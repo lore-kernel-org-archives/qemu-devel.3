@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B83C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 12:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4648C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 12:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg17k-0002X6-JT; Thu, 06 Feb 2025 07:36:52 -0500
+	id 1tg1CV-0004PG-5J; Thu, 06 Feb 2025 07:41:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg17i-0002Wf-W2
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:36:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg1CS-0004P5-Fq
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:41:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg17h-0003Ee-8L
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:36:50 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg1CQ-0005QH-MM
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:41:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738845407;
+ s=mimecast20190719; t=1738845700;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SMReUzADYcvb/zWJIGGeCCkejiqbRY8goP/EygGvfMk=;
- b=cmbBIXGMIlQKSQLomhdBmuIl+3JVdKEgnrt12iBa3CF18dT2EZSZo+blrExg2QDK7J4/7M
- C9wBUgYqHrXh8jQGDU/r4Z4nKw0GkxCKuvU1UPuoEG7lzIYuMva+qC7Cbdib+A/rRTVLxu
- 9O/gRLatRtnzLu9au+p25B56vitMdHk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r9s1rlEgXUybYG9lIxdLOgFO6yhjb9rK6w8uTMUsxcc=;
+ b=ZRaTqbESw+YhqHZEu0YJ5GK+4l4JMTBzn4ierRI3GKXt+Tx+hDRCgnDYBOh+QeL3OkUBd4
+ dSEI/8EpASEvmWjbabTjbVjfpRsy/H944aXdzdecbtohHdDcP/NJP2OJD3E3A0VAKOyLsG
+ lKrEi0Io2/IZadWWIQoNruVy0ctWL3Q=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-7uV-T_-LMh2_aZ45Mz-ahw-1; Thu, 06 Feb 2025 07:36:45 -0500
-X-MC-Unique: 7uV-T_-LMh2_aZ45Mz-ahw-1
-X-Mimecast-MFC-AGG-ID: 7uV-T_-LMh2_aZ45Mz-ahw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43625ceae52so5301195e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 04:36:45 -0800 (PST)
+ us-mta-295-pO3VhNZGNUeJo31ynsosNQ-1; Thu, 06 Feb 2025 07:41:39 -0500
+X-MC-Unique: pO3VhNZGNUeJo31ynsosNQ-1
+X-Mimecast-MFC-AGG-ID: pO3VhNZGNUeJo31ynsosNQ
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4362552ce62so4350135e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 04:41:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738845404; x=1739450204;
+ d=1e100.net; s=20230601; t=1738845698; x=1739450498;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=SMReUzADYcvb/zWJIGGeCCkejiqbRY8goP/EygGvfMk=;
- b=vJpaH6PpJ7siDniuI5DQFcyFqqLZMMaA64OOh91Gf35w63zZhlWkQANVWeWnMoU76K
- chKgTBXhAKNsoLdFaFIXqbgRKi38bD4OyDXr9r7IgxnjbpOXWMaBTz2WXKTTIOg8nHYK
- nJoFGEh3nNhXnMNDEMDujJP3Yr3utP6oVVYiq+vJ+ym44I8LWZEZn1FL6WUMBpOq2u+T
- M8SRs7aW5X+LeaJVy1ZSPtd8dhpzOLUhPCcTTeUWaqgIsK/20N1WUWzZguCRbGbvqSeS
- lnw3dlhOsLrLdm66L8eIJ16J46CNCOOeKNcVasdM68DJfKUtFIzFKgIInfbNpyVOahOY
- qRCw==
+ bh=r9s1rlEgXUybYG9lIxdLOgFO6yhjb9rK6w8uTMUsxcc=;
+ b=haz/x+ZMALbJjRb3KjWKtSsot8kfHHC0yXxW7YntOgfI5r/k9YhazNKsqs2UM/IDyz
+ gdhEnqRTbecLkOW/2N//3F6FTiNqXxB3U0oCgQ/xNg4t7lAatrOi+NE/qOqpjNvCBddd
+ F8MjpWImHWg/2y5HGMhUvRDNk+NgLtcQ6IoyBSH+H50joSrKN7UcEJFOx29KxGRySgem
+ nJgjY54i+vRfKo/FOK2I/ZaXNnB3Zw782eWXXmoo9OcJ4Y0b3FkPiVJgaCWWix8qlmU+
+ wgFzxADRT5sF8Rn25V6AX2g+CB9po1LbLYZAO0iHSQ+geAHgV1rb9G/fPpAi3XSLAfnl
+ bPUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVH69l5knOJhvZxrgFrQ+tVutMWwQlbXWCIQQMjp2ORSxWMkwftH8EfMvClXMEz2jKLuE/AUIv6Kzui@nongnu.org
-X-Gm-Message-State: AOJu0Yxw38UuprmPPmb+PUIlrS+wgT243vhTZM3zhE4gZ7vAUlAA+9IH
- ti9jr8OmLhfqjkjp2wOn4iV13b4HBjXAruakYpGgBO57N328DMQ3hr/9QDcaJwwlmZu6MnqWT+V
- MAxWvKB6UsDmup6Gs4VZ9x6KIGkfS3Z6FN1KktJR61JLHm3Gq6FFv
-X-Gm-Gg: ASbGncvPCJtTE9JOCnhH4ALGiRKYdQ1A+A8v/1AVv1a2cQ0cW1BLpJQSDxUGxYAKDs5
- EgmJVMVS6TvZkGGOiTzPmghliGA/H2ifNESVvuyiH1ccl811e6bWDsbWeMIyZ9qkYscBimJi1qn
- q1tfKEMMsBTsiltVOparLmQqxPfkD4dsFFTE40e9xEK0HFLdtNAXsSbVlq53sbFHRaoQBYag9yg
- j7UpCqXgrqGWxV4f+UX8u21kZ83ev6nl6X1PUEhiMeZVHL8Hb1CW7N6m3tq9RbajyIBTK1AW5XI
- h1uZD7n5QZN01ZPrS97GTnAXTvdzxbTbFmKR
-X-Received: by 2002:a05:600c:1d0f:b0:431:3bf9:3ebb with SMTP id
- 5b1f17b1804b1-4390d590553mr51009225e9.24.1738845404614; 
- Thu, 06 Feb 2025 04:36:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEP/L4zqsrHxxDQ1NRsZgD5dpFR6la0nUa4bcW9b+0N9FglIx7M2inr8ee9jem0M6Rhs/P9yw==
-X-Received: by 2002:a05:600c:1d0f:b0:431:3bf9:3ebb with SMTP id
- 5b1f17b1804b1-4390d590553mr51008995e9.24.1738845404297; 
- Thu, 06 Feb 2025 04:36:44 -0800 (PST)
+ AJvYcCVCPtrfM1COTOrAikwKfreBbQYYIRrwmg+fbKvIZwPjDZy07nIuOiOQuFO0dDBlpJza7lxYrHbYong+@nongnu.org
+X-Gm-Message-State: AOJu0YwbPrzpir2QteTIGDYBIhQ4m3bM51lkfeMc0WMzLwGfIXcXs5vv
+ AOoHbmAjyzoFMgZXSVdMOlrucua3eKZw2Ckor19Gc5qkYA6dSNUapnKaFGETDLag4weKuDPWeC0
+ 7+RK7Bq5BesX6ezcCKQI65XS4jbv8WC6phSMrw7XpmXRvZR0iUOf2
+X-Gm-Gg: ASbGncv4Z8AJsdiJFAnkCXIBam2BYLkL8TYMVfO1zCI825Sbl5U9RJJJRB5jMdeSR1l
+ hGBjNtz8DmdPvYLhE2y6EiO8waRQI5wWBbOwCKWWNX7CGtvplm+7l25j5imAh5k8gxYQHiVbTJJ
+ bt1PJ045Br10TYT64ZstnsT+AuONZ8X/XMlr9viAnbyf/qeiDpZmVVScO2hwlrVMaSSFhv7R46o
+ u3880mS1FsSnIG2RbOv7myBc+TSb/sOXaCaVpKmlnlcMcm3B6CbwWPkeGzD0ED4XVH8DxVkias9
+ tXFnWxpFe75ULcE5eoCqExiE3T5gxotUBaRT
+X-Received: by 2002:a05:600c:4684:b0:431:6153:a258 with SMTP id
+ 5b1f17b1804b1-4390d43d9abmr53069555e9.13.1738845697848; 
+ Thu, 06 Feb 2025 04:41:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEP0tPm9ZUdlTIVmOWeTKwMgSJ5VXAy8nJOT0i/TT17R5wmShZz90Zh7La0h1GEymX7z3alLg==
+X-Received: by 2002:a05:600c:4684:b0:431:6153:a258 with SMTP id
+ 5b1f17b1804b1-4390d43d9abmr53069285e9.13.1738845697508; 
+ Thu, 06 Feb 2025 04:41:37 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
  [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390db10b17sm52820555e9.34.2025.02.06.04.36.43
+ 5b1f17b1804b1-4390d94d7c7sm53453855e9.14.2025.02.06.04.41.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 04:36:43 -0800 (PST)
-Message-ID: <99b42d18-1ba4-4d54-96ee-12d9d9a2f9ff@redhat.com>
-Date: Thu, 6 Feb 2025 13:36:42 +0100
+ Thu, 06 Feb 2025 04:41:37 -0800 (PST)
+Message-ID: <f669dcfc-e8fb-429d-8639-b65f6f0a002b@redhat.com>
+Date: Thu, 6 Feb 2025 13:41:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/16] tests/functional: Allow microblaze tests to take
- a machine name argument
+Subject: Re: [PATCH v4 14/16] tests/functional: Have microblaze tests inherit
+ common parent class
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>, 
@@ -85,7 +85,7 @@ Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
  Jason Wang <jasowang@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20250206113321.94906-1-philmd@linaro.org>
- <20250206113321.94906-14-philmd@linaro.org>
+ <20250206113321.94906-15-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250206113321.94906-14-philmd@linaro.org>
+In-Reply-To: <20250206113321.94906-15-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -159,14 +159,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 06/02/2025 12.33, Philippe Mathieu-Daudé wrote:
-> Make microblaze tests a bit more generic.
+> Have the MicroblazeMachine class being common to both
+> MicroblazeBigEndianMachine and MicroblazeLittleEndianMachine
+> classes.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/functional/test_microblaze_s3adsp1800.py   | 7 +++++--
->   tests/functional/test_microblazeel_s3adsp1800.py | 7 +++++--
->   2 files changed, 10 insertions(+), 4 deletions(-)
+>   tests/functional/test_microblaze_s3adsp1800.py   | 2 ++
+>   tests/functional/test_microblazeel_s3adsp1800.py | 5 ++---
+>   2 files changed, 4 insertions(+), 3 deletions(-)
 
+Just a matter of taste, but I'd maybe squash this with the next patch.
+
+Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
