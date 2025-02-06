@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA3DEC0219B
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51366C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 10:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfyf8-0000Ki-Rc; Thu, 06 Feb 2025 04:59:10 -0500
+	id 1tfygc-0002aa-Ia; Thu, 06 Feb 2025 05:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tfyf5-00008a-Uw
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:59:07 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tfyf3-0006Ji-Hz
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:59:07 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21f0c4275a1so10482305ad.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 01:59:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738835944; x=1739440744;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JcH4F+LnQtE4KW/dTgSs8FJ54przEBLLbwEc7DxuhW8=;
- b=E2fD2/wGS6AHxWe3I5Z0OgeVFP3UTPAtlUwRqrMxtQjjSCgX0DZti7hzrc3vjaTCUa
- WvX10XvIlHIzDL8rE2jcu/Fgc+RwpdStIdOPhS7pJpxLlAYtkL9eNSRAdxWyUBNgQ3T7
- ZKMMbEamua9t8/raMe3cHekL0TBDt/Kxru6cF1wO5ZNKjiaRPxeU2Tasl2OCJj7g5k+i
- UA2wCPvoDupHLcKVqhfCrbkT2VlIaiNsxfuuIVHgQatbYT3KA3L4ZG4Y/+fj+Fdb1ZSc
- 5QloerUoo+JgYhygPuD5nXhqYK3gRh6RGqFxUserN5gP2P+uaIQqVOtYugt2qXtg2Vv6
- kwnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738835944; x=1739440744;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JcH4F+LnQtE4KW/dTgSs8FJ54przEBLLbwEc7DxuhW8=;
- b=RIuYMgL2hGY9q1cS9ym21wB5E+gsggjgA/Y4E9Wc89tnTS1xQo1bozobi7QXjCZfH2
- jFKw1Gt3umNiLh53rTZqp+pgKDSPPn98DQGJxFqXLiSGoZO23AIPvG3CR/7i9oFr3yEW
- fa0Zyci+jLGTQccALj008NKDgZgE2rKrwfxDAUWeaYt3n2nWEKDDE31R7v3lE3ZKFyt+
- Fh7iIUumBkjfnMPpwCtlzPX31kwaC7aQjE8qiaWL5Jn8J702wMl//Ce7ZaMyn8VmdtER
- 8BPs3LCzSMkiAGU7midONSeXZ3bPHWvml9+kkINARCtxcN040hKbCUxIY9iNeQndAkei
- F9Lw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbhOghr0K/uZsz/Ppw5ePZtMjzeSSR58E7ZkWpJKfBg4rdxhiXnY27ZZ9+bNYR283o0wtC0m5cE6lk@nongnu.org
-X-Gm-Message-State: AOJu0YxKlXqePuhSjrq4ICin3/7OZLzjN9KF14StKtZD+rL/y7FG1D1x
- gWhXm/asVBdxBcwyjyVBGhHKavmmDFaORjtWkdkzhq3hvuFqyqkUOCuCFl2L8Wk=
-X-Gm-Gg: ASbGnculF62uo2Colnx/RXMZK+dWwHDKgk8vUNP1K1UR4TRjNlTHU5vytppyyveyRF/
- vOMRcAZgDaCyRpj5oHvHOj6QEAKD/6VYJTcXvvF8WMzs1jrnxCDVgeW52fgD3r91FuoRUCtL4qd
- xEQNWQT16CTK2q0ybA8+KE8yMaOLkzAzthhdp0eZnxGvMtDX7jlDiX3DMc/z3IsVmdWluoBvQhf
- h0i2ohV5+kw1uwIgmudLb9zKcGLNSlSVCQ43kD3QKb/4npkyfTo0ztuu7aPhtuy3RpLt85ycRtC
- XsU5vheX0NUE0ytvwNcFuyIf+52u
-X-Google-Smtp-Source: AGHT+IHCuhzYGqjM7OMTve90iR1j8XFebNBtkTkIKGYjS/wsA5tL1AQ8GBbxxbXPCSDChA0ruh8bkA==
-X-Received: by 2002:a17:902:e886:b0:216:7d22:f69 with SMTP id
- d9443c01a7336-21f17f06218mr86822985ad.50.1738835943892; 
- Thu, 06 Feb 2025 01:59:03 -0800 (PST)
-Received: from atishp.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f365616ecsm8768815ad.100.2025.02.06.01.59.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 01:59:03 -0800 (PST)
-From: Atish Patra <atishp@rivosinc.com>
-Date: Thu, 06 Feb 2025 01:58:47 -0800
-Subject: [PATCH v2 2/2] target/riscv: Mask out upper sscofpmf bits during
- validation
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfygV-0002Zy-Vr; Thu, 06 Feb 2025 05:00:36 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tfygT-0006gZ-2T; Thu, 06 Feb 2025 05:00:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738836034; x=1770372034;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=MU874FEMTTz129Wl0GzXGt5/AqElqEZSPesXYVwITzg=;
+ b=Sbup0LoYTTgTs94LAMa1wLH7VvRDXPup/ufkwrmtQXntv+zTAzlb0x8e
+ LCsVlXLjnO35HdPeKxUtiM4wHqbtPadhrTAqSEFiSY9oW9T9X7Ty+fd3a
+ sbm8eO4/kv+3ikrSVUTH+tesqCvcNY7dZIzdia2Tz0hR22/xTHsnAk9Ne
+ 7Vo26zU08q91WxbqfOcNXJnd6WZSxoUZzKJxLaFet5zPf1wkE8tvvQE8D
+ 00joTUJxOlUWo0iDIHL8yzs3okCIXL7Sca2p5zRP0nwFioD+hW8MSOWPd
+ LFpPSFS0oa6PG90+NLkNu0Eu6Nx7Q6FbCzl3mTZays0WQ6nhVIdQz0iX+ w==;
+X-CSE-ConnectionGUID: 9/bAfngoQaGicD6MoveraQ==
+X-CSE-MsgGUID: TZyqQ+K5Tvy4gNC2OdBFwQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="39456944"
+X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="39456944"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Feb 2025 02:00:30 -0800
+X-CSE-ConnectionGUID: cx0BQhqjQt27D6NsVtSqcQ==
+X-CSE-MsgGUID: QCjIMYF1Qie+rufoFs4vsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="116147595"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 06 Feb 2025 02:00:22 -0800
+Date: Thu, 6 Feb 2025 18:19:50 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
+Subject: Re: [RFC v2 1/5] qapi/qom: Introduce kvm-pmu-filter object
+Message-ID: <Z6SMxlWhHgronott@intel.com>
+References: <20250122090517.294083-1-zhao1.liu@intel.com>
+ <20250122090517.294083-2-zhao1.liu@intel.com>
+ <871pwc3dyw.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250206-pmu_minor_fixes-v2-2-1bb0f4aeb8b4@rivosinc.com>
-References: <20250206-pmu_minor_fixes-v2-0-1bb0f4aeb8b4@rivosinc.com>
-In-Reply-To: <20250206-pmu_minor_fixes-v2-0-1bb0f4aeb8b4@rivosinc.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: Atish Patra <atishp@rivosinc.com>, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
-X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=atishp@rivosinc.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <871pwc3dyw.fsf@pond.sub.org>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,37 +92,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As per the ISA definition, the upper 8 bits in hpmevent are defined
-by Sscofpmf for privilege mode filtering and overflow bits while the
-lower 56 bits are desginated for platform specific hpmevent values.
-For the reset case, mhpmevent value should have zero in lower 56 bits.
-Software may set the OF bit to indicate disable interrupt.
+On Wed, Feb 05, 2025 at 11:03:51AM +0100, Markus Armbruster wrote:
+> Date: Wed, 05 Feb 2025 11:03:51 +0100
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [RFC v2 1/5] qapi/qom: Introduce kvm-pmu-filter object
+> 
+> Quick & superficial review for now.
 
-Ensure that correct value is checked after masking while clearing the
-event encodings.
+Thanks!
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
----
- target/riscv/pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> > diff --git a/qapi/kvm.json b/qapi/kvm.json
+> > new file mode 100644
+> > index 000000000000..d51aeeba7cd8
+> > --- /dev/null
+> > +++ b/qapi/kvm.json
+> > @@ -0,0 +1,116 @@
+> > +# -*- Mode: Python -*-
+> > +# vim: filetype=python
+> > +
+> > +##
+> > +# = KVM based feature API
+> 
+> This is a top-level section.  It ends up between sections "QMP
+> introspection" and "QEMU Object Model (QOM)".  Is this what we want?  Or
+> should it be a sub-section of something?  Or next to something else?
 
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index cf713663ee56..0408f96e6af8 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -390,7 +390,7 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-      * Expected mhpmevent value is zero for reset case. Remove the current
-      * mapping.
-      */
--    if (!value) {
-+    if (!(value & MHPMEVENT_IDX_MASK)) {
-         g_hash_table_foreach_remove(cpu->pmu_event_ctr_map,
-                                     pmu_remove_event_map,
-                                     GUINT_TO_POINTER(ctr_idx));
+Do you mean it's not in the right place in the qapi-schema.json?
 
--- 
-2.43.0
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index b1581988e4eb..742818d16e45 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -64,6 +64,7 @@
+ { 'include': 'compat.json' }
+ { 'include': 'control.json' }
+ { 'include': 'introspect.json' }
++{ 'include': 'kvm.json' }
+ { 'include': 'qom.json' }
+ { 'include': 'qdev.json' }
+ { 'include': 'machine-common.json' }
 
+Because qom.json includes kvm.json, so I have to place it before
+qom.json.
+
+It doesn't have any dependencies itself, so placing it in the previous
+position should be fine, where do you prefer?
+
+> > +##
+> > +
+> > +##
+> > +# @KVMPMUFilterAction:
+> > +#
+> > +# Actions that KVM PMU filter supports.
+> > +#
+> > +# @deny: disable the PMU event/counter in KVM PMU filter.
+> > +#
+> > +# @allow: enable the PMU event/counter in KVM PMU filter.
+> > +#
+> > +# Since 10.0
+> > +##
+> > +{ 'enum': 'KVMPMUFilterAction',
+> > +  'prefix': 'KVM_PMU_FILTER_ACTION',
+> > +  'data': ['allow', 'deny'] }
+> > +
+> > +##
+> > +# @KVMPMUEventEncodeFmt:
+> 
+> Please don't abbreviate Format to Fmt.  We use Format elsewhere, and
+> consistency is desirable.
+
+OK, will fix.
+
+> >  ##
+> >  # = QEMU Object Model (QOM)
+> > @@ -1108,6 +1109,7 @@
+> >        'if': 'CONFIG_LINUX' },
+> >      'iommufd',
+> >      'iothread',
+> > +    'kvm-pmu-filter',
+> >      'main-loop',
+> >      { 'name': 'memory-backend-epc',
+> >        'if': 'CONFIG_LINUX' },
+> > @@ -1183,6 +1185,7 @@
+> >                                        'if': 'CONFIG_LINUX' },
+> >        'iommufd':                    'IOMMUFDProperties',
+> >        'iothread':                   'IothreadProperties',
+> > +      'kvm-pmu-filter':             'KVMPMUFilterPropertyVariant',
+> 
+> The others are like
+> 
+>          'mumble': 'MumbleProperties'
+> 
+> Let's stick to that, and also avoid running together multiple
+> capitalized acronyms: KvmPmuFilterProperties.
+
+IIUC, then I should use the name "KvmPmuFilterProperties" (string version
+for QAPI), and the name "KvmPmuFilterPropertiesVariant" (numeric version
+in codes), do you agree?
+ 
+> >        'main-loop':                  'MainLoopProperties',
+> >        'memory-backend-epc':         { 'type': 'MemoryBackendEpcProperties',
+> >                                        'if': 'CONFIG_LINUX' },
+> 
 
