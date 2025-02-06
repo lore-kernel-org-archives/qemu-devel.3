@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B8DC02199
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7E3C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg5NE-0005mo-GM; Thu, 06 Feb 2025 12:09:08 -0500
+	id 1tg5OS-0006Wv-K7; Thu, 06 Feb 2025 12:10:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg5N9-0005mO-4Z
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:09:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg5OP-0006Ud-JS
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:10:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg5N6-0003qw-35
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:09:01 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg5OI-0004DP-S6
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:10:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738861738;
+ s=mimecast20190719; t=1738861812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BG53nlMU04NGKq+xa3R9304BpAVaRsdp8Zom4aGenhA=;
- b=dINn+58O/ntLqUWpdDPa8VS7o/UHaosFfTmTpbv/G4GjUEJb+Vo/0Dnd6xszxzTn1IFb+2
- 4Mv1B/fbJunI7+81yF9tRUOPeVxZb4Xwj7T2xPVFJj465efpJi2rOSHR/lJIoAyG3ORNoK
- VDe6R8pl5yYxohTYIsdhMvke1AXHIxo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qR7rCznCmYMMwhJR+p0kwoZQ6SlTJT+Pryh1NBvuhBI=;
+ b=W47vju6Yw9ZdVrmIbusJaMP4+Ur1bFGDeg/+Q1xljnppMR1DWNexY8ESI89PrHpN8fuf1w
+ FnLnIXFv/n4BMfxOhmB8H8AC6X47fISla2Eca3YCsyajuwEvG3358HPhG595eOrDdEQ897
+ GvWqxB2fj7ZoHdeXV4ijGKDqVdRNvDQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-npUaUyvuMFC1EboKMe0z-g-1; Thu, 06 Feb 2025 12:08:57 -0500
-X-MC-Unique: npUaUyvuMFC1EboKMe0z-g-1
-X-Mimecast-MFC-AGG-ID: npUaUyvuMFC1EboKMe0z-g
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-436289a570eso10153025e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:08:56 -0800 (PST)
+ us-mta-624-jOjQKyOTPPqTznVsNf-CKA-1; Thu, 06 Feb 2025 12:10:10 -0500
+X-MC-Unique: jOjQKyOTPPqTznVsNf-CKA-1
+X-Mimecast-MFC-AGG-ID: jOjQKyOTPPqTznVsNf-CKA
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38dae2ab056so580621f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:10:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738861736; x=1739466536;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BG53nlMU04NGKq+xa3R9304BpAVaRsdp8Zom4aGenhA=;
- b=fR7D+n+ixnn0vvg5XZgXvhUrMBVy3qXSBu+XePgv1zka7In/NitYvH6TUvRQpmFHoY
- v4QvXK6uCn7gzjZRJPX/ozp6LwYZYCz0ytr4wOCVxQBmT0BMO6dq/9NhZlEjThTs7gQL
- 34K7yn4cwKRTTRhCxRAGRy1WlMMa/L1m/vqQWeW661GbloBcPDIEzbaxPBIKIOhMah88
- c0FRKdeCoHsXzUfyR39C5I3e5bs1vJG3N5D+sQIx0JesWjMGBJ1MMdZU28wlHJc+nXd9
- Msosen4ZnzpwxFsDWzagPGgnsuB/6mYQuLvxk42oCRs/mpVUMj4PPBgp0+Ye2Eo5tlkJ
- YVGQ==
-X-Gm-Message-State: AOJu0YzoQbQgE7kKCYlst32s0ooMhLF3Wb9omcpYKNZVV1rVh4b7PJby
- ZSDIkF+qa06vn+U0Ck3EJyh8iH22ksTjcU2N6dxPPpBdKARYe+yyXd4FWpGl2tOzFGWO8Xr4UqU
- D4xx1FCUdewvWC2HxtY/kZjYFERkzZEbOBP9oDL+cw1bJVQsYkXVX
-X-Gm-Gg: ASbGnct7L/3JrzkWmtX6yHvQIQw1dWfJivwGqlPEke7/9tCArkc7QbmdKVB8FrjCxfZ
- qdEFMofJtrRuveH9LLuYysRzo+dZCc0pYbD7uvdw4+1HDG2fCae9TJA+qDKIrTNoTaJxrPmu3wc
- k3A34dVoR37hn5Km9q9fxuvAlCEx1WGGg6HgEcBhYS8pmnqwQKujRJqBqipEhbY9xJH68IrNgVI
- re+j5UQD/8j+hBj5YBKn97uA3hXd0JcZLg6cKIUvvJgQEK1iF7rzt323V3cCA/Bv2cpD2G8MMjL
- mOs0PGMYB8urD+hdJ4EMaOn/ME1waJk73MIF
-X-Received: by 2002:a05:600c:83c8:b0:434:fbe2:4f with SMTP id
- 5b1f17b1804b1-439249a7ad8mr2053625e9.23.1738861735782; 
- Thu, 06 Feb 2025 09:08:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpYci+cvj2Nq+DwHELaIblVcZ2g4fu1z0D+h4Nm0jfvtP/mj6qGOLNXCNMl25aIk2t51kJoA==
-X-Received: by 2002:a05:600c:83c8:b0:434:fbe2:4f with SMTP id
- 5b1f17b1804b1-439249a7ad8mr2052965e9.23.1738861735332; 
- Thu, 06 Feb 2025 09:08:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738861809; x=1739466609;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qR7rCznCmYMMwhJR+p0kwoZQ6SlTJT+Pryh1NBvuhBI=;
+ b=WJ5qLin8V0CIpYfxNHAnXjxpnOrbZzBWVoHMS91cxPWkQ4a6ENNZAHB9lxDxBn9bqi
+ tkZPUcXrvNHrBKECC/revaGM0UN1cBm/ovjiMcVo0kxMtbtDTCHgGXST+X+SRcVWqVbr
+ f9zJ1b+OV69QevyyhBkCW/H9qdy8vTEnl+g7KChRMWfWzmz7isLQ3cNtJyCS+UbZAOQ5
+ Da/9KtEx+OXvGlioFmin2i+2LzBeNuIAGiXERBGDx+l4k/7MCNLqm91f6z/PEpFcq7Gy
+ FiN8jBpYYf7/SBvwVA2xYvVq4d5jfZfVmZvjvDTI13sleyTUkpTRie7n4wmDllrS57O7
+ ezWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtKxRSjAX7jyNnKM0hsrHHiE74rJ8QKZdMGdfCTm6B3LwVSlsKMO2LF0vkbkMw18Ryp2lQNylUo9bc@nongnu.org
+X-Gm-Message-State: AOJu0Yxw9P1Eso83g5eqnRQS7p8XCiHMD5H70LvCHNSeJeSKRvIBSi4p
+ QL9QyV7U+sXf5H91bA23oxFbj+HgYL2oscNijIIIJ4tVIOgQcmzzN9YyRiwNm+dqLPOX7sCWL6n
+ 1m3kXi7+ra9+S3ycb5hqHjRUmJBBk01WnbZk6tg5HW9FigylBkECN
+X-Gm-Gg: ASbGncuDb3vA3YzS0peC5LiOnjz/89ZqetigSx6tcra4P+rwQz9tziFV8ad3+LaKTYa
+ BYD/l0revWJx/QpC7dJ19qUmfZdTBJWy4RsBEx7LQa/wl5fL8SQeWj1BnaQqQzXoM31n4JVnCXp
+ xs2VyUrKhJDe93TdgcG/0I+cYvCF1MhvQUNvcEqupJX4IhbPFrqdLFjnd/Sf8F3QAyZLKKEyz83
+ EnizB4lhfU9K5lFJmHIh3L4eSdWP90K7tLdo9/IzUZ6FGgMDy2YFcpSIUWn2P6tlIhxi0/KZsIG
+ yf5QVNWQyqD0wvNGi7gcO5GI6Up07xGv2JuM
+X-Received: by 2002:a05:6000:ecd:b0:38a:9c1b:df5c with SMTP id
+ ffacd0b85a97d-38db48fe39emr4956174f8f.50.1738861809499; 
+ Thu, 06 Feb 2025 09:10:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjHJyHKzcHjFNu+WvKPFCnY27wt8Rhv0B6fp5x67fT0xmNtHAKHaifdmBNmqDjU3P43RQgMA==
+X-Received: by 2002:a05:6000:ecd:b0:38a:9c1b:df5c with SMTP id
+ ffacd0b85a97d-38db48fe39emr4956129f8f.50.1738861809090; 
+ Thu, 06 Feb 2025 09:10:09 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
  [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbde1ddaesm2177603f8f.85.2025.02.06.09.08.52
+ ffacd0b85a97d-38dc73c2e00sm154829f8f.57.2025.02.06.09.10.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 09:08:53 -0800 (PST)
-Message-ID: <ece11f17-af70-4c17-9444-78de29405671@redhat.com>
-Date: Thu, 6 Feb 2025 18:08:51 +0100
+ Thu, 06 Feb 2025 09:10:08 -0800 (PST)
+Message-ID: <bcde80b6-0f86-432c-8b0a-ba7aff5dfb2c@redhat.com>
+Date: Thu, 6 Feb 2025 18:10:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/16] hw/microblaze: Support various endianness for
- s3adsp1800 machines
+Subject: Re: [PATCH v5 14/16] tests/functional: Remove sleep() kludges from
+ microblaze tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson
- <anjo@rev.ng>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Alistair Francis <alistair@alistair23.me>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20250206131052.30207-1-philmd@linaro.org>
- <20250206131052.30207-12-philmd@linaro.org> <Z6S3Mgt1G7fIjeBB@redhat.com>
- <4624f149-76d0-4da5-8f13-8c015043c335@linaro.org>
- <Z6THtfjL6UVhBiW7@redhat.com>
- <3156dc3b-9553-4b5f-a934-f29ee0601887@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20250206131052.30207-15-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -136,19 +132,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <3156dc3b-9553-4b5f-a934-f29ee0601887@linaro.org>
+In-Reply-To: <20250206131052.30207-15-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,72 +160,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/02/2025 16.04, Philippe Mathieu-Daudé wrote:
-> On 6/2/25 15:31, Daniel P. Berrangé wrote:
->> On Thu, Feb 06, 2025 at 02:53:58PM +0100, Philippe Mathieu-Daudé wrote:
->>> Hi Daniel,
->>>
->>> On 6/2/25 14:20, Daniel P. Berrangé wrote:
->>>> On Thu, Feb 06, 2025 at 02:10:47PM +0100, Philippe Mathieu-Daudé wrote:
->>>>> Introduce an abstract machine parent class which defines
->>>>> the 'little_endian' property. Duplicate the current machine,
->>>>> which endian is tied to the binary endianness, to one big
->>>>> endian and a little endian machine; updating the machine
->>>>> description. Keep the current default machine for each binary.
->>>>>
->>>>> 'petalogix-s3adsp1800' machine is aliased as:
->>>>> - 'petalogix-s3adsp1800-be' on big-endian binary,
->>>>> - 'petalogix-s3adsp1800-le' on little-endian one.
->>>>
->>>> Does it makes sense to expose these as different machine types ?
->>>>
->>>> If all the HW is identical in both cases, it feels like the
->>>> endianness could just be a bool property of the machine type,
->>>> rather than a new machine type.
->>>
->>> Our test suites expect "qemu-system-foo -M bar" to work out of
->>> the box, we can not have non-default properties.
->>>
->>> (This is related to the raspberry pi discussion in
->>> https://lore.kernel.org/qemu-devel/20250204002240.97830-1- 
->>> philmd@linaro.org/).
->>>
->>> My plan is to deprecate 'petalogix-s3adsp1800', so once we
->>> remove it we can merge both qemu-system-microblaze and
->>> qemu-system-microblazeel into a single binary.
->>>
->>> If you don't want to add more machines, what should be the
->>> endianness of the 'petalogix-s3adsp1800' machine in a binary
->>> with no particular endianness? Either we add for explicit
->>> endianness (fixing test suites) or we add one machine for
->>> each endianness; I fail to see other options not too
->>> confusing for our users.
->>
->> We would pick an arbitrary endianness of our choosing
->> I guess. How does this work in physical machines ? Is
->> the choice of endianess a firmware setting, or a choice
->> by the vendor when manufacturing in some way ?
+On 06/02/2025 14.10, Philippe Mathieu-Daudé wrote:
+> Commit f0ec14c78c4 ("tests/avocado: Fix console data loss") fixed
+> QEMUMachine's problem with console, we don't need to use the sleep()
+> kludges.
 > 
-> Like MIPS*, SH4* and Xtensa*, it is a jumper on the board
-> (wired to a CPU pin which is sampled once at cold reset).
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/functional/test_microblazeel_s3adsp1800.py | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
 
-If it's a jumper on the board instead of two separate boards, then I think 
-this is a good indication that this should only be a machine property, and 
-not two separate boards?
+Thanks for tackling this!
 
- > My worry is about how to not break what distros currently ship.
-
-So once the two binaries got unified, maybe we could still add a hook 
-somewhere that checks argv[0] and sets the endianess property according to 
-the name of the binary, so users can still use a symlink to force the 
-opposite behavior?
-
-Anyway, you likely don't have to solve this problem right in this series 
-here already, we can think of this later when one of the binaries gets 
-marked as deprecated. So for this series here, I'd suggest to go ahead 
-without adding the -le and -be machine types and only use a property first, 
-then tackle the remaining questions later...?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
