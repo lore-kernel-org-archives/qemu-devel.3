@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F61C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 08:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB93C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 09:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tfxid-0003FO-BU; Thu, 06 Feb 2025 03:58:43 -0500
+	id 1tfxlc-0004J4-VI; Thu, 06 Feb 2025 04:01:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tfxiZ-0003F6-A6
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:58:39 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tfxlb-0004IU-2J
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:01:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tfxiX-0004WJ-O4
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 03:58:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1738832318; x=1770368318;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=eeuulv5JLGftzUOJMSAtkOWvy58gJZCXRj6UIl2qTYg=;
- b=B5u+j8E5HnAf1vu1Ksfcw4c+Mbb97iuIOU+vZEoL23VV2cecFP70SYJW
- yIU3wmGSl4UtkD8zhzWoK8tCgT2q7ectUecJ8fvAlSyPJzQTHEBHhYOMa
- dGLvjg3ai5nIim+OR8JiN1ngYsLWVDszhqvkFQvXn0dwv4MxuErf3uuDS
- FUMRILCCVnUtaA+14b1uduFcHvRF31kCVqMgnsYkkO7vVnjr1/LDYnVTc
- ebSAZk9sY1HsIJOEx1LY/lU62ijwyXDX89GN5dGKufQd4Hj4JtD66eDwt
- HNf7UsgNxvxe0T43wh01SDwx3VHmGqnr3mNPeEygNu9UyjK+bGBMSXjtr g==;
-X-CSE-ConnectionGUID: 0xzSH2z+RqejNtlJwUBVUA==
-X-CSE-MsgGUID: 1W71PJ37QDuyFRTLXzxPHA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="64779127"
-X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="64779127"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Feb 2025 00:58:32 -0800
-X-CSE-ConnectionGUID: J1i99jh2QnOK8baB8N2FXg==
-X-CSE-MsgGUID: uq7B1JZ1QNmZ9MO8yBtwog==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,264,1732608000"; d="scan'208";a="116184254"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 06 Feb 2025 00:58:29 -0800
-Date: Thu, 6 Feb 2025 17:17:58 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH v7 RESEND 0/5] i386: Support SMP Cache Topology
-Message-ID: <Z6R+RpFGJHWyE5iq@intel.com>
-References: <20250110145115.1574345-1-zhao1.liu@intel.com>
- <87jza4zi5o.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tfxlY-0004u3-Kh
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 04:01:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738832502;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=OLFnOyzeMgN3PSGDypiRPKAPrLrgXMKnWAwVDvAHNL8=;
+ b=DPETR/CLHGHLSKWE8Yw1CRvdxcgOUMZHtU6Y8/LE/Z2exyLc/YaHinXFVdvnmZPeMbMDcj
+ Ttxe1e5/cUkm338bwcU/8vWGen/e/pd3brQXA1GQxF1GRrP5OqEtRFB/McWeUItE5s4/O5
+ td0dfmPO4f3h3NlvDZwE6JSkxDr+SM8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-vh2zwKEnP7O44c_SetWfVQ-1; Thu,
+ 06 Feb 2025 04:01:38 -0500
+X-MC-Unique: vh2zwKEnP7O44c_SetWfVQ-1
+X-Mimecast-MFC-AGG-ID: vh2zwKEnP7O44c_SetWfVQ
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05BDF19560AA; Thu,  6 Feb 2025 09:01:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.33])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A646530001AB; Thu,  6 Feb 2025 09:01:30 +0000 (UTC)
+Date: Thu, 6 Feb 2025 09:01:26 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, jon.grimm@amd.com,
+ santosh.shukla@amd.com, vasant.hegde@amd.com, Wei.Huang2@amd.com,
+ bsd@redhat.com
+Subject: Re: [PATCH v2] hw/i386/amd_iommu: Allow migration
+Message-ID: <Z6R6ZiHhbBjOfbko@redhat.com>
+References: <20250206051856.323651-1-suravee.suthikulpanit@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87jza4zi5o.fsf@pond.sub.org>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250206051856.323651-1-suravee.suthikulpanit@amd.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,26 +84,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 05, 2025 at 01:32:19PM +0100, Markus Armbruster wrote:
-> Date: Wed, 05 Feb 2025 13:32:19 +0100
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [PATCH v7 RESEND 0/5] i386: Support SMP Cache Topology
+On Thu, Feb 06, 2025 at 05:18:56AM +0000, Suravee Suthikulpanit wrote:
+> Add migration support for AMD IOMMU model by saving necessary AMDVIState
+> parameters for MMIO registers, device table, command buffer, and event
+> buffers.
 > 
-> Zhao Liu <zhao1.liu@intel.com> writes:
+> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+> ---
+> Changes from v1:
+> (https://lore.kernel.org/all/9ecffa7a-f4c6-45a5-a066-84826ccb55dd@amd.com/T/)
+> * Include ppr_log, pprlog_len, pprlog_head, pprlog_tail per Joao.
 > 
-> > Hi folks,
-> >
-> > This is my v7 resend version (updated the commit message of origin
-> > v7's Patch 1).
+>  hw/i386/amd_iommu.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 42 insertions(+), 1 deletion(-)
 > 
-> If anything changed, even if it's just a commit message, make it a new
-> version, not a resend, to avoid confusion.  Next time :)
-> 
-> [...]
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 13af7211e1..a1940a0ab3 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1673,7 +1673,48 @@ static Property amdvi_properties[] = {
+>  
+>  static const VMStateDescription vmstate_amdvi_sysbus = {
+>      .name = "amd-iommu",
+> -    .unmigratable = 1
+> +    .version_id = 1,
 
-Thanks Markus! I'll keep in my mind about this :-).
+IMHO we should not remove the 'unmigratable = 1'  setting, until we
+have fixed the design problem with this device, to split the creation
+of the 'AMDVI-PCI' device off from the 'amd-iommu' device, so that the
+former is user creatable.
+
+As it stands now, there's no mechanism to guarantee that the internally
+created 'AMDVI-PCI' device gets the same PCI address properties on every
+boot. Thus it isn't safe to claim this device is migratable yet IMHO.
+
+> +    .minimum_version_id = 1,
+> +    .priority = MIG_PRI_IOMMU,
+> +    .fields = (VMStateField[]) {
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
