@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C049EC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5919C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:13:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg1f7-00052p-9R; Thu, 06 Feb 2025 08:11:21 -0500
+	id 1tg1gL-0006kR-TF; Thu, 06 Feb 2025 08:12:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1ez-00050h-Ms
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:11:13 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1fs-00061f-QN
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:12:14 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1ex-00082Q-Cv
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:11:13 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso6243505e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 05:11:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg1fr-0008H5-AJ
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:12:08 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso9710415e9.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 05:12:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738847469; x=1739452269; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738847525; x=1739452325; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4hjV9qje+F9WM+1u7JaIIDgc7g6v/WUaxTXGCOTYvnI=;
- b=vDFtTl9cLjF3W12hmvrpTXgy6i1fKQSUh5Ac69JywwRisbOPuaGp9A2EL6BiQq1lJL
- 3Ciz8mU/14SBo53ZEgSEkBTHs0A8wv4S6x6TE1bA7NiEK+UMXmkQDma2QcAFj9qKYjP+
- YzxoEmgwksulXEws4tfnvz+ZpCjiSiQWX3xWK2SfRRW/eqiKSHHoQntEW1fCydR+cNqi
- BJwS8ErSEd3PVhFC6BmK/4PuGUI/Wy+DVl2ZdpKOA2QZFAHln85/V0+yVSF6u99QtYta
- oZiGbiJXK74UX3IqPd3qXJKKUB5so3OjVphMOozfjCYatHqq3fjFREP/eywabVW3tXQ4
- kuew==
+ bh=Ca93GC7mN6YPt3WWqji2t66DsugWAK2ak9CpDn3N/CI=;
+ b=RURTQN8ctGT83eS/AVxCTh1cuivsavHE4nwcjcBi26kl/blahsMr3RoFSqr74nVmxy
+ yZjSXeLWTuP6QBuRXNDAagNNspzOfJngGmvnZz28jZkRkrQaMtfxOSRhYsZ6fMm5wQ4s
+ kh2T3sjT2jQGVeWJ72eSUvjsPg1w6nBapRk5uoCZ2ltqV+LTNectb8ZGxGZqETZI4VWw
+ 4go2bRxQcuJ5D9rJnueOzv+Or3130Uld3sENmuPkojKJD70jcgiq8iYvBeFZuweSl8gX
+ 6R50iUXJAg3DNWQdmvgZXMvsv3xPlORd5+AC5IdKu5QWDlwJ8l3BAjgnC4OTkGn9tnWv
+ fqIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738847469; x=1739452269;
+ d=1e100.net; s=20230601; t=1738847525; x=1739452325;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4hjV9qje+F9WM+1u7JaIIDgc7g6v/WUaxTXGCOTYvnI=;
- b=NjsPgwfnC3x8sK3VjAqssvc6X4Re2q2XUh8m5gCN6frO1oCceOwtt03Er7nqfH1iBj
- qphmD/LWA0uj9jXWyrRiEJOM3NwpPR4Uw9sDJROWaGiDRssx8eoVgmN66w9HPXR+MXgy
- /rDAUAuKc3J8itj4qMQmbAIHOixwwiZ8Xd/SJYaLG/Knq30QpytAdU/OM/wdVqEj59vP
- 28NJS8e5w+gnDoJitDnishJYiObuojDmmVWpZ3gGikzoffunh/kvz50ImmqMk5u+QWEI
- bHjF5bKAB2KoETY6e0BlLNP80BNAzaxxNt+IBkKkuNscFYW2+PuM/5Uo50hzYpmjG8QS
- wWyQ==
-X-Gm-Message-State: AOJu0Yyizam/yWE2NLHnmjArlIw2eBks64o+5SXOsyUOGWjJpGaVx0LN
- FQTHHMTMk2V0jjZVfYkBp8zV3ccpMblGMK34ZemEzXhaIFIism4Oe5UJY+qkpumfUO24j4u8qm/
- snRY=
-X-Gm-Gg: ASbGnctWd/MjQBdGQOadUyV6iChirXN+d4S5Dt9rq+sinIchameYjARcO/6a650nNI6
- fyTfL3FO0QhKVJ5SlXlohPI3P3oYLbIvwG9r00NQcCKppSZNi8rprB+HBXYW/NtihCvLlnj4bL0
- kfG305uUXnJML+CxeywyDxYBHmX28Viw8J3L0R68ft/V0r4mq3JlXm7ogsaHR5LgEg9e0TenCbb
- slgKUC2AVsQbw9KhU4fGc1ujWx/gsiSs89aa+72iMvDF15Ml0i2h/2JWmJ8YLgVRw9VE5cPRRDQ
- 8jc/Af/EW/v9DJgkyuJPbfKCqlwYA6fEDzO2qk1+ayfQiG3JGn/SGRi5GU8Q5QMANg==
-X-Google-Smtp-Source: AGHT+IG5KuMThKcuLm7hcVGyYyQeWEVmIbCY6VWXFvAfGUxfab70FuaUwn7dHCHbtG0ugxXJQ+e+8g==
-X-Received: by 2002:a05:600c:512a:b0:434:f3a1:b214 with SMTP id
- 5b1f17b1804b1-4390d56cd58mr50851855e9.28.1738847469434; 
- Thu, 06 Feb 2025 05:11:09 -0800 (PST)
+ bh=Ca93GC7mN6YPt3WWqji2t66DsugWAK2ak9CpDn3N/CI=;
+ b=dCFGKnvCRZoy8jP99e97JTpDQ4s9hyeU7WpACqG6ZErv9TBD4ptCI1BYj+6f4WZ6OM
+ q5k4z7w8T2aUKM4KmzE7UXfObrQzBO3gHPaARKdXdBDAF3hBzPs7url6Di7ealKXAoXa
+ lUCfVGgYZwFeSa5CZ1belXF6qPRvh2HRthYW8UP0jVwdGw9Hz5lCXH7BxWnSky35DrkX
+ wWBkCl6zr5KIEpanHBA9UVe9kZFg8XolPTBvuAIV4nfB33ddmv39ofip2HwdprEMWkub
+ jHA1LBQNht+SI3bNWQo8SMR3bn4lu0czQg7hNd/YLfNFs8lQxKYWBufyXiN4Mgbo7ZbK
+ 0STg==
+X-Gm-Message-State: AOJu0YwPHa3YH3cSaIP1w7ch/IoR2mQCFSsR06pd8OxF7hgdBjsp9GZY
+ 6/Y01rUVuTpCsv9fEz1LFFgTB4TJftjP81iEXrXKJxLxRnnml0EtrzvBkp/7jhJnuNLKLjUQ96a
+ XFEA=
+X-Gm-Gg: ASbGnctKrbk059JtAYaxpAHie72Egv/bFaJKQivhVSYY+D4xDDGZudD1s/iW9b0hzHr
+ ViIUj2cwjqxV0QRvf/qay4gnHsJNsBJZF31Ml8XbRD4fsp1L8iknVMj99L3MMANkLnD0peioJ0X
+ mgZxK/YkfDGxOAG7SYrOeCAIsnSKzP5qb2Z1I2DqHdw1qtzWQqqKTp24PpyT75V77TAAhqrR/LL
+ zCKNn14VCmAbGrho0iLBdAIrPSgjpyicWbP25fGZIooDgtroaz0NvI05AUcj5W273hz86EzEWIp
+ HRNuo5bV9aWgrVYACWupUI2qAoT9My40kDJ0brFmfAqdYuqDeWVZPs58Ke1D9wcvLQ==
+X-Google-Smtp-Source: AGHT+IFVqjzXuEnDnkml/M4VYwoPKSCPNEhDXI3KviyMluXcIVCf/140gsFk7GgkK+a1VJhE/rPREg==
+X-Received: by 2002:a05:600c:3511:b0:434:a202:7a0d with SMTP id
+ 5b1f17b1804b1-4390d569890mr50269095e9.22.1738847524879; 
+ Thu, 06 Feb 2025 05:12:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc5839877sm254030f8f.3.2025.02.06.05.11.08
+ ffacd0b85a97d-38dbdd1af14sm1703873f8f.8.2025.02.06.05.12.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Feb 2025 05:11:08 -0800 (PST)
+ Thu, 06 Feb 2025 05:12:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
@@ -71,18 +71,18 @@ Cc: qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Peter Maydell <peter.maydell@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 03/16] hw/timer/xilinx_timer: Make device endianness
- configurable
-Date: Thu,  6 Feb 2025 14:10:39 +0100
-Message-ID: <20250206131052.30207-4-philmd@linaro.org>
+Subject: [PATCH v5 14/16] tests/functional: Remove sleep() kludges from
+ microblaze tests
+Date: Thu,  6 Feb 2025 14:10:50 +0100
+Message-ID: <20250206131052.30207-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250206131052.30207-1-philmd@linaro.org>
 References: <20250206131052.30207-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,132 +105,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
-of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
-Add the "little-endian" property to select the device
-endianness, defaulting to little endian.
-Set the proper endianness for each machine using the device.
+Commit f0ec14c78c4 ("tests/avocado: Fix console data loss") fixed
+QEMUMachine's problem with console, we don't need to use the sleep()
+kludges.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/microblaze/petalogix_ml605_mmu.c      |  1 +
- hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
- hw/ppc/virtex_ml507.c                    |  1 +
- hw/timer/xilinx_timer.c                  | 35 +++++++++++++++---------
- 4 files changed, 25 insertions(+), 13 deletions(-)
+ tests/functional/test_microblazeel_s3adsp1800.py | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-index cf3b9574db3..bbda70aa93b 100644
---- a/hw/microblaze/petalogix_ml605_mmu.c
-+++ b/hw/microblaze/petalogix_ml605_mmu.c
-@@ -127,6 +127,7 @@ petalogix_ml605_init(MachineState *machine)
+diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
+index 715ef3f79ac..60aab4a45e8 100755
+--- a/tests/functional/test_microblazeel_s3adsp1800.py
++++ b/tests/functional/test_microblazeel_s3adsp1800.py
+@@ -7,8 +7,7 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later. See the COPYING file in the top-level directory.
  
-     /* 2 timers at irq 2 @ 100 Mhz.  */
-     dev = qdev_new("xlnx.xps-timer");
-+    qdev_prop_set_bit(dev, "little-endian", true);
-     qdev_prop_set_uint32(dev, "one-timer-only", 0);
-     qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index fbf52ba8f2f..9d4316b4036 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -114,6 +114,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+-import time
+-from qemu_test import exec_command, exec_command_and_wait_for_pattern
++from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
  
-     /* 2 timers at irq 2 @ 62 Mhz.  */
-     dev = qdev_new("xlnx.xps-timer");
-+    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
-     qdev_prop_set_uint32(dev, "one-timer-only", 0);
-     qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 23238119273..f87c221d076 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -230,6 +230,7 @@ static void virtex_init(MachineState *machine)
- 
-     /* 2 timers at irq 2 @ 62 Mhz.  */
-     dev = qdev_new("xlnx.xps-timer");
-+    qdev_prop_set_bit(dev, "little-endian", false);
-     qdev_prop_set_uint32(dev, "one-timer-only", 0);
-     qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index 6595cf5f517..d942ac226e6 100644
---- a/hw/timer/xilinx_timer.c
-+++ b/hw/timer/xilinx_timer.c
-@@ -3,6 +3,9 @@
-  *
-  * Copyright (c) 2009 Edgar E. Iglesias.
-  *
-+ * DS573: https://docs.amd.com/v/u/en-US/xps_timer
-+ * LogiCORE IP XPS Timer/Counter (v1.02a)
-+ *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-  * of this software and associated documentation files (the "Software"), to deal
-  * in the Software without restriction, including without limitation the rights
-@@ -69,6 +72,7 @@ struct XpsTimerState
- {
-     SysBusDevice parent_obj;
- 
-+    bool little_endian_model;
-     MemoryRegion mmio;
-     qemu_irq irq;
-     uint8_t one_timer_only;
-@@ -189,18 +193,21 @@ timer_write(void *opaque, hwaddr addr,
-     timer_update_irq(t);
- }
- 
--static const MemoryRegionOps timer_ops = {
--    .read = timer_read,
--    .write = timer_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--    .impl = {
--        .min_access_size = 4,
--        .max_access_size = 4,
-+static const MemoryRegionOps timer_ops[2] = {
-+    [0 ... 1] = {
-+        .read = timer_read,
-+        .write = timer_write,
-+        .impl = {
-+            .min_access_size = 4,
-+            .max_access_size = 4,
-+        },
-+        .valid = {
-+            .min_access_size = 4,
-+            .max_access_size = 4,
-+        },
-     },
--    .valid = {
--        .min_access_size = 4,
--        .max_access_size = 4
--    }
-+    [0].endianness = DEVICE_BIG_ENDIAN,
-+    [1].endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void timer_hit(void *opaque)
-@@ -233,8 +240,9 @@ static void xilinx_timer_realize(DeviceState *dev, Error **errp)
-         ptimer_transaction_commit(xt->ptimer);
-     }
- 
--    memory_region_init_io(&t->mmio, OBJECT(t), &timer_ops, t, "xlnx.xps-timer",
--                          R_MAX * 4 * num_timers(t));
-+    memory_region_init_io(&t->mmio, OBJECT(t),
-+                          &timer_ops[t->little_endian_model], t,
-+                          "xlnx.xps-timer", R_MAX * 4 * num_timers(t));
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &t->mmio);
- }
- 
-@@ -247,6 +255,7 @@ static void xilinx_timer_init(Object *obj)
- }
- 
- static const Property xilinx_timer_properties[] = {
-+    DEFINE_PROP_BOOL("little-endian", XpsTimerState, little_endian_model, true),
-     DEFINE_PROP_UINT32("clock-frequency", XpsTimerState, freq_hz, 62 * 1000000),
-     DEFINE_PROP_UINT8("one-timer-only", XpsTimerState, one_timer_only, 0),
- };
+@@ -31,9 +30,8 @@ def do_xmaton_le_test(self, machine):
+         self.vm.add_args('-nic', f'user,tftp={tftproot}')
+         self.vm.launch()
+         wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
+-        time.sleep(0.1)
+-        exec_command(self, 'root')
+-        time.sleep(0.1)
++        wait_for_console_pattern(self, 'buildroot login:')
++        exec_command_and_wait_for_pattern(self, 'root', '#')
+         exec_command_and_wait_for_pattern(self,
+                 'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
+                 '821cd3cab8efd16ad6ee5acc3642a8ea')
 -- 
 2.47.1
 
