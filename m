@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F665C0219B
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC086C0219C
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 20:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg84f-0000Ux-Hk; Thu, 06 Feb 2025 15:02:11 -0500
+	id 1tg80q-0007zx-Jb; Thu, 06 Feb 2025 14:58:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg83Y-0007pD-Jq
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:01:07 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1tg80G-0007FD-95
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:36 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tg83Q-000180-2P
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 15:00:54 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2fa19e1d027so947876a91.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 12:00:51 -0800 (PST)
+ id 1tg80D-0000Xf-OU
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 14:57:35 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21f50895565so203585ad.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 11:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738872050; x=1739476850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738871852; x=1739476652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6VWUpY40SaAZ4kS1G9k/Y8ApoV0O+gEOwL6g/8hv230=;
- b=cDlvP7lEQg03TJG1kKn6f0rpyiexwW+rZoj6w2iBOIVfbbMH3hALFOPgv50F4Pyo5x
- BNqocPZzgmAi8Tuxe5khx/u+mCzCIyVng2rwvjpPQqC759+CyTGQ5+h6f3YOAtxb6gPH
- XNJ/uGFqGdPlWNdcU7h2uNI+NInvoAIilIXWnEFmgMtco2vzoQJ5FiA+eGwj4HunDDZi
- aayeJpNesTZs0nHBhuuOYjwa0k1YHy8uIU63x9jiMZ6I4FgdTg63D53rvIvGbWZJbmal
- DVHpcyyK3ck1WBqsw1U8islJ7N+mV2+AxmKbiUTNkMAf+kHKE8wML4K3ASyUh+obyaUS
- lt7A==
+ bh=RfCREBeWqP3xZCwzPTg3qYrCq3aLvYTQX4nKzsiQLes=;
+ b=GwX72b2yimJNteFNGWpYilyekeb45zyTUFoaLQ/A18ujr9EvHqU7VdiUmApIPoN0wh
+ 29IgXwmqX/p3Vjo6h8B5aDCgoOJp20ag7EI8gJha+LJJ3tmq0gZEitrj0GZguCiWLwvF
+ rwUYEdaG4AmfpnML6mMmHOz2xcFVYDlNFuM+JXcW9yScCcl7KLPWC4Kf4pur2gDKjMmx
+ oyS1FuloVH9qXjH6OzdQVHPAf++vj54IGLMHjSjhoWtKs+zI8a7yHWeSjxHFwDhx3MdP
+ 6eAPhwP6m+2TH1P+QPor96hJqu3KoAVk4tOyoDyeLy0zQB3EgP9ZUSccGN+hLvH1xNLv
+ TFsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738872050; x=1739476850;
+ d=1e100.net; s=20230601; t=1738871852; x=1739476652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6VWUpY40SaAZ4kS1G9k/Y8ApoV0O+gEOwL6g/8hv230=;
- b=cuJ5yJCCh8MhomGO1wJdtonGE97PvHoT0FQ9k1YIlmBp2pyrzGc+KEwE7n2MzzQF08
- iBwHFvVDS2h1I9MFgJJaBKThwtto8ygSHszzruSEum1eLaWr5smH6vPx7vC1ND+lFda2
- NVME2CyAf1eilouCXawOmZLV5TVG3ook0PQc2tlclEqa58oz/qYecxjZDtjBavIv1wHY
- QFM2z4KbwCJZeAF9xiGKnMYP/B+/ic9vp6ympNlOJ8unzatgkwSO5RTzWE6FpWlwXCQL
- 7NbJd0Qfyp/EagAf2n5IqeTKFV5CEmj0B7TOJaEqondaDN/D+IWAP5aQcjx0S8br8pvW
- sDEQ==
-X-Gm-Message-State: AOJu0Yy77PYEbQeXejatxs4+/195PgG+y0YBMX1HAFmdggILniuxVPN6
- QsyKCYLgyRiVLZoesbt6CSgvmV4gaHmrNH0EOaMfF9uEFVqnaJUwHQmtkKKlB1wU3ruir9RV4Ip
- X
-X-Gm-Gg: ASbGncu7NhVY6mtglq0UbJjF32+7+GGWualXNMn9msEEfdn9yDIGTgBCrJoI7LEb4Yn
- K5pBecN2jK5p0dCZZA+sp+hdZrRJm1WOBl4v13iDawIrMiFC9tNR7NjGB1dN8sGwb+R/HM2aWzf
- Ru8+cQWogRq3b5FLOfdPuU4nTCxQA4aV1yLnbLb7L33HM1vcnLtQY8ccEY8Labz/EKo9JRfeEvv
- PbRFy8mZZIldGgMwLaD+j1J7EcMzUxDApuTJKVO3NLq5cnrUSWWP07AeXjb+CB3eUfg9IOIH0k3
- TgZf2Fy8CSRk0yQl94ODcR3rnj3TNG25ZrWzSX88Q6A0DUo=
-X-Google-Smtp-Source: AGHT+IEEpcP7z7r3X3UmsXpFxQOHox3s/v04SJOGj/RHmVxUpNBp2SPn6h9Sq2WMmFcBtFBt7PD1SA==
-X-Received: by 2002:a17:90b:23d7:b0:2ee:dd9b:e402 with SMTP id
- 98e67ed59e1d1-2fa24063b84mr605667a91.12.1738872050069; 
- Thu, 06 Feb 2025 12:00:50 -0800 (PST)
+ bh=RfCREBeWqP3xZCwzPTg3qYrCq3aLvYTQX4nKzsiQLes=;
+ b=HYpNuQSMoSr2+DtMQZKqtlsCNhgjkIZ9dmwxUxx3R5gEC3UZRcs767DCh0+IFQYNue
+ ImZP+mQtgUEnR1fKRo6wZDvSjZf7HVmVIOUSGx8OcgzpMF0dncnaEn0e7ppOP2uCgr6H
+ qZfqTkGyF4n88GHbrk3DrkEQL2N8q8dxM9/OTw0OhAlRjFo7HoD07U4urGzwHMKxTfb8
+ kmUmCjmg0aSPERWZv5T3HkMPEZyOIAd1cbCyXC8LGiqXs8/GVkGj+6XeMswLvO03O+j+
+ fXcMUfIyQ5JSSwwGJZbYXboTBexDpIaohn1ZVCAP0NCr3+hp/R1SPv7ygLTnaEm5S9x9
+ kdoA==
+X-Gm-Message-State: AOJu0YxVCJMjAoxOHRDL9XVGuzsTAxgxjn4CCX1grsxsAa8UYncLpVT6
+ tWnNl7vx9mtfwHaqIkPv+MZ3UWuctPUwo55fG2lkdK+y/b47wASQTgfm/Q8IlyWj48/ghFsikAv
+ K
+X-Gm-Gg: ASbGncu/7oazX89qBsVa495evFV0I0pENqhVLR+aaSZGk/yz6XP8MHqxGmwZKxY+SVf
+ ocTVWryK+NsRQ0faFD1+zvSb4dJy6y0v8GRziGT/HdotHGit4pC6ygMGwdq6eWH4cNgdjzxEtzw
+ 03VWqErmpNMihxFyGsoYHJSeL5UwSzkq93JdXi7g3UlZ9qUS1wlxIJHz9Y7R5bu+eQ6WigOqgaS
+ Fbb3cgwSv535yUZD9L/y6ux2fifYgBVfAzoMkhIgC6WNFHjhYzdQ3NKHyXzQJm05jfj7DQqvl35
+ itrwQSwa8kP8zjHNrKjsJwj2fXz7ehFhpyFdqkyJbQdjHio=
+X-Google-Smtp-Source: AGHT+IExUn2PqlyVybj4hkYNrc8bu7m8w5OYMWbrLLp3RoRudia8qFKXTdBsDp3T1kPfzzLqoTl6Vw==
+X-Received: by 2002:a05:6a00:3c88:b0:730:4598:ddb5 with SMTP id
+ d2e1a72fcca58-7305d41760fmr827810b3a.2.1738871852018; 
+ Thu, 06 Feb 2025 11:57:32 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fa09b3ee24sm1808857a91.36.2025.02.06.12.00.49
+ d2e1a72fcca58-73048c16370sm1666993b3a.152.2025.02.06.11.57.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 12:00:49 -0800 (PST)
+ Thu, 06 Feb 2025 11:57:31 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 44/61] target/arm: Implement SME2 FADD, FSUB, BFADD, BFSUB
-Date: Thu,  6 Feb 2025 11:56:58 -0800
-Message-ID: <20250206195715.2150758-45-richard.henderson@linaro.org>
+Subject: [PATCH 21/61] target/arm: Split out get_zarray
+Date: Thu,  6 Feb 2025 11:56:35 -0800
+Message-ID: <20250206195715.2150758-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250206195715.2150758-1-richard.henderson@linaro.org>
 References: <20250206195715.2150758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,139 +99,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Prepare for MOVA array to/from vector with multiple registers
+by adding a div_len parameter, herein always 1.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.h            |  2 ++
- target/arm/tcg/translate-sme.c | 44 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/vec_helper.c    |  2 ++
- target/arm/tcg/sme.decode      | 25 +++++++++++++++++++
- 4 files changed, 73 insertions(+)
+ target/arm/tcg/translate-sme.c | 40 ++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index ac2372bbe7..4fa0730716 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -717,10 +717,12 @@ DEF_HELPER_FLAGS_4(gvec_fclt0_d, TCG_CALL_NO_RWG, void, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fadd_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fadd_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fadd_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(gvec_bfadd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- 
- DEF_HELPER_FLAGS_5(gvec_fsub_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fsub_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fsub_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(gvec_bfsub, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- 
- DEF_HELPER_FLAGS_5(gvec_fmul_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fmul_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
 diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 5dce2dfd15..f41b4343e4 100644
+index eed9345651..a818a549cb 100644
 --- a/target/arm/tcg/translate-sme.c
 +++ b/target/arm/tcg/translate-sme.c
-@@ -1005,6 +1005,50 @@ TRANS_FEAT(BFMLA_nx, aa64_sme2_b16b16, do_fmla_nx, a, FPST_ZA,
- TRANS_FEAT(BFMLS_nx, aa64_sme2_b16b16, do_fmla_nx, a, FPST_ZA,
-            s->fpcr_ah ? gen_helper_gvec_ah_bfmls_idx : gen_helper_gvec_bfmls_idx)
+@@ -43,7 +43,7 @@ static bool sme2_zt0_enabled_check(DisasContext *s)
  
-+static bool do_faddsub(DisasContext *s, arg_az_n *a, ARMFPStatusFlavour fpst,
-+                       gen_helper_gvec_3_ptr *fn)
+ /* Resolve tile.size[rs+imm] to a host pointer. */
+ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+-                                int tile, int imm, bool vertical)
++                                int tile, int imm, int div_len, bool vertical)
+ {
+     int pos, len, offset;
+     TCGv_i32 tmp;
+@@ -55,7 +55,7 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     tcg_gen_addi_i32(tmp, tmp, imm);
+ 
+     /* Prepare a power-of-two modulo via extraction of @len bits. */
+-    len = ctz32(streaming_vec_reg_size(s)) - esz;
++    len = ctz32(streaming_vec_reg_size(s) / div_len) - esz;
+ 
+     if (!len) {
+         /*
+@@ -111,6 +111,13 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     return addr;
+ }
+ 
++/* Resolve ZArray[rs+imm] to a host pointer. */
++static TCGv_ptr get_zarray(DisasContext *s, int rs, int imm, int div_len)
 +{
-+    if (sme_sm_enabled_check(s)) {
-+        int svl = streaming_vec_reg_size(s);
-+        int n = a->n;
-+        int zm = a->zm;
-+        int vstride = svl / n;
-+        TCGv_ptr t_za = get_zarray(s, a->rv, a->off, n);
-+        TCGv_ptr ptr = fpstatus_ptr(fpst);
-+        TCGv_ptr t = tcg_temp_new_ptr();
-+
-+        for (int r = 0; r < n; ++r) {
-+            TCGv_ptr t_zm = vec_full_reg_ptr(s, zm + r);
-+            int o_za = r * vstride * sizeof(ARMVectorReg);
-+            int desc = simd_desc(svl, svl, 0);
-+
-+            tcg_gen_addi_ptr(t, t_za, o_za);
-+            fn(t, t, t_zm, ptr, tcg_constant_i32(desc));
-+        }
-+    }
-+    return true;
++    /* ZA[n] equates to ZA0H.B[n]. */
++    return get_tile_rowcol(s, MO_8, rs, 0, imm, div_len, false);
 +}
 +
-+TRANS_FEAT(FADD_nn_h, aa64_sme2_f16f16, do_faddsub, a,
-+           FPST_ZA_F16, gen_helper_gvec_fadd_h)
-+TRANS_FEAT(FSUB_nn_h, aa64_sme2_f16f16, do_faddsub, a,
-+           FPST_ZA_F16, gen_helper_gvec_fsub_h)
-+
-+TRANS_FEAT(FADD_nn_s, aa64_sme2, do_faddsub, a,
-+           FPST_ZA, gen_helper_gvec_fadd_s)
-+TRANS_FEAT(FSUB_nn_s, aa64_sme2, do_faddsub, a,
-+           FPST_ZA, gen_helper_gvec_fsub_s)
-+
-+TRANS_FEAT(FADD_nn_d, aa64_sme2_f64f64, do_faddsub, a,
-+           FPST_ZA, gen_helper_gvec_fadd_d)
-+TRANS_FEAT(FSUB_nn_d, aa64_sme2_f64f64, do_faddsub, a,
-+           FPST_ZA, gen_helper_gvec_fsub_d)
-+
-+TRANS_FEAT(BFADD_nn, aa64_sme2_b16b16, do_faddsub, a,
-+           FPST_ZA, gen_helper_gvec_bfadd)
-+TRANS_FEAT(BFSUB_nn, aa64_sme2_b16b16, do_faddsub, a,
-+           FPST_ZA, gen_helper_gvec_bfsub)
-+
  /*
-  * Expand array multi-vector single (n1), array multi-vector (nn),
-  * and array multi-vector indexed (nx), for integer accumulate.
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index e5a4f56ef7..e41386861e 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -1469,10 +1469,12 @@ void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
- DO_3OP(gvec_fadd_h, float16_add, float16)
- DO_3OP(gvec_fadd_s, float32_add, float32)
- DO_3OP(gvec_fadd_d, float64_add, float64)
-+DO_3OP(gvec_bfadd, bfloat16_add, bfloat16)
+  * Resolve tile.size[0] to a host pointer.
+  * Used by e.g. outer product insns where we require the entire tile.
+@@ -177,7 +184,7 @@ static bool do_mova_tile(DisasContext *s, arg_mova_p *a, bool to_vec)
+         return true;
+     }
  
- DO_3OP(gvec_fsub_h, float16_sub, float16)
- DO_3OP(gvec_fsub_s, float32_sub, float32)
- DO_3OP(gvec_fsub_d, float64_sub, float64)
-+DO_3OP(gvec_bfsub, bfloat16_sub, bfloat16)
+-    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
++    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, 1, a->v);
+     t_zr = vec_full_reg_ptr(s, a->zr);
+     t_pg = pred_full_reg_ptr(s, a->pg);
  
- DO_3OP(gvec_fmul_h, float16_mul, float16)
- DO_3OP(gvec_fmul_s, float32_mul, float32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 0d592bb467..91df2068cf 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -515,6 +515,31 @@ FMLS_nn_h       11000001 101 ...01 0 .. 100 ...00 11 ...    @azz_4x4_o3
- FMLS_nn_s       11000001 101 ...01 0 .. 110 ...00 01 ...    @azz_4x4_o3
- FMLS_nn_d       11000001 111 ...01 0 .. 110 ...00 01 ...    @azz_4x4_o3
+@@ -234,7 +241,7 @@ static bool do_mova_tile_n(DisasContext *s, arg_mova_t *a, int n, bool to_vec)
+         for (int i = 0; i < n; ++i) {
+             TCGv_ptr t_zr = vec_full_reg_ptr(s, a->zr * n + i);
+             t_za = get_tile_rowcol(s, a->esz, a->rs, a->za,
+-                                   a->off * n + i, a->v);
++                                   a->off * n + i, 1, a->v);
+             if (to_vec) {
+                 zc_fns[a->esz](t_zr, t_za, t_desc);
+             } else {
+@@ -243,13 +250,13 @@ static bool do_mova_tile_n(DisasContext *s, arg_mova_t *a, int n, bool to_vec)
+         }
+     } else {
+         for (int i = 0; i < n; ++i) {
+-            int zr_ofs = vec_full_reg_offset(s, a->zr * n + i);
++            int o_zr = vec_full_reg_offset(s, a->zr * n + i);
+             t_za = get_tile_rowcol(s, a->esz, a->rs, a->za,
+-                                   a->off * n + i, a->v);
++                                   a->off * n + i, 1, a->v);
+             if (to_vec) {
+-                tcg_gen_gvec_mov_var(MO_8, tcg_env, zr_ofs, t_za, 0, svl, svl);
++                tcg_gen_gvec_mov_var(MO_8, tcg_env, o_zr, t_za, 0, svl, svl);
+             } else {
+-                tcg_gen_gvec_mov_var(MO_8, t_za, 0, tcg_env, zr_ofs, svl, svl);
++                tcg_gen_gvec_mov_var(MO_8, t_za, 0, tcg_env, o_zr, svl, svl);
+             }
+         }
+     }
+@@ -315,7 +322,7 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
+         return true;
+     }
  
-+&az_n           n off rv zm
-+@az_2x2_o3      ........ ... ..... . .. ... ..... .. off:3  \
-+                &az_n n=2 rv=%mova_rv zm=%zn_ax2
-+@az_4x4_o3      ........ ... ..... . .. ... ..... .. off:3  \
-+                &az_n n=4 rv=%mova_rv zm=%zn_ax4
-+
-+FADD_nn_h       11000001 101 00100 0 .. 111 ....0 00 ...    @az_2x2_o3
-+FADD_nn_s       11000001 101 00000 0 .. 111 ....0 00 ...    @az_2x2_o3
-+FADD_nn_d       11000001 111 00000 0 .. 111 ....0 00 ...    @az_2x2_o3
-+FADD_nn_h       11000001 101 00101 0 .. 111 ...00 00 ...    @az_4x4_o3
-+FADD_nn_s       11000001 101 00001 0 .. 111 ...00 00 ...    @az_4x4_o3
-+FADD_nn_d       11000001 111 00001 0 .. 111 ...00 00 ...    @az_4x4_o3
-+
-+FSUB_nn_h       11000001 101 00100 0 .. 111 ....0 01 ...    @az_2x2_o3
-+FSUB_nn_s       11000001 101 00000 0 .. 111 ....0 01 ...    @az_2x2_o3
-+FSUB_nn_d       11000001 111 00000 0 .. 111 ....0 01 ...    @az_2x2_o3
-+FSUB_nn_h       11000001 101 00101 0 .. 111 ...00 01 ...    @az_4x4_o3
-+FSUB_nn_s       11000001 101 00001 0 .. 111 ...00 01 ...    @az_4x4_o3
-+FSUB_nn_d       11000001 111 00001 0 .. 111 ...00 01 ...    @az_4x4_o3
-+
-+BFADD_nn        11000001 111 00100 0 .. 111 ....0 00 ...    @az_2x2_o3
-+BFADD_nn        11000001 111 00101 0 .. 111 ...00 00 ...    @az_4x4_o3
-+BFSUB_nn        11000001 111 00100 0 .. 111 ....0 01 ...    @az_2x2_o3
-+BFSUB_nn        11000001 111 00101 0 .. 111 ...00 01 ...    @az_4x4_o3
-+
- ### SME2 Multi-vector Indexed
+-    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
++    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, 1, a->v);
+     t_pg = pred_full_reg_ptr(s, a->pg);
+     addr = tcg_temp_new_i64();
  
- &azx_n          n off rv zn zm idx
+@@ -337,18 +344,13 @@ typedef void GenLdStR(DisasContext *, TCGv_ptr, int, int, int, int);
+ 
+ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
+ {
+-    int svl = streaming_vec_reg_size(s);
+-    int imm = a->imm;
+-    TCGv_ptr base;
++    if (sme_za_enabled_check(s)) {
++        int svl = streaming_vec_reg_size(s);
++        int imm = a->imm;
++        TCGv_ptr base = get_zarray(s, a->rv, imm, 1);
+ 
+-    if (!sme_za_enabled_check(s)) {
+-        return true;
++        fn(s, base, 0, svl, a->rn, imm * svl);
+     }
+-
+-    /* ZA[n] equates to ZA0H.B[n]. */
+-    base = get_tile_rowcol(s, MO_8, a->rv, 0, imm, false);
+-
+-    fn(s, base, 0, svl, a->rn, imm * svl);
+     return true;
+ }
+ 
 -- 
 2.43.0
 
