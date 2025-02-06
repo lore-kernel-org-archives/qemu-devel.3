@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CA7C0219B
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156E0C02196
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 22:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgAZZ-0008Dj-AL; Thu, 06 Feb 2025 17:42:13 -0500
+	id 1tgAaa-0000eu-OQ; Thu, 06 Feb 2025 17:43:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgAZX-0008DJ-M9
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:42:11 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgAaY-0000dI-OV
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:43:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgAZU-0002uJ-VH
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:42:11 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgAaX-000300-7j
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 17:43:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738881725;
+ s=mimecast20190719; t=1738881792;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=At1cjzSc+MFqeYl6Dpt8v4mTIuc9DPU3kGWKLkuRVZ8=;
- b=cGZBx9Opj3eK6H1sY761leiRS3nL7EDKnR0H9UhGpvMoE8aAXaxPAegWGeDG8LkdzPRKOC
- /yDPECwR31ElthLfeuPRQf+5r9x6ebZ2bk9Y2nbyIIX6lURlfghYTbPhYELK19ziyUwzbX
- HFFX/ayjMA/a/IBuEmVLkURLwsZPtdE=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OSMTQsWh/iIHSAjFjNlDzic3kYo3f2A40CU3G3VDEjw=;
+ b=AaAhib3hCD/iYbuLKJYRNIz+u95FOQ+NHjQmAW9b4JJBjWUz2+2vL3YGeHGO5Jq2j5TjWE
+ rwQzbGotuAYT/t/5UmOWtjh/mSUMmP4hRDpDd73Ui5XXze7Ty8FIURJagZPgSPVO51hIKQ
+ RgON25uRszUB2ldkppLtJ0s3oRjfC6U=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-kH3xFnK2PY6p_ZnIc_vzGA-1; Thu, 06 Feb 2025 17:42:01 -0500
-X-MC-Unique: kH3xFnK2PY6p_ZnIc_vzGA-1
-X-Mimecast-MFC-AGG-ID: kH3xFnK2PY6p_ZnIc_vzGA
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6e425770413so29216086d6.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:42:01 -0800 (PST)
+ us-mta-388-YiVKOBMBNIK_DsVJNISR3w-1; Thu, 06 Feb 2025 17:43:11 -0500
+X-MC-Unique: YiVKOBMBNIK_DsVJNISR3w-1
+X-Mimecast-MFC-AGG-ID: YiVKOBMBNIK_DsVJNISR3w
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6e43113ba01so32630836d6.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 14:43:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738881721; x=1739486521;
+ d=1e100.net; s=20230601; t=1738881790; x=1739486590;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=At1cjzSc+MFqeYl6Dpt8v4mTIuc9DPU3kGWKLkuRVZ8=;
- b=QBk3k+gnrOT6twN8kE1qUy/ImSesDkmr0KjWryHYsoTQT92glUT7LmgvEPurY9wG6e
- tumnCMMbvLfR0o3LumHB/UBJoAI6a8V6VBEdy7VSDDRbdjDih9epEsF5PcWCuH6LGqQY
- G4atXa9PJfG/UNxagY/xWQI+0AN6RbLCRfLd4moPDOGiO5KHKUg0AO8kLRjV2/5hDUXz
- +CdLiQKBpZWKZ/x0qI2prSKNnjYNc308zxKQhJbKwO2r12nkMFgSd//KqlldPQfGLzS1
- QYn5RPEZJ/bY6aluVcka58d5KZ8der6d5RfbxTSkt8ni99wqm6KlF9njGyp6HHQ5kLqP
- t3kw==
-X-Gm-Message-State: AOJu0YwgIu63zsAFeHTx2jg9zZJDiKWdeW+KVjzTM2O/GdMYRqTdeFYr
- tQwjZqvLOXEsNpKxqSPofhAHjzkPdy6MCAecSnS72+3yZ8/MtTyLbGBkvylo9fqno0mWj7TRw61
- VyaJFXi5PtdX3G3DMN1lNjqLdGZBFWO+xTNz+Xx1+9tvFxh86uNzq
-X-Gm-Gg: ASbGnctG8GF4Ccz5uUzCpN7DU5n37myLF9H52zNteX0y9vLMEtUoxI6KIOs0EIuaByc
- L8lttfUo3fkC7Gt4eWPUVSmxgsJU7pTelgXzPthB+ssyWCr83O8YhxmpPLacLQcVFUByQJ9GeEx
- iUI+6jMyT6OJtxAHMNrJLehouuw0Nr7VQQL553s+cEh6MZ6+ebqGtRb7pDoEMIVPhb0R3jzXFYv
- VRVlQ415Cb8yPbYj3luDKavGFKvpBvndMnsHqXR8MSboRSGSBGxSghO0o21X3VdAo32jmMPRpT1
- U9PYdMMXds9yvoSrfWM3YsrLI3PEM2Vyrt5MgOtWRyknLCyr
-X-Received: by 2002:ad4:5fca:0:b0:6e2:117d:e67 with SMTP id
- 6a1803df08f44-6e4455f1f18mr11090066d6.14.1738881721149; 
- Thu, 06 Feb 2025 14:42:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG93JvtF13nm2n13WAu0zFV0sQ7aqO1tz2UZU4/qVyj2XfzDD3qBJdiq0LmIBjgQKouWcFVNA==
-X-Received: by 2002:ad4:5fca:0:b0:6e2:117d:e67 with SMTP id
- 6a1803df08f44-6e4455f1f18mr11089916d6.14.1738881720917; 
- Thu, 06 Feb 2025 14:42:00 -0800 (PST)
+ bh=OSMTQsWh/iIHSAjFjNlDzic3kYo3f2A40CU3G3VDEjw=;
+ b=gOwQXHVsxEQ22lgmxU2kCYruNZn6xKkhdwJp3qWuX6ZEw+JkwopZp3I3PP4w9d9A39
+ WftqOSCtPct08tmN5l+EObf+QkjLZY4FmWvVoTt4oQhlib7j/cEXMfAG0gvSRoF0RGJy
+ FJANTegRvdLs7BnmNjRCe00lpD1I8lTg6BmPgGpxK/6ZLdsSGP3DpXSwnxQVl3X1qZ6v
+ xKSWw00ccn354qWCFsKP7ObQssocfQcrzWfs0eU7G3KPqvqeoAlGfKgpKveKDe9v1iG8
+ xcw7J1E2PfM+tDIQyq5Ku6cJct9qyuBYidtrI4Fx2gj6BfJhXTdc1mxrAg1q1c5wJ3IN
+ GKBQ==
+X-Gm-Message-State: AOJu0Yz2pNJhuNWxnHVCpxzaODteKwxHztw04PukHqahCnny9mr185+Q
+ 4VZUGoKq+NpBUQnnUlB46AqXHHon/lfvRWL4LCo0EiNT7VL2K0kiyT5SUEdrtXEFwU2HYJUyh3G
+ JpayvSOEa5C2Nq2IS5fjBq59PjHvodQY6LDz0brvAe4vI5OZsrMQU2w4ngNAN
+X-Gm-Gg: ASbGnctYCaapNNwSLn+H5rEfCBfbbYOhKn3Gjny87ZQhf+JDFpMdBQ2vQWluZysz7ra
+ sjf3bpghNPBir8Jw8qEjEKcbOimYCuYr8mWzPV6Ci5I2DWEEnjiVKXnwzSnOHcRbtd8zlvVCY8J
+ xxylzqu5MmB5w5N7i7dGMsiBFdwcupgKiNFEG5h4xyrr6MK4Fk6NO3qVA2XjFtJ9nzh0T9+F3dz
+ YKv3yttV9uVnPxGMsr0aLl3Qh9MNh4tDaTgGFCHh9cdMkbna4xO8QCbvXBCHuOjehzBfB+DWBPa
+ sXYHy7ZEnOinhUb8HZu0qjbTaLKPgy6an3PU5UY3DDD+FF1T
+X-Received: by 2002:a05:6214:2486:b0:6e2:3721:f2c6 with SMTP id
+ 6a1803df08f44-6e4456c513cmr12369286d6.33.1738881790342; 
+ Thu, 06 Feb 2025 14:43:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZO09Ana2t3Fiamt+y88pLn+wxsorZ1Hpqq9jHhyzNS3l8a1aLg1UwAU8rnCIpB+WQQTMQxg==
+X-Received: by 2002:a05:6214:2486:b0:6e2:3721:f2c6 with SMTP id
+ 6a1803df08f44-6e4456c513cmr12369176d6.33.1738881790115; 
+ Thu, 06 Feb 2025 14:43:10 -0800 (PST)
 Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e44194ac0asm5508426d6.117.2025.02.06.14.41.59
+ 6a1803df08f44-6e43e6b3c32sm7716406d6.124.2025.02.06.14.43.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Feb 2025 14:42:00 -0800 (PST)
-Date: Thu, 6 Feb 2025 17:41:59 -0500
+ Thu, 06 Feb 2025 14:43:09 -0800 (PST)
+Date: Thu, 6 Feb 2025 17:43:07 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Prasad Pandit <ppandit@redhat.com>
 Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v5 1/5] migration/multifd: move macros to multifd header
-Message-ID: <Z6U6t_IyL4fQ3M5z@x1.local>
+Subject: Re: [PATCH v5 2/5] migration: refactor ram_save_target_page functions
+Message-ID: <Z6U6-_oKIwqXz9kl@x1.local>
 References: <20250205122712.229151-1-ppandit@redhat.com>
- <20250205122712.229151-2-ppandit@redhat.com>
+ <20250205122712.229151-3-ppandit@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250205122712.229151-2-ppandit@redhat.com>
+In-Reply-To: <20250205122712.229151-3-ppandit@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -106,16 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 05, 2025 at 05:57:08PM +0530, Prasad Pandit wrote:
+On Wed, Feb 05, 2025 at 05:57:09PM +0530, Prasad Pandit wrote:
 > From: Prasad Pandit <pjp@fedoraproject.org>
 > 
-> Move MULTIFD_ macros to the header file so that
-> they are accessible from other source files.
+> Refactor ram_save_target_page legacy and multifd
+> functions into one. Other than simplifying it,
+> it frees 'migration_ops' object from usage, so it
+> is expunged.
 > 
 > Reviewed-by: Fabiano Rosas <farosas@suse.de>
 > Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
+
+One nitpick below:
+
+[...]
+
+> -static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
+> +static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+>  {
+>      ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+>      int res;
+>  
+> +    if (!migrate_multifd()
+> +        || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+> +        if (save_zero_page(rs, pss, offset)) {
+> +            return 1;
+> +        }
+> +    }
+> +
+> +    if (migrate_multifd()) {
+> +        RAMBlock *block = pss->block;
+> +        return ram_save_multifd_page(block, offset);
+
+Can drop the var here :
+
+           return ram_save_multifd_page(pss->block, offset);
 
 -- 
 Peter Xu
