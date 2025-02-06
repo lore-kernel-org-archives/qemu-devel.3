@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD01C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9FA8C02199
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 17:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg5kC-00023K-1d; Thu, 06 Feb 2025 12:32:52 -0500
+	id 1tg5kP-0002pg-UA; Thu, 06 Feb 2025 12:33:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg5k5-0001sQ-Ln
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:32:49 -0500
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg5kN-0002iL-NT
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:33:03 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tg5k3-0002cQ-RW
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:32:45 -0500
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e5addb0eb8eso1010908276.2
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:32:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tg5kM-0002r6-1n
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 12:33:03 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so8707845e9.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 09:33:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738863163; x=1739467963; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=PlFt7Zw45R18PGMj5maGWrpFddJpJXDab8WCgAb5xFQ=;
- b=XAQYxoZkHJeZntJE+rE9EPRPrVJEz1vChO+RXAKgy7KyhMcrpN/jrVNXmsB/NIsvao
- 2Jl2fdZvdketbjRDmkwzWP3Jq9ckIV3oPw2wEMRJ36/YpnREFVuQxMIeQ4bD4VMft7NE
- BEfwMIWpm6R3SRbDq5mO8+ww+qy6tHcQ9FBWS6f/glMckfwVtPa49FFhENh/QiFtRmEt
- Wl4smQIzh1IuB1jqYGlq8E4o+V1wZ+EYQI+ekadYmIf0tbhzH0fx6vb6iAYTw3bx3FDE
- XbKjHAnbAWKOe3VfldJRvSQYGsz3EhTOv+R3HRxBpOL89YaS/p66GjbSPlBy05R6aB/N
- nX6g==
+ d=linaro.org; s=google; t=1738863180; x=1739467980; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jTUl8shDQDg+BVRzsTYJLl6JuW/NwoZq701w5pB0BvM=;
+ b=tTUZcgLcEPkrR46uK7763MbVKUJITXlSRKH0VMHlTlEtyssFUMV6v6CNXtb/S7NpJv
+ bFeK7Hs49VLZacfhnDNV2P8hAfmNjPf4vINAtv4dvo41xiKtBpVJb2r5SpwnCaGXyK+U
+ /rVfPvll8nI8NBGB/uCESgnFYgxCK3j54Zffb2Qx7x/Jcjoxirt4NuRBbf6cOFr/c1ka
+ 26GBETtHxK6zWZ/yUC0YjkvRpMjRn87HktCpO7Scu24VAszPujKxTju5GSZXxDUtGxGG
+ sVNmxKIUBqD9heQ+NVzxBlFA7cuBlG5JvjYcGBmY2v7Mhteb4z8DQahkBvVEiq0o+fPO
+ 2jlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738863163; x=1739467963;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1738863180; x=1739467980;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PlFt7Zw45R18PGMj5maGWrpFddJpJXDab8WCgAb5xFQ=;
- b=tXM3QsgJ3NxnpuwLg+MVjT+QIfM+Fgk14PYrq0JqvePNN+SFidkkqKUJWI2JZQS9+7
- Qub0d5qvX4uRRC1unCgJGc6cH+ahW1MRhgGzbnZpQS5+spFn6YBXx8W5B/O6KnXB+kcZ
- vt2XdoXdpmjJL9XfF+/GBz0heN2MZPbeSv9500epbfoomQLKMJ1J4EuLJyPzICs/aIzo
- IPPBRKuQtIj46w5Hh9ovBkEOpBzKt8+tuyUZmYJRQHwPFINkNo9GWbMt/Y9As9cw4xdR
- cIQ8gUGT5Ou9I7CZwiJqa+K8iKuEoWAZ/juSK2DmxuezeeIt2wORHtdKdG3YVLhKMsBs
- h/sA==
-X-Gm-Message-State: AOJu0Yxs8XSepmnofn5ngR2dQdImXS3SQzWORrDGbr+hxvNIoQMCdAYb
- G3qBq5xt1GkKRnyfXYG2d8n9ArivFhojSkUkpuAQY9HEHeDNTPNUMtPf0nIWVGu5dRgQnY2AicM
- cJrXWtXZxMD1PWRfgo0bYLZZNDBBk31DOPdozDw==
-X-Gm-Gg: ASbGncu+HfjwqCV7p3GJ+o++TT1n1aFeHMfZtV9tdHrtZVFwyXaSnRYyi83QgQYXrjR
- l2Nr0hpaet3X2aJ23Xf32gtD7ZRRHMTuHbly5qjnonixkktQfG57MCC3OnAPjMJt+tyXrUfVMUg
- ==
-X-Google-Smtp-Source: AGHT+IHWfO9vwj61X/Zpt300EQnQeJiW3QnkdXAPQTSV+ioV1yTeS1uxHpCgowTY+Rhk+u1ksOGKN9oH+x1u+VULhR0=
-X-Received: by 2002:a05:6902:1610:b0:e57:8991:be4b with SMTP id
- 3f1490d57ef6-e5b25bcfceemr6804194276.35.1738863162403; Thu, 06 Feb 2025
- 09:32:42 -0800 (PST)
+ bh=jTUl8shDQDg+BVRzsTYJLl6JuW/NwoZq701w5pB0BvM=;
+ b=lihurxjhmagKdArwEp+uoTV0R/SqkDqaIOs5ivUhQE5wBrCf9XohAs2IMiH2RMV15z
+ DnwjT3mwZ5aov26WlInr0+Z9XNqtoWOINPKYpBJ9NsMnxbix38jFLIz2AsRKLc1zvFNJ
+ YgPcQA+0bZHHxFGwEIB8DQZex8smWjk0+1Y7Zmm+eoMq9AadlzYCjVyebj2WpgBBefkq
+ c/IVp4t81zQCqUkjw56K9TBr6dA8cX0DENfoTg6RupYuPaxjoPqP7YlejXCiZvCSMpZu
+ JU2Wq0cv16vkM6Gz3I/JW9DhvHPhdIhSYSwYvh0HVpmQG8l12upSgn+DRuVm/eGIOksS
+ HEnA==
+X-Gm-Message-State: AOJu0YzfeY6q+iKsNi3rdoM5J8C5hhs8Mw53QLYGGlC+yQ3Oyi+jfim2
+ MoL/t9SmLlWjKbkBMB9uRx+KrJBqbBH2xpYL4wMveBDxApQRlk/43oxozbeggTjJztWA+FUu2gx
+ PLDg=
+X-Gm-Gg: ASbGncvupwkr5M7kMxv8TBZFLwYrsraQRn4s1PwNrRNzWQW/283rYIJQ3mEAd9s0McO
+ JT7eANPBqFbcmitHekcuydsCap7zn/IL2PGzDnXJHhWwrYAv+eiZb3Jfv8uovNmNAKtu/tUl7b7
+ haSLMSEnZs2mN9/p0ZxbqU1Ef2FBUCBb0YMMQsGIEALvKFuj3EAya/KYKEvYno8GZdgr+zW3xv5
+ mD9ECf3C6V4wcU6ZWP0ti/i6iU0F+CFe1CiIktCtgrjXkxem4R6RP8L5IK47GVk1pczatM83de4
+ y8lLUWor6KsCQmkAHhTTVtptcZcWCo5o5krcD1KvL5M7zOmJyBDHywcCvViScp8XgQ==
+X-Google-Smtp-Source: AGHT+IEJoJq46iEU9+eP8QKUsZxclcjDmZPPGJdqZ9C35Fz3aYARQD0jvsOqBnYgfF3qGDPunLu4Qw==
+X-Received: by 2002:a5d:4ace:0:b0:38d:b1e5:7e09 with SMTP id
+ ffacd0b85a97d-38db493870bmr4763105f8f.49.1738863179854; 
+ Thu, 06 Feb 2025 09:32:59 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d9335b6sm63108675e9.2.2025.02.06.09.32.59
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 06 Feb 2025 09:32:59 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/tricore: Inline TARGET_LONG_BITS in
+ decode_rr_logical_shift()
+Date: Thu,  6 Feb 2025 18:32:58 +0100
+Message-ID: <20250206173258.36624-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <20250204092112.26957-1-shentey@gmail.com>
- <20250204092112.26957-19-shentey@gmail.com>
-In-Reply-To: <20250204092112.26957-19-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Feb 2025 17:32:31 +0000
-X-Gm-Features: AWEUYZl9jjT-V2VhqezxrkX6Nc1ENnIfrW6RMcemJ24rQnFKYn2FSiOD2MfqVaA
-Message-ID: <CAFEAcA_gxGWivT7byZh9gYc2QHfsTqbJ8vtxPDToOxLMdMvwQg@mail.gmail.com>
-Subject: Re: [PATCH v2 18/18] hw/rtc: Add Ricoh RS5C372 RTC emulation
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,23 +97,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> The implementation just allows Linux to determine date and time.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  MAINTAINERS         |   1 +
->  hw/rtc/rs5c372.c    | 227 ++++++++++++++++++++++++++++++++++++++++++++
->  hw/rtc/Kconfig      |   5 +
->  hw/rtc/meson.build  |   1 +
->  hw/rtc/trace-events |   4 +
->  5 files changed, 238 insertions(+)
->  create mode 100644 hw/rtc/rs5c372.c
+We only support 32-bit TriCore architecture.
 
-Should there be a patch after this one that adds this device
-to your board ?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/tricore/translate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-thanks
--- PMM
+diff --git a/target/tricore/translate.c b/target/tricore/translate.c
+index 6819b776686..c5b783b6a70 100644
+--- a/target/tricore/translate.c
++++ b/target/tricore/translate.c
+@@ -5936,7 +5936,7 @@ static void decode_rr_logical_shift(DisasContext *ctx)
+         break;
+     case OPC2_32_RR_CLO:
+         tcg_gen_not_tl(cpu_gpr_d[r3], cpu_gpr_d[r1]);
+-        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r3], TARGET_LONG_BITS);
++        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r3], 32);
+         break;
+     case OPC2_32_RR_CLO_H:
+         gen_helper_clo_h(cpu_gpr_d[r3], cpu_gpr_d[r1]);
+@@ -5948,7 +5948,7 @@ static void decode_rr_logical_shift(DisasContext *ctx)
+         gen_helper_cls_h(cpu_gpr_d[r3], cpu_gpr_d[r1]);
+         break;
+     case OPC2_32_RR_CLZ:
+-        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r1], TARGET_LONG_BITS);
++        tcg_gen_clzi_tl(cpu_gpr_d[r3], cpu_gpr_d[r1], 32);
+         break;
+     case OPC2_32_RR_CLZ_H:
+         gen_helper_clz_h(cpu_gpr_d[r3], cpu_gpr_d[r1]);
+-- 
+2.47.1
+
 
