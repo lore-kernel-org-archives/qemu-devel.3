@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4648C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 12:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C3CC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 12:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg1CV-0004PG-5J; Thu, 06 Feb 2025 07:41:47 -0500
+	id 1tg1EO-0005DK-5t; Thu, 06 Feb 2025 07:43:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg1CS-0004P5-Fq
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:41:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg1EM-0005D7-Qx
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:43:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg1CQ-0005QH-MM
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:41:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tg1EK-0007EJ-Us
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 07:43:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738845700;
+ s=mimecast20190719; t=1738845820;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r9s1rlEgXUybYG9lIxdLOgFO6yhjb9rK6w8uTMUsxcc=;
- b=ZRaTqbESw+YhqHZEu0YJ5GK+4l4JMTBzn4ierRI3GKXt+Tx+hDRCgnDYBOh+QeL3OkUBd4
- dSEI/8EpASEvmWjbabTjbVjfpRsy/H944aXdzdecbtohHdDcP/NJP2OJD3E3A0VAKOyLsG
- lKrEi0Io2/IZadWWIQoNruVy0ctWL3Q=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Y/OwopBBNyKJ/kQy5IFaaN55alWlxzu1qw9/wgFVZq0=;
+ b=RpcywkeoPXd72svPz2Pil5CzIJd2xXFBft7sXLhHB6lyXbLcNbqIvJpEvCFqEV0Qw4Ak7p
+ Yso29WHg223Of1wq23+FYGeiFY3MvJkglUPU88c8464xNibh9AqsIYDIQIREik4n/wJg95
+ Ub7h4s/lB2SL0Zdj5Zpj5lPEqzaw/Ek=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-pO3VhNZGNUeJo31ynsosNQ-1; Thu, 06 Feb 2025 07:41:39 -0500
-X-MC-Unique: pO3VhNZGNUeJo31ynsosNQ-1
-X-Mimecast-MFC-AGG-ID: pO3VhNZGNUeJo31ynsosNQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4362552ce62so4350135e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 04:41:38 -0800 (PST)
+ us-mta-382-i87fecFNMPqV8xeQeiH-eQ-1; Thu, 06 Feb 2025 07:43:36 -0500
+X-MC-Unique: i87fecFNMPqV8xeQeiH-eQ-1
+X-Mimecast-MFC-AGG-ID: i87fecFNMPqV8xeQeiH-eQ
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43624b08181so4702805e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 04:43:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738845698; x=1739450498;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r9s1rlEgXUybYG9lIxdLOgFO6yhjb9rK6w8uTMUsxcc=;
- b=haz/x+ZMALbJjRb3KjWKtSsot8kfHHC0yXxW7YntOgfI5r/k9YhazNKsqs2UM/IDyz
- gdhEnqRTbecLkOW/2N//3F6FTiNqXxB3U0oCgQ/xNg4t7lAatrOi+NE/qOqpjNvCBddd
- F8MjpWImHWg/2y5HGMhUvRDNk+NgLtcQ6IoyBSH+H50joSrKN7UcEJFOx29KxGRySgem
- nJgjY54i+vRfKo/FOK2I/ZaXNnB3Zw782eWXXmoo9OcJ4Y0b3FkPiVJgaCWWix8qlmU+
- wgFzxADRT5sF8Rn25V6AX2g+CB9po1LbLYZAO0iHSQ+geAHgV1rb9G/fPpAi3XSLAfnl
- bPUQ==
+ d=1e100.net; s=20230601; t=1738845815; x=1739450615;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y/OwopBBNyKJ/kQy5IFaaN55alWlxzu1qw9/wgFVZq0=;
+ b=s5cfmW1Y+auMPCaYLVLSP4uYxIaiixu4qMT5AHUhUFjjFQoenkPEiA+FfZjIPg29Ea
+ udQVz/plrpOza2SnDs1wZ1hPxRdE306VhD1NvAC9DbUhBoz6sT1TnBag2/IVq8qpC0O6
+ AejVj/mCMWvrxj2pR+oOK2CEest3308D4+HKmu1v4hX1VRntXeDl/7Eqh7MpbVDPopAw
+ 3v+QDGaC4m25t24GUB60Qc3iFc2TRRxtCC7PrPK9U1WUky5RcB7hXtIsuLAk5Edok4dI
+ BNn/v3n+kGWGukMaVy4hrZgntSz7Dyi75ndWPzBijBkvJ11bGrJ/1Ypx/BDmgzWvYyOc
+ JkwA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCPtrfM1COTOrAikwKfreBbQYYIRrwmg+fbKvIZwPjDZy07nIuOiOQuFO0dDBlpJza7lxYrHbYong+@nongnu.org
-X-Gm-Message-State: AOJu0YwbPrzpir2QteTIGDYBIhQ4m3bM51lkfeMc0WMzLwGfIXcXs5vv
- AOoHbmAjyzoFMgZXSVdMOlrucua3eKZw2Ckor19Gc5qkYA6dSNUapnKaFGETDLag4weKuDPWeC0
- 7+RK7Bq5BesX6ezcCKQI65XS4jbv8WC6phSMrw7XpmXRvZR0iUOf2
-X-Gm-Gg: ASbGncv4Z8AJsdiJFAnkCXIBam2BYLkL8TYMVfO1zCI825Sbl5U9RJJJRB5jMdeSR1l
- hGBjNtz8DmdPvYLhE2y6EiO8waRQI5wWBbOwCKWWNX7CGtvplm+7l25j5imAh5k8gxYQHiVbTJJ
- bt1PJ045Br10TYT64ZstnsT+AuONZ8X/XMlr9viAnbyf/qeiDpZmVVScO2hwlrVMaSSFhv7R46o
- u3880mS1FsSnIG2RbOv7myBc+TSb/sOXaCaVpKmlnlcMcm3B6CbwWPkeGzD0ED4XVH8DxVkias9
- tXFnWxpFe75ULcE5eoCqExiE3T5gxotUBaRT
-X-Received: by 2002:a05:600c:4684:b0:431:6153:a258 with SMTP id
- 5b1f17b1804b1-4390d43d9abmr53069555e9.13.1738845697848; 
- Thu, 06 Feb 2025 04:41:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEP0tPm9ZUdlTIVmOWeTKwMgSJ5VXAy8nJOT0i/TT17R5wmShZz90Zh7La0h1GEymX7z3alLg==
-X-Received: by 2002:a05:600c:4684:b0:431:6153:a258 with SMTP id
- 5b1f17b1804b1-4390d43d9abmr53069285e9.13.1738845697508; 
- Thu, 06 Feb 2025 04:41:37 -0800 (PST)
+ AJvYcCXkREb/z7QHZChmqgYH5LkTYQwP1TrfZpzbP4S3ZdXIUBbhndLTn1bglG6rvWVDO3d/oOE4SmLbxqS7@nongnu.org
+X-Gm-Message-State: AOJu0YywUb6xOhurpYlM7DgPjraSIuaKiAnohHvxBAEIaTuo4tYjDmGU
+ fp9YMx5/5stC4a8SWcGTWR3visb+znzEtfhX3i1D29AH/PBgsNnQ94b1eAchRuixdqFb6n5X6X9
+ bIopN3AEEHLZUr0/cbgibvfvDjHSbTQ8N9SiWcUharXJs8BmOa/99
+X-Gm-Gg: ASbGnctDgkz+SaU4gsEfm2GB7lIZ5WUEeF91d4G8HUCmRd9f1YuQFpvPLs/86aSgNQk
+ HDPMOIC8/fG0aeLjIG1Rdswjt5pPbdySOmmZghzeVElNXJ4ZQZKW+mrhbESq9EVF+Izzf+cXM49
+ yjSz83gWxW/Co8b8Yq8QRlsd/8aUbkiXqJOZ/W7OtUbk3EaL0jm6ogGBARhdAsLgJ4sowqW3FjO
+ 8Uj1HcGWPx7M1LUGwPZ7SStiIYPGtQPDnpX+aiesP0TiFWvnoJBQqr5Wr8eA4Ps6qjltfH0tllj
+ BshSxhK2DBkh7GGDC3M0CHOzkTgfCavJf/8r
+X-Received: by 2002:a05:600c:5249:b0:434:fddf:5c06 with SMTP id
+ 5b1f17b1804b1-43912d10a71mr24340575e9.1.1738845815473; 
+ Thu, 06 Feb 2025 04:43:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHnIzIguPv5oZ22QuL7Fb0AAR2mn4hjAUdal3lXLjVWWK5Vixk+ajIo667aZtuGaJRoGS3Bmw==
+X-Received: by 2002:a05:600c:5249:b0:434:fddf:5c06 with SMTP id
+ 5b1f17b1804b1-43912d10a71mr24340415e9.1.1738845815045; 
+ Thu, 06 Feb 2025 04:43:35 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
  [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d94d7c7sm53453855e9.14.2025.02.06.04.41.36
+ ffacd0b85a97d-38dbdd35bd6sm1622359f8f.22.2025.02.06.04.43.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 04:41:37 -0800 (PST)
-Message-ID: <f669dcfc-e8fb-429d-8639-b65f6f0a002b@redhat.com>
-Date: Thu, 6 Feb 2025 13:41:35 +0100
+ Thu, 06 Feb 2025 04:43:34 -0800 (PST)
+Message-ID: <b01c179e-e68b-4035-85d0-db1630a9ef1a@redhat.com>
+Date: Thu, 6 Feb 2025 13:43:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 14/16] tests/functional: Have microblaze tests inherit
+Subject: Re: [PATCH v4 15/16] tests/functional: Move microblaze tests to
  common parent class
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -85,9 +85,9 @@ Cc: Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>,
  Jason Wang <jasowang@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20250206113321.94906-1-philmd@linaro.org>
- <20250206113321.94906-15-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20250206113321.94906-16-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -130,17 +130,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250206113321.94906-15-philmd@linaro.org>
+In-Reply-To: <20250206113321.94906-16-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -159,19 +159,68 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 06/02/2025 12.33, Philippe Mathieu-Daudé wrote:
-> Have the MicroblazeMachine class being common to both
-> MicroblazeBigEndianMachine and MicroblazeLittleEndianMachine
-> classes.
+> Move the xmaton and ballerina tests to the parent class.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/functional/test_microblaze_s3adsp1800.py   | 2 ++
->   tests/functional/test_microblazeel_s3adsp1800.py | 5 ++---
->   2 files changed, 4 insertions(+), 3 deletions(-)
+>   .../functional/test_microblaze_s3adsp1800.py  | 27 +++++++++++++++++--
+>   .../test_microblazeel_s3adsp1800.py           | 26 +-----------------
+>   2 files changed, 26 insertions(+), 27 deletions(-)
+> 
+> diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
+> index 2eff31f13a7..0447097c048 100755
+> --- a/tests/functional/test_microblaze_s3adsp1800.py
+> +++ b/tests/functional/test_microblaze_s3adsp1800.py
+> @@ -7,6 +7,8 @@
+>   # This work is licensed under the terms of the GNU GPL, version 2 or
+>   # later. See the COPYING file in the top-level directory.
+>   
+> +import time
+> +from qemu_test import exec_command, exec_command_and_wait_for_pattern
+>   from qemu_test import QemuSystemTest, Asset
+>   from qemu_test import wait_for_console_pattern
+>   
+> @@ -15,13 +17,15 @@ class MicroblazeMachine(QemuSystemTest):
+>   
+>       timeout = 90
+>   
+> -class MicroblazeBigEndianMachine(MicroblazeMachine):
+> -
+>       ASSET_IMAGE_BE = Asset(
+>           ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
+>            'day17.tar.xz'),
+>           '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
+>   
+> +    ASSET_IMAGE_LE = Asset(
+> +        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+> +        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+> +
+>       def do_ballerina_be_test(self, machine):
+>           self.set_machine(machine)
+>           self.archive_extract(self.ASSET_IMAGE_BE)
+> @@ -36,6 +40,25 @@ def do_ballerina_be_test(self, machine):
+>           # message, that's why we don't test for a later string here. This
+>           # needs some investigation by a microblaze wizard one day...
+>   
+> +    def do_xmaton_le_test(self, machine):
+> +        self.require_netdev('user')
+> +        self.set_machine(machine)
+> +        self.archive_extract(self.ASSET_IMAGE_LE)
+> +        self.vm.set_console()
+> +        self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
+> +        tftproot = self.scratch_file('day13')
+> +        self.vm.add_args('-nic', f'user,tftp={tftproot}')
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
+> +        time.sleep(0.1)
+> +        exec_command(self, 'root')
+> +        time.sleep(0.1)
 
-Just a matter of taste, but I'd maybe squash this with the next patch.
+Not related to your patch, but we should try to remember to also rework this 
+code to run without the sleeps here - it should now be possible since we 
+reworked the console code to also work with partial lines.
 
-Anyway:
+For this patch here:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
