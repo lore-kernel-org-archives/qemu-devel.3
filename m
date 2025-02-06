@@ -4,63 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7516AC02196
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EE9C02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 13:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg2CQ-0004Rs-J8; Thu, 06 Feb 2025 08:45:47 -0500
+	id 1tg2GJ-0005yf-Ny; Thu, 06 Feb 2025 08:49:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tg2CK-0004Ov-0n
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:45:41 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tg2GH-0005xP-RK; Thu, 06 Feb 2025 08:49:46 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tg2CH-00036L-Qk
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 08:45:39 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YpdbT54rZz6H8G3;
- Thu,  6 Feb 2025 21:43:17 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id E691C140520;
- Thu,  6 Feb 2025 21:45:34 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 6 Feb
- 2025 14:45:34 +0100
-Date: Thu, 6 Feb 2025 13:45:33 +0000
-To: Vinayak Holikatti <vinayak.kh@samsung.com>
-CC: <qemu-devel@nongnu.org>, <krish.reddy@samsung.com>,
- <vishak.g@samsung.com>, <a.manzanares@samsung.com>,
- <alok.rathore@samsung.com>, <s5.kumari@samsung.com>,
- <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 2/2] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations Sanitize and Write Zeros commands (8.2.9.9.5.3)
-Message-ID: <20250206134533.00003e62@huawei.com>
-In-Reply-To: <20250206092714.zdwd6lddw64d5j3b@test-PowerEdge-R740xd>
-References: <20250123050903.92336-1-vinayak.kh@samsung.com>
- <CGME20250123050913epcas5p45fb9a638e62f436076da283e86e54ea2@epcas5p4.samsung.com>
- <20250123050903.92336-3-vinayak.kh@samsung.com>
- <20250124151946.0000134f@huawei.com>
- <20250206092714.zdwd6lddw64d5j3b@test-PowerEdge-R740xd>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tg2GE-0003RN-Og; Thu, 06 Feb 2025 08:49:44 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A71724E6014;
+ Thu, 06 Feb 2025 14:49:40 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id LKvwC01mFm39; Thu,  6 Feb 2025 14:49:38 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 64F1E4E6013; Thu, 06 Feb 2025 14:49:38 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6372E74577D;
+ Thu, 06 Feb 2025 14:49:38 +0100 (CET)
+Date: Thu, 6 Feb 2025 14:49:38 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Bernhard Beschow <shentey@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH] hw/sd/sdhci: Set reset value of interrupt registers
+In-Reply-To: <800dcc1b-8bf6-48e5-843a-99e630d4b494@linaro.org>
+Message-ID: <bd8e216d-df13-4842-9a5a-5f274237359c@eik.bme.hu>
+References: <20250115190422.5F0FA4E6030@zero.eik.bme.hu>
+ <8cbad5be-e67b-46bd-9198-f7c90ad5ff56@linaro.org>
+ <cc92e02b-c20d-974e-8b6d-bb30ea5af452@eik.bme.hu>
+ <800dcc1b-8bf6-48e5-843a-99e630d4b494@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-561812885-1738849778=:22970"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,62 +65,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> >> +static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
-> >> +                          uint8_t fill_value)
-> >> +{
-> >> +
-> >> +    MemoryRegion *vmr = NULL, *pmr = NULL;
-> >> +    uint64_t vmr_size = 0, pmr_size = 0;
-> >> +    AddressSpace *as = NULL;
-> >> +    MemTxAttrs mem_attrs = {0};
-> >> +
-> >> +    if (ct3d->hostvmem) {
-> >> +        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-> >> +        vmr_size = memory_region_size(vmr);
-> >> +    }
-> >> +    if (ct3d->hostpmem) {
-> >> +        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-> >> +        pmr_size = memory_region_size(pmr);
-> >> +    }
-> >> +
-> >> +    if (dpa_addr < vmr_size) {
-> >> +        as = &ct3d->hostvmem_as;
-> >> +    } else if (dpa_addr < vmr_size + pmr_size) {
-> >> +        as = &ct3d->hostpmem_as;
-> >> +    } else {
-> >> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
-> >> +            return -ENODEV;
-> >> +        }
-> >> +        as = &ct3d->dc.host_dc_as;
-> >> +    }  
-> >
-> >You could factor out everything down to here and then use that
-> >for the validate_dpa_addr() as finding an address space means
-> >we also checked the address is valid. Otherwise it does not match.  
-> 
-> Didnt get what you meant, validate_dpa_addr is meant for 
-> checking valid dpa address and sanitize_range is 
-> get the address space handle to do actual sanitize
-> of dpa address, so two are different purposes, 
+--3866299591-561812885-1738849778=:22970
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Different purposes but the actual checks mostly
-overlap.  If we can find the address space then there
-are only a few extra checks on alignment with granual
-size etc needed.  I'd just like to avoid that duplication
-so factor out the shared code to a helper called in both
-functions.
+On Thu, 6 Feb 2025, Philippe Mathieu-Daudé wrote:
+> On 6/2/25 13:49, BALATON Zoltan wrote:
+>> On Thu, 6 Feb 2025, Philippe Mathieu-Daudé wrote:
+>>> On 15/1/25 20:04, BALATON Zoltan wrote:
+>>>> The interrupt enable registers are not reset to 0 but some bits are
+>>>> enabled on reset. At least some U-Boot versions seem to expect this
+>>>> and not initialise these registers before expecting interrupts. The
+>>>> numbers in this patch match what QorIQ P1022 has on reset and fix
+>>>> U-Boot for this SoC and should not break other drivers that initialise
+>>>> (and thus overwrite) these reset values.
+>>>> 
+>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>> ---
+>>>> I've also noticed that the work around marked with an XXX comment near
+>>>> line 600 breaks the U-Boot I've tested so I need to disable it:
+>>>> if ((s->sdmasysad % boundary_chk) == 0) {
+>>>> -        page_aligned = true;
+>>>> +//        page_aligned = true;
+>>>> }
+>>>> What should this hack fix and could it be now removed or somehow
+>>>> restricted to cases where it's needed?
+>>> 
+>>> Cc'ing Jamin for
+>>> https://lore.kernel.org/qemu-devel/20241213031205.641009-2- 
+>>> jamin_lin@aspeedtech.com/
+>>> 
+>>>> 
+>>>> hw/sd/sdhci.c | 2 ++
+>>>>   1 file changed, 2 insertions(+)
+>>>> 
+>>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+>>>> index 58375483e3..88eb0bfcb2 100644
+>>>> --- a/hw/sd/sdhci.c
+>>>> +++ b/hw/sd/sdhci.c
+>>>> @@ -303,6 +303,8 @@ static void sdhci_reset(SDHCIState *s)
+>>>>       s->data_count = 0;
+>>>>       s->stopped_state = sdhc_not_stopped;
+>>>>       s->pending_insert_state = false;
+>>>> +    s->norintstsen = 0x013f;
+>>>> +    s->errintstsen = 0x117f;
+>>> 
+>>> I guess the problem is earlier:
+>>> 
+>>>    /*
+>>>     * Set all registers to 0. Capabilities/Version registers are not 
+>>> cleared
+>>>     * and assumed to always preserve their value, given to them during
+>>>     * initialization
+>>>     */
+>>>    memset(&s->sdmasysad, 0, (uintptr_t)&s->capareg - (uintptr_t)&s- 
+>>> >sdmasysad);
+>>> 
+>>> Not all registers have to be reset.
+>> 
+>> Nothing seems to program those registers before reset but the reset values 
+>> are documented (for Freescale eSDHCI) to be the above so just not zeroing 
+>> them does not seem to be enough. Bernhard has similar patch in his branch, 
+>> not sure if he came up with that separately or took this one. Do you have 
+>> some docs on which regs should not be reset?
+>
+> The header precises what is being modeled here:
+>
+> * SD Association Host Standard Specification v2.0 controller emulation
+> *
+> * Datasheet: PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf
+>
+> I can not see the reset values you mentioned there.
+>
+> What is wrong with adding a TYPE_FREESCALE_ESDHC, like the
+> TYPE_IMX_USDHC / TYPE_S3C_SDHCI types? Then you can add your
+> reset handler fixing your fields after sdhci_poweron_reset().
 
+Nothing's wrong with that, I just did not notice those existing variants. 
+Maybe that's the way to go then with this too. Bernhard, do you plan to do 
+that when cleaning up your tree or should I do another version?
 
-> 
-> >  
-> >> +
-> >> +    return  address_space_set(as, dpa_addr,  
-
-
+Regards,
+BALATON Zoltan
+--3866299591-561812885-1738849778=:22970--
 
