@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC35C02194
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 16:50:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA7FC02194
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Feb 2025 16:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tg54M-0008Rk-UN; Thu, 06 Feb 2025 11:49:40 -0500
+	id 1tg54W-0000QO-3k; Thu, 06 Feb 2025 11:49:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <3d68de855175ae590479f15b37e8db300d43e860@kylie.crudebyte.com>)
- id 1tg53t-0008MU-Cg
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 11:49:09 -0500
+ (envelope-from <bfa7bf02782dbd996201c90f850ca11730041af1@kylie.crudebyte.com>)
+ id 1tg54G-0008Sk-TJ
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 11:49:38 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <3d68de855175ae590479f15b37e8db300d43e860@kylie.crudebyte.com>)
- id 1tg53r-0006F9-Vx
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 11:49:09 -0500
+ (envelope-from <bfa7bf02782dbd996201c90f850ca11730041af1@kylie.crudebyte.com>)
+ id 1tg54E-0006H1-H0
+ for qemu-devel@nongnu.org; Thu, 06 Feb 2025 11:49:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=Ca3s76Xbf8+ekttt2UWEE6onhWTBpocpOOjWu6ipy1A=; b=VfDis
- 0lb4ATJYRDgueDhE0f6CYwW2MKN+o538mpeawsV/D7Qefqt6SXs+bu3mP/l5EVAndmlRBWoWa4Ssg
- 7hncKAomBh71q5vFxI9KJ/jLkK6qTqtDupnFv3EwMHtdZLzXZID2eicOlCT+3zo6izdwG7IiSSY6K
- bmCcoX/dNv7F7Dh3cZtNepJRxrtgY79kKmhFh7a0003Z9mNh2x9xr6uenTxDQix6qLsd7EVUFS5GP
- pWyVdStIpSlMRbETvFBX5uIXLEhTGc3JztTtJyX5NvDwabZNOifdiA9qF5fmXQYiePJtbZdbrAxzY
- t2uzHe0aOJ50r+3zMhNqN+L4R7wEvGeTF3+hVTH8ZyKnmA3VKL0sh1FTLSBq/44xyVQrsuMdF/2O7
- w1EaLhmHXUTVgAJtAjYvttVDXRM2+07bipvScixqzT3fIdkvjFWe3mGTL2PFWAAuXdlCikIiNB94H
- Qqk8GfIqYubwOb0PNetS3b4IKt4Fgp/UMaID8XmlEQpjx/jkCkuwfBZW5DW5J+ZzZlc96x7obEh0F
- YqXC2a/fc+pgX8MXDHEtf0/M6T3iIC/3hISsNpHy00lZY/MgRV3J03QJ0S4sEaagejKHF8ACquPx3
- fKk1AA8HaZL1ZL+LdIBn40Teo69Br4+Pa4qzE90I0eIIBRH9iFCzJjNTGp2cAE=;
-Message-Id: <3d68de855175ae590479f15b37e8db300d43e860.1738860115.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=JkRdxjgnBKt71547XwUn1O1/I1Rb6x+CIeZvvDqy18c=; b=SkEi/
+ cQ2KjJs+Lbpu/slDZ74yqOOy8NOiuYpIfKBTnv8hkSzPTCWI9rZsTim1G/N7HEvh8Z8wyJQi4utgB
+ zUo/C1juCQvjw3ZhWzz1smT+JWx7eHEX0F5yDh/8pnKZIRZV1kafoCINVxfEvj/S8ZH4n9OhiMf3j
+ gnP42Ubu9oT7aLAKMIRS07sCWQ4QUYi3LdBHdMuIxXIEFpWjTv+Z4nvF8HzBo7/oipRapmq0D5lxn
+ qiI1s4Q/bguDk+Vo08lbhD44axuwrZyg63mu5RO5489/uJS+fAyFhgHyVUntZoh1iqfYai2W0Y0nf
+ Am8qC1mZYU8MoAKZMpZ44NWviDMfEySNM8RbGFkyW8yZ9bbhl1Dajz02LcbQwLe/WKc3jcsFD6mi3
+ 0Ww5hsiaM6DHlrUElvVhRWTYYSGfXZvFxrj68hEpoyiYUrJK5Jp4INa4+g4OgK01QX3GrX8cK0ysb
+ JYRk6qZCo7qq93VqxH/pAC5Lsps/wAONhQ4ajCm7F1n1Lhb4MJZDNVyYslAhuudjssZYXVSuxm89c
+ ESFvaBGdFshBfp85i8afdEmp2U3x1KAtY7xflq4uvxF823Ze+hS11Rv3GVZTEnWtCkKVZevRKySXz
+ 4rPxJPwZe9aSfNlMTwjFbDMjNXrCqrAMxGxtvQ6rDLerSE02V5m7h5l35Z2py8=;
+Message-Id: <bfa7bf02782dbd996201c90f850ca11730041af1.1738860115.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1738860115.git.qemu_oss@crudebyte.com>
 References: <cover.1738860115.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Thu, 06 Feb 2025 17:41:56 +0100
-Subject: [PULL 4/7] tests/9p: rename test use_after_unlink ->
- use_file_after_unlink
+Subject: [PULL 7/7] MAINTAINERS: Mark me as reviewer only for 9pfs
 To: qemu-devel@nongnu.org,
     Peter Maydell <peter.maydell@linaro.org>
 Cc: Greg Kurz <groug@kaod.org>,
     Stefan Hajnoczi <stefanha@redhat.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=3d68de855175ae590479f15b37e8db300d43e860@kylie.crudebyte.com;
+ envelope-from=bfa7bf02782dbd996201c90f850ca11730041af1@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -71,42 +70,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To pave the way for adding new test use_dir_after_unlink with subsequent
-patch, i.e. making it clear that the existing test is just about unlinked
-files, not unlinked directories.
+From: Greg Kurz <groug@kaod.org>
 
+I still review 9pfs changes from time to time but I'm definitely
+not able to do actual maintainer work. Drop my tree on the way
+as I'll obviously not use it anymore, and it has been left
+untouched since May 2020.
+
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Message-Id: <20250115100849.259612-1-groug@kaod.org>
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <9d2ca46a58b812ad17ca7bb8a84f12252d3e3832.1736427878.git.qemu_oss@crudebyte.com>
 ---
- tests/qtest/virtio-9p-test.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index ab3a12c816..07459c5289 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -693,8 +693,8 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
-     g_assert(stat(real_file, &st_real) == 0);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0cf37fce7b..c6859cbb0e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2254,8 +2254,8 @@ F: include/system/balloon.h
+ F: tests/qtest/virtio-balloon-test.c
  
--static void fs_use_after_unlink(void *obj, void *data,
--                                QGuestAllocator *t_alloc)
-+static void fs_use_file_after_unlink(void *obj, void *data,
-+                                     QGuestAllocator *t_alloc)
- {
-     QVirtio9P *v9p = obj;
-     v9fs_set_allocator(t_alloc);
-@@ -802,8 +802,8 @@ static void register_virtio_9p_test(void)
-     qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
-     qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
-                  &opts);
--    qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
--                 &opts);
-+    qos_add_test("local/use_file_after_unlink", "virtio-9p",
-+                 fs_use_file_after_unlink, &opts);
- }
+ virtio-9p
+-M: Greg Kurz <groug@kaod.org>
+ M: Christian Schoenebeck <qemu_oss@crudebyte.com>
++R: Greg Kurz <groug@kaod.org>
+ S: Maintained
+ W: https://wiki.qemu.org/Documentation/9p
+ F: hw/9pfs/
+@@ -2263,7 +2263,6 @@ X: hw/9pfs/xen-9p*
+ F: fsdev/
+ F: tests/qtest/virtio-9p-test.c
+ F: tests/qtest/libqos/virtio-9p*
+-T: git https://gitlab.com/gkurz/qemu.git 9p-next
+ T: git https://github.com/cschoenebeck/qemu.git 9p.next
  
- libqos_init(register_virtio_9p_test);
+ virtio-blk
 -- 
 2.30.2
 
