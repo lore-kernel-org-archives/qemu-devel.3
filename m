@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55257C02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A772C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgMnc-000720-AP; Fri, 07 Feb 2025 06:45:32 -0500
+	id 1tgMvO-0001Qx-C7; Fri, 07 Feb 2025 06:53:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMnV-0006xU-Qw
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:45:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tgMvG-0001PS-Sl; Fri, 07 Feb 2025 06:53:28 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMnS-0002np-R0
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:45:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738928721;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ENoGYkTNbqBLK2zaBqPU/eJreQoUDQV0ALFXe2C8cM=;
- b=QH3/Wi+Pt0ffdthzH9AD7JggXDjlTJNzzX97LSRe18HKG1EuczTVpBAnSD/bddN1E8PcNM
- bTOGsU4H1VmuLrFD+pYQBq0eFGh21YNxGevhu9bltruI872+9iFBJQMYS2r4Qfxul15lL6
- 27HUdaahO50Rry+lqHgPGbQIs2P/BuY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-Tyb2n2KqPYCudO5RYl_3lA-1; Fri,
- 07 Feb 2025 06:45:18 -0500
-X-MC-Unique: Tyb2n2KqPYCudO5RYl_3lA-1
-X-Mimecast-MFC-AGG-ID: Tyb2n2KqPYCudO5RYl_3lA
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2B251956096; Fri,  7 Feb 2025 11:45:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88CA41800352; Fri,  7 Feb 2025 11:45:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EFA8121E6A28; Fri, 07 Feb 2025 12:45:13 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v4 4/4] qapi: expose all schema features to code
-In-Reply-To: <20250205123550.2754387-5-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 5 Feb 2025 12:35:50
- +0000")
-References: <20250205123550.2754387-1-berrange@redhat.com>
- <20250205123550.2754387-5-berrange@redhat.com>
-Date: Fri, 07 Feb 2025 12:45:13 +0100
-Message-ID: <875xlmj7w6.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tgMvE-0004KF-VA; Fri, 07 Feb 2025 06:53:26 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 71305E73D7;
+ Fri, 07 Feb 2025 14:52:38 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id ED0311B0B4F;
+ Fri,  7 Feb 2025 14:53:19 +0300 (MSK)
+Message-ID: <fcd2ffe7-a400-44e0-8dba-258583c2940b@tls.msk.ru>
+Date: Fri, 7 Feb 2025 14:53:19 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 5/7] target/i386: Do not raise Invalid for 0 * Inf + QNaN
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250207102802.2445596-1-pbonzini@redhat.com>
+ <20250207102802.2445596-6-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250207102802.2445596-6-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,56 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+07.02.2025 13:27, Paolo Bonzini wrote:
+> From: Peter Maydell <peter.maydell@linaro.org>
+> 
+> In commit 8adcff4ae7 ("fpu: handle raising Invalid for infzero in
+> pick_nan_muladd") we changed the handling of 0 * Inf + QNaN to always
+> raise the Invalid exception regardless of target architecture.  (This
+> was a change affecting hppa, i386, sh4 and tricore.) However, this
+> was incorrect for i386, which documents in the SDM section 14.5.2
+> that for the 0 * Inf + NaN case that it will only raise the Invalid
+> exception when the input is an SNaN.  (This is permitted by the IEEE
+> 754-2008 specification, which documents that whether we raise Invalid
+> for 0 * Inf + QNaN is implementation defined.)
+> 
+> Adjust the softfloat pick_nan_muladd code to allow the target to
+> suppress the raising of Invalid for the inf * zero + NaN case (as an
+> extra flag orthogonal to its choice for when to use the default NaN),
+> and enable that for x86.
+> 
+> We do not revert here the behaviour change for hppa, sh4 or tricore:
+>   * The sh4 manual is clear that it should signal Invalid
+>   * The tricore manual is a bit vague but doesn't say it shouldn't
+>   * The hppa manual doesn't talk about fused multiply-add corner
+>     cases at all
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 8adcff4ae7 (""fpu: handle raising Invalid for infzero in pick_nan_muladd")
 
-> This replaces use of the constants from the QapiSpecialFeatures
-> enum, with constants from the auto-generate QapiFeatures enum
-> in qapi-features.h
->
-> The 'deprecated' and 'unstable' features still have a little bit of
-> special handling, being force defined to be the 1st + 2nd features
-> in the enum, regardless of whether they're used in the schema. This
-> retains compatibility with common code that references the features
-> via the QapiSpecialFeatures constants.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+A nitpick: double double-quote.
 
-John pointed out that isort wants the appended fixup.  Not thrilled
-about the additional churn in the first hunk, but let's not fight our
-tools.  Thanks, John!
+8adcff4ae7 is v9.2.0-7-g8adcff4ae7 - which is 7 commits *after* the latest
+released version, -- hopefully this fix should not go to any stable series,
+unless 8adcff4ae7 itself has to be picked up for 9.2 too.
 
+Thanks,
 
-diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
-index be3e5d03ff..16ed26672b 100644
---- a/scripts/qapi/features.py
-+++ b/scripts/qapi/features.py
-@@ -11,10 +11,7 @@
-=20
- from .common import c_enum_const, c_name
- from .gen import QAPISchemaMonolithicCVisitor
--from .schema import (
--    QAPISchema,
--    QAPISchemaFeature,
--)
-+from .schema import QAPISchema, QAPISchemaFeature
-=20
-=20
- class QAPISchemaGenFeatureVisitor(QAPISchemaMonolithicCVisitor):
-diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-index 2b9a2c0c02..324081b9fc 100644
---- a/scripts/qapi/main.py
-+++ b/scripts/qapi/main.py
-@@ -15,10 +15,10 @@
- from .common import must_match
- from .error import QAPIError
- from .events import gen_events
-+from .features import gen_features
- from .introspect import gen_introspect
- from .schema import QAPISchema
- from .types import gen_types
--from .features import gen_features
- from .visit import gen_visit
-=20
-=20
-
+/mjt
 
