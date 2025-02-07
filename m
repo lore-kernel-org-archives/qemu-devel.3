@@ -4,54 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03320C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 01:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E61C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 02:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgCvQ-0007Mk-Vm; Thu, 06 Feb 2025 20:12:57 -0500
+	id 1tgE4i-0002DB-0e; Thu, 06 Feb 2025 21:26:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tgCvJ-0007Lp-H9; Thu, 06 Feb 2025 20:12:51 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <andrew.yuan@jaguarmicro.com>)
+ id 1tgE4f-0002Ct-QM; Thu, 06 Feb 2025 21:26:33 -0500
+Received: from mail-sg2apc01on2071e.outbound.protection.outlook.com
+ ([2a01:111:f403:200f::71e]
+ helo=APC01-SG2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tgCvF-0002GY-B5; Thu, 06 Feb 2025 20:12:49 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 663084E6013;
- Fri, 07 Feb 2025 02:12:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id KZYAcaPgC2sd; Fri,  7 Feb 2025 02:12:38 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1A5954E6000; Fri, 07 Feb 2025 02:12:38 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 17E6174577C;
- Fri, 07 Feb 2025 02:12:38 +0100 (CET)
-Date: Fri, 7 Feb 2025 02:12:38 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
- window registers
-In-Reply-To: <32BC6ABA-EE27-437C-81C0-AEEE3E0DFC9A@gmail.com>
-Message-ID: <81cd9319-848c-93f5-156d-b35226f90966@eik.bme.hu>
-References: <20250115211544.307124E602F@zero.eik.bme.hu>
- <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
- <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
- <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
- <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
- <32BC6ABA-EE27-437C-81C0-AEEE3E0DFC9A@gmail.com>
+ (Exim 4.90_1) (envelope-from <andrew.yuan@jaguarmicro.com>)
+ id 1tgE4d-00052o-GV; Thu, 06 Feb 2025 21:26:33 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Vc9G5XtmOj+xFUl48KY8VF9SNko6wV5H4HbyYiojnN4BwMDP8dWabuBIFjD4HfJYV1VmzYt/kf8p/QCekNvBmDygT1XH6elX2gKHtNefeH/p+7npbTr4gAZTSBj4vMdYmSpTxBdRpyjXrcQ2oLg/RpZ54YBFOo0RKgiYvSxQXypGmczep8IQpIMewUR5BDUolN8/tySdU7o521v15X4tVIM8Zyp/srySaQAADGuoOKzLaeHQ1C31agzhtC2iCnq6A0vU9S7puPPmiOzLww01Xmi/XWqOWZU4UeaigzyeWHO2/nOz3ofqx1EdK82Ra4F3VZvEpVZDXlW11Y76hIk2lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wKWh9OGpIzZfinVz5OBpUj6MNNyqt7CgCzulNQXuSiA=;
+ b=gwz7RUe5YLwmNTYHnZioTsLkFInjGSGzz/qCtYYQ64h1+3I0UlroMQFlIWkbOZProDnHksp4Z3DnY3Kv+/K43X+93ruduzShdQVem/aY+YLpf27lpSvICdCFaL9EjCkYT2qQEYSHZb/iVI/dC5YXahxelUWnWl6eOdn3V4nXeKmzxfZ3sMv1UKsaMwhRL9NfgAcgCyQ0RfSGqgCPVvLAMjt561oZos//I78dh1Z56ZGSPy7QTNGElc6SJErkuI+3/cjiGz6ZxkfvxL1taULdHkS5s9uAW2vkSV8MTsWlcoUeM1y1UVKNhf2BO+R7UltegAEUBaCMH6/40V92hzcGMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
+ header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wKWh9OGpIzZfinVz5OBpUj6MNNyqt7CgCzulNQXuSiA=;
+ b=I1RV0k4Jtbbl+MSZVwohnEpXvj4qSqTzDdV84yVaYQ4OtxGpud+7JXgC91xS4aiE9VEmWfeQ0lcxcmA9xF/uFWCPg9a+pCduawyhcUrMcJV0UfoA+dHAWtVw30GuoWYBAI0iPgk+Ba/Z5YdEm788rsmnv1ygpWxo0rJ3Q+7XjGgOdSuokqN92Te8JcAIuOZBHu4bHsmAOc2cttqToRf+UVzhzSO3zipUwHaavEmQo3bJVF9tVSUhCeslQUeVIq7bgDy9Y+Rk/nC3jj7qF3ICcyJ7Mo0geRX7GSxjPlsoDyxCI0zUm37ixMS98SENo08W7VuCpNYZDOncLsbbXxuNyQ==
+Received: from PSAPR06MB4888.apcprd06.prod.outlook.com (2603:1096:301:ac::6)
+ by KL1PR0601MB5799.apcprd06.prod.outlook.com (2603:1096:820:b5::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.6; Fri, 7 Feb
+ 2025 02:26:17 +0000
+Received: from PSAPR06MB4888.apcprd06.prod.outlook.com
+ ([fe80::e46a:2bbb:7b01:1bf0]) by PSAPR06MB4888.apcprd06.prod.outlook.com
+ ([fe80::e46a:2bbb:7b01:1bf0%4]) with mapi id 15.20.8445.005; Fri, 7 Feb 2025
+ 02:26:17 +0000
+From: andrew Yuan <andrew.yuan@jaguarmicro.com>
+To: Peter Maydell <peter.maydell@linaro.org>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>
+CC: "philmd@linaro.org" <philmd@linaro.org>, "alistair@alistair23.me"
+ <alistair@alistair23.me>, "jasowang@redhat.com" <jasowang@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: =?utf-8?B?562U5aSNOiBbUEFUQ0ggdjNdIGh3L25ldDogY2FkZW5jZV9nZW06IGZlYXQ6?=
+ =?utf-8?B?IGFkZCBsb2dpYyBmb3IgdGhlIERJU0FCTEVfTUFTSyBiaXQgaW4gdHlwZTJf?=
+ =?utf-8?B?Y29tcGFyZV94X3dvcmRfMQ==?=
+Thread-Topic: [PATCH v3] hw/net: cadence_gem: feat: add logic for the
+ DISABLE_MASK bit in type2_compare_x_word_1
+Thread-Index: AQHbUd2kxzq5y1zzu0+ipfiWCOLV+7Mq7yEAgAU6nACAB1cUgIAD6gAQ
+Date: Fri, 7 Feb 2025 02:26:17 +0000
+Message-ID: <PSAPR06MB4888F9254618C8644FE8D3A8E3F12@PSAPR06MB4888.apcprd06.prod.outlook.com>
+References: <20241219061658.805-1-andrew.yuan@jaguarmicro.com>
+ <CAFEAcA96ZLjOhBT9rhNhuk32ve0Qv4hUVuTTtgE=DBApbN98Pg@mail.gmail.com>
+ <CAJy5ezovedShKH=HFbK9uRY44no2ijQocs29CHLt2jKoNL+Vpw@mail.gmail.com>
+ <CAFEAcA8oaRVs8USMDGHvDW82AtRZGAhRCg189hhWtmRm2Y-YaQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8oaRVs8USMDGHvDW82AtRZGAhRCg189hhWtmRm2Y-YaQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PSAPR06MB4888:EE_|KL1PR0601MB5799:EE_
+x-ms-office365-filtering-correlation-id: 99a30384-61f5-4e1c-d625-08dd471ecd07
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?YmFJYXUzU1dDZnJWaVRtK3JDbFJFZHRLcmZ3UW83S1hzRUgzd0RNSFB3dzNK?=
+ =?utf-8?B?Mnh2eUFCNjFIdk5nVWdrNmphSXZrTkpXaEJQUG4rZ1k4QnY5bHZmRlB0VzU5?=
+ =?utf-8?B?ZmJlM3NZUVlZWEZMZHNWNGUxWDhYSzFjYytkTFlYQTdQTExIdHpTa2ZRMFh0?=
+ =?utf-8?B?ZVdCOXE0eXcyNW5zaVlXYVI3UThTU0ZpcHhYY1NkSHdqUXYyZU1rYUE1bFN4?=
+ =?utf-8?B?MU5nd0JpSmxhMHdUUHhOUkpPUEQ4NXRYSHlmaVBWbkg4M0FkZVhmSTd2RUpN?=
+ =?utf-8?B?b2xGWEtPOVY1N3hYcWhsR1g1bTdXaWpkQktzVXhXS0JhL05FT2YzbytkNzFv?=
+ =?utf-8?B?c3B0ZlNkcXQ1UERpUS9UTUtRT0I0MWFsYjVRWkM4VE5BaUZLVnh3SnJGVTRN?=
+ =?utf-8?B?dmduMHNQeVVCdWFoYzA5bzJwUHZtQWxPODZzUldFNkRqQnpEY1lldC91Wlcv?=
+ =?utf-8?B?TWVoaHFhZXZpZmUzWXd0dXd0Q1U5eDV0L1pTeWtWZC8xa3hreTlWazdLU3Vi?=
+ =?utf-8?B?dFRGSll0aVhONkpKNUcwdmt0ZFhROHphMWpZVDFzcHdkMHhsQVc0QURkREM1?=
+ =?utf-8?B?MHdqYkF5dFpQRXJuS0JYRUdTaWxNZ2IrbCtkZjM5ZTFxR0QzN2xVcnAvanpq?=
+ =?utf-8?B?SGxZT09SaDh2RHpXa29CemxiNFNFeUwxR1lBNzNVSGhkbVkvZld4R3l1cmxv?=
+ =?utf-8?B?dmREQ0ZxdERnTVN2TUxhejZldnNwNnB5UlgvaytIaGR6VkpuWVRzcC9ndkdS?=
+ =?utf-8?B?eEIwdlBCVVNOSlF4ZkN6bUdNa2cxenJ4SGZmS1F0eVM0SHpUcVNMMFAwMTJl?=
+ =?utf-8?B?SGp3aW5wSHJXdmZ5bEFvQmdqYm9vMkZxbCt4aFFIL2o2S1R3VFphSWhHYUdt?=
+ =?utf-8?B?c2VGUkFhT3BWTHRVV3RTcGhKY1FibnRFMWJabmhzMFhkL05LK0krUnhROHNP?=
+ =?utf-8?B?ZDhJc1NDdTdWd1BNdWdGZkhRQy94cGNvNjhMZktNRk5LVmVsZUJqTUlxSFR0?=
+ =?utf-8?B?VXNqMzJVNHN6OFFibm9HOG1FczVpbEc3aTFEZWFCNnJHNWpQNVlnVUNmdjJk?=
+ =?utf-8?B?UXZybnZ6Z2ZMUGxXK3Q5VDJCYTRiTnV3UkgySEtBRk03ajEvWWI2L3lES1NG?=
+ =?utf-8?B?MmZZVjRGcHB3Y2xIWGFDdldPTGxPMDdEWjZOZmtiWHZSTjBWQ094NXZuRlh6?=
+ =?utf-8?B?WUNTVHgvT1BYb0xwWkI5eHRVYndVQ2pFRVJSaGVSbTJvU0loaVZBZk40T3hl?=
+ =?utf-8?B?eCtacFZ4UnYwclg2aUtsNnY0R2lmd0JjMWVkWVAzUjV3SjA5clVZMlQ1TmFQ?=
+ =?utf-8?B?ekV5b3NqZXh0YnlNc0R2THMvNGttVDE5SlQvTmlxQ3d6dEZPcDhDSCtPTWIv?=
+ =?utf-8?B?UDc0eDBwTGlnU0JnRzhNL0hja0xEbFRaeDVQOXRlRnBzYUlCRURYY0tGUGVu?=
+ =?utf-8?B?dFdXa3R5T3FXdHZ4R0pSeU5KQ2IvZEpyUy83cFZmN0NVci85cEE3K3dnbkVV?=
+ =?utf-8?B?aUNFUy9KTnkwbkM5REFPdlVPcVRpeEhERHNUS0NyRUVmc2pUWGdxNUh5SXFo?=
+ =?utf-8?B?MmpVNVpHa1l1YW5HWmhsUEZKNElKeCttZ0dsVFFTczZ4STBVd3l1dUE3Lytp?=
+ =?utf-8?B?bGdNandkak5aZzJHbXJqNnZScWJFbG9STlYxNXdOTDJrYWRFdnNzaFVtd0lr?=
+ =?utf-8?B?ZmpaOFdyN0w1bGd5aHdVcTRzRG5hRDVrdzlyWG1VUjlseTFqL3B6UTRaeDBU?=
+ =?utf-8?B?WVRPSnNSN3AxcGxZTnRpanE1SE83Q0RJb3crYW9GQmpMZHYxeEdOb21RZC8z?=
+ =?utf-8?B?MURINzBVNlg4a00zVUtRZUlCVVlCaEtwNXk0dzFZWnh4M2g5RmZwVmF3czFi?=
+ =?utf-8?B?NldmcWxFZ1gxNVZVbHBwMmRBaDdUTHpsMU5ZdGhlTGxnZ3NGdlJwMmw3V2Qz?=
+ =?utf-8?Q?SFF+s8Fhveed/Zm1cjjrk4eqt+ErRdZp?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-cn; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:PSAPR06MB4888.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WGZETjhQWGhMWHlYRitoeXA4cXdXYzE3aG1McXk1TG9VN1hEdzFlOW9JSVFR?=
+ =?utf-8?B?ZzdaUHY1RXZ1c2dJbVRYdWt4N3VZR0Z3WWRCbnUrRVdpS2pkQjhpWFNCQTR2?=
+ =?utf-8?B?U2ZGYTIwUGdYNW1rZTNNL3VuY0JNRHVWK1VKN3c3UnlHZjVEMlliUG9YdDMr?=
+ =?utf-8?B?OXY2ZDBLM01JQUVnejBYdGlSUERUZzZzNjJIRWFWMk93RTJJR2pHVE93ZXNv?=
+ =?utf-8?B?NDZZNlA2THRmYnhQekRUR1N5NmE5UHdPTnFtT3NNU1VvN1VqcnVMSHpkeGFo?=
+ =?utf-8?B?aXhyR3dvZTBuOUNTL09RSHlIdEtPNFJhTzVzQjZVd0VSRS8yQ1ltUkt4WGty?=
+ =?utf-8?B?dFFIeUZGKzJxNThOTkFSU3R1dVh5Y0oyTmhtcHRXdXl5MHFxQ0VoN1Y4U29r?=
+ =?utf-8?B?L2NWTS9JaEYyblFKVVZpOGNtK0U0WktzbWVlbHZabitrOFVSZldiaE42MGNi?=
+ =?utf-8?B?bG5tUlVQbG5wTHpFU0psSVRCRk9jWTd6SWZsdFBLNzFBTG91QmdJRkYvWC9C?=
+ =?utf-8?B?eFZJQkY1ck9Wc3VQWENzSFVKYzVLaVBwNlllSXZraVdZL0k2ZnVCeDZFTngw?=
+ =?utf-8?B?MTRPaTIzSXF0dDVzYXMwUXl1NTBHMnI3dmVVRFpJRktiK2taYlVPZ05XK0JR?=
+ =?utf-8?B?WnJxTVBvb2d2QlZ2NzRlWDl3UGYzKzA4V3grOUp2d1lXbU9WVkMvVm5qSjM1?=
+ =?utf-8?B?eno2WVZtNk1adUozV3g3b2pwamh2NDk4SDRDZUVuYS9tQmtBZXNNV1prL0pa?=
+ =?utf-8?B?aGdPaTdyWEV4cEorTGFTdFZadjVKVm9kTGRId1lJeU80T1E5QjdVaExJZE5P?=
+ =?utf-8?B?NGNoYy9HQ1BOM3V1Vi9xVWNCTWxqSHJmcGJlSDdmaWx2R1IwaGFJWmVnNnAv?=
+ =?utf-8?B?OWsxa1pDd2VQNWh6TElTUmtnaXhzUUhidVFhUFY2cCtRK3FhMFVoRitjc0hj?=
+ =?utf-8?B?WlFKRWw5aTBkL1IxY2dSNUp6ZlczcDFLRFJlQVRDUDBGK29lRFZiUkJuT3Rz?=
+ =?utf-8?B?TjJOU1pzeS8rbHBYS1Z6S3d2cFNuY3QwVnVtM3hpenhMRmJwNlkzREErd3ha?=
+ =?utf-8?B?bEZ0SHVFUEU1VWM2ZWhkTEFCRmlrSlVUVFBxelQ0aVJCdlFHaUVTcVRCdzE5?=
+ =?utf-8?B?aG5leVJpbVhMOFVkazRJSkpwSFNOQVllbmlIWWtHZ2NLaFlhWlMvVmJ3NUlx?=
+ =?utf-8?B?VFZGWldNYjc2YVRoMU85cFpVM0xON0IxdXBDeHQzamxYOW9hbm5sZ2dZdXlq?=
+ =?utf-8?B?MmsraUl2SUY5Syt1eHVkNWJreGpEM3FVelJHajMyTUlBYnpWQmlwR1lTV1Vi?=
+ =?utf-8?B?cE15SDEzYSsrbDV4dENwb2xCbmNOZVF2ekxGZWRuWHN1MHpMRFd0aDhGQ0Uz?=
+ =?utf-8?B?WUtBUDJuckozU1I4bHdaMHFPRU1WOWE2N0RiVHpybjViaUhDV0xSTjFEUk1H?=
+ =?utf-8?B?VEpLeEhob2JvRURLSXQzYU5JZHMvV3JDT1JWd2VzODRFVFRtT3k1WWxpYWt3?=
+ =?utf-8?B?ejd0cUdwYUY0TVQ1dUI3WUFYZ25OQ0ZlVTdPbXZ5M2wzWnFwUjE2MmJrVDJs?=
+ =?utf-8?B?VW12aFF5K0hVdVovelJIbEQxZnRDRVIxMGYxdVdjYXhMZjluMEFReVllbG91?=
+ =?utf-8?B?UndUcDZETEU0SVNKdllrbmVOTnNlYVBIcEVvOEhXTTRkZVFiY0J2WkJuY0JG?=
+ =?utf-8?B?M3RKN1hRWnBwNC9qcUtRNWU2cW8yU2d1T3ozelNKcHBKdUpsSUNIK2ptSDBW?=
+ =?utf-8?B?NnQ0dGdRLzNYMHROMHJjYkhESWpTYlNjQlkzRlhMRmdOOUVlTzZkODE1QjFu?=
+ =?utf-8?B?bHhkNFNQUGJqNDdORlNKc0ZvMm9zamt4d0tNWmlWL3M0Sm1BUWQwM2plSEph?=
+ =?utf-8?B?d3hIUlEzeU8xWkhMbk80M0JxRkMxSVBoOGRsRkpHNlllL3pNTFExQ3preG5N?=
+ =?utf-8?B?di9iL0h2Tk5HVnJvalVJRldKa3RueGU1Q1U4UUhYOHUxd2cva2Vqb05FOC9B?=
+ =?utf-8?B?Q0l4MzhOR0s5U2FReEs0WVJldUZGczFwVHF2ZVcwS2xrVlFwaDdUOTJSb0JS?=
+ =?utf-8?B?aXNSR2FyNWwrdU5CVExxT3EzZ3ZFeGI1YlJMMVRNbVovWnNSWnAzU1ZGT3B6?=
+ =?utf-8?Q?ypLx0rAVsBe9OZ3m9kDcQcxXN?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-OriginatorOrg: jaguarmicro.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PSAPR06MB4888.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 99a30384-61f5-4e1c-d625-08dd471ecd07
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Feb 2025 02:26:17.0858 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: rFMprXPQF3UaV/WinOUS3bjrD14Pw3spnCZedFqXDs6d6PEc2NyoLxSg1fV7NSLbSGt5FFPLsCEwyzod8ng672iEZi8fshvgzbOuBC7IhSc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0601MB5799
+Received-SPF: pass client-ip=2a01:111:f403:200f::71e;
+ envelope-from=andrew.yuan@jaguarmicro.com;
+ helo=APC01-SG2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,235 +187,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Feb 2025, Bernhard Beschow wrote:
-> Am 2. Februar 2025 01:25:22 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->> On Sat, 1 Feb 2025, Bernhard Beschow wrote:
->>> Am 1. Februar 2025 14:55:15 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
->>>> Am 30. Januar 2025 12:45:58 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->>>>> On Wed, 15 Jan 2025, BALATON Zoltan wrote:
->>>>>> This allows guests to set the CCSR base address. Also store and return
->>>>>> values of the local access window registers but their functionality
->>>>>> isn't implemented.
->>>>>
->>>>> Ping?
->>>>
->>>> I guess you're trying to boot a real firmware image from SD card?
->>
->> I'm not trying, I've done it. I only needed these patches and 
->> commenting out the page_aligned = true in hw/sd/sdhci.c as I noted in 
->> the previous patch.
->
-> I had to apply 
-> <https://github.com/shentok/qemu/commit/56550cbb2805be2913ad9c12d6d9c6a9a3bf6f2c> 
-> to have the SPL load the whole U-Boot proper.
-
-Is that an alternative to commenting out page_aligned = true? (Previously 
-it also needed some tweak on when to set DMA bit but after your fix in 
-commit 5df50b8e973 in master resolved it that's no longer needed. Now only 
-the interrupt control reset values and commenting page_aligned = true was 
-needed to get it work.)
-
->> U-Boot works and I can run commands in the firmware prompt but I did 
->> not try to boot an OS yet. The amigaos boot loader which U-Boot for 
->> Tabor loads by default crashes somewhere but this may be a bug in the 
->> patched U-Boot. I think I've seen similar with sam460ex U-Boot before, 
->> maybe it's because of not finding some expected devices and not 
->> handling the returned NULL value well but I did not debug it.
->
-> Do you use the Tabor U-Boot or something else?
-
-I've tested the firmware image available from this page:
-http://eliyahu.org/tabor/setup.html
-There's also a technical manual there that has info on the content of the 
-SD card image.
-
-> How do you get to the command prompt? For me, the bootloader application 
-> started by Tabor U-Boot doesn't crash but then doesn't find bootable 
-> devices, not even with an emulated USB stick. Instead of dropping to the 
-> command prompt it only offers a restart to the firmware which then 
-> starts the bootloader application again...
-
-There are two U-Boot binaries on the card for some reason (I think maybe 
-the first one runs from cache as RAM and sets up the memory controller), 
-then the first one loads some env variables and then the second U-Boot 
-which then loads the bootloader. If you change one byte in the environment 
-on the SD card it breaks the checksum and then it does not load the 
-bootloader but gives a prompt. You can then look around in U-Boot. 
-Alternatively you can extract the U-Boot binaries and convert to elf to 
-load it with -bios then you can skip the SD card. Maybe depending on some 
-env settings I haven't identified yet, the bootloader either says no 
-bootable devices found or crashes when calling back into U-Boot which may 
-be something similar that I had to fix for sam460ex here: 
-https://gitlab.com/qemu-project/u-boot-sam460ex/-/commit/f6402c160f781145206b2dc0eb4d50738d0531d4/ 
-but I don't have the Tabor U-Boot sources yet to check. Presumably it 
-works on real machine so maybe it checks for SATA or other devices which 
-aren't emulated so it may get an unexpected NULL value. I've tried adding 
-dummy SATA emulation that shows an empty bus but it did not fix that. It 
-could also be something completely different. With the USB patch, it at 
-least finds USB storage devices after usb start in U-Boot but that's all I 
-could test. I should find some Linux boot media known to work on real 
-machine to test further but haven't had time for it.
-
->>>> I've implemented that in my e500-fdt branch which I want to send as 
->>>> an RFC. I still need to clean it up. Once it's on the list we could 
->>>> make a plan how to turn it into a p10xx. Would that work for you?
->>
->> Sure, I can try to test your patches once they are submitted to the 
->> list and rebase my changes on top if they still needed. I've just 
->> submitted these so you can incorporate them in your tree so I have less 
->> to rebase but I see you already have most of these. I'm OK to wait 
->> until your tree is cleaned and submitted but it seems there are a lot 
->> of patches so it might take a while. I don't expect that you can get it 
->> merged before the next release. Some of the patches may need several 
->> versions or alternative approaches until they can be merged. For 
->> example I expect problems with allowing ',' in device names as this is 
->> something that was removed before to avoid the need of quoting or 
->> something like that. But I'm not in a hurry as I don't have much free 
->> time for it anyway so only come back to this time to time and it's far 
->> from anything useful yet.
->
-> My branch is not a maintainer tree. I neither expect it to be mergeable 
-> like this, nor is it my goal. Instead, it's just an experiment to 
-> investigate data-driven machine creation which I'd like to share as an 
-> RFC with the community.
->
-> That said, one could probably turn that branch into a p10xx SoC 
-> implemented in the classic way. For this, one would need to decide on 
-> how to proceed with the mpc8544ds and e500plat machines. There are
-
-These existing machines set up values in PPCE500MachineClass in their init 
-methods that the e500.c uses to change its behaviour to match the machine 
-so to continue adding another board in the classic way I'd continue like 
-that. I've added another similar board file like those machines setting 
-the values matching P1022. For the additional devices in e500.c I've just 
-patched them in for experimenting but these could be optionally created 
-based on new values in the MachineClass, like has_2nd_i2c or similar to 
-not change existing machines. I would not go into more elaborate solutions 
-if your fdt based machine creation replaces this eventually.
-
-> Buildroot recipes for the machines, both 32 and 64 bit, which might be 
-> nice to keep working -- ideas welcome. Once the p10xx SoC is
-
-I think the e500 machine was originally made for running with KVM and not 
-for TCG emulation but it fell out of maintenance for a while and maybe 
-Linux dropped some of the support by now so don't know if that still 
-works. But it seems to still work for booting Linux in emulation so that 
-should definitely be kept working.
-
-> implemented, a tabor machine could be added which uses it.
->
->>
->>>>
->>>> Best regards,
->>>> Bernhard
->>>>
->>>> P.S. The last commit teaches you how to start a firmware from SD card.
->>
->> I did not try your version but looking at the patch looks like you have 
->> some sparse-mem region. (I've added similar one from board code, I did 
->> not know about this device.) Isn't that the l2cache as RAM or on-chip 
->> SRAM or whatever it's called? You seem to have some emulation of that 
->> l2cache in a previous patch so can't that be mapped there? Maybe we'll 
->> eventually need to implement reading the BOOT data from the beginning 
->> of the SD card or flash ROM which may have some initial register values 
->> that set things up that are currently hard coded.
->
-> This is implemented on my branch. It pokes the L2 cache registers to 
-> configure some (but not all) SRAM to load the SPL to. This SPL uses 
-> cache as RAM which I'm emulating with a modified sparse-mem region 
-> device.
-
-This is new addition from today. I still don't get why you need sparse-mem 
-when you also have a separate patch for l2cache regs which could have a 
-memory region itself for this but for now I'm OK with adding this region 
-from the tabor board code on my branch for experimenting. I'm a long way 
-from this to work or being mergeable so your RFC might be ready and merged 
-before that and then I don't need most of my changes, so I try to keep 
-them minimal and have no intent trying to clean up the existing machines 
-or SoC emulation.
-
->> Meanwhile I can cherry pick some patches from your tree and test them. 
->> Looks like you have some DDR3 support added, I haven't got to that yet.
->>
->> For USB I had this for now:
->>
->> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
->> index ee17acdb69..54890d25f3 100644
->> --- a/hw/ppc/e500.c
->> +++ b/hw/ppc/e500.c
->> @@ -900,6 +900,29 @@ static void ppce500_power_off(void *opaque, int line, int on)
->>     }
->> }
->>
->> +static uint64_t usb_read(void *opaque, hwaddr addr, unsigned size)
->> +{
->> +    switch (addr) {
->> +    case 0:
->> +        return BIT(2) | BIT(17);
->> +    }
->> +    return 0;
->> +}
->> +
->> +static void usb_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
->> +{
->> +}
->> +
->> +static const MemoryRegionOps usb_ops = {
->> +    .read = usb_read,
->> +    .write = usb_write,
->> +    .endianness = DEVICE_BIG_ENDIAN,
->> +    .valid = {
->> +        .min_access_size = 4,
->> +        .max_access_size = 4,
->> +    },
->> +};
->> +
->> void ppce500_init(MachineState *machine)
->> {
->>     MemoryRegion *address_space_mem = get_system_memory();
->> @@ -1118,6 +1141,19 @@ void ppce500_init(MachineState *machine)
->>                                     sysbus_mmio_get_region(s, 0));
->>     }
->>
->> +    /* USB */
->> +    dev = qdev_new("tegra2-ehci-usb");
->> +    s = SYS_BUS_DEVICE(dev);
->> +    sysbus_realize_and_unref(s, &error_fatal);
->> +    sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, 12));
->> +    memory_region_add_subregion(ccsr_addr_space, 0x22000,
->> +                                sysbus_mmio_get_region(s, 0));
->> +    {
->> +        MemoryRegion *mr =  g_new(MemoryRegion, 1);
->> +        memory_region_init_io(mr, OBJECT(dev), &usb_ops, s, "fsl-ehci", 4);
->> +        memory_region_add_subregion(ccsr_addr_space, 0x22500, mr);
->> +    }
->> +
->>     /* General Utility device */
->>     dev = qdev_new("mpc8544-guts");
->>     s = SYS_BUS_DEVICE(dev);
->>
->> which is reusing a sufficiently similar existing device just to have 
->> minimal changes. This isn't the right way but since most of these just 
->> differ in the reg offsets I wonder if we could turn these offsets into 
->> properties so we don't need to add a new subclass for every device. I 
->> think subclasses came from the pci version where the PCI IDs are 
->> different and maybe sysbus was modelled after that but we only need 
->> subclasses where additional registers are needed (which may be the case 
->> for this fsl device so this property idea is just unrelated clean up).
->
-> My implementation has similar usb_ops but is based on TYPE_CHIPIDEA 
-> which also has the "endpoints" registers covered. It is used by some 
-> i.MX machines and given that these and p1022 are NXP SoCs I wouldn't be 
-> surprised if they shared a relation in the real world.
-
-Yes, the CHIPIDEA maybe is a better idea. I've only picked one that had 
-the regs at the right place for a start and it seemed to work enough. But 
-you likely have a more complete implementation so if you submit that 
-eventually this will also be resolved for me so I can drop the above 
-change and use yours instead. I just added it above because you seem to 
-not have BIT(2) but I don't remember what that was and if it's really 
-needed. Otherwise it looked you have the same.
-
-Regards,
-BALATON Zoltan
+T24gVHVlLCA0IEZlYiAyMDI1IGF0IDIyOjM3LCBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxs
+QGxpbmFyby5vcmc+IHdyb3RlOg0KPiBPbiBUaHUsIDMwIEphbiAyMDI1IGF0IDIyOjMxLCBFZGdh
+ciBFLiBJZ2xlc2lhcyA8ZWRnYXIuaWdsZXNpYXNAZ21haWwuY29tPiB3cm90ZToNCj4gPiBPbiBN
+b24sIEphbiAyNywgMjAyNSBhdCA4OjQw4oCvQU0gUGV0ZXIgTWF5ZGVsbCA8cGV0ZXIubWF5ZGVs
+bEBsaW5hcm8ub3JnPiB3cm90ZToNCj4gPj4gT24gVGh1LCAxOSBEZWMgMjAyNCBhdCAwNjoxNywg
+QW5kcmV3Lll1YW4gPGFuZHJldy55dWFuQGphZ3Vhcm1pY3JvLmNvbT4gd3JvdGU6DQo+ID4+ID4g
+LSAgICAgICAgICAgIHJ4X2NtcCA9IHJ4YnVmX3B0cltvZmZzZXRdIDw8IDggfCByeGJ1Zl9wdHJb
+b2Zmc2V0XTsNCj4gPj4gPiAtICAgICAgICAgICAgbWFzayA9IEZJRUxEX0VYMzIoY3IwLCBUWVBF
+Ml9DT01QQVJFXzBfV09SRF8wLCBNQVNLX1ZBTFVFKTsNCj4gPj4gPiAtICAgICAgICAgICAgY29t
+cGFyZSA9IEZJRUxEX0VYMzIoY3IwLCBUWVBFMl9DT01QQVJFXzBfV09SRF8wLCBDT01QQVJFX1ZB
+TFVFKTsNCj4gPj4gPiArICAgICAgICAgICAgZGlzYWJsZV9tYXNrID0NCj4gPj4gPiArICAgICAg
+ICAgICAgICAgIEZJRUxEX0VYMzIoY3IxLCBUWVBFMl9DT01QQVJFXzBfV09SRF8xLCBESVNBQkxF
+X01BU0spOw0KPiA+PiA+ICsgICAgICAgICAgICBpZiAoZGlzYWJsZV9tYXNrKSB7DQo+ID4+ID4g
+KyAgICAgICAgICAgICAgICAvKg0KPiA+PiA+ICsgICAgICAgICAgICAgICAgICogSWYgZGlzYWJs
+ZV9tYXNrIGlzIHNldCwNCj4gPj4gPiArICAgICAgICAgICAgICAgICAqIG1hc2tfdmFsdWUgaXMg
+dXNlZCBhcyBhbiBhZGRpdGlvbmFsIDIgYnl0ZSBDb21wYXJlIFZhbHVlLg0KPiA+PiA+ICsgICAg
+ICAgICAgICAgICAgICogVG8gc2ltcGxlLCBzZXQgbWFzayA9IDB4RkZGRkZGRkYsIGlmIGRpc2Fi
+bGVfbWFzayBpcyBzZXQuDQo+ID4+ID4gKyAgICAgICAgICAgICAgICAgKi8NCj4gPj4gPiArICAg
+ICAgICAgICAgICAgIHJ4X2NtcCA9IGxkbF9sZV9wKHJ4YnVmX3B0ciArIG9mZnNldCk7DQo+ID4+
+ID4gKyAgICAgICAgICAgICAgICBtYXNrID0gMHhGRkZGRkZGRjsNCj4gPj4gPiArICAgICAgICAg
+ICAgICAgIGNvbXBhcmUgPSBjcjA7DQo+ID4+ID4gKyAgICAgICAgICAgIH0gZWxzZSB7DQo+ID4+
+ID4gKyAgICAgICAgICAgICAgICByeF9jbXAgPSBsZHV3X2xlX3AocnhidWZfcHRyICsgb2Zmc2V0
+KTsNCj4gPj4NCj4gPj4gSXMgdGhlIGNoYW5nZSBpbiBiZWhhdmlvdXIgaW4gdGhlICFkaXNhYmxl
+X21hc2sgY29kZXBhdGggaGVyZQ0KPiA+PiBpbnRlbnRpb25hbD8gUHJldmlvdXNseSB3ZSB1c2Ug
+b25lIGJ5dGUgZnJvbSByeGJ1Zl9wdHJbb2Zmc2V0XSwNCj4gPj4gZHVwbGljYXRlZCBpbnRvIGJv
+dGggaGFsdmVzIG9mIHJ4X2NtcDsgbm93IHdlIHdpbGwgbG9hZCB0d28gZGlmZmVyZW50DQo+ID4+
+IGJ5dGVzIGZyb20gcnhidWZfcHRyW29mZnNldF0gYW5kIHJ4YnVmX3B0cltvZmZzZXQgKyAxXS4N
+Cj4gPj4NCj4gPj4gSWYgdGhpcyBpcyBpbnRlbmRlZCwgd2Ugc2hvdWxkIHNheSBzbyBpbiB0aGUg
+Y29tbWl0IG1lc3NhZ2UuDQo+ID4+DQo+ID4NCj4gPiBJIGFncmVlIHRoYXQgaXQgc2hvdWxkIGJl
+IG1lbnRpb25lZCAobG9va3MgbGlrZSBhIGNvcnJlY3QgYnVnZml4KS4NCj4gDQo+IFRoYW5rcy4g
+SSd2ZSBleHBhbmRlZCB0aGUgY29tbWl0IG1lc3NhZ2U6DQo+IA0KPiAgICAgaHcvbmV0L2NhZGVu
+Y2VfZ2VtOiAgRml4IHRoZSBtYXNrL2NvbXBhcmUvZGlzYWJsZS1tYXNrIGxvZ2ljDQo+IA0KPiAg
+ICAgT3VyIGN1cnJlbnQgaGFuZGxpbmcgb2YgdGhlIG1hc2svY29tcGFyZSBsb2dpYyBpbiB0aGUg
+Q2FkZW5jZQ0KPiAgICAgR0VNIGV0aGVybmV0IGRldmljZSBpcyB3cm9uZzoNCj4gICAgICAoMSkg
+d2UgbG9hZCB0aGUgc2FtZSBieXRlIHR3aWNlIGZyb20gcnhfYnVmIHdoZW4NCj4gICAgICAgICAg
+Y3JlYXRpbmcgdGhlIGNvbXBhcmUgdmFsdWUNCj4gICAgICAoMikgd2UgaWdub3JlIHRoZSBESVNB
+QkxFX01BU0sgZmxhZw0KPiANCj4gICAgIFRoZSAiQ2FkZW5jZSBJUCBmb3IgR2lnYWJpdCBFdGhl
+cm5ldCBNQUMgUGFydCBOdW1iZXI6IElQNzAxNCBJUCBSZXY6DQo+ICAgICBSMXAxMiAtIERvYyBS
+ZXY6IDEuMyBVc2VyIEd1aWRlIiBzdGF0ZXMgdGhhdCBpZiB0aGUgRElTQUJMRV9NQVNLIGJpdA0K
+PiAgICAgaW4gdHlwZTJfY29tcGFyZV94X3dvcmRfMSBpcyBzZXQsIHRoZSBtYXNrX3ZhbHVlIGZp
+ZWxkIGluDQo+ICAgICB0eXBlMl9jb21wYXJlX3hfd29yZF8wIGlzIHVzZWQgYXMgYW4gYWRkaXRp
+b25hbCAyIGJ5dGUgQ29tcGFyZSBWYWx1ZS4NCj4gDQo+ICAgICBDb3JyZWN0IHRoZXNlIGJ1Z3M6
+DQo+ICAgICAgKiBpbiB0aGUgIWRpc2FibGVfbWFzayBjb2RlcGF0aCwgdXNlIGxkdXdfbGVfcCgp
+IHNvIHdlDQo+ICAgICAgICBjb3JyZWN0bHkgbG9hZCBhIDE2LWJpdCB2YWx1ZSBmb3IgY29tcGFy
+aXNvbg0KPiAgICAgICogaW4gdGhlIGRpc2FibGVfbWFzayBjb2RlcGF0aCwgd2UgbG9hZCBhIGZ1
+bGwgNC1ieXRlIHZhbHVlDQo+ICAgICAgICBmcm9tIHJ4X2J1ZiBmb3IgdGhlIGNvbXBhcmlzb24s
+IHNldCB0aGUgY29tcGFyZSB2YWx1ZSB0bw0KPiAgICAgICAgdGhlIHdob2xlIG9mIHRoZSBjcjAg
+cmVnaXN0ZXIgKGkuZS4gdGhlIGNvbmNhdGVuYXRpb24gb2YNCj4gICAgICAgIHRoZSBtYXNrIGFu
+ZCBjb21wYXJlIGZpZWxkcyksIGFuZCBzZXQgbWFzayB0byAweGZmZmZmZmZmDQo+ICAgICAgICB0
+byBmb3JjZSBhIDMyLWJpdCBjb21wYXJpc29uDQo+IA0KPiBhbmQgYWxzbyB0d2Vha2VkIHRoZSBj
+b21tZW50IGEgYml0Og0KPiANCj4gKyAgICAgICAgICAgICAgICAvKg0KPiArICAgICAgICAgICAg
+ICAgICAqIElmIGRpc2FibGVfbWFzayBpcyBzZXQsIG1hc2tfdmFsdWUgaXMgdXNlZCBhcyBhbg0K
+PiArICAgICAgICAgICAgICAgICAqIGFkZGl0aW9uYWwgMiBieXRlIENvbXBhcmUgVmFsdWU7IHRo
+YXQgaXMgZXF1aXZhbGVudA0KPiArICAgICAgICAgICAgICAgICAqIHRvIHVzaW5nIHRoZSB3aG9s
+ZSBjcjAgcmVnaXN0ZXIgYXMgdGhlIGNvbXBhcmlzb24gdmFsdWUuDQo+ICsgICAgICAgICAgICAg
+ICAgICogTG9hZCAzMiBiaXRzIG9mIGRhdGEgZnJvbSByeF9idWYsIGFuZCBzZXQgbWFzayB0bw0K
+PiArICAgICAgICAgICAgICAgICAqIGFsbC1vbmVzIHNvIHdlIGNvbXBhcmUgYWxsIDMyIGJpdHMu
+DQo+ICsgICAgICAgICAgICAgICAgICovDQo+IA0KPiBhbmQgYXBwbGllZCB0aGlzIHRvIHRhcmdl
+dC1hcm0ubmV4dC4NCj4gDQo+ID4gT3RoZXIgdGhhbiB0aGF0IHRoaXMgcGF0Y2ggbG9va3MgZ29v
+ZCB0byBtZSENCj4gDQo+IENhbiBJIGNhbGwgdGhhdCBhIFJldmlld2VkLWJ5ICh3aXRoIHRoZSBh
+Ym92ZSBjaGFuZ2VzKT8NCg0KWWVzLCBUaGFua3MgZm9yIHlvdXIgdGltZTsNCg0KPiB0aGFua3MN
+Cj4gLS0gUE1NDQo=
 
