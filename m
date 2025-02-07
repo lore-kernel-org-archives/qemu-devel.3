@@ -4,144 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 894B2C02192
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 05:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E299C02192
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 05:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgGT8-0006Md-PF; Thu, 06 Feb 2025 23:59:58 -0500
+	id 1tgHJU-0007eA-6h; Fri, 07 Feb 2025 00:54:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1tgGT7-0006Jm-JS
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 23:59:57 -0500
-Received: from mail-bn8nam12on20619.outbound.protection.outlook.com
- ([2a01:111:f403:2418::619]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1tgGT4-0007Wr-O8
- for qemu-devel@nongnu.org; Thu, 06 Feb 2025 23:59:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ijhxWtEQvVBBOAJ+liduaka7Z74p/I5MJASahs8VskJO31gPdsl7wsXFzrQ8haASfUveJlMkd+7FHEAN73jrAkisS+cN5TxBLLvC7eflHXTKEcLAN67ZQe9tBBFePfAAznQsxHRooyKptNOaTGk2uYLeZfMQw295KXw/7Z7M/AjSIwpFhhwCcBTA1BX6ZrbwoLE2EGNNjvYkcVRZYh6yk5qWNVmDHonfzIN4n7CDbWqWkGCFTwrr9mHeYH+OtwnQ0uMZV/dXL6ElJdMdQjAZW9yVGbTZUN/+oMtU36Ooh+OiYvIUozBhAFQWtjDcd0z75zpou3VKOmUllwfTqmOi4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5a8xeds9S148YABwdwqZntHjFQYXoHWht1q9ake5F3A=;
- b=FTHZiymgBibbSdmDh5Q9zN24VUklWyFyk6cMFiImpM6eexF5wKtbqDrtNZwg0kKShjiMejdT5D8Eh45AVQyGcv6z5k23/JQGT7dVjT/qT7LsyAp8h2Yi4Par//UT1gUYMzDtVbfTTV6xhRa356zQIPZWr/X67OBJ7B1BdkqDnG2QNB2uVsLVQ+EKuj773+blYBKf7yzojtINWtoU4u0bxfTfNode9CZ4rpUAIjayQ6ejX2wc3f9W9YFD25Qm2jdLxgl3Z0mFL271nmOWcduJ7aGeFlL+QGdeaNjG09yHvU2WLo8PAQIdBsmjj/Nz6SHCxQVh8A+Be6Gu2rrs1Iq6Ow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5a8xeds9S148YABwdwqZntHjFQYXoHWht1q9ake5F3A=;
- b=Ic6295Ezpy79vDSfDW29iek9OZXotgqrq4O9OLqQT4VIlEHa/Y/6aDG0RAGQEOt2yT8CDjHj2jNPZ7vCU7BKeHaPucE5GVu8bmRAZCNqhMEe1goQzK38CnUi5fr+5A45F8U0D4iKJ7UhvJOSGBJEpLbjJiWV2QTRQpRnqmdKt/E=
-Received: from MN2PR05CA0044.namprd05.prod.outlook.com (2603:10b6:208:236::13)
- by DM3PR12MB9349.namprd12.prod.outlook.com (2603:10b6:0:49::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.11; Fri, 7 Feb
- 2025 04:59:50 +0000
-Received: from BN3PEPF0000B370.namprd21.prod.outlook.com
- (2603:10b6:208:236:cafe::c0) by MN2PR05CA0044.outlook.office365.com
- (2603:10b6:208:236::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.25 via Frontend Transport; Fri,
- 7 Feb 2025 04:59:50 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B370.mail.protection.outlook.com (10.167.243.167) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8445.2 via Frontend Transport; Fri, 7 Feb 2025 04:59:49 +0000
-Received: from [10.136.46.27] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 6 Feb
- 2025 22:59:47 -0600
-Message-ID: <c513b084-2646-4a41-972d-02c4672a2341@amd.com>
-Date: Fri, 7 Feb 2025 10:29:45 +0530
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tgHJS-0007dh-NP
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 00:54:02 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tgHJQ-0003mc-Bn
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 00:54:02 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21f3328f72aso19641805ad.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 21:53:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738907638; x=1739512438;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jNbfp+IOewD+Bj2PvTx5EMEMOdfj7eLWaW/M6hpxtsY=;
+ b=tEoR1IZFSQ/sScrFU883HW2pnp0B1SULsB/Y67XrP+8WDq3O46AAyeFGO6wiomeuzP
+ 5GmRxKhEXmOycjLfjhJDoF8TDOkdGMJ55B+k0mpE/MHhpYyjQDdDre5568jPz6zvYGKP
+ rHYxIioGYlxuFBjXB342Mw30vl+xG8V7IHYL49wfZhVz51jKwhwwxJw1K2Z+tO4vIGeU
+ KtEshcZqy67Y63D4545mcGhx4nEONkQU1hyhfn8f6Jt4yb2kWU0ZodPgcR4pwAI1/4W4
+ M5U6+ujOcfhn4g1Sgzh0M65l1SOOGicC+4nluBWxd2ipjO1Yi26ilOoEhSQZ/NYX2xkK
+ OKiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738907638; x=1739512438;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jNbfp+IOewD+Bj2PvTx5EMEMOdfj7eLWaW/M6hpxtsY=;
+ b=Ruhd0u+haafwFb5jDF/9T2izyfa3OHzAw7d6bmkKbkUGxAZkBYvjm9Zadz/fFQLa0N
+ 4Xt/o0JQigkclvOQpFrOrh1FIx+MbekRYSi+gO5x7o2ajckhqCpw1Pp+8iMwiBPL9tDN
+ 5uZLL1iVwQpX5kgn37GTjqP2WAqQhk4lKEPGxEK0rX5ra8cX9i488czCBgMmS65T2iwN
+ C6GoKBwpralJR9lrnr+LAU4EJ1LDSZTrqUcxSC1BJPI+IT3w6kILd8fSGtXHWWfpt9IA
+ M+0v8NrebDUFKDtRioWZk6lsepOwGq8e6BQ9ky8A+Upjz//vf8YXU/2z/4VUtpvtvpol
+ paiQ==
+X-Gm-Message-State: AOJu0YyP9WR6o0ux+f+xsxrlXVdg3s42pcNAhZZF/deDwAIAOVoIr2d4
+ hwlZp0Jc0snEhXCOypJIC1dsvQrWdVAgwiiN76hfnDY0Y3LudPZxoQ7fIkXXi5o=
+X-Gm-Gg: ASbGncvgle3XRU2vkeIEG6Bu63HZ7lE86a1MGOcqNqYQIzypNnk6akG5r/Xa/FCvBSr
+ 4IupdhTdIlMb6dwScEjts/+cFMHwuuKlRWtezF3zZsJd/hZRUmjmlWF1mJuBp7Kw1l5GMfJI1bW
+ fjY/ErA7DakYu45dqd2x/lwqGLDUnbuuEdNA1efVZruGc4jlaayvPrJ4O+WT20yvB69ppWSpFs5
+ sZ+ADO+uGKXUwtn/Q8IqlkQU1J/dx3hkkcaTyQuOoCQAyAp3oACCRW4J9YqWRZnooIALdj7bWzU
+ u8z7v1TefOXl9KCqXAQ=
+X-Google-Smtp-Source: AGHT+IG491EH9xyurU60ShDpSK45H8jW0ZtDfA6OL4/VcOYocZkyBYR1XkbU5WMYA3duCdxG4q70MQ==
+X-Received: by 2002:a05:6a21:2fc7:b0:1e6:b2d7:4cf0 with SMTP id
+ adf61e73a8af0-1ee03b66867mr4001174637.41.1738907638026; 
+ Thu, 06 Feb 2025 21:53:58 -0800 (PST)
+Received: from localhost ([157.82.205.237])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-73048bf13d7sm2268286b3a.99.2025.02.06.21.53.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Feb 2025 21:53:57 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Fri, 07 Feb 2025 14:53:43 +0900
+Subject: [PATCH] qom: Use command line syntax for default values in help
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Emulated AMD IOMMU cleanup and fixes
-To: <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
-References: <20250207045354.27329-1-sarunkod@amd.com>
-Content-Language: en-US
-From: "Arun Kodilkar, Sairaj" <sarunkod@amd.com>
-In-Reply-To: <20250207045354.27329-1-sarunkod@amd.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B370:EE_|DM3PR12MB9349:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2615e20a-5bff-4841-f88f-08dd4734403a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y3JEeFZOV2RNT1VMZ3RWTWVBdGtjOFVPM1Y1YzR6c21GOVEvd3ZGL1AwcUZh?=
- =?utf-8?B?bFY0RVNGL05RRTVoNzE0bFM4RjdUVDFENEhzb0J0S3FZS2Y5VEdvSGtsZkJ3?=
- =?utf-8?B?MUdFdUdTQXpLQjFKdWFZeEpST0d0WlJDS3RoaWkrenhMa210Zi9mOXlYMFdU?=
- =?utf-8?B?QVlsamNuMUg2SjdEMGFrNE1BeWxqd21IOENZeXNpcC96aHFqVHNqWU1helRD?=
- =?utf-8?B?YXM1OHFndFkzWXh6TnNmbWVvZDY5dFh0U0xyRFg4Z3BKcmVzRmwwMWNUbmlR?=
- =?utf-8?B?TFM2TFJYeWVOOXl4cU9ERkVsNXhwbDdnaVc5Ui9PZUVSMWtQaE56T3NQTnpp?=
- =?utf-8?B?RlVIS0Rpa2M1TElyMHlhQlBHc1lmMW9rbnhEeVBFQzZtS3RnQ0hnNnZRa1cv?=
- =?utf-8?B?YVlYZmpPQyt4anZHWUZrYmoxRkMybitRbkxEdWxONUt0cmlhdDNFNEcvWWNi?=
- =?utf-8?B?ZUtYZUFySXVFSXltYnA0Yml3Ymw4S09IVVRvRU0rc0NWRUluSDVzcnlWUDJo?=
- =?utf-8?B?UjJmS3J1Q1pUdFJISy9xTW90cHExWnpXVzFkVjFjbWFPQWNEcHY1T0N5NmVt?=
- =?utf-8?B?bi9kSHNRZ09ObzNFODE0cks3TmJHQWYvMUdTc1oydmY5MVRkYVYyTWdNVnR1?=
- =?utf-8?B?LzZxeFBxYzdwWVdBeTNWQW05cTY5MWdLb1RhYTJYWXZUMk4zUjVrR3hKbktC?=
- =?utf-8?B?VWJWZHZCekNhaGEwNDkvWVMzNTJqcXFoNVNuc1V6VWVuRFpuTDYwUk9BOFN3?=
- =?utf-8?B?ZTJCaURGc0ZKQVJzRDVtY2dwUnAxc3FnWGRlZXRWRTcrLzlqTFUydSt1MXYr?=
- =?utf-8?B?bTZxNks4b0JSVHp4RzV3OUdWdnV0Tm9wSUxLUzlKOUZ3eTdoVStyaDVQbkZ4?=
- =?utf-8?B?cm9tZHZ4NEhHRmRoOFJrVVhGTnA1dGNqOStycDBGVEo2Y0RVbnFJM09rbDRm?=
- =?utf-8?B?N1B4ZG83OFZ5clAyeUlDSGVJdEo5TTFEanY3OTBET3R2RWJWbUNJK2lXZWtn?=
- =?utf-8?B?end4cmxHT1NxWG1DbGJueGVybnBPcXNrRmxPemtwTVBIOTh2S0h6ZWFGaUk0?=
- =?utf-8?B?ZC9QSVNoVXY2cjFhbENSaFBjMDZtS0dpWEMvcUVEM2FTKzk1MHhHZmVrc25x?=
- =?utf-8?B?RjZtejVKL1BqSEtJQVh2QThDaDNSTkM2WXFTM1VtbGo1VHpsVXNtOUZMbnVK?=
- =?utf-8?B?Z0tHbzExTVJVNkdsSndGN0FjM0R5RGpYWmxJS1N6cDhPdGY2cHp0dDJjM05l?=
- =?utf-8?B?cGtkRE1ndUZOQThnOTV3L3FrSFZSTUJUaXEwd0lMZm5hZVJkZ2dBOGphYUY3?=
- =?utf-8?B?d3VzV3pKSXhiZk1pMDloNjhaUVBmWnhFV25nNHQxOWE5b0gvSUFicnVqNjZU?=
- =?utf-8?B?VmZEOFRKQ0szSXJ5TGNWZk9YVXd5Tkw0V1llOC85K1lqbkFoZjh5QVVOUmpk?=
- =?utf-8?B?MlV0UzVhYmNDcTFINjBWUlpCYUwzUjVkTzNvTGp0SVJtV0FLYTM2MmhlUFk5?=
- =?utf-8?B?c1BHSW9CeWZDUzNaMVJNTmRDZ211bjB6UWJWYXJqc1FSaEF6akE5SGozVFZk?=
- =?utf-8?B?aWRUOERoTWtKYnhQZVJxMHhsSzg3ekE1Y0xUVUlZZHBPTzZreDczaFNQdFh4?=
- =?utf-8?B?YUUvUUhNbmF6WnpweGI2S1A3WlJGejg3d05aOWh6UHc4alhvT2RTa3Y3UTRu?=
- =?utf-8?B?RlVhZVdwT0hlK0NHUHNwYldiU3pHeU4reFhSNWRSQnBIV2ptdUlpWDFacERN?=
- =?utf-8?B?QjcreGFiQklGRFR0a1VrVmNoWStIVUthdE5OSHVlK00va1JqQk9DQWh3SFhk?=
- =?utf-8?B?enloazF2WlBQZ0lNWmJ0TzhLVHFMbHR6cTd4Y3JYYUxqRGpaZFhQcDEvNnRL?=
- =?utf-8?B?b1dHb3ZFWG45N216ZEMyQVk2blNFanZZYStYRWZYTGQxclJpNUlOdEk5ZW5t?=
- =?utf-8?B?UWtFTHFuaTVKalVsL1dMbTBYVW5qaXhvdk5rVFhheUdEbHRLYjdFZnZ5d1Zj?=
- =?utf-8?Q?zQObQbcbxJFF+mIHCGgFfitpNlR+Vo=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2025 04:59:49.7175 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2615e20a-5bff-4841-f88f-08dd4734403a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B370.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9349
-Received-SPF: permerror client-ip=2a01:111:f403:2418::619;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20250207-bool-v1-1-5749d5d6df24@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAOafpWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDIwNz3aT8/BxdSzNzIzPztBSDRCNTJaDSgqLUtMwKsDHRsbW1AMz8E7l
+ WAAAA
+X-Change-ID: 20250207-bool-967267fd0a25
+To: Jason Wang <jasowang@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Lei Yang <leiyang@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,32 +116,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+object_property_help() uses the conventional command line syntax instead
+of the JSON syntax. In particular,
+- Key-value pairs are written in the command line syntax.
+- bool description passed to the function says on/off instead of
+  true/false.
 
-Accidentally added v2 tag. Please ignore it, this is version 1.
+However, there is one exception: default values are formatted into JSON.
+While the command line and JSON syntaxes are consistent in many cases,
+there are two types where they disagree:
 
-On 2/7/2025 10:23 AM, Sairaj Kodilkar wrote:
-> This series provides few bug fixes for emulated AMD IOMMU. The series is based
-> on top of qemu upstream master commit d922088eb4ba.
-> 
-> Patch 1: The code was using wrong DTE field to determine interrupt passthrough.
->           Hence replaced it with correct field according to [1].
-> 
-> Patch 2: Current code sets the PCI capability BAR low and high to the
->           lower and upper 16 bits of AMDVI_BASE_ADDR respectively, which is
->           wrong. Instead use 32 bit mask to set the PCI capability BAR low and
->           high.
->           The guest IOMMU driver works with current qemu code because it uses
->           base address from the IVRS table and not the one provided by
->           PCI capability.
-> 
-> Sairaj Kodilkar (2):
->    amd_iommu: Use correct DTE field for interrupt passthrough
->    amd_iommu: Use correct bitmask to set capability BAR
-> 
->   hw/i386/amd_iommu.c | 10 +++++-----
->   hw/i386/amd_iommu.h |  2 +-
->   2 files changed, 6 insertions(+), 6 deletions(-)
-> 
+string: The command line syntax omits quotes while JSON requires them.
+
+bool: JSON only accepts true/false for bool but the command line syntax
+      accepts on/off too, and on/off are also more popular than
+      true/false. For example, the docs directory has 2045 "on"
+      occurances while it has only 194 "true" occurances.
+      on/off are also accepted by OnOffAuto so users do not have to
+      remember the type is bool or OnOffAuto to use the values.
+
+Omit quotes for strings and use on/off for bools when formatting
+default values for better consistency.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ qom/object_interfaces.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index 1a6f29c053e45bf5da5252f6ac1dfa4e85627f9f..f2450f8099c366864b56940e19c6a4bcc0d5e3a9 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -4,9 +4,11 @@
+ #include "qapi/error.h"
+ #include "qapi/qapi-visit-qom.h"
+ #include "qapi/qmp/qobject.h"
++#include "qapi/qmp/qbool.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qerror.h"
+ #include "qapi/qmp/qjson.h"
++#include "qapi/qmp/qstring.h"
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/qobject-output-visitor.h"
+ #include "qom/object_interfaces.h"
+@@ -177,9 +179,25 @@ char *object_property_help(const char *name, const char *type,
+         g_string_append(str, description);
+     }
+     if (defval) {
+-        g_autofree char *def_json = g_string_free(qobject_to_json(defval),
+-                                                  false);
+-        g_string_append_printf(str, " (default: %s)", def_json);
++        g_autofree char *def_json = NULL;
++        const char *def;
++
++        switch (qobject_type(defval)) {
++        case QTYPE_QSTRING:
++            def = qstring_get_str(qobject_to(QString, defval));
++            break;
++
++        case QTYPE_QBOOL:
++            def = qbool_get_bool(qobject_to(QBool, defval)) ? "on" : "off";
++            break;
++
++        default:
++            def_json = g_string_free(qobject_to_json(defval), false);
++            def = def_json;
++            break;
++        }
++
++        g_string_append_printf(str, " (default: %s)", def);
+     }
+ 
+     return g_string_free(str, false);
+
+---
+base-commit: 7433709a147706ad7d1956b15669279933d0f82b
+change-id: 20250207-bool-967267fd0a25
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
