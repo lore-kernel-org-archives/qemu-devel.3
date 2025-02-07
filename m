@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643BAC02199
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C31C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:02:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQoE-0000Po-TQ; Fri, 07 Feb 2025 11:02:26 -0500
+	id 1tgQoL-0000Qw-B6; Fri, 07 Feb 2025 11:02:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tgQo1-0000Ne-6c
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:23 -0500
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1tgQo7-0000Nt-0H
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:24 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tgQnz-0007Bc-Du
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:12 -0500
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-544ff74be63so436462e87.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:02:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1tgQo4-0007Cg-Vt
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:18 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38dcc6bfbccso403228f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738944129; x=1739548929; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1ws/hCOjjsYOBqMg3NpBqu06i8dgOTgFvePzpBfs4tU=;
- b=UnKS3VD0nmSXFyZHklDFxRdM2X2aJ7eKVlsZcUoIYD4+SqO8hb2fFb+Am+iuPqm7Db
- 0dXnCEvLLs4MMY1RL8QnZCehodW3tYDpb/QRl8r5yeGoQMX9EkQT59xEL/iKcd06yc2s
- rQSLTawiPu6cneQoz+Q8VF5UclndeH8HLsrq+SOuJsfpIP1fMH/MF4vq6xcEh+VbsHD7
- SrIad0W69fPpRwL5ojh4NnYYYDw8RQXBjgGrtvB5oIlsXa/Y/8LeA/4n++ksztlnbE1W
- gma2PYJYC6/FTRXkDUyjsEAlk5tXvsBF07yLdTGfcC+/dI4X/QfZKPqwoPzudoHxCrDK
- vQxQ==
+ d=linaro.org; s=google; t=1738944135; x=1739548935; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ihNlawI4mCyWONJEzR+1GSzo+oI1gh6OJ485QUuU/o0=;
+ b=NUdkZQVVbbVeg60avPIG0Q91kahPSlUcFjcMFvAVb3vvgVxgCxRMWnYUtAGobJ6WIh
+ 2s0aARCEzoiRr5UrH2+KKYrDxttiAFHRo7R9GiFC7Qm2xyb2XX9EBOvBR78Wyji/v19K
+ UH47fDR69gsE1FThSwG/5xVU4UUgmR7bmvufgmtWglsiiSRQjAVdfy0j3sVC2Ppr5rgu
+ gYbjXGf/EFQkCxm0xpsrF2Pt5lLwzQsW6dd9p6X+LWJcHNwnwoOrKuw5Lj9UdXcnoCLM
+ EZ38+k6nNLp09l5Jb9/IdY+uUubUcHYiuhazpG4UDfjoahLZEDzOD82L2JwvAeIMmfw2
+ ypXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738944129; x=1739548929;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1ws/hCOjjsYOBqMg3NpBqu06i8dgOTgFvePzpBfs4tU=;
- b=Kdf1oEelkkgOU8lrboljSCLg1a95l4ed+GU78ARlRM5jN/5Xb0g8t3wd/RuDXznc25
- 8f+SaezqLB9WCWNA4+wsa9al7EmnBA1O4zoKV8e/Nt0cjUhRr8o5ptmpKBNLpTEVlkpE
- cXztC3vUrMSBfNIEyFbfDrULJJLeBQVm/0P4KpxuXZ9I9urUAKIa9ePt5mnrH/grS+c6
- YFCjN03KzpWvGbONAsk8Q6fuc1KoJZic0JuelbqqEb7hmw6fRpvV8Qjm9yRoJIXCAX6u
- hqxaXciBys+XKg2pZccaCrC5sZKNraL+HfpudaD9vK96TfdlI+gkn6fPz8BpG/oY8lON
- WfBg==
-X-Gm-Message-State: AOJu0YwYaBQXBLPbsT2JwWU3ZTcNWXfYA0PGNsggEkiQXHNlYqYQIoc9
- RrL4hT0ZyWz9PkI/DqftGw3oq+efhXjsM2cIS+NQFSUMt/cn1CcoW2I7UcwLjpRV/QQfyDDiKoV
- x1GnMPYmKyvWj7+uuukA9lRhdy55u0P2f
-X-Gm-Gg: ASbGnctXCjUkZPmk95CHv3/oxlbcFIyChFyJorqyYq5mgqlI3CtdhuuPLBuRtIFoqOR
- yqyZx1QsxiW4UEY9ynD3cqs/8l/daCcv5Ip1sSNtr674mtgBWyZnmByDjaimY/FBpvmH9C7c=
-X-Google-Smtp-Source: AGHT+IG8/rXq5lbeHqJetJfYLHaTfGMfbkwo8tcYRHcuoJamHmnKuAKWKbXcLFHd/oV9bwAPLX9s0s+PT0RVp4iCbGg=
-X-Received: by 2002:a05:6512:2388:b0:542:2934:71a7 with SMTP id
- 2adb3069b0e04-54414a9d01bmr1405363e87.15.1738944125184; Fri, 07 Feb 2025
- 08:02:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738944135; x=1739548935;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ihNlawI4mCyWONJEzR+1GSzo+oI1gh6OJ485QUuU/o0=;
+ b=GYbRS5IavTd+THZwKsIsZpSBbccgzDORjH2LF9YIzMyEcENzpdg9wxz87etD1bwPBW
+ JQPLss0ow/r3Q7hGDh34XYnrlpiaozDLBc6FybB+K5X/HQp2aZsTnw+pJMxpsMTs8bvE
+ I0Y1eLyFRaUQNor5c1xhBVqpGafDlGvFFT/Q8I+m/50+7iVZvbADV12NUSURqLYTHj8d
+ rmNG91IlMQQ8f8YPab+o6HfxLRx+ZwWEjiqj7Ztk/waUpM0z7a7D9EMx3k0dPplyRldx
+ vGPerAeYX3jWKQnG8DKFEUubsB43Tqw/fJFopoj4OuO1TrVYXTNtV4gLiqoTv6FZgFQd
+ rNXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWq3yuLhlUvYkp9MGFbRinkgNtYeq4yKLCpUfKRoGih+TL5b8doEU09jAPtcNsTPbRMeejItSOySSy@nongnu.org
+X-Gm-Message-State: AOJu0YypvJ+jjqy9tqBg+fcrP/cG2hr60C8yqJdNTNhfoVowxKxYxUpY
+ e+/kcHc+Fz1zQvnOuD7XASw2bYA/n66QhxHNG6YyVSYIyGlW6fkVLEalNehkBblF+P2W+cHP5sX
+ pCtQ=
+X-Gm-Gg: ASbGncuEQYUrkfuPcddXBBsivDG3KwyrPJ6CDtzL486fRMORsphxJlZpXSgnB/10T0d
+ d3o4u7+4ztMjoVsNSfBCqgYr4FRKw+80Z3SBYD8Doo03X/Qz13KMuiUWiEyWhgc4S3sC5YFZe2T
+ A7ZFC1L+cJBi4c4Ijj13NCls8LuUHF0q5Yr5NelWzaZcuzlrPWvlTS18aXPVrCuGmPbd7iFL5Zw
+ IhMPO2bs+ArV6wa2E1afPSAeUZgno21SOmXawarutMifDBPch8oT8/5JFZGNXB9JxPwK9sTln+D
+ Dr5I+2paZE6gug==
+X-Google-Smtp-Source: AGHT+IFX9WvhugUJsutcR8mfxc4odbBaP7XrnuVWdvintjlRw7EEsftPfsKjc8xNC5EL2MidatfM4g==
+X-Received: by 2002:a5d:5984:0:b0:38b:ef22:d8c3 with SMTP id
+ ffacd0b85a97d-38dc934bcd9mr2613660f8f.35.1738944134537; 
+ Fri, 07 Feb 2025 08:02:14 -0800 (PST)
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbdd36776sm4941161f8f.32.2025.02.07.08.02.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Feb 2025 08:02:14 -0800 (PST)
+Date: Fri, 7 Feb 2025 16:02:38 +0000
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org
+Subject: Re: [PATCH v3 18/26] hw/arm/boot: Mark all guest memory as RIPAS_RAM.
+Message-ID: <20250207160238.GE3546768@myrica>
+References: <20241125195626.856992-2-jean-philippe@linaro.org>
+ <20241125195626.856992-20-jean-philippe@linaro.org>
+ <e8075a46-8810-4be2-8ad0-b465268541b8@redhat.com>
 MIME-Version: 1.0
-References: <CAJSP0QVYE1Zcws=9hoO6+B+xB-hVWv38Dtu_LM8SysAmS4qRMw@mail.gmail.com>
- <74d703f3-b2c4-416a-805f-61859a5a4e70@gmx.de>
- <CAJSP0QWfaW0Nk2hdAWyT7kr9bOY6FNC3FXMqsjVfzONfU5cU0g@mail.gmail.com>
- <a1bee9ff-f621-42c6-8ef8-c52432d735e7@gmx.de>
-In-Reply-To: <a1bee9ff-f621-42c6-8ef8-c52432d735e7@gmx.de>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Fri, 7 Feb 2025 11:01:53 -0500
-X-Gm-Features: AWEUYZkgrcKF11WT8U0AaHTctcUQ-FF8IU1ZidhCacSVbWiUqi3yI39U0QLWbjs
-Message-ID: <CAJSP0QU+NCDJhajgzotF_c8pMB_bxxpVwbvDpJjm3UasFApNSQ@mail.gmail.com>
-Subject: Re: Call for GSoC internship project ideas
-To: Helge Deller <deller@gmx.de>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=stefanha@gmail.com; helo=mail-lf1-x129.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e8075a46-8810-4be2-8ad0-b465268541b8@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,40 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 7, 2025 at 10:34=E2=80=AFAM Helge Deller <deller@gmx.de> wrote:
->
-> On 2/7/25 15:47, Stefan Hajnoczi wrote:
-> > On Fri, Feb 7, 2025 at 9:39=E2=80=AFAM Helge Deller <deller@gmx.de> wro=
-te:
-> >>
-> >> Hi Stefan,
-> >>
-> >> On 1/28/25 17:16, Stefan Hajnoczi wrote:
-> >>> How to propose your idea
-> >>> ------------------------------
-> >>> Reply to this email with the following project idea template filled i=
-n:
-> >>
-> >> Would something like this be acceptable?
-> >
-> > Yes, it would be great to have an emulation project idea like this!
-> >
-> > Please choose exactly which device you'd like them to implement.
-> > Interns may not be knowledgeable in the field yet and you actually
-> > help by setting limitations.
-> >
-> > Link to the specific device's datasheet, existing open source driver
-> > example, internal QEMU APIs needed to implement this type of device,
-> > etc so that it's easy for an applicant to investigate the idea and
-> > decide whether or not to apply.
->
-> Ok, here is an updated text:
+On Tue, Feb 04, 2025 at 05:27:17PM +1000, Gavin Shan wrote:
+> On 11/26/24 5:56 AM, Jean-Philippe Brucker wrote:
+> > All Realm IPA states are by default RIPAS_EMPTY, and accessing them in
+> > that state causes injection of synchronous exception. Either the loader
+> > or the guest needs to set IPA state to RIPAS_RAM before accessing it.
+> > Since a Linux guest needs all memory ready at boot [1], initialize it
+> > here.
+> > 
+> > [1] https://docs.kernel.org/arch/arm64/booting.html
+> >      https://lore.kernel.org/all/20241004144307.66199-12-steven.price@arm.com/
+> > 
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > ---
+> > v2->v3: New: the Linux guest does not initialize RIPAS itself anymore,
+> > and expects the loader to do it.
+> > ---
+> >   hw/arm/boot.c | 4 ++++
+> >   1 file changed, 4 insertions(+)
+> > 
+> 
+> I think the changes in this patch can be combined to the following one,
+> or move this after it. It logically to initialize guest's RAM covered
+> by PATCH[9]. I'm not sure if there is particular reasonable why we
+> don't do that.
 
-Thanks, I have added it to the project ideas list with some edits:
-https://wiki.qemu.org/Google_Summer_of_Code_2025#Implement_LASI_network_car=
-d_and/or_NCR_710_SCSI_controller_device_models
+If I understand correctly you mean I should merge patches
+9 and 18, or at least bring them closer together in the series?
 
-Feel free to update the project description on the wiki!
+I'd like to keep the hw/arm and target/arm changes in separate patches,
+because it's a nice way to have smaller patches and gives a clean commit
+message. But I could interleave the hw/arm and target/arm changes within
+the series (where it makes sense like here), it may be easier to review
 
-Stefan
+For now I pushed the reworked series to branch cca/latest
+https://git.codelinaro.org/linaro/dcap/qemu/-/tree/cca/latest
+
+Thanks,
+Jean
+
+> 
+> PATCH[09/26] target/arm/kvm-rme: Initialize Realm memory
 
