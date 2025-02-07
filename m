@@ -4,48 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CF6C02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3656C0219B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgLUh-0008GD-Lx; Fri, 07 Feb 2025 05:21:55 -0500
+	id 1tgLUI-0007x6-6m; Fri, 07 Feb 2025 05:21:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgLUe-0008Bm-SJ; Fri, 07 Feb 2025 05:21:52 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tgLUD-0007uX-7N; Fri, 07 Feb 2025 05:21:25 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgLUc-0006L2-NQ; Fri, 07 Feb 2025 05:21:52 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B0676E737E;
- Fri, 07 Feb 2025 13:20:56 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2BA391B0A70;
- Fri,  7 Feb 2025 13:21:38 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1B47A52D91; Fri, 07 Feb 2025 13:21:38 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 51/51] tap: Remove qemu_using_vnet_hdr()
-Date: Fri,  7 Feb 2025 13:21:32 +0300
-Message-Id: <20250207102136.2239826-6-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.9-20250207102509@cover.tls.msk.ru>
-References: <qemu-stable-8.2.9-20250207102509@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tgLUA-0006GW-3h; Fri, 07 Feb 2025 05:21:24 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Yq90n37prz6L55T;
+ Fri,  7 Feb 2025 18:18:33 +0800 (CST)
+Received: from frapeml500005.china.huawei.com (unknown [7.182.85.13])
+ by mail.maildlp.com (Postfix) with ESMTPS id AF4FE1408F9;
+ Fri,  7 Feb 2025 18:21:17 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500005.china.huawei.com (7.182.85.13) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 7 Feb 2025 11:21:17 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Fri, 7 Feb 2025 11:21:17 +0100
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, "Jason
+ Gunthorpe" <jgg@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ddutile@redhat.com"
+ <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
+ Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "nathanc@nvidia.com" <nathanc@nvidia.com>
+Subject: RE: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Topic: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Thread-Index: AQHbMeB0+Q5BEZc9JkeH/U6Jz+dF4rMv66IAgAA0HqCAAb2VAIAIsUnQgAADD4CAAB6MsIAAJxaAgAATMvCAABLUAIAAAjUAgAAKIYCAAAJIgIAAAQ2AgAARRyD///K+AIAAERgA///xZoCAACSvgIAA9kUQ
+Date: Fri, 7 Feb 2025 10:21:17 +0000
+Message-ID: <9112ba0694bd42199e279e37fbfc9dd0@huawei.com>
+References: <71116749d1234ab48a205fd2588151ec@huawei.com>
+ <20250206170238.GG2960738@nvidia.com> <Z6TtCLQ35UI12T77@redhat.com>
+ <20250206174647.GA3480821@nvidia.com> <Z6T3cX_fM-aeYbMI@redhat.com>
+ <20250206175843.GI2960738@nvidia.com>
+ <13b1d8b97a314cb28b87563fa9b45299@huawei.com>
+ <20250206181306.GK2960738@nvidia.com>
+ <02a0080a4a1642d69b7f5dd4707a5b3d@huawei.com>
+ <20250206182201.GL2960738@nvidia.com> <Z6Ucj/u3wt9muakb@Asurada-Nvidia>
+In-Reply-To: <Z6Ucj/u3wt9muakb@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,265 +87,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Since qemu_set_vnet_hdr_len() is always called when
-qemu_using_vnet_hdr() is called, we can merge them and save some code.
 
-For consistency, express that the virtio-net header is not in use by
-returning 0 with qemu_get_vnet_hdr_len() instead of having a dedicated
-function, qemu_get_using_vnet_hdr().
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Thursday, February 6, 2025 8:33 PM
+> To: Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; Daniel P. Berrang=E9
+> <berrange@redhat.com>; Jason Gunthorpe <jgg@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; ddutile@redhat.com;
+> Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
+> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
+> Jonathan Cameron <jonathan.cameron@huawei.com>;
+> zhangfei.gao@linaro.org; nathanc@nvidia.com
+> Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+> nested SMMUv3
+>=20
+> On Thu, Feb 06, 2025 at 02:22:01PM -0400, Jason Gunthorpe wrote:
+> > On Thu, Feb 06, 2025 at 06:18:14PM +0000, Shameerali Kolothum Thodi
+> wrote:
+> >
+> > > > So even if you invent an iommu ID we cannot accept it as a handle t=
+o
+> > > > create viommu in iommufd.
+> > >
+> > > Creating the vIOMMU only happens when the user does a  cold/hot
+> plug of
+> > > a VFIO device. At that time Qemu checks whether the assigned id
+> matches
+> > > with whatever the kernel tell it.
+> >
+> > This is not hard up until the guest is started. If you boot a guest
+> > without a backing viommu iommufd object then there will be some more
+> > complexities.
+>=20
+> Yea, I imagined that things would be complicated with hotplugs..
+>=20
+> On one hand, I got the part that we need some fixed link forehand
+> to ease migration/hotplugs.
+>=20
+> On the other hand, all IOMMUFD ioctls need a VFIO device FD, which
+> brings the immediate attention that we cannot even decide vSMMU's
+> capabilities being reflected in its IDR/IIDR registers, without a
+> coldplug device -- if we boot a VM (one vSMMU<->pSMMU) with only a
+> hotplug device, the IOMMU_GET_HW_INFO cannot be done during guest
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 4b52d63249a508dd927222ffac1a868d38681fc5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Right. I forgot about the call to smmu_dev_get_info() during the reset.
+That means we need at least one dev per Guest SMMU during Guest
+boot :(
 
-diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
-index e41a6c1038..4edb58858e 100644
---- a/hw/net/e1000e.c
-+++ b/hw/net/e1000e.c
-@@ -352,7 +352,6 @@ e1000e_init_net_peer(E1000EState *s, PCIDevice *pci_dev, uint8_t *macaddr)
-     for (i = 0; i < s->conf.peers.queues; i++) {
-         nc = qemu_get_subqueue(s->nic, i);
-         qemu_set_vnet_hdr_len(nc->peer, sizeof(struct virtio_net_hdr));
--        qemu_using_vnet_hdr(nc->peer, true);
-     }
- }
- 
-diff --git a/hw/net/igb.c b/hw/net/igb.c
-index 8089acfea4..7cebbc276b 100644
---- a/hw/net/igb.c
-+++ b/hw/net/igb.c
-@@ -349,7 +349,6 @@ igb_init_net_peer(IGBState *s, PCIDevice *pci_dev, uint8_t *macaddr)
-     for (i = 0; i < s->conf.peers.queues; i++) {
-         nc = qemu_get_subqueue(s->nic, i);
-         qemu_set_vnet_hdr_len(nc->peer, sizeof(struct virtio_net_hdr));
--        qemu_using_vnet_hdr(nc->peer, true);
-     }
- }
- 
-diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-index b7b1de816d..1f79b82b77 100644
---- a/hw/net/net_tx_pkt.c
-+++ b/hw/net/net_tx_pkt.c
-@@ -582,7 +582,7 @@ static void net_tx_pkt_sendv(
- {
-     NetClientState *nc = opaque;
- 
--    if (qemu_get_using_vnet_hdr(nc->peer)) {
-+    if (qemu_get_vnet_hdr_len(nc->peer)) {
-         qemu_sendv_packet(nc, virt_iov, virt_iov_cnt);
-     } else {
-         qemu_sendv_packet(nc, iov, iov_cnt);
-@@ -812,7 +812,7 @@ static bool net_tx_pkt_do_sw_fragmentation(struct NetTxPkt *pkt,
- 
- bool net_tx_pkt_send(struct NetTxPkt *pkt, NetClientState *nc)
- {
--    bool offload = qemu_get_using_vnet_hdr(nc->peer);
-+    bool offload = qemu_get_vnet_hdr_len(nc->peer);
-     return net_tx_pkt_send_custom(pkt, offload, net_tx_pkt_sendv, nc);
- }
- 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 534faa1b88..405e920b28 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3751,9 +3751,6 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- 
-     peer_test_vnet_hdr(n);
-     if (peer_has_vnet_hdr(n)) {
--        for (i = 0; i < n->max_queue_pairs; i++) {
--            qemu_using_vnet_hdr(qemu_get_subqueue(n->nic, i)->peer, true);
--        }
-         n->host_hdr_len = sizeof(struct virtio_net_hdr);
-     } else {
-         n->host_hdr_len = 0;
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 6fb4102d03..81ab8ada55 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -2091,8 +2091,6 @@ static void vmxnet3_net_init(VMXNET3State *s)
-     if (s->peer_has_vhdr) {
-         qemu_set_vnet_hdr_len(qemu_get_queue(s->nic)->peer,
-             sizeof(struct virtio_net_hdr));
--
--        qemu_using_vnet_hdr(qemu_get_queue(s->nic)->peer, 1);
-     }
- 
-     qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
-diff --git a/include/net/net.h b/include/net/net.h
-index ffbd2c8d56..374a827190 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -57,8 +57,6 @@ typedef bool (HasUfo)(NetClientState *);
- typedef bool (HasUso)(NetClientState *);
- typedef bool (HasVnetHdr)(NetClientState *);
- typedef bool (HasVnetHdrLen)(NetClientState *, int);
--typedef bool (GetUsingVnetHdr)(NetClientState *);
--typedef void (UsingVnetHdr)(NetClientState *, bool);
- typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
- typedef int (GetVnetHdrLen)(NetClientState *);
- typedef void (SetVnetHdrLen)(NetClientState *, int);
-@@ -88,10 +86,7 @@ typedef struct NetClientInfo {
-     HasUso *has_uso;
-     HasVnetHdr *has_vnet_hdr;
-     HasVnetHdrLen *has_vnet_hdr_len;
--    GetUsingVnetHdr *get_using_vnet_hdr;
--    UsingVnetHdr *using_vnet_hdr;
-     SetOffload *set_offload;
--    GetVnetHdrLen *get_vnet_hdr_len;
-     SetVnetHdrLen *set_vnet_hdr_len;
-     SetVnetLE *set_vnet_le;
-     SetVnetBE *set_vnet_be;
-@@ -194,8 +189,6 @@ bool qemu_has_ufo(NetClientState *nc);
- bool qemu_has_uso(NetClientState *nc);
- bool qemu_has_vnet_hdr(NetClientState *nc);
- bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
--bool qemu_get_using_vnet_hdr(NetClientState *nc);
--void qemu_using_vnet_hdr(NetClientState *nc, bool enable);
- void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
-                       int ecn, int ufo, int uso4, int uso6);
- int qemu_get_vnet_hdr_len(NetClientState *nc);
-diff --git a/net/dump.c b/net/dump.c
-index 16073f2458..956e34a123 100644
---- a/net/dump.c
-+++ b/net/dump.c
-@@ -154,10 +154,8 @@ static ssize_t filter_dump_receive_iov(NetFilterState *nf, NetClientState *sndr,
-                                        int iovcnt, NetPacketSent *sent_cb)
- {
-     NetFilterDumpState *nfds = FILTER_DUMP(nf);
--    int offset = qemu_get_using_vnet_hdr(nf->netdev) ?
--                 qemu_get_vnet_hdr_len(nf->netdev) : 0;
- 
--    dump_receive_iov(&nfds->ds, iov, iovcnt, offset);
-+    dump_receive_iov(&nfds->ds, iov, iovcnt, qemu_get_vnet_hdr_len(nf->netdev));
-     return 0;
- }
- 
-diff --git a/net/net.c b/net/net.c
-index 0520bc1681..98ed0280d3 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -524,24 +524,6 @@ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len)
-     return nc->info->has_vnet_hdr_len(nc, len);
- }
- 
--bool qemu_get_using_vnet_hdr(NetClientState *nc)
--{
--    if (!nc || !nc->info->get_using_vnet_hdr) {
--        return false;
--    }
--
--    return nc->info->get_using_vnet_hdr(nc);
--}
--
--void qemu_using_vnet_hdr(NetClientState *nc, bool enable)
--{
--    if (!nc || !nc->info->using_vnet_hdr) {
--        return;
--    }
--
--    nc->info->using_vnet_hdr(nc, enable);
--}
--
- void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
-                           int ecn, int ufo, int uso4, int uso6)
- {
-@@ -554,11 +536,7 @@ void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
- 
- int qemu_get_vnet_hdr_len(NetClientState *nc)
- {
--    if (!nc || !nc->info->get_vnet_hdr_len) {
--        return 0;
--    }
--
--    return nc->info->get_vnet_hdr_len(nc);
-+    return nc->vnet_hdr_len;
- }
- 
- void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
-diff --git a/net/netmap.c b/net/netmap.c
-index 241b27c8e9..297510e190 100644
---- a/net/netmap.c
-+++ b/net/netmap.c
-@@ -351,10 +351,6 @@ static bool netmap_has_vnet_hdr(NetClientState *nc)
-     return netmap_has_vnet_hdr_len(nc, sizeof(struct virtio_net_hdr));
- }
- 
--static void netmap_using_vnet_hdr(NetClientState *nc, bool enable)
--{
--}
--
- static void netmap_set_vnet_hdr_len(NetClientState *nc, int len)
- {
-     NetmapState *s = DO_UPCAST(NetmapState, nc, nc);
-@@ -393,7 +389,6 @@ static NetClientInfo net_netmap_info = {
-     .has_ufo = netmap_has_vnet_hdr,
-     .has_vnet_hdr = netmap_has_vnet_hdr,
-     .has_vnet_hdr_len = netmap_has_vnet_hdr_len,
--    .using_vnet_hdr = netmap_using_vnet_hdr,
-     .set_offload = netmap_set_offload,
-     .set_vnet_hdr_len = netmap_set_vnet_hdr_len,
- };
-diff --git a/net/tap.c b/net/tap.c
-index c23d0323c2..e080a9b969 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -266,13 +266,6 @@ static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
-     return !!tap_probe_vnet_hdr_len(s->fd, len);
- }
- 
--static int tap_get_vnet_hdr_len(NetClientState *nc)
--{
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
--
--    return s->host_vnet_hdr_len;
--}
--
- static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
- {
-     TAPState *s = DO_UPCAST(TAPState, nc, nc);
-@@ -284,23 +277,7 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
- 
-     tap_fd_set_vnet_hdr_len(s->fd, len);
-     s->host_vnet_hdr_len = len;
--}
--
--static bool tap_get_using_vnet_hdr(NetClientState *nc)
--{
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
--
--    return s->using_vnet_hdr;
--}
--
--static void tap_using_vnet_hdr(NetClientState *nc, bool using_vnet_hdr)
--{
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
--
--    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
--    assert(!!s->host_vnet_hdr_len == using_vnet_hdr);
--
--    s->using_vnet_hdr = using_vnet_hdr;
-+    s->using_vnet_hdr = true;
- }
- 
- static int tap_set_vnet_le(NetClientState *nc, bool is_le)
-@@ -398,10 +375,7 @@ static NetClientInfo net_tap_info = {
-     .has_uso = tap_has_uso,
-     .has_vnet_hdr = tap_has_vnet_hdr,
-     .has_vnet_hdr_len = tap_has_vnet_hdr_len,
--    .get_using_vnet_hdr = tap_get_using_vnet_hdr,
--    .using_vnet_hdr = tap_using_vnet_hdr,
-     .set_offload = tap_set_offload,
--    .get_vnet_hdr_len = tap_get_vnet_hdr_len,
-     .set_vnet_hdr_len = tap_set_vnet_hdr_len,
-     .set_vnet_le = tap_set_vnet_le,
-     .set_vnet_be = tap_set_vnet_be,
--- 
-2.39.5
-
+Thanks,
+Shameer
 
