@@ -4,113 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51400C02199
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 14:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCA4AC02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 14:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgPLC-0001W6-0z; Fri, 07 Feb 2025 09:28:22 -0500
+	id 1tgPLI-0001cZ-HX; Fri, 07 Feb 2025 09:28:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgPLA-0001VN-Jh
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 09:28:20 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgPLG-0001X5-Ts
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 09:28:26 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgPL5-0008Co-Pb
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 09:28:20 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgPLD-0000EG-VT
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 09:28:25 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6D5642115F;
- Fri,  7 Feb 2025 14:28:13 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A79DA2115F;
+ Fri,  7 Feb 2025 14:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738938493; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1738938501; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qQj+mXq6EHQUvS4SW9yvgtTrr/OpMRPh5pjA/ogVtoU=;
- b=UkY6FDDerKIU766pHwhFJgzZEhul2WQbqDDAanKc2DzQ3jwE+yxYHq0lFQmP4d7D6j+rGG
- CmYeq8zAuKXq/UfmwEpF+OXBVKE0+3ZmehmsbYFxrStPtI+XAvQ8jgvnoGjGme7dIWk7X5
- gdcZc90hO/yyS8+Lq+rKRkdpTfOf6To=
+ bh=w0KvXfDIFXkrX+ZgnkIYb6O2Q8w4gOAFmAaZ+kq6Y8k=;
+ b=W7ZK+POSIx39mwyzn9io9HvOG96IK9meraYg3s4FWuF30VdUDfUetumGYoA83zHxPhgonT
+ ZCvlzyFY7n9jQLsuh0l92xBzwfvgdXwq7ODMOado7jNHu8PqeuIILk73OgubMsIc+Uvvh2
+ ijUqgD/n1LItGX/JgKHcZKBr/Hr0Qf8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738938493;
+ s=susede2_ed25519; t=1738938501;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qQj+mXq6EHQUvS4SW9yvgtTrr/OpMRPh5pjA/ogVtoU=;
- b=vzp9hkqWba88OPuaXVf/OlS3hPp7Q+QPxQGiSK7rz6DkoFdHS4LYCwDFYfHnP+U4MIdkG0
- gATHozdvHT2VrVCg==
+ bh=w0KvXfDIFXkrX+ZgnkIYb6O2Q8w4gOAFmAaZ+kq6Y8k=;
+ b=eZSzZ101t7b/6hYlvQJZo6polupmC0MU50sATbVX93b0fduRo1VVUJuOG5+X/VhYcHNve8
+ cnbSWc3zvcQ0JzAw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UkY6FDDe;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vzp9hkqW
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738938493; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1738938501; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qQj+mXq6EHQUvS4SW9yvgtTrr/OpMRPh5pjA/ogVtoU=;
- b=UkY6FDDerKIU766pHwhFJgzZEhul2WQbqDDAanKc2DzQ3jwE+yxYHq0lFQmP4d7D6j+rGG
- CmYeq8zAuKXq/UfmwEpF+OXBVKE0+3ZmehmsbYFxrStPtI+XAvQ8jgvnoGjGme7dIWk7X5
- gdcZc90hO/yyS8+Lq+rKRkdpTfOf6To=
+ bh=w0KvXfDIFXkrX+ZgnkIYb6O2Q8w4gOAFmAaZ+kq6Y8k=;
+ b=W7ZK+POSIx39mwyzn9io9HvOG96IK9meraYg3s4FWuF30VdUDfUetumGYoA83zHxPhgonT
+ ZCvlzyFY7n9jQLsuh0l92xBzwfvgdXwq7ODMOado7jNHu8PqeuIILk73OgubMsIc+Uvvh2
+ ijUqgD/n1LItGX/JgKHcZKBr/Hr0Qf8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738938493;
+ s=susede2_ed25519; t=1738938501;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qQj+mXq6EHQUvS4SW9yvgtTrr/OpMRPh5pjA/ogVtoU=;
- b=vzp9hkqWba88OPuaXVf/OlS3hPp7Q+QPxQGiSK7rz6DkoFdHS4LYCwDFYfHnP+U4MIdkG0
- gATHozdvHT2VrVCg==
+ bh=w0KvXfDIFXkrX+ZgnkIYb6O2Q8w4gOAFmAaZ+kq6Y8k=;
+ b=eZSzZ101t7b/6hYlvQJZo6polupmC0MU50sATbVX93b0fduRo1VVUJuOG5+X/VhYcHNve8
+ cnbSWc3zvcQ0JzAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CAAFE139CB;
- Fri,  7 Feb 2025 14:28:11 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 09401139CB;
+ Fri,  7 Feb 2025 14:28:19 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QAp2IXsYpmcoOwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 14:28:11 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uD8HLoMYpmcoOwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 14:28:19 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH v2 5/8] crypto: Remove
- qcrypto_tls_session_get_handshake_status
-Date: Fri,  7 Feb 2025 11:27:55 -0300
-Message-Id: <20250207142758.6936-6-farosas@suse.de>
+Subject: [RFC PATCH v2 8/8] migration/multifd: Add a compat property for TLS
+ termination
+Date: Fri,  7 Feb 2025 11:27:58 -0300
+Message-Id: <20250207142758.6936-9-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250207142758.6936-1-farosas@suse.de>
 References: <20250207142758.6936-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6D5642115F
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,263 +121,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The correct way of calling qcrypto_tls_session_handshake() requires
-calling qcrypto_tls_session_get_handshake_status() right after it so
-there's no reason to have a separate method.
+We're currently changing the way the source multifd migration handles
+the shutdown of the multifd channels when TLS is in use to perform a
+clean termination by calling gnutls_bye().
 
-Refactor qcrypto_tls_session_handshake() to inform the status in its
-own return value and alter the callers accordingly.
+Older src QEMUs will always close the channel without terminating the
+TLS session. New dst QEMUs treat an unclean termination as an
+error. Due to synchronization conditions, src QEMUs 9.1 and 9.2 are an
+exception and can put the destination in a condition where it ignores
+the unclean termination. For src QEMUs older than 9.1, we'll need a
+compat property on the destination to inform that the src does not
+terminate the TLS session.
 
-No functional change.
+Add multifd_clean_tls_termination (default true) that can be switched
+on the destination whenever a src QEMU <9.1 is in use.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- crypto/tlssession.c                 | 64 +++++++++++------------------
- include/crypto/tlssession.h         | 32 ++++-----------
- io/channel-tls.c                    |  7 ++--
- tests/unit/test-crypto-tlssession.c | 12 ++----
- 4 files changed, 39 insertions(+), 76 deletions(-)
+ migration/migration.h | 33 +++++++++++++++++++++++++++++++++
+ migration/multifd.c   |  8 +++++++-
+ migration/multifd.h   |  2 ++
+ migration/options.c   |  2 ++
+ 4 files changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index d769d7a304..567698f5d9 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -546,45 +546,35 @@ qcrypto_tls_session_handshake(QCryptoTLSSession *session,
-                               Error **errp)
+diff --git a/migration/migration.h b/migration/migration.h
+index 4c1fafc2b5..77def0b437 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -443,6 +443,39 @@ struct MigrationState {
+      * Default value is false. (since 8.1)
+      */
+     bool multifd_flush_after_each_section;
++
++    /*
++     * This variable only makes sense when set on the machine that is
++     * the destination of a multifd migration with TLS enabled. It
++     * affects the behavior of the last send->recv iteration with
++     * regards to termination of the TLS session.
++     *
++     * When set:
++     *
++     * - the destination QEMU instance can expect to never get a
++     *   GNUTLS_E_PREMATURE_TERMINATION error. Manifested as the error
++     *   message: "The TLS connection was non-properly terminated".
++     *
++     * When clear:
++     *
++     * - the destination QEMU instance can expect to see a
++     *   GNUTLS_E_PREMATURE_TERMINATION error in any multifd channel
++     *   whenever the last recv() call of that channel happens after
++     *   the source QEMU instance has already issued shutdown() on the
++     *   channel.
++     *
++     *   Commit 637280aeb2 (since 9.1) introduced a side effect that
++     *   causes the destination instance to not be affected by the
++     *   premature termination, while commit 1d457daf86 (since 10.0)
++     *   causes the premature termination condition to be once again
++     *   reachable.
++     *
++     * NOTE: Regardless of the state of this option, a premature
++     * termination of the TLS connection might happen due to error at
++     * any moment prior to the last send->recv iteration.
++     */
++    bool multifd_clean_tls_termination;
++
+     /*
+      * This decides the size of guest memory chunk that will be used
+      * to track dirty bitmap clearing.  The size of memory chunk will
+diff --git a/migration/multifd.c b/migration/multifd.c
+index b4f82b0893..4342399818 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1147,6 +1147,7 @@ void multifd_recv_sync_main(void)
+ 
+ static void *multifd_recv_thread(void *opaque)
  {
-     int ret = gnutls_handshake(session->handle);
--    if (ret == 0) {
-+    if (!ret) {
-         session->handshakeComplete = true;
--    } else {
--        if (ret == GNUTLS_E_INTERRUPTED ||
--            ret == GNUTLS_E_AGAIN) {
--            ret = 1;
--        } else {
--            if (session->rerr || session->werr) {
--                error_setg(errp, "TLS handshake failed: %s: %s",
--                           gnutls_strerror(ret),
--                           error_get_pretty(session->rerr ?
--                                            session->rerr : session->werr));
--            } else {
--                error_setg(errp, "TLS handshake failed: %s",
--                           gnutls_strerror(ret));
--            }
--            ret = -1;
--        }
--    }
--    error_free(session->rerr);
--    error_free(session->werr);
--    session->rerr = session->werr = NULL;
--
--    return ret;
--}
--
--
--QCryptoTLSSessionHandshakeStatus
--qcrypto_tls_session_get_handshake_status(QCryptoTLSSession *session)
--{
--    if (session->handshakeComplete) {
-         return QCRYPTO_TLS_HANDSHAKE_COMPLETE;
--    } else if (gnutls_record_get_direction(session->handle) == 0) {
--        return QCRYPTO_TLS_HANDSHAKE_RECVING;
++    MigrationState *s = migrate_get_current();
+     MultiFDRecvParams *p = opaque;
+     Error *local_err = NULL;
+     bool use_packets = multifd_use_packets();
+@@ -1155,6 +1156,10 @@ static void *multifd_recv_thread(void *opaque)
+     trace_multifd_recv_thread_start(p->id);
+     rcu_register_thread();
+ 
++    if (!s->multifd_clean_tls_termination) {
++        p->read_flags = QIO_CHANNEL_READ_FLAG_RELAXED_EOF;
 +    }
 +
-+    if (ret == GNUTLS_E_INTERRUPTED || ret == GNUTLS_E_AGAIN) {
-+        int direction = gnutls_record_get_direction(session->handle);
-+        return direction ? QCRYPTO_TLS_HANDSHAKE_SENDING :
-+            QCRYPTO_TLS_HANDSHAKE_RECVING;
-+    }
-+
-+    if (session->rerr || session->werr) {
-+        error_setg(errp, "TLS handshake failed: %s: %s",
-+                   gnutls_strerror(ret),
-+                   error_get_pretty(session->rerr ?
-+                                    session->rerr : session->werr));
-     } else {
--        return QCRYPTO_TLS_HANDSHAKE_SENDING;
-+        error_setg(errp, "TLS handshake failed: %s",
-+                   gnutls_strerror(ret));
-     }
-+
-+    error_free(session->rerr);
-+    error_free(session->werr);
-+    session->rerr = session->werr = NULL;
-+
-+    return -1;
- }
- 
-+
- int
- qcrypto_tls_session_bye(QCryptoTLSSession *session, Error **errp)
- {
-@@ -720,14 +710,6 @@ qcrypto_tls_session_check_pending(QCryptoTLSSession *session)
- int
- qcrypto_tls_session_handshake(QCryptoTLSSession *sess,
-                               Error **errp)
--{
--    error_setg(errp, "TLS requires GNUTLS support");
--    return -1;
--}
--
--
--QCryptoTLSSessionHandshakeStatus
--qcrypto_tls_session_get_handshake_status(QCryptoTLSSession *sess)
- {
-     return QCRYPTO_TLS_HANDSHAKE_COMPLETE;
- }
-diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
-index c0f64ce989..d77ae0d423 100644
---- a/include/crypto/tlssession.h
-+++ b/include/crypto/tlssession.h
-@@ -75,12 +75,14 @@
-  *                                      GINT_TO_POINTER(fd));
-  *
-  *    while (1) {
-- *       if (qcrypto_tls_session_handshake(sess, errp) < 0) {
-+ *       int ret = qcrypto_tls_session_handshake(sess, errp);
-+ *
-+ *       if (ret < 0) {
-  *           qcrypto_tls_session_free(sess);
-  *           return -1;
-  *       }
-  *
-- *       switch(qcrypto_tls_session_get_handshake_status(sess)) {
-+ *       switch(ret) {
-  *       case QCRYPTO_TLS_HANDSHAKE_COMPLETE:
-  *           if (qcrypto_tls_session_check_credentials(sess, errp) < )) {
-  *               qcrypto_tls_session_free(sess);
-@@ -170,7 +172,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoTLSSession, qcrypto_tls_session_free)
-  *
-  * Validate the peer's credentials after a successful
-  * TLS handshake. It is an error to call this before
-- * qcrypto_tls_session_get_handshake_status() returns
-+ * qcrypto_tls_session_handshake() returns
-  * QCRYPTO_TLS_HANDSHAKE_COMPLETE
-  *
-  * Returns 0 if the credentials validated, -1 on error
-@@ -226,7 +228,7 @@ void qcrypto_tls_session_set_callbacks(QCryptoTLSSession *sess,
-  * registered with qcrypto_tls_session_set_callbacks()
-  *
-  * It is an error to call this before
-- * qcrypto_tls_session_get_handshake_status() returns
-+ * qcrypto_tls_session_handshake() returns
-  * QCRYPTO_TLS_HANDSHAKE_COMPLETE
-  *
-  * Returns: the number of bytes sent,
-@@ -256,7 +258,7 @@ ssize_t qcrypto_tls_session_write(QCryptoTLSSession *sess,
-  * opposed to an error.
-  *
-  * It is an error to call this before
-- * qcrypto_tls_session_get_handshake_status() returns
-+ * qcrypto_tls_session_handshake() returns
-  * QCRYPTO_TLS_HANDSHAKE_COMPLETE
-  *
-  * Returns: the number of bytes received,
-@@ -289,8 +291,7 @@ size_t qcrypto_tls_session_check_pending(QCryptoTLSSession *sess);
-  * the underlying data channel is non-blocking, then
-  * this method may return control before the handshake
-  * is complete. On non-blocking channels the
-- * qcrypto_tls_session_get_handshake_status() method
-- * should be used to determine whether the handshake
-+ * return value determines whether the handshake
-  * has completed, or is waiting to send or receive
-  * data. In the latter cases, the caller should setup
-  * an event loop watch and call this method again
-@@ -306,23 +307,6 @@ typedef enum {
-     QCRYPTO_TLS_HANDSHAKE_RECVING,
- } QCryptoTLSSessionHandshakeStatus;
- 
--/**
-- * qcrypto_tls_session_get_handshake_status:
-- * @sess: the TLS session object
-- *
-- * Check the status of the TLS handshake. This
-- * is used with non-blocking data channels to
-- * determine whether the handshake is waiting
-- * to send or receive further data to/from the
-- * remote peer.
-- *
-- * Once this returns QCRYPTO_TLS_HANDSHAKE_COMPLETE
-- * it is permitted to send/receive payload data on
-- * the channel
-- */
--QCryptoTLSSessionHandshakeStatus
--qcrypto_tls_session_get_handshake_status(QCryptoTLSSession *sess);
--
- typedef enum {
-     QCRYPTO_TLS_BYE_COMPLETE,
-     QCRYPTO_TLS_BYE_SENDING,
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 517ce190a4..ecde6b57bf 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -162,16 +162,17 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-                                            GMainContext *context)
- {
-     Error *err = NULL;
--    QCryptoTLSSessionHandshakeStatus status;
-+    int status;
- 
--    if (qcrypto_tls_session_handshake(ioc->session, &err) < 0) {
-+    status = qcrypto_tls_session_handshake(ioc->session, &err);
-+
-+    if (status < 0) {
-         trace_qio_channel_tls_handshake_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-         return;
-     }
- 
--    status = qcrypto_tls_session_get_handshake_status(ioc->session);
-     if (status == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-         trace_qio_channel_tls_handshake_complete(ioc);
-         if (qcrypto_tls_session_check_credentials(ioc->session,
-diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
-index 3395f73560..554054e934 100644
---- a/tests/unit/test-crypto-tlssession.c
-+++ b/tests/unit/test-crypto-tlssession.c
-@@ -158,8 +158,7 @@ static void test_crypto_tls_session_psk(void)
-             rv = qcrypto_tls_session_handshake(serverSess,
-                                                &error_abort);
-             g_assert(rv >= 0);
--            if (qcrypto_tls_session_get_handshake_status(serverSess) ==
--                QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-+            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-                 serverShake = true;
+     while (true) {
+         uint32_t flags = 0;
+         bool has_data = false;
+@@ -1166,7 +1171,8 @@ static void *multifd_recv_thread(void *opaque)
              }
-         }
-@@ -167,8 +166,7 @@ static void test_crypto_tls_session_psk(void)
-             rv = qcrypto_tls_session_handshake(clientSess,
-                                                &error_abort);
-             g_assert(rv >= 0);
--            if (qcrypto_tls_session_get_handshake_status(clientSess) ==
--                QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-+            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-                 clientShake = true;
-             }
-         }
-@@ -352,8 +350,7 @@ static void test_crypto_tls_session_x509(const void *opaque)
-             rv = qcrypto_tls_session_handshake(serverSess,
-                                                &error_abort);
-             g_assert(rv >= 0);
--            if (qcrypto_tls_session_get_handshake_status(serverSess) ==
--                QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-+            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-                 serverShake = true;
-             }
-         }
-@@ -361,8 +358,7 @@ static void test_crypto_tls_session_x509(const void *opaque)
-             rv = qcrypto_tls_session_handshake(clientSess,
-                                                &error_abort);
-             g_assert(rv >= 0);
--            if (qcrypto_tls_session_get_handshake_status(clientSess) ==
--                QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-+            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-                 clientShake = true;
-             }
-         }
+ 
+             ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
+-                                           p->packet_len, 0, &local_err);
++                                           p->packet_len, p->read_flags,
++                                           &local_err);
+             if (!ret) {
+                 /* EOF */
+                 assert(!local_err);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index bd785b9873..cf408ff721 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -244,6 +244,8 @@ typedef struct {
+     uint32_t zero_num;
+     /* used for de-compression methods */
+     void *compress_data;
++    /* Flags for the QIOChannel */
++    int read_flags;
+ } MultiFDRecvParams;
+ 
+ typedef struct {
+diff --git a/migration/options.c b/migration/options.c
+index 1ad950e397..feda354935 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -99,6 +99,8 @@ const Property migration_properties[] = {
+                       clear_bitmap_shift, CLEAR_BITMAP_SHIFT_DEFAULT),
+     DEFINE_PROP_BOOL("x-preempt-pre-7-2", MigrationState,
+                      preempt_pre_7_2, false),
++    DEFINE_PROP_BOOL("multifd-clean-tls-termination", MigrationState,
++                     multifd_clean_tls_termination, true),
+ 
+     /* Migration parameters */
+     DEFINE_PROP_UINT8("x-throttle-trigger-threshold", MigrationState,
 -- 
 2.35.3
 
