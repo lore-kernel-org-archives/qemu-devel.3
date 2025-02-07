@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8ABC02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 07:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A193C02192
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 07:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgIiY-00049f-Eb; Fri, 07 Feb 2025 02:24:02 -0500
+	id 1tgIiZ-0004AS-6M; Fri, 07 Feb 2025 02:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgIiW-000498-E1; Fri, 07 Feb 2025 02:24:00 -0500
+ id 1tgIiW-00049C-Lz; Fri, 07 Feb 2025 02:24:00 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgIiU-0007QK-Ir; Fri, 07 Feb 2025 02:24:00 -0500
+ id 1tgIiU-0007Q9-P4; Fri, 07 Feb 2025 02:24:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 18121E71F9;
- Fri, 07 Feb 2025 10:23:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4DBD7E71F8;
+ Fri, 07 Feb 2025 10:23:02 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 579A01B06D1;
- Fri,  7 Feb 2025 10:23:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A2551B06D0;
+ Fri,  7 Feb 2025 10:23:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5262B52D67; Fri, 07 Feb 2025 10:23:44 +0300 (MSK)
+ id 7C93952D65; Fri, 07 Feb 2025 10:23:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.16 32/33] target/arm: arm_reset_sve_state() should set
- FPSR, not FPCR
-Date: Fri,  7 Feb 2025 10:23:36 +0300
-Message-Id: <20250207072343.2109513-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.16 v2 00/33] Patch Round-up for stable 7.2.16,
+ freeze on 2025-02-06 (frozen)
+Date: Fri,  7 Feb 2025 10:23:35 +0300
+Message-Id: <qemu-stable-7.2.16-20250207102241@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.16-20250207102241@cover.tls.msk.ru>
-References: <qemu-stable-7.2.16-20250207102241@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,47 +61,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+The following patches are queued for QEMU stable v7.2.16:
 
-The pseudocode ResetSVEState() does:
-    FPSR = ZeroExtend(0x0800009f<31:0>, 64);
-but QEMU's arm_reset_sve_state() called vfp_set_fpcr() by accident.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-Before the advent of FEAT_AFP, this was only setting a collection of
-RES0 bits, which vfp_set_fpsr() would then ignore, so the only effect
-was that we didn't actually set the FPSR the way we are supposed to
-do.  Once FEAT_AFP is implemented, setting the bottom bits of FPSR
-will change the floating point behaviour.
+Patch freeze is 2025-02-06 (frozen), and the release is planned for 2025-02-08:
 
-Call vfp_set_fpsr(), as we ought to.
+  https://wiki.qemu.org/Planning/7.2
 
-(Note for stable backports: commit 7f2a01e7368f9 moved this function
-from sme_helper.c to helper.c, but it had the same bug before the
-move too.)
+Please respond here or CC qemu-stable@nongnu.org on any patches
+you think shouldn't be included in the release.
 
-Cc: qemu-stable@nongnu.org
-Fixes: f84734b87461 ("target/arm: Implement SMSTART, SMSTOP")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250124162836.2332150-4-peter.maydell@linaro.org
-(cherry picked from commit 1edc3d43f20df0d04f8d00b906ba19fed37512a5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(it is in sme_helper.c in 7.2, not in helper.c)
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
-diff --git a/target/arm/sme_helper.c b/target/arm/sme_helper.c
-index 98a4840970..fd5625c87e 100644
---- a/target/arm/sme_helper.c
-+++ b/target/arm/sme_helper.c
-@@ -35,7 +35,7 @@ void arm_reset_sve_state(CPUARMState *env)
-     memset(env->vfp.zregs, 0, sizeof(env->vfp.zregs));
-     /* Recall that FFR is stored as pregs[16]. */
-     memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
--    vfp_set_fpcr(env, 0x0800009f);
-+    vfp_set_fpsr(env, 0x0800009f);
- }
- 
- void helper_set_pstate_sm(CPUARMState *env, uint32_t i)
--- 
-2.39.5
+Thanks!
 
+/mjt
+
+--------------------------------------
+01* 3bf7dcd47a3d Peter Maydell:
+   hw/intc/openpic: Avoid taking address of out-of-bounds array index
+02* 3d7680fb18c7 Peter Maydell:
+   bitops.h: Define bit operations on 'uint32_t' arrays
+03* 335be5bc44aa Peter Maydell:
+   hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
+04* da80f11efeea Philippe Mathieu-Daudé:
+   cirrus-ci: Remove MSYS2 jobs duplicated with gitlab-ci
+05* a8575f7fb2f2 Akihiko Odaki:
+   virtio-net: Fix size check in dhclient workaround
+06* 5102f9df4a9a Kevin Wolf:
+   qdev: Fix set_pci_devfn() to visit option only once
+07* fbdea3d6c13d Jakub Jelen:
+   ssh: Do not switch session to non-blocking mode
+08* 3abb67323aee Guenter Roeck:
+   scsi: megasas: Internal cdbs have 16-byte length
+09* abf0f092c1dd Christian Schoenebeck:
+   tests/9p: fix Rreaddir response name
+10* 4ec984965079 Christian Schoenebeck:
+   tests/9p: add missing Rgetattr response name
+11* 462db8fb1d40 Christian Schoenebeck:
+   tests/9p: add 'use-after-unlink' test
+12* 3bc4db44430f Christian Schoenebeck:
+   9pfs: remove obsolete comment in v9fs_getattr()
+13* c81e7219e073 Christian Schoenebeck:
+   9pfs: fix 'Tgetattr' after unlink
+14* eaab44ccc59b Christian Schoenebeck:
+   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test
+15* fa416ae6157a Nicholas Piggin:
+   target/ppc: Fix non-maskable interrupt while halted
+16* 26dcf2be7e15 Ahmad Fatoum:
+   hw/openrisc/openrisc_sim: keep serial@90000000 as default
+17* b438362a1425 Roman Artemev:
+   tcg/riscv: Fix StoreStore barrier generation
+18* e7fca81e1705 Alexander Bulekov:
+   fuzz: specify audiodev for usb-audio
+19* 57e2cc9abf5d Gerd Hoffmann:
+   x86/loader: only patch linux kernels
+20* 9678b9c50572 Peter Maydell:
+   hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
+21* e2d98f257138 Thomas Huth:
+   meson.build: Disallow libnfs v6 to fix the broken macOS build
+22* 14e568ab4836 David Hildenbrand:
+   s390x/s390-virtio-ccw: don't crash on weird RAM sizes
+23* b4859e8f33a7 Philippe Mathieu-Daudé:
+   docs: Correct release of TCG trace-events removal
+24* 93dcc9390e5a Han Han:
+   target/i386/cpu: Fix notes for CPU models
+25* 78b0c15a563a Gabriel Barrantes:
+   backends/cryptodev-vhost-user: Fix local_error leaks
+26* bb5b7fced6b5 Phil Dennis-Jordan:
+   hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
+27* 694632fd4498 Sebastian Ott:
+   pci: ensure valid link status bits for downstream ports
+28* 42e2a7a0ab23 Nicholas Piggin:
+   pci/msix: Fix msix pba read vector poll end calculation
+29* 1ad32644fe4c Igor Mammedov:
+   tests: acpi: whitelist expected blobs
+30* 0b053391985a Igor Mammedov:
+   pci: acpi: Windows 'PCI Label Id' bug workaround
+31* 9fb1c9a1bb26 Igor Mammedov:
+   tests: acpi: update expected blobs
+32 1edc3d43f20d Peter Maydell:
+   target/arm: arm_reset_sve_state() should set FPSR, not FPCR
+33 664280abddcb Hongren Zheng:
+   hw/usb/canokey: Fix buffer overflow for OUT packet
+
+(commit(s) marked with * were in previous series and are not resent)
 
