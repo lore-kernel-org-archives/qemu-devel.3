@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E56C0219B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E38BC02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgLUb-00085u-MG; Fri, 07 Feb 2025 05:21:49 -0500
+	id 1tgLUc-00086e-Sh; Fri, 07 Feb 2025 05:21:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgLUY-00083N-Rb; Fri, 07 Feb 2025 05:21:46 -0500
+ id 1tgLUb-00085W-98; Fri, 07 Feb 2025 05:21:49 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgLUX-0006K3-0F; Fri, 07 Feb 2025 05:21:46 -0500
+ id 1tgLUZ-0006KT-Co; Fri, 07 Feb 2025 05:21:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A34C7E737B;
+ by isrv.corpit.ru (Postfix) with ESMTP id A8606E737C;
  Fri, 07 Feb 2025 13:20:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1E9551B0A6D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 23A781B0A6E;
  Fri,  7 Feb 2025 13:21:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 12E9652D8B; Fri, 07 Feb 2025 13:21:38 +0300 (MSK)
+ id 1605F52D8D; Fri, 07 Feb 2025 13:21:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Steve Sistare <steven.sistare@oracle.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.9 48/51] physmem: fix qemu_ram_alloc_from_fd size
- calculation
-Date: Fri,  7 Feb 2025 13:21:29 +0300
-Message-Id: <20250207102136.2239826-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Berthold Gunreben <azouhr@opensuse.org>,
+ Sarah Kriesch <ada.lovelace@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.9 49/51] target/s390x: Fix MVC not always invalidating
+ translation blocks
+Date: Fri,  7 Feb 2025 13:21:30 +0300
+Message-Id: <20250207102136.2239826-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.9-20250207102509@cover.tls.msk.ru>
 References: <qemu-stable-8.2.9-20250207102509@cover.tls.msk.ru>
@@ -63,55 +66,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-qemu_ram_alloc_from_fd allocates space if file_size == 0.  If non-zero,
-it uses the existing space and verifies it is large enough, but the
-verification was broken when the offset parameter was introduced.  As
-a result, a file smaller than offset passes the verification and causes
-errors later.  Fix that, and update the error message to include offset.
+Node.js crashes in qemu-system-s390x with random SIGSEGVs / SIGILLs.
 
-Peter provides this concise reproducer:
+The v8 JIT used by Node.js can garbage collect and overwrite unused
+code. Overwriting is performed by WritableJitAllocation::CopyCode(),
+which ultimately calls memcpy(). For certain sizes, memcpy() uses the
+MVC instruction.
 
-  $ touch ramfile
-  $ truncate -s 64M ramfile
-  $ ./qemu-system-x86_64 -object memory-backend-file,mem-path=./ramfile,offset=128M,size=128M,id=mem1,prealloc=on
-  qemu-system-x86_64: qemu_prealloc_mem: preallocating memory failed: Bad address
+QEMU implements MVC and other similar instructions using helpers. While
+TCG store ops invalidate affected translation blocks automatically,
+helpers must do this manually by calling probe_access_flags(). The MVC
+helper does this using the access_prepare() -> access_prepare_nf() ->
+s390_probe_access() -> probe_access_flags() call chain.
 
-With the fix, the error message is:
-  qemu-system-x86_64: mem1 backing store size 0x4000000 is too small for 'size' option 0x8000000 plus 'offset' option 0x8000000
+At the last step of this chain, the store size is replaced with 0. This
+causes the probe_access_flags() -> notdirty_write() ->
+tb_invalidate_phys_range_fast() chain to miss some translation blocks.
 
+When this happens, QEMU executes a mix of old and new code. This
+quickly leads to either a SIGSEGV or a SIGILL in case the old code
+ends in the middle of a new instruction.
+
+Fix by passing the true size.
+
+Reported-by: Berthold Gunreben <azouhr@opensuse.org>
+Cc: Sarah Kriesch <ada.lovelace@gmx.de>
 Cc: qemu-stable@nongnu.org
-Fixes: 4b870dc4d0c0 ("hostmem-file: add offset option")
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/1736967650-129648-3-git-send-email-steven.sistare@oracle.com
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 719168fba7c3215cc996dcfd32a6e5e9c7b8eee0)
+Closes: https://bugzilla.opensuse.org/show_bug.cgi?id=1235709
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Fixes: e2faabee78ff ("accel/tcg: Forward probe size on to notdirty_write")
+Message-ID: <20250128001338.11474-1-iii@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit e43ced8be18dda77c229ab09f85136a4d600d40d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/system/physmem.c b/system/physmem.c
-index e25c12d267..ea1d80f934 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1901,10 +1901,12 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 84103251b9..1da47c78e8 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -146,7 +146,7 @@ static inline int s390_probe_access(CPUArchState *env, target_ulong addr,
+                                     int mmu_idx, bool nonfault,
+                                     void **phost, uintptr_t ra)
+ {
+-    int flags = probe_access_flags(env, addr, 0, access_type, mmu_idx,
++    int flags = probe_access_flags(env, addr, size, access_type, mmu_idx,
+                                    nonfault, phost, ra);
  
-     size = HOST_PAGE_ALIGN(size);
-     file_size = get_file_size(fd);
--    if (file_size > offset && file_size < (offset + size)) {
--        error_setg(errp, "backing store size 0x%" PRIx64
--                   " does not match 'size' option 0x" RAM_ADDR_FMT,
--                   file_size, size);
-+    if (file_size && file_size < offset + size) {
-+        error_setg(errp, "%s backing store size 0x%" PRIx64
-+                   " is too small for 'size' option 0x" RAM_ADDR_FMT
-+                   " plus 'offset' option 0x%" PRIx64,
-+                   memory_region_name(mr), file_size, size,
-+                   (uint64_t)offset);
-         return NULL;
-     }
- 
+     if (unlikely(flags & TLB_INVALID_MASK)) {
 -- 
 2.39.5
 
