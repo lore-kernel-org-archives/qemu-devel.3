@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C455C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5454C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgRb1-0007uK-K2; Fri, 07 Feb 2025 11:52:51 -0500
+	id 1tgRcP-0000Fb-Kp; Fri, 07 Feb 2025 11:54:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tgRaz-0007tu-Vp
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:52:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgRcO-0000FK-Cq
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:54:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tgRay-0004FV-60
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:52:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgRcM-0004Qw-RK
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:54:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738947166;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1738947254;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=s2DMxp5NqGuhlDKNQ2xuPhKVtGPCQC67oVHERu9c1Xs=;
- b=TXSI+iw/Kq6O/jBG7e8TLBiajYRo+pM1kp4c+nTeC1kB+s0IT4vzCapl+VjsgYZo/5yKSG
- m0SVm+Epy7ufvyXcFJLrSOfa8S8ruAevSF5LN4PVQudFTxSP33bIp2e2d6PtDiiHTB8IIg
- 1qRCL+JHmk30KU32rRZaZxtww5BWAA4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YJXeFnEzqoSV6B2sp8vrSeC5C1Yde3acfQJgATlGvqc=;
+ b=ikCvQfFQgtW7BU4aac1NL6mBVs4f7fK3NaC2C0Ur+MVelRZM+2JrooK5o7Tx3iScjEBo/8
+ x4B1QPcpY85SBC7OUC7ci1eHULYJeIaD9fROU6ze+RKx+FpYkjUc9Mm7CvXtEmPiizHm3j
+ AMpAc4AhjYjGAqjd//WEhU1Xhnqu9xs=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-BkUaSVXoMTG21WO9WuaP3Q-1; Fri, 07 Feb 2025 11:52:45 -0500
-X-MC-Unique: BkUaSVXoMTG21WO9WuaP3Q-1
-X-Mimecast-MFC-AGG-ID: BkUaSVXoMTG21WO9WuaP3Q
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361efc9d1fso17698455e9.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:52:45 -0800 (PST)
+ us-mta-452-5foGbhmGN8yzkQZBnmLN2w-1; Fri, 07 Feb 2025 11:54:12 -0500
+X-MC-Unique: 5foGbhmGN8yzkQZBnmLN2w-1
+X-Mimecast-MFC-AGG-ID: 5foGbhmGN8yzkQZBnmLN2w
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6e44fa43bafso2875996d6.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:54:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738947164; x=1739551964;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s2DMxp5NqGuhlDKNQ2xuPhKVtGPCQC67oVHERu9c1Xs=;
- b=gImOR3z1bpuRIjHfSe2gJSav6DnKt5ZfJc/hclxWOP6tQr/iX8+TP1W1PbG3qJFA2W
- 20NgilaIza1naa0AsGhavXKg8ujk5zDxXQOqB9idyfwdmHoE8bTjQkAarBSFJI7fk3Gr
- LTnnlVzM1aAJu4vO/JnGKorBBnQ/9kunEBaf3+jd8FDXFTCPCzoCh++V2HjB5eoE5Gxt
- sDYKhi/22zHKfSy3uRFdskumK+Z6ruVPgk9v4pAcd0bwPXo7mME3z60ypA2edMEEyh3O
- KhJmF72wJZa9qkup+2soJcNW3SmIXCUxgp6j1YqaLD6PNBulNzZlSn4Mf4kmgUqieV9/
- nQlA==
+ d=1e100.net; s=20230601; t=1738947252; x=1739552052;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YJXeFnEzqoSV6B2sp8vrSeC5C1Yde3acfQJgATlGvqc=;
+ b=kEctRoB9ZEToZ06RuQSudSVpY6/B2njwp+O8lh6CdParYLYySRfdu19e3XQ5wJ6O3g
+ Ka3MaorBLMCiizru8vpJ+0FJU725qA8z84puzM8cwMTX8Y1YXPFvuDeNjpGqb7f6ymc1
+ ITCLNOTfZ5sZwh+ezhwwFeud5kj6cEdShwBj/ObenRj5e41CcmNO6XM9skQipA6JescM
+ +twDYez0ZQ8yfX5mTiHdBLZ8QCSI+nE+54Pixo3paZbWu67iWISAuE9dIqGdT7SGxBJL
+ RXHTAGjopTMdpoZSXlfNY5+kE5wu/Qhn+XSvUlVTCmoBSDCu6N8EwCZtQKxV+fmiWZmK
+ MATA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJ/7YJd7RZhopCipIoILDd8rGOVI+hVhW86ACqiyEtDW16HfgMI3OQ+jbXhBJ9vNqBno7YmXvTtbDP@nongnu.org
-X-Gm-Message-State: AOJu0Yw9uu+Rb6FrRmyGiSwe+zRXt7HdzXaTGkkFQcW/y+Auy/CQo9hZ
- adQZMFWo/iAflN7zWYSsUjK2zcOVcU6lVIhxq3yAH8xdLZW+5q2wwpu4Mt7hrl9bnjQaOLruwBP
- UyLxvjpKBL62hhRevvNOwQMTK0Lbd9WTg8tLbTBRX3qJrUPrW2NN0
-X-Gm-Gg: ASbGncsnjE4YUEovNMR80KDQpZfLawVdPdI7VxnMbRkM+WBmfD4a4lUD8EvQgTxsTKt
- 2gxhjeWZS1pA1qQXdkKpldXmq+WvWILoF9u9em8dyZGoBSBS6upp/4oBBggUTxgjKf2t1bK11Wf
- FAyAgKjiQB1jP3jj042NhLFDIfCt7T0OyistF6CI3YglL0rdXKlijKGsi34xL4szrwsv3SFRjSU
- XbX45+DDs0oh5xv63kIF32oUTmS3Dgr9+CApUFubqE4v+IVAZQmSFRlfPT51ljK/oEAKwyJowA4
- yc/lMoywN3HlLH+HfO3LoC6awD1ZLqcLNJFgoLPPjhR2UzWmodrs
-X-Received: by 2002:a05:600c:354a:b0:436:e751:e445 with SMTP id
- 5b1f17b1804b1-43924980937mr41889435e9.5.1738947164475; 
- Fri, 07 Feb 2025 08:52:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFuqQUrbtze1GaOZGsPiEvj9Dr9LVUzsKvtLvbaLot6HBEWfQZlb0HRLRFBIDNGKSSqtvZ13g==
-X-Received: by 2002:a05:600c:354a:b0:436:e751:e445 with SMTP id
- 5b1f17b1804b1-43924980937mr41889175e9.5.1738947164052; 
- Fri, 07 Feb 2025 08:52:44 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391da964e2sm60760295e9.4.2025.02.07.08.52.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 08:52:43 -0800 (PST)
-Message-ID: <fdd6c6db-fd02-4dbf-af74-2b5e7ca5ca71@redhat.com>
-Date: Fri, 7 Feb 2025 17:52:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
+ AJvYcCXfNqRbTep5WgcxNufsPQCaNur566d+jrL8OJo64Ksp1kA2VOHiyxpJjbXMlffOUR41k3kKHg4BUp0G@nongnu.org
+X-Gm-Message-State: AOJu0YwgFVJdoA3fUnXVby8DkTufKejkpLnjUkAmhwn/IQlIhppjtwps
+ 4UbwGxD0SmeVRjo+WqivLB5ceLgUPI58JiKnraDNCV8AibJWPzgCuIWCXZmM+jmMoYBcAQfak8z
+ +OHQdNccjCXSsrIJ78LKjH7oBuNwAkzF1LU6fggnEchL9T5SNNzNd
+X-Gm-Gg: ASbGncu4x+1EuizNlz3iBAzWUkoVdMIi05s4svtYB1/tDMXILe8H1Ya3qw8jPZXY3Cr
+ 1LweE5rPONa0ZN3sfKmvNDl4qROuzWqXkUAznXHA5OJZaeMnYQDIM9IV7o40tEL1o0ClFaSyJfr
+ Ju8gkM63U0dg5FgwmaZ+wwCtpzy9PY/+5mCQfYjBycGuFVw5h4dyeArYhQwuAPjHwraAcWMb4sW
+ Dqn7VhqmciMTELil4TCCsKaykP4EzGJ8GbBrQ/nVJ3liUs7RjODJ8RQCM3kOqQ7RKU+TSwYAsLW
+ ecsVCw0QNnJ5ttvWrJ4BsWD4xjbnZ4lkvo5mmSWp7XkS/ZNv
+X-Received: by 2002:a05:6214:1d24:b0:6d8:9c92:6555 with SMTP id
+ 6a1803df08f44-6e4456fea73mr53485796d6.29.1738947252103; 
+ Fri, 07 Feb 2025 08:54:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFnZ/7Bz6/MPYjtfM/i8M0A9RiBvRsFqmnKYEH92iOgVoBBP5We41Nf1wNQ2ViWPvtISsfG2A==
+X-Received: by 2002:a05:6214:1d24:b0:6d8:9c92:6555 with SMTP id
+ 6a1803df08f44-6e4456fea73mr53485486d6.29.1738947251796; 
+ Fri, 07 Feb 2025 08:54:11 -0800 (PST)
+Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e44eb52460sm2915526d6.8.2025.02.07.08.54.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Feb 2025 08:54:11 -0800 (PST)
+Date: Fri, 7 Feb 2025 11:54:09 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com,
- alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org,
- zhenzhong.duan@intel.com, ddutile@redhat.com
+ peter.maydell@linaro.org, mst@redhat.com, jasowang@redhat.com,
+ imammedo@redhat.com, alex.williamson@redhat.com, clg@redhat.com,
+ philmd@linaro.org, zhenzhong.duan@intel.com, ddutile@redhat.com
+Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
+Message-ID: <Z6Y6sf064FBWT5G1@x1.local>
 References: <20250206142307.921070-1-eric.auger@redhat.com>
- <20250207060822-mutt-send-email-mst@kernel.org>
- <CAFEAcA8j_ra21a2cuJKSxcL81qoT5aUHmb_mOs1J7aVjdR+eXQ@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA8j_ra21a2cuJKSxcL81qoT5aUHmb_mOs1J7aVjdR+eXQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250206142307.921070-1-eric.auger@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,60 +106,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter, Michael,
+On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
+> This is a follow-up of Peter's attempt to fix the fact that
+> vIOMMUs are likely to be reset before the device they protect:
+> 
+> [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+> https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
+> 
+> This is especially observed with virtio devices when a qmp system_reset
+> command is sent but also with VFIO devices.
+> 
+> This series puts the vIOMMU reset in the 3-phase exit callback.
+> 
+> This scheme was tested successful with virtio-devices and some
+> VFIO devices. Nevertheless not all the topologies have been
+> tested yet.
 
+Eric,
 
-On 2/7/25 5:40 PM, Peter Maydell wrote:
-> On Fri, 7 Feb 2025 at 11:10, Michael S. Tsirkin <mst@redhat.com> wrote:
->> On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
->>> This is a follow-up of Peter's attempt to fix the fact that
->>> vIOMMUs are likely to be reset before the device they protect:
->>>
->>> [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
->>> https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
->>>
->>> This is especially observed with virtio devices when a qmp system_reset
->>> command is sent but also with VFIO devices.
->>>
->>> This series puts the vIOMMU reset in the 3-phase exit callback.
->>>
->>> This scheme was tested successful with virtio-devices and some
->>> VFIO devices. Nevertheless not all the topologies have been
->>> tested yet.
->>>
->>> Best Regards
->>>
->>> Eric
->>
->>
->> Looks good.
->>
->>
->> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->>
->> How should this be merged?
->> I supposed I can merge the 1st three and the other
->> two by the respective maintainers?
->> I don't think there's a dependency here, right?
-> If we're happy with the design of the series I think it
-> would be simpler to take the whole thing through one
-> tree, rather than split it up. I had a question on the
-> smmu patch which is mostly about clarifying what the
-> issue is that we're running into, but in principle
-> I'm happy for you to take that patch as well.
-Thank you for the swift review. I will respin to add some comments along
-with the reset function and the relevance of exit phase + add more
-details in the cover letter.
+It's great to know that we seem to be able to fix everything in such small
+changeset!
 
-Thanks
+I would like to double check two things with you here:
 
-Erc
->
-> -- PMM
->
+  - For VFIO's reset hook, looks like we have landed more changes so that
+    vfio's reset function is now a TYPE_LEGACY_RESET, and it always do the
+    reset during "hold" phase only (via legacy_reset_hold()).  That part
+    will make sure vIOMMU (if switching to exit()-only reset) will order
+    properly with VFIO.  Is my understanding correct here?
+
+  - Is it possible if some PCIe devices that will provide its own
+    phase.exit(), would it matter on the order of PCIe device's
+    phase.exit() and vIOMMU's phase.exit() (if vIOMMUs switch to use
+    exit()-only approach like this one)?
+
+PS: it would be great to attach such information in either cover letter or
+commit message.  But definitely not a request to repost the patchset, if
+Michael would have Message-ID when merge that'll be far enough to help
+anyone find this discussion again.
+
+Thanks!
+
+-- 
+Peter Xu
 
 
