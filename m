@@ -4,108 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208FFC02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0769AC02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQOJ-0006xq-Ps; Fri, 07 Feb 2025 10:35:39 -0500
+	id 1tgQO4-00063r-Ev; Fri, 07 Feb 2025 10:35:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKY-0008GI-Kf
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:52 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tgQNq-0005Ti-7G
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:35:12 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKH-00042v-Ns
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:44 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38dc660b56cso1323101f8f.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tgQNn-0004kn-55
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:35:09 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-21f2339dcfdso36046265ad.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:35:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738942283; x=1739547083; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ss1s/z8UDnfCDTK92VTNTdO4MGHnAPeMCWUHdvvh61s=;
- b=nNMZDgnhuQajNYVVq558zMpeT6wnXeS/yqwKxgtG3MYBrNDn/sG1+zozdI/ayyzUFZ
- EuEq7Qh7stYMgyk2KcVByC1KGPQjadhB1QGzSSt1bxtDZynBJ6Kj8gLdjS+9pNdynlhh
- yXEL6t84aWrRmdo9bqUk3FDvO4/oB4kURd7Ub4iB0Yv8uONtp4fqzhZT/p2mu76epJPV
- EPyKGmRhTmeKMs58iVLx79nUZy/U746UIRSTnwwOvOOWy6W0AdJ4Wk2G2i6H5en0fjqG
- +pwj58/5H/sUFieGkcGTk8VqsqB344Ivai4FYGxYTpzQ39wg6CYQnK/ucLrhDAmsqaXq
- 9dqg==
+ d=ventanamicro.com; s=google; t=1738942504; x=1739547304; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JL6HX0/rUgVOcxkk5vAabK9dtF8gasDai0xn6kwNf/0=;
+ b=U5GNoRhzpC4yju1x80Yb4QAOfPKYw4r5nR9hcfCDbvdFkcL9iuQ/0A5vbWFn7oYmeD
+ 2cmHakGMDirOAeHlth5/OWdiuv0268vPMtlgvDiQyTVRLu+8KSyQbYX6h4y299NKGSE+
+ WK0BKzpe1zYVs+RgljYLUM/fMRsxSu/CwEe5toi/iwA7BXaG+zYBh8vBcGT993rXbqMd
+ Q6N77wrxyzPCE7JkTH7/II9FsepGVl+4hJpyT5Bp/9F6ZLHXkxBbWUIMh0nNN+ovqmRy
+ gmSn7g003PGsb4ENkRMirzQxZbQ3Ku93zSHBBGVl5AB/Af4noDgXGSpwPpeCqnaBNdUv
+ WNxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738942283; x=1739547083;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ss1s/z8UDnfCDTK92VTNTdO4MGHnAPeMCWUHdvvh61s=;
- b=pAc3X3xfj4OdYACegLvv/zaSyyPJ2++G5iCNYwWFhGeHnlveOzwOnqqyxTjvZm8jit
- Dmm5d5Cq8acIHeyHj9KEn61DGMqdLOU3zP5c0KPE+y1sE1DK9RrEr2vIAHjQeMdPWXx1
- SYYTEK8d7BPbKFX1RGRu9StFUMMu8EPtvv7HzO37l9U5yOfMfAB/e8WGK1G374gsnPK4
- WULos21230hsPd6wpO8FElyWzKgvwhp8hYx4lv9r28L4/M60QBcCixDMp1Kc82C7fqWt
- PcyUECOvjwDjVjcavqG/oe0icj+N7haptkAoVaAp7T6OC8L7FGiPvM1oh07DMVsdNg7d
- KBMw==
-X-Gm-Message-State: AOJu0Yw10FV1rSBAYh0M+Wp6f/gcGqZ2ng2Fg0g73EkRlsg6FGJPD7Ul
- 19oLjVAqBw7sYZO+ZSi4o5b3iKIhlNspmY3UdGU2NDrqQm0VaSn9dt/EkRX7EjI=
-X-Gm-Gg: ASbGncun5ClBfbmVdyoZ/zQd2WP/pOc5Eo21yPNxA48PrPFgkv/YGi6MOqBKcym9sjp
- wC9VfCCVNqKIIY8qmFpNDLdqmQ7XQre3utZaPV/IQzt9PFg5QOn9kWDXAebQjnYrGzcQXJkL5Pa
- Y2jQwZdkfEeU3j49ZcF3/vHC1hambPscb8F2cj03uCQn3Op+NQWrFbx96py8Vymbpwrsy2ih69q
- qGTQYN0hmn84yWG6kc1ruRsKu3aQ164MxV0wdyPVsAb7dGpXfqTi7UZ1UF9fEBOQnTgV9AHyEoW
- B7U/5ndtCoQPAMFrqQ==
-X-Google-Smtp-Source: AGHT+IG2SX5Q4KH4eRUVjOQ+1iALf4yNIx/St/braMTwifGpTyevkQkBwosEMcyUpLup4bcyJ/NyEA==
-X-Received: by 2002:a5d:584b:0:b0:38b:e32a:109f with SMTP id
- ffacd0b85a97d-38dc8dbfc57mr2993423f8f.12.1738942283500; 
- Fri, 07 Feb 2025 07:31:23 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab779832909sm246283066b.49.2025.02.07.07.31.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 07:31:18 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7F319609FC;
- Fri,  7 Feb 2025 15:31:13 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Kyle Evans <kevans@freebsd.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
- qemu-riscv@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 12/17] user: Introduce user/signal.h
-Date: Fri,  7 Feb 2025 15:31:07 +0000
-Message-Id: <20250207153112.3939799-13-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250207153112.3939799-1-alex.bennee@linaro.org>
-References: <20250207153112.3939799-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1738942504; x=1739547304;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JL6HX0/rUgVOcxkk5vAabK9dtF8gasDai0xn6kwNf/0=;
+ b=FMFKn9xCpZDDLahCH3wKLuAPB1T3ynz9mVZGkvx6ROySA2/PAp7aeEZUs2Mf72dPbx
+ Y9kt96NAs5WsUmlV1si1GgsKQUQB6MR16O0MdHGe2yhXdgE1XyiZTuktqJ1xEhYGak7Q
+ VR6avzRro75qd/T7wmI/9JMpxwSBdVdA8kCusafEeN6dWk8geAMlXZi6JaH48nJfpv2K
+ aG4/utZFagTJs6Enx5jEoDD6l+EJRAcQIMQW7NuYF9ET1DlF1QJc4O8sQDS7El+G3nVK
+ klxZVBERp4dwaBi2g5Rw++SgNk8Ljx+tbrrxc5UarHSEw9PETQy0f03iJBJqQDn4cDaf
+ xhXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUQaxZcZ7PIXndw6ErbjEoDRt2k+PQLnlm0myQkDk3aY8o4098SvTqJ79KPM4Y/x7WT12bUmvCPbp0@nongnu.org
+X-Gm-Message-State: AOJu0YyFaW47foyLRSgDQ+zyA1r4Wh0hZ9Gwc2AaqIsGeBvISCsBt/a7
+ xr/tKlyVcKxwwmVCp53LaRWNWnHUblQK3r/uTiKZ4dL5YeftLQAABCdJAeIVo0U=
+X-Gm-Gg: ASbGncsHCMYkMjtPiRRUyhI44k+2Gdlq69Jjy4/BwV4nh9EMQosC1mJO6Yt9HjVSYCw
+ YAMXjmZHPa9I5ByFO2ws7LzSsUi2auu2DgXQaegDmoTEFrJhw4ud9zYmIcJb72dyVoA8LA+HBwq
+ 2bOORoKIwAi5mYkJT7k9V6NiNFsAiumIdVYFHBVeLegfqrtAk8XwnBxechP4i4hpO/sp/hj4StT
+ kavyVJxEH/cQ0qPcyCSSxQ/i035LXwYRf0nVuPuZaFfklQIgyEcZUStUVqe/inGxtY1Uwf8x60t
+ V+8TJ8i7n9F68flgzxuRa2+dOqP6P71JuU2MRrQ8ufen4Hxq9vWA+LoQlXPva8kB
+X-Google-Smtp-Source: AGHT+IEg6TOgRbngSBxCtjXHpnQ5Uxj1dtAD59nwxTVtH8DBEiy+2pyGG6fbo45a7em/6DU7v01whA==
+X-Received: by 2002:a17:902:cf04:b0:216:5db1:5dc1 with SMTP id
+ d9443c01a7336-21f4f0ef803mr54542665ad.1.1738942504312; 
+ Fri, 07 Feb 2025 07:35:04 -0800 (PST)
+Received: from [192.168.68.110] (201-69-66-42.dial-up.telesp.net.br.
+ [201.69.66.42]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f36560d6csm32052135ad.92.2025.02.07.07.35.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Feb 2025 07:35:03 -0800 (PST)
+Message-ID: <8f551680-6553-42b1-9307-d4b56e7bc2a5@ventanamicro.com>
+Date: Fri, 7 Feb 2025 12:34:59 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Fix minor whitespace issue in
+ riscv_cpu_properties
+To: Rob Bradford <rbradford@rivosinc.com>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, Alistair Francis
+ <alistair.francis@wdc.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+References: <20250207152823.265068-1-rbradford@rivosinc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250207152823.265068-1-rbradford@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,116 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+Ccing qemu-trivial and Michael
+  
+On 2/7/25 12:28 PM, Rob Bradford wrote:
+> The mvendorid/mimpid/marchid properties have the wrong amount of
+> whitespace ahead of them.
+> 
+> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+> ---
 
-gdbstub needs target_to_host_signal(), so move its declaration to a
-public header.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20250117001542.8290-4-iii@linux.ibm.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- bsd-user/signal-common.h   |  1 -
- include/user/signal.h      | 23 +++++++++++++++++++++++
- linux-user/signal-common.h |  1 -
- bsd-user/signal.c          |  1 +
- linux-user/signal.c        |  1 +
- linux-user/syscall.c       |  1 +
- 6 files changed, 26 insertions(+), 2 deletions(-)
- create mode 100644 include/user/signal.h
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-diff --git a/bsd-user/signal-common.h b/bsd-user/signal-common.h
-index 77d7c7a78b..4e634e04a3 100644
---- a/bsd-user/signal-common.h
-+++ b/bsd-user/signal-common.h
-@@ -42,7 +42,6 @@ void process_pending_signals(CPUArchState *env);
- void queue_signal(CPUArchState *env, int sig, int si_type,
-                   target_siginfo_t *info);
- void signal_init(void);
--int target_to_host_signal(int sig);
- void target_to_host_sigset(sigset_t *d, const target_sigset_t *s);
- 
- /*
-diff --git a/include/user/signal.h b/include/user/signal.h
-new file mode 100644
-index 0000000000..19b6b9e5dd
---- /dev/null
-+++ b/include/user/signal.h
-@@ -0,0 +1,23 @@
-+/*
-+ * Signal-related declarations.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef USER_SIGNAL_H
-+#define USER_SIGNAL_H
-+
-+#ifndef CONFIG_USER_ONLY
-+#error Cannot include this header from system emulation
-+#endif
-+
-+/**
-+ * target_to_host_signal:
-+ * @sig: target signal.
-+ *
-+ * On success, return the host signal between 0 (inclusive) and NSIG
-+ * (exclusive) corresponding to the target signal @sig. Return any other value
-+ * on failure.
-+ */
-+int target_to_host_signal(int sig);
-+
-+#endif
-diff --git a/linux-user/signal-common.h b/linux-user/signal-common.h
-index 8584d9ecc2..196d2406f8 100644
---- a/linux-user/signal-common.h
-+++ b/linux-user/signal-common.h
-@@ -61,7 +61,6 @@ void queue_signal(CPUArchState *env, int sig, int si_type,
-                   target_siginfo_t *info);
- void host_to_target_siginfo(target_siginfo_t *tinfo, const siginfo_t *info);
- void target_to_host_siginfo(siginfo_t *info, const target_siginfo_t *tinfo);
--int target_to_host_signal(int sig);
- int host_to_target_signal(int sig);
- long do_sigreturn(CPUArchState *env);
- long do_rt_sigreturn(CPUArchState *env);
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index b4e1458237..8c51f6ce65 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -24,6 +24,7 @@
- #include "user/cpu_loop.h"
- #include "exec/page-protection.h"
- #include "user/page-protection.h"
-+#include "user/signal.h"
- #include "user/tswap-target.h"
- #include "gdbstub/user.h"
- #include "signal-common.h"
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index 087c4d270e..bffbef235c 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -36,6 +36,7 @@
- #include "user/cpu_loop.h"
- #include "user/page-protection.h"
- #include "user/safe-syscall.h"
-+#include "user/signal.h"
- #include "tcg/tcg.h"
- 
- /* target_siginfo_t must fit in gdbstub's siginfo save area. */
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 6ee02383da..90afaa4426 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -138,6 +138,7 @@
- #include "user-mmap.h"
- #include "user/page-protection.h"
- #include "user/safe-syscall.h"
-+#include "user/signal.h"
- #include "qemu/guest-random.h"
- #include "qemu/selfmap.h"
- #include "user/syscall-trace.h"
--- 
-2.39.5
+>   target/riscv/cpu.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 3d4bd157d2..cca24b9f1f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2844,9 +2844,9 @@ static const Property riscv_cpu_properties[] = {
+>       {.name = "cbop_blocksize", .info = &prop_cbop_blksize},
+>       {.name = "cboz_blocksize", .info = &prop_cboz_blksize},
+>   
+> -     {.name = "mvendorid", .info = &prop_mvendorid},
+> -     {.name = "mimpid", .info = &prop_mimpid},
+> -     {.name = "marchid", .info = &prop_marchid},
+> +    {.name = "mvendorid", .info = &prop_mvendorid},
+> +    {.name = "mimpid", .info = &prop_mimpid},
+> +    {.name = "marchid", .info = &prop_marchid},
+>   
+>   #ifndef CONFIG_USER_ONLY
+>       DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
 
 
