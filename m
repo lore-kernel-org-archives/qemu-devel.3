@@ -4,77 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA129C02192
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 08:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74122C02192
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 08:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgJfF-0003it-2p; Fri, 07 Feb 2025 03:24:41 -0500
+	id 1tgK3M-0008Lo-95; Fri, 07 Feb 2025 03:49:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgJfC-0003i5-Il; Fri, 07 Feb 2025 03:24:38 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1tgK3G-0008LZ-TL
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 03:49:31 -0500
+Received: from shirlock.uni-paderborn.de ([2001:638:502:c003::15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgJfA-0001s5-Av; Fri, 07 Feb 2025 03:24:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1738916676; x=1770452676;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=alS5qVhFCCybRfyInaLelXojIz7gLZOiCl97klrBBE8=;
- b=e54iWr0GsQdBOuPwKsJI4s48VWeQTCvo/7OM2rTX8SBmGYYlF28nNRe+
- DXo0w+LNrqm9SF0wTdAm12otet7n2z+1lDMJxeeC85hPVC2WFKXZ4nXmI
- Pum8rH/XWNy22D+AjxPA2/v6YoTVx5CtT/fyXNTmxPV+GXSxbPDY+BQWY
- hgm5+y5puZexCUkZFzd30QFXsFx1Irs8ac9jSXxhCnUb5KklXmVEO6olv
- Qowpqp2UuY7gOo92cRgfbuPMRG0tvI7yOF4BRc5u2RmhmQgZSf0ZKqabm
- tuyovEtqKIAVf1aWPvscr5MRkMzggJ90ucpHlhVH3Bt7DeRvLxHZufEAN A==;
-X-CSE-ConnectionGUID: kBi1SM2KSNmwBlHZXOOUGQ==
-X-CSE-MsgGUID: VVshjRorShKjcUPRbPNRxw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="39579024"
-X-IronPort-AV: E=Sophos;i="6.13,266,1732608000"; d="scan'208";a="39579024"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Feb 2025 00:24:30 -0800
-X-CSE-ConnectionGUID: AzF9DddJT86IrAN5uvi0Bg==
-X-CSE-MsgGUID: 7rtJ+DWuR+yo+0b4rH2SFg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,266,1732608000"; d="scan'208";a="111388339"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 07 Feb 2025 00:24:28 -0800
-Date: Fri, 7 Feb 2025 16:43:57 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 04/10] rust: add bindings for gpio_{in|out} initialization
-Message-ID: <Z6XHzXwoIklPZQ/I@intel.com>
-References: <20250125125137.1223277-1-zhao1.liu@intel.com>
- <20250125125137.1223277-5-zhao1.liu@intel.com>
- <5a19e7d2-9d69-45fe-812f-84145229876f@redhat.com>
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1tgK3E-0002Op-Q6
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 03:49:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
+ Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=4eBD9aCrImXbASeVWKPQGZgVi7qVSc9rMbPADmGNTJc=; b=XZZZ5nc5RNlNRS3JiRV1fwcBJo
+ 6v2njyN0wIukOVirecOD7TMpaNmxcnJseJbhh7TpivWAobkGAPHB9GiqT4aug9OBraPhxyRfy0LkM
+ AOIHb1+Ud7mDdMoGv1dNtqWzZ9pTDVZ/AHgveE1IzMnN61JaJh9za+XfBrRteUApUY8M=;
+Date: Fri, 7 Feb 2025 09:49:19 +0100
+From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/tricore: Inline TARGET_LONG_BITS in
+ decode_rr_logical_shift()
+Message-ID: <6awodnxb3u2ldcz2erxbjrpkttask6tyl4bk5kik4jaowr5nfd@xnc6zkzm6w35>
+References: <20250206173258.36624-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5a19e7d2-9d69-45fe-812f-84145229876f@redhat.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+In-Reply-To: <20250206173258.36624-1-philmd@linaro.org>
+X-IMT-Source: Extern
+X-IMT-rspamd-score: -25
+X-UPB-Report: Action: no action, RCVD_TLS_ALL(0.00), FROM_HAS_DN(0.00),
+ FROM_EQ_ENVFROM(0.00), BAYES_HAM(-2.99), TO_MATCH_ENVRCPT_ALL(0.00),
+ MID_RHS_NOT_FQDN(0.50), MIME_GOOD(-0.10), NEURAL_HAM(0.00),
+ RCPT_COUNT_TWO(0.00), RCVD_VIA_SMTP_AUTH(0.00), ARC_NA(0.00), ASN(0.00),
+ RCVD_COUNT_ONE(0.00), MIME_TRACE(0.00), TO_DN_SOME(0.00), MISSING_XM_UA(0.00),
+ Message-ID: 6awodnxb3u2ldcz2erxbjrpkttask6tyl4bk5kik4jaowr5nfd@xnc6zkzm6w35
+X-IMT-Spam-Score: 0.0 ()
+X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
+Received-SPF: pass client-ip=2001:638:502:c003::15;
+ envelope-from=kbastian@mail.uni-paderborn.de; helo=shirlock.uni-paderborn.de
+X-Spam_score_int: -42
+X-Spam_score: -4.3
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,49 +75,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 29, 2025 at 11:59:04AM +0100, Paolo Bonzini wrote:
-> Date: Wed, 29 Jan 2025 11:59:04 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 04/10] rust: add bindings for gpio_{in|out}
->  initialization
+On Thu, Feb 06, 2025 at 06:32:58PM +0100, Philippe Mathieu-Daudé wrote:
+> We only support 32-bit TriCore architecture.
 > 
-> 
-> 
-> On Sat, Jan 25, 2025 at 1:32â€¯PM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > +    fn init_gpio_in<F: for<'a> FnCall<(&'a Self::Target, u32, u32)>>(&self, num_lines: u32, _f: F) {
-> > +        unsafe extern "C" fn rust_irq_handler<T, F: for<'a> FnCall<(&'a T, u32, u32)>>(
-> > +            opaque: *mut c_void,
-> > +            line: c_int,
-> > +            level: c_int,
-> > +        ) {
-> > +            // SAFETY: the opaque was passed as a reference to `T`
-> > +            F::call((unsafe { &*(opaque.cast::<T>()) }, line as u32, level as u32))
-> > +        }
-> > +
-> > +        let gpio_in_cb: unsafe extern "C" fn(*mut c_void, c_int, c_int) =
-> > +            rust_irq_handler::<Self::Target, F>;
-> 
-> Please add "let _: () = F::ASSERT_IS_SOME;", which is added by the
-> qdev_init_clock_in() patch.
-> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  target/tricore/translate.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Okay.
+Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 
-I would add `assert!(F::is_some());` at the beginning of init_gpio_in().
-
-There's a difference with origianl C version:
-
-In C side, qdev_get_gpio_in() family could accept a NULL handler, but
-there's no such case in current QEMU:
-
-* qdev_get_gpio_in
-* qdev_init_gpio_in_named
-* qdev_init_gpio_in_named_with_opaque
-
-And from code logic view, creating an input GPIO line but doing nothing
-on input, sounds also unusual.
-
-So, for simplicity, in the Rust version I make the handler non-optional.
-
-
+Cheers,
+Bastian
 
