@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4683FC0219C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21C6C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgLbH-0005w0-NX; Fri, 07 Feb 2025 05:28:43 -0500
+	id 1tgLfe-0002jB-LW; Fri, 07 Feb 2025 05:33:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLb8-0005t7-Lm
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:28:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tgLfX-0002iO-Ey
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:33:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLb6-0008KG-TB
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:28:34 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tgLfV-0003Mi-O9
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:33:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738924112;
+ s=mimecast20190719; t=1738924385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dGTMV/JVOhgwSD7zfFhjmY9o50J6ILSLJjCbihcs1Oc=;
- b=EF5nqKhXRwhZXCtwCWBYU0IgDXrYCuwFiw8atvhrpbtIJcbf/TsKGtHoWBwQRlksBkgVsl
- 9PwKDHz832yhjfniGmNIcbVTAIxMQ4bdvWO2ly/IjGqDekX6l/lH/Oxd5RLd6anbcgyyBV
- xLp5WTSVE4vkvsTRh/HnlBpmLsZ+UNg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pvWFizoz9pJGHnfDdSO1CR7ZlUrvUtkaOixb6rFsBNA=;
+ b=b6iwGbHqapQwvp/+Sa3Ay04GZHnlho8VZ/nQEyoW2IHki74Nb9/de/ahYuCmdax+T5PcEg
+ h4Y3FFqPRXDx0QYVbyiSKkioxCQkOfghnUZTu/MxZV6MWx4DKcXpr31vx7PLlgVsjoZ41n
+ 2fdxdxsR8g1u5p+3s9TXbqeOAlMP4/U=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-3KzueV56MA2BRjcXDlq-2Q-1; Fri, 07 Feb 2025 05:28:30 -0500
-X-MC-Unique: 3KzueV56MA2BRjcXDlq-2Q-1
-X-Mimecast-MFC-AGG-ID: 3KzueV56MA2BRjcXDlq-2Q
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ab78afc6390so66870866b.3
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:28:30 -0800 (PST)
+ us-mta-486-NtjUAF4gM92YLOyi4Y5eCg-1; Fri, 07 Feb 2025 05:33:03 -0500
+X-MC-Unique: NtjUAF4gM92YLOyi4Y5eCg-1
+X-Mimecast-MFC-AGG-ID: NtjUAF4gM92YLOyi4Y5eCg
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38dc88ed7caso386038f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:33:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738924108; x=1739528908;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dGTMV/JVOhgwSD7zfFhjmY9o50J6ILSLJjCbihcs1Oc=;
- b=I6WiJwxKwWxKtDgbIgO/z57fkmWV3aGsk2lb71clpT2W8t2/zD0kLQTz64Y17A8V+e
- 4Y8IgkgsAFvDfyT1uhM8JV/H3ECoWLUeR0WPeVz3G9uzRxCDEf+SBHG68mwLN8V4ziZz
- LtR3leE0wlKvr45fEj+HXKm3TIyCtqtBd+HAc8qOPamh3yYBI6rEupWe2RHvhQiKHWE2
- N2yafspnqKzKx7TlykS0Po5ttMckRQZM/OF8sjMLMQrij6OpHXzSiV1IYJWPhvx5ZjfE
- mV7q5Q2v3sL9pibnIv7nFqrB7G5c92ljwHqggqhQ6F6hZoi3T5f4cKBojz5mnh3rgLij
- 57Ng==
-X-Gm-Message-State: AOJu0YyQnZ3wyVtsQQpwFp1TCHj5yBNPEjiRpHqHnNz3BwU4Ydwpdc4e
- gbkRvoCtV1qWFv6IzqNUn0jKHfa1YPY4qYXyWQ9NWv4+s/XfG4+ZGpSbkC7dAJ2/lHlEX1c6h9R
- nUE6DNjNER1qei4M4KrysP5gMaVBb9uuihM2R5ZhW0sgmFeq/aJOw2rxt/rV0RykWrw9uQpXRnr
- psrdNOmbqcZsXz/fdiryw0677mAIRaSxXNvCHt+k0=
-X-Gm-Gg: ASbGncs0yDT0XIqK+GpTiIIo3aS1NY84KCNBAnopDy1LLqpoHObFK+bwe6t7ZBva53K
- vZvUqJg0PBR7yjmrp6oGJl6IeZfelx7IJ8gPuQkAFz5n+RjT7ZSiXMe5a7sO7q3bUAmZqRZE4Xp
- 4A3haUgMu+98x1XfZIMoGieIcgog+PdpeGiLqZja9ToK6s1WamKocX7xpfuh9jpBhKt9+2Y+Ir0
- 0cUIoGjQ5YEdzCL+XD8AgxMeoPbn9DfwY7oWfu8XbK8qTDizkQ3JV4IdEChaWtojuBIFMDyG1S/
- xIH35Q==
-X-Received: by 2002:a17:907:2d2c:b0:ab7:93a9:2ba6 with SMTP id
- a640c23a62f3a-ab793a92c49mr36776966b.5.1738924108464; 
- Fri, 07 Feb 2025 02:28:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGShQXFzlsUAfdmLVBAyBKRjIiFk7hJkxu2BLvJcSG/amyTIz/cG+Iko+zT0uhk7y+o+h7Hhw==
-X-Received: by 2002:a17:907:2d2c:b0:ab7:93a9:2ba6 with SMTP id
- a640c23a62f3a-ab793a92c49mr36773366b.5.1738924108004; 
- Fri, 07 Feb 2025 02:28:28 -0800 (PST)
-Received: from [192.168.10.3] ([151.62.97.55])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab7732e71e3sm240031566b.112.2025.02.07.02.28.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 02:28:24 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 6/7] tests/tcg/x86_64/fma: Test some x86 fused-multiply-add
- cases
-Date: Fri,  7 Feb 2025 11:28:00 +0100
-Message-ID: <20250207102802.2445596-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250207102802.2445596-1-pbonzini@redhat.com>
-References: <20250207102802.2445596-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1738924382; x=1739529182;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pvWFizoz9pJGHnfDdSO1CR7ZlUrvUtkaOixb6rFsBNA=;
+ b=ajf6XwPeQat6GwQF8C9yk/pOMiuTkB2DckZyCRde9JwM/LpYAqD/gKFV76lqHr5LVF
+ Eh915ztwD7Vy6jwI41uYq/HX/7yfp9EyBp7vFcwPm68rvOpB/YRR9v/3q1b7BMyQsfvW
+ Zdae/KizYKxPW/SP8ZlZzMeYm5bBzE6gHbqxb9Hi7dKgsxVEQ2OQSQXvN9caK00wnGvg
+ NxArd5NvBcFf4w02fZsfaLrCqNR25SQgPFZ1Apwac4v0qY90z23NguExph0HMFxfqi6b
+ 1jtXfBiB6pfuSLocj1Vu4r4FL5UA3bpugTcrPUiL83JQLjSSd7FWpMB6+6bfHseCaCYF
+ 8s5Q==
+X-Gm-Message-State: AOJu0YykazjHuFyGO+wv+1jQWNYUtRR81586Xk481vdJtx+qxcx+72md
+ 0PqzfnIUGrfbxLEb3TI9tkupBfT50gF+VUrJbddrLvH9+jlErUOwtT7lCzPN65/iTgzAmkW0VHY
+ okazorqykgF/9bXMKf7ghjjp6uCKPhKDPDLX4E0LGjfKj711YUDgXzWwyCMA5GaNur/tXFLd2yN
+ 9Za1Thy2StTIyAoekj2ETE5BlEOl8=
+X-Gm-Gg: ASbGncshC1ntooD0zWlKsVWoQvVg9nF8qve44iHUJmyfPHolXMPOP5kk7dSyrCaLifi
+ zo2uY8BsTpcjts/7pWMnIHlnD+6MJIRlNTDZjaIXXoxBtQfwuYQIIFbDVa2a40g==
+X-Received: by 2002:a5d:5986:0:b0:38d:cf79:20a2 with SMTP id
+ ffacd0b85a97d-38dcf7924f6mr455305f8f.35.1738924382381; 
+ Fri, 07 Feb 2025 02:33:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE/D4kx2CNFqPlPETolNxfwpBOLKksXIPC3hCnfeFOO3jdEHT1OecECXiVxUFu3iszamjFPokMUdtpX1eeaZPc=
+X-Received: by 2002:a5d:5986:0:b0:38d:cf79:20a2 with SMTP id
+ ffacd0b85a97d-38dcf7924f6mr455284f8f.35.1738924381992; Fri, 07 Feb 2025
+ 02:33:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+References: <20250205122712.229151-1-ppandit@redhat.com>
+ <20250205122712.229151-4-ppandit@redhat.com>
+ <Z6VCxEKxn6-_okRx@x1.local>
+In-Reply-To: <Z6VCxEKxn6-_okRx@x1.local>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 7 Feb 2025 16:02:44 +0530
+X-Gm-Features: AWEUYZmQCEw7HiJYBIqjttDo1vqQDGMumhp7FiNmrJ3xqFX4UNgqXsP50u-lEpQ
+Message-ID: <CAE8KmOwJSYq2Ok38_sq29cr7JhbLLh1ZEncP13QpDdnYKOAheQ@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] migration: enable multifd and postcopy together
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,160 +102,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Hi,
 
-Add a test case which tests some corner case behaviour of
-fused-multiply-add on x86:
- * 0 * Inf + SNaN should raise Invalid
- * 0 * Inf + QNaN shouldh not raise Invalid
- * tininess should be detected after rounding
+On Fri, 7 Feb 2025 at 04:46, Peter Xu <peterx@redhat.com> wrote:
+> > +/* Migration channel types */
+> > +enum { CH_DEFAULT, CH_MULTIFD, CH_POSTCOPY };
+>
+> Maybe s/DEFAULT/MAIN/?
 
-There is also one currently-disabled test case:
- * flush-to-zero should be done after rounding
+* Okay.
 
-This is disabled because QEMU's emulation currently does this
-incorrectly (and so would fail the test).  The test case is kept in
-but disabled, as the justification for why the test running harness
-has support for testing both with and without FTZ set.
+> > -    if (migrate_multifd() && !migrate_mapped_ram() &&
+> > -        !migrate_postcopy_ram() &&
+> > -        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
+> > +    if (!migration_should_start_incoming(channel)) {
+>
+> This says "if we assume this is the main channel, and if we shouldn't start
+> incoming migration, then we should peek at the buffers".
+> Could you help explain?
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20250116112536.4117889-3-peter.maydell@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+* New migration starts only when the main channel and if 'multifd' is
+enabled all multifd channels are established. So, if 'main' and
+'multifd' channels are _not_ established then migration should _not_
+start. And in that case, incoming connection is likely for one of
+those channels and so we should peek at the buffers, because both
+'main' and 'multifd' channels send magic values.
+
+* migration_should_start_incoming() function returns 'true' only when
+'main' and 'multifd' channels are being established. For 'postcopy'
+channel it returns false.
+
+
+> > +            } else if (!mis->from_src_file
+> > +                        && mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> > +                /* reconnect default channel for postcopy recovery */
+> > +                channel = CH_DEFAULT;
+>
+> This is still in the big "peek buffer" if condition.
+> IMHO we can skip peeking buffer when postcopy paused, because in this stage
+> the channel must be (1) main channel first, then (2) preempt channel next.
+
+* It is in the big 'peek buffer' condition because the 'main' channel
+(= CH_DEFAULT) is being established here. Ideally, all channels should
+send magic values to be consistent. The 'main' channel sends magic
+value when it is established before starting migration, but the same
+'main' channel does not send magic value when it is established during
+postcopy recovery, that is an inconsistency (a bug) here. Ideal fix is
+to send a magic value every time the 'main' channel is established,
+irrespective of when it is established.
+
+* Adding conditionals to check if it is _POSTCOPY_PAUSED state then
+don't peek will only lead to complicated 'if' conditionals. This
+channel handling code is already complex and non-intuitive enough.
+
+> > +        } else if (mis->from_src_file
+> > +            && (!strcmp(ioc->name, "migration-tls-incoming")
+> > +                || !strcmp(ioc->name, "migration-file-incoming"))) {
+> > +            channel = CH_MULTIFD;
+>
+> Confused here too.  Why do we need to check ioc name? Shouldn't multifd has
+> the headers?
+
+* Because they are not 'multifd' channels, tls/file channels don't
+send magic values, but are still handled by
+'multifd_recv_new_channel()' function.
+===
+    ...
+    if (default_channel) {
+        migration_incoming_setup(f);
+    } else {
+        if (migrate_multifd()) {
+            multifd_recv_new_channel(ioc, &local_err);
+        } else {
+            postcopy_preempt_new_channel(mis, f);
+        }
+===
+In the code above, if 'default_channel==false' and multifd() is
+enabled, all incoming connections are handled by
+'multifd_recv_new_channel()', irrespective of whether it is a
+'multifd' channel or not. While creating multifd channels, there is no
+check for channel type like: if(channel == CH_MULTIFD).
+
+* IMHO, if we make all channels behave with consistency, ie. either
+they all send magic value or none sends magic value, that'll simplify
+this code a lot.
+
+> > -        assert(migration_needs_multiple_sockets());
+> Could I ask why removal?
+
+* Because that function returns migrate_multifd() =>
+migrate_multifd() || migrate_postcopy_preempt();
+* And the very following check is also migrate_multifd(), as below:
+
+> >          if (migrate_multifd()) {
+> >              multifd_recv_new_channel(ioc, &local_err);
+
+
+> It might be better to avoid such "ret && XXX" nested check.  E.g. do you
+> think below easier to read?
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 74c50cc72c..9eb2f3fdeb 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1064,12 +1064,14 @@ bool migration_has_all_channels(void)
+>          return false;
+>      }
+>
+> -    if (migrate_multifd()) {
+> -        return multifd_recv_all_channels_created();
+> +    if (migrate_multifd() &&
+> +        !multifd_recv_all_channels_created()) {
+> +        return false;
+>      }
+>
+> -    if (migrate_postcopy_preempt()) {
+> -        return mis->postcopy_qemufile_dst != NULL;
+> +    if (migrate_postcopy_preempt() &&
+> +        mis->postcopy_qemufile_dst == NULL) {
+> +        return false;
+>      }
+>
+>      return true;
+
+* Will try it.
+
+> > -    if (!migrate_multifd()) {
+> > +    if (!migrate_multifd() || migration_in_postcopy()) {
+> >          return 0;
+> >      }
+>
+> [1]
+>
+> >
+> >      if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index f2326788de..bdba7abe73 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -1295,7 +1295,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+> >          pss->page = 0;
+> >          pss->block = QLIST_NEXT_RCU(pss->block, next);
+> >          if (!pss->block) {
+> > -            if (multifd_ram_sync_per_round()) {
+> > +            if (multifd_ram_sync_per_round() && !migration_in_postcopy()) {
+>
+> If you have above[1], why need this?
+
+* True, I tried with just [1] above first, but it was failing for some
+reason. Will try again.
+
+> This patch still did nothing for multifd in postcopy_start().  I'm not sure
+> it's safe.
+>
+> What happens if some multifd pages were sent, then we start postcopy, dest
+> vcpu threads running, then during postcopy some multifd pages finally
+> arrived and modifying the guest pages during vcpus running?
+
+* ram_save_target_page() function saves multifd pages only when
+(..!migration_in_postcopy()) not in postcopy mode. Case of 'multifd'
+page arriving late on destination and 'postcopy' starting before that
+is strange, because if multifd page is getting late, that network
+latency should affect 'postcopy' channel too, no? But still if it is
+possible, do we want to call - multifd_ram_flush_and_sync() before
+postcopy_start()? Will that help?  I'll check if/how it works.
+
+Thank you.
 ---
- tests/tcg/x86_64/fma.c           | 109 +++++++++++++++++++++++++++++++
- tests/tcg/x86_64/Makefile.target |   1 +
- 2 files changed, 110 insertions(+)
- create mode 100644 tests/tcg/x86_64/fma.c
-
-diff --git a/tests/tcg/x86_64/fma.c b/tests/tcg/x86_64/fma.c
-new file mode 100644
-index 00000000000..09c622ebc00
---- /dev/null
-+++ b/tests/tcg/x86_64/fma.c
-@@ -0,0 +1,109 @@
-+/*
-+ * Test some fused multiply add corner cases.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <stdio.h>
-+#include <stdint.h>
-+#include <stdbool.h>
-+#include <inttypes.h>
-+
-+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
-+
-+/*
-+ * Perform one "n * m + a" operation using the vfmadd insn and return
-+ * the result; on return *mxcsr_p is set to the bottom 6 bits of MXCSR
-+ * (the Flag bits). If ftz is true then we set MXCSR.FTZ while doing
-+ * the operation.
-+ * We print the operation and its results to stdout.
-+ */
-+static uint64_t do_fmadd(uint64_t n, uint64_t m, uint64_t a,
-+                         bool ftz, uint32_t *mxcsr_p)
-+{
-+    uint64_t r;
-+    uint32_t mxcsr = 0;
-+    uint32_t ftz_bit = ftz ? (1 << 15) : 0;
-+    uint32_t saved_mxcsr = 0;
-+
-+    asm volatile("stmxcsr %[saved_mxcsr]\n"
-+                 "stmxcsr %[mxcsr]\n"
-+                 "andl $0xffff7fc0, %[mxcsr]\n"
-+                 "orl %[ftz_bit], %[mxcsr]\n"
-+                 "ldmxcsr %[mxcsr]\n"
-+                 "movq %[a], %%xmm0\n"
-+                 "movq %[m], %%xmm1\n"
-+                 "movq %[n], %%xmm2\n"
-+                 /* xmm0 = xmm0 + xmm2 * xmm1 */
-+                 "vfmadd231sd %%xmm1, %%xmm2, %%xmm0\n"
-+                 "movq %%xmm0, %[r]\n"
-+                 "stmxcsr %[mxcsr]\n"
-+                 "ldmxcsr %[saved_mxcsr]\n"
-+                 : [r] "=r" (r), [mxcsr] "=m" (mxcsr),
-+                   [saved_mxcsr] "=m" (saved_mxcsr)
-+                 : [n] "r" (n), [m] "r" (m), [a] "r" (a),
-+                   [ftz_bit] "r" (ftz_bit)
-+                 : "xmm0", "xmm1", "xmm2");
-+    *mxcsr_p = mxcsr & 0x3f;
-+    printf("vfmadd132sd 0x%" PRIx64 " 0x%" PRIx64 " 0x%" PRIx64
-+           " = 0x%" PRIx64 " MXCSR flags 0x%" PRIx32 "\n",
-+           n, m, a, r, *mxcsr_p);
-+    return r;
-+}
-+
-+typedef struct testdata {
-+    /* Input n, m, a */
-+    uint64_t n;
-+    uint64_t m;
-+    uint64_t a;
-+    bool ftz;
-+    /* Expected result */
-+    uint64_t expected_r;
-+    /* Expected low 6 bits of MXCSR (the Flag bits) */
-+    uint32_t expected_mxcsr;
-+} testdata;
-+
-+static testdata tests[] = {
-+    { 0, 0x7ff0000000000000, 0x7ff000000000aaaa, false, /* 0 * Inf + SNaN */
-+      0x7ff800000000aaaa, 1 }, /* Should be QNaN and does raise Invalid */
-+    { 0, 0x7ff0000000000000, 0x7ff800000000aaaa, false, /* 0 * Inf + QNaN */
-+      0x7ff800000000aaaa, 0 }, /* Should be QNaN and does *not* raise Invalid */
-+    /*
-+     * These inputs give a result which is tiny before rounding but which
-+     * becomes non-tiny after rounding. x86 is a "detect tininess after
-+     * rounding" architecture, so it should give a non-denormal result and
-+     * not set the Underflow flag (only the Precision flag for an inexact
-+     * result).
-+     */
-+    { 0x3fdfffffffffffff, 0x001fffffffffffff, 0x801fffffffffffff, false,
-+      0x8010000000000000, 0x20 },
-+    /*
-+     * Flushing of denormal outputs to zero should also happen after
-+     * rounding, so setting FTZ should not affect the result or the flags.
-+     * QEMU currently does not emulate this correctly because we do the
-+     * flush-to-zero check before rounding, so we incorrectly produce a
-+     * zero result and set Underflow as well as Precision.
-+     */
-+#ifdef ENABLE_FAILING_TESTS
-+    { 0x3fdfffffffffffff, 0x001fffffffffffff, 0x801fffffffffffff, true,
-+      0x8010000000000000, 0x20 }, /* Enabling FTZ shouldn't change flags */
-+#endif
-+};
-+
-+int main(void)
-+{
-+    bool passed = true;
-+    for (int i = 0; i < ARRAY_SIZE(tests); i++) {
-+        uint32_t mxcsr;
-+        uint64_t r = do_fmadd(tests[i].n, tests[i].m, tests[i].a,
-+                              tests[i].ftz, &mxcsr);
-+        if (r != tests[i].expected_r) {
-+            printf("expected result 0x%" PRIx64 "\n", tests[i].expected_r);
-+            passed = false;
-+        }
-+        if (mxcsr != tests[i].expected_mxcsr) {
-+            printf("expected MXCSR flags 0x%x\n", tests[i].expected_mxcsr);
-+            passed = false;
-+        }
-+    }
-+    return passed ? 0 : 1;
-+}
-diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
-index d6dff559c7d..be20fc64e88 100644
---- a/tests/tcg/x86_64/Makefile.target
-+++ b/tests/tcg/x86_64/Makefile.target
-@@ -18,6 +18,7 @@ X86_64_TESTS += adox
- X86_64_TESTS += test-1648
- X86_64_TESTS += test-2175
- X86_64_TESTS += cross-modifying-code
-+X86_64_TESTS += fma
- TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
- else
- TESTS=$(MULTIARCH_TESTS)
--- 
-2.48.1
+  - Prasad
 
 
