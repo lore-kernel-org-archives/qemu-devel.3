@@ -4,83 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60371C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D5AC02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgOeB-0002q6-2W; Fri, 07 Feb 2025 08:43:55 -0500
+	id 1tgOig-0004Ug-Lj; Fri, 07 Feb 2025 08:48:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tgOe7-0002pl-Du
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:43:51 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tgOe4-0006qg-9k
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:43:50 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e46ebe19489so1555632276.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 05:43:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738935826; x=1739540626; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VNdKWa3Ia2gl38bw4A+FJWTdodXrTZ1/0JopTaLaTpg=;
- b=b/dL4cChAlTg1Uv56xvDhjoLD0t4ezMVgjNhyTMtD5APPN3G/zobGH6kX2Fwq2MerN
- ymeczD/8F6ee3GGL8fvVXuv7qnu74G6EcsJ3onBfkpbZI6w/RaelqjQDtwkNdBGlyYWB
- 2QrupRTU8deX4o4YFDStNcZLiRxB6APvVsxaerGpeR73lpJbaHL2gI4ycDUsyqHJv76/
- fWMsX+nXvaUqpS98SO/PezpSi0d/H5F+t6ealFR0gfmDCFQnA0g0VX7LbhlWdqXZdR/w
- Yjpod0wz6/HmApDbFSPNOFlCKbGnAQLxly0yjVfICVu2YD7i94Vf+H/3wWWZLFei2mVz
- AV2Q==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1tgOic-0004U0-Hs
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:48:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1tgOiZ-0007ty-4L
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:48:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738936105;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oocHq1tE0J56Z1msQqpJpwEdwC4XO8/Z1+ZEBp+1m44=;
+ b=Ws+lvO00nI+cN/D2/737xzKcUD0ToG8fQdoTXCNDrxL0IER1Qnpm3HD+MsDfbgH2RxUHKU
+ /g/mO7Dhqpva5xVyQC85EwsYFEAf+VKHcVtUDdfBdrboTFQ0YpwB33VGQ3rvAZgpqjAOqc
+ TA9vN7EnrNxgx3cGMvmiryRAYIn+sm0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-15-8DnL_8SJOi2pl2_PBeVIJQ-1; Fri, 07 Feb 2025 08:48:22 -0500
+X-MC-Unique: 8DnL_8SJOi2pl2_PBeVIJQ-1
+X-Mimecast-MFC-AGG-ID: 8DnL_8SJOi2pl2_PBeVIJQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361fc2b2d6so12869975e9.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 05:48:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738935826; x=1739540626;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VNdKWa3Ia2gl38bw4A+FJWTdodXrTZ1/0JopTaLaTpg=;
- b=oKqjfa3/sTBhvlUlf5h/yuSj4DuIRP7W1vGiZuUIx7XrEpFeSLd0IDdNDlYrnAp7XF
- 3ptbj4UpS4yks8pHmAo8tvJjkUJMr4tReHQSMEMaz5t0430M1RomENkTIayKf0sZ2Yrr
- TZT6YS9D3ACaitcUL5gXnT/OzK3FTHjLTtbF4AUwqee29+priQ8EWCBtpx2zCASgVIJh
- eb7kQqj0GzR6+RTm6qDDUCnCWDBey0pcC22JXMGA7FOnTErGhRrj7VJgUpuGaiFezVQc
- CaFsQ7odEDDxw2dOA1Z341OaWPNSBPI1FPYAl0Q0WF9lebOY3keUZQ+NBUvGowaioGqE
- XwMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7r5A4ZxRY8Im5jNhGNrtXc+WNBCoHv+DtjxBu5Kjl6ckpAhiAKANvmV2n/lg1eO5jWqNrznUpFOQA@nongnu.org
-X-Gm-Message-State: AOJu0YzZ98WbDthe+JkIl0wyY6qw0DH/arYk/uhF7rDsPSkDRa8+Db3P
- kZJx9vUQsRIkho+pg5srV04kZXbf7rq38nUoj+nwbaVsNDyIGa+SliCvj8wU7QVBeEE+UWeDrEo
- qkMO70XtROeRtRtSi80uysWjoa4JZ3tToxfGEVA==
-X-Gm-Gg: ASbGncvZH72W8AisFKJ+nEgIil5cvt76pF5j4Pscu5ZSlnvaz4q+/X+GShIwt2u/tR6
- jTLhpte7+poYBzlaspNpK6Q3Oej/kGbrfWMKMpbjOWzLi9NOtGH+2HYA5cuR+RnMxVtJkoBPhjw
- ==
-X-Google-Smtp-Source: AGHT+IF2dnstfiiIAr+B4cd8MZq02hSL1afwvdNeIF0CTYEFIIHVNc6kLymu1Bde/Zh8UG0f82k6Qdssz6hVwzpFiu0=
-X-Received: by 2002:a05:6902:1b06:b0:e5b:ef8:845 with SMTP id
- 3f1490d57ef6-e5b46286c0emr2395285276.44.1738935826652; Fri, 07 Feb 2025
- 05:43:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738936101; x=1739540901;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oocHq1tE0J56Z1msQqpJpwEdwC4XO8/Z1+ZEBp+1m44=;
+ b=QoWP39ZXr4YyjnxSY3XJgIwGQbKOqV6h7ISldKLX+4eUemttqdnueT6LsLqd1AojbT
+ 3tRT7PnkvvFlKi5xRUFTHlF5hjaHUfbJI8PevZtoOuyoeSMP/Vzx6NJ5iL3LgL+9VZvm
+ /FQtndc3XL5p1zaQNrnVM5K8xfoniPzX/73Dbc8xQVE7B/jzAIROWw4WQ4E0BkJKDrZA
+ 8PV1bwSuegRTLjsoyHjUJHMqMj4jsJYdQKWdyK8Gc91g3sSw2MYsXEt1Pw4efSvv862W
+ Sq/x1p0FDdh+Nc0Lm4yUEGmSaas8BXTc1l76p9CQMTEVlp2fQsHgQYaVsuCBIuJxybty
+ g+XA==
+X-Gm-Message-State: AOJu0YwcAwAwB2NmNp2VN4C/I7MEaMlywfGmDL8dbhZbmVA2eVT52Hnz
+ Req42qE3nnhhDkrbIbRM+3z+THxFAcBxTpGlt4fOO49SjXEL5+TzCEHRlqvTcVNiWkA09PyKpbE
+ 4EA29MNDYvIbbxTr013Uxuhszs4p4l+HugD8Py3Nz3LTlft65qNZo
+X-Gm-Gg: ASbGncssyAqZT8IkDPX7GFrnDuxR9u2GxPnfCyoKZ63DsDj3pWN9cEbuaGpcG777qkw
+ Ns+R5VK7SDzuVuLJopixpDb/+5M31eMbP6lyRQ+IHMdZkieR0q68bQql9N7Yq2dtZcyB2NhNip5
+ 3VPcJXzIOLLPZb9ZRRh/KezQBvF/c+5Z4bthZz3iL1wqnE9pFl5X4t2PYDQfzPzP5FPtfD2B07s
+ eZB5kf4ztj5iuMRZBfPJA0CBprpC4Ahx60DLINikWo8w77l0XbiwxsJq1TeTeKgxagKoHm/NiAW
+ hHiSiNbx3MEZ6X2qcgfXFS6/fwXDtw1qa4ZRWOxcCtoD+6C1+GZkOuIFlRUoGoiZgaqPCuu9Xsy
+ 3Hxkf4+3+aE/tmlJYwN1IsPp4DLdWP+s9xA==
+X-Received: by 2002:a05:600c:a45:b0:434:a923:9310 with SMTP id
+ 5b1f17b1804b1-439249913a5mr31390635e9.15.1738936100943; 
+ Fri, 07 Feb 2025 05:48:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFJvxNkuaO/bd8Xm6z7ZexWgm5qQX4iRxNntYdl99g/Musovi08+5k5In8E3W8HxV1v/oX3qw==
+X-Received: by 2002:a05:600c:a45:b0:434:a923:9310 with SMTP id
+ 5b1f17b1804b1-439249913a5mr31390345e9.15.1738936100510; 
+ Fri, 07 Feb 2025 05:48:20 -0800 (PST)
+Received: from ?IPV6:2003:cf:d712:44fb:19ca:1c3d:6b27:934a?
+ (p200300cfd71244fb19ca1c3d6b27934a.dip0.t-ipconnect.de.
+ [2003:cf:d712:44fb:19ca:1c3d:6b27:934a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbdd36967sm4620439f8f.37.2025.02.07.05.48.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Feb 2025 05:48:19 -0800 (PST)
+Message-ID: <0a85b381-35c4-424f-9052-7b321b1afe02@redhat.com>
+Date: Fri, 7 Feb 2025 14:48:18 +0100
 MIME-Version: 1.0
-References: <20250207102802.2445596-1-pbonzini@redhat.com>
- <20250207102802.2445596-6-pbonzini@redhat.com>
- <fcd2ffe7-a400-44e0-8dba-258583c2940b@tls.msk.ru>
-In-Reply-To: <fcd2ffe7-a400-44e0-8dba-258583c2940b@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Feb 2025 13:43:35 +0000
-X-Gm-Features: AWEUYZnDXTY29vTTyrNBpSeENPRdIJozjlcpsLvBqXcjqHQyAiZMTeswqITwY1c
-Message-ID: <CAFEAcA-JJkk7wQh+bFbhAoR3tcSHThRMBd4XqZcmNOTL7UWmrA@mail.gmail.com>
-Subject: Re: [PULL 5/7] target/i386: Do not raise Invalid for 0 * Inf + QNaN
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Call for GSoC internship project ideas
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex Bennee <alex.bennee@linaro.org>, Akihiko Odaki
+ <akihiko.odaki@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Bibo Mao <maobibo@loongson.cn>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ German Maglione <gmaglione@redhat.com>
+References: <CAJSP0QVYE1Zcws=9hoO6+B+xB-hVWv38Dtu_LM8SysAmS4qRMw@mail.gmail.com>
+ <f3639df5-05cf-4aef-adfc-8a39ed7767ce@redhat.com>
+ <CAJSP0QUOzyqE16HL+QfXqQA3oZQ=4b=nt4_8JkoSSx5U_b7MsQ@mail.gmail.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <CAJSP0QUOzyqE16HL+QfXqQA3oZQ=4b=nt4_8JkoSSx5U_b7MsQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,44 +126,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 7 Feb 2025 at 11:53, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> 07.02.2025 13:27, Paolo Bonzini wrote:
-> > From: Peter Maydell <peter.maydell@linaro.org>
-> >
-> > In commit 8adcff4ae7 ("fpu: handle raising Invalid for infzero in
-> > pick_nan_muladd") we changed the handling of 0 * Inf + QNaN to always
-> > raise the Invalid exception regardless of target architecture.  (This
-> > was a change affecting hppa, i386, sh4 and tricore.) However, this
-> > was incorrect for i386, which documents in the SDM section 14.5.2
-> > that for the 0 * Inf + NaN case that it will only raise the Invalid
-> > exception when the input is an SNaN.  (This is permitted by the IEEE
-> > 754-2008 specification, which documents that whether we raise Invalid
-> > for 0 * Inf + QNaN is implementation defined.)
-> >
-> > Adjust the softfloat pick_nan_muladd code to allow the target to
-> > suppress the raising of Invalid for the inf * zero + NaN case (as an
-> > extra flag orthogonal to its choice for when to use the default NaN),
-> > and enable that for x86.
-> >
-> > We do not revert here the behaviour change for hppa, sh4 or tricore:
-> >   * The sh4 manual is clear that it should signal Invalid
-> >   * The tricore manual is a bit vague but doesn't say it shouldn't
-> >   * The hppa manual doesn't talk about fused multiply-add corner
-> >     cases at all
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: 8adcff4ae7 (""fpu: handle raising Invalid for infzero in pick_nan_muladd")
->
-> A nitpick: double double-quote.
->
-> 8adcff4ae7 is v9.2.0-7-g8adcff4ae7 - which is 7 commits *after* the latest
-> released version, -- hopefully this fix should not go to any stable series,
-> unless 8adcff4ae7 itself has to be picked up for 9.2 too.
+On 07.02.25 14:41, Stefan Hajnoczi wrote:
+> On Fri, Feb 7, 2025 at 7:35 AM Hanna Czenczek <hreitz@redhat.com> wrote:
+>> On 28.01.25 17:16, Stefan Hajnoczi wrote:
+>>> Dear QEMU and KVM communities,
+>>> QEMU will apply for the Google Summer of Code internship
+>>> program again this year. Regular contributors can submit project
+>>> ideas that they'd like to mentor by replying to this email by
+>>> February 7th.
+>>>
+>>> About Google Summer of Code
+>>> -----------------------------------------
+>>> GSoC (https://summerofcode.withgoogle.com/) offers paid open
+>>> source remote work internships to eligible people wishing to participate
+>>> in open source development. QEMU has been doing internship for
+>>> many years. Our mentors have enjoyed helping talented interns make
+>>> their first open source contributions and some former interns continue
+>>> to participate today.
+>>>
+>>> Who can mentor
+>>> ----------------------
+>>> Regular contributors to QEMU and KVM can participate as mentors.
+>>> Mentorship involves about 5 hours of time commitment per week to
+>>> communicate with the intern, review their patches, etc. Time is also
+>>> required during the intern selection phase to communicate with
+>>> applicants. Being a mentor is an opportunity to help someone get
+>>> started in open source development, will give you experience with
+>>> managing a project in a low-stakes environment, and a chance to
+>>> explore interesting technical ideas that you may not have time to
+>>> develop yourself.
+>>>
+>>> How to propose your idea
+>>> ------------------------------
+>>> Reply to this email with the following project idea template filled in:
+>>>
+>>> === TITLE ===
+>>>
+>>> '''Summary:''' Short description of the project
+>>>
+>>> Detailed description of the project that explains the general idea,
+>>> including a list of high-level tasks that will be completed by the
+>>> project, and provides enough background for someone unfamiliar with
+>>> the code base to research the idea. Typically 2 or 3 paragraphs.
+>>>
+>>> '''Links:'''
+>>> * Links to mailing lists threads, git repos, or web sites
+>>>
+>>> '''Details:'''
+>>> * Skill level: beginner or intermediate or advanced
+>>> * Language: C/Python/Rust/etc
+>> === Asynchronous request handling for virtiofsd ===
+>>
+>> '''Summary:''' Make virtiofsd’s request handling asynchronous, allowing
+>> single-threaded parallel request processing.
+>>
+>> virtiofsd is a virtio-fs device implementation, i.e. grants VM guests
+>> access to host directories. In its current state, it processes guest
+>> requests one by one, which means operations of long duration will block
+>> processing of others that could be processed more quickly.
+>>
+>> With asynchronous request processing, longer-lasting operations could
+>> continue in the background while other requests with lower latency are
+>> fetched and processed in parallel. This should improve performance
+>> especially for mixed workloads, i.e. one guest process executing
+>> longer-lasting filesystem operations, while another runs random small
+>> read requests on a single file.
+>>
+>> Your task is to:
+>> * Get familiar with a Linux AIO interface, preferably io_uring
+>> * Have virtiofsd make use of that interface for its operations
+>> * Make the virtiofsd request loop process requests asynchronously, so
+>> requests can be fetched and processed while others are continuing in the
+>> background
+>> * Evaluate the resulting performance with different workloads
+>>
+>> '''Links:'''
+>> * virtiofsd repository: https://gitlab.com/virtio-fs/virtiofsd
+>> * virtiofsd’s filesystem operations:
+>> https://gitlab.com/virtio-fs/virtiofsd/-/blob/main/src/passthrough/mod.rs#L1490
+>> * virtiofsd’s request processing loop:
+>> https://gitlab.com/virtio-fs/virtiofsd/-/blob/main/src/vhost_user.rs#L244
+>>
+>> '''Details:'''
+>> * Skill level: intermediate
+>> * Language: Rust
+>> * Mentors: Hanna Czenczek (hreitz@redhat.com), German Maglione
+>> (gmaglione@redhat.com)
+> Thanks, I have added your project idea to the list:
+> https://wiki.qemu.org/Google_Summer_of_Code_2025#Asynchronous_request_handling_for_virtiofsd
 
-Ah, yes, I think I assumed based on date that 8adcff4ae7 had
-made it into a release already. That commit was a refactoring
-so it doesn't need to be backported anywhere.
+Thanks!
 
--- PMM
+> Do you want to give any guidance on which crate to use for
+> asynchronous I/O? Do you want async Rust (e.g. tokio) or not?
+
+That would depend entirely on the student.  I’m open for async Rust 
+(tokio or even homegrown), but they could also decide they’d rather do 
+it in some different manner (e.g. with callbacks that would return 
+descriptors to the guest).  I’ll add that info, if that’s OK.
+
+Hanna
+
 
