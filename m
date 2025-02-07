@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC54EC0219D
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7CCC0219C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgR6l-0000wB-WE; Fri, 07 Feb 2025 11:21:36 -0500
+	id 1tgR6T-0000sO-2E; Fri, 07 Feb 2025 11:21:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tgR6V-0000u9-Tj
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:21:21 -0500
+ id 1tgR6P-0000rT-Rm
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:21:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tgR6U-0007ei-D0
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:21:19 -0500
+ id 1tgR6O-0007QW-7f
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:21:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738945277;
+ s=mimecast20190719; t=1738945270;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zLnalPDK5Dw5CE83Liep9DcgASL15xi5RCTTFoM4WJU=;
- b=emWCn9pzDIU104CxssBtyb+dus5e+QDZpUgCDSm0bE8CYYNkemFxA2eN8rXGFIgD4I44sX
- uOg78+O2D90SX4IldgMgoulsdp3CEU6dG7F30Bm6qWLWpISpFTkwjw5w7M0gzxAtaYC7xm
- WmIY5CJrJ4Pwr9qLE0KO0hZ6ej5ozHg=
+ bh=jvNbNCWnD/06MZnGY9GwwM9r1LyNWPvpGuSHwNQxZ6w=;
+ b=epAu10OyqOEmmiZ/1tJ1g0Y5fFzvU2nwaxono2eLkeuTrDv7vchn5M+q5d9ix+daa0J02q
+ c2Vm/BILMsxzZLrqhE1RRy7iF+TU5dmFKVhFNReXuKGuquF/3jVfK370RiQsfYT6OIzAvD
+ 3HIq3r27OEPcVIlkwTz3zLztkZ3lczo=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-E0q3J-dVOxqFu9AHSp0k1Q-1; Fri,
- 07 Feb 2025 11:21:14 -0500
-X-MC-Unique: E0q3J-dVOxqFu9AHSp0k1Q-1
-X-Mimecast-MFC-AGG-ID: E0q3J-dVOxqFu9AHSp0k1Q
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-x71I-1fLOXmIS1w-ZQ9xVg-1; Fri,
+ 07 Feb 2025 11:21:06 -0500
+X-MC-Unique: x71I-1fLOXmIS1w-ZQ9xVg-1
+X-Mimecast-MFC-AGG-ID: x71I-1fLOXmIS1w-ZQ9xVg
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4B6719560B9; Fri,  7 Feb 2025 16:21:11 +0000 (UTC)
+ id 15E4319560AF; Fri,  7 Feb 2025 16:21:05 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 613A31800878; Fri,  7 Feb 2025 16:21:10 +0000 (UTC)
+ id 864751800358; Fri,  7 Feb 2025 16:21:03 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 07/10] accel/tcg: Simplify use of &first_cpu in
- rr_cpu_thread_fn()
-Date: Fri,  7 Feb 2025 17:20:45 +0100
-Message-ID: <20250207162048.1890669-8-imammedo@redhat.com>
+Subject: [PATCH v2 04/10] tcg:tlb: use tcg_debug_assert() in
+ assert_cpu_is_self()
+Date: Fri,  7 Feb 2025 17:20:42 +0100
+Message-ID: <20250207162048.1890669-5-imammedo@redhat.com>
 In-Reply-To: <20250207162048.1890669-1-imammedo@redhat.com>
 References: <20250207162048.1890669-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -89,47 +89,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+that will enable assert_cpu_is_self when QEMU is configured with
+   --enable-debug
+without need for manual patching DEBUG_TLB_GATE define.
 
-Let vCPUs wait for themselves being ready first, then other ones.
-This allows the first thread to starts without the global vcpu
-queue (thus &first_cpu) being populated.
+Need to manually path DEBUG_TLB_GATE define to enable assert,
+let regression caused by [1] creep in unnoticed.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+1) 30933c4fb4f3d ("tcg/cputlb: remove other-cpu capability from TLB flushing")
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- accel/tcg/tcg-accel-ops-rr.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+v2: revert DEBUG_TLB_GATE/DEBUG_TLB_LOG_GATE to 0 as it used to be
+---
+ accel/tcg/cputlb.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 028b385af9..d9eadd5ec4 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -197,16 +197,19 @@ static void *rr_cpu_thread_fn(void *arg)
-     qemu_guest_random_seed_thread_part2(cpu->random_seed);
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b4ccf0cdcb..7380b29da3 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -74,11 +74,8 @@
+     } \
+ } while (0)
  
-     /* wait for initial kick-off after machine start */
--    while (first_cpu->stopped) {
--        qemu_cond_wait_bql(first_cpu->halt_cond);
-+    while (cpu->stopped) {
-+        CPUState *iter_cpu;
-+
-+        qemu_cond_wait_bql(cpu->halt_cond);
+-#define assert_cpu_is_self(cpu) do {                              \
+-        if (DEBUG_TLB_GATE) {                                     \
+-            g_assert(!(cpu)->created || qemu_cpu_is_self(cpu));   \
+-        }                                                         \
+-    } while (0)
++#define assert_cpu_is_self(cpu)                             \
++    tcg_debug_assert(!(cpu)->created || qemu_cpu_is_self(cpu))
  
-         /* process any pending work */
--        CPU_FOREACH(cpu) {
--            current_cpu = cpu;
--            qemu_wait_io_event_common(cpu);
-+        CPU_FOREACH(iter_cpu) {
-+            current_cpu = iter_cpu;
-+            qemu_wait_io_event_common(iter_cpu);
-         }
-     }
- 
-+    g_assert(first_cpu);
-     rr_start_kick_timer();
- 
-     cpu = first_cpu;
+ /* run_on_cpu_data.target_ptr should always be big enough for a
+  * vaddr even on 32 bit builds
 -- 
 2.43.0
 
