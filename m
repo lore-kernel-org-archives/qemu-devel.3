@@ -4,104 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35F0C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C455C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgRZ1-00075j-3n; Fri, 07 Feb 2025 11:50:47 -0500
+	id 1tgRb1-0007uK-K2; Fri, 07 Feb 2025 11:52:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tgRYv-00074Z-DO
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:50:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tgRaz-0007tu-Vp
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:52:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tgRYt-00039L-AT
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:50:41 -0500
+ id 1tgRay-0004FV-60
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:52:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738947037;
+ s=mimecast20190719; t=1738947166;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kJF17qzTWI8+1y8sNpI/aLlEcWQYEquLiTZ6doqt0p0=;
- b=eMyzeVfNzKM7usJrkxH1iatXIFcLG1uEC+sqcA0RVjnSLYYqoMtMgJZxmWhDkwHowg9wW3
- Mh57zR68yEYwtqdODryXElU36dEoSn7FwcFIXO2hfi7EPVhBYjYnal4ZqXc3UFj6emLHPI
- XoxXg/7qDgtfgyPOfwXGYN9/+Kg9cOU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s2DMxp5NqGuhlDKNQ2xuPhKVtGPCQC67oVHERu9c1Xs=;
+ b=TXSI+iw/Kq6O/jBG7e8TLBiajYRo+pM1kp4c+nTeC1kB+s0IT4vzCapl+VjsgYZo/5yKSG
+ m0SVm+Epy7ufvyXcFJLrSOfa8S8ruAevSF5LN4PVQudFTxSP33bIp2e2d6PtDiiHTB8IIg
+ 1qRCL+JHmk30KU32rRZaZxtww5BWAA4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-4UNPJvAhN7C1BLENnfAung-1; Fri, 07 Feb 2025 11:50:35 -0500
-X-MC-Unique: 4UNPJvAhN7C1BLENnfAung-1
-X-Mimecast-MFC-AGG-ID: 4UNPJvAhN7C1BLENnfAung
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43631d8d9c7so12131385e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:50:34 -0800 (PST)
+ us-mta-680-BkUaSVXoMTG21WO9WuaP3Q-1; Fri, 07 Feb 2025 11:52:45 -0500
+X-MC-Unique: BkUaSVXoMTG21WO9WuaP3Q-1
+X-Mimecast-MFC-AGG-ID: BkUaSVXoMTG21WO9WuaP3Q
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4361efc9d1fso17698455e9.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:52:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738947034; x=1739551834;
+ d=1e100.net; s=20230601; t=1738947164; x=1739551964;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kJF17qzTWI8+1y8sNpI/aLlEcWQYEquLiTZ6doqt0p0=;
- b=wkYt19ABXahROKHSX+5g/+WO4aEZJnXb5kmc1wri8u8m3pppqqFXSTmPcZ8NveHEdZ
- o3UIfBc6urBR07IuPuSo0EZCfMOcqvpfuSTJx7hATG/O948utXdeERQuUI8dDrpdae4Z
- H1fyjqtcyoEsoxG2/QUHqvINK9730d7ajtLkxg2WXFcf0QQg89UEdTZjOdoABk80tOOg
- 3adsotb4rGiZ+VBaVf0raq5ZCrkZyKjc2ivQFNZRlBx2ZlEX38sc0SNobfQ0oqaHyQ0f
- dwz+sFy4DfYki5huBl5Rl8JR1NaEMzrgRDtiWGOY0vRL3p+r31CkIxW4YW7FYtn8B9fO
- SVNA==
+ bh=s2DMxp5NqGuhlDKNQ2xuPhKVtGPCQC67oVHERu9c1Xs=;
+ b=gImOR3z1bpuRIjHfSe2gJSav6DnKt5ZfJc/hclxWOP6tQr/iX8+TP1W1PbG3qJFA2W
+ 20NgilaIza1naa0AsGhavXKg8ujk5zDxXQOqB9idyfwdmHoE8bTjQkAarBSFJI7fk3Gr
+ LTnnlVzM1aAJu4vO/JnGKorBBnQ/9kunEBaf3+jd8FDXFTCPCzoCh++V2HjB5eoE5Gxt
+ sDYKhi/22zHKfSy3uRFdskumK+Z6ruVPgk9v4pAcd0bwPXo7mME3z60ypA2edMEEyh3O
+ KhJmF72wJZa9qkup+2soJcNW3SmIXCUxgp6j1YqaLD6PNBulNzZlSn4Mf4kmgUqieV9/
+ nQlA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnvDTCOtITnvlCs3z+e8siXVCMPfVuuMX+ja1k+9fYkyKOVwJGHkSh6MbWYTarzmmpWKFN4QcTLvGM@nongnu.org
-X-Gm-Message-State: AOJu0YxsoHrxbtLQ7tglAPYf0LZA9G8/rvzIHWx4Bvm/CXn7of1m+QMJ
- 7q9Fuf+TIarw3S/dzWXp2z4wPEgohtujx1MtbaybqBbT8t486meQn0bUwCXSuVAkwXEwoQbRmYB
- adenZeM3NVHQXIcEy6E4RMCsZ0UgMWgCmb48y7I/MkYfwsV9mEqLx
-X-Gm-Gg: ASbGncunqKzFqlS8uM77prcEG80OVy3dAdCT9rfs7lK1x+kLnmq4outWValLx/fLS7w
- 4QhqdFWgobWfQkJuDS2z5QcdqJ6i8qBMv4N3bfLLg5jScA6ymJiPq4XxyhkCIR7113Z5IXMCYaN
- Ul0yjaw5lT6rRySqO0xR31sRM9ExyWxrmLcfc7QLPzSnh09+vYrGXvLudFAL3MPybxd7n5x+FuX
- jcTC36XGNno+L9Bqb5Rqwv3VMrva/2YkM7DGsLQGuZ1URyu5dtINU71krsyr0lAWZEGSeV5dvbH
- WnVky3mDF4ZtrVij+9YmYefCM8/wceWtjrKPxrKrBm6Y+o1UnfMd
-X-Received: by 2002:a05:600c:198a:b0:436:1af3:5b13 with SMTP id
- 5b1f17b1804b1-43912d49c3amr67542465e9.15.1738947033634; 
- Fri, 07 Feb 2025 08:50:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJjPPJ6SdQ+3tXpNgnpnZicccK8o/kVsI1eFDIia1j1TOCbxKyXhtzLQpwhlexQVvOi/iH0A==
-X-Received: by 2002:a05:600c:198a:b0:436:1af3:5b13 with SMTP id
- 5b1f17b1804b1-43912d49c3amr67542265e9.15.1738947033275; 
- Fri, 07 Feb 2025 08:50:33 -0800 (PST)
+ AJvYcCVJ/7YJd7RZhopCipIoILDd8rGOVI+hVhW86ACqiyEtDW16HfgMI3OQ+jbXhBJ9vNqBno7YmXvTtbDP@nongnu.org
+X-Gm-Message-State: AOJu0Yw9uu+Rb6FrRmyGiSwe+zRXt7HdzXaTGkkFQcW/y+Auy/CQo9hZ
+ adQZMFWo/iAflN7zWYSsUjK2zcOVcU6lVIhxq3yAH8xdLZW+5q2wwpu4Mt7hrl9bnjQaOLruwBP
+ UyLxvjpKBL62hhRevvNOwQMTK0Lbd9WTg8tLbTBRX3qJrUPrW2NN0
+X-Gm-Gg: ASbGncsnjE4YUEovNMR80KDQpZfLawVdPdI7VxnMbRkM+WBmfD4a4lUD8EvQgTxsTKt
+ 2gxhjeWZS1pA1qQXdkKpldXmq+WvWILoF9u9em8dyZGoBSBS6upp/4oBBggUTxgjKf2t1bK11Wf
+ FAyAgKjiQB1jP3jj042NhLFDIfCt7T0OyistF6CI3YglL0rdXKlijKGsi34xL4szrwsv3SFRjSU
+ XbX45+DDs0oh5xv63kIF32oUTmS3Dgr9+CApUFubqE4v+IVAZQmSFRlfPT51ljK/oEAKwyJowA4
+ yc/lMoywN3HlLH+HfO3LoC6awD1ZLqcLNJFgoLPPjhR2UzWmodrs
+X-Received: by 2002:a05:600c:354a:b0:436:e751:e445 with SMTP id
+ 5b1f17b1804b1-43924980937mr41889435e9.5.1738947164475; 
+ Fri, 07 Feb 2025 08:52:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFuqQUrbtze1GaOZGsPiEvj9Dr9LVUzsKvtLvbaLot6HBEWfQZlb0HRLRFBIDNGKSSqtvZ13g==
+X-Received: by 2002:a05:600c:354a:b0:436:e751:e445 with SMTP id
+ 5b1f17b1804b1-43924980937mr41889175e9.5.1738947164052; 
+ Fri, 07 Feb 2025 08:52:44 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d966faasm95958615e9.23.2025.02.07.08.50.31
+ 5b1f17b1804b1-4391da964e2sm60760295e9.4.2025.02.07.08.52.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 08:50:32 -0800 (PST)
-Message-ID: <7102d470-ac72-4c02-b8bc-20f1379a4843@redhat.com>
-Date: Fri, 7 Feb 2025 17:50:30 +0100
+ Fri, 07 Feb 2025 08:52:43 -0800 (PST)
+Message-ID: <fdd6c6db-fd02-4dbf-af74-2b5e7ca5ca71@redhat.com>
+Date: Fri, 7 Feb 2025 17:52:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] hw/arm/smmuv3: Move reset to exit phase
+Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com,
  alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org,
  zhenzhong.duan@intel.com, ddutile@redhat.com
 References: <20250206142307.921070-1-eric.auger@redhat.com>
- <20250206142307.921070-5-eric.auger@redhat.com>
- <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
+ <20250207060822-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8j_ra21a2cuJKSxcL81qoT5aUHmb_mOs1J7aVjdR+eXQ@mail.gmail.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8j_ra21a2cuJKSxcL81qoT5aUHmb_mOs1J7aVjdR+eXQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,66 +121,55 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Peter, Michael,
 
 
-
-On 2/7/25 5:37 PM, Peter Maydell wrote:
-> On Thu, 6 Feb 2025 at 14:23, Eric Auger <eric.auger@redhat.com> wrote:
->> Currently the iommu may be reset before the devices
->> it protects. For example this happens with virtio-scsi-pci.
->> when system_reset is issued from qmp monitor, spurious
->> "virtio: zero sized buffers are not allowed" warnings can
->> be observed.
+On 2/7/25 5:40 PM, Peter Maydell wrote:
+> On Fri, 7 Feb 2025 at 11:10, Michael S. Tsirkin <mst@redhat.com> wrote:
+>> On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
+>>> This is a follow-up of Peter's attempt to fix the fact that
+>>> vIOMMUs are likely to be reset before the device they protect:
+>>>
+>>> [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+>>> https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
+>>>
+>>> This is especially observed with virtio devices when a qmp system_reset
+>>> command is sent but also with VFIO devices.
+>>>
+>>> This series puts the vIOMMU reset in the 3-phase exit callback.
+>>>
+>>> This scheme was tested successful with virtio-devices and some
+>>> VFIO devices. Nevertheless not all the topologies have been
+>>> tested yet.
+>>>
+>>> Best Regards
+>>>
+>>> Eric
 >>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>  hw/arm/smmuv3.c     | 9 +++++----
->>  hw/arm/trace-events | 1 +
->>  2 files changed, 6 insertions(+), 4 deletions(-)
 >>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index c0cf5df0f6..7522c32b24 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1870,13 +1870,14 @@ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
->>      }
->>  }
+>> Looks good.
 >>
->> -static void smmu_reset_hold(Object *obj, ResetType type)
->> +static void smmu_reset_exit(Object *obj, ResetType type)
->>  {
->>      SMMUv3State *s = ARM_SMMUV3(obj);
->>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
 >>
->> -    if (c->parent_phases.hold) {
->> -        c->parent_phases.hold(obj, type);
->> +    trace_smmu_reset_exit();
->> +    if (c->parent_phases.exit) {
->> +        c->parent_phases.exit(obj, type);
->>      }
-> If we need to do something unexpected like reset
-> register values in the exit phase rather than the
-> hold phase, it's a good idea to have a comment explaining
-> why, to avoid somebody coming along afterwards and tidying
-> it up into the more usual arrangement.
-sure
->
-> If I understand correctly we need to keep the whole IOMMU
-> config intact until the exit phase? What's the thing the
-> device behind the IOMMU is trying to do during its reset
-> that triggers the warning?
-The virtio-pci-net continues to perform DMA requests and this causes
-some weird messages such as:
-"virtio: bogus descriptor or out of resources"
-
-Also VFIO devices may continue issuing DMAs causing translation faults
+>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>>
+>> How should this be merged?
+>> I supposed I can merge the 1st three and the other
+>> two by the respective maintainers?
+>> I don't think there's a dependency here, right?
+> If we're happy with the design of the series I think it
+> would be simpler to take the whole thing through one
+> tree, rather than split it up. I had a question on the
+> smmu patch which is mostly about clarifying what the
+> issue is that we're running into, but in principle
+> I'm happy for you to take that patch as well.
+Thank you for the swift review. I will respin to add some comments along
+with the reset function and the relevance of exit phase + add more
+details in the cover letter.
 
 Thanks
 
-Eric
-
+Erc
 >
-> thanks
 > -- PMM
 >
 
