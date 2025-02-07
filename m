@@ -4,91 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B8C9C02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 19:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF57CC02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 19:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgUHL-0000vr-8v; Fri, 07 Feb 2025 14:44:43 -0500
+	id 1tgUQd-0003D3-C1; Fri, 07 Feb 2025 14:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tgUHJ-0000uT-Ay
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:44:41 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tgUHH-0005Ab-Ka
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:44:41 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tgUHF-000000071Gk-3cBz; Fri, 07 Feb 2025 20:44:37 +0100
-Message-ID: <918ddd92-8884-4e82-b535-4f2007ee18b1@maciej.szmigiero.name>
-Date: Fri, 7 Feb 2025 20:44:32 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgUQa-0003CD-BR
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:54:16 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgUQY-0000NI-Bk
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:54:15 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 097411F452;
+ Fri,  7 Feb 2025 19:54:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738958053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iRsRX3Mj1GVAMbNt2PVEx+jFR98P0uMWXn3sVIy+E6o=;
+ b=eNyliNS72qaaTTzZfGReBsI8e9b6yn3Q7OAxJjZm+VPEqdk0DZrI/U7QeJaD2X/MWJb9Lq
+ WFikSUhldhV9zAuiX1sYNgbrg8IcCBDsvXqkUk73JiKjKUY/c299F+cQpQjY/6YOONU+ZU
+ CxuTT1eCIdOsqsfp+Ubny55qnOBZZOo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738958053;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iRsRX3Mj1GVAMbNt2PVEx+jFR98P0uMWXn3sVIy+E6o=;
+ b=xOqUpMf1hNUkCx1ewHJ5U8khQg+Kdwnv3IlgfDKEMPz9xrrTJ7RL1elkuxpEkRz4vkTUPY
+ UeProDptuL/fJQBQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=eNyliNS7;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xOqUpMf1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738958053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iRsRX3Mj1GVAMbNt2PVEx+jFR98P0uMWXn3sVIy+E6o=;
+ b=eNyliNS72qaaTTzZfGReBsI8e9b6yn3Q7OAxJjZm+VPEqdk0DZrI/U7QeJaD2X/MWJb9Lq
+ WFikSUhldhV9zAuiX1sYNgbrg8IcCBDsvXqkUk73JiKjKUY/c299F+cQpQjY/6YOONU+ZU
+ CxuTT1eCIdOsqsfp+Ubny55qnOBZZOo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738958053;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iRsRX3Mj1GVAMbNt2PVEx+jFR98P0uMWXn3sVIy+E6o=;
+ b=xOqUpMf1hNUkCx1ewHJ5U8khQg+Kdwnv3IlgfDKEMPz9xrrTJ7RL1elkuxpEkRz4vkTUPY
+ UeProDptuL/fJQBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D59A913694;
+ Fri,  7 Feb 2025 19:54:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +KgNJOJkpme1GQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 19:54:10 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: [RFC PATCH v3 4/8] io: Add flags argument to
+ qio_channel_readv_full_all_eof
+Date: Fri,  7 Feb 2025 16:53:55 -0300
+Message-Id: <20250207195359.17443-5-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250207195359.17443-1-farosas@suse.de>
+References: <20250207195359.17443-1-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/8] crypto,io,migration: Add support to
- gnutls_bye()
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-References: <20250207142758.6936-1-farosas@suse.de>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
- 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
- N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
- m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
- Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
- oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
- Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
- uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
- 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
- 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
- U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
- BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCZdEV4gUJDWuO
- nQAKCRCEf143kM4JdyzED/0Qwk2KVsyNwEukYK2zbJPHp7CRbXcpCApgocVwtmdabAubtHej
- 7owLq89ibmkKT0gJxc6OfJJeo/PWTJ/Qo/+db48Y7y03Xl+rTbFyzsoTyZgdR21FQGdgNRG9
- 3ACPDpZ0UlEwA4VdGT+HKfu0X8pVb0G0D44DjIeHC7lBRzzE5JXJUGUVUd2FiyUqMFqZ8xP3
- wp53ekB5p5OstceqyZIq+O/r1pTgGErZ1No80JrnVC/psJpmMpw1Q56t88JMaHIe+Gcnm8fB
- k3LyWNr7gUwVOus8TbkP3TOx/BdS/DqkjN3GvXauhVXfGsasmHHWEFBE0ijNZi/tD63ZILRY
- wUpRVRU2F0UqI+cJvbeG3c+RZ7jqMAAZj8NB8w6iviX1XG3amlbJgiyElxap6Za1SQ3hfTWf
- c6gYzgaNOFRh77PQbzP9BcAVDeinOqXg2IkjWQ89o0YVFKXiaDHKw7VVld3kz2FQMI8PGfyn
- zg5vyd9id1ykISCQQUQ4Nw49tqYoSomLdmIgPSfXDDMOvoDoENWDXPiMGOgDS2KbqRNYCNy5
- KGQngJZNuDicDBs4r/FGt9/xg2uf8M5lU5b8vC78075c4DWiKgdqaIhqhSC+n+qcHX0bAl1L
- me9DMNm0NtsVw+mk65d7cwxHmYXKEGgzBcbVMa5C+Yevv+0GPkkwccIvps7AzQRaRrwiAQwA
- xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
- dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
- N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
- XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
- /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
- XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
- wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
- iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCZdEWBwUJ
- DWuNXAAKCRCEf143kM4Jd5OdD/0UXMpMd4eDWvtBBQkoOcz2SqsWwMj+vKPJS0BZ33MV/wXT
- PaTbzAFy23/JXbyBPcb0qgILCmoimBNiXDzYBfcwIoc9ycNwCMBBN47Jxwb8ES5ukFutjS4q
- +tPcjbPYu+hc9qzodl1vjAhaWjgqY6IzDGe4BAmM+L6UUID4Vr46PPN02bpm4UsL31J6X+lA
- Vj5WbY501vKMvTAiF1dg7RkHPX7ZVa0u7BPLjBLqu6NixNkpSRts8L9G4QDpIGVO7sOC9oOU
- 2h99VYY1qKml0qJ9SdTwtDj+Yxz+BqW7O4nHLsc4FEIjILjwF71ZKY/dlTWDEwDl5AJR7bhy
- HXomkWae2nBTzmWgIf9fJ2ghuCIjdKKwOFkDbFUkSs8HjrWymvMM22PHLTTGFx+0QbjOstEh
- 9i56FZj3DoOEfVKvoyurU86/4sxjIbyhqL6ZiTzuZAmB0RICOIGilm5x03ESkDztiuCtQL2u
- xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
- ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
- WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <20250207142758.6936-1-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.07, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 097411F452
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,47 +132,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7.02.2025 15:27, Fabiano Rosas wrote:
-> v2:
-> 
-> Added the premature_ok logic;
-> Added compat property for QEMU <9.1;
-> Refactored the existing handshake code;
-> 
-> CI run:
-> https://gitlab.com/farosas/qemu/-/pipelines/1660800456
-> 
-> v1:
-> https://lore.kernel.org/r/20250206175824.22664-1-farosas@suse.de
-> 
-> Hi,
-> 
-> We've been discussing a way to stop multifd recv threads from getting
-> an error at the end of migration when the source threads close the
-> iochannel without ending the TLS session.
-> 
-> The original issue was introduced by commit 1d457daf86
-> ("migration/multifd: Further remove the SYNC on complete") which
-> altered the synchronization of the source and destination in a manner
-> that causes the destination to already be waiting at recv() when the
-> source closes the connection.
-> 
-> One approach would be to issue gnutls_bye() at the source after all
-> the data has been sent. The destination would then gracefully exit
-> when it gets EOF.
-> 
-> Aside from stopping the recv thread from seeing an error, this also
-> creates a contract that all connections should be closed only after
-> the TLS session is ended. This helps to avoid masking a legitimate
-> issue where the connection is closed prematurely.
-> 
+We want to pass flags into qio_channel_tls_readv() but
+qio_channel_readv_full_all_eof() doesn't take a flags argument.
 
-I've rebased my patch set on top of this version and can confirm
-it works too (with respect to VFIO migration and QEMU tests).
+No functional change.
 
-The updated series is available at its usual place.
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ hw/remote/mpqemu-link.c | 2 +-
+ include/io/channel.h    | 2 ++
+ io/channel.c            | 9 ++++++---
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-Thanks,
-Maciej
+diff --git a/hw/remote/mpqemu-link.c b/hw/remote/mpqemu-link.c
+index e25f97680d..49885a1db6 100644
+--- a/hw/remote/mpqemu-link.c
++++ b/hw/remote/mpqemu-link.c
+@@ -110,7 +110,7 @@ static ssize_t mpqemu_read(QIOChannel *ioc, void *buf, size_t len, int **fds,
+         bql_unlock();
+     }
+ 
+-    ret = qio_channel_readv_full_all_eof(ioc, &iov, 1, fds, nfds, errp);
++    ret = qio_channel_readv_full_all_eof(ioc, &iov, 1, fds, nfds, 0, errp);
+ 
+     if (drop_bql && !iothread && !qemu_in_coroutine()) {
+         bql_lock();
+diff --git a/include/io/channel.h b/include/io/channel.h
+index bdf0bca92a..58940eead5 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -885,6 +885,7 @@ void qio_channel_set_aio_fd_handler(QIOChannel *ioc,
+  * @niov: the length of the @iov array
+  * @fds: an array of file handles to read
+  * @nfds: number of file handles in @fds
++ * @flags: read flags (QIO_CHANNEL_READ_FLAG_*)
+  * @errp: pointer to a NULL-initialized error object
+  *
+  *
+@@ -903,6 +904,7 @@ int coroutine_mixed_fn qio_channel_readv_full_all_eof(QIOChannel *ioc,
+                                                       const struct iovec *iov,
+                                                       size_t niov,
+                                                       int **fds, size_t *nfds,
++                                                      int flags,
+                                                       Error **errp);
+ 
+ /**
+diff --git a/io/channel.c b/io/channel.c
+index e3f17c24a0..ebd9322765 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -115,7 +115,8 @@ int coroutine_mixed_fn qio_channel_readv_all_eof(QIOChannel *ioc,
+                                                  size_t niov,
+                                                  Error **errp)
+ {
+-    return qio_channel_readv_full_all_eof(ioc, iov, niov, NULL, NULL, errp);
++    return qio_channel_readv_full_all_eof(ioc, iov, niov, NULL, NULL, 0,
++                                          errp);
+ }
+ 
+ int coroutine_mixed_fn qio_channel_readv_all(QIOChannel *ioc,
+@@ -130,6 +131,7 @@ int coroutine_mixed_fn qio_channel_readv_full_all_eof(QIOChannel *ioc,
+                                                       const struct iovec *iov,
+                                                       size_t niov,
+                                                       int **fds, size_t *nfds,
++                                                      int flags,
+                                                       Error **errp)
+ {
+     int ret = -1;
+@@ -155,7 +157,7 @@ int coroutine_mixed_fn qio_channel_readv_full_all_eof(QIOChannel *ioc,
+     while ((nlocal_iov > 0) || local_fds) {
+         ssize_t len;
+         len = qio_channel_readv_full(ioc, local_iov, nlocal_iov, local_fds,
+-                                     local_nfds, 0, errp);
++                                     local_nfds, flags, errp);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+             if (qemu_in_coroutine()) {
+                 qio_channel_yield(ioc, G_IO_IN);
+@@ -222,7 +224,8 @@ int coroutine_mixed_fn qio_channel_readv_full_all(QIOChannel *ioc,
+                                                   int **fds, size_t *nfds,
+                                                   Error **errp)
+ {
+-    int ret = qio_channel_readv_full_all_eof(ioc, iov, niov, fds, nfds, errp);
++    int ret = qio_channel_readv_full_all_eof(ioc, iov, niov, fds, nfds, 0,
++                                             errp);
+ 
+     if (ret == 0) {
+         error_setg(errp, "Unexpected end-of-file before all data were read");
+-- 
+2.35.3
 
 
