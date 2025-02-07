@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DDFC02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 09:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E19C0219B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 09:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgKvW-0007HJ-LW; Fri, 07 Feb 2025 04:45:34 -0500
+	id 1tgL2U-0000pC-8l; Fri, 07 Feb 2025 04:52:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1tgKvT-0007Dq-0b
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:45:31 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1tgKvQ-0006Vw-I6
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:45:30 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21634338cfdso45301725ad.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 01:45:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1738921527; x=1739526327; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JAM3eL/WomDESnGsQK0BJe3nFp0migrvkKHJt3TK/u8=;
- b=j2rZ0H76EQ5CEZlZ2N89WyvyAbg4eYrd+Tl8BKLInq/Vngw287C39HYTr0GQLQFtXu
- zUVi0igIoKW0hpXGY5y/XmEDnKet02IKO+MCEy/E/nn5Mtfecg3cTPvUf13jPsPCTZ+K
- AT1kiRcs2dTp8lVKLJnQA8ctAP9fACoj+VCRdfd56ajl6+DknB29nfhykas7K0FbiwvZ
- P1xQkBlDyus6b1Fe275n2J6pyjlSPfbY7t9fJLKHMq9HyQPa0s8Nb4IY/Gq7bpe6m+S4
- YZH/ajNRZW77YFiwQ1vnvjdcmHqDRxpYup0aD6IjHSvq9WGtb66XvKOIGBNqcqa+bsLz
- wrqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738921527; x=1739526327;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JAM3eL/WomDESnGsQK0BJe3nFp0migrvkKHJt3TK/u8=;
- b=czVWnSMkomFISKl2QuNRIvgULDB1ZFST4U+FsOwBWYbqOUxsMU8rBQauU5q+fq8fXt
- fGBsQEzmH5H8brgBUxr83bZ5h41C1O1YFw692662p75wPyqLSQ9mFpsBDNPKuk37LtfS
- dPLqmyyJnAD+Nze9zwP2+nSjFgqhoYTujEkW7J8iPeKodbvz731O81G8qerVkNBBQ8qJ
- eNGlC1lnB8uyAtZM2fnoustZJb+WxEJBG+H64imVCa/0fY/MHA735EA+vFLpac/vkYXU
- yEdv7qw+CuilNVSMa85XJQurBboGG1EBGkY5AhRJ3LpZVv0Q3XaC8YEUv/P6/nhGVI4Y
- oEFw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDI1qf0nIP9GDNhecwa2hLcEk4FEqIj8xpG6nAjG0afZJI0tc1n+yio/jIhvmwsqRvwPIp52VtVW8+@nongnu.org
-X-Gm-Message-State: AOJu0YyZdxQfux5Q1dUReuhmfYw6DKNi5MdaNAvARiuXVw29vm3EezBE
- KF13TX+VQ7y7chsagFoEZWbC3c/YjMJddD/6pvwlCof1t3Y6ySy/3kaX63Bdbpo=
-X-Gm-Gg: ASbGncthGK2B18QKhhX+3+sxnXTFOR32kWfaTw5i6oy1JiFoppUXBFMeynd6u9dOHBI
- pFincTJz9k4VUcEtRSCRXw4j7StvtuFp8kQnmrPfSuASqz27d7yYg7vZM7DObUv/FOPNBsv3CGE
- rD/qsZd59GKV80df/ifF4eUsYlCJkRnKGqWuGtytsDINFI7QQTsVUhiHi8rxCCG+YEtCzb3V6Wv
- FMIjAFF64dKy1y4mWuOGSObd1LOuuqm0aN+u5yljD2nVWH2YP+paVAFgcSTlninI+CJScjuiSgi
- l3RVMNSuBgeSxA+EUDIVK610S3NjBb96I8LjazOx2CBTLNlaWhnaUPoa16B8V48z0dsK
-X-Google-Smtp-Source: AGHT+IHzIZBGH+9zBTkP73+5nhvItKxusYGL2bXGYFJJgGG48nKVbhlxOKHP6ZzDhaMszcTHgml+2A==
-X-Received: by 2002:a05:6a00:3e0b:b0:725:eb85:f7f7 with SMTP id
- d2e1a72fcca58-7305d4187c1mr4583988b3a.5.1738921526882; 
- Fri, 07 Feb 2025 01:45:26 -0800 (PST)
-Received: from [100.64.0.1] (218-166-198-8.dynamic-ip.hinet.net.
- [218.166.198.8]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73048e1e80fsm2584260b3a.157.2025.02.07.01.45.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 01:45:26 -0800 (PST)
-Message-ID: <391b0fdb-b5f7-4151-ad84-0718a197dcee@sifive.com>
-Date: Fri, 7 Feb 2025 17:45:23 +0800
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1tgL2R-0000ov-O6
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:52:43 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1tgL2O-0007l9-RR
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:52:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738921961; x=1770457961;
+ h=message-id:date:mime-version:subject:from:to:cc:
+ references:in-reply-to:content-transfer-encoding;
+ bh=QfDHwU4WFqlhad+mz/oAtaXA8YLEPdI6cC2Vf2M+4EA=;
+ b=NP1ePv0QRC8qfhMUlnlI0IJ0l70Ev76eTXPO/f7cNm37iVe1kiTP5ppp
+ BWi7ctZgEABkgk7zKHcHDfuvtM+DMk2JY5T5w/WwVccP1g4cotmWiPPBM
+ ktxsyxTugvvV1chox6sT3GATRZe7ug2Q/OUTuk86We434hNvPYw5rmLvL
+ AD6u9VqinaxjjuREexYwdRPWMu6yB3Kmm0ssJww1XDNG2uYHthZCukO4W
+ QpiS/3ASsUtsSXYf+/SoYRfEoFE3twLXRCigPpcyAqQEt8ilJ9VgYMtep
+ ajf7yLwMawP13x88KQc7F74T6632RagwDLGtacyJkPjb7xO5Fwy7jSHKo w==;
+X-CSE-ConnectionGUID: iAJDy9oMSA6HOmZEzrphPQ==
+X-CSE-MsgGUID: bFTwCN0DQaS/ImBD+CPW7g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="64914872"
+X-IronPort-AV: E=Sophos;i="6.13,266,1732608000"; d="scan'208";a="64914872"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Feb 2025 01:52:36 -0800
+X-CSE-ConnectionGUID: 8yqOncvtQxKIq/6IqQdw/Q==
+X-CSE-MsgGUID: 2pAW6AyuQumiD0897jHdQg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="116417443"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.245.128])
+ ([10.124.245.128])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Feb 2025 01:52:31 -0800
+Message-ID: <6aefa9df-10e3-4001-a509-a4bc3850d65a@linux.intel.com>
+Date: Fri, 7 Feb 2025 17:52:28 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/12] target/riscv: Add CHECK arg to GEN_OPFVF_WIDEN_TRANS
-To: Anton Blanchard <antonb@tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250126072056.4004912-1-antonb@tenstorrent.com>
- <20250126072056.4004912-12-antonb@tenstorrent.com>
+Subject: Re: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
+ KVM_PMU_CAP_DISABLE
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+To: dongli.zhang@oracle.com, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com, zhenyuw@linux.intel.com,
+ groug@kaod.org, lyan@digitalocean.com, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com, joe.jin@oracle.com,
+ davydov-max@yandex-team.ru, zide.chen@intel.com
+References: <20241104094119.4131-1-dongli.zhang@oracle.com>
+ <20241104094119.4131-3-dongli.zhang@oracle.com> <ZyxxygVaufOntpZJ@intel.com>
+ <57b4b74d-67d2-4fcf-aa59-c788afc93619@oracle.com>
+ <f4a2f801-9f82-424e-aee4-8b18add34aa6@linux.intel.com>
 Content-Language: en-US
-From: Max Chou <max.chou@sifive.com>
-In-Reply-To: <20250126072056.4004912-12-antonb@tenstorrent.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <f4a2f801-9f82-424e-aee4-8b18add34aa6@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=192.198.163.7;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,66 +93,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Max Chou <max.chou@sifive.com>
 
-
-On 2025/1/26 3:20 PM, Anton Blanchard wrote:
-> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-> ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
+On 11/21/2024 6:06 PM, Mi, Dapeng wrote:
+> On 11/8/2024 7:44 AM, dongli.zhang@oracle.com wrote:
+>> Hi Zhao,
+>>
+>>
+>> On 11/6/24 11:52 PM, Zhao Liu wrote:
+>>> (+Dapang & Zide)
+>>>
+>>> Hi Dongli,
+>>>
+>>> On Mon, Nov 04, 2024 at 01:40:17AM -0800, Dongli Zhang wrote:
+>>>> Date: Mon,  4 Nov 2024 01:40:17 -0800
+>>>> From: Dongli Zhang <dongli.zhang@oracle.com>
+>>>> Subject: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
+>>>>  KVM_PMU_CAP_DISABLE
+>>>> X-Mailer: git-send-email 2.43.5
+>>>>
+>>>> The AMD PMU virtualization is not disabled when configuring
+>>>> "-cpu host,-pmu" in the QEMU command line on an AMD server. Neither
+>>>> "-cpu host,-pmu" nor "-cpu EPYC" effectively disables AMD PMU
+>>>> virtualization in such an environment.
+>>>>
+>>>> As a result, VM logs typically show:
+>>>>
+>>>> [    0.510611] Performance Events: Fam17h+ core perfctr, AMD PMU driver.
+>>>>
+>>>> whereas the expected logs should be:
+>>>>
+>>>> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
+>>>> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
+>>>>
+>>>> This discrepancy occurs because AMD PMU does not use CPUID to determine
+>>>> whether PMU virtualization is supported.
+>>> Intel platform doesn't have this issue since Linux kernel fails to check
+>>> the CPU family & model when "-cpu *,-pmu" option clears PMU version.
+>>>
+>>> The difference between Intel and AMD platforms, however, is that it seems
+>>> Intel hardly ever reaches the “...due virtualization” message, but
+>>> instead reports an error because it recognizes a mismatched family/model.
+>>>
+>>> This may be a drawback of the PMU driver's print message, but the result
+>>> is the same, it prevents the PMU driver from enabling.
+>>>
+>>> So, please mention that KVM_PMU_CAP_DISABLE doesn't change the PMU
+>>> behavior on Intel platform because current "pmu" property works as
+>>> expected.
+>> Sure. I will mention this in v2.
+>>
+>>>> To address this, we introduce a new property, 'pmu-cap-disabled', for KVM
+>>>> acceleration. This property sets KVM_PMU_CAP_DISABLE if
+>>>> KVM_CAP_PMU_CAPABILITY is supported. Note that this feature currently
+>>>> supports only x86 hosts, as KVM_CAP_PMU_CAPABILITY is used exclusively for
+>>>> x86 systems.
+>>>>
+>>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>>>> ---
+>>>> Another previous solution to re-use '-cpu host,-pmu':
+>>>> https://urldefense.com/v3/__https://lore.kernel.org/all/20221119122901.2469-1-dongli.zhang@oracle.com/__;!!ACWV5N9M2RV99hQ!Nm8Db-mwBoMIwKkRqzC9kgNi5uZ7SCIf43zUBn92Ar_NEbLXq-ZkrDDvpvDQ4cnS2i4VyKAp6CRVE12bRkMF$ 
+>>> IMO, I prefer the previous version. This VM-level KVM property is
+>>> difficult to integrate with the existing CPU properties. Pls refer later
+>>> comments for reasons.
+>>>
+>>>>  accel/kvm/kvm-all.c        |  1 +
+>>>>  include/sysemu/kvm_int.h   |  1 +
+>>>>  qemu-options.hx            |  9 ++++++-
+>>>>  target/i386/cpu.c          |  2 +-
+>>>>  target/i386/kvm/kvm.c      | 52 ++++++++++++++++++++++++++++++++++++++
+>>>>  target/i386/kvm/kvm_i386.h |  2 ++
+>>>>  6 files changed, 65 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>>> index 801cff16a5..8b5ba45cf7 100644
+>>>> --- a/accel/kvm/kvm-all.c
+>>>> +++ b/accel/kvm/kvm-all.c
+>>>> @@ -3933,6 +3933,7 @@ static void kvm_accel_instance_init(Object *obj)
+>>>>      s->xen_evtchn_max_pirq = 256;
+>>>>      s->device = NULL;
+>>>>      s->msr_energy.enable = false;
+>>>> +    s->pmu_cap_disabled = false;
+>>>>  }
+>>> The CPU property "pmu" also defaults to "false"...but:
+>>>
+>>>  * max CPU would override this and try to enable PMU by default in
+>>>    max_x86_cpu_initfn().
+>>>
+>>>  * Other named CPU models keep the default setting to avoid affecting
+>>>    the migration.
+>>>
+>>> The pmu_cap_disabled and “pmu” property look unbound and unassociated,
+>>> so this can cause the conflict when they are not synchronized. For
+>>> example,
+>>>
+>>> -cpu host -accel kvm,pmu-cap-disabled=on
+>>>
+>>> The above options will fail to launch a VM (on Intel platform).
+>>>
+>>> Ideally, the “pmu” property and pmu-cap-disabled should be bound to each
+>>> other and be consistent. But it's not easy because:
+>>>  - There is no proper way to have pmu_cap_disabled set different default
+>>>    values (e.g., "false" for max CPU and "true" for named CPU models)
+>>>    based on different CPU models.
+>>>  - And, no proper place to check the consistency of pmu_cap_disabled and
+>>>    enable_pmu.
+>>>
+>>> Therefore, I prefer your previous approach, to reuse current CPU "pmu"
+>>> property.
+>> Thank you very much for the suggestion and reasons.
+>>
+>> I am going to follow your suggestion to switch back to the previous solution in v2.
+> +1.
 >
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-> index 312d8b1b81..2741f8bd8e 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -2410,10 +2410,10 @@ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
->   }
->   
->   /* OPFVF with WIDEN */
-> -#define GEN_OPFVF_WIDEN_TRANS(NAME)                              \
-> +#define GEN_OPFVF_WIDEN_TRANS(NAME, CHECK)                       \
->   static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
->   {                                                                \
-> -    if (opfvf_widen_check(s, a)) {                               \
-> +    if (CHECK(s, a)) {                                           \
->           uint32_t data = 0;                                       \
->           static gen_helper_opfvf *const fns[2] = {                \
->               gen_helper_##NAME##_h, gen_helper_##NAME##_w,        \
-> @@ -2429,8 +2429,8 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
->       return false;                                                \
->   }
->   
-> -GEN_OPFVF_WIDEN_TRANS(vfwadd_vf)
-> -GEN_OPFVF_WIDEN_TRANS(vfwsub_vf)
-> +GEN_OPFVF_WIDEN_TRANS(vfwadd_vf, opfvf_widen_check)
-> +GEN_OPFVF_WIDEN_TRANS(vfwsub_vf, opfvf_widen_check)
->   
->   static bool opfwv_widen_check(DisasContext *s, arg_rmrr *a)
->   {
-> @@ -2512,7 +2512,7 @@ GEN_OPFVF_TRANS(vfrdiv_vf,  opfvf_check)
->   
->   /* Vector Widening Floating-Point Multiply */
->   GEN_OPFVV_WIDEN_TRANS(vfwmul_vv, opfvv_widen_check)
-> -GEN_OPFVF_WIDEN_TRANS(vfwmul_vf)
-> +GEN_OPFVF_WIDEN_TRANS(vfwmul_vf, opfvf_widen_check)
->   
->   /* Vector Single-Width Floating-Point Fused Multiply-Add Instructions */
->   GEN_OPFVV_TRANS(vfmacc_vv, opfvv_check)
-> @@ -2537,10 +2537,10 @@ GEN_OPFVV_WIDEN_TRANS(vfwmacc_vv, opfvv_widen_check)
->   GEN_OPFVV_WIDEN_TRANS(vfwnmacc_vv, opfvv_widen_check)
->   GEN_OPFVV_WIDEN_TRANS(vfwmsac_vv, opfvv_widen_check)
->   GEN_OPFVV_WIDEN_TRANS(vfwnmsac_vv, opfvv_widen_check)
-> -GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf)
-> -GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf)
-> -GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf)
-> -GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf)
-> +GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf, opfvf_widen_check)
-> +GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf, opfvf_widen_check)
-> +GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf, opfvf_widen_check)
-> +GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf, opfvf_widen_check)
->   
->   /* Vector Floating-Point Square-Root Instruction */
->   
+>  I also prefer to leverage current exist "+/-pmu" option instead of adding
+> a new option. More options, more complexity. When they are not
+> inconsistent, which has higher priority? all these are issues.
+>
+> Although KVM_CAP_PMU_CAPABILITY is a VM-level PMU capability, but all CPUs
+> in a same VM should always share same PMU configuration (Don't consider
+> hybrid platforms which have many issues need to be handled specifically).
+>
+>
+>>> Further, considering that this is currently the only case that needs to
+>>> to set the VM level's capability in the CPU context, there is no need to
+>>> introduce a new kvm interface (in your previous patch), which can instead
+>>> be set in kvm_cpu_realizefn(), like:
+>>>
+>>>
+>>> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+>>> index 99d1941cf51c..05e9c9a1a0cf 100644
+>>> --- a/target/i386/kvm/kvm-cpu.c
+>>> +++ b/target/i386/kvm/kvm-cpu.c
+>>> @@ -42,6 +42,8 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>>>  {
+>>>      X86CPU *cpu = X86_CPU(cs);
+>>>      CPUX86State *env = &cpu->env;
+>>> +    KVMState *s = kvm_state;
+>>> +    static bool first = true;
+>>>      bool ret;
+>>>
+>>>      /*
+>>> @@ -63,6 +65,29 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>>>       *   check/update ucode_rev, phys_bits, guest_phys_bits, mwait
+>>>       *   cpu_common_realizefn() (via xcc->parent_realize)
+>>>       */
+>>> +
+>>> +    if (first) {
+>>> +        first = false;
+>>> +
+>>> +        /*
+>>> +         * Since Linux v5.18, KVM provides a VM-level capability to easily
+>>> +         * disable PMUs; however, QEMU has been providing PMU property per
+>>> +         * CPU since v1.6. In order to accommodate both, have to configure
+>>> +         * the VM-level capability here.
+>>> +         */
+>>> +        if (!cpu->enable_pmu &&
+>>> +            kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY)) {
+>>> +            int r = kvm_vm_enable_cap(s, KVM_CAP_PMU_CAPABILITY, 0,
+>>> +                                      KVM_PMU_CAP_DISABLE);
+>>> +
+>>> +            if (r < 0) {
+>>> +                error_setg(errp, "kvm: Failed to disable pmu cap: %s",
+>>> +                           strerror(-r));
+>>> +                return false;
+>>> +            }
+>>> +        }
+> It seems KVM_CAP_PMU_CAPABILITY is called to only disable PMU here. From
+> point view of logic completeness,  KVM_CAP_PMU_CAPABILITY should be called
+> to enabled PMU as well when user wants to enable PMU.
+>
+> I know currently we only need to disable PMU, but we may need to enable PMU
+> via KVM_CAP_PMU_CAPABILITY soon.
+>
+> We are working on the new KVM mediated vPMU framework, Sean suggest to
+> leverage KVM_CAP_PMU_CAPABILITY to enable mediated vPMU dynamically
+> (https://lore.kernel.org/all/Zz4uhmuPcZl9vJVr@google.com/). So It would be
+> better if the enable logic can be added here as well.
+>
+> Thanks.
 
+Hi Dongli,
+
+May I know if you have plan to continue to update this patch recently? As
+previous comment said, our KVM mediated vPMU solution needs qemu to
+explicitly call KVM_CAP_PMU_CAPABILITY to enable mediated vPMU as well. If
+you have no plan to update this patch recently, would you mind me to pick
+up this patch
+(https://lore.kernel.org/all/20221119122901.2469-2-dongli.zhang@oracle.com/)
+and post with other our mediated vPMU related patches to enable mediated vPMU?
+
+Thanks!
+
+Dapeng Mi
+
+>
+>
+>>> +    }
+>>> +
+>>>      if (cpu->max_features) {
+>>>          if (enable_cpu_pm) {
+>>>              if (kvm_has_waitpkg()) {
+>>> ---
+>> Sure. I will limit the change within only x86 + KVM.
+>>
+>>> In addition, if PMU is disabled, why not mask the perf related bits in
+>>> 8000_0001_ECX? :)
+>>>
+>> My fault. I have masked only 0x80000022, and I forgot 0x80000001 for AMD.
+>>
+>> Thank you very much for the reminder.
+>>
+>>
+>> I will wait for a day or maybe the weekend. I am going to switch to the previous
+>> solution in v2 if there isn't any further objection with a more valid reason.
+>>
+>> Thank you very much for the feedback!
+>>
+>> Dongli Zhang
+>>
+>>
 
