@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693A4C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146A0C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgVXs-0005PO-QV; Fri, 07 Feb 2025 16:05:52 -0500
+	id 1tgVXv-0005Qg-Ne; Fri, 07 Feb 2025 16:05:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXq-0005Os-P6
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:50 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXu-0005QO-01
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:54 -0500
 Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXo-0001rs-Lm
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:50 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXs-0001tS-83
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:53 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 8EC495C110C;
- Fri,  7 Feb 2025 21:05:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35ADC4CEE2;
- Fri,  7 Feb 2025 21:05:42 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id A95435C110C;
+ Fri,  7 Feb 2025 21:05:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1233AC4CEE2;
+ Fri,  7 Feb 2025 21:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1738962343;
- bh=i30A6zdXGXg5q05tpROTHVEGAeB8sw9Tt3VVFiD0kek=;
- h=From:To:Cc:Subject:Date:From;
- b=oBnoABzIzmrF8vyT4s0QgtkImIJ8IsmKysJsumh4LY2AvkQCw+VLE/jkqb8x74x6T
- o+uhBQXjBbDcKa2nMGcgj5oXSemTTL1yg+MG7Q7U9QdbaG0Dq2Y9Xpju4slL9Hmoy5
- GFRxuzo5Gt1YlK31UQFs4r2anBH3BiqKbfa6sJOU5irGQv+/ifiE0KU/SGeBB8zjQM
- kTR4P6Ps3UCX1Bd03fHZ6m1LvRVME5zBKILoMepzHsx+1NswvJx8L/18oLsDCkUMYx
- XzRfG0AspskPH0++VjNFT1jr/p145MOdU9IwVNq7O1lQPdBR/8Vn8HncpDQ4Yxpx43
- I2NDJA+H/WsbA==
+ s=k20201202; t=1738962351;
+ bh=Stz/PkE+RsExG68z0c7Y2GO5tU8XrxTcb9wEAxlyp6M=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=lFIaStmALRcgaxGrIvcweERWgROIUSW/7n61KGCAAIyYsAJhS1/94LpH/jQXH3Ggt
+ 8PjVByJO3Q6kCB/36OIeUAppmuyjOT1TxYNogfjtF+a3uScpld7PbpsLUy1IeWML9W
+ xuxmtmBbmEW33lXQhpuR9ywx2+gIDsewQbbHKw5YaTOeyv/JKQEGAso5CcO3FR5CV5
+ rIYLW5dlWcKR2XJeOaWonCu9qyaIaSjGdl2VDJkETHSlN5riwcoUWcnJ9/nIhWJn1j
+ v9YfgQWdoLmCXgNbRuoaip3xMjlAkNSKjiBUBtwU3sT6Fwcp9NziW1J1b5cIYZB0K4
+ pCRkKkINhNgYg==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 0/6] Hppa system for v10 diva artist patches
-Date: Fri,  7 Feb 2025 22:05:34 +0100
-Message-ID: <20250207210540.24594-1-deller@kernel.org>
+Subject: [PULL 5/6] hw/pci-host/astro: Add LMMIO range support
+Date: Fri,  7 Feb 2025 22:05:39 +0100
+Message-ID: <20250207210540.24594-6-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250207210540.24594-1-deller@kernel.org>
+References: <20250207210540.24594-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
@@ -72,52 +73,115 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The following changes since commit 6fccaa2fba391815308a746d68f7fa197bc93586:
+Each Astro on 64-bit machines supports up to four LMMIO regions.
+Those regions are used by graphic cards and other PCI devices which
+need to map huge memory areas. The LMMIO regions are configured and
+set up by SeaBIOS-hppa and then used as-is by the operating systems
+(Linux, HP-UX).
 
-  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2025-02-02 11:09:10 -0500)
+With this addition it's now possible to add other PCI graphic
+cards on the command line, e.g. with "-device ati-vga".
 
-are available in the Git repository at:
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ hw/pci-host/astro.c         | 52 +++++++++++++++++++++++++++++++++++++
+ include/hw/pci-host/astro.h |  6 ++---
+ 2 files changed, 55 insertions(+), 3 deletions(-)
 
-  https://github.com/hdeller/qemu-hppa.git tags/hppa-system-for-v10-diva-artist-pull-request
-
-for you to fetch changes up to 3dc340f8a7cfbc30193ab269aad1a5a6026365a6:
-
-  target/hppa: Update SeaBIOS-hppa (2025-02-04 23:07:05 +0100)
-
-----------------------------------------------------------------
-HPPA graphics and serial console enhancements
-
-A small series of patches which enhance the graphics output on 64-bit hppa
-machines. Allow disabling the artist graphic card and introduces drivers for
-the Diva GSP (remote management) cards which are used in later 64-bit machines
-and which we now use for serial console output.
-
-The LMMIO regions of the Astro chip are now supported too, which is important
-to support other graphic cards like an ATI PCI card with a 64-bit Linux kernel.
-
-----------------------------------------------------------------
-
-Helge Deller (6):
-  hw/char: Add emulation of Diva GSP PCI management boards
-  hw/hppa: Wire up Diva GSP card
-  artist: Allow disabling artist on command line
-  hw/hppa: Avoid creation of artist if disabled on command line
-  hw/pci-host/astro: Add LMMIO range support
-  target/hppa: Update SeaBIOS-hppa
-
- MAINTAINERS                 |   1 +
- hw/char/Kconfig             |   3 +
- hw/char/diva-gsp.c          | 297 ++++++++++++++++++++++++++++++++++++
- hw/char/meson.build         |   1 +
- hw/display/artist.c         |   9 +-
- hw/hppa/Kconfig             |   1 +
- hw/hppa/machine.c           |  42 +++--
- hw/pci-host/astro.c         |  52 +++++++
- include/hw/pci-host/astro.h |   6 +-
- roms/seabios-hppa           |   2 +-
- 10 files changed, 383 insertions(+), 31 deletions(-)
- create mode 100644 hw/char/diva-gsp.c
-
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index 62e9c8acbf..039cc3ad01 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -521,6 +521,53 @@ static ElroyState *elroy_init(int num)
+  * Astro Runway chip.
+  */
+ 
++static void adjust_LMMIO_DIRECT_mapping(AstroState *s, unsigned int reg_index)
++{
++    MemoryRegion *lmmio_alias;
++    unsigned int lmmio_index, map_route;
++    hwaddr map_addr;
++    uint32_t map_size;
++    struct ElroyState *elroy;
++
++    /* pointer to LMMIO_DIRECT entry */
++    lmmio_index = reg_index / 3;
++    lmmio_alias = &s->lmmio_direct[lmmio_index];
++
++    map_addr  = s->ioc_ranges[3 * lmmio_index + 0];
++    map_size  = s->ioc_ranges[3 * lmmio_index + 1];
++    map_route = s->ioc_ranges[3 * lmmio_index + 2];
++
++    /* find elroy to which this address is routed */
++    map_route &= (ELROY_NUM - 1);
++    elroy = s->elroy[map_route];
++
++    if (lmmio_alias->enabled) {
++        memory_region_set_enabled(lmmio_alias, false);
++    }
++
++    map_addr = F_EXTEND(map_addr);
++    map_addr &= TARGET_PAGE_MASK;
++    map_size = (~map_size) + 1;
++    map_size &= TARGET_PAGE_MASK;
++
++    /* exit if disabled or zero map size */
++    if (!(map_addr & 1) || !map_size) {
++        return;
++    }
++
++    if (!memory_region_size(lmmio_alias)) {
++        memory_region_init_alias(lmmio_alias, OBJECT(elroy),
++                        "pci-lmmmio-alias", &elroy->pci_mmio,
++                        (uint32_t) map_addr, map_size);
++        memory_region_add_subregion(get_system_memory(), map_addr,
++                                 lmmio_alias);
++    } else {
++        memory_region_set_alias_offset(lmmio_alias, map_addr);
++        memory_region_set_size(lmmio_alias, map_size);
++        memory_region_set_enabled(lmmio_alias, true);
++    }
++}
++
+ static MemTxResult astro_chip_read_with_attrs(void *opaque, hwaddr addr,
+                                              uint64_t *data, unsigned size,
+                                              MemTxAttrs attrs)
+@@ -628,6 +675,11 @@ static MemTxResult astro_chip_write_with_attrs(void *opaque, hwaddr addr,
+         break;
+     case 0x0300 ... 0x03d8 - 1: /* LMMIO_DIRECT0_BASE... */
+         put_val_in_arrary(s->ioc_ranges, 0x300, addr, size, val);
++        unsigned int index = (addr - 0x300) / 8;
++        /* check if one of the 4 LMMIO_DIRECT regs, each using 3 entries. */
++        if (index < LMMIO_DIRECT_RANGES * 3) {
++            adjust_LMMIO_DIRECT_mapping(s, index);
++        }
+         break;
+     case 0x10200:
+     case 0x10220:
+diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
+index e2966917cd..832125a05a 100644
+--- a/include/hw/pci-host/astro.h
++++ b/include/hw/pci-host/astro.h
+@@ -24,6 +24,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ElroyState, ELROY_PCI_HOST_BRIDGE)
+ #define LMMIO_DIST_BASE_ADDR      0xf4000000ULL
+ #define LMMIO_DIST_BASE_SIZE       0x4000000ULL
+ 
++#define LMMIO_DIRECT_RANGES     4
++
+ #define IOS_DIST_BASE_ADDR      0xfffee00000ULL
+ #define IOS_DIST_BASE_SIZE           0x10000ULL
+ 
+@@ -83,9 +85,7 @@ struct AstroState {
+     struct ElroyState *elroy[ELROY_NUM];
+ 
+     MemoryRegion this_mem;
+-
+-    MemoryRegion pci_mmio;
+-    MemoryRegion pci_io;
++    MemoryRegion lmmio_direct[LMMIO_DIRECT_RANGES];
+ 
+     IOMMUMemoryRegion iommu;
+     AddressSpace iommu_as;
 -- 
 2.47.0
 
