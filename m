@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FF5C02199
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B027C02199
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQoP-0000TR-1Y; Fri, 07 Feb 2025 11:02:37 -0500
+	id 1tgQr4-0002zT-7U; Fri, 07 Feb 2025 11:05:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tgQoF-0000QH-Jg
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tgQqn-0002rz-AQ
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:05:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tgQoD-0007G4-M4
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tgQqj-0001l8-6y
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:05:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738944144;
+ s=mimecast20190719; t=1738944298;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nYmDv7aMaGjQaZMAV2X7qgjajETu0BznXuUVEYnnqMw=;
- b=URTWMTb3cES4RtB/q2qQDtp7WAz44awO8McLzdcG5jPYLBJ4JM81AlWSHPRVNeIC+oepNC
- uzDzievYm1frH4kgLEHQnb8QMbXKhODoYtbaODO1U+PGFNfxkKQi69UKN7grS5Sc28a/3/
- nn4kY5TeKMg89jHyIkNsx8C3Ewj2wtA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xz0hJOJEOEWUqaSdSnNyXz9h0M8g/hqw16cg12waP0g=;
+ b=hdLuyQhkXSNFoejLuutzMAzGNxYtak0L6h0O7i8S+iaE8GPllN1kp4/8+wihg2/CKP6vHo
+ sJQbuBihgrRlONfV7CsrL0kudOwY2Cx45jU5jb4kWQsc28Fxodey11ZYdE7wDWsWGcTxiU
+ IEjW3xzCEUStrmSFqzu82Hc7ugrWDUg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-vGW0yefeO2CbRp_hVyvVNw-1; Fri, 07 Feb 2025 11:02:21 -0500
-X-MC-Unique: vGW0yefeO2CbRp_hVyvVNw-1
-X-Mimecast-MFC-AGG-ID: vGW0yefeO2CbRp_hVyvVNw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43631d8d9c7so11855005e9.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:02:21 -0800 (PST)
+ us-mta-662-juV18TyZMoSwVqVR73l_oA-1; Fri, 07 Feb 2025 11:04:57 -0500
+X-MC-Unique: juV18TyZMoSwVqVR73l_oA-1
+X-Mimecast-MFC-AGG-ID: juV18TyZMoSwVqVR73l_oA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43621907030so19247645e9.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:04:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738944140; x=1739548940;
+ d=1e100.net; s=20230601; t=1738944296; x=1739549096;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nYmDv7aMaGjQaZMAV2X7qgjajETu0BznXuUVEYnnqMw=;
- b=DQV32SdGkMWpbrBTo0YX9K1JSNvq+WnXwtCToH2dENh4y+qPes+IRyRMCIgsWW4qqB
- fldC1ATRPd8Jxl4jYm4W2AiaYIw4H+aJugq4vlFMPE19W6af7pQhmvv6wWOwqAhvM52O
- W4jHbBqRlE0H/ThmFaz26/vJInw8pfJ/Sab5Xz9ASsW1H17xoQDtLxLZYhJhOO2k3ZnJ
- RH4SMFPKxVdlND+w8Rea24qlG+H5g48BluHFprVF9VeY8XoEKzif+rkO3j5exNTT7K7Z
- F6RQeko6KijopMyNc/T2ytOM9HK4/Lgykaxkmc2D1/sb6SeeAuDoUK7LvP1b+A7ciG1q
- aQeg==
+ bh=xz0hJOJEOEWUqaSdSnNyXz9h0M8g/hqw16cg12waP0g=;
+ b=Qw8PBtEFKu26wXHEqFo3YKgiYFyilXhheIYbPmGzVaWdQYoEwT5tqcRWkehDypwf2g
+ PUk0+T5PufNjOrxqucp+JpYdmOmCj+9kVBOZYrpw+9JEkJ2waxcgy/EOV6Mk8qkqT+ci
+ LDxrKk4xCsLepEs2aSQfPBOAME1h2KKmdZYQhav31GQWRTmfmVM1oXJD5eVYBTSGeC+P
+ SZptA5H1pu3sz50oaOKDEx24MK1IVuOwkavkA0IvNZHgqI3kUN8mJoI8MiMYH+ItUT8U
+ HYqSgWfHZaGVCS31K07nBQHwdRTv2cVQYNW7X0uwIA885P0VK5krKKbKzV2YAcZ/PSjl
+ Kzxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULZkB7Sspm/+MTY684KL8hEr8u1imUqibVfNsRHngA5DVj33mChnl4rgcojwdq4lvjIteRNFtkunAc@nongnu.org
-X-Gm-Message-State: AOJu0Yxg3utki58scmSeorrPg9eN444IyRK0LIQ2dtb9A+4yPr0ytiSV
- ZxGwnmC98LrNx2PINqnLNEDmecV0oCpByHasUe0E9kWvV4KRYK04o26w6NIGJ1vQoqgAJqGZk0x
- qfdXFQxTh4Rv4+VAKJug49Ol891IwimrGBicLcvcrFYuZcMJDmSYE
-X-Gm-Gg: ASbGnctakXWahoeEvy9R/F+B7Ls6baa0TsaHsZx0LBD8W6/d9uKfu93POvywH5OYkMP
- C7rnfsrJHMlsdnPVmabh2VJYqNq6sLYUv07v+Lm6XCJ3j2UP2G5LSYBlOvhWGjMeSwZd7ehSbR9
- Ri+Rmh0bg4nQpuwbJ99+EjOMYRsvJiry4glJvXvFNU8VL2DvU98k75+pM4X2otWgLV/1UTxsQ5l
- pcnFz7J2x420W4lPBOJ+EuGCHJVcWrIyP6T3c/rXb2KB+5bOPTkrPQS4IBe7//OKoKxQcjUBqra
- ZylzuLyXOxScyaaVyIzTbgq/ExZ5OpgDq2K3
-X-Received: by 2002:a05:600c:198a:b0:436:1af3:5b13 with SMTP id
- 5b1f17b1804b1-43912d49c3amr65700135e9.15.1738944140036; 
- Fri, 07 Feb 2025 08:02:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEPNKYqpqSev2PKeajI3uh5KtnlpQGvb1jhoV/TfPJa8J4oXLNMORLSS+7dvgrHtgXKIkmfJQ==
-X-Received: by 2002:a05:600c:198a:b0:436:1af3:5b13 with SMTP id
- 5b1f17b1804b1-43912d49c3amr65699565e9.15.1738944139545; 
- Fri, 07 Feb 2025 08:02:19 -0800 (PST)
+ AJvYcCVF7kaHLXdSUc8bjYTIbOlAxo0hTow7GHs9yRRnuJsERWfje4GJpTSoSzhLYTJT6fhf2T9yDluNHI79@nongnu.org
+X-Gm-Message-State: AOJu0YwwmLR+fL+Q1/X6MB2fSxUG5gj7oUWztQLAMDZoQBb6RWbLpVmZ
+ 8BCQ00TIerhPQeLldefvNVgpuhZCJS3Btsto2NMDqHVLeMOq1AG4OQ+HUeQFN2L+JJw9u4iw7Jq
+ gMMugVRyp82t7fo1CUH2u5FZ5fkEJl73gAcjsglow6e1d/k4nJ76II/8xyLqJ
+X-Gm-Gg: ASbGncuUHq5GZti23L+Pc2jWoIZMsu8NyDfhumndDONMYwSARx7a5mu3YprqrS5HufB
+ 6PwA6lzajoZsufDqcfOisSJVUiTBqWE0/jm6FJYARuKDmtXzwEzZ6L5FBDYg/Qkd4FEejbhOcjQ
+ rQOhAOxeDswwpNDOGS9MRHMLexEdcoH3RgV6ZdZbQzM592SMZb3zYLe5j8CDjHI6nO6lwEf0rEV
+ GcPbaQnWBpxgCJkazegfmhasVD57nICdJPTmaZBA8UAb1NfiWLTM3yzCfuDL9SOVwVb0q6E8gN+
+ ztS/U1V/QbHX9s/+S+IzzbifPWDxilztIZuR
+X-Received: by 2002:a05:600c:4754:b0:438:a1f5:3e41 with SMTP id
+ 5b1f17b1804b1-4392498b6b7mr41958185e9.12.1738944295943; 
+ Fri, 07 Feb 2025 08:04:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEraYK+6gmFQGOGrzpx1iIDrUFHB5ABRtYi1f1eu0Eh4M+CzbNxh9pWSyrhWjDG0bCGIZ6Beg==
+X-Received: by 2002:a05:600c:4754:b0:438:a1f5:3e41 with SMTP id
+ 5b1f17b1804b1-4392498b6b7mr41957485e9.12.1738944295545; 
+ Fri, 07 Feb 2025 08:04:55 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
  [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391da9648dsm61317795e9.7.2025.02.07.08.02.16
+ 5b1f17b1804b1-4391dfc8a4asm59953685e9.32.2025.02.07.08.04.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 08:02:18 -0800 (PST)
-Message-ID: <75f73a61-b89b-4c17-b72f-35a027049d5e@redhat.com>
-Date: Fri, 7 Feb 2025 17:02:16 +0100
+ Fri, 07 Feb 2025 08:04:54 -0800 (PST)
+Message-ID: <f9877082-0238-47ec-972b-c750aef356ea@redhat.com>
+Date: Fri, 7 Feb 2025 17:04:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/17] tests/qtest: don't attempt to clock_step while
- waiting for virtio ISR
+Subject: Re: [PATCH v2 05/17] tests/qtest: rename qtest_send_prefix and
+ roll-up into qtest_send
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
@@ -97,7 +97,7 @@ Cc: Peter Xu <peterx@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
  qemu-riscv@nongnu.org
 References: <20250207153112.3939799-1-alex.bennee@linaro.org>
- <20250207153112.3939799-3-alex.bennee@linaro.org>
+ <20250207153112.3939799-6-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,7 +142,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250207153112.3939799-3-alex.bennee@linaro.org>
+In-Reply-To: <20250207153112.3939799-6-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -170,25 +170,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/02/2025 16.30, Alex Bennée wrote:
-> This replicates the changes from 92cb8f8bf6 (tests/qtest: remove
-> clock_steps from virtio tests) as there are no timers in the virtio
-> code. We still busy wait and timeout though.
+On 07/02/2025 16.31, Alex Bennée wrote:
+> qtest_send_prefix never actually sent something over the chardev, all
+> it does is print the timestamp to the QTEST_LOG when enabled. So
+> rename the function, make it static, remove the unused CharDev and
+> simplify all the call sites by handling that directly with
+> qtest_send (and qtest_log_send).
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
 > ---
-> v2
->    - fix trailing space
-> ---
->   tests/qtest/libqos/virtio-pci-modern.c | 6 ++----
->   tests/qtest/libqos/virtio-pci.c        | 6 ++----
->   2 files changed, 4 insertions(+), 8 deletions(-)
+>   include/system/qtest.h |  1 -
+>   hw/ppc/spapr_rtas.c    |  1 -
+>   hw/riscv/riscv_hart.c  |  1 -
+>   system/qtest.c         | 26 +++-----------------------
+>   4 files changed, 3 insertions(+), 26 deletions(-)
 
-I wonder whether a usleep(10000) in the loop might help to avoid burning too 
-much CPU time in there?
-
-Anyway,
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
