@@ -4,114 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99C5C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2553C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgOEs-0003Lx-Dz; Fri, 07 Feb 2025 08:17:46 -0500
+	id 1tgOcD-0001vD-Pi; Fri, 07 Feb 2025 08:41:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgOEa-0003IJ-Vs
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:17:32 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tgOcC-0001v2-0l
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:41:52 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgOEY-0004lu-1K
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:17:27 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6457221166;
- Fri,  7 Feb 2025 13:17:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738934243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
- b=c+Ksj84OPBDh5KHdsTpPeC3/7+a5LnsQv8AgbFnfRR/Ko655HraoukJbP7z3Bq6FpKYKJB
- ptuKFkkqBQOPj8cDRzpW7KLmu2+GywndYj0mAwe2X8RgilS/JEHh054FhUP9Lk/dwRQ9X0
- zN0rnApQZJoItZRbTSFEoWHB/tXqhy8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738934243;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
- b=KDFQSNnJooLXxeF8ddhmtWvDP6OczYpSmgDUn9TGiLEsVGPPsEiiCIRz6cVKHdYQJWuelL
- QdcLGsPXkjm4ANAQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738934243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
- b=c+Ksj84OPBDh5KHdsTpPeC3/7+a5LnsQv8AgbFnfRR/Ko655HraoukJbP7z3Bq6FpKYKJB
- ptuKFkkqBQOPj8cDRzpW7KLmu2+GywndYj0mAwe2X8RgilS/JEHh054FhUP9Lk/dwRQ9X0
- zN0rnApQZJoItZRbTSFEoWHB/tXqhy8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738934243;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
- b=KDFQSNnJooLXxeF8ddhmtWvDP6OczYpSmgDUn9TGiLEsVGPPsEiiCIRz6cVKHdYQJWuelL
- QdcLGsPXkjm4ANAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CA27113694;
- Fri,  7 Feb 2025 13:17:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4YkQIeIHpmcDJgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 13:17:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Alex Williamson
- <alex.williamson@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Eric Blake
- <eblake@redhat.com>, Markus
- Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Joao
- Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
- incoming channels
-In-Reply-To: <Z6Uu50gzSIgKsiLA@x1.local>
-References: <Z6Iy0wY-lsx3M71M@x1.local> <Z6I0mzWEsl5y57Zj@redhat.com>
- <87zfj0mcmy.fsf@suse.de> <87wme4m8ci.fsf@suse.de>
- <192db6a6-f3ff-4cf9-8537-b849fb3a97b3@maciej.szmigiero.name>
- <87tt97ma9l.fsf@suse.de>
- <ac6f56c0-58d9-45a4-bbf4-6b28649a8952@maciej.szmigiero.name>
- <87msezm75y.fsf@suse.de>
- <eba9c2d2-5a20-489c-aa89-8adde2781c7a@maciej.szmigiero.name>
- <87jza3m12b.fsf@suse.de> <Z6Uu50gzSIgKsiLA@x1.local>
-Date: Fri, 07 Feb 2025 10:17:19 -0300
-Message-ID: <87cyftnbc0.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tgOc6-0006TX-Rp
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:41:51 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5dccaaca646so4016570a12.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 05:41:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1738935705; x=1739540505; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yevD9LZYnC7jtqiNZe+XKae1FcHbKwHVm4Z/4ibfqk4=;
+ b=jFrB4J84XjFTb+p5/EupWlhi7XXHkafjeO5Ik5nk+EZrk2iGt0xtflGWnx1ZXi4Y3B
+ RIGVUCID1QSmmTCHHuNrxFGVwiGVDTirzjtDDwybGsdfheo34Pdv0GpSMVwmSWs4IdLp
+ epjyJ0bqaCezxzrcV5HqTwgCFCC2C7EdWA93AEcyNQN1B5kqo5eue491rVK4T7uJ31PS
+ 4WZV83N7n/v+01+g+YZY7bCeL1wUkQOdfqVAF0ODUoHFXA+ZQmUVSuwTts+9nApqHSdU
+ 1/CBupZGcGkFMujW3mzTCWfOTjCz4AM7MNkiEdmm9HJIf/PzpBpWhvjbI++4DdbVLT2Y
+ 2Rdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738935705; x=1739540505;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yevD9LZYnC7jtqiNZe+XKae1FcHbKwHVm4Z/4ibfqk4=;
+ b=Xr/OVqWQAeqyJsYKxnJs63uBSH0RIkTsTKGQV36u5vzQz3RaWmja1+NROp2o+v4taK
+ tgoh1eoYXAS9icMWQjce+ExlEOcFcKwNAAzEtA2YrZAD4QfJtsE7UqjM2xB6N253LvAD
+ vxWGcW3LgUc6sdvKa1SwOxLVJKQBCj/8Rz6Q6cD43TtNJ3xp/zgdw8oH//JH4DKf8Gq0
+ a3fHbEzD8RpRogbFMK/e8ZcEBCaUJhI/jHqf4QMGFjmXlt2wY4KaTLJ9V/oW2SHc9xJ/
+ CGLN941q1eyKRtCjaD/VGpXq//8+vlhIJQLHDwINGaBpkjtuPp2Z++1kUGkOcVMrISMd
+ f77w==
+X-Gm-Message-State: AOJu0YynKB1AZNgdVyXwQdtMYF+EzNfZFy0hFP8MgyjUnYXz3FixZP1X
+ MDQU8I0/y6Mg8EURCXGGRkplzlF8L4ZSAizVCGcbj2OICjxHi83WHtYW3byx8dhCAvSxQ9IirS5
+ COz+4X6TBQrDPo5c7YPyNGpUGiO4=
+X-Gm-Gg: ASbGncs+TNNiRv/xcb5QtR5HAWSNkheuBSzcDD3lx3coxNz6C/mYMZga+c2Sa5C1cFL
+ xOQQZhnQ/hthjsFm+hBQLuvb2YJpfh7XMAOi269t5RRcGFk+8A1LCUxuIzZiIoIL3a6IGk80=
+X-Google-Smtp-Source: AGHT+IH2B8/Fn6cb5AQQnDFCJMXfbJs5LBBUBoV7apHJflbGO/t6N9+a2MPeNrmbHXvaoogdv/LJnkWPUbqIbfqI2OA=
+X-Received: by 2002:a05:6402:3491:b0:5d3:f1f7:c232 with SMTP id
+ 4fb4d7f45d1cf-5dcecd1703amr7897398a12.11.1738935704041; Fri, 07 Feb 2025
+ 05:41:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <CAJSP0QVYE1Zcws=9hoO6+B+xB-hVWv38Dtu_LM8SysAmS4qRMw@mail.gmail.com>
+ <f3639df5-05cf-4aef-adfc-8a39ed7767ce@redhat.com>
+In-Reply-To: <f3639df5-05cf-4aef-adfc-8a39ed7767ce@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Fri, 7 Feb 2025 08:41:31 -0500
+X-Gm-Features: AWEUYZkawdYYeVMGzcyE7xtrfDTx0kuc1V3mY69xfNo6cCeH6NUX8nmwiAKSftM
+Message-ID: <CAJSP0QUOzyqE16HL+QfXqQA3oZQ=4b=nt4_8JkoSSx5U_b7MsQ@mail.gmail.com>
+Subject: Re: Call for GSoC internship project ideas
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Akihiko Odaki <akihiko.odaki@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Bibo Mao <maobibo@loongson.cn>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ German Maglione <gmaglione@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,96 +106,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Thu, Feb 06, 2025 at 02:32:12PM -0300, Fabiano Rosas wrote:
->> > In any case we'd still need some kind of a compatibility behavior for
->> > the TLS bit stream emitted by older QEMU versions (which is always
->> > improperly terminated).
->> >
->> 
->> There is no compat issue. For <= 9.2, QEMU is still doing an extra
->> multifd_send_sync_main(), which results in an extra MULTIFD_FLAG_SYNC on
->> the destination and it gets stuck waiting for the
->> RAM_SAVE_FLAG_MULTIFD_FLUSH that never comes. Therefore the src always
->> closes the connection before dst reaches the extra recv().
->> 
->> I test migration both ways with 2 previous QEMU versions and the
->> gnutls_bye() series passes all tests. I also put an assert at
->> tlssession.c and never triggers for GNUTLS_E_PREMATURE_TERMINATION. The
->> MULTIFD_FLAG_EOS should behave the same.
+On Fri, Feb 7, 2025 at 7:35=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
+rote:
 >
-> Which are the versions you tried?  As only 9.1 and 9.2 has 637280aeb2, so I
-> wonder if the same issue would hit too with 9.0 or older.
-
-Good point. 9.0 indeed breaks.
-
+> On 28.01.25 17:16, Stefan Hajnoczi wrote:
+> > Dear QEMU and KVM communities,
+> > QEMU will apply for the Google Summer of Code internship
+> > program again this year. Regular contributors can submit project
+> > ideas that they'd like to mentor by replying to this email by
+> > February 7th.
+> >
+> > About Google Summer of Code
+> > -----------------------------------------
+> > GSoC (https://summerofcode.withgoogle.com/) offers paid open
+> > source remote work internships to eligible people wishing to participat=
+e
+> > in open source development. QEMU has been doing internship for
+> > many years. Our mentors have enjoyed helping talented interns make
+> > their first open source contributions and some former interns continue
+> > to participate today.
+> >
+> > Who can mentor
+> > ----------------------
+> > Regular contributors to QEMU and KVM can participate as mentors.
+> > Mentorship involves about 5 hours of time commitment per week to
+> > communicate with the intern, review their patches, etc. Time is also
+> > required during the intern selection phase to communicate with
+> > applicants. Being a mentor is an opportunity to help someone get
+> > started in open source development, will give you experience with
+> > managing a project in a low-stakes environment, and a chance to
+> > explore interesting technical ideas that you may not have time to
+> > develop yourself.
+> >
+> > How to propose your idea
+> > ------------------------------
+> > Reply to this email with the following project idea template filled in:
+> >
+> > =3D=3D=3D TITLE =3D=3D=3D
+> >
+> > '''Summary:''' Short description of the project
+> >
+> > Detailed description of the project that explains the general idea,
+> > including a list of high-level tasks that will be completed by the
+> > project, and provides enough background for someone unfamiliar with
+> > the code base to research the idea. Typically 2 or 3 paragraphs.
+> >
+> > '''Links:'''
+> > * Links to mailing lists threads, git repos, or web sites
+> >
+> > '''Details:'''
+> > * Skill level: beginner or intermediate or advanced
+> > * Language: C/Python/Rust/etc
 >
-> I'd confess I feel unreliable relying on the side effect of 637280aeb2,
-> because fundamentally it works based on the fact that multifd threads need
-> to be kicked out by the main load thread SYNC event on dest QEMU to avoid
-> the readv() from going wrong.
+> =3D=3D=3D Asynchronous request handling for virtiofsd =3D=3D=3D
 >
-
-We're relying on the opposite: mutlifd_recv NOT getting kicked. Which is
-a bug that 1d457daf86 fixed.
-
-> What I'm not sure here is, is it sheer luck that the main channel SYNC will
-> always arrive _before_ pre-mature terminations of the multifd channels?  It
-> sounds like it could also happen when the multifd channels got its
-> pre-mature termination early, before the main thread got the SYNC.
-
-You lost me here, what main channel sync? Its the MULTIFD_FLAG_SYNC that
-puts the recv thread in the "won't see the termination" state and that
-is serialized:
-
-   SEND                        RECV
-   -------------------------+----------------------------
-1  multifd_send_sync_main()
-2  pending_sync==true,
-3  send thread sends SYNC      recv thread gets SYNC
-4  <some work>                 recv gets stuck.
-5  multifd_send_shutdown()     <time passes>
-6  shutdown()                  multifd_recv_shutdown()
-                               recv_terminate_threads()
-                               recv exits without recv()
-
-In other words, RECV would need to see the shutdown (6) before the SYNC
-(3), which I don't think it possible.
-
+> '''Summary:''' Make virtiofsd=E2=80=99s request handling asynchronous, al=
+lowing
+> single-threaded parallel request processing.
 >
-> Maybe we still need a compat property at the end..
+> virtiofsd is a virtio-fs device implementation, i.e. grants VM guests
+> access to host directories. In its current state, it processes guest
+> requests one by one, which means operations of long duration will block
+> processing of others that could be processed more quickly.
+>
+> With asynchronous request processing, longer-lasting operations could
+> continue in the background while other requests with lower latency are
+> fetched and processed in parallel. This should improve performance
+> especially for mixed workloads, i.e. one guest process executing
+> longer-lasting filesystem operations, while another runs random small
+> read requests on a single file.
+>
+> Your task is to:
+> * Get familiar with a Linux AIO interface, preferably io_uring
+> * Have virtiofsd make use of that interface for its operations
+> * Make the virtiofsd request loop process requests asynchronously, so
+> requests can be fetched and processed while others are continuing in the
+> background
+> * Evaluate the resulting performance with different workloads
+>
+> '''Links:'''
+> * virtiofsd repository: https://gitlab.com/virtio-fs/virtiofsd
+> * virtiofsd=E2=80=99s filesystem operations:
+> https://gitlab.com/virtio-fs/virtiofsd/-/blob/main/src/passthrough/mod.rs=
+#L1490
+> * virtiofsd=E2=80=99s request processing loop:
+> https://gitlab.com/virtio-fs/virtiofsd/-/blob/main/src/vhost_user.rs#L244
+>
+> '''Details:'''
+> * Skill level: intermediate
+> * Language: Rust
+> * Mentors: Hanna Czenczek (hreitz@redhat.com), German Maglione
+> (gmaglione@redhat.com)
 
-This is actually similar to preempt_pre_7_2, what about:
+Thanks, I have added your project idea to the list:
+https://wiki.qemu.org/Google_Summer_of_Code_2025#Asynchronous_request_handl=
+ing_for_virtiofsd
 
-    /*
-     * This variable only makes sense when set on the machine that is
-     * the destination of a multifd migration with TLS enabled. It
-     * affects the behavior of the last send->recv iteration with
-     * regards to termination of the TLS session. Defaults to true.
-     *
-     * When set:
-     *
-     * - the destination QEMU instance can expect to never get a
-     *   GNUTLS_E_PREMATURE_TERMINATION error. Manifested as the error
-     *   message: "The TLS connection was non-properly terminated".
-     *
-     * When clear:
-     *
-     * - the destination QEMU instance can expect to see a
-     *   GNUTLS_E_PREMATURE_TERMINATION error in any multifd channel
-     *   whenever the last recv() call of that channel happens after
-     *   the source QEMU instance has already issued shutdown() on the
-     *   channel. This is affected by (at least) commits 637280aeb2
-     *   and 1d457daf86.
-     *
-     * NOTE: Regardless of the state of this option, a premature
-     * termination of the TLS connection might happen due to error at
-     * any moment prior to the last send->recv iteration.
-     */
-    bool multifd_clean_tls_termination;
+Do you want to give any guidance on which crate to use for
+asynchronous I/O? Do you want async Rust (e.g. tokio) or not?
 
-And I think the more straight-forward implementation is to incorporate
-Maciej's premature_ok patches (in some form), otherwise that option will
-have to take effect on the QIOChannel which is a layering violation.
+Stefan
 
