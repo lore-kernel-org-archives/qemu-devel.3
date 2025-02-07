@@ -4,48 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDDAC02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 730B5C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgMxK-0002n2-7a; Fri, 07 Feb 2025 06:55:34 -0500
+	id 1tgMzA-0007qM-EJ; Fri, 07 Feb 2025 06:57:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgMx8-0002bC-LC; Fri, 07 Feb 2025 06:55:22 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMz8-0007mD-CN
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:57:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgMx2-0005XA-Cf; Fri, 07 Feb 2025 06:55:21 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 025B5E73DE;
- Fri, 07 Feb 2025 14:54:30 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A4CF1B0B57;
- Fri,  7 Feb 2025 14:55:11 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7E69152D99; Fri, 07 Feb 2025 14:55:11 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Steve Sistare <steven.sistare@oracle.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 61/65] physmem: fix qemu_ram_alloc_from_fd size
- calculation
-Date: Fri,  7 Feb 2025 14:54:54 +0300
-Message-Id: <20250207115501.2278106-3-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.3-20250207102547@cover.tls.msk.ru>
-References: <qemu-stable-9.1.3-20250207102547@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMz6-0005zP-At
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:57:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738929442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FjpUmZIKjIZGPUgiug4xe2Bxoc6x/jrKg13Yq1LbFDY=;
+ b=OPkP3SNzEGZ1558Mj38j1sAySx1Rejhf8V/ymBhtmau+OpzSTU9UysyrLKqnTHtXEzt7Yi
+ FQ1+iS+K2NDET+gfkBPRQ48+/ceOKfftFmXdACW0fDrpJNu9GJ7TMC3Xjvj2EfCCRJpCkt
+ zb6B05CFE54DchASL0MJ09YZfsLdZE4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-m5_xuSD0NwC2Iyy6BrJWVA-1; Fri,
+ 07 Feb 2025 06:57:21 -0500
+X-MC-Unique: m5_xuSD0NwC2Iyy6BrJWVA-1
+X-Mimecast-MFC-AGG-ID: m5_xuSD0NwC2Iyy6BrJWVA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3334619560A7; Fri,  7 Feb 2025 11:57:20 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.26])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C522195608D; Fri,  7 Feb 2025 11:57:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9DBE021E6A28; Fri, 07 Feb 2025 12:57:16 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH v4 4/4] qapi: expose all schema features to code
+In-Reply-To: <20250205123550.2754387-5-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 5 Feb 2025 12:35:50
+ +0000")
+References: <20250205123550.2754387-1-berrange@redhat.com>
+ <20250205123550.2754387-5-berrange@redhat.com>
+Date: Fri, 07 Feb 2025 12:57:16 +0100
+Message-ID: <87wme2hsrn.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -63,56 +93,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-qemu_ram_alloc_from_fd allocates space if file_size == 0.  If non-zero,
-it uses the existing space and verifies it is large enough, but the
-verification was broken when the offset parameter was introduced.  As
-a result, a file smaller than offset passes the verification and causes
-errors later.  Fix that, and update the error message to include offset.
+> This replaces use of the constants from the QapiSpecialFeatures
+> enum, with constants from the auto-generate QapiFeatures enum
+> in qapi-features.h
+>
+> The 'deprecated' and 'unstable' features still have a little bit of
+> special handling, being force defined to be the 1st + 2nd features
+> in the enum, regardless of whether they're used in the schema. This
+> retains compatibility with common code that references the features
+> via the QapiSpecialFeatures constants.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Peter provides this concise reproducer:
+Daniel, feel free to ignore this at least for now.  I'm trying to learn
+some typing lore from John.
 
-  $ touch ramfile
-  $ truncate -s 64M ramfile
-  $ ./qemu-system-x86_64 -object memory-backend-file,mem-path=./ramfile,offset=128M,size=128M,id=mem1,prealloc=on
-  qemu-system-x86_64: qemu_prealloc_mem: preallocating memory failed: Bad address
+v3 made mypy unhappy.  I asked John for advice, and also posted a
+solution involving ValuesView I hacked up myself.  Daniel took it for
+v4.
 
-With the fix, the error message is:
-  qemu-system-x86_64: mem1 backing store size 0x4000000 is too small for 'size' option 0x8000000 plus 'offset' option 0x8000000
+John suggested to use List.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 4b870dc4d0c0 ("hostmem-file: add offset option")
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/1736967650-129648-3-git-send-email-steven.sistare@oracle.com
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 719168fba7c3215cc996dcfd32a6e5e9c7b8eee0)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+I now wonder whether could use Iterable.
 
-diff --git a/system/physmem.c b/system/physmem.c
-index dc1db3a384..75389064a8 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1970,10 +1970,12 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-     size = REAL_HOST_PAGE_ALIGN(size);
- 
-     file_size = get_file_size(fd);
--    if (file_size > offset && file_size < (offset + size)) {
--        error_setg(errp, "backing store size 0x%" PRIx64
--                   " does not match 'size' option 0x" RAM_ADDR_FMT,
--                   file_size, size);
-+    if (file_size && file_size < offset + size) {
-+        error_setg(errp, "%s backing store size 0x%" PRIx64
-+                   " is too small for 'size' option 0x" RAM_ADDR_FMT
-+                   " plus 'offset' option 0x%" PRIx64,
-+                   memory_region_name(mr), file_size, size,
-+                   (uint64_t)offset);
-         return NULL;
-     }
- 
--- 
-2.39.5
+I'll show the three solutions inline.
+
+John, thoughts?
+
+[...]
+
+> diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
+> new file mode 100644
+> index 0000000000..be3e5d03ff
+> --- /dev/null
+> +++ b/scripts/qapi/features.py
+> @@ -0,0 +1,51 @@
+> +"""
+> +QAPI features generator
+> +
+> +Copyright 2024 Red Hat
+> +
+> +This work is licensed under the terms of the GNU GPL, version 2.
+> +# See the COPYING file in the top-level directory.
+> +"""
+> +
+> +from typing import Dict, ValuesView
+> +
+> +from .common import c_enum_const, c_name
+> +from .gen import QAPISchemaMonolithicCVisitor
+> +from .schema import (
+> +    QAPISchema,
+> +    QAPISchemaFeature,
+> +)
+> +
+> +
+> +class QAPISchemaGenFeatureVisitor(QAPISchemaMonolithicCVisitor):
+> +
+> +    def __init__(self, prefix: str):
+> +        super().__init__(
+> +            prefix, 'qapi-features',
+> +            ' * Schema-defined QAPI features',
+> +            __doc__)
+> +
+> +        self.features: ValuesView[QAPISchemaFeature]
+
+This is the ValuesView solution.
+
+The List solution:
+
+           self.features: List[QAPISchemaFeature] =3D []
+
+The Iterable solution:
+
+           self.features: Iterable[QAPISchemaFeature]
+
+[...]
+
+
+> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> index e97c978d38..7f70969c09 100644
+> --- a/scripts/qapi/schema.py
+> +++ b/scripts/qapi/schema.py
+
+[...]
+
+> @@ -1147,6 +1161,9 @@ def __init__(self, fname: str):
+>          self._def_exprs(exprs)
+>          self.check()
+>=20=20
+> +    def features(self) -> ValuesView[QAPISchemaFeature]:
+> +        return self._feature_dict.values()
+
+This is the ValuesView solution.
+
+The List solution:
+
+       def features(self) -> List[QAPISchemaFeature]:
+           return list(self._feature_dict.values())
+
+The Iterable solution:
+
+       def features(self) -> Iterable[QAPISchemaFeature]:
+           return self._feature_dict.values()
+
+
+> +
+>      def _def_entity(self, ent: QAPISchemaEntity) -> None:
+>          self._entity_list.append(ent)
+>=20=20
+
+[...]
 
 
