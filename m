@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B338C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE09C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgRMu-0003E7-VH; Fri, 07 Feb 2025 11:38:17 -0500
+	id 1tgRPO-0004OF-Jy; Fri, 07 Feb 2025 11:40:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tgRMp-0003A5-Ck
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:38:11 -0500
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1tgRPM-0004Nj-5x
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:40:48 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tgRMn-0006YX-1B
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:38:11 -0500
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e5ad75ca787so1993655276.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:38:08 -0800 (PST)
+ id 1tgRPK-0000Je-GS
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:40:47 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e589c258663so2443336276.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:40:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738946287; x=1739551087; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738946444; x=1739551244; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kAm+8KqVWhVPm/FTHeR78fkBlnBEZqi3WmpJ5OUjub4=;
- b=sVkIHzGRMMu3SPL9x3NMZ6mEQZCr+5otl68ylEAjzVjhbPol4LCe9gFVHKKftV9ICa
- cZn4nkDGssXrhdYenqyuJwTBG4sUWuiEYgiebMQKfzV9LKXa4kUNk+mQOcz2OK0Fk5Gf
- UO9jAYmi1bFBpTu+GoZHdS5E+BFpFN1G/ljGIoDYSRaz41GEGH86KEXM4i9prNf4W3KL
- 9ncKguIL6Qb4pnYOGXwxC/T24sV6+q1hOJSDzoEQ5xm3aFogwJU6MKOIfMJ7bOxZib5g
- UKCzPUpZVxLMTDoomozfyE1wRwYo5zlT7WNWW2ZIySIjVFgQZ/WqTBKsxjV9Y7s8GOza
- sAAw==
+ bh=/s1u7j02fdn/PpNH7d1OI9ADeeEfLYIO2WWJTxBpH08=;
+ b=NyvKps82EwnwzC6Ra/4/Y46yuEhnYB1WRLTReCNuAjwM+fnfrNffjhOa53FemMTBOS
+ o+8zHi/QFDJ5hscKBFtb9QZMrH5YZ08WKAqRYDj0v/rRqzFvjvzbf2+3LF29r2fMdgby
+ O29O5Kh7WyQ/iIyOXFlQF6jXWAkkaatnEtRXv/MuPiyejagIwmU9lQwAYTqQ5td8m7n4
+ +CNC7erfUEnHDCyMyE1tkEwLPpknsL6QeAJvDXX/G2Ss0lntvmPZ1+zak/NDGHstj6Hr
+ 4vMITxAT2zQX+JoOMJd5b9bIk3f6kkj7+keKOV/OMQD2A7n2Coao7wTZ+c0JaevznYIw
+ LdhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738946287; x=1739551087;
+ d=1e100.net; s=20230601; t=1738946444; x=1739551244;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kAm+8KqVWhVPm/FTHeR78fkBlnBEZqi3WmpJ5OUjub4=;
- b=vM4y5/z2gywATcMZQUw40WtdlDIAlhJJvKjOufgZAwtR4xSPOZ4fK5RuY3WkVr+Rgf
- 0UDKIWf2oBSuckhjZETZHkeRBO0jrMMez8YKbpIidlfqDcIfbWQNzF93QXf0uEi2BJ8r
- pEBRy+TEWEXh3P1ZzJJ8+K7EQVNGp9gBWTphGfoeaThv+dw/YVw4aQB53yTsvR3cURz7
- 0QsA8mZIeN+LrTsnQmX8BkP1KpKuj4hPaIqSEK9Ehcg7ETGEXGL8h1o7TgsVsw3DOWLz
- E5xgCzxtR6CTa1LX81KorLZP9rXsujBIlW8HYuLWz9TWeFuH67/1gpy1WA1NtHdOx3Sf
- EONQ==
+ bh=/s1u7j02fdn/PpNH7d1OI9ADeeEfLYIO2WWJTxBpH08=;
+ b=eX8n4skQW27h3vw7/vOc4WVhhMSJPrBc7i8ABDI6OoNvp5KJ1hhGCcWKsi9frB7PED
+ N0VwRYpZrzhVu/p7co0iOWnD3UqaTDEeHOoGx1m30oT1dR/QBNwnMfo4n8Hg0xnBlhCB
+ NcDUpOnCVk9FChmnz6jbOmFIKic78LPE6cEcXHuYXh+mS67vZBaYYN3KoYxVKb3je6Wf
+ Z4rvwHlvDYkC77V+zXgBlkZW2tEwZv0rShUz//XUIiejCvli2cHNXq1P4qQ0Wvwo/0C0
+ 20ZRdqjyn8eMzcqXa2wknIGqVAK6xSTObz86p2i2R3vXjU6H4tVf7LdAGjhzmeYcWd3F
+ O7LA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTLfG/qDy2quewGk53WLc+KV3UV1tdkP1p5I/mCzMvE/f5Iw0S4gDWTSdShwXU0CvSVeDwcCmXyARz@nongnu.org
-X-Gm-Message-State: AOJu0YwpLi6e0r1BhixBIybg4yWDYYAD17meMpC8lk3vjUXYzfemi/eH
- 0jBr1oL97YsiVCOFMPMZsELVjZIv4HmHIoOPeo0ucmGtDZffZ0gYTjTFwZ2xo21t8sy9og4E3oC
- OJRo68mgQPMNiAv4875kj64GaRMdUssA+8tgDJA==
-X-Gm-Gg: ASbGncsox1L/qbElvwo0B1TZnIpaIMygvio2A/xV+a4DBlmqU877hU9mP/XciRc96m3
- EqJwqEjvW94T11OpreaSYLG6PPxkJMZ6AcYM86DtaJsmBJiutQ7cnClLw8XlR7RIla60+at3fBg
+ AJvYcCVVmv9J5K27Db/16l7t+jp0syiPg6PrUZUZV4Jw9c7hhNeqRwDN86a8eVIw1xtMDcy8oGOHYW1lhQFy@nongnu.org
+X-Gm-Message-State: AOJu0YwTt2Tq4Ium5j1U6i1GeFe8NtOW4SBbsIUXTmD1f0Oiy4vrhOUk
+ BvTPss8gVjsbqf512qNb/TZEw8EMqQmkciKHiqTMhic1hor1EbfvRXgM/x9JPHSgvXQQt/Pw6x2
+ wn9QHTlIU4JYKh48fLYl6Qypk84p2bQX0i8Y94Q==
+X-Gm-Gg: ASbGncsL+vrAgxiszNP4M3NyIN/SkMI6sr+of6fvoP8WHtxuoxRPGCQLBveCHQtLrZp
+ YPhzME7qgisXpTCAECAegm60+JvdD5bb60BwX3SMr7cD8lqiTHc6Iu51esVZMV5XEVZZz4Ug/lg
  ==
-X-Google-Smtp-Source: AGHT+IFWFTvf41uVF3h65M2ZzMX4kat4Tlvty4g4q9TxadtqHvkoL3xhrou1Yfcyi3HQwckodQcRJh0aKyWdfUVhKyw=
-X-Received: by 2002:a05:6902:2686:b0:e5b:3b7a:fcb4 with SMTP id
- 3f1490d57ef6-e5b46b7d66emr3320873276.1.1738946287287; Fri, 07 Feb 2025
- 08:38:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFJZcnIAKnJXqiJoHJAoFOIo62hcGWutNDOvHpcI0OunGTERzVO+lLPgMpn9JyJ2r4JlFBHsnEl0kAOJ80AXhQ=
+X-Received: by 2002:a05:6902:1b12:b0:e58:a2aa:5234 with SMTP id
+ 3f1490d57ef6-e5b4616ca68mr3144107276.6.1738946444482; Fri, 07 Feb 2025
+ 08:40:44 -0800 (PST)
 MIME-Version: 1.0
 References: <20250206142307.921070-1-eric.auger@redhat.com>
- <20250206142307.921070-5-eric.auger@redhat.com>
-In-Reply-To: <20250206142307.921070-5-eric.auger@redhat.com>
+ <20250207060822-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20250207060822-mutt-send-email-mst@kernel.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Feb 2025 16:37:55 +0000
-X-Gm-Features: AWEUYZmnqP8S6aBg0zaVPZKtAHoxLWNEwTxS7fJ_Lrt0VeWRuuqsHzAQPdh0M8M
-Message-ID: <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
-Subject: Re: [PATCH 4/5] hw/arm/smmuv3: Move reset to exit phase
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com, 
- alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org, 
- zhenzhong.duan@intel.com, ddutile@redhat.com
+Date: Fri, 7 Feb 2025 16:40:33 +0000
+X-Gm-Features: AWEUYZkopjxOM1-HIYOyKs6aoYi5XsykQrgz6-bQbGpuxCYJENFnKmOLqmZ5U6c
+Message-ID: <CAFEAcA8j_ra21a2cuJKSxcL81qoT5aUHmb_mOs1J7aVjdR+eXQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, jasowang@redhat.com, imammedo@redhat.com, 
+ peterx@redhat.com, alex.williamson@redhat.com, clg@redhat.com, 
+ philmd@linaro.org, zhenzhong.duan@intel.com, ddutile@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,52 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Feb 2025 at 14:23, Eric Auger <eric.auger@redhat.com> wrote:
+On Fri, 7 Feb 2025 at 11:10, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> Currently the iommu may be reset before the devices
-> it protects. For example this happens with virtio-scsi-pci.
-> when system_reset is issued from qmp monitor, spurious
-> "virtio: zero sized buffers are not allowed" warnings can
-> be observed.
+> On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
+> > This is a follow-up of Peter's attempt to fix the fact that
+> > vIOMMUs are likely to be reset before the device they protect:
+> >
+> > [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+> > https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
+> >
+> > This is especially observed with virtio devices when a qmp system_reset
+> > command is sent but also with VFIO devices.
+> >
+> > This series puts the vIOMMU reset in the 3-phase exit callback.
+> >
+> > This scheme was tested successful with virtio-devices and some
+> > VFIO devices. Nevertheless not all the topologies have been
+> > tested yet.
+> >
+> > Best Regards
+> >
+> > Eric
 >
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> ---
->  hw/arm/smmuv3.c     | 9 +++++----
->  hw/arm/trace-events | 1 +
->  2 files changed, 6 insertions(+), 4 deletions(-)
 >
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index c0cf5df0f6..7522c32b24 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1870,13 +1870,14 @@ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
->      }
->  }
 >
-> -static void smmu_reset_hold(Object *obj, ResetType type)
-> +static void smmu_reset_exit(Object *obj, ResetType type)
->  {
->      SMMUv3State *s = ARM_SMMUV3(obj);
->      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+> Looks good.
 >
-> -    if (c->parent_phases.hold) {
-> -        c->parent_phases.hold(obj, type);
-> +    trace_smmu_reset_exit();
-> +    if (c->parent_phases.exit) {
-> +        c->parent_phases.exit(obj, type);
->      }
+>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>
+> How should this be merged?
+> I supposed I can merge the 1st three and the other
+> two by the respective maintainers?
+> I don't think there's a dependency here, right?
 
-If we need to do something unexpected like reset
-register values in the exit phase rather than the
-hold phase, it's a good idea to have a comment explaining
-why, to avoid somebody coming along afterwards and tidying
-it up into the more usual arrangement.
+If we're happy with the design of the series I think it
+would be simpler to take the whole thing through one
+tree, rather than split it up. I had a question on the
+smmu patch which is mostly about clarifying what the
+issue is that we're running into, but in principle
+I'm happy for you to take that patch as well.
 
-If I understand correctly we need to keep the whole IOMMU
-config intact until the exit phase? What's the thing the
-device behind the IOMMU is trying to do during its reset
-that triggers the warning?
-
-thanks
 -- PMM
 
