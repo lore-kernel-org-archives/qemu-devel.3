@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECD8C0219C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 09:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B66CC02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 09:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgL8F-0003tb-Dy; Fri, 07 Feb 2025 04:58:43 -0500
+	id 1tgL8Q-0004KX-Ez; Fri, 07 Feb 2025 04:58:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a2f17bd40b3d302f6c1ddf0da75d2343966e0a3f@kylie.crudebyte.com>)
- id 1tgL8B-0003tD-SJ
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:58:39 -0500
+ (envelope-from <52065d405ae96221f15b0fd9c099437c77178d4f@kylie.crudebyte.com>)
+ id 1tgL8N-00044J-02
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:58:51 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a2f17bd40b3d302f6c1ddf0da75d2343966e0a3f@kylie.crudebyte.com>)
- id 1tgL8A-0001JY-3i
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:58:39 -0500
+ (envelope-from <52065d405ae96221f15b0fd9c099437c77178d4f@kylie.crudebyte.com>)
+ id 1tgL8L-0001Kr-DK
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 04:58:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=wWlmiOVMENnEwZf9iPw+EDJPnbEjYuKXLevRQyibxQ0=; b=pvwX0
- EQw/25ws3nv0mBqlgpLCXE/wYpxAt1htsfaTcISuhYwcQi73FN+1TD3kBUxjaOT0JOHxnlEHb5ill
- N0olmm58GzLf3TTZ9hzADL1DfC4u8BMZE9vhzoNwABw4t/7TPF6waj6GLhNW4WgJiP/ngnaFkhhqj
- +kgJ0Yd5LU5XKNhECOtN0Ik41cdW/HuJgrw+84VIG293gnvvRZ4fIZi02U55YYBN65mbVviRaAgbS
- gVLFZ1oJWN8deQJx/etAquxIq+mVUu/SJgyZmfI7vm7pnNxG9oUs6vfe2g/KbVcPThQqWqckGSt5c
- Q0QTYeA8rskhPBM7uBqRgWwBIpmqbtc4GgywPgW75idIk78igfof5Prj45rN5DKhtjOSemGWcnhJ3
- M9fNqU6GikX5plHI3UMb0vFPoXUTLCwqUYUOXhEOikHu8rN/O2xBxmx/Kpk75VSi+0NBr4pC0J+UJ
- tFJBEN+qbTm08N2sC8X7EnSnhssQi0L2SuVF5LP7ckK9nGxTj113i0fvE+V2BtIuyxuq7KVO8PPWN
- nptoU65cFx8WY42/WGMocnn6FvhgioK5RFW9zgEjaftnBKVradshcLf/mrE6kcLZxgRxhgLr60jFH
- LwrN4XQjA13ReVGp38NlTi1qSvPbb0AzMNV2gY1mMqgO1FyFmy45tX0dQMjrIE=;
-Message-Id: <a2f17bd40b3d302f6c1ddf0da75d2343966e0a3f.1738921999.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=JkRdxjgnBKt71547XwUn1O1/I1Rb6x+CIeZvvDqy18c=; b=e9cvd
+ QTiXv3zc5UaN1mjj9K8O/stP3/tyTdthqNvx2CzLzuYnNqCD6n6xWBViNiNfJ5dYKaApadoGMfv0Z
+ C7Oma4MoaR+JB4Pe/8j44Cc/vPW2hK03jLh6thp0T/EqotxsTksOIj4xUJb7JQZic04dRfABpp387
+ HPc3jhZ6iklW90x1qwVWOfP0iID+xc/K61RQqkOcvcXkyC6l+b+KsofEFhJVW5/uNdcw3JD72l6HD
+ iYXz0dA25nW5qvF2Czgq61FxzTfwh56UhRHMcEDxHv1/cS+enXSRuxwrq60pN6CLU7neb0PGbSL5u
+ JdhAoSZ7YeeDntCvdrC4KZpqoOlBSDHCUhUnU37ANQ7k7wVUJUqxoqxXEukVl3e3TKwTfJjErijE0
+ xUqMdbENUJQTZdUPL1BxFHBjR2ywaRb/lOrP80RLGpUulkVv7juL/d8dbyfF7Lk1kkNXQFm/pKKxR
+ NO6VTvVYAWuZV5g77EIKYpRKl5rKfY5frm35seMSuKDKJuTdhmQGbxQGp9dlzGhwOO4kbIVoi2se8
+ XYSSFjJsTY/Vh6TGAUkXpuz/7HGr2LuKC5885tIsZTYLmkxIz0U++LJbcgx1gw5lFg7nFVCvuFz6C
+ 3/kFTbLGlquVnBHnNHasX8NhU4ok43H8m8QYtasG+TLQNGQJ6ckJVEAnyymrRg=;
+Message-Id: <52065d405ae96221f15b0fd9c099437c77178d4f.1738921999.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1738921999.git.qemu_oss@crudebyte.com>
 References: <cover.1738921999.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Fri, 07 Feb 2025 10:53:19 +0100
-Subject: [PULL v2 2/4] 9pfs: make multidevs=remap default
+Subject: [PULL v2 4/4] MAINTAINERS: Mark me as reviewer only for 9pfs
 To: qemu-devel@nongnu.org,
     Peter Maydell <peter.maydell@linaro.org>
 Cc: Greg Kurz <groug@kaod.org>,
     Stefan Hajnoczi <stefanha@redhat.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=a2f17bd40b3d302f6c1ddf0da75d2343966e0a3f@kylie.crudebyte.com;
+ envelope-from=52065d405ae96221f15b0fd9c099437c77178d4f@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -70,110 +70,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1a6ed33cc5 introduced option multidevs=remap|forbid|warn and made
-"warn" the default option.
+From: Greg Kurz <groug@kaod.org>
 
-As it turned out though, e.g. by several reports in conjunction with
-following 9p client issue:
+I still review 9pfs changes from time to time but I'm definitely
+not able to do actual maintainer work. Drop my tree on the way
+as I'll obviously not use it anymore, and it has been left
+untouched since May 2020.
 
-https://github.com/torvalds/linux/commit/850925a8133c73c4a2453c360b2c3beb3bab67c9
-
-Many people are just ignoring this warning, or even do not notice the
-warning at all. Therefore make multidevs=remap the new default option to
-prevent people to run into such kind of severe misbehaviours in the first
-place.
-
-From performance PoV the runtime overhead of multidevs=remap is
-neglectable with few or even just only one device being shared with the
-same 9p export, expected to be constant Theta(1). The inode numbers
-emitted to guest also just loose one bit (since 6b6aa8285d) for the 1st
-device being shared.
-
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Message-Id: <20250115100849.259612-1-groug@kaod.org>
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <09cc84e5561f66b6a8cf49b3532c6c78a6acc806.1734876877.git.qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-local.c |  3 +++
- qemu-options.hx    | 49 +++++++++++++++++++++++++---------------------
- 2 files changed, 30 insertions(+), 22 deletions(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 1b1f3b9ec8..928523afcc 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1538,6 +1538,9 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-                               "[remap|forbid|warn]\n");
-             return -1;
-         }
-+    } else {
-+        fse->export_flags &= ~V9FS_FORBID_MULTIDEVS;
-+        fse->export_flags |= V9FS_REMAP_INODES;
-     }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0cf37fce7b..c6859cbb0e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2254,8 +2254,8 @@ F: include/system/balloon.h
+ F: tests/qtest/virtio-balloon-test.c
  
-     if (!path) {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ec0090dfe2..1b26ad53bd 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1951,32 +1951,37 @@ SRST
-         Specifies the tag name to be used by the guest to mount this
-         export point.
+ virtio-9p
+-M: Greg Kurz <groug@kaod.org>
+ M: Christian Schoenebeck <qemu_oss@crudebyte.com>
++R: Greg Kurz <groug@kaod.org>
+ S: Maintained
+ W: https://wiki.qemu.org/Documentation/9p
+ F: hw/9pfs/
+@@ -2263,7 +2263,6 @@ X: hw/9pfs/xen-9p*
+ F: fsdev/
+ F: tests/qtest/virtio-9p-test.c
+ F: tests/qtest/libqos/virtio-9p*
+-T: git https://gitlab.com/gkurz/qemu.git 9p-next
+ T: git https://github.com/cschoenebeck/qemu.git 9p.next
  
--    ``multidevs=multidevs``
--        Specifies how to deal with multiple devices being shared with a
--        9p export. Supported behaviours are either "remap", "forbid" or
--        "warn". The latter is the default behaviour on which virtfs 9p
--        expects only one device to be shared with the same export, and
--        if more than one device is shared and accessed via the same 9p
--        export then only a warning message is logged (once) by qemu on
--        host side. In order to avoid file ID collisions on guest you
--        should either create a separate virtfs export for each device to
--        be shared with guests (recommended way) or you might use "remap"
--        instead which allows you to share multiple devices with only one
--        export instead, which is achieved by remapping the original
--        inode numbers from host to guest in a way that would prevent
--        such collisions. Remapping inodes in such use cases is required
-+    ``multidevs=remap|forbid|warn``
-+        Specifies how to deal with multiple devices being shared with
-+        the same 9p export in order to avoid file ID collisions on guest.
-+        Supported behaviours are either "remap" (default), "forbid" or
-+        "warn".
-+
-+        ``remap`` : assumes the possibility that more than one device is
-+        shared with the same 9p export. Therefore inode numbers from host
-+        are remapped for guest in a way that would prevent file ID
-+        collisions on guest. Remapping inodes in such cases is required
-         because the original device IDs from host are never passed and
-         exposed on guest. Instead all files of an export shared with
--        virtfs always share the same device id on guest. So two files
-+        virtfs always share the same device ID on guest. So two files
-         with identical inode numbers but from actually different devices
-         on host would otherwise cause a file ID collision and hence
--        potential misbehaviours on guest. "forbid" on the other hand
--        assumes like "warn" that only one device is shared by the same
--        export, however it will not only log a warning message but also
--        deny access to additional devices on guest. Note though that
--        "forbid" does currently not block all possible file access
--        operations (e.g. readdir() would still return entries from other
--        devices).
-+        potential severe misbehaviours on guest.
-+
-+        ``warn`` : virtfs 9p expects only one device to be shared with
-+        the same export. If however more than one device is shared and
-+        accessed via the same 9p export then only a warning message is
-+        logged (once) by qemu on host side. No further action is performed
-+        in this case that would prevent file ID collisions on guest. This
-+        could thus lead to severe misbehaviours in this case like wrong
-+        files being accessed and data corruption on the exported tree.
-+
-+        ``forbid`` : assumes like "warn" that only one device is shared
-+        by the same 9p export, however it will not only log a warning
-+        message but also deny access to additional devices on guest. Note
-+        though that "forbid" does currently not block all possible file
-+        access operations (e.g. readdir() would still return entries from
-+        other devices).
- ERST
- 
- DEF("iscsi", HAS_ARG, QEMU_OPTION_iscsi,
+ virtio-blk
 -- 
 2.30.2
 
