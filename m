@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F9AC02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 500C5C02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgMxE-0002bn-5V; Fri, 07 Feb 2025 06:55:29 -0500
+	id 1tgMxR-0002pJ-1T; Fri, 07 Feb 2025 06:55:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgMx1-0002ZR-78; Fri, 07 Feb 2025 06:55:15 -0500
+ id 1tgMxF-0002fb-9D; Fri, 07 Feb 2025 06:55:29 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgMwz-0005Wb-5v; Fri, 07 Feb 2025 06:55:14 -0500
+ id 1tgMxD-0005Ze-L8; Fri, 07 Feb 2025 06:55:29 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F2619E73DD;
- Fri, 07 Feb 2025 14:54:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 126E4E73E2;
+ Fri, 07 Feb 2025 14:54:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8617E1B0B56;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9A9B31B0B5B;
  Fri,  7 Feb 2025 14:55:11 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7BCBC52D97; Fri, 07 Feb 2025 14:55:11 +0300 (MSK)
+ id 88BA352DA1; Fri, 07 Feb 2025 14:55:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hongren Zheng <i@zenithal.me>,
- Juan Jose Lopez Jaimez <thatjiaozi@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.3 60/65] hw/usb/canokey: Fix buffer overflow for OUT
- packet
-Date: Fri,  7 Feb 2025 14:54:53 +0300
-Message-Id: <20250207115501.2278106-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 65/65] gdbstub/user-target: fix gdbserver int format
+ (%d -> %x)
+Date: Fri,  7 Feb 2025 14:54:58 +0300
+Message-Id: <20250207115501.2278106-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.3-20250207102547@cover.tls.msk.ru>
 References: <qemu-stable-9.1.3-20250207102547@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,80 +65,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hongren Zheng <i@zenithal.me>
+From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
 
-When USBPacket in OUT direction has larger payload
-than the ep_out_buffer (of size 512), a buffer overflow
-would occur.
+This commit fixes an incorrect format string for formatting integers
+provided to GDB when debugging a target run in QEMU user mode.
 
-It could be fixed by limiting the size of usb_packet_copy
-to be at most buffer size. Further optimization gets rid
-of the ep_out_buffer and directly uses ep_out as the target
-buffer.
+The correct format is hexadecimal for both success and errno values,
+some of which can be seen here [0].
 
-This is reported by a security researcher who artificially
-constructed an OUT packet of size 2047. The report has gone
-through the QEMU security process, and as this device is for
-testing purpose and no deployment of it in virtualization
-environment is observed, it is triaged not to be a security bug.
+[0] https://github.com/bminor/binutils-gdb/blob/e65a355022d0dc6b5707310876a72b5693ec0aa5/gdbserver/hostio.cc#L196-L213
 
+Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Fixes: e282010b2e1e ("gdbstub: Add support for info proc mappings")
 Cc: qemu-stable@nongnu.org
-Fixes: d7d34918551dc48 ("hw/usb: Add CanoKey Implementation")
-Reported-by: Juan Jose Lopez Jaimez <thatjiaozi@gmail.com>
-Signed-off-by: Hongren Zheng <i@zenithal.me>
-Message-id: Z4TfMOrZz6IQYl_h@Sun
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 664280abddcb3cacc9c6204706bb739fcc1316f7)
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 8b647bd352505234cab2acd2422aba183a1aa1fd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/canokey.c b/hw/usb/canokey.c
-index b306eeb20e..9af9d4da6e 100644
---- a/hw/usb/canokey.c
-+++ b/hw/usb/canokey.c
-@@ -197,8 +197,8 @@ static void canokey_handle_data(USBDevice *dev, USBPacket *p)
-     switch (p->pid) {
-     case USB_TOKEN_OUT:
-         trace_canokey_handle_data_out(ep_out, p->iov.size);
--        usb_packet_copy(p, key->ep_out_buffer[ep_out], p->iov.size);
-         out_pos = 0;
-+        /* segment packet into (possibly multiple) ep_out */
-         while (out_pos != p->iov.size) {
-             /*
-              * key->ep_out[ep_out] set by prepare_receive
-@@ -207,8 +207,8 @@ static void canokey_handle_data(USBDevice *dev, USBPacket *p)
-              * to be the buffer length
-              */
-             out_len = MIN(p->iov.size - out_pos, key->ep_out_size[ep_out]);
--            memcpy(key->ep_out[ep_out],
--                    key->ep_out_buffer[ep_out] + out_pos, out_len);
-+            /* usb_packet_copy would update the pos offset internally */
-+            usb_packet_copy(p, key->ep_out[ep_out], out_len);
-             out_pos += out_len;
-             /* update ep_out_size to actual len */
-             key->ep_out_size[ep_out] = out_len;
-diff --git a/hw/usb/canokey.h b/hw/usb/canokey.h
-index e528889d33..1b60d73485 100644
---- a/hw/usb/canokey.h
-+++ b/hw/usb/canokey.h
-@@ -24,8 +24,6 @@
- #define CANOKEY_EP_NUM 3
- /* BULK/INTR IN can be up to 1352 bytes, e.g. get key info */
- #define CANOKEY_EP_IN_BUFFER_SIZE 2048
--/* BULK OUT can be up to 270 bytes, e.g. PIV import cert */
--#define CANOKEY_EP_OUT_BUFFER_SIZE 512
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index b5e01fd8b0..0735e6cf72 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -317,9 +317,9 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+     int fd = open(filename, flags, mode);
+ #endif
+     if (fd < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+     } else {
+-        g_string_printf(gdbserver_state.str_buf, "F%d", fd);
++        g_string_printf(gdbserver_state.str_buf, "F%x", fd);
+     }
+     gdb_put_strbuf();
+ }
+@@ -329,7 +329,7 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+     int fd = gdb_get_cmd_param(params, 0)->val_ul;
  
- typedef enum {
-     CANOKEY_EP_IN_WAIT,
-@@ -59,8 +57,6 @@ typedef struct CanoKeyState {
-     /* OUT pointer to canokey recv buffer */
-     uint8_t *ep_out[CANOKEY_EP_NUM];
-     uint32_t ep_out_size[CANOKEY_EP_NUM];
--    /* For large BULK OUT, multiple write to ep_out is needed */
--    uint8_t ep_out_buffer[CANOKEY_EP_NUM][CANOKEY_EP_OUT_BUFFER_SIZE];
+     if (close(fd) == -1) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+         gdb_put_strbuf();
+         return;
+     }
+@@ -352,7 +352,7 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
  
-     /* Properties */
-     char *file; /* canokey-file */
+     ssize_t n = pread(fd, buf, bufsiz, offset);
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+         gdb_put_strbuf();
+         return;
+     }
+@@ -375,7 +375,7 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
+     ssize_t n = readlink(filename, buf, BUFSIZ);
+ #endif
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+         gdb_put_strbuf();
+         return;
+     }
 -- 
 2.39.5
 
