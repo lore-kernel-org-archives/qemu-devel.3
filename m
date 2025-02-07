@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B54C02194
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89BD1C02199
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQLZ-0001J3-Iw; Fri, 07 Feb 2025 10:32:49 -0500
+	id 1tgQLU-000122-Qr; Fri, 07 Feb 2025 10:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKM-00089p-Gm
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:37 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tgQKD-000842-QU
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:27 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKA-00040G-BR
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:33 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so26526735e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:21 -0800 (PST)
+ id 1tgQK6-0003xZ-JI
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:24 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5dcd8d6f130so4399235a12.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738942280; x=1739547080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738942276; x=1739547076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3ShDl4eTjpRUeb9COlaeWxryj/oOTu67dB6IU90OsGA=;
- b=qN+TLRrM+CQ6pbf/o4nNo7t+48evrOK0IR5AIgeH1HehlFaIRMS+lx+9bfIn+hQQUk
- ONgvmBFV2hsCwsQJKfMZrIJQ9NqR4oaox4muXtl0UJ8XOXDys7n54IS/ddq//tOIC36l
- 0mVvpq8mVkT4Ki8aOBFGI9UnbIOxUhYB8B530Y2+U6mmmNhiwhIOaxFuWjLQoA+a19Ya
- /UXRCvk+OvODgGb935bzBhw8js61ETWMuT5acIJLDLjVgx1sPSyxso28kz0kcCssQAgi
- nM/9mnr7ei7bUfFF/XZI0V5EDkLOn1Kuw0/LZnZxLWIzArberku0eexc5WOvcZUmd5+A
- JIVA==
+ bh=TgN34HFjNsDM8vD8ylx4YNq6temrMo6Bfwlmv/QI6BI=;
+ b=Hhts110rpdfD53pM2x8aBxsMRrtvw3A95Nt+5TOnjx1I6erYUU/6yjkq4uTPQKrPgz
+ j7YUI5thE/4n2qSIQZHPUme6Iyw4E3qabnHKBqN8q8hI/OYB9bZE4CVbUKy6vGPtHRmN
+ xrSOj0GEccvhTPwGOWUOVn4S/gqo20XxJzjTvkDAZ7zEFs0uvYyPW3aAFLaCUP0YCmfE
+ mN/H9Kk2nI38P0FByFe8wrkMpbEiW5sU+YNtL0v5MD2Jil6dJUrJcdLt3VUlj9/WMwn0
+ /f8jAMwFrbiCMvFNRSBXH5LAcyWolJAHIFwRceM2wYfiuulxUcRL56zFA8SqQ2j6bvrL
+ GZ/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738942280; x=1739547080;
+ d=1e100.net; s=20230601; t=1738942276; x=1739547076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3ShDl4eTjpRUeb9COlaeWxryj/oOTu67dB6IU90OsGA=;
- b=kxcLHhesNPxs+f8O7PLz5Z0sxII/rVTDT2kf8hcEDGpaOgimah8xS2b1bPqsyO56Gh
- R1OsN87uzJgH84ebZaynNvE52U5/qjrMXXv6PlqL7i7Reg+gUhco82uj5q2Ua8cxc+Jp
- C4YmVutN2ogv/tkhzUBjwqcb5RTS8aCuPX8uCj5O3wynSLQYMGhu/UaZrhIM6mgypcnO
- Vatwb5VQ9xkHnZkUjirx/9/eAB/23+nKYlaW/qLpXV4zURJefR5w8VAwRPqAaPiMgGg6
- FD2gYFZyUz86gUBSDYcOCkuVJO9V/WiWEclCoAAeWBO2LIk5rXfHalFEsIN0aPob5A4X
- 4tYQ==
-X-Gm-Message-State: AOJu0Yy8HhO56gjfpvvh3tD11OxmchvzE1eslvSXpMD6LelANPQTb8s9
- tcxG3yXjNfWhTixksD6SR4NQk7Oj00U2C4qs9VTmR3u+zhops08oOYv10aphpn8=
-X-Gm-Gg: ASbGncvMEgP3A7a8Su7SeWKBKY5TU9lLZvAnbsagoxoWod3wnLDkVm6CIRccKXCrFeb
- mmOey5nevkIzdgZWyNjqQRR2395sBPcPEVZYoEAPQEV/d+/gCzgubKng4ArbhbhXorkZ8r5EqQk
- dh2Q077ItuG6NCUuVyzmVCCCs/E+SHXlZFIvET3hx14v5xKC0w+5Da4WBjj5IxF8urKsBplWl35
- Gm1FbOkWUpJ1oTEiSPtYf7jpdaiyVs+vPg92OXWLekLOkpYZz/paIdT5nGErNuP0/miGrVAVyf8
- hcGiU1gxShCfjnWT5Q==
-X-Google-Smtp-Source: AGHT+IEzLNMgRx2nqn4ZMEmZweBd8Ch2Ufmp9Mqen9yErmCMZCQJmwz/+Lyueiyw7BmY3j+3tWQTSQ==
-X-Received: by 2002:a05:600c:1e23:b0:434:a04d:1670 with SMTP id
- 5b1f17b1804b1-439248c2c07mr44057015e9.0.1738942278829; 
- Fri, 07 Feb 2025 07:31:18 -0800 (PST)
+ bh=TgN34HFjNsDM8vD8ylx4YNq6temrMo6Bfwlmv/QI6BI=;
+ b=LBP6Lqqo45G8v7tHCZIFhDRcbuqhqCCVK2eG/Io+sWzq95gBeFom/GdGlSd4OgklxE
+ rHxgLlzUZ+gVZ8Uamzrfw+jTqk4TTYE1aonBcr55xjRGGbJv7idL3Wh8uJfOCnAgNf6t
+ YMOURAly++WvqRhG0ip2pMqdxWNXn1H+3tVU97iyniOG/ZxX3P7q66XWlI3LfFnhU4IX
+ cAmQkbaYMLU3nGLrYZgkIKgvtr0jccUs8yGrBUZaYjPgjVZ95uaFFwdqEa5y9IGQXD2I
+ 9tpBAIx++Oe9f0hnP2NSVhQlPUrM6cvVx+BtJzLzZfbNpwV+Ln8H7tnVuhZ9v170KVmP
+ SpSA==
+X-Gm-Message-State: AOJu0YyiMv+yrrT1+Gd7pqCo+YDlugyshWjdACZsFt/KC2pxcqOKWU0j
+ Azv1Aa+nBIFtRWeVmsu6Njm0qZHU+bn0KrPaNq7qlhNjjAXeg5oNJKeL5Ti3h2k=
+X-Gm-Gg: ASbGncuK3/8bGaZekYjRVIRC2H621veu4GaJ7wB/mJhX6h8Exw/4sM54RAfXYRSDKwM
+ uz9DSrhtI/MEcKmM/rmrS0jyF+8vAt3MNRk+21QU8zJax+wLdI/gxHFnTMKaRrP7/looTxPPGKv
+ XKkVovJ4hMe/uyXrldqnRytnki3W9RBWGunWd7imj+Q4tgP+RtoCqvnc2CAFIPVxGuvwPyAp5CN
+ yQ5o66OxcTNfSoQwe8b2RG/GEutTxTXWyCXIf7aUukIwiAdmioRRVKOjF7HueJmTFVrGo/J03em
+ KFubd5ze4mWWyQg3Cg==
+X-Google-Smtp-Source: AGHT+IEqzFUgykFDg+BzRAsgHxxxzwOjwd0iFxcy5saGCHYKMbqqCTZmszVdtqyx4yCd8hLnqX/+uw==
+X-Received: by 2002:a05:6402:3903:b0:5dc:74f1:8a32 with SMTP id
+ 4fb4d7f45d1cf-5de458c49d5mr4466459a12.28.1738942274649; 
+ Fri, 07 Feb 2025 07:31:14 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab79378ee30sm54936666b.160.2025.02.07.07.31.15
+ 4fb4d7f45d1cf-5de46b7b480sm1366479a12.36.2025.02.07.07.31.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 07:31:15 -0800 (PST)
+ Fri, 07 Feb 2025 07:31:13 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 016CE5FB89;
- Fri,  7 Feb 2025 15:31:13 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id A48D95FA80;
+ Fri,  7 Feb 2025 15:31:12 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -86,19 +86,19 @@ Cc: Peter Xu <peterx@redhat.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
- qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 07/17] Revert "util/timer: avoid deadlock when shutting
- down"
-Date: Fri,  7 Feb 2025 15:31:02 +0000
-Message-Id: <20250207153112.3939799-8-alex.bennee@linaro.org>
+ qemu-riscv@nongnu.org
+Subject: [PATCH v2 03/17] tests/qtest: don't step clock at start of npcm7xx
+ periodic IRQ test
+Date: Fri,  7 Feb 2025 15:30:58 +0000
+Message-Id: <20250207153112.3939799-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250207153112.3939799-1-alex.bennee@linaro.org>
 References: <20250207153112.3939799-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,58 +121,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit bc02be4508d8753d1f6071b77d10f4661587df6f.
-
-Now we catch attempts to clock_step to the next timer when none are
-enabled we can revert the previous attempt to prevent deadlock. As
-long as a new target time is given we will move time forward even if
-no timers will fire. This is desirable for tests which are checking
-that nothing changes when things are disabled.
-
-Previously most tests got away with it because --enable-slirp always
-has a timer running while the test is active.
+Until there are timers enabled the semantics of clock_step_next() will
+fail. Since d524441a36 (system/qtest: properly feedback results of
+clock_[step|set]) we will signal a FAIL if time doesn't advance.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
 ---
- util/qemu-timer.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ tests/qtest/npcm7xx_timer-test.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 0e8a453eaa..3243d2c515 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -675,17 +675,10 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
- {
-     int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     AioContext *aio_context;
--    int64_t deadline;
--
-     aio_context = qemu_get_aio_context();
--
--    deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
--                                          QEMU_TIMER_ATTR_ALL);
--    /*
--     * A deadline of < 0 indicates this timer is not enabled, so we
--     * won't get far trying to run it forward.
--     */
--    while (deadline >= 0 && clock < dest) {
-+    while (clock < dest) {
-+        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-+                                                      QEMU_TIMER_ATTR_ALL);
-         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
+diff --git a/tests/qtest/npcm7xx_timer-test.c b/tests/qtest/npcm7xx_timer-test.c
+index 58f58c2f71..43711049ca 100644
+--- a/tests/qtest/npcm7xx_timer-test.c
++++ b/tests/qtest/npcm7xx_timer-test.c
+@@ -465,7 +465,6 @@ static void test_periodic_interrupt(gconstpointer test_data)
+     int i;
  
-         qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
-@@ -693,9 +686,6 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
-         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
-         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
-         clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--
--        deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
--                                              QEMU_TIMER_ATTR_ALL);
-     }
-     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
+     tim_reset(td);
+-    clock_step_next();
  
+     tim_write_ticr(td, count);
+     tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(ps));
 -- 
 2.39.5
 
