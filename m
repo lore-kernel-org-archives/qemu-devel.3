@@ -4,90 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C31C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FF5C02199
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQoL-0000Qw-B6; Fri, 07 Feb 2025 11:02:34 -0500
+	id 1tgQoP-0000TR-1Y; Fri, 07 Feb 2025 11:02:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tgQo7-0000Nt-0H
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:24 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tgQo4-0007Cg-Vt
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:18 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38dcc6bfbccso403228f8f.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:02:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738944135; x=1739548935; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ihNlawI4mCyWONJEzR+1GSzo+oI1gh6OJ485QUuU/o0=;
- b=NUdkZQVVbbVeg60avPIG0Q91kahPSlUcFjcMFvAVb3vvgVxgCxRMWnYUtAGobJ6WIh
- 2s0aARCEzoiRr5UrH2+KKYrDxttiAFHRo7R9GiFC7Qm2xyb2XX9EBOvBR78Wyji/v19K
- UH47fDR69gsE1FThSwG/5xVU4UUgmR7bmvufgmtWglsiiSRQjAVdfy0j3sVC2Ppr5rgu
- gYbjXGf/EFQkCxm0xpsrF2Pt5lLwzQsW6dd9p6X+LWJcHNwnwoOrKuw5Lj9UdXcnoCLM
- EZ38+k6nNLp09l5Jb9/IdY+uUubUcHYiuhazpG4UDfjoahLZEDzOD82L2JwvAeIMmfw2
- ypXA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tgQoF-0000QH-Jg
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tgQoD-0007G4-M4
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:02:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1738944144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nYmDv7aMaGjQaZMAV2X7qgjajETu0BznXuUVEYnnqMw=;
+ b=URTWMTb3cES4RtB/q2qQDtp7WAz44awO8McLzdcG5jPYLBJ4JM81AlWSHPRVNeIC+oepNC
+ uzDzievYm1frH4kgLEHQnb8QMbXKhODoYtbaODO1U+PGFNfxkKQi69UKN7grS5Sc28a/3/
+ nn4kY5TeKMg89jHyIkNsx8C3Ewj2wtA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-28-vGW0yefeO2CbRp_hVyvVNw-1; Fri, 07 Feb 2025 11:02:21 -0500
+X-MC-Unique: vGW0yefeO2CbRp_hVyvVNw-1
+X-Mimecast-MFC-AGG-ID: vGW0yefeO2CbRp_hVyvVNw
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43631d8d9c7so11855005e9.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:02:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738944135; x=1739548935;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ihNlawI4mCyWONJEzR+1GSzo+oI1gh6OJ485QUuU/o0=;
- b=GYbRS5IavTd+THZwKsIsZpSBbccgzDORjH2LF9YIzMyEcENzpdg9wxz87etD1bwPBW
- JQPLss0ow/r3Q7hGDh34XYnrlpiaozDLBc6FybB+K5X/HQp2aZsTnw+pJMxpsMTs8bvE
- I0Y1eLyFRaUQNor5c1xhBVqpGafDlGvFFT/Q8I+m/50+7iVZvbADV12NUSURqLYTHj8d
- rmNG91IlMQQ8f8YPab+o6HfxLRx+ZwWEjiqj7Ztk/waUpM0z7a7D9EMx3k0dPplyRldx
- vGPerAeYX3jWKQnG8DKFEUubsB43Tqw/fJFopoj4OuO1TrVYXTNtV4gLiqoTv6FZgFQd
- rNXQ==
+ d=1e100.net; s=20230601; t=1738944140; x=1739548940;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nYmDv7aMaGjQaZMAV2X7qgjajETu0BznXuUVEYnnqMw=;
+ b=DQV32SdGkMWpbrBTo0YX9K1JSNvq+WnXwtCToH2dENh4y+qPes+IRyRMCIgsWW4qqB
+ fldC1ATRPd8Jxl4jYm4W2AiaYIw4H+aJugq4vlFMPE19W6af7pQhmvv6wWOwqAhvM52O
+ W4jHbBqRlE0H/ThmFaz26/vJInw8pfJ/Sab5Xz9ASsW1H17xoQDtLxLZYhJhOO2k3ZnJ
+ RH4SMFPKxVdlND+w8Rea24qlG+H5g48BluHFprVF9VeY8XoEKzif+rkO3j5exNTT7K7Z
+ F6RQeko6KijopMyNc/T2ytOM9HK4/Lgykaxkmc2D1/sb6SeeAuDoUK7LvP1b+A7ciG1q
+ aQeg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWq3yuLhlUvYkp9MGFbRinkgNtYeq4yKLCpUfKRoGih+TL5b8doEU09jAPtcNsTPbRMeejItSOySSy@nongnu.org
-X-Gm-Message-State: AOJu0YypvJ+jjqy9tqBg+fcrP/cG2hr60C8yqJdNTNhfoVowxKxYxUpY
- e+/kcHc+Fz1zQvnOuD7XASw2bYA/n66QhxHNG6YyVSYIyGlW6fkVLEalNehkBblF+P2W+cHP5sX
- pCtQ=
-X-Gm-Gg: ASbGncuEQYUrkfuPcddXBBsivDG3KwyrPJ6CDtzL486fRMORsphxJlZpXSgnB/10T0d
- d3o4u7+4ztMjoVsNSfBCqgYr4FRKw+80Z3SBYD8Doo03X/Qz13KMuiUWiEyWhgc4S3sC5YFZe2T
- A7ZFC1L+cJBi4c4Ijj13NCls8LuUHF0q5Yr5NelWzaZcuzlrPWvlTS18aXPVrCuGmPbd7iFL5Zw
- IhMPO2bs+ArV6wa2E1afPSAeUZgno21SOmXawarutMifDBPch8oT8/5JFZGNXB9JxPwK9sTln+D
- Dr5I+2paZE6gug==
-X-Google-Smtp-Source: AGHT+IFX9WvhugUJsutcR8mfxc4odbBaP7XrnuVWdvintjlRw7EEsftPfsKjc8xNC5EL2MidatfM4g==
-X-Received: by 2002:a5d:5984:0:b0:38b:ef22:d8c3 with SMTP id
- ffacd0b85a97d-38dc934bcd9mr2613660f8f.35.1738944134537; 
- Fri, 07 Feb 2025 08:02:14 -0800 (PST)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbdd36776sm4941161f8f.32.2025.02.07.08.02.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 08:02:14 -0800 (PST)
-Date: Fri, 7 Feb 2025 16:02:38 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
- philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v3 18/26] hw/arm/boot: Mark all guest memory as RIPAS_RAM.
-Message-ID: <20250207160238.GE3546768@myrica>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-20-jean-philippe@linaro.org>
- <e8075a46-8810-4be2-8ad0-b465268541b8@redhat.com>
+ AJvYcCULZkB7Sspm/+MTY684KL8hEr8u1imUqibVfNsRHngA5DVj33mChnl4rgcojwdq4lvjIteRNFtkunAc@nongnu.org
+X-Gm-Message-State: AOJu0Yxg3utki58scmSeorrPg9eN444IyRK0LIQ2dtb9A+4yPr0ytiSV
+ ZxGwnmC98LrNx2PINqnLNEDmecV0oCpByHasUe0E9kWvV4KRYK04o26w6NIGJ1vQoqgAJqGZk0x
+ qfdXFQxTh4Rv4+VAKJug49Ol891IwimrGBicLcvcrFYuZcMJDmSYE
+X-Gm-Gg: ASbGnctakXWahoeEvy9R/F+B7Ls6baa0TsaHsZx0LBD8W6/d9uKfu93POvywH5OYkMP
+ C7rnfsrJHMlsdnPVmabh2VJYqNq6sLYUv07v+Lm6XCJ3j2UP2G5LSYBlOvhWGjMeSwZd7ehSbR9
+ Ri+Rmh0bg4nQpuwbJ99+EjOMYRsvJiry4glJvXvFNU8VL2DvU98k75+pM4X2otWgLV/1UTxsQ5l
+ pcnFz7J2x420W4lPBOJ+EuGCHJVcWrIyP6T3c/rXb2KB+5bOPTkrPQS4IBe7//OKoKxQcjUBqra
+ ZylzuLyXOxScyaaVyIzTbgq/ExZ5OpgDq2K3
+X-Received: by 2002:a05:600c:198a:b0:436:1af3:5b13 with SMTP id
+ 5b1f17b1804b1-43912d49c3amr65700135e9.15.1738944140036; 
+ Fri, 07 Feb 2025 08:02:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEPNKYqpqSev2PKeajI3uh5KtnlpQGvb1jhoV/TfPJa8J4oXLNMORLSS+7dvgrHtgXKIkmfJQ==
+X-Received: by 2002:a05:600c:198a:b0:436:1af3:5b13 with SMTP id
+ 5b1f17b1804b1-43912d49c3amr65699565e9.15.1738944139545; 
+ Fri, 07 Feb 2025 08:02:19 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-132.web.vodafone.de.
+ [109.42.48.132]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4391da9648dsm61317795e9.7.2025.02.07.08.02.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Feb 2025 08:02:18 -0800 (PST)
+Message-ID: <75f73a61-b89b-4c17-b72f-35a027049d5e@redhat.com>
+Date: Fri, 7 Feb 2025 17:02:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e8075a46-8810-4be2-8ad0-b465268541b8@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x430.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/17] tests/qtest: don't attempt to clock_step while
+ waiting for virtio ISR
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Kyle Evans <kevans@freebsd.org>, Alistair Francis
+ <alistair.francis@wdc.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
+ Riku Voipio <riku.voipio@iki.fi>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Alexandre Iooss <erdnaxe@crans.org>, Laurent Vivier <lvivier@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, Warner Losh
+ <imp@bsdimp.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ qemu-riscv@nongnu.org
+References: <20250207153112.3939799-1-alex.bennee@linaro.org>
+ <20250207153112.3939799-3-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250207153112.3939799-3-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,45 +170,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 04, 2025 at 05:27:17PM +1000, Gavin Shan wrote:
-> On 11/26/24 5:56 AM, Jean-Philippe Brucker wrote:
-> > All Realm IPA states are by default RIPAS_EMPTY, and accessing them in
-> > that state causes injection of synchronous exception. Either the loader
-> > or the guest needs to set IPA state to RIPAS_RAM before accessing it.
-> > Since a Linux guest needs all memory ready at boot [1], initialize it
-> > here.
-> > 
-> > [1] https://docs.kernel.org/arch/arm64/booting.html
-> >      https://lore.kernel.org/all/20241004144307.66199-12-steven.price@arm.com/
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > ---
-> > v2->v3: New: the Linux guest does not initialize RIPAS itself anymore,
-> > and expects the loader to do it.
-> > ---
-> >   hw/arm/boot.c | 4 ++++
-> >   1 file changed, 4 insertions(+)
-> > 
+On 07/02/2025 16.30, Alex Bennée wrote:
+> This replicates the changes from 92cb8f8bf6 (tests/qtest: remove
+> clock_steps from virtio tests) as there are no timers in the virtio
+> code. We still busy wait and timeout though.
 > 
-> I think the changes in this patch can be combined to the following one,
-> or move this after it. It logically to initialize guest's RAM covered
-> by PATCH[9]. I'm not sure if there is particular reasonable why we
-> don't do that.
-
-If I understand correctly you mean I should merge patches
-9 and 18, or at least bring them closer together in the series?
-
-I'd like to keep the hw/arm and target/arm changes in separate patches,
-because it's a nice way to have smaller patches and gives a clean commit
-message. But I could interleave the hw/arm and target/arm changes within
-the series (where it makes sense like here), it may be easier to review
-
-For now I pushed the reworked series to branch cca/latest
-https://git.codelinaro.org/linaro/dcap/qemu/-/tree/cca/latest
-
-Thanks,
-Jean
-
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > 
-> PATCH[09/26] target/arm/kvm-rme: Initialize Realm memory
+> ---
+> v2
+>    - fix trailing space
+> ---
+>   tests/qtest/libqos/virtio-pci-modern.c | 6 ++----
+>   tests/qtest/libqos/virtio-pci.c        | 6 ++----
+>   2 files changed, 4 insertions(+), 8 deletions(-)
+
+I wonder whether a usleep(10000) in the loop might help to avoid burning too 
+much CPU time in there?
+
+Anyway,
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
