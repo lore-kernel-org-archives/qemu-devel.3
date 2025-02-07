@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948D0C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 17:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27CA0C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 17:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgRgt-0001cU-Ny; Fri, 07 Feb 2025 11:58:55 -0500
+	id 1tgRoV-0006dw-62; Fri, 07 Feb 2025 12:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tgRgs-0001bc-5R
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:58:54 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1tgRoJ-0006dO-Di
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:06:35 -0500
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tgRgq-0006E4-I2
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:58:53 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e5b107c4346so1879338276.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:58:52 -0800 (PST)
+ id 1tgRoH-0003fO-Iy
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:06:35 -0500
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e46c6547266so1822022276.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 09:06:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738947531; x=1739552331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738947992; x=1739552792; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lqiveB9osXI8XARFYdujgt/1317iAppaAA9K/dytfNw=;
- b=Vdt/tc6VcRN/kGueVQ4ACjzgUZWgSfNA+vFG33FA944SQ0yK+TEAArqWdzWk4I/ggj
- xqVodAXMI0cGPwOanppuf/4lOXBuKtXWyzOXybgWbC5VpXJz4WCfi4RZLlNkwuri0+ZA
- V/ESszHXw/9QwB1KDIZqdcDeRddlbp8dqEvvhGhuKqpDXpBFEY2kAlar/R/f7ZqAd7Yu
- Pm8C/Kd+l4xhIFt8/tM1A/nMNuLao+8w2Sz8MCJL1w/UbKB5lpNQOUIp94l2nAh5fp/t
- j+3owrmFZyv7BUSk+Z3PlAxuey2zOaRxBjmevamMG+fX9tH4HBDeMJicSJ4639Yhdwtb
- JvOA==
+ bh=x2EcrH1tEE3g+8S1bArdiH3Vlk3ipieMtmlaoFSIU/k=;
+ b=Q7fXDXNbJnKLfGZH4948+2z42p6C1r/sGsRLvOxYbQlnOULDdZ1ke16qhjGAlk+R1d
+ C4DD3Zn0sVbMw90q+WzlAppCzgGLN4SqcR6HgNKQkMiP+SFZb8+E0w1QzSB/2OdRA782
+ pVoQTBEoaaU9torQgk/BOAVUDhRi2fqCAnnifNUVWdPq9XCRL/5AcCES8h5gG+bgSBJT
+ HombPZrS5BGQNjoM9Wn3bKbexs0HpoCrVZ/K0jg2xc6zbT4w6je7rn1c7Oa1z51Irm2g
+ 5tXDUfkEFF/KNvNBZWprPYSrKEooPIVwEHVF4skU7kKwZhjWpNa80a61PMQ2de0fTdfP
+ ZNjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738947531; x=1739552331;
+ d=1e100.net; s=20230601; t=1738947992; x=1739552792;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lqiveB9osXI8XARFYdujgt/1317iAppaAA9K/dytfNw=;
- b=cKe6ZLbe5GpcPz+nxIxW8qFW3xofhi12nPNgq9HDvbGCmP1k2Pupt/0vDYok3N4A7h
- SUPGmtsTNKmu9bQ9kYY3pgJ9UOnsRWLl2nBQmCfhKfzxZtF0yr2p5bEyaloES6jjyBPc
- b4gW0w8RD3rdIJp2iwo88ZaDKT85PUaWO9Pca26NfsZvuAYFHZHz6CrO5iPrbJlhJn1F
- FJvsuq6yS59+2cc1Zwb9n2fAJWTt5xLAJmMEEJFRRQib+1G7+uMBFGXSpwnOT63LPQ6g
- phZYyDDntjUsjEmhsQhhwAIqG3rjn+CKbdERrjQQsj8/Y0y7QnaYzOSIhCuLr8TI7f+d
- 9cJg==
+ bh=x2EcrH1tEE3g+8S1bArdiH3Vlk3ipieMtmlaoFSIU/k=;
+ b=XdnchtvRab23RnxHUFz9ylUZIMVewwiSzDxmuXDIkgV54ncyjGpJ5jel5tUQghXSSk
+ epBOLJ8ewYqnfjbDbEquYPjbzfsFZE/1S6PKhaTDn6uDx4tAkILVlhhhgZGKS/Sxefyi
+ mEGQ7I1jx0LYrCCX2Fb7+GfPqGqtvVkWAFeBaKGX2g8QY4VC1DTweBoZkMwOY1RjksIn
+ nEdJTqHqqKG2K1aVc/qQhnLARFflMnYAUrjhCk5/Z6LY1pfhpnshTQf1g0m60vhyCvJE
+ fbdjWFaQWP6Wv2YJi52/MnsZs8ivqj0x3P1Zu9AZpJeRuBdwll2z6+yGOYFCc0Dsjcp2
+ cs+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWjlj+LO4kZO1TDgl73XwsxzuTO+Qr9BVKXBM3bRXN7f9GtSpnRyIFzPUSQUmUe7pAtF0DxQ7uQBF2@nongnu.org
-X-Gm-Message-State: AOJu0YxIVrdWy0rCwbAfos4KopqA1/wPdjn3D6LWeU//Ro2DARzLFwte
- xZILTb/oYDw/Kl2GF7VQ/TWX9dlfLJCHI3iSaGf0djAyCSkVKo2YJWStjea2XxVDqncJAWR/0oT
- bOzT+mvsV1zWtoiQkIa9KLv/Ar7Lax8nYIMhmVA==
-X-Gm-Gg: ASbGnctaiE/n91ZYQZs1/X5S50/+9axsP3IkyClN54ZOccbZQhIN8u5a6viK9rvALoa
- eLFWceBTnihOWcIBjdxBMmaan9E8V4rb2dR+hRQxDH/8otLATDq7aG5irD63D5pUZ+kYfkUtqpg
+ AJvYcCXtd7mVpiyzTyKChYNMYLA83I9hq0xqBfwmBot4aNzShB4QA9aj4TImr42+MA8xXvZBFxpl49hR2/Jt@nongnu.org
+X-Gm-Message-State: AOJu0Yyl4+mqDdtbAN5+rmNBeYAbS5eZD/419f+9s9YZYyiiTSimCr1S
+ L+LKPSM54E7WdjOmtryGrszIET2Nxppnu1Fah/N539QNZc8QwFsgauixGg3sNJfccD+RCWRPBL3
+ stY/BDz0kQhTO6wxQY3TedMSYla0DG+XJGSreztssD/Yl6jwH
+X-Gm-Gg: ASbGncunxuJppoKSDCNlROP2E7Gbi9Lz9n4OtGspVSdrBWDQTR8l+GqqFDmrhXIEkTM
+ qvp9j6HnREO3cyv+AN7F8uQPtgqkrPwK5pPTLrTtbB3alonTKVYs0SwMLOFeglpu9kog9Ew9Xcg
  ==
-X-Google-Smtp-Source: AGHT+IEUS/FPK2OBKKJJcX1ajxFP8zY6sHEl+WxjMUlHz7eO6RT0R8KK+YTMt1obvE8jm7pXQKfpmU/Le0/MjXkYPZI=
-X-Received: by 2002:a05:6902:2682:b0:e57:fd58:ad51 with SMTP id
- 3f1490d57ef6-e5b46176227mr3076012276.1.1738947530971; Fri, 07 Feb 2025
- 08:58:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHXPwecfKg48up9y+Mh8UnPGN7p1Q5HozH8B0Os/fvtMTc9GcCWHdCZuvQe3A/aoO5bsTdGPgp1lWaZ9/1OfFE=
+X-Received: by 2002:a05:6902:1101:b0:e57:3a77:99b9 with SMTP id
+ 3f1490d57ef6-e5b4629db09mr2525588276.41.1738947992033; Fri, 07 Feb 2025
+ 09:06:32 -0800 (PST)
 MIME-Version: 1.0
 References: <20250206142307.921070-1-eric.auger@redhat.com>
- <20250206142307.921070-5-eric.auger@redhat.com>
- <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
- <7102d470-ac72-4c02-b8bc-20f1379a4843@redhat.com>
-In-Reply-To: <7102d470-ac72-4c02-b8bc-20f1379a4843@redhat.com>
+ <Z6Y6sf064FBWT5G1@x1.local>
+In-Reply-To: <Z6Y6sf064FBWT5G1@x1.local>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Feb 2025 16:58:39 +0000
-X-Gm-Features: AWEUYZn8C8vUHzllJmbOc_heUb0gKDMG_YpbjTi8jXw7jhfGEEwsVKT-MCiG41o
-Message-ID: <CAFEAcA-XK5GwT0b_Ff-8fYnWcDgzaE-0Ei-YqDoXv-aXFGNXUQ@mail.gmail.com>
-Subject: Re: [PATCH 4/5] hw/arm/smmuv3: Move reset to exit phase
-To: eric.auger@redhat.com
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com, 
+Date: Fri, 7 Feb 2025 17:06:20 +0000
+X-Gm-Features: AWEUYZkGCgiYExZB1YkWnc2NpY21qlJjthqeofmkYckNTIsX-HskZnMDN8FOS5A
+Message-ID: <CAFEAcA9ETg2+Xa+e3quJhGG3KsNuH+DW3puuWaJi-q1psUdw6A@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
+To: Peter Xu <peterx@redhat.com>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com, 
  alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org, 
  zhenzhong.duan@intel.com, ddutile@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 7 Feb 2025 at 16:50, Eric Auger <eric.auger@redhat.com> wrote:
+On Fri, 7 Feb 2025 at 16:54, Peter Xu <peterx@redhat.com> wrote:
 >
->
->
->
-> On 2/7/25 5:37 PM, Peter Maydell wrote:
-> > On Thu, 6 Feb 2025 at 14:23, Eric Auger <eric.auger@redhat.com> wrote:
-> >> Currently the iommu may be reset before the devices
-> >> it protects. For example this happens with virtio-scsi-pci.
-> >> when system_reset is issued from qmp monitor, spurious
-> >> "virtio: zero sized buffers are not allowed" warnings can
-> >> be observed.
-> >>
-> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> >> ---
-> >>  hw/arm/smmuv3.c     | 9 +++++----
-> >>  hw/arm/trace-events | 1 +
-> >>  2 files changed, 6 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> >> index c0cf5df0f6..7522c32b24 100644
-> >> --- a/hw/arm/smmuv3.c
-> >> +++ b/hw/arm/smmuv3.c
-> >> @@ -1870,13 +1870,14 @@ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
-> >>      }
-> >>  }
-> >>
-> >> -static void smmu_reset_hold(Object *obj, ResetType type)
-> >> +static void smmu_reset_exit(Object *obj, ResetType type)
-> >>  {
-> >>      SMMUv3State *s = ARM_SMMUV3(obj);
-> >>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
-> >>
-> >> -    if (c->parent_phases.hold) {
-> >> -        c->parent_phases.hold(obj, type);
-> >> +    trace_smmu_reset_exit();
-> >> +    if (c->parent_phases.exit) {
-> >> +        c->parent_phases.exit(obj, type);
-> >>      }
-> > If we need to do something unexpected like reset
-> > register values in the exit phase rather than the
-> > hold phase, it's a good idea to have a comment explaining
-> > why, to avoid somebody coming along afterwards and tidying
-> > it up into the more usual arrangement.
-> sure
+> On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
+> > This is a follow-up of Peter's attempt to fix the fact that
+> > vIOMMUs are likely to be reset before the device they protect:
 > >
-> > If I understand correctly we need to keep the whole IOMMU
-> > config intact until the exit phase? What's the thing the
-> > device behind the IOMMU is trying to do during its reset
-> > that triggers the warning?
-> The virtio-pci-net continues to perform DMA requests and this causes
-> some weird messages such as:
-> "virtio: bogus descriptor or out of resources"
+> > [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+> > https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
+> >
+> > This is especially observed with virtio devices when a qmp system_reset
+> > command is sent but also with VFIO devices.
+> >
+> > This series puts the vIOMMU reset in the 3-phase exit callback.
+> >
+> > This scheme was tested successful with virtio-devices and some
+> > VFIO devices. Nevertheless not all the topologies have been
+> > tested yet.
 >
-> Also VFIO devices may continue issuing DMAs causing translation faults
+> Eric,
+>
+> It's great to know that we seem to be able to fix everything in such small
+> changeset!
+>
+> I would like to double check two things with you here:
+>
+>   - For VFIO's reset hook, looks like we have landed more changes so that
+>     vfio's reset function is now a TYPE_LEGACY_RESET, and it always do the
+>     reset during "hold" phase only (via legacy_reset_hold()).  That part
+>     will make sure vIOMMU (if switching to exit()-only reset) will order
+>     properly with VFIO.  Is my understanding correct here?
 
-Hmm, right. I guess this only happens with KVM, or can you
-trigger it in a TCG setup too? Anyway, presumably we can
-rely on the devices quiescing all their outstanding DMA
-by the time the hold phase comes along.
+Yes, we now do a reset of the whole system as a three-phase setup,
+and the old pre-three-phase reset APIs like qemu_register_reset() and
+device_class_set_legacy_reset() all happen during the "hold" phase.
 
-(I wonder if we ought to suggest quiescing outstanding
-DMA in the enter phase? But it's probably easier to fix
-the iommus like this series does than try to get every
-dma-capable pci device to do something different.)
+>   - Is it possible if some PCIe devices that will provide its own
+>     phase.exit(), would it matter on the order of PCIe device's
+>     phase.exit() and vIOMMU's phase.exit() (if vIOMMUs switch to use
+>     exit()-only approach like this one)?
+
+It's certainly possible for a PCIe device to implement
+a three-phase reset which does things in the exit phase. However
+I think I would say that such a device which didn't cancel all
+outstanding DMA operations during either 'enter' or 'hold'
+phases would be broken. If it did some other things during
+the 'exit' phase I don't think the ordering of those vs the
+iommu 'exit' handling should matter.
+
+(To some extent the splitting into three phases is trying
+to set up a consistent model as outlined in docs/devel/reset.rst
+and to some extent it's just a convenient way to get a basic
+"this reset thing I need to do must happen after some other
+device has done its reset things" which you can achieve
+by ad-hoc putting them in different phases. Ideally we get
+mostly the former and a little pragmatic dose of the latter,
+but the consistent model is not very solidly nailed down
+so I have a feeling the proportions may not be quite as
+lopsided as we'd like :-) )
 
 thanks
 -- PMM
