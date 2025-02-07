@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FF8C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C33C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:32:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQHa-0006o6-7m; Fri, 07 Feb 2025 10:28:42 -0500
+	id 1tgQKP-00086j-De; Fri, 07 Feb 2025 10:31:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1tgQHP-0006nS-J3
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:28:32 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tgQK7-0007zb-Sk
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:19 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1tgQHL-0001J0-IF
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:28:29 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-38dcab4b0e1so656290f8f.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:28:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tgQK5-0003ww-Fr
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:19 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5dcf0de81ebso4306037a12.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1738942105; x=1739546905;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YNuSvlIi2eH0IATCfdiQOsDtFgKiJypecWcAgoJwHY4=;
- b=y3jEncWiQ+UtL+QDuKvJ+ru70LeY9MoWj68FSA08M604RC963yOJt3/iczRyEHSP32
- 3asgaLoQLIxh/W7oG3na9AdkYeB0t3a9ESaCeUmHnXRnj2Prc7v9rxAHWoHex9LQ9JkE
- ZxmNxcbEjITY1MVCJ3Rw4kXZq7dNTm3n2GyhEFcftM+KUh3wKkhkBALvXOzm37E654Ze
- zSSS5m7mb2s1CYIr01TtpOcfWMfEqU3Fm12z8RqwKU66guzyunFex6RWjNZeNBA3Y6iE
- pP9a+Zr3DoDG/FLXpDqEWXOMEcm5lVB7plKIerydZRtw1NgrgDh1hEIcV7XREdmGYGkE
- ZY9w==
+ d=linaro.org; s=google; t=1738942274; x=1739547074; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Um1CwtmhdsQHyRWJ4xWo6y2AlcWR+j1kN7yWOVUF0WM=;
+ b=LfD4fPp0TZbBGnBQ0dM6TTBLxRPNHtZOFOf5A8B5oqp8yXlj01MtfW7mXSe91PlpM6
+ u6W7s5aiY69tIaAgkneDz7QDHskuxOiieTU4ajNLXPPWpAtcQq4XOg9kEfMVTF4v3IVv
+ iiWQEKD4OkyrNZsEmB5w0bquGDjleNaCL5a/CwnADK/+NQ9N7SZCTkRDMvXPmuTrB2pG
+ QKH5N4KoLBIKoBdxO9pMhmlk4tOu6UccAjDgGq3yM6PAkjhim6wDHiQ9+cc2/dYqKYPe
+ KEyCJB58dB5ZSa23KRyvQJ9eApF4aAKtjvAy/+9/vC3C9iYuSxV6FPqRF4CZNZ5/7a6B
+ 7udg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738942105; x=1739546905;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YNuSvlIi2eH0IATCfdiQOsDtFgKiJypecWcAgoJwHY4=;
- b=RMNvqKIO5+cihuJkWfvsRTxwwXsDr6EdNaa42Nt2vrV+Cicm+wkYFvYrSlE+7+6t0D
- 4OcrRuHn0gpSuc6ZxUBA/fZuJR4Y1lOhk62KfYaOe+TP+YbJwZMDSyoK6vxgyUeM0vUB
- m5lnxNNCqHICX/cDcPf9+kZqfRmwI7+B7DK2qRdz7vLwoXtlskftvmHRe4FjcDarVQx9
- gJ2V6SeM5RYKVEHVSEiUQ0R37s/qDx5mmOXmhlSD/wKcFlO57puMiN13J78tje7A4dc/
- lN/iBToXc2oBKADHr2dRXLzf5HrkiudU1FcExvuayMmTzYdADd4Gt1u7CNDyLZ1R+jVH
- 1xJQ==
-X-Gm-Message-State: AOJu0YxH2wSq7dGx4jqYp2PRlNIQywU71sCZWMgxQZ7MHqn4K3kF9Bmm
- VGS41IusJ6ZtBeRiQ37uq9y9AuP0Qn29lS/dfECFAW79dQLctRXEidZTKMglIV1gnVSvisN3g25
- T
-X-Gm-Gg: ASbGnctlQqlO0Jrk76DLmQJe/1kPL88cwoOU32plr8Lx/2NtrOxpgg5nNzuawV35O75
- mTQ20jqU29uqxoDXAdmGzpl6b5DzO1RqQnkKAXy7JELPbODo5GBSw33Vf03Vr6ADSRGGZviW4n/
- maz6XtXPaQH/cscEWyZM5ICob0msW8H+aJEwCSwHsSINjSK9B1eWexdXVx8Sl4sh/rEYpZjN6zy
- GGETt0jtFP+XP5F1tEG/Lvu/9XP8ecSbNJInR4ymYfKk22yZY+jCK9jCePfvBtp2Lq2BaCbyZkA
- lEY8+xOFczoVPgCpTdbeeBZR5xe7K902T7zkeNQhKLdV1MwAb78wzkSjiYootJEGejs=
-X-Google-Smtp-Source: AGHT+IEqlgL2igzW+RGqkuKw0zFmkmZS7qpbuqrgKXWWoJf+Je0i/KOhxbHdhi5F4xrR3Z+AHIELoA==
-X-Received: by 2002:a05:6000:1acb:b0:38a:4b8b:295a with SMTP id
- ffacd0b85a97d-38dc9101923mr2851991f8f.31.1738942104771; 
- Fri, 07 Feb 2025 07:28:24 -0800 (PST)
-Received: from rockhopper.ba.rivosinc.com (214.11.169.217.in-addr.arpa.
- [217.169.11.214]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc5839877sm3301079f8f.3.2025.02.07.07.28.23
+ d=1e100.net; s=20230601; t=1738942274; x=1739547074;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Um1CwtmhdsQHyRWJ4xWo6y2AlcWR+j1kN7yWOVUF0WM=;
+ b=utcJe5GNVVftKU3YfgOfY+83p/FqvVeyT11QbP85dbQsVPEufAqrtMmHHHqgfxqGPa
+ qzTL7VUPTfgPSlB3mXdAy0Ohj1dFxp4dAjZcwSTUwItzH4nmfRHsVA40AbZzw2IigFF9
+ KQKsyj0Tx27/CY2/FUPR2rzxHMrTAbzKzX6F7wqxdUSEokPBrMJk4c9zXOyMpXToCVvh
+ 3/wrA6X0TvSV2zzlnOprXnpLrC0kYeKbZIADh6RS4lCHfx5PennGTkc5r029vfpvFD94
+ jS+hHZIjMxJH5BA6PsHqeUqEYapxQXOlyVV185wzjzibzR70rmBZaShxElGe1SLoMGvx
+ AymQ==
+X-Gm-Message-State: AOJu0YwtvII3DymOxtQzDb4S0t0ZUKzmJtjYJ2qEbvepNrRXOMyOo27v
+ H3t3dFjKknDzrR/fwvvEYtiH1Il3MKSEWRLPb9MiBk17q7vtBErHprkZCvQUhYk=
+X-Gm-Gg: ASbGncuxN3SzAGyJwMJTWXwUVDmrjKdV8eom4tEhzt50EQaf4GrfILQzS6PxLF/i3Zp
+ GoPw1laNKcSajsIjVAY/0XEQDLVbVJiLzrOHBZl3rFmRaHSwfoFlIOU+uMg835QjOeit5MHHus7
+ sFvPYL7oEjD9hPvJIDHvE7A/zdqQCvLqQlO60nrdlSae4NOjIMhwJfkpSgKPyvbdOvHNi74VK90
+ bJS4qXQn+fB+kj+oKxc42qVlbiMNFYqI4N4cNJbuga5sjxbaEtK+GapebEjgh0IKLXDKkKjLVyV
+ rfU0F52GjauXrqbqOA==
+X-Google-Smtp-Source: AGHT+IElHjFtPVYJA73ULLa7+KgfPOyHampW28+/996bqIedaJsi9vSXndyF9JnqnF8avBEpNO5jIA==
+X-Received: by 2002:a17:907:7b06:b0:ab6:eec6:7cab with SMTP id
+ a640c23a62f3a-ab789c3ac8amr448973266b.38.1738942273971; 
+ Fri, 07 Feb 2025 07:31:13 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab781453f04sm205306266b.161.2025.02.07.07.31.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 07:28:24 -0800 (PST)
-From: Rob Bradford <rbradford@rivosinc.com>
+ Fri, 07 Feb 2025 07:31:13 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B6FC05FAD2;
+ Fri,  7 Feb 2025 15:31:12 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Rob Bradford <rbradford@rivosinc.com>
-Subject: [PATCH] target/riscv: Fix minor whitespace issue in
- riscv_cpu_properties
-Date: Fri,  7 Feb 2025 15:28:23 +0000
-Message-ID: <20250207152823.265068-1-rbradford@rivosinc.com>
-X-Mailer: git-send-email 2.48.1
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Kyle Evans <kevans@freebsd.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Warner Losh <imp@bsdimp.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 04/17] tests/qtest: simplify qtest_process_inbuf
+Date: Fri,  7 Feb 2025 15:30:59 +0000
+Message-Id: <20250207153112.3939799-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250207153112.3939799-1-alex.bennee@linaro.org>
+References: <20250207153112.3939799-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=rbradford@rivosinc.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,32 +120,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mvendorid/mimpid/marchid properties have the wrong amount of
-whitespace ahead of them.
+Don't both creating a GString to temporarily hold our qtest command.
+Instead do a simpler g_strndup and use autofree to clean up
+afterwards.
 
-Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/riscv/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ system/qtest.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3d4bd157d2..cca24b9f1f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2844,9 +2844,9 @@ static const Property riscv_cpu_properties[] = {
-     {.name = "cbop_blocksize", .info = &prop_cbop_blksize},
-     {.name = "cboz_blocksize", .info = &prop_cboz_blksize},
+diff --git a/system/qtest.c b/system/qtest.c
+index e68ed0f2a8..bb1efba9fd 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -763,25 +763,21 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+     }
+ }
  
--     {.name = "mvendorid", .info = &prop_mvendorid},
--     {.name = "mimpid", .info = &prop_mimpid},
--     {.name = "marchid", .info = &prop_marchid},
-+    {.name = "mvendorid", .info = &prop_mvendorid},
-+    {.name = "mimpid", .info = &prop_mimpid},
-+    {.name = "marchid", .info = &prop_marchid},
++/*
++ * Process as much of @inbuf as we can in newline terminated chunks.
++ * Remove the processed commands from @inbuf as we go.
++ */
+ static void qtest_process_inbuf(CharBackend *chr, GString *inbuf)
+ {
+     char *end;
  
- #ifndef CONFIG_USER_ONLY
-     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
+     while ((end = strchr(inbuf->str, '\n')) != NULL) {
+-        size_t offset;
+-        GString *cmd;
+-        gchar **words;
+-
+-        offset = end - inbuf->str;
++        size_t len = end - inbuf->str;
++        g_autofree char *cmd = g_strndup(inbuf->str, len);
++        g_auto(GStrv) words = g_strsplit(cmd, " ", 0);
+ 
+-        cmd = g_string_new_len(inbuf->str, offset);
+-        g_string_erase(inbuf, 0, offset + 1);
+-
+-        words = g_strsplit(cmd->str, " ", 0);
++        g_string_erase(inbuf, 0, len + 1);
+         qtest_process_command(chr, words);
+-        g_strfreev(words);
+-
+-        g_string_free(cmd, TRUE);
+     }
+ }
+ 
 -- 
-2.48.1
+2.39.5
 
 
