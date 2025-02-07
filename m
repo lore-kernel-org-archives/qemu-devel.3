@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6CF5C0219B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EBB1C0219D
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgLQ1-0007TB-1r; Fri, 07 Feb 2025 05:17:05 -0500
+	id 1tgLPz-0007Sw-TM; Fri, 07 Feb 2025 05:17:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLPk-0007Lm-HU
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:53 -0500
+ id 1tgLPg-0007L0-7X
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLPi-000432-RC
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:48 -0500
+ id 1tgLPe-0003wV-Cu
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738923405;
+ s=mimecast20190719; t=1738923400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ejM9LdULLid2GnKlRXBOXJbddnv2FpH9YLwLU6Alx7U=;
- b=FMdhJVpqP2Nt1LFQRyOyWkk/z4YZBVCA10zQV80uMRGGAh0H1G+Okfj41e1b+DPFPWAC73
- M7076ikbMXv7jgmfhNHE7homMtr3IIMb4CzYp7i9wMWImbZofBocPicQlk+k+3xeNJLvdc
- ZYkaxBQTlLPh8k6h0e6+ThEMHlfxrPw=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ybz9Kd3KNqxlJqHHjf3WKawSVTyUpJp4hK0ydPUn82E=;
+ b=aAVAsvf7XEzv33Ivwus3IfJnIKhSXri22AG34P39jWFfp1+uHtSkTV4zzagiBSp7VuaNiZ
+ 0mtljpS1mDKk+zMChIu2OilvYxfiajzlp3QcrFhRMtC4hZunr8phkeR+ZiM7geXJmzLC+S
+ gvK1dkranVi3M4sZt05WwsMM0DYMToY=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-n-B2sFemNlSJqUQxXMqJRQ-1; Fri, 07 Feb 2025 05:16:44 -0500
-X-MC-Unique: n-B2sFemNlSJqUQxXMqJRQ-1
-X-Mimecast-MFC-AGG-ID: n-B2sFemNlSJqUQxXMqJRQ
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ab397fff5a3so213356566b.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:16:44 -0800 (PST)
+ us-mta-77-sT0hVOuIPy2K6LAdmlnUFg-1; Fri, 07 Feb 2025 05:16:39 -0500
+X-MC-Unique: sT0hVOuIPy2K6LAdmlnUFg-1
+X-Mimecast-MFC-AGG-ID: sT0hVOuIPy2K6LAdmlnUFg
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ab7907bb87eso39168266b.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:16:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738923401; x=1739528201;
+ d=1e100.net; s=20230601; t=1738923396; x=1739528196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ejM9LdULLid2GnKlRXBOXJbddnv2FpH9YLwLU6Alx7U=;
- b=Kig8VCHtPqT7qGF8fhPIcDnqmUfZJs1q3xz610oLcVghD9UBF7Bec6t68zM2chp47a
- TDvmNHazgj/AFls7QUwpCIgk3a8K1e+XRPbK0k4AnPf/3dpSilEgo2tqnNqsgXhBAAgQ
- 2pw3xWsXe0oviFdVrgJ0pHVDQc/+QfmMa+cfPUICNdYMVxtvCf+fyQ5jhpXvjb8USvb1
- vsTfU2kGmWcdrxgO07YWwLVP58n4QqilQG2EPW2h9NWkgRF/jAlmO2dXb8n7RF+/6C+B
- 8pC8yjGnfuYctQZCd9+O+9ceAqrJyZslGCTHYeeV6hpPSZKM7LwvRgujN6Cq6JKRLb3p
- f4aw==
-X-Gm-Message-State: AOJu0YylYvh7Ggmb6TS2rTpLIF5u+t+4x21O5xxBwsFYUQFD0DYArJA9
- ulCPsh9gKdOusuI6jDgjo5A+/0hd1g8K27/vG2bBq8WsyWFT+gyWhZSO0XGGQWHDlsm5Ww7+x3J
- aSsB7gYjN8aL8IvRzjf8YLj+V6S8OPE2b+QhwhQHMkIpTX00A3J6Okohh9E+vlHElOOnPeo6Jnf
- 8wvu8ylmxoggBW6AZwvdasXeAKzkSHvcc8rsKqO9g=
-X-Gm-Gg: ASbGncsIOfy/FTS1uMxkaIWE2Q4dvLdlFonJQNaNLZ7Lw9EwipMmJskhnRUVTjgKZnl
- WbtyNxgkTmFZG/cm/N/2V5iV6oeInEbBws59+pcz4wCTTV7p4NNJcFXuJ2mRf7/xo+JuNb+bMFi
- 192TwPSr8PmYhAg/ZEgl7OSR9jHqMmhqX3TtDYLY4+nLicD2YLVT6NS5pF19DFXhMKzNYnVZm1B
- A68REQs6y6bGiSBNepbMwncCRacxQHvgdhNYKR0x1j4Ik8hzyaF18RiEwUSJB+LD1IugzfA4BX0
- 9Bw47w==
-X-Received: by 2002:a17:907:9484:b0:ab2:f6e5:3f1 with SMTP id
- a640c23a62f3a-ab789ace50cmr220063666b.8.1738923401347; 
- Fri, 07 Feb 2025 02:16:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFYFvkx7kxL5wQX/I6eTUg9VtwNiAsz7cQrnkIWtbX2vjwB7yapZwzOC5xnpFw7o24m1v/ngw==
-X-Received: by 2002:a17:907:9484:b0:ab2:f6e5:3f1 with SMTP id
- a640c23a62f3a-ab789ace50cmr220060566b.8.1738923400879; 
- Fri, 07 Feb 2025 02:16:40 -0800 (PST)
+ bh=ybz9Kd3KNqxlJqHHjf3WKawSVTyUpJp4hK0ydPUn82E=;
+ b=p4rh1cItBy67oiheJQnatSaK6n08wmmCx2oeAlNrFespY30V7Uw/knvDYfTyiSIAmf
+ cWYBJG3KXn+BaQHLAAj9/nyPSo3C+N4Gdvk2IJsuwDmLO7pB9MSMDHkTZPL80oftMpDu
+ 8XwU5T0kx+TjQuMhwlU+QMw7snEh8CnMtmcqcpIPVF67nDmruCdT2D1gdIxgmuasHKnL
+ qvVsZqnBklD8g9iE1Umgy2Dzu4Bx9mWU24eISP2aYQXhgzSh+XliEpjkBeZT3/dKPBrh
+ 5ZQQYlAICv5r+8f5tZi5N1PqWVOK4CnAXo9L3IJM/oE+U4NH2DpGqskETdcg0mmGn2Xy
+ f2/w==
+X-Gm-Message-State: AOJu0YwKyWw+a7Dwo2iOHyoUQqKiup2GjkiSrQ4MPcQ8Z2u8jnzsBqTr
+ ezjEk3FtiKan6FfB+xfgLjjabyVZk0Dn5IpdPOemhicQ57b+dQQ8bevrOsYps+Y5XgYRWjxYkWv
+ ZUKQP/C0vUdhk/nu1k18MTOUIxIN9NGvBnFzJpWmemZf8bpWqMFpw3yM4rx4I+JjJYno45MXArr
+ 7HUEFvozEGCo/lFJhJgf7kh2cSVvZvCq73TEaSzmw=
+X-Gm-Gg: ASbGnctnQY6zNGsGwtC7ch9rMxB5Yj2lN/UqiVs3h2WR2IcurZUEh/wQnV1LuTFwNRD
+ quaW8xDvaBu8FxIq4qlFosNZhh0mBS81gx4HQJ8/ZTWBQglUZl5vughLBvspNX7IMqikhU7FLKB
+ kPGcP9u1GgV1a73IAYrSfXH9Jaxq7mZY4WW5ZdSETxUPozlJyGUSHrr1cpiPhD+uItSxcDw+qMM
+ JfZW/m7t8241lWIqEdeT11hqw1nzeuZM4YY0qSf4Nq5BL3p07S/uHy/uZ36Wg5sq03v0+BUDmev
+ w9elaw==
+X-Received: by 2002:a17:906:f585:b0:ab6:b848:2ab with SMTP id
+ a640c23a62f3a-ab789b344a7mr278032666b.16.1738923396276; 
+ Fri, 07 Feb 2025 02:16:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFRMwDZp5GoGPo4LhchJ2F/GIOnN4dlM12Yx76gbWciYm/C8FDZEwHLD7KfPm0N5vouH7BKcw==
+X-Received: by 2002:a17:906:f585:b0:ab6:b848:2ab with SMTP id
+ a640c23a62f3a-ab789b344a7mr278026966b.16.1738923395815; 
+ Fri, 07 Feb 2025 02:16:35 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.97.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab772f49361sm240505766b.33.2025.02.07.02.16.36
+ a640c23a62f3a-ab773339986sm238685766b.156.2025.02.07.02.16.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 02:16:36 -0800 (PST)
+ Fri, 07 Feb 2025 02:16:30 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	zhao1.liu@intel.com
-Subject: [PATCH 03/12] rust: callbacks: allow passing optional callbacks as ()
-Date: Fri,  7 Feb 2025 11:16:14 +0100
-Message-ID: <20250207101623.2443552-4-pbonzini@redhat.com>
+Subject: [PATCH 02/12] rust: qom: add object creation functionality
+Date: Fri,  7 Feb 2025 11:16:13 +0100
+Message-ID: <20250207101623.2443552-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250207101623.2443552-1-pbonzini@redhat.com>
 References: <20250207101623.2443552-1-pbonzini@redhat.com>
@@ -109,150 +109,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some cases, callbacks are optional.  Using "Some(function)" and "None"
-does not work well, because when someone writes "None" the compiler does
-not know what to use for "F" in "Option<F>".
-
-Therefore, adopt () to mean a "null" callback.  It is possible to enforce
-that a callback is valid by adding a "let _: () = F::ASSERT_IS_SOME" before
-the invocation of F::call.
+The basic object lifecycle test can now be implemented using safe code!
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/callbacks.rs | 97 ++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ rust/hw/char/pl011/src/device.rs | 23 +++++++++++++----------
+ rust/qemu-api/src/prelude.rs     |  1 +
+ rust/qemu-api/src/qom.rs         | 23 +++++++++++++++++++++--
+ rust/qemu-api/tests/tests.rs     | 30 +++++++++++-------------------
+ 4 files changed, 46 insertions(+), 31 deletions(-)
 
-diff --git a/rust/qemu-api/src/callbacks.rs b/rust/qemu-api/src/callbacks.rs
-index 314f9dce962..9642a16eb89 100644
---- a/rust/qemu-api/src/callbacks.rs
-+++ b/rust/qemu-api/src/callbacks.rs
-@@ -79,6 +79,31 @@
- /// call_it(&move |_| String::from(x), "hello workd");
- /// ```
- ///
-+/// `()` can be used to indicate "no function":
-+///
-+/// ```
-+/// # use qemu_api::callbacks::FnCall;
-+/// fn optional<F: for<'a> FnCall<(&'a str,), String>>(_f: &F, s: &str) -> Option<String> {
-+///     if F::IS_SOME {
-+///         Some(F::call((s,)))
-+///     } else {
-+///         None
-+///     }
-+/// }
-+///
-+/// assert!(optional(&(), "hello world").is_none());
-+/// ```
-+///
-+/// Invoking `F::call` will then be a run-time error.
-+///
-+/// ```should_panic
-+/// # use qemu_api::callbacks::FnCall;
-+/// # fn call_it<F: for<'a> FnCall<(&'a str,), String>>(_f: &F, s: &str) -> String {
-+/// #     F::call((s,))
-+/// # }
-+/// let s: String = call_it(&(), "hello world"); // panics
-+/// ```
-+///
- /// # Safety
- ///
- /// Because `Self` is a zero-sized type, all instances of the type are
-@@ -93,10 +118,70 @@ pub unsafe trait FnCall<Args, R = ()>: 'static + Sync + Sized {
-     /// Rust 1.79.0+.
-     const ASSERT_ZERO_SIZED: () = { assert!(mem::size_of::<Self>() == 0) };
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 8050ede9c85..f5db114b0c7 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -10,11 +10,11 @@
  
-+    /// Referring to this constant asserts that the `Self` type is an actual
-+    /// function type, which can be used to catch incorrect use of `()`
-+    /// at compile time.
-+    ///
-+    /// # Examples
-+    ///
-+    /// ```compile_fail
-+    /// # use qemu_api::callbacks::FnCall;
-+    /// fn call_it<F: for<'a> FnCall<(&'a str,), String>>(_f: &F, s: &str) -> String {
-+    ///     let _: () = F::ASSERT_IS_SOME;
-+    ///     F::call((s,))
-+    /// }
-+    ///
-+    /// let s: String = call_it((), "hello world"); // does not compile
-+    /// ```
-+    ///
-+    /// Note that this can be more simply `const { assert!(F::IS_SOME) }` in
-+    /// Rust 1.79.0 or newer.
-+    const ASSERT_IS_SOME: () = { assert!(Self::IS_SOME) };
+ use qemu_api::{
+     bindings::{
+-        error_fatal, hwaddr, memory_region_init_io, qdev_init_clock_in, qdev_new,
+-        qdev_prop_set_chr, qemu_chr_fe_accept_input, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers,
+-        qemu_chr_fe_write_all, qemu_irq, sysbus_connect_irq, sysbus_mmio_map,
+-        sysbus_realize_and_unref, CharBackend, Chardev, Clock, ClockEvent, MemoryRegion,
+-        QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
++        error_fatal, hwaddr, memory_region_init_io, qdev_init_clock_in, qdev_prop_set_chr,
++        qemu_chr_fe_accept_input, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers,
++        qemu_chr_fe_write_all, qemu_irq, sysbus_connect_irq, sysbus_mmio_map, sysbus_realize,
++        CharBackend, Chardev, Clock, ClockEvent, MemoryRegion, QEMUChrEvent,
++        CHR_IOCTL_SERIAL_SET_BREAK,
+     },
+     c_str, impl_vmstate_forward,
+     irq::InterruptSource,
+@@ -705,15 +705,18 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
+     irq: qemu_irq,
+     chr: *mut Chardev,
+ ) -> *mut DeviceState {
++    let pl011 = PL011State::new();
+     unsafe {
+-        let dev: *mut DeviceState = qdev_new(PL011State::TYPE_NAME.as_ptr());
+-        let sysbus: *mut SysBusDevice = dev.cast::<SysBusDevice>();
+-
++        let dev = pl011.as_mut_ptr::<DeviceState>();
+         qdev_prop_set_chr(dev, c_str!("chardev").as_ptr(), chr);
+-        sysbus_realize_and_unref(sysbus, addr_of_mut!(error_fatal));
 +
-+    /// `true` if `Self` is an actual function type and not `()`.
-+    ///
-+    /// # Examples
-+    ///
-+    /// You can use `IS_SOME` to catch this at compile time:
-+    ///
-+    /// ```compile_fail
-+    /// # use qemu_api::callbacks::FnCall;
-+    /// fn call_it<F: for<'a> FnCall<(&'a str,), String>>(_f: &F, s: &str) -> String {
-+    ///     const { assert!(F::IS_SOME) }
-+    ///     F::call((s,))
-+    /// }
-+    ///
-+    /// let s: String = call_it((), "hello world"); // does not compile
-+    /// ```
-+    const IS_SOME: bool;
++        let sysbus = pl011.as_mut_ptr::<SysBusDevice>();
++        sysbus_realize(sysbus, addr_of_mut!(error_fatal));
+         sysbus_mmio_map(sysbus, 0, addr);
+         sysbus_connect_irq(sysbus, 0, irq);
+-        dev
 +
-+    /// `false` if `Self` is an actual function type, `true` if it is `()`.
-+    fn is_none() -> bool {
-+        !Self::IS_SOME
-+    }
-+
-+    /// `true` if `Self` is an actual function type, `false` if it is `()`.
-+    fn is_some() -> bool {
-+        Self::IS_SOME
-+    }
-+
-     /// Call the function with the arguments in args.
-     fn call(a: Args) -> R;
++        // return the pointer, which is kept alive by the QOM tree; drop owned ref
++        pl011.as_mut_ptr()
+     }
  }
  
-+/// `()` acts as a "null" callback.  Using `()` and `function` is nicer
-+/// than `None` and `Some(function)`, because the compiler is unable to
-+/// infer the type of just `None`.  Therefore, the trait itself acts as the
-+/// option type, with functions [`FnCall::is_some`] and [`FnCall::is_none`].
-+unsafe impl<Args, R> FnCall<Args, R> for () {
-+    const IS_SOME: bool = false;
-+
-+    /// Call the function with the arguments in args.
-+    fn call(_a: Args) -> R {
-+        panic!("callback not specified")
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index 2dc86e19b29..3df6a5c21ec 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -12,6 +12,7 @@
+ pub use crate::qom::ObjectCast;
+ pub use crate::qom::ObjectCastMut;
+ pub use crate::qom::ObjectDeref;
++pub use crate::qom::ObjectClassMethods;
+ pub use crate::qom::ObjectMethods;
+ pub use crate::qom::ObjectType;
+ 
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 4a2e84c9aed..fad4759d7a6 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -66,8 +66,8 @@
+ 
+ use crate::{
+     bindings::{
+-        self, object_dynamic_cast, object_get_class, object_get_typename, object_ref, object_unref,
+-        TypeInfo,
++        self, object_dynamic_cast, object_get_class, object_get_typename, object_new, object_ref,
++        object_unref, TypeInfo,
+     },
+     cell::bql_locked,
+ };
+@@ -759,6 +759,24 @@ fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+     }
+ }
+ 
++/// Trait for class methods exposed by the Object class.  The methods can be
++/// called on all objects that have the trait `IsA<Object>`.
++///
++/// The trait should only be used through the blanket implementation,
++/// which guarantees safety via `IsA`
++pub trait ObjectClassMethods: IsA<Object> {
++    /// Return a new reference counted instance of this class
++    fn new() -> Owned<Self> {
++        assert!(bql_locked());
++        // SAFETY: the object created by object_new is allocated on
++        // the heap and has a reference count of 1
++        unsafe {
++            let obj = &*object_new(Self::TYPE_NAME.as_ptr());
++            Owned::from_raw(obj.unsafe_cast::<Self>())
++        }
 +    }
 +}
 +
- macro_rules! impl_call {
-     ($($args:ident,)* ) => (
-         // SAFETY: because each function is treated as a separate type,
-@@ -106,6 +191,8 @@ unsafe impl<F, $($args,)* R> FnCall<($($args,)*), R> for F
-         where
-             F: 'static + Sync + Sized + Fn($($args, )*) -> R,
-         {
-+            const IS_SOME: bool = true;
-+
-             #[inline(always)]
-             fn call(a: ($($args,)*)) -> R {
-                 let _: () = Self::ASSERT_ZERO_SIZED;
-@@ -141,4 +228,14 @@ fn do_test_call<'a, F: FnCall<(&'a str,), String>>(_f: &F) -> String {
-     fn test_call() {
-         assert_eq!(do_test_call(&str::to_owned), "hello world")
+ /// Trait for methods exposed by the Object class.  The methods can be
+ /// called on all objects that have the trait `IsA<Object>`.
+ ///
+@@ -799,4 +817,5 @@ fn debug_fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
      }
-+
-+    // The `_f` parameter is unused but it helps the compiler infer `F`.
-+    fn do_test_is_some<'a, F: FnCall<(&'a str,), String>>(_f: &F) {
-+        assert!(F::is_some());
-+    }
-+
-+    #[test]
-+    fn test_is_some() {
-+        do_test_is_some(&str::to_owned);
-+    }
  }
+ 
++impl<T> ObjectClassMethods for T where T: IsA<Object> {}
+ impl<R: ObjectDeref> ObjectMethods for R where R::Target: IsA<Object> {}
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 69ddac7f1c5..9986925d71f 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -3,8 +3,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ use std::{
+-    ffi::CStr,
+-    os::raw::c_void,
++    ffi::{c_void, CStr},
+     ptr::{addr_of, addr_of_mut},
+ };
+ 
+@@ -132,10 +131,8 @@ fn init_qom() {
+ /// Create and immediately drop an instance.
+ fn test_object_new() {
+     init_qom();
+-    unsafe {
+-        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
+-        object_unref(object_new(DummyChildState::TYPE_NAME.as_ptr()).cast());
+-    }
++    drop(DummyState::new());
++    drop(DummyChildState::new());
+ }
+ 
+ #[test]
+@@ -152,12 +149,8 @@ fn test_clone() {
+ /// Try invoking a method on an object.
+ fn test_typename() {
+     init_qom();
+-    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
+-    let p_ref: &DummyState = unsafe { &*p };
+-    assert_eq!(p_ref.typename(), "dummy");
+-    unsafe {
+-        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
+-    }
++    let p = DummyState::new();
++    assert_eq!(p.typename(), "dummy");
+ }
+ 
+ // a note on all "cast" tests: usually, especially for downcasts the desired
+@@ -172,24 +165,23 @@ fn test_typename() {
+ /// Test casts on shared references.
+ fn test_cast() {
+     init_qom();
+-    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
++    let p = DummyState::new();
++    let p_ptr: *mut DummyState = unsafe { p.as_mut_ptr() };
++    let p_ref: &mut DummyState = unsafe { &mut *p_ptr };
+ 
+-    let p_ref: &DummyState = unsafe { &*p };
+     let obj_ref: &Object = p_ref.upcast();
+-    assert_eq!(addr_of!(*obj_ref), p.cast());
++    assert_eq!(addr_of!(*obj_ref), p_ptr.cast());
+ 
+     let sbd_ref: Option<&SysBusDevice> = obj_ref.dynamic_cast();
+     assert!(sbd_ref.is_none());
+ 
+     let dev_ref: Option<&DeviceState> = obj_ref.downcast();
+-    assert_eq!(addr_of!(*dev_ref.unwrap()), p.cast());
++    assert_eq!(addr_of!(*dev_ref.unwrap()), p_ptr.cast());
+ 
+     // SAFETY: the cast is wrong, but the value is only used for comparison
+     unsafe {
+         let sbd_ref: &SysBusDevice = obj_ref.unsafe_cast();
+-        assert_eq!(addr_of!(*sbd_ref), p.cast());
+-
+-        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
++        assert_eq!(addr_of!(*sbd_ref), p_ptr.cast());
+     }
+ }
+ 
 -- 
 2.48.1
 
