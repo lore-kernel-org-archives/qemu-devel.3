@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E67A4C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 19:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF15C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 19:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgUQg-0003Da-RJ; Fri, 07 Feb 2025 14:54:22 -0500
+	id 1tgUQT-0003Af-Cd; Fri, 07 Feb 2025 14:54:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgUQc-0003Cr-IO
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:54:18 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgUQR-0003AW-Bf
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:54:07 -0500
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgUQa-0000Nc-GA
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:54:17 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgUQP-0000Lu-FX
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 14:54:07 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3D2641F453;
- Fri,  7 Feb 2025 19:54:15 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B7BC91F44E;
+ Fri,  7 Feb 2025 19:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738958055; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738958043; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=DcmwSGYurujZAUQT5nb1lHi49CmosMoYnpZAdHr/iIB0BRf8FmgKEtFzhWU6p5wCh6VD48
- on9MvlhP7CbcBoH1cOzWY13y+Q+IrnwqDsSEeqV1IKqtluRxvd3JPeY0dthgIYtfKrhAQ8
- EMLQg+kCxPG0VN+SeVkyS4luggxogc4=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=45AePjZOc0vQ+OnFWOaxPb2cRzFof1mWsCSdOr8DJdU=;
+ b=DREMCekEZ+DuMM7YO/peI71TWju3MGAD4vxlyOebZbGhJ2PPuYknLu8CI9tWSSIb2cXkue
+ HDeN0RRoTwM+wDarYlT5/cGXSI3uvHkPtqbXxLn7rNhCvULw1KYtNeck3CEp/ygGUWHRvx
+ Ev+P+L3szAyVRvpfCsDNcmrSDH4b4bg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738958055;
+ s=susede2_ed25519; t=1738958043;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=wwf2J3f5XW/qvJxTyh5BPoM1M6bXUetldFUDtf3nH1PgIuxY9t4JC8v7lC9xjcp0aau/u5
- pOdZr2HM8pU5K1Ag==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=45AePjZOc0vQ+OnFWOaxPb2cRzFof1mWsCSdOr8DJdU=;
+ b=WOW9siqWqgqXvfwwSYO7VKS2YMC2V0tLZZYrGTIbzmtKGJ4RTVH7b70OYSypp5tyJwY/vh
+ z5L/8xjPZ9xE+SAA==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1738958055; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1738958043; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=DcmwSGYurujZAUQT5nb1lHi49CmosMoYnpZAdHr/iIB0BRf8FmgKEtFzhWU6p5wCh6VD48
- on9MvlhP7CbcBoH1cOzWY13y+Q+IrnwqDsSEeqV1IKqtluRxvd3JPeY0dthgIYtfKrhAQ8
- EMLQg+kCxPG0VN+SeVkyS4luggxogc4=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=45AePjZOc0vQ+OnFWOaxPb2cRzFof1mWsCSdOr8DJdU=;
+ b=DREMCekEZ+DuMM7YO/peI71TWju3MGAD4vxlyOebZbGhJ2PPuYknLu8CI9tWSSIb2cXkue
+ HDeN0RRoTwM+wDarYlT5/cGXSI3uvHkPtqbXxLn7rNhCvULw1KYtNeck3CEp/ygGUWHRvx
+ Ev+P+L3szAyVRvpfCsDNcmrSDH4b4bg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1738958055;
+ s=susede2_ed25519; t=1738958043;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=wwf2J3f5XW/qvJxTyh5BPoM1M6bXUetldFUDtf3nH1PgIuxY9t4JC8v7lC9xjcp0aau/u5
- pOdZr2HM8pU5K1Ag==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=45AePjZOc0vQ+OnFWOaxPb2cRzFof1mWsCSdOr8DJdU=;
+ b=WOW9siqWqgqXvfwwSYO7VKS2YMC2V0tLZZYrGTIbzmtKGJ4RTVH7b70OYSypp5tyJwY/vh
+ z5L/8xjPZ9xE+SAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 90FB213694;
- Fri,  7 Feb 2025 19:54:13 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CFA913694;
+ Fri,  7 Feb 2025 19:54:01 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UOyWE+Vkpme1GQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 19:54:13 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9+xEMtlkpme1GQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 19:54:01 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH v3 5/8] io: Add a read flag for relaxed EOF
-Date: Fri,  7 Feb 2025 16:53:56 -0300
-Message-Id: <20250207195359.17443-6-farosas@suse.de>
+Subject: [RFC PATCH v3 0/8] crypto,io,migration: Add support to gnutls_bye()
+Date: Fri,  7 Feb 2025 16:53:51 -0300
+Message-Id: <20250207195359.17443-1-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250207195359.17443-1-farosas@suse.de>
-References: <20250207195359.17443-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
  RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
  FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -121,45 +114,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a read flag that can inform a channel that it's ok to receive an
-EOF at any moment. Channels that have some form of strict EOF
-tracking, such as TLS session termination, may choose to ignore EOF
-errors with the use of this flag.
+(cover-letter update I forgot on v2:)
 
-This is being added for compatibility with older migration streams
-that do not include a TLS termination step.
+This series now contains the two approches we've been discussing to
+avoid the TLS termination error on the multifd_recv threads.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- include/io/channel.h | 1 +
- io/channel-tls.c     | 1 +
- 2 files changed, 2 insertions(+)
+The source machine now ends the TLS session with gnutls_bye() and the
+destination will consider a premature termination an error. The only
+exception is the src <9.1 case where there's a compatibility issue, in
+which case the presence of multifd-tls-clean-termination=false will
+cause the destination to (always) ignore a premature termination
+error.
 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 58940eead5..62b657109c 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -35,6 +35,7 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
- #define QIO_CHANNEL_WRITE_FLAG_ZERO_COPY 0x1
- 
- #define QIO_CHANNEL_READ_FLAG_MSG_PEEK 0x1
-+#define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
- 
- typedef enum QIOChannelFeature QIOChannelFeature;
- 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index ecde6b57bf..caf8301a9e 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -359,6 +359,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-             tioc->session,
-             iov[i].iov_base,
-             iov[i].iov_len,
-+            flags & QIO_CHANNEL_READ_FLAG_RELAXED_EOF ||
-             qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
-             errp);
-         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+changes in v3:
+
+Reordered the patches to have the io/crypto stuff at the start and the
+compat property before the code that breaks compat.
+
+Commit message improvements.
+
+Turned assert into an warning when gnutls_bye() fails but migration
+succeeded (should never happen).
+
+Other minor fixes asked by Daniel.
+
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/1661172595
+
+v2:
+https://lore.kernel.org/r/20250207142758.6936-1-farosas@suse.de
+
+v1:
+https://lore.kernel.org/r/20250206175824.22664-1-farosas@suse.de
+
+Hi,
+
+We've been discussing a way to stop multifd recv threads from getting
+an error at the end of migration when the source threads close the
+iochannel without ending the TLS session.
+
+The original issue was introduced by commit 1d457daf86
+("migration/multifd: Further remove the SYNC on complete") which
+altered the synchronization of the source and destination in a manner
+that causes the destination to already be waiting at recv() when the
+source closes the connection.
+
+One approach would be to issue gnutls_bye() at the source after all
+the data has been sent. The destination would then gracefully exit
+when it gets EOF.
+
+Aside from stopping the recv thread from seeing an error, this also
+creates a contract that all connections should be closed only after
+the TLS session is ended. This helps to avoid masking a legitimate
+issue where the connection is closed prematurely.
+
+Fabiano Rosas (8):
+  crypto: Allow gracefully ending the TLS session
+  io: tls: Add qio_channel_tls_bye
+  crypto: Remove qcrypto_tls_session_get_handshake_status
+  io: Add flags argument to qio_channel_readv_full_all_eof
+  io: Add a read flag for relaxed EOF
+  migration/multifd: Terminate the TLS connection
+  migration/multifd: Add a compat property for TLS termination
+  migration: Check migration error after loadvm
+
+ crypto/tlssession.c                 | 96 ++++++++++++++++++-----------
+ hw/core/machine.c                   |  1 +
+ hw/remote/mpqemu-link.c             |  2 +-
+ include/crypto/tlssession.h         | 46 ++++++++------
+ include/io/channel-tls.h            | 12 ++++
+ include/io/channel.h                |  3 +
+ io/channel-tls.c                    | 92 ++++++++++++++++++++++++++-
+ io/channel.c                        |  9 ++-
+ io/trace-events                     |  5 ++
+ migration/migration.h               | 33 ++++++++++
+ migration/multifd.c                 | 53 +++++++++++++++-
+ migration/multifd.h                 |  2 +
+ migration/options.c                 |  2 +
+ migration/savevm.c                  |  6 +-
+ migration/tls.c                     |  5 ++
+ migration/tls.h                     |  2 +-
+ tests/unit/test-crypto-tlssession.c | 12 ++--
+ 17 files changed, 305 insertions(+), 76 deletions(-)
+
 -- 
 2.35.3
 
