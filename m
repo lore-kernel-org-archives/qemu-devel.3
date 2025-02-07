@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AC3C0219C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B338C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 16:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgR6m-0000wr-AM; Fri, 07 Feb 2025 11:21:37 -0500
+	id 1tgRMu-0003E7-VH; Fri, 07 Feb 2025 11:38:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tgR6V-0000tx-EH
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:21:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tgR6T-0007ea-5g
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:21:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738945276;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MSjuhGKqBNyTqJ749i+3JTAV/+AiopQMad7eLbhKV1o=;
- b=KrQejlykAXXW8rNddxnqHAB9okJOYGcr80+45jcM69UcKc3lHZRt3M6gR/WUpTekocKCSN
- m5huD3t8SVOSyRo28socrUmEeF/AtZNKychih0A+kSpTpuLPlhXGqQgmDEUROB4v70q5iA
- dxl0ThZDemJ9rFxnKPlmLnJcM398ABM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-aX86bkiQPj2-GQQyIhHIvQ-1; Fri,
- 07 Feb 2025 11:21:09 -0500
-X-MC-Unique: aX86bkiQPj2-GQQyIhHIvQ-1
-X-Mimecast-MFC-AGG-ID: aX86bkiQPj2-GQQyIhHIvQ
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4CA41955D63; Fri,  7 Feb 2025 16:21:07 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79F5718004A7; Fri,  7 Feb 2025 16:21:05 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, npiggin@gmail.com,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 05/10] Revert "tcg/cputlb: remove other-cpu capability from
- TLB flushing"
-Date: Fri,  7 Feb 2025 17:20:43 +0100
-Message-ID: <20250207162048.1890669-6-imammedo@redhat.com>
-In-Reply-To: <20250207162048.1890669-1-imammedo@redhat.com>
-References: <20250207162048.1890669-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tgRMp-0003A5-Ck
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:38:11 -0500
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tgRMn-0006YX-1B
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 11:38:11 -0500
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e5ad75ca787so1993655276.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 08:38:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738946287; x=1739551087; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=kAm+8KqVWhVPm/FTHeR78fkBlnBEZqi3WmpJ5OUjub4=;
+ b=sVkIHzGRMMu3SPL9x3NMZ6mEQZCr+5otl68ylEAjzVjhbPol4LCe9gFVHKKftV9ICa
+ cZn4nkDGssXrhdYenqyuJwTBG4sUWuiEYgiebMQKfzV9LKXa4kUNk+mQOcz2OK0Fk5Gf
+ UO9jAYmi1bFBpTu+GoZHdS5E+BFpFN1G/ljGIoDYSRaz41GEGH86KEXM4i9prNf4W3KL
+ 9ncKguIL6Qb4pnYOGXwxC/T24sV6+q1hOJSDzoEQ5xm3aFogwJU6MKOIfMJ7bOxZib5g
+ UKCzPUpZVxLMTDoomozfyE1wRwYo5zlT7WNWW2ZIySIjVFgQZ/WqTBKsxjV9Y7s8GOza
+ sAAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1738946287; x=1739551087;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kAm+8KqVWhVPm/FTHeR78fkBlnBEZqi3WmpJ5OUjub4=;
+ b=vM4y5/z2gywATcMZQUw40WtdlDIAlhJJvKjOufgZAwtR4xSPOZ4fK5RuY3WkVr+Rgf
+ 0UDKIWf2oBSuckhjZETZHkeRBO0jrMMez8YKbpIidlfqDcIfbWQNzF93QXf0uEi2BJ8r
+ pEBRy+TEWEXh3P1ZzJJ8+K7EQVNGp9gBWTphGfoeaThv+dw/YVw4aQB53yTsvR3cURz7
+ 0QsA8mZIeN+LrTsnQmX8BkP1KpKuj4hPaIqSEK9Ehcg7ETGEXGL8h1o7TgsVsw3DOWLz
+ E5xgCzxtR6CTa1LX81KorLZP9rXsujBIlW8HYuLWz9TWeFuH67/1gpy1WA1NtHdOx3Sf
+ EONQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTLfG/qDy2quewGk53WLc+KV3UV1tdkP1p5I/mCzMvE/f5Iw0S4gDWTSdShwXU0CvSVeDwcCmXyARz@nongnu.org
+X-Gm-Message-State: AOJu0YwpLi6e0r1BhixBIybg4yWDYYAD17meMpC8lk3vjUXYzfemi/eH
+ 0jBr1oL97YsiVCOFMPMZsELVjZIv4HmHIoOPeo0ucmGtDZffZ0gYTjTFwZ2xo21t8sy9og4E3oC
+ OJRo68mgQPMNiAv4875kj64GaRMdUssA+8tgDJA==
+X-Gm-Gg: ASbGncsox1L/qbElvwo0B1TZnIpaIMygvio2A/xV+a4DBlmqU877hU9mP/XciRc96m3
+ EqJwqEjvW94T11OpreaSYLG6PPxkJMZ6AcYM86DtaJsmBJiutQ7cnClLw8XlR7RIla60+at3fBg
+ ==
+X-Google-Smtp-Source: AGHT+IFWFTvf41uVF3h65M2ZzMX4kat4Tlvty4g4q9TxadtqHvkoL3xhrou1Yfcyi3HQwckodQcRJh0aKyWdfUVhKyw=
+X-Received: by 2002:a05:6902:2686:b0:e5b:3b7a:fcb4 with SMTP id
+ 3f1490d57ef6-e5b46b7d66emr3320873276.1.1738946287287; Fri, 07 Feb 2025
+ 08:38:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250206142307.921070-1-eric.auger@redhat.com>
+ <20250206142307.921070-5-eric.auger@redhat.com>
+In-Reply-To: <20250206142307.921070-5-eric.auger@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Feb 2025 16:37:55 +0000
+X-Gm-Features: AWEUYZmnqP8S6aBg0zaVPZKtAHoxLWNEwTxS7fJ_Lrt0VeWRuuqsHzAQPdh0M8M
+Message-ID: <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
+Subject: Re: [PATCH 4/5] hw/arm/smmuv3: Move reset to exit phase
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com, 
+ alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org, 
+ zhenzhong.duan@intel.com, ddutile@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,123 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1)
-This reverts commit 30933c4fb4f3df95ae44c4c3c86a5df049852c01.
-  ("tcg/cputlb: remove other-cpu capability from TLB flushing")
+On Thu, 6 Feb 2025 at 14:23, Eric Auger <eric.auger@redhat.com> wrote:
+>
+> Currently the iommu may be reset before the devices
+> it protects. For example this happens with virtio-scsi-pci.
+> when system_reset is issued from qmp monitor, spurious
+> "virtio: zero sized buffers are not allowed" warnings can
+> be observed.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>  hw/arm/smmuv3.c     | 9 +++++----
+>  hw/arm/trace-events | 1 +
+>  2 files changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index c0cf5df0f6..7522c32b24 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1870,13 +1870,14 @@ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
+>      }
+>  }
+>
+> -static void smmu_reset_hold(Object *obj, ResetType type)
+> +static void smmu_reset_exit(Object *obj, ResetType type)
+>  {
+>      SMMUv3State *s = ARM_SMMUV3(obj);
+>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+>
+> -    if (c->parent_phases.hold) {
+> -        c->parent_phases.hold(obj, type);
+> +    trace_smmu_reset_exit();
+> +    if (c->parent_phases.exit) {
+> +        c->parent_phases.exit(obj, type);
+>      }
 
-The commit caused a regression which went unnoticed due to
-affected being disabled by default (DEBUG_TLB_GATE 0)
-Previous patch switched to using tcg_debug_assert() so that
-at least on debug builds assert_cpu_is_self() path would be exercised.
+If we need to do something unexpected like reset
+register values in the exit phase rather than the
+hold phase, it's a good idea to have a comment explaining
+why, to avoid somebody coming along afterwards and tidying
+it up into the more usual arrangement.
 
-And that lead to exposing regression introduced by [1] with abort during tests.
-to reproduce:
-  $ configure  --target-list=x86_64-softmmu --enable-debug
-  $ make && ./qemu-system-x86_64
+If I understand correctly we need to keep the whole IOMMU
+config intact until the exit phase? What's the thing the
+device behind the IOMMU is trying to do during its reset
+that triggers the warning?
 
-  accel/tcg/cputlb.c:419: tlb_flush_by_mmuidx:
-    Assertion `!(cpu)->created || qemu_cpu_is_self(cpu)' failed.
-
-which is triggered by usage outside of cpu thread:
-    x86_cpu_new -> ... ->
-      x86_cpu_realizefn -> cpu_reset -> ... ->
-          tcg_cpu_reset_hold
-
-Drop offending commit for now, until a propper fix that doesn't break
-'make check' is available.
-
-PS:
-fixup g_memdup() checkpatch error s/g_memdup/g_memdup2/
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
-I'll leave it upto TCG folz to fix it up propperly.
-
-CC: npiggin@gmail.com
-CC: BALATON Zoltan <balaton@eik.bme.hu>
-
----
- accel/tcg/cputlb.c | 42 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 9 deletions(-)
-
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 7380b29da3..3d1d7d2409 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -416,9 +416,12 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
- {
-     tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
- 
--    assert_cpu_is_self(cpu);
--
--    tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
-+    if (cpu->created && !qemu_cpu_is_self(cpu)) {
-+        async_run_on_cpu(cpu, tlb_flush_by_mmuidx_async_work,
-+                         RUN_ON_CPU_HOST_INT(idxmap));
-+    } else {
-+        tlb_flush_by_mmuidx_async_work(cpu, RUN_ON_CPU_HOST_INT(idxmap));
-+    }
- }
- 
- void tlb_flush(CPUState *cpu)
-@@ -607,12 +610,28 @@ void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr, uint16_t idxmap)
- {
-     tlb_debug("addr: %016" VADDR_PRIx " mmu_idx:%" PRIx16 "\n", addr, idxmap);
- 
--    assert_cpu_is_self(cpu);
--
-     /* This should already be page aligned */
-     addr &= TARGET_PAGE_MASK;
- 
--    tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
-+    if (qemu_cpu_is_self(cpu)) {
-+        tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
-+    } else if (idxmap < TARGET_PAGE_SIZE) {
-+        /*
-+         * Most targets have only a few mmu_idx.  In the case where
-+         * we can stuff idxmap into the low TARGET_PAGE_BITS, avoid
-+         * allocating memory for this operation.
-+         */
-+        async_run_on_cpu(cpu, tlb_flush_page_by_mmuidx_async_1,
-+                         RUN_ON_CPU_TARGET_PTR(addr | idxmap));
-+    } else {
-+        TLBFlushPageByMMUIdxData *d = g_new(TLBFlushPageByMMUIdxData, 1);
-+
-+        /* Otherwise allocate a structure, freed by the worker.  */
-+        d->addr = addr;
-+        d->idxmap = idxmap;
-+        async_run_on_cpu(cpu, tlb_flush_page_by_mmuidx_async_2,
-+                         RUN_ON_CPU_HOST_PTR(d));
-+    }
- }
- 
- void tlb_flush_page(CPUState *cpu, vaddr addr)
-@@ -775,8 +794,6 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
- {
-     TLBFlushRangeData d;
- 
--    assert_cpu_is_self(cpu);
--
-     /*
-      * If all bits are significant, and len is small,
-      * this devolves to tlb_flush_page.
-@@ -797,7 +814,14 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-     d.idxmap = idxmap;
-     d.bits = bits;
- 
--    tlb_flush_range_by_mmuidx_async_0(cpu, d);
-+    if (qemu_cpu_is_self(cpu)) {
-+        tlb_flush_range_by_mmuidx_async_0(cpu, d);
-+    } else {
-+        /* Otherwise allocate a structure, freed by the worker.  */
-+        TLBFlushRangeData *p = g_memdup2(&d, sizeof(d));
-+        async_run_on_cpu(cpu, tlb_flush_range_by_mmuidx_async_1,
-+                         RUN_ON_CPU_HOST_PTR(p));
-+    }
- }
- 
- void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
--- 
-2.43.0
-
+thanks
+-- PMM
 
