@@ -4,73 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC99C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99C5C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgOBq-000298-TI; Fri, 07 Feb 2025 08:14:38 -0500
+	id 1tgOEs-0003Lx-Dz; Fri, 07 Feb 2025 08:17:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgOBm-00028G-I1; Fri, 07 Feb 2025 08:14:35 -0500
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgOBh-0000xJ-HQ; Fri, 07 Feb 2025 08:14:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1738934070; x=1770470070;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=oa5egkzz6wHMDqFUbjxrfEjYAs/qKVk2eEFoeXYlyNI=;
- b=dmPYr3WZOJP54eBt5tLlyoL8xPTQ99IuabYSILiGYlUmrT8sG2DvyXxI
- cTjYb5zIKIXl9qqu9hRncMxw+KoWY7NI3bJYaW7qq5rLXpCZ3/OZxT72f
- 9QM1WoW5Vi9vqlo18nu7FVmW47ybGGD7nJF3Mu0qxlP++U0zhQYKgGjr+
- 35gDl+0lsOH/qUUUJq6/fUS5gP0c63X+dje3juDUuMX2Rb/UcUSZs2y7B
- LxpvqgsZNJoPgXE/H6nEjpOICRNmevrfN5R53OL2FQTI1ls56Ap0XHleL
- pppTH7TeZrqEcEzg5Em0MLLYJcLqNe06ZuxgQx8iOgnQA4VKDe6Ce0xX6 w==;
-X-CSE-ConnectionGUID: 4wvwRyQjSzC4hyW6szv81w==
-X-CSE-MsgGUID: d5SiKoDISgCcVH6X2Go8Ew==
-X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="39266364"
-X-IronPort-AV: E=Sophos;i="6.13,267,1732608000"; d="scan'208";a="39266364"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Feb 2025 05:14:26 -0800
-X-CSE-ConnectionGUID: W7sB86+dQdCYr9YYBuXP/w==
-X-CSE-MsgGUID: kmh0h/17RRG2vC+S6i74Fw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="112417933"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 07 Feb 2025 05:14:23 -0800
-Date: Fri, 7 Feb 2025 21:33:52 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 06/10] rust: add bindings for timer
-Message-ID: <Z6YLwAqDGm+9aiaM@intel.com>
-References: <20250125125137.1223277-1-zhao1.liu@intel.com>
- <20250125125137.1223277-7-zhao1.liu@intel.com>
- <a30bfa1c-ddb8-4a5b-9f95-7b000c11cd54@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgOEa-0003IJ-Vs
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:17:32 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgOEY-0004lu-1K
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:17:27 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6457221166;
+ Fri,  7 Feb 2025 13:17:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738934243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
+ b=c+Ksj84OPBDh5KHdsTpPeC3/7+a5LnsQv8AgbFnfRR/Ko655HraoukJbP7z3Bq6FpKYKJB
+ ptuKFkkqBQOPj8cDRzpW7KLmu2+GywndYj0mAwe2X8RgilS/JEHh054FhUP9Lk/dwRQ9X0
+ zN0rnApQZJoItZRbTSFEoWHB/tXqhy8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738934243;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
+ b=KDFQSNnJooLXxeF8ddhmtWvDP6OczYpSmgDUn9TGiLEsVGPPsEiiCIRz6cVKHdYQJWuelL
+ QdcLGsPXkjm4ANAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738934243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
+ b=c+Ksj84OPBDh5KHdsTpPeC3/7+a5LnsQv8AgbFnfRR/Ko655HraoukJbP7z3Bq6FpKYKJB
+ ptuKFkkqBQOPj8cDRzpW7KLmu2+GywndYj0mAwe2X8RgilS/JEHh054FhUP9Lk/dwRQ9X0
+ zN0rnApQZJoItZRbTSFEoWHB/tXqhy8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738934243;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xyCRc/Oj+cmkDIwkT9Z+rHuhLGxZKWyeie2SqufzUtQ=;
+ b=KDFQSNnJooLXxeF8ddhmtWvDP6OczYpSmgDUn9TGiLEsVGPPsEiiCIRz6cVKHdYQJWuelL
+ QdcLGsPXkjm4ANAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CA27113694;
+ Fri,  7 Feb 2025 13:17:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4YkQIeIHpmcDJgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 13:17:22 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Alex Williamson
+ <alex.williamson@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Joao
+ Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 08/33] migration/multifd: Allow premature EOF on TLS
+ incoming channels
+In-Reply-To: <Z6Uu50gzSIgKsiLA@x1.local>
+References: <Z6Iy0wY-lsx3M71M@x1.local> <Z6I0mzWEsl5y57Zj@redhat.com>
+ <87zfj0mcmy.fsf@suse.de> <87wme4m8ci.fsf@suse.de>
+ <192db6a6-f3ff-4cf9-8537-b849fb3a97b3@maciej.szmigiero.name>
+ <87tt97ma9l.fsf@suse.de>
+ <ac6f56c0-58d9-45a4-bbf4-6b28649a8952@maciej.szmigiero.name>
+ <87msezm75y.fsf@suse.de>
+ <eba9c2d2-5a20-489c-aa89-8adde2781c7a@maciej.szmigiero.name>
+ <87jza3m12b.fsf@suse.de> <Z6Uu50gzSIgKsiLA@x1.local>
+Date: Fri, 07 Feb 2025 10:17:19 -0300
+Message-ID: <87cyftnbc0.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a30bfa1c-ddb8-4a5b-9f95-7b000c11cd54@redhat.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -89,160 +128,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > +pub use bindings::QEMUTimer;
-> > +
-> > +use crate::{
-> > +    bindings::{
-> > +        self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType,
-> > +        QEMUTimerListGroup,
-> > +    },
-> > +    callbacks::FnCall,
-> > +};
-> > +
-> > +impl QEMUTimer {
-> > +    pub fn new() -> Self {
-> > +        Default::default()
-> > +    }
-> > +
-> > +    pub fn timer_init_full<'timer, 'opaque: 'timer, T, F>(
-> 
-> General question - should the names:
-> 
-> - include the "timer" part, matching QEMU C code, or exclude it to avoid
-> repetition? I would say remove it, 
+Peter Xu <peterx@redhat.com> writes:
 
-I agree and I would name it "init()" instead of "init_full()".
-
-> but I'm open to suggestions and other
-> opinions
+> On Thu, Feb 06, 2025 at 02:32:12PM -0300, Fabiano Rosas wrote:
+>> > In any case we'd still need some kind of a compatibility behavior for
+>> > the TLS bit stream emitted by older QEMU versions (which is always
+>> > improperly terminated).
+>> >
+>> 
+>> There is no compat issue. For <= 9.2, QEMU is still doing an extra
+>> multifd_send_sync_main(), which results in an extra MULTIFD_FLAG_SYNC on
+>> the destination and it gets stuck waiting for the
+>> RAM_SAVE_FLAG_MULTIFD_FLUSH that never comes. Therefore the src always
+>> closes the connection before dst reaches the extra recv().
+>> 
+>> I test migration both ways with 2 previous QEMU versions and the
+>> gnutls_bye() series passes all tests. I also put an assert at
+>> tlssession.c and never triggers for GNUTLS_E_PREMATURE_TERMINATION. The
+>> MULTIFD_FLAG_EOS should behave the same.
 >
-> - include the "QEMU" part? I'd say remove it, similar to ClockType below
-> that is:
-> 
-> -pub use bindings::QEMUTimer;
-> +pub use bindings::QEMUTimer as Timer;
-> +pub use bindings::QEMUTimerList as TimerList;
-> +pub use bindings::QEMUTimerListGroup as TimerListGroup;
+> Which are the versions you tried?  As only 9.1 and 9.2 has 637280aeb2, so I
+> wonder if the same issue would hit too with 9.0 or older.
 
-I notice you've picked another way for IRQState, so I could follow that
-like:
+Good point. 9.0 indeed breaks.
 
-pub type Timer = bindings::QEMUTimer;
+>
+> I'd confess I feel unreliable relying on the side effect of 637280aeb2,
+> because fundamentally it works based on the fact that multifd threads need
+> to be kicked out by the main load thread SYNC event on dest QEMU to avoid
+> the readv() from going wrong.
+>
 
-This style make it easy to add doc (timer binding currently lacks
-doc, but I will add it as much as possible).
+We're relying on the opposite: mutlifd_recv NOT getting kicked. Which is
+a bug that 1d457daf86 fixed.
 
-Another option may be to wrap QEMUTimer as what MemoryRegionOps did, but
-timer has only 1 callback so I think it's not necessary.
+> What I'm not sure here is, is it sheer luck that the main channel SYNC will
+> always arrive _before_ pre-mature terminations of the multifd channels?  It
+> sounds like it could also happen when the multifd channels got its
+> pre-mature termination early, before the main thread got the SYNC.
 
-> > +        &'timer mut self,
-> > +        timer_list_group: Option<&QEMUTimerListGroup>,
-> > +        clk_type: QEMUClockType,
-> 
-> Please take a ClockType instead.
+You lost me here, what main channel sync? Its the MULTIFD_FLAG_SYNC that
+puts the recv thread in the "won't see the termination" state and that
+is serialized:
 
-Sure.
+   SEND                        RECV
+   -------------------------+----------------------------
+1  multifd_send_sync_main()
+2  pending_sync==true,
+3  send thread sends SYNC      recv thread gets SYNC
+4  <some work>                 recv gets stuck.
+5  multifd_send_shutdown()     <time passes>
+6  shutdown()                  multifd_recv_shutdown()
+                               recv_terminate_threads()
+                               recv exits without recv()
 
-> > +        scale: u32,
-> > +        attributes: u32,
-> > +        _f: F,
-> > +        opaque: &'opaque T,
-> > +    ) where
-> > +        F: for<'a> FnCall<(&'a T,)>,
-> > +    {
-> > +        /// timer expiration callback
-> > +        unsafe extern "C" fn rust_timer_handler<T, F: for<'a> FnCall<(&'a T,)>>(
-> > +            opaque: *mut c_void,
-> > +        ) {
-> > +            // SAFETY: the opaque was passed as a reference to `T`.
-> > +            F::call((unsafe { &*(opaque.cast::<T>()) },))
-> > +        }
-> 
-> Please add "let _: () = F::ASSERT_IS_SOME;", which is added by the
-> qdev_init_clock_in() patch.
+In other words, RECV would need to see the shutdown (6) before the SYNC
+(3), which I don't think it possible.
 
-Sure. Added it to the beginning of this function.
+>
+> Maybe we still need a compat property at the end..
 
-> > +        let timer_cb: unsafe extern "C" fn(*mut c_void) = rust_timer_handler::<T, F>;
-> > +
-> > +        // SAFETY: the opaque outlives the timer
-> > +        unsafe {
-> > +            timer_init_full(
-> > +                self,
-> > +                if let Some(g) = timer_list_group {
-> > +                    g as *const QEMUTimerListGroup as *mut QEMUTimerListGroup
-> > +                } else {
-> > +                    ::core::ptr::null_mut()
-> > +                },
-> > +                clk_type,
-> > +                scale as c_int,
-> > +                attributes as c_int,
-> > +                Some(timer_cb),
-> > +                (opaque as *const T).cast::<c_void>() as *mut c_void,
-> > +            )
-> > +        }
-> > +    }
-> > +
-> > +    pub fn timer_mod(&mut self, expire_time: u64) {
-> > +        unsafe { timer_mod(self as *mut QEMUTimer, expire_time as i64) }
-> > +    }
-> 
-> This can take &self, because timers are thread-safe:
-> 
->     pub fn timer_mod(&self, expire_time: u64) {
->         unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
->     }
+This is actually similar to preempt_pre_7_2, what about:
 
-timer_mod means "modify a timer", so I'd rename this method to "modify"
+    /*
+     * This variable only makes sense when set on the machine that is
+     * the destination of a multifd migration with TLS enabled. It
+     * affects the behavior of the last send->recv iteration with
+     * regards to termination of the TLS session. Defaults to true.
+     *
+     * When set:
+     *
+     * - the destination QEMU instance can expect to never get a
+     *   GNUTLS_E_PREMATURE_TERMINATION error. Manifested as the error
+     *   message: "The TLS connection was non-properly terminated".
+     *
+     * When clear:
+     *
+     * - the destination QEMU instance can expect to see a
+     *   GNUTLS_E_PREMATURE_TERMINATION error in any multifd channel
+     *   whenever the last recv() call of that channel happens after
+     *   the source QEMU instance has already issued shutdown() on the
+     *   channel. This is affected by (at least) commits 637280aeb2
+     *   and 1d457daf86.
+     *
+     * NOTE: Regardless of the state of this option, a premature
+     * termination of the TLS connection might happen due to error at
+     * any moment prior to the last send->recv iteration.
+     */
+    bool multifd_clean_tls_termination;
 
->     const fn as_mut_ptr(&self) -> *mut Self {
->         self as *const QEMUTimer as *mut _
->     }
-
-Thanks!
-
-> > +}
-> > +
-> > +impl Drop for QEMUTimer {
-> > +    fn drop(&mut self) {
-> > +        unsafe { timer_del(self as *mut QEMUTimer) }
-> > +    }
-> 
-> timer_del() can be useful even outside Drop, so
-> 
->     pub fn timer_del(&self) {
->         unsafe { timer_del(self.as_mut_ptr()) }
->     }
-> 
-> and just use self.timer_del() here.
-
-OK, will also rename "timer_del" to "delete".
-
-> > +}
-> > +
-> > +pub fn qemu_clock_get_virtual_ns() -> u64 {
-> > +    // SAFETY:
-> > +    // Valid parameter.
-> > +    (unsafe { qemu_clock_get_ns(QEMUClockType::QEMU_CLOCK_VIRTUAL) }) as u64
-> > +}
-> 
-> Not needed.
-
-Yes!
-
-> > +pub struct ClockType {
-> > +    pub id: QEMUClockType,
-> > +}
-> 
-> The field does not have to be "pub" (maybe "pub(self)", I'm not sure
-> offhand).
-> 
-
-You're right! Making it private is enough, since I should also make
-timer_init_full accept ClockType instead of QEMUClockType.
-
-Thanks,
-Zhao
-
-
+And I think the more straight-forward implementation is to incorporate
+Maciej's premature_ok patches (in some form), otherwise that option will
+have to take effect on the QIOChannel which is a layering violation.
 
