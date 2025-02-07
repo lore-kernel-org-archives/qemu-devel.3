@@ -4,100 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47370C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 17:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69804C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 17:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgSSb-0000sl-By; Fri, 07 Feb 2025 12:48:13 -0500
+	id 1tgSaH-0002i0-Ge; Fri, 07 Feb 2025 12:56:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgSSZ-0000rz-1i
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:48:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgSSS-0001qE-C2
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:48:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738950483;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgSaF-0002hY-Jr
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:56:07 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgSaA-0004cm-Hq
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:56:07 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8C9AC21164;
+ Fri,  7 Feb 2025 17:56:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738950960; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cxfsx6u5R8uKJa8bY5IZuJYQ2qLA5Q3iOTNlVtOC1+0=;
- b=Ts2sNeaYAacUexQyg5D0ACt1oeO9eCLjmnzMAB0nDZ0EUheHUg5paDhF9JzOd/MPsafjiS
- 2pWiQPYOUwW4QclGtak4fLwEgiLM4HvMBzxZlRx1pIhtFBJp8luoPrBBF4+Y63N4q6GfOr
- GavGpCw8sTPLYSGdXNQPATO5MMAK/s4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-baB0_-b9NyeRBEyoiI8N5Q-1; Fri, 07 Feb 2025 12:47:59 -0500
-X-MC-Unique: baB0_-b9NyeRBEyoiI8N5Q-1
-X-Mimecast-MFC-AGG-ID: baB0_-b9NyeRBEyoiI8N5Q
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6e1c50ef1so364782385a.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 09:47:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738950479; x=1739555279;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cxfsx6u5R8uKJa8bY5IZuJYQ2qLA5Q3iOTNlVtOC1+0=;
- b=TVcVMcJoQGMlhxmQxEtHKAUB/9Nxrn64WZQ2FEDGwXDM1VazryT3H9DvZMsMZnk9we
- O/oyC96qvJ2QnKXGqrzKU0XSVCxYt5snAPPXrRoyDZ083UPfkDXZMgV4KRWDCsSYXL1J
- 9akTG8QGKmSS96BlbZLXpklX1HKd9kFiBnV5J2ZOrTirn4LuyT526gZVkMnPUs/2/rNS
- IvLI51w7jOFAia3S1cv6DtHYRTllAdYr1NPBldTbOOP73k2+FxBS3PVCRe/SXfFOeShb
- J91+ZUGjlRCI2R7YUwhH5Nn0sDW51eJyKXCPSLSpLIpbRZddX09PoMm0Gk7XJutgtl18
- GlMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNTQ+JqEIh8Jt7ci6qd4MTFBeYrRV7jByzcfWyViH8Wc/fcs9wA4lg9tnSbHFsUiKZKV+rcBerF7No@nongnu.org
-X-Gm-Message-State: AOJu0YyypJ5/02Qvl1Zr6AgQaqGL1vGXFlRZr4OGlFIQRK1g10/E04P1
- GbJvbKusgcu7XcDj3eWisoc6CT6rui1Q/4v9bRRmdPp7NHVEdX+1IFU0kvG/dzhWNFdneny5UPO
- wm9PO9DWAGf36m3OgP3QGvOIcc0YYurkkwGMp8Rqbr2KcWveI5lts
-X-Gm-Gg: ASbGncsCdodi45Deke35wqRhFhbB3wgxWEOIEzbY+rGuxj2ivJNz7c6Wu0RC1s50OPq
- UKbuItvDPCPM/1ljhzIAEFfSpx+b0nkBzUeqddrkDiJCnGZsPRfV+zncA3WQ9Tcn8GogXAWE410
- VfzOVrAOWfy2C3eGu+WELiDKTMJubL9ZrHVYtFzDxV2cmBVcL4nTnMfzCxmuA6+xGT7SX/Z0nWd
- 8kBC9Zvr+woSiZSJsX+joaJfbiUBKQPjyNlSGHUeOC8EL7tDQr2VtT6hM5+vNRJDdt4g0wF83eB
- FbpIEjln9eUpMVsLbVR76Jspe8cdW2VDGRzmoeEfTTOhRTtz
-X-Received: by 2002:a05:620a:454a:b0:7b6:66d0:5ac2 with SMTP id
- af79cd13be357-7c047c45d24mr756873785a.54.1738950479388; 
- Fri, 07 Feb 2025 09:47:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IExw/AuxTxKc/a8iR8ELE+FYB5JYNgNtiaexRstbbP6xCSDGzlcxVODvrP5FKTloyYRstuLog==
-X-Received: by 2002:a05:620a:454a:b0:7b6:66d0:5ac2 with SMTP id
- af79cd13be357-7c047c45d24mr756869685a.54.1738950479060; 
- Fri, 07 Feb 2025 09:47:59 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c041eb776fsm214743485a.91.2025.02.07.09.47.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 09:47:58 -0800 (PST)
-Date: Fri, 7 Feb 2025 12:47:57 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jasowang@redhat.com,
- imammedo@redhat.com, alex.williamson@redhat.com, clg@redhat.com,
- philmd@linaro.org, zhenzhong.duan@intel.com, ddutile@redhat.com
-Subject: Re: [PATCH 4/5] hw/arm/smmuv3: Move reset to exit phase
-Message-ID: <Z6ZHTStx_S9ALdxt@x1.local>
-References: <20250206142307.921070-1-eric.auger@redhat.com>
- <20250206142307.921070-5-eric.auger@redhat.com>
- <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
- <7102d470-ac72-4c02-b8bc-20f1379a4843@redhat.com>
- <CAFEAcA-XK5GwT0b_Ff-8fYnWcDgzaE-0Ei-YqDoXv-aXFGNXUQ@mail.gmail.com>
+ bh=MlAiqJJ2rOwjubIGJB7FVYhveiDyLM/NAnrHP5fu4Hk=;
+ b=NsqVa0EcLtiaFPvUUC9N/mj5ZlE6u6JdOvacUwxlXnY7jz0k25yJSeWNUcrABRQx1gImMz
+ xycJBOII4L4xo4KIjrQVLDeNjPLfojd2lrgWOzrBYS6NSRlPj5e671uijXxGiiXw+fLUgk
+ MLmvFAvgKs0oE0JFFNytd98jEtvzbug=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738950960;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MlAiqJJ2rOwjubIGJB7FVYhveiDyLM/NAnrHP5fu4Hk=;
+ b=V2ND6cqD+gwnESZrS6CUFy7+XUUC7IE386L2DbzGSzS8OxStktefKDct+FYHRc/2vSH26F
+ pW4eS3pOFzK2zjBA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NsqVa0Ec;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=V2ND6cqD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738950960; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MlAiqJJ2rOwjubIGJB7FVYhveiDyLM/NAnrHP5fu4Hk=;
+ b=NsqVa0EcLtiaFPvUUC9N/mj5ZlE6u6JdOvacUwxlXnY7jz0k25yJSeWNUcrABRQx1gImMz
+ xycJBOII4L4xo4KIjrQVLDeNjPLfojd2lrgWOzrBYS6NSRlPj5e671uijXxGiiXw+fLUgk
+ MLmvFAvgKs0oE0JFFNytd98jEtvzbug=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738950960;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MlAiqJJ2rOwjubIGJB7FVYhveiDyLM/NAnrHP5fu4Hk=;
+ b=V2ND6cqD+gwnESZrS6CUFy7+XUUC7IE386L2DbzGSzS8OxStktefKDct+FYHRc/2vSH26F
+ pW4eS3pOFzK2zjBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F30C513694;
+ Fri,  7 Feb 2025 17:55:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ZGL0Ki9JpmcSeAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 17:55:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [RFC PATCH v2 1/8] crypto: Allow gracefully ending the TLS session
+In-Reply-To: <Z6ZBLjToT9bRoyhI@x1.local>
+References: <20250207142758.6936-1-farosas@suse.de>
+ <20250207142758.6936-2-farosas@suse.de> <Z6ZBLjToT9bRoyhI@x1.local>
+Date: Fri, 07 Feb 2025 14:55:57 -0300
+Message-ID: <874j15myfm.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-XK5GwT0b_Ff-8fYnWcDgzaE-0Ei-YqDoXv-aXFGNXUQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 8C9AC21164
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,29 +124,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 04:58:39PM +0000, Peter Maydell wrote:
-> (I wonder if we ought to suggest quiescing outstanding
-> DMA in the enter phase? But it's probably easier to fix
-> the iommus like this series does than try to get every
-> dma-capable pci device to do something different.)
+Peter Xu <peterx@redhat.com> writes:
 
-I wonder if we should provide some generic helper to register vIOMMU reset
-callbacks, so that we'll be sure any vIOMMU model impl that will register
-at exit() phase only, and do nothing during the initial two phases.  Then
-we can put some rich comment on that helper on why.
+> On Fri, Feb 07, 2025 at 11:27:51AM -0300, Fabiano Rosas wrote:
+>> QEMU's TLS session code provides no way to call gnutls_bye() to
+>> terminate a TLS session. Callers of qcrypto_tls_session_read() can
+>> choose to ignore a GNUTLS_E_PREMATURE_TERMINATION error by setting the
+>> gracefulTermination argument.
+>> 
+>> The QIOChannelTLS ignores the premature termination error whenever
+>> shutdown() has already been issued. This is not enough anymore for the
+>> migration code due to changes [1] in the synchronization between
+>> migration source and destination.
+>
+> This sentence seems to say commit [1] changed something on the tls
+> condition, but IMHO fundamentally the issue is multifd recv thread model
+> that relies on blocking readv() rather than request-based (like what src
+> multifd does).
+>
+> Now src uses either shutdown() or close() to kick dest multifd recv threads
+> out from readv().  That has nothing to do with what we do during complete()
+> with those sync messages.. referencing it is ok, but we'll need to
+> reference also the other commit to be clear pre-9.0 can also be prone to
+> this.  To me, it's more important to mention the root cause on the multifd
+> recv thread model, which requires explicit tls terminations.
+>
 
-Looks like it means the qemu reset model in the future can be a combination
-of device tree (which resets depth-first) and the three phases model.  We
-will start to use different approach to solve different problems.
+I didn't want to go into too much detail in a commit for crypto/. The
+motivation for *this* patch is just: migration needs it. What about:
 
-Maybe after we settle our mind, we should update the reset document,
-e.g. for device emulation developers, we need to be clear on where to
-quiesce the DMAs, and it must not happen at exit().  Both all devices and
-all iommu impls need to follow the rules to make it work like the plan.
+ The QIOChannelTLS ignores the premature termination error whenever
+ shutdown() has already been issued. This was found to be not enough for
+ the migration code because shutdown() might not have been issued before
+ the connection is terminated.
 
-Thanks,
 
--- 
-Peter Xu
-
+>> 
+>> Add support for calling gnutls_bye() in the tlssession layer so users
+>> of QIOChannelTLS can clearly identify the end of a TLS session.
+>> 
+>> 1- 1d457daf86 ("migration/multifd: Further remove the SYNC on complete")
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
