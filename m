@@ -4,94 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F004C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 18:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D145DC02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 18:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgSnd-0002dm-9J; Fri, 07 Feb 2025 13:09:57 -0500
+	id 1tgSuB-0006Fd-JY; Fri, 07 Feb 2025 13:16:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tgSna-0002c1-S9
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 13:09:54 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgStq-0006Bg-AA
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 13:16:23 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tgSnZ-0002dk-1M
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 13:09:54 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-21ddab8800bso34944485ad.3
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 10:09:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1738951791; x=1739556591; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nNuHt3rg2ARFf37Gdiorrl7LW3Mcz7UcHzzmf15QxsU=;
- b=fvmvtQFHpQnlXBovMLjrsa04dImn8L2iEo9+aKy8R28a3K94Q+ULM0OKrJYTLCCHpp
- SJt73COvSXHt1KWBqtgfbu1gPK/S8ZHVmo83yr/r8vfSRGvD4+IBuWBaDvruU535I/zn
- FJPSJaczZpSTmZDow+mFGx6tXrs1hr11grlQH/+5X8UEGsdg31JU6IhE5m/njog02Uu3
- JrIdN36MFCPEYxZiLAO0rrJz0MtUNDY0STOOpJIYb2Bvg3jLB6OT2UXkfhTa+wwAZk4U
- 41CIafYMspkY2CWeZ80mcBYpxLoyDol/vxGq/JwZMOz5C9v+mp1JOOHoa6oI/cLZnw67
- drUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738951791; x=1739556591;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nNuHt3rg2ARFf37Gdiorrl7LW3Mcz7UcHzzmf15QxsU=;
- b=q6U9xGU+mYonqKpurt49heKZs9q4O3ajLSQews2WMzP4HUL71e6vNoC2EGEK9ynvom
- xrdYuxKtHanWsM7Q1+gT+i4avWaKAHXYWRlebHbEwRcSy+ZiGyqgnaSnOE26RcX3Lyga
- HFS1s1rGHprblydufa/c1lVD6zIkx9d95id8YpGtM9KxL7D4Hm52/emhxIHJYzkMaB9m
- qVq7JUfv3Sm+1+9iuPZnV4ZsV2jVWa8lop8zrEYC6jT0T7GRtUffP0T9Q/4Hw46o8cAx
- ryGhX5XtVwB7tQwuZalZP3XncmaeME7JycnD/vcXf+E7WHBG1S23iMM2KyaZtGtrJKDf
- 7RnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgx3LsWAkgHPC12aNO0yetqjHnRn34D95l9FhNi9d8MCdFyCrRgoyAefPiSjo1+9VEYQ3OvPliuaSt@nongnu.org
-X-Gm-Message-State: AOJu0YxqW8vV52ApoLEAPYNnAjtDIk40NoXVtVLUS9hYFNTbkl11Sx0J
- 0qoz2FEOxZQTa4FmantbnYXIm77eGEZFmkawO1QU0asKnpwXHU4=
-X-Gm-Gg: ASbGncu//3IHlgiDhrSaIhm60x+SoVYqdWuD1PU9OUk5zFNI/7YRiLfvRfrTlJArb9e
- X847+Q3EPgDIAE2P5HbvSWYk4vj33+VVgmqmAICEKVYEb1mXqSo1rU2gde9j2pyT6yQ19L18Avo
- 3+/bmyxVPATBMlv03QE3/MjGev6Qi1f6+5frt3xfjG2DFOK6rQrYdnJCK/WoC19TIW2IBEAh+sC
- r3pZDBrgHOsBc25MDu18bo3XCCWxKna4/5VKGh38UE7Ro4kQCbiP1xgZ4LoNyPnR3wmLII7qWTA
- AjV/nmcoD6HtRNUFDed1Kw==
-X-Google-Smtp-Source: AGHT+IGfKUgUmxHci0LIjnwE2GmqVyvqhzjZWiA44ZkBHB0iQ1qER5AFPPmD1rpucfqr+iWKbS4wJA==
-X-Received: by 2002:a05:6a20:c78c:b0:1ed:a4e2:89cf with SMTP id
- adf61e73a8af0-1ee03b129damr8209048637.27.1738951791093; 
- Fri, 07 Feb 2025 10:09:51 -0800 (PST)
-Received: from [192.168.0.163] ([116.232.67.252])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73048e1f13bsm3282220b3a.163.2025.02.07.10.09.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 10:09:50 -0800 (PST)
-Message-ID: <669b8096-a22e-4ca3-9b8f-579b0522050a@gmail.com>
-Date: Sat, 8 Feb 2025 02:09:47 +0800
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tgStc-0003ur-Ho
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 13:16:19 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 735F51F385;
+ Fri,  7 Feb 2025 18:15:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738952153; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8/RrShNEhA878Rr9BQomBb57jN01o0zbTjqS2tVtVvc=;
+ b=TQZPz2eRyWXpH/n3Njpwf25nB1wCvaProe6mYz9bFXmSQVPpyrCtIRI57yXtyXVFdikLYQ
+ MdQsK0JaSLscBJkM10J+7vq3RjbzRHJt3h8G6Hm4QBwfOX3s9GrmMwu+uNQHYWQgRlBTEX
+ cPJqYu31UZoD96SQnDuYYJszIt8jAh4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738952153;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8/RrShNEhA878Rr9BQomBb57jN01o0zbTjqS2tVtVvc=;
+ b=q3HQ2LfkUmaiEFWos4xlzZuAPJT5WuW+z0cZqI8BlO8jO0Xq25qqox2PDt62u70Uj9mt28
+ WlCIVEar7+hkxmBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1738952152; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8/RrShNEhA878Rr9BQomBb57jN01o0zbTjqS2tVtVvc=;
+ b=hHx/T69CQNwQCzW3Vtc/+9VjYXN/FmeNJ2GCav+UsVAK0u4e0U9rvB5IkLih68ZKacH3iS
+ hwYKh7s/aUr0jQ2xWh2o8oUORf/nir6WPCWpIwgWbi5C1EfaLYU6mtacFs2fdom6bL+9bA
+ rOq2qfS91VGDjo0HbHf/PA1m6vdWN5A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1738952152;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8/RrShNEhA878Rr9BQomBb57jN01o0zbTjqS2tVtVvc=;
+ b=R3avEmLhUGzgGfZCu2hSyE4ap2v0FPx5A2dDipjn7DAfXqJcsi1bLVuL8m16Wd4uNEigVV
+ FktHeOj2hcCn4BDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DA87D139CB;
+ Fri,  7 Feb 2025 18:15:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 5iYNJddNpmfwfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 07 Feb 2025 18:15:51 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [RFC PATCH v2 3/8] migration/multifd: Terminate the TLS connection
+In-Reply-To: <Z6ZKUTNVcCVgIbjh@x1.local>
+References: <20250207142758.6936-1-farosas@suse.de>
+ <20250207142758.6936-4-farosas@suse.de> <Z6ZKUTNVcCVgIbjh@x1.local>
+Date: Fri, 07 Feb 2025 15:15:48 -0300
+Message-ID: <871pw9mxij.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] vfio/igd: sync GPU generation with i915 kernel driver
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>,
- qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <c.koehne@beckhoff.com>
-References: <20250206121341.118337-1-corvin.koehne@gmail.com>
- <20250206121341.118337-5-corvin.koehne@gmail.com>
-Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <20250206121341.118337-5-corvin.koehne@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,74 +116,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
-On 2/6/25 20:13, Corvin Köhne wrote:
-> From: Corvin Köhne <c.koehne@beckhoff.com>
-> 
-> We're currently missing some GPU IDs already supported by the i915
-> kernel driver. Additionally, we've treated IvyBridge as gen 6 in the
-> past. According to i915 it's gen 7 [1]. It shouldn't cause any issues
-> yet because we treat gen 6 and gen 7 the same way. Nevertheless, we
-> should use the correct generation to avoid any confusion.
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/i915/i915_pci.c?h=v6.13#n330
-> 
-> Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
-> ---
->  hw/vfio/igd.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index e5d7006ce2..7bbf018efc 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -64,7 +64,7 @@ struct igd_device {
->  
->  static const struct igd_device igd_devices[] = {
->      INTEL_SNB_IDS(IGD_DEVICE, 6),
-> -    INTEL_IVB_IDS(IGD_DEVICE, 6),
-> +    INTEL_IVB_IDS(IGD_DEVICE, 7),
->      INTEL_HSW_IDS(IGD_DEVICE, 7),
->      INTEL_VLV_IDS(IGD_DEVICE, 7),
->      INTEL_BDW_IDS(IGD_DEVICE, 8),
-> @@ -73,8 +73,10 @@ static const struct igd_device igd_devices[] = {
->      INTEL_BXT_IDS(IGD_DEVICE, 9),
->      INTEL_KBL_IDS(IGD_DEVICE, 9),
->      INTEL_CFL_IDS(IGD_DEVICE, 9),
-> +    INTEL_WHL_IDS(IGD_DEVICE, 9),
->      INTEL_CML_IDS(IGD_DEVICE, 9),
->      INTEL_GLK_IDS(IGD_DEVICE, 9),
-> +    INTEL_CNL_IDS(IGD_DEVICE, 9),
->      INTEL_ICL_IDS(IGD_DEVICE, 11),
->      INTEL_EHL_IDS(IGD_DEVICE, 11),
->      INTEL_JSL_IDS(IGD_DEVICE, 11),
-> @@ -86,6 +88,8 @@ static const struct igd_device igd_devices[] = {
->      INTEL_RPLS_IDS(IGD_DEVICE, 12),
->      INTEL_RPLU_IDS(IGD_DEVICE, 12),
->      INTEL_RPLP_IDS(IGD_DEVICE, 12),
-> +    INTEL_ARL_IDS(IGD_DEVICE, 12),
-> +    INTEL_MTL_IDS(IGD_DEVICE, 12),
+> On Fri, Feb 07, 2025 at 11:27:53AM -0300, Fabiano Rosas wrote:
+>> The multifd recv side has been getting a TLS error of
+>> GNUTLS_E_PREMATURE_TERMINATION at the end of migration when the send
+>> side closes the sockets without ending the TLS session. This has been
+>> masked by the code not checking the migration error after loadvm.
+>> 
+>> Start ending the TLS session at multifd_send_shutdown() so the recv
+>> side always sees a clean termination (EOF) and we can start to
+>> differentiate that from an actual premature termination that might
+>> possibly happen in the middle of the migration.
+>> 
+>> There's nothing to be done if a previous migration error has already
+>> broken the connection, so add a comment explaining it and ignore any
+>> errors coming from gnutls_bye().
+>> 
+>> This doesn't break compat with older recv-side QEMUs because EOF has
+>> always caused the recv thread to exit cleanly.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+> One trivial comment..
+>
+>> ---
+>>  migration/multifd.c | 34 +++++++++++++++++++++++++++++++++-
+>>  migration/tls.c     |  5 +++++
+>>  migration/tls.h     |  2 +-
+>>  3 files changed, 39 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index ab73d6d984..b57cad3bb1 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -490,6 +490,32 @@ void multifd_send_shutdown(void)
+>>          return;
+>>      }
+>>  
+>> +    for (i = 0; i < migrate_multifd_channels(); i++) {
+>> +        MultiFDSendParams *p = &multifd_send_state->params[i];
+>> +
+>> +        /* thread_created implies the TLS handshake has succeeded */
+>> +        if (p->tls_thread_created && p->thread_created) {
+>> +            Error *local_err = NULL;
+>> +            /*
+>> +             * The destination expects the TLS session to always be
+>> +             * properly terminated. This helps to detect a premature
+>> +             * termination in the middle of the stream.  Note that
+>> +             * older QEMUs always break the connection on the source
+>> +             * and the destination always sees
+>> +             * GNUTLS_E_PREMATURE_TERMINATION.
+>> +             */
+>> +            migration_tls_channel_end(p->c, &local_err);
+>> +
+>> +            if (local_err) {
+>> +                /*
+>> +                 * The above can fail with broken pipe due to a
+>> +                 * previous migration error, ignore the error.
+>> +                 */
+>> +                assert(migration_has_failed(migrate_get_current()));
+>
+> Considering this is still src, do we want to be softer on this by
+> error_report?
+>
+> Logically !migration_has_failed() means it succeeded, so we can throw src
+> qemu way now, that shouldn't be a huge deal. More of thinking out loud kind
+> of comment..  Your call.
+>
 
-According to i915 driver [1], DSM becomes a part of BAR 2 in MTL/ARL.
-All accesses to DSM from CPU should be via BAR I think. BARs are
-mapped in guest address space to host address space by QEMU when
-passthrough, as a common behavior, just like normal discrete GPUs.
+Maybe even a warning? If at this point migration succeeded, it's probably
+best to let cleanup carry on.
 
-Though IGD takes a memory region as DSM, it should be reserved by
-firmware and not directly accessible by host also, like GTT memory,
-since arch/x86/kernel/early-quirks.c no longer reserves DSM for MTL/
-ARL.
-
-Appling the BDSM quirk would bring issues to MTL/ARL. Probably there
-is no special workarounds needed for MTL and later IGD devices. But
-intel hasn't made the MTL/ARL/LNL datasheet publicly available yet,
-I can not confirm it :( If Intel really decided to not using BDSM on
-MTL+, we can just have a fixed id list for igd devices.
-
-[1] https://github.com/torvalds/linux/blob/69b8923f5003664e3ffef102e73333edfa2abdcf/drivers/gpu/drm/i915/gem/i915_gem_stolen.c#L918
-
->  };
->  
->  /*
-
+>> +            }
+>> +        }
+>> +    }
+>> +
+>>      multifd_send_terminate_threads();
+>>  
+>>      for (i = 0; i < migrate_multifd_channels(); i++) {
+>> @@ -1141,7 +1167,13 @@ static void *multifd_recv_thread(void *opaque)
+>>  
+>>              ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
+>>                                             p->packet_len, &local_err);
+>> -            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
+>> +            if (!ret) {
+>> +                /* EOF */
+>> +                assert(!local_err);
+>> +                break;
+>> +            }
+>> +
+>> +            if (ret == -1) {
+>>                  break;
+>>              }
+>>  
+>> diff --git a/migration/tls.c b/migration/tls.c
+>> index fa03d9136c..5cbf952383 100644
+>> --- a/migration/tls.c
+>> +++ b/migration/tls.c
+>> @@ -156,6 +156,11 @@ void migration_tls_channel_connect(MigrationState *s,
+>>                                NULL);
+>>  }
+>>  
+>> +void migration_tls_channel_end(QIOChannel *ioc, Error **errp)
+>> +{
+>> +    qio_channel_tls_bye(QIO_CHANNEL_TLS(ioc), errp);
+>> +}
+>> +
+>>  bool migrate_channel_requires_tls_upgrade(QIOChannel *ioc)
+>>  {
+>>      if (!migrate_tls()) {
+>> diff --git a/migration/tls.h b/migration/tls.h
+>> index 5797d153cb..58b25e1228 100644
+>> --- a/migration/tls.h
+>> +++ b/migration/tls.h
+>> @@ -36,7 +36,7 @@ void migration_tls_channel_connect(MigrationState *s,
+>>                                     QIOChannel *ioc,
+>>                                     const char *hostname,
+>>                                     Error **errp);
+>> -
+>> +void migration_tls_channel_end(QIOChannel *ioc, Error **errp);
+>>  /* Whether the QIO channel requires further TLS handshake? */
+>>  bool migrate_channel_requires_tls_upgrade(QIOChannel *ioc);
+>>  
+>> -- 
+>> 2.35.3
+>> 
 
