@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4CDC02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 17:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69335C0219B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 17:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgS3H-000230-Fp; Fri, 07 Feb 2025 12:22:05 -0500
+	id 1tgS3o-00029H-2l; Fri, 07 Feb 2025 12:22:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgS3C-00022e-M8
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:21:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tgS3A-0000K0-Oa
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:21:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738948916;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LzxGtKjlz9BgguS+WPVnTlXNzYMpKJ+pd/iHBb7vB+o=;
- b=VacDd3p/sGwyGsY7pwUrbpVJqFdq29Cz1u2wMkwDerzWECTzqUWZIHwzEchdpmvxJ4Rh5U
- lzH6QbQAZmgQQnN4wWjvJrBE+Y3+LZpUQ9h+ynWRe+L/LHwEpL0YpG/BUYxbQku0CiPKzO
- Q2ap9YGFjqyxb7Pjd+MErX9bOpXCFQ4=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412--u9Bm8nNMcKB5tbhND54XA-1; Fri, 07 Feb 2025 12:21:54 -0500
-X-MC-Unique: -u9Bm8nNMcKB5tbhND54XA-1
-X-Mimecast-MFC-AGG-ID: -u9Bm8nNMcKB5tbhND54XA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7bf4704255dso366780285a.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 09:21:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tgS3c-00025H-Mn
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:22:24 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tgS3a-0000Mb-Jb
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 12:22:24 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-21f5a224544so9644795ad.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 09:22:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1738948940; x=1739553740; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PuI9ezYBAeHIwgM6VLS6Ioe0cLgcltuopXziKm5PBHw=;
+ b=yE9e2YxN2stXQ8aqcWwxOMDxaRDoHWtMT0JSK5bZag7O2/WcxYIZ+OqSFCN963yrbw
+ 5j0DW4I4sldUxybRS2+r5WUs9iZMDOaU5vSOD8em0qJYFS1iCI5BwySPhCW5ENToP9AS
+ WE1ozFK135tA5CCLx9jcLpU9Zi//EwGws9KZvHIYMUrWQ0RVXcDerQ8jeGS1CWzWy7Ln
+ gt407bPkeSaQh9rEnzFxLLY3jqx58DMek6EWRIf6UISt+qLmpXL5vJ9nUFMw/CQ01v75
+ NKXXIKZ9U97ZPqL6rwZARc+2BGx5PwqQjSeqJyR0FsvBA0qLogMHzssFYqDuzaiDTQQa
+ M7Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738948912; x=1739553712;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LzxGtKjlz9BgguS+WPVnTlXNzYMpKJ+pd/iHBb7vB+o=;
- b=tXzXNrwO48THCZwlkm9FjLo8eHrZq5xPJ/hAoWhU5DqPzo57i7EQyYWnkkXYh8EYv2
- KdzXQc4WVITzmgI0PtAW6+ZHlF8sxUWAXMQIkR/0u1gMb+f4+xtoeuu+jCB/QkQ0UOit
- ZmL/CPKbJpycvsoI+Nyo4ucH5fKsGd5908toq0xM4uKNJblED6GZ+MRlVa6djR1ihRzS
- cXOImcRVeZmaQDPl9wMjLw5fma8zVhMMGZHFMoEZa8+ku1gjLytnXAkGc6VPHEq/oJFa
- X/avQl4vNyyteGLmVfa6cXaxeJElPTf9GutIzLwIHowhA2gOKFSflasaTT1q1yA2Y0th
- Rldg==
-X-Gm-Message-State: AOJu0Yzp4zI/K4ibt+ONaeazDTDz27MSUu8AjOqQESxCdK4F+yUOZ6RJ
- NAJcHmkgj0yyg5bZxx7ZkfmjZkaGtelHdh2fosItvE/9WduYqILkL9ppvPAhgjSASG0U5+xIwyM
- 5oYk0QpNcEM4vsUyLnDpXi69RD6+6aOiunEedyPyduzCoZVFkQLh4
-X-Gm-Gg: ASbGncuMBJs6cJvl0bItCjRPOaQk+/BR0mTOthSnlNKOlqIPxtY5pIdoS2T4EiPomkK
- Ps62b1ogNLcSG7ztIgzyvwKrw2lXmqb5VDWU0+uKFli/F+nZ+Cv9Zq0+rlmgDSNL/7G01V9VKT9
- 2D3LZBvVaI1z1X9u71LPkeGjAlHTXoUdwyxZEEP8/w1a8NtNf7J/Xq/UvIR5GAeFxMBfD7Q44gW
- NhRuN9hEmx3Zh1Le5Jyg5OOavBkUzA626fI69pD53Me6xwDmeYuOGVRsXTHYo6GHXF2DUIO1nvC
- HE+4VhzNwSxyoTbxR2npuE71KBbVXxbPaWf3ORQ6z07icYAQ
-X-Received: by 2002:ad4:5f4a:0:b0:6d8:d84d:d938 with SMTP id
- 6a1803df08f44-6e4456c5c4emr49289616d6.28.1738948912456; 
- Fri, 07 Feb 2025 09:21:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQn+RCYg6Z4FmtYLAo7csT9gAhsbNq+WPOq/bOBrsmq+oIHWIdMtIHDQaOtBT1aNUdk/RXFA==
-X-Received: by 2002:ad4:5f4a:0:b0:6d8:d84d:d938 with SMTP id
- 6a1803df08f44-6e4456c5c4emr49289386d6.28.1738948912132; 
- Fri, 07 Feb 2025 09:21:52 -0800 (PST)
-Received: from x1.local (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e444b5ad24sm11461836d6.103.2025.02.07.09.21.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 09:21:51 -0800 (PST)
-Date: Fri, 7 Feb 2025 12:21:50 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH v2 1/8] crypto: Allow gracefully ending the TLS session
-Message-ID: <Z6ZBLjToT9bRoyhI@x1.local>
-References: <20250207142758.6936-1-farosas@suse.de>
- <20250207142758.6936-2-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1738948940; x=1739553740;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PuI9ezYBAeHIwgM6VLS6Ioe0cLgcltuopXziKm5PBHw=;
+ b=aISeztUrb8kF0tH9mG/W0Ua9UWNd3PQODo3e9fz3JjPQItZ9MVLraJby90yqivchRX
+ z2WWgD8rnsqytV3wA3rMVENGhsLp1kaME/b2rTmEoKhl7iiUPc75TtX9WtVavGCb+EcX
+ 3bM/hBle4c4H2IwDwTDfdKpt8R0PjkOAdXdJI8hHoqyJw8hbTVNWmN0yxp7kTLnWa981
+ 8dpHEx7TJ23gLnZRwa86yvXppLMYXA7VqFxDY7GM5Aw1h2zzZTBIkLCtr5a0VhyTpc94
+ u87dsJsBG/qVw5KdzgjKI63tXj+eryBj16q1rpC1keCFcWdYWArFyFkgvYGliAexoU5e
+ piEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzl1+ybnVPPIQibGyrSoTkphMBd4rUPyRPzfW8cw3Jmf1n1FcVgn5jSIpM6xmmBZ8YitM9f7rn6da9@nongnu.org
+X-Gm-Message-State: AOJu0Yxz3j21xd9YuBc3DR1uEfljgy9cvCtyQV9Kbd5HCdZ6fGv96MYx
+ PtLkcDlif2GYPVwO/B1hpXZIyNccnCpeWNVi4dDiMM9Nm9iCiEN/KAbODA+Ds9k=
+X-Gm-Gg: ASbGncvceZuZE0rOzaWBt2QrlWP/KmNtbnB4buSAnmrdwyGKGS4CAQcxzzByGRliFuM
+ c+GniRHDEFFHOneAzg1TF8oX6Z+PUCkPRbXjsXD5rKm5Kh1wFIECgwYYTkMBfn09+cXWKu2j4t8
+ oi2oCS6rZDOvN/RTpSSPgpxnMtkwcVZlzSNS4ERavMA7CZY9ZGGWrn9i2FtRLHeXKP63nKisaE6
+ DI+NmUABZhl4E9fj4mnkMZYvNjXScG8bAGaJ831QX5yQmu8e3OF4pnpyd9UueIJPeeS1b+KR/t3
+ o7Bws1fNjqcNJYH7kGGIewkBguCvgSh14cOWF850uI5bwkPVWciK7I0=
+X-Google-Smtp-Source: AGHT+IFH65CDDp7tP5xkPhrzS7K+EByWPF9bO0ure/lihhPD5d4Cw3JSMGTG2j77BjsC2FVvWZ9cCg==
+X-Received: by 2002:a17:903:2311:b0:215:acb3:3786 with SMTP id
+ d9443c01a7336-21f4e6e649dmr71243065ad.19.1738948939645; 
+ Fri, 07 Feb 2025 09:22:19 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f3683dc55sm33238375ad.125.2025.02.07.09.22.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Feb 2025 09:22:19 -0800 (PST)
+Message-ID: <5ee77b8c-e6a4-421b-b729-a6535fdf1e6d@linaro.org>
+Date: Fri, 7 Feb 2025 09:22:17 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250207142758.6936-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
+ HCR_EL2.E2H == 0
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ Florian Lugou <florian.lugou@provenrun.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240615185423.49474-1-florian.lugou@provenrun.com>
+ <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
+ <20240620135627.qxcrkdx5v7wdurx4@flugou-latitude5401>
+ <CAFEAcA-ngrrEUDD7eA_sOLGF+_wRCuQVxTwuCA4pXjRcuJucmA@mail.gmail.com>
+ <20240621140725.f4hsasmhrhh4joxm@flugou-latitude5401>
+ <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
+ <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
+ <CAFEAcA9X0w5QW2qnnhF2k72ZrS8SALWiXV7uNr1e=jQnZvrQ7Q@mail.gmail.com>
+ <CAFEAcA-MrouAPdwpsyojMC-bx4aFtuL=tYZD=2pBS1vP5iicaw@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA-MrouAPdwpsyojMC-bx4aFtuL=tYZD=2pBS1vP5iicaw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +113,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 11:27:51AM -0300, Fabiano Rosas wrote:
-> QEMU's TLS session code provides no way to call gnutls_bye() to
-> terminate a TLS session. Callers of qcrypto_tls_session_read() can
-> choose to ignore a GNUTLS_E_PREMATURE_TERMINATION error by setting the
-> gracefulTermination argument.
+On 2/7/25 07:45, Peter Maydell wrote:
+> This is where things go wrong -- icount_start_warp_timer()
+> notices that all CPU threads are currently idle, and
+> decides it needs to warp the timer forwards to the
+> next deadline, which is at the end of time -- INT64_MAX.
 > 
-> The QIOChannelTLS ignores the premature termination error whenever
-> shutdown() has already been issued. This is not enough anymore for the
-> migration code due to changes [1] in the synchronization between
-> migration source and destination.
-
-This sentence seems to say commit [1] changed something on the tls
-condition, but IMHO fundamentally the issue is multifd recv thread model
-that relies on blocking readv() rather than request-based (like what src
-multifd does).
-
-Now src uses either shutdown() or close() to kick dest multifd recv threads
-out from readv().  That has nothing to do with what we do during complete()
-with those sync messages.. referencing it is ok, but we'll need to
-reference also the other commit to be clear pre-9.0 can also be prone to
-this.  To me, it's more important to mention the root cause on the multifd
-recv thread model, which requires explicit tls terminations.
-
+> But once timer_mod_ns() returns, the generic timer code
+> is going to raise an interrupt (this goes through the GIC
+> code and comes back into the CPU which calls cpu_interrupt()),
+> so we don't want to warp the timer at all. The clock should
+> stay exactly at the value it has and the CPU is going to
+> have more work to do.
 > 
-> Add support for calling gnutls_bye() in the tlssession layer so users
-> of QIOChannelTLS can clearly identify the end of a TLS session.
-> 
-> 1- 1d457daf86 ("migration/multifd: Further remove the SYNC on complete")
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> How is this supposed to work? Shouldn't we only be doing
+> the "start moving the icount forward to the next deadline"
+> once we've completed all the "run timers and AIO stuff" that
+> icount_handle_deadline() triggers, not randomly in the middle
+> of that when this timer callback or some other one might do
+> something to trigger an interrupt?
 
--- 
-Peter Xu
+I don't understand timer warping at all.  And you're right, it doesn't seem like this 
+should happen outside of a specific point in the main loop.
 
+> ... But I don't think there's any reason why
+> timer callbacks should be obliged to reprogram their timers
+> last, and in any case you can imagine scenarios where there
+> are multiple timer callbacks for different timers and it's
+> only the second timer that raises an interrupt...
+
+Agreed.
+
+
+r~
 
