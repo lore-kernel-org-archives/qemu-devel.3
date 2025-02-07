@@ -4,108 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 979BCC02192
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 06:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF52EC02192
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 06:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgHP1-0001ji-8N; Fri, 07 Feb 2025 00:59:47 -0500
+	id 1tgIDw-0003IU-1y; Fri, 07 Feb 2025 01:52:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tgHOz-0001iR-HM
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 00:59:45 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tgHOx-0000av-1J
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 00:59:45 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21ddab8800bso24133305ad.3
- for <qemu-devel@nongnu.org>; Thu, 06 Feb 2025 21:59:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1738907981; x=1739512781;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QTyWN6OjRupwK+lmVmzE9YpQ0JF5OJgfPZGVkPzfKWM=;
- b=ePAubFdGXjuvd5vl9nbEynTqpwDYWaH0UcAg1hTOQSGmKLhX0Ka7oCPclbhug7ZTQ1
- JH+Q/YaXXYyFj0eozVuOy5HtrCxY8kfBYShYAEnZJYpeWvyVHqVcbL9jpx7bPWo+OBFO
- dUuR0r17x4JI3BgDvACWUSBM1wMLbtItV8Yb+pPDZJrUVCiKaRU3Y35dRgJdUkFGwlQi
- HEu3vA1hXfSfG7supXwQNpX81cJHd/PLpdnZ62SgIQymdPGx7NqT/dPrvO7iIefNqP5f
- IcWvvMtm5ulo6O0f4rsdeVj1OTQ0PvSlrb5iuJaUDIy9j4wn9NjsxLIMxKDof3ZVb7QB
- BWpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738907981; x=1739512781;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QTyWN6OjRupwK+lmVmzE9YpQ0JF5OJgfPZGVkPzfKWM=;
- b=H5bgMABFU18edsmwG9YrZurssd96ILvXqYV241V1pV0Z/FEAKNtQQ1RdnsM9s6ZaLb
- u9d8mvxXX/js7R+TFNhKeQmyg8oLR66EPzlS+09MetFlhIT5JufqkEPsFEF7d/H7WCqV
- zCEuZYsGMegC0QJmVH1J5F5Fsq8eVVmM3AHzRadDEwNpLRtxa6gT37NEvVT5/jgpiSJC
- gi+ekzgwvhI507xocZxLAX9FmL0qMsmwzB2ekP2Av7k+C8lYe7RlQuY8MzyuksyFOyzq
- 0II3Za/hRR6W9lZalDuQiNBUlv3BjzgOxQT6BQb0+FbliF4hnD2Y0b+GZEygQFRJKRhR
- f4CA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjdRGb1LRfBcvPBB4fQUB8yJ9XYe1vgOojNlDbuuNZuncHhjSFg+8u/hNkYL63lOfVWLkv9P6cUhiP@nongnu.org
-X-Gm-Message-State: AOJu0YyKFtkpb1apbPJsElh8fZB5Zu6X6MdsORZwDBCT22Gtg96PDLsg
- pLO0tmMONd15zam4lnKqkwr+ruvv9cmGMYo2HP24CmmkkDUNsw/n8TeVVxTlbSw=
-X-Gm-Gg: ASbGncunZnQYBv4IL/2mFWaqejDqR2EXOADwEGWAoevGtY96SP9U5VOTWgTzRGIVp8w
- ImaQkIlz/blrgW5R3o38YaBz+XVSJt01DGPd5c0xT/3cKxqlcfUmG/TS7nnbnxuHwdXfPXeIQCc
- eQVwq3WgPIHb/Iy/T6fHqkJGPDRxIYhZEcmh98x0yHFeK0FPEj44KknvpzjY3KiUKnqYqp9S+uA
- mR9EllmhLxcIPiGUXLVBKabdV4D521w8qh3E8keSOaCiSDpXVpxnustSVh/pDQzdQ/t/WGn5UPX
- bpnMw0mzv/nx+8QtT5Ro52/ke6Vz
-X-Google-Smtp-Source: AGHT+IGNUmwPQsrg7829k8NzCuRBwXHkUL8puz8Qvd83Ug9EpjMoR3i5kTYOVdDyPSoEjBwMjyjp5w==
-X-Received: by 2002:a17:902:c949:b0:21f:4144:a06f with SMTP id
- d9443c01a7336-21f4e6acffcmr28132895ad.13.1738907980802; 
- Thu, 06 Feb 2025 21:59:40 -0800 (PST)
-Received: from [157.82.205.237] ([157.82.205.237])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f3653c997sm22372515ad.78.2025.02.06.21.59.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Feb 2025 21:59:40 -0800 (PST)
-Message-ID: <79fea08e-21d0-46ba-923d-8892eef3ce8e@daynix.com>
-Date: Fri, 7 Feb 2025 14:59:34 +0900
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgIDl-0003Gd-43; Fri, 07 Feb 2025 01:52:13 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgIDi-0000ob-Ep; Fri, 07 Feb 2025 01:52:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738911131; x=1770447131;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=egq0cYWfPaMnTx9wXuN6RsRl60d8z95BLAdDihuuI2s=;
+ b=BCh+FP1RpBuHVd8GHB9Am90dvrmyocEP80/fUsw9GFI4MIrid6Vj/jbf
+ 72PUegme/z8r2f9Xs0HAQEt5t0iVKAsOHXYqysWoXKgxO4su5GOs7XEA0
+ tkM4IGxbqB38ylJVu67U8tDEZUcOG5Ak4fcjKkTbTzjk40c3jDKrBdNDi
+ zuAEj/nl9y9e+uaz3ZYk2hFbNI5EAqG5ISxwvJMRIoqAf5RZfcRyfzPd3
+ bTPrv1SKwP+mkxfs3ct+aZIGEu+gbreLM9DVoeC882YqDdgd8ZVg5+Fx7
+ 5KbhM0NSRKMjrFuDGJmntAWM3NZSikwG66vDyLARGZSrxwfLzGfCypD5p A==;
+X-CSE-ConnectionGUID: EHX586YqS3+BNwUI28PCdA==
+X-CSE-MsgGUID: a3GDB3qPQiynIaAG5mLxxg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11336"; a="39451552"
+X-IronPort-AV: E=Sophos;i="6.13,266,1732608000"; d="scan'208";a="39451552"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Feb 2025 22:51:27 -0800
+X-CSE-ConnectionGUID: GMOoCvHZTJiGXcznNZfSjQ==
+X-CSE-MsgGUID: EcjCImYFQAmhYL4kRVooeQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,266,1732608000"; d="scan'208";a="111639499"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa008.fm.intel.com with ESMTP; 06 Feb 2025 22:51:24 -0800
+Date: Fri, 7 Feb 2025 15:10:53 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert
+ [InterruptSource] to [*mut IRQState]
+Message-ID: <Z6Wx/RGBIElMaeZy@intel.com>
+References: <20250125125137.1223277-1-zhao1.liu@intel.com>
+ <20250125125137.1223277-4-zhao1.liu@intel.com>
+ <17907481-89d6-457c-bcd3-66a444b1325d@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] qdev-properties: Accept bool for OnOffAuto
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Markus Armbruster <armbru@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Michael Roth <michael.roth@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Lei Yang <leiyang@redhat.com>, qemu-devel@nongnu.org
-References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
- <20250108-virtio-v4-2-cbf0aa04c9f9@daynix.com> <87cyfwxveo.fsf@pond.sub.org>
- <44b21e4c-b076-41bb-9564-1e7a8cf4a450@daynix.com>
- <87r04bs8sj.fsf@pond.sub.org>
- <6e6935dd-fae7-4cce-acad-69609eba9b6e@daynix.com>
- <4363863f-3ba3-95b3-61ec-6fade162218f@eik.bme.hu>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <4363863f-3ba3-95b3-61ec-6fade162218f@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+In-Reply-To: <17907481-89d6-457c-bcd3-66a444b1325d@redhat.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RAZOR2_CF_RANGE_51_100=1.886, RAZOR2_CHECK=0.922, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,78 +91,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/02/06 22:23, BALATON Zoltan wrote:
-> On Thu, 6 Feb 2025, Akihiko Odaki wrote:
->> On 2025/02/06 18:48, Markus Armbruster wrote:
->>>>                                              This problem can be solved
->>>> using an existing mechanism, OnOffAuto, which differentiates the "auto"
->>>> state and explicit the "on" state.
->>>
->>> I guess you're proposing something like this:
->>>
->>> * auto: on if possible, else off
->>>
->>> * on: on if possible, else error
->>>
->>> * off: off (always possible)
->>>
->>> Which one is the default?
->>
->> I converted on to auto and off to false in a following patch.
->>
->>>
->>>> However, converting bool to OnOffAuto surfaces another problem: they
->>>> disagree how "on" and "off" should be written. Please note that the
->>>> disagreement already exists and so it is nice to solve anyway.
->>>
->>> Yes, converting bool to OnOffAuto is an incompatible change.
->>
->> Not just about conversion, but this inconsistency require users to 
->> know whether a property is bool or OnOffAuto and change how the values 
->> are written in JSON accordingly. This somewhat hurts usability.
+On Wed, Jan 29, 2025 at 11:51:02AM +0100, Paolo Bonzini wrote:
+> Date: Wed, 29 Jan 2025 11:51:02 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert
+>  [InterruptSource] to [*mut IRQState]
 > 
-> Worse than that, the help text is also confusing.
-> Excerpt from -device virtio-gpu,help
+> On Sat, Jan 25, 2025 at 1:32 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+> > 
+> > This is useful to hanlde InterruptSource slice and pass it to C
+> > bindings.
+> > 
+> > Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 > 
->    blob=<bool>            - on/off (default: false)
->    busnr=<busnr>
->    disable-legacy=<OnOffAuto> - on/off/auto (default: "auto")
->    disable-modern=<bool>  -  (default: false)
->    edid=<bool>            - on/off (default: true)
->    event_idx=<bool>       - on/off (default: true)
+> This may be a bad suggestion, after all. clippy complains that you're
+> casting &[*mut IRQState] to mutable (https://rust-lang.github.io/rust-
+> clippy/master/#as_ptr_cast_mut).
 > 
-> For bools it says on/off yet expects true/false. Wasn't originally true/ 
-> on/1 and false/off/0 accepted for bools? Where that got lost? I think 
-> getting back that behaviour would be easiest for users. Users don't care 
-> if OnOffAuto is an enum internally and can't (or don't want to) remember 
-> if bools are written on/off or true/false so accepting these as synonyms 
-> would help users.
+> I can think of two solutions:
+> 
+> 1) add #[allow(clippy::as_ptr_cast_mut)] and explain with a comment
+> 
+>     // Casting to *mut *mut IRQState is valid, because
+>     // the source slice `pins` uses interior mutability.
+> 
+> 2) drop as_slice_of_qemu_irq() and replace it with something like
+> 
+>     pub(crate) const fn slice_as_ptr(slice: &[Self]) -> *mut *mut IRQState {
+>         slice[0].as_ptr()
+>     }
+> 
+> You choose.
+>
 
-The help shows another problem: it mixes two different syntaxes. I sent 
-a patch to fix the inconsistency in the help. Please review it for more 
-detailed explanation and actual fix:
-https://lore.kernel.org/qemu-devel/20250207-bool-v1-1-5749d5d6df24@daynix.com
+:) I choose the second way, which goes back to the initial codes.
 
-Let me go back to the discussion of the bool/OnOffAuto problem below:
+Though an empty slice w/o any check would cause a runtime error like:
 
-The values the command line syntax accepts are on/yes/true/y and 
-off/no/false/n.
+"thread '<unnamed>' panicked at 'index out of bounds: the len is 0 but the index is 0'"
 
-For the command line syntax, you can always use on/off whether the type 
-is bool or OnOffAuto. In my opinion, it is still not good to reject 
-yes/true/y and no/false/n for OnOffAuto; why do we suddenly reject them 
-when the property gets the "auto" value? As you pointed out, the usage 
-of enum is our internal concern and should not bother users.
+Adding an assert to ensure a non-empty slice is better.
 
-The situation is worse for JSON as there is no common literals that are 
-compatible with both of bool and OnOffAuto, which forces users to 
-remember the type.
+Thanks,
+Zhao
 
-So I think this patch makes sense in terms of usability. Accepting 
-multiple representations for one value is ugly, but it is better than 
-exposing the ugliness to users. We should deprecate the representations 
-except one if we really hate the ugliness.
-
-Regards,
-Akihiko Odaki
 
