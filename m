@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C0A5C02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C342C0219B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgLPx-0007QD-3H; Fri, 07 Feb 2025 05:17:01 -0500
+	id 1tgLQN-0007lM-Cs; Fri, 07 Feb 2025 05:17:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLPb-0007KI-G1
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tgLPp-0007Nd-3R
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLPZ-0003lK-At
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:39 -0500
+ id 1tgLPn-0004GU-2a
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:16:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738923395;
+ s=mimecast20190719; t=1738923410;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ynfSiKySz1E493NM3nAmhgtxqEj3XUDWlZBIVMVVqV8=;
- b=T1rmDmxXu3QJUSRHn00L6Gh8PTL+Vy3QanInr6Y08UVjRae/gb0GkTXgvAYSHoh2irpqAo
- h//6ixDNnwqtknkFmOdWptXLGjvald5edpL3KAtdQU2KcUpJWXw09N/J+I6dzD20Uqc8oD
- 3kjk38FWM7rv1yam34bWv0D5bskpQXI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qPLe8n7w4lU+JK6BULn/ii43xbBtY2BZigYuJPo3FFQ=;
+ b=iII3ZBDf2LGLyi/VU3r2enK8wQP/OsOVRmFXIKO9uatgQ49YHI5Kr2YBP/ZRIVhJugIq1n
+ DcIhr6V850c7cyKRUR49mgyE8ww4fPJ6Zh1fxLD3e063w7xGzxyatxGN4U/1PAWLyNYfCk
+ V3lxMHi0BHRaFqv38kyQV+Vnclj9nDA=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-ysoVjjfvNCilfwI5r_FSfg-1; Fri, 07 Feb 2025 05:16:33 -0500
-X-MC-Unique: ysoVjjfvNCilfwI5r_FSfg-1
-X-Mimecast-MFC-AGG-ID: ysoVjjfvNCilfwI5r_FSfg
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab7044083e5so221841466b.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:16:33 -0800 (PST)
+ us-mta-246-RAEH24RFN4CgJKh44eEXqA-1; Fri, 07 Feb 2025 05:16:49 -0500
+X-MC-Unique: RAEH24RFN4CgJKh44eEXqA-1
+X-Mimecast-MFC-AGG-ID: RAEH24RFN4CgJKh44eEXqA
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5dc5beb5eb0so1501294a12.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:16:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738923390; x=1739528190;
+ d=1e100.net; s=20230601; t=1738923407; x=1739528207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ynfSiKySz1E493NM3nAmhgtxqEj3XUDWlZBIVMVVqV8=;
- b=NMQ117j4FnTPVgM8kno8BkFQVzw3HqorwOtXcKk7W5HXWKzOHS+ass7PLSHouEP7/q
- RB3jMKYWzrxjBA1iJL3+MSIhh46lXtQtYiXbnvSFagXs4DWdG22Gy7aEGdrLODZ9r8NJ
- H7OBsIOTOCH/IMC0B+4gWoxCVmS5G/2uBFqWm3Z3Kugj0xUOJuhtfFFbBAmcntp32Fzs
- EN3NtKqGU/7mEVMdXt2NMfI07V4b+fUenLdPk1HW+gJdCxLkZJXrARUGRVhH6eBirTcY
- ZWCev3JusmFOItTXYvPlZwVos6MlwAxhAS4a2ATJnlGYn0P9esmRi4Kt+SZMqvrTvZYd
- PpDQ==
-X-Gm-Message-State: AOJu0Yzk/8P5m2iHJyFOu2mq8bQvCuJqOpQuGFH1h/Zr/fCk/YQm3O3s
- MvGOmIwtUwxMMWjYjRHRjjRpewP8NFjAQM2vyap94j25E1WfLeSflwcPxFK7hGECc2B0GLNHdu/
- 28RDgcIt0mZjZ+xpd88KfsVwJZ3xSW2G9JGHykVu+folh2rb+zTWiuFh4u+t/Oq0MJBvlM9MxGp
- SEjKQ4QiO0jElZYCwKf97xgxxUvEQgY1hKxjwCEYg=
-X-Gm-Gg: ASbGncvykBq6TaHlWyEuDvsW9FEw7uhp0dAqhgfIxByS8/NDbaO5Y0hpcVbTBAmafJp
- hcmOUjX9sn0eOqMqAJba1PovuFl7h0dXEwVAow10zHF+NzSuFUNJ536a97dH3kqv1001MePEHgE
- 2npkGjZ1Eo+7dSyYWRqxDQPzLhIKMJ3krynIUAe3vpbp1UT9BsH9t07shi/2yDjVPPlFaNR3ujw
- wrT1CG/I2QkPSMKaxhvGX6BxjYtqdX5HXwNBb6pvCWP5yvyPa7u8cBub850QWFncH/0dxD0SUhF
- YISzoQ==
-X-Received: by 2002:a17:907:72d4:b0:ab7:5f0e:87e9 with SMTP id
- a640c23a62f3a-ab789c709d0mr241699166b.55.1738923390190; 
- Fri, 07 Feb 2025 02:16:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHtNVzUSMaVefP8pN97PYvnHBMVz7li2Kz2Y5myFpgrULJWY3/oHyeUKMhZENZnChv/evvjtw==
-X-Received: by 2002:a17:907:72d4:b0:ab7:5f0e:87e9 with SMTP id
- a640c23a62f3a-ab789c709d0mr241693666b.55.1738923389586; 
- Fri, 07 Feb 2025 02:16:29 -0800 (PST)
+ bh=qPLe8n7w4lU+JK6BULn/ii43xbBtY2BZigYuJPo3FFQ=;
+ b=SxQdV+qcXeMXZZjE9q4r5rOtAL5US+HjThVYNS2jlkRmRB02IoDdWMliDMlE03pCNA
+ Ea01XNBK8a7UtQyf992SmQ1ye3EQLqoWhI8JLG4deCV14qBfwvk1OINgkNfF+0IkdOcs
+ Qgi2J7JN6Ny8gCrcEJU5Fgnjhyu5qkQxrTYYg09VannzKRQF2DlAjC++26D6KoGJ4kyD
+ CGebmAmQNaNrp6pOhAMxOViiBJCL87ZVx1qUaPFx+0VHfnmBSq7m31StVUc4v7fTHaXp
+ oz0sOrEHCioHIhe9maXqfV+z9nJ8mvNDkgBnSzqk/CD1uv6qL0os6vjQts3L5FkEmcoi
+ N7kA==
+X-Gm-Message-State: AOJu0YzYQ93FJPfEQc5EU0G9aOzCi6FvjVAIQz6XHiNV6rJIirR0WLxF
+ pzEBYfUeJzIFILXJfzwQdKDI0Q55+juNfXeYlS6YnSrYe3YVZSLXQZbjfyVLyfqNnePiC5ATvfE
+ nTVKufV7X46j/tPb3rihp2TN+w6i4ZEQ9VAh+Q1PdmfWdqHDFJgvpy6AhoVxzF9t+Y4rq5rlbV/
+ g0NM73GXv3trldXYGkX7j809cClhI4GQ9PMtUJjNM=
+X-Gm-Gg: ASbGncuDuETHADvOIvtYr2mUQp4ijcGpITT0Ez1PKogWehGJbKhnj0wUG0CN53gWjUy
+ 9q+ZfB1pNCg2JAhlWDBFyAqIM3+r04vcPzBaNgE2qSV+nXLFuZB804hrkoO7Dux4cutTAH4oJN+
+ ue9wGYNT3DpUJGIH3hIKxlS+NphNPwtdP/bBJDIU/hBh6sNwJtxQqu/XkR6pgjRnvoEiFwJrG1Y
+ C5l3IwRBjQYyt8uk3gRGtaPvFLPulDKJhMUPWl9Lzz+UQ220KlKFzkRhvI5e5nW9fY8a34HRZ6S
+ rzBkpw==
+X-Received: by 2002:a05:6402:4588:b0:5db:e91a:6baf with SMTP id
+ 4fb4d7f45d1cf-5de45015f49mr7206872a12.14.1738923406475; 
+ Fri, 07 Feb 2025 02:16:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyLaRlLhMDi0sic2b81oIjyoDiKQ8HxFyoPHsUiHz/TTRI0oQR/+PmMjzhrWK8g7PQ3Zf3VQ==
+X-Received: by 2002:a05:6402:4588:b0:5db:e91a:6baf with SMTP id
+ 4fb4d7f45d1cf-5de45015f49mr7206826a12.14.1738923405955; 
+ Fri, 07 Feb 2025 02:16:45 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.97.55])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5de3e49c372sm1343232a12.3.2025.02.07.02.16.26
+ 4fb4d7f45d1cf-5dcf6c9f904sm2276175a12.58.2025.02.07.02.16.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 02:16:27 -0800 (PST)
+ Fri, 07 Feb 2025 02:16:42 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	zhao1.liu@intel.com
-Subject: [PATCH 01/12] rust: qom: add reference counting functionality
-Date: Fri,  7 Feb 2025 11:16:12 +0100
-Message-ID: <20250207101623.2443552-2-pbonzini@redhat.com>
+Subject: [PATCH 04/12] rust: qdev: add clock creation
+Date: Fri,  7 Feb 2025 11:16:15 +0100
+Message-ID: <20250207101623.2443552-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250207101623.2443552-1-pbonzini@redhat.com>
 References: <20250207101623.2443552-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -109,264 +109,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a smart pointer that allows to add and remove references from
-QOM objects.  It's important to note that while all QOM objects have a
-reference count, in practice not all of them have their lifetime guarded
-by it.  Embedded objects, specifically, are confined to the lifetime of
-the owner.
+Add a Rust version of qdev_init_clock_in, which can be used in
+instance_init.  There are a couple differences with the C
+version:
 
-When writing Rust bindings this is important, because embedded objects are
-*never* used through the "Owned<>" smart pointer that is introduced here.
+- in Rust the object keeps its own reference to the clock (in addition to
+  the one embedded in the NamedClockList), and the reference is dropped
+  automatically by instance_finalize(); this is encoded in the signature
+  of DeviceClassMethods::init_clock_in, which makes the lifetime of the
+  clock independent of that of the object it holds.  This goes unnoticed
+  in the C version and is due to the existence of aliases.
+
+- also, anything that happens during instance_init uses the pinned_init
+  framework to operate on a partially initialized object, and is done
+  through class methods (i.e. through DeviceClassMethods rather than
+  DeviceMethods) because the device does not exist yet.  Therefore, Rust
+  code *must* create clocks from instance_init, which is stricter than C.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/qom.rs     | 158 ++++++++++++++++++++++++++++++++++-
- rust/qemu-api/src/vmstate.rs |   6 +-
- rust/qemu-api/tests/tests.rs |  10 +++
- 3 files changed, 172 insertions(+), 2 deletions(-)
+ rust/hw/char/pl011/src/device.rs |  43 +++++-------
+ rust/qemu-api/src/prelude.rs     |   2 +
+ rust/qemu-api/src/qdev.rs        | 109 ++++++++++++++++++++++++++++++-
+ rust/qemu-api/src/vmstate.rs     |   4 +-
+ 4 files changed, 127 insertions(+), 31 deletions(-)
 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index f50ee371aac..4a2e84c9aed 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -56,6 +56,7 @@
- use std::{
-     ffi::CStr,
-     fmt,
-+    mem::ManuallyDrop,
-     ops::{Deref, DerefMut},
-     os::raw::c_void,
-     ptr::NonNull,
-@@ -63,7 +64,13 @@
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index f5db114b0c7..37936a328b8 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -10,17 +10,16 @@
  
- pub use bindings::{Object, ObjectClass};
+ use qemu_api::{
+     bindings::{
+-        error_fatal, hwaddr, memory_region_init_io, qdev_init_clock_in, qdev_prop_set_chr,
+-        qemu_chr_fe_accept_input, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers,
+-        qemu_chr_fe_write_all, qemu_irq, sysbus_connect_irq, sysbus_mmio_map, sysbus_realize,
+-        CharBackend, Chardev, Clock, ClockEvent, MemoryRegion, QEMUChrEvent,
+-        CHR_IOCTL_SERIAL_SET_BREAK,
++        error_fatal, hwaddr, memory_region_init_io, qdev_prop_set_chr, qemu_chr_fe_accept_input,
++        qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers, qemu_chr_fe_write_all, qemu_irq,
++        sysbus_connect_irq, sysbus_mmio_map, sysbus_realize, CharBackend, Chardev, MemoryRegion,
++        QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
+     },
+     c_str, impl_vmstate_forward,
+     irq::InterruptSource,
+     prelude::*,
+-    qdev::{DeviceImpl, DeviceState, Property},
+-    qom::{ClassInitImpl, ObjectImpl, ParentField},
++    qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property},
++    qom::{ClassInitImpl, ObjectImpl, Owned, ParentField},
+     sysbus::{SysBusDevice, SysBusDeviceClass},
+     vmstate::VMStateDescription,
+ };
+@@ -131,7 +130,7 @@ pub struct PL011State {
+     #[doc(alias = "irq")]
+     pub interrupts: [InterruptSource; IRQMASK.len()],
+     #[doc(alias = "clk")]
+-    pub clock: NonNull<Clock>,
++    pub clock: Owned<Clock>,
+     #[doc(alias = "migrate_clk")]
+     pub migrate_clock: bool,
+ }
+@@ -485,8 +484,6 @@ impl PL011State {
+     /// location/instance. All its fields are expected to hold unitialized
+     /// values with the sole exception of `parent_obj`.
+     unsafe fn init(&mut self) {
+-        const CLK_NAME: &CStr = c_str!("clk");
+-
+         // SAFETY:
+         //
+         // self and self.iomem are guaranteed to be valid at this point since callers
+@@ -506,22 +503,16 @@ unsafe fn init(&mut self) {
  
--use crate::bindings::{self, object_dynamic_cast, object_get_class, object_get_typename, TypeInfo};
-+use crate::{
-+    bindings::{
-+        self, object_dynamic_cast, object_get_class, object_get_typename, object_ref, object_unref,
-+        TypeInfo,
-+    },
-+    cell::bql_locked,
+         // SAFETY:
+         //
+-        // self.clock is not initialized at this point; but since `NonNull<_>` is Copy,
+-        // we can overwrite the undefined value without side effects. This is
+-        // safe since all PL011State instances are created by QOM code which
+-        // calls this function to initialize the fields; therefore no code is
+-        // able to access an invalid self.clock value.
+-        unsafe {
+-            let dev: &mut DeviceState = self.upcast_mut();
+-            self.clock = NonNull::new(qdev_init_clock_in(
+-                dev,
+-                CLK_NAME.as_ptr(),
+-                None, /* pl011_clock_update */
+-                addr_of_mut!(*self).cast::<c_void>(),
+-                ClockEvent::ClockUpdate.0,
+-            ))
+-            .unwrap();
+-        }
++        // self.clock is not initialized at this point; but since `Owned<_>` is
++        // not Drop, we can overwrite the undefined value without side effects;
++        // it's not sound but, because for all PL011State instances are created
++        // by QOM code which calls this function to initialize the fields, at
++        // leastno code is able to access an invalid self.clock value.
++        self.clock = self.init_clock_in("clk", &Self::clock_update, ClockEvent::ClockUpdate);
++    }
++
++    const fn clock_update(&self, _event: ClockEvent) {
++        /* pl011_trace_baudrate_change(s); */
+     }
+ 
+     fn post_init(&self) {
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index 3df6a5c21ec..87e3ce90f26 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -7,6 +7,8 @@
+ pub use crate::cell::BqlCell;
+ pub use crate::cell::BqlRefCell;
+ 
++pub use crate::qdev::DeviceMethods;
++
+ pub use crate::qom::IsA;
+ pub use crate::qom::Object;
+ pub use crate::qom::ObjectCast;
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index f4c75c752f1..8f6744c5e26 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -4,14 +4,20 @@
+ 
+ //! Bindings to create devices and access device functionality from Rust.
+ 
+-use std::{ffi::CStr, ptr::NonNull};
++use std::{
++    ffi::{CStr, CString},
++    os::raw::c_void,
++    ptr::NonNull,
 +};
  
- /// Marker trait: `Self` can be statically upcasted to `P` (i.e. `P` is a direct
- /// or indirect parent of `Self`).
-@@ -610,6 +617,148 @@ unsafe impl ObjectType for Object {
-         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_OBJECT) };
- }
+-pub use bindings::{DeviceClass, DeviceState, Property};
++pub use bindings::{Clock, ClockEvent, DeviceClass, DeviceState, Property};
  
-+/// A reference-counted pointer to a QOM object.
-+///
-+/// `Owned<T>` wraps `T` with automatic reference counting.  It increases the
-+/// reference count when created via [`Owned::from`] or cloned, and decreases
-+/// it when dropped.  This ensures that the reference count remains elevated
-+/// as long as any `Owned<T>` references to it exist.
-+///
-+/// `Owned<T>` can be used for two reasons:
-+/// * because the lifetime of the QOM object is unknown and someone else could
-+///   take a reference (similar to `Arc<T>`, for example): in this case, the
-+///   object can escape and outlive the Rust struct that contains the `Owned<T>`
-+///   field;
-+///
-+/// * to ensure that the object stays alive until after `Drop::drop` is called
-+///   on the Rust struct: in this case, the object will always die together with
-+///   the Rust struct that contains the `Owned<T>` field.
-+///
-+/// Child properties are an example of the second case: in C, an object that
-+/// is created with `object_initialize_child` will die *before*
-+/// `instance_finalize` is called, whereas Rust expects the struct to have valid
-+/// contents when `Drop::drop` is called.  Therefore Rust structs that have
-+/// child properties need to keep a reference to the child object.  Right now
-+/// this can be done with `Owned<T>`; in the future one might have a separate
-+/// `Child<'parent, T>` smart pointer that keeps a reference to a `T`, like
-+/// `Owned`, but does not allow cloning.
-+///
-+/// Note that dropping an `Owned<T>` requires the big QEMU lock to be taken.
-+#[repr(transparent)]
-+#[derive(PartialEq, Eq, Hash, PartialOrd, Ord)]
-+pub struct Owned<T: ObjectType>(NonNull<T>);
-+
-+// The following rationale for safety is taken from Linux's kernel::sync::Arc.
-+
-+// SAFETY: It is safe to send `Owned<T>` to another thread when the underlying
-+// `T` is `Sync` because it effectively means sharing `&T` (which is safe
-+// because `T` is `Sync`); additionally, it needs `T` to be `Send` because any
-+// thread that has an `Owned<T>` may ultimately access `T` using a
-+// mutable reference when the reference count reaches zero and `T` is dropped.
-+unsafe impl<T: ObjectType + Send + Sync> Send for Owned<T> {}
-+
-+// SAFETY: It is safe to send `&Owned<T>` to another thread when the underlying
-+// `T` is `Sync` because it effectively means sharing `&T` (which is safe
-+// because `T` is `Sync`); additionally, it needs `T` to be `Send` because any
-+// thread that has a `&Owned<T>` may clone it and get an `Owned<T>` on that
-+// thread, so the thread may ultimately access `T` using a mutable reference
-+// when the reference count reaches zero and `T` is dropped.
-+unsafe impl<T: ObjectType + Sync + Send> Sync for Owned<T> {}
-+
-+impl<T: ObjectType> Owned<T> {
-+    /// Convert a raw C pointer into an owned reference to the QOM
-+    /// object it points to.  The object's reference count will be
-+    /// decreased when the `Owned` is dropped.
-+    ///
-+    /// # Panics
-+    ///
-+    /// Panics if `ptr` is NULL.
-+    ///
-+    /// # Safety
-+    ///
-+    /// The caller must indeed own a reference to the QOM object.
-+    /// The object must not be embedded in another unless the outer
-+    /// object is guaranteed to have a longer lifetime.
-+    ///
-+    /// A raw pointer obtained via [`Owned::into_raw()`] can always be passed
-+    /// back to `from_raw()` (assuming the original `Owned` was valid!),
-+    /// since the owned reference remains there between the calls to
-+    /// `into_raw()` and `from_raw()`.
-+    pub unsafe fn from_raw(ptr: *const T) -> Self {
-+        // SAFETY NOTE: while NonNull requires a mutable pointer, only
-+        // Deref is implemented so the pointer passed to from_raw
-+        // remains const
-+        Owned(NonNull::new(ptr as *mut T).unwrap())
-+    }
-+
-+    /// Obtain a raw C pointer from a reference.  `src` is consumed
-+    /// and the reference is leaked.
-+    #[allow(clippy::missing_const_for_fn)]
-+    pub fn into_raw(src: Owned<T>) -> *mut T {
-+        let src = ManuallyDrop::new(src);
-+        src.0.as_ptr()
-+    }
-+
-+    /// Increase the reference count of a QOM object and return
-+    /// a new owned reference to it.
-+    ///
-+    /// # Safety
-+    ///
-+    /// The object must not be embedded in another, unless the outer
-+    /// object is guaranteed to have a longer lifetime.
-+    pub unsafe fn from(obj: &T) -> Self {
-+        unsafe {
-+            object_ref(obj.as_object_mut_ptr().cast::<c_void>());
-+
-+            // SAFETY NOTE: while NonNull requires a mutable pointer, only
-+            // Deref is implemented so the reference passed to from_raw
-+            // remains shared
-+            Owned(NonNull::new_unchecked(obj.as_mut_ptr()))
-+        }
-+    }
-+}
-+
-+impl<T: ObjectType> Clone for Owned<T> {
-+    fn clone(&self) -> Self {
-+        // SAFETY: creation method is unsafe; whoever calls it has
-+        // responsibility that the pointer is valid, and remains valid
-+        // throughout the lifetime of the `Owned<T>` and its clones.
-+        unsafe { Owned::from(self.deref()) }
-+    }
-+}
-+
-+impl<T: ObjectType> Deref for Owned<T> {
-+    type Target = T;
-+
-+    fn deref(&self) -> &Self::Target {
-+        // SAFETY: creation method is unsafe; whoever calls it has
-+        // responsibility that the pointer is valid, and remains valid
-+        // throughout the lifetime of the `Owned<T>` and its clones.
-+        // With that guarantee, reference counting ensures that
-+        // the object remains alive.
-+        unsafe { &*self.0.as_ptr() }
-+    }
-+}
-+impl<T: ObjectType> ObjectDeref for Owned<T> {}
-+
-+impl<T: ObjectType> Drop for Owned<T> {
-+    fn drop(&mut self) {
-+        assert!(bql_locked());
-+        // SAFETY: creation method is unsafe, and whoever calls it has
-+        // responsibility that the pointer is valid, and remains valid
-+        // throughout the lifetime of the `Owned<T>` and its clones.
-+        unsafe {
-+            object_unref(self.as_object_mut_ptr().cast::<c_void>());
-+        }
-+    }
-+}
-+
-+impl<T: IsA<Object>> fmt::Debug for Owned<T> {
-+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-+        self.deref().debug_fmt(f)
-+    }
-+}
-+
- /// Trait for methods exposed by the Object class.  The methods can be
- /// called on all objects that have the trait `IsA<Object>`.
- ///
-@@ -641,6 +790,13 @@ fn get_class(&self) -> &'static <Self::Target as ObjectType>::Class {
- 
-         klass
-     }
-+
-+    /// Convenience function for implementing the Debug trait
-+    fn debug_fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-+        f.debug_tuple(&self.typename())
-+            .field(&(self as *const Self))
-+            .finish()
-+    }
- }
- 
- impl<R: ObjectDeref> ObjectMethods for R where R::Target: IsA<Object> {}
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 6ac432cf52f..11d21b8791c 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -29,6 +29,8 @@
- pub use crate::bindings::{VMStateDescription, VMStateField};
  use crate::{
-     bindings::{self, VMStateFlags},
-+    prelude::*,
-+    qom::Owned,
-     zeroable::Zeroable,
+     bindings::{self, Error},
++    callbacks::FnCall,
++    cell::bql_locked,
+     prelude::*,
+-    qom::{ClassInitImpl, ObjectClass},
++    qom::{ClassInitImpl, ObjectClass, Owned},
+     vmstate::VMStateDescription,
  };
  
-@@ -191,7 +193,8 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
- /// * a transparent wrapper for any of the above (`Cell`, `UnsafeCell`,
- ///   [`BqlCell`](crate::cell::BqlCell), [`BqlRefCell`](crate::cell::BqlRefCell)
- /// * a raw pointer to any of the above
--/// * a `NonNull` pointer or a `Box` for any of the above
-+/// * a `NonNull` pointer, a `Box` or an [`Owned`](crate::qom::Owned) for any of
-+///   the above
- /// * an array of any of the above
- ///
- /// In order to support other types, the trait `VMState` must be implemented
-@@ -398,6 +401,7 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
- // Unlike C pointers, Box is always non-null therefore there is no need
- // to specify VMS_ALLOC.
- impl_vmstate_pointer!(Box<T> where T: VMState);
-+impl_vmstate_pointer!(Owned<T> where T: VMState + ObjectType);
- 
- // Arrays using the underlying type's VMState plus
- // VMS_ARRAY/VMS_ARRAY_OF_POINTER
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 5c3e75ed3d5..69ddac7f1c5 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -138,6 +138,16 @@ fn test_object_new() {
-     }
+@@ -143,3 +149,100 @@ unsafe impl ObjectType for DeviceState {
+         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
  }
- 
-+#[test]
-+#[allow(clippy::redundant_clone)]
-+/// Create, clone and then drop an instance.
-+fn test_clone() {
-+    init_qom();
-+    let p = DummyState::new();
-+    assert_eq!(p.clone().typename(), "dummy");
-+    drop(p);
+ qom_isa!(DeviceState: Object);
++
++/// Trait for methods exposed by the [`DeviceState`] class.  The methods can be
++/// called on all objects that have the trait `IsA<DeviceState>`.
++///
++/// The trait should only be used through the blanket implementation,
++/// which guarantees safety via `IsA`.
++pub trait DeviceMethods: ObjectDeref
++where
++    Self::Target: IsA<DeviceState>,
++{
++    /// Add an input clock named `name`.  Invoke the callback with
++    /// `self` as the first parameter for the events that are requested.
++    ///
++    /// The resulting clock is added as a child of `self`, but it also
++    /// stays alive until after `Drop::drop` is called because C code
++    /// keeps an extra reference to it until `device_finalize()` calls
++    /// `qdev_finalize_clocklist()`.  Therefore (unlike most cases in
++    /// which Rust code has a reference to a child object) it would be
++    /// possible for this function to return a `&Clock` too.
++    #[inline]
++    fn init_clock_in<F: for<'a> FnCall<(&'a Self::Target, ClockEvent)>>(
++        &self,
++        name: &str,
++        _cb: &F,
++        events: ClockEvent,
++    ) -> Owned<Clock> {
++        fn do_init_clock_in(
++            dev: *mut DeviceState,
++            name: &str,
++            cb: Option<unsafe extern "C" fn(*mut c_void, ClockEvent)>,
++            events: ClockEvent,
++        ) -> Owned<Clock> {
++            assert!(bql_locked());
++
++            // SAFETY: the clock is heap allocated, but qdev_init_clock_in()
++            // does not gift the reference to its caller; so use Owned::from to
++            // add one.  The callback is disabled automatically when the clock
++            // is unparented, which happens before the device is finalized.
++            unsafe {
++                let cstr = CString::new(name).unwrap();
++                let clk = bindings::qdev_init_clock_in(
++                    dev,
++                    cstr.as_ptr(),
++                    cb,
++                    dev.cast::<c_void>(),
++                    events.0,
++                );
++
++                Owned::from(&*clk)
++            }
++        }
++
++        let cb: Option<unsafe extern "C" fn(*mut c_void, ClockEvent)> = if F::is_some() {
++            unsafe extern "C" fn rust_clock_cb<T, F: for<'a> FnCall<(&'a T, ClockEvent)>>(
++                opaque: *mut c_void,
++                event: ClockEvent,
++            ) {
++                // SAFETY: the opaque is "this", which is indeed a pointer to T
++                F::call((unsafe { &*(opaque.cast::<T>()) }, event))
++            }
++            Some(rust_clock_cb::<Self::Target, F>)
++        } else {
++            None
++        };
++
++        // SAFETY: self can be cast to DeviceState because its type has an
++        // IsA<DeviceState> bound.
++        do_init_clock_in(unsafe { self.as_mut_ptr() }, name, cb, events)
++    }
++
++    /// Add an output clock named `name`.
++    ///
++    /// The resulting clock is added as a child of `self`, but it also
++    /// stays alive until after `Drop::drop` is called because C code
++    /// keeps an extra reference to it until `device_finalize()` calls
++    /// `qdev_finalize_clocklist()`.  Therefore (unlike most cases in
++    /// which Rust code has a reference to a child object) it would be
++    /// possible for this function to return a `&Clock` too.
++    #[inline]
++    fn init_clock_out(&self, name: &str) -> Owned<Clock> {
++        unsafe {
++            let cstr = CString::new(name).unwrap();
++            let clk = bindings::qdev_init_clock_out(self.as_mut_ptr(), cstr.as_ptr());
++
++            Owned::from(&*clk)
++        }
++    }
 +}
 +
- #[test]
- /// Try invoking a method on an object.
- fn test_typename() {
++impl<R: ObjectDeref> DeviceMethods for R where R::Target: IsA<DeviceState> {}
++
++unsafe impl ObjectType for Clock {
++    type Class = ObjectClass;
++    const TYPE_NAME: &'static CStr =
++        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_CLOCK) };
++}
++qom_isa!(Clock: Object);
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 11d21b8791c..164effc6553 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -470,11 +470,11 @@ macro_rules! vmstate_clock {
+                 $crate::assert_field_type!(
+                     $struct_name,
+                     $field_name,
+-                    core::ptr::NonNull<$crate::bindings::Clock>
++                    $crate::qom::Owned<$crate::bindings::Clock>
+                 );
+                 $crate::offset_of!($struct_name, $field_name)
+             },
+-            size: ::core::mem::size_of::<*const $crate::bindings::Clock>(),
++            size: ::core::mem::size_of::<*const $crate::qdev::Clock>(),
+             flags: VMStateFlags(VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_POINTER.0),
+             vmsd: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_clock) },
+             ..$crate::zeroable::Zeroable::ZERO
 -- 
 2.48.1
 
