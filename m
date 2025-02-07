@@ -4,84 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F502C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785B6C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:08:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgVZ2-0007GE-1C; Fri, 07 Feb 2025 16:07:04 -0500
+	id 1tgVXt-0005QE-R1; Fri, 07 Feb 2025 16:05:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgVYy-00071M-Ma
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:07:00 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgVYx-00022l-0m
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:07:00 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21f573ff39bso19490235ad.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 13:06:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738962417; x=1739567217; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cig0Ikc7b5qhuUpLi3eI6xYC2TiI0bWHi40sfAzfUrY=;
- b=H1s8libf0zAULVI9dlYo10ptLmsgHqvvdIRzHHOVWFnzm7h/suse4nJmH5DGblev21
- rZYIMQWp7D+rv5/INNWaBODogghMn+KctnpB+GghRNs2ORsUTEl9wClL7k3tKVMm5wYE
- +bR1GMbcWK2RWYt+slo7EA2haoS0kGsAnlW1WNt3j6uoTrufuEwXwejNi1QJqvN72lfe
- Ia2CGSAJFY9g7yzq+AQTZ9/Ph2z32tpUAbO9pFw6lTgf8pmZBDyeN3nhTxF6wngPl3z5
- bW8EvnJq/Jzk7RRExEiYqn0Jes2bRi2kkwCLRoJRUDirpanm8Fwwx9OHNhPA64hTwXhV
- KfIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738962417; x=1739567217;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cig0Ikc7b5qhuUpLi3eI6xYC2TiI0bWHi40sfAzfUrY=;
- b=t6Ccp0uvuc34QMtubHwyRMY3Y+1n3LJqeiQZGwE/jKhjA9TanD18L4M3xYC9xVOs0x
- U3rvGcv+sxoIlSNDH6qI4BtkYCHlbwEXyZDFv9v/rwsRBQkYMg/AmyYTGnvzFIEW3ha8
- ZO03Ga+Pw5goo8DMpT9DRcLo7xvGtVbkKSB8wKAhOuH4MJdLrwPi1njstJ0zXVTnXX69
- a62nm3+aGUXU7vcmaAeuM6TgreonkSeqbnln6oJMD8ctaCgS4NwrfGOncxM8uyZNI52W
- FGWIdARJwkPiA8eSTYI6gFik8SLFxJ9RGUhQ6PAnkRWyj1C8C95Mv2TLj+R1w1WYYATb
- h/QA==
-X-Gm-Message-State: AOJu0YywqREMYCNJ1gaY4QgRcTc7LXFYvX1w06AKWuOkqXDEuObWUZq+
- JyABD+SCMHiqhA9wKgLrmWrXsPPz+dfcaG21GNjEilhNRKMOrNDYMymekYm+9diIdIi5l8vDq/q
- 9
-X-Gm-Gg: ASbGncuB6BLTJbRaZuhXxWDDgayGq0jl81lwC7+cSs6cr9N3KGbvXv2xZ6MECWunN6a
- jg04MgkHa2eBPogZElxgOiYhXpONmqIjz59EyP6ycEimQeHz57ms//441ebG6q/YrwDzINgNWGQ
- lDM10Cm3QvMcyE94AuxQyCNcl1TTaP7QuPqI5G3EIx8JSN2BwQgUo8G/YBthQkalbjiGjhRU8Yf
- GgdimZCoSkHiknmvtKjtl/Fzif1VEKN6TktyHqQrLIrDR/lx/bHNX9LFZPWx5KZS9eVVvcHDPzR
- 5MgtGQgLNL2WV7mBh39evsL+TMcADIQzR3JUyICUuXYA9s4=
-X-Google-Smtp-Source: AGHT+IEnaiMfhGA+nc27lff0A2YYBWLP4oCEQ/W24NCR5JiwmZ+WXAnONS5K4QZM3DTMvxvluvlx2g==
-X-Received: by 2002:a05:6a21:350d:b0:1dc:2a02:913b with SMTP id
- adf61e73a8af0-1ee03a475c3mr8468504637.15.1738962417095; 
- Fri, 07 Feb 2025 13:06:57 -0800 (PST)
-Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ad51af64c1dsm3539043a12.52.2025.02.07.13.06.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 13:06:56 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
- philmd@linaro.org, thuth@redhat.com
-Subject: [PATCH v4 0/9] meson: Deprecate 32-bit host support
-Date: Fri,  7 Feb 2025 13:06:46 -0800
-Message-ID: <20250207210655.16717-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXr-0005P9-B3
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:51 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXo-0001sE-Uw
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:51 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 621285C71B6;
+ Fri,  7 Feb 2025 21:05:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BEDC4CEE5;
+ Fri,  7 Feb 2025 21:05:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1738962346;
+ bh=LN0dnrIDGZQR72H3wmJeJtnzrcc5u2AjRrx48WJYYTY=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Mcn4FTFk5X1mU+BjxsXmVR/o7Vw7fWtB7DT3f0jlJpKxXDPL8IQDkSrZFa+aujsS/
+ y8fyeLyNI3zuk0oyAeL7XdlBtoUqJ3HgA6JcWCQkXK6BMJMcJqm6t44yylBaXsgaBz
+ 4Z7OV6/HWnR/mspxzgeUSDXvhRHqEP1WrgdfTAD53r9m4Z5l8rrDZF4aGroZ3Ym3uw
+ kk/pn177kbJuzZWqvUJ15wgNaotcmhOA8n37JtYcAmNq8Q2n4nOslJPm5GUME2GwSF
+ mTdramlZpXLpTR2s/nMRGkDQTSyVG7BLPVe/ThLwQBQ6/n6qpFwAe32jjgHJCvsgE6
+ dfw5hyOghBqdg==
+From: deller@kernel.org
+To: qemu-devel@nongnu.org,
+	Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PULL 2/6] hw/hppa: Wire up Diva GSP card
+Date: Fri,  7 Feb 2025 22:05:36 +0100
+Message-ID: <20250207210540.24594-3-deller@kernel.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250207210540.24594-1-deller@kernel.org>
+References: <20250207210540.24594-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,121 +70,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1: 20250128004254.33442-1-richard.henderson@linaro.org
-v2: 20250203031821.741477-1-richard.henderson@linaro.org
-v3: 20250204215359.1238808-1-richard.henderson@linaro.org
+From: Helge Deller <deller@gmx.de>
 
-For v4, tidy NVMM/WHPX per Thomas' review.
-Drop two more stubs patches which were intended to be dropped with v3.
+Until now we used a standard serial-pci device to emulate a HP serial
+console.  This worked nicely with 32-bit Linux and 32-bit HP-UX, but
+64-bit HP-UX crashes with it and expects either a Diva GSP card, or a real
+64-bit capable PCI graphic card (which we don't have yet).
+In order to continue with 64-bit HP-UX, switch over to the recently
+added Diva GSP card emulation.
 
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ hw/hppa/Kconfig   |  1 +
+ hw/hppa/machine.c | 31 +++++++++++--------------------
+ 2 files changed, 12 insertions(+), 20 deletions(-)
 
-r~
-
-
-Richard Henderson (9):
-  meson: Drop tcg as a module
-  meson: Disallow 64-bit on 32-bit KVM emulation
-  meson: Disallow 64-bit on 32-bit Xen emulation
-  meson: Disallow 64-bit on 32-bit HVF/NVMM/WHPX emulation
-  gitlab-ci: Replace aarch64 with arm in cross-i686-tci build
-  configure: Define TARGET_LONG_BITS in configs/targets/*.mak
-  target/*: Remove TARGET_LONG_BITS from cpu-param.h
-  meson: Disallow 64-bit on 32-bit emulation
-  meson: Deprecate 32-bit host support
-
- target/alpha/cpu-param.h                    |  2 -
- target/arm/cpu-param.h                      |  2 -
- target/avr/cpu-param.h                      |  1 -
- target/hexagon/cpu-param.h                  |  1 -
- target/hppa/cpu-param.h                     |  2 -
- target/i386/cpu-param.h                     |  2 -
- target/loongarch/cpu-param.h                |  1 -
- target/m68k/cpu-param.h                     |  1 -
- target/microblaze/cpu-param.h               |  2 -
- target/mips/cpu-param.h                     |  5 --
- target/openrisc/cpu-param.h                 |  1 -
- target/ppc/cpu-param.h                      |  2 -
- target/riscv/cpu-param.h                    |  2 -
- target/rx/cpu-param.h                       |  1 -
- target/s390x/cpu-param.h                    |  1 -
- target/sh4/cpu-param.h                      |  1 -
- target/sparc/cpu-param.h                    |  2 -
- target/tricore/cpu-param.h                  |  1 -
- target/xtensa/cpu-param.h                   |  1 -
- .gitlab-ci.d/crossbuilds.yml                |  2 +-
- accel/tcg/meson.build                       | 11 ++--
- configs/targets/aarch64-bsd-user.mak        |  1 +
- configs/targets/aarch64-linux-user.mak      |  1 +
- configs/targets/aarch64-softmmu.mak         |  1 +
- configs/targets/aarch64_be-linux-user.mak   |  1 +
- configs/targets/alpha-linux-user.mak        |  1 +
- configs/targets/alpha-softmmu.mak           |  1 +
- configs/targets/arm-bsd-user.mak            |  1 +
- configs/targets/arm-linux-user.mak          |  1 +
- configs/targets/arm-softmmu.mak             |  1 +
- configs/targets/armeb-linux-user.mak        |  1 +
- configs/targets/avr-softmmu.mak             |  1 +
- configs/targets/hexagon-linux-user.mak      |  1 +
- configs/targets/hppa-linux-user.mak         |  2 +
- configs/targets/hppa-softmmu.mak            |  1 +
- configs/targets/i386-bsd-user.mak           |  1 +
- configs/targets/i386-linux-user.mak         |  1 +
- configs/targets/i386-softmmu.mak            |  1 +
- configs/targets/loongarch64-linux-user.mak  |  1 +
- configs/targets/loongarch64-softmmu.mak     |  1 +
- configs/targets/m68k-linux-user.mak         |  1 +
- configs/targets/m68k-softmmu.mak            |  1 +
- configs/targets/microblaze-linux-user.mak   |  1 +
- configs/targets/microblaze-softmmu.mak      |  3 +
- configs/targets/microblazeel-linux-user.mak |  1 +
- configs/targets/microblazeel-softmmu.mak    |  3 +
- configs/targets/mips-linux-user.mak         |  1 +
- configs/targets/mips-softmmu.mak            |  1 +
- configs/targets/mips64-linux-user.mak       |  1 +
- configs/targets/mips64-softmmu.mak          |  1 +
- configs/targets/mips64el-linux-user.mak     |  1 +
- configs/targets/mips64el-softmmu.mak        |  1 +
- configs/targets/mipsel-linux-user.mak       |  1 +
- configs/targets/mipsel-softmmu.mak          |  1 +
- configs/targets/mipsn32-linux-user.mak      |  1 +
- configs/targets/mipsn32el-linux-user.mak    |  1 +
- configs/targets/or1k-linux-user.mak         |  1 +
- configs/targets/or1k-softmmu.mak            |  1 +
- configs/targets/ppc-linux-user.mak          |  1 +
- configs/targets/ppc-softmmu.mak             |  1 +
- configs/targets/ppc64-linux-user.mak        |  1 +
- configs/targets/ppc64-softmmu.mak           |  1 +
- configs/targets/ppc64le-linux-user.mak      |  1 +
- configs/targets/riscv32-linux-user.mak      |  1 +
- configs/targets/riscv32-softmmu.mak         |  1 +
- configs/targets/riscv64-bsd-user.mak        |  1 +
- configs/targets/riscv64-linux-user.mak      |  1 +
- configs/targets/riscv64-softmmu.mak         |  1 +
- configs/targets/rx-softmmu.mak              |  1 +
- configs/targets/s390x-linux-user.mak        |  1 +
- configs/targets/s390x-softmmu.mak           |  1 +
- configs/targets/sh4-linux-user.mak          |  1 +
- configs/targets/sh4-softmmu.mak             |  1 +
- configs/targets/sh4eb-linux-user.mak        |  1 +
- configs/targets/sh4eb-softmmu.mak           |  1 +
- configs/targets/sparc-linux-user.mak        |  1 +
- configs/targets/sparc-softmmu.mak           |  1 +
- configs/targets/sparc32plus-linux-user.mak  |  1 +
- configs/targets/sparc64-linux-user.mak      |  1 +
- configs/targets/sparc64-softmmu.mak         |  1 +
- configs/targets/tricore-softmmu.mak         |  1 +
- configs/targets/x86_64-bsd-user.mak         |  1 +
- configs/targets/x86_64-linux-user.mak       |  1 +
- configs/targets/x86_64-softmmu.mak          |  1 +
- configs/targets/xtensa-linux-user.mak       |  1 +
- configs/targets/xtensa-softmmu.mak          |  1 +
- configs/targets/xtensaeb-linux-user.mak     |  1 +
- configs/targets/xtensaeb-softmmu.mak        |  1 +
- docs/about/deprecated.rst                   |  7 ++
- meson.build                                 | 72 ++++++++++-----------
- 90 files changed, 119 insertions(+), 76 deletions(-)
-
+diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
+index 9312c4294a..cab21045de 100644
+--- a/hw/hppa/Kconfig
++++ b/hw/hppa/Kconfig
+@@ -11,6 +11,7 @@ config HPPA_B160L
+     select LASI
+     select SERIAL_MM
+     select SERIAL_PCI
++    select DIVA_GSP
+     select ISA_BUS
+     select I8259
+     select IDE_CMD646
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index b6135d9526..9c98b4c229 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -383,26 +383,17 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+ 
+     pci_init_nic_devices(pci_bus, mc->default_nic);
+ 
+-    /* BMC board: HP Powerbar SP2 Diva (with console only) */
+-    pci_dev = pci_new(-1, "pci-serial");
+-    if (!lasi_dev) {
+-        /* bind default keyboard/serial to Diva card */
+-        qdev_prop_set_chr(DEVICE(pci_dev), "chardev", serial_hd(0));
+-    }
+-    qdev_prop_set_uint8(DEVICE(pci_dev), "prog_if", 0);
+-    pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
+-    pci_config_set_vendor_id(pci_dev->config, PCI_VENDOR_ID_HP);
+-    pci_config_set_device_id(pci_dev->config, 0x1048);
+-    pci_set_word(&pci_dev->config[PCI_SUBSYSTEM_VENDOR_ID], PCI_VENDOR_ID_HP);
+-    pci_set_word(&pci_dev->config[PCI_SUBSYSTEM_ID], 0x1227); /* Powerbar */
+-
+-    /* create a second serial PCI card when running Astro */
+-    if (serial_hd(1) && !lasi_dev) {
+-        pci_dev = pci_new(-1, "pci-serial-4x");
+-        qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(1));
+-        qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(2));
+-        qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(3));
+-        qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(4));
++    /* BMC board: HP Diva GSP */
++    dev = qdev_new("diva-gsp");
++    if (!object_property_get_bool(OBJECT(dev), "disable", NULL)) {
++        pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
++        if (!lasi_dev) {
++            /* bind default keyboard/serial to Diva card */
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
++        }
+         pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
+     }
+ 
 -- 
-2.43.0
+2.47.0
 
 
