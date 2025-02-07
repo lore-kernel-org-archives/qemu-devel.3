@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D637AC0219C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C04DDC0219C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQLY-0001Fd-Uu; Fri, 07 Feb 2025 10:32:48 -0500
+	id 1tgQMq-0002ge-Lv; Fri, 07 Feb 2025 10:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKO-0008A8-1T
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:38 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1tgQKP-0008AT-VO
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:39 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKB-00040x-0d
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:35 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-ab7157cf352so640858366b.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:22 -0800 (PST)
+ id 1tgQKD-00042H-1Q
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:37 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-ab78d9c5542so134427766b.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738942281; x=1739547081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738942283; x=1739547083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/577CdB1eWedE91Z4d0PM1VMtk8hOH9rwbGlAE6K9w8=;
- b=T6UsfFjKKjJFChLvwUX2GPsQIuOe3s53L2+jyXysPHsKas9TR8sf5YtKQxRZnn9Eo9
- BU7X6E8T75jU1Uv0LiJN/TbdyI2UiqSz0KcLTdid2QD2b+ttFUoZ/IVNZ57lpr+7+n4I
- LwKn7VS40/lK7kmcZUR8bIgq58j2dP2Y1Z9pCwIl6Utr3dRK8d/ns7KmkzF3wtg2PkVZ
- tYvAoXM+7D3mcYt5u37c4F9BhgfJf2cqFkdP8asIGphQHuYbjSON2HVuKe7wsW2f8ohL
- Jxe9Pqvkbhe+oyUCeYrh5ocaB4NM0W3/15qO3LmD2Vr3qEmXSLkMfKFtlfYIWRkYnoLF
- meJQ==
+ bh=M1O482OJIh050UUseeR+bYA6QoGKKDZRGYOAk/RFThQ=;
+ b=Zp2VrnY9aJlvuuaDsu5xChFdmkAhqli7chpu33/UN+XNB85ibKm2YMIME//qQtiPoo
+ fukKEJTJqDvMF4Xz46bsjdap4h8jm8I7bYrfVTB8N8W7AYPEpDd2SjyDetKgYw7nz1WP
+ oIRPkfNip1nFIgsOslx6/eCW/2vj6voSRDJlPIU2oRXeL8cjwDo8plUwv0cY3IOv4q4j
+ 4Z6CAG+xMsgeqD3TIcG3rVn1MW1JkXZPOmGn/3afL+y8+bqgq8W/+jWzHZi9aVRxEzoZ
+ X7U2ADlcs1SppXGuKi+8PTZRkb+TALAnFgZfXQKOu/VH+9TRM96ssaFhIlWufRBdKiUo
+ Wi1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738942281; x=1739547081;
+ d=1e100.net; s=20230601; t=1738942283; x=1739547083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/577CdB1eWedE91Z4d0PM1VMtk8hOH9rwbGlAE6K9w8=;
- b=iU0cWE8BH5UKqepxlI8vqBfWMjrHBc1MAOKg2GEEZ/viGO25MEiGzxtvxWRivR2dZ6
- 94OoRam6pPoPu8zHiiqvXL6hnm8KQLUTVT8X+26nnE2bWnu8P8uNZVM4YAR59XpwPQtZ
- xHMN3vv+X2Qn+VvlVdNbPyRGzPtUYnk8dcGPq/22D1FyfgAS38RfFN/8mD5dyvrkJuJt
- +DH3dQ1eQrsJAWLHEBYdUSaL4lWILApKAqpxJQ4ZX0lulb/rcHIGBKn60COzjkxROVUR
- qWYPNM28YLfVDxMwYq2sh4o3BoyoC+NfnUk5eP0x4Isum2qfY0MS3ZypUESjqRAr1Wkj
- mXHg==
-X-Gm-Message-State: AOJu0Yww/iFl8zZEqkyymutM1uyIEyymI+R0TB+n3j+dVXT54w6jP5v/
- z8e2vw7TY72SVFsjIy2k8CbOW4M9HF4s/ohe8e53jQOO8V/YUql1M2V6//eypt8=
-X-Gm-Gg: ASbGncsvbDuVfbPczIyIfn56SaIYqUW8Vn3EIQFNgIv+szXgEvQn2jH9Tdj2f7L4SnC
- 9Ieb0SQaQ8VdZsqg5VpO3dkfCSjMHknN1oxRT7Hhsv/11Ow9K1Y9M7A++0L3NCNZT4UsabPlKpo
- pDzpfJbn4ZcGNsOAm/2jn/pzRa9HJpUek7rQzM57mkhwa9azi4bBzerMoYXlkbWA0CPKtKsYvoN
- JFRxa/hn9I92BY88VW3vqN0fvh22aMltceqCwHc/RrkhlP24ByiLZWqSJnMUoNCHeV5WUW/Mf9S
- vdtl0i8uJG9tQhmxgA==
-X-Google-Smtp-Source: AGHT+IHe4VlyO6QwtzdDgsc6WpI1upG+iZ+wjWfymJFsSwQPwtHAo8XE8wlRC/4xv8lOU1yzf4AKtg==
-X-Received: by 2002:a17:907:d8a:b0:ab3:4d1e:4606 with SMTP id
- a640c23a62f3a-ab789a9a340mr333621766b.3.1738942280827; 
- Fri, 07 Feb 2025 07:31:20 -0800 (PST)
+ bh=M1O482OJIh050UUseeR+bYA6QoGKKDZRGYOAk/RFThQ=;
+ b=FbSLVgu88mdUNs3qg4hRVmrcwgQRC8CI9WjftK0M1KX6SiMp5JFtjV66Koqrc5UK3M
+ VGiVYpzZRA8u5emubFSVukueEMNRmi/cQHlk2FidKPrGAthARKCuwP8VUhBb7SGdDLIG
+ BKOz3Scf8S33lHWo0A7zXeYle2PP34CqDmZkefxPtA5JHAM0KL6L4EDXAC7vP+otfmMW
+ bkWiPRbxYepwG9rLCcBSzGY+ECKvEIlh7SfOlTNJcWMbvz5FAcr3hj4xtG4PYmT7pAac
+ Ap5gX540llgQ2zL/Sbg9Rn13ev0LuToUVQCj+LY+gWQJTmN4RpE+luMkgyK8tCEyaNmH
+ eUfA==
+X-Gm-Message-State: AOJu0YwYYtqLp0a0q4Wdt2FE3O0rlxnCDTrhmlnW6MJESa7KUPLAP4Ae
+ iuZDsqpKymyzV4O8c1k1SdFTan/XEh5Ihnk9kC7+3WOWqYpMMmBS3d0/hgGi1bI=
+X-Gm-Gg: ASbGncutyTkeR21WPIANDN2uR5IHTF/oiFsYdrpVypP6/knDYW5hxGiGX6+6Gv/jPI8
+ GjFIrtMdPlqJo2e0NBn5SQ3kqvaf004yTgkduXM0Tvj+ts8M3n0L1vgTBuc/F7qoAM6cSUc0BLa
+ g2ZZgOeQvwScKs4eow4xPVHckAFVj+OA/fhOfRGJE3JRjOzsaglM9jbC5MK3vPZfeeLAwblOI+m
+ /Up/eySZdVBURolmpnKQ9QGJOV6XVAe4WaD8e6wTa998eYKmenIlszP1rIsYz+e9SMKrE7hnLGQ
+ PqpXAjsh7lwJYzkrnA==
+X-Google-Smtp-Source: AGHT+IEXZm1I4NYSLnye7I6ENS+G0tiNEGsW9LsilLjwvaf03/wO4ZNecuR48DUOaMpc9MV5S8GWIg==
+X-Received: by 2002:a17:906:4fd6:b0:aa6:79fa:b47d with SMTP id
+ a640c23a62f3a-ab789a681a3mr405645966b.1.1738942282560; 
+ Fri, 07 Feb 2025 07:31:22 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab772f4870bsm286370366b.32.2025.02.07.07.31.15
+ a640c23a62f3a-ab77f5f5a0esm216633666b.155.2025.02.07.07.31.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 07 Feb 2025 07:31:18 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4FB7C608B4;
+ by draig.lan (Postfix) with ESMTP id A88E960C3D;
  Fri,  7 Feb 2025 15:31:13 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -88,24 +88,24 @@ Cc: Peter Xu <peterx@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
  qemu-riscv@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 10/17] gdbstub: Allow the %d placeholder in the socket path
-Date: Fri,  7 Feb 2025 15:31:05 +0000
-Message-Id: <20250207153112.3939799-11-alex.bennee@linaro.org>
+Subject: [PATCH v2 14/17] osdep: Introduce qemu_kill_thread()
+Date: Fri,  7 Feb 2025 15:31:09 +0000
+Message-Id: <20250207153112.3939799-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250207153112.3939799-1-alex.bennee@linaro.org>
 References: <20250207153112.3939799-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,45 +123,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Just like for QEMU_LOG_FILENAME, replace %d with PID in the GDB socket
-path. This allows running multi-process applications with, e.g.,
-export QEMU_GDB=/tmp/qemu-%d.sock. Currently this is not possible,
-since the first process will cause the subsequent ones to fail due to
-not being able to bind() the GDB socket.
+Add a function for sending signals to individual threads. It does not make
+sense on Windows, so do not provide an implementation, so that if someone
+uses it by accident, they will get a linker error.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20250117001542.8290-2-iii@linux.ibm.com>
+Message-Id: <20250117001542.8290-6-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- gdbstub/user.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/qemu/osdep.h |  9 +++++++++
+ util/oslib-posix.c   | 15 +++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index c2bdfc3d49..fd29d595f4 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -317,9 +317,19 @@ static bool gdb_accept_socket(int gdb_fd)
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 112ebdff21..4397a90680 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -631,6 +631,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **errp);
  
- static int gdbserver_open_socket(const char *path)
- {
-+    g_autoptr(GString) buf = g_string_new("");
-     struct sockaddr_un sockaddr = {};
-+    char *pid_placeholder;
-     int fd, ret;
+ int qemu_get_thread_id(void);
  
-+    pid_placeholder = strstr(path, "%d");
-+    if (pid_placeholder != NULL) {
-+        g_string_append_len(buf, path, pid_placeholder - path);
-+        g_string_append_printf(buf, "%d", qemu_get_thread_id());
-+        g_string_append(buf, pid_placeholder + 2);
-+        path = buf->str;
-+    }
++/**
++ * qemu_kill_thread:
++ * @tid: thread id.
++ * @sig: host signal.
++ *
++ * Send @sig to one of QEMU's own threads with identifier @tid.
++ */
++int qemu_kill_thread(int tid, int sig);
 +
-     fd = socket(AF_UNIX, SOCK_STREAM, 0);
-     if (fd < 0) {
-         perror("create socket");
+ #ifndef CONFIG_IOVEC
+ struct iovec {
+     void *iov_base;
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index 2bb34dade3..a697c602c6 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -111,6 +111,21 @@ int qemu_get_thread_id(void)
+ #endif
+ }
+ 
++int qemu_kill_thread(int tid, int sig)
++{
++#if defined(__linux__)
++    return syscall(__NR_tgkill, getpid(), tid, sig);
++#elif defined(__FreeBSD__)
++    return thr_kill2(getpid(), tid, sig);
++#elif defined(__NetBSD__)
++    return _lwp_kill(tid, sig);
++#elif defined(__OpenBSD__)
++    return thrkill(tid, sig, NULL);
++#else
++    return kill(tid, sig);
++#endif
++}
++
+ int qemu_daemon(int nochdir, int noclose)
+ {
+     return daemon(nochdir, noclose);
 -- 
 2.39.5
 
