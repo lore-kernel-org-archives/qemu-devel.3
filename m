@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E45CC02196
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0EE3C02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgVZC-0007th-Ey; Fri, 07 Feb 2025 16:07:16 -0500
+	id 1tgVZS-0008UC-K5; Fri, 07 Feb 2025 16:07:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgVZ3-0007YW-HB
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:07:07 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tgVZ9-0007nt-Ab
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:07:11 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgVZ1-00023U-Rz
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:07:05 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21f48ebaadfso35978435ad.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 13:07:03 -0800 (PST)
+ id 1tgVZ5-000246-6Y
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:07:08 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21f6a47d617so1384595ad.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 13:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738962422; x=1739567222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738962426; x=1739567226; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j2FzoHSuAoX+1zQ7RA2/urh/hio8OfZSmlzrSvDG4W4=;
- b=GDDtftl2YNbJMyOqjZ1DDD+giLrebeANc759D6Dqe6TaFsVYG0UocrYqYyjsGLupMe
- M9qRhzsFUNzu53mDKKjYqir98RWny9mSfPbQjmWZ4X5rr8m807Jx3GsMrN6YZfQCnYco
- j8078mBNHuX6kC/IV2BFY77JYnSqCHK3PcmjM4WDWUr557lE+ck5ZPuvRMC1GWtJ39Hq
- mB3cc4Bu2t6cr2oUSd9dDSrzV3Hm3IHDq8GXHkEbrYQzO3E84qQeRVe00ZuIjiSJtRFe
- ME1qCABedLpV2eZA51/fL28BvqBoLR200kQjjn8AKk2AegAhAoaGWpcrJKo4D1+Dvw74
- rgxw==
+ bh=VLitLdlmGvTcmycuDS6Q71bKYSkfaIiONi8PyJuH2g8=;
+ b=dNQiKuV0UQNWnfh/9McZ1aha6JlIPfT5jkB4I6HmOEm8eqXvM4PweKS547mm72cW5w
+ udbT5rNTVTf54riEA58Oc7Tdrx2dwVoOKptZERpcDSgZdtY7WkSrOO/v3l/yegPUL9Ze
+ /Ir8RhNlLebqz+dGLevsP9VKqmIA9MtIARd1C+ACrZ4VD2yjXh0qrwEaCZxmUDJFMj9b
+ zVIu9Ue5Q6WGUObmm4+877Ah8JtG4i+k7x5S1RjFdjuvnFYUeli5O4sYNb5ZSQANFeV8
+ +kSX+Y6FsDdGXKCbLz5tMEyn/pYcPhOoHpEnZCYaSdPAWj3CJWT8kPtRoA0RMCGu1y02
+ tBnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738962422; x=1739567222;
+ d=1e100.net; s=20230601; t=1738962426; x=1739567226;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j2FzoHSuAoX+1zQ7RA2/urh/hio8OfZSmlzrSvDG4W4=;
- b=cpnQAXMXVcC/k8O8Hj0mW1zg9Hf0uZLwoQ3nt6a1ui1KkNNt5oTj+8pJ7iMmoFJ0uy
- 6mp8MNEn1OCAspH+fQYkR0bJp1Atb/+fDVFUiD54P+/pOCcs2WQIFzQTOjQ82zydRXR3
- c723b9Jxlg5MlZ6qKVNgLPKYf9wjDPo32RkYj327O6ZM94abcFkmHCYsVVgG/c+EH6Ed
- zB72cl6TgTpPxwl4Up6kRhMZuJj8yw+Nli4l6Y6hULT/UJl2htkOC4HYqXkJ6Uix1Eza
- XIT/5t7rz/cMCiZKc5WpqlknfJSTzF9SP0XIIfHjmvljTgbJWjA2IfRtjXEyod2be9Fl
- VLyA==
-X-Gm-Message-State: AOJu0YyrOv44KNNTs7ut35j2xBAjITjKG33ZqOHBIEpInCVBhzXMZYJF
- wZIGSidJtfVWXgn6l747iadU5ETTAGKEWm0Uofiwdn+pb7YFDdhSHuU9Fg9xXDSsbwZ6WejNIIw
- I
-X-Gm-Gg: ASbGncvW+iyLg5cuEuBYJ3N+AoaukqJYpfKTkgXzEgQpUQstCh3U5fFSRmBrEv3K6/g
- iQ6tJmvEdo/NeQhzmT7aVJQYlsZrzcnm6FxjEq6VJZsWe7w9dF9ma423AYueuz3cM4umKmwVQzx
- BNChE/1dOcd+iIvF6eGNGZcbzoSxFanxtKZ6p6aeHspjB6BnUC1clIY2GwyRhTnfm1P4WNVLkwb
- hw01Z4z6UsrQGdZJq00J2Co6NFHuPt30IDZwrrwE/rdwIadteLY/TKcYgeOvh/GSI5rrGCrdilk
- +NTLHCLEjPZGXNMeVonaKowIZlLHv3aYrxNwn/QJw1CTe20=
-X-Google-Smtp-Source: AGHT+IFaren9YDdUyiJvTOiSIzWWv8bzEh2926EDxkj5hB+hHcdtH0sXhCc6flL9cUv8CO4zGDFuLg==
-X-Received: by 2002:a05:6a00:ac8a:b0:71e:744a:3fbc with SMTP id
- d2e1a72fcca58-7305d5159e1mr7476487b3a.21.1738962422412; 
- Fri, 07 Feb 2025 13:07:02 -0800 (PST)
+ bh=VLitLdlmGvTcmycuDS6Q71bKYSkfaIiONi8PyJuH2g8=;
+ b=qFJmPIGR8tGGhmL4x3vzSQDX/z7YPUXJxFKjy4eufkkFy+ndCXb7Uw+PFujvwi/nZr
+ txBeIF03U52e/EM06xgue/3ObD+Y2vFHcJcVvZ1qgNg04gxIbG2nHbKAscmB38DnN4PL
+ sbSsnxKfDbOGykFslIdsFU0wcWcy7Y4ZQIMxE2hgncqNi+H2usK9AWn8a00Q/XC6oybz
+ xmJCsZzR9jiwIKSqT4DJ2KOVRmeoCxUP7NfIBE5GWnAYpg5FtJ9swb8CKCH6L8vm4AM3
+ YrVVZy+KOwV+TL3hTlU32nCJnjhhwCQJyx2uKkyliVcfpxlSvfm3z8r5HKSB9Aqqhgvi
+ R8uw==
+X-Gm-Message-State: AOJu0YwXSTJeldQmAndAKDojTBMv3GnJ3f0NBeZgQg03dkdM98hkjthP
+ OLZ2YWSnnvdWx/9+ew0gG4AEN3SvwI44G8wHIJ1y4ZrtdneIIUb02x1miFPRjvvtyC1b9Ur+KhI
+ v
+X-Gm-Gg: ASbGncsHmL7NzfdZlWBox77pbD1Q14Fnl+VG/uBGn4MmFxm7W8gUcEjF8X5rjWxBoG0
+ XVdn0XwWS2RvjK33EDkA/rSoAb1WLyeFZ7oBoB9ZLM9PHzEsbN9WObLUWkdu3sfvOTcv4SVg6Sr
+ J+u/+B3NmwAaW6lZVHKtticdSTgweRY5qjEauUrXYJJoKhiBg8VqvduI6uBmbn5SoY0HSJy1Tj0
+ 7D/d4wOKOsQzL/yAOvUQa1Mg8pVxNrLDvZ5KqZ1CanZg2yuji8y0FSaXqWCKTwiYIFdh80g/Xhl
+ 2SuoBJFNU1a9qITXa+FL9+UkR+PsGfYORV8inNKplVXmv0k=
+X-Google-Smtp-Source: AGHT+IGt+VupTrdJ15h4GYMLhd8RvgRDDK6zMX4O1HwbECDOgT6z2YyWQ6zFDXZe4zSDfFSAbTDkFg==
+X-Received: by 2002:a05:6a21:181a:b0:1e7:6f82:3217 with SMTP id
+ adf61e73a8af0-1ee03a2205fmr8986196637.3.1738962425666; 
+ Fri, 07 Feb 2025 13:07:05 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ad51af64c1dsm3539043a12.52.2025.02.07.13.07.01
+ 41be03b00d2f7-ad51af64c1dsm3539043a12.52.2025.02.07.13.07.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 13:07:02 -0800 (PST)
+ Fri, 07 Feb 2025 13:07:05 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mark.cave-ayland@ilande.co.uk, berrange@redhat.com,
  philmd@linaro.org, thuth@redhat.com,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 5/9] gitlab-ci: Replace aarch64 with arm in cross-i686-tci
- build
-Date: Fri,  7 Feb 2025 13:06:51 -0800
-Message-ID: <20250207210655.16717-6-richard.henderson@linaro.org>
+Subject: [PATCH v4 9/9] meson: Deprecate 32-bit host support
+Date: Fri,  7 Feb 2025 13:06:55 -0800
+Message-ID: <20250207210655.16717-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250207210655.16717-1-richard.henderson@linaro.org>
 References: <20250207210655.16717-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,29 +102,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Configuration of 64-bit host on 32-bit guest will shortly
-be denied.  Use a 32-bit guest instead.
+We deprecated i686 system mode support for qemu 8.0.  However, to
+make real cleanups to TCG we need to deprecate all 32-bit hosts.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- .gitlab-ci.d/crossbuilds.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/about/deprecated.rst | 7 +++++++
+ meson.build               | 8 +++-----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index 95dfc39224..7ae0f966f1 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -61,7 +61,7 @@ cross-i686-tci:
-   variables:
-     IMAGE: debian-i686-cross
-     ACCEL: tcg-interpreter
--    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
-+    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,arm-softmmu,arm-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
-     # Force tests to run with reduced parallelism, to see whether this
-     # reduces the flakiness of this CI job. The CI
-     # environment by default shows us 8 CPUs and so we
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 4a3c302962..7c61d0ba16 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -204,6 +204,13 @@ is going to be so much slower it wouldn't make sense for any serious
+ instrumentation. Due to implementation differences there will also be
+ anomalies in things like memory instrumentation.
+ 
++32-bit host operating systems (since 10.0)
++''''''''''''''''''''''''''''''''''''''''''
++
++Keeping 32-bit host support alive is a substantial burden for the
++QEMU project.  Thus QEMU will in future drop the support for all
++32-bit host systems.
++
+ System emulator CPUs
+ --------------------
+ 
+diff --git a/meson.build b/meson.build
+index ec51827f40..387490d922 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4841,14 +4841,12 @@ if host_arch == 'unknown'
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
+   endif
+-elif host_arch == 'mips'
++elif host_long_bits < 64
+   message()
+   warning('DEPRECATED HOST CPU')
+   message()
+-  message('Support for CPU host architecture ' + cpu + ' is going to be')
+-  message('dropped as soon as the QEMU project stops supporting Debian 12')
+-  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
+-  message('that QEMU will compile or work on this host CPU.')
++  message('Support for 32-bit CPU host architecture ' + cpu + ' is going')
++  message('to be dropped in a future QEMU release.')
+ endif
+ 
+ if not supported_oses.contains(host_os)
 -- 
 2.43.0
 
