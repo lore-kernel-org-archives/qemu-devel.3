@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D5B2C02199
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC99C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 13:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgO4J-0008OT-Uo; Fri, 07 Feb 2025 08:06:51 -0500
+	id 1tgOBq-000298-TI; Fri, 07 Feb 2025 08:14:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgO4E-0008MX-Nn
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:06:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgOBm-00028G-I1; Fri, 07 Feb 2025 08:14:35 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgO4A-0008BB-EV
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 08:06:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738933601;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+/xEHSqNCYLGzlOdpZkl/FdgOJohjnC5Km7HHdqNE1U=;
- b=VuB5lGEA0FmmHomVuIrqL23vuCqLPmo76JP4jOkZqz5YDv/VBSlmhGQldlKLI9qCDJ4RqZ
- c2+y3jQ0mj368qZO4ZZeW7xohR5Q5QcNxk6amfDSBslb01cdE+brMNf7gV3fiCR6Xd2ZC1
- C+B4RTgIB9vgSXbEisnsP+z5XOknsyE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-XBNqVhAqOyyx6wCAtLvc5g-1; Fri,
- 07 Feb 2025 08:06:37 -0500
-X-MC-Unique: XBNqVhAqOyyx6wCAtLvc5g-1
-X-Mimecast-MFC-AGG-ID: XBNqVhAqOyyx6wCAtLvc5g
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 772E71800871; Fri,  7 Feb 2025 13:06:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAA241800360; Fri,  7 Feb 2025 13:06:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6F65A21E6A28; Fri, 07 Feb 2025 14:06:32 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=EF=BF=BD?= <berrange@redhat.com>,  Paolo
- Bonzini
- <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcelo
- Tosatti <mtosatti@redhat.com>,  Shaoqin Huang <shahuang@redhat.com>,  Eric
- Auger <eauger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,  Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>,  Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org,  kvm@vger.kernel.org,  qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>,  Yi Lai <yi1.lai@intel.com>
-Subject: Re: [RFC v2 3/5] i386/kvm: Support event with select & umask format
- in KVM PMU filter
-In-Reply-To: <Z6TNMZbonWmsnyM7@intel.com> (Zhao Liu's message of "Thu, 6 Feb
- 2025 22:54:41 +0800")
-References: <20250122090517.294083-1-zhao1.liu@intel.com>
- <20250122090517.294083-4-zhao1.liu@intel.com>
- <87zfj01z8x.fsf@pond.sub.org> <Z6SG2NLxxhz4adlV@intel.com>
- <Z6SEIqhJEWrMWTU1@redhat.com> <878qqjqskm.fsf@pond.sub.org>
- <Z6TFr49Cnhe1s4/5@intel.com> <Z6TNMZbonWmsnyM7@intel.com>
-Date: Fri, 07 Feb 2025 14:06:32 +0100
-Message-ID: <87o6zdhpk7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgOBh-0000xJ-HQ; Fri, 07 Feb 2025 08:14:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1738934070; x=1770470070;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=oa5egkzz6wHMDqFUbjxrfEjYAs/qKVk2eEFoeXYlyNI=;
+ b=dmPYr3WZOJP54eBt5tLlyoL8xPTQ99IuabYSILiGYlUmrT8sG2DvyXxI
+ cTjYb5zIKIXl9qqu9hRncMxw+KoWY7NI3bJYaW7qq5rLXpCZ3/OZxT72f
+ 9QM1WoW5Vi9vqlo18nu7FVmW47ybGGD7nJF3Mu0qxlP++U0zhQYKgGjr+
+ 35gDl+0lsOH/qUUUJq6/fUS5gP0c63X+dje3juDUuMX2Rb/UcUSZs2y7B
+ LxpvqgsZNJoPgXE/H6nEjpOICRNmevrfN5R53OL2FQTI1ls56Ap0XHleL
+ pppTH7TeZrqEcEzg5Em0MLLYJcLqNe06ZuxgQx8iOgnQA4VKDe6Ce0xX6 w==;
+X-CSE-ConnectionGUID: 4wvwRyQjSzC4hyW6szv81w==
+X-CSE-MsgGUID: d5SiKoDISgCcVH6X2Go8Ew==
+X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="39266364"
+X-IronPort-AV: E=Sophos;i="6.13,267,1732608000"; d="scan'208";a="39266364"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Feb 2025 05:14:26 -0800
+X-CSE-ConnectionGUID: W7sB86+dQdCYr9YYBuXP/w==
+X-CSE-MsgGUID: kmh0h/17RRG2vC+S6i74Fw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="112417933"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa008.jf.intel.com with ESMTP; 07 Feb 2025 05:14:23 -0800
+Date: Fri, 7 Feb 2025 21:33:52 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 06/10] rust: add bindings for timer
+Message-ID: <Z6YLwAqDGm+9aiaM@intel.com>
+References: <20250125125137.1223277-1-zhao1.liu@intel.com>
+ <20250125125137.1223277-7-zhao1.liu@intel.com>
+ <a30bfa1c-ddb8-4a5b-9f95-7b000c11cd54@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a30bfa1c-ddb8-4a5b-9f95-7b000c11cd54@redhat.com>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,62 +89,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+> > +pub use bindings::QEMUTimer;
+> > +
+> > +use crate::{
+> > +    bindings::{
+> > +        self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType,
+> > +        QEMUTimerListGroup,
+> > +    },
+> > +    callbacks::FnCall,
+> > +};
+> > +
+> > +impl QEMUTimer {
+> > +    pub fn new() -> Self {
+> > +        Default::default()
+> > +    }
+> > +
+> > +    pub fn timer_init_full<'timer, 'opaque: 'timer, T, F>(
+> 
+> General question - should the names:
+> 
+> - include the "timer" part, matching QEMU C code, or exclude it to avoid
+> repetition? I would say remove it, 
 
->> > Do users need to know how to compute the raw event value from @select
->> > and @umask?
->> 
->> Yes, because it's also a unified calculation. AMD and Intel have
->> differences in bits for supported select field, but this calculation
->> (which follows from the KVM code) makes both compatible.
->> 
->> > If yes, is C code the best way?
->
-> Sorry, I missed this line. In this patch, there's macro:
->
-> +#define X86_PMU_RAW_EVENT(eventsel, umask) (((eventsel & 0xf00UL) << 24) | \
-> +                                            ((eventsel) & 0xff) | \
-> +                                            ((umask) & 0xff) << 8)
->
-> So could I said something like the following?
->
-> +##
-> +# @KVMPMUX86SelectUmaskEvent:
-> +#
-> +# x86 PMU event encoding with select and umask.  Using the X86_PMU_RAW_EVENT
-> +# macro, the select and umask fields will be encoded into raw foramt and
-> +# delivered to KVM.
+I agree and I would name it "init()" instead of "init_full()".
 
-Doc comments are for the QMP reference manual, i.e. for users of QMP.
-Explaining the QMP interface in terms of its implementation in QEMU is
-not nice.
+> but I'm open to suggestions and other
+> opinions
+>
+> - include the "QEMU" part? I'd say remove it, similar to ClockType below
+> that is:
+> 
+> -pub use bindings::QEMUTimer;
+> +pub use bindings::QEMUTimer as Timer;
+> +pub use bindings::QEMUTimerList as TimerList;
+> +pub use bindings::QEMUTimerListGroup as TimerListGroup;
 
-> +#
-> +# @select: x86 PMU event select field, which is a 12-bit unsigned
-> +#     number.
-> +#
-> +# @umask: x86 PMU event umask field.
-> +#
-> +# Since 10.0
-> +##
-> +{ 'struct': 'KVMPMUX86DefalutEvent',
-> +  'data': { 'select': 'uint16',
-> +            'umask': 'uint8' } }
-> +
->
-> Thanks very much!
->
->> > Here's another way:
->> > 
->> >     bits  0..7 : bits 0..7 of @select
->> >     bits  8..15: @umask
->> >     bits 24..27: bits 8..11 of @select
->> >     all other bits: zero
->> >
->> 
->> Thank you! This is what I want.
->> 
->> 
->> 
+I notice you've picked another way for IRQState, so I could follow that
+like:
+
+pub type Timer = bindings::QEMUTimer;
+
+This style make it easy to add doc (timer binding currently lacks
+doc, but I will add it as much as possible).
+
+Another option may be to wrap QEMUTimer as what MemoryRegionOps did, but
+timer has only 1 callback so I think it's not necessary.
+
+> > +        &'timer mut self,
+> > +        timer_list_group: Option<&QEMUTimerListGroup>,
+> > +        clk_type: QEMUClockType,
+> 
+> Please take a ClockType instead.
+
+Sure.
+
+> > +        scale: u32,
+> > +        attributes: u32,
+> > +        _f: F,
+> > +        opaque: &'opaque T,
+> > +    ) where
+> > +        F: for<'a> FnCall<(&'a T,)>,
+> > +    {
+> > +        /// timer expiration callback
+> > +        unsafe extern "C" fn rust_timer_handler<T, F: for<'a> FnCall<(&'a T,)>>(
+> > +            opaque: *mut c_void,
+> > +        ) {
+> > +            // SAFETY: the opaque was passed as a reference to `T`.
+> > +            F::call((unsafe { &*(opaque.cast::<T>()) },))
+> > +        }
+> 
+> Please add "let _: () = F::ASSERT_IS_SOME;", which is added by the
+> qdev_init_clock_in() patch.
+
+Sure. Added it to the beginning of this function.
+
+> > +        let timer_cb: unsafe extern "C" fn(*mut c_void) = rust_timer_handler::<T, F>;
+> > +
+> > +        // SAFETY: the opaque outlives the timer
+> > +        unsafe {
+> > +            timer_init_full(
+> > +                self,
+> > +                if let Some(g) = timer_list_group {
+> > +                    g as *const QEMUTimerListGroup as *mut QEMUTimerListGroup
+> > +                } else {
+> > +                    ::core::ptr::null_mut()
+> > +                },
+> > +                clk_type,
+> > +                scale as c_int,
+> > +                attributes as c_int,
+> > +                Some(timer_cb),
+> > +                (opaque as *const T).cast::<c_void>() as *mut c_void,
+> > +            )
+> > +        }
+> > +    }
+> > +
+> > +    pub fn timer_mod(&mut self, expire_time: u64) {
+> > +        unsafe { timer_mod(self as *mut QEMUTimer, expire_time as i64) }
+> > +    }
+> 
+> This can take &self, because timers are thread-safe:
+> 
+>     pub fn timer_mod(&self, expire_time: u64) {
+>         unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
+>     }
+
+timer_mod means "modify a timer", so I'd rename this method to "modify"
+
+>     const fn as_mut_ptr(&self) -> *mut Self {
+>         self as *const QEMUTimer as *mut _
+>     }
+
+Thanks!
+
+> > +}
+> > +
+> > +impl Drop for QEMUTimer {
+> > +    fn drop(&mut self) {
+> > +        unsafe { timer_del(self as *mut QEMUTimer) }
+> > +    }
+> 
+> timer_del() can be useful even outside Drop, so
+> 
+>     pub fn timer_del(&self) {
+>         unsafe { timer_del(self.as_mut_ptr()) }
+>     }
+> 
+> and just use self.timer_del() here.
+
+OK, will also rename "timer_del" to "delete".
+
+> > +}
+> > +
+> > +pub fn qemu_clock_get_virtual_ns() -> u64 {
+> > +    // SAFETY:
+> > +    // Valid parameter.
+> > +    (unsafe { qemu_clock_get_ns(QEMUClockType::QEMU_CLOCK_VIRTUAL) }) as u64
+> > +}
+> 
+> Not needed.
+
+Yes!
+
+> > +pub struct ClockType {
+> > +    pub id: QEMUClockType,
+> > +}
+> 
+> The field does not have to be "pub" (maybe "pub(self)", I'm not sure
+> offhand).
+> 
+
+You're right! Making it private is enough, since I should also make
+timer_init_full accept ClockType instead of QEMUClockType.
+
+Thanks,
+Zhao
+
 
 
