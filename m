@@ -4,95 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9CA9C0219D
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 20:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D61C02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 21:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgVOo-0001u4-22; Fri, 07 Feb 2025 15:56:30 -0500
+	id 1tgVXv-0005QY-2j; Fri, 07 Feb 2025 16:05:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tgVOj-0001tD-Jk; Fri, 07 Feb 2025 15:56:26 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXs-0005PR-R5
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:52 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tgVOh-0005zc-12; Fri, 07 Feb 2025 15:56:25 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 517FqAN4030757;
- Fri, 7 Feb 2025 20:56:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Jnwj20daQ8vhHxDOu
- 5UPbg2FujtmyhOVPPDWn9aQZxQ=; b=YV5LKGHk9ZO0dTY+vghuMTUxVLZxX24Xu
- P2clskH5yeFL31gW5f/vjvKD9oJH8kKxzkHryTdouKFyn53fWWnOnPEYDhakb79I
- MWo3OHaIPTO3KpfY0GYsHhJpMuolN8dM3BL2DmYUhFExDIZo1zwl+bPsW/jGRja7
- veWiu8QQ2b82ynAF0OM7x/xSRVXsCv1UugqCLehIEIdwGzW//z0KvivNmx6UJsOU
- neE+m/YYj23JX6of42EynRVjKaKewcBeuwzYgBbnHMrJdHvSJ3ZJG1u/Enmwcycd
- 1K6SNaPMGrda4I7KPoM4iO7UkR3B2cGB1FadRiugnv1jvRXlhJpoA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44nc08mf4j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 07 Feb 2025 20:56:20 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 517IbxfO007192;
- Fri, 7 Feb 2025 20:56:19 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44hxb05hch-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 07 Feb 2025 20:56:19 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 517KuIlF32309880
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 7 Feb 2025 20:56:18 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 319DE58054;
- Fri,  7 Feb 2025 20:56:18 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E852558052;
- Fri,  7 Feb 2025 20:56:16 +0000 (GMT)
-Received: from li-2311da4c-2e09-11b2-a85c-c003041e9174.ibm.com.com (unknown
- [9.61.30.101]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  7 Feb 2025 20:56:16 +0000 (GMT)
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-To: qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- clegoate@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v4 2/2] s390x/pci: indicate QEMU supports relaxed translation
- for passthrough
-Date: Fri,  7 Feb 2025 15:56:13 -0500
-Message-ID: <20250207205613.474092-3-mjrosato@linux.ibm.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250207205613.474092-1-mjrosato@linux.ibm.com>
-References: <20250207205613.474092-1-mjrosato@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tgVXr-0001sy-7c
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 16:05:52 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id A54A1A412EE;
+ Fri,  7 Feb 2025 21:04:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DF6C4CEE2;
+ Fri,  7 Feb 2025 21:05:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1738962348;
+ bh=QWn+5N4g5u8cXEzZBEZLJId0H4Oo0w+wMEM3Jyb6RQs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ea7Au125xzICaVdKFzSd2ZZZjeNM4gIYjkl54pyWUcSLhV9nKhtgdXXU3pCe5Nf4N
+ N7yjgJdqGTLAkCsP3lauYG79KWb37N0UpUxbz8Oyf65OiaiGTvUtMeDuU+KkJrVaEt
+ ICs8mFVmkJUxK77pn3bygE//5VtdXi2/Ky6mGrE7zNSM07GPb4+WAx9w5JuOthGm2r
+ wl1UZVegXD1gPicKJ7PQuy1Sj3eHD1Ii9SdqkbRj3VVTcChjEYE28eHQnp1PcEMpcX
+ 4ZBIGN71X4/ILHicvNY7ADsXfNe60wOZQZyMC8e4rfgEkwm8V3oXL/rUhE1U3QYV0A
+ OQ9cYjzjt5ksA==
+From: deller@kernel.org
+To: qemu-devel@nongnu.org,
+	Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PULL 3/6] artist: Allow disabling artist on command line
+Date: Fri,  7 Feb 2025 22:05:37 +0100
+Message-ID: <20250207210540.24594-4-deller@kernel.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250207210540.24594-1-deller@kernel.org>
+References: <20250207210540.24594-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ViB5pfvgUwWnzTWKkK0UlDB_rfG0eaUi
-X-Proofpoint-GUID: ViB5pfvgUwWnzTWKkK0UlDB_rfG0eaUi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-07_09,2025-02-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 bulkscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
- suspectscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502070153
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=deller@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,46 +70,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Specifying this bit in the guest CLP response indicates that the guest
-can optionally choose to skip translation and instead use
-identity-mapped operations.
+From: Helge Deller <deller@gmx.de>
 
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Allow users to disable the artist graphic card on the command line
+with the option "-global artist.disable=true".
+This change allows to use other graphic cards when using Linux, e.g.
+by adding "-device ati-vga".
+
+Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/s390x/s390-pci-vfio.c        | 5 ++++-
- include/hw/s390x/s390-pci-clp.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ hw/display/artist.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 443e222912..6236ac7f1e 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -238,8 +238,11 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
-         pbdev->pci_group = s390_group_create(pbdev->zpci_fn.pfgid, start_gid);
+diff --git a/hw/display/artist.c b/hw/display/artist.c
+index 8b719b11ed..f24c1d83dd 100644
+--- a/hw/display/artist.c
++++ b/hw/display/artist.c
+@@ -48,6 +48,7 @@ struct ARTISTState {
  
-         resgrp = &pbdev->pci_group->zpci_group;
-+        if (pbdev->rtr_avail) {
-+            resgrp->fr |= CLP_RSP_QPCIG_MASK_RTR;
-+        }
-         if (cap->flags & VFIO_DEVICE_INFO_ZPCI_FLAG_REFRESH) {
--            resgrp->fr = 1;
-+            resgrp->fr |= CLP_RSP_QPCIG_MASK_REFRESH;
-         }
-         resgrp->dasm = cap->dasm;
-         resgrp->msia = cap->msi_addr;
-diff --git a/include/hw/s390x/s390-pci-clp.h b/include/hw/s390x/s390-pci-clp.h
-index 03b7f9ba5f..6a635d693b 100644
---- a/include/hw/s390x/s390-pci-clp.h
-+++ b/include/hw/s390x/s390-pci-clp.h
-@@ -158,6 +158,7 @@ typedef struct ClpRspQueryPciGrp {
- #define CLP_RSP_QPCIG_MASK_NOI 0xfff
-     uint16_t i;
-     uint8_t version;
-+#define CLP_RSP_QPCIG_MASK_RTR     0x20
- #define CLP_RSP_QPCIG_MASK_FRAME   0x2
- #define CLP_RSP_QPCIG_MASK_REFRESH 0x1
-     uint8_t fr;
+     struct vram_buffer vram_buffer[16];
+ 
++    bool disable;
+     uint16_t width;
+     uint16_t height;
+     uint16_t depth;
+@@ -1211,8 +1212,8 @@ static uint64_t artist_reg_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case 0x380004:
+-        /* 0x02000000 Buserror */
+-        val = 0x6dc20006;
++        /* magic number detected by SeaBIOS-hppa */
++        val = s->disable ? 0 : 0x6dc20006;
+         break;
+ 
+     default:
+@@ -1432,7 +1433,7 @@ static int vmstate_artist_post_load(void *opaque, int version_id)
+ 
+ static const VMStateDescription vmstate_artist = {
+     .name = "artist",
+-    .version_id = 2,
++    .version_id = 3,
+     .minimum_version_id = 2,
+     .post_load = vmstate_artist_post_load,
+     .fields = (const VMStateField[]) {
+@@ -1470,6 +1471,7 @@ static const VMStateDescription vmstate_artist = {
+         VMSTATE_UINT32(font_write1, ARTISTState),
+         VMSTATE_UINT32(font_write2, ARTISTState),
+         VMSTATE_UINT32(font_write_pos_y, ARTISTState),
++        VMSTATE_BOOL(disable, ARTISTState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -1478,6 +1480,7 @@ static const Property artist_properties[] = {
+     DEFINE_PROP_UINT16("width",        ARTISTState, width, 1280),
+     DEFINE_PROP_UINT16("height",       ARTISTState, height, 1024),
+     DEFINE_PROP_UINT16("depth",        ARTISTState, depth, 8),
++    DEFINE_PROP_BOOL("disable",        ARTISTState, disable, false),
+ };
+ 
+ static void artist_reset(DeviceState *qdev)
 -- 
-2.48.1
+2.47.0
 
 
