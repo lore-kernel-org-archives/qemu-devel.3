@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A9CC02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7434EC02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgMFM-0005sf-8p; Fri, 07 Feb 2025 06:10:08 -0500
+	id 1tgMgL-0003ak-67; Fri, 07 Feb 2025 06:38:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tgMFK-0005qJ-Hs
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:10:06 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMgI-0003aY-LV
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:37:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tgMFI-0003K8-TD
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:10:06 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMgG-0006Zu-5i
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:37:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738926603;
+ s=mimecast20190719; t=1738928274;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vb2bbZYfMJmk7CtnqEzHJQalG3GcWGX7WKXDfRplJsQ=;
- b=IFfraZHkAPqe9UX/QyDdpz4rpSCdGRtykU/CbJyZZBGrT0CNcwId1+KkUKGNxW3vDSVE1K
- ZF/XnlKvq+F//7U9SwvOyleK8jq4ouOgxeTjeXtIiLNpTenssJTczJthLcFX0/wETEv8Mz
- 8HocNtxd9WaLwL8Z8aXre0DgA3npNVg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-T9FsCAE5MQq377Be9sRNMw-1; Fri, 07 Feb 2025 06:10:02 -0500
-X-MC-Unique: T9FsCAE5MQq377Be9sRNMw-1
-X-Mimecast-MFC-AGG-ID: T9FsCAE5MQq377Be9sRNMw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361fc2b2d6so11946935e9.3
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 03:10:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738926601; x=1739531401;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vb2bbZYfMJmk7CtnqEzHJQalG3GcWGX7WKXDfRplJsQ=;
- b=HbZZX+WkAaH/+iIv7rILs75HQKyACxO97VYIl7JVI6n7du4UI7KQomV+pdgoeWCVZW
- Ut+CEEv4vVUG55lSfHyvbhIMHAUcW90WOpI2iGvW4gNPnuGAir4YAWKy5S3lB/7JzP0P
- 2c5GFp7Zw4ZqNIMNSYC2NYwaFPqAvYfWHFLl9ouxnM4xxXgwc3hVBWQYiYWYaPbzLJqX
- aZek695TgrtNbMN4OpdL5faUMyLwivLL8W8IOR4oOSpIqzcViXVzL8/zPQiQ14Rnf5yB
- DgRq3cFCXD6+mzFZKH5DYEGJ/9M9pUqDSbJat/xXbcOdQaVHs2qAhv7qZav0KQfLnRdZ
- UkQQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqbD6Pnd1bkTArH7Tz4mRqZspZ+GMQ5U0CHOPmrKR7zxbXOPW+MDmJMmLoKsI0sz+n0bOX0qL0GRV2@nongnu.org
-X-Gm-Message-State: AOJu0Yy8OgGonSrJX1e9AZudnQu94Tt5LR9b4wEDlPnR9XylY+YA6tv8
- rFb6DtOPPDpa4Pph+mx9x9HHlPf3BswZCdX6t04pWbYCoeFvQjKGD/IwY7/Buy5XqoMMz5HnIxZ
- 17BnekNDnMgrhZ5p5EolUfT3TxpwNRtGSTD7M2hP7WA/bGi0mxil1
-X-Gm-Gg: ASbGnctVfnR927ncTJDku9V5BxCRYjy6rCrN4PaA8Q2ronVG+AvM3SAshuFktKyK+9J
- ZEk1MIn9ka614tqiLrSZUoAssrIvGTImDJscDtw8NxBEeJkKb4f3QzRnUoxRhO+nvYrMnDxyD8W
- PMnPhLGbEXfDgIR0dn5VdgUyJnOc/O0fPyqIDvpWOt4Wr1HYySWmDIgUkDhZp3RgB7+NL+4XMhm
- yVbcafcVGb00Q0m/OkR5fVck/xnYyRe7DjBKUv2rKaKQi0NDoLwzSlaXJZm9OdDsZzzGRa2MQ==
-X-Received: by 2002:a05:600c:1c07:b0:434:ff9d:a3a1 with SMTP id
- 5b1f17b1804b1-4392497d81bmr23565515e9.2.1738926601085; 
- Fri, 07 Feb 2025 03:10:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGTqk4El86IuGz5jnQONTuXlUM1nyXKtItvC28d8R//wR3DoX7EE5ekdiE7DNjFjO/OKVNI+Q==
-X-Received: by 2002:a05:600c:1c07:b0:434:ff9d:a3a1 with SMTP id
- 5b1f17b1804b1-4392497d81bmr23565295e9.2.1738926600706; 
- Fri, 07 Feb 2025 03:10:00 -0800 (PST)
-Received: from redhat.com ([2a02:14f:178:610a:fb15:126:1857:dec9])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbde0fe37sm4248023f8f.69.2025.02.07.03.09.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 03:09:59 -0800 (PST)
-Date: Fri, 7 Feb 2025 06:09:56 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, jasowang@redhat.com, imammedo@redhat.com,
- peterx@redhat.com, alex.williamson@redhat.com, clg@redhat.com,
- philmd@linaro.org, zhenzhong.duan@intel.com, ddutile@redhat.com
-Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
-Message-ID: <20250207060822-mutt-send-email-mst@kernel.org>
-References: <20250206142307.921070-1-eric.auger@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=G681NJWhJblzSW1B26wQodNKl3skj5pWRVUIj+ZWGJ0=;
+ b=O0AhtqHbLQzE2jmRWo9X3EzQI3a74yae9gdNlka3b7n3Nw9AsLDD+LBmkK0blzR03K8VI4
+ uj7yu/xbYkEVnojBoEikaI7D+VZbeiAh514YFt8IEUKv+jud1OrWoIHqvldDMYoTR8spfq
+ ipblYVJO3Xq/M8WUTbGW9/clx+cPfBM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-EsjtT1DmNXqvvJCQQTpAMg-1; Fri,
+ 07 Feb 2025 06:37:52 -0500
+X-MC-Unique: EsjtT1DmNXqvvJCQQTpAMg-1
+X-Mimecast-MFC-AGG-ID: EsjtT1DmNXqvvJCQQTpAMg
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC714180087A; Fri,  7 Feb 2025 11:37:50 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.26])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 347EF19560AE; Fri,  7 Feb 2025 11:37:50 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8CFF921E6A28; Fri, 07 Feb 2025 12:37:47 +0100 (CET)
+Resent-To: michael.roth@amd.com, philmd@linaro.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Fri, 07 Feb 2025 12:37:47 +0100
+Resent-Message-ID: <87cyfuj88k.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>,  qemu-devel@nongnu.org,  Michael Roth
+ <michael.roth@amd.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 4/4] qapi: expose all schema features to code
+In-Reply-To: <CAFn=p-Y4RXP395Kjc4ZnSWuEjn-Vr7YuVEtGAOsWse74pkqvCw@mail.gmail.com>
+ (John Snow's message of "Thu, 6 Feb 2025 23:38:13 -0500")
+References: <20241212110616.3147676-1-berrange@redhat.com>
+ <20241212110616.3147676-5-berrange@redhat.com>
+ <87jzabm8ae.fsf@pond.sub.org>
+ <CAFn=p-Y4RXP395Kjc4ZnSWuEjn-Vr7YuVEtGAOsWse74pkqvCw@mail.gmail.com>
+Date: Fri, 07 Feb 2025 11:30:31 +0100
+Message-ID: <87wme2jbco.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250206142307.921070-1-eric.auger@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,61 +99,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
-> This is a follow-up of Peter's attempt to fix the fact that
-> vIOMMUs are likely to be reset before the device they protect:
-> 
-> [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
-> https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
-> 
-> This is especially observed with virtio devices when a qmp system_reset
-> command is sent but also with VFIO devices.
-> 
-> This series puts the vIOMMU reset in the 3-phase exit callback.
-> 
-> This scheme was tested successful with virtio-devices and some
-> VFIO devices. Nevertheless not all the topologies have been
-> tested yet.
-> 
-> Best Regards
-> 
-> Eric
+John Snow <jsnow@redhat.com> writes:
 
+> On Fri, Jan 31, 2025 at 8:18=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> Cc: John Snow for Python typing expertise.
+>>
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>
+>> > This replaces use of the constants from the QapiSpecialFeatures
+>> > enum, with constants from the auto-generate QapiFeatures enum
+>> > in qapi-features.h
+>> >
+>> > The 'deprecated' and 'unstable' features still have a little bit of
+>> > special handling, being force defined to be the 1st + 2nd features
+>> > in the enum, regardless of whether they're used in the schema. This
+>> > retains compatibility with common code that references the features
+>> > via the QapiSpecialFeatures constants.
+>> >
+>> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
+[...]
 
-Looks good.
+>> > diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
+>> > new file mode 100644
+>> > index 0000000000..f32f9fe5f4
+>> > --- /dev/null
+>> > +++ b/scripts/qapi/features.py
+>> > @@ -0,0 +1,51 @@
+>> > +"""
+>> > +QAPI features generator
+>> > +
+>> > +Copyright 2024 Red Hat
+>> > +
+>> > +This work is licensed under the terms of the GNU GPL, version 2.
+>> > +# See the COPYING file in the top-level directory.
+>> > +"""
+>> > +
+>> > +from typing import Dict
+>> > +
+>> > +from .common import c_enum_const, c_name
+>> > +from .gen import QAPISchemaMonolithicCVisitor
+>> > +from .schema import (
+>> > +    QAPISchema,
+>> > +    QAPISchemaFeature,
+>> > +)
+>> > +
+>> > +
+>> > +class QAPISchemaGenFeatureVisitor(QAPISchemaMonolithicCVisitor):
+>> > +
+>> > +    def __init__(self, prefix: str):
+>> > +        super().__init__(
+>> > +            prefix, 'qapi-features',
+>> > +            ' * Schema-defined QAPI features',
+>> > +            __doc__)
+>> > +
+>> > +        self.features: Dict[str, QAPISchemaFeature] =3D {}
+>> > +
+>> > +    def visit_begin(self, schema: QAPISchema) -> None:
+>> > +        self.features =3D schema.features()
+>>
+>> Inconsistent type hints:
+>>
+>>     $ mypy --config-file scripts/qapi/mypy.ini scripts/qapi-gen.py
+>>     scripts/qapi/schema.py:1164: error: Incompatible return value type
+>> (got "dict_values[str, QAPISchemaFeature]", expected
+>> "List[QAPISchemaFeature]")  [return-value]
+>>     scripts/qapi/features.py:31: error: Incompatible types in assignment
+>> (expression has type "List[QAPISchemaFeature]", variable has type
+>> "Dict[str, QAPISchemaFeature]")  [assignment]
+>>
+>> We've been working towards having the build run mypy, but we're not
+>> there, yet.  Sorry for the inconvenience!
+>>
+>> schema.features() returns .values(), i.e. a view object.
+>>
+>> I guess the type hint should be ValuesView[QAPISchemaFeature], both for
+>> type type of attribute .features above, and for the return type of
+>> method .features() below.  John?
+>>
+>
+> It's probably easiest to just use list(...) in the return and then use
+> List[T] anywhere it matters. The values view type is "kind of, but not
+> actually a list" because it isn't mutable. It is, however, an
+> Iterable/Sequence. You can either convert it to a list or make the typing
+> more abstract.
+>
+> (Rule of thumb: return types should be as specific as possible, input typ=
+es
+> should be as abstract as possible.)
 
+Converting a view to a list makes a copy, right?
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+I'm not asking because that would be terrible.  I just like to
+understand things.
 
-How should this be merged?
-I supposed I can merge the 1st three and the other
-two by the respective maintainers?
-I don't think there's a dependency here, right?
+I'd like to move further discussion to Daniel's v4.
 
-> This series can be found at:
-> https://github.com/eauger/qemu/tree/viommu-3phase-reset-v1
-> 
-> Eric Auger (4):
->   hw/virtio/virtio-iommu: Migrate to 3-phase reset
->   hw/i386/intel-iommu: Migrate to 3-phase reset
->   hw/arm/smmuv3: Move reset to exit phase
->   hw/vfio/common: Add a trace point in vfio_reset_handler
-> 
-> Peter Xu (1):
->   hw/i386/intel_iommu: Tear down address spaces before IOMMU reset
-> 
->  hw/arm/smmuv3.c          |  9 +++++----
->  hw/i386/intel_iommu.c    | 10 ++++++----
->  hw/vfio/common.c         |  1 +
->  hw/virtio/virtio-iommu.c |  9 +++++----
->  hw/arm/trace-events      |  1 +
->  hw/i386/trace-events     |  1 +
->  hw/vfio/trace-events     |  1 +
->  hw/virtio/trace-events   |  2 +-
->  8 files changed, 21 insertions(+), 13 deletions(-)
-> 
-> -- 
-> 2.47.1
+> I apologize for this format of relaying patches as it is against the blood
+> oath I swore as a maintainer, but it's late in my day, forgive me:
+> https://gitlab.com/jsnow/qemu/-/commits/dan-fixup
+>
+> That branch has two things in it:
+>
+> (1) patches to make the python/ tests check the qapi module. This means t=
+he
+> "make check-minreqs" test you can run from python/ will be run by the
+> GitLab pipelines. You can also run "make check-tox" manually, or run the
+> optional python-tox test from the pipeline dashboard.
+
+These are:
+
+    dd9e47f0a8 qapi: update pylintrc config
+    dfc6344f32 python: add qapi static analysis tests
+    1f89bf53ed qapi: delete un-needed static analysis configs
+
+Will you post them for review & merging?
+
+> (2) two fixups for linting problems with this series with my s-o-b; feel
+> free to steal them if they're good enough for you.
+
+These are:
+
+    b36a412162 fixup
+    fa6c90ea76 fixup
+
+I'll post them in reply to Daniel's v4 so they get recorded in the list
+archive.
+
+> Thank you for your patience,
+> --js
+
+Thanks for your help!
+
+[...]
 
 
