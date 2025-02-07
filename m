@@ -4,84 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A772C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 910AEC02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgMvO-0001Qx-C7; Fri, 07 Feb 2025 06:53:36 -0500
+	id 1tgMwu-0002Sq-UI; Fri, 07 Feb 2025 06:55:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgMvG-0001PS-Sl; Fri, 07 Feb 2025 06:53:28 -0500
+ id 1tgMwt-0002R5-2i; Fri, 07 Feb 2025 06:55:07 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tgMvE-0004KF-VA; Fri, 07 Feb 2025 06:53:26 -0500
+ id 1tgMwq-0005K3-FS; Fri, 07 Feb 2025 06:55:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 71305E73D7;
- Fri, 07 Feb 2025 14:52:38 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id ED0311B0B4F;
- Fri,  7 Feb 2025 14:53:19 +0300 (MSK)
-Message-ID: <fcd2ffe7-a400-44e0-8dba-258583c2940b@tls.msk.ru>
-Date: Fri, 7 Feb 2025 14:53:19 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 5/7] target/i386: Do not raise Invalid for 0 * Inf + QNaN
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250207102802.2445596-1-pbonzini@redhat.com>
- <20250207102802.2445596-6-pbonzini@redhat.com>
-Content-Language: en-US, ru-RU
+ by isrv.corpit.ru (Postfix) with ESMTP id 78700E73DA;
+ Fri, 07 Feb 2025 14:54:20 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0999F1B0B54;
+ Fri,  7 Feb 2025 14:55:02 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 00D6752D93; Fri, 07 Feb 2025 14:55:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250207102802.2445596-6-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.3 v2 00/65] Patch Round-up for stable 9.1.3,
+ freeze on 2025-02-06 (frozen)
+Date: Fri,  7 Feb 2025 14:54:51 +0300
+Message-Id: <qemu-stable-9.1.3-20250207102547@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -105,40 +61,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.02.2025 13:27, Paolo Bonzini wrote:
-> From: Peter Maydell <peter.maydell@linaro.org>
-> 
-> In commit 8adcff4ae7 ("fpu: handle raising Invalid for infzero in
-> pick_nan_muladd") we changed the handling of 0 * Inf + QNaN to always
-> raise the Invalid exception regardless of target architecture.  (This
-> was a change affecting hppa, i386, sh4 and tricore.) However, this
-> was incorrect for i386, which documents in the SDM section 14.5.2
-> that for the 0 * Inf + NaN case that it will only raise the Invalid
-> exception when the input is an SNaN.  (This is permitted by the IEEE
-> 754-2008 specification, which documents that whether we raise Invalid
-> for 0 * Inf + QNaN is implementation defined.)
-> 
-> Adjust the softfloat pick_nan_muladd code to allow the target to
-> suppress the raising of Invalid for the inf * zero + NaN case (as an
-> extra flag orthogonal to its choice for when to use the default NaN),
-> and enable that for x86.
-> 
-> We do not revert here the behaviour change for hppa, sh4 or tricore:
->   * The sh4 manual is clear that it should signal Invalid
->   * The tricore manual is a bit vague but doesn't say it shouldn't
->   * The hppa manual doesn't talk about fused multiply-add corner
->     cases at all
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 8adcff4ae7 (""fpu: handle raising Invalid for infzero in pick_nan_muladd")
+The following patches are queued for QEMU stable v9.1.3:
 
-A nitpick: double double-quote.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-9.1
 
-8adcff4ae7 is v9.2.0-7-g8adcff4ae7 - which is 7 commits *after* the latest
-released version, -- hopefully this fix should not go to any stable series,
-unless 8adcff4ae7 itself has to be picked up for 9.2 too.
+Patch freeze is 2025-02-06 (frozen), and the release is planned for 2025-02-08:
 
-Thanks,
+  https://wiki.qemu.org/Planning/9.1
+
+Please respond here or CC qemu-stable@nongnu.org on any patches
+you think shouldn't be included in the release.
+
+This is supposed to be the last stable release in 9.1.x series.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
 
 /mjt
+
+--------------------------------------
+01* 3bf7dcd47a3d Peter Maydell:
+   hw/intc/openpic: Avoid taking address of out-of-bounds array index
+02* 3d7680fb18c7 Peter Maydell:
+   bitops.h: Define bit operations on 'uint32_t' arrays
+03* 335be5bc44aa Peter Maydell:
+   hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
+04* d95fd9838b54 Ilya Leoshkevich:
+   linux-user: Fix strace output for s390x mmap()
+05* a8575f7fb2f2 Akihiko Odaki:
+   virtio-net: Fix size check in dhclient workaround
+06* 5102f9df4a9a Kevin Wolf:
+   qdev: Fix set_pci_devfn() to visit option only once
+07* fbdea3d6c13d Jakub Jelen:
+   ssh: Do not switch session to non-blocking mode
+08* cfa3a6c54511 Pierrick Bouvier:
+   plugins: add missing export for qemu_plugin_num_vcpus
+09* 87ae45e602e2 Peter Xu:
+   migration: Allow pipes to keep working for fd migrations
+10* 9379ea9db3c0 Akihiko Odaki:
+   virtio-net: Add queues before loading them
+11* e8185fdc63e1 Harsh Prateek Bora:
+   ppc/spapr: fix drc index mismatch for partially enabled vcpus
+12* 3abb67323aee Guenter Roeck:
+   scsi: megasas: Internal cdbs have 16-byte length
+13* abf0f092c1dd Christian Schoenebeck:
+   tests/9p: fix Rreaddir response name
+14* 4ec984965079 Christian Schoenebeck:
+   tests/9p: add missing Rgetattr response name
+15* 462db8fb1d40 Christian Schoenebeck:
+   tests/9p: add 'use-after-unlink' test
+16* 3bc4db44430f Christian Schoenebeck:
+   9pfs: remove obsolete comment in v9fs_getattr()
+17* c81e7219e073 Christian Schoenebeck:
+   9pfs: fix 'Tgetattr' after unlink
+18* eaab44ccc59b Christian Schoenebeck:
+   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test
+19* fa416ae6157a Nicholas Piggin:
+   target/ppc: Fix non-maskable interrupt while halted
+20* 2fc0a78a5773 Glenn Miles:
+   target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
+21* 9162f1012576 Klaus Jensen:
+   hw/nvme: fix msix_uninit with exclusive bar
+22* 6651f8f2e505 Klaus Jensen:
+   hw/nvme: take a reference on the subsystem on vf realization
+23* 26dcf2be7e15 Ahmad Fatoum:
+   hw/openrisc/openrisc_sim: keep serial@90000000 as default
+24* 5311599cdc48 Peter Maydell:
+   target/riscv: Avoid bad shift in riscv_cpu_do_interrupt()
+25* d06a9d843fb6 Christian Schoenebeck:
+   9pfs: fix regression regarding CVE-2023-2861
+26* 04e006ab36a8 Richard Henderson:
+   tcg: Reset free_temps before tcg_optimize
+27* b438362a1425 Roman Artemev:
+   tcg/riscv: Fix StoreStore barrier generation
+28* 57e2cc9abf5d Gerd Hoffmann:
+   x86/loader: only patch linux kernels
+29* 0f5715e4b570 Gerd Hoffmann:
+   roms: re-add edk2-basetools target
+30* 74dc38d0c6c1 Michael Tokarev:
+   pc-bios: add missing riscv64 descriptor
+31* 9678b9c50572 Peter Maydell:
+   hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
+32* e2d98f257138 Thomas Huth:
+   meson.build: Disallow libnfs v6 to fix the broken macOS build
+33* eea5aeef84e1 Albert Esteve:
+   vhost-user: fix shared object return values
+34* 3f2a05b31ee9 Maciej S. Szmigiero:
+   target/i386: Reset TSCs of parked vCPUs too on VM reset
+35* 0d0141fadc90 Yong-Xuan Wang:
+   hw/intc/riscv_aplic: Fix APLIC in_clrip and clripnum write emulation
+36* 14e568ab4836 David Hildenbrand:
+   s390x/s390-virtio-ccw: don't crash on weird RAM sizes
+37* 591e848aca7a Alex Bennée:
+   config/targets: update aarch64_be-linux-user gdb XML list
+38* d41989e75483 Bibo Mao:
+   target/loongarch: Use actual operand size with vbsrl check
+39* b4859e8f33a7 Philippe Mathieu-Daudé:
+   docs: Correct release of TCG trace-events removal
+40* 93dcc9390e5a Han Han:
+   target/i386/cpu: Fix notes for CPU models
+41* 86bee9e0c761 Fabiano Rosas:
+   migration: Add more error handling to analyze-migration.py
+42* 2aead53d39b8 Fabiano Rosas:
+   migration: Remove unused argument in vmsd_desc_field_end
+43* 69d1f784569f Fabiano Rosas:
+   migration: Fix parsing of s390 stream
+44* c76ee1f6255c Fabiano Rosas:
+   s390x: Fix CSS migration
+45* f52965bf0eee Fabiano Rosas:
+   migration: Rename vmstate_info_nullptr
+46* 9867c3a7ced1 Peter Xu:
+   migration: Dump correct JSON format for nullptr replacement
+47* 35049eb0d2fc Fabiano Rosas:
+   migration: Fix arrays of pointers in JSON writer
+48* cdc3970f8597 Yuan Liu:
+   multifd: bugfix for migration using compression methods
+49* 2588a5f99b0c Yuan Liu:
+   multifd: bugfix for incorrect migration data with QPL compression
+50* a87077316ed2 Philippe Mathieu-Daudé:
+   tests/qtest/boot-serial-test: Correct HPPA machine name
+51* 78b0c15a563a Gabriel Barrantes:
+   backends/cryptodev-vhost-user: Fix local_error leaks
+52* bb5b7fced6b5 Phil Dennis-Jordan:
+   hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
+53* 694632fd4498 Sebastian Ott:
+   pci: ensure valid link status bits for downstream ports
+54* 42e2a7a0ab23 Nicholas Piggin:
+   pci/msix: Fix msix pba read vector poll end calculation
+55* 1ad32644fe4c Igor Mammedov:
+   tests: acpi: whitelist expected blobs
+56* 0b053391985a Igor Mammedov:
+   pci: acpi: Windows 'PCI Label Id' bug workaround
+57* 9fb1c9a1bb26 Igor Mammedov:
+   tests: acpi: update expected blobs
+58* 1ce979e7269a Li Zhijian:
+   hw/cxl: Fix msix_notify: Assertion `vector < dev->msix_entries_nr`
+59 1edc3d43f20d Peter Maydell:
+   target/arm: arm_reset_sve_state() should set FPSR, not FPCR
+60 664280abddcb Hongren Zheng:
+   hw/usb/canokey: Fix buffer overflow for OUT packet
+61 719168fba7c3 Steve Sistare:
+   physmem: fix qemu_ram_alloc_from_fd size calculation
+62 e43ced8be18d Ilya Leoshkevich:
+   target/s390x: Fix MVC not always invalidating translation blocks
+63 84dfdcbff33f Laurent Vivier:
+   net: Fix announce_self
+64 c6a1b591a68b Laurent Vivier:
+   net/dump: Correctly compute Ethernet packet offset
+65 8b647bd35250 Dominik 'Disconnect3d' Czarnota:
+   gdbstub/user-target: fix gdbserver int format (%d -> %x)
+
+(commit(s) marked with * were in previous series and are not resent)
 
