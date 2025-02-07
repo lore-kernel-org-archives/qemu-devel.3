@@ -4,100 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB67BC0219C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66A2C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQON-0007DR-2X; Fri, 07 Feb 2025 10:35:43 -0500
+	id 1tgQYU-0001b7-C5; Fri, 07 Feb 2025 10:46:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKY-0008GD-JO
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:52 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tgQYS-0001Zz-0c
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:46:08 -0500
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tgQKG-00045G-Fz
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:31:42 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-aaedd529ba1so282909066b.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:31:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tgQYQ-0001UC-4D
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:46:07 -0500
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e549be93d5eso2121787276.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:46:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738942287; x=1739547087; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pPUDkSmMPYbLWvU17ZzS5yeDzam6zW4TjOrPUFAUhlo=;
- b=i95wKV0yKkOuGuXzhdZ6NcGa+2DzitY2IiNp/iy9LiY2JQitDB0gDNLihzZjATyRIm
- y+qKPzNUwzOni/awGpw91PofQ+/+HlSELx3aS7EYXNrQ+bJRGAKlZ4rnO7NNhvBonqki
- J8+kHA7b3PAN6NoYlWu24oR+Wi7lEDaZjmONitSPTCQYwwmbHVjRv0NGwPzKsPqvlh6y
- T5eqyDMVjT+8+FUt4Hoxi5+uSLZQm1SvLfn3tcnqjaSHqsSc/JuG9Hr3GA5Ok5ArWI4+
- ptzwsp4ioYslv4j0+hriqKP/5cz0dARR/S+Hu+5+51AksyKdSs++1ujor6D2nRvdu083
- K9PQ==
+ d=linaro.org; s=google; t=1738943164; x=1739547964; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8qHfuiv8szYGuQBfQUNagT+/VtxVwpzCJYe+xzLSfJI=;
+ b=iQ6lae0LICGASnHx291Egax+43yQhvIBIYg1/vJUwBO5Y7vwqMKCT92t44wl+IC9Rg
+ FkDYhAWuJS2+lD/qLHdJZGMvrS9yTpCn6b14eLTg2ggjEtYiwA/XkpDnGZ2hyovqZN38
+ +BCeaVkmnSjySG8nLU6kaZp0CCTp8xYxtjm8xCSHTEr07ymmki9SCIsI19eyl/6nL8yf
+ kcFHWFYWM2f88BWC45qMNBF+HCIWWQQ3jsLvJXsq7fvMV5CnKu+QyChCP/Uty4u9Vim/
+ W52Qz0uFVXXJiVgpJTI1r1uXRhder3dKgyxBRU4aHuS5fZfttjNekvJXfWddLE2WQisV
+ jVHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738942287; x=1739547087;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pPUDkSmMPYbLWvU17ZzS5yeDzam6zW4TjOrPUFAUhlo=;
- b=Bbvq6zF3+yaK1xcnRCkgXt7S41h8oMrSuEmYp0F9ovgPGMpTQs4dgQrzW5xc+M0RcO
- IYu+OhwhQSG1uMzdCIP6tfsg6L9kfoG5XsDfg38bez0x6dePoVJB5ceNKlTezrUH4OvM
- upGpsdv8yboOQkoALgwJTWrGBvhNNXYhNsbF1k83XjRMysU3/AohQQU2fZ6G7FS57zNN
- lDnOeI5gZt+djo+rK5b0Ftq9/pWEHJuHLrxq73KqPTG/dV0Ep7E2iuhS65uFaEcqzfN4
- nTvI9I86Dsfe/TK6xr2XR+PSZ5wrE0AqDd7xHGQlvzWuYuVxo9nGR08uEQFy/eeEz6u4
- MGNQ==
-X-Gm-Message-State: AOJu0YyKTbw+BAxGOfWzim7J0QgBbDMgs+cFl/58NglB+c6lud5usIgV
- Glt8J6/d+CZSDhHUbk6lK4l8jR7nc1DJ9p2lXwTv7WjGWx0uOmvDboIQE9C6scM=
-X-Gm-Gg: ASbGncvwdxcsqWs2mps7bUChFMh2tfSFA0tTfkvmrJ3O6viIXocKI2jKl8lWPqyYGeW
- WUxpuGgtBKiVzVk4g+B9XtOf7QQrRW9VGP05dU4VCtX0HW5QqDhyCfIGq+pHljaLUO582bTKshm
- ra5vm+FgMovt6YzAiwDzKj/8yLwLNAsnOArd4pwnpL/31xU0Un3xNrvGMINbsu3Z9goZMdWXIHS
- mMdccaJdNWE53oy/ICu46Ov+f+8rC9qMSEB/DmBrjfB4kUj1K+3N9wq4JPNUQxGrHTk/c8QkXXG
- UD9HbdjCPb7wPElZgg==
-X-Google-Smtp-Source: AGHT+IFRV196ER3Qoshm0OKFIo/daJCeveh8hvR4clDy2dZ1Zq/c9ZpzlpsLKZ1rrvJoQch2o0cU2g==
-X-Received: by 2002:a05:6402:42cb:b0:5dc:cf9b:b04a with SMTP id
- 4fb4d7f45d1cf-5de44fe9443mr9335607a12.1.1738942284912; 
- Fri, 07 Feb 2025 07:31:24 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5de4c8a3966sm995512a12.46.2025.02.07.07.31.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 07:31:20 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3CACA60870;
- Fri,  7 Feb 2025 15:31:13 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Kyle Evans <kevans@freebsd.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: [PATCH v2 09/17] tests/qtest/migration: Pick smoke tests
-Date: Fri,  7 Feb 2025 15:31:04 +0000
-Message-Id: <20250207153112.3939799-10-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250207153112.3939799-1-alex.bennee@linaro.org>
-References: <20250207153112.3939799-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1738943164; x=1739547964;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8qHfuiv8szYGuQBfQUNagT+/VtxVwpzCJYe+xzLSfJI=;
+ b=TTtJadZ96mNmlA5xoFFHss5Gec6f/uN4w2lfGOVMAsnuonOrUqhaER8pJxlwmkONiG
+ BEztHxikALUAVBsZLExl3Xj93KXYhKJN1O3kN/y7s5uDmBHqxePOOgTQda+uONj0tMuN
+ UlkneFnCxZSNGETS0J4e5GH2RWIXk6UWfbcdfn7Xc62u5hcrrXN6+ObQHCV4jH1ZSwxu
+ kP+rc2qrhn3G/Mn5Fl6HL6dzrUEFvBh85bnizqEbo+EV5bBa9COS4AoLk4ZgB0ci/5F2
+ 2txiL5+At9K73odP54+kFBOSQjEGsIg/n19bN3Gcl8Ag7mXv3NCVSkc4MZABx6IL3r56
+ iSAQ==
+X-Gm-Message-State: AOJu0YzUCvUFqi8cxFcndfC5d8injoKPN/JgqtctlYG3YaA7q3rgyGR5
+ lpULEXuCW8TU1owm6ZEYSG58NGfKBWtOdJRGdYhCEWPTtqIbIrubojU36CAHpQvAYY4IpMffL9s
+ lVNDXsWsZrsUvftWK/p0UFNq22D9+3Ec5wwIaScRqT89oXdQP
+X-Gm-Gg: ASbGncuecW8+LDgL+6SDZJoQDClIMYqU9s2X7PxzG5nBhDbLZEQ6bwrXQSFcHy4LsAk
+ lxvf/ajBv3ux7vGudKJ0agzxOgi5br+lKBZHYWGVnZxyIp0U9QWJH2aBvTTAXekJNnjwYzS/EmA
+ ==
+X-Google-Smtp-Source: AGHT+IG96PO/WT4Y1iZvBDavJypKJGCuobMLX37Y8etZTCazGr9wNy9osAjN4dIa4/vXxIH3quCxdfD9G9IncTROsOk=
+X-Received: by 2002:a05:6902:1249:b0:e5b:248a:bf2f with SMTP id
+ 3f1490d57ef6-e5b4626c51cmr3228852276.31.1738943164092; Fri, 07 Feb 2025
+ 07:46:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+References: <20240615185423.49474-1-florian.lugou@provenrun.com>
+ <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
+ <20240620135627.qxcrkdx5v7wdurx4@flugou-latitude5401>
+ <CAFEAcA-ngrrEUDD7eA_sOLGF+_wRCuQVxTwuCA4pXjRcuJucmA@mail.gmail.com>
+ <20240621140725.f4hsasmhrhh4joxm@flugou-latitude5401>
+ <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
+ <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
+ <CAFEAcA9X0w5QW2qnnhF2k72ZrS8SALWiXV7uNr1e=jQnZvrQ7Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA9X0w5QW2qnnhF2k72ZrS8SALWiXV7uNr1e=jQnZvrQ7Q@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Feb 2025 15:45:51 +0000
+X-Gm-Features: AWEUYZkJW5JQOCs7l_XTcs6Ajx6AeMqHFF_9wUObdj7LlibeladJiY8WEkVxmnI
+Message-ID: <CAFEAcA-MrouAPdwpsyojMC-bx4aFtuL=tYZD=2pBS1vP5iicaw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
+ HCR_EL2.E2H == 0
+To: qemu-devel@nongnu.org
+Cc: "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ Florian Lugou <florian.lugou@provenrun.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,285 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+On Thu, 6 Feb 2025 at 15:41, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Tue, 20 Aug 2024 at 12:30, Florian Lugou <florian.lugou@provenrun.com> wrote:
+> >
+> > > > $ aarch64-none-elf-gcc -ffreestanding -nostdlib -T qemu/tests/tcg/aarch64/system/kernel.ld -o test test.S
+> > > >
+> > > > $ qemu-system-aarch64 \
+> > > >         -machine virt,secure=on,gic-version=3 \
+> > > >         -cpu cortex-a57 \
+> > > >         -kernel test \
+> > > >         -display none \
+> > > >         -semihosting
+> > > >
+> > > > $ # Exits after ~1s
+> > > >
+> > > > $ qemu-system-aarch64 \
+> > > >         -machine virt,secure=on,gic-version=3 \
+> > > >         -cpu cortex-a57 \
+> > > >         -kernel test \
+> > > >         -display none \
+> > > >         -semihosting \
+> > > >         -icount shift=0,sleep=off
+> > > >
+> > > > ... (hangs until QEMU is killed)
 
-Choose a few tests per group and move them from the full set to the
-smoke set.
+> Somebody else reported a similar issue to this to me this week,
+> which reminded me of a different bug that we'd found and fixed
+> in the interim, which was enough of a hint that I figured out
+> why this wasn't reproducible for me.
+>
+> This bug only reproduces if your QEMU binary isn't compiled
+> with slirp support (which will happen if your host system
+> doesn't have libslirp-dev or libslirp-devel installed).
+> If slirp is present then the usermode networking backend
+> will be present and it always has an active timer. Without
+> slirp, the problem manifests when there are no active timers.
+>
+> You can also repro it on a with-slirp compile by adding
+> "-net none" to the command line.
+>
+> I'll have a look at what the underlying bug is... thanks again
+> for the handy test case.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250130184012.5711-3-farosas@suse.de>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/qtest/migration-test.c              |  1 -
- tests/qtest/migration/compression-tests.c | 11 ++++++---
- tests/qtest/migration/cpr-tests.c         |  2 ++
- tests/qtest/migration/file-tests.c        | 17 +++++++++-----
- tests/qtest/migration/misc-tests.c        | 12 +++++++---
- tests/qtest/migration/postcopy-tests.c    | 18 ++++++++++-----
- tests/qtest/migration/precopy-tests.c     | 27 ++++++++++++++---------
- tests/qtest/migration/tls-tests.c         | 10 +++++++--
- 8 files changed, 67 insertions(+), 31 deletions(-)
+So I've looked at this, and I can see *why* it hangs, but
+it looks like a structural problem with icount, which I'm
+not super familiar with. Richard, Alex, any suggestions?
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 61180fcbd5..0893687174 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -46,7 +46,6 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
-     env = migration_get_env();
-     env->full_set = full_set;
--    env->full_set = true; /* temporary */
-     module_call_init(MODULE_INIT_QOM);
- 
-     migration_test_add_tls(env);
-diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-index 9d0a258d51..8b58401b84 100644
---- a/tests/qtest/migration/compression-tests.c
-+++ b/tests/qtest/migration/compression-tests.c
-@@ -151,10 +151,18 @@ static void test_multifd_tcp_zlib(void)
-     test_precopy_common(&args);
- }
- 
-+static void migration_test_add_compression_smoke(MigrationTestEnv *env)
-+{
-+    migration_test_add("/migration/multifd/tcp/plain/zlib",
-+                       test_multifd_tcp_zlib);
-+}
-+
- void migration_test_add_compression(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
- 
-+    migration_test_add_compression_smoke(env);
-+
-     if (!env->full_set) {
-         return;
-     }
-@@ -183,7 +191,4 @@ void migration_test_add_compression(MigrationTestEnv *env)
-         migration_test_add("/migration/precopy/unix/xbzrle",
-                            test_precopy_unix_xbzrle);
-     }
--
--    migration_test_add("/migration/multifd/tcp/plain/zlib",
--                       test_multifd_tcp_zlib);
- }
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index b1651fe48c..4758841824 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -104,6 +104,8 @@ void migration_test_add_cpr(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
- 
-+    /* no tests in the smoke set for now */
-+
-     if (!env->full_set) {
-         return;
-     }
-diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
-index 5b190853a5..f474b3590a 100644
---- a/tests/qtest/migration/file-tests.c
-+++ b/tests/qtest/migration/file-tests.c
-@@ -300,17 +300,25 @@ static void test_multifd_file_mapped_ram_fdset_dio(void)
- }
- #endif /* !_WIN32 */
- 
-+static void migration_test_add_file_smoke(MigrationTestEnv *env)
-+{
-+    migration_test_add("/migration/precopy/file",
-+                       test_precopy_file);
-+
-+    migration_test_add("/migration/multifd/file/mapped-ram/dio",
-+                       test_multifd_file_mapped_ram_dio);
-+}
-+
- void migration_test_add_file(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
- 
-+    migration_test_add_file_smoke(env);
-+
-     if (!env->full_set) {
-         return;
-     }
- 
--    migration_test_add("/migration/precopy/file",
--                       test_precopy_file);
--
-     migration_test_add("/migration/precopy/file/offset",
-                        test_precopy_file_offset);
- #ifndef _WIN32
-@@ -330,9 +338,6 @@ void migration_test_add_file(MigrationTestEnv *env)
-     migration_test_add("/migration/multifd/file/mapped-ram/live",
-                        test_multifd_file_mapped_ram_live);
- 
--    migration_test_add("/migration/multifd/file/mapped-ram/dio",
--                       test_multifd_file_mapped_ram_dio);
--
- #ifndef _WIN32
-     migration_test_add("/migration/multifd/file/mapped-ram/fdset",
-                        test_multifd_file_mapped_ram_fdset);
-diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index 996256ef87..d03199f3c5 100644
---- a/tests/qtest/migration/misc-tests.c
-+++ b/tests/qtest/migration/misc-tests.c
-@@ -258,18 +258,24 @@ static void test_validate_uri_channels_none_set(void)
-     do_test_validate_uri_channel(&args);
- }
- 
-+static void migration_test_add_misc_smoke(MigrationTestEnv *env)
-+{
-+#ifndef _WIN32
-+    migration_test_add("/migration/analyze-script", test_analyze_script);
-+#endif
-+}
-+
- void migration_test_add_misc(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
- 
-+    migration_test_add_misc_smoke(env);
-+
-     if (!env->full_set) {
-         return;
-     }
- 
-     migration_test_add("/migration/bad_dest", test_baddest);
--#ifndef _WIN32
--    migration_test_add("/migration/analyze-script", test_analyze_script);
--#endif
- 
-     /*
-      * Our CI system has problems with shared memory.
-diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-index b08cde3270..7e84e60fea 100644
---- a/tests/qtest/migration/postcopy-tests.c
-+++ b/tests/qtest/migration/postcopy-tests.c
-@@ -79,18 +79,26 @@ static void test_postcopy_preempt_recovery(void)
-     test_postcopy_recovery_common(&args);
- }
- 
--void migration_test_add_postcopy(MigrationTestEnv *env)
-+static void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
- {
--    if (!env->full_set) {
--        return;
--    }
--
-     if (env->has_uffd) {
-         migration_test_add("/migration/postcopy/plain", test_postcopy);
-         migration_test_add("/migration/postcopy/recovery/plain",
-                            test_postcopy_recovery);
-         migration_test_add("/migration/postcopy/preempt/plain",
-                            test_postcopy_preempt);
-+    }
-+}
-+
-+void migration_test_add_postcopy(MigrationTestEnv *env)
-+{
-+    migration_test_add_postcopy_smoke(env);
-+
-+    if (!env->full_set) {
-+        return;
-+    }
-+
-+    if (env->has_uffd) {
-         migration_test_add("/migration/postcopy/preempt/recovery/plain",
-                            test_postcopy_preempt_recovery);
- 
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index c99a487bf1..b16f10e908 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -951,14 +951,8 @@ static void test_dirty_limit(void)
-     migrate_end(from, to, true);
- }
- 
--void migration_test_add_precopy(MigrationTestEnv *env)
-+static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
- {
--    tmpfs = env->tmpfs;
--
--    if (!env->full_set) {
--        return;
--    }
--
-     if (env->is_x86) {
-         migration_test_add("/migration/precopy/unix/suspend/live",
-                            test_precopy_unix_suspend_live);
-@@ -970,6 +964,21 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-                        test_precopy_unix_plain);
- 
-     migration_test_add("/migration/precopy/tcp/plain", test_precopy_tcp_plain);
-+    migration_test_add("/migration/multifd/tcp/uri/plain/none",
-+                       test_multifd_tcp_uri_none);
-+    migration_test_add("/migration/multifd/tcp/plain/cancel",
-+                       test_multifd_tcp_cancel);
-+}
-+
-+void migration_test_add_precopy(MigrationTestEnv *env)
-+{
-+    tmpfs = env->tmpfs;
-+
-+    migration_test_add_precopy_smoke(env);
-+
-+    if (!env->full_set) {
-+        return;
-+    }
- 
-     migration_test_add("/migration/precopy/tcp/plain/switchover-ack",
-                        test_precopy_tcp_switchover_ack);
-@@ -993,16 +1002,12 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-                                test_dirty_limit);
-         }
-     }
--    migration_test_add("/migration/multifd/tcp/uri/plain/none",
--                       test_multifd_tcp_uri_none);
-     migration_test_add("/migration/multifd/tcp/channels/plain/none",
-                        test_multifd_tcp_channels_none);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/legacy",
-                        test_multifd_tcp_zero_page_legacy);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
-                        test_multifd_tcp_no_zero_page);
--    migration_test_add("/migration/multifd/tcp/plain/cancel",
--                       test_multifd_tcp_cancel);
-     if (g_str_equal(env->arch, "x86_64")
-         && env->has_kvm && env->has_dirty_ring) {
- 
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index aee56930ac..2cb4a44bcd 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -722,10 +722,18 @@ static void test_multifd_tcp_tls_x509_reject_anon_client(void)
- }
- #endif /* CONFIG_TASN1 */
- 
-+static void migration_test_add_tls_smoke(MigrationTestEnv *env)
-+{
-+    migration_test_add("/migration/precopy/tcp/tls/psk/match",
-+                       test_precopy_tcp_tls_psk_match);
-+}
-+
- void migration_test_add_tls(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
- 
-+    migration_test_add_tls_smoke(env);
-+
-     if (!env->full_set) {
-         return;
-     }
-@@ -755,8 +763,6 @@ void migration_test_add_tls(MigrationTestEnv *env)
-                        test_precopy_unix_tls_x509_override_host);
- #endif /* CONFIG_TASN1 */
- 
--    migration_test_add("/migration/precopy/tcp/tls/psk/match",
--                       test_precopy_tcp_tls_psk_match);
-     migration_test_add("/migration/precopy/tcp/tls/psk/mismatch",
-                        test_precopy_tcp_tls_psk_mismatch);
- #ifdef CONFIG_TASN1
--- 
-2.39.5
+The sequence of events is that the test case sets up the
+timer with an expiry in the future, enables interrupts,
+and then executes a WFI insn. What's supposed to happen is
+that the interrupt fires and the test case exits.
 
+In helper_wfi, we set cs->halted and do a cpu_loop_exit(),
+so the WFI definitely goes to sleep.
+
+We do fire the timer's callback:
+#0  arm_gt_stimer_cb (opaque=0x55870482d670) at ../../target/arm/helper.c:2962
+#1  0x00005587013c3c86 in timerlist_run_timers
+(timer_list=0x5587042f5950) at ../../util/qemu-timer.c:566
+#2  0x00005587013c3d3c in qemu_clock_run_timers
+(type=QEMU_CLOCK_VIRTUAL) at ../../util/qemu-timer.c:580
+#3  0x0000558701102f4c in icount_notify_aio_contexts () at
+../../accel/tcg/tcg-accel-ops-icount.c:73
+#4  0x0000558701102faf in icount_handle_deadline () at
+../../accel/tcg/tcg-accel-ops-icount.c:88
+#5  0x0000558701103ac9 in rr_cpu_thread_fn (arg=0x55870482d670) at
+../../accel/tcg/tcg-accel-ops-rr.c:234
+
+and the timer count is correct for the timer expiry, so
+this part is OK.
+
+First the arm generic timer code reprograms the QEMU timer
+(for an expiry at INT64_MAX, ie "far far future")
+by calling timer_mod_ns(). timer_mod_ns() ends up calling
+timerlist_rearm(), which calls icount_start_warp_timer().
+
+This is where things go wrong -- icount_start_warp_timer()
+notices that all CPU threads are currently idle, and
+decides it needs to warp the timer forwards to the
+next deadline, which is at the end of time -- INT64_MAX.
+
+But once timer_mod_ns() returns, the generic timer code
+is going to raise an interrupt (this goes through the GIC
+code and comes back into the CPU which calls cpu_interrupt()),
+so we don't want to warp the timer at all. The clock should
+stay exactly at the value it has and the CPU is going to
+have more work to do.
+
+How is this supposed to work? Shouldn't we only be doing
+the "start moving the icount forward to the next deadline"
+once we've completed all the "run timers and AIO stuff" that
+icount_handle_deadline() triggers, not randomly in the middle
+of that when this timer callback or some other one might do
+something to trigger an interrupt?
+
+If the arm_gt_stimer_cb() was written in the other order,
+so that it first raised the interrupt and then modified
+the QEMU timer second, this would happen to work, because
+raising the interrupt sets cpu->interrupt_request, which
+means that arm_cpu_has_work() returns true, so when
+icount_start_warp_timer() calls all_cpu_threads_idle() it
+returns false and icount_start_warp_timer() returns without
+doing anything. But I don't think there's any reason why
+timer callbacks should be obliged to reprogram their timers
+last, and in any case you can imagine scenarios where there
+are multiple timer callbacks for different timers and it's
+only the second timer that raises an interrupt...
+
+thanks
+-- PMM
 
