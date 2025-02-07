@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BFCC02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98E9C02194
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 15:59:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgQjK-0006as-Ra; Fri, 07 Feb 2025 10:57:22 -0500
+	id 1tgQkv-0007dS-0R; Fri, 07 Feb 2025 10:59:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tgQjI-0006Zz-0c
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:57:21 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1tgQkt-0007cU-96
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:58:59 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tgQjF-0005A2-GO
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:57:18 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-38dcb7122c1so666936f8f.2
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:57:16 -0800 (PST)
+ id 1tgQkr-0006Jb-PS
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 10:58:59 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso15129015e9.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 07:58:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1738943835; x=1739548635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1738943936; x=1739548736; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=jqvGFtgLIcssDAnzxgAxV/XWOhETlMnJ77XRKC1k4ck=;
- b=V+bIe+2oCuvntr8IEcHzzgYsFgPghThHSClIc0u/KiroHKEOY1cS6KuReOy8B3so5c
- cp51Z7S675fOIAAb0o9kG23gXlD9/m01uFOMc2lGz7zXO7XkjQWwHHtERaKbFGLrxG5k
- oQTasLJTNM+4oDjPtGwUDh/RwoqKDroerxUw0JlDzCsmgEBThOPvmCvF5StU3ESUFR9P
- 8EZcv/a1prhJVdpGiQq9mpg8rpQlKwtCV08iavFf6TZ06TCA81Ui2MlLDWku6MIJlx1S
- CBb//BhYf/S4DsPidKX0R63AHtDsls3MrbjBo463EmpQjKKMoQpmRIHTMmQACEOKxzim
- VUpw==
+ bh=kqeh+h1QXkswiJkm4JJr0gR4w369qLmdh3P5XRMBllc=;
+ b=vtyu5fp1iPJX4euWrhP8Ac2JsL4nhv8ubNY8lcYzgfHs2jGHW1/CIdV6RLxchUVdco
+ pYAcSFx4ekHTzEjH2196VEkfM/bI2Qex8NPigYTeqE14s65ub/TxByQ6TGtQHhevzV+n
+ bEtJn5Kb1lmsgzJndjfqvcWtdm+QHqpz3MIP38tQ136DqLXIZqS3B4bUihaZ8wQEDFFZ
+ lnBNGZOdmJxr+tAev4+l2oTTKFXx+duZjtNlIzS6NGLtMMC7EglwgxwtnF84++lN9g5a
+ sheoOc42CdEH7Jkb0HyAvbqW/aUqlJuvjaLXj1hN70s0y126A75bDUDRk3uoKYMDOfkT
+ S+Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738943835; x=1739548635;
+ d=1e100.net; s=20230601; t=1738943936; x=1739548736;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jqvGFtgLIcssDAnzxgAxV/XWOhETlMnJ77XRKC1k4ck=;
- b=uvQdiuVC/y8WoarY3Arsse8mLjX6HNqCYOQDzDkVPV/Cd/Mr7JZeeSxpuoMqhfXraK
- MOqQzBt3zqFb8bO2bzu+fvbi+f4J+/onkzmp0+SphlKj8rj+nDGaQHqpdaV+6vmpktzL
- wE0noKh9IdCDvf3raYUTSth6gN+7ngSTcme3wzzMquxaUjV/Ekow1Db3BkJ3IFZkWUBy
- DfE468/6fkadhJ0+LJ41Xm1rsQJBF52QrepnLdeOmib7plNteZGlTfhb09ruKIE6HpZb
- f0Xa5RA159Zfl53z+U8fv3iIewSNQBhTlPYSvYS+bxnhV99vlPRvF6VMjHp2iwCgWKeP
- kQgg==
+ bh=kqeh+h1QXkswiJkm4JJr0gR4w369qLmdh3P5XRMBllc=;
+ b=PdevYS2LLRet4x6B/hA0H7ijk2dZME7GFNHNGhswsGr0RukG5rCv3FiSd7Nw9KX3Do
+ DhMgbv413WRJ1mwpP91gly1wZsL+f5VdhOmsn26L9VhzDHulPV6Uq7alXXRmy9YaRjKU
+ PrdFCbsJr4GGaWzGheWBPoYgh/WF2tXw/FXurrD/n7WLRAAiHiQoF2NCjGK+YFAbLxRQ
+ cY4ZrjfY4fiXjFcoZsyxQLGvSItMjOh8N4BlbceX2/fZucS7IKYHYRT47W5v4noIGh65
+ N5BaBSGIpssxaMaU+zdXtpJ4dWgu56gGf71DegbL63YQH23zu/W8QlfiC/Q9AsnnrSPy
+ 4Sow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5xDBQsUbIwIzCO8KKSP7GBXqUs52+tU9QJm99SHrCKmkEJZayRrXFazqdGbPAJ6BhtbtCTPnSgCHe@nongnu.org
-X-Gm-Message-State: AOJu0YzDpPngWUNkv39kaydFRqWF0wnQM7GxoI85akNyRcy+DLR/wLGH
- DWumwVy+okrMGYx+FEGLGUYN2MJxDaTGDOOFbFlQ3vyupFRPyruna9F0Ut+uioU=
-X-Gm-Gg: ASbGncuaijuq7d/KF+bvgISKRcWl2L7xk8orPt7ce4hFyxxxIs31SQBIXXGRuPsGhcr
- R+69ib4SeyXveFo31Z564HtZ3JT/7IMUYE+Gyln7/grbYu9CtFIcYKVSDIPNbS+8mlyEkVfLKv3
- 2WpqRM5XhzFDa/TIP0k+xNggiAjugBVKkyf+2gjbtiUHqMTldVvijNpTnbxHgjW8T957ZMEIK0I
- 7BB9Tb2tTXMyallof+mNwEYougIoRNb4CEZNfqeRLUdEegDI/Lt5iK0A1g+WT+4DbSt2GBAaROS
- ZToi0h5LXQl17w==
-X-Google-Smtp-Source: AGHT+IG0i0l5YpSBv7JUxMbvMfBfChO+FTI9m1yzLejFjQzYD8mDS4GA4acnoVtaTqBUwe2XXLFxaQ==
-X-Received: by 2002:adf:e90e:0:b0:38a:41a3:ac4 with SMTP id
- ffacd0b85a97d-38dc937334bmr2151278f8f.45.1738943835257; 
- Fri, 07 Feb 2025 07:57:15 -0800 (PST)
+ AJvYcCVesAymicmAaZe9QhNegi1d1B4nbp/XbLQLIQ2YiVn9ZckowYI8mChGoYLClxNOd5MQcbs1Bk3lNaEk@nongnu.org
+X-Gm-Message-State: AOJu0YwskFXuN7LJLVlej+AUj2Xjv5+qsNUDpjELHsk2NneLVeY8DR4k
+ nUUSOXjDADOt5AF+SCsx1rNdh+qS5vZgD2DdcvyQHny+oyDKYEfz2W/3wc8m+2Q=
+X-Gm-Gg: ASbGncs0VWRpA3ySXQfyuFu6yHFnsefTIb+MgJ9oYzi7pfNVNEhevWvdNK0tEsfBVCd
+ /nV5E/VGQvQqkNAEdSzins5b+1lUq+p1EHu2t7iES1SMWgjFMXoZ5oEc6FVBUbdQ+8MV59WKLhA
+ FyWhPwhT92CEN8Z2RapUcFiaWBE+67mnyV+ka6YabkeJl+IavFTN++h5U9/2WPzdoV6sz7wbFJS
+ WkjxYEvsHasfJ1QuQdgQiFCAk+WMyYqRyCkVy0jZE6T5/u2t807uhi1VxNCkcLm1+1EG6Gw6kec
+ CZtJabpq9r5tsQ==
+X-Google-Smtp-Source: AGHT+IEuWkdH2e+ehVQ7UkgUJ/atzJB1wHcX0nVz7kTWJubhBVqxzpXeLrW5oXbuVgXGY8VyJVvrlA==
+X-Received: by 2002:a05:6000:1acb:b0:385:f195:2a8 with SMTP id
+ ffacd0b85a97d-38dc90ee7dbmr2293163f8f.30.1738943936312; 
+ Fri, 07 Feb 2025 07:58:56 -0800 (PST)
 Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d9334e7sm93748775e9.6.2025.02.07.07.57.14
+ ffacd0b85a97d-38dbde31d9bsm4899334f8f.94.2025.02.07.07.58.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 07:57:15 -0800 (PST)
-Date: Fri, 7 Feb 2025 15:57:39 +0000
+ Fri, 07 Feb 2025 07:58:56 -0800 (PST)
+Date: Fri, 7 Feb 2025 15:59:20 +0000
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: Gavin Shan <gshan@redhat.com>
 Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
  philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  alex.bennee@linaro.org
-Subject: Re: [PATCH v3 08/26] hw/core/loader: Add ROM loader notifier
-Message-ID: <20250207155739.GC3546768@myrica>
+Subject: Re: [PATCH v3 09/26] target/arm/kvm-rme: Initialize Realm memory
+Message-ID: <20250207155920.GD3546768@myrica>
 References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-10-jean-philippe@linaro.org>
- <73f81e95-7636-4a55-aa29-d288b20005b1@redhat.com>
+ <20241125195626.856992-11-jean-philippe@linaro.org>
+ <91b825c4-462f-4663-8412-effa84c0863d@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <73f81e95-7636-4a55-aa29-d288b20005b1@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x432.google.com
+In-Reply-To: <91b825c4-462f-4663-8412-effa84c0863d@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,27 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 04, 2025 at 03:33:10PM +1000, Gavin Shan wrote:
-> > diff --git a/include/hw/loader.h b/include/hw/loader.h
-> > index 7f6d06b956..0cd9905f97 100644
-> > --- a/include/hw/loader.h
-> > +++ b/include/hw/loader.h
-> > @@ -353,6 +353,21 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
-> >   ssize_t rom_add_vga(const char *file);
-> >   ssize_t rom_add_option(const char *file, int32_t bootindex);
-> > +typedef struct RomLoaderNotify {
-> > +    /* Parameters passed to rom_add_blob() */
-> > +    hwaddr addr;
-> > +    size_t len;
-> > +    size_t max_len;
-> > +} RomLoaderNotify;
-> > +
+On Tue, Feb 04, 2025 at 03:30:00PM +1000, Gavin Shan wrote:
+> > +    hwaddr ram_base;
+> > +    size_t ram_size;
+> >   };
 > 
-> I would suggest to rename it to RomLoaderNotifyData since it's the
-> data passed to the notifier.
+> s/size_t/hwaddr. To be consistent with RmeRamRegion, we may reuse
+> it like below.
+> 
+> struct RmeGuest {
+>     :
+>     GSlist *populate_ram_regions;
+>     RmeRamRegion init_ram_region;
+> };
 
-Agreed
+Good idea, I'll make that init_ram
+
+> 
+> >   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+> >                                             CONFIDENTIAL_GUEST_SUPPORT,
+> >                                             { TYPE_USER_CREATABLE }, { })
+> > +typedef struct {
+> > +    hwaddr base;
+> > +    hwaddr size;
+> > +} RmeRamRegion;
+> > +
+> >   static RmeGuest *rme_guest;
+> > +static int rme_init_ram(hwaddr base, size_t size, Error **errp)
+> > +{
+> > +    int ret;
+> > +    uint64_t start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
+> > +    uint64_t end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
+> > +    struct kvm_cap_arm_rme_init_ipa_args init_args = {
+> > +        .init_ipa_base = start,
+> > +        .init_ipa_size = end - start,
+> > +    };
+> > +
+> > +    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
+> > +                            KVM_CAP_ARM_RME_INIT_IPA_REALM,
+> > +                            (intptr_t)&init_args);
+> > +    if (ret) {
+> > +        error_setg_errno(errp, -ret,
+> > +                         "failed to init RAM [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
+>                                                      ^^^^^^^^^^        ^^^^^^^^^^^
+> The type for 'start' and 'end' would be 'hwaddr'.
+
+Right, I changed everything to hwaddr
 
 Thanks,
 Jean
+
 
