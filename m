@@ -4,70 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 730B5C02194
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 11:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5837EC02199
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 12:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgMzA-0007qM-EJ; Fri, 07 Feb 2025 06:57:28 -0500
+	id 1tgNGc-0004qX-VI; Fri, 07 Feb 2025 07:15:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMz8-0007mD-CN
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:57:26 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgNGU-0004oh-Jz
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 07:15:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgMz6-0005zP-At
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 06:57:26 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tgNGR-0007AB-Sq
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 07:15:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738929442;
+ s=mimecast20190719; t=1738930517;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FjpUmZIKjIZGPUgiug4xe2Bxoc6x/jrKg13Yq1LbFDY=;
- b=OPkP3SNzEGZ1558Mj38j1sAySx1Rejhf8V/ymBhtmau+OpzSTU9UysyrLKqnTHtXEzt7Yi
- FQ1+iS+K2NDET+gfkBPRQ48+/ceOKfftFmXdACW0fDrpJNu9GJ7TMC3Xjvj2EfCCRJpCkt
- zb6B05CFE54DchASL0MJ09YZfsLdZE4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=y/CaYrFtOfYhyhA+xoYXbMIxEz05ffcLKkPYphZiKf8=;
+ b=NOIFAtFDrciMBCwnUAA/QN2xvNMGN5E96KZEtNqPqyZ4GXMNyKGfP8a8OMbnci5Mpmemuq
+ D6vAMEGbNEcx0qWmbcSOfbD92zFZdY6mRjgGHJqpS8WLBjJCfWMLzBGWoUOpLrCFSaoQlk
+ gstzV7qUw1dm28ILzjRdRO1oypGKG40=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-m5_xuSD0NwC2Iyy6BrJWVA-1; Fri,
- 07 Feb 2025 06:57:21 -0500
-X-MC-Unique: m5_xuSD0NwC2Iyy6BrJWVA-1
-X-Mimecast-MFC-AGG-ID: m5_xuSD0NwC2Iyy6BrJWVA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-nYq2juOSOy-SYk0AZQlf0A-1; Fri,
+ 07 Feb 2025 07:15:10 -0500
+X-MC-Unique: nYq2juOSOy-SYk0AZQlf0A-1
+X-Mimecast-MFC-AGG-ID: nYq2juOSOy-SYk0AZQlf0A
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3334619560A7; Fri,  7 Feb 2025 11:57:20 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17F921800873; Fri,  7 Feb 2025 12:15:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.26])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C522195608D; Fri,  7 Feb 2025 11:57:19 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 756B21800352; Fri,  7 Feb 2025 12:15:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9DBE021E6A28; Fri, 07 Feb 2025 12:57:16 +0100 (CET)
+ id BC9E121E6A28; Fri, 07 Feb 2025 13:15:02 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Jason Wang
+ <jasowang@redhat.com>,  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Luigi Rizzo <rizzo@iet.unipi.it>,  Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>,  Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,  Yuri Benditovich
+ <yuri.benditovich@daynix.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Michael Roth <michael.roth@amd.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
  =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v4 4/4] qapi: expose all schema features to code
-In-Reply-To: <20250205123550.2754387-5-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 5 Feb 2025 12:35:50
- +0000")
-References: <20250205123550.2754387-1-berrange@redhat.com>
- <20250205123550.2754387-5-berrange@redhat.com>
-Date: Fri, 07 Feb 2025 12:57:16 +0100
-Message-ID: <87wme2hsrn.fsf@pond.sub.org>
+ <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Lei Yang <leiyang@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 2/4] qdev-properties: Accept bool for OnOffAuto
+In-Reply-To: <4363863f-3ba3-95b3-61ec-6fade162218f@eik.bme.hu> (BALATON
+ Zoltan's message of "Thu, 6 Feb 2025 14:23:39 +0100 (CET)")
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-2-cbf0aa04c9f9@daynix.com>
+ <87cyfwxveo.fsf@pond.sub.org>
+ <44b21e4c-b076-41bb-9564-1e7a8cf4a450@daynix.com>
+ <87r04bs8sj.fsf@pond.sub.org>
+ <6e6935dd-fae7-4cce-acad-69609eba9b6e@daynix.com>
+ <4363863f-3ba3-95b3-61ec-6fade162218f@eik.bme.hu>
+Date: Fri, 07 Feb 2025 13:15:02 +0100
+Message-ID: <87o6zehry1.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -93,117 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+BALATON Zoltan <balaton@eik.bme.hu> writes:
 
-> This replaces use of the constants from the QapiSpecialFeatures
-> enum, with constants from the auto-generate QapiFeatures enum
-> in qapi-features.h
+> On Thu, 6 Feb 2025, Akihiko Odaki wrote:
+>> On 2025/02/06 18:48, Markus Armbruster wrote:
+>>>>                                              This problem can be solved
+>>>> using an existing mechanism, OnOffAuto, which differentiates the "auto"
+>>>> state and explicit the "on" state.
+>>>
+>>> I guess you're proposing something like this:
+>>>
+>>> * auto: on if possible, else off
+>>>
+>>> * on: on if possible, else error
+>>>
+>>> * off: off (always possible)
+>>>
+>>> Which one is the default?
+>>
+>> I converted on to auto and off to false in a following patch.
+>>
+>>>> However, converting bool to OnOffAuto surfaces another problem: they
+>>>> disagree how "on" and "off" should be written. Please note that the
+>>>> disagreement already exists and so it is nice to solve anyway.
+>>> 
+>>> Yes, converting bool to OnOffAuto is an incompatible change.
+>>
+>> Not just about conversion, but this inconsistency require users to know whether a property is bool or OnOffAuto and change how the values are written in JSON accordingly. This somewhat hurts usability.
 >
-> The 'deprecated' and 'unstable' features still have a little bit of
-> special handling, being force defined to be the 1st + 2nd features
-> in the enum, regardless of whether they're used in the schema. This
-> retains compatibility with common code that references the features
-> via the QapiSpecialFeatures constants.
+> Worse than that, the help text is also confusing.
+> Excerpt from -device virtio-gpu,help
 >
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>   blob=<bool>            - on/off (default: false)
+>   busnr=<busnr>
+>   disable-legacy=<OnOffAuto> - on/off/auto (default: "auto")
+>   disable-modern=<bool>  -  (default: false)
+>   edid=<bool>            - on/off (default: true)
+>   event_idx=<bool>       - on/off (default: true)
+>
+> For bools it says on/off yet expects true/false. Wasn't originally true/on/1 and false/off/0 accepted for bools? Where that got lost? I think getting back that behaviour would be easiest for users. Users don't care if OnOffAuto is an enum internally and can't (or don't want to) remember if bools are written on/off or true/false so accepting these as synonyms would help users.
 
-Daniel, feel free to ignore this at least for now.  I'm trying to learn
-some typing lore from John.
+The help text printed by -device is about usage of -device, not about
+QMP.
 
-v3 made mypy unhappy.  I asked John for advice, and also posted a
-solution involving ValuesView I hacked up myself.  Daniel took it for
-v4.
+There, the preferred syntax for bool values is on/off, but
+yes/true/y/no/false/n are also accepted.  I think that's a disgusting
+mess, but it's here to stay, so let's not argue this any further.
 
-John suggested to use List.
+Instead of "(default: true)" we should have "(default: on)".
 
-I now wonder whether could use Iterable.
-
-I'll show the three solutions inline.
-
-John, thoughts?
-
-[...]
-
-> diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
-> new file mode 100644
-> index 0000000000..be3e5d03ff
-> --- /dev/null
-> +++ b/scripts/qapi/features.py
-> @@ -0,0 +1,51 @@
-> +"""
-> +QAPI features generator
-> +
-> +Copyright 2024 Red Hat
-> +
-> +This work is licensed under the terms of the GNU GPL, version 2.
-> +# See the COPYING file in the top-level directory.
-> +"""
-> +
-> +from typing import Dict, ValuesView
-> +
-> +from .common import c_enum_const, c_name
-> +from .gen import QAPISchemaMonolithicCVisitor
-> +from .schema import (
-> +    QAPISchema,
-> +    QAPISchemaFeature,
-> +)
-> +
-> +
-> +class QAPISchemaGenFeatureVisitor(QAPISchemaMonolithicCVisitor):
-> +
-> +    def __init__(self, prefix: str):
-> +        super().__init__(
-> +            prefix, 'qapi-features',
-> +            ' * Schema-defined QAPI features',
-> +            __doc__)
-> +
-> +        self.features: ValuesView[QAPISchemaFeature]
-
-This is the ValuesView solution.
-
-The List solution:
-
-           self.features: List[QAPISchemaFeature] =3D []
-
-The Iterable solution:
-
-           self.features: Iterable[QAPISchemaFeature]
-
-[...]
-
-
-> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-> index e97c978d38..7f70969c09 100644
-> --- a/scripts/qapi/schema.py
-> +++ b/scripts/qapi/schema.py
-
-[...]
-
-> @@ -1147,6 +1161,9 @@ def __init__(self, fname: str):
->          self._def_exprs(exprs)
->          self.check()
->=20=20
-> +    def features(self) -> ValuesView[QAPISchemaFeature]:
-> +        return self._feature_dict.values()
-
-This is the ValuesView solution.
-
-The List solution:
-
-       def features(self) -> List[QAPISchemaFeature]:
-           return list(self._feature_dict.values())
-
-The Iterable solution:
-
-       def features(self) -> Iterable[QAPISchemaFeature]:
-           return self._feature_dict.values()
-
-
-> +
->      def _def_entity(self, ent: QAPISchemaEntity) -> None:
->          self._entity_list.append(ent)
->=20=20
-
-[...]
+All of this is a digression from the topic at hand, which is QMP.
 
 
