@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD683C0219B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C588FC02196
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Feb 2025 10:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgLQO-0007ob-8k; Fri, 07 Feb 2025 05:17:28 -0500
+	id 1tgLTL-0007Dp-1M; Fri, 07 Feb 2025 05:20:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLQM-0007hg-HW
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:17:26 -0500
+ id 1tgLTF-0007Ch-UO
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:20:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tgLQL-0004Lq-04
- for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:17:26 -0500
+ id 1tgLTE-0006BQ-Dz
+ for qemu-devel@nongnu.org; Fri, 07 Feb 2025 05:20:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1738923444;
+ s=mimecast20190719; t=1738923622;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2zMrreiA6fXml/tyoB0xwdzip2po3nTWUJjLq04bCbM=;
- b=IvYEJZ72oWYtUSSx4XRXvato5E8FkAOh96jAoKZb7d+ZOdUznF8/CddXVMiQj5sVSnYbPC
- UARdTWNaLhv41T/B/QiP6OvWNLZatNJ2kwnStVeSZLq6+qvYAmNAATHw0lrUWsNn2cCSde
- OQhpb9IL9tAKlBiO5EV2Ghh5T9OyKNI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VfV5omvEttMhI3EQX/PeOloTPWUmqnbr5osfkTzsZPA=;
+ b=STT82YIEWCFI24ogiz6CdCWBaMsqfyKTfu2ZZOARMt+WXBRDsuXLBSSBIfBMHIlbtY8LzS
+ lQ6vgtEkXzJ8kY8LUbGpZNScv7ANycBUeUIdYfzPBs2AiyACuB3utj5slPl/CPgfEcssVx
+ AaCq39PTKDFBBCWiuqXQwvqqxAM3858=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-CJXagb1hP5CU44sSqsF9Hg-1; Fri, 07 Feb 2025 05:17:23 -0500
-X-MC-Unique: CJXagb1hP5CU44sSqsF9Hg-1
-X-Mimecast-MFC-AGG-ID: CJXagb1hP5CU44sSqsF9Hg
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab2e44dc9b8so312118166b.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:17:22 -0800 (PST)
+ us-mta-319-bcE6NB4PMlqnPF1niivVjg-1; Fri, 07 Feb 2025 05:17:00 -0500
+X-MC-Unique: bcE6NB4PMlqnPF1niivVjg-1
+X-Mimecast-MFC-AGG-ID: bcE6NB4PMlqnPF1niivVjg
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa66f6ce6bfso201060666b.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 02:17:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1738923441; x=1739528241;
+ d=1e100.net; s=20230601; t=1738923418; x=1739528218;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2zMrreiA6fXml/tyoB0xwdzip2po3nTWUJjLq04bCbM=;
- b=Sqg9O7QTEVy0KLeXvq9hnUp1aWim+m657Y1Qgy/lTwbedKf/yRu2zpCs7v83uLtOVU
- /64Wo2qhXajVS8fcrPZkq59wdlkmFt+knwPrjKfnTQt9+4eqF0sGPJTOpWwaT1H1jtw+
- T9Lze1LdvXfDuqT9rOCLZfe5krkzbsBjew6c8sI5uSECvKusHWrUG5uHRDoP5jHyMLGA
- 7V0IjiHDBJeYBlg4I+sygZKNrqVNsRf/8oI4jR/qS3al21KXSGLybdiVAp0ULvclpCiS
- wR5d1BKR1PGtVur+iVeT+R1HPpenIvRl9659Qkd7XHxhtSRgUR/iN9pcoEy1RfMxGLeS
- PfpA==
-X-Gm-Message-State: AOJu0YwZbbr0bJCD9HyG6HfjR81Der2Yx1GcilQ6TKuGf2XjH8shWvKI
- xR4vpqs3Xab0bljUx4nCIHx8YOw9an5NWORcmPtnyVb5dIaKDPlP/7xonAwse2opsp1ol3Na7vb
- WBNpdaCkYfKg6Tu+M72iIB6dM62O+8MlcdoWaRQL+f8yqodPPbmYCVN3gIMAdiyoMioRN6rZ1iL
- RNVW57BeFJk+BoWg+Yci4VTNMevZvPZigi7MboOrY=
-X-Gm-Gg: ASbGncuOyMFRK+lTUtViR5rmU8v1R0gqwPlUw5++k7o+5PBdqr6Jb9yZ1BZxccsecrd
- Yd/CkMGAzp3y4us49E7jzRIGHAtwm5so2c9pbMVmNiTEHFZxH9AOalhDi6ceAAGHHeyBvW3HNpy
- 6X8yGqhvM2VgP6E1UIiUjwiWCsdGZcb4fP4We/Wb8k8IjwnOnUxFm4j0vNBaAgHDpIOqarKe5hg
- EUOwuIqrykjj7B5LTn+PpQZ2mPbOrixcDiq+n7+hFR0T2lLFVCQsvSIFBzht9kjE7OcN5DVlF5E
- YZfD2A==
-X-Received: by 2002:a17:907:6d0e:b0:ab6:cdc2:3417 with SMTP id
- a640c23a62f3a-ab76e8cef13mr685456966b.15.1738923441006; 
- Fri, 07 Feb 2025 02:17:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE6CjID0RSFN1ybO48T/D2riX1cvSrYvRckWhyBsi/kD+UvPszJG/T/VWvUl46MIRHbYT/twA==
-X-Received: by 2002:a17:907:6d0e:b0:ab6:cdc2:3417 with SMTP id
- a640c23a62f3a-ab76e8cef13mr685452266b.15.1738923440500; 
- Fri, 07 Feb 2025 02:17:20 -0800 (PST)
+ bh=VfV5omvEttMhI3EQX/PeOloTPWUmqnbr5osfkTzsZPA=;
+ b=JnL7NPX/e3ZXcvS5nWix0txoSYd8bSmyP2xMWDDzVqtjsZ2ol9uw0SSLkQ6j657mC1
+ h4wLHrLvCde5ZMXi/HboP2A3z/AgXTU/KvzAwybSsTSFlZxhi0Q9UAdxJdLPk6OTpD3o
+ 9CKQI790CCXLXGtqXK6z7X3BBJP8/txW4cU9cPzf0nurX41UjMajLNzFBd5/0yJXEirE
+ SZH8rGNpQkPGkD+1g4YpGfFcA84+nhn9PB460mo1iChRjEDh6oYksCywpiorRRfv2Z0w
+ u2iXdXjHdqatLmGi8rcsNFCmEeMm6m7GbM0nHi+6E6KV8JLvmVU3mJpMQeMfI2E1Q67F
+ PorQ==
+X-Gm-Message-State: AOJu0YyuKarkoHtEYdN1FaJG3OXpb6/nueJQsjzty+Yv5qVBoRlQzF3t
+ 8M1HBYG/fvKt5waq7atNtjeVZ3KAytSH+7jr7s1sPTJ0kNIELsLnY188UK02qgDoyVH+ydW0iJm
+ M+Vik1WzIpTwT1vLnbeLVqCoJatuWA2y/d7zvEfhY/dGEEwJhkCFAz62xydENVV29KAckLHGwhP
+ yWBnttmxL7nHXIwWojgYWaxuUpcCjF2NO5DXKBIjs=
+X-Gm-Gg: ASbGncvFcAyXcc/xC2WtKgwVr3dWqj1pvSDKRUItpTNJGOMGRBC8gGv7+XGG4WmRX/j
+ KFSZaX4mfbfeBRZNBTd3ruxOuujU6SRtGSw3iv2Ha1qxiwkx59qXOSp2z7h4uSyviGE/MgWbBDh
+ Itm13rE2cCt7kKbfAIXoPA7VveHsXT2O+6CFQpjt4aMe/ib00ofvPSheiWBnhIGW32OrbG8XrpT
+ Q60JXgzb39ft0hdFbfgbJDX2FGK8ccSeWKWixyADUTtS3dzBNUiKMsiiWtf0aXpl6bztdFdXYzD
+ ZYKSxQ==
+X-Received: by 2002:a17:907:6eac:b0:ab2:d721:ed92 with SMTP id
+ a640c23a62f3a-ab789bfc571mr233637066b.45.1738923418155; 
+ Fri, 07 Feb 2025 02:16:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IENxl2fGDbpXRhUB0cRg1D0aYQkWxbK9bKR2Fu7DI9m+bd5p0vWIL9kMuJAABQEtkcAZ6lzbw==
+X-Received: by 2002:a17:907:6eac:b0:ab2:d721:ed92 with SMTP id
+ a640c23a62f3a-ab789bfc571mr233632566b.45.1738923417520; 
+ Fri, 07 Feb 2025 02:16:57 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.97.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab78405313dsm146061166b.55.2025.02.07.02.17.15
+ a640c23a62f3a-ab772f83e30sm240714566b.38.2025.02.07.02.16.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Feb 2025 02:17:16 -0800 (PST)
+ Fri, 07 Feb 2025 02:16:54 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	zhao1.liu@intel.com
-Subject: [PATCH 10/12] rust: irq: define ObjectType for IRQState
-Date: Fri,  7 Feb 2025 11:16:21 +0100
-Message-ID: <20250207101623.2443552-11-pbonzini@redhat.com>
+Subject: [PATCH 06/12] rust: qdev: make ObjectImpl a supertrait of DeviceImpl
+Date: Fri,  7 Feb 2025 11:16:17 +0100
+Message-ID: <20250207101623.2443552-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250207101623.2443552-1-pbonzini@redhat.com>
 References: <20250207101623.2443552-1-pbonzini@redhat.com>
@@ -109,54 +109,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a small preparation in order to use an Owned<IRQState> for the argument
-to sysbus_connect_irq.
+In practice it has to be implemented always in order to access an
+implementation of ClassInitImpl<ObjectClass>.  Make the relationship
+explicit in the code.
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/irq.rs | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ rust/qemu-api/src/qdev.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
-index 638545c3a64..835b027d5e5 100644
---- a/rust/qemu-api/src/irq.rs
-+++ b/rust/qemu-api/src/irq.rs
-@@ -5,11 +5,12 @@
- //! Bindings for interrupt sources
- 
- use core::ptr;
--use std::{marker::PhantomData, os::raw::c_int};
-+use std::{ffi::CStr, marker::PhantomData, os::raw::c_int};
- 
- use crate::{
--    bindings::{qemu_set_irq, IRQState},
-+    bindings::{self, qemu_set_irq},
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 8f6744c5e26..cb6f12e726c 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -17,12 +17,12 @@
+     callbacks::FnCall,
+     cell::bql_locked,
      prelude::*,
-+    qom::ObjectClass,
+-    qom::{ClassInitImpl, ObjectClass, Owned},
++    qom::{ClassInitImpl, ObjectClass, ObjectImpl, Owned},
+     vmstate::VMStateDescription,
  };
  
- /// Interrupt sources are used by devices to pass changes to a value (typically
-@@ -21,7 +22,8 @@
- /// method sends a `true` value to the sink.  If the guest has to see a
- /// different polarity, that change is performed by the board between the
- /// device and the interrupt controller.
--///
-+pub type IRQState = bindings::IRQState;
-+
- /// Interrupts are implemented as a pointer to the interrupt "sink", which has
- /// type [`IRQState`].  A device exposes its source as a QOM link property using
- /// a function such as [`SysBusDeviceMethods::init_irq`], and
-@@ -91,3 +93,10 @@ fn default() -> Self {
-         }
-     }
- }
-+
-+unsafe impl ObjectType for IRQState {
-+    type Class = ObjectClass;
-+    const TYPE_NAME: &'static CStr =
-+        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_IRQ) };
-+}
-+qom_isa!(IRQState: Object);
+ /// Trait providing the contents of [`DeviceClass`].
+-pub trait DeviceImpl {
++pub trait DeviceImpl: ObjectImpl {
+     /// _Realization_ is the second stage of device creation. It contains
+     /// all operations that depend on device properties and can fail (note:
+     /// this is not yet supported for Rust devices).
 -- 
 2.48.1
 
