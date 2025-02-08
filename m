@@ -4,99 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7560BC02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 07:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE04C02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 08:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgfcm-0005zH-HZ; Sat, 08 Feb 2025 02:51:36 -0500
+	id 1tgfnW-0001oq-QF; Sat, 08 Feb 2025 03:02:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tgfcl-0005yt-3H
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 02:51:35 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tgfcj-0007Vu-FE
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 02:51:34 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21c2f1b610dso70012605ad.0
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 23:51:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1739001092; x=1739605892;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xJPqyACVWuy+f95M2UxICBXYp3QYbJ6h2gyeOOlBE4s=;
- b=OfpFnJoeD5GsgGstYowUTLncEqupk25y3AEg+5oQ2KBdxdz8lyNl7YdSGe7EBS5TTk
- P0d7170HftmJR2ObooBkPL5BtjJo5jp2X1+iqX8CALyOxFzEFMGsquROgPOwfwB195L6
- yajHWjKIJ5ApIqnSEZ5fFvJq5Pzak612kVK0To4k6PtxMOV1WqXhMohT/rd5z+8/ayxv
- k0riY5LjMu/dKAhcoyw4zhmm9k6i8CyGPwLrgRx7E9e8duAE74ZdSWKphtfkDfrPz/ma
- Ux6blGzUIv3k4hHogY5rGOqY99T5jUaaIMkwx7pO3QkhG9v4dmhlWNP5v98EKUQXrR+n
- gM2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739001092; x=1739605892;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xJPqyACVWuy+f95M2UxICBXYp3QYbJ6h2gyeOOlBE4s=;
- b=TGbM9BCdJ0ewk2sBz8mm2WiwC011QC7ZnBLeDiZoPVLoW+hKn3sG5j/KQGL3ZGr3Hu
- eS3DWLOVFo8XEy1iGqXgrdth3gCRMUImZ/4M3KsO0Hfo57NutwwJbK2NLYExftRQXoFB
- fiM2k4FDWPGdlfc0HxItRRhSwxW1RJ/OclfmOzwXmcYnagWvoqlhsSEKKsrecaFhfYCG
- G3Qn1ZEdNHrvHAnFN6gx6YZjtthdMNRUFGz/vIk8WebKs3fS4GTwHhDrrUI9B68ZaL/n
- gKhJsZdbFJltutkQgod55CrWeLrXiaUPqQuXTkz1Op4EWJ83hQnK3ABhE+em3nEL1LfX
- sG5Q==
-X-Gm-Message-State: AOJu0YwFhKoOD7iSXdY+exn4UlGqheY16I4+eIYpoGS4qWbSLFe+gOcw
- 9WcvuRHhZs0aVP0FwdPBJ67PJkmvurp991cd7A75tVAvjWv9mqUKW64fZKNYYb4=
-X-Gm-Gg: ASbGncvTObqLfsEmpB7Gj93tv6UB2qCHaIAGb9gQmOJG/ji5DYzVfjV5Ya7u69CMuu9
- VMQCvTDTVDBQh4qrQqLSfsmCrj9vvdumn3V/McazL3aXlPzvsITRYTtkLlCKgVqCbWCQNVutdjK
- lOHV3IaMzhPuYHPdePUXq1yjIayoqEG/BdlDZtRZgaI5ajjCrD4IHUBREXsEkKu9Ok7N5vUfTnk
- T3114UeZYJsdMOxP+f+cL/BQq3Olt67sv9emcPP5hsRoez64VeH5dClNd0laBkNv8T7/IHSr09Y
- o+06FceGO63g76i4Rd8=
-X-Google-Smtp-Source: AGHT+IHlCnrLQEnc4bz1UYyArmKAbb0ibEPs/DkUUG+6WboIMattskGZZmvy/vF8M4qY43vnNeQENg==
-X-Received: by 2002:a05:6a21:458a:b0:1e1:3970:d75a with SMTP id
- adf61e73a8af0-1ee03a21d7fmr11713144637.9.1739001091923; 
- Fri, 07 Feb 2025 23:51:31 -0800 (PST)
-Received: from localhost ([157.82.205.237])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-73048a9d063sm4156905b3a.34.2025.02.07.23.51.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 23:51:31 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 08 Feb 2025 16:51:08 +0900
-Subject: [PATCH v5 2/4] qapi: Accept bool for OnOffAuto and OnOffSplit
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgfnU-0001nB-Sk; Sat, 08 Feb 2025 03:02:40 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgfnR-0002vc-VB; Sat, 08 Feb 2025 03:02:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739001758; x=1770537758;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=PgO8/WqlJ+zgEu78mjjyldEkBb1UJgABH000P/22n3Q=;
+ b=TgHmA861RlcbnnCOOJfpbY4KJM/FJIjHVjQxYkfsWYMpXiY2/8D0Tzhv
+ Vz0UdMY1UHnhhwOfvRUcMJm1DaPtZRASwkMnvWeUGhP17992ARlYGcrh+
+ UyfXUV+ZuWGEtzpnBtCUHLzqxETN8Yacl5wkjFxkQIQ3NwTx1VU8QooB0
+ ybzLrqZ5e1Y71wiQWHNgTTJjtBDbN0ZkPiKeZ/y8V5fckPNy58zoRtAF1
+ KiSSTaEgvYIE4m7dl4f1Ig0AogvM3Id/7I0Gfb2BOajCBSoTWp8fVLKxQ
+ GppCJmnVOAleLX8Nt0FWR8p8FkKd615YAM38eTyT47UxVmIbDlFC1jkQp A==;
+X-CSE-ConnectionGUID: xjSaLEoSSYGy9hkyFddQUw==
+X-CSE-MsgGUID: jImCDJJ9Rsise3E+0gY12w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="65002522"
+X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="65002522"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2025 00:01:33 -0800
+X-CSE-ConnectionGUID: v8BgjGh9QqqlPwAG+H/FRw==
+X-CSE-MsgGUID: s4rTIjvbTMC6AHHK66MMMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="111561563"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 08 Feb 2025 00:00:31 -0800
+Date: Sat, 8 Feb 2025 16:19:58 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 08/10] rust/timer/hpet: add basic HPET timer and HPETState
+Message-ID: <Z6cTrkww4n9lPe2X@intel.com>
+References: <20250125125137.1223277-1-zhao1.liu@intel.com>
+ <20250125125137.1223277-9-zhao1.liu@intel.com>
+ <b9ce64fa-b2b8-4f61-8380-9ec582936b26@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250208-virtio-v5-2-4376cb218c0f@daynix.com>
-References: <20250208-virtio-v5-0-4376cb218c0f@daynix.com>
-In-Reply-To: <20250208-virtio-v5-0-4376cb218c0f@daynix.com>
-To: Jason Wang <jasowang@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Andrew Melnychenko <andrew@daynix.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Lei Yang <leiyang@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b9ce64fa-b2b8-4f61-8380-9ec582936b26@redhat.com>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,115 +90,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bool has representations of "on" and "off" different from
-OnOffAuto/OnOffSplit:
-- The command line syntax accepts on/yes/true/y and off/no/false/n for
-  bool but only on and off for OnOffAuto.
-- JSON uses true/false for bool but "on" and "off" for
-  OnOffAuto/OnOffSplit.
+On Wed, Jan 29, 2025 at 11:57:18AM +0100, Paolo Bonzini wrote:
+> Date: Wed, 29 Jan 2025 11:57:18 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 08/10] rust/timer/hpet: add basic HPET timer and
+>  HPETState
+> 
+> 
+> 
+> On Sat, Jan 25, 2025 at 1:32 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+> > +// Register space for each timer block. (HPET_BASE isn't defined here.)
+> > +const HPET_REG_SPACE_LEN: u64 = 0x400; // 1024 bytes
+> 
+> Use doc comments "///"...
 
-This inconsistency causes some problems:
-- Users need to take the underlying type into consideration to determine
-  what literal to specify, increasing cognitive loads for human users
-  and complexity for programs invoking QEMU.
-- Converting an existing bool property to OnOffAuto/OnOffSplit will
-  break compatibility.
+OK,
 
-Fix these problems by accepting bool literals for OnOffAuto/OnOffSplit.
-This change is specific to OnOffAuto/OnOffSplit; types added in the
-future may be defined as an alternate of bool and enum to avoid the
-mentioned problems in the first place.
+> > +// Timer N FSB Interrupt Route Register (masked by 0x18)
+> > +const HPET_TN_FSB_ROUTE_REG: u64 = 0x010;
+> 
+> ... all the way to here.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/core/qdev-properties.c | 17 ++++++++++++++++-
- scripts/qapi/visit.py     | 24 ++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 1 deletion(-)
+Done.
 
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 434a76f5036edd2091a9c79525b8e102582637be..073902431213c5be47197cb0d993d60cc2562501 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -2,6 +2,7 @@
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-misc.h"
-+#include "qapi/qapi-visit-common.h"
- #include "qapi/qmp/qlist.h"
- #include "qemu/ctype.h"
- #include "qemu/error-report.h"
-@@ -493,12 +494,26 @@ const PropertyInfo qdev_prop_string = {
- 
- /* --- on/off/auto --- */
- 
-+static void set_on_off_auto(Object *obj, Visitor *v, const char *name,
-+                            void *opaque, Error **errp)
-+{
-+    Property *prop = opaque;
-+    int *ptr = object_field_prop_ptr(obj, prop);
-+    OnOffAuto value;
-+
-+    if (!visit_type_OnOffAuto(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    *ptr = value;
-+}
-+
- const PropertyInfo qdev_prop_on_off_auto = {
-     .name = "OnOffAuto",
-     .description = "on/off/auto",
-     .enum_table = &OnOffAuto_lookup,
-     .get = qdev_propinfo_get_enum,
--    .set = qdev_propinfo_set_enum,
-+    .set = set_on_off_auto,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
- 
-diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
-index 12f92e429f6bafc091f74af88c1b837d08c7f733..221373b165aa95bceb4eb50a557edf0e5b4c01f7 100644
---- a/scripts/qapi/visit.py
-+++ b/scripts/qapi/visit.py
-@@ -209,6 +209,29 @@ def gen_visit_list(name: str, element_type: QAPISchemaType) -> str:
- 
- 
- def gen_visit_enum(name: str) -> str:
-+    if name in ('OnOffAuto', 'OnOffSplit'):
-+        return mcgen('''
-+
-+bool visit_type_%(c_name)s(Visitor *v, const char *name,
-+                 %(c_name)s *obj, Error **errp)
-+{
-+    bool b;
-+    int i;
-+
-+    if (v->type == VISITOR_INPUT && visit_type_bool(v, name, &b, NULL)) {
-+        *obj = b ? %(on)s : %(off)s;
-+        return true;
-+    }
-+
-+    b = visit_type_enum(v, name, &i, &%(c_name)s_lookup, errp);
-+    *obj = i;
-+
-+    return b;
-+}
-+''',
-+                     c_name=c_name(name),
-+                     on=c_enum_const(name, 'on'), off=c_enum_const(name, 'off'))
-+
-     return mcgen('''
- 
- bool visit_type_%(c_name)s(Visitor *v, const char *name,
-@@ -359,6 +382,7 @@ def _begin_user_module(self, name: str) -> None:
-         self._genc.preamble_add(mcgen('''
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/visitor-impl.h"
- #include "%(visit)s.h"
- ''',
-                                       visit=visit))
+> > +/// HPET Timer Abstraction
+> > +#[repr(C)]
+> > +#[derive(Debug, Default, qemu_api_macros::offsets)]
+> > +pub struct HPETTimer {
+> > +    /// timer N index within the timer block (HPETState)
+> > +    #[doc(alias = "tn")]
+> > +    index: usize,
+> > +    qemu_timer: Option<Box<QEMUTimer>>,
+> > +    /// timer block abstraction containing this timer
+> > +    state: Option<NonNull<HPETState>>,
+> > +
+> > +    /// Memory-mapped, software visible timer registers
+> 
+> These "headings" cannot be doc comments, because they would be attached
+> to the field after.  Same below:
+> 
+> -    /// Hidden register state
+> +    // Hidden register state
+> 
+> -    /// HPET block Registers: Memory-mapped, software visible registers
+> +    // HPET block Registers: Memory-mapped, software visible registers
+> 
+> -    /// Internal state
+> +    // Internal state
 
--- 
-2.48.1
+Fixed. Thanks!
+
+> > +    fn get_state(&self) -> &HPETState {
+> > +        // SAFETY:
+> > +        // the pointer is convertible to a reference
+> > +        unsafe { self.state.unwrap().as_ref() }
+> > +    }
+> 
+> Note for the future: I looked briefly into why a NonNull<> is needed
+> and the reasons are two.  First, the offset_of! replacement does not
+> support lifetime parameters.  Second, it's messy to pass a &HPETState
+> to the &HPETTimer, because the HPETTimer still has to be written into
+> the HPETState.
+
+Yes, and the second use would be a common case in practice. So maybe we
+need some wrapper on this, to provide someting like HPETTimer::get_state(),
+which returns a reference of the parent structure.
+
+In addition, for underlying library, NonNull<> is nice thinks to its low
+overhead. But for device implementation, I'm not sure if it's the good
+choice. Rust uses RefCell<Weak<>> (for QEMU, it could be BqlRefCell<Weak<>>)
+to handle this cycle reference case.
+
+As I mentioned in RFC,
+
+	The device instance is not created in Rust side, and there's
+	only init() method to initialize created device instance. This
+	way, it's hard to be compatible with the pattern of creating
+	weak references (at least I failed).
+
+To address this issue, the method `from` or `from_raw` seems necessary,
+like `Owned::from`, but it's tricky... So I don't have a good idea to
+replace NonNull<> yet! 
+
+> This may be worth revisiting when QEMU starts using
+> pinned-init is added, but for now is self-contained.
+> 
+> > +        if let Some(timer) = self.qemu_timer.as_mut() {
+> > +            timer.timer_mod(self.last);
+> > +        }
+> 
+> I think this can be just "timer.unwrap().timer_mod(self.last)" (not
+> sure if it needs an as_ref() too).
+> 
+
+Yes, it needs as_ref(). A direct unwrap() consumes the Some() since
+inter type of qemu_timer (Box<Timer>) is non-`Copy`.
+
+Another example is
+
+    fn get_state(&self) -> &HPETState {
+        // SAFETY:
+        // the pointer is convertible to a reference
+        unsafe { self.state.unwrap().as_ref() }
+    }
+
+Because the state (Option<NonNull<HPETState>>) has `Copy` so that this
+case doesn't need as_ref before unwrap.
+
+Thanks,
+Zhao
 
 
