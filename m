@@ -4,50 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1594C02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 08:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD7A6C02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 10:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgfwJ-0004LU-Su; Sat, 08 Feb 2025 03:11:48 -0500
+	id 1tgiCP-0007S9-Ib; Sat, 08 Feb 2025 05:36:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1tgfwI-0004JT-1e
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 03:11:46 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1tgfwG-0007ft-1w
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 03:11:45 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxSOG6EadnXlJvAA--.19209S3;
- Sat, 08 Feb 2025 16:11:38 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMCxLcW5Eadn0_cFAA--.20812S2;
- Sat, 08 Feb 2025 16:11:37 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: Bibo Mao <Maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Subject: [PATCH V2] target/loongarch: fix vcpu reset command word issue
-Date: Sat,  8 Feb 2025 15:50:23 +0800
-Message-Id: <20250208075023.5647-1-lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgiCN-0007Rc-Rt; Sat, 08 Feb 2025 05:36:31 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tgiCK-0003TO-Fb; Sat, 08 Feb 2025 05:36:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739010989; x=1770546989;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=0JTr5C7lCU/zR2Yl75EYqnRVv2KwKeWBGdVg0HXEuF0=;
+ b=KAuxxhQxXN1g9umticgb3ZJAewE/MJf+lj+12U3ik5PpAEgjROmLemoI
+ kD8AWIGy3soema5bcwxswwR1jFubPQfFfjuLSR+Enig1UXDvHkEz8qVd1
+ 8tpqDOdxt3VE6+A5TwiVK3us07Y/GfprA6bilGXSr4wNHmMXyb4upmyMd
+ bOZ30FzLian2SRzFIcxak6yFPkFWr+pmM/dZgrssPWs1wi0m3yfYM56aP
+ eHkP0hkPEFmgWa7jr/3ZlMbcIZwtahVF02pm7735ngVkbHIbxBMJjTLpf
+ Be/2dsvplBYBGLeSD77AEQ83Cg5IC5q0OdfmylUD6VxgFIsRhsAjCzsIA w==;
+X-CSE-ConnectionGUID: s9KNjlqhTBKUwiJpKrjp8A==
+X-CSE-MsgGUID: DtCW/yHPQrC8ugObvBd2ww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="50632344"
+X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="50632344"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2025 02:36:23 -0800
+X-CSE-ConnectionGUID: licO+vvqQASptpgi8CirBg==
+X-CSE-MsgGUID: Cwmlper6Q86A36ZnH0ksfg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="112264621"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa010.fm.intel.com with ESMTP; 08 Feb 2025 02:36:19 -0800
+Date: Sat, 8 Feb 2025 18:55:49 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 09/10] rust/timer/hpet: add qom and qdev APIs support
+Message-ID: <Z6c4NVX4wteIEIOA@intel.com>
+References: <20250125125137.1223277-1-zhao1.liu@intel.com>
+ <20250125125137.1223277-10-zhao1.liu@intel.com>
+ <750f06f3-6326-473f-9d08-ad6bb1f2a54a@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxLcW5Eadn0_cFAA--.20812S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+In-Reply-To: <750f06f3-6326-473f-9d08-ad6bb1f2a54a@redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -65,48 +90,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the KVM_REG_LOONGARCH_VCPU_RESET command word
-is sent to the kernel through the kvm_set_one_reg interface,
-the parameter source needs to be a legal address,
-otherwise the kernel will return an error and the command word
-will fail to be sent.
+On Wed, Jan 29, 2025 at 11:58:14AM +0100, Paolo Bonzini wrote:
+> Date: Wed, 29 Jan 2025 11:58:14 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 09/10] rust/timer/hpet: add qom and qdev APIs support
+> 
+> 
+> 
+> On Sat, Jan 25, 2025 at 1:32 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+> >      fn read(&mut self, addr: hwaddr, _size: u32) -> u64 {
+> 
+> This can be &self.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
-Cc: Bibo Mao <Maobibo@loongson.cn>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: Xianglai Li <lixianglai@loongson.cn>
+Done.
 
-CHANGE:
-V2<-V1:
-  1.Sets the initial value of the variable and
-  adds a function return value judgment and prints a log
+> >          let shift: u64 = (addr & 4) * 8;
+> > 
+> > +        match addr {
+> > +            HPET_TN_CFG_REG => self.config >> shift, // including interrupt capabilities
+> 
+> This needs to be "match addr & !4".
 
- target/loongarch/kvm/kvm.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+I understand it's not necessary:
 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index a3f55155b0..3f499e60ab 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -581,9 +581,14 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
- void kvm_arch_reset_vcpu(CPUState *cs)
- {
-     CPULoongArchState *env = cpu_env(cs);
-+    int ret = 0;
-+    uint64_t unused = 0;
- 
-     env->mp_state = KVM_MP_STATE_RUNNABLE;
--    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
-+    ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &unused);
-+    if (ret) {
-+        error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET");
-+    }
- }
- 
- static int kvm_loongarch_get_mpstate(CPUState *cs)
--- 
-2.39.1
+In timer_and_addr(), I've masked the address with 0x18. 
+
+    fn timer_and_addr(&self, addr: hwaddr) -> Option<(&BqlRefCell<HPETTimer>, hwaddr)> {
+        let timer_id: usize = ((addr - 0x100) / 0x20) as usize;
+
+        if timer_id > self.num_timers.get() {
+            None
+        } else {
+            Some((&self.timers[timer_id], addr & 0x18))
+        }
+    }
+
+And in HPETState::read(), I pass the masked address to
+HPETTimer::read():
+
+    fn read(&self, addr: hwaddr, size: u32) -> u64 {
+        let shift: u64 = (addr & 4) * 8;
+
+        if (0x100..=0x3ff).contains(&addr) {
+            match self.timer_and_addr(addr) {
+                None => 0, // Reserved,
+                Some((timer, addr)) => timer.borrow_mut().read(addr, size),
+            }
+        }
+
+Ah, the `addr` variable in Some() is misleading, and I should use
+anothor name like `tn_addr`.
+
+0x18 is a subset of !0x4, so the bitwise & operation with !0x4 can be
+omitted (I understand that this is why you also omitted this in the C
+side in the commit c2366567378dd :-) ).
+
+But `match addr & !4` is also reasonable, which explicitly emphasize
+`& !4` makes the code clearer. I would do this.
+
+> > +            HPET_TN_CMP_REG => self.cmp >> shift,    // comparator register
+> > +            HPET_TN_FSB_ROUTE_REG => self.fsb >> shift,
+> > +            _ => {
+> > +                // TODO: Add trace point - trace_hpet_ram_read_invalid()
+> > +                // Reserved.
+> > +                0
+> > +            }
+> > +        }
+> > +    }
+> > +
+> > +    fn write(&mut self, addr: hwaddr, value: u64, size: u32) {
+> > +        let shift = ((addr & 4) * 8) as u32;
+> > +        let len = std::cmp::min(size * 8, 64 - shift);
+> > +
+> > +        match addr {
+> > +            HPET_TN_CFG_REG => self.set_tn_cfg_reg(shift, len, value),
+> 
+> Likewise.
+
+Done. Thanks!
+
+> > +    fn write(&self, addr: hwaddr, value: u64, size: u32) {
+> > +        let shift = ((addr & 4) * 8) as u32;
+> > +        let len = std::cmp::min(size * 8, 64 - shift);
+> > +
+> > +        // TODO: Add trace point - trace_hpet_ram_write(addr, value)
+> > +        if (0x100..=0x3ff).contains(&addr
+> ) {
+> > +            match self.timer_and_addr(addr) {
+> > +                None => return, // Reserved.
+> 
+> Clippy complains about an unnecessary return, just replace it with "()".
+
+Fixed.
+
+> > +                Some((timer, addr)) => timer.borrow_mut().write(addr, value, size),
+> > +            }
+> 
+> > +
+> > +    fn reset_hold(&self, _type: ResetType) {
+> > +        let sbd = self.upcast::<SysBusDevice>();
+> > +
+> > +        for timer in self.timers.iter().take(self.num_timers.get()) {
+> > +            timer.borrow_mut().reset();
+> > +        }
+> > +
+> > +        self.counter.set(0);
+> > +        self.config.set(0);
+> > +        self.pit_enabled.set(true);
+> > +        self.hpet_offset.set(0);
+> > +
+> > +        HPETFwConfig::update_hpet_cfg(
+> > +            self.hpet_id.get(),
+> > +            Some(self.capability.get() as u32),
+> > +            Some((*sbd).mmio[0].addr),
+> > +        );
+> 
+> This can be simply sbd.mmio[0].addr, without the (*...).
+> 
+> Also, you can change update_hpet_cfg to take arguments without the Option<>
+> around them.
+
+Good idea! Done.
+
+> > +// TODO: add OBJECT_DECLARE_SIMPLE_TYPE.
+> > +#[repr(C)]
+> > +pub struct HPETClass {
+> > +    parent_class: <SysBusDevice as ObjectType>::Class,
+> > +}
+> > +
+> > +unsafe impl ObjectType for HPETState {
+> > +    type Class = HPETClass;
+> > +    const TYPE_NAME: &'static CStr = crate::TYPE_HPET;
+> > +}
+> 
+> No need for HPETClass (and for ClassInitImpl<HPETClass>), just do
+> 
+> unsafe impl ObjectType for HPETState {
+
+Pls let me add a comment here:
+
+// No need for HPETClass. Just like OBJECT_DECLARE_SIMPLE_TYPE in C.
+
+Then this can be "grep", as a reference.
+
+>     type Class = <SysBusDevice as ObjectType>::Class;
+>      const TYPE_NAME: &'static CStr = crate::TYPE_HPET;
+> }
+> 
+> which is indeed more similar to OBJECT_DECLARE_SIMPLE_TYPE().
+
+Awesome! Thanks.
+
+Regards,
+Zhao
 
 
