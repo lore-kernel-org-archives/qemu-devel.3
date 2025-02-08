@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0649C02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 16:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53466C0219E
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 16:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgnrf-00011w-EQ; Sat, 08 Feb 2025 11:39:31 -0500
+	id 1tgnrp-00013J-1b; Sat, 08 Feb 2025 11:39:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrd-00011S-VC
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:30 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnri-00012f-RT
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:35 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrb-0008OM-CW
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:29 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38a8b17d7a7so1431778f8f.2
- for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 08:39:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrh-0008P5-5e
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:34 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436a03197b2so20191525e9.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 08:39:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739032765; x=1739637565; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739032771; x=1739637571; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AcA7adOksZJD+UONQiU8US0WrcIGd+kxe3T2X7yAEcA=;
- b=BreY4QpU6wt+wCY+rpCPDIgJJ92jJfy3T16UwQCWhAwxkOTfEITVV6EPXsp0Ur2I+j
- VqCfJgKQMtS5reTd5jrhyU6LlqYTY19cSOOcRirt+yNDMJeTWOEpjCjuJB7S4SeNtoKZ
- poinmkvPXwLBgepH2KAKkA6dU0O4nGeHMK2x3labuIKRY1eP85+jAnuWyNu84FcZ3kid
- 1BHmLSddcKNBzweCyKow/vijE0EkNI3tVHHgRbElqz4vM7meZNsAwqk9hvXA9dudZix9
- 1bqkSbUI9SLsBKx5kd+HiM4F0OFrPhQVlSRnPuh6E8tw/irlM43RosRszT9CL3PSDlNu
- NBSg==
+ bh=BHNgIGYUe1Afrdl08LOWU03e5kzF56Zt76xmOxbCwW0=;
+ b=Cmq7FRNyadq2jHatYbe3wjIa26my42RrvWRY8QMLUH96D640yfZ7NLEeTUwx5ESVWE
+ bieJ+iK24hG7zLAPRp8tNkRI6UsH+We43xBPK1HUwDiOkIncMmH4AfjnTdX7nh/M1S2c
+ KGtK3JPThYZtyh88N91+z8niXOyb4mAP190+bKVdOeQm9F35/yqAJaDx1GnH3BLYsXNK
+ gcajfM6pKpXqpQ98epmhMbOVy9+4KMYnsgtJuObwhlt3zwxCQDZAU3eO3de6MrCCr79T
+ Kb/Nm2DG7F63Cl2r7evaMJAMpqv9nGPTv7yOI7YHRb7Yn8CTPspp+Ox8MUeWoTKoj3CR
+ QgBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739032765; x=1739637565;
+ d=1e100.net; s=20230601; t=1739032771; x=1739637571;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AcA7adOksZJD+UONQiU8US0WrcIGd+kxe3T2X7yAEcA=;
- b=uvGEFsAFlnfORfZxFhhzFhIULEXS8Z8Eld7t/m99Fg4cLrkgxE9+quGK8cfaB+KNFC
- sq+C/uiJICm+OogcQCvowCsvunodZcZUgY6bZQpBUi/3MqM+muAsXqIinGwwVWgEcdwb
- LowGdlvgCQJetG6GECbTDmr7XRPMB46YeQctRmxTehPCQ7yCEVehPRUHheiDC5qMLjD5
- AWcogNfJAja3jzIzm4V4bNcn13DwSdFnF9Gq6hKkNEL46GQ+wGCwx2CgdFbtNBaKlDgK
- usnpmErlkMjgcItwRJCFjGAXHCoBRGjMfrktA92qIOSLE/yoRbI+DiTV1YmDsQXMrX5F
- FzOg==
-X-Gm-Message-State: AOJu0YyeI4JKROj9lkydHrDQq5zDblyCdW5Va5Oxi9vpzt+HGzq4i+Gk
- PIBmlE3h2rqxIV2OB/K9c56y/5sNPoDEM1sgasJUbIQQ8O1SrnZma8Do0LTTShOJkqikD4ZBYCx
- OQs8=
-X-Gm-Gg: ASbGncvJkL+xpTDWS1nyGr9qv1c39Czuy9ZF2EoOgrQ1avilGgQ+4ryNQt75ZkSQwRc
- vLKh5YN1QgHcTvLe3kvzMMm3g17v46C/EreHF2aPxjy5f23BUoILtWO+izKQXmSqa/bYDAmMnRT
- BuiIG0No7YCFRh9896l3qerumyDdKQw3wbP+K02NHbinbLHlMXVLGpJUvKfnScczi10L27K3oi0
- 3Ovubx4BXiVrIGdXYQcQi4O2KlHhf7LOUzj/JXjAnAOg1FqdUiLPD5Jr2pqip40X201Vhu0vCUs
- +8qbgaDBs7V2yr5fv89q1yeuRYeAi14dPkG4X1hl54KKwuR4zKi7nQfW/J72maVL5g==
-X-Google-Smtp-Source: AGHT+IEdTgs0/7BmFE/lYXZS9m5FuUhqNVoPpaW8JwjPjKIKOJi1em2pZpdtO0n7teZaA1euLiI3sw==
-X-Received: by 2002:adf:efc4:0:b0:38a:4b8b:c57a with SMTP id
- ffacd0b85a97d-38dc93509damr5335898f8f.44.1739032765467; 
- Sat, 08 Feb 2025 08:39:25 -0800 (PST)
+ bh=BHNgIGYUe1Afrdl08LOWU03e5kzF56Zt76xmOxbCwW0=;
+ b=XbcUoOdfmTKFrkxhGpmOr/t2xME+kNTw0QxAg5vszZgkBJKdroGXc67a7HRdQdq6EC
+ IulFymlH8M62bl0FxgZCrxEPoAvdl2elz/uatHrFrnGwnW0ThlJh+a43G4yXiQ/Llu/6
+ wRdE2GJtaDIlGQVKAi/8LsH6QWm/ZL/DuQlsSZrvX5+8MKpbtPBHTjg4QN85S2nfiFDU
+ T1vFbe06rMltIZGjTASlwo+cePRq11q6PYemmvR/DFGy0e/wGdmK1c2TVIGTw4Hj5k9c
+ 9bJ4oGxkacZ8ygawHKp76aYsuNn8sicgH/NIO7rSRnDKku8N4qKF9o7HL+kUXTPMsEEY
+ 9Pew==
+X-Gm-Message-State: AOJu0Yy4eBPA9FQMbuIkPGbzGyd/8ZCPtA/IhqSFuFCG0UbcGCX++zqR
+ BT8ker6Cu56RypnB8RPj1HPYkclnTRFmHNquXi3e7zZ4OEWkoS21+KgwxIh4KRk6ajQEY2YaVzi
+ vR5c=
+X-Gm-Gg: ASbGncudEuGSkfeiU50vW819tV744JmkttTipmyzzGnG1HDZlv+De178NMArnmMcM9m
+ gYu8N1StrvoaTQcIN3SQguMlDh2Bv1tID6BEkxeD4CQcSh1A4QUq4DByW9ZM2vBzo76PxyFMoPd
+ bjJsTm2Ytu2nHe+9CKUFgFaSx3lIVBD1JeE1zBl28rSMIRLt1CKRbxnFHXBfkQzLW4I8chGfWk5
+ J/sWCmV8RtauRSjIxKrjoEXhVkWDSxKLmELt2rQyfeTQBNv2LWK886uMT+/Px8elRi7A19yPwGG
+ 7fQ9larjxu5K7VLFrDMqooaneufFFGR/FKY+LgnndR37HJQ/PT3eBlXu8WB448CkKQ==
+X-Google-Smtp-Source: AGHT+IFYXCzbTFyNpFo+/GYGePnB+ahiUdqXKhY+NZKi+ZPsvLUsiHHLIKejAHlbITfeO0ayn66qUw==
+X-Received: by 2002:a5d:6d8b:0:b0:38d:d328:7987 with SMTP id
+ ffacd0b85a97d-38dd3287fd1mr2148023f8f.40.1739032770614; 
+ Sat, 08 Feb 2025 08:39:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390daf4480sm125465305e9.27.2025.02.08.08.39.23
+ ffacd0b85a97d-38dd1d3a2c3sm2661793f8f.50.2025.02.08.08.39.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Feb 2025 08:39:24 -0800 (PST)
+ Sat, 08 Feb 2025 08:39:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -70,24 +70,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 2/7] hw/char/pl011: Add transmit FIFO to PL011State
-Date: Sat,  8 Feb 2025 17:39:06 +0100
-Message-ID: <20250208163911.54522-3-philmd@linaro.org>
+Subject: [PATCH v6 3/7] hw/char/pl011: Introduce pl011_xmit() as GSource
+Date: Sat,  8 Feb 2025 17:39:07 +0100
+Message-ID: <20250208163911.54522-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250208163911.54522-1-philmd@linaro.org>
 References: <20250208163911.54522-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,137 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to make the next commit easier to review,
-introduce the transmit FIFO, but do not yet use it.
+Extract pl011_xmit() from pl011_write_txdata(). Use the
+FIFO to pass the character to be transmitted.
 
-We only migrate the TX FIFO if it is in use.
+Implement it using the FEWatchFunc prototype, since we want
+to register it as GSource later. While the return value is
+not yet used, we return G_SOURCE_REMOVE meaning the GSource
+is removed from the main loop (because we only send one char).
 
-When migrating from new to old VM:
-- if the fifo is empty, migration will still work because
-   of the subsection.
-- if the fifo is not empty, the subsection will be ignored,
-  with the only consequence being that some characters will
-  be dropped.
-
-Since the FIFO is created empty, we don't need a migration
-pre_load() handler.
-
-Uninline pl011_reset_tx_fifo().
-
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/char/pl011.h |  2 ++
- hw/char/pl011.c         | 37 +++++++++++++++++++++++++++++++++++--
- 2 files changed, 37 insertions(+), 2 deletions(-)
+ hw/char/pl011.c      | 36 +++++++++++++++++++++++++++++-------
+ hw/char/trace-events |  3 +++
+ 2 files changed, 32 insertions(+), 7 deletions(-)
 
-diff --git a/include/hw/char/pl011.h b/include/hw/char/pl011.h
-index 4fcaf3d7d30..e8d95961f66 100644
---- a/include/hw/char/pl011.h
-+++ b/include/hw/char/pl011.h
-@@ -18,6 +18,7 @@
- #include "hw/sysbus.h"
- #include "chardev/char-fe.h"
- #include "qom/object.h"
-+#include "qemu/fifo8.h"
- 
- #define TYPE_PL011 "pl011"
- OBJECT_DECLARE_SIMPLE_TYPE(PL011State, PL011)
-@@ -52,6 +53,7 @@ struct PL011State {
-     Clock *clk;
-     bool migrate_clk;
-     const unsigned char *id;
-+    Fifo8 xmit_fifo;
- };
- 
- DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr);
 diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index 60cea1d9a16..807fcdee50b 100644
+index 807fcdee50b..b9c9e5b5983 100644
 --- a/hw/char/pl011.c
 +++ b/hw/char/pl011.c
-@@ -167,11 +167,13 @@ static inline void pl011_reset_rx_fifo(PL011State *s)
-     s->flags |= PL011_FLAG_RXFE;
+@@ -226,6 +226,32 @@ static void pl011_loopback_tx(PL011State *s, uint32_t value)
+     pl011_fifo_rx_put(s, value);
  }
  
--static inline void pl011_reset_tx_fifo(PL011State *s)
-+static void pl011_reset_tx_fifo(PL011State *s)
- {
-     /* Reset FIFO flags */
-     s->flags &= ~PL011_FLAG_TXFF;
-     s->flags |= PL011_FLAG_TXFE;
++static gboolean pl011_xmit(void *do_not_use, GIOCondition cond, void *opaque)
++{
++    PL011State *s = opaque;
++    int bytes_consumed;
++    uint8_t data;
++    uint32_t count;
 +
-+    fifo8_reset(&s->xmit_fifo);
- }
- 
- static void pl011_fifo_rx_put(void *opaque, uint32_t value)
-@@ -553,6 +555,24 @@ static const VMStateDescription vmstate_pl011_clock = {
++    count = fifo8_num_used(&s->xmit_fifo);
++    trace_pl011_fifo_tx_xmit_used(count);
++
++    data = fifo8_pop(&s->xmit_fifo);
++    bytes_consumed = 1;
++
++    /*
++     * XXX this blocks entire thread. Rewrite to use
++     * qemu_chr_fe_write and background I/O callbacks
++     */
++    qemu_chr_fe_write_all(&s->chr, &data, bytes_consumed);
++    trace_pl011_fifo_tx_xmit_consumed(bytes_consumed);
++    s->int_level |= INT_TX;
++
++    pl011_update(s);
++
++    return G_SOURCE_REMOVE;
++}
++
+ static void pl011_write_txdata(PL011State *s, uint8_t data)
+ {
+     if (!(s->cr & CR_UARTEN)) {
+@@ -237,14 +263,10 @@ static void pl011_write_txdata(PL011State *s, uint8_t data)
+                       "PL011 data written to disabled TX UART\n");
      }
- };
  
-+static bool pl011_xmit_fifo_state_needed(void *opaque)
-+{
-+    PL011State* s = opaque;
-+
-+    return pl011_is_fifo_enabled(s) && !fifo8_is_empty(&s->xmit_fifo);
-+}
-+
-+static const VMStateDescription vmstate_pl011_xmit_fifo = {
-+    .name = "pl011/xmit_fifo",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = pl011_xmit_fifo_state_needed,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_FIFO8(xmit_fifo, PL011State),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static int pl011_post_load(void *opaque, int version_id)
- {
-     PL011State* s = opaque;
-@@ -607,7 +627,11 @@ static const VMStateDescription vmstate_pl011 = {
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_pl011_clock,
-         NULL
--    }
-+    },
-+    .subsections = (const VMStateDescription * []) {
-+        &vmstate_pl011_xmit_fifo,
-+        NULL
-+    },
- };
- 
- static const Property pl011_properties[] = {
-@@ -621,6 +645,7 @@ static void pl011_init(Object *obj)
-     PL011State *s = PL011(obj);
-     int i;
- 
-+    fifo8_create(&s->xmit_fifo, PL011_FIFO_DEPTH);
-     memory_region_init_io(&s->iomem, OBJECT(s), &pl011_ops, s, "pl011", 0x1000);
-     sysbus_init_mmio(sbd, &s->iomem);
-     for (i = 0; i < ARRAY_SIZE(s->irq); i++) {
-@@ -633,6 +658,13 @@ static void pl011_init(Object *obj)
-     s->id = pl011_id_arm;
+-    /*
+-     * XXX this blocks entire thread. Rewrite to use
+-     * qemu_chr_fe_write and background I/O callbacks
+-     */
+-    qemu_chr_fe_write_all(&s->chr, &data, 1);
++    trace_pl011_fifo_tx_put(data);
+     pl011_loopback_tx(s, data);
+-    s->int_level |= INT_TX;
+-    pl011_update(s);
++    fifo8_push(&s->xmit_fifo, data);
++    pl011_xmit(NULL, G_IO_OUT, s);
  }
  
-+static void pl011_finalize(Object *obj)
-+{
-+    PL011State *s = PL011(obj);
-+
-+    fifo8_destroy(&s->xmit_fifo);
-+}
-+
- static void pl011_realize(DeviceState *dev, Error **errp)
- {
-     PL011State *s = PL011(dev);
-@@ -676,6 +708,7 @@ static const TypeInfo pl011_arm_info = {
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(PL011State),
-     .instance_init = pl011_init,
-+    .instance_finalize = pl011_finalize,
-     .class_init    = pl011_class_init,
- };
+ static uint32_t pl011_read_rxdata(PL011State *s)
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index b2e3d25ae34..3d07866be5c 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -65,6 +65,9 @@ pl011_write(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x val
+ pl011_can_receive(uint32_t lcr, int read_count, int r) "LCR 0x%08x read_count %d returning %d"
+ pl011_fifo_rx_put(uint32_t c, int read_count) "new char 0x%02x read_count now %d"
+ pl011_fifo_rx_full(void) "RX FIFO now full, RXFF set"
++pl011_fifo_tx_put(uint8_t byte) "TX FIFO push char [0x%02x]"
++pl011_fifo_tx_xmit_used(unsigned sent) "TX FIFO used %u chars"
++pl011_fifo_tx_xmit_consumed(unsigned sent) "TX FIFO consumed %u chars"
+ pl011_baudrate_change(unsigned int baudrate, uint64_t clock, uint32_t ibrd, uint32_t fbrd) "new baudrate %u (clk: %" PRIu64 "hz, ibrd: %" PRIu32 ", fbrd: %" PRIu32 ")"
  
+ # cmsdk-apb-uart.c
 -- 
 2.47.1
 
