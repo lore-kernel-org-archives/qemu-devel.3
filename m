@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD35DC0219D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE78C02198
 	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 07:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgfcY-0005uO-PP; Sat, 08 Feb 2025 02:51:22 -0500
+	id 1tgfcu-00061C-38; Sat, 08 Feb 2025 02:51:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tgfcW-0005tw-O8
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 02:51:21 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tgfcs-00060m-3v
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 02:51:42 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tgfcU-0007UU-BU
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 02:51:20 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21f6d264221so2711935ad.1
- for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 23:51:17 -0800 (PST)
+ id 1tgfcq-0007aF-Fa
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 02:51:41 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2fa0892f9bdso4052461a91.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Feb 2025 23:51:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1739001076; x=1739605876;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1739001099; x=1739605899;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=E8wtZqclrqM98UWJJiybSsZS11RbxecILtCjIKcLIwM=;
- b=cecuggcLCNAqzwYn8iuL+IDwaEP1xiiLWhOfLNxZnb0ZgyD6FF+gRcp9qrx+eJmo07
- zzVKKSgZX8FP57cIWrHTy2gitQXsCbkPz8X567p6365bGtZ+0fTzpEbgCkwCZest2Ecd
- xZFJVwbMtRo1FtKLr7ANk+ZuI1/UlZevXBMw3fM1Upos7X+ikG7JEfN4Gggj4dQnIA4K
- J8A+Pj7dinVCh5KOrS4HJ9O5v4bIj8qlABZ62QRMaiu8oYXEMElFEllqCZfTLodNoygu
- f0zhNw8ScE4qKTY0oLCAuKnfwm6KOLkwFuEZ2O1tu8bRwr2vrkzbRNXt0XXh4WVIObd0
- RKlg==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=dj8ygh4vHQ3IWs88c977D3eMuGw5gxEkT1B9kT9ojBI=;
+ b=gtZ3n+CiYGMIN4KZbLuRh3r7UG0WD5zkxoj1vp9r9cy6XanAcGJ89OeJR255VA7rZ4
+ 9tSBPtga4auAa7KiqORpPVdPNOf2HDVdBVDESL8ohsy/euG2sxg8QrmgM88St9WkuOx2
+ J69DveGZ6SuR7b/cpRnqgjN+yOM+a3u5TrGAZpDeYcAUNNJGI4vE0vwNOplyjdELKzUq
+ G5+JtiAxHVUn/KxrpNeQxqJz5w6hkJoch2N/KZRe9KQPifIlyHM9oBtK4Y9P4c19KqTX
+ jrkTmmEptpHxfJKhgnSkJCsTUnIP95GSdLLNR30anMLuT5f4MrOsxKNmo0v1qdYiq13B
+ 57vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739001076; x=1739605876;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=E8wtZqclrqM98UWJJiybSsZS11RbxecILtCjIKcLIwM=;
- b=WacFCVh+E7PX1MDENvwn4SjHEUQy8U8xqz7sa6T7RVbXl04prNr39qnLkBKR1g9OoU
- +ZIfIV0LK2Qh/jqrWtVhkRwookyPSZ7IfwSmHR7e0+ASzKXRGrjERvV5o0nbdv97jTR9
- e+tW1Zk+6Clys3rNUWsLMM7WtHWhiU/LAy1fEOf/vTa6zNTBE8nI+JCdJh6IiCx4GwfL
- 9HE99H2570CqYejDdVkp855r7wuFftxroVguQqueAdpZTwtRVzEXyqnPvw6BBwEjzJtI
- Xcncv6Cj0Cmqw42JBDBAFHj2r06R6RacqvdrGP9BdcMLUOuWGw59SWFi5PRfP8jsxDYJ
- zy6w==
-X-Gm-Message-State: AOJu0YzdrdMv7s7wU5pv/wJjobzdyGVrATR4QbuHkkGsqQZEaV7L+p1G
- Sy9py8aOY2PVgVoDaJ6dAGyO3jdt8jbmQYuDEqVl6+JSAwQ9vkk0uV7Mu/qB+pg=
-X-Gm-Gg: ASbGncuVvYQkaidEBCRr4SuWoKJIGdDTnS9XFDcF4xvrVJ33WfBv7bRrD3s7qxWYsJc
- 6tD0z5fkw5gX/Y1tZn6UyUiH+2MJIF5f8SOURF+IuKmgVSGwMDJOyqV/GfcmhWDAlLoXgIy/Cxj
- R6mE8WNXYF7ZhgDC/eb3FWU6stnf/sbN71DYxZFOohbj2IZTtULo0KHWVE/zezRMq40FtfnKfcF
- ymxnDJDXf9WyuEH0Sfz69Od6Ro7OJy9npGf0wkr6o+wvN1v/JeLapJu5hvOyftHeK4WEZe94fyb
- A2S8xCmu9xCGOvMw5DE=
-X-Google-Smtp-Source: AGHT+IG5NgiJVvjFyA/Dr6T56W9onQBNukzb/Xy3/onvsBLz+j0qsYR/u7rlHs3LaTrXjEheSHRtBw==
-X-Received: by 2002:a17:902:f543:b0:21f:573d:4ab2 with SMTP id
- d9443c01a7336-21f573d4b44mr77338475ad.51.1739001076512; 
- Fri, 07 Feb 2025 23:51:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739001099; x=1739605899;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dj8ygh4vHQ3IWs88c977D3eMuGw5gxEkT1B9kT9ojBI=;
+ b=EdT56EzHdNRqrL354q1vujOerh8KLc166XC72JvoYJIQs9LXYvWQH8vmyl6088YQf1
+ Sc7g4A4vmIT+UdocjwfH/EqC665RYoTLxYoFn20AyGF2ewQor9bgFAt+EdDh4+wHl4Vd
+ IYnwdSenTpA/b9i7BNfTVYN5oo2H+d3xLutwOjO390oueL78gSRof3KBRHfut7QT/6bI
+ wR4P1VrGCaQBllX2P35rMuqauc4mvr63o/ta+cut/ZcJ97Iz3xWE7DYshhgkHf2jXta6
+ wDmEgivtMuS+xmB1Dy1tq7bwf4mR0FU+membp1Rdq1GQirIZ0h72cz14hh0WQvjwug8p
+ Vwyg==
+X-Gm-Message-State: AOJu0YzpsYfYAweBU1AACBHLtAtSL9RKcr2R5s+jocrEauZPRUQG+Gvq
+ CB+JPHGgX/vhzmU//V4WJa5ba4A0m5gdB6FotgEmd5tkp/3BWnYBxWmOFbZZP34=
+X-Gm-Gg: ASbGncu5gz46J/9fraRQrVRT5VALYeAxiGgPTcpHznlsRroCLzeQmCd9CmqJSzvk8nh
+ 0z0qdmodlliHAiTVcAQzr/sZNN2OpGoNsVkXRWPnmSQljIgcN5eWb9ZI9xgjm92Va21EOuWnToe
+ CJHH4pTF2MgDXO9RQp9UT2zP7Ldgm8KuIVxTWQV3hN0Hv2xZqDPRm6ayUhxZzbIQ7vsTJpyntpG
+ 6DPUVzZcdowpxnkK7aDD6DL4vYfaaPI4sZ6wyRfpOGZ7Ee79Xvisc/mgP7Q1J//I8tQHUlFEaVd
+ g4rJFAUyudK+Y52GFzc=
+X-Google-Smtp-Source: AGHT+IE7Ra8iD8s/TG01A3EUYSnmLXr3jSrTlD8vtUslNB34/1ASIXeBwDVb8Nr6wYW4ztks1InN/w==
+X-Received: by 2002:a05:6a00:9286:b0:725:322a:9438 with SMTP id
+ d2e1a72fcca58-7305d4135bemr9005357b3a.1.1739001099211; 
+ Fri, 07 Feb 2025 23:51:39 -0800 (PST)
 Received: from localhost ([157.82.205.237])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-21f3687c820sm41901985ad.173.2025.02.07.23.51.10
+ d2e1a72fcca58-7307bfc03efsm188745b3a.160.2025.02.07.23.51.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Feb 2025 23:51:16 -0800 (PST)
+ Fri, 07 Feb 2025 23:51:38 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v5 0/4] virtio: Convert feature properties to OnOffAuto
-Date: Sat, 08 Feb 2025 16:51:06 +0900
-Message-Id: <20250208-virtio-v5-0-4376cb218c0f@daynix.com>
+Date: Sat, 08 Feb 2025 16:51:09 +0900
+Subject: [PATCH v5 3/4] qdev-properties: Add
+ DEFINE_PROP_ON_OFF_AUTO_BIT64()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOoMp2cC/2XNTQ7CIBCG4asY1mKGGVqLK+9hXCAddBa2hhqiM
- b272KT+xOVHeN55qIGT8KA2i4dKnGWQviujWi5UOPnuyFrashUCWgOGdJZ0lV6b2rKniK4KpMr
- nS+Iotym025d9kuHap/vUzeb1OifsnMhGg2bXtnHtG9M4s239vZPbKvRn9Wpk/HKIb4fFHZCcR
- aoZKvpzNLsKDHzuUXE1cVzDdPXf2W/XvJ0tLhwieA82uOh+3DiOT+SINFtFAQAA
-X-Change-ID: 20241013-virtio-164ea3f295c3
+Message-Id: <20250208-virtio-v5-3-4376cb218c0f@daynix.com>
+References: <20250208-virtio-v5-0-4376cb218c0f@daynix.com>
+In-Reply-To: <20250208-virtio-v5-0-4376cb218c0f@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
@@ -93,8 +91,8 @@ To: Jason Wang <jasowang@redhat.com>,
  Lei Yang <leiyang@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,65 +114,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series was spun off from:
-"[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
-(https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
-
-Some features are not always available with vhost. Legacy features are
-not available with vp_vdpa in particular. virtio devices used to disable
-them when not available even if the corresponding properties were
-explicitly set to "on".
-
-QEMU already has OnOffAuto type, which includes the "auto" value to let
-it automatically decide the effective value. Convert feature properties
-to OnOffAuto and set them "auto" by default to utilize it. This allows
-QEMU to report an error if they are set "on" and the corresponding
-features are not available.
+DEFINE_PROP_ON_OFF_AUTO_BIT64() corresponds to DEFINE_PROP_ON_OFF_AUTO()
+as DEFINE_PROP_BIT64() corresponds to DEFINE_PROP_BOOL(). The difference
+is that DEFINE_PROP_ON_OFF_AUTO_BIT64() exposes OnOffAuto instead of
+bool.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v5:
-- Covered QAPI more than just qdev.
-- Expanded the description of patch
-  "qapi: Accept bool for OnOffAuto and OnOffSplit".
-- Rebased.
-- Link to v4: https://lore.kernel.org/r/20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com
+ include/hw/qdev-properties.h | 18 ++++++++++++
+ hw/core/qdev-properties.c    | 66 +++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 83 insertions(+), 1 deletion(-)
 
-Changes in v4:
-- Added patch "qapi: Do not consume a value if failed".
-- Link to v3: https://lore.kernel.org/r/20250104-virtio-v3-0-63ef70e9ddf3@daynix.com
+diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+index bf27375a3ccdb238ef3327dd85d3d0a1431cbfbf..0d161325e8dc92d0e0e5aa9a1e2dd734f7a55cae 100644
+--- a/include/hw/qdev-properties.h
++++ b/include/hw/qdev-properties.h
+@@ -43,11 +43,22 @@ struct PropertyInfo {
+     ObjectPropertyRelease *release;
+ };
+ 
++/**
++ * struct OnOffAutoBit64 - OnOffAuto storage with 64 elements.
++ * @on_bits: Bitmap of elements with "on".
++ * @auto_bits: Bitmap of elements with "auto".
++ */
++typedef struct OnOffAutoBit64 {
++    uint64_t on_bits;
++    uint64_t auto_bits;
++} OnOffAutoBit64;
++
+ 
+ /*** qdev-properties.c ***/
+ 
+ extern const PropertyInfo qdev_prop_bit;
+ extern const PropertyInfo qdev_prop_bit64;
++extern const PropertyInfo qdev_prop_on_off_auto_bit64;
+ extern const PropertyInfo qdev_prop_bool;
+ extern const PropertyInfo qdev_prop_enum;
+ extern const PropertyInfo qdev_prop_uint8;
+@@ -100,6 +111,13 @@ extern const PropertyInfo qdev_prop_link;
+                 .set_default = true,                              \
+                 .defval.u  = (bool)_defval)
+ 
++#define DEFINE_PROP_ON_OFF_AUTO_BIT64(_name, _state, _field, _bit, _defval) \
++    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit64,         \
++                OnOffAutoBit64,                                             \
++                .bitnr    = (_bit),                                         \
++                .set_default = true,                                        \
++                .defval.i = (OnOffAuto)_defval)
++
+ #define DEFINE_PROP_BOOL(_name, _state, _field, _defval)     \
+     DEFINE_PROP(_name, _state, _field, qdev_prop_bool, bool, \
+                 .set_default = true,                         \
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 073902431213c5be47197cb0d993d60cc2562501..cfab7b97091ad704b7f43d6ba6fcd8937ca5dfe3 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -188,7 +188,8 @@ const PropertyInfo qdev_prop_bit = {
+ 
+ static uint64_t qdev_get_prop_mask64(const Property *prop)
+ {
+-    assert(prop->info == &qdev_prop_bit64);
++    assert(prop->info == &qdev_prop_bit64 ||
++           prop->info == &qdev_prop_on_off_auto_bit64);
+     return 0x1ull << prop->bitnr;
+ }
+ 
+@@ -233,6 +234,69 @@ const PropertyInfo qdev_prop_bit64 = {
+     .set_default_value = set_default_value_bool,
+ };
+ 
++static void prop_get_on_off_auto_bit64(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    Property *prop = opaque;
++    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
++    OnOffAuto value;
++    uint64_t mask = qdev_get_prop_mask64(prop);
++
++    if (p->auto_bits & mask) {
++        value = ON_OFF_AUTO_AUTO;
++    } else if (p->on_bits & mask) {
++        value = ON_OFF_AUTO_ON;
++    } else {
++        value = ON_OFF_AUTO_OFF;
++    }
++
++    visit_type_OnOffAuto(v, name, &value, errp);
++}
++
++static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    Property *prop = opaque;
++    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
++    OnOffAuto value;
++    uint64_t mask = qdev_get_prop_mask64(prop);
++
++    if (!visit_type_OnOffAuto(v, name, &value, errp)) {
++        return;
++    }
++
++    switch (value) {
++    case ON_OFF_AUTO_AUTO:
++        p->on_bits &= ~mask;
++        p->auto_bits |= mask;
++        break;
++
++    case ON_OFF_AUTO_ON:
++        p->on_bits |= mask;
++        p->auto_bits &= ~mask;
++        break;
++
++    case ON_OFF_AUTO_OFF:
++        p->on_bits &= ~mask;
++        p->auto_bits &= ~mask;
++        break;
++
++    case ON_OFF_AUTO__MAX:
++        g_assert_not_reached();
++    }
++}
++
++const PropertyInfo qdev_prop_on_off_auto_bit64 = {
++    .name  = "OnOffAuto",
++    .description = "on/off/auto",
++    .enum_table = &OnOffAuto_lookup,
++    .get = prop_get_on_off_auto_bit64,
++    .set = prop_set_on_off_auto_bit64,
++    .set_default_value = qdev_propinfo_set_default_value_enum,
++};
++
+ /* --- bool --- */
+ 
+ static void get_bool(Object *obj, Visitor *v, const char *name, void *opaque,
 
-Changes in v3:
-- Rebased.
-- Link to v2: https://lore.kernel.org/r/20241022-virtio-v2-0-b2394236e053@daynix.com
-
-Changes in v2:
-- Expanded the message of patch "qdev-properties: Accept bool for
-  OnOffAuto".
-- Link to v1: https://lore.kernel.org/r/20241014-virtio-v1-0-e9ddf7a81891@daynix.com
-
----
-Akihiko Odaki (4):
-      qapi: Do not consume a value if failed
-      qapi: Accept bool for OnOffAuto and OnOffSplit
-      qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
-      virtio: Convert feature properties to OnOffAuto
-
- include/hw/qdev-properties.h |  18 ++++++++
- include/hw/virtio/virtio.h   |  38 +++++++++-------
- hw/core/machine.c            |   1 +
- hw/core/qdev-properties.c    |  83 +++++++++++++++++++++++++++++++++-
- hw/virtio/virtio-bus.c       |  14 +++++-
- hw/virtio/virtio.c           |   4 +-
- qapi/qobject-input-visitor.c | 103 +++++++++++++++++++++++++++++--------------
- scripts/qapi/visit.py        |  24 ++++++++++
- 8 files changed, 229 insertions(+), 56 deletions(-)
----
-base-commit: 7433709a147706ad7d1956b15669279933d0f82b
-change-id: 20241013-virtio-164ea3f295c3
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.48.1
 
 
