@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02736C021A0
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 20:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70696C02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 20:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgrtR-0001uS-LD; Sat, 08 Feb 2025 15:57:37 -0500
+	id 1tgrtS-0001ui-Eh; Sat, 08 Feb 2025 15:57:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgrtM-0001sR-3c
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:32 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tgrtP-0001tR-AI
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:35 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgrtK-00057U-FJ
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:31 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21f78b1fb7dso4824165ad.3
- for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 12:57:30 -0800 (PST)
+ id 1tgrtN-00058I-AL
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:35 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-21f4500a5c3so57841115ad.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 12:57:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739048249; x=1739653049; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739048252; x=1739653052; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U+e3NmMpDYxhMb26080aeO1z+Gh7xEdjEvCdFDBVM7k=;
- b=NbdpL+oMJB5T22EhZxUtSiq5QjvyfVV0DtAaHhMIy11/HaNSdAovWjHV8RnTNz3E1P
- bV6eLAFJdqxC1D1/M//FFvVREkSv5ICTT5geXlX7DWE1Xrq2IZ2adJucYgI266yLxlRm
- HzXpYcVFtq6+fVTo7nB7GEoGiJp4XcPDnLMo+JwtKDeufQTtTBclGsBvw1SY6Mtm1VpR
- mVyZW6eCYiKQlYNMay3RLofy+UKRvEkmyNk52ahxL+A7YMUgGIQ/AeS3zbzWP4KjJytk
- OnCX7dMfMWiZrzDuL23lhcmZY+VSmsh+xcTVsyEgAgeUyXvW6/A8osMk/ib3R1ohvuXl
- Jhrg==
+ bh=eG/d8IONo4okZHoOBktlmuHynzB6DQe11EAuukemM7Q=;
+ b=OxAsnNWj8OyD7uEI7W5eqUZ8yfjydvr+VkNo/Jkb6EOgPPOfDHMUxvUSn9kcNnhist
+ 2BV/iVb+E+vig8AZjhYBB/1lkHyZVaV3RDFOVPZaWxvBVQ+TvrJ/evKp655to+e0Uc6A
+ bYoLnDr1vYQxdBpdc7kY/ojBertxGWb230vKrhoOUViiryRU0ld7ldrasWqDX/Ns3JLj
+ vZYnWIOB3D8hmcqYaypXlKOXna+W4QilVeKwKCjijz5OI5E1sj3RK4I2HHX411VRm+zZ
+ T155veSuLFdXQ05Tf1pJiUECGGMpsu8C1ZBW2WcWy4X3K3d7x+ICm/ZAl+ti2hptZxuO
+ vZJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739048249; x=1739653049;
+ d=1e100.net; s=20230601; t=1739048252; x=1739653052;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U+e3NmMpDYxhMb26080aeO1z+Gh7xEdjEvCdFDBVM7k=;
- b=l7pZlVS5EnDdg7aqy1kcAbzRRqsJrxq8KG87zgGi283ncaEYkJj9Q0Sg2WZz21EjGz
- 3c3pe12pbQMmIaLNGKgHMWLzlXmwwu0gIDqHlFgmEFpmpVdHAJKAMfa3/IPocHg2iY2Y
- W1LfXGnXWw8cFGGdLpphfL1WrCAzTTDOTsyZr8XugDS5fp2OMlIByGNkzoS3f8uw1stw
- uwRlK9dlSgROe0IwwQudV938q5wea+ExoLVRqhwF4+a4fQnzbIP/ugfY9akvHWJL8w12
- mHvgwAFUOK7C5OBmpszuWxS6l6t9mOqm2glGRwZR/NPuGGEmDeAp+1Q+ejvdXRwSIdkn
- n36A==
-X-Gm-Message-State: AOJu0YxL2gk5UEQeNl3CQ5Na1w4t/rHKD5yAxOKpd/H4EtcBoc4xng42
- so0EAkyTIzPZjX5APJsT9VvIK9YULuVwz3bMudGuPDzQwPp0P5is5G/ytEtp0vDKLLe/opw2EZe
+ bh=eG/d8IONo4okZHoOBktlmuHynzB6DQe11EAuukemM7Q=;
+ b=UII48c0BUOGx0HobYfsfA6INomZW2QUNccxisJlixhkvWvpotPKu6oR1KpC5EmFWIn
+ CpcFGzvqZgxSg1FxAltyZmqdoQD7zJV0hd5vTa7OXIVqHB7kKlFfWsWnp6KVV2w7JkG5
+ WVzyihjakRQtsj+Hkjl4gTs2qJGD5xJSSKmi+vewb98uQduK1rCrGHpxypbx2exjTenQ
+ Zc2aq9OiAGv4IJgY70ecZVOf5D6dxNUIZ1XbE2SdXx/VcBQNZvmflSDt/mwUnRZf8KNJ
+ 5HrcoaHa8EcaP6K0xFJDfLbYVH1U3eDlb/MEsqabJgU0cvSHYUrMpnAXENjz+VXuhYLb
+ ciig==
+X-Gm-Message-State: AOJu0YwFuGI/JSiPrrIsinMTHiwTWfb6Ee84/KGC6uJog5TZQPDG8V03
+ 7ZvP7z8DsFty164VZqBd18wW1c3uPdUF06WYIpsiVZIjwdgEt5ajoIo/7iByfvVGYra9QdvnQQG
  Q
-X-Gm-Gg: ASbGncvVMN+SSshTHDAWUsPkSCg8kHHUHXC6PGhvyls0/DRB3OpFJB5ClZdN8JSqQ0j
- 7rn0RMG7LqWi2QuGHG1/MaZj0IfR10P2B7FLzvDB1FvvHiIw59RiRb05gk5/a96jgWksYVlloMk
- qg9qAcfkG6tTN005ggbXTt0ify0Y3kJorRlE+zXAtbMNFFSvhbortSNK5sYy694nwdeo3AZviZc
- n8gf6YTl8dtdNVSKpYMMY1/zWlEknNmO/lMpCMLipIJJARpp1ECARu485i2sOwrhNrweuq5TEuB
- 3/2fbHgUMB2aaFxXnMTnPtjI2zrVm2vjZC32AGzxJD/FmVk=
-X-Google-Smtp-Source: AGHT+IF7utxRzvlgzmcC0OXBEZFDclZK3/iC5bZ8Yj3+W/0IealyWxqP4xTk4Sl2/4GVII3GwcBTXQ==
-X-Received: by 2002:a17:903:2311:b0:215:b5c6:9ee8 with SMTP id
- d9443c01a7336-21f4e6a028cmr118157045ad.7.1739048249079; 
- Sat, 08 Feb 2025 12:57:29 -0800 (PST)
+X-Gm-Gg: ASbGncv2JnJPGf2Dllug8D/cHEdeLhpmHA8Z07P4Qlt3P405WHp7t3o/thgKCQJDwpU
+ ZOvY/R6+o+uMnuecl7ZTKBVuabDsJrhWsVBxkh9hDwpN2I819BjUbCyR1HBZz6O1QjWYrvAkYQo
+ lEomtHjVcv93pXqAHq405MFdarD/FXg8fdWT4H2VyNqE5NXgnfwqgPkLxdyDdnlnQh4RVClTJ2b
+ Vn4yI62zH5RKIq0oQqT2HWTQe7aGH9U4RtBN/pIaqZRNLbHsDETZ/+Z1f6V/D59zj+Cr/3LB1cl
+ kPpSvvQHH6dvW4H0c/BocqkTsaFkyl3njHvLsPsGJ+jgGdI=
+X-Google-Smtp-Source: AGHT+IHuzG2ZotrVY8dk5FVqrNKTuItLVBRPbYsh3ZhCHNynrkr6hsEvCUzXmzaR67a42g9WMaEjSg==
+X-Received: by 2002:a17:903:104b:b0:215:bf1b:a894 with SMTP id
+ d9443c01a7336-21f4e7249bdmr114952075ad.24.1739048252018; 
+ Sat, 08 Feb 2025 12:57:32 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f3683d58fsm50852685ad.122.2025.02.08.12.57.28
+ d9443c01a7336-21f3683d58fsm50852685ad.122.2025.02.08.12.57.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Feb 2025 12:57:28 -0800 (PST)
+ Sat, 08 Feb 2025 12:57:31 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 4/9] meson: Disallow 64-bit on 32-bit HVF/NVMM/WHPX emulation
-Date: Sat,  8 Feb 2025 12:57:19 -0800
-Message-ID: <20250208205725.568631-5-richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 8/9] meson: Disallow 64-bit on 32-bit emulation
+Date: Sat,  8 Feb 2025 12:57:23 -0800
+Message-ID: <20250208205725.568631-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250208205725.568631-1-richard.henderson@linaro.org>
 References: <20250208205725.568631-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,42 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Require a 64-bit host binary to spawn a 64-bit guest.
+For system mode, we can rarely support the amount of RAM that
+the guest requires. TCG emulation is restricted to round-robin
+mode, which solves many of the atomicity issues, but not those
+associated with virtio.  In any case, round-robin does nothing
+to help the speed of emulation.
 
-For HVF this is trivially true because macOS 11 dropped
-support for 32-bit applications entirely.
+For user mode, most emulation does not succeed at all.  Most
+of the time we cannot even load 64-bit non-PIE binaries due
+to lack of a 64-bit address space.  Threads are run in
+parallel, not round-robin, which means that atomicity
+is not handled.
 
-For NVMM, NetBSD only enables nvmm on x86_64:
-  http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/dev/nvmm/Makefile?rev=1.1.6.2;content-type=text%2Fplain
-
-For WHPX, we have already dropped support for 32-bit Windows.
-
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- meson.build | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ meson.build | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 911955cfa8..85317cd63f 100644
+index 85317cd63f..ec51827f40 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -319,13 +319,11 @@ else
+@@ -3185,6 +3185,9 @@ if host_os == 'windows'
+   endif
  endif
- accelerator_targets += { 'CONFIG_XEN': xen_targets }
  
--if cpu in ['aarch64']
-+if cpu == 'aarch64'
-   accelerator_targets += {
-     'CONFIG_HVF': ['aarch64-softmmu']
-   }
--endif
++# Detect host pointer size for the target configuration loop.
++host_long_bits = cc.sizeof('void *') * 8
++
+ ########################
+ # Target configuration #
+ ########################
+@@ -3277,8 +3280,14 @@ foreach target : target_dirs
+     }
+   endif
+ 
++  config_target += keyval.load('configs/targets' / target + '.mak')
++
+   target_kconfig = []
+   foreach sym: accelerators
++    # Disallow 64-bit on 32-bit emulation and virtualization
++    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
++      continue
++    endif
+     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
+       config_target += { sym: 'y' }
+       config_all_accel += { sym: 'y' }
+@@ -3292,9 +3301,6 @@ foreach target : target_dirs
+     error('No accelerator available for target @0@'.format(target))
+   endif
+ 
+-  config_target += keyval.load('configs/targets' / target + '.mak')
+-  config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
 -
--if cpu in ['x86', 'x86_64']
-+elif cpu == 'x86_64'
-   accelerator_targets += {
-     'CONFIG_HVF': ['x86_64-softmmu'],
-     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
+   if 'TARGET_NEED_FDT' in config_target and not fdt.found()
+     if default_targets
+       warning('Disabling ' + target + ' due to missing libfdt')
+@@ -3307,6 +3313,7 @@ foreach target : target_dirs
+   actual_target_dirs += target
+ 
+   # Add default keys
++  config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
+   if 'TARGET_BASE_ARCH' not in config_target
+     config_target += {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
+   endif
 -- 
 2.43.0
 
