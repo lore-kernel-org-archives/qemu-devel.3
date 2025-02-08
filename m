@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD9DC02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 10:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDBEC02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 10:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgiUk-0003QZ-3h; Sat, 08 Feb 2025 05:55:30 -0500
+	id 1tgiWO-0004IR-IE; Sat, 08 Feb 2025 05:57:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgiUh-0003Pj-QM; Sat, 08 Feb 2025 05:55:27 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1tgiWJ-0004Hg-6w; Sat, 08 Feb 2025 05:57:07 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgiUf-0001fm-Rt; Sat, 08 Feb 2025 05:55:27 -0500
+ id 1tgiWH-0001ru-PP; Sat, 08 Feb 2025 05:57:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739012126; x=1770548126;
+ t=1739012225; x=1770548225;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=bpHfQoqEkdxhjobtTG8rJewexyyXdUtlbHZZgYIXbV8=;
- b=GmKO5YEus53rYwEUIHVbtJ1xg5YPFm8Hr6iHNskpCCDIiC/p0bBcccGF
- YPJ73lLPTxg4D+ALhI8TDKLJZrL7WA6H9kC6GTAYe++C3G29YUWRA2EDL
- 30NMVdfBt1PnsBueHv3Q8FzYSOktqQhVBBlylA+7LKixzxa/tpF0ZvLuQ
- fy36WmtENiKi9Truco5VnyC8d34PjO0u+wdNQecjmLgbmdNDVw5LOhBHv
- BnWjITLn7AvWdxhUXRMGuXofCOKES6OT9yaXOZ46s0rOYNsJqgxT4rUrC
- 5dTgoAk/nPgzrM57UhaomUx6MpwQt8owubrQVLjx9dwk/PcEmVThu3WrF Q==;
-X-CSE-ConnectionGUID: lo1DU0VOSYCzBBTD/XsueA==
-X-CSE-MsgGUID: +21WjFYnSYOtNgh1vBf6dw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="39519728"
-X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="39519728"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2025 02:55:23 -0800
-X-CSE-ConnectionGUID: HGvXpS3XRe2n4BUQQiipGA==
-X-CSE-MsgGUID: 87Lfi/NtS+uu+TnARP6Wyw==
+ mime-version:in-reply-to;
+ bh=DSsZrANcTJeTDe2XG2rANTgEcuJ6JlCUl4fqqBiaA08=;
+ b=k5tCkcdSWQasr4yeKOft6tnKsg8cn2aI4fROX+7pzP8vnw7oJR0qZRMz
+ xr6vSUdYuzAuGrPhxpIXXLX/x0H0gZOBsojAVCXXwHHzSO62jqnVPhLBK
+ 2bEeCwyKOJaBh7q7f44rBZL3xmpJo86QzxC/ms/WEhqR9EIM1FM83CFE3
+ myi1rSOS/TodnxH0gMDa9TtGDF1grZWy6UU0BB2lYADFLaS0QP1eB8/sR
+ wJoo/VD9qqGWE6hLwXq1edLN1SNET0//Zj2b3WvWy6vhQjBJGa9ib4FVe
+ wKbqR4eSmsNmufTbUZQTeB9/uCg2eEBApM1V3XawoviAbyLIgp9VXYs2U w==;
+X-CSE-ConnectionGUID: zDRuAsGVSTW9MtFY7BdZzw==
+X-CSE-MsgGUID: 3JY5+3nqQcGFLBDVey942g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="57186324"
+X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="57186324"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2025 02:56:58 -0800
+X-CSE-ConnectionGUID: MwZcsMT1QgC9bDvc9055Vg==
+X-CSE-MsgGUID: ORrFD1u6TGy8VLnnPYicew==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="116356226"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="148955570"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 08 Feb 2025 02:55:20 -0800
-Date: Sat, 8 Feb 2025 19:14:50 +0800
+ by orviesa001.jf.intel.com with ESMTP; 08 Feb 2025 02:56:56 -0800
+Date: Sat, 8 Feb 2025 19:16:25 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Junjie Mao <junjie.mao@hotmail.com>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
  qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert
- [InterruptSource] to [*mut IRQState]
-Message-ID: <Z6c8qju9IJaKM6rK@intel.com>
+Subject: Re: [PATCH 04/10] rust: add bindings for gpio_{in|out} initialization
+Message-ID: <Z6c9CWaPPnWmp3gT@intel.com>
 References: <20250125125137.1223277-1-zhao1.liu@intel.com>
- <20250125125137.1223277-4-zhao1.liu@intel.com>
- <17907481-89d6-457c-bcd3-66a444b1325d@redhat.com>
- <Z6Wx/RGBIElMaeZy@intel.com> <Z6W56AH3J1qOx18m@intel.com>
- <CABgObfa+_VVQWvrGWf6fJjf39O0AkoNB5aoptDrhk7dDx_SNXQ@mail.gmail.com>
+ <20250125125137.1223277-5-zhao1.liu@intel.com>
+ <5a19e7d2-9d69-45fe-812f-84145229876f@redhat.com>
+ <Z6XHzXwoIklPZQ/I@intel.com>
+ <CABgObfYathYPF-KWrZv+33+iEA_j=ee7eJbJmzA5F2rpY-ktqw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfa+_VVQWvrGWf6fJjf39O0AkoNB5aoptDrhk7dDx_SNXQ@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <CABgObfYathYPF-KWrZv+33+iEA_j=ee7eJbJmzA5F2rpY-ktqw@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -93,36 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 10:57:11AM +0100, Paolo Bonzini wrote:
-> Date: Fri, 7 Feb 2025 10:57:11 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert
->  [InterruptSource] to [*mut IRQState]
-> 
-> Il ven 7 feb 2025, 08:25 Zhao Liu <zhao1.liu@intel.com> ha scritto:
-> 
-> > Just to confirm, I check with `cargo +nightly clippy` but it doesn't
-> > complain about this case. Should I switch to another version of clippy
-> > when I do such check? (currently I'm using v0.1.63 clippy as well, to
-> > match rustc.)
+> Use the "let" so that it's caught at compile time.
+
+Thanks! Fixed.
+
+> There's a difference with origianl C version:
+> >
+> > In C side, qdev_get_gpio_in() family could accept a NULL handler, but
+> > there's no such case in current QEMU:
+> >
+> > * qdev_get_gpio_in
+> > * qdev_init_gpio_in_named
+> > * qdev_init_gpio_in_named_with_opaque
+> >
+> > And from code logic view, creating an input GPIO line but doing nothing
+> > on input, sounds also unusual.
 > >
 > 
-> I don't remember exactly how I noticed it—I am pretty sure it broke in CI
-> though. Maybe the change to add rust_version hid it.
+> Wouldn't it then crash in qemu_set_irq?
 > 
-> To answer your question, generally the idea is that we use the latest
-> version of the developer tools (cargo, rustfmt, clippy). In particular old
-> versions of cargo don't support retrieving clippy settings from Cargo.toml.
 
-This one inspired me. I'm thinking that even though we deleted the
-README of pl011, a gneral guide or doc section (at somewhere, e.g.,
-docs/devel/style.rst or docs/devel/submitting-a-patch.rst) would be
-helpful.
+Yes! Thank you for the education.
 
-At least, that could remind contributor to check patches with latest
-toolchain instead of letting the maintainer's CI smoking fail.
-
-Thanks,
+Regards,
 Zhao
 
 
