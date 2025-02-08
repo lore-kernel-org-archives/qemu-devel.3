@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70696C02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 20:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EFCC02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 20:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgrtS-0001ui-Eh; Sat, 08 Feb 2025 15:57:38 -0500
+	id 1tgrtS-0001uU-2s; Sat, 08 Feb 2025 15:57:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgrtP-0001tR-AI
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:35 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tgrtM-0001sb-MU
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:32 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tgrtN-00058I-AL
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:35 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-21f4500a5c3so57841115ad.3
- for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 12:57:32 -0800 (PST)
+ id 1tgrtL-00057k-4L
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 15:57:32 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21f53ad05a0so28320885ad.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 12:57:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739048252; x=1739653052; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739048250; x=1739653050; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eG/d8IONo4okZHoOBktlmuHynzB6DQe11EAuukemM7Q=;
- b=OxAsnNWj8OyD7uEI7W5eqUZ8yfjydvr+VkNo/Jkb6EOgPPOfDHMUxvUSn9kcNnhist
- 2BV/iVb+E+vig8AZjhYBB/1lkHyZVaV3RDFOVPZaWxvBVQ+TvrJ/evKp655to+e0Uc6A
- bYoLnDr1vYQxdBpdc7kY/ojBertxGWb230vKrhoOUViiryRU0ld7ldrasWqDX/Ns3JLj
- vZYnWIOB3D8hmcqYaypXlKOXna+W4QilVeKwKCjijz5OI5E1sj3RK4I2HHX411VRm+zZ
- T155veSuLFdXQ05Tf1pJiUECGGMpsu8C1ZBW2WcWy4X3K3d7x+ICm/ZAl+ti2hptZxuO
- vZJA==
+ bh=j2FzoHSuAoX+1zQ7RA2/urh/hio8OfZSmlzrSvDG4W4=;
+ b=EM9g0quJb+N3RL+8CFgcIMquKAfT365FU2Z6hfcklfUS1t/sT7No6cM0xtq00NbmI2
+ wUKxJMEuULZfGWiG4nMjFEB6x0hhZrXQ96tyV2JQGcKO0lQ0W9sEW2SSTnivUf1MIa7o
+ CCF/GMcLpWkClRkvNe7XTKNJFiu+H+LW2c3blDS5DpZLM44T1dwYCRHK9+2jXrUbYnee
+ jW9olGWkHkoWHNq0FImWlQfMGQJkYu6J73MwGkO4sbxfZ8S/WPAbH5mCyfnrR/t4ffY5
+ pluGP9rCJLaXCpdOQnTyrI78rKDJZf/Ku5Q83XAdM0dGtg7RLMZtYEfaapNR9p4wgiEw
+ 0/sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739048252; x=1739653052;
+ d=1e100.net; s=20230601; t=1739048250; x=1739653050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eG/d8IONo4okZHoOBktlmuHynzB6DQe11EAuukemM7Q=;
- b=UII48c0BUOGx0HobYfsfA6INomZW2QUNccxisJlixhkvWvpotPKu6oR1KpC5EmFWIn
- CpcFGzvqZgxSg1FxAltyZmqdoQD7zJV0hd5vTa7OXIVqHB7kKlFfWsWnp6KVV2w7JkG5
- WVzyihjakRQtsj+Hkjl4gTs2qJGD5xJSSKmi+vewb98uQduK1rCrGHpxypbx2exjTenQ
- Zc2aq9OiAGv4IJgY70ecZVOf5D6dxNUIZ1XbE2SdXx/VcBQNZvmflSDt/mwUnRZf8KNJ
- 5HrcoaHa8EcaP6K0xFJDfLbYVH1U3eDlb/MEsqabJgU0cvSHYUrMpnAXENjz+VXuhYLb
- ciig==
-X-Gm-Message-State: AOJu0YwFuGI/JSiPrrIsinMTHiwTWfb6Ee84/KGC6uJog5TZQPDG8V03
- 7ZvP7z8DsFty164VZqBd18wW1c3uPdUF06WYIpsiVZIjwdgEt5ajoIo/7iByfvVGYra9QdvnQQG
- Q
-X-Gm-Gg: ASbGncv2JnJPGf2Dllug8D/cHEdeLhpmHA8Z07P4Qlt3P405WHp7t3o/thgKCQJDwpU
- ZOvY/R6+o+uMnuecl7ZTKBVuabDsJrhWsVBxkh9hDwpN2I819BjUbCyR1HBZz6O1QjWYrvAkYQo
- lEomtHjVcv93pXqAHq405MFdarD/FXg8fdWT4H2VyNqE5NXgnfwqgPkLxdyDdnlnQh4RVClTJ2b
- Vn4yI62zH5RKIq0oQqT2HWTQe7aGH9U4RtBN/pIaqZRNLbHsDETZ/+Z1f6V/D59zj+Cr/3LB1cl
- kPpSvvQHH6dvW4H0c/BocqkTsaFkyl3njHvLsPsGJ+jgGdI=
-X-Google-Smtp-Source: AGHT+IHuzG2ZotrVY8dk5FVqrNKTuItLVBRPbYsh3ZhCHNynrkr6hsEvCUzXmzaR67a42g9WMaEjSg==
-X-Received: by 2002:a17:903:104b:b0:215:bf1b:a894 with SMTP id
- d9443c01a7336-21f4e7249bdmr114952075ad.24.1739048252018; 
- Sat, 08 Feb 2025 12:57:32 -0800 (PST)
+ bh=j2FzoHSuAoX+1zQ7RA2/urh/hio8OfZSmlzrSvDG4W4=;
+ b=XFZp3ZlOuFXF2Q85qZS6zlg6KBkzYD03oZ95ryskA0PMK7VNx2vP/gfv5eI9pGZaiF
+ pWPBf21REabPVtUY911ETPSNB9xp2DPYMGBOHqUrMEz928Jq7N7qGZ9OhryiNiy110GN
+ sJ21Ec9ZhF1Z+xOrl1u4IoSND8EOsD73iqHm5KIBijSxO0JHXT78a2MXlQRJL2lo9yhX
+ I3DVrZgunRKa7iItZCm0ipaMtC6ntFfISTQiF4MZpd2Vef3gUpiI7j8CJ+kZSl+6avOC
+ WQYu1SEsqjnHupBYM03WOQt8Q+n/MW2PUEPyvtgg3IGkxovyJ1I6zYuEzP2uTX/aGhte
+ y8xA==
+X-Gm-Message-State: AOJu0YxcKEsbzZlIPAAnmFd8P2Zn2OHadoe0qe57Bze4vT6BjxFQuUtq
+ wp6GhVc9fliHgL3NHtBqhW+GT1PvtqzhLh3vhNxRXlc91TdtOdkdX7Hk/rxETcufkMM94/U4/SB
+ 6
+X-Gm-Gg: ASbGnctX6moPK0i/sqQbY9SQgrfxBLH5C02lIGQ354KczxL3BwTPoOE2xXy+VzCUWuS
+ e+eUQFeEDbWES/ucumy0uc/h9UfxJCbiKwoNS8vSeMhtGpowTFP1MQeXjqHdu9W+Au87SJ4ChRF
+ a5e9PPYr8X/1oTPO5fD6C0T4wz8cOB1vXcedwsEciGbzShBlKBUhDsrC1H5gpye9c6bNQvn7WTb
+ Pz9pY+0rBTMoC3hF4ZyOn9K0HRDrrxkUCpqffy1OKCEWSwy3xhQ9jYlF1E09vQRxiksuS+1KxeD
+ 6RiBcEBDP9srY9V2dZhwOrDu22s8veGyTO3/sELcn0+4RI4=
+X-Google-Smtp-Source: AGHT+IGzc0jiyUgdQJtK1eufS6pLuTxjzL3AiQUBpJNMenVWLgTbVutyoXfzW7H2XuAd5DGiNlCs+A==
+X-Received: by 2002:a17:902:d592:b0:217:9172:2ce1 with SMTP id
+ d9443c01a7336-21f4e6d7d8bmr158877355ad.22.1739048249867; 
+ Sat, 08 Feb 2025 12:57:29 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f3683d58fsm50852685ad.122.2025.02.08.12.57.31
+ d9443c01a7336-21f3683d58fsm50852685ad.122.2025.02.08.12.57.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Feb 2025 12:57:31 -0800 (PST)
+ Sat, 08 Feb 2025 12:57:29 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 8/9] meson: Disallow 64-bit on 32-bit emulation
-Date: Sat,  8 Feb 2025 12:57:23 -0800
-Message-ID: <20250208205725.568631-9-richard.henderson@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 5/9] gitlab-ci: Replace aarch64 with arm in cross-i686-tci build
+Date: Sat,  8 Feb 2025 12:57:20 -0800
+Message-ID: <20250208205725.568631-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250208205725.568631-1-richard.henderson@linaro.org>
 References: <20250208205725.568631-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,72 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For system mode, we can rarely support the amount of RAM that
-the guest requires. TCG emulation is restricted to round-robin
-mode, which solves many of the atomicity issues, but not those
-associated with virtio.  In any case, round-robin does nothing
-to help the speed of emulation.
-
-For user mode, most emulation does not succeed at all.  Most
-of the time we cannot even load 64-bit non-PIE binaries due
-to lack of a 64-bit address space.  Threads are run in
-parallel, not round-robin, which means that atomicity
-is not handled.
+Configuration of 64-bit host on 32-bit guest will shortly
+be denied.  Use a 32-bit guest instead.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- meson.build | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ .gitlab-ci.d/crossbuilds.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 85317cd63f..ec51827f40 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3185,6 +3185,9 @@ if host_os == 'windows'
-   endif
- endif
- 
-+# Detect host pointer size for the target configuration loop.
-+host_long_bits = cc.sizeof('void *') * 8
-+
- ########################
- # Target configuration #
- ########################
-@@ -3277,8 +3280,14 @@ foreach target : target_dirs
-     }
-   endif
- 
-+  config_target += keyval.load('configs/targets' / target + '.mak')
-+
-   target_kconfig = []
-   foreach sym: accelerators
-+    # Disallow 64-bit on 32-bit emulation and virtualization
-+    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-+      continue
-+    endif
-     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
-       config_target += { sym: 'y' }
-       config_all_accel += { sym: 'y' }
-@@ -3292,9 +3301,6 @@ foreach target : target_dirs
-     error('No accelerator available for target @0@'.format(target))
-   endif
- 
--  config_target += keyval.load('configs/targets' / target + '.mak')
--  config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
--
-   if 'TARGET_NEED_FDT' in config_target and not fdt.found()
-     if default_targets
-       warning('Disabling ' + target + ' due to missing libfdt')
-@@ -3307,6 +3313,7 @@ foreach target : target_dirs
-   actual_target_dirs += target
- 
-   # Add default keys
-+  config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
-   if 'TARGET_BASE_ARCH' not in config_target
-     config_target += {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
-   endif
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index 95dfc39224..7ae0f966f1 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -61,7 +61,7 @@ cross-i686-tci:
+   variables:
+     IMAGE: debian-i686-cross
+     ACCEL: tcg-interpreter
+-    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
++    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,arm-softmmu,arm-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+     # Force tests to run with reduced parallelism, to see whether this
+     # reduces the flakiness of this CI job. The CI
+     # environment by default shows us 8 CPUs and so we
 -- 
 2.43.0
 
