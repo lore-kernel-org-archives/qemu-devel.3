@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB68AC02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 17:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D38C02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 17:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgovM-0008B9-Jr; Sat, 08 Feb 2025 12:47:24 -0500
+	id 1tgozS-0000pX-08; Sat, 08 Feb 2025 12:51:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgovE-0008AU-Nl; Sat, 08 Feb 2025 12:47:16 -0500
-Received: from mgamail.intel.com ([192.198.163.9])
+ id 1tgozE-0000ny-PR; Sat, 08 Feb 2025 12:51:27 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgov9-0001Nz-OM; Sat, 08 Feb 2025 12:47:16 -0500
+ id 1tgozD-0001rP-7L; Sat, 08 Feb 2025 12:51:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739036832; x=1770572832;
+ t=1739037083; x=1770573083;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=1gK9h1vczc5j3kZbPyd0lYpHUIWHeETECrkJDpSnH9M=;
- b=WkresChNltQVKsArG7g5TmulWGn3K4vCOqdzkz06IxrKTnSnGxLML1/n
- nMEgE6zAYjKBKeZq443Sw1i+inb+7OgneZa4xgcE2Mm602zDTUPL1cWQ0
- VkET2havGiX1nBuTKj+hvbD29iDlBQ2g/KzWD9i9i316mrkQWTxpwspAy
- rBiwvIuDEf9sJI8bj4XrC6OZZNPlKctX3eyufXleR4pyQsW6ej0PyvJSp
- MnKKjAH1p0wSe2zGAiZm4MNExeQZGasr5KNyH122IPE1Nt8WGT91B+ab3
- 7ByHAn4BKdHbTKhYL+7kC+uDXWMlsDilsGOIKNevTSal30dWCkMNedlsy w==;
-X-CSE-ConnectionGUID: dwTUJdEDS0qNzjMX+Q0G+w==
-X-CSE-MsgGUID: dX+FMNGFQaqIfkZ5ge3lIw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11339"; a="50300252"
-X-IronPort-AV: E=Sophos;i="6.13,270,1732608000"; d="scan'208";a="50300252"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2025 09:47:08 -0800
-X-CSE-ConnectionGUID: Z/D0jeOqQnqrUVP3d6mRoA==
-X-CSE-MsgGUID: gHb+jhT3QCidaNTTtp6zrg==
+ bh=nrGrtODF+1mKpVShCRsmn3DhnXQwMu1v/I3xBGebxpk=;
+ b=SYNrkURI0JV350m+XQ0Pv8q1kbALbm/jhO7ZumnTXnjDt18Ks7rhDPjL
+ iM8pYLRAgnQCEvJXylXDzTsex8veE7ClMtOfFReNfHDPC1NGVVVj0GxzA
+ 7qc2M1mciQk/SEojyRYXPKR0NJG2gfVxoRdHhvPPb9xShRzZfOSv9uG8F
+ quHfZhGAmSchZVTOof1vAGb7/3IBqDHDkYMh/lC9ImlUNyhEyPPUalaCB
+ dOsRkqQONp7DrJP6mCyZRCFxDE14VxO5eLdER0LK726ACos0x/T4Zm2K1
+ cjMUdPIk5gm++YiLMLgIzvpbOVo3tMsbiSoCApwR5JUdgUN8eQzLpIXak Q==;
+X-CSE-ConnectionGUID: lBcRvtaiRXuwINV1ElWxOQ==
+X-CSE-MsgGUID: Hd1EHCT6SHWzcrOFDsO0uQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11339"; a="62139005"
+X-IronPort-AV: E=Sophos;i="6.13,270,1732608000"; d="scan'208";a="62139005"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2025 09:51:21 -0800
+X-CSE-ConnectionGUID: nyAFOmPHSOScZmfPGagrMQ==
+X-CSE-MsgGUID: m6GVumN1TwG7RYoBXjzfYA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="111637131"
+X-IronPort-AV: E=Sophos;i="6.13,270,1732608000"; d="scan'208";a="116849665"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 08 Feb 2025 09:47:05 -0800
-Date: Sun, 9 Feb 2025 02:06:35 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 08 Feb 2025 09:51:18 -0800
+Date: Sun, 9 Feb 2025 02:10:48 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Junjie Mao <junjie.mao@hotmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
  qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Subject: Re: [PATCH 09/10] rust/timer/hpet: add qom and qdev APIs support
-Message-ID: <Z6edKxYFzA6suDlj@intel.com>
+Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert
+ [InterruptSource] to [*mut IRQState]
+Message-ID: <Z6eeKCH0gaqNBFU/@intel.com>
 References: <20250125125137.1223277-1-zhao1.liu@intel.com>
- <20250125125137.1223277-10-zhao1.liu@intel.com>
- <750f06f3-6326-473f-9d08-ad6bb1f2a54a@redhat.com>
- <Z6c4NVX4wteIEIOA@intel.com>
- <CABgObfaBLdQOf0RGbnmxYJ5qYM0Q95z-8Nx6Amwzvu-88e56zQ@mail.gmail.com>
+ <20250125125137.1223277-4-zhao1.liu@intel.com>
+ <17907481-89d6-457c-bcd3-66a444b1325d@redhat.com>
+ <Z6Wx/RGBIElMaeZy@intel.com> <Z6W56AH3J1qOx18m@intel.com>
+ <CABgObfa+_VVQWvrGWf6fJjf39O0AkoNB5aoptDrhk7dDx_SNXQ@mail.gmail.com>
+ <Z6c8qju9IJaKM6rK@intel.com>
+ <CABgObfYJK_LsG6DwALpym1ZHk1TUA9G0Wa2JAit3yULeWkAgSA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABgObfaBLdQOf0RGbnmxYJ5qYM0Q95z-8Nx6Amwzvu-88e56zQ@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <CABgObfYJK_LsG6DwALpym1ZHk1TUA9G0Wa2JAit3yULeWkAgSA@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -91,32 +94,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > This needs to be "match addr & !4".
-> >
-> > I understand it's not necessary:
-> >
-> > In timer_and_addr(), I've masked the address with 0x18.
-> >
-> >     fn timer_and_addr(&self, addr: hwaddr) ->
-> > Option<(&BqlRefCell<HPETTimer>, hwaddr)> {
-> >         let timer_id: usize = ((addr - 0x100) / 0x20) as usize;
-> >
-> >         if timer_id > self.num_timers.get() {
-> >             None
-> >         } else {
-> >             Some((&self.timers[timer_id], addr & 0x18))
-> >
-> 
-> Ah, this should be 0x1C (or perhaps 0x1F). Otherwise there is a bug in
-> accessing the high 32 bits of a 64-bit register; shift will always be 0 in
-> HPETTimer::read and write.
+> I have sent a docs/devel/rust.rst sometime last week, it will be in the
+> next pull request and then you can send a patch on top.
+>
 
-Yes, you're right. Then we should use 0x1F so that invalid access could
-detected (or loged in future) and ignored.
+Nice, I'll also have a look at that patch
 
-Based on the similar reason, C side also need to use "addr & (0x1f | ~4)"
-instead of 0x18 to catch invalid access. If I'm right, I can submit a
-fix.
+And I plan to post v2 tomorrow... as I'll leave at next week from Tuesday.
+Try to catch your pull request train if possible. :-)
 
 Thanks,
 Zhao
