@@ -4,78 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDBEC02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 10:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EE7C02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 11:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgiWO-0004IR-IE; Sat, 08 Feb 2025 05:57:12 -0500
+	id 1tgjC6-0003tm-8V; Sat, 08 Feb 2025 06:40:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgiWJ-0004Hg-6w; Sat, 08 Feb 2025 05:57:07 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tgjC1-0003rH-Ha
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 06:40:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgiWH-0001ru-PP; Sat, 08 Feb 2025 05:57:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739012225; x=1770548225;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=DSsZrANcTJeTDe2XG2rANTgEcuJ6JlCUl4fqqBiaA08=;
- b=k5tCkcdSWQasr4yeKOft6tnKsg8cn2aI4fROX+7pzP8vnw7oJR0qZRMz
- xr6vSUdYuzAuGrPhxpIXXLX/x0H0gZOBsojAVCXXwHHzSO62jqnVPhLBK
- 2bEeCwyKOJaBh7q7f44rBZL3xmpJo86QzxC/ms/WEhqR9EIM1FM83CFE3
- myi1rSOS/TodnxH0gMDa9TtGDF1grZWy6UU0BB2lYADFLaS0QP1eB8/sR
- wJoo/VD9qqGWE6hLwXq1edLN1SNET0//Zj2b3WvWy6vhQjBJGa9ib4FVe
- wKbqR4eSmsNmufTbUZQTeB9/uCg2eEBApM1V3XawoviAbyLIgp9VXYs2U w==;
-X-CSE-ConnectionGUID: zDRuAsGVSTW9MtFY7BdZzw==
-X-CSE-MsgGUID: 3JY5+3nqQcGFLBDVey942g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="57186324"
-X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="57186324"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2025 02:56:58 -0800
-X-CSE-ConnectionGUID: MwZcsMT1QgC9bDvc9055Vg==
-X-CSE-MsgGUID: ORrFD1u6TGy8VLnnPYicew==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="148955570"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 08 Feb 2025 02:56:56 -0800
-Date: Sat, 8 Feb 2025 19:16:25 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Subject: Re: [PATCH 04/10] rust: add bindings for gpio_{in|out} initialization
-Message-ID: <Z6c9CWaPPnWmp3gT@intel.com>
-References: <20250125125137.1223277-1-zhao1.liu@intel.com>
- <20250125125137.1223277-5-zhao1.liu@intel.com>
- <5a19e7d2-9d69-45fe-812f-84145229876f@redhat.com>
- <Z6XHzXwoIklPZQ/I@intel.com>
- <CABgObfYathYPF-KWrZv+33+iEA_j=ee7eJbJmzA5F2rpY-ktqw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tgjBz-0007iX-3i
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 06:40:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739014809;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/3mXv4ELeiC2V6JPgnHvkqvzAX/X9skwIErg2J5nckg=;
+ b=jJFuVog3Cq1BytaVo8v+kIdD4qfBg1JdiFuZFx1r1QxIQDsDWtgEGUvqBk+qpp6KtDXjLe
+ DaCyHXIHVz37c+Qt6JG9ezzdPPgVEZ88guk+vT0VFuCxcEL7JwhAcXF5xbbdFZ3YqETy3X
+ vJBE6kCRSYOCdrlmaukfIC12+gBTR5M=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-vlex9O2sOcGJBla94t3mow-1; Sat, 08 Feb 2025 06:40:04 -0500
+X-MC-Unique: vlex9O2sOcGJBla94t3mow-1
+X-Mimecast-MFC-AGG-ID: vlex9O2sOcGJBla94t3mow
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43935bcec79so726865e9.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 03:40:03 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739014802; x=1739619602;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/3mXv4ELeiC2V6JPgnHvkqvzAX/X9skwIErg2J5nckg=;
+ b=bk2sFd/GjMJNTSNUhsxh0NJtQPI4ufADwEYZMsrerJBB/gkumeYRytVeNHScOVUCiY
+ 0E677S9qp96YLO6usG1vPZbdW4Tu87dMnGpXRbHXF58C1SKXNaWTbknENUd+DHlo/4dQ
+ 8swkv3orUbWdnvF4OK/W5BkfC4iJ36lKxOibZD3lVSVlGdzlQmWHNz5UY9u2HSk4sM92
+ kK7BH/lXpfjPF/sc6PrhTLvUrgS4yq1FQmm9/PP3fhl56hW96bYiurEPOEIdtDuUPMxu
+ 7Ylw8D4qalzb6INPRs7JwOQ6Yv81aQQFJ+n/pBO/K24PiBdWGhWh7c99yTYxiNntsNZC
+ W2Cw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSlapL/zwf5f85L0i1VqFFzLM1DgKwySUulFbmqcu+lcz4Arh8v8qJDSuIalnmzK/NrmOkEPLpaSx4@nongnu.org
+X-Gm-Message-State: AOJu0YwWybiU83r3tc0W4CaVu9zp3YDAXu2JwrE0MTdFYKsN6Hr6UwOh
+ rvJcK/CDkQUHODMRLjWIUrFyrvTh/Hr+CgnM4RcdBhATpsF8vI3IZnAlmhEIjTN5Fi3vuvdNa99
+ D91X9flSzTQciKB09FgTRJ0z+TFrbQ0+kw3LpQo2kTclQ02ZB4x56Lms5Ex67e30sq5tOvYTQ85
+ zVRAp613HbWqXCcHo2CdR+evIPm5M=
+X-Gm-Gg: ASbGncu72Ke0s7ljqgHWRc0NyQURbC837oeO4Vt7iEpyHTLhArlQ97HRnYzZqRLPOPx
+ Dl4JupGYsAIEazRsxZPXf9i1+NHMS6HSNui6WFlpqq7AZsdaxb0QmqSqv+WSr
+X-Received: by 2002:a05:600c:3508:b0:434:9936:c823 with SMTP id
+ 5b1f17b1804b1-43924994503mr60020025e9.18.1739014802672; 
+ Sat, 08 Feb 2025 03:40:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSEHpdn1iQEtAaZ19iiLEf/ZokcqJ/tMlEpRmFkQSZ4t2W3Mi7Ssw1i8k1FaDcg5mui26qNJ1gVzGD/B5mayk=
+X-Received: by 2002:a05:600c:3508:b0:434:9936:c823 with SMTP id
+ 5b1f17b1804b1-43924994503mr60019925e9.18.1739014802374; Sat, 08 Feb 2025
+ 03:40:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfYathYPF-KWrZv+33+iEA_j=ee7eJbJmzA5F2rpY-ktqw@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20250125125137.1223277-1-zhao1.liu@intel.com>
+ <20250125125137.1223277-4-zhao1.liu@intel.com>
+ <17907481-89d6-457c-bcd3-66a444b1325d@redhat.com> <Z6Wx/RGBIElMaeZy@intel.com>
+ <Z6W56AH3J1qOx18m@intel.com>
+ <CABgObfa+_VVQWvrGWf6fJjf39O0AkoNB5aoptDrhk7dDx_SNXQ@mail.gmail.com>
+ <Z6c8qju9IJaKM6rK@intel.com>
+In-Reply-To: <Z6c8qju9IJaKM6rK@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sat, 8 Feb 2025 12:39:52 +0100
+X-Gm-Features: AWEUYZmH99vpotQ0rtrXqSyInMaku2dIohEqkNdsQBDDZH7DrbhDDmAE4Gy9QpQ
+Message-ID: <CABgObfYJK_LsG6DwALpym1ZHk1TUA9G0Wa2JAit3yULeWkAgSA@mail.gmail.com>
+Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert [InterruptSource]
+ to [*mut IRQState]
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, 
+ =?UTF-8?Q?Alex_Benn=EF=BF=BDe?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?RGFuaWVsIFAgLiBCZXJyYW5n77+9?= <berrange@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000008e1d04062d9fefc8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,29 +115,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Use the "let" so that it's caught at compile time.
+--0000000000008e1d04062d9fefc8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks! Fixed.
+Il sab 8 feb 2025, 11:55 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 
-> There's a difference with origianl C version:
+> On Fri, Feb 07, 2025 at 10:57:11AM +0100, Paolo Bonzini wrote:
+> > Date: Fri, 7 Feb 2025 10:57:11 +0100
+> > From: Paolo Bonzini <pbonzini@redhat.com>
+> > Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert
+> >  [InterruptSource] to [*mut IRQState]
 > >
-> > In C side, qdev_get_gpio_in() family could accept a NULL handler, but
-> > there's no such case in current QEMU:
+> > Il ven 7 feb 2025, 08:25 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 > >
-> > * qdev_get_gpio_in
-> > * qdev_init_gpio_in_named
-> > * qdev_init_gpio_in_named_with_opaque
+> > > Just to confirm, I check with `cargo +nightly clippy` but it doesn't
+> > > complain about this case. Should I switch to another version of clipp=
+y
+> > > when I do such check? (currently I'm using v0.1.63 clippy as well, to
+> > > match rustc.)
+> > >
 > >
-> > And from code logic view, creating an input GPIO line but doing nothing
-> > on input, sounds also unusual.
+> > I don't remember exactly how I noticed it=E2=80=94I am pretty sure it b=
+roke in CI
+> > though. Maybe the change to add rust_version hid it.
 > >
-> 
-> Wouldn't it then crash in qemu_set_irq?
-> 
+> > To answer your question, generally the idea is that we use the latest
+> > version of the developer tools (cargo, rustfmt, clippy). In particular
+> old
+> > versions of cargo don't support retrieving clippy settings from
+> Cargo.toml.
+>
+> This one inspired me. I'm thinking that even though we deleted the
+> README of pl011, a gneral guide or doc section (at somewhere, e.g.,
+> docs/devel/style.rst or docs/devel/submitting-a-patch.rst) would be
+> helpful.
+>
+> At least, that could remind contributor to check patches with latest
+> toolchain instead of letting the maintainer's CI smoking fail.
+>
 
-Yes! Thank you for the education.
+I have sent a docs/devel/rust.rst sometime last week, it will be in the
+next pull request and then you can send a patch on top.
 
-Regards,
-Zhao
+Paolo
+
+Thanks,
+> Zhao
+>
+>
+
+--0000000000008e1d04062d9fefc8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il sab 8 feb 2025, 11:55 Zhao Li=
+u &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; ha=
+ scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Fri=
+, Feb 07, 2025 at 10:57:11AM +0100, Paolo Bonzini wrote:<br>
+&gt; Date: Fri, 7 Feb 2025 10:57:11 +0100<br>
+&gt; From: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=
+=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+&gt; Subject: Re: [PATCH 03/10] rust/irq: Add a helper to convert<br>
+&gt;=C2=A0 [InterruptSource] to [*mut IRQState]<br>
+&gt; <br>
+&gt; Il ven 7 feb 2025, 08:25 Zhao Liu &lt;<a href=3D"mailto:zhao1.liu@inte=
+l.com" target=3D"_blank" rel=3D"noreferrer">zhao1.liu@intel.com</a>&gt; ha =
+scritto:<br>
+&gt; <br>
+&gt; &gt; Just to confirm, I check with `cargo +nightly clippy` but it does=
+n&#39;t<br>
+&gt; &gt; complain about this case. Should I switch to another version of c=
+lippy<br>
+&gt; &gt; when I do such check? (currently I&#39;m using v0.1.63 clippy as =
+well, to<br>
+&gt; &gt; match rustc.)<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; I don&#39;t remember exactly how I noticed it=E2=80=94I am pretty sure=
+ it broke in CI<br>
+&gt; though. Maybe the change to add rust_version hid it.<br>
+&gt; <br>
+&gt; To answer your question, generally the idea is that we use the latest<=
+br>
+&gt; version of the developer tools (cargo, rustfmt, clippy). In particular=
+ old<br>
+&gt; versions of cargo don&#39;t support retrieving clippy settings from Ca=
+rgo.toml.<br>
+<br>
+This one inspired me. I&#39;m thinking that even though we deleted the<br>
+README of pl011, a gneral guide or doc section (at somewhere, e.g.,<br>
+docs/devel/style.rst or docs/devel/submitting-a-patch.rst) would be<br>
+helpful.<br>
+<br>
+At least, that could remind contributor to check patches with latest<br>
+toolchain instead of letting the maintainer&#39;s CI smoking fail.<br></blo=
+ckquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I have se=
+nt a docs/devel/rust.rst sometime last week, it will be in the next pull re=
+quest and then you can send a patch on top.</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto=
+"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">
+Thanks,<br>
+Zhao<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000008e1d04062d9fefc8--
 
 
