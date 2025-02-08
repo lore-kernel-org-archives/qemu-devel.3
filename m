@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B84C02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 16:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2D6C021A0
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 16:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgns1-00017Z-Dq; Sat, 08 Feb 2025 11:39:53 -0500
+	id 1tgnrX-00010f-OO; Sat, 08 Feb 2025 11:39:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrx-00015C-29
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:49 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrW-00010N-Cn
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:22 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrv-00006x-5Y
- for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:48 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso36228005e9.1
- for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 08:39:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tgnrU-0008NL-TP
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 11:39:22 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43934d41730so4090305e9.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Feb 2025 08:39:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739032785; x=1739637585; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739032759; x=1739637559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=81ffc0XjjE2CDrZU8HhaqibfPhqNj9LivXTF2X9Kxp8=;
- b=CckJVCJcrrsuDLl0kgh0hrnNu8/OvjV6v7THB1+IA4GPLmHXI4vH6kPqGcsfB1KGls
- IYSeOg1TGQwtKhITv1VHulLncCCc6Hms1asvZsF4xiWCDkcmLHLFTCfeDUtSY0GY58wy
- i4xxRLZbEq1CgHnU9PC+hRz8hHcwv6dX9Vk6CBFpLiRX9NqK/I+4kxMTtAsZo0GSamvj
- j5a54jNWHOwr5a7SKm7N5rw3LeTQpSXC0gUHLZNvu/cqZP76bDuvAI6UXQfyCQiqWOAG
- ZzdIP3Tmf7owZWFZnpoDxO03OCoBS43q7NGGM32gUIYatobMH5AnS53YPDOUIbuiL2/i
- u9ug==
+ bh=pnDfQ0pDNHjagyoidO1nQy0wbrzE23spPhP9nSEJCp0=;
+ b=M2GYL5VJbm3fLpUbuaP+A2IqSlhhpa3F1nFe/LltDcWNRdRaBZsGyX8hOTWbzjTNZK
+ Qwo375LO45k2qrXXu0t52+12WuMzhpAxxQ0GVCLC3lG4X7L6QZ7YNd/+tDwrrNTd65Xh
+ Du5dCy9ADLHcTxybYGmguEWiRNwwa3k1P16Q6RppbGs6JF5X20jO9XAG6gMjd3h5cw4G
+ Wn8litcw+1x+osRn9gV94MR8JB5annIC7pMQCULRJvcBARdfp1K6nQ4tokib6+pdwC5N
+ PG9MOL4yKeM9mQoHaG2ilUJCKldwylOMfFnI/yeiFkLf4iRQj6UcyKhpUsoG+E2zjf/8
+ /Vxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739032785; x=1739637585;
+ d=1e100.net; s=20230601; t=1739032759; x=1739637559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=81ffc0XjjE2CDrZU8HhaqibfPhqNj9LivXTF2X9Kxp8=;
- b=UXNvSUGJIQ28fVk0c8ibnxiJ2HG9wcWPfgRLtjmpqxcSdEjkG1i44N+T6BWIgI5e9d
- 9frdZe8oI/1tCOvM1vL4dwgB8tLlYwT0AdkIK3n6WkI94LYrxd7G7O7j6hyxqJmgYdQq
- kx7ldVybsSUBWO9/v19Wehvk79IxxDLLwLCMCT1Pb9fxvU0lD6BRRjMXxsmCRWiKScHr
- cNm51v355rfgyYBh9ZBLaN2Rc8vBTbigQXu3248vQ6JAQ/DTybCR+npjscminrnnOhtW
- 1+FhZTlDPdFDSL/kGU7cJZK90l6hX4fYyMmc0k1eyVoDcXNt7+HmD22y4FG4QNYtCeCI
- fPHA==
-X-Gm-Message-State: AOJu0YxG02pSaN97PfPg1gjUCmXp58RmootRfsPGkVBbPklj92yveBrd
- k7oiNIyDOo9P4kuaWUHzuOOBLMFTZPIgF86a68ZDB8xmRR1GdW+/V4uCzs7XLbJvNWyJPUPTV67
- RF0I=
-X-Gm-Gg: ASbGnctp3gh6nAaU57YvnxdHVI4VYg/MbNoDmi0l+ja4zb/URX6NcRQa9rtmXRog9yg
- qn1Mu+xAm0wKqTi+TgS0Relq9h806AzKQ8N4ORT4797/HZDGufsEENPeIvq/xPXUCvCssalfJ+O
- tpy4HOOAkQwUcTyPn3v3TircL5fokJIArcOngiW9SxGiehyhE0u8VfP+Pqjvcpy+FG5N1WQ8FTl
- W2BiI43SqzLOw1Kndw/2GaLQtVSe/xHYFOT2DlDA3Ds87kQuJJ4XGMDxUCdaO6kbR0xDhSHbyE9
- Vh6nZvttj3XqFKmMKSf8IIqWMz/gjrzEoKCxvoGi3MVW6hdeTHOsyG2Bn2pPILx3wQ==
-X-Google-Smtp-Source: AGHT+IG/X0VyA9+eIBjlpg23/gpiC6q5rDMExQc5IPCMWapruWrwiPy2YHvflwAE1tp+5k9gGRgdgA==
-X-Received: by 2002:a05:600c:3d06:b0:436:2238:97f6 with SMTP id
- 5b1f17b1804b1-4392f1b8e78mr17671635e9.1.1739032785361; 
- Sat, 08 Feb 2025 08:39:45 -0800 (PST)
+ bh=pnDfQ0pDNHjagyoidO1nQy0wbrzE23spPhP9nSEJCp0=;
+ b=NVFXsCt8J+hOp9pBDtovE/TFwvnruvthk+w7CFXORnYadNYTpzqTxUrj5oc+suXo6c
+ YzjbTckdhLPmTqWBplW+hhJqIpxdvunWqy6zM1z6H5qRFGwMoVzmM2wtCrBSUuqZq3J/
+ aqZ3K1ywCo+kXcwxjr8mbLslFsVDb62AhoBKFn1MHd9FUN/BPSqf9dWkuBBleg8trHvJ
+ onZx7W+1gRBqc2LTy6OCbCyobp2Ml8wSCFuuX6j9TqbS9++PAk4v5h68HvpJy0pQvp1e
+ cokhm/j22A2IfqlEiKDm2Z1OD5QjCv/enxKVz6uLpfojL1noV70ySu3Ua8gMv5kjMBuW
+ EyOw==
+X-Gm-Message-State: AOJu0Yy9MvDzp6zgctooD2m/TscsNhMKx073ErQWtEDtl/KwsRqFdjFE
+ jZ41Fa4nk/5h6qJJKS7CpcZQ6ImQJ4JS0Is0d24aM5wv47HonMJnqfY2KIDfScFM1yTY1FnbPkw
+ u0zY=
+X-Gm-Gg: ASbGnctW3F143Wk8DbyAmnK8V8yDGsQptRBcFfXVGX5t+vGUVj43uIEArkX0OFMWs/Q
+ TcH0LfJfrbzs6XEJ6Trjt7C8xlcL83OifXmk+kuaJ3nZN/LGw0mMa6ZjrzbCHHG4pfcUp4wXn3j
+ usBngtPEfOgMug8eOCKvK0m8ff7mhACwmQ/O/A18DJO5vev1kaOQvhHaUSJKAxaSrlac1WSDc07
+ e54vIPlHTS/Ha9tSjT9/e2BTQq9+lFC9r8oc5U8AWoNYaUrwpi0jbfP99pVmuc+v4WcNToOpVwq
+ QydRahpBf8TSqeOrtVddqYbey3rTwXkHJZX3BLahUKbZskdxa5V+zvPYlGCoiaDNbA==
+X-Google-Smtp-Source: AGHT+IGtem7OP/J+ciEP6t1sttj6uUucFHKFy2ilA0KO9IbGMYq37p+5gV+Q9tzUmRYGQPuY0zZLXQ==
+X-Received: by 2002:a05:6000:1887:b0:386:3356:f3ac with SMTP id
+ ffacd0b85a97d-38dc90edfecmr5468949f8f.26.1739032758923; 
+ Sat, 08 Feb 2025 08:39:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbde31d9bsm7546987f8f.94.2025.02.08.08.39.44
+ ffacd0b85a97d-38dbdd54624sm7410071f8f.45.2025.02.08.08.39.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 08 Feb 2025 08:39:44 -0800 (PST)
+ Sat, 08 Feb 2025 08:39:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -69,18 +69,19 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 6/7] hw/char/pl011: Drain TX FIFO when no backend connected
-Date: Sat,  8 Feb 2025 17:39:10 +0100
-Message-ID: <20250208163911.54522-7-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v6 1/7] hw/char/pl011: Warn when using disabled receiver
+Date: Sat,  8 Feb 2025 17:39:05 +0100
+Message-ID: <20250208163911.54522-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250208163911.54522-1-philmd@linaro.org>
 References: <20250208163911.54522-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,58 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no character backend is connected, the PL011 frontend
-just drains the FIFO.
+We shouldn't receive characters when the full UART or its
+receiver is disabled. However we don't want to break the
+possibly incomplete "my first bare metal assembly program"s,
+so we choose to simply display a warning when this occurs.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/pl011.c      | 13 +++++++++++++
- hw/char/trace-events |  1 +
- 2 files changed, 14 insertions(+)
+ hw/char/pl011.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index ef39ab666a2..3c4264869df 100644
+index 06ce851044d..60cea1d9a16 100644
 --- a/hw/char/pl011.c
 +++ b/hw/char/pl011.c
-@@ -240,6 +240,13 @@ static void pl011_loopback_tx(PL011State *s, uint32_t value)
-     pl011_fifo_rx_put(s, value);
- }
+@@ -85,6 +85,7 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+ #define CR_OUT1     (1 << 12)
+ #define CR_RTS      (1 << 11)
+ #define CR_DTR      (1 << 10)
++#define CR_RXE      (1 << 9)
+ #define CR_TXE      (1 << 8)
+ #define CR_LBE      (1 << 7)
+ #define CR_UARTEN   (1 << 0)
+@@ -487,6 +488,12 @@ static int pl011_can_receive(void *opaque)
+     PL011State *s = (PL011State *)opaque;
+     int r;
  
-+static void pl011_drain_tx(PL011State *s)
-+{
-+    trace_pl011_fifo_tx_drain(fifo8_num_used(&s->xmit_fifo));
-+    pl011_reset_tx_fifo(s);
-+    s->rsr &= ~RSR_OE;
-+}
-+
- static gboolean pl011_xmit(void *do_not_use, GIOCondition cond, void *opaque)
- {
-     PL011State *s = opaque;
-@@ -250,6 +257,12 @@ static gboolean pl011_xmit(void *do_not_use, GIOCondition cond, void *opaque)
-     count = fifo8_num_used(&s->xmit_fifo);
-     trace_pl011_fifo_tx_xmit_used(count);
- 
-+    if (!qemu_chr_fe_backend_connected(&s->chr)) {
-+        /* Instant drain the fifo when there's no back-end. */
-+        pl011_drain_tx(s);
-+        return G_SOURCE_REMOVE;
++    if (!(s->cr & CR_UARTEN)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "PL011 reading data on disabled UART\n");
 +    }
-+
-     data = fifo8_pop(&s->xmit_fifo);
-     bytes_consumed = 1;
- 
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 8234f3afa13..7d1cba1b4f8 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -72,6 +72,7 @@ pl011_fifo_tx_put(uint8_t byte) "TX FIFO push char [0x%02x]"
- pl011_fifo_tx_xmit_used(unsigned sent) "TX FIFO used %u chars"
- pl011_fifo_tx_xmit_consumed(unsigned sent) "TX FIFO consumed %u chars"
- pl011_fifo_tx_overrun(void) "TX FIFO overrun"
-+pl011_fifo_tx_drain(unsigned drained) "TX FIFO draining %u chars"
- pl011_baudrate_change(unsigned int baudrate, uint64_t clock, uint32_t ibrd, uint32_t fbrd) "new baudrate %u (clk: %" PRIu64 "hz, ibrd: %" PRIu32 ", fbrd: %" PRIu32 ")"
- 
- # cmsdk-apb-uart.c
++    if (!(s->cr & CR_RXE)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "PL011 reading data on disabled TX UART\n");
++    }
+     r = s->read_count < pl011_get_fifo_depth(s);
+     trace_pl011_can_receive(s->lcr, s->read_count, r);
+     return r;
 -- 
 2.47.1
 
