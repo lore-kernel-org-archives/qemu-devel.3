@@ -4,77 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE04C02198
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 08:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0DEC02198
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Feb 2025 08:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tgfnW-0001oq-QF; Sat, 08 Feb 2025 03:02:43 -0500
+	id 1tgfuH-0003Fn-GI; Sat, 08 Feb 2025 03:09:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgfnU-0001nB-Sk; Sat, 08 Feb 2025 03:02:40 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tgfnR-0002vc-VB; Sat, 08 Feb 2025 03:02:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739001758; x=1770537758;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=PgO8/WqlJ+zgEu78mjjyldEkBb1UJgABH000P/22n3Q=;
- b=TgHmA861RlcbnnCOOJfpbY4KJM/FJIjHVjQxYkfsWYMpXiY2/8D0Tzhv
- Vz0UdMY1UHnhhwOfvRUcMJm1DaPtZRASwkMnvWeUGhP17992ARlYGcrh+
- UyfXUV+ZuWGEtzpnBtCUHLzqxETN8Yacl5wkjFxkQIQ3NwTx1VU8QooB0
- ybzLrqZ5e1Y71wiQWHNgTTJjtBDbN0ZkPiKeZ/y8V5fckPNy58zoRtAF1
- KiSSTaEgvYIE4m7dl4f1Ig0AogvM3Id/7I0Gfb2BOajCBSoTWp8fVLKxQ
- GppCJmnVOAleLX8Nt0FWR8p8FkKd615YAM38eTyT47UxVmIbDlFC1jkQp A==;
-X-CSE-ConnectionGUID: xjSaLEoSSYGy9hkyFddQUw==
-X-CSE-MsgGUID: jImCDJJ9Rsise3E+0gY12w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11338"; a="65002522"
-X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="65002522"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2025 00:01:33 -0800
-X-CSE-ConnectionGUID: v8BgjGh9QqqlPwAG+H/FRw==
-X-CSE-MsgGUID: s4rTIjvbTMC6AHHK66MMMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,269,1732608000"; d="scan'208";a="111561563"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 08 Feb 2025 00:00:31 -0800
-Date: Sat, 8 Feb 2025 16:19:58 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 08/10] rust/timer/hpet: add basic HPET timer and HPETState
-Message-ID: <Z6cTrkww4n9lPe2X@intel.com>
-References: <20250125125137.1223277-1-zhao1.liu@intel.com>
- <20250125125137.1223277-9-zhao1.liu@intel.com>
- <b9ce64fa-b2b8-4f61-8380-9ec582936b26@redhat.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1tgfuE-0003FI-IE
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 03:09:38 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1tgfuB-00072h-WB
+ for qemu-devel@nongnu.org; Sat, 08 Feb 2025 03:09:38 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxSOE0Eadn1lFvAA--.19206S3;
+ Sat, 08 Feb 2025 16:09:24 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMBxXsUzEadnAfcFAA--.23256S2;
+ Sat, 08 Feb 2025 16:09:24 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Bibo Mao <Maobibo@loongson.cn>,
+	Song Gao <gaosong@loongson.cn>
+Subject: [PATCH V2] target/loongarch: fix vcpu reset command word issue
+Date: Sat,  8 Feb 2025 15:48:08 +0800
+Message-Id: <20250208074808.5615-1-lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b9ce64fa-b2b8-4f61-8380-9ec582936b26@redhat.com>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMBxXsUzEadnAfcFAA--.23256S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,114 +63,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 29, 2025 at 11:57:18AM +0100, Paolo Bonzini wrote:
-> Date: Wed, 29 Jan 2025 11:57:18 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 08/10] rust/timer/hpet: add basic HPET timer and
->  HPETState
-> 
-> 
-> 
-> On Sat, Jan 25, 2025 at 1:32 PM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > +// Register space for each timer block. (HPET_BASE isn't defined here.)
-> > +const HPET_REG_SPACE_LEN: u64 = 0x400; // 1024 bytes
-> 
-> Use doc comments "///"...
+When the KVM_REG_LOONGARCH_VCPU_RESET command word
+is sent to the kernel through the kvm_set_one_reg interface,
+the parameter source needs to be a legal address,
+otherwise the kernel will return an error and the command word
+will fail to be sent.
 
-OK,
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+---
+Cc: Bibo Mao <Maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
 
-> > +// Timer N FSB Interrupt Route Register (masked by 0x18)
-> > +const HPET_TN_FSB_ROUTE_REG: u64 = 0x010;
-> 
-> ... all the way to here.
+CHANGE:
+V2<-V1:
+  1.Sets the initial value of the variable and
+  adds a function return value judgment and prints a log
 
-Done.
+ target/loongarch/kvm/kvm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-> > +/// HPET Timer Abstraction
-> > +#[repr(C)]
-> > +#[derive(Debug, Default, qemu_api_macros::offsets)]
-> > +pub struct HPETTimer {
-> > +    /// timer N index within the timer block (HPETState)
-> > +    #[doc(alias = "tn")]
-> > +    index: usize,
-> > +    qemu_timer: Option<Box<QEMUTimer>>,
-> > +    /// timer block abstraction containing this timer
-> > +    state: Option<NonNull<HPETState>>,
-> > +
-> > +    /// Memory-mapped, software visible timer registers
-> 
-> These "headings" cannot be doc comments, because they would be attached
-> to the field after.  Same below:
-> 
-> -    /// Hidden register state
-> +    // Hidden register state
-> 
-> -    /// HPET block Registers: Memory-mapped, software visible registers
-> +    // HPET block Registers: Memory-mapped, software visible registers
-> 
-> -    /// Internal state
-> +    // Internal state
-
-Fixed. Thanks!
-
-> > +    fn get_state(&self) -> &HPETState {
-> > +        // SAFETY:
-> > +        // the pointer is convertible to a reference
-> > +        unsafe { self.state.unwrap().as_ref() }
-> > +    }
-> 
-> Note for the future: I looked briefly into why a NonNull<> is needed
-> and the reasons are two.  First, the offset_of! replacement does not
-> support lifetime parameters.  Second, it's messy to pass a &HPETState
-> to the &HPETTimer, because the HPETTimer still has to be written into
-> the HPETState.
-
-Yes, and the second use would be a common case in practice. So maybe we
-need some wrapper on this, to provide someting like HPETTimer::get_state(),
-which returns a reference of the parent structure.
-
-In addition, for underlying library, NonNull<> is nice thinks to its low
-overhead. But for device implementation, I'm not sure if it's the good
-choice. Rust uses RefCell<Weak<>> (for QEMU, it could be BqlRefCell<Weak<>>)
-to handle this cycle reference case.
-
-As I mentioned in RFC,
-
-	The device instance is not created in Rust side, and there's
-	only init() method to initialize created device instance. This
-	way, it's hard to be compatible with the pattern of creating
-	weak references (at least I failed).
-
-To address this issue, the method `from` or `from_raw` seems necessary,
-like `Owned::from`, but it's tricky... So I don't have a good idea to
-replace NonNull<> yet! 
-
-> This may be worth revisiting when QEMU starts using
-> pinned-init is added, but for now is self-contained.
-> 
-> > +        if let Some(timer) = self.qemu_timer.as_mut() {
-> > +            timer.timer_mod(self.last);
-> > +        }
-> 
-> I think this can be just "timer.unwrap().timer_mod(self.last)" (not
-> sure if it needs an as_ref() too).
-> 
-
-Yes, it needs as_ref(). A direct unwrap() consumes the Some() since
-inter type of qemu_timer (Box<Timer>) is non-`Copy`.
-
-Another example is
-
-    fn get_state(&self) -> &HPETState {
-        // SAFETY:
-        // the pointer is convertible to a reference
-        unsafe { self.state.unwrap().as_ref() }
-    }
-
-Because the state (Option<NonNull<HPETState>>) has `Copy` so that this
-case doesn't need as_ref before unwrap.
-
-Thanks,
-Zhao
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index a3f55155b0..3f499e60ab 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -581,9 +581,14 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
+ void kvm_arch_reset_vcpu(CPUState *cs)
+ {
+     CPULoongArchState *env = cpu_env(cs);
++    int ret = 0;
++    uint64_t unused = 0;
+ 
+     env->mp_state = KVM_MP_STATE_RUNNABLE;
+-    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
++    ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &unused);
++    if (ret) {
++        error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET");
++    }
+ }
+ 
+ static int kvm_loongarch_get_mpstate(CPUState *cs)
+-- 
+2.39.1
 
 
