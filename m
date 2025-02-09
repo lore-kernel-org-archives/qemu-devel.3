@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C284C021A1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 17:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0534C021A1
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 17:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thB6D-0004Vo-OI; Sun, 09 Feb 2025 12:28:05 -0500
+	id 1thB6E-0004W7-Ip; Sun, 09 Feb 2025 12:28:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1thB6C-0004VM-1D
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:04 -0500
+ id 1thB6D-0004VW-Lc
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:05 -0500
 Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1thB67-0006K0-HP
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:03 -0500
+ id 1thB6A-0006Iq-Ao
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:04 -0500
 Received: from localhost.localdomain (default-rdns.vocus.co.nz
  [202.150.110.104] (may be forged)) (authenticated bits=0)
  by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 519HRdEq3380282
+ 519HRdEp3380282
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Sun, 9 Feb 2025 17:27:51 GMT
+ Sun, 9 Feb 2025 17:27:49 GMT
 Authentication-Results: anarch128.org; auth=pass;
  dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=Il23nKOa header.a=rsa-sha256 header.s=100003;
+ header.i=@anarch128.org header.b=e3HcQepb header.a=rsa-sha256 header.s=100003;
  x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org); 
  x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1739122074;
- bh=PEtAsmbyszmqdfXjdSl1GSic99FuRpUMJux4kROZ2A4=;
+ s=100003; t=1739122071;
+ bh=v2r5+aLWIDg3nxqMxTLpFoUFEZ4FxZUh0mEzUQmI0hw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Il23nKOafKtAAd0aK2yjOFfV8nd43K/gX/IYqweUj4g6VDgeTOURI4+yKqDNkzgS7
- Wapa6dJz6fnuSy/y16/hPK++j5C9H9ozjS/E0Nv1DwMKOt4hTOKgMuuy7rCqRbwD8y
- Wzk/HaLf2cJ0tMxQ38uPivhwqOe3jE4r6I2Pd3wLWd66mUiDURG8FEqdz56htYifkh
- 5ejkT9Fg/07kFXnvvA0AX1ZJhSJh/KSZtgpNdKUB3hg0/huelr1RFfoF+u4ZD+nZLE
- LBE/X4tSMzIWhYSx088JMh5y5bUg8KghtlSPQPRJBz1bulTYtuQCalIHkv6mbMO0uS
- AKYZdHVU9H7nA==
+ b=e3HcQepbtWyhFJ8jlFIzbiQZV0SQzKfWyrswls7GUSyWScBjkXQ25JgdjFZrAZMd9
+ dAv9lTpa+adVCD7MKRyd3BxL+6Bdtt7WRevTyKFFKi1ycvcqpkHKlI9uNCraz+8UOm
+ E/WaCExAlIcSHf89jTIdmpVrEego0/Kf9N5X+d74dbFkPgjqUgCIlV0Ou5qgGxyDhJ
+ 6mr5OL9pdEKaWy+3nRyEf3Bg8Ynq0Gxq1xLHIhyuNMR+KmuvJcPXOZYWz9bDCQgTYJ
+ IcfENMIyuT1qG7z32fJIZTCijAyswhRQHk1CP88gg/DolKdSEf427juAvQe+9SIg9h
+ /sMnnPKIxjMBA==
 From: Michael Clark <michael@anarch128.org>
 To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
 Cc: Michael Clark <michael@anarch128.org>
-Subject: [PATCH v2 3/4] x86-disas: add x86-mini metadata tablegen script
-Date: Mon, 10 Feb 2025 06:26:55 +1300
-Message-ID: <20250209172656.1466556-4-michael@anarch128.org>
+Subject: [PATCH v2 2/4] x86-disas: add x86-mini metadata documentation
+Date: Mon, 10 Feb 2025 06:26:54 +1300
+Message-ID: <20250209172656.1466556-3-michael@anarch128.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250209172656.1466556-1-michael@anarch128.org>
 References: <20250209172656.1466556-1-michael@anarch128.org>
@@ -79,721 +79,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the x86-mini metadata tablegen python script reads instruction
-set metadata CSV files and translates them into tables used
-by the disassembler. it generates the following tables:
-
-- x86_opc_table that encodes prefix, map, and opcode
-- x86_opr_table that encodes instruction operands
-- x86_ord_table that encodes operand field order
-- x86 register enum and string table
-- x86 opcode enum and string table
+add detailed information on the instruction opcode encoding
+format for LEX/VEX/EVEX prefix, map and opcode encoding, the
+operand encoding format, the field order encoding format and
+notes on instruction synthesis for parameterized opcodes.
 
 Signed-off-by: Michael Clark <michael@anarch128.org>
 ---
- scripts/x86-tablegen.py | 693 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 693 insertions(+)
- create mode 100755 scripts/x86-tablegen.py
+ docs/x86-metadata.txt | 303 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 303 insertions(+)
+ create mode 100644 docs/x86-metadata.txt
 
-diff --git a/scripts/x86-tablegen.py b/scripts/x86-tablegen.py
-new file mode 100755
-index 000000000000..6d6a0916fb36
+diff --git a/docs/x86-metadata.txt b/docs/x86-metadata.txt
+new file mode 100644
+index 000000000000..ce96cedfe100
 --- /dev/null
-+++ b/scripts/x86-tablegen.py
-@@ -0,0 +1,693 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright (c) 2024-2025 Michael Clark
-+#
-+# Permission is hereby granted, free of charge, to any person obtaining a
-+# copy of this software and associated documentation files (the "Software"),
-+# to deal in the Software without restriction, including without limitation
-+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
-+# and/or sell copies of the Software, and to permit persons to whom the
-+# Software is furnished to do so, subject to the following conditions:
-+#
-+# The above copyright notice and this permission notice shall be included
-+# in all copies or substantial portions of the Software.
-+#
-+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-+# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-+# OTHER DEALINGS IN THE SOFTWARE.
++++ b/docs/x86-metadata.txt
+@@ -0,0 +1,303 @@
++x86 Instruction Set Metadata
++============================
 +
-+import re
-+import sys
-+import csv
-+import glob
-+import string
-+import argparse
++Legacy x86 instructions have been parameterized in the instruction set
++metadata using a new LEX prefix for instruction encoding with abstract width
++suffix codes that synthesize multiple instruction widths using combinations
++of operand size prefixes and `REX.W` bits. This new LEX format makes legacy
++instruction encodings consistent with VEX and EVEX encodings as well as
++eliminating some redundancy in the metadata.
 +
-+gpr_bh = ["ah", "ch", "dh", "bh"]
-+gpr_b = ["al", "cl", "dl", "bl", "spl", "bpl", "sil", "dil"]
-+gpr_w = ["ax", "cx", "dx", "bx", "sp", "bp", "si", "di"]
-+gpr_d = ["eax", "ecx", "edx", "ebx", "esp", "ebp", "esi", "edi"]
-+gpr_q = ["rax", "rcx", "rdx", "rbx", "rsp", "rbp", "rsi", "rdi"]
-+seg_r = ["es", "cs", "ss", "ds", "fs", "gs", "seg6", "seg7"]
-+sys_r = ["rip", "rflags","fpcsr", "mxcsr"]
-+sys_n = ["none"]
++There are a small number of special cases for legacy instructions which need
++mode-dependent overrides for cases such as, a different opcode is used for
++different modes, or the instruction has a quirk where the operand size does
++not follow the default rules for instruction word and address sizes:
 +
-+cc_all = [ 'EQ', 'NEQ', 'GT', 'NLE', 'GE', 'NLT', 'LT', 'NGE', 'LE', 'NGT',
-+                        'A',  'NBE', 'AE', 'NB',  'B',  'NAE', 'BE', 'NA' ]
-+cc_signed = [ 'EQ', 'GE', 'GT', 'LE', 'LT', 'NEQ', 'NGT', 'NLE', 'NLT' ]
-+cc_unsigned = [ 'EQ', 'AE', 'A',  'BE', 'B',  'NEQ', 'NA',  'NBE', 'NB' ]
++- `.wx` is used to specify 64-bit instructions that default to 32-bit
++  operands in 64-bit mode.
++- `.ww` is used to specify 64-bit instructions that default to 64-bit
++  operands in 64-bit mode.
++- `.o16` is used to specify an instruction override specific to 16-bit mode.
++- `.o32` is used to specify an instruction override specific to 32-bit mode.
++- `.o64` is used to specify an instruction override specific to 64-bit mode.
 +
-+def gen_range(fmt,f,s,e):
-+    t = []
-+    for i in range(s,e):
-+        t += [[i, fmt % i, f]]
-+    return t
++CSV File Format
++===============
 +
-+def gen_list(l,f,start):
-+    t = []
-+    for i, s in enumerate(l):
-+        t += [[i + start, s, f]]
-+    return t
++The instruction set metadata in the `disas/x86-data` directory has the
++following fields which map to instruction encoding tables in the Intel
++Architecture Software Developer's Manual:
 +
-+def gen_sep():
-+    return [[0, "", ""]]
++- _Instruction_: opcode and operands from Opcode/Instruction column.
++- _Opcode_: instruction encoding from Opcode/Instruction column.
++- _Valid 64-bit_: 64-bit valid field from 64/32 bit Mode Support column.
++- _Valid 32-bit_: 32-bit valid field from 64/32 bit Mode Support column.
++- _Valid 16-bit_: 16-bit valid field from Compat/Legacy Mode column.
++- _Feature Flags_: extension name from CPUID Feature Flag column.
++- _Operand 1_: Operand 1 column from Instruction Operand Encoding table.
++- _Operand 2_: Operand 2 column from Instruction Operand Encoding table.
++- _Operand 3_: Operand 3 column from Instruction Operand Encoding table.
++- _Operand 4_: Operand 4 column from Instruction Operand Encoding table.
++- _Tuple Type_: Tuple Type column from Instruction Operand Encoding table.
 +
-+def reg_table():
-+    t = []
-+    t += gen_list(gpr_bh, "reg_bl", 4)
-+    t += gen_sep()
-+    t += gen_list(gpr_b, "reg_b", 0)
-+    t += gen_range("r%db", "reg_b", 8, 32)
-+    t += gen_sep()
-+    t += gen_list(gpr_w, "reg_w", 0)
-+    t += gen_range("r%dw", "reg_w", 8, 32)
-+    t += gen_sep()
-+    t += gen_list(gpr_d, "reg_d", 0)
-+    t += gen_range("r%dd", "reg_d", 8, 32)
-+    t += gen_sep()
-+    t += gen_list(gpr_q, "reg_q", 0)
-+    t += gen_range("r%d", "reg_q", 8, 32)
-+    t += gen_sep()
-+    t += gen_range("mm%d", "reg_mmx", 0, 8)
-+    t += gen_sep()
-+    t += gen_range("xmm%d", "reg_xmm", 0, 32)
-+    t += gen_sep()
-+    t += gen_range("ymm%d", "reg_ymm", 0, 32)
-+    t += gen_sep()
-+    t += gen_range("zmm%d", "reg_zmm", 0, 32)
-+    t += gen_sep()
-+    t += gen_range("k%d", "reg_kmask", 0, 8)
-+    t += gen_sep()
-+    t += gen_range("st(%d)", "reg_fpu", 0, 8)
-+    t += gen_sep()
-+    t += gen_range("bnd%d", "reg_bnd", 0, 8)
-+    t += gen_sep()
-+    t += gen_range("dr%d", "reg_dreg", 0, 16)
-+    t += gen_sep()
-+    t += gen_range("cr%d", "reg_creg", 0, 16)
-+    t += gen_sep()
-+    t += gen_list(seg_r, "reg_sreg", 0)
-+    t += gen_sep()
-+    t += gen_list(sys_r, "reg_sys", 0)
-+    t += gen_sep()
-+    t += gen_list(sys_n, "reg_sys", 31)
-+    return t
++The instruction set metadata in the `data` directory is derived from
++[x86-csv](https://github.com/GregoryComer/x86-csv), although it has had
++extensive modifications to fix transcription errors, to revise legacy
++instruction encodings to conform to the new LEX format, as well as add
++missing details such as missing operands or recently added AVX-512
++instruction encodings and various other instruction set extensions.
 +
-+operand_map = {
-+    '1'                                                     : 'one/r',
-+    'RAX (r)'                                               : 'rax/r',
-+    'RAX (r, w)'                                            : 'rax/rw',
-+    'RAX (w)'                                               : 'rax/w',
-+    'RCX (r)'                                               : 'rcx/r',
-+    'RCX (r, w)'                                            : 'rcx/rw',
-+    'RCX (w)'                                               : 'rcx/w',
-+    'RDX (r)'                                               : 'rdx/r',
-+    'RDX (r, w)'                                            : 'rdx/rw',
-+    'RDX (w)'                                               : 'rdx/w',
-+    'RBX (r)'                                               : 'rbx/r',
-+    'RBX (r, w)'                                            : 'rbx/rw',
-+    'RBX (w)'                                               : 'rbx/w',
-+    'RSI (r)'                                               : 'rsi/r',
-+    'RSI (r, w)'                                            : 'rsi/rw',
-+    'RSI (w)'                                               : 'rsi/w',
-+    'RDI (r)'                                               : 'rdi/r',
-+    'RDI (r, w)'                                            : 'rdi/rw',
-+    'RDI (w)'                                               : 'rdi/w',
-+    'ST0 (r)'                                               : 'st0/r',
-+    'ST0 (r, w)'                                            : 'st0/rw',
-+    'ST0 (w)'                                               : 'st0/w',
-+    'STX (r)'                                               : 'stx/r',
-+    'STX (r, w)'                                            : 'stx/rw',
-+    'STX (w)'                                               : 'stx/w',
-+    'SEG (r)'                                               : 'seg/r',
-+    'SEG (r, w)'                                            : 'seg/rw',
-+    'SEG (w)'                                               : 'seg/w',
-+    'RSP (r, w, i)'                                         : 'rsp/rwi',
-+    'RBP (r, w, i)'                                         : 'rbp/rwi',
-+    'MXCSR (r, i)'                                          : 'mxcsr/ri',
-+    'MXCSR (w, i)'                                          : 'mxcsr/wi',
-+    'RFLAGS (r, i)'                                         : 'rflags/ri',
-+    'RFLAGS (w, i)'                                         : 'rflags/wi',
-+    'ModRM:reg (r)'                                         : 'reg/r',
-+    'ModRM:reg (r, w)'                                      : 'reg/rw',
-+    'ModRM:reg (w)'                                         : 'reg/w',
-+    'ModRM:r/m (r)'                                         : 'mrm/r',
-+    'ModRM:r/m (r, w)'                                      : 'mrm/rw',
-+    'ModRM:r/m (w)'                                         : 'mrm/w',
-+    'ModRM:r/m (r, ModRM:[7:6] must be 11b)'                : 'mrm/r',
-+    'ModRM:r/m (r, ModRM:[7:6] must not be 11b)'            : 'mrm/r',
-+    'ModRM:r/m (w, ModRM:[7:6] must not be 11b)'            : 'mrm/w',
-+    'ModRM:r/m (r, w, ModRM:[7:6] must not be 11b)'         : 'mrm/rw',
-+    'BaseReg (r): VSIB:base, VectorReg (r): VSIB:index'     : 'sib/r',
-+    'SIB.base (r): Address of pointer SIB.index (r)'        : 'sib/r',
-+    'EVEX.vvvv (r)'                                         : 'vec/r',
-+    'EVEX.vvvv (w)'                                         : 'vec/w',
-+    'VEX.vvvv (r)'                                          : 'vec/r',
-+    'VEX.vvvv (r, w)'                                       : 'vec/rw',
-+    'VEX.vvvv (w)'                                          : 'vec/w',
-+    'ib'                                                    : 'imm',
-+    'iw'                                                    : 'imm',
-+    'iwd'                                                   : 'imm',
-+    'i16'                                                   : 'imm',
-+    'i32'                                                   : 'imm',
-+    'i64'                                                   : 'imm',
-+    'imm'                                                   : 'imm',
-+    'ime'                                                   : 'ime',
-+    'ib[3:0]'                                               : 'imm',
-+    'ib[7:4]'                                               : 'is4/r',
-+    'Implicit XMM0 (r)'                                     : 'xmm0/r',
-+    'Implicit XMM0-7 (r, w)'                                : 'xmm0_7/rw',
-+    'opcode +r (r)'                                         : 'opr/r',
-+    'opcode +r (r, w)'                                      : 'opr/rw',
-+    'opcode +r (w)'                                         : 'opr/w',
-+    'NA'                                                    : None,
-+    ''                                                      : None
-+}
++Table Generation
++================
 +
-+opcode_map = {
-+    '<xmm0>'  : 'reg_xmm0',
-+    '<xmm0-7>': 'reg_xmm0_7',
-+    '1'       : '1',
-+    'm'       : 'mem',
-+    'al'      : 'reg_al',
-+    'cl'      : 'reg_cl',
-+    'ah'      : 'reg_ah',
-+    'aw'      : 'reg_aw',
-+    'cw'      : 'reg_cw',
-+    'dw'      : 'reg_dw',
-+    'bw'      : 'reg_bw',
-+    'ax'      : 'reg_ax',
-+    'cx'      : 'reg_cx',
-+    'dx'      : 'reg_dx',
-+    'bx'      : 'reg_bx',
-+    'eax'     : 'reg_eax',
-+    'ecx'     : 'reg_ecx',
-+    'edx'     : 'reg_edx',
-+    'ebx'     : 'reg_ebx',
-+    'rax'     : 'reg_rax',
-+    'rcx'     : 'reg_rcx',
-+    'rdx'     : 'reg_rdx',
-+    'rbx'     : 'reg_rbx',
-+    'si'      : 'reg_si',
-+    'di'      : 'reg_di',
-+    'pa'      : 'reg_pa',
-+    'pc'      : 'reg_pc',
-+    'pd'      : 'reg_pd',
-+    'pb'      : 'reg_pb',
-+    'psi'     : 'reg_psi',
-+    'pdi'     : 'reg_pdi',
-+    'cs'      : 'seg_cs',
-+    'ds'      : 'seg_ds',
-+    'ss'      : 'seg_ss',
-+    'es'      : 'seg_es',
-+    'fs'      : 'seg_fs',
-+    'gs'      : 'seg_gs',
-+    'sreg'    : 'seg',
-+    'dr0-dr7' : 'dreg',
-+    'cr0-cr15': 'creg',
-+    'cr8'     : 'creg8',
-+    'st(0)'   : 'reg_st0',
-+    'st(1)'   : 'reg_st1',
-+    'st(i)'   : 'st'
-+}
++The appendices outline the printable form of the mnemonics used in the
++generated tables to describe operands, instruction encodings and field order.
++The mnemonics are referenced in the instruction set metadata files which are
++translated to enums and arrays by `scripts/x86-tablegen.py` which then map to
++the enum type and set definitions in `disas/x86.h`:
 +
-+def x86_mode(row):
-+    l = list()
-+    if row['Valid 64-bit'] == 'Valid':
-+        l.append('64')
-+    if row['Valid 32-bit'] == 'Valid':
-+        l.append('32')
-+    if row['Valid 16-bit'] == 'Valid':
-+        l.append('16')
-+    return "/".join(l)
++- _enum x86_opr_ - operand encoding enum type and set attributes.
++- _enum x86_enc_ - instruction encoding enum type and set attributes.
++- _enum x86_ord_ - operand to instruction encoding field map set attributes.
 +
-+def x86_operand(opcode,row):
-+    l = list()
-+    opcode = opcode.split(' ')[0]
-+    operand1 = operand_map[row['Operand 1']]
-+    operand2 = operand_map[row['Operand 2']]
-+    operand3 = operand_map[row['Operand 3']]
-+    operand4 = operand_map[row['Operand 4']]
-+    if operand1:
-+        l += [operand1]
-+    if operand2:
-+        l += [operand2]
-+    if operand3:
-+        l += [operand3]
-+    if operand4:
-+        l += [operand4]
-+    return ",".join(l)
++The enum values are combined together with _logical or_ combinations to
++form the primary metadata tables used by the encoder and decoder library:
 +
-+def cleanup_oprs(args):
-+    args = list(map(lambda x : x.lstrip().rstrip(), args.split(",")))
-+    args = list(map(lambda x : x.replace('&',':'), args))
-+    args = list(map(lambda x : x.replace('{k1}','{k}'), args))
-+    args = list(map(lambda x : x.lower(), args))
-+    args = list(map(lambda x : opcode_map[x] if x in opcode_map else x, args))
-+    for reg in ('r32', 'r64'):
-+        for suffix in ('a', 'b'):
-+            args = list(map(lambda x : x.replace(reg + suffix, reg), args))
-+    args = list(map(lambda x : 'rw' if x == 'r' else x, args))
-+    args = list(map(lambda x : 'rw/mw' if x == 'r/m' else x, args))
-+    for reg in ('k', 'bnd', 'mm', 'xmm', 'ymm', 'zmm'):
-+        for i in range(0,5):
-+            args = list(map(lambda x : x.replace(reg + str(i), reg) \
-+                if x.find(reg) == 0 else x, args))
-+    args = list(map(lambda x : x.replace(' ', ''), args))
-+    return args
++- _struct x86_opc_data_ - table type for instruction opcode encodings.
++- _struct x86_opr_data_ - table type for unique sets of instruction operands.
++- _struct x86_ord_data_ - table type for unique sets of instruction field orders.
 +
-+def split_opcode(opcode):
-+    space_idx = opcode.find(' ')
-+    if space_idx == -1:
-+        return (opcode,list())
-+    else:
-+        return (opcode[:space_idx], cleanup_oprs(opcode[space_idx:]))
++***Note***: There are some differences between the mnemonics used in the
++CSV metadata and the C enums. Exceptions are described in `operand_map` and
++`opcode_map` within `scripts/x86_tablegen.py`. The primary differences are
++in the names used in the operand columns to indicate operand field order,
++otherwise a type prefix is added, dots and brackets are omitted, and forward
++slashes are translated to underscores.
 +
-+def cleanup_opcode(opcode):
-+    op, args = split_opcode(opcode)
-+    if len(args) > 0:
-+        return "%s %s " % (op, ",".join(args))
-+    else:
-+        return op
++Appendices
++==========
 +
-+def cleanup_encoding(enc):
-+    enc = enc.lower()
-+    enc = enc.replace('/is4', 'ib')
-+    enc = enc.replace('0f 38', '0f38')
-+    enc = enc.replace('0f 3a', '0f3a')
-+    enc = enc.replace('  ', ' ')
-+    return enc
++This section describes the mnemonics used in the primary data structures:
 +
-+def translate_modes(modes):
-+    modelist = []
-+    if modes == '':
-+        return '0'
-+    for m in modes.split('/'):
-+        modelist += ['x86_modes_%s' % m]
-+    return "|".join(modelist)
++- _Appendix A - Operand Encoding_ - describes instruction operands.
++- _Appendix B - Operand Order_ - describes instruction field ordering.
++- _Appendix C - Instruction Encoding Prefixes_ - describes encoding prefixes.
++- _Appendix D - Instruction Encoding Suffixes_ - describes encoding suffixes.
++- _Appendix E - Instruction Synthesis Notes_ - notes on prefix synthesis.
 +
-+# add 9b, del rex rex.w
-+def translate_encoding(enc):
-+    prefixes = [ 'hex', 'lex', 'vex', 'evex' ]
-+    r_suffixes = [ 'rep', 'lock', 'norexb' ]
-+    s_suffixes = [ 'o16', 'o32', 'o64', 'a16', 'a32', 'a64' ]
-+    pbytes = [ '66', '9b', 'f2', 'f3' ]
-+    maps = { '0f', '0f38', '0f3a', 'map4', 'map5', 'map6' }
-+    widths = { 'w0', 'w1', 'wig', 'wb', 'wn', 'ws', 'wx', 'ww' }
-+    lengths = { 'lig', 'lz', 'l0', 'l1', '128', '256', '512' }
-+    flags = { 'nds', 'ndd', 'dds' }
-+    imm = { 'ib', 'iw', 'iwd', 'i16', 'i32', 'i64' }
-+    mods = { '/r', '/0', '/1', '/2', '/3', '/4', '/5', '/6', '/7' }
-+    pl = []
-+    opc = ['0x00','0x00']
-+    opm = ['0x00','0x00']
-+    oplen = 0
-+    has_imm, has_pfx, has_pbyte, has_map = False, False, False, False
-+    comps = enc.split(" ")
-+    for el in comps:
-+        is_hex = all(c in string.hexdigits for c in el[0:2])
-+        p = None
-+        for sel in prefixes:
-+            if el.find(sel) == 0 and ( p == None or len(sel) > len(p) ):
-+                p = sel
-+        if p:
-+            pl += ['x86_enc_t_%s' % p.replace('.', '_')]
-+            el = el[len(p):]
-+            vp, vm, vw, vl, vf = None, None, None, None, None
-+            for sel in el.split('.'):
-+                if sel == '':
-+                    pass
-+                elif sel in pbytes:
-+                    vp = 'x86_enc_p_%s' % sel
-+                elif sel in maps:
-+                    vm = 'x86_enc_m_%s' % sel
-+                elif sel in widths:
-+                    vw = 'x86_enc_w_%s' % sel
-+                elif sel in lengths:
-+                    vl = 'x86_enc_l_%s' % sel
-+                elif sel in flags:
-+                    vf = 'x86_enc_f_%s' % sel
-+                else:
-+                    raise Exception("unknown element '%s' for encoding"
-+                        " '%s" % (sel, enc))
-+            if vp:
-+                pl += [vp]
-+            if vm:
-+                pl += [vm]
-+            if vw:
-+                pl += [vw]
-+            if vl:
-+                pl += [vl]
-+            if vf:
-+                pl += [vf]
-+            if p == 'vex' or p == 'evex' or p == 'lex':
-+                has_pfx = True
-+        elif el in maps and len(comps) > 1 and not (has_map or has_pfx):
-+            pl += ['x86_enc_m_%s' % el]
-+            has_map = True
-+        elif el in r_suffixes:
-+            pl += ['x86_enc_r_%s' % el]
-+        elif el in s_suffixes:
-+            pl += ['x86_enc_s_%s' % el]
-+        elif el in imm:
-+            if has_imm:
-+                # additional immediate used by CALLF/JMPF/ENTER
-+                if el in { 'ib', 'i16' }:
-+                    pl += ['x86_enc_j_%s' % el]
-+                else:
-+                    raise Exception("illegal immediate '%s' for encoding"
-+                        " '%s" % (el, enc))
-+            else:
-+                pl += ['x86_enc_i_%s' % el]
-+                has_imm = True
-+        elif el in mods:
-+            if oplen == 2:
-+                raise Exception("opcode '%s' limit exceeded for encoding"
-+                    " '%s" % (el, enc))
-+            pl += ['x86_enc_f_modrm_r' if el == '/r' else 'x86_enc_f_modrm_n']
-+            if el != '/r':
-+                opc[oplen] = '0x{:02x}'.format(int(el[1]) << 3)
-+                opm[oplen] = '0x38'
-+            oplen += 1
-+        elif len(el) == 2 and is_hex:
-+            if oplen == 2:
-+                raise Exception("opcode '%s' limit exceeded for encoding"
-+                    " '%s" % (el, enc))
-+            if oplen == 1:
-+                pl += ['x86_enc_f_opcode']
-+            opc[oplen] = '0x%s' % el[0:2]
-+            opm[oplen] = '0xff'
-+            oplen += 1
-+        elif len(el) == 4 and is_hex and el[2:4] == '+r':
-+            if oplen == 2:
-+                raise Exception("opcode '%s' limit exceeded for encoding "
-+                    "'%s" % (el, enc))
-+            pl += ['x86_enc_%s_opcode_r' % ('o' if oplen == 0 else 'f')]
-+            opc[oplen] = '0x%s' % el[0:2]
-+            opm[oplen] = '0xf8'
-+            oplen += 1
-+        else:
-+            raise Exception("unknown element '%s' for encoding "
-+                "'%s" % (el, enc))
-+    return "|".join(pl), opc, opm
++Appendix A - Operand Encoding
++=============================
 +
-+def translate_operands(operands):
-+    oprlist = []
-+    typpat = re.compile('([if])(\\d+)x(\\d+)')
-+    for i,arg0 in enumerate(operands):
-+        flags = arg0.split('{')
-+        argcomps = []
-+        for j,arg1 in enumerate(flags):
-+            cp = arg1.find('}')
-+            if cp == -1:
-+                arg1 = arg1.replace(':','_')
-+                argp = []
-+                for arg2 in arg1.split('/'):
-+                    m = typpat.match(arg2)
-+                    if m:
-+                        argcomps += ['x86_opr_' + arg2]
-+                    else:
-+                        argp += [arg2]
-+                argcomps += ['x86_opr_' + '_'.join(argp)]
-+            else:
-+                arg1 = arg1.replace('}','')
-+                argcomps += ['x86_opr_flag_' + arg1]
-+        oprlist += ["|".join(argcomps)]
-+    return oprlist
++This table outlines the operand mnemonics used in instruction operands
++_(enum x86_opr)_.
 +
-+def translate_order(order):
-+    ol = []
-+    if order:
-+        for o in order.split(','):
-+            o = o.replace(':','_')
-+            ol.append("|".join(map(lambda x: 'x86_ord_' + x, o.split('/'))))
-+    return ol
++| operand            | description                                           |
++|:-------------------|:------------------------------------------------------|
++| `r`                | integer register                                      |
++| `v`                | vector register                                       |
++| `k`                | mask register                                         |
++| `seg`              | segment register                                      |
++| `creg`             | control register                                      |
++| `dreg`             | debug register                                        |
++| `bnd`              | bound register                                        |
++| `mem`              | memory reference                                      |
++| `rw`               | integer register word-sized (16/32/64 bit)            |
++| `ra`               | integer register addr-sized (16/32/64 bit)            |
++| `mw`               | memory reference word-sized (16/32/64 bit)            |
++| `mm`               | vector register 64-bit                                |
++| `xmm`              | vector register 128-bit                               |
++| `ymm`              | vector register 256-bit                               |
++| `zmm`              | vector register 512-bit                               |
++| `r8`               | register 8-bit                                        |
++| `r16`              | register 16-bit                                       |
++| `r32`              | register 32-bit                                       |
++| `r64`              | register 64-bit                                       |
++| `m8`               | memory reference 8-bit byte                           |
++| `m16`              | memory reference 16-bit word                          |
++| `m32`              | memory reference 32-bit dword                         |
++| `m64`              | memory reference 64-bit qword                         |
++| `m128`             | memory reference 128-bit oword/xmmword                |
++| `m256`             | memory reference 256-bit ymmword                      |
++| `m512`             | memory reference 512-bit zmmword                      |
++| `m80`              | memory reference 80-bit tword/tbyte                   |
++| `m384`             | memory reference 384-bit key locker handle            |
++| `mib`              | memory reference bound                                |
++| `m16bcst`          | memory reference 16-bit word broadcast                |
++| `m32bcst`          | memory reference 32-bit word broadcast                |
++| `m64bcst`          | memory reference 64-bit word broadcast                |
++| `vm32`             | vector memory 32-bit                                  |
++| `vm64`             | vector memory 64-bit                                  |
++| `{er}`             | operand suffix - embedded rounding control            |
++| `{k}`              | operand suffix - apply mask register                  |
++| `{sae}`            | operand suffix - suppress all execptions              |
++| `{z}`              | operand suffix - zero instead of merge                |
++| `{rs2}`            | operand suffix - register stride 2                    |
++| `{rs4}`            | operand suffix - register stride 4                    |
++| `r/m8`             | register unsized memory 8-bit                         |
++| `r/m16`            | register unsized memory 16-bit                        |
++| `r/m32`            | register unsized memory 32-bit                        |
++| `r/m64`            | register unsized memory 64-bit                        |
++| `k/m8`             | mask register memory 8-bit                            |
++| `k/m16`            | mask register memory 16-bit                           |
++| `k/m32`            | mask register memory 32-bit                           |
++| `k/m64`            | mask register memory 64-bit                           |
++| `bnd/m64`          | bound register memory 64-bit                          |
++| `bnd/m128`         | bound register memory 128-bit                         |
++| `rw/mw`            | register or memory 16/32/64-bit (word size)           |
++| `r8/m8`            | 8-bit register 8-bit memory                           |
++| `r?/m?`            | N-bit register N-bit memory                           |
++| `mm/m?`            | 64-bit vector N-bit memory                            |
++| `xmm/m?`           | 128-bit vector N-bit memory                           |
++| `ymm/m?`           | 256-bit vector N-bit memory                           |
++| `zmm/m?`           | 512-bit vector N-bit memory                           |
++| `xmm/m?/m?bcst`    | 128-bit vector N-bit memory N-bit broadcast           |
++| `ymm/m?/m?bcst`    | 256-bit vector N-bit memory N-bit broadcast           |
++| `zmm/m?/m?bcst`    | 512-bit vector N-bit memory N-bit broadcast           |
++| `vm32x`            | 32-bit vector memory in xmm                           |
++| `vm32y`            | 32-bit vector memory in ymm                           |
++| `vm32z`            | 32-bit vector memory in zmm                           |
++| `vm64x`            | 64-bit vector memory in xmm                           |
++| `vm64y`            | 64-bit vector memory in ymm                           |
++| `vm64z`            | 64-bit vector memory in zmm                           |
++| `st0`              | implicit register st0                                 |
++| `st1`              | implicit register st1                                 |
++| `es`               | implicit segment es                                   |
++| `cs`               | implicit segment cs                                   |
++| `ss`               | implicit segment ss                                   |
++| `ds`               | implicit segment ds                                   |
++| `fs`               | implicit segment fs                                   |
++| `gs`               | implicit segment gs                                   |
++| `aw`               | implicit register (ax/eax/rax)                        |
++| `cw`               | implicit register (cx/ecx/rcx)                        |
++| `dw`               | implicit register (dx/edx/rdx)                        |
++| `bw`               | implicit register (bx/ebx/rbx)                        |
++| `pa`               | implicit indirect register (ax/eax/rax)               |
++| `pc`               | implicit indirect register (cx/ecx/rcx)               |
++| `pd`               | implicit indirect register (dx/edx/rdx)               |
++| `pb`               | implicit indirect register (bx/ebx/rbx)               |
++| `psi`              | implicit indirect register (si/esi/rsi)               |
++| `pdi`              | implicit indirect register (di/edi/rdi)               |
++| `xmm0`             | implicit register xmm0                                |
++| `xmm0_7`           | implicit registers xmm0-xmm7                          |
++| `1`                | constant 1                                            |
++| `ib`               | 8-bit immediate                                       |
++| `iw`               | 16-bit or 32-bit immediate (mode + operand size)      |
++| `iwd`              | 16-bit or 32-bit immediate (mode)                     |
++| `id`               | 32-bit immediate                                      |
++| `iq`               | 64-bit immediate                                      |
++| `rel8`             | 8-bit displacement                                    |
++| `relw`             | 6-bit or 32-bit displacement (mode + operand size)    |
++| `moffs`            | indirect memory offset                                |
++| `far16/16`         | 16-bit seg 16-bit far displacement                    |
++| `far16/32`         | 16-bit seg 32-bit far displacement                    |
++| `memfar16/16`      | indirect 16-bit seg 16-bit far displacement           |
++| `memfar16/32`      | indirect 16-bit seg 32-bit far displacement           |
++| `memfar16/64`      | indirect 16-bit seg 64-bit far displacement           |
 +
-+def print_insn(x86_insn):
-+    for row in x86_insn:
-+        opcode, enc, modes, ext, order, tt, desc = row
-+        opcode = opcode.replace('reg_','')
-+        print("| %-53s | %-31s | %-23s | %-8s |" % \
-+            (opcode, enc, order, modes))
++Appendix B - Operand Order
++==========================
 +
-+def opcode_list(x86_insn):
-+    ops = set()
-+    for row in x86_insn:
-+        opcode, enc, modes, ext, order, tt, desc = row
-+        op, opr = split_opcode(opcode)
-+        ops.add(op)
-+    return ['NIL'] + sorted(ops)
++This table outlines the mnemonics used to map operand field order
++_(enum x86_ord)_.
 +
-+def operand_list(x86_insn):
-+    oprset = set()
-+    for idx, row in enumerate(x86_insn):
-+        opcode, enc, modes, ext, order, tt, desc = row
-+        op, opr = split_opcode(opcode)
-+        oprset.add(tuple(translate_operands(opr)))
-+    return sorted(oprset)
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `imm`    | ib, iw, i16, i32, i64                                           |
++| `reg`    | modrm.reg                                                       |
++| `mrm`    | modrm.r/m                                                       |
++| `sib`    | modrm.r/m sib                                                   |
++| `is4`    | register from ib                                                |
++| `ime`    | i8, i16 (special case for CALLF/JMPF/ENTER)                     |
++| `vec`    | VEX.vvvv                                                        |
++| `opr`    | opcode +r                                                       |
++| `one`    | constant 1                                                      |
++| `rax`    | constant al/ax/eax/rax                                          |
++| `rcx`    | constant cl/cx/ecx/rcx                                          |
++| `rdx`    | constant dl/dx/edx/rdx                                          |
++| `rbx`    | constant bl/bx/ebx/rbx                                          |
++| `rsp`    | constant sp/esp/rsp                                             |
++| `rbp`    | constant bp/ebp/rbp                                             |
++| `rsi`    | constant si/esi/rsi                                             |
++| `rdi`    | constant di/edi/rdi                                             |
++| `st0`    | constant st(0)                                                  |
++| `stx`    | constant st(i)                                                  |
++| `seg`    | constant segment                                                |
++| `xmm0`   | constant xmm0                                                   |
++| `xmm0_7` | constant xmm0-xmm7                                              |
++| `mxcsr`  | constant mxcsr                                                  |
++| `rflags` | constant rflags                                                 |
 +
-+def order_list(x86_insn):
-+    ordset = set()
-+    for idx, row in enumerate(x86_insn):
-+        opcode, enc, modes, ext, order, tt, desc = row
-+        ordset.add(tuple(translate_order(order)))
-+    return sorted(ordset)
++Appendix C - Instruction Encoding Prefixes
++==========================================
 +
-+opcode_enums_template = """/* generated source */
-+enum x86_reg\n{%s};
-+enum x86_op\n{%s};"""
++This table outlines the mnemonic prefixes used in instruction encodings
++_(enum x86_enc)_.
 +
-+opcode_table_template = """/* generated source */
-+const size_t x86_opc_table_size = %d;
-+const size_t x86_opr_table_size = %d;
-+const size_t x86_ord_table_size = %d;
-+const size_t x86_op_names_size = %d;
-+const x86_opc_data x86_opc_table[] =\n{
-+  { x86_op_NIL, 0, 0, 0, 0, { { 0, 0 } }, { { 0, 0 } } },%s};
-+const x86_opr_data x86_opr_table[] =\n{%s};
-+const x86_ord_data x86_ord_table[] =\n{%s};
-+const char* x86_op_names[] =\n{%s};
-+const char* x86_reg_names[512] =\n{%s};"""
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `lex`    | legacy instruction                                              |
++| `vex`    | VEX encoded instruction                                         |
++| `evex`   | EVEX encoded instruction                                        |
++| `.lz`    | VEX encoding L=0 and L=1 is unassigned                          |
++| `.l0`    | VEX encoding L=0                                                |
++| `.l1`    | VEX encoding L=1                                                |
++| `.lig`   | VEX/EVEX encoding ignores length L=any                          |
++| `.128`   | VEX/EVEX encoding uses 128-bit vector L=0                       |
++| `.256`   | VEX/EVEX encoding uses 256-bit vector L=1                       |
++| `.512`   | EVEX encoding uses 512-bit vector L=2                           |
++| `.66`    | prefix byte 66 is used for opcode mapping                       |
++| `.f2`    | prefix byte f2 is used for opcode mapping                       |
++| `.f3`    | prefix byte f3 is used for opcode mapping                       |
++| `.9b`    | prefix byte 9b is used for opcode mapping (x87 only)            |
++| `.0f`    | map 0f is used in opcode                                        |
++| `.0f38`  | map 0f38 is used in opcode                                      |
++| `.0f3a`  | map 0f3a is used in opcode                                      |
++| `.wn`    | no register extension, fixed operand size                       |
++| `.wb`    | register extension, fixed operand size                          |
++| `.wx`    | REX and/or operand size extension, optional 66 or REX.W0/W1     |
++| `.ww`    | REX and/or operand size extension, optional 66 and REX.WIG      |
++| `.w0`    | LEX/VEX/EVEX optional REX W0 with operand size used in opcode   |
++| `.w1`    | LEX/VEX/EVEX mandatory REX W1 with operand size used in opcode  |
++| `.wig`   | VEX/EVEX encoding width ignored                                 |
 +
-+def print_opcode_enums(x86_reg, x86_insn):
-+    regstr, opstr = '\n', '\n'
-+    for i,s,f in x86_reg:
-+        n = s.replace('(','').replace(')','')
-+        regstr += '\n' if len(s) == 0 else \
-+            '  %-10s = %s,\n' % ('x86_%s' % n, 'x86_%s | %d' % (f, i))
-+    for op in opcode_list(x86_insn):
-+        opstr += '    x86_op_%s,\n' % op
-+    print(opcode_enums_template % (regstr, opstr))
++Appendix D - Instruction Encoding Suffixes
++==========================================
 +
-+def print_opcode_tables(x86_reg, x86_insn):
-+    oplist = opcode_list(x86_insn)
-+    oprlist = operand_list(x86_insn)
-+    ordlist = order_list(x86_insn)
-+    oprmap = {v: i for i, v in enumerate(oprlist)}
-+    ordmap = {v: i for i, v in enumerate(ordlist)}
-+    opcstr, oprstr, ordstr, opsstr, regstr = '\n', '\n', '\n', '\n', '\n'
-+    for idx, row in enumerate(x86_insn):
-+        opcode, enc, modes, ext, order, tt, desc = row
-+        op, opr = split_opcode(opcode)
-+        oprl = translate_operands(opr)
-+        ordl = translate_order(order)
-+        oprc = oprmap[tuple(oprl)]
-+        ordc = ordmap[tuple(ordl)]
-+        modes = translate_modes(modes)
-+        enc, opc, opm = translate_encoding(enc)
-+        opcstr += '  { %s, %s, %d, %d, %s, { %s }, { %s } },\n' % \
-+            ('x86_op_%s' % op, modes, oprc, ordc, enc,
-+                '{ %s, %s }' % (opc[0], opc[1]),
-+                '{ %s, %s }' % (opm[0], opm[1]))
-+    for x in oprlist:
-+        oprstr += '  { { %s } },\n' % (", ".join(['0'] if not x else x))
-+    for x in ordlist:
-+        ordstr += '  { { %s } },\n' % (", ".join(['0'] if not x else x))
-+    for op in oplist:
-+        opsstr += '    "' + op.lower() + '",\n'
-+    for i,s,f in x86_reg:
-+        n = s.replace('(','').replace(')','')
-+        regstr += '\n' if len(s) == 0 else \
-+                  '    %-12s = \"%s\",\n' % ('[x86_%s]' % n, s)
-+    print(opcode_table_template % (
-+        len(x86_insn) + 1, len(oprlist), len(ordlist), len(oplist),
-+        opcstr, oprstr, ordstr, opsstr, regstr)
-+    )
++This table outlines the mnemonic suffixes used in instruction encodings
++_(enum x86_enc)_.
 +
-+def read_data(files):
-+    data = []
-+    if not isinstance(files, list):
-+        files = glob.glob(files)
-+    for csvpath in files:
-+        file = open(csvpath, encoding='utf-8-sig', newline='')
-+        reader = csv.DictReader(file, delimiter=',', quotechar='"')
-+        for row in reader:
-+            data += [row]
-+    data.sort(key=lambda x: (
-+            x['Instruction'].split(' ')[0],
-+            x['Opcode'].split(' ')[1],
-+            x['Instruction']))
-+    insn = []
-+    for row in data:
-+        opcode = cleanup_opcode(row['Instruction'])
-+        enc = cleanup_encoding(row['Opcode'])
-+        modes = x86_mode(row)
-+        ext = row['Feature Flags']
-+        order = x86_operand(opcode,row)
-+        tt = row['Tuple Type']
-+        desc = row['Description']
-+        insn += [[opcode, enc, modes, ext, order, tt, desc]]
-+    return insn
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `/r`     | ModRM byte                                                      |
++| `/0../7` | ModRM byte with 'r' field used for functions 0 to 7             |
++| `XX+r`   | opcode byte with 3-bit register added to the opcode             |
++| `XX`     | opcode byte                                                     |
++| `ib`     | 8-bit immediate                                                 |
++| `iw`     | 16-bit or 32-bit immediate (real mode XOR operand size)         |
++| `i16`    | 16-bit immediate                                                |
++| `i32`    | 32-bit immediate                                                |
++| `i64`    | 64-bit immediate                                                |
++| `o16`    | encoding uses prefix 66 in 32-bit and 64-bit modes              |
++| `o32`    | encoding uses prefix 66 in 16-bit mode                          |
++| `o64`    | encoding is used exclusively in 64-bit mode with REX.W=1        |
++| `a16`    | encoding uses prefix 67 in 32-bit and 64-bit modes              |
++| `a32`    | encoding uses prefix 67 in 16-bit mode                          |
++| `a64`    | encoding is used exclusively in 64-bit mode                     |
++| `lock`   | memory operand encodings can be used with the LOCK prefix       |
++| `rep`    | string instructions that can be used with the REP prefix        |
 +
-+def parse_table(rows):
-+    rows = [row.strip() for row in rows]
-+    data = []
-+    obj = []
-+    h1 = None
-+    begun = False
-+    for row in rows:
-+        if row.startswith("#"):
-+            space = row.index(' ')
-+            hashes = row[:space]
-+            heading = row[space+1:]
-+            depth = hashes.count('#')
-+            if not h1:
-+                h1 = heading
-+            obj.append(TableSection(heading, depth))
-+        elif row.startswith("|"):
-+            cells = row.split('|')
-+            cells = [cell.strip() for cell in cells if cell.strip()]
-+            if cells[0].startswith("-") or cells[0].startswith(":"):
-+                begun = True
-+                obj.append(TableHeader())
-+            elif begun:
-+                data.append(cells)
-+                obj.append(TableData(cells))
-+        else:
-+            begun = False
-+            obj.append(TableText(row))
-+    return { 'title': h1, 'data': data, 'obj': obj }
++Appendix E - Instruction Synthesis Notes
++========================================
 +
-+def read_file(file_path):
-+    try:
-+        with open(file_path, 'r') as file:
-+            lines = file.readlines()
-+            lines = [line.strip() for line in lines]
-+        return lines
-+    except FileNotFoundError:
-+        print(f"File not found: {file_path}")
-+        return []
++The `.wx` and `.ww` mnemonics are used to synthesize prefix combinations:
 +
-+def make_map(x86_insn):
-+    insn_map = dict()
-+    for row in x86_insn:
-+        opcode, enc, modes, ext, order, tt, desc = row
-+        op, opr = split_opcode(opcode)
-+        if op not in insn_map:
-+            insn_map[op] = list()
-+        insn_map[op].append(row)
-+    return insn_map
-+
-+#
-+# description table types
-+#
-+class TableText():
-+    def __init__(self,text):
-+        self.text = text
-+class TableSection():
-+    def __init__(self,heading,depth):
-+        self.heading = heading
-+        self.depth = depth
-+class TableHeader():
-+    def __init__(self):
-+        return
-+class TableData():
-+    def __init__(self,cells):
-+        self.cells = cells
-+
-+#
-+# print descriptions with instructions
-+#
-+def table_text_insn(self,x86_desc):
-+    return ""
-+def table_section_insn(self,x86_desc):
-+    return "%s %s\n\n" % ("#" * self.depth, self.heading)
-+def table_header_insn(self,x86_desc):
-+    return ""
-+def table_data_insn(self,x86_desc):
-+    insn_map = x86_desc['insn']
-+    insn, desc = self.cells
-+    text = ""
-+    insn_list = []
-+    o = insn.find("cc")
-+    if insn.startswith("v"):
-+        insn_list.append(insn[1:])
-+        insn_list.append(insn.upper())
-+    elif o >= 0:
-+        for cc in cc_all:
-+            new_insn = '%s%s%s' % (insn[0:o], cc, insn[o+2:])
-+            insn_list.append(new_insn)
-+    else:
-+        insn_list.append(insn)
-+    if len(insn_list) > 0:
-+        text += "\n"
-+        text += "| %-51s | %-29s | %-23s | %-8s |\n" % \
-+            ("opcode", "encoding", "order", "modes")
-+        text += "|:%-51s-|:%-29s-|:%-23s-|:%-8s-|\n" % \
-+            ("-"*51, "-"*29, "-"*23, "-"*8)
-+        for insn_name in insn_list:
-+            if insn_name in insn_map:
-+                for row in insn_map[insn_name]:
-+                    opcode, enc, modes, ext, order, tt, desc = row
-+                    opcode = opcode.replace('reg_','')
-+                    text += "| %-51s | %-29s | %-23s | %-8s |\n" % \
-+                        (opcode, enc, order, modes)
-+        text += "|:%-51s-|:%-29s-|:%-23s-|:%-8s-|\n" % \
-+            ("-"*51, "-"*29, "-"*23, "-"*8)
-+    text += "\n\n"
-+    return "%s %s\n%s" % ("[%s]" % insn, "# %s" % desc, text)
-+
-+table_insn = {
-+    TableText: table_text_insn, TableSection: table_section_insn,
-+    TableHeader: table_header_insn, TableData: table_data_insn,
-+}
-+
-+def print_fancy_insn(x86_desc):
-+    for obj in x86_desc['tab']['obj']:
-+        print(table_insn[type(obj)](obj, x86_desc), end="")
-+
-+parser = argparse.ArgumentParser(description='x86 table generator')
-+parser.add_argument('files',
-+                    default='data/*.csv', nargs='*',
-+                    help='x86 csv metadata')
-+parser.add_argument('--print-insn',
-+                    default=False, action='store_true',
-+                    help='print instructions')
-+parser.add_argument('--print-fancy-insn',
-+                    default=False, action='store_true',
-+                    help='print fancy instructions')
-+parser.add_argument('--print-opcode-enums',
-+                    default=False, action='store_true',
-+                    help='print register enum')
-+parser.add_argument('--print-opcode-tables',
-+                    default=False, action='store_true',
-+                    help='print register strings')
-+parser.add_argument('--output-file', type=argparse.FileType('w'),
-+                    help="filename to write output to")
-+args = parser.parse_args()
-+
-+x86_reg = reg_table()
-+x86_insn = read_data(args.files)
-+
-+if args.output_file:
-+    sys.stdout = args.output_file
-+if args.print_insn:
-+    print_insn(x86_insn)
-+if args.print_opcode_enums:
-+    print_opcode_enums(x86_reg, x86_insn)
-+if args.print_opcode_tables:
-+    print_opcode_tables(x86_reg, x86_insn)
++- `.wx` labels opcodes with _default 32-bit operand size in 64-bit mode_
++  to synthesize 16/32/64-bit versions using REX and operand size prefix,
++  or in 16/32-bit modes synthesizes 16/32-bit versions using only the
++  operand size prefix. REX is used for register extension on opcodes
++  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
++- `.ww` labels opcodes with _default 64-bit operand size in 64-bit mode_
++  to synthesize 16/64-bit versions using only the operand size prefix,
++  or in 16/32-bit modes. synthesizes 16/32-bit versions using only the
++  operand size prefix. REX is used for register extension on opcodes
++  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
 -- 
 2.43.0
 
