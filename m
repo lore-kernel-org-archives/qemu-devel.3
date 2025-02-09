@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4ACC02199
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 09:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 321FAC02199
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 09:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1th3lL-0004fF-A4; Sun, 09 Feb 2025 04:38:03 -0500
+	id 1th3oh-0005bg-0N; Sun, 09 Feb 2025 04:41:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1th3lJ-0004ez-IN
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 04:38:01 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1th3oe-0005aN-F3
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 04:41:28 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1th3lH-00061Y-Rk
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 04:38:01 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1th3oc-0006pc-GI
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 04:41:27 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B4009E7E96;
- Sun, 09 Feb 2025 12:37:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 93788E7E99;
+ Sun, 09 Feb 2025 12:41:24 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0D4E31B2939;
- Sun,  9 Feb 2025 12:37:44 +0300 (MSK)
-Message-ID: <cc04420e-efdb-4551-9dc1-b0dff1c1df9b@tls.msk.ru>
-Date: Sun, 9 Feb 2025 12:37:44 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id E55AE1B2940;
+ Sun,  9 Feb 2025 12:41:24 +0300 (MSK)
+Message-ID: <6b159be8-01e7-4dc7-9260-849432f1f4bf@tls.msk.ru>
+Date: Sun, 9 Feb 2025 12:41:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/2] qemu/timer: Sanity check timer_list in
  timer_init_full()
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
 References: <20250125182425.59708-1-philmd@linaro.org>
  <20250125182425.59708-3-philmd@linaro.org>
+ <cc04420e-efdb-4551-9dc1-b0dff1c1df9b@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -81,7 +82,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250125182425.59708-3-philmd@linaro.org>
+In-Reply-To: <cc04420e-efdb-4551-9dc1-b0dff1c1df9b@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -107,17 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.01.2025 21:24, Philippe Mathieu-Daudé wrote:
+09.02.2025 12:37, Michael Tokarev wrote:
+> 25.01.2025 21:24, Philippe Mathieu-Daudé wrote:
+> 
+>> - * You need not call an explicit deinit call. Simply make
+>> + * You need not call an explicit timer_deinit() call. Simply make
+>>    * sure it is not on a list with timer_del.
+> 
+> Reworded this as "You need not call timer_deinit() explicitly. Simply make..."
 
-> - * You need not call an explicit deinit call. Simply make
-> + * You need not call an explicit timer_deinit() call. Simply make
->    * sure it is not on a list with timer_del.
+"You don't need to call timer_deinit() explicitly.", actually.
 
-Reworded this as "You need not call timer_deinit() explicitly. Simply make..."
+This breaks quite a lot of CI tests: https://gitlab.com/mjt0k/qemu/-/pipelines/1662551717
 
-and applied to trivial-patches tree.
-
-Thanks,
-
-/mjt
 
