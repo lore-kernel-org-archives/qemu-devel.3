@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E33C0219B
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 17:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D5A9C0219B
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 17:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thBJc-00036L-9o; Sun, 09 Feb 2025 12:41:56 -0500
+	id 1thBQK-0004kB-Ht; Sun, 09 Feb 2025 12:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thBJS-00035j-IC
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:41:47 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thBQI-0004jm-Fd
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:48:50 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thBJN-0007oF-Ku
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:41:44 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so36387925e9.3
- for <qemu-devel@nongnu.org>; Sun, 09 Feb 2025 09:41:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thBQ6-0000TL-VU
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:48:50 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso23890865e9.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Feb 2025 09:48:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739122897; x=1739727697; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739123316; x=1739728116; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+YRkLbBScq3OWZsTCYxQl6VA6RluAOAZ5euu/Z5wTTY=;
- b=JV3G126KFJAfGVlNca4F59ppXU7OXvqWmZUcMdMEGYXuMNho5GZIA2i04ewXfkVPJv
- wB9bVfKB6tUI0kpbrab2e6HMyuCEQ5kzmB26VwviopePM3+A0lbJ+QP5/1bRDlXSCZVs
- ek9iBcq1ds50ozCJzO+Dc718+f+zafMI9fyz9wrLD8dCgWNTDRV1kRJ83xPf6xmUaAfQ
- YYNpAhU8ae1LzjMIlccOAbegHCuCP+YOuStmkTV1kheOkvEUefS7K/RH7nf1zKv9oMtn
- C9lXYpIlPt1loNWXzNR68uFt0nOCoOUBVHjOuoby7G1FcvKHM0g3jNMlUWlGGceBgoBO
- DBPg==
+ bh=MfUfwyyOf6ikTKqC5ppl2P595P0uuLiq/UPwbIU/2wE=;
+ b=lT/5vakUwq3GvdoSAxQHe33wJafFEfvDTrha2ZnEFGb42Qoah8bUTcRO7c8ydoZbgX
+ pYPwfN7y8LOz9/6jiy/IwGCEctr2XAO5EZk/1/AoBbOG4Z5z8T6bmZjRQwM6hfCP2LR8
+ QIVUPsp/NMOm7shHdBGjJCDuOAyMz8i376y2OMMXOjAVmQIiyYWo/2Xq+aklV84UvH11
+ PIUNgIJOSoHspDQ9i4dJC8S7ta8w2GvrkBbzFeGDrgHIJfRO9DiXRlpxcgtQsjnpl2Kp
+ HnQ7STClk5NKbEKcgCB2AM2O4r1heV4Zj88lQy5S8Ibck2L+hxV/9Ee/TuMcFi9zQSCg
+ jjpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739122897; x=1739727697;
+ d=1e100.net; s=20230601; t=1739123316; x=1739728116;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+YRkLbBScq3OWZsTCYxQl6VA6RluAOAZ5euu/Z5wTTY=;
- b=foECXGpPjYLgrxESJJcbxqte3GnmvG+boxLHkL1iZnU0MIbwGG1mgCqHtvp0R2TRos
- Pb7mrLzgYj5ywV6Gk1pz0vr/vJD+jtlH4uNnPKkIAcFy123vf5RpfS52e8xw96FMdwMx
- uzzocU63PxaYk6lz54PJBCt/+i7LZXOzdh62iPeVfVGD9BKrnTkizwTIoed6/H9fNF96
- HAe5if9SdmJot0utnuhj0ir1tRHokPzxA6uL4yz5CNRYyiBljLpBjtFw1e8SEdbNemHK
- W7FM6ADR1OeuiRmdH7Z+kI/c9zI8j/b8v3eUOUp4OB/IFDtFnW65zq/QuuUjH0JF6Skb
- gg1g==
+ bh=MfUfwyyOf6ikTKqC5ppl2P595P0uuLiq/UPwbIU/2wE=;
+ b=a3wLM04wgGd7IS0vEjJWTDvk3+s5FCHKDiNjE3132sn/pXsoRkx2OeKnVLmehFNmw3
+ sIgddonUWzXV744gmikHsqH5969wz6Wnnz3in+OBUiCuHEjBaV4TBHKfRKFIR//t/OPF
+ WF5+cKx9hEq6cjk1uIMjUldEuSfe6sz+XRJPCG5Wu5C8/PRqJL+EU98Zq2wDrRg1ISmD
+ SVKgVhFyV/o/mPbCLPR8gKUe9PvH0f11oIt9qjmmCzkcsWLqAzs1gnAIRy/qL4nXEKnL
+ UqGJY/pUOXGUAw7aDerAbWePq6DW6WfueFpL2axugxIL1XhpkE4xBsDV99oVWA93e1hV
+ ns9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4XH6lgZCTW3eCQe3//BZpY4RUMGBpKXI7Y4t2MWu9oHSpVMyfkQFkwk+6yDquy2xLBcKLGlt21O/r@nongnu.org
-X-Gm-Message-State: AOJu0YwRM9gOZl95jEqMlILMwviEfKuhZMnto+U+cGXfvZhd4tArfbN5
- nEWCOeGt9yh1Zw+XvHMBMunH/Q0TeU6gtIE5TcUqNVhZDdE79JKNg9lS7fqvC38=
-X-Gm-Gg: ASbGnctYP13+7KaFVQac6M707tyyUZ1zBd3Q8r8bZiaEw0eiUXgYYzsiDfvTGJK6UiC
- dj6Sl2ke3DDP3lGSt/+oK7B1AtBO6/ua8npDDhfegYot9+g7edeDxcqR5amTCdWmymwNd5/UjSf
- uiEd4E7kkt/JTFYqnW2XzwWr47T5B8kQ2CBF9JpK+vGO/mgkhwvdp0u4h4ynVNV76f2c9z5OmRV
- Sjdf6ZRkZvXnoRSK8hfp7hh+XtACMXg1mNK0aSrZPlSWUrv5fGTmNqHQvsUldEL8Hym8D5YZEFV
- +PkaneDu2PCYx/7ikn2/28IgI6dqSyEpS44DzGAr9axvhdaR10O4z9/YQz0=
-X-Google-Smtp-Source: AGHT+IGXllxJRqBNpefMTuWI5XxsQ78VMUXhlRDLSi0cc9Fuevx/BfB2nE5Hnrw7xBymOy7glGd00Q==
-X-Received: by 2002:a05:600c:3b89:b0:435:9ed3:5698 with SMTP id
- 5b1f17b1804b1-439249af2f0mr82773045e9.24.1739122897333; 
- Sun, 09 Feb 2025 09:41:37 -0800 (PST)
+ AJvYcCULXMztyoI6RvIXZTqYxedV35T03CZ0DDSyBlcPIZXU5q842luxLOGMXWFDdMzzbTStB4kUaA52Dtfl@nongnu.org
+X-Gm-Message-State: AOJu0YyOgr8vUyUhCMTLri9uIjqsTkGqFao9xWRSq9iqfQDmaboAiADA
+ enDcHYq6dp+cfTISxc95KbDuk7NqQWOcGnUcR2lw80SpMwnTD7I6xjp0eRqkgiU=
+X-Gm-Gg: ASbGncvNn09SotwOPxW2eWb3HkyqQNma89ztEt+i3FTNwxb82zkOLfGBPEbnXK4gnST
+ 3Np+/1FcBC1OyKtVnDTlomnRrCDdA9DtNzdvZsZrWmCZOjXfru6F4KbTy8zzT0x1FVgwKj2rFxp
+ 1xhvyUEeFlXy3tmcFKApti82UBoFmBnFMh3Gu1hvXBDhX6mV1meVSezn1A/ihavlxSB5uiSzho2
+ ZlgPYR2tN5EdsyHv7e6CM44ztOeCONcLkEW5gyxn85YtSpDn9rHX8dccgODEhO6iBWGkGfawVQI
+ Yson2D/9kM4IVMpYmijMs7M2D8/l6LQMGPPbxm5De6eygV6idkoECr4DSu4=
+X-Google-Smtp-Source: AGHT+IGd/XDb34EkKfmSFZhWJPhrnA7A7SmQh2tvM08VpfMHBBzMH15Yi4MnSVh5ay2LnzkfnAYyag==
+X-Received: by 2002:a05:600c:895:b0:439:331b:e34d with SMTP id
+ 5b1f17b1804b1-439331be5aemr46083675e9.5.1739123316433; 
+ Sun, 09 Feb 2025 09:48:36 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc5e6f027sm8354985f8f.4.2025.02.09.09.41.36
+ 5b1f17b1804b1-4394376118esm10137065e9.40.2025.02.09.09.48.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Feb 2025 09:41:36 -0800 (PST)
-Message-ID: <b9b0c5c1-1d1b-4c58-8540-4093356e2a4d@linaro.org>
-Date: Sun, 9 Feb 2025 18:41:35 +0100
+ Sun, 09 Feb 2025 09:48:35 -0800 (PST)
+Message-ID: <62ad5a5b-9860-42dc-a4f3-37f504f3ded6@linaro.org>
+Date: Sun, 9 Feb 2025 18:48:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qemu/timer: Sanity check timer_list in
- timer_init_full()
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250125182425.59708-1-philmd@linaro.org>
- <20250125182425.59708-3-philmd@linaro.org>
- <cc04420e-efdb-4551-9dc1-b0dff1c1df9b@tls.msk.ru>
- <6b159be8-01e7-4dc7-9260-849432f1f4bf@tls.msk.ru>
+Subject: Re: [PATCH V2] target/loongarch: fix vcpu reset command word issue
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org,
+ kvm-devel <kvm@vger.kernel.org>
+Cc: Bibo Mao <Maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+References: <20250208075023.5647-1-lixianglai@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6b159be8-01e7-4dc7-9260-849432f1f4bf@tls.msk.ru>
+In-Reply-To: <20250208075023.5647-1-lixianglai@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/25 10:41, Michael Tokarev wrote:
-> 09.02.2025 12:37, Michael Tokarev wrote:
->> 25.01.2025 21:24, Philippe Mathieu-Daudé wrote:
->>
->>> - * You need not call an explicit deinit call. Simply make
->>> + * You need not call an explicit timer_deinit() call. Simply make
->>>    * sure it is not on a list with timer_del.
->>
->> Reworded this as "You need not call timer_deinit() explicitly. Simply 
->> make..."
-> 
-> "You don't need to call timer_deinit() explicitly.", actually.
-> 
-> This breaks quite a lot of CI tests: https://gitlab.com/mjt0k/qemu/-/ 
-> pipelines/1662551717
+Hi,
 
-Do sorry, I only tested on a specific config and missed all the
-other errors :/
+On 8/2/25 08:50, Xianglai Li wrote:
+> When the KVM_REG_LOONGARCH_VCPU_RESET command word
+> is sent to the kernel through the kvm_set_one_reg interface,
+> the parameter source needs to be a legal address,
+> otherwise the kernel will return an error and the command word
+> will fail to be sent.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <Maobibo@loongson.cn>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+> CHANGE:
+> V2<-V1:
+>    1.Sets the initial value of the variable and
+>    adds a function return value judgment and prints a log
+> 
+>   target/loongarch/kvm/kvm.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+> index a3f55155b0..3f499e60ab 100644
+> --- a/target/loongarch/kvm/kvm.c
+> +++ b/target/loongarch/kvm/kvm.c
+> @@ -581,9 +581,14 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
+>   void kvm_arch_reset_vcpu(CPUState *cs)
+>   {
+>       CPULoongArchState *env = cpu_env(cs);
+> +    int ret = 0;
+> +    uint64_t unused = 0;
+>   
+>       env->mp_state = KVM_MP_STATE_RUNNABLE;
+> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
+> +    ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &unused);
+> +    if (ret) {
+> +        error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET");
+
+If this call fails, I'd not rely on the state of the VM. What about:
+
+if (ret < 0) {
+     error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET: %s",
+                  strerror(errno));
+     exit(EXIT_FAILURE);
+}
+
+?
+
+> +    }
+>   }
+>   
+>   static int kvm_loongarch_get_mpstate(CPUState *cs)
+
 
