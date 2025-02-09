@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45F8DC021A1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 21:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A4CC0219B
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 21:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thET3-0005mw-PD; Sun, 09 Feb 2025 16:03:53 -0500
+	id 1thEcS-0007J5-VN; Sun, 09 Feb 2025 16:13:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1thET1-0005mc-1X
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:03:51 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1thESy-0002OU-NP
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:03:50 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1739135011; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=jP+Ra9Qpj97NsV+8lERLtbcZYIk0ixnzZy/9qzMfVC4k8UgtCaNPHxGnhe7FUl7IMH+sJVneXaVyN1QLaMhL2YBmdEgVvUoX/T2nbz9AxE7d16xaE2VGlaBg9lyNCtTeyFXhmzqVGM7MWxfhgQzU4G7W9UgTy+tg5rNJWj0i8B8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1739135011;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=3Fu9JjiMn5+UQdJCTkYIkKy2eNEHB/ssPhgUPc9udoY=; 
- b=Y4GC/lumAU9YUwUt0tLyBVjX4yp+cF52urasjpqOsjLGxs6aHALa3Nd4P0y8dvY0bWa13JIic4h+8nXyfcgXXY6UPk2/qnK893hHYHvPse6B+GtxwHiAdxg/J+AJK85ox+1r0xDScRw5oimuw0iyQBRj85LqxYIdTjYJtObkKTc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739135011; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=3Fu9JjiMn5+UQdJCTkYIkKy2eNEHB/ssPhgUPc9udoY=;
- b=I5C5WAx4gQh/8unfHgf8N7n4jtkSqIGMVz92roUs0d1hCB5b4VcUbv5mTR3jMBD+
- E8BKC6FTVQnX/RgVBl50imtrYGYgiuRTvwFY36tYn/KOjZMMod0WDpHN+sHc9BQ7TdH
- ytxGUPvsqJaCSNhGvDfuKREf5BS2glYGmeBgYbKc=
-Received: by mx.zohomail.com with SMTPS id 1739135008024960.7997563115566;
- Sun, 9 Feb 2025 13:03:28 -0800 (PST)
-Message-ID: <59f70c1d-4c66-4440-a102-5f478749c8f3@collabora.com>
-Date: Mon, 10 Feb 2025 00:03:20 +0300
+ (Exim 4.90_1) (envelope-from <atar4qemu@gmail.com>)
+ id 1thEcQ-0007Iu-LO
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:13:34 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atar4qemu@gmail.com>)
+ id 1thEcP-0003NN-5U
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:13:34 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso24436955e9.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Feb 2025 13:13:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739135611; x=1739740411; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4mxNmu2xFcIw7eeu6rCjpzywjGDaWVjP/XkaZ/Tsld0=;
+ b=RAdVa/buKD7PqvZZPJXkC6FlD3b/1mnkuz9Gwwh79lf9X01BVa7LHMwcudULEXMuIx
+ PXk5QVayI/IG7SpU+kMOgDLr3rb8yToOX+s8IweTguzN3Uz72dAX8DrJUSfmIxSfKHq0
+ 3Mv3OWtD8se9cETV7fIuP2ixsH7oppOqw7iDW16CTf7zmCQoe8tiaMeDH76fwIrsWNMm
+ jb3j9a4Zy/3+ZvRiUQIOFcm/K56fG4F8+1Vda/bSOL5z3ccv+yqcD0TtGMjQ+F1otEGw
+ N6Da9z/bCqOp1k3m+12q+Xi9lI7efxUv6GnA5A/RrQ7cdzwvmOiywU7Gx17mYE8psg+V
+ mI7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739135611; x=1739740411;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4mxNmu2xFcIw7eeu6rCjpzywjGDaWVjP/XkaZ/Tsld0=;
+ b=bUnYtWmaADIuh6MxDqQ0yJ3t0UzNhPhRd0SxekMOweUBnuxV+9O9yuC1WC6JbgdrMP
+ CGp4zvg02ptchMFo3zatJIz3E2k71pG6BpPGNNoXfWcau+v6Y5cm3uGZNe0CKOV9AlZF
+ 30tK3zoStD7jM4R0ib9ZvlKmVPYR0d6rbds3s4kNXE0XIAsYINFA7TkZCEp6njZdpSx6
+ mT5xxp8yLBiyPP0jAu0nz+UAZSt60TopxW823K4pbWcfqQ02Z922lHpLfHciVKg4eE+t
+ CmgszOiUO5MFeHKgnqoqcFw+CFX06m4t/UNrTkKDrIkS1c4Y1GEkot/eZq5geMdXFDHK
+ E4tQ==
+X-Gm-Message-State: AOJu0Yzm8KQ5HKMt+KjnlC+Sx/wxeePZLSbjIWGP3KkN8ko9p2vBkR3s
+ ez0AEA6/EBr5Q81636n2ykMv98r4rVoQ42CZxiGZonz9D2sp5roAE0rcGAQO
+X-Gm-Gg: ASbGnctMn8UUlYQJX5pSMbgNJLc7EaBBNhuTsLo6YI8q1pMuz/dqTR9vPL7m/rg3Zr1
+ RtFlhcqrRzYziMrqDjygeHtzTYirby31UBB9pl/N05bnXy3k5YqgIShexHSmZyCakoSeS2MhAjV
+ b27QDyGftlNaYm4avqQxkOb/k5Hcb5NAbRBSI4Fg37q/IUS49WieLErXcz5tAEAe4WCvo0of5kY
+ 1vdiaywAXp7mOTylYXwWszOsHuLwoRG+UYy9WzycwGLI/xPmlg2AIsxFooTVGVVfd7nzIzlwgTM
+ CLbGtAx9VmwMBkUc50vFZHXhb3VmLqVXuWLDAnZsuNHHOt+/2A5+WvSTAu09r2Fg7SL9vtmMz3B
+ cPuXDbu0=
+X-Google-Smtp-Source: AGHT+IH+z5ZwmEYNze9Qd6b+uGIRoid1lrlidhxGorHbJ7cwRb/5G6DL4OPW8/NCm9zDF93/VcnhGQ==
+X-Received: by 2002:a05:600c:4754:b0:434:9e46:5bc with SMTP id
+ 5b1f17b1804b1-4392498ac55mr97841765e9.10.1739135610774; 
+ Sun, 09 Feb 2025 13:13:30 -0800 (PST)
+Received: from localhost.localdomain
+ (dynamic-077-012-237-182.77.12.pool.telefonica.de. [77.12.237.182])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d966faasm160357045e9.23.2025.02.09.13.13.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Feb 2025 13:13:30 -0800 (PST)
+From: Artyom Tarasenko <atar4qemu@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PATCH v2] target/sparc: fake UltraSPARC T1 PCR and PIC registers
+Date: Sun,  9 Feb 2025 22:12:48 +0100
+Message-ID: <20250209211248.50383-1-atar4qemu@gmail.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <99ea71e8-b978-41c6-8ba5-f056935ea39e@linaro.org>
+References: <99ea71e8-b978-41c6-8ba5-f056935ea39e@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] docs/system: Expand the virtio-gpu documentation
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
- <20250119220050.15167-9-dmitry.osipenko@collabora.com>
- <c2e1c362-5d02-488e-b849-d0b14781a60f@daynix.com>
- <87ikq9r7wj.fsf@draig.linaro.org>
- <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
- <ea866d19-90f6-4bb9-a3f6-f84b2ea2c457@collabora.com>
- <86dce86b-03bf-4abe-b825-1341e93eb88d@daynix.com>
- <920043a8-9294-4b40-8d8e-3611727e4cd2@collabora.com>
- <0f88994f-1a93-4049-addc-a62e8ca49904@daynix.com>
- <d85f6669-8c46-4678-85d6-59240935d197@collabora.com>
- <fdd8b7ca-e4ad-405d-a58e-fbcb82183ec8@daynix.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <fdd8b7ca-e4ad-405d-a58e-fbcb82183ec8@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=atar4qemu@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,89 +102,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/25 08:41, Akihiko Odaki wrote:
-> On 2025/02/06 2:40, Dmitry Osipenko wrote:
->> On 2/3/25 08:31, Akihiko Odaki wrote:
->> ...
->>>> Requirements don't vary much. For example virglrenderer minigbm support
->>>> is mandatory for crosvm, while for QEMU it's not.
->>>
->>> Is that true? It seems that virglrenderer uses builds without minigbm
->>> support to run tests on GitLab CI.
->>
->> CI is running in a headless mode using software renderer. For a
->> full-featured crosvm support running on a baremetal, minigbm should be
->> needed, along with other downstream features.
-> 
-> That makes sense.
-> 
-> Based on your input, for QEMU, I don't think we need a separate
-> documentation to describe libvirglrenderer's build flags though crosvm
-> should have some documentation saying it requires minigbm.
-> 
->>
->>> Anyway, if there is any variance in the build procedure, that may
->>> justify having a separate build instruction in QEMU tree to avoid
->>> confusion. Otherwise, it's better to have a documentation shared with
->>> other VMMs.
->>>
->>>>
->>>>> I'm not entirely sure the documentation will stay as is for that long.
->>>>> The requirements of Intel native context refer to merge requests that
->>>>> can be merged sooner or later. Asahi may need more updates if you
->>>>> document it too because its DRM ABI is still unstable.
->>>>
->>>> The unstable parts of course will need to be updated sooner, but the
->>>> stable should be solid for years. I expect that about a year later
->>>> requirements will need to be revisited.
->>>>
->>>
->>> It will be some burden in the future. Now you are adding this
->>> documentation just for QEMU, but crosvm and libkrun may gain similar
->>> documentation. The DRM native context support for Intel and Asahi is in
->>> development, and I guess nvk will support it someday.
->>>
->>> So, a very rough estimation of future documentation updates will be:
->>> (number of VMMs) * (number of DRM native contexts in development)
->>> = 3 * 3
->>> = 9
->>>
->>> That's manageable but suboptimal.
->>
->> I don't mind deferring the doc addition if that's preferred. Either way
->> is fine with me. Yet it's better to have doc than not.
-> 
-> My suggestion is not to defer the addition, but to add it to Mesa, which
-> does not require deferring.
-> 
->>
->> In my view crosvm and libkrun exist separately from QEMU, they serve a
->> different purpose. Majority of QEMU users likely never heard about those
->> other VMMs. A unified doc won't be a worthwhile effort, IMO.
->>
-> 
-> When evaluating the utility of a unified documentation, Whether the
-> majority of Mesa/Virgl users care VMMs other than QEMU matters more. And
-> I think it is true; libkrun and crosvm are excellent options for
-> graphics-accelerated VMs.
-> 
-> If we have a unified documentation, any VM can point to it for the build
-> instruction of Mesa and virglrenderer. Once that's done, QEMU users who
-> want graphics acceleration can take the following steps:
-> 1. See docs/system/devices/virtio-gpu.rst
-> 2. Figure out that they need Mesa and virglrenderer
-> 3. Click the link to the unified documentation
-> 4. Build Mesa and virglrenderer accordingly
-> 
-> No other VMMs will bother them in this procedure.
+fake access to
+PCR Performance Control Register
+and
+PIC Performance Instrumentation Counter.
 
-Will see. For the starter, adding example build flags to QEMU doesn't
-hurt, it's a very minimal information. Later on, if and when all
-relevant Mesa/virglrenderer doc pages will appear, it won't be a problem
-replace QEMU flags with the links. Please let's do it step-by-step, one
-step at a time :)
+Ignore writes in privileged mode, and return 0 on reads.
 
+This allows booting Tribblix, MilaX and v9os under Niagara target.
+
+Signed-off-by: Artyom Tarasenko <atar4qemu@gmail.com>
+---
+ target/sparc/insns.decode |  7 ++++++-
+ target/sparc/translate.c  | 19 +++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index 989c20b44a..504147563c 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -96,7 +96,10 @@ CALL    01 i:s30
+     RDTICK          10 rd:5  101000 00100 0 0000000000000
+     RDPC            10 rd:5  101000 00101 0 0000000000000
+     RDFPRS          10 rd:5  101000 00110 0 0000000000000
+-    RDASR17         10 rd:5  101000 10001 0 0000000000000
++    {
++      RDASR17       10 rd:5  101000 10001 0 0000000000000
++      RDPIC         10 rd:5  101000 10001 0 0000000000000
++    }
+     RDGSR           10 rd:5  101000 10011 0 0000000000000
+     RDSOFTINT       10 rd:5  101000 10110 0 0000000000000
+     RDTICK_CMPR     10 rd:5  101000 10111 0 0000000000000
+@@ -114,6 +117,8 @@ CALL    01 i:s30
+     WRCCR           10 00010 110000 ..... . .............  @n_r_ri
+     WRASI           10 00011 110000 ..... . .............  @n_r_ri
+     WRFPRS          10 00110 110000 ..... . .............  @n_r_ri
++    WRPCR           10 10000 110000 01000 0 0000000000000
++    WRPIC           10 10001 110000 01000 0 0000000000000
+     {
+       WRGSR         10 10011 110000 ..... . .............  @n_r_ri
+       WRPOWERDOWN   10 10011 110000 ..... . .............  @n_r_ri
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 7e5c7351cb..bfe63649db 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -2882,6 +2882,14 @@ static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
+ 
+ TRANS(RDASR17, ASR17, do_rd_special, true, a->rd, do_rd_leon3_config)
+ 
++static TCGv do_rdpic(DisasContext *dc, TCGv dst)
++{
++    return tcg_constant_tl(0);
++}
++
++TRANS(RDPIC, HYPV, do_rd_special, supervisor(dc), a->rd, do_rdpic)
++
++
+ static TCGv do_rdccr(DisasContext *dc, TCGv dst)
+ {
+     gen_helper_rdccr(dst, tcg_env);
+@@ -3315,6 +3323,17 @@ static void do_wrfprs(DisasContext *dc, TCGv src)
+ 
+ TRANS(WRFPRS, 64, do_wr_special, a, true, do_wrfprs)
+ 
++static bool do_priv_nop(DisasContext *dc, bool priv)
++{
++    if (!priv) {
++        return raise_priv(dc);
++    }
++    return advance_pc(dc);
++}
++
++TRANS(WRPCR, HYPV, do_priv_nop, supervisor(dc))
++TRANS(WRPIC, HYPV, do_priv_nop, supervisor(dc))
++
+ static void do_wrgsr(DisasContext *dc, TCGv src)
+ {
+     gen_trap_ifnofpu(dc);
 -- 
-Best regards,
-Dmitry
+2.43.5
+
 
