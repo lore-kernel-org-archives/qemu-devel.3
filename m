@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0534C021A1
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 17:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C5FDC0219B
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 17:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thB6E-0004W7-Ip; Sun, 09 Feb 2025 12:28:06 -0500
+	id 1thB6l-0004bF-L0; Sun, 09 Feb 2025 12:28:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1thB6D-0004VW-Lc
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:05 -0500
+ id 1thB6H-0004Wp-Qr
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:10 -0500
 Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1thB6A-0006Iq-Ao
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:04 -0500
+ id 1thB6B-0006LV-9O
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 12:28:07 -0500
 Received: from localhost.localdomain (default-rdns.vocus.co.nz
  [202.150.110.104] (may be forged)) (authenticated bits=0)
  by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 519HRdEp3380282
+ 519HRdEr3380282
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Sun, 9 Feb 2025 17:27:49 GMT
+ Sun, 9 Feb 2025 17:27:54 GMT
 Authentication-Results: anarch128.org; auth=pass;
  dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=e3HcQepb header.a=rsa-sha256 header.s=100003;
+ header.i=@anarch128.org header.b=Xm/4vYbY header.a=rsa-sha256 header.s=100003;
  x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org); 
  x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1739122071;
- bh=v2r5+aLWIDg3nxqMxTLpFoUFEZ4FxZUh0mEzUQmI0hw=;
+ s=100003; t=1739122079;
+ bh=ynyGsY/hOsAFofCf+WN2352Doz/A4geySaubdzdYYuE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=e3HcQepbtWyhFJ8jlFIzbiQZV0SQzKfWyrswls7GUSyWScBjkXQ25JgdjFZrAZMd9
- dAv9lTpa+adVCD7MKRyd3BxL+6Bdtt7WRevTyKFFKi1ycvcqpkHKlI9uNCraz+8UOm
- E/WaCExAlIcSHf89jTIdmpVrEego0/Kf9N5X+d74dbFkPgjqUgCIlV0Ou5qgGxyDhJ
- 6mr5OL9pdEKaWy+3nRyEf3Bg8Ynq0Gxq1xLHIhyuNMR+KmuvJcPXOZYWz9bDCQgTYJ
- IcfENMIyuT1qG7z32fJIZTCijAyswhRQHk1CP88gg/DolKdSEf427juAvQe+9SIg9h
- /sMnnPKIxjMBA==
+ b=Xm/4vYbYEBRpX1ehyun0O7dIpwVrts/ZwoFCkxB0E7TPg4JCU34e/oVmRNyU/qvpG
+ /9t9GimM6pUTZHgkyNoTCk2TtJS0ErPkN1ZjEVs7QWjKdyokmSh/eSkNmf19al3isy
+ WL47WOnqO/C4x9HkFZrjPz4IiJxrQQuMiiPU2F3t+0xj3tfIsQKktUxnZebwL4879k
+ BdgUKT8jgiyVFrP5pgjcop7mnGSqvrNDO9T3ub6wjIBnnf25Mq+rCv7KUpiB3qZiPH
+ OrXQjZ82Rfyp/dTYIS66l3a25wzB9KkGRIYmLMp/0DuH5xwOiFGpgBBLgUDdgvqWvX
+ KcVOS/O7+vGDA==
 From: Michael Clark <michael@anarch128.org>
 To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
 Cc: Michael Clark <michael@anarch128.org>
-Subject: [PATCH v2 2/4] x86-disas: add x86-mini metadata documentation
-Date: Mon, 10 Feb 2025 06:26:54 +1300
-Message-ID: <20250209172656.1466556-3-michael@anarch128.org>
+Subject: [PATCH v2 4/4] x86-disas: add x86-mini disassembler implementation
+Date: Mon, 10 Feb 2025 06:26:56 +1300
+Message-ID: <20250209172656.1466556-5-michael@anarch128.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250209172656.1466556-1-michael@anarch128.org>
 References: <20250209172656.1466556-1-michael@anarch128.org>
@@ -79,326 +79,5231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add detailed information on the instruction opcode encoding
-format for LEX/VEX/EVEX prefix, map and opcode encoding, the
-operand encoding format, the field order encoding format and
-notes on instruction synthesis for parameterized opcodes.
+the x86-mini library is a lightweight x86 encoder, decoder, and
+disassembler that uses extensions to the Intel instruction set
+metadata to encode modern VEX/EVEX instructions and legacy
+instructions with a parameterized LEX (legacy extension) format.
+
+this patch adds the x86-tablegen.py script, the disassembler,
+a print_insn_x86 implementation plus host and target cpu stubs.
 
 Signed-off-by: Michael Clark <michael@anarch128.org>
 ---
- docs/x86-metadata.txt | 303 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 303 insertions(+)
- create mode 100644 docs/x86-metadata.txt
+ disas/disas-host.c      |    5 +
+ disas/meson.build       |   97 ++
+ disas/x86-core.c        | 3059 +++++++++++++++++++++++++++++++++++++++
+ disas/x86-disas.c       |   94 ++
+ disas/x86.h             | 1858 ++++++++++++++++++++++++
+ include/disas/dis-asm.h |    1 +
+ target/i386/cpu.c       |    7 +
+ 7 files changed, 5121 insertions(+)
+ create mode 100644 disas/x86-core.c
+ create mode 100644 disas/x86-disas.c
+ create mode 100644 disas/x86.h
 
-diff --git a/docs/x86-metadata.txt b/docs/x86-metadata.txt
+diff --git a/disas/disas-host.c b/disas/disas-host.c
+index 8146fafe804c..e2d171464a87 100644
+--- a/disas/disas-host.c
++++ b/disas/disas-host.c
+@@ -6,6 +6,7 @@
+ #include "qemu/osdep.h"
+ #include "disas/disas.h"
+ #include "disas/capstone.h"
++#include "disas/x86.h"
+ #include "disas-internal.h"
+ 
+ 
+@@ -50,12 +51,16 @@ static void initialize_debug_host(CPUDebug *s)
+     s->info.cap_mode = CS_MODE_32;
+     s->info.cap_insn_unit = 1;
+     s->info.cap_insn_split = 8;
++    s->info.private_data = x86_ctx_create(x86_modes_32);
++    s->info.print_insn = print_insn_x86;
+ #elif defined(__x86_64__)
+     s->info.mach = bfd_mach_x86_64;
+     s->info.cap_arch = CS_ARCH_X86;
+     s->info.cap_mode = CS_MODE_64;
+     s->info.cap_insn_unit = 1;
+     s->info.cap_insn_split = 8;
++    s->info.private_data = x86_ctx_create(x86_modes_64);
++    s->info.print_insn = print_insn_x86;
+ #elif defined(_ARCH_PPC)
+     s->info.cap_arch = CS_ARCH_PPC;
+ # ifdef _ARCH_PPC64
+diff --git a/disas/meson.build b/disas/meson.build
+index bbfa11978352..dca926a00987 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -9,6 +9,103 @@ common_ss.add(when: 'CONFIG_RISCV_DIS', if_true: files(
+     'riscv-xthead.c',
+     'riscv-xventana.c'
+ ))
++x86_data = files(
++    'x86-data/x86_adx.csv',
++    'x86-data/x86_aes.csv',
++    'x86-data/x86_aeskle.csv',
++    'x86-data/x86_aesklewide.csv',
++    'x86-data/x86_avx2.csv',
++    'x86-data/x86_avx5124fmaps.csv',
++    'x86-data/x86_avx5124vnniw.csv',
++    'x86-data/x86_avx512b.csv',
++    'x86-data/x86_avx512bf16.csv',
++    'x86-data/x86_avx512bitalg.csv',
++    'x86-data/x86_avx512bw.csv',
++    'x86-data/x86_avx512cd.csv',
++    'x86-data/x86_avx512d.csv',
++    'x86-data/x86_avx512dq.csv',
++    'x86-data/x86_avx512er.csv',
++    'x86-data/x86_avx512f.csv',
++    'x86-data/x86_avx512fp16.csv',
++    'x86-data/x86_avx512ifma.csv',
++    'x86-data/x86_avx512pf.csv',
++    'x86-data/x86_avx512vbmi2.csv',
++    'x86-data/x86_avx512vbmi.csv',
++    'x86-data/x86_avx512vl.csv',
++    'x86-data/x86_avx512vnni.csv',
++    'x86-data/x86_avx512vp2intersect.csv',
++    'x86-data/x86_avx512vpopcntdq.csv',
++    'x86-data/x86_avx.csv',
++    'x86-data/x86_avxneconvert.csv',
++    'x86-data/x86_avxvnni.csv',
++    'x86-data/x86_avxvnniint8.csv',
++    'x86-data/x86_base.csv',
++    'x86-data/x86_bmi1.csv',
++    'x86-data/x86_bmi2.csv',
++    'x86-data/x86_cet.csv',
++    'x86-data/x86_cldemote.csv',
++    'x86-data/x86_clwb.csv',
++    'x86-data/x86_enqcmd.csv',
++    'x86-data/x86_f16c.csv',
++    'x86-data/x86_fma.csv',
++    'x86-data/x86_fsgsbase.csv',
++    'x86-data/x86_gfni.csv',
++    'x86-data/x86_hreset.csv',
++    'x86-data/x86_invpcid.csv',
++    'x86-data/x86_lzcnt.csv',
++    'x86-data/x86_mmx.csv',
++    'x86-data/x86_movdir64b.csv',
++    'x86-data/x86_movdiri.csv',
++    'x86-data/x86_mpx.csv',
++    'x86-data/x86_msrlist.csv',
++    'x86-data/x86_ospke.csv',
++    'x86-data/x86_pclmulqdq.csv',
++    'x86-data/x86_pconfig.csv',
++    'x86-data/x86_prefetchw.csv',
++    'x86-data/x86_raoint.csv',
++    'x86-data/x86_rdpid.csv',
++    'x86-data/x86_rdrand.csv',
++    'x86-data/x86_rdseed.csv',
++    'x86-data/x86_rtm.csv',
++    'x86-data/x86_serialize.csv',
++    'x86-data/x86_sha.csv',
++    'x86-data/x86_smap.csv',
++    'x86-data/x86_sse2.csv',
++    'x86-data/x86_sse3.csv',
++    'x86-data/x86_sse4_1.csv',
++    'x86-data/x86_sse4_2.csv',
++    'x86-data/x86_sse4_3.csv',
++    'x86-data/x86_sse.csv',
++    'x86-data/x86_ssse3.csv',
++    'x86-data/x86_uintr.csv',
++    'x86-data/x86_vaes.csv',
++    'x86-data/x86_vmx.csv',
++    'x86-data/x86_waitpkg.csv',
++    'x86-data/x86_wbnoinvd.csv',
++    'x86-data/x86_x87.csv',
++    'x86-data/x86_xsaveopt.csv'
++)
++x86_tablegen_py = find_program('../scripts/x86-tablegen.py')
++x86_gen_enums_inc = custom_target(
++    'x86-enums.inc',
++    output: 'x86-enums.inc',
++    depend_files: x86_data,
++    command: [x86_tablegen_py, '--print-opcode-enums',
++              '--output-file', '@OUTPUT@', x86_data]
++)
++x86_gen_tables_inc = custom_target(
++    'x86-tables.inc',
++    output: 'x86-tables.inc',
++    depend_files: x86_data,
++    command: [x86_tablegen_py, '--print-opcode-tables',
++              '--output-file', '@OUTPUT@', x86_data]
++)
++common_ss.add(when: 'CONFIG_I386_DIS', if_true: x86_gen_enums_inc)
++common_ss.add(when: 'CONFIG_I386_DIS', if_true: x86_gen_tables_inc)
++common_ss.add(when: 'CONFIG_I386_DIS', if_true: files(
++    'x86-core.c',
++    'x86-disas.c'
++))
+ common_ss.add(when: 'CONFIG_SH4_DIS', if_true: files('sh4.c'))
+ common_ss.add(when: 'CONFIG_SPARC_DIS', if_true: files('sparc.c'))
+ common_ss.add(when: 'CONFIG_XTENSA_DIS', if_true: files('xtensa.c'))
+diff --git a/disas/x86-core.c b/disas/x86-core.c
 new file mode 100644
-index 000000000000..ce96cedfe100
+index 000000000000..71833d7ec557
 --- /dev/null
-+++ b/docs/x86-metadata.txt
-@@ -0,0 +1,303 @@
-+x86 Instruction Set Metadata
-+============================
++++ b/disas/x86-core.c
+@@ -0,0 +1,3059 @@
++/*
++ * Copyright (c) 2024-2025 Michael Clark
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included
++ * in all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
++ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
++ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ */
 +
-+Legacy x86 instructions have been parameterized in the instruction set
-+metadata using a new LEX prefix for instruction encoding with abstract width
-+suffix codes that synthesize multiple instruction widths using combinations
-+of operand size prefixes and `REX.W` bits. This new LEX format makes legacy
-+instruction encodings consistent with VEX and EVEX encodings as well as
-+eliminating some redundancy in the metadata.
++#include <stdio.h>
++#include <stdlib.h>
++#include <stdarg.h>
++#include <string.h>
++#include <limits.h>
 +
-+There are a small number of special cases for legacy instructions which need
-+mode-dependent overrides for cases such as, a different opcode is used for
-+different modes, or the instruction has a quirk where the operand size does
-+not follow the default rules for instruction word and address sizes:
++#include "qemu/osdep.h"
++#include "qemu/host-utils.h"
 +
-+- `.wx` is used to specify 64-bit instructions that default to 32-bit
-+  operands in 64-bit mode.
-+- `.ww` is used to specify 64-bit instructions that default to 64-bit
-+  operands in 64-bit mode.
-+- `.o16` is used to specify an instruction override specific to 16-bit mode.
-+- `.o32` is used to specify an instruction override specific to 32-bit mode.
-+- `.o64` is used to specify an instruction override specific to 64-bit mode.
++#include "disas/x86.h"
++#include "disas/x86-tables.inc"
 +
-+CSV File Format
-+===============
++#define array_size(arr) (sizeof(arr) / sizeof(arr[0]))
 +
-+The instruction set metadata in the `disas/x86-data` directory has the
-+following fields which map to instruction encoding tables in the Intel
-+Architecture Software Developer's Manual:
++typedef struct x86_table_col x86_table_col;
++typedef struct x86_map_str x86_map_str;
++typedef struct x86_operands x86_operands;
++typedef struct x86_arg x86_arg;
++typedef struct x86_opc_prefix x86_opc_prefix;
++typedef struct x86_opr_formatter x86_opr_formatter;
++typedef struct x86_opr_formats x86_opr_formats;
 +
-+- _Instruction_: opcode and operands from Opcode/Instruction column.
-+- _Opcode_: instruction encoding from Opcode/Instruction column.
-+- _Valid 64-bit_: 64-bit valid field from 64/32 bit Mode Support column.
-+- _Valid 32-bit_: 32-bit valid field from 64/32 bit Mode Support column.
-+- _Valid 16-bit_: 16-bit valid field from Compat/Legacy Mode column.
-+- _Feature Flags_: extension name from CPUID Feature Flag column.
-+- _Operand 1_: Operand 1 column from Instruction Operand Encoding table.
-+- _Operand 2_: Operand 2 column from Instruction Operand Encoding table.
-+- _Operand 3_: Operand 3 column from Instruction Operand Encoding table.
-+- _Operand 4_: Operand 4 column from Instruction Operand Encoding table.
-+- _Tuple Type_: Tuple Type column from Instruction Operand Encoding table.
++typedef size_t (*x86_opr_str_fn)(char *buf, size_t buflen, x86_codec *c,
++    x86_arg a);
++typedef size_t (*x86_opr_addr_fn)(char *buf, size_t buflen, x86_codec *c,
++    x86_arg a, size_t pc_offset, x86_fmt_symbol sym_cb);
 +
-+The instruction set metadata in the `data` directory is derived from
-+[x86-csv](https://github.com/GregoryComer/x86-csv), although it has had
-+extensive modifications to fix transcription errors, to revise legacy
-+instruction encodings to conform to the new LEX format, as well as add
-+missing details such as missing operands or recently added AVX-512
-+instruction encodings and various other instruction set extensions.
++enum
++{
++    x86_state_top,
++    x86_state_segment,
++    x86_state_legacy,
++    x86_state_map_0f,
++    x86_state_lex_opcode,
++    x86_state_rex_opcode,
++    x86_state_vex_opcode,
++    x86_state_done,
++};
 +
-+Table Generation
-+================
++struct x86_table_col
++{
++    int width;
++    char *data;
++};
 +
-+The appendices outline the printable form of the mnemonics used in the
-+generated tables to describe operands, instruction encodings and field order.
-+The mnemonics are referenced in the instruction set metadata files which are
-+translated to enums and arrays by `scripts/x86-tablegen.py` which then map to
-+the enum type and set definitions in `disas/x86.h`:
++struct x86_map_str
++{
++    uint ord;
++    const char *str;
++};
 +
-+- _enum x86_opr_ - operand encoding enum type and set attributes.
-+- _enum x86_enc_ - instruction encoding enum type and set attributes.
-+- _enum x86_ord_ - operand to instruction encoding field map set attributes.
++struct x86_opr_formatter
++{
++    x86_opr_str_fn fmt_const;
++    x86_opr_str_fn fmt_imm;
++    x86_opr_str_fn fmt_reg;
++    x86_opr_str_fn fmt_mrm;
++    x86_opr_str_fn fmt_vec;
++    x86_opr_str_fn fmt_opb;
++    x86_opr_str_fn fmt_is4;
++    x86_opr_str_fn fmt_ime;
++    x86_opr_addr_fn fmt_rel;
++};
 +
-+The enum values are combined together with _logical or_ combinations to
-+form the primary metadata tables used by the encoder and decoder library:
++struct x86_opr_formats
++{
++    const char *ptr_rip;
++    const char *ptr_rip_disp;
++    const char *ptr_reg;
++    const char *ptr_reg_disp;
++    const char *ptr_reg_sreg;
++    const char *ptr_reg_sreg_disp;
++    const char *ptr_reg_reg;
++    const char *ptr_reg_reg_disp;
++    const char *ptr_sreg;
++    const char *ptr_disp;
++    const char *ptr_imm64;
++    const char *ptr_imm32;
++    const char *imm64;
++    const char *imm32;
++    const char *reg;
++};
 +
-+- _struct x86_opc_data_ - table type for instruction opcode encodings.
-+- _struct x86_opr_data_ - table type for unique sets of instruction operands.
-+- _struct x86_ord_data_ - table type for unique sets of instruction field orders.
++struct x86_operands
++{
++    ullong mod : 3;
++    ullong rm  : 3;
++    ullong r   : 5;
++    ullong x   : 5;
++    ullong b   : 5;
++    ullong s   : 2;
++    ullong v   : 5;
++    ullong k   : 5;
++    ullong l   : 2;
++    ullong w   : 1;
++    ullong brd : 1;
++    ullong osz : 1;
++};
 +
-+***Note***: There are some differences between the mnemonics used in the
-+CSV metadata and the C enums. Exceptions are described in `operand_map` and
-+`opcode_map` within `scripts/x86_tablegen.py`. The primary differences are
-+in the names used in the operand columns to indicate operand field order,
-+otherwise a type prefix is added, dots and brackets are omitted, and forward
-+slashes are translated to underscores.
++struct x86_arg
++{
++    uint enc;
++    uint opr;
++    uint ord;
++    x86_operands q;
++};
 +
-+Appendices
-+==========
++struct x86_opc_prefix
++{
++    uint pfx;
++    uint pfx_w;
++    uint pfx_o;
++    uint modfun;
++    uint modreg;
++    uint modmem;
++};
 +
-+This section describes the mnemonics used in the primary data structures:
++x86_opr_formatter x86_format_intel_hex;
++x86_opr_formatter x86_format_intel_dec;
++x86_opr_formats x86_opr_formats_intel_hex;
++x86_opr_formats x86_opr_formats_intel_dec;
 +
-+- _Appendix A - Operand Encoding_ - describes instruction operands.
-+- _Appendix B - Operand Order_ - describes instruction field ordering.
-+- _Appendix C - Instruction Encoding Prefixes_ - describes encoding prefixes.
-+- _Appendix D - Instruction Encoding Suffixes_ - describes encoding suffixes.
-+- _Appendix E - Instruction Synthesis Notes_ - notes on prefix synthesis.
++static uint debug;
 +
-+Appendix A - Operand Encoding
-+=============================
++void x86_set_debug(uint d) { debug = d; }
 +
-+This table outlines the operand mnemonics used in instruction operands
-+_(enum x86_opr)_.
++x86_map_str x86_mode_names[] =
++{
++    { x86_modes_64,             "64"               },
++    { x86_modes_32,             "32"               },
++    { x86_modes_16,             "16"               },
++};
 +
-+| operand            | description                                           |
-+|:-------------------|:------------------------------------------------------|
-+| `r`                | integer register                                      |
-+| `v`                | vector register                                       |
-+| `k`                | mask register                                         |
-+| `seg`              | segment register                                      |
-+| `creg`             | control register                                      |
-+| `dreg`             | debug register                                        |
-+| `bnd`              | bound register                                        |
-+| `mem`              | memory reference                                      |
-+| `rw`               | integer register word-sized (16/32/64 bit)            |
-+| `ra`               | integer register addr-sized (16/32/64 bit)            |
-+| `mw`               | memory reference word-sized (16/32/64 bit)            |
-+| `mm`               | vector register 64-bit                                |
-+| `xmm`              | vector register 128-bit                               |
-+| `ymm`              | vector register 256-bit                               |
-+| `zmm`              | vector register 512-bit                               |
-+| `r8`               | register 8-bit                                        |
-+| `r16`              | register 16-bit                                       |
-+| `r32`              | register 32-bit                                       |
-+| `r64`              | register 64-bit                                       |
-+| `m8`               | memory reference 8-bit byte                           |
-+| `m16`              | memory reference 16-bit word                          |
-+| `m32`              | memory reference 32-bit dword                         |
-+| `m64`              | memory reference 64-bit qword                         |
-+| `m128`             | memory reference 128-bit oword/xmmword                |
-+| `m256`             | memory reference 256-bit ymmword                      |
-+| `m512`             | memory reference 512-bit zmmword                      |
-+| `m80`              | memory reference 80-bit tword/tbyte                   |
-+| `m384`             | memory reference 384-bit key locker handle            |
-+| `mib`              | memory reference bound                                |
-+| `m16bcst`          | memory reference 16-bit word broadcast                |
-+| `m32bcst`          | memory reference 32-bit word broadcast                |
-+| `m64bcst`          | memory reference 64-bit word broadcast                |
-+| `vm32`             | vector memory 32-bit                                  |
-+| `vm64`             | vector memory 64-bit                                  |
-+| `{er}`             | operand suffix - embedded rounding control            |
-+| `{k}`              | operand suffix - apply mask register                  |
-+| `{sae}`            | operand suffix - suppress all execptions              |
-+| `{z}`              | operand suffix - zero instead of merge                |
-+| `{rs2}`            | operand suffix - register stride 2                    |
-+| `{rs4}`            | operand suffix - register stride 4                    |
-+| `r/m8`             | register unsized memory 8-bit                         |
-+| `r/m16`            | register unsized memory 16-bit                        |
-+| `r/m32`            | register unsized memory 32-bit                        |
-+| `r/m64`            | register unsized memory 64-bit                        |
-+| `k/m8`             | mask register memory 8-bit                            |
-+| `k/m16`            | mask register memory 16-bit                           |
-+| `k/m32`            | mask register memory 32-bit                           |
-+| `k/m64`            | mask register memory 64-bit                           |
-+| `bnd/m64`          | bound register memory 64-bit                          |
-+| `bnd/m128`         | bound register memory 128-bit                         |
-+| `rw/mw`            | register or memory 16/32/64-bit (word size)           |
-+| `r8/m8`            | 8-bit register 8-bit memory                           |
-+| `r?/m?`            | N-bit register N-bit memory                           |
-+| `mm/m?`            | 64-bit vector N-bit memory                            |
-+| `xmm/m?`           | 128-bit vector N-bit memory                           |
-+| `ymm/m?`           | 256-bit vector N-bit memory                           |
-+| `zmm/m?`           | 512-bit vector N-bit memory                           |
-+| `xmm/m?/m?bcst`    | 128-bit vector N-bit memory N-bit broadcast           |
-+| `ymm/m?/m?bcst`    | 256-bit vector N-bit memory N-bit broadcast           |
-+| `zmm/m?/m?bcst`    | 512-bit vector N-bit memory N-bit broadcast           |
-+| `vm32x`            | 32-bit vector memory in xmm                           |
-+| `vm32y`            | 32-bit vector memory in ymm                           |
-+| `vm32z`            | 32-bit vector memory in zmm                           |
-+| `vm64x`            | 64-bit vector memory in xmm                           |
-+| `vm64y`            | 64-bit vector memory in ymm                           |
-+| `vm64z`            | 64-bit vector memory in zmm                           |
-+| `st0`              | implicit register st0                                 |
-+| `st1`              | implicit register st1                                 |
-+| `es`               | implicit segment es                                   |
-+| `cs`               | implicit segment cs                                   |
-+| `ss`               | implicit segment ss                                   |
-+| `ds`               | implicit segment ds                                   |
-+| `fs`               | implicit segment fs                                   |
-+| `gs`               | implicit segment gs                                   |
-+| `aw`               | implicit register (ax/eax/rax)                        |
-+| `cw`               | implicit register (cx/ecx/rcx)                        |
-+| `dw`               | implicit register (dx/edx/rdx)                        |
-+| `bw`               | implicit register (bx/ebx/rbx)                        |
-+| `pa`               | implicit indirect register (ax/eax/rax)               |
-+| `pc`               | implicit indirect register (cx/ecx/rcx)               |
-+| `pd`               | implicit indirect register (dx/edx/rdx)               |
-+| `pb`               | implicit indirect register (bx/ebx/rbx)               |
-+| `psi`              | implicit indirect register (si/esi/rsi)               |
-+| `pdi`              | implicit indirect register (di/edi/rdi)               |
-+| `xmm0`             | implicit register xmm0                                |
-+| `xmm0_7`           | implicit registers xmm0-xmm7                          |
-+| `1`                | constant 1                                            |
-+| `ib`               | 8-bit immediate                                       |
-+| `iw`               | 16-bit or 32-bit immediate (mode + operand size)      |
-+| `iwd`              | 16-bit or 32-bit immediate (mode)                     |
-+| `id`               | 32-bit immediate                                      |
-+| `iq`               | 64-bit immediate                                      |
-+| `rel8`             | 8-bit displacement                                    |
-+| `relw`             | 6-bit or 32-bit displacement (mode + operand size)    |
-+| `moffs`            | indirect memory offset                                |
-+| `far16/16`         | 16-bit seg 16-bit far displacement                    |
-+| `far16/32`         | 16-bit seg 32-bit far displacement                    |
-+| `memfar16/16`      | indirect 16-bit seg 16-bit far displacement           |
-+| `memfar16/32`      | indirect 16-bit seg 32-bit far displacement           |
-+| `memfar16/64`      | indirect 16-bit seg 64-bit far displacement           |
++x86_map_str x86_map_names[] =
++{
++    { x86_map_map6,            "map6"              },
++    { x86_map_map5,            "map5"              },
++    { x86_map_map4,            "map4"              },
++    { x86_map_0f3a,            "0f3a"              },
++    { x86_map_0f38,            "0f38"              },
++    { x86_map_0f,              "0f"                },
++};
 +
-+Appendix B - Operand Order
-+==========================
++x86_map_str x86_ord_names[] =
++{
++    { x86_ord_rflags,           "rflags"           },
++    { x86_ord_mxcsr,            "mxcsr"            },
++    { x86_ord_xmm0_7,           "xmm0_7"           },
++    { x86_ord_xmm0,             "xmm0"             },
++    { x86_ord_seg,              "seg"              },
++    { x86_ord_stx,              "stx"              },
++    { x86_ord_st0,              "st0"              },
++    { x86_ord_rdi,              "rdi"              },
++    { x86_ord_rsi,              "rsi"              },
++    { x86_ord_rbp,              "rbp"              },
++    { x86_ord_rsp,              "rsp"              },
++    { x86_ord_rbx,              "rbx"              },
++    { x86_ord_rdx,              "rdx"              },
++    { x86_ord_rcx,              "rcx"              },
++    { x86_ord_rax,              "rax"              },
++    { x86_ord_one,              "one"              },
++    { x86_ord_ime,              "ime"              },
++    { x86_ord_is4,              "is4"              },
++    { x86_ord_sib,              "sib"              },
++    { x86_ord_vec,              "vec"              },
++    { x86_ord_opr,              "opr"              },
++    { x86_ord_mrm,              "mrm"              },
++    { x86_ord_reg,              "reg"              },
++    { x86_ord_imm,              "imm"              },
++    { x86_ord_rwi,              "rwi"              },
++    { x86_ord_wi,               "wi"               },
++    { x86_ord_ri,               "ri"               },
++    { x86_ord_rw,               "rw"               },
++    { x86_ord_i,                "i"                },
++    { x86_ord_r,                "r"                },
++    { x86_ord_w,                "w"                },
++    { 0,                        NULL               },
++};
 +
-+This table outlines the mnemonics used to map operand field order
-+_(enum x86_ord)_.
++x86_map_str x86_opr_names[] =
++{
++    { x86_opr_bnd_mem,          "bnd/mem"          },
++    { x86_opr_k_m64,            "k/m64"            },
++    { x86_opr_k_m32,            "k/m32"            },
++    { x86_opr_k_m16,            "k/m16"            },
++    { x86_opr_k_m8,             "k/m8"             },
++    { x86_opr_vm64z,            "vm64z"            },
++    { x86_opr_vm64y,            "vm64y"            },
++    { x86_opr_vm64x,            "vm64x"            },
++    { x86_opr_vm32z,            "vm32z"            },
++    { x86_opr_vm32y,            "vm32y"            },
++    { x86_opr_vm32x,            "vm32x"            },
++    { x86_opr_rw_mw,            "rw/mw"            },
++    { x86_opr_r64_m64,          "r64/m64"          },
++    { x86_opr_r64_m32,          "r64/m32"          },
++    { x86_opr_r64_m16,          "r64/m16"          },
++    { x86_opr_r64_m8,           "r64/m8"           },
++    { x86_opr_r32_m32,          "r32/m32"          },
++    { x86_opr_r32_m16,          "r32/m16"          },
++    { x86_opr_r32_m8,           "r32/m8"           },
++    { x86_opr_r16_m16,          "r16/m16"          },
++    { x86_opr_r16_m8,           "r16/m8"           },
++    { x86_opr_r8_m8,            "r8/m8"            },
++    { x86_opr_zmm_m512_m64bcst, "zmm/m512/m64bcst" },
++    { x86_opr_zmm_m512_m32bcst, "zmm/m512/m32bcst" },
++    { x86_opr_zmm_m512_m16bcst, "zmm/m512/m16bcst" },
++    { x86_opr_ymm_m256_m64bcst, "ymm/m256/m64bcst" },
++    { x86_opr_ymm_m256_m32bcst, "ymm/m256/m32bcst" },
++    { x86_opr_ymm_m256_m16bcst, "ymm/m256/m16bcst" },
++    { x86_opr_xmm_m128_m64bcst, "xmm/m128/m64bcst" },
++    { x86_opr_xmm_m128_m32bcst, "xmm/m128/m32bcst" },
++    { x86_opr_xmm_m128_m16bcst, "xmm/m128/m16bcst" },
++    { x86_opr_xmm_m64_m32bcst,  "xmm/m64/m32bcst"  },
++    { x86_opr_xmm_m64_m16bcst,  "xmm/m64/m16bcst"  },
++    { x86_opr_xmm_m32_m16bcst,  "xmm/m32/m16bcst"  },
++    { x86_opr_zmm_m512,         "zmm/m512"         },
++    { x86_opr_ymm_m256,         "ymm/m256"         },
++    { x86_opr_xmm_m128,         "xmm/m128"         },
++    { x86_opr_xmm_m64,          "xmm/m64"          },
++    { x86_opr_xmm_m32,          "xmm/m32"          },
++    { x86_opr_xmm_m16,          "xmm/m16"          },
++    { x86_opr_xmm_m8,           "xmm/m8"           },
++    { x86_opr_mm_m64,           "mm/m64"           },
++    { x86_opr_mm_m32,           "mm/m32"           },
++    { x86_opr_mp,               "mp"               },
++    { x86_opr_mw,               "mw"               },
++    { x86_opr_vm64,             "vm64"             },
++    { x86_opr_vm32,             "vm32"             },
++    { x86_opr_r_m64,            "r/m64"            },
++    { x86_opr_r_m32,            "r/m32"            },
++    { x86_opr_r_m16,            "r/m16"            },
++    { x86_opr_r_m8,             "r/m8"             },
++    { x86_opr_m64bcst,          "m64bcst"          },
++    { x86_opr_m32bcst,          "m32bcst"          },
++    { x86_opr_m16bcst,          "m16bcst"          },
++    { x86_opr_mib,              "mib"              },
++    { x86_opr_m384,             "m384"             },
++    { x86_opr_m80,              "m80"              },
++    { x86_opr_m512,             "m512"             },
++    { x86_opr_m256,             "m256"             },
++    { x86_opr_m128,             "m128"             },
++    { x86_opr_m64,              "m64"              },
++    { x86_opr_m32,              "m32"              },
++    { x86_opr_m16,              "m16"              },
++    { x86_opr_m8,               "m8"               },
++    { x86_opr_seg_gs,           "gs"               },
++    { x86_opr_seg_fs,           "fs"               },
++    { x86_opr_seg_ds,           "ds"               },
++    { x86_opr_seg_ss,           "ss"               },
++    { x86_opr_seg_cs,           "cs"               },
++    { x86_opr_seg_es,           "es"               },
++    { x86_opr_reg_xmm0_7,       "xmm0_7"           },
++    { x86_opr_reg_xmm0,         "xmm0"             },
++    { x86_opr_reg_pdi,          "pdi"              },
++    { x86_opr_reg_psi,          "psi"              },
++    { x86_opr_reg_pb,           "pb"               },
++    { x86_opr_reg_pd,           "pd"               },
++    { x86_opr_reg_pc,           "pc"               },
++    { x86_opr_reg_pa,           "pa"               },
++    { x86_opr_reg_bw,           "bw"               },
++    { x86_opr_reg_dw,           "dw"               },
++    { x86_opr_reg_cw,           "cw"               },
++    { x86_opr_reg_aw,           "aw"               },
++    { x86_opr_reg_rbx,          "rbx"              },
++    { x86_opr_reg_rdx,          "rdx"              },
++    { x86_opr_reg_rcx,          "rcx"              },
++    { x86_opr_reg_rax,          "rax"              },
++    { x86_opr_reg_ebx,          "ebx"              },
++    { x86_opr_reg_edx,          "edx"              },
++    { x86_opr_reg_ecx,          "ecx"              },
++    { x86_opr_reg_eax,          "eax"              },
++    { x86_opr_reg_bx,           "bx"               },
++    { x86_opr_reg_dx,           "dx"               },
++    { x86_opr_reg_cx,           "cx"               },
++    { x86_opr_reg_ax,           "ax"               },
++    { x86_opr_reg_cl,           "cl"               },
++    { x86_opr_reg_al,           "al"               },
++    { x86_opr_reg_st0,          "st0"              },
++    { x86_opr_reg_v0,           "v0"               },
++    { x86_opr_reg_ah,           "ah"               },
++    { x86_opr_reg_di,           "di"               },
++    { x86_opr_reg_si,           "si"               },
++    { x86_opr_reg_d,            "d"                },
++    { x86_opr_reg_c,            "c"                },
++    { x86_opr_reg_a,            "a"                },
++    { x86_opr_memfar16_64,      "memfar16:64"      },
++    { x86_opr_memfar16_32,      "memfar16:32"      },
++    { x86_opr_memfar16_16,      "memfar16:16"      },
++    { x86_opr_far16_32,         "far16:32"         },
++    { x86_opr_far16_16,         "far16:16"         },
++    { x86_opr_relw,             "relw"             },
++    { x86_opr_rel8,             "rel8"             },
++    { x86_opr_moffs,            "moffs"            },
++    { x86_opr_1,                "1"                },
++    { x86_opr_zmm,              "zmm"              },
++    { x86_opr_ymm,              "ymm"              },
++    { x86_opr_xmm,              "xmm"              },
++    { x86_opr_mm,               "mm"               },
++    { x86_opr_ra,               "ra"               },
++    { x86_opr_rw,               "rw"               },
++    { x86_opr_r64,              "r64"              },
++    { x86_opr_r32,              "r32"              },
++    { x86_opr_r16,              "r16"              },
++    { x86_opr_r8,               "r8"               },
++    { x86_opr_iw,               "iw"               },
++    { x86_opr_iwd,              "iwd"              },
++    { x86_opr_i64,              "i64"              },
++    { x86_opr_i32,              "i32"              },
++    { x86_opr_i16,              "i16"              },
++    { x86_opr_ib,               "ib"               },
++    { x86_opr_bnd,              "bnd"              },
++    { x86_opr_dreg,             "dreg"             },
++    { x86_opr_creg,             "creg"             },
++    { x86_opr_seg,              "seg"              },
++    { x86_opr_k,                "k"                },
++    { x86_opr_st,               "st"               },
++    { x86_opr_mmx,              "mmx"              },
++    { x86_opr_vec,              "vec"              },
++    { x86_opr_reg,              "reg"              },
++    { x86_opr_imm,              "imm"              },
++    { x86_opr_bcst,             "bcst"             },
++    { x86_opr_mem,              "mem"              },
++    { x86_opr_flag_er,          "{er}"             },
++    { x86_opr_flag_k,           "{k}"              },
++    { x86_opr_flag_sae,         "{sae}"            },
++    { x86_opr_flag_z,           "{z}"              },
++    { x86_opr_flag_rs2,         "{rs2}"            },
++    { x86_opr_flag_rs4,         "{rs4}"            },
++    { x86_opr_f64x8,            "/f64x8"           },
++    { x86_opr_f64x4,            "/f64x4"           },
++    { x86_opr_f64x2,            "/f64x2"           },
++    { x86_opr_f64x1,            "/f64x1"           },
++    { x86_opr_f32x16,           "/f32x16"          },
++    { x86_opr_f32x8,            "/f32x8"           },
++    { x86_opr_f32x4,            "/f32x4"           },
++    { x86_opr_f32x2,            "/f32x2"           },
++    { x86_opr_f32x1,            "/f32x1"           },
++    { x86_opr_f16x32,           "/f16x32"          },
++    { x86_opr_f16x16,           "/f16x16"          },
++    { x86_opr_f16x8,            "/f16x8"           },
++    { x86_opr_f16x4,            "/f16x4"           },
++    { x86_opr_f16x2,            "/f16x2"           },
++    { x86_opr_f16x1,            "/f16x1"           },
++    { x86_opr_f8x64,            "/f8x64"           },
++    { x86_opr_f8x32,            "/f8x32"           },
++    { x86_opr_f8x16,            "/f8x16"           },
++    { x86_opr_f8x8,             "/f8x8"            },
++    { x86_opr_f8x4,             "/f8x4"            },
++    { x86_opr_f8x2,             "/f8x2"            },
++    { x86_opr_f8x1,             "/f8x1"            },
++    { x86_opr_i512x1,           "/i512x1"          },
++    { x86_opr_i256x2,           "/i256x2"          },
++    { x86_opr_i256x1,           "/i256x1"          },
++    { x86_opr_i128x4,           "/i128x4"          },
++    { x86_opr_i128x2,           "/i128x2"          },
++    { x86_opr_i128x1,           "/i128x1"          },
++    { x86_opr_i64x8,            "/i64x8"           },
++    { x86_opr_i64x4,            "/i64x4"           },
++    { x86_opr_i64x2,            "/i64x2"           },
++    { x86_opr_i64x1,            "/i64x1"           },
++    { x86_opr_i32x16,           "/i32x16"          },
++    { x86_opr_i32x8,            "/i32x8"           },
++    { x86_opr_i32x4,            "/i32x4"           },
++    { x86_opr_i32x2,            "/i32x2"           },
++    { x86_opr_i32x1,            "/i32x1"           },
++    { x86_opr_i16x32,           "/i16x32"          },
++    { x86_opr_i16x16,           "/i16x16"          },
++    { x86_opr_i16x8,            "/i16x8"           },
++    { x86_opr_i16x4,            "/i16x4"           },
++    { x86_opr_i16x2,            "/i16x2"           },
++    { x86_opr_i16x1,            "/i16x1"           },
++    { x86_opr_i8x64,            "/i8x64"           },
++    { x86_opr_i8x32,            "/i8x32"           },
++    { x86_opr_i8x16,            "/i8x16"           },
++    { x86_opr_i8x8,             "/i8x8"            },
++    { x86_opr_i8x4,             "/i8x4"            },
++    { x86_opr_i8x2,             "/i8x2"            },
++    { x86_opr_i8x1,             "/i8x1"            },
++    { 0,                        NULL               },
++};
 +
-+| mnemonic | description                                                     |
-+|:---------|:----------------------------------------------------------------|
-+| `imm`    | ib, iw, i16, i32, i64                                           |
-+| `reg`    | modrm.reg                                                       |
-+| `mrm`    | modrm.r/m                                                       |
-+| `sib`    | modrm.r/m sib                                                   |
-+| `is4`    | register from ib                                                |
-+| `ime`    | i8, i16 (special case for CALLF/JMPF/ENTER)                     |
-+| `vec`    | VEX.vvvv                                                        |
-+| `opr`    | opcode +r                                                       |
-+| `one`    | constant 1                                                      |
-+| `rax`    | constant al/ax/eax/rax                                          |
-+| `rcx`    | constant cl/cx/ecx/rcx                                          |
-+| `rdx`    | constant dl/dx/edx/rdx                                          |
-+| `rbx`    | constant bl/bx/ebx/rbx                                          |
-+| `rsp`    | constant sp/esp/rsp                                             |
-+| `rbp`    | constant bp/ebp/rbp                                             |
-+| `rsi`    | constant si/esi/rsi                                             |
-+| `rdi`    | constant di/edi/rdi                                             |
-+| `st0`    | constant st(0)                                                  |
-+| `stx`    | constant st(i)                                                  |
-+| `seg`    | constant segment                                                |
-+| `xmm0`   | constant xmm0                                                   |
-+| `xmm0_7` | constant xmm0-xmm7                                              |
-+| `mxcsr`  | constant mxcsr                                                  |
-+| `rflags` | constant rflags                                                 |
++x86_map_str x86_enc_names[] =
++{
++    { x86_enc_r_norexb,         " .norexb"         },
++    { x86_enc_r_lock,           " .lock"           },
++    { x86_enc_r_rep,            " .rep"            },
++    { x86_enc_s_a64,            " .a64"            },
++    { x86_enc_s_a32,            " .a32"            },
++    { x86_enc_s_a16,            " .a16"            },
++    { x86_enc_s_o64,            " .o64"            },
++    { x86_enc_s_o32,            " .o32"            },
++    { x86_enc_s_o16,            " .o16"            },
++    { x86_enc_j_i16,            " i16"             },
++    { x86_enc_j_ib,             " ib"              },
++    { x86_enc_i_i64,            " i64"             },
++    { x86_enc_i_i32,            " i32"             },
++    { x86_enc_i_i16,            " i16"             },
++    { x86_enc_i_iwd,            " iwd"             },
++    { x86_enc_i_iw,             " iw"              },
++    { x86_enc_i_ib,             " ib"              },
++    { x86_enc_f_opcode_r,       ""                 },
++    { x86_enc_f_opcode,         ""                 },
++    { x86_enc_f_modrm_n,        ""                 },
++    { x86_enc_f_modrm_r,        ""                 },
++    { x86_enc_o_opcode_r,       ""                 },
++    { x86_enc_t_evex,           ".evex"            },
++    { x86_enc_t_vex,            ".vex"             },
++    { x86_enc_t_lex,            ".lex"             },
++    { x86_enc_l_lig,            ".lig"             },
++    { x86_enc_l_512,            ".512"             },
++    { x86_enc_l_256,            ".256"             },
++    { x86_enc_l_128,            ".128"             },
++    { x86_enc_l_l1,             ".l1"              },
++    { x86_enc_l_l0,             ".l0"              },
++    { x86_enc_l_lz,             ".lz"              },
++    { x86_enc_p_rexw,           ".w"               },
++    { x86_enc_p_9b,             ".9b"              },
++    { x86_enc_p_f2,             ".f2"              },
++    { x86_enc_p_f3,             ".f3"              },
++    { x86_enc_p_66,             ".66"              },
++    { x86_enc_m_map6,           ".map6"            },
++    { x86_enc_m_map5,           ".map5"            },
++    { x86_enc_m_map4,           ".map4"            },
++    { x86_enc_m_0f3a,           ".0f3a"            },
++    { x86_enc_m_0f38,           ".0f38"            },
++    { x86_enc_m_0f,             ".0f"              },
++    { x86_enc_w_wig,            ".wig"             },
++    { x86_enc_w_ww,             ".ww"              },
++    { x86_enc_w_wx,             ".wx"              },
++    { x86_enc_w_wn,             ".wn"              },
++    { x86_enc_w_wb,             ".wb"              },
++    { x86_enc_w_w1,             ".w1"              },
++    { x86_enc_w_w0,             ".w0"              },
++    { 0,                        NULL               },
++};
 +
-+Appendix C - Instruction Encoding Prefixes
-+==========================================
++/*
++ *  string tables
++ */
 +
-+This table outlines the mnemonic prefixes used in instruction encodings
-+_(enum x86_enc)_.
++static size_t x86_name_map(x86_map_str *p, char * buf, size_t len, uint ord,
++    const char *sep)
++{
++    size_t count = 0;
++    int ret = 0;
++    for (;;) {
++        while (p->str != NULL) {
++            if (p->ord && (p->ord & ord) == p->ord) {
++                ord = ord & ~p->ord;
++                break;
++            }
++            p++;
++        }
++        if (p->str == NULL) break;
++        if (buf == NULL || len - count <= len) {
++            ret = snprintf(buf ? buf + count : NULL,
++                buf ? len - count : 0,
++                "%s%s", count == 0 ? "" : sep, p->str);
++            if (ret > 0) count += ret;
++        }
++    }
++    return count;
++}
 +
-+| mnemonic | description                                                     |
-+|:---------|:----------------------------------------------------------------|
-+| `lex`    | legacy instruction                                              |
-+| `vex`    | VEX encoded instruction                                         |
-+| `evex`   | EVEX encoded instruction                                        |
-+| `.lz`    | VEX encoding L=0 and L=1 is unassigned                          |
-+| `.l0`    | VEX encoding L=0                                                |
-+| `.l1`    | VEX encoding L=1                                                |
-+| `.lig`   | VEX/EVEX encoding ignores length L=any                          |
-+| `.128`   | VEX/EVEX encoding uses 128-bit vector L=0                       |
-+| `.256`   | VEX/EVEX encoding uses 256-bit vector L=1                       |
-+| `.512`   | EVEX encoding uses 512-bit vector L=2                           |
-+| `.66`    | prefix byte 66 is used for opcode mapping                       |
-+| `.f2`    | prefix byte f2 is used for opcode mapping                       |
-+| `.f3`    | prefix byte f3 is used for opcode mapping                       |
-+| `.9b`    | prefix byte 9b is used for opcode mapping (x87 only)            |
-+| `.0f`    | map 0f is used in opcode                                        |
-+| `.0f38`  | map 0f38 is used in opcode                                      |
-+| `.0f3a`  | map 0f3a is used in opcode                                      |
-+| `.wn`    | no register extension, fixed operand size                       |
-+| `.wb`    | register extension, fixed operand size                          |
-+| `.wx`    | REX and/or operand size extension, optional 66 or REX.W0/W1     |
-+| `.ww`    | REX and/or operand size extension, optional 66 and REX.WIG      |
-+| `.w0`    | LEX/VEX/EVEX optional REX W0 with operand size used in opcode   |
-+| `.w1`    | LEX/VEX/EVEX mandatory REX W1 with operand size used in opcode  |
-+| `.wig`   | VEX/EVEX encoding width ignored                                 |
++size_t x86_mode_name(char *buf, size_t len, uint mode, const char *sep)
++{
++    return x86_name_map(x86_mode_names, buf, len, mode, sep);
++}
 +
-+Appendix D - Instruction Encoding Suffixes
-+==========================================
++size_t x86_map_name(char *buf, size_t len, uint mode, const char *sep)
++{
++    return x86_name_map(x86_map_names, buf, len, mode, sep);
++}
 +
-+This table outlines the mnemonic suffixes used in instruction encodings
-+_(enum x86_enc)_.
++size_t x86_ord_name(char *buf, size_t len, uint ord, const char *sep)
++{
++    return x86_name_map(x86_ord_names, buf, len, ord, sep);
++}
 +
-+| mnemonic | description                                                     |
-+|:---------|:----------------------------------------------------------------|
-+| `/r`     | ModRM byte                                                      |
-+| `/0../7` | ModRM byte with 'r' field used for functions 0 to 7             |
-+| `XX+r`   | opcode byte with 3-bit register added to the opcode             |
-+| `XX`     | opcode byte                                                     |
-+| `ib`     | 8-bit immediate                                                 |
-+| `iw`     | 16-bit or 32-bit immediate (real mode XOR operand size)         |
-+| `i16`    | 16-bit immediate                                                |
-+| `i32`    | 32-bit immediate                                                |
-+| `i64`    | 64-bit immediate                                                |
-+| `o16`    | encoding uses prefix 66 in 32-bit and 64-bit modes              |
-+| `o32`    | encoding uses prefix 66 in 16-bit mode                          |
-+| `o64`    | encoding is used exclusively in 64-bit mode with REX.W=1        |
-+| `a16`    | encoding uses prefix 67 in 32-bit and 64-bit modes              |
-+| `a32`    | encoding uses prefix 67 in 16-bit mode                          |
-+| `a64`    | encoding is used exclusively in 64-bit mode                     |
-+| `lock`   | memory operand encodings can be used with the LOCK prefix       |
-+| `rep`    | string instructions that can be used with the REP prefix        |
++size_t x86_opr_name(char *buf, size_t len, uint opr)
++{
++    return x86_name_map(x86_opr_names, buf, len, opr, "");
++}
 +
-+Appendix E - Instruction Synthesis Notes
-+========================================
++size_t x86_enc_name(char *buf, size_t len, uint enc)
++{
++    return x86_name_map(x86_enc_names, buf, len, enc, "");
++}
 +
-+The `.wx` and `.ww` mnemonics are used to synthesize prefix combinations:
++const char *x86_reg_name(uint reg)
++{
++    return (reg < 512) ? x86_reg_names[reg] : "invalid";
++}
 +
-+- `.wx` labels opcodes with _default 32-bit operand size in 64-bit mode_
-+  to synthesize 16/32/64-bit versions using REX and operand size prefix,
-+  or in 16/32-bit modes synthesizes 16/32-bit versions using only the
-+  operand size prefix. REX is used for register extension on opcodes
-+  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
-+- `.ww` labels opcodes with _default 64-bit operand size in 64-bit mode_
-+  to synthesize 16/64-bit versions using only the operand size prefix,
-+  or in 16/32-bit modes. synthesizes 16/32-bit versions using only the
-+  operand size prefix. REX is used for register extension on opcodes
-+  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
++size_t x86_ord_mnem(char *buf, size_t len, const ushort *ord)
++{
++    const char codes[8] = " -irmvo ";
++    size_t count = 0;
++    for (size_t i = 0; i < array_size(x86_ord_table[0].ord) && ord[i]; i++) {
++        uint type = x86_ord_type_val(ord[i]);
++        if (buf && count < len) {
++            buf[count++] = codes[type];
++        }
++    }
++    buf[count] = '\0';
++    return count;
++}
++
++const char *x86_table_type_name(uint type)
++{
++    switch (type) {
++    case x86_table_none: return "none";
++    case x86_table_lex: return "lex";
++    case x86_table_vex: return "vex";
++    case x86_table_evex: return "evex";
++    default: return "";
++    }
++}
++
++const char *x86_table_map_name(uint map)
++{
++    switch (map) {
++    case x86_map_none: return "";
++    case x86_map_0f: return "0f";
++    case x86_map_0f38: return "0f38";
++    case x86_map_0f3a: return "0f3a";
++    case x86_map_map4: return "map4";
++    case x86_map_map5: return "map5";
++    case x86_map_map6: return "map6";
++    default: return "";
++    }
++}
++
++const char *x86_table_prefix_name(uint prefix)
++{
++    switch (prefix) {
++    case x86_pfx_66: return "66";
++    case x86_pfx_f3: return "f3";
++    case x86_pfx_f2: return "f2";
++    case x86_pfx_9b: return "9b";
++    case x86_pfx_66 | x86_pfx_rexw: return "66+w";
++    case x86_pfx_f3 | x86_pfx_rexw: return "f3+w";
++    case x86_pfx_f2 | x86_pfx_rexw: return "f2+w";
++    case x86_pfx_9b | x86_pfx_rexw: return "9b+w";
++    default: return "";
++    }
++}
++
++/*
++ * string formatting
++ */
++
++static const char dd[200] = {
++    0x30, 0x30, 0x30, 0x31, 0x30, 0x32, 0x30, 0x33, 0x30, 0x34,
++    0x30, 0x35, 0x30, 0x36, 0x30, 0x37, 0x30, 0x38, 0x30, 0x39,
++    0x31, 0x30, 0x31, 0x31, 0x31, 0x32, 0x31, 0x33, 0x31, 0x34,
++    0x31, 0x35, 0x31, 0x36, 0x31, 0x37, 0x31, 0x38, 0x31, 0x39,
++    0x32, 0x30, 0x32, 0x31, 0x32, 0x32, 0x32, 0x33, 0x32, 0x34,
++    0x32, 0x35, 0x32, 0x36, 0x32, 0x37, 0x32, 0x38, 0x32, 0x39,
++    0x33, 0x30, 0x33, 0x31, 0x33, 0x32, 0x33, 0x33, 0x33, 0x34,
++    0x33, 0x35, 0x33, 0x36, 0x33, 0x37, 0x33, 0x38, 0x33, 0x39,
++    0x34, 0x30, 0x34, 0x31, 0x34, 0x32, 0x34, 0x33, 0x34, 0x34,
++    0x34, 0x35, 0x34, 0x36, 0x34, 0x37, 0x34, 0x38, 0x34, 0x39,
++    0x35, 0x30, 0x35, 0x31, 0x35, 0x32, 0x35, 0x33, 0x35, 0x34,
++    0x35, 0x35, 0x35, 0x36, 0x35, 0x37, 0x35, 0x38, 0x35, 0x39,
++    0x36, 0x30, 0x36, 0x31, 0x36, 0x32, 0x36, 0x33, 0x36, 0x34,
++    0x36, 0x35, 0x36, 0x36, 0x36, 0x37, 0x36, 0x38, 0x36, 0x39,
++    0x37, 0x30, 0x37, 0x31, 0x37, 0x32, 0x37, 0x33, 0x37, 0x34,
++    0x37, 0x35, 0x37, 0x36, 0x37, 0x37, 0x37, 0x38, 0x37, 0x39,
++    0x38, 0x30, 0x38, 0x31, 0x38, 0x32, 0x38, 0x33, 0x38, 0x34,
++    0x38, 0x35, 0x38, 0x36, 0x38, 0x37, 0x38, 0x38, 0x38, 0x39,
++    0x39, 0x30, 0x39, 0x31, 0x39, 0x32, 0x39, 0x33, 0x39, 0x34,
++    0x39, 0x35, 0x39, 0x36, 0x39, 0x37, 0x39, 0x38, 0x39, 0x39
++};
++
++static inline size_t utoa_u32(uint n, char *s)
++{
++    const uchar utodb_u32[32] = {
++         9,  9,  9,  8,  8,  8,  7,  7,
++         7,  6,  6,  6,  6,  5,  5,  5,
++         4,  4,  4,  3,  3,  3,  3,  2,
++         2,  2,  1,  1,  1,  1,  1,  1,
++    };
++    const uint utodd_u32[10] = {
++        999999999u,  99999999u,
++          9999999u,    999999u,
++            99999u,      9999u,
++              999u,        99u,
++                9u,         0u,
++    };
++    uint x1, x2, a1, a2, a3, b1, b2;
++    uint dig = n == 0 ? 1 : utodb_u32[clz32(n)];
++    dig += n > utodd_u32[9 - dig];
++    x1 = n % 1000000; x2 = n / 1000000;
++    switch (dig) {
++    case 9:
++        b2 = x2 / 100 % 100;
++        *s++ = dd[b2 * 2 + 1];
++        goto l8;
++    case 7:
++        b1 = x2 % 100;
++        *s++ = dd[b1 * 2 + 1];
++        goto l6;
++    case 5:
++        a3 = x1 / 10000;
++        *s++ = dd[a3 * 2 + 1];
++        goto l4;
++    case 3:
++        a2 = x1 / 100 % 100;
++        *s++ = dd[a2 * 2 + 1];
++        goto l2;
++    case 1:
++        a1 = x1 % 100;
++        *s++ = dd[a1 * 2 + 1];
++        break;
++    case 10:
++        b2 = x2 / 100 % 100;
++        *s++ = dd[b2 * 2];
++        *s++ = dd[b2 * 2 + 1];
++        /* fallthrough */
++    case 8:  l8:
++        b1 = x2 % 100;
++        *s++ = dd[b1 * 2];
++        *s++ = dd[b1 * 2 + 1];
++        /* fallthrough */
++    case 6:  l6:
++        a3 = x1 / 10000;
++        *s++ = dd[a3 * 2];
++        *s++ = dd[a3 * 2 + 1];
++        /* fallthrough */
++    case 4:  l4:
++        a2 = x1 / 100 % 100;
++        *s++ = dd[a2 * 2];
++        *s++ = dd[a2 * 2 + 1];
++        /* fallthrough */
++    case 2:  l2:
++        a1 = x1 % 100;
++        *s++ = dd[a1 * 2];
++        *s++ = dd[a1 * 2 + 1];
++        break;
++    }
++    *s++ = '\0';
++    return dig;
++}
++
++static inline size_t utoa_u64(ullong n, char *s)
++{
++    const uchar utodb_u64[64] = {
++        19, 18, 18, 18, 18, 17, 17, 17,
++        16, 16, 16, 15, 15, 15, 15, 14,
++        14, 14, 13, 13, 13, 12, 12, 12,
++        12, 11, 11, 11, 10, 10, 10,  9,
++         9,  9,  9,  8,  8,  8,  7,  7,
++         7,  6,  6,  6,  6,  5,  5,  5,
++         4,  4,  4,  3,  3,  3,  3,  2,
++         2,  2,  1,  1,  1,  1,  1,  1,
++    };
++    const ullong utodd_u64[20] = {
++        9999999999999999999llu,  999999999999999999llu,
++          99999999999999999llu,    9999999999999999llu,
++            999999999999999llu,      99999999999999llu,
++              9999999999999llu,        999999999999llu,
++                99999999999llu,          9999999999llu,
++                  999999999llu,            99999999llu,
++                    9999999llu,              999999llu,
++                      99999llu,                9999llu,
++                        999llu,                  99llu,
++                          9llu,                   0llu,
++    };
++    ullong x1, x2;
++    uint y1, y2, z1, z2, a1, a2, a3, b1, b2, b3, c1, c2, c3, d1;
++    uint dig = n == 0 ? 1 : utodb_u64[clz64(n)];
++    dig += n > utodd_u64[19 - dig];
++    x1 = n  % 1000000000000ll; x2 = n  / 1000000000000ll;
++    y1 = x1 % 1000000ll;       y2 = x1 / 1000000ll;
++    z1 = x2 % 1000000ll;       z2 = x2 / 1000000ll;
++    switch (dig) {
++    case 19:
++        d1 = z2 % 100;
++        *s++ = dd[d1 * 2 + 1];
++        goto l18;
++    case 17:
++        c3 = z1 / 10000;
++        *s++ = dd[c3 * 2 + 1];
++        goto l16;
++    case 15:
++        c2 = z1 / 100 % 100;
++        *s++ = dd[c2 * 2 + 1];
++        goto l14;
++    case 13:
++        c1 = z1 % 100;
++        *s++ = dd[c1 * 2 + 1];
++        goto l12;
++    case 11:
++        b3 = y2 / 10000;
++        *s++ = dd[b3 * 2 + 1];
++        goto l10;
++    case 9:
++        b2 = y2 / 100 % 100;
++        *s++ = dd[b2 * 2 + 1];
++        goto l8;
++    case 7:
++        b1 = y2 % 100;
++        *s++ = dd[b1 * 2 + 1];
++        goto l6;
++    case 5:
++        a3 = y1 / 10000;
++        *s++ = dd[a3 * 2 + 1];
++        goto l4;
++    case 3:
++        a2 = y1 / 100 % 100;
++        *s++ = dd[a2 * 2 + 1];
++        goto l2;
++    case 1:
++        a1 = y1 % 100;
++        *s++ = dd[a1 * 2 + 1];
++        break;
++    case 20:
++        d1 = z2 % 100;
++        *s++ = dd[d1 * 2];
++        *s++ = dd[d1 * 2 + 1];
++        /* fallthrough */
++    case 18: l18:
++        c3 = z1 / 10000;
++        *s++ = dd[c3 * 2];
++        *s++ = dd[c3 * 2 + 1];
++        /* fallthrough */
++    case 16: l16:
++        c2 = z1 / 100 % 100;
++        *s++ = dd[c2 * 2];
++        *s++ = dd[c2 * 2 + 1];
++        /* fallthrough */
++    case 14: l14:
++        c1 = z1 % 100;
++        *s++ = dd[c1 * 2];
++        *s++ = dd[c1 * 2 + 1];
++        /* fallthrough */
++    case 12: l12:
++        b3 = y2 / 10000;
++        *s++ = dd[b3 * 2];
++        *s++ = dd[b3 * 2 + 1];
++        /* fallthrough */
++    case 10: l10:
++        b2 = y2 / 100 % 100;
++        *s++ = dd[b2 * 2];
++        *s++ = dd[b2 * 2 + 1];
++        /* fallthrough */
++    case 8:  l8:
++        b1 = y2 % 100;
++        *s++ = dd[b1 * 2];
++        *s++ = dd[b1 * 2 + 1];
++        /* fallthrough */
++    case 6:  l6:
++        a3 = y1 / 10000;
++        *s++ = dd[a3 * 2];
++        *s++ = dd[a3 * 2 + 1];
++        /* fallthrough */
++    case 4:  l4:
++        a2 = y1 / 100 % 100;
++        *s++ = dd[a2 * 2];
++        *s++ = dd[a2 * 2 + 1];
++        /* fallthrough */
++    case 2:  l2:
++        a1 = y1 % 100;
++        *s++ = dd[a1 * 2];
++        *s++ = dd[a1 * 2 + 1];
++        break;
++    }
++    *s++ = '\0';
++    return dig;
++}
++
++static const char *hexdigits = "0123456789abcdef";
++
++static size_t xvappend_char(char *restrict out, size_t o, size_t n, char c)
++{
++    if (out && o < n) {
++        out[o] = c;
++    }
++    return o + 1;
++}
++
++static size_t xvappend_hex_u32(char *restrict out, size_t o, size_t n,
++    uint val)
++{
++    size_t dig = (32 - clz32(val) + 3) / 4;
++    for (size_t i = dig - 1; i < dig; i--) {
++        o = xvappend_char(out, o, n, hexdigits[(val >> (i * 4)) & 0xf]);
++    }
++    return o;
++}
++
++static size_t xvappend_hex_u64(char *restrict out, size_t o, size_t n,
++    ullong val)
++{
++    size_t dig = (64 - clz64(val) + 3) / 4;
++    for (size_t i = dig - 1; i < dig; i--) {
++        o = xvappend_char(out, o, n, hexdigits[(val >> (i * 4)) & 0xf]);
++    }
++    return o;
++}
++
++static int xvsnprintf(char *restrict out, size_t n, const char* fmt,
++    va_list vl)
++{
++    int w = -1, s = 0, c;
++    size_t o = 0, l;
++    const char *v;
++    char t[21];
++    for ( ; *fmt; fmt++) {
++        if (w >= 0) {
++            switch (*fmt) {
++            case 'l':
++                w = w < 2 ? w + 1 : w;
++                break;
++            case 'd':
++                s = 1;
++                /* fallthrough */
++            case 'u':
++                if (w == 0 || sizeof(long) == 4) {
++                    int val = va_arg(vl, int);
++                    if (s && val < 0) {
++                        val = -val;
++                        o = xvappend_char(out, o, n, '-');
++                    }
++                    l = utoa_u32(val, t);
++                }
++                else if (w == 2 || sizeof(long) == 8) {
++                    llong val = va_arg(vl, llong);
++                    if (s && val < 0) {
++                        val = -val;
++                        o = xvappend_char(out, o, n, '-');
++                    }
++                    l = utoa_u64(val, t);
++                }
++                l = n - o < l ? n - o : l;
++                memcpy(out + o, t, l);
++                o += l;
++                w = -1;
++                s = 0;
++                break;
++            case 'p':
++                o = xvappend_char(out, o, n, '0');
++                o = xvappend_char(out, o, n, 'x');
++                w = 2;
++                /* fallthrough */
++            case 'x':
++                if (w == 0 || sizeof(long) == 4) {
++                    int val = va_arg(vl, int);
++                    o = xvappend_hex_u32(out, o, n, val);
++                }
++                else if (w == 2 || sizeof(long) == 8) {
++                    llong val = va_arg(vl, llong);
++                    o = xvappend_hex_u64(out, o, n, val);
++                }
++                w = -1;
++                break;
++            case 's':
++                v = va_arg(vl, const char *);
++                l = strlen(v);
++                memcpy(out + o, v, n - o < l ? n - o : l);
++                o += l;
++                w = -1;
++                break;
++            case 'c':
++                c = va_arg(vl, int);
++                o = xvappend_char(out, o, n, (char)c);
++                w = -1;
++                break;
++            }
++        }
++        else if (*fmt == '%') {
++            w = 0;
++        }
++        else {
++            o = xvappend_char(out, o, n, *fmt);
++        }
++    }
++    if (out) {
++        out[o < n ? o : n ? n - 1 : 0] = 0;
++    }
++    return o;
++}
++
++static inline int xsnprintf(char *out, size_t n, const char *fmt, ...)
++{
++    va_list vl;
++    va_start(vl, fmt);
++    int res = xvsnprintf(out, n, fmt, vl);
++    va_end(vl);
++    return res;
++}
++
++/*
++ *  metadata filters
++ */
++
++int x86_enc_filter_rex(x86_rex prefix, uint enc)
++{
++    uint lex =  (enc & x86_enc_t_mask) == x86_enc_t_lex;
++    uint ew0 =  (enc & x86_enc_w_mask) == x86_enc_w_w0;
++    uint ew1 =  (enc & x86_enc_w_mask) == x86_enc_w_w1;
++    uint ewn =  (enc & x86_enc_w_mask) == x86_enc_w_wn;
++    uint ewb =  (enc & x86_enc_w_mask) == x86_enc_w_wb;
++    uint eww =  (enc & x86_enc_w_mask) == x86_enc_w_ww;
++    uint ewx =  (enc & x86_enc_w_mask) == x86_enc_w_wx;
++    uint ewig = (enc & x86_enc_w_mask) == x86_enc_w_wig;
++    uint norexb = (enc & x86_enc_r_norexb) != 0;
++
++    uint w = (prefix.data[0] >> 3) & 1;
++
++    if (!lex) return -1;
++    if (norexb) return -1;
++
++    switch (w) {
++    case x86_vex_w0:
++        if (!(ew0 || ewig || ewn || ewb || eww || ewx)) return -1;
++        break;
++    case x86_vex_w1:
++        if (!(ew1 || ewig || ewn || ewb || eww || ewx)) return -1;
++        break;
++    }
++
++    return 0;
++}
++
++int x86_enc_filter_rex2(x86_rex2 prefix, uint enc)
++{
++    uint lex =  (enc & x86_enc_t_mask) == x86_enc_t_lex;
++    uint ew0 =  (enc & x86_enc_w_mask) == x86_enc_w_w0;
++    uint ew1 =  (enc & x86_enc_w_mask) == x86_enc_w_w1;
++    uint ewig = (enc & x86_enc_w_mask) == x86_enc_w_wig;
++    uint em =   (enc & x86_enc_m_mask) >> x86_enc_m_shift;
++
++    uint m = (prefix.data[0] >> 7) & 1;
++    uint w = (prefix.data[0] >> 3) & 1;
++
++    if (!lex || m != em) return -1;
++
++    switch (w) {
++    case x86_vex_w0: if (!(ew0 || ewig)) return -1; break;
++    case x86_vex_w1: if (!(ew1 || ewig)) return -1; break;
++    default: return -1;
++    }
++
++    return 0;
++}
++
++int x86_enc_filter_vex2(x86_vex2 prefix, uint enc)
++{
++    uint vex =  (enc & x86_enc_t_mask) == x86_enc_t_vex;
++    uint ew0 =  (enc & x86_enc_w_mask) == x86_enc_w_w0;
++    uint ewig = (enc & x86_enc_w_mask) == x86_enc_w_wig;
++    uint lz =   (enc & x86_enc_l_mask) == x86_enc_l_lz;
++    uint l0 =   (enc & x86_enc_l_mask) == x86_enc_l_l0;
++    uint l1 =   (enc & x86_enc_l_mask) == x86_enc_l_l1;
++    uint l128 = (enc & x86_enc_l_mask) == x86_enc_l_128;
++    uint l256 = (enc & x86_enc_l_mask) == x86_enc_l_256;
++    uint lig =  (enc & x86_enc_l_mask) == x86_enc_l_lig;
++    uint np =   (enc & x86_enc_p_mask) == x86_enc_p_none;
++    uint p66 =  (enc & x86_enc_p_mask) == x86_enc_p_66;
++    uint pf2 =  (enc & x86_enc_p_mask) == x86_enc_p_f2;
++    uint pf3 =  (enc & x86_enc_p_mask) == x86_enc_p_f3;
++    uint em =   (enc & x86_enc_m_mask) >> x86_enc_m_shift;
++
++    uint p = (prefix.data[0] >> 0) & 3;
++    uint l = (prefix.data[0] >> 2) & 1;
++
++    if (!vex || !(ew0 || ewig) || x86_map_0f != em) return -1;
++
++    switch (l) {
++    case x86_vex_l0: if (!(lig || lz || l0 || l128)) return -1; break;
++    case x86_vex_l1: if (!(lig || l1 || l256)) return -1; break;
++    default: return -1;
++    }
++
++    switch (p) {
++    case x86_pfx_none: if (!np) return -1; break;
++    case x86_pfx_66: if (!p66) return -1; break;
++    case x86_pfx_f2: if (!pf2) return -1; break;
++    case x86_pfx_f3: if (!pf3) return -1; break;
++    default: return -1;
++    }
++
++    return 0;
++}
++
++int x86_enc_filter_vex3(x86_vex3 prefix, uint enc)
++{
++    uint vex =  (enc & x86_enc_t_mask) == x86_enc_t_vex;
++    uint ew0 =  (enc & x86_enc_w_mask) == x86_enc_w_w0;
++    uint ew1 =  (enc & x86_enc_w_mask) == x86_enc_w_w1;
++    uint ewig = (enc & x86_enc_w_mask) == x86_enc_w_wig;
++    uint lz =   (enc & x86_enc_l_mask) == x86_enc_l_lz;
++    uint l0 =   (enc & x86_enc_l_mask) == x86_enc_l_l0;
++    uint l1 =   (enc & x86_enc_l_mask) == x86_enc_l_l1;
++    uint l128 = (enc & x86_enc_l_mask) == x86_enc_l_128;
++    uint l256 = (enc & x86_enc_l_mask) == x86_enc_l_256;
++    uint lig =  (enc & x86_enc_l_mask) == x86_enc_l_lig;
++    uint np =   (enc & x86_enc_p_mask) == x86_enc_p_none;
++    uint p66 =  (enc & x86_enc_p_mask) == x86_enc_p_66;
++    uint pf2 =  (enc & x86_enc_p_mask) == x86_enc_p_f2;
++    uint pf3 =  (enc & x86_enc_p_mask) == x86_enc_p_f3;
++    uint em =   (enc & x86_enc_m_mask) >> x86_enc_m_shift;
++
++    uint m = (prefix.data[0] >> 0) & 31;
++    uint w = (prefix.data[1] >> 7) & 1;
++    uint p = (prefix.data[1] >> 0) & 3;
++    uint l = (prefix.data[1] >> 2) & 1;
++
++    if (!vex || m != em) return -1;
++
++    switch (w) {
++    case x86_vex_w0: if (!(ew0 || ewig)) return -1; break;
++    case x86_vex_w1: if (!(ew1 || ewig)) return -1; break;
++    default: return -1;
++    }
++
++    switch (l) {
++    case x86_vex_l0: if (!(lig || lz || l0 || l128)) return -1; break;
++    case x86_vex_l1: if (!(lig || l1 || l256)) return -1; break;
++    default: return -1;
++    }
++
++    switch (p) {
++    case x86_pfx_none: if (!np) return -1; break;
++    case x86_pfx_66: if (!p66) return -1; break;
++    case x86_pfx_f2: if (!pf2) return -1; break;
++    case x86_pfx_f3: if (!pf3) return -1; break;
++    default: return -1;
++    }
++
++    return 0;
++}
++
++int x86_enc_filter_evex(x86_evex prefix, uint enc)
++{
++    uint evex = (enc & x86_enc_t_mask) == x86_enc_t_evex;
++    uint ew0 =  (enc & x86_enc_w_mask) == x86_enc_w_w0;
++    uint ew1 =  (enc & x86_enc_w_mask) == x86_enc_w_w1;
++    uint ewig = (enc & x86_enc_w_mask) == x86_enc_w_wig;
++    uint l128 = (enc & x86_enc_l_mask) == x86_enc_l_128;
++    uint l256 = (enc & x86_enc_l_mask) == x86_enc_l_256;
++    uint l512 = (enc & x86_enc_l_mask) == x86_enc_l_512;
++    uint lig =  (enc & x86_enc_l_mask) == x86_enc_l_lig;
++    uint np =   (enc & x86_enc_p_mask) == x86_enc_p_none;
++    uint p66 =  (enc & x86_enc_p_mask) == x86_enc_p_66;
++    uint pf2 =  (enc & x86_enc_p_mask) == x86_enc_p_f2;
++    uint pf3 =  (enc & x86_enc_p_mask) == x86_enc_p_f3;
++    uint em =   (enc & x86_enc_m_mask) >> x86_enc_m_shift;
++
++    uint m = (prefix.data[0] >> 0) & 7;
++    uint w = (prefix.data[1] >> 7) & 1;
++    uint p = (prefix.data[1] >> 0) & 3;
++    uint l = (prefix.data[2] >> 5) & 3;
++
++    if (!evex || m != em) return -1;
++
++    switch (w) {
++    case x86_vex_w0: if (!(ew0 || ewig)) return -1; break;
++    case x86_vex_w1: if (!(ew1 || ewig)) return -1; break;
++    default: return -1;
++    }
++
++    switch (l) {
++    case x86_vex_l0: if (!(lig || l128)) return -1; break;
++    case x86_vex_l1: if (!(lig || l256)) return -1; break;
++    case x86_vex_l2: if (!(lig || l512)) return -1; break;
++    default: return -1;
++    }
++
++    switch (p) {
++    case x86_pfx_none: if (!np) return -1; break;
++    case x86_pfx_66: if (!p66) return -1; break;
++    case x86_pfx_f2: if (!pf2) return -1; break;
++    case x86_pfx_f3: if (!pf3) return -1; break;
++    default: return -1;
++    }
++
++    return 0;
++}
++
++/*
++ *  table sorting
++ */
++
++static int x86_opc_data_compare_opcode(const void *p1, const void *p2)
++{
++    const x86_opc_data *op1 = x86_opc_table + *(size_t *)p1;
++    const x86_opc_data *op2 = x86_opc_table + *(size_t *)p2;
++
++    /* split into prefix and suffix */
++    uint mask = x86_enc_t_mask | x86_enc_p_mask | x86_enc_m_mask;
++    uint op1pre = op1->enc & mask;
++    uint op2pre = op2->enc & mask;
++    uint op1suf = op1->enc & ~mask;
++    uint op2suf = op2->enc & ~mask;
++
++    if (op1pre < op2pre) return -1;
++    if (op1pre > op2pre) return 1;
++    if (op1->opc[0] < op2->opc[0]) return -1;
++    if (op1->opc[0] > op2->opc[0]) return 1;
++    if (op1->opc[1] < op2->opc[1]) return -1;
++    if (op1->opc[1] > op2->opc[1]) return 1;
++    if (op1suf < op2suf) return -1;
++    if (op1suf > op2suf) return 1;
++    return 0;
++}
++
++static int x86_opc_data_compare_alpha(const void *p1, const void *p2)
++{
++    const x86_opc_data *op1 = x86_opc_table + *(size_t *)p1;
++    const x86_opc_data *op2 = x86_opc_table + *(size_t *)p2;
++    int alpha = strcmp(x86_op_names[op1->op], x86_op_names[op2->op]);
++    if (alpha == 0) return x86_opc_data_compare_opcode(p1, p2);
++    else return alpha;
++}
++
++static x86_table_idx x86_opc_table_index(size_t n)
++{
++    x86_table_idx tab = { n, g_malloc(sizeof(size_t) * n) };
++    for (size_t i = 0; i < tab.count; i++) tab.idx[i] = i;
++    return tab;
++}
++
++x86_table_idx x86_opc_table_identity(void)
++{
++    return x86_opc_table_index(x86_opc_table_size);
++}
++
++x86_table_idx x86_opc_table_sorted(x86_table_idx tab, uint sort)
++{
++    switch (sort) {
++    case x86_sort_none:
++        break;
++    case x86_sort_numeric:
++        qsort(tab.idx, tab.count, sizeof(size_t), x86_opc_data_compare_opcode);
++        break;
++    case x86_sort_alpha:
++        qsort(tab.idx, tab.count, sizeof(size_t), x86_opc_data_compare_alpha);
++        break;
++    }
++    return tab;
++}
++
++x86_table_idx x86_opc_table_filter(x86_table_idx tab, uint modes)
++{
++    size_t count = 0;
++    for (size_t i = 0; i < tab.count; i++) {
++        const x86_opc_data *d = x86_opc_table + tab.idx[i];
++        if (d->mode & modes) count++;
++    }
++    x86_table_idx newtab = { count, g_malloc(sizeof(size_t) * count) };
++    count = 0;
++    for (size_t i = 0; i < tab.count; i++) {
++        const x86_opc_data *d = x86_opc_table + tab.idx[i];
++        if (d->mode & modes) newtab.idx[count++] = i;
++    }
++    g_free(tab.idx);
++    return newtab;
++}
++
++static int x86_opc_data_compare_masked(const void *p1, const void *p2)
++{
++    x86_opc_data *om1 = (x86_opc_data *)p1;
++    x86_opc_data *om2 = (x86_opc_data *)p2;
++    uint enc1 = om1->enc, enc2 = om2->enc;
++    uint pre1 = enc1 & (x86_enc_t_mask | x86_enc_m_mask | x86_enc_prexw_mask);
++    uint pre2 = enc2 & (x86_enc_t_mask | x86_enc_m_mask | x86_enc_prexw_mask);
++    if (pre1 < pre2) return -1;
++    if (pre1 > pre2) return 1;
++    ushort mask_s = om1->opm_s & om2->opm_s;
++    if ((om1->opc_s & mask_s) < (om2->opc_s & mask_s)) return -1;
++    if ((om1->opc_s & mask_s) > (om2->opc_s & mask_s)) return 1;
++    /* suffix is unnecessary for matching opcodes because it contains format*/
++    return 0;
++}
++
++static int x86_opc_data_compare_build(const void *p1, const void *p2)
++{
++    x86_opc_data *om1 = (x86_opc_data *)p1;
++    x86_opc_data *om2 = (x86_opc_data *)p2;
++    uint enc1 = om1->enc, enc2 = om2->enc;
++    uint pre1 = enc1 & (x86_enc_t_mask | x86_enc_m_mask | x86_enc_prexw_mask);
++    uint pre2 = enc2 & (x86_enc_t_mask | x86_enc_m_mask | x86_enc_prexw_mask);
++    if (pre1 < pre2) return -1;
++    if (pre1 > pre2) return 1;
++    for (size_t i = 0; i < 2; i++) {
++        if (om1->opc[i] < om2->opc[i]) return -1;
++        if (om1->opc[i] > om2->opc[i]) return 1;
++        /* most specific mask first for fixed modrm */
++        if (om1->opm[i] < om2->opm[i]) return 1;
++        if (om1->opm[i] > om2->opm[i]) return -1;
++    }
++    uint suf1 = enc1 & ~(x86_enc_t_mask | x86_enc_m_mask | x86_enc_prexw_mask);
++    uint suf2 = enc2 & ~(x86_enc_t_mask | x86_enc_m_mask | x86_enc_prexw_mask);
++    if (suf1 < suf2) return -1;
++    if (suf1 > suf2) return 1;
++    return 0;
++}
++
++/*
++ *  table construction
++ */
++
++static x86_opc_prefix x86_table_make_prefix(const x86_opc_data *d,
++    const x86_opr_data *o, const x86_ord_data *p)
++{
++    x86_opc_prefix tp;
++    memset(&tp, 0, sizeof(tp));
++
++    /* extract prefix and synthesize width prefixes */
++    switch (x86_enc_type(d->enc)) {
++    case x86_enc_t_lex:
++    case x86_enc_t_vex:
++    case x86_enc_t_evex:
++        switch (d->enc & x86_enc_w_mask) {
++        case x86_enc_w_wig:
++        case x86_enc_w_wn:
++        case x86_enc_w_wb:
++        case x86_enc_w_w0: break;
++        case x86_enc_w_w1: tp.pfx = x86_enc_p_rexw; break;
++        case x86_enc_w_wx: tp.pfx_w = x86_enc_p_rexw; /* fallthrough */
++        case x86_enc_w_ww: tp.pfx_o = x86_enc_p_66; break;
++        }
++        break;
++     }
++
++    /* find register or memory operand mapping to modrm.rm field
++     * so that we can add mod=0b11 or mod!=0b11 to modrm mask */
++    tp.modfun = x86_enc_func(d->enc) == x86_enc_f_modrm_n;
++    for (size_t i = 0; i < array_size(o->opr) && o->opr[i]; i++) {
++        uint isreg = x86_opr_type_val(o->opr[i]) >= x86_opr_reg;
++        uint ismem = x86_opr_has_mem(o->opr[i]);
++        uint ismrm = x86_ord_type_val(p->ord[i]) == x86_ord_mrm;
++        if (ismrm) {
++            if (isreg && !ismem) {
++                tp.modreg = 1; /* mod == 0b11 */
++                break;
++            } else if (!isreg && ismem) {
++                tp.modmem = 1; /* mod != 0b11 */
++                break;
++            }
++        }
++    }
++
++    /* explict second opcode byte has mod == 0b11 */
++    if (d->opm[1] == 0xff && (d->opc[1] & 0xc0) == 0xc0 &&
++        !tp.modreg && !tp.modmem)
++    {
++        tp.modreg = 1;
++    }
++
++    return tp;
++}
++
++static void x86_build_prefix_clashes(x86_acc_idx *idx, x86_table_idx tab,
++    ullong *modfun, ullong *modmod)
++{
++    /*
++     * record modrm.reg /n or modrm.mod (reg or mem) usage
++     * so that opcodes with clashes can expand mod entries
++     */
++    for (size_t i = 0; i < tab.count; i++) {
++        const x86_opc_data *d = x86_opc_table + tab.idx[i];
++        const x86_opr_data *o = x86_opr_table + d->opr;
++        const x86_ord_data *p = x86_ord_table + d->ord;
++        x86_opc_prefix tp = x86_table_make_prefix(d, o, p);
++        uint type = x86_enc_type(d->enc) >> x86_enc_t_shift;
++        uint prefix = x86_enc_prefix(d->enc) >> x86_enc_p_shift;
++        uint map = x86_enc_map(d->enc) >> x86_enc_m_shift;
++        size_t tpm = x86_acc_page(type, prefix, map);
++        size_t x = (tpm << 8) | d->opc[0];
++        if (tp.modfun) {
++            x86_bitmap_set(modfun, x, 1);
++        }
++        if (tp.modreg || tp.modmem) {
++            x86_bitmap_set(modmod, x, 1);
++        }
++    }
++}
++
++static size_t x86_add_opc_data(x86_opc_data *op_map, size_t idx,
++    x86_opc_data rec, uint modreg, uint modmem, uint modcla)
++{
++    /*
++     * add entries to opcode map, expanding mod entries where
++     * for modreg or modmem constraints or clashes with mod.reg /n
++     */
++    if (op_map) {
++        if (modreg) {
++            /* add one entry with mod == 0b11 - ModRM.rm is register */
++            rec.opm[1] |= 0xc0;
++            rec.opc[1] |= 0xc0;
++            op_map[idx] = rec;
++        } else if (modmem) {
++            /* add three entries with mod != 0b11 - ModRM.rm is memory */
++            rec.opm[1] |= 0xc0;
++            rec.opc[1] = (rec.opc[1] & 0x3f) | 0x80;
++            op_map[idx] = rec;
++            rec.opc[1] = (rec.opc[1] & 0x3f) | 0x40;
++            op_map[idx + 1] = rec;
++            rec.opc[1] = (rec.opc[1] & 0x3f);
++            op_map[idx + 2] = rec;
++        } else if (modcla) {
++            /* add four entries mod (0b00..0b11) due to function clash */
++            rec.opm[1] |= 0xc0;
++            rec.opc[1] = (rec.opc[1] & 0x3f) | 0xc0;
++            op_map[idx] = rec;
++            rec.opc[1] = (rec.opc[1] & 0x3f) | 0x80;
++            op_map[idx + 1] = rec;
++            rec.opc[1] = (rec.opc[1] & 0x3f) | 0x40;
++            op_map[idx + 2] = rec;
++            rec.opc[1] = (rec.opc[1] & 0x3f);
++            op_map[idx + 3] = rec;
++        } else {
++            /* add entry unmodified */
++            op_map[idx] = rec;
++        }
++    }
++    return modreg ? 1 : modmem ? 3 : modcla ? 4 : 1;
++}
++
++static void x86_build_prefix_table(x86_acc_idx *idx,
++    x86_table_idx tab, x86_opc_data *op_map, size_t *count,
++    ullong *modfun, ullong *modmod)
++{
++    /*
++     * build the opcode map with synthesized prefixes and modrm expansion
++     */
++    size_t n = 1;
++    for (size_t i = 0; i < tab.count; i++) {
++        const x86_opc_data *d = x86_opc_table + tab.idx[i];
++        const x86_opr_data *o = x86_opr_table + d->opr;
++        const x86_ord_data *p = x86_ord_table + d->ord;
++
++        uint type = x86_enc_type(d->enc) >> x86_enc_t_shift;
++        uint prefix = x86_enc_prefix(d->enc) >> x86_enc_p_shift;
++        uint map = x86_enc_map(d->enc) >> x86_enc_m_shift;
++        size_t tpm = x86_acc_page(type, prefix, map);
++        size_t x = (tpm << 8) | d->opc[0];
++        uint modcla = x86_bitmap_get(modfun, x) && x86_bitmap_get(modmod, x);
++        x86_opc_prefix tp = x86_table_make_prefix(d, o, p);
++
++        x86_opc_data rec = *d;
++        rec.enc |= tp.pfx;
++        n += x86_add_opc_data(op_map, n, rec,
++            tp.modreg, tp.modmem, modcla);
++        if (tp.pfx_w) {
++            rec = *d;
++            rec.enc |= tp.pfx | tp.pfx_w;
++            n += x86_add_opc_data(op_map, n, rec,
++                tp.modreg, tp.modmem, modcla);
++        }
++        if (tp.pfx_o) {
++            rec = *d;
++            rec.enc |= tp.pfx | tp.pfx_o;
++            n += x86_add_opc_data(op_map, n, rec,
++                tp.modreg, tp.modmem, modcla);
++        }
++    }
++
++    if (count) *count = n;
++}
++
++static size_t x86_build_accel_offsets(x86_acc_idx *idx)
++{
++    /*
++     * allocate offsets for type prefix map combinations
++     *
++     * offset zero means the slice is not allocated but page zero is
++     * preallocated as a special cased for type:LEX, prefix:0, map:0
++     */
++    size_t num_pages = 1;
++    for (size_t i = 1; i < idx->map_count; i++) {
++        const x86_opc_data *m = idx->map + i;
++        uint type = x86_enc_type(m->enc) >> x86_enc_t_shift;
++        uint prefix = x86_enc_prefix(m->enc) >> x86_enc_p_shift;
++        uint map = x86_enc_map(m->enc) >> x86_enc_m_shift;
++        size_t acc_page = x86_acc_page(type, prefix, map);
++        if (acc_page > 0 && idx->page_offsets[acc_page] == 0) {
++            size_t page = num_pages++;
++            idx->page_offsets[acc_page] = page;
++        }
++    }
++    return num_pages << 8;
++}
++
++static void x86_build_accel_table(x86_acc_idx *idx, x86_acc_entry *acc)
++{
++    /*
++     * add entries to the acceleration table. the acceleration
++     * table contains ranges for all entries of a given opcode.
++     *
++     * (type, prefix, map, opcode) -> (index, count)
++     */
++    for (size_t i = 1; i < idx->map_count; i++) {
++        const x86_opc_data *m = idx->map + i;
++        uint type = x86_enc_type(m->enc) >> x86_enc_t_shift;
++        uint prefix = x86_enc_prefix(m->enc) >> x86_enc_p_shift;
++        uint map = x86_enc_map(m->enc) >> x86_enc_m_shift;
++        size_t acc_page = x86_acc_page(type, prefix, map);
++        size_t offset = x86_acc_offset(idx, acc_page);
++        uint opc = m->opc[0], opc_i = opc, opm = m->opm[0];
++        while ((opc_i & opm) == opc) {
++            if (acc[offset + opc_i].idx == 0) {
++                acc[offset + opc_i].idx = i;
++            }
++            acc[offset + opc_i].nent++;
++            opc_i++;
++        }
++    }
++}
++
++static x86_acc_idx *x86_table_build(uint modes)
++{
++    x86_acc_idx *idx = g_malloc0(sizeof(x86_acc_idx));
++    x86_table_idx tab = x86_opc_table_sorted(x86_opc_table_filter(
++        x86_opc_table_identity(), modes), x86_sort_numeric);
++    size_t bmap_size = /*t,p,m*/ 512 * /*opcode*/ 256 >> /*bits*/ 3;
++    ullong *modfun = g_malloc0(bmap_size);
++    ullong *modmod = g_malloc0(bmap_size);
++    x86_build_prefix_clashes(idx, tab, modfun, modmod);
++    x86_build_prefix_table(idx, tab, NULL, &idx->map_count, modfun, modmod);
++    idx->map = g_malloc0(idx->map_count * sizeof(x86_opc_data));
++    x86_build_prefix_table(idx, tab, idx->map, NULL, modfun, modmod);
++    qsort(idx->map, idx->map_count, sizeof(x86_opc_data),
++        x86_opc_data_compare_build);
++    idx->page_offsets = g_malloc0(/*t,p,m*/ 512);
++    idx->acc_count = x86_build_accel_offsets(idx);
++    idx->acc = g_malloc0(idx->acc_count * sizeof(x86_acc_entry));
++    x86_build_accel_table(idx, idx->acc);
++    g_free(tab.idx);
++    g_free(modfun);
++    g_free(modmod);
++    return idx;
++}
++
++/*
++ *  table lookup
++ */
++
++static x86_opc_data *x86_table_lookup_slow(x86_acc_idx *idx,
++    const x86_opc_data *m)
++{
++    size_t begin = 0, end = idx->map_count;
++    while (end != 0) {
++        size_t half = (end >> 1), probe = begin + half;
++        if (x86_opc_data_compare_masked(m, idx->map + probe) > 0) {
++            begin = probe + 1;
++            end -= half + 1;
++        } else {
++            end = half;
++        }
++    }
++    return idx->map + begin;
++}
++
++x86_opc_data *x86_table_lookup(x86_acc_idx *idx, const x86_opc_data *m)
++{
++    uint type = x86_enc_type(m->enc) >> x86_enc_t_shift;
++    uint prefix = x86_enc_prefix(m->enc) >> x86_enc_p_shift;
++    uint map = x86_enc_map(m->enc) >> x86_enc_m_shift;
++    size_t acc_page = x86_acc_page(type, prefix, map);
++    size_t offset = x86_acc_offset(idx, acc_page) + m->opc[0];
++    x86_acc_entry *ent = x86_acc_lookup(idx, offset);
++    x86_acc_idx new_idx = { ent->nent, idx->map + ent->idx };
++    return x86_table_lookup_slow(&new_idx, m);
++}
++
++/*
++ * table printing utilities
++ */
++
++static x86_table_col x86_new_column(int width, char *data)
++{
++    x86_table_col col = { width, strdup(data) };
++    return col;
++}
++
++static void x86_print_row(size_t count, x86_table_col *cols)
++{
++    printf("|");
++    for (size_t i = 0; i < count; i++) {
++        printf(" %-*s |", cols[i].width, cols[i].data);
++        g_free(cols[i].data);
++    }
++    printf("\n");
++}
++
++static size_t x86_format_enc(char *buf, size_t buflen, const x86_opc_data *d)
++{
++    size_t len = 0;
++
++    uint s = x86_enc_suffix(d->enc);
++    uint i = x86_enc_imm(d->enc);
++    uint j = x86_enc_imm2(d->enc);
++    uint enc = x86_enc_leading(d->enc);
++
++    len += x86_enc_name(buf + len, buflen - len, enc);
++
++    switch (x86_enc_opcode(enc)) {
++    case x86_enc_o_opcode_r:
++        len += snprintf(buf + len, buflen - len, " %02hhx+r", d->opc[0]);
++        break;
++    default:
++        len += snprintf(buf + len, buflen - len, " %02hhx", d->opc[0]);
++        break;
++    }
++
++    switch (x86_enc_func(enc)) {
++    case x86_enc_f_modrm_r:
++        len += snprintf(buf + len, buflen - len, " /r");
++        break;
++    case x86_enc_f_modrm_n:
++        len += snprintf(buf + len, buflen - len, " /%d", (d->opc[1] >> 3) & 7);
++        break;
++    case x86_enc_f_opcode_r:
++        len += snprintf(buf + len, buflen - len, " %02hhx+r", d->opc[1]);
++        break;
++    case x86_enc_f_opcode:
++        len += snprintf(buf + len, buflen - len, " %02hhx", d->opc[1]);
++        break;
++    }
++
++    if (i) {
++        len += x86_enc_name(buf + len, buflen - len, i);
++    }
++    if (j) {
++        len += x86_enc_name(buf + len, buflen - len, j);
++    }
++    if (s) {
++        len += x86_enc_name(buf + len, buflen - len, s);
++    }
++
++    return len;
++}
++
++void x86_print_op(const x86_opc_data *d, uint compact, uint opcode)
++{
++    char buf[256];
++    x86_table_col cols[6];
++    size_t count = 0, buflen = sizeof(buf), len;
++
++    const x86_opr_data *o = x86_opr_table + d->opr;
++    const x86_ord_data *p = x86_ord_table + d->ord;
++
++    buf[(len = 0)] = '\0';
++    if (compact) {
++        len += snprintf(buf + len, buflen - len, "%s", x86_op_names[d->op]);
++        cols[count++] = x86_new_column(18, buf);
++    } else {
++        len += snprintf(buf + len, buflen - len, "%s ", x86_op_names[d->op]);
++        for (size_t i = 0; i < array_size(o->opr) && o->opr[i]; i++) {
++            if (i != 0) len += snprintf(buf + len, buflen - len, ",");
++            len += x86_opr_name(buf + len, buflen - len, o->opr[i]);
++        }
++        cols[count++] = x86_new_column(52, buf);
++    }
++
++    if (opcode) {
++        buf[(len = 0)] = '\0';
++        len += snprintf(buf + len, buflen - len, "%02hhx %02hhx",
++            d->opc[0], d->opc[1]);
++        cols[count++] = x86_new_column(5, buf);
++        buf[(len = 0)] = '\0';
++        len += snprintf(buf + len, buflen - len, "%02hhx %02hhx",
++            d->opm[0], d->opm[1]);
++        cols[count++] = x86_new_column(5, buf);
++    }
++
++    if (compact) {
++        buf[(len = 0)] = '\0';
++        len += x86_ord_mnem(buf + len, buflen - len, p->ord);
++        cols[count++] = x86_new_column(4, buf);
++    }
++
++    buf[(len = 0)] = '\0';
++    len += x86_format_enc(buf, buflen - len, d);
++    cols[count++] = x86_new_column(31, buf);
++
++    if (!compact) {
++        buf[(len = 0)] = '\0';
++        for (size_t i = 0; i < array_size(p->ord) && p->ord[i]; i++) {
++            if (i != 0) len += snprintf(buf + len, buflen - len, ",");
++            len += x86_ord_name(buf + len, buflen - len, p->ord[i], "/");
++        }
++        cols[count++] = x86_new_column(23, buf);
++    }
++
++    buf[(len = 0)] = '\0';
++    len += x86_mode_name(buf + len, buflen - len, d->mode, "/");
++    cols[count++] = x86_new_column(8, buf);
++
++    x86_print_row(count, cols);
++}
++
++/*
++ * encoding / decoding
++ */
++
++int x86_codec_write(x86_ctx *ctx, x86_buffer *buf, x86_codec c, size_t *len)
++{
++    size_t nbytes = 0;
++
++    /* segment prefix */
++    switch (c.seg) {
++    case x86_seg_es: nbytes += x86_out8(buf, x86_pb_es); break;
++    case x86_seg_cs: nbytes += x86_out8(buf, x86_pb_cs); break;
++    case x86_seg_ss: nbytes += x86_out8(buf, x86_pb_ss); break;
++    case x86_seg_ds: nbytes += x86_out8(buf, x86_pb_ds); break;
++    case x86_seg_fs: nbytes += x86_out8(buf, x86_pb_fs); break;
++    case x86_seg_gs: nbytes += x86_out8(buf, x86_pb_gs); break;
++    }
++
++    /* other prefixes */
++    if (x86_codec_has_osize(&c)) {
++        nbytes += x86_out8(buf, x86_pb_osize);
++    }
++    if (x86_codec_has_asize(&c)) {
++        nbytes += x86_out8(buf, x86_pb_asize);
++    }
++    if (x86_codec_has_wait(&c)) {
++        nbytes += x86_out8(buf, x86_pb_wait);
++    }
++    if (x86_codec_has_lock(&c)) {
++        nbytes += x86_out8(buf, x86_pb_lock);
++    }
++    if (x86_codec_has_rep(&c)) {
++        nbytes += x86_out8(buf, x86_pb_rep);
++    }
++    if (x86_codec_has_repne(&c)) {
++        nbytes += x86_out8(buf, x86_pb_repne);
++    }
++
++    /* extended prefixes */
++    switch (x86_codec_field_ce(&c) >> x86_ce_shift) {
++        case x86_ce_rex >> x86_ce_shift:
++            nbytes += x86_out8(buf, c.rex.data[0]);
++            break;
++        case x86_ce_rex2 >> x86_ce_shift:
++            nbytes += x86_out8(buf, x86_pb_rex2);
++            nbytes += x86_out8(buf, c.rex2.data[0]);
++            break;
++        case x86_ce_vex2 >> x86_ce_shift:
++            nbytes += x86_out8(buf, x86_pb_vex2);
++            nbytes += x86_out8(buf, c.vex2.data[0]);
++            break;
++        case x86_ce_vex3 >> x86_ce_shift:
++            nbytes += x86_out8(buf, x86_pb_vex3);
++            nbytes += x86_out8(buf, c.vex3.data[0]);
++            nbytes += x86_out8(buf, c.vex3.data[1]);
++            break;
++        case x86_ce_evex >> x86_ce_shift:
++            nbytes += x86_out8(buf, x86_pb_evex);
++            nbytes += x86_out8(buf, c.evex.data[0]);
++            nbytes += x86_out8(buf, c.evex.data[1]);
++            nbytes += x86_out8(buf, c.evex.data[2]);
++            break;
++    }
++
++    /* map */
++    switch (x86_codec_field_cm(&c) >> x86_cm_shift) {
++    case x86_cm_none >> x86_cm_shift:
++        break;
++    case x86_cm_0f   >> x86_cm_shift:
++        nbytes += x86_out8(buf, 0x0f);
++        break;
++    case x86_cm_0f38 >> x86_cm_shift:
++        nbytes += x86_out16(buf, 0x380f);
++        break;
++    case x86_cm_0f3a >> x86_cm_shift:
++        nbytes += x86_out16(buf, 0x3a0f);
++        break;
++    }
++
++    /* opcode */
++    for (size_t i = 0; i < c.opclen; i++) {
++        nbytes += x86_out8(buf, c.opc[i]);
++    }
++
++    /* ModRM and SIB */
++    int b;
++    if (x86_codec_has_modrm(&c)) {
++        nbytes += x86_out8(buf, c.modrm.data[0]);
++
++        uchar rm = x86_modrm_rm(c.modrm.data[0]);
++        uchar mod = x86_modrm_mod(c.modrm.data[0]);
++
++        switch (mod) {
++        case x86_mod_disp0:
++        case x86_mod_disp8:
++        case x86_mod_dispw:
++            /* there is no SIB in real mode */
++            if (!x86_codec_is16(&c) && rm == x86_rm_sp_sib) {
++                nbytes += x86_out8(buf, c.sib.data[0]);
++            }
++            break;
++        case x86_mod_reg: break;
++        }
++        switch (mod) {
++        case x86_mod_disp0:
++            /* special case for rm/b == bp */
++            b = x86_sib_b(c.sib.data[0]);
++            if (rm == x86_rm_bp_disp0 ||
++                (rm == x86_rm_sp_sib && b == x86_rm_bp_disp0))
++            {
++                if (x86_codec_is16(&c)) {
++                    nbytes += x86_out16(buf, (u16)c.disp32);
++                } else {
++                    /* this is RIP-relative in amd64 mode */
++                    nbytes += x86_out32(buf, (u32)c.disp32);
++                }
++            }
++            break;
++        case x86_mod_disp8:
++            nbytes += x86_out8(buf, (u8)c.disp32);
++            break;
++        case x86_mod_dispw:
++            if (x86_codec_is16(&c)) {
++                nbytes += x86_out16(buf, (u16)c.disp32); break;
++            } else {
++                nbytes += x86_out32(buf, (u32)c.disp32); break;
++            }
++        case x86_mod_reg: break;
++        }
++    }
++
++    /* immediate */
++    switch (x86_codec_field_ci(&c) >> x86_ci_shift) {
++    case x86_ci_iw >> x86_ci_shift:
++        if (x86_codec_is16(&c) ^ x86_codec_has_osize(&c)) {
++            nbytes += x86_out16(buf, (u16)c.imm32);
++        } else {
++            nbytes += x86_out32(buf, (u32)c.imm32);
++        }
++        break;
++    case x86_ci_iwd >> x86_ci_shift:
++        if (x86_codec_is16(&c)) {
++            nbytes += x86_out16(buf, (u16)c.imm32);
++        } else {
++            nbytes += x86_out32(buf, (u32)c.imm32);
++        }
++        break;
++    case x86_ci_ib >> x86_ci_shift:
++        nbytes += x86_out8(buf, (u8)c.imm32);
++        break;
++    case x86_ci_i16 >> x86_ci_shift:
++        nbytes += x86_out16(buf, (u16)c.imm32);
++        break;
++    case x86_ci_i32 >> x86_ci_shift:
++        nbytes += x86_out32(buf, (u32)c.imm32);
++        break;
++    case x86_ci_i64 >> x86_ci_shift:
++        nbytes += x86_out64(buf, (u64)c.imm64);
++        break;
++    }
++
++    /* additional immediate used by CALLF/JMPF/ENTER */
++    switch (x86_codec_field_cj(&c) >> x86_cj_shift) {
++    case x86_cj_ib >> x86_cj_shift:
++        nbytes += x86_out8(buf, (u8)c.imm2);
++        break;
++    case x86_cj_i16 >> x86_cj_shift:
++        nbytes += x86_out16(buf, (u16)c.imm2);
++        break;
++    }
++
++    *len = nbytes;
++    return 0;
++}
++
++static int x86_filter_op(x86_codec *c, x86_opc_data *d, uint w)
++{
++    if (x86_codec_is16(c) && !x86_mode_has16(d->mode)) return -1;
++    if (x86_codec_is32(c) && !x86_mode_has32(d->mode)) return -1;
++    if (x86_codec_is64(c) && !x86_mode_has64(d->mode)) return -1;
++
++    switch (x86_codec_field_ce(c) >> x86_ce_shift) {
++    case x86_ce_rex >> x86_ce_shift:
++        if (x86_enc_filter_rex(c->rex, d->enc) < 0) return -1;
++        break;
++    case x86_ce_rex2 >> x86_ce_shift:
++        if (x86_enc_filter_rex2(c->rex2, d->enc) < 0) return -1;
++        break;
++    case x86_ce_vex2 >> x86_ce_shift:
++        if (x86_enc_filter_vex2(c->vex2, d->enc) < 0) return -1;
++        break;
++    case x86_ce_vex3 >> x86_ce_shift:
++        if (x86_enc_filter_vex3(c->vex3, d->enc) < 0) return -1;
++        break;
++    case x86_ce_evex >> x86_ce_shift:
++        if (x86_enc_filter_evex(c->evex, d->enc) < 0) return -1;
++        break;
++    }
++
++    if (x86_enc_has_a16(d->enc)) {
++        if (!x86_codec_is16(c) ||
++            !(x86_codec_is32(c) && x86_codec_has_asize(c))) return -1;
++    }
++    if (x86_enc_has_a32(d->enc)) {
++        if (!x86_codec_is32(c) ||
++            !(x86_codec_is64(c) && x86_codec_has_asize(c))) return -1;
++    }
++    if (x86_enc_has_a64(d->enc)) {
++        if (!x86_codec_is64(c) || x86_codec_has_asize(c)) return -1;
++    }
++
++    if (x86_enc_has_o16(d->enc)) {
++        switch (x86_enc_width(d->enc)) {
++        case x86_enc_w_ww:
++        case x86_enc_w_wx:
++            if (!(x86_codec_is16(c) ^ x86_codec_has_osize(c)) || w) return -1;
++            break;
++        }
++    }
++    if (x86_enc_has_o32(d->enc)) {
++        switch (x86_enc_width(d->enc)) {
++        case x86_enc_w_ww:
++            /* .ww means no 32-bit operands in 64-bit mode */
++            if ((x86_codec_is16(c) ^ x86_codec_has_osize(c)) ||
++                 x86_codec_is64(c)) return -1;
++            break;
++        case x86_enc_w_wx:
++            if ((x86_codec_is16(c) ^ x86_codec_has_osize(c)) || w) return -1;
++            break;
++        }
++    }
++    if (x86_enc_has_o64(d->enc)) {
++        switch (x86_enc_width(d->enc)) {
++        case x86_enc_w_ww:
++            /* .ww means ignores W=1 in 64-bit mode */
++            if (!x86_codec_is64(c)) return -1;
++            break;
++        case x86_enc_w_wx:
++            if (!x86_codec_is64(c) || !w) return -1;
++            break;
++        }
++    }
++
++    return 0;
++}
++
++static size_t x86_parse_encoding(x86_buffer *buf, x86_codec *c,
++    x86_opc_data *d)
++{
++    size_t nbytes = 0;
++
++    /* parse SIB and displacement */
++    int b;
++    if (x86_codec_has_modrm(c)) {
++        uchar rm = x86_modrm_rm(c->modrm.data[0]);
++        uchar mod = x86_modrm_mod(c->modrm.data[0]);
++        switch (mod) {
++        case x86_mod_disp0:
++        case x86_mod_disp8:
++        case x86_mod_dispw:
++            /* there is no SIB in real mode */
++            if (!x86_codec_is16(c) && rm == x86_rm_sp_sib) {
++                c->sib.data[0] = (u8)x86_in8(buf); nbytes += 1;
++            }
++            break;
++        case x86_mod_reg:
++            break;
++        }
++        switch (mod) {
++        case x86_mod_disp0:
++            /* special case for rm/b == bp */
++            b = x86_sib_b(c->sib.data[0]);
++            if (rm == x86_rm_bp_disp0 ||
++                (rm == x86_rm_sp_sib && b == x86_rm_bp_disp0))
++            {
++                if (x86_codec_is16(c)) {
++                    c->disp32 = (i16)x86_in16(buf); nbytes += 2;
++                } else {
++                    /* this is RIP-relative in amd64 mode */
++                    c->disp32 = (i32)x86_in32(buf); nbytes += 4;
++                }
++            }
++            break;
++        case x86_mod_disp8:
++            c->disp32 = (i8)x86_in8(buf); nbytes += 1;
++            break;
++        case x86_mod_dispw:
++            if (x86_codec_is16(c)) {
++                c->disp32 = (i16)x86_in16(buf); nbytes += 2;
++            } else {
++                c->disp32 = (i32)x86_in32(buf); nbytes += 4;
++            }
++        case x86_mod_reg:
++            break;
++        }
++    }
++
++    /* parse immediate */
++    switch (x86_enc_imm(d->enc) >> x86_enc_i_shift) {
++    case x86_enc_i_ib >> x86_enc_i_shift:
++        c->imm32 = (i8)x86_in8(buf); nbytes += 1;
++        c->flags |= x86_ci_ib;
++        break;
++    case x86_enc_i_iw >> x86_enc_i_shift:
++        if (x86_codec_is16(c) ^ x86_codec_has_osize(c)) {
++            c->imm32 = (i16)x86_in16(buf); nbytes += 2;
++        } else {
++            c->imm32 = (i32)x86_in32(buf); nbytes += 4;
++        }
++        c->flags |= x86_ci_iw;
++        break;
++    case x86_enc_i_iwd >> x86_enc_i_shift:
++        if (x86_codec_is16(c)) {
++            c->imm32 = (i16)x86_in16(buf); nbytes += 2;
++        } else {
++            c->imm32 = (i32)x86_in32(buf); nbytes += 4;
++        }
++        c->flags |= x86_ci_iwd;
++        break;
++    case x86_enc_i_i16 >> x86_enc_i_shift:
++        c->imm32 = (i16)x86_in16(buf);  nbytes += 2;
++        c->flags |= x86_ci_i16;
++        break;
++    case x86_enc_i_i32 >> x86_enc_i_shift:
++        c->imm32 = (i32)x86_in32(buf);  nbytes += 4;
++        c->flags |= x86_ci_i32;
++        break;
++    case x86_enc_i_i64 >> x86_enc_i_shift:
++        c->imm64 = (i64)x86_in64(buf);  nbytes += 8;
++        c->flags |= x86_ci_i64;
++        break;
++    }
++
++    /* additional immediate used by CALLF/JMPF/ENTER */
++    switch (x86_enc_imm2(d->enc) >> x86_enc_j_shift) {
++    case x86_enc_j_ib >> x86_enc_j_shift:
++        c->imm2 = (i8)x86_in8(buf); nbytes += 1;
++        c->flags |= x86_cj_ib;
++        break;
++    case x86_enc_j_i16 >> x86_enc_j_shift:
++        c->imm2 = (i16)x86_in16(buf); nbytes += 2;
++        c->flags |= x86_cj_i16;
++        break;
++    }
++
++    return nbytes;
++}
++
++enum {
++    x86_enc_tpm_mask  = x86_enc_t_mask | x86_enc_prexw_mask | x86_enc_m_mask
++};
++
++static x86_opc_data *x86_table_match(x86_ctx *ctx, x86_codec *c,
++    x86_opc_data k, int w)
++{
++    x86_opc_data *r = NULL;
++    /* key is type+prefix+map with substituted rexw=w flag */
++    k.enc = ((k.enc & ~x86_enc_p_rexw) |
++             (-w    &  x86_enc_p_rexw)) & x86_enc_tpm_mask;
++    x86_debugf("table_lookup { type:%x prefix:%x map:%x "
++        "opc:[%02hhx %02hhx] opm:[%02hhx %02hhx] }",
++        (k.enc & x86_enc_t_mask) >> x86_enc_t_shift,
++        (k.enc & x86_enc_p_mask) >> x86_enc_p_shift,
++        (k.enc & x86_enc_m_mask) >> x86_enc_m_shift,
++        k.opc[0], k.opc[1], k.opm[0], k.opm[1]);
++    r = x86_table_lookup(ctx->idx, &k);
++    while (r < ctx->idx->map + ctx->idx->map_count) {
++        /* substitute suffix of record for precise match */
++        k.enc = ((k.enc & x86_enc_tpm_mask) |
++                  (r->enc & ~x86_enc_tpm_mask));
++        size_t oprec = (r - ctx->idx->map);
++        x86_debugf("checking opdata %zu", oprec);
++        if (debug) x86_print_op(r, 1, 1);
++        if (x86_opc_data_compare_masked(&k, r) != 0) {
++            x86_debugf("** no matches");
++            r = NULL;
++            break;
++        }
++        if (x86_filter_op(c, r, w) == 0) break;
++        r++;
++    }
++    return r;
++}
++
++int x86_codec_read(x86_ctx *ctx, x86_buffer *buf, x86_codec *c, size_t *len)
++{
++    uint state = x86_state_top;
++    size_t nbytes = 0, limit = buf->end - buf->start;
++    uint t = 0, m = 0, w = 0, p = 0, l = 0, mode = ctx->mode;
++    x86_opc_data k = { 0 }, *r = NULL;
++    uchar b = 0, lastp = 0;
++
++    memset(c, 0, sizeof(x86_codec));
++    switch (mode) {
++    case x86_modes_32: c->flags |= x86_cf_ia32; break;
++    case x86_modes_64: c->flags |= x86_cf_amd64; break;
++    }
++
++    while (state != x86_state_done) {
++        nbytes += x86_buffer_read(buf, &b, 1);
++        switch (state) {
++        case x86_state_top:
++            switch (b) {
++            case 0x40: case 0x41: case 0x42: case 0x43:
++            case 0x44: case 0x45: case 0x46: case 0x47:
++            case 0x48: case 0x49: case 0x4a: case 0x4b:
++            case 0x4c: case 0x4d: case 0x4e: case 0x4f:
++                c->rex.data[0] = b;
++                c->flags |= x86_ce_rex;
++                w = (c->rex.data[0] >> 3) & 1;
++                t = x86_table_lex;
++                state = x86_state_rex_opcode;
++                break;
++            case x86_pb_26:
++            case x86_pb_2e:
++            case x86_pb_36:
++            case x86_pb_3e:
++            case x86_pb_64:
++            case x86_pb_65:
++                state = x86_state_segment;
++                goto segment_reparse;
++            case x86_pb_66:
++            case x86_pb_67:
++            case x86_pb_9b:
++            case x86_pb_f0:
++            case x86_pb_f2:
++            case x86_pb_f3:
++                state = x86_state_legacy;
++                goto legacy_reparse;
++            case x86_pb_62:
++                nbytes += x86_buffer_read(buf, c->evex.data, 3);
++                c->flags |= x86_ce_evex;
++                m = (c->evex.data[0] >> 0) & 7;
++                w = (c->evex.data[1] >> 7) & 1;
++                p = (c->evex.data[1] >> 0) & 3;
++                l = (c->evex.data[2] >> 5) & 3;
++                t = x86_table_evex;
++                state = x86_state_vex_opcode;
++                break;
++            case x86_pb_c4:
++                nbytes += x86_buffer_read(buf, c->vex3.data, 2);
++                c->flags |= x86_ce_vex3;
++                m = (c->vex3.data[0] >> 0) & 31;
++                w = (c->vex3.data[1] >> 7) & 1;
++                p = (c->vex3.data[1] >> 0) & 3;
++                l = (c->vex3.data[1] >> 2) & 1;
++                t = x86_table_vex;
++                state = x86_state_vex_opcode;
++                break;
++            case x86_pb_c5:
++                nbytes += x86_buffer_read(buf, c->vex2.data, 1);
++                c->flags |= x86_ce_vex2;
++                m = x86_map_0f;
++                p = (c->vex2.data[0] >> 0) & 3;
++                l = (c->vex2.data[0] >> 2) & 1;
++                t = x86_table_vex;
++                state = x86_state_vex_opcode;
++                break;
++            case x86_pb_d5:
++                nbytes += x86_buffer_read(buf, c->rex2.data, 1);
++                c->flags |= x86_ce_rex2;
++                m = (c->rex2.data[0] >> 7) & 1;
++                w = (c->rex2.data[0] >> 3) & 1;
++                t = x86_table_lex;
++                state = x86_state_lex_opcode;
++                break;
++            case 0x0f:
++                t = x86_table_lex;
++                state = x86_state_map_0f;
++                break;
++            default:
++                m = x86_map_none;
++                t = x86_table_lex;
++                state = x86_state_lex_opcode;
++                goto lex_reparse;
++            }
++            break;
++        case x86_state_segment: segment_reparse:
++            switch (b) {
++            case 0x40: case 0x41: case 0x42: case 0x43:
++            case 0x44: case 0x45: case 0x46: case 0x47:
++            case 0x48: case 0x49: case 0x4a: case 0x4b:
++            case 0x4c: case 0x4d: case 0x4e: case 0x4f:
++                c->rex.data[0] = b;
++                c->flags |= x86_ce_rex;
++                w = (c->rex.data[0] >> 3) & 1;
++                t = x86_table_lex;
++                state = x86_state_rex_opcode;
++                break;
++            case x86_pb_26:
++                c->seg = x86_seg_es; state = x86_state_legacy;
++                break;
++            case x86_pb_2e:
++                c->seg = x86_seg_cs; state = x86_state_legacy;
++                break;
++            case x86_pb_36:
++                c->seg = x86_seg_ss; state = x86_state_legacy;
++                break;
++            case x86_pb_3e:
++                c->seg = x86_seg_ds; state = x86_state_legacy;
++                break;
++            case x86_pb_64:
++                c->seg = x86_seg_fs; state = x86_state_legacy;
++                break;
++            case x86_pb_65:
++                c->seg = x86_seg_gs; state = x86_state_legacy;
++                break;
++            case x86_pb_66:
++            case x86_pb_67:
++            case x86_pb_9b:
++            case x86_pb_f0:
++            case x86_pb_f2:
++            case x86_pb_f3:
++                state = x86_state_legacy;
++                goto legacy_reparse;
++            case x86_pb_62:
++            case x86_pb_c4:
++            case x86_pb_c5:
++            case x86_pb_d5:
++                goto err;
++            case 0x0f:
++                t = x86_table_lex;
++                state = x86_state_map_0f;
++                break;
++            default:
++                m = x86_map_none;
++                t = x86_table_lex;
++                state = x86_state_lex_opcode;
++                goto lex_reparse;
++            }
++            break;
++        case x86_state_legacy: legacy_reparse:
++            switch (b) {
++            case 0x40: case 0x41: case 0x42: case 0x43:
++            case 0x44: case 0x45: case 0x46: case 0x47:
++            case 0x48: case 0x49: case 0x4a: case 0x4b:
++            case 0x4c: case 0x4d: case 0x4e: case 0x4f:
++                c->rex.data[0] = b;
++                c->flags |= x86_ce_rex;
++                w = (c->rex.data[0] >> 3) & 1;
++                t = x86_table_lex;
++                state = x86_state_rex_opcode;
++                break;
++            case x86_pb_26:
++            case x86_pb_2e:
++            case x86_pb_36:
++            case x86_pb_3e:
++            case x86_pb_64:
++            case x86_pb_65:
++            case x86_pb_62:
++            case x86_pb_c4:
++            case x86_pb_c5:
++            case x86_pb_d5:
++                goto err;
++            case x86_pb_66:
++                lastp = b;
++                c->flags |= x86_cp_osize;
++                break;
++            case x86_pb_67:
++                lastp = b;
++                c->flags |= x86_cp_asize;
++                break;
++            case x86_pb_9b:
++                lastp = b;
++                c->flags |= x86_cp_wait;
++                break;
++            case x86_pb_f0:
++                lastp = b;
++                c->flags |= x86_cp_lock;
++                break;
++            case x86_pb_f2:
++                lastp = b;
++                c->flags |= x86_cp_repne;
++                break;
++            case x86_pb_f3:
++                lastp = b;
++                c->flags |= x86_cp_rep;
++                break;
++            case 0x0f:
++                t = x86_table_lex;
++                state = x86_state_map_0f;
++                break;
++            default:
++                m = x86_map_none;
++                t = x86_table_lex;
++                state = x86_state_lex_opcode;
++                goto lex_reparse;
++            }
++            break;
++        case x86_state_rex_opcode:
++            switch (b) {
++            case 0x0f:
++                state = x86_state_map_0f;
++                break;
++            default:
++                state = x86_state_lex_opcode;
++                goto lex_reparse;
++            }
++            break;
++        case x86_state_map_0f:
++            switch (b) {
++            case 0x38:
++                c->flags |= x86_cm_0f38;
++                m = x86_map_0f38;
++                state = x86_state_lex_opcode;
++                break;
++            case 0x3a:
++                c->flags |= x86_cm_0f3a;
++                m = x86_map_0f3a;
++                state = x86_state_lex_opcode;
++                break;
++            default:
++                c->flags |= x86_cm_0f;
++                m = x86_map_0f;
++                state = x86_state_lex_opcode;
++                goto lex_reparse;
++            }
++            break;
++        case x86_state_lex_opcode: lex_reparse:
++            k.enc |= ((t << x86_enc_t_shift) & x86_enc_t_mask)
++                  |  ((m << x86_enc_m_shift) & x86_enc_m_mask);
++            switch (lastp) {
++            case 0x66: k.enc |= x86_enc_p_66; break;
++            case 0x9b: k.enc |= x86_enc_p_9b; break;
++            case 0xf2: k.enc |= x86_enc_p_f2; break;
++            case 0xf3: k.enc |= x86_enc_p_f3; break;
++            }
++            state = x86_state_done;
++            break;
++        case x86_state_vex_opcode:
++            k.enc |= ((t << x86_enc_t_shift) & x86_enc_t_mask)
++                  |  ((m << x86_enc_m_shift) & x86_enc_m_mask);
++            switch (p) {
++            case x86_pfx_66: k.enc |= x86_enc_p_66; break;
++            case x86_pfx_f2: k.enc |= x86_enc_p_f2; break;
++            case x86_pfx_f3: k.enc |= x86_enc_p_f3; break;
++            }
++            state = x86_state_done;
++            (void)l; /* l can be added to the index key */
++            break;
++        default:
++            abort();
++        }
++    };
++
++    /* populate opcode for table lookup */
++    k.mode = mode;
++    c->opc[0] = k.opc[0] = b;
++    nbytes += x86_buffer_read(buf, &b, 1);
++    c->opc[1] = k.opc[1] = b;
++    k.opm[0] = k.opm[1] = 0xff;
++
++    /* if REX.W=1 first attempt to lookup W=1 record */
++    if (w) {
++        r = x86_table_match(ctx, c, k, 1);
++    }
++
++    /* if REX.W=0 or search failed lookup W=0/WIG record */
++    if (!w || (w && !r)) {
++        r = x86_table_match(ctx, c, k, 0);
++    }
++
++    /* now attempt lookup without using the prefix */
++    if (!r) {
++        k.enc &= ~x86_enc_p_mask;
++
++        /* if REX.W=1 first attempt to lookup W=1 record */
++        if (w) {
++            r = x86_table_match(ctx, c, k, 1);
++        }
++
++        /* if REX.W=0 or search failed lookup W=0/WIG record */
++        if (!w || (w && !r)) {
++            r = x86_table_match(ctx, c, k, 0);
++        }
++    }
++
++    /* parse encoding */
++    if (r) {
++
++        /* set opcode length and modrm flags */
++        switch (x86_enc_func(r->enc)) {
++        case x86_enc_f_modrm_r:
++        case x86_enc_f_modrm_n:
++            /* second byte is modrm */
++            c->flags |= x86_cf_modrm;
++            c->opclen = 1;
++            break;
++        case x86_enc_f_opcode:
++        case x86_enc_f_opcode_r:
++            /* two byte opcode */
++            c->opclen = 2;
++            break;
++        default:
++            /* no second opcode byte */
++            nbytes -= x86_buffer_unread(buf, 1);
++            c->opclen = 1;
++            break;
++        }
++
++        /* parse SIB, disp, imm from format */
++        nbytes += x86_parse_encoding(buf, c, r);
++        if (nbytes <= limit) {
++            c->rec = (r - ctx->idx->map);
++            *len = nbytes;
++            return 0;
++        }
++    }
++
++err:
++    nbytes -= x86_buffer_unread(buf, nbytes);
++    *len = nbytes;
++    return -1;
++}
++
++static x86_operands x86_codec_operands(x86_ctx *ctx, x86_codec *c)
++{
++    x86_operands q;
++    memset(&q, 0, sizeof(q));
++
++    const x86_opc_data *d = ctx->idx->map + c->rec;
++
++    q.osz = x86_codec_has_osize(c);
++
++    if (x86_codec_has_modrm(c)) {
++        uchar rm = x86_modrm_rm(c->modrm.data[0]);
++        uchar reg = x86_modrm_reg(c->modrm.data[0]);
++        uchar mod = x86_modrm_mod(c->modrm.data[0]);
++
++        /*
++         * q.rm contains unextended value from ModRM.rm
++         * and is used to indicate SIB/disp encoding.
++         *
++         * if SIB present, copy SIB.b into q.b
++         * if SIB not present, copy ModRM.rm into q.b
++         *
++         * q.b contains extended ModRM.rm or SIB.b
++         */
++
++        q.mod = mod;
++        q.rm = rm;
++        q.r = reg;
++
++        switch (mod) {
++        case x86_mod_disp0:
++        case x86_mod_disp8:
++        case x86_mod_dispw:
++            if (!x86_codec_is16(c) && rm == x86_rm_sp_sib) {
++                q.b = x86_sib_b(c->sib.data[0]);
++                q.x = x86_sib_x(c->sib.data[0]);
++                q.s = x86_sib_s(c->sib.data[0]);
++            } else {
++                q.b = q.rm;
++            }
++            break;
++        case x86_mod_reg:
++            q.b = q.rm;
++            break;
++        }
++    } else if (d->enc & x86_enc_o_opcode_r) {
++        q.b = c->opc[0] & 7;
++    } else if (d->enc & x86_enc_f_opcode_r) {
++        q.b = c->opc[1] & 7;
++    }
++
++    switch (x86_codec_field_ce(c) >> x86_ce_shift) {
++    case x86_ce_rex >> x86_ce_shift:
++        q.b |=  (c->rex.data[0] &    1) << 3; /* [0] -> b[3]*/
++        q.x |=  (c->rex.data[0] &    2) << 2; /* [1] -> x[3]*/
++        q.r |=  (c->rex.data[0] &    4) << 1; /* [2] -> r[3]*/
++        q.w  =  (c->rex.data[0] &    8) >> 3;
++        break;
++    case x86_ce_rex2 >> x86_ce_shift:
++        q.b |=  (c->rex2.data[0] &   1) << 3; /* [0] -> b[3]*/
++        q.x |=  (c->rex2.data[0] &   2) << 2; /* [1] -> x[3]*/
++        q.r |=  (c->rex2.data[0] &   4) << 1; /* [2] -> r[3]*/
++        q.w  =  (c->rex2.data[0] &   8) >> 3;
++        q.b |=  (c->rex2.data[0] &  16) >> 0; /* [4] -> b[4]*/
++        q.x |=  (c->rex2.data[0] &  32) >> 1; /* [5] -> x[4]*/
++        q.r |=  (c->rex2.data[0] &  64) >> 2; /* [6] -> r[4]*/
++        break;
++    case x86_ce_vex2 >> x86_ce_shift:
++        q.r |= (~c->vex2.data[0] & 128) >> 4; /* [7] -> r[3] */
++        q.l  =  (c->vex2.data[0] >>  2) & 1;
++        q.v  = (~c->vex2.data[0] >>  3) & 15;
++        q.osz = (c->vex2.data[0] & 3) == x86_pfx_66;
++        break;
++    case x86_ce_vex3 >> x86_ce_shift:
++        q.b |= (~c->vex3.data[0] &  32) >> 2; /* [5] -> b[3]*/
++        q.x |= (~c->vex3.data[0] &  64) >> 3; /* [6] -> x[3]*/
++        q.r |= (~c->vex3.data[0] & 128) >> 4; /* [7] -> r[3]*/
++        q.l  =  (c->vex3.data[1] >>  2) & 1;
++        q.v  = (~c->vex3.data[1] >>  3) & 15;
++        q.w  =  (c->vex3.data[1] >>  7) & 1;
++        q.osz = (c->vex3.data[1] & 3) == x86_pfx_66;
++        break;
++    case x86_ce_evex >> x86_ce_shift:
++        q.b |= (~c->evex.data[0] &  32) >> 2; /* [5] -> b[3]*/
++        q.x |= (~c->evex.data[0] &  64) >> 3; /* [6] -> x[3]*/
++        q.r |= (~c->evex.data[0] & 128) >> 4; /* [7] -> r[3]*/
++        q.b |=  (c->evex.data[0] &   8) << 1; /* [3] -> b[4]*/
++        q.x |= (~c->evex.data[1] &   4) << 2; /* [2] -> x[4]*/
++        q.r |= (~c->evex.data[0] &  16) >> 0; /* [4] -> r[4]*/
++        q.v  = (~c->evex.data[1] >>  3) & 15;
++        q.v |= (~c->evex.data[2] &   8) << 1; /* [3] -> v[4]*/
++        q.k  =  (c->evex.data[2] >>  0) & 7;
++        q.l  =  (c->evex.data[2] >>  5) & 3;
++        q.brd = (c->evex.data[2] >>  4) & 1;
++        q.osz = (c->evex.data[1] & 3) == x86_pfx_66;
++        break;
++    }
++
++    return q;
++}
++
++/*
++ * disassembly
++ */
++
++static inline x86_arg x86_codec_meta(uint enc, uint opr, uint ord,
++    x86_operands q)
++{
++    x86_arg a = { enc, opr, ord, q };
++    return a;
++}
++
++static uint x86_codec_addr_size(x86_codec *c)
++{
++    /* todo - handle address size prefix */
++    if (x86_codec_is32(c)) return x86_opr_size_32;
++    if (x86_codec_is64(c)) return x86_opr_size_64;
++    return x86_opr_size_16;
++}
++
++static const char *x86_ptr_size_str(uint sz)
++{
++    switch (sz) {
++    case x86_opr_size_8: return "byte ptr ";
++    case x86_opr_size_16: return "word ptr ";
++    case x86_opr_size_32: return "dword ptr ";
++    case x86_opr_size_64: return "qword ptr ";
++    case x86_opr_size_80: return "tbyte ptr ";
++    case x86_opr_size_128: return "xmmword ptr ";
++    case x86_opr_size_256: return "ymmword ptr ";
++    case x86_opr_size_512: return "zmmword ptr ";
++    default: return "";
++    }
++}
++
++static uint x86_opr_reg_size(x86_codec *c, x86_arg a)
++{
++    uint oprty = x86_opr_type_val(a.opr);
++    uint oprsz = x86_opr_size_val(a.opr);
++    uint oprmem = x86_opr_mem_val(a.opr);
++
++    /* 'rw' or 'mw' deduce size from mode, operand size prefix and REX.W */
++    if ((oprty == x86_opr_reg && oprsz == x86_opr_size_w) ||
++        (oprmem == x86_opr_mw) ||
++        (a.opr == x86_opr_moffs || a.opr == x86_opr_reg_psi ||
++         a.opr == x86_opr_reg_pdi))
++    {
++        switch (x86_enc_width(a.enc)) {
++        case x86_enc_w_wb: return x86_opr_size_8;
++        case x86_enc_w_ww:
++            if (x86_codec_is16(c))
++                return a.q.osz ? x86_opr_size_32 : x86_opr_size_16;
++            if (x86_codec_is32(c))
++                return a.q.osz ? x86_opr_size_16 : x86_opr_size_32;
++            if (x86_codec_is64(c))
++                return a.q.osz ? x86_opr_size_16 : x86_opr_size_64;
++            break;
++        case x86_enc_w_wx:
++            if (x86_codec_is16(c))
++                return a.q.osz ? x86_opr_size_32 : x86_opr_size_16;
++            if (x86_codec_is32(c))
++                return a.q.osz ? x86_opr_size_16 : x86_opr_size_32;
++            if (x86_codec_is64(c))
++                return a.q.osz ? x86_opr_size_16 :
++                        a.q.w ? x86_opr_size_64 : x86_opr_size_32;
++            break;
++        case x86_enc_w_w0: return x86_opr_size_32;
++        case x86_enc_w_w1: return x86_opr_size_64;
++        default: break;
++        }
++    }
++
++    /* operand contains the register size */
++    if (oprsz != 0 && oprsz != x86_opr_size_w && oprsz != x86_opr_size_a) {
++        return oprsz;
++    }
++
++    return 0;
++}
++
++static uint x86_opr_ptr_size(x86_codec *c, x86_arg a)
++{
++    uint memsz = x86_opr_mem_size(a.opr);
++    if (memsz == x86_opr_size_w) {
++        memsz = x86_opr_reg_size(c, a);
++    }
++    return memsz;
++}
++
++static uint x86_sized_gpr(x86_codec *c, uint reg, uint opr)
++{
++    switch (x86_opr_size_val(opr)) {
++    case x86_opr_size_8:
++        /* legacy encoding selects ah/cd/dh/bh instead of spl/bpl/sil/dil */
++        if ((x86_codec_field_ce(c)) == x86_ce_none &&
++           ((reg & 31) >= 4 && (reg & 31) < 8)) return x86_reg_bl | (reg & 31);
++        return x86_reg_b | (reg & 31);
++    case x86_opr_size_16: return x86_reg_w | (reg & 31);
++    case x86_opr_size_32: return x86_reg_d | (reg & 31);
++    case x86_opr_size_64: return x86_reg_q | (reg & 31);
++    default: return reg;
++    }
++}
++
++static uint x86_sized_vec(uint reg, uint opr)
++{
++    switch (x86_opr_size_val(opr)) {
++    case x86_opr_size_64:  return x86_reg_mmx | (reg & 7);
++    case x86_opr_size_128: return x86_reg_xmm | (reg & 31);
++    case x86_opr_size_256: return x86_reg_ymm | (reg & 31);
++    case x86_opr_size_512: return x86_reg_zmm | (reg & 31);
++    default: return reg;
++    }
++}
++
++static uint x86_regsz_bytes(uint regsz)
++{
++    switch (regsz) {
++    case x86_opr_size_8: return 1;
++    case x86_opr_size_16: return 2;
++    case x86_opr_size_32: return 4;
++    case x86_opr_size_64: return 8;
++    case x86_opr_size_128: return 16;
++    case x86_opr_size_256: return 32;
++    case x86_opr_size_512: return 64;
++    default: break;
++    }
++    return 1;
++}
++
++static size_t x86_opr_intel_reg_str_internal(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a, uint reg)
++{
++    size_t len = 0;
++
++    switch (x86_opr_type_val(a.opr)) {
++    case x86_opr_reg: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_sized_gpr(c, reg,
++        x86_opr_reg_size(c, a)))); break;
++    case x86_opr_vec: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_sized_vec(reg, a.opr))); break;
++    case x86_opr_k: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_kmask | (reg & 7))); break;
++    case x86_opr_mmx: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_mmx | (reg & 7))); break;
++    case x86_opr_st: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_fpu | (reg & 7))); break;
++    case x86_opr_bnd: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_bnd | (reg & 7))); break;
++    case x86_opr_seg: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_sreg | (reg & 7)));  break;
++    case x86_opr_creg: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_creg | (reg & 15))); break;
++    case x86_opr_dreg: len = xsnprintf(buf, buflen, "%s",
++        x86_reg_name(x86_reg_dreg | (reg & 15))); break;
++    default: len = xsnprintf(buf, buflen, "%s", "unknown"); break;
++    }
++
++    if ((a.q.k & 7) > 0 && (a.opr & x86_opr_flag_k) != 0) {
++        len += xsnprintf(buf + len, buflen - len, " {%s}",
++                        x86_reg_name(x86_reg_kmask | (a.q.k & 7)));
++    }
++
++    return len;
++}
++
++static uint x86_opr_bcst_size(uint opr)
++{
++    switch (x86_opr_bcst_val(opr)) {
++    case x86_opr_m16bcst: return x86_opr_size_16;
++    case x86_opr_m32bcst: return x86_opr_size_32;
++    case x86_opr_m64bcst: return x86_opr_size_64;
++    }
++    return 0;
++}
++
++x86_opr_formats x86_opr_formats_intel_hex =
++{
++    .ptr_rip            = "%s[rip]",
++    .ptr_rip_disp       = "%s[rip %s 0x%x]",
++    .ptr_reg            = "%s[%s]",
++    .ptr_reg_disp       = "%s[%s %s 0x%x]",
++    .ptr_reg_sreg       = "%s[%s + %d*%s]",
++    .ptr_reg_sreg_disp  = "%s[%s + %d*%s %s 0x%x]",
++    .ptr_reg_reg        = "%s[%s + %s]",
++    .ptr_reg_reg_disp   = "%s[%s + %s %s 0x%x]",
++    .ptr_sreg           = "%s[%d*%s]",
++    .ptr_disp           = "%s[%s0x%x]",
++    .ptr_imm64          = "%s[%s0x%llx]",
++    .ptr_imm32          = "%s[%s0x%x]",
++    .imm64              = "%s0x%llx",
++    .imm32              = "%s0x%x",
++    .reg                = "%s",
++};
++
++x86_opr_formats x86_opr_formats_intel_dec =
++{
++    .ptr_rip            = "%s[rip]",
++    .ptr_rip_disp       = "%s[rip %s %u]",
++    .ptr_reg            = "%s[%s]",
++    .ptr_reg_disp       = "%s[%s %s %u]",
++    .ptr_reg_sreg       = "%s[%s + %d*%s]",
++    .ptr_reg_sreg_disp  = "%s[%s + %d*%s %s %u]",
++    .ptr_reg_reg        = "%s[%s + %s]",
++    .ptr_reg_reg_disp   = "%s[%s + %s %s %u]",
++    .ptr_sreg           = "%s[%d*%s]",
++    .ptr_disp           = "%s[%s%u]",
++    .ptr_imm64          = "%s[%s%llu]",
++    .ptr_imm32          = "%s[%s%u]",
++    .imm64              = "%s%llu",
++    .imm32              = "%s%u",
++    .reg                = "%s",
++};
++
++static size_t x86_opr_intel_mrm_str_internal(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a, x86_opr_formats *fmt)
++{
++    uint regsz = x86_opr_reg_size(c, a);
++    uint ptrsz = x86_opr_ptr_size(c, a);
++    uint addrsz = x86_codec_addr_size(c);
++    uint bcstsz = x86_opr_bcst_size(a.opr);
++    uint oprmem = x86_opr_mem_val(a.opr);
++    uint vmsz = x86_opr_ew_size(a.opr);
++    size_t len = 0;
++
++    int is_disp = c->disp32 != 0;
++    int is_scale = a.q.s != 0;
++    int is_sib = a.q.rm == x86_sp;
++    int is_vsib = oprmem == x86_opr_vm32 || oprmem == x86_opr_vm64;
++    int is_reg = a.q.mod == x86_mod_reg;
++    int is_disp0 = a.q.mod == x86_mod_disp0;
++    int is_disp8 = a.q.mod == x86_mod_disp8;
++    int is_base_bp = (a.q.b & 7) == x86_bp;
++    int is_base_sp = (a.q.b & 7) == x86_sp;
++    int is_index_sp = a.q.x == x86_sp;
++    int is_64bit = x86_codec_is64(c);
++    int is_evex = x86_codec_field_ce(c) == x86_ce_evex;
++
++    int is_ptr_rip = is_base_bp && is_disp0 && !is_sib && is_64bit;
++    int is_ptr_rip_disp = is_ptr_rip && is_disp;
++    int is_ptr_disp = is_base_bp && is_disp0 && (!is_sib ||
++                      (is_sib && !is_vsib && is_index_sp && !is_scale));
++    int is_ptr_sreg = is_sib && is_base_bp && is_disp0;
++    int is_ptr_reg_sreg = is_sib && is_scale;
++    int is_ptr_reg_sreg_disp = is_ptr_reg_sreg && is_disp;
++    int is_ptr_reg_reg = is_sib && !(is_base_sp && is_index_sp && !is_vsib);
++    int is_ptr_reg_reg_disp = is_ptr_reg_reg && is_disp;
++
++    int s = (1 << a.q.s);
++    uint d = c->disp32 < 0 ? -c->disp32 : c->disp32;
++
++    const char *so = c->disp32 < 0 ? "-" : "+";
++    const char *sn = c->disp32 < 0 ? "-" : "";
++    const char *p = is_vsib ? x86_ptr_size_str(vmsz) : x86_ptr_size_str(ptrsz);
++    const char *b = x86_reg_name(x86_sized_gpr(c, a.q.b, addrsz));
++    const char *x = is_vsib ? x86_reg_name(x86_sized_vec(a.q.x, regsz)) :
++        is_index_sp ? "riz" : x86_reg_name(x86_sized_gpr(c, a.q.x, addrsz));
++
++    if (is_disp8 && is_evex) {
++        d *= x86_opr_et_val(a.opr) ?
++            x86_opr_ew_bytes(a.opr) : x86_regsz_bytes(ptrsz);
++    }
++
++    if (is_reg) {
++        len = x86_opr_intel_reg_str_internal(buf, buflen, c, a, a.q.b);
++    } else if (is_ptr_rip_disp) {
++        len = xsnprintf(buf, buflen, fmt->ptr_rip_disp, p, so, d);
++    } else if (is_ptr_rip) {
++        len = xsnprintf(buf, buflen, fmt->ptr_rip, p);
++    } else if (is_ptr_disp) {
++        len = xsnprintf(buf, buflen, fmt->ptr_disp, p, sn, d);
++    } else if (is_ptr_sreg) {
++        len = xsnprintf(buf, buflen, fmt->ptr_sreg, p, s, x);
++    } else if (is_ptr_reg_sreg_disp) {
++        len = xsnprintf(buf, buflen, fmt->ptr_reg_sreg_disp, p, b, s, x, so, d);
++    } else if (is_ptr_reg_sreg) {
++        len = xsnprintf(buf, buflen, fmt->ptr_reg_sreg, p, b, s, x);
++    } else if (is_ptr_reg_reg_disp) {
++        len = xsnprintf(buf, buflen, fmt->ptr_reg_reg_disp, p, b, x, so, d);
++    } else if (is_ptr_reg_reg) {
++        len = xsnprintf(buf, buflen, fmt->ptr_reg_reg, p, b, x);
++    } else if (is_disp) {
++        len = xsnprintf(buf, buflen, fmt->ptr_reg_disp, p, b, so, d);
++    } else {
++        len = xsnprintf(buf, buflen, fmt->ptr_reg, p, b);
++    }
++
++    if (!is_reg && (a.q.k & 7) > 0 && (a.opr & x86_opr_flag_k) != 0) {
++        const char *k = x86_reg_name(x86_reg_kmask | (a.q.k & 7));
++        len += xsnprintf(buf + len, buflen - len, " {%s}", k);
++    }
++
++    if (bcstsz && a.q.brd) {
++        int bcstsc = x86_regsz_bytes(ptrsz) / x86_regsz_bytes(bcstsz);
++        len += xsnprintf(buf + len, buflen - len, "{1to%u}", bcstsc);
++    }
++
++    return len;
++}
++
++static size_t x86_opr_intel_mrm_dec_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_mrm_str_internal(buf, buflen, c, a,
++        &x86_opr_formats_intel_dec);
++}
++
++static size_t x86_opr_intel_mrm_hex_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_mrm_str_internal(buf, buflen, c, a,
++        &x86_opr_formats_intel_hex);
++}
++
++static size_t x86_opr_intel_reg_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_reg_str_internal(buf, buflen, c, a, a.q.r);
++}
++
++static size_t x86_opr_intel_vec_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_reg_str_internal(buf, buflen, c, a, a.q.v);
++}
++
++static size_t x86_opr_intel_opb_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_reg_str_internal(buf, buflen, c, a, a.q.b);
++}
++
++static size_t x86_opr_intel_is4_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    uint reg = (c->imm32 >> 4) & 15;
++    return x86_opr_intel_reg_str_internal(buf, buflen, c, a, reg);
++}
++
++static size_t x86_opr_intel_imm_str_internal(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a, x86_opr_formats *fmt)
++{
++    if (a.opr == x86_opr_moffs) {
++        uint regsz = x86_opr_reg_size(c, a);
++        if ((x86_codec_field_ci(c)) == x86_ci_i64) {
++            llong imm = c->imm64;
++            return xsnprintf(buf, buflen, fmt->ptr_imm64,
++                x86_ptr_size_str(regsz),
++                imm < 0 ? "-" : "", imm < 0 ? -imm : imm);
++        } else {
++            int imm = c->imm32;
++            return xsnprintf(buf, buflen, fmt->ptr_imm32,
++                x86_ptr_size_str(regsz),
++                imm < 0 ? "-" : "", imm < 0 ? -imm : imm);
++        }
++    } else {
++        if ((x86_codec_field_ci(c)) == x86_ci_i64) {
++            llong imm = c->imm64;
++            return xsnprintf(buf, buflen, fmt->imm64,
++                imm < 0 ? "-" : "", imm < 0 ? -imm : imm);
++        } else {
++            int imm = c->imm32;
++            return xsnprintf(buf, buflen, fmt->imm32,
++                imm < 0 ? "-" : "", imm < 0 ? -imm : imm);
++        }
++    }
++}
++
++static size_t x86_opr_intel_imm_hex_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_imm_str_internal(buf, buflen, c, a,
++        &x86_opr_formats_intel_hex);
++}
++
++static size_t x86_opr_intel_imm_dec_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    return x86_opr_intel_imm_str_internal(buf, buflen, c, a,
++        &x86_opr_formats_intel_dec);
++}
++
++static size_t x86_opr_intel_ime_hex_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    int imm = c->imm2;
++    return xsnprintf(buf, buflen, "%s0x%x",
++        imm < 0 ? "-" : "", imm < 0 ? -imm : imm);
++}
++
++static size_t x86_opr_intel_ime_dec_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a)
++{
++    int imm = c->imm2;
++    return xsnprintf(buf, buflen, "%s%u",
++        imm < 0 ? "-" : "", imm < 0 ? -imm : imm);
++}
++
++static size_t x86_opr_intel_rel_hex_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a, size_t pc_offset, x86_fmt_symbol sym_cb)
++{
++    size_t len = x86_opr_intel_imm_str_internal(buf, buflen, c, a,
++        &x86_opr_formats_intel_hex);
++    if (sym_cb) {
++        len += sym_cb(buf + len, buflen - len, c, pc_offset);
++    }
++    return len;
++}
++
++static size_t x86_opr_intel_rel_dec_str(char *buf, size_t buflen,
++    x86_codec *c, x86_arg a, size_t pc_offset, x86_fmt_symbol sym_cb)
++{
++    size_t len = x86_opr_intel_imm_str_internal(buf, buflen, c, a,
++        &x86_opr_formats_intel_dec);
++    if (sym_cb) {
++        len += sym_cb(buf + len, buflen - len, c, pc_offset);
++    }
++    return len;
++}
++
++static uint x86_opr_intel_const_reg(x86_codec *c,
++    x86_arg a)
++{
++    uint regsz = x86_opr_reg_size(c, a);
++    uint addrsz = x86_codec_addr_size(c);
++
++    switch (a.opr) {
++    case x86_opr_reg_al: return x86_al;
++    case x86_opr_reg_cl: return x86_cl;
++    case x86_opr_reg_ax: return x86_ax;
++    case x86_opr_reg_cx: return x86_cx;
++    case x86_opr_reg_dx: return x86_dx;
++    case x86_opr_reg_bx: return x86_bx;
++    case x86_opr_reg_eax: return x86_eax;
++    case x86_opr_reg_ecx: return x86_ecx;
++    case x86_opr_reg_edx: return x86_edx;
++    case x86_opr_reg_ebx: return x86_ebx;
++    case x86_opr_reg_rax: return x86_rax;
++    case x86_opr_reg_rcx: return x86_rcx;
++    case x86_opr_reg_rdx: return x86_rdx;
++    case x86_opr_reg_rbx: return x86_rbx;
++    case x86_opr_reg_aw: return x86_sized_gpr(c, x86_al, regsz);
++    case x86_opr_reg_cw: return x86_sized_gpr(c, x86_cl, regsz);
++    case x86_opr_reg_dw: return x86_sized_gpr(c, x86_dl, regsz);
++    case x86_opr_reg_bw: return x86_sized_gpr(c, x86_bl, regsz);
++    case x86_opr_reg_pa: return x86_sized_gpr(c, x86_al, addrsz);
++    case x86_opr_reg_pc: return x86_sized_gpr(c, x86_cl, addrsz);
++    case x86_opr_reg_pd: return x86_sized_gpr(c, x86_dl, addrsz);
++    case x86_opr_reg_pb: return x86_sized_gpr(c, x86_bl, addrsz);
++    default: break;
++    }
++    return -1;
++}
++
++static size_t x86_opr_intel_const_str(char *buf, size_t buflen, x86_codec *c,
++    x86_arg a)
++{
++    uint regsz = x86_opr_reg_size(c, a);
++    uint addrsz = x86_codec_addr_size(c);
++    int regname = x86_opr_intel_const_reg(c, a);
++
++    if (regname >= 0) {
++        return xsnprintf(buf, buflen, "%s", x86_reg_name(regname));
++    }
++
++    switch (a.opr) {
++    case x86_opr_1:
++        return xsnprintf(buf, buflen, "1");
++    case x86_opr_reg_xmm0:
++        return xsnprintf(buf, buflen, "%s", "xmm0");
++    case x86_opr_reg_xmm0_7:
++        return xsnprintf(buf, buflen, "%s", "xmm0_7");
++    case x86_opr_seg_fs:
++        return xsnprintf(buf, buflen, "fs");
++    case x86_opr_seg_gs:
++        return xsnprintf(buf, buflen, "gs");
++    case x86_opr_reg_st0:
++        return xsnprintf(buf, buflen, "st");
++    case x86_opr_reg_psi:
++        return xsnprintf(buf, buflen, "%s[%s]",
++            x86_ptr_size_str(regsz),
++            x86_reg_name(x86_sized_gpr(c, x86_sil, addrsz)));
++    case x86_opr_reg_pdi:
++        return xsnprintf(buf, buflen, "%s[%s]",
++            x86_ptr_size_str(regsz),
++            x86_reg_name(x86_sized_gpr(c, x86_dil, addrsz)));
++    default: return xsnprintf(buf, buflen, "%s", "unknown");
++    }
++}
++
++x86_opr_formatter x86_format_intel_hex =
++{
++    .fmt_const = &x86_opr_intel_const_str,
++    .fmt_imm = &x86_opr_intel_imm_hex_str,
++    .fmt_reg = &x86_opr_intel_reg_str,
++    .fmt_mrm = &x86_opr_intel_mrm_hex_str,
++    .fmt_vec = &x86_opr_intel_vec_str,
++    .fmt_opb = &x86_opr_intel_opb_str,
++    .fmt_is4 = &x86_opr_intel_is4_str,
++    .fmt_ime = &x86_opr_intel_ime_hex_str,
++    .fmt_rel = &x86_opr_intel_rel_hex_str
++};
++
++x86_opr_formatter x86_format_intel_dec =
++{
++    .fmt_const = &x86_opr_intel_const_str,
++    .fmt_imm = &x86_opr_intel_imm_dec_str,
++    .fmt_reg = &x86_opr_intel_reg_str,
++    .fmt_mrm = &x86_opr_intel_mrm_dec_str,
++    .fmt_vec = &x86_opr_intel_vec_str,
++    .fmt_opb = &x86_opr_intel_opb_str,
++    .fmt_is4 = &x86_opr_intel_is4_str,
++    .fmt_ime = &x86_opr_intel_ime_dec_str,
++    .fmt_rel = &x86_opr_intel_rel_dec_str
++};
++
++static size_t x86_format_operand(char *buf, size_t buflen, x86_codec *c,
++    x86_arg a, size_t pc_offset, x86_fmt_symbol sym_cb, x86_opr_formatter *fmt)
++{
++    switch (x86_ord_type_val(a.ord)) {
++    case x86_ord_const:
++        return fmt->fmt_const(buf, buflen, c, a);
++    case x86_ord_reg:
++        return fmt->fmt_reg(buf, buflen, c, a);
++    case x86_ord_mrm:
++        return fmt->fmt_mrm(buf, buflen, c, a);
++    case x86_ord_vec:
++        return fmt->fmt_vec(buf, buflen, c, a);
++    case x86_ord_opr:
++        return fmt->fmt_opb(buf, buflen, c, a);
++    case x86_ord_imm:
++        if (a.opr == x86_opr_rel8 || a.opr == x86_opr_relw) {
++            return fmt->fmt_rel(buf, buflen, c, a, pc_offset, sym_cb);
++        } else if ((a.ord & ~x86_ord_flag_mask) == x86_ord_is4) {
++            return fmt->fmt_is4(buf, buflen, c, a);
++        } else if ((a.ord & ~x86_ord_flag_mask) == x86_ord_ime) {
++            return fmt->fmt_ime(buf, buflen, c, a);
++        } else {
++            return fmt->fmt_imm(buf, buflen, c, a);
++        }
++    default: return 0;
++    }
++}
++
++static size_t x86_format_op_internal(char *buf, size_t buflen, x86_ctx *ctx,
++    x86_codec *c, size_t pc_offset, x86_fmt_symbol sym_cb)
++{
++    const x86_opc_data *d = ctx->idx->map + c->rec;
++    const x86_opr_data *o = x86_opr_table + d->opr;
++    const x86_ord_data *s = x86_ord_table + d->ord;
++
++    x86_operands q = x86_codec_operands(ctx, c);
++
++    size_t len = 0;
++    uint prefix = d->enc & x86_enc_p_mask;
++
++    if (x86_codec_has_lock(c)) {
++        len += xsnprintf(buf + len, buflen - len, "lock ");
++    }
++    if (x86_codec_has_rep(c) && prefix != x86_enc_p_f3) {
++        len += xsnprintf(buf + len, buflen - len, "rep ");
++    }
++    if (x86_codec_has_repne(c) && prefix != x86_enc_p_f2) {
++        len += xsnprintf(buf + len, buflen - len, "repne ");
++    }
++    if (x86_codec_has_wait(c) && prefix != x86_enc_p_9b) {
++        len += xsnprintf(buf + len, buflen - len, "wait ");
++    }
++
++    len += xsnprintf(buf + len, buflen - len, "%s", x86_op_names[d->op]);
++
++    for (size_t i = 0; i < array_size(o->opr) && o->opr[i]; i++) {
++        x86_arg a = x86_codec_meta(d->enc, o->opr[i], s->ord[i], q);
++        len += xsnprintf(buf + len, buflen - len, i == 0 ? "\t" : ", ");
++        len += x86_format_operand(buf + len, buflen - len, c, a,
++            pc_offset, sym_cb, &x86_format_intel_dec);
++    }
++
++    return len;
++}
++
++size_t x86_format_op(char *buf, size_t buflen, x86_ctx *ctx, x86_codec *c)
++{
++    return x86_format_op_internal(buf, buflen, ctx, c, 0, NULL);
++}
++
++size_t x86_format_op_symbol(char *buf, size_t buflen, x86_ctx *ctx,
++    x86_codec *c, size_t pc_offset, x86_fmt_symbol sym_cb)
++{
++    /* note: caller needs to add instruction length to pc_offset */
++    return x86_format_op_internal(buf, buflen, ctx, c, pc_offset, sym_cb);
++}
++
++size_t x86_format_hex(char *buf, size_t buflen, uchar *data, size_t datalen)
++{
++    size_t len = 0;
++    for (size_t i = 0; i < datalen && i < 11; i++) {
++        len += xsnprintf(buf + len, buflen - len, i == 0 ? "\t" : " ");
++        len += xsnprintf(buf + len, buflen - len, "%02hhx", data[i]);
++    }
++    size_t tabs = datalen < 10 ? (40 - datalen * 3) / 8 : 1;
++    for (size_t i = 0; i < tabs ; i++) {
++        len += xsnprintf(buf + len, buflen - len, "\t");
++    }
++    return len;
++}
++
++/*
++ * context
++ */
++
++x86_ctx *x86_ctx_create(uint mode)
++{
++    x86_ctx *ctx = g_malloc(sizeof(x86_ctx));
++    ctx->mode = mode;
++    ctx->idx = x86_table_build(mode);
++    return ctx;
++}
++
++void x86_ctx_destroy(x86_ctx *ctx)
++{
++    g_free(ctx->idx->page_offsets);
++    g_free(ctx->idx->map);
++    g_free(ctx->idx->acc);
++    g_free(ctx);
++}
+diff --git a/disas/x86-disas.c b/disas/x86-disas.c
+new file mode 100644
+index 000000000000..9ea21f26075b
+--- /dev/null
++++ b/disas/x86-disas.c
+@@ -0,0 +1,94 @@
++/*
++ * Copyright (c) 2024-2025 Michael Clark
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included
++ * in all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
++ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
++ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++#include "qemu/osdep.h"
++#include "disas/dis-asm.h"
++#include "disas/x86.h"
++
++static size_t format_hex(char *buf, size_t buflen, uchar *data, size_t nbytes)
++{
++    size_t len = 0;
++    size_t indent = 1;
++
++    const size_t hexcols = 10;
++
++    for (size_t i = 0; i < nbytes; i++) {
++        len += snprintf(buf + len, buflen - len, " %02x" + (i == 0), data[i]);
++    }
++    if (hexcols - nbytes < hexcols) {
++        indent = (hexcols - nbytes) * 3 + 8 - (hexcols * 3) % 8;
++    }
++    for (size_t i = 0; i < indent && len < (buflen - 1); i++) {
++        buf[len++] = ' ';
++    }
++    buf[len] = '\0';
++
++    return len;
++}
++
++static size_t format_symbol(char *buf, size_t buflen, x86_codec *c,
++    size_t pc_offset)
++{
++    ullong addr = pc_offset + c->imm32;
++    return snprintf(buf, buflen, " # 0x%llx", addr);
++}
++
++int print_insn_x86(bfd_vma memaddr, struct disassemble_info *info)
++{
++    x86_buffer buf;
++    x86_codec codec;
++    x86_ctx *ctx;
++    bfd_byte *packet;
++    size_t nfetch, ndecode, len;
++    char str[128];
++    int ret;
++
++    static const size_t max_fetch_len = 16;
++
++    /* read instruction */
++    nfetch = info->buffer_vma + info->buffer_length - memaddr;
++    if (nfetch > max_fetch_len) {
++        nfetch = max_fetch_len;
++    }
++    packet = alloca(nfetch);
++    ret = (*info->read_memory_func)(memaddr, packet, nfetch, info);
++    if (ret != 0) {
++        (*info->memory_error_func)(ret, memaddr, info);
++        return ret;
++    }
++
++    /* decode instruction */
++    ctx = (x86_ctx *)info->private_data;
++    x86_buffer_init_ex(&buf, packet, 0, nfetch);
++    ret = x86_codec_read(ctx, &buf, &codec, &ndecode);
++    if (ret != 0) {
++        return -1;
++    }
++
++    /* format instruction */
++    len = format_hex(str, sizeof(str), packet, ndecode);
++    x86_format_op_symbol(str + len, sizeof(str) - len, ctx, &codec,
++        memaddr + ndecode, format_symbol);
++    (*info->fprintf_func)(info->stream, "%s", str);
++
++    return ndecode;
++}
+diff --git a/disas/x86.h b/disas/x86.h
+new file mode 100644
+index 000000000000..87e87a0dcb92
+--- /dev/null
++++ b/disas/x86.h
+@@ -0,0 +1,1858 @@
++/*
++ * Copyright (c) 2024-2025 Michael Clark
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included
++ * in all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
++ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
++ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++#pragma once
++
++#include <stddef.h>
++#include <string.h>
++
++#include "qemu/bswap.h"
++
++/*
++ * types
++ */
++
++typedef unsigned char uchar;
++typedef unsigned short ushort;
++typedef unsigned int uint;
++typedef unsigned long ulong;
++typedef unsigned long long ullong;
++typedef long long llong;
++
++typedef char i8;
++typedef short i16;
++typedef int i32;
++typedef llong i64;
++
++typedef uchar u8;
++typedef ushort u16;
++typedef uint u32;
++typedef ullong u64;
++
++/*
++ * x86 forward declarations
++ */
++
++typedef struct x86_rex x86_rex;
++typedef struct x86_rex2 x86_rex2;
++typedef struct x86_vex2 x86_vex2;
++typedef struct x86_vex3 x86_vex3;
++typedef struct x86_evex x86_evex;
++typedef struct x86_modrm x86_modrm;
++typedef struct x86_sib x86_sib;
++
++typedef struct x86_mem x86_mem;
++typedef struct x86_codec x86_codec;
++typedef struct x86_modeb x86_modeb;
++typedef struct x86_opc_data x86_opc_data;
++typedef struct x86_opr_data x86_opr_data;
++typedef struct x86_ord_data x86_ord_data;
++typedef struct x86_table_idx x86_table_idx;
++typedef struct x86_acc_idx x86_acc_idx;
++typedef struct x86_acc_entry x86_acc_entry;
++typedef struct x86_buffer x86_buffer;
++typedef struct x86_ctx x86_ctx;
++
++/*
++ * simple debug macros
++ */
++
++#define VA_ARGS(...) , ##__VA_ARGS__
++#define x86_debug(fmt, ...) if (debug) \
++    printf(fmt "\n" VA_ARGS(__VA_ARGS__))
++#define x86_debugf(fmt, ...) if (debug) \
++    printf("%s: " fmt "\n", __func__ VA_ARGS(__VA_ARGS__))
++
++/*
++ * register groups
++ */
++
++enum
++{
++    x86_reg_w     = (0 << 5),
++    x86_reg_b     = (1 << 5),
++    x86_reg_d     = (2 << 5),
++    x86_reg_q     = (3 << 5),
++
++    x86_reg_mmx   = (4 << 5),
++    x86_reg_xmm   = (5 << 5),
++    x86_reg_ymm   = (6 << 5),
++    x86_reg_zmm   = (7 << 5),
++
++    x86_reg_kmask = (8 << 5),
++    x86_reg_bl    = (9 << 5),
++    x86_reg_fpu   = (10 << 5),
++    x86_reg_bnd   = (11 << 5),
++
++    x86_reg_dreg  = (12 << 5),
++    x86_reg_creg  = (13 << 5),
++    x86_reg_sreg  = (14 << 5),
++    x86_reg_sys   = (15 << 5),
++};
++
++/*
++ * prefix byte
++ */
++
++enum
++{
++    x86_pb_26    = 0x26,
++    x86_pb_2e    = 0x2e,
++    x86_pb_36    = 0x36,
++    x86_pb_3e    = 0x3e,
++    x86_pb_41    = 0x41,
++    x86_pb_42    = 0x42,
++    x86_pb_44    = 0x44,
++    x86_pb_48    = 0x48,
++    x86_pb_62    = 0x62,
++    x86_pb_64    = 0x64,
++    x86_pb_65    = 0x65,
++    x86_pb_66    = 0x66,
++    x86_pb_67    = 0x67,
++    x86_pb_9b    = 0x9b,
++    x86_pb_c4    = 0xc4,
++    x86_pb_c5    = 0xc5,
++    x86_pb_d5    = 0xd5,
++    x86_pb_f0    = 0xf0,
++    x86_pb_f2    = 0xf2,
++    x86_pb_f3    = 0xf3,
++
++    x86_pb_es    = x86_pb_26,
++    x86_pb_cs    = x86_pb_2e, /* branch not taken with Jcc */
++    x86_pb_ss    = x86_pb_36,
++    x86_pb_ds    = x86_pb_3e, /* branch taken with Jcc (CET notrack) */
++    x86_pb_rex_b = x86_pb_41,
++    x86_pb_rex_x = x86_pb_42,
++    x86_pb_rex_r = x86_pb_44,
++    x86_pb_rex_w = x86_pb_48,
++    x86_pb_evex  = x86_pb_62,
++    x86_pb_fs    = x86_pb_64,
++    x86_pb_gs    = x86_pb_65,
++    x86_pb_osize = x86_pb_66,
++    x86_pb_asize = x86_pb_67,
++    x86_pb_wait  = x86_pb_9b, /* x87 */
++    x86_pb_vex3  = x86_pb_c4,
++    x86_pb_vex2  = x86_pb_c5,
++    x86_pb_rex2  = x86_pb_d5,
++    x86_pb_lock  = x86_pb_f0,
++    x86_pb_repne = x86_pb_f2, /* REPNE/REPNZ and XACQUIRE */
++    x86_pb_rep   = x86_pb_f3, /* REP/REPE/REPZ and XRELEASE */
++};
++
++/*
++ * mod values
++ */
++
++enum
++{
++    x86_mod_disp0,
++    x86_mod_disp8,
++    x86_mod_dispw,
++    x86_mod_reg,
++};
++
++/*
++ * SIB scale
++ */
++
++enum
++{
++    x86_scale_1,
++    x86_scale_2,
++    x86_scale_4,
++    x86_scale_8,
++};
++
++/*
++ * segment
++ */
++
++enum
++{
++    x86_seg_none,
++    x86_seg_es,
++    x86_seg_cs,
++    x86_seg_ss,
++    x86_seg_ds,
++    x86_seg_fs,
++    x86_seg_gs
++};
++
++/*
++ * REX flags
++ */
++
++enum
++{
++    x86_rex_b = 0x01,
++    x86_rex_x = 0x02,
++    x86_rex_r = 0x04,
++    x86_rex_w = 0x08,
++};
++
++/*
++ * VEX prefix
++ */
++
++enum
++{
++    x86_pfx_none,
++    x86_pfx_66,
++    x86_pfx_f3,
++    x86_pfx_f2,
++    x86_pfx_9b,
++    x86_pfx_rexw = 8
++};
++
++/*
++ * VEX map
++ */
++
++enum
++{
++    x86_map_none,
++    x86_map_0f,
++    x86_map_0f38,
++    x86_map_0f3a,
++    x86_map_map4,
++    x86_map_map5,
++    x86_map_map6,
++};
++
++/*
++ * VEX length
++ */
++
++enum
++{
++    x86_vex_l0 = 0,
++    x86_vex_l1 = 1,
++    x86_vex_l2 = 2,
++    x86_vex_l3 = 3,
++    x86_vex_lz = x86_vex_l0,
++    x86_vex_lig = x86_vex_l3,
++    x86_vex_l128 = x86_vex_l0,
++    x86_vex_l256 = x86_vex_l1,
++    x86_vex_l512 = x86_vex_l2,
++};
++
++/*
++ * VEX width
++ */
++
++enum
++{
++    x86_vex_w0,
++    x86_vex_w1,
++};
++
++/*
++ * condition codes (x86)
++ */
++
++enum
++{
++    x86_cc_o     = 0,  /* overflow */
++    x86_cc_no    = 1,  /* no overflow */
++    x86_cc_b     = 2,  /* below */
++    x86_cc_c     = 2,  /* carry */
++    x86_cc_nae   = 2,  /* neither-above-nor-equal */
++    x86_cc_nb    = 3,  /* not-below */
++    x86_cc_nc    = 3,  /* not-carry */
++    x86_cc_ae    = 3,  /* above-or-equal */
++    x86_cc_e     = 4,  /* equal */
++    x86_cc_z     = 4,  /* zero */
++    x86_cc_ne    = 5,  /* not-equal */
++    x86_cc_nz    = 5,  /* not-zero */
++    x86_cc_be    = 6,  /* below-or-equal */
++    x86_cc_na    = 6,  /* not-above */
++    x86_cc_nbe   = 7,  /* neither-below-nor-equal */
++    x86_cc_a     = 7,  /* above */
++    x86_cc_s     = 8,  /* sign */
++    x86_cc_ns    = 9,  /* no-sign */
++    x86_cc_p     = 10, /* parity */
++    x86_cc_pe    = 10, /* parity-even */
++    x86_cc_np    = 11, /* no-parity */
++    x86_cc_po    = 11, /* parity-odd */
++    x86_cc_l     = 12, /* less */
++    x86_cc_nge   = 12, /* neither-greater-nor-equal */
++    x86_cc_nl    = 13, /* not-less */
++    x86_cc_ge    = 13, /* greater-or-equal */
++    x86_cc_le    = 14, /* less-or-equal */
++    x86_cc_ng    = 14, /* not-greater */
++    x86_cc_nle   = 15, /* neither-less-nor-equal- */
++    x86_cc_g     = 15, /* greater */
++};
++
++/*
++ * condition codes (agnostic)
++ */
++
++enum
++{
++    x86_o        = 0,  /* overflow (signed) */
++    x86_no       = 1,  /* not-overflow (signed) */
++    x86_c        = 2,  /* carry */
++    x86_nc       = 3,  /* not-carry */
++    x86_ltu      = 2,  /* less-than (unsigned) */
++    x86_geu      = 3,  /* greater-than-or-equal (unsigned) */
++    x86_eq       = 4,  /* equal */
++    x86_ne       = 5,  /* not-equal */
++    x86_leu      = 6,  /* less-than-or-equal (unsigned) */
++    x86_gtu      = 7,  /* greater-than (unsigned) */
++    x86_s        = 8,  /* sign */
++    x86_ns       = 9,  /* not-sign */
++    x86_lt       = 12, /* less-than (signed) */
++    x86_ge       = 13, /* greater-than-or-equal (signed) */
++    x86_le       = 14, /* less-than-or-equal (signed) */
++    x86_gt       = 15, /* greater-than (signed) */
++};
++
++/*
++ * compare packed operators
++ *
++ * oq = ordered queit, os = ordered signalling
++ * uq = unordered queit, us = unordered signalling
++ */
++
++enum
++{
++    x86_eq_oq    = 0x00,
++    x86_lt_os    = 0x01,
++    x86_le_os    = 0x02,
++    x86_unord_q  = 0x03,
++    x86_neq_uq   = 0x04,
++    x86_nlt_us   = 0x05,
++    x86_nle_us   = 0x06,
++    x86_ord_q    = 0x07,
++    x86_eq_uq    = 0x08,
++    x86_nge_us   = 0x09,
++    x86_ngt_us   = 0x0a,
++    x86_false_oq = 0x0b,
++    x86_neq_oq   = 0x0c,
++    x86_ge_os    = 0x0d,
++    x86_gt_os    = 0x0e,
++    x86_true_uq  = 0x0f,
++    x86_eq_os    = 0x10,
++    x86_lt_oq    = 0x11,
++    x86_le_oq    = 0x12,
++    x86_unord_s  = 0x13,
++    x86_neq_us   = 0x14,
++    x86_nlt_uq   = 0x15,
++    x86_nle_uq   = 0x16,
++    x86_ord_s    = 0x17,
++    x86_eq_us    = 0x18,
++    x86_nge_uq   = 0x19,
++    x86_ngt_uq   = 0x1a,
++    x86_false_os = 0x1b,
++    x86_neq_os   = 0x1c,
++    x86_ge_oq    = 0x1d,
++    x86_gt_oq    = 0x1e,
++    x86_true_us  = 0x1f,
++};
++
++/*
++ * prefix encoding structures
++ */
++
++/*
++ * ModRM struct
++ */
++
++struct x86_modrm
++{
++    union {
++        uchar data[1];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0:2] */ uchar rm:3;
++            /* [3:5] */ uchar reg:3;
++            /* [6:7] */ uchar mod:2;
++        };
++    };
++};
++
++/*
++ * ModRM values
++ */
++
++enum
++{
++    x86_rm_sp_sib       = 4,
++    x86_rm_bp_disp0     = 5,
++
++    x86_modrm_rm_mask   = 7,
++    x86_modrm_reg_shift = 3,
++    x86_modrm_reg_mask  = 7,
++    x86_modrm_mod_shift = 6,
++    x86_modrm_mod_mask  = 3,
++};
++
++/*
++ * ModRM accessors
++ */
++
++static inline uint x86_modrm_rm(uchar modrm) {
++    return modrm & x86_modrm_rm_mask;
++}
++static inline uint x86_modrm_reg(uchar modrm) {
++    return (modrm >> x86_modrm_reg_shift) & x86_modrm_reg_mask;
++}
++static inline uint x86_modrm_mod(uchar modrm) {
++    return (modrm >> x86_modrm_mod_shift) & x86_modrm_mod_mask;
++}
++
++/*
++ * SIB struct
++ */
++
++struct x86_sib
++{
++    union {
++        uchar data[1];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0:2] */ uchar b : 3; /* base[0:2] */
++            /* [3:5] */ uchar x : 3; /* index[0:2] */
++            /* [6:7] */ uchar s : 2; /* scale[0:2] */
++        };
++    };
++};
++
++/*
++ * SIB values
++ */
++
++enum {
++    x86_sib_b_mask = 7,
++    x86_sib_x_shift = 3,
++    x86_sib_x_mask = 7,
++    x86_sib_s_shift = 6,
++    x86_sib_s_mask = 3
++};
++
++/*
++ * SIB accessors
++ */
++
++static inline uint x86_sib_b(uchar sib) {
++    return sib & x86_sib_b_mask;
++}
++static inline uint x86_sib_x(uchar sib) {
++    return (sib >> x86_sib_x_shift) & x86_sib_x_mask;
++}
++static inline uint x86_sib_s(uchar sib) {
++    return (sib >> x86_sib_s_shift) & x86_sib_s_mask;
++}
++
++/*
++ * REX struct
++ */
++
++struct x86_rex
++{
++    union {
++        uchar data[1];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0] */ uchar b3 : 1; /* base[3] */
++            /* [1] */ uchar x3 : 1; /* index[3] */
++            /* [2] */ uchar r3 : 1; /* reg[3] */
++            /* [3] */ uchar w  : 1; /* width */
++        };
++    };
++};
++
++
++/*
++ * REX2 struct
++ */
++
++struct x86_rex2
++{
++    union {
++        uchar data[1];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0] */ uchar b3 : 1; /* base[3] */
++            /* [1] */ uchar x3 : 1; /* index[3] */
++            /* [2] */ uchar r3 : 1; /* reg[3] */
++            /* [3] */ uchar w  : 1; /* width */
++            /* [4] */ uchar b4 : 1; /* base[4] */
++            /* [5] */ uchar x4 : 1; /* index[4] */
++            /* [6] */ uchar r4 : 1; /* reg[4] */
++            /* [7] */ uchar m0 : 1; /* map prefix 0x0f */
++        };
++    };
++};
++
++
++/*
++ * VEX2 struct
++ */
++
++struct x86_vex2
++{
++    union {
++        uchar data[1];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0:1] */ uchar p   : 2; /* see x86_pfx */
++            /*   [2] */ uchar l   : 1; /* len 0=128 1=256 */
++            /* [3:6] */ uchar vn  : 4; /* ~vec[0:3] */
++            /*   [7] */ uchar r3n : 1; /* ~reg[3] */
++        };
++    };
++};
++
++/*
++ * VEX3 struct
++ */
++
++struct x86_vex3
++{
++    union {
++        uchar data[2];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0:4] */ uchar m   : 5; /* see x86_map */
++            /*   [5] */ uchar b3n : 1; /* ~base[3] */
++            /*   [6] */ uchar x3n : 1; /* ~index[3] */
++            /*   [7] */ uchar r3n : 1; /* ~reg[3] */
++
++            /* [0:1] */ uchar p   : 2; /* see x86_pfx */
++            /*   [2] */ uchar l   : 1; /* len 0=128 1=256 */
++            /* [3:6] */ uchar vn  : 4; /* ~vec[0:3] */
++            /*   [7] */ uchar w   : 1; /* width */
++        };
++    };
++};
++
++/*
++ * EVEX struct
++ */
++
++struct x86_evex
++{
++    union {
++        uchar data[3];
++        /* note: bitfield used for documentation purposes only */
++        struct {
++            /* [0:2] */ uchar m   : 3; /* see x86_map */
++            /*   [3] */ uchar b4  : 1; /* base[4] */
++            /*   [4] */ uchar r4n : 1; /* ~reg[4] */
++            /*   [5] */ uchar b3n : 1; /* ~base[3] */
++            /*   [6] */ uchar x3n : 1; /* ~index[3] */
++            /*   [7] */ uchar r3n : 1; /* ~reg[3] */
++
++            /* [0:1] */ uchar p   : 2; /* see x86_pfx */
++            /*   [2] */ uchar x4n : 1; /* ~index[4] */
++            /* [3:6] */ uchar vn  : 4; /* ~vec[0:3] */
++            /*   [7] */ uchar w   : 1; /* width */
++
++            /* [0:2] */ uchar a   : 3; /* kmask[0:2] or map4.NF[2] no-flags */
++            /*   [3] */ uchar v4n : 1; /* ~vec[4] */
++            /*   [4] */ uchar br  : 1; /* broadcast or map4.ND[4] new-dest */
++            /* [5:6] */ uchar l   : 2; /* len 00=128 01=256, 10=512 */
++            /*   [7] */ uchar z   : 1; /* merge/zero */
++        };
++    };
++};
++
++/*
++ * opcode encoding
++ */
++
++enum
++{
++    x86_enc_w_shift          = 0,
++    x86_enc_m_shift          = x86_enc_w_shift + 3,
++    x86_enc_p_shift          = x86_enc_m_shift + 3,
++    x86_enc_l_shift          = x86_enc_p_shift + 4,
++    x86_enc_t_shift          = x86_enc_l_shift + 3,
++    x86_enc_o_shift          = x86_enc_t_shift + 2,
++    x86_enc_f_shift          = x86_enc_o_shift + 1,
++    x86_enc_i_shift          = x86_enc_f_shift + 3,
++    x86_enc_j_shift          = x86_enc_i_shift + 3,
++    x86_enc_r_shift          = x86_enc_j_shift + 2,
++    x86_enc_s_shift          = x86_enc_r_shift + 3,
++
++    x86_enc_w_w0             = (1 << x86_enc_w_shift),
++    x86_enc_w_w1             = (2 << x86_enc_w_shift),
++    x86_enc_w_wb             = (3 << x86_enc_w_shift),
++    x86_enc_w_wn             = (4 << x86_enc_w_shift),
++    x86_enc_w_wx             = (5 << x86_enc_w_shift),
++    x86_enc_w_ww             = (6 << x86_enc_w_shift),
++    x86_enc_w_wig            = (7 << x86_enc_w_shift),
++    x86_enc_w_mask           = (7 << x86_enc_w_shift),
++
++    x86_enc_m_none           = (0 << x86_enc_m_shift),
++    x86_enc_m_0f             = (1 << x86_enc_m_shift),
++    x86_enc_m_0f38           = (2 << x86_enc_m_shift),
++    x86_enc_m_0f3a           = (3 << x86_enc_m_shift),
++    x86_enc_m_map4           = (4 << x86_enc_m_shift),
++    x86_enc_m_map5           = (5 << x86_enc_m_shift),
++    x86_enc_m_map6           = (6 << x86_enc_m_shift),
++    x86_enc_m_mask           = (7 << x86_enc_m_shift),
++
++    x86_enc_p_none           = (0 << x86_enc_p_shift),
++    x86_enc_p_66             = (1 << x86_enc_p_shift),
++    x86_enc_p_f3             = (2 << x86_enc_p_shift),
++    x86_enc_p_f2             = (3 << x86_enc_p_shift),
++    x86_enc_p_9b             = (4 << x86_enc_p_shift),
++    x86_enc_p_rexw           = (8 << x86_enc_p_shift),
++    x86_enc_p_mask           = (7 << x86_enc_p_shift),
++    x86_enc_prexw_mask       = (15 << x86_enc_p_shift),
++
++    x86_enc_l_lz             = (1 << x86_enc_l_shift),
++    x86_enc_l_l0             = (2 << x86_enc_l_shift),
++    x86_enc_l_l1             = (3 << x86_enc_l_shift),
++    x86_enc_l_128            = (4 << x86_enc_l_shift),
++    x86_enc_l_256            = (5 << x86_enc_l_shift),
++    x86_enc_l_512            = (6 << x86_enc_l_shift),
++    x86_enc_l_lig            = (7 << x86_enc_l_shift),
++    x86_enc_l_mask           = (7 << x86_enc_l_shift),
++
++    x86_enc_t_none           = (0 << x86_enc_t_shift),
++    x86_enc_t_lex            = (1 << x86_enc_t_shift),
++    x86_enc_t_vex            = (2 << x86_enc_t_shift),
++    x86_enc_t_evex           = (3 << x86_enc_t_shift),
++    x86_enc_t_mask           = (3 << x86_enc_t_shift),
++
++    x86_enc_o_opcode_r       = (1 << x86_enc_o_shift), /* XX+r */
++    x86_enc_o_mask           = (1 << x86_enc_o_shift),
++
++    x86_enc_f_modrm_r        = (1 << x86_enc_f_shift), /* /r */
++    x86_enc_f_modrm_n        = (2 << x86_enc_f_shift), /* /N */
++    x86_enc_f_opcode         = (3 << x86_enc_f_shift), /* XX */
++    x86_enc_f_opcode_r       = (4 << x86_enc_f_shift), /* XX+r */
++    x86_enc_f_mask           = (7 << x86_enc_f_shift),
++
++    x86_enc_i_ib             = (1 << x86_enc_i_shift),
++    x86_enc_i_iw             = (2 << x86_enc_i_shift),
++    x86_enc_i_iwd            = (3 << x86_enc_i_shift),
++    x86_enc_i_i16            = (4 << x86_enc_i_shift),
++    x86_enc_i_i32            = (5 << x86_enc_i_shift),
++    x86_enc_i_i64            = (6 << x86_enc_i_shift),
++    x86_enc_i_mask           = (7 << x86_enc_i_shift),
++
++    x86_enc_j_ib             = (1 << x86_enc_j_shift),
++    x86_enc_j_i16            = (2 << x86_enc_j_shift),
++    x86_enc_j_mask           = (3 << x86_enc_j_shift),
++
++    x86_enc_r_rep            = (1 << x86_enc_r_shift),
++    x86_enc_r_lock           = (2 << x86_enc_r_shift),
++    x86_enc_r_norexb         = (4 << x86_enc_r_shift),
++    x86_enc_r_mask           = (7 << x86_enc_r_shift),
++
++    x86_enc_s_o16            = (1 << x86_enc_s_shift),
++    x86_enc_s_o32            = (2 << x86_enc_s_shift),
++    x86_enc_s_o64            = (3 << x86_enc_s_shift),
++    x86_enc_s_a16            = (4 << x86_enc_s_shift),
++    x86_enc_s_a32            = (5 << x86_enc_s_shift),
++    x86_enc_s_a64            = (6 << x86_enc_s_shift),
++    x86_enc_s_mask           = (7 << x86_enc_s_shift),
++
++    x86_enc_immediate_mask   = x86_enc_i_mask | x86_enc_j_mask,
++    x86_enc_suffix_mask      = x86_enc_r_mask | x86_enc_s_mask,
++    x86_enc_param_mask       = x86_enc_immediate_mask | x86_enc_suffix_mask
++};
++
++/*
++ * opcode encoding accessors
++ */
++
++static inline uint x86_enc_width(uint enc) {
++    return enc & x86_enc_w_mask;
++}
++static inline uint x86_enc_prefix(uint enc) {
++    return enc & x86_enc_prexw_mask;
++}
++static inline uint x86_enc_length(uint enc) {
++    return enc & x86_enc_l_mask;
++}
++static inline uint x86_enc_opcode(uint enc) {
++    return enc & x86_enc_o_mask;
++}
++static inline uint x86_enc_func(uint enc) {
++    return enc & x86_enc_f_mask;
++}
++static inline uint x86_enc_map(uint enc) {
++    return enc & x86_enc_m_mask;
++}
++static inline uint x86_enc_imm(uint enc) {
++    return enc & x86_enc_i_mask;
++}
++static inline uint x86_enc_imm2(uint enc) {
++    return enc & x86_enc_j_mask;
++}
++static inline uint x86_enc_type(uint enc) {
++    return enc & x86_enc_t_mask;
++}
++static inline uint x86_enc_suffix(uint enc) {
++    return enc & x86_enc_suffix_mask;
++}
++static inline uint x86_enc_leading(uint enc) {
++    return enc & ~x86_enc_param_mask;
++}
++static inline uint x86_enc_has_rep(uint enc) {
++    return enc & x86_enc_r_rep;
++}
++static inline uint x86_enc_has_lock(uint enc) {
++    return enc & x86_enc_r_lock;
++}
++static inline uint x86_enc_has_norexb(uint enc) {
++    return enc & x86_enc_r_norexb;
++}
++static inline uint x86_enc_has_o16(uint enc) {
++    return (enc & x86_enc_s_mask) == x86_enc_s_o16;
++}
++static inline uint x86_enc_has_o32(uint enc) {
++    return (enc & x86_enc_s_mask) == x86_enc_s_o32;
++}
++static inline uint x86_enc_has_o64(uint enc) {
++    return (enc & x86_enc_s_mask) == x86_enc_s_o64;
++}
++static inline uint x86_enc_has_a16(uint enc) {
++    return (enc & x86_enc_s_mask) == x86_enc_s_a16;
++}
++static inline uint x86_enc_has_a32(uint enc) {
++    return (enc & x86_enc_s_mask) == x86_enc_s_a32;
++}
++static inline uint x86_enc_has_a64(uint enc) {
++    return (enc & x86_enc_s_mask) == x86_enc_s_a64;
++}
++
++/*
++ * operand encoding
++ */
++
++enum
++{
++    x86_opr_none,
++
++    /* operand field shifts */
++    x86_opr_ot               = 8,
++    x86_opr_os               = x86_opr_ot + 4,
++    x86_opr_ms               = x86_opr_os + 4,
++    x86_opr_av               = x86_opr_ms + 4,
++    x86_opr_et               = x86_opr_av + 4,
++    x86_opr_ew               = x86_opr_et + 2,
++    x86_opr_ec               = x86_opr_ew + 3,
++
++    x86_opr_ot_mask          = (15 << x86_opr_ot), /* operand type */
++    x86_opr_os_mask          = (15 << x86_opr_os), /* operand size */
++    x86_opr_ms_mask          = (15 << x86_opr_ms), /* memory size */
++    x86_opr_av_mask          = (15 << x86_opr_av), /* auxiliary value */
++    x86_opr_et_mask          = (3 << x86_opr_et), /* element type */
++    x86_opr_ew_mask          = (7 << x86_opr_ew), /* element width */
++    x86_opr_ec_mask          = (7 << x86_opr_ec), /* element count */
++
++    /* operand flags */
++    x86_opr_mem              = (1 << 0),
++    x86_opr_ind              = (1 << 1),
++    x86_opr_bcst             = (1 << 2),
++    x86_opr_flag_er          = (1 << 3),
++    x86_opr_flag_k           = (1 << 4),
++    x86_opr_flag_sae         = (1 << 5),
++    x86_opr_flag_z           = (1 << 6),
++    x86_opr_flag_rs          = (1 << 7),
++
++    /* operand type */
++    x86_opr_const            = (1 << x86_opr_ot), /* constant */
++    x86_opr_imm              = (2 << x86_opr_ot), /* immediate */
++    x86_opr_reg              = (3 << x86_opr_ot), /* register */
++    x86_opr_vec              = (4 << x86_opr_ot), /* vector */
++    x86_opr_mmx              = (5 << x86_opr_ot), /* mmx */
++    x86_opr_st               = (6 << x86_opr_ot), /* x87 */
++    x86_opr_k                = (7 << x86_opr_ot), /* mask */
++    x86_opr_seg              = (8 << x86_opr_ot), /* segment */
++    x86_opr_creg             = (9 << x86_opr_ot), /* control */
++    x86_opr_dreg             = (10 << x86_opr_ot), /* debug */
++    x86_opr_bnd              = (11 << x86_opr_ot), /* bound */
++    x86_opr_type_mask        = x86_opr_ot_mask,
++
++    /* operand sizes */
++    x86_opr_size_8           = (1 << x86_opr_os),
++    x86_opr_size_16          = (2 << x86_opr_os),
++    x86_opr_size_32          = (3 << x86_opr_os),
++    x86_opr_size_64          = (4 << x86_opr_os),
++    x86_opr_size_128         = (5 << x86_opr_os),
++    x86_opr_size_256         = (6 << x86_opr_os),
++    x86_opr_size_512         = (7 << x86_opr_os),
++    x86_opr_size_1024        = (8 << x86_opr_os),
++    x86_opr_size_80          = (9 << x86_opr_os),
++    x86_opr_size_wd          = (13 << x86_opr_os),
++    x86_opr_size_w           = (14 << x86_opr_os),
++    x86_opr_size_a           = (15 << x86_opr_os),
++    x86_opr_size_mask        = x86_opr_os_mask,
++
++    /* sized register */
++    x86_opr_r8               = x86_opr_reg | x86_opr_size_8,
++    x86_opr_r16              = x86_opr_reg | x86_opr_size_16,
++    x86_opr_r32              = x86_opr_reg | x86_opr_size_32,
++    x86_opr_r64              = x86_opr_reg | x86_opr_size_64,
++    x86_opr_rw               = x86_opr_reg | x86_opr_size_w,
++    x86_opr_ra               = x86_opr_reg | x86_opr_size_a,
++    x86_opr_mm               = x86_opr_vec | x86_opr_size_64,
++    x86_opr_xmm              = x86_opr_vec | x86_opr_size_128,
++    x86_opr_ymm              = x86_opr_vec | x86_opr_size_256,
++    x86_opr_zmm              = x86_opr_vec | x86_opr_size_512,
++
++    /* sized memory */
++    x86_opr_m8               = x86_opr_mem | (1 << x86_opr_ms), /* byte */
++    x86_opr_m16              = x86_opr_mem | (2 << x86_opr_ms), /* word */
++    x86_opr_m32              = x86_opr_mem | (3 << x86_opr_ms), /* dword */
++    x86_opr_m64              = x86_opr_mem | (4 << x86_opr_ms), /* qword */
++    x86_opr_m128             = x86_opr_mem | (5 << x86_opr_ms), /* oword/xmmword */
++    x86_opr_m256             = x86_opr_mem | (6 << x86_opr_ms), /* ymmword */
++    x86_opr_m512             = x86_opr_mem | (7 << x86_opr_ms), /* zmmword */
++    x86_opr_m1024            = x86_opr_mem | (8 << x86_opr_ms),
++    x86_opr_m80              = x86_opr_mem | (9 << x86_opr_ms), /* tword/tbyte */
++    x86_opr_m384             = x86_opr_mem | (10 << x86_opr_ms),
++    x86_opr_mib              = x86_opr_mem | (11 << x86_opr_ms), /* bound */
++    x86_opr_vm32             = x86_opr_mem | (12 << x86_opr_ms), /* vecmem32 */
++    x86_opr_vm64             = x86_opr_mem | (13 << x86_opr_ms), /* vecmem64 */
++    x86_opr_mw               = x86_opr_mem | (14 << x86_opr_ms), /* 16/32/64 */
++    x86_opr_mp               = x86_opr_mem | (15 << x86_opr_ms), /* pointer */
++    x86_opr_mem_mask         = x86_opr_mem | (15 << x86_opr_ms),
++
++    /* unsized register / sized memory */
++    x86_opr_r_m8             = x86_opr_reg | x86_opr_m8,
++    x86_opr_r_m16            = x86_opr_reg | x86_opr_m16,
++    x86_opr_r_m32            = x86_opr_reg | x86_opr_m32,
++    x86_opr_r_m64            = x86_opr_reg | x86_opr_m64,
++
++    /* sized register / sized memory */
++    x86_opr_r8_m8            = x86_opr_r8  | x86_opr_m8,
++    x86_opr_r16_m8           = x86_opr_r16 | x86_opr_m8,
++    x86_opr_r16_m16          = x86_opr_r16 | x86_opr_m16,
++    x86_opr_r32_m8           = x86_opr_r32 | x86_opr_m8,
++    x86_opr_r32_m16          = x86_opr_r32 | x86_opr_m16,
++    x86_opr_r32_m32          = x86_opr_r32 | x86_opr_m32,
++    x86_opr_r64_m8           = x86_opr_r64 | x86_opr_m8,
++    x86_opr_r64_m16          = x86_opr_r64 | x86_opr_m16,
++    x86_opr_r64_m32          = x86_opr_r64 | x86_opr_m32,
++    x86_opr_r64_m64          = x86_opr_r64 | x86_opr_m64,
++    x86_opr_rw_mw            = x86_opr_rw  | x86_opr_mw,
++
++    /* sized vector / sized memory */
++    x86_opr_mm_m32           = x86_opr_mm  | x86_opr_m32,
++    x86_opr_mm_m64           = x86_opr_mm  | x86_opr_m64,
++    x86_opr_xmm_m8           = x86_opr_xmm | x86_opr_m8,
++    x86_opr_xmm_m16          = x86_opr_xmm | x86_opr_m16,
++    x86_opr_xmm_m32          = x86_opr_xmm | x86_opr_m32,
++    x86_opr_xmm_m64          = x86_opr_xmm | x86_opr_m64,
++    x86_opr_xmm_m128         = x86_opr_xmm | x86_opr_m128,
++    x86_opr_ymm_m256         = x86_opr_ymm | x86_opr_m256,
++    x86_opr_zmm_m512         = x86_opr_zmm | x86_opr_m512,
++
++    /* sized vector memory */
++    x86_opr_vm32x            = x86_opr_xmm | x86_opr_vm32,
++    x86_opr_vm32y            = x86_opr_ymm | x86_opr_vm32,
++    x86_opr_vm32z            = x86_opr_zmm | x86_opr_vm32,
++    x86_opr_vm64x            = x86_opr_xmm | x86_opr_vm64,
++    x86_opr_vm64y            = x86_opr_ymm | x86_opr_vm64,
++    x86_opr_vm64z            = x86_opr_zmm | x86_opr_vm64,
++
++    /* mask / sized memory */
++    x86_opr_k_m8             = x86_opr_k   | x86_opr_m8,
++    x86_opr_k_m16            = x86_opr_k   | x86_opr_m16,
++    x86_opr_k_m32            = x86_opr_k   | x86_opr_m32,
++    x86_opr_k_m64            = x86_opr_k   | x86_opr_m64,
++
++    /* bound / memory */
++    x86_opr_bnd_mem          = x86_opr_bnd | x86_opr_mem,
++
++    /* memory operand alias */
++    x86_opr_m16int           = x86_opr_m16,
++    x86_opr_m32fp            = x86_opr_m32,
++    x86_opr_m32int           = x86_opr_m32,
++    x86_opr_m64fp            = x86_opr_m64,
++    x86_opr_m64int           = x86_opr_m64,
++    x86_opr_m80bcd           = x86_opr_m80,
++    x86_opr_m80dec           = x86_opr_m80,
++    x86_opr_m80fp            = x86_opr_m80,
++
++    /* sized immediate */
++    x86_opr_ib               = x86_opr_imm | x86_opr_size_8,
++    x86_opr_i16              = x86_opr_imm | x86_opr_size_16,
++    x86_opr_i32              = x86_opr_imm | x86_opr_size_32,
++    x86_opr_i64              = x86_opr_imm | x86_opr_size_64,
++    x86_opr_iwd              = x86_opr_imm | x86_opr_size_wd,
++    x86_opr_iw               = x86_opr_imm | x86_opr_size_w,
++
++    /* memory offset */
++    x86_opr_moffs            = x86_opr_imm | x86_opr_mem | x86_opr_size_w,
++
++    /* constant */
++    x86_opr_1                = x86_opr_const | (1 << x86_opr_av),
++
++    /* registers sequential */
++    x86_opr_flag_rs2         = x86_opr_flag_rs | (1 << x86_opr_av),
++    x86_opr_flag_rs4         = x86_opr_flag_rs | (2 << x86_opr_av),
++
++    /* sized broadcast */
++    x86_opr_m16bcst          = x86_opr_bcst | (1 << x86_opr_av),
++    x86_opr_m32bcst          = x86_opr_bcst | (2 << x86_opr_av),
++    x86_opr_m64bcst          = x86_opr_bcst | (3 << x86_opr_av),
++    x86_opr_bcst_mask        = x86_opr_bcst | x86_opr_av_mask,
++
++    /* sized vector / sized memory / broadcast */
++    x86_opr_xmm_m32_m16bcst  = x86_opr_mm_m32   | x86_opr_m16bcst,
++    x86_opr_xmm_m64_m16bcst  = x86_opr_xmm_m64  | x86_opr_m16bcst,
++    x86_opr_xmm_m64_m32bcst  = x86_opr_xmm_m64  | x86_opr_m32bcst,
++    x86_opr_xmm_m128_m16bcst = x86_opr_xmm_m128 | x86_opr_m16bcst,
++    x86_opr_xmm_m128_m32bcst = x86_opr_xmm_m128 | x86_opr_m32bcst,
++    x86_opr_xmm_m128_m64bcst = x86_opr_xmm_m128 | x86_opr_m64bcst,
++    x86_opr_ymm_m256_m16bcst = x86_opr_ymm_m256 | x86_opr_m16bcst,
++    x86_opr_ymm_m256_m32bcst = x86_opr_ymm_m256 | x86_opr_m32bcst,
++    x86_opr_ymm_m256_m64bcst = x86_opr_ymm_m256 | x86_opr_m64bcst,
++    x86_opr_zmm_m512_m16bcst = x86_opr_zmm_m512 | x86_opr_m16bcst,
++    x86_opr_zmm_m512_m32bcst = x86_opr_zmm_m512 | x86_opr_m32bcst,
++    x86_opr_zmm_m512_m64bcst = x86_opr_zmm_m512 | x86_opr_m64bcst,
++
++    /* relative displacement */
++    x86_opr_rel8             = x86_opr_imm | x86_opr_ind | x86_opr_size_8,
++    x86_opr_relw             = x86_opr_imm | x86_opr_ind | x86_opr_size_w,
++
++    /* enter / far displacement */
++    x86_opr_far16_16         = x86_opr_imm | x86_opr_ind | (1 << x86_opr_av),
++    x86_opr_far16_32         = x86_opr_imm | x86_opr_ind | (2 << x86_opr_av),
++
++    /* far memory indirect */
++    x86_opr_memfar16_16      = x86_opr_mem | x86_opr_ind | (3 << x86_opr_av),
++    x86_opr_memfar16_32      = x86_opr_mem | x86_opr_ind | (4 << x86_opr_av),
++    x86_opr_memfar16_64      = x86_opr_mem | x86_opr_ind | (5 << x86_opr_av),
++
++    /* implicit register */
++    x86_opr_reg_a            = x86_opr_reg | x86_opr_ind | (1 << x86_opr_av),
++    x86_opr_reg_c            = x86_opr_reg | x86_opr_ind | (2 << x86_opr_av),
++    x86_opr_reg_d            = x86_opr_reg | x86_opr_ind | (3 << x86_opr_av),
++    x86_opr_reg_b            = x86_opr_reg | x86_opr_ind | (4 << x86_opr_av),
++    x86_opr_reg_si           = x86_opr_reg | x86_opr_ind | (5 << x86_opr_av),
++    x86_opr_reg_di           = x86_opr_reg | x86_opr_ind | (6 << x86_opr_av),
++    x86_opr_reg_ah           = x86_opr_reg | x86_opr_ind | (7 << x86_opr_av),
++    x86_opr_reg_v0           = x86_opr_vec | x86_opr_ind | (1 << x86_opr_av),
++    x86_opr_reg_st0          = x86_opr_st  | x86_opr_ind | (1 << x86_opr_av),
++    x86_opr_seg_es           = x86_opr_seg | x86_opr_ind | (1 << x86_opr_av),
++    x86_opr_seg_cs           = x86_opr_seg | x86_opr_ind | (2 << x86_opr_av),
++    x86_opr_seg_ss           = x86_opr_seg | x86_opr_ind | (3 << x86_opr_av),
++    x86_opr_seg_ds           = x86_opr_seg | x86_opr_ind | (4 << x86_opr_av),
++    x86_opr_seg_fs           = x86_opr_seg | x86_opr_ind | (5 << x86_opr_av),
++    x86_opr_seg_gs           = x86_opr_seg | x86_opr_ind | (6 << x86_opr_av),
++
++    /* sized implicit register */
++    x86_opr_reg_al           = x86_opr_reg_a | x86_opr_size_8,
++    x86_opr_reg_cl           = x86_opr_reg_c | x86_opr_size_8,
++    x86_opr_reg_ax           = x86_opr_reg_a | x86_opr_size_16,
++    x86_opr_reg_cx           = x86_opr_reg_c | x86_opr_size_16,
++    x86_opr_reg_dx           = x86_opr_reg_d | x86_opr_size_16,
++    x86_opr_reg_bx           = x86_opr_reg_b | x86_opr_size_16,
++    x86_opr_reg_eax          = x86_opr_reg_a | x86_opr_size_32,
++    x86_opr_reg_ecx          = x86_opr_reg_c | x86_opr_size_32,
++    x86_opr_reg_edx          = x86_opr_reg_d | x86_opr_size_32,
++    x86_opr_reg_ebx          = x86_opr_reg_b | x86_opr_size_32,
++    x86_opr_reg_rax          = x86_opr_reg_a | x86_opr_size_64,
++    x86_opr_reg_rcx          = x86_opr_reg_c | x86_opr_size_64,
++    x86_opr_reg_rdx          = x86_opr_reg_d | x86_opr_size_64,
++    x86_opr_reg_rbx          = x86_opr_reg_b | x86_opr_size_64,
++    x86_opr_reg_aw           = x86_opr_reg_a | x86_opr_size_w,
++    x86_opr_reg_cw           = x86_opr_reg_c | x86_opr_size_w,
++    x86_opr_reg_dw           = x86_opr_reg_d | x86_opr_size_w,
++    x86_opr_reg_bw           = x86_opr_reg_b | x86_opr_size_w,
++    x86_opr_reg_pa           = x86_opr_reg_a | x86_opr_size_a,
++    x86_opr_reg_pc           = x86_opr_reg_c | x86_opr_size_a,
++    x86_opr_reg_pd           = x86_opr_reg_d | x86_opr_size_a,
++    x86_opr_reg_pb           = x86_opr_reg_b | x86_opr_size_a,
++    x86_opr_reg_psi          = x86_opr_reg_si | x86_opr_size_a,
++    x86_opr_reg_pdi          = x86_opr_reg_di | x86_opr_size_a,
++    x86_opr_reg_xmm0         = x86_opr_reg_v0 | x86_opr_size_128,
++    x86_opr_reg_xmm0_7       = x86_opr_reg_v0 | x86_opr_size_1024,
++
++    /* element type */
++    x86_opr_et_none          = (0 << x86_opr_et),
++    x86_opr_et_i             = (1 << x86_opr_et),
++    x86_opr_et_f             = (2 << x86_opr_et),
++    x86_opr_et_bf            = (3 << x86_opr_et),
++
++    /* element width */
++    x86_opr_ew_8             = (1 << x86_opr_ew),
++    x86_opr_ew_16            = (2 << x86_opr_ew),
++    x86_opr_ew_32            = (3 << x86_opr_ew),
++    x86_opr_ew_64            = (4 << x86_opr_ew),
++    x86_opr_ew_128           = (5 << x86_opr_ew),
++    x86_opr_ew_256           = (6 << x86_opr_ew),
++    x86_opr_ew_512           = (7 << x86_opr_ew),
++
++    /* element count */
++    x86_opr_ec_x1            = (1 << x86_opr_ec),
++    x86_opr_ec_x2            = (2 << x86_opr_ec),
++    x86_opr_ec_x4            = (3 << x86_opr_ec),
++    x86_opr_ec_x8            = (4 << x86_opr_ec),
++    x86_opr_ec_x16           = (5 << x86_opr_ec),
++    x86_opr_ec_x32           = (6 << x86_opr_ec),
++    x86_opr_ec_x64           = (7 << x86_opr_ec),
++
++    /* tuple type */
++    x86_opr_i8x1             = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x1,
++    x86_opr_i8x2             = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x2,
++    x86_opr_i8x4             = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x4,
++    x86_opr_i8x8             = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x8,
++    x86_opr_i8x16            = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x16,
++    x86_opr_i8x32            = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x32,
++    x86_opr_i8x64            = x86_opr_et_i | x86_opr_ew_8 | x86_opr_ec_x64,
++    x86_opr_i16x1            = x86_opr_et_i | x86_opr_ew_16 | x86_opr_ec_x1,
++    x86_opr_i16x2            = x86_opr_et_i | x86_opr_ew_16 | x86_opr_ec_x2,
++    x86_opr_i16x4            = x86_opr_et_i | x86_opr_ew_16 | x86_opr_ec_x4,
++    x86_opr_i16x8            = x86_opr_et_i | x86_opr_ew_16 | x86_opr_ec_x8,
++    x86_opr_i16x16           = x86_opr_et_i | x86_opr_ew_16 | x86_opr_ec_x16,
++    x86_opr_i16x32           = x86_opr_et_i | x86_opr_ew_16 | x86_opr_ec_x32,
++    x86_opr_i32x1            = x86_opr_et_i | x86_opr_ew_32 | x86_opr_ec_x1,
++    x86_opr_i32x2            = x86_opr_et_i | x86_opr_ew_32 | x86_opr_ec_x2,
++    x86_opr_i32x4            = x86_opr_et_i | x86_opr_ew_32 | x86_opr_ec_x4,
++    x86_opr_i32x8            = x86_opr_et_i | x86_opr_ew_32 | x86_opr_ec_x8,
++    x86_opr_i32x16           = x86_opr_et_i | x86_opr_ew_32 | x86_opr_ec_x16,
++    x86_opr_i64x1            = x86_opr_et_i | x86_opr_ew_64 | x86_opr_ec_x1,
++    x86_opr_i64x2            = x86_opr_et_i | x86_opr_ew_64 | x86_opr_ec_x2,
++    x86_opr_i64x4            = x86_opr_et_i | x86_opr_ew_64 | x86_opr_ec_x4,
++    x86_opr_i64x8            = x86_opr_et_i | x86_opr_ew_64 | x86_opr_ec_x8,
++    x86_opr_i128x1           = x86_opr_et_i | x86_opr_ew_128 | x86_opr_ec_x1,
++    x86_opr_i128x2           = x86_opr_et_i | x86_opr_ew_128 | x86_opr_ec_x2,
++    x86_opr_i128x4           = x86_opr_et_i | x86_opr_ew_128 | x86_opr_ec_x4,
++    x86_opr_i256x1           = x86_opr_et_i | x86_opr_ew_256 | x86_opr_ec_x1,
++    x86_opr_i256x2           = x86_opr_et_i | x86_opr_ew_256 | x86_opr_ec_x2,
++    x86_opr_i512x1           = x86_opr_et_i | x86_opr_ew_512 | x86_opr_ec_x1,
++    x86_opr_f8x1             = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x1,
++    x86_opr_f8x2             = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x2,
++    x86_opr_f8x4             = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x4,
++    x86_opr_f8x8             = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x8,
++    x86_opr_f8x16            = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x16,
++    x86_opr_f8x32            = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x32,
++    x86_opr_f8x64            = x86_opr_et_f | x86_opr_ew_8 | x86_opr_ec_x64,
++    x86_opr_f16x1            = x86_opr_et_f | x86_opr_ew_16 | x86_opr_ec_x1,
++    x86_opr_f16x2            = x86_opr_et_f | x86_opr_ew_16 | x86_opr_ec_x2,
++    x86_opr_f16x4            = x86_opr_et_f | x86_opr_ew_16 | x86_opr_ec_x4,
++    x86_opr_f16x8            = x86_opr_et_f | x86_opr_ew_16 | x86_opr_ec_x8,
++    x86_opr_f16x16           = x86_opr_et_f | x86_opr_ew_16 | x86_opr_ec_x16,
++    x86_opr_f16x32           = x86_opr_et_f | x86_opr_ew_16 | x86_opr_ec_x32,
++    x86_opr_f32x1            = x86_opr_et_f | x86_opr_ew_32 | x86_opr_ec_x1,
++    x86_opr_f32x2            = x86_opr_et_f | x86_opr_ew_32 | x86_opr_ec_x2,
++    x86_opr_f32x4            = x86_opr_et_f | x86_opr_ew_32 | x86_opr_ec_x4,
++    x86_opr_f32x8            = x86_opr_et_f | x86_opr_ew_32 | x86_opr_ec_x8,
++    x86_opr_f32x16           = x86_opr_et_f | x86_opr_ew_32 | x86_opr_ec_x16,
++    x86_opr_f64x1            = x86_opr_et_f | x86_opr_ew_64 | x86_opr_ec_x1,
++    x86_opr_f64x2            = x86_opr_et_f | x86_opr_ew_64 | x86_opr_ec_x2,
++    x86_opr_f64x4            = x86_opr_et_f | x86_opr_ew_64 | x86_opr_ec_x4,
++    x86_opr_f64x8            = x86_opr_et_f | x86_opr_ew_64 | x86_opr_ec_x8,
++};
++
++/*
++ * operand encoding accessors
++ */
++
++static inline uint x86_opr_has_mem(uint opr) {
++    return (opr & x86_opr_mem) != 0;
++}
++static inline uint x86_opr_type_val(uint opr) {
++    return opr & x86_opr_type_mask;
++}
++static inline uint x86_opr_size_val(uint opr) {
++    return opr & x86_opr_size_mask;
++}
++static inline uint x86_opr_mem_val(uint opr) {
++    return opr & x86_opr_mem_mask;
++}
++static inline uint x86_opr_bcst_val(uint opr) {
++    return opr & x86_opr_bcst_mask;
++}
++static inline uint x86_opr_et_val(uint opr) {
++    return opr & x86_opr_et_mask;
++}
++static inline uint x86_opr_ec_val(uint opr) {
++    return opr & x86_opr_ec_mask;
++}
++static inline uint x86_opr_ew_val(uint opr) {
++    return opr & x86_opr_ew_mask;
++}
++
++static inline uint x86_opr_mem_size(uint opr)
++{
++    switch (x86_opr_mem_val(opr)) {
++    case x86_opr_m8: return x86_opr_size_8;
++    case x86_opr_m16: return x86_opr_size_16;
++    case x86_opr_m32: return x86_opr_size_32;
++    case x86_opr_m64: return x86_opr_size_64;
++    case x86_opr_m80: return x86_opr_size_80;
++    case x86_opr_m128: return x86_opr_size_128;
++    case x86_opr_m256: return x86_opr_size_256;
++    case x86_opr_m512: return x86_opr_size_512;
++    case x86_opr_mw:
++    default: return x86_opr_size_w;
++    }
++}
++
++static inline uint x86_opr_ew_bytes(uint opr)
++{
++    switch (x86_opr_ew_val(opr)) {
++    case x86_opr_ew_8: return 1;
++    case x86_opr_ew_16: return 2;
++    case x86_opr_ew_32: return 4;
++    case x86_opr_ew_64: return 8;
++    case x86_opr_ew_128: return 16;
++    case x86_opr_ew_256: return 32;
++    case x86_opr_ew_512: return 64;
++    }
++    return 0;
++}
++
++static inline uint x86_opr_ew_size(uint opr)
++{
++    switch (x86_opr_ew_val(opr)) {
++    case x86_opr_ew_8: return x86_opr_size_8;
++    case x86_opr_ew_16: return x86_opr_size_16;
++    case x86_opr_ew_32: return x86_opr_size_32;
++    case x86_opr_ew_64: return x86_opr_size_64;
++    case x86_opr_ew_128: return x86_opr_size_128;
++    case x86_opr_ew_256: return x86_opr_size_256;
++    case x86_opr_ew_512: return x86_opr_size_512;
++    }
++    return 0;
++}
++
++static inline uint x86_opr_ec_mult(uint opr)
++{
++    switch (x86_opr_ec_val(opr)) {
++    case x86_opr_ec_x1: return 1;
++    case x86_opr_ec_x2: return 2;
++    case x86_opr_ec_x4: return 4;
++    case x86_opr_ec_x8: return 8;
++    case x86_opr_ec_x16: return 16;
++    case x86_opr_ec_x32: return 32;
++    case x86_opr_ec_x64: return 64;
++    }
++    return 0;
++}
++
++/*
++ * order encoding
++ */
++
++enum
++{
++    x86_ord_none,
++
++    x86_ord_s1               = 0,
++    x86_ord_s2               = x86_ord_s1 + 3,
++    x86_ord_s3               = x86_ord_s2 + 3,
++
++    x86_ord_const            = (1 << x86_ord_s1), /* - */
++    x86_ord_imm              = (2 << x86_ord_s1), /* I */
++    x86_ord_reg              = (3 << x86_ord_s1), /* R */
++    x86_ord_mrm              = (4 << x86_ord_s1), /* M */
++    x86_ord_vec              = (5 << x86_ord_s1), /* V */
++    x86_ord_opr              = (6 << x86_ord_s1), /* O */
++    x86_ord_type_mask        = (7 << x86_ord_s1),
++
++    x86_ord_r                = (1 << x86_ord_s2),
++    x86_ord_w                = (2 << x86_ord_s2),
++    x86_ord_rw               = (3 << x86_ord_s2),
++    x86_ord_i                = (4 << x86_ord_s2),
++    x86_ord_ri               = (5 << x86_ord_s2),
++    x86_ord_wi               = (6 << x86_ord_s2),
++    x86_ord_rwi              = (7 << x86_ord_s2),
++    x86_ord_flag_mask        = (7 << x86_ord_s2),
++
++    x86_ord_one              = x86_ord_const | (1 << x86_ord_s3),
++    x86_ord_rax              = x86_ord_const | (2 << x86_ord_s3),
++    x86_ord_rcx              = x86_ord_const | (3 << x86_ord_s3),
++    x86_ord_rdx              = x86_ord_const | (4 << x86_ord_s3),
++    x86_ord_rbx              = x86_ord_const | (5 << x86_ord_s3),
++    x86_ord_rsp              = x86_ord_const | (6 << x86_ord_s3),
++    x86_ord_rbp              = x86_ord_const | (7 << x86_ord_s3),
++    x86_ord_rsi              = x86_ord_const | (8 << x86_ord_s3),
++    x86_ord_rdi              = x86_ord_const | (9 << x86_ord_s3),
++    x86_ord_st0              = x86_ord_const | (10 << x86_ord_s3),
++    x86_ord_stx              = x86_ord_const | (11 << x86_ord_s3),
++    x86_ord_seg              = x86_ord_const | (12 << x86_ord_s3),
++    x86_ord_xmm0             = x86_ord_const | (13 << x86_ord_s3),
++    x86_ord_xmm0_7           = x86_ord_const | (14 << x86_ord_s3),
++    x86_ord_mxcsr            = x86_ord_const | (15 << x86_ord_s3),
++    x86_ord_rflags           = x86_ord_const | (16 << x86_ord_s3),
++
++    x86_ord_sib              = x86_ord_mrm | (1 << x86_ord_s3),
++
++    x86_ord_is4              = x86_ord_imm | (1 << x86_ord_s3),
++    x86_ord_ime              = x86_ord_imm | (2 << x86_ord_s3),
++};
++
++/*
++ * order encoding accessors
++ */
++
++static inline uint x86_ord_type_val(uint ord) {
++    return ord & x86_ord_type_mask;
++}
++
++/*
++ * codec flags
++ */
++
++enum
++{
++    x86_ce_shift   = 0,
++    x86_cm_shift   = 3,
++    x86_ci_shift   = 5,
++    x86_cj_shift   = 8,
++
++    /* [0:2] encoding */
++    x86_ce_none    = (0 << x86_ce_shift),
++    x86_ce_rex     = (1 << x86_ce_shift),
++    x86_ce_rex2    = (2 << x86_ce_shift),
++    x86_ce_vex2    = (3 << x86_ce_shift),
++    x86_ce_vex3    = (4 << x86_ce_shift),
++    x86_ce_evex    = (5 << x86_ce_shift),
++    x86_ce_mask    = (7 << x86_ce_shift),
++
++    /* [3:4] map */
++    x86_cm_none    = (0 << x86_cm_shift),
++    x86_cm_0f      = (1 << x86_cm_shift),
++    x86_cm_0f38    = (2 << x86_cm_shift),
++    x86_cm_0f3a    = (3 << x86_cm_shift),
++    x86_cm_mask    = (3 << x86_cm_shift),
++
++    /* [5:7] imm */
++    x86_ci_none    = (0 << x86_ci_shift),
++    x86_ci_ib      = (1 << x86_ci_shift),
++    x86_ci_iw      = (2 << x86_ci_shift),
++    x86_ci_iwd     = (3 << x86_ci_shift),
++    x86_ci_i16     = (4 << x86_ci_shift),
++    x86_ci_i32     = (5 << x86_ci_shift),
++    x86_ci_i64     = (6 << x86_ci_shift),
++    x86_ci_mask    = (7 << x86_ci_shift),
++
++    /* [8:9] imm2 */
++    x86_cj_ib      = (1 << x86_cj_shift),
++    x86_cj_i16     = (2 << x86_cj_shift),
++    x86_cj_mask    = (3 << x86_cj_shift),
++
++    /* [10:15] prefixes */
++    x86_cp_osize   = (1 << 10), /* 0x66 */
++    x86_cp_asize   = (1 << 11), /* 0x67 */
++    x86_cp_wait    = (1 << 12), /* 0x9B */
++    x86_cp_lock    = (1 << 13), /* 0xF0 */
++    x86_cp_repne   = (1 << 14), /* 0xF2 */
++    x86_cp_rep     = (1 << 15), /* 0xF3 */
++
++    /* [16:18] flags */
++    x86_cf_modrm   = (1 << 16),
++    x86_cf_ia32    = (1 << 17),
++    x86_cf_amd64   = (1 << 18),
++};
++
++/*
++ * codec struct
++ */
++
++struct x86_codec
++{
++    union {
++        x86_rex rex;
++        x86_rex2 rex2;
++        x86_vex2 vex2;
++        x86_vex3 vex3;
++        x86_evex evex;
++    };
++
++    union {
++        uchar opc[2];
++        struct {
++            uchar opc0;
++            x86_modrm modrm;
++        };
++    };
++
++    uchar opclen : 2;
++    uchar seg : 3;
++    uchar spare;
++    x86_sib sib;
++
++    uint flags;
++    ushort rec;
++    short imm2;
++
++    union {
++        struct {
++            int disp32;
++            int imm32;
++        };
++        struct {
++            ullong imm64;
++        };
++    };
++};
++
++/*
++ * codec accessors
++ */
++
++static inline int x86_codec_field_ce(x86_codec *c) {
++    return c->flags & x86_ce_mask;
++}
++static inline int x86_codec_field_cm(x86_codec *c) {
++    return c->flags & x86_cm_mask;
++}
++static inline int x86_codec_field_ci(x86_codec *c) {
++    return c->flags & x86_ci_mask;
++}
++static inline int x86_codec_field_cj(x86_codec *c) {
++    return c->flags & x86_cj_mask;
++}
++static inline int x86_codec_has_wait(x86_codec *c) {
++    return (c->flags & x86_cp_wait) != 0;
++}
++static inline int x86_codec_has_lock(x86_codec *c) {
++    return (c->flags & x86_cp_lock) != 0;
++}
++static inline int x86_codec_has_rep(x86_codec *c) {
++    return (c->flags & x86_cp_rep) != 0;
++}
++static inline int x86_codec_has_repne(x86_codec *c) {
++    return (c->flags & x86_cp_repne) != 0;
++}
++static inline int x86_codec_has_osize(x86_codec *c) {
++    return (c->flags & x86_cp_osize) != 0;
++}
++static inline int x86_codec_has_asize(x86_codec *c) {
++    return (c->flags & x86_cp_asize) != 0;
++}
++static inline int x86_codec_has_modrm(x86_codec *c) {
++    return (c->flags & x86_cf_modrm) != 0;
++}
++static inline int x86_codec_is16(x86_codec *c) {
++    return (c->flags & (x86_cf_ia32 | x86_cf_amd64)) == 0;
++}
++static inline int x86_codec_is32(x86_codec *c) {
++    return (c->flags & x86_cf_ia32) != 0;
++}
++static inline int x86_codec_is64(x86_codec *c) {
++    return (c->flags & x86_cf_amd64) != 0;
++}
++
++/*
++ * modes
++ */
++
++enum
++{
++    x86_modes_16 = (1 << 0),
++    x86_modes_32 = (1 << 1),
++    x86_modes_64 = (1 << 2),
++};
++
++/*
++ * modes accessors
++ */
++
++static inline int x86_mode_has16(uint mode) {
++    return (mode & x86_modes_16) != 0;
++}
++static inline int x86_mode_has32(uint mode) {
++    return (mode & x86_modes_32) != 0;
++}
++static inline int x86_mode_has64(uint mode) {
++    return (mode & x86_modes_64) != 0;
++}
++
++/*
++ * memory operand
++ */
++
++struct x86_mem
++{
++    union {
++        uint code;
++        struct {
++            uint base : 9;
++            uint index : 9;
++            uint scale : 2;
++        };
++    };
++    int disp;
++};
++
++/*
++ * opcode metadata
++ *
++ * type, prefix, map, opcode, mask, plus operand and order records.
++ *
++ * opcode - opcode number from opcode enum for name lookup
++ * mode   - operating mode (16 | 32 | 64)
++ * opr    - operand list (r8/m8, rw/mw, xmm/m128, etc)
++ * ord    - operand order (register, immediate, regmem, etc)
++ * enc    - operand encoding (type, width, prefix, map, immediate, etc)
++ * opc    - opcode, ModRM function byte or second opcode byte.
++ * opm    - opcode mask (f8 for XX+r), ModRM function or second byte mask.
++ *
++ * prefix and map are provisioned as 6 bits each to align the bitfield.
++ * there are 3 types, 10 prefixes (5 * 2), and 7 maps (up to map6).
++ */
++
++struct x86_opc_data
++{
++    ushort op;
++    ushort mode;
++    ushort opr;
++    ushort ord;
++    uint enc;
++    union {
++        uchar opc[2];
++        ushort opc_s;
++    };
++    union {
++        uchar opm[2];
++        ushort opm_s;
++    };
++};
++
++struct x86_opr_data
++{
++    uint opr[4];
++};
++
++struct x86_ord_data
++{
++    ushort ord[4];
++};
++
++/*
++ * ModRM encoder
++ */
++
++static inline x86_modrm x86_enc_modrm(uint mod, uint reg, uint rm)
++{
++    x86_modrm modrm = {
++        .data = {
++            /* [0:2] */ (rm & 7u) |
++            /* [3:5] */ ((reg & 7u) << 3) |
++            /* [6:7] */ ((mod & 3u) << 6)
++        }
++    };
++    return modrm;
++}
++
++/*
++ * SIB encoder
++ */
++
++static inline x86_sib x86_enc_sib(uint s, uint x, uint b)
++{
++    x86_sib sib = {
++        .data = {
++            /* [0:2] */ (b & 7u) |
++            /* [3:5] */ ((x & 7u) << 3) |
++            /* [6:7] */ (((uint)s & 3u) << 6)
++        }
++    };
++    return sib;
++}
++
++/*
++ * REX encoder
++ */
++
++static inline x86_rex x86_enc_rex(uint w, uint r, uint x, uint b)
++{
++    x86_rex rex = {
++        .data = {
++            /*   [0] */ ((b & 8u) >> 3) |
++            /*   [1] */ ((x & 8u) >> 2) |
++            /*   [2] */ ((r & 8u) >> 1) |
++            /*   [3] */ ((w & 1u) << 3) |
++            /* [4:7] */ 0x40
++        }
++    };
++    return rex;
++}
++
++/*
++ * REX2 encoder
++ */
++
++static inline x86_rex2 x86_enc_rex2(uint m, uint w, uint r, uint x, uint b)
++{
++    x86_rex2 rex2 = {
++        .data = {
++            /*   [0] */ ((b &  8u) >> 3) |
++            /*   [1] */ ((x &  8u) >> 2) |
++            /*   [2] */ ((r &  8u) >> 1) |
++            /*   [3] */ ((w &  1u) << 3) |
++            /*   [4] */ ((b & 16u) << 0) |
++            /*   [5] */ ((x & 16u) << 1) |
++            /*   [6] */ ((r & 16u) << 2) |
++            /*   [7] */ ((m &  1u) << 7)
++        }
++    };
++    return rex2;
++}
++
++/*
++ * VEX2 encoder
++ */
++
++static inline x86_vex2 x86_enc_vex2(uint p, uint l, uint r, uint v)
++{
++    x86_vex2 vex2 = {
++        .data = {
++            /* [0:1] */ ((uint)p & 3u) |
++            /*   [2] */ ((l & 1u) << 2) |
++            /* [3:6] */ ((~v & 15u) << 3) |
++            /*   [7] */ ((~r & 8u) << 4)
++        }
++    };
++    return vex2;
++}
++
++/*
++ * VEX3 encoder
++ */
++
++static inline x86_vex3 x86_enc_vex3(uint m, uint p,
++    uint l, uint w, uint r, uint x, uint b, uint v)
++{
++    x86_vex3 vex3 = {
++        .data = {
++            /* [0:4] */ ((m &  31u) >> 0) |
++            /*   [5] */ ((~b &  8u) << 2) |
++            /*   [6] */ ((~x &  8u) << 3) |
++            /*   [7] */ ((~r &  8u) << 4),
++            /* [0:1] */ ((p &   3u) >> 0) |
++            /*   [2] */ ((l  &  1u) << 2) |
++            /* [3:6] */ ((~v & 15u) << 3) |
++            /*   [7] */ ((w  &  1u) << 7)
++        }
++    };
++    return vex3;
++}
++
++/*
++ * EVEX encoder
++ */
++
++static inline x86_evex x86_enc_evex(uint m, uint p,
++    uint l, uint w, uint r, uint x, uint b, uint v,
++    uint k, uint brd, uint z)
++{
++    x86_evex evex = {
++        .data = {
++            /* [0:2] */ ((m &   7u) >> 0) |
++            /*   [3] */ ((b &  16u) >> 1) |
++            /*   [4] */ ((~r & 16u) >> 0) |
++            /*   [5] */ ((~b &  8u) << 2) |
++            /*   [6] */ ((~x &  8u) << 3) |
++            /*   [7] */ ((~r &  8u) << 4),
++            /* [0:1] */ ((p &   3u) >> 0) |
++            /*   [2] */ ((~x & 16u) >> 2) |
++            /* [3:6] */ ((~v & 15u) << 3) |
++            /*   [7] */ ((w  &  1u) << 7),
++            /* [0:2] */ ((k &   7u) >> 0) |
++            /*   [3] */ ((~v & 16u) >> 1) |
++            /*   [4] */ ((brd & 1u) << 4) |
++            /* [5:6] */ ((l &   3u) << 5) |
++            /*   [7] */ ((z &   1u) << 7)
++        }
++    };
++    return evex;
++}
++
++/*
++ * table sort types
++ */
++
++enum
++{
++    x86_sort_none,
++    x86_sort_numeric,
++    x86_sort_alpha
++};
++
++/*
++ * table encoding prefix types
++ */
++
++enum
++{
++    x86_table_none,
++    x86_table_lex,
++    x86_table_vex,
++    x86_table_evex
++};
++
++/*
++ * table sort indices
++ */
++
++struct x86_table_idx
++{
++    size_t count;
++    size_t *idx;
++};
++
++/*
++ * opcode index decode tables
++ */
++
++struct x86_acc_idx
++{
++    size_t map_count;
++    x86_opc_data *map;
++    size_t acc_count;
++    x86_acc_entry *acc;
++    uchar *page_offsets;
++};
++
++/*
++ * opcode index acceleration entry
++ */
++
++struct x86_acc_entry
++{
++    uint idx : 24;
++    uint nent : 8;
++};
++
++/*
++ * opcode acceleration functions
++ */
++
++static inline uint x86_acc_page(uint type, uint prefix, uint map)
++{
++    return (type & 3) | ((prefix & 15) << 2) | ((map & 7) << 6);
++}
++
++static inline size_t x86_acc_offset(x86_acc_idx *idx, size_t acc_page)
++{
++    return (size_t)idx->page_offsets[acc_page] << 8;
++}
++
++static inline x86_acc_entry *x86_acc_lookup(x86_acc_idx *idx, size_t offset)
++{
++    return idx->acc + offset;
++}
++
++/*
++ * bitmap utility functions
++ */
++
++static inline size_t x86_bitmap_idx(size_t i) { return i >> 6; }
++static inline size_t x86_bitmap_shift(size_t i) { return (i & 63); }
++
++static inline int x86_bitmap_get(ullong *bitmap, size_t i)
++{
++    return (int)((bitmap[x86_bitmap_idx(i)] >> x86_bitmap_shift(i)) & 1);
++}
++
++static inline void x86_bitmap_set(ullong *bitmap, size_t i, int value)
++{
++    bitmap[x86_bitmap_idx(i)] |= ((ullong)value << x86_bitmap_shift(i));
++}
++
++/*
++ * context for encoder, decoder, formatter and parser
++ */
++
++struct x86_ctx
++{
++    uint mode;
++    x86_acc_idx *idx;
++};
++
++/*
++ * buffer
++ *
++ * simplified buffer with read (start) and write (end) cursors
++ * capacity is user managed because it does no limit checking.
++ */
++
++struct x86_buffer
++{
++    uchar *data;
++    size_t start;
++    size_t end;
++};
++
++/*
++ * buffer functions
++ */
++
++static inline void x86_buffer_init(x86_buffer *b, uchar *data)
++{
++    b->start = 0;
++    b->end = 0;
++    b->data = data;
++}
++
++static inline void x86_buffer_init_ex(x86_buffer *b, uchar *data,
++    size_t start, size_t end)
++{
++    b->start = start;
++    b->end = end;
++    b->data = data;
++}
++
++static inline size_t x86_buffer_read(x86_buffer *b, uchar *buf, size_t len)
++{
++    memcpy(buf, b->data + b->start, len);
++    b->start += len;
++    return len;
++}
++
++static inline size_t x86_buffer_unread(x86_buffer *b, size_t len)
++{
++    b->start -= len;
++    return len;
++}
++
++static inline size_t x86_buffer_write(x86_buffer *b, uchar *buf, size_t len)
++{
++    memcpy(b->data + b->end, buf, len);
++    b->end += len;
++    return len;
++}
++
++static inline size_t x86_buffer_unwrite(x86_buffer *b, size_t len)
++{
++    b->end -= len;
++    return len;
++}
++
++static inline size_t x86_out8(x86_buffer *buf, u8 v)
++{
++    return x86_buffer_write(buf, (void *)&v, sizeof(u8));
++}
++
++static inline size_t x86_out16(x86_buffer *buf, u16 v)
++{
++    u16 t = cpu_to_le16(v);
++    return x86_buffer_write(buf, (void *)&t, sizeof(u16));
++}
++
++static inline size_t x86_out32(x86_buffer *buf, u32 v)
++{
++    u32 t = cpu_to_le32(v);
++    return x86_buffer_write(buf, (void *)&t, sizeof(u32));
++}
++
++static inline size_t x86_out64(x86_buffer *buf, u64 v)
++{
++    u64 t = cpu_to_le64(v);
++    return x86_buffer_write(buf, (void *)&t, sizeof(u64));
++}
++
++static inline size_t x86_unput(x86_buffer *buf, size_t n)
++{
++    return x86_buffer_unwrite(buf, n);
++}
++
++static inline u8 x86_in8(x86_buffer *buf)
++{
++    u8 t = 0;
++    x86_buffer_read(buf, (void *)&t, sizeof(u8));
++    return t;
++}
++
++static inline u16 x86_in16(x86_buffer *buf)
++{
++    u16 t = 0;
++    x86_buffer_read(buf, (void *)&t, sizeof(u16));
++    return le16_to_cpu(t);
++}
++
++static inline u32 x86_in32(x86_buffer *buf)
++{
++    u32 t = 0;
++    x86_buffer_read(buf, (void *)&t, sizeof(u32));
++    return le32_to_cpu(t);
++}
++
++static inline u64 x86_in64(x86_buffer *buf)
++{
++    u64 t = 0;
++    x86_buffer_read(buf, (void *)&t, sizeof(u64));
++    return le64_to_cpu(t);
++}
++
++/*
++ * metadata tables
++ */
++
++extern const char *x86_reg_names[];
++extern const size_t x86_op_names_size;
++extern const char *x86_op_names[];
++extern const size_t x86_opc_table_size;
++extern const x86_opc_data x86_opc_table[];
++extern const size_t x86_opr_table_size;
++extern const x86_opr_data x86_opr_table[];
++extern const size_t x86_ord_table_size;
++extern const x86_ord_data x86_ord_table[];
++
++/*
++ * encoder, decoder, table lookup, disassembly
++ */
++
++void x86_set_debug(uint d);
++size_t x86_mode_name(char *buf, size_t len, uint mode, const char *sep);
++size_t x86_map_name(char *buf, size_t len, uint mode, const char *sep);
++size_t x86_ord_name(char *buf, size_t len, uint ord, const char *sep);
++size_t x86_ord_mnem(char *buf, size_t len, const ushort *ord);
++size_t x86_opr_name(char *buf, size_t len, uint opr);
++size_t x86_enc_name(char *buf, size_t len, uint enc);
++const char *x86_reg_name(uint reg);
++const char *x86_table_type_name(uint type);
++const char *x86_table_map_name(uint map);
++const char *x86_table_prefix_name(uint prefix);
++int x86_enc_filter_rex(x86_rex prefix, uint enc);
++int x86_enc_filter_rex2(x86_rex2 prefix, uint enc);
++int x86_enc_filter_vex2(x86_vex2 prefix, uint enc);
++int x86_enc_filter_vex3(x86_vex3 prefix, uint enc);
++int x86_enc_filter_evex(x86_evex prefix, uint enc);
++x86_table_idx x86_opc_table_identity(void);
++x86_table_idx x86_opc_table_sorted(x86_table_idx tab, uint sort);
++x86_table_idx x86_opc_table_filter(x86_table_idx tab, uint modes);
++x86_opc_data *x86_table_lookup(x86_acc_idx *idx, const x86_opc_data *m);
++void x86_print_op(const x86_opc_data *d, uint compact, uint opcode);
++size_t x86_format_op(char *buf, size_t len, x86_ctx *ctx, x86_codec *c);
++typedef size_t (*x86_fmt_symbol)(char *buf, size_t buflen, x86_codec *c,
++    size_t pc_offset);
++size_t x86_format_op_symbol(char *buf, size_t buflen, x86_ctx *ctx,
++    x86_codec *c, size_t pc_offset, x86_fmt_symbol sym_cb);
++size_t x86_format_hex(char *buf, size_t len, uchar *data, size_t datalen);
++x86_ctx *x86_ctx_create(uint mode);
++void x86_ctx_destroy(x86_ctx *ctx);
++int x86_codec_write(x86_ctx *ctx, x86_buffer *buf, x86_codec c, size_t *len);
++int x86_codec_read(x86_ctx *ctx, x86_buffer *buf, x86_codec *c, size_t *len);
++
++/*
++ * registers sand opcodes
++ */
++
++#include "disas/x86-enums.inc"
+diff --git a/include/disas/dis-asm.h b/include/disas/dis-asm.h
+index 3b50ecfb5409..fd8aa326948f 100644
+--- a/include/disas/dis-asm.h
++++ b/include/disas/dis-asm.h
+@@ -446,6 +446,7 @@ int print_insn_v850             (bfd_vma, disassemble_info*);
+ int print_insn_tic30            (bfd_vma, disassemble_info*);
+ int print_insn_microblaze       (bfd_vma, disassemble_info*);
+ int print_insn_ia64             (bfd_vma, disassemble_info*);
++int print_insn_x86              (bfd_vma, disassemble_info*);
+ int print_insn_xtensa           (bfd_vma, disassemble_info*);
+ int print_insn_riscv32          (bfd_vma, disassemble_info*);
+ int print_insn_riscv64          (bfd_vma, disassemble_info*);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index b5dd60d2812e..ff82174915cf 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -44,6 +44,7 @@
+ #endif
+ 
+ #include "disas/capstone.h"
++#include "disas/x86.h"
+ #include "cpu-internal.h"
+ 
+ static void x86_cpu_realizefn(DeviceState *dev, Error **errp);
+@@ -8507,6 +8508,12 @@ static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
+                       : CS_MODE_16);
+     info->cap_insn_unit = 1;
+     info->cap_insn_split = 8;
++
++    info->print_insn = print_insn_x86;
++    info->private_data = x86_ctx_create(
++        env->hflags & HF_CS64_MASK ? x86_modes_64
++        : env->hflags & HF_CS32_MASK ? x86_modes_32
++        : x86_modes_16);
+ }
+ 
+ void x86_update_hflags(CPUX86State *env)
 -- 
 2.43.0
 
