@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BC5C0219D
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 21:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B424C0219B
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Feb 2025 21:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thEfR-00007s-Vg; Sun, 09 Feb 2025 16:16:41 -0500
+	id 1thEmc-0001ub-IE; Sun, 09 Feb 2025 16:24:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <a.tarasenko@gmail.com>)
- id 1thEfQ-00007R-5t
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:16:40 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1thEma-0001tM-4r
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:24:05 -0500
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <a.tarasenko@gmail.com>)
- id 1thEfO-0003om-HO
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:16:39 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2f44353649aso5343010a91.0
- for <qemu-devel@nongnu.org>; Sun, 09 Feb 2025 13:16:36 -0800 (PST)
+ id 1thEmW-0004cI-4U
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 16:24:01 -0500
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2f44353649aso5346700a91.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Feb 2025 13:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739135795; x=1739740595; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1739136237; x=1739741037; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BlqlZjOCom3Z8oR3xK7otCpSgVgm+sM9Zn5Lx9ifaqc=;
- b=KS2g6gLINYtdqZJ9w6U9BqQGo2BaTu7BnNY0qL/tzKoudPPdmIQgB3JRHw5hG/AEg7
- ZPoFORxp/u6vEUEflJK+4ows3TXZ3dbIehdYQgOLQKPUXzKcPwJGESm1EBH36IarlwpO
- acDs+/L4b5/rft26ax1uqvxdAS9w6TQGkc2+YNenJz8FwXIKgJtaHTDG2BrK/NFI9VQ6
- a8a3VvnismgX7iQ02rBEdedg7enpuPfKio6bixwRq8QKpNKzImFwtVdNN6OVD7PIsway
- MWhAfPmfytD7XGwFLD2aJr47U5ikFk8ca45/vazB41FyhWy/lSFu/ZYzGlJWYeag/MeY
- rwfg==
+ bh=KSiOpw+C4OG9Y7kki3qCGviRlSuvL4zBKAmUunFPRSs=;
+ b=EXoZwa46wT4YPHf1DAZ/I8zvvtg1pdScsuGmxAXGIXdQJKVunwYBebmFs1smOnD/D2
+ +vrRYdIGnfR9G4TwBYNnjxA8Xhsx4uAYD2/lVL4RpR/WBI48LLRUqw2ELA/OO54aji2j
+ znd5qPdrwRZdv1obZFR6/Xx/qM3SVUVeJabavQYddyEmESxjEDioFXA4P5nEy86phTaB
+ a6Q46MYe00d6fWENg0Iy0knpGnBxM7N1Fok4X/fNkXMMDLPZ/l6vcdtzt7FE1C7C9ID/
+ ZD6FgIz9JDbAbnKp6poD4b5RSZQE23LDGcLGNL0Ke0V2m8Sd5QMvtWvxZ8IFhclC4L/N
+ mX4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739135795; x=1739740595;
+ d=1e100.net; s=20230601; t=1739136237; x=1739741037;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BlqlZjOCom3Z8oR3xK7otCpSgVgm+sM9Zn5Lx9ifaqc=;
- b=ZWG8e6Uzw8FkVP2QE0XnvaRQCxpdxhbsL0+Xs11pcpOupZh6CYKdYuShd8VaJZfjV4
- sXczIQkRZRvmnZ9NXl55UtIKFn5Wo6eyLYSHfj0b6OGlalaZgknFIlV8r4B8fU6KRu2p
- TInqJGIRP/MZaZ8LnZt2hMmJpKxx06lWujeLU+a8t6X9YcBvnsrXF5MwFsXeodMW2wea
- uJkA3gcPVB7Fl1uMBrhtM/AI7mU8KVyXGqzBj7O5VhnWalHTq+LTTfmxfT7THDWcyCtm
- I+FpuEpErjkg1vcIUIeRehIx9rPoGAjo5jH8udXPGw/MgWpId+9cruB4CJcxoVFbTDrU
- M1fw==
-X-Gm-Message-State: AOJu0YxyB35fmVUXMzhxe78z4D3pAzuVHVIjjKX74CC83H21VC7tMrgm
- Axy79nOHYTLO8rTBDXEXWvc6VHc1DnGCIlI/0+aEbyqL5Zlzjje7o3NORb1w+OEKXmV85yrV8un
- gCrMPpola6ZOB7eDKgzawNFHPrAg=
-X-Gm-Gg: ASbGncuGyNGc6vLkBtGCbpWZKE86I56FCdYBYBsWAA9KR68SUw3YflpLg/xxcgx9YzO
- sU038fkyMd0rndymd5wta/1vRKmEaRZCJf2CiZWb5DrYgS0Y1cFha58XoowVfuPLkTdUHpqtf
-X-Google-Smtp-Source: AGHT+IEjBR3spxH9gojPKibSsoqwAs/thJmdDCVYPWLnWcSq7KLRj+xDRHhgsCi4nufTdpOFPhwEnY5aFA4lM4rvHyM=
-X-Received: by 2002:a17:90b:2ec5:b0:2fa:228d:5af2 with SMTP id
- 98e67ed59e1d1-2fa24274b6cmr18692962a91.15.1739135795354; Sun, 09 Feb 2025
- 13:16:35 -0800 (PST)
+ bh=KSiOpw+C4OG9Y7kki3qCGviRlSuvL4zBKAmUunFPRSs=;
+ b=QJi7kVxggxHRNfG9f7kJpOGFFMHm9D079PTTNzp+tEo+Vq02/3TPLlnr5tEJTacgi0
+ dHPwCDSvNCdVXaa1RJbcsc51w1VIwinq55/BoEm3P0di9+sjJoQfXajqvOI/7FahrcIi
+ ZrFdDwrYi3OM05+3BVDaXcvH78VB4NIS0ULcp/hatmM4oCbHoCoE3wLTGaeC2gVs7NzU
+ tzO99sRMivnlfkrUQj4raQaH3QGGtga4Yl+OJVUzG5vgxC0B5O4UjZXXEvb6u4JsjARS
+ bYGi6I0AIbDwc1aQvSihQ04JSfSw+Lt4hP0BanUS4QSv2O/2EvW45JdVKdz3HxNul0Yr
+ 3EQQ==
+X-Gm-Message-State: AOJu0YyGT0UBKMc5pPzgPezUJWEx0tdnz8n1+NGWpqUfdM1gZFgUxeBi
+ CX84pTTWld7MITXLWQeo7nQ6DJr8CvqBG4Fn09JrCRaoA70iJeDKGtumATx7/TriU1XOawv2UBZ
+ Q3MexUXVdvEciWe5sJc1u+OswAfjyLA==
+X-Gm-Gg: ASbGncuNO4cexrrkRzAFtYRvKIvtVXrZXdc1Y97jb/uzqj9HI5o96QuJy6sMSd518n6
+ B3yCYwTbZL0lQ61XjekzTvoEjKs4A2rqGSez7vnJT8KfTtC3VHCtcXRW1sa5XuzirV5uCRoY+
+X-Google-Smtp-Source: AGHT+IEoy3DNVgALGDcGfCQtpZQ8VobX2nb/KFivz8sCxFwvnozQMm8yeCszanU1kCsv8WO3uVvEX80aZtf+X/PbPJQ=
+X-Received: by 2002:a17:90b:2391:b0:2ea:3f34:f190 with SMTP id
+ 98e67ed59e1d1-2fa243f0ac1mr18082658a91.25.1739136237097; Sun, 09 Feb 2025
+ 13:23:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20250131214528.117846-1-atar4qemu@gmail.com>
- <99ea71e8-b978-41c6-8ba5-f056935ea39e@linaro.org>
-In-Reply-To: <99ea71e8-b978-41c6-8ba5-f056935ea39e@linaro.org>
+References: <20250205090333.19626-1-git@miszr.win>
+ <20250205090333.19626-3-git@miszr.win>
+In-Reply-To: <20250205090333.19626-3-git@miszr.win>
 From: Artyom Tarasenko <atar4qemu@gmail.com>
-Date: Sun, 9 Feb 2025 22:16:23 +0100
-X-Gm-Features: AWEUYZl3sA2LLAnwcGXyr0qXMTE06sV4um7DMcP0N1kOHDXcyye8O1_khdj24bo
-Message-ID: <CAAM0arMwOeZ_d0dmGqoTFcf-ezb3_j3HTd71qo6k35ftPRRzdw@mail.gmail.com>
-Subject: Re: [PATCH] target/sparc: fake UltraSPARC T1 PCR and PIC registers
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Date: Sun, 9 Feb 2025 22:23:45 +0100
+X-Gm-Features: AWEUYZn8-fwVvyVTm1YBnIf1M_zxcwZCbp9X9YzlehHDk2Zh2_c_srtQUWC3bxc
+Message-ID: <CAAM0arOoLuORHtjCxxrWFsdmgJ9G0XawUE9tBikj0xX3LPoTSA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] target/sparc: Fix register selection for all F*TOx
+ and FxTO* instructions
+To: Mikael Szreder <git@miszr.win>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=a.tarasenko@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=a.tarasenko@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,71 +95,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 2, 2025 at 10:47=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Wed, Feb 5, 2025 at 10:03=E2=80=AFAM Mikael Szreder <git@miszr.win> wrot=
+e:
 >
-> On 1/31/25 13:44, Artyom Tarasenko wrote:
-> > fake access to
-> > PCR Performance Control Register
-> > and
-> > PIC Performance Instrumentation Counter.
-> >
-> > Ignore writes in privileged mode, and return 0 on reads.
-> >
-> > This allows booting Tribblix, MilaX and v9os under Niagara target.
-> >
-> > Signed-off-by: Artyom Tarasenko <atar4qemu@gmail.com>
-> > ---
-> >   target/sparc/insns.decode |  7 ++++++-
-> >   target/sparc/translate.c  | 20 ++++++++++++++++++++
-> >   2 files changed, 26 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-> > index 989c20b44a..504147563c 100644
-> > --- a/target/sparc/insns.decode
-> > +++ b/target/sparc/insns.decode
-> > @@ -96,7 +96,10 @@ CALL    01 i:s30
-> >       RDTICK          10 rd:5  101000 00100 0 0000000000000
-> >       RDPC            10 rd:5  101000 00101 0 0000000000000
-> >       RDFPRS          10 rd:5  101000 00110 0 0000000000000
-> > -    RDASR17         10 rd:5  101000 10001 0 0000000000000
-> > +    {
-> > +      RDASR17       10 rd:5  101000 10001 0 0000000000000
-> > +      RDPIC         10 rd:5  101000 10001 0 0000000000000
-> > +    }
-> >       RDGSR           10 rd:5  101000 10011 0 0000000000000
-> >       RDSOFTINT       10 rd:5  101000 10110 0 0000000000000
-> >       RDTICK_CMPR     10 rd:5  101000 10111 0 0000000000000
-> > @@ -114,6 +117,8 @@ CALL    01 i:s30
-> >       WRCCR           10 00010 110000 ..... . .............  @n_r_ri
-> >       WRASI           10 00011 110000 ..... . .............  @n_r_ri
-> >       WRFPRS          10 00110 110000 ..... . .............  @n_r_ri
-> > +    WRPCR           10 10000 110000 01000 0 0000000000000
-> > +    WRPIC           10 10001 110000 01000 0 0000000000000
-> >       {
-> >         WRGSR         10 10011 110000 ..... . .............  @n_r_ri
-> >         WRPOWERDOWN   10 10011 110000 ..... . .............  @n_r_ri
-> > diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-> > index 7e5c7351cb..285c9b0a59 100644
-> > --- a/target/sparc/translate.c
-> > +++ b/target/sparc/translate.c
-> > @@ -2882,6 +2882,15 @@ static TCGv do_rd_leon3_config(DisasContext *dc,=
- TCGv dst)
-> >
-> >   TRANS(RDASR17, ASR17, do_rd_special, true, a->rd, do_rd_leon3_config)
-> >
-> > +static TCGv do_rdpic(DisasContext *dc, TCGv dst)
-> > +{
-> > +    tcg_gen_movi_tl(dst, 0UL);
-> > +    return dst;
-> > +}
+> Fixed a mistake I made in the FqTOx instruction.
+> Fixed issues in the FsTOx, FxTOs, FxTOd, FxTOq instructions.
 >
-> return tcg_constant_tl(0);
->
-> > +
-> > +TRANS(RDPIC, HYPV, do_rd_special, true, a->rd, do_rdpic)
->
-> Surely reads are not allowed in user mode.
+> Fixes: 0bba7572d40d ("target/sparc: Perform DFPREG/QFPREG in decodetree")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2802
+> Signed-off-by: Mikael Szreder <git@miszr.win>
 
-Thanks Richard, addressed it in v2.
+Acked-by: Artyom Tarasenko <atar4qemu@gmail.com>
+
+> ---
+>  target/sparc/insns.decode | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+> index 694a28d88c..cfcdf6690e 100644
+> --- a/target/sparc/insns.decode
+> +++ b/target/sparc/insns.decode
+> @@ -321,12 +321,12 @@ FdMULq      10 ..... 110100 ..... 0 0110 1110 .....=
+        @q_d_d
+>  FNHADDs     10 ..... 110100 ..... 0 0111 0001 .....        @r_r_r
+>  FNHADDd     10 ..... 110100 ..... 0 0111 0010 .....        @d_d_d
+>  FNsMULd     10 ..... 110100 ..... 0 0111 1001 .....        @d_r_r
+> -FsTOx       10 ..... 110100 00000 0 1000 0001 .....        @r_r2
+> +FsTOx       10 ..... 110100 00000 0 1000 0001 .....        @d_r2
+>  FdTOx       10 ..... 110100 00000 0 1000 0010 .....        @d_d2
+> -FqTOx       10 ..... 110100 00000 0 1000 0011 .....        @q_q2
+> -FxTOs       10 ..... 110100 00000 0 1000 0100 .....        @r_r2
+> -FxTOd       10 ..... 110100 00000 0 1000 1000 .....        @d_r2
+> -FxTOq       10 ..... 110100 00000 0 1000 1100 .....        @q_r2
+> +FqTOx       10 ..... 110100 00000 0 1000 0011 .....        @d_q2
+> +FxTOs       10 ..... 110100 00000 0 1000 0100 .....        @r_d2
+> +FxTOd       10 ..... 110100 00000 0 1000 1000 .....        @d_d2
+> +FxTOq       10 ..... 110100 00000 0 1000 1100 .....        @q_d2
+>  FiTOs       10 ..... 110100 00000 0 1100 0100 .....        @r_r2
+>  FdTOs       10 ..... 110100 00000 0 1100 0110 .....        @r_d2
+>  FqTOs       10 ..... 110100 00000 0 1100 0111 .....        @r_q2
+> --
+> 2.48.1
+>
 
