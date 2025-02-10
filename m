@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08276C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF1AC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thaeJ-0005zV-5S; Mon, 10 Feb 2025 15:44:59 -0500
+	id 1thadj-0003Vf-Q0; Mon, 10 Feb 2025 15:44:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thaeE-0005QB-4Z
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:44:54 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thadf-00035D-B1
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:44:19 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thaeB-00044G-OO
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:44:53 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38dc33931d3so2064072f8f.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:44:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thadd-0003sf-Br
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:44:19 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43934d6b155so13690655e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:44:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739220289; x=1739825089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739220255; x=1739825055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DX9DBgf/ZOjZteqt+lpORZoLsvdeqNqe4QCTU3mIslQ=;
- b=aFl8WVcBNxqk6VFSulXAazssOGbIMqlsh6dyZFDpWf26BlolJ0Pup6aOQTcqAHjyPo
- tC/PUvupnp25athQhnC/zbRuRwxQbKKs7Uzx71g7RvBCLU/p+Fc23mjz9r4r0x6N4iW0
- zOM6N24Hv1GxhnN62uwx2Wu/xXWBPmYNG57YSE5k6YytzSJOSLCAH/jQe/jAqikoE3l9
- FdoSB32VyCEmpn5c6UJGLtGQk/zxZJ3qshDIvvJta9OfzqMyhaQEunT6Rj6E75BjTNs+
- yyDOdUTilOPgUDfoMxhCWijkARBEmLvRTAvZ3GHa65SiEPW3prhKq9Y8FN5eqznEH7ZT
- PArg==
+ bh=nwm1ZkyQbCKYEL7sQcfI0amiIz6D6N+OhtZTgkExnsw=;
+ b=WHuRt/xZ+SKNK3MJigOap6ZgXNx6Jbyh+fzhFmb5zMUsW0o7YYYAHMC32ar1ykvARd
+ QxMntnCnZbsgvKirtkfKR5XZphi4GhUKZOiB/A8eRlIh0LhwBBRzzU8mGeEhBcFZ3Kn+
+ DpMWPft8N8poAkFgtkszqkKtqWBjXKF00oumNs5pR+hzWiHuuWpgMAd8YaYBykFscVAf
+ 6XyREEgTnWGMzELjHLaTFydlCvpRz8zGiIw7w37KdlRHY5ujam5M/DtEptfYWCGyuoHW
+ UrI5BnC/mi4NWb3+qw2+32Miv6hzBX/YJNQS65FjkQERjLckGziP6KAiiVsIdeUCvTm0
+ 3oSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739220289; x=1739825089;
+ d=1e100.net; s=20230601; t=1739220255; x=1739825055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DX9DBgf/ZOjZteqt+lpORZoLsvdeqNqe4QCTU3mIslQ=;
- b=LMi4NR8bebWI5CSATBoFgoaEnWzoU/cST8i9lPlgd5V7RlVVe84oS0L3It5Bbi+Kqv
- VatADdebg88surD3XL8uU+RjRyO1bWK+P/F1A6xJsaBPPLT9DCA5CLhL0VllvN0SdJ9d
- hI4dO8ghrFP09st6uEKXKQRQe5KYaBWSCE7Mv+yqmyixyAAmHLIEeUrvPmSv5WWLjcnN
- AjUJ0bMKlhlUuULQ7L0pzLRf6blcdGuupGUMx9nFZSboDjiqhlWh0CHPeuoYZHauY1QW
- wmDdV9QmpRySlGzIXOE6Pb4mjcRABnpDJiMQrPXXnSJ451MYhdwLR2k+TetDBQtsgN55
- iMOQ==
-X-Gm-Message-State: AOJu0YwmV80gi8w49+mlMmJBoMQzYRKSceRBaMTqUbmywzA9YOvWQKG0
- CsvF1YxEYclQUVJFKqG6BfBUMI3xepTmCTwyibgP76m/DstkhoUP+/F63+5LqmCtyTnfJbPdc6A
- GvMY=
-X-Gm-Gg: ASbGnct8ZOyRqew9/nRTaEufCvZVXQLf4h3lD0eIAFPpMKbLqFFgfTatiMJ6FAA81/n
- KXKFjFLtHqGXhGyNwNXGsGpcai7UuMS3yIGbugBo4RpmpZ5Tet55RnlraSS8dZWtKHtWm1GnyYw
- vP00ZpJXGhpdVMR/BycckYQ56DbbEBeZ60Jy7jn1OnyhQmmRHxTNRej+erl3LoMrmkF8JD9+i6N
- nLOyG285uqgjUBqZly8J96/HjhgnrPLZWA3WoQT98DozYpaZUT5mX1llTM6KrzEbasURMhdkL1v
- mXHZDIH1WyeneyGNjEIYGW6jfCxtTmxasYgKB8Jbve+At15qRVMNE7yH3KU7F+gJhQ==
-X-Google-Smtp-Source: AGHT+IGP29UJrV3lIdnox1Xfuir7/Weit+kMYgyB2VN/CZwycNsHQHztvTbxndodUrefO0FY0lktpQ==
-X-Received: by 2002:a05:6000:186f:b0:38d:e052:625a with SMTP id
- ffacd0b85a97d-38de05263fbmr4435911f8f.16.1739220289575; 
- Mon, 10 Feb 2025 12:44:49 -0800 (PST)
+ bh=nwm1ZkyQbCKYEL7sQcfI0amiIz6D6N+OhtZTgkExnsw=;
+ b=tWQPUPxswvgHmyaNSFfZ/1ayoZ0/z6IV6kKP01RcMFxRBaotXuMP1qWnZkBCCMozt2
+ vqBIkT6DSisnBqMqQ0+JFOr0DcSqsPob5xx09i8jqwGs3UyTLzYbaKGLcSTtxrAAzlxL
+ mh23d08qSb2wrQc6bBkc0V5XEkSAnjj1OM6A758twSbbabQsODLPZnQ9pbGo9mwqZDlr
+ IFZc7wemR37LVgLXKeIejE4YMZqK3KsgrGhy9YavtY/z+yqNMB/Y7dAdKhlGGUfL5eFE
+ RuT5GMDVH/cr/IMykKr8bNqpEGM2//hq41TSDQM4T8aRmNilOOKbKdefkr4+Z8XbcMdU
+ Qw9w==
+X-Gm-Message-State: AOJu0YwNCwoJxU79zssQqOSqAXGD45eLEkkc76tRM/UMA+TyBFPkBRVE
+ hpIFJuDj9UFuf6C9aIaIOPBbboZWPjSKBG2tNtliaSsL1HcUYNb/6UimvXs4nsL4obk3eAvPGK7
+ AcVw=
+X-Gm-Gg: ASbGncvzSDfnUVKGMcsFSpHt00DTWWPFisw/6eBEjE2XGUbSLA1Ci0EI7MqsWLT+yzs
+ Lj5h2EHtlUOPnoEh24iz93LULfrnV46iLUwAEXpeLmfEYy/j5Sh592vZMlyzyRsL3IgRd84yz2S
+ KqFP7eVqmQkZuSkm+WcPikPuiRhtvS2VKsRCt8JzpNj7NIuyfTzgwFbJb+16RAdBcrFt6jwPIvK
+ s/w5hVKFJF6nkUVYAsaCS4taNNtMYyZSxcoIo/6nEUdFleziLAhlAmVLH+Pfgt3WoNnqQaIeJ4N
+ /TgYOlNTzFL4zqzvWmeGefNL80DIfxensiHqtcfvTvtoMPFMxhYvu5AAc7pCGFnVdw==
+X-Google-Smtp-Source: AGHT+IEW00f5NXPMEah0IyXqUYIaAbaLYFMThNpjvOjtZexVfFL2TAoAzUOKUs/LcmU274Q3fJNctQ==
+X-Received: by 2002:a05:600c:1c85:b0:434:ea1a:e30c with SMTP id
+ 5b1f17b1804b1-4394cf08108mr6697495e9.13.1739220255360; 
+ Mon, 10 Feb 2025 12:44:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390db11200sm189100565e9.38.2025.02.10.12.44.48
+ 5b1f17b1804b1-4394127afcbsm53217585e9.23.2025.02.10.12.44.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 12:44:49 -0800 (PST)
+ Mon, 10 Feb 2025 12:44:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 32/32] hw/net/smc91c111: Ignore attempt to pop from empty RX
- fifo
-Date: Mon, 10 Feb 2025 21:42:04 +0100
-Message-ID: <20250210204204.54407-33-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 25/32] hw/riscv: Remove all invalid uses of
+ auto_create_sdcard=true
+Date: Mon, 10 Feb 2025 21:41:57 +0100
+Message-ID: <20250210204204.54407-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250210204204.54407-1-philmd@linaro.org>
 References: <20250210204204.54407-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,53 +100,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+MachineClass::auto_create_sdcard is only useful to automatically
+create a SD card, attach a IF_SD block drive to it and plug the
+card onto a SD bus. None of the RISCV machines modified by this
+commit try to use the IF_SD interface.
 
-The SMC91C111 includes an MMU Command register which permits
-the guest to remove entries from the RX FIFO. The datasheet
-does not specify what happens if the guest tries to do this
-when the FIFO is already empty; there are no status registers
-containing error bits which might be applicable.
-
-Currently we don't guard at all against pop of an empty
-RX FIFO, with the result that we allow the guest to drive
-the rx_fifo_len index to negative values, which will cause
-smc91c111_receive() to write to the rx_fifo[] array out of
-bounds when we receive the next packet.
-
-Instead ignore attempts to pop an empty RX FIFO.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 80337b66a8e7 ("NIC emulation for qemu arm-softmmu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2780
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250207151157.3151776-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250204200934.65279-7-philmd@linaro.org>
 ---
- hw/net/smc91c111.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/riscv/opentitan.c | 1 -
+ hw/riscv/shakti_c.c  | 1 -
+ hw/riscv/sifive_e.c  | 1 -
+ hw/riscv/spike.c     | 1 -
+ hw/riscv/virt.c      | 1 -
+ 5 files changed, 5 deletions(-)
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index b18d5c23c39..0e13dfa18b2 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -182,6 +182,15 @@ static void smc91c111_pop_rx_fifo(smc91c111_state *s)
- {
-     int i;
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index d78a96c5354..b9e56235d87 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -121,7 +121,6 @@ static void opentitan_machine_class_init(ObjectClass *oc, void *data)
+     mc->default_cpu_type = TYPE_RISCV_CPU_IBEX;
+     mc->default_ram_id = "riscv.lowrisc.ibex.ram";
+     mc->default_ram_size = ibex_memmap[IBEX_DEV_RAM].size;
+-    mc->auto_create_sdcard = true;
+ }
  
-+    if (s->rx_fifo_len == 0) {
-+        /*
-+         * The datasheet doesn't document what the behaviour is if the
-+         * guest tries to pop an empty RX FIFO, and there's no obvious
-+         * error status register to report it. Just ignore the attempt.
-+         */
-+        return;
-+    }
-+
-     s->rx_fifo_len--;
-     if (s->rx_fifo_len) {
-         for (i = 0; i < s->rx_fifo_len; i++)
+ static void lowrisc_ibex_soc_init(Object *obj)
+diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
+index efe814b5868..e2242b97d0c 100644
+--- a/hw/riscv/shakti_c.c
++++ b/hw/riscv/shakti_c.c
+@@ -84,7 +84,6 @@ static void shakti_c_machine_class_init(ObjectClass *klass, void *data)
+     mc->default_cpu_type = TYPE_RISCV_CPU_SHAKTI_C;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->default_ram_id = "riscv.shakti.c.ram";
+-    mc->auto_create_sdcard = true;
+ }
+ 
+ static const TypeInfo shakti_c_machine_type_info = {
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index 164eb3ab83b..73d3b74281c 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -153,7 +153,6 @@ static void sifive_e_machine_class_init(ObjectClass *oc, void *data)
+     mc->default_cpu_type = SIFIVE_E_CPU;
+     mc->default_ram_id = "riscv.sifive.e.ram";
+     mc->default_ram_size = sifive_e_memmap[SIFIVE_E_DEV_DTIM].size;
+-    mc->auto_create_sdcard = true;
+ 
+     object_class_property_add_bool(oc, "revb", sifive_e_machine_get_revb,
+                                    sifive_e_machine_set_revb);
+diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+index 1ea35937e15..74a20016f14 100644
+--- a/hw/riscv/spike.c
++++ b/hw/riscv/spike.c
+@@ -358,7 +358,6 @@ static void spike_machine_class_init(ObjectClass *oc, void *data)
+     /* platform instead of architectural choice */
+     mc->cpu_cluster_has_numa_boundary = true;
+     mc->default_ram_id = "riscv.spike.ram";
+-    mc->auto_create_sdcard = true;
+     object_class_property_add_str(oc, "signature", NULL, spike_set_signature);
+     object_class_property_set_description(oc, "signature",
+                                           "File to write ACT test signature");
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 2aa420f6e55..241389d72f8 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1918,7 +1918,6 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+     mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
+     mc->block_default_type = IF_VIRTIO;
+     mc->no_cdrom = 1;
+-    mc->auto_create_sdcard = true;
+     mc->pci_allow_0_address = true;
+     mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
+     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
 -- 
 2.47.1
 
