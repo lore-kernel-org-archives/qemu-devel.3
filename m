@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81BFCC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33EB9C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thPIA-0008Pb-7S; Mon, 10 Feb 2025 03:37:22 -0500
+	id 1thPKk-0000gx-6D; Mon, 10 Feb 2025 03:40:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPI6-0008P6-LG
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:37:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPKf-0000gG-Vq
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:39:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPI4-00033U-D7
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:37:17 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPKe-0003EJ-Ay
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:39:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739176634;
+ s=mimecast20190719; t=1739176795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mymLosjx8yBb96OnIFYnflS/oIfCmiYMYF4pJHwg+Z0=;
- b=VjwrWRlVOhmV1fl2NWzvEii6C+I/CKPHMnuuYMzOQiuawb5Kw48UnLhbN/nPlB7vj8W7NW
- TOtj9T8twz3daCWPG3usqa5PacZMFZH5wS/wMN7Ejbpses/XjBCgcco+XCs9XuFyL5CphA
- 8Xe26hA/MeEDFRRPCHAQyMQSNYNkook=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lU5iBJmaBkwDwhbv4E1UItgxk5NwBV93HL/h6G/NcaM=;
+ b=fgTESL92kK6VBldolt4LfeEfAb0396kStKpFBBM4NZUeDtgKp6ASvMENoEX0fDiesDvczb
+ BCjigWdB0E3owkigjdShxTiwXgZw+szv4k11ImKhv2T81B8rqFw1HKR1HlO0DxJVvYKBib
+ B+zFT8TrA/k6v8/nrZhm8XruIRLH9gs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-TnR0wh3zPQOJfSvJZCsNYA-1; Mon,
- 10 Feb 2025 03:37:12 -0500
-X-MC-Unique: TnR0wh3zPQOJfSvJZCsNYA-1
-X-Mimecast-MFC-AGG-ID: TnR0wh3zPQOJfSvJZCsNYA
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-3l45JAuPOoWkkdpgNmNgsg-1; Mon,
+ 10 Feb 2025 03:39:53 -0500
+X-MC-Unique: 3l45JAuPOoWkkdpgNmNgsg-1
+X-Mimecast-MFC-AGG-ID: 3l45JAuPOoWkkdpgNmNgsg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45472195608C; Mon, 10 Feb 2025 08:37:11 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D08B71956086
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:39:52 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0078C1956094; Mon, 10 Feb 2025 08:37:10 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B8F819560A3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:39:52 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8CFEA21E6A28; Mon, 10 Feb 2025 09:37:08 +0100 (CET)
+ id B38D021E6939; Mon, 10 Feb 2025 09:39:46 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 0/4] qapi: generalize special features
-In-Reply-To: <20250205123550.2754387-1-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 5 Feb 2025 12:35:46
- +0000")
-References: <20250205123550.2754387-1-berrange@redhat.com>
-Date: Mon, 10 Feb 2025 09:37:08 +0100
-Message-ID: <87ldue9owb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 5/6] qapi: rename 'special_features' to 'features'
+Date: Mon, 10 Feb 2025 09:39:45 +0100
+Message-ID: <20250210083946.3553415-6-armbru@redhat.com>
+In-Reply-To: <20250210083946.3553415-1-armbru@redhat.com>
+References: <20250210083946.3553415-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
@@ -89,6 +87,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued with imports tidied up.  Thanks!
+From: Daniel P. Berrangé <berrange@redhat.com>
+
+This updates the QAPI code generation to refer to 'features' instead
+of 'special_features', in preparation for generalizing their exposure.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250205123550.2754387-4-berrange@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+[Imports tidied up with isort]
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/commands.py |  4 ++--
+ scripts/qapi/gen.py      |  8 ++++----
+ scripts/qapi/types.py    | 14 +++++---------
+ scripts/qapi/visit.py    | 18 +++++++-----------
+ 4 files changed, 18 insertions(+), 26 deletions(-)
+
+diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
+index 79951a841f..d629d2d97e 100644
+--- a/scripts/qapi/commands.py
++++ b/scripts/qapi/commands.py
+@@ -25,7 +25,7 @@
+     QAPIGenC,
+     QAPISchemaModularCVisitor,
+     build_params,
+-    gen_special_features,
++    gen_features,
+     ifcontext,
+ )
+ from .schema import (
+@@ -298,7 +298,7 @@ def gen_register_command(name: str,
+ ''',
+                 name=name, c_name=c_name(name),
+                 opts=' | '.join(options) or 0,
+-                feats=gen_special_features(features))
++                feats=gen_features(features))
+     return ret
+ 
+ 
+diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
+index c53ca72950..b51f8d955e 100644
+--- a/scripts/qapi/gen.py
++++ b/scripts/qapi/gen.py
+@@ -41,10 +41,10 @@
+ from .source import QAPISourceInfo
+ 
+ 
+-def gen_special_features(features: Sequence[QAPISchemaFeature]) -> str:
+-    special_features = [f"1u << {c_enum_const('qapi', feat.name)}"
+-                        for feat in features if feat.is_special()]
+-    return ' | '.join(special_features) or '0'
++def gen_features(features: Sequence[QAPISchemaFeature]) -> str:
++    featenum = [f"1u << {c_enum_const('qapi', feat.name)}"
++                for feat in features if feat.is_special()]
++    return ' | '.join(featenum) or '0'
+ 
+ 
+ class QAPIGen:
+diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
+index 7bc3f8241f..e4a1bb9f85 100644
+--- a/scripts/qapi/types.py
++++ b/scripts/qapi/types.py
+@@ -16,11 +16,7 @@
+ from typing import List, Optional
+ 
+ from .common import c_enum_const, c_name, mcgen
+-from .gen import (
+-    QAPISchemaModularCVisitor,
+-    gen_special_features,
+-    ifcontext,
+-)
++from .gen import QAPISchemaModularCVisitor, gen_features, ifcontext
+ from .schema import (
+     QAPISchema,
+     QAPISchemaAlternatives,
+@@ -61,12 +57,12 @@ def gen_enum_lookup(name: str,
+                      index=index, name=memb.name)
+         ret += memb.ifcond.gen_endif()
+ 
+-        special_features = gen_special_features(memb.features)
+-        if special_features != '0':
++        features = gen_features(memb.features)
++        if features != '0':
+             feats += mcgen('''
+-        [%(index)s] = %(special_features)s,
++        [%(index)s] = %(features)s,
+ ''',
+-                           index=index, special_features=special_features)
++                           index=index, features=features)
+ 
+     if feats:
+         ret += mcgen('''
+diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
+index 12f92e429f..928273b9bb 100644
+--- a/scripts/qapi/visit.py
++++ b/scripts/qapi/visit.py
+@@ -21,11 +21,7 @@
+     indent,
+     mcgen,
+ )
+-from .gen import (
+-    QAPISchemaModularCVisitor,
+-    gen_special_features,
+-    ifcontext,
+-)
++from .gen import QAPISchemaModularCVisitor, gen_features, ifcontext
+ from .schema import (
+     QAPISchema,
+     QAPISchemaAlternatives,
+@@ -103,15 +99,15 @@ def gen_visit_object_members(name: str,
+ ''',
+                          name=memb.name, has=has)
+             indent.increase()
+-        special_features = gen_special_features(memb.features)
+-        if special_features != '0':
++        features = gen_features(memb.features)
++        if features != '0':
+             ret += mcgen('''
+-    if (visit_policy_reject(v, "%(name)s", %(special_features)s, errp)) {
++    if (visit_policy_reject(v, "%(name)s", %(features)s, errp)) {
+         return false;
+     }
+-    if (!visit_policy_skip(v, "%(name)s", %(special_features)s)) {
++    if (!visit_policy_skip(v, "%(name)s", %(features)s)) {
+ ''',
+-                         name=memb.name, special_features=special_features)
++                         name=memb.name, features=features)
+             indent.increase()
+         ret += mcgen('''
+     if (!visit_type_%(c_type)s(v, "%(name)s", &obj->%(c_name)s, errp)) {
+@@ -120,7 +116,7 @@ def gen_visit_object_members(name: str,
+ ''',
+                      c_type=memb.type.c_name(), name=memb.name,
+                      c_name=c_name(memb.name))
+-        if special_features != '0':
++        if features != '0':
+             indent.decrease()
+             ret += mcgen('''
+     }
+-- 
+2.48.1
 
 
