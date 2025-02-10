@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C190EC021A0
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 02:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CABC0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 02:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thJjs-000078-1E; Sun, 09 Feb 2025 21:41:36 -0500
+	id 1thJxS-0007eT-5U; Sun, 09 Feb 2025 21:55:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thJjo-00005F-NV; Sun, 09 Feb 2025 21:41:32 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thJjm-00087f-KO; Sun, 09 Feb 2025 21:41:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739155291; x=1770691291;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=aBNXUK51XTb5h+RZylc8ESD+bwtNxYy97oEksRtg0Sk=;
- b=R8i9+Y4p0nuSlUy+loa8f6AaovizCg4IRmzTtrPMo9hHLEUFAKfft4YC
- g9O029ZDHSWJgkbVw63zHdY6/NHVoDAuUjFGJJ6NTZvBiZbGRQZ1Wo2Sz
- CBTZJ3CXrRKqXMjdo98iwoKAFONWG8XgG7zJ2BIL3Jun8HV+PogbLs20r
- M/PQJayYBZEsvmOaOjVbW1ksvcFCdPUPQ12gqRypIMOlXn118z0IGvUsU
- 5MPh8EnU03tvpXigpUTeuWvxRd1mPTaHW1ZVTP8Mnt+Wbkf4PlqXB9iBZ
- WHwt8hyjmvBCJn2dMdBaGeT43SIlWftNyvo/rOXwXdybepHzfxRDTG0No g==;
-X-CSE-ConnectionGUID: 79f50HH7Tqe9jUFgOR6rHg==
-X-CSE-MsgGUID: q2NYFwAsSNOnx1FVnxLecQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11340"; a="50351234"
-X-IronPort-AV: E=Sophos;i="6.13,273,1732608000"; d="scan'208";a="50351234"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2025 18:41:27 -0800
-X-CSE-ConnectionGUID: aAHcT5VOTl2pOXAz+VEFvQ==
-X-CSE-MsgGUID: OvR4yrbuRnetMqSyXJmVYA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="142938200"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 09 Feb 2025 18:41:24 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 01/10] i386/fw_cfg: move hpet_cfg definition to hpet.c
-Date: Mon, 10 Feb 2025 11:00:42 +0800
-Message-Id: <20250210030051.2562726-2-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250210030051.2562726-1-zhao1.liu@intel.com>
-References: <20250210030051.2562726-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1thJxG-0007d1-Eu; Sun, 09 Feb 2025 21:55:26 -0500
+Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1thJxE-0001PG-U6; Sun, 09 Feb 2025 21:55:26 -0500
+Received: by mail-ua1-x92f.google.com with SMTP id
+ a1e0cc1a2514c-866eb01bde9so2495771241.0; 
+ Sun, 09 Feb 2025 18:55:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739156123; x=1739760923; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KEPlvcFJyyyPg9V3qUeq2H44oh55V3PP51Q9CSm/qo4=;
+ b=Mkp1uDquC21BuqzNnqEEzvT9MNLe5X6MKOU+/Lq8gseHQ7Wlqs+j7C3EzzwwkExnhx
+ uFcposOx7b6rjLcj7fvSjnm4BVlq1nldwLkhhMTNsusqygmVgZawWHE7ZHQV9+fvzunP
+ xsM6HXjeqyo5pyYTpaw1c59CXQMZiQPmSVrRX19gPdD32OSi8PGwv/1BwYY8ESfx7gPc
+ AUT7KJncR7vPK77+O14iXgKzC6mg4CdnN+niX0r7mTKhZI2w/9iPzG0wLOS3zP7bmKUu
+ KgRwVhUBYu2IU11JsUFphePyOUpTCz6ioWMcSkkD1SDAefudwI+Qwq8rz6/Lg7vTUqEL
+ rHdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739156123; x=1739760923;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KEPlvcFJyyyPg9V3qUeq2H44oh55V3PP51Q9CSm/qo4=;
+ b=W8eexFMWDi4TgvroAa3JyUnP0ayd7MmcP6yqQp4R8zn5JkDQpzgKzVjqAXLLbH7xAR
+ Bm8blsWhbY5ndaqNMe+rah4w/lKOSz1tU99IopxvkUq8AWHeqn+2LskMAPpktV8pBL5r
+ 4LchBaTVYKoLOAQkbXOXd9dOUw1tr6DW6ZVLabt4QQtjvwCN6jXZaCiK7d3LyyUumqD0
+ 9ymLWwkaBo3pihGptOyYEduUv53mUfIgjhpZVrXYlts8nzhDtwyN928LVNSRLPjdNeL5
+ jGKMHjAmzaST3qVUoqz0/s/SgCRTcn8hDUy2pvDVxN2ei8pYpIKL2N5iqM6o7XYPMvJA
+ KO9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMM2eBA8Ti9fkC904y06tfYZX3pIsZQpEdxY2KDEhUW/T93dmp5YyDf59LmtQPPzVppgQ0L3bjCukO@nongnu.org
+X-Gm-Message-State: AOJu0YwT8Bh0+gB6fWdI8zsmy3C5s1rL7pNXCsdMlKgPaNx7J5mhBdz0
+ 828QlIbJ8FxB1UmcYFMEtkw3xG+0ehz87L8/TqJOfGGy40uMDG/Blix6epycwwaejF7tmWg+8bj
+ RvKfeddJehSO9KtDYjuEsPcp62Jk=
+X-Gm-Gg: ASbGnctq6ACQM7EUkKyH9kx8WS8gorxDGU3xAalCPu1MiLIxY4oqJa9idMDimOztKSD
+ B9dePE2u1OViUi/GjbOH9HkAQXvRcjKmxalvYX6RtvoEl03pEIbP/Vn8T2zK3do8kizadosloiS
+ CaK8dfH7nT1a42mJiabQ64R2HKmg==
+X-Google-Smtp-Source: AGHT+IG+/yfWkHUGNF8Sdqv2ptBO6gc9KuzGQW5AtK0rDdwOL8mz0mJIAbTbDLEVuJLFeyUtgrV+jqFJlLfqByW4WCg=
+X-Received: by 2002:a05:6102:4414:b0:4af:e61d:e22f with SMTP id
+ ada2fe7eead31-4ba85f90424mr9409532137.24.1739156123321; Sun, 09 Feb 2025
+ 18:55:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250206-pmu_minor_fixes-v2-0-1bb0f4aeb8b4@rivosinc.com>
+In-Reply-To: <20250206-pmu_minor_fixes-v2-0-1bb0f4aeb8b4@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 10 Feb 2025 12:54:57 +1000
+X-Gm-Features: AWEUYZmIwcflzyh5bQuiuhXRX6VBW_PlqTJKgVIbNLN_ImC-HxOnRV_AjDx9pMg
+Message-ID: <CAKmqyKMuNS6kAytheSAwDXo1MEOvadi-0nXMOR9BRN_hKRnYEw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Minor mhpmevent related fixes
+To: Atish Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,103 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HPET device needs to access and update hpet_cfg variable, but now it is
-defined in hw/i386/fw_cfg.c and Rust code can't access it.
+On Thu, Feb 6, 2025 at 7:59=E2=80=AFPM Atish Patra <atishp@rivosinc.com> wr=
+ote:
+>
+> Here are two small fixes around mhpmevent encoding and reset value.
+> The first patch is picked from the platform specific event encoding
+> series[1].
+>
+> [1] https://lore.kernel.org/qemu-devel/20241009-pmu_event_machine-v1-0-dc=
+bd7a60e3ba@rivosinc.com/
+>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
 
-Move hpet_cfg definition to hpet.c (and rename it to hpet_fw_cfg). This
-allows Rust HPET device implements its own global hpet_fw_cfg variable,
-and will further reduce the use of unsafe C code access and calls in the
-Rust HPET implementation.
+Thanks!
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- hw/i386/fw_cfg.c        |  4 +---
- hw/timer/hpet.c         | 14 ++++++++------
- include/hw/timer/hpet.h |  2 +-
- 3 files changed, 10 insertions(+), 10 deletions(-)
+Applied to riscv-to-apply.next
 
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index d2cb08715a21..546de63123e6 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -26,8 +26,6 @@
- #include CONFIG_DEVICES
- #include "target/i386/cpu.h"
- 
--struct hpet_fw_config hpet_cfg = {.count = UINT8_MAX};
--
- const char *fw_cfg_arch_key_name(uint16_t key)
- {
-     static const struct {
-@@ -153,7 +151,7 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
-     PCMachineState *pcms =
-         (PCMachineState *)object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE);
-     if (pcms && pcms->hpet_enabled) {
--        fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_cfg, sizeof(hpet_cfg));
-+        fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_fw_cfg, sizeof(hpet_fw_cfg));
-     }
- #endif
- 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 92b6d509edda..f2e2d83a3f67 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -40,6 +40,8 @@
- #include "qom/object.h"
- #include "trace.h"
- 
-+struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
-+
- #define HPET_MSI_SUPPORT        0
- 
- OBJECT_DECLARE_SIMPLE_TYPE(HPETState, HPET)
-@@ -655,8 +657,8 @@ static void hpet_reset(DeviceState *d)
-     s->hpet_counter = 0ULL;
-     s->hpet_offset = 0ULL;
-     s->config = 0ULL;
--    hpet_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
--    hpet_cfg.hpet[s->hpet_id].address = sbd->mmio[0].addr;
-+    hpet_fw_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
-+    hpet_fw_cfg.hpet[s->hpet_id].address = sbd->mmio[0].addr;
- 
-     /* to document that the RTC lowers its output on reset as well */
-     s->rtc_irq_level = 0;
-@@ -698,17 +700,17 @@ static void hpet_realize(DeviceState *dev, Error **errp)
-     if (!s->intcap) {
-         warn_report("Hpet's intcap not initialized");
-     }
--    if (hpet_cfg.count == UINT8_MAX) {
-+    if (hpet_fw_cfg.count == UINT8_MAX) {
-         /* first instance */
--        hpet_cfg.count = 0;
-+        hpet_fw_cfg.count = 0;
-     }
- 
--    if (hpet_cfg.count == 8) {
-+    if (hpet_fw_cfg.count == 8) {
-         error_setg(errp, "Only 8 instances of HPET is allowed");
-         return;
-     }
- 
--    s->hpet_id = hpet_cfg.count++;
-+    s->hpet_id = hpet_fw_cfg.count++;
- 
-     for (i = 0; i < HPET_NUM_IRQ_ROUTES; i++) {
-         sysbus_init_irq(sbd, &s->irqs[i]);
-diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
-index 71e8c62453d1..c2656f7f0bef 100644
---- a/include/hw/timer/hpet.h
-+++ b/include/hw/timer/hpet.h
-@@ -73,7 +73,7 @@ struct hpet_fw_config
-     struct hpet_fw_entry hpet[8];
- } QEMU_PACKED;
- 
--extern struct hpet_fw_config hpet_cfg;
-+extern struct hpet_fw_config hpet_fw_cfg;
- 
- #define TYPE_HPET "hpet"
- 
--- 
-2.34.1
+Alistair
 
+> ---
+> Changes in v2:
+> - Replace GENMASK_ULL with MAKE_64BIT_MASK
+> - Applied RB/AB tags.
+> - Link to v1: https://lore.kernel.org/r/20250115-pmu_minor_fixes-v1-0-c32=
+388defb02@rivosinc.com
+>
+> ---
+> Atish Patra (2):
+>       target/riscv: Fix the hpmevent mask
+>       target/riscv: Mask out upper sscofpmf bits during validation
+>
+>  target/riscv/cpu_bits.h | 5 ++---
+>  target/riscv/pmu.c      | 2 +-
+>  2 files changed, 3 insertions(+), 4 deletions(-)
+> ---
+> base-commit: 3f26a7a370c11c7dff68dabcccc19c4e0de901e4
+> change-id: 20250115-pmu_minor_fixes-7a2b8e3658e4
+> --
+> Regards,
+> Atish patra
+>
+>
 
