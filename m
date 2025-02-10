@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10BEC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 22:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF1ECC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 22:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thc7W-0002Tx-UJ; Mon, 10 Feb 2025 17:19:14 -0500
+	id 1thcVs-0006hJ-Mp; Mon, 10 Feb 2025 17:44:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thc7U-0002QZ-Vb
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 17:19:13 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1thcVq-0006gq-9g; Mon, 10 Feb 2025 17:44:22 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thc7S-0002ye-DX
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 17:19:12 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4394a0c65fcso11261995e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 14:19:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1thcVn-0007lk-Qd; Mon, 10 Feb 2025 17:44:21 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ab78e6edb48so509340166b.2; 
+ Mon, 10 Feb 2025 14:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739225948; x=1739830748; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1739227456; x=1739832256; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Bm3IwAVfo/Moh0xAEaNpxkkhaYnZBCTmolWG6ZgnfJI=;
- b=NQY8n0fAcPUsZWMlPL08uL8vC1BZ1e7DzvKbStUaZb+0v1E5ZABuvHiWFtwB/cIC1V
- tg6Rsv/Cw4Xsf8VoXKKpytj1uGXVvC/l1rBtn8yXKh/H+ObagNgzBfNglh5FzSu5W5aO
- BGLwjxb17w9ZTU1r2xK0STDPN8MBj8GS5+ptx8PWp5mrkSIhTy5+TowLw4N+TKVRG+N5
- gW2piE3/OG4yf2jW/9AMbm3txYZrYiLM03Na0VJdeGTO0VPgsDK1bAhQG7mFcazZgWtK
- 9CYMi9N27L2Ask8gXXfvn4OzKBi8qP44vBYkpznl5v0MZUoSwzMZ/BQ2dt4N+sASi6r2
- w2SQ==
+ bh=EMiOfTbKGdUSnrzjPYFyrwRord+4epbRH65Zn+Id4C0=;
+ b=YL+Nz8LijkkuesG5JCpko2/2i/zaF3tGojcMPeYnpIAbzDuzFLeL2pKT/IJqCf+iWq
+ fkFcfmJMwMjNnClElBejmjpQ1eAOeQfFgc7MaTEfEYXf7zS4XFnZslqHPMjkwPzPEl5C
+ vaYyfsHLF7SakIsL5R1c0rMF+q0Ed63P8UnYqLaIbMW68RF/y4EeGRxJS14lCGwG3N+1
+ MzDDXlSN0/hpwK6l7JQFV4ch3FkamMjTXj1Sh/CwoO2Z0569uLzbbqf8Afr0LEbNNZKk
+ gWqIP1AFpvsXr/9cRXWkQAAL1M88c6iWSYuLZYNsxUCQqxog1EijMFIxnoDwQT/S8vFQ
+ KIAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739225948; x=1739830748;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1739227456; x=1739832256;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Bm3IwAVfo/Moh0xAEaNpxkkhaYnZBCTmolWG6ZgnfJI=;
- b=g9Eck2VVtoXODzUlCnVj4pGKyfdeHdMPEbi1FReeuIsJNRyY25FiUwDhZ162gBzSIQ
- QJykUJ1TOQ58QwmiUQikj6o4NxZn7zK8aKSywrV8C4ISLlu1DInd++UInF9KczwaWyh7
- WTGJSwTtXKcjFAKxA9UIOm8plSnKWFwsOmBJXnwsmNVQYz7n0BQRVr47crr4q1LDTktn
- iTEsbdrZaPjv6mRua+YB81ORau1rSmCwYzDbwEfy689Y6+S/rqc/ASc1q2pQcrQRsDjW
- zPL0XZ9qS8pWySEbbjY8VrAeq1l9HbHMcuBAARabJc0Al12icuqgxyatLTkrB4ocH3qb
- f52Q==
-X-Gm-Message-State: AOJu0YxIeni1roSn1tfMZBKhzahRS3FDTLOwrkbJ2GDyNUzA+16B8PMg
- inpEmOLoCsMOiSfQXlhgzgTGmlcvOFeMWXxKu4qai3ZX++zadZiKDFTwqT4W46IbgwkkzI9rLhS
- EGLU=
-X-Gm-Gg: ASbGncskCARQHXHAckLC5ZqfqNvohhrez1HSzVLd8NVkXV3IvmVc8BloVvk6+OArylQ
- ixeKUz3+uETy3EzpPMJvM+Yolv76fxEYKUgSatQPNzPanMxQeqPdQgStspfN/FCx+hJxLIZUP6f
- 5D2/4v6w4jizhKGqZbSroYi1VzesCmp8cNKL0dFfn/L2dTai+att0U1q4QtsHRMY2cJSrkz44/n
- 6mXsxvrxVZFmkXLacYqKClNwO0TOEoXcjc+OEjCqDw5UwhCDsg21MLVz7/vMtYLS4SCAGJMNjt7
- LunEYs5cKuLYQD9boPpZAvvdTNxT+CUTlxOiTju1+6LT7fBaQD/N7IxGR0tKhubKPg==
-X-Google-Smtp-Source: AGHT+IF2LzLQBt39nyq5MTdT7uiohp8s32bwoXI45SnHWredDHFc00IwtYxb2b5mPVtU3JrvGHaWFQ==
-X-Received: by 2002:a05:600c:691:b0:439:350a:ab57 with SMTP id
- 5b1f17b1804b1-439350aad3cmr71255845e9.26.1739225948449; 
- Mon, 10 Feb 2025 14:19:08 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dd5930aabsm7579434f8f.56.2025.02.10.14.19.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 14:19:08 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 07/10] target/riscv: Set disassemble_info::endian value in
- disas_set_info()
-Date: Mon, 10 Feb 2025 23:18:27 +0100
-Message-ID: <20250210221830.69129-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250210221830.69129-1-philmd@linaro.org>
-References: <20250210221830.69129-1-philmd@linaro.org>
+ bh=EMiOfTbKGdUSnrzjPYFyrwRord+4epbRH65Zn+Id4C0=;
+ b=TRINufgE7B8ymYMmUHeHMSx439ZQb29HofL4xV34kvclAr5TCdU/8ofbu/xcWRUaii
+ syXqjnXtzg1aGli1yY+5VfwvvKetCKSss/FS1/S/Y5Nid695OXRCp4NMWxBRr//axJx5
+ j7Sq91z297XzfwYX37154nuK2pip3M+O2B429B+UPn5h6jGwysiBaWFHC0frGIAAcjhE
+ x5x/9N+g1udT4u2MT/rQ9CPPykFXU961GpqnvRfcc8Hu2Q96qvG3LIOVYhy5d3jIbtIz
+ v5lpe7QYIGGUs2jBWkz7xEZ4tZBuR+4fS4OPll4BcmO2RqXDqH0NgNp9Puc/za1NELeA
+ z8CQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3ubXESq+j8YWNmtOZ5TtXgqQFZbWO5STb2VCzxpr7NLEgBtFuNz7skCVqRYpotfVIu4GtoVbGhw==@nongnu.org
+X-Gm-Message-State: AOJu0YwptgtMVFcH0yuuSI0SrAzxSNn5Bx4wtXx8HbhelQKNBhk7h66d
+ wEccnK2z/Z8xvu9h7opbTwFnGiVt60z3sZP/iN6783CJ9T3mnBeF
+X-Gm-Gg: ASbGnctPCUK9iEAYsvso7z8/njMJKuIUqh6leX5CB//WqUhM7EPUZN0JK6Xri6GrfSH
+ vLtzWZIraM8pvZAptFItLielpStbmbuVjV5mPh6Zre3eVgjpTTxW1r4QC31t6FMD6tneTapVHKs
+ 24dS/adA8vUichcfSdOwKiKvMgpEuFVCk6M7tERTrl8swb22GKUtktmeqR20f3lX12pxcJk7Nrv
+ lUOG97VY6lDRfg4XY3nmZZfUNWtwgqCwQxC6H60wg18Zdwtp5Npxb5BX86GMzCA/m18Bfdfx8CO
+ Ka3V4BEvaLBMUjBcw8z3oI+F6koDCpTORC1YuLAkfo8blt/Gk/4tgdA4bkn7TVJ4
+X-Google-Smtp-Source: AGHT+IHwj0qNpDxKF4rPs4Wtn+vWMG+Gv+GnIgvQUOT+M4GD/DNJE3+5WZ3BhkvLWKddo+M6cH1SuQ==
+X-Received: by 2002:a05:6402:e83:b0:5dc:d8d2:e38f with SMTP id
+ 4fb4d7f45d1cf-5de450839f3mr41330141a12.31.1739227456244; 
+ Mon, 10 Feb 2025 14:44:16 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-078-054-086-138.78.54.pool.telefonica.de.
+ [78.54.86.138]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab779832909sm901409966b.49.2025.02.10.14.44.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Feb 2025 14:44:15 -0800 (PST)
+Date: Mon, 10 Feb 2025 22:44:15 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 04/18] hw/arm: Add i.MX 8M Plus EVK board
+In-Reply-To: <CAFEAcA8qgEDAnfaQDmpUjy77KZBiqwdKSmyLE-ZwEAhMNLWn4Q@mail.gmail.com>
+References: <20250204092112.26957-1-shentey@gmail.com>
+ <20250204092112.26957-5-shentey@gmail.com>
+ <CAFEAcA8qgEDAnfaQDmpUjy77KZBiqwdKSmyLE-ZwEAhMNLWn4Q@mail.gmail.com>
+Message-ID: <831901E4-69B2-4637-8507-77C7BF4DA65D@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +103,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have the CPUClass::disas_set_info() callback set the
-disassemble_info::endian field.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/riscv/cpu.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3d4bd157d2c..b39a701d751 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1156,6 +1156,15 @@ static void riscv_cpu_disas_set_info(CPUState *s, disassemble_info *info)
-     CPURISCVState *env = &cpu->env;
-     info->target_info = &cpu->cfg;
- 
-+    /*
-+     * A couple of bits in MSTATUS set the endianness:
-+     *  - MSTATUS_UBE (User-mode),
-+     *  - MSTATUS_SBE (Supervisor-mode),
-+     *  - MSTATUS_MBE (Machine-mode)
-+     * but we don't implement that yet.
-+     */
-+    info->endian = BFD_ENDIAN_LITTLE;
-+
-     switch (env->xl) {
-     case MXL_RV32:
-         info->print_insn = print_insn_riscv32;
--- 
-2.47.1
+Am 10=2E Februar 2025 17:30:01 UTC schrieb Peter Maydell <peter=2Emaydell@=
+linaro=2Eorg>:
+>On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>> As a first step, implement the bare minimum: CPUs, RAM, interrupt contr=
+oller,
+>> serial=2E All other devices of the A53 memory map are represented as
+>> TYPE_UNIMPLEMENTED_DEVICE, i=2Ee=2E the whole memory map is provided=2E=
+ This allows
+>> for running Linux without it crashing due to invalid memory accesses=2E
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>
+>
+>
+>> --- /dev/null
+>> +++ b/docs/system/arm/imx8mp-evk=2Erst
+>> @@ -0,0 +1,56 @@
+>> +NXP i=2EMX 8M Plus Evaluation Kit (``imx8mp-evk``)
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +The QEMU i=2EMX 8M Plus EVK board emulation is intended to emulate a p=
+lain i=2EMX 8M
+>> +Plus system on chip (SoC)=2E All peripherals the real board has such a=
+s flash and
+>> +I2C devices are intended to be added via configuration, e=2Eg=2E comma=
+nd line=2E
+>
+>Why do this? If they're on the real hardware board, we should
+>be creating them by default in the machine model in QEMU=2E
+>Command line options are for devices that are optional and
+>pluggable by the user on the hardware=2E
 
+My goal is to be able to model a custom, proprietary machine which runs in=
+ a CI=2E In order to avoid peripherals getting in the way, the idea is to h=
+ave a machine which essentially exposes the plain SoC, and allow users to "=
+decorate" it themselves=2E Is an EVK machine the wrong approach for this? A=
+re there any other ways to achieve this, e=2Eg=2E with -nodefaults?
+
+>
+>> +Supported devices
+>> +-----------------
+>> +
+>> +The ``imx8mp-evk`` machine implements the following devices:
+>> +
+>> + * Up to 4 Cortex-A53 Cores
+>
+>"cores"
+
+Fixed in v3=2E
+
+>
+>> + * Generic Interrupt Controller (GICv3)
+>> + * 4 UARTs
+>> +
+>> +Boot options
+>> +------------
+>> +
+>> +The ``imx8mp-evk`` machine can start using the standard -kernel functi=
+onality
+>> +for loading a Linux kernel=2E
+>> +
+>> +Direct Linux Kernel Boot
+>> +''''''''''''''''''''''''
+>> +
+>> +Probably the easiest way to get started with a whole Linux system on t=
+he machine
+>> +is to generate an image with Buildroot=2E Version 2024=2E11=2E1 is tes=
+ted at the time
+>> +of writing and involves two steps=2E First run the following commands =
+in the
+>> +toplevel directory of the Buildroot source tree:
+>> +
+>> +=2E=2E code-block:: bash
+>> +
+>> +  $ echo "BR2_TARGET_ROOTFS_CPIO=3Dy" >> configs/freescale_imx8mpevk_d=
+efconfig
+>> +  $ make freescale_imx8mpevk_defconfig
+>> +  $ make
+>> +
+>> +Once finished successfully there is an ``output/image`` subfolder=2E N=
+avigate into
+>> +it patch the device tree needs to be patched with the following comman=
+ds which
+>> +will remove the ``cpu-idle-states`` properties from CPU nodes:
+>
+>This sentence seems to be confused in the middle -- cut-and-paste
+>error ?
+
+Yeah, probably=2E Fixed in v3=2E
+
+>
+>> +
+>> +=2E=2E code-block:: bash
+>> +
+>> +  $ dtc imx8mp-evk=2Edtb | sed '/cpu-idle-states/d' > imx8mp-evk-patch=
+ed=2Edts
+>> +  $ dtc imx8mp-evk-patched=2Edts -o imx8mp-evk-patched=2Edtb
+>> +
+>> +Now that everything is prepared the newly built image can be run in th=
+e QEMU
+>> +``imx8mp-evk`` machine:
+>
+>> +#define NAME_SIZE 20
+>> +
+>> +static void fsl_imx8mp_init(Object *obj)
+>> +{
+>> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+>> +    FslImx8mpState *s =3D FSL_IMX8MP(obj);
+>> +    char name[NAME_SIZE];
+>
+>Better than fixed sized char arrays for object names
+>is to use
+>   g_autofree char *name =3D g_strdup_printf("cpu%d", i);
+>inside the block of each for() loop etc=2E
+
+Will fix for v3, touching subsequent patches=2E
+
+>
+>> +    int i;
+>> +
+>> +    for (i =3D 0; i < MIN(ms->smp=2Ecpus, FSL_IMX8MP_NUM_CPUS); i++) {
+>> +        snprintf(name, NAME_SIZE, "cpu%d", i);
+>> +        object_initialize_child(obj, name, &s->cpu[i],
+>> +                                ARM_CPU_TYPE_NAME("cortex-a53"));
+>> +    }
+>> +
+>> +    object_initialize_child(obj, "gic", &s->gic, TYPE_ARM_GICV3);
+>> +
+>> +    for (i =3D 0; i < FSL_IMX8MP_NUM_UARTS; i++) {
+>> +        snprintf(name, NAME_SIZE, "uart%d", i + 1);
+>> +        object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIA=
+L);
+>> +    }
+>> +}
+>> +
+>> +static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+>> +{
+>> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+>> +    FslImx8mpState *s =3D FSL_IMX8MP(dev);
+>> +    DeviceState *gicdev =3D DEVICE(&s->gic);
+>> +    int i;
+>> +
+>> +    if (ms->smp=2Ecpus > FSL_IMX8MP_NUM_CPUS) {
+>> +        error_setg(errp, "%s: Only %d CPUs are supported (%d requested=
+)",
+>> +                   TYPE_FSL_IMX8MP, FSL_IMX8MP_NUM_CPUS, ms->smp=2Ecpu=
+s);
+>> +        return;
+>> +    }
+>> +
+>> +    /* CPUs */
+>> +    for (i =3D 0; i < ms->smp=2Ecpus; i++) {
+>> +        /* On uniprocessor, the CBAR is set to 0 */
+>> +        if (ms->smp=2Ecpus > 1) {
+>> +            object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+>> +                                    fsl_imx8mp_memmap[FSL_IMX8MP_GIC_D=
+IST]=2Eaddr,
+>> +                                    &error_abort);
+>> +        }
+>> +
+>> +        /*
+>> +         * Magic value from Linux output: "arch_timer: cp15 timer(s) r=
+unning at
+>> +         * 8=2E00MHz (phys)"=2E
+>> +         */
+>> +        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
+>> +                                &error_abort);
+>
+>This is the CNTFRQ value in Hz=2E The datasheet actually tells you
+>this, so we don't need to call it a magic number (section 4=2E11=2E4=2E1=
+=2E6=2E4
+>of the i=2EMX 8M Plus Applications Processor Reference Manual says the
+>base frequency of the system counter is 8MHz)=2E
+
+Ah, so then it's the "nxp,sysctr-timer"-compatible counter in the device t=
+ree? I've stared my own implementation but didn't see the relation to the c=
+p15 timer=2E Thanks for clarifying this=2E I'd comment: 'CNTFID0 base frequ=
+ency in Hz'=2E
+
+>
+>(Incidentally the memory mapped system counter is a stock Arm
+>IP block and I have about 60% of a model of it, I just haven't
+>needed to upstream it yet because in practice no guest software
+>really tries to mess with it=2E If we turn out to need it for
+>this SoC that would be a reason for me to clean it up and
+>send it out=2E But I suspect we don't need it in practice=2E)
+
+The ugly workaround for the cpu-idle-states above is actually related to t=
+his counter, IIUC=2E I suppose that QEMU doesn't support these idle states,=
+ it only seems to support WFI=2E But if it did, then this counter would wak=
+e up the CPUs (if I'm not mistaken, I'm no expert here)=2E It would be nice=
+ to be able to boot the machine via U-Boot, and I wonder if that could fix =
+the idle states when there are PSCI handlers in the secure world=2E Again, =
+this probably also requires the counter implementation=2E Looking into U-Bo=
+ot, TF-A, and OP-TEE is on my plan, but right now I'm focusing on direct ke=
+rnel boot=2E
+
+Best regards,
+Bernhard
+
+>
+>thanks
+>-- PMM
 
