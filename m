@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C77C0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2468C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thREJ-0005yC-D8; Mon, 10 Feb 2025 05:41:33 -0500
+	id 1thRHP-0006kE-DO; Mon, 10 Feb 2025 05:44:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thRED-0005xr-P9
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:41:27 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thRHN-0006jv-Ni
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:44:42 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thRE4-0005ji-Pw
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:41:18 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-436ce2ab251so28035225e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:41:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thRHL-0005wW-Sy
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:44:41 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43948021a45so4017345e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739184074; x=1739788874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739184278; x=1739789078; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=A5vV/pedvfnOn86zLj2OiqLzvsqlX7k0iGoIW3Axn/Y=;
- b=JN8kQrgiMwVg4ccOE1kj9k4wQpygYoyPCu4ZYD08dD+P4q2pM5eLtiWCY9Q48aDnYj
- tmcAeJUbwH+2qxhNzvBkw8xjVDQ5w8t0QEuRLEK6HsLGKBKJ0jscWK0oQreqhFIhr+cF
- 9ze53F6OU0+uu/HbayOQxNeE3CkDOW4I5X63DCOtsWp87QKPTAejmp/mtacO8sbLtk1g
- auNCQYvYZ1z30QJcXv4JSi8qFuwnrJyI4Te/qKKCy4NQ3nLEWa3j+UAQc/N1IE1q2+Us
- xYuamX01FeqweVIDRnE4rtKrofvctXS9S++k3f+AeN/FYn/9QDtQEVm5cIpXPgpo1Qgx
- kwMQ==
+ bh=D0Dwoc7RY4bZRTzAOMQfPuoeH3Y30Ed9EhRFs8jdDH8=;
+ b=m17JTpe4wFr7C3Ww+yEAl39/t23BAi4FQx0auEN/LspKN2yUTUBRdJhwgLm6Cwn6OI
+ Nt41JmYqk07w0rdAlVCxBH9LEMrb/CqjXLPakLVMx2dREPueE6Kh3QJmoWZNDlZCjcTV
+ F9ALf6d951HwgQ2ETrlEJgSHdOJLUO3FQCD62xRFT8LQ54iesVzjlo5KIk1lI4IZMofE
+ 44AP3dEiiinsLZpYipt2dgjyuL98B33WfPrwZOfTSVu3I6kM1m3GKBdKKM35JIfVxFfV
+ h/HWbDmKEhCUGbxsLqTeNAAtOwoHp1l9UBzNqRQlLcg/qKHte4A7+t6cswDPi6eF78pp
+ nG5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739184074; x=1739788874;
+ d=1e100.net; s=20230601; t=1739184278; x=1739789078;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A5vV/pedvfnOn86zLj2OiqLzvsqlX7k0iGoIW3Axn/Y=;
- b=ZiPKv4JXiIACooC2CK8e9yVa/ABBhnJgK3yE66gAuO88+g8DYTaAlOmbx7Tzwj4AXS
- Hgga2z4km/KtHdRlhJgceYODrqj6BtpcdsroMsXbYcX92ahXVM50lNgpanOE/vgOxHCw
- 1R3apFGekjjvIhuAo9VnfaJ4RpyhZL7Z+A70SGDVINHCZJHA5MFJ+9bbLR5MmxhPYA8e
- rCAaCpdDfGSdknoMn0HcQiLBaH4L2zLs1B1RMvbvY+OM1GxspKJu6M9CkHLWjkP4mI5r
- i8uk9dzd0V2nufHvZF+x/2EvwzMiRu5RHSfEiZ9szgTeJVbRysUkpDVrg3FkUd9A1/om
- 529Q==
+ bh=D0Dwoc7RY4bZRTzAOMQfPuoeH3Y30Ed9EhRFs8jdDH8=;
+ b=cblEHBSzMxzIzgetEHhlF2y12UgnLlwb9sVpOFercO06UClDPnpJxZFMEpxIYFujy9
+ V6kKtcOZasAFC7GbYZsN5RDI/dQLBqt9Jc3B+GztZ73ZnA09urOk4nKym4fYIe30mmFS
+ YcL2oRjh3vrrULV7h155CdjlgUH2nkz9IO23Ocs3Ak/GTi2tjIeBwGEiWPjSd2kRj0Mm
+ dWti1Q1o+04FPsX9diKN7cm4kNrpoZ9FQVJLTgvRLcCspph0fQOnjzdLEoSI/6R3O6bd
+ 2cEeLqX6JKDLKmcYpVvZ9eoJlhO+kSZ4TtE2rGUI8CxkZsdejNHamIG3C+cZknmn7zBx
+ 3EFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX085v17KTVcoLBgFpkFiImQb/TbUKo15LUqPfqKE0Z0qaB5vwclVs7zfyM1Ect4I1i9t93vqT75ACv@nongnu.org
-X-Gm-Message-State: AOJu0YzYuzWDzzAFr60oWJTd00NGELkP3dLAWjzrZ38Y30bvgABE2W7H
- nYMs2rdwIr25Qxh/1DdyYyihYq6bbSzeQ8EEeJyR+twn1s0q7uVSD8HmYa1Feu4=
-X-Gm-Gg: ASbGncuOx95/JKx4Atnqp5NQLsUm/dpS7odUVMWpZoPBzUw4gb3MpVRac144WCgiUDw
- ki9HVixYdju/PFR8FYVD9bpFO0Ap/IPS0oA/qPtd+B7IRoY8ufm4HMxGE/0u2Hz6hSNVx90cM7C
- oGauJOGYj1b/iBL43DvUaqIUxpCaoAY3o+GfnmidiwVoqdvx/32dg9LXqVz5WTtNtUtM+gdAkdZ
- 07n09lieRO/FSYaw9d1aiBxltJgmAI9z7ZWs207qgCg3KPXauDiON+Za5kJvJDgi943NGSmVZen
- BZ2tC6XCCyTnPq2SSxdIanLWbexdqqtXYgLhIniY00Gb+NSF5ezToRgC1CPlcJxF
-X-Google-Smtp-Source: AGHT+IErQh+eoDkNcSK23ifuVK1WXIttMgeBAaMbwgo98CN7Jb/6ibyb81nKXdjUuxhA8YrkOpVYuA==
-X-Received: by 2002:a5d:5888:0:b0:38d:adc2:110a with SMTP id
- ffacd0b85a97d-38dc935f09emr10928127f8f.43.1739184074127; 
- Mon, 10 Feb 2025 02:41:14 -0800 (PST)
+ AJvYcCUXOlGtXRzYr2ym4NTdV6u7oD/BEFYcECcO9Z0X3Pa0O1eXJdwKA8NQSW8WHp8jMQ2Gf9K2TzMvLkb0@nongnu.org
+X-Gm-Message-State: AOJu0YyOEIcpprp789mdMI/IHy54y3l5Q7mQfHkmLDzan9OH68kVYm+M
+ A/BMFI6jzxx+qVbNnTxzGr196k2nP6tanFw5Y2Nwsdr6/bav/QFP1uqMiuZcb1o=
+X-Gm-Gg: ASbGncsF4TRddA6k6FJBIdvMO5SeKov3G48K/dGRFAPGtg4G4Y5/EY+Z0jTcNjMLwSx
+ /LH+61N04/4dPcpE4ve1H/5T9FuPUndwxGYS9fCr6USMhUHmCzxtgQSX3JfaPj1vKQ8oZwgsJG6
+ bEhvj4iTCh+J0rDmgjtHoxgw+MJkiXmHKV4RzSzInPpXY6FuuLWQznrq//y1d6fZ2G43zBFj2D1
+ XU+fTwXOStDc9CH3P3UsNCRVcOasgWFhBz0WfMdOSRaaeBNe4mY91fcuOiC5MzqRr7ZB1MW0XaY
+ 9qFqq16iGuyntvHIH7Cjhl16XLptlSF7KKhFuuZ8PG1hAZb8l7z6hY3GiT2UZDBm
+X-Google-Smtp-Source: AGHT+IGgYIZtrpUqudTiScu89irHgeNVVhWtI9BfF9U0fFAqperJpaK7L9yjPXCUK8NiD6BncxKT+w==
+X-Received: by 2002:a05:6000:1547:b0:385:e35e:9da8 with SMTP id
+ ffacd0b85a97d-38dc8dd3475mr9256407f8f.18.1739184278172; 
+ Mon, 10 Feb 2025 02:44:38 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc3a10fffsm11032418f8f.12.2025.02.10.02.41.13
+ ffacd0b85a97d-38dcb22f737sm8995633f8f.24.2025.02.10.02.44.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 02:41:13 -0800 (PST)
-Message-ID: <0d920309-c7ba-48d8-b46d-04ac1e38efc7@linaro.org>
-Date: Mon, 10 Feb 2025 11:41:12 +0100
+ Mon, 10 Feb 2025 02:44:37 -0800 (PST)
+Message-ID: <e5bcfc84-ad3e-4ee2-bf83-b3c4aea4e56e@linaro.org>
+Date: Mon, 10 Feb 2025 11:44:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] hw/loongarch/virt: CPU irq routing enhancement
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>
-References: <20250210093632.3274012-1-maobibo@loongson.cn>
+Subject: Re: [PATCH v3] hw/net: cadence_gem: feat: add logic for the
+ DISABLE_MASK bit in type2_compare_x_word_1
+To: Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, alistair@alistair23.me,
+ jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20241219061658.805-1-andrew.yuan@jaguarmicro.com>
+ <CAFEAcA96ZLjOhBT9rhNhuk32ve0Qv4hUVuTTtgE=DBApbN98Pg@mail.gmail.com>
+ <CAJy5ezovedShKH=HFbK9uRY44no2ijQocs29CHLt2jKoNL+Vpw@mail.gmail.com>
+ <CAFEAcA8oaRVs8USMDGHvDW82AtRZGAhRCg189hhWtmRm2Y-YaQ@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250210093632.3274012-1-maobibo@loongson.cn>
+In-Reply-To: <CAFEAcA8oaRVs8USMDGHvDW82AtRZGAhRCg189hhWtmRm2Y-YaQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,40 +106,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Igor for vCPU hotplugging expertise.
+On 4/2/25 15:37, Peter Maydell wrote:
+> On Thu, 30 Jan 2025 at 22:31, Edgar E. Iglesias
+> <edgar.iglesias@gmail.com> wrote:
+>> On Mon, Jan 27, 2025 at 8:40 AM Peter Maydell <peter.maydell@linaro.org> wrote:
+>>> On Thu, 19 Dec 2024 at 06:17, Andrew.Yuan <andrew.yuan@jaguarmicro.com> wrote:
+>>>> -            rx_cmp = rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
+>>>> -            mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
+>>>> -            compare = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
+>>>> +            disable_mask =
+>>>> +                FIELD_EX32(cr1, TYPE2_COMPARE_0_WORD_1, DISABLE_MASK);
+>>>> +            if (disable_mask) {
+>>>> +                /*
+>>>> +                 * If disable_mask is set,
+>>>> +                 * mask_value is used as an additional 2 byte Compare Value.
+>>>> +                 * To simple, set mask = 0xFFFFFFFF, if disable_mask is set.
+>>>> +                 */
+>>>> +                rx_cmp = ldl_le_p(rxbuf_ptr + offset);
+>>>> +                mask = 0xFFFFFFFF;
+>>>> +                compare = cr0;
+>>>> +            } else {
+>>>> +                rx_cmp = lduw_le_p(rxbuf_ptr + offset);
+>>>
+>>> Is the change in behaviour in the !disable_mask codepath here
+>>> intentional? Previously we use one byte from rxbuf_ptr[offset],
+>>> duplicated into both halves of rx_cmp; now we will load two
+>>> different bytes from rxbuf_ptr[offset] and rxbuf_ptr[offset + 1].
+>>>
+>>> If this is intended, we should say so in the commit message.
+>>>
+>>
+>> I agree that it should be mentioned (looks like a correct bugfix).
+> 
+> Thanks. I've expanded the commit message:
+> 
+>      hw/net/cadence_gem:  Fix the mask/compare/disable-mask logic
+> 
+>      Our current handling of the mask/compare logic in the Cadence
+>      GEM ethernet device is wrong:
+>       (1) we load the same byte twice from rx_buf when
+>           creating the compare value
+>       (2) we ignore the DISABLE_MASK flag
+> 
+>      The "Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev:
+>      R1p12 - Doc Rev: 1.3 User Guide" states that if the DISABLE_MASK bit
+>      in type2_compare_x_word_1 is set, the mask_value field in
+>      type2_compare_x_word_0 is used as an additional 2 byte Compare Value.
+> 
+>      Correct these bugs:
+>       * in the !disable_mask codepath, use lduw_le_p() so we
+>         correctly load a 16-bit value for comparison
+>       * in the disable_mask codepath, we load a full 4-byte value
+>         from rx_buf for the comparison, set the compare value to
+>         the whole of the cr0 register (i.e. the concatenation of
+>         the mask and compare fields), and set mask to 0xffffffff
+>         to force a 32-bit comparison
+> 
+> and also tweaked the comment a bit:
+> 
+> +                /*
+> +                 * If disable_mask is set, mask_value is used as an
+> +                 * additional 2 byte Compare Value; that is equivalent
+> +                 * to using the whole cr0 register as the comparison value.
+> +                 * Load 32 bits of data from rx_buf, and set mask to
+> +                 * all-ones so we compare all 32 bits.
+> +                 */
+> 
+> and applied this to target-arm.next.
+> 
+>> Other than that this patch looks good to me!
+> 
+> Can I call that a Reviewed-by (with the above changes)?
 
-On 10/2/25 10:36, Bibo Mao wrote:
-> Interrupt controller ipi and extioi on LoongArch system can send
-> intterrupt to multiple CPUs, physical cpu id is used to route interrupt
-> for CPUs.
-> 
-> With cpu hotplug feature in future, notification with ipi and extioi
-> interrupt controller is required. Since there is common Notifier API for
-> CPU hotplug, cpu hotplug interface is added on ipi and extioi class for
-> notification usage.
-> 
-> With CPU hotplug event notfication, gpio irq line is connected to cpu irq
-> line, and irq routing for irqchip is setup.
-> 
-> ---
->    v1 .. v2:
->      1. Combine patchset ipi and extioi irq routing enhancement together
->      2. Rebase patch based on latest version
-> ---
-> Bibo Mao (7):
->    hw/intc/loongarch_ipi: Add basic hotplug framework
->    hw/intc/loongarch_ipi: Implment cpu hotplug interface
->    hw/intc/loongarch_ipi: Notify ipi object when cpu is plugged
->    hw/intc/loongarch_extioi: Move gpio irq initial to common code
->    hw/intc/loongarch_extioi: Add basic hotplug framework
->    hw/intc/loongarch_extioi: Implment cpu hotplug interface
->    hw/intc/loongarch_extioi: Use cpu plug notification
-> 
->   hw/intc/loongarch_extioi.c        |  8 +--
->   hw/intc/loongarch_extioi_common.c | 84 ++++++++++++++++++++++++++++++-
->   hw/intc/loongarch_ipi.c           | 71 ++++++++++++++++++++++++++
->   hw/loongarch/virt.c               | 17 ++-----
->   4 files changed, 159 insertions(+), 21 deletions(-)
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
