@@ -4,100 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A283C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 07:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25ED3C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thO9U-0002t6-CZ; Mon, 10 Feb 2025 02:24:20 -0500
+	id 1thOmN-0001Wz-Uk; Mon, 10 Feb 2025 03:04:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ENuV=VB=kaod.org=clg@ozlabs.org>)
- id 1thO9Q-0002sO-J5; Mon, 10 Feb 2025 02:24:16 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1thOmM-0001Wl-CN
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:04:30 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ENuV=VB=kaod.org=clg@ozlabs.org>)
- id 1thO9N-0001p0-VJ; Mon, 10 Feb 2025 02:24:16 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yrx005Tlqz4wxh;
- Mon, 10 Feb 2025 18:24:00 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yrwzw28M8z4wby;
- Mon, 10 Feb 2025 18:23:55 +1100 (AEDT)
-Message-ID: <f23dcbe6-596f-4b5c-9fe5-135f087112bd@kaod.org>
-Date: Mon, 10 Feb 2025 08:23:51 +0100
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1thOmJ-0006oE-3r
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:04:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739174668; x=1770710668;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=bnws4m/cgsYVSJVmsCZ/sWjxAsmEtJj8WLVAn6Evxao=;
+ b=AS0pM88ur+nGQwR5cY5JTlVVhq2jbv91hNhDENxWNEdm0LczsW0XRfVC
+ k3q7kKUjI38xoebAE7JwO3hYN8M51M2ovhivd7OzKoO8s9JW6ohvu06iQ
+ 8kFnXwHsSvnoy4gYVmy3ygB5kG44HJLrQ2ItJ5/kdwqE7A4p/quZjmy/o
+ x8HE/lOBTusga/dfvLLe0zzFx/one5ItndV6Q+r2pdyM+JWAStBB4KzvK
+ BMImDMkrCbpnVF0QcrrYc75sRjqcnU59rgkszgr/TNgI1bdMM4pwNKtF4
+ /XYHxzpIghKmComM9dJYtC/+/jPvHef3JHzjHztrNaPvd/dEd3hX/qQvn g==;
+X-CSE-ConnectionGUID: 7IpYEfFNSoeaFkv7dqU8Bg==
+X-CSE-MsgGUID: ygKD6bL8SlqCyEKnT3gujQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11340"; a="39654250"
+X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="39654250"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2025 00:04:08 -0800
+X-CSE-ConnectionGUID: CAzXRT3sTcmw4z9x6jPYeA==
+X-CSE-MsgGUID: ExSnojCPTAOWmnvW9GKjOw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="112345679"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.245.128])
+ ([10.124.245.128])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2025 00:04:03 -0800
+Message-ID: <8618eac7-80ae-4533-9b05-17323955d1b5@linux.intel.com>
+Date: Mon, 10 Feb 2025 16:04:00 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] INTC model cleanup
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20250206095253.928308-1-jamin_lin@aspeedtech.com>
- <SI2PR06MB504118C85E9C5FFEADB3274FFCF22@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI2PR06MB504118C85E9C5FFEADB3274FFCF22@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
+ KVM_PMU_CAP_DISABLE
+To: dongli.zhang@oracle.com, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com, zhenyuw@linux.intel.com,
+ groug@kaod.org, lyan@digitalocean.com, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com, joe.jin@oracle.com,
+ davydov-max@yandex-team.ru, zide.chen@intel.com
+References: <20241104094119.4131-1-dongli.zhang@oracle.com>
+ <20241104094119.4131-3-dongli.zhang@oracle.com> <ZyxxygVaufOntpZJ@intel.com>
+ <57b4b74d-67d2-4fcf-aa59-c788afc93619@oracle.com>
+ <f4a2f801-9f82-424e-aee4-8b18add34aa6@linux.intel.com>
+ <6aefa9df-10e3-4001-a509-a4bc3850d65a@linux.intel.com>
+ <bf41c97a-b5e2-4cfd-90ef-89f12f1b384a@oracle.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <bf41c97a-b5e2-4cfd-90ef-89f12f1b384a@oracle.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=ENuV=VB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: none client-ip=198.175.65.21;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,65 +95,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
 
-On 2/10/25 02:46, Jamin Lin wrote:
-> Hi Cedric, Andrew
-> 
->> -----Original Message-----
->> From: Jamin Lin <jamin_lin@aspeedtech.com>
->> Sent: Thursday, February 6, 2025 5:53 PM
->> To: Cédric Le Goater <clg@kaod.org>; Peter Maydell
->> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
->> Lee <leetroy@gmail.com>; Andrew Jeffery <andrew@codeconstruct.com.au>;
->> Joel Stanley <joel@jms.id.au>; open list:ASPEED BMCs
->> <qemu-arm@nongnu.org>; open list:All patches CC here
->> <qemu-devel@nongnu.org>
->> Cc: Jamin Lin <jamin_lin@aspeedtech.com>; Troy Lee
->> <troy_lee@aspeedtech.com>; Yunlin Tang <yunlin.tang@aspeedtech.com>
->> Subject: [PATCH v2 0/6] INTC model cleanup
+On 2/10/2025 4:12 AM, dongli.zhang@oracle.com wrote:
+> Hi Dapeng,
+>
+> On 2/7/25 1:52 AM, Mi, Dapeng wrote:
+>> On 11/21/2024 6:06 PM, Mi, Dapeng wrote:
+>>> On 11/8/2024 7:44 AM, dongli.zhang@oracle.com wrote:
+>>>> Hi Zhao,
+>>>>
+>>>>
+>>>> On 11/6/24 11:52 PM, Zhao Liu wrote:
+>>>>> (+Dapang & Zide)
+>>>>>
+>>>>> Hi Dongli,
+>>>>>
+>>>>> On Mon, Nov 04, 2024 at 01:40:17AM -0800, Dongli Zhang wrote:
+>>>>>> Date: Mon,  4 Nov 2024 01:40:17 -0800
+>>>>>> From: Dongli Zhang <dongli.zhang@oracle.com>
+>>>>>> Subject: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
+>>>>>>  KVM_PMU_CAP_DISABLE
+>>>>>> X-Mailer: git-send-email 2.43.5
+>>>>>>
+>>>>>> The AMD PMU virtualization is not disabled when configuring
+>>>>>> "-cpu host,-pmu" in the QEMU command line on an AMD server. Neither
+>>>>>> "-cpu host,-pmu" nor "-cpu EPYC" effectively disables AMD PMU
+>>>>>> virtualization in such an environment.
+>>>>>>
+>>>>>> As a result, VM logs typically show:
+>>>>>>
+>>>>>> [    0.510611] Performance Events: Fam17h+ core perfctr, AMD PMU driver.
+>>>>>>
+>>>>>> whereas the expected logs should be:
+>>>>>>
+>>>>>> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
+>>>>>> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
+>>>>>>
+>>>>>> This discrepancy occurs because AMD PMU does not use CPUID to determine
+>>>>>> whether PMU virtualization is supported.
+>>>>> Intel platform doesn't have this issue since Linux kernel fails to check
+>>>>> the CPU family & model when "-cpu *,-pmu" option clears PMU version.
+>>>>>
+>>>>> The difference between Intel and AMD platforms, however, is that it seems
+>>>>> Intel hardly ever reaches the “...due virtualization” message, but
+>>>>> instead reports an error because it recognizes a mismatched family/model.
+>>>>>
+>>>>> This may be a drawback of the PMU driver's print message, but the result
+>>>>> is the same, it prevents the PMU driver from enabling.
+>>>>>
+>>>>> So, please mention that KVM_PMU_CAP_DISABLE doesn't change the PMU
+>>>>> behavior on Intel platform because current "pmu" property works as
+>>>>> expected.
+>>>> Sure. I will mention this in v2.
+>>>>
+>>>>>> To address this, we introduce a new property, 'pmu-cap-disabled', for KVM
+>>>>>> acceleration. This property sets KVM_PMU_CAP_DISABLE if
+>>>>>> KVM_CAP_PMU_CAPABILITY is supported. Note that this feature currently
+>>>>>> supports only x86 hosts, as KVM_CAP_PMU_CAPABILITY is used exclusively for
+>>>>>> x86 systems.
+>>>>>>
+>>>>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>>>>>> ---
+>>>>>> Another previous solution to re-use '-cpu host,-pmu':
+>>>>>> https://urldefense.com/v3/__https://lore.kernel.org/all/20221119122901.2469-1-dongli.zhang@oracle.com/__;!!ACWV5N9M2RV99hQ!Nm8Db-mwBoMIwKkRqzC9kgNi5uZ7SCIf43zUBn92Ar_NEbLXq-ZkrDDvpvDQ4cnS2i4VyKAp6CRVE12bRkMF$ 
+>>>>> IMO, I prefer the previous version. This VM-level KVM property is
+>>>>> difficult to integrate with the existing CPU properties. Pls refer later
+>>>>> comments for reasons.
+>>>>>
+>>>>>>  accel/kvm/kvm-all.c        |  1 +
+>>>>>>  include/sysemu/kvm_int.h   |  1 +
+>>>>>>  qemu-options.hx            |  9 ++++++-
+>>>>>>  target/i386/cpu.c          |  2 +-
+>>>>>>  target/i386/kvm/kvm.c      | 52 ++++++++++++++++++++++++++++++++++++++
+>>>>>>  target/i386/kvm/kvm_i386.h |  2 ++
+>>>>>>  6 files changed, 65 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>>>>> index 801cff16a5..8b5ba45cf7 100644
+>>>>>> --- a/accel/kvm/kvm-all.c
+>>>>>> +++ b/accel/kvm/kvm-all.c
+>>>>>> @@ -3933,6 +3933,7 @@ static void kvm_accel_instance_init(Object *obj)
+>>>>>>      s->xen_evtchn_max_pirq = 256;
+>>>>>>      s->device = NULL;
+>>>>>>      s->msr_energy.enable = false;
+>>>>>> +    s->pmu_cap_disabled = false;
+>>>>>>  }
+>>>>> The CPU property "pmu" also defaults to "false"...but:
+>>>>>
+>>>>>  * max CPU would override this and try to enable PMU by default in
+>>>>>    max_x86_cpu_initfn().
+>>>>>
+>>>>>  * Other named CPU models keep the default setting to avoid affecting
+>>>>>    the migration.
+>>>>>
+>>>>> The pmu_cap_disabled and “pmu” property look unbound and unassociated,
+>>>>> so this can cause the conflict when they are not synchronized. For
+>>>>> example,
+>>>>>
+>>>>> -cpu host -accel kvm,pmu-cap-disabled=on
+>>>>>
+>>>>> The above options will fail to launch a VM (on Intel platform).
+>>>>>
+>>>>> Ideally, the “pmu” property and pmu-cap-disabled should be bound to each
+>>>>> other and be consistent. But it's not easy because:
+>>>>>  - There is no proper way to have pmu_cap_disabled set different default
+>>>>>    values (e.g., "false" for max CPU and "true" for named CPU models)
+>>>>>    based on different CPU models.
+>>>>>  - And, no proper place to check the consistency of pmu_cap_disabled and
+>>>>>    enable_pmu.
+>>>>>
+>>>>> Therefore, I prefer your previous approach, to reuse current CPU "pmu"
+>>>>> property.
+>>>> Thank you very much for the suggestion and reasons.
+>>>>
+>>>> I am going to follow your suggestion to switch back to the previous solution in v2.
+>>> +1.
+>>>
+>>>  I also prefer to leverage current exist "+/-pmu" option instead of adding
+>>> a new option. More options, more complexity. When they are not
+>>> inconsistent, which has higher priority? all these are issues.
+>>>
+>>> Although KVM_CAP_PMU_CAPABILITY is a VM-level PMU capability, but all CPUs
+>>> in a same VM should always share same PMU configuration (Don't consider
+>>> hybrid platforms which have many issues need to be handled specifically).
+>>>
+>>>
+>>>>> Further, considering that this is currently the only case that needs to
+>>>>> to set the VM level's capability in the CPU context, there is no need to
+>>>>> introduce a new kvm interface (in your previous patch), which can instead
+>>>>> be set in kvm_cpu_realizefn(), like:
+>>>>>
+>>>>>
+>>>>> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+>>>>> index 99d1941cf51c..05e9c9a1a0cf 100644
+>>>>> --- a/target/i386/kvm/kvm-cpu.c
+>>>>> +++ b/target/i386/kvm/kvm-cpu.c
+>>>>> @@ -42,6 +42,8 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>>>>>  {
+>>>>>      X86CPU *cpu = X86_CPU(cs);
+>>>>>      CPUX86State *env = &cpu->env;
+>>>>> +    KVMState *s = kvm_state;
+>>>>> +    static bool first = true;
+>>>>>      bool ret;
+>>>>>
+>>>>>      /*
+>>>>> @@ -63,6 +65,29 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>>>>>       *   check/update ucode_rev, phys_bits, guest_phys_bits, mwait
+>>>>>       *   cpu_common_realizefn() (via xcc->parent_realize)
+>>>>>       */
+>>>>> +
+>>>>> +    if (first) {
+>>>>> +        first = false;
+>>>>> +
+>>>>> +        /*
+>>>>> +         * Since Linux v5.18, KVM provides a VM-level capability to easily
+>>>>> +         * disable PMUs; however, QEMU has been providing PMU property per
+>>>>> +         * CPU since v1.6. In order to accommodate both, have to configure
+>>>>> +         * the VM-level capability here.
+>>>>> +         */
+>>>>> +        if (!cpu->enable_pmu &&
+>>>>> +            kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY)) {
+>>>>> +            int r = kvm_vm_enable_cap(s, KVM_CAP_PMU_CAPABILITY, 0,
+>>>>> +                                      KVM_PMU_CAP_DISABLE);
+>>>>> +
+>>>>> +            if (r < 0) {
+>>>>> +                error_setg(errp, "kvm: Failed to disable pmu cap: %s",
+>>>>> +                           strerror(-r));
+>>>>> +                return false;
+>>>>> +            }
+>>>>> +        }
+>>> It seems KVM_CAP_PMU_CAPABILITY is called to only disable PMU here. From
+>>> point view of logic completeness,  KVM_CAP_PMU_CAPABILITY should be called
+>>> to enabled PMU as well when user wants to enable PMU.
+>>>
+>>> I know currently we only need to disable PMU, but we may need to enable PMU
+>>> via KVM_CAP_PMU_CAPABILITY soon.
+>>>
+>>> We are working on the new KVM mediated vPMU framework, Sean suggest to
+>>> leverage KVM_CAP_PMU_CAPABILITY to enable mediated vPMU dynamically
+>>> (https://urldefense.com/v3/__https://lore.kernel.org/all/Zz4uhmuPcZl9vJVr@google.com/__;!!ACWV5N9M2RV99hQ!JQx8CdjEI-J6WbzbvB7vHcZ0nJPkzUhvl6TvWvDorAal1XAC17dwpRa6b6Xlva--pK-4ej3Ota0k9SJl3BUWXKTew70$ ). So It would be
+>>> better if the enable logic can be added here as well.
+>>>
+>>> Thanks.
+>> Hi Dongli,
 >>
->> v2:
->>    To streamline the review process, split the following patch series into
->>    three parts.
+>> May I know if you have plan to continue to update this patch recently? As
+>> previous comment said, our KVM mediated vPMU solution needs qemu to
+>> explicitly call KVM_CAP_PMU_CAPABILITY to enable mediated vPMU as well. If
+>> you have no plan to update this patch recently, would you mind me to pick
+>> up this patch
+>> (https://urldefense.com/v3/__https://lore.kernel.org/all/20221119122901.2469-2-dongli.zhang@oracle.com/__;!!ACWV5N9M2RV99hQ!JQx8CdjEI-J6WbzbvB7vHcZ0nJPkzUhvl6TvWvDorAal1XAC17dwpRa6b6Xlva--pK-4ej3Ota0k9SJl3BUWzQmZ_yA$ )
+>> and post with other our mediated vPMU related patches to enable mediated vPMU?
 >>
->> https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.246
->> 5942-1-jamin_lin@aspeedtech.com/
->>    This patch series focuses on cleaning up the INTC model to
->>    facilitate future support for the INTC_IO model.
+>> Thanks!
 >>
->> Jamin Lin (6):
->>    hw/intc/aspeed: Support setting different memory and register size
->>    hw/intc/aspeed: Introduce helper functions for enable and status
->>      registers
->>    hw/intc/aspeed: Add object type name to trace events for better
->>      debugging
->>    hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
->>    hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
->>    hw/intc/aspeed: Support different memory region ops
->>
->>   hw/arm/aspeed.c               |   8 +-
->>   hw/arm/aspeed_ast27x0.c       |  58 ++++-----
->>   hw/intc/aspeed_intc.c         | 227 ++++++++++++++++++++--------------
->>   hw/intc/trace-events          |  24 ++--
->>   include/hw/intc/aspeed_intc.h |   5 +
->>   5 files changed, 183 insertions(+), 139 deletions(-)
->>
-> 
-> Please ignore the v2 patch.
-> I will resend the v3 patch, as I am retaining the INTC naming and introducing a new INTC_IO model to support the AST2700 A1.
-> So, I think I don't need to split 3 part patches to support AST2700 A1.
-> Sorry for your inconvenience.
-> Do you have any suggestion or concern?
+>> Dapeng Mi
+>
+> Sorry for the delay — it took some effort to learn about mediated vPMU (as
+> you suggested) to adapt this patch accordingly.
+>
+> Yes, feel free to pick up this patch for mediated vPMU, as I don’t want to
+> block your work, although, I do plan to continue updating it.
+>
+> I am continuing working on it, but my primary objective is to reset the AMD
+> PMU during QEMU reset, which depends on KVM_PMU_CAP_DISABLE.
+>
+> [PATCH 5/7] target/i386/kvm: Reset AMD PMU registers during VM reset
+> [PATCH 6/7] target/i386/kvm: Support perfmon-v2 for reset
+>
+> Would you mind keeping me updated on any changes/discussions you make to
+> QEMU on KVM_PMU_CAP_DISABLE for mediated vPMU? That way, I can adjust my
+> code accordingly once your QEMU patch for KVM_PMU_CAP_DISABLE is finalized.
+>
+> In the meantime, I am continuing working on the entire patchset and I can
+> change the code when you post the relevant QEMU changes on
+> KVM_PMU_CAP_DISABLE soon.
+>
+> Would that work for you?
 
-none. Please resend as well as the hace series if possible. these 2
-series are easy to review and merge.
+Dongli,
 
+Thanks for your feedback. Sure, I would add you into the mail loop when
+sending the qemu mediated vPMU patches.
+
+BTW, I found Xiaoyao ever sent a quite familiar patch
+(https://lore.kernel.org/qemu-devel/20220317135913.2166202-10-xiaoyao.li@intel.com/)
+and he has updated the patch to latest qemu code base, I would pick up his
+patch directly.
 
 Thanks,
 
-C.
+Dapeng Mi
 
 
-
+>
+> Thank you very much!
+>
+> Dongli Zhang
 
