@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FED6C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 11:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2794AC0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 11:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thS6v-0003y0-VX; Mon, 10 Feb 2025 06:37:59 -0500
+	id 1thSBy-0006PE-MA; Mon, 10 Feb 2025 06:43:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thS6r-0003uJ-JU
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:37:54 -0500
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSBu-0006OM-3h
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:43:06 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thS6n-0006Wm-MV
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:37:53 -0500
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e5b1c4b952dso3361314276.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 03:37:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSBs-0007D8-5x
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:43:05 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4394036c0efso6198925e9.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 03:43:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739187460; x=1739792260; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Pp2zLLlfLDN8WiIc1V0EgQjJieMnt5v1KRho29rsolU=;
- b=gBkLAd/XQOIqmizzEjrEx/8F6aNEzRsFgwL1XlmpTqkEmL+dpyLkM1MkMA+71aCj3v
- xGtiJyKZI3JBXrWDhwTE6AX6mdSLS/yV/zJlWWxpBBu0a5q/u/COu+U97G7Xb3EDdFdM
- SK7Hz7BqtoAQYYPh7ZcOM6xjZ8ZlrBN+QU2SBWOA7MvlQIXOXtA+Irtha/F6b6hUDINj
- brVlK+Q5sF4f2Cw8dv4Pv7bNph/BJAC6yoaJcmSF5l3VrpcmkkeIq+Oxxop4nAWCUxHZ
- inPkuPZIzkhmh0eW4nxUOxyGPVmPpkmhFwCFuAEBnL82nHeAuTqsE1cMJqBLVqTsYwxy
- mvCg==
+ d=linaro.org; s=google; t=1739187782; x=1739792582; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8EfAEcBZVfgER+PyjUrcBoEN2a5jycU5m9Zrs1Vj4dU=;
+ b=btU546x3o3G73Idc7HYNR0PYZDnk5C+Uuz9Y54/q4NdV/svSkITW3WuzcAziVnYw0N
+ 9ov5gJ/JkUQDfa8JSLiSgToYPTTQDm3QZkJlnJ8135FEGJOPNtRVmhvhRUOWjMWsmRqD
+ adqCqtgaDGCMQaciYupoyTS0HHLRw5/cQRLjTVNsmioiGbQV0Qgkb4aIw4yIJog/CSHA
+ qdFw2TqZ5NmubjF+rJXiIDvier1F+/XQIebCncfWr6ZgY0XgmVM4xz4rk8rksxHgphET
+ lM8qLt5OTfp+mkNzJRayMPHahLkGqgaUvcduHbLpchTkWjJ9qkAO1hL7L4EXZhjXPEXB
+ 6XaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739187460; x=1739792260;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Pp2zLLlfLDN8WiIc1V0EgQjJieMnt5v1KRho29rsolU=;
- b=RBz4roIYHuy10f6mcBdDd/qnvDtAGALMAZ2AwNqQq5/G6Mfm+aLBq1UrACwYH2jTlx
- cLn28BcmZsoQI5d4bEdMz/vhsJTMvhHS4oiMVqebqzD97s9tQUtHFfS79oG5AMuDDmIl
- PNy66PsxrmZ2dfe0Kat2PKcw+8jjfjAwujaHhDjojrdEusHWMAIBih488Gy8IOwB+O+K
- LruYxtS94thc9bf3GAmnuA3NTXNxY2sv7tY0I/9bKXScQDjhaAcqRmpCAtYOsb8jlqPH
- IQ5TSy3uMnU4RdnfJRg1cxo4t9hwKgdWIL8wH8Pp/trNC/yuz19UEjzSjsmVvB2kgHQU
- Itmg==
-X-Gm-Message-State: AOJu0YzvqMwp+xKkTSpxrtGnYKr3dCfbcX3JcOP6QTdtpxa5Z6scZLR3
- 7XCx/CZMi51CdWma0XQy0XfxoKDrYtzc3Ny98+1ABQNDpn9tjIugIayXFHL1Zv8oaOyisIL0sAB
- TDEDtn0cqYSd65a5g4cztOSBhJCp7yVxB502HAA==
-X-Gm-Gg: ASbGncv8X6nuCmSE1meJYQFIS4rvUvGaaiwP9soyUUeobFYFZkqaeQ8phW+8Q60Y1mA
- bHJ249R1DCE31zxVGMMkCneXXsna1u8Aal71tVUmCxKnSMW8HH/p7lU+LaeGkl4S/G84MfVt7dQ
- ==
-X-Google-Smtp-Source: AGHT+IFEqJai7C5o6VQu3T1/+dJjyN7F6oShxIFkEV0LUavhATdw3PA9OHaTX+WKF8gqBONmJ6NS7Cvp76RN6dhvy3Q=
-X-Received: by 2002:a05:6902:1025:b0:e5b:323b:a1a7 with SMTP id
- 3f1490d57ef6-e5b4629256emr9460910276.42.1739187460438; Mon, 10 Feb 2025
- 03:37:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739187782; x=1739792582;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8EfAEcBZVfgER+PyjUrcBoEN2a5jycU5m9Zrs1Vj4dU=;
+ b=dnVyy8BSVxnnM0WeCnxScC15/QOER4S1w9NHuzhytKAr46O6a8lwofTY7MkcdNBkLX
+ Xn+sHwZE4lT5+tsdo8rumQospJ1ckmeWE8931QOo3q24WIS24iZu/Y74AHw7rC0lRcWy
+ 5/qHN263/XlT/ozx8Xt98mtwZ9McTqUMbSl8zRpLaVQNujVnthMaiCj2Tvuk+oWeoty4
+ 5wqkjWroKWH5/Ye6Kl8BdRtZUF5q/wzOBNr5TGwQ2FJFENtNJslT23J1Bqz8LE4Jpmam
+ RWMMyvubjOG8Xmif+4uQlSsZvN6kmw3MZSRZN3xbYs8hr/+eUDhfO1TwSTlxGy62nLEh
+ rzYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVchtb+7uT2VWm7ZPfM2hA3uQrCcxlfFlXaegJHcrySmJMMK8hEo4a4U0rJnUi0vIUKascHWOcd/bAu@nongnu.org
+X-Gm-Message-State: AOJu0Yy73KdZDDTfehqQK+o4Sbisx+1PzrqQSbejeA9E79x2WqmDLU3I
+ JgIIybm8z6h/qw3FE+fJh+qtK2iF1ZQlVew3GLJBqz2vSlB/Xem436Sif04ptAU=
+X-Gm-Gg: ASbGncsRoF6ZJLvgF1U4OTwwhJuIQLJG1tv7/n8ucZXEVIj1dAXSNqtAw+VgEOGbLSY
+ yPDo8k9pGyUhY9mMeFZUeFuKMAaot3d/R20UC9R1EBdfCUcxClO03J8UgI/4korO9kORKOa5Id3
+ SEWd/ODWDeYBKxgU7MBR2mxTzddcZRd1+BBq2ezrhczhbunaUP6Nwmckke5+ahB2+39KPG2zh9w
+ OW0wDmw7wg1P9uJSYFwGFhgNcd38u++NOH9Ywvbw/GT/ZSgm7xdJcnMnOJX/78kLiyqbB6oUT6c
+ Cb9plM/JVyCn9ODxa20ucY0L09RJl256HIfGj83WRRI3tUx21ssjlvu6nslgg6pu
+X-Google-Smtp-Source: AGHT+IE0ilfTc2otY9pOIaVgjNtY99ocpapQf2nyyIp5DWjOIIU/fgmGtPCGmxKW8ozZvvkwRds2Tg==
+X-Received: by 2002:a05:600c:204c:b0:439:3050:1abc with SMTP id
+ 5b1f17b1804b1-43930501c28mr65743385e9.15.1739187782022; 
+ Mon, 10 Feb 2025 03:43:02 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d94d753sm177623775e9.11.2025.02.10.03.43.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Feb 2025 03:43:01 -0800 (PST)
+Message-ID: <69457f04-47bb-4cee-9f10-64dfb1dc9447@linaro.org>
+Date: Mon, 10 Feb 2025 12:43:00 +0100
 MIME-Version: 1.0
-References: <20220606231450.448443-1-richard.henderson@linaro.org>
- <20220606231450.448443-28-richard.henderson@linaro.org>
- <CAFEAcA8ccgyLQPMykDQGjK5qc-etEBrsy0qGo+8mq-2_nCDDFg@mail.gmail.com>
- <CAFEAcA8mHTYoY8C-KJ0BFJ6JR3BgRA0ZPjZKDyPjOGVEJ+RFvQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8mHTYoY8C-KJ0BFJ6JR3BgRA0ZPjZKDyPjOGVEJ+RFvQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 10 Feb 2025 11:37:28 +0000
-X-Gm-Features: AWEUYZniYJCWCVvZgtmaQsXtvaT7vuZ0VE0VqOOwqEipOfK8qoIAIMyp_JhRbQA
-Message-ID: <CAFEAcA-HOr1Bf_tknZcdyg20KbQeydQi33UKpYjtynV-09DHLg@mail.gmail.com>
-Subject: Re: [PULL 27/43] target/loongarch: Add TLB instruction support
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, =gaosong@loongson.cn, yangxiaojuan@loongson.cn, 
- Song Gao <gaosong@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20250207151157.3151776-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250207151157.3151776-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,99 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping^2 -- could one of the loongarch maintainers have
-a look at this problem with the TLB code where it
-does an out-of-range shift, please? This is the only
-sanitizer failure in 'make check-functional' for the
-whole of QEMU, so it would be nice to get this to a
-100% pass.
+On 7/2/25 16:11, Peter Maydell wrote:
+> The SMC91C111 includes an MMU Command register which permits
+> the guest to remove entries from the RX FIFO. The datasheet
+> does not specify what happens if the guest tries to do this
+> when the FIFO is already empty; there are no status registers
+> containing error bits which might be applicable.
+> 
+> Currently we don't guard at all against pop of an empty
+> RX FIFO, with the result that we allow the guest to drive
+> the rx_fifo_len index to negative values, which will cause
+> smc91c111_receive() to write to the rx_fifo[] array out of
+> bounds when we receive the next packet.
+> 
+> Instead ignore attempts to pop an empty RX FIFO.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 80337b66a8e7 ("NIC emulation for qemu arm-softmmu")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2780
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/net/smc91c111.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-thanks
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On Tue, 26 Nov 2024 at 13:13, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Ping regarding this UB due to an invalid shift --
-> I think this is now the only remaining sanitizer error
-> in a 'make check-functional', so it would be nice to get
-> it fixed...
->
-> thanks
-> -- PMM
->
-> On Thu, 7 Nov 2024 at 17:33, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > On Tue, 7 Jun 2022 at 00:31, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> > >
-> > > From: Xiaojuan Yang <yangxiaojuan@loongson.cn>
-> > >
-> > > This includes:
-> > > - TLBSRCH
-> > > - TLBRD
-> > > - TLBWR
-> > > - TLBFILL
-> > > - TLBCLR
-> > > - TLBFLUSH
-> > > - INVTLB
-> >
-> > Hi; running the loongarch functional tests on a build with
-> > the clang undefined-behaviour sanitizer enabled reveals an
-> > attempt to shift by an out-of-range amount in
-> > helper_invtlb_page_asid_or_g():
-> >
-> > ../../target/loongarch/tcg/tlb_helper.c:470:31: runtime error: shift
-> > exponent 244 is too large for 64-bit type 'uint64_t' (aka 'unsigned
-> > long')
-> > SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-> > ../../target/loongarch/tcg/tlb_helper.c:470:31 in
-> >
-> > > +void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
-> > > +                                  target_ulong info, target_ulong addr)
-> > > +{
-> > > +    uint16_t asid = info & 0x3ff;
-> > > +
-> > > +    for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
-> > > +        LoongArchTLB *tlb = &env->tlb[i];
-> > > +        uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
-> > > +        uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-> > > +        uint64_t vpn, tlb_vppn;
-> > > +        uint8_t tlb_ps, compare_shift;
-> > > +
-> > > +        if (i >= LOONGARCH_STLB) {
-> > > +            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
-> > > +        } else {
-> > > +            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-> > > +        }
-> >
-> > We read here a field from the guest, which can be 0.
-> >
-> > > +        tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
-> > > +        vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
-> > > +        compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-> >
-> > If tlb_ps is 0, then "tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT"
-> > is tlb_ps + 1 - 13 == tlb_ps - 12. When converted back to
-> > uint8_t this is 244.
-> >
-> > > +
-> > > +        if ((tlb_g || (tlb_asid == asid)) &&
-> > > +            (vpn == (tlb_vppn >> compare_shift))) {
-> >
-> > Here we shift tlb_vppn by 244, which is undefined behaviour
-> > and triggers the sanitizer.
-> >
-> > > +            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
-> > > +        }
-> > > +    }
-> > > +    tlb_flush(env_cpu(env));
-> > > +}
-> >
-> > What's the intended behaviour here?
-> >
-> > This likely applies also to other similar functions; this
-> > is just the one that I found.
-> >
-> > thanks
-> > -- PMM
 
