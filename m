@@ -4,82 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96953C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 01:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3255AC0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 01:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thIL6-0005Ir-58; Sun, 09 Feb 2025 20:11:56 -0500
+	id 1thISa-0006Ji-IK; Sun, 09 Feb 2025 20:19:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thIKz-0005IV-QA; Sun, 09 Feb 2025 20:11:50 -0500
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thIKx-0005LZ-TV; Sun, 09 Feb 2025 20:11:49 -0500
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-4ba7ef5e501so1947501137.1; 
- Sun, 09 Feb 2025 17:11:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739149906; x=1739754706; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8QzcDy+Dz4vtdrkTE+WXUEp/yYHUyeKheDi/6LffmvQ=;
- b=D8H5t36ixirLNodLIYCq/JzTK6eoHIw3y3/v7sSrPfzafGJtogiJRQ5neM8Rxfhfq2
- raqwW/Ecm6NY4CzAF+IUl548re+TimyjB6FmpwuIVyzZxISbSGMytyW8BZZrkOorJZ2X
- o7vRt9RtSRhMiNwvGyIJH5EqkkB2y4Ea6/2JYGjZcJFAyOO62k4eZ2XjnWbcG8nVttw6
- VmLlDlemrF1nW7RpBARb+edAS71h7zM2FNUr8d/ecPvggQ/HNu3k1SxqleMV/EA8Udd2
- 5Sft4UQK6EJZMUCEkWthD7SoTqf2H3aFJIr/EcXfhXbHLy7Ghq1S92R59GMUAcWS+gDw
- kJbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739149906; x=1739754706;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8QzcDy+Dz4vtdrkTE+WXUEp/yYHUyeKheDi/6LffmvQ=;
- b=b8e25lfIjgr1sIEeBV0ORWkBgMu6E6HHDDqS44U18jZpT096LJwjQpkwtlZbGuAAlp
- dmbvYdrDxjq/KJ6929XP3JhFvE8Kpdcc4GSiU60ZeHwUjWSLnxOREwETCpCt7RklhFIo
- pE4wcb+J5Xicr1GrCoC/InIXLY4gf82FPeMCuCq6f/cS9Xj/HZM0QtbS87LLlgK/8D/z
- DPmq3aBl3pmRPSzHkzqolLcDmR3b9tG9mBxNFYaff4eFjo8jYQrxr+MYT5K9PnCXhY2t
- TwvMJA1rfP+o6fCCQtK84aTntAIKnuyyL5NPW6Ko0aEv3u98xIfMPMIw1g0YIVWgq4BH
- B6aA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWXshzifVEw7ogUsr4nD17dXbEXQVgsNGmY/Acj54k20SoKKXVffcuFTbFVRs/Rg2G7T2dXLYhJCXiS@nongnu.org
-X-Gm-Message-State: AOJu0Yzs6P7yucm03xhK4gW2bF+Ss4eyjCCahSwawGUsAZdlkR7C9PpI
- eRzYTf1O+Xu7qFnOXPPL3uXWZBhxyDzKwTK4kynTtbnmE7RcY5GrbGOjw6vrIDeNqb0DfmlaPwC
- w0ARWuFuRdUyIPvn2yKNz+D6dC04arg==
-X-Gm-Gg: ASbGncvpvEiIcauY77RFoMRScoCJkvEhaeMB4yn3wlRQDmurL7xymvFwNE1qKpDxIka
- t+hIQ76lX8P5faeusuem+f2uF+Bt9onJYeLXjIDaRH3szr0V6LkUsZ+De+uK1IsiQXeY1eyFvJx
- sS839reM6xwvsoet+tqZusPrtDng==
-X-Google-Smtp-Source: AGHT+IFqgqoHbRkyKItbE9tvzmxjWI2e39RhljQu1PbSbqUnqmuPmeTS6GtrnmQiEfpu7gVM5+9Oz50V/a8hrkHB7os=
-X-Received: by 2002:a05:6102:2b92:b0:4b2:5ca3:f82a with SMTP id
- ada2fe7eead31-4ba85dc556fmr8198819137.7.1739149906344; Sun, 09 Feb 2025
- 17:11:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1thISU-0006JM-AJ
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 20:19:35 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1thISQ-00065d-FB
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 20:19:32 -0500
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8DxvnMYVKlns9dwAA--.32960S3;
+ Mon, 10 Feb 2025 09:19:20 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowMBxXsUVVKlnLmsJAA--.35757S3;
+ Mon, 10 Feb 2025 09:19:19 +0800 (CST)
+Subject: Re: [PATCH V2] target/loongarch: fix vcpu reset command word issue
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, kvm-devel <kvm@vger.kernel.org>
+Cc: Bibo Mao <Maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+References: <20250208075023.5647-1-lixianglai@loongson.cn>
+ <62ad5a5b-9860-42dc-a4f3-37f504f3ded6@linaro.org>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <cced0ac9-3f5b-0c5b-1c11-c45f6848a020@loongson.cn>
+Date: Mon, 10 Feb 2025 09:17:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250206153410.236636-1-rbradford@rivosinc.com>
-In-Reply-To: <20250206153410.236636-1-rbradford@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 10 Feb 2025 11:11:20 +1000
-X-Gm-Features: AWEUYZmnZ6U7AyiPQI_bNQc3uCcU-wqtBw1vrcTCThzHWLpib9FKn0Ng2CKU4YY
-Message-ID: <CAKmqyKOm3uQNKDZWx5zivQCNxm=6CrbJw4RA=Dsx1_pELK072Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] disas/riscv: Add missing Sdtrig CSRs
-To: Rob Bradford <rbradford@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <62ad5a5b-9860-42dc-a4f3-37f504f3ded6@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMBxXsUVVKlnLmsJAA--.35757S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Kw4kAFy3trykKrWxXrWDGFX_yoW8ZF1fpF
+ WkAFZ7KFy8GrykJwn7X34DZa4DZrWxG34kXa4IqFy0yr1jqryvg3W0qwsIgFn8Aw48GF4Y
+ vr18Cr1jvFW7J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
+ fJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.37,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,29 +83,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 7, 2025 at 1:35=E2=80=AFAM Rob Bradford <rbradford@rivosinc.com=
-> wrote:
+Hi Philippe Mathieu-Daudé:
+> Hi,
 >
-> Add missing Sdtrig CSRs per the latest RISC-V Debug specification. (+ min=
-or
-> whitespace fix)
+> On 8/2/25 08:50, Xianglai Li wrote:
+>> When the KVM_REG_LOONGARCH_VCPU_RESET command word
+>> is sent to the kernel through the kvm_set_one_reg interface,
+>> the parameter source needs to be a legal address,
+>> otherwise the kernel will return an error and the command word
+>> will fail to be sent.
+>>
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>> ---
+>> Cc: Bibo Mao <Maobibo@loongson.cn>
+>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Cc: Song Gao <gaosong@loongson.cn>
+>> Cc: Xianglai Li <lixianglai@loongson.cn>
+>>
+>> CHANGE:
+>> V2<-V1:
+>>    1.Sets the initial value of the variable and
+>>    adds a function return value judgment and prints a log
+>>
+>>   target/loongarch/kvm/kvm.c | 7 ++++++-
+>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>> index a3f55155b0..3f499e60ab 100644
+>> --- a/target/loongarch/kvm/kvm.c
+>> +++ b/target/loongarch/kvm/kvm.c
+>> @@ -581,9 +581,14 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
+>>   void kvm_arch_reset_vcpu(CPUState *cs)
+>>   {
+>>       CPULoongArchState *env = cpu_env(cs);
+>> +    int ret = 0;
+>> +    uint64_t unused = 0;
+>>         env->mp_state = KVM_MP_STATE_RUNNABLE;
+>> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
+>> +    ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &unused);
+>> +    if (ret) {
+>> +        error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET");
 >
-> Rob Bradford (2):
->   disas/riscv: Fix minor whitespace issues
->   disas/riscv: Add missing Sdtrig CSRs
+> If this call fails, I'd not rely on the state of the VM. What about:
+>
+> if (ret < 0) {
+>     error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET: %s",
+>                  strerror(errno));
+>     exit(EXIT_FAILURE);
+> }
+>
+> ?
+>
+I'll second that!
 
-Thanks!
+Thanks,
+Xianglai.
+>> +    }
+>>   }
+>>     static int kvm_loongarch_get_mpstate(CPUState *cs)
+>
 
-Applied to riscv-to-apply.next
-
-Alistair
-
->
->  disas/riscv.c | 16 +++++++++-------
->  1 file changed, 9 insertions(+), 7 deletions(-)
->
-> --
-> 2.48.1
->
->
 
