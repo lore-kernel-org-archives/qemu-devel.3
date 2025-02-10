@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8E8C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9717AC0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWRh-0004tF-W5; Mon, 10 Feb 2025 11:15:42 -0500
+	id 1thWSB-0006nj-Jf; Mon, 10 Feb 2025 11:16:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1thWR1-00047F-3K
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:00 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1thWR3-00049G-Bx
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:04 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1thWQy-0001Ud-Tn
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:14:58 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ab78e6edb48so454676666b.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:14:55 -0800 (PST)
+ id 1thWR0-0001Ur-Rw
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:00 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5de5bf41652so4051498a12.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:14:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739204095; x=1739808895; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cgHEs4UjXEPONNRSfBLs6a+I9ub5T+ewhfrcjtrhUWQ=;
- b=La1vGC0ddQglcVkkun47313KFV30aByQDJ2Hr612sSdPJuci/wQ0RM4PcLq9NfeNCp
- MnPT039Ms87IO5lzrLEwyaOu38uGeEYm8qTE3eCo5mmIMikMXqbb0AW+47mzmxqPdI8v
- TD94y3fKke0/2WNmRdDjtUsVmBFtYMvLNcvX/Llwc1v4+3i5B7a8BAXvTVieRulbAcST
- TIzasjJej3yGisdtTMNcKHprLPl2cn470NmgCRfpOH1nH894JUJg9s//aT9AXRvfkpV6
- XlP58lsuoy9HESUY2xMN06dJn8EJoCzyLHauC0+bZ3XdR0BEUIJXs/Rkx/Of7TxCE1+3
- +1MA==
+ d=linaro.org; s=google; t=1739204097; x=1739808897; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1RFUaUw8AmOoBrTLJ033QBHmmzDR19jzUEOy29awR64=;
+ b=y7hQ78LRPlm5P0W1JfDhrsSa24KgX6HukgSqoaGN2a10pJ2mOo0/JES3XPt7sl8fJD
+ EQcOdwyjA/rVFBaljMG8j0cehjK4IOFE+r7mzTFLJpC3iHZSgbppYlpxLdBPx2KpaeRu
+ 9m2oymhAE60Ym4/57ZChEsyZBxVIIYwRzMOrFH6QuLBcBVdYw9TyW0njEJrC4A8jqW9O
+ bWJAaQBleyMBwRRgsvEcW2iI4rU/TWb+Bpaw3EKHrWj6GxJTzftG3y/S0lAyIumOQdAG
+ 5e09JFCjr+92j5+5sDdzTrZknICDPN+OCTiTDqEc7tvQ8eqjzjvC99uOte0+vYS1Ne/+
+ d4Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739204095; x=1739808895;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cgHEs4UjXEPONNRSfBLs6a+I9ub5T+ewhfrcjtrhUWQ=;
- b=vOPi2FI9VjY7y9wAHJW6ugIkXT+qe+qDTyiiLgKzuXesBwrQHLUwzAfPctL/6oeUqi
- Tfq23hNqExEDYIID5mO0CdBKNj65hEfNf1WqFWgFaH1G4c1lNxrSMCviIvE+eG00rahl
- q3WsTRIlrEWZIDc/aBk5nyBYFfx/vo18U0QqrWaqLo4Z9qSbVSnFwHGIqqvOA5yRL91O
- 2Cvd7mveBroVTudIvy+9cKcjYwd5MiODGbCJuzSaV0zRAD+9brGPauuQvVRtsuqSLGR/
- AfT8+xwZ29T7U8ICh7WuU5jr8HxBrTXMhXHQ855l+N6FThkTJz/1rjZoePRd3XJgCqJQ
- m4DA==
-X-Gm-Message-State: AOJu0YyizRxB95pjchQYoCjm6LwvY94FydqnlU2TY7TV9KAljNuyQrWi
- h8YmY8Z5hNNLquW6jqSSkLY/N6sslDxGxSMKhEDJ+8UGV4YHJWK//ndqAIfE/s8=
-X-Gm-Gg: ASbGnctYxp96A/CldaSAiSjTKuQKja5v4T5NlHiBJUty8cA4TxVnWVas/mcSlkvccRJ
- OkzC9sDofQ4MFeRZgZ70xqn8onFXaW670Wvln13sV96YaO9TMlQChDSxT4OVAC8l7hmKVmGtol0
- a8nWdJyS8tVM9D6bbbg39ssERh+kNxqHgNG/wCVZ5T53liA+JThTRI84W2Ic6CL3vozz194oluf
- EPx0LHe1g1xbrSQftU5hYeM0ui2AZjpC8ujGH5FnzkCkiMLMEbPBSysUNDqmx4fTy8AOK4AajWK
- H8G78viFF/tHtahzAQ==
-X-Google-Smtp-Source: AGHT+IE+1nSSACPNzPBxGI3gEjERuVGGbI12sXgyLDT9D246YqT3THYbiTqgghfFY1LgnZJ/r/ZEAQ==
-X-Received: by 2002:a05:6402:194b:b0:5dc:a44e:7644 with SMTP id
- 4fb4d7f45d1cf-5de44fe95c1mr38189449a12.2.1739204094616; 
- Mon, 10 Feb 2025 08:14:54 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739204097; x=1739808897;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1RFUaUw8AmOoBrTLJ033QBHmmzDR19jzUEOy29awR64=;
+ b=aKUKFnUOpCxgyATBjuw2M87/EYJZyvuDs9jxjf/zb1BYw6VJs7f4ZMVV3G55apNEIW
+ I8NkoGMDw5pB8VRhKhikqeehRfD5LnMqLpILpPx0lcVlMPAAbTU+r7qNmNOhbRd02Mhh
+ 1rY187TJIWj9iAKyuv+/RwH09JRg/wjnnlvcM4WHZnpW310WrzKkWB6ZXU1biPRQFMkv
+ rUi83uG4tIIPI5qs9xqYhmZZpfJsk1OZOKhA27RCLblhbynb29w2yKxNBjJIaDRhWD9P
+ GNQCw4dsYlCyK9hSHmpJTA4o/1BD7vr2tOFnh1SXkgwZZr1eSWEk29NRdEFMoE7buGjV
+ kajA==
+X-Gm-Message-State: AOJu0Ywey/DaAuld4BO6XrU4ni8tUrnjIrbmlpF1sGkMhbpTGDVh9XHD
+ bVH0Ft0d+BxhvSm7+FM6B2Vgif2wGwvz258NvwDDu2HPMt26Obh/lXNWSiduyZnezkxV+fo1mzT
+ /y+g=
+X-Gm-Gg: ASbGncsEb7fv5bIlUp2JL3cUahtfi2OpH8tb8dw8yPh6qODqH7VXAayCK2eOmARhM7j
+ PHtH0bSoK4KyGQCGJ+hnTVZyaKOWKfCRNu0WKmHp3fDRhPNQtonTJE5i8I7/uiucap0t1Drd0P5
+ yPq3NHTHpRD3FApyn3sXAm7kBxef5cKlbvViv5Gx/frd9gtYdTO/tausI6yA2TyMu5ds/0fYZl0
+ zdEC9Nx2KztMPgDv+EPXfrCqflpOsxYd6AyaHw4xmKVYJbaHUt8rM8gUD31XH6IOqVHZvyBlzuP
+ T3CcF8qBgkC6yh26ew==
+X-Google-Smtp-Source: AGHT+IF77MokyEFbpnSHKwFEo1MhEy8jF1Yslehqh/Mozf5TZgdkvuUvnUaFnQBOJqGvBZTIHkEakw==
+X-Received: by 2002:a05:6402:13c8:b0:5dc:cc02:5d25 with SMTP id
+ 4fb4d7f45d1cf-5de45002faamr13195735a12.11.1739204097080; 
+ Mon, 10 Feb 2025 08:14:57 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5de4e6d60bbsm6224628a12.15.2025.02.10.08.14.52
+ 4fb4d7f45d1cf-5dcf1b7adf4sm8147447a12.26.2025.02.10.08.14.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 08:14:52 -0800 (PST)
+ Mon, 10 Feb 2025 08:14:53 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 11D805FA16;
- Mon, 10 Feb 2025 16:14:52 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id CA4695F8CF;
+ Mon, 10 Feb 2025 16:14:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Hao Wu <wuhaotsh@google.com>, Tyrone Ting <kfting@nuvoton.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org (open list:Nuvoton NPCM7xx)
-Subject: [PULL 03/17] tests/qtest: don't step clock at start of npcm7xx
- periodic IRQ test
-Date: Mon, 10 Feb 2025 16:14:37 +0000
-Message-Id: <20250210161451.3273284-4-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 00/17] testing and gdbstub updates
+Date: Mon, 10 Feb 2025 16:14:34 +0000
+Message-Id: <20250210161451.3273284-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250210161451.3273284-1-alex.bennee@linaro.org>
-References: <20250210161451.3273284-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -106,26 +99,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Until there are timers enabled the semantics of clock_step_next() will
-fail. Since d524441a36 (system/qtest: properly feedback results of
-clock_[step|set]) we will signal a FAIL if time doesn't advance.
+The following changes since commit 04d3d0e9f54d4c42759f3810aa135ce314d98dc4:
 
-Reviewed-by: Hao Wu <wuhaotsh@google.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250207153112.3939799-4-alex.bennee@linaro.org>
+  Merge tag 'hppa-system-for-v10-diva-artist-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2025-02-08 09:00:57 -0500)
 
-diff --git a/tests/qtest/npcm7xx_timer-test.c b/tests/qtest/npcm7xx_timer-test.c
-index 58f58c2f71..43711049ca 100644
---- a/tests/qtest/npcm7xx_timer-test.c
-+++ b/tests/qtest/npcm7xx_timer-test.c
-@@ -465,7 +465,6 @@ static void test_periodic_interrupt(gconstpointer test_data)
-     int i;
- 
-     tim_reset(td);
--    clock_step_next();
- 
-     tim_write_ticr(td, count);
-     tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(ps));
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-10.0-testing-and-gdstub-updates-100225-1
+
+for you to fetch changes up to 24c61663dcec0e87bb4206a7623f0e222e188b47:
+
+  tests/tcg: Add late gdbstub attach test (2025-02-10 13:47:59 +0000)
+
+----------------------------------------------------------------
+testing and gdbstub updates:
+
+  - add a check-rust test to docker builds
+  - re-factor the qtest logic to be cleaner
+  - fix tests to not clock_step when no timers enabled
+  - roll-up log prefix into qtest_send
+  - cleaner error reporting when qtest_clock_set fails
+  - revert old deadlock fix now tests are updated
+  - only run full set of migration tests under HW acceleration
+  - support late attachment to user-mode gdbstubs
+
+----------------------------------------------------------------
+Alex Bennée (7):
+      tests/docker: replicate the check-rust-tools-nightly CI job
+      tests/qtest: don't attempt to clock_step while waiting for virtio ISR
+      tests/qtest: don't step clock at start of npcm7xx periodic IRQ test
+      tests/qtest: simplify qtest_process_inbuf
+      tests/qtest: rename qtest_send_prefix and roll-up into qtest_send
+      tests/qtest: tighten up the checks on clock_step
+      Revert "util/timer: avoid deadlock when shutting down"
+
+Fabiano Rosas (2):
+      tests/qtest/migration: Add --full option
+      tests/qtest/migration: Pick smoke tests
+
+Ilya Leoshkevich (8):
+      gdbstub: Allow the %d placeholder in the socket path
+      gdbstub: Try unlinking the unix socket before binding
+      user: Introduce user/signal.h
+      user: Introduce host_interrupt_signal
+      osdep: Introduce qemu_kill_thread()
+      gdbstub: Allow late attachment
+      docs/user: Document the %d placeholder and suspend=n QEMU_GDB features
+      tests/tcg: Add late gdbstub attach test
+
+ MAINTAINERS                                |   1 +
+ docs/user/main.rst                         |  16 ++-
+ bsd-user/signal-common.h                   |   1 -
+ include/qemu/osdep.h                       |   9 ++
+ include/system/qtest.h                     |   1 -
+ include/user/signal.h                      |  25 +++++
+ linux-user/signal-common.h                 |   1 -
+ tests/qtest/migration/framework.h          |   1 +
+ bsd-user/main.c                            |   1 -
+ bsd-user/signal.c                          |  13 +++
+ gdbstub/user.c                             | 150 ++++++++++++++++++++++-------
+ hw/ppc/spapr_rtas.c                        |   1 -
+ hw/riscv/riscv_hart.c                      |   1 -
+ linux-user/main.c                          |   1 -
+ linux-user/signal.c                        |  26 ++++-
+ linux-user/syscall.c                       |   1 +
+ stubs/monitor-fd.c                         |   9 ++
+ system/qtest.c                             |  59 +++++-------
+ tests/qtest/libqos/virtio-pci-modern.c     |   6 +-
+ tests/qtest/libqos/virtio-pci.c            |   6 +-
+ tests/qtest/migration-test.c               |  25 +++++
+ tests/qtest/migration/compression-tests.c  |  15 ++-
+ tests/qtest/migration/cpr-tests.c          |   6 ++
+ tests/qtest/migration/file-tests.c         |  19 +++-
+ tests/qtest/migration/misc-tests.c         |  16 ++-
+ tests/qtest/migration/postcopy-tests.c     |  14 ++-
+ tests/qtest/migration/precopy-tests.c      |  23 +++--
+ tests/qtest/migration/tls-tests.c          |  14 ++-
+ tests/qtest/npcm7xx_timer-test.c           |   1 -
+ tests/tcg/multiarch/late-attach.c          |  41 ++++++++
+ util/oslib-posix.c                         |  15 +++
+ util/qemu-timer.c                          |  16 +--
+ stubs/meson.build                          |   2 +
+ tests/docker/Makefile.include              |   3 +
+ tests/docker/test-rust                     |  21 ++++
+ tests/guest-debug/run-test.py              |  15 ++-
+ tests/qtest/meson.build                    |  11 ++-
+ tests/tcg/multiarch/Makefile.target        |   9 +-
+ tests/tcg/multiarch/gdbstub/late-attach.py |  28 ++++++
+ util/meson.build                           |   2 +
+ 40 files changed, 490 insertions(+), 135 deletions(-)
+ create mode 100644 include/user/signal.h
+ create mode 100644 stubs/monitor-fd.c
+ create mode 100644 tests/tcg/multiarch/late-attach.c
+ create mode 100755 tests/docker/test-rust
+ create mode 100644 tests/tcg/multiarch/gdbstub/late-attach.py
+
 -- 
 2.39.5
 
