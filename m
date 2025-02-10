@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE15C0219E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC44C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thacB-0006Lr-89; Mon, 10 Feb 2025 15:42:47 -0500
+	id 1thacK-0006kb-Ly; Mon, 10 Feb 2025 15:42:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thac6-0006Gh-Jg
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:44 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacJ-0006hh-3z
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:55 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thac3-0003cJ-CD
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:40 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4362f61757fso48058275e9.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:42:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacH-0003du-H9
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:54 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38dd93a6f0aso1416905f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:42:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739220157; x=1739824957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739220171; x=1739824971; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BYj1i0C2Bzb8mJTlz6kNhAyO1j8/RdFzATqWG3urJNQ=;
- b=S30yiYi5/13bzm0QteEdEcOMAadosYfGQDRGdsdvDHi3znzNPOG9T17Mz89+7mVVth
- v9Ri9DxLIg7SL1tGYSKMbU4pLsXUcaCsv8TWpYddnNKMTnGjyhVh5cG8YdNs9w8QyQWx
- 57eCRHPiD1bkLQEgQjja2mNiQCDpaNAtTcFEqM3sgaFW4MAujeRJlzLblO+0oLOOCLq4
- NLZs5qr6CGwRaF4BlI4x/BPZ2a8PrqIuNqp8/pgzpSlPCIbrjXhb5vy/u4LIreQuLRHI
- 4ii1dYbFv7aFGqwUZ3gNe3A50F0uZJkuA+LCefkZ1yCpLhtRcWG5GdqjNByhgN99sshy
- k91Q==
+ bh=GOkHWRVq/7AcufWqPBNvF3JtlhqdXf5mWn9gacGGeOo=;
+ b=PEEj7ehBujeiGyPeemOIzk8ewxhIXCxQ19hb4W2c/vCsTUO1n41+WGn2Urc8XtqEW4
+ PP9LEmdV9XPGEb1T7YInOKItBHgZZxarfatJ/HhOD/D+Yhn1EaO32R0qA8fXkNOJFQ94
+ CMFwqVDvnIOGaGl5Zx/TMGToR6Y4q4jwlFr8Vem8EDgaa54K/UaCn69n+kc/XmzQsnRM
+ LsJoc9OkleBXDEzJw09Gh/ii7enEI9EzDKk2OxP7SR538xgUWwNuYSnswVH3GOsi6XXA
+ pul+IVA60kjjLOxwn6yP4xZM6ooLZyDTyLc5CYf3Bq1FTaDigfEHxmk1dcT8ojCP9BWO
+ aMgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739220157; x=1739824957;
+ d=1e100.net; s=20230601; t=1739220171; x=1739824971;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BYj1i0C2Bzb8mJTlz6kNhAyO1j8/RdFzATqWG3urJNQ=;
- b=EwXDOlsAtYZ7gQ8qgW1JHXzMKp5GZPMypIXmDdjgFIN3IhbpSsK/oojZMt8v7cvWUQ
- /AXHD4PBNEw3OZdya8ixh0PjFBUSdfzaiB4lhlXF65EH+9bGMPV5/DCjbKZFhW2XUHL/
- 86fN2cc09cs8IE7Eob9ywufc/l4QdEYT7SCuTSgk22ZvWw4X/rM9nPBXrpw+vdlXV0OP
- Hb/BBdclyiBsRHI5aCp3YQAox9Wbh8p4qF4IxMsrizlYRFdlQjeEh6NnsED9df04zY5z
- gN5f0Hl4BNreje/s55S8H5jQQw62V830UUXjlWZqCF0IITCS6IS1QdqM26t3TvmfDlPv
- JYuQ==
-X-Gm-Message-State: AOJu0Yxpj+221QsZVC2e5lIs270vlnyrVDuh9/n4cG1xLEg4IXqQ95zb
- yAYUj8qqdul4q/EVYjL048rY6jpgD3M5wlQDplxepy8AZhLwNffChSxwSCfDOW+cKmLiW5mJlHO
- WmuY=
-X-Gm-Gg: ASbGncvRZLOu2+lLjonxiVt5n4p1Ve4mN2829+smsOSLke5sEghoL6ftWI6WS/yz4hR
- VtuM6tp4eWqV+LotZ2eAt6MRWPcjzhCVNRMAYuiE2yYcU3RIBOmGLSnEIn2sVBhjdv4YmSd3cvd
- FwNcJWpjIFPJ9EXAMwuE4n9HdgFCcGG/Pu51gBO/cuKBGyYpXPkLDdqVKBSNiiI+aB3G3VZRC6b
- zEapE2cEi/Kgdaf5PFAGQJdJnz9bR/LypuIIQ9vcyp3WysTVD8BLKR3lR3Q5Qx4CPR0w5M3Gjl3
- uQIdmRoZnNNbF0tpmdgGzZ8iNa7qoqb9hEIa/FvMZ1aQJ1/WCJmSay/zl2iCRxPYAQ==
-X-Google-Smtp-Source: AGHT+IF6O5pXWB9UXMPh2mDILfcy102zxeO/PwIAFIDE+pGH0X0cSKb7LwTTqvrxM3SMMemnlCrRVw==
-X-Received: by 2002:a5d:6705:0:b0:386:3e3c:efd with SMTP id
- ffacd0b85a97d-38dc9359019mr11007358f8f.44.1739220156654; 
- Mon, 10 Feb 2025 12:42:36 -0800 (PST)
+ bh=GOkHWRVq/7AcufWqPBNvF3JtlhqdXf5mWn9gacGGeOo=;
+ b=tKzl6uVFalGVK3Nu5/K+LaLCFav9P65z8POorHk1RFFXPEzYs2IQ2FltDQp+hT6dih
+ qxu3ne+aV/4lpQK34zAVNW+8qcxRF/pS3vAESiJoKdSF/yz4HHsYmdfdOVPFgVIx429/
+ ++fw14nAdP3cFlnlthvNAGY8CAEgT3wy5D2yRtd/mAIl/qRN5sG71Il0FSzuUy47rUkk
+ bvFc2Ems5y7o2nbn2WK0mSBEnd3222OO/biEiDN/SI3qLdV7d5/6TYKUNk/GMMHAgnHc
+ o/lCbpBfskxVOwKz5tULMECUk/6Ohi8HwvOn6CV8mVChtp4qtSLershAxnJOwJPLRd8n
+ 7Jwg==
+X-Gm-Message-State: AOJu0Yy26JZ4TaV9QXnV4NoJGD9bqEg01sA72y0rEJ5yv8DQuzj1HXZt
+ ly8DOT1ROqDuVbyJPuOs7VNFKaUz+xK81UC6V5dxE+Ie6ZSwkut90hveMebOwjghOa2Ilc4+bhP
+ Rp9c=
+X-Gm-Gg: ASbGnctlevzC6ZWbZ9icugj80PRktq9Aw48JSU1X+GoqUQxYnVpsz1ufqqz3EdPkTrd
+ aODh9i3QCAWoDkMheIWTtomKDSBT11cfzeMzLh9XfDS7+6MUQSkmgX6d/hmXLkIVO/1RhFqs2B8
+ jR+293wgLUw/5gVoLjLCBV4M9SG8o+BuS1uz5K8XYE1R6jtYRofp0cgqkZ3/o2BOeGKfb/9R0jZ
+ +5xufiycY49JRfveEonNwJkYOcZB++WURjlWpIycSbVW1i/9ZiiKf6ml90FzG8PtMn7KgD4w5cE
+ uyVtmcxnIvwdiIbKgPmmNSFG3EagYVbfGPp9vNbhrCm/pqjFiuN0O5nAfT5C43bLKg==
+X-Google-Smtp-Source: AGHT+IH1pliFBulv3OpDz285krX25B3ucS9m8Fylqwvh7mokOa4sAKjz5nxqJSC4Tl1FO3PuMfL3BA==
+X-Received: by 2002:a05:6000:cc:b0:38a:87cc:fb42 with SMTP id
+ ffacd0b85a97d-38dc8decf44mr10619754f8f.21.1739220171604; 
+ Mon, 10 Feb 2025 12:42:51 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390daf4438sm195336895e9.25.2025.02.10.12.42.35
+ ffacd0b85a97d-38dd3fc7ee5sm7835378f8f.39.2025.02.10.12.42.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 12:42:36 -0800 (PST)
+ Mon, 10 Feb 2025 12:42:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/32] hw/ssi/xilinx_spi: Make device endianness configurable
-Date: Mon, 10 Feb 2025 21:41:38 +0100
-Message-ID: <20250210204204.54407-7-philmd@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/32] hw/core/machine: Reject thread level cache
+Date: Mon, 10 Feb 2025 21:41:41 +0100
+Message-ID: <20250210204204.54407-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250210204204.54407-1-philmd@linaro.org>
 References: <20250210204204.54407-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,89 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
-of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
-Add the "little-endian" property to select the device
-endianness, defaulting to little endian.
-Set the proper endianness on the single machine using the
-device.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Currently, neither i386 nor ARM have real hardware support for per-
+thread cache, and there is no clear demand for this specific cache
+topology.
+
+Additionally, since ARM even can't support this special cache topology
+in device tree, it is unnecessary to support it at this moment, even
+though per-thread cache might have potential scheduling benefits for
+VMs without CPU affinity.
+
+Therefore, disable thread-level cache topology in the general machine
+part. At present, i386 has not enabled SMP cache, so disabling the
+thread parameter does not pose compatibility issues.
+
+In the future, if there is a clear demand for this feature, the correct
+approach would be to add a new control field in MachineClass.smp_props
+and enable it only for the machines that require it.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250110145115.1574345-2-zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250206131052.30207-7-philmd@linaro.org>
 ---
- hw/microblaze/petalogix_ml605_mmu.c |  1 +
- hw/ssi/xilinx_spi.c                 | 24 +++++++++++++++---------
- 2 files changed, 16 insertions(+), 9 deletions(-)
+ hw/core/machine-smp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-index bbda70aa93b..a795c6385b4 100644
---- a/hw/microblaze/petalogix_ml605_mmu.c
-+++ b/hw/microblaze/petalogix_ml605_mmu.c
-@@ -175,6 +175,7 @@ petalogix_ml605_init(MachineState *machine)
-         SSIBus *spi;
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index b954eb84902..4e020c358b6 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -321,6 +321,13 @@ bool machine_parse_smp_cache(MachineState *ms,
+             return false;
+         }
  
-         dev = qdev_new("xlnx.xps-spi");
-+        qdev_prop_set_bit(dev, "little-endian", true);
-         qdev_prop_set_uint8(dev, "num-ss-bits", NUM_SPI_FLASHES);
-         busdev = SYS_BUS_DEVICE(dev);
-         sysbus_realize_and_unref(busdev, &error_fatal);
-diff --git a/hw/ssi/xilinx_spi.c b/hw/ssi/xilinx_spi.c
-index fd1ff12eb1d..299004ff36d 100644
---- a/hw/ssi/xilinx_spi.c
-+++ b/hw/ssi/xilinx_spi.c
-@@ -83,6 +83,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(XilinxSPI, XILINX_SPI)
- struct XilinxSPI {
-     SysBusDevice parent_obj;
- 
-+    bool little_endian_model;
-     MemoryRegion mmio;
- 
-     qemu_irq irq;
-@@ -313,14 +314,17 @@ done:
-     xlx_spi_update_irq(s);
- }
- 
--static const MemoryRegionOps spi_ops = {
--    .read = spi_read,
--    .write = spi_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--    .valid = {
--        .min_access_size = 4,
--        .max_access_size = 4
--    }
-+static const MemoryRegionOps spi_ops[2] = {
-+    [0 ... 1] = {
-+        .read = spi_read,
-+        .write = spi_write,
-+        .valid = {
-+            .min_access_size = 4,
-+            .max_access_size = 4,
-+        },
-+    },
-+    [0].endianness = DEVICE_BIG_ENDIAN,
-+    [1].endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void xilinx_spi_realize(DeviceState *dev, Error **errp)
-@@ -339,7 +343,8 @@ static void xilinx_spi_realize(DeviceState *dev, Error **errp)
-         sysbus_init_irq(sbd, &s->cs_lines[i]);
-     }
- 
--    memory_region_init_io(&s->mmio, OBJECT(s), &spi_ops, s,
-+    memory_region_init_io(&s->mmio, OBJECT(s),
-+                          &spi_ops[s->little_endian_model], s,
-                           "xilinx-spi", R_MAX * 4);
-     sysbus_init_mmio(sbd, &s->mmio);
- 
-@@ -362,6 +367,7 @@ static const VMStateDescription vmstate_xilinx_spi = {
- };
- 
- static const Property xilinx_spi_properties[] = {
-+    DEFINE_PROP_BOOL("little-endian", XilinxSPI, little_endian_model, true),
-     DEFINE_PROP_UINT8("num-ss-bits", XilinxSPI, num_cs, 1),
- };
- 
++        if (props->topology == CPU_TOPOLOGY_LEVEL_THREAD) {
++            error_setg(errp,
++                       "%s level cache not supported by this machine",
++                       CpuTopologyLevel_str(props->topology));
++            return false;
++        }
++
+         if (!machine_check_topo_support(ms, props->topology, errp)) {
+             return false;
+         }
 -- 
 2.47.1
 
