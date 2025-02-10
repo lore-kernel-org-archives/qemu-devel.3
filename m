@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB4BC0219E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EAFC0219B
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thW2h-0007DN-0U; Mon, 10 Feb 2025 10:49:51 -0500
+	id 1thW34-0007GI-5a; Mon, 10 Feb 2025 10:50:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thW2e-0007CB-G7
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:48 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1thW2j-0007Dq-51
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:53 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thW2c-0004gS-JU
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:48 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so30020185e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:49:45 -0800 (PST)
+ id 1thW2h-0004hV-Ep
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:52 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4361f664af5so50859745e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:49:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739202585; x=1739807385; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=eIhwxGSJo+fnEjb9uUzGNFjWk9qjiJXDurLhZkghUFo=;
- b=nwuMHul2+dOKpL4ZyQinWn2YmaI0ooJLqG8CdDa+LqtOZ1IdSo6MeDtFrG15kfcKVG
- 6OdUbygwd868WviWgHeZ2qRLL5Jgs8ReVag8dprsbACe0UpZCL51KERmn+brxetL0Z52
- 36xA48vg5yIEqx63ZmyBGn7Z03Pe6drFTM/cNgxoWh3gV4aSinS6VPZi/Vf3ilBPQumN
- 0xa1l3mHMILDYKOvikJn7BiluwOxY40q3Pi2POFGbKm0U/HOoILqqjaNVKc/GxqrUFVb
- q3N5H5BqQj3yj68hcWtg0fu4J+ZWzHjxlwAd8/OPsqV5706G5PuGzGIGtx0jf7nMfAD+
- YNNw==
+ d=linaro.org; s=google; t=1739202590; x=1739807390; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=hQ//IdqEgE6/omsnCXSjledOx7ZAm6kjJCgkts3JmS8=;
+ b=y9XY6+OE3w/wkQV5xKLnVRLHfE8RR628Tmoxga0YOAHfDnvgMPNC7Ekzk3rORnMS6G
+ xD10goKctOE0M+MxVLpdP7X1Yr/3b6A2kjeCBPypyRHRsJpmdYJhZIGUa+6SmEe7dsbV
+ c90zmgNVD3FZlOL1n+c3lxc1FN68LXHl9mG0RDFXQxJChyHsF1Cwd+3vlhNG38XVYh6W
+ BqfHhl+RCRABvro9iQIyYmdNMKoYLZkAf4lxV2cqz+o9tVnUsRf5lgRdkN5fwVkTsHye
+ qjccL9tr1Ldfdy9tpuuWIdUYJvhliA6ZXXZXiqVW6osnaHYFezAI8Y1B6/vVINyOpgtx
+ GmGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739202585; x=1739807385;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eIhwxGSJo+fnEjb9uUzGNFjWk9qjiJXDurLhZkghUFo=;
- b=NSZpbOhyrYMuZiAXug0fx4jam4ad0x/Wm6uXB5GXiupwOUV/9YhFEhaZ2ik2nYwqN/
- TjQx0Bl/tPCwkv2YDfnwWY+UdjjQLhecWXBE6CJfGBOBv0niCCy4KOa4gp8Mr+ThbX0k
- h2StDOgW4QCLUjRKoVcOJJQhGK6R78jO4fvMxlG7ip6MnjU9g75mZS0rZjBzz32AUXqx
- NCb4jSVpk5v/mUZkYZnF4AbzOxD9Sak9FKyMBLL7YZdOhSaDDwHzV5RJtI0NMzZ3tptr
- u6s0kTS4QqkwPETbF7wpz7zoxIftvj4JEmB3/fU1qNxeKk7Ajxe9Kc9FVO5idHR8ilcw
- VLnw==
-X-Gm-Message-State: AOJu0YysvosBHd+E6WFbq3+sYqOzivnupgoE536YIopk030neUO5oABc
- W7KZwuSd+k2/53uUd0bKaQ55E8sDf4KyD3SUuQkclFV6SpFfViPviJ5UDhIjsQRLVm5n1h8UP8S
- 5
-X-Gm-Gg: ASbGncueJg7/IbVdPviFxrfXe1f6gMC3mHx7kVnBtdaR7vy8flt9W4CYGdh0wKTs323
- kLWOACBv9XVu/yopwA11VJFWkTTWaWjdLojwBrDmkN5k+iPYF7PMxrHfVLe98M6LjPFjOm+yMif
- 1Ys0lc1wrR5NYgqwRf6SQUpEIX/uuPJZv8bm/ZtF2xDaRcgxuyMFt/4f23hCJ6uSSZ/SUZDmQpB
- fcqpmLVVcdce51/uHo3q/6fgE397CucekL16Ow13dqb5qbrFaIhC0leATeMXTZjfnnMkt4IJPnU
- LDhMu2sSnG+Ye16Y4Q9M
-X-Google-Smtp-Source: AGHT+IG+RzJDLON9+FEECOVGkV4LpGmnJFCd8thcxYg7Tr6ntQJ/yQQn1KkbEeFymFaJvDi99Xmtvg==
-X-Received: by 2002:a05:600c:4f50:b0:438:a240:c54 with SMTP id
- 5b1f17b1804b1-43924987962mr103243025e9.9.1739202584712; 
- Mon, 10 Feb 2025 07:49:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739202590; x=1739807390;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hQ//IdqEgE6/omsnCXSjledOx7ZAm6kjJCgkts3JmS8=;
+ b=wXD37zfSf8Yf0b+/SEoFYUjce3E4UMVD2PUbwK8IJXP75vw3TJ/Z0yH1eHk+WMI3DX
+ G9pjL8v0iq7aSQ0dlO9kkuJkEg4WzXbbsp9EebCFWTfcupKL7Yrl1sblnttPvOhZkxJq
+ a0N8CoOjlj4AepXCSm/K7fLB0frf4SvYWiL6PtvKzc6MOvJ6c5EaXzuX43ckaNQj0r8N
+ Jt9EjJnqtDHMJR9/qmA11dkszpzWtyTj8vyotjYeKwcj5pfF/GtAbqhUOBoqF6K6cqKc
+ Qi3ppL0ZEHr1N29pZ6nMXu6Ie+KDLSaXrzKiV8SqaSuhsk9BnehbkPQpewNBObrHszr4
+ twdQ==
+X-Gm-Message-State: AOJu0YwX7H3r8fVm8vDEb8FaqZZVIbojxd6y/YCKQikBpRcZ72O+hIOy
+ aNqpSizKy9kZ03MWw68yNfB+8BaeggsjRjZTixH2u6gPjUxUT0+xZ2So9KSSVWPB5/FkGQBNl78
+ u
+X-Gm-Gg: ASbGncvToljLyAXbtPPP82TCMSFdDnDWP8FKTi/C+B+x8eK1fmHOEKucQX6qrL7ctl0
+ VtumkjjGptwEBrtwciCPUWxGnxtz+ePOVtL7cszyxPpMaGcEJ+oDlGZGGOtwEw8AMR4UK31OcN6
+ Tm63kv0Pioi3+xeuxOkZaW1SWEVklwtyljrnf/Qbrj6U4h4yf2rSgJghScxiGC/hblIlU8BteJs
+ N7om5+KcxO4n5EsE1hLiZx0Of6feAzTDjHib/At4+bbqKZE6K2UILGlHOqqVP+cn6Ee4OvXic4V
+ OdFfzAYQ3qVFforfQaiE
+X-Google-Smtp-Source: AGHT+IEFuStf5tJHf9n6fJSK2KZChOwV46Jb6Xwo4AAvRtvvtjwKnzScHupEWtexHy+KVHAcNMoHdQ==
+X-Received: by 2002:a05:600c:4f89:b0:439:4b9e:45fc with SMTP id
+ 5b1f17b1804b1-4394b9e4883mr13260275e9.4.1739202589755; 
+ Mon, 10 Feb 2025 07:49:49 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391dfd8448sm150612845e9.38.2025.02.10.07.49.43
+ 5b1f17b1804b1-4391dfd8448sm150612845e9.38.2025.02.10.07.49.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 07:49:44 -0800 (PST)
+ Mon, 10 Feb 2025 07:49:48 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/12] target-arm queue
-Date: Mon, 10 Feb 2025 15:49:30 +0000
-Message-Id: <20250210154942.3634878-1-peter.maydell@linaro.org>
+Subject: [PULL 04/12] hw/arm/boot: Propagate vCPU to arm_load_dtb()
+Date: Mon, 10 Feb 2025 15:49:34 +0000
+Message-Id: <20250210154942.3634878-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250210154942.3634878-1-peter.maydell@linaro.org>
+References: <20250210154942.3634878-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,68 +99,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 131c58469f6fb68c89b38fee6aba8bbb20c7f4bf:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  rust: add --rust-target option for bindgen (2025-02-06 13:51:46 -0500)
+In heterogeneous setup the first vCPU might not be
+the one expected, better pass it explicitly.
 
-are available in the Git repository at:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Message-id: 20250130112615.3219-2-philmd@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/arm/boot.h |  4 +++-
+ hw/arm/boot.c         | 11 ++++++-----
+ hw/arm/virt.c         |  2 +-
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250210
+diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
+index 80c492d7421..b12bf61ca81 100644
+--- a/include/hw/arm/boot.h
++++ b/include/hw/arm/boot.h
+@@ -160,6 +160,7 @@ AddressSpace *arm_boot_address_space(ARMCPU *cpu,
+  * @binfo:      struct describing the boot environment
+  * @addr_limit: upper limit of the available memory area at @addr
+  * @as:         address space to load image to
++ * @cpu:        ARM CPU object
+  *
+  * Load a device tree supplied by the machine or by the user  with the
+  * '-dtb' command line option, and put it at offset @addr in target
+@@ -176,7 +177,8 @@ AddressSpace *arm_boot_address_space(ARMCPU *cpu,
+  * Note: Must not be called unless have_dtb(binfo) is true.
+  */
+ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+-                 hwaddr addr_limit, AddressSpace *as, MachineState *ms);
++                 hwaddr addr_limit, AddressSpace *as, MachineState *ms,
++                 ARMCPU *cpu);
+ 
+ /* Write a secure board setup routine with a dummy handler for SMCs */
+ void arm_write_secure_board_setup_dummy_smc(ARMCPU *cpu,
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index cbc24356fc1..42c18355e85 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -432,13 +432,12 @@ out:
+     return ret;
+ }
+ 
+-static void fdt_add_psci_node(void *fdt)
++static void fdt_add_psci_node(void *fdt, ARMCPU *armcpu)
+ {
+     uint32_t cpu_suspend_fn;
+     uint32_t cpu_off_fn;
+     uint32_t cpu_on_fn;
+     uint32_t migrate_fn;
+-    ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(0));
+     const char *psci_method;
+     int64_t psci_conduit;
+     int rc;
+@@ -512,7 +511,8 @@ static void fdt_add_psci_node(void *fdt)
+ }
+ 
+ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+-                 hwaddr addr_limit, AddressSpace *as, MachineState *ms)
++                 hwaddr addr_limit, AddressSpace *as, MachineState *ms,
++                 ARMCPU *cpu)
+ {
+     void *fdt = NULL;
+     int size, rc, n = 0;
+@@ -655,7 +655,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         }
+     }
+ 
+-    fdt_add_psci_node(fdt);
++    fdt_add_psci_node(fdt, cpu);
+ 
+     if (binfo->modify_dtb) {
+         binfo->modify_dtb(binfo, fdt);
+@@ -1327,7 +1327,8 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
+      * decided whether to enable PSCI and set the psci-conduit CPU properties.
+      */
+     if (!info->skip_dtb_autoload && have_dtb(info)) {
+-        if (arm_load_dtb(info->dtb_start, info, info->dtb_limit, as, ms) < 0) {
++        if (arm_load_dtb(info->dtb_start, info, info->dtb_limit,
++                         as, ms, cpu) < 0) {
+             exit(1);
+         }
+     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 99e0a68b6c5..d23b14718af 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1746,7 +1746,7 @@ void virt_machine_done(Notifier *notifier, void *data)
+                                        vms->memmap[VIRT_PLATFORM_BUS].size,
+                                        vms->irqmap[VIRT_PLATFORM_BUS]);
+     }
+-    if (arm_load_dtb(info->dtb_start, info, info->dtb_limit, as, ms) < 0) {
++    if (arm_load_dtb(info->dtb_start, info, info->dtb_limit, as, ms, cpu) < 0) {
+         exit(1);
+     }
+ 
+-- 
+2.34.1
 
-for you to fetch changes up to 27a8d899c7a100fd5aa040a8b993bb257687c393:
-
-  linux-user: Do not define struct sched_attr if libc headers do (2025-02-07 16:09:20 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * Deprecate pxa2xx CPUs, iwMMXt emulation, -old-param option
- * Drop unused AArch64DecodeTable typedefs
- * Minor code cleanups
- * hw/net/cadence_gem:  Fix the mask/compare/disable-mask logic
- * linux-user: Do not define struct sched_attr if libc headers do
-
-----------------------------------------------------------------
-Andrew Yuan (1):
-      hw/net/cadence_gem:  Fix the mask/compare/disable-mask logic
-
-Khem Raj (1):
-      linux-user: Do not define struct sched_attr if libc headers do
-
-Peter Maydell (4):
-      target/arm: deprecate the pxa2xx CPUs and iwMMXt emulation
-      tests/tcg/arm: Remove test-arm-iwmmxt test
-      target/arm: Drop unused AArch64DecodeTable typedefs
-      qemu-options: Deprecate -old-param command line option
-
-Philippe Mathieu-Daudé (6):
-      hw/arm/boot: Propagate vCPU to arm_load_dtb()
-      hw/arm/fsl-imx6: Add local 'mpcore/gic' variables
-      hw/arm/fsl-imx6ul: Add local 'mpcore/gic' variables
-      hw/arm/fsl-imx7: Add local 'mpcore/gic' variables
-      hw/cpu/arm: Alias 'num-cpu' property on TYPE_REALVIEW_MPCORE
-      hw/cpu/arm: Declare CPU QOM types using DEFINE_TYPES() macro
-
- docs/about/deprecated.rst       | 34 ++++++++++++++++++++++
- include/hw/arm/boot.h           |  4 ++-
- target/arm/cpu.h                |  1 +
- hw/arm/boot.c                   | 11 +++----
- hw/arm/fsl-imx6.c               | 52 ++++++++++++++-------------------
- hw/arm/fsl-imx6ul.c             | 64 +++++++++++++++++------------------------
- hw/arm/fsl-imx7.c               | 52 +++++++++++++++------------------
- hw/arm/virt.c                   |  2 +-
- hw/cpu/a15mpcore.c              | 21 ++++++--------
- hw/cpu/a9mpcore.c               | 21 ++++++--------
- hw/cpu/arm11mpcore.c            | 21 ++++++--------
- hw/cpu/realview_mpcore.c        | 29 +++++++------------
- hw/net/cadence_gem.c            | 26 +++++++++++++----
- linux-user/syscall.c            |  4 ++-
- system/vl.c                     |  1 +
- target/arm/cpu.c                |  3 ++
- target/arm/tcg/cpu32.c          | 36 +++++++++++++++--------
- target/arm/tcg/translate-a64.c  | 11 -------
- tests/tcg/arm/Makefile.target   |  7 -----
- tests/tcg/arm/README            |  5 ----
- tests/tcg/arm/test-arm-iwmmxt.S | 49 -------------------------------
- 21 files changed, 205 insertions(+), 249 deletions(-)
- delete mode 100644 tests/tcg/arm/test-arm-iwmmxt.S
 
