@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A42C0219B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE25C021A1
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thW3P-0007Um-U2; Mon, 10 Feb 2025 10:50:37 -0500
+	id 1thW43-0008P3-RC; Mon, 10 Feb 2025 10:51:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thW2g-0007Cz-1Q
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:50 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1thW2q-0007F5-Mf
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:50:01 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thW2e-0004gn-4u
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:49 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38a8b17d7a7so2320439f8f.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:49:47 -0800 (PST)
+ id 1thW2o-0004in-RH
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:50:00 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43944c51e41so11321205e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:49:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739202587; x=1739807387; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739202597; x=1739807397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TVhArnI/yCCcRG7PoX5IHc19VJC8agcmZuYy95VHBKo=;
- b=bzZgLgB/2cG6W1/DGb1V2nbtG/tmbPthtv6Iaj5RBLgGw/Xcho/VM36uGosCQJvqB8
- 9Zd3fP5eaBbV8BWJ9egW/eDrn2zlJbHxDzYfNlKTulbATapa1xoXlO0od5PRMJNhgs5Y
- vFR7KVEBx8U/mby77uY617+N9VTSH8HEUo57Y1GFUqZ62dx+vyBMxS2QCP7U7Vhkl+5D
- rUyTYH36YjGaRMNzGqALiXghoWgC/rfOHdj45EQTlPJogBCMD+G3MyxJ2tRwz28GPf9O
- F34J++K1E4de/WYNFKhmYS3nbJo65eeYcfV/0Y4QqFhAg7D6nsOCAWDTH8i5lFWKH0Ld
- 0Fbw==
+ :reply-to; bh=yUBcHpc5OCe44EFqf9E+CLvvwsZEvaTZC3OB4U4wEFU=;
+ b=iz72c136EF8LaXdB8AobzR/YcziPqCAkUkFC6xp3YebyUk8SgDgF8i6Z9iDNxLFWFu
+ hDQlmevKtqegIDQBs6s82FbpL7hJCGQoz2WkKhnXWNR+HyWEkkll4d/8bvsWUb/9emqz
+ bNWQ/I/R7vklZr2jY3XC5Doqi87BVkhWMJci2ZVYQAjCY+t5n5yW5LsT1Meidx/U8HBG
+ F4e+06JiO/QiG1xFLJyc5LCuMW6HLWIivv/mh9GyNgm4YuThwLvmt57QEPja1mE7zK0M
+ GmUx3z/frfUiLNb/5xL8SGUX0JAVzVKRPUwWtxr0s48DA79gFpPp0KTectK/nMA2bZPP
+ 9pTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739202587; x=1739807387;
+ d=1e100.net; s=20230601; t=1739202597; x=1739807397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TVhArnI/yCCcRG7PoX5IHc19VJC8agcmZuYy95VHBKo=;
- b=XFYrBDVGifz+ueITTv1ZhCZvtGtBqlqayScuPbpFPsfJSB+N1JMjpKpuNo7aWa6a6T
- 4lTsLkqUq/Qdx7L/kbJvbRWT5qfvJqaVZow4yMuN53GpFudOgDtmELiu0QTRtlACim+D
- NvBTA/HeCcS8CV95jksEhjU+duVOMfLPAWPLeOW8Boo4UUn5LZ2v64hQQJvoX9jEcG0G
- RfQxHTH/NRGDYkhfVafjoO7CPrHZS+clKbFlgpJgxIfy6mXmHXcz9VgsLY9z3Mjv+ETY
- vWrNwXzKqJyL0pFczQy4+AANSrCffi0TzdKWZ9aTwg5DJ8umY7hfpE13LxHtQK9OOuRF
- 2kmA==
-X-Gm-Message-State: AOJu0YzQN1v3KP4jPASsSSuDBVGEpWO9UTLkSUJr6S4wj/vBVHt4M1dJ
- Q5t9PdDknl+T0irR3tJK8GSOJr9zwQi6xgRVG0GJHgFqu2Vdk4/1n8Bli8p6tLbA0xvCwRjMO94
- c
-X-Gm-Gg: ASbGncvs1Jk5KyxuqWNXFBYTQH3vCxGkB7GcUUvmq7VxVbf4WlL60Hja6tzmaSsz0cC
- ixAf4pIwQf+8ZLLMDMXp15ozUP8LFm4HdtBegKTXfL7GFnWkbKtPhFa87M5VJUS5Xkg8Pl4jIYK
- LFFlzEFvrajLwUiKo0Xd00pACwGM7ZcEMeWlRjE4DlClGxNywQqtoJgtp2Cn+wyybgeESGvOjZ4
- 72h50LTwZ2kte2pYWBuvFYZVew8b0XsB3LbV4jInxaP9MBFuzeM8pBd7JVnEgQqGMaeLOraMT/c
- nJPnLAy7hYTk7+g46vBY
-X-Google-Smtp-Source: AGHT+IHYGxwDX1ZyW+tnCmA9rTop0a+cFhQjHehn8OgQ+Lp4KQYYKw8FVw6OBKxn1I/Q7fmMo0wMcg==
-X-Received: by 2002:a5d:6da4:0:b0:38d:e078:43a0 with SMTP id
- ffacd0b85a97d-38de0784709mr2898546f8f.38.1739202586494; 
- Mon, 10 Feb 2025 07:49:46 -0800 (PST)
+ bh=yUBcHpc5OCe44EFqf9E+CLvvwsZEvaTZC3OB4U4wEFU=;
+ b=EO0f9PGfsuHPmZqDokIeMQtTFDavBrlXFXVFWkBNWhM3fczNEYi2WihesleiuleaEp
+ uRSGO/32JlSzooOxhBGbi+u6deSKCPZrhXY/YPKx3qdaMWZnEWMJXrTAbw93mMoNi+mG
+ 7ZcDYI1xHBZEyUthuxOACPB9UyncuhpHzAHAmFAldPlWS5MggbMTc0GRsOKvqGlvs7OA
+ UIxFaqzH1gqYnC2mbsFSU67nJEzez/pdA1kNu1C1Au5szO0phE6FL9tPWd5zDhyDPhxS
+ 6sv2SLNvi6Uzxw2k2AuBooifYuUpIHFADZ2PoFv5ohR1+9bwWebLug7+WOHLh5Bi4K8k
+ VQgA==
+X-Gm-Message-State: AOJu0Yz7/FrA1qumvr11umUSPni2EtqC6YT5S+gwyMUz6UCLTDz1B4sX
+ NrqzwTIWVFvnS7wXx2vORXSvT3OKpkuI1MnlNqcQu0FCRBPfm8Y6j92oCAk1LqoxT5sdrtvRaXl
+ m
+X-Gm-Gg: ASbGncvJl22Ut+HophVLDiV3szMCTa+fd8IYKON37z9t27wS5gmgd4Bu4TL2uBV6hK9
+ U99P/pH9mPKzvZwlIb+GrQMcm4i5vrhj0+CHkLFGxsw2WS4uXmXAytFgtOdr/V32Ls38AhDve5R
+ eY4HCscylZoroyYeKbxn+MbVqRefHpyndo65CLVMQ61QFhbdMFGSOHvl994snI9cpeT8dyGZjlA
+ oaRkPLs4thEkfGBcsUym3R1O5YzlVdI6tFKBmtbURn1IiLllqnFs5SmLMxdQq+lmbm9yg7zIjVA
+ bhBDIbgajUxNIrZ65FsH
+X-Google-Smtp-Source: AGHT+IHJVZXJO0p17//VgEa/8/2BSPWYNK9HdHrqEEBPJQNNHo9Fb7wlLYkkIspMtu5ivVYixI7P6A==
+X-Received: by 2002:a05:600c:1e0d:b0:439:4827:73d with SMTP id
+ 5b1f17b1804b1-439482709dcmr24849095e9.18.1739202597256; 
+ Mon, 10 Feb 2025 07:49:57 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391dfd8448sm150612845e9.38.2025.02.10.07.49.45
+ 5b1f17b1804b1-4391dfd8448sm150612845e9.38.2025.02.10.07.49.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 07:49:45 -0800 (PST)
+ Mon, 10 Feb 2025 07:49:56 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/12] tests/tcg/arm: Remove test-arm-iwmmxt test
-Date: Mon, 10 Feb 2025 15:49:32 +0000
-Message-Id: <20250210154942.3634878-3-peter.maydell@linaro.org>
+Subject: [PULL 12/12] linux-user: Do not define struct sched_attr if libc
+ headers do
+Date: Mon, 10 Feb 2025 15:49:42 +0000
+Message-Id: <20250210154942.3634878-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250210154942.3634878-1-peter.maydell@linaro.org>
 References: <20250210154942.3634878-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,133 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test-arm-iwmmmxt test isn't testing what it thinks it's testing.
+From: Khem Raj <raj.khem@gmail.com>
 
-If you run it with a CPU type that supports iwMMXt then it will crash
-immediately with a SIGILL, because (even with -marm) GCC will link it
-against startup code that is in Thumb mode, and no iwMMXt CPU has
-Thumb:
+glibc 2.41+ has added [1] definitions for sched_setattr and
+sched_getattr functions and struct sched_attr.  Therefore, it needs
+to be checked for here as well before defining sched_attr, to avoid
+a compilation failure.
 
-00010338 <_start>:
-   10338:       f04f 0b00       mov.w   fp, #0
-   1033c:       f04f 0e00       mov.w   lr, #0
+Define sched_attr conditionally only when SCHED_ATTR_SIZE_VER0 is
+not defined.
 
-If you run it with a CPU type which does *not* support iwMMXt, which
-is what 'make check-tcg' does, then QEMU will not try to handle the
-insns as iwMMXt.  Instead the translator turns them into illegal
-instructions.  Then in the linux-user cpu_loop() code we identify
-them as FPA11 instructions inside emulate_arm_fpa11(), because the
-FPA11 happened to use the same coprocessor number as these iwMMXt
-insns.  So we execute a completely different set of FPA11 insns,
-which means we don't crash, but we will print garbage to stdout.
-Then the test binary always exits with a 0 return code, so 'make
-check-tcg' thinks the test passes.
+[1] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=21571ca0d70302909cf72707b2a7736cf12190a0;hp=298bc488fdc047da37482f4003023cb9adef78f8
 
-Modern gnueabihf toolchains assume in their startup code that the CPU
-is not so old as to not support Thumb, so there's no way to get them
-to generate a binary that actually does what the test wants.  Since
-we're deprecating iwMMXt emulation anyway, it's not worth trying to
-salvage the test case to get it to really test the iwMMXt insns.
-
-Delete the test entirely.
-
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2799
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250127112715.2936555-3-peter.maydell@linaro.org
 ---
- tests/tcg/arm/Makefile.target   |  7 -----
- tests/tcg/arm/README            |  5 ----
- tests/tcg/arm/test-arm-iwmmxt.S | 49 ---------------------------------
- 3 files changed, 61 deletions(-)
- delete mode 100644 tests/tcg/arm/test-arm-iwmmxt.S
+ linux-user/syscall.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
-index 06ddf3e04fc..99a953b6671 100644
---- a/tests/tcg/arm/Makefile.target
-+++ b/tests/tcg/arm/Makefile.target
-@@ -20,13 +20,6 @@ ARM_TESTS = hello-arm
- hello-arm: CFLAGS+=-marm -ffreestanding -fno-stack-protector
- hello-arm: LDFLAGS+=-nostdlib
- 
--# IWMXT floating point extensions
--ARM_TESTS += test-arm-iwmmxt
--# Clang assembler does not support IWMXT, so use the external assembler.
--test-arm-iwmmxt: CFLAGS += -marm -march=iwmmxt -mabi=aapcs -mfpu=fpv4-sp-d16 $(CROSS_CC_HAS_FNIA)
--test-arm-iwmmxt: test-arm-iwmmxt.S
--	$(CC) $(CFLAGS) -Wa,--noexecstack $< -o $@ $(LDFLAGS)
--
- # Float-convert Tests
- ARM_TESTS += fcvt
- fcvt: LDFLAGS += -lm
-diff --git a/tests/tcg/arm/README b/tests/tcg/arm/README
-index e6307116e23..aceccc127f7 100644
---- a/tests/tcg/arm/README
-+++ b/tests/tcg/arm/README
-@@ -4,8 +4,3 @@ hello-arm
- ---------
- 
- A very simple inline assembly, write syscall based hello world
--
--test-arm-iwmmxt
-----------------
--
--A simple test case for older iwmmxt extended ARMs
-diff --git a/tests/tcg/arm/test-arm-iwmmxt.S b/tests/tcg/arm/test-arm-iwmmxt.S
-deleted file mode 100644
-index d647f9404ae..00000000000
---- a/tests/tcg/arm/test-arm-iwmmxt.S
-+++ /dev/null
-@@ -1,49 +0,0 @@
--@ Checks whether iwMMXt is functional.
--.code	32
--.globl	main
--
--main:
--ldr	r0, =data0
--ldr	r1, =data1
--ldr	r2, =data2
--#ifndef FPA
--wldrd	wr0, [r0, #0]
--wldrd	wr1, [r0, #8]
--wldrd	wr2, [r1, #0]
--wldrd	wr3, [r1, #8]
--wsubb	wr2, wr2, wr0
--wsubb	wr3, wr3, wr1
--wldrd	wr0, [r2, #0]
--wldrd	wr1, [r2, #8]
--waddb	wr0, wr0, wr2
--waddb	wr1, wr1, wr3
--wstrd	wr0, [r2, #0]
--wstrd	wr1, [r2, #8]
--#else
--ldfe	f0, [r0, #0]
--ldfe	f1, [r0, #8]
--ldfe	f2, [r1, #0]
--ldfe	f3, [r1, #8]
--adfdp	f2, f2, f0
--adfdp	f3, f3, f1
--ldfe	f0, [r2, #0]
--ldfe	f1, [r2, #8]
--adfd	f0, f0, f2
--adfd	f1, f1, f3
--stfe	f0, [r2, #0]
--stfe	f1, [r2, #8]
--#endif
--mov	r0, #1
--mov	r1, r2
--mov	r2, #0x11
--swi	#0x900004
--mov	r0, #0
--swi	#0x900001
--
--.data
--data0:
--.string	"aaaabbbbccccdddd"
--data1:
--.string	"bbbbccccddddeeee"
--data2:
--.string	"hvLLWs\x1fsdrs9\x1fNJ-\n"
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 6ee02383daf..df5ed18062c 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -360,7 +360,8 @@ _syscall3(int, sys_sched_getaffinity, pid_t, pid, unsigned int, len,
+ #define __NR_sys_sched_setaffinity __NR_sched_setaffinity
+ _syscall3(int, sys_sched_setaffinity, pid_t, pid, unsigned int, len,
+           unsigned long *, user_mask_ptr);
+-/* sched_attr is not defined in glibc */
++/* sched_attr is not defined in glibc < 2.41 */
++#ifndef SCHED_ATTR_SIZE_VER0
+ struct sched_attr {
+     uint32_t size;
+     uint32_t sched_policy;
+@@ -373,6 +374,7 @@ struct sched_attr {
+     uint32_t sched_util_min;
+     uint32_t sched_util_max;
+ };
++#endif
+ #define __NR_sys_sched_getattr __NR_sched_getattr
+ _syscall4(int, sys_sched_getattr, pid_t, pid, struct sched_attr *, attr,
+           unsigned int, size, unsigned int, flags);
 -- 
 2.34.1
 
