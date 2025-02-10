@@ -4,74 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E36C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E412C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thR1F-0004ST-1a; Mon, 10 Feb 2025 05:28:03 -0500
+	id 1thQzx-0001bL-M0; Mon, 10 Feb 2025 05:26:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thR0t-00046i-J9
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:27:39 -0500
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thQzv-0001Ri-6H
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:26:39 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thR0r-0002Ay-9q
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:27:39 -0500
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e5b1c4d14f2so3501641276.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:27:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thQzt-0001px-AD
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:26:38 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso27910895e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:26:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739183256; x=1739788056; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8Lw06BOrYsNQ4AYM+lwVkVkT2+9W/2UtsjCWofhmopk=;
- b=w7aU2EcVOmslh65VZYjGIYktrAz1vX99IZicGKWNwTJlKgUcce9UTBdbfZ5ycAhIMT
- dVCs98uDRnRKoRW2LP3rPri7MSVXFTjgSDYBZojzH84mb22rDGG/rOedsFsqjmIkni9M
- wkJCj0dG3e5W8QvYKeYJS+qSdH8E/AWbUm9itH8/SZgW5Et4tFxQiG7Bwe4dj7g/jDh0
- RUzUpVjTzee8K72VtS6WvN2RJ5ltsHWW/wRLcVNZChOhTHpWG48kYfWbo8rITAnTw8vQ
- kYDcX1PtyPSAAJfO+7oFt/VFDsLO8od5SST8EnGYKyZ5ihFYhWHQu2D4L9/yUCxaQTm5
- yf4Q==
+ d=linaro.org; s=google; t=1739183195; x=1739787995; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tRDqbtanMlA5Asve4v+RadDNokWUtgjMp7wgM0p7V4g=;
+ b=Y3YuWfrEPCspAh6vyGKQ/bRHIY9DBK52r7bkwQTzELRFIAv4Fs5wNQ+raNVnlOfJ/D
+ dpu6fSiByY4Ipt6ttrLNkM6gON1UJr4N6cajSmcdcQCCGZHs4dJ6OcNHyW5YZbBL1tpD
+ HHJw3FnKQ7m6D9St9ogfejg/A8ky8SAvdoDIzgE0Xe8FbyOmLU4z+IVurbT/kf9eD2Pn
+ PQPC2xwgLGcH2MVqLS78VN2o4zD+zXe6O6pyNJERbTYF0KKdjQer+9HSlvoKU0z0mX7z
+ JlHN44XRxkENPs59kCzvZR8S8K7ZJ+OUPW6v6SwL4yUJjw1zMkLg9bMp7007xnwDF0sF
+ Eh9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739183256; x=1739788056;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8Lw06BOrYsNQ4AYM+lwVkVkT2+9W/2UtsjCWofhmopk=;
- b=njQExJ+PsLInGNZa2p4A8nxqAZ9cG60E2FkQf1738ifDgejB0/OClN/9aX5BIrgxzK
- XE+S8uCSSrDuINy8wKvDlfZUvwOE+NEzQ/AoH9mBumtEXHjuKVoL6PoetaHUSS9bmJkK
- XJUAwi6hf3UJdHvTfBxVKY6BpjnIuSrC6Yc9tzoumoYdNOk5/5UZ7l0scRELWOI7jHiH
- L6alvUEDssuv7NEkvMbzSjmNbvYm4MR1I3ng06nXtLgYYCUUGj0y5kNxMW//D99spWgD
- t+ygNrH3GVDaj7A8y1Ja6oZ7fwH3HwNWfmFd7GEt+Zmspd2CtKPc20yhjXwUKoahHnAE
- QnWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDQmFInWXmKWApR5DhFNxdwWLdjp9OXmRVNvKops0piCQz3+s/6KnnaoppY0Oi3p1JYmYJWru184Fh@nongnu.org
-X-Gm-Message-State: AOJu0Ywwj2Tkq/44QLZ69xrxYzpCt/vV7eFuEnmnrxJQoM7NyXhnXlvQ
- uS9YG0pNZT1tFl4QQdm9lQ/oIxmO8FHLTVpQFERqcxiNd6PyB6Awn9+y4ZLoEix+Ek2DEY8vPhA
- 6+aTjw0Qz0m7VWuVbu56z4hVtALY9yrAO8F4qLStcdU7Es/gI
-X-Gm-Gg: ASbGncs9btFiugBgO1nD7GcvQEzhdDMYaciqvC+eogJw6gckQSBmZoJXasxoBV7CFcv
- yqRImM7zfa5w54oBJBjOgn+2joJBrJ57znAGx40fmWBNVg0OUyZOq6S0ce915G4d1NPYXO57H1g
- ==
-X-Google-Smtp-Source: AGHT+IF+artVKxhqv46vV7sWzB7uOCL7Hx6x0PeGwPVt6FAOxTwT5zoev8H+x/5cWKexKZxrj7C6xVALcqGyHv5E/AA=
-X-Received: by 2002:a05:6902:1586:b0:e39:85e3:1069 with SMTP id
- 3f1490d57ef6-e5b4628c5ffmr11112327276.47.1739183255777; Mon, 10 Feb 2025
- 02:27:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739183195; x=1739787995;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tRDqbtanMlA5Asve4v+RadDNokWUtgjMp7wgM0p7V4g=;
+ b=Sf6yEWbuwlqBl9eAmrWr0aptrhSGopTXeLgTIKa5CdmKAKhOQlB82/s6ONyngDkxdP
+ 7Sccv/mK1qnh6YHXuMpCXu/EgQ8il4qopAWmdtRWKe/tgT07NULqS6pJNJoiZ0b5z8yC
+ Oqycj54OTmeDp6YX1rqEbw4vhewX1kVMwVvjJQNCI8pLa5a8aeej8nH781Pp1ranaCbv
+ +4T4DBaucYtVb5GQlwQ3kRtr4w+3dSEGaMXrKFf7rW7n2VvFtpGHEJDG0k/LnLFbYQl4
+ q3owNYreWTZlSsaYsvgHpUReryLDeSHK9/mw45cj1PoYFBYMJTTxeBYTchdPqXKrpFJ7
+ DZtg==
+X-Gm-Message-State: AOJu0YykOpAsO5qgyOpZZse8WzAg5Qhwa2GW1YzNBKk73ZCSWPQZFZB6
+ QnLvdwAEYyZdtPmNoCW7bXQwdKEgXsvBr3Qie6/CM8Wp7ZgjT1fzXjk6XRjuIagt0XtGXCyhrWO
+ X3yA=
+X-Gm-Gg: ASbGncsV2RX8RK4/qbfmiTkLGT7E9oZ171ItI9YmFo8sTQsF8DWcaBaeIgT0pQsQAuV
+ JdPgUZ+QSQdHglHMzXv/hnE/OU81gOXTA3YIXXlkb4XLRKbfMmyWqU+Bvvo3kvQH8nDlHUZ6rkb
+ 1E4c/NiOeuYAI8+7phCX7BKJPsvOiNK23Q9IkmwQlH3YGhjPdbudDcBXJlE+2r9ff+V52hUBzRO
+ MKW9C7w08besgIZGpcTkwFU8jPOBD+XLR7FuCH3q1YrN5uamSwbMyvDXNno8MrgfTbZe1NARUwm
+ RrDCBwJXT0iK1q4go2E11X653QxknM3ck9NjAA56cGHK+jiAmOgVeWlovFFQ2EGcRuAirY0=
+X-Google-Smtp-Source: AGHT+IHrqGrYCnv6aFVdtB2T/pXjIhKu2h6/wogDJe5McArtoOWzQVdnFbXhUsJc3hjIxrSJiHvjMA==
+X-Received: by 2002:a05:600c:4eca:b0:434:a852:ba6d with SMTP id
+ 5b1f17b1804b1-4392498a1e3mr93634665e9.9.1739183195282; 
+ Mon, 10 Feb 2025 02:26:35 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4390d94d753sm175560445e9.11.2025.02.10.02.26.34
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 10 Feb 2025 02:26:34 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 06/10] hw: Declare various const data as 'const'
+Date: Mon, 10 Feb 2025 11:26:00 +0100
+Message-ID: <20250210102604.34284-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250210102604.34284-1-philmd@linaro.org>
+References: <20250210102604.34284-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250130182309.717346-1-peter.maydell@linaro.org>
-In-Reply-To: <20250130182309.717346-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 10 Feb 2025 10:27:24 +0000
-X-Gm-Features: AWEUYZlm3rU8fdHUwBPlkvkks2uJDnMpswY0qMxJXIWvubDGFwHv6Go_NBfm2ic
-Message-ID: <CAFEAcA_+9tVJaV4EpdfYvBx=bBL1KFzdGAD28TAvjct0x28KcQ@mail.gmail.com>
-Subject: Re: [PATCH 00/14] target/arm: Clean up some corner cases of sysreg
- traps
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,116 +100,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for review on patches 2, 3, 9, 10, 12, 14, please?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/isa/vt82c686.c     | 2 +-
+ hw/rtc/m48t59-isa.c   | 2 +-
+ hw/rtc/m48t59.c       | 2 +-
+ hw/sensor/tmp421.c    | 2 +-
+ hw/usb/hcd-ehci-pci.c | 2 +-
+ hw/usb/hcd-uhci.c     | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-thanks
--- PMM
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 6f44b381a5f..43bd67eeef2 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -224,7 +224,7 @@ static void via_pm_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    ViaPMInitInfo *info = data;
++    const ViaPMInitInfo *info = data;
+ 
+     k->realize = via_pm_realize;
+     k->config_write = pm_write_config;
+diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
+index 38bc8dcf100..9c3855a3ef1 100644
+--- a/hw/rtc/m48t59-isa.c
++++ b/hw/rtc/m48t59-isa.c
+@@ -129,7 +129,7 @@ static void m48txx_isa_class_init(ObjectClass *klass, void *data)
+ static void m48txx_isa_concrete_class_init(ObjectClass *klass, void *data)
+ {
+     M48txxISADeviceClass *u = M48TXX_ISA_CLASS(klass);
+-    M48txxInfo *info = data;
++    const M48txxInfo *info = data;
+ 
+     u->info = *info;
+ }
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index c9bd6f878fe..3fb2f27d9d1 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -639,7 +639,7 @@ static void m48txx_sysbus_class_init(ObjectClass *klass, void *data)
+ static void m48txx_sysbus_concrete_class_init(ObjectClass *klass, void *data)
+ {
+     M48txxSysBusDeviceClass *u = M48TXX_SYS_BUS_CLASS(klass);
+-    M48txxInfo *info = data;
++    const M48txxInfo *info = data;
+ 
+     u->info = *info;
+ }
+diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
+index 82e604279c5..007f7cd018b 100644
+--- a/hw/sensor/tmp421.c
++++ b/hw/sensor/tmp421.c
+@@ -68,7 +68,7 @@ struct TMP421State {
+ 
+ struct TMP421Class {
+     I2CSlaveClass parent_class;
+-    DeviceInfo *dev;
++    const DeviceInfo *dev;
+ };
+ 
+ #define TYPE_TMP421 "tmp421-generic"
+diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+index d410c38a8a2..e00316721ac 100644
+--- a/hw/usb/hcd-ehci-pci.c
++++ b/hw/usb/hcd-ehci-pci.c
+@@ -182,7 +182,7 @@ static void ehci_data_class_init(ObjectClass *klass, void *data)
+ {
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+-    EHCIPCIInfo *i = data;
++    const EHCIPCIInfo *i = data;
+ 
+     k->vendor_id = i->vendor_id;
+     k->device_id = i->device_id;
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 8528d493d63..0561a6d801a 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -1289,7 +1289,7 @@ void uhci_data_class_init(ObjectClass *klass, void *data)
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     UHCIPCIDeviceClass *u = UHCI_CLASS(klass);
+-    UHCIInfo *info = data;
++    const UHCIInfo *info = data;
+ 
+     k->realize = info->realize ? info->realize : usb_uhci_common_realize;
+     k->exit = info->unplug ? usb_uhci_exit : NULL;
+-- 
+2.47.1
 
-On Thu, 30 Jan 2025 at 18:23, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> While reviewing Alex's recent secure timer patchset, I noticed a
-> bug where it was using CP_ACCESS_TRAP when CP_ACCESS_TRAP_UNCATEGORIZED
-> was wanted, and that we were making the same mistake elsewhere in
-> our existing code. This series started out as an attempt to fix
-> that and also rearrange the API so that it's harder to introduce
-> other instances of this bug in future. In the process I noticed
-> a different bug, where we weren't handling traps to AArch32
-> Monitor mode correctly, so the series fixes those as well.
->
-> The first four patches are fixes for the places where we were
-> using CP_ACCESS_TRAP when we wanted CP_ACCESS_TRAP_UNCATEGORIZED.
-> These are all situations where an attempt to access a sysreg
-> should UNDEF and we were incorrectly reporting it with a
-> syndrome value for a system register access trap. I've cc'd
-> these to stable as they are technically bugs, but really the impact
-> s very limited because I can't see a reason why any code except
-> test code would deliberately attempt a sysreg access that they
-> knew would take an exception and then look at the syndrome
-> value for it.
->
-> Patches 5, 6 and 7 together fix bugs in our handling of sysreg
-> traps that should go to AArch32 Monitor mode:
->  * we were incorrectly triggering an UNDEF exception for these
->    rather than a Monitor Trap, so the exception would go to
->    the wrong vector table and the wrong CPU mode
->  * in most cases we weren't trapping accesses from EL3
->    non-Monitor modes to Monitor mode
-> This affects only:
->  * trapping of ERRIDR via SCR.TERR
->  * trapping of the debug channel registers via SDCR.TDCC
->  * trapping of GICv3 registers via SCR.IRQ and SCR.FIQ
-> because most "trap sysreg access to EL3" situations are either for
-> AArch64 only registers or for trap bits that are AArch64 only.
->
-> Patch 8 is a trivial one removing an unnecessary clause in
-> an if() condition in the GIC cpuif access functions.
->
-> Patches 9-13 are the API change that tries to make the bug harder to
-> write: we add CP_ACCESS_TRAP_EL1 for "trap a sysreg access direct to
-> EL1". After all the bugfixes in the first half of the series, the
-> remaining uses of CP_ACCESS_TRAP are all in contexts where we know the
-> current EL is 0, so we can directly replace them with
-> CP_ACCESS_TRAP_EL1, and remove CP_ACCESS_TRAP entirely. We also rename
-> CP_ACCESS_TRAP_UNCATEGORIZED to CP_ACCESS_UNDEFINED, to be a clearer
-> parallel with the pseudocode's use of "UNDEFINED" in this situation.
-> The resulting
-> API is that an accessfn can only return:
->  CP_ACCESS_OK for a success
->  CP_ACCESS_UNDEFINED for an UNDEF
->  CP_ACCESS_TRAP_EL{1,2,3} for a sysreg trap direct to an EL
-> and everything else is invalid. UNCATEGORIZED traps never go to a
-> specified target EL, and sysreg-traps always go to a specified target
-> EL, matching the pseudocode which either uses "UNDEFINED" or some kind
-> of SystemAccessTrap(ELx, ...).
->
-> Patch 14 fixes some issues with the WFI/WFX trap code, some of
-> which are like the above sysreg access check bugs (not using
-> Monitor Trap, not honouring traps in EL3 not-Monitor-mode),
-> plus one which I noticed while working on the code (it doesn't
-> use arm_sctlr() so will look at the wrong SCTLR when in EL2&0).
->
-> I've cc'd the relevant patches to stable, but I don't think
-> it's very likely that anybody ever ran into these bugs, because
-> they're all cases of "we did the wrong thing if code at an EL
-> below EL3 tried to do something it shouldn't". I don't think that
-> EL3 code generally uses the trap bits for trap-and-emulate
-> of functionality, only to prevent the lower ELs messing with
-> state it should not, and everything here with the exception of
-> SCR.IRQ and SCR.FIQ is pretty obscure anyway.
->
-> (Tested somewhat lightly, because I don't have any test images
-> that test AArch32 EL3 really.)
->
-> thanks
-> -- PMM
->
-> Peter Maydell (14):
->   target/arm: Report correct syndrome for UNDEFINED CNTPS_*_EL1 from EL2
->     and NS EL1
->   target/arm: Report correct syndrome for UNDEFINED AT ops with wrong
->     NSE,NS
->   target/arm: Report correct syndrome for UNDEFINED S1E2 AT ops at EL3
->   target/arm: Report correct syndrome for UNDEFINED LOR sysregs when
->     NS=0
->   target/arm: Make CP_ACCESS_TRAPs to AArch32 EL3 be Monitor traps
->   hw/intc/arm_gicv3_cpuif: Don't downgrade monitor traps for AArch32 EL3
->   target/arm: Honour SDCR.TDCC and SCR.TERR in AArch32 EL3 non-Monitor
->     modes
->   hw/intc/arm_gicv3_cpuif(): Remove redundant tests of is_a64()
->   target/arm: Support CP_ACCESS_TRAP_EL1 as a CPAccessResult
->   target/arm: Use CP_ACCESS_TRAP_EL1 for traps that are always to EL1
->   target/arm: Use TRAP_UNCATEGORIZED for XScale CPAR traps
->   target/arm: Remove CP_ACCESS_TRAP handling
->   target/arm: Rename CP_ACCESS_TRAP_UNCATEGORIZED to CP_ACCESS_UNDEFINED
->   target/arm: Correct errors in WFI/WFE trapping
->
->  target/arm/cpregs.h        | 15 +++++---
->  target/arm/cpu.h           |  6 +++
->  hw/intc/arm_gicv3_cpuif.c  | 15 ++------
->  target/arm/debug_helper.c  |  5 ++-
->  target/arm/helper.c        | 75 ++++++++++++++++++++++----------------
->  target/arm/tcg/op_helper.c | 71 ++++++++++++++++++++++--------------
->  6 files changed, 107 insertions(+), 80 deletions(-)
->
-> --
 
