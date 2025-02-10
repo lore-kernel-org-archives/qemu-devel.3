@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2FD8C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067D7C0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thQzo-0001BG-Bs; Mon, 10 Feb 2025 05:26:32 -0500
+	id 1thQzl-00017i-Fo; Mon, 10 Feb 2025 05:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thQzl-00018A-Rq
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:26:29 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thQzh-00013Z-6H
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:26:25 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thQzk-0001ka-2J
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:26:29 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so46694305e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:26:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thQzf-0001hI-78
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:26:24 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso46714355e9.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:26:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739183186; x=1739787986; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739183181; x=1739787981; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OZ1fgmbr6UR57aQyXOIyNIPPA+qrJvYb0dDxQG0PMFQ=;
- b=YOj/gxdeCTgggDrSyojcYwPe1bwC9uehCGvIslLKMeXzeefyIcBOOZDWVcdsfW2NCR
- W0LH15UgADyzWYXJ7gCV4wEVjefq3DI3p6lcRRP9a1J/srP3HfdojoDnM0djzFLsmHV4
- HmkupWavTp448uxAMyHRUZ0Ln4ib5SoAf42vDx+7T8X4hAfdyGmowxf4/tW9iLnBdjjW
- hJLjKgWWq7Su90gI48aDMjEuXQ6jxJ+ySdXPzbIkONYgbeVkzLEqF1pLPxWOqVmT3CvP
- 4D2LmgGKiqe48HwBW3+c3gm0C/tNwbtYOgcWiBiUILi0v30k2xTrsVHpWSsECjgS0Wza
- yvBQ==
+ bh=oaWE2enR8RP6eZb5QQCWKwDbX9Xg4pAo/h8gHd03afQ=;
+ b=WHtnX7TV2nhIeAMPoPfoRXK+Fu25+WC2SqtXBSrkIXGR2K2BRt5sbMtBcrcgxKAI5U
+ xi8sMqx5rEKd4XRLZS2L/OY1XdN4S1CR8xLPjvOiTtuQ9GhfrPO80E6AHSKkKwvJxFVN
+ 6B/7gTdvOtcY7aoG+XelEGIuWbIfDCZhQPm5rgdy0WTNcmOAgr3UxlNOif7SreQlMvxR
+ ZtE7SWB6b3XKC2ek3wnagglyoWKcdh/qrqPmYKrtUDjDpbhyzQFHPeQ1RqiVvj6H3Mfc
+ AcPyUegWU4E6bY+0wh7Oa5d3/dXEIk7vHXPO88NYDPSircCqBZMVBwx44wnoWpOMOvZ6
+ KDEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739183186; x=1739787986;
+ d=1e100.net; s=20230601; t=1739183181; x=1739787981;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OZ1fgmbr6UR57aQyXOIyNIPPA+qrJvYb0dDxQG0PMFQ=;
- b=JugH3JdkJjFqC+a4+LfYS0zomJbS/OIc8DeQ8+eQLh0GCJtQFgNvbG3ls8PMKNkDbE
- DMBUKiKJ6EEi2xbo8Gq3tqmxUt2vwQv9gEKjvzA5rgPhv3ln/q9mrDm2YTPxkHZko51o
- P2+OobYnh+Oid0+slIwbj9X1G4HUBxh2uHiCKo6GGcW82yZxrG2hI6FNQjybKGVZKBLw
- Z0OdxXme2OOeydMCMGsg/tpcjNnuqRFe6gYHcgQqnnB+qzLAE5LBIDIWcO+OGg11FL0d
- SK4oVnu++kDWi7Rd1x6XnMbwMy9Vz1YDOd/1AGxGQ5relA1DLT6PI9eryVx6+AKPqmD/
- 0xJQ==
-X-Gm-Message-State: AOJu0YwQcNOE3BEfrE95gUlsSGhX0VXEj/JBOr438kuRb0Za4G9zS0FK
- 8Xu/Bluo93ta/DuTGaHDpgZhHKDRMqXRiB//LVuJh/RzfmXDu2pS3JossMRC3EoqrVsD/VEruYU
- rNok=
-X-Gm-Gg: ASbGncurn0BPyhCAPDuQWIKa+ZI6HP2XI5Z0/ZfEp3+2At7ctON/hcQB635SOgY2oTQ
- zsslpIjUUu7f6Nwf3B5AgbLD3KlhC2ICmqkni2xct3KRe5xziUSgIzEEntHIbbKCghRWYz8e6o7
- Obb/oiQHRr/DtCkCXzZS5I5Q3VWIO5KlMvW5N8aIpcW5igQBI03Mm9nii6v5jwB2urvhoTeohDa
- Sf+REgzfwbaUzRSy133/oLVtyIs3K+4qYtHi6poB/YPW00xr06hkgh4+ifp8YjHYifbWXKcCINv
- EMCtYMBWq8STSvZ3p3au6l2UBA8KferlVneUileU3uTMLgoXMc/hjdYmK/lDQ6IQrngzOp4=
-X-Google-Smtp-Source: AGHT+IF8YzpKZLGjHS4ok2TrSBGEWx7W1lWRfYmFewnlMdq+Cw/FaTKqr2s0y+9c5O5oeC7ftG+FnQ==
-X-Received: by 2002:a05:600c:502b:b0:439:3d0e:f10e with SMTP id
- 5b1f17b1804b1-4393d0ef265mr37718925e9.28.1739183185839; 
- Mon, 10 Feb 2025 02:26:25 -0800 (PST)
+ bh=oaWE2enR8RP6eZb5QQCWKwDbX9Xg4pAo/h8gHd03afQ=;
+ b=RyhTb3ilBaC8lNzd7xcg1ltfSXeCBiuXt5HyoH1uywrDpZPw9GEcpyg/lpRcsy4XOU
+ vMCmXea7L690PfokvQWzJuRmrPGWj5Ey824Fof/jynpWne6noSBMhgFZPeRjzv1d1pNm
+ ru0YzgUgVOfGgn4J1pMyJ3pA9WjaLH9S+cvcGRjIHugt2ykI1iZGN3KduibkW0oka/Mf
+ 7NeF2SlG/FYFjgrgx6raDo6CGFS6/8xtXUgpGZIoX4ZybHZS3Du1lHrUp5kRpfkRl18b
+ VaD0/yJFfZFVNYR7/xDKF2P66sV+VgN2Rwbk2SbTrMubygae7aqYlm7qUUy6AZ/+Vu0z
+ VIvw==
+X-Gm-Message-State: AOJu0YzyAaOToh3e+R5ZNS1xOoNrYVBkJ5OlHm8pK56IYRr3YuCM+ZJ8
+ sXxtPSyWnaLLnXhGJr+BPeyR/5YRYBu8kLXHxc0g/958Tkmj2bcw0ffvMbgXK4LFoNo32O+WE87
+ dk50=
+X-Gm-Gg: ASbGncslnFyn5FR91LRlq6stzOZuXbXNWJ72Bv4D7UlWpHg3brQgpiyVEBQwxARKLxA
+ WH1TLeDdHrqkwD+NqYScCfjQ6X1NRu3YtNolt3pQuPk4uJowddZL+/Yn+XPim8Wlqo8uKuLk5w4
+ 34iz4etK5pfFmKH+V7pxZpKX1K/8QnlUge5eGozH82Hzi9mXtWKXRG8CglHbmqNW00JjkJUVYhp
+ qNhKmJ5bJ4qMEqUIG2ESBCE0bz0DWEV7gmqRyUXvNOHT7HD+MTNEw9fjEF/v71dbf505p4CX5rH
+ M+XrKuK8AkgsUjxHmLPNwJhCJ8Y0s6ICyFs++Pe/+YRQ3KLazB56/HkVE060cYxY9hp3E+E=
+X-Google-Smtp-Source: AGHT+IGRYR5sVUYDNsUpq2FbZZ0qzGRmtDciM8Es9AJa0HRq2hCcAb73CFdwvsTmFptOznMijQCkOw==
+X-Received: by 2002:a05:600c:1e0d:b0:439:4827:73d with SMTP id
+ 5b1f17b1804b1-439482709dcmr12580945e9.18.1739183181112; 
+ Mon, 10 Feb 2025 02:26:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390daf7dbcsm178043805e9.30.2025.02.10.02.26.25
+ 5b1f17b1804b1-43936bcc04fsm66245805e9.20.2025.02.10.02.26.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 02:26:25 -0800 (PST)
+ Mon, 10 Feb 2025 02:26:20 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-riscv@nongnu.org
-Subject: [PATCH 04/10] target/riscv: Declare RISCVCPUClass::misa_mxl_max as
- RISCVMXL
-Date: Mon, 10 Feb 2025 11:25:58 +0100
-Message-ID: <20250210102604.34284-5-philmd@linaro.org>
+ Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 03/10] target/xtensa: Finalize config in xtensa_register_core()
+Date: Mon, 10 Feb 2025 11:25:57 +0100
+Message-ID: <20250210102604.34284-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250210102604.34284-1-philmd@linaro.org>
 References: <20250210102604.34284-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,40 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Only modify XtensaConfig within xtensa_register_core(),
+when the class is registered, not when it is initialized.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Cc: qemu-riscv@nongnu.org
+Cc: Max Filippov <jcmvbkbc@gmail.com>
 ---
- target/riscv/cpu.h | 2 +-
- target/riscv/cpu.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/xtensa/helper.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 97713681cbe..fbe5548cf5a 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -529,7 +529,7 @@ struct RISCVCPUClass {
- 
-     DeviceRealize parent_realize;
-     ResettablePhases parent_phases;
--    uint32_t misa_mxl_max;  /* max mxl for this cpu */
-+    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
- };
- 
- static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3d4bd157d2c..f3ad7f88f0e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2955,7 +2955,7 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
+diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
+index 2978c471c1f..c4735989714 100644
+--- a/target/xtensa/helper.c
++++ b/target/xtensa/helper.c
+@@ -173,9 +173,8 @@ static void xtensa_core_class_init(ObjectClass *oc, void *data)
  {
-     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
+     CPUClass *cc = CPU_CLASS(oc);
+     XtensaCPUClass *xcc = XTENSA_CPU_CLASS(oc);
+-    XtensaConfig *config = data;
++    const XtensaConfig *config = data;
  
--    mcc->misa_mxl_max = (uint32_t)(uintptr_t)data;
-+    mcc->misa_mxl_max = (RISCVMXL)(uintptr_t)data;
-     riscv_cpu_validate_misa_mxl(mcc);
- }
+-    xtensa_finalize_config(config);
+     xcc->config = config;
  
+     /*
+@@ -189,12 +188,15 @@ static void xtensa_core_class_init(ObjectClass *oc, void *data)
+ 
+ void xtensa_register_core(XtensaConfigList *node)
+ {
++    XtensaConfig *config = g_memdup2(node->config, sizeof(config));
+     TypeInfo type = {
+         .parent = TYPE_XTENSA_CPU,
+         .class_init = xtensa_core_class_init,
+-        .class_data = (void *)node->config,
++        .class_data = config,
+     };
+ 
++    xtensa_finalize_config(config);
++
+     node->next = xtensa_cores;
+     xtensa_cores = node;
+     type.name = g_strdup_printf(XTENSA_CPU_TYPE_NAME("%s"), node->config->name);
 -- 
 2.47.1
 
