@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13EF9C0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 13:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9E6C0219E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 13:35:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thTvv-0001kx-FV; Mon, 10 Feb 2025 08:34:49 -0500
+	id 1thTwb-0002YH-Jn; Mon, 10 Feb 2025 08:35:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTtZ-0008RW-1L
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:32:24 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTtL-0008L4-Nm
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:32:04 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTtV-0006BA-Je
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:32:15 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38dcac27bcbso1796143f8f.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 05:32:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTtG-00068b-G4
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:32:01 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4394036c0efso7145555e9.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 05:31:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739194330; x=1739799130; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739194316; x=1739799116; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GB1YwrY+qaOJi+5vuXWHaBJPFs12eogUHsnzqNis+TE=;
- b=SKT1dJAGOxeUU8GwK+zq5DttnjtvMv3ESLokk0VsWXBpmHJQrJOaGf7eShzi5KCb30
- QQ3mif9Z+VO4engvIGAJ2lE+AHoWHGa9MJyaE8JCHue57JkWdz6dkXm7SmBuO3mqScbE
- hui2y1cYCJicfuRlq2DqZATMFFZ6d9GNFjuCGp9tcrKo4DxW9WwjsIaNsU41Ac+3fiDX
- SdcovBvo/GAKSsncMvof7aW2cguLuAUp6R1SBTxDL9IFV0WNJGRadQ7t4LHr0pBb71ks
- Xskfby7tx0EQHiAk7dDiYrPY5LaX4CdOsQmOVI81R65kjoz9UtPg1EqRrH5RTUCMIPb5
- ufaA==
+ bh=OZ1fgmbr6UR57aQyXOIyNIPPA+qrJvYb0dDxQG0PMFQ=;
+ b=EMVr36D3uR/gZOncTnt0i9zIPCR9YgrYsHedhcxkmKR+yrsmIfjVGeunhhk+gfqwrW
+ d307qHBuyk5xMickJHqxz2ohrC2xdn2hTaQMdcLKjHHOQWW56DDIsTfncoyZchA1/E9b
+ Bl/2knsoBUoHqMNR5d8uY8OeHx92sb6bOZfRuBf4RlAz8hofbQ5a50NWCPKtAmUAOROX
+ SBd37jrC4sgmAIRCKAlWvPH5ju6cAYfa0s2v+6gifVtgWyJHTBqifgF4f2jtpD81Hm4m
+ 8mEU7UqLZDdSQPa2vRKpE5qoM2KaS2FmEom5s4eoPZC7Y8tYW6F8zOdukNKdZ1KOcydS
+ U8CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739194330; x=1739799130;
+ d=1e100.net; s=20230601; t=1739194316; x=1739799116;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GB1YwrY+qaOJi+5vuXWHaBJPFs12eogUHsnzqNis+TE=;
- b=CzkQC456G14hjHLtmSeDr+GYXS4OVroZIhNJWm3vTjf+a8fUfYeDOXTt8CgPPgqWmR
- bheDk3yY5o1NH/VdnXBwZkOyvmYqXI5mIP5v41jPY4suAuA81Uwy2oYKTzMhonrVkNC2
- ij4xKaJ70RlzEPixjJsY44rxT39ef0E6J8dfktcNE0L0EU4QGwRO75YooB1jBO4S/JsS
- 0cmnNPCwwcKkiQwd4Ljjg3wjuLxyFoZ9WjYVvAoy61tOkYMdn2ti74aU/yOLpNoLIMi7
- 3BVoUJ2Q9B4Hnt4YIqFA9CV7hCOJBUq8kSELJN1T1sjapEDh6h9QQijYK2iWcvWA0zky
- 62wQ==
-X-Gm-Message-State: AOJu0Yw32QgJZYwgfXPwavAVU/IPB1rdoTlPWIAVhQ0SHN7Dj+MWd4Ew
- HzR49T3Iorq35Ll2kbdFkSkawtYHByAWa9+/BkMoIFe79cKAcSnWu1OaGcRMOnDhXaHiK/1oN15
- GL2o=
-X-Gm-Gg: ASbGncvDuFe53fJE7MW5a4LXP9IS2A+QRHajEYiUe2aczTkTj70ESVTHQVHN/uu4EGc
- Zy15YPli9D3x2iChnoMXZk7uFvdBD69v9k4OP+WjxQRcnNxEF1FeHcDHNaUztUP1Ek+Ty9bOMkH
- zY2ZX3WyPICZnxQSoQANHYPLfTIaXd2fFdC09h93Ftwp/wEKeUCeUAiB/A/R/Y1TW6DtIF5UeVh
- LDTB0+N/H2S9738U22AA8eNaLtccbVCo3CJ4vtydwN1nDJ9ASqQL5hehrATyWGLtimpZMJJfgdV
- /nQolwpOKiOsvsld8iT8lHvuyPowl0MXsPihMQyj9Nac0kqNnz40CDfNyoaSdJbvleEr1hs=
-X-Google-Smtp-Source: AGHT+IEwaY8ks3EpUYDDrOnVv7M9eBEuaK3LethIYcHqxjjsP3KlSEaALUYVi8lxEQ2kaf0lMg2x0w==
-X-Received: by 2002:a5d:5f87:0:b0:38d:d222:ee70 with SMTP id
- ffacd0b85a97d-38dd222ef6amr8289000f8f.20.1739194330442; 
- Mon, 10 Feb 2025 05:32:10 -0800 (PST)
+ bh=OZ1fgmbr6UR57aQyXOIyNIPPA+qrJvYb0dDxQG0PMFQ=;
+ b=COtPK2w/YNQronOXbgthhhQJDMNU8iSAprQ7xyWdxPiUz7cjt0qJOOtOd4r/AM2JAx
+ YL6khfMFEMz4NM76dJSE54MaBe+AtjCqNdivbtNJooJ42Fz4oNo/HczSRJSubiTkSV4u
+ AAx3DoOZrIvxByolZ4U6rWjxrMn5+0esvmfFu7CkXRYCc43wrrRbHiqfLMOnuS7uNf0d
+ Q0iWuLFGDG+oc7qKqicWEsptUgxvgF+61XWGA77zU/69hqRhNkGzqPGa/ZphSw6P4ORJ
+ 1OwcUsLIzOu/ZWUUV3L09AFr8e58lLm8Bh0qv/LJ2eeDd4n30/R9ucoPTBfgcLDdgjQ/
+ hhLQ==
+X-Gm-Message-State: AOJu0YwE79iNanbCd2ONg8YXrKPmLBnRDJEm0KxGC1W8jcYhDv8FbaIO
+ oFQQjccxRFbHQIg0dhaVIu9TAo5PF6yFCrDYW/dd54SK0neG3AdXtiC2PMEg6rLbrlA/Jy09aKc
+ 1Zrs=
+X-Gm-Gg: ASbGncsySfNPYJMS2ISvHR4HjOEeNUuHDEq3vaWWttF58cGFav7QmImCuYk2/dpqQF2
+ E6s+pviemxBMEQdPMtFF6XOraJKSI5ntU1F3U1LerCHM4LRHvN9REVBAcwK4tULlO6zw6cxW2F7
+ 2mDAsiBOVEEIho+6hIuPSdFej5LzsunhVexsvB7OMkaQTH8GrOm9JkPWQViGjhBEqPPHGjNDckj
+ mpKRihccXFrbjZxyh7fsfH5QJ95YsloXmh+0Yuhi1pfJH6nucTB5sdPEY+SXM/x31jKruBl1eKY
+ 1aVSBe8AG1Xohd4FPUDxWMCq2zlBY1t2tVsuVMbLnieJOFYq/rhYEiYDcDpvFLk2+GpWOO8=
+X-Google-Smtp-Source: AGHT+IEweqWJGL+JaO7TrOk1f3wx8k+hCAUgrY1Yr1bWjMkztgiJPPp3HCmks3rMw26vxQfSd25enw==
+X-Received: by 2002:a05:600c:1c9f:b0:436:1c0c:bfb6 with SMTP id
+ 5b1f17b1804b1-439249c0324mr101976465e9.27.1739194316059; 
+ Mon, 10 Feb 2025 05:31:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbde1dfaesm12495372f8f.90.2025.02.10.05.32.09
+ 5b1f17b1804b1-43907f19247sm132652225e9.1.2025.02.10.05.31.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 05:32:09 -0800 (PST)
+ Mon, 10 Feb 2025 05:31:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/11] hw: Make class data 'const'
-Date: Mon, 10 Feb 2025 14:31:30 +0100
-Message-ID: <20250210133134.90879-8-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-riscv@nongnu.org
+Subject: [PATCH v2 04/11] target/riscv: Declare RISCVCPUClass::misa_mxl_max as
+ RISCVMXL
+Date: Mon, 10 Feb 2025 14:31:27 +0100
+Message-ID: <20250210133134.90879-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250210133134.90879-1-philmd@linaro.org>
 References: <20250210133134.90879-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,67 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the %data argument is not modified, we can declare it const.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sdhci-internal.h   | 2 +-
- hw/sd/sdhci.c            | 2 +-
- hw/sensor/emc141x.c      | 2 +-
- hw/sensor/isl_pmbus_vr.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Cc: qemu-riscv@nongnu.org
+---
+ target/riscv/cpu.h | 2 +-
+ target/riscv/cpu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 5f3765f12d2..9f768c418e0 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -322,6 +322,6 @@ void sdhci_initfn(SDHCIState *s);
- void sdhci_uninitfn(SDHCIState *s);
- void sdhci_common_realize(SDHCIState *s, Error **errp);
- void sdhci_common_unrealize(SDHCIState *s);
--void sdhci_common_class_init(ObjectClass *klass, void *data);
-+void sdhci_common_class_init(ObjectClass *klass, const void *data);
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 97713681cbe..fbe5548cf5a 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -529,7 +529,7 @@ struct RISCVCPUClass {
  
- #endif
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 99dd4a4e952..1f45a77566c 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1542,7 +1542,7 @@ const VMStateDescription sdhci_vmstate = {
-     },
+     DeviceRealize parent_realize;
+     ResettablePhases parent_phases;
+-    uint32_t misa_mxl_max;  /* max mxl for this cpu */
++    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
  };
  
--void sdhci_common_class_init(ObjectClass *klass, void *data)
-+void sdhci_common_class_init(ObjectClass *klass, const void *data)
+ static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 3d4bd157d2c..f3ad7f88f0e 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2955,7 +2955,7 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
  
-diff --git a/hw/sensor/emc141x.c b/hw/sensor/emc141x.c
-index aeccd2a3c94..33c1bd330fd 100644
---- a/hw/sensor/emc141x.c
-+++ b/hw/sensor/emc141x.c
-@@ -265,7 +265,7 @@ static void emc141x_initfn(Object *obj)
-                         emc141x_set_temperature, NULL, NULL);
+-    mcc->misa_mxl_max = (uint32_t)(uintptr_t)data;
++    mcc->misa_mxl_max = (RISCVMXL)(uintptr_t)data;
+     riscv_cpu_validate_misa_mxl(mcc);
  }
  
--static void emc141x_class_init(ObjectClass *klass, void *data)
-+static void emc141x_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-diff --git a/hw/sensor/isl_pmbus_vr.c b/hw/sensor/isl_pmbus_vr.c
-index 304a66ea8b0..c60282cfe77 100644
---- a/hw/sensor/isl_pmbus_vr.c
-+++ b/hw/sensor/isl_pmbus_vr.c
-@@ -233,7 +233,7 @@ static void raa228000_init(Object *obj)
-     isl_pmbus_vr_add_props(obj, flags, 1);
- }
- 
--static void isl_pmbus_vr_class_init(ObjectClass *klass, void *data,
-+static void isl_pmbus_vr_class_init(ObjectClass *klass, const void *data,
-                                     uint8_t pages)
- {
-     PMBusDeviceClass *k = PMBUS_DEVICE_CLASS(klass);
 -- 
 2.47.1
 
