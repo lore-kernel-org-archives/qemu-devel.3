@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E2FC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 22:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F9AC0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 23:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thcZs-0008Sy-Gj; Mon, 10 Feb 2025 17:48:32 -0500
+	id 1thckz-00030s-N1; Mon, 10 Feb 2025 18:00:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1thcZq-0008SS-3I; Mon, 10 Feb 2025 17:48:30 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thcks-0002vG-Nf
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 17:59:54 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1thcZo-0008K0-Aw; Mon, 10 Feb 2025 17:48:29 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5de7519e5a7so2177356a12.2; 
- Mon, 10 Feb 2025 14:48:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thckq-0001YE-7A
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 17:59:54 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38dd93a4e8eso1705105f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 14:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739227706; x=1739832506; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cP5LifdYyCcwXnUpjlTi7Q1GyBwG1MhbcNFx3wTGDyA=;
- b=edJtWYVnVwZUxkcGfeiktmbk7wVnIRT0mcfdGfYlmcCum2mH2elqBGgBPH60+M0tTD
- Evu3uHLgsDmGS7oeGua58F+7RUM2rbRYHAvu3sBroMLmOfV1Ixp+d0CwZDkPkZqzqv/o
- cTca6bWkzXKcguOXM8s8s20GxQLzqiaq13Alz9VZx/Buru2pr0imAj7uYqKVAaLls8zs
- brSnILnfVo7AFFwo/93TWkt3811S0SjwI6NDZxNrn/Sj/hGB6pmuxAkADDuk4HZGPV7o
- PE10VzLujg0RYuAFQ1gvIaNLsG9biDVpspR6Gd6idEHnisn/H0xe8kbb8WASAxhjJzho
- r3wg==
+ d=linaro.org; s=google; t=1739228390; x=1739833190; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6uJYWG/CKUK21TL34ACFa9VcxuKRpp3O2dx6sRfNcbE=;
+ b=fodJrOV7AfoSqTJQ7Wgz1RqsxHtQfPinyz7lKLAg4tw00ao1o4w0alRzgAlWfGPAj+
+ gPgFNkOh2HFvau9w+jFNm35tTUCRHCb4SGQocGrZU1UxyDOZs7VzBoKiXHTo6D7pPUnE
+ oi7xfiMoF8UD3tM1eQS5j3w1Z2ZHnq/Tv2UuJQ6/OlxVwXJ9p25/K3QION3hWra3Wn8G
+ MQgumzXjZ0QZTGbl81YAI71iehe2z1qcvqNr9aKr/NTmsM4WNbfi0GNpbAWzT9w2ZItC
+ 17kAUl00wUMuLaEAgX4gse+cOW+QF/+mslKsFD1P9im4tpL1gpgwE1znuw+SnxYH4bFQ
+ JUdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739227706; x=1739832506;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cP5LifdYyCcwXnUpjlTi7Q1GyBwG1MhbcNFx3wTGDyA=;
- b=vYYxNbgOPT0xq/8ZGXzDnzrR2nuuDkeOoqeWdhbmKn5pKkrOwyfaSNLZl3m15jHgau
- QhgvyY9TRAt9gU41jX5iJnYdQHM9D7w6U0cODXHsDA09elzitgNJM7fmHl8p5oNZon1o
- hIe1m30jhpf2QjGurl9g9R7AA4F/jMKOTh3ZsDaRjWaHmjRnzHRWhnb1yB7XKeOjf3j/
- X7DaND8uH8+jsEDXCMbm9Nl1dS2rPO5icLLlkNxh8M/LvilKDzqCzW1snZkYLpfGIFFj
- /HjsjrnyrOLCn1BfIRUfWc8WbYdRbyWG+5O/DUI0nONS16ZmykGLRplskZEJLSmvGH9t
- aoPQ==
+ d=1e100.net; s=20230601; t=1739228390; x=1739833190;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6uJYWG/CKUK21TL34ACFa9VcxuKRpp3O2dx6sRfNcbE=;
+ b=fhKLPR9u5O+Zru9rfMkUNaXcqltTt2w1yf8VKGkcOWE5nUlVJkWgPCvSgBUS6qVq8D
+ wbbSzS+5qTxGEGs8n34x8ekCaD2fnqZikXXosJom+nGOyOO59iVflQgU/BH8YpSELwkL
+ eztcB+G2nS28Zu2rNkzojP/dxfzEG68pgpBshcdEO9UutmcZd/zjZi8KxOGmzeNZxZaD
+ BrPKDn4ie628vemyQQRjb1J4/V/caFT02ZUVcKln6k0CbO8gpDcAotlHqoWJE673zHSY
+ E9X6Dwzt0xpgQk5dCrCtCCq/QteZeU4TvFz/W5tZHLBs6v0Nd1BsxguuhYgPlyk696w9
+ tfyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3DCf6i7ehVQ8Dm/JenHZS98nDU/6QL45Kx2bN3MFx8xzQa6HyiModCcA4od4gm30D4xueVjhImQ==@nongnu.org
-X-Gm-Message-State: AOJu0Ywwy15bhTLiW3Q+Ti6eQhoKx0IYa9pIF7lOWapjrKJq+hWXAwf7
- 5OfnYt22q0rDJDG+HmLbgKmzQVP7c69wyAxVhsiTEyi8hEgt6/0C
-X-Gm-Gg: ASbGncsx4U86nJweHEfraywbleC+uq/MHmMgxCeivf0OytI32zp4WAk4mtgsnyPAZrW
- yJd6uRKY1qp1yUSioL6i7qh1pkCEt3n/8B0d95B+/AcORkKJPomlbce2Ty8IhtWI/Lra9V7IiYN
- tmKLbOiPt1zN4LQBvZu9xyBZE8KrabxQw2vxOJzsMKNLLEQK/LMq8Y3pE6r9DuVmJb/qnzCHnOk
- rbqAG8X2lLlbx/DUlHJPA1FcGfBYKei2tYp1WtcrDdIZZrCFegKFnHKkyrpp9HPBi0Ow2b8myeH
- zvWk8VwUvtb2QCjOag+TdJjYORQGt/Vel81zWaV2pdUSg9TFjltM8LTZ4mtrI7aN
-X-Google-Smtp-Source: AGHT+IGc0rE9ya9gHuk4FTO9Gv9tXh3+7DyrH3yEQ5deGKRtJBsj0Xd0dSh1kVn/8B25dV5HromT9w==
-X-Received: by 2002:a05:6402:3907:b0:5d0:b925:a8a with SMTP id
- 4fb4d7f45d1cf-5de45019b56mr15890173a12.16.1739227705723; 
- Mon, 10 Feb 2025 14:48:25 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-078-054-086-138.78.54.pool.telefonica.de.
- [78.54.86.138]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5de44e4bc17sm7427469a12.70.2025.02.10.14.48.25
+ AJvYcCUDPgIac95v5690rm4sjAM46sJSgjCjzCc87wk1HGmrKeLOMIY3TFb1/Cow0f7U8AKItveG2Gc3eGTM@nongnu.org
+X-Gm-Message-State: AOJu0YzvGQkwLPmYJVoJuyPVoruFfUr1YeBrJyNrQz5/M00fkdc5Iag4
+ psQy2caRkbKRExt2eDT1US/HS31HvPzHSRph5LvEpCoDZIVB896Hj9WvO6qfHy0=
+X-Gm-Gg: ASbGncsENtKOITz0i9eny2EN2ZwlcTpE0ke3kDyZND1llbGYgjrs77IETQ6UAkEh1dG
+ hGgBrCtlnu/og3ve5MBaGBxSrP03hA15fqbhvl6MYU1X4mmM9GjS8ghJ4Xj6NVxzbcc7JGUzbMg
+ K3/U5a5KCYb2Iez5km9WuYVtjweq/Dl/ho7n3Qy5U6m/nZBluZSTvLWppgNc8WX/SEHDuEb3yXj
+ Io91coqJCo5HCkc4llk2m1c2/0e6BlMRfKYC2+MCREoyAYHqwkrnxD+kdmuAFSgkgv1x/t1UZ+R
+ pcRxxnRzv10QyKQmcYjHK0RUVVfN1YPMPtInURyjslOaMl9rMYfi+tMbRjY=
+X-Google-Smtp-Source: AGHT+IEVcjOPiCt4w83ifCCGjNLlo3+DZaaCmHPQZQGKnpUOy/GeMQ+ZL8f08e45O+rcOM2iNF5GzA==
+X-Received: by 2002:a05:6000:1865:b0:38c:5e03:5bb with SMTP id
+ ffacd0b85a97d-38dc9138e84mr14125879f8f.41.1739228390001; 
+ Mon, 10 Feb 2025 14:59:50 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dd6548b25sm7342066f8f.32.2025.02.10.14.59.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 14:48:25 -0800 (PST)
-Date: Mon, 10 Feb 2025 22:48:24 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 18/18] hw/rtc: Add Ricoh RS5C372 RTC emulation
-In-Reply-To: <a8855d03-d207-4a0d-a16f-24e4436a3b66@linaro.org>
-References: <20250204092112.26957-1-shentey@gmail.com>
- <20250204092112.26957-19-shentey@gmail.com>
- <CAFEAcA_gxGWivT7byZh9gYc2QHfsTqbJ8vtxPDToOxLMdMvwQg@mail.gmail.com>
- <F8650CD9-AA03-4462-A74E-7A068820F1A2@gmail.com>
- <a8855d03-d207-4a0d-a16f-24e4436a3b66@linaro.org>
-Message-ID: <6E5A0BEB-F0AC-4791-8CB6-B9AF74CBF307@gmail.com>
+ Mon, 10 Feb 2025 14:59:49 -0800 (PST)
+Message-ID: <d831600a-9a61-45c1-a535-f75bb64cdff4@linaro.org>
+Date: Mon, 10 Feb 2025 23:59:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/10] target/arm: Set disassemble_info::endian value
+ in disas_set_info()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org
+References: <20250210212931.62401-1-philmd@linaro.org>
+ <20250210212931.62401-4-philmd@linaro.org>
+ <7056fbfc-58eb-4881-a6ee-67b3e608a336@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7056fbfc-58eb-4881-a6ee-67b3e608a336@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,45 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/2/25 23:10, Richard Henderson wrote:
+> On 2/10/25 13:29, Philippe Mathieu-Daudé wrote:
+>> Have the CPUClass::disas_set_info() callback set the
+>> disassemble_info::endian field.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/arm/cpu.c | 10 +++-------
+>>   1 file changed, 3 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 94f1c55622b..68b3a9d3ab0 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -1188,7 +1188,7 @@ static void arm_disas_set_info(CPUState *cpu, 
+>> disassemble_info *info)
+>>   {
+>>       ARMCPU *ac = ARM_CPU(cpu);
+>>       CPUARMState *env = &ac->env;
+>> -    bool sctlr_b;
+>> +    bool sctlr_b = arm_sctlr_b(env);
+>>       if (is_a64(env)) {
+>>           info->cap_arch = CS_ARCH_ARM64;
+>> @@ -1215,13 +1215,9 @@ static void arm_disas_set_info(CPUState *cpu, 
+>> disassemble_info *info)
+>>           info->cap_mode = cap_mode;
+>>       }
+>> -    sctlr_b = arm_sctlr_b(env);
+>> +    info->endian = BFD_ENDIAN_LITTLE;
+>>       if (bswap_code(sctlr_b)) {
+>> -#if TARGET_BIG_ENDIAN
+>> -        info->endian = BFD_ENDIAN_LITTLE;
+>> -#else
+>> -        info->endian = BFD_ENDIAN_BIG;
+>> -#endif
+>> +        info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_LITTLE : 
+>> BFD_ENDIAN_BIG;
+>>       }
+>>       info->flags &= ~INSN_ARM_BE32;
+>>   #ifndef CONFIG_USER_ONLY
+> 
+> This is a faithful adjustment to the existing code, so,
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> However:
+> 
+> (1) aarch64 code is always little-endian,
+> (2) sctlr_b is always false from armv7 (and thus always false for aarch64)
+> (3) I think the BE32 logic is wrong -- CONFIG_USER_ONLY is irrelevant.
+>      See linux-user/arm/cpu_loop.c, target_cpu_copy_regs.
 
+What about v7-R [*]? I don't see SCTLR_IE defined as 1<<31 for AArch32,
+only:
 
-Am 10=2E Februar 2025 14:26:00 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
-philmd@linaro=2Eorg>:
->On 6/2/25 22:58, Bernhard Beschow wrote:
->>=20
->>=20
->> Am 6=2E Februar 2025 17:32:31 UTC schrieb Peter Maydell <peter=2Emaydel=
-l@linaro=2Eorg>:
->>> On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wr=
-ote:
->>>>=20
->>>> The implementation just allows Linux to determine date and time=2E
->>>>=20
->>>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->>>> ---
->>>>   MAINTAINERS         |   1 +
->>>>   hw/rtc/rs5c372=2Ec    | 227 +++++++++++++++++++++++++++++++++++++++=
-+++++
->>>>   hw/rtc/Kconfig      |   5 +
->>>>   hw/rtc/meson=2Ebuild  |   1 +
->>>>   hw/rtc/trace-events |   4 +
->>>>   5 files changed, 238 insertions(+)
->>>>   create mode 100644 hw/rtc/rs5c372=2Ec
->>>=20
->>> Should there be a patch after this one that adds this device
->>> to your board ?
->>=20
->> As per Kconfig the board selects I2C_DEVICES and this device is "defaul=
-t y if I2C_DEVICES"=2E I've deliberately not hardcoded this device to the b=
-oard to make it emulate a plain i=2EMX 8M Plus SoC (see also board document=
-ation)=2E
->
->Then maybe add a test to be sure it is not bitroting?
+#define SCTLR_EnIA    (1U << 31) /* v8.3, AArch64 only */
+#define SCTLR_DSSBS_32 (1U << 31) /* v8.5, AArch32 only */
 
-Good idea=2E I haven't written a test in QEMU yet but I could certainly dr=
-aw some inspiration from ds1338-test=2Ec=2E This may take an iteration long=
-er but won't be forgotten=2E
+---
 
-Best regards,
-Bernhard
+[*] 
+https://developer.arm.com/documentation/ddi0406/cb/System-Level-Architecture/System-Control-Registers-in-a-PMSA-implementation/PMSA-System-control-registers-descriptions--in-register-order/SCTLR--System-Control-Register--PMSA
+
+SCTLR_IE, bit[31]
+
+Instruction Endianness. This bit indicates the endianness of the
+instructions issued to the processor. The possible values of this bit are:
+
+0: Little-endian byte ordering in the instructions.
+1: Big-endian byte ordering in the instructions.
+
+When set to 1, this bit causes the byte order of instructions to be 
+reversed at runtime.
+
+This bit is read-only. It is implementation defined which instruction 
+endianness is used by an ARMv7-R implementation, and this bit must 
+indicate the implemented endianness.
+
+---
+
+For the Cortex-r5* we have, SCTLR_IE is always 0 in reset_sctlr.
+
+Is it OK to consider v7-R implemented as little-endian in QEMU?
 
