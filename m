@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEBC2C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 17:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C83C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 17:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thXB5-0001Ns-1x; Mon, 10 Feb 2025 12:02:35 -0500
+	id 1thXG8-0006Nf-1O; Mon, 10 Feb 2025 12:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1thXAy-0001Fs-Sa
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:02:29 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1thXG5-0006NH-4O
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:07:45 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1thXAx-0001ZX-AF
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:02:28 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2fa345713a8so5661244a91.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 09:02:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1thXG3-00046Z-5O
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:07:44 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-21f48ebaadfso75679005ad.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 09:07:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739206945; x=1739811745; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qHXjo7N63RGQrMMZtoewKoCyxZtxUlYyfebHFvufNAU=;
- b=Y05wtjYB0SKca9HIHNy9ACkPqdYt2jCkmoTJoRXhB/lgw+YNpLRNKpQ9Xw17iZGaSw
- 8pPmqY2mG5NCGK+b2ZcHdv7vTsOV+k/hlUlL6To8P1q48lLDLl40eC6Vja9ztiWo1qGZ
- /doK2JIi+NHkP1of8y8WyNbTSlGV2G9Uidv1EbB3SLSOo+Uek1PxI+REGl1WaQxPMO6h
- 67xD9K9xInQs3NdK6RzSbOYL7cpYYk1rfSrx9bYjGdOMR6A1RSpkb+REdU1Afnz4IV8p
- jxWmqnoLcSIuRt3KtfPFSeaR756cRKV4krRKNFfQU2KDtRHOTZSaS61L44wRAQ1aEd4O
- DQug==
+ d=linaro.org; s=google; t=1739207261; x=1739812061; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=es/buT9jK7sjcUKyx3iWTrVdUIyDmiwIom5uEP1+hL4=;
+ b=od9QfmClvhoaGckFsi6okYBjnXI3Cg1ICTBhsuhKXB2/6vsrltLyk8aFNHUVQ3qoPj
+ AldIzrN4KE0U2t+nYXymQa4wKSER2Rl2pEUYHeFgDZZPLi6IzzyYzzAwLh6VfbWmzmH7
+ H4XBjhszBSWuBkcHcxy+B06xm5kydUag/mmryGtl/5pPLYKBslSVCYLDOZXo+zCJvyQl
+ VAuPNag0eNumxRG1k9v4yuW8S9oZcDIcZvcHCWa1WsXvu5gCgrEiXvS8j94El4Jk+7xt
+ LcJjEjBaqjVm97ao/hUf0Sja9gPliO0jM8hcPX1u1NnjYArPS/9jhO3sMJY+Vbwa5IQq
+ rMFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739206945; x=1739811745;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qHXjo7N63RGQrMMZtoewKoCyxZtxUlYyfebHFvufNAU=;
- b=tNX4NC1IQ1qpAAw0kN9QIg2NT86ecr/xj6OVl/S97OmaAwc8KX28+q+iHB0kqnvsQ3
- EWiLpMIlHi7T7PpAQXyNgKlaNduI1rly7Z/gtSD3mOg0H6fxLRB5z/WFA5IoHzc5gW8V
- GymjQ7mGb7LoyoxS5BlrAOsvVS8fxn38ZW9wSZ6TKGgB+jH/qcU0YlAk5vApY/IkdCjK
- mkuN5POwAese+iWHOy+fi7tpgDek5luFPPvolEhJ4odK3FmwHwUta4pnRtsthx/+KSzu
- Mmn56UBGy0IEiA0pgN/z57ibof4zHLRPSmbwO8jzioV0dBFZpviQOnbKYNoI2Z3f4dV8
- HN/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiftchyYdwgC00xA8ZnaxCVFuYNxOeTt74faqGIxomfS2w4IBWR7pUSuGFD8XFUf2eWthPhOU1VuBc@nongnu.org
-X-Gm-Message-State: AOJu0Ywxg7psPTDDlAAVf2dUzskmIXuCmtA/9Uuc3HdNX3liUKXD2tf6
- wXDHTFUypY4rUTfoXHM8qIjuSuVQJRpu/Um7p9CGVeXIZngOq+HxZJXIOAHfIUbBsj/TBJCXI0e
- lbqnbaAOfnBYUjwV3/0mX4siQx2I=
-X-Gm-Gg: ASbGncs1QCC9f474nVH6Dxrvk23h2ORVumRfeaA3dh9oScAr/BDKJhQzurXV8E0VCV6
- eIXYLH+6QPVsQG5KOPSg12090JhjrP+FDENON1BCzte8P1VKRJ37uaSWVBkk4H1EaJE8lFzXybR
- V9ysmnc/fcn1Kv6vOnpm/hW1DMjfr3oA==
-X-Google-Smtp-Source: AGHT+IGMpW1FUXEANax3MGSzGYzBoVr1yqYTpgH8/MgbGl10bN0O0xasgCXks91KfvjGJvg70BgCqdj2sxaIYm9Lhc0=
-X-Received: by 2002:a17:90b:510e:b0:2ee:70cb:a500 with SMTP id
- 98e67ed59e1d1-2fa23f563b2mr20301300a91.1.1739206945555; Mon, 10 Feb 2025
- 09:02:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739207261; x=1739812061;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=es/buT9jK7sjcUKyx3iWTrVdUIyDmiwIom5uEP1+hL4=;
+ b=g0g0ofCEvGC44uZGBj1KR6mEoeQ8AhAz+7X0SStDxIj9PbUq+wnhsDJqoRdgIaCOOU
+ Kw+VLj364+5kc1sC6P9iQWm+v5wH8eHiPOyjTkjEq87Uu6rhL1y4epCOD4RO4xwU/cjL
+ vW4gBarxPEbB4i8xtVgqTLpaEMYrNtf/RvJvYYuT3AoLAWhJZO9QSucp6YZ5UPIq9yhL
+ BGeco9NWkDSOm0vzEQaGfgWarCkJYuSDcugjFMzbcjHmCUQoyrKRBqJy48xYIAEPNmEX
+ DKZjaoICOwZZ6Bn6A486Ahu/ajAxYTkxZaVRLLMOtwHzxFEPyGSsVp5Xq9UlFEJOFBrw
+ MsEg==
+X-Gm-Message-State: AOJu0YwmL/Hd/8EMmLrVCCphev7rvzww+w+/R/TycXfeiVzR9zN+E4tR
+ dKZXkMJWY7UqUiIJnyARXNg8dFuZ+ROXyspGuGAP4IrvxZr9zApQdLV2SUsuIHMdsEtxmTzGKRH
+ n
+X-Gm-Gg: ASbGnctQcuRtoY7quakQ4j/Ktez61/PYqIll99cP9YeVUXHRKw01tEz21nPD2Pqyrxk
+ +dY3/nhsCZoDS6MobEfbwI+qngxwxIsJaa3Ob9W/2l0Tg+KOv4T5G+wPraHkKvFmqH7QlxI9AEO
+ da5bQB2rl+r1RO6ijROsL6bWoaPkCx3o9sJvvQ8QqKb9kWS3wzJo21ijILnqHpZJA9UXvvBEo9M
+ phPHxWPn7kPGvV2Pdl3/Q2x2U595KeVbRuQWH4baoikQfb3DUb/+oX8SG5XkGK2QkNaq7gLasy7
+ u817aGy4sNiDLOW51drLdpGaRfILrAd1fniPYtjHhspA8Hi9p3tSFT4=
+X-Google-Smtp-Source: AGHT+IE/BowXWSlkpOrunTGggsDEjc7bY5XUEc6VWKl9Ot0lV7FUttxFLw1MCqsgNMJyQZpeDzOn5Q==
+X-Received: by 2002:a05:6a00:4883:b0:730:75b1:721b with SMTP id
+ d2e1a72fcca58-73075b17628mr11266118b3a.18.1739207261250; 
+ Mon, 10 Feb 2025 09:07:41 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73096da6e0bsm1431981b3a.28.2025.02.10.09.07.40
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Feb 2025 09:07:40 -0800 (PST)
+Message-ID: <095019a6-04ea-4463-be79-89286719df61@linaro.org>
+Date: Mon, 10 Feb 2025 09:07:39 -0800
 MIME-Version: 1.0
-References: <20250210133134.90879-1-philmd@linaro.org>
- <20250210133134.90879-4-philmd@linaro.org>
- <526984ce-6bee-49b5-aebd-0ab4c391efb4@linaro.org>
-In-Reply-To: <526984ce-6bee-49b5-aebd-0ab4c391efb4@linaro.org>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Mon, 10 Feb 2025 09:02:14 -0800
-X-Gm-Features: AWEUYZnUB88E1zD2TGnOwynVaGrWzs-YMOFGqG-S5lS0ZBQ-VUpZ5JrZBpg4jeQ
-Message-ID: <CAMo8BfLE8ROwCZRaEbHgTUT18LAV8sVugMxa=+DELCb24nA35Q@mail.gmail.com>
-Subject: Re: [PATCH v2 03/11] target/xtensa: Finalize config in
- xtensa_register_core()
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] system/qdev: Remove pointless NULL check in
+ qdev_device_add_from_qdict
+To: qemu-devel@nongnu.org
+References: <20250210121045.38908-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250210121045.38908-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,27 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 10, 2025 at 8:30=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 2/10/25 05:31, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Make XtensaConfigList::config not const. Only modify
-> > XtensaConfig within xtensa_register_core(), when the
-> > class is registered, not when it is initialized.
-> >
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> > Cc: Max Filippov <jcmvbkbc@gmail.com>
-> > ---
-> >   target/xtensa/cpu.h    | 2 +-
-> >   target/xtensa/helper.c | 5 +++--
-> >   2 files changed, 4 insertions(+), 3 deletions(-)
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On 2/10/25 04:10, Philippe Mathieu-Daudé wrote:
+> Coverity reported a unnecessary NULL check:
+> 
+>    qemu/system/qdev-monitor.c: 720 in qdev_device_add_from_qdict()
+>    683     /* create device */
+>    684     dev = qdev_new(driver);
+>    ...
+>    719     err_del_dev:
+>    >>>     CID 1590192:  Null pointer dereferences  (REVERSE_INULL)
+>    >>>     Null-checking "dev" suggests that it may be null, but it has already been dereferenced on all paths leading to the check.
+>    720         if (dev) {
+>    721             object_unparent(OBJECT(dev));
+>    722             object_unref(OBJECT(dev));
+>    723         }
+>    724         return NULL;
+>    725     }
+> 
+> Indeed, unlike qdev_try_new() which can return NULL,
+> qdev_new() always returns a heap pointer (or aborts).
+> 
+> Remove the unnecessary assignment and check.
+> 
+> Fixes: f3a85056569 ("qdev/qbus: add hidden device support")
+> Resolves: Coverity CID 1590192 (Null pointer dereferences)
+> Suggested-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   system/qdev-monitor.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
 
-Acked-by: Max Filippov <jcmvbkbc@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
---=20
-Thanks.
--- Max
+r~
 
