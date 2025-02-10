@@ -2,88 +2,87 @@ Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A287EC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 10:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC963C0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 13:36:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thR0c-0003L8-7b; Mon, 10 Feb 2025 05:27:22 -0500
+	id 1thTx9-0003fg-Pn; Mon, 10 Feb 2025 08:36:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thR0L-0002Yp-9l
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:27:07 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTtp-0000Bg-Fv
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:32:41 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thR0E-0001yU-8o
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 05:27:05 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38dcb7122c1so2366584f8f.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 02:26:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTti-0006Di-U2
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:32:32 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so3431935e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 05:32:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739183213; x=1739788013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739194345; x=1739799145; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EtwQp60PrnPUVoi1pDRwmavXzMAhQOcIo4Hjvx5tqQ4=;
- b=G3ZnXKCMUMVYZIxKrzBdVCX4IUHPZDYa0ifkoH0k93G/9HLbqL6QRkui1CyhjU95GV
- m6wwhawJDNEuKu/XDayvWg2XvEq69cl/srtBDWZlx818dOvrkDq/QCt3PuFH39sg4ZjI
- 286NDTjfe0iIpamDQAidburedgHbt+hRLWrbysIzo+0MSoPvbrF/vCPJyanJ6EoAYBr3
- 9MCB1xwh1qcUsxHMYVTvyyEufPWoqkoNz6P+qtifWCy977qRTBj0hUZo6piXJdA8WUc/
- dWrvaWe8bUck/A99ex3s45Om3FceW/q2PFCMapQZiv2t5n3W+5u1TgKWJrjcoX7Defxe
- trHQ==
+ bh=lsFQnKatgbFjpENCUr3yXOOYs3pnj5+raU/sBwlwO+Q=;
+ b=Eyy8YmkmYa+Fzn4Kep6BRjFsPYugil2MFJVLgU0ZE1lnV/SXtaI/Z4j97ZLuLFjKpv
+ lkYQEUGwkmfhY08ZLq6hjDfSCe3U0/auMHzbPLG/HajUt5quIbMMs2LorVE/BXx/NgFx
+ 8sTSwvt0aLDe0BvDRYObFQJ36zV6a+imQJVkGnNl+33soEmVQofLty4dc1d0izOPWbTV
+ +fmlOdtl45V//OwllZ99XqS8MR/PCyBjPeBPITh6j6Sw/IUP+TSbcOegBOv4/hQZ2XoP
+ DGZRFdF7Mrl0ZmIRpGhdFjtrzlqFhu32PdPShsXrLBhNJkb1qVJJKMcMMkMCmgX1mVNF
+ XAKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739183213; x=1739788013;
+ d=1e100.net; s=20230601; t=1739194345; x=1739799145;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EtwQp60PrnPUVoi1pDRwmavXzMAhQOcIo4Hjvx5tqQ4=;
- b=uxO4W2r1QtPG/UEmOuIr296G1OriWmQJBmALnRlMJJEJv2iuIGVzZXfL5VcpwTmLmf
- 0GNOqIeMSGGQw3Sc0F/YeGsl3WXY6oSQwBOuF99ke+k8gPL6zV84XzNPJWjBp+2FyYeq
- Sd541JPVRfNGh4K5A7oQJsTv9a7SO1936XC6byXggAfFV4Jo8WMYOinhpXyLrsqug1wb
- xobt7oGntVTJoohgAsHFNVD2Uhq7+3C5bVPNTPwUD7W3kHxqzGVa6XpKF9b83s6qfGBu
- 7zIEmfgVLx0jjO7/sS00jjgopElH/MeUHkFH6ZSTu4ejtLOAoMdrySmlxvHJ+q07A12i
- VtUQ==
-X-Gm-Message-State: AOJu0Yw3xZwhwSUlaorw4O9KP1PpzySr1GJCnJnxtSZ+fwfO9pbFyv3o
- HFnyKLrabDzyVXKFRiMZF8F5wkRyo09IL2mZNNezV7s31Klu+yluJTNwsGO/PdfGTHKiCWEXG9b
- 53IQ=
-X-Gm-Gg: ASbGncu9iQtDJ/t257GiKMSIEW8EidCKcrOWwLwXIpwk3ILdxdbXpqs2lg1K4wcmC3M
- UHCpTyC8Td2tuo61elhErjmTZddZQzbqVGtpOphcdPyad0OsXePem3CINiHcVVITIwRy3UuTnM+
- 930LI+BbZtlt8gekBMxM7Z3+xdtPbuX3dtpHC8hipl97lEXTIwQNLet7WNoe5vykgzg+SBp2a8N
- mgOuzMmRlvmI92tImAXAqIg4Cki68eTC67dqUjBlsX4zDfGumF21bd0xUvr5v3GEj6CQyDTsqp2
- 2m/C/LZeq3fySy5rj3jmPQ4xIz3Xjo2dtoaG+/YzXWpgJRxeL03kSkUBmXJfK+QETcvde5g=
-X-Google-Smtp-Source: AGHT+IEo1w4nqxDduE7CuaAwFqkhM5lO6g0Weo8geZm9A0eaHoQyO1pbd7fsrMNk0bASu38E8Fv8qA==
-X-Received: by 2002:a5d:5847:0:b0:38d:dd8c:51db with SMTP id
- ffacd0b85a97d-38ddd8c53d1mr3551989f8f.53.1739183211542; 
- Mon, 10 Feb 2025 02:26:51 -0800 (PST)
+ bh=lsFQnKatgbFjpENCUr3yXOOYs3pnj5+raU/sBwlwO+Q=;
+ b=Psgg8nhDyuQcI0mPVr/1L44upKVkWHFv44lozooWtLuOJ/623jLugwcF1r4mfxLhCc
+ bHTX7CzhggMrloSrsZTeqEzr1jgryPqtONmmdAD1FDZJCLUKn8blTlB9oWMH758flZid
+ 99GgQ9BsQEZR0Ot0b6K8N73CbAx525GCuv/7ZsMeyJRJpHvDheikGJoJaY1LbhUm9fpQ
+ bvAXKXE+Y0Mc63uArOnnP89uB/VP4FV2hnauNlhO81SszT5p87E910Xx96GKBZ3yaO+J
+ GEVOgPM8SeJWwT+Fe7xtUo2dU+dd/JyhU0tbAMTbNFPMbwf1NJL/qW7P7N4/TQUbX3xV
+ 3hzQ==
+X-Gm-Message-State: AOJu0YzI/c8HERPk0UfkPLuGBm411hDN6C2pt7sZs8RQW5+NVwD+wjMv
+ GSiEPBI96te5g62wWbnnjG/iw3LtHFOv/V1c3joDy3dizIC4rlw4iEXHOjGi5dNp4l2HFgNmRow
+ 1uBU=
+X-Gm-Gg: ASbGncs5oY9JXcYcfTXqwx+/FsujKLDTpKP7Jl7d0wP6F9T8IpE0E+tdAbQWMXskuRw
+ 8AhrvwJFV+auvH9VYvfZ/eDXkhuBdVHiUjC1blBwzZVwVt/HDhC4zV/QcuwS3/m+pXaIsey3zuk
+ LoLGy+yyGnexGLY/4G7SW7p7+5a6r+8cBz7y6HNRyZ0qMS+WBiSSRHCOEnnD2aSlVZIOdpEwucp
+ loCnhBHsgZZydbUmfwh+PgDeDQFCNsmbmczARN0UUcHP6RfkU6R+5dYY4fJ6n23XW9JMaaHmn4G
+ KvLD5ueMiI5Z6IKfbyDPbnUnthCyr2F2xKqVlpacJ9JoVcrExkI09fTMYgllFhHPZHEFb/4=
+X-Google-Smtp-Source: AGHT+IHFnXiJhLxAYJWgvfLkSlNKk11Qs8hi9OA7OGluPpjvCcPz3zdVVBIPHuLhnK9s2M6ZvRoVsQ==
+X-Received: by 2002:a05:6000:178c:b0:38d:ddd9:58f1 with SMTP id
+ ffacd0b85a97d-38dddd95b62mr3607432f8f.19.1739194343155; 
+ Mon, 10 Feb 2025 05:32:23 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4394328fcb8sm31768175e9.32.2025.02.10.02.26.49
+ 5b1f17b1804b1-4394bcade97sm3585955e9.8.2025.02.10.05.32.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 02:26:49 -0800 (PST)
+ Mon, 10 Feb 2025 05:32:19 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-rust@nongnu.org
-Subject: [PATCH 09/10] qom: Have class_init() take a const data argument
-Date: Mon, 10 Feb 2025 11:26:03 +0100
-Message-ID: <20250210102604.34284-10-philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 09/11] qom: Have class_init() take a const data argument
+Date: Mon, 10 Feb 2025 14:31:32 +0100
+Message-ID: <20250210133134.90879-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250210102604.34284-1-philmd@linaro.org>
-References: <20250210102604.34284-1-philmd@linaro.org>
+In-Reply-To: <20250210133134.90879-1-philmd@linaro.org>
+References: <20250210133134.90879-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,8 +103,6 @@ to pass checkpatch.pl script.
 
 Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Cc: qemu-rust@nongnu.org
 ---
  docs/devel/qom.rst                            |  8 +-
  docs/devel/reset.rst                          |  2 +-
@@ -1213,8 +1210,9 @@ Cc: qemu-rust@nongnu.org
  util/thread-context.c                         |  2 +-
  hw/display/apple-gfx-mmio.m                   |  2 +-
  hw/display/apple-gfx-pci.m                    |  2 +-
+ rust/qemu-api/src/qom.rs                      |  2 +-
  .../codeconverter/qom_type_info.py            |  3 +-
- 1107 files changed, 1751 insertions(+), 1688 deletions(-)
+ 1108 files changed, 1752 insertions(+), 1689 deletions(-)
 
 diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
 index 0889ca949c1..5870745ba27 100644
@@ -20474,7 +20472,7 @@ index 4eb699d1f45..9e1ed75ba7d 100644
      DeviceClass *dc = DEVICE_CLASS(oc);
      CPUClass *cc = CPU_CLASS(oc);
 diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index c4735989714..9f0bde835fb 100644
+index f64699b116d..75bb00ee246 100644
 --- a/target/xtensa/helper.c
 +++ b/target/xtensa/helper.c
 @@ -169,7 +169,7 @@ static void xtensa_finalize_config(XtensaConfig *config)
@@ -20867,6 +20865,19 @@ index b939bb9b233..2f0d24f7fee 100644
  {
      DeviceClass *dc = DEVICE_CLASS(klass);
      PCIDeviceClass *pci = PCI_DEVICE_CLASS(klass);
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index f3d43e066ef..b39dba829d4 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -173,7 +173,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+ 
+ unsafe extern "C" fn rust_class_init<T: ObjectType + ClassInitImpl<T::Class>>(
+     klass: *mut ObjectClass,
+-    _data: *mut c_void,
++    _data: *const c_void,
+ ) {
+     let mut klass = NonNull::new(klass)
+         .unwrap()
 diff --git a/scripts/codeconverter/codeconverter/qom_type_info.py b/scripts/codeconverter/codeconverter/qom_type_info.py
 index f92c3a4730e..22a25560760 100644
 --- a/scripts/codeconverter/codeconverter/qom_type_info.py
