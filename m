@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9600C0219B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C190EC021A0
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 02:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thJjr-000076-TN; Sun, 09 Feb 2025 21:41:35 -0500
+	id 1thJjs-000078-1E; Sun, 09 Feb 2025 21:41:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thJjo-00005O-Tm; Sun, 09 Feb 2025 21:41:32 -0500
+ id 1thJjo-00005F-NV; Sun, 09 Feb 2025 21:41:32 -0500
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thJjm-00087n-VJ; Sun, 09 Feb 2025 21:41:32 -0500
+ id 1thJjm-00087f-KO; Sun, 09 Feb 2025 21:41:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1739155291; x=1770691291;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=hb1E+rvhbzGMqxScQskJB9sjdylpqfV6pPId6e63v94=;
- b=TECYSYuRLpxyJ3U0nyltU/OjVP6w0S2wHQEvjQSiEGgj5jL+FxS/bHW9
- 5oDXr0da9tDSXyx+J+H0tCwNxfApkmQhjA33ADMRAZxrrdu0VK8yGJvAh
- 9X9VtY3N96luubYcSLi/mwKfvGrBXzG8u30bp6ZAtNPF0VEinSiL99eyh
- mllLL27u2/d+Bns/laMLfxsjjG+MlOPj/lLLmg4eg/MGvi/4c+stN0pB8
- +BkxaWAs4oBgZuFQepZZk0fUSyKnhdJOzjB8pT2aMUQENCkha2PfCXEqm
- XujU9nohE6bNMKuUzDHmy/Jc0+wiXZmUDU10Wuuf18M8YQDIYc8+vnezv Q==;
-X-CSE-ConnectionGUID: gaKGANCZTJ+f+Pw+sVpwpg==
-X-CSE-MsgGUID: q0okhtYBQHGcutl/rmgvtA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11340"; a="50351245"
-X-IronPort-AV: E=Sophos;i="6.13,273,1732608000"; d="scan'208";a="50351245"
+ bh=aBNXUK51XTb5h+RZylc8ESD+bwtNxYy97oEksRtg0Sk=;
+ b=R8i9+Y4p0nuSlUy+loa8f6AaovizCg4IRmzTtrPMo9hHLEUFAKfft4YC
+ g9O029ZDHSWJgkbVw63zHdY6/NHVoDAuUjFGJJ6NTZvBiZbGRQZ1Wo2Sz
+ CBTZJ3CXrRKqXMjdo98iwoKAFONWG8XgG7zJ2BIL3Jun8HV+PogbLs20r
+ M/PQJayYBZEsvmOaOjVbW1ksvcFCdPUPQ12gqRypIMOlXn118z0IGvUsU
+ 5MPh8EnU03tvpXigpUTeuWvxRd1mPTaHW1ZVTP8Mnt+Wbkf4PlqXB9iBZ
+ WHwt8hyjmvBCJn2dMdBaGeT43SIlWftNyvo/rOXwXdybepHzfxRDTG0No g==;
+X-CSE-ConnectionGUID: 79f50HH7Tqe9jUFgOR6rHg==
+X-CSE-MsgGUID: q2NYFwAsSNOnx1FVnxLecQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11340"; a="50351234"
+X-IronPort-AV: E=Sophos;i="6.13,273,1732608000"; d="scan'208";a="50351234"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2025 18:41:29 -0800
-X-CSE-ConnectionGUID: +oR4jyecR3WQe0niqKW6dw==
-X-CSE-MsgGUID: QLOleOOuS1K0Z9ZIXkeC6Q==
+ 09 Feb 2025 18:41:27 -0800
+X-CSE-ConnectionGUID: aAHcT5VOTl2pOXAz+VEFvQ==
+X-CSE-MsgGUID: OvR4yrbuRnetMqSyXJmVYA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="142938209"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="142938200"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 09 Feb 2025 18:41:27 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 09 Feb 2025 18:41:24 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -53,9 +53,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 02/10] rust/qdev: add the macro to define bit property
-Date: Mon, 10 Feb 2025 11:00:43 +0800
-Message-Id: <20250210030051.2562726-3-zhao1.liu@intel.com>
+Subject: [PATCH v2 01/10] i386/fw_cfg: move hpet_cfg definition to hpet.c
+Date: Mon, 10 Feb 2025 11:00:42 +0800
+Message-Id: <20250210030051.2562726-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250210030051.2562726-1-zhao1.liu@intel.com>
 References: <20250210030051.2562726-1-zhao1.liu@intel.com>
@@ -86,38 +86,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HPET device (Rust device) needs to define the bit type property.
+HPET device needs to access and update hpet_cfg variable, but now it is
+defined in hw/i386/fw_cfg.c and Rust code can't access it.
 
-Add a variant of define_property macro to define bit type property.
+Move hpet_cfg definition to hpet.c (and rename it to hpet_fw_cfg). This
+allows Rust HPET device implements its own global hpet_fw_cfg variable,
+and will further reduce the use of unsafe C code access and calls in the
+Rust HPET implementation.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-api/src/qdev.rs | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ hw/i386/fw_cfg.c        |  4 +---
+ hw/timer/hpet.c         | 14 ++++++++------
+ include/hw/timer/hpet.h |  2 +-
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 0041c66ed0cd..28d9be723d89 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -168,6 +168,18 @@ fn class_init(dc: &mut DeviceClass) {
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index d2cb08715a21..546de63123e6 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -26,8 +26,6 @@
+ #include CONFIG_DEVICES
+ #include "target/i386/cpu.h"
  
- #[macro_export]
- macro_rules! define_property {
-+    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, bit = $bitnr:expr, default = $defval:expr$(,)*) => {
-+        $crate::bindings::Property {
-+            // use associated function syntax for type checking
-+            name: ::std::ffi::CStr::as_ptr($name),
-+            info: $prop,
-+            offset: $crate::offset_of!($state, $field) as isize,
-+            bitnr: $bitnr,
-+            set_default: true,
-+            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
-+            ..$crate::zeroable::Zeroable::ZERO
-+        }
-+    };
-     ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default = $defval:expr$(,)*) => {
-         $crate::bindings::Property {
-             // use associated function syntax for type checking
+-struct hpet_fw_config hpet_cfg = {.count = UINT8_MAX};
+-
+ const char *fw_cfg_arch_key_name(uint16_t key)
+ {
+     static const struct {
+@@ -153,7 +151,7 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+     PCMachineState *pcms =
+         (PCMachineState *)object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE);
+     if (pcms && pcms->hpet_enabled) {
+-        fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_cfg, sizeof(hpet_cfg));
++        fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_fw_cfg, sizeof(hpet_fw_cfg));
+     }
+ #endif
+ 
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 92b6d509edda..f2e2d83a3f67 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -40,6 +40,8 @@
+ #include "qom/object.h"
+ #include "trace.h"
+ 
++struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
++
+ #define HPET_MSI_SUPPORT        0
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HPETState, HPET)
+@@ -655,8 +657,8 @@ static void hpet_reset(DeviceState *d)
+     s->hpet_counter = 0ULL;
+     s->hpet_offset = 0ULL;
+     s->config = 0ULL;
+-    hpet_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
+-    hpet_cfg.hpet[s->hpet_id].address = sbd->mmio[0].addr;
++    hpet_fw_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
++    hpet_fw_cfg.hpet[s->hpet_id].address = sbd->mmio[0].addr;
+ 
+     /* to document that the RTC lowers its output on reset as well */
+     s->rtc_irq_level = 0;
+@@ -698,17 +700,17 @@ static void hpet_realize(DeviceState *dev, Error **errp)
+     if (!s->intcap) {
+         warn_report("Hpet's intcap not initialized");
+     }
+-    if (hpet_cfg.count == UINT8_MAX) {
++    if (hpet_fw_cfg.count == UINT8_MAX) {
+         /* first instance */
+-        hpet_cfg.count = 0;
++        hpet_fw_cfg.count = 0;
+     }
+ 
+-    if (hpet_cfg.count == 8) {
++    if (hpet_fw_cfg.count == 8) {
+         error_setg(errp, "Only 8 instances of HPET is allowed");
+         return;
+     }
+ 
+-    s->hpet_id = hpet_cfg.count++;
++    s->hpet_id = hpet_fw_cfg.count++;
+ 
+     for (i = 0; i < HPET_NUM_IRQ_ROUTES; i++) {
+         sysbus_init_irq(sbd, &s->irqs[i]);
+diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
+index 71e8c62453d1..c2656f7f0bef 100644
+--- a/include/hw/timer/hpet.h
++++ b/include/hw/timer/hpet.h
+@@ -73,7 +73,7 @@ struct hpet_fw_config
+     struct hpet_fw_entry hpet[8];
+ } QEMU_PACKED;
+ 
+-extern struct hpet_fw_config hpet_cfg;
++extern struct hpet_fw_config hpet_fw_cfg;
+ 
+ #define TYPE_HPET "hpet"
+ 
 -- 
 2.34.1
 
