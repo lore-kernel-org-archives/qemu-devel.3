@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DB1C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 00:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9D9C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 00:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thHbv-0006HF-MM; Sun, 09 Feb 2025 19:25:16 -0500
+	id 1thHuk-0008Hy-I9; Sun, 09 Feb 2025 19:44:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thHbp-0006Fl-NA; Sun, 09 Feb 2025 19:25:09 -0500
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ id 1thHuj-0008HX-K5
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 19:44:41 -0500
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thHbo-0000AC-4O; Sun, 09 Feb 2025 19:25:09 -0500
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-4bbb91481deso147572137.0; 
- Sun, 09 Feb 2025 16:25:07 -0800 (PST)
+ id 1thHug-0001sm-Ux
+ for qemu-devel@nongnu.org; Sun, 09 Feb 2025 19:44:40 -0500
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-866f61c01e5so1155735241.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Feb 2025 16:44:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739147106; x=1739751906; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1739148277; x=1739753077; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wu7U5ZmiKirMU7YBqYpSKXK3U+c31+6gzWljqTJWANM=;
- b=Dc9cLnHp2O7NpmNMREw2VvVpaajsghKnu5AEjYXA1VJlFKqxDKzZx+LPhuChs+Ng/e
- Me5ptGUbHrpKp0nwzeRrZoAVsw0ZywkP8leDvcqdWr0nLr73bN6TKb3GoSQktApattfn
- oXMKLwOn5wKG9ghdoQxRagjF64/18siYcbXu111+rdTW6A2rypoIGtiOK/DMcpPdqwu6
- UT8BlI2RqRNWvuw4NSZsF4ywCFAiAj6skcVzccihf7ZA/Np0u8yQVgXDyVXa0ZdDG73E
- 6Vd70OiZkqeH0JS3yJ3fa4yd7VijePRRLQOy/PLfaBT4o/hCBzmb53qWwAgyMlZm7AyQ
- fb7A==
+ bh=FH9gaPOUXqlV0eC3tdI/bbstRUYJzar55sXppBsjXxs=;
+ b=PFkCwpnPy3GWZfnpYKGzYjBqHhn4aRTGv3IlzMHQz8/aW3oG/V60qto+MscyxaEr0v
+ 9v3abFmIM5P2nIie1aFXUDKcJWBBokkNiHFM4LIARlQAq0d2D5uXY6fy6zovmfP2cGMr
+ kEOOFceSvwCLMKxTfq1dZec9drEvztydTDg944wZRLOOGyDGfVa92L20gHBdBCUdeape
+ UMOkon6nZ3go0/soZ5xWcTu1OEQVsJUuEOu2b+UMXb9bDFhCxt30NiNq9/uGG22HtlfQ
+ g//2ZiPJdG3QB08smuWgfEZLq9eGuxgLb/PafzDFFyxP99XZkgmvtRGbdf1hyDrQ8EZI
+ aOWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739147106; x=1739751906;
+ d=1e100.net; s=20230601; t=1739148277; x=1739753077;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wu7U5ZmiKirMU7YBqYpSKXK3U+c31+6gzWljqTJWANM=;
- b=IgaU9fPIUmVq8uxVvHEh2Xhj8NH9l/CUQJ3kQEdGNQXXFVzJNCTKmXHWbYpDtoIjh/
- 35BHZEMLgrbJ8bbhumDhkLM6oqKaTl3UKIRYgqoB/EDYhtg5tacPGB0QN14w86EkbY+M
- 34ShWPwvOEQgRJgFLLjun7oytcOeNk+MpwBx7iK4UShwgj04BZs7qhITcEqNBMXaf5dq
- /wJfmppTbFPXPLNTChoWsomzpUypIxY5Z24NkVujj0GUGyY3k5OKuTgBXYHVTWW8B8zS
- SUH2XtBiGEeV57qH0WEzcF3GlGU/wpYB7/g0BQXumOx3OUAgmQ/q8kagcIkn76KKOV7P
- Iqhw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeoOjbda24BsmjOdRTdCHTgH+CaXVc/QfU/Yt74EG6ln4jCTk/2wDgzaXwrcdVPgHD5pvBAKFhqeQs@nongnu.org
-X-Gm-Message-State: AOJu0YxBT6xIxcT5h7mrmTc/2u321GTuSbaw7bZusQbzthG7zB0MUj1m
- U4Hb66CKgV6MVNoQcGPExyjJBcPhf4bK5lShaU/JzeldxPeMONts7ZBluhBCnF4rVA0+x1WkA3n
- wxFHY/pNkzxt23TJpguBII8G/12c=
-X-Gm-Gg: ASbGnctl+YCiDjgWGiz0AEV2NrwUm4LYxjskcJRwvkrqmeTF3tCDmlg1qI0o8w1XleK
- aDqNSIXeH7OBZ9E+3/41Up3f5mP9lPvIjXsRjt1oKRkT4OEwwD+nAea4nqYYyB5KFhkf5DgV7Sr
- 4qEM1vOt8LQWekRC3yiaOK9ASn0A==
-X-Google-Smtp-Source: AGHT+IF8oU+X2hzIWh+nD0IkajaFcgO3M0HROhCYSxnbF7OQPTCTv/2iVIq6iHxq6h703q1zQSVFyEZxHfBxtNY+35I=
-X-Received: by 2002:a05:6102:41a4:b0:4b1:3409:5dcd with SMTP id
- ada2fe7eead31-4ba85f460c3mr7791143137.20.1739147106659; Sun, 09 Feb 2025
- 16:25:06 -0800 (PST)
+ bh=FH9gaPOUXqlV0eC3tdI/bbstRUYJzar55sXppBsjXxs=;
+ b=cq1SwcDr9zgUO/S7zv8AOSeVMBFih68Fb+zcjsiW8vILwHsipXZP2l2d7OIqO5ij5D
+ ZthiCoZRr41ZF+DIqFgRWRz/zNSALgTCr7PBFzTT7hlvrRka+eML1tYXFjYu6hgJQMEh
+ Bzeldj4DEwsCHM7m+n7WJTbBhIOot1f0g2FcMzgnOqu7MiPXQhkSyYMj4YKtUXdTMky6
+ Cwj7vM2dQYiklNcy7aECiMORms8eWYXXWWFHRMnkqMya78IWRYKFtWuKidNVs7n7bnI0
+ kfhSqDLL9EumaWfnkf/FzJ6DEH2KSCxwvcNr3BB5iIgUJntAdVi5Gfvab/A4oCAuF00x
+ 4qOQ==
+X-Gm-Message-State: AOJu0YxgIOqI4EJP9W2TggyWmqNf62J1lDJzAVSd91GnunKQbNOKGRGF
+ 4XFhSlVrx45iqir6bInXZ08MAbiKYyLDsWGoYjMsMmiSlTfHeHNhz909FEc55NXbNa6ZgBRH3Ts
+ f7W7Mpb1kYuz3Lo1ZHL1Orp1NrT0=
+X-Gm-Gg: ASbGnctVyu2hKr80uO8MlR5ARXgcpXasZGSH347kNbI0j7XW9GM3HSt1wvGe8GORq/e
+ uHtH1yIN5sl+4obE3neqlNmP2OjvyMShVLJBGz7qwRAszym2FVcyjO2bNUr0YQwjmqhzSI0Zgcr
+ /T1zRl7xiM3CwOHhuuqRWPm5KfAA==
+X-Google-Smtp-Source: AGHT+IFnZs4+RFJwk/28WebhCYHp5GumMqF9reZi15f16Z3dVtdMLSHoycSUpHaC29VktRJcKj0exhhmFzHN8vwRasg=
+X-Received: by 2002:a05:6102:6c7:b0:4bb:b868:9d2d with SMTP id
+ ada2fe7eead31-4bbb868b96fmr2849597137.24.1739148276799; Sun, 09 Feb 2025
+ 16:44:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20250206181827.41557-1-philmd@linaro.org>
- <20250206181827.41557-2-philmd@linaro.org>
-In-Reply-To: <20250206181827.41557-2-philmd@linaro.org>
+References: <20250206182711.2420505-1-pbonzini@redhat.com>
+ <20250206182711.2420505-2-pbonzini@redhat.com>
+In-Reply-To: <20250206182711.2420505-2-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 10 Feb 2025 10:24:40 +1000
-X-Gm-Features: AWEUYZno3SYWGKe9HJgpSRFmacBP9jzlQhpPd-nyINH1448CD9vo-NHQmqKNGW0
-Message-ID: <CAKmqyKPSewTC3dkzCaZRu26f0qoZhvnr_RXPNuH9SfgxNuVcLQ@mail.gmail.com>
-Subject: Re: [PATCH 1/7] MAINTAINERS: Unify Alistair's professional email
- address
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>, Sunil V L <sunilvl@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Mon, 10 Feb 2025 10:44:10 +1000
+X-Gm-Features: AWEUYZmMpgyPo_Pw0qB-ypNmaF8782UvD6-W2AfiKP-PgPo-4Yudc3ZeIMpRf7A
+Message-ID: <CAKmqyKOwkVnumAXB5JH+YDP9BuJKXdtQUBuaewnVSebMhx-2Rg@mail.gmail.com>
+Subject: Re: [PATCH 01/22] target/riscv: remove unused macro DEFINE_CPU
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,95 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 7, 2025 at 4:22=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
+On Fri, Feb 7, 2025 at 4:29=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
 >
-> Alistair's email is typed differently, so the get_maintainer.pl
-> script add it twice :) Unify to reduce traffic.
->
->   $ git grep -h 'Alistair Francis' -- MAINTAINERS | sort -u
->   M: Alistair Francis <Alistair.Francis@wdc.com>
->   M: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-These two should be combined
-
->   M: Alistair Francis <alistair@alistair23.me>
-
-But this is actually my personal email for older non WDC work
-(basically not RISC-V stuff).
-
-It all goes to the same place but there is some distinction between
-the two, so I'd probably like to keep this one separate. If it's too
-annoying for others then I'm happy to consolidate them though
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  MAINTAINERS | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>  target/riscv/cpu.c | 9 ---------
+>  1 file changed, 9 deletions(-)
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 0cf37fce7b5..b7ac1519ee3 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -318,7 +318,7 @@ F: tests/functional/test_ppc_74xx.py
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 3d4bd157d2c..ed9da692030 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3051,15 +3051,6 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt,=
+ char *nodename)
+>  }
+>  #endif
 >
->  RISC-V TCG CPUs
->  M: Palmer Dabbelt <palmer@dabbelt.com>
-> -M: Alistair Francis <alistair.francis@wdc.com>
-> +M: alistair.francis <alistair.francis@wdc.com>
->  M: Bin Meng <bmeng.cn@gmail.com>
->  R: Weiwei Li <liwei1518@gmail.com>
->  R: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> @@ -753,7 +753,7 @@ F: docs/system/arm/digic.rst
->
->  Goldfish RTC
->  M: Anup Patel <anup.patel@wdc.com>
-> -M: Alistair Francis <Alistair.Francis@wdc.com>
-> +M: alistair.francis <alistair.francis@wdc.com>
->  L: qemu-riscv@nongnu.org
->  S: Maintained
->  F: hw/rtc/goldfish_rtc.c
-> @@ -1009,7 +1009,7 @@ F: tests/functional/test_arm_tuxrun.py
->
->  Xilinx Zynq
->  M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-> -M: Alistair Francis <alistair@alistair23.me>
-> +M: alistair.francis <alistair@alistair23.me>
->  M: Peter Maydell <peter.maydell@linaro.org>
->  L: qemu-arm@nongnu.org
->  S: Maintained
-> @@ -1593,7 +1593,7 @@ F: pc-bios/vof*
->  RISC-V Machines
->  ---------------
->  OpenTitan
-> -M: Alistair Francis <Alistair.Francis@wdc.com>
-> +M: Alistair Francis <alistair.francis@wdc.com>
->  L: qemu-riscv@nongnu.org
->  S: Supported
->  F: hw/riscv/opentitan.c
-> @@ -1628,7 +1628,7 @@ F: include/hw/riscv/shakti_c.h
->  F: include/hw/char/shakti_uart.h
->
->  SiFive Machines
-> -M: Alistair Francis <Alistair.Francis@wdc.com>
-> +M: Alistair Francis <alistair.francis@wdc.com>
->  M: Bin Meng <bmeng.cn@gmail.com>
->  M: Palmer Dabbelt <palmer@dabbelt.com>
->  L: qemu-riscv@nongnu.org
-> @@ -3842,7 +3842,7 @@ F: tcg/ppc/
->
->  RISC-V TCG target
->  M: Palmer Dabbelt <palmer@dabbelt.com>
-> -M: Alistair Francis <Alistair.Francis@wdc.com>
-> +M: Alistair Francis <alistair.francis@wdc.com>
->  L: qemu-riscv@nongnu.org
->  S: Maintained
->  F: tcg/riscv/
+> -#define DEFINE_CPU(type_name, misa_mxl_max, initfn)         \
+> -    {                                                       \
+> -        .name =3D (type_name),                                \
+> -        .parent =3D TYPE_RISCV_CPU,                           \
+> -        .instance_init =3D (initfn),                          \
+> -        .class_init =3D riscv_cpu_class_init,                 \
+> -        .class_data =3D (void *)(misa_mxl_max)                \
+> -    }
+> -
+>  #define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max, initfn) \
+>      {                                                       \
+>          .name =3D (type_name),                                \
 > --
-> 2.47.1
+> 2.48.1
 >
 >
 
