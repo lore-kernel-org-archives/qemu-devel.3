@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBED6C0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 09:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F4BC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 09:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thQ2C-0001ND-Qw; Mon, 10 Feb 2025 04:24:56 -0500
+	id 1thQB7-00031M-0T; Mon, 10 Feb 2025 04:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1thQ2B-0001Md-7f
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:24:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1thQ29-0000Du-5a
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:24:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739179491;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=CQxZL5xoLK6Tb2nweuMpnv3OC+qEnohkK5KbgeI3dqg=;
- b=dYwl569rchwVhunDIYyuF19HlZqkCDgy8EhrkXUgjFpoxJ1E7JBnzzi2XukzSumJK/90lE
- mWodZk8+j70qWXxxni9gRhPCV6wqZ+lxbqiwKXOZXCFlHHJf9pNW/d8TwfYA98nCzcItTI
- o0DVg+lVdAKzNAECHJSHn+Eaqny/udU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-Sy4BxvDkM3C9g5qeK7ULqA-1; Mon,
- 10 Feb 2025 04:24:44 -0500
-X-MC-Unique: Sy4BxvDkM3C9g5qeK7ULqA-1
-X-Mimecast-MFC-AGG-ID: Sy4BxvDkM3C9g5qeK7ULqA
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 977FB195608B; Mon, 10 Feb 2025 09:24:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.104])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E1931800115; Mon, 10 Feb 2025 09:24:35 +0000 (UTC)
-Date: Mon, 10 Feb 2025 09:24:31 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kim Phillips <kim.phillips@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ashish Kalra <ashish.kalra@amd.com>,
- "Nikunj A . Dadhania" <nikunj@amd.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Ingo Molnar <mingo@redhat.com>,
- "H. Peter Anvin" <hpa@zytor.com>, Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [RFC] target/i386: sev: Add cmdline option to enable the Allowed
- SEV Features feature
-Message-ID: <Z6nFzwwOZDx4p6yq@redhat.com>
-References: <20250207233327.130770-1-kim.phillips@amd.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thQB0-0002zp-G1
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:34:05 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thQAy-0001bL-95
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:34:02 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e461015fbd4so3191771276.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 01:33:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739180035; x=1739784835; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zbzce1JeM8K739t+w3wJvg+8MysR5ashRFokl5gUKN8=;
+ b=u9pj2ud9OYXuIaWqppv9q0sdT0SDzLVE8VeDUQw71fDP0rTrHKRh0mLe/QYuXSpfYV
+ au2d266V+OwgYm83sx+Do9Sd0pv1j+sXhR2lCfd4MwwlrvBXvpanaF5BF9Q5Fp5cEi9i
+ 01S8O/fHR2hug1FRFc7PJst2h1A4krUC402g+vNaO2Dkkm+BJqPwI80bZVyurY0aa+PT
+ nYwSbDMoHve72S7IDENXZvuAsSh8/taSpL3eTOE1IEcw0T4yx1jN+h60NydqIeBWwyay
+ e9LiBjYaqITYCk1Hl8HJr0b6+ZmXBluhrPxSaxgjlY3pXtIdvVnl8KldwSIfeCtudLLy
+ U2WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739180035; x=1739784835;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zbzce1JeM8K739t+w3wJvg+8MysR5ashRFokl5gUKN8=;
+ b=D99NMEs4UN0bG/Czuv41kWPHQtc6nifk/TULtI3Ki+ffF0KreZOMLR3uIHy7ryADeK
+ 94wjyH/04jDTGqNT+1KwfNit0xHvHRiKItPpQAz/1H1yS3Vf6JT8MRpHzv+uvGotosgt
+ AjH2wj/VgCwOdfE+3mR5k3kFQWbmPvaIOyrPL5yj5EeQYMIbGjJ7pkWXlCDhsnsKfG0Y
+ dkNdmyNqbAXrbKx7zHygv6I4g016dB83hfIGKu7FQbf+GYJ+ldNuIo2fp0gI0qtZUnNg
+ P8/VKgkfbkJUzTN/hk3V7ois69AoDB0YaOeCNACHWAl7hHVnF6tWJpShotWFifwt42c2
+ A5yA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1BSJ+HNrxu9wr1JRv0pTGjwcYk7RfLjA8H4pL0RwgyqBbpbJsORMVQfoUBYiK6ieE7AoVmlOYi81Q@nongnu.org
+X-Gm-Message-State: AOJu0YwhB5ZnQJGWyA1W4sIA6tAz03FPeNvd4iT8FH/SFlc9VjXyxJQz
+ muxq3uaVSobZCIrYFXMuxwumafAe70fw5Ai3+83AVZzJ4QLYGY5RTyXfx1NlpT9I9DWQVXHvb1g
+ VJ3rjmWHTvkbzz9FD+7M5hf5y3rdAKODhIQsgSQ==
+X-Gm-Gg: ASbGnct3RXBd6Rd1/tA7xiU+1TNDC17tI46t4oz2lm569Wd+13k7ZPUVvscCaqGK7/V
+ ArGaYI59X1AmBvDaabGiHYwgVU5MpdSsq5eQvWKzUq1oJr1Yic61vn0+YxC1xqT2HC3U6cibA6A
+ ==
+X-Google-Smtp-Source: AGHT+IH+LpIg3DfIs0EJDk2wfnMLR3zmxIhh+xfMnqKNw65LHDaxqpqdKVHcC25fGTb6WHCGIBSZdsKjqhpmqkj+eiI=
+X-Received: by 2002:a05:6902:1249:b0:e5b:248a:bf2f with SMTP id
+ 3f1490d57ef6-e5b4626c51cmr10924092276.31.1739180035342; Mon, 10 Feb 2025
+ 01:33:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250207233327.130770-1-kim.phillips@amd.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240615185423.49474-1-florian.lugou@provenrun.com>
+ <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
+ <20240620135627.qxcrkdx5v7wdurx4@flugou-latitude5401>
+ <CAFEAcA-ngrrEUDD7eA_sOLGF+_wRCuQVxTwuCA4pXjRcuJucmA@mail.gmail.com>
+ <20240621140725.f4hsasmhrhh4joxm@flugou-latitude5401>
+ <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
+ <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
+ <CAFEAcA9X0w5QW2qnnhF2k72ZrS8SALWiXV7uNr1e=jQnZvrQ7Q@mail.gmail.com>
+ <CAFEAcA-MrouAPdwpsyojMC-bx4aFtuL=tYZD=2pBS1vP5iicaw@mail.gmail.com>
+ <5ee77b8c-e6a4-421b-b729-a6535fdf1e6d@linaro.org>
+ <87a5axr4l4.fsf@draig.linaro.org>
+In-Reply-To: <87a5axr4l4.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Feb 2025 09:33:44 +0000
+X-Gm-Features: AWEUYZks7N5joTM2FfdiQcWhg1B3GGmwDm1C_TyYlrkh2oHdflFuHEhWeKy_Jq8
+Message-ID: <CAFEAcA89Wm-cZZV7swdmzVxjR3h3QfGpgROA=AAt6ABJLbOOsw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
+ HCR_EL2.E2H == 0
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ Florian Lugou <florian.lugou@provenrun.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,203 +105,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 05:33:27PM -0600, Kim Phillips wrote:
-> The Allowed SEV Features feature allows the host kernel to control
-> which SEV features it does not want the guest to enable [1].
-> 
-> This has to be explicitly opted-in by the user because it has the
-> ability to break existing VMs if it were set automatically.
-> 
-> Currently, both the PmcVirtualization and SecureAvic features
-> require the Allowed SEV Features feature to be set.
-> 
-> Based on a similar patch written for Secure TSC [2].
-> 
-> [1] Section 15.36.20 "Allowed SEV Features", AMD64 Architecture
->     Programmer's Manual, Pub. 24593 Rev. 3.42 - March 2024:
->     https://bugzilla.kernel.org/attachment.cgi?id=306250
-> 
-> [2] https://github.com/qemu/qemu/commit/4b2288dc6025ba32519ee8d202ca72d565cbbab7
+On Fri, 7 Feb 2025 at 18:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Richard Henderson <richard.henderson@linaro.org> writes:
+>
+> > On 2/7/25 07:45, Peter Maydell wrote:
+> >> This is where things go wrong -- icount_start_warp_timer()
+> >> notices that all CPU threads are currently idle, and
+> >> decides it needs to warp the timer forwards to the
+> >> next deadline, which is at the end of time -- INT64_MAX.
+> >> But once timer_mod_ns() returns, the generic timer code
+> >> is going to raise an interrupt (this goes through the GIC
+> >> code and comes back into the CPU which calls cpu_interrupt()),
+> >> so we don't want to warp the timer at all. The clock should
+> >> stay exactly at the value it has and the CPU is going to
+> >> have more work to do.
+> >> How is this supposed to work? Shouldn't we only be doing
+> >> the "start moving the icount forward to the next deadline"
+> >> once we've completed all the "run timers and AIO stuff" that
+> >> icount_handle_deadline() triggers, not randomly in the middle
+> >> of that when this timer callback or some other one might do
+> >> something to trigger an interrupt?
+> >
+> > I don't understand timer warping at all.  And you're right, it doesn't
+> > seem like this should happen outside of a specific point in the main
+> > loop.
+>
+> This has come up before - and the conclusion was we don't know what
+> sleep=3Don/off is meant to mean. If the processor is asleep and there are
+> no timers to fire then nothing will happen.
+>
+> It was off-list though:
+>
+>   Subject: Re: qemu-system-aarch64 & icount behavior
 
-Despite that URL, that commit also does not appear to be merged into
-the QEMU git repo, and indeed I can't find any record of it even being
-posted as a patch for review on qemu-devel.
+No, that was a different situation. That thread was about
+when there genuinely is nothing to do (all CPUs asleep and
+no timers active) for the rest of the life of the simulation.
 
-This is horribly misleading to reviewers, suggesting that the referenced
-patch was already accepted :-(
+The bug in this thread is that icount incorrectly prematurely
+decides it should warp the timer forwards, when in fact
+there is going to be something the CPU should be doing
+right now (i.e. responding to the interrupt the timer callback
+is about to raise). It becomes very obvious when there's
+no other timer callback, because the place that icount
+incorrectly warps us to is end-of-time, but I'm pretty sure
+that even when there is another timer active icount will
+still be wrongly warping time -- it will just be less obvious
+because the interrupt gets incorrectly delayed to whatever
+that subsequent timer callback time is, rather than forever.
 
-> 
-> Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-> ---
->  qapi/qom.json     |  6 ++++-
->  target/i386/sev.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++
->  target/i386/sev.h |  2 ++
->  3 files changed, 67 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 28ce24cd8d..113b44ad74 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -948,13 +948,17 @@
->  #     designated guest firmware page for measured boot with -kernel
->  #     (default: false) (since 6.2)
->  #
-> +# @allowed-sev-features: true if secure allowed-sev-features feature
-> +#     is to be enabled in an SEV-ES or SNP guest. (default: false)
-
-Missing 'since' annotation.
-
-> +#
->  # Since: 9.1
->  ##
->  { 'struct': 'SevCommonProperties',
->    'data': { '*sev-device': 'str',
->              '*cbitpos': 'uint32',
->              'reduced-phys-bits': 'uint32',
-> -            '*kernel-hashes': 'bool' } }
-> +            '*kernel-hashes': 'bool',
-> +            '*allowed-sev-features': 'bool' } }
->  
->  ##
->  # @SevGuestProperties:
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 0e1dbb6959..85ad73f9a0 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -98,6 +98,7 @@ struct SevCommonState {
->      uint32_t cbitpos;
->      uint32_t reduced_phys_bits;
->      bool kernel_hashes;
-> +    uint64_t vmsa_features;
->  
->      /* runtime state */
->      uint8_t api_major;
-> @@ -411,6 +412,33 @@ sev_get_reduced_phys_bits(void)
->      return sev_common ? sev_common->reduced_phys_bits : 0;
->  }
->  
-> +static __u64
-> +sev_supported_vmsa_features(void)
-> +{
-> +    uint64_t supported_vmsa_features = 0;
-> +    struct kvm_device_attr attr = {
-> +        .group = KVM_X86_GRP_SEV,
-> +        .attr = KVM_X86_SEV_VMSA_FEATURES,
-> +        .addr = (unsigned long) &supported_vmsa_features
-> +    };
-> +
-> +    bool sys_attr = kvm_check_extension(kvm_state, KVM_CAP_SYS_ATTRIBUTES);
-> +    if (!sys_attr) {
-> +        return 0;
-> +    }
-> +
-> +    int rc = kvm_ioctl(kvm_state, KVM_GET_DEVICE_ATTR, &attr);
-> +    if (rc < 0) {
-> +        if (rc != -ENXIO) {
-> +            warn_report("KVM_GET_DEVICE_ATTR(0, KVM_X86_SEV_VMSA_FEATURES) "
-> +                        "error: %d", rc);
-> +        }
-> +        return 0;
-> +    }
-> +
-> +    return supported_vmsa_features;
-> +}
-> +
->  static SevInfo *sev_get_info(void)
->  {
->      SevInfo *info;
-> @@ -1524,6 +1552,20 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
->      case KVM_X86_SNP_VM: {
->          struct kvm_sev_init args = { 0 };
->  
-> +        if (sev_es_enabled()) {
-> +            __u64 vmsa_features, supported_vmsa_features;
-> +
-> +            supported_vmsa_features = sev_supported_vmsa_features();
-> +            vmsa_features = sev_common->vmsa_features;
-> +            if ((vmsa_features & supported_vmsa_features) != vmsa_features) {
-> +                error_setg(errp, "%s: requested sev feature mask (0x%llx) "
-> +                           "contains bits not supported by the host kernel "
-> +                           " (0x%llx)", __func__, vmsa_features,
-> +                           supported_vmsa_features);
-
-This logic is being applied unconditionally, and not connected to
-the setting of the new 'allowed-sev-features' flag value. Is that
-correct  ? 
-
-Will this end up breaking existing deployed guests, or is this a
-scenario that would have been blocked with an error later on
-regardless ?
-
-> +            return -1;
-
-Malformed indentation.
-
-> +            }
-> +            args.vmsa_features = vmsa_features;
-> +        }
->          ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
->          break;
->      }
-> @@ -2044,6 +2086,19 @@ static void sev_common_set_kernel_hashes(Object *obj, bool value, Error **errp)
->      SEV_COMMON(obj)->kernel_hashes = value;
->  }
->  
-> +static bool
-> +sev_snp_guest_get_allowed_sev_features(Object *obj, Error **errp)
-> +{
-> +    return SEV_COMMON(obj)->vmsa_features & SEV_VMSA_ALLOWED_SEV_FEATURES;
-> +}
-> +
-> +static void
-> +sev_snp_guest_set_allowed_sev_features(Object *obj, bool value, Error **errp)
-> +{
-> +    if (value)
-> +        SEV_COMMON(obj)->vmsa_features |= SEV_VMSA_ALLOWED_SEV_FEATURES;
-> +}
-> +
->  static void
->  sev_common_class_init(ObjectClass *oc, void *data)
->  {
-> @@ -2061,6 +2116,11 @@ sev_common_class_init(ObjectClass *oc, void *data)
->                                     sev_common_set_kernel_hashes);
->      object_class_property_set_description(oc, "kernel-hashes",
->              "add kernel hashes to guest firmware for measured Linux boot");
-> +    object_class_property_add_bool(oc, "allowed-sev-features",
-> +                                   sev_snp_guest_get_allowed_sev_features,
-> +                                   sev_snp_guest_set_allowed_sev_features);
-> +    object_class_property_set_description(oc, "allowed-sev-features",
-> +            "Enable the Allowed SEV Features feature");
->  }
->  
->  static void
-> diff --git a/target/i386/sev.h b/target/i386/sev.h
-> index 373669eaac..07447c4b01 100644
-> --- a/target/i386/sev.h
-> +++ b/target/i386/sev.h
-> @@ -44,6 +44,8 @@ bool sev_snp_enabled(void);
->  #define SEV_SNP_POLICY_SMT      0x10000
->  #define SEV_SNP_POLICY_DBG      0x80000
->  
-> +#define SEV_VMSA_ALLOWED_SEV_FEATURES BIT_ULL(63)
-> +
->  typedef struct SevKernelLoaderContext {
->      char *setup_data;
->      size_t setup_size;
-> -- 
-> 2.43.0
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
