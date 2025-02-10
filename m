@@ -4,82 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C408C0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647E4C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thUSb-0005Qu-EI; Mon, 10 Feb 2025 09:08:29 -0500
+	id 1thUVB-0006Ur-8X; Mon, 10 Feb 2025 09:11:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thUSW-0005QR-IH
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:08:24 -0500
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thUSU-0004GR-O7
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:08:24 -0500
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e545c1e8a15so3826095276.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 06:08:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739196501; x=1739801301; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xMydYF9T098euIszM7ik4JTCZxbWbtFNiTuzagikfbM=;
- b=tG+XLSG7m1DfbWVdi1ZOz/ybfbmNHh/SmbR5fsxcQTcGRNy9S/lPHsX9OJARp3Nfcv
- oeZfF9kH6uxPxbICLfmm/o40ElqrAhPF8avSJTRPb6ErRi8hP7kkGef8uVuvFCCOAK27
- +9SATE19/vwvDQep2w1GTGPQLWQ524j2jMf0Ek2F5iVn3AaHduk8As1NIKI6Wo/hhB7T
- sHfoVxn90QJNhBJsOImFyBHwzD85T4G4X5N24Djg0brqXEiMHT5mk22+fsQadi4KpHpe
- roRfgYL5onfawW8oJaGe1Uy9NXeZhV1gnpcANIHhgU7emn4dOQi+d0m3XaNX8GADGfcQ
- d6bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739196501; x=1739801301;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xMydYF9T098euIszM7ik4JTCZxbWbtFNiTuzagikfbM=;
- b=RJHqwwVn0yg9hCNqjmC9A1PqmDArBIYXvrUvzJIMjtL5G5Q+2qVw5nOMP6fnmUMScb
- V6bZiykjVE69BP/Yq+tipko6Thjk6x4ZAnif3LVVd8RIPqxUkuQVTptUxNbcLjwAZhE5
- ENN2/on91pFDNH5pcJWTEErR/LWV5FfDq1Zm5gIQ+pxMnorwD1MwaVczl6AZpUJBhm4l
- Xeb+E5iLnPmEnZ/1wvcK4LZ8JFb2HraUQRyHENsIe1I0VBC4GvyaAr03Gi6DE5UVoxKX
- vP2UoYy7EC9P2WsYDkqJXs5JyeXMVDCp2nx/An6Ny0DjfPmWTEF9gh8zz5lX5opyZg/z
- OWPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzKK4n+jiOjUDolK2G3uWZVG5KyloK7Bsbd99TymgFCsa5PHmkqhwXY9pCaPpUU2B6H8fBAiLvExWY@nongnu.org
-X-Gm-Message-State: AOJu0Yzy/PgUFqYLslE6jl0GpM13Vg8DdYWYTDjI3vZ5QaE0m1Yk+SP2
- cnRRgOlXnOGwm6ZIRdE74s6d37NCtBBjyYHuT06K6ecHiUG8L08h/HpM67cgUpDUwQTPjK618U9
- jKgD+8gGSfzQKU7nv/QYLo2aXL7TBQnQebXJjZw==
-X-Gm-Gg: ASbGncsNYLMuRL7CF9HKPOdq7VcdJaOe2ybII/LuQ/oWgGaZxWEraUm+XuAGdpzvEwl
- RmQFOSghjiRwTNQqm8PRW9sVFgkCBg3TO+uwnKvwnrtmMAUhxyHws4426J7/zn56JZUa3BaosKw
- ==
-X-Google-Smtp-Source: AGHT+IGYtgvlbMteA8OshRfdmMAGYPL2A88mFNDr3gV4EUJ+eM89dSqUEk7RN5fsm6T9auPUoV71FAGHZlyC9MRddj4=
-X-Received: by 2002:a05:6902:170a:b0:e57:fbf0:5016 with SMTP id
- 3f1490d57ef6-e5b461c3280mr12034195276.22.1739196501416; Mon, 10 Feb 2025
- 06:08:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1thUV3-0006Sx-V7; Mon, 10 Feb 2025 09:11:05 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1thUV1-0004qK-J2; Mon, 10 Feb 2025 09:11:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739196660; x=1770732660;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Dl0ZWBsR1/HSCOhMTXqjWRBpm2e6iP4RBwyicQrCF/A=;
+ b=OgjzTGcxmc/eTFqJgO6jGZ3q5k9lco293hBoOnVBmytF/cXP5h47IuP7
+ 1GgI0ioHs+WjzqAcaqon7YZZEqrQ11SwTQzcktXzgDEcJL+XUTjatFtAL
+ 20P1bSBpbcQzgj7zYSEH6iq6m5PoDg1IWAezB0aG0Q64zBq7qjJCJR4zz
+ 1DivholO52JbhxwXf8/XcZc+ibsyBNJGQp/dkKMBAhptb6/erQCquPsGG
+ 4PZur8CIxge0HUK1irbOWUiFNn1QR+97F5WbzZ1dZjre3F6FUbEXQm2bf
+ mEvEv3grkUnmCw/8see807Ynlwsq2xbUi2LCW4XSxrigc15BZVYu2YDi6 A==;
+X-CSE-ConnectionGUID: UMfm4CW/RGum0FSYqKlUaw==
+X-CSE-MsgGUID: pMpjtVjDSweyd0Rl9NNsiQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11341"; a="50010018"
+X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="50010018"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2025 06:10:57 -0800
+X-CSE-ConnectionGUID: EDxs6woCSrKfJxIIHvx4iA==
+X-CSE-MsgGUID: ZgbMYkR0QLOARRgo62pN3w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="117128900"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 10 Feb 2025 06:10:56 -0800
+Date: Mon, 10 Feb 2025 22:30:26 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 02/12] rust: qom: add object creation functionality
+Message-ID: <Z6oNgks2bNDRrIIz@intel.com>
+References: <20250207101623.2443552-1-pbonzini@redhat.com>
+ <20250207101623.2443552-3-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20250210135804.3526943-1-peter.maydell@linaro.org>
-In-Reply-To: <20250210135804.3526943-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 10 Feb 2025 14:08:10 +0000
-X-Gm-Features: AWEUYZlYGcA3eOXPzrsb89SM5uWj_mQXJ7tTOfjEylXNA0MUkyl1g0cGYJ_1XAY
-Message-ID: <CAFEAcA97TpSfRVpNOg025GMw3pduR+73gr2LDmncoCpTDfV3jg@mail.gmail.com>
-Subject: Re: [PATCH] util/qemu-timer.c: Don't warp timer from timerlist_rearm()
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250207101623.2443552-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,28 +81,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 10 Feb 2025 at 13:58, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Fri, Feb 07, 2025 at 11:16:13AM +0100, Paolo Bonzini wrote:
+> Date: Fri,  7 Feb 2025 11:16:13 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 02/12] rust: qom: add object creation functionality
+> X-Mailer: git-send-email 2.48.1
+> 
+> The basic object lifecycle test can now be implemented using safe code!
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs | 23 +++++++++++++----------
+>  rust/qemu-api/src/prelude.rs     |  1 +
+>  rust/qemu-api/src/qom.rs         | 23 +++++++++++++++++++++--
+>  rust/qemu-api/tests/tests.rs     | 30 +++++++++++-------------------
+>  4 files changed, 46 insertions(+), 31 deletions(-)
 >
-> Currently we call icount_start_warp_timer() from timerlist_rearm().
-> This produces incorrect behaviour, because timerlist_rearm() is
-> called, for instance, when a timer callback modifies its timer.  We
-> cannot decide here to warp the timer forwards to the next timer
-> deadline merely because all_cpu_threads_idle() is true, because the
-> timer callback we were called from (or some other callback later in
-> the list of callbacks being invoked) may be about to raise a CPU
-> interrupt and move a CPU from idle to ready.5A
 
-(oops, stray editor damage "5A" at end of line)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
->
-> The only valid place to choose to warp the timer forward is from the
-> main loop, when we know we have no outstanding IO or timer callbacks
-> that might be about to wake up a CPU.
-
-This raises actually another question: should the call to
-icount_start_warp_timer() in main_loop_wait() maybe go after
-qemu_clock_run_all_timers() rather than before? (Haven't tested
-whether that breaks anything ;-))
-
--- PMM
 
