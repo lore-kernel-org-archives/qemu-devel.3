@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8CBBC0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469E1C0219E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thW3X-0007mK-OA; Mon, 10 Feb 2025 10:50:43 -0500
+	id 1thW3l-00082C-RX; Mon, 10 Feb 2025 10:50:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thW2n-0007Er-TI
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:50:00 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1thW2q-0007Ex-1X
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:50:01 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thW2l-0004i8-Vk
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:57 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso2361828f8f.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:49:55 -0800 (PST)
+ id 1thW2n-0004iX-Tr
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:49:59 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-439350f1a0bso11749205e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:49:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739202594; x=1739807394; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739202596; x=1739807396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mZ4KLCN5rTxCDwJzmAh6VIQu5Td0a43voxEJaqli8sk=;
- b=gCMCHnDp3GkiPt6jf3ME08BVFZKnR0zOBAPkdHxn/0TEHokJb0TLi8TPQYwbyXubqP
- ltRnCWOq1cWyhESFUQEvNPZBIZ/+FoL/60THGeUIaj1G77W9H592RmGLyLhAEIM0mwgy
- 9CpxHujqhJiB8USn1hGm2womS1n2N+958OM3rVdHTv6PEMPzNCxI+hf+ezb+OgjIXK7F
- 3BgYw0CGI7imciJFDwjhztRZML7k8K0U2eHRbEWwWBmgBfbUeR52DFD5dIVO+k6QMoAa
- B5RksN3091p/4YxJeWSGfSUZQHfD6Ird5IVSwOxJXNoRGL0yf0KIH/hU+WEhSRgfCZLh
- 9FZA==
+ :reply-to; bh=ach7bnbaT/M/a9OUubHchNVXpLnBww1JCB9bAXJ6NA4=;
+ b=phrMCiuc8RYsAjsa2q7ds8dsMLc/bvHG0RqlYFbLXz6TfIk4o95sUIeo1E9bYlWgPJ
+ kdoxxTboMAxqFkK+t55KvNTwzkfmKT/1aW52G8ygS5ASL7K8R+zRkr4bT4uYsiT8osDa
+ 3DIkzb8F1ac+48x7wKBX3vGizm/vhWVaFi46fj9mH75NSWjkyaDs+eYYjENUS6EUA8CX
+ uI/XFrO59EF12uCnIf1EjjEJ61dfVqfyk70waQzh1WKeN5CoqLUMCoJ/Yw7shWF+pLs7
+ jo4SL49dXFQ8XMfSnBn3GBV4GlfSdSN6eV8ryU5biv0EKvme3Ni2aVVfuql2nDuki9GD
+ B/Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739202594; x=1739807394;
+ d=1e100.net; s=20230601; t=1739202596; x=1739807396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mZ4KLCN5rTxCDwJzmAh6VIQu5Td0a43voxEJaqli8sk=;
- b=qKyyfgupH4d048QERwANhPQOcH8Gqnu7E9zl34CrAg3v07iwjoKK3QGzTdwDbibnRx
- 1p8Rr1Fi2vljgbUgyGPqLSOeyHnkBpp8fJUKmuzxOk++6Orl/wBnMaxh1Lwd/b4fbabP
- SdI2NVB6K4GIDUP9E25DYsnOSiEvf+QJjyyMNUTG4aFpnPYaN9Y36LvqCA5Te1ZlPwv2
- JyiE12tzC4mpk8gQr+E3HlIJXA2D/Y3Dvl6wjLBTSNh6KxR2kCNjSWc2IG2AH1YgD5mf
- ZjgJgfPW0r6VCiVNea89AKO8+JTn+sq5Rbdjhn7CS26wnif4EjMZ02c+mzY9lhIWgJAt
- 9kVg==
-X-Gm-Message-State: AOJu0YxrxhDFkXb2mcVO9VCROa7cNMbVM513P76V8a41CGqWdzifGIZy
- P9rx39Aosu+Wf5vDl1qYrDFtsBggGH/kzjPV7a7Bxl7oNyQ7sDRZRUWqjUPocT6jAWxHerkdQ96
- M
-X-Gm-Gg: ASbGncsNqAsHpfGy2q0VxJnrtw+3TE9OiaBCctCPm+1Bt58gjsRtWtQ7MNUl8DIoMRK
- QXtKpy8yW04D7KDSPVapiGb5nSmI3FxuwH/gIewPp+oFLqwVj3FiaLE/EsssiiamoCe972zyf2/
- XweymiXLnFlRAWJSmY67PHZNvqHMqDftx/OE5mUDjjIj7FRaFOEZLOL7ffzEkDoU8XG79TYNBV8
- NiShCkM3Yp33ap2Xqq4aVQySB+rAthOsHSGFCZctUtqrBZqnnJ0feKsanSIzzeHyczyO5KlNU5U
- 5bH9ZUIxqTOysXFEuRr5
-X-Google-Smtp-Source: AGHT+IGswfkqKoVumkN1pCBydcMMR06ixfGsFyxBrXjAY3QkoNSogXyL9iAfRLt7a8i47BkjQBpncQ==
-X-Received: by 2002:a05:6000:400f:b0:385:f220:f798 with SMTP id
- ffacd0b85a97d-38dc8da6361mr9668002f8f.6.1739202594553; 
- Mon, 10 Feb 2025 07:49:54 -0800 (PST)
+ bh=ach7bnbaT/M/a9OUubHchNVXpLnBww1JCB9bAXJ6NA4=;
+ b=KawwfRDAKBNhZiHYtShdYgkaWVknDJiFlFXkGUX8/WL33PXfqLTLOxKmHZRqIUpAwv
+ arE8A4h+oTZPMBXpw+hgka/cAhcrub1p/C1AGrD4hPSwUrAkhje9ZIW7P/yt/R2MSwVM
+ EJE7FXrmIK15O/JGtzSzeXGr4dXSGkm0YYx+T/zIW+rYNXUSw8npCWlNyYpNnGFY+fuD
+ U44rQ5Ci2rhHn75w/9I/E0kJ2MbwGiouGfpL4v7Gm+OvAFa+DQVfhof/H/DxmLThUQgC
+ oOZmkTs/ShZIbfO0aic1RQHdzoLEe++COUMvV4+v2uexx8Cds/cKFKijWvOwLYUk0Tok
+ xyRw==
+X-Gm-Message-State: AOJu0YxdXozUdDz3Wilp1CrzJsbUvjIF2Rx3Vjxi9ZQjeB9Fqt+9CJL/
+ MmocLZIRsx+5TgERevkdNj5fRxqOFY6EcRAAy4PJqnmlX+knMJBOz9MqtXgvQJE+8SRS9vY8iFM
+ k
+X-Gm-Gg: ASbGnctQ1ZE2maOwd4d3dUwcSPAi5dlx7JsoYihHxu6a/oJndMb5NWjRpxcrZreFJu6
+ kE6oaGXhYi43x/Y8+Y/uaYicbYcLs5k43uKR1u3WHKtx2Oje1s5QAdBaBaDv2GEeYkk0iw28514
+ U0Bld6yTFkj58tKSnGu2Q2+kvhxbG8K+ACmB5YHxjoh7TGI+bQsLqh94WBY3Muh2yDEa9jLSR2G
+ 9BlWW8SwKvyj7ozaSxqEr6gWkKcSR2yWzb/kKnN4e6hxSVYVxTaHoRt9B+sYNj7shUO6mK6vHA7
+ VqxpOXNblqLgLxHd9Ozl
+X-Google-Smtp-Source: AGHT+IFoe3+CxYVZ3JWf9BaCNW341TLW+JBqwXnDt62weu737nTif8sq5dh/WAPUO38MheV24JADww==
+X-Received: by 2002:a7b:c342:0:b0:42c:baf1:4c7 with SMTP id
+ 5b1f17b1804b1-43912d150bbmr136614685e9.4.1739202596379; 
+ Mon, 10 Feb 2025 07:49:56 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391dfd8448sm150612845e9.38.2025.02.10.07.49.53
+ 5b1f17b1804b1-4391dfd8448sm150612845e9.38.2025.02.10.07.49.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 07:49:53 -0800 (PST)
+ Mon, 10 Feb 2025 07:49:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/12] hw/cpu/arm: Declare CPU QOM types using DEFINE_TYPES()
- macro
-Date: Mon, 10 Feb 2025 15:49:39 +0000
-Message-Id: <20250210154942.3634878-10-peter.maydell@linaro.org>
+Subject: [PULL 11/12] qemu-options: Deprecate -old-param command line option
+Date: Mon, 10 Feb 2025 15:49:41 +0000
+Message-Id: <20250210154942.3634878-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250210154942.3634878-1-peter.maydell@linaro.org>
 References: <20250210154942.3634878-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,148 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The '-old-param' command line option is specific to Arm targets; it
+is very briefly documented as "old param mode".  What this option
+actually does is change the behaviour when directly booting a guest
+kernel, so that command line arguments are passed to the kernel using
+the extremely old "param_struct" ABI, rather than the newer ATAGS or
+even newer DTB mechanisms.
 
-When multiple QOM types are registered in the same file,
-it is simpler to use the the DEFINE_TYPES() macro. In
-particular because type array declared with such macro
-are easier to review.
+This support was added back in 2007 to support an old vendor kernel
+on the akita/terrier board types:
+ https://mail.gnu.org/archive/html/qemu-devel/2007-07/msg00344.html
+Even then, it was an out-of-date mechanism from the kernel's
+point of view -- the kernel has had a comment since 2001 marking
+it as deprecated. As of mid-2024, the kernel only retained
+param_struct support for the RiscPC and Footbridge platforms:
+ https://lore.kernel.org/linux-arm-kernel/2831c5a6-cfbf-4fe0-b51c-0396e5b0aeb7@app.fastmail.com/
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Message-id: 20250130112615.3219-7-philmd@linaro.org
+None of the board types QEMU supports need param_struct support;
+mark this option as deprecated.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20250127123113.2947620-1-peter.maydell@linaro.org
 ---
- hw/cpu/a15mpcore.c       | 21 +++++++++------------
- hw/cpu/a9mpcore.c        | 21 +++++++++------------
- hw/cpu/arm11mpcore.c     | 21 +++++++++------------
- hw/cpu/realview_mpcore.c | 21 +++++++++------------
- 4 files changed, 36 insertions(+), 48 deletions(-)
+ docs/about/deprecated.rst | 13 +++++++++++++
+ system/vl.c               |  1 +
+ 2 files changed, 14 insertions(+)
 
-diff --git a/hw/cpu/a15mpcore.c b/hw/cpu/a15mpcore.c
-index 3b0897e54ee..d24ab0a6ab2 100644
---- a/hw/cpu/a15mpcore.c
-+++ b/hw/cpu/a15mpcore.c
-@@ -164,17 +164,14 @@ static void a15mp_priv_class_init(ObjectClass *klass, void *data)
-     /* We currently have no saveable state */
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 29de49351d1..a4c7d642236 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -68,6 +68,19 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
+ marked deprecated since 9.0, users have to ensure that all the topology members
+ described with -smp are supported by the target machine.
  
--static const TypeInfo a15mp_priv_info = {
--    .name  = TYPE_A15MPCORE_PRIV,
--    .parent = TYPE_SYS_BUS_DEVICE,
--    .instance_size  = sizeof(A15MPPrivState),
--    .instance_init = a15mp_priv_initfn,
--    .class_init = a15mp_priv_class_init,
-+static const TypeInfo a15mp_types[] = {
-+    {
-+        .name           = TYPE_A15MPCORE_PRIV,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(A15MPPrivState),
-+        .instance_init  = a15mp_priv_initfn,
-+        .class_init     = a15mp_priv_class_init,
-+    },
- };
++``-old-param`` option for booting Arm kernels via param_struct (since 10.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The ``-old-param`` command line option is specific to Arm targets:
++it is used when directly booting a guest kernel to pass it the
++command line and other information via the old ``param_struct`` ABI,
++rather than the newer ATAGS or DTB mechanisms. This option was only
++ever needed to support ancient kernels on some old board types
++like the ``akita`` or ``terrier``; it has been deprecated in the
++kernel since 2001. None of the board types QEMU supports need
++``param_struct`` support, so this option has been deprecated and will
++be removed in a future QEMU version.
++
+ User-mode emulator command line arguments
+ -----------------------------------------
  
--static void a15mp_register_types(void)
--{
--    type_register_static(&a15mp_priv_info);
--}
--
--type_init(a15mp_register_types)
-+DEFINE_TYPES(a15mp_types)
-diff --git a/hw/cpu/a9mpcore.c b/hw/cpu/a9mpcore.c
-index 9671585b5f9..25416c5032b 100644
---- a/hw/cpu/a9mpcore.c
-+++ b/hw/cpu/a9mpcore.c
-@@ -177,17 +177,14 @@ static void a9mp_priv_class_init(ObjectClass *klass, void *data)
-     device_class_set_props(dc, a9mp_priv_properties);
- }
- 
--static const TypeInfo a9mp_priv_info = {
--    .name          = TYPE_A9MPCORE_PRIV,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(A9MPPrivState),
--    .instance_init = a9mp_priv_initfn,
--    .class_init    = a9mp_priv_class_init,
-+static const TypeInfo a9mp_types[] = {
-+    {
-+        .name           = TYPE_A9MPCORE_PRIV,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  =  sizeof(A9MPPrivState),
-+        .instance_init  = a9mp_priv_initfn,
-+        .class_init     = a9mp_priv_class_init,
-+    },
- };
- 
--static void a9mp_register_types(void)
--{
--    type_register_static(&a9mp_priv_info);
--}
--
--type_init(a9mp_register_types)
-+DEFINE_TYPES(a9mp_types)
-diff --git a/hw/cpu/arm11mpcore.c b/hw/cpu/arm11mpcore.c
-index 94861a06d94..b56bee6d543 100644
---- a/hw/cpu/arm11mpcore.c
-+++ b/hw/cpu/arm11mpcore.c
-@@ -152,17 +152,14 @@ static void mpcore_priv_class_init(ObjectClass *klass, void *data)
-     device_class_set_props(dc, mpcore_priv_properties);
- }
- 
--static const TypeInfo mpcore_priv_info = {
--    .name          = TYPE_ARM11MPCORE_PRIV,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(ARM11MPCorePriveState),
--    .instance_init = mpcore_priv_initfn,
--    .class_init    = mpcore_priv_class_init,
-+static const TypeInfo arm11mp_types[] = {
-+    {
-+        .name           = TYPE_ARM11MPCORE_PRIV,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(ARM11MPCorePriveState),
-+        .instance_init  = mpcore_priv_initfn,
-+        .class_init     = mpcore_priv_class_init,
-+    },
- };
- 
--static void arm11mpcore_register_types(void)
--{
--    type_register_static(&mpcore_priv_info);
--}
--
--type_init(arm11mpcore_register_types)
-+DEFINE_TYPES(arm11mp_types)
-diff --git a/hw/cpu/realview_mpcore.c b/hw/cpu/realview_mpcore.c
-index 7480b38d1ab..b1408886184 100644
---- a/hw/cpu/realview_mpcore.c
-+++ b/hw/cpu/realview_mpcore.c
-@@ -114,17 +114,14 @@ static void mpcore_rirq_class_init(ObjectClass *klass, void *data)
-     dc->realize = realview_mpcore_realize;
- }
- 
--static const TypeInfo mpcore_rirq_info = {
--    .name          = TYPE_REALVIEW_MPCORE_RIRQ,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(mpcore_rirq_state),
--    .instance_init = mpcore_rirq_init,
--    .class_init    = mpcore_rirq_class_init,
-+static const TypeInfo realview_mpcore_types[] = {
-+    {
-+        .name           = TYPE_REALVIEW_MPCORE_RIRQ,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(mpcore_rirq_state),
-+        .instance_init  = mpcore_rirq_init,
-+        .class_init     = mpcore_rirq_class_init,
-+    },
- };
- 
--static void realview_mpcore_register_types(void)
--{
--    type_register_static(&mpcore_rirq_info);
--}
--
--type_init(realview_mpcore_register_types)
-+DEFINE_TYPES(realview_mpcore_types)
+diff --git a/system/vl.c b/system/vl.c
+index db8e604ebab..aa91047c480 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3469,6 +3469,7 @@ void qemu_init(int argc, char **argv)
+                 nb_prom_envs++;
+                 break;
+             case QEMU_OPTION_old_param:
++                warn_report("-old-param is deprecated");
+                 old_param = 1;
+                 break;
+             case QEMU_OPTION_rtc:
 -- 
 2.34.1
 
