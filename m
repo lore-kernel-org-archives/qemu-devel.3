@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D45C0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 11:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DB2C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 11:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thSDT-0007Rc-82; Mon, 10 Feb 2025 06:44:43 -0500
+	id 1thSKa-0001lJ-SA; Mon, 10 Feb 2025 06:52:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSDL-0007PL-5o
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:44:36 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1thSKU-0001kR-RY; Mon, 10 Feb 2025 06:52:00 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSDJ-0007JV-8f
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:44:34 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43946b5920cso3933455e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 03:44:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1thSKS-00089e-CP; Mon, 10 Feb 2025 06:51:58 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2fa1fb3c445so4867621a91.2; 
+ Mon, 10 Feb 2025 03:51:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739187871; x=1739792671; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Fq/MaIf7u/qe/AJ/loUwx22EaMeIBHXoGSZ8t/jl0vE=;
- b=voBNaGoI/iQp4Z3NN01n02SGFDlWNDm5Usjfqjz6UHP4CgDIds2TQBDHANYJderM9j
- sYA/lHtRzAqLzOajIppE00Mkx2CfCxGo+zsFiR/sDT0AO+ZkmKkxJ+P8TY+Q1pNGSMGy
- 63dXZe0ZmFp8+vor0ulCBPlFlJ+NHqTdzDalzQ1gTl6kYzRD84sUq3zC8hZe2CflFU3e
- 2dzqXA3vXaxc7bkEAc2Uw02jK2ooax2jnopy6iLbA11hPR6ozxMONm3m2yrGQssLH8NB
- B7NvVN39elbsvAeUhk6aED2hf/Jc5DEqNkrZNqEMhieJ8amTdYhyphBtSqIB+pH/HPpH
- rb9w==
+ d=gmail.com; s=20230601; t=1739188314; x=1739793114; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P9tAvp6r8kOY87WceoaBiekGM0rVtgkrdKYF78gCjTo=;
+ b=KLZecJ/ZqKLpj8Jbh8gKw418ELLUysl68cHEW9RMeBSPKhbz6ToRt1p9Xf1BjiD7WO
+ +s90u3u+MKZxNptr2ZTs3yz7nKixKaLlGx8/hAVK2go7cul/NBOib0ZCqEvu/TwSND5H
+ dOL+5x7r97z8WLW5ECpPHABOZI29Lmu+OZ4IOkAT9jDc8rEAbU/bZGk82xZQijGzF31j
+ Z2ggnsWfpXsL45DTWS/zJfZPnAKWNhqPIQNXdo+SrhPsoDKgnY8U0GEbu6nGF9wtDXTz
+ njUKk6PAoTTpq2uCgTXrvoqEmn4P1Al4Xo5qp+uB1pz1tChj6C0ZaQbkgqBxfzbqNv58
+ sayg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739187871; x=1739792671;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fq/MaIf7u/qe/AJ/loUwx22EaMeIBHXoGSZ8t/jl0vE=;
- b=HcmzqcrG91KgnGKE5EJ0v+Is1Y/aqVtz5hRBqs7gjA0UeJTfeQicODGTUUsD2KztsO
- 45N3+ktfpLB2wMRdjI4GqXYfeCIkOgtvosmNI624wSQVhvg4c5t4KqcsIdK014kC/Oyf
- Xpnmej3NtRC1oF4hxuTFNY92ODLfKk/wDhp+lnwcJNDtDYC/t3fSs9YlfgafcWGC9wm7
- VZf8ne2JKO1Mz4CpmmexDBLV0Q6mjPEdwSe1DppvX3mLBsOSFr7FY8qwOizgB6X+g4VB
- 4tPfgILjTLH4my/0iQIu4u3QDUxGwwAgyqvwvi//r84v5pg+isjTsY2ReQkBQdAisFFM
- SolA==
+ d=1e100.net; s=20230601; t=1739188314; x=1739793114;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=P9tAvp6r8kOY87WceoaBiekGM0rVtgkrdKYF78gCjTo=;
+ b=Sx5y5XCINc+Z06JzLPi8GjtVsIBSvGD0boJ+8gDdI8PRwc52eUMLyc7km1B+Lq2G9w
+ zH/d02W3K+o28UxKPvzDDxQTJOJ/Zoai/q/P/Vs1ncWJEWgzifGSe1lxBJvyuSd4KfXv
+ aEw3osTjvy27tPMsEUUF1aIZyIV+MI38+I56RWeTwdSeLHpxkGfhiFZT/cSKrP1qswp8
+ jeaYQ5C14HaXpzoOlC0m3cq/WPkXwnv7iSseg+lWCGryw5dTjhSJCCiKayuyFyl/J70V
+ IilPBjkwY6izOTaKgvPmVnvqNpgy4peZ8QEwGL/VGGmZY3zfP3u4TGvLAaSNLGZUaR3Y
+ sNHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsUTYQCS8tQVUM2j7DKgjG0HkIqAeMQgjuY6XMBPge7CAgn5RGbl2a6E5ONHckkkmlEfEf0h68pN6T@nongnu.org
-X-Gm-Message-State: AOJu0YwmnvQqhC+49KjvCFpzZtnCk1VofKCwaINdG6RtCp+8k6I4dDXl
- 6kNTKbOvO7hJiIv9SzliR+cXJuxPUcV17PH+FKIF5N5XIk8xQf8y7118b7FDGS0=
-X-Gm-Gg: ASbGncuIZDJ/vFpnTbVHAcBoudG216IgGXE2ZqwHzAPaNPilSZNIQYim//Vj8eQtnTj
- Q9nOaXtUElzqhnrp3tmzdt05bT1MvKfCSbrlbDfW4sf8LUeQLp4XbkvVMo9lxzJUU1kXWQk9Jho
- UWa8Iauns6LB9AE0t0Pv4QGdc51U1xWqgxZdAb+iRrlfpUT6g6wemqnVxUtN2rRWjes9ciywMLa
- ota16iww6KmvfLfp0fwAVVQ9nmedSOlu1ng+9Vr5Sa4h1yEmVxasFSrcmWO53lNKALsiLNDslvr
- Sy7XvnUDnZGIvyNu0pwRtAk0oDlOwHHhi3nR20UFgvEt2/bCZ4wFAQDBo4pJ20Zs
-X-Google-Smtp-Source: AGHT+IHclkkc3V1Mg7e2WiJByU7kP3k3KyklXr7mUmYWGpg/YqefGj2aiF3N2JbFWF3KvylssktNow==
-X-Received: by 2002:a05:600c:3b20:b0:438:d9f1:f5cc with SMTP id
- 5b1f17b1804b1-43924988c67mr103224345e9.8.1739187871478; 
- Mon, 10 Feb 2025 03:44:31 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390db11750sm181978405e9.40.2025.02.10.03.44.30
+ AJvYcCX0s9A6x6YkS18tiYxkXQhAQTBn97D7GKy2ydgPaJC7B99oVXqyIg5FykkeSVDSq9xjvL0gjw+c7Gbg@nongnu.org
+X-Gm-Message-State: AOJu0YzkgcZOXHHPQPCHCvwuDUdCxktQO9rayt09Y091pJlK/JDW2ups
+ 2XrYXnF7GRn3hzKPSCb6jEocyK8IIgmngbUkH0sRkfPZYIRdTJYl
+X-Gm-Gg: ASbGnctS1g6DYg5DCoeFgyyDQJzPL06AGRW3bJeAJyLMkTKKfqesIFa+zuAAkVY5pKr
+ YX3mBue84PTjUZ0rMnbHK64msAp0eTNsd34vuas7LVPK6TWzv+pdSkNTZkjvGeqWebp8f+tkRN0
+ MqbFEyPRBFFhswveX2Qo/kIANEFoJwp9PMbjV+u+Q81BF5moU1gEvf3TmfbtO37hsxWKzDVJjmT
+ 1DSwL1n330V+mRdRXJNQN6chRTLA5FFyTHMPUdTJeSM/u8B7HbWPJIypHqQtOc9EQ6OvyNu0MeP
+ zLHJ5KqVxQE=
+X-Google-Smtp-Source: AGHT+IE121SwXBgi5jzD6zcqeOEQ/S3DOfxbNjl0696niG6xDlbjd1x3J2K5y54IfRGO/yf6bv/p+w==
+X-Received: by 2002:a17:90b:184d:b0:2ee:d824:b559 with SMTP id
+ 98e67ed59e1d1-2fa243f058cmr20492432a91.28.1739188314154; 
+ Mon, 10 Feb 2025 03:51:54 -0800 (PST)
+Received: from localhost ([118.209.251.215]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f368bb4bdsm75518615ad.235.2025.02.10.03.51.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 03:44:31 -0800 (PST)
-Message-ID: <f0518994-e7f2-4341-add5-5265329603ef@linaro.org>
-Date: Mon, 10 Feb 2025 12:44:30 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: Remove unused blk_op_is_blocked()
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-References: <20250206165331.379033-1-kwolf@redhat.com>
- <b46b9348-0f28-4714-8b39-13cf2e62a649@linaro.org>
- <Z6UfKeso5lackAKq@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z6UfKeso5lackAKq@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+ Mon, 10 Feb 2025 03:51:53 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 10 Feb 2025 21:51:48 +1000
+Message-Id: <D7OQSUZR3065.2W7CYPR1UJMWT@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 0/3] ppc: Remove ref405ep
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20250204080649.836155-1-clg@redhat.com>
+In-Reply-To: <20250204080649.836155-1-clg@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,24 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/25 21:44, Kevin Wolf wrote:
-> Am 06.02.2025 um 18:25 hat Philippe Mathieu-Daudé geschrieben:
->> On 6/2/25 17:53, Kevin Wolf wrote:
->>> Commit fc4e394b28 removed the last caller of blk_op_is_blocked(). Remove
->>> the now unused function.
->>
->> fatal: ambiguous argument 'fc4e394b28': unknown revision or path not in the
->> working tree.
->>
->> Is there a patch on the list?
-> 
-> It's in my pending pull request (which I hope to go through - otherwise
-> I'll have to update the commit ID here). This is the patch:
-> 
-> https://patchew.org/QEMU/20250203182529.269066-1-stefanha@redhat.com/
+On Tue Feb 4, 2025 at 6:06 PM AEST, C=C3=A9dric Le Goater wrote:
+> Hello,
+>
+> The PPC 405 CPU and ref405ep machine was deprecated in QEMU 9.1
+> because there are no known users, firmware images are not available,
+> OpenWRT dropped support in 2019, U-Boot in 2017, and Linux in 2024.
+>
+> Continue the phase-out process and remove tests, plus boards. The 405
+> CPU implementation is kept for a while because it is possible to model
+> the power management (OCC) co-processor found on the IBM POWER [8-11]
+> processors.
+>
+> Thanks,
 
-OK! Then:
+Thanks Cedric, this looks fine. Daniel mentioned updating the MAINTAINER
+file, but I think since you've removed the board then the entry can just
+be removed as you have since there is no separate MAINTAINER entry for
+the 405 CPU emulation. I think the note in the deprecated doc should be
+sufficient for that.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
+>
+> C.
+>
+> Changes in v2:
+>
+>  - keep CPU implementation (for OCC possible models)
+>
+> C=C3=A9dric Le Goater (3):
+>   ppc/ppc405: Remove tests
+>   ppc/ppc405: Remove boards
+>   hw/ppc: Deprecate 405 CPUs
+>
+>  MAINTAINERS                      |    6 -
+>  docs/about/deprecated.rst        |   17 +-
+>  docs/about/removed-features.rst  |    7 +
+>  docs/system/ppc/embedded.rst     |    1 -
+>  hw/ppc/ppc405.h                  |  186 -----
+>  hw/ppc/ppc405_boards.c           |  520 -------------
+>  hw/ppc/ppc405_uc.c               | 1216 ------------------------------
+>  tests/qtest/m48t59-test.c        |    5 -
+>  hw/ppc/Kconfig                   |    9 -
+>  hw/ppc/meson.build               |    3 -
+>  tests/functional/meson.build     |    1 -
+>  tests/functional/test_ppc_405.py |   37 -
+>  tests/qtest/meson.build          |    1 -
+>  13 files changed, 16 insertions(+), 1993 deletions(-)
+>  delete mode 100644 hw/ppc/ppc405.h
+>  delete mode 100644 hw/ppc/ppc405_boards.c
+>  delete mode 100644 hw/ppc/ppc405_uc.c
+>  delete mode 100755 tests/functional/test_ppc_405.py
 
 
