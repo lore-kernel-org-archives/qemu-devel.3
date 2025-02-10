@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC44C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D84BC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thacK-0006kb-Ly; Mon, 10 Feb 2025 15:42:56 -0500
+	id 1thace-00078N-OW; Mon, 10 Feb 2025 15:43:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacJ-0006hh-3z
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:55 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacV-00073w-PM
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:43:07 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacH-0003du-H9
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:54 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-38dd93a6f0aso1416905f8f.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:42:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacT-0003et-Hw
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:43:07 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38dd9b3419cso1030189f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:43:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739220171; x=1739824971; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739220183; x=1739824983; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GOkHWRVq/7AcufWqPBNvF3JtlhqdXf5mWn9gacGGeOo=;
- b=PEEj7ehBujeiGyPeemOIzk8ewxhIXCxQ19hb4W2c/vCsTUO1n41+WGn2Urc8XtqEW4
- PP9LEmdV9XPGEb1T7YInOKItBHgZZxarfatJ/HhOD/D+Yhn1EaO32R0qA8fXkNOJFQ94
- CMFwqVDvnIOGaGl5Zx/TMGToR6Y4q4jwlFr8Vem8EDgaa54K/UaCn69n+kc/XmzQsnRM
- LsJoc9OkleBXDEzJw09Gh/ii7enEI9EzDKk2OxP7SR538xgUWwNuYSnswVH3GOsi6XXA
- pul+IVA60kjjLOxwn6yP4xZM6ooLZyDTyLc5CYf3Bq1FTaDigfEHxmk1dcT8ojCP9BWO
- aMgg==
+ bh=RAVRicxK4K9Kq8EWK86Z7wtR9JdvR1JNSPA3JXMRgOI=;
+ b=F/Nt/ZuzvgAKz4rXFSfgjUThduJ9ealiSuIvcZwCC6mAzVFbhcuVpBnMmcTr+u/Qob
+ Y9Cb8I8GwWJyYY8xGIvuiqs4tcOuZckvocrzwNb6Owxrau7HS0XVgoOO09EGjyvu148J
+ pKWUKjxjovdS01+saGIimWAz6RUCgoisY8th7HsYPx915lekFSikHYeuWuN7jycYzLFq
+ 2G/DEnMzZzLEGxcBYxOShAmup2ASc3S+kT1ct337NBzDEpAVT5FFeO2tTLCW/Q7hsknJ
+ PrCXqMgZBLRSxfwVO/BBm0aIr/KM3APL4tne4u/EI7b9gOm3gcpnCRr0rsbJLDLknDmO
+ eV6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739220171; x=1739824971;
+ d=1e100.net; s=20230601; t=1739220183; x=1739824983;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GOkHWRVq/7AcufWqPBNvF3JtlhqdXf5mWn9gacGGeOo=;
- b=tKzl6uVFalGVK3Nu5/K+LaLCFav9P65z8POorHk1RFFXPEzYs2IQ2FltDQp+hT6dih
- qxu3ne+aV/4lpQK34zAVNW+8qcxRF/pS3vAESiJoKdSF/yz4HHsYmdfdOVPFgVIx429/
- ++fw14nAdP3cFlnlthvNAGY8CAEgT3wy5D2yRtd/mAIl/qRN5sG71Il0FSzuUy47rUkk
- bvFc2Ems5y7o2nbn2WK0mSBEnd3222OO/biEiDN/SI3qLdV7d5/6TYKUNk/GMMHAgnHc
- o/lCbpBfskxVOwKz5tULMECUk/6Ohi8HwvOn6CV8mVChtp4qtSLershAxnJOwJPLRd8n
- 7Jwg==
-X-Gm-Message-State: AOJu0Yy26JZ4TaV9QXnV4NoJGD9bqEg01sA72y0rEJ5yv8DQuzj1HXZt
- ly8DOT1ROqDuVbyJPuOs7VNFKaUz+xK81UC6V5dxE+Ie6ZSwkut90hveMebOwjghOa2Ilc4+bhP
- Rp9c=
-X-Gm-Gg: ASbGnctlevzC6ZWbZ9icugj80PRktq9Aw48JSU1X+GoqUQxYnVpsz1ufqqz3EdPkTrd
- aODh9i3QCAWoDkMheIWTtomKDSBT11cfzeMzLh9XfDS7+6MUQSkmgX6d/hmXLkIVO/1RhFqs2B8
- jR+293wgLUw/5gVoLjLCBV4M9SG8o+BuS1uz5K8XYE1R6jtYRofp0cgqkZ3/o2BOeGKfb/9R0jZ
- +5xufiycY49JRfveEonNwJkYOcZB++WURjlWpIycSbVW1i/9ZiiKf6ml90FzG8PtMn7KgD4w5cE
- uyVtmcxnIvwdiIbKgPmmNSFG3EagYVbfGPp9vNbhrCm/pqjFiuN0O5nAfT5C43bLKg==
-X-Google-Smtp-Source: AGHT+IH1pliFBulv3OpDz285krX25B3ucS9m8Fylqwvh7mokOa4sAKjz5nxqJSC4Tl1FO3PuMfL3BA==
-X-Received: by 2002:a05:6000:cc:b0:38a:87cc:fb42 with SMTP id
- ffacd0b85a97d-38dc8decf44mr10619754f8f.21.1739220171604; 
- Mon, 10 Feb 2025 12:42:51 -0800 (PST)
+ bh=RAVRicxK4K9Kq8EWK86Z7wtR9JdvR1JNSPA3JXMRgOI=;
+ b=HZkboRn889RWMUTFFGVlMoLMigjfZSu5jifcyV7GeAr+oDWGJucuUW5MnD2jWRB45S
+ ADigz/LoA6+2L4rbq95FFGOPEyC3JLKd9f+ZvYjulbHp1dHqzwDViLwXFxH+cEiY00ak
+ iSz9U39sr+MH1SSAa3qexKqntQL5wgUIKJzhC1bStCFnaC9F3Tg0RduIUhmrXoGsJRd+
+ G9b2OmegEmwvsTzuhuttfHtINdMSWWAPRw3EQPkrORyJAT/ldmCKa83A5uQiWB3Gf66a
+ KYDd+J/SJlnG4+0hifMOrTrvJmRrgvxeSVgOu+FdFfHkKBcstEiJdS9smK2G13aLlkIN
+ qV3A==
+X-Gm-Message-State: AOJu0Yzk1iGT4yslN1meWLLwC8tl0dD2YyJQ30uZWp+v67xwGIBhw1YZ
+ PCSfc0r4crXsdHk1WRUdmpci3YINjgT41zb7O5UWivpcAdL48btpi0X0ihueZXt4YVWXHF4VLdE
+ sZH4=
+X-Gm-Gg: ASbGncuIcQ1b3KlZNZVdI1VdocD1tO1N8SsrUb/tW3F913UxGHuf3IYNIDJN3oL6DXU
+ GzKjyU4xL4N6S0jngmaVxwgucKeRLBjbxE2LqO19tXSzkeyVVMGJf1COtgPnZodkpmAc5iDCIj4
+ o0gb1URcQ5eg2Ul87WsvmlVBW53ppLsshWDJ6n37SivKkQz7oiYALVwacSuPka1VrZ/R8L0CFDi
+ mx1w0I9XmFT7GFM8i4deiMQ4Y1IVUP9OxolHVSWNK3yiQf/nn5sqUvbCQXVP1NXKKge30Xm98K2
+ Xni+I8vVvKVlUGxOY/AzjScL8qrLTVe6bqPKMZHp0KvRuNnZoCOmqsQDEDFpSWSNVQ==
+X-Google-Smtp-Source: AGHT+IEi/cecoR//pPrgCGJzlNCbVXKKhzz2o29C7A6Z6aoYlWdD5x6B4ZEuM3gFSS1vmq8ZMYSwEA==
+X-Received: by 2002:a05:6000:1846:b0:38d:e34f:6aa4 with SMTP id
+ ffacd0b85a97d-38de41c3ce0mr937828f8f.47.1739220182937; 
+ Mon, 10 Feb 2025 12:43:02 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dd3fc7ee5sm7835378f8f.39.2025.02.10.12.42.50
+ 5b1f17b1804b1-4390db11200sm189069465e9.38.2025.02.10.12.43.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 12:42:51 -0800 (PST)
+ Mon, 10 Feb 2025 12:43:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/32] hw/core/machine: Reject thread level cache
-Date: Mon, 10 Feb 2025 21:41:41 +0100
-Message-ID: <20250210204204.54407-10-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <graf@amazon.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 11/32] hw/sysbus: Declare QOM types using DEFINE_TYPES() macro
+Date: Mon, 10 Feb 2025 21:41:43 +0100
+Message-ID: <20250210204204.54407-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250210204204.54407-1-philmd@linaro.org>
 References: <20250210204204.54407-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,52 +102,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+When multiple QOM types are registered in the same file,
+it is simpler to use the the DEFINE_TYPES() macro. In
+particular because type array declared with such macro
+are easier to review.
 
-Currently, neither i386 nor ARM have real hardware support for per-
-thread cache, and there is no clear demand for this specific cache
-topology.
-
-Additionally, since ARM even can't support this special cache topology
-in device tree, it is unnecessary to support it at this moment, even
-though per-thread cache might have potential scheduling benefits for
-VMs without CPU affinity.
-
-Therefore, disable thread-level cache topology in the general machine
-part. At present, i386 has not enabled SMP cache, so disabling the
-thread parameter does not pose compatibility issues.
-
-In the future, if there is a clear demand for this feature, the correct
-approach would be to add a new control field in MachineClass.smp_props
-and enable it only for the machines that require it.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250110145115.1574345-2-zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20250125181343.59151-3-philmd@linaro.org>
 ---
- hw/core/machine-smp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/core/sysbus.c | 40 +++++++++++++++++-----------------------
+ 1 file changed, 17 insertions(+), 23 deletions(-)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index b954eb84902..4e020c358b6 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -321,6 +321,13 @@ bool machine_parse_smp_cache(MachineState *ms,
-             return false;
-         }
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index f713bbfe04f..075c7dfd69b 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -19,7 +19,6 @@
  
-+        if (props->topology == CPU_TOPOLOGY_LEVEL_THREAD) {
-+            error_setg(errp,
-+                       "%s level cache not supported by this machine",
-+                       CpuTopologyLevel_str(props->topology));
-+            return false;
-+        }
-+
-         if (!machine_check_topo_support(ms, props->topology, errp)) {
-             return false;
-         }
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "qemu/module.h"
+ #include "hw/sysbus.h"
+ #include "monitor/monitor.h"
+ #include "exec/address-spaces.h"
+@@ -80,13 +79,6 @@ static void system_bus_class_init(ObjectClass *klass, void *data)
+     k->get_fw_dev_path = sysbus_get_fw_dev_path;
+ }
+ 
+-static const TypeInfo system_bus_info = {
+-    .name = TYPE_SYSTEM_BUS,
+-    .parent = TYPE_BUS,
+-    .instance_size = sizeof(BusState),
+-    .class_init = system_bus_class_init,
+-};
+-
+ /* Check whether an IRQ source exists */
+ bool sysbus_has_irq(SysBusDevice *dev, int n)
+ {
+@@ -306,15 +298,6 @@ static void sysbus_device_class_init(ObjectClass *klass, void *data)
+     k->user_creatable = false;
+ }
+ 
+-static const TypeInfo sysbus_device_type_info = {
+-    .name = TYPE_SYS_BUS_DEVICE,
+-    .parent = TYPE_DEVICE,
+-    .instance_size = sizeof(SysBusDevice),
+-    .abstract = true,
+-    .class_size = sizeof(SysBusDeviceClass),
+-    .class_init = sysbus_device_class_init,
+-};
+-
+ static BusState *main_system_bus;
+ 
+ static void main_system_bus_create(void)
+@@ -337,10 +320,21 @@ BusState *sysbus_get_default(void)
+     return main_system_bus;
+ }
+ 
+-static void sysbus_register_types(void)
+-{
+-    type_register_static(&system_bus_info);
+-    type_register_static(&sysbus_device_type_info);
+-}
++static const TypeInfo sysbus_types[] = {
++    {
++        .name           = TYPE_SYSTEM_BUS,
++        .parent         = TYPE_BUS,
++        .instance_size  = sizeof(BusState),
++        .class_init     = system_bus_class_init,
++    },
++    {
++        .name           = TYPE_SYS_BUS_DEVICE,
++        .parent         = TYPE_DEVICE,
++        .instance_size  = sizeof(SysBusDevice),
++        .abstract       = true,
++        .class_size     = sizeof(SysBusDeviceClass),
++        .class_init     = sysbus_device_class_init,
++    },
++};
+ 
+-type_init(sysbus_register_types)
++DEFINE_TYPES(sysbus_types)
 -- 
 2.47.1
 
