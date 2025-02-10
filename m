@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D37BC0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C76F9C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWNv-0006iB-Aj; Mon, 10 Feb 2025 11:11:49 -0500
+	id 1thWO7-0006pE-RA; Mon, 10 Feb 2025 11:11:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNf-0006cz-7l
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:31 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNs-0006h8-TI
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNc-00015O-Jd
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:30 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNp-00017z-TS
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739203887;
+ s=mimecast20190719; t=1739203901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Owm3L4ZkbUxQ1Ak58FVJDI2GR7Xl4Q+NxrFDOZZM414=;
- b=S2mBken4qs5yi1MgEaNXiUb9MzlYWMEgfmiW46z1oS91NFinnTHYhLrMtVSWguMbl4ft6E
- nd7zu1gV8Eq17xsN6OWXkhUr0Gpshe9KOYgqFYnyV8vEaTrUmAn4dX4FTA0SXHGaUTASgr
- /Bevf+Kyv0z69rPmuqEZhEbJrAzGwIE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=yzw6kPQK4fjsn/KDPQEjLySTEtEaxHvhHdbz5V3w+cw=;
+ b=J7qYivGwVgw1ObYdvxOnf3If0/TG/Wc63jJH98TS6DClu6W/ASPb4DTQVlbSzNwFhsoGX0
+ zxNvr/qnmQQ4/eRmRJI8T1pVwcLr3tPnPwFFmf/63gvtUzM/s47QK/kvhIkpP1hLtospoF
+ XDTBtQXbw5rfc0DrIp4V/UbYJVn+498=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-S6vqwdTzPmeGLJkPmaSmsA-1; Mon,
- 10 Feb 2025 11:11:21 -0500
-X-MC-Unique: S6vqwdTzPmeGLJkPmaSmsA-1
-X-Mimecast-MFC-AGG-ID: S6vqwdTzPmeGLJkPmaSmsA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-vfnsuIUrMNW6wM7MpzG0jA-1; Mon,
+ 10 Feb 2025 11:11:39 -0500
+X-MC-Unique: vfnsuIUrMNW6wM7MpzG0jA-1
+X-Mimecast-MFC-AGG-ID: vfnsuIUrMNW6wM7MpzG0jA
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADFB71801A0D; Mon, 10 Feb 2025 16:11:20 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D43319560AA; Mon, 10 Feb 2025 16:11:33 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.225.156])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 665AB195608D; Mon, 10 Feb 2025 16:11:19 +0000 (UTC)
+ id D817C195608D; Mon, 10 Feb 2025 16:11:31 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 16/25] block: Add blockdev-set-active QMP command
-Date: Mon, 10 Feb 2025 17:10:25 +0100
-Message-ID: <20250210161034.76494-17-kwolf@redhat.com>
+Subject: [PULL 23/25] iotests: Add qsd-migrate case
+Date: Mon, 10 Feb 2025 17:10:32 +0100
+Message-ID: <20250210161034.76494-24-kwolf@redhat.com>
 In-Reply-To: <20250210161034.76494-1-kwolf@redhat.com>
 References: <20250210161034.76494-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -82,176 +82,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The system emulator tries to automatically activate and inactivate block
-nodes at the right point during migration. However, there are still
-cases where it's necessary that the user can do this manually.
-
-Images are only activated on the destination VM of a migration when the
-VM is actually resumed. If the VM was paused, this doesn't happen
-automatically. The user may want to perform some operation on a block
-device (e.g. taking a snapshot or starting a block job) without also
-resuming the VM yet. This is an example where a manual command is
-necessary.
-
-Another example is VM migration when the image files are opened by an
-external qemu-storage-daemon instance on each side. In this case, the
-process that needs to hand over the images isn't even part of the
-migration and can't know when the migration completes. Management tools
-need a way to explicitly inactivate images on the source and activate
-them on the destination.
-
-This adds a new blockdev-set-active QMP command that lets the user
-change the status of individual nodes (this is necessary in
-qemu-storage-daemon because it could be serving multiple VMs and only
-one of them migrates at a time). For convenience, operating on all
-devices (like QEMU does automatically during migration) is offered as an
-option, too, and can be used in the context of single VM.
+Test that it's possible to migrate a VM that uses an image on shared
+storage through qemu-storage-daemon.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 Acked-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20250204211407.381505-16-kwolf@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20250204211407.381505-9-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- qapi/block-core.json               | 32 ++++++++++++++++++++++++++++++
- include/block/block-global-state.h |  3 +++
- block.c                            | 21 ++++++++++++++++++++
- blockdev.c                         | 32 ++++++++++++++++++++++++++++++
- 4 files changed, 88 insertions(+)
+ tests/qemu-iotests/tests/qsd-migrate     | 140 +++++++++++++++++++++++
+ tests/qemu-iotests/tests/qsd-migrate.out |  59 ++++++++++
+ 2 files changed, 199 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/qsd-migrate
+ create mode 100644 tests/qemu-iotests/tests/qsd-migrate.out
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 6029e54889..ee6eccc68c 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4945,6 +4945,38 @@
- { 'command': 'blockdev-del', 'data': { 'node-name': 'str' },
-   'allow-preconfig': true }
- 
-+##
-+# @blockdev-set-active:
+diff --git a/tests/qemu-iotests/tests/qsd-migrate b/tests/qemu-iotests/tests/qsd-migrate
+new file mode 100755
+index 0000000000..de17562cb0
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qsd-migrate
+@@ -0,0 +1,140 @@
++#!/usr/bin/env python3
++# group: rw quick
 +#
-+# Activate or inactivate a block device. Use this to manage the handover of
-+# block devices on migration with qemu-storage-daemon.
++# Copyright (C) Red Hat, Inc.
 +#
-+# Activating a node automatically activates all of its child nodes first.
-+# Inactivating a node automatically inactivates any of its child nodes that are
-+# not in use by a still active node.
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
 +#
-+# @node-name: Name of the graph node to activate or inactivate. By default, all
-+#     nodes are affected by the operation.
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
 +#
-+# @active: true if the nodes should be active when the command returns success,
-+#     false if they should be inactive.
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 +#
-+# Since: 10.0
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "blockdev-set-active",
-+#          "arguments": {
-+#               "node-name": "node0",
-+#               "active": false
-+#          }
-+#        }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'blockdev-set-active',
-+  'data': { '*node-name': 'str', 'active': 'bool' },
-+  'allow-preconfig': true }
++# Creator/Owner: Kevin Wolf <kwolf@redhat.com>
 +
- ##
- # @BlockdevCreateOptionsFile:
- #
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index a826bf5f78..9be34b3c99 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -184,6 +184,9 @@ bdrv_activate(BlockDriverState *bs, Error **errp);
- int coroutine_fn no_co_wrapper_bdrv_rdlock
- bdrv_co_activate(BlockDriverState *bs, Error **errp);
- 
-+int no_coroutine_fn
-+bdrv_inactivate(BlockDriverState *bs, Error **errp);
++import iotests
 +
- void bdrv_activate_all(Error **errp);
- int bdrv_inactivate_all(void);
- 
-diff --git a/block.c b/block.c
-index 7f6eca392f..7eeb8d076e 100644
---- a/block.c
-+++ b/block.c
-@@ -7052,6 +7052,27 @@ bdrv_inactivate_recurse(BlockDriverState *bs, bool top_level)
-     return 0;
- }
- 
-+int bdrv_inactivate(BlockDriverState *bs, Error **errp)
-+{
-+    int ret;
++from iotests import filter_qemu_io, filter_qtest
 +
-+    GLOBAL_STATE_CODE();
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
++iotests.script_initialize(supported_fmts=['generic'],
++                          supported_protocols=['file'],
++                          supported_platforms=['linux'])
 +
-+    if (bdrv_has_bds_parent(bs, true)) {
-+        error_setg(errp, "Node has active parent node");
-+        return -EPERM;
-+    }
++with iotests.FilePath('disk.img') as path, \
++     iotests.FilePath('nbd-src.sock', base_dir=iotests.sock_dir) as nbd_src, \
++     iotests.FilePath('nbd-dst.sock', base_dir=iotests.sock_dir) as nbd_dst, \
++     iotests.FilePath('migrate.sock', base_dir=iotests.sock_dir) as mig_sock, \
++     iotests.VM(path_suffix="-src") as vm_src, \
++     iotests.VM(path_suffix="-dst") as vm_dst:
 +
-+    ret = bdrv_inactivate_recurse(bs, true);
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to inactivate node");
-+        return ret;
-+    }
++    img_size = '10M'
 +
-+    return 0;
-+}
++    iotests.log('Preparing disk...')
++    iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
 +
- int bdrv_inactivate_all(void)
- {
-     BlockDriverState *bs = NULL;
-diff --git a/blockdev.c b/blockdev.c
-index eb2517f1dd..7e0d433712 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -3471,6 +3471,38 @@ void qmp_blockdev_del(const char *node_name, Error **errp)
-     bdrv_unref(bs);
- }
- 
-+void qmp_blockdev_set_active(const char *node_name, bool active, Error **errp)
-+{
-+    int ret;
++    iotests.log('Launching source QSD...')
++    qsd_src = iotests.QemuStorageDaemon(
++        '--blockdev', f'file,node-name=disk-file,filename={path}',
++        '--blockdev', f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt',
++        '--nbd-server', f'addr.type=unix,addr.path={nbd_src}',
++        '--export', 'nbd,id=exp0,node-name=disk-fmt,writable=true,'
++                    'allow-inactive=true',
++        qmp=True,
++    )
 +
-+    GLOBAL_STATE_CODE();
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
++    iotests.log('Launching source VM...')
++    vm_src.add_args('-blockdev', f'nbd,node-name=disk,server.type=unix,'
++                                 f'server.path={nbd_src},export=disk-fmt')
++    vm_src.add_args('-device', 'virtio-blk,drive=disk,id=virtio0')
++    vm_src.launch()
 +
-+    if (!node_name) {
-+        if (active) {
-+            bdrv_activate_all(errp);
-+        } else {
-+            ret = bdrv_inactivate_all();
-+            if (ret < 0) {
-+                error_setg_errno(errp, -ret, "Failed to inactivate all nodes");
-+            }
-+        }
-+    } else {
-+        BlockDriverState *bs = bdrv_find_node(node_name);
-+        if (!bs) {
-+            error_setg(errp, "Failed to find node with node-name='%s'",
-+                       node_name);
-+            return;
-+        }
++    iotests.log('Launching destination QSD...')
++    qsd_dst = iotests.QemuStorageDaemon(
++        '--blockdev', f'file,node-name=disk-file,filename={path},active=off',
++        '--blockdev', f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
++                      f'active=off',
++        '--nbd-server', f'addr.type=unix,addr.path={nbd_dst}',
++        '--export', 'nbd,id=exp0,node-name=disk-fmt,writable=true,'
++                    'allow-inactive=true',
++        qmp=True,
++        instance_id='b',
++    )
 +
-+        if (active) {
-+            bdrv_activate(bs, errp);
-+        } else {
-+            bdrv_inactivate(bs, errp);
-+        }
-+    }
-+}
++    iotests.log('Launching destination VM...')
++    vm_dst.add_args('-blockdev', f'nbd,node-name=disk,server.type=unix,'
++                                 f'server.path={nbd_dst},export=disk-fmt')
++    vm_dst.add_args('-device', 'virtio-blk,drive=disk,id=virtio0')
++    vm_dst.add_args('-incoming', f'unix:{mig_sock}')
++    vm_dst.launch()
 +
- static BdrvChild * GRAPH_RDLOCK
- bdrv_find_child(BlockDriverState *parent_bs, const char *child_name)
- {
++    iotests.log('\nTest I/O on the source')
++    vm_src.hmp_qemu_io('virtio0/virtio-backend', 'write -P 0x11 0 4k',
++                       use_log=True, qdev=True)
++    vm_src.hmp_qemu_io('virtio0/virtio-backend', 'read -P 0x11 0 4k',
++                       use_log=True, qdev=True)
++
++    iotests.log('\nStarting migration...')
++
++    mig_caps = [
++        {'capability': 'events', 'state': True},
++        {'capability': 'pause-before-switchover', 'state': True},
++    ]
++    vm_src.qmp_log('migrate-set-capabilities', capabilities=mig_caps)
++    vm_dst.qmp_log('migrate-set-capabilities', capabilities=mig_caps)
++    vm_src.qmp_log('migrate', uri=f'unix:{mig_sock}',
++                   filters=[iotests.filter_qmp_testfiles])
++
++    vm_src.event_wait('MIGRATION',
++                      match={'data': {'status': 'pre-switchover'}})
++
++    iotests.log('\nPre-switchover: Reconfigure QSD instances')
++
++    iotests.log(qsd_src.qmp('blockdev-set-active', {'active': False}))
++
++    # Reading is okay from both sides while the image is inactive. Note that
++    # the destination may have stale data until it activates the image, though.
++    vm_src.hmp_qemu_io('virtio0/virtio-backend', 'read -P 0x11 0 4k',
++                       use_log=True, qdev=True)
++    vm_dst.hmp_qemu_io('virtio0/virtio-backend', 'read 0 4k',
++                       use_log=True, qdev=True)
++
++    iotests.log(qsd_dst.qmp('blockdev-set-active', {'active': True}))
++
++    iotests.log('\nCompleting migration...')
++
++    vm_src.qmp_log('migrate-continue', state='pre-switchover')
++    vm_dst.event_wait('MIGRATION', match={'data': {'status': 'completed'}})
++
++    iotests.log('\nTest I/O on the destination')
++
++    # Now the destination must see what the source wrote
++    vm_dst.hmp_qemu_io('virtio0/virtio-backend', 'read -P 0x11 0 4k',
++                       use_log=True, qdev=True)
++
++    # And be able to overwrite it
++    vm_dst.hmp_qemu_io('virtio0/virtio-backend', 'write -P 0x22 0 4k',
++                       use_log=True, qdev=True)
++    vm_dst.hmp_qemu_io('virtio0/virtio-backend', 'read -P 0x22 0 4k',
++                       use_log=True, qdev=True)
++
++    iotests.log('\nDone')
++
++    vm_src.shutdown()
++    iotests.log('\n--- vm_src log ---')
++    log = vm_src.get_log()
++    if log:
++        iotests.log(log, [filter_qtest, filter_qemu_io])
++    qsd_src.stop()
++
++    vm_dst.shutdown()
++    iotests.log('\n--- vm_dst log ---')
++    log = vm_dst.get_log()
++    if log:
++        iotests.log(log, [filter_qtest, filter_qemu_io])
++    qsd_dst.stop()
+diff --git a/tests/qemu-iotests/tests/qsd-migrate.out b/tests/qemu-iotests/tests/qsd-migrate.out
+new file mode 100644
+index 0000000000..4a5241e5d4
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qsd-migrate.out
+@@ -0,0 +1,59 @@
++Preparing disk...
++Launching source QSD...
++Launching source VM...
++Launching destination QSD...
++Launching destination VM...
++
++Test I/O on the source
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"write -P 0x11 0 4k\""}}
++{"return": ""}
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"read -P 0x11 0 4k\""}}
++{"return": ""}
++
++Starting migration...
++{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [{"capability": "events", "state": true}, {"capability": "pause-before-switchover", "state": true}]}}
++{"return": {}}
++{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [{"capability": "events", "state": true}, {"capability": "pause-before-switchover", "state": true}]}}
++{"return": {}}
++{"execute": "migrate", "arguments": {"uri": "unix:SOCK_DIR/PID-migrate.sock"}}
++{"return": {}}
++
++Pre-switchover: Reconfigure QSD instances
++{"return": {}}
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"read -P 0x11 0 4k\""}}
++{"return": ""}
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"read 0 4k\""}}
++{"return": ""}
++{"return": {}}
++
++Completing migration...
++{"execute": "migrate-continue", "arguments": {"state": "pre-switchover"}}
++{"return": {}}
++
++Test I/O on the destination
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"read -P 0x11 0 4k\""}}
++{"return": ""}
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"write -P 0x22 0 4k\""}}
++{"return": ""}
++{"execute": "human-monitor-command", "arguments": {"command-line": "qemu-io -d virtio0/virtio-backend \"read -P 0x22 0 4k\""}}
++{"return": ""}
++
++Done
++
++--- vm_src log ---
++wrote 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++--- vm_dst log ---
++read 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 4096/4096 bytes at offset 0
++4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
 -- 
 2.48.1
 
