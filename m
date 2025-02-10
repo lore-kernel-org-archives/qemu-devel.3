@@ -4,103 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCCFC0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D609C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thaZW-00055c-Uu; Mon, 10 Feb 2025 15:40:03 -0500
+	id 1thabi-00064I-1o; Mon, 10 Feb 2025 15:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1thaZV-00054e-0k
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:40:01 -0500
-Received: from rn-mx02.apple.com ([17.132.108.1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thabf-00063p-IW
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:15 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1thaZT-00036k-El
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:40:00 -0500
-Received: from rn-mailsvcp-mta-lapp02.rno.apple.com
- (rn-mailsvcp-mta-lapp02.rno.apple.com [10.225.203.150])
- by mr55p01nt-mxp02.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPS id <0SRH291G9IQJCO20@mr55p01nt-mxp02.apple.com> for
- qemu-devel@nongnu.org; Mon, 10 Feb 2025 20:39:55 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_11,2025-02-10_01,2024-11-22_01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=cc :
- content-transfer-encoding : content-type : date : from : in-reply-to :
- message-id : mime-version : references : subject : to; s=20180706;
- bh=0sascirrTTL3Ba1QHLoaQ9g4Z4jZkMlO9virPyDuR3w=;
- b=jnmbJabHuJ9Y4ZKjkwXPvUvnsBv+JoQfewBSBLW9d7nXuOy3wgEYFar35MKhAZoyXVPz
- CwGw0sIe3GWTjTrFuunI91c9+ayOogFmQeaVKWAy+WNYs3olcVf6iUd7HWzU2pyPP4Zp
- EihCPGLHFh3Z09VTYchfuZZnM8kjRY8B6H36Cap9UnABh83X/PBSh4hNSlRfgm7VypvJ
- 8OKCAAuyNBuABdR+Ub7aif+lC8cjpjnldEYHlNx41hRPb1/EwdL+cpNwMkmiIMBUPtZH
- r0r+FsoPzLSms1DUHFg+rfFQWsiCL5idOVJJaO/YnAd/xGJFFhrifYhATcFlUWou0ao8 LA==
-Received: from mr55p01nt-mmpp02.apple.com
- (mr55p01nt-mmpp02.apple.com [10.170.185.213])
- by rn-mailsvcp-mta-lapp02.rno.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPS id <0SRH00N1CIQJI6L0@rn-mailsvcp-mta-lapp02.rno.apple.com>; 
- Mon, 10 Feb 2025 12:39:55 -0800 (PST)
-Received: from process_milters-daemon.mr55p01nt-mmpp02.apple.com by
- mr55p01nt-mmpp02.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) id <0SRH0X400INC0100@mr55p01nt-mmpp02.apple.com>; Mon,
- 10 Feb 2025 20:39:55 +0000 (GMT)
-X-Va-A: 
-X-Va-T-CD: 9be860c946f6cbc0801dd392535b1c06
-X-Va-E-CD: 2325b25e1853304713f33c2dc3bf5831
-X-Va-R-CD: f2c730f0a964009da4023b008f6c4c11
-X-Va-ID: ff56baa5-7b1a-49e7-b333-fd79c3c0d7b6
-X-Va-CD: 0
-X-V-A: 
-X-V-T-CD: 9be860c946f6cbc0801dd392535b1c06
-X-V-E-CD: 2325b25e1853304713f33c2dc3bf5831
-X-V-R-CD: f2c730f0a964009da4023b008f6c4c11
-X-V-ID: 9ff289cb-53d6-4fec-9088-17f1f35cfe69
-X-V-CD: 0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_11,2025-02-10_01,2024-11-22_01
-Received: from smtpclient.apple (unknown [17.243.208.254])
- by mr55p01nt-mmpp02.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPSA id <0SRH0W6CVIQH2C00@mr55p01nt-mmpp02.apple.com>; Mon,
- 10 Feb 2025 20:39:54 +0000 (GMT)
-Content-type: text/plain; charset=utf-8
-MIME-version: 1.0 (Mac OS X Mail 16.0 \(3815.100.3\))
-Subject: Re: [PATCH v2 3/3] hvf: arm: Implement and use
- hvf_get_physical_address_range
-From: Danny Canter <danny_canter@apple.com>
-In-reply-to: <CAFEAcA-Npf_9gV=LP2pmpgQ+dbqxQnJk1ubrtAhUc3nVbM-s6Q@mail.gmail.com>
-Date: Mon, 10 Feb 2025 12:39:43 -0800
-Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Itaru Kitayama <itaru.kitayama@fujitsu.com>, dirty@apple.com,
- rbolshakov@ddn.com, agraf@csgraf.de, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
- marcel.apfelbaum@gmail.com, wangyanan55@huawei.com, zhao1.liu@intel.com
-Content-transfer-encoding: quoted-printable
-Message-id: <CF400E00-3635-4556-B19C-91A50A41CD53@apple.com>
-References: <20240828111552.93482-1-danny_canter@apple.com>
- <20240828111552.93482-4-danny_canter@apple.com>
- <e67f8106-f741-4e81-a291-db06bfbedd7c@linaro.org>
- <1CE8C01E-6930-4DFA-8C96-CACCFEBD24AE@apple.com>
- <CAFEAcA-Npf_9gV=LP2pmpgQ+dbqxQnJk1ubrtAhUc3nVbM-s6Q@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3815.100.3)
-Received-SPF: pass client-ip=17.132.108.1; envelope-from=danny_canter@apple.com;
- helo=rn-mx02.apple.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thabZ-0003UH-NK
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:15 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso32381175e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:42:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739220127; x=1739824927; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SJr5z9ae/TFaELMlTEnCnVd5z+ON9SCf5Ds9hjjhaa4=;
+ b=daCsR7ceIrxnrTts2831ERmV0Bd5LoPnXH+CewIi8TZtm3DV+/OUe86e85wtsaY2dE
+ uJhPD7If4H580iYvdW9RTVC8sMtXGPrezdYJCCtxhmRZRLrcrzDK5v73a5SuWQIV4Mvy
+ lr9k6VW5S5GH3H7WtpaqSvQsanZ4zRYeZgdoBI09tCa4V7jIpaBCnOEpX1NeZZvA0ofs
+ hv7qcVETo5hFRDG1eR4zbxSpvxKZDWRMGkUDK6J4m6ev2S7dwLBNHyCD9MKYpRjrTVPr
+ uoAIoSrhHuSgXPNGk3aaForZ0BLeyo405Qdws8LbFxrO53NaQb6PnGSxd6ZutvjBx1C6
+ TCwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739220127; x=1739824927;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SJr5z9ae/TFaELMlTEnCnVd5z+ON9SCf5Ds9hjjhaa4=;
+ b=aODWg1zGVn9BAC3jkArzM/LT91TAr+aGOIsAYJ+OxZIF+rTCMNjLpOf2sRwAmR1L4i
+ Q+MGGvg6Zd6vg66NGE43SzDnM3j/VaxsdgwIrWJl6fpCpucfl5IPtPXECfhMeZgiPfNZ
+ 3OZCPBGvTHKesRlYUpkS5UCWXNXbgXmFPK+ZWrqppm3yS309AMgqh8iaS8OT1tAUsbUc
+ t3wwkaHFKvakMK7aXBuv3gLoxRp9OOdD9Z0b3TXwU2juLE0Q4DXGuEOymp5BYr5QEu6e
+ PNwUSkT/9LjFzrvSG2XlsW5Fn+Gj+pdksep/qRcj3zZCBnUp69E0aO6/C+eNRRsY/MwI
+ NXgw==
+X-Gm-Message-State: AOJu0YzVVZLldV3dE2YnTlDPlIACyMFHisxNERpyMZp15XOkwOFuCxg0
+ 3nUBVW/4/4wSDKraycIUEGwEpAdlu2ET3ZvihTb4lGMUiw9d+nloga6XKbRvG7y4RQZhYNvnTKK
+ Obj4=
+X-Gm-Gg: ASbGnctsPzt7xR/iw1tIJlhK5xPbT9KbeIcRb7NjMt2zavMtp0LapSbo6ZjXrqGPj7s
+ keFST28TtiUBJQ3qeKXkAWZuQ9d3t9Vx4JKLM7CzUrzQleMsODb33o/jMQMX6UJd6zgbnefW9eE
+ +zy1uLjifG0eUv288/gWyihKRdIRlX5uCVEpQzaqnvXhzwB97gcmn8mwBRVlDSi0X2qmChBG0az
+ PM/lEmZjTH9jOj9TiSqqd/IZ/K1XgghlmTX4rdLbMofTCqtXw6frCHiNshHPMKnmy/5LivO03n8
+ xclHp2s3X96FHUsuavc9nLQ7x5rZeBR3C3CmouMUvq/V/XtS1SqOjHl7g5Zwa2VS0Q==
+X-Google-Smtp-Source: AGHT+IGaYPa9IMdy2JPrek5RQF3cdbewLLfluzi3UWMK/SDssJ5XOgi6ADw2xdWIH2RjrgOvHucfIQ==
+X-Received: by 2002:a05:6000:2ad:b0:38d:e02d:5f43 with SMTP id
+ ffacd0b85a97d-38de02d60a6mr3382963f8f.2.1739220127527; 
+ Mon, 10 Feb 2025 12:42:07 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43936bcc04fsm80576935e9.20.2025.02.10.12.42.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 10 Feb 2025 12:42:07 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/32] Misc HW patches for 2025-02-10
+Date: Mon, 10 Feb 2025 21:41:32 +0100
+Message-ID: <20250210204204.54407-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,30 +95,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No worries, will get a machine on 15.2 at least as it seems both reports =
-are on that or higher. I=E2=80=99ll likely have time mid to late week to =
-debug this. Thanks!
+The following changes since commit 54e91d1523b412b4cff7cb36c898fa9dc133e886:
 
--Danny =20
+  Merge tag 'pull-qapi-2025-02-10-v2' of https://repo.or.cz/qemu/armbru into staging (2025-02-10 10:47:31 -0500)
 
-> On Feb 10, 2025, at 10:24=E2=80=AFAM, Peter Maydell =
-<peter.maydell@linaro.org> wrote:
->=20
-> On Mon, 10 Feb 2025 at 18:20, Danny Canter <danny_canter@apple.com> =
-wrote:
->>=20
->> Will do. I=E2=80=99ll reach out if I need extra info. The issue =
-appears to be closed though, was this fixed/no-repro already though?
->=20
-> Whoops, no, that must have been a mis-click on my part.
->=20
-> While you're looking at address-space related bugs,
-> https://gitlab.com/qemu-project/qemu/-/issues/2713
-> is another recent one -- user reports that QEMU says they're
-> limited to 32 bits even though their mac/macos has a 40-bit
-> IVA space.
->=20
-> thanks
-> -- PMM
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/hw-misc-20250210
+
+for you to fetch changes up to 1078a376932cc1d1c501ee3643fef329da6a189a:
+
+  hw/net/smc91c111: Ignore attempt to pop from empty RX fifo (2025-02-10 21:30:44 +0100)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Use qemu_hexdump_line() in TPM backend (Philippe)
+- Make various Xilinx devices endianness configurable (Philippe)
+- Remove magic number in APIC (Phil)
+- Disable thread-level cache topology (Zhao)
+- Xen QOM style cleanups (Bernhard)
+- Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
+- Invert logic of machine no_sdcard flag (Philippe)
+- Housekeeping in MicroBlaze functional tests (Philippe)
+- Prevent out-of-bound access in SMC91C111 RX path (Peter)
+
+----------------------------------------------------------------
+
+Bernhard Beschow (1):
+  hw/xen: Prefer QOM cast for XenLegacyDevice
+
+Peter Maydell (1):
+  hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
+
+Phil Dennis-Jordan (1):
+  hw/intc/apic: Fixes magic number use, removes outdated comment
+
+Philippe Mathieu-Daudé (28):
+  backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
+  hw/intc/xilinx_intc: Make device endianness configurable
+  hw/net/xilinx_ethlite: Make device endianness configurable
+  hw/timer/xilinx_timer: Make device endianness configurable
+  hw/char/xilinx_uartlite: Make device endianness configurable
+  hw/ssi/xilinx_spi: Make device endianness configurable
+  hw/arm/xlnx-zynqmp: Use &error_abort for programming errors
+  hw/sysbus: Use sizeof(BusState) in main_system_bus_create()
+  hw/sysbus: Declare QOM types using DEFINE_TYPES() macro
+  hw/sysbus: Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE
+  hw/vfio: Have VFIO_PLATFORM devices inherit from
+    DYNAMIC_SYS_BUS_DEVICE
+  hw/display: Have RAMFB device inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/i386: Have X86_IOMMU devices inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/net: Have eTSEC device inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/tpm: Have TPM TIS sysbus device inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/xen: Have legacy Xen backend inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/boards: Convert no_sdcard flag to OnOffAuto tri-state
+  hw/boards: Explicit no_sdcard=false as ON_OFF_AUTO_OFF
+  hw/boards: Rename no_sdcard -> auto_create_sdcard
+  hw/boards: Do not create unusable default if=sd drives
+  hw/arm: Remove all invalid uses of auto_create_sdcard=true
+  hw/riscv: Remove all invalid uses of auto_create_sdcard=true
+  hw/boards: Ensure machine setting auto_create_sdcard expose a SD Bus
+  tests/functional: Explicit endianness of microblaze assets
+  tests/functional: Allow microblaze tests to take a machine name
+    argument
+  tests/functional: Remove sleep() kludges from microblaze tests
+  tests/functional: Have microblaze tests inherit common parent class
+  hw/riscv/opentitan: Include missing 'exec/address-spaces.h' header
+
+Zhao Liu (1):
+  hw/core/machine: Reject thread level cache
+
+ include/hw/boards.h                           |  2 +-
+ include/hw/sysbus.h                           |  2 +
+ include/hw/xen/xen_pvdev.h                    |  5 +-
+ backends/tpm/tpm_util.c                       | 24 ++++----
+ hw/arm/aspeed.c                               | 20 +++++++
+ hw/arm/bananapi_m2u.c                         |  1 +
+ hw/arm/cubieboard.c                           |  1 +
+ hw/arm/exynos4_boards.c                       |  2 +
+ hw/arm/fby35.c                                |  1 +
+ hw/arm/imx25_pdk.c                            |  1 +
+ hw/arm/integratorcp.c                         |  1 +
+ hw/arm/mcimx6ul-evk.c                         |  1 +
+ hw/arm/mcimx7d-sabre.c                        |  1 +
+ hw/arm/npcm7xx_boards.c                       |  5 ++
+ hw/arm/omap_sx1.c                             |  2 +
+ hw/arm/orangepi.c                             |  1 +
+ hw/arm/raspi.c                                |  5 ++
+ hw/arm/raspi4b.c                              |  1 +
+ hw/arm/realview.c                             |  4 ++
+ hw/arm/sabrelite.c                            |  1 +
+ hw/arm/stellaris.c                            |  1 +
+ hw/arm/versatilepb.c                          |  2 +
+ hw/arm/vexpress.c                             |  2 +
+ hw/arm/xilinx_zynq.c                          |  1 -
+ hw/arm/xlnx-versal-virt.c                     |  1 +
+ hw/arm/xlnx-zcu102.c                          |  1 +
+ hw/arm/xlnx-zynqmp.c                          | 38 ++++--------
+ hw/char/xilinx_uartlite.c                     | 27 +++++----
+ hw/core/machine-smp.c                         |  7 +++
+ hw/core/null-machine.c                        |  1 -
+ hw/core/sysbus.c                              | 54 ++++++++++-------
+ hw/display/ramfb-standalone.c                 |  3 +-
+ hw/i386/amd_iommu.c                           |  2 -
+ hw/i386/intel_iommu.c                         |  2 -
+ hw/i386/x86-iommu.c                           |  2 +-
+ hw/intc/apic.c                                |  3 +-
+ hw/intc/xilinx_intc.c                         | 52 +++++++++++-----
+ hw/microblaze/petalogix_ml605_mmu.c           |  3 +
+ hw/microblaze/petalogix_s3adsp1800_mmu.c      |  4 ++
+ hw/net/fsl_etsec/etsec.c                      |  4 +-
+ hw/net/smc91c111.c                            |  9 +++
+ hw/net/xilinx_ethlite.c                       | 20 +++++--
+ hw/ppc/virtex_ml507.c                         |  1 +
+ hw/riscv/microchip_pfsoc.c                    |  1 +
+ hw/riscv/opentitan.c                          |  1 +
+ hw/riscv/sifive_u.c                           |  1 +
+ hw/s390x/s390-virtio-ccw.c                    |  1 -
+ hw/ssi/xilinx_spi.c                           | 24 +++++---
+ hw/timer/xilinx_timer.c                       | 35 +++++++----
+ hw/tpm/tpm_tis_sysbus.c                       |  3 +-
+ hw/usb/xen-usb.c                              |  6 +-
+ hw/vfio/amd-xgbe.c                            |  2 -
+ hw/vfio/calxeda-xgmac.c                       |  2 -
+ hw/vfio/platform.c                            |  4 +-
+ hw/xen/xen-legacy-backend.c                   |  9 +--
+ hw/xen/xen_pvdev.c                            |  2 +-
+ system/vl.c                                   | 24 ++++++--
+ .../functional/test_microblaze_s3adsp1800.py  | 34 +++++++++--
+ .../test_microblazeel_s3adsp1800.py           | 32 ++--------
+ tests/qemu-iotests/172.out                    | 60 -------------------
+ 60 files changed, 314 insertions(+), 248 deletions(-)
+
+-- 
+2.47.1
 
 
