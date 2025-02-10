@@ -4,68 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68753C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 18:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D04C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 18:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thYnr-0002yo-Gb; Mon, 10 Feb 2025 13:46:43 -0500
+	id 1thYun-0005MI-My; Mon, 10 Feb 2025 13:53:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1thYnk-0002ui-Sl
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 13:46:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
+ id 1thYul-0005M9-Il
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 13:53:51 -0500
+Received: from mail-mw2nam10on20607.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::607]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1thYne-0000gY-81
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 13:46:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739213187;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=09eeiFIk0wkzK/6PhqoRacs9/MCWii4GIYbNNHl3T40=;
- b=ER67nVyHYUoQmGTpY180p0vUMfbJsJXjHKwtAg1SrBLO17kwDsqM2wLPb4BXTKQiCQ+Axa
- saYf3eDndDTXx8XmUphlpkFO8ZL3pEmv3zMI01UpyYBdXCYCy4ynrBkA7jtMLrZJ8BTAAT
- SoD0XxmsA6z8EIfcow/7m9HIjjQQLS0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-kn-Z7M64OhOxjVuR8jTTlQ-1; Mon,
- 10 Feb 2025 13:46:24 -0500
-X-MC-Unique: kn-Z7M64OhOxjVuR8jTTlQ-1
-X-Mimecast-MFC-AGG-ID: kn-Z7M64OhOxjVuR8jTTlQ
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E33E19560AE; Mon, 10 Feb 2025 18:46:23 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5301C18004A7; Mon, 10 Feb 2025 18:46:19 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] tests/functional: Convert reverse_debugging tests to the
- functional framework
-Date: Mon, 10 Feb 2025 19:46:18 +0100
-Message-ID: <20250210184618.84144-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
+ id 1thYuj-0001Nd-02
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 13:53:51 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qf6UXODInp/NlIbUX4mHpY2UGzx+X3EIGPW1SOIwEtHdscPOGJxPp6mAgVrxqk6M4g60xT755xUDk2Xg6qmFTU6Bm0MOdOSoK9mqYrxNqTxxd24NhXtx/uCpjyF11LYtrIXwuwRu4VG0gMvKQR3r0t3EysS3WLH9Tt7hJ1wVREOqqS4iCxE5CtZxoz9rTiJaWG4+lZI6zksa/cEjaXfJTMxmgx///2e16FV4dcEsTyrnVmGXjAzRsSh0WCcOG9E+IftgiKEcBltvCn+SSGkdCYKGxIuwaq5IItqP50Gp93aEyTwtC+mWGUxspv6QzE/Qo5tNj3eQVQFLk4gfFlrcoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JXs4D6Fm9JYXEOzXBs/pnYUKhpX7uNlaUlZ8S+0magI=;
+ b=RZeY5sBTW/Qpytv9OvJGEcSBdXit59OPUgLQsfUc/kHZ4ONKLo3Yo8PWfbsHMSi/C0dWzHRsk/4+C/YICfvuJeWDP59JCyvNAVhvv46HLYapq8XzlLAvQtSDizx0g/fU+WAXpdXQ7/NU5UvykLMkL2HDaR1xE2+LQMxbxLEZ1d0VMhaglAHV7tevS5U1VSem1UKjFzDVQAWG9YSS580jqVRtgXt0mYgvhXuTCXwlnea8loy/J+LwZVt+SGFluTGh4HzGhRbJuVOGGm5asAZeG2zHuBEqW+sTR48whpBk8ubVMjQUNXo9+7fGFqOXqercKS83R9xMEnz6vw53z0aaYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JXs4D6Fm9JYXEOzXBs/pnYUKhpX7uNlaUlZ8S+0magI=;
+ b=OicnhnB5gkPwhqayCmcojV6kGHT3NiWn816lPnmRfHxrDVNRocw7kJ6uazl/QIc27FQfWM066RC8QzCJwlBMSeLr+UUx+bOpQ1/ltCW48wl0aqnXg/9XxhdtBeYZBMx9Jw335QwPWASFOa36UhHRYDSCVIVYW/ebM0SFMnq/4+0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM4PR12MB5070.namprd12.prod.outlook.com (2603:10b6:5:389::22)
+ by DS0PR12MB8069.namprd12.prod.outlook.com (2603:10b6:8:f0::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8422.18; Mon, 10 Feb 2025 18:53:39 +0000
+Received: from DM4PR12MB5070.namprd12.prod.outlook.com
+ ([fe80::20a9:919e:fd6b:5a6e]) by DM4PR12MB5070.namprd12.prod.outlook.com
+ ([fe80::20a9:919e:fd6b:5a6e%7]) with mapi id 15.20.8422.015; Mon, 10 Feb 2025
+ 18:53:39 +0000
+Message-ID: <9d1643f8-f9f7-137d-8105-e9c06e2c8b72@amd.com>
+Date: Mon, 10 Feb 2025 12:53:36 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Content-Language: en-US
+To: Kim Phillips <kim.phillips@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: Michael Roth <michael.roth@amd.com>, Ashish Kalra <ashish.kalra@amd.com>, 
+ "Nikunj A . Dadhania" <nikunj@amd.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Ingo Molnar <mingo@redhat.com>,
+ "H. Peter Anvin" <hpa@zytor.com>, Thomas Gleixner <tglx@linutronix.de>
+References: <20250207233327.130770-1-kim.phillips@amd.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
+Subject: Re: [RFC] target/i386: sev: Add cmdline option to enable the Allowed
+ SEV Features feature
+In-Reply-To: <20250207233327.130770-1-kim.phillips@amd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA1PR05CA0020.namprd05.prod.outlook.com
+ (2603:10b6:806:2d2::22) To DM4PR12MB5070.namprd12.prod.outlook.com
+ (2603:10b6:5:389::22)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5070:EE_|DS0PR12MB8069:EE_
+X-MS-Office365-Filtering-Correlation-Id: 78855dc8-342e-4df3-0a4b-08dd4a043b25
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dUYwSnVZNXJVaWMyNWRoaGRnTThVTUI3RzJucS9uR1ZOL3BkdGZCWTJneFcz?=
+ =?utf-8?B?a0RaR2F0MStHdlg0UDJuMkVzcUg5ekN5QzI1K0ZOYVZFYkJuRm40OHdpSFVF?=
+ =?utf-8?B?VEtwS0QySldGMTUrVHA3WUVOVlNBQ3ZHd0lBYW9BVWJRaTBYY0EyaEtNajA2?=
+ =?utf-8?B?SUx6TlgweEJnSUd4RHZHUkV4Uy9DUmkvWk1MV3lPRFh0eGdQL3ZUcnZWaWJ0?=
+ =?utf-8?B?TXFqcmxpVXFITmsvekl4RG9UME9MazRKelFqNTIvZlhiRitidFNFbHRSbU9n?=
+ =?utf-8?B?UkZTdWFTaUdtNDV2cEo5V2dLMDJ3Mm44K01sWTl5bEp0MHEwSkNKY29acllU?=
+ =?utf-8?B?OHBOUWtiZ21GVm0xbkRLTFVsdU1iT3l6MDBLbWthZjNORVZtL2N6djNwcjhJ?=
+ =?utf-8?B?a3J5SmJYSXRZVi9KdisycHNjd1IxK2RZajlZalJid1F5QjhGa0NuNTBOa1po?=
+ =?utf-8?B?SVRwME10c3BIOEJNdWd6eFlMcDZLVWlSVGN6SFpMV2ZDaVFiNzBRQXZPOFVy?=
+ =?utf-8?B?TzlWMmtCVjg5ZXEza2IrYWlGdXRQZjNLa1dMMm02TC9JcXFPWmJ0eGVQaXpI?=
+ =?utf-8?B?dEFkTjZrN1dFRkRQdmtEY1FmVWVqSldKK2Yxb0xOc1YreGF2SDVyMGdKQTBu?=
+ =?utf-8?B?aE95MHY2MHd1eFoxTFlEc1F5V2FmdDV1TE5LdC9LQ2lNb29nWlNNMi9KVDBM?=
+ =?utf-8?B?UllrT29jRHdtL1VMYzZKcUxETDR3NmpkZ0lSaEx0anBvVTVsT0tIcjI0SmJT?=
+ =?utf-8?B?bUgvcEJVQkRWY3ZlMVM1T3gyNXVvelZtUjZqdDRDSEJRVHFqOEV4aEc4TUZy?=
+ =?utf-8?B?UFdWSE8yWDJXMWZqYmtjT3J2VnZPMTJRRTNpU3ZSM3l5ZzJHSkJpMUNjZDdW?=
+ =?utf-8?B?d0F4T05zR2NVL25iUzF3VHZFVjNxWDk1Qi96NkFaSEpMSk9QRHJFV1BMU1ZW?=
+ =?utf-8?B?YTJTN2swUHkyS2pTT2xpempzNmM3NEQ1ZWcvQ0RVU2tqQmtFNjJuRzFrSjE5?=
+ =?utf-8?B?WDRYeUZmRXIwWmVkWGdCRElLV2djUHIvekNmNjh0NVRqdmVjWnRSZ0NsQXd3?=
+ =?utf-8?B?SkNNVWJ3ZnNna2JBdklRc2JnM29XakZYOHBDTnVDWUpyMHFmSVRqY2c4cmM3?=
+ =?utf-8?B?ZEY2WllZcTJYa0tscll2Q1dpZFRDZWl2eW5zZEpSUWFlTGxlbHRwbmdwbjk2?=
+ =?utf-8?B?N0ZtSU9NYytMTENKR28zTElXWTZSTE9zd0svNlRxcXVYeEFaNmthYWxCNGRz?=
+ =?utf-8?B?ZzhMM1VsWnpxdTh6am5iV3QrVUpiZzM3eVFxZ0Ezdm5MKzNGZEd0TG9nUHRK?=
+ =?utf-8?B?VGM0MjRTNVNHVWpORDJPQXZwbnhkakd4VkREQU53TCt6Nk1DaXJYYWk0aGp3?=
+ =?utf-8?B?VGRhRUVBazVJUXJPWVhkM3lORXJURmJRN1pxWHY5VzltR1NFN285U1hkdnAw?=
+ =?utf-8?B?VU9NWEFLZERPdEpoS2FaM3pMdVhrUklkUnBJb0RUSVltSGorS0liSkhGczlp?=
+ =?utf-8?B?aytweFRxSmRLNWp1SWN0Z0dCZGdSQjBPZlhJbkRUZm1OUERRWDIwRWhHTmFi?=
+ =?utf-8?B?VGpNVEMxSlFOeWVZRnBxdzY5a2Y5eEZMYTJOU21rUzRwQXVVeEZJVTFVdG1I?=
+ =?utf-8?B?QTFWOUI3N2Z1SVJ4NWdpc0ZIWmpQeVBFSnFXZk5lUVM1Mnc2MVVDZ1JYakZI?=
+ =?utf-8?B?eXhHR0Ywb3VDV3E2UFdVWjBYMis1ZVh4eEdSRGNianN4Z2ZrNUVVRTBXWVlJ?=
+ =?utf-8?B?TjZUQ2RwcWY3QUE0eUgvQS9MS2RDMWNEaG43ZVYxV2dGY2d4Z3FtSmExVGRO?=
+ =?utf-8?B?eHBuSzlPZTlrUHN0NEtmQT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5070.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N2dJR2hkdWNvUnc5MkF1UFR6NHJhKzdua0xINy9ZSDV1NjZ0S1Bqcmg5UWFr?=
+ =?utf-8?B?bGhOc1VDQjlVNXRNY3VpMUwzb2dHa05tUkJxZmhDNGplbGVaT2tDbWlUcWhX?=
+ =?utf-8?B?UEt3SmJkZnFFc0FXQTJKbzV4MzBHQzU0TTFzSFVoaGZRVWIzalduQlBQeTA1?=
+ =?utf-8?B?TnkwVy9FL2VCKzhxS3kvUVN0SmZvWkJ5QUZsV0JEQnJMbkdrUlhDRW52aU1v?=
+ =?utf-8?B?S0p5NUJEamxmMm9FaldHWThzRXlNTVVNUzJ3UHhTOElXMy80VjBOVFZtRU1I?=
+ =?utf-8?B?ZWRZTk0zUWV3bFNSdHlIc3RmVnJEUEZ3eUVMRWNqWXNLeDcrWXlVUU85YWlv?=
+ =?utf-8?B?L2Q1K29vVnJmZVNvM2Jnek1zditkVVJJamNXMUNRZ3NMRUI2ak8rTWptWXpv?=
+ =?utf-8?B?cFRFMFFtZWxOb1NZWWg1REFYNWNGUytVT2VIdWVXZEp3N2p2Nk5sd3ZBSUdC?=
+ =?utf-8?B?a3pQU25qdzlITEpKN1Z1NXE0QklBWG1Vc3FsNmRObWEzMU0xaTJwcWszbERv?=
+ =?utf-8?B?dnUyZmFzNVgyNGc2QWFTdmFaSDB0eFRoUkFYb3phMlM5SVFqVGYvWGc4cmlY?=
+ =?utf-8?B?YUR2RDN6VHN4QndNOExxNlFKT3lvRUNBS3JJcW8rTjh3Mi9XMWRVa3RaR0E0?=
+ =?utf-8?B?UmJLdEdTNzJSTXBHMTNNSnpzMTdFaWF3N3ViZWFvWUVydzJxbUdVaXNaL2Fo?=
+ =?utf-8?B?YnZzMUFoTXhPZXQxK09WMUxBOVBidm04dndyd3FlcEViQ0lYMk5kS3pTU1RE?=
+ =?utf-8?B?TVB6VENScE1tT3NNc2JkYSs3TkRXZkxDcndrR01MLzVudGJybXJiQUJjYkhu?=
+ =?utf-8?B?cndhajREY2RFcUEwck9kN202dFRDVDBnbEVqKzJBeGpGaHg5di9INTYzRzlj?=
+ =?utf-8?B?eGh3Rk1PU3dnNUxtSzJHYmlIcjI4MTVBamJ0MzBRaFdmelZYVWlEWjYzbUgy?=
+ =?utf-8?B?cksxV3pudlZDczVsSktyT0ZLSElNb2lVd3Q5WVA4WWFnRGhGd0JETDJ1Wjc1?=
+ =?utf-8?B?b045MVBxS3BMZ1FNWUJxVG5xQXJrRlpNdkNhR3hpUC96Uk5RRW4vRGNJVUQv?=
+ =?utf-8?B?ckMvSmdMVkNCaUNDM2c5ajE5a2p0TlRwMmVuc2hHaHdOT1VrN25PVWplWkdB?=
+ =?utf-8?B?dHZXNGVtRUd0RmZ2Q21selRKTW85SEh0aDVhZFdxWE54SS84T2dWaGpDbDFE?=
+ =?utf-8?B?YnIwVlNQOVhaSnQ0NzJuZ05wSWFBdzdMbkJWU0VOekIvelZkSlBmL1dYYWJJ?=
+ =?utf-8?B?UTVLS3R6RFpGb3FiNEtmOHV0aC9ObFlXcVJ1SU16TXg2ck94ZkdtaTVjTkFQ?=
+ =?utf-8?B?MkZINEdHVEtNTzVwVGd1TS9Odzg2N3NHUDA1WjljUkZIcmkramgrY0NPYjRS?=
+ =?utf-8?B?YktOdkRDNzA5bWdQOXk5YXlZeU54MCtyWDdFWCtMZU05WUtwVThYVGZlaVpY?=
+ =?utf-8?B?U0dEVjVnQ3F5S0E2SEwyNkxDMllnMW5NcURBRWdhblhtc3J1ZDg5SmV6NFc0?=
+ =?utf-8?B?dnRNRXJYQXh5VVlDMVJ2ZlBlYUFsOW9zQ0pEOFdsVmMvVHN5VHdkWVFQbUZq?=
+ =?utf-8?B?Mzd3bG9sWUh1anFib0licXpOc0s4TWZGNzJyZXBPQ0ZuSmdmK0k3TUcvUWZF?=
+ =?utf-8?B?NmZPamlvc2ozMDVSaHJOMVk3TnhWSVJrZVAwR3dDNXJoZThzdUI0Q2ZuVXZ5?=
+ =?utf-8?B?bWcwWW41aTVHTzl0bnNRdUVvSXN0OVNjMVBkRUNhakN5ay8vMFh5eXZTZ1VH?=
+ =?utf-8?B?d2c0eS9hYnVOTEcxNTZaUzlHaHFxbFUvQVZPQUw1WEVNSVNjS29kWnpaREYx?=
+ =?utf-8?B?OS9ubEthVnVUbjZXQkM0L1JYWG1ncjRWWkpjd3czYUhwWXd1cStuTkNnZlo1?=
+ =?utf-8?B?aTdleW9tM2tJSERuOFpDMzFlQ2tQa3FZNjg1eVUyVXZmQTh1dzNzNnpnTFVQ?=
+ =?utf-8?B?UzBvZ1d0REgvbmNNMjNMaTM5bGdNMG9yS3NNdGlRM2NQNk9QYTRTMko5UEtu?=
+ =?utf-8?B?bWNOeE9iblU4YjBuUnNTS3c1djRpUXNhM2YrTkNzeHFDUm84UlZ2Y1BROThz?=
+ =?utf-8?B?bmZPZlVnWlRtRzVKdEwwZUJPK2xnNDZHMTh5WnI2MTdIU0swN3ZQb3l1Z1RH?=
+ =?utf-8?Q?xOcyWqriHWkR/CZNMTGCwMl71?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 78855dc8-342e-4df3-0a4b-08dd4a043b25
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5070.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Feb 2025 18:53:39.1236 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: E7WhZEIbw8olF4vUQYZcfoU/P5LXN4tdDhcKRwMe7w5FPc9WRqkXVqi6txBFQUA29ipKJi7Ce/lE19ONjzyjRQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8069
+Received-SPF: permerror client-ip=2a01:111:f403:2412::607;
+ envelope-from=Thomas.Lendacky@amd.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ NICE_REPLY_A=-1.023, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,354 +182,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These tests are using the gdb-related library functions from the
-Avocado framework which we don't have in the functional framework
-yet. So for the time being, keep those imports and skip the test
-if the Avocado framework is not installed on the host.
+On 2/7/25 17:33, Kim Phillips wrote:
+> The Allowed SEV Features feature allows the host kernel to control
+> which SEV features it does not want the guest to enable [1].
+> 
+> This has to be explicitly opted-in by the user because it has the
+> ability to break existing VMs if it were set automatically.
+> 
+> Currently, both the PmcVirtualization and SecureAvic features
+> require the Allowed SEV Features feature to be set.
+> 
+> Based on a similar patch written for Secure TSC [2].
+> 
+> [1] Section 15.36.20 "Allowed SEV Features", AMD64 Architecture
+>     Programmer's Manual, Pub. 24593 Rev. 3.42 - March 2024:
+>     https://bugzilla.kernel.org/attachment.cgi?id=306250
+> 
+> [2] https://github.com/qemu/qemu/commit/4b2288dc6025ba32519ee8d202ca72d565cbbab7
+> 
+> Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+> ---
+>  qapi/qom.json     |  6 ++++-
+>  target/i386/sev.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++
+>  target/i386/sev.h |  2 ++
+>  3 files changed, 67 insertions(+), 1 deletion(-)
+> 
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 28ce24cd8d..113b44ad74 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -948,13 +948,17 @@
+>  #     designated guest firmware page for measured boot with -kernel
+>  #     (default: false) (since 6.2)
+>  #
+> +# @allowed-sev-features: true if secure allowed-sev-features feature
+> +#     is to be enabled in an SEV-ES or SNP guest. (default: false)
+> +#
+>  # Since: 9.1
+>  ##
+>  { 'struct': 'SevCommonProperties',
+>    'data': { '*sev-device': 'str',
+>              '*cbitpos': 'uint32',
+>              'reduced-phys-bits': 'uint32',
+> -            '*kernel-hashes': 'bool' } }
+> +            '*kernel-hashes': 'bool',
+> +            '*allowed-sev-features': 'bool' } }
+>  
+>  ##
+>  # @SevGuestProperties:
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index 0e1dbb6959..85ad73f9a0 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -98,6 +98,7 @@ struct SevCommonState {
+>      uint32_t cbitpos;
+>      uint32_t reduced_phys_bits;
+>      bool kernel_hashes;
+> +    uint64_t vmsa_features;
+>  
+>      /* runtime state */
+>      uint8_t api_major;
+> @@ -411,6 +412,33 @@ sev_get_reduced_phys_bits(void)
+>      return sev_common ? sev_common->reduced_phys_bits : 0;
+>  }
+>  
+> +static __u64
+> +sev_supported_vmsa_features(void)
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                                   |   2 +-
- tests/functional/meson.build                  |   4 +
- .../reverse_debugging.py                      | 111 +++---------------
- .../test_aarch64_reverse_debugging.py         |  35 ++++++
- .../test_ppc64_reverse_debugging.py           |  39 ++++++
- .../test_x86_64_reverse_debugging.py          |  34 ++++++
- 6 files changed, 131 insertions(+), 94 deletions(-)
- rename tests/{avocado => functional}/reverse_debugging.py (67%)
- create mode 100755 tests/functional/test_aarch64_reverse_debugging.py
- create mode 100755 tests/functional/test_ppc64_reverse_debugging.py
- create mode 100755 tests/functional/test_x86_64_reverse_debugging.py
+s/sev_/sev_get_/ ?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index dd278e2db3..b13849f399 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3636,7 +3636,7 @@ F: docs/system/replay.rst
- F: stubs/replay.c
- F: tests/avocado/replay_kernel.py
- F: tests/avocado/replay_linux.py
--F: tests/avocado/reverse_debugging.py
-+F: tests/functional/*reverse_debugging.py
- F: tests/functional/*replay*.py
- F: qapi/replay.json
- 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 1054287a1e..5dae870895 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -13,6 +13,7 @@ endif
- test_timeouts = {
-   'aarch64_aspeed' : 600,
-   'aarch64_raspi4' : 480,
-+  'aarch64_reverse_debugging' : 180,
-   'aarch64_rme_virt' : 1200,
-   'aarch64_rme_sbsaref' : 1200,
-   'aarch64_sbsaref_alpine' : 720,
-@@ -69,6 +70,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_aspeed',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-+  'aarch64_reverse_debugging',
-   'aarch64_rme_virt',
-   'aarch64_rme_sbsaref',
-   'aarch64_sbsaref',
-@@ -212,6 +214,7 @@ tests_ppc64_system_thorough = [
-   'ppc64_hv',
-   'ppc64_powernv',
-   'ppc64_pseries',
-+  'ppc64_reverse_debugging',
-   'ppc64_tuxrun',
-   'ppc64_mac99',
- ]
-@@ -291,6 +294,7 @@ tests_x86_64_system_thorough = [
-   'x86_64_hotplug_blk',
-   'x86_64_hotplug_cpu',
-   'x86_64_kvm_xen',
-+  'x86_64_reverse_debugging',
-   'x86_64_tuxrun',
- ]
- 
-diff --git a/tests/avocado/reverse_debugging.py b/tests/functional/reverse_debugging.py
-similarity index 67%
-rename from tests/avocado/reverse_debugging.py
-rename to tests/functional/reverse_debugging.py
-index f24287cd0a..bf2c45822b 100644
---- a/tests/avocado/reverse_debugging.py
-+++ b/tests/functional/reverse_debugging.py
-@@ -10,14 +10,9 @@
- import os
- import logging
- 
--from avocado import skipUnless
--from avocado_qemu import BUILD_DIR
--from avocado.utils import datadrainer
--from avocado.utils import gdb
--from avocado.utils import process
--from avocado.utils.network.ports import find_free_port
--from avocado.utils.path import find_command
--from boot_linux_console import LinuxKernelTest
-+from qemu_test import LinuxKernelTest, get_qemu_img
-+from qemu_test.ports import Ports
-+
- 
- class ReverseDebugging(LinuxKernelTest):
-     """
-@@ -36,8 +31,10 @@ class ReverseDebugging(LinuxKernelTest):
-     endian_is_le = True
- 
-     def run_vm(self, record, shift, args, replay_path, image_path, port):
-+        from avocado.utils import datadrainer
-+
-         logger = logging.getLogger('replay')
--        vm = self.get_vm()
-+        vm = self.get_vm(name='record' if record else 'replay')
-         vm.set_console()
-         if record:
-             logger.info('recording the execution...')
-@@ -99,23 +96,23 @@ def gdb_bstep(g):
-     def vm_get_icount(vm):
-         return vm.qmp('query-replay')['return']['icount']
- 
--    def reverse_debugging(self, shift=7, args=None):
-+    def _reverse_debugging(self, port, shift=7, args=None):
-+        from avocado.utils import gdb
-+        from avocado.utils import process
-+
-         logger = logging.getLogger('replay')
- 
-         # create qcow2 for snapshots
-         logger.info('creating qcow2 image for VM snapshots')
-         image_path = os.path.join(self.workdir, 'disk.qcow2')
--        qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
--        if not os.path.exists(qemu_img):
--            qemu_img = find_command('qemu-img', False)
--        if qemu_img is False:
--            self.cancel('Could not find "qemu-img", which is required to '
--                        'create the temporary qcow2 image')
-+        qemu_img = get_qemu_img(self)
-+        if qemu_img is None:
-+            self.skipTest('Could not find "qemu-img", which is required to '
-+                          'create the temporary qcow2 image')
-         cmd = '%s create -f qcow2 %s 128M' % (qemu_img, image_path)
-         process.run(cmd)
- 
-         replay_path = os.path.join(self.workdir, 'replay.bin')
--        port = find_free_port()
- 
-         # record the log
-         vm = self.run_vm(True, shift, args, replay_path, image_path, port)
-@@ -194,79 +191,7 @@ def reverse_debugging(self, shift=7, args=None):
-         logger.info('exiting gdb and qemu')
-         vm.shutdown()
- 
--class ReverseDebugging_X86_64(ReverseDebugging):
--    """
--    :avocado: tags=accel:tcg
--    """
--
--    REG_PC = 0x10
--    REG_CS = 0x12
--    def get_pc(self, g):
--        return self.get_reg_le(g, self.REG_PC) \
--            + self.get_reg_le(g, self.REG_CS) * 0x10
--
--    # unidentified gitlab timeout problem
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_x86_64_pc(self):
--        """
--        :avocado: tags=arch:x86_64
--        :avocado: tags=machine:pc
--        """
--        # start with BIOS only
--        self.reverse_debugging()
--
--class ReverseDebugging_AArch64(ReverseDebugging):
--    """
--    :avocado: tags=accel:tcg
--    """
--
--    REG_PC = 32
--
--    # unidentified gitlab timeout problem
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_aarch64_virt(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=machine:virt
--        :avocado: tags=cpu:cortex-a53
--        """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/29/Everything/aarch64/os/images/pxeboot'
--                      '/vmlinuz')
--        kernel_hash = '8c73e469fc6ea06a58dc83a628fc695b693b8493'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        self.reverse_debugging(
--            args=('-kernel', kernel_path))
--
--class ReverseDebugging_ppc64(ReverseDebugging):
--    """
--    :avocado: tags=accel:tcg
--    """
--
--    REG_PC = 0x40
--
--    # unidentified gitlab timeout problem
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_ppc64_pseries(self):
--        """
--        :avocado: tags=arch:ppc64
--        :avocado: tags=machine:pseries
--        :avocado: tags=flaky
--        """
--        # SLOF branches back to its entry point, which causes this test
--        # to take the 'hit a breakpoint again' path. That's not a problem,
--        # just slightly different than the other machines.
--        self.endian_is_le = False
--        self.reverse_debugging()
--
--    # See https://gitlab.com/qemu-project/qemu/-/issues/1992
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_ppc64_powernv(self):
--        """
--        :avocado: tags=arch:ppc64
--        :avocado: tags=machine:powernv
--        :avocado: tags=flaky
--        """
--        self.endian_is_le = False
--        self.reverse_debugging()
-+    def reverse_debugging(self, shift=7, args=None):
-+        with Ports() as ports:
-+            port = ports.find_free_port()
-+            self._reverse_debugging(port, shift=7, args=None)
-diff --git a/tests/functional/test_aarch64_reverse_debugging.py b/tests/functional/test_aarch64_reverse_debugging.py
-new file mode 100755
-index 0000000000..f665e79a6c
---- /dev/null
-+++ b/tests/functional/test_aarch64_reverse_debugging.py
-@@ -0,0 +1,35 @@
-+#!/usr/bin/env python3
-+#
-+# Reverse debugging test
-+#
-+# Copyright (c) 2020 ISP RAS
-+#
-+# Author:
-+#  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import Asset, skipIfMissingImports
-+from reverse_debugging import ReverseDebugging
-+
-+
-+@skipIfMissingImports('avocado')
-+class ReverseDebugging_AArch64(ReverseDebugging):
-+
-+    REG_PC = 32
-+
-+    KERNEL_ASSET = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-+        '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
-+
-+    def test_aarch64_virt(self):
-+        self.set_machine('virt')
-+        self.cpu = 'cortex-a53'
-+        kernel_path = self.KERNEL_ASSET.fetch()
-+        self.reverse_debugging(args=('-kernel', kernel_path))
-+
-+
-+if __name__ == '__main__':
-+    ReverseDebugging.main()
-diff --git a/tests/functional/test_ppc64_reverse_debugging.py b/tests/functional/test_ppc64_reverse_debugging.py
-new file mode 100755
-index 0000000000..4bb3cca05f
---- /dev/null
-+++ b/tests/functional/test_ppc64_reverse_debugging.py
-@@ -0,0 +1,39 @@
-+#!/usr/bin/env python3
-+#
-+# Reverse debugging test
-+#
-+# Copyright (c) 2020 ISP RAS
-+#
-+# Author:
-+#  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import skipIfMissingImports, skipFlakyTest
-+from reverse_debugging import ReverseDebugging
-+
-+
-+@skipIfMissingImports('avocado')
-+class ReverseDebugging_ppc64(ReverseDebugging):
-+
-+    REG_PC = 0x40
-+
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
-+    def test_ppc64_pseries(self):
-+        self.set_machine('pseries')
-+        # SLOF branches back to its entry point, which causes this test
-+        # to take the 'hit a breakpoint again' path. That's not a problem,
-+        # just slightly different than the other machines.
-+        self.endian_is_le = False
-+        self.reverse_debugging()
-+
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
-+    def test_ppc64_powernv(self):
-+        self.set_machine('powernv')
-+        self.endian_is_le = False
-+        self.reverse_debugging()
-+
-+
-+if __name__ == '__main__':
-+    ReverseDebugging.main()
-diff --git a/tests/functional/test_x86_64_reverse_debugging.py b/tests/functional/test_x86_64_reverse_debugging.py
-new file mode 100755
-index 0000000000..45b25866d6
---- /dev/null
-+++ b/tests/functional/test_x86_64_reverse_debugging.py
-@@ -0,0 +1,34 @@
-+#!/usr/bin/env python3
-+#
-+# Reverse debugging test
-+#
-+# Copyright (c) 2020 ISP RAS
-+#
-+# Author:
-+#  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import skipIfMissingImports, skipFlakyTest
-+from reverse_debugging import ReverseDebugging
-+
-+
-+@skipIfMissingImports('avocado')
-+class ReverseDebugging_X86_64(ReverseDebugging):
-+
-+    REG_PC = 0x10
-+    REG_CS = 0x12
-+    def get_pc(self, g):
-+        return self.get_reg_le(g, self.REG_PC) \
-+            + self.get_reg_le(g, self.REG_CS) * 0x10
-+
-+    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
-+    def test_x86_64_pc(self):
-+        self.set_machine('pc')
-+        # start with BIOS only
-+        self.reverse_debugging()
-+
-+
-+if __name__ == '__main__':
-+    ReverseDebugging.main()
--- 
-2.48.1
+> +{
+> +    uint64_t supported_vmsa_features = 0;
+> +    struct kvm_device_attr attr = {
+> +        .group = KVM_X86_GRP_SEV,
+> +        .attr = KVM_X86_SEV_VMSA_FEATURES,
+> +        .addr = (unsigned long) &supported_vmsa_features
+> +    };
+> +
+> +    bool sys_attr = kvm_check_extension(kvm_state, KVM_CAP_SYS_ATTRIBUTES);
+> +    if (!sys_attr) {
+> +        return 0;
+> +    }
+> +
+> +    int rc = kvm_ioctl(kvm_state, KVM_GET_DEVICE_ATTR, &attr);
+> +    if (rc < 0) {
+> +        if (rc != -ENXIO) {
+> +            warn_report("KVM_GET_DEVICE_ATTR(0, KVM_X86_SEV_VMSA_FEATURES) "
+> +                        "error: %d", rc);
+> +        }
+> +        return 0;
+> +    }
+> +
+> +    return supported_vmsa_features;
+> +}
+> +
+>  static SevInfo *sev_get_info(void)
+>  {
+>      SevInfo *info;
+> @@ -1524,6 +1552,20 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>      case KVM_X86_SNP_VM: {
+>          struct kvm_sev_init args = { 0 };
+>  
+> +        if (sev_es_enabled()) {
 
+Shouldn't this be
+
+if (sev_es_enabled() && (sev_common->vmsa_features & SEV_VMSA_ALLOWED_SEV_FEATURES)) {
+
+> +            __u64 vmsa_features, supported_vmsa_features;
+
+s/__u64/uint64_t/ ?
+
+> +
+> +            supported_vmsa_features = sev_supported_vmsa_features();
+> +            vmsa_features = sev_common->vmsa_features;
+> +            if ((vmsa_features & supported_vmsa_features) != vmsa_features) {
+> +                error_setg(errp, "%s: requested sev feature mask (0x%llx) "
+> +                           "contains bits not supported by the host kernel "
+> +                           " (0x%llx)", __func__, vmsa_features,
+> +                           supported_vmsa_features);
+> +            return -1;
+> +            }
+
+Add a blank line
+
+> +            args.vmsa_features = vmsa_features;
+> +        }
+
+Add a blank line
+
+Thanks,
+Tom
+
+>          ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
+>          break;
+>      }
+> @@ -2044,6 +2086,19 @@ static void sev_common_set_kernel_hashes(Object *obj, bool value, Error **errp)
+>      SEV_COMMON(obj)->kernel_hashes = value;
+>  }
+>  
+> +static bool
+> +sev_snp_guest_get_allowed_sev_features(Object *obj, Error **errp)
+> +{
+> +    return SEV_COMMON(obj)->vmsa_features & SEV_VMSA_ALLOWED_SEV_FEATURES;
+> +}
+> +
+> +static void
+> +sev_snp_guest_set_allowed_sev_features(Object *obj, bool value, Error **errp)
+> +{
+> +    if (value)
+> +        SEV_COMMON(obj)->vmsa_features |= SEV_VMSA_ALLOWED_SEV_FEATURES;
+> +}
+> +
+>  static void
+>  sev_common_class_init(ObjectClass *oc, void *data)
+>  {
+> @@ -2061,6 +2116,11 @@ sev_common_class_init(ObjectClass *oc, void *data)
+>                                     sev_common_set_kernel_hashes);
+>      object_class_property_set_description(oc, "kernel-hashes",
+>              "add kernel hashes to guest firmware for measured Linux boot");
+> +    object_class_property_add_bool(oc, "allowed-sev-features",
+> +                                   sev_snp_guest_get_allowed_sev_features,
+> +                                   sev_snp_guest_set_allowed_sev_features);
+> +    object_class_property_set_description(oc, "allowed-sev-features",
+> +            "Enable the Allowed SEV Features feature");
+>  }
+>  
+>  static void
+> diff --git a/target/i386/sev.h b/target/i386/sev.h
+> index 373669eaac..07447c4b01 100644
+> --- a/target/i386/sev.h
+> +++ b/target/i386/sev.h
+> @@ -44,6 +44,8 @@ bool sev_snp_enabled(void);
+>  #define SEV_SNP_POLICY_SMT      0x10000
+>  #define SEV_SNP_POLICY_DBG      0x80000
+>  
+> +#define SEV_VMSA_ALLOWED_SEV_FEATURES BIT_ULL(63)
+> +
+>  typedef struct SevKernelLoaderContext {
+>      char *setup_data;
+>      size_t setup_size;
 
