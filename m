@@ -4,110 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0ABFC0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C1BC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thPRz-0006fR-68; Mon, 10 Feb 2025 03:47:32 -0500
+	id 1thPRj-0006Hb-Pc; Mon, 10 Feb 2025 03:47:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1thPRi-0006Oh-J7
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:47:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1thPRY-0006F9-1K
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:47:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1thPRg-00046m-G6
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:47:14 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1thPRW-00045u-HA
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:47:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739177231;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1739177221;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q6Y1JRaaRUtWFZvfGb1RPUPBj4MwuLzl3ZiWakaP89k=;
- b=Ur5OtPJArpKL5T+xcvl7NEU1xY/E+J67bB+rj/MMpqSQoPhHdafPsPeVGzdWD/o69UVOVA
- e38n+88qNdsMwVq1vK8rQZR8RLCSHc4rIxD966Qu2UvS7JqAGqJrm2Tkg/MMXIWeOZvluy
- Xsc1oAEcn1fWhULqrjoit/MHy11froo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xTOvCrN4mZxccS1AJtceqMgg7d6ocLtBCsm8pA3bnfA=;
+ b=cqc6/kO9x4IRHL9qOp5yQs++bJWcDpwXEbsb1JEkM0IU4ENSo8jUpuNr6D40l+/6rRBDNo
+ nWobPWaZ5kAoPhb8T4BsuRSdZpKYGY+ssOzmnGGrgw0s/koQ4OMw44rWfVpXLVE3zNhDj+
+ S/m5qKPijI5PrfSndGSDb1r6MDFFx58=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-J2Nu_aErNyOJ1_NlPuBA8A-1; Mon, 10 Feb 2025 03:47:08 -0500
-X-MC-Unique: J2Nu_aErNyOJ1_NlPuBA8A-1
-X-Mimecast-MFC-AGG-ID: J2Nu_aErNyOJ1_NlPuBA8A
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4393e89e910so5500535e9.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 00:47:08 -0800 (PST)
+ us-mta-592-AvxX1k65MnKje5Jw5LPSYg-1; Mon, 10 Feb 2025 03:46:59 -0500
+X-MC-Unique: AvxX1k65MnKje5Jw5LPSYg-1
+X-Mimecast-MFC-AGG-ID: AvxX1k65MnKje5Jw5LPSYg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43626224274so24146725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 00:46:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739177227; x=1739782027;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=q6Y1JRaaRUtWFZvfGb1RPUPBj4MwuLzl3ZiWakaP89k=;
- b=ZddCGQ8y4zAFVyg/F6vDN0mCzN7OgFY1+nKy2p7oZ5eBKl8CLU9qSGi7StUjfrLYKp
- ywE25ddwRW99GY/vmMmEBgsvU+2wOkjUKlNqRrB9ZSSTCI1l7Rs2yy3hAC1aIHp8cdaU
- oBP/PmxiiowwyUyMvh0RYukpQkGXdzy1j+FGOFAVHMRqQnC4EIx2Z9if7LkWmohBv0dv
- oRVCkh7RpjzrGMCe8HTntAq6H6eNl6fApAwrZ9VcY45giWL/rxWpLpSu5CZeYPfRPByp
- TeaYAC1CvVSplCVHeMHF2CjRTk729vwpany79jDORs0PO71IhZMdEMITVUw6glkvfP4A
- Dt8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDxFWTFt/2+JijqE1A8ojAwikdiFT9NR3EO4OM7quXYjN3+HolQbnmubOTiiECGMkSK1tcQmCvSWvX@nongnu.org
-X-Gm-Message-State: AOJu0Yw1KMXh1/GS3k4WxQH+r05G3MV/b1glH0CBquXvO9XYNyTtfnXL
- 4uLoT9p6dxmOjDU2j/cAu3esUakNOI59Vt1w9aWXnko7GhVVHBwSB63Y+kowjBUKR7lcmjnQpus
- ywBUHVpM3vxJrL6UhGLgfEqiyUM9e0KKf4VTZikFiiLrq3+AGHK6v
-X-Gm-Gg: ASbGnct7WLjE9ZG3G+lK2r2WmrZ01UM96cjOLBZXMZq87tOdkn0RexeqW81KqqmF6op
- 3Vk+st3V17Rl29jiWscIYofJHBBxKqq/J48mS3FmjUG7WeaB+3Fbv74Tvk9JlyiQRNOCrXGScjD
- o5Re+A4nDTXWHdPtE5Y49wDDg5ewfx4Iom87O03AoQwd4PxflA5Mjk7aZwcKOTf47PZyoU918zB
- viGC9Yp3ROwDLU7bj48niRtvoFLhKoGel/wtrC0rtOOgrVP10b6JfQx8g26peLfEp9wFdTv/TVV
- 4kiX3vktu9KgqqAIpxN6uzjheqOxGAmVWqrL8xsIHRISDK0Tk9OS
-X-Received: by 2002:a05:600c:3593:b0:438:e231:d342 with SMTP id
- 5b1f17b1804b1-4392497dbe7mr81610315e9.1.1739177227054; 
- Mon, 10 Feb 2025 00:47:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFRudidh0cTEWpc3Ld2rBWJo5SBcxvsGERAd1rPqovj0ZvGIypbp59DwwdL548YP+UyOYLZJg==
-X-Received: by 2002:a05:600c:3593:b0:438:e231:d342 with SMTP id
- 5b1f17b1804b1-4392497dbe7mr81610105e9.1.1739177226722; 
- Mon, 10 Feb 2025 00:47:06 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc565d62dsm10420009f8f.93.2025.02.10.00.47.04
+ d=1e100.net; s=20230601; t=1739177218; x=1739782018;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xTOvCrN4mZxccS1AJtceqMgg7d6ocLtBCsm8pA3bnfA=;
+ b=FUr7zneDURqg29YHZ/FHDQfNDuTEtLs/OFEJfrJBp29AqUbPDhH5zlvObnV5S3dF1F
+ gv8Bh+E9ttI2+881zn/wij8zjxFqOnwq4Vz9QUVlHILTnhu50Ru75UQ9ixJmeUTvjFnf
+ EgAK9nPV4EMq0Ayh9ZfK+dZ0U3Koqw3HPbq8vjcoikI6FhqYxODDR6sDUwqvLi1UWRfq
+ saIgbqtUfQ7BpVGKC83/ngq7IlISAv4iTWPIL4x8qHb37+08HkoqVqI2XufeyMKe+wC0
+ 8zGeVyBSBukL6znGCOAoEwWief9FlF6ZIJN5LNlz66yg4Zs6L2e6WhPwKAtfYszUeWzF
+ N2Gw==
+X-Gm-Message-State: AOJu0YyP8zVAvv8vpbU+3CNg4wKjxyQh5inZj+a/NfJ7dO1D1UWN9r8z
+ joi4i5GYFAvHpHn+41+Umuh9ssSdnsDwU/YjHdWf2vUnmqJabiPXGIJVYYG5HyVzEEXKVXabDh/
+ cUzatdr5iNweiIBHL4FL6BJB+JPYWkpIeVlVpS50JBkOGx+czF3OCtgbjYEk0E7Ffgwxdqsy/B0
+ eOCJ9O4RU/OGUrIjSITfYeMxCIz9Kwn7qL
+X-Gm-Gg: ASbGncsYDyCgTxEuyzUrHq31ts+lu945t5mSlG5b3kWt6iu7Pzp82ySce86QhWJHNwV
+ xubpdhle8hHWQbtl1wq/EKfj8t6rbhK7gSX26r/nUppyccIx1TNIgIB4SmzOJGuwh6c/L8RtA2n
+ ku0TpUBdUNTQ8BJXNHOlYpTsH5BZZHZzb2Z5Vv3MqVg++N/+TxcacofDjGc9SWyhm1on8ZwpEWB
+ 0HHGY22o5FSahxdjHDOWTmbSOALal8PODdGx+2C7mJkXVKs1HBru2zfbenziXorVbMDj/5fVWu7
+ mteVF8tfYmTpsbkLKGMaXSo99FYND9vl9DXWnZQSHKO4wi+PCpJkNvqoerLAKO9UKw==
+X-Received: by 2002:a05:600c:5105:b0:439:386e:9859 with SMTP id
+ 5b1f17b1804b1-439386e98d1mr51120625e9.4.1739177218686; 
+ Mon, 10 Feb 2025 00:46:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFPjDiL5pZBi9owqpm+TapF2OF2MjbbZOLDJ+wjvZztM7NQQaKqaaMRpgxCR1zkkKMTKOL0Cw==
+X-Received: by 2002:a05:600c:5105:b0:439:386e:9859 with SMTP id
+ 5b1f17b1804b1-439386e98d1mr51120265e9.4.1739177218222; 
+ Mon, 10 Feb 2025 00:46:58 -0800 (PST)
+Received: from localhost
+ (p200300cbc734b80012c465cd348aaee6.dip0.t-ipconnect.de.
+ [2003:cb:c734:b800:12c4:65cd:348a:aee6])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-4391da964e2sm140093095e9.4.2025.02.10.00.46.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 00:47:05 -0800 (PST)
-Message-ID: <07a12390-dea8-49dd-a38e-13aecddc6b87@redhat.com>
-Date: Mon, 10 Feb 2025 09:47:04 +0100
+ Mon, 10 Feb 2025 00:46:57 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Zabka <git@zabka.it>
+Subject: [PATCH v3 2/7] physmem: factor out RAM/ROMD check in
+ memory_access_is_direct()
+Date: Mon, 10 Feb 2025 09:46:43 +0100
+Message-ID: <20250210084648.33798-3-david@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250210084648.33798-1-david@redhat.com>
+References: <20250210084648.33798-1-david@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] hw/arm/smmuv3: Move reset to exit phase
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com,
- alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org,
- zhenzhong.duan@intel.com, ddutile@redhat.com
-References: <20250206142307.921070-1-eric.auger@redhat.com>
- <20250206142307.921070-5-eric.auger@redhat.com>
- <CAFEAcA_LgrBRbafVQ0vLGPd8xG=wsLjWnKTJ2JSEREYUqgRQBQ@mail.gmail.com>
- <7102d470-ac72-4c02-b8bc-20f1379a4843@redhat.com>
- <CAFEAcA-XK5GwT0b_Ff-8fYnWcDgzaE-0Ei-YqDoXv-aXFGNXUQ@mail.gmail.com>
- <Z6ZHTStx_S9ALdxt@x1.local>
- <CAFEAcA8ovoGsQ9oEco88iw3iUy_3kBOUaYHL+oq5VF-i9xg4+A@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA8ovoGsQ9oEco88iw3iUy_3kBOUaYHL+oq5VF-i9xg4+A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,42 +118,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Let's factor more of the generic "is this directly accessible" check,
+independent of the "write" condition out.
 
-Hi Peter,
+Note that the "!mr->rom_device" check in the write case essentially
+disallows the memory_region_is_romd() condition again. Further note that
+RAM DEVICE regions are also RAM regions, so we can check for RAM+ROMD
+first.
 
-On 2/7/25 7:18 PM, Peter Maydell wrote:
-> On Fri, 7 Feb 2025 at 17:48, Peter Xu <peterx@redhat.com> wrote:
->> On Fri, Feb 07, 2025 at 04:58:39PM +0000, Peter Maydell wrote:
->>> (I wonder if we ought to suggest quiescing outstanding
->>> DMA in the enter phase? But it's probably easier to fix
->>> the iommus like this series does than try to get every
->>> dma-capable pci device to do something different.)
->> I wonder if we should provide some generic helper to register vIOMMU reset
->> callbacks, so that we'll be sure any vIOMMU model impl that will register
->> at exit() phase only, and do nothing during the initial two phases.  Then
->> we can put some rich comment on that helper on why.
->>
->> Looks like it means the qemu reset model in the future can be a combination
->> of device tree (which resets depth-first) and the three phases model.  We
->> will start to use different approach to solve different problems.
-> The tree of QOM devices (i.e. the one based on the qbus buses
-> and rooted at the sysbus) resets depth-first, but it does so in
-> three phases: first we traverse everything doing 'enter'; then
-> we traverse everything doing 'hold'; then we traverse everything
-> doing 'exit'. There *used* to be an awkward mix of some things
-> being three-phase and some not, but we have now got rid of all
-> of those so a system reset does a single three-phase reset run
-> which resets everything.
-Thank you Peter. This is reassuring. I will add such kind of description
-in the commit msg/cover letter.
+This is a preparation for further changes.
 
-Eric
->
-> -- PMM
->
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ include/exec/memory.h | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 5cd7574c60..cb35c38402 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2997,6 +2997,10 @@ bool prepare_mmio_access(MemoryRegion *mr);
+ 
+ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
+ {
++    /* ROM DEVICE regions only allow direct access if in ROMD mode. */
++    if (!memory_region_is_ram(mr) && !memory_region_is_romd(mr)) {
++        return false;
++    }
+     /*
+      * RAM DEVICE regions can be accessed directly using memcpy, but it might
+      * be MMIO and access using mempy can be wrong (e.g., using instructions not
+@@ -3006,11 +3010,9 @@ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write)
+         return false;
+     }
+     if (is_write) {
+-        return memory_region_is_ram(mr) && !mr->readonly &&
+-               !mr->rom_device;
+-    } else {
+-        return memory_region_is_ram(mr) || memory_region_is_romd(mr);
++        return !mr->readonly && !mr->rom_device;
+     }
++    return true;
+ }
+ 
+ /**
+-- 
+2.48.1
 
 
