@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA82C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 17:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D29C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 17:23:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thXTk-0004WM-T7; Mon, 10 Feb 2025 12:21:52 -0500
+	id 1thXUq-0005My-Qm; Mon, 10 Feb 2025 12:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thXTi-0004Uh-NJ
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:21:50 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thXUo-0005Ja-Ot
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:22:58 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thXTe-0007Lb-CO
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:21:48 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-aaf900cc7fbso783056466b.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 09:21:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thXUn-0007Zp-8B
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:22:58 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4394a0c65fcso8624645e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 09:22:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739208104; x=1739812904; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739208175; x=1739812975; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=duGXbvA0hjBfTk7OhJrVu/9zBhz4Li2GRi+3aPRPIFM=;
- b=VDROrh6L3eZVJ/hLlmtimal0H4betbiJTGcvQJbZG53w8fvlhslRdDYgyNuXZ7ov/m
- 3QH9yPaTfaMgFS96FTNPz1sJ5O24eg8Gh1Mw4pQtKf2pW4Im6C48KDqe0LPrAla7QCbr
- wv7vEyys9bIqBNPDBeVn1kFNpSpUIR26dv/veN/Th9CPvMkx5zlUSPNGPEOX5+xVdPJf
- PVExxxsSX9+wP0y687L4ziq7/UsFh7xK/Eq27F00zz5+4tRrB5svm3UjnIe7icjs/6kh
- KqoZTSEHkbFZZK+Dzq97KooF6myGNo5Q/VUrPAlD9Lx9A5Oczm+5HkMHcs4806ZcSYgH
- sdww==
+ bh=ZxKItMBa6CMh5gmAKdypzeWgkVbkc2jWPlHO3gvO5Nk=;
+ b=VSaVck2mfwZYMVzkXjETwHCjz7ia7oLitM/1+DfX8orkCR0liPg7rZkQTp0v3tUIi9
+ PfN2jJTYv1QyLYKbuaUxWArU3GErDG5uKQOvZpt5WGXmsLlRPoQKGQeAnWEwUGnqLtNd
+ 3yOWzgngdhropJG2aKPZ/Qbu5b20TAvIIerG7cJI2bIi6rAVNIVo75X9W0KeVNHbN76r
+ zs/K8CT0KU9POOmJGNqd9qAktUvQ1rdAAwmfKvghZy6A8DCQdVDLgyfkgjHd7ghLmSj7
+ 0zdCUB0enDpyhYBgE+i/mXFAkjV39HiPOkqM/P/Ky4vfFdqA5pY+r4u+N2CIIKdBgTmW
+ piAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739208104; x=1739812904;
+ d=1e100.net; s=20230601; t=1739208175; x=1739812975;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=duGXbvA0hjBfTk7OhJrVu/9zBhz4Li2GRi+3aPRPIFM=;
- b=xFHEoAvgyPJgyu0bhonC9C5TKhkXzQkD8E++/gDS5gVCncdqbv4/2MTGo4gDnifd/r
- ZW1VFHqCRoOEbdl1EDLiL6Pj3yFBzFjIPQOo0PhWB0+npTkmhrV4YwdSlaxJlgIUJsdZ
- 6lJoxR/NMZdKmd5rf80OYYhQxOqkeh6OWyQhkVqGH05BM45QDXwHLJDceQUQ/IFCWJXN
- bN3Mp/dxe5bbu7DVlAs046HKB+5a2JkM1qVfwt+Bw2GTZ4idhaY/R6xa+Yy4W+0eGSIb
- oVmrnMQqvXCtS/0SEZBxEqXHCTPPqmdl430eMC/HFtYdS4rkbA7VVUjCux30Pd82I7xI
- leqQ==
+ bh=ZxKItMBa6CMh5gmAKdypzeWgkVbkc2jWPlHO3gvO5Nk=;
+ b=C2lacK3OkSZOobjcuQN87yHjX5rv262/BU9nrFjQ0xn05eH2UkuBVUOtw0EXUZfPi9
+ U5RMZmabWEk/CoFPxxx38Mb9nW9rnQFvU1X/wV/JjAgx57WDn28daxAKzA+nLe0RecHR
+ V2RMTAvQ+Fy4I1fu575D0I9f9O8TMUp81lYfcE+uJcb3QJaTOz4/OrKCvnREl8HQhm0J
+ DF0sJ33bchcM5T12vOv3YS6D8iugtd2kUn5kB55/1yP17bBjw0bH/Q+CdQvIbqjtG3BX
+ rhQUSmJzYDpoOFzRMqwXl40nF9PXsvYJkkDNTsJbd8XUKADQSW3+RWEocNZVQ8BjjlQO
+ EC4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5NNWjjEYIjHlLZTEkW3XUEFzoYhN6hqG72TM3xhobSLyx6Z5Vv0wIuaPTvw0qIwjcIQQTe38CMlwz@nongnu.org
-X-Gm-Message-State: AOJu0YxQxRoV/kYNCcMOCxvl/Fp/mshWgGp8ckdk+Jl4UWwj1eg7L0EG
- SXpx71jQIxYYy11NgG9rlP0xDPxfTBGDwat01sVuFitYk+KF2zuDqu8KSHzNC00=
-X-Gm-Gg: ASbGnctcRqBtC4w331FbMGgx+rlP9pJg0PoHgoJ0NJ/NRZP1eTA7Ejbpk2pAOHP8DIQ
- w1EA+cXX3ChIUM4/Q5v+qRUoV6IsssJoe3aWyho+QlICE9tqT50jSk9UiWKHPa+pKyf+rnpZ4rL
- KQH1t1nRX7vS/DNtLwiKvId/YyOK2Iqt3Gs8I97M7Xg5kgw+RQ8fqQK6W9YMCjv85ejG1a2XfD4
- cxWAT/MYtiDy+wLewvnVEgH/uJy0nT7+sy7Gqv63/5dFp7HB+S3f5mEetqcukrBj9JCF7LD0Gqo
- OhLmpoLJM5XJNkaTOCaYehasm+GsSRtcKMzdU6e5+NFBzrsPlMoDlDWS0WI=
-X-Google-Smtp-Source: AGHT+IGJ8PEeNK91ASTgw3auwFAxaUK0F8OverbQHigtkZXr7d7OUa2R7ehntOr9m7cxTdxZZ2jcHw==
-X-Received: by 2002:a17:907:1c24:b0:aa5:225f:47d9 with SMTP id
- a640c23a62f3a-ab789aeb5demr1461294166b.29.1739208103888; 
- Mon, 10 Feb 2025 09:21:43 -0800 (PST)
+ AJvYcCWc6k3oryuhBhUm4w/M9N1nhro9rWvar2iaqcpPqhsrkv8PqMqMBhEWn1BtByswqWfGT4gAWltAo/53@nongnu.org
+X-Gm-Message-State: AOJu0YzqzKEVXD7OD1Q9S/0FZF1yUgpMJ5W/tAMFzQdCmZvjmgAuZkp0
+ pJc0/K4XnEPTEQUlDU39qQ75lb6EaG/BE2omWhXtftwTKcqqaZAo1aI2Ql2Yaq55nQYImyfp8fT
+ +7gc=
+X-Gm-Gg: ASbGncsmxukjY9uIJt9VfzNnnztfApLnuzZgmQOtWldXQQrQksVm475jyX4NUkmAKU6
+ w+ViF1CUXwmCAWGAkt2PgaMtWaNiHyy5+40Z4EnrtM3zcW8YLzqoFv6jsn+hSnXL7zEgUcU/XLb
+ RYb4Nm1LPa1OXDJ1t6XVZUL+vmRNqv6poUdsE2vzjzN/Hewl9CEiDur6lUyUwevszSagpLaovFf
+ nY/6E4Zj0pUo5KYgDxhdGtP7J0FOzH3izBob8ZALyo7kzrIUqrwalmvtZNeuEOZlP9wtaSHgFzm
+ gBW0s60MOIsop0LJGGs/YeyhAo+DL7Y/KoMlmSB1u+Ht/JPsSBEO6oE0X5w=
+X-Google-Smtp-Source: AGHT+IG0TEk41y7B/w3WSj44zWrkP49DS25kVsbmgtCQi7k+D9M71z42VL9bPftY/PajGTJVG1XzCQ==
+X-Received: by 2002:a05:600c:4f05:b0:434:a802:e9a6 with SMTP id
+ 5b1f17b1804b1-43924989da5mr138396115e9.7.1739208175204; 
+ Mon, 10 Feb 2025 09:22:55 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab78c219740sm760973366b.61.2025.02.10.09.21.43
+ ffacd0b85a97d-38dd49d2cafsm7350912f8f.16.2025.02.10.09.22.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 09:21:43 -0800 (PST)
-Message-ID: <58008d22-a006-4e42-aed0-1cad51458a8a@linaro.org>
-Date: Mon, 10 Feb 2025 18:21:42 +0100
+ Mon, 10 Feb 2025 09:22:54 -0800 (PST)
+Message-ID: <2db2d180-b134-4cfe-a5be-b8542aff4bac@linaro.org>
+Date: Mon, 10 Feb 2025 18:22:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] qom: Constify class_data
+Subject: Re: [PATCH v2 09/11] qom: Have class_init() take a const data argument
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 References: <20250210133134.90879-1-philmd@linaro.org>
- <d0c8837f-a47f-45ad-a060-0a2b638932a8@linaro.org>
- <443902c7-8697-44d4-9f7d-9bddb93607aa@linaro.org>
+ <20250210133134.90879-10-philmd@linaro.org>
+ <37042664-844b-4376-ac35-6426b5e34c5d@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <443902c7-8697-44d4-9f7d-9bddb93607aa@linaro.org>
+In-Reply-To: <37042664-844b-4376-ac35-6426b5e34c5d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,67 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/25 18:02, Richard Henderson wrote:
-> On 2/10/25 05:46, Philippe Mathieu-Daudé wrote:
->> On 10/2/25 14:31, Philippe Mathieu-Daudé wrote:
->>> Since v1:
->>> - Make XtensaConfigList::config not const (Max)
->>> - Update / test rust (Paolo)
->>> - Constify InterfaceInfo[]
->>>
->>> Following Richard's suggestion [*], make QOM class data *const*.
->>>
->>> [*] https://lore.kernel.org/qemu-devel/f4ec871d-e759-44bc- 
->>> a10b-872322330a3f@linaro.org/
->>
->> I'm only seeing +3KiB in .rodata for each binary...
->>
->>> Philippe Mathieu-Daudé (11):
->>>    target/i386: Constify X86CPUModel uses
->>>    target/sparc: Constify SPARCCPUClass::cpu_def
->>>    target/xtensa: Finalize config in xtensa_register_core()
->>>    target/riscv: Declare RISCVCPUClass::misa_mxl_max as RISCVMXL
->>>    target/riscv: Convert misa_mxl_max using GLib macros
->>>    hw: Declare various const data as 'const'
->>>    hw: Make class data 'const'
->>>    qom: Have class_base_init() take a const data argument
->>>    qom: Have class_init() take a const data argument
->>>    qom: Constify TypeInfo::class_data
->>>    qom: Constify InterfaceInfo[] interfaces
+On 10/2/25 17:51, Richard Henderson wrote:
+> On 2/10/25 05:31, Philippe Mathieu-Daudé wrote:
+>> --- a/include/hw/core/cpu.h
+>> +++ b/include/hw/core/cpu.h
+>> @@ -170,7 +170,7 @@ struct CPUClass {
+>>       void (*disas_set_info)(CPUState *cpu, disassemble_info *info);
+>>       const char *deprecation_note;
+>> -    struct AccelCPUClass *accel_cpu;
+>> +    const struct AccelCPUClass *accel_cpu;
 > 
-> There is some additional data that can be made const after this [1], 
-> though still not lots.  But the additional data that Paolo was going to 
-> add for 99 riscv bottles of beer on the wall would have been quite a bit 
-> more than 3k.
-> 
-> 
-> r~
-> 
-> 
-> [1]
-> 
-> -static M48txxInfo m48txx_isa_info[] = {
-> +static const M48txxInfo m48txx_isa_info[] = {
-> 
-> -static M48txxInfo m48txx_sysbus_info[] = {
-> +static const M48txxInfo m48txx_sysbus_info[] = {
-> 
-> -static struct EHCIPCIInfo ehci_pci_info[] = {
-> +static const struct EHCIPCIInfo ehci_pci_info[] = {
-> 
-> -static UHCIInfo uhci_info[] = {
-> +static const UHCIInfo uhci_info[] = {
-> 
-> -static UHCIInfo uhci_info[] = {
-> +static const UHCIInfo uhci_info[] = {
+> This to have been split out previously.
+> It's certainly not gsed material.
 
-Doh, I took not for these but forgot 🤦🏻
+Yes, mis-rebased with I misunderstood object_child_foreach() pattern.
 
-> -static StreamSinkClass xilinx_axidma_data_stream_class = {
-> +static const StreamSinkClass xilinx_axidma_data_stream_class = {
-> 
-> -static StreamSinkClass xilinx_axidma_control_stream_class = {
-> +static const StreamSinkClass xilinx_axidma_control_stream_class = {
-> 
+(good eyes!)
 
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Thanks!
 
