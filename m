@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DDA1C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 00:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC25C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 00:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thI3b-0001YW-Ik; Sun, 09 Feb 2025 19:53:51 -0500
+	id 1thI5W-0002KY-Le; Sun, 09 Feb 2025 19:55:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thI3Z-0001XX-B5; Sun, 09 Feb 2025 19:53:49 -0500
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ id 1thI5U-0002K5-9i; Sun, 09 Feb 2025 19:55:48 -0500
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thI3X-0002jz-Lo; Sun, 09 Feb 2025 19:53:49 -0500
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-4b2c0a7ef74so2597408137.2; 
- Sun, 09 Feb 2025 16:53:46 -0800 (PST)
+ id 1thI5S-00031N-KZ; Sun, 09 Feb 2025 19:55:47 -0500
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-4bbbab48111so263984137.0; 
+ Sun, 09 Feb 2025 16:55:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739148826; x=1739753626; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1739148945; x=1739753745; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RXONoNNTGaXXKSl1DL1uZSnQOd1CCrunq2zGZIh0jwY=;
- b=i/z+u7LiIDY3NoHH5SZQJt1hkiGaRkVPRYnDLM9OGqcF3bNTahCww7GjEEVvGK2B8+
- eyV0V5sWiqHFDulpuLd+j9lr0RqkefCycgLULBh+oGSmkpFG6sGcLE2eWayPTGiV6B0b
- Mg7OWtgE/TI++wvLK/Zlaw+5BDzhjOvJI8moNpQhSmF8bDrSmyac/sOUlFOrvSogOB1p
- FWO17hATuousZmt0A02a61jUQeQXrxjaqumVPND92M2yiDIfhHaM+j3gwlwRZ+h7pMbK
- aVwdA4k6/lZrQy02RRiv27/C0CG3axWWSKs76i/zgggr+K3VKWMeG6d0DffQ6zD6j6ww
- +XVw==
+ bh=Df3b01eM+Jkric0lTW6NkxFkbinWZ+2IBGK1miF0/Ao=;
+ b=nM4Lq54FCvK9CHWmAMC01JpM339flJRWlCbOU4Ns0rldebjkZZ9q8IoEjodImj+l7P
+ FPjUuijKqKiol+KKKA9V0ZH8itB3j/DSNBznMKIcnV0QaTZx4WvCkSDFlxWmhRPEtJOe
+ Y7QQIMHVMTICkpPxbEddt+6/RO1O9pHnXAx7QH7n/abd5ZmEpYRIjSvU8z/nFg1Cl7Va
+ 6ZTS+b7DgRlGsv+dE+j0uuk/fbd3qiOUsb98cizNJ9zpyvyNNA2dkIrCkQV+7tjl8jy5
+ EixKnclhXJELge1rgl4fcyy44MfnqOv9XsFT+fy4/i7t38QK6pIg7RFSr2Wl2XQGKBg2
+ w8sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739148826; x=1739753626;
+ d=1e100.net; s=20230601; t=1739148945; x=1739753745;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RXONoNNTGaXXKSl1DL1uZSnQOd1CCrunq2zGZIh0jwY=;
- b=Jxq0lf9t6v6kzGBskbINQ47Ng/tkjI789+mgJ2f1Xc0j6GxkkkGvkaIFfYsJhOZc0V
- aEAS0sl13gmcndsJRYKDkaQc5fXH7YDFle7dPLnewzjOLXeMMf6wvWEn4+icqKrKqlPp
- SGlWyRmqoK/n+gh5hZVq1zXHeme5OzWkunqNloxEtZDADtd3Vc//uIqQUMcRDmFehxU1
- pNLaDCvgeUFRmoZjOchsVbSB/Exbh8ycyl/M+ClrwnCtFxaF8qQkuGzuUeBhXa++WD34
- +imm39dGPV4JMk3uKaiswKgCi1NkKY3hToLRZpcCd/SQBDIARUDYE3Uo1TqRr5xJofy2
- xOGg==
+ bh=Df3b01eM+Jkric0lTW6NkxFkbinWZ+2IBGK1miF0/Ao=;
+ b=X/9NpPge5TZF2Y74Ja7iJ0ITdcdq6B1iGDI+Wj3Au5CqXO6WvhByav0x8623Vio4/O
+ iwZIRaKgX6eY/SBYRCi3xII3T77S/0GoR4TA6s1DZFxaxmQYbzOQjXgx0UNN8AJC8OYh
+ g7h8aEhfIcKEs5J0nFyHwKhMkWSBIZJq9YSEaEFU2cIPKaJAVvAnmE7NI6KlFs2X+b0L
+ HBXuvyTMEE9fx4C2MoOyKwKedP0qlmo5UddcXgwlfdaox2kqagIVnTiNkoPIgHSueu6w
+ i0h0CiSNuzT0hlQ1NtVqUrdb2iJgpYGx9PlNsG1kuFIWs/Hp8BvOFxEgJuuR6b+evVmq
+ 17YQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXv4aJIOT/3nu2jiAm41s3wB40Rc+E20aBrbAWoduDTg6vL7X3QLO6ShhiPEIWcdwQ3saO+8gkXuvtd@nongnu.org
-X-Gm-Message-State: AOJu0Yxqk2/ue1s+UkoqIcvuxTmpJgh1i/MJYo2rX+d4R+RblCOGd1os
- TzyxWqGe45ME6feBjDV2yuYnn6tlZKanBIImhn6fZBgSe4SmEwFaBUmp7y9SYqFvCyP+pQfiGOA
- Rt3sUDrtuOgnVjsKNpHIsWpZsBQM=
-X-Gm-Gg: ASbGncv68AiCLV9ijnq+1FmyksCqbn+wzD7utOFr18/n29QClb9jjJJkThmyn9kGg2j
- 1EThSg50z8t35aLwiaw8gN/A3D1N7vcACvH0tjIBrI7OalxK8PQeHyQgsW6aE4dowqO4udB0R8r
- 8KmnHx9dmpJJmsveuWl/o79j0EPw==
-X-Google-Smtp-Source: AGHT+IEkx8dVap0E45mWVk6Y82qBF9DsyRoZXtlnG+QIyPBEydGgAawPgipnPIx0iQ388teo2+2TS3HoCDLkZmtKu58=
-X-Received: by 2002:a05:6102:4414:b0:4af:e61d:e22f with SMTP id
- ada2fe7eead31-4ba85f90424mr9324038137.24.1739148826202; Sun, 09 Feb 2025
- 16:53:46 -0800 (PST)
+ AJvYcCWhkzASa+3KHqO+5BBxeiGmEL//0Je5Dnq3db35Pa8uuAs7BEuMA5GHqIf/Nvaj/+hFuUhlJQjeHP1k@nongnu.org
+X-Gm-Message-State: AOJu0YwQyo6PVVWU1k4jLe/sw9LdElnF7yocoSmLQTsDx8magLMQ66x2
+ IVVbPBuPqesbsw+gCZY5K6Qhzvruxgxur0pvSvFtYoUdABsgn/XlvNuHCYka9sh2YHqc/otnuRC
+ Wn8TtP+N8dJOUQcxkesLo8pNhzUw=
+X-Gm-Gg: ASbGncsIqXDUguD+ImZxNa6Wc1z5nyh1SpdHEUSnRdNlC9Mj6A++7dv74eLTlwKNkhH
+ D7psPaIPxmjOoZQ4hHA+S0gL0jg/RXyUgOitsJglzusjGG9h/1ZNwyQOjhaXET4nQ2gN3ZgIori
+ etIQrLgUQaUEWuk+Y5BiN8zPJuTA==
+X-Google-Smtp-Source: AGHT+IGtaW3xFxcqYfJ1RRhWs89C7VZ6jNoGeJ9GbxI6o79zQjOhkGwL0SjPEMXTaP9TwG/jRtGtcfq6FJLt5n0luv4=
+X-Received: by 2002:a05:6102:419f:b0:4bb:c0a7:39b8 with SMTP id
+ ada2fe7eead31-4bbc0a75178mr1478058137.17.1739148944844; Sun, 09 Feb 2025
+ 16:55:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20250203061852.2931556-1-midnight@trainwit.ch>
-In-Reply-To: <20250203061852.2931556-1-midnight@trainwit.ch>
+References: <20250206153410.236636-1-rbradford@rivosinc.com>
+ <20250206153410.236636-2-rbradford@rivosinc.com>
+In-Reply-To: <20250206153410.236636-2-rbradford@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 10 Feb 2025 10:53:20 +1000
-X-Gm-Features: AWEUYZn_mdXtgtkW9WBZOWTTNbvHXgXbMn8N4OJ7hHDKZ7oh9HaLFjwTPQcZ2eg
-Message-ID: <CAKmqyKMGqMBaMUGL9DZW1zHJhF1LdCec_R4HgB7O1W71O7KHCw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] target/riscv: log guest errors when reserved bits
- are set in PTEs
-To: julia <midnight@trainwit.ch>
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-riscv@nongnu.org, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Alistair Francis <alistair.francis@wdc.com>
+Date: Mon, 10 Feb 2025 10:55:18 +1000
+X-Gm-Features: AWEUYZkKgXuQMh8frlg7d4mWHjQprlt1aImv4fxEw2eQ0Y05WUfpBfgOCo19Gqk
+Message-ID: <CAKmqyKOMRP3eW5jRMkqYqHmYdrEsu3Zkkmt7tFDO3SCK=EoPhA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] disas/riscv: Fix minor whitespace issues
+To: Rob Bradford <rbradford@rivosinc.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,111 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 3, 2025 at 4:20=E2=80=AFPM julia <midnight@trainwit.ch> wrote:
+On Fri, Feb 7, 2025 at 1:35=E2=80=AFAM Rob Bradford <rbradford@rivosinc.com=
+> wrote:
 >
-> For instance, QEMUs newer than b6ecc63c569bb88c0fcadf79fb92bf4b88aefea8
-> would silently treat this akin to an unmapped page (as required by the
-> RISC-V spec, admittedly). However, not all hardware platforms do (e.g.
-> CVA6) which leads to an apparent QEMU bug.
+> Some extra spaces made into into the RISC-V opcode data table.
 >
-> Instead, log a guest error so that in future, incorrectly set up page
-> tables can be debugged without bisecting QEMU.
->
-> Signed-off-by: julia <midnight@trainwit.ch>
+> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu_helper.c | 27 ++++++++++++++++++++++++++-
->  1 file changed, 26 insertions(+), 1 deletion(-)
+>  disas/riscv.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index e1dfc4ecbf..3dd8e06044 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1226,14 +1226,27 @@ restart:
->              ppn =3D pte >> PTE_PPN_SHIFT;
->          } else {
->              if (pte & PTE_RESERVED) {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: reserved bits set in=
- PTE: "
-> +                              "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_=
-FMT_lx "\n",
-> +                              __func__, pte_addr, pte);
->                  return TRANSLATE_FAIL;
->              }
->
->              if (!pbmte && (pte & PTE_PBMT)) {
-> +                /* Reserved without Svpbmt. */
-> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE=
-, "
-> +                              "and Svpbmt extension is disabled: "
-> +                              "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_=
-FMT_lx "\n",
-> +                              __func__, pte_addr, pte);
->                  return TRANSLATE_FAIL;
->              }
->
->              if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
-> +                /* Reserved without Svnapot extension */
-> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: N bit set in PTE, "
-> +                              "and Svnapot extension is disabled: "
-> +                              "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_=
-FMT_lx "\n",
-> +                              __func__, pte_addr, pte);
->                  return TRANSLATE_FAIL;
->              }
->
-> @@ -1244,14 +1257,19 @@ restart:
->              /* Invalid PTE */
->              return TRANSLATE_FAIL;
->          }
-> +
->          if (pte & (PTE_R | PTE_W | PTE_X)) {
->              goto leaf;
->          }
->
-> -        /* Inner PTE, continue walking */
->          if (pte & (PTE_D | PTE_A | PTE_U | PTE_ATTR)) {
-> +            /* D, A, and U bits are reserved in non-leaf/inner PTEs */
-> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: D, A, or U bits set in n=
-on-leaf PTE: "
-> +                          "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_=
-lx "\n",
-> +                          __func__, pte_addr, pte);
->              return TRANSLATE_FAIL;
->          }
-> +        /* Inner PTE, continue walking */
->          base =3D ppn << PGSHIFT;
->      }
->
-> @@ -1261,10 +1279,17 @@ restart:
->   leaf:
->      if (ppn & ((1ULL << ptshift) - 1)) {
->          /* Misaligned PPN */
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: PPN bits in PTE is misaligne=
-d: "
-> +                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "=
-\n",
-> +                      __func__, pte_addr, pte);
->          return TRANSLATE_FAIL;
->      }
->      if (!pbmte && (pte & PTE_PBMT)) {
->          /* Reserved without Svpbmt. */
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
-> +                      "and Svpbmt extension is disabled: "
-> +                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "=
-\n",
-> +                      __func__, pte_addr, pte);
->          return TRANSLATE_FAIL;
->      }
->
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 4075ed6bfe..305dd40ac4 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -1662,7 +1662,7 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>      { "aes32esi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
+>      { "aes32dsmi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
+>      { "aes32dsi", rv_codec_k_bs, rv_fmt_rs1_rs2_bs, NULL, 0, 0, 0 },
+> -    { "aes64ks1i", rv_codec_k_rnum,  rv_fmt_rd_rs1_rnum, NULL, 0, 0, 0 }=
+,
+> +    { "aes64ks1i", rv_codec_k_rnum, rv_fmt_rd_rs1_rnum, NULL, 0, 0, 0 },
+>      { "aes64ks2", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+>      { "aes64im", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+>      { "aes64esm", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> @@ -2214,11 +2214,11 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>      { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+>      { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+>      { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> -    { "c.mop.1",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> -    { "c.mop.3",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> -    { "c.mop.5",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> -    { "c.mop.7",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> -    { "c.mop.9",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "c.mop.1", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "c.mop.3", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "c.mop.5", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "c.mop.7", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "c.mop.9", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+>      { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+>      { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+>      { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
 > --
-> 2.47.0
+> 2.48.1
 >
 >
 
