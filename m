@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D609C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A02E7C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:43:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thabi-00064I-1o; Mon, 10 Feb 2025 15:42:18 -0500
+	id 1thabj-00064l-Sw; Mon, 10 Feb 2025 15:42:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thabf-00063p-IW
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:15 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thabg-000645-Gi
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:18 -0500
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thabZ-0003UH-NK
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:15 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thabe-0003Vw-PZ
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:42:16 -0500
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso32381175e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:42:09 -0800 (PST)
+ 5b1f17b1804b1-439350f1a0bso13617705e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:42:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739220127; x=1739824927; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SJr5z9ae/TFaELMlTEnCnVd5z+ON9SCf5Ds9hjjhaa4=;
- b=daCsR7ceIrxnrTts2831ERmV0Bd5LoPnXH+CewIi8TZtm3DV+/OUe86e85wtsaY2dE
- uJhPD7If4H580iYvdW9RTVC8sMtXGPrezdYJCCtxhmRZRLrcrzDK5v73a5SuWQIV4Mvy
- lr9k6VW5S5GH3H7WtpaqSvQsanZ4zRYeZgdoBI09tCa4V7jIpaBCnOEpX1NeZZvA0ofs
- hv7qcVETo5hFRDG1eR4zbxSpvxKZDWRMGkUDK6J4m6ev2S7dwLBNHyCD9MKYpRjrTVPr
- uoAIoSrhHuSgXPNGk3aaForZ0BLeyo405Qdws8LbFxrO53NaQb6PnGSxd6ZutvjBx1C6
- TCwQ==
+ d=linaro.org; s=google; t=1739220133; x=1739824933; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UcGKYNB2iXQxYTIMbFa2ddZc406Eqn3eyhE9dse+xIY=;
+ b=r2zfbUH4R5irxTQ9v2ebS3s50CLUdmSgRHu64ZIyCo8ho9pgVfpRn1amlwSRkXPA5N
+ 8wnYiZov0iAp7XX/QxkqF4uaNjyQly/B84j5XVxKmtqI1HjlzfA5HVdMUKqK2XENMCSx
+ kGpAQ6X3iS3LBc9oramPdd8IDDEC0daWF8hOoD411wVbDqIHGGNoNggE+wtfDD+Ja0aB
+ 1DWb02tjN3wsoyCHN1XTVvMCMjMhWGSSXYo6GSKNrcbqjyW+6UwnfoN53jFfI6caY2r8
+ 0/pYpAI5rgUbp5xQg8diWstSeD1gz8xx9Wt9H5jFsXwoVLGBtXYTlGcXWWRpqBhl3pv6
+ 8itQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739220127; x=1739824927;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SJr5z9ae/TFaELMlTEnCnVd5z+ON9SCf5Ds9hjjhaa4=;
- b=aODWg1zGVn9BAC3jkArzM/LT91TAr+aGOIsAYJ+OxZIF+rTCMNjLpOf2sRwAmR1L4i
- Q+MGGvg6Zd6vg66NGE43SzDnM3j/VaxsdgwIrWJl6fpCpucfl5IPtPXECfhMeZgiPfNZ
- 3OZCPBGvTHKesRlYUpkS5UCWXNXbgXmFPK+ZWrqppm3yS309AMgqh8iaS8OT1tAUsbUc
- t3wwkaHFKvakMK7aXBuv3gLoxRp9OOdD9Z0b3TXwU2juLE0Q4DXGuEOymp5BYr5QEu6e
- PNwUSkT/9LjFzrvSG2XlsW5Fn+Gj+pdksep/qRcj3zZCBnUp69E0aO6/C+eNRRsY/MwI
- NXgw==
-X-Gm-Message-State: AOJu0YzVVZLldV3dE2YnTlDPlIACyMFHisxNERpyMZp15XOkwOFuCxg0
- 3nUBVW/4/4wSDKraycIUEGwEpAdlu2ET3ZvihTb4lGMUiw9d+nloga6XKbRvG7y4RQZhYNvnTKK
- Obj4=
-X-Gm-Gg: ASbGnctsPzt7xR/iw1tIJlhK5xPbT9KbeIcRb7NjMt2zavMtp0LapSbo6ZjXrqGPj7s
- keFST28TtiUBJQ3qeKXkAWZuQ9d3t9Vx4JKLM7CzUrzQleMsODb33o/jMQMX6UJd6zgbnefW9eE
- +zy1uLjifG0eUv288/gWyihKRdIRlX5uCVEpQzaqnvXhzwB97gcmn8mwBRVlDSi0X2qmChBG0az
- PM/lEmZjTH9jOj9TiSqqd/IZ/K1XgghlmTX4rdLbMofTCqtXw6frCHiNshHPMKnmy/5LivO03n8
- xclHp2s3X96FHUsuavc9nLQ7x5rZeBR3C3CmouMUvq/V/XtS1SqOjHl7g5Zwa2VS0Q==
-X-Google-Smtp-Source: AGHT+IGaYPa9IMdy2JPrek5RQF3cdbewLLfluzi3UWMK/SDssJ5XOgi6ADw2xdWIH2RjrgOvHucfIQ==
-X-Received: by 2002:a05:6000:2ad:b0:38d:e02d:5f43 with SMTP id
- ffacd0b85a97d-38de02d60a6mr3382963f8f.2.1739220127527; 
- Mon, 10 Feb 2025 12:42:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739220133; x=1739824933;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UcGKYNB2iXQxYTIMbFa2ddZc406Eqn3eyhE9dse+xIY=;
+ b=B5J/D0s5jGYduzFooTLob6+QwlhqabHXJSzifz/7qsvObZjMaPRZbTgLiGnCDWFgU0
+ /GjNd1rr6LfMwUtfJQD6EBn4TMy0mtzzWmL8xRkrdkAIO2nfNAND3G5KNi5agxsvsFzH
+ QmUj9BseJvYdEGhwdaEqTN8NsRCaCoFdc2uvRZfVTnClCqVfdybMHsSvu6rx5hRghsiM
+ 7ckeaxZOg1VixxSax0XokJXcBR1O1geJyu0BLT2ZV0tslYE/E0ayNstM6BJO9Cb0d+cD
+ x6LikGP3WXr4Xom2dY9Fb4LdM134CaBRFrPRieFO8i8vvzrkb67JGHYpuGohHgZS/nVt
+ NlOA==
+X-Gm-Message-State: AOJu0YynOMtQ1/3lFQbg67MMdfiqDGYTSE5pxuCg3iCNjIwQtowKg96R
+ ug8N5/wJBkuQicJWxsaotz+pAlPb1fd82Yq8BOZKVvwBwFoYy4RRrQuFAbUECPTaQPCW2mpnhWE
+ lw2I=
+X-Gm-Gg: ASbGncvt+q3ZMpASo4EG+EtO/iOyIBkWMs1GTxFZLiRBRX3sJtgktEVlWCiuHOzDDHk
+ HhWrX1WOFeJJgzt1hdrFaDJ7fZyhZ1OrPMvk6aQ5BVJhd7Tp3h0jeO9ny/3q1DsdlJd/IRABItn
+ VELI9TFsP/42/Xnf0Dqj6WsEs2F2QSYdK0gMW78D3QcqWx461EmN//cpWH94Ja2ur9Ae5TfQcmO
+ 7csZRuzKcbpTKGGCg0PcM7KvMiXqORLrXU/O+so1PTN9iGfu0pbwo4KzE8u9TVtZbAqvtPEvnrh
+ zBfy2TaK3F+rg94PNmTVqlmeC/TECO3HAr9REoZGdBaUCVlNJZVmUwIqQgg309PcdQ==
+X-Google-Smtp-Source: AGHT+IFrGqFtsoxvatxUNuh/frVzKMRA9QrAotxE81vuzkvN3DhDKFiaknClKhSpuM3+itVP/m/tOQ==
+X-Received: by 2002:a7b:c7d8:0:b0:437:c453:ff19 with SMTP id
+ 5b1f17b1804b1-4394cf0825fmr6068855e9.14.1739220132560; 
+ Mon, 10 Feb 2025 12:42:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43936bcc04fsm80576935e9.20.2025.02.10.12.42.05
+ ffacd0b85a97d-38dbdd1af07sm13299269f8f.15.2025.02.10.12.42.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 12:42:07 -0800 (PST)
+ Mon, 10 Feb 2025 12:42:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/32] Misc HW patches for 2025-02-10
-Date: Mon, 10 Feb 2025 21:41:32 +0100
-Message-ID: <20250210204204.54407-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Berger <stefanb@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 01/32] backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
+Date: Mon, 10 Feb 2025 21:41:33 +0100
+Message-ID: <20250210204204.54407-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250210204204.54407-1-philmd@linaro.org>
+References: <20250210204204.54407-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
@@ -95,139 +100,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 54e91d1523b412b4cff7cb36c898fa9dc133e886:
+sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1.
+Using qemu_hexdump_line() both fixes the deprecation warning and
+simplifies the code base.
 
-  Merge tag 'pull-qapi-2025-02-10-v2' of https://repo.or.cz/qemu/armbru into staging (2025-02-10 10:47:31 -0500)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+[rth: Keep the linebreaks every 16 bytes]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240412073346.458116-12-richard.henderson@linaro.org>
+[PMD: Rebased]
+---
+ backends/tpm/tpm_util.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20250210
-
-for you to fetch changes up to 1078a376932cc1d1c501ee3643fef329da6a189a:
-
-  hw/net/smc91c111: Ignore attempt to pop from empty RX fifo (2025-02-10 21:30:44 +0100)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Use qemu_hexdump_line() in TPM backend (Philippe)
-- Make various Xilinx devices endianness configurable (Philippe)
-- Remove magic number in APIC (Phil)
-- Disable thread-level cache topology (Zhao)
-- Xen QOM style cleanups (Bernhard)
-- Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
-- Invert logic of machine no_sdcard flag (Philippe)
-- Housekeeping in MicroBlaze functional tests (Philippe)
-- Prevent out-of-bound access in SMC91C111 RX path (Peter)
-
-----------------------------------------------------------------
-
-Bernhard Beschow (1):
-  hw/xen: Prefer QOM cast for XenLegacyDevice
-
-Peter Maydell (1):
-  hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
-
-Phil Dennis-Jordan (1):
-  hw/intc/apic: Fixes magic number use, removes outdated comment
-
-Philippe Mathieu-Daudé (28):
-  backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
-  hw/intc/xilinx_intc: Make device endianness configurable
-  hw/net/xilinx_ethlite: Make device endianness configurable
-  hw/timer/xilinx_timer: Make device endianness configurable
-  hw/char/xilinx_uartlite: Make device endianness configurable
-  hw/ssi/xilinx_spi: Make device endianness configurable
-  hw/arm/xlnx-zynqmp: Use &error_abort for programming errors
-  hw/sysbus: Use sizeof(BusState) in main_system_bus_create()
-  hw/sysbus: Declare QOM types using DEFINE_TYPES() macro
-  hw/sysbus: Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE
-  hw/vfio: Have VFIO_PLATFORM devices inherit from
-    DYNAMIC_SYS_BUS_DEVICE
-  hw/display: Have RAMFB device inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/i386: Have X86_IOMMU devices inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/net: Have eTSEC device inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/tpm: Have TPM TIS sysbus device inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/xen: Have legacy Xen backend inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/boards: Convert no_sdcard flag to OnOffAuto tri-state
-  hw/boards: Explicit no_sdcard=false as ON_OFF_AUTO_OFF
-  hw/boards: Rename no_sdcard -> auto_create_sdcard
-  hw/boards: Do not create unusable default if=sd drives
-  hw/arm: Remove all invalid uses of auto_create_sdcard=true
-  hw/riscv: Remove all invalid uses of auto_create_sdcard=true
-  hw/boards: Ensure machine setting auto_create_sdcard expose a SD Bus
-  tests/functional: Explicit endianness of microblaze assets
-  tests/functional: Allow microblaze tests to take a machine name
-    argument
-  tests/functional: Remove sleep() kludges from microblaze tests
-  tests/functional: Have microblaze tests inherit common parent class
-  hw/riscv/opentitan: Include missing 'exec/address-spaces.h' header
-
-Zhao Liu (1):
-  hw/core/machine: Reject thread level cache
-
- include/hw/boards.h                           |  2 +-
- include/hw/sysbus.h                           |  2 +
- include/hw/xen/xen_pvdev.h                    |  5 +-
- backends/tpm/tpm_util.c                       | 24 ++++----
- hw/arm/aspeed.c                               | 20 +++++++
- hw/arm/bananapi_m2u.c                         |  1 +
- hw/arm/cubieboard.c                           |  1 +
- hw/arm/exynos4_boards.c                       |  2 +
- hw/arm/fby35.c                                |  1 +
- hw/arm/imx25_pdk.c                            |  1 +
- hw/arm/integratorcp.c                         |  1 +
- hw/arm/mcimx6ul-evk.c                         |  1 +
- hw/arm/mcimx7d-sabre.c                        |  1 +
- hw/arm/npcm7xx_boards.c                       |  5 ++
- hw/arm/omap_sx1.c                             |  2 +
- hw/arm/orangepi.c                             |  1 +
- hw/arm/raspi.c                                |  5 ++
- hw/arm/raspi4b.c                              |  1 +
- hw/arm/realview.c                             |  4 ++
- hw/arm/sabrelite.c                            |  1 +
- hw/arm/stellaris.c                            |  1 +
- hw/arm/versatilepb.c                          |  2 +
- hw/arm/vexpress.c                             |  2 +
- hw/arm/xilinx_zynq.c                          |  1 -
- hw/arm/xlnx-versal-virt.c                     |  1 +
- hw/arm/xlnx-zcu102.c                          |  1 +
- hw/arm/xlnx-zynqmp.c                          | 38 ++++--------
- hw/char/xilinx_uartlite.c                     | 27 +++++----
- hw/core/machine-smp.c                         |  7 +++
- hw/core/null-machine.c                        |  1 -
- hw/core/sysbus.c                              | 54 ++++++++++-------
- hw/display/ramfb-standalone.c                 |  3 +-
- hw/i386/amd_iommu.c                           |  2 -
- hw/i386/intel_iommu.c                         |  2 -
- hw/i386/x86-iommu.c                           |  2 +-
- hw/intc/apic.c                                |  3 +-
- hw/intc/xilinx_intc.c                         | 52 +++++++++++-----
- hw/microblaze/petalogix_ml605_mmu.c           |  3 +
- hw/microblaze/petalogix_s3adsp1800_mmu.c      |  4 ++
- hw/net/fsl_etsec/etsec.c                      |  4 +-
- hw/net/smc91c111.c                            |  9 +++
- hw/net/xilinx_ethlite.c                       | 20 +++++--
- hw/ppc/virtex_ml507.c                         |  1 +
- hw/riscv/microchip_pfsoc.c                    |  1 +
- hw/riscv/opentitan.c                          |  1 +
- hw/riscv/sifive_u.c                           |  1 +
- hw/s390x/s390-virtio-ccw.c                    |  1 -
- hw/ssi/xilinx_spi.c                           | 24 +++++---
- hw/timer/xilinx_timer.c                       | 35 +++++++----
- hw/tpm/tpm_tis_sysbus.c                       |  3 +-
- hw/usb/xen-usb.c                              |  6 +-
- hw/vfio/amd-xgbe.c                            |  2 -
- hw/vfio/calxeda-xgmac.c                       |  2 -
- hw/vfio/platform.c                            |  4 +-
- hw/xen/xen-legacy-backend.c                   |  9 +--
- hw/xen/xen_pvdev.c                            |  2 +-
- system/vl.c                                   | 24 ++++++--
- .../functional/test_microblaze_s3adsp1800.py  | 34 +++++++++--
- .../test_microblazeel_s3adsp1800.py           | 32 ++--------
- tests/qemu-iotests/172.out                    | 60 -------------------
- 60 files changed, 314 insertions(+), 248 deletions(-)
-
+diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
+index 32946251060..0a428eaf756 100644
+--- a/backends/tpm/tpm_util.c
++++ b/backends/tpm/tpm_util.c
+@@ -21,6 +21,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qemu/cutils.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+ #include "tpm_int.h"
+@@ -336,8 +337,8 @@ void tpm_sized_buffer_reset(TPMSizedBuffer *tsb)
+ void tpm_util_show_buffer(const unsigned char *buffer,
+                           size_t buffer_size, const char *string)
+ {
+-    size_t len, i;
+-    char *line_buffer, *p;
++    g_autoptr(GString) str = NULL;
++    size_t len, i, l;
+ 
+     if (!trace_event_get_state_backends(TRACE_TPM_UTIL_SHOW_BUFFER_CONTENT)) {
+         return;
+@@ -345,19 +346,14 @@ void tpm_util_show_buffer(const unsigned char *buffer,
+     len = MIN(tpm_cmd_get_size(buffer), buffer_size);
+     trace_tpm_util_show_buffer_header(string, len);
+ 
+-    /*
+-     * allocate enough room for 3 chars per buffer entry plus a
+-     * newline after every 16 chars and a final null terminator.
+-     */
+-    line_buffer = g_malloc(len * 3 + (len / 16) + 1);
+-
+-    for (i = 0, p = line_buffer; i < len; i++) {
+-        if (i && !(i % 16)) {
+-            p += sprintf(p, "\n");
++    for (i = 0; i < len; i += l) {
++        if (str) {
++            g_string_append_c(str, '\n');
+         }
+-        p += sprintf(p, "%.2X ", buffer[i]);
++        l = MIN(len, 16);
++        str = qemu_hexdump_line(str, buffer, l, 1, 0);
+     }
+-    trace_tpm_util_show_buffer_content(line_buffer);
+ 
+-    g_free(line_buffer);
++    g_string_ascii_up(str);
++    trace_tpm_util_show_buffer_content(str->str);
+ }
 -- 
 2.47.1
 
