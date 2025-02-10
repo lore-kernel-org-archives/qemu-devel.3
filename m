@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D03C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06873C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 21:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thacm-0007S5-8d; Mon, 10 Feb 2025 15:43:24 -0500
+	id 1thbGc-0001gi-9S; Mon, 10 Feb 2025 16:24:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacf-0007Cc-Dt
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:43:18 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thbGa-0001fQ-6C
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 16:24:32 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thacd-0003g8-KU
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:43:17 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38dcac27bcbso2115330f8f.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:43:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thbGX-0001VU-Tc
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 16:24:31 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so54153365e9.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 13:24:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739220194; x=1739824994; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=164MJWJMM4XF5ZTwp3LiTfxGt94ljlFDi9lBlhGSKKs=;
- b=i4gWmIS+FmyYSdXjemmR8Cm9KJWeJYhIw0O7JloFQil1P4XwGC78l0il/gaRzfmSp5
- bvEM8sgUu4VpUC9UqfGyvp0z9ZmPwrkUXZ9uEYCAmpaWihw2stpOXwVmpsEp73I4HDni
- tMTO85bsaIhYj6dzzeLJIicskeQw7lZBkT0gx4jrJ5SMGTODw3591KCqn+4qQ0279rga
- Hvqw1apPgRvTeL7PfOi86/42D3Y9WKma2i748ghTcO/N+sRWOV55TbQHqpxUN1WPPBKL
- VUeLwF5wwNZExCatifIyDWp7IY4o/hyKXrMTZOF/Bn/Z4OUQf0+60sJlZvArnqRi3zfN
- Dg5A==
+ d=linaro.org; s=google; t=1739222668; x=1739827468; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RX2Ba4AEmWE/ZbSo9lVv2ayt1T6p6DSyJXpJ16zRnN4=;
+ b=epB1jlpgZC0OjNy+484kTlELBnLW/ySQRFM6tLnZAbj1ve6tGAbwsM97u0iKNPJ3i+
+ /p4fwRb/0pO3brsztRZ7i+e+xEIKQQshOdtySVCeACmVF9D21soXFS9FrbldkCXHL1FW
+ 7ShmDamuNHJ4nxsG/dW501VFC/b8PSUwJ+BG4OIFr4fowIcTG33wvNtkDx6ORrPGLclS
+ DYc4Mou+ivDOu3o7sz7o15DYJiWsA9JvEUtRVxGO8j5gCVh8a2lyHU+SBIuVpkew1pEC
+ IS4v9UMv9zAiIqGOJCBSIvu5i3Uqtf0/YpoX/aVCjM5W+1ZNwlbBvOMFgNYmDUQEWNf0
+ XV0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739220194; x=1739824994;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=164MJWJMM4XF5ZTwp3LiTfxGt94ljlFDi9lBlhGSKKs=;
- b=FQ4XtvOoGPb8FEed7Ks7f9j2yJSKZrvEHF2zRIK2KHUxcYWEj3d68X7P8EDUDO3lk1
- 8naPi4tmuG8hv8aFtyIDeQGPWIFrMw20E66uGnkLgGsAkU6QFC0IW95aAF+ADOMb/WJs
- UQ3wsXFhi/StySMQyCEK48N10tTOGHASJzY6rqeFTxiQs3xDzSea7+Uh6U8Gq20rnuc6
- 4/t+kmWZKe3DsD4keqK3hdo5zAKpa+1YvcR5oXbscjAbFDBNBiOPpphV9yu0cewkJumv
- SKrFWBEQdM15Ep62dxmZCdNQQ0dPMVdzUKya63tL3DUFei1+k/gRYYqkxopVnJzyBEK0
- 4bzA==
-X-Gm-Message-State: AOJu0YzKuQv/7Nsvpik6Z85wrh7gp+zTgdBea8vu4Cng9fEFImZ74K0N
- bqkY198Fo4hLkEs2v5EvyF58aEnRuIDD9gMSo3sT8Pmk/vpo+qTHS6+Rv3Nhc0JO2Fry79qGcZF
- RR4k=
-X-Gm-Gg: ASbGncsE9s09bcLAh2AnoC6yejeQUOCYjeE0ZKVOPFHS/hAkY++ejijEY/tmeIWX6kz
- t0m3VetXxKogFzTS9bXL9+ZEujvmaoVnmj5rLIa/izSrKRivpemAUWjMArCw4ZU8xXy9CWJQrbF
- NyWsgs1cSksvUOleNtDkEJO8OGH+KQf2RQJKsIYXS6d/DAUn1jv/Vm6tdELAPii02Fm68S5LMik
- qEFe+zN5oeXIcGsTk8xnnrj+a3v3KD7xCaMMN+zOMqg9GrZZVeAhtN984rhA4A+obDzMizAeIns
- oWSamy/lqwYShgqC4+apIBNcLtahR0XPSMGad0D9L0/H2Vn0tnPAgsbKxh880Rmn4A==
-X-Google-Smtp-Source: AGHT+IEQyCDA17Rv1DgYeW9fS9OghSWSHQOiqaK/1t4gRdiEU7CVLYGq9Xf3vKxGhRbcJERxvY2uIQ==
-X-Received: by 2002:a05:6000:156c:b0:38d:c88e:d57b with SMTP id
- ffacd0b85a97d-38de43e921fmr588013f8f.26.1739220193397; 
- Mon, 10 Feb 2025 12:43:13 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1739222668; x=1739827468;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RX2Ba4AEmWE/ZbSo9lVv2ayt1T6p6DSyJXpJ16zRnN4=;
+ b=QCx1ub2eqU4c7LgGebVsCRfux05aK1XlTjmOdzesS1OX5QdcdrJbAXTWQuURp690TA
+ 5gyJjCxCB9y082V2vHnY/clbY1MJD0Kqc+5rgHxqG3fzUFSaPgGOJvSO0HDTgbkTFqIN
+ NVNDLegSatWLBdYwHEdKF80+rYbUTkUeJUa/UXlj/uoLLC9/W7D/DXrxaD/g/d9KfrNo
+ Y/FpulUwl6E6X8q0FZyadFlH7NqOT0FDp5S3yoGK6E22NrVlQw7GFg5sc0MPUL0x35WQ
+ ylWvUgAJ6hyYgogwDlJRpVYEldDqYJEKwmpN3sX2Xqowd4PMWPpOXyohlDbgarjotc9s
+ mqHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwO5pQdLlqYY4sF4EQEivmuXqzxQqLPu4zHoeaDJeBEOHr11GvBS/FZ1x1wsOa4FJHVxOHZk/tzf2S@nongnu.org
+X-Gm-Message-State: AOJu0YzzzJYQt/OlxZSqahkH85SsudlfEgKo06NuHLtSLH+d3hCmNEng
+ vINa6cBRvQNS5vQRgqg07fbR/a2PO3uIBJOiXp+FMx+l6ALThUOUe3KkhNVZ74I=
+X-Gm-Gg: ASbGncsx2jEEmvfRMahPlMrYb6FTg34S/ayubqMwqRnJsJFbi4YRWCXKEG0TigiLEZA
+ nsKlkBkJ/PYj2Y0p+OGLFmr76+3ACBpC34vEN4PRDknPM051Y0VkJaeQ9BARLHjmU8QWYTUW02g
+ IXwIEkTGBcE2/A6ERmi3qa9X/68krWoIFJBVgpO52MS/7zqqXm9YADsID9svUuAe1ZNLMAZtncD
+ HE/eNJtI4PCWgIahSnW7aGu5RisrIu1DDUHFr0I/+b5uS5sIcgeIFODxnC7cV74oSYLWZ2SN1Wx
+ 2zc/Q9jX1sPg5na5U4j1+uRoDfymgjXah/NYRpLHxbez6jZdGkTJE+cnNts=
+X-Google-Smtp-Source: AGHT+IEDkI147k0o0gDzWHheNda1d+bPHNMSUv5FXH6WssmFr9ti4uNlmdYrkMquofDTbygNzgCTqA==
+X-Received: by 2002:a05:600c:4e89:b0:439:45ce:15c0 with SMTP id
+ 5b1f17b1804b1-43945ce18d2mr34098865e9.25.1739222668139; 
+ Mon, 10 Feb 2025 13:24:28 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391d5283b2sm161645935e9.0.2025.02.10.12.43.12
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 12:43:12 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <graf@amazon.com>
-Subject: [PULL 13/32] hw/vfio: Have VFIO_PLATFORM devices inherit from
- DYNAMIC_SYS_BUS_DEVICE
-Date: Mon, 10 Feb 2025 21:41:45 +0100
-Message-ID: <20250210204204.54407-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250210204204.54407-1-philmd@linaro.org>
-References: <20250210204204.54407-1-philmd@linaro.org>
+ ffacd0b85a97d-38dcf35b15bsm9659767f8f.64.2025.02.10.13.24.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Feb 2025 13:24:27 -0800 (PST)
+Message-ID: <ad266394-bf8c-4030-831c-b7e16aefd803@linaro.org>
+Date: Mon, 10 Feb 2025 22:24:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/10] target/arm: Set disassemble_info::endian value in
+ disas_set_info()
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
+References: <20250127115426.51355-1-philmd@linaro.org>
+ <20250127115426.51355-4-philmd@linaro.org>
+ <c364ee71-7f0c-43d2-8ded-a7b8156c0839@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c364ee71-7f0c-43d2-8ded-a7b8156c0839@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,66 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not explain why VFIO_PLATFORM devices are user_creatable,
-have them inherit TYPE_DYNAMIC_SYS_BUS_DEVICE, to make explicit
-that they can optionally be plugged on TYPE_PLATFORM_BUS_DEVICE.
+On 27/1/25 14:57, Thomas Huth wrote:
+> On 27/01/2025 12.54, Philippe Mathieu-Daudé wrote:
+>> Have the CPUClass::disas_set_info() callback set the
+>> disassemble_info::endian field.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/arm/cpu.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index f9fdf708653..9de8c799c77 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -1220,6 +1220,8 @@ static void arm_disas_set_info(CPUState *cpu, 
+>> disassemble_info *info)
+>>   #else
+>>           info->endian = BFD_ENDIAN_BIG;
+>>   #endif
+>> +    } else {
+>> +        info->endian = BFD_ENDIAN_LITTLE;
+>>       }
+> 
+> I'd maybe rather go with something like this:
+> 
+>      info->endian = BFD_ENDIAN_LITTLE;
+> #if TARGET_BIG_ENDIAN
+>      if (bswap_code(sctlr_b)) {
+>          info->endian = BFD_ENDIAN_LITTLE;
+>      }
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Message-Id: <20250125181343.59151-5-philmd@linaro.org>
----
- hw/vfio/amd-xgbe.c      | 2 --
- hw/vfio/calxeda-xgmac.c | 2 --
- hw/vfio/platform.c      | 4 +---
- 3 files changed, 1 insertion(+), 7 deletions(-)
+This misses:
 
-diff --git a/hw/vfio/amd-xgbe.c b/hw/vfio/amd-xgbe.c
-index 96bd608b8dd..aaa96903db0 100644
---- a/hw/vfio/amd-xgbe.c
-+++ b/hw/vfio/amd-xgbe.c
-@@ -41,8 +41,6 @@ static void vfio_amd_xgbe_class_init(ObjectClass *klass, void *data)
-                                     &vcxc->parent_realize);
-     dc->desc = "VFIO AMD XGBE";
-     dc->vmsd = &vfio_platform_amd_xgbe_vmstate;
--    /* Supported by TYPE_VIRT_MACHINE */
--    dc->user_creatable = true;
- }
- 
- static const TypeInfo vfio_amd_xgbe_dev_info = {
-diff --git a/hw/vfio/calxeda-xgmac.c b/hw/vfio/calxeda-xgmac.c
-index 87c382e7361..b016d42b496 100644
---- a/hw/vfio/calxeda-xgmac.c
-+++ b/hw/vfio/calxeda-xgmac.c
-@@ -41,8 +41,6 @@ static void vfio_calxeda_xgmac_class_init(ObjectClass *klass, void *data)
-                                     &vcxc->parent_realize);
-     dc->desc = "VFIO Calxeda XGMAC";
-     dc->vmsd = &vfio_platform_calxeda_xgmac_vmstate;
--    /* Supported by TYPE_VIRT_MACHINE */
--    dc->user_creatable = true;
- }
- 
- static const TypeInfo vfio_calxeda_xgmac_dev_info = {
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index 1070a2113a1..f491f4dc954 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -672,13 +672,11 @@ static void vfio_platform_class_init(ObjectClass *klass, void *data)
-     dc->desc = "VFIO-based platform device assignment";
-     sbc->connect_irq_notifier = vfio_start_irqfd_injection;
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
--    /* Supported by TYPE_VIRT_MACHINE */
--    dc->user_creatable = true;
- }
- 
- static const TypeInfo vfio_platform_dev_info = {
-     .name = TYPE_VFIO_PLATFORM,
--    .parent = TYPE_SYS_BUS_DEVICE,
-+    .parent = TYPE_DYNAMIC_SYS_BUS_DEVICE,
-     .instance_size = sizeof(VFIOPlatformDevice),
-     .instance_init = vfio_platform_instance_init,
-     .class_init = vfio_platform_class_init,
--- 
-2.47.1
+        else {
+            info->endian = BFD_ENDIAN_BIG;
+        }
 
+> #endif
+> 
+> What do you think?
+
+I'll go with Richard's ternary suggestion for v2 and see :)
 
