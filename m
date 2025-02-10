@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD45C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D65B1C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWRf-0004ht-Qa; Mon, 10 Feb 2025 11:15:40 -0500
+	id 1thWSD-0006wV-EL; Mon, 10 Feb 2025 11:16:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1thWR2-000489-Bu
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:01 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1thWRB-0004NX-Cy
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:09 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1thWR0-0001Up-F2
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:00 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5de4d4adac9so6064050a12.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:14:57 -0800 (PST)
+ id 1thWR6-0001XJ-PJ
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:08 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ab7b80326cdso238870466b.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:15:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739204097; x=1739808897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739204103; x=1739808903; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ALPFRjqBCzN5IspKKvq+gGyQjhJlGV0zlBdiRI50u44=;
- b=qrWk3F7Qo+P9t3BXpU3FAF8mqCa878vHuRKnKf+Na5kDSZCkK89ZcrAPOSwuQjdt08
- xtqGO7E2EHPVESs4D0KVaZ3RbQPSG75msyqYPL5Vi9UrgaY4g0Mwo/37NH18w3rbIDVJ
- pVOaFkHJ0XuQZyZ69nKeVw8jhIUof3RPFOLsKxgL9JiKTUNGETl6ETnDcniAw85l/1nf
- a7V2wvCDSuXyPXrIcMd2VI3w2KG/A8F0IpKhY5walszHEBhVHtBsQ7YiJ24K5I0txeb+
- TfVext7UVasrzMWjLD8XdSyMA888rnS7xeHjka2Xr25u3xElo2kam9EuaGlst5nBt07Q
- hE1Q==
+ bh=YT3MtmnSLkBKcOVyMB0JztX76L81nkooZxZXsqcklIs=;
+ b=Ct6YfJaKa2Ka+A34mWwgmMA+wEpIwQ4BUKa6BNZFJeUrC6J1TX9AwuFAgCbs3ZlPzj
+ LlTtmRZguks4MXGkHuIWsDX7czsGfjZjEDp6qewwqW0RKLjZ92/iRuMz2ppu30pyW++P
+ pMqrdE9cFuQKgxVEnWWKekRBQhL7DReHuvIGv6j92gksid+gW53LYPn6eKnYorXjc39I
+ DLqMY4ELq+uaYm+TKdGH+v8puMYrZhUVeNF2RZTgBKMQ1q97lqQ8tA4hpV+PfaunLtHQ
+ x8TMbr4pjJGlGPmX1krY8kWJsySiVQmpyzuoxsOqoMZ4uIiKqfv/OsdivE29TPi97G29
+ VExg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739204097; x=1739808897;
+ d=1e100.net; s=20230601; t=1739204103; x=1739808903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ALPFRjqBCzN5IspKKvq+gGyQjhJlGV0zlBdiRI50u44=;
- b=hdF1wqaDILAG6iA7xD+TFqc/4+M2a5IemmRZflvZ65KeXPhwqoVGNZWATNHRdaVJkm
- E3a6M7IHs2fdRtjWQwuYejPo7BHhjjbMDXIce1jVx5dJkdG+MWdLDW6D2uMJZG3Lxw47
- ZVx0pLdsp5Tho46X9GUsM2EVA2x8PVThHi9VCSTLfIzyA/XIY66Ccy4m4TrmfWV8X/+P
- AG95X9hFVTTwGWlhkxQ1E6rsx6ENhZJWQG2DInbec9ESzxzW+EfrLIc3FbaJ8QxOTvty
- kauwEC2qs3j21OgBplQHQvhIdvMdRZBoxr+DuhFCRnHe0hsOs72lX8r6kDGOe9Y8u1Bh
- AaGQ==
-X-Gm-Message-State: AOJu0YzQGSyKXb/i2JxeIVIGbfaGXd0KFYUrZMLTVUsQxqTHdmMc8HdM
- bmdlQnWeylD0R9LXJK8AYoXyAygtLsUFL82TaOSTYhacIL4li9lshoFLdyCS9Gk=
-X-Gm-Gg: ASbGncsTg4Bj3kjvUiuZtPYDEKMkv0OKOxegLdtPTCdfhVNrzjPF51fk3WYEAxaUpIJ
- 5nbGa3x8FKpf5JBdGHwx/GQiFrsSzPVVDFHCVXnWbZiub7MuMVCsoSHMo/IEcV1pz8/qoNvuqCp
- 9cOkFNEToZkCkpsS6IE4d4YuyVc/KVnQNzkrGkQ23KS71E4icKFDAcvojGTSb++vNJKVUe/V2jj
- QFa/ZPa5Oy0yQi+cWN9wZKN7mF95IZ3AmSwT/e72ic2G/SHrfGfhiquTGzfSPkWo+YpbNGVeR6J
- OTb9o1eymfJD/syYYg==
-X-Google-Smtp-Source: AGHT+IErRl2CvwHSOtOdyPyDYD9WUPeegFpG0YcGycdZEE4aU3VltBS7tgdl78Mkg0cQ1H4CEiFaGw==
-X-Received: by 2002:a05:6402:194b:b0:5dc:7fbe:730d with SMTP id
- 4fb4d7f45d1cf-5de44fe9d71mr17348939a12.6.1739204096717; 
- Mon, 10 Feb 2025 08:14:56 -0800 (PST)
+ bh=YT3MtmnSLkBKcOVyMB0JztX76L81nkooZxZXsqcklIs=;
+ b=VVSlTx5IHT0S3q8byaxdJw+KSFqOIpMTSpm26RL7QsgAhRSeBJ2yDvW8hxXjF3tmF2
+ X3hhqLeNIS2+/apWZOs0Gte2ohP+PB/6h/KaqIP8VlzzUkhtiPNw7tXCy/94cdpB+D5B
+ XZPdH39ubT2gfZS0Y+0+BSVUKQgZGj6Hp5F5IXmvAPBDQTCM2ZNj5ZNYkdhLZcM5Jipj
+ lHxCWA2C5/1dvlDLDJ6DedHek+qG9CKATu9xbAfjw/RzZ2Cv+kB+a/DwMARELVNDJcZn
+ 5goazC5/JgfxuKkKVmBqS3G11rn25skdL9+ZUm/L5d7hMCJIf3FS6ubs2ScvktrrBQgN
+ /dGQ==
+X-Gm-Message-State: AOJu0YwzHQdZzwFmA7zo44znOW/ZLvTaXKiRCV7qOsd/bT2xgTglWS2c
+ lB4/4pCKerxch4g5TwAtQfCmdewJB8wpfuews4hcJy4ZsLuGQat5ka47bPCUHr8=
+X-Gm-Gg: ASbGncso+SUnY8t0oTxhCeymgXtU238aWMEc/oUwQLZgtIJHDc05k2+l31PZYNyLrd4
+ J3k+PYYN5fnDr1erSqXokiIU9wfgqHFI9Wau4bsSKtTPYolbNh8yGiZTUmVFliX5oZF06AX9Z8f
+ 63obx0pewKFBvNptqCx6aQgyqe6FteDCP4A/DOVLmJ+k+fXsGMOnEqePFB9phHpFEQmpOKqoMM9
+ Or4IX6uZQnD/0vw5f2498R4920VULzwy4811SQKaZNw/Zr/TaCTworfPcNDx4rL9591G0zPx501
+ sVpD4d1vix3H1DZZyw==
+X-Google-Smtp-Source: AGHT+IG7BXxMQc+AY0CbJDer036tQ93MEsDG2oNxFJ6I5mNOrN8SCnNKi9SGXVyjFfhevbbjqNB7Bg==
+X-Received: by 2002:a17:907:d92:b0:ab7:b068:c7b9 with SMTP id
+ a640c23a62f3a-ab7b068c7d9mr696240266b.13.1739204103126; 
+ Mon, 10 Feb 2025 08:15:03 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dcf1b73f8csm8003497a12.8.2025.02.10.08.14.52
+ a640c23a62f3a-ab7bbf40b2bsm291680466b.23.2025.02.10.08.14.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 08:14:53 -0800 (PST)
+ Mon, 10 Feb 2025 08:15:00 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 23FB25FB53;
+ by draig.lan (Postfix) with ESMTP id C773960354;
  Mon, 10 Feb 2025 16:14:52 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 04/17] tests/qtest: simplify qtest_process_inbuf
-Date: Mon, 10 Feb 2025 16:14:38 +0000
-Message-Id: <20250210161451.3273284-5-alex.bennee@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 11/17] gdbstub: Try unlinking the unix socket before binding
+Date: Mon, 10 Feb 2025 16:14:45 +0000
+Message-Id: <20250210161451.3273284-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250210161451.3273284-1-alex.bennee@linaro.org>
 References: <20250210161451.3273284-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -103,52 +104,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Don't both creating a GString to temporarily hold our qtest command.
-Instead do a simpler g_strndup and use autofree to clean up
-afterwards.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+In case an emulated process execve()s another emulated process, bind()
+will fail, because the socket already exists. So try deleting it. Use
+the existing unix_listen() function which does this. Link qemu-user
+with qemu-sockets.c and add the monitor_get_fd() stub.
+
+Note that it is not possible to handle this in do_execv(): deleting
+gdbserver_user_state.socket_path before safe_execve() is not correct,
+because the latter may fail, and afterwards we may lose control.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250117001542.8290-3-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250207153112.3939799-5-alex.bennee@linaro.org>
+Message-Id: <20250207153112.3939799-12-alex.bennee@linaro.org>
 
-diff --git a/system/qtest.c b/system/qtest.c
-index e68ed0f2a8..bb1efba9fd 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -763,25 +763,21 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
-     }
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index fd29d595f4..8225b70280 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -315,12 +315,10 @@ static bool gdb_accept_socket(int gdb_fd)
+     return true;
  }
  
-+/*
-+ * Process as much of @inbuf as we can in newline terminated chunks.
-+ * Remove the processed commands from @inbuf as we go.
-+ */
- static void qtest_process_inbuf(CharBackend *chr, GString *inbuf)
+-static int gdbserver_open_socket(const char *path)
++static int gdbserver_open_socket(const char *path, Error **errp)
  {
-     char *end;
+     g_autoptr(GString) buf = g_string_new("");
+-    struct sockaddr_un sockaddr = {};
+     char *pid_placeholder;
+-    int fd, ret;
  
-     while ((end = strchr(inbuf->str, '\n')) != NULL) {
--        size_t offset;
--        GString *cmd;
--        gchar **words;
--
--        offset = end - inbuf->str;
-+        size_t len = end - inbuf->str;
-+        g_autofree char *cmd = g_strndup(inbuf->str, len);
-+        g_auto(GStrv) words = g_strsplit(cmd, " ", 0);
- 
--        cmd = g_string_new_len(inbuf->str, offset);
--        g_string_erase(inbuf, 0, offset + 1);
--
--        words = g_strsplit(cmd->str, " ", 0);
-+        g_string_erase(inbuf, 0, len + 1);
-         qtest_process_command(chr, words);
--        g_strfreev(words);
--
--        g_string_free(cmd, TRUE);
+     pid_placeholder = strstr(path, "%d");
+     if (pid_placeholder != NULL) {
+@@ -330,28 +328,7 @@ static int gdbserver_open_socket(const char *path)
+         path = buf->str;
      }
+ 
+-    fd = socket(AF_UNIX, SOCK_STREAM, 0);
+-    if (fd < 0) {
+-        perror("create socket");
+-        return -1;
+-    }
+-
+-    sockaddr.sun_family = AF_UNIX;
+-    pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun_path) - 1, path);
+-    ret = bind(fd, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
+-    if (ret < 0) {
+-        perror("bind socket");
+-        close(fd);
+-        return -1;
+-    }
+-    ret = listen(fd, 1);
+-    if (ret < 0) {
+-        perror("listen socket");
+-        close(fd);
+-        return -1;
+-    }
+-
+-    return fd;
++    return unix_listen(path, errp);
  }
  
+ static bool gdb_accept_tcp(int gdb_fd)
+@@ -424,7 +401,7 @@ bool gdbserver_start(const char *port_or_path, Error **errp)
+     if (port > 0) {
+         gdb_fd = gdbserver_open_port(port, errp);
+     } else {
+-        gdb_fd = gdbserver_open_socket(port_or_path);
++        gdb_fd = gdbserver_open_socket(port_or_path, errp);
+     }
+ 
+     if (gdb_fd < 0) {
+diff --git a/stubs/monitor-fd.c b/stubs/monitor-fd.c
+new file mode 100644
+index 0000000000..9bb6749885
+--- /dev/null
++++ b/stubs/monitor-fd.c
+@@ -0,0 +1,9 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "monitor/monitor.h"
++
++int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
++{
++    abort();
++}
+diff --git a/stubs/meson.build b/stubs/meson.build
+index a8b3aeb564..b0fee37e05 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -61,6 +61,8 @@ if have_user
+   if not have_system
+     stub_ss.add(files('qdev.c'))
+   endif
++
++  stub_ss.add(files('monitor-fd.c'))
+ endif
+ 
+ if have_system
+diff --git a/util/meson.build b/util/meson.build
+index 5d8bef9891..780b5977a8 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -84,6 +84,8 @@ if have_block or have_ga
+   util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
+   util_ss.add(files(f'coroutine-@coroutine_backend@.c'))
+   util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
++endif
++if have_block or have_ga or have_user
+   util_ss.add(files('qemu-sockets.c'))
+ endif
+ if have_block
 -- 
 2.39.5
 
