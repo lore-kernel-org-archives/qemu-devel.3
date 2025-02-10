@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5ACC0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E5AC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thUPk-0002XJ-VS; Mon, 10 Feb 2025 09:05:34 -0500
+	id 1thUQj-0003ZL-SY; Mon, 10 Feb 2025 09:06:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thUPO-0002Mp-RT; Mon, 10 Feb 2025 09:05:11 -0500
-Received: from mgamail.intel.com ([192.198.163.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thUPL-0003EJ-Js; Mon, 10 Feb 2025 09:05:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739196308; x=1770732308;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=jlBC11wbQ4UqD1n/hnYNjMIGutLzA21IAe7GQaQaAls=;
- b=NM9ddOAcjxtPGjCoPa1kO6LJYSJ2rJE3kAGLCgiGZJSqcXjtwvJxcgKR
- dnlk6AfI5voB6rdaVSRQP88rDno0dWSlvETxnQ+wH1zOUVGH9Et4SBnQC
- 1tObPae6kK6upm33CfhZAuoq78elcdD8AGg4Ydj6tP8noBJABwHz3Be3l
- MionId7/f4KQH3r1y52nk7VPKjUvMEI4EBHYRDmfRFxtc2gGkDqOv6afw
- B7TdZatbVzBV1BfxxSd8JcVEWVmcaSTPWMo/DyFuZcuy9bg0IQxaFrkq7
- PLhwiJTQ/EEvw6gTOnjKNlSkLJMrb7t0Qljv3gS6e6lXIq4ifOVjFRJYr A==;
-X-CSE-ConnectionGUID: Ihl9C5SlSdC8B1OyrmBhZQ==
-X-CSE-MsgGUID: 43YuBOUlQo69qEqyugFPNQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11341"; a="38978798"
-X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="38978798"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2025 06:05:04 -0800
-X-CSE-ConnectionGUID: Lu65BV0rT/qmTV8XL6/OAw==
-X-CSE-MsgGUID: RsDoXCutR1meNgSqV0lO7Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="113077327"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 10 Feb 2025 06:05:02 -0800
-Date: Mon, 10 Feb 2025 22:24:33 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 01/12] rust: qom: add reference counting functionality
-Message-ID: <Z6oMIXLwifxKV6g+@intel.com>
-References: <20250207101623.2443552-1-pbonzini@redhat.com>
- <20250207101623.2443552-2-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1thUQg-0003Yi-0b; Mon, 10 Feb 2025 09:06:30 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1thUQe-0003NH-EY; Mon, 10 Feb 2025 09:06:29 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5de7531434fso2229306a12.0; 
+ Mon, 10 Feb 2025 06:06:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739196386; x=1739801186; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pb2xhhq3/7K2yCbO0CUQWdg6iyyhNb9njS7vuQ7ZH7w=;
+ b=WkncihD3GEwixN1/nCakRZv4ViaagtqDgAJd2HqVl8f64fcxPc71B1zy5o+UCgEIpn
+ Mryctxua+JB2rG9YWCrO6BuN5SSyP4y+uO8uaU2C2RG0radyKMMcJ4MYn03B90Vi9SRr
+ dWfhd0aHyJGRkcmAAkJDYRRruX5dzxycV/F2WGvBslaib6/yFj5fBtOocEGoVKuTefPk
+ hX9QP3G8JbA9yT2KDxeO240YOC2mlUmaNwnTuvZnQwZkYVEYOqhEpamavT2PjMIB+1e0
+ Ly8JX7oG6RtXzi14twJIBvXNI9BI86OCbfHJSYJU9Q1rfzGqVvBj5nd8JZvH6OM0fCdg
+ ymXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739196386; x=1739801186;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pb2xhhq3/7K2yCbO0CUQWdg6iyyhNb9njS7vuQ7ZH7w=;
+ b=GBcXnX7u/jrD2lsc4YDYA1bn45B6/pv1uNXB1Etkd+x3jVY0wtTefxeFQpGNScycac
+ oEj+DmvgwWhMmYtFu4Ze6IgW1GilKD/1okP4643Xj7GRtqjs/o0R5YgkJDz7/JJnjrTL
+ rFsui38Sq5OAVmggkQcReNRCJnS+OUy/GuIqj9QxMbai37b7OKM/UctgLhokjgqHtqqW
+ KalXqEOKYW5oguYj2wDnIkCYaCP6Lwxu9tYGlNuSqSJpjMkotPFhscWw1JIXSxgR1iWR
+ YNM7xQMNTUe/djrXoi09LU1RRjdeck2NArUYqKJxND3cW4SlSRNI55nKgQ8zJSHYPREM
+ PAYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQq6kqgLeBKKq5pFxikRKTM+CTL3H8yiqtlOeQ9qM5n3OXl+W4HtC1iLoVQ2CR54Km9pUC+GVnWQI=@nongnu.org
+X-Gm-Message-State: AOJu0Yx/x0aYYg4UFzdsxZdC+M6wvq1oqFPwkKmfJ+refFNKMzcnxNQ3
+ ohIeV94g+x8awvNylyboJ9wb6WbYf3VTuPt7HzrDThmtIyxDORFzFlFhLuOFaTXRmNRpZCoMlRS
+ ybUypztSbeSGU7zW9Hfe8LCGUNyOipg==
+X-Gm-Gg: ASbGncsVAxFQunFa8rWJ1JSIStlkzNwUmlRPdhEVN0fGbZtOJ2D8IyytQYb6mGx8OkS
+ mXjBvxLkZa610SD+jl9Nuf116q6bnYCLWio+sbLWkyyPdfb6VcN8NgeA2Tpo/3DXIufgi5R8=
+X-Google-Smtp-Source: AGHT+IFIc5AMgqXpnb0ZE/IWlPWCNgw1zlA/mZAh0YvW/8ZZ7iW5vYImNAGMjLaQhwLHl651Y77Mc+AzIQqZZ/bk6CQ=
+X-Received: by 2002:a05:6402:1e91:b0:5de:39fd:b2ff with SMTP id
+ 4fb4d7f45d1cf-5de44e5da3bmr16374436a12.0.1739196384118; Mon, 10 Feb 2025
+ 06:06:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250207101623.2443552-2-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250207143952.2486587-2-pbonzini@redhat.com>
+In-Reply-To: <20250207143952.2486587-2-pbonzini@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 10 Feb 2025 09:06:12 -0500
+X-Gm-Features: AWEUYZk-2472gv1IJcA8ntSdkATkHi9p-pwUVgUEn9HCXNummoif23Zic4txkIk
+Message-ID: <CAJSP0QV+wfAFOeC_Jw5PBd5sOgzozPLPeEN=ddWd81Hok6uf4g@mail.gmail.com>
+Subject: Re: [PATCH] rust: restrict missing_const_for_fn to qemu_api crate
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,91 +92,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 11:16:12AM +0100, Paolo Bonzini wrote:
-> Date: Fri,  7 Feb 2025 11:16:12 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 01/12] rust: qom: add reference counting functionality
-> X-Mailer: git-send-email 2.48.1
-> 
-> Add a smart pointer that allows to add and remove references from
-> QOM objects.  It's important to note that while all QOM objects have a
-> reference count, in practice not all of them have their lifetime guarded
-> by it.  Embedded objects, specifically, are confined to the lifetime of
-> the owner.
-> 
-> When writing Rust bindings this is important, because embedded objects are
-> *never* used through the "Owned<>" smart pointer that is introduced here.
-> 
+On Fri, Feb 7, 2025 at 9:40=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+>
+> missing_const_for_fn is not necessarily useful or good.  For example in
+> a private API you can always add const later, and in a public API
+> it can be unnecessarily restrictive to annotate everything with const
+> (blocking further improvements to the API).
+>
+> Nevertheless, QEMU turns it on because qemu_api uses const quite
+> aggressively and therefore it can be handy to have as much as possible
+> annotated with const.  Outside qemu_api though, not so much: devices
+> are self contained consumers and if there is nothing that could use
+> their functions in const contexts that were not anticipated.
+>
+> Since missing_const_for_fn can be a bit noisy and trigger on trivial
+> functions that no one would ever call in const context, do not
+> turn it on everywhere and only keep it in qemu_api as a special case.
+>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api/src/qom.rs     | 158 ++++++++++++++++++++++++++++++++++-
->  rust/qemu-api/src/vmstate.rs |   6 +-
->  rust/qemu-api/tests/tests.rs |  10 +++
->  3 files changed, 172 insertions(+), 2 deletions(-)
-> 
-> diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-> index f50ee371aac..4a2e84c9aed 100644
-> --- a/rust/qemu-api/src/qom.rs
-> +++ b/rust/qemu-api/src/qom.rs
-> @@ -56,6 +56,7 @@
->  use std::{
->      ffi::CStr,
->      fmt,
-> +    mem::ManuallyDrop,
->      ops::{Deref, DerefMut},
->      os::raw::c_void,
->      ptr::NonNull,
-> @@ -63,7 +64,13 @@
->  
->  pub use bindings::{Object, ObjectClass};
->  
-> -use crate::bindings::{self, object_dynamic_cast, object_get_class, object_get_typename, TypeInfo};
-> +use crate::{
-> +    bindings::{
-> +        self, object_dynamic_cast, object_get_class, object_get_typename, object_ref, object_unref,
-> +        TypeInfo,
-> +    },
-> +    cell::bql_locked,
-> +};
->  
->  /// Marker trait: `Self` can be statically upcasted to `P` (i.e. `P` is a direct
->  /// or indirect parent of `Self`).
-> @@ -610,6 +617,148 @@ unsafe impl ObjectType for Object {
->          unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_OBJECT) };
->  }
->  
-> +/// A reference-counted pointer to a QOM object.
-> +///
-> +/// `Owned<T>` wraps `T` with automatic reference counting.  It increases the
-> +/// reference count when created via [`Owned::from`] or cloned, and decreases
-> +/// it when dropped.  This ensures that the reference count remains elevated
-> +/// as long as any `Owned<T>` references to it exist.
-> +///
-> +/// `Owned<T>` can be used for two reasons:
-> +/// * because the lifetime of the QOM object is unknown and someone else could
-> +///   take a reference (similar to `Arc<T>`, for example): in this case, the
-> +///   object can escape and outlive the Rust struct that contains the `Owned<T>`
-> +///   field;
-> +///
-> +/// * to ensure that the object stays alive until after `Drop::drop` is called
-> +///   on the Rust struct: in this case, the object will always die together with
-> +///   the Rust struct that contains the `Owned<T>` field.
-> +///
-> +/// Child properties are an example of the second case: in C, an object that
-> +/// is created with `object_initialize_child` will die *before*
-> +/// `instance_finalize` is called, whereas Rust expects the struct to have valid
-> +/// contents when `Drop::drop` is called.  Therefore Rust structs that have
-> +/// child properties need to keep a reference to the child object.  Right now
-> +/// this can be done with `Owned<T>`; in the future one might have a separate
-> +/// `Child<'parent, T>` smart pointer that keeps a reference to a `T`, like
-> +/// `Owned`, but does not allow cloning.
-> +///
-> +/// Note that dropping an `Owned<T>` requires the big QEMU lock to be taken.
 
-Nice doc.
-
-LGTM,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
