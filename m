@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0314C0219E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DAAC0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thae8-0004kF-8I; Mon, 10 Feb 2025 15:44:48 -0500
+	id 1thadO-00014U-D4; Mon, 10 Feb 2025 15:44:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thadw-0004KO-U0
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:44:40 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thadF-0000Op-JC
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:43:56 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thads-0003zw-7c
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:44:34 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4362f61757fso48072155e9.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:44:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thadD-0003lb-SD
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:43:53 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43948f77f1aso7037445e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739220270; x=1739825070; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739220230; x=1739825030; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=03rJTTNBd3cp6/LXAuK3umtC787I9nHxNQm0tFuSG4M=;
- b=A92mH0LR4g9mJfC1/VhBrEYe2gta+kP7iWAdZDW+8ilgUOMfIu4kc77CDMbhJ9S9Ce
- wdn81iAhJr5cl1UA+nvd/NRjGCOE17iqXAAEhM5jM1c1Xe3eCEDH8GjV7RBUDCPXSHB5
- Sbwtkba+SppRhh9pf8lt8pcaMg/9TLznF28r/nU5GnVBKWKQVq+iZe0OJhB8O5WdMfgf
- BsKhN5mVxUdvznRIGZoFVrRyOrkv/+mOtMkVcwftj3UGbYNge21uJOGBN5cjb0SJE/Cy
- FMObjxVb5naiEnUguhFeK24n/6RoeInGV/4otjt3UniGARBbkyhWjCwRaK4kc2nH7Ox8
- veZA==
+ bh=zXvQGNnfpvT1VTqpauRS8evm2rYYkEf6B70nswq9ErA=;
+ b=Nta/IgQH+ZisLmFChmCsvjZZBvrpEiN+9miuCyFm+rVzcetz9xedJr14/c19/GAEEc
+ jUJE6wt7YhCTagND7AmbTay9+09kI15eqnwvXvc746tUBf5JCxHDQTscQphttiuQNU78
+ lqnvBRJ/LL4SRmt9ChZbAjkrB9h/a/NLp0hR7CKbHTCyNtZiEtvD3CwD4AInMX5GpcL8
+ oJjrMeOouthcdYd6LANGlsS5krbkccxc/1lHvxw1ogSjJ+YXiKXgWMP80VPIF5nLWdSC
+ N1SrG2EI/B9iBHo34fEe/qZEGeH85CZbbfbvXKjSJrOstTP+Lvqg6WcE98pXAwQIPZqO
+ Lxog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739220270; x=1739825070;
+ d=1e100.net; s=20230601; t=1739220230; x=1739825030;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=03rJTTNBd3cp6/LXAuK3umtC787I9nHxNQm0tFuSG4M=;
- b=R8PxG/yg0joBS+vjvn2PUDOov/ERF2oFmMBfreh+RZlkDnVzvKaMOSIIXZ3q//HHRi
- XfvrU8XfuPxmNN+dGL69eI6owNIEvSMhlbqesSpa2qrid4dOGxHMcHSvAoPuyQGLmRVE
- u36rh0Lklyf+ZlZX00Rz+rRMKxQN36QzagPO++Lvgi6zR05iET2veUrspvKK/Yz2hFi4
- a2cd4hSexxxlGCYveta5WXif0gUTmUrKl8KjB+RJWqISv9STONsRZihxFMC3iq7miOsD
- bEXon3GVJCfoKvJt4lyOs/SjURy3B/e9Wnnn2esL9lUQCDZjNVtlSdQPodXTs5Zgdqsk
- +5yg==
-X-Gm-Message-State: AOJu0YyMju0otDynscsKqpBGuAuApLigsbyvoleHHSHVoYH6ZQ9eFjhX
- RHBpj26YAfr/h7Ry6mwQEaSwyZA4UG+CLmiSXY8VmAq0g16MPV0ZVC0WEmwstsIY0iwfg12D9f/
- 1M3Q=
-X-Gm-Gg: ASbGncuFawHB4RqaEJScF5piVAn9tnSFXGkm7+8pvH2lVMKj9gB/hYYcsx3mkc2uBsh
- qLeWFMAsNn1e5sRk2wONr9+32Cjdxvzz4jFJWU7LGWr/9AyTadj9aztJoMB6ySC5DcWgiyyXzn7
- 0ZBd7CBydEPG5zsZwpTlw84k0UPeAmJrCQQn7JREpwXvVL82Fz5Ao4REnf+3fDesgJF51ShvyOt
- 3QbcJyQZ181i82OEVQO/Wzw+t5U4Rlq0cKSDJhS/W+LILH7ALemRWTTkHPOBQOV2zO2zyXou2wY
- HejkbhC+gNh7eL2c/eqTJVZaYf/bFfz9RHWB97WU48p8dKMmt72/PyhnxOgsY7NqSA==
-X-Google-Smtp-Source: AGHT+IHdJ9XZ6pS0aortmibAQ65AuQtCaIwrlV8T7OI01bs8lowikxC2ggiq6RNqq2bRgjq3sBlonw==
-X-Received: by 2002:a05:600c:500b:b0:439:48d9:d8b0 with SMTP id
- 5b1f17b1804b1-43948d9dd41mr37756095e9.16.1739220270286; 
- Mon, 10 Feb 2025 12:44:30 -0800 (PST)
+ bh=zXvQGNnfpvT1VTqpauRS8evm2rYYkEf6B70nswq9ErA=;
+ b=c+DAkpY3pjMjferZgXf0rr4h7WkGokDN0w7+y1R799Ndo4tVD34HH5OPnu2Q1CAu8W
+ deWKBZojc/aqIdlm5o/yLro1N3JQL5a1k/rVCfxF881NAm4fnnBhicfkkfsIGjVictZO
+ 2GC6AhmnNNUyzvUEQDr5qvSTzYxj1KYKoo3xpX+ONr/HhO18MkOFe9KJsm+BIA0cJvEw
+ KKcujpoMMiKd56x+jPNpXAYfgEWuM4qfdJV+NSyIwk8GEIxrNEAHRnnnSuhrRQUBHgUW
+ fZL7PU/t3FCYJBlnyDoAAzZQZXTybeK5Q5x1okoUESKJ/1ZgfbbBhRs76Sp3BBDiTYTY
+ MxJg==
+X-Gm-Message-State: AOJu0Yyzcc4/ZhomKoeqeeqLlISOxE1pQ/ZMhoJurgMYwNNpNqCbBrlO
+ fUyR0H8XegnEdFNXdvxgtG4p+ZCGoBoHTlp7bW2gEBTEGzsZdv5aSxPiOGDjw99j+FUdl6NwU/l
+ UX5o=
+X-Gm-Gg: ASbGncspVSek0iTGqy2/i9YlbBEyDhSJhmeThL7As6lOAx0FRYodY2MjZjHh4AlGpaH
+ k7DpkiTI/3Xiv25GOwMy3qw+Uahhnvv+SGjXWxRyGAiQbBgczmsmP+00PbHgAFH0HM5XHdX+vC4
+ EyXb84HU3kJ916eSZxUO9GXvDVW0oFVFnCBEEw+0oIBcwHNM1TzPom82uGlrMtU564huOemJ2MT
+ d/TjbQhBQTQLosKpvoEF3tXjy1kRCb0T+KP9RUNQY5Mg6uKBtNtYC9G0Bo0LEdoW7llAjzb14XS
+ 1DeOqxeCPLE9CmQGWTD9RRh4vcdYyXBn51+zBE6Ip+P5k94gezIC3gi6FH6xLYS8dQ==
+X-Google-Smtp-Source: AGHT+IGxZ0VyTFz2OLb855O009Q8ElmdYG6IKwQq+Ff2cTq7t17PHa+GAHmlYJO2U/4hMHc0xdMdbw==
+X-Received: by 2002:a05:6000:1448:b0:385:ee40:2d88 with SMTP id
+ ffacd0b85a97d-38dc90e39c5mr11772777f8f.3.1739220229954; 
+ Mon, 10 Feb 2025 12:43:49 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4392fc7ceacsm90186975e9.20.2025.02.10.12.44.28
+ ffacd0b85a97d-38dd3dcca71sm7795971f8f.76.2025.02.10.12.43.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Feb 2025 12:44:29 -0800 (PST)
+ Mon, 10 Feb 2025 12:43:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 28/32] tests/functional: Allow microblaze tests to take a
- machine name argument
-Date: Mon, 10 Feb 2025 21:42:00 +0100
-Message-ID: <20250210204204.54407-29-philmd@linaro.org>
+Subject: [PULL 20/32] hw/boards: Convert no_sdcard flag to OnOffAuto tri-state
+Date: Mon, 10 Feb 2025 21:41:52 +0100
+Message-ID: <20250210204204.54407-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250210204204.54407-1-philmd@linaro.org>
 References: <20250210204204.54407-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,65 +99,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make microblaze tests a bit more generic.
+MachineClass::no_sdcard is initialized as false by default.
+To catch all uses, convert it to a tri-state, having the
+current default (false) becoming AUTO.
+
+No logical change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250206131052.30207-14-philmd@linaro.org>
+Message-Id: <20250204200934.65279-2-philmd@linaro.org>
 ---
- tests/functional/test_microblaze_s3adsp1800.py   | 7 +++++--
- tests/functional/test_microblazeel_s3adsp1800.py | 7 +++++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ include/hw/boards.h        | 2 +-
+ hw/arm/xilinx_zynq.c       | 2 +-
+ hw/core/null-machine.c     | 2 +-
+ hw/s390x/s390-virtio-ccw.c | 2 +-
+ system/vl.c                | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
-index fac364b1ea9..c4226f49cf3 100755
---- a/tests/functional/test_microblaze_s3adsp1800.py
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -20,8 +20,8 @@ class MicroblazeMachine(QemuSystemTest):
-          'day17.tar.xz'),
-         '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index e1f41b2a533..d61b0a47780 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -283,9 +283,9 @@ struct MachineClass {
+         no_parallel:1,
+         no_floppy:1,
+         no_cdrom:1,
+-        no_sdcard:1,
+         pci_allow_0_address:1,
+         legacy_fw_cfg_order:1;
++    OnOffAuto no_sdcard;
+     bool is_default;
+     const char *default_machine_opts;
+     const char *default_boot_order;
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 8477b828745..12418094f9d 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -463,7 +463,7 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
+     mc->desc = "Xilinx Zynq Platform Baseboard for Cortex-A9";
+     mc->init = zynq_init;
+     mc->max_cpus = ZYNQ_MAX_CPUS;
+-    mc->no_sdcard = 1;
++    mc->no_sdcard = ON_OFF_AUTO_ON;
+     mc->ignore_memory_transaction_failures = true;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->default_ram_id = "zynq.ext_ram";
+diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+index f586a4bef54..b93056c0f7b 100644
+--- a/hw/core/null-machine.c
++++ b/hw/core/null-machine.c
+@@ -53,7 +53,7 @@ static void machine_none_machine_init(MachineClass *mc)
+     mc->no_parallel = 1;
+     mc->no_floppy = 1;
+     mc->no_cdrom = 1;
+-    mc->no_sdcard = 1;
++    mc->no_sdcard = ON_OFF_AUTO_ON;
+ }
  
--    def test_microblaze_s3adsp1800_be(self):
--        self.set_machine('petalogix-s3adsp1800')
-+    def do_ballerina_be_test(self, machine):
-+        self.set_machine(machine)
-         self.archive_extract(self.ASSET_IMAGE_BE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel',
-@@ -34,5 +34,8 @@ def test_microblaze_s3adsp1800_be(self):
-         # message, that's why we don't test for a later string here. This
-         # needs some investigation by a microblaze wizard one day...
- 
-+    def test_microblaze_s3adsp1800_legacy_be(self):
-+        self.do_ballerina_be_test('petalogix-s3adsp1800')
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index 5d353dba5d2..715ef3f79ac 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -21,9 +21,9 @@ class MicroblazeelMachine(QemuSystemTest):
-         ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
-         'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
- 
--    def test_microblazeel_s3adsp1800_le(self):
-+    def do_xmaton_le_test(self, machine):
-         self.require_netdev('user')
--        self.set_machine('petalogix-s3adsp1800')
-+        self.set_machine(machine)
-         self.archive_extract(self.ASSET_IMAGE_LE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
-@@ -38,5 +38,8 @@ def test_microblazeel_s3adsp1800_le(self):
-                 'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
-                 '821cd3cab8efd16ad6ee5acc3642a8ea')
- 
-+    def test_microblaze_s3adsp1800_legacy_le(self):
-+        self.do_xmaton_le_test('petalogix-s3adsp1800')
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+ DEFINE_MACHINE("none", machine_none_machine_init)
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index d9e683c5b49..5f78c8d20ff 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -817,7 +817,7 @@ static void ccw_machine_class_init(ObjectClass *oc, void *data)
+     mc->no_cdrom = 1;
+     mc->no_floppy = 1;
+     mc->no_parallel = 1;
+-    mc->no_sdcard = 1;
++    mc->no_sdcard = ON_OFF_AUTO_ON;
+     mc->max_cpus = S390_MAX_CPUS;
+     mc->has_hotpluggable_cpus = true;
+     mc->smp_props.books_supported = true;
+diff --git a/system/vl.c b/system/vl.c
+index ff91af8eca6..a845f692af1 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1346,7 +1346,7 @@ static void qemu_disable_default_devices(void)
+     if (!has_defaults || machine_class->no_cdrom) {
+         default_cdrom = 0;
+     }
+-    if (!has_defaults || machine_class->no_sdcard) {
++    if (!has_defaults || machine_class->no_sdcard == ON_OFF_AUTO_ON) {
+         default_sdcard = 0;
+     }
+     if (!has_defaults) {
 -- 
 2.47.1
 
