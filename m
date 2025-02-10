@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FD8C0219E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32505C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWgj-0000RK-Uv; Mon, 10 Feb 2025 11:31:27 -0500
+	id 1thWhi-0001H2-9k; Mon, 10 Feb 2025 11:32:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thWgW-0000OU-1u
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:31:03 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1thWhU-00011h-EC
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:32:02 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thWgT-0004I7-WA
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:30:59 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21f4a4fbb35so59121305ad.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:30:57 -0800 (PST)
+ id 1thWhS-0004Mm-RS
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:32:00 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-21f55fbb72bso52591675ad.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:31:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739205056; x=1739809856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739205117; x=1739809917; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uRZw297lOi4e+9Bab3RSIo8PWSK2aFRQ3o8MfjipIs8=;
- b=Pj5u5ZzIWLbzGzz6qAhGciP8hsWG+fRW2qjFuSsATFVjHb/iEcakAaYMRcpD171Wcw
- R+JxsLGm7KZcQ+8JBEnsnJqKG6afKj86Zn0b1bY41EpkqznQleYxYyBRHSTnhG/I/H5m
- 03MiC6k/xfJVusDZ42bu8zqmvlKtXPVy9GNfn/hIWp47lkx6+aA8kFdYEd9DQ/tSIHVG
- kIyTAAsTCx0LxsxYl8HtXvjFFCxesBZczUqKmyGiLoqjvcht8xR9sP+h/JZi6oyTBjdj
- zBQxrmXwf2ZXulgL4RVGfiTNpxqlwzw4JYci9Fc3+TLdNcdz/4Dry/3z+AXhmwhcrj47
- 7QiQ==
+ bh=12CbQEpCPianDbSiaHuldNx/DpianNvUPrkbzazwvQw=;
+ b=Tj3nbTY7JQtiUiZ2cUuqk9Ms9QEPU/y6BtA3GLVJ2BdaKq2pbQ7rEKG3TlzBi0HrpI
+ VLZbZJHYPJG65rQivjG19nqUnWwCztqWuF619eBhyi4SckrXihMf/VsWk9Wg8TxC9Fro
+ KTxGsKYHSEnnF0MONnhTC4ZoAb2U57I5a+VP69dDfLEid5D7xRALmVjxtP0M0054ThGm
+ 2K1muptndXwfVOWYWjWa3W35Fc3sC8NhrK6c0p9rCEuWnyB+/M3DnnhZPniPlRn2fhVD
+ tfUcuMz3hSDiG+JQeXFEDUsud3xnVizrF9cd07xePs8TdeJjz2ZGVlZkJUjq8/hMzTyA
+ P/pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739205056; x=1739809856;
+ d=1e100.net; s=20230601; t=1739205117; x=1739809917;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uRZw297lOi4e+9Bab3RSIo8PWSK2aFRQ3o8MfjipIs8=;
- b=F3LZtLJcS3SfH9cbIvneu0a716TL4Dc5zu4mn2ldrFpzjh2x5n7o2oDFj6F97R1R+P
- 1GNilCabJeO2vGYxKvlr/kaTBbFPWoUZowfhhbgvD2vyiV0ovgvd2GY913RaLsH+OM6Y
- Kq4RS04mXaytLnZd8Od3XuH6iWvT/tcPX3WpY2RXpZqhWUdfu4fxJ/o0grK3ZPpa6u/a
- 3REhqj4QtP6ayT/GzqD1I8gFfjqpDCpWI9tUkk1vlPANOnG94zhnONDxTb9Q5hzQwBRU
- 9bd+vBfUn74uRfOwXdZcnOMKxpI08WBwSE2YilE9CrqQ5iO47Tu5XQLPdereJ8ipy43e
- 9+LQ==
+ bh=12CbQEpCPianDbSiaHuldNx/DpianNvUPrkbzazwvQw=;
+ b=o8VXSw31cfX+6PFWYb8tIg3X7E1Dus8wigfP5Z2lM6X3ijcN8d0Mf6YxWRGeepkof7
+ yik5ODzGj8ColOL+SXaRbgdTSCZ7rXjTGtRDPj3+6lsM+hpjMZpvg8MOZJymZjG34oQ4
+ FH/l3zwquJj5tWvHxMFnGR7sw9QoZgSyXmNdu6x5T1nvlrM00SGuFTBaZXQfwSP0jJmk
+ pxLGVNF4etbZZslzalQlMRlzx1SgR8fUvtyBQV/HkykBKsgMFhqIBjTasB1mJfeJf22h
+ A08FBfiKbfaS/p0mOvOjcgK6oNfwBD8sPw7CnXqfkjKdSZj8bfS4w2gtKK50O8YbLhjb
+ QnwA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWN8/ooKuT+n367G8QO7Xtxub/xTUdiO35sck02cuhyFmsNfwM+YA+G0ECchYW2YixzbAdx0McO5fDk@nongnu.org
-X-Gm-Message-State: AOJu0Ywf3h+JjzhF/F3TWSphPDbbY5kEmtvzm6/FEooDejLTtGlL4Vps
- GJq1D+PPre/wNlTTEU0CKCCpxaggt1B6FAcPfGkXCUOB/DpDTLb+s6jO6cs1D2A=
-X-Gm-Gg: ASbGnctxC7Q2RcwU9EElTc7JkG+4vgA1XzNcPPzbYYSYxKPg6hLYKtDca7aVEtk7Sek
- SJGrkEA+DvuXjEKSBhNHht50sX2sfmO4RBdwxftJ9Q5TSGPO01ulVBeTzwyxT0MPxF5o/5UGKuQ
- dzBuBOqFKeqRqG0/D5Dm04buJrEQweRGlkYJ0ujgWtG5Fjx93gCvMALwCCzNLlnFreJnSWC7VpT
- qh6ZyBpoKMvKx2kCGEGgdBce685b4XUiqrGrzndYpRMwc3KNSYN9hyAMyEosAV6k8x3aAtygaA4
- VGL7yc7JBsFOPdZ/HwF7IyYyHuvP9bjH174YTDxoGEoxglFyCC9vGtY=
-X-Google-Smtp-Source: AGHT+IEtz9Be2/Cjap06xFlr8tSZi9X90szF/jfEj6Y+GUZt0SBkWj2Q4SrdqHpJBo77d7h+WAgz9Q==
-X-Received: by 2002:a17:902:f68d:b0:21f:97c3:f885 with SMTP id
- d9443c01a7336-21f97c3fa25mr77252415ad.18.1739205056434; 
- Mon, 10 Feb 2025 08:30:56 -0800 (PST)
+ AJvYcCXpBNnKdacGIfMV9FQnpx3L1cjkCdfkUssgbpTRNbBJGgajSzbJ01C758PFkAl5MLKfvDHKcQMqQb3Y@nongnu.org
+X-Gm-Message-State: AOJu0YwoCYN+js0Fb6oEp8DhwUAkZ4qb+mmT2cCho0QvjUFaLh4RbWLy
+ TdixBa5IGk0fPcKdvlsTWhtD1TAoBqZcO0+XjC97yNlYLc/HjO7BjP64j7JelPk=
+X-Gm-Gg: ASbGnctKsQZzIsQXCAWqIR9cdWbFebK1tm9yVTpZoeFZFuKXTDa8iGiHYwAcgZAm/rQ
+ kfnoawByzT5nvVv6H0HarIfyeXZx04BV3R1wFIQqe/WlTH+CDoO6al6i7SghLnMN7e4R8qo2sZd
+ +/mMIvXADoE+G9YfisHDrczGXu7biZ4hEqIrgPxjGGhOxhp+BxiElVgqfYDkrdA5CbA7SV4G6Pd
+ exnjnyNo478ypoq+xroimnLmhWiV4WZf1bD8SgnZKFZkfPAKdqahUCOtcA+34NSyRTciIjOtByT
+ 3CHlTWw0/ERjivFt+qwF1htw9dm6du85j1dAHCm/bvC4c2rchm1UsFk=
+X-Google-Smtp-Source: AGHT+IFFWEftsfkSdGjm+736gE4C1ddxbd+4hzUX1a43y14NKfYMJPtTzdUq7+eghSsTvUWTvpr7nw==
+X-Received: by 2002:a17:902:f54d:b0:21f:3a7b:f4f1 with SMTP id
+ d9443c01a7336-21f4e73af02mr230206585ad.32.1739205117043; 
+ Mon, 10 Feb 2025 08:31:57 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f3650e63fsm81069205ad.41.2025.02.10.08.30.55
+ d9443c01a7336-21f3683d8d3sm80112585ad.156.2025.02.10.08.31.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 08:30:56 -0800 (PST)
-Message-ID: <526984ce-6bee-49b5-aebd-0ab4c391efb4@linaro.org>
-Date: Mon, 10 Feb 2025 08:30:54 -0800
+ Mon, 10 Feb 2025 08:31:56 -0800 (PST)
+Message-ID: <3bc0e1a1-3587-44db-9802-8d80381339b9@linaro.org>
+Date: Mon, 10 Feb 2025 08:31:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/11] target/xtensa: Finalize config in
- xtensa_register_core()
+Subject: Re: [PATCH v2 04/11] target/riscv: Declare
+ RISCVCPUClass::misa_mxl_max as RISCVMXL
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org
 References: <20250210133134.90879-1-philmd@linaro.org>
- <20250210133134.90879-4-philmd@linaro.org>
+ <20250210133134.90879-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250210133134.90879-4-philmd@linaro.org>
+In-Reply-To: <20250210133134.90879-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,17 +106,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/10/25 05:31, Philippe Mathieu-Daudé wrote:
-> Make XtensaConfigList::config not const. Only modify
-> XtensaConfig within xtensa_register_core(), when the
-> class is registered, not when it is initialized.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Cc: Max Filippov <jcmvbkbc@gmail.com>
+> Cc: qemu-riscv@nongnu.org
 > ---
->   target/xtensa/cpu.h    | 2 +-
->   target/xtensa/helper.c | 5 +++--
->   2 files changed, 4 insertions(+), 3 deletions(-)
+>   target/riscv/cpu.h | 2 +-
+>   target/riscv/cpu.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
