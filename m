@@ -4,74 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202C4C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F29BC0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thPKy-0000oo-2d; Mon, 10 Feb 2025 03:40:16 -0500
+	id 1thPQs-00064W-Rv; Mon, 10 Feb 2025 03:46:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPKh-0000gy-Rq
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:40:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1thPQf-00062h-Iw
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:46:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPKf-0003EL-IC
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:39:59 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1thPQX-00041w-Ru
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:46:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739176795;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1739177157;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gR6wCGdNeHeA7efp7AXnk4HntbV8CKgC9xNJeFr7Gus=;
- b=P58BFNT237TC8tcMZB6eeHtnyK0EycnFZvXXDuCO4zgVfyLRzWIxNxQ9GZxWEEoh2IXqVR
- zIUob9G7E9JTuv1kxHyFVxe9GrrTY494yCoqUBKM7OxCY030t/5YReltqoxS6zyHVkTOhg
- ABMe1mOPfYtJ4h6vzQmBnfLNF2JjoaE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-Yt7dR2-TMMiopLTR9wsDfg-1; Mon,
- 10 Feb 2025 03:39:52 -0500
-X-MC-Unique: Yt7dR2-TMMiopLTR9wsDfg-1
-X-Mimecast-MFC-AGG-ID: Yt7dR2-TMMiopLTR9wsDfg
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4D721800877; Mon, 10 Feb 2025 08:39:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F5781800358; Mon, 10 Feb 2025 08:39:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AFC9621E692E; Mon, 10 Feb 2025 09:39:46 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 4/6] qapi: change 'unsigned special_features' to 'uint64_t
- features'
-Date: Mon, 10 Feb 2025 09:39:44 +0100
-Message-ID: <20250210083946.3553415-5-armbru@redhat.com>
-In-Reply-To: <20250210083946.3553415-1-armbru@redhat.com>
-References: <20250210083946.3553415-1-armbru@redhat.com>
+ bh=1Yxw9wJ/eCV0W+yEwON0vaPP/3SiyUK8VOJ3gFn3Alc=;
+ b=P0XJzBafk+NV5JTwY1MhuqYqYIIO0sYS2keuoZQ9Pa0Y6dv+ALxuqGi7kUiToJK3BKwe9E
+ GQwgrXTUqETWB29isuvCOsJykQCKrCgov/sExPVM4mTpXGRrEOn6Z0zX3RKxuChZ1RAWgi
+ 1UvXzIWMIj8i16bisMW5Ygjux7EbcZ8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-r6Iw3iSRNhKwrPdyGxwVgw-1; Mon, 10 Feb 2025 03:45:56 -0500
+X-MC-Unique: r6Iw3iSRNhKwrPdyGxwVgw-1
+X-Mimecast-MFC-AGG-ID: r6Iw3iSRNhKwrPdyGxwVgw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38dc32f753dso1368014f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 00:45:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739177155; x=1739781955;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1Yxw9wJ/eCV0W+yEwON0vaPP/3SiyUK8VOJ3gFn3Alc=;
+ b=Z+FNsvcNGMvjm71KUN5an6hSMdzwVNfBDm86WCrlPoJmAtgJjpOgh2gXnqdJ/Y3umy
+ Qua2X7K7NkzTasUHrLI4PsOALQE9VHAAsCaT9iHAKkQwzS+Vxbxz8WrS7gaW3wfq0tXp
+ boDxPLIjRI4RbyfV5u7g1D8KdqQ62qHjONDDQmToia0CSgdVSg0MQ6fyZimjI5rHWZsF
+ 7n+utcudaxtoHTOB6NqYbdo27nWRaWkaY7ucD9/28aNV2pxrhYoJb+FeQ8GMeIy9Yonh
+ YTA0QtSZjL9ePOsM6pzfPj7SU33qMd5cgGkggvTgSLHvfSZNbBrI8ihhnRR6c1Oaz0Cj
+ gEwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkVzfsflZRBMCOrh69DE4SjXT9JN8LuiRdFsboCpi/cfbwJLlZNgnib6IHES+PBCXS0hWKdvc4yoc/@nongnu.org
+X-Gm-Message-State: AOJu0Yz8n6xYcuLsbKUPY4qno0r5KwRiLA8Zey2Lj1wPBstvcW5ftuK9
+ e9XuMnq0jplcc01K6AU2Q3nbxwzuxk38VA4NokZg12B+00Xc1K58hqSRkChIc5raIG9NKvPu8fh
+ 1at+GySWgaQOp5lldxdCtSEM+uGBEyruxkZvr4dBCRyI9osS8HtcX
+X-Gm-Gg: ASbGncvDgUc86Ne/4wowcNYBgk2KcQ84WwfjkwaNDr4wEfjQXR3vUT0VFz62FBqU7SJ
+ GImoISfJI3/D7Ychq5ZbvHXk9jIV81CjEo9546LpDlqe6P/YtvfV4xbB9l0oz4WbkB80lgBEKtk
+ aqZS/d5wkG+YOz/6stPiCyNiHyEeS6JZ3LdooU8UNGOWqSf7mL4B5ayIB6zKI1M2tNEJLuJVEmy
+ V1t49CoIQjsFgUj56QncMljatF1YTZhRiZnRhjIZPN259imZ7rQW27gas2sW/agEQ7atXafLpmG
+ 6VvyNJvpOJsKS8ZzIyDqsGTcNd3uqJ4hs3fcPenmw7TvuHvTzbfr
+X-Received: by 2002:a5d:598f:0:b0:38d:e250:d960 with SMTP id
+ ffacd0b85a97d-38de250dc0emr424872f8f.8.1739177155151; 
+ Mon, 10 Feb 2025 00:45:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0qpbZ2jFGvlJqCJgVCpnBZanGKNY2oFBXXXRj8l5aLrHhUwpWuIBYgoGcYy+GTfK3bxaJiQ==
+X-Received: by 2002:a5d:598f:0:b0:38d:e250:d960 with SMTP id
+ ffacd0b85a97d-38de250dc0emr424844f8f.8.1739177154764; 
+ Mon, 10 Feb 2025 00:45:54 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dcf35b15bsm8084129f8f.64.2025.02.10.00.45.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Feb 2025 00:45:53 -0800 (PST)
+Message-ID: <b08cee40-a726-498e-af28-bf677e41464b@redhat.com>
+Date: Mon, 10 Feb 2025 09:45:51 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Fix vIOMMU reset order
+Content-Language: en-US
+To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com, jasowang@redhat.com, imammedo@redhat.com,
+ alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org,
+ zhenzhong.duan@intel.com, ddutile@redhat.com
+References: <20250206142307.921070-1-eric.auger@redhat.com>
+ <Z6Y6sf064FBWT5G1@x1.local>
+ <CAFEAcA9ETg2+Xa+e3quJhGG3KsNuH+DW3puuWaJi-q1psUdw6A@mail.gmail.com>
+ <Z6ZDf2K0YsqVRE5T@x1.local>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <Z6ZDf2K0YsqVRE5T@x1.local>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,336 +117,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
 
-The "special_features" field / parameter holds the subset of schema
-features that are for internal code use. Specifically 'DEPRECATED'
-and 'UNSTABLE'.
+Hi,
 
-This special casing of internal features is going to be removed, so
-prepare for that by renaming to 'features'. Using a fixed size type
-is also best practice for bit fields.
+On 2/7/25 6:31 PM, Peter Xu wrote:
+> On Fri, Feb 07, 2025 at 05:06:20PM +0000, Peter Maydell wrote:
+>> On Fri, 7 Feb 2025 at 16:54, Peter Xu <peterx@redhat.com> wrote:
+>>> On Thu, Feb 06, 2025 at 03:21:51PM +0100, Eric Auger wrote:
+>>>> This is a follow-up of Peter's attempt to fix the fact that
+>>>> vIOMMUs are likely to be reset before the device they protect:
+>>>>
+>>>> [PATCH 0/4] intel_iommu: Reset vIOMMU after all the rest of devices
+>>>> https://lore.kernel.org/all/20240117091559.144730-1-peterx@redhat.com/
+>>>>
+>>>> This is especially observed with virtio devices when a qmp system_reset
+>>>> command is sent but also with VFIO devices.
+>>>>
+>>>> This series puts the vIOMMU reset in the 3-phase exit callback.
+>>>>
+>>>> This scheme was tested successful with virtio-devices and some
+>>>> VFIO devices. Nevertheless not all the topologies have been
+>>>> tested yet.
+>>> Eric,
+>>>
+>>> It's great to know that we seem to be able to fix everything in such small
+>>> changeset!
+>>>
+>>> I would like to double check two things with you here:
+>>>
+>>>   - For VFIO's reset hook, looks like we have landed more changes so that
+>>>     vfio's reset function is now a TYPE_LEGACY_RESET, and it always do the
+>>>     reset during "hold" phase only (via legacy_reset_hold()).  That part
+>>>     will make sure vIOMMU (if switching to exit()-only reset) will order
+>>>     properly with VFIO.  Is my understanding correct here?
+>> Yes, we now do a reset of the whole system as a three-phase setup,
+>> and the old pre-three-phase reset APIs like qemu_register_reset() and
+>> device_class_set_legacy_reset() all happen during the "hold" phase.
+>>
+>>>   - Is it possible if some PCIe devices that will provide its own
+>>>     phase.exit(), would it matter on the order of PCIe device's
+>>>     phase.exit() and vIOMMU's phase.exit() (if vIOMMUs switch to use
+>>>     exit()-only approach like this one)?
+>> It's certainly possible for a PCIe device to implement
+>> a three-phase reset which does things in the exit phase. However
+>> I think I would say that such a device which didn't cancel all
+>> outstanding DMA operations during either 'enter' or 'hold'
+>> phases would be broken. If it did some other things during
+>> the 'exit' phase I don't think the ordering of those vs the
+>> iommu 'exit' handling should matter.
+> Yes, this sounds fair.
+>
+>> (To some extent the splitting into three phases is trying
+>> to set up a consistent model as outlined in docs/devel/reset.rst
+>> and to some extent it's just a convenient way to get a basic
+>> "this reset thing I need to do must happen after some other
+>> device has done its reset things" which you can achieve
+>> by ad-hoc putting them in different phases. Ideally we get
+>> mostly the former and a little pragmatic dose of the latter,
+>> but the consistent model is not very solidly nailed down
+>> so I have a feeling the proportions may not be quite as
+>> lopsided as we'd like :-) )
+> Yes, it's a good move that we can have other ways to fix all the problems
+> without major surgery, and it also looks solid and clean if we have plan to
+> fix any outlier PCIe devices.
+>
+> If there will be a repost after all, not sure if Eric would like to add
+> some of above discussions into either some commit messages or cover letter.
+> Or some comment in the code might be even better.
+Yes I will definitively augment commit msgs/cover letter with all those
+considerations. Thank you very much for this rich discussion!
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250205123550.2754387-3-berrange@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- include/qapi/compat-policy.h  |  2 +-
- include/qapi/qmp/dispatch.h   |  4 ++--
- include/qapi/util.h           |  2 +-
- include/qapi/visitor-impl.h   |  4 ++--
- include/qapi/visitor.h        | 12 ++++++------
- qapi/qapi-forward-visitor.c   |  8 ++++----
- qapi/qapi-util.c              |  6 +++---
- qapi/qapi-visit-core.c        | 12 ++++++------
- qapi/qmp-dispatch.c           |  2 +-
- qapi/qmp-registry.c           |  4 ++--
- qapi/qobject-input-visitor.c  |  4 ++--
- qapi/qobject-output-visitor.c |  6 +++---
- scripts/qapi/types.py         |  2 +-
- 13 files changed, 34 insertions(+), 34 deletions(-)
-
-diff --git a/include/qapi/compat-policy.h b/include/qapi/compat-policy.h
-index 8b7b25c0b5..ea65e10744 100644
---- a/include/qapi/compat-policy.h
-+++ b/include/qapi/compat-policy.h
-@@ -18,7 +18,7 @@
- 
- extern CompatPolicy compat_policy;
- 
--bool compat_policy_input_ok(unsigned special_features,
-+bool compat_policy_input_ok(uint64_t features,
-                             const CompatPolicy *policy,
-                             ErrorClass error_class,
-                             const char *kind, const char *name,
-diff --git a/include/qapi/qmp/dispatch.h b/include/qapi/qmp/dispatch.h
-index f2e956813a..e0ee1ad3ac 100644
---- a/include/qapi/qmp/dispatch.h
-+++ b/include/qapi/qmp/dispatch.h
-@@ -33,7 +33,7 @@ typedef struct QmpCommand
-     /* Runs in coroutine context if QCO_COROUTINE is set */
-     QmpCommandFunc *fn;
-     QmpCommandOptions options;
--    unsigned special_features;
-+    uint64_t features;
-     QTAILQ_ENTRY(QmpCommand) node;
-     bool enabled;
-     const char *disable_reason;
-@@ -43,7 +43,7 @@ typedef QTAILQ_HEAD(QmpCommandList, QmpCommand) QmpCommandList;
- 
- void qmp_register_command(QmpCommandList *cmds, const char *name,
-                           QmpCommandFunc *fn, QmpCommandOptions options,
--                          unsigned special_features);
-+                          uint64_t features);
- const QmpCommand *qmp_find_command(const QmpCommandList *cmds,
-                                    const char *name);
- void qmp_disable_command(QmpCommandList *cmds, const char *name,
-diff --git a/include/qapi/util.h b/include/qapi/util.h
-index b8254247b8..29bc4eb865 100644
---- a/include/qapi/util.h
-+++ b/include/qapi/util.h
-@@ -18,7 +18,7 @@ typedef enum {
- 
- typedef struct QEnumLookup {
-     const char *const *array;
--    const unsigned char *const special_features;
-+    const uint64_t *const features;
-     const int size;
- } QEnumLookup;
- 
-diff --git a/include/qapi/visitor-impl.h b/include/qapi/visitor-impl.h
-index 2badec5ba4..7beb0dbfa5 100644
---- a/include/qapi/visitor-impl.h
-+++ b/include/qapi/visitor-impl.h
-@@ -115,11 +115,11 @@ struct Visitor
- 
-     /* Optional */
-     bool (*policy_reject)(Visitor *v, const char *name,
--                          unsigned special_features, Error **errp);
-+                          uint64_t features, Error **errp);
- 
-     /* Optional */
-     bool (*policy_skip)(Visitor *v, const char *name,
--                        unsigned special_features);
-+                        uint64_t features);
- 
-     /* Must be set */
-     VisitorType type;
-diff --git a/include/qapi/visitor.h b/include/qapi/visitor.h
-index 27b85d4700..f6a9b0743f 100644
---- a/include/qapi/visitor.h
-+++ b/include/qapi/visitor.h
-@@ -463,29 +463,29 @@ bool visit_optional(Visitor *v, const char *name, bool *present);
- /*
-  * Should we reject member @name due to policy?
-  *
-- * @special_features is the member's special features encoded as a
-- * bitset of QapiSpecialFeature.
-+ * @features is the member's special features encoded as a
-+ * bitset of QapiFeature.
-  *
-  * @name must not be NULL.  This function is only useful between
-  * visit_start_struct() and visit_end_struct(), since only objects
-  * have deprecated members.
-  */
- bool visit_policy_reject(Visitor *v, const char *name,
--                         unsigned special_features, Error **errp);
-+                         uint64_t features, Error **errp);
- 
- /*
-  *
-  * Should we skip member @name due to policy?
-  *
-- * @special_features is the member's special features encoded as a
-- * bitset of QapiSpecialFeature.
-+ * @features is the member's special features encoded as a
-+ * bitset of QapiFeature.
-  *
-  * @name must not be NULL.  This function is only useful between
-  * visit_start_struct() and visit_end_struct(), since only objects
-  * have deprecated members.
-  */
- bool visit_policy_skip(Visitor *v, const char *name,
--                       unsigned special_features);
-+                       uint64_t features);
- 
- /*
-  * Set policy for handling deprecated management interfaces.
-diff --git a/qapi/qapi-forward-visitor.c b/qapi/qapi-forward-visitor.c
-index e36d9bc9ba..6e9a784a9f 100644
---- a/qapi/qapi-forward-visitor.c
-+++ b/qapi/qapi-forward-visitor.c
-@@ -246,7 +246,7 @@ static void forward_field_optional(Visitor *v, const char *name, bool *present)
- }
- 
- static bool forward_field_policy_reject(Visitor *v, const char *name,
--                                        unsigned special_features,
-+                                        uint64_t features,
-                                         Error **errp)
- {
-     ForwardFieldVisitor *ffv = to_ffv(v);
-@@ -254,18 +254,18 @@ static bool forward_field_policy_reject(Visitor *v, const char *name,
-     if (!forward_field_translate_name(ffv, &name, errp)) {
-         return true;
-     }
--    return visit_policy_reject(ffv->target, name, special_features, errp);
-+    return visit_policy_reject(ffv->target, name, features, errp);
- }
- 
- static bool forward_field_policy_skip(Visitor *v, const char *name,
--                                      unsigned special_features)
-+                                      uint64_t features)
- {
-     ForwardFieldVisitor *ffv = to_ffv(v);
- 
-     if (!forward_field_translate_name(ffv, &name, NULL)) {
-         return true;
-     }
--    return visit_policy_skip(ffv->target, name, special_features);
-+    return visit_policy_skip(ffv->target, name, features);
- }
- 
- static void forward_field_complete(Visitor *v, void *opaque)
-diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
-index 65a7d18437..3d849fe034 100644
---- a/qapi/qapi-util.c
-+++ b/qapi/qapi-util.c
-@@ -37,19 +37,19 @@ static bool compat_policy_input_ok1(const char *adjective,
-     }
- }
- 
--bool compat_policy_input_ok(unsigned special_features,
-+bool compat_policy_input_ok(uint64_t features,
-                             const CompatPolicy *policy,
-                             ErrorClass error_class,
-                             const char *kind, const char *name,
-                             Error **errp)
- {
--    if ((special_features & 1u << QAPI_DEPRECATED)
-+    if ((features & 1u << QAPI_DEPRECATED)
-         && !compat_policy_input_ok1("Deprecated",
-                                     policy->deprecated_input,
-                                     error_class, kind, name, errp)) {
-         return false;
-     }
--    if ((special_features & (1u << QAPI_UNSTABLE))
-+    if ((features & (1u << QAPI_UNSTABLE))
-         && !compat_policy_input_ok1("Unstable",
-                                     policy->unstable_input,
-                                     error_class, kind, name, errp)) {
-diff --git a/qapi/qapi-visit-core.c b/qapi/qapi-visit-core.c
-index 6c13510a2b..706c61e026 100644
---- a/qapi/qapi-visit-core.c
-+++ b/qapi/qapi-visit-core.c
-@@ -141,21 +141,21 @@ bool visit_optional(Visitor *v, const char *name, bool *present)
- }
- 
- bool visit_policy_reject(Visitor *v, const char *name,
--                         unsigned special_features, Error **errp)
-+                         uint64_t features, Error **errp)
- {
-     trace_visit_policy_reject(v, name);
-     if (v->policy_reject) {
--        return v->policy_reject(v, name, special_features, errp);
-+        return v->policy_reject(v, name, features, errp);
-     }
-     return false;
- }
- 
- bool visit_policy_skip(Visitor *v, const char *name,
--                       unsigned special_features)
-+                       uint64_t features)
- {
-     trace_visit_policy_skip(v, name);
-     if (v->policy_skip) {
--        return v->policy_skip(v, name, special_features);
-+        return v->policy_skip(v, name, features);
-     }
-     return false;
- }
-@@ -409,8 +409,8 @@ static bool input_type_enum(Visitor *v, const char *name, int *obj,
-         return false;
-     }
- 
--    if (lookup->special_features
--        && !compat_policy_input_ok(lookup->special_features[value],
-+    if (lookup->features
-+        && !compat_policy_input_ok(lookup->features[value],
-                                    &v->compat_policy,
-                                    ERROR_CLASS_GENERIC_ERROR,
-                                    "value", enum_str, errp)) {
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index 176b549473..d411eebf4e 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -173,7 +173,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
-                   "The command %s has not been found", command);
-         goto out;
-     }
--    if (!compat_policy_input_ok(cmd->special_features, &compat_policy,
-+    if (!compat_policy_input_ok(cmd->features, &compat_policy,
-                                 ERROR_CLASS_COMMAND_NOT_FOUND,
-                                 "command", command, &err)) {
-         goto out;
-diff --git a/qapi/qmp-registry.c b/qapi/qmp-registry.c
-index 485bc5e6fc..bfcabec526 100644
---- a/qapi/qmp-registry.c
-+++ b/qapi/qmp-registry.c
-@@ -17,7 +17,7 @@
- 
- void qmp_register_command(QmpCommandList *cmds, const char *name,
-                           QmpCommandFunc *fn, QmpCommandOptions options,
--                          unsigned special_features)
-+                          uint64_t features)
- {
-     QmpCommand *cmd = g_malloc0(sizeof(*cmd));
- 
-@@ -28,7 +28,7 @@ void qmp_register_command(QmpCommandList *cmds, const char *name,
-     cmd->fn = fn;
-     cmd->enabled = true;
-     cmd->options = options;
--    cmd->special_features = special_features;
-+    cmd->features = features;
-     QTAILQ_INSERT_TAIL(cmds, cmd, node);
- }
- 
-diff --git a/qapi/qobject-input-visitor.c b/qapi/qobject-input-visitor.c
-index f110a804b2..ff9c726de3 100644
---- a/qapi/qobject-input-visitor.c
-+++ b/qapi/qobject-input-visitor.c
-@@ -664,10 +664,10 @@ static void qobject_input_optional(Visitor *v, const char *name, bool *present)
- }
- 
- static bool qobject_input_policy_reject(Visitor *v, const char *name,
--                                        unsigned special_features,
-+                                        uint64_t features,
-                                         Error **errp)
- {
--    return !compat_policy_input_ok(special_features, &v->compat_policy,
-+    return !compat_policy_input_ok(features, &v->compat_policy,
-                                    ERROR_CLASS_GENERIC_ERROR,
-                                    "parameter", name, errp);
- }
-diff --git a/qapi/qobject-output-visitor.c b/qapi/qobject-output-visitor.c
-index 74770edd73..8902287caa 100644
---- a/qapi/qobject-output-visitor.c
-+++ b/qapi/qobject-output-visitor.c
-@@ -210,13 +210,13 @@ static bool qobject_output_type_null(Visitor *v, const char *name,
- }
- 
- static bool qobject_output_policy_skip(Visitor *v, const char *name,
--                                       unsigned special_features)
-+                                       uint64_t features)
- {
-     CompatPolicy *pol = &v->compat_policy;
- 
--    return ((special_features & 1u << QAPI_DEPRECATED)
-+    return ((features & 1u << QAPI_DEPRECATED)
-             && pol->deprecated_output == COMPAT_POLICY_OUTPUT_HIDE)
--        || ((special_features & 1u << QAPI_UNSTABLE)
-+        || ((features & 1u << QAPI_UNSTABLE)
-             && pol->unstable_output == COMPAT_POLICY_OUTPUT_HIDE);
- }
- 
-diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
-index 0dd0b00ada..7bc3f8241f 100644
---- a/scripts/qapi/types.py
-+++ b/scripts/qapi/types.py
-@@ -71,7 +71,7 @@ def gen_enum_lookup(name: str,
-     if feats:
-         ret += mcgen('''
-     },
--    .special_features = (const unsigned char[%(max_index)s]) {
-+    .features = (const uint64_t[%(max_index)s]) {
- ''',
-                      max_index=max_index)
-         ret += feats
--- 
-2.48.1
+Eric
+>
+> Thanks!
+>
 
 
