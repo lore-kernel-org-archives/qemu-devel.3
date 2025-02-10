@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25ED3C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D645C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 08:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thOmN-0001Wz-Uk; Mon, 10 Feb 2025 03:04:32 -0500
+	id 1thPD0-0005hz-EJ; Mon, 10 Feb 2025 03:32:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1thOmM-0001Wl-CN
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:04:30 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPCo-0005hi-VV
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:31:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1thOmJ-0006oE-3r
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:04:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739174668; x=1770710668;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=bnws4m/cgsYVSJVmsCZ/sWjxAsmEtJj8WLVAn6Evxao=;
- b=AS0pM88ur+nGQwR5cY5JTlVVhq2jbv91hNhDENxWNEdm0LczsW0XRfVC
- k3q7kKUjI38xoebAE7JwO3hYN8M51M2ovhivd7OzKoO8s9JW6ohvu06iQ
- 8kFnXwHsSvnoy4gYVmy3ygB5kG44HJLrQ2ItJ5/kdwqE7A4p/quZjmy/o
- x8HE/lOBTusga/dfvLLe0zzFx/one5ItndV6Q+r2pdyM+JWAStBB4KzvK
- BMImDMkrCbpnVF0QcrrYc75sRjqcnU59rgkszgr/TNgI1bdMM4pwNKtF4
- /XYHxzpIghKmComM9dJYtC/+/jPvHef3JHzjHztrNaPvd/dEd3hX/qQvn g==;
-X-CSE-ConnectionGUID: 7IpYEfFNSoeaFkv7dqU8Bg==
-X-CSE-MsgGUID: ygKD6bL8SlqCyEKnT3gujQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11340"; a="39654250"
-X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="39654250"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2025 00:04:08 -0800
-X-CSE-ConnectionGUID: CAzXRT3sTcmw4z9x6jPYeA==
-X-CSE-MsgGUID: ExSnojCPTAOWmnvW9GKjOw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="112345679"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.245.128])
- ([10.124.245.128])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2025 00:04:03 -0800
-Message-ID: <8618eac7-80ae-4533-9b05-17323955d1b5@linux.intel.com>
-Date: Mon, 10 Feb 2025 16:04:00 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thPCm-0002b0-CV
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 03:31:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739176305;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=vMRsPuETqYvRODCWMBp+vjF8cqye2huWUqsXuTPjJAo=;
+ b=a26VKjWcORHa92hN2Rh6JznMNHosRsjq9tZCdRn+8lrjKfWrQNoUNTV+sggEyohCkGvw2I
+ 7f0KbX6Bcdbxgr6oroIrem2xcnCCqvLoaBcR5dMJpfIcdrHpgSs/aJjPcpkeRBUdH+92Ze
+ hwLTzS0qw7jEEtCio3rNq2fRiQoQiGg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-XkUpHtB4OS-iiZoK7a_o7A-1; Mon,
+ 10 Feb 2025 03:31:40 -0500
+X-MC-Unique: XkUpHtB4OS-iiZoK7a_o7A-1
+X-Mimecast-MFC-AGG-ID: XkUpHtB4OS-iiZoK7a_o7A
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A4DE2195608E; Mon, 10 Feb 2025 08:31:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B046E1800878; Mon, 10 Feb 2025 08:31:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 527E721E6A28; Mon, 10 Feb 2025 09:31:35 +0100 (CET)
+Resent-To: michael.roth@amd.com, philmd@linaro.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 10 Feb 2025 09:31:35 +0100
+Resent-Message-ID: <8734gmb3q0.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 4/4] qapi: expose all schema features to code
+In-Reply-To: <CAFn=p-aSdesaSxb3pTFD54qnJJ5y0MHnS16eevcU7L+ReqZwyA@mail.gmail.com>
+ (John Snow's message of "Fri, 7 Feb 2025 13:56:18 -0500")
+References: <20250205123550.2754387-1-berrange@redhat.com>
+ <20250205123550.2754387-5-berrange@redhat.com>
+ <87wme2hsrn.fsf@pond.sub.org>
+ <CAFn=p-aSdesaSxb3pTFD54qnJJ5y0MHnS16eevcU7L+ReqZwyA@mail.gmail.com>
+Date: Mon, 10 Feb 2025 09:24:29 +0100
+Message-ID: <87cyfqb41u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
- KVM_PMU_CAP_DISABLE
-To: dongli.zhang@oracle.com, Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com, zhenyuw@linux.intel.com,
- groug@kaod.org, lyan@digitalocean.com, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com, joe.jin@oracle.com,
- davydov-max@yandex-team.ru, zide.chen@intel.com
-References: <20241104094119.4131-1-dongli.zhang@oracle.com>
- <20241104094119.4131-3-dongli.zhang@oracle.com> <ZyxxygVaufOntpZJ@intel.com>
- <57b4b74d-67d2-4fcf-aa59-c788afc93619@oracle.com>
- <f4a2f801-9f82-424e-aee4-8b18add34aa6@linux.intel.com>
- <6aefa9df-10e3-4001-a509-a4bc3850d65a@linux.intel.com>
- <bf41c97a-b5e2-4cfd-90ef-89f12f1b384a@oracle.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <bf41c97a-b5e2-4cfd-90ef-89f12f1b384a@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=198.175.65.21;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.405,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,241 +98,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
-On 2/10/2025 4:12 AM, dongli.zhang@oracle.com wrote:
-> Hi Dapeng,
+> On Fri, Feb 7, 2025, 6:57=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 >
-> On 2/7/25 1:52 AM, Mi, Dapeng wrote:
->> On 11/21/2024 6:06 PM, Mi, Dapeng wrote:
->>> On 11/8/2024 7:44 AM, dongli.zhang@oracle.com wrote:
->>>> Hi Zhao,
->>>>
->>>>
->>>> On 11/6/24 11:52 PM, Zhao Liu wrote:
->>>>> (+Dapang & Zide)
->>>>>
->>>>> Hi Dongli,
->>>>>
->>>>> On Mon, Nov 04, 2024 at 01:40:17AM -0800, Dongli Zhang wrote:
->>>>>> Date: Mon,  4 Nov 2024 01:40:17 -0800
->>>>>> From: Dongli Zhang <dongli.zhang@oracle.com>
->>>>>> Subject: [PATCH 2/7] target/i386/kvm: introduce 'pmu-cap-disabled' to set
->>>>>>  KVM_PMU_CAP_DISABLE
->>>>>> X-Mailer: git-send-email 2.43.5
->>>>>>
->>>>>> The AMD PMU virtualization is not disabled when configuring
->>>>>> "-cpu host,-pmu" in the QEMU command line on an AMD server. Neither
->>>>>> "-cpu host,-pmu" nor "-cpu EPYC" effectively disables AMD PMU
->>>>>> virtualization in such an environment.
->>>>>>
->>>>>> As a result, VM logs typically show:
->>>>>>
->>>>>> [    0.510611] Performance Events: Fam17h+ core perfctr, AMD PMU driver.
->>>>>>
->>>>>> whereas the expected logs should be:
->>>>>>
->>>>>> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
->>>>>> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
->>>>>>
->>>>>> This discrepancy occurs because AMD PMU does not use CPUID to determine
->>>>>> whether PMU virtualization is supported.
->>>>> Intel platform doesn't have this issue since Linux kernel fails to check
->>>>> the CPU family & model when "-cpu *,-pmu" option clears PMU version.
->>>>>
->>>>> The difference between Intel and AMD platforms, however, is that it seems
->>>>> Intel hardly ever reaches the “...due virtualization” message, but
->>>>> instead reports an error because it recognizes a mismatched family/model.
->>>>>
->>>>> This may be a drawback of the PMU driver's print message, but the result
->>>>> is the same, it prevents the PMU driver from enabling.
->>>>>
->>>>> So, please mention that KVM_PMU_CAP_DISABLE doesn't change the PMU
->>>>> behavior on Intel platform because current "pmu" property works as
->>>>> expected.
->>>> Sure. I will mention this in v2.
->>>>
->>>>>> To address this, we introduce a new property, 'pmu-cap-disabled', for KVM
->>>>>> acceleration. This property sets KVM_PMU_CAP_DISABLE if
->>>>>> KVM_CAP_PMU_CAPABILITY is supported. Note that this feature currently
->>>>>> supports only x86 hosts, as KVM_CAP_PMU_CAPABILITY is used exclusively for
->>>>>> x86 systems.
->>>>>>
->>>>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
->>>>>> ---
->>>>>> Another previous solution to re-use '-cpu host,-pmu':
->>>>>> https://urldefense.com/v3/__https://lore.kernel.org/all/20221119122901.2469-1-dongli.zhang@oracle.com/__;!!ACWV5N9M2RV99hQ!Nm8Db-mwBoMIwKkRqzC9kgNi5uZ7SCIf43zUBn92Ar_NEbLXq-ZkrDDvpvDQ4cnS2i4VyKAp6CRVE12bRkMF$ 
->>>>> IMO, I prefer the previous version. This VM-level KVM property is
->>>>> difficult to integrate with the existing CPU properties. Pls refer later
->>>>> comments for reasons.
->>>>>
->>>>>>  accel/kvm/kvm-all.c        |  1 +
->>>>>>  include/sysemu/kvm_int.h   |  1 +
->>>>>>  qemu-options.hx            |  9 ++++++-
->>>>>>  target/i386/cpu.c          |  2 +-
->>>>>>  target/i386/kvm/kvm.c      | 52 ++++++++++++++++++++++++++++++++++++++
->>>>>>  target/i386/kvm/kvm_i386.h |  2 ++
->>>>>>  6 files changed, 65 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>>>>> index 801cff16a5..8b5ba45cf7 100644
->>>>>> --- a/accel/kvm/kvm-all.c
->>>>>> +++ b/accel/kvm/kvm-all.c
->>>>>> @@ -3933,6 +3933,7 @@ static void kvm_accel_instance_init(Object *obj)
->>>>>>      s->xen_evtchn_max_pirq = 256;
->>>>>>      s->device = NULL;
->>>>>>      s->msr_energy.enable = false;
->>>>>> +    s->pmu_cap_disabled = false;
->>>>>>  }
->>>>> The CPU property "pmu" also defaults to "false"...but:
->>>>>
->>>>>  * max CPU would override this and try to enable PMU by default in
->>>>>    max_x86_cpu_initfn().
->>>>>
->>>>>  * Other named CPU models keep the default setting to avoid affecting
->>>>>    the migration.
->>>>>
->>>>> The pmu_cap_disabled and “pmu” property look unbound and unassociated,
->>>>> so this can cause the conflict when they are not synchronized. For
->>>>> example,
->>>>>
->>>>> -cpu host -accel kvm,pmu-cap-disabled=on
->>>>>
->>>>> The above options will fail to launch a VM (on Intel platform).
->>>>>
->>>>> Ideally, the “pmu” property and pmu-cap-disabled should be bound to each
->>>>> other and be consistent. But it's not easy because:
->>>>>  - There is no proper way to have pmu_cap_disabled set different default
->>>>>    values (e.g., "false" for max CPU and "true" for named CPU models)
->>>>>    based on different CPU models.
->>>>>  - And, no proper place to check the consistency of pmu_cap_disabled and
->>>>>    enable_pmu.
->>>>>
->>>>> Therefore, I prefer your previous approach, to reuse current CPU "pmu"
->>>>> property.
->>>> Thank you very much for the suggestion and reasons.
->>>>
->>>> I am going to follow your suggestion to switch back to the previous solution in v2.
->>> +1.
->>>
->>>  I also prefer to leverage current exist "+/-pmu" option instead of adding
->>> a new option. More options, more complexity. When they are not
->>> inconsistent, which has higher priority? all these are issues.
->>>
->>> Although KVM_CAP_PMU_CAPABILITY is a VM-level PMU capability, but all CPUs
->>> in a same VM should always share same PMU configuration (Don't consider
->>> hybrid platforms which have many issues need to be handled specifically).
->>>
->>>
->>>>> Further, considering that this is currently the only case that needs to
->>>>> to set the VM level's capability in the CPU context, there is no need to
->>>>> introduce a new kvm interface (in your previous patch), which can instead
->>>>> be set in kvm_cpu_realizefn(), like:
->>>>>
->>>>>
->>>>> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
->>>>> index 99d1941cf51c..05e9c9a1a0cf 100644
->>>>> --- a/target/i386/kvm/kvm-cpu.c
->>>>> +++ b/target/i386/kvm/kvm-cpu.c
->>>>> @@ -42,6 +42,8 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
->>>>>  {
->>>>>      X86CPU *cpu = X86_CPU(cs);
->>>>>      CPUX86State *env = &cpu->env;
->>>>> +    KVMState *s = kvm_state;
->>>>> +    static bool first = true;
->>>>>      bool ret;
->>>>>
->>>>>      /*
->>>>> @@ -63,6 +65,29 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
->>>>>       *   check/update ucode_rev, phys_bits, guest_phys_bits, mwait
->>>>>       *   cpu_common_realizefn() (via xcc->parent_realize)
->>>>>       */
->>>>> +
->>>>> +    if (first) {
->>>>> +        first = false;
->>>>> +
->>>>> +        /*
->>>>> +         * Since Linux v5.18, KVM provides a VM-level capability to easily
->>>>> +         * disable PMUs; however, QEMU has been providing PMU property per
->>>>> +         * CPU since v1.6. In order to accommodate both, have to configure
->>>>> +         * the VM-level capability here.
->>>>> +         */
->>>>> +        if (!cpu->enable_pmu &&
->>>>> +            kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY)) {
->>>>> +            int r = kvm_vm_enable_cap(s, KVM_CAP_PMU_CAPABILITY, 0,
->>>>> +                                      KVM_PMU_CAP_DISABLE);
->>>>> +
->>>>> +            if (r < 0) {
->>>>> +                error_setg(errp, "kvm: Failed to disable pmu cap: %s",
->>>>> +                           strerror(-r));
->>>>> +                return false;
->>>>> +            }
->>>>> +        }
->>> It seems KVM_CAP_PMU_CAPABILITY is called to only disable PMU here. From
->>> point view of logic completeness,  KVM_CAP_PMU_CAPABILITY should be called
->>> to enabled PMU as well when user wants to enable PMU.
->>>
->>> I know currently we only need to disable PMU, but we may need to enable PMU
->>> via KVM_CAP_PMU_CAPABILITY soon.
->>>
->>> We are working on the new KVM mediated vPMU framework, Sean suggest to
->>> leverage KVM_CAP_PMU_CAPABILITY to enable mediated vPMU dynamically
->>> (https://urldefense.com/v3/__https://lore.kernel.org/all/Zz4uhmuPcZl9vJVr@google.com/__;!!ACWV5N9M2RV99hQ!JQx8CdjEI-J6WbzbvB7vHcZ0nJPkzUhvl6TvWvDorAal1XAC17dwpRa6b6Xlva--pK-4ej3Ota0k9SJl3BUWXKTew70$ ). So It would be
->>> better if the enable logic can be added here as well.
->>>
->>> Thanks.
->> Hi Dongli,
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 >>
->> May I know if you have plan to continue to update this patch recently? As
->> previous comment said, our KVM mediated vPMU solution needs qemu to
->> explicitly call KVM_CAP_PMU_CAPABILITY to enable mediated vPMU as well. If
->> you have no plan to update this patch recently, would you mind me to pick
->> up this patch
->> (https://urldefense.com/v3/__https://lore.kernel.org/all/20221119122901.2469-2-dongli.zhang@oracle.com/__;!!ACWV5N9M2RV99hQ!JQx8CdjEI-J6WbzbvB7vHcZ0nJPkzUhvl6TvWvDorAal1XAC17dwpRa6b6Xlva--pK-4ej3Ota0k9SJl3BUWzQmZ_yA$ )
->> and post with other our mediated vPMU related patches to enable mediated vPMU?
+>> > This replaces use of the constants from the QapiSpecialFeatures
+>> > enum, with constants from the auto-generate QapiFeatures enum
+>> > in qapi-features.h
+>> >
+>> > The 'deprecated' and 'unstable' features still have a little bit of
+>> > special handling, being force defined to be the 1st + 2nd features
+>> > in the enum, regardless of whether they're used in the schema. This
+>> > retains compatibility with common code that references the features
+>> > via the QapiSpecialFeatures constants.
+>> >
+>> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 >>
->> Thanks!
+>> Daniel, feel free to ignore this at least for now.  I'm trying to learn
+>> some typing lore from John.
 >>
->> Dapeng Mi
+>> v3 made mypy unhappy.  I asked John for advice, and also posted a
+>> solution involving ValuesView I hacked up myself.  Daniel took it for
+>> v4.
+>>
+>> John suggested to use List.
+>>
+>> I now wonder whether could use Iterable.
+>>
+>> I'll show the three solutions inline.
+>>
+>> John, thoughts?
+>>
 >
-> Sorry for the delay — it took some effort to learn about mediated vPMU (as
-> you suggested) to adapt this patch accordingly.
+> ValuesView works just fine. It accurately describes what that function
+> returns. I only avoided it in my fixup because it's a more obscure type a=
+nd
+> generally list is easier to work with as a first-class built in primitive
+> type to the language.
 >
-> Yes, feel free to pick up this patch for mediated vPMU, as I don’t want to
-> block your work, although, I do plan to continue updating it.
->
-> I am continuing working on it, but my primary objective is to reset the AMD
-> PMU during QEMU reset, which depends on KVM_PMU_CAP_DISABLE.
->
-> [PATCH 5/7] target/i386/kvm: Reset AMD PMU registers during VM reset
-> [PATCH 6/7] target/i386/kvm: Support perfmon-v2 for reset
->
-> Would you mind keeping me updated on any changes/discussions you make to
-> QEMU on KVM_PMU_CAP_DISABLE for mediated vPMU? That way, I can adjust my
-> code accordingly once your QEMU patch for KVM_PMU_CAP_DISABLE is finalized.
->
-> In the meantime, I am continuing working on the entire patchset and I can
-> change the code when you post the relevant QEMU changes on
-> KVM_PMU_CAP_DISABLE soon.
->
-> Would that work for you?
+> (read as: I didn't have to consult any docs to fix it up using List and I=
+'m
+> lazy.)
 
-Dongli,
+Aside: John later shared a useful technique on IRC: "you can write
+reveal_type(foo) to get mypy to spill the beans on what it thinks".
 
-Thanks for your feedback. Sure, I would add you into the mail loop when
-sending the qemu mediated vPMU patches.
-
-BTW, I found Xiaoyao ever sent a quite familiar patch
-(https://lore.kernel.org/qemu-devel/20220317135913.2166202-10-xiaoyao.li@intel.com/)
-and he has updated the patch to latest qemu code base, I would pick up his
-patch directly.
-
-Thanks,
-
-Dapeng Mi
-
-
+> Your solution describes precisely the type being returned (always good) a=
+nd
+> avoids any re-copying of data.
 >
-> Thank you very much!
->
-> Dongli Zhang
+> Do be aware by caching the values view object in another object that you
+> are keeping a "live reference" to the list of dict values that I think can
+> change if the source dict changes.
+
+Yes.
+
+>                                    I doubt it matters, but you should know
+> about that.
+
+I believe it's just fine.
+
+> The only design consideration you have now is what type you actually want
+> to return and why. I think it barely matters, and I'm always going to opt
+> for whatever is the least annoying for the patch author so I don't have to
+> bore/torture them with python minutiae.
+
+Since the typing in Daniel's patch is fine, I'll refrain from messing
+with it.
+
+> As long as the tests pass (my first three patches in the dan-fixup branch=
+ I
+> posted based on v3) I'm more than content.
+
+Thanks!
+
 
