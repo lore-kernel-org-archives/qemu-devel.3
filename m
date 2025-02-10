@@ -4,70 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D14C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A6EC0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWNa-0006b8-Br; Mon, 10 Feb 2025 11:11:26 -0500
+	id 1thWSc-0008N2-JB; Mon, 10 Feb 2025 11:16:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNL-0006Tb-AY
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNE-0000yF-W5
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739203861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WBfOH5imhATpuMEU8VBlckuqMBnW0M1uEnt8wFgy4II=;
- b=iys+HbmpZqETxIccwheYT+YoKHkfBUaY0C4Vlt7oWbBCvas0KDihAhrrAUs3L2OVDU2DHS
- 9vyT5FyCMhuvLBVj4PpWogAjtZPQIvYtNtnMVq0nwJBIErudoRx1AsnFGMPYjdvSxgl+i6
- lJzw9TOMwVG2Kyw2swfqtPSTK9tpXXM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-DT9ToAiSPOyc4D-evMX9Hw-1; Mon,
- 10 Feb 2025 11:10:58 -0500
-X-MC-Unique: DT9ToAiSPOyc4D-evMX9Hw-1
-X-Mimecast-MFC-AGG-ID: DT9ToAiSPOyc4D-evMX9Hw
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 462BA180087B; Mon, 10 Feb 2025 16:10:57 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.45.225.156])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 00EEC195608D; Mon, 10 Feb 2025 16:10:55 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 03/25] block: Improve blk_get_attached_dev_id() docstring
-Date: Mon, 10 Feb 2025 17:10:12 +0100
-Message-ID: <20250210161034.76494-4-kwolf@redhat.com>
-In-Reply-To: <20250210161034.76494-1-kwolf@redhat.com>
-References: <20250210161034.76494-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1thWRD-0004U9-AG
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:14 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1thWRB-0001YO-6y
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:10 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5de47cf9329so5406379a12.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:15:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739204106; x=1739808906; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2LwehABNpz+elHyUtu6V8SdPZXAtvSq5keb1F8SzdXM=;
+ b=D2d6BZ7hD6gYCrk/Cz+T6xy3mO5H1wOofwV5xkMyuZUi7fhPUg0MD23H3fOo4BowTb
+ 7nIBdHC5D+PkISjymsKThnELhJpwnA9Hyw6lUcqWXWfclJKPM0tibaIdoOneySzF6VYL
+ D99jEMAEci3RREB8TEwhKusB/QJnjj4gC4dtugjMIW34XfeFmttQsyk3IMNyJobkPXNB
+ LnZU6EUoqE52iT8kf9x12knGQSPeVGer1E/UwlPOkLHjbtT8BkxiUH34wC6tf+VJrqxJ
+ o0RfLD5CkcJ/IpQYbfwBHCSJro6LMHQ+qOyNihjr0Ul/7jpxwUjPm6/Fc0khVbFtfA5J
+ 1q9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739204106; x=1739808906;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2LwehABNpz+elHyUtu6V8SdPZXAtvSq5keb1F8SzdXM=;
+ b=ThfanZYauaOFLPO2NYormwuWeEZSBaF2NjIxnHJ/3koTw7XuG5AI6wY3UMDVb7FGu0
+ FISh/IzjpHlgimB9+zjbcGsucn6UR9aGSOFv8qxE94VUi9zjvpAUDX+BEfVE7n1yiHjQ
+ TklMp6VWsnPmvgsbzaT9fejvYzHCba3/2wn0gFkUABLeZzucmqjZtJhkX8LIBvkT1vUO
+ G201kn8XLKReetZpf7DBg9T9jb6bmRDHGgN/wHP3ki9WJCO6htQovplGk85tljJvdyiF
+ ReVX7EsJ74AuvqvebhUUPDI9BF/KV6KhWkRU5jYxRjF6uRF3KkwU8pNcb1HT6L6Gl1So
+ KNjw==
+X-Gm-Message-State: AOJu0Yzn9w/uxL1Juh1oJMED/5dMUl2vIG8OocLEUnrECvjAESN8Elme
+ +/SLqqKOhGbDTeiulBeA1xgFbH619Jeyvv44t1pvysKxeDmlCiZLn/TY8AFgxo4=
+X-Gm-Gg: ASbGncufk4dPE9g3btMt2GQpuE6JrcLOTHtSu5NrMMhNhgRroyMmf5wHNlWxz0gUdpw
+ AM/vAVmYQRVOg4n3iIaENzpvNPCL0Ur3xRxRfe0aa9Xupf0j4Xw4wo6DXpjxcCSQmmPEmqbZ07/
+ w143YjswF1YkddgY1l0Y4iV96e9HsVbGzWtW9i1PGIBEaxv/1zlRVFMlcmRdquKIsTcUiVJv2Qe
+ dAnJc37GxIc3itjUl3eifTi0FivACn0XAgnHPtCdGc9UmfS/NwiKVlRbpPpxdTV2E4YgSjwBgbt
+ J4pqksfBxApz6YE0zg==
+X-Google-Smtp-Source: AGHT+IFOwSSx7A2I4US7tcl8+SmC6mwVYsew2ms96Muhvxz4xciy4wJngym67uJ3E2Mr17d6Tu5RtQ==
+X-Received: by 2002:a05:6402:358e:b0:5db:731d:4456 with SMTP id
+ 4fb4d7f45d1cf-5de9a4c86cbmr248743a12.28.1739204106312; 
+ Mon, 10 Feb 2025 08:15:06 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5de5ef7029asm4934287a12.58.2025.02.10.08.14.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Feb 2025 08:15:00 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E0D096037E;
+ Mon, 10 Feb 2025 16:14:52 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 12/17] user: Introduce user/signal.h
+Date: Mon, 10 Feb 2025 16:14:46 +0000
+Message-Id: <20250210161451.3273284-13-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250210161451.3273284-1-alex.bennee@linaro.org>
+References: <20250210161451.3273284-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,74 +106,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Expose the method docstring in the header, and mention
-returned value must be free'd by caller.
+gdbstub needs target_to_host_signal(), so move its declaration to a
+public header.
 
-Reported-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241111170333.43833-2-philmd@linaro.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- include/system/block-backend-io.h |  7 +++++++
- block/block-backend.c             | 12 ++++++++----
- 2 files changed, 15 insertions(+), 4 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20250117001542.8290-4-iii@linux.ibm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250207153112.3939799-13-alex.bennee@linaro.org>
 
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index d174275a5c..ba8dfcc7d0 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -32,6 +32,13 @@ void blk_set_allow_aio_context_change(BlockBackend *blk, bool allow);
- void blk_set_disable_request_queuing(BlockBackend *blk, bool disable);
- bool blk_iostatus_is_enabled(const BlockBackend *blk);
+diff --git a/bsd-user/signal-common.h b/bsd-user/signal-common.h
+index 77d7c7a78b..4e634e04a3 100644
+--- a/bsd-user/signal-common.h
++++ b/bsd-user/signal-common.h
+@@ -42,7 +42,6 @@ void process_pending_signals(CPUArchState *env);
+ void queue_signal(CPUArchState *env, int sig, int si_type,
+                   target_siginfo_t *info);
+ void signal_init(void);
+-int target_to_host_signal(int sig);
+ void target_to_host_sigset(sigset_t *d, const target_sigset_t *s);
  
+ /*
+diff --git a/include/user/signal.h b/include/user/signal.h
+new file mode 100644
+index 0000000000..19b6b9e5dd
+--- /dev/null
++++ b/include/user/signal.h
+@@ -0,0 +1,23 @@
 +/*
-+ * Return the qdev ID, or if no ID is assigned the QOM path,
-+ * of the block device attached to the BlockBackend.
++ * Signal-related declarations.
 + *
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
- char *blk_get_attached_dev_id(BlockBackend *blk);
- 
- BlockAIOCB *blk_aio_pwrite_zeroes(BlockBackend *blk, int64_t offset,
-diff --git a/block/block-backend.c b/block/block-backend.c
-index c93a7525ad..789fc6d4ea 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1019,6 +1019,10 @@ DeviceState *blk_get_attached_dev(BlockBackend *blk)
-     return blk->dev;
- }
- 
-+/*
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
++#ifndef USER_SIGNAL_H
++#define USER_SIGNAL_H
++
++#ifndef CONFIG_USER_ONLY
++#error Cannot include this header from system emulation
++#endif
++
++/**
++ * target_to_host_signal:
++ * @sig: target signal.
++ *
++ * On success, return the host signal between 0 (inclusive) and NSIG
++ * (exclusive) corresponding to the target signal @sig. Return any other value
++ * on failure.
 + */
- static char *blk_get_attached_dev_id_or_path(BlockBackend *blk, bool want_id)
- {
-     DeviceState *dev = blk->dev;
-@@ -1033,15 +1037,15 @@ static char *blk_get_attached_dev_id_or_path(BlockBackend *blk, bool want_id)
-     return object_get_canonical_path(OBJECT(dev)) ?: g_strdup("");
- }
++int target_to_host_signal(int sig);
++
++#endif
+diff --git a/linux-user/signal-common.h b/linux-user/signal-common.h
+index 8584d9ecc2..196d2406f8 100644
+--- a/linux-user/signal-common.h
++++ b/linux-user/signal-common.h
+@@ -61,7 +61,6 @@ void queue_signal(CPUArchState *env, int sig, int si_type,
+                   target_siginfo_t *info);
+ void host_to_target_siginfo(target_siginfo_t *tinfo, const siginfo_t *info);
+ void target_to_host_siginfo(siginfo_t *info, const target_siginfo_t *tinfo);
+-int target_to_host_signal(int sig);
+ int host_to_target_signal(int sig);
+ long do_sigreturn(CPUArchState *env);
+ long do_rt_sigreturn(CPUArchState *env);
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index b4e1458237..8c51f6ce65 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -24,6 +24,7 @@
+ #include "user/cpu_loop.h"
+ #include "exec/page-protection.h"
+ #include "user/page-protection.h"
++#include "user/signal.h"
+ #include "user/tswap-target.h"
+ #include "gdbstub/user.h"
+ #include "signal-common.h"
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index 087c4d270e..bffbef235c 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -36,6 +36,7 @@
+ #include "user/cpu_loop.h"
+ #include "user/page-protection.h"
+ #include "user/safe-syscall.h"
++#include "user/signal.h"
+ #include "tcg/tcg.h"
  
--/*
-- * Return the qdev ID, or if no ID is assigned the QOM path, of the block
-- * device attached to the BlockBackend.
-- */
- char *blk_get_attached_dev_id(BlockBackend *blk)
- {
-     return blk_get_attached_dev_id_or_path(blk, true);
- }
- 
-+/*
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
-+ */
- static char *blk_get_attached_dev_path(BlockBackend *blk)
- {
-     return blk_get_attached_dev_id_or_path(blk, false);
+ /* target_siginfo_t must fit in gdbstub's siginfo save area. */
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 6ee02383da..90afaa4426 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -138,6 +138,7 @@
+ #include "user-mmap.h"
+ #include "user/page-protection.h"
+ #include "user/safe-syscall.h"
++#include "user/signal.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/selfmap.h"
+ #include "user/syscall-trace.h"
 -- 
-2.48.1
+2.39.5
 
 
