@@ -4,87 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AB4C021A1
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 13:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08AEEC02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 13:30:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thTqk-0005vc-8N; Mon, 10 Feb 2025 08:29:22 -0500
+	id 1thTqy-0006Ii-IR; Mon, 10 Feb 2025 08:29:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTqd-0005ml-OB
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:29:16 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thTqZ-0005O2-2F
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 08:29:12 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43944181e68so9892285e9.0
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 05:29:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739194149; x=1739798949; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pnKit6bvlceVtaPue+HnO2chHJDyacT6hBPxAwvfjDo=;
- b=QX6DPYFprh40u3VC23+9Ec0FfxRor3BOsn8uJTMUMNs4Uhn86681Qku3KoR2mo6erO
- dniIBBKPuoz0czbOW/Rs60xeNwp9jGeGURA8iq209QqerJ8HJZeh2UmA2YvXl3CWPLWH
- Oq0jCGc4NwSev3KiQ3OO2yN1ZZY9c8YIfT2Uy7PPpSytNuBo3zHlD2XzU7+Jn4+4XpBf
- quc5X4t8kUVu7IhhCPisbHJoqMZ1quzT3ldHPwT6hJJJHvMXC6Trnw79wJAbvEWD/B//
- hLuYNXCaBL8YmCI2MCV8lSQ6RQrTFlJHV7SnyPMX+l7yun/5Xp+xV489PH/niNxrTJ7X
- LynQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739194149; x=1739798949;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pnKit6bvlceVtaPue+HnO2chHJDyacT6hBPxAwvfjDo=;
- b=uxbv1YZ0rec6xMyq2Bt/c+0DT5umveopOcIu1ESHGZNI7v2RsEdkuv9u74mDCYwmUO
- ZSNSPC/ToISsn8D9LrY2p3wTP19p4Vj0pwNP2vlZW8uDbHKk91vcaqzF1GtHqnhO8GCc
- 88hurnHVr6Efs98G9NJRsC5Lz1Eo72b5BOjDHK9bqJJpzjlPQI/GA3aNjm/gsvdvWFV7
- WI8B9bXWMLciW98qalAEke8SfYu1RW5nOLVNSySCMi3ceZ1mmgaeYZx9wOKr7XbWzQKD
- Hnili+BTMft8mvxLKPk/yo/Wbb/bxu0tO0kP5M5bPzKSRdx3G4F3nYPBKVNEPx1mipIV
- +W0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4QI5zwlPFqw6WlICMC4RGRiGNBtklb8wgAv32mESmNePP8/i433rvVR47cs0cxiU1cBzhQhuBlPBk@nongnu.org
-X-Gm-Message-State: AOJu0Yyxgt28Q6hvUvWPcf8IZH18S2/34anQr0F5FmmxjgkQtddXjyVX
- Ou5vsRmAGaaMhAFSmOlas+vD6IKPzKq4GclDtF1SSILdnxfXiEqxXVYd/tv+qTM=
-X-Gm-Gg: ASbGnctjdeNSteTfYnD5N107J9ln+BzMczRdB0OF80P7oIw92L79tRG7vgHJiJIUTwi
- NlHO4kWFlgFo3+3XxrRa3i4Pip5Ox2z1CsySOpEsgSHCMejOcUaIiTLephH7vs65GlpSbXXLe1M
- j603DFu6DWL7B3IDWH/sRCipG9QeDCyJAMZ8fD7MzUZcEhz/r3xB2gom+ppijsIhDgHYF9Wo7/R
- 2CNIOsEnCc8ogsIPkk1BXtm0sVS2+mSQuWbfW3Yz8Mflu5n/vuq51BpbHVtytn3+OoR1X0ITn8i
- 14iNJsX8ktfPZp/aeAi22PHvigYuN6Zxv6U0tBhOyKUkWM0Ciz13tBvhNvfjOzSF
-X-Google-Smtp-Source: AGHT+IHpoqhPyUk+chR3FjAOEvIAfgqKQU+q3d3eoYGuwQjLU6SSfXl35gbgql2gPBnsu5nTq53MuQ==
-X-Received: by 2002:a05:600c:3ac7:b0:439:40c1:1343 with SMTP id
- 5b1f17b1804b1-43940c1141bmr46344715e9.15.1739194149008; 
- Mon, 10 Feb 2025 05:29:09 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391d5283b2sm151451435e9.0.2025.02.10.05.29.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 05:29:08 -0800 (PST)
-Message-ID: <f82d5a10-6cf3-4d46-8699-e3bb8f552e6e@linaro.org>
-Date: Mon, 10 Feb 2025 14:29:07 +0100
+ (Exim 4.90_1) (envelope-from <schnelle@linux.ibm.com>)
+ id 1thTqs-00068A-UT; Mon, 10 Feb 2025 08:29:31 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <schnelle@linux.ibm.com>)
+ id 1thTqq-0005QE-LK; Mon, 10 Feb 2025 08:29:30 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ABlIBH023336;
+ Mon, 10 Feb 2025 13:29:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=W265XT
+ 1wU42xkUoy/Vcci64tSyJc1XJncV8zbDvQaaI=; b=O1GZybzO1IzULnsciiZ6LM
+ 0nQZgOHQnxwz8d+6jbXVN99b03vdI+nwS1Qnx/m9pWKXJGmiswvyj9NRFRgrBviD
+ C5FcidZld99RfFddiB/owFgzyOR8fAQOvFSAD8guIkSDl1PAckQ2cQ6UWP9nyNqg
+ 3h3aOMEB+mJyHA32BJ0WEAjtW6mVf0hv/AmUK7BFzZP/SCMhGr4CV3erOAfDxvw/
+ LsLd6V4deocXOJ122gl7zoH6RV6DGUv8XyuYwhuajNWBnhwxXgTNM84D2Ue5rXQI
+ Xw3eWI2PGoA4MImuaH1bloA/QGyON9fn45EQZHIdfKU5OKgm3Zi2mqHkZUQRi5Ag
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44q7h9b01w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Feb 2025 13:29:25 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51AC15Hg000978;
+ Mon, 10 Feb 2025 13:29:24 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44pjkmxfe3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Feb 2025 13:29:24 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51ADTN6w20316702
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Feb 2025 13:29:23 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B9A95804E;
+ Mon, 10 Feb 2025 13:29:23 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 044585803F;
+ Mon, 10 Feb 2025 13:29:21 +0000 (GMT)
+Received: from [9.171.88.1] (unknown [9.171.88.1])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 10 Feb 2025 13:29:20 +0000 (GMT)
+Message-ID: <00b2948203d2e5586543d58153ef5bc07ef4dd67.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 2/2] s390x/pci: indicate QEMU supports relaxed
+ translation for passthrough
+From: Niklas Schnelle <schnelle@linux.ibm.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, thuth@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org,
+ david@redhat.com, iii@linux.ibm.com, clegoate@redhat.com,
+ qemu-devel@nongnu.org
+Date: Mon, 10 Feb 2025 14:29:20 +0100
+In-Reply-To: <20250207205613.474092-3-mjrosato@linux.ibm.com>
+References: <20250207205613.474092-1-mjrosato@linux.ibm.com>
+ <20250207205613.474092-3-mjrosato@linux.ibm.com>
+Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] qom: Constify class_data
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250210102604.34284-1-philmd@linaro.org>
- <ef7d98d4-c0e7-4bb3-bf8c-e36c5cfe2e05@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ef7d98d4-c0e7-4bb3-bf8c-e36c5cfe2e05@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: wuOhVS1s1PmmOqTMSw-qqePWlS0qKn9C
+X-Proofpoint-ORIG-GUID: wuOhVS1s1PmmOqTMSw-qqePWlS0qKn9C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-10_07,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 phishscore=0 mlxscore=0
+ mlxlogscore=999 clxscore=1015 malwarescore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502100113
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=schnelle@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,53 +167,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/25 13:30, Paolo Bonzini wrote:
-> On 2/10/25 11:25, Philippe Mathieu-Daudé wrote:
->> Following Richard's suggestion [*], make QOM class data *const*.
->>
->> Note, rust code not modified...
-> 
-> Untested but it should be something like
-> 
-> diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-> index f36be2831eb..8603f7cc657 100644
-> --- a/rust/qemu-api/src/qom.rs
-> +++ b/rust/qemu-api/src/qom.rs
-> @@ -180,7 +180,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> 
-> Result<(), fmt::Error> {
-> 
->   unsafe extern "C" fn rust_class_init<T: ObjectType + 
-> ClassInitImpl<T::Class>>(
->       klass: *mut ObjectClass,
-> -    _data: *mut c_void,
-> +    _data: *const c_void,
->   ) {
->       let mut klass = NonNull::new(klass)
->           .unwrap()
-> @@ -523,7 +523,7 @@ pub trait ObjectImpl: ObjectType + 
-> ClassInitImpl<Self::Class> {
->       /// the effects of copying the contents of the parent's class struct
->       /// to the descendants.
->       const CLASS_BASE_INIT: Option<
-> -        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
-> +        unsafe extern "C" fn(klass: *mut ObjectClass, data: *const 
-> c_void),
->       > = None;
-> 
->       const TYPE_INFO: TypeInfo = TypeInfo {
-> @@ -544,7 +544,7 @@ pub trait ObjectImpl: ObjectType + 
-> ClassInitImpl<Self::Class> {
->           class_size: core::mem::size_of::<Self::Class>(),
->           class_init: Some(rust_class_init::<Self>),
->           class_base_init: Self::CLASS_BASE_INIT,
-> -        class_data: core::ptr::null_mut(),
-> +        class_data: core::ptr::null(),
->           interfaces: core::ptr::null_mut(),
->       };
-> 
-> 
-> to be split across patches 8-10.
+On Fri, 2025-02-07 at 15:56 -0500, Matthew Rosato wrote:
+> Specifying this bit in the guest CLP response indicates that the guest
+> can optionally choose to skip translation and instead use
+> identity-mapped operations.
+>=20
+> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> ---
+>  hw/s390x/s390-pci-vfio.c        | 5 ++++-
+>  include/hw/s390x/s390-pci-clp.h | 1 +
+>  2 files changed, 5 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+> index 443e222912..6236ac7f1e 100644
+> --- a/hw/s390x/s390-pci-vfio.c
+> +++ b/hw/s390x/s390-pci-vfio.c
+> @@ -238,8 +238,11 @@ static void s390_pci_read_group(S390PCIBusDevice *pb=
+dev,
+>          pbdev->pci_group =3D s390_group_create(pbdev->zpci_fn.pfgid, sta=
+rt_gid);
+> =20
+>          resgrp =3D &pbdev->pci_group->zpci_group;
+> +        if (pbdev->rtr_avail) {
+> +            resgrp->fr |=3D CLP_RSP_QPCIG_MASK_RTR;
+> +        }
+>          if (cap->flags & VFIO_DEVICE_INFO_ZPCI_FLAG_REFRESH) {
+> -            resgrp->fr =3D 1;
+> +            resgrp->fr |=3D CLP_RSP_QPCIG_MASK_REFRESH;
+>          }
+>          resgrp->dasm =3D cap->dasm;
+>          resgrp->msia =3D cap->msi_addr;
+> diff --git a/include/hw/s390x/s390-pci-clp.h b/include/hw/s390x/s390-pci-=
+clp.h
+> index 03b7f9ba5f..6a635d693b 100644
+> --- a/include/hw/s390x/s390-pci-clp.h
+> +++ b/include/hw/s390x/s390-pci-clp.h
+> @@ -158,6 +158,7 @@ typedef struct ClpRspQueryPciGrp {
+>  #define CLP_RSP_QPCIG_MASK_NOI 0xfff
+>      uint16_t i;
+>      uint8_t version;
+> +#define CLP_RSP_QPCIG_MASK_RTR     0x20
+>  #define CLP_RSP_QPCIG_MASK_FRAME   0x2
+>  #define CLP_RSP_QPCIG_MASK_REFRESH 0x1
+>      uint8_t fr;
 
-Thanks!
+Looks good to me!
 
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 
