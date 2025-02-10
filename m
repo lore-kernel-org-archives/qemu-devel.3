@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04475C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 21:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE29C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 21:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thbkx-0003Cp-S1; Mon, 10 Feb 2025 16:55:55 -0500
+	id 1thblu-00041p-7B; Mon, 10 Feb 2025 16:56:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thbkq-0003BP-SY
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 16:55:49 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thblr-00041H-Mw
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 16:56:51 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thbkl-0006ZP-S7
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 16:55:47 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21f7f1e1194so51031995ad.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 13:55:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thblq-0006j7-8u
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 16:56:51 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38de17a5fc9so718546f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 13:56:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739224542; x=1739829342; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739224607; x=1739829407; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EB8wNvdrHW8cKwkJWprogzd09c1jUUh+Kcirc2bmyrI=;
- b=Vsw5Zq+2hpeLaWpq3zeXr68RFV1bbiwfzNkfLKYJQaiSKHFYLMhJ2wFalnOICRcJ8V
- NUT8TJ97ud7mYRFXNBXig+eP8PlFfCl7h99clJY2o2uHt9Rs9IyEplIVWpOJSprDUUHX
- rbptASNTDT1xJoB1j3QFyIwy5Wp73tybcyaXQgRr/s3kf6gqnV+8TOn9eXo24Yirb4Q8
- 8D+uRwhUlQRa/r2ns+YC/mkV9wwkkGyg+BDvsd6kJRzl19Cu6aIsWtEUEnD5fPO4JzSf
- XTLyx3cpctE0MVX9Mx2FTxuBz8XXYdnTz5j9yJEFrcaIxAwNAti1p2Nbw3niEk5iGTOn
- aa0Q==
+ bh=EJQjl73eRofuwRcg21XrKJ694zjYy+X/+JQ/eJoLN+w=;
+ b=qkdZHBIFlERa8Rqxze2EjPpz3+HTNHKmmuARWwd0D+k9ZM/hv4wsnSFmjk3B5IBw0f
+ q5K/gbClvAQFwRvis4iy4V3BXsPIIU3kvkkQ5CMVRZktwqHGJ5v5oScBiPDBKXbAlOlO
+ wuWgqpvVgcrW9n7gbiTHYmilfrrJxfZpqek2gTGVEOhTwPL3yOy/mQYzGzRe6ozHCzeq
+ jC8+k7tJ0GV9PjsLElLpa+WWEszfrPcbE8WnCnfvLMcv0SxBWhG3hz+dQWVZ2yxQ4Yvd
+ ilRkliR6tlCcZ+jfnB8gkFotvgJMOaYUdjGyYTpQ/QGrQMIMk/1isUNC/2rDg3QuoOjm
+ aYNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739224542; x=1739829342;
+ d=1e100.net; s=20230601; t=1739224607; x=1739829407;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EB8wNvdrHW8cKwkJWprogzd09c1jUUh+Kcirc2bmyrI=;
- b=if7OdiLVcqbM452zdUHDcZSXKmSIaueWJFpetbaA5V6QWKqeePUgLMz/s4cWedNjM2
- senW5aSpskzLLwwJxNvqAZ7DxQAPls0XAWWOakpOs8e5DV1xs5U++b5KGlbfkwBo/axp
- KZzKaEFZWrSw+oawHfqwx28fuKK8gae8bp7ElhixsY5Q2DpAYUu3hCXg6cPAr+DKjK8n
- mTOqfOyzR3w36fr1V/EwidpO2cUPhAqR1Tc2YpzONCCYiuHCUFugVbEuj6l5du7NxAGW
- kEP89pZYk0YQ7R5cZ3jTNsJoh133/q9niAcFmYDZulF3iAPLAtpt2EgLBKOMhTMyKyQK
- Xy3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVX0j8dprgychyJU04Hjl5MaRB6LiAKBk/q8/eDY8R0HVGbrnpH1yf5QWNW5dG2lyrQFui/o4zM+XLq@nongnu.org
-X-Gm-Message-State: AOJu0YwU8lWjsmigQXonidLzpUgJuiv8WdHyBb4JtBs4TP6Dg4htGtID
- yyRs6IQ8u1ygOr0TtX8Zal6UtlNZT9BQlwHxizMXuRYLS84yqt77BhAWTCH++XE=
-X-Gm-Gg: ASbGncuDNTvWuRCxCulo1zsvPUYBxImOGSsJV4dZoNUfEZrHNxGjvez+O3m6rz0mof9
- /IMAEvcsVuX1DZdsvSOD8+C7GjOv61NAX6Wr8OezO/VQeAdiOuIDIDJ30IpXsElxVqHD1/YZAA3
- EENJBM52Mt7rScPI5bpysbBgtDtkZ61qCexn2M7y3QO5x34SltYWguxbbFNPwlBEhI0l2cnbkDv
- LG+yp8hJpGhjQbYhvZQp12dY33bnELmUOklFcq7/tRejf5VvoXPOQ/wgbNe/5C+4qDTScMXlOYu
- XR8981pt+xm6gYhiNCTpt0BJ0+AuDv8vLnMR2cgOxXrdvOeCMwVxsM0=
-X-Google-Smtp-Source: AGHT+IECMRarfMDCqkErNLnAUNgtkgI0F66aVyKROltcd3fRaEfiTY+Q8pzv4D9kaPpn3XQfcfPimQ==
-X-Received: by 2002:a17:902:e945:b0:21f:b483:2ad5 with SMTP id
- d9443c01a7336-21fb4832b7dmr24393175ad.20.1739224542418; 
- Mon, 10 Feb 2025 13:55:42 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f36561397sm83910685ad.89.2025.02.10.13.55.41
+ bh=EJQjl73eRofuwRcg21XrKJ694zjYy+X/+JQ/eJoLN+w=;
+ b=JVtYEkvX/+r8lk+PLFsE5GA4nNqA+mpU5C6kNJoGFQAGGhyYPn9p4n0fYXG4UnLQe+
+ cSeBZ9lELpOlUt6GHoHfJGhwI7+xLOKq3AjyP4GUqerxAz5xMylHLQa5y56ZLPPr8WvF
+ dCh3JIizA3S4Qi5HcBaSj6k/QFUb+ZFghs/M2gzpLnuzRabztrXG9LF0arXC4qREQ5WN
+ 5kA83z4BzYxX8izt3vJyrmcP63izMcAcxsb8ATpMFpg30uk0bPeLcj7XFYlaTTz8JLNd
+ +DIKygIhWrkUwa91jden9++Lk7k2F2PLkqxMcNMCkufUJ+KptLZ5Nf/JYjzkck0MqDsb
+ 5dKg==
+X-Gm-Message-State: AOJu0YwGfRvfo/LHCnwCHw4F3hZnoz33o8Ps0q2tXbnqpuiX5ZFpjRoa
+ 0iq6NXwnq/HUUV3zo6uaRdxIgNUsHUSp+D6UyEFqLApuZESJwZd69bzZigxyIjUn/U7L7wkRomR
+ 4Cuc=
+X-Gm-Gg: ASbGnctoBufg6w+aMHG8noOz/8julN50QLNz6GFr7LmDbsEAoKp7t/2ci8F5XEROESw
+ YB2EpzBoZ2Timk7bzGxk7HmDGFdJ/hmz3Vl7++9KRIj38k10BNCuPXBoGnHEim190saBgVZnfoU
+ odVExyIT2feMMN4v8UTVH8LjScRHIohvtiemh+9jdVxDq2m7Zt4po5X2ZYh/NRLnAa99WGLeiik
+ AGxwJqYZVoY7EdwbiOKm225K29BBI+W29qmycgmyMm9Ax6qiO2e8V21vzGFuyCvUy30lj+fNhIC
+ uwqvEU/OnndPQRRhqUruNr8l+LpYvfbq+SYs4kU8tmye6njD4leS9Evc5JQkuEtC
+X-Google-Smtp-Source: AGHT+IHbpn1JM7uo1XeA+cEtDXCF3d3VewlIQDG/09fUcPiIIt3lxdXjTZYr6kAI4bi1mx6MS6urZQ==
+X-Received: by 2002:a05:6000:1fa2:b0:38d:d43c:31b5 with SMTP id
+ ffacd0b85a97d-38dd43c356amr8162049f8f.38.1739224607172; 
+ Mon, 10 Feb 2025 13:56:47 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4394679a3a1sm34143905e9.5.2025.02.10.13.56.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 13:55:42 -0800 (PST)
-Message-ID: <51fc4c66-43b4-4b19-8241-ec0af2d78355@linaro.org>
-Date: Mon, 10 Feb 2025 13:55:40 -0800
+ Mon, 10 Feb 2025 13:56:46 -0800 (PST)
+Message-ID: <7c71885f-6e55-4d36-98ef-8b226c238662@linaro.org>
+Date: Mon, 10 Feb 2025 22:56:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/10] target: Set disassemble_info::endian value for
- big-endian targets
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Thomas Huth
- <thuth@redhat.com>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org
-References: <20250210212931.62401-1-philmd@linaro.org>
- <20250210212931.62401-3-philmd@linaro.org>
+Subject: Re: [PATCH v2 00/10] cpus: Prefer cached CpuClass over
+ CPU_GET_CLASS() macro
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250122093028.52416-1-philmd@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250210212931.62401-3-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250122093028.52416-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,21 +101,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/25 13:29, Philippe Mathieu-Daudé wrote:
-> Have theCPUClass::disas_set_info() callback set the
-> disassemble_info::endian field for big-endian targets.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Thomas Huth<thuth@redhat.com>
-> ---
->   target/hppa/cpu.c     | 1 +
->   target/m68k/cpu.c     | 1 +
->   target/openrisc/cpu.c | 1 +
->   target/s390x/cpu.c    | 1 +
->   target/sparc/cpu.c    | 1 +
->   5 files changed, 5 insertions(+)
+On 22/1/25 10:30, Philippe Mathieu-Daudé wrote:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Philippe Mathieu-Daudé (10):
+>    hw/core/generic-loader: Do not open-code cpu_set_pc()
+>    gdbstub: Clarify no more than @gdb_num_core_regs can be accessed
+>    cpus: Cache CPUClass early in instance_init() handler
+>    cpus: Prefer cached CpuClass over CPU_GET_CLASS() macro
+>    accel: Prefer cached CpuClass over CPU_GET_CLASS() macro
+>    user: Prefer cached CpuClass over CPU_GET_CLASS() macro
+>    disas: Prefer cached CpuClass over CPU_GET_CLASS() macro
+>    gdbstub: Prefer cached CpuClass over CPU_GET_CLASS() macro
+>    hw/acpi: Prefer cached CpuClass over CPU_GET_CLASS() macro
+>    target/arm: Prefer cached CpuClass over CPU_GET_CLASS() macro
 
-r~
+Series queued, thanks.
 
