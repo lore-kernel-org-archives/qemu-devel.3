@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292EDC0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8E8C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWRs-0005Py-4N; Mon, 10 Feb 2025 11:15:52 -0500
+	id 1thWRh-0004tF-W5; Mon, 10 Feb 2025 11:15:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1thWR2-000487-6P
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:01 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1thWR1-00047F-3K
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:15:00 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1thWQy-0001UL-TR
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:14:59 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-ab795ebaa02so518914866b.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:14:54 -0800 (PST)
+ id 1thWQy-0001Ud-Tn
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:14:58 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ab78e6edb48so454676666b.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 08:14:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739204093; x=1739808893; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739204095; x=1739808895; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s+bgwk18lKdsHzokGpBgI91DaZBecMvO8llhyl5xsWo=;
- b=YDRaIuP6/zYmQI7dc+3k6pGxtQ+RjHPS81cJoG/oqi2KgPlOMoRHmccsv6PzZeauzK
- 42QgrBLVoa0Xo+IPfhcXltX3qBU+uij1S3I/H/WsUYWInT2jOE8MoJBne4kQ3tv6y9ql
- NI4xUukilOCzIQ7dMjcwIiBGYMbtPsfP1C3G3kRw43lg6uL4O5Ka50/YohL1GUBRByU+
- dD6h6eJrGT3NeOZOYnjgyUpAJq4lY+4RbvlctLXZnqIYVCjf5zGa4Gmz/wI7dFGZ0DmO
- y/N7QwezSlULO/g6mxr109X6H696Reb9lYf5nnymOxPHtaPOw/GPBO9etG50u1CDa+XQ
- JamQ==
+ bh=cgHEs4UjXEPONNRSfBLs6a+I9ub5T+ewhfrcjtrhUWQ=;
+ b=La1vGC0ddQglcVkkun47313KFV30aByQDJ2Hr612sSdPJuci/wQ0RM4PcLq9NfeNCp
+ MnPT039Ms87IO5lzrLEwyaOu38uGeEYm8qTE3eCo5mmIMikMXqbb0AW+47mzmxqPdI8v
+ TD94y3fKke0/2WNmRdDjtUsVmBFtYMvLNcvX/Llwc1v4+3i5B7a8BAXvTVieRulbAcST
+ TIzasjJej3yGisdtTMNcKHprLPl2cn470NmgCRfpOH1nH894JUJg9s//aT9AXRvfkpV6
+ XlP58lsuoy9HESUY2xMN06dJn8EJoCzyLHauC0+bZ3XdR0BEUIJXs/Rkx/Of7TxCE1+3
+ +1MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739204093; x=1739808893;
+ d=1e100.net; s=20230601; t=1739204095; x=1739808895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s+bgwk18lKdsHzokGpBgI91DaZBecMvO8llhyl5xsWo=;
- b=gx0+tk7iADvzlIFssrsWLG13DnWZvyPpY++XdFlD12g0DDVKyeTa2w9cwC0FvnjaEx
- 1NdM/bP8NDyVYLMGpQ9PREUTh/xmS0Xg2dkavGI5l+zPY+FNaOqb4c0Z6RyouWKsvT3U
- p5E3RBwSUjn+o8xIVP17IdTZUpITXNUh3w6AfbQDIm3WGRvJavrBvgk7qi6zkotOgv41
- fjeZkERw336WFYXzLuTMec/4TGATt/tvwVRXAPAIySYCCsdypO7W+oOVrTAI4sFnSXui
- 5qoEBagdEFN8eTuAGppCRqMw1unx26HrkDp5GqY/SoVbcUb1Qqw7h9qxUMPZASOvNCcV
- xA6A==
-X-Gm-Message-State: AOJu0Ywhne6JuKs8TCHnu4YTUuMFgMdS9rGVafkFWU/Vt6JVOY5B+pfZ
- Fvd+qc4Tp6McIoV8lglcvdkPwF1ZSDMhljpKr8YNdANm44gzLnxlUVeeUFsQiS4=
-X-Gm-Gg: ASbGncuI6EaJaEtC0IS0QaRtpDmLIRQV3fG7fLrMEODUJ+Pjxqzn1VpyJdh53a6zpRz
- Qy/n8a1JVLJGZAAY+zr470wFEQZlpiEjcXMriRekrBcZ9UPLjhRpXByC60xdn4iAIxES+7H1CvI
- 1PsdZvqqu5owXdUfADlCcu2mPQUU3nmp4U0z1I3fl6EC4WuLWl3effcQ04b9qckla+7nkXx58av
- oevnZ5N4F3zB7rI4XWy9GhwpkTYKPu6fBboVIqEDFqEMmkhDkFqm+/dpaKWz4JK6zSqf5HRJ4cX
- 4AiYmikSE3H1EqALeA==
-X-Google-Smtp-Source: AGHT+IFr2A58jx4kKR8nVUg6w6bivqW1VmnAzxHJV+dJtiq1/zgsS0YfJ7zBCGfSA/4mUNBRtLrTew==
-X-Received: by 2002:a17:906:f59e:b0:ab7:1816:e8a with SMTP id
- a640c23a62f3a-ab789c47d9fmr1843499666b.36.1739204093555; 
- Mon, 10 Feb 2025 08:14:53 -0800 (PST)
+ bh=cgHEs4UjXEPONNRSfBLs6a+I9ub5T+ewhfrcjtrhUWQ=;
+ b=vOPi2FI9VjY7y9wAHJW6ugIkXT+qe+qDTyiiLgKzuXesBwrQHLUwzAfPctL/6oeUqi
+ Tfq23hNqExEDYIID5mO0CdBKNj65hEfNf1WqFWgFaH1G4c1lNxrSMCviIvE+eG00rahl
+ q3WsTRIlrEWZIDc/aBk5nyBYFfx/vo18U0QqrWaqLo4Z9qSbVSnFwHGIqqvOA5yRL91O
+ 2Cvd7mveBroVTudIvy+9cKcjYwd5MiODGbCJuzSaV0zRAD+9brGPauuQvVRtsuqSLGR/
+ AfT8+xwZ29T7U8ICh7WuU5jr8HxBrTXMhXHQ855l+N6FThkTJz/1rjZoePRd3XJgCqJQ
+ m4DA==
+X-Gm-Message-State: AOJu0YyizRxB95pjchQYoCjm6LwvY94FydqnlU2TY7TV9KAljNuyQrWi
+ h8YmY8Z5hNNLquW6jqSSkLY/N6sslDxGxSMKhEDJ+8UGV4YHJWK//ndqAIfE/s8=
+X-Gm-Gg: ASbGnctYxp96A/CldaSAiSjTKuQKja5v4T5NlHiBJUty8cA4TxVnWVas/mcSlkvccRJ
+ OkzC9sDofQ4MFeRZgZ70xqn8onFXaW670Wvln13sV96YaO9TMlQChDSxT4OVAC8l7hmKVmGtol0
+ a8nWdJyS8tVM9D6bbbg39ssERh+kNxqHgNG/wCVZ5T53liA+JThTRI84W2Ic6CL3vozz194oluf
+ EPx0LHe1g1xbrSQftU5hYeM0ui2AZjpC8ujGH5FnzkCkiMLMEbPBSysUNDqmx4fTy8AOK4AajWK
+ H8G78viFF/tHtahzAQ==
+X-Google-Smtp-Source: AGHT+IE+1nSSACPNzPBxGI3gEjERuVGGbI12sXgyLDT9D246YqT3THYbiTqgghfFY1LgnZJ/r/ZEAQ==
+X-Received: by 2002:a05:6402:194b:b0:5dc:a44e:7644 with SMTP id
+ 4fb4d7f45d1cf-5de44fe95c1mr38189449a12.2.1739204094616; 
+ Mon, 10 Feb 2025 08:14:54 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab78ec15421sm715275266b.157.2025.02.10.08.14.52
+ 4fb4d7f45d1cf-5de4e6d60bbsm6224628a12.15.2025.02.10.08.14.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 10 Feb 2025 08:14:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E05065F91D;
- Mon, 10 Feb 2025 16:14:51 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 11D805FA16;
+ Mon, 10 Feb 2025 16:14:52 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- qemu-rust@nongnu.org (open list:Rust-related patc...)
-Subject: [PULL 01/17] tests/docker: replicate the check-rust-tools-nightly CI
- job
-Date: Mon, 10 Feb 2025 16:14:35 +0000
-Message-Id: <20250210161451.3273284-2-alex.bennee@linaro.org>
+ Hao Wu <wuhaotsh@google.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org (open list:Nuvoton NPCM7xx)
+Subject: [PULL 03/17] tests/qtest: don't step clock at start of npcm7xx
+ periodic IRQ test
+Date: Mon, 10 Feb 2025 16:14:37 +0000
+Message-Id: <20250210161451.3273284-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250210161451.3273284-1-alex.bennee@linaro.org>
 References: <20250210161451.3273284-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -106,64 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows people to run the test locally:
+Until there are timers enabled the semantics of clock_step_next() will
+fail. Since d524441a36 (system/qtest: properly feedback results of
+clock_[step|set]) we will signal a FAIL if time doesn't advance.
 
-  make docker-test-rust@fedora-rust-nightly
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250207153112.3939799-2-alex.bennee@linaro.org>
+Message-Id: <20250207153112.3939799-4-alex.bennee@linaro.org>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0091bd1a90..aac7404473 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3386,6 +3386,7 @@ F: rust/rustfmt.toml
+diff --git a/tests/qtest/npcm7xx_timer-test.c b/tests/qtest/npcm7xx_timer-test.c
+index 58f58c2f71..43711049ca 100644
+--- a/tests/qtest/npcm7xx_timer-test.c
++++ b/tests/qtest/npcm7xx_timer-test.c
+@@ -465,7 +465,6 @@ static void test_periodic_interrupt(gconstpointer test_data)
+     int i;
  
- Rust-related patches CC here
- L: qemu-rust@nongnu.org
-+F: tests/docker/test-rust
- F: rust/
+     tim_reset(td);
+-    clock_step_next();
  
- SLIRP
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index fead7d3abe..fa1cbb6726 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -236,3 +236,6 @@ docker-image: ${DOCKER_IMAGES:%=docker-image-%}
- 
- docker-clean:
- 	$(call quiet-command, $(DOCKER_SCRIPT) clean)
-+
-+# Overrides
-+docker-test-rust%: NETWORK=1
-diff --git a/tests/docker/test-rust b/tests/docker/test-rust
-new file mode 100755
-index 0000000000..e7e3e94a55
---- /dev/null
-+++ b/tests/docker/test-rust
-@@ -0,0 +1,21 @@
-+#!/bin/bash -e
-+#
-+# Run the rust code checks (a.k.a. check-rust-tools-nightly)
-+#
-+# Copyright (c) 2025 Linaro Ltd
-+#
-+# Authors:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2
-+# or (at your option) any later version. See the COPYING file in
-+# the top-level directory.
-+
-+. common.rc
-+
-+cd "$BUILD_DIR"
-+
-+configure_qemu --disable-user --disable-docs --enable-rust
-+pyvenv/bin/meson devenv -w $QEMU_SRC/rust ${CARGO-cargo} fmt --check
-+make clippy
-+make rustdoc
+     tim_write_ticr(td, count);
+     tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(ps));
 -- 
 2.39.5
 
