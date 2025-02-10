@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1437CC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76103C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 20:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tha5s-0003RG-BS; Mon, 10 Feb 2025 15:09:25 -0500
+	id 1thaSk-0000Ps-IF; Mon, 10 Feb 2025 15:33:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tha5g-0003QV-WC
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:09:13 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thaSh-0000PF-QQ
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:32:59 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tha5d-0005cq-5x
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:09:11 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21f48ebaadfso78795065ad.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:09:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thaSe-0001x4-9h
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 15:32:59 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43944181e68so15631205e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 12:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739218147; x=1739822947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739219574; x=1739824374; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RvtE9e4pTriWj/Hzw4UsY9LISHfN6byGEISwxPa5dww=;
- b=A/Urnrh/xamKLAPyapgnCAi4Y5J+UuI1coPxwCSvjonjmndIQTMrn5jftRzJM4w5HY
- Dsdr+EI2zNHAkxOBnk1YntApToJlnSAGNYWbi2YVz5badDeNCgBLHM4pub8hnUFzOIJ1
- Y0GXmgaTxb/gCSpo0MLEQHjtGnJOTclG7EAd2I0cb0NhsXS+mtsUasfZLA5HeQB7/oNq
- 3KLdsj5M+o5DG4u9JmHKUT8BrtwAwyQstTo4Gy8i3EZBOf/1WJK2q0NuiynaKQ6IpHwc
- Qu0sG8Zjq/SpLzA2vbKuJZBHmsk+R2U283mkNxCu+vMfcq7ANPVqzlAHsH4fmH3ez3fP
- i8cA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JO28UvwJr0bHz8S59EzQAGb7sFlG/PKWfO3E9TxYgy0=;
+ b=QFuOvVEUILUvSeI01nk14rX2vPtFFe3geDTJjwzpLxWEhQ92IT12IFhbfUGGvg0pCB
+ EOwdvNgnz7VGqoeZJrnytM/Uv1AUd8DrfnDDc1q5oBz/j8WvZemxq/qO7UAQAnAt1aJf
+ KBSEKTRntwBQYazX9D/1EVp3j6D966gSjQEXIZxHQCmZcb/W7cK4iuwOdQkbL523cxi3
+ vmiPD/qPCPBfzJ+aKzXwWXV+lds7D/eDMNrO29jaQXIbpiWuiWNe3E1cHs6ZyjCMF6mb
+ PFttL/K7JvMcyiKtAKcLYFu6Uvnne3S0vc8tAmsjCLcUVoNDH/PVYQOb86PK45jfa7D2
+ 7REQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739218147; x=1739822947;
+ d=1e100.net; s=20230601; t=1739219574; x=1739824374;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RvtE9e4pTriWj/Hzw4UsY9LISHfN6byGEISwxPa5dww=;
- b=XG7FbEMZNbOdBHt/LGuiXkphSgiGaJXyFDrNRcUCm9YcvfytlAMZmgLTLpeZizyeqE
- tIU4zslTw/ULVG7phsaY3oRCT/BJwUAbaB5F0paYyh/ILop4wAqgIQPyv/GUjzj5ppCP
- sMXF/wovXabAyn0hi2m6tlCIe8ftFddi/nu/v5qrITp4R+muGLB7oTEQ/p1uDOqlEBo6
- SddVVVuQWkYFt7deWcYFHoLOjHxJQm3g09XO51boP6tDvpsiqCWlyKt4wrBS4Yzv6wRy
- wcQS4NrobJb7ulh8NfvsUTi6dS8JjrzzgHv9wYmCtI+jti/1kcTIBN3SzRSZE3E1vTwt
- ozbg==
-X-Gm-Message-State: AOJu0Yzs3sGbdJ8iWM1pJEBsjMNXbyHhIMvxRo3jwoU7mGCMlsRGxGif
- 5+BvUHSKLj7ghZLxFnfdm4T1C6FsZ+a51cOdWObaIEH820rgUiBMBLN6TXT5kYOV8cUBsfWo9gj
- Q
-X-Gm-Gg: ASbGncukQlffjLxnDbNq8gtBo0WulmcscjDP9vfzxJ1srWBdbwet/HEIfyYN7W1Bwgq
- V7wUoalQRHF4rqu44QkbLqRXwbtyAJrJcW8/OUGEKVUCXhnVbvsWFWR6rOC6fXp1GMM/57i+2W7
- Viv9TE61DOT5fOfs/VEeYVJIfMozRYtN8EnLhTJWw3X5rlHmh69gjHhJ8N+zesLF3IOw9X5hSGq
- cs8ivk70Ctn3owkDeXq2DEsVy798yDyZBZbh0g1nW6Nzzvoa9rnTfpm6FwWprGKCc44Fz7u5Ynh
- NUc0vE1hHD/ncQsM5HYS+9rVrfWqp1Z0Nh6T7HN+cF+xbeyT5kSocCM=
-X-Google-Smtp-Source: AGHT+IHZ6ZzHXW1o4eYWnI9orF0j9d/5oCBIeIU9WnelHohz5ZF3w9dvpejrrCF4mfj+mSyl62YliQ==
-X-Received: by 2002:a05:6a00:6ca3:b0:730:9801:d3e2 with SMTP id
- d2e1a72fcca58-7309801e1c2mr5484935b3a.8.1739218147262; 
- Mon, 10 Feb 2025 12:09:07 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-730796baa42sm4491152b3a.107.2025.02.10.12.09.06
- for <qemu-devel@nongnu.org>
+ bh=JO28UvwJr0bHz8S59EzQAGb7sFlG/PKWfO3E9TxYgy0=;
+ b=b6j/IvwFqWCovra9Bev3xa5rWu7Ha7eqST9Q/LU52Hh5z8k2BPnXtm1V/cOJaCZsp5
+ XNctIJftJnReEvA1xpaNwSjQtoEDULnERqjiOJlIC8wrGA6j01g6yN3AU6Vq8dUXa1jb
+ qZaxEnQ39DuR3210zAyLH5TLyKaD734Sxs+46zxAsSnx1w/PFni6X/xlo5r1ktzpqizV
+ V4/uUF2GJcvNFPPnZyNNOQdESugi6vBFpFEeJAzLpekbPwb2xtbJUu63gVaQuPpzOguu
+ oaD1Me6OgEeKTgZ/Bsci/6aI23mwUo/Q/jjoDH7pA4pD7Vh8jofJHqaBC5rvFcaIc7lB
+ k75A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAMGgDrRrnzPDW+ax54Ygvp8Sw+GE/5G/AlN4BwuGDO8tjaRO/V+8JuaYQB/DHVuDo+NrvVQh8P/E1@nongnu.org
+X-Gm-Message-State: AOJu0YxN95xdWWgl5y8P6mChfnJoz8rGP3+MU0H8d3PFGjTlZX9uC9GY
+ 1G1i+gWGSaZwSDDNdcn/QL/2+CgY1QDLNNtImsT4k4Fjo2KlRjhSJpwUleMGx4c=
+X-Gm-Gg: ASbGncvBUzvHCEGDZW49JjRksq7vhv8tsEPFUltDdusPb2k2VsDofuYnOXDa2MrPlcK
+ AfjkujJ+KZp354wu4Yg9f7jrRPXKokGON4vslPFnn2+Y6qxJJxiICp6b2+YH6HBWyuQ52MMTNkA
+ Va8JjxitagI+MYHys0a8ECYnGHWABSdWol32KKbusmlXsU75bHnEQZUPt0tUicnMD3uq9wrbkFe
+ ndcNQdgppqvXS7SVW8avBWwMLNK8PY/IJRlYOHfk5dUyMe75fHObLWMWus6Myo7LwG13DZySbtS
+ XO9mjXECSLSbcFTTgYcgFxkUbZ0lxtTbAFo7OZVYToAKvM6hNWKA7qrIE3E=
+X-Google-Smtp-Source: AGHT+IExS3NV9qQORHi+Vx0CKc7kfrgKd7b5yUx3AfwLFU1DJb4NlN+QGXnoJ3sbrJ0Npvwg3FUGaA==
+X-Received: by 2002:a05:600c:384c:b0:434:fddf:5c0c with SMTP id
+ 5b1f17b1804b1-4392497d1d9mr138833155e9.4.1739219574105; 
+ Mon, 10 Feb 2025 12:32:54 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4391dca004esm153571025e9.13.2025.02.10.12.32.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 12:09:06 -0800 (PST)
-Message-ID: <3549328f-6363-44d4-8361-f89b68a59a44@linaro.org>
-Date: Mon, 10 Feb 2025 12:09:05 -0800
+ Mon, 10 Feb 2025 12:32:53 -0800 (PST)
+Message-ID: <ad2548d0-962e-4a32-8ea2-0af4be45f008@linaro.org>
+Date: Mon, 10 Feb 2025 21:32:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Move TARGET_SA_RESTORER out of
- generic/signal.h
-To: qemu-devel@nongnu.org
-References: <mvmed060xc9.fsf@suse.de>
+Subject: Re: [PATCH] hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20250207151157.3151776-1-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <mvmed060xc9.fsf@suse.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250207151157.3151776-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/25 04:59, Andreas Schwab wrote:
-> SA_RESTORER and the associated sa_restorer field of struct sigaction are
-> an obsolete feature, not expected to be used by future architectures.
-> They are also absent on RISC-V, LoongArch, Hexagon and OpenRISC, but
-> defined due to their use of generic/signal.h.  This leads to corrupted
-> data and out-of-bounds accesses.
+On 7/2/25 16:11, Peter Maydell wrote:
+> The SMC91C111 includes an MMU Command register which permits
+> the guest to remove entries from the RX FIFO. The datasheet
+> does not specify what happens if the guest tries to do this
+> when the FIFO is already empty; there are no status registers
+> containing error bits which might be applicable.
 > 
-> Move the definition of TARGET_SA_RESTORER out of generic/signal.h into the
-> target_signal.h files that need it.  Note that m68k has the sa_restorer
-> field, but does not use it and does not define SA_RESTORER.
+> Currently we don't guard at all against pop of an empty
+> RX FIFO, with the result that we allow the guest to drive
+> the rx_fifo_len index to negative values, which will cause
+> smc91c111_receive() to write to the rx_fifo[] array out of
+> bounds when we receive the next packet.
 > 
-> Reported-by: Thomas Weißschuh<thomas@t-8ch.de>
-> Signed-off-by: Andreas Schwab<schwab@suse.de>
+> Instead ignore attempts to pop an empty RX FIFO.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 80337b66a8e7 ("NIC emulation for qemu arm-softmmu")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2780
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   linux-user/aarch64/target_signal.h    | 2 ++
->   linux-user/arm/target_signal.h        | 2 ++
->   linux-user/generic/signal.h           | 1 -
->   linux-user/i386/target_signal.h       | 2 ++
->   linux-user/m68k/target_signal.h       | 1 +
->   linux-user/microblaze/target_signal.h | 2 ++
->   linux-user/ppc/target_signal.h        | 2 ++
->   linux-user/s390x/target_signal.h      | 2 ++
->   linux-user/sh4/target_signal.h        | 2 ++
->   linux-user/x86_64/target_signal.h     | 2 ++
->   linux-user/xtensa/target_signal.h     | 2 ++
->   11 files changed, 19 insertions(+), 1 deletion(-)
+>   hw/net/smc91c111.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+Patch queued, thanks.
 
