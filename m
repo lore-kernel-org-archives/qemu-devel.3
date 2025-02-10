@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2794AC0219D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 11:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D45C0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 11:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thSBy-0006PE-MA; Mon, 10 Feb 2025 06:43:10 -0500
+	id 1thSDT-0007Rc-82; Mon, 10 Feb 2025 06:44:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSBu-0006OM-3h
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:43:06 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSDL-0007PL-5o
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:44:36 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSBs-0007D8-5x
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:43:05 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4394036c0efso6198925e9.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 03:43:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thSDJ-0007JV-8f
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 06:44:34 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43946b5920cso3933455e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 03:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739187782; x=1739792582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739187871; x=1739792671; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8EfAEcBZVfgER+PyjUrcBoEN2a5jycU5m9Zrs1Vj4dU=;
- b=btU546x3o3G73Idc7HYNR0PYZDnk5C+Uuz9Y54/q4NdV/svSkITW3WuzcAziVnYw0N
- 9ov5gJ/JkUQDfa8JSLiSgToYPTTQDm3QZkJlnJ8135FEGJOPNtRVmhvhRUOWjMWsmRqD
- adqCqtgaDGCMQaciYupoyTS0HHLRw5/cQRLjTVNsmioiGbQV0Qgkb4aIw4yIJog/CSHA
- qdFw2TqZ5NmubjF+rJXiIDvier1F+/XQIebCncfWr6ZgY0XgmVM4xz4rk8rksxHgphET
- lM8qLt5OTfp+mkNzJRayMPHahLkGqgaUvcduHbLpchTkWjJ9qkAO1hL7L4EXZhjXPEXB
- 6XaA==
+ bh=Fq/MaIf7u/qe/AJ/loUwx22EaMeIBHXoGSZ8t/jl0vE=;
+ b=voBNaGoI/iQp4Z3NN01n02SGFDlWNDm5Usjfqjz6UHP4CgDIds2TQBDHANYJderM9j
+ sYA/lHtRzAqLzOajIppE00Mkx2CfCxGo+zsFiR/sDT0AO+ZkmKkxJ+P8TY+Q1pNGSMGy
+ 63dXZe0ZmFp8+vor0ulCBPlFlJ+NHqTdzDalzQ1gTl6kYzRD84sUq3zC8hZe2CflFU3e
+ 2dzqXA3vXaxc7bkEAc2Uw02jK2ooax2jnopy6iLbA11hPR6ozxMONm3m2yrGQssLH8NB
+ B7NvVN39elbsvAeUhk6aED2hf/Jc5DEqNkrZNqEMhieJ8amTdYhyphBtSqIB+pH/HPpH
+ rb9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739187782; x=1739792582;
+ d=1e100.net; s=20230601; t=1739187871; x=1739792671;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8EfAEcBZVfgER+PyjUrcBoEN2a5jycU5m9Zrs1Vj4dU=;
- b=dnVyy8BSVxnnM0WeCnxScC15/QOER4S1w9NHuzhytKAr46O6a8lwofTY7MkcdNBkLX
- Xn+sHwZE4lT5+tsdo8rumQospJ1ckmeWE8931QOo3q24WIS24iZu/Y74AHw7rC0lRcWy
- 5/qHN263/XlT/ozx8Xt98mtwZ9McTqUMbSl8zRpLaVQNujVnthMaiCj2Tvuk+oWeoty4
- 5wqkjWroKWH5/Ye6Kl8BdRtZUF5q/wzOBNr5TGwQ2FJFENtNJslT23J1Bqz8LE4Jpmam
- RWMMyvubjOG8Xmif+4uQlSsZvN6kmw3MZSRZN3xbYs8hr/+eUDhfO1TwSTlxGy62nLEh
- rzYA==
+ bh=Fq/MaIf7u/qe/AJ/loUwx22EaMeIBHXoGSZ8t/jl0vE=;
+ b=HcmzqcrG91KgnGKE5EJ0v+Is1Y/aqVtz5hRBqs7gjA0UeJTfeQicODGTUUsD2KztsO
+ 45N3+ktfpLB2wMRdjI4GqXYfeCIkOgtvosmNI624wSQVhvg4c5t4KqcsIdK014kC/Oyf
+ Xpnmej3NtRC1oF4hxuTFNY92ODLfKk/wDhp+lnwcJNDtDYC/t3fSs9YlfgafcWGC9wm7
+ VZf8ne2JKO1Mz4CpmmexDBLV0Q6mjPEdwSe1DppvX3mLBsOSFr7FY8qwOizgB6X+g4VB
+ 4tPfgILjTLH4my/0iQIu4u3QDUxGwwAgyqvwvi//r84v5pg+isjTsY2ReQkBQdAisFFM
+ SolA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVchtb+7uT2VWm7ZPfM2hA3uQrCcxlfFlXaegJHcrySmJMMK8hEo4a4U0rJnUi0vIUKascHWOcd/bAu@nongnu.org
-X-Gm-Message-State: AOJu0Yy73KdZDDTfehqQK+o4Sbisx+1PzrqQSbejeA9E79x2WqmDLU3I
- JgIIybm8z6h/qw3FE+fJh+qtK2iF1ZQlVew3GLJBqz2vSlB/Xem436Sif04ptAU=
-X-Gm-Gg: ASbGncsRoF6ZJLvgF1U4OTwwhJuIQLJG1tv7/n8ucZXEVIj1dAXSNqtAw+VgEOGbLSY
- yPDo8k9pGyUhY9mMeFZUeFuKMAaot3d/R20UC9R1EBdfCUcxClO03J8UgI/4korO9kORKOa5Id3
- SEWd/ODWDeYBKxgU7MBR2mxTzddcZRd1+BBq2ezrhczhbunaUP6Nwmckke5+ahB2+39KPG2zh9w
- OW0wDmw7wg1P9uJSYFwGFhgNcd38u++NOH9Ywvbw/GT/ZSgm7xdJcnMnOJX/78kLiyqbB6oUT6c
- Cb9plM/JVyCn9ODxa20ucY0L09RJl256HIfGj83WRRI3tUx21ssjlvu6nslgg6pu
-X-Google-Smtp-Source: AGHT+IE0ilfTc2otY9pOIaVgjNtY99ocpapQf2nyyIp5DWjOIIU/fgmGtPCGmxKW8ozZvvkwRds2Tg==
-X-Received: by 2002:a05:600c:204c:b0:439:3050:1abc with SMTP id
- 5b1f17b1804b1-43930501c28mr65743385e9.15.1739187782022; 
- Mon, 10 Feb 2025 03:43:02 -0800 (PST)
+ AJvYcCVsUTYQCS8tQVUM2j7DKgjG0HkIqAeMQgjuY6XMBPge7CAgn5RGbl2a6E5ONHckkkmlEfEf0h68pN6T@nongnu.org
+X-Gm-Message-State: AOJu0YwmnvQqhC+49KjvCFpzZtnCk1VofKCwaINdG6RtCp+8k6I4dDXl
+ 6kNTKbOvO7hJiIv9SzliR+cXJuxPUcV17PH+FKIF5N5XIk8xQf8y7118b7FDGS0=
+X-Gm-Gg: ASbGncuIZDJ/vFpnTbVHAcBoudG216IgGXE2ZqwHzAPaNPilSZNIQYim//Vj8eQtnTj
+ Q9nOaXtUElzqhnrp3tmzdt05bT1MvKfCSbrlbDfW4sf8LUeQLp4XbkvVMo9lxzJUU1kXWQk9Jho
+ UWa8Iauns6LB9AE0t0Pv4QGdc51U1xWqgxZdAb+iRrlfpUT6g6wemqnVxUtN2rRWjes9ciywMLa
+ ota16iww6KmvfLfp0fwAVVQ9nmedSOlu1ng+9Vr5Sa4h1yEmVxasFSrcmWO53lNKALsiLNDslvr
+ Sy7XvnUDnZGIvyNu0pwRtAk0oDlOwHHhi3nR20UFgvEt2/bCZ4wFAQDBo4pJ20Zs
+X-Google-Smtp-Source: AGHT+IHclkkc3V1Mg7e2WiJByU7kP3k3KyklXr7mUmYWGpg/YqefGj2aiF3N2JbFWF3KvylssktNow==
+X-Received: by 2002:a05:600c:3b20:b0:438:d9f1:f5cc with SMTP id
+ 5b1f17b1804b1-43924988c67mr103224345e9.8.1739187871478; 
+ Mon, 10 Feb 2025 03:44:31 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d94d753sm177623775e9.11.2025.02.10.03.43.01
+ 5b1f17b1804b1-4390db11750sm181978405e9.40.2025.02.10.03.44.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 03:43:01 -0800 (PST)
-Message-ID: <69457f04-47bb-4cee-9f10-64dfb1dc9447@linaro.org>
-Date: Mon, 10 Feb 2025 12:43:00 +0100
+ Mon, 10 Feb 2025 03:44:31 -0800 (PST)
+Message-ID: <f0518994-e7f2-4341-add5-5265329603ef@linaro.org>
+Date: Mon, 10 Feb 2025 12:44:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20250207151157.3151776-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] block: Remove unused blk_op_is_blocked()
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
+References: <20250206165331.379033-1-kwolf@redhat.com>
+ <b46b9348-0f28-4714-8b39-13cf2e62a649@linaro.org>
+ <Z6UfKeso5lackAKq@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250207151157.3151776-1-peter.maydell@linaro.org>
+In-Reply-To: <Z6UfKeso5lackAKq@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,28 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/25 16:11, Peter Maydell wrote:
-> The SMC91C111 includes an MMU Command register which permits
-> the guest to remove entries from the RX FIFO. The datasheet
-> does not specify what happens if the guest tries to do this
-> when the FIFO is already empty; there are no status registers
-> containing error bits which might be applicable.
+On 6/2/25 21:44, Kevin Wolf wrote:
+> Am 06.02.2025 um 18:25 hat Philippe Mathieu-Daudé geschrieben:
+>> On 6/2/25 17:53, Kevin Wolf wrote:
+>>> Commit fc4e394b28 removed the last caller of blk_op_is_blocked(). Remove
+>>> the now unused function.
+>>
+>> fatal: ambiguous argument 'fc4e394b28': unknown revision or path not in the
+>> working tree.
+>>
+>> Is there a patch on the list?
 > 
-> Currently we don't guard at all against pop of an empty
-> RX FIFO, with the result that we allow the guest to drive
-> the rx_fifo_len index to negative values, which will cause
-> smc91c111_receive() to write to the rx_fifo[] array out of
-> bounds when we receive the next packet.
+> It's in my pending pull request (which I hope to go through - otherwise
+> I'll have to update the commit ID here). This is the patch:
 > 
-> Instead ignore attempts to pop an empty RX FIFO.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 80337b66a8e7 ("NIC emulation for qemu arm-softmmu")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2780
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/net/smc91c111.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
+> https://patchew.org/QEMU/20250203182529.269066-1-stefanha@redhat.com/
+
+OK! Then:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
