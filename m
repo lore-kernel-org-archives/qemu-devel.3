@@ -4,147 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021CBC0219E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20347C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thV9b-0008VN-DD; Mon, 10 Feb 2025 09:52:55 -0500
+	id 1thV9d-00004w-EU; Mon, 10 Feb 2025 09:52:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1thV9U-0008UL-Mr
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:52:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1thV9S-0003Hs-VL
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:52:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739199165;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=evF202mqWnnMNYEWNlPDPYKUevieY3ts4NV1nPJV8HU=;
- b=L4Oo/z/IlQ5PCfbnu11bgFSPSTLfbefChml/qmf/VxxrXLJBgGbNPhCqHW2LtEykMzzeEJ
- ZX5cydTjGIGWLHgP+ZDTFiqCsAWBcIMTRFNJwfV890l0PFP6ldv35v8KgbHWtaGgiXUTDP
- lwsmVZYyrkqYfNDhSP31zwWBc+vtZTk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-w1E6Tqx7PbukRno8qioD0A-1; Mon, 10 Feb 2025 09:52:39 -0500
-X-MC-Unique: w1E6Tqx7PbukRno8qioD0A-1
-X-Mimecast-MFC-AGG-ID: w1E6Tqx7PbukRno8qioD0A
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4394b2c19ccso3291235e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 06:52:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thV9X-0008V2-Lg
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:52:52 -0500
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thV9W-0003IX-2W
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:52:51 -0500
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e5b3dbd6732so3417630276.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 06:52:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739199168; x=1739803968; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dXZenGARfw3IOupKccrnIOuz9KweyoTKXdi5aucIOHo=;
+ b=K4j+98/edOKEuXFW7eiL4vO9e+nNF67f7PD7sOIkwJmjfduv6l0ecR9Lt8saJ3OEaD
+ Zzt5Bd0kRXgIpNdR4WZVweecRzzY8/ZLCL2xdi2PsXTMV2e53q3WaLDd3QCh/dP4HUBG
+ sAfxSDHQhZe5q1ri4oFGSxyviY/NKG4/d9YuNdR97Fwmy1JxseZyDeTw85LxWh4i4yzI
+ 09udEDwTi3tzmgf0R9pNOAWqHOO7uqbR6FpnijP6wwlFcpKF8QruOrVX6rKB0S6+mngf
+ nFcZSlg4/t00+lzvuMROrBDOU1cQvGInSaqth+mhhbkNUQehQ7Ov9tJBXBBIHkLhprkq
+ KxpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739199158; x=1739803958;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=evF202mqWnnMNYEWNlPDPYKUevieY3ts4NV1nPJV8HU=;
- b=juy2XqsyeJRWnhMHCT17zdebpF3p5pWG3WTM8C45/NACrsb+j2X6yIrizKaixpm+eY
- Kq7k4qfnCn2vbviSPM70AT/i3RSQEMxVmnUHRpdR55NjymMGaxquoC0C6HIHw8qn6orB
- t04ICNGQcpWZkt6GsXTLarxLm+Z/8nR/jEj00XRGQE5Td/jcGnERdUuykP0FRHcoDuME
- 8Jbf4ZrVKIFmHI8rK3IhDcNyC9ezyZd8SXERMOukGX+g6iGf/RA0DT5IhzVxH4wrDwHe
- cyHUo3EOMrQAwRWVTLNCyiVyvk7SJ1pK4E6yvcGLKj0ejnHcjwga7ANqwzSPPbng0MU4
- MCrA==
+ d=1e100.net; s=20230601; t=1739199168; x=1739803968;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dXZenGARfw3IOupKccrnIOuz9KweyoTKXdi5aucIOHo=;
+ b=CACKeXD85MWNkXqrtMJyRbkVuvEsq/LF/buG2/5nuE0mD3VOYDWVfuimVdqhkFhqBP
+ 2T1+E7Zrrha45MVhdyBF8WUhQa1l+Djaan1kR2zRb6Q9ppOuPUcTuZIARIBbI0tq73mk
+ WI5l15bOXQuKlKAeveOR1+txVgsMWTTu7MCxgq7sPOaLeQf+sxFNKWt+PESwIv5JYRVR
+ LWN5fDje9JNHqvX5TiBMJIfsdqDZYj+iAbCEwTqWB6qTWpeU/B7+X4dmkypuOqktlCPY
+ ANffOSjE9H9EMekdlaW+AwI0ohn22IJzWfBWRox4EzbnwH29qKe0fsyXqm/A4hHPN139
+ sMDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDXhJMaRNtPtA983bCIbIIpu3Xsm5FbsdxvaPTdtBl5A7wa4MKKVtrWmweWOMRkphcZFnpdDgXmKey@nongnu.org
-X-Gm-Message-State: AOJu0YzS2dPeLidpmtsh8/hpM/8whQWhsVYtQBzdOHSfLTfGRJOAfXGo
- 60JGcnfzo+sykEWA/s4XeCi8WOyPAclJUnidWvGUe9QRS7DHb1qjh9gBuILQwy+KmgqDUdJ2UPT
- 0rV8N9iGtX1+8f1UmxqrNoN64E/uJLfpH1fHgUBjXedskfCj8myAq
-X-Gm-Gg: ASbGncsMGuFbbtfgtRQeZgcTJR2WZ0j0vYBQsUqtj8QmabZURCXf0/OxplfslH2oTEa
- mJwMfSzvkOb//Bprxi5W44hLV6kgEA0Sq3rMQP76PnVpB76bjLfsZ0Ftsgm66OxKu5NFiJ9xLab
- bU6AxmJHEoINtDAbUFqM/aL6biiCwEj+U16AqQXJP489JX7SSgCJFnKYYxuW5WtfigtWgXnS8Wa
- nKEP8+TOEFFgPU3FIZBZcsBWX5iiYaGNYodHQoNOYQ5X7/gG7jVfko/r7S5l3uov6iTnd+ImXsN
- 68ABu8hDmnTCC2fqF5BF7itdgVyuxOgzBXg=
-X-Received: by 2002:a05:600c:1e23:b0:434:a04d:1670 with SMTP id
- 5b1f17b1804b1-439248c2c07mr143048085e9.0.1739199158635; 
- Mon, 10 Feb 2025 06:52:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEti4YTYhIVN24q6eMkfStjt/5bWDAdCiwSUu6iYhG3QxN7ANHy90mqlaAIm/0qtD5lnemlyA==
-X-Received: by 2002:a05:600c:1e23:b0:434:a04d:1670 with SMTP id
- 5b1f17b1804b1-439248c2c07mr143047845e9.0.1739199158282; 
- Mon, 10 Feb 2025 06:52:38 -0800 (PST)
-Received: from [192.168.3.141] (p5b0c6c7f.dip0.t-ipconnect.de. [91.12.108.127])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439429c0790sm39989215e9.2.2025.02.10.06.52.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 06:52:37 -0800 (PST)
-Message-ID: <5201950c-b0dd-4efa-a991-4e682c705682@redhat.com>
-Date: Mon, 10 Feb 2025 15:52:36 +0100
+ AJvYcCUOqio6ZW5ZBI4VG7Jq78kFiSWqP2UzK9/NFa08oCsYeWYdE5xlAkFjt/eHvVfdj5oubuQ6WDusfX7O@nongnu.org
+X-Gm-Message-State: AOJu0Yz05E+j0W65l0SBbkOdakdrBWhmD320t8KAFX72cPoZmCWVozGc
+ xu4C10CNtuQS7SEZQQZAJkPxjpK0P6m4H0lU4zQd6e4eMLTKbgzCXxmARDyB3Gigkp9SaX4Tm+d
+ tT3YdHUaqnWxTmQ4wwKQLKm8tzeKPScEfnwRT4w==
+X-Gm-Gg: ASbGncsqMj8pvVNO+wugRFNpvsLIlmZRnNQejtMNrOsMuP5kd6xwa5oc90uXiHVmjkp
+ axRisvQqD6tg6dVeqoYcEcwWzUfboJS0KFjJCxRqPyNejfXZhwaniqzUr1C6JpoKPXms2Stuf0A
+ ==
+X-Google-Smtp-Source: AGHT+IEP0Ctoq22+/C4IGxu76403TZM9VKd2AyExbdyeFl7Gx3IQRxX/aM7vMSNO2mcdK0+Muv7UlbhNNGtjwUMpwyE=
+X-Received: by 2002:a05:6902:18cb:b0:e58:dbf:ed09 with SMTP id
+ 3f1490d57ef6-e5b4617025bmr12243101276.3.1739199168696; Mon, 10 Feb 2025
+ 06:52:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] s390x/pci: add support for guests that request
- direct mapping
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org
-References: <20250207205613.474092-1-mjrosato@linux.ibm.com>
- <20250207205613.474092-2-mjrosato@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250207205613.474092-2-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250206221203.4187217-1-wuhaotsh@google.com>
+ <20250206221203.4187217-16-wuhaotsh@google.com>
+In-Reply-To: <20250206221203.4187217-16-wuhaotsh@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Feb 2025 14:52:37 +0000
+X-Gm-Features: AWEUYZlK86CxAfUXcKSQzwXTRt_0Le6ac4RFQ6NFPmX2kDqd92WmKwPTHXEXOvU
+Message-ID: <CAFEAcA8wgvb7k56me7muy2PsLNL0GAa0ewySpQpPQocHQ2djYw@mail.gmail.com>
+Subject: Re: [PATCH v4 15/17] hw/arm: Add NPCM8XX SoC
+To: Hao Wu <wuhaotsh@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com, 
+ Avi.Fishman@nuvoton.com, kfting@nuvoton.com, hskinnemoen@google.com, 
+ titusr@google.com, chli30@nuvoton.corp-partner.google.com, 
+ pbonzini@redhat.com, jasowang@redhat.com, alistair@alistair23.me, 
+ philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,83 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.02.25 21:56, Matthew Rosato wrote:
-> When receiving a guest mpcifc(4) or mpcifc(6) instruction without the T
-> bit set, treat this as a request to perform direct mapping instead of
-> address translation.  In order to facilitate this, pin the entirety of
-> guest memory into the host iommu.
-> 
-> Pinning for the direct mapping case is handled via vfio and its memory
-> listener.  Additionally, ram discard settings are inherited from vfio:
-> coordinated discards (e.g. virtio-mem) are allowed while uncoordinated
-> discards (e.g. virtio-balloon) are disabled.
-> 
-> Subsequent guest DMA operations are all expected to be of the format
-> guest_phys+sdma, allowing them to be used as lookup into the host
-> iommu table.
-> 
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+On Thu, 6 Feb 2025 at 22:12, Hao Wu <wuhaotsh@google.com> wrote:
+>
+> Signed-off-by: Hao Wu <wuhaotsh@google.com>
 > ---
->   hw/s390x/s390-pci-bus.c         | 38 +++++++++++++++++++++++++++++++--
->   hw/s390x/s390-pci-inst.c        | 13 +++++++++--
->   hw/s390x/s390-pci-vfio.c        | 23 ++++++++++++++++----
->   hw/s390x/s390-virtio-ccw.c      |  5 +++++
->   include/hw/s390x/s390-pci-bus.h |  4 ++++
->   5 files changed, 75 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index eead269cc2..81e5843c81 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -18,6 +18,8 @@
->   #include "hw/s390x/s390-pci-inst.h"
->   #include "hw/s390x/s390-pci-kvm.h"
->   #include "hw/s390x/s390-pci-vfio.h"
-> +#include "hw/s390x/s390-virtio-ccw.h"
-> +#include "hw/boards.h"
->   #include "hw/pci/pci_bus.h"
->   #include "hw/qdev-properties.h"
->   #include "hw/pci/pci_bridge.h"
-> @@ -720,16 +722,45 @@ void s390_pci_iommu_enable(S390PCIIOMMU *iommu)
->                                TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
->                                name, iommu->pal + 1);
->       iommu->enabled = true;
-> +    iommu->direct_map = false;
->       memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&iommu->iommu_mr));
->       g_free(name);
->   }
->   
-> +void s390_pci_iommu_direct_map_enable(S390PCIIOMMU *iommu)
+>  configs/devices/aarch64-softmmu/default.mak |   1 +
+>  hw/arm/Kconfig                              |  13 +
+>  hw/arm/meson.build                          |   1 +
+>  hw/arm/npcm8xx.c                            | 804 ++++++++++++++++++++
+>  include/hw/arm/npcm8xx.h                    | 107 +++
+>  5 files changed, 926 insertions(+)
+>  create mode 100644 hw/arm/npcm8xx.c
+>  create mode 100644 include/hw/arm/npcm8xx.h
+
+
+> +static void npcm8xx_init_fuses(NPCM8xxState *s)
 > +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    S390CcwMachineState *s390ms = S390_CCW_MACHINE(ms);
+> +    NPCM8xxClass *nc = NPCM8XX_GET_CLASS(s);
+> +    uint32_t value;
 > +
 > +    /*
-> +     * For direct-mapping we must map the entire guest address space.  Rather
-> +     * than using an iommu, create a memory region alias that maps GPA X to
-> +     * IOVA X + SDMA.  VFIO will handle pinning via its memory listener.
+> +     * The initial mask of disabled modules indicates the chip derivative (e.g.
+> +     * NPCM750 or NPCM730).
 > +     */
-> +    g_autofree char *name = g_strdup_printf("iommu-dm-s390-%04x",
-> +                                            iommu->pbdev->uid);
+> +    value = tswap32(nc->disabled_modules);
+> +    npcm7xx_otp_array_write(&s->fuse_array, &value, NPCM7XX_FUSE_DERIVATIVE,
+> +                            sizeof(value));
+> +}
 
-Empty line.
+We're trying to get rid of tswap32() uses. Compare
+npcm7xx_init_fuses(), which does
+    value = cpu_to_le32(nc->disabled_modules);
 
-> +    memory_region_init_alias(&iommu->dm_mr, OBJECT(&iommu->mr), name,
-> +                             get_system_memory(), 0,
-> +                             s390_get_memory_limit(s390ms));
-> +    iommu->enabled = true;
- > +    iommu->direct_map = true;
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-You could dynamically allocate the dm_mr instead, and use that as 
-indication if the direct mapping is active. Whatever you prefer.
-
-
-Nothing else jumped at me, thanks!
-
--- 
-Cheers,
-
-David / dhildenb
-
+thanks
+-- PMM
 
