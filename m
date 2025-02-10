@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F3FC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8A1C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thVll-0002Lk-8b; Mon, 10 Feb 2025 10:32:21 -0500
+	id 1thVqb-0003mE-M6; Mon, 10 Feb 2025 10:37:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thVle-0002JM-RY
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:32:14 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
+ id 1thVqa-0003lk-0A
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:37:20 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thVlc-0002Ic-Mz
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:32:14 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so7498115e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:32:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
+ id 1thVqX-00033g-I6
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:37:19 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so50589525e9.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:37:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739201530; x=1739806330; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oenO1W94cVye508wdyozys7JL+m9rUg1uFJD6hc3nzM=;
- b=j645LIergyTterRBhYP/JZNPi6ZNUCrjxasMXqyvlrjGHhSb40HyIKIv2DOH2CZD5W
- CzmVEq4v2nLXAGd2XjMF5gQGnyERTmqkdFpDkcKaeEE2T3abJv3FdoNUqYnJz6L1Wzyh
- pX7DtaOLZMonYcjlaUAvy85lAQRynD1PJNpxebVIvc+89geLj7/so64lFDF06vCZTWPh
- tzUWD+PUogKK3SKmhs2dt3OxXjBYtzLv9Lo+nxvP2dL80Eb47ipI4BhXRL/eisuUz8xG
- eSD1L2Bc7V+UWi/TjuyaPNJ1HbGGnpx+Vgxynjey5zHDl2AB9YJ2XrE7qYVxLeaCl5OJ
- /wNw==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1739201835; x=1739806635;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2FNj/lHt1BHjvndFs0hjsvwi65QGfXgWDRzZ4lr18ss=;
+ b=stvKsbrFmJmtvaIEvY605+7ECpMGTXZkSI03rLerkGDVq8S/h3tPdRBC0FMccGdMh0
+ l6gMNpBfVyN151/DFE7FU2tn2r2bj5ZKaXmnlUiJOrd3FwrN+wJMkaBYRZ04Qd2s0DJV
+ gLUEK+VZ9dyS6Ej3AQ1E4SjPvgbb92O6RzC+Uy49sUL4y6xYAzv7KVyqMSf5olqWrNx6
+ 6rV2cAXHgY11nbxPvZiTQMzouGK7Cyn8Y8Cau3CX0UC6YOtf0u7+ABG2f6V1yagkPGLK
+ VCpZf8+V8muAh6uzzhI3UWWXeATK6ha1RVQIXoGzNXrkaiehUe8NpZpzIE1cpkPfD8sa
+ u/ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739201530; x=1739806330;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oenO1W94cVye508wdyozys7JL+m9rUg1uFJD6hc3nzM=;
- b=BkvRlYEWmCyK0z63mJjGEkoLTdWHOhtmOaLCkLq6+yDIBUi2VtUDNctxl3DNTn5r+8
- cMKnEnyuYRF7Sk8pgeesG5NxVzRad+bnXiF0lEiQk2qD1bFL6fd4RCg6Q6uoF6Hu7B88
- oNei6PJFryXgSW3lfXL6lSij1qmDzEiK8erpuk/bUiS2+qJcDe6wqViGb8TxCrGf5+Y2
- Ek79Ce/ohB+19IgZ2DzynPKZKVsVAo5MSAxDcZKrM+Ui0zJerV2xKa7JQKID8zDbZvNb
- RFudqGX7p/VgSHZNbJ233dG7pA6zcLnknIIWBchL3zZsvhBjTj3D+qB1HW6z3spesAyj
- Czuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUryS95SvlaG69/IIuHygpbL2UR0smUt27+HQg4Bkc7VjbBb5Npn9bGXcZj6P9t/DpzVuREvQY9ueiE@nongnu.org
-X-Gm-Message-State: AOJu0YzDlJun4Gnel92L2ZKqQ5ht9JMBU7Ux9c4egazLPmPl2t+FM6Ub
- vEvxfwZTbSU+fpP90wEjt1FXwslxAIDDSRWEaZknTrBc5PHd1hmq/jaN0DkmtEE=
-X-Gm-Gg: ASbGnct5NxVQVdai1Yqny1PG6YCb0myzhsBHxsbP4iE6FR8Zmi6fUdlqJplEr8aC/9f
- m3/lbYy+GIZcAo7y7BOx5ctIFBxc7kwchkqWidmKiCRjzVyhFQWahARqrMrkOPzHKuyV1sGHxq5
- 0jAqergk4FsiJOe4sc43Z17eijidPy+McRS3VghiXUzUUrLK+wE1tFaiVZmmoX53LBDzYRxENga
- KTtSfSdgoMBv5H0rIQaKBk3NAQBWA6ptaMf2OtAmgWmxGkZJaG33Ay+Pd1u1kpYM841hT6MNa/B
- +JfH/bY2ttO0Fup1iUnwWQsM23aEIpZO0De5FVpK7f/BT1hH0siipEoC64Y=
-X-Google-Smtp-Source: AGHT+IExnc56mu8YTkAPMABcnxXoztceLtLnKDhqj/ffub+WOzKCG/RFk1AS9GEWzPjL6iRAKpnbVw==
-X-Received: by 2002:a05:600c:1e25:b0:436:17e4:ad4c with SMTP id
- 5b1f17b1804b1-43924972ce9mr109769255e9.6.1739201529677; 
- Mon, 10 Feb 2025 07:32:09 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4390d964c71sm181978295e9.18.2025.02.10.07.32.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 07:32:08 -0800 (PST)
-Message-ID: <2cfca5f9-4c2f-4777-bfb9-4700005780ec@linaro.org>
-Date: Mon, 10 Feb 2025 16:32:08 +0100
+ d=1e100.net; s=20230601; t=1739201835; x=1739806635;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2FNj/lHt1BHjvndFs0hjsvwi65QGfXgWDRzZ4lr18ss=;
+ b=UED/6AWE80Inlx64V4TGWI0mFjXdk4haOnJzJlAoDXtENlZM95V6bZeljxGiIu5VVw
+ qht9Zc1tf1j4U4N/EoH0YHQJq08Nj4OUL4Pa6X6sZqeZsU5PvJknYCmsfVO6Uv82cBfd
+ BjcPCvtEupFQIqjpcHLEZ0M2F4xPBCyXOnZK2GYf92PWZT70cl/B6juzpQO4zcLJUYOo
+ C1SifJI398hsX1QMPcaaiAWF/em10hsajEOufGOXPita7ocJomJqTCWi7lRuX1PNYm8C
+ i1Jr8CckARllRN12ct6Eg/6B2WbbT1SpttqNVxsXZ+JP+2N7S52Mbj2w1akOzDJlIhd9
+ vrdA==
+X-Gm-Message-State: AOJu0Yy1Sdc7w/zcltSsWseLBH5sJw96VKqINAiUjZJRuTSLq16dgt8z
+ 2bcpxbHnNdmMfwkliCe5YX31RBSSe23cwHCZlFkjwcBi/9UBftJTgapBmMuPyukyZMhJiT5zMmH
+ E
+X-Gm-Gg: ASbGncuARclPpgvWdxlRXg7IHHqHREopwpc3IH12NALEyTnDe1uZ0ZnPBNFjL3jusSM
+ mV8hbAZf01YnR7lt7GHwIZKG2INVgFbsGUtXUNNUr0Uaa8S6jfZrKYgzrtRU/VpeESonCw6Vo0a
+ +wwPtNbC2a8ip6zoyqrTHlsHl8h7vHHZHso/CLTCdgm4u9QPXiVTSArKI1GGKlMJwuxJfAeK/ch
+ ZaXtrYqgLXzzX+6hZRkK9EmIAD0WC8DrBcgg0TnpsP6l8TZW1fPCCJHdbykliKtbYjNCgwsAhu4
+ rDdGi/a1hJlYA30hbbYE0Ucb90RR/zRRZw+V+zhXTvjkMRevuCXuPrBAAAJW/2c0Oxg=
+X-Google-Smtp-Source: AGHT+IGNn4as9Kzn0sAxjtvPebvPmo1u/I/U9IP5mAkw+2WGT9e0lMcrRG+vVDjqvSzusscSK8qnAQ==
+X-Received: by 2002:a05:600c:83cd:b0:439:44eb:2db0 with SMTP id
+ 5b1f17b1804b1-43944eb306emr34707505e9.15.1739201835055; 
+ Mon, 10 Feb 2025 07:37:15 -0800 (PST)
+Received: from rockhopper.ba.rivosinc.com (214.11.169.217.in-addr.arpa.
+ [217.169.11.214]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439471bf782sm24052565e9.39.2025.02.10.07.37.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Feb 2025 07:37:14 -0800 (PST)
+From: Rob Bradford <rbradford@rivosinc.com>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Rob Bradford <rbradford@rivosinc.com>
+Subject: [PATCH] target/riscv: Respect mseccfg.RLB bit for TOR mode PMP entry
+Date: Mon, 10 Feb 2025 15:37:13 +0000
+Message-ID: <20250210153713.343626-1-rbradford@rivosinc.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] 9pfs: fix dead code in qemu_open_flags_tostr()
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Eric Blake <eblake@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <E1thUwq-0020ux-5f@kylie.crudebyte.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <E1thUwq-0020ux-5f@kylie.crudebyte.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=rbradford@rivosinc.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,45 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/25 15:33, Christian Schoenebeck wrote:
-> Coverity scan complained about expression "|LARGEFILE" to be non reachable
-> and the detailed Coverity report claims O_LARGEFILE was zero. I can't
-> reproduce this here, but I assume that means there are at least some
-> system(s) which define O_LARGEFILE as zero.
+When running in TOR mode (Top of Range) the next PMP entry controls
+whether the entry is locked. However simply checking if the PMP_LOCK bit
+is set is not sufficient with the Smepmp extension which now provides a
+bit (mseccfg.RLB (Rule Lock Bypass)) to disregard the lock bits. In
+order to respect this bit use the convenience pmp_is_locked() function
+rather than directly checking PMP_LOCK since this function checks
+mseccfg.RLB.
 
-Is O_LARGEFILE a Linux-ism?
+Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+---
+ target/riscv/pmp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Commit 67b915a5dd5 ("win32 port (initial patch by kazu)") started to
-define it to 0 on 32-bit Windows. It isn't defined on my 64-bit Darwin,
-and apparently nor on other BSDs.
-
-> This is not really an issue, but to silence this Coverity warning, add a
-> preprocessor wrapper that checks for O_LARGEFILE being non-zero for this
-> overall expression. The 'defined(O_LARGEFILE)' check is not necessary,
-> but it makes it more clear that we really want to check for the value of
-> O_LARGEFILE, not just whether the macro was defined.
-> 
-> Fixes: 9a0dd4b3
-> Resolves: Coverity CID 1591178
-> Reported-by: Coverity Scan
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
->   hw/9pfs/9p-util-generic.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/9pfs/9p-util-generic.c b/hw/9pfs/9p-util-generic.c
-> index 4c1e9c887d..02e359f17b 100644
-> --- a/hw/9pfs/9p-util-generic.c
-> +++ b/hw/9pfs/9p-util-generic.c
-> @@ -19,7 +19,9 @@ char *qemu_open_flags_tostr(int flags)
->           #ifdef O_DIRECT
->           (flags & O_DIRECT) ? "|DIRECT" : "",
->           #endif
-> +        #if defined(O_LARGEFILE) && O_LARGEFILE != 0
->           (flags & O_LARGEFILE) ? "|LARGEFILE" : "",
-> +        #endif
->           (flags & O_DIRECTORY) ? "|DIRECTORY" : "",
->           (flags & O_NOFOLLOW) ? "|NOFOLLOW" : "",
->           #ifdef O_NOATIME
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index a185c246d6..85ab270dad 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -524,7 +524,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+             uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
+             is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
+ 
+-            if (pmp_cfg & PMP_LOCK && is_next_cfg_tor) {
++            if (pmp_is_locked(env, addr_index + 1) && is_next_cfg_tor) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+                               "ignoring pmpaddr write - pmpcfg + 1 locked\n");
+                 return;
+-- 
+2.48.1
 
 
