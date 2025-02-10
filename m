@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3255AC0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 01:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65C6C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 01:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thISa-0006Ji-IK; Sun, 09 Feb 2025 20:19:40 -0500
+	id 1thIWF-00077I-7I; Sun, 09 Feb 2025 20:23:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1thISU-0006JM-AJ
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 20:19:35 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1thISQ-00065d-FB
- for qemu-devel@nongnu.org; Sun, 09 Feb 2025 20:19:32 -0500
-Received: from loongson.cn (unknown [10.20.42.126])
- by gateway (Coremail) with SMTP id _____8DxvnMYVKlns9dwAA--.32960S3;
- Mon, 10 Feb 2025 09:19:20 +0800 (CST)
-Received: from [10.20.42.126] (unknown [10.20.42.126])
- by front1 (Coremail) with SMTP id qMiowMBxXsUVVKlnLmsJAA--.35757S3;
- Mon, 10 Feb 2025 09:19:19 +0800 (CST)
-Subject: Re: [PATCH V2] target/loongarch: fix vcpu reset command word issue
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, kvm-devel <kvm@vger.kernel.org>
-Cc: Bibo Mao <Maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-References: <20250208075023.5647-1-lixianglai@loongson.cn>
- <62ad5a5b-9860-42dc-a4f3-37f504f3ded6@linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <cced0ac9-3f5b-0c5b-1c11-c45f6848a020@loongson.cn>
-Date: Mon, 10 Feb 2025 09:17:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1thIWD-00076w-7V; Sun, 09 Feb 2025 20:23:25 -0500
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1thIWB-0006RX-BG; Sun, 09 Feb 2025 20:23:24 -0500
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4ba7d7aa995so720027137.2; 
+ Sun, 09 Feb 2025 17:23:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739150601; x=1739755401; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AHaNFzAkQ/6cK53w3+F9cdjDsoiZOwToRR9MmMtflXg=;
+ b=Cg7aT9JaYi17zkAtMYatxYEDHVO7ZIpJbdbMWbjmYcZYmerMDWg0zRzJoC0ZKtmX4w
+ omQe4RRF7tnqhCcg5r1XUt1uzUSEj2yZvQ1Y9xkPCP5uOpzaGXExzzOGrba2infr+SS5
+ r6boK9JDx36NmOmMD9KZstE6r4yfSgNVW5gFdXy0hZYM+64FWchaGVSeCdnVh1Yy6RGM
+ OV/CF2tzz2LTX7jCp1hIg93o71wGGsk5Kt++JvfpSAWIL5AjVixQ2d1Dxsh41JTxNoXq
+ SX28H6jscEkkWv8fukMpDI0xJMBh9D3J/U1foNUjwrGvxlUyGIsZoceycc+nsPRaTWg7
+ zHmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739150601; x=1739755401;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AHaNFzAkQ/6cK53w3+F9cdjDsoiZOwToRR9MmMtflXg=;
+ b=DAdUuG39C9z42SH3mIX/v54uw1jX76OYJ3ysb9jlBHB5+EHwGjqewew5RZD3FHJn+I
+ S0sOH1gLJ3mMDu46pG9JE7p+OzkdLyB201csCeQ1M0kKUfeh4x7jQC9J30EWiC5izbJz
+ kz8tFEaYry6VYjiRdxAzUQvbev3RDPGTqP6mkVVs15whpZHHfpN/VL4wVTK9rcWqpTNS
+ E59c+Kx+vEKlOZXZc7LaLo/KeRtgMly8oOKldREjvUZ5I9P8okY15TbXsznbMxhxfxqQ
+ XLPnD/CVMxE22vC1hPofvcZh1YeJRmHpAkcP9G3LRz0ttQqzIUV00MVrCOe2PhQsBZL2
+ No8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFohZgSrXh3SdYQ06AdsFQrx+I1LOAvLLBqKIEn4hJnP56hMtGioE/kX9YqaZtgcKJn6YOrMWfyDvy@nongnu.org
+X-Gm-Message-State: AOJu0Yw1m8Qi/G4Rv9VelEdz/fukT11f87Lg6xDK8zgnCN97BoyASx8N
+ SYXnPFb4kFlzdE0IDF8wu8nXIpYSbD+ZLYTBw5kxaYpKuzCZz0yIdqMunSTOMEAXyZUMWurbWVf
+ AWqarR3MI3FQxiLRLtygfsNfeM5k=
+X-Gm-Gg: ASbGncsd6lQLc0Q1kgwjluCUlEf+K6E0c+Pv/szDpzHJ/36FupPE6v3c5Z/TXARpZYV
+ OQaJCQjFWCKfXk3kk3Tsijs0cJ6hzLA8eE2omzCNlrrJ3XPR5DIaBZy1tEGj//HCas+bmtCuUs5
+ GB84VX5jPazFSwenlnHTBt2/RC6g==
+X-Google-Smtp-Source: AGHT+IH4R8HYJeaAsHJhqNHjV5UitH8xV8l0ZQ3I2bJTxmsBpAB+QmptnG5P7rhuDobT0TCsIHqMJh03mDLLaqqp8sE=
+X-Received: by 2002:a05:6102:6c7:b0:4bb:b868:9d2d with SMTP id
+ ada2fe7eead31-4bbb868b96fmr2874583137.24.1739150601590; Sun, 09 Feb 2025
+ 17:23:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <62ad5a5b-9860-42dc-a4f3-37f504f3ded6@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMBxXsUVVKlnLmsJAA--.35757S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Kw4kAFy3trykKrWxXrWDGFX_yoW8ZF1fpF
- WkAFZ7KFy8GrykJwn7X34DZa4DZrWxG34kXa4IqFy0yr1jqryvg3W0qwsIgFn8Aw48GF4Y
- vr18Cr1jvFW7J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
- fJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.37,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250206-pmu_minor_fixes-v2-0-1bb0f4aeb8b4@rivosinc.com>
+ <20250206-pmu_minor_fixes-v2-1-1bb0f4aeb8b4@rivosinc.com>
+In-Reply-To: <20250206-pmu_minor_fixes-v2-1-1bb0f4aeb8b4@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 10 Feb 2025 11:22:55 +1000
+X-Gm-Features: AWEUYZlx7Zx1AzCC_umnj9vvKQ67ru_U6JKwfiYh3fU3erUW_iRMXka0DDibgBY
+Message-ID: <CAKmqyKNv5Mz=y-SP89FpRzgsTK2grMpv1rPNU2OPN1PbSHQD3g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] target/riscv: Fix the hpmevent mask
+To: Atish Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,64 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe Mathieu-Daudé:
-> Hi,
+On Thu, Feb 6, 2025 at 7:59=E2=80=AFPM Atish Patra <atishp@rivosinc.com> wr=
+ote:
 >
-> On 8/2/25 08:50, Xianglai Li wrote:
->> When the KVM_REG_LOONGARCH_VCPU_RESET command word
->> is sent to the kernel through the kvm_set_one_reg interface,
->> the parameter source needs to be a legal address,
->> otherwise the kernel will return an error and the command word
->> will fail to be sent.
->>
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> ---
->> Cc: Bibo Mao <Maobibo@loongson.cn>
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Cc: Song Gao <gaosong@loongson.cn>
->> Cc: Xianglai Li <lixianglai@loongson.cn>
->>
->> CHANGE:
->> V2<-V1:
->>    1.Sets the initial value of the variable and
->>    adds a function return value judgment and prints a log
->>
->>   target/loongarch/kvm/kvm.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index a3f55155b0..3f499e60ab 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -581,9 +581,14 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
->>   void kvm_arch_reset_vcpu(CPUState *cs)
->>   {
->>       CPULoongArchState *env = cpu_env(cs);
->> +    int ret = 0;
->> +    uint64_t unused = 0;
->>         env->mp_state = KVM_MP_STATE_RUNNABLE;
->> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
->> +    ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &unused);
->> +    if (ret) {
->> +        error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET");
+> As per the latest privilege specification v1.13[1], the sscofpmf
+> only reserves first 8 bits of hpmeventX. Update the corresponding
+> masks accordingly.
 >
-> If this call fails, I'd not rely on the state of the VM. What about:
+> [1]https://github.com/riscv/riscv-isa-manual/issues/1578
 >
-> if (ret < 0) {
->     error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET: %s",
->                  strerror(errno));
->     exit(EXIT_FAILURE);
-> }
->
-> ?
->
-I'll second that!
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
 
-Thanks,
-Xianglai.
->> +    }
->>   }
->>     static int kvm_loongarch_get_mpstate(CPUState *cs)
->
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
+Alistair
+
+> ---
+>  target/riscv/cpu_bits.h | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index f97c48a3943f..74859c4bc8ff 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -933,9 +933,8 @@ typedef enum RISCVException {
+>                                              MHPMEVENTH_BIT_VSINH | \
+>                                              MHPMEVENTH_BIT_VUINH)
+>
+> -#define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
+> -#define MHPMEVENT_IDX_MASK                 0xFFFFF
+> -#define MHPMEVENT_SSCOF_RESVD              16
+> +#define MHPMEVENT_SSCOF_MASK               MAKE_64BIT_MASK(63, 56)
+> +#define MHPMEVENT_IDX_MASK                 (~MHPMEVENT_SSCOF_MASK)
+>
+>  /* RISC-V-specific interrupt pending bits. */
+>  #define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
+>
+> --
+> 2.43.0
+>
+>
 
