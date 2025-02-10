@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4DC6C0219B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 00:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65285C0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 00:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thHXP-0004TV-59; Sun, 09 Feb 2025 19:20:35 -0500
+	id 1thHZ6-0005SG-98; Sun, 09 Feb 2025 19:22:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thHXM-0004T2-RF; Sun, 09 Feb 2025 19:20:32 -0500
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1thHZ4-0005Rp-41; Sun, 09 Feb 2025 19:22:18 -0500
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1thHXL-00081g-EQ; Sun, 09 Feb 2025 19:20:32 -0500
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-85c4c9349b3so996161241.3; 
- Sun, 09 Feb 2025 16:20:30 -0800 (PST)
+ id 1thHZ0-0008Dn-8l; Sun, 09 Feb 2025 19:22:15 -0500
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-86712bc0508so552462241.2; 
+ Sun, 09 Feb 2025 16:22:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739146829; x=1739751629; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1739146931; x=1739751731; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5lmgmsn191/xkR2MqNkyc879vAy+UpV8jLP2EKCsWi8=;
- b=D+b8ECbfUFi/JgM0VEDij3p/Y2U6b/ldJ7p9LBbDS9tKm2/fFhKLkl5Q7uo2o7kD/a
- sfY3V5WJfrFjHGh9F+EJddoc7gYqovRFMoem0xkkfubXZDs3UjJEvu2NTO5URT9BSWQV
- 6MT3dzJ2Yz8Ul+RnKjN/Q0Spv/puuJ1/jsDG+4VIlvZWiOf+wvFN1FxEJS6x2R038tsQ
- 4awEfNYyZrLyTWNQWxfSuwCmt0oauWbO/sxOWvsUCRMZLSJDPhaGEdXMddskxS9Ycw+V
- P0OAYcJfExDufNaFIZ1CNjH0MJFMphTmbn/2+dtKCVe0DLq13K4hs6V5pbqV0fRV9tyO
- sPKw==
+ bh=mBElaxVntqJAi3XpxfBeAiLLX6H7NYr1dd0yqY68g20=;
+ b=VZcNp7fK6/c/K8IH95fPRt986kDzIuTlOwfxIjNhabuSCngWG4/Mj4NCMdUZYtmEhf
+ 6btiFiJj20YV/KjMcGwsRkxFnaQLgZU8628PZLdQ+f/6t2gIGOa2d4wjCc0gsxFh5ISg
+ 3BqWCdyFh5GpNbPbG6BDv3m7u/KgJBvQldt09gUIUkDjPRLTbORHFF+uxuXf0+KTPzU/
+ bscupOdgm6LnOdUlIjHpU+qdQ3t/bddNsKYv0Bsn0wFtSSZjLFeISsik9dA4+elM0D7U
+ RdEi2/HaHHn8r6Htp5UBNezN9/UVVp53GlWQZT0gNZHrytEXT+hPSCRsxjcRh34y5hrg
+ /6Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739146829; x=1739751629;
+ d=1e100.net; s=20230601; t=1739146931; x=1739751731;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5lmgmsn191/xkR2MqNkyc879vAy+UpV8jLP2EKCsWi8=;
- b=nqTaCiEtKVH1QNHQsqVvqHHmcNila3BBk95xRtguMnbjt24VmRNFSynB3euMbuCaVX
- NiD2rvA5w/0QCD+Zc7KQsD6OQuHCnhEKZmuoWVD1poNWeMoCUu3AFGBmTo3+1bj4cugc
- XrJIKlIDHOfgVt83WXo/NlPd3uy6QszqBFzOUOAVWKcdPiqXgSEWwKwR3DJWv0l5Es0+
- xYuhJ/BfGiD6MWECmQg21dC07TyYvtocCducGFiQkRhZoM4RSKbl/u7OAWscUtkDaA/i
- eoa89w1q2WaaKNI9Isf9jLxJszYELKjrQBQ/mA9aamHe4XzTZCzbSz7vf60vqWelsq+P
- bRRg==
+ bh=mBElaxVntqJAi3XpxfBeAiLLX6H7NYr1dd0yqY68g20=;
+ b=AVZcEvbt3euY+TE2xuGzHM1MNFs2iTVDBvw9o6hlr/XtxiASqGWgfde6gl+jGDMNEI
+ n+Lc6Lz9e1INlvbTJvAWx3R5ju2P50N8v94J4tDlctIvJSzXMHpT9QnNjU8fzPTKEot+
+ Z3vu27tvHdfTwBvjnIOrwVLS2ld/mPb7dV3OLO38/iKT2MKfxQW28cfWUh19B9T5xN5l
+ JzQrdofQWc21McCYt0E6JvhkVVCj//Sqj48bUdv389F2Be0IWcXmrVvt58MNFuKSBgs4
+ 06x+dHlQW+lYTcbRkf40lXrOC1UBmnY9ym7M8PEwInYyBHAkjsXdrTzd8UPej2zVKtDO
+ OhDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvZEvU4EXlFlIVnOAuVjhfJD1SYJh1TdHTTzFIE57GiQxa531R8t08yNYhyvGa/NTOgMcuDyM7dh3Q@nongnu.org
-X-Gm-Message-State: AOJu0YxqekqzilT5gzKW1+9D6To3FiCHseDKDp54gaJzhJNhfgLbcQWI
- L5Vwp8diazHa0OPtcv1UPK5xHvDICDXoShTjyTaoblfP3sIrATJmiuvlQoYN9oyZ4c4NZJD0PzN
- +bGzQRV3tLNzPEmoTDeDbYzqEBCM=
-X-Gm-Gg: ASbGnctXeDZ9j7CJgt+Io8c0IjFucxruEWWpvayamZHbFwVsKtV3neiQCZ6r8dCwF42
- V+cdLZQMBq1XL5u/yigkBYGsHA5ofQHh1C7nxGwh0KsQO8IdxwoeB+8SFKtLyfIT1yc0rATM7h5
- MouYx3KEQ2cdiQp/Mbj+Q5GA+5AA==
-X-Google-Smtp-Source: AGHT+IHLhS9GyVaPuPOM9t3hmsMHIJfanijgb3zpUbYl90YU5TByrMsNL7HmIkOnxJUkIsMfOTtdIuNH3kGDNClW064=
-X-Received: by 2002:a05:6122:1d55:b0:520:4539:4b4c with SMTP id
- 71dfb90a1353d-520453960cfmr1099802e0c.9.1739146829221; Sun, 09 Feb 2025
- 16:20:29 -0800 (PST)
+ AJvYcCX+bA5uRAWLfKceC7Mi/Inb8f1EGGwBmbz4FAauOkkN/rISO/CsXqYzbzFRC4cmYGm7b5Ljj+p7qGyF@nongnu.org
+X-Gm-Message-State: AOJu0Yy8UIkAjLlS2aY6SFHdPc3zJgx8o3d5nxr6FZHUeuA1jccaXtCE
+ rteN4c77rN7DkGC6ECxXHEud1Ab3bpAPpo+/YADQIEG8Kzp2aMqZPDhC1JAM8Z7W1Wpiq/gSY/c
+ 51a8mxQju0v0xwaKw2kkGS2BW26U=
+X-Gm-Gg: ASbGncvo21b+h+sFBS7n9BBmT4RYe89eMHujSKddvayiRuJ0kc2s8MUI4ffa9fxlYcP
+ X+j1Krq9WYxpN1hADXCDZD6S5d6sMPtMcptLHIy4Za33rNTfDIOAj+Y175tF8kNnQD35K++CgW3
+ qqXc6QhWqr2qeoSLKRORvZj6n/2w==
+X-Google-Smtp-Source: AGHT+IF6O5epnJPTJIpUQyRHfjqoUl/P0MK9B/qEAEbk09pCT9mBViGUaVfje3i0vTuJSB/gVsy85XRZLke9K/ZnR1w=
+X-Received: by 2002:a05:6102:418b:b0:4bb:5d61:1252 with SMTP id
+ ada2fe7eead31-4bb5d611970mr2965371137.23.1739146931203; Sun, 09 Feb 2025
+ 16:22:11 -0800 (PST)
 MIME-Version: 1.0
-References: <20250207152823.265068-1-rbradford@rivosinc.com>
-In-Reply-To: <20250207152823.265068-1-rbradford@rivosinc.com>
+References: <20250206181827.41557-1-philmd@linaro.org>
+ <20250206181827.41557-4-philmd@linaro.org>
+In-Reply-To: <20250206181827.41557-4-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 10 Feb 2025 10:20:03 +1000
-X-Gm-Features: AWEUYZkteMMhLcoxk-xsqi2QjcxrRYdSmrhBqY7TaiHEgduUNzjcPgZm_Au6HyI
-Message-ID: <CAKmqyKNVcR2ErHZxawHVwZCbU-xL54tAdhntYkgfz4+mzB6qvw@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix minor whitespace issue in
- riscv_cpu_properties
-To: Rob Bradford <rbradford@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org, 
- Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
+Date: Mon, 10 Feb 2025 10:21:45 +1000
+X-Gm-Features: AWEUYZltez5mZGL1EOoR5Y_BhkiYfKVQo9jWoiaHEWaGyorOXSaSdYdL-1wP_jY
+Message-ID: <CAKmqyKNGQ6-i62iczWOcXC0meA0hXJSCapc=oC3kUoz0xUX=8A@mail.gmail.com>
+Subject: Re: [PATCH 3/7] hw/riscv/opentitan: Include missing
+ 'exec/address-spaces.h' header
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Sunil V L <sunilvl@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,44 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 8, 2025 at 1:29=E2=80=AFAM Rob Bradford <rbradford@rivosinc.com=
-> wrote:
+On Fri, Feb 7, 2025 at 4:20=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
 >
-> The mvendorid/mimpid/marchid properties have the wrong amount of
-> whitespace ahead of them.
+> opentitan_machine_init() calls get_system_memory(),
+> which is declared in "exec/address-spaces.h". Include
+> it in order to avoid when refactoring unrelated headers:
 >
-> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+>   hw/riscv/opentitan.c:83:29: error: call to undeclared function 'get_sys=
+tem_memory'
+>      83 |     MemoryRegion *sys_mem =3D get_system_memory();
+>         |                             ^
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  hw/riscv/opentitan.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 3d4bd157d2..cca24b9f1f 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2844,9 +2844,9 @@ static const Property riscv_cpu_properties[] =3D {
->      {.name =3D "cbop_blocksize", .info =3D &prop_cbop_blksize},
->      {.name =3D "cboz_blocksize", .info =3D &prop_cboz_blksize},
+> diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+> index b9e56235d87..98a67fe52a8 100644
+> --- a/hw/riscv/opentitan.c
+> +++ b/hw/riscv/opentitan.c
+> @@ -28,6 +28,7 @@
+>  #include "hw/riscv/boot.h"
+>  #include "qemu/units.h"
+>  #include "system/system.h"
+> +#include "exec/address-spaces.h"
 >
-> -     {.name =3D "mvendorid", .info =3D &prop_mvendorid},
-> -     {.name =3D "mimpid", .info =3D &prop_mimpid},
-> -     {.name =3D "marchid", .info =3D &prop_marchid},
-> +    {.name =3D "mvendorid", .info =3D &prop_mvendorid},
-> +    {.name =3D "mimpid", .info =3D &prop_mimpid},
-> +    {.name =3D "marchid", .info =3D &prop_marchid},
->
->  #ifndef CONFIG_USER_ONLY
->      DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVE=
-C),
+>  /*
+>   * This version of the OpenTitan machine currently supports
 > --
-> 2.48.1
+> 2.47.1
 >
 >
 
