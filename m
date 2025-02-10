@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ABEAC0219E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 19:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8CF7C0219E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 19:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thZZq-0003NS-Or; Mon, 10 Feb 2025 14:36:19 -0500
+	id 1thZjz-0005hg-4I; Mon, 10 Feb 2025 14:46:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thZZn-0003N1-C9
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 14:36:15 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1thZjp-0005g4-7F
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 14:46:38 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thZZk-0000u3-GP
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 14:36:14 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2fa1a3c88c5so6023557a91.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 11:36:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1thZjc-0001yg-Fj
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 14:46:27 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ab7a342ef4eso489114366b.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 11:46:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739216171; x=1739820971; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1iBWhi95mhxmEgNqQDCWVz6kk0a7Kvp8WZvC/THKsqE=;
- b=keQLizw74h31H/JirhhOnq5zAT72YvbH8qweAgXeGAifjSe2PoW0SRlT0XyJBWh/SJ
- OB0yVIpFEKLrweGlajWdRDEdADiP8CW3HXyKK9Ndg21+hcIpDfJ9L/0/+RdwqB7GXONW
- HZoB6Uyf4DwsE3197D6fF4ycbuU1TG2lSJQicgfDLX2G23FCIpl7D+NMP0LxFMCha6BQ
- NAWhY2j1kNsBmxIXX9lxp7ELbcCZR9V8tt1pY0/2OJkduFeYElTRx7zuywZ9MKTvB97p
- B5YBKBQE4BYpQ0bj9rlwgpaNyz4qcPNRFLw9wtZwk3dd0XGC7u5y1p3EjoW8QHcpqOII
- PUkQ==
+ d=linaro.org; s=google; t=1739216782; x=1739821582; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rlGruTHGycd5Vly3E7rODSdEcDVmQ8nL9itLwPeqvGs=;
+ b=oJ31LY6BJ0FnTTcZLmwXX//Z7aiqYdOd/hMUcUMdY72dA2uWCf5n7Y6/hee4/VO5bp
+ zbnr5n4Br+0twMjLSL7HbFfYlF7YC+ane3NeDUgVu/vY+dAEGnRVT3AKwn5GyWlKxcap
+ QUBnvasFVjeX6EqS3LbrfURBU6tS3bnvTPXOjKFd3pXhJpqugtUe93C6j5nZdXJ1jabY
+ gTg0/DpoK5Ab/Uup99vU0uKqHdhTVEQN8cFYe77RacEPa4LLwJKp9OLORnUI/XJusVaC
+ FgkOthMaG13jq4HjR2qSxlk3/tfsAFiKH+oOyxTknkkdL/ybGNCXPMWCjQ+8lOYjCyfr
+ XTmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739216171; x=1739820971;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1iBWhi95mhxmEgNqQDCWVz6kk0a7Kvp8WZvC/THKsqE=;
- b=TnmYyXcpg1oDy7dusVbBcweqML5ZozXmsYCP+EnT6ZH9n7W/LpcVCdcqAFVgUNR4G1
- hcu6kC0yTmz+EaYs9UL/56bT82Mu4HGV4XuYxUvChWL9I4M/cFhzqf99ijUQLWc4tKsK
- 08KhYb/exDVVYid0+YpN57Z2DhwkkY3mNWoUkQHPXal1jQZiBFlMsv3mJpDz7QxbvAcf
- 2zg+68l9v4kU5EX6YxVxSFtUdB8dGestgQV0pwE54LfscGMdXRuIqanVgdWGQT0FZ2nd
- FYjV31qY0fcJsLRtEpzG381WxniUFj/erPp5XElVlpRBWMq+OI87jqXBYdvrRe5hUyjI
- n1RA==
-X-Gm-Message-State: AOJu0YyewF3WKu03fxYV8q4Zm5LrMEp0D9fznWRUxJogDKSiqJRSU1Xv
- UOMMaW+2asgUnuimkkEAXQBN6Zu5pGIxC1KWWdDiK5fr8tMeHYJG2HmGvyfTseSgfAhZqGs+V7E
- W
-X-Gm-Gg: ASbGncuxHQ1LIqz0Z2gugASDGVnwgzU7vYaNfT9JA0KZg6bVT9+9GAaR02zJY7HcjyI
- 8woR02E0dpCx0Kc7pB5XUT5cwnSY0NH/SqA97b7Sj4HTOoTDR12mBlCpeFXkwje+PY5FLhU0glr
- +6w6D/snzfALkakTvAC4uh9qIZm14Z93gq08+NbfHVVEiVuM+/1YA/oxNx+aQKai66osMCWXkbV
- T7jbtHSDYDQ526xEww09LiMoYsZLlC+vMV1NT7QOw2xw7j2t+3D6EYHhI/Nd+5OHEORm2ni9PAB
- 9EFj3sb6P8quJM/jpShpcq6ulh+zyafZQOF1tbZs76jeErZJ/AzT8rA=
-X-Google-Smtp-Source: AGHT+IFBYYO/7kp4wCTNSMx1nZgxvP7IQzcL/uNaooWIMR3woCnz7KvUnf4w9yOpYw2U2YuknjkX7g==
-X-Received: by 2002:a05:6a00:90a5:b0:730:957d:a811 with SMTP id
- d2e1a72fcca58-73217e1741bmr1198369b3a.1.1739216170339; 
- Mon, 10 Feb 2025 11:36:10 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7309270637bsm2021044b3a.172.2025.02.10.11.36.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Feb 2025 11:36:10 -0800 (PST)
-Message-ID: <9cf7bd67-0a24-45a1-87f8-0d57bb936e85@linaro.org>
-Date: Mon, 10 Feb 2025 11:36:08 -0800
+ d=1e100.net; s=20230601; t=1739216782; x=1739821582;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rlGruTHGycd5Vly3E7rODSdEcDVmQ8nL9itLwPeqvGs=;
+ b=fVWewDnHXOXSo5XIPohvDNvWPvbPH2Ka82J2vRFGlZQLqCt7cmFroHJMf1UFhlLObK
+ wL0nf7mFbSZgx+GKDhx8FN2YkkK6P9OBJI9imdNMboBNvvJfb5F8YZx2WNwAbhURfc41
+ twZeKsGY7tg2v8VXyBWW7e/JBvOnz9rScvs+EO84YYnf6olE9tklD/ID/LgLg9HaXctF
+ 6vqBSyuzPEhn74EGB9vRBu5ETPp+U2iPG//IK2HR76rx0NVJ2eJn8leX8e9zO8697quS
+ 6umHzawwF2NANtTtILtRyjd4r8DFGKVT0eW0IQtrWJa3Jf2LZb1kRaTBA6Cqv1MozIqg
+ 3/RQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVN74EiiiTzwaZxONGOrXrgyweNNfRylmNEvRjktv7cP3qBosbjjlN7NstBzBZkoM8kgiTJyyaCAmbY@nongnu.org
+X-Gm-Message-State: AOJu0YyBC8IOHXtI+XSdEXvB8upZGRBvOpoEr015wA47tJsqLQ/AxqH2
+ zeuCQ3OHUQJiantbFH2b8OBuYr0hJM8LNLscVJWvVMRJFt8Qv7qYeWR6soqDFN0=
+X-Gm-Gg: ASbGncsQWifZOJZ+V4OExC0adEeR1mdXFUUHg4iafqvcnKP3uXnnG6GArndxD69Nhpa
+ Zcsj49HYtKyJToERM0LFm22HcVZLU6HoAIqh5sBJTuog6UUZkX/6AnCcUsQBe8Rnf9c+3WGr/3k
+ G5O/ftRwE4WWUH6b9Wb5EBrsVXqwihHWBcyOT5P4mRbmpJdHBInq2fovI3JCdYp7btUaOVi4Y19
+ pAYWk1Eh90iMaQzeymThYYfSN1PSPkOMeQSXpc9W09mPqFzm/5DR0CM4rlVGm/etNHwlR1TI7vm
+ FATa8yxniGDUW8fPSw==
+X-Google-Smtp-Source: AGHT+IEd3xxgA8iCLYYSobPPJgoNMtPNjoZYhW+y7r3rJYOt1INyc9B9/ucUm1m7emTU1fa06W7yFA==
+X-Received: by 2002:a17:907:c12:b0:ab7:d87:50f2 with SMTP id
+ a640c23a62f3a-ab789c485bemr1476871966b.44.1739216782321; 
+ Mon, 10 Feb 2025 11:46:22 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab7db5ef658sm20916966b.42.2025.02.10.11.46.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Feb 2025 11:46:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0A6995F8CF;
+ Mon, 10 Feb 2025 19:46:21 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] util/qemu-timer.c: Don't warp timer from timerlist_rearm()
+In-Reply-To: <20250210135804.3526943-1-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Mon, 10 Feb 2025 13:58:04 +0000")
+References: <20250210135804.3526943-1-peter.maydell@linaro.org>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Mon, 10 Feb 2025 19:46:20 +0000
+Message-ID: <87ikphr3ar.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/14] target/arm: Rename CP_ACCESS_TRAP_UNCATEGORIZED to
- CP_ACCESS_UNDEFINED
-To: qemu-devel@nongnu.org
-References: <20250130182309.717346-1-peter.maydell@linaro.org>
- <20250130182309.717346-14-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250130182309.717346-14-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +105,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/30/25 10:23, Peter Maydell wrote:
-> CP_ACCESS_TRAP_UNCATEGORIZED is technically an accurate description
-> of what this return value from a cpreg accessfn does, but it's liable
-> to confusion because it doesn't match how the Arm ARM pseudocode
-> indicates this case. What it does is an EXCP_UDEF with a zero
-> ("uncategorized") syndrome value, which is what an UNDEFINED instruction
-> does. The pseudocode uses "UNDEFINED" to show this; rename our
-> constant to CP_ACCESS_UNDEFINED to make the parallel clearer.
-> 
-> Commit created with
-> sed -i -e 's/CP_ACCESS_TRAP_UNCATEGORIZED/CP_ACCESS_UNDEFINED/' $(git grep -l CP_ACCESS_TRAP_UNCATEGORIZED)
-> 
-> plus manual editing of the comment.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+Peter Maydell <peter.maydell@linaro.org> writes:
+
+> Currently we call icount_start_warp_timer() from timerlist_rearm().
+> This produces incorrect behaviour, because timerlist_rearm() is
+> called, for instance, when a timer callback modifies its timer.  We
+> cannot decide here to warp the timer forwards to the next timer
+> deadline merely because all_cpu_threads_idle() is true, because the
+> timer callback we were called from (or some other callback later in
+> the list of callbacks being invoked) may be about to raise a CPU
+> interrupt and move a CPU from idle to ready.5A
+>
+> The only valid place to choose to warp the timer forward is from the
+> main loop, when we know we have no outstanding IO or timer callbacks
+> that might be about to wake up a CPU.
+>
+> For Arm guests, this bug was mostly latent until the refactoring
+> commit f6fc36deef6abc ("target/arm/helper: Implement
+> CNTHCTL_EL2.CNT[VP]MASK"), which exposed it because it refactored a
+> timer callback so that it happened to call timer_mod() first and
+> raise the interrupt second, when it had previously raised the
+> interrupt first and called timer_mod() afterwards.
+>
+> This call seems to have originally derived from the
+> pre-record-and-replay icount code, which (as of e.g.  commit
+> db1a49726c3c in 2010) in this location did a call to
+> qemu_notify_event(), necessary to get the icount code in the vCPU
+> round-robin thread to stop and recalculate the icount deadline when a
+> timer was reprogrammed from the IO thread.  In current QEMU,
+> everything is done on the vCPU thread when we are in icount mode, so
+> there's no need to try to notify another thread here.
+>
+> I suspect that the other reason why this call was doing icount timer
+> warping is that it pre-dates commit efab87cf79077a from 2015, which
+> added a call to icount_start_warp_timer() to main_loop_wait().  Once
+> the call in timerlist_rearm() has been removed, if the timer
+> callbacks don't cause any CPU to be woken up then we will end up
+> calling icount_start_warp_timer() from main_loop_wait() when the rr
+> main loop code calls rr_wait_io_event().
+>
+> Remove the incorrect call from timerlist_rearm().
+>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/cpregs.h        |  5 +++--
->   target/arm/helper.c        | 30 +++++++++++++++---------------
->   target/arm/tcg/op_helper.c |  6 +++---
->   3 files changed, 21 insertions(+), 20 deletions(-)
+> As far as I can tell, this is the right thing, and it fixes the
+> "icount warps the timer when it should not" bug I'm trying to
+> address, but I'm not super familiar with the icount subsystem or its
+> evolution, so it's possible I've accidentally broken some other setup
+> here.  This does pass the tcg, functional and avocado tests,
+> including the record-and-replay ones.  I've cc'd it to stable as a
+> bugfix, but it definitely merits careful review first.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yeah as far as I can tell in all the situations we do this with icount
+we should always be exiting the loop anyway. Changing our mind about
+when the next time slice ends while in a block would break things. For
+IO triggered events we already know the block is about to end anyway and
+things be rectified.
+
+I did wonder if pmuevents (under icount) might suffer because they call
+timer_mod_anticipate_ns in pmccntr_op_finish but my kvm-unit-test smoke
+test was fine.
+
+So:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 
-r~
+> ---
+>  util/qemu-timer.c | 4 ----
+>  1 file changed, 4 deletions(-)
+>
+> diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+> index 0e8a453eaa1..af6e1787e57 100644
+> --- a/util/qemu-timer.c
+> +++ b/util/qemu-timer.c
+> @@ -409,10 +409,6 @@ static bool timer_mod_ns_locked(QEMUTimerList *timer=
+_list,
+>=20=20
+>  static void timerlist_rearm(QEMUTimerList *timer_list)
+>  {
+> -    /* Interrupt execution to force deadline recalculation.  */
+> -    if (icount_enabled() && timer_list->clock->type =3D=3D QEMU_CLOCK_VI=
+RTUAL) {
+> -        icount_start_warp_timer();
+> -    }
+>      timerlist_notify(timer_list);
+>  }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
