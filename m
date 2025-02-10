@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD56FC0219B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 047E4C021A1
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 16:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thWNa-0006aZ-2I; Mon, 10 Feb 2025 11:11:26 -0500
+	id 1thWNY-0006Zt-N9; Mon, 10 Feb 2025 11:11:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNR-0006U7-Qx
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:19 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNN-0006Ts-VU
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNP-00012D-TW
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:17 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thWNL-00010d-O3
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 11:11:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739203875;
+ s=mimecast20190719; t=1739203871;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x5zLuQrHVGbOmvU8jjmcpxMxUJDwC9esChLaBL+yZwE=;
- b=DbnG8cp7+mW6WDO2YSINpf4ImYmVu1OrIvOMEStqpITJJ8l4JhADw1FgPSs9KO8RRECfPz
- 7LPf3B+GuS/DIebIu0PDFMNFl8RPwY+WiBQw2Gwld84G0QZjPRIweXf+cUrdVGgCfcIRkZ
- YsH5zQwnLBZa+nmUR6TI7tJm3kqIhJY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Us6rSAdRi50U3+TL610UuTJjH+NW1dPzUAxL6weKf3U=;
+ b=OLGJnNIRLdt5vlP/nk4YQiBCB1Bxu7P8Pew0pwGISrx1TLe3bdyxgb4WKVcHzzXNI2rbuv
+ K5xsaqU5BiFpNMiJjN7jgYwO++UXyrNbSqC7v4jxzxHkbIb1hW6nfG4dH/6Z285Z3FJWv4
+ 0S4x6Gn+dShibGpyOh7AWDgCuwjemGI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-YkR4w-KaM3aiEJS_fRlHqw-1; Mon,
- 10 Feb 2025 11:11:13 -0500
-X-MC-Unique: YkR4w-KaM3aiEJS_fRlHqw-1
-X-Mimecast-MFC-AGG-ID: YkR4w-KaM3aiEJS_fRlHqw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-PNly4jUyNuKmageUylSnpw-1; Mon,
+ 10 Feb 2025 11:11:07 -0500
+X-MC-Unique: PNly4jUyNuKmageUylSnpw-1
+X-Mimecast-MFC-AGG-ID: PNly4jUyNuKmageUylSnpw
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C23041801A16; Mon, 10 Feb 2025 16:11:11 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 580621800268; Mon, 10 Feb 2025 16:11:06 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.225.156])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7B2E8195608D; Mon, 10 Feb 2025 16:11:10 +0000 (UTC)
+ id 0FEF1195608D; Mon, 10 Feb 2025 16:11:04 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 11/25] block: Inactivate external snapshot overlays when
- necessary
-Date: Mon, 10 Feb 2025 17:10:20 +0100
-Message-ID: <20250210161034.76494-12-kwolf@redhat.com>
+Subject: [PULL 08/25] block-backend: Fix argument order when calling
+ 'qapi_event_send_block_io_error()'
+Date: Mon, 10 Feb 2025 17:10:17 +0100
+Message-ID: <20250210161034.76494-9-kwolf@redhat.com>
 In-Reply-To: <20250210161034.76494-1-kwolf@redhat.com>
 References: <20250210161034.76494-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -83,56 +84,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Putting an active block node on top of an inactive one is strictly
-speaking an invalid configuration and the next patch will turn it into a
-hard error.
+From: Peter Krempa <pkrempa@redhat.com>
 
-However, taking a snapshot while disk images are inactive after
-completing migration has an important use case: After migrating to a
-file, taking an external snapshot is what is needed to take a full VM
-snapshot.
+Commit 7452162adec25c10 introduced 'qom-path' argument to BLOCK_IO_ERROR
+event but when the event is instantiated in 'send_qmp_error_event()' the
+arguments for 'device' and 'qom_path' in
+qapi_event_send_block_io_error() were reversed :
 
-In order for this to keep working after the later patches, change
-creating a snapshot such that it automatically inactivates an overlay
-that is added on top of an already inactive node.
+Generated code for sending event:
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20250204211407.381505-4-kwolf@redhat.com>
+  void qapi_event_send_block_io_error(const char *qom_path,
+                                      const char *device,
+                                      const char *node_name,
+                                      IoOperationType operation,
+                                      [...]
+
+Call inside send_qmp_error_event():
+
+     qapi_event_send_block_io_error(blk_name(blk),
+                                    blk_get_attached_dev_path(blk),
+                                    bs ? bdrv_get_node_name(bs) : NULL, optype,
+                                    [...]
+
+This results into reporting the QOM path as the device alias and vice
+versa which in turn breaks libvirt, which expects the device alias being
+either a valid alias or empty (which would make libvirt do the lookup by
+node-name instead).
+
+Cc: qemu-stable@nongnu.org
+Fixes: 7452162adec2 ("qapi: add qom-path to BLOCK_IO_ERROR event")
+Signed-off-by: Peter Krempa <pkrempa@redhat.com>
+Message-ID: <09728d784888b38d7a8f09ee5e9e9c542c875e1e.1737973614.git.pkrempa@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- blockdev.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ block/block-backend.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/blockdev.c b/blockdev.c
-index 218024497b..eb2517f1dd 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -1497,6 +1497,22 @@ static void external_snapshot_action(TransactionAction *action,
-         return;
-     }
+diff --git a/block/block-backend.c b/block/block-backend.c
+index b610582644..d093f01f89 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -2141,7 +2141,7 @@ static void send_qmp_error_event(BlockBackend *blk,
+     g_autofree char *path = blk_get_attached_dev_path(blk);
  
-+    /*
-+     * Older QEMU versions have allowed adding an active parent node to an
-+     * inactive child node. This is unsafe in the general case, but there is an
-+     * important use case, which is taking a VM snapshot with migration to file
-+     * and then adding an external snapshot while the VM is still stopped and
-+     * images are inactive. Requiring the user to explicitly create the overlay
-+     * as inactive would break compatibility, so just do it automatically here
-+     * to keep this working.
-+     */
-+    if (bdrv_is_inactive(state->old_bs) && !bdrv_is_inactive(state->new_bs)) {
-+        ret = bdrv_inactivate(state->new_bs, errp);
-+        if (ret < 0) {
-+            return;
-+        }
-+    }
-+
-     ret = bdrv_append(state->new_bs, state->old_bs, errp);
-     if (ret < 0) {
-         return;
+     optype = is_read ? IO_OPERATION_TYPE_READ : IO_OPERATION_TYPE_WRITE;
+-    qapi_event_send_block_io_error(blk_name(blk), path,
++    qapi_event_send_block_io_error(path, blk_name(blk),
+                                    bs ? bdrv_get_node_name(bs) : NULL, optype,
+                                    action, blk_iostatus_is_enabled(blk),
+                                    error == ENOSPC, strerror(error));
 -- 
 2.48.1
 
