@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4257AC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D85EC0219D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 14:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thUe8-0003nG-PE; Mon, 10 Feb 2025 09:20:24 -0500
+	id 1thUel-0004Hw-Ld; Mon, 10 Feb 2025 09:21:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thUe5-0003mE-99
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:20:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1thUej-0004Cw-D0; Mon, 10 Feb 2025 09:21:01 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thUe3-0006Tz-Ed
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 09:20:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739197218;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=unVBynzcTR69zAnyjlxu43GMU8HeDifodQGhYGd6rqw=;
- b=Rh5E2fomGEGegBIjimx9xC/Zti5yQbzpXSeF4RTA4k0SMPVzXJ4GKMJkoxfV3EQ0SLysj9
- Uu3rdVn25rnnwiXviljAql5+TGNb5l/TCz3CNt/lBEImLXsl9+zZfTQQP3JzdJzTqR1T/I
- gEY5vJ1VvxtsGIb6PMhGeAEfS+uBOfg=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-sJBabcpNN-ONYNbtZMWzAw-1; Mon, 10 Feb 2025 09:20:16 -0500
-X-MC-Unique: sJBabcpNN-ONYNbtZMWzAw-1
-X-Mimecast-MFC-AGG-ID: sJBabcpNN-ONYNbtZMWzAw
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c051b1860eso162366585a.1
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 06:20:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739197216; x=1739802016;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=unVBynzcTR69zAnyjlxu43GMU8HeDifodQGhYGd6rqw=;
- b=LL0NJ2rkKcpQvfI/kSEtXrsTKmHzLhiXQggZVZv7olSgUBbC2JKloAsn6SLj9B3B02
- W84nNb6ActR3wpoFBh3ns1YFvfFwYbjL1YZ/M5ndcQ/F52APlouVym+biLQ+rSBd4AMS
- 3tr9hX4W6jVKPTbozwMiFYT3emRQdOunIKIvvbASWFrxPvF+RtLbNL0mXtnlQ7460zxN
- wi+TxmUBoHhroPAtkVFxVKkuZ4LuXAZIvxY+wbC3Ny2xyfm682p2V0XFsk5Qk/KAyri0
- vf3Xl7Dl0uuQpDfcieG6iiFSDAK3D5ggITUBC8ksJmP+605OW6cinlwbC7rvZ6PB4Yg/
- PnIQ==
-X-Gm-Message-State: AOJu0Yzy7AiwiwHsh04B76fsAb/SPLCz8V/uogaZu9ux1aoZ7EDilpYg
- mCKGp481i5pW8ry8TC84rOviEQfZpi+D3oIH+q2fAcFkolPYAGbnVN1K51PVPuQ+MNpRfPDrR//
- Z9d7ufovBM7NNDdTPkmqSfjzKpowakjPwNQCiW2TxP7Lb5L8K+ikt
-X-Gm-Gg: ASbGncvVgo4u+JkpJbdOln1J0ZRl+QK6FIkpDzFywba8AqLGa0oMbSgJS3jY/JkVU9X
- itzI0SIKBL3638U00Cn6PIC23k2DsydzfeICr/0kHTaWhBPHE75q2LlNnHMyecddl1vBIzEaivo
- hlM5aSf+4Zmuv/AJZbH3RGRwDTQie9o3NCsit2Sc5e+N6TROiy3c9UQoIL3fiJuE1TKPJ5VhQot
- weJ0Gh13fbJxiUE1Mm10SW3A6K+9J5RUYM26xox+cBAa2Cg3uRRMR/sWOc=
-X-Received: by 2002:a05:620a:414e:b0:7b6:d8da:9095 with SMTP id
- af79cd13be357-7c047bbb346mr1580651585a.13.1739197215750; 
- Mon, 10 Feb 2025 06:20:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9ZlV083E0iuTlu+eCCsfWFq1ncy12QXCj+9sCkaTXUa0XoxL0iUHWlayOk7gIUXbhcoZt5g==
-X-Received: by 2002:a05:620a:414e:b0:7b6:d8da:9095 with SMTP id
- af79cd13be357-7c047bbb346mr1580648885a.13.1739197215323; 
- Mon, 10 Feb 2025 06:20:15 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c041dec312sm528969585a.11.2025.02.10.06.20.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 06:20:14 -0800 (PST)
-Date: Mon, 10 Feb 2025 09:20:12 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH v2 3/8] migration/multifd: Terminate the TLS connection
-Message-ID: <Z6oLHLSGxrQpEzQ-@x1.local>
-References: <20250207142758.6936-1-farosas@suse.de>
- <20250207142758.6936-4-farosas@suse.de> <Z6ZKUTNVcCVgIbjh@x1.local>
- <871pw9mxij.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1thUef-0006Xe-U2; Mon, 10 Feb 2025 09:21:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739197258; x=1770733258;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=sYbTlx77q+ft32PSThKf42Jf95f3ZBTqng6r3Qc2hXU=;
+ b=Dj8LG4WTIEBpEIIuzARV5+HsIfg8yJ876jYnnKiSzP7ijyMfuZQEgFkt
+ D9abAZFE7WDiV1P+llmtdOW/qDcMoyRUMyE7U/OOP2Mx/8nQlkcELMLWr
+ 0qgZrUJCnrmngD+hF2NM2NzoULAcHz+tpHrKjHQwcxawgDHOCURigmwnk
+ DEB2kkvdQuOsqgLmxYJcyqBgbXYQ9BL+SvgHUPo+xL788JPxwS5FLgowl
+ QzUyK2p0QRjyrB2QV7s/G3JvBhUqHQfump9CLA+EoiLxDwa69SKenEh88
+ ZpM92F50YCtZ7jwhrOi2X6y1s3s3sq/pC/UjjmnAX8arFQ7gTjMerThd5 A==;
+X-CSE-ConnectionGUID: 2nz94KCbRA6sTh+aMPiStw==
+X-CSE-MsgGUID: 84KmWp5BTpWvbqZQJqCUOA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11341"; a="50010932"
+X-IronPort-AV: E=Sophos;i="6.13,274,1732608000"; d="scan'208";a="50010932"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2025 06:20:54 -0800
+X-CSE-ConnectionGUID: lVKNosY/TX680ICYIJC4fw==
+X-CSE-MsgGUID: xwB0cp5zR7yOfUFs29NXBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="117129848"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 10 Feb 2025 06:20:52 -0800
+Date: Mon, 10 Feb 2025 22:40:23 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 04/12] rust: qdev: add clock creation
+Message-ID: <Z6oP18+J96S0BS90@intel.com>
+References: <20250207101623.2443552-1-pbonzini@redhat.com>
+ <20250207101623.2443552-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <871pw9mxij.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
+In-Reply-To: <20250207101623.2443552-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,44 +81,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 03:15:48PM -0300, Fabiano Rosas wrote:
-> >> +    for (i = 0; i < migrate_multifd_channels(); i++) {
-> >> +        MultiFDSendParams *p = &multifd_send_state->params[i];
-> >> +
-> >> +        /* thread_created implies the TLS handshake has succeeded */
-> >> +        if (p->tls_thread_created && p->thread_created) {
-> >> +            Error *local_err = NULL;
-> >> +            /*
-> >> +             * The destination expects the TLS session to always be
-> >> +             * properly terminated. This helps to detect a premature
-> >> +             * termination in the middle of the stream.  Note that
-> >> +             * older QEMUs always break the connection on the source
-> >> +             * and the destination always sees
-> >> +             * GNUTLS_E_PREMATURE_TERMINATION.
-> >> +             */
-> >> +            migration_tls_channel_end(p->c, &local_err);
-> >> +
-> >> +            if (local_err) {
-> >> +                /*
-> >> +                 * The above can fail with broken pipe due to a
-> >> +                 * previous migration error, ignore the error.
-> >> +                 */
-> >> +                assert(migration_has_failed(migrate_get_current()));
-> >
-> > Considering this is still src, do we want to be softer on this by
-> > error_report?
-> >
-> > Logically !migration_has_failed() means it succeeded, so we can throw src
-> > qemu way now, that shouldn't be a huge deal. More of thinking out loud kind
-> > of comment..  Your call.
-> >
+On Fri, Feb 07, 2025 at 11:16:15AM +0100, Paolo Bonzini wrote:
+> Date: Fri,  7 Feb 2025 11:16:15 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 04/12] rust: qdev: add clock creation
+> X-Mailer: git-send-email 2.48.1
 > 
-> Maybe even a warning? If at this point migration succeeded, it's probably
-> best to let cleanup carry on.
+> Add a Rust version of qdev_init_clock_in, which can be used in
+> instance_init.  There are a couple differences with the C
+> version:
+> 
+> - in Rust the object keeps its own reference to the clock (in addition to
+>   the one embedded in the NamedClockList), and the reference is dropped
+>   automatically by instance_finalize(); this is encoded in the signature
+>   of DeviceClassMethods::init_clock_in, which makes the lifetime of the
+>   clock independent of that of the object it holds.  This goes unnoticed
+>   in the C version and is due to the existence of aliases.
+> 
+> - also, anything that happens during instance_init uses the pinned_init
+>   framework to operate on a partially initialized object, and is done
+>   through class methods (i.e. through DeviceClassMethods rather than
+>   DeviceMethods) because the device does not exist yet.  Therefore, Rust
+>   code *must* create clocks from instance_init, which is stricter than C.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs |  43 +++++-------
+>  rust/qemu-api/src/prelude.rs     |   2 +
+>  rust/qemu-api/src/qdev.rs        | 109 ++++++++++++++++++++++++++++++-
+>  rust/qemu-api/src/vmstate.rs     |   4 +-
+>  4 files changed, 127 insertions(+), 31 deletions(-)
+>
 
-Yep, warning sounds good too.
-
--- 
-Peter Xu
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
