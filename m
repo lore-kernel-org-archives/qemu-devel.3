@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8A1C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D96C0219B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 15:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thVqb-0003mE-M6; Mon, 10 Feb 2025 10:37:21 -0500
+	id 1thVtP-0004rA-TP; Mon, 10 Feb 2025 10:40:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1thVqa-0003lk-0A
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:37:20 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thVtN-0004pk-VZ
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:40:14 -0500
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbradford@rivosinc.com>)
- id 1thVqX-00033g-I6
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:37:19 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so50589525e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:37:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thVtL-0003YL-Bt
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 10:40:13 -0500
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e5b1c7c31b2so3656074276.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 07:40:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1739201835; x=1739806635;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2FNj/lHt1BHjvndFs0hjsvwi65QGfXgWDRzZ4lr18ss=;
- b=stvKsbrFmJmtvaIEvY605+7ECpMGTXZkSI03rLerkGDVq8S/h3tPdRBC0FMccGdMh0
- l6gMNpBfVyN151/DFE7FU2tn2r2bj5ZKaXmnlUiJOrd3FwrN+wJMkaBYRZ04Qd2s0DJV
- gLUEK+VZ9dyS6Ej3AQ1E4SjPvgbb92O6RzC+Uy49sUL4y6xYAzv7KVyqMSf5olqWrNx6
- 6rV2cAXHgY11nbxPvZiTQMzouGK7Cyn8Y8Cau3CX0UC6YOtf0u7+ABG2f6V1yagkPGLK
- VCpZf8+V8muAh6uzzhI3UWWXeATK6ha1RVQIXoGzNXrkaiehUe8NpZpzIE1cpkPfD8sa
- u/ig==
+ d=linaro.org; s=google; t=1739202010; x=1739806810; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=OnSd/e/jEqTUcYBz684UyvujbuuystBLx+4LOUZE/hg=;
+ b=rsz8GeMRPBP9xXqWTUSAryrUM6twgyDMpeHsFs+J3kxatpP4N7Bvdm37bdJ5+xB3ge
+ 3Khw1Y5d5B5vGXHZSEaI/z+hE8fu3BjBcbidGcKN9SmmpYeoFqQ07a+Bsefdvk0hSMdX
+ vbTkIxH41BG62fdutvDztJB5pOHZr0jJzG4bmxEaCZaXyK1nW/RLqn6f0yI7ODgrvjYI
+ hROO0Emk1TWf+A7beIT+dL7xLby+lLikg9ysotxF7FJYW0gKA5p8oYZwj6IDaeoecBdd
+ RH32xS8RlRMDpmdQgTxSdE9GVW36c9AlFkCwhhciyNZMfGM4yhglo3qSdrjedsbqz21v
+ xSaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739201835; x=1739806635;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1739202010; x=1739806810;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2FNj/lHt1BHjvndFs0hjsvwi65QGfXgWDRzZ4lr18ss=;
- b=UED/6AWE80Inlx64V4TGWI0mFjXdk4haOnJzJlAoDXtENlZM95V6bZeljxGiIu5VVw
- qht9Zc1tf1j4U4N/EoH0YHQJq08Nj4OUL4Pa6X6sZqeZsU5PvJknYCmsfVO6Uv82cBfd
- BjcPCvtEupFQIqjpcHLEZ0M2F4xPBCyXOnZK2GYf92PWZT70cl/B6juzpQO4zcLJUYOo
- C1SifJI398hsX1QMPcaaiAWF/em10hsajEOufGOXPita7ocJomJqTCWi7lRuX1PNYm8C
- i1Jr8CckARllRN12ct6Eg/6B2WbbT1SpttqNVxsXZ+JP+2N7S52Mbj2w1akOzDJlIhd9
- vrdA==
-X-Gm-Message-State: AOJu0Yy1Sdc7w/zcltSsWseLBH5sJw96VKqINAiUjZJRuTSLq16dgt8z
- 2bcpxbHnNdmMfwkliCe5YX31RBSSe23cwHCZlFkjwcBi/9UBftJTgapBmMuPyukyZMhJiT5zMmH
- E
-X-Gm-Gg: ASbGncuARclPpgvWdxlRXg7IHHqHREopwpc3IH12NALEyTnDe1uZ0ZnPBNFjL3jusSM
- mV8hbAZf01YnR7lt7GHwIZKG2INVgFbsGUtXUNNUr0Uaa8S6jfZrKYgzrtRU/VpeESonCw6Vo0a
- +wwPtNbC2a8ip6zoyqrTHlsHl8h7vHHZHso/CLTCdgm4u9QPXiVTSArKI1GGKlMJwuxJfAeK/ch
- ZaXtrYqgLXzzX+6hZRkK9EmIAD0WC8DrBcgg0TnpsP6l8TZW1fPCCJHdbykliKtbYjNCgwsAhu4
- rDdGi/a1hJlYA30hbbYE0Ucb90RR/zRRZw+V+zhXTvjkMRevuCXuPrBAAAJW/2c0Oxg=
-X-Google-Smtp-Source: AGHT+IGNn4as9Kzn0sAxjtvPebvPmo1u/I/U9IP5mAkw+2WGT9e0lMcrRG+vVDjqvSzusscSK8qnAQ==
-X-Received: by 2002:a05:600c:83cd:b0:439:44eb:2db0 with SMTP id
- 5b1f17b1804b1-43944eb306emr34707505e9.15.1739201835055; 
- Mon, 10 Feb 2025 07:37:15 -0800 (PST)
-Received: from rockhopper.ba.rivosinc.com (214.11.169.217.in-addr.arpa.
- [217.169.11.214]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439471bf782sm24052565e9.39.2025.02.10.07.37.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 07:37:14 -0800 (PST)
-From: Rob Bradford <rbradford@rivosinc.com>
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Rob Bradford <rbradford@rivosinc.com>
-Subject: [PATCH] target/riscv: Respect mseccfg.RLB bit for TOR mode PMP entry
-Date: Mon, 10 Feb 2025 15:37:13 +0000
-Message-ID: <20250210153713.343626-1-rbradford@rivosinc.com>
-X-Mailer: git-send-email 2.48.1
+ bh=OnSd/e/jEqTUcYBz684UyvujbuuystBLx+4LOUZE/hg=;
+ b=NdMWQFQOFI55hHGyaHO4F9otcp7h/ttbYB6nPjZKhWA8w51Hw6UtRLNTp5vDXUeOoj
+ mHYYWZQ5H58qWy/DCX9r8w97kCZCkn393F81JZwKCsrxeUbASY6ycIcN0GqwofuFYZed
+ 09UGAsJK43q2XM0zAWjKmM2+0tvLJOmg2AMY1/0iV5v6W6a6+UH/TVxZpaLk6mOX1w9q
+ jg+4yi5qW+P/WKRQUPxqDn0AXNaV8FjhTY75Cs+PNQCdY/ISeHCvgnXYSsT4vhpjtlu/
+ F0wxp4UuMVcr5RBscwi5+CrglUYYsPbBcjmFmyJnBMx7F+B7577OOM76rO5kTj72uhiJ
+ 7gZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXC39BB81RfriUGmbBZDhEeROMw9MQsHOCtuBU7cPjTAXoBmxb5rk8bAyuSq3fNpGBunaF1RagDYNIp@nongnu.org
+X-Gm-Message-State: AOJu0YzOwNdlCsUdgMpRVWo4J1J3ISl4MMPeWkuwKTQW+J6HDyQXgHEJ
+ Qnw6XdO1x/TSb1Dj11MC3aZSMVowtzTmS05UNsmqQy81mpHHc/o+u7guoGgmi2rTUXbeixmoH3c
+ SkdkIoPCsKdTzRiTkyEwBfEuAU0MF4KHSX6rUGg==
+X-Gm-Gg: ASbGncsptvu7040eIHp/V4VTXqrY8cr9x389NC+HL9vm2vjSvg5Kp7c68L3lEd9wsMV
+ uS57HNqkuUpSlxmQFZNB5chRe5DmW7U0m4rM6GHZjcIXXTFHu8UbTgqXlZzX7FkDvchEHMK73+A
+ ==
+X-Google-Smtp-Source: AGHT+IGZ6tTtQbSYRKN7SBTNNh5paFiswS2IAV7Qu5inH+1JnCBNWIVqaP4UBWFpzvDbKN87vztRT1l9CP9Efq1p3fs=
+X-Received: by 2002:a05:6902:1021:b0:e5b:38df:b44e with SMTP id
+ 3f1490d57ef6-e5b46b7d685mr9947422276.2.1739202009938; Mon, 10 Feb 2025
+ 07:40:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=rbradford@rivosinc.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250210135804.3526943-1-peter.maydell@linaro.org>
+In-Reply-To: <20250210135804.3526943-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Feb 2025 15:39:58 +0000
+X-Gm-Features: AWEUYZlKrxW_nY6VZoKTKhrWWp6oTjox6P5o4lp5DpJJOmaWb-04m8RbnrXulOg
+Message-ID: <CAFEAcA_gA9CSsQboFYT5ZmOUc3Gr=c25ayOVyW=RzCqT3fdWYg@mail.gmail.com>
+Subject: Re: [PATCH] util/qemu-timer.c: Don't warp timer from timerlist_rearm()
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,33 +95,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running in TOR mode (Top of Range) the next PMP entry controls
-whether the entry is locked. However simply checking if the PMP_LOCK bit
-is set is not sufficient with the Smepmp extension which now provides a
-bit (mseccfg.RLB (Rule Lock Bypass)) to disregard the lock bits. In
-order to respect this bit use the convenience pmp_is_locked() function
-rather than directly checking PMP_LOCK since this function checks
-mseccfg.RLB.
+On Mon, 10 Feb 2025 at 13:58, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Currently we call icount_start_warp_timer() from timerlist_rearm().
+> This produces incorrect behaviour, because timerlist_rearm() is
+> called, for instance, when a timer callback modifies its timer.  We
+> cannot decide here to warp the timer forwards to the next timer
+> deadline merely because all_cpu_threads_idle() is true, because the
+> timer callback we were called from (or some other callback later in
+> the list of callbacks being invoked) may be about to raise a CPU
+> interrupt and move a CPU from idle to ready.5A
+>
+> The only valid place to choose to warp the timer forward is from the
+> main loop, when we know we have no outstanding IO or timer callbacks
+> that might be about to wake up a CPU.
 
-Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
----
- target/riscv/pmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This patch also seems to fix
+https://gitlab.com/qemu-project/qemu/-/issues/2703
+(a report that with an x86 system sometimes the ptimer
+period would be longer than you'd programmed the ptimer for).
 
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index a185c246d6..85ab270dad 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -524,7 +524,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-             uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
-             is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
- 
--            if (pmp_cfg & PMP_LOCK && is_next_cfg_tor) {
-+            if (pmp_is_locked(env, addr_index + 1) && is_next_cfg_tor) {
-                 qemu_log_mask(LOG_GUEST_ERROR,
-                               "ignoring pmpaddr write - pmpcfg + 1 locked\n");
-                 return;
--- 
-2.48.1
-
+thanks
+-- PMM
 
