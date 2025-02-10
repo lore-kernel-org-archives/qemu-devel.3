@@ -4,95 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F4BC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 09:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A20C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 09:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thQB7-00031M-0T; Mon, 10 Feb 2025 04:34:09 -0500
+	id 1thQDi-0003xL-21; Mon, 10 Feb 2025 04:36:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thQB0-0002zp-G1
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:34:05 -0500
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thQAy-0001bL-95
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:34:02 -0500
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e461015fbd4so3191771276.2
- for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 01:33:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739180035; x=1739784835; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zbzce1JeM8K739t+w3wJvg+8MysR5ashRFokl5gUKN8=;
- b=u9pj2ud9OYXuIaWqppv9q0sdT0SDzLVE8VeDUQw71fDP0rTrHKRh0mLe/QYuXSpfYV
- au2d266V+OwgYm83sx+Do9Sd0pv1j+sXhR2lCfd4MwwlrvBXvpanaF5BF9Q5Fp5cEi9i
- 01S8O/fHR2hug1FRFc7PJst2h1A4krUC402g+vNaO2Dkkm+BJqPwI80bZVyurY0aa+PT
- nYwSbDMoHve72S7IDENXZvuAsSh8/taSpL3eTOE1IEcw0T4yx1jN+h60NydqIeBWwyay
- e9LiBjYaqITYCk1Hl8HJr0b6+ZmXBluhrPxSaxgjlY3pXtIdvVnl8KldwSIfeCtudLLy
- U2WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739180035; x=1739784835;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zbzce1JeM8K739t+w3wJvg+8MysR5ashRFokl5gUKN8=;
- b=D99NMEs4UN0bG/Czuv41kWPHQtc6nifk/TULtI3Ki+ffF0KreZOMLR3uIHy7ryADeK
- 94wjyH/04jDTGqNT+1KwfNit0xHvHRiKItPpQAz/1H1yS3Vf6JT8MRpHzv+uvGotosgt
- AjH2wj/VgCwOdfE+3mR5k3kFQWbmPvaIOyrPL5yj5EeQYMIbGjJ7pkWXlCDhsnsKfG0Y
- dkNdmyNqbAXrbKx7zHygv6I4g016dB83hfIGKu7FQbf+GYJ+ldNuIo2fp0gI0qtZUnNg
- P8/VKgkfbkJUzTN/hk3V7ois69AoDB0YaOeCNACHWAl7hHVnF6tWJpShotWFifwt42c2
- A5yA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1BSJ+HNrxu9wr1JRv0pTGjwcYk7RfLjA8H4pL0RwgyqBbpbJsORMVQfoUBYiK6ieE7AoVmlOYi81Q@nongnu.org
-X-Gm-Message-State: AOJu0YwhB5ZnQJGWyA1W4sIA6tAz03FPeNvd4iT8FH/SFlc9VjXyxJQz
- muxq3uaVSobZCIrYFXMuxwumafAe70fw5Ai3+83AVZzJ4QLYGY5RTyXfx1NlpT9I9DWQVXHvb1g
- VJ3rjmWHTvkbzz9FD+7M5hf5y3rdAKODhIQsgSQ==
-X-Gm-Gg: ASbGnct3RXBd6Rd1/tA7xiU+1TNDC17tI46t4oz2lm569Wd+13k7ZPUVvscCaqGK7/V
- ArGaYI59X1AmBvDaabGiHYwgVU5MpdSsq5eQvWKzUq1oJr1Yic61vn0+YxC1xqT2HC3U6cibA6A
- ==
-X-Google-Smtp-Source: AGHT+IH+LpIg3DfIs0EJDk2wfnMLR3zmxIhh+xfMnqKNw65LHDaxqpqdKVHcC25fGTb6WHCGIBSZdsKjqhpmqkj+eiI=
-X-Received: by 2002:a05:6902:1249:b0:e5b:248a:bf2f with SMTP id
- 3f1490d57ef6-e5b4626c51cmr10924092276.31.1739180035342; Mon, 10 Feb 2025
- 01:33:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1thQDd-0003v8-2t
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:36:45 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1thQDa-0001x7-CO
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 04:36:44 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8AxGHGhyKlnkxtxAA--.210S3;
+ Mon, 10 Feb 2025 17:36:33 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBxn8WgyKlnqwUKAA--.39266S3;
+ Mon, 10 Feb 2025 17:36:32 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 1/7] hw/intc/loongarch_ipi: Add basic hotplug framework
+Date: Mon, 10 Feb 2025 17:36:26 +0800
+Message-Id: <20250210093632.3274012-2-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250210093632.3274012-1-maobibo@loongson.cn>
+References: <20250210093632.3274012-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-References: <20240615185423.49474-1-florian.lugou@provenrun.com>
- <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
- <20240620135627.qxcrkdx5v7wdurx4@flugou-latitude5401>
- <CAFEAcA-ngrrEUDD7eA_sOLGF+_wRCuQVxTwuCA4pXjRcuJucmA@mail.gmail.com>
- <20240621140725.f4hsasmhrhh4joxm@flugou-latitude5401>
- <CAFEAcA9c9hbpsdyc7+=QEOZGrNY2m-urk6VrWdwCdfk9ipkwpw@mail.gmail.com>
- <20240820113024.53tmzejw2omm6bbx@flugou-latitude5401>
- <CAFEAcA9X0w5QW2qnnhF2k72ZrS8SALWiXV7uNr1e=jQnZvrQ7Q@mail.gmail.com>
- <CAFEAcA-MrouAPdwpsyojMC-bx4aFtuL=tYZD=2pBS1vP5iicaw@mail.gmail.com>
- <5ee77b8c-e6a4-421b-b729-a6535fdf1e6d@linaro.org>
- <87a5axr4l4.fsf@draig.linaro.org>
-In-Reply-To: <87a5axr4l4.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 10 Feb 2025 09:33:44 +0000
-X-Gm-Features: AWEUYZks7N5joTM2FfdiQcWhg1B3GGmwDm1C_TyYlrkh2oHdflFuHEhWeKy_Jq8
-Message-ID: <CAFEAcA89Wm-cZZV7swdmzVxjR3h3QfGpgROA=AAt6ABJLbOOsw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
- HCR_EL2.E2H == 0
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- Florian Lugou <florian.lugou@provenrun.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxn8WgyKlnqwUKAA--.39266S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,57 +65,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 7 Feb 2025 at 18:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> Richard Henderson <richard.henderson@linaro.org> writes:
->
-> > On 2/7/25 07:45, Peter Maydell wrote:
-> >> This is where things go wrong -- icount_start_warp_timer()
-> >> notices that all CPU threads are currently idle, and
-> >> decides it needs to warp the timer forwards to the
-> >> next deadline, which is at the end of time -- INT64_MAX.
-> >> But once timer_mod_ns() returns, the generic timer code
-> >> is going to raise an interrupt (this goes through the GIC
-> >> code and comes back into the CPU which calls cpu_interrupt()),
-> >> so we don't want to warp the timer at all. The clock should
-> >> stay exactly at the value it has and the CPU is going to
-> >> have more work to do.
-> >> How is this supposed to work? Shouldn't we only be doing
-> >> the "start moving the icount forward to the next deadline"
-> >> once we've completed all the "run timers and AIO stuff" that
-> >> icount_handle_deadline() triggers, not randomly in the middle
-> >> of that when this timer callback or some other one might do
-> >> something to trigger an interrupt?
-> >
-> > I don't understand timer warping at all.  And you're right, it doesn't
-> > seem like this should happen outside of a specific point in the main
-> > loop.
->
-> This has come up before - and the conclusion was we don't know what
-> sleep=3Don/off is meant to mean. If the processor is asleep and there are
-> no timers to fire then nothing will happen.
->
-> It was off-list though:
->
->   Subject: Re: qemu-system-aarch64 & icount behavior
+LoongArch ipi can send interrupt to multiple CPUs, interrupt routing
+to CPU comes from destination physical cpu id. Here hotplug interface
+is added for IPI object, so that parent irq line can be connected, and
+routing table can be added for new created cpu.
 
-No, that was a different situation. That thread was about
-when there genuinely is nothing to do (all CPUs asleep and
-no timers active) for the rest of the life of the simulation.
+Here only basic hotplug framework is added, it is stub function.
 
-The bug in this thread is that icount incorrectly prematurely
-decides it should warp the timer forwards, when in fact
-there is going to be something the CPU should be doing
-right now (i.e. responding to the interrupt the timer callback
-is about to raise). It becomes very obvious when there's
-no other timer callback, because the place that icount
-incorrectly warps us to is end-of-time, but I'm pretty sure
-that even when there is another timer active icount will
-still be wrongly warping time -- it will just be less obvious
-because the interrupt gets incorrectly delayed to whatever
-that subsequent timer callback time is, rather than forever.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/intc/loongarch_ipi.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-thanks
--- PMM
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index 5376f1e084..90bbb7ac6e 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "hw/boards.h"
+ #include "qapi/error.h"
+ #include "hw/intc/loongarch_ipi.h"
+@@ -76,9 +77,34 @@ static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static void loongarch_ipi_cpu_plug(HotplugHandler *hotplug_dev,
++                                   DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch extioi: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++}
++
++static void loongarch_ipi_cpu_unplug(HotplugHandler *hotplug_dev,
++                                     DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch extioi: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++}
++
+ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+ {
+     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
++    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
+     LoongarchIPIClass *lic = LOONGARCH_IPI_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+@@ -86,6 +112,8 @@ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+                                     &lic->parent_realize);
+     licc->get_iocsr_as = get_iocsr_as;
+     licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
++    hc->plug = loongarch_ipi_cpu_plug;
++    hc->unplug = loongarch_ipi_cpu_unplug;
+ }
+ 
+ static const TypeInfo loongarch_ipi_types[] = {
+@@ -95,6 +123,10 @@ static const TypeInfo loongarch_ipi_types[] = {
+         .instance_size      = sizeof(LoongarchIPIState),
+         .class_size         = sizeof(LoongarchIPIClass),
+         .class_init         = loongarch_ipi_class_init,
++        .interfaces         = (InterfaceInfo[]) {
++            { TYPE_HOTPLUG_HANDLER },
++            { }
++        },
+     }
+ };
+ 
+-- 
+2.39.3
+
 
