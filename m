@@ -4,53 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CA0C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 17:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE0AC0219E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Feb 2025 17:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thX9B-0008Ez-GD; Mon, 10 Feb 2025 12:00:38 -0500
+	id 1thXAo-00012r-V4; Mon, 10 Feb 2025 12:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1thX8q-00087t-Tb; Mon, 10 Feb 2025 12:00:18 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1thX8o-0000mu-FC; Mon, 10 Feb 2025 12:00:16 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 905B44E600E;
- Mon, 10 Feb 2025 18:00:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Yq3XppFdbPmm; Mon, 10 Feb 2025 18:00:08 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A78344E6033; Mon, 10 Feb 2025 18:00:08 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A548774577D;
- Mon, 10 Feb 2025 18:00:08 +0100 (CET)
-Date: Mon, 10 Feb 2025 18:00:08 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
- window registers
-In-Reply-To: <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
-Message-ID: <9998591d-9cdc-6e80-aa09-ba922bacb235@eik.bme.hu>
-References: <20250115211544.307124E602F@zero.eik.bme.hu>
- <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
- <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
- <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
- <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1thXAj-0000tP-CJ
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:02:13 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1thXAd-0001OF-OR
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 12:02:13 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-21f6f18b474so30405245ad.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Feb 2025 09:02:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739206924; x=1739811724; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PjuWZZvFT/zu6QKoMVm5AKliHld0wKOoOeAep+MSoIY=;
+ b=wIR+rHdCiFn0xhAK5YHkwlCNMMplKogP66f1/Y33Xp3iQXJNS2gJ61y9bd98aF3cAc
+ IiKuNjHBUdqg5RYdan++5sLhxV8JAIPKBLYbUZ9wAbympSUga9x86Oxy4zDDabtQbh4x
+ FJmKhtHfF8oXzmXCyeuo2bH/y8MpDZyis7C+/rTj1G9JMf7cDaF5pg506gPESSbU2yl3
+ OY+n4j9u19CyFvtpE0/yHaWNv6CR6YUxOOiqdJXKUGjvOlOoL8LXx2xzHoppM/vQck8s
+ CMLbqMaFULFMFlTi/xSVTEZ4aXA/9a0Ea5b/tCY+HBgf8z4UJfNN2xgTxkf1UPTnrgf+
+ ep2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739206924; x=1739811724;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PjuWZZvFT/zu6QKoMVm5AKliHld0wKOoOeAep+MSoIY=;
+ b=X6FWbKLG3nvWVYNGBXSI1JgkxC3w4LFYDwOKHsYKLu9wBAWZCWbwovhnGtH0q44ybY
+ Qp94JEmbfI7aGzg6F1IlMf5H8d60kPn/EiT0yh3OBals+meFPux2GjorSm6Wx9e6PFkP
+ Ie5+o8eAgDAqStclXotSCSxFDHyvNkJ8fLkt+yXkWGZK1x/50WwNFjH0N8YGpUt51i5N
+ q6UyvH50uIv8+3b96PqPc8Dxo7bdx7R0q0iNClzQ2D2cz71VZ5BpdDl80uLrIF1qDElE
+ 9uCtbT+WsbY30PEEIQxKZ++KP/WzCL4cD9UaMlj729MFh4bHfHpHcU1AZKuK+2I8IMeS
+ dohg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUd/TAZl8bjkOU1JzxmTwX5QAeR4mpJpIQoNeQmbymMnytlaFmyY35R47w+rG9RmRKA/NHLfBemS5+R@nongnu.org
+X-Gm-Message-State: AOJu0YwdOQVVB5NA7qvh2TPD+q7+VxL17UySYIA4sud+/X4hBPvHRsH4
+ GqgTVu21EruL3CfQYkousDJorU9AgZWOFXHPAvNMjmrUfcuIoEhPBYUbZu3uTks=
+X-Gm-Gg: ASbGncs8RAqwEgcoWuCmwtCbaC8qoOcVWQg1AxyKbKQlEItgRMdJQXwpP+wqVb2WZsh
+ IHQJ7jtVyAzLgU+mQ/WFkgjbGvLm5hfxrJuJ6rUV5rYgANyrLcNraSY1GWCRkGz9nrfTz+Ng133
+ SMtZSMq4Ny6trsJvzaK+g285+EsvQRVkcwU+ikZI4pm1d4QXDlpDjDBr5lYogYu+esaSoODUfKL
+ f5omRVUYfXAGt9skuyQk6wN9bQ9MuJHLnJ1HFFtJeWDcpridp6wQcFvczHww95JS6X6HelSOrLN
+ k8OMN74BgpP1AQnUFPWRDlc2mCKNvUEZrZG3me2q97ReMwgB5r/GuxA=
+X-Google-Smtp-Source: AGHT+IE8d6KmcvevPEpdm8Gq6HYynfOw88u0AR1MAYzdTXUd7+gL2li5j9x5a64czIJvjUXnalWj2A==
+X-Received: by 2002:a05:6a00:cc4:b0:732:13fd:3f1f with SMTP id
+ d2e1a72fcca58-73213fd3fe1mr818162b3a.24.1739206924047; 
+ Mon, 10 Feb 2025 09:02:04 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7307cf77a3asm3897011b3a.68.2025.02.10.09.02.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Feb 2025 09:02:03 -0800 (PST)
+Message-ID: <443902c7-8697-44d4-9f7d-9bddb93607aa@linaro.org>
+Date: Mon, 10 Feb 2025 09:02:02 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/11] qom: Constify class_data
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20250210133134.90879-1-philmd@linaro.org>
+ <d0c8837f-a47f-45ad-a060-0a2b638932a8@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <d0c8837f-a47f-45ad-a060-0a2b638932a8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,46 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2 Feb 2025, BALATON Zoltan wrote:
-> On Sat, 1 Feb 2025, Bernhard Beschow wrote:
->>> I've implemented that in my e500-fdt branch which I want to send as an 
->>> RFC. I still need to clean it up. Once it's on the list we could make a 
->>> plan how to turn it into a p10xx. Would that work for you?
->
-> Sure, I can try to test your patches once they are submitted to the list and 
-> rebase my changes on top if they still needed. I've just submitted these so 
-> you can incorporate them in your tree so I have less to rebase but I see you 
-> already have most of these. I'm OK to wait until your tree is cleaned and 
-> submitted but it seems there are a lot of patches so it might take a while. I 
-> don't expect that you can get it merged before the next release. Some of the 
-> patches may need several versions or alternative approaches until they can be 
-> merged. For example I expect problems with allowing ',' in device names as 
-> this is something that was removed before to avoid the need of quoting or 
-> something like that. But I'm not in a hurry as I don't have much free time 
-> for it anyway so only come back to this time to time and it's far from 
-> anything useful yet.
+On 2/10/25 05:46, Philippe Mathieu-Daudé wrote:
+> On 10/2/25 14:31, Philippe Mathieu-Daudé wrote:
+>> Since v1:
+>> - Make XtensaConfigList::config not const (Max)
+>> - Update / test rust (Paolo)
+>> - Constify InterfaceInfo[]
+>>
+>> Following Richard's suggestion [*], make QOM class data *const*.
+>>
+>> [*] https://lore.kernel.org/qemu-devel/f4ec871d-e759-44bc-a10b-872322330a3f@linaro.org/
+> 
+> I'm only seeing +3KiB in .rodata for each binary...
+> 
+>> Philippe Mathieu-Daudé (11):
+>>    target/i386: Constify X86CPUModel uses
+>>    target/sparc: Constify SPARCCPUClass::cpu_def
+>>    target/xtensa: Finalize config in xtensa_register_core()
+>>    target/riscv: Declare RISCVCPUClass::misa_mxl_max as RISCVMXL
+>>    target/riscv: Convert misa_mxl_max using GLib macros
+>>    hw: Declare various const data as 'const'
+>>    hw: Make class data 'const'
+>>    qom: Have class_base_init() take a const data argument
+>>    qom: Have class_init() take a const data argument
+>>    qom: Constify TypeInfo::class_data
+>>    qom: Constify InterfaceInfo[] interfaces
 
-To solve the problem of needing reintroducing ',' in type names and adding 
-a new subclass for every compatible device variant (which might also be 
-wasteful if this creates a new type struct for these) maybe you'd have to 
-attach a string array to classes or type info instead with all the 
-compatible names and then look for the type to instantiate based on that. 
-I don't know what the best way would be for that, adding a class property 
-or adding this array to type? And maybe you need a new funcion to find the 
-type instead of qdev_try_new().
+There is some additional data that can be made const after this [1], though still not 
+lots.  But the additional data that Paolo was going to add for 99 riscv bottles of beer on 
+the wall would have been quite a bit more than 3k.
 
-I don't know how this works but the types seem to be stored in a hash 
-table so instead of an array of compatible names maybe all that's needed 
-is to allow adding alternative names for the same type in this type hash 
-table or add another hash table for those alternative names then types 
-could be looked up the same way from that by the compatible names without 
-needing to subclass them multiple times. If these are separated hash 
-tables then ',' may be allowed in the compatible names table or if it's 
-the same types table then maybe the names can be encoded in some way to 
-separate them from normal type names and avoid the need to reintroduce 
-','. These are just vague ideas but maybe gives you some inspiration for 
-which way to go to get closer to be able to upstream it.
 
-Regards,
-BALATON Zoltan
+r~
+
+
+[1]
+
+-static M48txxInfo m48txx_isa_info[] = {
++static const M48txxInfo m48txx_isa_info[] = {
+
+-static M48txxInfo m48txx_sysbus_info[] = {
++static const M48txxInfo m48txx_sysbus_info[] = {
+
+-static struct EHCIPCIInfo ehci_pci_info[] = {
++static const struct EHCIPCIInfo ehci_pci_info[] = {
+
+-static UHCIInfo uhci_info[] = {
++static const UHCIInfo uhci_info[] = {
+
+-static UHCIInfo uhci_info[] = {
++static const UHCIInfo uhci_info[] = {
+
+-static StreamSinkClass xilinx_axidma_data_stream_class = {
++static const StreamSinkClass xilinx_axidma_data_stream_class = {
+
+-static StreamSinkClass xilinx_axidma_control_stream_class = {
++static const StreamSinkClass xilinx_axidma_control_stream_class = {
+
 
