@@ -4,98 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4742C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 15:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90ED5C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 15:24:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ths3l-0002I0-6p; Tue, 11 Feb 2025 10:20:25 -0500
+	id 1ths6t-0003LY-GM; Tue, 11 Feb 2025 10:23:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ths3j-0002HF-8F
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:20:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ths3h-00082j-8Z
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:20:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739287217;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ths6q-0003KR-Ai
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:23:36 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ths6o-000142-Gr
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:23:36 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4335F5C230;
+ Tue, 11 Feb 2025 15:01:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739286108; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VZxI4cgSEJolcbBtPngxMid5RD0SmoXjNHYsqUoBDxs=;
- b=OPJvWNFVMOPSeH6kypfcu1IBAFoh0xf4/djCRZbbCtLWkDuUww1zK7CGhe800TkmB47SzP
- yl4NNqgzp4I4GouGjSC4wu7qHB7NoBIH9KK0TgJ+e+F51LJ2RS/ZTOu/gNyJChHXtBmASC
- FV7PeVnMwTeP3XqZI1osHQPcyA0oXxs=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-kne4PbDsMleRpbpI-PyXOw-1; Tue, 11 Feb 2025 10:20:16 -0500
-X-MC-Unique: kne4PbDsMleRpbpI-PyXOw-1
-X-Mimecast-MFC-AGG-ID: kne4PbDsMleRpbpI-PyXOw
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6e45d62930aso51808506d6.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 07:20:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739287216; x=1739892016;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VZxI4cgSEJolcbBtPngxMid5RD0SmoXjNHYsqUoBDxs=;
- b=K3utZhs/5aHmBYPeFbjPgmvCbd4lp3McEzMwbeuwNoWtlP9U4qUtQxVa7LUcFBcwSY
- MU/NYY7w7pze20vXpuuTQpzaa5DYUjkvwr+IVsZxhkDLX1kpXHD23tocQ4Ut1c1mzMJn
- zcown286rQLCsfRG6JfMvInRUNNnFK1I7FpUnQaDs2ifeqB4fXXgxvYZMIB9KaO8irjv
- BH8oxM9DsXpAUnJiuEsNzFsgIj90MmhsMKMP3iTcDLkCkK6inAPshZUG/FHxKOFZxSmB
- 3YDNdNa/TyssGB3wZ8EstHda42T4To3EGhKX4axOAmwOfmDTMMVbldLaVHPoaywYsET/
- 6Izg==
-X-Gm-Message-State: AOJu0YzIQ4NwGJqe0ScuP8TYp2X+2MCnppaYeWAFTznytmFqm95s3sBH
- V1x4GHn7L6hPFgYQPA0EOvIkoiWv+1Xze8BDzpCIq61xGK7tGUqgUdguPHJGxzZALbAJ2kM/thQ
- PwTwGOuPp8j2XMTxB7GSTuUC5tWGR0j8mN6GmkpgQCtegCjehPcSf
-X-Gm-Gg: ASbGnctpCFR0PyAQOpteqLGaLYDAkT2zv308pvwOkEPNTbk/Jdp71U9FLnpqXfbRJd4
- 0AzIYq4qxAMdih1aTaVDVZkPobPPJJFQ7SW3kFbhmo+NfVlEtZVqTmfW3We04fdzlNlTZMNCxxv
- ChQHouM4+lW2eW/XRsbw9VsY/VGr1+OGBfCkPF8JNBb5BdvFMwCWcsXMQYmfuDEGlIUZM5fUbsA
- T/h24oqp6lzSyr/Svwz/eZp4E9LUoUMVlhuPxz18sNtSz+frjgJY5kfIz4=
-X-Received: by 2002:a05:6214:5188:b0:6e2:4575:6bd5 with SMTP id
- 6a1803df08f44-6e4455e60b9mr250971676d6.12.1739287215761; 
- Tue, 11 Feb 2025 07:20:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEuDyJatQLl1XoE+rgo7bgygrYXJAzzE7KlcKEZz+nG250S+0TuOv7iHy419sD11HjiWQqmUw==
-X-Received: by 2002:a05:6214:5188:b0:6e2:4575:6bd5 with SMTP id
- 6a1803df08f44-6e4455e60b9mr250971436d6.12.1739287215376; 
- Tue, 11 Feb 2025 07:20:15 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e4437ddc85sm54627516d6.87.2025.02.11.07.20.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 07:20:14 -0800 (PST)
-Date: Tue, 11 Feb 2025 10:20:11 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v5 3/5] migration: enable multifd and postcopy together
-Message-ID: <Z6tqq5jpbDHsVtVw@x1.local>
-References: <20250205122712.229151-1-ppandit@redhat.com>
- <20250205122712.229151-4-ppandit@redhat.com>
- <Z6VCxEKxn6-_okRx@x1.local>
- <CAE8KmOwJSYq2Ok38_sq29cr7JhbLLh1ZEncP13QpDdnYKOAheQ@mail.gmail.com>
- <Z6YqstgG2bSY45dM@x1.local>
- <CAE8KmOwMTw-m0w+JbFBZ7mn-ZuSNfpk9xbq-_KbLXu7_kDhDVg@mail.gmail.com>
- <Z6owYoktb5nk2yRw@x1.local>
- <CAE8KmOy+C7QzDHJ5hfWg93zSV0ctGYYz30qsQTe-=+iq1vA+fQ@mail.gmail.com>
+ bh=SehH71zwnyNtivtSgJtsutJO3Y84wtwrpTtBRBDFJcI=;
+ b=jl47AoFvW0kvol02/+Qs73KyWg3n3AnEWySHPdQSlIfibTze+fUVpaMeHjJusnNpXk3kRx
+ NgLy4MDRcDq0Xp2fbg++JWD5I3Eykmu8WbkVsCoqZkwpY5pL8lVy0oml3enH/7yCZtN1e3
+ gVhG4dWgc+s2jv8phu2sZl+AhchXRRw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739286108;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SehH71zwnyNtivtSgJtsutJO3Y84wtwrpTtBRBDFJcI=;
+ b=TszKKivX/jPvRPiXp8X9pfSq4NmKB+X2jAb93TJmVC8uGtU+ySwPQZzJRUzG4LlrqYeO/3
+ eYwvMH4QQYtcMxAg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739286108; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SehH71zwnyNtivtSgJtsutJO3Y84wtwrpTtBRBDFJcI=;
+ b=jl47AoFvW0kvol02/+Qs73KyWg3n3AnEWySHPdQSlIfibTze+fUVpaMeHjJusnNpXk3kRx
+ NgLy4MDRcDq0Xp2fbg++JWD5I3Eykmu8WbkVsCoqZkwpY5pL8lVy0oml3enH/7yCZtN1e3
+ gVhG4dWgc+s2jv8phu2sZl+AhchXRRw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739286108;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SehH71zwnyNtivtSgJtsutJO3Y84wtwrpTtBRBDFJcI=;
+ b=TszKKivX/jPvRPiXp8X9pfSq4NmKB+X2jAb93TJmVC8uGtU+ySwPQZzJRUzG4LlrqYeO/3
+ eYwvMH4QQYtcMxAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F0BD713AA6;
+ Tue, 11 Feb 2025 15:01:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id wBi/K1pmq2c8WwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 11 Feb 2025 15:01:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 4/9] migration: Fix hang after error in destination setup
+ phase
+Date: Tue, 11 Feb 2025 12:01:31 -0300
+Message-Id: <20250211150136.6781-5-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250211150136.6781-1-farosas@suse.de>
+References: <20250211150136.6781-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOy+C7QzDHJ5hfWg93zSV0ctGYYz30qsQTe-=+iq1vA+fQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,67 +121,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 02:34:07PM +0530, Prasad Pandit wrote:
-> On Mon, 10 Feb 2025 at 22:29, Peter Xu <peterx@redhat.com> wrote:
-> > Yes, and I suggest a rename or introduce a new helper, per previous reply.
-> 
-> * Okay, will try it.
-> 
-> > I didn't follow, sorry - do you mean this patch is correct on dropping the
-> > mapped-ram check? I don't yet understand how it can work if without.
-> 
-> * It goes for channel peek if '!migrate_mapped_ram', ie. when
-> mapped_ram is not set. When it is enabled, likely it just falls into
-> the multifd channel, like other tls/file channels. I'll see if we have
-> to add a check for mapped_ram stream, like tls/file one.
-> 
-> > I meant tls channels should have these magics too.  Do you mean they're not?
-> 
-> * Yes. AFAIU, tls/file channels don't send magic values.
+If the destination side fails at migration_ioc_process_incoming()
+before starting the coroutine, it will report the error but QEMU will
+not exit.
 
-Please double check whether TLS will send magics.  AFAICT, they should.
+Set the migration state to FAILED and exit the process if
+exit-on-error allows.
 
-> 
-> > No I don't think so.
-> > Flushing sending side makes sure send buffer is empty.  It doesn't
-> > guarantee recv buffer is empty on the other side.
-> 
-> * A simple 'flush' operation is not supposed to guarantee reception on
-> the destination side. It is just a 'flush' operation. If we want to
-> _confirm_ whether the pages sent to the destination are received or
-> not, then the destination side should send an 'Acknowledgement' to the
-> source side. Is there such a mechanism in place currently?
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2633
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/channel.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-No.  We need to figure out a way to do that properly, and that's exactly
-what I mentioned as one of the core changes we need in this series, which
-is still missing.  We may or may not need an ACK message.  Please think
-about it.
-
-> 
-> > >
-> > > * If all multifd pages are sent/written/flushed onto the multifd
-> > > channels before postcopy_start() is called, then multifd pages should
-> > > not arrive at the destination after postcopy starts IIUC.  If that is
-> > > happening, we need a reproducer for such a case. Do we have such a
-> > > reproducer?
-> >
-> > With or without a reproducer, we need to at least justify it in theory.  If
-> > it doesn't even work in theory, it's a problem.
-> 
-> * The theory that both multifd and postcopy channels use the same
-> underlying network wire; And in that multifd pages get delayed, but
-> postcopy pages don't, is not understandable. There must be something
-> else happening in such a case, which a reproducer could help with.
-
-Please consider the case where multifd recv threads may get scheduled out
-on dest host during precopy phase, not getting chance to be scheduled until
-postcopy already started running on dst, then the recv thread can stumble
-upon a page that was sent during precopy.  As long as that can be always
-avoided, I think we should be good.
-
-Thanks,
-
+diff --git a/migration/channel.c b/migration/channel.c
+index 24a91ef911..a547b1fbfe 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -33,6 +33,7 @@
+ void migration_channel_process_incoming(QIOChannel *ioc)
+ {
+     MigrationState *s = migrate_get_current();
++    MigrationIncomingState *mis = migration_incoming_get_current();
+     Error *local_err = NULL;
+ 
+     trace_migration_set_incoming_channel(
+@@ -47,6 +48,10 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+ 
+     if (local_err) {
+         error_report_err(local_err);
++        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
++        if (mis->exit_on_error) {
++            exit(EXIT_FAILURE);
++        }
+     }
+ }
+ 
 -- 
-Peter Xu
+2.35.3
 
 
