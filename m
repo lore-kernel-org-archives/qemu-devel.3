@@ -4,126 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB39EC0219E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 05:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD80C0219E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 06:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thiii-0003vQ-Cm; Tue, 11 Feb 2025 00:22:04 -0500
+	id 1thk3G-00061j-2x; Tue, 11 Feb 2025 01:47:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
- id 1thiid-0003uv-JD
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 00:21:59 -0500
-Received: from mailout4.samsung.com ([203.254.224.34])
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1thk32-000601-Ii; Tue, 11 Feb 2025 01:47:09 -0500
+Received: from mail-sy4aus01olkn20805.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::805]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
- id 1thiia-0004OX-0N
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 00:21:59 -0500
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20250211052141epoutp04c0c0032f999ea00fbbb9538e45d46f80~jD9fs_JWU1489814898epoutp04S
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:21:41 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20250211052141epoutp04c0c0032f999ea00fbbb9538e45d46f80~jD9fs_JWU1489814898epoutp04S
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1739251301;
- bh=4mSB4WrrvRi3s6FiC2tqJDVEyiCAPsVXt2n2CizDamw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=ob1zhHPVzvjvRUz9EG23zSOBq0WUZGYJM3UeI8gszHy1Z008ugbdaGwLm9qgVn2cy
- UQwm0J2cOIejcFKptqMghOizrC8xaWGNJdrM5JNK7onpBMXTWTJwUa4JDIzDwLtrzU
- KiP7nWhRN3hD9m0IeXchgz/FgCdwc6+auke/4XbY=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTP id
- 20250211052140epcas5p3529915db2fe8a14787b709241a726eeb~jD9fbVNCY3171631716epcas5p3M;
- Tue, 11 Feb 2025 05:21:40 +0000 (GMT)
-Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.180]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4YsVDM1PMRz4x9Q2; Tue, 11 Feb
- 2025 05:21:39 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
- epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- AB.68.19710.36EDAA76; Tue, 11 Feb 2025 14:21:39 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20250211052057epcas5p4c04c1a47574ffca9a6cb2daaabe46634~jD825Bu2w2646426464epcas5p4N;
- Tue, 11 Feb 2025 05:20:57 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
- epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
- 20250211052057epsmtrp22c87f0a7e8cd2549b99b7a2258417bc8~jD824QPT12804228042epsmtrp26;
- Tue, 11 Feb 2025 05:20:57 +0000 (GMT)
-X-AuditID: b6c32a44-36bdd70000004cfe-94-67aade63f78d
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
- epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 37.6E.18729.93EDAA76; Tue, 11 Feb 2025 14:20:57 +0900 (KST)
-Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
- epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20250211052055epsmtip1db735d6c58ace3b5ea9f2bec662f81f3~jD81V1J920163901639epsmtip17;
- Tue, 11 Feb 2025 05:20:55 +0000 (GMT)
-Date: Tue, 11 Feb 2025 10:50:46 +0530
-From: Vinayak Holikatti <vinayak.kh@samsung.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, krish.reddy@samsung.com, vishak.g@samsung.com,
- a.manzanares@samsung.com, alok.rathore@samsung.com, s5.kumari@samsung.com,
- linux-cxl@vger.kernel.org, gost.dev@samsung.com
-Subject: Re: [PATCH 1/2] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations discovery commands (8.2.9.9.5.3)
-Message-ID: <20250211052046.nfcn2r7z3m376xh7@test-PowerEdge-R740xd>
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1thk2z-00068p-14; Tue, 11 Feb 2025 01:47:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=M4kejqrdXmpQqUnUQ41+n3XAY+m3AWzBk/e9xdoWCosQytpqbLEeN+mN+84mIjTL+baI+Yf4zJYcHu8qpY/YTHF0nU9TQmLt9Oq7G3JUgJRbeqbiCf5rL7UPFLgf0OqvTN0IkB8Bs+vI+MHNW64Kc8EZj3hBMCf5Id57M+t0VRyFE5LP3TvhmBZJCAQV8M/gBkjqAYXqwm9XUbXTfcT8SDSKqAz8YXwxnK+W5Iw/kRe5pym9BI+QHkjJ5QvrvCVtaJ6mOAf6S5mqrtSUptaVqf5Q9kHyEmxI5qnPd53DI9aiZQpg/MDxoTMc4eMWWDr4179LigPcHHapiuJ+mDCxjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pnPAjQDn3wwzwnnqWwZGyDKw/r2RXPGzDIRfGUU9NF8=;
+ b=pxTxrN9JAKZZMiO0jiwEvfCTohyW1inkaeZrccFuu5x5n1lyRViGmiow/Xce8Pvhi/e0L/1E75lBIounodbuIJwJWAW018h9U/CZ98dWofT43VyGLiZwg36OUlVSk+wCafFcbSl0JwVO2Ox7GsOoTZC2NQOkLUGZSRiVvYpaj93UaZtiua+cidE7xsaxj6UxItrWWPq2QMinrT1qBChcDfZADigTf2K3E76QxdMbMvSr40CmQPhRSSAR69YCxiSOPL8Gj0b8/OwiJIVz2WoTq98dRbT84TGVSVPvaFb25dgtbLiCwK5JM4hT+xpTFpxOgvAmeeylGLJejWcCa4vP4g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pnPAjQDn3wwzwnnqWwZGyDKw/r2RXPGzDIRfGUU9NF8=;
+ b=lj4y/EolViKNeDS9+/qapDjgQl0yUgER/+KdSY0XGvkxpovBA/2je0J903TRuekiALK5eaBvw9iiPzabWoNb3xmyEM0YdUUgw8Q5vjuT/iRsBNq6Fd1ovTGa+lNjVa1gpDkxnGXMWzG6+P/sKRNKBMaqWGO+fp67uH1gpu6Zwu25fZubUNIPndQVuipjr/cfRD5yBpuz7dEwUdVmw7psnMtXJ32gZnxcLFDwCklwGL8GlbUfkEHo8ET6VxVb+zwbErpAgSntIEfpuRittrOpZa7s3QJtB1zipjil//wQk3KtL16VQSI102av4z8lNCJUrnUZ8x9YvLoetoOQQ8Oy8A==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY0P300MB0051.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:251::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.19; Tue, 11 Feb
+ 2025 06:46:51 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%3]) with mapi id 15.20.8422.015; Tue, 11 Feb 2025
+ 06:46:51 +0000
+References: <20250206111514.2134895-1-pbonzini@redhat.com>
+ <20250206111514.2134895-2-pbonzini@redhat.com>
+ <Z6nOAftJsjQ7KAiS@intel.com>
+ <c7685bff-96d1-4e89-ba19-08fbba399d37@redhat.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: vtables and procedural macros (was Re: [PATCH] rust: pl011:
+ convert pl011_create to safe Rust)
+Date: Tue, 11 Feb 2025 13:21:57 +0800
+In-reply-to: <c7685bff-96d1-4e89-ba19-08fbba399d37@redhat.com>
+Message-ID: <SY0P300MB1026B9C81F2EF236BB703F2B95FD2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: TYAPR01CA0046.jpnprd01.prod.outlook.com
+ (2603:1096:404:28::34) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <87a5athtbm.fsf@hotmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20250124145645.00005ba9@huawei.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEJsWRmVeSWpSXmKPExsWy7bCmum7yvVXpBjcWsFlMP6xo8eX0HjaL
- mwd2MlmsWniNzWLhxmVMFudnnWKxON67g8VizbnPLEDuHHYHTo+WI29ZPZ5c28zk0bdlFaPH
- 501yASxR2TYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbmSgp5ibmptkouPgG6bpk5
- QKcoKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgpMCvSKE3OLS/PS9fJSS6wMDQyM
- TIEKE7IzOtd8Zyn4EVbx5sRc5gbGFbZdjJwcEgImEvdunmHvYuTiEBLYzSjR82wTlPOJUeLG
- 0s0sEM43RolTf/4ywrQs77wAldjLKDH3ymVGuJZZe3cBORwcLAKqEs1X2UEa2AQMJB40Hwez
- RQSMJN7dmARWzyxwglFiy9SLrCAJYYEyial978E28Ao4SzQ8msgKYQtKnJz5hAVkJqeAocTG
- 2RkgvRICX9kljvTvZwaJSwi4SMze7AdxnLDEq+Nb2CFsKYnP7/ayQdjFEucufoJ6oEbiddcK
- ZgjbXqL1VD+YzSyQIdGxcBtUvazE1FPrmCDifBK9v58wQcR5JXbMA7FB1qpILH2bCbPqy7Nm
- qPEeEutOroeGzwtGiavPXjJNYJSbheSbWUjWQdhWEp0fmlhnAY1lFpCWWP6PA8LUlFi/S38B
- I+sqRsnUguLc9NRk0wLDvNRyeBwn5+duYgQnTi2XHYw35v/TO8TIxMF4iFGCg1lJhNdk4Yp0
- Id6UxMqq1KL8+KLSnNTiQ4ymwNiZyCwlmpwPTN15JfGGJpYGJmZmZiaWxmaGSuK8zTtb0oUE
- 0hNLUrNTUwtSi2D6mDg4pRqYnt5SzXl44mzjrHl5vqUqs+OipPK+KTUeyrs9sb6uSrT+cug1
- j/gdjuvDuFLehE0pvDTxk494mth6z/t3XvtzLlvafl7nzpEDfl7enb3nVptw99g3cXzefnlO
- uNnR9hLfjIrbqz9/WbbK0nnxjsh/a16tzxDc8EdLYT2n19r275bfdYrELp+S8G3KUZVPyebU
- 28zn65r0VsZMmkn7O59z7Qlhyybzv+m9Kv8XOyyNu92YLW4zW1Bqa3QyY0zRUo/D6gmPy3rr
- M5lV9jskdZmqSaq8vsgkxHimQiQxSbr0JCfntVvR5selBH+v/5kXufKc7Y5ow21f2i5EmrmJ
- eznf3dfzvUJt4WN/Hq3/p5VYijMSDbWYi4oTAXF8AEwlBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCLMWRmVeSWpSXmKPExsWy7bCSnK7lvVXpBj9n8VhMP6xo8eX0HjaL
- mwd2MlmsWniNzWLhxmVMFudnnWKxON67g8VizbnPLEDuHHYHTo+WI29ZPZ5c28zk0bdlFaPH
- 501yASxRXDYpqTmZZalF+nYJXBmLJ35iLFgVUjHrYXgD4xerLkZODgkBE4nlnRdYuhi5OIQE
- djNKrLv5iwkiISVxbOdPNghbWGLlv+fsEEUfgIrmvwIq4uBgEVCVaL7KDlLDJmAg8aD5OJgt
- ImAk8e7GJEaQemaBU4wSHxf/BhskLFAmMbXvPSOIzSvgLNHwaCIrxNAXjBKXbxxhhUgISpyc
- +YQFxGYWMJOYt/khM8gyZgFpieX/OEBMTgFDiY2zMyYwCsxC0jALScMshIYFjMyrGCVTC4pz
- 03OLDQsM81LL9YoTc4tL89L1kvNzNzGCA15Lcwfj9lUf9A4xMnEwHmKU4GBWEuE1WbgiXYg3
- JbGyKrUoP76oNCe1+BCjNAeLkjiv+IveFCGB9MSS1OzU1ILUIpgsEwenVANT6J7fF6dEhj8r
- MDlev/B+2TKtF3zLeu516ovq7930VSju+8HMDEmfQKapfmwGXbZn7xrwLX4QsPQcR2impswO
- lu7f6da7/Rbt91+4/cs54Z7dOzJ1jsWXmHIcr1eb9oV9cWDZScPojo2VnTNXtaTnXhF7FxAt
- rWcWdaBw8h6/K28O89rYzV9dNOP2kbBqY/0nK+/9yNz+1miHyT1uIUm5M33svdf1Nc0j1UOO
- ZYj+ZXzAdSpqUoCVWlib1XMTyUdtzj8ffCq06OvqXMftrPhzyRzfL6r6pUeN22SN+qw/rPd4
- ZHzm+r5gteLHV5ouvteJ0Xmc4BxRqeB0b9JWtu++eXuO8hyK+RMfrrawc6sSS3FGoqEWc1Fx
- IgDAWtSr5wIAAA==
-X-CMS-MailID: 20250211052057epcas5p4c04c1a47574ffca9a6cb2daaabe46634
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_44a12_"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250123050912epcas5p2965fd6efa702030802a42c225f11f65b
-References: <20250123050903.92336-1-vinayak.kh@samsung.com>
- <CGME20250123050912epcas5p2965fd6efa702030802a42c225f11f65b@epcas5p2.samsung.com>
- <20250123050903.92336-2-vinayak.kh@samsung.com>
- <20250124145645.00005ba9@huawei.com>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=vinayak.kh@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY0P300MB0051:EE_
+X-MS-Office365-Filtering-Correlation-Id: a60618ee-afb9-4119-ed08-08dd4a67dcec
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|461199028|8060799006|19110799003|5072599009|7092599003|15080799006|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Uf3C8uVRwGCZAESnauaDHiVBIIpg5XBV9GImPN3Waep2zyLrD7RO4gmEJFBq?=
+ =?us-ascii?Q?kiZexDTlCdKdfCaQnhg4RU783BQJU5KQIFwGARt7QLDhFHgmue4/gaIw4yDP?=
+ =?us-ascii?Q?qSWic81CEoT7j8aDhcurkXuKhPJcw3JT4m0w01EWYk/0tIV5VOk9qN4p70ff?=
+ =?us-ascii?Q?Aq9Q5QlwyYPHCuJtOqPJ9phl7y5jwmtBcfajPBxYmSl5J6ZHfL0izzVyofhH?=
+ =?us-ascii?Q?qEqPUOat2zzMFdsfkzeM+LUYFOSunkSLQHm/pNPUmQKFjNYGFKzaKiMUAOiT?=
+ =?us-ascii?Q?J2P+kYjEMuXINgKv0wd9bbXmVPt3OBb0klITAI9bEep97P6BlJ2dNIaXu2g2?=
+ =?us-ascii?Q?r5/n6vK2Pj5OTkUkf+01IwdIvhstsJO04ikgMccN2obWutJs0MQ9kTtF/pJj?=
+ =?us-ascii?Q?+QFuH+en12bHRP+VhMPV/bUAZ8ldnoYO9/F5SbQu2OWSel0DDj4w6N3BTMaw?=
+ =?us-ascii?Q?Cgf5tvh+4mYiaBgJj29IYSs2jHkJVohOmIbfKuFtPhZp85G/jB0RRkv+dmb5?=
+ =?us-ascii?Q?quT1b8mmudVFB/mgcnrLfdYO4zl247fqmt7wjUej4ocTmo9nsZwXw42CC9yn?=
+ =?us-ascii?Q?XqCD6TiCDyECuWPMyVcVHl3VNhU6rdPwtYGcp2xhDO/uLcVrufS1NL5a5NOf?=
+ =?us-ascii?Q?xzHmqIhRH581bshZB//QiV/bzYK6DFoCZgiDA9V6NDwwLKR6HaQWdli6VaPp?=
+ =?us-ascii?Q?RmpKwCDL0lQpTbCH2WSsDlCzZzSPBGotYGaqwp8xRFZE1YX15MMhK6kWwTwZ?=
+ =?us-ascii?Q?n2Gocd7mA92iao7iv0CKkHMU158BkU+6yALPbQ5Tnyp+jsulk4pzvQRQ898t?=
+ =?us-ascii?Q?k3Un5rYQNfSP9ud3DkukYDc4RE197/me6uxy0gHpH2Bu4mAQONraxvRow/7v?=
+ =?us-ascii?Q?b3OBb2CtKFaO/M4OGnlfgo5tCHnAc5+wDDxhKVk1JAZz4ryuXus61gXIrlUc?=
+ =?us-ascii?Q?3XFYz6eS9y6VcNzzUl40nA5kOkaoI+qkigXfj7Ti8tx+U2GKiu9ihnEOLsto?=
+ =?us-ascii?Q?X/wdkOs6cMxbxSrlBqgwmdv8zOhckfLIiFDmv/0f7tA0R5APUU3t6Nbm8Wmm?=
+ =?us-ascii?Q?E81wkR5/qb6GiEV3noaN/bVOgKHpmA=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zAvIZqXP7zqnwPIsVX6vwWqQutxYFRKcK2Wf2Xp6KEaipofVZSI8P/fCPh4B?=
+ =?us-ascii?Q?oPNoJRCxLT6ubL3eeaTcE1vHerP4rCDwqRTCX1ff2FgAj8DaPlvyjWM6O/ql?=
+ =?us-ascii?Q?CGszK37XAoBK+E4FyGqQOGMpbujlBX2oMdjU63KgVxa3duYp6tFfZ1qcg0JE?=
+ =?us-ascii?Q?acVkOPBoIjRxoJ7cG4bKYiGrjm5/hWKKs6a1CTtP+IXLsMvKn8TtgMzQ8IGc?=
+ =?us-ascii?Q?in4wFQYJGRpKR23abcx7NE3dhRoqa7GgiEL7jCJRXlDcE7GwDKRDntSvbpUF?=
+ =?us-ascii?Q?bCZ8waJNMg9is2f1LYCt44WeKk+tT/Gm3B9mki87ar0MKlGMEVHsqG5cXua8?=
+ =?us-ascii?Q?x0S2LPPuRhh1U3v0KfAuMhIrwLRu4Gm5h0Es/Xz8ZyZ25GmNE/w4BlhEvH6I?=
+ =?us-ascii?Q?2Tx+CdxYvB9O/LGgp6Vzb4tvUD9EOszhyzBXB6nIyJiBpxlY4lhs1g+zOz2E?=
+ =?us-ascii?Q?DZbFyIqRVP7bDzitmOTnC55OhOSeFijnFeguDkc8MA0FoBzY0+s7rPjfQMpr?=
+ =?us-ascii?Q?MC6qQ3NTm7Gbegj3gux/L0pqz32YN+65epO04Zwu+ZG0EVrNKWk/GfVOkKSR?=
+ =?us-ascii?Q?MaMHBvvLz5JeRgKt3WQ2KFt+SQVSVByz2ZckdFm5cN5pnu7rHKsoDaBPimXt?=
+ =?us-ascii?Q?6XTCv20QkdBv2dRil77R8onk8LAmNSPVqqZXcJ2Mqb7WaEFNwbeFtErD6R73?=
+ =?us-ascii?Q?7FQM/VJktIDBafzSswV0i8noz5BqD9EFqRtrL7xJWGM0+B3LvzjxFU7Bthgg?=
+ =?us-ascii?Q?atZvXF31dVdp5/w+paeteef+GSRgxM5K9I6JgwfPYcrw6ekTVo+wkTiacbbI?=
+ =?us-ascii?Q?VRF+FTpOxm37bTqBTVMi5x16vPZ5ezkuKzgcPkNBlice+/r8waRXl4Kkyc2R?=
+ =?us-ascii?Q?TI4MCzCfOg/j14oItcmHzpB5E/vWevJvcxoTplAE1LTD2TcH0+z+jFt3FjaE?=
+ =?us-ascii?Q?HLwGYzHgFQpSLd0YPTLkbSEKe3irmhXnaT8D2SVw/whh0MMa2o2h2T+uEnER?=
+ =?us-ascii?Q?d0i2/oYKyxBEsr93Eu9B2CH923elkGO/+dMc9Lyu25I55O48UoHwwYxD9YvX?=
+ =?us-ascii?Q?0ocGAF3iOb8nNPBO9jDGuznEePNmC9OsKcmO6d9Lb0ryqkbV2LwAXJyOq97p?=
+ =?us-ascii?Q?Fr18mFKcwQGFMBhzwvWhrKbhtMW0foWV6rg5APXy++P018N7v9Z179C+ok7S?=
+ =?us-ascii?Q?8kjeoX7g3oKbRhmHSkj3/T9OMceqWyy/NICfFPhZtC4xXPe/po2XUIByCmTy?=
+ =?us-ascii?Q?Ei6hufY6uvc5CtYxNpt7?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: a60618ee-afb9-4119-ed08-08dd4a67dcec
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2025 06:46:51.0644 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0051
+Received-SPF: pass client-ip=2a01:111:f403:2819::805;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,334 +144,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_44a12_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
 
-On 24/01/25 02:56PM, Jonathan Cameron wrote:
->On Thu, 23 Jan 2025 10:39:02 +0530
->Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
->
->Hi Vinayak,
->
->Thanks for your patch!  Good to add support for this.
->
->Various comments inline, but all fairly minor things.
->
->thanks,
->
->Jonathan
->
->
->>     CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
->>     CXL devices supports media operations discovery command.
->
->Please don't indent the commit message. Maybe this is a side effect
->of some tooling but definitely clean it up before sending a v2.
->
+Paolo Bonzini <pbonzini@redhat.com> writes:
+
+> On 2/10/25 10:59, Zhao Liu wrote:
+>> On Thu, Feb 06, 2025 at 12:15:14PM +0100, Paolo Bonzini wrote:
+>>> Not a major change but, as a small but significant step in creating
+>>> qdev bindings, show how pl011_create can be written without "unsafe"
+>>> calls (apart from converting pointers to references).
+>>>
+>>> This also provides a starting point for creating Error** bindings.
+>>>
+>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> ---
+>>>   rust/hw/char/pl011/src/device.rs | 39 ++++++++++++++++----------------
+>>>   rust/qemu-api/src/sysbus.rs      | 34 +++++++++++++++++++++++++---
+>>>   2 files changed, 50 insertions(+), 23 deletions(-)
+>> ...
 >>
->> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
->+CC linux-cxl to increase chance of review and let people know this
->exists.
+>>> +    fn realize(&self) {
+>> What about renaming this as "realize_with_sysbus"?
+>> Elsewhere, the device's own realize method is often used to set
+>> DeviceImpl::REALIZE.
 >
->> ---
->>  hw/cxl/cxl-mailbox-utils.c | 130 ++++++++++++++++++++++++++++++++++++-
->>  1 file changed, 128 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
->> index 9c7ea5bc35..2315d07fb1 100644
->> --- a/hw/cxl/cxl-mailbox-utils.c
->> +++ b/hw/cxl/cxl-mailbox-utils.c
->> @@ -87,8 +87,9 @@ enum {
->>          #define GET_LSA       0x2
->>          #define SET_LSA       0x3
->>      SANITIZE    = 0x44,
->> -        #define OVERWRITE     0x0
->> -        #define SECURE_ERASE  0x1
->> +        #define OVERWRITE        0x0
->> +        #define SECURE_ERASE     0x1
->> +        #define MEDIA_OPERATIONS 0x2
->
->Trivial but I've given up trying to keep these aligned.
->It's a fools game as the names get steadily longer.
-Ok Will Fix in V2
->
->As such better to just leave the existing pair alone.
->
->>      PERSISTENT_MEM = 0x45,
->>          #define GET_SECURITY_STATE     0x0
->>      MEDIA_AND_POISON = 0x43,
->> @@ -1721,6 +1722,127 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
->>      return CXL_MBOX_BG_STARTED;
->>  }
->>
->> +enum {
->> +    MEDIA_OP_GENERAL  = 0x0,
->I'd name them so the field id explicit.
->
->MEDIA_OP_CLASS_GENERAL
->etc
+> I *think* this is not a problem in practice because trait methods are public (if
+> the trait is in scope) whereas the device's realize method if private.
 
-Ok will fix in V2
->
->> +    MEDIA_OP_SANITIZE = 0x1,
->> +    MEDIA_OP_CLASS_MAX,
->No comma on terminating entry. We don't want it to be easy to add
->stuff after it.
->
->> +} MEDIA_OPERATION_CLASS;
->The enum type is never used.  So might as well keep it anonymous
->like we do for other enums in this file.
->
->> +
->> +enum {
->> +    MEDIA_OP_SUB_DISCOVERY = 0x0,
->This set of class and subcalss is similar to the enum you add
->the MEDIA_OPERATIONS define to above.
->I'd take a similar strategy with
->
-ok will fix
->enum {
->    MEDIA_OP_CLASS_GENERAL = 0x0,
->        #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
->    MEDIA_OP_CLASS_SANITIZE = 0x1,
->        #define MEDIA_OP_SAN_SUBC_SANITIZE 0x0
->        #define MEDIA_OP_SAN_SUBC_ZERO 0x1
->
->or something like that.
-ok will fix 
->}
->> +    MEDIA_OP_SUB_SANITIZE = 0x0,
->> +    MEDIA_OP_SUB_ZERO     = 0x1,
->> +    MEDIA_OP_SUB_CLASS_MAX
->No need for SUB_CLASS_MAX as you don't seem to use it.
->
->> +} MEDIA_OPERATION_SUB_CLASS;
->> +
->> +struct media_op_supported_list_entry {
->> +    uint8_t media_op_class;
->> +    uint8_t media_op_subclass;
->> +};
->> +
->> +struct media_op_discovery_out_pl {
->> +    uint64_t dpa_range_granularity;
->> +    uint16_t total_supported_operations;
->> +    uint16_t num_of_supported_operations;
->> +    struct media_op_supported_list_entry entry[0];
->entry[]
-ok will change it in V2
->
->which is the c spec defined way to do variable length last elements.
->The [0] was I think a weird extension that we have moved away from.
->
->> +};
->
->Not strictly necessary but I'd mark it packed as chances of future breakage
->are high with a structure starting at byte 0xC.
->
-ok will fix
->> +
->> +#define MAX_SUPPORTED_OPS 3
->I'd avoid explicit define for this and just use ARRAY_SIZE() on the
->array of structures to find out.
->
->> +struct media_op_supported_list_entry media_op_matrix[MAX_SUPPORTED_OPS] = {
->
->Use the defines above rather than the numeric values.
->Then it's obvious what this is, also mark it static const.
->
-ok will fix 
->static const struct media_op_supported_list_entry media_op_matrix[] =
->    { MEDIA_OP_CLASS_GENERAL, MEDIA_OP_GEN_SUBC_DISCOVERY },
->    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_SANITIZE },
->    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO },
->};
->
->> +                                                            {0, 0},
->> +                                                            {1, 0},
->> +                                                            {1, 1} };
->> +
->> +static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
->> +                                         uint8_t *payload_in,
->> +                                         size_t len_in,
->> +                                         uint8_t *payload_out,
->> +                                         size_t *len_out,
->> +                                         CXLCCI *cci)
->> +{
->> +    struct {
->> +    uint8_t media_operation_class;
->    struct {
->        uint8_t media_operation_class;
->
->etc for alignment.
->
->> +    uint8_t media_operation_subclass;
->> +    uint8_t rsvd[2];
->> +    uint32_t dpa_range_count;
->> +    union {
->> +        struct {
->> +            uint64_t starting_dpa;
->> +            uint64_t length;
->> +        } dpa_range_list[0];
->[]
-here its under union, compiler errors if not 
-given the [0] number of element.
-May be try some other way
->
->> +        struct {
->> +            uint16_t start_index;
->> +            uint16_t num_supported_ops;
->> +        } discovery_osa;
->> +    };
->
->This is a little tricky as in theory you can have a variable number
->of DPA Range List elements and then the operation specific arguments.
->
->However, general always provides a range count of 0.  Also both sanitize
->and zero have no osa elemetns.  Add a comment
->about this so we don't think it looks wrong in future + do notice that
->this approach doesn't generalize if a new operation allows dpa ranges
->and operation specific parameters.
->
-Will add approriate comment
->
->> +    } QEMU_PACKED *media_op_in_pl = (void *)payload_in;
->> +
->> +    uint8_t media_op_cl = media_op_in_pl->media_operation_class;
->> +    uint8_t media_op_subclass = media_op_in_pl->media_operation_subclass;
->> +    uint32_t dpa_range_count = media_op_in_pl->dpa_range_count;
->> +
->> +    if (len_in < sizeof(*media_op_in_pl)) {
->> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
->> +    }
->
->Test this before getting values to fill in media_op_cl local variables etc.
->It's both logically correct and may constrain the compiler not to get too smart
->if it can see enough to realize what len_in is.
->
-ok 
->> +
->> +    switch (media_op_cl) {
->> +    case MEDIA_OP_GENERAL:
->> +        switch (media_op_subclass) {
->> +        case MEDIA_OP_SUB_DISCOVERY:
->Given there is only one element, maybe cleaner as
->           if (media_op_subclass != MEDIA_OP_SUB_DISCOVERY) {
->                return CXL_MBOX_UNSUPPORTED;
->           }
->AS reduces indent of the following, helping readability a litle.
-ok
->
->> +            int count = 0;
->> +            struct media_op_discovery_out_pl *media_out_pl =
->> +                (void *)payload_out;
->> +            int num_ops = media_op_in_pl->discovery_osa.num_supported_ops;
->> +            int start_index = media_op_in_pl->discovery_osa.start_index;
->> +
->> +            /* As per spec CXL 3.1 8.2.9.9.5.3 dpa_range_count */
->> +            /* should be zero for discovery sub class command */
->Local style is multiline comment as
->               /*
->                * As per spec CXL 3.1...
->                * should be zero...
->                */
->
+I would suggest to keep the "sysbus" prefix in the method name, or in
+general, keep the class prefix in the method names in XXXClassMethods
+traits. Otherwise APIs from different parent classes may also
+conflict. As an example, in the following class hierarchy:
 
-ok
->> +            if (dpa_range_count) {
->> +                return CXL_MBOX_INVALID_INPUT;
->> +            }
->> +
->> +            if ((start_index >= MEDIA_OP_CLASS_MAX) ||
->> +                (num_ops > MAX_SUPPORTED_OPS)) {
->
->Check here should be for num_ops + start_index > MAX_SUPPORTED OPS
->Comparing start_index against MEDIA_OP_CLASS_MAX doesn't make sense to me
->as I believe it's an index into the array of Class / subclass pairs not
->the class array.
->
+  Object -> DeviceState -> PCIDevice -> PCIBridge -> ...
 
-ok
->
->> +                return CXL_MBOX_INVALID_INPUT;
->> +            }
->> +
->> +            media_out_pl->dpa_range_granularity = CXL_CAPACITY_MULTIPLIER;
->> +            media_out_pl->total_supported_operations = MAX_SUPPORTED_OPS;
->> +            if (num_ops > 0) {
->> +                for (int i = start_index; i < MAX_SUPPORTED_OPS; i++) {
->> +                    media_out_pl->entry[count].media_op_class =
->> +                            media_op_matrix[i].media_op_class;
->> +                    media_out_pl->entry[count].media_op_subclass =
->> +                            media_op_matrix[i].media_op_subclass;
->> +                    count++;
->> +                    if (count == num_ops) {
->> +                        goto disc_out;
->
->break should be enough and removes need for goto and label.
->
+For PCIDevice instances there is an API pci_device_reset(), and for
+PCIBridge ones pci_bridge_reset(). Without class prefixes both will be
+wrapped (as blanket impl in two traits) as reset() and a dev.reset()
+call will lead to a "multiple applicable items in scope" build error.
 
-ok
->> +                    }
->> +                }
->> +            }
->> +disc_out:
->> +            media_out_pl->num_of_supported_operations = count;
->> +            *len_out = sizeof(struct media_op_discovery_out_pl) +
->> +            (sizeof(struct media_op_supported_list_entry) * count);
+In addition, it is quite common to see static functions named
+xxx_device_type_reset() in C today. Thus, it is quite natural to expect
+(private) methods named XXXDeviceState::reset() in future Rust devices,
+which will cause even more trouble as the compiler will no longer
+complain and always pick that method for dev.reset() calls.
+
+More general names can be found in multiple device classes, such as
+write_config (pci_default_write_config() and pci_bridge_write_config()).
+
+There are alternatives to solve such conflicts, such as requiring proc
+macro attributes above methods with such general names, and requiring
+ambiguous parent class API call to use fully qualified syntax, e.g.,
+SysBusDeviceMethods::realize(self). But I think the former can be
+error-prone because the list of general names vary among different
+device types and required attributes can be easily neglected since no
+build error is triggered without them, and the later is more tedious
+than self.sysbus_realize().
+
 >
->indent this line.
+> I agree that the naming conflict is unfortunate though, if only because it can
+> cause confusion.  I don't know if this can be solved by procedural macros; for
+> example a #[vtable] attribute that changes
 >
-
-ok
->> +            break;
->I'd
->        return CXL_MBOX_SUCCESS;
+>     #[qemu_api_macros::vtable]
+>     fn realize(...) {
+>     }
 >
->> +        default:
->> +            return CXL_MBOX_UNSUPPORTED;
->> +        }
->> +        break;
->then this break isn't needed.
-
-ok
->> +    case MEDIA_OP_SANITIZE:
->> +        switch (media_op_subclass) {
->> +
->No blank line here yet.
->> +        default:
->> +            return CXL_MBOX_UNSUPPORTED;
->> +        }
->Similar. Return in all paths so no break.
-
-ok
->> +        break;
->> +    default:
->> +        return CXL_MBOX_UNSUPPORTED;
->> +    }
->> +
->> +    return CXL_MBOX_SUCCESS;
->> +}
->> +
->>  static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
->>                                           uint8_t *payload_in,
->>                                           size_t len_in,
->> @@ -2864,6 +2986,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
->>           CXL_MBOX_SECURITY_STATE_CHANGE |
->>           CXL_MBOX_BACKGROUND_OPERATION |
->>           CXL_MBOX_BACKGROUND_OPERATION_ABORT)},
->> +    [SANITIZE][MEDIA_OPERATIONS] = { "MEDIA_OPERATIONS", cmd_media_operations,
->> +        ~0,
->> +        (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
->> +         CXL_MBOX_BACKGROUND_OPERATION)},
->>      [PERSISTENT_MEM][GET_SECURITY_STATE] = { "GET_SECURITY_STATE",
->>          cmd_get_security_state, 0, 0 },
->>      [MEDIA_AND_POISON][GET_POISON_LIST] = { "MEDIA_AND_POISON_GET_POISON_LIST",
+> into
 >
+>     const fn REALIZE: ... = Some({
+>         fn realize(...) {
+>         }
+>         realize
+>     }
+>
+> This way, the REALIZE item would be included in the "impl DeviceImpl for
+> PL011State" block instead of "impl PL011State".  It's always a fine line
+> between procedural macros cleaning vs. messing things up, which is why until now
+> I wanted to see what things look like with pure Rust code; but I guess now it's
+> the time to evaluate this kind of thing.
+>
+> Adding Junjie since he contributed the initial proc macro infrastructure and may
+> have opinions on this.
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_44a12_
-Content-Type: text/plain; charset="utf-8"
+I agree that uses of proc macros should be carefully evaluated to see if
+they really help or hurt. In this specific case, I'm not sure if using
+attributes solves the root cause, though.
 
+--
+Best Regards
+Junjie Mao
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_44a12_--
+>
+> Paolo
 
