@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F6EC0219E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BB6C0219E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht6C-0006mg-QY; Tue, 11 Feb 2025 11:27:01 -0500
+	id 1tht5N-0006P5-8T; Tue, 11 Feb 2025 11:26:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5Z-0006Tp-0U
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:21 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tht5H-0006NH-Eq
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:03 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5W-00037g-5i
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:20 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-439554db49dso7728435e9.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:17 -0800 (PST)
+ id 1tht5D-00030i-25
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:03 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38dc5764fc0so4403886f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:25:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739291177; x=1739895977; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Z3YGmuarfBzTTyJth0EvutsVXIKFE4fV+5NakAnRC0I=;
- b=JCnDJCuAlmXFXg5mJhpwzR8XnUtBTlOgOpF79f08AhWATPBgkO4wn8DGYue6QcuIDE
- 029U+mhmwFXUROLCdlnPTY+Vu5h++Ih+JraSGsKv4buu9ZvqAAaNYwmwfLmcOCvPKvj2
- mgc7BjKSceU3VWrL7LpyLi8i8zAvLoAgVel08En1TgHvfCLHpu4SLutnc5V4AYI8pVum
- YjQFJ7z9Rjeb8x0++sXi6SMZX0J0ZGjti7nYPZmcAqii6ZVO2fHtAdgMnfERsxNaqCax
- wU5lXhUqCdgoXr6LcQpAPeydi0hrwi9n1rj2Tc6Z1aedWKe1l8IzVC/1JG/wKq1f/8VA
- e9aQ==
+ d=linaro.org; s=google; t=1739291157; x=1739895957; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9N7DCto/R1TRAhv/bwrZKREzJ8W3DXVfglrlnEd6kWE=;
+ b=h7tibF/eVu5ieAlWN72RYu8WPyOFXzDyDxj1mCZV0BHNoNBEn33Q7O8odzQdbqQkjW
+ qhxlDjkj8KRrEe/WJzJ5tU777Y6eLOMb6YEcKBezAVdNC2Vq159UdlNkLRmwyfJl8bES
+ rbAD2Q8PHGS41+C9i1PpvC3yKYtzBjncB6jT3crU1IJuSwrj7WNJfGDuZvxRSe6Dl93Z
+ YoGlO9vdnClsOARGYT6xBs3ZRxNSMJKfnluoPIbNO1PInDhBqXPH7SqKqc7BKaqwreCB
+ zlQheRprG+RDi1wZzPVS4hE9vqI5Bis+v4OMLMMtE66v+WSOftBilDwjia1PFyb6SzZS
+ t9Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291177; x=1739895977;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Z3YGmuarfBzTTyJth0EvutsVXIKFE4fV+5NakAnRC0I=;
- b=DSyhVVZbGjvwcvS8SesqlZ84BYMDXF5WfhVRZA6WM+IDUDLJxVONCYF8DinP6iCevy
- At/VQvzLadrLiRaIvZyQuJOgc+TfrJWKcfs7bzR6Y1S4enJp13CUs2dN3YUNnUC3Ye1T
- 19zZDinOXy++Wea63AwO7mdezz5cM4n0YPllQABY4PuYSHea3kJs5UclMeP+7pR36OVF
- orSLFbJLAXnHb5yFEbuIIbSighiZYdOrFOBagGM3XP4djl2wF3w4qLPJeirm6ICUSCrR
- gCVcngRR36t9P3cQko9S+TIbHuGt/r8PlL4Vq+4NUPH8gQnjwZe8lR5NrQnMqDPB+Cfh
- 0khQ==
-X-Gm-Message-State: AOJu0YyoPXCGnvJpgS6ktaUE+HQ8pBGQZsIV2k42sGYRkG7fYbt+bTTF
- VReIxjMO0JdNYpqOXu0YjT7un/mBJA0IW/S/KHrrp+I6EzF6axYQlyDBuwBqtnAimQYVXLfFMCj
- H
-X-Gm-Gg: ASbGncvAVrUp/kyt+hLAIECP0B/VTV2iC+mWGh54xSUyGyjMRTg5q3VoDy20RO0cdwL
- KMfNqAM9kC2UFUBHEiLfKO1eN+aZinjidRh9YhJ+Vvpj9e0ZL78P+MzAJCzsBx8Ala8lrf7esaB
- iuJpG7t4h9j4osI6/M0PFZ0v/FH4G5nCYvv7TgXUNmakp1Xf0YZ6jfpiUehmBBZLyZSydY3q632
- a0W8mZ8/pHPAa36ZEzLAOpsc0hxJYviYb5AYwTCEqe6HX3iUdOzeWbIcpRMLQj/PSSydaLDG2A1
- RdcGPp5wGcUnAzQ3VxJR
-X-Google-Smtp-Source: AGHT+IE+S/WGOKwOT0VPsweF0/pISrrKJKtmcIglPbQeSrkvVKDBgAQaawpqDVej3vkeKcSj6djfxw==
-X-Received: by 2002:a05:600c:3d07:b0:439:4700:9eb3 with SMTP id
- 5b1f17b1804b1-43947009ff1mr66057635e9.3.1739291176667; 
- Tue, 11 Feb 2025 08:26:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739291157; x=1739895957;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9N7DCto/R1TRAhv/bwrZKREzJ8W3DXVfglrlnEd6kWE=;
+ b=fWROPdShxrlGr1uZfo5T0No4HZ5gRUflOgqz8GV8I/G/aPxzOfhtjo3SbkFxcQ8Ppv
+ X0fa0EpaSRV2XdoXi6wk12AZOXJII06HOd/ieUprN2Ek3Zab6Y1IR7uP/b0z4/ixqA6I
+ dr8daEQG32n0VBLXEOOzTgG5mh773Bb1nJ6jTLD7eCiKkNLlcT7p0tW6x9E27r6DvogS
+ q+IrOgSGBFdYRmgZqNB1hIIHR4xCi7FM9mu+4qhQpkIT6J3DqEh2DWCiJJpPicQoE02c
+ YhVAkDGKQ4CYDMf2S3D0bGRkN1QXif+ftSCPfKfdQ4tow3tvBxjSIy3EX4jmDPWHGrol
+ /nHw==
+X-Gm-Message-State: AOJu0YwAE/J8A5kYy5YnxrQehSidJLsd4YU93ELWqp0IwP7Wra2qGuee
+ a4FDPZfbdPVmzaH0DbBmmhuBQG/8abrlFBz0/zTlLdh0F1G1Bf8OZ4skwnbYyJj3vMhCbXxyS32
+ p
+X-Gm-Gg: ASbGncsD5w9xYr3wQj8NEgMtZOBtvZ57ayAiHQuyO2dZrOTxwnMS1LGFBBhK+7Bn7NE
+ Ogr07VN3UIDmV9Rt4F5Z2q7a8MAEk9Co2VkEx6oWjV/zHzaJh9Enbp0mS429iBAn89o8cuSJznV
+ zeRsJoHpBbIBpV5zO7M+cz7mDliGDTHRYzF4vZaaEn0nJbRq2+GVF8Q4hUeLgzL7RfNYb5EVRPJ
+ z7Y5MjY706G38Z7bpuK1UVuEfL9ku5bWTgxGTBOfm63Zng4vA3ggsuaQ6l4SJ+TlDGtXA4EpYvE
+ vv21hpLqRz9B6ZhLX2b6
+X-Google-Smtp-Source: AGHT+IHg78OZ3wTeaaGgy7nao3zCUBKIs2x7lxPBDECJhhx6tOgtcyVYdIwwMG41W2GP++XyXb79lQ==
+X-Received: by 2002:a5d:59ad:0:b0:385:fd07:8616 with SMTP id
+ ffacd0b85a97d-38de9003eb9mr426314f8f.0.1739291156889; 
+ Tue, 11 Feb 2025 08:25:56 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.15
+ 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.25.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:26:16 -0800 (PST)
+ Tue, 11 Feb 2025 08:25:56 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/68] target/arm: Handle FPCR.NEP for 1-input scalar operations
-Date: Tue, 11 Feb 2025 16:25:04 +0000
-Message-Id: <20250211162554.4135349-19-peter.maydell@linaro.org>
+Subject: [PULL 00/68] target-arm queue
+Date: Tue, 11 Feb 2025 16:24:46 +0000
+Message-Id: <20250211162554.4135349-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
-References: <20250211162554.4135349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,109 +96,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle FPCR.NEP for the 1-input scalar operations.
+Hi; this pullreq contains only my FEAT_AFP/FEAT_RPRES patches
+(plus a fix for a target/alpha latent bug that would otherwise
+be revealed by the fpu changes), because 68 patches is already
+longer than I prefer to send in at one time...
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+thanks
+-- PMM
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 61ea2bb9f75..a5f59a94ec2 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8509,17 +8509,17 @@ static bool do_fp1_scalar_with_fpsttype(DisasContext *s, arg_rr_e *a,
-     case MO_64:
-         t64 = read_fp_dreg(s, a->rn);
-         f->gen_d(t64, t64, fpst);
--        write_fp_dreg(s, a->rd, t64);
-+        write_fp_dreg_merging(s, a->rd, a->rd, t64);
-         break;
-     case MO_32:
-         t32 = read_fp_sreg(s, a->rn);
-         f->gen_s(t32, t32, fpst);
--        write_fp_sreg(s, a->rd, t32);
-+        write_fp_sreg_merging(s, a->rd, a->rd, t32);
-         break;
-     case MO_16:
-         t32 = read_fp_hreg(s, a->rn);
-         f->gen_h(t32, t32, fpst);
--        write_fp_sreg(s, a->rd, t32);
-+        write_fp_hreg_merging(s, a->rd, a->rd, t32);
-         break;
-     default:
-         g_assert_not_reached();
-@@ -8640,7 +8640,7 @@ static bool trans_FCVT_s_ds(DisasContext *s, arg_rr *a)
-         TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvtds(tcg_rd, tcg_rn, fpst);
--        write_fp_dreg(s, a->rd, tcg_rd);
-+        write_fp_dreg_merging(s, a->rd, a->rd, tcg_rd);
-     }
-     return true;
- }
-@@ -8653,8 +8653,8 @@ static bool trans_FCVT_s_hs(DisasContext *s, arg_rr *a)
-         TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvt_f32_to_f16(tmp, tmp, fpst, ahp);
--        /* write_fp_sreg is OK here because top half of result is zero */
--        write_fp_sreg(s, a->rd, tmp);
-+        /* write_fp_hreg_merging is OK here because top half of result is zero */
-+        write_fp_hreg_merging(s, a->rd, a->rd, tmp);
-     }
-     return true;
- }
-@@ -8667,7 +8667,7 @@ static bool trans_FCVT_s_sd(DisasContext *s, arg_rr *a)
-         TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvtsd(tcg_rd, tcg_rn, fpst);
--        write_fp_sreg(s, a->rd, tcg_rd);
-+        write_fp_sreg_merging(s, a->rd, a->rd, tcg_rd);
-     }
-     return true;
- }
-@@ -8681,8 +8681,8 @@ static bool trans_FCVT_s_hd(DisasContext *s, arg_rr *a)
-         TCGv_ptr fpst = fpstatus_ptr(FPST_A64);
- 
-         gen_helper_vfp_fcvt_f64_to_f16(tcg_rd, tcg_rn, fpst, ahp);
--        /* write_fp_sreg is OK here because top half of tcg_rd is zero */
--        write_fp_sreg(s, a->rd, tcg_rd);
-+        /* write_fp_hreg_merging is OK here because top half of tcg_rd is zero */
-+        write_fp_hreg_merging(s, a->rd, a->rd, tcg_rd);
-     }
-     return true;
- }
-@@ -8696,7 +8696,7 @@ static bool trans_FCVT_s_sh(DisasContext *s, arg_rr *a)
-         TCGv_i32 tcg_ahp = get_ahp_flag();
- 
-         gen_helper_vfp_fcvt_f16_to_f32(tcg_rd, tcg_rn, tcg_fpst, tcg_ahp);
--        write_fp_sreg(s, a->rd, tcg_rd);
-+        write_fp_sreg_merging(s, a->rd, a->rd, tcg_rd);
-     }
-     return true;
- }
-@@ -8710,7 +8710,7 @@ static bool trans_FCVT_s_dh(DisasContext *s, arg_rr *a)
-         TCGv_i32 tcg_ahp = get_ahp_flag();
- 
-         gen_helper_vfp_fcvt_f16_to_f64(tcg_rd, tcg_rn, tcg_fpst, tcg_ahp);
--        write_fp_dreg(s, a->rd, tcg_rd);
-+        write_fp_dreg_merging(s, a->rd, a->rd, tcg_rd);
-     }
-     return true;
- }
-@@ -8958,7 +8958,9 @@ static bool do_fcvt_f(DisasContext *s, arg_fcvt *a,
-     do_fcvt_scalar(s, a->esz | (is_signed ? MO_SIGN : 0),
-                    a->esz, tcg_int, a->shift, a->rn, rmode);
- 
--    clear_vec(s, a->rd);
-+    if (!s->fpcr_nep) {
-+        clear_vec(s, a->rd);
-+    }
-     write_vec_element(s, tcg_int, a->rd, 0, a->esz);
-     return true;
- }
--- 
-2.34.1
+The following changes since commit ffaf7f0376f8040ce9068d71ae9ae8722505c42e:
 
+  Merge tag 'pull-10.0-testing-and-gdstub-updates-100225-1' of https://gitlab.com/stsquad/qemu into staging (2025-02-10 13:26:17 -0500)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250211
+
+for you to fetch changes up to ca4c34e07d1388df8e396520b5e7d60883cd3690:
+
+  target/arm: Sink fp_status and fpcr access into do_fmlal* (2025-02-11 16:22:08 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * target/alpha: Don't corrupt error_code with unknown softfloat flags
+ * target/arm: Implement FEAT_AFP and FEAT_RPRES
+
+----------------------------------------------------------------
+Peter Maydell (49):
+      target/alpha: Don't corrupt error_code with unknown softfloat flags
+      fpu: Add float_class_denormal
+      fpu: Implement float_flag_input_denormal_used
+      fpu: allow flushing of output denormals to be after rounding
+      target/arm: Define FPCR AH, FIZ, NEP bits
+      target/arm: Implement FPCR.FIZ handling
+      target/arm: Adjust FP behaviour for FPCR.AH = 1
+      target/arm: Adjust exception flag handling for AH = 1
+      target/arm: Add FPCR.AH to tbflags
+      target/arm: Set up float_status to use for FPCR.AH=1 behaviour
+      target/arm: Use FPST_FPCR_AH for FRECPE, FRECPS, FRECPX, FRSQRTE, FRSQRTS
+      target/arm: Use FPST_FPCR_AH for BFCVT* insns
+      target/arm: Use FPST_FPCR_AH for BFMLAL*, BFMLSL* insns
+      target/arm: Add FPCR.NEP to TBFLAGS
+      target/arm: Define and use new write_fp_*reg_merging() functions
+      target/arm: Handle FPCR.NEP for 3-input scalar operations
+      target/arm: Handle FPCR.NEP for BFCVT scalar
+      target/arm: Handle FPCR.NEP for 1-input scalar operations
+      target/arm: Handle FPCR.NEP in do_cvtf_scalar()
+      target/arm: Handle FPCR.NEP for scalar FABS and FNEG
+      target/arm: Handle FPCR.NEP for FCVTXN (scalar)
+      target/arm: Handle FPCR.NEP for NEP for FMUL, FMULX scalar by element
+      target/arm: Implement FPCR.AH semantics for scalar FMIN/FMAX
+      target/arm: Implement FPCR.AH semantics for vector FMIN/FMAX
+      target/arm: Implement FPCR.AH semantics for FMAXV and FMINV
+      target/arm: Implement FPCR.AH semantics for FMINP and FMAXP
+      target/arm: Implement FPCR.AH semantics for SVE FMAXV and FMINV
+      target/arm: Implement FPCR.AH semantics for SVE FMIN/FMAX immediate
+      target/arm: Implement FPCR.AH semantics for SVE FMIN/FMAX vector
+      target/arm: Implement FPCR.AH handling of negation of NaN
+      target/arm: Implement FPCR.AH handling for scalar FABS and FABD
+      target/arm: Handle FPCR.AH in vector FABD
+      target/arm: Handle FPCR.AH in SVE FNEG
+      target/arm: Handle FPCR.AH in SVE FABS
+      target/arm: Handle FPCR.AH in SVE FABD
+      target/arm: Handle FPCR.AH in negation steps in SVE FCADD
+      target/arm: Handle FPCR.AH in negation steps in FCADD
+      target/arm: Handle FPCR.AH in FRECPS and FRSQRTS scalar insns
+      target/arm: Handle FPCR.AH in FRECPS and FRSQRTS vector insns
+      target/arm: Handle FPCR.AH in negation step in FMLS (indexed)
+      target/arm: Handle FPCR.AH in negation in FMLS (vector)
+      target/arm: Handle FPCR.AH in negation step in SVE FMLS (vector)
+      target/arm: Handle FPCR.AH in SVE FTSSEL
+      target/arm: Handle FPCR.AH in SVE FTMAD
+      target/arm: Enable FEAT_AFP for '-cpu max'
+      target/arm: Plumb FEAT_RPRES frecpe and frsqrte through to new helper
+      target/arm: Implement increased precision FRECPE
+      target/arm: Implement increased precision FRSQRTE
+      target/arm: Enable FEAT_RPRES for -cpu max
+
+Richard Henderson (19):
+      target/arm: Handle FPCR.AH in vector FCMLA
+      target/arm: Handle FPCR.AH in FCMLA by index
+      target/arm: Handle FPCR.AH in SVE FCMLA
+      target/arm: Handle FPCR.AH in FMLSL (by element and vector)
+      target/arm: Handle FPCR.AH in SVE FMLSL (indexed)
+      target/arm: Handle FPCR.AH in SVE FMLSLB, FMLSLT (vectors)
+      target/arm: Introduce CPUARMState.vfp.fp_status[]
+      target/arm: Remove standard_fp_status_f16
+      target/arm: Remove standard_fp_status
+      target/arm: Remove ah_fp_status_f16
+      target/arm: Remove ah_fp_status
+      target/arm: Remove fp_status_f16_a64
+      target/arm: Remove fp_status_f16_a32
+      target/arm: Remove fp_status_a64
+      target/arm: Remove fp_status_a32
+      target/arm: Simplify fp_status indexing in mve_helper.c
+      target/arm: Simplify DO_VFP_cmp in vfp_helper.c
+      target/arm: Read fz16 from env->vfp.fpcr
+      target/arm: Sink fp_status and fpcr access into do_fmlal*
+
+ docs/system/arm/emulation.rst   |   2 +
+ include/fpu/softfloat-helpers.h |  11 +
+ include/fpu/softfloat-types.h   |  25 ++
+ target/arm/cpu-features.h       |  10 +
+ target/arm/cpu.h                |  97 +++--
+ target/arm/helper.h             |  26 ++
+ target/arm/internals.h          |   6 +
+ target/arm/tcg/helper-a64.h     |  13 +
+ target/arm/tcg/helper-sve.h     | 120 ++++++
+ target/arm/tcg/translate-a64.h  |  13 +
+ target/arm/tcg/translate.h      |  54 +--
+ target/arm/tcg/vec_internal.h   |  35 ++
+ target/mips/fpu_helper.h        |   6 +
+ fpu/softfloat.c                 |  66 +++-
+ target/alpha/cpu.c              |   7 +
+ target/alpha/fpu_helper.c       |   2 +
+ target/arm/cpu.c                |  46 +--
+ target/arm/helper.c             |   2 +-
+ target/arm/tcg/cpu64.c          |   2 +
+ target/arm/tcg/helper-a64.c     | 151 ++++----
+ target/arm/tcg/hflags.c         |  13 +
+ target/arm/tcg/mve_helper.c     |  44 +--
+ target/arm/tcg/sme_helper.c     |   4 +-
+ target/arm/tcg/sve_helper.c     | 367 ++++++++++++++-----
+ target/arm/tcg/translate-a64.c  | 782 ++++++++++++++++++++++++++++++++--------
+ target/arm/tcg/translate-sve.c  | 193 +++++++---
+ target/arm/tcg/vec_helper.c     | 387 ++++++++++++++------
+ target/arm/vfp_helper.c         | 374 +++++++++++++++----
+ target/hppa/fpu_helper.c        |  11 +
+ target/i386/tcg/fpu_helper.c    |   8 +
+ target/mips/msa.c               |   9 +
+ target/ppc/cpu_init.c           |   3 +
+ target/rx/cpu.c                 |   8 +
+ target/sh4/cpu.c                |   8 +
+ target/tricore/helper.c         |   1 +
+ tests/fp/fp-bench.c             |   1 +
+ fpu/softfloat-parts.c.inc       | 127 +++++--
+ 37 files changed, 2325 insertions(+), 709 deletions(-)
 
