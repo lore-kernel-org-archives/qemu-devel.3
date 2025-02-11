@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AEDC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB78DC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht5V-0006SO-3N; Tue, 11 Feb 2025 11:26:17 -0500
+	id 1tht5c-0006UE-0C; Tue, 11 Feb 2025 11:26:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5N-0006Pb-Vj
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:10 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tht5L-0006Om-8I
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:08 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5M-00034B-4M
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:09 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so17351885e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:07 -0800 (PST)
+ id 1tht5J-000335-7h
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:07 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4394a0c65fcso21384215e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739291167; x=1739895967; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739291164; x=1739895964; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yFFYGk2z6wncJvqMPz/0PChB0KSd0ypiZMRnDwsxBYI=;
- b=icpvYeFV1kowMT4TJE2oAU/lmyoNTNzil5qQhahMlngUwQsAAU7xswBxpdpCtxS9+4
- Y0cn+MHzEG86BBhfVKy0oDsgy8/qqW6TTQ00dXx5ThX7VQsUW+jc/m9vi5CuvmfRWG8B
- 728Oy6xJBIKpgN8LBDx13/VjPVjc4BszVLOvDxN1setON1JwXaPwNZ0zIh5D2NK9YkFk
- 2ZSIJxCclAeNFCoSATwGkMRdHG9DodGbMZAEK2fgoEtrDvDeTHlQPInQ6N6ExefzLxca
- W+LzQuEdjkre3Tq8HuBbLOUId50bYYPC1u4FIrmYohBZMqW1Sviuj078u5DeV6AwerkC
- Kp6A==
+ :reply-to; bh=oHCiuj4JVKpkS58JWQkdgF532nZyU3vTNz6sMG44ioQ=;
+ b=twbtaz6RlAhIzx0ASTar9/CFIUO1QyjSALACsx7GuqI3fnN4oRpb+A/x6OAq2ovPiF
+ cGFUl6OiFpFiEJl9aAx5tLcooMojKidyuHs7qZi0hdoFTqzPrxxbtp37+tLT3uCJbEc5
+ xE5GDmJgJbp5UD6DDrwacpiPvCPKsIg82BergzIlIqmyxC9dvoD4CRb7dSGuTV9ppbij
+ sUTgn3oPGXD+wA5oe8jDXiY3RTeff0TAFkOaSJ1sOAv067g8Za6n5GnmzoFrevlPg+aW
+ nGoUX+Hbchlw7jGMIybtFvNFS8vFGlyGDbCzcn9QQNEdfV4wdm4eG91skqNMaq4vdJvu
+ U89g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291167; x=1739895967;
+ d=1e100.net; s=20230601; t=1739291164; x=1739895964;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yFFYGk2z6wncJvqMPz/0PChB0KSd0ypiZMRnDwsxBYI=;
- b=IBOAcBquvnZcYEcpVtRQKvUzuyci+EHvGvwSERJZSwNOz88YZ6pMhq29wpoyBI+Its
- QlhDrWFuzQakMG2B9gzLnWqwI+HQpnckFTUj9bisDafUgfiz96w6lKeGaYVQ6Wwmy/zb
- gH6Rfx2Uo5spDCJoPstlNjGjHyhNKkI1vzGx9AC1sFCb3JZC4EnXbJW2OBtSvaYkR1+Q
- mxFkN3sVs9Pax+X7mQHIEZ0OY7QHt/Nw0ZHof/B4ZiB2/PjLkaxFs9m0vVeAhXw+ldx+
- GaUoyiruGb/XNgsj74laNwqKx1/lAjXCZTa4I9sVWyvoZLK21GuZ4Mr1jZzsOe8dEAk/
- n66Q==
-X-Gm-Message-State: AOJu0YwD8BX/0NU7YQ/fnecMWjWOE0TPm6x3bnxR7kx4KVzYkbf5uvnt
- dphpxOBMHkxixsZbGTCd5w75gmuL4o7JGIGpD6vFxhi0qWk80Q0PPcKIark6sSu7hsnmd0iwUIS
- w
-X-Gm-Gg: ASbGncuhPG7IJmIqGx42L7XPwigfoMd3Zr2hoGj1etAveM9Vigh069ungj58B9fNksm
- 5veVeT5ihjzRHiD9FFMqlnr1ZLDwgj5qNZ6ks2o7/wrrnAgZa7Gy5cIUC49LHGvDzBmezrrSXLL
- sNUjwNQqZal8aLYK7FEkdXG6wEog+5i8xTx94hFJn2stqMaOC09QdOjiFTvn+4ANDvf/IFTWRry
- TIAz/hmKgzFzEQqzVF5fjB2+AUIQiVsleZqxW04qhgh4yhk+v14xAW24oCaU0dpFK8+QS4JzT6K
- lGYU2958n1P6ph1Hm9Ov
-X-Google-Smtp-Source: AGHT+IHcMuOWlOGV7BeEdxEI+KqujNH3OcI52ZVr4ubsWymI/ruwTfFW14E3SFr3rs2vNh05C/+Sdg==
-X-Received: by 2002:a05:600c:8410:b0:439:5512:ba0d with SMTP id
- 5b1f17b1804b1-4395512bd2emr27454245e9.24.1739291166538; 
- Tue, 11 Feb 2025 08:26:06 -0800 (PST)
+ bh=oHCiuj4JVKpkS58JWQkdgF532nZyU3vTNz6sMG44ioQ=;
+ b=dx1gdhNLAKNLxP6XcP8bR2cLoy2JgrvbpwZC7WDfAqYAZPqIH3Oy8XP61dzitYpRIt
+ Q4Oov/w+z7vJA0T2vrVyrMx0RS7ccR/IPMrVZFHR8wzAymcMGo6yV4um22c63+4h4e3x
+ XD70A3pRx71t+dXY/keqffAMOz4AtO8B0XO9bff/Vg6Kk5JpcP4+jTyx4KpvMDq34vIi
+ SS7a6uX8dNidzbYfeMCR/K/z2CQx8iI9Zn9pGeMlAyikYDZpjmtnR0333WYuQ5clgh9a
+ r088WphuyBtx9PRbZT6MKvBeUPeOds9kbkhPIvGJja6yIasJoHSJDsTx+1M+1GJEzyol
+ bNUA==
+X-Gm-Message-State: AOJu0Ywvx3Xr0SAdMnhDJqi99A9cAwsltcbDtfYaJUJeBIVEcP01HivE
+ UhxKFWvJHyH8zEt4he5yQUEhcobNnnPaGN5KwP7xgpR9t/nyr1mMOhUxpBrbfQqxVI03q0Pzgzz
+ A
+X-Gm-Gg: ASbGncujWdduBpyZt+OyUr8ohJggjHVNTQ4J402w1AvdKhouuO/n+y2ozQXxT75Zfmj
+ 0BLNvGOEwL9F9i64gXbuSRjtFpfCFsjPiRKO8E2gUKvav/75bU+M10zcuwRsA5kWROWLnaKpLog
+ SCHqtRjVKQfsQHvYpaII/ZstP6bynFsypYEzwatefpPnUttlkS2f7tppxjVltO3JpNqMHaH67JF
+ psoCyvG4BpWx3BI4ZJdV68LSiAkEyTz8wANWZCdrhTg73JKPJgtJZPXs20H6YenpsZp5qHq5HUT
+ DyB+tZi9rBor0fbwV1e2
+X-Google-Smtp-Source: AGHT+IEstagllL9nHnc4gaJU04HddV01/KQ896wJz42yxoD00jNJ1/vbr3vYnrf3wVZ0Bxqu6vP0WA==
+X-Received: by 2002:a05:600c:1d02:b0:431:542d:2599 with SMTP id
+ 5b1f17b1804b1-439249a7ba5mr162747055e9.22.1739291163596; 
+ Tue, 11 Feb 2025 08:26:03 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.05
+ 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:26:05 -0800 (PST)
+ Tue, 11 Feb 2025 08:26:02 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/68] target/arm: Add FPCR.AH to tbflags
-Date: Tue, 11 Feb 2025 16:24:55 +0000
-Message-Id: <20250211162554.4135349-10-peter.maydell@linaro.org>
+Subject: [PULL 06/68] target/arm: Implement FPCR.FIZ handling
+Date: Tue, 11 Feb 2025 16:24:52 +0000
+Message-Id: <20250211162554.4135349-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
 References: <20250211162554.4135349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,95 +98,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to need to generate different code in some cases when
-FPCR.AH is 1.  For example:
- * Floating point neg and abs must not flip the sign bit of NaNs
- * some insns (FRECPE, FRECPS, FRECPX, FRSQRTE, FRSQRTS, and various
-   BFCVT and BFM bfloat16 ops) need to use a different float_status
-   to the usual one
+Part of FEAT_AFP is the new control bit FPCR.FIZ.  This bit affects
+flushing of single and double precision denormal inputs to zero for
+AArch64 floating point instructions.  (For half-precision, the
+existing FPCR.FZ16 control remains the only one.)
 
-Encode FPCR.AH into the A64 tbflags, so we can refer to it at
-translate time.
+FPCR.FIZ differs from FPCR.FZ in that if we flush an input denormal
+only because of FPCR.FIZ then we should *not* set the cumulative
+exception bit FPSR.IDC.
 
-Because we now have a bit in FPCR that affects codegen, we can't mark
-the AArch64 FPCR register as being SUPPRESS_TB_END any more; writes
-to it will now end the TB and trigger a regeneration of hflags.
+FEAT_AFP also defines that in AArch64 the existing FPCR.FZ only
+applies when FPCR.AH is 0.
+
+We can implement this by setting the "flush inputs to zero" state
+appropriately when FPCR is written, and by not reflecting the
+float_flag_input_denormal status flag into FPSR reads when it is the
+result only of FPSR.FIZ.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h               | 1 +
- target/arm/tcg/translate.h     | 2 ++
- target/arm/helper.c            | 2 +-
- target/arm/tcg/hflags.c        | 4 ++++
- target/arm/tcg/translate-a64.c | 1 +
- 5 files changed, 9 insertions(+), 1 deletion(-)
+ target/arm/vfp_helper.c | 60 ++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 50 insertions(+), 10 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 1c91b1f50f2..a71f848cc51 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -3198,6 +3198,7 @@ FIELD(TBFLAG_A64, NV2, 34, 1)
- FIELD(TBFLAG_A64, NV2_MEM_E20, 35, 1)
- /* Set if FEAT_NV2 RAM accesses are big-endian */
- FIELD(TBFLAG_A64, NV2_MEM_BE, 36, 1)
-+FIELD(TBFLAG_A64, AH, 37, 1)   /* FPCR.AH */
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 8c79ab4fc8a..30c170ecee5 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -61,19 +61,31 @@ static inline uint32_t vfp_exceptbits_from_host(int host_bits)
  
- /*
-  * Helpers for using the above. Note that only the A64 accessors use
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 084ee63d990..1fc4fdd7794 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -155,6 +155,8 @@ typedef struct DisasContext {
-     bool nv2_mem_e20;
-     /* True if NV2 enabled and NV2 RAM accesses are big-endian */
-     bool nv2_mem_be;
-+    /* True if FPCR.AH is 1 (alternate floating point handling) */
-+    bool fpcr_ah;
-     /*
-      * >= 0, a copy of PSTATE.BTYPE, which will be 0 without v8.5-BTI.
-      *  < 0, set by the current instruction.
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 40bdfc851a5..7d95eae9971 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4848,7 +4848,7 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-       .writefn = aa64_daif_write, .resetfn = arm_cp_reset_ignore },
-     { .name = "FPCR", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 3, .opc2 = 0, .crn = 4, .crm = 4,
--      .access = PL0_RW, .type = ARM_CP_FPU | ARM_CP_SUPPRESS_TB_END,
-+      .access = PL0_RW, .type = ARM_CP_FPU,
-       .readfn = aa64_fpcr_read, .writefn = aa64_fpcr_write },
-     { .name = "FPSR", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 3, .opc2 = 1, .crn = 4, .crm = 4,
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index f03977b4b00..b3a78564ec1 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -404,6 +404,10 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-         DP_TBFLAG_A64(flags, TCMA, aa64_va_parameter_tcma(tcr, mmu_idx));
-     }
+ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
+ {
+-    uint32_t i = 0;
++    uint32_t a32_flags = 0, a64_flags = 0;
  
-+    if (env->vfp.fpcr & FPCR_AH) {
-+        DP_TBFLAG_A64(flags, AH, 1);
-+    }
+-    i |= get_float_exception_flags(&env->vfp.fp_status_a32);
+-    i |= get_float_exception_flags(&env->vfp.fp_status_a64);
+-    i |= get_float_exception_flags(&env->vfp.standard_fp_status);
++    a32_flags |= get_float_exception_flags(&env->vfp.fp_status_a32);
++    a32_flags |= get_float_exception_flags(&env->vfp.standard_fp_status);
+     /* FZ16 does not generate an input denormal exception.  */
+-    i |= (get_float_exception_flags(&env->vfp.fp_status_f16_a32)
++    a32_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a32)
+           & ~float_flag_input_denormal_flushed);
+-    i |= (get_float_exception_flags(&env->vfp.fp_status_f16_a64)
++    a32_flags |= (get_float_exception_flags(&env->vfp.standard_fp_status_f16)
+           & ~float_flag_input_denormal_flushed);
+-    i |= (get_float_exception_flags(&env->vfp.standard_fp_status_f16)
 +
-     return rebuild_hflags_common(env, fp_el, mmu_idx, flags);
++    a64_flags |= get_float_exception_flags(&env->vfp.fp_status_a64);
++    a64_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a64)
+           & ~float_flag_input_denormal_flushed);
+-    return vfp_exceptbits_from_host(i);
++    /*
++     * Flushing an input denormal *only* because FPCR.FIZ == 1 does
++     * not set FPSR.IDC; if FPCR.FZ is also set then this takes
++     * precedence and IDC is set (see the FPUnpackBase pseudocode).
++     * So squash it unless (FPCR.AH == 0 && FPCR.FZ == 1).
++     * We only do this for the a64 flags because FIZ has no effect
++     * on AArch32 even if it is set.
++     */
++    if ((env->vfp.fpcr & (FPCR_FZ | FPCR_AH)) != FPCR_FZ) {
++        a64_flags &= ~float_flag_input_denormal_flushed;
++    }
++    return vfp_exceptbits_from_host(a32_flags | a64_flags);
  }
  
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index d6ac2ed418a..be3f4489e5e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9655,6 +9655,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-     dc->nv2 = EX_TBFLAG_A64(tb_flags, NV2);
-     dc->nv2_mem_e20 = EX_TBFLAG_A64(tb_flags, NV2_MEM_E20);
-     dc->nv2_mem_be = EX_TBFLAG_A64(tb_flags, NV2_MEM_BE);
-+    dc->fpcr_ah = EX_TBFLAG_A64(tb_flags, AH);
-     dc->vec_len = 0;
-     dc->vec_stride = 0;
-     dc->cp_regs = arm_cpu->cp_regs;
+ static void vfp_clear_float_status_exc_flags(CPUARMState *env)
+@@ -91,6 +103,17 @@ static void vfp_clear_float_status_exc_flags(CPUARMState *env)
+     set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
+ }
+ 
++static void vfp_sync_and_clear_float_status_exc_flags(CPUARMState *env)
++{
++    /*
++     * Synchronize any pending exception-flag information in the
++     * float_status values into env->vfp.fpsr, and then clear out
++     * the float_status data.
++     */
++    env->vfp.fpsr |= vfp_get_fpsr_from_host(env);
++    vfp_clear_float_status_exc_flags(env);
++}
++
+ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+ {
+     uint64_t changed = env->vfp.fpcr;
+@@ -130,9 +153,18 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+     if (changed & FPCR_FZ) {
+         bool ftz_enabled = val & FPCR_FZ;
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status_a32);
+-        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_a32);
+         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status_a64);
+-        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_a64);
++        /* FIZ is A64 only so FZ always makes A32 code flush inputs to zero */
++        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status_a32);
++    }
++    if (changed & (FPCR_FZ | FPCR_AH | FPCR_FIZ)) {
++        /*
++         * A64: Flush denormalized inputs to zero if FPCR.FIZ = 1, or
++         * both FPCR.AH = 0 and FPCR.FZ = 1.
++         */
++        bool fitz_enabled = (val & FPCR_FIZ) ||
++            (val & (FPCR_FZ | FPCR_AH)) == FPCR_FZ;
++        set_flush_inputs_to_zero(fitz_enabled, &env->vfp.fp_status_a64);
+     }
+     if (changed & FPCR_DN) {
+         bool dnan_enabled = val & FPCR_DN;
+@@ -141,6 +173,14 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a32);
+         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a64);
+     }
++    /*
++     * If any bits changed that we look at in vfp_get_fpsr_from_host(),
++     * we must sync the float_status flags into vfp.fpsr now (under the
++     * old regime) before we update vfp.fpcr.
++     */
++    if (changed & (FPCR_FZ | FPCR_AH | FPCR_FIZ)) {
++        vfp_sync_and_clear_float_status_exc_flags(env);
++    }
+ }
+ 
+ #else
 -- 
 2.34.1
 
