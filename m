@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33987C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 21:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC37C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 21:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thy4K-0008G2-Ow; Tue, 11 Feb 2025 16:45:33 -0500
+	id 1thy4X-0000E4-KN; Tue, 11 Feb 2025 16:45:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thy3V-00081X-K8
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:44:38 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thy3N-0007xl-4J
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:44:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thy3S-0005OW-Uf
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:44:33 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thy3K-0005CK-5Q
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:44:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739310270;
+ s=mimecast20190719; t=1739310260;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/OWHn8YVudrVjD30pFiw9gzLSOJXgZ2dezAHaj9jIKU=;
- b=KMoRRxexdvw6dlOIXUyuWJ4GLcUo1QkOMiHnvwOE+tnyDgHFmAF8JIIXfcGlvuhuujbfHc
- kLIEcxbM2hUjCf4oiAAs4csoHNLyZvrmqxGeJu2DCd5HlhkPk4eND4WTxR2rvPMUxqPtSA
- VQYlV7Wc4AarvZVTCzakuV/rC29c7f4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=XSzSFAT3rgdThuIc6FzbUhbBWhXyBUS0hMTEzRpzB2k=;
+ b=NEGuWR2FPbOpfxFvBmFeujzMsCRRRZlkgVEmMBcSHSjp6wNSykj3CVa47N68xTKldrZfib
+ 7xRHRUqmQweZhOk9S3Q4Cymj9JOhJQqQNX/ExZ+1pTS+p1FgvAr6z4iabPIZ/VPDkgULVz
+ t2ECGN0MdwWculZMSUXX1ljMNq3kmyo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-I6KzDElLPP2cB1iufbH_UQ-1; Tue,
- 11 Feb 2025 16:44:25 -0500
-X-MC-Unique: I6KzDElLPP2cB1iufbH_UQ-1
-X-Mimecast-MFC-AGG-ID: I6KzDElLPP2cB1iufbH_UQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-e6x9UmKPO-qPmCxSyi2fmg-1; Tue,
+ 11 Feb 2025 16:44:16 -0500
+X-MC-Unique: e6x9UmKPO-qPmCxSyi2fmg-1
+X-Mimecast-MFC-AGG-ID: e6x9UmKPO-qPmCxSyi2fmg
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C24E8195609F; Tue, 11 Feb 2025 21:44:23 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 236EA1955DD0; Tue, 11 Feb 2025 21:44:15 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.32.210])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47125195608D; Tue, 11 Feb 2025 21:44:21 +0000 (UTC)
+ id E87B0195608D; Tue, 11 Feb 2025 21:44:11 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
  manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: [PATCH 06/11] rust/block: Add I/O buffer traits
-Date: Tue, 11 Feb 2025 22:43:23 +0100
-Message-ID: <20250211214328.640374-7-kwolf@redhat.com>
+Subject: [PATCH 03/11] rust: Add some block layer bindings
+Date: Tue, 11 Feb 2025 22:43:20 +0100
+Message-ID: <20250211214328.640374-4-kwolf@redhat.com>
 In-Reply-To: <20250211214328.640374-1-kwolf@redhat.com>
 References: <20250211214328.640374-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -82,123 +82,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Types that implement IoBuffer can be used with safe I/O functions.
-
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- rust/block/src/iobuffer.rs | 94 ++++++++++++++++++++++++++++++++++++++
- rust/block/src/lib.rs      |  2 +
- 2 files changed, 96 insertions(+)
- create mode 100644 rust/block/src/iobuffer.rs
+ rust/wrapper.h                | 4 ++++
+ meson.build                   | 1 +
+ rust/qemu-api/src/zeroable.rs | 5 +++--
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/rust/block/src/iobuffer.rs b/rust/block/src/iobuffer.rs
-new file mode 100644
-index 0000000000..d61370c961
---- /dev/null
-+++ b/rust/block/src/iobuffer.rs
-@@ -0,0 +1,94 @@
-+// Copyright Red Hat Inc.
-+// Author(s): Kevin Wolf <kwolf@redhat.com>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+use std::mem::MaybeUninit;
-+
-+/// Types that implement IoBuffer can be used with safe I/O functions.
-+///
-+/// # Safety
-+///
-+/// `buffer_ptr()` and `buffer_mut_ptr()` must return pointers to the address of the same I/O
-+/// buffer with the size returned by `buffer_len()` which remain valid for the lifetime of the
-+/// object. It must be safe for the I/O buffer to contain any byte patterns.
-+pub unsafe trait IoBuffer {
-+    /// Returns a const pointer to be used as a raw I/O buffer
-+    fn buffer_ptr(&self) -> *const u8;
-+
-+    /// Returns a mutable pointer to be used as a raw I/O buffer
-+    fn buffer_mut_ptr(&mut self) -> *mut u8;
-+
-+    /// Returns the length in bytes for the raw I/O buffer returned by [`buffer_ptr`] and
-+    /// [`buffer_mut_ptr`]
-+    ///
-+    /// [`buffer_ptr`]: IoBuffer::buffer_ptr
-+    /// [`buffer_mut_ptr`]: IoBuffer::buffer_mut_ptr
-+    fn buffer_len(&self) -> usize;
-+}
-+
-+/// Implementing `SizedIoBuffer` provides an implementation for [`IoBuffer`] without having to
-+/// implement any functions manually.
-+///
-+/// # Safety
-+///
-+/// Types implementing `SizedIoBuffer` guarantee that the whole object can be accessed as an I/O
-+/// buffer that is safe to contain any byte patterns.
-+pub unsafe trait SizedIoBuffer: Sized {
-+    /// Safely converts a byte slice into a shared reference to the type implementing
-+    /// `SizedIoBuffer`
-+    fn from_byte_slice(buf: &[u8]) -> Option<&Self> {
-+        if buf.len() < std::mem::size_of::<Self>() {
-+            return None;
-+        }
-+
-+        let ptr = buf.as_ptr() as *const Self;
-+
-+        // TODO Use ptr.is_aligned() when MSRV is updated to at least 1.79.0
-+        if (ptr as usize) % std::mem::align_of::<Self>() != 0 {
-+            return None;
-+        }
-+
-+        // SAFETY: This function checked that the byte slice is large enough and aligned.
-+        // Implementing SizedIoBuffer promises that any byte pattern is valid for the type.
-+        Some(unsafe { &*ptr })
-+    }
-+}
-+
-+unsafe impl<T: SizedIoBuffer> IoBuffer for T {
-+    fn buffer_ptr(&self) -> *const u8 {
-+        self as *const Self as *const u8
-+    }
-+
-+    fn buffer_mut_ptr(&mut self) -> *mut u8 {
-+        self as *mut Self as *mut u8
-+    }
-+
-+    fn buffer_len(&self) -> usize {
-+        std::mem::size_of::<Self>()
-+    }
-+}
-+
-+unsafe impl<T: SizedIoBuffer> IoBuffer for [T] {
-+    fn buffer_ptr(&self) -> *const u8 {
-+        self.as_ptr() as *const u8
-+    }
-+
-+    fn buffer_mut_ptr(&mut self) -> *mut u8 {
-+        self.as_mut_ptr() as *mut u8
-+    }
-+
-+    fn buffer_len(&self) -> usize {
-+        std::mem::size_of_val(self)
-+    }
-+}
-+
-+unsafe impl<T: SizedIoBuffer> SizedIoBuffer for MaybeUninit<T> {}
-+
-+unsafe impl SizedIoBuffer for u8 {}
-+unsafe impl SizedIoBuffer for u16 {}
-+unsafe impl SizedIoBuffer for u32 {}
-+unsafe impl SizedIoBuffer for u64 {}
-+unsafe impl SizedIoBuffer for i8 {}
-+unsafe impl SizedIoBuffer for i16 {}
-+unsafe impl SizedIoBuffer for i32 {}
-+unsafe impl SizedIoBuffer for i64 {}
-diff --git a/rust/block/src/lib.rs b/rust/block/src/lib.rs
-index 8b13789179..1c03549821 100644
---- a/rust/block/src/lib.rs
-+++ b/rust/block/src/lib.rs
-@@ -1 +1,3 @@
-+mod iobuffer;
+diff --git a/rust/wrapper.h b/rust/wrapper.h
+index 41be87adcf..c3e1e6f9cf 100644
+--- a/rust/wrapper.h
++++ b/rust/wrapper.h
+@@ -53,3 +53,7 @@ typedef enum memory_order {
+ #include "chardev/char-fe.h"
+ #include "qapi/error.h"
+ #include "chardev/char-serial.h"
++#include "block/block.h"
++#include "block/block_int.h"
++#include "block/qdict.h"
++#include "qapi/qapi-visit-block-core.h"
+diff --git a/meson.build b/meson.build
+index 30aae6b3c3..154195bc80 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4045,6 +4045,7 @@ if have_rust
+     '--with-derive-default',
+     '--no-layout-tests',
+     '--no-prepend-enum-name',
++    '--allowlist-item', 'EINVAL|EIO',
+     '--allowlist-file', meson.project_source_root() + '/include/.*',
+     '--allowlist-file', meson.project_source_root() + '/.*',
+     '--allowlist-file', meson.project_build_root() + '/.*'
+diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
+index b454e9e05e..60af681293 100644
+--- a/rust/qemu-api/src/zeroable.rs
++++ b/rust/qemu-api/src/zeroable.rs
+@@ -56,7 +56,6 @@ pub unsafe trait Zeroable: Default {
+ /// ## Differences with `core::mem::zeroed`
+ ///
+ /// `const_zero` zeroes padding bits, while `core::mem::zeroed` doesn't
+-#[allow(unused)]
+ macro_rules! const_zero {
+     // This macro to produce a type-generic zero constant is taken from the
+     // const_zero crate (v0.1.1):
+@@ -78,7 +77,6 @@ union TypeAsBytes {
+ }
  
-+pub use iobuffer::{IoBuffer, SizedIoBuffer};
+ /// A wrapper to implement the `Zeroable` trait through the `const_zero` macro.
+-#[allow(unused)]
+ macro_rules! impl_zeroable {
+     ($type:ty) => {
+         unsafe impl Zeroable for $type {
+@@ -110,3 +108,6 @@ fn default() -> Self {
+ impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_1);
+ #[cfg(feature = "system")]
+ impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_2);
++
++impl_zeroable!(crate::bindings::BlockDriver);
++impl_zeroable!(crate::bindings::BlockDriver__bindgen_ty_1);
 -- 
 2.48.1
 
