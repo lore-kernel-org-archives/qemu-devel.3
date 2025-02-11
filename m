@@ -4,65 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84447C0219E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2B0C0219B
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thtGz-0003XW-IR; Tue, 11 Feb 2025 11:38:09 -0500
+	id 1tht6Z-00084E-UW; Tue, 11 Feb 2025 11:27:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thtGr-000348-CH
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:38:03 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tht65-0006sG-5K
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thtGp-0000A8-H7
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:38:01 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tht62-0003U4-Lq
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739291876;
+ s=mimecast20190719; t=1739291209;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=d9zYju0cgo8r2+qiw1betYGzWi8jKGhs+YXYtyhzrT8=;
- b=hOiryfr1O8vNKElq7xafihxoNMYx2FjeBsqlioTbzJFW7gPcSqseE9zX1Je/JaCi3UNLDw
- 9TOzpB0NbOJvQWy6vgAnqjOl9qNpNPey6/nwiLg4Yu8lqjuCN6YiV8dlFO6WGrcQVlOl9Y
- vPpvmfwMjqEDsFRESGWjnBcD5PArwGc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-C2TjtXwxPkujQ9-DpD0NFg-1; Tue,
- 11 Feb 2025 11:37:52 -0500
-X-MC-Unique: C2TjtXwxPkujQ9-DpD0NFg-1
-X-Mimecast-MFC-AGG-ID: C2TjtXwxPkujQ9-DpD0NFg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 407361800997; Tue, 11 Feb 2025 16:37:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E566619560A3; Tue, 11 Feb 2025 16:37:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6D04321E6A28; Tue, 11 Feb 2025 17:37:47 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v2 9/9] migration: Update migrate_cancel documentation
-In-Reply-To: <20250211150136.6781-10-farosas@suse.de> (Fabiano Rosas's message
- of "Tue, 11 Feb 2025 12:01:36 -0300")
-References: <20250211150136.6781-1-farosas@suse.de>
- <20250211150136.6781-10-farosas@suse.de>
-Date: Tue, 11 Feb 2025 17:37:47 +0100
-Message-ID: <87y0ycsahw.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=Ag7/kcTmaUTRSM6LCTBcCbtLWMglMNq0WLwQy0Or26E=;
+ b=gxqpBldNMjC5iboHi2L0ONV/vfqiUuX3ENU5fW8zOxLfyHIvmedCs1k+8fpCD/kPMysUfx
+ hzNr5aP2PN8gKJIEN3JnKWZZUd7I+CPrFv8tzsw6qI9gakfjHGZQ9Epc6OFjtdZCtJUxq4
+ C4G6H/29RCktTZnNQZcLOLJJlJeOiu0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-6iYNa6D4OD6Ozhd0_MbsNA-1; Tue, 11 Feb 2025 11:26:46 -0500
+X-MC-Unique: 6iYNa6D4OD6Ozhd0_MbsNA-1
+X-Mimecast-MFC-AGG-ID: 6iYNa6D4OD6Ozhd0_MbsNA
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38dcd8ddc5eso3001674f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739291205; x=1739896005;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ag7/kcTmaUTRSM6LCTBcCbtLWMglMNq0WLwQy0Or26E=;
+ b=t7oaIIu38XDmFxCDW6gJZIkdjt5KAEpp359c10mvxdGacAZwEOHtiABjdXU8eVgyAl
+ fmn1s5fM+N4lTV68XuKX1rZ2bYjTIYDDWxMGRCQsDbxqmS6i83uIxDwMhpXeAgnVLQuh
+ /cP696RQf3Od4Bk8BiHkw4pcDNwd84Vn13cys8ARzuQoKqlRGlPYogkM8uDOggUTpkOr
+ y44DylSTYhD9F17Asls+11FNePgjFTi5aYVqwSEqcAIkdhYMXnPR1xBC4prmWDQqcagN
+ Am8gceXellQ3pRzRTsghon5kPvhRu+IBcgqI2F+T2nERXAWsBSpxPhynWFC0E/qmSMxT
+ wFYA==
+X-Gm-Message-State: AOJu0YyzcKs2/P3lSq2xiKhYciBhsKkNNWmE4+gy0yUT3iDtHjkoxTV/
+ SqRLmWXKlrkR54DBmQsgZmNY/C/JE2xcAkmTvXVO6ok6wKtrw+83864xQf5H13dIBFsSIJtS7sO
+ EJQo4GOGTSkVaiAWK0+9L6FqpSZBMpGcuxO1d/iMFEGRZdUZo7Vzs
+X-Gm-Gg: ASbGncvz2yarlYFOg+FxIjOuQnYHYTvb2lSuIt19+3vZsab77orRfSPWO44cxN+w8hX
+ 41ZB3JqHdbQuWE+kWGwjtk5d8IPblbAi85h8wgCPv3IgjCO3xa2t0dQjcVD0TcBMYyCFeSrzzpP
+ WY+o+3lmy7yXnrg+CDsH/kTRN+Z5CpjplBJDYSiKOknQX8LvqW6ak30jxv9BttLnPOwOYcL4AL/
+ SqpOJ+p+1TCzJf1Dx5JKNYkqFiGUCxWvkfZ1IV6ttJiCg/Vp3uUTK69vdVKXMs5HzHsBQo3JHNV
+ hB9zlCA/GApGU9tBzxma+pQiKGqreNGKgjtdorwjIYz1JrH5FWjh+g==
+X-Received: by 2002:a5d:5850:0:b0:38d:d118:8b4d with SMTP id
+ ffacd0b85a97d-38dd1189408mr13736526f8f.54.1739291204817; 
+ Tue, 11 Feb 2025 08:26:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+8OtW7y97gZpe/WvXipk8JHhm/p06mhyuoVWwvTI+QMyndALi668ow53/APRjnvchayGXkQ==
+X-Received: by 2002:a5d:5850:0:b0:38d:d118:8b4d with SMTP id
+ ffacd0b85a97d-38dd1189408mr13736472f8f.54.1739291204165; 
+ Tue, 11 Feb 2025 08:26:44 -0800 (PST)
+Received: from sgarzare-redhat (host-79-46-200-29.retail.telecomitalia.it.
+ [79.46.200.29]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbf2ed900sm15117663f8f.53.2025.02.11.08.26.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Feb 2025 08:26:43 -0800 (PST)
+Date: Tue, 11 Feb 2025 17:26:39 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net, mst@redhat.com
+Subject: Re: [PATCH 1/1] vhost-scsi: support VIRTIO_SCSI_F_HOTPLUG
+Message-ID: <uut6fljzuwk6rwbzmnc7ieftwtyuwdjimehn5frluldt3cqudq@ndvyu6iu4gul>
+References: <20250203005215.1502-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250203005215.1502-1-dongli.zhang@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -87,32 +106,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
-
-> Update the migrate_cancel command documentation with a few words about
-> postcopy and the expected state of the machine after migration.
+On Sun, Feb 02, 2025 at 04:52:15PM -0800, Dongli Zhang wrote:
+>So far there isn't way to test host kernel vhost-scsi event queue path,
+>because VIRTIO_SCSI_F_HOTPLUG isn't supported by QEMU.
 >
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  qapi/migration.json | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>virtio-scsi.c and vhost-user-scsi.c already support VIRTIO_SCSI_F_HOTPLUG
+>as property "hotplug".
 >
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 43babd1df4..8b9c53595c 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1524,7 +1524,9 @@
->  ##
->  # @migrate_cancel:
->  #
-> -# Cancel the current executing migration process.
-> +# Cancel the currently executing migration process.  Allows a new
-> +# migration to be started right after.  When postcopy-ram is in use,
-> +# cancelling is not allowed after the postcopy phase has started.
->  #
->  # .. note:: This command succeeds even if there is no migration
->  #    process running.
+>Add support to vhost-scsi.c to help evaluate and test event queue.
+>
+>To test the feature:
+>
+>1. Create vhost-scsi target with targetcli.
+>
+>targetcli /backstores/fileio create name=storage file_or_dev=disk01.raw
+>targetcli /vhost create naa.1123451234512345
+>targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage
+>
+>2. Create QEMU instance with vhost-scsi.
+>
+>-device vhost-scsi-pci,wwpn=naa.1123451234512345,hotplug=true
+>
+>3. Once guest bootup, hotplug a new LUN from host.
+>
+>targetcli /backstores/fileio create name=storage02 file_or_dev=disk02.raw
+>targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage02
+>
+>Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>---
+> hw/scsi/vhost-scsi.c | 3 +++
+> 1 file changed, 3 insertions(+)
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
+LGTM:
+
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+
+
+>
+>diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+>index 8039d13fd9..d3a260f6a7 100644
+>--- a/hw/scsi/vhost-scsi.c
+>+++ b/hw/scsi/vhost-scsi.c
+>@@ -359,6 +359,9 @@ static const Property vhost_scsi_properties[] = {
+>     DEFINE_PROP_BIT64("t10_pi", VHostSCSICommon, host_features,
+>                                                  VIRTIO_SCSI_F_T10_PI,
+>                                                  false),
+>+    DEFINE_PROP_BIT64("hotplug", VHostSCSICommon, host_features,
+>+                                                  VIRTIO_SCSI_F_HOTPLUG,
+>+                                                  false),
+>     DEFINE_PROP_BOOL("migratable", VHostSCSICommon, migratable, false),
+>     DEFINE_PROP_BOOL("worker_per_virtqueue", VirtIOSCSICommon,
+>                      conf.worker_per_virtqueue, false),
+>-- 
+>2.39.3
+>
 
 
