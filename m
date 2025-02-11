@@ -4,171 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E304C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 19:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EB83C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 19:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thvcm-0007JZ-3z; Tue, 11 Feb 2025 14:08:48 -0500
+	id 1thwAG-0007oD-Kp; Tue, 11 Feb 2025 14:43:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kim.phillips@amd.com>)
- id 1thvck-0007IL-Sc
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:08:46 -0500
-Received: from mail-dm6nam11on2055.outbound.protection.outlook.com
- ([40.107.223.55] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwAF-0007o1-EF
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:43:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kim.phillips@amd.com>)
- id 1thvcg-00041B-Ok
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:08:46 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Id3OrO/S4rCt4hrsZsdBQV5cuOlCsqOUodKdyoI5cCZ6EXcSNT4RhtLmJNdedUxWYaqbbc22wYCO4W9yPLrqr7+jG49QZhWeNqLPCmVikxuN/QJ5o5bbQTxndFooS/zxwG6BIoUx1cGsUWZDoncJn4fz5KdGog+ZQQgaZxP0TwbiCIM0+7GGaz10oAxM/4cp6uHmPMHzgFzMdR/32SLrFxQA3PEtJVVPkR8+Qcg7yB2vf9aXqgmHyNPnvjWSP9DwY9vccorNZ+A2UfbhMUq88U+RSTZX0C36rPpdexIutimr+KsGF/sNEMsKh/vFBoWxgs7omlKFYt72jZ8sSvJw0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lrUSHHQzILJWvq2Qd9uEJGxtMW0SO10VdvdLamKzYn0=;
- b=QKzICztiVyzfJmKzGZJ/kssc9v+XLEoB1EvhbVs6WgQcBmRiigGL0aQkUf4RC/q/z/6eHw0JBqhYHFngJ8MsI3WuqN0BB2uDClooa/VpCO6VRK0jDgovUvUfhZwKnJ3bWkUN+rFRQCbDuaTjfNStscJz/e1RK3Xyf+pBp1H8T5ITTxIvQ9FGSNlDAfrE7Q8AMz2cFayVqUiNMhBt47vvNGI5YnZqvS5qc47JK+8u4dB6715uCX7MVD4xaE5a8UlfFp2P/qFcWeQd0PcDMVxHXwlTIhevKbXbs7+P5/O7e3ZmdV+akEfJF5STNWxZRbPIPgtzB7NgsrifXllH53eAbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lrUSHHQzILJWvq2Qd9uEJGxtMW0SO10VdvdLamKzYn0=;
- b=RzsQctQXovUjjzXBmODz/oubrzH50wnI20iXOWKT/lWWeyT0rcLrJQ2Binjn+s4gysENfJzcxRuUcdzCweLAXqlco5Ye7eQ2bv2BRDnZetySehng/zYD8LAQsUWrRXE7gP8YFsg1lF0sXVr31kriTfNFcur9pPuSy+OIAiKiVw8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS7PR12MB6263.namprd12.prod.outlook.com (2603:10b6:8:95::17) by
- CH3PR12MB8971.namprd12.prod.outlook.com (2603:10b6:610:177::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.16; Tue, 11 Feb
- 2025 19:03:30 +0000
-Received: from DS7PR12MB6263.namprd12.prod.outlook.com
- ([fe80::66d2:1631:5693:7a06]) by DS7PR12MB6263.namprd12.prod.outlook.com
- ([fe80::66d2:1631:5693:7a06%4]) with mapi id 15.20.8445.008; Tue, 11 Feb 2025
- 19:03:30 +0000
-Message-ID: <d61d4ca6-41ec-4236-a5ca-8fb40d987e3a@amd.com>
-Date: Tue, 11 Feb 2025 13:03:26 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] target/i386: sev: Add cmdline option to enable the Allowed
- SEV Features feature
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>,
- Ashish Kalra <ashish.kalra@amd.com>, "Nikunj A . Dadhania" <nikunj@amd.com>,
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
- Sean Christopherson <seanjc@google.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Ingo Molnar <mingo@redhat.com>,
- "H. Peter Anvin" <hpa@zytor.com>, Thomas Gleixner <tglx@linutronix.de>
-References: <20250207233327.130770-1-kim.phillips@amd.com>
- <Z6nFzwwOZDx4p6yq@redhat.com>
-Content-Language: en-US
-From: Kim Phillips <kim.phillips@amd.com>
-Organization: AMD
-In-Reply-To: <Z6nFzwwOZDx4p6yq@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SN7P220CA0013.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:806:123::18) To DS7PR12MB6263.namprd12.prod.outlook.com
- (2603:10b6:8:95::17)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwAD-00054F-AX
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:43:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739302999;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+FRiz0vFBBQFWvGSWvQmpATQqfAnoP/gg11H3yIdRBs=;
+ b=BKuKBL6sfL87158tmlpgsJquVMb7IhKnzX0v65PbX+vFHIH/HCcubSVE7cQYl8rv4DDs+F
+ ucngwx1nP5DVm8p02U0HqtKVvHJ+vu7Xxjp7PKrEUcgU7vSg4UdgbunPkBtKDnkcm54Kpf
+ WQfvH8SDaAEi7XGg7j0YFaZ/5ciKiok=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-okLYjoOLP22kjn2EhxQeRw-1; Tue, 11 Feb 2025 14:43:15 -0500
+X-MC-Unique: okLYjoOLP22kjn2EhxQeRw-1
+X-Mimecast-MFC-AGG-ID: okLYjoOLP22kjn2EhxQeRw
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7c057344597so17808285a.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 11:43:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739302995; x=1739907795;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+FRiz0vFBBQFWvGSWvQmpATQqfAnoP/gg11H3yIdRBs=;
+ b=jz/MZBTaw2EsU1kvoo8TwqRSFIZ+tjtImhyQz/7z2v0YB1iY2R9jdjTNkbHBHY3O1W
+ 3FFLLNmeoRQfRri2SfSCVwGWeOJd8ZsOq2n/b08wY4UcRk7V+5AkNRKGBjTUkuR+TTFW
+ zFEEHDajO40DOl6e3+MC/n2+AcsB6pNv2ZEneqHaSZ1lUacVHY0/R8xRuLGU2PsJnrGQ
+ bf+Fko/AmEJvOuWrPwgOwzotky5IWNqs/Oih9dKxbB7wnV7NQItbjT5YwSlWLGBDbCFd
+ 0pbAEsdHACee9HUE/n2UfO6ZLhb8TKEBi1XTUhaxnRkFZqdVR5XBbV4TeiIonyuupvMo
+ rHcQ==
+X-Gm-Message-State: AOJu0YyXwDmfEVR5V91t73hRsOSPr1AZm/ZVRa+WrzIpbB7/P8xMSCX+
+ 368PXAW2LDTZ/+/yIWL7SaW4I2TBgSCHPbAEA3ux/c5+jWU09qKEZTqOAV+1+bFySyxXuxk3/Nk
+ KNAaHJZ5JDP+rBT/vXbq2AiJ6mkdPUITa5RO1VfFjPjxvd2NVjskz
+X-Gm-Gg: ASbGncsldEdZ2jM82xy2FwYN5PCcW05WEoCi20Ki4tf8P11uJ82yHvH/KeYFC3UhdtX
+ oeoPi+z3g5CBoWTgEQH09Hjzauq1wAFHgARJbUf+1lntjHgaU6s7MQclNUGV5p19QrPx9yXXW1f
+ QadGh2UgXCOURZKDA52QMD/TVdluknVh/8Ck8yGnzMI/58o09K3VwvQBhkI/PZgC2KpHlkfjIsp
+ lOl2EXffDhkXC87aBqId/miraq1CFFEnc6BJYdejX7OfoYF2x5SWskclnI=
+X-Received: by 2002:a05:620a:288b:b0:7b1:ab32:b71e with SMTP id
+ af79cd13be357-7c06ff5a000mr53231685a.0.1739302994980; 
+ Tue, 11 Feb 2025 11:43:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHHLvRXVTbZkpKypPzKxPVWIRCivZcQY/Ld9MJ0HtVPaw6Yjmsj8VLvLC2zxNumjeBgmR4mAA==
+X-Received: by 2002:a05:620a:288b:b0:7b1:ab32:b71e with SMTP id
+ af79cd13be357-7c06ff5a000mr53228185a.0.1739302994622; 
+ Tue, 11 Feb 2025 11:43:14 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c04ec3fa82sm470574785a.93.2025.02.11.11.43.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Feb 2025 11:43:14 -0800 (PST)
+Date: Tue, 11 Feb 2025 14:43:11 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 6/9] migration: Don't set FAILED state when cancelling
+Message-ID: <Z6uoTymcfHcjnrtf@x1.local>
+References: <20250211150136.6781-1-farosas@suse.de>
+ <20250211150136.6781-7-farosas@suse.de> <Z6uM5TDDGb5FkVqf@x1.local>
+ <87wmdwuzm2.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR12MB6263:EE_|CH3PR12MB8971:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6501c991-01ab-40a6-4794-08dd4acec5ca
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Vk1TTFlvTTluYmdTbDRuVk9tY2lTS3lJUVNnSnZETWo5VnM0Z01tbmVzT1pj?=
- =?utf-8?B?TWpWeDZxUGNKRlZUZ0tyTW4rcnNEOXovazRMS0U2SUtVcXNrV0t1MmYvOG0v?=
- =?utf-8?B?NWtseHV4RGxJSTRlck9QcVNQREVWZzJBYUlPYzlrUjF6SFE3SWtzZlpseW94?=
- =?utf-8?B?U3NOK0RjM2FibzQ4c2IwUFpnak5GR1FqcjBPOTRUdWdQYW5yN3FPWHZ5NHI3?=
- =?utf-8?B?cXpxQ3RVWVJZU05SQXE3Z3lmV3EveXFXZk9DRDdiZmx0dnI0RXZ5UzMwWHVL?=
- =?utf-8?B?Q1JqYjRPN0VyeStFVXl1R2Vkd0lwUU5lWGJqM1plT2RTUDJXeXN5TmVXbE5E?=
- =?utf-8?B?VzBZS2VTcUZIV2Y0UVVuWE1YeVZ0Qk8vbEZYVGlUUXc1cDZyY1NMWkVMY3o3?=
- =?utf-8?B?RVM2aEtXUXh1SlEzYW5weHg4QUMxRlJkRVM1YklXR2JoTWgyL1h3KzhlWjh5?=
- =?utf-8?B?ZnFSVVU4Wmw2V2FPeHl6U0R2SjBTcVdjUTNvUG52dGZmNXNzTWUrQVJVMDgv?=
- =?utf-8?B?elhlcDRPeERaZUxPU25qTkxvdVdNM2cydnNtQTlsTXhuU1dJWjJmQ3F2TVM1?=
- =?utf-8?B?NTByRWlCTDVVaUZZUmJmMTlEOGNaaGNyNkNxS1JhUjVCSTJpTkZmVW9VWWY2?=
- =?utf-8?B?UFVTb0FZK3lnL01uRUUxYkxYemxTRzBjK3Rjc1ZESkpJSnVmV2hUcXFtZENQ?=
- =?utf-8?B?TUFZVjRXdjJlZ0V4M0kvZHBMKzd5K25SOTNjcFRreEN5bFhwOXg5NW9lTGpJ?=
- =?utf-8?B?MXJGSUNlMHJSeTVpSml4c3dBQ3dmcU5ZS1doeWIxeDhKb2lwUVArcWNRYzR1?=
- =?utf-8?B?ZzdkNDlsVGtzOWNKK2tCZHppTitaMG5kRnZndXM5UmNmcWliWWdySXdQbUpB?=
- =?utf-8?B?eFpXSHN4eWNhcDA0OVJVeHRjRWlRanJvaTJ5aklLRFNZbHBXQmdOT1lSNk9z?=
- =?utf-8?B?WGQvTVBTNm5uems4MGF0a0RJSm92dWkwNkNDNGtGTHpBUnJSTUx2cCtkeW5s?=
- =?utf-8?B?TjdqYWxYZmdoVTNJejFrR0FONnRGSGxwQW11cHVXTmRaNXJyWWgrck5OWGo3?=
- =?utf-8?B?SVZiREU0clRYcWt3bCttdCtTT1J0NEo3Nm0yb3l2L3ozRlA2ODRLd3dZYzl3?=
- =?utf-8?B?YUJNK1c0SHM4eWIwQ05DQTRRSWNQN2RYemdBTkV6aXl3YnQ0MDJHazJHZnJL?=
- =?utf-8?B?bUhDL2MvdWU5TExEdS8xTDJ3ZGVuSWRTeW9LMkJ6Z3FrNFV1WXRtL1JWZmFs?=
- =?utf-8?B?N0Z1VGxyakpZZ2ZvMXBtdlR1UHRjRmI0NjhHYjErSTJtYzJyK2xPVGd6MDVN?=
- =?utf-8?B?WjdIL09iMFZOM1F5enVEVzI2OTgvOVpHRGNMU0VKM2pud3JGSkZkY3FhbDdp?=
- =?utf-8?B?R1lNL3ZhbHNtQkF2VnFHNWt2eG1DTHFUTFdaYldzUmpSU3NjdTFISHh5LzFT?=
- =?utf-8?B?MTVqNHdqNlN0UkNvM0xXQkV6R1hBeDgzS3kvVUhnL0NBKzFqNEdXUnBYMG1P?=
- =?utf-8?B?YkUrdlBQWWwzVWRzZUFSWjdRRGg5Qk9YbEJXdEdTSnNZQjNvbVErRzMrM0R1?=
- =?utf-8?B?SjlEUHA4NlFGRDVDakZ5NHFoMXV5ZHd2SDZXZDdpWFB6K1pUaW82RGd4b2hS?=
- =?utf-8?B?RjdZck1oS2JkdTA4MndYaW1VdGh1SmxTbHNDUitXVUc1U2J1WkI5S2xyV24w?=
- =?utf-8?B?ektYckx2SVVtOG11WmVyYTRVYlJaQTZMVVVJTHVaZUZZYXhSQkFMazhYQ05W?=
- =?utf-8?B?NkZQKzRCc1pJM3BJV3E4UkVrR3JFVWNpUFFVVkJUOVdqeVFRbDVJY0o1Tzh1?=
- =?utf-8?B?ekJVenRld0E3OS9YZXlxQT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR12MB6263.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ajhGWXlZbTRBb1BEbkF2cjNzanoxMU9RSm4xRXJWUVFhNUNUSzYzdUZSQ1oz?=
- =?utf-8?B?MXpMRy9EbG5VRjc2cWVrdktCVWs3eGI0V3JwMmVuclQrcFhmTDJmeE9weEVp?=
- =?utf-8?B?Q1c0NzBKY2VEZ3hBUlRtREFvWXlqQmxtY2lTMmVncEZYYlNUaVhJM2pKMHpj?=
- =?utf-8?B?MTJLZTRDMFlPRXBmM21VWXpMSHFTMXhYT3FGT2c1Z0RpaFg4K1ZqL29TaEdZ?=
- =?utf-8?B?UFdQV0wrd3dNN1Joa0hKYSt3V3NaMXFPVjA0ekxvWm9rZTQwdG1HN25vUnVZ?=
- =?utf-8?B?Sk0xMGlQMGkwR0R4VmZhcmVvVGMrTC9ZMVpmWmRBR3d2TU1JQ1J3elRHUDZD?=
- =?utf-8?B?UXFXd2xEV08vL2tvUk9RTkFEQXoxeW9yQ3dGb01zNUVKNzNzR0o3RWx6eEhH?=
- =?utf-8?B?T1BUbHA5RFRpWTMveGdDRGYyck5EWVJFdkljdEw5OHR1dkZ1Y0hHUExkQmll?=
- =?utf-8?B?RmVrTFQ5aGdoTUxSeDhSY0pNd0RiT2t1NDZ4aDV4UjZWUGNSZTdYTjBrODFk?=
- =?utf-8?B?SDZoS213ZXMwQ2NBOEhZY1lTYWZHOEd5SXI1QURJWXZ1L1Q0a1hjOUhxR1E4?=
- =?utf-8?B?VUtCdnVPV1Jsa3VidUswODlXSTUwOTNWTlBzM0NKQ01MYkRDODdhZXM2K0hI?=
- =?utf-8?B?cGZySW83YzRYRnlOQXlMdXRIWkY2ZVVZUmdReDRzRlUrR3dveDc3bHByOGJB?=
- =?utf-8?B?UDk1S1QvM3J3QlNub3lCU05OZnM2dkhzZ0dUWGhQNzZzYVJlUldsQ0Fua0Yr?=
- =?utf-8?B?eFJYQ2FwaGlGTjgrd3QvdzRNdDg2RGRkbEJmcUhQcForUHhRVDdUOGs0djl3?=
- =?utf-8?B?aUZmVDVnNlM4UUZtTHYrTjE1Y21nMmR1VmtxcUNJMTlBUHZ4L0Flc3BtL3ho?=
- =?utf-8?B?OEM4aktEZnhTWS9vM2grOGVtZUJKM0VqdzJjU3V3UlFDdkNadXJNY3hWakZh?=
- =?utf-8?B?SGRsTjhMUWh3TVF1dHJLQm5lTXJ0ajhaWTdvaHhOZjR6REZsM2dKMjZTbUpa?=
- =?utf-8?B?RXFrSUN6bzEvUHRhQVZPeGlGV1ZkMWtTcmpOWUE0UjIzTjJvSDN0RDN3SWxR?=
- =?utf-8?B?cWd4b1BYYmNzcjdhTFFpZEZZRlZpUGI5RnlLdkIzdE53ajd3VllmK2prR0xS?=
- =?utf-8?B?VUpGemZwUjZiZFJBV1I5Z2VFSDhGdEVBTjduT1dLOW5wcXErRWpyMHQ3ekdq?=
- =?utf-8?B?VCtHdUE5QXo4S1dJS3E4ZzFWV2EvTmllNXJCMGZNWnJhbVVKZlQxYUlaWjZU?=
- =?utf-8?B?bS81YWxvUGtMQmZqdFREMm0yN1JmWjJUTzVKRmhub0RjUWhwdUVBR2Y5YVI0?=
- =?utf-8?B?T2ZVcjQ1SSsrZHdaQmlnUElXaXd1Q2xTZkl2TERmZWN2T0RoYkl1NGFPMFZ0?=
- =?utf-8?B?NjFTVjdPaXBVYmVGTUxUWjNNMkFLaG4vUjZ4c01OL1oxbVJ3N2NqV0xpaURT?=
- =?utf-8?B?cFZsbllrNC9URk04OVFFbmFrTERYNGNvb2hHaGJZM2dNMTkybnM2L2loT2Vq?=
- =?utf-8?B?N255Mm85UFNqK3h0TXlMcmMvSFZmUzdOTnpwemd2bUliKy94WEVyU1M5dis5?=
- =?utf-8?B?Z1hxOStLWnhjOVRQZE12MThQeUN4UzBrcHpIZFRDV3c1TmVyWWQrRFJkek9i?=
- =?utf-8?B?WXlFU1dvaGtCZExRZEpoYVVQd3F4bGQ2RkNiN1dSNFhmWVJMTWZxYzZVS2d6?=
- =?utf-8?B?RjhEVDV4Z2Nxa1p6NW14RFhVRHhadWxtQ1RQR3lLaWpKWCtVRkpJUTMzRmU3?=
- =?utf-8?B?YVVWR3c3cktBVzJsNTUvaC85V3dadTJidjF3cEtUY0hDWHhaQmgyd2cwaDYv?=
- =?utf-8?B?ZG5hampRT2g3VnVqN3lrR29SWm1xclI4bnZoOFhGeU5tL09CLzk2MVdLaVRi?=
- =?utf-8?B?VUlBVS9SL25KZFdvYmhRUUVnVEl1Y3o4TG9UQW9jbGYvaDF6NTJucURxb0pE?=
- =?utf-8?B?VmVXSTdxZm5lb0pKUkhEdyszdmJmRXhtdzQ2YTJZcURzNHN2Z3dUYW54WUYy?=
- =?utf-8?B?WTI0WUhBRTBnenU3K2JRU09qQ29WZHFMa1NBZWMxcEJiUlpkZzEyendEWUZU?=
- =?utf-8?B?a2dBY0pzb0tuV2NtQnlBK0YzZkFtWkx6N1hEZ3lOVjNwU1IxWThDYTBGN05P?=
- =?utf-8?Q?UYZ7FjWBzepqBjyygi+mBzjI9?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6501c991-01ab-40a6-4794-08dd4acec5ca
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6263.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2025 19:03:30.2549 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mMUIq3f4LL0S1W7AH4q29xZ1oBWKwK3DLL3md1xcHbZ0xzX8udsJW5eorMuAZcaqnYfEyfSX/vTmRWXOd3CvDQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8971
-Received-SPF: permerror client-ip=40.107.223.55;
- envelope-from=kim.phillips@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87wmdwuzm2.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,66 +106,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/25 3:24 AM, Daniel P. Berrangé wrote:
-> On Fri, Feb 07, 2025 at 05:33:27PM -0600, Kim Phillips wrote:
->> The Allowed SEV Features feature allows the host kernel to control
->> which SEV features it does not want the guest to enable [1].
->>
->> This has to be explicitly opted-in by the user because it has the
->> ability to break existing VMs if it were set automatically.
->>
->> Currently, both the PmcVirtualization and SecureAvic features
->> require the Allowed SEV Features feature to be set.
->>
->> Based on a similar patch written for Secure TSC [2].
->>
->> [1] Section 15.36.20 "Allowed SEV Features", AMD64 Architecture
->>      Programmer's Manual, Pub. 24593 Rev. 3.42 - March 2024:
->>      https://bugzilla.kernel.org/attachment.cgi?id=306250
->>
->> [2] https://github.com/qemu/qemu/commit/4b2288dc6025ba32519ee8d202ca72d565cbbab7
+On Tue, Feb 11, 2025 at 03:04:37PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Despite that URL, that commit also does not appear to be merged into
-> the QEMU git repo, and indeed I can't find any record of it even being
-> posted as a patch for review on qemu-devel.
+> > On Tue, Feb 11, 2025 at 12:01:33PM -0300, Fabiano Rosas wrote:
+> >> It's possible that the migration is cancelled during
+> >> migration_switchover_start(). In that case, don't set the migration
+> >> state FAILED in migration_completion().
+> >> 
+> >> Fixes: 3dde8fdbad ("migration: Merge precopy/postcopy on switchover start")
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >
+> > I remember I paid some attention on this one when working on the commit,
+> > where it has:
+> >
+> > static bool migration_switchover_prepare(MigrationState *s)
+> > {
+> >     /* Concurrent cancellation?  Quit */
+> >     if (s->state == MIGRATION_STATUS_CANCELLING) {   <================= [1]
+> >         return false;
+> >     }
+> >     ...
+> >     bql_unlock();
+> >
+> >     qemu_sem_wait(&s->pause_sem);
+> >
+> >     bql_lock();
+> >     /*
+> >      * After BQL released and retaken, the state can be CANCELLING if it
+> >      * happend during sem_wait().. Only change the state if it's still
+> >      * pre-switchover.
+> >      */
+> >     migrate_set_state(&s->state, MIGRATION_STATUS_PRE_SWITCHOVER, <====== [2]
+> >                       MIGRATION_STATUS_DEVICE);
+> >
+> >     return s->state == MIGRATION_STATUS_DEVICE;
+> > }
+> >
+> > So when holding BQL logically it can't change to CANCELLING, it'll check
+> > first [1] making sure no prior CANCELLING.  Then after release and retake
+> > BQL it'll check again [2] (see the comment above [2], it's done by passing
+> > in explicit old_state to not change it if it's CANCELLING).
 > 
-> This is horribly misleading to reviewers, suggesting that the referenced
-> patch was already accepted :-(
-
-Apologies, that was not the intent.  I'll remove it from the next version.
-
->> @@ -1524,6 +1552,20 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
->>       case KVM_X86_SNP_VM: {
->>           struct kvm_sev_init args = { 0 };
->>   
->> +        if (sev_es_enabled()) {
->> +            __u64 vmsa_features, supported_vmsa_features;
->> +
->> +            supported_vmsa_features = sev_supported_vmsa_features();
->> +            vmsa_features = sev_common->vmsa_features;
->> +            if ((vmsa_features & supported_vmsa_features) != vmsa_features) {
->> +                error_setg(errp, "%s: requested sev feature mask (0x%llx) "
->> +                           "contains bits not supported by the host kernel "
->> +                           " (0x%llx)", __func__, vmsa_features,
->> +                           supported_vmsa_features);
+> Right, it doesn't change the state. But the function returns false and
+> someone else changes to FAILED. That's what both my patch and your
+> snippet below fix.
 > 
-> This logic is being applied unconditionally, and not connected to
-> the setting of the new 'allowed-sev-features' flag value. Is that
-> correct  ?
+> >
+> > Any hint on how this could be triggered?
+> >
+> > OTOH, when looking at this.. I seem to have found a bug indeed (which could
+> > be another?), where I may have forgot to touch up the old_state in
+> > migrate_set_state() after switching to always use DEVICE..
+> >
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 74c50cc72c..513e5955cc 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -2793,8 +2793,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+> >  fail_closefb:
+> >      qemu_fclose(fb);
+> >  fail:
+> > -    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > -                          MIGRATION_STATUS_FAILED);
+> > +    if (ms->state != MIGRATION_STATUS_CANCELLING) {
+> > +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+> > +    }
+> 
+> Now that I think about it, we should probably just use the skip at
+> migrate_set_state() always. Isn't this^ the same as:
+> 
+> migrate_set_state(&ms->state, MIGRATION_STATUS_DEVICE,
+> MIGRATION_STATUS_FAILED);
+> 
+> Better to list the state explicitly, no?
 
-That's correct.
+There's one case where it can be in ACTIVE rather than DEVICE,
+unfortunately:
 
-> Will this end up breaking existing deployed guests, or is this a
-> scenario that would have been blocked with an error later on
-> regardless ?
+    ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
+    if (ret < 0) {
+        error_setg_errno(errp, -ret, "%s: Failed to stop the VM", __func__);
+        goto fail;
+    }
 
-It would have been blocked regardless by this check in kvm's __sev_guest_init:
+> 
+> Or... do we want to incorporate this into migrate_set_state()?
+> 
+> void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+>                        MigrationStatus new_state)
+> {
+>     assert(new_state < MIGRATION_STATUS__MAX);
+> 
+>     if (qatomic_read(state) == CANCELLING && new_state != CANCELLED) {
+>         /* Once it's cancelling, there's no way back, it must finish cancel */
+>         return;
+>     }
+> 
+>     if (qatomic_cmpxchg(state, old_state, new_state) == old_state) {
+>         trace_migrate_set_state(MigrationStatus_str(new_state));
+>         migrate_generate_event(new_state);
+>     }
+> }
 
-https://elixir.bootlin.com/linux/v6.13.2/source/arch/x86/kvm/svm/sev.c#L418
+IMHO we'll need the original migrate_set_state() more or less, e.g. when
+setting CANCELLING->CANCELLED in migration_[fd_]cleanup().  So maybe it's
+slightly easier we keep it.
 
-I've addressed all your other comments.
+Said that, maybe we could have a few helpers for the state transitions,
+like:
 
-Thank you for your review,
+  migrate_set_state_failure(MigrationState *s)
 
-Kim
+Which can consider CANCELLING.
+
+Also, we have a portion of such state transitions not caring about current
+state, so we could also have some helper for that, like:
+
+  migrate_set_state_always(MigrationState *s, MigrationStatus status)
+
+Or rename old migrate_set_state() into migrate_set_state_atomic(), then
+make migrate_set_state() to ignore current state.
+
+> 
+> >      migration_block_activate(NULL);
+> >      migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+> >      bql_unlock();
+> >
+> > I'm not sure whether it's relevant to what you hit, though.. since you're
+> > looking at this, I'd rely on you help figuring it out before I do.. :)
+> >
+> >> ---
+> >>  migration/migration.c | 4 +++-
+> >>  1 file changed, 3 insertions(+), 1 deletion(-)
+> >> 
+> >> diff --git a/migration/migration.c b/migration/migration.c
+> >> index 375de6d460..5dc43bcdc0 100644
+> >> --- a/migration/migration.c
+> >> +++ b/migration/migration.c
+> >> @@ -2986,7 +2986,9 @@ fail:
+> >>          error_free(local_err);
+> >>      }
+> >>  
+> >> -    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+> >> +    if (s->state != MIGRATION_STATUS_CANCELLING) {
+> >> +        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+> >> +    }
+> >>  }
+> >>  
+> >>  /**
+> >> -- 
+> >> 2.35.3
+> >> 
+> 
+
+-- 
+Peter Xu
+
 
