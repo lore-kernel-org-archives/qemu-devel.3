@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B705DC0219E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B6AFC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht5J-0006No-EW; Tue, 11 Feb 2025 11:26:05 -0500
+	id 1tht5d-0006Va-NB; Tue, 11 Feb 2025 11:26:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5H-0006NC-8o
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:03 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1tht5X-0006TW-7F
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:19 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5D-000318-QQ
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:02 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so17350545e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:25:59 -0800 (PST)
+ id 1tht5V-00037N-J8
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:18 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38dd93a4e8eso2440192f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739291158; x=1739895958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739291176; x=1739895976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dM05yax/yOR1dNSXH7LQ6wcIVot/e2PVCR/pWphSyGk=;
- b=U3aCY2U9XWlgRgO4uUpsy7vgoUjAFwSVFuzfi1dZhiyO9mb7MQGmpLHs80kpzC5lMe
- 2bflCdxpjjydqSVDvVJRyUEHEK1yeAx9yIqowXbmKpo+N5rFAma36Jr9nJ/ao3ytdEnk
- y8EC+nnwQ6dCqzxpQxNDHotwF+pU53u5mCS/NP2+w6lPo1jVV7RI8kO33R4RhImiUltg
- HuxwvpMG9eRZbHkeClgZEwreIYPCjSDw/hpN5j0VfW5IlLJivCGA0QvJNAhYhej1XZV4
- t1lUKo6MB7kmuujB+a3r/vQq9PRzM3d4k13Go31btY3qRP/GvDegUlVuJWEG33xp5QJb
- L+rA==
+ :reply-to; bh=5pvvdwtaRAuWUBeLXdtYT01E90XaKGN2JSz829Nr8n8=;
+ b=bDUGGj0zbEogxUTb0nzpzjAZwUH1JTA3yoNQQimLy5ykdQ0/4aezIBA585Isfelbwh
+ AhJ0vmk4Y0FqtfVI5Ei/Ab+ZBe17QptGIFHM4QpaBVaQFnsBWUL0A2m/PlIlfBwLtc4s
+ Fa6T/sEF1bVHObbeMNOSTm9HocS8HAbtMnI1OixcYUHSBGtThwWYTaosvBFpeVDGiuyh
+ 6R7mXVXpZNL822L8Xp9jP33VvVLgGAbIJ13MBNkf6UE/WDMBH1gOiCCPAPZQh+2fFtiT
+ RZ02MCzzXyemwtQ3Bnuuy19mTEGGaWFAZJZXdWTm0d3yXqfUCoVJCLUKbf55U7uhn2wU
+ gL7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291158; x=1739895958;
+ d=1e100.net; s=20230601; t=1739291176; x=1739895976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dM05yax/yOR1dNSXH7LQ6wcIVot/e2PVCR/pWphSyGk=;
- b=vSvluY48fAzguijhVJgt77pP21Kf7N3tXSxpSGmQktzrAJ4iMKZbQux3ldbNLfmFk+
- cjxKEo2VnjCt+rooDvKBbHry7x9VjcByxodg5n+utNsQKoFVCoW124pgEmkzp2KrqauR
- 4Fpuiqe+wHM8mQU0VqWUFVj0LjeVPy1WUeI8WKKvxjZnwH2OpKkYclzD0z5tu4c7pUbf
- qthfr4M+6tDFs1EEhWLr8lOf6YERCtek7wFqzW6Uumek3/D9ptF3eQSJuYF8bsROAQjt
- cVgor/9oRVcZxsm+KxDK9h1KntezESzH9NBlglv8ghDLBu9ByS4QixMDeIid5xBxgbXf
- 35Xg==
-X-Gm-Message-State: AOJu0YxkBKlaMXMwfEOCgxtNw84nUsfFqg+ILK/FtlwEYBn9ld9L3pXC
- RhLzTwgb+ctzzXi1NWUsf7qoJnmahwT0v88p/ygxXPnldTASZ7lhBjABWEBJiMUrz09/RhJC8uY
- w
-X-Gm-Gg: ASbGnctVv53j0nNSYa9GoWIHzPPFQS9qM+9omupMaAxQ+BzoR3IRBceUwVUX2PJuyg4
- DfKvoHbyfgDpr1PqnLTixzhtvuO3MgwUBUDyajBSQWTY1/O9BCRoXQfybR7uDHKHiMOjC3AdECJ
- 0bmWPRMNVXPn71AuGZzeg13tJ/HKi5OPtU7qlrrc3d++pBxEYg8yiswq/rZuIATwhkoTBw+xKyp
- mmssoIRdV0QvOaJjL7Q+uvZQLQuIm4Bjj/BgQual+WzZowG/KRdRgshv01vK6I0T+BAbD5e3BLN
- 0vnUn/D1jsHTh3uZwYxT
-X-Google-Smtp-Source: AGHT+IFxMFRZQluesQWSShBt5KDNypMKiuSxDZ/xwThGTjfrdLouYjlzbZicIl4sQiLlILYd+ktubw==
-X-Received: by 2002:a05:600c:1f85:b0:436:30e4:459b with SMTP id
- 5b1f17b1804b1-4392499962dmr165184815e9.18.1739291158167; 
- Tue, 11 Feb 2025 08:25:58 -0800 (PST)
+ bh=5pvvdwtaRAuWUBeLXdtYT01E90XaKGN2JSz829Nr8n8=;
+ b=CtSzR7bMbxKleLV9thNWGBfjZTAhFo9a7PnMeZYcq3nCJnwp5v/0Zmqg7Crxmc9OBZ
+ R2ZaETgL/8N7iw3d9eZDLvFbJPRoisGgMbm8EcCXHFQWr+pZoqXplceHRf1kb5+WkxSo
+ PWtDG069SUYalyBbCmybUdDfNoifjYuI268l08uJSEdgF9j7NvzmHYL9zDTNh7pnb3rT
+ xnBdFdkg0B2cWyvRb1y3II8qNeEZs0hHeqXRhNc/YImwy+OQK0SRqQLSWluzxM8tjT2U
+ vK7mDMzoKCWhWhd36ZMa0OWdGfrcSj5VRW5C6Sn2XF6uEu5Q48WFelzUwqt5/4EycRDC
+ 6L1A==
+X-Gm-Message-State: AOJu0YxsUQa6A9Bj0Uyr+fV8mGCsIYRVICbgNoXOcAXhfgwj516qiQ4M
+ V5acCYfg5d/JYO9RsVhLd4YMQtm0Dfnlt4eAgvOIRwc9xWon/8wZCzfCSYSQ3igYfiZAl4IcvCm
+ p
+X-Gm-Gg: ASbGncupINDFO8MXKXtyqvYR3LUnrwSB/8GauFXmkUrqv1x7x4mrSc4yFopRwalFRu3
+ 0F+U60419mf7YQyt+KuNC/TcmPz8UMD097FgTUYJFqcL+n9juxsM+xU736T9Ll5ez+eXRqCEclr
+ 5ZFwX/vKisJpgAl7zopv1F4/138JLkNXh1v0YThLwMJT11ppqLElmLAZjS8VKMedB1feOhm3PUx
+ 8yJIa9t1hFRGxq1ok8sl73UfxeUYY1XotnLwVf95IvuVFsxTf4E3qkj6rkWS+OSy3ZZaDDwNGF8
+ wwp0FvZvmbaGq1smRoC+
+X-Google-Smtp-Source: AGHT+IEGmze+eYALL8JET2t+gFwP8XbotwaTNRdbvUOpe6hLcqT4bbkPQf+pa9Um4y8d2ntKPgxzxg==
+X-Received: by 2002:a5d:47a3:0:b0:38c:5fbf:10ca with SMTP id
+ ffacd0b85a97d-38dc9edb1c3mr16607779f8f.39.1739291175783; 
+ Tue, 11 Feb 2025 08:26:15 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.25.56
+ 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:25:57 -0800 (PST)
+ Tue, 11 Feb 2025 08:26:15 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/68] target/alpha: Don't corrupt error_code with unknown
- softfloat flags
-Date: Tue, 11 Feb 2025 16:24:47 +0000
-Message-Id: <20250211162554.4135349-2-peter.maydell@linaro.org>
+Subject: [PULL 17/68] target/arm: Handle FPCR.NEP for BFCVT scalar
+Date: Tue, 11 Feb 2025 16:25:03 +0000
+Message-Id: <20250211162554.4135349-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
 References: <20250211162554.4135349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,45 +98,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In do_cvttq() we set env->error_code with what is supposed to be a
-set of FPCR exception bit values.  However, if the set of float
-exception flags we get back from softfloat for the conversion
-includes a flag which is not one of the three we expect here
-(invalid_cvti, invalid, inexact) then we will fall through the
-if-ladder and set env->error_code to the unconverted softfloat
-exception_flag value.  This will then cause us to take a spurious
-exception.
+Currently we implement BFCVT scalar via do_fp1_scalar().  This works
+even though BFCVT is a narrowing operation from 32 to 16 bits,
+because we can use write_fp_sreg() for float16. However, FPCR.NEP
+support requires that we use write_fp_hreg_merging() for float16
+outputs, so we can't continue to borrow the non-narrowing
+do_fp1_scalar() function for this. Split out trans_BFCVT_s()
+into its own implementation that honours FPCR.NEP.
 
-This is harmless now, but when we add new floating point exception
-flags to softfloat it will cause problems.  Add an else clause to the
-if-ladder to make it ignore any float exception flags it doesn't care
-about.
-
-Specifically, without this fix, 'make check-tcg' will fail for Alpha
-when the commit adding float_flag_input_denormal_used lands.
-
-
-Fixes: aa3bad5b59e7 ("target/alpha: Use float64_to_int64_modulo for CVTTQ")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/alpha/fpu_helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/tcg/translate-a64.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
-index 63d9e9ce39c..f810a9b6a47 100644
---- a/target/alpha/fpu_helper.c
-+++ b/target/alpha/fpu_helper.c
-@@ -476,6 +476,8 @@ static uint64_t do_cvttq(CPUAlphaState *env, uint64_t a, int roundmode)
-             exc = FPCR_INV;
-         } else if (exc & float_flag_inexact) {
-             exc = FPCR_INE;
-+        } else {
-+            exc = 0;
-         }
-     }
-     env->error_code = exc;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 3f6e31d36a5..61ea2bb9f75 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8571,10 +8571,27 @@ static const FPScalar1 f_scalar_frintx = {
+ };
+ TRANS(FRINTX_s, do_fp1_scalar, a, &f_scalar_frintx, -1)
+ 
+-static const FPScalar1 f_scalar_bfcvt = {
+-    .gen_s = gen_helper_bfcvt,
+-};
+-TRANS_FEAT(BFCVT_s, aa64_bf16, do_fp1_scalar_ah, a, &f_scalar_bfcvt, -1)
++static bool trans_BFCVT_s(DisasContext *s, arg_rr_e *a)
++{
++    ARMFPStatusFlavour fpsttype = s->fpcr_ah ? FPST_AH : FPST_A64;
++    TCGv_i32 t32;
++    int check;
++
++    if (!dc_isar_feature(aa64_bf16, s)) {
++        return false;
++    }
++
++    check = fp_access_check_scalar_hsd(s, a->esz);
++
++    if (check <= 0) {
++        return check == 0;
++    }
++
++    t32 = read_fp_sreg(s, a->rn);
++    gen_helper_bfcvt(t32, t32, fpstatus_ptr(fpsttype));
++    write_fp_hreg_merging(s, a->rd, a->rd, t32);
++    return true;
++}
+ 
+ static const FPScalar1 f_scalar_frint32 = {
+     NULL,
 -- 
 2.34.1
 
