@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51833C0219D
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 945AAC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmqF-0004u6-1O; Tue, 11 Feb 2025 04:46:07 -0500
+	id 1thmw8-0005uN-09; Tue, 11 Feb 2025 04:52:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1301cb12a=graf@amazon.de>)
- id 1thmq8-0004t7-Q5; Tue, 11 Feb 2025 04:46:01 -0500
-Received: from smtp-fw-9106.amazon.com ([207.171.188.206])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1301cb12a=graf@amazon.de>)
- id 1thmq6-0003GT-4L; Tue, 11 Feb 2025 04:46:00 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thmw2-0005u8-LE
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:52:07 -0500
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thmw0-0004C3-Lb
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:52:06 -0500
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e5d93dd26daso696030276.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 01:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1739267158; x=1770803158;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=gIgkivdNGrQUY80zEqtwZEiGXqOVeupPAvFL7o0aGZU=;
- b=BDbxyDCc2ehpu5hicOC5j8xnYhVGFanQtpp9QQenAA4DRxD99sKnIxvX
- owe53HJ0UjnLuzUr8yvtVJWW0Kd5cB/o9mqsdQNp2XoSDZLurmkYRsWnP
- XPLDT8uSaHIvufmIS6ZpZ/hIiXbqWMylZZX9B+NsMl6tS/xsvTN33qb4W A=;
-X-IronPort-AV: E=Sophos;i="6.13,277,1732579200"; d="scan'208";a="797828342"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
- by smtp-border-fw-9106.sea19.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2025 09:45:46 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.38.20:29780]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.23.246:2525]
- with esmtp (Farcaster)
- id d5b01edc-a8cb-4930-a853-d26f4fca0cae; Tue, 11 Feb 2025 09:45:46 +0000 (UTC)
-X-Farcaster-Flow-ID: d5b01edc-a8cb-4930-a853-d26f4fca0cae
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Tue, 11 Feb 2025 09:45:45 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Tue, 11 Feb 2025
- 09:45:42 +0000
-Message-ID: <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
-Date: Tue, 11 Feb 2025 10:45:40 +0100
+ d=linaro.org; s=google; t=1739267521; x=1739872321; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=BfpsPa9ilzykncCxXSY0EpWpQLvpwmwBrWmdULAbYn0=;
+ b=B9ZUy0gwq8trkVMjjEp5fNeE3F2NqFapbDisUWkQqOtJ9AqBYEkMJ9W6QcyET4IUBU
+ e1wp00HQNZ+4KOs8PrfmRorhHL25Dqum5PIcJ/k5yLjMXdopNl/bsdWCONtpuFsEEub7
+ uMb7Y9Da9GjltBTzHT4NpQg5wtmT59o62PbXxjWFHGcM4KnRWcPlE7g/5qXyYrcKRp9a
+ tqfKNLrQ/qtmq4I7aOoUYX6p6c75ZAhRLFTRFn3/McWIN5uBnbN0Pbx/6iCGQjSRpN82
+ +KHVmV3Lmmqz9dXernTz9274UTjRYYOn6i236nteQ3xLNdw4ixHGtv1t+P+Snsbuwu0I
+ l9vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739267521; x=1739872321;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BfpsPa9ilzykncCxXSY0EpWpQLvpwmwBrWmdULAbYn0=;
+ b=Aw2rJWxiMH30ii8ikUWLvFx/8ASibppJyRXCeAPwyJb8i1UZfGhNj4VcMPKyjyr0PI
+ L/mztMYpq2nUUHcOWuWo7yAYqY7cdi5X8CXALyFV7aVyYrPsavZPphNzNjNotbPis4+g
+ t4z35mLLBiFVHKb843K95AAsHjev2WBsDoyrF8K7eEvVM2VP6hYLq2owB+e4Q5uL8XeR
+ nWrW9fLNTakIwAyFH/AiRmGj4WxEpuLn/4Ky4gKypQhHxkSjoGe/SLgbJMnsad54zzHg
+ wTxDcbBvubBwr0PBJw/EKJHgKyaTkjmX+klCkMkDqmJwF7qUS7s5y3FXm0H29+i5Pulg
+ 0dJw==
+X-Gm-Message-State: AOJu0Yymwtlx8thBLSg9D/rlON8Q1nK8QpW0Nt6vcbLeAAtK7tb8xGop
+ a7soSrgO5hAg5KCFlIAlXoViERCC0249jCJTz8TutlUguolAwfUKwWN+0S9iT2wSh41HZmpbYRh
+ AnL31hExBNXa5nczkTzNsBCXw8mQDt3pslcUU+w==
+X-Gm-Gg: ASbGncttoNtK8+CRwSlBXgnjou1hjFKuSu+6Ij4gxVDB5pgs5KmNwVTjkAyHDDHK4hr
+ CQuOz6kQicGzmhdoxkP+xlrWcIhzmBuvlUdD2IiV5JSd8XwZpwVApIPU4yoCv+tdeezC8FWg4gw
+ ==
+X-Google-Smtp-Source: AGHT+IEoCoMY0tyYrzbu+9W8nEd9PbReSYjhXXXF3UKKK3JBdGspVjxmUQla2law1AxZdtZrSUpzDsgSc/ZVAV4GeUE=
+X-Received: by 2002:a05:6902:1b91:b0:e4d:89e9:6a96 with SMTP id
+ 3f1490d57ef6-e5b4618d6d9mr13620840276.18.1739267520721; Tue, 11 Feb 2025
+ 01:52:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
-To: Gerd Hoffmann <kraxel@redhat.com>, <qemu-devel@nongnu.org>
-CC: Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- <qemu-arm@nongnu.org>, Michael Roth <michael.roth@amd.com>, Markus Armbruster
- <armbru@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Ard Biesheuvel <ardb@kernel.org>
-References: <20250211092324.965440-1-kraxel@redhat.com>
- <20250211092324.965440-10-kraxel@redhat.com>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <20250211092324.965440-10-kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D036UWC001.ant.amazon.com (10.13.139.233) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=207.171.188.206;
- envelope-from=prvs=1301cb12a=graf@amazon.de; helo=smtp-fw-9106.amazon.com
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+References: <20250130182309.717346-1-peter.maydell@linaro.org>
+ <20250130182309.717346-13-peter.maydell@linaro.org>
+ <d8abfef6-36cd-47a4-b05b-e5d3d504683a@linaro.org>
+In-Reply-To: <d8abfef6-36cd-47a4-b05b-e5d3d504683a@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Feb 2025 09:51:49 +0000
+X-Gm-Features: AWEUYZkEV3X3XW1F7IeAgbvVXqMdWLwpSSGg5PBJxeKWT74KFdoLfh3yAHkLN4s
+Message-ID: <CAFEAcA8d9YNx++MC5ipdj8Pb-zV0w_ANF6B2CQg3+fx4X3Ajzw@mail.gmail.com>
+Subject: Re: [PATCH 12/14] target/arm: Remove CP_ACCESS_TRAP handling
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,134 +93,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 11.02.25 10:23, Gerd Hoffmann wrote:
-> This is the core code for guest <-> host communication.  This accepts
-> request messages from the guest, dispatches them to the service called,
-> and sends back the response message.
+On Mon, 10 Feb 2025 at 19:35, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->   hw/uefi/var-service-core.c | 237 +++++++++++++++++++++++++++++++++++++
->   1 file changed, 237 insertions(+)
->   create mode 100644 hw/uefi/var-service-core.c
+> On 1/30/25 10:23, Peter Maydell wrote:
+> > There are no longer any uses of CP_ACCESS_TRAP in access functions,
+> > because we have converted them all to use either CP_ACCESS_TRAP_EL1
+> > or CP_ACCESS_TRAP_UNCATEGORIZED, as appropriate. Remove the handling
+> > of bare CP_ACCESS_TRAP from the access_check_cp_reg() helper, so that
+> > it now asserts if an access function returns it.
 >
-> diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-> new file mode 100644
-> index 000000000000..78a668e68fa2
-> --- /dev/null
-> +++ b/hw/uefi/var-service-core.c
-> @@ -0,0 +1,237 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * uefi vars device
-> + */
-> +#include "qemu/osdep.h"
-> +#include "system/dma.h"
-> +#include "migration/vmstate.h"
-> +
-> +#include "hw/uefi/var-service.h"
-> +#include "hw/uefi/var-service-api.h"
-> +#include "hw/uefi/var-service-edk2.h"
-> +
-> +#include "trace/trace-hw_uefi.h"
-> +
-> +static int uefi_vars_pre_load(void *opaque)
-> +{
-> +    uefi_vars_state *uv = opaque;
-> +
-> +    uefi_vars_clear_all(uv);
-> +    uefi_vars_policies_clear(uv);
-> +    g_free(uv->buffer);
-> +    return 0;
-> +}
-> +
-> +static int uefi_vars_post_load(void *opaque, int version_id)
-> +{
-> +    uefi_vars_state *uv = opaque;
-> +
-> +    uefi_vars_update_storage(uv);
-> +    uv->buffer = g_malloc(uv->buf_size);
-> +    return 0;
-> +}
-> +
-> +const VMStateDescription vmstate_uefi_vars = {
-> +    .name = "uefi-vars",
-> +    .pre_load = uefi_vars_pre_load,
-> +    .post_load = uefi_vars_post_load,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT16(sts, uefi_vars_state),
-> +        VMSTATE_UINT32(buf_size, uefi_vars_state),
-> +        VMSTATE_UINT32(buf_addr_lo, uefi_vars_state),
-> +        VMSTATE_UINT32(buf_addr_hi, uefi_vars_state),
-> +        VMSTATE_BOOL(end_of_dxe, uefi_vars_state),
-> +        VMSTATE_BOOL(ready_to_boot, uefi_vars_state),
-> +        VMSTATE_BOOL(exit_boot_service, uefi_vars_state),
-> +        VMSTATE_BOOL(policy_locked, uefi_vars_state),
-> +        VMSTATE_UINT64(used_storage, uefi_vars_state),
-> +        VMSTATE_QTAILQ_V(variables, uefi_vars_state, 0,
-> +                         vmstate_uefi_variable, uefi_variable, next),
-> +        VMSTATE_QTAILQ_V(var_policies, uefi_vars_state, 0,
-> +                         vmstate_uefi_var_policy, uefi_var_policy, next),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
-> +static uint32_t uefi_vars_cmd_mm(uefi_vars_state *uv)
-> +{
-> +    hwaddr    dma;
-> +    mm_header *mhdr;
-> +    uint64_t  size;
-> +    uint32_t  retval;
-> +
-> +    dma = uv->buf_addr_lo | ((hwaddr)uv->buf_addr_hi << 32);
-> +    mhdr = (mm_header *) uv->buffer;
-> +
-> +    if (!uv->buffer || uv->buf_size < sizeof(*mhdr)) {
-> +        return UEFI_VARS_STS_ERR_BAD_BUFFER_SIZE;
-> +    }
-> +
-> +    /* read header */
-> +    dma_memory_read(&address_space_memory, dma,
-> +                    uv->buffer, sizeof(*mhdr),
-> +                    MEMTXATTRS_UNSPECIFIED);
+> Wording from an in-development patch? How can an access function return CP_ACCESS_TRAP
+> when it has been removed?
 
+I think more that my wording wasn't super clear. It's kind of
+a two step thing: we make access_check_cp_reg assert() if you
+return that value (4), and we also change the constant name
+so it's clearer that you shouldn't be returning that value.
 
-Depending on DMA sounds appealing at first, but can fall apart in corner 
-cases. I know of 2 cases where DMA failed for me in the EC2 equivalent 
-of this:
+> That said, the code is correct.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-1) SEV-SNP. If you want the hypervisor to implement UEFI variable 
-services for you, the buffer region must always be in shared state. 
-Ensuring that during boot time is tricky but doable. At runtime you no 
-longer really have control over the sharability of pages.
-
-2) Mac OS X. MacOS is the only OS I'm aware of that really makes use of 
-relocation. They move your physical pages to random locations, give you 
-a non-1:1 mapping to that and once you're in real OS land, you have no 
-more knowledge at all about the physical location of anything. Maybe you 
-can work around that by declaring the buffer region as MMIO space? But 
-then it really should be a memory region in the device.
-
-
-To address the 2 cases above, I ended up implementing a special "PIO 
-mode" which does not rely on DMA at all:
-
-https://github.com/aws/uefi/blob/main/edk2-stable202211/0023-edk2-stable202211-ExtVarStore-Add-support-for-PIO-transfer.patch
-
-Also, I'm surprised you cut the variable service off at the SMM boundary 
-instead of the RTS callback boundary. Why is that cleaner/better than 
-implementing variables completely in QEMU? In the EC2 version, we just 
-built a separate variable store implementation that completely replaces 
-the edk2 variable store:
-
-https://github.com/aws/uefi/blob/main/edk2-stable202211/0012-edk2-stable202211-nitro-Add-ExtVarStore-for-vmm-based-variable-storage.patch
-
-It would be nice to agree on a single external variable store 
-implementation :).
-
-
-Alex
-
+thanks
+-- PMM
 
