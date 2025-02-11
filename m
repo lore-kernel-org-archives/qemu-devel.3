@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A509C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 03:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01E2AC021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 03:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thgdp-0007C8-5s; Mon, 10 Feb 2025 22:08:53 -0500
+	id 1thgdq-0007Ch-BM; Mon, 10 Feb 2025 22:08:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1thgdk-0007AB-NC
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 22:08:48 -0500
+ id 1thgdm-0007AP-N9
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 22:08:50 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1thgdg-0000Lv-W6
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 22:08:48 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1thgdj-0000Lk-29
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 22:08:49 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxrnI2v6pnDddxAA--.1576S3;
+ by gateway (Coremail) with SMTP id _____8DxOGo2v6pnA9dxAA--.1616S3;
  Tue, 11 Feb 2025 11:08:38 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxbsUyv6pnL1YLAA--.43924S6;
- Tue, 11 Feb 2025 11:08:38 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCxbsUyv6pnL1YLAA--.43924S4;
+ Tue, 11 Feb 2025 11:08:37 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Subject: [PATCH v5 4/7] hw/loongarch/virt: Implement cpu unplug interface
-Date: Tue, 11 Feb 2025 11:08:31 +0800
-Message-Id: <20250211030834.3276732-5-maobibo@loongson.cn>
+Subject: [PATCH v5 2/7] hw/loongarch/virt: Add topo properties on CPU object
+Date: Tue, 11 Feb 2025 11:08:29 +0800
+Message-Id: <20250211030834.3276732-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250211030834.3276732-1-maobibo@loongson.cn>
 References: <20250211030834.3276732-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxbsUyv6pnL1YLAA--.43924S6
+X-CM-TRANSID: qMiowMCxbsUyv6pnL1YLAA--.43924S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,96 +67,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement cpu unplug interfaces including virt_cpu_unplug_request()
-and virt_cpu_unplug().
+Add some properties such as socket_id, core_id, thread_id and node_id
+on LoongArch CPU object.
 
 Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/loongarch/virt.c | 58 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ target/loongarch/cpu.c | 9 +++++++++
+ target/loongarch/cpu.h | 4 ++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a36b66c64d..44c2a277f8 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -824,6 +824,19 @@ static int virt_get_arch_id_from_topo(MachineState *ms, LoongArchCPUTopo *topo)
-     return arch_id;
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index e91f4a5239..3c877312cd 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -14,6 +14,7 @@
+ #include "system/tcg.h"
+ #include "system/kvm.h"
+ #include "kvm/kvm_loongarch.h"
++#include "hw/qdev-properties.h"
+ #include "exec/exec-all.h"
+ #include "exec/translation-block.h"
+ #include "cpu.h"
+@@ -909,6 +910,13 @@ static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
  }
+ #endif
  
-+/* Find cpu slot in machine->possible_cpus by arch_id */
-+static CPUArchId *virt_find_cpu_slot(MachineState *ms, int arch_id)
-+{
-+    int n;
-+    for (n = 0; n < ms->possible_cpus->len; n++) {
-+        if (ms->possible_cpus->cpus[n].arch_id == arch_id) {
-+            return &ms->possible_cpus->cpus[n];
-+        }
-+    }
++static const Property loongarch_cpu_properties[] = {
++    DEFINE_PROP_INT32("socket-id", LoongArchCPU, socket_id, 0),
++    DEFINE_PROP_INT32("core-id", LoongArchCPU, core_id, 0),
++    DEFINE_PROP_INT32("thread-id", LoongArchCPU, thread_id, 0),
++    DEFINE_PROP_INT32("node-id", LoongArchCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
++};
 +
-+    return NULL;
-+}
-+
- static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
-                               DeviceState *dev, Error **errp)
+ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
  {
-@@ -832,11 +845,56 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
- static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
-                                     DeviceState *dev, Error **errp)
- {
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
-+    Error *err = NULL;
-+    LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-+    CPUState *cs = CPU(dev);
-+
-+    if (cs->cpu_index == 0) {
-+        error_setg(&err, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
-+                   cs->cpu_index, cpu->socket_id,
-+                   cpu->core_id, cpu->thread_id);
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
-+    if (err) {
-+        error_propagate(errp, err);
-+    }
- }
+     LoongArchCPUClass *lacc = LOONGARCH_CPU_CLASS(c);
+@@ -916,6 +924,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
+     DeviceClass *dc = DEVICE_CLASS(c);
+     ResettableClass *rc = RESETTABLE_CLASS(c);
  
- static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-                             DeviceState *dev, Error **errp)
- {
-+    CPUArchId *cpu_slot;
-+    Error *err = NULL;
-+    LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
-+
-+    /* Notify ipi and extioi irqchip to remove interrupt routing to CPU */
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
-+    if (err) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
-+    if (err) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    /* Notify acpi ged CPU removed */
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
-+    if (err) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-+    cpu_slot->cpu = NULL;
-+    return;
- }
++    device_class_set_props(dc, loongarch_cpu_properties);
+     device_class_set_parent_realize(dc, loongarch_cpu_realizefn,
+                                     &lacc->parent_realize);
+     resettable_class_set_parent_phases(rc, NULL, loongarch_cpu_reset_hold, NULL,
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 8c13ee6bd8..0fb82a218b 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -412,6 +412,10 @@ struct ArchCPU {
+     OnOffAuto pmu;
+     OnOffAuto lsx;
+     OnOffAuto lasx;
++    int32_t socket_id;  /* socket-id of this VCPU */
++    int32_t core_id;    /* core-id of this VCPU */
++    int32_t thread_id;  /* thread-id of this VCPU */
++    int32_t node_id;    /* NUMA node of this VCPU */
  
- static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+     /* 'compatible' string for this CPU for Linux device trees */
+     const char *dtb_compatible;
 -- 
 2.39.3
 
