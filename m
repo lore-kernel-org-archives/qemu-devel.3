@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B82C0219B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7DBC0219D
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 13:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thqNF-0007uw-Bf; Tue, 11 Feb 2025 08:32:25 -0500
+	id 1thqNt-00083y-UI; Tue, 11 Feb 2025 08:33:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thqNA-0007uP-NL
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:32:23 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thqNq-00083h-9i
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:33:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thqN7-0007D5-Gx
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:32:20 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thqNo-0007YR-PT
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:33:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739280735;
+ s=mimecast20190719; t=1739280779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KYbRbDR0RIOgUtXcU0k3ebLugfQzdDeA25GqhwSOMYU=;
- b=czyCNQ/ql6cnKq2KGFt/kCyiK+igIHBAbTEnmtq2QsiHn1ddKwDbAzrUuKahD177fQfx42
- 4hZ7V9h9KR9WPY8xTDi6QkLJW7xl8FFd0l3ezZJrXA7La2jV5X2TYJX4f8rtFNr6LNPOYz
- ANsjqGXdehcDkqBTrxU7LW8hViJ93c4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+FaHkAG3brrOmH0uAyYUDAavNNR2klJ7+ZurSf9Gqcw=;
+ b=NQ2VVCY8c1benxjXEkL9FzpI5nm/d91Z4p0wprae27YxwJ2SR1+H3UZccAG/h3L5SvJCbW
+ MBVbCgT70BkpA+gtefygVW3JuWyRE6wL2ZR4xMTwR5WGxu/5GEZx232UgZ+35u/whIA6FS
+ I90IwE08Jh9aL+x3Amc+lcTbATZa4lc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-LSxNv2tNM0OIdYhxDaOPuQ-1; Tue, 11 Feb 2025 08:32:13 -0500
-X-MC-Unique: LSxNv2tNM0OIdYhxDaOPuQ-1
-X-Mimecast-MFC-AGG-ID: LSxNv2tNM0OIdYhxDaOPuQ_1739280733
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38dd91cd38cso1666828f8f.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:32:13 -0800 (PST)
+ us-mta-262-NPecRjd3OsaEsqqoHWO8oQ-1; Tue, 11 Feb 2025 08:32:57 -0500
+X-MC-Unique: NPecRjd3OsaEsqqoHWO8oQ-1
+X-Mimecast-MFC-AGG-ID: NPecRjd3OsaEsqqoHWO8oQ
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4393182f0a6so13828415e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:32:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739280732; x=1739885532;
+ d=1e100.net; s=20230601; t=1739280776; x=1739885576;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KYbRbDR0RIOgUtXcU0k3ebLugfQzdDeA25GqhwSOMYU=;
- b=DIULGptsrJ3tO2BFuTfGplZVHgZv/Z6+PLvlzoDva62ln6daZcpZGKL1Swshf/ZH38
- NZIHhnYYG9xyoONkBPGB1hNh3Z6wy5Gt0qCB8dv8dkwMDXeOZvUF0FVoClwtowEWds0g
- T+NwNigJbSZU3SVoh6yP7cwQ1AME4trgtNdv5JZcnDK2/anE4DZgmw/TR84R7uCsjvcT
- yHhKt7ffH41HmoJypHy6Uim689XdsUQZFqzWBVrJB7lDkX+JnOt8BVEwYlnBe4VJ8r0V
- 7gKrxui6PBI/DCwEcXwuAnWop3o2EGk6PnQVUfzzd0+sw8H8421xP/bM5I/ZFy2EU+4L
- ZR3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvzik/hPjZ/VqY/w7kAvS0pSBIxrLauonRwlzFvX4OoswqFCGJrDIntsHkv8xE0hdBjmGyhpXv7ty+@nongnu.org
-X-Gm-Message-State: AOJu0YxFqWWg0stG4c65TRTbsbNgnsfWc+0OYA55Aj6XNTP/DjToi8iG
- 19Dshwk4sJatfyojhr5tGG0AIbwbXvLTRu/g1N4jofOECvlwYXQ1/hE3WUYKkaUFZLL0Zg+jiEY
- 0HtqG0zSUFpwEtCFFRj/hKUJNcSmFKvOmGSdvIL13kMaMMwprLbtG8tHworMT
-X-Gm-Gg: ASbGnctBrinnCOXqq83vWBR5dQBAOnJg/76wPDJDtjYhUD1Uv+lHaJROrfM6fP/pXkx
- 3YfmrFaa23XeYHcSy0dUidybCjUbfHBtrt+JXTFBRtvPbu9M511AQEiuiNF349zGdGb2OSo42O9
- U0A0WB5t0ncJD51fF0nvvcYfKqjq0LWQS4Bx34wkK8QFbqmc8OxHmwgb7AKvd7FFk6mnRygLY68
- 2dqMwjf/ENFHAtWLr0o+4BBViwpC+dAT4DErUv+izTYsAQuk3MEg0JYUPmZCOdx1ZI4N/omGAFN
- HLqlLxo72GW5dgU8kKettScinPxaPA+tjak8n8UZ7fk=
-X-Received: by 2002:a05:6000:1ac6:b0:38d:e572:4dc2 with SMTP id
- ffacd0b85a97d-38de5724ecamr2814772f8f.40.1739280732231; 
- Tue, 11 Feb 2025 05:32:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG/cc1en2hGuZeXyeeFcRNvsaI4anu1t0umzPE8fF2N83ZB+d/Ipb0XiZpwyQlvkGnetnQhYg==
-X-Received: by 2002:a05:6000:1ac6:b0:38d:e572:4dc2 with SMTP id
- ffacd0b85a97d-38de5724ecamr2814741f8f.40.1739280731802; 
- Tue, 11 Feb 2025 05:32:11 -0800 (PST)
+ bh=+FaHkAG3brrOmH0uAyYUDAavNNR2klJ7+ZurSf9Gqcw=;
+ b=Rm7qwkA/XbQBwzGh/QJS5SpeqynevVwc2c63xGumVimtBqr/4JdadZSiiJmgNRm9KZ
+ pSWeuMUenHKMQ0BZcwn+6Y7sVJjiN75sY0ODyUHFqinjqsTwZJjsmS5MO4VgNJ2u6/Zq
+ nigQhIVDHMbPhxwedmrdCGkYsoPfYGAIEL15WyPK3+e+WNHkaSU71ZB6SBdJ37p9eLSd
+ OAkhECu10EIGC52EXxP/tesrAG8KR9O5BKczaP0Zjbz2nrXLqeEqjdLpb2HTbVAsh0hn
+ 0S+6A0OtGykXj/CjXt8PsDv8ffb8lBg5Cl4d068x3OHYOKLdZIbwhPw3wGP38cjU1N9O
+ WsHQ==
+X-Gm-Message-State: AOJu0Yya+kp4HmDCwZlD24zbIbiDMrUzKbNwgYrhd/jCQtBCpbR47zBy
+ 7Kicr4Gbed7SYF/nhaQy+bNB+f0lgnvvhMUkZEssrusNRo36AfrgmsCqHb3V2yZG/x4GcF4190a
+ EIl5Nrv8nY1Mi4oz/70wWKvqliTrOu956tUAkSA5qDo2mfyW3U27ENNTycOmW8MHlwshCB42mSM
+ eew8fOMBdSKTFiG0NUk7TNDO+OfRqWhw==
+X-Gm-Gg: ASbGncvnVNz251ZlQ+6nSaaf3QQyyTHIM5Drd9soq/bB2R3sJCiwt2qhHh7DmDIcaEa
+ XEShCCVDyxrel6dUtrAWfc5mMRCGU8sYIxBPz54TrfttimeBkcYKK+OsQe3Iif3Wi8yTx0pJCyX
+ e9DQLj6PFH2vzXhLS0otEoeI4dXZmhA0BByjZZQsHD+e3YwUss2iYGbd0RI8uCUvH4pk0lNov0Z
+ APhUE8WJNugtOIiTgfUI9PwUt9qRUt5rYYilXwO1T3f+8R8YtjU9HmvziB4rzsUu4gxm15DZA47
+ qOGdgRCouySd8t01EFtcyGVjTbZwZNXq4GMcOpivtFE=
+X-Received: by 2002:a05:600c:4245:b0:436:1b77:b5aa with SMTP id
+ 5b1f17b1804b1-4394cebd103mr30446255e9.8.1739280776155; 
+ Tue, 11 Feb 2025 05:32:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHY2zJ0BiDqQVhprYCZ6MulHLXilzkwRfQGL0zF+dSd8xf9OVdDVV41hIf/hVl5GEkx+Bc4+g==
+X-Received: by 2002:a05:600c:4245:b0:436:1b77:b5aa with SMTP id
+ 5b1f17b1804b1-4394cebd103mr30446005e9.8.1739280775718; 
+ Tue, 11 Feb 2025 05:32:55 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:ecac:5b28:cd98:868a?
  ([2a01:e0a:280:24f0:ecac:5b28:cd98:868a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dd07fa80csm10671284f8f.13.2025.02.11.05.32.10
+ ffacd0b85a97d-38dd4d826c6sm9377924f8f.69.2025.02.11.05.32.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 05:32:11 -0800 (PST)
-Message-ID: <b12fb545-ec6f-424b-a430-27ae7f4da836@redhat.com>
-Date: Tue, 11 Feb 2025 14:32:10 +0100
+ Tue, 11 Feb 2025 05:32:55 -0800 (PST)
+Message-ID: <7fa41dda-d0cf-490b-bf31-09985aca59b5@redhat.com>
+Date: Tue, 11 Feb 2025 14:32:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Add a ppc sam460ex test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-References: <20250203092606.491933-1-clg@redhat.com>
- <6b18058c-8c02-4171-abb0-ca7ef7d3fd4a@redhat.com>
+Subject: Re: [PATCH v3 0/7] vfio: Improve error reporting when MMIO region
+ mapping fails
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250206131438.1505542-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,7 +126,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <6b18058c-8c02-4171-abb0-ca7ef7d3fd4a@redhat.com>
+In-Reply-To: <20250206131438.1505542-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -155,61 +154,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/11/25 12:37, Thomas Huth wrote:
-> On 03/02/2025 10.26, Cédric Le Goater wrote:
->> The test sequence boots from kernel a sam460ex machine with a
->> virtio-net device to check PCI.
->>
->> The buildroot is built with config :
->>
->>    BR2_powerpc=y
->>    BR2_powerpc_440fp=y
->>
->> and the kernel with the '44x/canyonlands' deconfig and virtio support.
->>
->> Cc: BALATON Zoltan <balaton@eik.bme.hu>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   MAINTAINERS                           |  1 +
->>   tests/functional/meson.build          |  1 +
->>   tests/functional/test_ppc_sam460ex.py | 38 +++++++++++++++++++++++++++
->>   3 files changed, 40 insertions(+)
->>   create mode 100644 tests/functional/test_ppc_sam460ex.py
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 8d30c5bafd87..e4ab6031511b 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1555,6 +1555,7 @@ F: pc-bios/canyonlands.dt[sb]
->>   F: pc-bios/u-boot-sam460ex-20100605.bin
->>   F: roms/u-boot-sam460ex
->>   F: docs/system/ppc/amigang.rst
->> +F: tests/functional/test_ppc_sam460ex.py
->>   pegasos2
->>   M: BALATON Zoltan <balaton@eik.bme.hu>
->> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->> index 868f4a64b60b..6a5f1dc405cb 100644
->> --- a/tests/functional/meson.build
->> +++ b/tests/functional/meson.build
->> @@ -193,6 +193,7 @@ tests_ppc_system_thorough = [
->>     'ppc_40p',
->>     'ppc_amiga',
->>     'ppc_bamboo',
->> +  'ppc_sam460ex',
->>     'ppc_mac',
->>     'ppc_mpc8544ds',
->>     'ppc_tuxrun',
+On 2/6/25 14:14, Cédric Le Goater wrote:
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=UTF-8
+> Content-Transfer-Encoding: 8bit
 > 
-> I'll sort that entry alphabetically into the list, and then pick this patch up for my next pull request.
+> Hello,
+> 
+> Under certain circumstances, a MMIO region of a device fails to map
+> because the region is outside the supported IOVA ranges of the VM. In
+> this case, PCI peer-to-peer transactions on BARs are not supported.
+> This typically occurs when the IOMMU address space width is less than
+> the physical address width, as can be the case on some Intel consumer
+> processors or when using a vIOMMU device with default settings.
+> 
+> This series tries to clarify the error message reported to the user.
+> 
+> Thanks,
+> 
+> C.
+> 
+> Changes in v3:
+> 
+>   - Fixed warn_report_err_once()
+>   - Improved commit logs a bit
+>   - Dropped check on compatibility of CPU and IOMMU address space
+>     width. Will address later in its own series.
+> 
+> Changes in v2:
+> 
+>   - Removed advice on how to resolve the issue. Diagnostic is enough.
+>   - Introduced helpers
+>   - Checked device type, since this only applies to PCI
+>   - Added cleanup
+>   
+> Cédric Le Goater (7):
+>    util/error: Introduce warn_report_err_once()
+>    vfio/pci: Replace "iommu_device" by "vIOMMU"
+>    vfio: Rephrase comment in vfio_listener_region_add() error path
+>    vfio: Introduce vfio_get_vfio_device()
+>    vfio: Improve error reporting when MMIO region mapping fails
+>    vfio: Remove reports of DMA mapping errors in backends
+>    vfio: Remove superfluous error report in vfio_listener_region_add()
+> 
+>   include/hw/vfio/vfio-common.h |  1 +
+>   include/qapi/error.h          | 12 +++++++++++
+>   backends/iommufd.c            |  3 ---
+>   hw/vfio/common.c              | 40 +++++++++++++++++++++++++----------
+>   hw/vfio/container.c           |  2 --
+>   hw/vfio/helpers.c             | 10 +++++++++
+>   hw/vfio/pci.c                 |  2 +-
+>   util/error.c                  | 11 ++++++++++
+>   8 files changed, 64 insertions(+), 17 deletions(-)
+> 
 
-Indeed. Thanks,
+
+Applied to vfio-next.
+
+Thanks,
 
 C.
 
-
-> 
->   Thanks!
->    Thomas
-> 
 
 
