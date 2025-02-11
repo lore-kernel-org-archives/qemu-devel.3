@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AEA2C021A4
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B57C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht7P-000232-Gb; Tue, 11 Feb 2025 11:28:16 -0500
+	id 1tht7Q-0002C6-Bg; Tue, 11 Feb 2025 11:28:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5w-0006iv-05
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tht6D-0006xA-4d
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:27:02 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht5s-0003Jq-T2
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:43 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43957634473so1664955e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:39 -0800 (PST)
+ id 1tht66-0003Yc-V0
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:27:00 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-439554db49dso7735635e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739291198; x=1739895998; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739291213; x=1739896013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OGHA0fXAvxOXELNfX5hCnXpfwIVchIakZd34FrCzJrI=;
- b=hrdyHq486njHtBTDhnYMU1hf/2fKTw/Ai7fBCvXWqGuG6kledBNxOCvERshQPGgbsf
- BA1WF1f0xM6FGe8aXQZGWmudZqrSc1d+/Nr/wp0M+oYtkxeehNIMB5vZFy7u0a0wwab+
- GJ6qBS8UURP7zU7YcdVCg0PIPCq58rf1QOmhAiwvIUKPvIsSMFgGANPiLdXygPfYrtxQ
- ftnLWwos2ZBAyixzvvj5cSlsSLBrl07hJnDDUOmtIMeZEJtorhg33TgmzIfpTB1hI5uR
- C+ChwGuOneSve2tr2U01lalpe/hmdgzoZxuMrLdm5mKiBt3OfAcf6Y7EBRQ4rweJ2ffV
- pKxg==
+ :reply-to; bh=rHdPYoaNtSW6szZbbvGIFs2n75GS6UBB15kG4jxX0x4=;
+ b=QxBq3mn8ZzFGcDTuUUN9fqJ9VgmDdVjRDgNtwqqYvzmFH58BOShkuKQyKFItMuknBM
+ fP9Bs3cAVU88tVcwluC1GyQLj9v42DIRFwNHAr6/QflHvS3/RrqbGq7zwNdd+IFFepvh
+ VtpRNegLIOswOxXAiKK3haudL8bokHiM44V6XEbmAqjBrKH6CF7QR4CxyBMVUjkhWbWv
+ DH3VUod4i1UJLXY4I4afAl02K5BM0PWi3pxBEPU3GwH++W08Nf99vhhEzWblMcvHh4N7
+ 42rGRKe4BxYWfrKbFhKRqD0i06qVIzk3bZJ33ZriLhef1g7jAiv2K8oKBZBdcGmvbCBy
+ T3qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291198; x=1739895998;
+ d=1e100.net; s=20230601; t=1739291213; x=1739896013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OGHA0fXAvxOXELNfX5hCnXpfwIVchIakZd34FrCzJrI=;
- b=TB5Bi5wjd2y0XDok93Sue3kJ9HuPldkA0kid6UHbPLUI4zTogz/nK2mG4qkkvOB35c
- 2fVFC62v4xMv+DRDWFDMyD/hxV635T74BUt7bKntQPl9i2hqX06Lb5rY0BwGxeanq1dM
- gbzBJdZ/PrnYt/msLhlebYDd/nHct9YGX0qgBh1vRZRDBnVvopdfFA/KURPRyXxOFjXP
- i3ZDWMBgEVZLrmy/GcyQApfbrIIDAmPFIFWf7Xr0ZLmB+0q7bZrfIxWEbXlTkI1FQmAf
- wWFoSVV7a9dbHOY3Ywk2svSXfjrNtmRTZFgaKE4o0X3/GU3vairNFShc2TXt3MEyj/E1
- 5WKA==
-X-Gm-Message-State: AOJu0YwX0EbmadW6kT/KL7x7Qa2i/4mlC00LEcl7zG380GLeBmy79xhj
- 1BwgBVahT7Y5inP9acweH6oEAILXSRT10jhWEHcvZffE2/eSF9DgxKmeUJCvKtEuXTSecszzJMn
- t
-X-Gm-Gg: ASbGncswyp4d4NOeI2IEdmcBRHQytq3oG7ImaDGBRHuxoonQ1ZDTzA4XBYYYkkprNf+
- Idn6c2G1L2hZVVPXsYTf5OtYciLCDcH/o80JikN+8WChmV9nXKPcpxNYdxPW3EPI+FzmUrD71Y+
- xLxQBu01zac6fR7YHSg6qdazqwifUdgWBV+Y1P5XUfO7Dk2zD+y0Kbh65xKsPmqaDoH9ZETEeDj
- 0Z5Tg98yysT80WIUf0liv8DWTVwE+cJFIk6hOTC+UU6D3Oj1F43jpZoXpLlmyPESxlO96H1mATg
- s69qX1eEWD3DdoXVQm5r
-X-Google-Smtp-Source: AGHT+IHlWC4tZDGxIR9rw7t+FSFxqBnMawjGtbw2oliP6/M94bt10aDtvNcXBIOQMHzSIeQRRMDIHg==
-X-Received: by 2002:a05:600c:34c2:b0:439:4a9d:aeaf with SMTP id
- 5b1f17b1804b1-4394a9db1ebmr47015335e9.25.1739291198136; 
- Tue, 11 Feb 2025 08:26:38 -0800 (PST)
+ bh=rHdPYoaNtSW6szZbbvGIFs2n75GS6UBB15kG4jxX0x4=;
+ b=REJrVZSuVV193e3ZWMEpjaPXVH9EJFYDH8WMEg4kSWGJX6eRb5E2dhKEaWSeeRd0uG
+ BqCyeksTMcs36Qkv3nWfAaJrsOIZoGWEDtnDbIoE/P74iP8qFmNck8zIrllLLuPF3UWg
+ esGsR2H0LOg+Lhg/DfPfMCOamHEglvoaUHjKg0I3CAHBKnTYnRa45YKe73qg29YWpSY9
+ PhQPI1c7soP0dqxPa6nLv0PhTaXUn8tbIafjs3i4JJStEyKXIxxEBovGQyQSlpSfzJpZ
+ ZKQipOtEJLx5IiSd9M+T22tDf8YGZ972Ix3X+9P/Eb/wpwd9gBO/gQd3Q+NBnFUYMuRm
+ WO+A==
+X-Gm-Message-State: AOJu0YwNpP3Tzeaib3/2/O0LWEAPe2IWeOf9oZand3VTEYJqHMjVSsGo
+ MZzxYRVaECFrx2hb0TVdefgIfZUYxl6px3YaRQ491FF8NTaotgWp8u2vsUfxIcakI9zUQW1kypM
+ n
+X-Gm-Gg: ASbGncsBLGiTejkDwE4MnhR6GYInJ3FkyHjqurFcNp1Uiz8b9zV7d2IUnBX7TU0vReq
+ 19qtXmEDpoe3zJUvr3fI0+Ld1gCiHWgkVrmvaMSttxUy6Q/2USwT/NUgLdcnuXIDaw3ZBAjqSRD
+ lCNHkVa/yzI9bXgP8UIDNumPDTjlrv75gsy0LRcEipP2K3h0lxwSxcf0U4lHk+79ImQt5yB+GnV
+ ESbcQS0Hl6Nr7HDSGDqrl5gb80FAyRLf2dXDQa4al/mrBw4h21LcnkkH5Oxayo2uMkDmhCKgXk8
+ fsy+JB8ZxJ0UUpjY11o7
+X-Google-Smtp-Source: AGHT+IG5MdPrv4CoxZxQyHD9O4amVQMhTx9l7PZUnpIcPbjdg9cTKl7+uIehkykjoDnPN9bOrcu15A==
+X-Received: by 2002:a05:600c:1f17:b0:436:e8b4:36e7 with SMTP id
+ 5b1f17b1804b1-43924987efbmr148135225e9.8.1739291213449; 
+ Tue, 11 Feb 2025 08:26:53 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.37
+ 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:26:37 -0800 (PST)
+ Tue, 11 Feb 2025 08:26:52 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/68] target/arm: Handle FPCR.AH in negation step in FMLS
- (indexed)
-Date: Tue, 11 Feb 2025 16:25:26 +0000
-Message-Id: <20250211162554.4135349-41-peter.maydell@linaro.org>
+Subject: [PULL 54/68] target/arm: Implement increased precision FRSQRTE
+Date: Tue, 11 Feb 2025 16:25:40 +0000
+Message-Id: <20250211162554.4135349-55-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
 References: <20250211162554.4135349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,174 +98,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle the FPCR.AH "don't negate the sign of a NaN" semantics in FMLS
-(indexed). We do this by creating 6 new helpers, which allow us to
-do the negation either by XOR (for AH=0) or by muladd flags
-(for AH=1).
+Implement the increased precision variation of FRSQRTE.  In the
+pseudocode this corresponds to the handling of the
+"increasedprecision" boolean in the FPRSqrtEstimate() and
+RecipSqrtEstimate() functions.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: Mostly from RTH's patch; error in index order into fns[][]
- fixed]
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.h            | 14 ++++++++++++++
- target/arm/tcg/translate-a64.c | 17 +++++++++++------
- target/arm/tcg/translate-sve.c | 31 +++++++++++++++++--------------
- target/arm/tcg/vec_helper.c    | 24 +++++++++++++++---------
- 4 files changed, 57 insertions(+), 29 deletions(-)
+ target/arm/vfp_helper.c | 77 ++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 64 insertions(+), 13 deletions(-)
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 43505d5fedc..be47edff896 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -813,6 +813,20 @@ DEF_HELPER_FLAGS_6(gvec_fmla_idx_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_6(gvec_fmla_idx_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 2df97e128f2..9d58fa7d6f5 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -1015,8 +1015,36 @@ static int do_recip_sqrt_estimate(int a)
+     return estimate;
+ }
  
-+DEF_HELPER_FLAGS_6(gvec_fmls_idx_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(gvec_fmls_idx_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(gvec_fmls_idx_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
-+DEF_HELPER_FLAGS_6(gvec_ah_fmls_idx_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(gvec_ah_fmls_idx_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(gvec_ah_fmls_idx_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
- DEF_HELPER_FLAGS_5(gvec_uqadd_b, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(gvec_uqadd_h, TCG_CALL_NO_RWG,
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 50c207c9a12..dc35e5d896e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -6726,10 +6726,16 @@ TRANS(FMULX_vi, do_fp3_vector_idx, a, f_vector_idx_fmulx)
++static int do_recip_sqrt_estimate_incprec(int a)
++{
++    /*
++     * The Arm ARM describes the 12-bit precision version of RecipSqrtEstimate
++     * in terms of an infinite-precision floating point calculation of a
++     * square root. We implement this using the same kind of pure integer
++     * algorithm as the 8-bit mantissa, to get the same bit-for-bit result.
++     */
++    int64_t b, estimate;
  
- static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
+-static uint64_t recip_sqrt_estimate(int *exp , int exp_off, uint64_t frac)
++    assert(1024 <= a && a < 4096);
++    if (a < 2048) {
++        a = a * 2 + 1;
++    } else {
++        a = (a >> 1) << 1;
++        a = (a + 1) * 2;
++    }
++    b = 8192;
++    while (a * (b + 1) * (b + 1) < (1ULL << 39)) {
++        b += 1;
++    }
++    estimate = (b + 1) / 2;
++
++    assert(4096 <= estimate && estimate < 8192);
++
++    return estimate;
++}
++
++static uint64_t recip_sqrt_estimate(int *exp , int exp_off, uint64_t frac,
++                                    bool increasedprecision)
  {
--    static gen_helper_gvec_4_ptr * const fns[3] = {
--        gen_helper_gvec_fmla_idx_h,
--        gen_helper_gvec_fmla_idx_s,
--        gen_helper_gvec_fmla_idx_d,
-+    static gen_helper_gvec_4_ptr * const fns[3][3] = {
-+        { gen_helper_gvec_fmla_idx_h,
-+          gen_helper_gvec_fmla_idx_s,
-+          gen_helper_gvec_fmla_idx_d },
-+        { gen_helper_gvec_fmls_idx_h,
-+          gen_helper_gvec_fmls_idx_s,
-+          gen_helper_gvec_fmls_idx_d },
-+        { gen_helper_gvec_ah_fmls_idx_h,
-+          gen_helper_gvec_ah_fmls_idx_s,
-+          gen_helper_gvec_ah_fmls_idx_d },
-     };
-     MemOp esz = a->esz;
-     int check = fp_access_check_vector_hsd(s, a->q, esz);
-@@ -6740,8 +6746,7 @@ static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
+     int estimate;
+     uint32_t scaled;
+@@ -1029,17 +1057,32 @@ static uint64_t recip_sqrt_estimate(int *exp , int exp_off, uint64_t frac)
+         frac = extract64(frac, 0, 51) << 1;
+     }
  
-     gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
-                       esz == MO_16 ? FPST_A64_F16 : FPST_A64,
--                      (a->idx << 1) | neg,
--                      fns[esz - 1]);
-+                      a->idx, fns[neg ? 1 + s->fpcr_ah : 0][esz - 1]);
-     return true;
+-    if (*exp & 1) {
+-        /* scaled = UInt('01':fraction<51:45>) */
+-        scaled = deposit32(1 << 7, 0, 7, extract64(frac, 45, 7));
++    if (increasedprecision) {
++        if (*exp & 1) {
++            /* scaled = UInt('01':fraction<51:42>) */
++            scaled = deposit32(1 << 10, 0, 10, extract64(frac, 42, 10));
++        } else {
++            /* scaled = UInt('1':fraction<51:41>) */
++            scaled = deposit32(1 << 11, 0, 11, extract64(frac, 41, 11));
++        }
++        estimate = do_recip_sqrt_estimate_incprec(scaled);
+     } else {
+-        /* scaled = UInt('1':fraction<51:44>) */
+-        scaled = deposit32(1 << 8, 0, 8, extract64(frac, 44, 8));
++        if (*exp & 1) {
++            /* scaled = UInt('01':fraction<51:45>) */
++            scaled = deposit32(1 << 7, 0, 7, extract64(frac, 45, 7));
++        } else {
++            /* scaled = UInt('1':fraction<51:44>) */
++            scaled = deposit32(1 << 8, 0, 8, extract64(frac, 44, 8));
++        }
++        estimate = do_recip_sqrt_estimate(scaled);
+     }
+-    estimate = do_recip_sqrt_estimate(scaled);
+ 
+     *exp = (exp_off - *exp) / 2;
+-    return extract64(estimate, 0, 8) << 44;
++    if (increasedprecision) {
++        return extract64(estimate, 0, 12) << 40;
++    } else {
++        return extract64(estimate, 0, 8) << 44;
++    }
  }
  
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 50f16d5affa..e81e996c56e 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3524,21 +3524,24 @@ DO_SVE2_RRXR_ROT(CDOT_zzxw_d, gen_helper_sve2_cdot_idx_d)
-  *** SVE Floating Point Multiply-Add Indexed Group
-  */
+ uint32_t HELPER(rsqrte_f16)(uint32_t input, float_status *s)
+@@ -1078,7 +1121,7 @@ uint32_t HELPER(rsqrte_f16)(uint32_t input, float_status *s)
  
--static bool do_FMLA_zzxz(DisasContext *s, arg_rrxr_esz *a, bool sub)
--{
--    static gen_helper_gvec_4_ptr * const fns[4] = {
--        NULL,
--        gen_helper_gvec_fmla_idx_h,
--        gen_helper_gvec_fmla_idx_s,
--        gen_helper_gvec_fmla_idx_d,
--    };
--    return gen_gvec_fpst_zzzz(s, fns[a->esz], a->rd, a->rn, a->rm, a->ra,
--                              (a->index << 1) | sub,
--                              a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
--}
-+static gen_helper_gvec_4_ptr * const fmla_idx_fns[4] = {
-+    NULL,                       gen_helper_gvec_fmla_idx_h,
-+    gen_helper_gvec_fmla_idx_s, gen_helper_gvec_fmla_idx_d
-+};
-+TRANS_FEAT(FMLA_zzxz, aa64_sve, gen_gvec_fpst_zzzz,
-+           fmla_idx_fns[a->esz], a->rd, a->rn, a->rm, a->ra, a->index,
-+           a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
+     f64_frac = ((uint64_t) f16_frac) << (52 - 10);
  
--TRANS_FEAT(FMLA_zzxz, aa64_sve, do_FMLA_zzxz, a, false)
--TRANS_FEAT(FMLS_zzxz, aa64_sve, do_FMLA_zzxz, a, true)
-+static gen_helper_gvec_4_ptr * const fmls_idx_fns[4][2] = {
-+    { NULL, NULL },
-+    { gen_helper_gvec_fmls_idx_h, gen_helper_gvec_ah_fmls_idx_h },
-+    { gen_helper_gvec_fmls_idx_s, gen_helper_gvec_ah_fmls_idx_s },
-+    { gen_helper_gvec_fmls_idx_d, gen_helper_gvec_ah_fmls_idx_d },
-+};
-+TRANS_FEAT(FMLS_zzxz, aa64_sve, gen_gvec_fpst_zzzz,
-+           fmls_idx_fns[a->esz][s->fpcr_ah],
-+           a->rd, a->rn, a->rm, a->ra, a->index,
-+           a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
+-    f64_frac = recip_sqrt_estimate(&f16_exp, 44, f64_frac);
++    f64_frac = recip_sqrt_estimate(&f16_exp, 44, f64_frac, false);
  
- /*
-  *** SVE Floating Point Multiply Indexed Group
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index e4c519f9e33..ae3cb50fa24 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -1680,29 +1680,35 @@ DO_FMUL_IDX(gvec_fmls_nf_idx_s, float32_sub, float32_mul, float32, H4)
+     /* result = sign : result_exp<4:0> : estimate<7:0> : Zeros(2) */
+     val = deposit32(0, 15, 1, f16_sign);
+@@ -1127,12 +1170,20 @@ static float32 do_rsqrte_f32(float32 input, float_status *s, bool rpres)
  
- #undef DO_FMUL_IDX
+     f64_frac = ((uint64_t) f32_frac) << 29;
  
--#define DO_FMLA_IDX(NAME, TYPE, H)                                         \
-+#define DO_FMLA_IDX(NAME, TYPE, H, NEGX, NEGF)                             \
- void HELPER(NAME)(void *vd, void *vn, void *vm, void *va,                  \
-                   float_status *stat, uint32_t desc)                       \
- {                                                                          \
-     intptr_t i, j, oprsz = simd_oprsz(desc);                               \
-     intptr_t segment = MIN(16, oprsz) / sizeof(TYPE);                      \
--    TYPE op1_neg = extract32(desc, SIMD_DATA_SHIFT, 1);                    \
--    intptr_t idx = desc >> (SIMD_DATA_SHIFT + 1);                          \
-+    intptr_t idx = simd_data(desc);                                        \
-     TYPE *d = vd, *n = vn, *m = vm, *a = va;                               \
--    op1_neg <<= (8 * sizeof(TYPE) - 1);                                    \
-     for (i = 0; i < oprsz / sizeof(TYPE); i += segment) {                  \
-         TYPE mm = m[H(i + idx)];                                           \
-         for (j = 0; j < segment; j++) {                                    \
--            d[i + j] = TYPE##_muladd(n[i + j] ^ op1_neg,                   \
--                                     mm, a[i + j], 0, stat);               \
-+            d[i + j] = TYPE##_muladd(n[i + j] ^ NEGX, mm,                  \
-+                                     a[i + j], NEGF, stat);                \
-         }                                                                  \
-     }                                                                      \
-     clear_tail(d, oprsz, simd_maxsz(desc));                                \
+-    f64_frac = recip_sqrt_estimate(&f32_exp, 380, f64_frac);
++    f64_frac = recip_sqrt_estimate(&f32_exp, 380, f64_frac, rpres);
+ 
+-    /* result = sign : result_exp<4:0> : estimate<7:0> : Zeros(15) */
++    /*
++     * result = sign : result_exp<7:0> : estimate<7:0> : Zeros(15)
++     * or for increased precision
++     * result = sign : result_exp<7:0> : estimate<11:0> : Zeros(11)
++     */
+     val = deposit32(0, 31, 1, f32_sign);
+     val = deposit32(val, 23, 8, f32_exp);
+-    val = deposit32(val, 15, 8, extract64(f64_frac, 52 - 8, 8));
++    if (rpres) {
++        val = deposit32(val, 11, 12, extract64(f64_frac, 52 - 12, 12));
++    } else {
++        val = deposit32(val, 15, 8, extract64(f64_frac, 52 - 8, 8));
++    }
+     return make_float32(val);
  }
  
--DO_FMLA_IDX(gvec_fmla_idx_h, float16, H2)
--DO_FMLA_IDX(gvec_fmla_idx_s, float32, H4)
--DO_FMLA_IDX(gvec_fmla_idx_d, float64, H8)
-+DO_FMLA_IDX(gvec_fmla_idx_h, float16, H2, 0, 0)
-+DO_FMLA_IDX(gvec_fmla_idx_s, float32, H4, 0, 0)
-+DO_FMLA_IDX(gvec_fmla_idx_d, float64, H8, 0, 0)
-+
-+DO_FMLA_IDX(gvec_fmls_idx_h, float16, H2, INT16_MIN, 0)
-+DO_FMLA_IDX(gvec_fmls_idx_s, float32, H4, INT32_MIN, 0)
-+DO_FMLA_IDX(gvec_fmls_idx_d, float64, H8, INT64_MIN, 0)
-+
-+DO_FMLA_IDX(gvec_ah_fmls_idx_h, float16, H2, 0, float_muladd_negate_product)
-+DO_FMLA_IDX(gvec_ah_fmls_idx_s, float32, H4, 0, float_muladd_negate_product)
-+DO_FMLA_IDX(gvec_ah_fmls_idx_d, float64, H8, 0, float_muladd_negate_product)
+@@ -1176,7 +1227,7 @@ float64 HELPER(rsqrte_f64)(float64 input, float_status *s)
+         return float64_zero;
+     }
  
- #undef DO_FMLA_IDX
+-    f64_frac = recip_sqrt_estimate(&f64_exp, 3068, f64_frac);
++    f64_frac = recip_sqrt_estimate(&f64_exp, 3068, f64_frac, false);
  
+     /* result = sign : result_exp<4:0> : estimate<7:0> : Zeros(44) */
+     val = deposit64(0, 61, 1, f64_sign);
 -- 
 2.34.1
 
