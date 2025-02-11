@@ -4,142 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7DBC0219D
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 13:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A947C021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 13:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thqNt-00083y-UI; Tue, 11 Feb 2025 08:33:06 -0500
+	id 1thqjS-0005Lk-PG; Tue, 11 Feb 2025 08:55:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thqNq-00083h-9i
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:33:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
+ id 1thpI5-0003u9-Au
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 07:23:01 -0500
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thqNo-0007YR-PT
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:33:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739280779;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+FaHkAG3brrOmH0uAyYUDAavNNR2klJ7+ZurSf9Gqcw=;
- b=NQ2VVCY8c1benxjXEkL9FzpI5nm/d91Z4p0wprae27YxwJ2SR1+H3UZccAG/h3L5SvJCbW
- MBVbCgT70BkpA+gtefygVW3JuWyRE6wL2ZR4xMTwR5WGxu/5GEZx232UgZ+35u/whIA6FS
- I90IwE08Jh9aL+x3Amc+lcTbATZa4lc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-NPecRjd3OsaEsqqoHWO8oQ-1; Tue, 11 Feb 2025 08:32:57 -0500
-X-MC-Unique: NPecRjd3OsaEsqqoHWO8oQ-1
-X-Mimecast-MFC-AGG-ID: NPecRjd3OsaEsqqoHWO8oQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4393182f0a6so13828415e9.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:32:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739280776; x=1739885576;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+FaHkAG3brrOmH0uAyYUDAavNNR2klJ7+ZurSf9Gqcw=;
- b=Rm7qwkA/XbQBwzGh/QJS5SpeqynevVwc2c63xGumVimtBqr/4JdadZSiiJmgNRm9KZ
- pSWeuMUenHKMQ0BZcwn+6Y7sVJjiN75sY0ODyUHFqinjqsTwZJjsmS5MO4VgNJ2u6/Zq
- nigQhIVDHMbPhxwedmrdCGkYsoPfYGAIEL15WyPK3+e+WNHkaSU71ZB6SBdJ37p9eLSd
- OAkhECu10EIGC52EXxP/tesrAG8KR9O5BKczaP0Zjbz2nrXLqeEqjdLpb2HTbVAsh0hn
- 0S+6A0OtGykXj/CjXt8PsDv8ffb8lBg5Cl4d068x3OHYOKLdZIbwhPw3wGP38cjU1N9O
- WsHQ==
-X-Gm-Message-State: AOJu0Yya+kp4HmDCwZlD24zbIbiDMrUzKbNwgYrhd/jCQtBCpbR47zBy
- 7Kicr4Gbed7SYF/nhaQy+bNB+f0lgnvvhMUkZEssrusNRo36AfrgmsCqHb3V2yZG/x4GcF4190a
- EIl5Nrv8nY1Mi4oz/70wWKvqliTrOu956tUAkSA5qDo2mfyW3U27ENNTycOmW8MHlwshCB42mSM
- eew8fOMBdSKTFiG0NUk7TNDO+OfRqWhw==
-X-Gm-Gg: ASbGncvnVNz251ZlQ+6nSaaf3QQyyTHIM5Drd9soq/bB2R3sJCiwt2qhHh7DmDIcaEa
- XEShCCVDyxrel6dUtrAWfc5mMRCGU8sYIxBPz54TrfttimeBkcYKK+OsQe3Iif3Wi8yTx0pJCyX
- e9DQLj6PFH2vzXhLS0otEoeI4dXZmhA0BByjZZQsHD+e3YwUss2iYGbd0RI8uCUvH4pk0lNov0Z
- APhUE8WJNugtOIiTgfUI9PwUt9qRUt5rYYilXwO1T3f+8R8YtjU9HmvziB4rzsUu4gxm15DZA47
- qOGdgRCouySd8t01EFtcyGVjTbZwZNXq4GMcOpivtFE=
-X-Received: by 2002:a05:600c:4245:b0:436:1b77:b5aa with SMTP id
- 5b1f17b1804b1-4394cebd103mr30446255e9.8.1739280776155; 
- Tue, 11 Feb 2025 05:32:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHY2zJ0BiDqQVhprYCZ6MulHLXilzkwRfQGL0zF+dSd8xf9OVdDVV41hIf/hVl5GEkx+Bc4+g==
-X-Received: by 2002:a05:600c:4245:b0:436:1b77:b5aa with SMTP id
- 5b1f17b1804b1-4394cebd103mr30446005e9.8.1739280775718; 
- Tue, 11 Feb 2025 05:32:55 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:ecac:5b28:cd98:868a?
- ([2a01:e0a:280:24f0:ecac:5b28:cd98:868a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dd4d826c6sm9377924f8f.69.2025.02.11.05.32.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 05:32:55 -0800 (PST)
-Message-ID: <7fa41dda-d0cf-490b-bf31-09985aca59b5@redhat.com>
-Date: Tue, 11 Feb 2025 14:32:54 +0100
+ (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
+ id 1thpI2-00067B-Gy
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 07:23:01 -0500
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20250211122253epoutp01faead4f07bfc380523f58b2ba6fb70ec~jJtQLzJdE0548605486epoutp01K
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 12:22:53 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20250211122253epoutp01faead4f07bfc380523f58b2ba6fb70ec~jJtQLzJdE0548605486epoutp01K
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1739276573;
+ bh=P51UcJLPaMwD6C2GoxB0DdBlX7NquJQefHRN98xks54=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=tfhpuUK5bCEDzvajWTI37ENsrBy8SIirzSKBF1xCuLhoWsW0axqSWT4fFnDcnohea
+ +6yix9o8IwDvorfD3klCCIa79u0MI9R3YuBPf/ZPNezQ6gUXrNOlKiVOtMiBcsMx05
+ FzABXH6ZIeRGMFiJVUUEWz/L+zRels988kTZBkEw=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+ 20250211122252epcas5p3936e8fe04379d006723191ef0cdc39c9~jJtPx-ctF0628306283epcas5p3_;
+ Tue, 11 Feb 2025 12:22:52 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.178]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4YsgZM434fz4x9Pt; Tue, 11 Feb
+ 2025 12:22:51 +0000 (GMT)
+Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
+ epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 36.8C.20052.B114BA76; Tue, 11 Feb 2025 21:22:51 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250211113504epcas5p1bf475ef119b45766066b492d2a7684c1~jJDgHM1js0121101211epcas5p1g;
+ Tue, 11 Feb 2025 11:35:04 +0000 (GMT)
+Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250211113504epsmtrp10a0172121dd9983e781c64b4e3edb124~jJDgGgN4Y0260202602epsmtrp1c;
+ Tue, 11 Feb 2025 11:35:04 +0000 (GMT)
+X-AuditID: b6c32a49-3d20270000004e54-a9-67ab411b70b0
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 04.24.33707.7E53BA76; Tue, 11 Feb 2025 20:35:04 +0900 (KST)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250211113502epsmtip2c702228f8eca5d2bbfb4b3a5ccba9bfc~jJDecMnND0905509055epsmtip2R;
+ Tue, 11 Feb 2025 11:35:02 +0000 (GMT)
+Date: Tue, 11 Feb 2025 17:04:57 +0530
+From: Sweta Kumari <s5.kumari@samsung.com>
+To: Fan Ni <nifan.cxl@gmail.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com
+Subject: Re: [PATCH 1/1] Added support for get/set alert configuration commands
+Message-ID: <20250211113457.trn26pkbbg26b5gi@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] vfio: Improve error reporting when MMIO region
- mapping fails
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>
-References: <20250206131438.1505542-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250206131438.1505542-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
+In-Reply-To: <Z6JOfy74ujK6r_UB@smc-140338-bm01>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKJsWRmVeSWpSXmKPExsWy7bCmlq604+p0gx3L5SymH1a0+HJ6D5vF
+ 6ptrGC1uHtjJZLFw4zImi/OzTrFY/N22l9HieO8OFiB3DrsDp8fOWXfZPZ5c28zk0bdlFaPH
+ 1Nn1Hp83yQWwRmXbZKQmpqQWKaTmJeenZOal2yp5B8c7x5uaGRjqGlpamCsp5CXmptoqufgE
+ 6Lpl5gCdo6RQlphTChQKSCwuVtK3synKLy1JVcjILy6xVUotSMkpMCnQK07MLS7NS9fLSy2x
+ MjQwMDIFKkzIzmh5WFVw1aNi34sOxgbGXyZdjBwcEgImEjcPM3YxcnIICexmlPj1WwrC/sQo
+ cfdXRRcjF4Td3H2SBSQBUr+l+wM7RNFORone2cpwRUd+XWAFSbAIqErsu3EGbCqbgJbEj88P
+ mEFsEQEFic5r5xhBGpgFjjBKXGk/ApYQFgiUeNn3FqyBV8BZ4v21x+wQtqDEyZlPwDZzCuhL
+ fF54jRWkWULgI7tE/+Ln7BAnuUisO/eGFcIWlnh1fAtUXEriZX8blJ0tcXdrJxuEXSLx4fZu
+ JgjbXqL1VD/YEcwCGRLdN2ZD1ctKTD21jgkizifR+/sJVD2vxI55MLayxJZ/y6H2Skqs+LwE
+ yvaQmPm0mQkSLE8YJWbd2cQ6gVFuFpKHZiHZB2FbSXR+aGKdBYwSZgFpieX/OCBMTYn1u/QX
+ MLKuYpRMLSjOTU8tNi0wzEsth0dxcn7uJkZw+tTy3MF498EHvUOMTByMhxglOJiVRHhNFq5I
+ F+JNSaysSi3Kjy8qzUktPsRoCoyhicxSosn5wASeVxJvaGJpYGJmZmZiaWxmqCTO27yzJV1I
+ ID2xJDU7NbUgtQimj4mDU6qBSWdr+Ktkvz8tbacWtE8It5HRVbZbHhE+/8dPzw05BS8udhvf
+ lq68mp9l9S93zdkA1q4Pv0y3XFnMJtEzJ/t278HuzyWcV26p7eueUr3EdW3PxtdbpELdGZnW
+ eKlz7DqR2yq+7Jl7/ifJjy83pCjva47vTJFz3fCkf8HDicYL+FLL/168sCPph+aqSVNPv7kV
+ 0ugcce/r/ieuc4r3mTzcs3L2FZ1rfwUden5UlB/4bBg80VViT9XOHcvras6U/zSd68LruFqD
+ 9RRXsMiHxmlLj5yce3p/wbTcrnvnLrCELHx0cVfnJ5EnLwoY3wm6aF1Z33AqtcLC8oPxnnS3
+ CWKLm/x+PcnOzvzpeP1f3Drp3VlKLMUZiYZazEXFiQBHE6GNKAQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGLMWRmVeSWpSXmKPExsWy7bCSvO4L09XpBjO2MltMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLEDuHHYHTo+ds+6yezy5tpnJo2/LKkaP
+ qbPrPT5vkgtgjeKySUnNySxLLdK3S+DK2NQ7k62g3a1i4zbxBsZjRl2MnBwSAiYSW7o/sHcx
+ cnEICWxnlNg+eT4TREJS4u2ZS4wQtrDEyn/PoYo+MErc+9XCApJgEVCV2HfjDFgRm4CWxI/P
+ D5hBbBEBBYnOa+cYQRqYBY4wSlxpPwKWEBYIlHjZ9xasgVfAWeL9tcdQU58wSszZv5sdIiEo
+ cXLmE7ANzAJmEvM2PwRq5gCypSWW/+MACXMK6Et8XniNdQKjwCwkHbOQdMxC6FjAyLyKUTS1
+ oDg3PTe5wFCvODG3uDQvXS85P3cTIzjotYJ2MC5b/1fvECMTB+MhRgkOZiURXpOFK9KFeFMS
+ K6tSi/Lji0pzUosPMUpzsCiJ8yrndKYICaQnlqRmp6YWpBbBZJk4OKUamDal275jCHT6U3/x
+ 0z9/ljN3rlcURrQdN7kxhfmYC5d7wf7epQ1nF8ZlHVC8Eqx0KMl7f1hKpNCdr5xiU817v+Zy
+ uvE+5gjfZ9mYnv47dv7Pfdwbfn6wrO5UvDpZOuFbeMn0Owlcx/9KXGMyjo2JmLw5/Kb7r2ZL
+ 5anTrbs26Eo0V1sVMsTdFZy647cG1zcOw78uubOuzUytFbaz8FLT9bmXZnj/sGzLxiWRnRMd
+ fhspGk06d/E9i+8Cexm3eJe1q1/eEpGr2c91NIbxzq13DTwO4cq7mjNYVmxx/TRV/PUXjmoF
+ 3/f2ywO//eczuVPiaZn9q56XpU+DOyA7LLq72D7wP+dHzZ4/Eof/9dgpsRRnJBpqMRcVJwIA
+ 3VUjVekCAAA=
+X-CMS-MailID: 20250211113504epcas5p1bf475ef119b45766066b492d2a7684c1
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_46c76_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250203114459epcas5p33839b8e8150427947f9b5419ce9cd611
+References: <20250203114445.64088-1-s5.kumari@samsung.com>
+ <CGME20250203114459epcas5p33839b8e8150427947f9b5419ce9cd611@epcas5p3.samsung.com>
+ <20250203114445.64088-2-s5.kumari@samsung.com>
+ <Z6JOfy74ujK6r_UB@smc-140338-bm01>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=s5.kumari@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -58
+X-Spam_score: -5.9
+X-Spam_bar: -----
+X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 11 Feb 2025 08:55:20 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -154,66 +140,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/25 14:14, Cédric Le Goater wrote:
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=UTF-8
-> Content-Transfer-Encoding: 8bit
-> 
-> Hello,
-> 
-> Under certain circumstances, a MMIO region of a device fails to map
-> because the region is outside the supported IOVA ranges of the VM. In
-> this case, PCI peer-to-peer transactions on BARs are not supported.
-> This typically occurs when the IOMMU address space width is less than
-> the physical address width, as can be the case on some Intel consumer
-> processors or when using a vIOMMU device with default settings.
-> 
-> This series tries to clarify the error message reported to the user.
-> 
-> Thanks,
-> 
-> C.
-> 
-> Changes in v3:
-> 
->   - Fixed warn_report_err_once()
->   - Improved commit logs a bit
->   - Dropped check on compatibility of CPU and IOMMU address space
->     width. Will address later in its own series.
-> 
-> Changes in v2:
-> 
->   - Removed advice on how to resolve the issue. Diagnostic is enough.
->   - Introduced helpers
->   - Checked device type, since this only applies to PCI
->   - Added cleanup
->   
-> Cédric Le Goater (7):
->    util/error: Introduce warn_report_err_once()
->    vfio/pci: Replace "iommu_device" by "vIOMMU"
->    vfio: Rephrase comment in vfio_listener_region_add() error path
->    vfio: Introduce vfio_get_vfio_device()
->    vfio: Improve error reporting when MMIO region mapping fails
->    vfio: Remove reports of DMA mapping errors in backends
->    vfio: Remove superfluous error report in vfio_listener_region_add()
-> 
->   include/hw/vfio/vfio-common.h |  1 +
->   include/qapi/error.h          | 12 +++++++++++
->   backends/iommufd.c            |  3 ---
->   hw/vfio/common.c              | 40 +++++++++++++++++++++++++----------
->   hw/vfio/container.c           |  2 --
->   hw/vfio/helpers.c             | 10 +++++++++
->   hw/vfio/pci.c                 |  2 +-
->   util/error.c                  | 11 ++++++++++
->   8 files changed, 64 insertions(+), 17 deletions(-)
-> 
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_46c76_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
+
+On 04/02/25 05:29PM, Fan Ni wrote:
+>On Mon, Feb 03, 2025 at 05:14:45PM +0530, Sweta Kumari wrote:
+>> Signed-off-by: Sweta Kumari <s5.kumari@samsung.com>
+>> Reviewed-by: Alok Rathore <alok.rathore@samsung.com>
+>> Reviewed-by: Krishna Kanth Reddy <krish.reddy@samsung.com>
+>Hi Sweta,
+>Since this series only have one patch, you do not need a cover letter.
+>Move the commit comment in the first patch to this one and remove the
+>first one.
+>
+>Fan
+Hi Fan Ni,
+
+Thank you for your feedback. I'll fix this in V2 patch.
+>> ---
+>>  hw/cxl/cxl-mailbox-utils.c  | 91 +++++++++++++++++++++++++++++++++++++
+>>  hw/mem/cxl_type3.c          | 20 ++++++++
+>>  include/hw/cxl/cxl_device.h | 24 ++++++++++
+>>  3 files changed, 135 insertions(+)
+>>
+>> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>> index 9c7ea5bc35..7a054c059d 100644
+>> --- a/hw/cxl/cxl-mailbox-utils.c
+>> +++ b/hw/cxl/cxl-mailbox-utils.c
+>> @@ -86,6 +86,9 @@ enum {
+>>          #define GET_PARTITION_INFO     0x0
+>>          #define GET_LSA       0x2
+>>          #define SET_LSA       0x3
+>> +    HEALTH_INFO_ALERTS = 0x42,
+>> +        #define GET_ALERT_CONFIGURATION 0x1
+>> +        #define SET_ALERT_CONFIGURATION 0x2
+>>      SANITIZE    = 0x44,
+>>          #define OVERWRITE     0x0
+>>          #define SECURE_ERASE  0x1
+>> @@ -1625,6 +1628,90 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
+>>      return CXL_MBOX_SUCCESS;
+>>  }
+>>
+>> +/* CXL r3.1 Section 8.2.9.9.3.2 Get Alert Configuration (Opcode 4201h) */
+>As mentioned by Jonathan, use r3.2.
+Ok, I'll address this in V2 patch.
+>> +static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
+>> +                                   uint8_t *payload_in,
+>> +                                   size_t len_in,
+>> +                                   uint8_t *payload_out,
+>> +                                   size_t *len_out,
+>> +                                   CXLCCI *cci)
+>The code indent here is not right.
+>+static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
+>+                                       uint8_t *payload_in,
+>+                                       size_t len_in,
+>+                                       uint8_t *payload_out,
+>+                                       size_t *len_out,
+>+                                       CXLCCI *cci)
+>
+Ok, will fix the alignment as suggested.
+>> +{
+>> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>> +    CXLAlertConfig *out = (void *)payload_out;
+>> +    memcpy(out, &ct3d->alert_config, sizeof(ct3d->alert_config));
+>> +    *len_out = sizeof(ct3d->alert_config);
+>> +    return CXL_MBOX_SUCCESS;
+>> +
+>> +}
+>> +
+>> +/* CXL r3.1 Section 8.2.9.9.3.3 Set Alert Configuration (Opcode 4202h) */
+>> +static CXLRetCode cmd_set_alert_config(const struct cxl_cmd *cmd,
+>> +                                   uint8_t *payload_in,
+>> +                                   size_t len_in,
+>> +                                   uint8_t *payload_out,
+>> +                                   size_t *len_out,
+>> +                                   CXLCCI *cci)
+>indent issue.
+>
+>Fan
+Ok, I'll fix this in V2 patch.
+>> +{
+>> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>> +    CXLAlertConfig *alert_config = &ct3d->alert_config;
+>> +    struct {
+>> +        CXLValidEnableAlerts valid_alert_actions;
+>> +        CXLValidEnableAlerts enable_alert_actions;
+>> +        uint8_t lupwt;
+>> +        uint8_t reserve;
+>> +        uint16_t dotpwt;
+>> +        uint16_t dutpwt;
+>> +        uint16_t cvmepwt;
+>> +        uint16_t cpmepwt;
+>> +    } QEMU_PACKED *in = (void *)payload_in;
+>> +
+>> +    if (in->valid_alert_actions.lupwt) {
+>> +        if ((in->lupwt > 100) || (in->lupwt >= alert_config->lucat)) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +
+>> +        if (in->enable_alert_actions.lupwt) {
+>> +            alert_config->lupwt = in->lupwt;
+>> +        }
+>> +        alert_config->enable_alerts.lupwt = in->enable_alert_actions.lupwt;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions.dotpwt) {
+>> +        if (in->dotpwt >= alert_config->dotcat) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +        if (in->enable_alert_actions.dotpwt) {
+>> +            alert_config->dotpwt = in->dotpwt;
+>> +        }
+>> +        alert_config->enable_alerts.dotpwt = in->enable_alert_actions.dotpwt;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions.dutpwt) {
+>> +        if (in->dutpwt < alert_config->dutcat) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +        if (in->enable_alert_actions.dutpwt) {
+>> +            alert_config->dutpwt = in->dutpwt;
+>> +        }
+>> +        alert_config->enable_alerts.dutpwt = in->enable_alert_actions.dutpwt;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions.cvmepwt) {
+>> +        if (in->enable_alert_actions.cvmepwt) {
+>> +            alert_config->cvmepwt = in->cvmepwt;
+>> +        }
+>> +        alert_config->enable_alerts.cvmepwt = in->valid_alert_actions.cvmepwt;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions.cpmepwt) {
+>> +        if (in->enable_alert_actions.cpmepwt) {
+>> +            alert_config->cpmepwt = in->cpmepwt;
+>> +        }
+>> +        alert_config->enable_alerts.cpmepwt = in->valid_alert_actions.cpmepwt;
+>> +    }
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>>  /* Perform the actual device zeroing */
+>>  static void __do_sanitization(CXLType3Dev *ct3d)
+>>  {
+>> @@ -2859,6 +2946,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>>      [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
+>>      [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
+>>          ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
+>> +    [HEALTH_INFO_ALERTS][GET_ALERT_CONFIGURATION] = {"GET_ALERT_CONFIGURATION",
+>> +        cmd_get_alert_config, 0, 0 },
+>> +    [HEALTH_INFO_ALERTS][SET_ALERT_CONFIGURATION] = {"SET_ALERT_CONFIGURATION",
+>> +        cmd_set_alert_config, 12, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
+>>      [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
+>>          (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
+>>           CXL_MBOX_SECURITY_STATE_CHANGE |
+>> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+>> index 5f365afb4d..ce5a4962da 100644
+>> --- a/hw/mem/cxl_type3.c
+>> +++ b/hw/mem/cxl_type3.c
+>> @@ -956,6 +956,25 @@ static DOEProtocol doe_comp_prot[] = {
+>>      { }
+>>  };
+>>
+>> +/*
+>> + * Initialize CXL device alerts with default threshold values.
+>> + */
+>> +static void init_alert_config(CXLType3Dev *ct3d)
+>> +{
+>> +    CXLAlertConfig *alert_config = &ct3d->alert_config;
+>> +
+>> +    memset(&alert_config->valid_alerts, 0, sizeof(CXLValidEnableAlerts));
+>> +    memset(&alert_config->enable_alerts, 0, sizeof(CXLValidEnableAlerts));
+>> +    alert_config->lucat = 75;
+>> +    alert_config->lupwt = 0;
+>> +    alert_config->dotcat = 35;
+>> +    alert_config->dutcat = 10;
+>> +    alert_config->dotpwt = 25;
+>> +    alert_config->dutpwt = 20;
+>> +    alert_config->cvmepwt = 0;
+>> +    alert_config->cpmepwt = 0;
+>> +}
+>> +
+>>  void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>>  {
+>>      ERRP_GUARD();
+>> @@ -1030,6 +1049,7 @@ void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>>          goto err_free_special_ops;
+>>      }
+>>
+>> +    init_alert_config(ct3d);
+>>      pcie_cap_deverr_init(pci_dev);
+>>      /* Leave a bit of room for expansion */
+>>      rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, NULL);
+>> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>> index a64739be25..6acae7d74d 100644
+>> --- a/include/hw/cxl/cxl_device.h
+>> +++ b/include/hw/cxl/cxl_device.h
+>> @@ -581,6 +581,28 @@ typedef struct CXLSetFeatureInfo {
+>>      size_t data_size;
+>>  } CXLSetFeatureInfo;
+>>
+>> +typedef struct CXLValidEnableAlerts {
+>> +    uint8_t lupwt:1;
+>> +    uint8_t dotpwt:1;
+>> +    uint8_t dutpwt:1;
+>> +    uint8_t cvmepwt:1;
+>> +    uint8_t cpmepwt:1;
+>> +    uint8_t reserved:3;
+>> +} CXLValidEnableAlerts;
+>> +
+>> +typedef struct CXLAlertConfig {
+>> +    CXLValidEnableAlerts valid_alerts;
+>> +    CXLValidEnableAlerts enable_alerts;
+>> +    uint8_t lucat;
+>> +    uint8_t lupwt;
+>> +    uint16_t dotcat;
+>> +    uint16_t dutcat;
+>> +    uint16_t dotpwt;
+>> +    uint16_t dutpwt;
+>> +    uint16_t cvmepwt;
+>> +    uint16_t cpmepwt;
+>> +} QEMU_PACKED CXLAlertConfig;
+>> +
+>>  struct CXLType3Dev {
+>>      /* Private */
+>>      PCIDevice parent_obj;
+>> @@ -605,6 +627,8 @@ struct CXLType3Dev {
+>>      CXLCCI vdm_fm_owned_ld_mctp_cci;
+>>      CXLCCI ld0_cci;
+>>
+>> +    CXLAlertConfig alert_config;
+>> +
+>>      /* PCIe link characteristics */
+>>      PCIExpLinkSpeed speed;
+>>      PCIExpLinkWidth width;
+>> --
+>> 2.34.1
+>>
+>
+>-- 
+>Fan Ni (From gmail)
+
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_46c76_
+Content-Type: text/plain; charset="utf-8"
 
 
-Applied to vfio-next.
-
-Thanks,
-
-C.
-
-
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_46c76_--
 
