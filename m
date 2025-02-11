@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D13BC021A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 553C2C021A2
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thrL4-0006Wv-AX; Tue, 11 Feb 2025 09:34:14 -0500
+	id 1thrKp-0006S0-HH; Tue, 11 Feb 2025 09:33:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrL2-0006WY-Kj
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:34:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKn-0006R5-3h
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:33:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrL0-0001vU-Mc
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:34:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKl-0001sM-0T
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:33:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739284450;
+ s=mimecast20190719; t=1739284434;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PmboF7nJ2QrLfLhXSnLwZkX9n6tQcij2HQMifxLhhnI=;
- b=AzhOeiEpjEwpBl5BcZZr0Uy8Sv6Exs92UfJEfqPw7jLxyci9CmhHH/ZdBl7PzMqj843nvg
- E3qQuC8gxkP3+1cFNeImAm0snCbAKkb6zgnPSDiWOVnR+GNU4vLCKar1QWRRqTJ4iq1KuS
- NZ01ulDydP/awaIRBgDxpKbsqzgAE9I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=LR3a9Hsz2ORFTdSz+PBwkbusc7qS/KoezzL1HBR2I3g=;
+ b=idwB9xGwap5YIywnt3kijziNreThkCLwVVa/3zM0RIAMrbpwEIbtGNp/wvn15aFCbHCx/i
+ v3O4BVEd5d/csRKlxEWBEw4u/hYiYzNgovnTmGL9t7O/Ec3H6vWiIz/C5vDIRF6QmuPQbN
+ upNGEIDbEeO20MANeClhOYBNRUDu3Ag=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-YpGBoNJzMSikYDzJSMwq_g-1; Tue,
- 11 Feb 2025 09:34:08 -0500
-X-MC-Unique: YpGBoNJzMSikYDzJSMwq_g-1
-X-Mimecast-MFC-AGG-ID: YpGBoNJzMSikYDzJSMwq_g_1739284448
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-rjZZeqPiPaOqIPGdIJgyzw-1; Tue,
+ 11 Feb 2025 09:33:52 -0500
+X-MC-Unique: rjZZeqPiPaOqIPGdIJgyzw-1
+X-Mimecast-MFC-AGG-ID: rjZZeqPiPaOqIPGdIJgyzw
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C106180087A
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 14:34:07 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73E361956094; Tue, 11 Feb 2025 14:33:51 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.39])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D5138180087F; Tue, 11 Feb 2025 14:34:04 +0000 (UTC)
+ id 013A91800570; Tue, 11 Feb 2025 14:33:49 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/12] vfio: Introduce vfio_get_vfio_device()
-Date: Tue, 11 Feb 2025 15:33:37 +0100
-Message-ID: <20250211143340.787996-10-clg@redhat.com>
+Subject: [PULL 02/12] vfio/pci: declare generic quirks in a new header file
+Date: Tue, 11 Feb 2025 15:33:30 +0100
+Message-ID: <20250211143340.787996-3-clg@redhat.com>
 In-Reply-To: <20250211143340.787996-1-clg@redhat.com>
 References: <20250211143340.787996-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,56 +84,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This helper will be useful in the listener handlers to extract the
-VFIO device from a memory region using memory_region_owner(). At the
-moment, we only care for PCI passthrough devices. If the need arises,
-we will add more.
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
+Declare generic vfio_generic_{window_address,window_data,mirror}_quirk
+in newly created pci_quirks.h so that they can be used elsewhere, like
+igd.c.
+
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250206131438.1505542-5-clg@redhat.com
+Link: https://lore.kernel.org/r/20250104154219.7209-2-tomitamoeko@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h |  1 +
- hw/vfio/helpers.c             | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+ hw/vfio/pci-quirks.h | 71 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/pci-quirks.c | 55 +++-------------------------------
+ 2 files changed, 75 insertions(+), 51 deletions(-)
+ create mode 100644 hw/vfio/pci-quirks.h
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 0c60be5b15c70168f4f94ad7054d9bd750a162d3..ac35136a11051b079cd9d04e6becd344a0e0f7e7 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -252,6 +252,7 @@ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-                         AddressSpace *as, Error **errp);
- void vfio_detach_device(VFIODevice *vbasedev);
-+VFIODevice *vfio_get_vfio_device(Object *obj);
- 
- int vfio_kvm_device_add_fd(int fd, Error **errp);
- int vfio_kvm_device_del_fd(int fd, Error **errp);
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 913796f437f84eece8711cb4b4b654a44040d17c..4b255d4f3a9e81f55df00c68fc71da769fd5bd04 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -23,6 +23,7 @@
- #include <sys/ioctl.h>
- 
- #include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/pci.h"
- #include "hw/hw.h"
- #include "trace.h"
- #include "qapi/error.h"
-@@ -728,3 +729,12 @@ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp)
- 
-     return HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp);
- }
+diff --git a/hw/vfio/pci-quirks.h b/hw/vfio/pci-quirks.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..c0e96a01cc64bd82013d6bd87adb7ce3d31bf060
+--- /dev/null
++++ b/hw/vfio/pci-quirks.h
+@@ -0,0 +1,71 @@
++/*
++ * vfio generic region quirks (mostly backdoors to PCI config space)
++ *
++ * Copyright Red Hat, Inc. 2012-2015
++ *
++ * Authors:
++ *  Alex Williamson <alex.williamson@redhat.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2.  See
++ * the COPYING file in the top-level directory.
++ */
++#ifndef HW_VFIO_VFIO_PCI_QUIRKS_H
++#define HW_VFIO_VFIO_PCI_QUIRKS_H
 +
-+VFIODevice *vfio_get_vfio_device(Object *obj)
-+{
-+    if (object_dynamic_cast(obj, TYPE_VFIO_PCI)) {
-+        return &VFIO_PCI(obj)->vbasedev;
-+    } else {
-+        return NULL;
-+    }
-+}
++#include "qemu/osdep.h"
++#include "exec/memop.h"
++
++/*
++ * The generic window quirks operate on an address and data register,
++ * vfio_generic_window_address_quirk handles the address register and
++ * vfio_generic_window_data_quirk handles the data register.  These ops
++ * pass reads and writes through to hardware until a value matching the
++ * stored address match/mask is written.  When this occurs, the data
++ * register access emulated PCI config space for the device rather than
++ * passing through accesses.  This enables devices where PCI config space
++ * is accessible behind a window register to maintain the virtualization
++ * provided through vfio.
++ */
++typedef struct VFIOConfigWindowMatch {
++    uint32_t match;
++    uint32_t mask;
++} VFIOConfigWindowMatch;
++
++typedef struct VFIOConfigWindowQuirk {
++    struct VFIOPCIDevice *vdev;
++
++    uint32_t address_val;
++
++    uint32_t address_offset;
++    uint32_t data_offset;
++
++    bool window_enabled;
++    uint8_t bar;
++
++    MemoryRegion *addr_mem;
++    MemoryRegion *data_mem;
++
++    uint32_t nr_matches;
++    VFIOConfigWindowMatch matches[];
++} VFIOConfigWindowQuirk;
++
++extern const MemoryRegionOps vfio_generic_window_address_quirk;
++extern const MemoryRegionOps vfio_generic_window_data_quirk;
++
++/*
++ * The generic mirror quirk handles devices which expose PCI config space
++ * through a region within a BAR.  When enabled, reads and writes are
++ * redirected through to emulated PCI config space.  XXX if PCI config space
++ * used memory regions, this could just be an alias.
++ */
++typedef struct VFIOConfigMirrorQuirk {
++    struct VFIOPCIDevice *vdev;
++    uint32_t offset;
++    uint8_t bar;
++    MemoryRegion *mem;
++    uint8_t data[];
++} VFIOConfigMirrorQuirk;
++
++extern const MemoryRegionOps vfio_generic_mirror_quirk;
++
++#endif /* HW_VFIO_VFIO_PCI_QUIRKS_H */
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index c8e60475d5166593f012e0d87993de3801920411..2258fdda5f1fd4ae4f57fd163beb24bfe2116717 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -25,6 +25,7 @@
+ #include "hw/nvram/fw_cfg.h"
+ #include "hw/qdev-properties.h"
+ #include "pci.h"
++#include "pci-quirks.h"
+ #include "trace.h"
+ 
+ /*
+@@ -66,40 +67,6 @@ bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev)
+  * Device specific region quirks (mostly backdoors to PCI config space)
+  */
+ 
+-/*
+- * The generic window quirks operate on an address and data register,
+- * vfio_generic_window_address_quirk handles the address register and
+- * vfio_generic_window_data_quirk handles the data register.  These ops
+- * pass reads and writes through to hardware until a value matching the
+- * stored address match/mask is written.  When this occurs, the data
+- * register access emulated PCI config space for the device rather than
+- * passing through accesses.  This enables devices where PCI config space
+- * is accessible behind a window register to maintain the virtualization
+- * provided through vfio.
+- */
+-typedef struct VFIOConfigWindowMatch {
+-    uint32_t match;
+-    uint32_t mask;
+-} VFIOConfigWindowMatch;
+-
+-typedef struct VFIOConfigWindowQuirk {
+-    struct VFIOPCIDevice *vdev;
+-
+-    uint32_t address_val;
+-
+-    uint32_t address_offset;
+-    uint32_t data_offset;
+-
+-    bool window_enabled;
+-    uint8_t bar;
+-
+-    MemoryRegion *addr_mem;
+-    MemoryRegion *data_mem;
+-
+-    uint32_t nr_matches;
+-    VFIOConfigWindowMatch matches[];
+-} VFIOConfigWindowQuirk;
+-
+ static uint64_t vfio_generic_window_quirk_address_read(void *opaque,
+                                                        hwaddr addr,
+                                                        unsigned size)
+@@ -135,7 +102,7 @@ static void vfio_generic_window_quirk_address_write(void *opaque, hwaddr addr,
+     }
+ }
+ 
+-static const MemoryRegionOps vfio_generic_window_address_quirk = {
++const MemoryRegionOps vfio_generic_window_address_quirk = {
+     .read = vfio_generic_window_quirk_address_read,
+     .write = vfio_generic_window_quirk_address_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+@@ -178,26 +145,12 @@ static void vfio_generic_window_quirk_data_write(void *opaque, hwaddr addr,
+                       addr + window->data_offset, data, size);
+ }
+ 
+-static const MemoryRegionOps vfio_generic_window_data_quirk = {
++const MemoryRegionOps vfio_generic_window_data_quirk = {
+     .read = vfio_generic_window_quirk_data_read,
+     .write = vfio_generic_window_quirk_data_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+-/*
+- * The generic mirror quirk handles devices which expose PCI config space
+- * through a region within a BAR.  When enabled, reads and writes are
+- * redirected through to emulated PCI config space.  XXX if PCI config space
+- * used memory regions, this could just be an alias.
+- */
+-typedef struct VFIOConfigMirrorQuirk {
+-    struct VFIOPCIDevice *vdev;
+-    uint32_t offset;
+-    uint8_t bar;
+-    MemoryRegion *mem;
+-    uint8_t data[];
+-} VFIOConfigMirrorQuirk;
+-
+ static uint64_t vfio_generic_quirk_mirror_read(void *opaque,
+                                                hwaddr addr, unsigned size)
+ {
+@@ -228,7 +181,7 @@ static void vfio_generic_quirk_mirror_write(void *opaque, hwaddr addr,
+                                           addr, data);
+ }
+ 
+-static const MemoryRegionOps vfio_generic_mirror_quirk = {
++const MemoryRegionOps vfio_generic_mirror_quirk = {
+     .read = vfio_generic_quirk_mirror_read,
+     .write = vfio_generic_quirk_mirror_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
 -- 
 2.48.1
 
