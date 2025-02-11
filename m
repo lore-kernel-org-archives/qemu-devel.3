@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E15C0219E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DF1C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht6z-0000sk-4d; Tue, 11 Feb 2025 11:27:54 -0500
+	id 1tht5V-0006SP-3r; Tue, 11 Feb 2025 11:26:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht6H-00071v-0S
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:27:07 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tht5N-0006PW-Hc
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:10 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht6C-0003e0-R1
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:27:04 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so17360835e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tht5L-000341-Ug
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:09 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4394829ef0fso12778655e9.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739291219; x=1739896019; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2+eGFS3Y9n+RVP7ZZfbx8EfwhLtSPudzUjSz57pI92s=;
- b=Kj9nvD62qtJMo5U5TSWThj6ga8v5tZquObsB3DBYidFu4fHiI06ZQbLe/FSGqTa8pX
- UrFEaqGxgtdJXMvOV7ts1eqSLLXsitD7Tuzkfhk+lp0W9O0AsiUBMKfTeSoqtwwG6ZvO
- 6KS2HJlHUr/F9m7hLL6YSCc2CGhTpZdZiD3+VwFltP3IPuaiRvQ9TJ1SjvlKaCn0wW05
- HvLo9LukQpsNSzMQPN+QfjfikBavifaAMmn3tZfNwXgp8w7tMFFKCvAA8isYH/W9qw/8
- ypvuj8Y83JmP/qJ+akwwZ4/FAQ88LmXS+YNGgQI19+joOmrEz2Gri/ZMbnER0FbsvsKP
- ITlg==
+ d=linaro.org; s=google; t=1739291166; x=1739895966; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UTlj99r0T6pPfzjdgb6uJLs6OLra7ZAWbShTkPt4ma4=;
+ b=UwRZ/t9TdxmiVifI8E2XYz55n6GAS61CI91oboq7L4GVhfTzJRvOwobxcSlehAxZhV
+ YMw/6qEqdOubWXavvolyCEx8Ptjwnngqq/h38Ek/MkwsG043KtFcaMbAORLu3Pp4WhIb
+ AhkSbBhesFatJWyK4yPvtCEYmJv4Cmtq90O2ltHprg0ySZV+wjx05rLqj16aCQs5CW18
+ oRxA+GKZ4fnyUabTKANa181Ro9SPo2L8xQWp5gi2rDMi3pSZCHsDPaySIEE+qNfOEStQ
+ /lWHgDcuW0XU2ODPhY6jPbrsLeSRk0hB27WKALpsQTknS4XY2afLsP57yKjA6pAkLE+g
+ 71HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291219; x=1739896019;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2+eGFS3Y9n+RVP7ZZfbx8EfwhLtSPudzUjSz57pI92s=;
- b=HL5A6prBc8KsGLEl+wr56pDxINkemj3wB/0pGF4qWQSbEWysOmmgKicka7opbuzt5v
- jo37O3lWLe/oN1UmxZTeaZjzGbEY5ZoceMmL6Tlmln2J/1UIM2XRz7BMlVs3NOF2ud9g
- 7+B3KIdgnM3DZez5uXgWuSrRTLmDMMkyJaexm2qRC2GOnsLOVHXzP+fOKhQ5uyuzTIOb
- viBTpeWYohQQ93bQ5DWLDAKPPsXAd7O8jWHrNv5xCg+3u3BknMQiAG91GUl+qbNeMBPe
- IrMSWXUuYS0lqky+vcG7IG5phTiIuJ6xoGom7o1V2MBucOFcZ2odRoBkLlLuQ3eHKdt4
- XSnw==
-X-Gm-Message-State: AOJu0Yz6kC1I/GalIjEHO0GVEPGx05YS+p551zQpi9ZMRnMNbpb+vhaN
- zBXTm92lFVW90RGk7QcCrtujVuTJiieU1IWwr/9oefASN4vZXIyU09OLtJVOHiqbIC11dQlWpCX
- P
-X-Gm-Gg: ASbGncu6ErBt9i5gS4OKvl83Jii6eDEf1QY6wvpQos/dMSkbfr92ruM9s0OGiHn9WFe
- J9xz6v0IkADS+0PZLn2VoL8h0Fu4AXf2W9TTEQ9OfsGVXsU4Jm5HKdS9zWzoTJhENcBxxEtWjMg
- 14tf4umOyFhrgVon2zegPbwlkwqTbw45iO1kh49RCdAEyyLxGyjFW62T1KsQ37ZU0DDqaTH44Rj
- HpRXUvOVtneQyqYgVCUOKwJenYRnGvrp7zO6Erkvx07v3AwJEqTXi7NOaCGrTXRcWb6ZaqbjVL2
- r1TNSfmnkK9MOqiLSBDX
-X-Google-Smtp-Source: AGHT+IH0E+f5czgyCvfms/S93rjeSjsXmzrj2DLaBLi8AsFy+SJV5JZbNOyGaanggR8ZsJrTcBlzWQ==
-X-Received: by 2002:a05:600c:1f8c:b0:439:35d2:ed6 with SMTP id
- 5b1f17b1804b1-43935d2109emr109492875e9.3.1739291218797; 
- Tue, 11 Feb 2025 08:26:58 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.58
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:26:58 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1739291166; x=1739895966;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UTlj99r0T6pPfzjdgb6uJLs6OLra7ZAWbShTkPt4ma4=;
+ b=wEkR990wfecxqWasF+XISqL3VGVF3Lot7TigNC3LOqPhVqzmEUb2BX4RekGIKwyCdG
+ 1wWyxBuu7OE7yxpoVE4vGZ99J+jogBIBg4CQnlTJxu0vERxaYL1GSc9yhG/U+jgU/P3g
+ W8rD79VliLmBC0lbxsotMgOqqJlkrgL+ntVGzIVWoLloTXMSXa4+fSNWep+hvxgWM1D5
+ wIevZ7kWGj3YKLd6EHZZFNLg5SHAIdNMiVK4BPbAQNBBJjSG8hEROnZM8SKpeMwVABBw
+ heFyH2RAixzKy3BWRiThyNwFblh8feH9x8+QX8bOZjBMkJAHY+TybQFZbOehlUlcMINl
+ TV8A==
+X-Gm-Message-State: AOJu0Ywwcw/V86k+ljcbPJgTRKKXXsDkAuXxJxi8bM3cTjsspk5CCkim
+ rS4+8JsFTOZqFWTX7XMxvze3uXagvvkLcTMZzuf7DJvtRyPiYhMHOk3QSjdR8L9NlG1UEYE9VFz
+ JRoA=
+X-Gm-Gg: ASbGncsc+nARofYB6W3a9Bi72z/h4NgPGyc9qIcdrgyUrfQwKg2aXDmi8gRLnUHepQK
+ nBfrTRuIBVT0CQLAj9AtKaxtxaJZehNiowFmsS+Wmd3e9r5lJgDLFDeyTU9/VcdS/MkLBulyT+V
+ y0eIVobrSkyij7h2AT1p/bTVZ5477bRU4SeoHXGEFAPpitgrfTTcQpzJUM7gjosuxHHZLcyAAnt
+ GGFwe3uAWTYRb1vbb1V7dHL3ftasRVWkKu9Ey3V/KZPr4mXLkZgvMeA6ySfxOGPH1w1DDue79/a
+ kiW3LepX81S5Lgu6oVZMPm9wevsF+lOUxQGw7xiSqNTmD5t4UA4AjOa8H0ksTUCzZg==
+X-Google-Smtp-Source: AGHT+IGkCXBxUVQPAcwuBwCHilnHMerM7BP5F+KU9LkREX3u5uTfqDzwWPGP48jiMzjznLIXWRH9ew==
+X-Received: by 2002:a05:600c:3d8b:b0:438:a313:cda9 with SMTP id
+ 5b1f17b1804b1-4394cf0112dmr34712495e9.10.1739291166027; 
+ Tue, 11 Feb 2025 08:26:06 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4393963c84esm102195835e9.27.2025.02.11.08.26.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 11 Feb 2025 08:26:05 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 60/68] target/arm: Remove ah_fp_status
-Date: Tue, 11 Feb 2025 16:25:46 +0000
-Message-Id: <20250211162554.4135349-61-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
-References: <20250211162554.4135349-1-peter.maydell@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/alpha: Do not mix exception flags and FPCR bits
+Date: Tue, 11 Feb 2025 17:26:04 +0100
+Message-ID: <20250211162604.83446-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,90 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+get_float_exception_flags() returns exception flags,
+which are distinct from the FPCR bits used as error code.
 
-Replace with fp_status[FPST_AH].
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250129013857.135256-11-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/cpu.h        | 3 +--
- target/arm/cpu.c        | 6 +++---
- target/arm/vfp_helper.c | 6 +++---
- 3 files changed, 7 insertions(+), 8 deletions(-)
+Based-on: <20250211130626.3940412-1-peter.maydell@linaro.org>
+---
+ target/alpha/fpu_helper.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 91e132024e7..577c69dec1a 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -233,7 +233,7 @@ typedef struct NVICState NVICState;
-  * the "standard FPSCR" tracks the FPSCR.FZ16 bit rather than
-  * using a fixed value for it.
-  *
-- * The ah_fp_status is needed because some insns have different
-+ * FPST_AH is needed because some insns have different
-  * behaviour when FPCR.AH == 1: they don't update cumulative
-  * exception flags, they act like FPCR.{FZ,FIZ} = {1,1} and
-  * they ignore FPCR.RMode. But they don't ignore FPCR.FZ16,
-@@ -694,7 +694,6 @@ typedef struct CPUArchState {
-                 float_status fp_status_a64;
-                 float_status fp_status_f16_a32;
-                 float_status fp_status_f16_a64;
--                float_status ah_fp_status;
-             };
-         };
+diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
+index f810a9b6a47..6aefb9b851a 100644
+--- a/target/alpha/fpu_helper.c
++++ b/target/alpha/fpu_helper.c
+@@ -455,29 +455,28 @@ static uint64_t do_cvttq(CPUAlphaState *env, uint64_t a, int roundmode)
+ {
+     float64 fa;
+     int64_t ret;
+-    uint32_t exc;
++    uint32_t exc = 0;
++    int flags;
  
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 5a21a6c6eb2..6b4839b5bac 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -556,9 +556,9 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a32);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status_f16_a64);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
--    arm_set_ah_fp_behaviours(&env->vfp.ah_fp_status);
--    set_flush_to_zero(1, &env->vfp.ah_fp_status);
--    set_flush_inputs_to_zero(1, &env->vfp.ah_fp_status);
-+    arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
-+    set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
-+    set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_AH]);
-     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH_F16]);
+     fa = t_to_float64(a);
+     ret = float64_to_int64_modulo(fa, roundmode, &FP_STATUS);
  
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index ec7c0d6a98f..2bb98c4ee49 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -129,7 +129,7 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     a64_flags |= (get_float_exception_flags(&env->vfp.fp_status_f16_a64)
-           & ~(float_flag_input_denormal_flushed | float_flag_input_denormal_used));
-     /*
--     * We do not merge in flags from ah_fp_status or FPST_AH_F16, because
-+     * We do not merge in flags from FPST_AH or FPST_AH_F16, because
-      * they are used for insns that must not set the cumulative exception bits.
-      */
+-    exc = get_float_exception_flags(&FP_STATUS);
+-    if (unlikely(exc)) {
++    flags = get_float_exception_flags(&FP_STATUS);
++    if (unlikely(flags)) {
+         set_float_exception_flags(0, &FP_STATUS);
  
-@@ -161,7 +161,7 @@ static void vfp_clear_float_status_exc_flags(CPUARMState *env)
-     set_float_exception_flags(0, &env->vfp.fp_status_f16_a64);
-     set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD]);
-     set_float_exception_flags(0, &env->vfp.fp_status[FPST_STD_F16]);
--    set_float_exception_flags(0, &env->vfp.ah_fp_status);
-+    set_float_exception_flags(0, &env->vfp.fp_status[FPST_AH]);
-     set_float_exception_flags(0, &env->vfp.fp_status[FPST_AH_F16]);
- }
- 
-@@ -236,7 +236,7 @@ static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_a64);
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a32);
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16_a64);
--        set_default_nan_mode(dnan_enabled, &env->vfp.ah_fp_status);
-+        set_default_nan_mode(dnan_enabled, &env->vfp.fp_status[FPST_AH]);
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status[FPST_AH_F16]);
+         /* We need to massage the resulting exceptions. */
+-        if (exc & float_flag_invalid_cvti) {
++        if (flags & float_flag_invalid_cvti) {
+             /* Overflow, either normal or infinity. */
+             if (float64_is_infinity(fa)) {
+                 exc = FPCR_INV;
+             } else {
+                 exc = FPCR_IOV | FPCR_INE;
+             }
+-        } else if (exc & float_flag_invalid) {
++        } else if (flags & float_flag_invalid) {
+             exc = FPCR_INV;
+-        } else if (exc & float_flag_inexact) {
++        } else if (flags & float_flag_inexact) {
+             exc = FPCR_INE;
+-        } else {
+-            exc = 0;
+         }
      }
-     if (changed & FPCR_AH) {
+     env->error_code = exc;
 -- 
-2.34.1
+2.47.1
 
 
