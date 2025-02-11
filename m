@@ -4,54 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5954DC021A0
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5DFBC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:35:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thrKm-0006Qi-F7; Tue, 11 Feb 2025 09:33:56 -0500
+	id 1thrKp-0006S4-H4; Tue, 11 Feb 2025 09:33:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKl-0006QF-Ez
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:33:55 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKn-0006Rb-Br
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:33:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKj-0001rp-B1
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:33:55 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKl-0001sT-Lc
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:33:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739284430;
+ s=mimecast20190719; t=1739284435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=tJGZpw8AvCCxQVPgZI5VaVfATDGJSZGpUrOw3exR24A=;
- b=XHwa3uujpnMIdbEJdAfBOB5JCoadyYAuPn5B2BCbsFW+JtYGfAz5D6jJTqIy0gbaHJ8Lnh
- YwXKHfVvLaboK+lmDC2Bd5mTIA1lB/1YL6HbrCRqtXIRgNxTca+n/twxJOofQ+9xivri3p
- GmWQdKPst6AwG9LbceTJwLSUhyBnUmE=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rWeM8xEh0bgDY2ynaZY0NiCmiLKkWLzv3qy5lwA7tlY=;
+ b=C8ahcU19t+265cMjjgKZMYvFUtT6MF/6kFg+9CgCoVi19StjRrXSchKAhWJqaqzNSUhA20
+ FUzvsEen9jdhyHER9wiU5xURiaBISp3cH8dvueVPXBaVvZXU4P4nM4Nd+oQr8z6J02yYhv
+ vOnEoARXzAvKhCiKeYrtAeURHduf/Cw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-37WzBITyMeuxRSpNLqvRmw-1; Tue,
- 11 Feb 2025 09:33:48 -0500
-X-MC-Unique: 37WzBITyMeuxRSpNLqvRmw-1
-X-Mimecast-MFC-AGG-ID: 37WzBITyMeuxRSpNLqvRmw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-_sHfBJwYPJmaUxNbIRugew-1; Tue,
+ 11 Feb 2025 09:33:50 -0500
+X-MC-Unique: _sHfBJwYPJmaUxNbIRugew-1
+X-Mimecast-MFC-AGG-ID: _sHfBJwYPJmaUxNbIRugew
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B1FC180056F
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 14:33:47 +0000 (UTC)
+ id 5B36F1801A10
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 14:33:49 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.39])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45ED11800873; Tue, 11 Feb 2025 14:33:45 +0000 (UTC)
+ id 19F7F18008CC; Tue, 11 Feb 2025 14:33:47 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 00/12] vfio queue
-Date: Tue, 11 Feb 2025 15:33:28 +0100
-Message-ID: <20250211143340.787996-1-clg@redhat.com>
+Subject: [PULL 01/12] vfio/igd: Fix potential overflow in igd_gtt_memory_size()
+Date: Tue, 11 Feb 2025 15:33:29 +0100
+Message-ID: <20250211143340.787996-2-clg@redhat.com>
+In-Reply-To: <20250211143340.787996-1-clg@redhat.com>
+References: <20250211143340.787996-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,58 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ffaf7f0376f8040ce9068d71ae9ae8722505c42e:
+The risk is mainly theoretical since the applied bit mask will keep
+the 'ggms' shift value below 3. Nevertheless, let's use a 64 bit
+integer type and resolve the coverity issue.
 
-  Merge tag 'pull-10.0-testing-and-gdstub-updates-100225-1' of https://gitlab.com/stsquad/qemu into staging (2025-02-10 13:26:17 -0500)
+Resolves: Coverity CID 1585908
+Fixes: 1e1eac5f3dcd ("vfio/igd: canonicalize memory size calculations")
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/r/20250107130604.669697-1-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/igd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://github.com/legoater/qemu/ tags/pull-vfio-20250211
-
-for you to fetch changes up to be7d8579eb5758c0edf81eb068017a56471a77e0:
-
-  vfio: Remove superfluous error report in vfio_listener_region_add() (2025-02-11 14:15:19 +0100)
-
-----------------------------------------------------------------
-vfio queue:
-
-* Coverity fix
-* IGD cleanups using VFIOQuirk
-* SIGSEV fix in IOMMUFD host IOMMU device
-* Improved error reporting for MMIO region mapping failures
-
-----------------------------------------------------------------
-Cédric Le Goater (8):
-      vfio/igd: Fix potential overflow in igd_gtt_memory_size()
-      util/error: Introduce warn_report_err_once()
-      vfio/pci: Replace "iommu_device" by "vIOMMU"
-      vfio: Rephrase comment in vfio_listener_region_add() error path
-      vfio: Introduce vfio_get_vfio_device()
-      vfio: Improve error reporting when MMIO region mapping fails
-      vfio: Remove reports of DMA mapping errors in backends
-      vfio: Remove superfluous error report in vfio_listener_region_add()
-
-Tomita Moeko (3):
-      vfio/pci: declare generic quirks in a new header file
-      vfio/pci: introduce config_offset field in VFIOConfigMirrorQuirk
-      vfio/igd: use VFIOConfigMirrorQuirk for mirrored registers
-
-Zhenzhong Duan (1):
-      vfio/iommufd: Fix SIGSEV in iommufd_cdev_attach()
-
- hw/vfio/pci-quirks.h          |  72 ++++++++++++++++++++++++
- include/hw/vfio/vfio-common.h |   1 +
- include/qapi/error.h          |  12 ++++
- backends/iommufd.c            |   3 -
- hw/vfio/common.c              |  40 +++++++++----
- hw/vfio/container.c           |   2 -
- hw/vfio/helpers.c             |  10 ++++
- hw/vfio/igd.c                 | 127 +++++++++++-------------------------------
- hw/vfio/iommufd.c             |   5 +-
- hw/vfio/pci-quirks.c          |  57 ++-----------------
- hw/vfio/pci.c                 |   2 +-
- util/error.c                  |  11 ++++
- 12 files changed, 177 insertions(+), 165 deletions(-)
- create mode 100644 hw/vfio/pci-quirks.h
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 0740a5dd8cc9346a92c4613194faa8dea42e1d98..b5303ea565d6a344d0a43273f288bbb4a7f48327 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -133,7 +133,7 @@ static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+     } else {
+         ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
+         if (ggms != 0) {
+-            ggms = 1 << ggms;
++            ggms = 1ULL << ggms;
+         }
+     }
+ 
+-- 
+2.48.1
 
 
