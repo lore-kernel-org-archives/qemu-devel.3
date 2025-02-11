@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E415BC021A1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:24:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA65C0219D
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmUZ-00022o-5U; Tue, 11 Feb 2025 04:23:43 -0500
+	id 1thmUq-0002GM-LZ; Tue, 11 Feb 2025 04:24:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUX-0001zs-M9
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUd-00029S-Bo
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUU-0002xN-Hm
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:41 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUb-0002zY-1r
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739265817;
+ s=mimecast20190719; t=1739265824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UcwzD9Z63x96h1sI6W/9y2W4Vf+j646dhLH7hNWWdtg=;
- b=VuKFy3p4H6CIWlieOpOnc/vqBpIa9RxYY4RrdC6Y0x4LzClxiQYSpN7gJFPNSCm0HF0hgL
- BbFD6dmYehmn4ROwzjV1lrHY3vb7RmFuF1KuC7PrrVW4VtE92d12c8tbxGJHHeQGr/COPy
- 5ztk0frnIjbXaUAOoizQx1sf0N3J7mk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=dihYdzQJoxG55KPRUrzoXBvN3cz1o1fWZpT8/A+vLW4=;
+ b=fxxbg+q+w7wR3oGyps0oZnF1HXHIL1RrCoHq6tcSjYRQNsgbIjJME719q0/R0cRQmQjypo
+ 8oY3vDJgbJVECISR3C4ok/MNyNj02e3m8Pu4h7yUF3hgI8aaMoi3q49tJVXWqYUNR9/TyD
+ GQdb8xz8wevms1id2XOHWm5mWwPq4G0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-XLOUSeq5Mw-k2KGyvqkEVQ-1; Tue,
- 11 Feb 2025 04:23:34 -0500
-X-MC-Unique: XLOUSeq5Mw-k2KGyvqkEVQ-1
-X-Mimecast-MFC-AGG-ID: XLOUSeq5Mw-k2KGyvqkEVQ
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-6kPWiNY0MWGOp65RzICdUQ-1; Tue,
+ 11 Feb 2025 04:23:40 -0500
+X-MC-Unique: 6kPWiNY0MWGOp65RzICdUQ-1
+X-Mimecast-MFC-AGG-ID: 6kPWiNY0MWGOp65RzICdUQ_1739265819
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E59801800876; Tue, 11 Feb 2025 09:23:32 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44D28195608B; Tue, 11 Feb 2025 09:23:38 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.57])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DEF91800358; Tue, 11 Feb 2025 09:23:31 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B846D30001AB; Tue, 11 Feb 2025 09:23:37 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 986D51800381; Tue, 11 Feb 2025 10:23:24 +0100 (CET)
+ id C7DC818003A4; Tue, 11 Feb 2025 10:23:24 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
@@ -59,22 +59,22 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH v3 02/23] hw/uefi: add include/hw/uefi/var-service-edk2.h
-Date: Tue, 11 Feb 2025 10:23:00 +0100
-Message-ID: <20250211092324.965440-3-kraxel@redhat.com>
+Subject: [PATCH v3 05/23] hw/uefi: add var-service-utils.c
+Date: Tue, 11 Feb 2025 10:23:03 +0100
+Message-ID: <20250211092324.965440-6-kraxel@redhat.com>
 In-Reply-To: <20250211092324.965440-1-kraxel@redhat.com>
 References: <20250211092324.965440-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
 X-Spam_bar: ---
 X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,249 +92,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A bunch of #defines and structs copied over from edk2,
-mostly needed to decode and encode the messages in the
-communication buffer.
+Add utility functions.  Helpers for UEFI (ucs2) string handling.
+Helpers for readable trace messages.  Compare UEFI time stamps.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/hw/uefi/var-service-edk2.h | 227 +++++++++++++++++++++++++++++
- 1 file changed, 227 insertions(+)
- create mode 100644 include/hw/uefi/var-service-edk2.h
+ hw/uefi/var-service-utils.c | 241 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 241 insertions(+)
+ create mode 100644 hw/uefi/var-service-utils.c
 
-diff --git a/include/hw/uefi/var-service-edk2.h b/include/hw/uefi/var-service-edk2.h
+diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
 new file mode 100644
-index 000000000000..c743a8df948d
+index 000000000000..c9ef46570f48
 --- /dev/null
-+++ b/include/hw/uefi/var-service-edk2.h
-@@ -0,0 +1,227 @@
++++ b/hw/uefi/var-service-utils.c
+@@ -0,0 +1,241 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * uefi-vars device - structs and defines from edk2
-+ *
-+ * Note: The edk2 UINTN type has been mapped to uint64_t,
-+ *       so the structs are compatible with 64bit edk2 builds.
++ * uefi vars device - helper functions for ucs2 strings and tracing
 + */
-+#ifndef QEMU_UEFI_VAR_SERVICE_EDK2_H
-+#define QEMU_UEFI_VAR_SERVICE_EDK2_H
++#include "qemu/osdep.h"
++#include "system/dma.h"
 +
-+#include "qemu/uuid.h"
++#include "hw/uefi/var-service.h"
 +
-+#define MAX_BIT                   0x8000000000000000ULL
-+#define ENCODE_ERROR(StatusCode)  (MAX_BIT | (StatusCode))
-+#define EFI_SUCCESS               0
-+#define EFI_INVALID_PARAMETER     ENCODE_ERROR(2)
-+#define EFI_UNSUPPORTED           ENCODE_ERROR(3)
-+#define EFI_BAD_BUFFER_SIZE       ENCODE_ERROR(4)
-+#define EFI_BUFFER_TOO_SMALL      ENCODE_ERROR(5)
-+#define EFI_WRITE_PROTECTED       ENCODE_ERROR(8)
-+#define EFI_OUT_OF_RESOURCES      ENCODE_ERROR(9)
-+#define EFI_NOT_FOUND             ENCODE_ERROR(14)
-+#define EFI_ACCESS_DENIED         ENCODE_ERROR(15)
-+#define EFI_ALREADY_STARTED       ENCODE_ERROR(20)
-+#define EFI_SECURITY_VIOLATION    ENCODE_ERROR(26)
++#include "trace/trace-hw_uefi.h"
 +
-+#define EFI_VARIABLE_NON_VOLATILE                           0x01
-+#define EFI_VARIABLE_BOOTSERVICE_ACCESS                     0x02
-+#define EFI_VARIABLE_RUNTIME_ACCESS                         0x04
-+#define EFI_VARIABLE_HARDWARE_ERROR_RECORD                  0x08
-+#define EFI_VARIABLE_AUTHENTICATED_WRITE_ACCESS             0x10  /* deprecated */
-+#define EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS  0x20
-+#define EFI_VARIABLE_APPEND_WRITE                           0x40
++/* ------------------------------------------------------------------ */
 +
-+/* SecureBootEnable */
-+#define SECURE_BOOT_ENABLE         1
-+#define SECURE_BOOT_DISABLE        0
++/*
++ * string helper functions.
++ *
++ * Most of the time uefi ucs2 strings are NULL-terminated, except
++ * sometimes when they are not (for example in variable policies).
++ */
 +
-+/* SecureBoot */
-+#define SECURE_BOOT_MODE_ENABLE    1
-+#define SECURE_BOOT_MODE_DISABLE   0
++gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
++                           gboolean must_be_null_terminated)
++{
++    size_t pos = 0;
 +
-+/* CustomMode */
-+#define CUSTOM_SECURE_BOOT_MODE    1
-+#define STANDARD_SECURE_BOOT_MODE  0
++    for (;;) {
++        if (pos == len) {
++            if (must_be_null_terminated) {
++                return false;
++            } else {
++                return true;
++            }
++        }
++        switch (str[pos]) {
++        case 0:
++            /* end of string */
++            return true;
++        case 0xd800 ... 0xdfff:
++            /* reject surrogates */
++            return false;
++        default:
++            /* char is good, check next */
++            break;
++        }
++        pos++;
++    }
++}
 +
-+/* SetupMode */
-+#define SETUP_MODE                 1
-+#define USER_MODE                  0
++size_t uefi_strlen(const uint16_t *str, size_t len)
++{
++    size_t pos = 0;
 +
-+typedef uint64_t efi_status;
-+typedef struct mm_header mm_header;
++    for (;;) {
++        if (pos == len) {
++            return pos;
++        }
++        if (str[pos] == 0) {
++            return pos;
++        }
++        pos++;
++    }
++}
 +
-+/* EFI_MM_COMMUNICATE_HEADER */
-+struct mm_header {
-+    QemuUUID  guid;
-+    uint64_t  length;
-+};
++gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
++                           const uint16_t *b, size_t blen,
++                           gboolean wildcards_in_a)
++{
++    size_t pos = 0;
 +
-+/* --- EfiSmmVariableProtocol ---------------------------------------- */
++    alen = alen / 2;
++    blen = blen / 2;
++    for (;;) {
++        if (pos == alen && pos == blen) {
++            return true;
++        }
++        if (pos == alen && b[pos] == 0) {
++            return true;
++        }
++        if (pos == blen && a[pos] == 0) {
++            return true;
++        }
++        if (pos == alen || pos == blen) {
++            return false;
++        }
++        if (a[pos] == 0 && b[pos] == 0) {
++            return true;
++        }
 +
-+#define SMM_VARIABLE_FUNCTION_GET_VARIABLE            1
-+#define SMM_VARIABLE_FUNCTION_GET_NEXT_VARIABLE_NAME  2
-+#define SMM_VARIABLE_FUNCTION_SET_VARIABLE            3
-+#define SMM_VARIABLE_FUNCTION_QUERY_VARIABLE_INFO     4
-+#define SMM_VARIABLE_FUNCTION_READY_TO_BOOT           5
-+#define SMM_VARIABLE_FUNCTION_EXIT_BOOT_SERVICE       6
-+#define SMM_VARIABLE_FUNCTION_LOCK_VARIABLE           8
-+#define SMM_VARIABLE_FUNCTION_GET_PAYLOAD_SIZE       11
++        if (wildcards_in_a && a[pos] == '#') {
++            if (!isxdigit(b[pos])) {
++                return false;
++            }
++        } else {
++            if (a[pos] != b[pos]) {
++                return false;
++            }
++        }
++        pos++;
++    }
++}
 +
-+typedef struct mm_variable mm_variable;
-+typedef struct mm_variable_access mm_variable_access;
-+typedef struct mm_next_variable mm_next_variable;
-+typedef struct mm_next_variable mm_lock_variable;
-+typedef struct mm_variable_info mm_variable_info;
-+typedef struct mm_get_payload_size mm_get_payload_size;
++gboolean uefi_str_equal(const uint16_t *a, size_t alen,
++                        const uint16_t *b, size_t blen)
++{
++    return uefi_str_equal_ex(a, alen, b, blen, false);
++}
 +
-+/* SMM_VARIABLE_COMMUNICATE_HEADER */
-+struct mm_variable {
-+    uint64_t  function;
-+    uint64_t  status;
-+};
++char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
++{
++    char *str = g_malloc0(ucs2_size / 2 + 1);
++    int i;
 +
-+/* SMM_VARIABLE_COMMUNICATE_ACCESS_VARIABLE */
-+struct QEMU_PACKED mm_variable_access {
-+    QemuUUID  guid;
-+    uint64_t  data_size;
-+    uint64_t  name_size;
-+    uint32_t  attributes;
-+    /* Name */
-+    /* Data */
-+};
++    for (i = 0; i * 2 < ucs2_size; i++) {
++        if (ucs2[i] == 0) {
++            break;
++        }
++        if (ucs2[i] < 128) {
++            str[i] = ucs2[i];
++        } else {
++            str[i] = '?';
++        }
++    }
++    str[i] = 0;
++    return str;
++}
 +
-+/* SMM_VARIABLE_COMMUNICATE_GET_NEXT_VARIABLE_NAME */
-+struct mm_next_variable {
-+    QemuUUID  guid;
-+    uint64_t  name_size;
-+    /* Name */
-+};
++/* ------------------------------------------------------------------ */
++/* time helper functions                                              */
 +
-+/* SMM_VARIABLE_COMMUNICATE_QUERY_VARIABLE_INFO */
-+struct QEMU_PACKED mm_variable_info {
-+    uint64_t max_storage_size;
-+    uint64_t free_storage_size;
-+    uint64_t max_variable_size;
-+    uint32_t attributes;
-+};
++int uefi_time_compare(efi_time *a, efi_time *b)
++{
++    if (a->year < b->year) {
++        return -1;
++    }
++    if (a->year > b->year) {
++        return 1;
++    }
 +
-+/* SMM_VARIABLE_COMMUNICATE_GET_PAYLOAD_SIZE */
-+struct mm_get_payload_size {
-+    uint64_t  payload_size;
-+};
++    if (a->month < b->month) {
++        return -1;
++    }
++    if (a->month > b->month) {
++        return 1;
++    }
 +
-+/* --- VarCheckPolicyLibMmiHandler ----------------------------------- */
++    if (a->day < b->day) {
++        return -1;
++    }
++    if (a->day > b->day) {
++        return 1;
++    }
 +
-+#define VAR_CHECK_POLICY_COMMAND_DISABLE     0x01
-+#define VAR_CHECK_POLICY_COMMAND_IS_ENABLED  0x02
-+#define VAR_CHECK_POLICY_COMMAND_REGISTER    0x03
-+#define VAR_CHECK_POLICY_COMMAND_DUMP        0x04
-+#define VAR_CHECK_POLICY_COMMAND_LOCK        0x05
++    if (a->hour < b->hour) {
++        return -1;
++    }
++    if (a->hour > b->hour) {
++        return 1;
++    }
 +
-+typedef struct mm_check_policy mm_check_policy;
-+typedef struct mm_check_policy_is_enabled mm_check_policy_is_enabled;
-+typedef struct mm_check_policy_dump_params mm_check_policy_dump_params;
++    if (a->minute < b->minute) {
++        return -1;
++    }
++    if (a->minute > b->minute) {
++        return 1;
++    }
 +
-+/* VAR_CHECK_POLICY_COMM_HEADER */
-+struct QEMU_PACKED mm_check_policy {
-+    uint32_t  signature;
-+    uint32_t  revision;
-+    uint32_t  command;
-+    uint64_t  result;
-+};
++    if (a->second < b->second) {
++        return -1;
++    }
++    if (a->second > b->second) {
++        return 1;
++    }
 +
-+/* VAR_CHECK_POLICY_COMM_IS_ENABLED_PARAMS */
-+struct QEMU_PACKED mm_check_policy_is_enabled {
-+    uint8_t   state;
-+};
++    if (a->nanosecond < b->nanosecond) {
++        return -1;
++    }
++    if (a->nanosecond > b->nanosecond) {
++        return 1;
++    }
 +
-+/* VAR_CHECK_POLICY_COMM_DUMP_PARAMS */
-+struct QEMU_PACKED mm_check_policy_dump_params {
-+    uint32_t  page_requested;
-+    uint32_t  total_size;
-+    uint32_t  page_size;
-+    uint8_t   has_more;
-+};
++    return 0;
++}
 +
-+/* --- Edk2VariablePolicyProtocol ------------------------------------ */
++/* ------------------------------------------------------------------ */
++/* tracing helper functions                                           */
 +
-+#define VARIABLE_POLICY_ENTRY_REVISION  0x00010000
++void uefi_trace_variable(const char *action, QemuUUID guid,
++                         const uint16_t *name, uint64_t name_size)
++{
++    QemuUUID be = qemu_uuid_bswap(guid);
++    char *str_uuid = qemu_uuid_unparse_strdup(&be);
++    char *str_name = uefi_ucs2_to_ascii(name, name_size);
 +
-+#define VARIABLE_POLICY_TYPE_NO_LOCK            0
-+#define VARIABLE_POLICY_TYPE_LOCK_NOW           1
-+#define VARIABLE_POLICY_TYPE_LOCK_ON_CREATE     2
-+#define VARIABLE_POLICY_TYPE_LOCK_ON_VAR_STATE  3
++    trace_uefi_variable(action, str_name, name_size, str_uuid);
 +
-+typedef struct variable_policy_entry variable_policy_entry;
-+typedef struct variable_lock_on_var_state variable_lock_on_var_state;
++    g_free(str_name);
++    g_free(str_uuid);
++}
 +
-+/* VARIABLE_POLICY_ENTRY */
-+struct variable_policy_entry {
-+    uint32_t      version;
-+    uint16_t      size;
-+    uint16_t      offset_to_name;
-+    QemuUUID      namespace;
-+    uint32_t      min_size;
-+    uint32_t      max_size;
-+    uint32_t      attributes_must_have;
-+    uint32_t      attributes_cant_have;
-+    uint8_t       lock_policy_type;
-+    uint8_t       padding[3];
-+    /* LockPolicy */
-+    /* Name */
-+};
-+
-+/* VARIABLE_LOCK_ON_VAR_STATE_POLICY */
-+struct variable_lock_on_var_state {
-+    QemuUUID      namespace;
-+    uint8_t       value;
-+    uint8_t       padding;
-+    /* Name */
-+};
-+
-+/* --- variable authentication --------------------------------------- */
-+
-+#define WIN_CERT_TYPE_EFI_GUID  0x0EF1
-+
-+typedef struct efi_time efi_time;
-+typedef struct efi_siglist efi_siglist;
-+typedef struct variable_auth_2 variable_auth_2;
-+
-+/* EFI_TIME */
-+struct efi_time {
-+    uint16_t  year;
-+    uint8_t   month;
-+    uint8_t   day;
-+    uint8_t   hour;
-+    uint8_t   minute;
-+    uint8_t   second;
-+    uint8_t   pad1;
-+    uint32_t  nanosecond;
-+    int16_t   timezone;
-+    uint8_t   daylight;
-+    uint8_t   pad2;
-+};
-+
-+/* EFI_SIGNATURE_LIST */
-+struct efi_siglist {
-+    QemuUUID  guid_type;
-+    uint32_t  siglist_size;
-+    uint32_t  header_size;
-+    uint32_t  sig_size;
-+};
-+
-+/* EFI_VARIABLE_AUTHENTICATION_2 */
-+struct variable_auth_2 {
-+    struct efi_time timestamp;
-+
-+    /* WIN_CERTIFICATE_UEFI_GUID */
-+    uint32_t  hdr_length;
-+    uint16_t  hdr_revision;
-+    uint16_t  hdr_cert_type;
-+    QemuUUID  guid_cert_type;
-+    uint8_t   cert_data[];
-+};
-+
-+#endif /* QEMU_UEFI_VAR_SERVICE_EDK2_H */
++void uefi_trace_status(const char *action, efi_status status)
++{
++    switch (status) {
++    case EFI_SUCCESS:
++        trace_uefi_status(action, "success");
++        break;
++    case EFI_INVALID_PARAMETER:
++        trace_uefi_status(action, "invalid parameter");
++        break;
++    case EFI_UNSUPPORTED:
++        trace_uefi_status(action, "unsupported");
++        break;
++    case EFI_BAD_BUFFER_SIZE:
++        trace_uefi_status(action, "bad buffer size");
++        break;
++    case EFI_BUFFER_TOO_SMALL:
++        trace_uefi_status(action, "buffer too small");
++        break;
++    case EFI_WRITE_PROTECTED:
++        trace_uefi_status(action, "write protected");
++        break;
++    case EFI_OUT_OF_RESOURCES:
++        trace_uefi_status(action, "out of resources");
++        break;
++    case EFI_NOT_FOUND:
++        trace_uefi_status(action, "not found");
++        break;
++    case EFI_ACCESS_DENIED:
++        trace_uefi_status(action, "access denied");
++        break;
++    case EFI_ALREADY_STARTED:
++        trace_uefi_status(action, "already started");
++        break;
++    case EFI_SECURITY_VIOLATION:
++        trace_uefi_status(action, "security violation");
++        break;
++    default:
++        trace_uefi_status(action, "unknown error");
++        break;
++    }
++}
 -- 
 2.48.1
 
