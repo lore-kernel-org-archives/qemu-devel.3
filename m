@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40FAC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51833C0219D
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmoR-0004Ax-AV; Tue, 11 Feb 2025 04:44:15 -0500
+	id 1thmqF-0004u6-1O; Tue, 11 Feb 2025 04:46:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1thmoJ-0004AP-Bm
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:44:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <prvs=1301cb12a=graf@amazon.de>)
+ id 1thmq8-0004t7-Q5; Tue, 11 Feb 2025 04:46:01 -0500
+Received: from smtp-fw-9106.amazon.com ([207.171.188.206])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1thmoB-0002tt-Nl
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:44:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739267035;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lUIVWfwCgxYpe5SnNUogusMe6+DGls/H/8iwoLgmp2A=;
- b=V3GwgweQwNKTE/g5Qd8i3kH8HkXfdKToVENWxW9x58f9Ve0XaFnQtfppwO2gXwM5wq27Kj
- mvTkaGXVJ3eRExF5/8iyYJX0+bzbPwxZLJyWKc27HMxqaLC+8Y4ibAymLK1CkcphUCjCak
- EEVISHvu61gwoL2QJ2RstdheHEnFs8A=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-nOF_-rpqPoeWKIPFp8DX-A-1; Tue, 11 Feb 2025 04:43:52 -0500
-X-MC-Unique: nOF_-rpqPoeWKIPFp8DX-A-1
-X-Mimecast-MFC-AGG-ID: nOF_-rpqPoeWKIPFp8DX-A
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-e5b48736dcfso5583455276.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 01:43:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739267032; x=1739871832;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lUIVWfwCgxYpe5SnNUogusMe6+DGls/H/8iwoLgmp2A=;
- b=TxdjbQKJ4AOMvHaQfrEdfwtrYWuT0D3H2VLxak8SJFwDkhBKQ9PnNYYg4v8l+ZqrlJ
- 7fY3SHSUfuKU5FUKm3knPJiCAkK48On0OsW/30kpa6Qd/RZqs6SwSqRlb6VgPTV5jHuo
- QdkizmG+0wXv0B9Sa2bDrc6LLaD34sEX8wueNeQDyUmFw98PRMTBJGMNGiId//l/Iiuf
- W89tcqZiiW7NeVTumUXMSM0DYzvAza8XWUa6VR97r51CQ5Ixx13XdTGcpZe6kzoLhb0F
- 4tmb1J2bVK3uRUKj5bQNoxdz1h3KNpATjodRR5jYsyHRhfLxUYRkHhpqIet91l/IVijn
- TOMQ==
-X-Gm-Message-State: AOJu0YwkQyrTilPlsPqA5hul+IMM0cFwXl2Kghzr7k+HGCyvNMarC/BJ
- E+dCmEbW0+nE4pMWjw75jDJUXN/JlP3YCX8a/OTIMq+8E+2pMuUtwIFhx+/u0HrKqId44Z7wVVw
- WDLRMHaZ1Q5KijsPiDlKGngwhT74J/a9yKOHY42kiT/z26iO+i6JFhNsa5O6MX4VPkbO8sLwq7T
- AT5OWw5O9Fc8LlAWYNoTGpMEOgiSw=
-X-Gm-Gg: ASbGncumqRKcr7AsG6uyMXlbK7EJQiiqNQoLpekMKidas7Qr+T3NAjxT9O0VPrZsONf
- v/ZP4hNyWy5AOevJ/roLWYgBJ11b2tG0ux+CiDkFaYfzQ0mPDrQMAne27YgX+
-X-Received: by 2002:a05:6902:2510:b0:e5b:3af0:d4a1 with SMTP id
- 3f1490d57ef6-e5b46292777mr13911540276.40.1739267032258; 
- Tue, 11 Feb 2025 01:43:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXkbeqXuDLJoCSNeGAkY6qVgfb5wtul3KoUA2AH50NfVjVqmq3LtgudKvjkRwY9p/kUiRlhwzwYsARPvns3Fo=
-X-Received: by 2002:a05:6902:2510:b0:e5b:3af0:d4a1 with SMTP id
- 3f1490d57ef6-e5b46292777mr13911526276.40.1739267031900; Tue, 11 Feb 2025
- 01:43:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=1301cb12a=graf@amazon.de>)
+ id 1thmq6-0003GT-4L; Tue, 11 Feb 2025 04:46:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1739267158; x=1770803158;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=gIgkivdNGrQUY80zEqtwZEiGXqOVeupPAvFL7o0aGZU=;
+ b=BDbxyDCc2ehpu5hicOC5j8xnYhVGFanQtpp9QQenAA4DRxD99sKnIxvX
+ owe53HJ0UjnLuzUr8yvtVJWW0Kd5cB/o9mqsdQNp2XoSDZLurmkYRsWnP
+ XPLDT8uSaHIvufmIS6ZpZ/hIiXbqWMylZZX9B+NsMl6tS/xsvTN33qb4W A=;
+X-IronPort-AV: E=Sophos;i="6.13,277,1732579200"; d="scan'208";a="797828342"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
+ by smtp-border-fw-9106.sea19.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2025 09:45:46 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [10.0.38.20:29780]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.23.246:2525]
+ with esmtp (Farcaster)
+ id d5b01edc-a8cb-4930-a853-d26f4fca0cae; Tue, 11 Feb 2025 09:45:46 +0000 (UTC)
+X-Farcaster-Flow-ID: d5b01edc-a8cb-4930-a853-d26f4fca0cae
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Tue, 11 Feb 2025 09:45:45 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Tue, 11 Feb 2025
+ 09:45:42 +0000
+Message-ID: <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
+Date: Tue, 11 Feb 2025 10:45:40 +0100
 MIME-Version: 1.0
-References: <20250205145813.394915-1-jonah.palmer@oracle.com>
- <20250205145813.394915-5-jonah.palmer@oracle.com>
-In-Reply-To: <20250205145813.394915-5-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 11 Feb 2025 10:43:15 +0100
-X-Gm-Features: AWEUYZky5nccyiLv-Wc7lKiQK3vm6SQma9FJD5FF7dO_6qu9QFd2kkgQk8k3ij8
-Message-ID: <CAJaqyWc1FFS76CFknaxjcWbECzUNopNxUY7SVkufVR=nHBvkfg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] vhost-iova-tree: Update documentation
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com, 
- peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
+To: Gerd Hoffmann <kraxel@redhat.com>, <qemu-devel@nongnu.org>
+CC: Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ <qemu-arm@nongnu.org>, Michael Roth <michael.roth@amd.com>, Markus Armbruster
+ <armbru@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ard Biesheuvel <ardb@kernel.org>
+References: <20250211092324.965440-1-kraxel@redhat.com>
+ <20250211092324.965440-10-kraxel@redhat.com>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <20250211092324.965440-10-kraxel@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D036UWC001.ant.amazon.com (10.13.139.233) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=207.171.188.206;
+ envelope-from=prvs=1301cb12a=graf@amazon.de; helo=smtp-fw-9106.amazon.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,102 +95,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 5, 2025 at 3:58=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
+
+On 11.02.25 10:23, Gerd Hoffmann wrote:
+> This is the core code for guest <-> host communication.  This accepts
+> request messages from the guest, dispatches them to the service called,
+> and sends back the response message.
 >
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-Thanks!
-
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->  hw/virtio/vhost-iova-tree.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+>   hw/uefi/var-service-core.c | 237 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 237 insertions(+)
+>   create mode 100644 hw/uefi/var-service-core.c
 >
-> diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
-> index 9d2d6a7af2..fa4147b773 100644
-> --- a/hw/virtio/vhost-iova-tree.c
-> +++ b/hw/virtio/vhost-iova-tree.c
-> @@ -37,9 +37,9 @@ struct VhostIOVATree {
->  };
->
->  /**
-> - * Create a new IOVA tree
-> + * Create a new VhostIOVATree
->   *
-> - * Returns the new IOVA tree
-> + * Returns the new VhostIOVATree.
->   */
->  VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
->  {
-> @@ -56,7 +56,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, h=
-waddr iova_last)
->  }
->
->  /**
-> - * Delete an iova tree
-> + * Delete a VhostIOVATree
->   */
->  void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
->  {
-> @@ -69,10 +69,10 @@ void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
->  /**
->   * Find the IOVA address stored from a memory address
->   *
-> - * @tree: The iova tree
-> + * @tree: The VhostIOVATree
->   * @map: The map with the memory address
->   *
-> - * Return the stored mapping, or NULL if not found.
-> + * Returns the stored IOVA->HVA mapping, or NULL if not found.
->   */
->  const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *tree,
->                                          const DMAMap *map)
-> @@ -81,10 +81,10 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIO=
-VATree *tree,
->  }
->
->  /**
-> - * Allocate a new mapping
-> + * Allocate a new IOVA range and add the mapping to the IOVA->HVA tree
->   *
-> - * @tree: The iova tree
-> - * @map: The iova map
-> + * @tree: The VhostIOVATree
-> + * @map: The IOVA mapping
->   * @taddr: The translated address (HVA)
->   *
->   * Returns:
-> @@ -92,7 +92,7 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVA=
-Tree *tree,
->   * - IOVA_ERR_INVALID if the map does not make sense (like size overflow=
-)
->   * - IOVA_ERR_NOMEM if tree cannot allocate more space.
->   *
-> - * It returns assignated iova in map->iova if return value is VHOST_DMA_=
-MAP_OK.
-> + * It returns an assigned IOVA in map->iova if the return value is IOVA_=
-OK.
->   */
->  int vhost_iova_tree_map_alloc(VhostIOVATree *tree, DMAMap *map, hwaddr t=
-addr)
->  {
-> @@ -117,9 +117,9 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *tree, DM=
-AMap *map, hwaddr taddr)
->  }
->
->  /**
-> - * Remove existing mappings from iova tree
-> + * Remove existing mappings from the IOVA-only and IOVA->HVA trees
->   *
-> - * @iova_tree: The vhost iova tree
-> + * @iova_tree: The VhostIOVATree
->   * @map: The map to remove
->   */
->  void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map)
-> --
-> 2.43.5
->
+> diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+> new file mode 100644
+> index 000000000000..78a668e68fa2
+> --- /dev/null
+> +++ b/hw/uefi/var-service-core.c
+> @@ -0,0 +1,237 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * uefi vars device
+> + */
+> +#include "qemu/osdep.h"
+> +#include "system/dma.h"
+> +#include "migration/vmstate.h"
+> +
+> +#include "hw/uefi/var-service.h"
+> +#include "hw/uefi/var-service-api.h"
+> +#include "hw/uefi/var-service-edk2.h"
+> +
+> +#include "trace/trace-hw_uefi.h"
+> +
+> +static int uefi_vars_pre_load(void *opaque)
+> +{
+> +    uefi_vars_state *uv = opaque;
+> +
+> +    uefi_vars_clear_all(uv);
+> +    uefi_vars_policies_clear(uv);
+> +    g_free(uv->buffer);
+> +    return 0;
+> +}
+> +
+> +static int uefi_vars_post_load(void *opaque, int version_id)
+> +{
+> +    uefi_vars_state *uv = opaque;
+> +
+> +    uefi_vars_update_storage(uv);
+> +    uv->buffer = g_malloc(uv->buf_size);
+> +    return 0;
+> +}
+> +
+> +const VMStateDescription vmstate_uefi_vars = {
+> +    .name = "uefi-vars",
+> +    .pre_load = uefi_vars_pre_load,
+> +    .post_load = uefi_vars_post_load,
+> +    .fields = (VMStateField[]) {
+> +        VMSTATE_UINT16(sts, uefi_vars_state),
+> +        VMSTATE_UINT32(buf_size, uefi_vars_state),
+> +        VMSTATE_UINT32(buf_addr_lo, uefi_vars_state),
+> +        VMSTATE_UINT32(buf_addr_hi, uefi_vars_state),
+> +        VMSTATE_BOOL(end_of_dxe, uefi_vars_state),
+> +        VMSTATE_BOOL(ready_to_boot, uefi_vars_state),
+> +        VMSTATE_BOOL(exit_boot_service, uefi_vars_state),
+> +        VMSTATE_BOOL(policy_locked, uefi_vars_state),
+> +        VMSTATE_UINT64(used_storage, uefi_vars_state),
+> +        VMSTATE_QTAILQ_V(variables, uefi_vars_state, 0,
+> +                         vmstate_uefi_variable, uefi_variable, next),
+> +        VMSTATE_QTAILQ_V(var_policies, uefi_vars_state, 0,
+> +                         vmstate_uefi_var_policy, uefi_var_policy, next),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static uint32_t uefi_vars_cmd_mm(uefi_vars_state *uv)
+> +{
+> +    hwaddr    dma;
+> +    mm_header *mhdr;
+> +    uint64_t  size;
+> +    uint32_t  retval;
+> +
+> +    dma = uv->buf_addr_lo | ((hwaddr)uv->buf_addr_hi << 32);
+> +    mhdr = (mm_header *) uv->buffer;
+> +
+> +    if (!uv->buffer || uv->buf_size < sizeof(*mhdr)) {
+> +        return UEFI_VARS_STS_ERR_BAD_BUFFER_SIZE;
+> +    }
+> +
+> +    /* read header */
+> +    dma_memory_read(&address_space_memory, dma,
+> +                    uv->buffer, sizeof(*mhdr),
+> +                    MEMTXATTRS_UNSPECIFIED);
+
+
+Depending on DMA sounds appealing at first, but can fall apart in corner 
+cases. I know of 2 cases where DMA failed for me in the EC2 equivalent 
+of this:
+
+1) SEV-SNP. If you want the hypervisor to implement UEFI variable 
+services for you, the buffer region must always be in shared state. 
+Ensuring that during boot time is tricky but doable. At runtime you no 
+longer really have control over the sharability of pages.
+
+2) Mac OS X. MacOS is the only OS I'm aware of that really makes use of 
+relocation. They move your physical pages to random locations, give you 
+a non-1:1 mapping to that and once you're in real OS land, you have no 
+more knowledge at all about the physical location of anything. Maybe you 
+can work around that by declaring the buffer region as MMIO space? But 
+then it really should be a memory region in the device.
+
+
+To address the 2 cases above, I ended up implementing a special "PIO 
+mode" which does not rely on DMA at all:
+
+https://github.com/aws/uefi/blob/main/edk2-stable202211/0023-edk2-stable202211-ExtVarStore-Add-support-for-PIO-transfer.patch
+
+Also, I'm surprised you cut the variable service off at the SMM boundary 
+instead of the RTS callback boundary. Why is that cleaner/better than 
+implementing variables completely in QEMU? In the EC2 version, we just 
+built a separate variable store implementation that completely replaces 
+the edk2 variable store:
+
+https://github.com/aws/uefi/blob/main/edk2-stable202211/0012-edk2-stable202211-nitro-Add-ExtVarStore-for-vmm-based-variable-storage.patch
+
+It would be nice to agree on a single external variable store 
+implementation :).
+
+
+Alex
 
 
