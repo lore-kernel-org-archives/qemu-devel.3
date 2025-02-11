@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9E7C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F92C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thstS-0002xg-UR; Tue, 11 Feb 2025 11:13:51 -0500
+	id 1thsw1-0004IW-Ta; Tue, 11 Feb 2025 11:16:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thstI-0002xG-CA
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:13:40 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1thsvz-0004ID-CM
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:16:27 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thstG-0000yF-4e
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:13:39 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38dc5764fc0so4390780f8f.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:13:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1thsvw-0001ca-Qd
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:16:27 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21f4a4fbb35so79099905ad.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:16:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739290416; x=1739895216; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739290583; x=1739895383; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KGqldNwFIhB9ujlMAnc3Z8kCs6IlQj3MKUbPAMTaMxA=;
- b=tEVXqIJOyYMfp3xJweajvr1Q+yBGxQF+vYxkCHxkGmSdpUhzmTpsIZW0IGgRdODHv9
- lj+CALujd7PoH3d98nd/LYMTE2ASSNRjZNRBY8m6DZB/cyVQFiT+QgIQ2BKmDND27pVP
- A7JQrttfyGNOI99counYWPTm0bliHFl+nbvKIGZPe14nJy5ytOjfHRgFXECjb70S0zld
- tjMTGXvdDDIx3elv8lQ0E7CewL31OS0sFeOdqwSLzj+A+AscVGzda+q6M5kjAmJnNtAc
- P9wMnuoibTwB5wqAGW679+wkmvs088WRnypW39Pepk9HXHJt05+ZESScSVpO63aMUXDC
- t2jg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/ERff0xWZfxlF/0xWLRDxv5LxieGRps4Aa07IyWuMxE=;
+ b=LsctmACEdY9ZAO9PI3zE1wQXyljcK6EoHePC7ycZFcShq0lf7J3qfgK+NbfF41jLQs
+ AvWIJulB6ImvisTYxeFoiuMwaq86ma/QBrlen/je3E9UlWDVYme/6/p64zbVJyoqVUd+
+ 76ei0A3aK1vdS0kIOWpJQSbpYiPaObas/XuWcOgk6tXfK9J9H2Domol5v6/bfy2Hg8+U
+ IkxzR1wTcQ3G/nweQkpky+zmS6vEtEia29ExZ5a1/9kRfV+Hzz8neQ1O2Z00k08BXi6M
+ 360Pm6AxnJwi5/S0sZH7+Pn+nop/+qXfuzAD7xnA17toeucRVJeABqJ2TIrrF2kjdRd2
+ 74cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739290416; x=1739895216;
+ d=1e100.net; s=20230601; t=1739290583; x=1739895383;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KGqldNwFIhB9ujlMAnc3Z8kCs6IlQj3MKUbPAMTaMxA=;
- b=W22IUlob8gPuJ+/YodPHEnnq+jBeLLiY5fy4v3ryy9/zAqrZDTxhcpZSykmmp+EZik
- fSE+2eEHeADReNGqE94JpIJFFrmET8sB+TG/wVMq1in9k3bPIaK9qY/FzoL/vObAK9BJ
- PaHsi7rfc+OZ1XlZZ6Ow4vQxIA/Ocr9ANys2yYKE2Qgpkn1lJQ3dqs/Qw3mjLwJ5aBI7
- ba29x2SrUEQFa96li+f4TiscMziayjDcYc6zZEd7/9QvibYgOKMtjdRh6XXXglE18iRR
- 3x39py2qAmb7WMeCbZHahUO2EtWtbnF4Q35jpLtxCSXiH5i3XKP1Xt3ODfCad87MQPrz
- qrSg==
+ bh=/ERff0xWZfxlF/0xWLRDxv5LxieGRps4Aa07IyWuMxE=;
+ b=M3TvOEZNXVgEoiD4zxYv5MgBLE25lkpp9RiKwaubnFChr6WZuG2XIGGhr9v8v/uWZ4
+ 9pOx1Kzcaq09qDDy8N00x3xQwYzMfTQZ+923VSnXrplqqXe3xi+GSc4j/euRgmRTm5+6
+ NXWEfuMZnyeESZBvAOIFOY7+zQoiOhf6/B8IeNz80hMI2vNb4Xf8zsuQgCDZsj03Q6rT
+ xktSTJcQ3Pwh31WbWHPSAWFj45HKQeBJrEhNlxIm45uZQvPJgfqdgn2N06/qFb24eMVi
+ 6R21dw2RpweGyEhmlRQGw9WIv0TJkLegubgubQ0d+jPHpIeOAdg+xSykB8WbWZaHrlBv
+ 83dA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhGsuDPBeeTdW0IdpYN3GzIhBaOQCzkzRodS+SmHz13XXvMLJ7Zkerix/+IX/top01QIIMFv7FS/5q@nongnu.org
-X-Gm-Message-State: AOJu0YwMuXrlV8XEr7uslx28I27v8GLxrleyGbX47fiDhOEo0LwMKObQ
- AHHDIK2rFx2xBEhStaixN6QAiNGroum3HGTpzY6SbQsouCH1/YWYSUl3Nlylbzq+VnpPbuNzvId
- Q++E=
-X-Gm-Gg: ASbGncvBcdGPNF672cX6QLgeThVmmH4dP4NQJ950iw0KTidIGDqRAt36QbPAuARNhAc
- YDQehaZnXFFpz1MUV8QfL3W7sfp8VxqJOhhHOLwoTGdSpQf7G/c6mZSTZk0IL4eEiMjSyswQL6b
- arv+0A+p6wW5ImjL0d0Ckmg8h+/7lYbZ+Gi9ebLGhj/psHt6bPUAucNEYI2uwfBJeV5hrAZYBY8
- 9pHXyKjQ2nHey0EdSuMsyfvqA0Bu2PYQDaaX5kpu9YyuhYOvfmlZ/fCyD37GGiKrZKhKi6tVDI2
- ZHTjQxiyF3fRCql1lo+LjOQK1DjMticwojNtJyHs0S0A4E91CLJIBkeUEjM=
-X-Google-Smtp-Source: AGHT+IGNnndkADTnd17pddj65BXNiFC0Cu37B+sUdXggpeN+Q9zLNom4gOLNeyuEMZs5t+H0Ep6Xow==
-X-Received: by 2002:a5d:4c4e:0:b0:38d:d603:ff3e with SMTP id
- ffacd0b85a97d-38de9280c11mr319502f8f.21.1739290415699; 
- Tue, 11 Feb 2025 08:13:35 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43935c4f4aasm108896115e9.22.2025.02.11.08.13.34
+ AJvYcCXZ0jyBUoys0ahm6co4P8dRYzIraQ2YnautcocOxl2zv7ertHaQBcfdXuqh4xP1o73GsNpwbmiYR4dH@nongnu.org
+X-Gm-Message-State: AOJu0YwusjlVExgR/FcR6TlsMGJKzLQsvok2yXn6mXi6GvTfdikTA8Hm
+ TML7pJuhNBVUlUfZ5Zz3EaDgVhkfL5iO+9XWRwjN5sGiKDWvxzyBVLX5p9xvDNo=
+X-Gm-Gg: ASbGncvxUj4TKgsMg691Y5IRmey95WnjjUWxMme3pqiLwa9ZzKOM6cCVHpKx/V1m8Hc
+ 2utsIw0EO6Ims65oSvPSSaeo6P7AIrhYLLljEM/q++r3xQiehHSSOLBJuWiqhKWKRMR5/leqMPS
+ Frw7JGJnBWS9mDIhs5lWkRim8oQqoLzur8HRNj454hWxVAiGPzFcrpuveyBRl3O0wGlWPVjsnQx
+ jE4lbCItMn7Ksiob/+p1OLvH8KT6ZO+Qg7USlQnY7tA5snPwyqKvicWlkl6x2ixAquzuzXeHBG6
+ GokLQqKprr1R61gBZ2aA4jBRmaeoqMTE7S4n91fEwq1Vxsmz8pEqNRQ=
+X-Google-Smtp-Source: AGHT+IHxJfypVXZA3ee7yn4gX6zhuNH5TNStgv2z0DlNg8bAl9gJaNVyn03Vm+dOC2FgUE4MKcLKPw==
+X-Received: by 2002:a17:902:f68c:b0:215:a303:24e9 with SMTP id
+ d9443c01a7336-21fb6c026b3mr53496605ad.3.1739290582820; 
+ Tue, 11 Feb 2025 08:16:22 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f36535f0fsm98349075ad.56.2025.02.11.08.16.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 08:13:35 -0800 (PST)
-Message-ID: <97794727-4298-4770-bb86-c66bda7605ca@linaro.org>
-Date: Tue, 11 Feb 2025 17:13:34 +0100
+ Tue, 11 Feb 2025 08:16:22 -0800 (PST)
+Message-ID: <782799f1-1ec6-4ac3-aa55-6a2a769fcaf3@linaro.org>
+Date: Tue, 11 Feb 2025 08:16:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] target/alpha: Don't corrupt error_code with unknown
  softfloat flags
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
 References: <20250211130626.3940412-1-peter.maydell@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 In-Reply-To: <20250211130626.3940412-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,7 +102,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/2/25 14:06, Peter Maydell wrote:
+On 2/11/25 05:06, Peter Maydell wrote:
 > In do_cvttq() we set env->error_code with what is supposed to be a
 > set of FPCR exception bit values.  However, if the set of float
 > exception flags we get back from softfloat for the conversion
@@ -142,50 +142,11 @@ On 11/2/25 14:06, Peter Maydell wrote:
 >       }
 >       env->error_code = exc;
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-But (pre-existing) it would be clearer to not use the same variable
-for 2 distinct things. As a preliminary cleanup:
+And I think there's a case for
+Fixes: aa3bad5b59e7 ("target/alpha: Use float64_to_int64_modulo for CVTTQ")
 
--- >8 --
-diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
-index 63d9e9ce39c..d1a17b71423 100644
---- a/target/alpha/fpu_helper.c
-+++ b/target/alpha/fpu_helper.c
-@@ -455,26 +455,27 @@ static uint64_t do_cvttq(CPUAlphaState *env, 
-uint64_t a, int roundmode)
-  {
-      float64 fa;
-      int64_t ret;
--    uint32_t exc;
-+    uint32_t exc = 0;
-+    int flags;
 
-      fa = t_to_float64(a);
-      ret = float64_to_int64_modulo(fa, roundmode, &FP_STATUS);
-
--    exc = get_float_exception_flags(&FP_STATUS);
--    if (unlikely(exc)) {
-+    flags = get_float_exception_flags(&FP_STATUS);
-+    if (unlikely(flags)) {
-          set_float_exception_flags(0, &FP_STATUS);
-
-          /* We need to massage the resulting exceptions. */
--        if (exc & float_flag_invalid_cvti) {
-+        if (flags & float_flag_invalid_cvti) {
-              /* Overflow, either normal or infinity. */
-              if (float64_is_infinity(fa)) {
-                  exc = FPCR_INV;
-              } else {
-                  exc = FPCR_IOV | FPCR_INE;
-              }
--        } else if (exc & float_flag_invalid) {
-+        } else if (flags & float_flag_invalid) {
-              exc = FPCR_INV;
--        } else if (exc & float_flag_inexact) {
-+        } else if (flags & float_flag_inexact) {
-              exc = FPCR_INE;
-          }
-      }
----
+r~
 
