@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D26C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E415BC021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmUk-0002D4-3k; Tue, 11 Feb 2025 04:23:57 -0500
+	id 1thmUZ-00022o-5U; Tue, 11 Feb 2025 04:23:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUZ-00023C-AB
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:43 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUX-0001zs-M9
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUX-0002y5-1U
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:43 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUU-0002xN-Hm
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739265820;
+ s=mimecast20190719; t=1739265817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ae3RfQDslfS0/+8r8eChjkfDFE+d3A19Q0XLW28/4XI=;
- b=NOEtnwzfVZQLExDmw93wu0aSXflRGtaO8ai6P+S8ODnA3BzZTsnPbdI5vTZRghoV+8RUqa
- L6ARPq68Q6BE8alX4ORblgcQeJ0E9y2of/hLuQJPG+FVXHDcbHtfMcJNIxMJl4W68oksiv
- qrqDxovfq3u40vtvy+vTWJmMqUVPv34=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=UcwzD9Z63x96h1sI6W/9y2W4Vf+j646dhLH7hNWWdtg=;
+ b=VuKFy3p4H6CIWlieOpOnc/vqBpIa9RxYY4RrdC6Y0x4LzClxiQYSpN7gJFPNSCm0HF0hgL
+ BbFD6dmYehmn4ROwzjV1lrHY3vb7RmFuF1KuC7PrrVW4VtE92d12c8tbxGJHHeQGr/COPy
+ 5ztk0frnIjbXaUAOoizQx1sf0N3J7mk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-LDOo18xPMBW2TeM8dJWlkA-1; Tue,
- 11 Feb 2025 04:23:37 -0500
-X-MC-Unique: LDOo18xPMBW2TeM8dJWlkA-1
-X-Mimecast-MFC-AGG-ID: LDOo18xPMBW2TeM8dJWlkA
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-XLOUSeq5Mw-k2KGyvqkEVQ-1; Tue,
+ 11 Feb 2025 04:23:34 -0500
+X-MC-Unique: XLOUSeq5Mw-k2KGyvqkEVQ-1
+X-Mimecast-MFC-AGG-ID: XLOUSeq5Mw-k2KGyvqkEVQ
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3C3A1956094; Tue, 11 Feb 2025 09:23:35 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E59801800876; Tue, 11 Feb 2025 09:23:32 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.57])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4825919560A3; Tue, 11 Feb 2025 09:23:35 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4DEF91800358; Tue, 11 Feb 2025 09:23:31 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id B7D801800390; Tue, 11 Feb 2025 10:23:24 +0100 (CET)
+ id 986D51800381; Tue, 11 Feb 2025 10:23:24 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
@@ -59,14 +59,14 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH v3 04/23] hw/uefi: add var-service-guid.c
-Date: Tue, 11 Feb 2025 10:23:02 +0100
-Message-ID: <20250211092324.965440-5-kraxel@redhat.com>
+Subject: [PATCH v3 02/23] hw/uefi: add include/hw/uefi/var-service-edk2.h
+Date: Tue, 11 Feb 2025 10:23:00 +0100
+Message-ID: <20250211092324.965440-3-kraxel@redhat.com>
 In-Reply-To: <20250211092324.965440-1-kraxel@redhat.com>
 References: <20250211092324.965440-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
@@ -92,119 +92,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add variables for a bunch of UEFI GUIDs we will need.
+A bunch of #defines and structs copied over from edk2,
+mostly needed to decode and encode the messages in the
+communication buffer.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/uefi/var-service-guid.c | 99 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
- create mode 100644 hw/uefi/var-service-guid.c
+ include/hw/uefi/var-service-edk2.h | 227 +++++++++++++++++++++++++++++
+ 1 file changed, 227 insertions(+)
+ create mode 100644 include/hw/uefi/var-service-edk2.h
 
-diff --git a/hw/uefi/var-service-guid.c b/hw/uefi/var-service-guid.c
+diff --git a/include/hw/uefi/var-service-edk2.h b/include/hw/uefi/var-service-edk2.h
 new file mode 100644
-index 000000000000..eba3655c8d30
+index 000000000000..c743a8df948d
 --- /dev/null
-+++ b/hw/uefi/var-service-guid.c
-@@ -0,0 +1,99 @@
++++ b/include/hw/uefi/var-service-edk2.h
+@@ -0,0 +1,227 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * uefi vars device - GUIDs
++ * uefi-vars device - structs and defines from edk2
++ *
++ * Note: The edk2 UINTN type has been mapped to uint64_t,
++ *       so the structs are compatible with 64bit edk2 builds.
 + */
++#ifndef QEMU_UEFI_VAR_SERVICE_EDK2_H
++#define QEMU_UEFI_VAR_SERVICE_EDK2_H
 +
-+#include "qemu/osdep.h"
-+#include "system/dma.h"
++#include "qemu/uuid.h"
 +
-+#include "hw/uefi/var-service.h"
++#define MAX_BIT                   0x8000000000000000ULL
++#define ENCODE_ERROR(StatusCode)  (MAX_BIT | (StatusCode))
++#define EFI_SUCCESS               0
++#define EFI_INVALID_PARAMETER     ENCODE_ERROR(2)
++#define EFI_UNSUPPORTED           ENCODE_ERROR(3)
++#define EFI_BAD_BUFFER_SIZE       ENCODE_ERROR(4)
++#define EFI_BUFFER_TOO_SMALL      ENCODE_ERROR(5)
++#define EFI_WRITE_PROTECTED       ENCODE_ERROR(8)
++#define EFI_OUT_OF_RESOURCES      ENCODE_ERROR(9)
++#define EFI_NOT_FOUND             ENCODE_ERROR(14)
++#define EFI_ACCESS_DENIED         ENCODE_ERROR(15)
++#define EFI_ALREADY_STARTED       ENCODE_ERROR(20)
++#define EFI_SECURITY_VIOLATION    ENCODE_ERROR(26)
 +
-+/* variable namespaces */
++#define EFI_VARIABLE_NON_VOLATILE                           0x01
++#define EFI_VARIABLE_BOOTSERVICE_ACCESS                     0x02
++#define EFI_VARIABLE_RUNTIME_ACCESS                         0x04
++#define EFI_VARIABLE_HARDWARE_ERROR_RECORD                  0x08
++#define EFI_VARIABLE_AUTHENTICATED_WRITE_ACCESS             0x10  /* deprecated */
++#define EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS  0x20
++#define EFI_VARIABLE_APPEND_WRITE                           0x40
 +
-+const QemuUUID EfiGlobalVariable = {
-+    .data = UUID_LE(0x8be4df61, 0x93ca, 0x11d2, 0xaa, 0x0d,
-+                    0x00, 0xe0, 0x98, 0x03, 0x2b, 0x8c)
++/* SecureBootEnable */
++#define SECURE_BOOT_ENABLE         1
++#define SECURE_BOOT_DISABLE        0
++
++/* SecureBoot */
++#define SECURE_BOOT_MODE_ENABLE    1
++#define SECURE_BOOT_MODE_DISABLE   0
++
++/* CustomMode */
++#define CUSTOM_SECURE_BOOT_MODE    1
++#define STANDARD_SECURE_BOOT_MODE  0
++
++/* SetupMode */
++#define SETUP_MODE                 1
++#define USER_MODE                  0
++
++typedef uint64_t efi_status;
++typedef struct mm_header mm_header;
++
++/* EFI_MM_COMMUNICATE_HEADER */
++struct mm_header {
++    QemuUUID  guid;
++    uint64_t  length;
 +};
 +
-+const QemuUUID EfiImageSecurityDatabase = {
-+    .data = UUID_LE(0xd719b2cb, 0x3d3a, 0x4596, 0xa3, 0xbc,
-+                    0xda, 0xd0, 0x0e, 0x67, 0x65, 0x6f)
++/* --- EfiSmmVariableProtocol ---------------------------------------- */
++
++#define SMM_VARIABLE_FUNCTION_GET_VARIABLE            1
++#define SMM_VARIABLE_FUNCTION_GET_NEXT_VARIABLE_NAME  2
++#define SMM_VARIABLE_FUNCTION_SET_VARIABLE            3
++#define SMM_VARIABLE_FUNCTION_QUERY_VARIABLE_INFO     4
++#define SMM_VARIABLE_FUNCTION_READY_TO_BOOT           5
++#define SMM_VARIABLE_FUNCTION_EXIT_BOOT_SERVICE       6
++#define SMM_VARIABLE_FUNCTION_LOCK_VARIABLE           8
++#define SMM_VARIABLE_FUNCTION_GET_PAYLOAD_SIZE       11
++
++typedef struct mm_variable mm_variable;
++typedef struct mm_variable_access mm_variable_access;
++typedef struct mm_next_variable mm_next_variable;
++typedef struct mm_next_variable mm_lock_variable;
++typedef struct mm_variable_info mm_variable_info;
++typedef struct mm_get_payload_size mm_get_payload_size;
++
++/* SMM_VARIABLE_COMMUNICATE_HEADER */
++struct mm_variable {
++    uint64_t  function;
++    uint64_t  status;
 +};
 +
-+const QemuUUID EfiCustomModeEnable = {
-+    .data = UUID_LE(0xc076ec0c, 0x7028, 0x4399, 0xa0, 0x72,
-+                    0x71, 0xee, 0x5c, 0x44, 0x8b, 0x9f)
++/* SMM_VARIABLE_COMMUNICATE_ACCESS_VARIABLE */
++struct QEMU_PACKED mm_variable_access {
++    QemuUUID  guid;
++    uint64_t  data_size;
++    uint64_t  name_size;
++    uint32_t  attributes;
++    /* Name */
++    /* Data */
 +};
 +
-+const QemuUUID EfiSecureBootEnableDisable = {
-+    .data = UUID_LE(0xf0a30bc7, 0xaf08, 0x4556, 0x99, 0xc4,
-+                    0x0, 0x10, 0x9, 0xc9, 0x3a, 0x44)
++/* SMM_VARIABLE_COMMUNICATE_GET_NEXT_VARIABLE_NAME */
++struct mm_next_variable {
++    QemuUUID  guid;
++    uint64_t  name_size;
++    /* Name */
 +};
 +
-+/* signatures */
-+
-+const QemuUUID EfiCertSha256Guid = {
-+    .data = UUID_LE(0xc1c41626, 0x504c, 0x4092, 0xac, 0xa9,
-+                    0x41, 0xf9, 0x36, 0x93, 0x43, 0x28)
++/* SMM_VARIABLE_COMMUNICATE_QUERY_VARIABLE_INFO */
++struct QEMU_PACKED mm_variable_info {
++    uint64_t max_storage_size;
++    uint64_t free_storage_size;
++    uint64_t max_variable_size;
++    uint32_t attributes;
 +};
 +
-+const QemuUUID EfiCertSha384Guid = {
-+    .data = UUID_LE(0xff3e5307, 0x9fd0, 0x48c9, 0x85, 0xf1,
-+                    0x8a, 0xd5, 0x6c, 0x70, 0x1e, 0x1)
++/* SMM_VARIABLE_COMMUNICATE_GET_PAYLOAD_SIZE */
++struct mm_get_payload_size {
++    uint64_t  payload_size;
 +};
 +
-+const QemuUUID EfiCertSha512Guid = {
-+    .data = UUID_LE(0x93e0fae, 0xa6c4, 0x4f50, 0x9f, 0x1b,
-+                    0xd4, 0x1e, 0x2b, 0x89, 0xc1, 0x9a)
++/* --- VarCheckPolicyLibMmiHandler ----------------------------------- */
++
++#define VAR_CHECK_POLICY_COMMAND_DISABLE     0x01
++#define VAR_CHECK_POLICY_COMMAND_IS_ENABLED  0x02
++#define VAR_CHECK_POLICY_COMMAND_REGISTER    0x03
++#define VAR_CHECK_POLICY_COMMAND_DUMP        0x04
++#define VAR_CHECK_POLICY_COMMAND_LOCK        0x05
++
++typedef struct mm_check_policy mm_check_policy;
++typedef struct mm_check_policy_is_enabled mm_check_policy_is_enabled;
++typedef struct mm_check_policy_dump_params mm_check_policy_dump_params;
++
++/* VAR_CHECK_POLICY_COMM_HEADER */
++struct QEMU_PACKED mm_check_policy {
++    uint32_t  signature;
++    uint32_t  revision;
++    uint32_t  command;
++    uint64_t  result;
 +};
 +
-+const QemuUUID EfiCertRsa2048Guid = {
-+    .data = UUID_LE(0x3c5766e8, 0x269c, 0x4e34, 0xaa, 0x14,
-+                    0xed, 0x77, 0x6e, 0x85, 0xb3, 0xb6)
++/* VAR_CHECK_POLICY_COMM_IS_ENABLED_PARAMS */
++struct QEMU_PACKED mm_check_policy_is_enabled {
++    uint8_t   state;
 +};
 +
-+const QemuUUID EfiCertX509Guid = {
-+    .data = UUID_LE(0xa5c059a1, 0x94e4, 0x4aa7, 0x87, 0xb5,
-+                    0xab, 0x15, 0x5c, 0x2b, 0xf0, 0x72)
++/* VAR_CHECK_POLICY_COMM_DUMP_PARAMS */
++struct QEMU_PACKED mm_check_policy_dump_params {
++    uint32_t  page_requested;
++    uint32_t  total_size;
++    uint32_t  page_size;
++    uint8_t   has_more;
 +};
 +
-+const QemuUUID EfiCertTypePkcs7Guid = {
-+    .data = UUID_LE(0x4aafd29d, 0x68df, 0x49ee, 0x8a, 0xa9,
-+                    0x34, 0x7d, 0x37, 0x56, 0x65, 0xa7)
++/* --- Edk2VariablePolicyProtocol ------------------------------------ */
++
++#define VARIABLE_POLICY_ENTRY_REVISION  0x00010000
++
++#define VARIABLE_POLICY_TYPE_NO_LOCK            0
++#define VARIABLE_POLICY_TYPE_LOCK_NOW           1
++#define VARIABLE_POLICY_TYPE_LOCK_ON_CREATE     2
++#define VARIABLE_POLICY_TYPE_LOCK_ON_VAR_STATE  3
++
++typedef struct variable_policy_entry variable_policy_entry;
++typedef struct variable_lock_on_var_state variable_lock_on_var_state;
++
++/* VARIABLE_POLICY_ENTRY */
++struct variable_policy_entry {
++    uint32_t      version;
++    uint16_t      size;
++    uint16_t      offset_to_name;
++    QemuUUID      namespace;
++    uint32_t      min_size;
++    uint32_t      max_size;
++    uint32_t      attributes_must_have;
++    uint32_t      attributes_cant_have;
++    uint8_t       lock_policy_type;
++    uint8_t       padding[3];
++    /* LockPolicy */
++    /* Name */
 +};
 +
-+/*
-+ * mm_header.guid values that the guest DXE/BDS phases use for
-+ * sending requests to management mode
-+ */
-+
-+const QemuUUID EfiSmmVariableProtocolGuid = {
-+    .data = UUID_LE(0xed32d533, 0x99e6, 0x4209, 0x9c, 0xc0,
-+                    0x2d, 0x72, 0xcd, 0xd9, 0x98, 0xa7)
++/* VARIABLE_LOCK_ON_VAR_STATE_POLICY */
++struct variable_lock_on_var_state {
++    QemuUUID      namespace;
++    uint8_t       value;
++    uint8_t       padding;
++    /* Name */
 +};
 +
-+const QemuUUID VarCheckPolicyLibMmiHandlerGuid = {
-+    .data = UUID_LE(0xda1b0d11, 0xd1a7, 0x46c4, 0x9d, 0xc9,
-+                    0xf3, 0x71, 0x48, 0x75, 0xc6, 0xeb)
++/* --- variable authentication --------------------------------------- */
++
++#define WIN_CERT_TYPE_EFI_GUID  0x0EF1
++
++typedef struct efi_time efi_time;
++typedef struct efi_siglist efi_siglist;
++typedef struct variable_auth_2 variable_auth_2;
++
++/* EFI_TIME */
++struct efi_time {
++    uint16_t  year;
++    uint8_t   month;
++    uint8_t   day;
++    uint8_t   hour;
++    uint8_t   minute;
++    uint8_t   second;
++    uint8_t   pad1;
++    uint32_t  nanosecond;
++    int16_t   timezone;
++    uint8_t   daylight;
++    uint8_t   pad2;
 +};
 +
-+/*
-+ * mm_header.guid values that the guest DXE/BDS phases use for
-+ * reporting event groups being signaled to management mode
-+ */
-+
-+const QemuUUID EfiEndOfDxeEventGroupGuid = {
-+    .data = UUID_LE(0x02ce967a, 0xdd7e, 0x4FFc, 0x9e, 0xe7,
-+                    0x81, 0x0c, 0xF0, 0x47, 0x08, 0x80)
++/* EFI_SIGNATURE_LIST */
++struct efi_siglist {
++    QemuUUID  guid_type;
++    uint32_t  siglist_size;
++    uint32_t  header_size;
++    uint32_t  sig_size;
 +};
 +
-+const QemuUUID EfiEventReadyToBootGuid = {
-+    .data = UUID_LE(0x7ce88Fb3, 0x4bd7, 0x4679, 0x87, 0xa8,
-+                    0xa8, 0xd8, 0xde, 0xe5, 0x0d, 0x2b)
++/* EFI_VARIABLE_AUTHENTICATION_2 */
++struct variable_auth_2 {
++    struct efi_time timestamp;
++
++    /* WIN_CERTIFICATE_UEFI_GUID */
++    uint32_t  hdr_length;
++    uint16_t  hdr_revision;
++    uint16_t  hdr_cert_type;
++    QemuUUID  guid_cert_type;
++    uint8_t   cert_data[];
 +};
 +
-+const QemuUUID EfiEventExitBootServicesGuid = {
-+    .data = UUID_LE(0x27abF055, 0xb1b8, 0x4c26, 0x80, 0x48,
-+                    0x74, 0x8F, 0x37, 0xba, 0xa2, 0xdF)
-+};
++#endif /* QEMU_UEFI_VAR_SERVICE_EDK2_H */
 -- 
 2.48.1
 
