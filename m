@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14533C021A1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40FAC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmV7-000320-AH; Tue, 11 Feb 2025 04:24:17 -0500
+	id 1thmoR-0004Ax-AV; Tue, 11 Feb 2025 04:44:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUn-0002EN-WE
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:24:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1thmoJ-0004AP-Bm
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:44:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUl-000331-C1
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:57 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1thmoB-0002tt-Nl
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:44:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739265834;
+ s=mimecast20190719; t=1739267035;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zi3+/3c7euqa5IeRFSWHCzMh7A6BT1sdC4vxZ51IM3M=;
- b=W1moS2ZQQ97Xv0lWYE7GaJk+2k5ydWX2dyhAvMnXiO+JR5cOM48v5GXZoUWQDYx34joaoa
- s/KqzigY+HlxJFovABJjBSmBxXSu8a6pBHMVq5jaULpRyEeZnmB479mQN7iNhd0JuCwWkg
- rZrj8b4g9wAuDBMObnVkzVBdY3eW/30=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-s72T5dnjOxiM7PCPQ1r6yw-1; Tue,
- 11 Feb 2025 04:23:50 -0500
-X-MC-Unique: s72T5dnjOxiM7PCPQ1r6yw-1
-X-Mimecast-MFC-AGG-ID: s72T5dnjOxiM7PCPQ1r6yw
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 806B21800879; Tue, 11 Feb 2025 09:23:49 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.57])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1DB6180087B; Tue, 11 Feb 2025 09:23:48 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 61342180060D; Tue, 11 Feb 2025 10:23:25 +0100 (CET)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
- Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH v3 13/23] hw/uefi: add var-service-json.c + qapi for NV vars.
-Date: Tue, 11 Feb 2025 10:23:11 +0100
-Message-ID: <20250211092324.965440-14-kraxel@redhat.com>
-In-Reply-To: <20250211092324.965440-1-kraxel@redhat.com>
-References: <20250211092324.965440-1-kraxel@redhat.com>
+ bh=lUIVWfwCgxYpe5SnNUogusMe6+DGls/H/8iwoLgmp2A=;
+ b=V3GwgweQwNKTE/g5Qd8i3kH8HkXfdKToVENWxW9x58f9Ve0XaFnQtfppwO2gXwM5wq27Kj
+ mvTkaGXVJ3eRExF5/8iyYJX0+bzbPwxZLJyWKc27HMxqaLC+8Y4ibAymLK1CkcphUCjCak
+ EEVISHvu61gwoL2QJ2RstdheHEnFs8A=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-634-nOF_-rpqPoeWKIPFp8DX-A-1; Tue, 11 Feb 2025 04:43:52 -0500
+X-MC-Unique: nOF_-rpqPoeWKIPFp8DX-A-1
+X-Mimecast-MFC-AGG-ID: nOF_-rpqPoeWKIPFp8DX-A
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-e5b48736dcfso5583455276.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 01:43:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739267032; x=1739871832;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lUIVWfwCgxYpe5SnNUogusMe6+DGls/H/8iwoLgmp2A=;
+ b=TxdjbQKJ4AOMvHaQfrEdfwtrYWuT0D3H2VLxak8SJFwDkhBKQ9PnNYYg4v8l+ZqrlJ
+ 7fY3SHSUfuKU5FUKm3knPJiCAkK48On0OsW/30kpa6Qd/RZqs6SwSqRlb6VgPTV5jHuo
+ QdkizmG+0wXv0B9Sa2bDrc6LLaD34sEX8wueNeQDyUmFw98PRMTBJGMNGiId//l/Iiuf
+ W89tcqZiiW7NeVTumUXMSM0DYzvAza8XWUa6VR97r51CQ5Ixx13XdTGcpZe6kzoLhb0F
+ 4tmb1J2bVK3uRUKj5bQNoxdz1h3KNpATjodRR5jYsyHRhfLxUYRkHhpqIet91l/IVijn
+ TOMQ==
+X-Gm-Message-State: AOJu0YwkQyrTilPlsPqA5hul+IMM0cFwXl2Kghzr7k+HGCyvNMarC/BJ
+ E+dCmEbW0+nE4pMWjw75jDJUXN/JlP3YCX8a/OTIMq+8E+2pMuUtwIFhx+/u0HrKqId44Z7wVVw
+ WDLRMHaZ1Q5KijsPiDlKGngwhT74J/a9yKOHY42kiT/z26iO+i6JFhNsa5O6MX4VPkbO8sLwq7T
+ AT5OWw5O9Fc8LlAWYNoTGpMEOgiSw=
+X-Gm-Gg: ASbGncumqRKcr7AsG6uyMXlbK7EJQiiqNQoLpekMKidas7Qr+T3NAjxT9O0VPrZsONf
+ v/ZP4hNyWy5AOevJ/roLWYgBJ11b2tG0ux+CiDkFaYfzQ0mPDrQMAne27YgX+
+X-Received: by 2002:a05:6902:2510:b0:e5b:3af0:d4a1 with SMTP id
+ 3f1490d57ef6-e5b46292777mr13911540276.40.1739267032258; 
+ Tue, 11 Feb 2025 01:43:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXkbeqXuDLJoCSNeGAkY6qVgfb5wtul3KoUA2AH50NfVjVqmq3LtgudKvjkRwY9p/kUiRlhwzwYsARPvns3Fo=
+X-Received: by 2002:a05:6902:2510:b0:e5b:3af0:d4a1 with SMTP id
+ 3f1490d57ef6-e5b46292777mr13911526276.40.1739267031900; Tue, 11 Feb 2025
+ 01:43:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+References: <20250205145813.394915-1-jonah.palmer@oracle.com>
+ <20250205145813.394915-5-jonah.palmer@oracle.com>
+In-Reply-To: <20250205145813.394915-5-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 11 Feb 2025 10:43:15 +0100
+X-Gm-Features: AWEUYZky5nccyiLv-Wc7lKiQK3vm6SQma9FJD5FF7dO_6qu9QFd2kkgQk8k3ij8
+Message-ID: <CAJaqyWc1FFS76CFknaxjcWbECzUNopNxUY7SVkufVR=nHBvkfg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] vhost-iova-tree: Update documentation
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com, 
+ peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
 X-Spam_bar: ---
 X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,342 +104,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define qapi schema for the uefi variable store state.
+On Wed, Feb 5, 2025 at 3:58=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
+>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 
-Use it and the generated visitor helper functions to store persistent
-(EFI_VARIABLE_NON_VOLATILE) variables in JSON format on disk.
+Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- hw/uefi/var-service-json.c | 242 +++++++++++++++++++++++++++++++++++++
- qapi/meson.build           |   1 +
- qapi/qapi-schema.json      |   1 +
- qapi/uefi.json             |  45 +++++++
- 4 files changed, 289 insertions(+)
- create mode 100644 hw/uefi/var-service-json.c
- create mode 100644 qapi/uefi.json
+Thanks!
 
-diff --git a/hw/uefi/var-service-json.c b/hw/uefi/var-service-json.c
-new file mode 100644
-index 000000000000..ae2fc7726ac6
---- /dev/null
-+++ b/hw/uefi/var-service-json.c
-@@ -0,0 +1,242 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * uefi vars device - serialize non-volatile varstore from/to json,
-+ *                    using qapi
-+ *
-+ * tools which can read/write these json files:
-+ *  - https://gitlab.com/kraxel/virt-firmware
-+ *  - https://github.com/awslabs/python-uefivars
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/cutils.h"
-+#include "qemu/error-report.h"
-+#include "system/dma.h"
-+
-+#include "hw/uefi/var-service.h"
-+
-+#include "qapi/dealloc-visitor.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qapi/qobject-output-visitor.h"
-+#include "qapi/qmp/qobject.h"
-+#include "qapi/qmp/qjson.h"
-+#include "qapi/qapi-types-uefi.h"
-+#include "qapi/qapi-visit-uefi.h"
-+
-+static char *generate_hexstr(void *data, size_t len)
-+{
-+    static const char hex[] = {
-+        '0', '1', '2', '3', '4', '5', '6', '7',
-+        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
-+    };
-+    uint8_t *src = data;
-+    char *dest;
-+    size_t i;
-+
-+    dest = g_malloc(len * 2 + 1);
-+    for (i = 0; i < len * 2;) {
-+        dest[i++] = hex[*src >> 4];
-+        dest[i++] = hex[*src & 15];
-+        src++;
-+    }
-+    dest[i++] = 0;
-+
-+    return dest;
-+}
-+
-+static UefiVarStore *uefi_vars_to_qapi(uefi_vars_state *uv)
-+{
-+    UefiVarStore *vs;
-+    UefiVariableList **tail;
-+    UefiVariable *v;
-+    QemuUUID be;
-+    uefi_variable *var;
-+
-+    vs = g_new0(UefiVarStore, 1);
-+    vs->version = 2;
-+    tail = &vs->variables;
-+
-+    QTAILQ_FOREACH(var, &uv->variables, next) {
-+        if (!(var->attributes & EFI_VARIABLE_NON_VOLATILE)) {
-+            continue;
-+        }
-+
-+        v = g_new0(UefiVariable, 1);
-+        be = qemu_uuid_bswap(var->guid);
-+        v->guid = qemu_uuid_unparse_strdup(&be);
-+        v->name = uefi_ucs2_to_ascii(var->name, var->name_size);
-+        v->attr = var->attributes;
-+
-+        v->data = generate_hexstr(var->data, var->data_size);
-+
-+        if (var->attributes &
-+            EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS) {
-+            v->time = generate_hexstr(&var->time, sizeof(var->time));
-+            if (var->digest && var->digest_size) {
-+                v->digest = generate_hexstr(var->digest, var->digest_size);
-+            }
-+        }
-+
-+        QAPI_LIST_APPEND(tail, v);
-+    }
-+    return vs;
-+}
-+
-+static unsigned parse_hexchar(char c)
-+{
-+    switch (c) {
-+    case '0' ... '9': return c - '0';
-+    case 'a' ... 'f': return c - 'a' + 0xa;
-+    case 'A' ... 'F': return c - 'A' + 0xA;
-+    default: return 0;
-+    }
-+}
-+
-+static void parse_hexstr(void *dest, char *src, int len)
-+{
-+    uint8_t *data = dest;
-+    size_t i;
-+
-+    for (i = 0; i < len; i += 2) {
-+        *(data++) =
-+            parse_hexchar(src[i]) << 4 |
-+            parse_hexchar(src[i + 1]);
-+    }
-+}
-+
-+static void uefi_vars_from_qapi(uefi_vars_state *uv, UefiVarStore *vs)
-+{
-+    UefiVariableList *item;
-+    UefiVariable *v;
-+    QemuUUID be;
-+    uefi_variable *var;
-+    uint8_t *data;
-+    size_t i, len;
-+
-+    for (item = vs->variables; item != NULL; item = item->next) {
-+        v = item->value;
-+
-+        var = g_new0(uefi_variable, 1);
-+        var->attributes = v->attr;
-+        qemu_uuid_parse(v->guid, &be);
-+        var->guid = qemu_uuid_bswap(be);
-+
-+        len = strlen(v->name);
-+        var->name_size = len * 2 + 2;
-+        var->name = g_malloc(var->name_size);
-+        for (i = 0; i <= len; i++) {
-+            var->name[i] = v->name[i];
-+        }
-+
-+        len = strlen(v->data);
-+        var->data_size = len / 2;
-+        var->data = data = g_malloc(var->data_size);
-+        parse_hexstr(var->data, v->data, len);
-+
-+        if (v->time && strlen(v->time) == 32) {
-+            parse_hexstr(&var->time, v->time, 32);
-+        }
-+
-+        if (v->digest) {
-+            len = strlen(v->digest);
-+            var->digest_size = len / 2;
-+            var->digest = g_malloc(var->digest_size);
-+            parse_hexstr(var->digest, v->digest, len);
-+        }
-+
-+        QTAILQ_INSERT_TAIL(&uv->variables, var, next);
-+    }
-+}
-+
-+static GString *uefi_vars_to_json(uefi_vars_state *uv)
-+{
-+    UefiVarStore *vs = uefi_vars_to_qapi(uv);
-+    QObject *qobj = NULL;
-+    Visitor *v;
-+    GString *gstr;
-+
-+    v = qobject_output_visitor_new(&qobj);
-+    if (visit_type_UefiVarStore(v, NULL, &vs, NULL)) {
-+        visit_complete(v, &qobj);
-+    }
-+    visit_free(v);
-+    qapi_free_UefiVarStore(vs);
-+
-+    gstr = qobject_to_json_pretty(qobj, true);
-+    qobject_unref(qobj);
-+
-+    return gstr;
-+}
-+
-+void uefi_vars_json_init(uefi_vars_state *uv, Error **errp)
-+{
-+    if (uv->jsonfile) {
-+        uv->jsonfd = qemu_create(uv->jsonfile, O_RDWR, 0666, errp);
-+    }
-+}
-+
-+void uefi_vars_json_save(uefi_vars_state *uv)
-+{
-+    GString *gstr;
-+    int rc;
-+
-+    if (uv->jsonfd == -1) {
-+        return;
-+    }
-+
-+    gstr = uefi_vars_to_json(uv);
-+
-+    lseek(uv->jsonfd, 0, SEEK_SET);
-+    rc = ftruncate(uv->jsonfd, 0);
-+    if (rc != 0) {
-+        warn_report("%s: ftruncate error", __func__);
-+    }
-+    rc = write(uv->jsonfd, gstr->str, gstr->len);
-+    if (rc != gstr->len) {
-+        warn_report("%s: write error", __func__);
-+    }
-+    fsync(uv->jsonfd);
-+
-+    g_string_free(gstr, true);
-+}
-+
-+void uefi_vars_json_load(uefi_vars_state *uv, Error **errp)
-+{
-+    UefiVarStore *vs;
-+    QObject *qobj;
-+    Visitor *v;
-+    char *str;
-+    size_t len;
-+    int rc;
-+
-+    if (uv->jsonfd == -1) {
-+        return;
-+    }
-+
-+    len = lseek(uv->jsonfd, 0, SEEK_END);
-+    if (len == 0) {
-+        return;
-+    }
-+
-+    str = g_malloc(len + 1);
-+    lseek(uv->jsonfd, 0, SEEK_SET);
-+    rc = read(uv->jsonfd, str, len);
-+    if (rc != len) {
-+        warn_report("%s: read error", __func__);
-+    }
-+    str[len] = 0;
-+
-+    qobj = qobject_from_json(str, errp);
-+    v = qobject_input_visitor_new(qobj);
-+    visit_type_UefiVarStore(v, NULL, &vs, errp);
-+    visit_free(v);
-+
-+    if (!(*errp)) {
-+        uefi_vars_from_qapi(uv, vs);
-+        uefi_vars_update_storage(uv);
-+    }
-+
-+    qapi_free_UefiVarStore(vs);
-+    qobject_unref(qobj);
-+    g_free(str);
-+}
-diff --git a/qapi/meson.build b/qapi/meson.build
-index e7bc54e5d047..eadde4db307f 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -65,6 +65,7 @@ if have_system
-     'pci',
-     'rocker',
-     'tpm',
-+    'uefi',
-   ]
- endif
- if have_system or have_tools
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-index b1581988e4eb..2877aff73d0c 100644
---- a/qapi/qapi-schema.json
-+++ b/qapi/qapi-schema.json
-@@ -81,3 +81,4 @@
- { 'include': 'vfio.json' }
- { 'include': 'cryptodev.json' }
- { 'include': 'cxl.json' }
-+{ 'include': 'uefi.json' }
-diff --git a/qapi/uefi.json b/qapi/uefi.json
-new file mode 100644
-index 000000000000..c268ed11b70c
---- /dev/null
-+++ b/qapi/uefi.json
-@@ -0,0 +1,45 @@
-+# -*- Mode: Python -*-
-+# vim: filetype=python
-+#
-+
-+##
-+# @UefiVariable:
-+#
-+# UEFI Variable
-+#
-+# @guid: variable namespace guid
-+#
-+# @name: variable name (utf-8)
-+#
-+# @attr: variable attributes
-+#
-+# @data: variable content (base64)
-+#
-+# @time: variable modification time (EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS).
-+#
-+# @digest: variable certificate digest (EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS).
-+#
-+# Since: 10.0
-+##
-+{ 'struct' : 'UefiVariable',
-+  'data' : { 'guid'  : 'str',
-+             'name'  : 'str',
-+             'attr'  : 'int',
-+             'data'  : 'str',
-+             '*time' : 'str',
-+             '*digest' : 'str'}}
-+
-+##
-+# @UefiVarStore:
-+#
-+# UEFI Variable Store
-+#
-+# @version: 2
-+#
-+# @variables: list of uefi variables
-+#
-+# Since: 10.0
-+##
-+{ 'struct' : 'UefiVarStore',
-+  'data' : { 'version'   : 'int',
-+             'variables' : [ 'UefiVariable' ] }}
--- 
-2.48.1
+> ---
+>  hw/virtio/vhost-iova-tree.c | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
+> index 9d2d6a7af2..fa4147b773 100644
+> --- a/hw/virtio/vhost-iova-tree.c
+> +++ b/hw/virtio/vhost-iova-tree.c
+> @@ -37,9 +37,9 @@ struct VhostIOVATree {
+>  };
+>
+>  /**
+> - * Create a new IOVA tree
+> + * Create a new VhostIOVATree
+>   *
+> - * Returns the new IOVA tree
+> + * Returns the new VhostIOVATree.
+>   */
+>  VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
+>  {
+> @@ -56,7 +56,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, h=
+waddr iova_last)
+>  }
+>
+>  /**
+> - * Delete an iova tree
+> + * Delete a VhostIOVATree
+>   */
+>  void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
+>  {
+> @@ -69,10 +69,10 @@ void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
+>  /**
+>   * Find the IOVA address stored from a memory address
+>   *
+> - * @tree: The iova tree
+> + * @tree: The VhostIOVATree
+>   * @map: The map with the memory address
+>   *
+> - * Return the stored mapping, or NULL if not found.
+> + * Returns the stored IOVA->HVA mapping, or NULL if not found.
+>   */
+>  const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *tree,
+>                                          const DMAMap *map)
+> @@ -81,10 +81,10 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIO=
+VATree *tree,
+>  }
+>
+>  /**
+> - * Allocate a new mapping
+> + * Allocate a new IOVA range and add the mapping to the IOVA->HVA tree
+>   *
+> - * @tree: The iova tree
+> - * @map: The iova map
+> + * @tree: The VhostIOVATree
+> + * @map: The IOVA mapping
+>   * @taddr: The translated address (HVA)
+>   *
+>   * Returns:
+> @@ -92,7 +92,7 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVA=
+Tree *tree,
+>   * - IOVA_ERR_INVALID if the map does not make sense (like size overflow=
+)
+>   * - IOVA_ERR_NOMEM if tree cannot allocate more space.
+>   *
+> - * It returns assignated iova in map->iova if return value is VHOST_DMA_=
+MAP_OK.
+> + * It returns an assigned IOVA in map->iova if the return value is IOVA_=
+OK.
+>   */
+>  int vhost_iova_tree_map_alloc(VhostIOVATree *tree, DMAMap *map, hwaddr t=
+addr)
+>  {
+> @@ -117,9 +117,9 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *tree, DM=
+AMap *map, hwaddr taddr)
+>  }
+>
+>  /**
+> - * Remove existing mappings from iova tree
+> + * Remove existing mappings from the IOVA-only and IOVA->HVA trees
+>   *
+> - * @iova_tree: The vhost iova tree
+> + * @iova_tree: The VhostIOVATree
+>   * @map: The map to remove
+>   */
+>  void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map)
+> --
+> 2.43.5
+>
 
 
