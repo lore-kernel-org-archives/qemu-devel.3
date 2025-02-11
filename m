@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2B0C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C690DC021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht6Z-00084E-UW; Tue, 11 Feb 2025 11:27:23 -0500
+	id 1tht77-00019I-HZ; Tue, 11 Feb 2025 11:27:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tht65-0006sG-5K
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tht62-0003U4-Lq
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739291209;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ag7/kcTmaUTRSM6LCTBcCbtLWMglMNq0WLwQy0Or26E=;
- b=gxqpBldNMjC5iboHi2L0ONV/vfqiUuX3ENU5fW8zOxLfyHIvmedCs1k+8fpCD/kPMysUfx
- hzNr5aP2PN8gKJIEN3JnKWZZUd7I+CPrFv8tzsw6qI9gakfjHGZQ9Epc6OFjtdZCtJUxq4
- C4G6H/29RCktTZnNQZcLOLJJlJeOiu0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-6iYNa6D4OD6Ozhd0_MbsNA-1; Tue, 11 Feb 2025 11:26:46 -0500
-X-MC-Unique: 6iYNa6D4OD6Ozhd0_MbsNA-1
-X-Mimecast-MFC-AGG-ID: 6iYNa6D4OD6Ozhd0_MbsNA
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38dcd8ddc5eso3001674f8f.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tht6D-0006xB-4m
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:27:02 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tht68-0003d2-Ru
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:58 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-438a39e659cso40472725e9.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739291215; x=1739896015; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=kbu4pc+zogRWu6uXYrZLOamaF8sA1Rc2dDB91mMAtCw=;
+ b=s05pnxC/R1lfAHkZaJ8FCQOlaCJUMaR9Pefp5dQQWxybl9kc9ehxbGTzCozoL0ANoQ
+ eMmjFbH2mgAsPoIK+ooZPK1AkmKRaMtL41cLvC1vALxn6buHs7WcGYX5UEgWVc6r+2fp
+ 6zOwPlDMLHd2gFQcwfPHJXTQ7Ntpxm8z4NrBdrCP7VSOZuAKN8Qgi5VQMInJcGuE+1K/
+ ljpZiuhafpMvtBhIoBoIXGwM8Hsbpz+W/8HYlmuQCX5+NpIrJkhYHaM7Pduh4zfCsmMX
+ UiTPOmeiS9NIPiwP9vS9/3KRbJGue587R3IyW1Rn6G5VaUji0HBl9QUH11RjkudJmhbt
+ 7fjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291205; x=1739896005;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ag7/kcTmaUTRSM6LCTBcCbtLWMglMNq0WLwQy0Or26E=;
- b=t7oaIIu38XDmFxCDW6gJZIkdjt5KAEpp359c10mvxdGacAZwEOHtiABjdXU8eVgyAl
- fmn1s5fM+N4lTV68XuKX1rZ2bYjTIYDDWxMGRCQsDbxqmS6i83uIxDwMhpXeAgnVLQuh
- /cP696RQf3Od4Bk8BiHkw4pcDNwd84Vn13cys8ARzuQoKqlRGlPYogkM8uDOggUTpkOr
- y44DylSTYhD9F17Asls+11FNePgjFTi5aYVqwSEqcAIkdhYMXnPR1xBC4prmWDQqcagN
- Am8gceXellQ3pRzRTsghon5kPvhRu+IBcgqI2F+T2nERXAWsBSpxPhynWFC0E/qmSMxT
- wFYA==
-X-Gm-Message-State: AOJu0YyzcKs2/P3lSq2xiKhYciBhsKkNNWmE4+gy0yUT3iDtHjkoxTV/
- SqRLmWXKlrkR54DBmQsgZmNY/C/JE2xcAkmTvXVO6ok6wKtrw+83864xQf5H13dIBFsSIJtS7sO
- EJQo4GOGTSkVaiAWK0+9L6FqpSZBMpGcuxO1d/iMFEGRZdUZo7Vzs
-X-Gm-Gg: ASbGncvz2yarlYFOg+FxIjOuQnYHYTvb2lSuIt19+3vZsab77orRfSPWO44cxN+w8hX
- 41ZB3JqHdbQuWE+kWGwjtk5d8IPblbAi85h8wgCPv3IgjCO3xa2t0dQjcVD0TcBMYyCFeSrzzpP
- WY+o+3lmy7yXnrg+CDsH/kTRN+Z5CpjplBJDYSiKOknQX8LvqW6ak30jxv9BttLnPOwOYcL4AL/
- SqpOJ+p+1TCzJf1Dx5JKNYkqFiGUCxWvkfZ1IV6ttJiCg/Vp3uUTK69vdVKXMs5HzHsBQo3JHNV
- hB9zlCA/GApGU9tBzxma+pQiKGqreNGKgjtdorwjIYz1JrH5FWjh+g==
-X-Received: by 2002:a5d:5850:0:b0:38d:d118:8b4d with SMTP id
- ffacd0b85a97d-38dd1189408mr13736526f8f.54.1739291204817; 
- Tue, 11 Feb 2025 08:26:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE+8OtW7y97gZpe/WvXipk8JHhm/p06mhyuoVWwvTI+QMyndALi668ow53/APRjnvchayGXkQ==
-X-Received: by 2002:a5d:5850:0:b0:38d:d118:8b4d with SMTP id
- ffacd0b85a97d-38dd1189408mr13736472f8f.54.1739291204165; 
- Tue, 11 Feb 2025 08:26:44 -0800 (PST)
-Received: from sgarzare-redhat (host-79-46-200-29.retail.telecomitalia.it.
- [79.46.200.29]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbf2ed900sm15117663f8f.53.2025.02.11.08.26.43
+ d=1e100.net; s=20230601; t=1739291215; x=1739896015;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kbu4pc+zogRWu6uXYrZLOamaF8sA1Rc2dDB91mMAtCw=;
+ b=nGDTAWwrea+gwsiWG1vdL+gr9eZbOsAak+W7/Lz3gvrHQxoqoTEz4svM9Z0G4yd2aK
+ phevPWi3ruYK5O5B/qFb4iTHDXF3zEFq2AQoX4XTEwkAdME3s58v70nOMFSfkSVx7NYQ
+ NnuobPaesUaJi5r5D1AE5vZOzfcvs61mp2we3N9Wy3zb9Na4DVq1g6PI1CRSePDVxxjx
+ Ij9XZgqoHRThfNIFytnYeZVOCZVcdCpF19h4hBYHkP702eYKhBuR2sdXDqTGvMpCJToG
+ IN0moU8Wwes6fZhpeOxUlj9Dux/cas2Sb9jtqLyyA83na1K3TNkFqwyiMwTxsSBJ5qM3
+ WvWA==
+X-Gm-Message-State: AOJu0YxlOYbXFlHXCWbxIe83G+mQSGUrklCKC192Se22Smo8kJg4XBzq
+ SztobVBn4kADcSSwXpOIoTKMvI/ORsO6V6TwC42qeyKLelQXrQxKvw7G/XDIyfTFlNmjjE1K6hz
+ w
+X-Gm-Gg: ASbGnct+Pizp55Im5UQPEu6Dx8TAw2eq+osByw5kZsBVfpiGiePUdhn9dfDOuf5/zaX
+ n92ZA9yD8KoVJjwGJRkBmSXiNnZ4BqoRE7wHnuBlklCDqU+jgEnPnLWqi/NGNmSQV60cS0WpZ5T
+ so1Lx/rNfU+Mn1g8511euYFloUDU+dC29+FnHonze7FXJ4TyHm1HctYskB5N7w0djoDN4nMbh+/
+ 00FknKYktC30DlViFr80UDgG1iwmzCcS6arKXoyVPvEatuW76AdrzXMuBzEUQicuSHnMjPSX4D0
+ BuM2rGbD9tEVZeiIw2cl
+X-Google-Smtp-Source: AGHT+IF8Nxv4SatVnIO/VEIbdAr67aBaOMIPevsoK0gX3n9MXquyAl5tL7r/MJCpzg25bP2BS3XS7Q==
+X-Received: by 2002:a05:600c:56d0:b0:434:9c1b:b36a with SMTP id
+ 5b1f17b1804b1-4392dfbd5d8mr130264755e9.13.1739291215152; 
+ Tue, 11 Feb 2025 08:26:55 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.54
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:26:43 -0800 (PST)
-Date: Tue, 11 Feb 2025 17:26:39 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net, mst@redhat.com
-Subject: Re: [PATCH 1/1] vhost-scsi: support VIRTIO_SCSI_F_HOTPLUG
-Message-ID: <uut6fljzuwk6rwbzmnc7ieftwtyuwdjimehn5frluldt3cqudq@ndvyu6iu4gul>
-References: <20250203005215.1502-1-dongli.zhang@oracle.com>
+ Tue, 11 Feb 2025 08:26:54 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 56/68] target/arm: Introduce CPUARMState.vfp.fp_status[]
+Date: Tue, 11 Feb 2025 16:25:42 +0000
+Message-Id: <20250211162554.4135349-57-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
+References: <20250211162554.4135349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250203005215.1502-1-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,59 +99,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 02, 2025 at 04:52:15PM -0800, Dongli Zhang wrote:
->So far there isn't way to test host kernel vhost-scsi event queue path,
->because VIRTIO_SCSI_F_HOTPLUG isn't supported by QEMU.
->
->virtio-scsi.c and vhost-user-scsi.c already support VIRTIO_SCSI_F_HOTPLUG
->as property "hotplug".
->
->Add support to vhost-scsi.c to help evaluate and test event queue.
->
->To test the feature:
->
->1. Create vhost-scsi target with targetcli.
->
->targetcli /backstores/fileio create name=storage file_or_dev=disk01.raw
->targetcli /vhost create naa.1123451234512345
->targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage
->
->2. Create QEMU instance with vhost-scsi.
->
->-device vhost-scsi-pci,wwpn=naa.1123451234512345,hotplug=true
->
->3. Once guest bootup, hotplug a new LUN from host.
->
->targetcli /backstores/fileio create name=storage02 file_or_dev=disk02.raw
->targetcli /vhost/naa.1123451234512345/tpg1/luns create /backstores/fileio/storage02
->
->Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
->---
-> hw/scsi/vhost-scsi.c | 3 +++
-> 1 file changed, 3 insertions(+)
+From: Richard Henderson <richard.henderson@linaro.org>
 
-LGTM:
+Move ARMFPStatusFlavour to cpu.h with which to index
+this array.  For now, place the array in an anonymous
+union with the existing structures.  Adjust the order
+of the existing structures to match the enum.
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Simplify fpstatus_ptr() using the new array.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250129013857.135256-7-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu.h           | 119 +++++++++++++++++++++----------------
+ target/arm/tcg/translate.h |  64 +-------------------
+ 2 files changed, 70 insertions(+), 113 deletions(-)
 
->
->diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
->index 8039d13fd9..d3a260f6a7 100644
->--- a/hw/scsi/vhost-scsi.c
->+++ b/hw/scsi/vhost-scsi.c
->@@ -359,6 +359,9 @@ static const Property vhost_scsi_properties[] = {
->     DEFINE_PROP_BIT64("t10_pi", VHostSCSICommon, host_features,
->                                                  VIRTIO_SCSI_F_T10_PI,
->                                                  false),
->+    DEFINE_PROP_BIT64("hotplug", VHostSCSICommon, host_features,
->+                                                  VIRTIO_SCSI_F_HOTPLUG,
->+                                                  false),
->     DEFINE_PROP_BOOL("migratable", VHostSCSICommon, migratable, false),
->     DEFINE_PROP_BOOL("worker_per_virtqueue", VirtIOSCSICommon,
->                      conf.worker_per_virtqueue, false),
->-- 
->2.39.3
->
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 24b0a5fcb9f..bf68e135d73 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -202,6 +202,61 @@ typedef struct ARMMMUFaultInfo ARMMMUFaultInfo;
+ 
+ typedef struct NVICState NVICState;
+ 
++/*
++ * Enum for indexing vfp.fp_status[].
++ *
++ * FPST_A32: is the "normal" fp status for AArch32 insns
++ * FPST_A64: is the "normal" fp status for AArch64 insns
++ * FPST_A32_F16: used for AArch32 half-precision calculations
++ * FPST_A64_F16: used for AArch64 half-precision calculations
++ * FPST_STD: the ARM "Standard FPSCR Value"
++ * FPST_STD_F16: used for half-precision
++ *       calculations with the ARM "Standard FPSCR Value"
++ * FPST_AH: used for the A64 insns which change behaviour
++ *       when FPCR.AH == 1 (bfloat16 conversions and multiplies,
++ *       and the reciprocal and square root estimate/step insns)
++ * FPST_AH_F16: used for the A64 insns which change behaviour
++ *       when FPCR.AH == 1 (bfloat16 conversions and multiplies,
++ *       and the reciprocal and square root estimate/step insns);
++ *       for half-precision
++ *
++ * Half-precision operations are governed by a separate
++ * flush-to-zero control bit in FPSCR:FZ16. We pass a separate
++ * status structure to control this.
++ *
++ * The "Standard FPSCR", ie default-NaN, flush-to-zero,
++ * round-to-nearest and is used by any operations (generally
++ * Neon) which the architecture defines as controlled by the
++ * standard FPSCR value rather than the FPSCR.
++ *
++ * The "standard FPSCR but for fp16 ops" is needed because
++ * the "standard FPSCR" tracks the FPSCR.FZ16 bit rather than
++ * using a fixed value for it.
++ *
++ * The ah_fp_status is needed because some insns have different
++ * behaviour when FPCR.AH == 1: they don't update cumulative
++ * exception flags, they act like FPCR.{FZ,FIZ} = {1,1} and
++ * they ignore FPCR.RMode. But they don't ignore FPCR.FZ16,
++ * which means we need an ah_fp_status_f16 as well.
++ *
++ * To avoid having to transfer exception bits around, we simply
++ * say that the FPSCR cumulative exception flags are the logical
++ * OR of the flags in the four fp statuses. This relies on the
++ * only thing which needs to read the exception flags being
++ * an explicit FPSCR read.
++ */
++typedef enum ARMFPStatusFlavour {
++    FPST_A32,
++    FPST_A64,
++    FPST_A32_F16,
++    FPST_A64_F16,
++    FPST_AH,
++    FPST_AH_F16,
++    FPST_STD,
++    FPST_STD_F16,
++} ARMFPStatusFlavour;
++#define FPST_COUNT  8
++
+ typedef struct CPUArchState {
+     /* Regs for current mode.  */
+     uint32_t regs[16];
+@@ -631,56 +686,20 @@ typedef struct CPUArchState {
+         /* Scratch space for aa32 neon expansion.  */
+         uint32_t scratch[8];
+ 
+-        /* There are a number of distinct float control structures:
+-         *
+-         *  fp_status_a32: is the "normal" fp status for AArch32 insns
+-         *  fp_status_a64: is the "normal" fp status for AArch64 insns
+-         *  fp_status_fp16_a32: used for AArch32 half-precision calculations
+-         *  fp_status_fp16_a64: used for AArch64 half-precision calculations
+-         *  standard_fp_status : the ARM "Standard FPSCR Value"
+-         *  standard_fp_status_fp16 : used for half-precision
+-         *       calculations with the ARM "Standard FPSCR Value"
+-         *  ah_fp_status: used for the A64 insns which change behaviour
+-         *       when FPCR.AH == 1 (bfloat16 conversions and multiplies,
+-         *       and the reciprocal and square root estimate/step insns)
+-         *  ah_fp_status_f16: used for the A64 insns which change behaviour
+-         *       when FPCR.AH == 1 (bfloat16 conversions and multiplies,
+-         *       and the reciprocal and square root estimate/step insns);
+-         *       for half-precision
+-         *
+-         * Half-precision operations are governed by a separate
+-         * flush-to-zero control bit in FPSCR:FZ16. We pass a separate
+-         * status structure to control this.
+-         *
+-         * The "Standard FPSCR", ie default-NaN, flush-to-zero,
+-         * round-to-nearest and is used by any operations (generally
+-         * Neon) which the architecture defines as controlled by the
+-         * standard FPSCR value rather than the FPSCR.
+-         *
+-         * The "standard FPSCR but for fp16 ops" is needed because
+-         * the "standard FPSCR" tracks the FPSCR.FZ16 bit rather than
+-         * using a fixed value for it.
+-         *
+-         * The ah_fp_status is needed because some insns have different
+-         * behaviour when FPCR.AH == 1: they don't update cumulative
+-         * exception flags, they act like FPCR.{FZ,FIZ} = {1,1} and
+-         * they ignore FPCR.RMode. But they don't ignore FPCR.FZ16,
+-         * which means we need an ah_fp_status_f16 as well.
+-         *
+-         * To avoid having to transfer exception bits around, we simply
+-         * say that the FPSCR cumulative exception flags are the logical
+-         * OR of the flags in the four fp statuses. This relies on the
+-         * only thing which needs to read the exception flags being
+-         * an explicit FPSCR read.
+-         */
+-        float_status fp_status_a32;
+-        float_status fp_status_a64;
+-        float_status fp_status_f16_a32;
+-        float_status fp_status_f16_a64;
+-        float_status standard_fp_status;
+-        float_status standard_fp_status_f16;
+-        float_status ah_fp_status;
+-        float_status ah_fp_status_f16;
++        /* There are a number of distinct float control structures. */
++        union {
++            float_status fp_status[FPST_COUNT];
++            struct {
++                float_status fp_status_a32;
++                float_status fp_status_a64;
++                float_status fp_status_f16_a32;
++                float_status fp_status_f16_a64;
++                float_status ah_fp_status;
++                float_status ah_fp_status_f16;
++                float_status standard_fp_status;
++                float_status standard_fp_status_f16;
++            };
++        };
+ 
+         uint64_t zcr_el[4];   /* ZCR_EL[1-3] */
+         uint64_t smcr_el[4];  /* SMCR_EL[1-3] */
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 0dff00015e8..f8dc2f0d4bb 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -670,80 +670,18 @@ static inline CPUARMTBFlags arm_tbflags_from_tb(const TranslationBlock *tb)
+     return (CPUARMTBFlags){ tb->flags, tb->cs_base };
+ }
+ 
+-/*
+- * Enum for argument to fpstatus_ptr().
+- */
+-typedef enum ARMFPStatusFlavour {
+-    FPST_A32,
+-    FPST_A64,
+-    FPST_A32_F16,
+-    FPST_A64_F16,
+-    FPST_AH,
+-    FPST_AH_F16,
+-    FPST_STD,
+-    FPST_STD_F16,
+-} ARMFPStatusFlavour;
+-
+ /**
+  * fpstatus_ptr: return TCGv_ptr to the specified fp_status field
+  *
+  * We have multiple softfloat float_status fields in the Arm CPU state struct
+  * (see the comment in cpu.h for details). Return a TCGv_ptr which has
+  * been set up to point to the requested field in the CPU state struct.
+- * The options are:
+- *
+- * FPST_A32
+- *   for AArch32 non-FP16 operations controlled by the FPCR
+- * FPST_A64
+- *   for AArch64 non-FP16 operations controlled by the FPCR
+- * FPST_A32_F16
+- *   for AArch32 operations controlled by the FPCR where FPCR.FZ16 is to be used
+- * FPST_A64_F16
+- *   for AArch64 operations controlled by the FPCR where FPCR.FZ16 is to be used
+- * FPST_AH:
+- *   for AArch64 operations which change behaviour when AH=1 (specifically,
+- *   bfloat16 conversions and multiplies, and the reciprocal and square root
+- *   estimate/step insns)
+- * FPST_AH_F16:
+- *   ditto, but for half-precision operations
+- * FPST_STD
+- *   for A32/T32 Neon operations using the "standard FPSCR value"
+- * FPST_STD_F16
+- *   as FPST_STD, but where FPCR.FZ16 is to be used
+  */
+ static inline TCGv_ptr fpstatus_ptr(ARMFPStatusFlavour flavour)
+ {
+     TCGv_ptr statusptr = tcg_temp_new_ptr();
+-    int offset;
++    int offset = offsetof(CPUARMState, vfp.fp_status[flavour]);
+ 
+-    switch (flavour) {
+-    case FPST_A32:
+-        offset = offsetof(CPUARMState, vfp.fp_status_a32);
+-        break;
+-    case FPST_A64:
+-        offset = offsetof(CPUARMState, vfp.fp_status_a64);
+-        break;
+-    case FPST_A32_F16:
+-        offset = offsetof(CPUARMState, vfp.fp_status_f16_a32);
+-        break;
+-    case FPST_A64_F16:
+-        offset = offsetof(CPUARMState, vfp.fp_status_f16_a64);
+-        break;
+-    case FPST_AH:
+-        offset = offsetof(CPUARMState, vfp.ah_fp_status);
+-        break;
+-    case FPST_AH_F16:
+-        offset = offsetof(CPUARMState, vfp.ah_fp_status_f16);
+-        break;
+-    case FPST_STD:
+-        offset = offsetof(CPUARMState, vfp.standard_fp_status);
+-        break;
+-    case FPST_STD_F16:
+-        offset = offsetof(CPUARMState, vfp.standard_fp_status_f16);
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+     tcg_gen_addi_ptr(statusptr, tcg_env, offset);
+     return statusptr;
+ }
+-- 
+2.34.1
 
 
