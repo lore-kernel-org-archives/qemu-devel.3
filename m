@@ -4,78 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0F0C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 11:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB16C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 11:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thoAP-0002mh-MM; Tue, 11 Feb 2025 06:11:01 -0500
+	id 1thoWu-0007q2-1i; Tue, 11 Feb 2025 06:34:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1thoAK-0002mH-AS
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 06:10:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1thoWo-0007p4-MF; Tue, 11 Feb 2025 06:34:10 -0500
+Received: from mail-sy4aus01olkn20823.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::823]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1thoAH-00086e-QJ
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 06:10:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739272249;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aHMr+S/qEyJxIoQ3GZWM/ZtsNaf2tLt/uoktCMQgchk=;
- b=JlDpc2L2XYfh1DVSHwFDQCczCRowQEvhxtZ6rI29BjBGNiQJy23C+XTUM/ez8FtSUM0eu4
- UCU22PExXGXOvu4hppdYUxnby7RGJtr1amImOhyykyBChtGu8NUZ0Oz+Dz3AxKHnzEaURU
- sikhuYohaNbUVfj4YmWrhErUUUqk7NA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-ijbelHaOPWuywII7Zskb0Q-1; Tue,
- 11 Feb 2025 06:10:43 -0500
-X-MC-Unique: ijbelHaOPWuywII7Zskb0Q-1
-X-Mimecast-MFC-AGG-ID: ijbelHaOPWuywII7Zskb0Q
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 061AC1800875
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 11:10:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.132])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70B861800358; Tue, 11 Feb 2025 11:10:40 +0000 (UTC)
-Date: Tue, 11 Feb 2025 11:10:37 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Victor Toso <victortoso@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- John Snow <jsnow@redhat.com>, Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [PATCH v3 0/8] qapi-go: add generator for Golang interfaces
-Message-ID: <Z6swLZ3csrf-3JH2@redhat.com>
-References: <20250110104946.74960-1-victortoso@redhat.com>
- <Z4mBWMqktTPWKaGR@redhat.com>
- <4gwkmv7h3hlkrgayhyrid7xgrk3gxylthrhvea7crfzqojbcgg@5mbpyvqv5zro>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1thoWj-0007LB-DA; Tue, 11 Feb 2025 06:34:10 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=I1ebA4o44UMFT1ByQ6M8Fip3K6E3BjBhTFwe3qzY9g+R+Yux4RYbuKN6eNkLGG3PR/v+74FuQtxjBd07bu7JyKRyAi73Wum9GkfyECWm0q/Q7EXTNtonaIqSzNAysVmAe1z7qPCg8iFUhQVLdrrzXQ933ZhUDHpoSOZ5sRnajVygvGs6cQhAoR4oBWeZwX7fmpk2US1aMBmeDlTJY0LW09LekBL67caNjhxSvVWqmIT7ESYPrT6ABo5M/XWaP+XdIjZmubIHCk1A1avxdkrdvgu6XYgSfD7gQOR0D5I0m6J/e4TPSPM55vFmIIkg72YXGQZ/y+Hm6wlALTDO2SM6Bg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=u//ap+z6PFCc7J4sOgEqmgDd80HbJcbAd/SxH0kl318=;
+ b=nKTDX4IMvXuT65njhKy8ofimn8jF/2VO4tvkL36rH6cE+jbW08rxELKD1Nk1MqgIqCoLyu1ihsRkbfxK6AiL2YBViBK/wvLCtXg+q1Pc9/voJpI/+dEvIOMIRma2UJMyPhdYdzGbPSlWflQmzGGlYIPe1wZImRhnHj7TUHaUqrWnO/kRSqwZJMUPGX/LASafYPASOBmsn13DYhafcmMoZiZaN2V9wur+7ZwpeFCZ/7GzetbzczIY04m2tkoLRKHoi1AUEqGFbkJ9gcDyNuTo1+LruoZEYNcbnpYVr/+NLA88UrQBWNn3/ChOmaxa9Phxcx+6sVW3ENWaVB2iXL/VRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u//ap+z6PFCc7J4sOgEqmgDd80HbJcbAd/SxH0kl318=;
+ b=fEg3n2fZZWBQxnEUXwg029QT7XuVUzdP/lRPcFCBwe8WHgN6SiKVvlkjpCWwsChEV1RAGVYbz052mavn52C2aOgHBTbvcP34eIjQafg1iL1pW3Ab1VtZiVYKBiIulXQUC4xQM+iPi0nd9bqSe19GhBGEKlyx1ZtB163IjZPXLRvMUvwsu0rU7TyQ/LuJr81Xr6HTUgB+5JHwZvKLabSu/UHnMtpy7yItHOoFR0NncJTSVyysKeLNM5u1MEKvz81VKfv0B9mU37hZYLb0I5nAFmjUC91pdIyvPrtQBiKq2cNl46k6vQTMot/tDF5MeW+fqzoFmtksxul+HrRSRifnyA==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by ME0P300MB0485.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:22b::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.20; Tue, 11 Feb
+ 2025 11:33:56 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%3]) with mapi id 15.20.8422.015; Tue, 11 Feb 2025
+ 11:33:56 +0000
+References: <20250206111514.2134895-1-pbonzini@redhat.com>
+ <20250206111514.2134895-2-pbonzini@redhat.com>
+ <Z6nOAftJsjQ7KAiS@intel.com>
+ <c7685bff-96d1-4e89-ba19-08fbba399d37@redhat.com>
+ <SY0P300MB1026B9C81F2EF236BB703F2B95FD2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <CABgObfbTx9DNkkzw8EeMRU0+L6_+P64KHtAJTUwsW40mtwGSOg@mail.gmail.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: vtables and procedural macros (was Re: [PATCH] rust: pl011:
+ convert pl011_create to safe Rust)
+Date: Tue, 11 Feb 2025 18:31:14 +0800
+In-reply-to: <CABgObfbTx9DNkkzw8EeMRU0+L6_+P64KHtAJTUwsW40mtwGSOg@mail.gmail.com>
+Message-ID: <SY0P300MB1026E0CE5AFBEA4E713F73F595FD2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4gwkmv7h3hlkrgayhyrid7xgrk3gxylthrhvea7crfzqojbcgg@5mbpyvqv5zro>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: KL1PR01CA0052.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:5::16) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <875xlgiulj.fsf@hotmail.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|ME0P300MB0485:EE_
+X-MS-Office365-Filtering-Correlation-Id: 98b7bb46-c4fe-41e4-e138-08dd4a8ff83f
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|5072599009|6090799003|19110799003|15080799006|8060799006|7092599003|461199028|3412199025|440099028|10035399004|56899033;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MnZLZUxiSjl3ZnlkRkpKRTR3NTJvNmhmYVh6RVJlZ3VDV09tQWdPYTVyQ1VV?=
+ =?utf-8?B?YTcza3lZTWdQSlBObmFUbSt5S0NEeE1OUHlQRlFFYUgxcGZHckMyUThCT3hR?=
+ =?utf-8?B?c3VaN0EwTGdaNEs2ejBORHFFMjdYUjhvTjRyak1yS2hoVnpQY3BmVGVTZWVP?=
+ =?utf-8?B?UmV0Mk5uTHRsdlRJUzJXNUNoVVlMUnRWUmFpZFVJRVRpWURjY3pBMkJlbXE4?=
+ =?utf-8?B?VVBkZjRHV0Z1RnJpUFNTRkZqY0ZqbTdkaWdvSWNibFFqZDFLYWE5U2RMRGtm?=
+ =?utf-8?B?WHNYaXNqSUN2VU5lZWJXRnNHTk1pYVB4SXpVUDUzUzVvVG9selVVU1o4Q2Y4?=
+ =?utf-8?B?ZFI1VytwSjJvOVVEUXp3ekRtOWx2TjFaVUlETlRRaVRIWW5mRTlTbElLb0lJ?=
+ =?utf-8?B?T1dNLzBPWGs0bTNuQitOcWw1bVhuUHJNV2lPSU9Ka3pGYzFHUktuS1FZY2ZD?=
+ =?utf-8?B?UmJUT3JCTHNyRWZzRStOdHJPRzRQSzJuL2swTjFBREt0OTdUUXNkcXEySmRH?=
+ =?utf-8?B?QTJXanRJNE8wbFp5dDNhWTQ2Y0N2cGg3K1NXcjk2QlVIdVd0TkhzcGYrQ1Jr?=
+ =?utf-8?B?WFdJNHd3c0plb0pHcmhXSnFtNE5uUE1HUmpnN0NBRmhJS1pYVEJnaWMwdzU0?=
+ =?utf-8?B?MHpHMTdQbk8xMWwvSmtjam1ENWxFUGlVaDZPbUxGVUw3NGdXSzR6ZDJyb1dD?=
+ =?utf-8?B?VGs3K0RsSDlrenpud1B1ZzNMNFNkNHMvQnpMK3dvMEY3MEJyQWQrWEh0TXh0?=
+ =?utf-8?B?V1FOaUk5TW5aQitVb2QwMFVZUkp0SEtSb2VjbmhhRkhBOTZhYTR6NExpM2E2?=
+ =?utf-8?B?VlpwVXZ6WnN6NUpuSFR2T1UrUEpiczUrd0p0Y1FURyt6WXpYZGpvVkxmWVFO?=
+ =?utf-8?B?QXl5YVF1ZVhDd3RsQUVWT0FjTThWQkNZejZhTUtWa096b3pZbnNCeFkzcHFn?=
+ =?utf-8?B?MStxcldvbFpJSUkydnVsQXpxdXlydGJZQlBsNkJnRi9ndWJDbm1sZlJEeGNk?=
+ =?utf-8?B?dDVJYkN3TUI5NmpDNnYvSDE2Z2JFamo5K2FQV0l1eE4yRkVncFdmYU5mVjNU?=
+ =?utf-8?B?b1pYNnhnSFpMM0pocUZ1RnQ3dkdud2hDT1JsZTE4bGpUa0xDbURGd09aRzBh?=
+ =?utf-8?B?R0tMRHpJR3E3M1BUOU5iRFhXQ0dyN3pvODI0THJ0VnJaYmJTZmhZWkpYTnNH?=
+ =?utf-8?B?TFhuTFc3bDJ3NlJCV0szbzdNYk5YSTJDMlUrTHg3VWo3WTVQK2lZUG0wY1Fs?=
+ =?utf-8?B?eWdwbTVQdjRoTXVlUlhaN3FPM3R3b2dnTExGWTlMczhvSlAzd1d1NE5qN0kx?=
+ =?utf-8?B?SkdTcUNrY3h6Njk3RDJEVm9WY0ZVQXJzVHQ1Z3FLRXhZWDJEdkh6T2VMUXFz?=
+ =?utf-8?B?c3IzQ0RoYjlBRDd2Vko3SVBqNnRIOHNpQnU1aUoxc2VGb1BqamVnU2ZaYjJk?=
+ =?utf-8?B?RG1CNnFxd3EzMUR2V0pCc2puZWFNenRqRXRBSExaa1BqYmJuaDR0b0Z0Szhy?=
+ =?utf-8?B?WTRaSnIzY3NqRnFVam9zK0R2dnhtb3lhdGE5ZWlpblZFQi9FUzRXVkdLcU12?=
+ =?utf-8?Q?CnnhQkSSZKmq8mFNcp5lJH4f0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aTYwbVNSL2F2V2JXdEE2R1diSTN6VTd3Mm92WFdEd3RFL2xnNFU2Y21zMS9z?=
+ =?utf-8?B?c2s5VDQvc2szU254aHdBanM4OHBsZWlIUnRERDBsSFRHaGVvZ1ZxZks4Nkth?=
+ =?utf-8?B?WnUrVk5wQVZuWkhJaVozNlBTNmtZeVpqRVY2QnVEbzdDaDQvOGJFR3pPMlFk?=
+ =?utf-8?B?QWRPbEZxaGE3bnFrRC9sZUdpbW1SMVIrNGZSWkx5elhYMC80T0RhZVh0VU1j?=
+ =?utf-8?B?a25JNGJjNmtkREVyT0txK2l5UDJWSlAxY1krTVFFcEdGc0FOT2dxWHFvNzhT?=
+ =?utf-8?B?Rmd2dW9YVnIrdklBQ0ppOEViNEV1WkR3SlN4T3ZVQ3kvMFN6Y3dXOEhibEJ0?=
+ =?utf-8?B?ZUhnU1BWK1hsYnhGOUNsYmpTbldnS05MRktWNCtHU3NKR2RmWDYvdEJlRmtT?=
+ =?utf-8?B?VjFkdlNsVUo2Z3AzK3F4QVVzdFgwbFgzZ0RFS2FUbHBHVUVzYVduZ1VESW96?=
+ =?utf-8?B?YWNybmhLLzhIWDJ3SWN6NUFTOHZiMGhmemgwZG9xYm9WYnIyVEk0cE5hTEpp?=
+ =?utf-8?B?SHB6b0VSc095VllrOUFSNGZlZTlaRlF3WCtoRmVPUG5vaW43eXZKZTF5SmUx?=
+ =?utf-8?B?aGVNbkQ2Z25seFJ0cGNjWDVjYzFKYWVabjJuL1NHMVBkSlNueE9nQ0J0NEg4?=
+ =?utf-8?B?a0JSOXVFUXN0akNPc205b1NoTUJ3bmpraGVrZE4xQUdtbUdGbFB6TjM3WVJt?=
+ =?utf-8?B?aWhqdFFWeXBYN3ZGM2EyUWkvZG5tYXIzTXp2Zzk4Q2NmUWh5c0F2RkdSemRH?=
+ =?utf-8?B?SmxEdWFhTjNOaUxvUnkzekt1cE1YZUdzYm9EWG1UN3lWMjlnRWd1dTNreUQx?=
+ =?utf-8?B?ZldxYThxWFkvbzZURHpKcjVUUjNSemY0VlVDRHRPaThMcGhBdjhPM0RGaldw?=
+ =?utf-8?B?WDRVYlNDdmdKTjdWSmFYU0FwTG1oRFZKWWR6M2lMT285R0hjaEpjWTB1M0Z6?=
+ =?utf-8?B?ZWxleW4wRGNrRm9CazRKa3NUeCtCU0k4WTJTQjh4WUtpREJNNmVuVDBoWDFF?=
+ =?utf-8?B?R0huMjNDWDUreElJVlovSWFkUFNMbXVCK2w0RkNpZUpaMXpjcFZyT1ZBZVNB?=
+ =?utf-8?B?cElDZTQycC9qMFZRcHVmdkRMaFUzM3FsZmViT0dGNHFMVlNOYjAyak5qWU8y?=
+ =?utf-8?B?RkEvV2luU0l5ckFOcUVJd0E2NWZvcVdFY3hpRGR5WCtvdjBpbDRPNXlyU2tS?=
+ =?utf-8?B?VHVZSFYxUUx0NFplUEJLL3o5UStsSjl2QXA3Smc1eDlISjQ2YXdGSTJ2V3py?=
+ =?utf-8?B?bW42UXZrZzd5TmFrWkhHeWhWaU1EV0RMV2F5TEFJUmZzdk1qaEw0RjB5M3B3?=
+ =?utf-8?B?QytZQzdOUXNnanoycWFmb2ZRbzY2RHNzNDE2NlpUVHJwODFnTkJTQ2RzK0Fs?=
+ =?utf-8?B?WkgzNnNsek1xYm9EVUcwbmlLWWNKdTB4cWhOcTVhZWdhcXEyb0tXelpzMFBv?=
+ =?utf-8?B?Q0ZTYzkxSzNpSGJDQmNrb0VwdWZuaGgxRmF3UXhvNG8ycER3MGk4RWhER3FW?=
+ =?utf-8?B?VmVTRXRvbGQvNm1aNHVOZkZSMG5jZlMvMUxYTEQvQ0tKNy91SjlmR29WZGNr?=
+ =?utf-8?B?Sy83QUJyejl6cE1tbFJQd0l3bTNEbUx5bU1ZbjIwL0pzRlhsd3RqRWpLMWpE?=
+ =?utf-8?B?YzlES3dCaVpaS0RZdnR1aVZ1bVpLZUxpb014RjhwcDlQemNIVkJCNzBNUW4x?=
+ =?utf-8?Q?D0PKSX7AJnk9LDeHWgLN?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98b7bb46-c4fe-41e4-e138-08dd4a8ff83f
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2025 11:33:56.5179 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB0485
+Received-SPF: pass client-ip=2a01:111:f403:2819::823;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,195 +159,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 11:25:05AM +0100, Victor Toso wrote:
-> Hi,
-> 
-> On Thu, Jan 16, 2025 at 09:59:52PM +0000, Daniel P. Berrangé wrote:
-> >     <<<< Pause here if you've read enough for now. >>>>
-> > 
-> > 
-> > 
-> > As a way to validate these thoughts, I spent a day to mock up a demo
-> > of a QAPI client and server implementation.
-> > 
-> > First I created some manually written structs for the core QMP types
-> > 
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/protocol.go
-> > 
-> > Then I've got (what would be) generated code creating types for the
-> > specific QAPI schema. I've just illustrated this with query-machines
-> > and qmp_capabilities commands, and STOP, CONT, BALLOON_CHANGE events:
-> > 
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/gen_types.go
-> > 
-> > Essentially this is all the types you generated, but without any of
-> > the (un)marshalling method impls which IMHO are all redundant. I put
-> > everything in one file just for convenience, your per-file split makes
-> > more sense in a real impl.
-> > 
-> > 
-> > IMHO that's all that's needed to cover the scope of what is done in
-> > this series, but to illustrate a real world usage model, I've then
-> > gone on to implement both clients and servers.
-> > 
-> > At the very lowest level, both clients & servers need a way to send
-> > and recv "Message" instances, so I created a "Channel" object with
-> > SendMessage/RecvMessage methods:
-> > 
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/channel.go
-> > 
-> > This is the most basic low level client one could have for QMP
-> > 
-> > 
-> > 
-> > From that we can derive a object for QMP Clients, giving slightly higher
-> > level APIs to send commands, receive replies & events, avoiding the need
-> > to touch the "Message" object directly:
-> > 
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/client.go
-> > 
-> > And derive a similar object for QMP severs, giving APIs to dispatch commands,
-> > and send replies, events & errors:
-> > 
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/server.go
-> > 
-> > So far this is all static written code common to any QAPI schema impl.
-> > The APIs can be used with any schema specific structs, however, the
-> > latter might be defined.
-> > 
-> > 
-> > Being low level, none of these APIs are strongly typed, which is not nice
-> > as an application API in Go, so need a way to introduce better type safety.
-> > 
-> > 
-> > In a real application I don't think developers should really be touching
-> > the structs directly for commands/responses/events. Instead I believe
-> > they need to be given formal APIs:
-> > 
-> > Thus I have (what would be) auto-generated interfaces for covering all
-> > the commands and events:
-> > 
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/gen_commands.go
-> >   https://gitlab.com/berrange/qapi-go-demo/-/blob/main/pkg/qapi/gen_events.go
-> 
-> One thing that bothers me a little is using event's fields
-> directly instead of event type in the interface itself:
-> 
->     type Events interface {
->         StopEvent(time.Time) error
->         ContEvent(time.Time) error
->         BalloonChangeEvent(int64, time.Time) error
->     }
-> 
-> In the gen_server_events.go:
-> 
->     func (cmds *serverEvents) BalloonChangeEvent(actual int64, when time.Time) error {
->         ev := &BalloonChangeEvent{
->             Actual: actual,
->         }
->         return cmds.QMP.SendEvent("BALLOON_CHANGE", ev, when)
->     }
-> 
-> I'm actually in favor of moving the Type itself to the method:
-> 
->     type Events interface {
->         StopEvent(time.Time) error
->         ContEvent(time.Time) error
->         BalloonChangeEvent(BalloonChangeEvent, time.Time) error
->     }
-> 
->     func (cmds *serverEvents) BalloonChangeEvent(ev BalloonChangeEvent, when time.Time) error {
->         return cmds.QMP.SendEvent("BALLOON_CHANGE", &ev, when)
->     }
 
-I choose to expand all the types inline in events & commands
-because I felt like this gives a more convenient API design
-for applications, without the extra indirectino of packing
-and unpacking parameters
-.
-> For the caller it might be an extra step but I see a few
-> benefits:
-> 
->     1. Documentation: I'm generating the QAPI documentation of
->        the events in its types. IDE's can jump-to-definition and
->        see the documentation there. Obviously we could move the
->        documentation here or duplicate it but the doc in the Type
->        looks the right place imho.
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Yep, it would complicate docs to have to unpack it against the
-method. I was coming at this from the POV of an application
-developer though, intentionally ignoring what is the most
-convenient for the code generator. The latter is fixed cost
-while writing the generator, while the API design is an ongoing
-cost time, so makes more sense to optimize for the latter.
+> On Tue, Feb 11, 2025 at 7:47=E2=80=AFAM Junjie Mao <junjie.mao@hotmail.co=
+m> wrote:
+>> I would suggest to keep the "sysbus" prefix in the method name, or in
+>> general, keep the class prefix in the method names in XXXClassMethods
+>> traits. Otherwise APIs from different parent classes may also
+>> conflict. As an example, in the following class hierarchy:
+>>
+>>   Object -> DeviceState -> PCIDevice -> PCIBridge -> ...
+>>
+>> For PCIDevice instances there is an API pci_device_reset(), and for
+>> PCIBridge ones pci_bridge_reset(). Without class prefixes both will be
+>> wrapped (as blanket impl in two traits) as reset() and a dev.reset()
+>> call will lead to a "multiple applicable items in scope" build error.
+>
+> Yes, reset is definitely a problem.
+>
+> I will wrap qdev_realize() in DeviceMethods to check if you get
+> "multiple applicable items" from that as well.
+>
+> I can also go back and add "sysbus_" in front of init_mmio, init_irq,
+> etc.; but on the other hand we have Timer::{modify, delete} and
+> DeviceMethods::init_{clock,qdev}_{in,out}, should they be changed as
+> well? I'm not sure there is a single solution that always works.
+>
 
->     2. Changes in the Event fields over time would not impact the
->        Breaking the Methods API. While some fields my be
->        added/removed/changed, I think this would help break less
->        the application when bumping the go module version.
+The DeviceMethods::init_* wrappers may need a similar prefix for the
+same reason, though it seems unlikely to suffer from such name
+conflicts. Meanwhile, adding prefixes to timer::* seems redundant.
 
-Yep, hiding everything behind a struct can reduce breakage.
+Essentially we want a naming convention that (1) avoids any potential
+name conflicts, and (2) applies consistently to (ideally) all APIs. For
+goal (1), we need something at API call sites that can resolve the
+potential ambiguity. So instead of dev.realize(), we may write:
 
-The tricky (impossible) question is how beneficial it is in
-the real world usage ?
+  a) dev.sysbus_realize()
 
-As guidance, taking protobuf as a commonly used package though,
-if I look at Kubevirt's protobuf generated APIs:
+  b) SysBusDeviceMethods::realize(&dev); dev.realize() is still ok if
+     there is no ambiguity
 
-  https://github.com/kubevirt/kubevirt/blob/main/pkg/handler-launcher-com/cmd/v1/cmd.pb.go#L1237
+  c) dev.as_ref::<SysBusDevice>().realize()
 
-I can see they're using structs for parameters and return
-values. So that widely used prior art, suggests we go the
-way you outline and use structs.
+  (any more options?)
 
+None looks perfect, unfortunately. Option (a) introduces inconsistent
+naming conventions as mentioned earlier; (b) cannot prevent confusions
+when a device has both a "reset()" method and "dev.reset()" calls; (c)
+deviates from how wrappers are auto-delegated to child classes today and
+is the longest to write.
 
-> I'm not sure about empty types like StopEvent. I'm generating it
-> with its doc but as it goes, it is bound to not be used, being
-> generated just as source of documentation. Still, if it so
-> happens that it does change in the future, we would need to
-> extend the Method with its field or its type.
-> 
->     // Emitted when the virtual machine is stopped
->     //
->     // Since: 0.12
->     //
->     // .. qmp-example::    <- { "event": "STOP",      "timestamp": {
->     // "seconds": 1267041730, "microseconds": 281295 } }
->     type StopEvent struct{}
+Option (b) + a lint that warns same method names looks a good tradeoff
+to me. I tried to find some clippy lints for that purpose, but have not
+found any yet. A similar issue exists [1], but has been kept open for >6
+years and is not exactly what we want.
 
-Yes, if the goal of using structs is to reduce breakage when
-fields are added/removed, then IMHO the logical conclusion
-is that empty structs must be generated.
+[1] https://github.com/rust-lang/rust-clippy/issues/3117
 
-> That also applies for commands..
-> 
->     // Resume guest VM execution.
->     //
->     // Since: 0.14
->     //
->     // .. note:: This command will succeed if the guest is currently
->     // running. It will also succeed if the guest is in the "inmigrate"
->     // state; in this case, the effect of the command is to make sure
->     // the guest starts once migration finishes, removing the effect of
->     // the "-S" command line option if it was passed.    If the VM was
->     // previously suspended, and not been reset or woken,   this command
->     // will transition back to the "suspended" state.   (Since 9.0)  ..
->     // qmp-example::    -> { "execute": "cont" }   <- { "return": {} }
->     type ContCommand struct {}
-> 
-> 
-> I honestly did the requested changes a little while ago but I was
-> thinking about this and tinkering a little with the demo.
+--
+Best Regards
+Junjie Mao
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+>> I agree that uses of proc macros should be carefully evaluated to see if
+>> they really help or hurt. In this specific case, I'm not sure if using
+>> attributes solves the root cause, though.
+>
+> Yes, it doesn't help if you have multiple similarly-named methods
+> across the "superclasses".
+>
+> Paolo
 
