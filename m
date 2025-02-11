@@ -4,56 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E333C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 02:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AEA2C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 02:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thfxQ-0005Ue-VN; Mon, 10 Feb 2025 21:25:05 -0500
+	id 1thg9d-0008Ds-Mk; Mon, 10 Feb 2025 21:37:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1thfxJ-0005U5-6G
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 21:24:57 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1thfxE-0003Bg-Kk
- for qemu-devel@nongnu.org; Mon, 10 Feb 2025 21:24:56 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCngzPwtKpnp41YAg--.25585S2;
- Tue, 11 Feb 2025 10:24:48 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDX3YnmtKpnW+AgAA--.43854S4;
- Tue, 11 Feb 2025 10:24:42 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: jonathan.cameron@huawei.com,
-	fan.ni@samsung.com
-Cc: qemu-devel@nongnu.org, chenbaozi@phytium.com.cn, linux-cxl@vger.kernel.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [PATCH 1/1] mem/cxl-type3: Add a default value of sn
-Date: Tue, 11 Feb 2025 10:24:13 +0800
-Message-Id: <20250211022413.80842-2-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250211022413.80842-1-wangyuquan1236@phytium.com.cn>
-References: <20250211022413.80842-1-wangyuquan1236@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1thg9b-0008DM-F9
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 21:37:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1thg9X-0000GT-Eq
+ for qemu-devel@nongnu.org; Mon, 10 Feb 2025 21:37:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739241451;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W8mv7Wtl83YpB1KMblXOpwN1rAv4sdsU8d+QvvHEwkg=;
+ b=LjtW1HN0E+LS5gwWIrVMT2O4ChjVRJKGC9EqjnEuiA5tol1YSoopMqQjlkiR1p6Pm+Hmr7
+ CDdG5TqOlAUIWGhR5wuc0ZqWTiArth4cCVZp/T/RVecs09EdEseR+Rqgko+zMSD/yjvyYK
+ NbV1BisuCrjU1x/ztyeElmjbIftjOdI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-TozyFYMyNvipZ7lQ_Xe2hA-1; Mon,
+ 10 Feb 2025 21:37:27 -0500
+X-MC-Unique: TozyFYMyNvipZ7lQ_Xe2hA-1
+X-Mimecast-MFC-AGG-ID: TozyFYMyNvipZ7lQ_Xe2hA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB6A21956088; Tue, 11 Feb 2025 02:37:25 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.124])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 443F6195608D; Tue, 11 Feb 2025 02:37:24 +0000 (UTC)
+Date: Mon, 10 Feb 2025 21:37:23 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PULL 00/17] testing and gdbstub updates
+Message-ID: <20250211023723.GA149825@fedora>
+References: <20250210161451.3273284-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDX3YnmtKpnW+AgAA--.43854S4
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQASAWeqWwIBbQAAsq
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7WF1xGrW7Xw4xWFyUCFyUZFb_yoW8tr15pr
- WagFy5KFs7ArnxJrWvya45Jw1xWFsag34UAasxAw17ZF92vwn0qr1DKryFkFyDuayxAr1U
- ta12ga429w43Kw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="sqzcT9Yljrwtlpvr"
+Content-Disposition: inline
+In-Reply-To: <20250210161451.3273284-1-alex.bennee@linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -71,63 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous default value of sn is UI64_NULL which would cause the
-cookie of nd_interleave_set be '0' and the "invalid interleave-set
--cookie" failure in label validation.
 
-As many users maybe not know how to set a unique sn for cxl-type3
-device and perhaps be confuesd by the failure of label validation,
-so this defines '1' as the default value of serial number to fix the
-problem.
+--sqzcT9Yljrwtlpvr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
----
- hw/mem/cxl_type3.c | 17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+Applied, thanks.
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 0ae1704a34..a6b5a9f74e 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -310,12 +310,6 @@ static void ct3d_config_write(PCIDevice *pci_dev, uint32_t addr, uint32_t val,
-     pcie_aer_write_config(pci_dev, addr, val, size);
- }
- 
--/*
-- * Null value of all Fs suggested by IEEE RA guidelines for use of
-- * EU, OUI and CID
-- */
--#define UI64_NULL ~(0ULL)
--
- static void build_dvsecs(CXLType3Dev *ct3d)
- {
-     CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
-@@ -856,12 +850,9 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     pci_config_set_prog_interface(pci_conf, 0x10);
- 
-     pcie_endpoint_cap_init(pci_dev, 0x80);
--    if (ct3d->sn != UI64_NULL) {
--        pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
--        cxl_cstate->dvsec_offset = 0x100 + 0x0c;
--    } else {
--        cxl_cstate->dvsec_offset = 0x100;
--    }
-+
-+    pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
-+    cxl_cstate->dvsec_offset = 0x100 + 0x0c;
- 
-     ct3d->cxl_cstate.pdev = pci_dev;
-     build_dvsecs(ct3d);
-@@ -1225,7 +1216,7 @@ static const Property ct3_props[] = {
-                      TYPE_MEMORY_BACKEND, HostMemoryBackend *),
-     DEFINE_PROP_LINK("lsa", CXLType3Dev, lsa, TYPE_MEMORY_BACKEND,
-                      HostMemoryBackend *),
--    DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
-+    DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, 0x1),
-     DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
-     DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
-     DEFINE_PROP_LINK("volatile-dc-memdev", CXLType3Dev, dc.host_dc,
--- 
-2.34.1
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+
+--sqzcT9Yljrwtlpvr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeqt+MACgkQnKSrs4Gr
+c8h/dAgAjVNYu5MjjvpdB9KBMwJI8D/N2Vq8VI/nsDsX8+cqYPIje6OMFEU2RnqE
+isaa8gyokWBDnRpVNi73W7ElMTFpM9LzHz3dP2uzyCjQSJ/p39ZVCiStomebooWL
+IikjBQy9dHUbJB6RTr58EFWdZaNa5FkJ5TTIstmREnYD+j6YTrHJzhLGqvhIoTiE
+L+sXxXzUDxgGD8dg3qDxyD+Wpn6wQ1+GJbKf4y52kvPprS0reJbFEO64cXa8MaRj
+Sco9NymDeLwph0YAC2VJ4uY2ilcJUlC3WhtKOSbQH7vHEidEnDH1QuGiBQXsBdJB
+tlRe9k6c3TtoK2XE7SSGB4OelWtRFQ==
+=SHII
+-----END PGP SIGNATURE-----
+
+--sqzcT9Yljrwtlpvr--
 
 
