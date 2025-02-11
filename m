@@ -4,207 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35589C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 21:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0060AC0219D
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 21:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thxik-0000kF-Lz; Tue, 11 Feb 2025 16:23:06 -0500
+	id 1thxjB-0000nN-BL; Tue, 11 Feb 2025 16:23:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1thxie-0000jX-Lx; Tue, 11 Feb 2025 16:23:00 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1thxic-0001T7-Dc; Tue, 11 Feb 2025 16:23:00 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BLMUhu010977;
- Tue, 11 Feb 2025 21:22:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=uYZAkeV+7iW7Mx3/NW8QJtrcW+aN/wnJSipF356yLgE=; b=
- Yuvk+BjXBDutcoGevTT3LqwG+zpryutznQtoS5FPyD6KrUEGnInvj1+bGT3H0I06
- b7IeqiPzcr1wr5Lj/yLa2SUOG+05vbA742LdA/9g2GTQYQ/KNXP+jAU+ATdf6miT
- zYVQM9Is0ohNsHcfNfS1XD7rGjU6mk4Y/uMg4SNEgqJWtqQGZ2YX3MSCzCMyRFP2
- GFRZniQ/JBZgZFpR2bD/BHWujk1SPo6OaeBPXQ46rFJfU/ShexknElKNA2ryb1q6
- TmfJT7XD05x5gQJyS1cBRMDF9f858vBSP3eIwOhsrK+Q5V77kS1ynd2DZWivjdKk
- F2KItpXI/BCGe2uy+WEvzw==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0q2e4vc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Feb 2025 21:22:45 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51BK54mV012414; Tue, 11 Feb 2025 21:22:45 GMT
-Received: from nam10-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam10lp2041.outbound.protection.outlook.com [104.47.55.41])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwq9bwt5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Feb 2025 21:22:45 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=emt4VdjqSDORe0k7BA4uUlyM2AUKO03NHQ8xlc6ZcjqS1sjFpikaGIzsQ3jkJuNPMOrp7zBZ8B0lBMON5d/7pb25PPhj2FM55UuWpEOoohVxgRgC64UyEFByD4fm4dyTpajHOidgQsRGqehwwTq8BxiNxT9ZecLLKoxoYMSB2W+M9ffZ4kc53AkTHU+y/F6gd9sZyENbVkSMrWFZ+NTQYplwMhReQHmlzCHBTzySqg7yGuh0FUlYnjE05Y+outffbVswmghJMa5FCrnV0cfOnkiziuuntSOGci9IPxMj3dYu3koteMyAOo/B7ihxwJnNC7plOYzoHut7ni6hRWRMHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uYZAkeV+7iW7Mx3/NW8QJtrcW+aN/wnJSipF356yLgE=;
- b=oCvMpYQIVEZoGg704VqSQ1BO+yP9QL+Rfv5LqxuQCro86q3gy7R6FaPBCqawYLYj2eSmT0MjzTh9oYAaGqG3dFBR3eopDFEk+ORSGwm4HkY5SnTHnLOEPTiXMKnL0fYji3sFlT5+uRDKg0GrW/uGwgEV49R6SSOb1r3XbH39DroeoP5gfTchvVMBXpq8z2Yw+w39nzoVoxbWfclP6dqmpd89uld5qfRN7k/wPQZJ0T6HC6uIg4oVG2M8VnL2nTL/HM2qVgdxgFLHm3p+L2Fv94QdAL1XN8mlZShsQZ5B08gUp2CSIWYFBubwpnQCN/udBdTnJN2SCmIgUuadYCGUPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uYZAkeV+7iW7Mx3/NW8QJtrcW+aN/wnJSipF356yLgE=;
- b=b1lwvmunVAg1lUKnRjU46r6nMESRgf5CUs885wzcdC7vyOnC1owO5oXMCrrox8yB2/delz7lgM43cviecbQNGbGIOT+0ufBwN5XyLy5ZGJ5wp0g5rrWzVwvhLzLqKC3i3PwwofvmTHpDajaFZgVWB/eGHNhgI107wXPnvKl3ra8=
-Received: from CH3PR10MB7329.namprd10.prod.outlook.com (2603:10b6:610:12c::16)
- by MN2PR10MB4382.namprd10.prod.outlook.com (2603:10b6:208:1d7::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.18; Tue, 11 Feb
- 2025 21:22:43 +0000
-Received: from CH3PR10MB7329.namprd10.prod.outlook.com
- ([fe80::f238:6143:104c:da23]) by CH3PR10MB7329.namprd10.prod.outlook.com
- ([fe80::f238:6143:104c:da23%6]) with mapi id 15.20.8422.015; Tue, 11 Feb 2025
- 21:22:42 +0000
-Message-ID: <6c891caf-fbc0-4f5e-8e21-e87c3348c9fa@oracle.com>
-Date: Tue, 11 Feb 2025 22:22:38 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/6] accel/kvm: Report the loss of a large memory page
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1thxj9-0000n4-7i
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:23:31 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1thxj5-0001VC-Ju
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:23:30 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9409F211B8;
+ Tue, 11 Feb 2025 21:23:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739309004; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nUpxduoRHU+M6oE1mDUMH9ZBsKGfwShYoclZ1vzt/A4=;
+ b=G2IjzN718L4GendtMX7Jq1Td/PzoAwM5ZbK/7Y7FVuDETjPi9s+z4ttIlv6+WOfGldNZuC
+ sFQddK0c4bnCnnD5L91zF9Oz2bM82R1qp7Wb+DYDS1zbXGLnEbqvbvkdhUJPFymvcAr/cs
+ MqbVNdSAOL+jGgpsR/WtQ78dyPr4qUw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739309004;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nUpxduoRHU+M6oE1mDUMH9ZBsKGfwShYoclZ1vzt/A4=;
+ b=PUM/I/VJPj7+/9P7mKVzFAVpkJZ2KkkoN0kcuiS21cufSUEEh4CEbEQc7yorQVQQnR3ygH
+ 7dT3Sxhk2GsoneDw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739309003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nUpxduoRHU+M6oE1mDUMH9ZBsKGfwShYoclZ1vzt/A4=;
+ b=TnyP00CU5iVyR+r8oemMjEFANnP6DnbtKWVCkAiVchZvGn70VoqyEY1l8IXf281KmNPiKe
+ IQte7FdJelPvEiHyIfByuibqMcUGji4Z/7LpIs6J0ZTJQyI9YMJ3usBvgIt22CEEAdKqSz
+ wQwK4U12ReD5OSTGT5H6oZbSwafYTTA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739309003;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nUpxduoRHU+M6oE1mDUMH9ZBsKGfwShYoclZ1vzt/A4=;
+ b=i4/19o6elyo/I6CXIay60pAYRIl8ekdnhc6fxQHBAeiKLX9/lBctV6880C5TtecLOyvT3z
+ GNhOfhznwIBRPODw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1345D13782;
+ Tue, 11 Feb 2025 21:23:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /GKqMcq/q2f9UQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 11 Feb 2025 21:23:22 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>
-Cc: david@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
- imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-References: <20250201095726.3768796-1-william.roche@oracle.com>
- <20250201095726.3768796-4-william.roche@oracle.com>
- <Z6JH_OyppIA7WFjk@x1.local> <3f3ebbe8-be97-4827-a8c5-6777dea08707@oracle.com>
- <Z6Oaukumli1eIEDB@x1.local> <2ad49f5d-f2c1-4ba2-9b6b-77ba96c83bab@oracle.com>
- <Z6ot7eVxaf39oWKr@x1.local>
-Content-Language: en-US, fr
-From: William Roche <william.roche@oracle.com>
-In-Reply-To: <Z6ot7eVxaf39oWKr@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AS4P189CA0053.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:659::17) To CH3PR10MB7329.namprd10.prod.outlook.com
- (2603:10b6:610:12c::16)
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 8/9] tests/qtest/migration: Add a cancel test
+In-Reply-To: <Z6urZeOyLYRJzMM8@x1.local>
+References: <20250211150136.6781-1-farosas@suse.de>
+ <20250211150136.6781-9-farosas@suse.de> <Z6urZeOyLYRJzMM8@x1.local>
+Date: Tue, 11 Feb 2025 18:23:20 -0300
+Message-ID: <87pljouqev.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR10MB7329:EE_|MN2PR10MB4382:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9d734e10-6b3c-4413-c3a5-08dd4ae2383f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?U3I4NHNqcjQ5QkNXbmdxZjNFcWpqL29aNy9nc0ZCSWJkVEYwSVNENFNGMnhB?=
- =?utf-8?B?dTZGTG9ZQzFVR2RSR1NGdTV5RFp4MlEwb2tFWVBsaTRzNVRxY29NQ29TbVY0?=
- =?utf-8?B?NWdvSmRnUC9panplZVBUZ1ZCbFFUMmJwRDRCQWZ6WlpvYlF5TENoaXFNMXFZ?=
- =?utf-8?B?WUFUSzBwV2FyeE03Tkh6cnhtbVhSZVB2SmhUNTNGaUJ4Ym5CeGNCU0F4TVNQ?=
- =?utf-8?B?cU1BY3FFY1psbGNHWkh1Y2d1TUQ5Uzg0N2g5OWx3WDFTM0VUMHNDbFBtcVdH?=
- =?utf-8?B?S01jL0p0TkJ0NHFHSmtwYzR3WUJTeWN3ZGpnYlpmQ3ZNOWVjRkdWRmRZMHRi?=
- =?utf-8?B?K2g3NE50cyt5VFdGVm1BZVZFSnhhWGF2b2NNKzBGT3ZrUGhsUTZQTkNlZW1j?=
- =?utf-8?B?bG1KM0h2ai8vN3NmOHZuSUJSTVU4VlhDYXZnckRPOGNFRUNBSm9KNDRwQWxI?=
- =?utf-8?B?UC9IOTZFRWpqbkJrU2Q2WiswSys4SytSNEtCRG5nMk5JOUdXQUh0N0w4V0g4?=
- =?utf-8?B?QS94NzhWSHFJWkNIYWxHVFhCZ1czcGkyQkl5bUk2amFrbWdMdVFHYWhybW5y?=
- =?utf-8?B?ZTRTL2JwLytjNTdhbzZlbGpobzNVcmNsRUw0RmEvZDV4dXBBQVpEazdQRkFV?=
- =?utf-8?B?eXNZeHdpWUtEZjBMSUtRUkN2b3MzdzV5YXl3SWtZQ3ZmVE04aWJwN09iVWM1?=
- =?utf-8?B?VVF6S2lkQVUzVU1Sa1NoM3BQYlY0UWExNkdkS3lWUkMrMk9RdHRWK3l5MEw0?=
- =?utf-8?B?c1gzZ0g1T1dpajlxWkZ6b3R2b201STdlb1FWVFpPQXRDdU1GNm1SM3lRaFFr?=
- =?utf-8?B?RE1nNGFLR3hTY2N1WlJsMW5vSmRVTnVsSWZBM29aVSs3QjhraWlnMVhPcUNm?=
- =?utf-8?B?NGswUm8zL2VhMTlGOEg3NVZISWVNdmJEazN5bU9pc3kveldNL0JYeW5kUENj?=
- =?utf-8?B?d1dHcXd2UWtxSllOckNDNEtSTXhOUUdRbVI1c00ySEdZWWREVnlqazhZc0E2?=
- =?utf-8?B?YWpTU2IxK0YyQjRIL1hvbVZhNm14Y0toTmcwb3JzbnNYU2piUUFVdVBkN3VD?=
- =?utf-8?B?ekUwcjNJK0FRa2ZUSnVMdWN2YWFEVkFuRmtmdlVjcjl2bTNIUnF3TW5PYjFa?=
- =?utf-8?B?UCtycFVLWDNleWtiSFY1ZmtaSkhKeml1MmluTjM5VGhQZmkvSGY1SzE5UzN2?=
- =?utf-8?B?T1BRWlZPZjc3aE02RkU1SWZ6L2RCcWZlcGh0Qlpxamx6S2xjTlFKQVNNRDhK?=
- =?utf-8?B?ODQ5VlV2cHJXamF4ckZ2eFl5U2Ewd090RUtCRVB4ZVcwb3V3bGZvSzFpeVFV?=
- =?utf-8?B?QlNWR3lFdTlsZUxXbmUyK2w0SE1HMlhmL3lzMEVpQnBPQlNTc0pTckVqTDdz?=
- =?utf-8?B?bEhUU3R4SVh1VXNVOVZhWENGbzRUN3NnV3M5dVhURGtJSXdrenR2UjkwSnNZ?=
- =?utf-8?B?MThIbmdMQjBtU3h6b1F0N1NMcHBPMlNQdVhqSFEvZlliU2lNb0c3MSsyMHRa?=
- =?utf-8?B?NG5qeUh6aW14MjIrUGdnMC94RzlCa0x0N3RIQi9DV2c3QnQxSEZuU1NnRGR3?=
- =?utf-8?B?elBoeTY0eThIRDc5ZHFINzlGLzZpMGxLejExZVoxUzBvQm1tOFVVVmRnOTd6?=
- =?utf-8?B?RGZJbXo2Y3U2SUtDbjgwbSt2ZmxrRTBVdExOUFJSMDFHMjRXL1lWWEU2K3JG?=
- =?utf-8?B?QW5yN3FETWpLb3BJM3FEMFYwam1MN3l3OXkxZ3VZNDBjMm02LzRadGt3MkNC?=
- =?utf-8?B?VXVoQ1JBcDd3djVvUjVqZUM3bzNHUVVKUXczb2tnK1F4VW90djZsUDJ1ZlR3?=
- =?utf-8?B?M3JTdjRQdFQzVXB6dzlzWDVNalY3blJuR0VlL2dsOHA4RTlJUzh5L3M1eTNH?=
- =?utf-8?Q?/F8suKt4mNzPh?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR10MB7329.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Qmk4T2FYSyt0dThFNzJqU0dtNURHU29meWJROXkyRlROZGxSSEg0dWNLRHg0?=
- =?utf-8?B?a3FackIrd3gvRG4rZUFJY3A2Z1oyazIzMVRHcTZiRjNQOFE1dWJwa1VLN2Nu?=
- =?utf-8?B?TDJ0dUMrY21Rc0FSZUF0SDIrcGhac0t1Kys3YVlzU09jZEh4aEhleDVwWFRw?=
- =?utf-8?B?QjdydFB4TzF6RngrRm1La081UFJzQkN5aGxEZjQra2I4dnJwb1BUZ1JWYTRh?=
- =?utf-8?B?QWQ0dlhZU2IwZWRVb0N0SXNJMDlKcU1leENmTENxbWNKSFNodGpjSXdFM2Zo?=
- =?utf-8?B?MjJOT1NFRXVkZFlEMVUrbFNsQmZvdXFVV1dQYjMycDhkUCs2NlJ4eHVZckRI?=
- =?utf-8?B?c0drRGI4OE0wY1l2ZFphR0pPMTJRQ012ZnlsV1JFd3F0bStHVW9yQkhJSUVF?=
- =?utf-8?B?R0VUZThXR1ZSSlBQU3lBTkhmN29GT29pd1ZOMk1DOVpwbmxPTG1rakhoaHFi?=
- =?utf-8?B?Y0t2MzVIdks5Vy84Y2Y4ZEZSTzJTZWxxeU9OM2l6Y3pjWjNCS1NLZXpwQzFn?=
- =?utf-8?B?LzQ0bitpNlJzaG1JSEp2SnZKYUNzdTV6YSt4TTE2QWJ5djh4WWpXamx3alZs?=
- =?utf-8?B?N1VLT3NuSXE2amx6SElLaFJPQ01TMFRWNkViamxpakZsdHRFSHBDWkRRejNo?=
- =?utf-8?B?YUx6MEd1eGtDOEhOWXB0TEpvZnFxWDlxZWdtdEc2d01JV0ZHMDhwN045eGY2?=
- =?utf-8?B?LzJsK3dyVUVIdlA0Q2RxS2s1VnBVaHNJSWcwOW5ua2piZEhyU0FoK1lhbTAx?=
- =?utf-8?B?ZmRTVjlVNlpjdG80M3h3TE56eGZMdFVLOEF3Wm52VlV5VFF1UzJYSGtnNUhi?=
- =?utf-8?B?SE52VW5FRDhRVzdkM1RVSnRTVHBUT2FOUUo4L0hhOTlBakEwM1V2VzJONzJp?=
- =?utf-8?B?TktXd1lkb2lTWC85azdORFdYTDN1Z045eFhoMkZFZEdTSFFFRmxOcVoxOTVi?=
- =?utf-8?B?WTFQSDJQKzg4Q3AxNXNGSFB4Zi8zL0hIVDJob1ZlR2kwaU92WlV1QUl6VFVh?=
- =?utf-8?B?b2VLdXRmMWtPZHIyM0NqTE56SEFGdVQ2bG0ybDM5Q0ZkdzJGd0lpYTNzOU1y?=
- =?utf-8?B?ZS9pbnlaUkxOK2hQS2pSQUJLMk56U096NEtCWHNkSks4TGR6SGZiSTJNMTVI?=
- =?utf-8?B?NDhTT21udDQzZTBIR1VIdXlJOVE5aWFlY1hjckRZZ1ZobTVUUmREM0kwcVRi?=
- =?utf-8?B?UEdQQytoRTErWFNSa0JIVkNtTjVOd1dvMFRFVFlWZXpLbytrNUhObEljTDA2?=
- =?utf-8?B?N0FoNXNaZ3FFLy9pUDhPcTkyTGNHRDhObHBtRkhXWU00Y25YY1hPVmgxQ2RE?=
- =?utf-8?B?NHdkLzV2YWVrUzlhMjJzL08wbC9GemtZOGpSVTNONDU1MEtRSG0waGlmSzRL?=
- =?utf-8?B?TlVYWFNUWFlKamJvTHQxcS9JWlFRK0xIOTFmVWxUaDFaN1QwNEo4aGx6bzE2?=
- =?utf-8?B?cklPZmZlc2RBaEk2K3czWWZ4SWlMaUNURkZCZFhFWHBVVWQxbUlGUyt1aGdk?=
- =?utf-8?B?dVJvMkdqZWFXNkxIUUw1N3pkRHE2ZkhyQWVQRkcvSklTWkJKc05teVIxL3Va?=
- =?utf-8?B?RkQ4TElXNkc2UWM4VWpXK3ZnMmVKUm5Cd2N3akRuM08rTkhrK2dna3lQUlU2?=
- =?utf-8?B?RlNOYUYwSDZLZDNyNGtsSGRuV0NVMFRXRFR5L3M0MFRpckFFdTRya1krZGtG?=
- =?utf-8?B?Z2hiSVRjUHpOMjZBT1UxMDR2UnVZNzFEZTRQamt1anYvT3AvYkQ0VEp5TU9t?=
- =?utf-8?B?OXBLTW55alRiSFpiL1hMWHo1M3FYTXhRUVdRbHordUNQV3E3VXdzVVNLa1dw?=
- =?utf-8?B?NytHaVIwLzFMazNSTHpabnhBMS9QMmRKeHU1blpuZkVIdHI3NDF4b1ZNOWIx?=
- =?utf-8?B?WW1kbHlmbDh0VTJnWDlnM29aenhDdmtzRzcycWRlNnp0dzhRbyttVTI2ODRR?=
- =?utf-8?B?bkVDVjY2aCtYUGVrOTJEYkxURmpJcllmK1Q5eEVyUVFUNStzZjl2REVoRmFZ?=
- =?utf-8?B?ZDJ6MURyNm1oWVlHNzhwbytSTkhsWTVROUI0U21jUUZ2RVVVMkt5cGlUUkha?=
- =?utf-8?B?Q3ZmckR3Y29YOHd2c00xb2xEOE82YWZCYzBGd0JxZ0d4RHN3cUx0WDBOOTlT?=
- =?utf-8?B?SkdISG40OU5QLzU1bzZmb1dYZUNtdk54a1UxOFJzc2QwempUellteHNRZnQv?=
- =?utf-8?B?NVE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: QTVqyVez4BkbLvjWAzc3mHCI8fKccgQu2FFW45F4POjoQju5zIDXas0tjveOkaE5o36OrYZnMl5sF7gW7rAzDbd1XuvX+I++nzNgxHb3zOyoUeDrEM3TasddaJRg5yAILxASkws5qfnKlQ5siit8epn6uPt4Jyt5L6C4TCjiRwdUER8ozPs0fz1EpIsgiobsslQcOGP+v7WC1anvZ83FTMWyBJq3M77UUf1S4Kwc9jeaMpCUIe1kl+oga4lMISWfbdjzQ0vl7SqGaxA5KU3D0VfNuxx2H+JOTdzfoaWqMsjTfPIyI3GTbqLLyEwpuoybNeEIKkrMPhjWhKV6RiTizDJ0MV7tto3SbH4XjeTnAbZuoqRdVokvYUCV1A/L3X15vDsJ6iisfdw8VWR6RQb91+l1O9fF8K9r4SbxZDcX4Nm0eL/eONJdRaJS/rGrkqTq9EpgNJ+jbIJtbzvV0xSF2T6IadnY9eACHI77RXMDOBtNVY/AKBJWBGXbBAkhbH81ceXsgK6roe7R7S/WD1e1aEjtPktATIsr2bxoHqgVdxJArUUPkAXyppkBiHWMDnjaNEgn7nyp9zOQ6+EMJPzfUCLNgM7VDQYwYAt2Gx75TlU=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d734e10-6b3c-4413-c3a5-08dd4ae2383f
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7329.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2025 21:22:42.7514 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HnpBIpAGMH1I+PK8UpZUa3QMjet70vk5LG4iSzKqJOGg6Q10uTnrzIA+qNJaZGNMg3ufR6B+em8PJ7IkecXsOnoLtzBqpHRerlpci6SzWUE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR10MB4382
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_09,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- malwarescore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2501170000 definitions=main-2502110140
-X-Proofpoint-GUID: omLP9-LGYgMcVwY2x69A5VNP7mPC_PnF
-X-Proofpoint-ORIG-GUID: omLP9-LGYgMcVwY2x69A5VNP7mPC_PnF
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=william.roche@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -220,84 +116,335 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/25 17:48, Peter Xu wrote:
-> On Fri, Feb 07, 2025 at 07:02:22PM +0100, William Roche wrote:
->> [...]
->> So the main reason is a KVM "weakness" with kvm_send_hwpoison_signal(), and
->> the second reason is to have richer error messages.
-> 
-> This seems true, and I also remember something when I looked at this
-> previously but maybe nobody tried to fix it.  ARM seems to be correct on
-> that field, otoh.
-> 
-> Is it possible we fix KVM on x86?
+Peter Xu <peterx@redhat.com> writes:
 
-Yes, very probably, and it would be a kernel fix.
-This kernel modification would be needed to run on the hypervisor first 
-to influence a new code in qemu able to use the SIGBUS siginfo 
-information and identify the size of the page impacted (instead of using 
-an internal addition to kvm API).
-But this mechanism could help to generate a large page memory error 
-specific message on SIGBUS receiving.
+> On Tue, Feb 11, 2025 at 12:01:35PM -0300, Fabiano Rosas wrote:
+>> The qmp_migrate_cancel() command is poorly tested and code inspection
+>> reveals that there might be concurrency issues with its usage. Add a
+>> test that runs a migration and calls qmp_migrate_cancel() at specific
+>> moments.
+>> 
+>> In order to make the test more deterministic, instead of calling
+>> qmp_migrate_cancel() at random moments during migration, do it after
+>> the migration status change events are seen.
+>> 
+>> The expected result is that qmp_migrate_cancel() on the source ends
+>> migration on the source with the "cancelled" state and ends migration
+>> on the destination with the "failed" state. The only exception is that
+>> a failed migration should continue in the failed state.
+>> 
+>> Cancelling is not allowed during postcopy (no test is added for this
+>> because it's a trivial check in the code).
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  tests/qtest/migration/precopy-tests.c | 176 ++++++++++++++++++++++++++
+>>  1 file changed, 176 insertions(+)
+>> 
+>> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+>> index 162fa69531..ba273d10b9 100644
+>> --- a/tests/qtest/migration/precopy-tests.c
+>> +++ b/tests/qtest/migration/precopy-tests.c
+>> @@ -20,6 +20,7 @@
+>>  #include "migration/migration-util.h"
+>>  #include "ppc-util.h"
+>>  #include "qobject/qlist.h"
+>> +#include "qapi-types-migration.h"
+>>  #include "qemu/module.h"
+>>  #include "qemu/option.h"
+>>  #include "qemu/range.h"
+>> @@ -536,6 +537,161 @@ static void test_multifd_tcp_cancel(void)
+>>      migrate_end(from, to2, true);
+>>  }
+>>  
+>> +static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
+>> +                                         const char *uri, const char *phase)
+>> +{
+>> +    /*
+>> +     * No migrate_incoming_qmp() at the start to force source into
+>> +     * failed state during migrate_qmp().
+>> +     */
+>> +
+>> +    wait_for_serial("src_serial");
+>> +    migrate_ensure_converge(from);
+>> +
+>> +    migrate_qmp(from, to, uri, NULL, "{}");
+>> +
+>> +    migration_event_wait(from, phase);
+>> +    migrate_cancel(from);
+>> +
+>> +    /* cancelling will not move the migration out of 'failed' */
+>> +
+>> +    wait_for_migration_status(from, "failed",
+>> +                              (const char * []) { "completed", NULL });
+>> +
+>> +    /*
+>> +     * Not waiting for the destination because it never started
+>> +     * migration.
+>> +     */
+>> +}
+>> +
+>> +static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
+>> +                                            const char *uri, const char *phase)
+>> +{
+>> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +
+>> +    wait_for_serial("src_serial");
+>> +    migrate_ensure_converge(from);
+>> +
+>> +    migrate_qmp(from, to, uri, NULL, "{}");
+>> +
+>> +    /* To move to cancelled/cancelling */
+>> +    migrate_cancel(from);
+>> +    migration_event_wait(from, phase);
+>> +
+>> +    /* The migrate_cancel under test */
+>> +    migrate_cancel(from);
+>> +
+>> +    wait_for_migration_status(from, "cancelled",
+>> +                              (const char * []) { "completed", NULL });
+>> +
+>> +    wait_for_migration_status(to, "failed",
+>> +                              (const char * []) { "completed", NULL });
+>> +}
+>> +
+>> +static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
+>> +                                           const char *uri, const char *phase)
+>> +{
+>> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +
+>> +    wait_for_serial("src_serial");
+>> +    migrate_ensure_converge(from);
+>> +
+>> +    migrate_qmp(from, to, uri, NULL, "{}");
+>> +
+>> +    migration_event_wait(from, phase);
+>> +    migrate_cancel(from);
+>> +
+>> +    /*
+>> +     * qmp_migrate_cancel() exits early if migration is not running
+>> +     * anymore, the status will not change to cancelled.
+>> +     */
+>> +    wait_for_migration_complete(from);
+>> +    wait_for_migration_complete(to);
+>> +}
+>> +
+>> +static void test_cancel_src_after_none(QTestState *from, QTestState *to,
+>> +                                       const char *uri, const char *phase)
+>> +{
+>> +    /*
+>> +     * Test that cancelling without a migration happening does not
+>> +     * affect subsequent migrations
+>> +     */
+>> +    migrate_cancel(to);
+>> +
+>> +    wait_for_serial("src_serial");
+>> +    migrate_cancel(from);
+>> +
+>> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +
+>> +    migrate_ensure_converge(from);
+>> +    migrate_qmp(from, to, uri, NULL, "{}");
+>> +
+>> +    wait_for_migration_complete(from);
+>> +    wait_for_migration_complete(to);
+>> +}
+>> +
+>> +static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+>> +                                           const char *uri, const char *phase)
+>> +{
+>> +    migrate_set_capability(from, "pause-before-switchover", true);
+>> +    migrate_set_capability(to, "pause-before-switchover", true);
+>> +
+>> +    migrate_set_capability(from, "multifd", true);
+>> +    migrate_set_capability(to, "multifd", true);
+>> +
+>> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +
+>> +    wait_for_serial("src_serial");
+>> +    migrate_ensure_converge(from);
+>> +
+>> +    migrate_qmp(from, to, uri, NULL, "{}");
+>> +
+>> +    migration_event_wait(from, phase);
+>> +    migrate_cancel(from);
+>> +    migration_event_wait(from, "cancelling");
+>> +
+>> +    wait_for_migration_status(from, "cancelled",
+>> +                              (const char * []) { "completed", NULL });
+>> +
+>> +    wait_for_migration_status(to, "failed",
+>> +                              (const char * []) { "completed", NULL });
+>> +}
+>> +
+>> +static void test_cancel_src_after_status(void *opaque)
+>> +{
+>> +    const char *test_path = opaque;
+>> +    g_autofree char *phase = g_path_get_basename(test_path);
+>> +    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+>> +    QTestState *from, *to;
+>> +    MigrateStart args = {
+>> +        .hide_stderr = true,
+>> +    };
+>> +
+>> +    if (migrate_start(&from, &to, "defer", &args)) {
+>> +        return;
+>> +    }
+>> +
+>> +    if (g_str_equal(phase, "cancelling") ||
+>> +        g_str_equal(phase, "cancelled")) {
+>> +        test_cancel_src_after_cancelled(from, to, uri, phase);
+>> +
+>> +    } else if (g_str_equal(phase, "completed")) {
+>> +        test_cancel_src_after_complete(from, to, uri, phase);
+>> +
+>> +    } else if (g_str_equal(phase, "failed")) {
+>> +        test_cancel_src_after_failed(from, to, uri, phase);
+>> +
+>> +    } else if (g_str_equal(phase, "none")) {
+>> +        test_cancel_src_after_none(from, to, uri, phase);
+>> +
+>> +    } else {
+>> +        /* any state that comes before pre-switchover */
+>> +        test_cancel_src_pre_switchover(from, to, uri, phase);
+>
+> [1]
+>
+>> +    }
+>> +
+>> +    migrate_end(from, to, false);
+>> +}
+>
+> I'm OK with the current status, considering it at least enlarge our cancel
+> testcases so definitely good to have:
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+> Though one thing to mention is the new "test_full()" abstraction doesn't
+> yet look like to benefit us a huge lot, IMHO.
+>
+> These are the new tests:
+>
+> # /x86_64/migration/cancel/src/after/none
+> # /x86_64/migration/cancel/src/after/setup             [*]
+> # /x86_64/migration/cancel/src/after/cancelling
+> # /x86_64/migration/cancel/src/after/cancelled
+> # /x86_64/migration/cancel/src/after/active
+> # /x86_64/migration/cancel/src/after/completed
+> # /x86_64/migration/cancel/src/after/failed
+> # /x86_64/migration/cancel/src/after/pre-switchover    [*]
+>
+> We have only one abstracted path [1] to test random status, but that so far
+> only covers two cases marked with [*].  It is hard to say whether the
+> abstraction is necessary, or maybe it's easier we always register separate
+> test cases.  So it's still slightly debatable whether we could make all
+> above "if .. if else .. if else ... else" into separate tests.
+>
+
+It gets super boilerplatey:
 
 
->>>
->>> I feel like when hwpoison becomes a serious topic, we need some more
->>> serious reporting facility than error reports.  So that we could have this
->>> as separate topic to be revisited.  It might speed up your prior patches
->>> from not being blocked on this.
->>
->> I explained why I think that error messages are important, but I don't want
->> to get blocked on fixing the hugepage memory recovery because of that.
-> 
-> What is the major benefit of reporting in QEMU's stderr in this case?
+    for (int i = MIGRATION_STATUS_NONE; i < MIGRATION_STATUS__MAX; i++) {
+        switch (i) {
+        case MIGRATION_STATUS_DEVICE:          /* happens too fast */
+        case MIGRATION_STATUS_WAIT_UNPLUG:     /* no support in tests */
+        case MIGRATION_STATUS_COLO:            /* no support in tests */
+        case MIGRATION_STATUS_POSTCOPY_ACTIVE: /* postcopy can't be cancelled */
+        case MIGRATION_STATUS_POSTCOPY_PAUSED:
+        case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+        case MIGRATION_STATUS_POSTCOPY_RECOVER:
+            continue;
+        case MIGRATION_STATUS_NONE:
+            migration_test_add("/migration/cancel/src/after/none",
+                               test_cancel_src_after_none);
+            break;
+        case MIGRATION_STATUS_SETUP:
+            migration_test_add("/migration/cancel/src/after/setup",
+                               test_cancel_src_after_setup);
+            break;
+        case MIGRATION_STATUS_CANCELLING:
+            migration_test_add("/migration/cancel/src/after/cancelling",
+                               test_cancel_src_after_cancelling);
+            break;
+        case MIGRATION_STATUS_CANCELLED:
+            migration_test_add("/migration/cancel/src/after/cancelled",
+                               test_cancel_src_after_cancelled);
+            break;
+        case MIGRATION_STATUS_ACTIVE:
+            migration_test_add("/migration/cancel/src/after/active",
+                               test_cancel_src_after_active);
+            break;
+        case MIGRATION_STATUS_COMPLETED:
+            migration_test_add("/migration/cancel/src/after/completed",
+                               test_cancel_src_after_completed);
+            break;
+        case MIGRATION_STATUS_FAILED:
+            migration_test_add("/migration/cancel/src/after/failed",
+                               test_cancel_src_after_failed);
+            break;
+        case MIGRATION_STATUS_PRE_SWITCHOVER:
+            migration_test_add("/migration/cancel/src/after/pre-switchover",
+                               test_cancel_src_after_pre_switchover);
+            break;
+        }
+    }
 
-Such messages can be collected into VM specific log file, as any other 
-error_report() message, like the existing x86 error injection messages 
-reported by Qemu.
-This messages should help the administrator to better understand the 
-behavior of the VM.
+}
 
+void test_cancel_src_after_cancelling(void)
+{
+    test_cancel_src_after_cancel("cancelling");
+}
 
-> For example, how should we consume the error reports that this patch
-> introduces?  Is it still for debugging purpose?
+void test_cancel_src_after_cancelled(void)
+{
+    test_cancel_src_after_cancel("cancelled");
+}
 
-Its not only debugging, but it's a trace of a significant event that can 
-have major consequences on the VM.
+void test_cancel_src_after_setup(void)
+{
+    test_cancel_src_after("setup");
+}
 
-> 
-> I agree it's always better to dump something in QEMU when such happened,
-> but IIUC what I mentioned above (by monitoring QEMU ramblock setups, and
-> monitor host dmesg on any vaddr reported hwpoison) should also allow anyone
-> to deduce the page size of affected vaddr, especially if it's for debugging
-> purpose.  However I could possibly have missed the goal here..
+void test_cancel_src_after_active(void)
+{
+    test_cancel_src_after("active");
+}
 
-You're right that knowing the address, the administrator can deduce what 
-memory area was impacted and the associated page size. But the goal of 
-these large page specific messages was to give details on the event type 
-and immediately qualify the consequences.
-Using large pages can also have drawbacks, and a large page specific 
-message on memory error makes that more obvious !  Not only a debug msg, 
-but an indication that the VM lost an unusually large amount of its memory.
+void test_cancel_src_after_pre_switchover(void)
+{
+    test_cancel_src_after("pre-switchover");
+}
 
->>
->> If you think that not displaying a specific message for large page loss can
->> help to get the recovery fixed, than I can change my proposal to do so.
->>
->> Early next week, I'll send a simplified version of my first 3 patches
->> without this specific messages and without the preallocation handling in all
->> remap cases, so you can evaluate this possibility.
-> 
-> Yes IMHO it'll always be helpful to separate it if possible.
+static void test_cancel_src_after_failed(void)
+{
+    ...
+    migration_event_wait(from, "failed");
+    ...
+}
 
-I'm sending now a v8 version, without the specific messages and the 
-remap notification. It should fix the main recovery bug we currently 
-have. More messages and a notification dealing with pre-allocation can 
-be added in a second step.
+static void test_cancel_src_after_cancel(const char *phase)
+{
+    ...    
+    migration_event_wait(from, phase);
+    ...
+}
 
-Please let me know if this v8 version can be integrated without the 
-prealloc and specific messages ?
+static void test_cancel_src_after_complete(void)
+{
+    migration_event_wait(from, "complete");
+    ...
+}
 
-Thanks,
-William.
+static void test_cancel_src_after_none(void)
+{
+    ...
+}
+
+static void test_cancel_src_after(const char *phase)
+{
+   ...
+   migration_event_wait(from, phase);
+   ...
+}
 
