@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F754C021A2
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91C6C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmV8-00036r-Pj; Tue, 11 Feb 2025 04:24:18 -0500
+	id 1thmV5-0002y2-ON; Tue, 11 Feb 2025 04:24:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUu-0002Pd-Er
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:24:04 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUl-0002Dk-Tz
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUs-00034Y-JC
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:24:04 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUj-00031n-Hd
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739265839;
+ s=mimecast20190719; t=1739265831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XDe69REBwANjG/ksvGk7MhbAEdcoWWDQGF+7LC7014Q=;
- b=HUNNcJqfoCncDpgW+6FY6BblHx/uw6fNsuIezQDvfQiEj/2sinfGD33ZpDeUU7HIgQexpW
- +BSt2Wo7ZZ6UWjI1RE7zcBSjVUZY7gicYxjW1n9DpAdbZuawD5T6fr7PdtSTkjeC+QROHI
- xSevWmLY6HUAFb6j/mfmzbow3e3rLBE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=UV88xJJUfAvrw/fc/mg8vRoOkEyBrTNQ3OXAJ9SV/Ic=;
+ b=LzQQkxJCENekHKDK3oBAISa8YhNjEKSeGIdh6yqHvjPIkxyuKNAih+qkNY6tq15Ho1Tkrd
+ A3D9n06p/5Ev3SngUVjTmhRLJq3XJoR5MFwMjjWEsTq+rhViSaSzdXZ15gj4+bFW7ZfHCe
+ qJEAcenFGOW26RcGs5HIj2op4yiCL3U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-xOqvmH6xPlG0jkKY0UEuBQ-1; Tue,
- 11 Feb 2025 04:23:56 -0500
-X-MC-Unique: xOqvmH6xPlG0jkKY0UEuBQ-1
-X-Mimecast-MFC-AGG-ID: xOqvmH6xPlG0jkKY0UEuBQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-hL9E1HInPdaQYjsTgO8Iug-1; Tue,
+ 11 Feb 2025 04:23:48 -0500
+X-MC-Unique: hL9E1HInPdaQYjsTgO8Iug-1
+X-Mimecast-MFC-AGG-ID: hL9E1HInPdaQYjsTgO8Iug
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CDAC5180036F; Tue, 11 Feb 2025 09:23:54 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFDD019560B9; Tue, 11 Feb 2025 09:23:46 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.57])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8896F180087B; Tue, 11 Feb 2025 09:23:54 +0000 (UTC)
+ id AFB0E1800115; Tue, 11 Feb 2025 09:23:45 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id A69A21800618; Tue, 11 Feb 2025 10:23:25 +0100 (CET)
+ id 2AFDF1800602; Tue, 11 Feb 2025 10:23:25 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
@@ -59,9 +59,9 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH v3 17/23] hw/uefi: add uefi-vars-sysbus device
-Date: Tue, 11 Feb 2025 10:23:15 +0100
-Message-ID: <20250211092324.965440-18-kraxel@redhat.com>
+Subject: [PATCH v3 10/23] hw/uefi: add var-service-pkcs7.c
+Date: Tue, 11 Feb 2025 10:23:08 +0100
+Message-ID: <20250211092324.965440-11-kraxel@redhat.com>
 In-Reply-To: <20250211092324.965440-1-kraxel@redhat.com>
 References: <20250211092324.965440-1-kraxel@redhat.com>
 MIME-Version: 1.0
@@ -92,124 +92,457 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds sysbus bindings for the variable service.
+This implements pkcs7 signature verification using gnutls.
+Needed to check authenticated variable updates.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/uefi/var-service-sysbus.c | 89 ++++++++++++++++++++++++++++++++++++
- hw/uefi/meson.build          |  3 +-
- 2 files changed, 91 insertions(+), 1 deletion(-)
- create mode 100644 hw/uefi/var-service-sysbus.c
+ hw/uefi/var-service-pkcs7.c | 436 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 436 insertions(+)
+ create mode 100644 hw/uefi/var-service-pkcs7.c
 
-diff --git a/hw/uefi/var-service-sysbus.c b/hw/uefi/var-service-sysbus.c
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
 new file mode 100644
-index 000000000000..1815c0b8d27f
+index 000000000000..32accf4e44e0
 --- /dev/null
-+++ b/hw/uefi/var-service-sysbus.c
-@@ -0,0 +1,89 @@
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -0,0 +1,436 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * uefi vars device - sysbus variant.
++ * uefi vars device - pkcs7 verification
 + */
 +#include "qemu/osdep.h"
-+#include "migration/vmstate.h"
++#include "qemu/error-report.h"
++#include "system/dma.h"
 +
-+#include "hw/qdev-properties.h"
-+#include "hw/sysbus.h"
++#include <gnutls/gnutls.h>
++#include <gnutls/pkcs7.h>
++#include <gnutls/crypto.h>
 +
 +#include "hw/uefi/var-service.h"
-+#include "hw/uefi/var-service-api.h"
 +
-+OBJECT_DECLARE_SIMPLE_TYPE(uefi_vars_sysbus_state, UEFI_VARS_SYSBUS)
++#define AUTHVAR_DIGEST_ALGO GNUTLS_DIG_SHA256
++#define AUTHVAR_DIGEST_SIZE 32
 +
-+struct uefi_vars_sysbus_state {
-+    SysBusDevice parent_obj;
-+    struct uefi_vars_state state;
-+};
++/*
++ * Replicate the signed data for signature verification.
++ */
++static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
++{
++    variable_auth_2 *auth = data;
++    uint64_t data_offset = sizeof(efi_time) + auth->hdr_length;
++    uint16_t *name = (void *)va + sizeof(mm_variable_access);
++    gnutls_datum_t *sdata;
++    uint64_t pos = 0;
 +
-+static const VMStateDescription vmstate_uefi_vars_sysbus = {
-+    .name = TYPE_UEFI_VARS_SYSBUS,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_STRUCT(state, uefi_vars_sysbus_state, 0,
-+                       vmstate_uefi_vars, uefi_vars_state),
-+        VMSTATE_END_OF_LIST()
++    sdata = g_new(gnutls_datum_t, 1);
++    sdata->size = (va->name_size - 2
++                   + sizeof(QemuUUID)
++                   + sizeof(va->attributes)
++                   + sizeof(auth->timestamp)
++                   + va->data_size - data_offset);
++    sdata->data = g_malloc(sdata->size);
++
++    /* Variable Name (without terminating \0) */
++    memcpy(sdata->data + pos, name, va->name_size - 2);
++    pos += va->name_size - 2;
++
++    /* Variable Namespace Guid */
++    memcpy(sdata->data + pos, &va->guid, sizeof(va->guid));
++    pos += sizeof(va->guid);
++
++    /* Attributes */
++    memcpy(sdata->data + pos, &va->attributes, sizeof(va->attributes));
++    pos += sizeof(va->attributes);
++
++    /* TimeStamp */
++    memcpy(sdata->data + pos, &auth->timestamp, sizeof(auth->timestamp));
++    pos += sizeof(auth->timestamp);
++
++    /* Variable Content */
++    memcpy(sdata->data + pos, data + data_offset, va->data_size - data_offset);
++    pos += va->data_size - data_offset;
++
++    assert(pos == sdata->size);
++    return sdata;
++}
++
++/*
++ * See WrapPkcs7Data() in edk2.
++ *
++ * UEFI spec allows pkcs7 signatures being used without the envelope which
++ * identifies them as pkcs7 signatures.  openssl and gnutls will not parse them
++ * without the envelope though.  So add it if needed.
++ */
++static void wrap_pkcs7(gnutls_datum_t *pkcs7)
++{
++    static uint8_t signed_data_oid[9] = {
++        0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x07, 0x02
++    };
++    gnutls_datum_t wrap;
++
++    if (pkcs7->data[4] == 0x06 &&
++        pkcs7->data[5] == 0x09 &&
++        memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
++        pkcs7->data[15] == 0x0a &&
++        pkcs7->data[16] == 0x82) {
++        return;
 +    }
-+};
 +
-+static const Property uefi_vars_sysbus_properties[] = {
-+    DEFINE_PROP_SIZE("size", uefi_vars_sysbus_state, state.max_storage,
-+                     256 * 1024),
-+    DEFINE_PROP_STRING("jsonfile", uefi_vars_sysbus_state, state.jsonfile),
-+    DEFINE_PROP_BOOL("force-secure-boot", uefi_vars_sysbus_state,
-+                     state.force_secure_boot, false),
-+    DEFINE_PROP_BOOL("disable-custom-mode", uefi_vars_sysbus_state,
-+                     state.disable_custom_mode, false),
-+};
++    wrap.size = pkcs7->size + 19;
++    wrap.data = g_malloc(wrap.size);
 +
-+static void uefi_vars_sysbus_init(Object *obj)
-+{
-+    uefi_vars_sysbus_state *uv = UEFI_VARS_SYSBUS(obj);
++    wrap.data[0] = 0x30;
++    wrap.data[1] = 0x82;
++    wrap.data[2] = (wrap.size - 4) >> 8;
++    wrap.data[3] = (wrap.size - 4) & 0xff;
++    wrap.data[4] = 0x06;
++    wrap.data[5] = 0x09;
++    memcpy(wrap.data + 6, signed_data_oid, sizeof(signed_data_oid));
 +
-+    uefi_vars_init(obj, &uv->state);
++    wrap.data[15] = 0xa0;
++    wrap.data[16] = 0x82;
++    wrap.data[17] = pkcs7->size >> 8;
++    wrap.data[18] = pkcs7->size & 0xff;
++    memcpy(wrap.data + 19, pkcs7->data, pkcs7->size);
++
++    g_free(pkcs7->data);
++    *pkcs7 = wrap;
 +}
 +
-+static void uefi_vars_sysbus_reset(DeviceState *dev)
++static gnutls_datum_t *build_pkcs7(void *data)
 +{
-+    uefi_vars_sysbus_state *uv = UEFI_VARS_SYSBUS(dev);
++    variable_auth_2 *auth = data;
++    gnutls_datum_t *pkcs7;
 +
-+    uefi_vars_hard_reset(&uv->state);
++    pkcs7 = g_new(gnutls_datum_t, 1);
++    pkcs7->size = auth->hdr_length - 24;
++    pkcs7->data = g_malloc(pkcs7->size);
++    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
++
++    wrap_pkcs7(pkcs7);
++
++    return pkcs7;
 +}
 +
-+static void uefi_vars_sysbus_realize(DeviceState *dev, Error **errp)
++/*
++ * Read UEFI signature database, store x509 all certificates found in
++ * gnutls_x509_trust_list_t.
++ */
++static gnutls_x509_trust_list_t build_trust_list_sb(uefi_variable *var)
 +{
-+    uefi_vars_sysbus_state *uv = UEFI_VARS_SYSBUS(dev);
-+    SysBusDevice *sysbus = SYS_BUS_DEVICE(dev);
++    gnutls_x509_trust_list_t tlist;
++    gnutls_datum_t cert_data;
++    gnutls_x509_crt_t cert;
++    uefi_vars_siglist siglist;
++    uefi_vars_cert *c;
++    int rc;
 +
-+    sysbus_init_mmio(sysbus, &uv->state.mr);
-+    uefi_vars_realize(&uv->state, errp);
++    rc = gnutls_x509_trust_list_init(&tlist, 0);
++    if (rc < 0) {
++        warn_report("gnutls_x509_trust_list_init error: %s",
++                     gnutls_strerror(rc));
++        return NULL;
++    }
++
++    uefi_vars_siglist_init(&siglist);
++    uefi_vars_siglist_parse(&siglist, var->data, var->data_size);
++
++    QTAILQ_FOREACH(c, &siglist.x509, next) {
++        cert_data.size = c->size;
++        cert_data.data = c->data;
++
++        rc = gnutls_x509_crt_init(&cert);
++        if (rc < 0) {
++            warn_report("gnutls_x509_crt_init error: %s", gnutls_strerror(rc));
++            break;
++        }
++        rc = gnutls_x509_crt_import(cert, &cert_data, GNUTLS_X509_FMT_DER);
++        if (rc < 0) {
++            warn_report("gnutls_x509_crt_import error: %s",
++                        gnutls_strerror(rc));
++            gnutls_x509_crt_deinit(cert);
++            break;
++        }
++        rc = gnutls_x509_trust_list_add_cas(tlist, &cert, 1, 0);
++        if (rc < 0) {
++            warn_report("gnutls_x509_crt_import error: %s",
++                        gnutls_strerror(rc));
++            gnutls_x509_crt_deinit(cert);
++            break;
++        }
++    }
++
++    uefi_vars_siglist_free(&siglist);
++
++    return tlist;
 +}
 +
-+static void uefi_vars_sysbus_class_init(ObjectClass *klass, void *data)
++static int build_digest_authvar(gnutls_x509_crt_t signer,
++                                gnutls_x509_crt_t root,
++                                uint8_t *hash_digest)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    char *cn;
++    size_t cn_size = 0;
++    uint8_t fp[AUTHVAR_DIGEST_SIZE];
++    size_t fp_size = sizeof(fp);
++    gnutls_hash_hd_t hash;
++    int rc;
 +
-+    dc->realize = uefi_vars_sysbus_realize;
-+    dc->vmsd = &vmstate_uefi_vars_sysbus;
-+    device_class_set_legacy_reset(dc, uefi_vars_sysbus_reset);
-+    device_class_set_props(dc, uefi_vars_sysbus_properties);
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    /* get signer CN */
++    rc = gnutls_x509_crt_get_dn_by_oid(signer, GNUTLS_OID_X520_COMMON_NAME,
++                                       0, 0, NULL, &cn_size);
++    if (rc != GNUTLS_E_SHORT_MEMORY_BUFFER) {
++        warn_report("gnutls_x509_crt_get_dn_by_oid error #1: %s",
++                    gnutls_strerror(rc));
++        return rc;
++    }
++
++    cn = g_malloc(cn_size);
++    rc = gnutls_x509_crt_get_dn_by_oid(signer, GNUTLS_OID_X520_COMMON_NAME,
++                                       0, 0, cn, &cn_size);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_get_dn_by_oid error #2: %s",
++                    gnutls_strerror(rc));
++        goto err;
++    }
++
++    /* get root certificate fingerprint */
++    rc = gnutls_x509_crt_get_fingerprint(root, AUTHVAR_DIGEST_ALGO,
++                                         fp, &fp_size);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_get_fingerprint error: %s",
++                    gnutls_strerror(rc));
++        goto err;
++    }
++
++    /* digest both items */
++    rc = gnutls_hash_init(&hash, AUTHVAR_DIGEST_ALGO);
++    if (rc < 0) {
++        warn_report("gnutls_hash_init error: %s",
++                    gnutls_strerror(rc));
++        goto err;
++    }
++    rc = gnutls_hash(hash, cn, cn_size);
++    if (rc < 0) {
++        warn_report("gnutls_hash error: %s",
++                    gnutls_strerror(rc));
++        goto err;
++    }
++    rc = gnutls_hash(hash, fp, fp_size);
++    if (rc < 0) {
++        warn_report("gnutls_hash error: %s",
++                    gnutls_strerror(rc));
++        goto err;
++    }
++    gnutls_hash_deinit(hash, hash_digest);
++
++    return 0;
++
++err:
++    g_free(cn);
++    return rc;
 +}
 +
-+static const TypeInfo uefi_vars_sysbus_info = {
-+    .name          = TYPE_UEFI_VARS_SYSBUS,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(uefi_vars_sysbus_state),
-+    .instance_init = uefi_vars_sysbus_init,
-+    .class_init    = uefi_vars_sysbus_class_init,
-+};
-+module_obj(TYPE_UEFI_VARS_SYSBUS);
-+
-+static void uefi_vars_sysbus_register_types(void)
++/*
++ * uefi spec 2.9, section 8.2.2
++ *
++ * For EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS variables which are
++ * NOT secure boot variables we should track the root certificate of the trust
++ * chain, and the subject CN of the signer certificate.
++ *
++ * So we'll go store a digest of these two items so we can verify this.  Also
++ * create a gnutls_x509_trust_list_t with the root certificate, so
++ * gnutls_pkcs7_verify() will pass (assuming the signature is otherwise
++ * correct).
++ */
++static gnutls_x509_trust_list_t build_trust_list_authvar(gnutls_pkcs7_t pkcs7,
++                                                         uint8_t *hash_digest)
 +{
-+    type_register_static(&uefi_vars_sysbus_info);
++    gnutls_datum_t signer_data = { 0 };
++    gnutls_datum_t root_data = { 0 };
++    gnutls_x509_crt_t signer = NULL;
++    gnutls_x509_crt_t root = NULL;
++    gnutls_x509_trust_list_t tlist = NULL;
++    int n, rc;
++
++    n = gnutls_pkcs7_get_crt_count(pkcs7);
++
++    /* first is signer certificate */
++    rc = gnutls_pkcs7_get_crt_raw2(pkcs7, 0, &signer_data);
++    if (rc < 0) {
++        warn_report("gnutls_pkcs7_get_crt_raw2(0) error: %s",
++                    gnutls_strerror(rc));
++        goto done;
++    }
++    rc = gnutls_x509_crt_init(&signer);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_init error: %s", gnutls_strerror(rc));
++        goto done;
++    }
++    rc = gnutls_x509_crt_import(signer, &signer_data, GNUTLS_X509_FMT_DER);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_import error: %s",
++                    gnutls_strerror(rc));
++        gnutls_x509_crt_deinit(signer);
++        goto done;
++    }
++
++    /* last is root-of-trust certificate (can be identical to signer) */
++    rc = gnutls_pkcs7_get_crt_raw2(pkcs7, n - 1, &root_data);
++    if (rc < 0) {
++        warn_report("gnutls_pkcs7_get_crt_raw2(%d) error: %s",
++                    n - 1, gnutls_strerror(rc));
++        goto done;
++    }
++    rc = gnutls_x509_crt_init(&root);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_init error: %s", gnutls_strerror(rc));
++        goto done;
++    }
++    rc = gnutls_x509_crt_import(root, &root_data, GNUTLS_X509_FMT_DER);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_import error: %s",
++                    gnutls_strerror(rc));
++        goto done;
++    }
++
++    /* calc digest for signer CN + root cert */
++    rc = build_digest_authvar(signer, root, hash_digest);
++    if (rc < 0) {
++        goto done;
++    }
++
++    /* add root to trust list */
++    rc = gnutls_x509_trust_list_init(&tlist, 0);
++    if (rc < 0) {
++        warn_report("gnutls_x509_trust_list_init error: %s",
++                    gnutls_strerror(rc));
++        goto done;
++    }
++    rc = gnutls_x509_trust_list_add_cas(tlist, &root, 1, 0);
++    if (rc < 0) {
++        warn_report("gnutls_x509_crt_import error: %s",
++                    gnutls_strerror(rc));
++        gnutls_x509_trust_list_deinit(tlist, 1);
++        tlist = NULL;
++        goto done;
++    } else {
++        /* ownership passed to tlist */
++        root = NULL;
++    }
++
++done:
++    if (signer_data.data) {
++        gnutls_free(signer_data.data);
++    }
++    if (root_data.data) {
++        gnutls_free(root_data.data);
++    }
++    if (signer) {
++        gnutls_x509_crt_deinit(signer);
++    }
++    if (root) {
++        gnutls_x509_crt_deinit(root);
++    }
++    return tlist;
 +}
 +
-+type_init(uefi_vars_sysbus_register_types)
-diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
-index d280881f457a..cf2d26e9bf9a 100644
---- a/hw/uefi/meson.build
-+++ b/hw/uefi/meson.build
-@@ -6,7 +6,8 @@ if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
-                          'var-service-auth.c',
-                          'var-service-guid.c',
-                          'var-service-utils.c',
--                         'var-service-policy.c'))
-+                         'var-service-policy.c',
-+                         'var-service-sysbus.c'))
-   uefi_vars_ss.add(when: gnutls,
-                    if_true: files('var-service-pkcs7.c'),
-                    if_false: files('var-service-pkcs7-stub.c'))
++static void free_datum(gnutls_datum_t *ptr)
++{
++    if (!ptr) {
++        return;
++    }
++    g_free(ptr->data);
++    g_free(ptr);
++}
++
++static void gnutls_log_stderr(int level, const char *msg)
++{
++    if (strncmp(msg, "ASSERT:", 7) == 0) {
++        return;
++    }
++    fprintf(stderr, "    %d: %s", level, msg);
++}
++
++/*
++ * pkcs7 signature verification (EFI_VARIABLE_AUTHENTICATION_2).
++ */
++efi_status uefi_vars_check_pkcs7_2(uefi_variable *siglist,
++                                   void **digest, uint32_t *digest_size,
++                                   mm_variable_access *va, void *data)
++{
++    gnutls_x509_trust_list_t tlist = NULL;
++    gnutls_datum_t *signed_data = NULL;
++    gnutls_datum_t *pkcs7_data = NULL;
++    gnutls_pkcs7_t pkcs7 = NULL;
++    efi_status status = EFI_SECURITY_VIOLATION;
++    int rc;
++
++    if (0) {
++        /* gnutls debug logging */
++        static bool first = true;
++
++        if (first) {
++            first = false;
++            gnutls_global_set_log_function(gnutls_log_stderr);
++            gnutls_global_set_log_level(99);
++        }
++    }
++
++    signed_data = build_signed_data(va, data);
++    pkcs7_data = build_pkcs7(data);
++
++    rc = gnutls_pkcs7_init(&pkcs7);
++    if (rc < 0) {
++        warn_report("gnutls_pkcs7_init error: %s", gnutls_strerror(rc));
++        goto out;
++    }
++
++    rc = gnutls_pkcs7_import(pkcs7, pkcs7_data, GNUTLS_X509_FMT_DER);
++    if (rc < 0) {
++        warn_report("gnutls_pkcs7_import error: %s", gnutls_strerror(rc));
++        goto out;
++    }
++
++    if (siglist) {
++        /* secure boot variables */
++        tlist = build_trust_list_sb(siglist);
++    } else if (digest && digest_size) {
++        /* other authenticated variables */
++        *digest_size = AUTHVAR_DIGEST_SIZE;
++        *digest = g_malloc(*digest_size);
++        tlist = build_trust_list_authvar(pkcs7, *digest);
++    } else {
++        /* should not happen */
++        goto out;
++    }
++
++    rc = gnutls_pkcs7_verify(pkcs7, tlist,
++                             NULL, 0,
++                             0, signed_data,
++                             GNUTLS_VERIFY_DISABLE_TIME_CHECKS |
++                             GNUTLS_VERIFY_DISABLE_TRUSTED_TIME_CHECKS);
++    if (rc < 0) {
++        warn_report("gnutls_pkcs7_verify error: %s", gnutls_strerror(rc));
++        goto out;
++    }
++
++    /* check passed */
++    status = EFI_SUCCESS;
++
++out:
++    free_datum(signed_data);
++    free_datum(pkcs7_data);
++    if (tlist) {
++        gnutls_x509_trust_list_deinit(tlist, 1);
++    }
++    if (pkcs7) {
++        gnutls_pkcs7_deinit(pkcs7);
++    }
++    return status;
++}
 -- 
 2.48.1
 
