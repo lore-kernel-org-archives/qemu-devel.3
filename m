@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 945AAC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36502C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 10:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmw8-0005uN-09; Tue, 11 Feb 2025 04:52:12 -0500
+	id 1thnA4-00087G-FX; Tue, 11 Feb 2025 05:06:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thmw2-0005u8-LE
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:52:07 -0500
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ id 1thnA2-00086s-KT
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 05:06:34 -0500
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thmw0-0004C3-Lb
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:52:06 -0500
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e5d93dd26daso696030276.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 01:52:01 -0800 (PST)
+ id 1thnA0-00015X-D8
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 05:06:34 -0500
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e46c6547266so4189501276.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 02:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739267521; x=1739872321; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BfpsPa9ilzykncCxXSY0EpWpQLvpwmwBrWmdULAbYn0=;
- b=B9ZUy0gwq8trkVMjjEp5fNeE3F2NqFapbDisUWkQqOtJ9AqBYEkMJ9W6QcyET4IUBU
- e1wp00HQNZ+4KOs8PrfmRorhHL25Dqum5PIcJ/k5yLjMXdopNl/bsdWCONtpuFsEEub7
- uMb7Y9Da9GjltBTzHT4NpQg5wtmT59o62PbXxjWFHGcM4KnRWcPlE7g/5qXyYrcKRp9a
- tqfKNLrQ/qtmq4I7aOoUYX6p6c75ZAhRLFTRFn3/McWIN5uBnbN0Pbx/6iCGQjSRpN82
- +KHVmV3Lmmqz9dXernTz9274UTjRYYOn6i236nteQ3xLNdw4ixHGtv1t+P+Snsbuwu0I
- l9vQ==
+ d=linaro.org; s=google; t=1739268391; x=1739873191; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hq8v5ZGXlavP47quo7Tm3BAJFUUhNjayCGTcbMqfmIU=;
+ b=HZO73hEJLvLgXrIOpsiX2jhL75TaApmF3S0i6xX9YTozgRVFijFSnUcFwXIrf8sDoC
+ WoyOqWe3GUkPcyxpZZulRCfc9iTSulbxifj4CwWMDMqB8+hvatirdZdO/AvElL8h6zBB
+ LixNit38kiwVShm59fxabAjJ8hizigV09j5qR/fFBiBaA4DhczgbjffXdjEW9tJJe3oH
+ zK3/W4aFp4GPZ4eLseUAUhPPJ4eygvBQyXe06LrmYx7XlleAC06/2pQXqPOs+HKhqavJ
+ syZ9bT5X8zq5xjAz+4+YUnP4c5Meq0TD6hWVcMPbZDM4EBaGJdmtQiZ+r/jiYjNBnD36
+ 9AqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739267521; x=1739872321;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BfpsPa9ilzykncCxXSY0EpWpQLvpwmwBrWmdULAbYn0=;
- b=Aw2rJWxiMH30ii8ikUWLvFx/8ASibppJyRXCeAPwyJb8i1UZfGhNj4VcMPKyjyr0PI
- L/mztMYpq2nUUHcOWuWo7yAYqY7cdi5X8CXALyFV7aVyYrPsavZPphNzNjNotbPis4+g
- t4z35mLLBiFVHKb843K95AAsHjev2WBsDoyrF8K7eEvVM2VP6hYLq2owB+e4Q5uL8XeR
- nWrW9fLNTakIwAyFH/AiRmGj4WxEpuLn/4Ky4gKypQhHxkSjoGe/SLgbJMnsad54zzHg
- wTxDcbBvubBwr0PBJw/EKJHgKyaTkjmX+klCkMkDqmJwF7qUS7s5y3FXm0H29+i5Pulg
- 0dJw==
-X-Gm-Message-State: AOJu0Yymwtlx8thBLSg9D/rlON8Q1nK8QpW0Nt6vcbLeAAtK7tb8xGop
- a7soSrgO5hAg5KCFlIAlXoViERCC0249jCJTz8TutlUguolAwfUKwWN+0S9iT2wSh41HZmpbYRh
- AnL31hExBNXa5nczkTzNsBCXw8mQDt3pslcUU+w==
-X-Gm-Gg: ASbGncttoNtK8+CRwSlBXgnjou1hjFKuSu+6Ij4gxVDB5pgs5KmNwVTjkAyHDDHK4hr
- CQuOz6kQicGzmhdoxkP+xlrWcIhzmBuvlUdD2IiV5JSd8XwZpwVApIPU4yoCv+tdeezC8FWg4gw
+ d=1e100.net; s=20230601; t=1739268391; x=1739873191;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hq8v5ZGXlavP47quo7Tm3BAJFUUhNjayCGTcbMqfmIU=;
+ b=KZf3kuqb9SzoInppufgDcn+1F6vuJxWbYX2dUOUJBu/APGJoeZOLNx6iKfUQltyziB
+ /I/o/ItmYpPRArxyRUhCEHNOyJnaSCRAkvmiqZiekA6YgodbZzDCG9petI3+grc5VrX5
+ FrqjQlwyoAItLtQ5vWQjuFVRblGnf4NVHrcxZfm1w3rZsWldj+jP2U31hg0sLZFi3qnn
+ KBsJO2XqWWntNiQfeCIghFrRJv1bQabd8lMO9Xv5ptE/CIEWwK+yqtZ/1dzacH1NFKJF
+ yrV8GELWgL84FNeV2+kemMRM6Q79DeBjS0kohJ3hDpUYUgS4F9V8E3kQlftx4FnfamAU
+ +16A==
+X-Gm-Message-State: AOJu0YxqjUpmaUPyz7PSXt6vMqWptsJkvVXrfQUudLSfX7hLqc60qZeu
+ hpPBkxj/MuGst8DuJrl5UBmEkG1eqhi8x1sCqcZpqZ/HE3GiEI3/zEhViOAFPuQYxvaA6vrhEDh
+ IwQwzNxD1CFbUeF7YPenPAgMB776VIdEPmI3xi1VyyGxG1RhX
+X-Gm-Gg: ASbGncuUWazrhOG5EtomX6dxUeTZjyCMpl4YwJ44zKPYopdkqnCUVvhRL54QApD3HFh
+ lswslMpd7u/OwK1YVlEXvLyR922x9pKnqoRZ3P8pWiA3E7gTvz1Y7qry3cfC0jXuKYgb0eGcM4g
  ==
-X-Google-Smtp-Source: AGHT+IEoCoMY0tyYrzbu+9W8nEd9PbReSYjhXXXF3UKKK3JBdGspVjxmUQla2law1AxZdtZrSUpzDsgSc/ZVAV4GeUE=
-X-Received: by 2002:a05:6902:1b91:b0:e4d:89e9:6a96 with SMTP id
- 3f1490d57ef6-e5b4618d6d9mr13620840276.18.1739267520721; Tue, 11 Feb 2025
- 01:52:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE0dDYsHYNe7ndYWrSwSaRlM6QkhOWtR+1iqX8YeN5n/CqaMe18hmZL6O1X2KiV3yyspYuyXk03+IizLLXGTMM=
+X-Received: by 2002:a05:6902:1707:b0:e48:7efe:57b0 with SMTP id
+ 3f1490d57ef6-e5d93d30f5amr3442059276.47.1739268390991; Tue, 11 Feb 2025
+ 02:06:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20250130182309.717346-1-peter.maydell@linaro.org>
- <20250130182309.717346-13-peter.maydell@linaro.org>
- <d8abfef6-36cd-47a4-b05b-e5d3d504683a@linaro.org>
-In-Reply-To: <d8abfef6-36cd-47a4-b05b-e5d3d504683a@linaro.org>
+References: <20250204092112.26957-1-shentey@gmail.com>
+ <20250204092112.26957-5-shentey@gmail.com>
+ <CAFEAcA8qgEDAnfaQDmpUjy77KZBiqwdKSmyLE-ZwEAhMNLWn4Q@mail.gmail.com>
+ <831901E4-69B2-4637-8507-77C7BF4DA65D@gmail.com>
+In-Reply-To: <831901E4-69B2-4637-8507-77C7BF4DA65D@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Feb 2025 09:51:49 +0000
-X-Gm-Features: AWEUYZkEV3X3XW1F7IeAgbvVXqMdWLwpSSGg5PBJxeKWT74KFdoLfh3yAHkLN4s
-Message-ID: <CAFEAcA8d9YNx++MC5ipdj8Pb-zV0w_ANF6B2CQg3+fx4X3Ajzw@mail.gmail.com>
-Subject: Re: [PATCH 12/14] target/arm: Remove CP_ACCESS_TRAP handling
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 11 Feb 2025 10:06:19 +0000
+X-Gm-Features: AWEUYZmp2ji1x3nx79awKG0q_5GASRsKO17xpfZ_ECorEOO3NwWNaQXHNkmRl3w
+Message-ID: <CAFEAcA-7REe0uQsuptAxxSsd36c5MgPVzufqVcstJVqZmfAKDw@mail.gmail.com>
+Subject: Re: [PATCH v2 04/18] hw/arm: Add i.MX 8M Plus EVK board
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,26 +97,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 10 Feb 2025 at 19:35, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Mon, 10 Feb 2025 at 22:44, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> On 1/30/25 10:23, Peter Maydell wrote:
-> > There are no longer any uses of CP_ACCESS_TRAP in access functions,
-> > because we have converted them all to use either CP_ACCESS_TRAP_EL1
-> > or CP_ACCESS_TRAP_UNCATEGORIZED, as appropriate. Remove the handling
-> > of bare CP_ACCESS_TRAP from the access_check_cp_reg() helper, so that
-> > it now asserts if an access function returns it.
 >
-> Wording from an in-development patch? How can an access function return CP_ACCESS_TRAP
-> when it has been removed?
+>
+> Am 10. Februar 2025 17:30:01 UTC schrieb Peter Maydell <peter.maydell@lin=
+aro.org>:
+> >On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail.com> wrote:
+> >>
+> >> As a first step, implement the bare minimum: CPUs, RAM, interrupt cont=
+roller,
+> >> serial. All other devices of the A53 memory map are represented as
+> >> TYPE_UNIMPLEMENTED_DEVICE, i.e. the whole memory map is provided. This=
+ allows
+> >> for running Linux without it crashing due to invalid memory accesses.
+> >>
+> >> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> >> ---
+> >
+> >
+> >
+> >> --- /dev/null
+> >> +++ b/docs/system/arm/imx8mp-evk.rst
+> >> @@ -0,0 +1,56 @@
+> >> +NXP i.MX 8M Plus Evaluation Kit (``imx8mp-evk``)
+> >> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >> +
+> >> +The QEMU i.MX 8M Plus EVK board emulation is intended to emulate a pl=
+ain i.MX 8M
+> >> +Plus system on chip (SoC). All peripherals the real board has such as=
+ flash and
+> >> +I2C devices are intended to be added via configuration, e.g. command =
+line.
+> >
+> >Why do this? If they're on the real hardware board, we should
+> >be creating them by default in the machine model in QEMU.
+> >Command line options are for devices that are optional and
+> >pluggable by the user on the hardware.
+>
+> My goal is to be able to model a custom, proprietary machine which runs i=
+n a CI. In order to avoid peripherals getting in the way, the idea is to ha=
+ve a machine which essentially exposes the plain SoC, and allow users to "d=
+ecorate" it themselves. Is an EVK machine the wrong approach for this? Are =
+there any other ways to achieve this, e.g. with -nodefaults?
 
-I think more that my wording wasn't super clear. It's kind of
-a two step thing: we make access_check_cp_reg assert() if you
-return that value (4), and we also change the constant name
-so it's clearer that you shouldn't be returning that value.
+That's not really a usage model QEMU currently supports. We generally
+speaking model what the actual hardware does. In the same way,
+if you were running CI on the real EVK board your CI would have
+to deal with those devices being present.
 
-> That said, the code is correct.
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> >> +        /*
+> >> +         * Magic value from Linux output: "arch_timer: cp15 timer(s) =
+running at
+> >> +         * 8.00MHz (phys)".
+> >> +         */
+> >> +        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000=
+,
+> >> +                                &error_abort);
+> >
+> >This is the CNTFRQ value in Hz. The datasheet actually tells you
+> >this, so we don't need to call it a magic number (section 4.11.4.1.6.4
+> >of the i.MX 8M Plus Applications Processor Reference Manual says the
+> >base frequency of the system counter is 8MHz).
+>
+> Ah, so then it's the "nxp,sysctr-timer"-compatible counter in
+> the device tree? I've stared my own implementation but didn't
+> see the relation to the cp15 timer. Thanks for clarifying this.
+
+Yeah; I haven't actually checked carefully whether there
+are NXP specifics here, as that device-tree compat string
+suggests. But it's almost certainly the same general principle:
+there's a memory-mapped system counter which is the global
+source of the system count, and each CPU consumes that count
+and uses it to feed its generic timers and counters. So if
+you mess with the enable on the memory mapped system counter
+then this causes the CPU's timers/counters to stop ticking.
+
+I modelled this similarly to the in-tree M-profile
+sse-counter and sse-timer, where you link the timer to
+the counter and there's an API that lets the timer know
+when the counter is enabled/disabled, changes frequency, etc.
+This needs changes to the timer and counter code in the CPU
+itself. (You can get away without doing this if you assume
+that the guest code never tries to actually disable the system
+counter or pick a non-default frequency, which is typically true:
+it will just want to set it up to a single standard config and
+then leave it alone.)
+
+> >(Incidentally the memory mapped system counter is a stock Arm
+> >IP block and I have about 60% of a model of it, I just haven't
+> >needed to upstream it yet because in practice no guest software
+> >really tries to mess with it. If we turn out to need it for
+> >this SoC that would be a reason for me to clean it up and
+> >send it out. But I suspect we don't need it in practice.)
+>
+> The ugly workaround for the cpu-idle-states above is actually related to =
+this counter, IIUC. I suppose that QEMU doesn't support these idle states, =
+it only seems to support WFI. But if it did, then this counter would wake u=
+p the CPUs (if I'm not mistaken, I'm no expert here). It would be nice to b=
+e able to boot the machine via U-Boot, and I wonder if that could fix the i=
+dle states when there are PSCI handlers in the secure world. Again, this pr=
+obably also requires the counter implementation. Looking into U-Boot, TF-A,=
+ and OP-TEE is on my plan, but right now I'm focusing on direct kernel boot=
+.
+
+Hmm, if the system counter can generate interrupts then
+it might be different from the Arm IP block in that
+respect. I'd have to check the datasheet. Anyway, as
+you suggest this is all something we can postpone until
+we need to care about running EL3 firmware in the guest.
 
 thanks
 -- PMM
