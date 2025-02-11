@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF04C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 17:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A87AC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 17:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thu8X-0006UJ-Pt; Tue, 11 Feb 2025 12:33:30 -0500
+	id 1thu9Y-0007no-J4; Tue, 11 Feb 2025 12:34:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thu8R-0006O6-Q8
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 12:33:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1thszZ-0004zx-NL
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:20:09 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thu8Q-0008In-93
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 12:33:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739295200;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=15l0gEW7iL6v/0ADwVzP8dueSuIReFWpPf5vCTkEojA=;
- b=XQ86CNjWOd+NtaFJTgf56K3vsCAp9jOjEBWOE9g0QLHA8WW7jOnOzmu2seDlEzhF18Oa3K
- LaXF+9FRDM/iP0djNCRmylgTgFL3cAlwGccv1p0PD3EcasV2BleO/lQfP7Yu5UFgIouiLP
- W9ewZPwhV9hfpiWCExAZJHEy4P0tUWw=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-aPhu-dVuME2o19n_MquVAw-1; Tue, 11 Feb 2025 12:33:19 -0500
-X-MC-Unique: aPhu-dVuME2o19n_MquVAw-1
-X-Mimecast-MFC-AGG-ID: aPhu-dVuME2o19n_MquVAw
-Received: by mail-oo1-f69.google.com with SMTP id
- 006d021491bc7-5fc7340efadso3896332eaf.2
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 09:33:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739295198; x=1739899998;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=15l0gEW7iL6v/0ADwVzP8dueSuIReFWpPf5vCTkEojA=;
- b=LA4Mp+03AvZa5yQ5KfRAgEeAgfnQBsn4RLIs218IeSbE2az4ki3q4MiIQ2jqv4yW+8
- it3Rr/vCk0bVPdkVZJingboRKc4WFIljTYCI0W5LSwk544efGw8zAdXeuE3F/ulWOp47
- NxJ/57AwTghsGfZfp/vayku4V2CWhjxPMmLn/47luQaeQ+fGup4SryOFipUJINF6Dj5f
- VZRG+pXc626LtjJMxl0vZZHTE5zC/KxSxcw/XsUdTp1yi0zwOtGe1HXMjz3dm8PwTSNH
- Hn3xVV/S1D6A92TBftyS414E8VQ5BYQ8ITtmLXN6LsFe1lJaOAwtH7bNKrzxfBQsps1Q
- G2Uw==
-X-Gm-Message-State: AOJu0YxBQvk31HDmvV7K6AcW458WIp0/fy8gWvM9azdR+7EVrBZMi3Jq
- /Xr4daKWOqqTSO7Bj32y5HOHx2cYBeDxgZKcpNI95uzwW61MuxziWJuIlWuNrL5nkzqtzJbf4yP
- D53B+Hh0RT3OPrrQg3/Vw8wFgxtEyYQO7QZPNvlsVRFKge9Ij1yF4
-X-Gm-Gg: ASbGncuL2rqZmsFTdVo+/tYlAmbzOhDULo23pKUCT/ZGsJyYsEnZ3BMa5CuQbw74Wp6
- aYAVg1SeF3uCmCyz06EqZCgHfZxk/EHC3tRiM3lpUadUmY3uOSgnZCxcuHRBZq+usN85SovTPhb
- XzloaCWIroQhlfmfpyeAN2Pj2YRu53OOOOOViOEwtebcVDP7PUGLgxYO3xIAtyw65W/ZbkyMRch
- sDVjWSDnODiB3e2YSkkFZRuMpLFBE+UrtmwpCFq11lj+bC9/Fr3crVVbz0=
-X-Received: by 2002:a05:6820:2614:b0:5fc:9e6f:35b with SMTP id
- 006d021491bc7-5fca18ce0c0mr201564eaf.6.1739295198490; 
- Tue, 11 Feb 2025 09:33:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGSQzEGNx79kZpGHfAnPXelM0ySXqh2irhB+WC9eCeNqSStBMcYVtQ7WZtz+KV2858WOMHQkw==
-X-Received: by 2002:a05:6820:2614:b0:5fc:9e6f:35b with SMTP id
- 006d021491bc7-5fca18ce0c0mr201543eaf.6.1739295198205; 
- Tue, 11 Feb 2025 09:33:18 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5fc80565fccsm1740516eaf.25.2025.02.11.09.33.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 09:33:17 -0800 (PST)
-Date: Tue, 11 Feb 2025 12:33:14 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 4/9] migration: Fix hang after error in destination
- setup phase
-Message-ID: <Z6uJ2gg_RiIez6Gv@x1.local>
-References: <20250211150136.6781-1-farosas@suse.de>
- <20250211150136.6781-5-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1thszX-00029E-LZ
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:20:09 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BDgNKf021694;
+ Tue, 11 Feb 2025 16:20:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=75AOCLqOvzG86tQn0BeU/zKJK/1FrvZuuOdGjJEQu
+ Xc=; b=avlrXfocuhNbc4X0unk8dRhiZVBW9C81qkG8fDC25yC2IF09xLMMoGOlk
+ RueJ8Rx/fBYGThWqFU2QovGasrDN026WU0y+IhVsTWM5w3A8cQoxEmJnegKkMR1h
+ SsBuZYAMswIMacX55QJqu/7FGj2xCbiP1sFSSa435NK7CvbAHTWJSexpVE+fPukH
+ vZSzJctRUcH1jneHBrZWf7mklqEAKi4GZYdagbZGWo5dyj4PwZqZUPjMkPsm2CXH
+ MpZrA59Gz3qCRySr+0WfVui14s+tZFHgozZYfLV08xVFbhh0/aXo+uAcEhl0cVFJ
+ Juf3c1dV0HqqlAadOu58ZFkt5vamg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44qwd1bh5c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Feb 2025 16:20:03 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51BEQPtk011642;
+ Tue, 11 Feb 2025 16:20:02 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44pktjuum9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Feb 2025 16:20:02 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51BGK1di18023102
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 11 Feb 2025 16:20:02 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4B6E5806C;
+ Tue, 11 Feb 2025 16:20:01 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 375C95805D;
+ Tue, 11 Feb 2025 16:20:01 +0000 (GMT)
+Received: from WIN-DU0DFC9G5VV.austin.ibm.com (unknown [9.41.104.243])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 11 Feb 2025 16:20:01 +0000 (GMT)
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+To: eperezma@redhat.com
+Cc: mst@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
+ qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
+Subject: [PATCH] vdpa: Allow vDPA to work on big-endian machine
+Date: Tue, 11 Feb 2025 10:19:23 -0600
+Message-Id: <20250211161923.1477960-1-kshk@linux.ibm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250211150136.6781-5-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ACfD_gP2YC4aYQxAupOMWBPMyU0bFXnG
+X-Proofpoint-ORIG-GUID: ACfD_gP2YC4aYQxAupOMWBPMyU0bFXnG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-11_07,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 suspectscore=0
+ adultscore=0 impostorscore=0 mlxlogscore=826 clxscore=1011
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502110106
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 11 Feb 2025 12:34:14 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,21 +107,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 12:01:31PM -0300, Fabiano Rosas wrote:
-> If the destination side fails at migration_ioc_process_incoming()
-> before starting the coroutine, it will report the error but QEMU will
-> not exit.
-> 
-> Set the migration state to FAILED and exit the process if
-> exit-on-error allows.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2633
-> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Add .set_vnet_le() function that always returns success, assuming that
+vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
+outputs the message:
+"backend does not support LE vnet headers; falling back on userspace virtio"
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+---
+ net/vhost-vdpa.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 231b45246c..7219aa2eee 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -270,6 +270,11 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+ 
+ }
+ 
++static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool is_le)
++{
++    return 0;
++}
++
+ static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
+                                        Error **errp)
+ {
+@@ -437,6 +442,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .cleanup = vhost_vdpa_cleanup,
+         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+         .has_ufo = vhost_vdpa_has_ufo,
++        .set_vnet_le = vhost_vdpa_set_vnet_le,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+ };
 -- 
-Peter Xu
+2.34.1
 
 
