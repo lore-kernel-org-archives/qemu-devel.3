@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB44EC0219D
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 12:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D5BC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 13:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thpVO-0002ND-Q8; Tue, 11 Feb 2025 07:36:47 -0500
+	id 1thpyG-0001M6-0Z; Tue, 11 Feb 2025 08:06:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thpVL-0002Ja-1E
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 07:36:43 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thpyE-0001Lp-5z
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:06:34 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thpVI-0001Bi-N2
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 07:36:42 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so17718175e9.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 04:36:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thpyB-0006Ov-UR
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:06:33 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-38dc660b56cso4281140f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:06:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739277397; x=1739882197; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YfFPeUl1Dex9j0bhhlccqnBVdmfLqQXjgVCiS1IJBLA=;
- b=IZ1iFtNBVrIDv/nCqheStqV2/T3t/5T9xKRzL/4gtOHixlUSA2qng8jbwlcgg2x6gZ
- itRVoIDGlL3RJV8QJAdC6ut41oBK5FzE9spI2zklVcr8EtIck324bzk/HSKkhnMXYzIB
- 5Abazni4tSz/W8F7a/sBbZVBvXUdTeKuUQThMHRrg5crLpPijzzcXAUyi4tHsz4U1BE9
- yozA6pE13MnSMTYkZyNcX6kNlIZ9Ce4Rxo7FgyDP0jAQvvb8ockNWoHxg4VR1dX36BCB
- PpA8aHqX7t4VCMBebgbX7m1Iz+oNbfIL04bTkE06/7Y6BWNcMwFKbFh4PCOKX0/dBBvI
- y91w==
+ d=linaro.org; s=google; t=1739279188; x=1739883988; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=KvkNjTeRragMRh+PEtaxFCPvqzPT6cVpx4DPzGg4c0s=;
+ b=tjl/laxuc+fuBvzw5+4OiQTJOVFAdUZqWKeHu85UOFpnyxkPViNhCd2vqDAZWiENLr
+ E9FfHEdkmWD7vRHhrgrw/d/ExqNHAlkh2I0QTRDKohfSI1XJd9bdIcSvbHDwcAUyG7gy
+ /TYS0Mb2CQyBmIg1Nh7gwaDoLTM+Lof5SibfhzkjRVg9LO1kN/mKpmMZevu4wY3+5/Xe
+ SccMxVJUMCqH+2FDBgO96FuOYsUAYmyc1p3zX9maKp5oA9QTLOXSQl6whWioxCfp6rtd
+ OqpfMRJxv97Uo6Np8/37PRJOc/VloJtv5H8PgHSa3rW0Fj1qvmMsR+VtVfO/z+EZ2164
+ TpFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739277397; x=1739882197;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YfFPeUl1Dex9j0bhhlccqnBVdmfLqQXjgVCiS1IJBLA=;
- b=wBTNC2QOCt4av6JPCNgWA4FzDMZ7tTM3+VO2rkwJMr5trLxaBs9WOJ29WwZKmkKg+g
- kwvTju3hX7wmndMwuKCOy6HTQ1Y8Igbi/EGIEHWSSyv3IrcCwuYE17PK/MSD2uwCx9xM
- /ZP3CUJ7O+mAjUZt9BY5vGJJk+hqiaJk8QuhnXeR6nuf0ElsA0bjHMtEdAgmVrq2RU2Z
- 4M9rl4jRQlcZbArQXrOOl59vLM9FA+YG5+koTp+6rPG3EWzDCzWwc3+/iuTHcsDAtcuD
- 8krlAieb3+aRxIsk62O0hqtHpoSeEG1DaWWL/iAzMnlUwNMUvY7uXlnKTCjsmDoW3mAu
- TLcw==
-X-Gm-Message-State: AOJu0YxqX5NxZ3L6o5AKeuAqB2QtyJDlrsbTHMwsrSJJMucIi9VG3SUX
- PlSmIF20sSE8RAEfDka8EuZZTp0uIOJDqihYpMSgKtN7iX/B3nZAbIAvIJs+x6w=
-X-Gm-Gg: ASbGncuGQELxwOxy+QG7+n/i5+hEGqBxaNX5FsbGuJHmTbV8tMcJmCu7Ye5UpW4JKHa
- HRlI0FnBeTM7JUhrD2Ja97nThKj/eOkC3czLRlht8ihKbHBV1zmh8FC/D8p5zJ6tWXchuJqfgxv
- ggG7tugB7lgeRuEcOwAsNqXBPwPwFpxn1Xe3Ka0R+PkriFDgjIzB6Z64BoTkE/pC50VuMeSGlMR
- xtzhykkOTGeAk4gP2PP+KNCLS098XWo45oAnWJKUxf4HCqvQHvS+EP+5bp5yVkEyk9yXXTovsKE
- Y1yYHmwhoTI/4x04ZrYDD+1g9jxQHSV6pvOhg1cWTAdyYyB6fc/TQL+ru9M=
-X-Google-Smtp-Source: AGHT+IFdAvYzxJyDI8regOkV2AVTvb7qFd3ZgnfM0oml24pFLYUrLBDDvBAyWfEACNFEhGwv8sy8qg==
-X-Received: by 2002:a05:600c:3c87:b0:438:c18c:5ad8 with SMTP id
- 5b1f17b1804b1-439249d189cmr154014655e9.31.1739277397613; 
- Tue, 11 Feb 2025 04:36:37 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439471bf782sm50157325e9.39.2025.02.11.04.36.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 04:36:37 -0800 (PST)
-Message-ID: <a314109f-3238-4605-8fba-beaf310cd565@linaro.org>
-Date: Tue, 11 Feb 2025 13:36:35 +0100
+ d=1e100.net; s=20230601; t=1739279188; x=1739883988;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KvkNjTeRragMRh+PEtaxFCPvqzPT6cVpx4DPzGg4c0s=;
+ b=I8278SCBj1phBWFij7YlA9uBiBHHptgHbcpZjezQM+CcaASgEBSHWZpciiIwSNJytE
+ SLOxQkQO+uNwsy/Y84/xf7e044C+ehdtRD5EiD7AJhycG8cFe7VWS0Ojv1aJUX1VWg5B
+ GMWmU06Slvcu6/H9AF+L1MzWDewCiujRTpM8n3V9kqnwdDS8xhKZnUlfz4o6ZUGMfUT8
+ lg492crF6esGlBHNcKEA/ghXoJfxxQfERcK3gEaSYr3sBDYMlBZzW5F0MLDmgJnIhTts
+ A82PgFW0+ATlS/UBU9cdJgr2zBT21y7y6TdjWCgAtbVEvD4zT7fugg91aHk+7+QVzVhm
+ VccA==
+X-Gm-Message-State: AOJu0Yx5RnoSQo7y8hT719av9E74EN8qervcSHEH2T4nfdTj5srmSZJ9
+ /N188ujo8Z9JoKCOMelhBTypc3PGy/SxOXLwpidFAXzY4PA9YBIhRhSOi9sH4WqriBCzGt9S4SY
+ L
+X-Gm-Gg: ASbGncs197Qho1a0erGfkVz48YuUTliixvJ38zf3a/Aq0YVhKNbINxPEZLkPhDcr2Yt
+ 6btR30BW2ytXl6Odl8tzEzPvG8ZFkl7coOpohlgxLCLZXODqTzs4EEMnr2dZmw0TAebLa8OwzfJ
+ Kg4pg6CABPhdJH1ECn2M0Eu7xMyX3RJSzWXbmwT1zDLoFdO2KVzJ9JLQHt/mGnSpkhmcVkEqArb
+ 1Xt8kOen3qiS8b8X4ff3p8HRxcrWq1TTZqOtfeYzcELDDg8VeU5HQ3uWOWeNAWE9lWrcFlCfdT9
+ gyRSvOmdUsRgcYRNOoDE
+X-Google-Smtp-Source: AGHT+IFqm0OI+kd+S8btlE3uTQMsBbHTMR0FGbnZgizCu6sInTViMxuO7OYOOHeyqu3Mko6XCsMzLA==
+X-Received: by 2002:a5d:47a9:0:b0:38d:d9e4:9ba0 with SMTP id
+ ffacd0b85a97d-38dd9e49cccmr9174097f8f.25.1739279188519; 
+ Tue, 11 Feb 2025 05:06:28 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dbdd1af07sm14973737f8f.15.2025.02.11.05.06.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Feb 2025 05:06:27 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] target/alpha: Don't corrupt error_code with unknown softfloat
+ flags
+Date: Tue, 11 Feb 2025 13:06:26 +0000
+Message-Id: <20250211130626.3940412-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab-ci.d/cirrus: Update the FreeBSD job to v14.2
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-stable@nongnu.org
-References: <20250211120817.35050-1-thuth@redhat.com>
- <Z6s-0LxACyF5KWOc@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z6s-0LxACyF5KWOc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,89 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/2/25 13:13, Daniel P. Berrangé wrote:
-> On Tue, Feb 11, 2025 at 01:08:17PM +0100, Thomas Huth wrote:
->> The FreeBSD job started to fail since the 14-1 image disappeared
->> from the cloud. Update the job to v14.2 to fix it.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   .gitlab-ci.d/cirrus.yml | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
->> index 16411f3d2b..75b611418e 100644
->> --- a/.gitlab-ci.d/cirrus.yml
->> +++ b/.gitlab-ci.d/cirrus.yml
->> @@ -37,7 +37,7 @@ x64-freebsd-14-build:
->>       NAME: freebsd-14
->>       CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
->>       CIRRUS_VM_IMAGE_SELECTOR: image_family
->> -    CIRRUS_VM_IMAGE_NAME: freebsd-14-1
->> +    CIRRUS_VM_IMAGE_NAME: freebsd-14-2
->>       CIRRUS_VM_CPUS: 8
->>       CIRRUS_VM_RAM: 8G
->>       UPDATE_COMMAND: pkg update; pkg upgrade -y
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> This needs to be merged to master immediately, and also into stable
-> branches. Any old reference to 14-1 is a guaranteed failed job since
-> FreeBSD deleted old images off Google Cloud
+In do_cvttq() we set env->error_code with what is supposed to be a
+set of FPCR exception bit values.  However, if the set of float
+exception flags we get back from softfloat for the conversion
+includes a flag which is not one of the three we expect here
+(invalid_cvti, invalid, inexact) then we will fall through the
+if-ladder and set env->error_code to the unconverted softfloat
+exception_flag value.  This will then cause us to take a spurious
+exception.
 
-https://cirrus-ci.org/guide/FreeBSD/ still only lists 14-1...
+This is harmless now, but when we add new floating point exception
+flags to softfloat it will cause problems.  Add an else clause to the
+if-ladder to make it ignore any float exception flags it doesn't care
+about.
 
-Anyway you are right:
+Specifically, without this fix, 'make check-tcg' will fail for Alpha
+when the commit adding float_flag_input_denormal_used lands.
 
-$ gcloud compute images list --project freebsd-org-cloud-dev 
---no-standard-images
-NAME                                     PROJECT                FAMILY 
-           DEPRECATED  STATUS
-freebsd-13-4-release-amd64               freebsd-org-cloud-dev 
-freebsd-13-4                   READY
-freebsd-13-4-stable-amd64-v20250102      freebsd-org-cloud-dev 
-freebsd-13-4-snap              READY
-freebsd-13-4-stable-amd64-v20250109      freebsd-org-cloud-dev 
-freebsd-13-4-snap              READY
-freebsd-13-4-stable-amd64-v20250116      freebsd-org-cloud-dev 
-freebsd-13-4-snap              READY
-freebsd-13-4-stable-amd64-v20250124      freebsd-org-cloud-dev 
-freebsd-13-4-snap              READY
-freebsd-13-5-beta1-amd64                 freebsd-org-cloud-dev 
-freebsd-13-5                   READY
-freebsd-13-5-prerelease-amd64-v20250130  freebsd-org-cloud-dev 
-freebsd-13-5-snap              READY
-freebsd-13-5-prerelease-amd64-v20250206  freebsd-org-cloud-dev 
-freebsd-13-5-snap              READY
-freebsd-14-2-release-amd64-ufs           freebsd-org-cloud-dev 
-freebsd-14-2                   READY
-freebsd-14-2-release-amd64-ufs-gce       freebsd-org-cloud-dev 
-freebsd-14-2                   READY
-freebsd-14-2-stable-amd64-ufs-20250102   freebsd-org-cloud-dev 
-freebsd-14-2-snap              READY
-freebsd-14-2-stable-amd64-ufs-20250109   freebsd-org-cloud-dev 
-freebsd-14-2-snap              READY
-freebsd-14-2-stable-amd64-ufs-20250116   freebsd-org-cloud-dev 
-freebsd-14-2-snap              READY
-freebsd-14-2-stable-amd64-ufs-20250124   freebsd-org-cloud-dev 
-freebsd-14-2-snap              READY
-freebsd-14-2-stable-amd64-ufs-20250130   freebsd-org-cloud-dev 
-freebsd-14-2-snap              READY
-freebsd-14-2-stable-amd64-ufs-20250206   freebsd-org-cloud-dev 
-freebsd-14-2-snap              READY
-freebsd-15-0-current-amd64-ufs-20250102  freebsd-org-cloud-dev 
-freebsd-15-0-snap              READY
-freebsd-15-0-current-amd64-ufs-20250109  freebsd-org-cloud-dev 
-freebsd-15-0-snap              READY
-freebsd-15-0-current-amd64-ufs-20250116  freebsd-org-cloud-dev 
-freebsd-15-0-snap              READY
-freebsd-15-0-current-amd64-ufs-20250124  freebsd-org-cloud-dev 
-freebsd-15-0-snap              READY
-freebsd-15-0-current-amd64-ufs-20250130  freebsd-org-cloud-dev 
-freebsd-15-0-snap              READY
-freebsd-15-0-current-amd64-ufs-20250206  freebsd-org-cloud-dev 
-freebsd-15-0-snap              READY
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I guess I forgot to run a 'make check-tcg' for all targets until
+I was getting around to queuing the FEAT_AFP series :-/
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+ target/alpha/fpu_helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
+index 63d9e9ce39c..f810a9b6a47 100644
+--- a/target/alpha/fpu_helper.c
++++ b/target/alpha/fpu_helper.c
+@@ -476,6 +476,8 @@ static uint64_t do_cvttq(CPUAlphaState *env, uint64_t a, int roundmode)
+             exc = FPCR_INV;
+         } else if (exc & float_flag_inexact) {
+             exc = FPCR_INE;
++        } else {
++            exc = 0;
+         }
+     }
+     env->error_code = exc;
+-- 
+2.34.1
 
 
