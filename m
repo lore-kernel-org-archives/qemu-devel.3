@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B93FC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 02:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FE9C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 03:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thgRk-0003pO-I2; Mon, 10 Feb 2025 21:56:26 -0500
+	id 1thgbl-0005z0-LG; Mon, 10 Feb 2025 22:06:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thgRe-0003ov-JV; Mon, 10 Feb 2025 21:56:18 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
+ id 1thgbi-0005wE-4J; Mon, 10 Feb 2025 22:06:42 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1thgRb-00055I-Ia; Mon, 10 Feb 2025 21:56:18 -0500
+ id 1thgbd-0007bx-Q4; Mon, 10 Feb 2025 22:06:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739242575; x=1770778575;
+ t=1739243198; x=1770779198;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=L+d/T0S7rwLh/IUVD8rHMGPWi5hJ6U10Pn/4BlpJ8yg=;
- b=NnCRAopTrorWPzXuxmV2w0oUYHjdJqyr5ywSZsEeUb7xU1upzjrRNcMv
- JnhPkx74i0sSOasFnsK2k45K/tiLm9kfsOwkz/pb8Hldhwf3dWiWi3eke
- l43mE2k7YPKuo24YWVjx/O+kHQZyKdfLLXMhVo20CnSEBY+cIQR1qtuFz
- A3ZVQGRzpP/6M7+LjtVeJxIyvspVsPCLngMAH4x71T8bU0e5JAhL72bUV
- xArTBJwk6O/uKRCfFk0rsc0UiunrmIFly+An0d3n1us1va2Jmtt8VOyio
- R6I8m6FuSp0Tg3RJrFSOxqt2WHasq1GzlPwBP+0HMBo7VoWzMd+xhdr8D w==;
-X-CSE-ConnectionGUID: B651BPXcSeaX3VvtCk4+mQ==
-X-CSE-MsgGUID: mf2/ULZsR3eITZfDm1R6OQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11341"; a="39735503"
-X-IronPort-AV: E=Sophos;i="6.13,276,1732608000"; d="scan'208";a="39735503"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Feb 2025 18:56:02 -0800
-X-CSE-ConnectionGUID: DsJdL3LORiaF3Ym5cRusZQ==
-X-CSE-MsgGUID: Bk/a7yPSTJCyyDQw1mNvrw==
+ bh=RusancdOSN5pZD6hD2Db6zM0IygsyfsprIX4VM9JsYM=;
+ b=E8uO2mLV3kix3weksZ9V2FzitiZnA1rHx+Ky2/oc26OdbGgVNJwcAAut
+ TQ31H7Z+JoqWrYCeofycJKYsyL24Ocxndc5/c8JwjFP3IambKleQj8yz5
+ GavuFFcSp+4nV2PTxa7O4QHCH6dzn9nHiT9CAb1HZ0jMCErr6b4yatRTN
+ QbXlBttIxQBD6iCm85n4JTmVqZPs1+IZpWIB6K+7jSj6qrfKAsyb9eatd
+ PhDeT1gx9na5qG9viazsVq6YaFX51dmgKMTRh0IXE6C0yJVoynlWAUxAt
+ jcsLqrqGens/wN7mIdpVanMfA8Nsi6Gc41r7KSfVVXl4QUECsCcaZPDxh Q==;
+X-CSE-ConnectionGUID: zn5fIYZ7SROBuIU2wBe3sw==
+X-CSE-MsgGUID: owpvWxz/SyeXpyygC9NKng==
+X-IronPort-AV: E=McAfee;i="6700,10204,11341"; a="39993556"
+X-IronPort-AV: E=Sophos;i="6.13,276,1732608000"; d="scan'208";a="39993556"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2025 19:06:34 -0800
+X-CSE-ConnectionGUID: BLkAhMPTQbu6TqSr1p31pg==
+X-CSE-MsgGUID: GMHBskXXT56DUh3Ro7voPg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,276,1732608000"; d="scan'208";a="112211456"
+X-IronPort-AV: E=Sophos;i="6.13,276,1732608000"; d="scan'208";a="113024933"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 10 Feb 2025 18:55:52 -0800
-Date: Tue, 11 Feb 2025 11:15:24 +0800
+ by fmviesa009.fm.intel.com with ESMTP; 10 Feb 2025 19:06:32 -0800
+Date: Tue, 11 Feb 2025 11:26:04 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 07/12] rust: qdev: switch from legacy reset to Resettable
-Message-ID: <Z6rAzBIRjDw9N3B6@intel.com>
+Subject: Re: [PATCH 09/12] rust: bindings for MemoryRegionOps
+Message-ID: <Z6rDTM4X3P95V+UA@intel.com>
 References: <20250207101623.2443552-1-pbonzini@redhat.com>
- <20250207101623.2443552-8-pbonzini@redhat.com>
+ <20250207101623.2443552-10-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250207101623.2443552-8-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250207101623.2443552-10-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -81,19 +81,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 07, 2025 at 11:16:18AM +0100, Paolo Bonzini wrote:
-> Date: Fri,  7 Feb 2025 11:16:18 +0100
+On Fri, Feb 07, 2025 at 11:16:20AM +0100, Paolo Bonzini wrote:
+> Date: Fri,  7 Feb 2025 11:16:20 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 07/12] rust: qdev: switch from legacy reset to Resettable
+> Subject: [PATCH 09/12] rust: bindings for MemoryRegionOps
 > X-Mailer: git-send-email 2.48.1
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  meson.build                      |   1 +
->  rust/hw/char/pl011/src/device.rs |  10 ++-
->  rust/qemu-api/src/qdev.rs        | 111 ++++++++++++++++++++++++-------
->  rust/qemu-api/tests/tests.rs     |   5 +-
->  4 files changed, 99 insertions(+), 28 deletions(-)
+>  rust/hw/char/pl011/src/device.rs     |  51 +++----
+>  rust/hw/char/pl011/src/lib.rs        |   1 -
+>  rust/hw/char/pl011/src/memory_ops.rs |  34 -----
+>  rust/qemu-api/meson.build            |   1 +
+>  rust/qemu-api/src/lib.rs             |   1 +
+>  rust/qemu-api/src/memory.rs          | 191 +++++++++++++++++++++++++++
+>  rust/qemu-api/src/sysbus.rs          |   7 +-
+>  rust/qemu-api/src/zeroable.rs        |   1 +
+>  8 files changed, 226 insertions(+), 61 deletions(-)
+>  delete mode 100644 rust/hw/char/pl011/src/memory_ops.rs
+>  create mode 100644 rust/qemu-api/src/memory.rs
 >
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
