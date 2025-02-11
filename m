@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE6EC0219E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 06:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5C0C0219E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 06:53:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thk5Q-0006mb-7a; Tue, 11 Feb 2025 01:49:37 -0500
+	id 1thk9I-0007et-Kk; Tue, 11 Feb 2025 01:53:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thk5J-0006mH-Ip
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 01:49:29 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thk9F-0007ej-Pd
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 01:53:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thk5H-0006w7-1C
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 01:49:29 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1thk9C-0001kq-TD
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 01:53:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739256565;
+ s=mimecast20190719; t=1739256809;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hYG9ozkUChVi0LpzoFDpI+hZuWG8vISN2Wntr++H6Rs=;
- b=Sq44WryJu8e1aRzTJemhcMXjRQSTTYqRF6e34XSZgWnsPQFJ6AmoIWrmdloZbqDeYgs7V4
- JrjZqye7vgOERtB2+Oi078V+29xpYt3LDBb9ophzf/sXLcFz9yuJ7CV65BrIAsxOmPS56a
- 5eWLTn1odL2HCXaL/krwSh7ErN1cYy8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ElnDZtjk16aFM+dw0Xc1cVCU86AqETu4dLsR6gwKCJw=;
+ b=H6Chl3OK+twwnNGBUTgFRoEst+mW+91Q1PiMTNlpRN2VNcYn14CQY4juYEuLUk8cs61NqO
+ AaDNKthRusbo6+j5yFS7A6Ib8qE2rQJK0AK2mNoYx+ug+TpbjSrOb1zUkiTG8k14rXeARQ
+ JMrcVR1dWGQLSPYOFc0ZEl7+p4FavKE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-6w5MnKqvNsWCyAAzRDEcvw-1; Tue,
- 11 Feb 2025 01:49:23 -0500
-X-MC-Unique: 6w5MnKqvNsWCyAAzRDEcvw-1
-X-Mimecast-MFC-AGG-ID: 6w5MnKqvNsWCyAAzRDEcvw
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-LdU9yH8aPb-Vu0HajmvlhA-1; Tue,
+ 11 Feb 2025 01:53:25 -0500
+X-MC-Unique: LdU9yH8aPb-Vu0HajmvlhA-1
+X-Mimecast-MFC-AGG-ID: LdU9yH8aPb-Vu0HajmvlhA
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B64C1195608E
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 06:49:22 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5747E1800878
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 06:53:24 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7158D180035E
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 06:49:22 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E8B419560A3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 06:53:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D978A21E6A28; Tue, 11 Feb 2025 07:49:19 +0100 (CET)
+ id 4CDD021E6A28; Tue, 11 Feb 2025 07:53:21 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/2] include: move include/qapi/qmp/ to include/qobject/
-In-Reply-To: <874j1152i6.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 10 Feb 2025 14:54:25 +0100")
-References: <20241118151235.2665921-1-armbru@redhat.com>
- <Z6n2mMbIXJcJ6VCn@redhat.com> <874j1152i6.fsf@pond.sub.org>
-Date: Tue, 11 Feb 2025 07:49:19 +0100
-Message-ID: <87wmdxyo0g.fsf@pond.sub.org>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,  Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH v3 1/7] util/error: Introduce warn_report_err_once()
+In-Reply-To: <c7ce5f30-ee52-46c8-b968-08ba01214a3e@redhat.com>
+ (=?utf-8?Q?=22C=C3=A9dric?= Le
+ Goater"'s message of "Mon, 10 Feb 2025 17:26:48 +0100")
+References: <20250206131438.1505542-1-clg@redhat.com>
+ <20250206131438.1505542-2-clg@redhat.com>
+ <c7ce5f30-ee52-46c8-b968-08ba01214a3e@redhat.com>
+Date: Tue, 11 Feb 2025 07:53:21 +0100
+Message-ID: <87pljpyntq.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
@@ -89,17 +91,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->
->> Hi Markus,
+> On 2/6/25 14:14, C=C3=A9dric Le Goater wrote:
+>> Depending on the configuration of the host and VM, a passthrough
+>> device may generate recurring DMA mapping errors at runtime. In such
+>> cases, reporting the issue once is sufficient.
 >>
->> These patches seem to have got lost/delayed along the way. Are
->> you able to send a pull for them soon ?
+>> We have already the warn/error_report_once() routines taking a format
+>> and arguments. Using the same design pattern, add a new warning
+>> variant taking an 'Error *' parameter.
+>>
+>> Cc: Markus Armbruster <armbru@redhat.com>
+>> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>> ---
+>>   include/qapi/error.h | 12 ++++++++++++
+>>   util/error.c         | 11 +++++++++++
+>>   2 files changed, 23 insertions(+)
 >
-> My bad!  Will send them out a.s.a.p.  Thanks for the reminder!
+> Hello Markus,
+>
+> Are you ok with this change ? Should we take it through the vfio queue ?
 
-It's in master now.
+Yes, please.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
