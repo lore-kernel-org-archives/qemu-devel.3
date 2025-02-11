@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F96C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D24C021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thrL4-0006Wt-9e; Tue, 11 Feb 2025 09:34:14 -0500
+	id 1thrL6-0006Y0-51; Tue, 11 Feb 2025 09:34:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrL2-0006WU-E6
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:34:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrL3-0006Ws-Un
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:34:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrKx-0001ut-Lv
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:34:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1thrL2-0001vk-7m
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:34:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739284446;
+ s=mimecast20190719; t=1739284451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bPZVrbsgZOWeCoD7MxZMqgbjo9iKE+41P6bgZWofvF0=;
- b=Y3zkLdc3lDXAtZzYFySxiXMeSQAMb5hSS0s8Z/GBKSupLA9/nEhRvhkHjyakSaflVjgAxe
- GvGxGxxm8o3XTrgLXQgvdn4kOchEVL2JysLFsNkUZfoDsnIDndOfoTT47eb3IUkoYAfra8
- 7E0Zynr62Q7dMPRe3QYbPtNRGeNaJqM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=69rEzwaZb7qaICu75wMIPjWyfZ+8rY+b9xAgO7dxvic=;
+ b=BN4sB6DjASko1wwl/zIp4bQe1RIQb58SGIG9k1GuL5ULVW43SCXGWmjv3+2SVM2vCBXo69
+ YZ5Fd5p1JlB6aLfgd3FE++hHWBrM0v7ntUdQvS4BL5UeJ+43V7AB8/n0fo5lbDcB0KGbuT
+ LZMWf+w8IREPf4MUz4hjTEEKqZJjrlY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-pE9c6MqJOMysVbgXbMPzRg-1; Tue,
- 11 Feb 2025 09:34:05 -0500
-X-MC-Unique: pE9c6MqJOMysVbgXbMPzRg-1
-X-Mimecast-MFC-AGG-ID: pE9c6MqJOMysVbgXbMPzRg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-mc2uIRMUPwelOOMbveGrNA-1; Tue,
+ 11 Feb 2025 09:34:09 -0500
+X-MC-Unique: mc2uIRMUPwelOOMbveGrNA-1
+X-Mimecast-MFC-AGG-ID: mc2uIRMUPwelOOMbveGrNA
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 832E21956086
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 14:34:04 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C318F1800875
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 14:34:08 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.39])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 97E391800873; Tue, 11 Feb 2025 14:34:02 +0000 (UTC)
+ id 8BB4218008CC; Tue, 11 Feb 2025 14:34:07 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 08/12] vfio: Rephrase comment in vfio_listener_region_add()
- error path
-Date: Tue, 11 Feb 2025 15:33:36 +0100
-Message-ID: <20250211143340.787996-9-clg@redhat.com>
+Subject: [PULL 10/12] vfio: Improve error reporting when MMIO region mapping
+ fails
+Date: Tue, 11 Feb 2025 15:33:38 +0100
+Message-ID: <20250211143340.787996-11-clg@redhat.com>
 In-Reply-To: <20250211143340.787996-1-clg@redhat.com>
 References: <20250211143340.787996-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,50 +85,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rephrase a bit the ending comment about how errors are handled
-depending on the phase in which vfio_listener_region_add() is called.
+When the IOMMU address space width is smaller than the physical
+address width, a MMIO region of a device can fail to map because the
+region is outside the supported IOVA ranges of the VM. In this case,
+PCI peer-to-peer transactions on BARs are not supported. This can
+occur with the 39-bit IOMMU address space width, as can be the case on
+some Intel consumer processors, or when using a vIOMMU device with
+default settings.
+
+The current error message is unclear, improve it and also change the
+error report to a warning because it is a non fatal condition for the
+VM. To prevent excessive log messages, restrict these recurring DMA
+mapping errors to a single warning at runtime.
 
 Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250206131438.1505542-4-clg@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20250206131438.1505542-6-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/common.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ hw/vfio/common.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index f7499a9b7447a7593198e1523c50858b70a8bd85..62af1216fc5a9089fc718c2afe3a405d9381db32 100644
+index 62af1216fc5a9089fc718c2afe3a405d9381db32..4fca4c6166f761acceb7b57b52e379603ea53876 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -683,12 +683,13 @@ fail:
-         error_reportf_err(err, "PCI p2p may not work: ");
-         return;
-     }
--    /*
--     * On the initfn path, store the first error in the container so we
--     * can gracefully fail.  Runtime, there's not much we can do other
--     * than throw a hardware error.
--     */
+@@ -555,6 +555,18 @@ static bool vfio_get_section_iova_range(VFIOContainerBase *bcontainer,
+     return true;
+ }
+ 
++static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
++{
++    /*
++     * MMIO region mapping failures are not fatal but in this case PCI
++     * peer-to-peer transactions are broken.
++     */
++    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
++        error_append_hint(errp, "%s: PCI peer-to-peer transactions "
++                          "on BARs are not supported.\n", vbasedev->name);
++    }
++}
 +
-     if (!bcontainer->initialized) {
-+        /*
-+         * At machine init time or when the device is attached to the
-+         * VM, store the first error in the container so we can
-+         * gracefully fail the device realize routine.
-+         */
-         if (!bcontainer->error) {
-             error_propagate_prepend(&bcontainer->error, err,
-                                     "Region %s: ",
-@@ -697,6 +698,10 @@ fail:
-             error_free(err);
+ static void vfio_listener_region_add(MemoryListener *listener,
+                                      MemoryRegionSection *section)
+ {
+@@ -670,7 +682,10 @@ static void vfio_listener_region_add(MemoryListener *listener,
+                    strerror(-ret));
+         if (memory_region_is_ram_device(section->mr)) {
+             /* Allow unexpected mappings not to be fatal for RAM devices */
+-            error_report_err(err);
++            VFIODevice *vbasedev =
++                vfio_get_vfio_device(memory_region_owner(section->mr));
++            vfio_device_error_append(vbasedev, &err);
++            warn_report_err_once(err);
+             return;
          }
-     } else {
-+        /*
-+         * At runtime, there's not much we can do other than throw a
-+         * hardware error.
-+         */
-         error_report_err(err);
-         hw_error("vfio: DMA mapping failed, unable to continue");
-     }
+         goto fail;
 -- 
 2.48.1
 
