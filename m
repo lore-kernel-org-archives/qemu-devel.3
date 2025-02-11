@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8431BC021A0
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5557EC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 14:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thrTl-00080i-UZ; Tue, 11 Feb 2025 09:43:14 -0500
+	id 1thrYH-0000cI-Tu; Tue, 11 Feb 2025 09:47:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1thrTj-00080Y-HS
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:43:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1thrTf-000514-JQ
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:43:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739284985;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=iLkKusfjzzxxrZTcbLwIvVw1ebfi7UpNZpZRbIN4u9I=;
- b=gVrBkRZrViC9fs87iaW6XlsaiAFrossEISc2994e+3xqPIJoovkMS/RQRbNFxNhOHf9jVW
- fxLNN8BfipiMR59FGgTxxc9RV2E8g2tOediZF3Tgd+rXMmKWpviB0N8Ofe5Gks6nw3DlTi
- ugP0pe8bLkW8XcsxoOSqz/EHmVKPnx0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-7dsMo_Y-NoGRi23oi3IBPQ-1; Tue, 11 Feb 2025 09:43:04 -0500
-X-MC-Unique: 7dsMo_Y-NoGRi23oi3IBPQ-1
-X-Mimecast-MFC-AGG-ID: 7dsMo_Y-NoGRi23oi3IBPQ
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38dc88ed9c0so1756956f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 06:43:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thrYC-0000bz-Vd
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:47:49 -0500
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1thrYB-0006R5-7P
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 09:47:48 -0500
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e5b32f64ffeso4654855276.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 06:47:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739285266; x=1739890066; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=htenO4NWqgecrAFiiMaIqYD1X+buDOgn6dQTCmf8JU4=;
+ b=Bt2RTNt9P5sn+dl/HjI/A1nO0btW/Y7oqbG1JZviXXh336ghBlBZrsY+zGnpLqjlCI
+ NOB9xWpOLW+dCjLkzAdV9viicIeRLfWqyursfT5J5rSOjHYEgNZJz2zSQwM1nJoYLso1
+ SQo7EKtpwC6y3nt72RZMknQlQxenOOWlnTh+P09a9tr0OuEPDIri2vnYdUepjbZWhNm5
+ RHTtWK9OXPkPr0iAsS87FeZGjhIwbfpPEImiIfsJZ1QaP4Arvei0FwZM4lROEBQK+Z1q
+ axes+vKxBsvSVzBT5tlYuk3v7I6wN7oXVCbX8kZ+XFSksCa5srFDmQ1G9cIKaK3EUWIs
+ XFpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739284983; x=1739889783;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1739285266; x=1739890066;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iLkKusfjzzxxrZTcbLwIvVw1ebfi7UpNZpZRbIN4u9I=;
- b=Gpfi7wtU5Jb2Cy8z3YOTTiT5MfGBjeTZyoXC6VpgVDrlcLel7vQZRcrxAWgjIruKCJ
- IUrQBKkOdqxDCZ1cQ7l/KcqHaWdIQg5B4dI9gY5rXSUfMz2do3+6SMdFM03kUofCiVOX
- EpMz51bWz2D2z4uoWRToX3gP76EdonQAFfXS/6mEBW1fwu3oKDQaod5Fp6hK3+JE4PYe
- ri3SwfvQLNt+1pck98NcC8uaHKgK/3xa2ToMOuIaGIBqoncoI93tn++V7Geeaa9dXRrx
- rY5GT3ljoSIOLGkHclJTjYsrQGQUIq/lWMy8pVL0zNzuTvkKZbUVdkwX9YcDgxFBaBka
- umPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8Mmmm2zTbcHMVYnPS2M5FmUwx0LOgeEzr6zdInrsGgzRKFy2u4O0RfZ5UMxHeBwNuAfpxzgAGZV/t@nongnu.org
-X-Gm-Message-State: AOJu0Ywv+aNPxO/fDo4Ue9dPB2nEMoGfumaGlqTqD0y+8Q9yw88QvcUg
- 0293+VAC9wpJNYWqoi9OyXlvH8vA0qpYydLQF/HctJRwX27bQttcEdbhAsCR8e8Jr02zlMa9Onh
- N2VxuS4pqlxDFDfVqREjVYCPsnr7dyAg7biamPwadCc62xaQ4LXKQ
-X-Gm-Gg: ASbGncuSv0Jp186p+i/7LFLpv9uZjcFF8Xm+mZ1YrCq8PFUHSZkytn4KUUtUC/QsZFd
- HSERFyqgyWmiEod+CEFxkn5nz7NfXzqTbXzXSJ1wImi+PsHJFjfqYqYmiCCxdGdyPX+8a8awm5j
- t7UuDO6GFo4tCixwa9tLfVeZL7DDF8pkaD9P88Tcfj8nRJ4wlK9NSMlmyCk/tervRE0DJwOYNP4
- rZWoFT2dccc91i/LZkLib5eF7S+fwuHIE9S4/NxM4Gh8Rc5vd4MKGJUGn8qm82Xr4f79uCnPApD
- uzBXNXwCkexSsiDsig4RnpqBkNKmmHJCQdRKdMDyXF3pv5nF44XW1qE=
-X-Received: by 2002:a5d:64c4:0:b0:38d:dcc4:1dcb with SMTP id
- ffacd0b85a97d-38de416d704mr3735738f8f.2.1739284983160; 
- Tue, 11 Feb 2025 06:43:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF044mlgmfdXCzahgywX8cOO1u5fMiMHnioarIK0MqKOTIZLofs8/sVp2loa8ZxvqKUhN/KsQ==
-X-Received: by 2002:a5d:64c4:0:b0:38d:dcc4:1dcb with SMTP id
- ffacd0b85a97d-38de416d704mr3735698f8f.2.1739284982554; 
- Tue, 11 Feb 2025 06:43:02 -0800 (PST)
-Received: from stex1.redhat.com (host-79-46-200-29.retail.telecomitalia.it.
- [79.46.200.29]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4391dcae5c7sm177587125e9.18.2025.02.11.06.43.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 06:43:01 -0800 (PST)
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: mst@redhat.com,
-	qemu-devel@nongnu.org
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH] MAINTAINERS: add more files to `vhost`
-Date: Tue, 11 Feb 2025 15:42:57 +0100
-Message-ID: <20250211144259.117910-1-sgarzare@redhat.com>
-X-Mailer: git-send-email 2.48.1
+ bh=htenO4NWqgecrAFiiMaIqYD1X+buDOgn6dQTCmf8JU4=;
+ b=ImT2xZh5srFWLjo3t7/Sh0ulQz0cxjUcwJ+7bP/aXSH7CUcjw4hq2RmrW4BtfuvSPJ
+ EHr3IG0RvdVXZJIJgXwAk8KGe0I2JdTo2cWkyvry5T/CRBDlpIq8p2X18e5A/8nqJGLc
+ eK0+D33N7YJ0g71L+1mIfHiEQaGUKiS/6aIOkONIOVoCRSv4o0X04vxF1V9lSg9lL61k
+ ErOJ/0JqSJF8279qFEdoCQC2qyt64ukhg4erhzbH1sMMe3V6VDoqDc/0EMIprq4mJE8K
+ dzqDgu6kcfJAwLKpRxdKpGg3YPAZRzppgAFhbtnYNbYYBZPnYMAb92ERYhSRQxbLs7Jh
+ nAkA==
+X-Gm-Message-State: AOJu0Yw+6rKOKd6umHwnw8GfW07KEIjWTxB0DBOBKW3JtYliy1lhUk02
+ gwdzqjL3qpIoJ287dCQD1F37p8POPVSA5wDdnHAQENq7S9cOtmmnCFg+JyznCccntMM2XUsuL0c
+ 40d36t88w9MxnJm07JmUL+Enig96yL9I76cpl9A==
+X-Gm-Gg: ASbGncvEZhRBTvIQEsz6ely7xqla5IGeS4gGzZrnxspTGUXX+uv6p6ifchrfEHzZO/r
+ sr7v8LNoT4kt+hAED5Twm3N24oWRk9XZIXh2X9HV+U7iRgz3J55wDcUDFa+jfoSfh3n2whwfmdQ
+ ==
+X-Google-Smtp-Source: AGHT+IF274jkvJzgWFCGaambk5Hiylywpk29Gjs/QZ7DT+9E+OpDukAZBo0Qvcyg7FbtQ30Aj9OOk1cOpNnue2i9Ss8=
+X-Received: by 2002:a05:6902:72d:b0:e58:5cf:bc52 with SMTP id
+ 3f1490d57ef6-e5d9e7e3b53mr18449276.9.1739285265596; Tue, 11 Feb 2025 06:47:45
+ -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <E1thUwq-0020ux-5f@kylie.crudebyte.com>
+In-Reply-To: <E1thUwq-0020ux-5f@kylie.crudebyte.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Feb 2025 14:47:33 +0000
+X-Gm-Features: AWEUYZkT2xSuM1OFcT-BDgeWlZvwvgPQguSk974Hil29fDZJemczbScuayWf3_8
+Message-ID: <CAFEAcA-Gh18aqaOtw5aj2KVn75c+gVHWUUoFVRzcffc7DGKqQw@mail.gmail.com>
+Subject: Re: [PATCH] 9pfs: fix dead code in qemu_open_flags_tostr()
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +91,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While sending a patch for backends/cryptodev-vhost.c I noticed that
-Michael wasn`t in CC so I took a look at the files listed under `vhost`
-and tried to fix it increasing the coverage by adding new files.
+On Mon, 10 Feb 2025 at 14:40, Christian Schoenebeck
+<qemu_oss@crudebyte.com> wrote:
+>
+> Coverity scan complained about expression "|LARGEFILE" to be non reachable
+> and the detailed Coverity report claims O_LARGEFILE was zero. I can't
+> reproduce this here, but I assume that means there are at least some
+> system(s) which define O_LARGEFILE as zero.
+>
+> This is not really an issue, but to silence this Coverity warning, add a
+> preprocessor wrapper that checks for O_LARGEFILE being non-zero for this
+> overall expression. The 'defined(O_LARGEFILE)' check is not necessary,
+> but it makes it more clear that we really want to check for the value of
+> O_LARGEFILE, not just whether the macro was defined.
+>
+> Fixes: 9a0dd4b3
+> Resolves: Coverity CID 1591178
+> Reported-by: Coverity Scan
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/9p-util-generic.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/hw/9pfs/9p-util-generic.c b/hw/9pfs/9p-util-generic.c
+> index 4c1e9c887d..02e359f17b 100644
+> --- a/hw/9pfs/9p-util-generic.c
+> +++ b/hw/9pfs/9p-util-generic.c
+> @@ -19,7 +19,9 @@ char *qemu_open_flags_tostr(int flags)
+>          #ifdef O_DIRECT
+>          (flags & O_DIRECT) ? "|DIRECT" : "",
+>          #endif
+> +        #if defined(O_LARGEFILE) && O_LARGEFILE != 0
+>          (flags & O_LARGEFILE) ? "|LARGEFILE" : "",
+> +        #endif
+>          (flags & O_DIRECTORY) ? "|DIRECTORY" : "",
+>          (flags & O_NOFOLLOW) ? "|NOFOLLOW" : "",
+>          #ifdef O_NOATIME
 
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
----
- MAINTAINERS | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+I don't think we need to make this change -- the code is
+correct, and osdep.h defines O_LARGEFILE if the system doesn't,
+exactly so that we don't need to put in extra ifdefs in the
+code itself. Coverity often fails to understand that some
+code is not dead in a different configuration or host OS
+than the one that got scanned. I've marked the issue as
+a false-positive in the Coverity UI.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 842bac8a7f..7a0b493dee 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2219,12 +2219,16 @@ M: Michael S. Tsirkin <mst@redhat.com>
- R: Stefano Garzarella <sgarzare@redhat.com>
- S: Supported
- F: hw/*/*vhost*
--F: docs/interop/vhost-user.json
--F: docs/interop/vhost-user.rst
-+F: docs/interop/vhost-user*
-+F: docs/system/devices/vhost-user*
- F: contrib/vhost-user-*/
--F: backends/vhost-user.c
-+F: backends/*vhost*
- F: include/system/vhost-user-backend.h
-+F: include/hw/virtio/vhost*
-+F: include/*/vhost*
- F: subprojects/libvhost-user/
-+F: block/export/vhost-user*
-+F: util/vhost-user-server.c
- 
- vhost-shadow-virtqueue
- R: Eugenio Pérez <eperezma@redhat.com>
--- 
-2.48.1
-
+thanks
+-- PMM
 
