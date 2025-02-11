@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF42C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497EBC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tht7u-0003yZ-8u; Tue, 11 Feb 2025 11:28:46 -0500
+	id 1tht5x-0006i3-84; Tue, 11 Feb 2025 11:26:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht63-0006me-PK
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:55 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1tht5d-0006Ve-Af
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:25 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tht60-0003TQ-Kj
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:51 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-38dc6d55ebaso2898408f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:48 -0800 (PST)
+ id 1tht5b-00039M-Eu
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:26:25 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4394c192285so10766285e9.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:26:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739291206; x=1739896006; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739291182; x=1739895982; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oWHlihOIdQ6CYG5rSBr2TwbytpUFZOd7E5qydFIL3W0=;
- b=Jm5yw5ADVZaBQm+tezWhc+oWb7tQXeAHgXS7GkpPZUT/wa2SAau9RDkhBzqCWUFu4+
- ykIAtxkASP5qp/47Mt2XxHd+6o1aUTzg0kppyyE4LWFloZh0VT1DVahnWl/EMdF6rUM8
- YpjqT3sIwQ1+HEYadXx20R5jqdBmMJizwqB2QN2jzndd+7ViD6Xa7C7Wgr3vaNrDSNWO
- L7C+fX9hME3Aa59lykWd1d/wKavpQS6SGF3QEnAzpm+34vz4mG7hG4EfntQ4t2BtEmea
- IGeEzcUWBddE9J0aTFVwO7zjI6qWvnsE0w5DdvOkXxM7rusWJ3OVRA0QiMNtcTY83e7g
- serg==
+ :reply-to; bh=yTAezoHOP/iCLVoLliWF3UtQZzqr33hZzleMgsTBjew=;
+ b=MvKcCMl4d9aMjRlVNE8EfldDbwH1Hhffb7NeWznumS2n0ebpaiRMAOR6gk6/+aMkr1
+ 0FfdJUpvExEgxnp65aZgDlp3wcgCZpit0g7i5TZOr3mPfaz9KQmi2KdPF4X5dc+Tnlb3
+ KRvCywPDpZS/Jyf7+KnZBDRfcN029lACHcpenAulOP/vz5z7qQR3+tKC5X2WPF1OH4a+
+ oOvjkwejpA69nxu/uUswC/aZRBGkHXgvvul/MZc30vam/3YnWKIiWuO/n4BdINBW1kM2
+ zpBY057eFiBPO2B3MffWMCpmEF3yfYwlHkVBPitkHw4Bo1wHrXvNtEEFd1X33O5ZslfY
+ AsCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739291206; x=1739896006;
+ d=1e100.net; s=20230601; t=1739291182; x=1739895982;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oWHlihOIdQ6CYG5rSBr2TwbytpUFZOd7E5qydFIL3W0=;
- b=wWDGJtKaUWt+QZrSCOsgPc4xYUFHP1nQpRa9Bepe7ymM83FCe+fe15f1VFhB1mtvTx
- 73W5gJ+c+wocuBd9RcGAMNr/rHZin5onyCPDtSC8gaVVJmLxq94d+LzhJ7fgZo+o5v6b
- /V2ibSCjQK7QlJ2+ylYK24DGYNduiqMXbeH3SeFe3Trw/qqGbz2R0QHWdMqWSS7UdJSy
- VDsTCjHsc9+jJDgxm5cjodBgnqhzMuBP/DicvDhW98CBFXmDk6YoHrXfXe9GsnIDeyEY
- WSuS/0y8OouadUU9LJxMqLTj9S6ub41hMG/3OApsvg5oDBPjtXBxzJySBqC36hLtvNKu
- TJWw==
-X-Gm-Message-State: AOJu0Ywq6tQJqE+hiEMV6+YyYJbZ5qxTK3SKvWIo79IFeAcFhQ63LKyV
- VNN5kCKZFs3CIZxKNO7FfLNMt7tL4zQg+7ju+7mqfQyavjqbLCFZvyrKQZvro98n+r7LK7dqWEp
- g
-X-Gm-Gg: ASbGncv4hvYTRH9w4gV6Md3WPwH6h2xCZd+8V7M+hOc/6Ngt0qGkutXWdFAzGEIWLpA
- lE9lc7UE1MRHrV5LwxWhWBJb83nNy7QGsmdnOhNrp9NQMvKRwVkgfn+oeDMyUqp6l+4iVFk8Lmq
- NbBiIN9FGoMtQ78KKrp9rMWG8/0txG5bKzYqjEOeS0qT7HBJ2we/iBQYn/MB5n+NUZVErYjA8J3
- OsMYgoEiXpNXeRVNsrFCFgRJEuDvXVdGiabF08umqUZz0kiwNqFeO2eROc3ylvshF1lTu0KEnOU
- ia3ryuPRMOxEw6QDmlNi
-X-Google-Smtp-Source: AGHT+IGRlzcdUftBnHK3r1PEMVu20z5uwNu1GtnfdzgdE73TTbg2RnltGwj2HaxukXlVXgVGkWXvVw==
-X-Received: by 2002:a5d:598d:0:b0:38a:8b34:76b0 with SMTP id
- ffacd0b85a97d-38de43ec4b6mr3833068f8f.27.1739291206575; 
- Tue, 11 Feb 2025 08:26:46 -0800 (PST)
+ bh=yTAezoHOP/iCLVoLliWF3UtQZzqr33hZzleMgsTBjew=;
+ b=V8gth3RlSEVotSw5SQ3gLvtZT4AbXFnHnsWQ3Qaq72k6zJ0M8O9qZiSGvoa3VjvXeF
+ DadMBmeO9BtiIFDWGEHdo7PKuELrk4fGTMCc7qVH8mWpw3Nuzu5ymX26ODXX0Hk6C0Fb
+ cN/ed4LOvW/h/eq/TCX7R7PCdB5ZouMrsN6U9Zbw/D0GQG50wcj5+ypBFHmhFs4mzOAG
+ wErTevpzWrwatcFrjXq/828zFVYuQVv3pHKWFf/9qqVZO0AkgdBYZmlEh1dTubJFkGZ3
+ 3yJrtLnBYe6VdIN1SocPRoYNAgUGX2GnOPkWgTaj5rWsG6khnauCDZHAwbGfr/GYv1OZ
+ K7Hg==
+X-Gm-Message-State: AOJu0Yyh2HVzUt9uApJvkzYZldza36ToXUhFGh+LaJ4049M0VM/WqZdo
+ pCdQbgRqpM470aDzAVdWrBcUChR9KX+eFCpRxUDZ4RkocMXpIbkCQhQWa++dugrD8yUDxGzIyxo
+ S
+X-Gm-Gg: ASbGncvbsgNoTm9lF/V+wdyqq8BPdkCBVAkbj+r1Naa0IkbWiUPNkc1PuC5V/q9dZcp
+ ylDDrVBN5ouDF+PP6XgeQ/LYIMPqxlby+EXwEAcE3G/5pQyIcGFlsagUtpKvvN9MX1tGOeIYXhy
+ fL6h9sUsHH3tP+qZ03PBK2M6+tIm+sIeFR7X9Y8U2Q0FREY6fdqu0c6ESffxRJ7il5h8Rm/RTIh
+ JEv2uv3u5UqKzA6iCX5AoorDXzkedq3pGkOKBR0mqLonB1/hr4cI61SsQv3U+PAYJm0YrvhKoq5
+ cmsK2MFku6a7mS23ACRS
+X-Google-Smtp-Source: AGHT+IFs2QOBW8wC2DDGUALrOrgJm+HDmZ7ZF+AHAN+tetNy6oE3Ttls+omejE8bReUbPmGu1OSe/w==
+X-Received: by 2002:a05:6000:1ac9:b0:38d:db8b:f518 with SMTP id
+ ffacd0b85a97d-38ddb8bf750mr9272238f8f.22.1739291182004; 
+ Tue, 11 Feb 2025 08:26:22 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.45
+ 5b1f17b1804b1-4393f202721sm82660455e9.21.2025.02.11.08.26.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 08:26:46 -0800 (PST)
+ Tue, 11 Feb 2025 08:26:21 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/68] target/arm: Handle FPCR.AH in SVE FCMLA
-Date: Tue, 11 Feb 2025 16:25:33 +0000
-Message-Id: <20250211162554.4135349-48-peter.maydell@linaro.org>
+Subject: [PULL 24/68] target/arm: Implement FPCR.AH semantics for vector
+ FMIN/FMAX
+Date: Tue, 11 Feb 2025 16:25:10 +0000
+Message-Id: <20250211162554.4135349-25-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250211162554.4135349-1-peter.maydell@linaro.org>
 References: <20250211162554.4135349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,180 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Implement the FPCR.AH == 1 semantics for vector FMIN/FMAX, by
+creating new _ah_ versions of the gvec helpers which invoke the
+scalar fmin_ah and fmax_ah helpers on each element.
 
-The negation step in SVE FCMLA mustn't negate a NaN when FPCR.AH is
-set.  Use the same approach as we did for A64 FCMLA of passing in
-FPCR.AH and using it to select whether to negate by XOR or by the
-muladd negate_product flag.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250129013857.135256-28-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/sve_helper.c    | 69 +++++++++++++++++++++-------------
- target/arm/tcg/translate-sve.c |  2 +-
- 2 files changed, 43 insertions(+), 28 deletions(-)
+ target/arm/tcg/helper-sve.h    | 14 ++++++++++++++
+ target/arm/tcg/translate-a64.c | 21 +++++++++++++++++++--
+ target/arm/tcg/vec_helper.c    |  8 ++++++++
+ 3 files changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index c12b2600bd7..c206ca65ceb 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5347,13 +5347,18 @@ void HELPER(sve_fcmla_zpzzz_h)(void *vd, void *vn, void *vm, void *va,
-                                void *vg, float_status *status, uint32_t desc)
+diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
+index fea43b319c3..f1b4606f763 100644
+--- a/target/arm/tcg/helper-sve.h
++++ b/target/arm/tcg/helper-sve.h
+@@ -972,6 +972,20 @@ DEF_HELPER_FLAGS_5(gvec_rsqrts_s, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_5(gvec_rsqrts_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
+ 
++DEF_HELPER_FLAGS_5(gvec_ah_fmax_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_fmax_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_fmax_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++
++DEF_HELPER_FLAGS_5(gvec_ah_fmin_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_fmin_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_5(gvec_ah_fmin_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
++
+ DEF_HELPER_FLAGS_4(sve_faddv_h, TCG_CALL_NO_RWG,
+                    i64, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_4(sve_faddv_s, TCG_CALL_NO_RWG,
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 89f061d20b8..24695ab55b6 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5596,6 +5596,13 @@ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a, int data,
+                                        FPST_A64_F16 : FPST_A64);
+ }
+ 
++static bool do_fp3_vector_2fn(DisasContext *s, arg_qrrr_e *a, int data,
++                              gen_helper_gvec_3_ptr * const fnormal[3],
++                              gen_helper_gvec_3_ptr * const fah[3])
++{
++    return do_fp3_vector(s, a, data, s->fpcr_ah ? fah : fnormal);
++}
++
+ static bool do_fp3_vector_ah(DisasContext *s, arg_qrrr_e *a, int data,
+                              gen_helper_gvec_3_ptr * const f[3])
  {
-     intptr_t j, i = simd_oprsz(desc);
--    unsigned rot = simd_data(desc);
--    bool flip = rot & 1;
--    float16 neg_imag, neg_real;
-+    bool flip = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    uint32_t fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    uint32_t negf_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
-+    uint32_t negf_real = flip ^ negf_imag;
-+    float16 negx_imag, negx_real;
-     uint64_t *g = vg;
- 
--    neg_imag = float16_set_sign(0, (rot & 2) != 0);
--    neg_real = float16_set_sign(0, rot == 1 || rot == 2);
-+    /* With AH=0, use negx; with AH=1 use negf. */
-+    negx_real = (negf_real & ~fpcr_ah) << 15;
-+    negx_imag = (negf_imag & ~fpcr_ah) << 15;
-+    negf_real = (negf_real & fpcr_ah ? float_muladd_negate_product : 0);
-+    negf_imag = (negf_imag & fpcr_ah ? float_muladd_negate_product : 0);
- 
-     do {
-         uint64_t pg = g[(i - 1) >> 6];
-@@ -5370,18 +5375,18 @@ void HELPER(sve_fcmla_zpzzz_h)(void *vd, void *vn, void *vm, void *va,
-             mi = *(float16 *)(vm + H1_2(j));
- 
-             e2 = (flip ? ni : nr);
--            e1 = (flip ? mi : mr) ^ neg_real;
-+            e1 = (flip ? mi : mr) ^ negx_real;
-             e4 = e2;
--            e3 = (flip ? mr : mi) ^ neg_imag;
-+            e3 = (flip ? mr : mi) ^ negx_imag;
- 
-             if (likely((pg >> (i & 63)) & 1)) {
-                 d = *(float16 *)(va + H1_2(i));
--                d = float16_muladd(e2, e1, d, 0, status);
-+                d = float16_muladd(e2, e1, d, negf_real, status);
-                 *(float16 *)(vd + H1_2(i)) = d;
-             }
-             if (likely((pg >> (j & 63)) & 1)) {
-                 d = *(float16 *)(va + H1_2(j));
--                d = float16_muladd(e4, e3, d, 0, status);
-+                d = float16_muladd(e4, e3, d, negf_imag, status);
-                 *(float16 *)(vd + H1_2(j)) = d;
-             }
-         } while (i & 63);
-@@ -5392,13 +5397,18 @@ void HELPER(sve_fcmla_zpzzz_s)(void *vd, void *vn, void *vm, void *va,
-                                void *vg, float_status *status, uint32_t desc)
- {
-     intptr_t j, i = simd_oprsz(desc);
--    unsigned rot = simd_data(desc);
--    bool flip = rot & 1;
--    float32 neg_imag, neg_real;
-+    bool flip = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    uint32_t fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    uint32_t negf_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
-+    uint32_t negf_real = flip ^ negf_imag;
-+    float32 negx_imag, negx_real;
-     uint64_t *g = vg;
- 
--    neg_imag = float32_set_sign(0, (rot & 2) != 0);
--    neg_real = float32_set_sign(0, rot == 1 || rot == 2);
-+    /* With AH=0, use negx; with AH=1 use negf. */
-+    negx_real = (negf_real & ~fpcr_ah) << 31;
-+    negx_imag = (negf_imag & ~fpcr_ah) << 31;
-+    negf_real = (negf_real & fpcr_ah ? float_muladd_negate_product : 0);
-+    negf_imag = (negf_imag & fpcr_ah ? float_muladd_negate_product : 0);
- 
-     do {
-         uint64_t pg = g[(i - 1) >> 6];
-@@ -5415,18 +5425,18 @@ void HELPER(sve_fcmla_zpzzz_s)(void *vd, void *vn, void *vm, void *va,
-             mi = *(float32 *)(vm + H1_2(j));
- 
-             e2 = (flip ? ni : nr);
--            e1 = (flip ? mi : mr) ^ neg_real;
-+            e1 = (flip ? mi : mr) ^ negx_real;
-             e4 = e2;
--            e3 = (flip ? mr : mi) ^ neg_imag;
-+            e3 = (flip ? mr : mi) ^ negx_imag;
- 
-             if (likely((pg >> (i & 63)) & 1)) {
-                 d = *(float32 *)(va + H1_2(i));
--                d = float32_muladd(e2, e1, d, 0, status);
-+                d = float32_muladd(e2, e1, d, negf_real, status);
-                 *(float32 *)(vd + H1_2(i)) = d;
-             }
-             if (likely((pg >> (j & 63)) & 1)) {
-                 d = *(float32 *)(va + H1_2(j));
--                d = float32_muladd(e4, e3, d, 0, status);
-+                d = float32_muladd(e4, e3, d, negf_imag, status);
-                 *(float32 *)(vd + H1_2(j)) = d;
-             }
-         } while (i & 63);
-@@ -5437,13 +5447,18 @@ void HELPER(sve_fcmla_zpzzz_d)(void *vd, void *vn, void *vm, void *va,
-                                void *vg, float_status *status, uint32_t desc)
- {
-     intptr_t j, i = simd_oprsz(desc);
--    unsigned rot = simd_data(desc);
--    bool flip = rot & 1;
--    float64 neg_imag, neg_real;
-+    bool flip = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    uint32_t fpcr_ah = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    uint32_t negf_imag = extract32(desc, SIMD_DATA_SHIFT + 1, 1);
-+    uint32_t negf_real = flip ^ negf_imag;
-+    float64 negx_imag, negx_real;
-     uint64_t *g = vg;
- 
--    neg_imag = float64_set_sign(0, (rot & 2) != 0);
--    neg_real = float64_set_sign(0, rot == 1 || rot == 2);
-+    /* With AH=0, use negx; with AH=1 use negf. */
-+    negx_real = (uint64_t)(negf_real & ~fpcr_ah) << 63;
-+    negx_imag = (uint64_t)(negf_imag & ~fpcr_ah) << 63;
-+    negf_real = (negf_real & fpcr_ah ? float_muladd_negate_product : 0);
-+    negf_imag = (negf_imag & fpcr_ah ? float_muladd_negate_product : 0);
- 
-     do {
-         uint64_t pg = g[(i - 1) >> 6];
-@@ -5460,18 +5475,18 @@ void HELPER(sve_fcmla_zpzzz_d)(void *vd, void *vn, void *vm, void *va,
-             mi = *(float64 *)(vm + H1_2(j));
- 
-             e2 = (flip ? ni : nr);
--            e1 = (flip ? mi : mr) ^ neg_real;
-+            e1 = (flip ? mi : mr) ^ negx_real;
-             e4 = e2;
--            e3 = (flip ? mr : mi) ^ neg_imag;
-+            e3 = (flip ? mr : mi) ^ negx_imag;
- 
-             if (likely((pg >> (i & 63)) & 1)) {
-                 d = *(float64 *)(va + H1_2(i));
--                d = float64_muladd(e2, e1, d, 0, status);
-+                d = float64_muladd(e2, e1, d, negf_real, status);
-                 *(float64 *)(vd + H1_2(i)) = d;
-             }
-             if (likely((pg >> (j & 63)) & 1)) {
-                 d = *(float64 *)(va + H1_2(j));
--                d = float64_muladd(e4, e3, d, 0, status);
-+                d = float64_muladd(e4, e3, d, negf_imag, status);
-                 *(float64 *)(vd + H1_2(j)) = d;
-             }
-         } while (i & 63);
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 410087c3fbd..6af94fedd0a 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3955,7 +3955,7 @@ static gen_helper_gvec_5_ptr * const fcmla_fns[4] = {
-     gen_helper_sve_fcmla_zpzzz_s, gen_helper_sve_fcmla_zpzzz_d,
+@@ -5636,14 +5643,24 @@ static gen_helper_gvec_3_ptr * const f_vector_fmax[3] = {
+     gen_helper_gvec_fmax_s,
+     gen_helper_gvec_fmax_d,
  };
- TRANS_FEAT(FCMLA_zpzzz, aa64_sve, gen_gvec_fpst_zzzzp, fcmla_fns[a->esz],
--           a->rd, a->rn, a->rm, a->ra, a->pg, a->rot,
-+           a->rd, a->rn, a->rm, a->ra, a->pg, a->rot | (s->fpcr_ah << 2),
-            a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
+-TRANS(FMAX_v, do_fp3_vector, a, 0, f_vector_fmax)
++static gen_helper_gvec_3_ptr * const f_vector_fmax_ah[3] = {
++    gen_helper_gvec_ah_fmax_h,
++    gen_helper_gvec_ah_fmax_s,
++    gen_helper_gvec_ah_fmax_d,
++};
++TRANS(FMAX_v, do_fp3_vector_2fn, a, 0, f_vector_fmax, f_vector_fmax_ah)
  
- static gen_helper_gvec_4_ptr * const fcmla_idx_fns[4] = {
+ static gen_helper_gvec_3_ptr * const f_vector_fmin[3] = {
+     gen_helper_gvec_fmin_h,
+     gen_helper_gvec_fmin_s,
+     gen_helper_gvec_fmin_d,
+ };
+-TRANS(FMIN_v, do_fp3_vector, a, 0, f_vector_fmin)
++static gen_helper_gvec_3_ptr * const f_vector_fmin_ah[3] = {
++    gen_helper_gvec_ah_fmin_h,
++    gen_helper_gvec_ah_fmin_s,
++    gen_helper_gvec_ah_fmin_d,
++};
++TRANS(FMIN_v, do_fp3_vector_2fn, a, 0, f_vector_fmin, f_vector_fmin_ah)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmaxnm[3] = {
+     gen_helper_gvec_fmaxnum_h,
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 7330b373c38..9f77aa6b919 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -1448,6 +1448,14 @@ DO_3OP(gvec_rsqrts_h, helper_rsqrtsf_f16, float16)
+ DO_3OP(gvec_rsqrts_s, helper_rsqrtsf_f32, float32)
+ DO_3OP(gvec_rsqrts_d, helper_rsqrtsf_f64, float64)
+ 
++DO_3OP(gvec_ah_fmax_h, helper_vfp_ah_maxh, float16)
++DO_3OP(gvec_ah_fmax_s, helper_vfp_ah_maxs, float32)
++DO_3OP(gvec_ah_fmax_d, helper_vfp_ah_maxd, float64)
++
++DO_3OP(gvec_ah_fmin_h, helper_vfp_ah_minh, float16)
++DO_3OP(gvec_ah_fmin_s, helper_vfp_ah_mins, float32)
++DO_3OP(gvec_ah_fmin_d, helper_vfp_ah_mind, float64)
++
+ #endif
+ #undef DO_3OP
+ 
 -- 
 2.34.1
 
