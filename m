@@ -4,85 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94DFC021A0
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 21:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEEBCC0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 21:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thxql-0005mY-T1; Tue, 11 Feb 2025 16:31:23 -0500
+	id 1thy3F-0007uq-QW; Tue, 11 Feb 2025 16:44:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thxqj-0005mP-LM
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:31:21 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thy3D-0007ol-76
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:44:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thxqd-0003N1-82
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:31:21 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1thy39-00055p-AP
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 16:44:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739309473;
+ s=mimecast20190719; t=1739310248;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iekK8C8DF2Js0HWqUbtJ3hJVPHGDm8ZufblbEWPHLJE=;
- b=JuUsGvvhHMls5FAnpUxGo+rG5mMO/5yPVZH8rWSAXrCLQtU9LH+ajrRghCwKeDY2vLh8Wg
- 8t+lmuvsiVbG4qftysg9RrakWCdZy748/SjrFd6qfKy3561rJvWDIadZ7SX31ztvxMrgtK
- BPjZ0/LHs63cTHE391f/fgmNKV0ROxY=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-MbgRNnhRN4SH8kUKN2rhjA-1; Tue, 11 Feb 2025 16:31:06 -0500
-X-MC-Unique: MbgRNnhRN4SH8kUKN2rhjA-1
-X-Mimecast-MFC-AGG-ID: MbgRNnhRN4SH8kUKN2rhjA
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-5fc8530336dso1386102eaf.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 13:31:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739309465; x=1739914265;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iekK8C8DF2Js0HWqUbtJ3hJVPHGDm8ZufblbEWPHLJE=;
- b=Bekh06zQOSzkqWbNRtaei6zSVmosSBk/GhOEx/WF7OgXodw8TZNYhkPuB89XYdc2QE
- YANnkq1JqOkfCW9vGivLZbE30ZFepZmFA3NRZ6VqhO0vfoLacaMi3xt52mdfBSB3vkW2
- Z0rQgJul1i7m0ZNwm2X6p8OJw4Ra1vkY5WwGwfrAfH1egLCItK10mZfNTntVgYkJRu2A
- bqJIJdGyDd6Rq7gMcf+sq3dnq3hA0ANRx1k4jRAnUxeFYy5vQvSn5GHK7mN1CwTNkHMr
- tTz9mF2kR95wyAt6250frPkrYQAYnxSdWOj7+5tr7ad9U5P9Agopp9Llbs/4dU/gwmNq
- ztKg==
-X-Gm-Message-State: AOJu0Yy9BfQb7WdE2AATtEA7tsEDgPlE2/aROOwOca8sDRbdWEF9swWW
- oY7kNYXosvB4a5qLRlAKRJlGckZWFzYQMxQPpC/yMhSjtldFHKIDGJGC6nyP2etzN0/GTlT5YgQ
- FQ+zqRnhm4Zxo33HTMfiDOtHRhd+iuKO2BiE4/lw9NO966aMtOolP
-X-Gm-Gg: ASbGnct/XfyKGmcrJkbQy6wQ63GjJboNVJvrlP7FTc+O5wMybDSjxTKIq9PNGnlEwDn
- MwlUMFa7Dua6xaPufpJbIt8KhAwelbK5zXqGG7Wi81O0mCKjDJR6lypkSZvQ6EO6BBHWyazqdV4
- 5UXIENRNKwHEZjmlJibBNbmIsCdLv+WwVO+zaLyN6g1L+8sEjbqE4nawk5rHU1Gp9PSEwb+sbqj
- 8QncX22f1hCdEr21t7xFZGPeR9662stRXiY/BxGdKAh9DjoyGv4jR4SvFs=
-X-Received: by 2002:a05:6808:2dc3:b0:3f3:afd0:a682 with SMTP id
- 5614622812f47-3f3cd600a54mr809071b6e.11.1739309465309; 
- Tue, 11 Feb 2025 13:31:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHL+/2HEY4gk7XtKIY1MZDguUE2wjQIWj+F1qcLZ768CLNM+L3Gsmz641swy+2v3LhkPGzF2Q==
-X-Received: by 2002:a05:6808:2dc3:b0:3f3:afd0:a682 with SMTP id
- 5614622812f47-3f3cd600a54mr809047b6e.11.1739309465019; 
- Tue, 11 Feb 2025 13:31:05 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3f389ed1ca2sm3535287b6e.11.2025.02.11.13.31.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 13:31:04 -0800 (PST)
-Date: Tue, 11 Feb 2025 16:31:00 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 8/9] tests/qtest/migration: Add a cancel test
-Message-ID: <Z6vBlAqGN-GJNCq2@x1.local>
-References: <20250211150136.6781-1-farosas@suse.de>
- <20250211150136.6781-9-farosas@suse.de> <Z6urZeOyLYRJzMM8@x1.local>
- <87pljouqev.fsf@suse.de>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=h/ifcYhQ7KkTIGj6O+VZXM2QcwDr9dlJUCrUFlqQsPg=;
+ b=UCMyhiaqr/AoLj03VL70AUPZrtq3BJTM+x7BEgC9qMPZ0jz9xVR7hgXSex9ojiaEcR0zOB
+ zzi97G+LngONHg2qAUqv3/+IXWNZhsdNaRxBbUWyUmdHjzUxcAmXHqsvfHx60Wea6WIisb
+ 5MLQj5NC/jwu9nImgxbD2jrOSNNk78A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-YyH2liYOPQuhWdxtwfzIwA-1; Tue,
+ 11 Feb 2025 16:44:06 -0500
+X-MC-Unique: YyH2liYOPQuhWdxtwfzIwA-1
+X-Mimecast-MFC-AGG-ID: YyH2liYOPQuhWdxtwfzIwA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C01A1800876; Tue, 11 Feb 2025 21:44:05 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.44.32.210])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BD30B195608D; Tue, 11 Feb 2025 21:44:02 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
+ manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: [PATCH 00/11] rust/block: Add minimal block driver bindings
+Date: Tue, 11 Feb 2025 22:43:17 +0100
+Message-ID: <20250211214328.640374-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87pljouqev.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -107,14 +79,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 06:23:20PM -0300, Fabiano Rosas wrote:
-> It gets super boilerplatey:
+This series adds minimal bindings for writing block drivers in Rust and
+converts the bochs block driver as an example. Some parts (such as the
+open functions) are still essentially C written in Rust syntax, while
+other parts already try to provide somewhat idiomatic abstractions.
 
-Let's go with what we have.
+The main purpose of this series is just to add a starting point for
+incremental improvements to the bindings; it's clearly not very polished
+yet and ignores some important points like enforcing the graph lock.
 
-Thanks,
+Therefore, the main focus in the immediate future after this series
+should be cleaning up the bochs driver and the bindings it uses rather
+than adding more drivers.
+
+Kevin Wolf (11):
+  rust: Build separate qemu_api_tools and qemu_api_system
+  meson: Add rust_block_ss and link tools with it
+  rust: Add some block layer bindings
+  rust/qemu-api: Add wrappers to run futures in QEMU
+  rust/block: Add empty crate
+  rust/block: Add I/O buffer traits
+  block: Add bdrv_open_blockdev_ref_file()
+  rust/block: Add driver module
+  rust/block: Add read support for block drivers
+  bochs-rs: Add bochs block driver reimplementation in Rust
+  rust/block: Add format probing
+
+ include/block/block-global-state.h |   4 +
+ include/qemu/coroutine-rust.h      |  24 +++
+ rust/wrapper-system.h              |  44 ++++
+ rust/wrapper.h                     |  14 +-
+ block.c                            |  30 ++-
+ util/qemu-co-rust-async.c          |  55 +++++
+ meson.build                        |  48 ++++-
+ rust/Cargo.lock                    |   7 +
+ rust/Cargo.toml                    |   1 +
+ rust/block/Cargo.toml              |  15 ++
+ rust/block/README.md               |   3 +
+ rust/block/meson.build             |  19 ++
+ rust/block/src/bochs.rs            | 316 +++++++++++++++++++++++++++++
+ rust/block/src/driver.rs           | 309 ++++++++++++++++++++++++++++
+ rust/block/src/iobuffer.rs         |  94 +++++++++
+ rust/block/src/lib.rs              |   5 +
+ rust/hw/char/pl011/meson.build     |   3 +-
+ rust/meson.build                   |  12 +-
+ rust/qemu-api/Cargo.toml           |   1 +
+ rust/qemu-api/build.rs             |  10 +-
+ rust/qemu-api/meson.build          |  71 ++++---
+ rust/qemu-api/src/bindings.rs      |  16 +-
+ rust/qemu-api/src/futures.rs       |  78 +++++++
+ rust/qemu-api/src/lib.rs           |   5 +
+ rust/qemu-api/src/prelude.rs       |   2 +
+ rust/qemu-api/src/zeroable.rs      |  11 +
+ storage-daemon/meson.build         |   2 +-
+ util/meson.build                   |   3 +
+ 28 files changed, 1146 insertions(+), 56 deletions(-)
+ create mode 100644 include/qemu/coroutine-rust.h
+ create mode 100644 rust/wrapper-system.h
+ create mode 100644 util/qemu-co-rust-async.c
+ create mode 100644 rust/block/Cargo.toml
+ create mode 100644 rust/block/README.md
+ create mode 100644 rust/block/meson.build
+ create mode 100644 rust/block/src/bochs.rs
+ create mode 100644 rust/block/src/driver.rs
+ create mode 100644 rust/block/src/iobuffer.rs
+ create mode 100644 rust/block/src/lib.rs
+ create mode 100644 rust/qemu-api/src/futures.rs
 
 -- 
-Peter Xu
+2.48.1
 
 
