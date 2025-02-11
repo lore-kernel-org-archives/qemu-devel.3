@@ -4,93 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA6DC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 19:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6388DC0219E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 20:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thwN0-0002GI-De; Tue, 11 Feb 2025 14:56:34 -0500
+	id 1thwln-00054s-2A; Tue, 11 Feb 2025 15:22:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwMy-0002Fv-Jp
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:56:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwMw-0008M9-AC
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:56:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739303788;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1thwlm-00054f-5t
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 15:22:10 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1thwlk-00013I-Ai
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 15:22:09 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A8AFB1F7CB;
+ Tue, 11 Feb 2025 20:22:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739305326; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ERtkZUPraXTR80P06QF3QtjwOiGmwOkmhRJ6xLVw990=;
- b=Sd6Qv6cg0mV63EXW4aAzBqjThffj0nbjqGLlmmcCwXVHRpeMjB8wJMVEO3H14vbiYD7TK7
- /z163CSRwr/aRRZIrGa2I2L295sxxS+8huRTTCOGz0EpNgd4voSROYIrxSjn9PADW49drn
- c2olphMS8o8dsqOUY5CXsKjVpSUnFPI=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-473--17iXM3_MCK438Fgkx2ocw-1; Tue, 11 Feb 2025 14:56:26 -0500
-X-MC-Unique: -17iXM3_MCK438Fgkx2ocw-1
-X-Mimecast-MFC-AGG-ID: -17iXM3_MCK438Fgkx2ocw
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6e45d629308so28677846d6.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 11:56:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739303785; x=1739908585;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ERtkZUPraXTR80P06QF3QtjwOiGmwOkmhRJ6xLVw990=;
- b=FUafVmmPIrnVO1YO5pUOg5j0th8rRPDhgz92Du1LBBwh/KCmXIZDNytPIdcYeu23VL
- n+un0sggb6b7V6ojIF3hoRplGZQ969AOq2wq8LezXllquj/6g92Dyk8VMaRQsex+og8d
- z3BnRKt9nxlOwc8Uhqv98aEuNjLnfU/+fHv8zZj9lON9Jsmu65XRc6P/w6fxof7Xxk9n
- a4Y2q5P7xPODMKFiv+QgENioL611w8Ac6wG2Dt8NSYEWYl2oMpo7DfOK+lc/IhD3H+36
- +LtqUM6XgIi7KyKZ/faZb0gOvxnT3ZlGd/wmRK5o5sUW34lohfreDZa1wQ+QkrEt5e22
- Cv8A==
-X-Gm-Message-State: AOJu0YwVFgTQUub3Z0Bso29Iq06tF1YvI4uKWa8ml5m5J05c8knEvgPv
- Q06UtjmxOPCStDWbbp8pwu+OGZYEG2YrMMGb9biqyMdYzfiqUGUYzl4nXHs1SCmErVlQSBx1+rc
- 1xgOQifLD68jeU7kt8Hosl8TxnAx0QABu3Hy5zR8CsA/k+0M8NkaE
-X-Gm-Gg: ASbGnctUc/xoy6Vu3HI0/deZGg1yEF8+1eq3ZaV5Sl77frkRJi9hInUseLWd41JxXqQ
- cjCAxhFL3LQTXPxjTQqRiwqao5RlPBK/j3/lLzsZhvfSc5m6db884ZSqkdhUv02xTUDRb9EMmWJ
- 3+PSQA0C3DKzF9a2dxulzIWRqGESZmGPkWGcPqqZxSQmxjk8OdFj5fayK27eVI4ONIOkzGFBYLM
- PT5SRuVOLI8RItZJ9+xz4gQ25/E+DoEoWGG03385nvQWc7pA0OTCSS2zmk=
-X-Received: by 2002:a05:6214:1303:b0:6e4:2d8e:5cce with SMTP id
- 6a1803df08f44-6e46edacde7mr14390226d6.36.1739303785383; 
- Tue, 11 Feb 2025 11:56:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXuH++v5vjG8qPhbdCLrwUYS5DZaW3poc2Le0NwdYu2aoyJdCyXA0RpP+zyQbNuAdvjaBbvA==
-X-Received: by 2002:a05:6214:1303:b0:6e4:2d8e:5cce with SMTP id
- 6a1803df08f44-6e46edacde7mr14389866d6.36.1739303785010; 
- Tue, 11 Feb 2025 11:56:25 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e4524925eesm43718216d6.14.2025.02.11.11.56.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 11:56:24 -0800 (PST)
-Date: Tue, 11 Feb 2025 14:56:21 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 8/9] tests/qtest/migration: Add a cancel test
-Message-ID: <Z6urZeOyLYRJzMM8@x1.local>
+ bh=/SesV60hJMXaraBy4T79Kx2W1v/1bJITZ+V3P2Pxl50=;
+ b=ohbHY4QD+TpQQpneSWoq5csWZ3fA+siAC/PWm/MpNuwu2SRsZXIG8IXuGL5DLs+x2UsC8Y
+ C6cFm9ACHIS20en+4Jak1nfvKvRO/iPJMHYWXBnT+s81KVGNipxOFI9eTLD6pwdmyOX4TK
+ qAwgwEKU3eZrp8wF1N6rPOWaiGk08dE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739305326;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/SesV60hJMXaraBy4T79Kx2W1v/1bJITZ+V3P2Pxl50=;
+ b=egM22FLVp3fwKA+WkInCprJMsTXguY45HtoDrgM6VuHldjl7HblvJn+94tonUquGz1Z9RF
+ TsiggFqvUH6c9QAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739305326; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/SesV60hJMXaraBy4T79Kx2W1v/1bJITZ+V3P2Pxl50=;
+ b=ohbHY4QD+TpQQpneSWoq5csWZ3fA+siAC/PWm/MpNuwu2SRsZXIG8IXuGL5DLs+x2UsC8Y
+ C6cFm9ACHIS20en+4Jak1nfvKvRO/iPJMHYWXBnT+s81KVGNipxOFI9eTLD6pwdmyOX4TK
+ qAwgwEKU3eZrp8wF1N6rPOWaiGk08dE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739305326;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/SesV60hJMXaraBy4T79Kx2W1v/1bJITZ+V3P2Pxl50=;
+ b=egM22FLVp3fwKA+WkInCprJMsTXguY45HtoDrgM6VuHldjl7HblvJn+94tonUquGz1Z9RF
+ TsiggFqvUH6c9QAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2837C13715;
+ Tue, 11 Feb 2025 20:22:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1uJzNm2xq2fJPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 11 Feb 2025 20:22:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH v2 6/9] migration: Don't set FAILED state when cancelling
+In-Reply-To: <Z6uoTymcfHcjnrtf@x1.local>
 References: <20250211150136.6781-1-farosas@suse.de>
- <20250211150136.6781-9-farosas@suse.de>
+ <20250211150136.6781-7-farosas@suse.de> <Z6uM5TDDGb5FkVqf@x1.local>
+ <87wmdwuzm2.fsf@suse.de> <Z6uoTymcfHcjnrtf@x1.local>
+Date: Tue, 11 Feb 2025 17:22:03 -0300
+Message-ID: <87tt90ut90.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250211150136.6781-9-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,262 +118,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 12:01:35PM -0300, Fabiano Rosas wrote:
-> The qmp_migrate_cancel() command is poorly tested and code inspection
-> reveals that there might be concurrency issues with its usage. Add a
-> test that runs a migration and calls qmp_migrate_cancel() at specific
-> moments.
-> 
-> In order to make the test more deterministic, instead of calling
-> qmp_migrate_cancel() at random moments during migration, do it after
-> the migration status change events are seen.
-> 
-> The expected result is that qmp_migrate_cancel() on the source ends
-> migration on the source with the "cancelled" state and ends migration
-> on the destination with the "failed" state. The only exception is that
-> a failed migration should continue in the failed state.
-> 
-> Cancelling is not allowed during postcopy (no test is added for this
-> because it's a trivial check in the code).
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/migration/precopy-tests.c | 176 ++++++++++++++++++++++++++
->  1 file changed, 176 insertions(+)
-> 
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index 162fa69531..ba273d10b9 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -20,6 +20,7 @@
->  #include "migration/migration-util.h"
->  #include "ppc-util.h"
->  #include "qobject/qlist.h"
-> +#include "qapi-types-migration.h"
->  #include "qemu/module.h"
->  #include "qemu/option.h"
->  #include "qemu/range.h"
-> @@ -536,6 +537,161 @@ static void test_multifd_tcp_cancel(void)
->      migrate_end(from, to2, true);
->  }
->  
-> +static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
-> +                                         const char *uri, const char *phase)
-> +{
-> +    /*
-> +     * No migrate_incoming_qmp() at the start to force source into
-> +     * failed state during migrate_qmp().
-> +     */
-> +
-> +    wait_for_serial("src_serial");
-> +    migrate_ensure_converge(from);
-> +
-> +    migrate_qmp(from, to, uri, NULL, "{}");
-> +
-> +    migration_event_wait(from, phase);
-> +    migrate_cancel(from);
-> +
-> +    /* cancelling will not move the migration out of 'failed' */
-> +
-> +    wait_for_migration_status(from, "failed",
-> +                              (const char * []) { "completed", NULL });
-> +
-> +    /*
-> +     * Not waiting for the destination because it never started
-> +     * migration.
-> +     */
-> +}
-> +
-> +static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
-> +                                            const char *uri, const char *phase)
-> +{
-> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +
-> +    wait_for_serial("src_serial");
-> +    migrate_ensure_converge(from);
-> +
-> +    migrate_qmp(from, to, uri, NULL, "{}");
-> +
-> +    /* To move to cancelled/cancelling */
-> +    migrate_cancel(from);
-> +    migration_event_wait(from, phase);
-> +
-> +    /* The migrate_cancel under test */
-> +    migrate_cancel(from);
-> +
-> +    wait_for_migration_status(from, "cancelled",
-> +                              (const char * []) { "completed", NULL });
-> +
-> +    wait_for_migration_status(to, "failed",
-> +                              (const char * []) { "completed", NULL });
-> +}
-> +
-> +static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
-> +                                           const char *uri, const char *phase)
-> +{
-> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +
-> +    wait_for_serial("src_serial");
-> +    migrate_ensure_converge(from);
-> +
-> +    migrate_qmp(from, to, uri, NULL, "{}");
-> +
-> +    migration_event_wait(from, phase);
-> +    migrate_cancel(from);
-> +
-> +    /*
-> +     * qmp_migrate_cancel() exits early if migration is not running
-> +     * anymore, the status will not change to cancelled.
-> +     */
-> +    wait_for_migration_complete(from);
-> +    wait_for_migration_complete(to);
-> +}
-> +
-> +static void test_cancel_src_after_none(QTestState *from, QTestState *to,
-> +                                       const char *uri, const char *phase)
-> +{
-> +    /*
-> +     * Test that cancelling without a migration happening does not
-> +     * affect subsequent migrations
-> +     */
-> +    migrate_cancel(to);
-> +
-> +    wait_for_serial("src_serial");
-> +    migrate_cancel(from);
-> +
-> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +
-> +    migrate_ensure_converge(from);
-> +    migrate_qmp(from, to, uri, NULL, "{}");
-> +
-> +    wait_for_migration_complete(from);
-> +    wait_for_migration_complete(to);
-> +}
-> +
-> +static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
-> +                                           const char *uri, const char *phase)
-> +{
-> +    migrate_set_capability(from, "pause-before-switchover", true);
-> +    migrate_set_capability(to, "pause-before-switchover", true);
-> +
-> +    migrate_set_capability(from, "multifd", true);
-> +    migrate_set_capability(to, "multifd", true);
-> +
-> +    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +
-> +    wait_for_serial("src_serial");
-> +    migrate_ensure_converge(from);
-> +
-> +    migrate_qmp(from, to, uri, NULL, "{}");
-> +
-> +    migration_event_wait(from, phase);
-> +    migrate_cancel(from);
-> +    migration_event_wait(from, "cancelling");
-> +
-> +    wait_for_migration_status(from, "cancelled",
-> +                              (const char * []) { "completed", NULL });
-> +
-> +    wait_for_migration_status(to, "failed",
-> +                              (const char * []) { "completed", NULL });
-> +}
-> +
-> +static void test_cancel_src_after_status(void *opaque)
-> +{
-> +    const char *test_path = opaque;
-> +    g_autofree char *phase = g_path_get_basename(test_path);
-> +    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-> +    QTestState *from, *to;
-> +    MigrateStart args = {
-> +        .hide_stderr = true,
-> +    };
-> +
-> +    if (migrate_start(&from, &to, "defer", &args)) {
-> +        return;
-> +    }
-> +
-> +    if (g_str_equal(phase, "cancelling") ||
-> +        g_str_equal(phase, "cancelled")) {
-> +        test_cancel_src_after_cancelled(from, to, uri, phase);
-> +
-> +    } else if (g_str_equal(phase, "completed")) {
-> +        test_cancel_src_after_complete(from, to, uri, phase);
-> +
-> +    } else if (g_str_equal(phase, "failed")) {
-> +        test_cancel_src_after_failed(from, to, uri, phase);
-> +
-> +    } else if (g_str_equal(phase, "none")) {
-> +        test_cancel_src_after_none(from, to, uri, phase);
-> +
-> +    } else {
-> +        /* any state that comes before pre-switchover */
-> +        test_cancel_src_pre_switchover(from, to, uri, phase);
+Peter Xu <peterx@redhat.com> writes:
 
-[1]
+> On Tue, Feb 11, 2025 at 03:04:37PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Tue, Feb 11, 2025 at 12:01:33PM -0300, Fabiano Rosas wrote:
+>> >> It's possible that the migration is cancelled during
+>> >> migration_switchover_start(). In that case, don't set the migration
+>> >> state FAILED in migration_completion().
+>> >> 
+>> >> Fixes: 3dde8fdbad ("migration: Merge precopy/postcopy on switchover start")
+>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >
+>> > I remember I paid some attention on this one when working on the commit,
+>> > where it has:
+>> >
+>> > static bool migration_switchover_prepare(MigrationState *s)
+>> > {
+>> >     /* Concurrent cancellation?  Quit */
+>> >     if (s->state == MIGRATION_STATUS_CANCELLING) {   <================= [1]
+>> >         return false;
+>> >     }
+>> >     ...
+>> >     bql_unlock();
+>> >
+>> >     qemu_sem_wait(&s->pause_sem);
+>> >
+>> >     bql_lock();
+>> >     /*
+>> >      * After BQL released and retaken, the state can be CANCELLING if it
+>> >      * happend during sem_wait().. Only change the state if it's still
+>> >      * pre-switchover.
+>> >      */
+>> >     migrate_set_state(&s->state, MIGRATION_STATUS_PRE_SWITCHOVER, <====== [2]
+>> >                       MIGRATION_STATUS_DEVICE);
+>> >
+>> >     return s->state == MIGRATION_STATUS_DEVICE;
+>> > }
+>> >
+>> > So when holding BQL logically it can't change to CANCELLING, it'll check
+>> > first [1] making sure no prior CANCELLING.  Then after release and retake
+>> > BQL it'll check again [2] (see the comment above [2], it's done by passing
+>> > in explicit old_state to not change it if it's CANCELLING).
+>> 
+>> Right, it doesn't change the state. But the function returns false and
+>> someone else changes to FAILED. That's what both my patch and your
+>> snippet below fix.
+>> 
+>> >
+>> > Any hint on how this could be triggered?
+>> >
+>> > OTOH, when looking at this.. I seem to have found a bug indeed (which could
+>> > be another?), where I may have forgot to touch up the old_state in
+>> > migrate_set_state() after switching to always use DEVICE..
+>> >
+>> > diff --git a/migration/migration.c b/migration/migration.c
+>> > index 74c50cc72c..513e5955cc 100644
+>> > --- a/migration/migration.c
+>> > +++ b/migration/migration.c
+>> > @@ -2793,8 +2793,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>> >  fail_closefb:
+>> >      qemu_fclose(fb);
+>> >  fail:
+>> > -    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+>> > -                          MIGRATION_STATUS_FAILED);
+>> > +    if (ms->state != MIGRATION_STATUS_CANCELLING) {
+>> > +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+>> > +    }
+>> 
+>> Now that I think about it, we should probably just use the skip at
+>> migrate_set_state() always. Isn't this^ the same as:
+>> 
+>> migrate_set_state(&ms->state, MIGRATION_STATUS_DEVICE,
+>> MIGRATION_STATUS_FAILED);
+>> 
+>> Better to list the state explicitly, no?
+>
+> There's one case where it can be in ACTIVE rather than DEVICE,
+> unfortunately:
+>
+>     ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
+>     if (ret < 0) {
+>         error_setg_errno(errp, -ret, "%s: Failed to stop the VM", __func__);
+>         goto fail;
+>     }
+>
+>> 
+>> Or... do we want to incorporate this into migrate_set_state()?
+>> 
+>> void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+>>                        MigrationStatus new_state)
+>> {
+>>     assert(new_state < MIGRATION_STATUS__MAX);
+>> 
+>>     if (qatomic_read(state) == CANCELLING && new_state != CANCELLED) {
+>>         /* Once it's cancelling, there's no way back, it must finish cancel */
+>>         return;
+>>     }
+>> 
+>>     if (qatomic_cmpxchg(state, old_state, new_state) == old_state) {
+>>         trace_migrate_set_state(MigrationStatus_str(new_state));
+>>         migrate_generate_event(new_state);
+>>     }
+>> }
+>
+> IMHO we'll need the original migrate_set_state() more or less, e.g. when
+> setting CANCELLING->CANCELLED in migration_[fd_]cleanup().  So maybe it's
+> slightly easier we keep it.
+>
+> Said that, maybe we could have a few helpers for the state transitions,
+> like:
+>
+>   migrate_set_state_failure(MigrationState *s)
+>
+> Which can consider CANCELLING.
+>
+> Also, we have a portion of such state transitions not caring about current
+> state, so we could also have some helper for that, like:
+>
+>   migrate_set_state_always(MigrationState *s, MigrationStatus status)
+>
+> Or rename old migrate_set_state() into migrate_set_state_atomic(), then
+> make migrate_set_state() to ignore current state.
+>
 
-> +    }
-> +
-> +    migrate_end(from, to, false);
-> +}
+Thanks for the input.
 
-I'm OK with the current status, considering it at least enlarge our cancel
-testcases so definitely good to have:
+I think for this series I'll stick with the
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+if (s->state != MIGRATION_STATUS_CANCELLING)
 
-Though one thing to mention is the new "test_full()" abstraction doesn't
-yet look like to benefit us a huge lot, IMHO.
+and prepare a new series with generic improvements to the migration
+state code. I want to also fix the nomenclature of status vs. state.
 
-These are the new tests:
-
-# /x86_64/migration/cancel/src/after/none
-# /x86_64/migration/cancel/src/after/setup             [*]
-# /x86_64/migration/cancel/src/after/cancelling
-# /x86_64/migration/cancel/src/after/cancelled
-# /x86_64/migration/cancel/src/after/active
-# /x86_64/migration/cancel/src/after/completed
-# /x86_64/migration/cancel/src/after/failed
-# /x86_64/migration/cancel/src/after/pre-switchover    [*]
-
-We have only one abstracted path [1] to test random status, but that so far
-only covers two cases marked with [*].  It is hard to say whether the
-abstraction is necessary, or maybe it's easier we always register separate
-test cases.  So it's still slightly debatable whether we could make all
-above "if .. if else .. if else ... else" into separate tests.
-
-> +
->  static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
->  {
->      qtest_qmp_assert_success(who,
-> @@ -1018,4 +1174,24 @@ void migration_test_add_precopy(MigrationTestEnv *env)
->                                 test_vcpu_dirty_limit);
->          }
->      }
-> +
-> +    /* ensure new status don't go unnoticed */
-> +    assert(MIGRATION_STATUS__MAX == 15);
-> +
-> +    for (int i = MIGRATION_STATUS_NONE; i < MIGRATION_STATUS__MAX; i++) {
-> +        switch (i) {
-> +        case MIGRATION_STATUS_DEVICE: /* happens too fast */
-> +        case MIGRATION_STATUS_WAIT_UNPLUG: /* no support in tests */
-> +        case MIGRATION_STATUS_COLO: /* no support in tests */
-> +        case MIGRATION_STATUS_POSTCOPY_ACTIVE: /* postcopy can't be cancelled */
-> +        case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> +        case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> +        case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> +            continue;
-> +        default:
-> +            migration_test_add_suffix("/migration/cancel/src/after/",
-> +                                      MigrationStatus_str(i),
-> +                                      test_cancel_src_after_status);
-> +        }
-> +    }
->  }
-> -- 
-> 2.35.3
-> 
-
--- 
-Peter Xu
-
+>> 
+>> >      migration_block_activate(NULL);
+>> >      migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+>> >      bql_unlock();
+>> >
+>> > I'm not sure whether it's relevant to what you hit, though.. since you're
+>> > looking at this, I'd rely on you help figuring it out before I do.. :)
+>> >
+>> >> ---
+>> >>  migration/migration.c | 4 +++-
+>> >>  1 file changed, 3 insertions(+), 1 deletion(-)
+>> >> 
+>> >> diff --git a/migration/migration.c b/migration/migration.c
+>> >> index 375de6d460..5dc43bcdc0 100644
+>> >> --- a/migration/migration.c
+>> >> +++ b/migration/migration.c
+>> >> @@ -2986,7 +2986,9 @@ fail:
+>> >>          error_free(local_err);
+>> >>      }
+>> >>  
+>> >> -    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+>> >> +    if (s->state != MIGRATION_STATUS_CANCELLING) {
+>> >> +        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+>> >> +    }
+>> >>  }
+>> >>  
+>> >>  /**
+>> >> -- 
+>> >> 2.35.3
+>> >> 
+>> 
 
