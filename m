@@ -4,91 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B67C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 16:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D46C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 17:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thtRs-0000yh-UH; Tue, 11 Feb 2025 11:49:25 -0500
+	id 1thtxA-0001hf-QP; Tue, 11 Feb 2025 12:21:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thtRr-0000yS-Fb
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:49:23 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1thtRp-00043e-LT
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 11:49:23 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21f92258aa6so66025895ad.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 08:49:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739292560; x=1739897360; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A/SpX0pZCMH6Nx4aU5binfZTiKllhdOFr9p/c1lzc4Q=;
- b=juIOPoA1IMIvw8qFPjJB9yQT7yIJ3LYeXPaC+wQtjK/RBKx8pDi9UaQ4OBaXB3hc3A
- w1+0kcbTajTQmV5HkmKi5FR/gWW0+qbsdKWIwUsJMf7Qfh7GZLO1Q/vcNe62D/F8n+KV
- OFFetKBfASUOCNbXOOmzxLL3D9yG0uSrSdDDHz0+Crs5x5uoJrdYsdXooK+idqWkdMIF
- 1u2K2Ovbc8WgI5/s2SXiHROdb50A6Gs1N7gyfk36jSaM3CRZYfSX0o9mD2fdF9xCH5eV
- v2NvsBCDNqMP4WUgCNqaL6Gr4FlFm4oP/9d4yZwDi5GiroYUuTDM/NsKWjmhYpO/FZsh
- zRNA==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1thtx7-0001hJ-Ds
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 12:21:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1thtx3-0005kI-Sg
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 12:21:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739294495;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=agW0Q94mU7hjkM7nGhiHqYJ5GyP1jPfHxsAcIQlbRrY=;
+ b=di876ns3VMCqjY5fT7wmjni6xQmc0leqJNp5XIjX/NG/O3fxzGGRBxc05s5AvSU/r2i8hj
+ 8syceomO3+1Fvs0zEj93e+UbgkqoKSW+cLoQxNzP9cVym1ALP36C8d1djkF9nS3VntK8z7
+ G+gQxVI6/XWwXVM41pBRvIHsqBcF/+k=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-512-kx9oLjp2NRqeywcUXT5AaQ-1; Tue, 11 Feb 2025 12:21:30 -0500
+X-MC-Unique: kx9oLjp2NRqeywcUXT5AaQ-1
+X-Mimecast-MFC-AGG-ID: kx9oLjp2NRqeywcUXT5AaQ
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2f9c02f54f2so11747636a91.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 09:21:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739292560; x=1739897360;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A/SpX0pZCMH6Nx4aU5binfZTiKllhdOFr9p/c1lzc4Q=;
- b=TMAdoVm8VSTaPmIVZL2aakr5h1yl84Hxp0VcF8KG9bvCmWoT5cvgc7fbjzUEzub/6m
- s9zZhW1444XWY6lK+nr/SVRn38b5+ijzLf+bk0SFC0mfXFeOPatx8BjjejuuTW3U6jj+
- GGhQxuET8aw1u9fik6tZhc8BAo+Gu3nCh6HCWr0z9o94iwDviAcIT6Qxh4X3x//SuwRV
- 0i8/sBJ3jWh+z2+pN3LCqgb3UUBDHKTE+xk5S7b1Yq6JliOeb0dNJEjauSCe+mNcUaah
- n6B8JnuTPsUDLd56V7bqoCuM0nqJLOORD7H2G+j0zbC7E/jTjzlC+Tk5IfP4yjGpaGtJ
- voEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoPa5pN7i/okWyQbdzDUup9RQXgnw3hMg2rTbztCOJfGUWtCAgjvYII8hXVGbH9OotT4SlS9LQqr/Q@nongnu.org
-X-Gm-Message-State: AOJu0YyQtq1/9ABYpZkInhTBMpDprfH+O1bCz77ZMcFo1K2bgCfNADCI
- qA1EvtMxyTKbkA2F6X3T8+V10TkKVO86o2aT3Co2fAiQ4LQeAD8HLTMxWVR2KAdsjT6r062ywMH
- a
-X-Gm-Gg: ASbGnctsgRnFmsYmb9EU7NYaSp3Aml/K/A+5SQZXxswSl9nOOZtC/aGpsR+e6tNoKcn
- ScuqDScTlhq96iPOPndoQtRpXsTzId12597tvi57wDMfVSiZ6p4HjmgPY6KIiN4aAk3bSrXczaS
- OM5xj0lzjA/0zoNXjd3d43M4NzUtn+pb5R3zPmKzDJJcKFU5R8qMh0ZDkkfuVHtw60t59WmaUCB
- GSPCsaHThujfTg/SmkIV/fTiE4pf2Di8V4TUbhQaNj7DCba2CTUDFyH1kFRcMLKo4DkRxVtF91T
- 0ra7xGMvlfmMxTBAp2KHRUu10aiapwqx91wht+i4b9205ay4uZx6Btw=
-X-Google-Smtp-Source: AGHT+IFcWyt3H8T7XWr2MaYiSzbJI9/x8x2FLTPkY1ONySpUCFZBbftZKr9oUXaPK0slUMMJm5GvSA==
-X-Received: by 2002:a17:903:1c8:b0:21f:164d:93fe with SMTP id
- d9443c01a7336-21f4e7e658dmr294002555ad.53.1739292559890; 
- Tue, 11 Feb 2025 08:49:19 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f36896774sm99449835ad.214.2025.02.11.08.49.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 08:49:19 -0800 (PST)
-Message-ID: <52d24c8e-b005-4223-9b26-57885ec3d67d@linaro.org>
-Date: Tue, 11 Feb 2025 08:49:18 -0800
+ d=1e100.net; s=20230601; t=1739294490; x=1739899290;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=agW0Q94mU7hjkM7nGhiHqYJ5GyP1jPfHxsAcIQlbRrY=;
+ b=bdTpptvg4wysCnmLBR9UjWCZibuEZcJ6nF7NjtUwr3NEUi9xRl6kxpF+Cy4fQ1PO3S
+ JLpxThkYxSbThqCkZdgXuyHlJD9EPfsYJSIxKQ9bPGHNrCUu6XgGY5ybej5dMHFNVwJG
+ Q3BEq+X1b5D+PDXvRBFDN1/+Re8zfv/UQfQwXuq5kO2hbTm1e+c370nRFGGpHoV0gwnV
+ JmdwTt1SC05T9EemwTTllwAQVDOE/5vKtT6b7eSY98pX3tCZIelQ75sWZpsrxhvCcbSH
+ VWXGAitmv58v97dIEDxB06JTVkw0ISUs9dCW16XmXM900mRt+6Q7qm+PGOGamkw1pPAV
+ klqg==
+X-Gm-Message-State: AOJu0Yxz056z340UqTa/upAvk1nxCPWHq0kOt2ZTGDtzAgerVhhsIYmu
+ rIweR6L/d1rFHTltEXSKcBUJnHL0CqLNIEzFK3TYYXw00hnN0qQ/tnCxdXr13CK0W2uEaM7SCVB
+ vLhemYr8hBC4bRd83mr3j9oqNo+3j/jxbGH0IYXTm0BeizEjq2io6N41XFWwZazMK6ZrbXJephh
+ C9vkoJTUzGAtGdro93kC9cnLWCNug=
+X-Gm-Gg: ASbGnctdRwiQly+ilyTYFudmFfJtZZDTNQPH8O/NM89lBrbWbvkBay4LBD0soUprkAn
+ HzPvgrUhX1g+hTtrPd92EiJ0AKeZw5mqiACUHYUupL+2gIllPt4bpSiX+gRZU+wh9fKZTNEkKa2
+ 9XMv21gE8tTs4CHAZQdg==
+X-Received: by 2002:a17:90b:3596:b0:2ee:bf84:4fe8 with SMTP id
+ 98e67ed59e1d1-2fa243eaa37mr24985360a91.30.1739294489622; 
+ Tue, 11 Feb 2025 09:21:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGm1n/SfAVOGRoWIYQlNy/ZWhovnLfVDWJLm6Qy4Mg+AYXAMYO5yUVSamfuNju0UIIWdvpxenDy30sCdYhemVo=
+X-Received: by 2002:a17:90b:3596:b0:2ee:bf84:4fe8 with SMTP id
+ 98e67ed59e1d1-2fa243eaa37mr24985326a91.30.1739294489320; Tue, 11 Feb 2025
+ 09:21:29 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/alpha: Do not mix exception flags and FPCR bits
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20250211162604.83446-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250211162604.83446-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250205231208.1480762-1-jsnow@redhat.com>
+ <20250205231208.1480762-2-jsnow@redhat.com>
+ <87msestu08.fsf@pond.sub.org>
+In-Reply-To: <87msestu08.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 11 Feb 2025 12:21:17 -0500
+X-Gm-Features: AWEUYZlugDOM6eqCLsb4sVuULZs9Qvs_L3S5flrk5Z2HblBsVaAcIeQLBcsk-Pg
+Message-ID: <CAFn=p-ZWE4SOmYksxs4XNeeSwQXSeCz+NXPCfwY16V6kWeQ3QQ@mail.gmail.com>
+Subject: Re: [PATCH 01/42] docs/qapidoc: support header-less freeform sections
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>, 
+ Lukas Straub <lukasstraub2@web.de>, Eduardo Habkost <eduardo@habkost.net>, 
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000003232ed062de10e79"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +111,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/11/25 08:26, Philippe Mathieu-Daudé wrote:
-> get_float_exception_flags() returns exception flags,
-> which are distinct from the FPCR bits used as error code.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20250211130626.3940412-1-peter.maydell@linaro.org>
-> ---
->   target/alpha/fpu_helper.c | 15 +++++++--------
->   1 file changed, 7 insertions(+), 8 deletions(-)
+--0000000000003232ed062de10e79
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, this is clearer.
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, Feb 11, 2025, 9:51=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+ wrote:
+
+> John Snow <jsnow@redhat.com> writes:
+>
+> > The code as written can't handle if a header isn't found and will crash=
+,
+> > because `node` will be uninitialized. If we don't have a section title,
+> > create a generic block to insert text into instead.
+>
+> Suggest to show input that makes it crash.  Something like
+>
+>   The code as written crashes when a free-form documentation block
+>   doesn't start with a heading or subheading, like so
+>
+>       ##
+>       # Just text, no heading.
+>       ##
+>
+>   The code then uses `node` uninitialized.
+>
+>   To fix, create a generic block to insert the doc text into.
+>
 
 
-r~
+Okeydokey. Simple enough, thanks.
+
+
+> > (This patch also removes a lingering pylint warning in the QAPIDoc
+> > implementation that prevents getting a clean baseline to use for
+> > forthcoming additions.)
+> >
+> > I am not attempting to *fully* clean up the existing QAPIDoc
+> > implementation in pylint because I intend to delete it anyway; this
+> > patch merely accomplishes a baseline under a specific pylint
+> > configuration:
+> >
+> > PYTHONPATH=3D../../scripts/ pylint --disable=3Dfixme,too-many-lines,\
+> > consider-using-f-string,missing-docstring,unused-argument,\
+> > too-many-arguments,too-many-positional-arguments,\
+> > too-many-public-methods \
+> > qapidoc.py
+> >
+> > (under at least pylint 3.3.1; more robust tamping down of the
+> > environment needed to consistently perform checks will happen later -
+> > hopefully soon, sorry for the inconvenience.)
+> >
+> > This at least ensures there aren't regressions outside of these general
+> > warnings in the new qapidoc.py code to be committed.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freeform
+> QMP sections)
+>
+
+Ah, yep. You got it. Thanks for reviewing this mammoth project.
+
+>
+
+--0000000000003232ed062de10e79
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 11, 2025, 9:51=E2=80=
+=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
+hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Snow &l=
+t;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
+jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; The code as written can&#39;t handle if a header isn&#39;t found and w=
+ill crash,<br>
+&gt; because `node` will be uninitialized. If we don&#39;t have a section t=
+itle,<br>
+&gt; create a generic block to insert text into instead.<br>
+<br>
+Suggest to show input that makes it crash.=C2=A0 Something like<br>
+<br>
+=C2=A0 The code as written crashes when a free-form documentation block<br>
+=C2=A0 doesn&#39;t start with a heading or subheading, like so<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 ##<br>
+=C2=A0 =C2=A0 =C2=A0 # Just text, no heading.<br>
+=C2=A0 =C2=A0 =C2=A0 ##<br>
+<br>
+=C2=A0 The code then uses `node` uninitialized.<br>
+<br>
+=C2=A0 To fix, create a generic block to insert the doc text into.<br></blo=
+ckquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">Okeydokey. Simple enough, thanks.</div><div dir=3D"auto"=
+><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_containe=
+r"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
+:1px #ccc solid;padding-left:1ex">
+<br>
+&gt; (This patch also removes a lingering pylint warning in the QAPIDoc<br>
+&gt; implementation that prevents getting a clean baseline to use for<br>
+&gt; forthcoming additions.)<br>
+&gt;<br>
+&gt; I am not attempting to *fully* clean up the existing QAPIDoc<br>
+&gt; implementation in pylint because I intend to delete it anyway; this<br=
+>
+&gt; patch merely accomplishes a baseline under a specific pylint<br>
+&gt; configuration:<br>
+&gt;<br>
+&gt; PYTHONPATH=3D../../scripts/ pylint --disable=3Dfixme,too-many-lines,\<=
+br>
+&gt; consider-using-f-string,missing-docstring,unused-argument,\<br>
+&gt; too-many-arguments,too-many-positional-arguments,\<br>
+&gt; too-many-public-methods \<br>
+&gt; qapidoc.py<br>
+&gt;<br>
+&gt; (under at least pylint 3.3.1; more robust tamping down of the<br>
+&gt; environment needed to consistently perform checks will happen later -<=
+br>
+&gt; hopefully soon, sorry for the inconvenience.)<br>
+&gt;<br>
+&gt; This at least ensures there aren&#39;t regressions outside of these ge=
+neral<br>
+&gt; warnings in the new qapidoc.py code to be committed.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+<br>
+Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freeform QMP=
+ sections)<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Ah, yep. You got it. Thanks for reviewing this mammoth project.=
+=C2=A0</div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_contain=
+er"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-lef=
+t:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--0000000000003232ed062de10e79--
 
 
