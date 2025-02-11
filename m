@@ -4,87 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9490CC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 15:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4D6C021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 15:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thsR8-0001EF-S4; Tue, 11 Feb 2025 10:44:35 -0500
+	id 1thsVw-0003Vv-Dz; Tue, 11 Feb 2025 10:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thsR4-0001CF-7z
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:44:30 -0500
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1thsVv-0003Vn-TF
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:49:31 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thsR1-0007RI-9F
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:44:28 -0500
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e549b0f8d57so4926140276.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 07:44:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739288666; x=1739893466; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oWOYYEa+6s/NbH3ZPeR9OuuWzJMhNpe0oTscVGP6bVc=;
- b=V0QZdewSOathB8b8lDWVcrhmuiug/oUQXj8c6GGECLFK2KJLwHghhu5mNrf8zacqpk
- W8ERf27TagjT2O0Q7CzzoceRghrXpZYMaKTpso1ZnVViMxB2ZCSkORH1llmaU4RPTk8E
- fOD/pHXqKOLk+w1BkpFxsbrasOy4ILPFIV2zp4XISTYRnXJ59ZVLl/fvChO/rlRZLLmZ
- eJDKb9p3ZAYBQE6Wda9KY3WTETa0ESwXtuUNjwX0TUvc399pmT5wOdo/8GtUfbPeTXbL
- LG7a1NEGlf0SuskuVh5TnOakvi61O5aSLz+ZLYSO/qdRjMm4CzdIZBqcO+6xwqAb4Zn7
- V03A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739288666; x=1739893466;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oWOYYEa+6s/NbH3ZPeR9OuuWzJMhNpe0oTscVGP6bVc=;
- b=v5E1TtHJ7x5LTLYOMZIIJPN5ucmb5aqLG9IoE9t0KlbCwX4Vrr5CObfnR2z3mFAJu1
- WnhoNEmGG0D8sl9mkGxTZMEqjcdegSFg8rZwY8dogwmeRbwHtPGyJtUhEYv66YE6gbsZ
- LcTFWOiYuH9K44HpJgSW7D8YAV+yPqv6uLjXaWDBk6hqbbOp1dcRJbOEn/WTcikqD44H
- gEy6Fc3TZuaTxog7L7e2/SK4qCq3YV9xF25jCuoI9f/2rhhgdPV4t0cGaESlnAlMaVY6
- 636M/Ru0jRTWUaSt5NzAB+DvFDw+h12NFfuLiNV34+g1q2H/ViudhXkMmA6OJb8WKmAj
- AOVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNuFiDnT1deh6SAJkgAZKGuCSd/EByvpc4mqhK6WX1/U90Dwlk/24O5li2KF23v74lBMNVhbc3OCT1@nongnu.org
-X-Gm-Message-State: AOJu0YzFf61FU6jXRX56xjlCm3i1scTFE1DaJf7or8TGZsR7o0LgaVz+
- 3IYlVYrZ9SQ5q4NyUkd+Ptz92QUac/ZdB9OgSGB5B8Ufm5148TrExwNKZzduuyKzwJ7r+ADSXuS
- ol/E5BaDF0muznnFd64XjL9MVX25SrmNXbkEuMA==
-X-Gm-Gg: ASbGncvZjNqPI4vdWbXX7ljl2/k5KpLxnAhzGdrcwv8MY3DQ9R3jYP5/i0bK7qjb+qH
- DQ50l8e3Pu9p5/1BDZG+bVCPRhJ74fKyr8ckpx24T1eI2LLGazbkD89FDg8txsdKzEmR4j4r/gQ
- ==
-X-Google-Smtp-Source: AGHT+IEcQM4m1pJ4IdDJ7qIHjRli/apzMMJXvuiv/2L0e3P+e9Wvq4PFAeSqHSizjpSv9erR7oFadMvEShJvKH3hjgs=
-X-Received: by 2002:a05:6902:1201:b0:e5b:43f5:fa3d with SMTP id
- 3f1490d57ef6-e5b461ea0acmr15194271276.24.1739288666087; Tue, 11 Feb 2025
- 07:44:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1thsVu-0001fs-Aw
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 10:49:31 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 94E9E5C782;
+ Tue, 11 Feb 2025 15:01:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739286102; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qnpa18Ug8U8iCSVQZZdswGjacmydKyQZIj7284I5x4I=;
+ b=hgl2N/WHqFoVTF/90Ba0tH8yMAZH3MjMMtV0uSCgC9NrPubAokMYCZwKvDO+Crpb3Cwzee
+ YrjqWpa3Gvlg+S+WzKXD5Lx+ry6+kcYK2ZwZJvt44eZJaKm4wPHenrXdAHe0aBsNwkzRhF
+ blxvakkozkZvM5xcTCMTK4i0P/fo3z4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739286102;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qnpa18Ug8U8iCSVQZZdswGjacmydKyQZIj7284I5x4I=;
+ b=V4bRNHRe8hDkEN8us7pUGj0D23mxX6DmBKeQdknTpalgQuKTtwSGzTEoUx9kfouBpH/+kW
+ 9zk8YXDXP3MLGsDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="hgl2N/WH";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=V4bRNHRe
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739286102; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qnpa18Ug8U8iCSVQZZdswGjacmydKyQZIj7284I5x4I=;
+ b=hgl2N/WHqFoVTF/90Ba0tH8yMAZH3MjMMtV0uSCgC9NrPubAokMYCZwKvDO+Crpb3Cwzee
+ YrjqWpa3Gvlg+S+WzKXD5Lx+ry6+kcYK2ZwZJvt44eZJaKm4wPHenrXdAHe0aBsNwkzRhF
+ blxvakkozkZvM5xcTCMTK4i0P/fo3z4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739286102;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qnpa18Ug8U8iCSVQZZdswGjacmydKyQZIj7284I5x4I=;
+ b=V4bRNHRe8hDkEN8us7pUGj0D23mxX6DmBKeQdknTpalgQuKTtwSGzTEoUx9kfouBpH/+kW
+ 9zk8YXDXP3MLGsDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5499A13715;
+ Tue, 11 Feb 2025 15:01:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YEMcO1Rmq2c8WwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 11 Feb 2025 15:01:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 1/9] migration: Set migration error outside of
+ migrate_cancel
+Date: Tue, 11 Feb 2025 12:01:28 -0300
+Message-Id: <20250211150136.6781-2-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250211150136.6781-1-farosas@suse.de>
+References: <20250211150136.6781-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <20250127112715.2936555-1-peter.maydell@linaro.org>
- <44f75f64-4480-4cd2-a907-cf0638568e55@linaro.org>
- <CAFEAcA_BF_b8r8cOJVsk13qEQZg0BS5F16s9M6NFLQVHZBfq4Q@mail.gmail.com>
- <27599be5-9669-466e-8e34-4ec0831c91cc@linaro.org>
-In-Reply-To: <27599be5-9669-466e-8e34-4ec0831c91cc@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Feb 2025 15:44:13 +0000
-X-Gm-Features: AWEUYZlLug6vg8uUi3v3dMnBV8jqUW9o3FIS9K-GNtXu8BRkxpQA_ht1kqFKtVA
-Message-ID: <CAFEAcA8RX527GvvxKwCViynqyGA+g_wUbtmaaoyz9Sak2brjow@mail.gmail.com>
-Subject: Re: Deprecate nwfpe emulation?
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 94E9E5C782
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URG_BIZ=0.573 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,37 +130,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Jan 2025 at 21:02, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 1/27/25 09:46, Peter Maydell wrote:
-> > On Mon, 27 Jan 2025 at 17:27, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >> On 27/1/25 12:27, Peter Maydell wrote:
-> >>> We have one test case in check-tcg which purports to be checking
-> >>> iwMMXt. In fact it is doing no such thing: it runs the test without
-> >>> selecting an iwMMXt CPU, which means the iwMMXt insns are interpreted
-> >>> as FPA11 insns by the linux-user emulate_arm_fpa11() code. So the tes=
-t
-> >>> prints garbage and then succeeds anyway.
-> >>
-> >> Uh...
-> >
-> > It had me confused for a while, because I'd convinced myself
-> > by code inspection that we only enabled iwMMXt if you
-> > manually asked for a pxa2xx CPU and not in the default 'max'
-> > CPU, and then I found this test case that we were running
-> > with the default CPU type and which was apparently passing :-)
->
-> Any chance we can deprecate the fpa11 stuff too?
+There's no point passing the error into migration cancel only for it
+to call migrate_set_error().
 
-I had wondered about that from the QEMU side, but it's
-a little trickier than the iwmmxt deprecation because
-we enable the fpa11 emulation by default, so it's harder
-to tell if any users are still using it. (In practice I'm
-pretty sure it'll only being used if people are running
-old binaries that used the ancient "floating point return
-values go in an FPA register" ABI.)
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/migration.c | 7 ++-----
+ migration/migration.h | 2 +-
+ migration/ram.c       | 4 +++-
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
--- PMM
+diff --git a/migration/migration.c b/migration/migration.c
+index 396928513a..7728f52aef 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -342,11 +342,8 @@ void migration_bh_schedule(QEMUBHFunc *cb, void *opaque)
+     qemu_bh_schedule(bh);
+ }
+ 
+-void migration_cancel(const Error *error)
++void migration_cancel()
+ {
+-    if (error) {
+-        migrate_set_error(current_migration, error);
+-    }
+     if (migrate_dirty_limit()) {
+         qmp_cancel_vcpu_dirty_limit(false, -1, NULL);
+     }
+@@ -365,7 +362,7 @@ void migration_shutdown(void)
+      * Cancel the current migration - that will (eventually)
+      * stop the migration using this structure
+      */
+-    migration_cancel(NULL);
++    migration_cancel();
+     object_unref(OBJECT(current_migration));
+ 
+     /*
+diff --git a/migration/migration.h b/migration/migration.h
+index eaebcc2042..3547420c52 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -530,7 +530,7 @@ void migration_make_urgent_request(void);
+ void migration_consume_urgent_request(void);
+ bool migration_rate_limit(void);
+ void migration_bh_schedule(QEMUBHFunc *cb, void *opaque);
+-void migration_cancel(const Error *error);
++void migration_cancel(void);
+ 
+ void migration_populate_vfio_info(MigrationInfo *info);
+ void migration_reset_vfio_bytes_transferred(void);
+diff --git a/migration/ram.c b/migration/ram.c
+index 6f460fd22d..589b6505eb 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4465,8 +4465,10 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
+          * Abort and indicate a proper reason.
+          */
+         error_setg(&err, "RAM block '%s' resized during precopy.", rb->idstr);
+-        migration_cancel(err);
++        migrate_set_error(migrate_get_current(), err);
+         error_free(err);
++
++        migration_cancel();
+     }
+ 
+     switch (ps) {
+-- 
+2.35.3
+
 
