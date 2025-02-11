@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBEBC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 19:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA70C0219E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 19:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thwHj-0001Iy-Ug; Tue, 11 Feb 2025 14:51:07 -0500
+	id 1thwND-0002Iw-3V; Tue, 11 Feb 2025 14:56:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwHh-0001IW-Um
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:51:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwNB-0002IC-KE
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:56:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwHf-0007V2-C9
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:51:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1thwNA-0008OE-7a
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 14:56:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739303461;
+ s=mimecast20190719; t=1739303803;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=FGGQZiI/+QX1IiGDicvIlHZ2msH3PaXToiABEXGO4E4=;
- b=NaF5IQhHmOCign0j1EUa3+bKgHfIxjdbelsLOw9OZWez4k+tFxr2INa95RHq/CscKTaj+6
- 2x9wNBtdigcwksIQwbrWHLBSXn/VgCQufB2PRYqW0zARvViIAU4amaoMz1gK/kfwJP4Y8l
- V6gKoyDes+iJenL17uggf9cr7wbzAIU=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M63kfrmskX6hMdRrB4pW1eocJkfk22lzF/M15ulWIkU=;
+ b=D5SH1WXXTMpVsH2lSIqr/uAPjjK/eNiHgg8cEQWR1ITtYhC1oD0vAoQGTJdCG+fEWgGiOx
+ ditGufnP+5I5F6qKpsx8BYgSzfozq4zOZ0+LPv8eLz41Yv9HKYlCloApPCsyec/wQcxTIg
+ kR0PE/ju6kaip5B6atm+3bKFE0RmX60=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-QKO8i908MIWI-a7adGlJrg-1; Tue, 11 Feb 2025 14:51:00 -0500
-X-MC-Unique: QKO8i908MIWI-a7adGlJrg-1
-X-Mimecast-MFC-AGG-ID: QKO8i908MIWI-a7adGlJrg
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c05f4f174cso21907885a.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 11:51:00 -0800 (PST)
+ us-mta-332-_wnfNkQMP5CjxSQt4zc2OQ-1; Tue, 11 Feb 2025 14:56:42 -0500
+X-MC-Unique: _wnfNkQMP5CjxSQt4zc2OQ-1
+X-Mimecast-MFC-AGG-ID: _wnfNkQMP5CjxSQt4zc2OQ
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c04e4c62a8so578225985a.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 11:56:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739303460; x=1739908260;
+ d=1e100.net; s=20230601; t=1739303802; x=1739908602;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FGGQZiI/+QX1IiGDicvIlHZ2msH3PaXToiABEXGO4E4=;
- b=IKntYM0qmP2WAQ0fS/vDHIHDNm5LY9VKxWFFFbsF5iIb3W3uodtIblnZZtyyGhKYnY
- g9Q2YmZC1fx2Fkimrs04LCi+ajV0ogAdPeBXZryX6WoILsXYZC///wOWzZsfrAXsxS3Q
- nDb0S2nHU3w5P3UaUxHiaumBlbtPjPXy4F3rjuvNt1o/JKjRpF5GDnVJxA1g/mWqzhkJ
- T3HI90imtECDyEPYdMCihB5fj5mqzc6xTagSa5l/g/YEDgIELx/2R76suVcEPfU43cln
- lExN4E9/k0hcXZaYESLanqHECw5wfWkgNzWmo6xQHMbLgejN/G+StFylV/S8Okb4Xplu
- jLAA==
-X-Gm-Message-State: AOJu0YyBiWYuwnzK1DyebqFVJH3da43SGH9O0FzcLqGVhFQaFZGsr50b
- uWI1wWoabv3GA7UhRuYUlE1FM9a6TYswfQ7bi617dlm761SM3/LkRZiXsTSWn8ienjIUQNRab++
- e9EeClChCmDltL4p9LMTfOQ9wIDRUpoNCzHM2uE99I8bp7kDUyR59RfzZmC+w
-X-Gm-Gg: ASbGncsR4rFMbVPPXqi34LIkZzkevoORAFNgSfL3hnlHG8N0o/OCHlPdFKQMVoCSEWF
- x7VTCw5Gdezp3FJh2MhEcle9a+o4NoQhVpgImI/ITKqtNbt0yhCJMINoCXKKF5pNOLJinn3ni7o
- LSpr+OYYs/TBzG6BCXJSYS/Jt65j6iiGIjMV8DY6hgWTvij2zCkY7AfgcYd35XayZgDn3wbvTzX
- 7LU1W83dedLWKIBJLmUX2I/IvFPcf/zPqvDGgyCxlv15mxNqtETDuB3Who=
-X-Received: by 2002:a05:620a:1708:b0:7a8:554:c368 with SMTP id
- af79cd13be357-7c068f8a167mr725833285a.6.1739303460151; 
- Tue, 11 Feb 2025 11:51:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZy5dYKCnVGYZypzV/7vwdkMejAVxJkFIA4lhvW70CymGWRGXUFee7Wts9oEEgHU89z48H/Q==
-X-Received: by 2002:a05:620a:1708:b0:7a8:554:c368 with SMTP id
- af79cd13be357-7c068f8a167mr725831085a.6.1739303459916; 
- Tue, 11 Feb 2025 11:50:59 -0800 (PST)
+ bh=M63kfrmskX6hMdRrB4pW1eocJkfk22lzF/M15ulWIkU=;
+ b=M4bG/4r3kwAZtIRIrlFZZY46XarbloMuI1ZPZItCI6wBXFcmL8NlFJKey9K6WRk+fy
+ HXL+L9NiI5iHR9dBVEo0zlEQmThdZoFGyGXaHtiaUA50aKUhIkqqmtfocAvvASSk1R8d
+ pluLNtuW4KbHj+7P/pFQkG3UrDQQX5eGjwNTwUAAH9UnzBNQnXY0SEqKWaYvvs0NkvqT
+ lOdLFde9Lbwax1cSfWBpq3NuNJ1uSoNIDInwOTSRxipWtzIe5B5+ALw8pgyMWDRoD7tr
+ G3k/XMDDjCXW5mBIDiVmGGea580N95eKf8nyCB22h1HntWjqR1Pcmpf2goJEJAdEerl1
+ xIlQ==
+X-Gm-Message-State: AOJu0YxOrR9u17i6gzWfjKuzFvACi7qiPflaSewSQLfK0yzs87dGepgR
+ WSrSDr0vQOybG9YiUyxbm/AVTq7r6pa+qjzKYvG0cqtRkeRTBdk7tsNx+dzmaOvKJEt+MIR9GHa
+ pbIre1pBY8a6YkmH7hacGJgLHxuJiVzQW7lOC6UeKTSDkugAsrDLc
+X-Gm-Gg: ASbGncvMsvkFu2+92k1DMZSVIuTKxNzsPQvbB4tmnb/IFXKetPeizdIk69D4QaWmuib
+ zqe+rkNM8QxHeIrnh4HVPa0dk74yy7Rq+yZYUY4UPRrz0FbrRvAdpLEY7gmchziWa19sgzeqyAv
+ fhwYrDTY6+dd8bTF1wu75EAQJHM5sr77NbL43/C6s7FunifWVh+TAmfVv8qaXHchtqR8ZZfuTK1
+ rWehPzGFfwzIMz/fKsK5LuEtftyvap1GRuvIlS5MdRQ7diStIYUMT2/4D4=
+X-Received: by 2002:a05:620a:26a7:b0:7b6:73de:f340 with SMTP id
+ af79cd13be357-7c06fc578b4mr83569185a.12.1739303801772; 
+ Tue, 11 Feb 2025 11:56:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHwKqYX66riDxF4o/ryvEM4aycA8eXtNh9SwZ/N8OTeUXwKc6uDJg+JBUL+YbHlnpA2gfl0QA==
+X-Received: by 2002:a05:620a:26a7:b0:7b6:73de:f340 with SMTP id
+ af79cd13be357-7c06fc578b4mr83565885a.12.1739303801403; 
+ Tue, 11 Feb 2025 11:56:41 -0800 (PST)
 Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c056b42b89sm422191485a.69.2025.02.11.11.50.59
+ af79cd13be357-7c054580f06sm440424285a.65.2025.02.11.11.56.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 11:50:59 -0800 (PST)
-Date: Tue, 11 Feb 2025 14:50:56 -0500
+ Tue, 11 Feb 2025 11:56:40 -0800 (PST)
+Date: Tue, 11 Feb 2025 14:56:37 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 7/9] tests/qtest/migration: Introduce
- migration_test_add_suffix
-Message-ID: <Z6uqIEinMqNISPuN@x1.local>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 9/9] migration: Update migrate_cancel documentation
+Message-ID: <Z6urdQwbKktZJel3@x1.local>
 References: <20250211150136.6781-1-farosas@suse.de>
- <20250211150136.6781-8-farosas@suse.de>
+ <20250211150136.6781-10-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250211150136.6781-8-farosas@suse.de>
+In-Reply-To: <20250211150136.6781-10-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
@@ -107,10 +106,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 12:01:34PM -0300, Fabiano Rosas wrote:
-> Introduce a new migration_test_add_suffix to allow programmatic
-> creation of tests based on a suffix. Pass the test name into the test
-> so it can know which variant to run.
+On Tue, Feb 11, 2025 at 12:01:36PM -0300, Fabiano Rosas wrote:
+> Update the migrate_cancel command documentation with a few words about
+> postcopy and the expected state of the machine after migration.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
