@@ -4,94 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE363C0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D26C0219B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 09:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thmTg-0001rf-83; Tue, 11 Feb 2025 04:22:48 -0500
+	id 1thmUk-0002D4-3k; Tue, 11 Feb 2025 04:23:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thmTd-0001r8-W9
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:22:46 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1thmTZ-0002s2-8I
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:22:43 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-38dd0dc21b2so1978259f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 01:22:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739265759; x=1739870559; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sDQKIoAvPAsyL+4G8ZB827EKcWgYbqdiMzHDX46eOA0=;
- b=rvmoePpHoPUaFAGkTbBQ7Ex39CazeBdqD0UAJoS2BY2ZXWMkESXzXgM/OEOszcXqX2
- 7FPgoApOTRoWN26Slvln0K4+W0mYIW5pzbCvfZU/juviV2n8juuC5VsIwFB7anfge2YV
- ZP4BWPM3tao7+UC/bqm3h+HV9S6YEpty2etzswAwb7m3tLqeWfNJSjNEOKVFLRKCQK/W
- ha6PpjkV7bDAxhLXNqHAeT6YOU7x3DqYsUzZCuxBRpynpXtgImWTdmOege6Nlgfvi5ne
- R3hR+Kgm+L3t7bgX7NcCUSpE2I/4qCNFn2ftJFo/5BMwYsSfqggBFYiRxBpH4IIYSit8
- eTkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739265759; x=1739870559;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sDQKIoAvPAsyL+4G8ZB827EKcWgYbqdiMzHDX46eOA0=;
- b=f15T/aZ8CNNmF45E2bwbCjGit2X0H5djFw+ii82unqNAyJtqNqEqEUAmiZ4GHge2No
- Lv95FCNWAdsGXt17lECgWwCbtWQtnGzZWFHcs6JYnKLmgUyqz/dhOO/I3cFWQ+6mSxcM
- gj7XxL+fZufOqGeFgO+fOGdA5PQGdcPyCSs4dkrbMN/KET59nZpGhL5VbfjRqRmIkddx
- W5fbZmPgtU4IdhLolbLvMYHOduhWjCfpxWCTThpo8EIH9EcvgL502p/g4cXAbeorEKYn
- zXn5UE3AsOoRXbjoZ/XaDAjMGJcImZc6iKvgTz55CtryVPTMyglMdBF9sdlaqIp3dcKV
- 0nRg==
-X-Gm-Message-State: AOJu0YysqeKL1xda/9YSjrUK4N/46BN+3pkrCy72cJIt0WurP0tHm07r
- kM4x3kB/XLzoSf715mF8VVOWrdS3LWKtpKrM8hxTjcPwvoBN2ZueyC0ks4e7xGE=
-X-Gm-Gg: ASbGncuiVsAz+KrHJSoRN7Xj6Sg3MB3buxNGK1neRuF3vR16JsMgzHU1XShpYh2mrFl
- GX/kadoLeFehQdcw1bV15ZrLazCO4ITm7bHK9P02McR37ZJsERtmCfTe+hgZyoR3Qiypf+H9WHy
- 1VEadNtlHP3mV4PFFEC63pM3tmXcUFYreBmpbKUm16shVDrOmGyQZGcsfXyirT9vlXNounrBeS0
- Qm27ETEMPq9kYb8ixA4U2tqB1rbllrAkurL2mDPQdiKqjgbjSBBR1xd9r2RtcKd7KxrQ0uRvYn2
- BJPMHoVrMWZPEMzu4ivmT8CuIt8K2kKrVCL1EWWtfDL9oyDEJ+0EzmzGrCqYPx5K
-X-Google-Smtp-Source: AGHT+IFm9sHqMY2wsq9CX/mOFo8eSAc5Jknmon+kFX0ZskhO8XkO6AVqu+AbxX4gmVvCANa0saoiZQ==
-X-Received: by 2002:a05:6000:154e:b0:38d:e3da:63cd with SMTP id
- ffacd0b85a97d-38de3da6560mr3140306f8f.23.1739265758981; 
- Tue, 11 Feb 2025 01:22:38 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dcfd7d153sm10204079f8f.84.2025.02.11.01.22.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 01:22:38 -0800 (PST)
-Message-ID: <85539c0c-51e8-43ba-9c99-23e1b684f30e@linaro.org>
-Date: Tue, 11 Feb 2025 10:22:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/16] hw/microblaze: Support various endianness for
- s3adsp1800 machines
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson
- <anjo@rev.ng>, Jason Wang <jasowang@redhat.com>,
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUZ-00023C-AB
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1thmUX-0002y5-1U
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 04:23:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739265820;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ae3RfQDslfS0/+8r8eChjkfDFE+d3A19Q0XLW28/4XI=;
+ b=NOEtnwzfVZQLExDmw93wu0aSXflRGtaO8ai6P+S8ODnA3BzZTsnPbdI5vTZRghoV+8RUqa
+ L6ARPq68Q6BE8alX4ORblgcQeJ0E9y2of/hLuQJPG+FVXHDcbHtfMcJNIxMJl4W68oksiv
+ qrqDxovfq3u40vtvy+vTWJmMqUVPv34=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-LDOo18xPMBW2TeM8dJWlkA-1; Tue,
+ 11 Feb 2025 04:23:37 -0500
+X-MC-Unique: LDOo18xPMBW2TeM8dJWlkA-1
+X-Mimecast-MFC-AGG-ID: LDOo18xPMBW2TeM8dJWlkA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3C3A1956094; Tue, 11 Feb 2025 09:23:35 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.57])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4825919560A3; Tue, 11 Feb 2025 09:23:35 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id B7D801800390; Tue, 11 Feb 2025 10:23:24 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
+ Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20250206131052.30207-1-philmd@linaro.org>
- <20250206131052.30207-12-philmd@linaro.org> <Z6S3Mgt1G7fIjeBB@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z6S3Mgt1G7fIjeBB@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH v3 04/23] hw/uefi: add var-service-guid.c
+Date: Tue, 11 Feb 2025 10:23:02 +0100
+Message-ID: <20250211092324.965440-5-kraxel@redhat.com>
+In-Reply-To: <20250211092324.965440-1-kraxel@redhat.com>
+References: <20250211092324.965440-1-kraxel@redhat.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.388,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,92 +92,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/25 14:20, Daniel P. Berrangé wrote:
-> On Thu, Feb 06, 2025 at 02:10:47PM +0100, Philippe Mathieu-Daudé wrote:
->> Introduce an abstract machine parent class which defines
->> the 'little_endian' property. Duplicate the current machine,
->> which endian is tied to the binary endianness, to one big
->> endian and a little endian machine; updating the machine
->> description. Keep the current default machine for each binary.
->>
->> 'petalogix-s3adsp1800' machine is aliased as:
->> - 'petalogix-s3adsp1800-be' on big-endian binary,
->> - 'petalogix-s3adsp1800-le' on little-endian one.
-> 
-> Does it makes sense to expose these as different machine types ?
-> 
-> If all the HW is identical in both cases, it feels like the
-> endianness could just be a bool property of the machine type,
-> rather than a new machine type.
+Add variables for a bunch of UEFI GUIDs we will need.
 
-To clarify what we are trying to achieve here:
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ hw/uefi/var-service-guid.c | 99 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
+ create mode 100644 hw/uefi/var-service-guid.c
 
-1/ Current situation:
-
-$ qemu-system-microblaze -M help
-Supported machines are:
-none                 empty machine
-petalogix-ml605      PetaLogix linux refdesign for xilinx ml605 (big 
-endian) (deprecated)
-petalogix-s3adsp1800 PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (default)
-xlnx-zynqmp-pmu      Xilinx ZynqMP PMU machine (big endian) (deprecated)
-$ qemu-system-microblazeel -M help
-Supported machines are:
-none                 empty machine
-petalogix-ml605      PetaLogix linux refdesign for xilinx ml605 (little 
-endian)
-petalogix-s3adsp1800 PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (default)
-xlnx-zynqmp-pmu      Xilinx ZynqMP PMU machine (little endian)
-
-1 architecture declined in 2 binaries, total of 6 machines
-
-2/ With this series:
-
-qemu-system-microblaze -M help
-Supported machines are:
-none                 empty machine
-petalogix-ml605      PetaLogix linux refdesign for xilinx ml605 (big 
-endian) (deprecated)
-petalogix-s3adsp1800 PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (big endian) (alias of petalogix-s3adsp1800-be)
-petalogix-s3adsp1800-be PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (big endian) (default)
-petalogix-s3adsp1800-le PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (little endian)
-xlnx-zynqmp-pmu      Xilinx ZynqMP PMU machine (big endian) (deprecated)
-qemu-system-microblazeel -M help
-Supported machines are:
-none                 empty machine
-petalogix-ml605      PetaLogix linux refdesign for xilinx ml605 (little 
-endian)
-petalogix-s3adsp1800-be PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (big endian)
-petalogix-s3adsp1800 PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (little endian) (alias of petalogix-s3adsp1800-le)
-petalogix-s3adsp1800-le PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (little endian) (default)
-xlnx-zynqmp-pmu      Xilinx ZynqMP PMU machine (little endian)
-
-1 architecture declined in 2 binaries, total of 10 machines
-
-3/ Once the deprecation period passed and we can merge the 2 binaries:
-
-$ qemu-system-microblaze -M help
-Supported machines are:
-none                 empty machine
-petalogix-ml605      PetaLogix linux refdesign for xilinx ml605 (little 
-endian)
-petalogix-s3adsp1800-be PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (big endian)
-petalogix-s3adsp1800-le PetaLogix linux refdesign for xilinx Spartan 
-3ADSP1800 (little endian)
-xlnx-zynqmp-pmu      Xilinx ZynqMP PMU machine (little endian)
-
-1 architecture, 1 binary, 4 machines (which could be reduced to 3 if
-we want a default endianness for the s3adsp1800).
-
-Due to the deprecation policy, step 2/ is necessary to reach 3/.
+diff --git a/hw/uefi/var-service-guid.c b/hw/uefi/var-service-guid.c
+new file mode 100644
+index 000000000000..eba3655c8d30
+--- /dev/null
++++ b/hw/uefi/var-service-guid.c
+@@ -0,0 +1,99 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * uefi vars device - GUIDs
++ */
++
++#include "qemu/osdep.h"
++#include "system/dma.h"
++
++#include "hw/uefi/var-service.h"
++
++/* variable namespaces */
++
++const QemuUUID EfiGlobalVariable = {
++    .data = UUID_LE(0x8be4df61, 0x93ca, 0x11d2, 0xaa, 0x0d,
++                    0x00, 0xe0, 0x98, 0x03, 0x2b, 0x8c)
++};
++
++const QemuUUID EfiImageSecurityDatabase = {
++    .data = UUID_LE(0xd719b2cb, 0x3d3a, 0x4596, 0xa3, 0xbc,
++                    0xda, 0xd0, 0x0e, 0x67, 0x65, 0x6f)
++};
++
++const QemuUUID EfiCustomModeEnable = {
++    .data = UUID_LE(0xc076ec0c, 0x7028, 0x4399, 0xa0, 0x72,
++                    0x71, 0xee, 0x5c, 0x44, 0x8b, 0x9f)
++};
++
++const QemuUUID EfiSecureBootEnableDisable = {
++    .data = UUID_LE(0xf0a30bc7, 0xaf08, 0x4556, 0x99, 0xc4,
++                    0x0, 0x10, 0x9, 0xc9, 0x3a, 0x44)
++};
++
++/* signatures */
++
++const QemuUUID EfiCertSha256Guid = {
++    .data = UUID_LE(0xc1c41626, 0x504c, 0x4092, 0xac, 0xa9,
++                    0x41, 0xf9, 0x36, 0x93, 0x43, 0x28)
++};
++
++const QemuUUID EfiCertSha384Guid = {
++    .data = UUID_LE(0xff3e5307, 0x9fd0, 0x48c9, 0x85, 0xf1,
++                    0x8a, 0xd5, 0x6c, 0x70, 0x1e, 0x1)
++};
++
++const QemuUUID EfiCertSha512Guid = {
++    .data = UUID_LE(0x93e0fae, 0xa6c4, 0x4f50, 0x9f, 0x1b,
++                    0xd4, 0x1e, 0x2b, 0x89, 0xc1, 0x9a)
++};
++
++const QemuUUID EfiCertRsa2048Guid = {
++    .data = UUID_LE(0x3c5766e8, 0x269c, 0x4e34, 0xaa, 0x14,
++                    0xed, 0x77, 0x6e, 0x85, 0xb3, 0xb6)
++};
++
++const QemuUUID EfiCertX509Guid = {
++    .data = UUID_LE(0xa5c059a1, 0x94e4, 0x4aa7, 0x87, 0xb5,
++                    0xab, 0x15, 0x5c, 0x2b, 0xf0, 0x72)
++};
++
++const QemuUUID EfiCertTypePkcs7Guid = {
++    .data = UUID_LE(0x4aafd29d, 0x68df, 0x49ee, 0x8a, 0xa9,
++                    0x34, 0x7d, 0x37, 0x56, 0x65, 0xa7)
++};
++
++/*
++ * mm_header.guid values that the guest DXE/BDS phases use for
++ * sending requests to management mode
++ */
++
++const QemuUUID EfiSmmVariableProtocolGuid = {
++    .data = UUID_LE(0xed32d533, 0x99e6, 0x4209, 0x9c, 0xc0,
++                    0x2d, 0x72, 0xcd, 0xd9, 0x98, 0xa7)
++};
++
++const QemuUUID VarCheckPolicyLibMmiHandlerGuid = {
++    .data = UUID_LE(0xda1b0d11, 0xd1a7, 0x46c4, 0x9d, 0xc9,
++                    0xf3, 0x71, 0x48, 0x75, 0xc6, 0xeb)
++};
++
++/*
++ * mm_header.guid values that the guest DXE/BDS phases use for
++ * reporting event groups being signaled to management mode
++ */
++
++const QemuUUID EfiEndOfDxeEventGroupGuid = {
++    .data = UUID_LE(0x02ce967a, 0xdd7e, 0x4FFc, 0x9e, 0xe7,
++                    0x81, 0x0c, 0xF0, 0x47, 0x08, 0x80)
++};
++
++const QemuUUID EfiEventReadyToBootGuid = {
++    .data = UUID_LE(0x7ce88Fb3, 0x4bd7, 0x4679, 0x87, 0xa8,
++                    0xa8, 0xd8, 0xde, 0xe5, 0x0d, 0x2b)
++};
++
++const QemuUUID EfiEventExitBootServicesGuid = {
++    .data = UUID_LE(0x27abF055, 0xb1b8, 0x4c26, 0x80, 0x48,
++                    0x74, 0x8F, 0x37, 0xba, 0xa2, 0xdF)
++};
+-- 
+2.48.1
 
 
