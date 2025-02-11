@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D5BC0219B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 13:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF5FC021A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Feb 2025 13:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1thpyG-0001M6-0Z; Tue, 11 Feb 2025 08:06:36 -0500
+	id 1thq9F-0004Pu-A0; Tue, 11 Feb 2025 08:17:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thpyE-0001Lp-5z
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:06:34 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1thq91-0004OL-9T
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:17:46 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1thpyB-0006Ov-UR
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:06:33 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-38dc660b56cso4281140f8f.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:06:30 -0800 (PST)
+ id 1thq8z-0001A6-07
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 08:17:42 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e53a91756e5so4668290276.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 05:17:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739279188; x=1739883988; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KvkNjTeRragMRh+PEtaxFCPvqzPT6cVpx4DPzGg4c0s=;
- b=tjl/laxuc+fuBvzw5+4OiQTJOVFAdUZqWKeHu85UOFpnyxkPViNhCd2vqDAZWiENLr
- E9FfHEdkmWD7vRHhrgrw/d/ExqNHAlkh2I0QTRDKohfSI1XJd9bdIcSvbHDwcAUyG7gy
- /TYS0Mb2CQyBmIg1Nh7gwaDoLTM+Lof5SibfhzkjRVg9LO1kN/mKpmMZevu4wY3+5/Xe
- SccMxVJUMCqH+2FDBgO96FuOYsUAYmyc1p3zX9maKp5oA9QTLOXSQl6whWioxCfp6rtd
- OqpfMRJxv97Uo6Np8/37PRJOc/VloJtv5H8PgHSa3rW0Fj1qvmMsR+VtVfO/z+EZ2164
- TpFA==
+ d=linaro.org; s=google; t=1739279859; x=1739884659; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wPHK2/7y7lM2DRSfC8k131Pk3pYOMVGZdLEWYS2YOm0=;
+ b=NZ9soloPmbf73At8HVBAgMxU7p/u6fY5tBks6OdH6K28H98jMeYXtGCAn5VqGl+l5w
+ mmJ34o1hKR+hHZ0Z50Sa89X0b4uiGIRR4uJCCNdiEeCAb2FgcwYRMv7ikcrvAuB9ZJfU
+ HHo/FY81r9PbbX6lIHSUcb1rIs5X0cvIHURIRe2mo3EiO2b6gAqkz4NwY1U97dLiXQTZ
+ t/IJC+ZhqbwGALOJ0ki2NHlzL2cMRwopYauiV/HyFi8y4TDDW3ReQ7gLeawvSFykkdBq
+ uUKEayGrYOZXTZKiR4Q89CrFHUlyCLV6/B1yBPEHm8RoEq74lwkQo0VWR5rfke0rnsmu
+ xy/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739279188; x=1739883988;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KvkNjTeRragMRh+PEtaxFCPvqzPT6cVpx4DPzGg4c0s=;
- b=I8278SCBj1phBWFij7YlA9uBiBHHptgHbcpZjezQM+CcaASgEBSHWZpciiIwSNJytE
- SLOxQkQO+uNwsy/Y84/xf7e044C+ehdtRD5EiD7AJhycG8cFe7VWS0Ojv1aJUX1VWg5B
- GMWmU06Slvcu6/H9AF+L1MzWDewCiujRTpM8n3V9kqnwdDS8xhKZnUlfz4o6ZUGMfUT8
- lg492crF6esGlBHNcKEA/ghXoJfxxQfERcK3gEaSYr3sBDYMlBZzW5F0MLDmgJnIhTts
- A82PgFW0+ATlS/UBU9cdJgr2zBT21y7y6TdjWCgAtbVEvD4zT7fugg91aHk+7+QVzVhm
- VccA==
-X-Gm-Message-State: AOJu0Yx5RnoSQo7y8hT719av9E74EN8qervcSHEH2T4nfdTj5srmSZJ9
- /N188ujo8Z9JoKCOMelhBTypc3PGy/SxOXLwpidFAXzY4PA9YBIhRhSOi9sH4WqriBCzGt9S4SY
- L
-X-Gm-Gg: ASbGncs197Qho1a0erGfkVz48YuUTliixvJ38zf3a/Aq0YVhKNbINxPEZLkPhDcr2Yt
- 6btR30BW2ytXl6Odl8tzEzPvG8ZFkl7coOpohlgxLCLZXODqTzs4EEMnr2dZmw0TAebLa8OwzfJ
- Kg4pg6CABPhdJH1ECn2M0Eu7xMyX3RJSzWXbmwT1zDLoFdO2KVzJ9JLQHt/mGnSpkhmcVkEqArb
- 1Xt8kOen3qiS8b8X4ff3p8HRxcrWq1TTZqOtfeYzcELDDg8VeU5HQ3uWOWeNAWE9lWrcFlCfdT9
- gyRSvOmdUsRgcYRNOoDE
-X-Google-Smtp-Source: AGHT+IFqm0OI+kd+S8btlE3uTQMsBbHTMR0FGbnZgizCu6sInTViMxuO7OYOOHeyqu3Mko6XCsMzLA==
-X-Received: by 2002:a5d:47a9:0:b0:38d:d9e4:9ba0 with SMTP id
- ffacd0b85a97d-38dd9e49cccmr9174097f8f.25.1739279188519; 
- Tue, 11 Feb 2025 05:06:28 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dbdd1af07sm14973737f8f.15.2025.02.11.05.06.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 05:06:27 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] target/alpha: Don't corrupt error_code with unknown softfloat
- flags
-Date: Tue, 11 Feb 2025 13:06:26 +0000
-Message-Id: <20250211130626.3940412-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1739279859; x=1739884659;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wPHK2/7y7lM2DRSfC8k131Pk3pYOMVGZdLEWYS2YOm0=;
+ b=W/Hv9NjrzXrhXigRZbPQ2Zi+v/SmRvNNLeQ0zTkS17bYxPEKpWP4XvfAw8ufRJHKr8
+ wTV00RV+M+ylryx16db88kmJf4QXcuPBqjgVM6M07kFeivn0aEZiVyewsXIXpG3muqq9
+ ceqoNePTOHcK0iDlJOG2Hy5oJz1FCe7Kmrw+ofL4leHDv9vUwZ7MI2fB4RjoxBS9aB4h
+ 5p0Tsw7m/vyELG83wMO5bUX2YhCAZvLeh5GA3KrF631bX2vIy+Ccfl1PDmSaE7pfPUuC
+ UtKh4/tB1tDI3I2On8XqtqOfX9LmtG+mlE6pXi3tkH6piVUZPYvqdGz8S8W+QdFXAwO/
+ gctw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7RKhujveNO44DT+7jvze88mQdZqOEmzotA5Np3qfU6nG8PcnCBbudQ+Z2rxV5qxxUmcF027rdK9kx@nongnu.org
+X-Gm-Message-State: AOJu0YxzFYVJPZN8wwYNCpY9ljw9LIU5ehvpkW4j3xYojyqCtriLaG7q
+ AFN9Zm5Zq614vC56i2NxNZOafHqOkARqssM6rBbp3Hz0DG4EFdCJglp/fQOpGOiG/x0y0kGzZR8
+ zx4kNEuzSGmKo+x9WIEOUZfYr4jrbzqmasCEX4A==
+X-Gm-Gg: ASbGncvxkaigTe9RS0lRuzPA8+gaw1jCBR13A5kql01KeO8n/K+/JedPnxo4IGDHL2U
+ e0OSrYYlPQ1vja3VngQklkPTn8OjuFH17fQCbocSbbqGE+hsS+FU1z5tc36xGGNsp8tGTPq9VIA
+ ==
+X-Google-Smtp-Source: AGHT+IFWgXw06kU2v3NB/dBqscculj6CIFJt+G7rZlwWWbuG8LMkti1QUxsVbOxFSXKIJXjUgsKPr8MdB6gZHgCQ2/o=
+X-Received: by 2002:a05:6902:844:b0:e57:34ee:398c with SMTP id
+ 3f1490d57ef6-e5d93d30d43mr4307512276.44.1739279858897; Tue, 11 Feb 2025
+ 05:17:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+References: <20250201164012.1660228-1-peter.maydell@linaro.org>
+ <20250201164012.1660228-9-peter.maydell@linaro.org>
+In-Reply-To: <20250201164012.1660228-9-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Feb 2025 13:17:25 +0000
+X-Gm-Features: AWEUYZldTfeBYFfbgHhQAEo2iFBAa1hCmddkzDFrihaVNPYzs7CA0bUbzp0lrBA
+Message-ID: <CAFEAcA9QHK1HcvSEW+p=dGTJ0NjUKTq3C-+-Lr-rwGJpXTYKsg@mail.gmail.com>
+Subject: Re: [PATCH v2 08/69] target/arm: Adjust FP behaviour for FPCR.AH = 1
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,45 +92,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In do_cvttq() we set env->error_code with what is supposed to be a
-set of FPCR exception bit values.  However, if the set of float
-exception flags we get back from softfloat for the conversion
-includes a flag which is not one of the three we expect here
-(invalid_cvti, invalid, inexact) then we will fall through the
-if-ladder and set env->error_code to the unconverted softfloat
-exception_flag value.  This will then cause us to take a spurious
-exception.
+On Sat, 1 Feb 2025 at 16:40, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> When FPCR.AH is set, various behaviours of AArch64 floating point
+> operations which are controlled by softfloat config settings change:
+>  * tininess and ftz detection before/after rounding
+>  * NaN propagation order
+>  * result of 0 * Inf + NaN
+>  * default NaN value
+>
+> When the guest changes the value of the AH bit, switch these config
+> settings on the fp_status_a64 and fp_status_f16_a64 float_status
+> fields.
+>
+> This requires us to make the arm_set_default_fp_behaviours() function
+> global, since we now need to call it from cpu.c and vfp_helper.c; we
+> move it to vfp_helper.c so it can be next to the new
+> arm_set_ah_fp_behaviours().
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-This is harmless now, but when we add new floating point exception
-flags to softfloat it will cause problems.  Add an else clause to the
-if-ladder to make it ignore any float exception flags it doesn't care
-about.
+This turns out to need this tweak folding in to avoid compile
+failures on the kvm-only config:
 
-Specifically, without this fix, 'make check-tcg' will fail for Alpha
-when the commit adding float_flag_input_denormal_used lands.
+ #include "exec/helper-proto.h"
+ #include "internals.h"
+ #include "cpu-features.h"
++#include "fpu/softfloat.h"
+ #ifdef CONFIG_TCG
+ #include "qemu/log.h"
+-#include "fpu/softfloat.h"
+ #endif
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-I guess I forgot to run a 'make check-tcg' for all targets until
-I was getting around to queuing the FEAT_AFP series :-/
 
- target/alpha/fpu_helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+(Once this has landed I'm tempted to clean up vfp_helper.c
+so that e.g. the tcg-only parts get moved into tcg/ rather
+than almost all of the file being inside an ifdef.)
 
-diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
-index 63d9e9ce39c..f810a9b6a47 100644
---- a/target/alpha/fpu_helper.c
-+++ b/target/alpha/fpu_helper.c
-@@ -476,6 +476,8 @@ static uint64_t do_cvttq(CPUAlphaState *env, uint64_t a, int roundmode)
-             exc = FPCR_INV;
-         } else if (exc & float_flag_inexact) {
-             exc = FPCR_INE;
-+        } else {
-+            exc = 0;
-         }
-     }
-     env->error_code = exc;
--- 
-2.34.1
-
+-- PMM
 
