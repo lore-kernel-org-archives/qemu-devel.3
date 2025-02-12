@@ -4,62 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263A2C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 13:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D7DC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 13:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiCYe-0003oc-Lu; Wed, 12 Feb 2025 08:13:40 -0500
+	id 1tiChi-0006ki-7G; Wed, 12 Feb 2025 08:23:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tiCYY-0003nE-CG
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:13:34 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tiChg-0006jm-A1
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:23:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tiCYW-0001lU-8M
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:13:33 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tiCha-0004Tk-Qq
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:23:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739366011;
+ s=mimecast20190719; t=1739366570;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xqqK5cdIvGLUJUMzoyAJoVATsVehHhV57gBFzsVJkZQ=;
- b=WlHlg8raSidao3Sw/J+bqoFUJ3MQusmm582bq5ULr9LUQKirAiy2yhuInkO+w5T5xY1B3Y
- oGm/S0TQSBu3ETv0s+t8vqSnmMK1G1LpK/sq5PtgJpeFfq7WIcMOAkaihXDqf/mwsxfGUJ
- zZvjSKZV8y7GVk34rcfkiI1jd7puiTI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-w44MsOc3M128k9dpPcevMw-1; Wed,
- 12 Feb 2025 08:13:28 -0500
-X-MC-Unique: w44MsOc3M128k9dpPcevMw-1
-X-Mimecast-MFC-AGG-ID: w44MsOc3M128k9dpPcevMw_1739366007
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EABF1800875; Wed, 12 Feb 2025 13:13:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.168])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AF1C1800570; Wed, 12 Feb 2025 13:13:24 +0000 (UTC)
-Date: Wed, 12 Feb 2025 14:13:22 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com,
- manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 03/11] rust: Add some block layer bindings
-Message-ID: <Z6yecuOmtQKYUwLj@redhat.com>
-References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-4-kwolf@redhat.com>
- <b7b2ab97-acd3-4008-abd6-3da874541113@redhat.com>
+ bh=hD0PIw+pIDLYif4bwIHxBBXG+3VnK1FzOueEi0RI/S4=;
+ b=Ok/zXtHZXqrdVWRi76NdrKEuVZc9xDVEkpKmPa2BhqItVFZaooqELHXWYFWQRCuZSlfKdS
+ bR4X/T8Eqpej3Gc9c69HsOE8Hng3oYvgk9ckg+thVCFxXfmCiirocnJter9vsnRtUSCwIQ
+ xG2IEtqlFuJzfxrEYmYG+Vuq8Rubbz0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-155-pNPRiYrnNiuyZgwxg1qxIA-1; Wed, 12 Feb 2025 08:22:46 -0500
+X-MC-Unique: pNPRiYrnNiuyZgwxg1qxIA-1
+X-Mimecast-MFC-AGG-ID: pNPRiYrnNiuyZgwxg1qxIA_1739366565
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38dc6aad9f8so379632f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 05:22:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739366565; x=1739971365;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hD0PIw+pIDLYif4bwIHxBBXG+3VnK1FzOueEi0RI/S4=;
+ b=t2P5xNn+12thefcMnA2rqyYg599u1RbJVlFMkc8HGazXqEjhFZNrf9TQn4MXb+NJ24
+ T2ioq1zVbXD6mCVYE8Gcd5MA51LTro6YJc0IrwuwHpfM96+FntSPo5pP/+/VNHgs6IsF
+ tFVs1n58sqSQL+3TJNR2K6hC0af39DMczmrFtf9zW52ULoThVPRSSvaA2SPRdZHCKaas
+ nyHpdvakyfM2MLGxS77OMqUZVmZ45sh7qWbYD1n+MwQr+NC/wFd+KdxKlrj3RXqocjFf
+ 7St5gJ1vie0AvNURTMyfUzeCpa5wS8g9TfCVhxy6XpYz4K2xdAqx1RsF6aNADzd+4tfV
+ w1rA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV207ZAQoa4Chfac+eOAi5/SffaU5QAFX29Rp4npoNK6PXghzlEMPxCaC2jUlcmBE6//m/llruu4gfa@nongnu.org
+X-Gm-Message-State: AOJu0Yz++nyvJPm9MU7/CoqPTsPQ5QGTIWpMP0ztZcY+RQvl+lh8X/cN
+ uLFMqwRS/zpoaZ1dymjZ0BCr+G46ojRbIGaoX6e32DWAh0EMC6pUgHdmnnAPn6Xro0WzdoIqMh2
+ 3hbzyDDqaL4Sq7TS6JAGYm40f48A+f/2MztQ+WADy56DIlNCQEgvoPW2NtOuNQse54xv/Wj0oUA
+ 4m9ml6XBbFfXp4TSGo62QgI0QNTXg=
+X-Gm-Gg: ASbGncsbMkqvPf1UFH6nUr6uH+z0tiElC69FjN2PFVSzw+6UE+TfkGyavsD6RmC6Zjj
+ zCVu6FWJGJj90GZF5qaqGvdyz1Qmvyb4GGXOmZ7jqf1vXMZrbsbEkwdHonMYl
+X-Received: by 2002:a5d:64ef:0:b0:38d:d8f7:8f75 with SMTP id
+ ffacd0b85a97d-38de43c6f4amr6811632f8f.17.1739366565290; 
+ Wed, 12 Feb 2025 05:22:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFkAf9UQJHlZrKcO1H0w+Ra71HiOHpqfNaKXbmnBrTvt+q3oV0jUlpdNZ96f1s5dBXfBd1Tmz2NLMCTVz0SuLE=
+X-Received: by 2002:a5d:64ef:0:b0:38d:d8f7:8f75 with SMTP id
+ ffacd0b85a97d-38de43c6f4amr6811613f8f.17.1739366564762; Wed, 12 Feb 2025
+ 05:22:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b7b2ab97-acd3-4008-abd6-3da874541113@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+References: <20250211214328.640374-1-kwolf@redhat.com>
+ <20250211214328.640374-5-kwolf@redhat.com>
+ <533ac9c1-7486-4b1b-af9a-ed4a864727de@redhat.com>
+ <Z6yYRrp4KTjveCHg@redhat.com>
+In-Reply-To: <Z6yYRrp4KTjveCHg@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 12 Feb 2025 14:22:32 +0100
+X-Gm-Features: AWEUYZna8ygT0fcd9g8mri6IVx4pZTckcjFG8Qvehk6e30-DrtjovO8cN5ms0Lg
+Message-ID: <CABgObfZ=YjFSkfH9gDWbjeWjkVo6oYgYMdEsZPyaXzeXY=qLtw@mail.gmail.com>
+Subject: Re: [PATCH 04/11] rust/qemu-api: Add wrappers to run futures in QEMU
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, manos.pitsidianakis@linaro.org, 
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -68,7 +91,7 @@ X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,57 +107,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.02.2025 um 10:29 hat Paolo Bonzini geschrieben:
-> On 2/11/25 22:43, Kevin Wolf wrote:
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> >   rust/wrapper.h                | 4 ++++
-> >   meson.build                   | 1 +
-> >   rust/qemu-api/src/zeroable.rs | 5 +++--
-> >   3 files changed, 8 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/rust/wrapper.h b/rust/wrapper.h
-> > index 41be87adcf..c3e1e6f9cf 100644
-> > --- a/rust/wrapper.h
-> > +++ b/rust/wrapper.h
-> > @@ -53,3 +53,7 @@ typedef enum memory_order {
-> >   #include "chardev/char-fe.h"
-> >   #include "qapi/error.h"
-> >   #include "chardev/char-serial.h"
-> > +#include "block/block.h"
-> > +#include "block/block_int.h"
-> > +#include "block/qdict.h"
-> > +#include "qapi/qapi-visit-block-core.h"
-> > diff --git a/meson.build b/meson.build
-> > index 30aae6b3c3..154195bc80 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -4045,6 +4045,7 @@ if have_rust
-> >       '--with-derive-default',
-> >       '--no-layout-tests',
-> >       '--no-prepend-enum-name',
-> > +    '--allowlist-item', 'EINVAL|EIO',
-> 
-> I've got some errno bindings that I wrote for chardev, I'll send them
-> shortly.
+On Wed, Feb 12, 2025 at 1:47=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
+:
+> > > +pub fn qemu_co_run_future<F: Future>(future: F) -> F::Output {
+> > > +    let waker =3D Arc::new(RunFutureWaker {
+> > > +        co: unsafe { bindings::qemu_coroutine_self() },
+> > > +    })
+> > > +    .into();
+> >
+> > into what? :)  Maybe you can add the type to the "let" for clarity.
+>
+> Into Waker. Do we have any idea yet how explicit we want to be with type
+> annotations that aren't strictly necessary? I didn't think of making it
+> explicit here because the only thing that is done with it is building a
+> Context from it, so it seemed obvious enough.
+>
+> If you think that being explicit is better, then Waker::from() might
+> be better than adding a type name to let and keeping .into().
 
-Yes, we definitely need some proper bindings there. I'm already tired of
-writing things like this:
+I think this case threw me off because From<Arc<W: Wake>> is a bit
+more generic than your
+usual From implementation.  Maybe it's obvious to anyone who has used
+futures in Rust
+(I haven't).
 
-    return -(bindings::EINVAL as std::os::raw::c_int)
+I agree, something like
 
-Or even:
+    let waker =3D Waker::from(waker);
+    let mut cx =3D Context::from_waker(&waker);
 
-    return e
-        .raw_os_error()
-        .unwrap_or(-(bindings::EIO as std::os::raw::c_int))
+could be the best of both worlds.
 
-Which actually already shows that your errno binding patch does the
-opposite direction of what I needed in this series. My problem is when I
-need to return an int to C, and I either have an io::Result or I just
-want to directly return an errno value. So we'll have to add that part
-to your errno module, too.
+> > Also, would qemu_co_run_future() and qemu_run_future() become methods o=
+n an
+> > Executor later?  Maybe it make sense to have already something like
+> >
+> > pub trait QemuExecutor {
+> >     fn run_until<F: Future>(future: F) -> F::Output;
+> > }
+> >
+> > pub struct Executor;
+> > pub struct CoExecutor;
+> >
+> > and pass an executor to Rust functions (&Executor for no_coroutine_fn,
+> > &CoExecutor for coroutine_fn, &dyn QemuExecutor for mixed).  Or would t=
+hat
+> > be premature in your opinion?
+>
+> If we could get bindgen to actually do that for the C interface, then
+> this could be interesting, though for most functions it also would
+> remain unused boilerplate. If we have to get the executor manually on
+> the Rust side for each function, that's probably the same function that
+> will want to execute the future - in which case it just can directly
+> call the correct function.
 
-Kevin
+The idea was that you don't call the correct function but the *only*
+function :) i.e. exec.run_until(), and it will do the right thing for
+coroutine vs. no coroutine.
+
+But yeah, there would be boilerplate to pass it all the way down so
+maybe it is not a great idea. I liked the concept that you just
+*couldn't* get _co_ wrong... but perhaps it is not necessary once more
+of "BlockDriver::open"
+is lifted into bdrv_open<D: BlockDriver>.
+
+Paolo
+
+> The long term idea should be anyway that C coroutines disappear from the
+> path and we integrate an executor into the QEMU main loop. But as long
+> as the block layer core is written in C and uses coroutines and we want
+> Rust futures to be able to call into coroutine_fns, that's still a long
+> way to go.
 
 
