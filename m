@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF84C021A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 17:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFC1BC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 17:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiGrA-0000wj-0V; Wed, 12 Feb 2025 12:49:04 -0500
+	id 1tiGtY-0002Bo-40; Wed, 12 Feb 2025 12:51:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tiGr8-0000vz-8A
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:49:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tiGr6-0007Ct-1S
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:49:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739382538;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=E53DL2Obv3IF8av2mINfqSqTjICoZxJnGRSYc2VFQpc=;
- b=gBEdARep8u1MmM6MKesjUaX1aq1MG0HlE6xA3CSIYIgbfoO2EL9DJTHY3m0FtwPJNtg/0z
- iVo3H4QnBTqTR1ohIkq9bAEuuFBc5pYEELur+kesPWGqbSn+GL5/CNiAkBBVf9oPD9ojUn
- ZJjh2zv2gNE8wRWcTmGtv3Z3roF94no=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-Vs0yoDhiPx2whQe9r8R0Lw-1; Wed,
- 12 Feb 2025 12:48:55 -0500
-X-MC-Unique: Vs0yoDhiPx2whQe9r8R0Lw-1
-X-Mimecast-MFC-AGG-ID: Vs0yoDhiPx2whQe9r8R0Lw
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8CED1955DD0; Wed, 12 Feb 2025 17:48:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.110])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44C2E18004A7; Wed, 12 Feb 2025 17:48:49 +0000 (UTC)
-Date: Wed, 12 Feb 2025 17:48:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PULL v2 11/14] os: add an ability to lock memory on_fault
-Message-ID: <Z6ze_muL8OkkuAFr@redhat.com>
-References: <20250212173823.214429-1-peterx@redhat.com>
- <20250212173823.214429-3-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiGtV-0002Ba-JL
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:51:29 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiGtT-0007gl-LT
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:51:29 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2fa7465baceso142486a91.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 09:51:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739382686; x=1739987486; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6s+ywLtucGd3omhtOd8r1GReli9Roqvp9b+gHZT468c=;
+ b=ECxPFE3A2AoWoQQWat6yni6p5GwV7fy2fsMA/vHCQ9+epV9DfzUPWJXc9v0Bor2f66
+ a+N4te6NXIEpzjegJDaPQYIEpyKdcDyCIL2y7S0wAs/YTnjZ9egMlTgkf/EJRfKPdpD+
+ vdLrwxeuCISXMRAeJ3Uq5yZlRn04HtPbtn9mHi130jru4P5ULGIAiwJtQ0JuJDgIEUgF
+ rxY/lS0MvsA7rFE921kwAIU0pgR5AJU9+RxyCqx4ue3uOjRirwSXggOUby+7f87JIGaW
+ hCC45crnlemFrtdFn5+K/UqQKyrShob6+d7D2gQK0f7h93301kKKTOfHW/SmEDz2xoye
+ uVbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739382686; x=1739987486;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6s+ywLtucGd3omhtOd8r1GReli9Roqvp9b+gHZT468c=;
+ b=h/eGUJqnEmMwEdMH66/Cdkn6a4s/2Dd4xio4Mh4opYbwpw4eNHG9RUTK8hUXNXDqh6
+ JuA9P0yKbCSIK+E1l3xHva0xzYv2P9ed7UkT9jgX+suuALtquk0ExxjVMo06MK9MCNQr
+ LBwRi2siCer8cBFBKS9jcRt1qskTfm/mA8XENbzxNr92LBZZJA5Z2LrfeOat2m1cL4Fa
+ pZiwLqWHmsmWkFcOfygaJHT7f8o3yg2b8OB0XxveMD16Lq/Ntr1Q9n4cNhzILpg5jhAy
+ KC29d4rIM049qeq1zOWK4i8H6DZb1TyMuKNRrzXbYhG3nuqdBLArxQ43DeWdO9TUE6eI
+ Vpyg==
+X-Gm-Message-State: AOJu0Yw1vc1c8MRQWeLwNog+LrWwZgRj81rqoBsh3IJ2CFGaU2Or1GwM
+ is2COIkc0u+kEaTe08+nksIeAmgAShamtwQa764z8PD2U2Qlw+5p1Vumjkkn3G7SPNGtzxtQ9L5
+ Z
+X-Gm-Gg: ASbGnctzxt9H0Pnwo9xx+gmpnCbw6SfFZv6Nn5buGo4DPZpNoDIbMYPsBjENPmNZmm6
+ YOjw8Nk+fC9lIAEHjIrDhBqL08kQ0gpQFfBXWZqB0vbDDNwF0Wog/iHGGnEEr+/XzqLuz+vQieo
+ CWJW5ZaZjDxevgQdZIHJAIN4hYvMYZf0yEFyOigxuIBEcERUvln02EO86N35z4QPqRlQdMj6JCl
+ 3dPRaczFzMTEZnj3DCzy315jCfUubbw5gNSFzgigavL60TScTjQV2QYXMmYIfYpgdyL0r6Q7G1L
+ jGFsoue4WP0HQsCYPy7q7hsKGNBxuUeCNTBf4GupVu7rhu7e8mxxEpE=
+X-Google-Smtp-Source: AGHT+IGdReHd8PLBmX30bSUdRrlfXrnpAr8/lcA24//jcOAQgQdzik+BwCTUnYezSQqWnMfU5H5jiw==
+X-Received: by 2002:a17:90b:4b88:b0:2f9:9e64:37b1 with SMTP id
+ 98e67ed59e1d1-2fc0f0a5778mr146400a91.28.1739382685866; 
+ Wed, 12 Feb 2025 09:51:25 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fbf98cfd19sm1785106a91.14.2025.02.12.09.51.25
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Feb 2025 09:51:25 -0800 (PST)
+Message-ID: <958ad6b3-296f-40d4-baf5-25670d9188cc@linaro.org>
+Date: Wed, 12 Feb 2025 09:51:23 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250212173823.214429-3-peterx@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] hw/mips: Mark Boston machine devices as little-endian
+To: qemu-devel@nongnu.org
+References: <20250212113938.38692-1-philmd@linaro.org>
+ <20250212113938.38692-3-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250212113938.38692-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,136 +99,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 12, 2025 at 12:38:23PM -0500, Peter Xu wrote:
-> From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+On 2/12/25 03:39, Philippe Mathieu-Daudé wrote:
+> The Boston machine is only built as little-endian.
+> Therefore the DEVICE_NATIVE_ENDIAN definition expand to
+> DEVICE_LITTLE_ENDIAN (besides, the DEVICE_BIG_ENDIAN case
+> isn't tested). Simplify directly using DEVICE_LITTLE_ENDIAN.
 > 
-> This will be used in the following commits to make it possible to only
-> lock memory on fault instead of right away.
-> 
-> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Link: https://lore.kernel.org/r/20250212143920.1269754-2-d-tatianin@yandex-team.ru
-> [peterx: fail os_mlock(on_fault=1) when not supported]
-> [peterx: use G_GNUC_UNUSED instead of "(void)on_fault", per Dan]
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->  meson.build               |  6 ++++++
->  include/system/os-posix.h |  2 +-
->  include/system/os-win32.h |  2 +-
->  migration/postcopy-ram.c  |  2 +-
->  os-posix.c                | 15 +++++++++++++--
->  system/vl.c               |  2 +-
->  6 files changed, 23 insertions(+), 6 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 18cf9e2913..59953cbe6b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2885,6 +2885,12 @@ config_host_data.set('HAVE_MLOCKALL', cc.links(gnu_source_prefix + '''
->      return mlockall(MCL_FUTURE);
->    }'''))
->  
-> +config_host_data.set('HAVE_MLOCK_ONFAULT', cc.links(gnu_source_prefix + '''
-> +  #include <sys/mman.h>
-> +  int main(void) {
-> +      return mlockall(MCL_FUTURE | MCL_ONFAULT);
-> +  }'''))
-> +
->  have_l2tpv3 = false
->  if get_option('l2tpv3').allowed() and have_system
->    have_l2tpv3 = cc.has_type('struct mmsghdr',
-> diff --git a/include/system/os-posix.h b/include/system/os-posix.h
-> index b881ac6c6f..ce5b3bccf8 100644
-> --- a/include/system/os-posix.h
-> +++ b/include/system/os-posix.h
-> @@ -53,7 +53,7 @@ bool os_set_runas(const char *user_id);
->  void os_set_chroot(const char *path);
->  void os_setup_limits(void);
->  void os_setup_post(void);
-> -int os_mlock(void);
-> +int os_mlock(bool on_fault);
->  
->  /**
->   * qemu_alloc_stack:
-> diff --git a/include/system/os-win32.h b/include/system/os-win32.h
-> index b82a5d3ad9..bc623061d8 100644
-> --- a/include/system/os-win32.h
-> +++ b/include/system/os-win32.h
-> @@ -123,7 +123,7 @@ static inline bool is_daemonized(void)
->      return false;
->  }
->  
-> -static inline int os_mlock(void)
-> +static inline int os_mlock(bool on_fault G_GNUC_UNUSED)
+>   hw/mips/boston.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-So did this actually generate a warning ? We don' even need
-G_GNUC_UNUSED unless we're actually seeing warnings about this.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->  {
->      return -ENOSYS;
->  }
-> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index 6a6da6ba7f..fc4d8a10df 100644
-> --- a/migration/postcopy-ram.c
-> +++ b/migration/postcopy-ram.c
-> @@ -652,7 +652,7 @@ int postcopy_ram_incoming_cleanup(MigrationIncomingState *mis)
->      }
->  
->      if (enable_mlock) {
-> -        if (os_mlock() < 0) {
-> +        if (os_mlock(false) < 0) {
->              error_report("mlock: %s", strerror(errno));
->              /*
->               * It doesn't feel right to fail at this point, we have a valid
-> diff --git a/os-posix.c b/os-posix.c
-> index 9cce55ff2f..52925c23d3 100644
-> --- a/os-posix.c
-> +++ b/os-posix.c
-> @@ -327,18 +327,29 @@ void os_set_line_buffering(void)
->      setvbuf(stdout, NULL, _IOLBF, 0);
->  }
->  
-> -int os_mlock(void)
-> +int os_mlock(bool on_fault)
->  {
->  #ifdef HAVE_MLOCKALL
->      int ret = 0;
-> +    int flags = MCL_CURRENT | MCL_FUTURE;
->  
-> -    ret = mlockall(MCL_CURRENT | MCL_FUTURE);
-> +    if (on_fault) {
-> +#ifdef HAVE_MLOCK_ONFAULT
-> +        flags |= MCL_ONFAULT;
-> +#else
-> +        error_report("mlockall: on_fault not supported");
-> +        return -EINVAL;
-> +#endif
-> +    }
-> +
-> +    ret = mlockall(flags);
->      if (ret < 0) {
->          error_report("mlockall: %s", strerror(errno));
->      }
->  
->      return ret;
->  #else
-> +    (void)on_fault;
-
-Still has the pointless (void) cast I mentioned on the previous postign.
-
->      return -ENOSYS;
->  #endif
->  }
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
