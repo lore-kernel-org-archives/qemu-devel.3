@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443ADC0219E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DD4C02198
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 03:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti3hk-00009o-Tj; Tue, 11 Feb 2025 22:46:31 -0500
+	id 1ti3i8-0000Fb-3F; Tue, 11 Feb 2025 22:46:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ti3hf-00008t-Hv
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 22:46:23 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ti3hi-00009k-LA
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 22:46:28 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ti3hd-0001Zj-1V
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 22:46:23 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-220bff984a0so3916085ad.3
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 19:46:20 -0800 (PST)
+ id 1ti3hf-0001aJ-Qj
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 22:46:26 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-21f62cc4088so76351435ad.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 19:46:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739331979; x=1739936779; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=cdsZUFhW1GSa3hHfShsopl5Q9pSd86BGZIew4a00dDE=;
- b=AS+0hMipEI/q29VH1YYTR+8jfbPdMF+9oO+0McqIloHh/Rc7LKsReGfOTQT3xrRPpw
- 7nZhpQpYuTuyiWMN4nqr73AEMhFyCXQKeiDLyanzL0iuvN9JPF9FOuHwbVX8xUpmArxC
- qII8bTIeYGujV0T+KmVvpBhyELFvYh2W1sv6oOgaPxWMfL3n7vEaXvsVj0hio3RTlV/a
- u8CKhCmlGcFRmhoWeWC/zqf2t/USUY1RjphZ+c4MVlugVN4Mw91j22bU3Li2g382NzAj
- GQ9IM0pn4X8G8GT3UN/VgyU9vwbEEwNC8GFJBuATk1NowOFOkoJy8kL/dgnLmvbxOik7
- lCig==
+ d=linaro.org; s=google; t=1739331982; x=1739936782; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=gOgvNftMIIoKV3YyDJMbr2pcd4FkgGtrzluRHQDbxpc=;
+ b=UTOMfCEmDaTUMOLQCi3ZSIRnBEyA5x8o0LVl6Fjp0dWhQln21NlaZUjFgOI8DwhrHa
+ RsptDxM3wH96kt8kJGHK0lRyjjatsINb4hv6FLgfqjqlGtlvgpHXfBuF4fupXkFT2l7w
+ HI32yCB5wefBV9G2+fvUmvcCIcC95y5Wkr95oFAVPqnV0tk8eFCXKb7zexB5BlMT9dp/
+ rB2NA34GhAjhG+Ppfn+IkQfXwcGVitLrMB0cJ5e7mORMjFHxnoOeA5mp1AG4vSnfGnnr
+ A2w6Hn14DDcJ+fzGmz22RimQ+WbvIqEz1VMadIgVmwhLYkU0l51tsfOqWU0iUeOPWkAP
+ YBQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739331979; x=1739936779;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cdsZUFhW1GSa3hHfShsopl5Q9pSd86BGZIew4a00dDE=;
- b=ltfhbJGT63HTeK8eC49zef1U4V5vqp5sv9YfZD8fnhC5OKvDKljnQYqp1uO76KMS0c
- QcZzBBnCSFlWpx39IP77d4kjNxcSqoiW4cW2PVJTryQy9Qq6J26N8Wmey8/idS9ZHmbH
- 3KjnEcAYGiAUShjkQsugHbIZ3g8pkY05CWHNEMr/NYpXTPQ/NAXyxoTStZZzlDXIMQcw
- MR5jWdeesSsIRV2J6z0rLt4DF7pIWNdjnG6izUO8QE8UxfMue6Bfl8U/qovStkpfVTCS
- jh7wAeJPNLBUxfizIrFMNatcuCxu9FVMb2J/XxM9/5H4LzAc9JwdS1TvOnU+Xbbgw77v
- xGug==
-X-Gm-Message-State: AOJu0YwMNRrTdlQuzn/0PtJkzrJBLUaBXVn1K6G6G40LvNToT0DSeEIu
- 0q9xgZ6QTQBgk2LWFGiTzrJmOUqJNPtNI9u0Ae4jsBZMu2NhU3Lcn/naxE6KGAT+tYol/J3ie5E
- A
-X-Gm-Gg: ASbGnctm8JMmlSxk7VZ0KGXmSADBCWBkPvl06bj7bXktFtDx8LedSASFs+eBGdSTbfp
- kKiYbs5LMl8mI/P3SvttTBlHKb+zk0Ze3qvLkud/coCLT9WbzEnfzshZRnNQB2cBdLjS/6ZHiOg
- OwaEJKLsLbFQ5PfPGZMZW5ZKTaxkLVONOipdN/PmW/hjSBEFhsZe+QYuNmCWcot989VFvYyij6K
- MioktVUxgLYQ+WK79Ev2x6qpN9V97m8IG/yoHlYg1/jd746V0SYxRhKIB9lzKfBUUW3HZtpkgcS
- 9Y4jDFi3SfAs9YJtbgtvEMIwMjg9M2pNv5FpfyYh7RQQNNE=
-X-Google-Smtp-Source: AGHT+IF2/1VLxr8vi5EDzWTJPYhXvQbxDOawM4jGXyFI4W2zNvpGa/RK3Sn7JxWIpsfqRtMhoUaFJA==
-X-Received: by 2002:a05:6a00:2e28:b0:730:8526:5db0 with SMTP id
- d2e1a72fcca58-7322c3fe428mr2714807b3a.22.1739331979109; 
- Tue, 11 Feb 2025 19:46:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739331982; x=1739936782;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gOgvNftMIIoKV3YyDJMbr2pcd4FkgGtrzluRHQDbxpc=;
+ b=MG4fYfKz+t0kjxzo4h6FR66cH65aS6b7bqJR8JaU6iyf0YCMVK5DKMPe3eUerINYRs
+ UCuPXtteeYYHxBV/F2JSn+cFpy2sYHL85uKpt0/c1fS9rvvPzEF+yErutfq5mUNHeoJ0
+ 11X3IWiON750igF52sg7Epz0s6y68jqYztbBxUAtQLL3dPwPn6axdYKllPAvWdl3/7ue
+ 9etzsdB5hf5YgYc5K8RLuc5qT5ijXsxZjnQedOdmHFriJYD2ab3b6I5FXK4fxRrTzv/S
+ pPWICZYV41ubqSnKQFW+zRDWllk3OyCho1KXTtU0vSC7f93kQDv02KASz8Q+n/27j6h5
+ aTJw==
+X-Gm-Message-State: AOJu0YxKiZSnO2XkgXdXe7TFEEY5vSA424b34+HclgY5XOPBSY7bq7vJ
+ tDW8YHJM74pJf26tY7V7JX7Y8cR3+sMyXWQtYpKYRHpBPO82d4fEHo/eCOMH6/lKXL+VBWkkQsV
+ H
+X-Gm-Gg: ASbGncvtFy9E+PuTaN+kHgxuwuGFxgvHR/vR9XFUlTBvHc35obLkqfDU7jbKvG5AwhF
+ wF2pKzYSvoTqEQMembi1N0z+xSsdrJdSHcvS/EElJGEX4VNVjfoq1IQXiVcIHQGqhmJlpwR+SNg
+ 9+stedFqftPFAY5kUf2qNKSeOqgZkaOZ/mBKAnUctzr/v15wEVB5d77kIZ9QzSU3jy7d8j0UHF6
+ 2Hu76M2pDtrKmfBFFBCrR+ca553adUqChzNGVj7zH41cQ4zMML9Fi5rJe9KB9/3KtD9EKlXjj8/
+ 3MvbxPuGSN8WgAIkhkFABUlJ/Z3XpP3eylplswhEAiOodiQ=
+X-Google-Smtp-Source: AGHT+IEIumUG1b9wOx+h7K+srdfggEZdfnN3OThPYwRcrgd9uO/eZoOkql/O2jo2A/rchOju/SbEmg==
+X-Received: by 2002:a05:6a21:6b17:b0:1ed:a80e:932 with SMTP id
+ adf61e73a8af0-1ee5c83de1bmr4135966637.34.1739331982416; 
+ Tue, 11 Feb 2025 19:46:22 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-730992eba96sm3482569b3a.126.2025.02.11.19.46.18
+ d2e1a72fcca58-730992eba96sm3482569b3a.126.2025.02.11.19.46.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Feb 2025 19:46:18 -0800 (PST)
+ Tue, 11 Feb 2025 19:46:21 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/6] tcg: Introduce constraint for zero register
-Date: Tue, 11 Feb 2025 19:46:11 -0800
-Message-ID: <20250212034617.1079324-1-richard.henderson@linaro.org>
+Subject: [PATCH 4/6] tcg/mips: Use 'z' constraint
+Date: Tue, 11 Feb 2025 19:46:15 -0800
+Message-ID: <20250212034617.1079324-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250212034617.1079324-1-richard.henderson@linaro.org>
+References: <20250212034617.1079324-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,57 +98,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 20250205040341.2056361-1-richard.henderson@linaro.org
-("[PATCH 00/11] tcg: Cleanups after disallowing 64-on-32")
+Replace target-specific 'Z' with generic 'z'.
 
-Introduce a new general-purpose constraint which maps 0
-to TCG_REG_ZERO, if defined.  This differs from existing
-constant constraints in that const_arg[*] is recorded as
-false, indicating that the value is in a register.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/mips/tcg-target-con-set.h | 26 ++++++++++-----------
+ tcg/mips/tcg-target-con-str.h |  1 -
+ tcg/mips/tcg-target.c.inc     | 44 ++++++++++++++---------------------
+ 3 files changed, 31 insertions(+), 40 deletions(-)
 
-This doesn't make much difference to the current tree, but as a
-prelude to [1], where small output functions are categorized by
-register vs immediate arguments, then this provides a way to
-send a constant zero as a register argument.
-
-
-r~
-
-
-[1] https://patchew.org/QEMU/20250107080112.1175095-1-richard.henderson@linaro.org/
-
-Richard Henderson (6):
-  tcg: Introduce the 'z' constraint for a hardware zero register
-  tcg/aarch64: Use 'z' constraint
-  tcg/loongarch64: Use 'z' constraint
-  tcg/mips: Use 'z' constraint
-  tcg/riscv: Use 'z' constraint
-  tcg/sparc64: Use 'z' constraint
-
- include/tcg/tcg.h                    |  3 +-
- tcg/aarch64/tcg-target-con-set.h     | 12 ++++----
- tcg/aarch64/tcg-target.h             |  2 ++
- tcg/loongarch64/tcg-target-con-set.h | 15 +++++----
- tcg/loongarch64/tcg-target-con-str.h |  1 -
- tcg/loongarch64/tcg-target.h         |  2 ++
- tcg/mips/tcg-target-con-set.h        | 26 ++++++++--------
- tcg/mips/tcg-target-con-str.h        |  1 -
- tcg/mips/tcg-target.h                |  2 ++
- tcg/riscv/tcg-target-con-set.h       | 10 +++---
- tcg/riscv/tcg-target-con-str.h       |  1 -
- tcg/riscv/tcg-target.h               |  2 ++
- tcg/sparc64/tcg-target-con-set.h     | 12 ++++----
- tcg/sparc64/tcg-target-con-str.h     |  1 -
- tcg/sparc64/tcg-target.h             |  3 +-
- tcg/tcg.c                            | 29 +++++++++++++-----
- docs/devel/tcg-ops.rst               |  4 ++-
- tcg/aarch64/tcg-target.c.inc         | 46 ++++++++++++----------------
- tcg/loongarch64/tcg-target.c.inc     | 32 +++++++++----------
- tcg/mips/tcg-target.c.inc            | 44 +++++++++++---------------
- tcg/riscv/tcg-target.c.inc           | 12 ++++----
- tcg/sparc64/tcg-target.c.inc         | 12 ++++----
- 22 files changed, 138 insertions(+), 134 deletions(-)
-
+diff --git a/tcg/mips/tcg-target-con-set.h b/tcg/mips/tcg-target-con-set.h
+index 864034f468..06ab04cc4d 100644
+--- a/tcg/mips/tcg-target-con-set.h
++++ b/tcg/mips/tcg-target-con-set.h
+@@ -10,24 +10,24 @@
+  * tcg-target-con-str.h; the constraint combination is inclusive or.
+  */
+ C_O0_I1(r)
+-C_O0_I2(rZ, r)
+-C_O0_I2(rZ, rZ)
+-C_O0_I3(rZ, r, r)
+-C_O0_I3(rZ, rZ, r)
+-C_O0_I4(rZ, rZ, rZ, rZ)
+-C_O0_I4(rZ, rZ, r, r)
++C_O0_I2(rz, r)
++C_O0_I2(rz, rz)
++C_O0_I3(rz, r, r)
++C_O0_I3(rz, rz, r)
++C_O0_I4(rz, rz, rz, rz)
++C_O0_I4(rz, rz, r, r)
+ C_O1_I1(r, r)
+-C_O1_I2(r, 0, rZ)
++C_O1_I2(r, 0, rz)
+ C_O1_I2(r, r, r)
+ C_O1_I2(r, r, ri)
+ C_O1_I2(r, r, rI)
+ C_O1_I2(r, r, rIK)
+ C_O1_I2(r, r, rJ)
+-C_O1_I2(r, r, rWZ)
+-C_O1_I2(r, rZ, rN)
+-C_O1_I2(r, rZ, rZ)
+-C_O1_I4(r, rZ, rZ, rZ, 0)
+-C_O1_I4(r, rZ, rZ, rZ, rZ)
++C_O1_I2(r, r, rzW)
++C_O1_I2(r, rz, rN)
++C_O1_I2(r, rz, rz)
++C_O1_I4(r, rz, rz, rz, 0)
++C_O1_I4(r, rz, rz, rz, rz)
+ C_O2_I1(r, r, r)
+ C_O2_I2(r, r, r, r)
+-C_O2_I4(r, r, rZ, rZ, rN, rN)
++C_O2_I4(r, r, rz, rz, rN, rN)
+diff --git a/tcg/mips/tcg-target-con-str.h b/tcg/mips/tcg-target-con-str.h
+index 413c280a7a..dfe2b156df 100644
+--- a/tcg/mips/tcg-target-con-str.h
++++ b/tcg/mips/tcg-target-con-str.h
+@@ -19,4 +19,3 @@ CONST('J', TCG_CT_CONST_S16)
+ CONST('K', TCG_CT_CONST_P2M1)
+ CONST('N', TCG_CT_CONST_N16)
+ CONST('W', TCG_CT_CONST_WSZ)
+-CONST('Z', TCG_CT_CONST_ZERO)
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index 6fe7a77813..dffb59cde4 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -184,12 +184,11 @@ static bool patch_reloc(tcg_insn_unit *code_ptr, int type,
+     g_assert_not_reached();
+ }
+ 
+-#define TCG_CT_CONST_ZERO 0x100
+-#define TCG_CT_CONST_U16  0x200    /* Unsigned 16-bit: 0 - 0xffff.  */
+-#define TCG_CT_CONST_S16  0x400    /* Signed 16-bit: -32768 - 32767 */
+-#define TCG_CT_CONST_P2M1 0x800    /* Power of 2 minus 1.  */
+-#define TCG_CT_CONST_N16  0x1000   /* "Negatable" 16-bit: -32767 - 32767 */
+-#define TCG_CT_CONST_WSZ  0x2000   /* word size */
++#define TCG_CT_CONST_U16  0x100    /* Unsigned 16-bit: 0 - 0xffff.  */
++#define TCG_CT_CONST_S16  0x200    /* Signed 16-bit: -32768 - 32767 */
++#define TCG_CT_CONST_P2M1 0x400    /* Power of 2 minus 1.  */
++#define TCG_CT_CONST_N16  0x800    /* "Negatable" 16-bit: -32767 - 32767 */
++#define TCG_CT_CONST_WSZ  0x1000   /* word size */
+ 
+ #define ALL_GENERAL_REGS  0xffffffffu
+ 
+@@ -204,8 +203,6 @@ static bool tcg_target_const_match(int64_t val, int ct,
+ {
+     if (ct & TCG_CT_CONST) {
+         return 1;
+-    } else if ((ct & TCG_CT_CONST_ZERO) && val == 0) {
+-        return 1;
+     } else if ((ct & TCG_CT_CONST_U16) && val == (uint16_t)val) {
+         return 1;
+     } else if ((ct & TCG_CT_CONST_S16) && val == (int16_t)val) {
+@@ -1663,11 +1660,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+     TCGArg a0, a1, a2;
+     int c2;
+ 
+-    /*
+-     * Note that many operands use the constraint set "rZ".
+-     * We make use of the fact that 0 is the ZERO register,
+-     * and hence such cases need not check for const_args.
+-     */
+     a0 = args[0];
+     a1 = args[1];
+     a2 = args[2];
+@@ -2178,14 +2170,14 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_st16_i64:
+     case INDEX_op_st32_i64:
+     case INDEX_op_st_i64:
+-        return C_O0_I2(rZ, r);
++        return C_O0_I2(rz, r);
+ 
+     case INDEX_op_add_i32:
+     case INDEX_op_add_i64:
+         return C_O1_I2(r, r, rJ);
+     case INDEX_op_sub_i32:
+     case INDEX_op_sub_i64:
+-        return C_O1_I2(r, rZ, rN);
++        return C_O1_I2(r, rz, rN);
+     case INDEX_op_mul_i32:
+     case INDEX_op_mulsh_i32:
+     case INDEX_op_muluh_i32:
+@@ -2204,7 +2196,7 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_remu_i64:
+     case INDEX_op_nor_i64:
+     case INDEX_op_setcond_i64:
+-        return C_O1_I2(r, rZ, rZ);
++        return C_O1_I2(r, rz, rz);
+     case INDEX_op_muls2_i32:
+     case INDEX_op_mulu2_i32:
+     case INDEX_op_muls2_i64:
+@@ -2231,35 +2223,35 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+         return C_O1_I2(r, r, ri);
+     case INDEX_op_clz_i32:
+     case INDEX_op_clz_i64:
+-        return C_O1_I2(r, r, rWZ);
++        return C_O1_I2(r, r, rzW);
+ 
+     case INDEX_op_deposit_i32:
+     case INDEX_op_deposit_i64:
+-        return C_O1_I2(r, 0, rZ);
++        return C_O1_I2(r, 0, rz);
+     case INDEX_op_brcond_i32:
+     case INDEX_op_brcond_i64:
+-        return C_O0_I2(rZ, rZ);
++        return C_O0_I2(rz, rz);
+     case INDEX_op_movcond_i32:
+     case INDEX_op_movcond_i64:
+         return (use_mips32r6_instructions
+-                ? C_O1_I4(r, rZ, rZ, rZ, rZ)
+-                : C_O1_I4(r, rZ, rZ, rZ, 0));
++                ? C_O1_I4(r, rz, rz, rz, rz)
++                : C_O1_I4(r, rz, rz, rz, 0));
+     case INDEX_op_add2_i32:
+     case INDEX_op_sub2_i32:
+-        return C_O2_I4(r, r, rZ, rZ, rN, rN);
++        return C_O2_I4(r, r, rz, rz, rN, rN);
+     case INDEX_op_setcond2_i32:
+-        return C_O1_I4(r, rZ, rZ, rZ, rZ);
++        return C_O1_I4(r, rz, rz, rz, rz);
+     case INDEX_op_brcond2_i32:
+-        return C_O0_I4(rZ, rZ, rZ, rZ);
++        return C_O0_I4(rz, rz, rz, rz);
+ 
+     case INDEX_op_qemu_ld_i32:
+         return C_O1_I1(r, r);
+     case INDEX_op_qemu_st_i32:
+-        return C_O0_I2(rZ, r);
++        return C_O0_I2(rz, r);
+     case INDEX_op_qemu_ld_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I1(r, r, r);
+     case INDEX_op_qemu_st_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(rZ, r) : C_O0_I3(rZ, rZ, r);
++        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(rz, r) : C_O0_I3(rz, rz, r);
+ 
+     default:
+         return C_NotImplemented;
 -- 
 2.43.0
 
