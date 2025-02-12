@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DABC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A59FC021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 12:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiBND-00061T-Le; Wed, 12 Feb 2025 06:57:47 -0500
+	id 1tiBSC-00084y-Us; Wed, 12 Feb 2025 07:02:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBNB-0005y3-5k
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:57:45 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBS4-00083a-CT
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 07:02:49 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBN8-0004Bj-IE
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:57:44 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4395578be70so16149915e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 03:57:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBS1-0005Up-3t
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 07:02:47 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5de74599749so5308678a12.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 04:02:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739361460; x=1739966260; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=54ARi22mlK1/plYqd476Cq1udVV29MrdJACpBAux9n0=;
- b=kwiBKDe8qEd05jHZ5KdSTeZht4T2AJCPr/zaiNQFlQ0NCMhK3v3c1/SPCXK3DUShPS
- oiRqFu9IiwdMSMF3yY5Y63txgSCTQVb8D0p2LeXRJW040oTroRVP8G8ePjEkvA8Oxkmd
- MnqaEgWsfMci9doDterYTGRMUjHPfOEk4yZ1vagJ8/T/xJfXQBoXPLAoongtuUhxsBmB
- Dt9wOLo+bld8gemWgwZNbShbg3YKEhiXejOv/EmjZmO3ergUt5R5LsF11ZTPf6g8A7xq
- j5zVXZDZT12k6ponOKcdVnauSVSSgGbpl/0OTUC7RMhe25i3pYFJgoS1Qpajg/du8beL
- icTw==
+ d=linaro.org; s=google; t=1739361758; x=1739966558; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Basu0NzGRbdjUqVR/+YNCnEJIE3+3Y+dcbfNVJalzX4=;
+ b=wgq0ikObQGzOURXDlfJtz0mPyMs7hKQbsdDKhPoS6l0v1Dwigk5Ao2G/ZuTNQKAHPq
+ C3knENWrG2HuXOLUv88H6DUcOlvlIE1kcwvAUgAB6mIYP5P37XTO4q8VrWx9F9GZRO1T
+ yh5sAqt8fYxLG1Fvscc/fRQ1biBNEyCECm/M0rm3DNXaPwmuxzavL3DVielUIo+RWlmG
+ P8lZd0dngx4eCBQwT89JqnLqy55/A3+AwgcEFku++PwpTJev0aZh0z2NMb/ai9yhO4TE
+ cHYgJYIfxiYxO0AekJROR2nCyJMvjk9R3t1ixa6JTT/UHgDckfotJR6Jjv9pfAucWn4V
+ KAbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739361460; x=1739966260;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739361758; x=1739966558;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=54ARi22mlK1/plYqd476Cq1udVV29MrdJACpBAux9n0=;
- b=m/8NJqouplXtBdba0ipMrCfOX2LnwXUQCIUhXUaG1Qilt9Db4BSlDxpeP9BsKToQBW
- ZoxH6Veij7zRb+SkaoxO2RdEBgh/0UVPOGQxj3EDKD0GwKcNnU/DIu91sAqD0Y+BCxgC
- MkbQpiVVqcNGAV2UD1sSJ3y+2PZfeOjOwl1+ol2KZYZ9SZQcQY4Tuc8m5xulK1O4EUwY
- U5QGjQz4R59H/D/Xty8ldh3bNeur+pj4W6vhzu/Bc0mjhzz8ONjp8LPmGUjrDJv9mGkg
- ONdkfCip5wBp7d+WqFL1KFVYUYte5FyGhvxWKwq3Uoyti0i5Dj8Ouavknk2G9KF9ScEr
- 9Gdg==
+ bh=Basu0NzGRbdjUqVR/+YNCnEJIE3+3Y+dcbfNVJalzX4=;
+ b=iWZ3pfAmvR9/s0QgRX4mqeWIyDy5vN+bojz5JVBGl+iTQ9oX44MbkpkxDSHsQ4rBg8
+ kROooMuk52lv1HfiPmM3wNysRgYRFMyrkENoxEZsa3LyGycE8OnY2lpYYYCy4baKneaX
+ 8clT5BH+Wsq99V89OmAWH+1luGj+8fWgw2CbxOCKQdFfCXY3hu+0iNb9KyNflD/eQZ/I
+ hgBv+oIE3kcBLC96apGyBrpKMTw79zNwtH6ULnzUm1Qqejz8wtnITsWAywYo/86EKy6i
+ dfWum/NOWbgJ1490YGkmE8kSX+8nEUTfkVlOxW5uG6Sa9leMiaVJ2Y0DRnCxnKzHpqzl
+ srHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvulfTZ7hhZyusuUJegxLksdeqitW7OMNUf2oRDCbpsZji6DrORotO1ho0DP6oiCug9ojt75FYq4PV@nongnu.org
-X-Gm-Message-State: AOJu0YwwkQ9l2IeEEbLoaVcU6KH+Tebcx+7ja6x+Mq+RMzccrzCBWi49
- vut5GyzsPvAGUkcylpve6XPzcqNZS0jUt2tsEd6NwT4xLtG4ZL8MZi55gUyjaiM=
-X-Gm-Gg: ASbGncsbneyb7+obDLavbtUCyqmH1PAqF8h6Q7WwbtMEl7eKL19hCQOoMAiAATpHyNy
- /LPRW4ExtSMNn3JviVW1oTjCC6Pa1kG7TAtsyh4Hs8gOc8cQNHlr1Tp/tSbNY+MhgwLSVXQ41jt
- ix8XnoNPR3ZgMyvEri4q2N6oVHubEcqOAFCc0zrZEXXaKG++xw9wloHEAdR2dgOwveq/o9Ob3rn
- 324dHy7blWhxf8P2PLlYdarAim4JDTlMp0LKvtDoHI9wTm/8cHzpUSCjusw2BpCAZT/CceVhesN
- V3LDKlVlFR6XuYtVo9CNP34c+qah8+axQGVgAesG7RWuzAxr5sXq0f7ctuU=
-X-Google-Smtp-Source: AGHT+IFRz70Em5aPzY59cmcTYBYsVxsVMnhSYFHRlsb4qa9VhOeJMi9d06nPQuIncWkwNYGZFTac6g==
-X-Received: by 2002:a05:600c:1c91:b0:438:c18c:5ad8 with SMTP id
- 5b1f17b1804b1-439581cab45mr29799995e9.31.1739361460348; 
- Wed, 12 Feb 2025 03:57:40 -0800 (PST)
+ AJvYcCWTgC4Alv0n4Z9Zd+cg+OsKuNkWbpaGg3Wium93CIXUk/2auRK4PfBP2JC9fa/Yab6ozDhGsXT7E3a1@nongnu.org
+X-Gm-Message-State: AOJu0YzyGLQMkbQqnW5Fy1cUvuHSODfr76qSIg436vDuPUEcNJf3E113
+ SqipMenJ9APUmEkKdDp6ODnQ5rGIOw2b4ETYP0L2ZEE3r7bAtqVvmL7utxfpg4th7XZCwjkzFIf
+ 4GZQ=
+X-Gm-Gg: ASbGncvYGf7UsZ00cgXJBRj8YxK7z4GKPK+cJWOyuzkjxpCArQK1tN8Sv/8fJfw6f64
+ nLTHs/pgJAwLWoxcqZ44FjsTDu0n7VsDMXCuIU8Aw0QSwWqsloZWBHi2cXSns2+lfBQYg1Ro8QC
+ pyEfmZmemutcPupazoA3R9drffBOVfRzALWmtqozypGYUe0bysqf+djF1U1sUNIgjK7ROZN6vy8
+ npjpOLVCFJI/4NNECFM5Gb0prcqgN8bQLoVZSDRyfnxPIZ/zGXNaOVJaBZ76wZricWTfGAW2h+q
+ QahTxFrv9uQSu6bxUIDytSzqeFyewHMLHct/aN6kWK2NhgVSkW2pYYDIoqI=
+X-Google-Smtp-Source: AGHT+IGY959yXJUmTUlxZEAKdHlBBgnt69Gxl2UhLJZJDq2WiEDqwqCyM4EtVbB49LOr23yu/5LFEw==
+X-Received: by 2002:a05:600c:4e8d:b0:439:4a1f:cf8b with SMTP id
+ 5b1f17b1804b1-439580e73femr31401585e9.0.1739361739588; 
+ Wed, 12 Feb 2025 04:02:19 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a053e42sm17672615e9.15.2025.02.12.03.57.39
+ ffacd0b85a97d-38dbdd7f039sm17595138f8f.59.2025.02.12.04.02.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 03:57:39 -0800 (PST)
-Message-ID: <682f2585-ec38-4a36-9749-457e22a46415@linaro.org>
-Date: Wed, 12 Feb 2025 12:57:39 +0100
+ Wed, 12 Feb 2025 04:02:18 -0800 (PST)
+Message-ID: <24377a63-0772-4dda-875d-2c4fddd1bbca@linaro.org>
+Date: Wed, 12 Feb 2025 13:02:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/32] Misc HW patches for 2025-02-10
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org
-References: <20250210204204.54407-1-philmd@linaro.org>
- <CAJSP0QWH2+sLaNGwwLTQr5Kud6kKLML_Y24M=Kz1GSX9yRxDQw@mail.gmail.com>
- <f28e0b87-9bb2-4bb3-8c10-1f3ff0f784c2@linaro.org>
- <1ddb567a-7261-4831-9f46-7c247969a86d@linaro.org>
- <Z6xlUMopyRVfYjAh@redhat.com>
-Content-Language: en-US
+Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
+ QAPI enum
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z6xlUMopyRVfYjAh@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250212112413.37553-1-philmd@linaro.org>
+ <20250212112413.37553-2-philmd@linaro.org>
+ <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
+ <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
+Content-Language: en-US
+In-Reply-To: <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,76 +110,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 10:10, Daniel P. Berrangé wrote:
-> On Tue, Feb 11, 2025 at 07:53:32PM +0100, Philippe Mathieu-Daudé wrote:
->> On 11/2/25 19:48, Philippe Mathieu-Daudé wrote:
->>> On 11/2/25 19:26, Stefan Hajnoczi wrote:
->>>> On Mon, Feb 10, 2025 at 3:43 PM Philippe Mathieu-Daudé
->>>> <philmd@linaro.org> wrote:
->>>>>
->>>>> The following changes since commit
->>>>> 54e91d1523b412b4cff7cb36c898fa9dc133e886:
->>>>>
->>>>>     Merge tag 'pull-qapi-2025-02-10-v2' of
->>>>> https://repo.or.cz/qemu/ armbru into staging (2025-02-10
->>>>> 10:47:31 -0500)
->>>>>
->>>>> are available in the Git repository at:
->>>>>
->>>>>     https://github.com/philmd/qemu.git tags/hw-misc-20250210
->>>>>
->>>>> for you to fetch changes up to 1078a376932cc1d1c501ee3643fef329da6a189a:
->>>>>
->>>>>     hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
->>>>> (2025-02-10 21:30:44 +0100)
->>>>>
->>>>> ----------------------------------------------------------------
->>>>> Misc HW patches
->>>>>
->>>>> - Use qemu_hexdump_line() in TPM backend (Philippe)
->>>>> - Make various Xilinx devices endianness configurable (Philippe)
->>>>> - Remove magic number in APIC (Phil)
->>>>> - Disable thread-level cache topology (Zhao)
->>>>> - Xen QOM style cleanups (Bernhard)
->>>>> - Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
->>>>> - Invert logic of machine no_sdcard flag (Philippe)
->>>>> - Housekeeping in MicroBlaze functional tests (Philippe)
->>>>
->>>> Please take a look at this CI failure:
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/9106591368
+On 12/2/25 12:43, Philippe Mathieu-Daudé wrote:
+> On 12/2/25 12:37, Thomas Huth wrote:
+>> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
+>>> Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
+>>> Endianness can be BIG, LITTLE or unspecified (default).
 >>>
->>> Hmm I can not reproduce locally this error:
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   qapi/common.json                    | 16 ++++++++++++++++
+>>>   include/hw/qdev-properties-system.h |  7 +++++++
+>>>   hw/core/qdev-properties-system.c    | 11 +++++++++++
+>>>   3 files changed, 34 insertions(+)
 >>>
->>>     Exception: Asset cache is invalid and downloads disabled
+>>> diff --git a/qapi/common.json b/qapi/common.json
+>>> index 6ffc7a37890..217feaaf683 100644
+>>> --- a/qapi/common.json
+>>> +++ b/qapi/common.json
+>>> @@ -212,3 +212,19 @@
+>>>   ##
+>>>   { 'struct': 'HumanReadableText',
+>>>     'data': { 'human-readable-text': 'str' } }
+>>> +
+>>> +##
+>>> +# @EndianMode:
+>>> +#
+>>> +# An enumeration of three options: little, big, and unspecified
+>>> +#
+>>> +# @little: Little endianness
+>>> +#
+>>> +# @big: Big endianness
+>>> +#
+>>> +# @unspecified: Endianness not specified
+>>> +#
+>>> +# Since: 10.0
+>>> +##
+>>> +{ 'enum': 'EndianMode',
+>>> +  'data': [ 'little', 'big', 'unspecified' ] }
 >>
->> OK, I could reproduce by blowing my cache away.
->>
->> The problem seems in the "tests/functional: Have microblaze tests
->> inherit common parent class" patch, which does:
->>
->> -class MicroblazeelMachine(QemuSystemTest):
->> +class MicroblazeLittleEndianMachine(MicroblazeMachine):
->>
->> I presume, since MicroblazeLittleEndianMachine is no more a direct
->> child of QemuSystemTest, then the ASSET_IMAGE_* aren't automatically
->> downloaded.
-> 
-> Yes, my code assumes all assets are on the leaf test classes. I'll
-> look at a fix since it is easy enough to check parent classes too.
+>> Should 'unspecified' come first? ... so that it gets the value 0, i.e. 
+>> when someone forgets to properly initialize a related variable, the 
+>> chances are higher that it ends up as "unspecified" than as "little" ?
 
-Actually your code works fine :) I mis-interpreted the network issue:
-
-DEBUG:qemu-test:Extract 
-/Users/philmd/.cache/qemu/download/b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22 
-format=Nonesub_dir=None member=None
-INFO:qemu-test:Downloading 
-http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz to 
-/Users/philmd/.cache/qemu/download/b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22...
-DEBUG:qemu-test:Unable to set xattr on 
-/Users/philmd/.cache/qemu/download/b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22.download: 
-module 'os' has no attribute 'setxattr'
-INFO:qemu-test:Cached 
-http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz at 
-/Users/philmd/.cache/qemu/download/b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22
+BTW I'm not sure QAPI guaranty enums are following an order
+(at least, as in C, I wouldn't rely on that assumption).
 
 
