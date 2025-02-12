@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21207C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 14:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 910FEC021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 14:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiE5u-0000XH-4I; Wed, 12 Feb 2025 09:52:06 -0500
+	id 1tiE6j-00019W-V4; Wed, 12 Feb 2025 09:52:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1tiE5q-0000X3-B7
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 09:52:02 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1tiE5e-0002bI-Ls
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 09:51:52 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:3f48:0:640:7695:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 20B8E60C58;
- Wed, 12 Feb 2025 17:51:45 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b518::1:2f] (unknown
- [2a02:6b8:b081:b518::1:2f])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id hpQFa90IjOs0-PBG9hxpr; Wed, 12 Feb 2025 17:51:44 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1739371904;
- bh=jbSl7Qci8wAjArxl5pTAz2oWreE0LP1quw7XfOVvs4o=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=jB6Arfz4kAZj+ZqoBhN8l3u22qXsyypivkGg0eJ9NoPJLqccvToPjK27HwJAd/Ai+
- HCQeRnM5ZqHXmSbhy2RFYbwXS4oGK+d8iFyQEz13C2p6PJ57olmICjzrrF+nVN/9Cq
- /sYdokhz/+yCez/H6cyVV/ODQ1WTstdBN7uJ6AEs=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <be37d63c-b1c3-4c76-8113-0bad556aef37@yandex-team.ru>
-Date: Wed, 12 Feb 2025 17:51:43 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiE6h-00016U-80
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 09:52:55 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiE6f-0002wa-Bb
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 09:52:54 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4394820123dso21305575e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 06:52:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739371970; x=1739976770; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PhIRQKB0sRk/nGimbBk5DhJP37IVykDYH/DyEQv6kP8=;
+ b=oLkrzWw1CyLZy1YWlK4yBvFsLaYOekQ8d0n2rOpKhXXieezJajhrQwWPA5xEuGxhdR
+ fZ4jKSUnUCqhITHKm/jJXGP0KE/e0cO8xwu8TfIshEEuOLQ9dM37kscGJP+qEaIny+O5
+ KGcLyCE9l9D/rl1sn8GXmqk/xcprNnQxuNWhFmMjq772NWRMkD0Xt/qfH3Q+T9tsXxMa
+ jPkidDwAHo9leSRtQFF0tu+JRyx1XX3jJbsmbvv9NlWxRdXibnivApkSkJTRURycW3ts
+ C7Y1IgpowkY7OJ4ADWqYpvoinmeG4xmSoS1mTrizGmf3PUH7Y1sLLpUz+Yd/aBYvsQlx
+ C12Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739371970; x=1739976770;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PhIRQKB0sRk/nGimbBk5DhJP37IVykDYH/DyEQv6kP8=;
+ b=Hwrq12bPO3ELYpkbfHSw5KhXqmqLL8XFdqHViI+FjdSU6aIVFn8A75TopFGbe3GinH
+ WAffiH8emRpCww5Nnzr/VTbADgkUG57gL5Ff8fJ0xrNFwWqjjka0ie6q8Ub8kC0Qy5gS
+ rmKbcz9YPkl0RNRf8HMHwM+n7kD+rPWlVcUF4ngWKUjFwAu2Yma3+dTrMGbnzBMvQEa0
+ kMWeof9H6S//lagbt6LdQTXCMs4grn3FoUdJ5qkXH4mTNo9n9f7xO5If1n/oOcRVCQAD
+ WZSvJyKjfsm+W9nUWvIuPpTNy4UnoSNG/AQHHMmOXGAEeayLbJTe0w2XdEf2ItN9V/pu
+ Ay8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnMF5vOCrecnzm3QVk8WxdDWEumGTBtZWBdTSw34YjKcUoTjmLLOdgNXj7AH4CGqknDEjM4Xl5CskD@nongnu.org
+X-Gm-Message-State: AOJu0YzjiUiNtHgF+xP6RN+ip4pZ9WfY2dVApZcBsR8ZlDhThyWXrGVu
+ xNH3YfQYvVRqrqiWNbpd6kbyo4ul6oBvBA0gMemn0KUow74pGVGurAyHsQZ43Kg=
+X-Gm-Gg: ASbGncsqghVe6tgzzjj4AQJZPadq9vJIpeN+yJ4pc2Eg9hZNkoduHWBmr0qwbnyY/bN
+ fIFg2+Y2f2VRFPK1b4PRBjJE25EhcDPfkPZMF3X3UhnfB+ojRFph0mqXQuM0akm6y7b+7Dl/TG4
+ OOSQy69obB//bVSCP2AY5jqyQjYxu5RQGuyMWmJzYNSJuJAUf1DY5+nFYFsha0il5A2l/2Bf94o
+ MZml1Arjv0W31NvI9dB42MXqjMgSUtrcd5guDr84Ja4niqeUQu2Gc0TodalU3PCjptFXf6uGMQ0
+ 3fB7OaS2ZFzcC0Ka9sHniiwzfmstJpLSKQGnvwyYHebm6C7PZ8SmChwqtog=
+X-Google-Smtp-Source: AGHT+IHg9KfY3UsQ4Ti5V1ctxnCzm/0NECg94cIh33Os+aQOOnCuXay6D9Q24rP2gJ3u/82zMPkT0w==
+X-Received: by 2002:a05:600c:4509:b0:438:da66:fdf9 with SMTP id
+ 5b1f17b1804b1-43958192070mr33546955e9.18.1739371970244; 
+ Wed, 12 Feb 2025 06:52:50 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4395a04ee2fsm21922575e9.4.2025.02.12.06.52.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Feb 2025 06:52:49 -0800 (PST)
+Message-ID: <bbee3d53-ac82-407b-91a5-b7e4c3f464bf@linaro.org>
+Date: Wed, 12 Feb 2025 15:52:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/4] os: add an ability to lock memory on_fault
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Weil <sw@weilnetz.de>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH] vdpa: Allow vDPA to work on big-endian machine
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, eperezma@redhat.com
+Cc: mst@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
  qemu-devel@nongnu.org
-References: <20250212143920.1269754-1-d-tatianin@yandex-team.ru>
- <20250212143920.1269754-2-d-tatianin@yandex-team.ru>
- <8099a911-88a1-4eed-a17c-5a18e25b4d68@linaro.org>
+References: <20250211161923.1477960-1-kshk@linux.ibm.com>
 Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <8099a911-88a1-4eed-a17c-5a18e25b4d68@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250211161923.1477960-1-kshk@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,44 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/25 5:48 PM, Philippe Mathieu-Daudé wrote:
+On 11/2/25 17:19, Konstantin Shkolnyy wrote:
+> Add .set_vnet_le() function that always returns success, assuming that
+> vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
+> outputs the message:
+> "backend does not support LE vnet headers; falling back on userspace virtio"
+> 
+> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> ---
+>   net/vhost-vdpa.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 231b45246c..7219aa2eee 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -270,6 +270,11 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+>   
+>   }
+>   
+> +static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool is_le)
+> +{
+> +    return 0;
+> +}
+> +
+>   static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
+>                                          Error **errp)
+>   {
+> @@ -437,6 +442,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+>           .cleanup = vhost_vdpa_cleanup,
+>           .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+>           .has_ufo = vhost_vdpa_has_ufo,
+> +        .set_vnet_le = vhost_vdpa_set_vnet_le,
 
-> Hi Daniil,
->
-> On 12/2/25 15:39, Daniil Tatianin wrote:
->> This will be used in the following commits to make it possible to only
->> lock memory on fault instead of right away.
->>
->> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->> ---
->>   include/system/os-posix.h |  2 +-
->>   include/system/os-win32.h |  3 ++-
->>   meson.build               |  6 ++++++
->>   migration/postcopy-ram.c  |  2 +-
->>   os-posix.c                | 14 ++++++++++++--
->>   system/vl.c               |  2 +-
->>   6 files changed, 23 insertions(+), 6 deletions(-)
->>
->> diff --git a/include/system/os-posix.h b/include/system/os-posix.h
->> index b881ac6c6f..ce5b3bccf8 100644
->> --- a/include/system/os-posix.h
->> +++ b/include/system/os-posix.h
->> @@ -53,7 +53,7 @@ bool os_set_runas(const char *user_id);
->>   void os_set_chroot(const char *path);
->>   void os_setup_limits(void);
->>   void os_setup_post(void);
->> -int os_mlock(void);
->> +int os_mlock(bool on_fault);
->
-> If we need to support more flag, is your plan to add more arguments?
-> Otherwise, why not use a 'int flags' argument, and have the callers
-> pass MCL_ONFAULT?
+Dubious mismatch with set_vnet_be handler.
 
-Hi!
-
-I chose this approach because MCL_ONFAULT is a POSIX/linux-specific 
-flag, and this function is called in places that are platform-agnostic, 
-thus a bool flag seemed more fitting.
-
+>           .check_peer_type = vhost_vdpa_check_peer_type,
+>           .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+>   };
 
 
