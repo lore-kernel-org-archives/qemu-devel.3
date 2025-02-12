@@ -4,140 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BF9C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 08:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2F5C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 09:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti85j-0000V0-VP; Wed, 12 Feb 2025 03:27:31 -0500
+	id 1ti8hW-0005r0-Sa; Wed, 12 Feb 2025 04:06:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ti85i-0000Ua-1z
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 03:27:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ti8hV-0005qS-0b
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:06:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ti85f-0002tu-A0
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 03:27:29 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ti8hS-0003dW-QQ
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:06:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739348844;
+ s=mimecast20190719; t=1739351188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KzUm2JcebvBEriyU/58FuXfzUnj3eWxFzJZA+8Eeklo=;
- b=JaHtM84UAc+DBo9Rx7hWN28wQd40WJsihyS5w2gPKVRNt/oqHsLvTJvG0Ays1q+OBOQIce
- fXjUCXmL7KcrA6bWhoxzn3ZXVTGLAHYjbprfyPPQpGPPLwSJJxln9GtuGEAbrAH8cH89J1
- uhlL1RwTldNez32DU0xFTdusmzVMWBo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-LmdGHCRgNz-8SpNqVBA7CQ-1; Wed, 12 Feb 2025 03:27:22 -0500
-X-MC-Unique: LmdGHCRgNz-8SpNqVBA7CQ-1
-X-Mimecast-MFC-AGG-ID: LmdGHCRgNz-8SpNqVBA7CQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38de0201961so1966616f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 00:27:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739348841; x=1739953641;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KzUm2JcebvBEriyU/58FuXfzUnj3eWxFzJZA+8Eeklo=;
- b=mzR0TYGR86aoE48tv3TQ79ffU4sdlnDsbFX8q1+Hzr1R7Xsa6FSySLAiK8akSk7lEv
- GsCMZbdWfbygdeuY9NXkFPUQ1Jsa02Gjb5CLmDuwm5LlT6gHoKxsKXYlgydA4vb5alqy
- cos+ipsJC+UATsuhk4RH3UoFcAXuqXaksmePADTZm2FZpGXtWHTpNa491eIBn1330arI
- BVaKsLVWiIN9khAE/wefk1iJFstNSkPvhP2MUvT48W8kBBwGNSRdT8tggsmuCjV2WQuA
- PfVgCxMTQdTepxb1I1KJ0+5SgQFz4TR23YT77xTHpaDj1OnXIgkaQxm2jhoaa29nQ0v1
- 018A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2yF87whqPpBf0Uk3uECliKqgLIHmeS+R89HtBf2tQT5U7Lghq1FWDNp/TK98ZAa0qHDYd+Gb12JWa@nongnu.org
-X-Gm-Message-State: AOJu0Yx3ouk8iZ/g5U+rS1gNDPE3zcPvN4nQOMyAsZ+qRRkGFiW0ge1F
- dZh4yaa7Javt3kS3llPjpWItCIVk9syRw8MolyWL3aOo9NtDrE69mvNRMyRPElmDEBnuit8cubX
- xnDcMvFVIDwpJ8/NpEoG/YzPSs0Z17S3jkwRQTLK0Bh650HXKOTWY
-X-Gm-Gg: ASbGncvQVk9TYiL+KArtmOLCYJeo8f4GWPpJAcnRhzCBGzbO1FwfmWVvc9Ai0xiURsN
- zPjXj5MaDn7//+0G3wzrFAbOXXJnvoQBPU5nPR+4L7wLmR5OgHwJGxkNSL6r1trv5IJCxlHzpBQ
- PtM0rfb7K29vYp+R4zVQX/DNAGI9OQ7W/UEtH25/Dx1nU9+bKdQtN5oORw6SIEkiFoB/ei9QNlN
- RKLTTjNnahD2C1cAablvoVZySER8XVfcyZvIfwoyIwsJCGSBpzfVxpD3CN5f4qbC/XrUxoX8kVf
- Gdr2MxqXbRd52XGFZnUprACEbXz1Slu4Rw==
-X-Received: by 2002:a5d:48c9:0:b0:386:2d40:a192 with SMTP id
- ffacd0b85a97d-38dea2d3487mr1182295f8f.34.1739348840816; 
- Wed, 12 Feb 2025 00:27:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEHqycS6MJEtTs/Rk46/uFlF5S4uAczKpvlHelTA40oAgJeWrRZgUvweon4bl0bx6Rzsxq9TQ==
-X-Received: by 2002:a5d:48c9:0:b0:386:2d40:a192 with SMTP id
- ffacd0b85a97d-38dea2d3487mr1182282f8f.34.1739348840438; 
- Wed, 12 Feb 2025 00:27:20 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-37.web.vodafone.de. [109.42.48.37])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1aa6f7sm12241285e9.32.2025.02.12.00.27.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 00:27:20 -0800 (PST)
-Message-ID: <678561c5-4d06-494a-b12c-6013b07f3b05@redhat.com>
-Date: Wed, 12 Feb 2025 09:27:18 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=HYZJir5nMKMCJm70aeJOJKhHn4QCutI2WjNR2wesDV0=;
+ b=KTRBrATCbDnFyuhwK7FrOz9Xg5mSvvp4E8xGrHFW3KxEnfxHDq9YcTQU+WT9Zf0/C7n5lC
+ H4x626Rf/x1CHgGh8HjOncn+KDVkrKqVAPVqkeH4Vja0suJff4/kguPH3XZeRqIfMrDJUP
+ 1eyxoXHpTbNECh1oXKEyw/OjHO9xEmY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-fGL8r1kFOzWdBXnfrXFX_Q-1; Wed,
+ 12 Feb 2025 04:06:26 -0500
+X-MC-Unique: fGL8r1kFOzWdBXnfrXFX_Q-1
+X-Mimecast-MFC-AGG-ID: fGL8r1kFOzWdBXnfrXFX_Q
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39A471955DD0; Wed, 12 Feb 2025 09:06:24 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F6781800570; Wed, 12 Feb 2025 09:06:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A3D2F21E6A28; Wed, 12 Feb 2025 10:06:19 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
+ Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
+ Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
+ <jasowang@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 28/42] qapi/parser: prohibit untagged sections between
+ tagged sections
+In-Reply-To: <20250205231208.1480762-29-jsnow@redhat.com> (John Snow's message
+ of "Wed, 5 Feb 2025 18:11:54 -0500")
+References: <20250205231208.1480762-1-jsnow@redhat.com>
+ <20250205231208.1480762-29-jsnow@redhat.com>
+Date: Wed, 12 Feb 2025 10:06:19 +0100
+Message-ID: <87ed03r0qc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 04/32] hw/timer/xilinx_timer: Make device endianness
- configurable
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250210204204.54407-1-philmd@linaro.org>
- <20250210204204.54407-5-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250210204204.54407-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,67 +96,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/02/2025 21.41, Philippe Mathieu-Daudé wrote:
-> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
-> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
-> Add the "little-endian" property to select the device
-> endianness, defaulting to little endian.
-> Set the proper endianness for each machine using the device.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Message-Id: <20250206131052.30207-5-philmd@linaro.org>
+John Snow <jsnow@redhat.com> writes:
+
+> This is being done primarily to ensure consistency between the source
+> documents and the final, rendered HTML output. Because
+> member/feature/returns sections will always appear in a visually grouped
+> element in the HTML output, prohibiting free paragraphs between those
+> sections ensures ordering consistency between source and the final
+> render.
+>
+> Additionally, prohibiting such "middle" text paragraphs allows us to
+> classify all plain text sections as either "intro" or "detail"
+> sections, because these sections must either appear before structured
+> elements ("intro") or afterwards ("detail").
+>
+> This keeps the inlining algorithm simpler with fewer "splice" points
+> when inlining multiple documentation blocks.
+
+Mention the two "middle" paragraphs you have to eliminate in this patch?
+
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   hw/microblaze/petalogix_ml605_mmu.c      |  1 +
->   hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
->   hw/ppc/virtex_ml507.c                    |  1 +
->   hw/timer/xilinx_timer.c                  | 35 +++++++++++++++---------
->   4 files changed, 25 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-> index cf3b9574db3..bbda70aa93b 100644
-> --- a/hw/microblaze/petalogix_ml605_mmu.c
-> +++ b/hw/microblaze/petalogix_ml605_mmu.c
-> @@ -127,6 +127,7 @@ petalogix_ml605_init(MachineState *machine)
->   
->       /* 2 timers at irq 2 @ 100 Mhz.  */
->       dev = qdev_new("xlnx.xps-timer");
-> +    qdev_prop_set_bit(dev, "little-endian", true);
->       qdev_prop_set_uint32(dev, "one-timer-only", 0);
->       qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
->       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> index fbf52ba8f2f..9d4316b4036 100644
-> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> @@ -114,6 +114,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
->   
->       /* 2 timers at irq 2 @ 62 Mhz.  */
->       dev = qdev_new("xlnx.xps-timer");
-> +    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
->       qdev_prop_set_uint32(dev, "one-timer-only", 0);
->       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
->       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-> index 23238119273..f87c221d076 100644
-> --- a/hw/ppc/virtex_ml507.c
-> +++ b/hw/ppc/virtex_ml507.c
-> @@ -230,6 +230,7 @@ static void virtex_init(MachineState *machine)
->   
->       /* 2 timers at irq 2 @ 62 Mhz.  */
->       dev = qdev_new("xlnx.xps-timer");
-> +    qdev_prop_set_bit(dev, "little-endian", false);
->       qdev_prop_set_uint32(dev, "one-timer-only", 0);
->       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
->       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>  qapi/net.json                   |  4 ++--
+>  qapi/qom.json                   |  4 ++--
+>  scripts/qapi/parser.py          | 16 ++++++++++++++++
+>  tests/qapi-schema/doc-good.json |  4 ++--
+>  tests/qapi-schema/doc-good.out  |  4 ++--
+>  tests/qapi-schema/doc-good.txt  |  8 ++++----
+>  6 files changed, 28 insertions(+), 12 deletions(-)
+>
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 2739a2f4233..49bc7de64e9 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -655,13 +655,13 @@
+>  #     this to zero disables this function.  This member is mutually
+>  #     exclusive with @reconnect.  (default: 0) (Since: 9.2)
+>  #
+> -# Only SocketAddress types 'unix', 'inet' and 'fd' are supported.
+> -#
+>  # Features:
+>  #
+>  # @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+>  #     instead.
+>  #
+> +# Only SocketAddress types 'unix', 'inet' and 'fd' are supported.
+> +#
+>  # Since: 7.2
+>  ##
+>  { 'struct': 'NetdevStreamOptions',
 
-  Hi,
+The text moved applies to member @addr.  You're moving it even farther
+away from @addr.  Move it into @addr instead?  Could be done as a
+separate cleanup patch to keep this one as simple as possible; matter of
+taste.
 
-with this patch applied, the ppc_virtex_ml507 functional test is now failing 
-for me ... could you please double-check whether "make check-functional-ppc" 
-still works for you?
+The same text is in NetdevDgramOptions below, where it applies to both
+@remote and @local.  It just happens to follow @remote and @local
+immediately, because there are no other members and no features.  Hmm.
 
-  Thanks,
-   Thomas
+Ideally, we'd have a way to put such notes next to the stuff they apply
+to without having to rely on happy accidents like "no features".
+Alternatively, have a way to link stuff and note.  Footnotes?  Food for
+thought, not demand.
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 28ce24cd8d0..11277d1f84c 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -195,12 +195,12 @@
+>  #
+>  # @typename: the type name of an object
+>  #
+> +# Returns: a list of ObjectPropertyInfo describing object properties
+> +#
+>  # .. note:: Objects can create properties at runtime, for example to
+>  #    describe links between different devices and/or objects.  These
+>  #    properties are not included in the output of this command.
+>  #
+> -# Returns: a list of ObjectPropertyInfo describing object properties
+> -#
+>  # Since: 2.12
+>  ##
+
+This move is fine.  Placing notes at the end is more common already.
+
+>  { 'command': 'qom-list-properties',
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index b2f77ffdd7a..c5d2b950a82 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -500,6 +500,20 @@ def get_doc(self) -> 'QAPIDoc':
+>              self.accept(False)
+>              line = self.get_doc_line()
+>              have_tagged = False
+> +            no_more_tags = False
+> +
+> +            def _tag_check(what: str) -> None:
+> +                if what in ('TODO', 'Since'):
+> +                    return
+> +
+> +                if no_more_tags:
+> +                    raise QAPIParseError(
+> +                        self,
+> +                        f"{what!r} section cannot appear after free "
+> +                        "paragraphs that follow other tagged sections. "
+> +                        "Move this section upwards with the preceding "
+> +                        "tagged sections."
+> +                    )
+
+Why !r conversion?
+
+Error messages should be a single, short phrase, no punctuation at the
+end.  Sometimes a helpful hint is desirable.  Here's one in expr.py:
+
+        raise QAPISemError(
+            info,
+            "%s has unknown key%s %s\nValid keys are %s."
+            % (source, 's' if len(unknown) > 1 else '',
+               pprint(unknown), pprint(allowed)))
+
+Needs a negative test case.
+
+Aside: we should probably convert most string interpolation to f-strings
+en masse at some point.
+
+>  
+>              while line is not None:
+>                  # Blank lines
+> @@ -513,6 +527,7 @@ def get_doc(self) -> 'QAPIDoc':
+>                      if doc.features:
+>                          raise QAPIParseError(
+>                              self, "duplicated 'Features:' line")
+> +                    _tag_check("Features")
+>                      self.accept(False)
+>                      line = self.get_doc_line()
+>                      while line == '':
+> @@ -576,6 +591,7 @@ def get_doc(self) -> 'QAPIDoc':
+>                          )
+>                          raise QAPIParseError(self, emsg)
+>  
+> +                    _tag_check(match.group(1))
+>                      doc.new_tagged_section(
+>                          self.info,
+>                          QAPIDoc.Kind.from_string(match.group(1))
+> diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
+> index f64bf38d854..14b2091b08f 100644
+> --- a/tests/qapi-schema/doc-good.json
+> +++ b/tests/qapi-schema/doc-good.json
+> @@ -157,12 +157,12 @@
+>  # @cmd-feat1: a feature
+>  # @cmd-feat2: another feature
+>  #
+> -# .. note:: @arg3 is undocumented
+> -#
+>  # Returns: @Object
+>  #
+>  # Errors: some
+>  #
+> +# .. note:: @arg3 is undocumented
+> +#
+
+This used to be right next to @arg1 and arg2 (commit 80d1f2e4a5d) until
+commit 79598c8a634 added features in between.  This patch adds more
+stuff there.  Right next is clearly the best spot, but this is just a
+test, so it doesn't really matter.  Related: NetdevDgramOptions' note
+discussed above.
+
+>  # TODO: frobnicate
+>  #
+>  # .. admonition:: Notes
+
+[...]
 
 
