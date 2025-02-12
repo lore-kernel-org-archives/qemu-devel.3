@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0861CC02198
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA49AC021A4
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiKMJ-00032x-0f; Wed, 12 Feb 2025 16:33:27 -0500
+	id 1tiKNC-0004n6-T8; Wed, 12 Feb 2025 16:34:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKM9-0002xm-Cy
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:18 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKN8-0004R0-O5
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:18 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKM6-0000UR-Ic
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:15 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-439307d83f0so1068215e9.3
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:33:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKN6-0000Yy-Sz
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:18 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-38dd93a4e8eso120095f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:34:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739395992; x=1740000792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739396055; x=1740000855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eRab0hDnaS4AewVF3P4hSBJEHzwC6g1AT44Nvwa7bNQ=;
- b=ph0VreMv5ab9owix5zqnUwPY3FJqYzYwkrLl6sjsSCg40lm8zBgmUndQ8PSpYapnII
- t8PZNwynaSbSGUifdWoCydfabG9CGcLXcMa1/OhGt6oirRZvdQVOxJjAppOVcpTDVgit
- PMmL66WZegLCa+h+lJVhY7Hsj9bBiUTn5QUgeoxkcPPlM9LsiNHkSYRKhYv5AkTgB3t9
- A+rS9eKSKU8/vJVsMOf5+5C8M+/AiP64J4p58ty2JtHNtd2iumlSg0ENL8gzf9MwEEbc
- pKeU2/YV1MrngWeGzunPNF27fh6i14S2qzx4HSKS3zwdu8N6rnalMt4MrPtueWNcqEX7
- rDiQ==
+ bh=XUmnlPPLPQjrTTXNDitdBPrUpGSeikKZ8+CtY1G8/RY=;
+ b=zMpDGn59dPp+WkeBmH/xCxoGiQ4Y27K+l23PCjOaZg+09rmenRl/v3zLp6ecsO2xYc
+ 4yP4DxC5ylnEWURUvqNONJFd9drBbMetm+ynEkorP9BzVSQrHumWtlawRM845O5RtYm+
+ DD+VViTq/5H2olmcYgjhhCd4aG0qHmZ9OPynuJ+lmkieGeR9/0bNKnaXnSkNBSQFV5ZD
+ RKuEAMLAVK2ftyk9XhlN7AWsV4sZoF5dUBBWZpdiBXeXPl+c01PaENqCF95VD5I4sq0Q
+ k2aYAOqndRhF4kxoSZl+cSVFxMmCTeqTRTFbHyESc6Y9UWmVl/0NhP0Y1pC15Yo9Gyxx
+ eNOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739395992; x=1740000792;
+ d=1e100.net; s=20230601; t=1739396055; x=1740000855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eRab0hDnaS4AewVF3P4hSBJEHzwC6g1AT44Nvwa7bNQ=;
- b=Wn7Kn/ddNKY53TG2rAD/5lL1g2oS2bv2LRQEW/2qVkXW6R/7aTE6jRKVkimFQD6f9m
- Ba1MxfSaOcmBYQT5RPUXEkmZJRN9nxvYYN8CN6xst31qgzAEZ3D7Gk3uv+xEd/I7In1/
- 9BQGX5gYrGjXLUOL9HZ7A/+jJ8i3D8XVDPc1qDslskvRly4sophifZjl9jgjPBenMlCc
- 8Y2M13oILC2FgUUsW6glwdoDiySa2koCeDh5ks1dzyj6NIWxQIY8pxVtFWPrOAPEr481
- GbAaxMnV9SyayaXPD7a350QsaMJFouE1Ep6Ebhp8vxvdEmi8plkkn4mpLC4wAab5P8j5
- oEIg==
-X-Gm-Message-State: AOJu0YwDcqnFA4ZQyrWjTVi7glYe/AgyZBFWD3HEq6b/xjUvRyHlGqNK
- Im4D5dAuhiIVsMTXA+GfAILWl8gAns+FYbhC9tBhPK7Uq7/nEZDBZU+ygyN2R2pCxvYyRr8e7AK
- pjSQ=
-X-Gm-Gg: ASbGncvzXJm8ocYL+t/MIt3YpOSbD9tOTIfM/HYY0QuMg5t8TnNTnmrMUGQ1AtkZNYs
- YVvL38Hnf/8RJY1RPq5rXg52Fu9DAomlMYjzYXTsaZ826OGuERCSYSBC69JeP0hnlKrOIxhi6/3
- Wm9HkZpsjNL2Hf/uAg5rmfcPgFTcFbPncjKgL5WKeHh1yvfPO4shmbRwwgkcR6PLzjw2M+URTtu
- 2DUkBa7+9rgI1pCBknl0sbfIF/Vt40COwa2OdilAHU7zYxCBpTEipriXKN1yaS2cbHTA75Xl2bU
- K7VDGJcyHrbVGKP7Qta4ws/xvx3msGUrugOQhldqrsFaKYfX8brl7yArmmaUeSvO5g==
-X-Google-Smtp-Source: AGHT+IFPUqhXXf6J4nkRU0xHl898AweZfyqSrFwJnIiuYISnNZc28bwM9XNkKOlfXR+vY4r76nmZ1g==
-X-Received: by 2002:a05:600c:1d88:b0:439:574c:bf77 with SMTP id
- 5b1f17b1804b1-439601799b2mr10236315e9.8.1739395991839; 
- Wed, 12 Feb 2025 13:33:11 -0800 (PST)
+ bh=XUmnlPPLPQjrTTXNDitdBPrUpGSeikKZ8+CtY1G8/RY=;
+ b=Dtm6XYufFX87jecTzN+XgjIngyjdPsGb5AmYB08JgDPL/8SOr36EkOFvFFOrjHjhP7
+ hMV0/u9lVVmf0NiggG+eSF30ysiw1o6pKQwlAm9DWMKmhbo/GGm38LAqlUi6Ph5mAYLH
+ ULABevQxpJjvJHwtDLFK7VjxuwVwpnXoeXsLsfbyAuuterkKJWuzInOwDih72jprFeHn
+ rUeKXIZZqmaARhL7uguvb4YxXTXJvNphD37WVJVW9AQ/Pw+j1O8KzGvLEQ59mcV0ryAB
+ Sdezo1EBVQ1Cr/wp/weXtL1CyKb7ddpuXPClo8mdqIe76/MydYue+pdXlSncQhcdPeE2
+ HpfQ==
+X-Gm-Message-State: AOJu0YxYLA03cZr71L8HVGa3Ek+XRmzXWXUJdIJ1w852cLFF/QDLjyLC
+ zCxSwuEcy4UH/p+Jz58QVmMYIWQ5RfVRf7w0Os1xciVVg6ixlzzSLITggdp5R0KKdlPFHVNkR7w
+ +j90=
+X-Gm-Gg: ASbGncvp8t2TvjsUc9YeqOboFNuT2edrC6DtDsj7GL9Z+WEujh1A1jYcdwjzeRgGiIc
+ zP9OTp+hMTM2mLJ1MuBUqqeKH+3q5CsnerSoklEqAdawFwRocMVTIxPJfLt5rzDF+ctHu2+8LN0
+ d2QFVqo1yyhQrhgEF3RHTBEoNWhGr+eBSlVXxxck3+czBOwEGgur809Zgx46shCyi6+ckKoPB8w
+ 9HP+1Q842oPsvbSGsWpSi+XtfDp+D70Gau/qG2N6jT0drE6dkxT2g/uDPoqSQPeb0RHwi4EGVhO
+ twNdtYbpoEwPcwlbmzLNLjDA5KyU1dNzIZGlkJj2yzZJDmMtarSNwaIUAAUWe9NjLw==
+X-Google-Smtp-Source: AGHT+IE1eVloI516Vo1RTBENLFd+naT4Rg4ZF0SLKA1fu9aX2v46qN48qGbY4Qycye0914rN9CkERA==
+X-Received: by 2002:a05:6000:18a6:b0:38d:d299:7097 with SMTP id
+ ffacd0b85a97d-38f244da177mr899339f8f.5.1739396055077; 
+ Wed, 12 Feb 2025 13:34:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a04ee2fsm30764105e9.4.2025.02.12.13.33.11
+ ffacd0b85a97d-38f259f8115sm14785f8f.92.2025.02.12.13.34.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 13:33:11 -0800 (PST)
+ Wed, 12 Feb 2025 13:34:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 04/19] target/sparc: Constify SPARCCPUClass::cpu_def
-Date: Wed, 12 Feb 2025 22:32:34 +0100
-Message-ID: <20250212213249.45574-5-philmd@linaro.org>
+Subject: [PATCH v3 16/19] hw/virtio/virtio-pci: Constify generic_type_info
+Date: Wed, 12 Feb 2025 22:32:46 +0100
+Message-ID: <20250212213249.45574-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250212213249.45574-1-philmd@linaro.org>
 References: <20250212213249.45574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,24 +101,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/virtio-pci.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index dda811503b5..462bcb6c0e6 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -574,7 +574,7 @@ struct SPARCCPUClass {
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index a33d1b2cbcf..6f0e1772669 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2488,10 +2488,12 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+         .abstract      = true,
+         .interfaces    = t->interfaces,
+     };
+-    TypeInfo generic_type_info = {
++    const TypeInfo generic_type_info = {
+         .name = t->generic_name,
+-        .parent = t->base_name,
+-        .class_init = virtio_pci_generic_class_init,
++        .parent = t->base_name ?: base_name,
++        .class_init = t->base_name ? virtio_pci_generic_class_init
++                                   : virtio_pci_base_class_init,
++        .class_data = t->base_name ? NULL : t,
+         .interfaces = (const InterfaceInfo[]) {
+             { INTERFACE_PCIE_DEVICE },
+             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+@@ -2504,13 +2506,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
  
-     DeviceRealize parent_realize;
-     ResettablePhases parent_phases;
--    sparc_def_t *cpu_def;
-+    const sparc_def_t *cpu_def;
- };
+     type_register_static(&base_type_info);
  
- #ifndef CONFIG_USER_ONLY
+-    if (!t->base_name) {
+-        generic_type_info.parent = base_name;
+-        generic_type_info.class_init = virtio_pci_base_class_init;
+-        generic_type_info.class_data = t;
+-    }
+-
+-    if (generic_type_info.name) {
++    if (t->generic_name) {
+         type_register_static(&generic_type_info);
+     }
+ 
 -- 
 2.47.1
 
