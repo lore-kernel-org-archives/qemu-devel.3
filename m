@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F42C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893EBC021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 22:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiKN7-0004C3-3O; Wed, 12 Feb 2025 16:34:17 -0500
+	id 1tiKo0-0006lz-5q; Wed, 12 Feb 2025 17:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMz-0003rH-NB
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:11 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiKny-0006ko-92
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 17:02:02 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMx-0000YS-Qx
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:09 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43956e3863eso1887285e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:34:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiKnv-0004Rx-Pe
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 17:02:01 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2fa1a3c88c5so379610a91.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 14:01:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739396045; x=1740000845; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739397718; x=1740002518; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xO6SV4w4GEb/p1wdkem/NKWYVecHNr9NrkbEfMoLTPg=;
- b=WUn6rzUwepyyYHBsIIqaamu7YHpdS3EiGlZIt6HXU/WoqcjNBO9TQnipxF6V3DMN4e
- 1i/FFSvDhyxUF+bbSz1Vz6bOZrbx3tIaLm1DIy54z9ob+s2zwMptODPGKYKJmmtyiT7/
- AoNUfkLDEYCzhUW9EU6tHW8bO4bYPz/oZ84m0hwhS6oCo662hj/raD4QpRn2P59VpR12
- EC0KpnFQJy492cN9dWiT07o72HdSac6k14e1d+IiYiin/v2xz9mjXEctYMK9jITxj53L
- praqgdZODpyktK/d1wq/d0gDgc7eufsxBYftPjVsalZ54Clfavs9UDJU5bKvCPamw9jM
- aDyQ==
+ bh=NvOAkVfZMQwTxcmtw611EOoijp2EWfBDBUZbU+MYgKI=;
+ b=sxcqB+IzwLkpkHSnHH8Y3h6MW4CsADl5Vk4QAoONftrs8zFwJd8djlETXm5wES9xhM
+ nRAiE1JBEy1BH2yzNDrd/vfDHI4XhMFxiCzQdlTBj2SW+NmXkgZyN9J8l70d0jsEVwlT
+ iAVtiAvGLruupCxrI+LYnrUY9nxu3bwfivbtQo6OCRYCJeeYuKVHfHuX+WeV7bU0YyFP
+ 61d7U6Y3KtcO2amrGkUQJydAuoHu3eq0BO+HXhRTGvsZDoWkd4pbrtAg/ZtOWdVz/0us
+ fkhNqyMvNXgXBBvYwXTKpTIj0TyjybUdpLf5EQU+GbLR0Tw+2gf03mUqTFvpGPqNv63S
+ RymA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739396045; x=1740000845;
+ d=1e100.net; s=20230601; t=1739397718; x=1740002518;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xO6SV4w4GEb/p1wdkem/NKWYVecHNr9NrkbEfMoLTPg=;
- b=Rb2aLN1hmdgY2aCtwL85Cw5J78nizCwqGkVsLrz2D3GpSd1+2PzrzzTci4xNwLcQEo
- d3tXWyx2mNqeWleG1XC2euqVGzI2nMxsnt6eUDt9D/Hd6uA0QbEGeKpmSGmHrwM4N8iX
- EcYdWRDY59NpNMb0I5D0C9jcvI0/9Hkrvue9C4cEi6dnGiAROgvfQbhQFoD6ap5aoxgY
- KOXchPMSCFkIvY2ji8uVoeBFgJdGiHmsuh9wQBy18mt84SIuoMipq9Co29isWE72S1tB
- AFWjMr+GP2qWIVguLDAv+S80D+TxhN4YzfFxmgeHuGUCk+Xv9b1p58BNt/202Fh8BbgW
- P6Qw==
-X-Gm-Message-State: AOJu0YwFp9XztGOQV5m/0Fv6vCFuO4ZHo2REV9BrfX6zXf25HApllTf7
- 1JYa4/Hvk5rkuRDDnLdXwwtfLQCEfldS955ORGHroMyRVDmV159AKk+xGJ7U+oultzinRLLzCkb
- mYgY=
-X-Gm-Gg: ASbGncuupjvBgkDMw7nz0fI7+foT244QoA0EGz37vN0XH5w/I1N1v+tBZ8ZF5QZvvJG
- EQsIgSqcWXTXilm/d1ivg8dYb66AqDBfbgF4kDNi1Ld935wknjcMU1efRzYxCTXpg9Ek+izMFFI
- IFypH9fuQvNrRcnxTOhNjA5sdTWKvaBYU1yS5M4xmjnfSDqKzMSbmt3AxRYqaBOTJ4QSrK5HzpQ
- GHyJgM5c74QsIvoEdZS5o/18dteaT+objdeqBpHBWIzRxwzQiIWTKTCzv48rxe106u8WTpL74OF
- 1PaZqmcJW2kdiAJweNjiAWVC/MnU8jM9pf/jZhf7aIOD145OaXtVKjX9+yZw+yA9NA==
-X-Google-Smtp-Source: AGHT+IEgr1TDCBQZessHN5VdXt2BpdOh4fzJnnNahs9Vc+A2p86E15JT+bbNmqp1MrXvOHL51IRcGQ==
-X-Received: by 2002:a05:600c:3b9a:b0:439:33dd:48ea with SMTP id
- 5b1f17b1804b1-4395815f6f3mr46065155e9.2.1739396045229; 
- Wed, 12 Feb 2025 13:34:05 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a058930sm31109815e9.17.2025.02.12.13.34.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 13:34:04 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=NvOAkVfZMQwTxcmtw611EOoijp2EWfBDBUZbU+MYgKI=;
+ b=o24bqifQEo+FHxuxZaHS00ERN1Y7RRg5A3hlw+cQI74yzFo6+h9ywDYjC4X95IoBqC
+ mQd9nAALmXSgnAOJeAL9wSHz2ZsNPPzZl3gKl0KPI8D6sNhWsXn6DlFJR4lO9XCihqru
+ mRdOSGtl9wmiYfzYSNGg36a7ZeOUldXQAvC2Djfuu9WxRphuhvHlw4X4JuQIySrFb0Xt
+ rf3CZxs42f54moOMDNKnOgyWIs3BQqDoW8+2FbsN/B9emGy6lRKdIIQjZRBfcV3VcDri
+ IoGAfSDDP2ICFTiruMOpdWZm2XHNQjXnnICKeeDaYnj1yzy8Meu007c5/HUKMrtkipT7
+ Ingg==
+X-Gm-Message-State: AOJu0YzooZm7R4Ke+KZh08a2Xfvu+hHYgnS2SzfZHyLogTx3mvE/mteI
+ IdS7LT4scXvFG7KagkvnLdpQfVYLOWha9NyEWPxMwaGVw89kvuK++8+1jagPf4efB7tvYeClEbG
+ W
+X-Gm-Gg: ASbGncu/gXkALbLG3OpVXfIDxeaEH0LEYOsSQKwW04Zh2uVe2KfImyVvGF9NN8jLtS1
+ 0CKMHHIh5EDyxF+TWaCQerrGt+rguZU942tqyiaqjXVvJL8hPGZsRbyaxV96H4E5ty38xiIyKqu
+ +Y/OSGhaIKb/HWxYhBi2rImXPsgVw1e9JdObzszHPIJ0z7LyhByidmgfvly11UAFQ6FeAvZm+XC
+ HtyDadGj17sBprdfZSFrpVETzjIVWhxvmVacopaotvpuySp4HFey18PZMxN1cHhQY4vsPeGbDSN
+ Q5A5XPGM9BYIlp94yu313Wqg8ciwF0oJQlLuobHlHcGDk14=
+X-Google-Smtp-Source: AGHT+IE/ET8zmMFq7C1KXsLy2mZG1wUQMPbXoTQjFvvZWonhB6k4AmNZN1Ywmuuwur38Bp0Pg+ixGg==
+X-Received: by 2002:a17:90b:1913:b0:2fa:20f4:d27f with SMTP id
+ 98e67ed59e1d1-2fbf91358d2mr5471672a91.32.1739397718327; 
+ Wed, 12 Feb 2025 14:01:58 -0800 (PST)
+Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fbf98b4c52sm1964837a91.4.2025.02.12.14.01.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Feb 2025 14:01:57 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 14/19] hw/virtio/virtio-pci: Do not access
- base_type_info.name directly
-Date: Wed, 12 Feb 2025 22:32:44 +0100
-Message-ID: <20250212213249.45574-15-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250212213249.45574-1-philmd@linaro.org>
-References: <20250212213249.45574-1-philmd@linaro.org>
+Cc: edgar.iglesias@gmail.com,
+	philmd@linaro.org
+Subject: [PATCH 2/9] target/microblaze: Split out
+ mb_transaction_failed_internal
+Date: Wed, 12 Feb 2025 14:01:48 -0800
+Message-ID: <20250212220155.1147144-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250212220155.1147144-1-richard.henderson@linaro.org>
+References: <20250212220155.1147144-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,65 +101,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-base_type_info.name is initialized to t->base_name,
-check that directly.
+Use an explicit 64-bit type for the address to store in EAR.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/virtio/virtio-pci.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ target/microblaze/op_helper.c | 70 +++++++++++++++++++++--------------
+ 1 file changed, 42 insertions(+), 28 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index ad1d164421d..9512590c936 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2476,7 +2476,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-                                  ? g_strconcat(t->generic_name, "-base-type", NULL)
-                                  : NULL;
-     TypeInfo base_type_info = {
--        .name          = t->base_name,
-+        .name          = t->base_name ?: base_name,
-         .parent        = t->parent ? t->parent : TYPE_VIRTIO_PCI,
-         .instance_size = t->instance_size,
-         .instance_init = t->instance_init,
-@@ -2487,7 +2487,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     };
-     TypeInfo generic_type_info = {
-         .name = t->generic_name,
--        .parent = base_type_info.name,
-+        .parent = t->base_name,
-         .class_init = virtio_pci_generic_class_init,
-         .interfaces = (const InterfaceInfo[]) {
-             { INTERFACE_PCIE_DEVICE },
-@@ -2499,8 +2499,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     assert(t->base_name || !t->non_transitional_name);
-     assert(t->base_name || !t->transitional_name);
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+index f6378030b7..6019c5b2eb 100644
+--- a/target/microblaze/op_helper.c
++++ b/target/microblaze/op_helper.c
+@@ -394,38 +394,52 @@ void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uint32_t v)
+     mmu_write(env, ext, rn, v);
+ }
  
--    if (!base_type_info.name) {
--        base_type_info.name = base_name;
-+    if (!t->base_name) {
-         base_type_info.class_init = virtio_pci_generic_class_init;
- 
-         generic_type_info.parent = base_name;
-@@ -2519,7 +2518,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     if (t->non_transitional_name) {
-         const TypeInfo non_transitional_type_info = {
-             .name          = t->non_transitional_name,
--            .parent        = base_type_info.name,
-+            .parent        = t->base_name ?: base_name,
-             .instance_init = virtio_pci_non_transitional_instance_init,
-             .interfaces = (const InterfaceInfo[]) {
-                 { INTERFACE_PCIE_DEVICE },
-@@ -2533,7 +2532,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     if (t->transitional_name) {
-         const TypeInfo transitional_type_info = {
-             .name          = t->transitional_name,
--            .parent        = base_type_info.name,
-+            .parent        = t->base_name ?: base_name,
-             .instance_init = virtio_pci_transitional_instance_init,
-             .interfaces = (const InterfaceInfo[]) {
-                 /*
++static void mb_transaction_failed_internal(CPUState *cs, hwaddr physaddr,
++                                           uint64_t addr, unsigned size,
++                                           MMUAccessType access_type,
++                                           uintptr_t retaddr)
++{
++    CPUMBState *env = cpu_env(cs);
++    MicroBlazeCPU *cpu = env_archcpu(env);
++    const char *access_name = "INVALID";
++    bool take = env->msr & MSR_EE;
++    uint32_t esr = ESR_EC_DATA_BUS;
++
++    switch (access_type) {
++    case MMU_INST_FETCH:
++        access_name = "INST_FETCH";
++        esr = ESR_EC_INSN_BUS;
++        take &= cpu->cfg.iopb_bus_exception;
++        break;
++    case MMU_DATA_LOAD:
++        access_name = "DATA_LOAD";
++        take &= cpu->cfg.dopb_bus_exception;
++        break;
++    case MMU_DATA_STORE:
++        access_name = "DATA_STORE";
++        take &= cpu->cfg.dopb_bus_exception;
++        break;
++    }
++
++    qemu_log_mask(CPU_LOG_INT, "Transaction failed: addr 0x%" PRIx64
++                  "physaddr 0x" HWADDR_FMT_plx " size %d access-type %s (%s)\n",
++                  addr, physaddr, size, access_name,
++                  take ? "TAKEN" : "DROPPED");
++
++    if (take) {
++        env->esr = esr;
++        env->ear = addr;
++        cs->exception_index = EXCP_HW_EXCP;
++        cpu_loop_exit_restore(cs, retaddr);
++    }
++}
++
+ void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+                                unsigned size, MMUAccessType access_type,
+                                int mmu_idx, MemTxAttrs attrs,
+                                MemTxResult response, uintptr_t retaddr)
+ {
+-    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+-    CPUMBState *env = &cpu->env;
+-
+-    qemu_log_mask(CPU_LOG_INT, "Transaction failed: vaddr 0x%" VADDR_PRIx
+-                  " physaddr 0x" HWADDR_FMT_plx " size %d access type %s\n",
+-                  addr, physaddr, size,
+-                  access_type == MMU_INST_FETCH ? "INST_FETCH" :
+-                  (access_type == MMU_DATA_LOAD ? "DATA_LOAD" : "DATA_STORE"));
+-
+-    if (!(env->msr & MSR_EE)) {
+-        return;
+-    }
+-
+-    if (access_type == MMU_INST_FETCH) {
+-        if (!cpu->cfg.iopb_bus_exception) {
+-            return;
+-        }
+-        env->esr = ESR_EC_INSN_BUS;
+-    } else {
+-        if (!cpu->cfg.dopb_bus_exception) {
+-            return;
+-        }
+-        env->esr = ESR_EC_DATA_BUS;
+-    }
+-
+-    env->ear = addr;
+-    cs->exception_index = EXCP_HW_EXCP;
+-    cpu_loop_exit_restore(cs, retaddr);
++    mb_transaction_failed_internal(cs, physaddr, addr, size,
++                                   access_type, retaddr);
+ }
+ #endif
 -- 
-2.47.1
+2.43.0
 
 
