@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE3EC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B6EC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiKNG-00058E-So; Wed, 12 Feb 2025 16:34:27 -0500
+	id 1tiKNM-0005Sg-9n; Wed, 12 Feb 2025 16:34:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKND-0004se-Pv
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:24 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKNI-0005Gx-Sj
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:28 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKNC-0000Zi-9O
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:23 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4394a0c65fcso2195365e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:34:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKNG-0000aS-Nf
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:28 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38dc6d55ebaso898172f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:34:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739396060; x=1740000860; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739396065; x=1740000865; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3tahwZukGhQY0cObaTIwWhUmXQqOFwvV4yeEEvNe3Ak=;
- b=YfIj8rwM399z1uK855bV+qJDRi+1SpaVlSr16qLYDrewAdegp0GidellzbfSF6Qa2Z
- Dz7WFTeKYgDMaQQtCr5lJUMrs5JX8gwAy1xh04/uLtDhAIy401UszLjjgQDFiJU+xwdQ
- b7BImy/kqG0+Y6wHq+Yz1JqGAV7VD1cH9MX8pzr+uLySYUcnnZ9xgL1e1YacNj+eryKz
- ikjVoKbVMDNnhauwPj0GiLktdeQDcMl1d4VHzRDroEW76kb2ECtHt0XqVFrWTU/LC6Be
- x23F31qjMfe4+YTFpucA1cvwc7CZuk3BUw63HTn3rMxQZDuz9D3Xo0HR3qQ+uCAGmjya
- MCcw==
+ bh=gWUMYVWKZSu2OSfc0MXilpdxQiaoa1PiI/aXL88osMc=;
+ b=uWkkOoE+a06xCCFBx+DO8hToI3NbwyEkMzuvm8qWqz12Hxkz5nIXKoMeiL/ylpIUL5
+ L5r/G4MMUV8aK5M1wzvbUd6cq/fpYKMd5yKgN9ZeHpDTSNshBgvIeDzmkANAHHw/XHKp
+ +M8cmkztv59bpv1H40x3C0XUkgt3IshW9t6YxZwBWDaIQ56Ufjz8Lur+2RMMRG5cii/S
+ oPi++1/GJFNX5v8pSfuiD2OzL9H9RLzaDPPSXyzCBZ2zcxxT6mcnv1cU1M21j/VyzO5z
+ M+0D+lnV2XNzYaYkfm3LeCRh+7poXJAFMQq/8GH+ndqZxlAIg3zgSfxJBhEWEw+wt2/M
+ XrLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739396060; x=1740000860;
+ d=1e100.net; s=20230601; t=1739396065; x=1740000865;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3tahwZukGhQY0cObaTIwWhUmXQqOFwvV4yeEEvNe3Ak=;
- b=ayb8s8yJHuSZnONb0YMwG2SWoeStsq1RNqBEy2SUn+BypO5usO3g3+e1Oh48o1O4SB
- cKNCQwdN3VX4uOc20JJq/g0EvyeVyyfEFEqyYc27mpLIk5O7w9pZ5TCJ/ttxFLowUU7Q
- rzFFCcttx3tlPdDQT3l3V05znBi6KxlibCF6GwyoXOtu9gb4AxUB3u196mNoHGqlf0/+
- dM2lG21pLCecNrSvyeBfmnWxq6rwvrTUq2TBxa7uMnWyXNWm6RPdiQ9Fe8Pv6OTmCvBf
- GnXvXELakP5XFM0hn5sdAdHZkcRiJ/ZXc5UgVmkfwPgkL5epmLi1V9pYnYXPssC8fov8
- ElGQ==
-X-Gm-Message-State: AOJu0YwLrKhzCxWuf40lVfZ8kpuxD4y5kCdXJU9umoXz6YG1X3T2WcA6
- ePAJogTwpDVzulNc9GPbLOCjacg0bzBe2gRI/TPk0rqQDq7w8H4FQCECBAfNNhqNW7LuOtn2a13
- NlMg=
-X-Gm-Gg: ASbGncuwKyjo7y5B3iBnIwUSSmXv7W30YaKctUsQBaAsBRKeP3996poUfhFlqIYFb2U
- Sj9bn+h5op9Ot7hHx6goQMIqXIlmHWiK4jBN8CNErPw/Qvt9U7BS90QYhtnvuBllagvKVvaxw3k
- 3iHKaL+lTWYinw7o2cQCurVbYvSs+d56aJd55dH4BriHzMVC63WqweFNVa2L3XRE5Q1V44Uq2cl
- l+aARCLmXBbuqhdrrTppWIEKasig92HA2xLGd4yh7txPUX4BPJV1vrq131d24xSZwiZlu628ELd
- JDk/XoJzh7uAZiI6xDswJ1CMv+1+GQVxfJGsr4EibDezZTAFPTbeB/qjhnRh1zem8Q==
-X-Google-Smtp-Source: AGHT+IGotS/3O+wmWktJ3ePo6qnkPb9/U65PSkIDob5JtKNMlNKiqGE7pwYsoUqmKRm9Zuyd9Z+05Q==
-X-Received: by 2002:a05:600c:1e0f:b0:434:f586:7520 with SMTP id
- 5b1f17b1804b1-43960185f0amr11972505e9.6.1739396060389; 
- Wed, 12 Feb 2025 13:34:20 -0800 (PST)
+ bh=gWUMYVWKZSu2OSfc0MXilpdxQiaoa1PiI/aXL88osMc=;
+ b=lwRINCF3SYnMT7C1nfl+oxhbX31SnufnfXLtTZ5fgn+d3SokciutXpcpaPq8ogqvis
+ ED6UvGuy2a9Dgg0ikuPrnEyrZ76pqJWH5UfU6MHT4mydEfcOZKGTl0zDas/poje7O7uM
+ MWAZmtU1KlCZxVBh4Hnlm/XfjYym5Yb6Yp7ubpqeNzgb/dB6cyYbROk6lSB0mfUQzFHm
+ KYBtAbG+jOTDmy5uDfxcvfe5AAF+1ZOz2sCM4stf8p5NVFgcn52v4yzAA4IaF2+8Unqw
+ UXqKnTyscw0dJpLYTe21CB4FK1GbD14g7pcMpGmXwJbHN45b47jCqhZhTKGVFl6Z2DWN
+ e4Mg==
+X-Gm-Message-State: AOJu0YymQ7dVk7GlKeaN+wyNbfiiGB9TTjkKLsZanKjj7+eBFo95wX8n
+ BS4z8+kKRJZEg4jcrGvi6AWyZxXPZ3fb8VY/p1KV3/TzVlQptyRPsYzvC9RG3KPH4UwmVgcO6E8
+ mD+M=
+X-Gm-Gg: ASbGncukOLHEtrgtsY/v26p+fbDsybdaWR7txB7mpgu7ANg6O9RDUE1Z5kJDc2VFCqE
+ 6G92migahl4fuN1INVTgMxxkgXtRwamsIVRYLr3SYCHZmzudJibiSo1cyqxTwlm51ofBQ1OxjUP
+ +gOOck40D4qTSZnKj7raYR9WVhMcTV4SlXkM0w7jz7CBs6x6zXEeql7D9AFr7g5vCRB10d0SnIr
+ GgK/Rynm/S28mKBcrBpsKXyIZk/eopfLfwM9RrPVPA0gj0tGuPzy3QgvLsJtF13lgB6cOZcg1v0
+ IHbkMm5O/05iZpPxJM6lRTHdqzrfoRMuKMX1DFgJiheA18uqD2HM8l183dTnFoN8nw==
+X-Google-Smtp-Source: AGHT+IER81hBzlIvzMsEvHZz2n7YPOmC7B3RIPMUkIO4YO6lK/ZfxkOOdSvTecLfPq0Fh8tKtyDozw==
+X-Received: by 2002:a05:6000:144b:b0:38d:b028:d906 with SMTP id
+ ffacd0b85a97d-38f24f90c32mr287319f8f.21.1739396064911; 
+ Wed, 12 Feb 2025 13:34:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d5e9esm20117f8f.61.2025.02.12.13.34.18
+ ffacd0b85a97d-38f259fe1efsm20089f8f.97.2025.02.12.13.34.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 13:34:19 -0800 (PST)
+ Wed, 12 Feb 2025 13:34:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 17/19] hw/virtio/virtio-pci: Reduce generic_type_info scope
-Date: Wed, 12 Feb 2025 22:32:47 +0100
-Message-ID: <20250212213249.45574-18-philmd@linaro.org>
+Subject: [PATCH v3 18/19] hw: Constify various TypeInfo and associated
+ structures
+Date: Wed, 12 Feb 2025 22:32:48 +0100
+Message-ID: <20250212213249.45574-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250212213249.45574-1-philmd@linaro.org>
 References: <20250212213249.45574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,54 +101,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Constify various TypeInfo structures.
+
+When they are generated from an array, also constify the array.
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/virtio/virtio-pci.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ hw/net/e1000.c             | 12 ++++++------
+ hw/rtc/m48t59-isa.c        | 22 +++++++++++-----------
+ hw/rtc/m48t59.c            | 22 +++++++++++-----------
+ hw/scsi/megasas.c          | 16 ++++++++--------
+ hw/usb/hcd-ehci-pci.c      | 20 ++++++++++----------
+ hw/usb/hcd-uhci.c          | 20 ++++++++++----------
+ hw/usb/vt82c686-uhci-pci.c |  6 +++---
+ 7 files changed, 59 insertions(+), 59 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 6f0e1772669..99724deb3d9 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2488,18 +2488,6 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-         .abstract      = true,
-         .interfaces    = t->interfaces,
-     };
--    const TypeInfo generic_type_info = {
--        .name = t->generic_name,
--        .parent = t->base_name ?: base_name,
--        .class_init = t->base_name ? virtio_pci_generic_class_init
--                                   : virtio_pci_base_class_init,
--        .class_data = t->base_name ? NULL : t,
--        .interfaces = (const InterfaceInfo[]) {
--            { INTERFACE_PCIE_DEVICE },
--            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
--            { }
--        },
+diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+index cba4999e6d0..4436c2ce0cc 100644
+--- a/hw/net/e1000.c
++++ b/hw/net/e1000.c
+@@ -1766,12 +1766,12 @@ static void e1000_register_types(void)
+     type_register_static(&e1000_base_info);
+     for (i = 0; i < ARRAY_SIZE(e1000_devices); i++) {
+         const E1000Info *info = &e1000_devices[i];
+-        TypeInfo type_info = {};
+-
+-        type_info.name = info->name;
+-        type_info.parent = TYPE_E1000_BASE;
+-        type_info.class_data = info;
+-        type_info.class_init = e1000_class_init;
++        const TypeInfo type_info = {
++            .name       = info->name,
++            .parent     = TYPE_E1000_BASE,
++            .class_data = info,
++            .class_init = e1000_class_init,
++        };
+ 
+         type_register_static(&type_info);
+     }
+diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
+index 9e2f6563a0a..152208d931e 100644
+--- a/hw/rtc/m48t59-isa.c
++++ b/hw/rtc/m48t59-isa.c
+@@ -51,7 +51,7 @@ struct M48txxISADeviceClass {
+     M48txxInfo info;
+ };
+ 
+-static M48txxInfo m48txx_isa_info[] = {
++static const M48txxInfo m48txx_isa_info[] = {
+     {
+         .bus_name = "isa-m48t59",
+         .model = 59,
+@@ -148,18 +148,18 @@ static const TypeInfo m48txx_isa_type_info = {
+ 
+ static void m48t59_isa_register_types(void)
+ {
+-    TypeInfo isa_type_info = {
+-        .parent = TYPE_M48TXX_ISA,
+-        .class_size = sizeof(M48txxISADeviceClass),
+-        .class_init = m48txx_isa_concrete_class_init,
 -    };
+-    int i;
+-
+     type_register_static(&m48txx_isa_type_info);
  
-     assert(t->base_name || !t->non_transitional_name);
-     assert(t->base_name || !t->transitional_name);
-@@ -2507,6 +2495,19 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     type_register_static(&base_type_info);
- 
-     if (t->generic_name) {
-+        const TypeInfo generic_type_info = {
-+            .name = t->generic_name,
-+            .parent = t->base_name ?: base_name,
-+            .class_init = t->base_name ? virtio_pci_generic_class_init
-+                                       : virtio_pci_base_class_init,
-+            .class_data = t->base_name ? NULL : t,
-+            .interfaces = (const InterfaceInfo[]) {
-+                { INTERFACE_PCIE_DEVICE },
-+                { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+                { }
-+            },
+-    for (i = 0; i < ARRAY_SIZE(m48txx_isa_info); i++) {
+-        isa_type_info.name = m48txx_isa_info[i].bus_name;
+-        isa_type_info.class_data = &m48txx_isa_info[i];
++    for (unsigned i = 0; i < ARRAY_SIZE(m48txx_isa_info); i++) {
++        const M48txxInfo *info = &m48txx_isa_info[i];
++        const TypeInfo isa_type_info = {
++            .name       = info->bus_name,
++            .parent     = TYPE_M48TXX_ISA,
++            .class_size = sizeof(M48txxISADeviceClass),
++            .class_init = m48txx_isa_concrete_class_init,
++            .class_data = info,
 +        };
 +
-         type_register_static(&generic_type_info);
+         type_register_static(&isa_type_info);
      }
+ }
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index 68be2dad6f3..967331401a7 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -66,7 +66,7 @@ struct M48txxSysBusDeviceClass {
+     M48txxInfo info;
+ };
  
+-static M48txxInfo m48txx_sysbus_info[] = {
++static const M48txxInfo m48txx_sysbus_info[] = {
+     {
+         .bus_name = "sysbus-m48t02",
+         .model = 2,
+@@ -666,19 +666,19 @@ static const TypeInfo m48txx_sysbus_type_info = {
+ 
+ static void m48t59_register_types(void)
+ {
+-    TypeInfo sysbus_type_info = {
+-        .parent = TYPE_M48TXX_SYS_BUS,
+-        .class_size = sizeof(M48txxSysBusDeviceClass),
+-        .class_init = m48txx_sysbus_concrete_class_init,
+-    };
+-    int i;
+-
+     type_register_static(&nvram_info);
+     type_register_static(&m48txx_sysbus_type_info);
+ 
+-    for (i = 0; i < ARRAY_SIZE(m48txx_sysbus_info); i++) {
+-        sysbus_type_info.name = m48txx_sysbus_info[i].bus_name;
+-        sysbus_type_info.class_data = &m48txx_sysbus_info[i];
++    for (unsigned i = 0; i < ARRAY_SIZE(m48txx_sysbus_info); i++) {
++        const M48txxInfo *info = &m48txx_sysbus_info[i];
++        const TypeInfo sysbus_type_info = {
++            .name       = info->bus_name,
++            .parent     = TYPE_M48TXX_SYS_BUS,
++            .class_size = sizeof(M48txxSysBusDeviceClass),
++            .class_init = m48txx_sysbus_concrete_class_init,
++            .class_data = info,
++        };
++
+         type_register_static(&sysbus_type_info);
+     }
+ }
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index 03cd837b44f..ccd87fb0604 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -2490,7 +2490,7 @@ typedef struct MegasasInfo {
+     const InterfaceInfo *interfaces;
+ } MegasasInfo;
+ 
+-static struct MegasasInfo megasas_devices[] = {
++static const struct MegasasInfo megasas_devices[] = {
+     {
+         .name = TYPE_MEGASAS_GEN1,
+         .desc = "LSI MegaRAID SAS 1078",
+@@ -2569,13 +2569,13 @@ static void megasas_register_types(void)
+     type_register_static(&megasas_info);
+     for (i = 0; i < ARRAY_SIZE(megasas_devices); i++) {
+         const MegasasInfo *info = &megasas_devices[i];
+-        TypeInfo type_info = {};
+-
+-        type_info.name = info->name;
+-        type_info.parent = TYPE_MEGASAS_BASE;
+-        type_info.class_data = info;
+-        type_info.class_init = megasas_class_init;
+-        type_info.interfaces = info->interfaces;
++        const TypeInfo type_info = {
++            .name       = info->name,
++            .parent     = TYPE_MEGASAS_BASE,
++            .class_data = info,
++            .class_init = megasas_class_init,
++            .interfaces = info->interfaces,
++        };
+ 
+         type_register_static(&type_info);
+     }
+diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+index 38ad3406b32..5a96c15c67c 100644
+--- a/hw/usb/hcd-ehci-pci.c
++++ b/hw/usb/hcd-ehci-pci.c
+@@ -193,7 +193,7 @@ static void ehci_data_class_init(ObjectClass *klass, const void *data)
+     }
+ }
+ 
+-static struct EHCIPCIInfo ehci_pci_info[] = {
++static const struct EHCIPCIInfo ehci_pci_info[] = {
+     {
+         .name      = "usb-ehci",
+         .vendor_id = PCI_VENDOR_ID_INTEL,
+@@ -216,17 +216,17 @@ static struct EHCIPCIInfo ehci_pci_info[] = {
+ 
+ static void ehci_pci_register_types(void)
+ {
+-    TypeInfo ehci_type_info = {
+-        .parent        = TYPE_PCI_EHCI,
+-        .class_init    = ehci_data_class_init,
+-    };
+-    int i;
+-
+     type_register_static(&ehci_pci_type_info);
+ 
+-    for (i = 0; i < ARRAY_SIZE(ehci_pci_info); i++) {
+-        ehci_type_info.name = ehci_pci_info[i].name;
+-        ehci_type_info.class_data = ehci_pci_info + i;
++    for (unsigned i = 0; i < ARRAY_SIZE(ehci_pci_info); i++) {
++        const EHCIPCIInfo *info = &ehci_pci_info[i];
++        const TypeInfo ehci_type_info = {
++            .name       = info->name,
++            .parent     = TYPE_PCI_EHCI,
++            .class_data = info,
++            .class_init = ehci_data_class_init,
++        };
++
+         type_register_static(&ehci_type_info);
+     }
+ }
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 4822c704f69..9c671f53684 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -1309,7 +1309,7 @@ void uhci_data_class_init(ObjectClass *klass, const void *data)
+     u->info = *info;
+ }
+ 
+-static UHCIInfo uhci_info[] = {
++static const UHCIInfo uhci_info[] = {
+     {
+         .name      = TYPE_PIIX3_USB_UHCI,
+         .vendor_id = PCI_VENDOR_ID_INTEL,
+@@ -1371,17 +1371,17 @@ static UHCIInfo uhci_info[] = {
+ 
+ static void uhci_register_types(void)
+ {
+-    TypeInfo uhci_type_info = {
+-        .parent        = TYPE_UHCI,
+-        .class_init    = uhci_data_class_init,
+-    };
+-    int i;
+-
+     type_register_static(&uhci_pci_type_info);
+ 
+-    for (i = 0; i < ARRAY_SIZE(uhci_info); i++) {
+-        uhci_type_info.name = uhci_info[i].name;
+-        uhci_type_info.class_data = uhci_info + i;
++    for (unsigned i = 0; i < ARRAY_SIZE(uhci_info); i++) {
++        const UHCIInfo *info = &uhci_info[i];
++        const TypeInfo uhci_type_info = {
++            .name       = info->name,
++            .parent     = TYPE_UHCI,
++            .class_data = info,
++            .class_init = uhci_data_class_init,
++        };
++
+         type_register_static(&uhci_type_info);
+     }
+ }
+diff --git a/hw/usb/vt82c686-uhci-pci.c b/hw/usb/vt82c686-uhci-pci.c
+index 61628061722..cd5ca9c8850 100644
+--- a/hw/usb/vt82c686-uhci-pci.c
++++ b/hw/usb/vt82c686-uhci-pci.c
+@@ -26,7 +26,7 @@ static void usb_uhci_vt82c686b_realize(PCIDevice *dev, Error **errp)
+     s->irq = qemu_allocate_irq(uhci_isa_set_irq, s, 0);
+ }
+ 
+-static UHCIInfo uhci_info[] = {
++static const UHCIInfo uhci_info[] = {
+     {
+         .name      = TYPE_VT82C686B_USB_UHCI,
+         .vendor_id = PCI_VENDOR_ID_VIA,
+@@ -37,14 +37,14 @@ static UHCIInfo uhci_info[] = {
+         .unplug    = true,
+         /* Reason: only works as USB function of VT82xx superio chips */
+         .notuser   = true,
+-    }
++    },
+ };
+ 
+ static const TypeInfo vt82c686b_usb_uhci_type_info = {
+     .parent         = TYPE_UHCI,
+     .name           = TYPE_VT82C686B_USB_UHCI,
+     .class_init     = uhci_data_class_init,
+-    .class_data     = uhci_info,
++    .class_data     = &uhci_info[0],
+ };
+ 
+ static void vt82c686b_usb_uhci_register_types(void)
 -- 
 2.47.1
 
