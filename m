@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 731B9C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DD9C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiKN5-000422-AN; Wed, 12 Feb 2025 16:34:15 -0500
+	id 1tiKMB-0002xU-6R; Wed, 12 Feb 2025 16:33:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMp-0003b7-DF
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:34:00 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKLt-0002vn-NB
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:02 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMn-0000Xl-QF
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:59 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4394036c0efso1234285e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:33:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKLr-0000Sr-VH
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:01 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38dd91c313bso80696f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:32:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739396036; x=1740000836; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739395978; x=1740000778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vdFpkqfd4B+rA0TtuwX6WnKMXV9HddDmN8ccU2WMJQw=;
- b=zK0+oije8isd9oOLy0H+mFcsypRoG7+ddoKPRq5M+fI/0+KRBDRT/6pkm7pEGNnVQ6
- SLe1HUSXcDIC+duJufYb7DTLBRQvjlqkt7JC1KPkvf/mkP09NbChaXbYG69NDmBclZ6i
- uPIIjH6xwGt6GMJ+5iX0icIS7aJ3JIG4QDbmaZ9xxI+OTvjF2QonDgqto8tnRG104sdQ
- RBGwnUL+O6Vlup1GiPl6Pa0izmhlQhFLG+GkDZr7RsTxykKWaY1+ybSBCSTyx/2stC1Q
- 06rUQzDO9vWtF+tUjQazq8BD8NHJy+EuIPOak56XHWMv5vHFiFX/nzag5g0ysvijn9YC
- Zy6g==
+ bh=cF7/nSXhHunM2CJO3C+y1skuY8Xt+xo4KY2S2II5T6U=;
+ b=vAPLxtNWrxUhnZ93vbFNKR09GDvIyXTgK4wvt76QEUXHZEgfiSZ4V5U8a8eZ0uVKgo
+ kal506VmsyOQYkwDvClacQVfTnRWznxCPfj+hvCeQ18UxnIVZUcolFlJx3NfmFyN+8S7
+ axmbiNhBdcLy8wGBcy5sqXYmx0d+w7rXusySw1JCuBZHfHmxSOhROIK6hqNWDoeJRq1m
+ kOSd+OZGXkh28wycf6zKUashtcsFh7lyK/5JCXC1+bb4S/z6g/NwKaJfRi6VPotZ0Bbs
+ wM6Z+wJTxSuvwS/BZpN8aT9iuDz+o3C7M5anVnkWB9OBX+k+BZnJW7TgTKnkPw+W9tLJ
+ FSng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739396036; x=1740000836;
+ d=1e100.net; s=20230601; t=1739395978; x=1740000778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vdFpkqfd4B+rA0TtuwX6WnKMXV9HddDmN8ccU2WMJQw=;
- b=V+L9CJYk7acXfIE2OeuqeMUhcJOkv4HAgIfroPboJhmRHOgigMDVzVdDYxD/37+RmX
- eJ7bi7Yj71toXE0TtGPbImTiPdcxNHBMnXHwEfyDlGt3YdEEB0T9uLAx7eaOjDdT3Vk9
- JCJm8H7tyvzPCltq/HWbJufUCvbR5MjtBKGc2ciUiBWOl8hLktpHlZAJ0r8nZYLqDPGv
- grayDbxUyoJD/fdvDoE6FfM6uiHEGmnxJnJlt8QCI9gG7z+1TzrA5yzQDyLZYBc0V/mL
- G8bahtntHtczxjG1m2QnY+gqdqT4tUirE6jb0T3mS2jnBTRk9kUluZDm5b0E/ONo32NB
- 6S+g==
-X-Gm-Message-State: AOJu0YwgyMTcVFVoJFYUlVathzZVRRjwULXvrhQI4iidSMNla5UegQgz
- se3ZMRkD5m/VwHN5ondFJFEQHvJpACpnznUvrZ+wMxvlsc+l529yOplzTVJg4OvaDzAS+OPgJEp
- RV6Y=
-X-Gm-Gg: ASbGncsqVWye7UXqwmNKPt9ntkfDHr+cFHpL01Rj5T9r61HcRc6WsZowfOd1/AjTRqG
- JUokGJTHZPG701Svlmw19dxztz55Lrm8vUGKHCHhI8CA9G0NxQH5mKUbDUzX/msA37OX/oR95Ld
- VKuUl8DdbukZif4qOT/mzNWaZYBp9aOUDT2XbD7GQYx0UBH7Yb7UtknXPzCk0tdF96K5PSlwBoC
- K9KuayCUKXrmB5BSEyWxQTYex0spATeciLetMCh+Ql1o24Ut9xbyOw7uebBLfDy8PKEB3I7JodY
- Cr9swt0qOUIE01nGcX/sM4ZSMH5aFfoHRoYOrrmuPJo+HHsWz25CTJVYT8HWNHSSjQ==
-X-Google-Smtp-Source: AGHT+IF4xILXPfhsfqGiPijUunnlxzjPtHU5wrtcrk7nT/RaRP1WGuO5VyqUocNnledxgA+VmlEpqw==
-X-Received: by 2002:a05:600c:4fc9:b0:431:547e:81d0 with SMTP id
- 5b1f17b1804b1-4395816a6bfmr62224215e9.11.1739396035785; 
- Wed, 12 Feb 2025 13:33:55 -0800 (PST)
+ bh=cF7/nSXhHunM2CJO3C+y1skuY8Xt+xo4KY2S2II5T6U=;
+ b=kOpA2+9YBt89feqab6C44MXADKgmmUtEdyaxBwXLZ06TcKl5yBpT47bTTErIam7O+5
+ FvRpjx/kmwzBi/xCFDix05Xxq0cEY1oAP/eq5dH2Oda0kt1Z5ZUbGOHQo4vFhtsc5xxr
+ BcE3+gaEkxRz2LYrriZ3n+6ftUKj42BDbeGje4WGcwX5jjaeoKBcsfQOiRSSqQ/j1HAn
+ 2I31waf7cRgBTiSKFljMQ1hjctTOuzuWEnBdEqDyljUoywtrhzZD1O8Sv+tU16EnhGSn
+ FOVfp18IrPuL1zh7yMkDZ3h586E37gfPBzm8poWs++z9WqkEgtrEAM31gA04DL2VJQsP
+ skGQ==
+X-Gm-Message-State: AOJu0YxZ+OGTYxAL+PqIxqxsEbQ4bx4wknhcBaXwdH/i0DShSr2OXuvr
+ 6tM2vD/IskoihWFBT7fTIiri5ehhvpWgnXNMyWYZNHFFhCbt3JfTtXKumXfyt/1SwXf4zwoY4PO
+ RLDo=
+X-Gm-Gg: ASbGncvL53Hb9/15LPNvq//EsVLHlah+pmN7EDj9a06vb68WAijSwsZXKZcTh2xnrvO
+ J3g1BeGGPSf2/CpwYtlMbqoY33aoWdncTnUvxPrLFAlQYpeuLu+Su2Btt89aqx+PAG+689Ay/eI
+ iOmw68+mvOZbGDCuWdIxWWiebHQtaj0imAyjtJsTjXbZUVwGG2oFjFhklNCyVVSMnSM9B9Psltr
+ LIbndSGuJYFwu2tpiR7OYPHDmSoThSpo7fFDbzknxGmpIsA5jb6FnGk6tMuC1sKzfS1BHB9/TSe
+ k97V6pMxmmOCjclT+D8/9+IpBA6LOBAdBqMRzbawt990aEqZUHEpgQVdydZJpTFHaA==
+X-Google-Smtp-Source: AGHT+IH7uHeKNC2IgyI4IpBbzK9o8DFFag2cuF5w8ENeYpyy972A19wiVnY7odD7pCuQHrRnGEayZQ==
+X-Received: by 2002:adf:f4c2:0:b0:38d:a910:b4d5 with SMTP id
+ ffacd0b85a97d-38dea6050b7mr3593921f8f.54.1739395977959; 
+ Wed, 12 Feb 2025 13:32:57 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a056151sm31283875e9.16.2025.02.12.13.33.54
+ ffacd0b85a97d-38f258ccef7sm46800f8f.31.2025.02.12.13.32.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 13:33:55 -0800 (PST)
+ Wed, 12 Feb 2025 13:32:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 12/19] hw/virtio/virtio-pci: Always allocate QOM type
- base_name
-Date: Wed, 12 Feb 2025 22:32:42 +0100
-Message-ID: <20250212213249.45574-13-philmd@linaro.org>
+Subject: [PATCH v3 01/19] hw: Declare various const data as 'const'
+Date: Wed, 12 Feb 2025 22:32:31 +0100
+Message-ID: <20250212213249.45574-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250212213249.45574-1-philmd@linaro.org>
 References: <20250212213249.45574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,52 +100,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce 'single_generic_device' boolean for clarity.
-Allocate base_name on entry. Replace the g_free() call
-by g_autofree qualifier. Use g_strconcat() instead of
-g_strdup_printf().
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/virtio/virtio-pci.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ hw/isa/vt82c686.c     | 2 +-
+ hw/rtc/m48t59-isa.c   | 2 +-
+ hw/rtc/m48t59.c       | 2 +-
+ hw/sensor/tmp421.c    | 2 +-
+ hw/usb/hcd-ehci-pci.c | 2 +-
+ hw/usb/hcd-uhci.c     | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index a72f878e949..15383570c91 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2469,7 +2469,12 @@ static void virtio_pci_non_transitional_instance_init(Object *obj)
- 
- void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 6f44b381a5f..43bd67eeef2 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -224,7 +224,7 @@ static void via_pm_class_init(ObjectClass *klass, void *data)
  {
--    char *base_name = NULL;
-+    /* No base type -> register a single generic device type */
-+    bool single_generic_device = !t->base_name;
-+    /* use intermediate %s-base-type to add generic device props */
-+    g_autofree char *base_name = single_generic_device
-+                                 ? g_strconcat(t->generic_name, "-base-type", NULL)
-+                                 : NULL;
-     TypeInfo base_type_info = {
-         .name          = t->base_name,
-         .parent        = t->parent ? t->parent : TYPE_VIRTIO_PCI,
-@@ -2492,9 +2497,6 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-     };
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    ViaPMInitInfo *info = data;
++    const ViaPMInitInfo *info = data;
  
-     if (!base_type_info.name) {
--        /* No base type -> register a single generic device type */
--        /* use intermediate %s-base-type to add generic device props */
--        base_name = g_strdup_printf("%s-base-type", t->generic_name);
-         base_type_info.name = base_name;
-         base_type_info.class_init = virtio_pci_generic_class_init;
+     k->realize = via_pm_realize;
+     k->config_write = pm_write_config;
+diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
+index 38bc8dcf100..9c3855a3ef1 100644
+--- a/hw/rtc/m48t59-isa.c
++++ b/hw/rtc/m48t59-isa.c
+@@ -129,7 +129,7 @@ static void m48txx_isa_class_init(ObjectClass *klass, void *data)
+ static void m48txx_isa_concrete_class_init(ObjectClass *klass, void *data)
+ {
+     M48txxISADeviceClass *u = M48TXX_ISA_CLASS(klass);
+-    M48txxInfo *info = data;
++    const M48txxInfo *info = data;
  
-@@ -2544,7 +2546,6 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
-         };
-         type_register_static(&transitional_type_info);
-     }
--    g_free(base_name);
+     u->info = *info;
  }
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index c9bd6f878fe..3fb2f27d9d1 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -639,7 +639,7 @@ static void m48txx_sysbus_class_init(ObjectClass *klass, void *data)
+ static void m48txx_sysbus_concrete_class_init(ObjectClass *klass, void *data)
+ {
+     M48txxSysBusDeviceClass *u = M48TXX_SYS_BUS_CLASS(klass);
+-    M48txxInfo *info = data;
++    const M48txxInfo *info = data;
  
- unsigned virtio_pci_optimal_num_queues(unsigned fixed_queues)
+     u->info = *info;
+ }
+diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
+index 82e604279c5..007f7cd018b 100644
+--- a/hw/sensor/tmp421.c
++++ b/hw/sensor/tmp421.c
+@@ -68,7 +68,7 @@ struct TMP421State {
+ 
+ struct TMP421Class {
+     I2CSlaveClass parent_class;
+-    DeviceInfo *dev;
++    const DeviceInfo *dev;
+ };
+ 
+ #define TYPE_TMP421 "tmp421-generic"
+diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+index d410c38a8a2..e00316721ac 100644
+--- a/hw/usb/hcd-ehci-pci.c
++++ b/hw/usb/hcd-ehci-pci.c
+@@ -182,7 +182,7 @@ static void ehci_data_class_init(ObjectClass *klass, void *data)
+ {
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+-    EHCIPCIInfo *i = data;
++    const EHCIPCIInfo *i = data;
+ 
+     k->vendor_id = i->vendor_id;
+     k->device_id = i->device_id;
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 8528d493d63..0561a6d801a 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -1289,7 +1289,7 @@ void uhci_data_class_init(ObjectClass *klass, void *data)
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     UHCIPCIDeviceClass *u = UHCI_CLASS(klass);
+-    UHCIInfo *info = data;
++    const UHCIInfo *info = data;
+ 
+     k->realize = info->realize ? info->realize : usb_uhci_common_realize;
+     k->exit = info->unplug ? usb_uhci_exit : NULL;
 -- 
 2.47.1
 
