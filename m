@@ -4,100 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A473EC021A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 13:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448EAC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 13:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiDAw-00029C-Fm; Wed, 12 Feb 2025 08:53:15 -0500
+	id 1tiDF4-0003i9-BW; Wed, 12 Feb 2025 08:57:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiDAq-0001z9-Ou
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:53:10 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiDAn-0004UD-BR
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:53:08 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-38dcb7122c1so4565764f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 05:53:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739368382; x=1739973182; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zfbyxcqWj/UiN856rWG2h1KLNYBYxW0dhw/bjjl2hE0=;
- b=aYMeakJWs/OmTBwXGYTQIOS3fnmd2DDTL9fXfNxZpZTHJ3d5qLkv5REWRdHsf14iOV
- p6KvwAeuyCyHzBfauGVUdwSDnAPpYzAl5xGtmxj/B4lpeVoajb5TdwYzE2ZEHgUeFH75
- K2D2HKWl5V2CKqNNsH/FBVBeY/ZXfedFqD7rllAWQGejDGtVi4Q4HdkT4qmLfCnBdsYD
- ocg3iS1zNlqkRqWVJh0xGgMwwPfRakFKDSX//mNtwPqUDrujVHCBg5x5poOpEpRV1zsa
- dPG/iqtLVwT03vQ1vb65gLpCQbDJ01U+SGK3iWcwOix8c9+FNgSZKoiTjN2wvKjcT/rg
- aAIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739368382; x=1739973182;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zfbyxcqWj/UiN856rWG2h1KLNYBYxW0dhw/bjjl2hE0=;
- b=f1IZXty/l3QVcrz7YpGqEbHM+furNj+CiCRKizpwVI9ShmHp3/HNtgv6YOLVin8SAz
- xyTQTgWcz7AF1XH8/WDcFad/7KuOt9gJXtxAdDNf6Pv951pv9mNDj+AL7WFsAMui+F8L
- 4LLDA9spBOaw35hI0fIVs4z8Dlu4D9bhf2s911bArf+Ip7Uc0HJs/4hh1240priztF5F
- vHHAybaruafR3/LRaj/fBAl2VwDXAraGq0JWcs5BshOqLbzcG28+/wre8SuTWV/GbHIi
- 5GzYd4kYAKRTujC61kil6HLQC79/awCqBw0npJ6e3pdbCYFv3hWkc9RpOBdG4fMmF6ba
- Q22A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtF8to8gqC1dJufEAW0Xn/GUrpnw7Sv8K0R3H2JbJiqFTyl+PnI52PxYmc7eOxjtIo2kYejYgOt53s@nongnu.org
-X-Gm-Message-State: AOJu0YxNJXqoq3aRMB4sFQiFyU/6F5ecamyx+M7QbyRz71AsIJkzYqDo
- 5pig7S1/3dH9fTFvQw2nDvd8d8CgyT6jDSU+1enrJ33IFMqhar48vW5wW1kV/BXWFCESP7eI1FN
- /pWw=
-X-Gm-Gg: ASbGnct++GWBOQNNQ2jfnXCWBUeNoeYGaqnBJXlY81S9lfrvHQiPELMjrSVhMcJneXK
- DHXBBSfACpXZZV8zBf/S2eAkHxAuVgYI4i1z5/DzOMfSZg/HvwI4X0di4gG54DYSXWB9MgwQ2MQ
- MIyZv0h21pQQ8aTIb3k5tORYGtjqh/D1E587KlRTVjLTxoJp/DNoEi3U1fAg7W1lloYkjLTOEeQ
- kG3i3EcAGR2Jqev+biAgkm1Ij62M928TgvvIWbUDXC3OsdOfgKWJ5HEQhIV0kWbUsSU0cvyjaQm
- Zen9EI2XId3IZ3ia3sLC0dxtZMSfBXjqpIDznF34/GTZ85nqSmExZUeYcvg=
-X-Google-Smtp-Source: AGHT+IG/lfKP5G5CHY8c8pWMzE2yIWajKjW/XutuPwpU8TFbNmxnOtW2rm8Qjh6SBqJv2JE67Z8zcg==
-X-Received: by 2002:a05:6000:bd2:b0:38d:dc0d:8f4c with SMTP id
- ffacd0b85a97d-38dea270ec9mr2169095f8f.20.1739368382142; 
- Wed, 12 Feb 2025 05:53:02 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dc33939f3sm16776390f8f.17.2025.02.12.05.53.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 05:53:01 -0800 (PST)
-Message-ID: <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
-Date: Wed, 12 Feb 2025 14:53:00 +0100
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1tiCTq-0001kR-NE
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:08:47 -0500
+Received: from mailout1.samsung.com ([203.254.224.24])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1tiCTj-0000aw-Bz
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:08:39 -0500
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20250212130828epoutp015c8a65ac53eb922a420a39bc5fb15e5e~jd_VgXhzF0744607446epoutp01S
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:08:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20250212130828epoutp015c8a65ac53eb922a420a39bc5fb15e5e~jd_VgXhzF0744607446epoutp01S
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1739365708;
+ bh=aH6hNuq4o8VH6EBItpXBg3NZCF57oQNgUhJfWyllJPA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=oDhOOGjrh4aTENQzE8MnauW2Ou79mBSufMriuRD0LtZhxZJh8vjl661tAXpHUrBhW
+ GfsfU0zygxTCWPW8YrAjNlldU0OToYOCuRG8LIXQ+f/5/MoMwYxrSkQTa8P0VwTGFs
+ jksMMRzXTMXDgKHj6Rpmz371WW9ZK47vDFzMnOjk=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+ 20250212130827epcas5p36a40693e0cbf6fd390fbd5198424d7cf~jd_Umigr62814328143epcas5p3G;
+ Wed, 12 Feb 2025 13:08:27 +0000 (GMT)
+Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.177]) by
+ epsnrtp3.localdomain (Postfix) with ESMTP id 4YtJXT6DhHz4x9Pp; Wed, 12 Feb
+ 2025 13:08:25 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+ epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ F1.9F.29212.94D9CA76; Wed, 12 Feb 2025 22:08:25 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250212113729epcas5p2707be4e4b7787ea8ba5f47f3b31a1ac3~jcu6IVoZ-0329103291epcas5p20;
+ Wed, 12 Feb 2025 11:37:29 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250212113729epsmtrp140ebe53f39b59bf5155180ee7b507848~jcu6HhVtu0509205092epsmtrp16;
+ Wed, 12 Feb 2025 11:37:29 +0000 (GMT)
+X-AuditID: b6c32a50-7ebff7000000721c-a3-67ac9d49f09f
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+ epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 8B.6A.18949.9F78CA76; Wed, 12 Feb 2025 20:37:29 +0900 (KST)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250212113728epsmtip17255d461eb0e7244d40bf0a694e17c22~jcu4dwqg10939709397epsmtip1a;
+ Wed, 12 Feb 2025 11:37:27 +0000 (GMT)
+Date: Wed, 12 Feb 2025 17:07:01 +0530
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
+ krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com
+Subject: Re: [PATCH 2/3] hw/cxl/cxl-mailbox-utils.c: Added support for Clear
+ Log (Opcode 0403h)
+Message-ID: <20250212113631.ngye4varkii5bb5j@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
- QAPI enum
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250212112413.37553-1-philmd@linaro.org>
- <20250212112413.37553-2-philmd@linaro.org>
- <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
- <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
- <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20250204105342.00000c31@huawei.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKJsWRmVeSWpSXmKPExsWy7bCmuq7n3DXpBh9O6VlMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLVwmtsFgs3LmOyOD/rFIvF3217GS2O9+5gAXLnsDtweeycdZfdo+XIW1aP
+ J9c2M3n0bVnF6DF1dr3H501yAWxR2TYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbm
+ Sgp5ibmptkouPgG6bpk5QIcpKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgpMCvSK
+ E3OLS/PS9fJSS6wMDQyMTIEKE7IzXqzoYypoVar4vPkxUwPjO4kuRk4OCQETiTdXVzJ3MXJx
+ CAnsYZS49uALlPOJUeLfks9QzjdGib0Ln7PDtPTe7meFSOxllHizczkLXMvP9s1MIFUsAqoS
+ 1z8dZwGx2QR0JM7fnssGYosIGEm8uzGJEaSBWeAmo0TjpGdgCWGBRInO4x1gDbwCzhK/zl9h
+ g7AFJU7OfAIW5xQwlNh/bR/YNgmBTg6J2bdXskHc5CKx6+VWZghbWOLV8S1Qt0pJvOxvg7Kz
+ Jf7Mb4eqL5BY9HMmVNxeovVUP1gvs0CGROvKPUwQcVmJqafWMUHE+SR6fz+BivNK7JgHY6tJ
+ tO+YDzVHRuLNr8VQ8z0kjq3/zwgJlg+MEnt2T2acwCg3C8lDs5Dsg7CtJDo/NLHOYuQAsqUl
+ lv/jgDA1Jdbv0l/AyLqKUSq1oDg3PTXZtMBQNy+1HB7Ryfm5mxjB6VUrYAfj6g1/9Q4xMnEw
+ HmKU4GBWEuGVmLYmXYg3JbGyKrUoP76oNCe1+BCjKTCKJjJLiSbnAxN8Xkm8oYmlgYmZmZmJ
+ pbGZoZI4b/POlnQhgfTEktTs1NSC1CKYPiYOTqkGJk9hw/sX/7E6P1dojXWZUPbec1VRS726
+ y1H+e+/L7pXl8G1ONj2+SD0kVf6lsNnk41490tPrG/qEuPYlTl33m5s3SydgN287t9jHTxve
+ fel0UPY/wsencPPbmti7mu9Sj8/U2jUlZMZRyfP1Iol1Zteimo2zNpV9LJvRytcq6Ha20C9O
+ /4jT0teWrsySQpP3CviuC9C9c+MxWzfHAi37LbaP5wpL3tW+sHPnue3qfkFHMyfO2xj9MPy8
+ 3v8tj339dN7fUhFmbN/zrPnLivOCT9PP5OfrfvJoE46XWxRx2LBq16qtF+ce8+w5LxK97G5R
+ gDYH990whpSSgjqrO49YRVQPK67nXT3L/KiqQtcDJZbijERDLeai4kQAW//AbjgEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKLMWRmVeSWpSXmKPExsWy7bCSnO7P9jXpBns3GFlMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLVwmtsFgs3LmOyOD/rFIvF3217GS2O9+5gAXLnsDtweeycdZfdo+XIW1aP
+ J9c2M3n0bVnF6DF1dr3H501yAWxRXDYpqTmZZalF+nYJXBlfZ1xnLNguX3Hm/AmWBsZdYl2M
+ nBwSAiYSvbf7WbsYuTiEBHYzSqzd8pMVIiEjcXHmYxYIW1hi5b/n7BBFHxglHhydzw6SYBFQ
+ lbj+6ThYEZuAjsT523PZQGwRASOJdzcmMYI0MAvcZpT4vfseWJGwQKJE5/EOMJtXwFni1/kr
+ bHBTW192MEEkBCVOznwCVsQsYCYxb/ND5i5GDiBbWmL5Pw6QMKeAocT+a/tYJjAKzELSMQtJ
+ xyyEjgWMzKsYJVMLinPTc4sNC4zyUsv1ihNzi0vz0vWS83M3MYJjQktrB+OeVR/0DjEycTAe
+ YpTgYFYS4TVZuCJdiDclsbIqtSg/vqg0J7X4EKM0B4uSOO+3170pQgLpiSWp2ampBalFMFkm
+ Dk6pBqbEA/OWtB9bum51T6+3gVDV2RM1r541f/xj0OvP8VfcLTti4suzGz9IVXBOsND9+Kg4
+ 7JrWrPdR+x7zVs3qaC3pL+p+OSfaeLPx5nVhxTrrnuZ8uRH4su743bt9Ia97Itr4VXT6FtuE
+ npqrPD33wD+V2w5tHkqpMyLz+JqsVjrqHDgh6vRaL22TQOYVmVrDy6dPs/gEOjheXFM8wTf+
+ 5D6RdT9fHr/ywfhEk3tZWKtb4qY+0ZmiHTzLctjK+72crBZs8jZ7eV2dUSnteUbNuhs1R148
+ WbBxp9fefdG6OybVu/Eq9nx9rflq49PZCQvrXLhOJB1tmz3dqTb2vOODPsGbgd0ba7du6tb/
+ cVXT/I8SS3FGoqEWc1FxIgBksDfC+AIAAA==
+X-CMS-MailID: 20250212113729epcas5p2707be4e4b7787ea8ba5f47f3b31a1ac3
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----8pCVYZkCOGUjObx0wm0yJlGbi0Dl-Xo5m.-jYkYL.P4N.DQv=_4c48b_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250203060053epcas5p137fe4cbd5661afdfd2602dbc7facdcb9
+References: <20250203055950.2126627-1-arpit1.kumar@samsung.com>
+ <CGME20250203060053epcas5p137fe4cbd5661afdfd2602dbc7facdcb9@epcas5p1.samsung.com>
+ <20250203055950.2126627-3-arpit1.kumar@samsung.com>
+ <20250204105342.00000c31@huawei.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -58
+X-Spam_score: -5.9
+X-Spam_bar: -----
+X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 12 Feb 2025 08:57:28 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,65 +141,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 13:56, BALATON Zoltan wrote:
-> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
->> On 12/2/25 12:37, Thomas Huth wrote:
->>> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
->>>> Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
->>>> Endianness can be BIG, LITTLE or unspecified (default).
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>   qapi/common.json                    | 16 ++++++++++++++++
->>>>   include/hw/qdev-properties-system.h |  7 +++++++
->>>>   hw/core/qdev-properties-system.c    | 11 +++++++++++
->>>>   3 files changed, 34 insertions(+)
->>>>
->>>> diff --git a/qapi/common.json b/qapi/common.json
->>>> index 6ffc7a37890..217feaaf683 100644
->>>> --- a/qapi/common.json
->>>> +++ b/qapi/common.json
->>>> @@ -212,3 +212,19 @@
->>>>   ##
->>>>   { 'struct': 'HumanReadableText',
->>>>     'data': { 'human-readable-text': 'str' } }
->>>> +
->>>> +##
->>>> +# @EndianMode:
->>>> +#
->>>> +# An enumeration of three options: little, big, and unspecified
->>>> +#
->>>> +# @little: Little endianness
->>>> +#
->>>> +# @big: Big endianness
->>>> +#
->>>> +# @unspecified: Endianness not specified
->>>> +#
->>>> +# Since: 10.0
->>>> +##
->>>> +{ 'enum': 'EndianMode',
->>>> +  'data': [ 'little', 'big', 'unspecified' ] }
->>>
->>> Should 'unspecified' come first? ... so that it gets the value 0, 
->>> i.e. when someone forgets to properly initialize a related variable, 
->>> the chances are higher that it ends up as "unspecified" than as 
->>> "little" ?
->>
->> Hmm but then in this series the dual-endianness regions are defined as:
->>
->> +static const MemoryRegionOps pic_ops[2] = {
->> +    [0 ... 1] = {
-> 
-> This is already confusing as you'd have to know that 0 and 1 here means 
-> ENDIAN_MODE_LITTLE and ENDIAN_MODE_BIG (using those constants here as 
-> well might be clearer). It's easy to miss what this does so maybe 
-> repeating the definitions for each case would be longer but less 
-> confusing and then it does not matter what the values are.
-> 
-> Or what uses the ops.endianness now should look at the property 
-> introduced by this patch to avoid having to propagate it like below and 
-> drop the ops.endianness? Or it should move to the memory region and set 
-> when the ops are assigned?
+------8pCVYZkCOGUjObx0wm0yJlGbi0Dl-Xo5m.-jYkYL.P4N.DQv=_4c48b_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
 
-I'm not understanding well what you ask, but maybe the answer is in v7 :)
+On 04/02/25 10:53AM, Jonathan Cameron wrote:
+>On Mon,  3 Feb 2025 11:29:49 +0530
+>Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+>
+>Add some description of what is being added here.
+>
+>Key issue in here is that clearing the CEL doesn't make
+>sense. It is a description of what the device supports, there
+>is no state to clear in it.  To add this command you need
+>to pick a different log.
+>
+>Jonathan
+>
+Thanks for the review Jonathan, will modify the code accordingly 
+in V2 patch.
+
+>
+>> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+>> Reviewed-by: Alok Rathore <alok.rathore@samsung.com>
+>> Reviewed-by: Krishna Kanth Reddy <krish.reddy@samsung.com>
+>> ---
+>>  hw/cxl/cxl-mailbox-utils.c | 36 ++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 36 insertions(+)
+>>
+>> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>> index 3d66a425a9..5fd7f850c4 100644
+>> --- a/hw/cxl/cxl-mailbox-utils.c
+>> +++ b/hw/cxl/cxl-mailbox-utils.c
+>> @@ -77,6 +77,7 @@ enum {
+>>          #define GET_SUPPORTED 0x0
+>>          #define GET_LOG       0x1
+>>          #define GET_LOG_CAPABILITIES   0x2
+>> +        #define CLEAR_LOG     0x3
+>>      FEATURES    = 0x05,
+>>          #define GET_SUPPORTED 0x0
+>>          #define GET_FEATURE   0x1
+>> @@ -1115,6 +1116,39 @@ static CXLRetCode cmd_logs_get_log_capabilities(const struct cxl_cmd *cmd,
+>>      return CXL_MBOX_SUCCESS;
+>>  }
+>>
+>> +/* CXL r3.1 Section 8.2.9.5.4: Clear Log (Opcode 0403h) */
+>> +static CXLRetCode cmd_logs_clear_log(const struct cxl_cmd *cmd,
+>> +                                     uint8_t *payload_in,
+>> +                                     size_t len_in,
+>> +                                     uint8_t *payload_out,
+>> +                                     size_t *len_out,
+>> +                                     CXLCCI *cci)
+>> +{
+>> +    int32_t cap_id;
+>> +    struct {
+>> +        QemuUUID uuid;
+>> +    } QEMU_PACKED QEMU_ALIGNED(8) * clear_log = (void *)payload_in;
+>> +
+>> +    cap_id = valid_log_check(&clear_log->uuid, cci);
+>> +    if (cap_id == -1) {
+>> +        return CXL_MBOX_INVALID_LOG;
+>> +    }
+>
+>Follow on from previous patch, if this returns the cap pointer,
+>the following code wont have to index the array and should end up simpler.
+>
+okay
+
+>> +
+>> +    if (cci->supported_log_cap[cap_id].param_flags.clear_log_supported) {
+>I would flip this.
+>    if (!(cap->param_flags & PARAM_FLAG_CLEAR_LOG_SUPPORTED)) {
+>        return CXL_MBOX_UNSUPPORTED;
+>    }
+>
+>
+>> +        switch (cap_id) {
+>> +        case CEL:
+>
+>So if we return the cap as suggested, it will have to reference what it is
+>or provide a callback (which might be cleaner as this grows).
+>
+>However, what does clearly the command effects log mean?
+>This makes no sense.  So if you want to implement clear_log you
+>need to implement a different log to clear.
+>
+okay
+
+>> +            memset(cci->cel_log, 0, (1 << 16) * sizeof(struct cel_log));
+>> +            cci->cel_size = 0;
+>> +            break;
+>> +        default:
+>> +            return CXL_MBOX_UNSUPPORTED;
+>> +        }
+>> +    } else {
+>> +        return CXL_MBOX_UNSUPPORTED;
+>> +    }
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>>  /* CXL r3.1 section 8.2.9.6: Features */
+>>  /*
+>>   * Get Supported Features output payload
+>> @@ -2882,6 +2916,8 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>>      [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
+>>      [LOGS][GET_LOG_CAPABILITIES] = { "LOGS_GET_LOG_CAPABILITIES",
+>>                                       cmd_logs_get_log_capabilities, 0x10, 0 },
+>> +    [LOGS][CLEAR_LOG] = { "LOGS_CLEAR_LOG", cmd_logs_clear_log, 0x10,
+>> +                          CXL_MBOX_IMMEDIATE_LOG_CHANGE},
+>>      [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
+>>                                    cmd_features_get_supported, 0x8, 0 },
+>>      [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
+>
+
+------8pCVYZkCOGUjObx0wm0yJlGbi0Dl-Xo5m.-jYkYL.P4N.DQv=_4c48b_
+Content-Type: text/plain; charset="utf-8"
+
+
+------8pCVYZkCOGUjObx0wm0yJlGbi0Dl-Xo5m.-jYkYL.P4N.DQv=_4c48b_--
 
