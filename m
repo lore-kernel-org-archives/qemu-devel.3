@@ -4,137 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55B2C021A1
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 10:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60536C021A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 10:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti9ZB-0004pr-Aq; Wed, 12 Feb 2025 05:02:01 -0500
+	id 1ti9pt-0000Yw-H8; Wed, 12 Feb 2025 05:19:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ti9Z8-0004pQ-Oq
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 05:01:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ti9Z1-0000vO-Qu
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 05:01:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739354509;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CNkIMF/NI3L6xDvayogJor+p/40OSWdQSMO+0UT3Oog=;
- b=K1p5VWy6hlNx+Z5ALAJGPbRrFmjUpLry2wYwX6OOpELZxk2ItbJHCatl4nyrIn95LuedsT
- bMZ6stqHStb/Jaa2yhmcIIbTqru6ldaeDsVspSkNfKeYdQ9eIX1oQ6AS7I8uIrSxLOGEqJ
- UhpRSp23kNYN/5HxyHlWVq6P7ou0b+M=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-5X5tYVOdPXy6hCgUAUOYZQ-1; Wed, 12 Feb 2025 05:01:48 -0500
-X-MC-Unique: 5X5tYVOdPXy6hCgUAUOYZQ-1
-X-Mimecast-MFC-AGG-ID: 5X5tYVOdPXy6hCgUAUOYZQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4392fc6bceaso22849115e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 02:01:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
+ id 1ti9pi-0000Xk-Ey
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 05:19:06 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
+ id 1ti9pe-00045m-Mq
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 05:19:06 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-38dd14c99d3so3835166f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 02:19:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1739355539; x=1739960339;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6XkriyTzPI5DjwkNonjIK3I5ClgViopgS3eYB4dJgVw=;
+ b=Bc0YJoUPSBZnm1gnNmOtLr+9Cn2WJ3Mc5HqRZKacMlFs27NlfAEZy1ferLTMWBrAV5
+ stzRoKne/DEUYYTfEB/JT9sfqw5fpjUkVhNnpEQKIXN0SxODxH0wlZ4pSPgYZ1iG3iuo
+ +Rzeq+gEKaB0vV0k5vlc/G+DYnCQYANYaeMDlCGHNi0FQ3gX20gSROOsNZ5Ef0GUVnxV
+ LfU43FIK6L1sQ1rTN9GEF4I4HWj2sINn/3O6lmX+xMDvaj/zGc64uEAbALXYSPR046Bj
+ wmUlWzFYup+pNwS7AfG7Cz5r2Z/GeE9DGUiUw2sYXfcGdImnc0tmylYrcDnjbpCNSmJU
+ 7nVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739354507; x=1739959307;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1739355539; x=1739960339;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CNkIMF/NI3L6xDvayogJor+p/40OSWdQSMO+0UT3Oog=;
- b=EVxZX8u6FE5Rd4PrL8B9aygs/yJL2PbHdEnLH8VC6xYd46c6HF0uALLYwxwNti1Tri
- N0ktR1hfYX3aWyCIMHufv4Nfd4kupXzY8Oy/qDw/zx7McD934R64VIBJ3TbuNWn75i+A
- ATMLpuNdrS8fwNBM7nc6q2zwNgUJJ0QeaD1z/4BTBSaKGixM0VZ9yiUqFkwu63rm7f/q
- ieBFtJxcg5CqECSHOqf7QSUodkDtXCEYqn+55p3WcmiGdC97oQViooBFXqfLSmnONQLV
- xNmXGBzvnGbsAulHYRuPNbfzKnOaAnnR/9zPL9LrMOXCDUteS0mw8mFPmwkcUgbhuQ3W
- VMEg==
+ bh=6XkriyTzPI5DjwkNonjIK3I5ClgViopgS3eYB4dJgVw=;
+ b=nr4ghaAbhBA7flBmnvAlC4HEMAat+OxBUusX1g5bRnRpLXKHO0OnTBFiXXZETjchT1
+ EtwjW2eUSu/XKxQBWSM/q4t9NzHbmchtJs6mSs4zybMPwZ2JwwbOFghmIcv3OFyX6TQn
+ lgmYwd3mq9auCwxdipTV/AyzO/je4DYCmq32tU60o8mN6ATPI+EZwINZs60MY2h7RbT6
+ 4txgc/Wop8k4AKQ1T8q6om/RiNFctW/p/Pel1s7EWyClnuceb0po/TGLCMN/+3u/M7BT
+ vtS2eF3ypO9WzVOIyfviUv3gWamn/fPyzNfsjiEtNJo9Qh1dRMDrjvpZsjZA9Mqhzb/x
+ gojg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5X6/HNE/UrpxmpqMoxvNhPb3fofPt8c5N9db7oCZEAIdesZv3TmdHXmtDnu7DguBsKHYkbUqEKHWg@nongnu.org
-X-Gm-Message-State: AOJu0Yx+880JIqvl93VH88sMmI3EKJMRHnGzWCOM/2lowS1s7hCSroxi
- 2D4hDXTb2LPGw96rhCDLn1Db9U1iGZyrm3fMXpSvGh2aabcuv64CWhs+q6v53yNVrKP1oU0WehG
- Q4YY2rpiG7XlqeMvqpKxaa3V+Zt3SRZjjR3rpO1TL+vWNrtOqDKBq
-X-Gm-Gg: ASbGnctciukM89gV+RlEnhCASI5vWIs9WiJEBM4LufRHJdAeTxnlvT0sH6OQrU2h+MB
- AjLsC9zGwb9j8SG9JDMaIvrK7pnKxZXoXpxnb8URbOJhKfIMjBGmEEA/cHzLpjsKYRJSgtXcKyl
- yOtJoG7Ob4iOe6NtyaVmSOszuKEeZLp86FCxt+xG1bPCzMlFq2ooJdOuIkqawLi5s8/HwJF3iFD
- 3CzxWeBUAhMxgsgqt+mCI3M75aibbxgmm/UfrAyZrMzC87Q/+op8JTPa62x2OAwhP4XkEr9MAPO
- NBE/SMA=
-X-Received: by 2002:a05:600c:1f11:b0:439:4b7d:72de with SMTP id
- 5b1f17b1804b1-4395817d2ecmr24484665e9.15.1739354506708; 
- Wed, 12 Feb 2025 02:01:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IENGqGiIi6OxIhOf3rEZD+OEecvN1GM4r5De1KTPtJQJFTHTQOByn4MVK5OYd8ukQb8HNVRKg==
-X-Received: by 2002:a05:600c:1f11:b0:439:4b7d:72de with SMTP id
- 5b1f17b1804b1-4395817d2ecmr24484275e9.15.1739354506199; 
- Wed, 12 Feb 2025 02:01:46 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.148.6])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-4395aef82edsm11500155e9.38.2025.02.12.02.01.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 02:01:45 -0800 (PST)
-Message-ID: <1bcb9de2-5932-4c24-958d-7a86cfcea70e@redhat.com>
-Date: Wed, 12 Feb 2025 11:01:44 +0100
+ AJvYcCW4jGairMFpvI77tBAxBbIjufxcl/+n50lveN776HMsgd7kXb06nns8dg5+oLuBu+NXK90UBRWdqaXV@nongnu.org
+X-Gm-Message-State: AOJu0YyP643q34lA5d9Bu/5xAnz95mP1AtGU+ho8Ml4+TFqoFIfxH4K7
+ ddj7zF3nYEwwQaS6+o6y8whX8G+z/tAT1TdEseOoP+NbRaRWzbMKnEPOrPidlxk=
+X-Gm-Gg: ASbGncu76fH4JFhZ3TKDLW2P40jC5IYs56qD1Jd0i/m0Pw56rQfEBt62z8b9AGbiCee
+ WLoMvKzQx2rlVl9rQJXnlfAjiaZxacR1tPS7O6O6kxdo6SgSdhsvL4JXi9w8NskAh3LBs2yen+7
+ NF4MLyIqMq+e59Y6sJjiYGX+kewjHuDKKXE5M7j2h9fjsoIASm14C8OiZRPG+1T06Dr5aY2SRj8
+ C4TqoJIFHev2wM7+IBrxpEWMRbGQfYqNnao59Lbnmng6TGQaOGOxxqJWc0Gi5ygy3uq7+aS/aPd
+ S1thk7OnRIbylDucfyharND0Z/Tqy179GtWSBphSJ2QpiQ==
+X-Google-Smtp-Source: AGHT+IGdA1J8VnJK7SNU9iar8PaWOAn/+9tsuLrb1ZTqL02IANB01QEcVxNtosElwND1L6a6kjMNfQ==
+X-Received: by 2002:a05:6000:156f:b0:38e:d026:820 with SMTP id
+ ffacd0b85a97d-38ed02609f0mr1428947f8f.16.1739355538838; 
+ Wed, 12 Feb 2025 02:18:58 -0800 (PST)
+Received: from rkanwal-XPS-15-9520.uk.rivosinc.com ([51.52.155.79])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dc73c2e00sm15148815f8f.57.2025.02.12.02.18.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Feb 2025 02:18:58 -0800 (PST)
+From: Rajnesh Kanwal <rkanwal@rivosinc.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ atishp@rivosinc.com, apatel@ventanamicro.com, rkanwal@rivosinc.com,
+ beeman@rivosinc.com, jason.chien@sifive.com, frank.chang@sifive.com,
+ richard.henderson@linaro.org, bmeng.cn@gmail.com
+Subject: [PATCH v7] target/riscv: Add support to access ctrsource,
+ ctrtarget, ctrdata regs.
+Date: Wed, 12 Feb 2025 10:18:49 +0000
+Message-ID: <20250212-b4-ctr_upstream_v6-v7-1-4e8159ea33bf@rivosinc.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] rust: Build separate qemu_api_tools and
- qemu_api_system
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: hreitz@redhat.com, manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, 
- qemu-rust@nongnu.org
-References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-2-kwolf@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250211214328.640374-2-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20250205-b4-ctr_upstream_v6-71418cd245ee
+X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,436 +106,426 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/11/25 22:43, Kevin Wolf wrote:
-> The existing qemu_api library can't be linked into tools because it
-> contains a few bindings for things that only exist in the system
-> emulator.
-> 
-> This adds a new "system" feature to the qemu_api crate that enables the
-> system emulator parts in it, and build the crate twice: qemu_api_tools
-> is the core library that can be linked into tools, and qemu_api_system
-> is the full one for the system emulator.
-
-As discussed on IRC, the issue here is ClassInitImpl<>, which has to be 
-defined in the same crate for qemu_api::qom and qemu_api::qdev.
-
-Right now, the block layer has no use for QOM, but later it will (for 
-secret management, for example), so splitting QOM into a separate crate 
-does not work long term.
-
-I'll try to figure out an alternative way to do the class_init bindings.
-
-Paolo
-
-> Unfortunately, since library names have to be unique in meson, this
-> means that every user of the library now needs to specify a
-> rust_dependency_map to make either qemu_api_tools or qemu_api_system
-> show up as the qemu_api crate in Rust.
-> 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   rust/wrapper-system.h          | 44 +++++++++++++++++++++
->   rust/wrapper.h                 |  9 -----
->   meson.build                    | 11 +++++-
->   rust/hw/char/pl011/meson.build |  3 +-
->   rust/meson.build               | 11 +++---
->   rust/qemu-api/Cargo.toml       |  1 +
->   rust/qemu-api/build.rs         | 10 ++++-
->   rust/qemu-api/meson.build      | 70 ++++++++++++++++++++++------------
->   rust/qemu-api/src/bindings.rs  | 16 ++++++--
->   rust/qemu-api/src/lib.rs       |  4 ++
->   rust/qemu-api/src/prelude.rs   |  2 +
->   rust/qemu-api/src/zeroable.rs  | 10 +++++
->   12 files changed, 143 insertions(+), 48 deletions(-)
->   create mode 100644 rust/wrapper-system.h
-> 
-> diff --git a/rust/wrapper-system.h b/rust/wrapper-system.h
-> new file mode 100644
-> index 0000000000..fc6c571e6d
-> --- /dev/null
-> +++ b/rust/wrapper-system.h
-> @@ -0,0 +1,44 @@
-> +/*
-> + * QEMU System Emulator
-> + *
-> + * Copyright (c) 2024 Linaro Ltd.
-> + *
-> + * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> + *
-> + * Permission is hereby granted, free of charge, to any person obtaining a copy
-> + * of this software and associated documentation files (the "Software"), to deal
-> + * in the Software without restriction, including without limitation the rights
-> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-> + * copies of the Software, and to permit persons to whom the Software is
-> + * furnished to do so, subject to the following conditions:
-> + *
-> + * The above copyright notice and this permission notice shall be included in
-> + * all copies or substantial portions of the Software.
-> + *
-> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-> + * THE SOFTWARE.
-> + */
-> +
-> +
-> +/*
-> + * This header file is meant to be used as input to the `bindgen` application
-> + * in order to generate C FFI compatible Rust bindings.
-> + */
-> +
-> +/* The system emulator has all of the bindings tools have */
-> +#include "wrapper.h"
-> +
-> +#include "system/system.h"
-> +#include "hw/sysbus.h"
-> +#include "exec/memory.h"
-> +#include "hw/clock.h"
-> +#include "hw/qdev-clock.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/qdev-properties-system.h"
-> +#include "hw/irq.h"
-> +#include "migration/vmstate.h"
-> diff --git a/rust/wrapper.h b/rust/wrapper.h
-> index a9bc67af0d..41be87adcf 100644
-> --- a/rust/wrapper.h
-> +++ b/rust/wrapper.h
-> @@ -50,15 +50,6 @@ typedef enum memory_order {
->   #include "qemu/osdep.h"
->   #include "qemu/module.h"
->   #include "qemu-io.h"
-> -#include "system/system.h"
-> -#include "hw/sysbus.h"
-> -#include "exec/memory.h"
->   #include "chardev/char-fe.h"
-> -#include "hw/clock.h"
-> -#include "hw/qdev-clock.h"
-> -#include "hw/qdev-properties.h"
-> -#include "hw/qdev-properties-system.h"
-> -#include "hw/irq.h"
->   #include "qapi/error.h"
-> -#include "migration/vmstate.h"
->   #include "chardev/char-serial.h"
-> diff --git a/meson.build b/meson.build
-> index 18cf9e2913..1f26801b69 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4094,10 +4094,17 @@ if have_rust
->     # this case you must pass the path to `clang` and `libclang` to your build
->     # command invocation using the environment variables CLANG_PATH and
->     # LIBCLANG_PATH
-> -  bindings_rs = rust.bindgen(
-> +  bindings_rs_tools = rust.bindgen(
->       input: 'rust/wrapper.h',
-> +    output: 'bindings_tools.inc.rs',
-> +    include_directories: include_directories('.', 'include'),
-> +    bindgen_version: ['>=0.60.0'],
-> +    args: bindgen_args,
-> +    )
-> +  bindings_rs_system = rust.bindgen(
-> +    input: 'rust/wrapper-system.h',
->       dependencies: common_ss.all_dependencies(),
-> -    output: 'bindings.inc.rs',
-> +    output: 'bindings_system.inc.rs',
->       include_directories: include_directories('.', 'include'),
->       bindgen_version: ['>=0.60.0'],
->       args: bindgen_args,
-> diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-> index 547cca5a96..d2cfede5dc 100644
-> --- a/rust/hw/char/pl011/meson.build
-> +++ b/rust/hw/char/pl011/meson.build
-> @@ -12,9 +12,10 @@ _libpl011_rs = static_library(
->     dependencies: [
->       bilge_dep,
->       bilge_impl_dep,
-> -    qemu_api,
-> +    qemu_api_system,
->       qemu_api_macros,
->     ],
-> +  rust_dependency_map: {'qemu_api_system': 'qemu_api'},
->   )
->   
->   rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
-> diff --git a/rust/meson.build b/rust/meson.build
-> index 91e52b8fb8..50eb23b072 100644
-> --- a/rust/meson.build
-> +++ b/rust/meson.build
-> @@ -9,18 +9,19 @@ if cargo.found()
->     run_target('clippy',
->       command: [config_host['MESON'], 'devenv',
->                 '--workdir', '@CURRENT_SOURCE_DIR@',
-> -              cargo, 'clippy', '--tests'],
-> -    depends: bindings_rs)
-> +              cargo, 'clippy', '--tests', '--features', 'system'],
-> +    depends: bindings_rs_system)
->   
->     run_target('rustfmt',
->       command: [config_host['MESON'], 'devenv',
->                 '--workdir', '@CURRENT_SOURCE_DIR@',
->                 cargo, 'fmt'],
-> -    depends: bindings_rs)
-> +    depends: bindings_rs_system)
->   
->     run_target('rustdoc',
->       command: [config_host['MESON'], 'devenv',
->                 '--workdir', '@CURRENT_SOURCE_DIR@',
-> -              cargo, 'doc', '--no-deps', '--document-private-items'],
-> -    depends: bindings_rs)
-> +              cargo, 'doc', '--no-deps', '--document-private-items',
-> +              '--features', 'system'],
-> +    depends: bindings_rs_system)
->   endif
-> diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
-> index a51dd14285..ed7b60bc80 100644
-> --- a/rust/qemu-api/Cargo.toml
-> +++ b/rust/qemu-api/Cargo.toml
-> @@ -24,6 +24,7 @@ version_check = "~0.9"
->   default = ["debug_cell"]
->   allocator = []
->   debug_cell = []
-> +system= []
->   
->   [lints]
->   workspace = true
-> diff --git a/rust/qemu-api/build.rs b/rust/qemu-api/build.rs
-> index 471e6c633d..b14f9d4e4a 100644
-> --- a/rust/qemu-api/build.rs
-> +++ b/rust/qemu-api/build.rs
-> @@ -16,7 +16,13 @@ fn main() -> Result<()> {
->       let path = env::var("MESON_BUILD_ROOT")
->           .unwrap_or_else(|_| format!("{}/src", env!("CARGO_MANIFEST_DIR")));
->   
-> -    let file = format!("{}/bindings.inc.rs", path);
-> +    let basename = if cfg!(feature = "system") {
-> +        "bindings_system.inc.rs"
-> +    } else {
-> +        "bindings_tools.inc.rs"
-> +    };
-> +
-> +    let file = format!("{}/{}", path, basename);
->       let file = Path::new(&file);
->       if !Path::new(&file).exists() {
->           panic!(concat!(
-> @@ -31,7 +37,7 @@ fn main() -> Result<()> {
->       }
->   
->       let out_dir = env::var("OUT_DIR").unwrap();
-> -    let dest_path = format!("{}/bindings.inc.rs", out_dir);
-> +    let dest_path = format!("{}/{}", out_dir, basename);
->       let dest_path = Path::new(&dest_path);
->       if dest_path.symlink_metadata().is_ok() {
->           remove_file(dest_path)?;
-> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-> index 60944a657d..acac384936 100644
-> --- a/rust/qemu-api/meson.build
-> +++ b/rust/qemu-api/meson.build
-> @@ -10,39 +10,58 @@ if get_option('debug_mutex')
->     _qemu_api_cfg += ['--cfg', 'feature="debug_cell"']
->   endif
->   
-> -_qemu_api_rs = static_library(
-> -  'qemu_api',
-> +sources_core = [
-> +  'src/lib.rs',
-> +  'src/assertions.rs',
-> +  'src/bindings.rs',
-> +  'src/bitops.rs',
-> +  'src/callbacks.rs',
-> +  'src/cell.rs',
-> +  'src/c_str.rs',
-> +  'src/module.rs',
-> +  'src/offset_of.rs',
-> +  'src/prelude.rs',
-> +  'src/qom.rs',
-> +  'src/zeroable.rs',
-> +]
-> +sources_system = sources_core + [
-> +  'src/irq.rs',
-> +  'src/qdev.rs',
-> +  'src/sysbus.rs',
-> +  'src/vmstate.rs',
-> +]
-> +
-> +
-> +_qemu_api_tools_rs = static_library(
-> +  'qemu_api_tools',
->     structured_sources(
-> -    [
-> -      'src/lib.rs',
-> -      'src/assertions.rs',
-> -      'src/bindings.rs',
-> -      'src/bitops.rs',
-> -      'src/callbacks.rs',
-> -      'src/cell.rs',
-> -      'src/c_str.rs',
-> -      'src/irq.rs',
-> -      'src/module.rs',
-> -      'src/offset_of.rs',
-> -      'src/prelude.rs',
-> -      'src/qdev.rs',
-> -      'src/qom.rs',
-> -      'src/sysbus.rs',
-> -      'src/vmstate.rs',
-> -      'src/zeroable.rs',
-> -    ],
-> -    {'.' : bindings_rs},
-> +    sources_core,
-> +    {'.' : bindings_rs_tools},
->     ),
->     override_options: ['rust_std=2021', 'build.rust_std=2021'],
->     rust_abi: 'rust',
->     rust_args: _qemu_api_cfg,
->   )
-> +_qemu_api_system_rs = static_library(
-> +  'qemu_api_system',
-> +  structured_sources(
-> +    sources_system,
-> +    {'.' : bindings_rs_system},
-> +  ),
-> +  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-> +  rust_abi: 'rust',
-> +  rust_args: _qemu_api_cfg + ['--cfg', 'feature="system"'],
-> +)
->   
-> -rust.test('rust-qemu-api-tests', _qemu_api_rs,
-> +rust.test('rust-qemu-api-tests', _qemu_api_system_rs,
->             suite: ['unit', 'rust'])
->   
-> -qemu_api = declare_dependency(
-> -  link_with: _qemu_api_rs,
-> +qemu_api_tools = declare_dependency(
-> +  link_with: _qemu_api_tools_rs,
-> +  dependencies: qemu_api_macros,
-> +)
-> +qemu_api_system = declare_dependency(
-> +  link_with: _qemu_api_system_rs,
->     dependencies: qemu_api_macros,
->   )
->   
-> @@ -59,7 +78,8 @@ test('rust-qemu-api-integration',
->           override_options: ['rust_std=2021', 'build.rust_std=2021'],
->           rust_args: ['--test'],
->           install: false,
-> -        dependencies: [qemu_api, qemu_api_macros],
-> +        dependencies: [qemu_api_system, qemu_api_macros],
-> +        rust_dependency_map: {'qemu_api_system': 'qemu_api'},
->           link_whole: [rust_qemu_api_objs, libqemuutil]),
->       args: [
->           '--test', '--test-threads', '1',
-> diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-> index 8a9b821bb9..2bf6c13a32 100644
-> --- a/rust/qemu-api/src/bindings.rs
-> +++ b/rust/qemu-api/src/bindings.rs
-> @@ -15,15 +15,23 @@
->       clippy::missing_safety_doc
->   )]
->   
-> -#[cfg(MESON)]
-> -include!("bindings.inc.rs");
-> +#[cfg(all(MESON, not(feature="system")))]
-> +include!("bindings_tools.inc.rs");
-> +#[cfg(all(MESON, feature="system"))]
-> +include!("bindings_system.inc.rs");
->   
-> -#[cfg(not(MESON))]
-> -include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
-> +#[cfg(all(not(MESON), not(feature="system")))]
-> +include!(concat!(env!("OUT_DIR"), "/bindings_tools.inc.rs"));
-> +#[cfg(all(not(MESON), feature="system"))]
-> +include!(concat!(env!("OUT_DIR"), "/bindings_system.inc.rs"));
->   
->   unsafe impl Send for Property {}
->   unsafe impl Sync for Property {}
->   unsafe impl Sync for TypeInfo {}
-> +
-> +#[cfg(feature="system")]
->   unsafe impl Sync for VMStateDescription {}
-> +#[cfg(feature="system")]
->   unsafe impl Sync for VMStateField {}
-> +#[cfg(feature="system")]
->   unsafe impl Sync for VMStateInfo {}
-> diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-> index 3cf9371cff..3c6c154f3d 100644
-> --- a/rust/qemu-api/src/lib.rs
-> +++ b/rust/qemu-api/src/lib.rs
-> @@ -18,12 +18,16 @@
->   pub mod c_str;
->   pub mod callbacks;
->   pub mod cell;
-> +#[cfg(feature = "system")]
->   pub mod irq;
->   pub mod module;
->   pub mod offset_of;
-> +#[cfg(feature = "system")]
->   pub mod qdev;
->   pub mod qom;
-> +#[cfg(feature = "system")]
->   pub mod sysbus;
-> +#[cfg(feature = "system")]
->   pub mod vmstate;
->   pub mod zeroable;
->   
-> diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-> index 2dc86e19b2..1b8d7d319e 100644
-> --- a/rust/qemu-api/src/prelude.rs
-> +++ b/rust/qemu-api/src/prelude.rs
-> @@ -17,6 +17,8 @@
->   
->   pub use crate::qom_isa;
->   
-> +#[cfg(feature="system")]
->   pub use crate::sysbus::SysBusDeviceMethods;
->   
-> +#[cfg(feature="system")]
->   pub use crate::vmstate::VMState;
-> diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
-> index 7b04947cb6..b454e9e05e 100644
-> --- a/rust/qemu-api/src/zeroable.rs
-> +++ b/rust/qemu-api/src/zeroable.rs
-> @@ -56,6 +56,7 @@ pub unsafe trait Zeroable: Default {
->   /// ## Differences with `core::mem::zeroed`
->   ///
->   /// `const_zero` zeroes padding bits, while `core::mem::zeroed` doesn't
-> +#[allow(unused)]
->   macro_rules! const_zero {
->       // This macro to produce a type-generic zero constant is taken from the
->       // const_zero crate (v0.1.1):
-> @@ -77,6 +78,7 @@ union TypeAsBytes {
->   }
->   
->   /// A wrapper to implement the `Zeroable` trait through the `const_zero` macro.
-> +#[allow(unused)]
->   macro_rules! impl_zeroable {
->       ($type:ty) => {
->           unsafe impl Zeroable for $type {
-> @@ -86,6 +88,7 @@ unsafe impl Zeroable for $type {
->   }
->   
->   // bindgen does not derive Default here
-> +#[cfg(feature = "system")]
->   #[allow(clippy::derivable_impls)]
->   impl Default for crate::bindings::VMStateFlags {
->       fn default() -> Self {
-> @@ -93,10 +96,17 @@ fn default() -> Self {
->       }
->   }
->   
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::Property__bindgen_ty_1);
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::Property);
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::VMStateFlags);
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::VMStateField);
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::VMStateDescription);
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_1);
-> +#[cfg(feature = "system")]
->   impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_2);
-
+CTR entries are accessed using ctrsource, ctrtarget and ctrdata=0D
+registers using smcsrind/sscsrind extension. This commits extends=0D
+the csrind extension to support CTR registers.=0D
+=0D
+ctrsource is accessible through xireg CSR, ctrtarget is accessible=0D
+through xireg1 and ctrdata is accessible through xireg2 CSR.=0D
+=0D
+CTR supports maximum depth of 256 entries which are accessed using=0D
+xiselect range 0x200 to 0x2ff.=0D
+=0D
+This commits also adds properties to enable CTR extension. CTR can be=0D
+enabled using smctr=3Dtrue and ssctr=3Dtrue now.=0D
+=0D
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>=0D
+Acked-by: Alistair Francis <alistair.francis@wdc.com>=0D
+---=0D
+This series enables Control Transfer Records extension support on riscv=0D
+platform. This extension is similar to Arch LBR in x86 and BRBE in ARM.=0D
+The Extension has been ratified and this series is based on v1.0 [0]=0D
+=0D
+CTR extension depends on both the implementation of S-mode and Sscsrind=0D
+extension v1.0.0 [1]. CTR access ctrsource, ctrtartget and ctrdata CSRs usi=
+ng=0D
+sscsrind extension.=0D
+=0D
+The series is based on Smcdeleg/Ssccfg counter delegation extension [2]=0D
+patches [3]. CTR itself doesn't depend on counter delegation support. This=
+=0D
+rebase is basically to include the Smcsrind patches.=0D
+=0D
+Here is the link to a quick start guide [4] to setup and run a basic perf d=
+emo=0D
+on Linux to use CTR Ext.=0D
+=0D
+Qemu patches can be found here:=0D
+https://github.com/rajnesh-kanwal/qemu/tree/b4/ctr_upstream_v7=0D
+=0D
+Opensbi patch can be found here:=0D
+https://github.com/rajnesh-kanwal/opensbi/tree/ctr_upstream_v2=0D
+=0D
+Linux kernel patches can be found here:=0D
+https://github.com/rajnesh-kanwal/linux/tree/b4/ctr_upstream_v2=0D
+=0D
+[0]: https://github.com/riscv/riscv-control-transfer-records/releases/tag/v=
+1.0=0D
+[1]: https://github.com/riscvarchive/riscv-indirect-csr-access/releases/tag=
+/v1.0.0=0D
+[2]: https://github.com/riscvarchive/riscv-smcdeleg-ssccfg/releases/tag/v1.=
+0.0=0D
+[3]: https://lore.kernel.org/qemu-riscv/20241203-counter_delegation-v4-0-c1=
+2a89baed86@rivosinc.com/=0D
+[4]: https://github.com/rajnesh-kanwal/linux/wiki/Running-CTR-basic-demo-on=
+-QEMU-RISC%E2%80%90V-Virt-machine=0D
+---=0D
+Changes in v7:=0D
+v7: Rebased on latest riscv-to-apply.next. Given 6 out of 7 patches=0D
+    are already in riscv-to-apply.next, this version only contains the=0D
+    last patch which failed to apply.=0D
+=0D
+v6: Rebased on latest riscv-to-apply.for-upstream.=0D
+  - https://lore.kernel.org/qemu-devel/20250205-b4-ctr_upstream_v6-v6-0-439=
+d8e06c8ef@rivosinc.com=0D
+=0D
+v5: Improvements based on Richard Henderson's feedback.=0D
+  - Fixed code gen logic to use gen_update_pc() instead of=0D
+    tcg_constant_tl().=0D
+  - Some function renaming.=0D
+  - Rebased onto v4 of counter delegation series.=0D
+  - https://lore.kernel.org/qemu-riscv/20241205-b4-ctr_upstream_v3-v5-0-60b=
+993aa567d@rivosinc.com/=0D
+=0D
+v4: Improvements based on Richard Henderson's feedback.=0D
+  - Refactored CTR related code generation to move more code into=0D
+    translation side and avoid unnecessary code execution in generated=0D
+    code.=0D
+  - Added missing code in machine.c to migrate the new state.=0D
+  - https://lore.kernel.org/r/20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432=
+@rivosinc.com=0D
+=0D
+v3: Improvements based on Jason Chien and Frank Chang's feedback.=0D
+  - Created single set of MACROs for CTR CSRs in cpu_bit.h=0D
+  - Some fixes in riscv_ctr_add_entry.=0D
+  - Return zero for vs/sireg4-6 for CTR 0x200 to 0x2ff range.=0D
+  - Improved extension dependency check.=0D
+  - Fixed invalid ctrctl csr selection bug in riscv_ctr_freeze.=0D
+  - Added implied rules for Smctr and Ssctr.=0D
+  - Added missing SMSTATEEN0_CTR bit in mstateen0 and hstateen0 write ops.=
+=0D
+  - Some more cosmetic changes.=0D
+  - https://lore.kernel.org/qemu-riscv/20241104-b4-ctr_upstream_v3-v3-0-32f=
+d3c48205f@rivosinc.com/=0D
+=0D
+v2: Lots of improvements based on Jason Chien's feedback including:=0D
+  - Added CTR recording for cm.jalt, cm.jt, cm.popret, cm.popretz.=0D
+  - Fixed and added more CTR extension enable checks.=0D
+  - Fixed CTR CSR predicate functions.=0D
+  - Fixed external trap xTE bit checks.=0D
+  - One fix in freeze function for VS-mode.=0D
+  - Lots of minor code improvements.=0D
+  - Added checks in sctrclr instruction helper.=0D
+  - https://lore.kernel.org/qemu-riscv/20240619152708.135991-1-rkanwal@rivo=
+sinc.com/=0D
+=0D
+v1:=0D
+  - https://lore.kernel.org/qemu-riscv/20240529160950.132754-1-rkanwal@rivo=
+sinc.com/=0D
+---=0D
+ target/riscv/cpu.c         |  26 +++++++-=0D
+ target/riscv/csr.c         | 150 +++++++++++++++++++++++++++++++++++++++++=
++++-=0D
+ target/riscv/tcg/tcg-cpu.c |  11 ++++=0D
+ 3 files changed, 185 insertions(+), 2 deletions(-)=0D
+=0D
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c=0D
+index 8264c81e889424dfd491cec0ef95eeffc8fcc5b6..522d6584e4c3be7070e5a59f70f=
+5948be8196a77 100644=0D
+--- a/target/riscv/cpu.c=0D
++++ b/target/riscv/cpu.c=0D
+@@ -216,6 +216,8 @@ const RISCVIsaExtData isa_edata_arr[] =3D {=0D
+     ISA_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1_12),=0D
+     ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),=0D
+     ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),=0D
++    ISA_EXT_DATA_ENTRY(smctr, PRIV_VERSION_1_12_0, ext_smctr),=0D
++    ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),=0D
+     ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),=0D
+     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),=0D
+     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),=0D
+@@ -1599,6 +1601,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] =
+=3D {=0D
+     MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),=0D
+     MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),=0D
+     MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),=0D
++    MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),=0D
++    MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),=0D
+     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),=0D
+     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),=0D
+     MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),=0D
+@@ -2863,6 +2867,26 @@ static RISCVCPUImpliedExtsRule SSPM_IMPLIED =3D {=0D
+     },=0D
+ };=0D
+ =0D
++static RISCVCPUImpliedExtsRule SMCTR_IMPLIED =3D {=0D
++    .ext =3D CPU_CFG_OFFSET(ext_smctr),=0D
++    .implied_misa_exts =3D RVS,=0D
++    .implied_multi_exts =3D {=0D
++        CPU_CFG_OFFSET(ext_sscsrind),=0D
++=0D
++        RISCV_IMPLIED_EXTS_RULE_END=0D
++    },=0D
++};=0D
++=0D
++static RISCVCPUImpliedExtsRule SSCTR_IMPLIED =3D {=0D
++    .ext =3D CPU_CFG_OFFSET(ext_ssctr),=0D
++    .implied_misa_exts =3D RVS,=0D
++    .implied_multi_exts =3D {=0D
++        CPU_CFG_OFFSET(ext_sscsrind),=0D
++=0D
++        RISCV_IMPLIED_EXTS_RULE_END=0D
++    },=0D
++};=0D
++=0D
+ RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] =3D {=0D
+     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,=0D
+     &RVM_IMPLIED, &RVV_IMPLIED, NULL=0D
+@@ -2881,7 +2905,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rule=
+s[] =3D {=0D
+     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,=0D
+     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,=0D
+     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,=0D
+-    &SUPM_IMPLIED, &SSPM_IMPLIED,=0D
++    &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,=0D
+     NULL=0D
+ };=0D
+ =0D
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c=0D
+index a62c50f057f487753a79393306641d3e50085ee5..d0068ce98c156abd67b7d08f94f=
+29edb957143bd 100644=0D
+--- a/target/riscv/csr.c=0D
++++ b/target/riscv/csr.c=0D
+@@ -2431,6 +2431,13 @@ static bool xiselect_cd_range(target_ulong isel)=0D
+     return (ISELECT_CD_FIRST <=3D isel && isel <=3D ISELECT_CD_LAST);=0D
+ }=0D
+ =0D
++static bool xiselect_ctr_range(int csrno, target_ulong isel)=0D
++{=0D
++    /* MIREG-MIREG6 for the range 0x200-0x2ff are not used by CTR. */=0D
++    return CTR_ENTRIES_FIRST <=3D isel && isel <=3D CTR_ENTRIES_LAST &&=0D
++           csrno < CSR_MIREG;=0D
++}=0D
++=0D
+ static int rmw_iprio(target_ulong xlen,=0D
+                      target_ulong iselect, uint8_t *iprio,=0D
+                      target_ulong *val, target_ulong new_val,=0D
+@@ -2476,6 +2483,124 @@ static int rmw_iprio(target_ulong xlen,=0D
+     return 0;=0D
+ }=0D
+ =0D
++static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,=
+=0D
++                          target_ulong new_val, target_ulong wr_mask)=0D
++{=0D
++    /*=0D
++     * CTR arrays are treated as circular buffers and TOS always points to=
+ next=0D
++     * empty slot, keeping TOS - 1 always pointing to latest entry. Given =
+entry=0D
++     * 0 is always the latest one, traversal is a bit different here. See =
+the=0D
++     * below example.=0D
++     *=0D
++     * Depth =3D 16.=0D
++     *=0D
++     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] =
+[F]=0D
++     * TOS                                 H=0D
++     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8  =
+ 7=0D
++     */=0D
++    const uint64_t entry =3D isel - CTR_ENTRIES_FIRST;=0D
++    const uint64_t depth =3D 16 << get_field(env->sctrdepth, SCTRDEPTH_MAS=
+K);=0D
++    uint64_t idx;=0D
++=0D
++    /* Entry greater than depth-1 is read-only zero */=0D
++    if (entry >=3D depth) {=0D
++        if (val) {=0D
++            *val =3D 0;=0D
++        }=0D
++        return 0;=0D
++    }=0D
++=0D
++    idx =3D get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);=0D
++    idx =3D (idx - entry - 1) & (depth - 1);=0D
++=0D
++    if (val) {=0D
++        *val =3D env->ctr_src[idx];=0D
++    }=0D
++=0D
++    env->ctr_src[idx] =3D (env->ctr_src[idx] & ~wr_mask) | (new_val & wr_m=
+ask);=0D
++=0D
++    return 0;=0D
++}=0D
++=0D
++static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,=
+=0D
++                          target_ulong new_val, target_ulong wr_mask)=0D
++{=0D
++    /*=0D
++     * CTR arrays are treated as circular buffers and TOS always points to=
+ next=0D
++     * empty slot, keeping TOS - 1 always pointing to latest entry. Given =
+entry=0D
++     * 0 is always the latest one, traversal is a bit different here. See =
+the=0D
++     * below example.=0D
++     *=0D
++     * Depth =3D 16.=0D
++     *=0D
++     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] =
+[F]=0D
++     * head                                H=0D
++     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8  =
+ 7=0D
++     */=0D
++    const uint64_t entry =3D isel - CTR_ENTRIES_FIRST;=0D
++    const uint64_t depth =3D 16 << get_field(env->sctrdepth, SCTRDEPTH_MAS=
+K);=0D
++    uint64_t idx;=0D
++=0D
++    /* Entry greater than depth-1 is read-only zero */=0D
++    if (entry >=3D depth) {=0D
++        if (val) {=0D
++            *val =3D 0;=0D
++        }=0D
++        return 0;=0D
++    }=0D
++=0D
++    idx =3D get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);=0D
++    idx =3D (idx - entry - 1) & (depth - 1);=0D
++=0D
++    if (val) {=0D
++        *val =3D env->ctr_dst[idx];=0D
++    }=0D
++=0D
++    env->ctr_dst[idx] =3D (env->ctr_dst[idx] & ~wr_mask) | (new_val & wr_m=
+ask);=0D
++=0D
++    return 0;=0D
++}=0D
++=0D
++static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,=0D
++                        target_ulong new_val, target_ulong wr_mask)=0D
++{=0D
++    /*=0D
++     * CTR arrays are treated as circular buffers and TOS always points to=
+ next=0D
++     * empty slot, keeping TOS - 1 always pointing to latest entry. Given =
+entry=0D
++     * 0 is always the latest one, traversal is a bit different here. See =
+the=0D
++     * below example.=0D
++     *=0D
++     * Depth =3D 16.=0D
++     *=0D
++     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] =
+[F]=0D
++     * head                                H=0D
++     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8  =
+ 7=0D
++     */=0D
++    const uint64_t entry =3D isel - CTR_ENTRIES_FIRST;=0D
++    const uint64_t mask =3D wr_mask & CTRDATA_MASK;=0D
++    const uint64_t depth =3D 16 << get_field(env->sctrdepth, SCTRDEPTH_MAS=
+K);=0D
++    uint64_t idx;=0D
++=0D
++    /* Entry greater than depth-1 is read-only zero */=0D
++    if (entry >=3D depth) {=0D
++        if (val) {=0D
++            *val =3D 0;=0D
++        }=0D
++        return 0;=0D
++    }=0D
++=0D
++    idx =3D get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);=0D
++    idx =3D (idx - entry - 1) & (depth - 1);=0D
++=0D
++    if (val) {=0D
++        *val =3D env->ctr_data[idx];=0D
++    }=0D
++=0D
++    env->ctr_data[idx] =3D (env->ctr_data[idx] & ~mask) | (new_val & mask)=
+;=0D
++=0D
++    return 0;=0D
++}=0D
++=0D
+ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,=0D
+                          target_ulong isel, target_ulong *val,=0D
+                          target_ulong new_val, target_ulong wr_mask)=0D
+@@ -2628,6 +2753,27 @@ done:=0D
+     return ret;=0D
+ }=0D
+ =0D
++static int rmw_xireg_ctr(CPURISCVState *env, int csrno,=0D
++                        target_ulong isel, target_ulong *val,=0D
++                        target_ulong new_val, target_ulong wr_mask)=0D
++{=0D
++    if (!riscv_cpu_cfg(env)->ext_smctr && !riscv_cpu_cfg(env)->ext_ssctr) =
+{=0D
++        return -EINVAL;=0D
++    }=0D
++=0D
++    if (csrno =3D=3D CSR_SIREG || csrno =3D=3D CSR_VSIREG) {=0D
++        return rmw_ctrsource(env, isel, val, new_val, wr_mask);=0D
++    } else if (csrno =3D=3D CSR_SIREG2 || csrno =3D=3D CSR_VSIREG2) {=0D
++        return rmw_ctrtarget(env, isel, val, new_val, wr_mask);=0D
++    } else if (csrno =3D=3D CSR_SIREG3 || csrno =3D=3D CSR_VSIREG3) {=0D
++        return rmw_ctrdata(env, isel, val, new_val, wr_mask);=0D
++    } else if (val) {=0D
++        *val =3D 0;=0D
++    }=0D
++=0D
++    return 0;=0D
++}=0D
++=0D
+ /*=0D
+  * rmw_xireg_csrind: Perform indirect access to xireg and xireg2-xireg6=0D
+  *=0D
+@@ -2639,11 +2785,13 @@ static int rmw_xireg_csrind(CPURISCVState *env, int=
+ csrno,=0D
+                               target_ulong isel, target_ulong *val,=0D
+                               target_ulong new_val, target_ulong wr_mask)=
+=0D
+ {=0D
+-    int ret =3D -EINVAL;=0D
+     bool virt =3D csrno =3D=3D CSR_VSIREG ? true : false;=0D
++    int ret =3D -EINVAL;=0D
+ =0D
+     if (xiselect_cd_range(isel)) {=0D
+         ret =3D rmw_xireg_cd(env, csrno, isel, val, new_val, wr_mask);=0D
++    } else if (xiselect_ctr_range(csrno, isel)) {=0D
++        ret =3D rmw_xireg_ctr(env, csrno, isel, val, new_val, wr_mask);=0D
+     } else {=0D
+         /*=0D
+          * As per the specification, access to unimplented region is undef=
+ined=0D
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c=0D
+index 027b0324136961c61efb3fcca7a8dc13920d5e4d..29f6a3a72901abd9d56744834c6=
+b0c28ae8cf685 100644=0D
+--- a/target/riscv/tcg/tcg-cpu.c=0D
++++ b/target/riscv/tcg/tcg-cpu.c=0D
+@@ -681,6 +681,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, =
+Error **errp)=0D
+         return;=0D
+     }=0D
+ =0D
++    if ((cpu->cfg.ext_smctr || cpu->cfg.ext_ssctr) &&=0D
++        (!riscv_has_ext(env, RVS) || !cpu->cfg.ext_sscsrind)) {=0D
++        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_smctr)) ||=0D
++            cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_ssctr))) {=0D
++            error_setg(errp, "Smctr and Ssctr require S-mode and Sscsrind"=
+);=0D
++            return;=0D
++        }=0D
++        cpu->cfg.ext_smctr =3D false;=0D
++        cpu->cfg.ext_ssctr =3D false;=0D
++    }=0D
++=0D
+     /*=0D
+      * Disable isa extensions based on priv spec after we=0D
+      * validated and set everything we need.=0D
+=0D
+---=0D
+base-commit: 485adaaf6657dd5070dbefed593b2923a397a63f=0D
+change-id: 20250205-b4-ctr_upstream_v6-71418cd245ee=0D
+=0D
+Best regards,=0D
+-- =0D
+Rajnesh Kanwal=0D
+=0D
 
