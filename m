@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE08EC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A47FC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiHDn-0004Tg-Iy; Wed, 12 Feb 2025 13:12:29 -0500
+	id 1tiHEG-0005EK-Ar; Wed, 12 Feb 2025 13:12:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiHDY-0004Sh-QE
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:12:13 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tiHE8-00050E-Tc
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:12:51 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiHDX-0003K1-97
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:12:12 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-21f55fbb72bso96105275ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:12:09 -0800 (PST)
+ id 1tiHE4-0003RL-Mi
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:12:45 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2fa40c0bab2so145854a91.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:12:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739383928; x=1739988728; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739383963; x=1739988763; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Glm6+Pe0IC25eIp3BrpVgsURsHqMEAfFb2NN7a5cFRU=;
- b=Cf/Bp2qGOUHALFX9gNUKpWtUpDzRN8c0x2DUc0VLm36mD/N9OJl16uQmNqmENKfSSe
- R1jxrbYwEnyDvKMIZXB+qDcYA/UqlD0t8KlNrZGZAb9M0NzzmCQ4aTRWXP+rKkgBmknh
- 8Ea8nH3Cn890DVGOqkMR/eeE9A423Lu6Wl195hEqKcTZqXDI1KY0ZYldQtdXY528MW6y
- C05/iJaRpJRm+D2Tn+suTURVwRouBzoSkU7lJdCVhXPrpk4ShiqTenJ+gxMyTwdgyFAs
- 4BvAMoJfXYX3gKiCKxZ0ZAJOcku7e7LQOCo9wtQQWpSDc9H7Vqq4hFA1F4Qx/9vGx8Nt
- 9D8A==
+ bh=6EebdLKQC8jKWgqGaLEWJbkkKWXkq812mFkBTiD+VN8=;
+ b=wpFfxAnDCtv2770U1wV3zX92lGFouGP/wZxwjl1jXvUDg1cGW5kQNzfq1B4NBe3Hvg
+ /n+dlRtIjGyb0ZqfaTPks557t3hxFeVa9mMw+AvY36MI8qVzZhn6drVw7R/YqC4hzvKU
+ 9GrDo8cJXL5bdJEVg13hwTIvniiKpclv/y12BKS0IOS5EiUEvhC9qYxIGYbyhlmK3cms
+ lHWLvaQdVrYh/Ln/YlWkm3FMpzmH6CjsAVX2p+tsyoiQr9VPcOixQe43AkfqaQu3XnUY
+ mFkmWjOHcVyxWQUO5FjJdR3fxGVlnvPAUYzhWlYI65u+469XtYyS0TC+wTH2nXHYC6qs
+ iU7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739383928; x=1739988728;
+ d=1e100.net; s=20230601; t=1739383963; x=1739988763;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Glm6+Pe0IC25eIp3BrpVgsURsHqMEAfFb2NN7a5cFRU=;
- b=gACsNj1EfUJRtN2jASHn2lYFedzVw9CkQGUYWYHSrxgzF5N52dDAuZb9iw7oWxzLrw
- YfdDys3JnvL7K9PBtivZ821E6M+guwFzvSnFkVR7sno5Qv0Zt33SbSmcoEEd3Vqjo0z3
- M99nT6BIpBGlPB+g+QyUnHgB76z9lCVyhppkafzmCk7zkYScKFgXUlm5v0I3doSiklOW
- q73ZQ0yGSngxIC2nXt913i9IKE5JAUregRcT2vYKKx5t8t7wnX/hldV9iv4zsL1V42mX
- TST7M9fDVYfoDsJInNDLUBdc5yOkDxq4+rGugk+ZmzSD+8PR2ukp9JXNA0CaIEK/jWjg
- nPVA==
-X-Gm-Message-State: AOJu0Yw4DlNs7qtQeSA9oyW/j2R2O2ehApGDXHz4FOjAekrPNieUGNfS
- nkNjEGYGUw2Fo5yNxcC4X7co/ZgA3quEolWXRTv+jzQQf7gO+zV8pFyb2XtkI/mAHVDrfqdsp23
- D
-X-Gm-Gg: ASbGncufmqgA02o0dzGQMgKlcyx30+V8kT3S+uaSi8MKnWgh61De7zbkwRlUPA/CDne
- pBjRoRJNvbsvWKYQXhrMZASmFWjgwFUlA6cm+RUD8YFly7MJSaEVPsFjnEE5xjD+G3Lyy9ysP+S
- q4JSGSLN3QSxFjEVK0KOmdrTUeuoIV8Mu4140XHlFjZ9KSV/zpC6CZJqK29HBH7JnvxYC97M2/f
- EoVRIuerkWJ9EaZJXfS50XNn2f0cIQKgtwCcxTrsFO+Gz0OxrvJQbRw6XnWnJJ5nh/s9bZF7YtP
- hcQmzxI0UQTnKgoJYmu4FtCxk3hlBTuNbrNh+hyiCeb0t42sbpLuq/4=
-X-Google-Smtp-Source: AGHT+IGcIWnu5Ui5lJox+HemSvFjK+uisM/nlyXxiF21REPpxzaNs31Prf0Gf0rM95LXxQXZzDQp4A==
-X-Received: by 2002:a05:6a21:3981:b0:1e1:ae4a:1d42 with SMTP id
- adf61e73a8af0-1ee6b399c4amr972674637.31.1739383928498; 
- Wed, 12 Feb 2025 10:12:08 -0800 (PST)
+ bh=6EebdLKQC8jKWgqGaLEWJbkkKWXkq812mFkBTiD+VN8=;
+ b=U/7pB6k/pegxdHRMEm4VjPqg9rPYhqh3iMTAft/aABS7qhtvW1F+ofMdnrIEgd+fVo
+ iUKuiW1ukiOndv/cOrHoOGCh/+ccQrbLNpVhaNLv9gPuGjds7HAyDrrjLsaHw2pjAwSX
+ YjIoedBVKPxPA5y+dDWd445/s1mkMEbhMiaMZLHYTSmARcOXUmbSB4lc4nTLYqnix+/T
+ JlZvhptPjsbFdD13ktu6zLAAfXedxIhSq1OCvaCiJPlxcx9lLgmY8rz8erpyW02XbrbP
+ tzxWOiwbKf8xwWPxktt3uszbzA7jH7/7yDCXAffgUC0Jj8oTMJ5l9CZZOH3N7piFjBim
+ V3/w==
+X-Gm-Message-State: AOJu0YwIQaQfHvsoQxOw6y3zfVyUsjid7oWn727QTifMLU0RPR4fqWww
+ 0WtD8ztDQoZkErzfMGoCY9+AiVbQ1iE6j2AQcOFZnPvm8mbGP6/4ghzzQWigTPRZjyjVDWE3ro9
+ q
+X-Gm-Gg: ASbGncsc0uOSi7oqKUnDruuyCr+F5luNoo+9lX6tTtahoo9tSG7ReHTSI7ddiGHEXvv
+ vSCtuKFkBOY8vZadxVnaqo2amc6WHjktj5ldUOjpufhRZC8cNE0sc+IOxXXn5jO67HrarJJN3ZG
+ qn+29bLjjCR5jNORSxIvPDhZnqFY3lpHOSlWx6Qpsl01aztdrItSz39e6I9k7YbjBjH2tOjbsvf
+ cF867K5Q7FgD57uqPUm7FpVivfX0OdxkIirtvS9AHtda5zqjmlZpj8rWybz6YPxuQDBnKKba4Ql
+ xhHadMXsmu0pygxADMTxQcwx2X+r5yBdaEh5NKH5U3MsBUEtS2QAa4Q=
+X-Google-Smtp-Source: AGHT+IHxwV3IF365hdXtJmBC6WPpRXilCYAOqxslTbMHXXuU84oOLGcbEm0tLS/Qp63OlyW9uBQ4+Q==
+X-Received: by 2002:a17:90b:5444:b0:2ef:2d9f:8e58 with SMTP id
+ 98e67ed59e1d1-2fbf5c73570mr5641414a91.34.1739383963143; 
+ Wed, 12 Feb 2025 10:12:43 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-730775e4896sm7906512b3a.39.2025.02.12.10.12.08
+ 98e67ed59e1d1-2fbf98986ccsm1808587a91.4.2025.02.12.10.12.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 10:12:08 -0800 (PST)
-Message-ID: <6e2758d1-e904-44f8-83e9-2838c5385b89@linaro.org>
-Date: Wed, 12 Feb 2025 10:12:06 -0800
+ Wed, 12 Feb 2025 10:12:42 -0800 (PST)
+Message-ID: <ba6d579f-9bae-4bb3-9fd6-7645230fccae@linaro.org>
+Date: Wed, 12 Feb 2025 10:12:40 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] hw/arm/vexpress: Specify explicitly the GIC has 64
- external IRQs
+Subject: Re: [PATCH v2 7/8] hw/arm/highbank: Specify explicitly the GIC has
+ 128 external IRQs
 To: qemu-devel@nongnu.org
 References: <20250212154333.28644-1-philmd@linaro.org>
- <20250212154333.28644-7-philmd@linaro.org>
+ <20250212154333.28644-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250212154333.28644-7-philmd@linaro.org>
+In-Reply-To: <20250212154333.28644-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,19 +108,18 @@ On 2/12/25 07:43, Philippe Mathieu-Daudé wrote:
 > IRQs, (see commit a32134aad89 "arm:make the number of GIC interrupts
 > configurable"), and Cortex-15MP to 128 (see commit  528622421eb
 > "hw/cpu/a15mpcore: Correct default value for num-irq").
-> The Versatile Express board however expects a fixed set of 64
+> The Caldexa Highbank board however expects a fixed set of 128
 > interrupts (see the fixed IRQ length when this board was added in
-> commit 2055283bcc8 ("hw/vexpress: Add model of ARM Versatile Express
-> board"). Add the GIC_EXT_IRQS definition (with a comment) to make
-> that explicit.
+> commit 2488514cef2 ("arm: SoC model for Calxeda Highbank"). Add the
+> GIC_EXT_IRQS definition (with a comment) to make that explicit.
 > 
 > Except explicitly setting a property value to its same implicit
 > value, there is no logical change intended.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/arm/vexpress.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>   hw/arm/highbank.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
