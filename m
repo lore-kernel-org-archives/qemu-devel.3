@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC74C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 09:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEAA8C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 09:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti8tz-0000J4-El; Wed, 12 Feb 2025 04:19:27 -0500
+	id 1ti93Q-0001s6-2T; Wed, 12 Feb 2025 04:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti8tx-0000IU-9d
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:19:25 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ti93O-0001rd-83
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:29:10 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti8tu-000607-7b
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:19:24 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38dc6d55ebaso368948f8f.1
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 01:19:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ti93J-0001RZ-BX
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:29:09 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-21f2339dcfdso10386945ad.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 01:28:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739351959; x=1739956759; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1739352537; x=1739957337; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XoWgCpDwrmO8nNKAIVklfvwLlSH3A7c6sgcpo3s2mU8=;
- b=zGkPAFXLhAoz0gkSgzTbrARveJ3VQ9Og7gk7r7AHWlVVFg97QBpcKhlBqwOeqfmgWg
- d/bNH6TN4yvPiTtsj7T6dwQpS95w77HexE764W8id3nSPlhQKQ5Jvw2Spus3o9+XzLHN
- kvMETzvnq+h7V9/dc9ghCot9ExNmss+UEhxGy0wngmXQ6AA0PQ3LdTt7M8r5lw3GIpVm
- Lnf6qzinQKaqBTRjb0x38SCKTIG/i5kqOpsIRcWYGBQK40gRwz/M6wV05Q4sOETJCeRU
- bPTK9csWQeA1q6sY4HD30iVC0BmoTb4LdElp2q10nAa6NNFM5PLSa9D0kOLIUBXRDvJb
- vTwg==
+ bh=wgX6nmIL24Hdl4P0VZKRrax5AthdWjzZFI94BuNDxrE=;
+ b=M/obVQMfl6HqbVFQCmHk8cLUzcox4sdpf4F306Axqyqbf7AjBiug0aMZELOyBo/Lqp
+ wgByBd8KcgOm8qpiOzKmG5AexqRdi7ucKKRrs/FR/9h7dZWcYBI+qfP+gLJjTR4V405r
+ JpWABZyc8itkYrRp9AySlF/HEi5OIs+ae0EqWrCh/48V6dv1w3ww++lZDZJ/M8l3pmnW
+ /GcYWmHBIVk9PDqJpH/J0KPGkE/KMHcIGslHCpm2hvx1sFXhKaaB8Kje3Ex/KMv4BPIa
+ C97KHTSqU5lIJ5ekxhCLRZwkGdmqj/e+XLIr500wm+KFMZ73AKl+W+xx1XMrqdsYYemR
+ /SFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739351959; x=1739956759;
+ d=1e100.net; s=20230601; t=1739352537; x=1739957337;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XoWgCpDwrmO8nNKAIVklfvwLlSH3A7c6sgcpo3s2mU8=;
- b=ayyuE4mKLBZJsG+75j0bdyd1iaQAWRKypZZFI+fTAFyigovaLMnY3+srJVPjYqiG+p
- CEsdgHR+/rsi9+rDK9XtsWl3s9qPZ4Wo99jJWuhGMW/sCbjH6IqWC60vpFh6nz1Cl4qQ
- /jFjS2MOd9d2p/ymG1kmuFzBoYGaYyjIYelaf4r8OOVUkhizAT2QkJHlKMpkR5VIxEkM
- gqn/de/dkH/jsxMk+BAJBxIJMCuGNEBGJwvOJLDns/pEltBqk/+DJnPsN61D3eu+qleU
- +A9eLzXCU7mDUuomjd04KifONENRVWBVT6xZ8HsqfriO5rmgHKHf2QMjZEkTS1LrTq7i
- FbPg==
+ bh=wgX6nmIL24Hdl4P0VZKRrax5AthdWjzZFI94BuNDxrE=;
+ b=u4eVLXI8VuacR0qmxfSeBhVBP02Ya8jcr45zVizrDvBUhO6OQr9go2al8gvXERc7gm
+ sI4LS5vXgQWtTJ+LuEETpJnup5Juc8RyxPKUU0KTswNe2N+y0NPlSAfqg+c01gdZQum+
+ sschrgu45VjySWEmS9oSnUHzZOlarfLulBe1aMVSs/2cyI9W2GRJe4n71MMEHhO3v1pe
+ s/MPhcdFB/2pAIK+qhYmK+/rWs4kfCAI16fM5FqhQhaCp30TUyCvnxq2EfkmKNSgXqCC
+ 2ftE6yCC/Drc8ziWz81+eFOEjNUpj9axmPmUQmPO98jN8Hbt0vfh9C62eJemBSBhdFat
+ Mb4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3qb1GLblB3SsZAB27viU36V4gE0amr6wprCiAcHtnb2E2TRK8UwF7uzFQ7/q7422XNYNczzCkTdGn@nongnu.org
-X-Gm-Message-State: AOJu0Yxv4uKwYFFxe0IBs9gbiGhwQ5vqhxa4tVRIpJ4v26061EBaDWlO
- 5ksnil/8km7oWh4/VO1WrMbNYXE1E8NIQSqe7j9DaJCEDIlWJofeO7+mIT1jh1o=
-X-Gm-Gg: ASbGncsYDZ0HNWQad6tr+lYP/xENVn6o2YPdGkEZ7F84r+47FtHzBCrzL8MHxg39dpJ
- sdVyiLfGGFxgeL3RTvTx/dYoOQeUp7ZGAsdMSmx0dv2JpicIrHMrnr5Vwa41LfRfbIWCh9xjB7e
- Y2rio/XDEIdnImYfqUgjA8b/46BcACIzPkVYBOrUNtoTtWir0NwJVN+ElAojI2YQK1QeVdOdw7C
- z0jDLH46Uwl9LdqxuElvw2hCRWb9oitKzfMdKp62VFRf2ybI79YL5wOtwooI6YpCDW5M7+EnMl1
- /C38Q26tiukN7sOiAy11ugtO3gkooKptWqm6YgRkhneJiRBvv2/3/yQKLkE=
-X-Google-Smtp-Source: AGHT+IHrMK+aR0+KapkytzRf0g9yYdUG38YQYRpLQ5n7IQv53xLRD+dW4P5l7l61qLvcgtFG6kmQ7g==
-X-Received: by 2002:a05:6000:1867:b0:386:3327:4f21 with SMTP id
- ffacd0b85a97d-38dea2689f5mr1686874f8f.27.1739351959476; 
- Wed, 12 Feb 2025 01:19:19 -0800 (PST)
-Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dd4342502sm11347783f8f.26.2025.02.12.01.19.18
+ AJvYcCUfG+UIx1tgnx6aKIf8uB68/KBza+sA+1oZytvzzMvDvJsysNuDTVNubntp3015y6+GZgG4JPcLMltf@nongnu.org
+X-Gm-Message-State: AOJu0YyNDMgeDwDHPpbRal2q3I0XE3P8Gy8+oQ82ohG5iXw1jQNmA4/X
+ ioD6q81p8SkXCra7yKpuSO8kaERqHlCc0HmltCRqRbGIcbZ67qdtB6OCFSBJq+Y=
+X-Gm-Gg: ASbGncuNHb96xjutn5Q1PIP049G22ZXaJbkHAsC18jiWH+7dwo6boKnSshQI8oWOYeO
+ UasYJGzsQd66by4eboiE7UcIZo4qZkdFFH9ZoBINJhX3jQNA8PZmIHFfWBM5PuoH/JvcMeQMIwB
+ qbVV6CUhzfyUmRl6WmoRiQDsUALBM8oHeCoaYAZnVMUnSEFQm5fAs2VxLJj3+PJzBUd85eANVGf
+ hlA+B/rqOxijJYAWC+Qjhh2IvAM7n3WRJjE8jYdFj8IuFYp3XTBCdbhGEtUb3Q+oter39lcc81G
+ D0vnbqx+N7YK1bFSDIVK+w==
+X-Google-Smtp-Source: AGHT+IE3Q6Lj+7HXjInoEZXvEGP5hq47jecuWChnSwhfdjqNmgG/FvxqT0IqKaCU8g6+cjp6ZpxLmg==
+X-Received: by 2002:a17:902:e74f:b0:21f:3a7b:f4e6 with SMTP id
+ d9443c01a7336-21fb6f54801mr116543255ad.23.1739352537368; 
+ Wed, 12 Feb 2025 01:28:57 -0800 (PST)
+Received: from [10.3.43.196] ([61.213.176.12])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-ad546b381d8sm6375546a12.1.2025.02.12.01.28.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 01:19:19 -0800 (PST)
-Message-ID: <03446903-2100-4981-831e-7ee4741ffead@linaro.org>
-Date: Wed, 12 Feb 2025 10:19:18 +0100
+ Wed, 12 Feb 2025 01:28:56 -0800 (PST)
+Message-ID: <afe6b1a0-eb09-4760-b7f7-e09d6793d04b@bytedance.com>
+Date: Wed, 12 Feb 2025 17:28:53 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 04/32] hw/timer/xilinx_timer: Make device endianness
- configurable
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250210204204.54407-1-philmd@linaro.org>
- <20250210204204.54407-5-philmd@linaro.org>
- <678561c5-4d06-494a-b12c-6013b07f3b05@redhat.com>
+Subject: Re: [PATCH] cryptodev/vhost: allocate CryptoDevBackendVhost using
+ g_mem0()
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org,
+ myluo24@m.fudan.edu.cn
+References: <20250211135523.101203-1-sgarzare@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <678561c5-4d06-494a-b12c-6013b07f3b05@redhat.com>
+From: zhenwei pi <pizhenwei@bytedance.com>
+In-Reply-To: <20250211135523.101203-1-sgarzare@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,78 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 09:27, Thomas Huth wrote:
-> On 10/02/2025 21.41, Philippe Mathieu-Daudé wrote:
->> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
->> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
->> Add the "little-endian" property to select the device
->> endianness, defaulting to little endian.
->> Set the proper endianness for each machine using the device.
->>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Message-Id: <20250206131052.30207-5-philmd@linaro.org>
->> ---
->>   hw/microblaze/petalogix_ml605_mmu.c      |  1 +
->>   hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
->>   hw/ppc/virtex_ml507.c                    |  1 +
->>   hw/timer/xilinx_timer.c                  | 35 +++++++++++++++---------
->>   4 files changed, 25 insertions(+), 13 deletions(-)
->>
->> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/ 
->> petalogix_ml605_mmu.c
->> index cf3b9574db3..bbda70aa93b 100644
->> --- a/hw/microblaze/petalogix_ml605_mmu.c
->> +++ b/hw/microblaze/petalogix_ml605_mmu.c
->> @@ -127,6 +127,7 @@ petalogix_ml605_init(MachineState *machine)
->>       /* 2 timers at irq 2 @ 100 Mhz.  */
->>       dev = qdev_new("xlnx.xps-timer");
->> +    qdev_prop_set_bit(dev, "little-endian", true);
->>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
->>       qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
->>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/ 
->> petalogix_s3adsp1800_mmu.c
->> index fbf52ba8f2f..9d4316b4036 100644
->> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
->> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
->> @@ -114,6 +114,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
->>       /* 2 timers at irq 2 @ 62 Mhz.  */
->>       dev = qdev_new("xlnx.xps-timer");
->> +    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
->>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
->>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
->>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
->> index 23238119273..f87c221d076 100644
->> --- a/hw/ppc/virtex_ml507.c
->> +++ b/hw/ppc/virtex_ml507.c
->> @@ -230,6 +230,7 @@ static void virtex_init(MachineState *machine)
->>       /* 2 timers at irq 2 @ 62 Mhz.  */
->>       dev = qdev_new("xlnx.xps-timer");
->> +    qdev_prop_set_bit(dev, "little-endian", false);
->>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
->>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
->>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+Acked-by: zhenwei pi <pizhenwei@bytedance.com>
+
+On 2/11/25 21:55, Stefano Garzarella wrote:
+> The function `vhost_dev_init()` expects the `struct vhost_dev`
+> (passed as a parameter) to be fully initialized. This is important
+> because some parts of the code check whether `vhost_dev->config_ops`
+> is NULL to determine if it has been set (e.g. later via
+> `vhost_dev_set_config_notifier`).
 > 
->   Hi,
+> To ensure this initialization, it’s better to allocate the entire
+> `CryptoDevBackendVhost` structure (which includes `vhost_dev`) using
+> `g_mem0()`, following the same approach used for other vhost devices,
+> such as in `vhost_net_init()`.
 > 
-> with this patch applied, the ppc_virtex_ml507 functional test is now 
-> failing for me ... could you please double-check whether "make check- 
-> functional-ppc" still works for you?
+> Fixes: 042cea274c ("cryptodev: add vhost-user as a new cryptodev backend")
+> Cc: qemu-stable@nongnu.org
+> Reported-by: myluo24@m.fudan.edu.cn
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+>   backends/cryptodev-vhost.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
+> index 8718c97326..943680a23a 100644
+> --- a/backends/cryptodev-vhost.c
+> +++ b/backends/cryptodev-vhost.c
+> @@ -53,7 +53,7 @@ cryptodev_vhost_init(
+>       CryptoDevBackendVhost *crypto;
+>       Error *local_err = NULL;
+>   
+> -    crypto = g_new(CryptoDevBackendVhost, 1);
+> +    crypto = g_new0(CryptoDevBackendVhost, 1);
+>       crypto->dev.max_queues = 1;
+>       crypto->dev.nvqs = 1;
+>       crypto->dev.vqs = crypto->vqs;
 
-Thanks, not this patch problem, but patch #2 misses:
-
--- >8 --
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 23238119273..723f62c904b 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -219,2 +219,3 @@ static void virtex_init(MachineState *machine)
-      dev = qdev_new("xlnx.xps-intc");
-+    qdev_prop_set_bit(dev, "little-endian", false);
-      qdev_prop_set_uint32(dev, "kind-of-intr", 0);
----
-
-Why is my CI green?
 
