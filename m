@@ -4,64 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B8DC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 16:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD525C021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 16:43:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiFWM-0004QE-VF; Wed, 12 Feb 2025 11:23:30 -0500
+	id 1tiFp2-0008Vc-1n; Wed, 12 Feb 2025 11:42:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tiFW9-0004NS-Pi; Wed, 12 Feb 2025 11:23:18 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiFoy-0008Us-6Q
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 11:42:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tiFW6-0007ph-Hi; Wed, 12 Feb 2025 11:23:16 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D73424E6014;
- Wed, 12 Feb 2025 17:23:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id sKExMbfYnAmT; Wed, 12 Feb 2025 17:23:08 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DD10D4E602A; Wed, 12 Feb 2025 17:23:08 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DA52874577C;
- Wed, 12 Feb 2025 17:23:08 +0100 (CET)
-Date: Wed, 12 Feb 2025 17:23:08 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
- QAPI enum
-In-Reply-To: <a3608e43-79ce-403d-8ba7-6735fde66759@linaro.org>
-Message-ID: <e1436061-a840-0942-2c2c-4f49bfb932b8@eik.bme.hu>
-References: <20250212112413.37553-1-philmd@linaro.org>
- <20250212112413.37553-2-philmd@linaro.org>
- <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
- <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
- <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
- <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
- <a3608e43-79ce-403d-8ba7-6735fde66759@linaro.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiFos-0003Uf-Ms
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 11:42:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739378556;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0zLN15kW/sVRsgQMPCXeO7L2hWd3oYwz2dqJdaQO3to=;
+ b=Y2Zt/N6sB50BWXXfp4LTwAUoWICIJHB9HAj04iUu7IgehlfmEtbin8/SJ66IEvBeQEAOBX
+ CZ5uuak2GMpd1F2OagYKhfYgMqRvgezy6Nl/seMgqTKQxN7pcQsz2Wxw4E2Wns3uVJ1w9h
+ zJiswI/YlSo5xLDhLLlkr4sd6KmgEFU=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-119-q1JHAEtyMSyLTZc7ZFEGsA-1; Wed, 12 Feb 2025 11:42:35 -0500
+X-MC-Unique: q1JHAEtyMSyLTZc7ZFEGsA-1
+X-Mimecast-MFC-AGG-ID: q1JHAEtyMSyLTZc7ZFEGsA_1739378555
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c067ec2de7so188485785a.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 08:42:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739378555; x=1739983355;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0zLN15kW/sVRsgQMPCXeO7L2hWd3oYwz2dqJdaQO3to=;
+ b=rC95siGiqdO8Xc0GQV/Oj7OXKQczrYQ5r6ZJRKg89wg5n5IxTl4bnfCnEScRVMhZh0
+ FD28O8Ev9zcowYqNJHOYTnJaxqpohs/VQzibTYX9YAWrnFc8O4HQmc5CSZnurodEE/lu
+ x393EjS6Mbhcbx3ih6Sjny5nenh1WDvrjVrIW1KgM+c6mGTpda7KZkEKo3XSSVjFv8l8
+ lCb3IN7/LZlFTmgdbKoOsgelZ8q23UdvUxWnHt1RdOeXhTmS5tYSsTLBPrt5IYHPNCnf
+ DSlx5RC8DYR2WGJQ2qtN7jtGYsY9R4FFY3l44JkAxfYGNiQeWP+SZ+H4T6/en82121AK
+ SiKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4w68WYToGaJITdFzUBW9hVgoCx1zWGW8ujeCacorAWUb3q1frTSuM7TjB0JPd8/2ulC8Tr4ommcA1@nongnu.org
+X-Gm-Message-State: AOJu0YxDQR4asQ5wt5w163AWDS8liFUV4CJ48LDa5n8+dwhagXReWd0N
+ RVXumAYTW4n981eeHBf0MMd3ncIjDn2Io41tOn92g0s7mI0racgnnPDnzjvw3qPgYkTxIAb/xVj
+ sijnPFYFT0XcTGJ+DjUU8OptBZ8bEKkBbgah8AvZWfMwNq5kVLbud
+X-Gm-Gg: ASbGncsmIBWnhCOSHCWjR5t7MNrFKJ1ZPEnGLCkuGKKdnmdjEvpU9t0nvmPc/0hT3Ge
+ xKPsV+MjZtTiw55FQlWyUF7mOZs5mkUZ3VQKzoWqyCKl6LnvtBy6eiLX5bKt2CZRiKxDGMjV3P5
+ 7A4dKVPIE/S2dcQQpD5yNfurUtdatbRR/hBbupj6kEr3iGdrUCHvvBaeY+zUBmaZLm1E8/PHF+H
+ zAHjQYg3m0R8v2GUdvaFF+FslaV5Fy2GvvobNafjvlcu1KZHCpiHHVAc20=
+X-Received: by 2002:a05:6214:174c:b0:6e6:5a83:dcf5 with SMTP id
+ 6a1803df08f44-6e65a83de6dmr13492696d6.21.1739378555093; 
+ Wed, 12 Feb 2025 08:42:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG1RJNozA95pzVTPIU3PPaCUF/wK26B0umP/YgMQlE7SM7MJvfEnPtblMjw6aIkdJf/xeXnfw==
+X-Received: by 2002:a05:6214:174c:b0:6e6:5a83:dcf5 with SMTP id
+ 6a1803df08f44-6e65a83de6dmr13492486d6.21.1739378554836; 
+ Wed, 12 Feb 2025 08:42:34 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e658ae283dsm5345376d6.51.2025.02.12.08.42.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Feb 2025 08:42:34 -0800 (PST)
+Date: Wed, 12 Feb 2025 11:42:31 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 1/4] os: add an ability to lock memory on_fault
+Message-ID: <Z6zPd7DM1yGWXokt@x1.local>
+References: <20250212143920.1269754-1-d-tatianin@yandex-team.ru>
+ <20250212143920.1269754-2-d-tatianin@yandex-team.ru>
+ <Z6y-jdFOCVz8mEXo@redhat.com>
+ <c78c911c-d7b3-412b-a6d0-b4bcca070a6b@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-173597825-1739377388=:91349"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c78c911c-d7b3-412b-a6d0-b4bcca070a6b@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,106 +112,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Feb 12, 2025 at 07:17:45PM +0300, Daniil Tatianin wrote:
+> > > -static inline int os_mlock(void)
+> > > +static inline int os_mlock(bool on_fault)
+> > >   {
+> > > +    (void)on_fault;
+> > Is this really needed ? Our compiler flags don't enable warnings
+> > about unused variables.
+> 
+> Hmm, I was not aware of that, thank you.
+> 
+> Peter, do you want me to resend, or can you squash remove this as well?
 
---3866299591-173597825-1739377388=:91349
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+I'll do, no worry.
 
-On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
-> On 12/2/25 14:53, Philippe Mathieu-Daudé wrote:
->> On 12/2/25 13:56, BALATON Zoltan wrote:
->>> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
->>>> On 12/2/25 12:37, Thomas Huth wrote:
->>>>> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
->>>>>> Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
->>>>>> Endianness can be BIG, LITTLE or unspecified (default).
->>>>>> 
->>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>> ---
->>>>>>   qapi/common.json                    | 16 ++++++++++++++++
->>>>>>   include/hw/qdev-properties-system.h |  7 +++++++
->>>>>>   hw/core/qdev-properties-system.c    | 11 +++++++++++
->>>>>>   3 files changed, 34 insertions(+)
->>>>>> 
->>>>>> diff --git a/qapi/common.json b/qapi/common.json
->>>>>> index 6ffc7a37890..217feaaf683 100644
->>>>>> --- a/qapi/common.json
->>>>>> +++ b/qapi/common.json
->>>>>> @@ -212,3 +212,19 @@
->>>>>>   ##
->>>>>>   { 'struct': 'HumanReadableText',
->>>>>>     'data': { 'human-readable-text': 'str' } }
->>>>>> +
->>>>>> +##
->>>>>> +# @EndianMode:
->>>>>> +#
->>>>>> +# An enumeration of three options: little, big, and unspecified
->>>>>> +#
->>>>>> +# @little: Little endianness
->>>>>> +#
->>>>>> +# @big: Big endianness
->>>>>> +#
->>>>>> +# @unspecified: Endianness not specified
->>>>>> +#
->>>>>> +# Since: 10.0
->>>>>> +##
->>>>>> +{ 'enum': 'EndianMode',
->>>>>> +  'data': [ 'little', 'big', 'unspecified' ] }
->>>>> 
->>>>> Should 'unspecified' come first? ... so that it gets the value 0, i.e. 
->>>>> when someone forgets to properly initialize a related variable, the 
->>>>> chances are higher that it ends up as "unspecified" than as "little" ?
->>>> 
->>>> Hmm but then in this series the dual-endianness regions are defined as:
->>>> 
->>>> +static const MemoryRegionOps pic_ops[2] = {
->>>> +    [0 ... 1] = {
->>> 
->>> This is already confusing as you'd have to know that 0 and 1 here means 
->>> ENDIAN_MODE_LITTLE and ENDIAN_MODE_BIG (using those constants here as well 
->>> might be clearer). It's easy to miss what this does so 
->
-> At this point 0 / 1 only mean "from the index #0 included to the index
-> #1 included", 0 being the first one and 1 the last one.
->
->>> maybe repeating the definitions for each case would be longer but less 
->>> confusing and then it does not matter what the values are.
->
-> This is what I tried to do with:
->
-> +    [ENDIAN_MODE_BIG].endianness = DEVICE_BIG_ENDIAN,
-> +    [ENDIAN_MODE_LITTLE].endianness = DEVICE_LITTLE_ENDIAN,
-> };
->
-> but in v7 we are back of picking an arbitrary value.
->
->>> Or what uses the ops.endianness now should look at the property introduced 
->>> by this patch to avoid having to propagate it like below and drop the 
->>> ops.endianness? Or it should move to the memory region and set when the 
->>> ops are assigned?
->> 
->> I'm not understanding well what you ask, but maybe the answer is in v7 :)
+-- 
+Peter Xu
 
-I'm not sure I understand it well either. I think what I was asking about 
-is the same as what Thomas asked if this could be avoided to make it 
-necessary to allocate two separate ops for this. Looks like from now on 
-this ops struct should really loose the endianness value and this should 
-be assigned when the ops is added to the io region because that's where it 
-decides which endianness is it based on the property added in this series. 
-But I don't know if that could be done or would need deeper changes as 
-what later uses this ops struct might not have access to the property and 
-if we have a single ops struct it may need to be copied to set different 
-endianness intstead of just referencing it. So I'm not sure there's a 
-better way but I think this change makes an already cryptic boiler plate 
-even more confusing for people less knowledgeable about QEMU and C 
-programming so it makes even harder to write devices. But as long as it's 
-just a few devices that need to work with different endianness then it 
-might be OK. But wasn't that what NATIVE_ENDIAN was meant for? What can't 
-that be kept then?
-
-Regards,
-BALATON Zoltan
---3866299591-173597825-1739377388=:91349--
 
