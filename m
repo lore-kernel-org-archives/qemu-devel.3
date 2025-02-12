@@ -4,57 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15010C02198
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD7BC021A0
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 14:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiDoo-0007ay-8e; Wed, 12 Feb 2025 09:34:26 -0500
+	id 1tiDoI-0007Vr-Nm; Wed, 12 Feb 2025 09:33:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1tiDok-0007Yf-OJ; Wed, 12 Feb 2025 09:34:22 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1tiDoG-0007VT-7w; Wed, 12 Feb 2025 09:33:53 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1tiDoe-0006ks-4r; Wed, 12 Feb 2025 09:34:22 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:7e14:0:640:9fc8:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id AE9E660C1C;
- Wed, 12 Feb 2025 17:34:12 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b51c::1:4])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id rXQb590Il4Y0-G5eBQcOd; Wed, 12 Feb 2025 17:34:11 +0300
+ id 1tiDoA-0006ex-7i; Wed, 12 Feb 2025 09:33:51 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:3e09:0:640:a98e:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id DE1FD60CCC;
+ Wed, 12 Feb 2025 17:33:33 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b51c::1:4] (unknown
+ [2a02:6b8:b081:b51c::1:4])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id WXQ6K90IcuQ0-jWHGVEY2; Wed, 12 Feb 2025 17:33:33 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1739370851;
- bh=Ldc30azz94cHzovhysNSozAgUt0AcCoVWKQBbPPr20g=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=ZeTUt+Os8q8T4Jf3Qef2i+mqDTfntpihxBCmulV+pbHNAHYo9aqjcabb2QmM4NirO
- RFoS1s7N+hqSF48LTrMfW4yI4cxs39MhaIphOf3Ega1BaW6JBQYA6knIxox0U8G7XY
- l/lAo6kL42c71xcZlGmiRZ/4jMKvxLHYYxG4se2E=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ s=default; t=1739370813;
+ bh=F6hESNbhgqv9NUwZsDo3ni2rmZBMtUl0e2FHKsqRwdY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=KrKERp8eplJltQAoxC8JaB4qc9FudZ0nJ0rjZQ2T5TfalhPAaMxPBxoPaLgYA+Hxy
+ sLk72fIBxLtPBzBE8fHEJGANwYPMLhYhGuj53FwNBWVrJTPVxpsW0yGHuzSyfl19Ei
+ GMZvZsfCE84d1QIHMBn3rcsrVgOROfZudW/CZ4Jk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, vsementsov@yandex-team.ru,
- eblake@redhat.com, hreitz@redhat.com, kwolf@redhat.com
-Subject: [PATCH] qapi: merge common parts of NbdServerOptions and
- nbd-server-start data
-Date: Wed, 12 Feb 2025 17:33:51 +0300
-Message-ID: <20250212143351.274931-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
+Message-ID: <48a28d16-e20d-4328-bf4a-84dd7d23ee88@yandex-team.ru>
+Date: Wed, 12 Feb 2025 17:33:32 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] nbd/server: Allow users to adjust handshake limit in
+ QMP
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, devel@lists.libvirt.org
+References: <20250203222722.650694-4-eblake@redhat.com>
+ <20250203222722.650694-6-eblake@redhat.com>
+ <d1171e97-eac6-4b9c-81cd-43dbb3777911@yandex-team.ru>
+ <nqkksqej7hazlphlzzj7bjkoed2xxcjxqjdk7s42tjylhvojgr@mbyy5twhm6zl>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <nqkksqej7hazlphlzzj7bjkoed2xxcjxqjdk7s42tjylhvojgr@mbyy5twhm6zl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,140 +81,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of comment
-"Keep this type consistent with the nbd-server-start arguments", we
-can simply merge these things.
+On 11.02.25 00:46, Eric Blake wrote:
+> On Thu, Feb 06, 2025 at 10:20:09AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>> ---
+>>>    qapi/block-export.json         | 10 ++++++++++
+>>>    include/block/nbd.h            |  6 +++---
+>>
+>> [..]
+>>
+>>> @@ -52,6 +57,10 @@
+>>>    #
+>>>    # @addr: Address on which to listen.
+>>>    #
+>>> +# @handshake-max-secs: Time limit, in seconds, at which a client that
+>>> +#     has not completed the negotiation handshake will be disconnected,
+>>> +#     or 0 for no limit (since 10.0; default: 10).
+>>> +#
+>>
+>> Hmm. [not about the series], shouldn't we finally deprecate older interface?
+> 
+> By older interface, you are asking about the QMP command
+> 'nbd-server-start' as compared to struct NbdServerOptions.  But the
+> struct is not directly present in any QMP commands; rather, it only
+> appears to be used by qemu-storage-daemon as one of its command line
+> options that needs to set up an NBD server with a JSON-like syntax
+> that has less nesting than QMP nbd-server-start.  blockdev-nbd.c has
+> two functions [nbd_server_start_options(NbdServerOPtions *arg...)  and
+> qmp_nbd_server_start(args...)] that both unpack their slightly
+> different forms and pass them as parameters to nbd_server_start() that
+> is then agnostic to whether the older QMP command or newer q-s-d CLI
+> option was specified.
+> 
+> It looks like libvirt is still using QMP nbd-server-start.  If we were
+> to start the deprecation process for qemu 10.0, what would the new
+> command look like?  What would everyone be required to use by qemu
+> 10.2?
+> 
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+Oh you are right, I was inattentive.
 
-No problem for me to rebase on top of
-[PATCH 0/2] nbd: Allow debugging tuning of handshake limit
-if it goes earlier.
+So, probably thing to be deprecated is actually SocketAddressLegacy, which is the only difference.
 
-Also, not that order of nbd-server-start is changed. I think the order
-could not be a contract of JSON interface.
+And why just not move common part of the structures to common base? I'll send a patch with a try.
 
-We could instead of making common base structure go another way
-and define two structures with same data=NbdServerOptionsCommon, and
-different bases (will have to define additional base strucutres with
-SocketAddress and SocketAddressLegacy fields). But it would look a bit
-unusual in QAPI.
-
- blockdev-nbd.c         |  4 +--
- qapi/block-export.json | 57 ++++++++++++++++++++----------------------
- 2 files changed, 29 insertions(+), 32 deletions(-)
-
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 9e61fbaf2b..b0b8993a1b 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -215,10 +215,10 @@ void nbd_server_start_options(NbdServerOptions *arg, Error **errp)
-                      arg->max_connections, errp);
- }
- 
--void qmp_nbd_server_start(SocketAddressLegacy *addr,
--                          const char *tls_creds,
-+void qmp_nbd_server_start(const char *tls_creds,
-                           const char *tls_authz,
-                           bool has_max_connections, uint32_t max_connections,
-+                          SocketAddressLegacy *addr,
-                           Error **errp)
- {
-     SocketAddress *addr_flat = socket_address_flatten(addr);
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 117b05d13c..5eb94213db 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -9,13 +9,7 @@
- { 'include': 'block-core.json' }
- 
- ##
--# @NbdServerOptions:
--#
--# Keep this type consistent with the nbd-server-start arguments.  The
--# only intended difference is using SocketAddress instead of
--# SocketAddressLegacy.
--#
--# @addr: Address on which to listen.
-+# @NbdServerOptionsBase:
- #
- # @tls-creds: ID of the TLS credentials object (since 2.6).
- #
-@@ -30,14 +24,35 @@
- #     server from advertising multiple client support (since 5.2;
- #     default: 100)
- #
--# Since: 4.2
-+# Since: 10.0
- ##
--{ 'struct': 'NbdServerOptions',
--  'data': { 'addr': 'SocketAddress',
--            '*tls-creds': 'str',
-+{ 'struct': 'NbdServerOptionsBase',
-+  'data': { '*tls-creds': 'str',
-             '*tls-authz': 'str',
-             '*max-connections': 'uint32' } }
- 
-+##
-+# @NbdServerOptions:
-+#
-+# @addr: Address on which to listen.
-+#
-+# Since: 10.0
-+##
-+{ 'struct': 'NbdServerOptions',
-+  'base': 'NbdServerOptionsBase',
-+  'data': { 'addr': 'SocketAddress' } }
-+
-+##
-+# @NbdServerOptionsLegacy:
-+#
-+# @addr: Address on which to listen.
-+#
-+# Since: 10.0
-+##
-+{ 'struct': 'NbdServerOptionsLegacy',
-+  'base': 'NbdServerOptionsBase',
-+  'data': { 'addr': 'SocketAddressLegacy' } }
-+
- ##
- # @nbd-server-start:
- #
-@@ -50,31 +65,13 @@
- # intended difference is using SocketAddressLegacy instead of
- # SocketAddress.
- #
--# @addr: Address on which to listen.
--#
--# @tls-creds: ID of the TLS credentials object (since 2.6).
--#
--# @tls-authz: ID of the QAuthZ authorization object used to validate
--#     the client's x509 distinguished name.  This object is is only
--#     resolved at time of use, so can be deleted and recreated on the
--#     fly while the NBD server is active.  If missing, it will default
--#     to denying access (since 4.0).
--#
--# @max-connections: The maximum number of connections to allow at the
--#     same time, 0 for unlimited.  Setting this to 1 also stops the
--#     server from advertising multiple client support (since 5.2;
--#     default: 100).
--#
- # Errors:
- #     - if the server is already running
- #
- # Since: 1.3
- ##
- { 'command': 'nbd-server-start',
--  'data': { 'addr': 'SocketAddressLegacy',
--            '*tls-creds': 'str',
--            '*tls-authz': 'str',
--            '*max-connections': 'uint32' },
-+  'data': 'NbdServerOptionsLegacy',
-   'allow-preconfig': true }
- 
- ##
 -- 
-2.48.1
+Best regards,
+Vladimir
 
 
