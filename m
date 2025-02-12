@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68285C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE08EC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiHDG-0004M5-Sx; Wed, 12 Feb 2025 13:11:54 -0500
+	id 1tiHDn-0004Tg-Iy; Wed, 12 Feb 2025 13:12:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiHDE-0004Hf-Ux
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:11:52 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiHDY-0004Sh-QE
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:12:13 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiHDD-0003IB-9p
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:11:52 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38dd0dc2226so4121548f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:11:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiHDX-0003K1-97
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:12:12 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21f55fbb72bso96105275ad.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:12:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739383909; x=1739988709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739383928; x=1739988728; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fqppiBd5nMBTUuGcb+ikkZizddku8LgTX7pa9/dVEN8=;
- b=yXEsxSBnRozTiUheKPRVHNXyNdi+ywueFaYK0xRlzpyLkc36G7+FFKpjXjSuKe6FzF
- Kw03dlSj49Lx6fqFbDxIPQoG73WgZ3ggLWv27y55LjIL0EMDZKzYaXRt9SVS3gpnmCWJ
- JLwcnUVWbtbKSdVQ9q63Eglj4GAPnyNksnRhMqADlOzaq1wEwb5fSIzTTBwi0wJi8I4J
- Lw2fk56QWgtx49sip/pFwGYJgpcT3M8hR9jhQqH4vkXmRKW37XhuMTVBSjgTyTfUJgJJ
- HbebJpXwAdhvwgTnSw8zmW3t07iXYskKAM/XxH3DQbJq88wbumtF7o+XeqMHhRHlQBTw
- SauA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Glm6+Pe0IC25eIp3BrpVgsURsHqMEAfFb2NN7a5cFRU=;
+ b=Cf/Bp2qGOUHALFX9gNUKpWtUpDzRN8c0x2DUc0VLm36mD/N9OJl16uQmNqmENKfSSe
+ R1jxrbYwEnyDvKMIZXB+qDcYA/UqlD0t8KlNrZGZAb9M0NzzmCQ4aTRWXP+rKkgBmknh
+ 8Ea8nH3Cn890DVGOqkMR/eeE9A423Lu6Wl195hEqKcTZqXDI1KY0ZYldQtdXY528MW6y
+ C05/iJaRpJRm+D2Tn+suTURVwRouBzoSkU7lJdCVhXPrpk4ShiqTenJ+gxMyTwdgyFAs
+ 4BvAMoJfXYX3gKiCKxZ0ZAJOcku7e7LQOCo9wtQQWpSDc9H7Vqq4hFA1F4Qx/9vGx8Nt
+ 9D8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739383909; x=1739988709;
+ d=1e100.net; s=20230601; t=1739383928; x=1739988728;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fqppiBd5nMBTUuGcb+ikkZizddku8LgTX7pa9/dVEN8=;
- b=F7RLsZNTBzxPlsx7AtJiHhijwocyaAcAed/kXTjcV/DkV7WN9y1afyxVpIold1jn7I
- PhJwuKslH2DT8il4x1ELekfg5w+1U/S/gu1+Kyw2rQ+OKquR25SZbKceYf/3zacm201r
- bogjBir8tV8xy6jqt9VYayvxxWoEEMBrKb5uSsVhdOTuMP6FFhZwxRQVnQXcehxfYA0K
- 2kP47K/iI2LGXL6Ht/Cbn5C7nbEDcUPRS0RzTln100iveqRxqRZSKNAYV1nPMQvOl3i8
- L3R5SXDygDMooNi6OHNZWyuEmSskt4cYckvTfA8f3gyNfkJLOuvKHMKr7hvcV7pkvREo
- /oHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW93PQAZ5nMlTDBcoICJ+pnElF/IkiYWQ/Mp/q/KJzcmWrVpTHpleobh7NG5OaMrLt0VWMHVTqT5lIG@nongnu.org
-X-Gm-Message-State: AOJu0YxOHSBoSVLDSmYLfBQE61OJUp2tNuPAVVQZSujGv41XA10LA75s
- I+u7X9jmWE898hGQYi2KqMsn2CoadheHepA6WaCJuO+Q3IE1aS5ZqStnE5CfKqw=
-X-Gm-Gg: ASbGncvQNQXjB8A9tVdhJFHhSZYkQziyLAR4+o6pgECD7RHkQ6s+suqTDNPzGFttCRu
- erWjOYh+dLOoChq+Mh1nmmpi+UmmaUEgP4bwIcM1zFb8ICHzC4gWsrhfCq1XIX6TVa/dTiqBjXz
- JYkl0B4UmH4Mfl3B8M5TX+SZbkURudUu5fyuJ5LMmllyj4U6+C5h59/HJ1b5oznjleQEFVQ6tod
- qoSGWV5nXxYzGNc8+wca8bLoDqUGqUcFRxP/YwnILAWcHB66KB08A1IsqheYN478ZnyQSHPSyXT
- 9srZT5HUTChoBYC3N8726D1bNCCdGKl1XBDJlp+UESrbqjLZAGcC2Yi+ivMiUCzB
-X-Google-Smtp-Source: AGHT+IG6vEpXDfhY6l3y66qI0wFVflw/TVyvPctJkOUHWUct3V7D6JEpRUzukXio5LWr6Uy5U0FaAg==
-X-Received: by 2002:a5d:64a6:0:b0:38d:e707:f312 with SMTP id
- ffacd0b85a97d-38dea2e95f9mr3795989f8f.46.1739383908909; 
- Wed, 12 Feb 2025 10:11:48 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38ddaf333c5sm10219225f8f.36.2025.02.12.10.11.47
+ bh=Glm6+Pe0IC25eIp3BrpVgsURsHqMEAfFb2NN7a5cFRU=;
+ b=gACsNj1EfUJRtN2jASHn2lYFedzVw9CkQGUYWYHSrxgzF5N52dDAuZb9iw7oWxzLrw
+ YfdDys3JnvL7K9PBtivZ821E6M+guwFzvSnFkVR7sno5Qv0Zt33SbSmcoEEd3Vqjo0z3
+ M99nT6BIpBGlPB+g+QyUnHgB76z9lCVyhppkafzmCk7zkYScKFgXUlm5v0I3doSiklOW
+ q73ZQ0yGSngxIC2nXt913i9IKE5JAUregRcT2vYKKx5t8t7wnX/hldV9iv4zsL1V42mX
+ TST7M9fDVYfoDsJInNDLUBdc5yOkDxq4+rGugk+ZmzSD+8PR2ukp9JXNA0CaIEK/jWjg
+ nPVA==
+X-Gm-Message-State: AOJu0Yw4DlNs7qtQeSA9oyW/j2R2O2ehApGDXHz4FOjAekrPNieUGNfS
+ nkNjEGYGUw2Fo5yNxcC4X7co/ZgA3quEolWXRTv+jzQQf7gO+zV8pFyb2XtkI/mAHVDrfqdsp23
+ D
+X-Gm-Gg: ASbGncufmqgA02o0dzGQMgKlcyx30+V8kT3S+uaSi8MKnWgh61De7zbkwRlUPA/CDne
+ pBjRoRJNvbsvWKYQXhrMZASmFWjgwFUlA6cm+RUD8YFly7MJSaEVPsFjnEE5xjD+G3Lyy9ysP+S
+ q4JSGSLN3QSxFjEVK0KOmdrTUeuoIV8Mu4140XHlFjZ9KSV/zpC6CZJqK29HBH7JnvxYC97M2/f
+ EoVRIuerkWJ9EaZJXfS50XNn2f0cIQKgtwCcxTrsFO+Gz0OxrvJQbRw6XnWnJJ5nh/s9bZF7YtP
+ hcQmzxI0UQTnKgoJYmu4FtCxk3hlBTuNbrNh+hyiCeb0t42sbpLuq/4=
+X-Google-Smtp-Source: AGHT+IGcIWnu5Ui5lJox+HemSvFjK+uisM/nlyXxiF21REPpxzaNs31Prf0Gf0rM95LXxQXZzDQp4A==
+X-Received: by 2002:a05:6a21:3981:b0:1e1:ae4a:1d42 with SMTP id
+ adf61e73a8af0-1ee6b399c4amr972674637.31.1739383928498; 
+ Wed, 12 Feb 2025 10:12:08 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-730775e4896sm7906512b3a.39.2025.02.12.10.12.08
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 10:11:47 -0800 (PST)
-Message-ID: <7a07090c-78d4-4d5a-9d8e-56fa41db06cc@linaro.org>
-Date: Wed, 12 Feb 2025 19:11:47 +0100
+ Wed, 12 Feb 2025 10:12:08 -0800 (PST)
+Message-ID: <6e2758d1-e904-44f8-83e9-2838c5385b89@linaro.org>
+Date: Wed, 12 Feb 2025 10:12:06 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vdpa: Fix endian bugs in shadow virtqueue
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, eperezma@redhat.com
-Cc: mst@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
- qemu-devel@nongnu.org
-References: <20250212164923.1971538-1-kshk@linux.ibm.com>
+Subject: Re: [PATCH v2 6/8] hw/arm/vexpress: Specify explicitly the GIC has 64
+ external IRQs
+To: qemu-devel@nongnu.org
+References: <20250212154333.28644-1-philmd@linaro.org>
+ <20250212154333.28644-7-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250212164923.1971538-1-kshk@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250212154333.28644-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 17:49, Konstantin Shkolnyy wrote:
-> VDPA didn't work on a big-endian machine due to missing/incorrect
-> CPU<->LE data format conversions.
+On 2/12/25 07:43, Philippe Mathieu-Daudé wrote:
+> When not specified, Cortex-A9MP configures its GIC with 64 external
+> IRQs, (see commit a32134aad89 "arm:make the number of GIC interrupts
+> configurable"), and Cortex-15MP to 128 (see commit  528622421eb
+> "hw/cpu/a15mpcore: Correct default value for num-irq").
+> The Versatile Express board however expects a fixed set of 64
+> interrupts (see the fixed IRQ length when this board was added in
+> commit 2055283bcc8 ("hw/vexpress: Add model of ARM Versatile Express
+> board"). Add the GIC_EXT_IRQS definition (with a comment) to make
+> that explicit.
 > 
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> Except explicitly setting a property value to its same implicit
+> value, there is no logical change intended.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
-> Changes in v2: Change desc_next[] from LE format to "CPU".
-> 
->   hw/virtio/vhost-shadow-virtqueue.c | 18 ++++++++++--------
->   1 file changed, 10 insertions(+), 8 deletions(-)
+>   hw/arm/vexpress.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> @@ -228,10 +228,12 @@ static void vhost_svq_kick(VhostShadowVirtqueue *svq)
->       smp_mb();
->   
->       if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
-> -        uint16_t avail_event = *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]);
-> +        uint16_t avail_event = le16_to_cpu(
-> +                *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]));
-
-Nitpicking, sometimes using the ld/st API is cleaner (here lduw_le_p).
-
->           needs_kick = vring_need_event(avail_event, svq->shadow_avail_idx, svq->shadow_avail_idx - 1);
->       } else {
-> -        needs_kick = !(svq->vring.used->flags & VRING_USED_F_NO_NOTIFY);
-> +        needs_kick =
-> +                !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_NO_NOTIFY));
->       }
-
+r~
 
