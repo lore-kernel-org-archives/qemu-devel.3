@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A9AC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 15:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 017CFC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 15:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiEnw-0002K2-8y; Wed, 12 Feb 2025 10:37:36 -0500
+	id 1tiEsA-0003fw-KL; Wed, 12 Feb 2025 10:41:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tiEnu-0002EL-Fn
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:37:34 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiEs7-0003fT-0n
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:41:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tiEnn-0005qc-Df
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:37:29 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51CALTQM012271;
- Wed, 12 Feb 2025 15:37:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rC3pIL
- tizeeDQ+B2tZP+lK0iemOAhC8ALLGfa3K+C+E=; b=jnM+j5XLypQ6+Vqucnfoh4
- vl4qoIntLlQdb6kbliMIQskIessBypI7u6jOuIlUTThWC0G+07JMqGtY6Ca+0NNM
- Fe4FodtucFmGWQhNpl5eajQCaOCVdpGowbTNEbhIP2kxr5/CYXPhwHf9t7gRnGqq
- Wo7rBe5MCRQylfQa9XPvqg5MgnKbKXssBSQICYrT8kru+H9rE9iE+hVIsMugqCBy
- lSU3OHXXWDS8L+ZTgEI5ZyrBeuVh1d+3BO6TseBjdR2yxMeaYX0gnjtrkOT1s2zr
- wyapDb6gTmgVZyM9jbs2WVjBJDubWJZVn9fFCFL/vWuywf5rFNQGvkTZxglCA6YQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44rfpa4etc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Feb 2025 15:37:25 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51CFKuJM021894;
- Wed, 12 Feb 2025 15:37:24 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 44phksspwf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Feb 2025 15:37:24 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51CFbN6823658786
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Feb 2025 15:37:23 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D49E5805C;
- Wed, 12 Feb 2025 15:37:23 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 490AF58058;
- Wed, 12 Feb 2025 15:37:23 +0000 (GMT)
-Received: from [9.41.104.243] (unknown [9.41.104.243])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 12 Feb 2025 15:37:23 +0000 (GMT)
-Message-ID: <8a5e0e25-4fda-45d9-9315-9649e8560f38@linux.ibm.com>
-Date: Wed, 12 Feb 2025 09:37:24 -0600
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiEs5-0006dq-7b
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:41:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739374911;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gbWHNmQdXi+GwA8HKXpggdGwctsO39u61MSPg1rCwmo=;
+ b=SDWiSb6zwHUv1CtdGD0bsYKRx8jS3lhSqd7zeZmAVJhlyXD2kphXstpv3pQFiC9oPWJRuT
+ +NY6ud3P3oAgmbhQhV6ydCl1BbU/6KR6Dv2C3vCtFisnbffwpPHMEAYVfp2XBRu+6k3zeG
+ Xu1lV1SIkt7/Z0kjXooItA6k3WhTa/s=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-255-GyRWbsvFMgu__SPbkxqh8A-1; Wed, 12 Feb 2025 10:41:50 -0500
+X-MC-Unique: GyRWbsvFMgu__SPbkxqh8A-1
+X-Mimecast-MFC-AGG-ID: GyRWbsvFMgu__SPbkxqh8A_1739374909
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6e451554bc2so23615286d6.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 07:41:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739374909; x=1739979709;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gbWHNmQdXi+GwA8HKXpggdGwctsO39u61MSPg1rCwmo=;
+ b=vxUicYYZDcRsQKfa56Tj2hi6Qc55UN1cGtqAHm2XEGTfW3kiS2pvbcz50MP6hUxAF/
+ MhquG+/v/g3qPq9rFISvnQotUy2bMQWrqqrhctuWyZUUQUkIOxKZKQK1XRwcsGTQNZcI
+ 4SIUYdM4GDXBiXMv0NYKXEvCE+wBv/PLhVLIX2w77FAEAbbplMF1AjqxMutwwg9AFS08
+ T1waYFIy3yeCNvSgKMdePKN0TdXBDlP1lBkp/ffugFY5lZht8eKHsE0PN4MNmmgOqYTv
+ bAdMFTjGSDMzBaQqWa7jENIoAgApY+B2OnDGxWSt/uHFFSbhLLbcOW9N6OF9gdGq9nAU
+ +tgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWa6BA0nRGXjxk6M5GUj+TosQWMV7hUSCxJussDJpL/9bBZIynSWPCoxZmuhaClsv6I3ZXId/sp+tUb@nongnu.org
+X-Gm-Message-State: AOJu0YwmHwSMucxP7W2ktT1tDGPQPpNe5TGs/rsUywwnDIX0OtRkIpoJ
+ 4eEP2FgY7yQJzROcgxPo5pmz4CiNla0vZNCuHLz9UIcu3tmOD/h31a9KwCuXn0NfyffcUaU+Xtk
+ BaUi4GKURDNz/zTNqqGhW3n6X4xpYmdy38hF+n2l/N2wWmpYOMaQa
+X-Gm-Gg: ASbGncspZIaz9p+IGpOKS/He4zJSH/W6nPi8hRYbKrwhh90XFtxQwfWLT8y/bWqTd6a
+ 1f3AT8bhwimjz88cxeZcZ0sHuYHeTOiyQhiuMdkKwtE0gxEqE/624oEEGC4WpWyCEM+WfxfNn0/
+ 9Of9Zy08l1COS+TBFPePxb1N+XqmFazzEWX4aALTjsdkd/7AlGT7S5nIXXV4IwKtczzD+u82wSI
+ tq6N6cU9P12bDQgVjmwW9icqmDMbhOs1hWg2jV19vg6yGYmjowEynqqGEo=
+X-Received: by 2002:a05:6214:2a4b:b0:6e4:47b0:8b53 with SMTP id
+ 6a1803df08f44-6e468042edbmr105181786d6.9.1739374909625; 
+ Wed, 12 Feb 2025 07:41:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGxd/VnZjZXRna5ZK+VyWQYX55tLRBDY2UOp0tCA82jozS9bRT0qXe4vG58zUIptiICiBgJfA==
+X-Received: by 2002:a05:6214:2a4b:b0:6e4:47b0:8b53 with SMTP id
+ 6a1803df08f44-6e468042edbmr105181556d6.9.1739374909341; 
+ Wed, 12 Feb 2025 07:41:49 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e44628d1fbsm71389086d6.112.2025.02.12.07.41.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Feb 2025 07:41:48 -0800 (PST)
+Date: Wed, 12 Feb 2025 10:41:46 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 1/4] os: add an ability to lock memory on_fault
+Message-ID: <Z6zBOrzRe1J4hmzm@x1.local>
+References: <20250212143920.1269754-1-d-tatianin@yandex-team.ru>
+ <20250212143920.1269754-2-d-tatianin@yandex-team.ru>
+ <Z6y-jdFOCVz8mEXo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vdpa: Fix endian bugs in shadow virtqueue
-Content-Language: en-US
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: mst@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
- qemu-devel@nongnu.org
-References: <20250211162010.1478402-1-kshk@linux.ibm.com>
- <CAJaqyWd60RFTugxxu8NNYxHKTX3vEGZ-Za2Z=BLwVPYde8EgwA@mail.gmail.com>
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-In-Reply-To: <CAJaqyWd60RFTugxxu8NNYxHKTX3vEGZ-Za2Z=BLwVPYde8EgwA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ny6HP4ZMR1cmXR6CfvKvxaE9E58iu9Ca
-X-Proofpoint-ORIG-GUID: ny6HP4ZMR1cmXR6CfvKvxaE9E58iu9Ca
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-12_05,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- mlxscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=614 clxscore=1015 phishscore=0 impostorscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502120117
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z6y-jdFOCVz8mEXo@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,22 +113,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/2025 09:06, Eugenio Perez Martin wrote:
->> -        i = cpu_to_le16(svq->desc_next[i]);
->> +        i = le16_to_cpu(svq->desc_next[i]);
+On Wed, Feb 12, 2025 at 03:30:21PM +0000, Daniel P. Berrangé wrote:
+> > diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+> > index b82a5d3ad9..cd61d69e10 100644
+> > --- a/include/system/os-win32.h
+> > +++ b/include/system/os-win32.h
+> > @@ -123,8 +123,9 @@ static inline bool is_daemonized(void)
+> >      return false;
+> >  }
+> >  
+> > -static inline int os_mlock(void)
+> > +static inline int os_mlock(bool on_fault)
+> >  {
+> > +    (void)on_fault;
 > 
-> Both svq->desc_next and "i" are in QEMU. We can skip the conversion
-> and assign directly.
+> Is this really needed ? Our compiler flags don't enable warnings
+> about unused variables.
+> 
+> If they did, this would not be the way to hide them. Instead you
+> would use the "G_GNUC_UNUSED" annotation against the parameter.
+> eg
+> 
+>   static inline int os_mlock(bool on_fault G_GNUC_UNUSED)
 
-Are you saying that desc_next[] should be in "CPU" and not LE format?
+To be on the safe side..  I'll try to keep the marker if no one disagrees.
+So that's:
 
-The original code contained statements (below) that led me to think that 
-desc_next[] was designed to be LE...
+diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+index cd61d69e10..bc623061d8 100644
+--- a/include/system/os-win32.h
++++ b/include/system/os-win32.h
+@@ -123,9 +123,8 @@ static inline bool is_daemonized(void)
+     return false;
+ }
+ 
+-static inline int os_mlock(bool on_fault)
++static inline int os_mlock(bool on_fault G_GNUC_UNUSED)
+ {
+-    (void)on_fault;
+     return -ENOSYS;
+ }
 
-vhost_svq_last_desc_of_chain()
-         i = le16_to_cpu(svq->desc_next[i]);
+> 
+> >      return -ENOSYS;
+> >  }
 
-vhost_svq_start()
-         svq->desc_next[i] = cpu_to_le16(i + 1);
+-- 
+Peter Xu
 
 
