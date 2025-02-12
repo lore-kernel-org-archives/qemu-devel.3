@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC9EEC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 15:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1568DC021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 15:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiF4D-0004gt-US; Wed, 12 Feb 2025 10:54:26 -0500
+	id 1tiF4F-0004lu-MY; Wed, 12 Feb 2025 10:54:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiF46-0004c9-7Q
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:54:18 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiF47-0004d9-P5
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:54:20 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiF42-0000pg-PQ
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:54:17 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4395f66a639so2013685e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 07:54:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiF46-0000r4-0y
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:54:19 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4393dc02b78so26559575e9.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 07:54:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739375650; x=1739980450; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9fvZyvUuG5we6uquTUIOU3INcIuKxOLNdEIdFjFeBAs=;
- b=SYCHgJEpXEdbwjycXM1GkjEZ2ij8AwJCFR50BexBT/T5CggezgSh+sLGuiUwbQuoPK
- ckIHYFK7zXJzzS6OfP5aVYH8dXyLxTsSFmBCFAx3ELAQOn8jboKOF0AwPYgAkMb4xBvd
- 7tnmQ40b2CPlbOyI9brzDMnzRB3xICBS4glGy8MWtKUHBrHlhYCcJpdtGimMpqqYWhue
- UKFD+XBWvLOE5zgM3t4nLiRLWCF9UmLTVBu3nfvOUUcQTJQ+PwRNucDt9KbFFQ/BcRkZ
- 1nrZSWW6gee7ewlpCG8bBkStKNPvCqTcytKxdg1lzI7dnCn0mGrSJQHyr1QLkAANV+Uf
- +ZLA==
+ d=linaro.org; s=google; t=1739375655; x=1739980455; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9jgwvuUHnyL21kGDz/lsBVep518SWeLt+3+GCxJqisU=;
+ b=DkjHD/upr6mBwgtIfb8+lP2ZqZHgIpVE7/vnkgF4ofnSqIRHsUZN3v8gIh7mcpn8bX
+ 4tYZWAHxXPbnfkADO2ioZxE4kC+9saoXXSuscLn/GSYk/ViO4YugNlWxIwS6Q5gSi6lw
+ rGJvwHqeI2V5bupx7jXF9AewRFdIOPpSqTLqG/dFK1Zce1kSfNr7+CV/6pcaqIM6r58C
+ TbBFeyPGauEPvn/aeM0txxHQZwmTLj0x/Yk7cRssHjXorlkvQOLzk3sbsJiBhpsEfR66
+ RsAp8aSlZZ4GZshJ25hI0ZzijQBtg2y1Btlz2lguq3/lUY092DvOpkibEJ1KvcE8OxBh
+ AJdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739375650; x=1739980450;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9fvZyvUuG5we6uquTUIOU3INcIuKxOLNdEIdFjFeBAs=;
- b=AZQEcOi43leT53fKM7tr8zhhRVfOS0NVsBXAI3WRZn3oBrxpiNJyAtxj69hmons3pm
- WpfFUaXOQDDL+IWRBQohGHWcX4sew9Is1UCxMlQSmcf7Z/IgSIexKsAk3VPrSxa9muvc
- u2uIqIhxcF0FfVXOQ4as0Q3E0fSMbRgr+qIG+76uk/zYDB589SGxJt6sNehXN6+w0a7z
- dKTDoyKgQYqX3WD064EE6sIj5g+KYop6+CbobNaEgmcobJvUGwhn+kQHi9sm3O6a/g1q
- 36pFSvnx8yv+wj/tH1CijNODFFIuhfB94NWR5PKpf5zIalUfT2fQnRRih78yiaO/1q4e
- QghA==
-X-Gm-Message-State: AOJu0Yw1LAVBie1345xhbT5H+b/W8IwcwVPNC08JCeRyOhe9h5zp4Vdt
- 4ojYd19bskdANR3aN2Yd0OpZG3JgQKhqKMPRetQ4KDAQEUm+1UCB5SOU9CNtD6iROTJ2s7iOdAL
- nXvQ=
-X-Gm-Gg: ASbGncsikRPiP6SYYtj04PYivE4ZlSSO/kIVZub2BYzOedZSyZfGXfVYL/Lr4tNb2Ai
- zczhrddgarJBECSZ2Dd8Vk7aSgEpOl5NS1z5BGMcnbyKx12DQvg5rSdyQaXP5AyP0+lrdfpjMxq
- ZdfrhBt919q3nLwI2/nDjOSBqwWI4+foaMIRLtrg5qcahCSmJfvwgGjbKYAQhlD+auFNiuPZV7O
- +Ssq8v7kbv+DRVwowpD/HmY7MHGZIOKw83iKjVXZOgSHLAloMNI4AlHzM4XAWwHWF+tZuubgsMg
- 9pnjdjPRaoVE7DgJcQmmkbK/gvbxp2TEkybWFfRkolyRHfqRyiDyXdqWMBloVaF2jnNwl+Y=
-X-Google-Smtp-Source: AGHT+IE9bWOCAfFK5SSn8nKoB2J5L+2sjLvI8vJhat4uljf2b++3SueN6PShexJp9LDYaAuScfMWSA==
-X-Received: by 2002:a05:600c:3ba7:b0:439:5766:7232 with SMTP id
- 5b1f17b1804b1-439581b271fmr31779515e9.21.1739375650128; 
- Wed, 12 Feb 2025 07:54:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739375655; x=1739980455;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9jgwvuUHnyL21kGDz/lsBVep518SWeLt+3+GCxJqisU=;
+ b=uVBXhS3tsbFhQIZU7GD955TvVDtt9WMf0IcLgLVHWfZjJLzrw8QrYwoXnmRtNPfhor
+ NtZ14yy48WJ23iEXsYiPP1EX/YFzbJMLn1hRUgBGgtMRkR6o7s2xO1JTmasYfPDwY4dU
+ X/YGE+Gr29kOfSf1o6QQ2rR/U4x7vt+H/Z74GgsMhSxEeRGroq9z8XrPidpSroASEIfO
+ zjjzGMYUR/SmpJ8Gv8NrZFPks2O2pkimedd21aOLE+ygG68GI4r+2hmpaqngTsI7B8fO
+ /KMnJ0/FLSSAqn0yD0x4a5dc8E1IkWfHOTQG8KZv2721Ez+/LijGdHdVPNeGH2QQ3vdv
+ oLqA==
+X-Gm-Message-State: AOJu0YxSCY1LCIqxRWNrCABGYWu70SVoyleEgcMHGawCy9mYam6f7KUP
+ PPh4+ZsGHtI+P5vCsVTx7IsdxzzL11sYddIsxsk7ThH7Bf/xOGvKNGxEjgV1dbG0OI96En3V+J0
+ oTpI=
+X-Gm-Gg: ASbGncunlr4M/B9jOX5vh2DBZehxKwIooYHaj7fNcze1/2hEZCZ9bKNBQVURt8INqo1
+ QP7JVQamqOhhdECeOgUkMwJdUFTyS3XdIQx9MrzHdSShbfyTJ5eING2QyWKdIH7hTMXmW2KssRp
+ DdYQTqrBo5L6ncSnDOvyI0FK3bi/5D5gMSwDkPT3DdMz7cbln8qcxe9r5CqMdpDHr/AJTqKpcaB
+ lpMlhEyvkvLOFokWT4cjlv3lu48tFzDJ3nT0c1MGAzETgfzTaP3OIsM+xUMsH7UEF0EKqPFwhQa
+ zFEay23T5Dogg7CaLbPAh7kPcS7ouQ8i0dgQnCT9xy/N0hP4LKsArPC6iXBFU+I4ROSAYxU=
+X-Google-Smtp-Source: AGHT+IGec4EqfxKCJuFloNeLbGhzs1N7BS45fJG6yFWRpSRKa5TURUzf4gInZfvwJxzV/xelNtpvjg==
+X-Received: by 2002:a05:600c:1548:b0:436:1b08:4c78 with SMTP id
+ 5b1f17b1804b1-43959a997a5mr30960965e9.31.1739375655371; 
+ Wed, 12 Feb 2025 07:54:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a076496sm23036485e9.32.2025.02.12.07.54.08
+ 5b1f17b1804b1-4395a055bffsm23336625e9.12.2025.02.12.07.54.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 07:54:09 -0800 (PST)
+ Wed, 12 Feb 2025 07:54:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/29] Misc HW patches for 2025-02-12
-Date: Wed, 12 Feb 2025 16:54:06 +0100
-Message-ID: <20250212155408.29502-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 28/29] hw: Declare various const data as 'const'
+Date: Wed, 12 Feb 2025 16:54:07 +0100
+Message-ID: <20250212155408.29502-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250212155408.29502-1-philmd@linaro.org>
+References: <20250212155408.29502-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,140 +99,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f9edf32ea2e18a56de5d92f57e9d10565c822367:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250210133134.90879-7-philmd@linaro.org>
+---
+ hw/isa/vt82c686.c     | 2 +-
+ hw/rtc/m48t59-isa.c   | 2 +-
+ hw/rtc/m48t59.c       | 2 +-
+ hw/sensor/tmp421.c    | 2 +-
+ hw/usb/hcd-ehci-pci.c | 2 +-
+ hw/usb/hcd-uhci.c     | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-  Merge tag 'pull-request-2025-02-11' of https://gitlab.com/thuth/qemu into staging (2025-02-11 13:27:32 -0500)
-
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20250212
-
-for you to fetch changes up to b374adcae577dddfe6cfd404985014fdd2443428:
-
-  hw: Make class data 'const' (2025-02-12 15:39:46 +0100)
-
-Since 2025-02-10: Dropped MicroBlaze endianness patches, added constify.
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Use qemu_hexdump_line() in TPM backend (Philippe)
-- Remove magic number in APIC (Phil)
-- Disable thread-level cache topology (Zhao)
-- Xen QOM style cleanups (Bernhard)
-- Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
-- Invert logic of machine no_sdcard flag (Philippe)
-- Housekeeping in MicroBlaze functional tests (Philippe)
-- Prevent out-of-bound access in SMC91C111 RX path (Peter)
-- Declare more fields / arguments as const (Philippe)
-
-----------------------------------------------------------------
-
-Bernhard Beschow (1):
-  hw/xen: Prefer QOM cast for XenLegacyDevice
-
-Peter Maydell (1):
-  hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
-
-Phil Dennis-Jordan (1):
-  hw/intc/apic: Fixes magic number use, removes outdated comment
-
-Philippe Mathieu-Daudé (25):
-  backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
-  hw/arm/xlnx-zynqmp: Use &error_abort for programming errors
-  hw/sysbus: Use sizeof(BusState) in main_system_bus_create()
-  hw/sysbus: Declare QOM types using DEFINE_TYPES() macro
-  hw/sysbus: Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE
-  hw/vfio: Have VFIO_PLATFORM devices inherit from
-    DYNAMIC_SYS_BUS_DEVICE
-  hw/display: Have RAMFB device inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/i386: Have X86_IOMMU devices inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/net: Have eTSEC device inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/tpm: Have TPM TIS sysbus device inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/xen: Have legacy Xen backend inherit from DYNAMIC_SYS_BUS_DEVICE
-  hw/boards: Convert no_sdcard flag to OnOffAuto tri-state
-  hw/boards: Explicit no_sdcard=false as ON_OFF_AUTO_OFF
-  hw/boards: Rename no_sdcard -> auto_create_sdcard
-  hw/boards: Do not create unusable default if=sd drives
-  hw/arm: Remove all invalid uses of auto_create_sdcard=true
-  hw/riscv: Remove all invalid uses of auto_create_sdcard=true
-  hw/boards: Ensure machine setting auto_create_sdcard expose a SD Bus
-  hw/riscv/opentitan: Include missing 'exec/address-spaces.h' header
-  tests/functional: Explicit endianness of microblaze assets
-  tests/functional: Allow microblaze tests to take a machine name
-    argument
-  tests/functional: Remove sleep() kludges from microblaze tests
-  tests/functional: Have microblaze tests inherit common parent class
-  hw: Declare various const data as 'const'
-  hw: Make class data 'const'
-
-Zhao Liu (1):
-  hw/core/machine: Reject thread level cache
-
- hw/sd/sdhci-internal.h                        |  2 +-
- include/hw/boards.h                           |  2 +-
- include/hw/sysbus.h                           |  2 +
- include/hw/xen/xen_pvdev.h                    |  5 +-
- backends/tpm/tpm_util.c                       | 24 ++++----
- hw/arm/aspeed.c                               | 20 +++++++
- hw/arm/bananapi_m2u.c                         |  1 +
- hw/arm/cubieboard.c                           |  1 +
- hw/arm/exynos4_boards.c                       |  2 +
- hw/arm/fby35.c                                |  1 +
- hw/arm/imx25_pdk.c                            |  1 +
- hw/arm/integratorcp.c                         |  1 +
- hw/arm/mcimx6ul-evk.c                         |  1 +
- hw/arm/mcimx7d-sabre.c                        |  1 +
- hw/arm/npcm7xx_boards.c                       |  5 ++
- hw/arm/omap_sx1.c                             |  2 +
- hw/arm/orangepi.c                             |  1 +
- hw/arm/raspi.c                                |  5 ++
- hw/arm/raspi4b.c                              |  1 +
- hw/arm/realview.c                             |  4 ++
- hw/arm/sabrelite.c                            |  1 +
- hw/arm/stellaris.c                            |  1 +
- hw/arm/versatilepb.c                          |  2 +
- hw/arm/vexpress.c                             |  2 +
- hw/arm/xilinx_zynq.c                          |  1 -
- hw/arm/xlnx-versal-virt.c                     |  1 +
- hw/arm/xlnx-zcu102.c                          |  1 +
- hw/arm/xlnx-zynqmp.c                          | 38 ++++--------
- hw/core/machine-smp.c                         |  7 +++
- hw/core/null-machine.c                        |  1 -
- hw/core/sysbus.c                              | 54 ++++++++++-------
- hw/display/ramfb-standalone.c                 |  3 +-
- hw/i386/amd_iommu.c                           |  2 -
- hw/i386/intel_iommu.c                         |  2 -
- hw/i386/x86-iommu.c                           |  2 +-
- hw/intc/apic.c                                |  3 +-
- hw/isa/vt82c686.c                             |  2 +-
- hw/net/fsl_etsec/etsec.c                      |  4 +-
- hw/net/smc91c111.c                            |  9 +++
- hw/riscv/microchip_pfsoc.c                    |  1 +
- hw/riscv/opentitan.c                          |  1 +
- hw/riscv/sifive_u.c                           |  1 +
- hw/rtc/m48t59-isa.c                           |  2 +-
- hw/rtc/m48t59.c                               |  2 +-
- hw/s390x/s390-virtio-ccw.c                    |  1 -
- hw/sd/sdhci.c                                 |  2 +-
- hw/sensor/emc141x.c                           |  2 +-
- hw/sensor/isl_pmbus_vr.c                      |  2 +-
- hw/sensor/tmp421.c                            |  2 +-
- hw/tpm/tpm_tis_sysbus.c                       |  3 +-
- hw/usb/hcd-ehci-pci.c                         |  2 +-
- hw/usb/hcd-uhci.c                             |  2 +-
- hw/usb/xen-usb.c                              |  6 +-
- hw/vfio/amd-xgbe.c                            |  2 -
- hw/vfio/calxeda-xgmac.c                       |  2 -
- hw/vfio/platform.c                            |  4 +-
- hw/xen/xen-legacy-backend.c                   |  9 +--
- hw/xen/xen_pvdev.c                            |  2 +-
- system/vl.c                                   | 24 ++++++--
- .../functional/test_microblaze_s3adsp1800.py  | 34 +++++++++--
- .../test_microblazeel_s3adsp1800.py           | 32 ++--------
- tests/qemu-iotests/172.out                    | 60 -------------------
- 62 files changed, 211 insertions(+), 205 deletions(-)
-
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 6f44b381a5f..43bd67eeef2 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -224,7 +224,7 @@ static void via_pm_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    ViaPMInitInfo *info = data;
++    const ViaPMInitInfo *info = data;
+ 
+     k->realize = via_pm_realize;
+     k->config_write = pm_write_config;
+diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
+index 38bc8dcf100..9c3855a3ef1 100644
+--- a/hw/rtc/m48t59-isa.c
++++ b/hw/rtc/m48t59-isa.c
+@@ -129,7 +129,7 @@ static void m48txx_isa_class_init(ObjectClass *klass, void *data)
+ static void m48txx_isa_concrete_class_init(ObjectClass *klass, void *data)
+ {
+     M48txxISADeviceClass *u = M48TXX_ISA_CLASS(klass);
+-    M48txxInfo *info = data;
++    const M48txxInfo *info = data;
+ 
+     u->info = *info;
+ }
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index c9bd6f878fe..3fb2f27d9d1 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -639,7 +639,7 @@ static void m48txx_sysbus_class_init(ObjectClass *klass, void *data)
+ static void m48txx_sysbus_concrete_class_init(ObjectClass *klass, void *data)
+ {
+     M48txxSysBusDeviceClass *u = M48TXX_SYS_BUS_CLASS(klass);
+-    M48txxInfo *info = data;
++    const M48txxInfo *info = data;
+ 
+     u->info = *info;
+ }
+diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
+index 82e604279c5..007f7cd018b 100644
+--- a/hw/sensor/tmp421.c
++++ b/hw/sensor/tmp421.c
+@@ -68,7 +68,7 @@ struct TMP421State {
+ 
+ struct TMP421Class {
+     I2CSlaveClass parent_class;
+-    DeviceInfo *dev;
++    const DeviceInfo *dev;
+ };
+ 
+ #define TYPE_TMP421 "tmp421-generic"
+diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+index d410c38a8a2..e00316721ac 100644
+--- a/hw/usb/hcd-ehci-pci.c
++++ b/hw/usb/hcd-ehci-pci.c
+@@ -182,7 +182,7 @@ static void ehci_data_class_init(ObjectClass *klass, void *data)
+ {
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+-    EHCIPCIInfo *i = data;
++    const EHCIPCIInfo *i = data;
+ 
+     k->vendor_id = i->vendor_id;
+     k->device_id = i->device_id;
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 8528d493d63..0561a6d801a 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -1289,7 +1289,7 @@ void uhci_data_class_init(ObjectClass *klass, void *data)
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     UHCIPCIDeviceClass *u = UHCI_CLASS(klass);
+-    UHCIInfo *info = data;
++    const UHCIInfo *info = data;
+ 
+     k->realize = info->realize ? info->realize : usb_uhci_common_realize;
+     k->exit = info->unplug ? usb_uhci_exit : NULL;
 -- 
 2.47.1
 
