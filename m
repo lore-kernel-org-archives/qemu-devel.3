@@ -4,129 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C2AC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 13:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD2BC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 14:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiDF5-0003hq-EM; Wed, 12 Feb 2025 08:57:31 -0500
+	id 1tiDLA-0006pc-Qu; Wed, 12 Feb 2025 09:03:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1tiCTq-0001kQ-ME
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:08:47 -0500
-Received: from mailout1.samsung.com ([203.254.224.24])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1tiCTl-0000bl-TX
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:08:40 -0500
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20250212130834epoutp015e9eda09c6e1ae95a7dc88ea7878efc7~jd_byO31I0743507435epoutp01M
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:08:34 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20250212130834epoutp015e9eda09c6e1ae95a7dc88ea7878efc7~jd_byO31I0743507435epoutp01M
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1739365714;
- bh=B0oEDPfPQfCNVkbugaxU2CuXgm4aspBSRwQz+zy1uac=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=VMAlFFZb72M9f39nTEK4vhgr4E65Iz53ZpJKmXo8YUroQgdqs66uMR8tMHMLqWpWC
- F4SHoHwAaJeCQUoWTMyx7cpY/RsKPpRasT5NUnKvShCS79Lj269TtVUsiLK3iG5bsE
- EgyD+AcXvhVqrCPsmJRT63UnYLP/8sTSfodcQGhs=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTP id
- 20250212130834epcas5p378894a8d8377a5005bb2127fde5fe512~jd_bdf1VE2814328143epcas5p3R;
- Wed, 12 Feb 2025 13:08:34 +0000 (GMT)
-Received: from epsmges5p2new.samsung.com (unknown [182.195.38.180]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4YtJXd1zmbz4x9Q0; Wed, 12 Feb
- 2025 13:08:33 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
- epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 44.EF.19933.15D9CA76; Wed, 12 Feb 2025 22:08:33 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20250212114537epcas5p20dd573ae3eaf86e8793fb035662e509f~jc1-02ssS0314703147epcas5p2u;
- Wed, 12 Feb 2025 11:45:37 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20250212114537epsmtrp1673d524939dc7980f5aa86e1b12d1a71~jc1-0KnLP0957909579epsmtrp1E;
- Wed, 12 Feb 2025 11:45:37 +0000 (GMT)
-X-AuditID: b6c32a4a-b87c770000004ddd-e9-67ac9d51fe80
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
- epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- C1.22.18729.0E98CA76; Wed, 12 Feb 2025 20:45:36 +0900 (KST)
-Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
- epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250212114535epsmtip21a0d91755548700961d8145b8a0b2f0e~jc1_XFLpA2106121061epsmtip2s;
- Wed, 12 Feb 2025 11:45:35 +0000 (GMT)
-Date: Wed, 12 Feb 2025 17:15:31 +0530
-From: Arpit Kumar <arpit1.kumar@samsung.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
- nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
- krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com
-Subject: Re: [PATCH 3/3] hw/cxl/cxl-mailbox-utils.c: Added support for
- Populate Log (Opcode 0404h) as background operation
-Message-ID: <20250212114531.oxjcylhvdydltoqk@test-PowerEdge-R740xd>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiDL7-0006oZ-Gg
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 09:03:46 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiDL5-0006XS-FX
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 09:03:45 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38dd935a267so3126096f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 06:03:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739369022; x=1739973822; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=kAH2qclmGgBA3ka8vJzUEw7N4C7mBg3fIza94AFCUGI=;
+ b=UbkiZW39MrY0A/jnjsPCqfVFfhFXyM/hjOB2w+7c1WQwVm5ege+38p3A+SdVKNrb0n
+ uH5fSq7LITLpNbWOA8vPFX638penPK1iqJKhSlXK8qvfTwmiWSVrdyHcaL2mGtjUonZs
+ jAlveIy8l+mXrbWmjqw4iqCERwRRzzwXbtvz9iLIrk2c0JxOxJUXEaOJwor9SlCH8FTM
+ fKanWyyGwKqAnnZlgzEob7SZXVWavRz1EBGr3ffzfJawPJF7+hy6w6vRPfIsvr9nYgvf
+ fDqWfKwTm+X7c2ErvpDW1/rjPIyqAVLa/m2mkbINjxA1bO2PKMT1vajm5vzMabEDSNfD
+ 5tqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739369022; x=1739973822;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kAH2qclmGgBA3ka8vJzUEw7N4C7mBg3fIza94AFCUGI=;
+ b=jLDo2t0S/GPAGklCiToNTdCxZSjzwdksV0v3q3KOGZpwJq7Q+iwC1I4bPeBHbi1CWb
+ MnkgAaQ2r4IXKOW20OgFCDItqhrPv9zpWSzpwP63VdfEVaRI9zvZPqPlt2Xx9zqucpor
+ mh5pYDzXHnSp+n6LvNv36xoOKVFJcU1DxtsRW2aqrZzpX+gao8iE0SqadRQqI2jvc4xB
+ VD0tK+HlYhLF+mKetCE0tfYcyKsdtO+gKUsIH1jXpxQz8JNUT9YRj5YnhFwRkwhnHFnU
+ mSWm2VggIzt5nuqWE6wy0SdJyJRYm6foMufqJSKqW5slwFd2N9SSJiPkJyAMqMIYxr3o
+ Vm3w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvADL2aSA5qdmLAbSnMluymUst6rCS8hvfZZe8V1COKZ/BUmT/17PYwEfmQas6gdstN3+JueJSIfLo@nongnu.org
+X-Gm-Message-State: AOJu0YwzqsDOOqHgbRZS2DtolB8Skam/l+Ko/nTAUV/M0Tpyy24Cm+oS
+ dEUMIfhPtPVYrZg5WBdIzxjc4CsZ2BUgtIKakLqJI9MhrqVbzD96Z0PCFZwGoWA=
+X-Gm-Gg: ASbGncsrDUeg91jVEROO6tuMh3q+yj0XSUoggTX4i5NAjapVYm17RcWUagdmvf8+DU1
+ yz7rDIiWpBItS1MeYlMtXu4Td+Og94QJvZFa7LiH+052g9wviDgiM/HSA0wTsTsLGC7DjETRL1+
+ G/E5wFnMxuQy7B0KLWysraNND7ouKSDXasU3M0bvmHRu6KURxlmRDB83LWPsXRbP6E6lKETMBUn
+ qe4auohZO9j/3TAgdr6+auhiMh9d9lD0gOfNLYK5GdhXM5MaufD0HKTo/Rjmc+72Ejg/6dInDAh
+ jo4dYx19zldipSshTF/zLwYFyJs3iL27y36JSpt61jDvWGkS9btsc90awrQ=
+X-Google-Smtp-Source: AGHT+IGEf2YuUGY1vo8xQmGC8IuKzzqXdWx4AHY5ax9Y3JFPirG0TdNyckGhDpiEc1MuI0gcWZtlTw==
+X-Received: by 2002:a05:6000:184:b0:38d:b448:8ffc with SMTP id
+ ffacd0b85a97d-38dea28eb1cmr2337831f8f.27.1739369021551; 
+ Wed, 12 Feb 2025 06:03:41 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4395a1b84bcsm21489225e9.40.2025.02.12.06.03.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Feb 2025 06:03:40 -0800 (PST)
+Message-ID: <a3608e43-79ce-403d-8ba7-6735fde66759@linaro.org>
+Date: Wed, 12 Feb 2025 15:03:39 +0100
 MIME-Version: 1.0
-In-Reply-To: <20250204105829.00001c47@huawei.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPJsWRmVeSWpSXmKPExsWy7bCmlm7g3DXpBmsecllMP6xo8eX0HjaL
- 1TfXMFrcPLCTyWLVwmtsFgs3LmOyOD/rFIvF3217GS2O9+5gAXLnsDtweeycdZfdo+XIW1aP
- J9c2M3n0bVnF6DF1dr3H501yAWxR2TYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbm
- Sgp5ibmptkouPgG6bpk5QIcpKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgpMCvSK
- E3OLS/PS9fJSS6wMDQyMTIEKE7IztjW8YyuYalZxtOE4SwNjm1oXIyeHhICJxKEFp1lBbCGB
- 3YwS3xepQNifGCVmn0rrYuQCsr8xSvx9tIARpuHRl/UsEEV7GSW270yFKAJqWDJjA1gRi4Cq
- xLaWRiYQm01AR+L87blsILaIgJHEuxuTGEEamAVuMko0TnoGlhAWqJF4+2Ij0BkcHLwCzhLX
- loJdwSsgKHFy5hOwZZwChhLH5t1kgTiil0Pi8nNXCNtFYvncbmYIW1ji1fEt7BC2lMTL/jYo
- O1viz/x2Ngi7QGLRz5lQcXuJ1lP9YL3MAhkSzxYfgJojKzH11DomiDifRO/vJ0wQcV6JHfNg
- bDWJ9h3zoebISLz5tRhqvofE4ws9TJBA+cAosXTdfZYJjHKzkPwzC8k+CNtKovNDE+ssoPeZ
- BaQllv/jgDA1Jdbv0l/AyLqKUTK1oDg3PbXYtMAoL7UcHsXJ+bmbGMEpVctrB+PDBx/0DjEy
- cTAeYpTgYFYS4ZWYtiZdiDclsbIqtSg/vqg0J7X4EKMpMH4mMkuJJucDk3peSbyhiaWBiZmZ
- mYmlsZmhkjhv886WdCGB9MSS1OzU1ILUIpg+Jg5OqQamDX9cffdcWXo5rDjfTOrPNI5stcaO
- rbOefOVc3bfAp6ij7Wm9zoX5d55+mLBq6c3+fdwZhzXnrTXZ+f/cias3Kg0C3L16y0/25vo+
- 2ub7QrZ+87/ypXPa/x29lvw913K72v9ghUP/ruvK7+n5xre31ll2kf1VP+OdC9+YLEgs6/Pw
- 6alRX+7Aa3OP00P9glCNn7yc+lRhXud9bp5zK2cpXZQKFVlaf2HjRPMj0xnWVp9qrfQ16RUq
- ZEx15/N899o+/P05bZ6g0yFVPMId17d8PxobM/mh5i7OvU5LPx5XOFwQwVvWyi1YuHpH0PNa
- r6Q41RVnKk8Hptj1OK78s2fBij3aK47czuPZ1Pipjb9ZiaU4I9FQi7moOBEASjWF1DIEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMLMWRmVeSWpSXmKPExsWy7bCSvO6DzjXpBnfWW1lMP6xo8eX0HjaL
- 1TfXMFrcPLCTyWLVwmtsFgs3LmOyOD/rFIvF3217GS2O9+5gAXLnsDtweeycdZfdo+XIW1aP
- J9c2M3n0bVnF6DF1dr3H501yAWxRXDYpqTmZZalF+nYJXBlr1z1hKThuXHHreAtbA+Ml5S5G
- Tg4JAROJR1/Ws3QxcnEICexmlPjTs4gdIiEjcXHmYxYIW1hi5b/n7BBFHxgl5vzdzwSSYBFQ
- ldjW0ghmswnoSJy/PZcNxBYRMJJ4d2MSI0gDs8BtRonfu++BTRIWqJF4+2IjaxcjBwevgLPE
- taUqIGGwodc2B4HYvAKCEidnPgErZxYwk5i3+SEzSDmzgLTE8n8cIGFOAUOJY/NuskxgFJiF
- pGMWko5ZCB0LGJlXMUqmFhTnpucWGxYY5qWW6xUn5haX5qXrJefnbmIEx4OW5g7G7as+6B1i
- ZOJgPMQowcGsJMJrsnBFuhBvSmJlVWpRfnxRaU5q8SFGaQ4WJXFe8Re9KUIC6YklqdmpqQWp
- RTBZJg5OqQYm7q1/Fj17atbtqPF4rd7G90ZHuvcFR50sfr/qRm3TH93EwJ8bP5XOWCXcG11/
- /EPV2VdnwrWO18fUfb7dZe/PkHlb7Fo01+cYdoGLzt7BHBNmadvEO3xeyxItYpB7eELUCcUr
- yrsOWNcb3l66f8ndeSH68quzopZPceBNiNhR59bpz3B8wVTndf1+p9kvlSaUbU39o5n06ZpD
- x6FlfqG1Kq6SW2Or9TmtN0qfrah8Pee6/r3b4bISk1eGXii3fTJxYZWJ0/S67HmzTr8XUlTV
- Wftz8rkttn/atjEeyPzTz7D8qaZGA0v94Yf8RfqfJctafiquO2gqXK9lMtFaf8ZizVMXD3ZU
- SNhFWVUwxM5VYinOSDTUYi4qTgQApW7D4/YCAAA=
-X-CMS-MailID: 20250212114537epcas5p20dd573ae3eaf86e8793fb035662e509f
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_4c391_"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250203060055epcas5p4a7889ddf3b73b10f8b9b41778375ce63
-References: <20250203055950.2126627-1-arpit1.kumar@samsung.com>
- <CGME20250203060055epcas5p4a7889ddf3b73b10f8b9b41778375ce63@epcas5p4.samsung.com>
- <20250203055950.2126627-4-arpit1.kumar@samsung.com>
- <20250204105829.00001c47@huawei.com>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=arpit1.kumar@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
+ QAPI enum
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250212112413.37553-1-philmd@linaro.org>
+ <20250212112413.37553-2-philmd@linaro.org>
+ <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
+ <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
+ <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
+ <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
+Content-Language: en-US
+In-Reply-To: <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 12 Feb 2025 08:57:28 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,194 +112,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_4c391_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
-
-On 04/02/25 10:58AM, Jonathan Cameron wrote:
->On Mon,  3 Feb 2025 11:29:50 +0530
->Arpit Kumar <arpit1.kumar@samsung.com> wrote:
->
->> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
->> Reviewed-by: Alok Rathore <alok.rathore@samsung.com>
->> Reviewed-by: Krishna Kanth Reddy <krish.reddy@samsung.com>
->
->Likewise, the CEL isn't a dynamic thing.  Asking to populate
->it makes little sense so the log capability should always
->say this is not supported.
->
->I suspect you had this running with a different log and flipped
->to CEL for purposes of up streaming?
->
->Anyhow, choose something else.  Maybe component state dump or ECS log?
->
-Thanks for the review Jonathan, will update the same in V2 patch 
-and return unsupported for CEL.
->> ---
->>  hw/cxl/cxl-mailbox-utils.c  | 95 +++++++++++++++++++++++++++++++++++++
->>  include/hw/cxl/cxl_device.h |  2 +
->>  2 files changed, 97 insertions(+)
+On 12/2/25 14:53, Philippe Mathieu-Daudé wrote:
+> On 12/2/25 13:56, BALATON Zoltan wrote:
+>> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
+>>> On 12/2/25 12:37, Thomas Huth wrote:
+>>>> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
+>>>>> Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
+>>>>> Endianness can be BIG, LITTLE or unspecified (default).
+>>>>>
+>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> ---
+>>>>>   qapi/common.json                    | 16 ++++++++++++++++
+>>>>>   include/hw/qdev-properties-system.h |  7 +++++++
+>>>>>   hw/core/qdev-properties-system.c    | 11 +++++++++++
+>>>>>   3 files changed, 34 insertions(+)
+>>>>>
+>>>>> diff --git a/qapi/common.json b/qapi/common.json
+>>>>> index 6ffc7a37890..217feaaf683 100644
+>>>>> --- a/qapi/common.json
+>>>>> +++ b/qapi/common.json
+>>>>> @@ -212,3 +212,19 @@
+>>>>>   ##
+>>>>>   { 'struct': 'HumanReadableText',
+>>>>>     'data': { 'human-readable-text': 'str' } }
+>>>>> +
+>>>>> +##
+>>>>> +# @EndianMode:
+>>>>> +#
+>>>>> +# An enumeration of three options: little, big, and unspecified
+>>>>> +#
+>>>>> +# @little: Little endianness
+>>>>> +#
+>>>>> +# @big: Big endianness
+>>>>> +#
+>>>>> +# @unspecified: Endianness not specified
+>>>>> +#
+>>>>> +# Since: 10.0
+>>>>> +##
+>>>>> +{ 'enum': 'EndianMode',
+>>>>> +  'data': [ 'little', 'big', 'unspecified' ] }
+>>>>
+>>>> Should 'unspecified' come first? ... so that it gets the value 0, 
+>>>> i.e. when someone forgets to properly initialize a related variable, 
+>>>> the chances are higher that it ends up as "unspecified" than as 
+>>>> "little" ?
+>>>
+>>> Hmm but then in this series the dual-endianness regions are defined as:
+>>>
+>>> +static const MemoryRegionOps pic_ops[2] = {
+>>> +    [0 ... 1] = {
 >>
->> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
->> index 5fd7f850c4..115c2dc66b 100644
->> --- a/hw/cxl/cxl-mailbox-utils.c
->> +++ b/hw/cxl/cxl-mailbox-utils.c
->> @@ -78,6 +78,7 @@ enum {
->>          #define GET_LOG       0x1
->>          #define GET_LOG_CAPABILITIES   0x2
->>          #define CLEAR_LOG     0x3
->> +        #define POPULATE_LOG  0x4
->>      FEATURES    = 0x05,
->>          #define GET_SUPPORTED 0x0
->>          #define GET_FEATURE   0x1
->> @@ -1149,6 +1150,94 @@ static CXLRetCode cmd_logs_clear_log(const struct cxl_cmd *cmd,
->>      return CXL_MBOX_SUCCESS;
->>  }
->>
->> +static void cxl_rebuild_cel(CXLCCI *cci);
->> +
->> +static int get_populate_duration(uint32_t total_mem)
->> +{
->> +    int secs = 0;
->> +
->> +    if (total_mem <= 512) {
->> +        secs = 4;
->> +    } else if (total_mem <= 1024) {
->> +        secs = 8;
->> +    } else if (total_mem <= 2 * 1024) {
->> +        secs = 15;
->> +    } else if (total_mem <= 4 * 1024) {
->> +        secs = 30;
->> +    } else if (total_mem <= 8 * 1024) {
->> +        secs = 60;
->> +    } else if (total_mem <= 16 * 1024) {
->> +        secs = 2 * 60;
->> +    } else if (total_mem <= 32 * 1024) {
->> +        secs = 4 * 60;
->> +    } else if (total_mem <= 64 * 1024) {
->> +        secs = 8 * 60;
->> +    } else if (total_mem <= 128 * 1024) {
->> +        secs = 15 * 60;
->> +    } else if (total_mem <= 256 * 1024) {
->> +        secs = 30 * 60;
->> +    } else if (total_mem <= 512 * 1024) {
->> +        secs = 60 * 60;
->> +    } else if (total_mem <= 1024 * 1024) {
->> +        secs = 120 * 60;
->> +    } else {
->> +        secs = 240 * 60; /* max 4 hrs */
->> +    }
->> +
->> +    return secs;
->> +}
->> +
->> +/* CXL r3.1 Section 8.2.9.5.5: Populate log (Opcode 0404h) */
->> +static CXLRetCode cmd_logs_populate_log(const struct cxl_cmd *cmd,
->> +                                        uint8_t *payload_in,
->> +                                        size_t len_in,
->> +                                        uint8_t *payload_out,
->> +                                        size_t *len_out,
->> +                                        CXLCCI *cci)
->> +{
->> +    int32_t cap_id;
->> +    uint32_t total_mem = 0;
->> +    int secs = 0;
->> +    struct {
->> +        QemuUUID uuid;
->> +    } QEMU_PACKED QEMU_ALIGNED(8) * populate_log = (void *)payload_in;
->> +
->> +    cap_id = valid_log_check(&populate_log->uuid, cci);
->> +    if (cap_id == -1) {
->> +        return CXL_MBOX_INVALID_LOG;
->> +    }
->> +
->> +    if (cci->supported_log_cap[cap_id].param_flags.populate_log_supported) {
->> +        switch (cap_id) {
->> +        case CEL:
->Similar to before, a callback to fill the log inside the cap entry
->is probably going to be the most extensible way to do this rather
->than using an ID and a switch statement that gets steadily more
->complex and doesn't easily allow for different device emulation to
->make different choices on what to fill with (e.g. faking component
->state dump for a type 3 vs a type 2 device - once supported in qemu).
->
-okay
+>> This is already confusing as you'd have to know that 0 and 1 here 
+>> means ENDIAN_MODE_LITTLE and ENDIAN_MODE_BIG (using those constants 
+>> here as well might be clearer). It's easy to miss what this does so 
 
->> +            cci->log = CEL;
->> +            total_mem = (1 << 16) * sizeof(struct cel_log);
->> +            secs = get_populate_duration(total_mem >> 20);
->
->Why would the CEL be based on memory size?
->
-CEL is not dependent on memory size. It is representing CEL buffer size. 
-total_mem variable is misleading in this case. will take care in next
-iteration.
->> +            goto start_bg;
->> +            break;
->> +        default:
->> +            return CXL_MBOX_UNSUPPORTED;
->> +        }
->> +    }
->> +    return CXL_MBOX_UNSUPPORTED;
->> +
->> +start_bg:
->> +    cci->bg.runtime = secs * 1000UL;
->> +    *len_out = 0;
->> +    return CXL_MBOX_BG_STARTED;
->> +}
->> +
->> +static void __do_populate(CXLCCI *cci)
->> +{
->> +    switch (cci->log) {
->> +    case CEL:
->> +        cxl_rebuild_cel(cci);
->> +        break;
->> +    default:
->> +        break;
->> +    }
->> +}
->> +
->>  /* CXL r3.1 section 8.2.9.6: Features */
->>  /*
->>   * Get Supported Features output payload
->> @@ -2918,6 +3007,9 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
->>                                       cmd_logs_get_log_capabilities, 0x10, 0 },
->>      [LOGS][CLEAR_LOG] = { "LOGS_CLEAR_LOG", cmd_logs_clear_log, 0x10,
->>                            CXL_MBOX_IMMEDIATE_LOG_CHANGE},
->> +    [LOGS][POPULATE_LOG] = { "LOGS_POPULATE_LOG", cmd_logs_populate_log, 0x10,
->> +                             (CXL_MBOX_IMMEDIATE_LOG_CHANGE |
->> +                              CXL_MBOX_BACKGROUND_OPERATION)},
->>      [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
->>                                    cmd_features_get_supported, 0x8, 0 },
->>      [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
->> @@ -3098,6 +3190,9 @@ static void bg_timercb(void *opaque)
->>          case 0x0201: /* fw transfer */
->>              __do_firmware_xfer(cci);
->>              break;
->> +        case 0x0404: /* populate_ log */
->> +            __do_populate(cci);
->> +            break;
->>          case 0x4400: /* sanitize */
->>          {
->>              CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
->> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
->> index e7cb99a1d2..d90d0d4a8f 100644
->> --- a/include/hw/cxl/cxl_device.h
->> +++ b/include/hw/cxl/cxl_device.h
->> @@ -230,6 +230,8 @@ typedef struct CXLCCI {
->>      } cel_log[1 << 16];
->>      size_t cel_size;
->>
->> +    enum Logs log;
->> +
->>      /* get log capabilities */
->>      CXLLogCapabilities supported_log_cap[MAX_LOG_TYPE];
->>
->
+At this point 0 / 1 only mean "from the index #0 included to the index
+#1 included", 0 being the first one and 1 the last one.
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_4c391_
-Content-Type: text/plain; charset="utf-8"
+>> maybe repeating the definitions for each case would be longer but less 
+>> confusing and then it does not matter what the values are.
 
+This is what I tried to do with:
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_4c391_--
++    [ENDIAN_MODE_BIG].endianness = DEVICE_BIG_ENDIAN,
++    [ENDIAN_MODE_LITTLE].endianness = DEVICE_LITTLE_ENDIAN,
+};
+
+but in v7 we are back of picking an arbitrary value.
+
+>> Or what uses the ops.endianness now should look at the property 
+>> introduced by this patch to avoid having to propagate it like below 
+>> and drop the ops.endianness? Or it should move to the memory region 
+>> and set when the ops are assigned?
+> 
+> I'm not understanding well what you ask, but maybe the answer is in v7 :)
+
 
