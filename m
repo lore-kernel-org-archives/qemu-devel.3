@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC9DC0219B
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 00:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B3AC0219B
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 00:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti0fT-0003ya-PP; Tue, 11 Feb 2025 19:31:57 -0500
+	id 1ti0pE-0005P3-SP; Tue, 11 Feb 2025 19:42:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ti0fQ-0003yE-7C
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 19:31:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ti0pD-0005Oo-1r
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 19:41:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ti0fN-0003kA-JK
- for qemu-devel@nongnu.org; Tue, 11 Feb 2025 19:31:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ti0pA-0006Dx-CE
+ for qemu-devel@nongnu.org; Tue, 11 Feb 2025 19:41:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739320305;
+ s=mimecast20190719; t=1739320914;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XDTxujAkJJd3lvFnCBgx6j6dSG+qahwnnte41k2vcwA=;
- b=Qi7aJLzFyOtVL7b6ecqbZKMuQgcexPFoprSkciH2Qr3+m/RVoz2H25kyHsVH6szCMhESln
- HYCbxylz/OYP94c24xxxVBlnsZGGTXJ5pjuvVlA4zOKwpAvkEqxz/guFa3+4j4HCPB5xi/
- Kc8Tk/wCzM/g9bGnseHAdXLumJBgdD0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tTanG0H0tjUgSeoSDLraFmzuRe/xbf3fsUPlbi+mOBI=;
+ b=Q97F8/rw0p8mq5L4QmwVety5taP53RlFAUL7lA2DrqH8c7571Q9oUpaoEBk/2GPCqgai6j
+ 5G1tMJoBNQ0hzPBG7m06INI0Kbi6fxBMmxHeXc5nLjZdhrfRIAyEG8HiCwd7Iitlkct6VZ
+ OPDhVS4nv5T/fK2nNaRST3G8pD99fqI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-Mj4pj-yAPE2ea8tj24-ykw-1; Tue, 11 Feb 2025 19:31:43 -0500
-X-MC-Unique: Mj4pj-yAPE2ea8tj24-ykw-1
-X-Mimecast-MFC-AGG-ID: Mj4pj-yAPE2ea8tj24-ykw_1739320302
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4394c0a58e7so13112305e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 16:31:43 -0800 (PST)
+ us-mta-496-0kSc6WcJPqefUL-CsMtsHA-1; Tue, 11 Feb 2025 19:41:52 -0500
+X-MC-Unique: 0kSc6WcJPqefUL-CsMtsHA-1
+X-Mimecast-MFC-AGG-ID: 0kSc6WcJPqefUL-CsMtsHA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4361eb83f46so45188045e9.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 16:41:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739320302; x=1739925102;
+ d=1e100.net; s=20230601; t=1739320911; x=1739925711;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XDTxujAkJJd3lvFnCBgx6j6dSG+qahwnnte41k2vcwA=;
- b=kT53i71dyi1CkMaO5JY3eoTcHuDJEXMr4o1R5j50n+wLRO4i1RwjadDNF3ULMmE9GG
- mWHTF0KllLCB7tr9+k4SwVuffkKgV+HqXFPMywgzzM8eMVm+q+xpXDFQs8u8Ri9Ilux+
- B7sKCPxZBQ7zihj2HhvE0Sielw3Bk9ax++XgQXE+eP102F3ZDy+SXbDL0ppMdlenmFKH
- H3yTtUHhUoPE9ShQ9epObaH22/JSQe5/v8C83VIOjU1MhsJg6yGiPL3JsGPRL536l0As
- G7amcuDNHMRoVkivHDXDXxbVddiqIvmyZga0MLpdNYvs7LM1hrAY8Kt5IuWmdJttEzHJ
- pmOA==
-X-Gm-Message-State: AOJu0YyTL8/N/axXeu+noTSxrviWwfB1/KX7S+13oqdDTidoogjBT3Y8
- k/CaoMgfb8+DG5FfJHWHQWAgeHUz0q0gptWLoyVeNAQKrvDnxUU81uj+BDxeHS1EtQeLAszUzKZ
- I2Z7PhGi0qje8Zpn0CAfQFjInyQUMz5v9TcoQ1RHzaEfLk6yIULss
-X-Gm-Gg: ASbGncu8sAB7qcJmh7+Mzqea1gQo86WSDwAIODv/dlQupqNEIyIo8DVw+L4Os6coiAf
- KSr7EesQ4FvqrFKgH49SgK6D103vqaDAvQxAiC+7Oy+EgI6ktkD0Ex/cbLonLAWpA28UKzUSi2N
- JqODf2ki8M2gCe0JtDP/NxAujSksejKUtrVXY7gYV4FraoSO0tc9HMEMtKRje/yL+FAuC6x+ecu
- lO8eP1kf5iI5bozkTsPXZXQEg/hMwC+ey32p8S9RF2qjlXft4jZWrgUEbbIdUFDXptOlqbqB8vX
- 8gQ25eJWu4reA13KP4csUR6UGOiQZEbHXA==
-X-Received: by 2002:a05:600c:46c7:b0:439:35bb:a5eb with SMTP id
- 5b1f17b1804b1-439581604d6mr11073305e9.4.1739320302401; 
- Tue, 11 Feb 2025 16:31:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHEuratniRUKPhHFiUBPXqfytzkCDOD+d9/TqhHNjKQ4ApfuO0Z0DjE1gUxuOBx+1VXWxKGsw==
-X-Received: by 2002:a05:600c:46c7:b0:439:35bb:a5eb with SMTP id
- 5b1f17b1804b1-439581604d6mr11073135e9.4.1739320302000; 
- Tue, 11 Feb 2025 16:31:42 -0800 (PST)
+ bh=tTanG0H0tjUgSeoSDLraFmzuRe/xbf3fsUPlbi+mOBI=;
+ b=nTnTGXi4JdQ2FD/qky/Y0h02OvxREtPZuC5bpNz7cd76dQuyZaG7BuU1HyUqzJMtcv
+ Aukjt8+k+5K9i4RV4wB0PA7uoect33s6rczjwr3LmITbJidM3nYXghLqQSERfGRS1lhn
+ hDUWre3DqYTXWu0/pcKj4NQ4GvAJtQaP7uwyx44GW4JYxYEs9Ykc3FxL61AJrUnIl9m7
+ CWsEPy9ERQaKAOJ8PkjYB/Eu2Rn/UyZj4lufh0OliY8YlcRMBQsqvzNZndmoqxjQvTvJ
+ /YAoMSmjzxRl8Tk8bReSVcSwLbYusx6lYv5zRHWryHke+1Gxvd5kZ5BWuACNOJ/JKSk3
+ PZmg==
+X-Gm-Message-State: AOJu0YzNxq2VugeoAGIPiOQkaoaj1pSSrzm2EIZdBfwsHk6aZZS+SaNM
+ Ekp8EK+WsqY1Lb7+0tcLQTf58vNdlvQlEaJwjJtvuJj1GTok9uLYKwmn3PWbXlEr5o3fXHupjpQ
+ rABjC0bIr/jjGLi9hbA+bh5DhLkY1rrMp/2QVCTj006vdSJRQ6BMN
+X-Gm-Gg: ASbGncuZ3dgWVTtpaRpeboFWMS4/weSM9MAXRqUs3/kulbfZ2rBlR5RKo8ADx/zYcI8
+ ScpDGvE4RTjB2PIo0NiDlXTiI7lUHs/qWVaD5O4wEu/gl5xKzDSAV5cFGLX5uGXxXhAmfQcuaw9
+ U1rfHJbuni+js9NZzplwhFe5idUdjgIGQj9OEU+MTHEckBKKzuUvkTkHwOPvdQ2uNUYrUtKZqWY
+ mShbUcWV4QQk5AMLk3NITZbUpB+nY9LZerjvS/ypqC0d2IXK5Ui97TX2kb1Syy9q7xb4wfICHTK
+ BbQnbwhbCKNuuzTVP4k8LXme1WH/NH1GCQ==
+X-Received: by 2002:a5d:6c61:0:b0:38d:dbbc:3b04 with SMTP id
+ ffacd0b85a97d-38dea259195mr669004f8f.5.1739320911284; 
+ Tue, 11 Feb 2025 16:41:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEM+DyCR0dtkHpM1YL+P9QMgdzUSBaSMOVQT5K/QEXQh9eRvarT9N4R3g1+mrgG+ig1h4VT8Q==
+X-Received: by 2002:a5d:6c61:0:b0:38d:dbbc:3b04 with SMTP id
+ ffacd0b85a97d-38dea259195mr668992f8f.5.1739320910876; 
+ Tue, 11 Feb 2025 16:41:50 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-37.web.vodafone.de. [109.42.48.37])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a055859sm3394925e9.10.2025.02.11.16.31.40
+ ffacd0b85a97d-38dd093e1ffsm11545481f8f.100.2025.02.11.16.41.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 16:31:41 -0800 (PST)
-Message-ID: <39f9b27c-cd77-411e-8944-6769999ace25@redhat.com>
-Date: Wed, 12 Feb 2025 01:31:39 +0100
+ Tue, 11 Feb 2025 16:41:50 -0800 (PST)
+Message-ID: <6e62808e-0fc2-4de0-a732-621e81f1937e@redhat.com>
+Date: Wed, 12 Feb 2025 01:41:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 00/32] Misc HW patches for 2025-02-10
@@ -83,6 +83,7 @@ References: <20250210204204.54407-1-philmd@linaro.org>
  <CAJSP0QWH2+sLaNGwwLTQr5Kud6kKLML_Y24M=Kz1GSX9yRxDQw@mail.gmail.com>
  <f28e0b87-9bb2-4bb3-8c10-1f3ff0f784c2@linaro.org>
  <1ddb567a-7261-4831-9f46-7c247969a86d@linaro.org>
+ <39314f09-268f-48b8-add5-95366c254f81@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,17 +128,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <1ddb567a-7261-4831-9f46-7c247969a86d@linaro.org>
+In-Reply-To: <39314f09-268f-48b8-add5-95366c254f81@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,89 +156,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/02/2025 19.53, Philippe Mathieu-Daudé wrote:
-> On 11/2/25 19:48, Philippe Mathieu-Daudé wrote:
->> On 11/2/25 19:26, Stefan Hajnoczi wrote:
->>> On Mon, Feb 10, 2025 at 3:43 PM Philippe Mathieu-Daudé
->>> <philmd@linaro.org> wrote:
+On 11/02/2025 20.03, Philippe Mathieu-Daudé wrote:
+> On 11/2/25 19:53, Philippe Mathieu-Daudé wrote:
+>> On 11/2/25 19:48, Philippe Mathieu-Daudé wrote:
+>>> On 11/2/25 19:26, Stefan Hajnoczi wrote:
+>>>> On Mon, Feb 10, 2025 at 3:43 PM Philippe Mathieu-Daudé
+>>>> <philmd@linaro.org> wrote:
+>>>>>
+>>>>> The following changes since commit 
+>>>>> 54e91d1523b412b4cff7cb36c898fa9dc133e886:
+>>>>>
+>>>>>    Merge tag 'pull-qapi-2025-02-10-v2' of https://repo.or.cz/qemu/ 
+>>>>> armbru into staging (2025-02-10 10:47:31 -0500)
+>>>>>
+>>>>> are available in the Git repository at:
+>>>>>
+>>>>>    https://github.com/philmd/qemu.git tags/hw-misc-20250210
+>>>>>
+>>>>> for you to fetch changes up to 1078a376932cc1d1c501ee3643fef329da6a189a:
+>>>>>
+>>>>>    hw/net/smc91c111: Ignore attempt to pop from empty RX fifo 
+>>>>> (2025-02-10 21:30:44 +0100)
+>>>>>
+>>>>> ----------------------------------------------------------------
+>>>>> Misc HW patches
+>>>>>
+>>>>> - Use qemu_hexdump_line() in TPM backend (Philippe)
+>>>>> - Make various Xilinx devices endianness configurable (Philippe)
+>>>>> - Remove magic number in APIC (Phil)
+>>>>> - Disable thread-level cache topology (Zhao)
+>>>>> - Xen QOM style cleanups (Bernhard)
+>>>>> - Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
+>>>>> - Invert logic of machine no_sdcard flag (Philippe)
+>>>>> - Housekeeping in MicroBlaze functional tests (Philippe)
 >>>>
->>>> The following changes since commit 
->>>> 54e91d1523b412b4cff7cb36c898fa9dc133e886:
->>>>
->>>>    Merge tag 'pull-qapi-2025-02-10-v2' of https://repo.or.cz/qemu/ 
->>>> armbru into staging (2025-02-10 10:47:31 -0500)
->>>>
->>>> are available in the Git repository at:
->>>>
->>>>    https://github.com/philmd/qemu.git tags/hw-misc-20250210
->>>>
->>>> for you to fetch changes up to 1078a376932cc1d1c501ee3643fef329da6a189a:
->>>>
->>>>    hw/net/smc91c111: Ignore attempt to pop from empty RX fifo 
->>>> (2025-02-10 21:30:44 +0100)
->>>>
->>>> ----------------------------------------------------------------
->>>> Misc HW patches
->>>>
->>>> - Use qemu_hexdump_line() in TPM backend (Philippe)
->>>> - Make various Xilinx devices endianness configurable (Philippe)
->>>> - Remove magic number in APIC (Phil)
->>>> - Disable thread-level cache topology (Zhao)
->>>> - Xen QOM style cleanups (Bernhard)
->>>> - Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
->>>> - Invert logic of machine no_sdcard flag (Philippe)
->>>> - Housekeeping in MicroBlaze functional tests (Philippe)
+>>>> Please take a look at this CI failure:
+>>>> https://gitlab.com/qemu-project/qemu/-/jobs/9106591368
 >>>
->>> Please take a look at this CI failure:
->>> https://gitlab.com/qemu-project/qemu/-/jobs/9106591368
+>>> Hmm I can not reproduce locally this error:
+>>>
+>>>    Exception: Asset cache is invalid and downloads disabled
 >>
->> Hmm I can not reproduce locally this error:
+>> OK, I could reproduce by blowing my cache away.
 >>
->>    Exception: Asset cache is invalid and downloads disabled
+>> The problem seems in the "tests/functional: Have microblaze tests
+>> inherit common parent class" patch, which does:
+>>
+>> -class MicroblazeelMachine(QemuSystemTest):
+>> +class MicroblazeLittleEndianMachine(MicroblazeMachine):
+>>
+>> I presume, since MicroblazeLittleEndianMachine is no more a direct
+>> child of QemuSystemTest, then the ASSET_IMAGE_* aren't automatically
+>> downloaded.
 > 
-> OK, I could reproduce by blowing my cache away.
+> Well, apparently related to network failure:
 > 
-> The problem seems in the "tests/functional: Have microblaze tests
-> inherit common parent class" patch, which does:
+> INFO:qemu-test:Downloading http://www.qemu-advent-calendar.org/2023/ 
+> download/day13.tar.gz to /Users/philmd/.cache/qemu/download/ 
+> b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22...
+> ERROR:qemu-test:Unable to download http://www.qemu-advent-calendar.org/2023/ 
+> download/day13.tar.gz: HTTP Error 403: Forbidden
 > 
-> -class MicroblazeelMachine(QemuSystemTest):
-> +class MicroblazeLittleEndianMachine(MicroblazeMachine):
+> $ curl -v http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz
+>  > GET /2023/download/day13.tar.gz HTTP/1.1
+> < HTTP/1.1 301 Moved Permanently
+> < Location: https://www.qemu-advent-calendar.org/2023/download/day13.tar.gz
 > 
-> I presume, since MicroblazeLittleEndianMachine is no more a direct
-> child of QemuSystemTest, then the ASSET_IMAGE_* aren't automatically
-> downloaded.
+> Using:
+> 
+> -- >8 --
+> diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/ 
+> functional/test_microblaze_s3adsp1800.py
+> index 177c8a685bc..949e627c84a 100755
+> --- a/tests/functional/test_microblaze_s3adsp1800.py
+> +++ b/tests/functional/test_microblaze_s3adsp1800.py
+> @@ -24,3 +24,3 @@ class MicroblazeMachine(QemuSystemTest):
+>       ASSET_IMAGE_LE = Asset(
+> -        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+> + ('https://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+> 
+> 'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+> ---
+> 
+> I still get:
+> 
+> INFO:qemu-test:Downloading https://www.qemu-advent-calendar.org/2023/ 
+> download/day13.tar.gz to /Users/philmd/.cache/qemu/download/ 
+> b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22...
+> 
+> However:
+> 
+> $ curl --http1.0 -v https://www.qemu-advent-calendar.org/2023/download/ 
+> day13.tar.gz
+>  > GET /2023/download/day13.tar.gz HTTP/1.0
+> < HTTP/1.0 200 OK
+> < Content-Length: 4752277
+> < Content-Type: application/gzip
+> 
+> So I'm confused...
 
-I guess you could fix it with:
+Looks like this also happens in test runs without your patches:
 
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py 
-b/tests/functional/test_microblaze_s3adsp1800.py
---- a/tests/functional/test_microblaze_s3adsp1800.py
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -57,6 +57,8 @@ def do_xmaton_le_test(self, machine):
+  https://gitlab.com/qemu-project/qemu/-/jobs/9108828196#L844
 
-  class MicroblazeBigEndianMachine(MicroblazeMachine):
+The test then silently gets skipped there (since we only fail hard for a 404 
+error now).
 
-+    ASSET_IMAGE_BE = MicroblazeMachine.ASSET_IMAGE_BE
-+
-      def test_microblaze_s3adsp1800_legacy_be(self):
-          self.do_ballerina_be_test('petalogix-s3adsp1800')
+Maybe Eldon could comment why the downloads are blocked for python scripts 
+but not for curl downloads?
 
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py 
-b/tests/functional/test_microblazeel_s3adsp1800.py
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -13,6 +13,8 @@
-
-  class MicroblazeLittleEndianMachine(MicroblazeMachine):
-
-+    ASSET_IMAGE_LE = MicroblazeMachine.ASSET_IMAGE_LE
-+
-      def test_microblaze_s3adsp1800_legacy_le(self):
-          self.do_xmaton_le_test('petalogix-s3adsp1800')
-
-(this still won't help with the strange 403 error ... maybe we have to 
-mirror the asset in another place now if the advent-calendar site does not 
-work reliably anymore...)
+I the worst case, we have to mirror the asset to another place, I guess...
 
   Thomas
 
