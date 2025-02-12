@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0447C021A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 20:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177D9C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiJit-0003Dd-3p; Wed, 12 Feb 2025 15:52:43 -0500
+	id 1tiKGD-0001rs-50; Wed, 12 Feb 2025 16:27:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tiJiq-0003D6-Un
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 15:52:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <prvs=131cd17d8=graf@amazon.de>)
+ id 1tiKFx-0001r6-VE; Wed, 12 Feb 2025 16:26:54 -0500
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tiJip-0004Cv-9y
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 15:52:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739393558;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Th+AYWX8dvC10bw3Qem3zOgUmNVIqvBGdHVHNvvXuyQ=;
- b=JZL3PqC62wgBKDnHOqVei/4B0oioZAW+XAkWEZ5Jvn3QTinxacvlEwu3VvdekwlgJ7irRi
- uq92QxU2VLss1jHIbcR8SxOocUM480+m77kIx3Gs3aXQcM2Iy3cgxBEJ1Awj96WjOMrXpu
- snLK70Zhr7x+dyUF1qFRRIl8urqVWQ0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-TYmlOIoNMCmbOYBd75rLZQ-1; Wed,
- 12 Feb 2025 15:52:34 -0500
-X-MC-Unique: TYmlOIoNMCmbOYBd75rLZQ-1
-X-Mimecast-MFC-AGG-ID: TYmlOIoNMCmbOYBd75rLZQ_1739393552
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F996195608B; Wed, 12 Feb 2025 20:52:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.168])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30C3E19560A3; Wed, 12 Feb 2025 20:52:27 +0000 (UTC)
-Date: Wed, 12 Feb 2025 21:52:25 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com,
- manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 09/11] rust/block: Add read support for block drivers
-Message-ID: <Z60KCVt38X59J9TN@redhat.com>
-References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-10-kwolf@redhat.com>
- <f515a321-8f76-4d94-97d5-309fba14aa85@redhat.com>
+ (Exim 4.90_1) (envelope-from <prvs=131cd17d8=graf@amazon.de>)
+ id 1tiKFu-0008A2-Ua; Wed, 12 Feb 2025 16:26:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1739395611; x=1770931611;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=oT81K49Xsa2SJv24Kp3+uTsDVxMAUY2ffI5tRIzxybA=;
+ b=sqyBRw74yu8W3DJeYu12vdTuVopJ/gUA4STNMl3AAMV6LSp7PScmGAeu
+ BIJIJwZRKiEdr6fVJuKMBa66CUvYESv6g5ZOF4ZcbK9fAVOJ++x2WbpS0
+ U87cGlQDNla+BubE3UPYLCv/zZj25ICBSztGFnowd5Je236NkPjexUtC8 U=;
+X-IronPort-AV: E=Sophos;i="6.13,281,1732579200"; d="scan'208";a="471665595"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-6002.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2025 21:26:46 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [10.0.21.151:44711]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.1:2525] with
+ esmtp (Farcaster)
+ id f0861896-2dcc-4525-aa01-f1c13c01e0be; Wed, 12 Feb 2025 21:26:45 +0000 (UTC)
+X-Farcaster-Flow-ID: f0861896-2dcc-4525-aa01-f1c13c01e0be
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Wed, 12 Feb 2025 21:26:45 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Wed, 12 Feb 2025
+ 21:26:41 +0000
+Message-ID: <2c06a98c-f286-4632-a352-8b47dc4cc43c@amazon.com>
+Date: Wed, 12 Feb 2025 22:26:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f515a321-8f76-4d94-97d5-309fba14aa85@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
+To: Gerd Hoffmann <kraxel@redhat.com>
+CC: <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, <qemu-arm@nongnu.org>, Michael Roth
+ <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Ard Biesheuvel
+ <ardb@kernel.org>
+References: <20250211092324.965440-1-kraxel@redhat.com>
+ <20250211092324.965440-10-kraxel@redhat.com>
+ <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
+ <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
+ <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
+ <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
+ <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
+ <4bwjwcs2k4hbrj6mokc57a5dy57jjssfxnvd4qm5257dgnid3x@yqdx7e47o2mf>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <4bwjwcs2k4hbrj6mokc57a5dy57jjssfxnvd4qm5257dgnid3x@yqdx7e47o2mf>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D040UWB001.ant.amazon.com (10.13.138.82) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=52.95.49.90;
+ envelope-from=prvs=131cd17d8=graf@amazon.de; helo=smtp-fw-6002.amazon.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,94 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.02.2025 um 16:05 hat Paolo Bonzini geschrieben:
-> On 2/11/25 22:43, Kevin Wolf wrote:
-> > +/// A request to a block driver
-> > +pub enum Request {
-> > +    Read { offset: u64, len: u64 },
-> > +}
-> > +
-> 
-> Maybe add flags already?
-> > +#[allow(dead_code)]
-> > +pub enum MappingTarget {
-> > +    /// The described blocks are unallocated. Reading from them yields zeros.
-> > +    Unmapped,
-> > +
-> > +    /// The described blocks are stored in a child node.
-> > +    Data {
-> > +        /// Child node in which the data is stored
-> > +        node: (),
-> 
-> Make it already a *mut BlockDriverState, or *mut BdrvChild?  Or are you worried of
-> irritating the borrow checker? :)
 
-Mostly I just didn't need it yet and was too lazy to think about the
-details.
+On 12.02.25 16:18, Gerd Hoffmann wrote:
+>    Hi,
+>
+>>> Yes.  Knowing both physical and virtual address works only for memory
+>>> you allocated yourself before ExitBootServices.  So you can't pass on
+>>> pointers from the OS, you have to copy the data to a buffer where you
+>>> know the physical address instead.  Yes, some overhead.  Should still
+>>> be much faster than going to pio transfer mode ...
+>> MacOS takes over the full physical address map past ExitBootServices: Your
+>> code no longer has VA access to random code
+> That is totally fine.  EFI drivers must register everything they need as
+> runtime memory.  Anything else can be unmapped by the OS when calling
+> EFI services.
+>
+>> and it literally memcpy()'s all preserved (virtual available) code and
+>> data to different physical addresses.
+> Uhm.  I have my doubts this copying behavior is blessed by the UEFI spec.
 
-The right type would probably be Arc<driver::BdrvChild> (which contains
-the raw *mut pointer). But I haven't thought much about how this plays
-together with graph changes.
 
-> > +        /// Offset in the child node at which the data is stored
-> > +        offset: u64,
-> > +    },
-> > +}
-> > +
-> > +/// A mapping for a number of contiguous guest blocks
-> > +pub struct Mapping {
-> > +    /// Offset of the mapped blocks from the perspective of the guest
-> > +    pub offset: u64,
-> > +    /// Length of the mapping in bytes
-> > +    pub len: u64,
-> > +    /// Where the data for the described blocks is stored
-> > +    pub target: MappingTarget,
-> > +}
-> > +
-> >   /// A trait for writing block drivers.
-> >   ///
-> >   /// Types that implement this trait can be registered as QEMU block drivers using the
-> > @@ -37,6 +72,11 @@ unsafe fn open(
-> >       /// Returns the size of the image in bytes
-> >       fn size(&self) -> u64;
-> > +
-> > +    /// Returns the mapping for the first part of `req`. If the returned mapping is shorter than
-> > +    /// the request, the function can be called again with a shortened request to get the mapping
-> > +    /// for the remaining part.
-> > +    async fn map(&self, req: &Request) -> io::Result<Mapping>;
-> 
-> I am not sure I like the idea of making this the only way to do a read.
+I don't remember anything in the spec prohibiting it.
 
-We'll clearly need a way for drivers to have explicit functions when the
-blocks aren't just mapped to somewhere else, e.g. with compression or
-encryption. (My idea for that was that it would be another MappingTarget
-branch.)
 
-But using map() as the primary interface is intentional as it enables a
-few things, even though this isn't visible in the code yet. Of course,
-that basically every block driver duplicates the same loop is a reason
-to unify it, but as you say there are other ways to do that.
+>> You simply have nothing that is all of 1) RAM (mapped as cacheable on
+>> ARM), 2) known VA 3) known PA.
+> Bummer.
+>
+>> So we really really need a fallback mechanism that works without DMA
+>> :).
+> On arm it should be relatively simple to move the buffer to device
+> memory.  Just place one more region on the platform bus, advertise
+> address + size via device tree, done.
 
-One thing map() can do in the common case is provide the caller just a
-list of mappings to a file descriptor and an offset. This may in the
-future allow some block exports like ublk or fuse to use zero copy
-operations. You can't do that if the block driver already does an
-explicit read into a buffer.
 
-You can cache mappings outside of the block driver and even of QEMU.
-Block exports could tell the kernel that it shouldn't even bother with
-going to userspace if a request can be completed using a cached mapping.
-Two hosts with shared storage could access the same qcow2 image without
-one of them sending all data across the network (like we did in KubeSAN
-with NBD), but it's enough if metadata (= mappings) are synchronised.
+That will bring back all issues with cached vs non-cached memory 
+accesses, no? So edk2 will always access that memory as device memory 
+which means it bypasses the cache, while QEMU will access it through the 
+cache. So that buffer would need to actually be MMIO memory I suppose?
 
-So I think this is a useful interface to have, even if we don't know
-which of the possibilities we'll actually make use of. And it should be
-the primary interface, because if you want to do caching, then cache
-invalidation must be done properly by block drivers, which is more
-likely to go wrong if it's just an additional interface that isn't
-normally used.
 
-Kevin
+> Not sure how to do that best on x86 though.  Find 64k unused address
+> space over ioapic?  Do we have enough free space there?  And how
+> future-proof would that be?
+
+
+I'm not worried yet about where we place that memory, but more about 
+ensuring that we actually have a working path to access it. We can 
+always find space in the PCI hole, as long as we properly advertise it 
+to all stakeholders via ACPI and memory map.
+
+
+Alex
 
 
