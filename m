@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C9FC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 07:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7523AC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 07:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti7Ox-00008R-82; Wed, 12 Feb 2025 02:43:19 -0500
+	id 1ti7RR-0000zl-HY; Wed, 12 Feb 2025 02:45:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti7Ov-00007t-Ic
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 02:43:17 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti7RP-0000z2-RK
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 02:45:51 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti7Ot-0007qV-M5
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 02:43:17 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-439350f1a0bso3096945e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 23:43:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti7RM-0008My-7b
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 02:45:51 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38dd9b3419cso1872898f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Feb 2025 23:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739346193; x=1739950993; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739346346; x=1739951146; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3a9fIsye4pd6WhsqlD+ZRv9wRTNkS1SmwooMPJWiJ3E=;
- b=vbuFxeZHUXIXV1GDoFnAPY5yGQ8osSTd1bBeudtDL1L+S71enLtRzqMKsYjB772sl1
- OpWxmpOR+Jc0KBY4gXjxbftgjv1N51ePh7GqmUPVzTvgyHV3KV4NoCee3XAD71nCu/2W
- Lgtr5m2qFJGApPpCBaMR7gG+CO6zSuLuobHbQU88ymTqrrmasFLtuPjn/E4kQs228EH3
- 8oPnMyklviS6aVUnm/5+p4vX01EYkBQjgCaX0/ipCehtGIRrwH2S0x38a1PaWQOQp8yN
- Gh0Qb0XMerf9Jm910bDx9jWGUZoTNhqfF5C8YPvBGZj3CICQUPFflj6DbpgofcZ+c5Y5
- O9Ng==
+ bh=Qm1f1nZfZ2iQKvWN53yOji6gIYUo6lA0Co9Noz/ZQ8A=;
+ b=dDKq6qSXhdTyM3uAkPfUoLunyg0LsBLB8+IqYkqR5Wpmq5r8u5fIBjVKWxaDd8vmL1
+ PQAShf8FXc270Gzc4r5zMlzfv7Ouwd/8QrQQW973dzQetDRVBQdV144QcZEYU2NT3Wqe
+ sMv5o09J8C5DlKiMwmYJc3Q9tmDA3Pr3cmw7yhom+AsXqUrHwiqAmjNWtUb7tGz4fvzu
+ tMQF+y1MtgphtuhwJVDbHjRdnDuqbaipVnv1AQ49UOQUJgTKjdr5Z1ByR0j6XkbvMK1n
+ hxRId5IoaCaA3xYxNHlCK4uWS8eQwt1+puFm2ZYowu4kM/6HOKriKFiqleNtKFleFk84
+ 8mtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739346193; x=1739950993;
+ d=1e100.net; s=20230601; t=1739346346; x=1739951146;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3a9fIsye4pd6WhsqlD+ZRv9wRTNkS1SmwooMPJWiJ3E=;
- b=lmjAzO/GcY65eQkCBs2U2As6rOdqsqTLEeybY69inyUjTI2QImmaxt8uVGRa93rdgZ
- KVsOOzSej5M7DVF3Rub/cOxbCYhjQlKF5TyKs/xAv/EKNfLJuDoRy+vlZYQ6IBLGs3eX
- JPfsIlcBkickFpVqv4wfcGFVsVgtgT6wAiFnXiFhlwP00WXtlErql/8f2nAmD19v9/Az
- /UAPq9YySJbrQk4xWIwuydDoCJmUITHCrX18vDCcF5/nVguqDOXvmeplNB7i/aalZR1F
- Q9tWKEAMc2ZjTwUwJ8E9AHXlaKhyiCDjwg2t0n2nakiYq9M3GPQEMElDL4gjs+RV3fVz
- JK8Q==
+ bh=Qm1f1nZfZ2iQKvWN53yOji6gIYUo6lA0Co9Noz/ZQ8A=;
+ b=MZV1o9uq+Od81B4vaSjasZYWoI/5TiybSl1kPqjpk83duK8isZLyOFhAb4Q4JaImFS
+ tLEWG5BPlcdtLelojZztM03hu0kfu+86oeWON39UYNZH8hkxhm1+4xgy4a4qVIG7f1B3
+ nRAS6QQWSDK2p0gdqVSuTU3QefBYJMGsJhnPc/lybOhq3y6VOmz9uP3QsijPcOljAWPG
+ MpGt5omjUcBtBhu1ora+MpKP0vq1RWrYCH69f02R6e/9vU+FLachEkhMklH/pTTn6e/5
+ mKpQhO7Yq4pRLTAXVMNPFu0Y/6cPPpmd54yZzcY0xrqv1tnMV7eel/8c2pgMM9MPfzxN
+ yW+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnHLT5M5gpny5BI2TXr5PkkhpIWkTH6qxXvTvVFxW7NUE36VVY2rb9gZHK1ipC3XAWWIfHvanTnOQk@nongnu.org
-X-Gm-Message-State: AOJu0YwulkXBCXp2BlWuhGCaaSO/vrhV93pU4YAdoYsbjrbaMgsmNpyX
- z/m3o6tv4iO2uiskeC20P1umPwYMWZUOHkN+Qa2Iuuk447gjo9vXf1wbZnThD04=
-X-Gm-Gg: ASbGncvM+Mp9LjefHoGwiOaJ9WjgQhH+cE4aMz2xtUZ5qa/Bc4RCtAmOOYOg8Aaisa4
- 5+rASAiWfcQndfHbawrJ0YU6gAzM1sK6ESPXZ9aP/0cMB201FaBz28Uw2eU6w+1ilGCO47GYyK4
- Iq8YokXe8/bZrot+lep0eetsYoLDQCjxx2VDFnUAWK2LLca3+cbhzK+5FlhsJeeaetUtDyMcyPG
- 5W3ns9FISZ43cyDaKJE0nBa3RCM1SaOXjaC+ua7ZARa6/GjgntRnoPhsyzWVuRlmivJ7W94+1MB
- xD72P7G39cD0EN+gIZFevJrIuq2G+ASOuqL7FP5ulLHvCp0f032o/SD5K08=
-X-Google-Smtp-Source: AGHT+IFybKtcEJ+o50hvyRapskh+z/+SoQTb5A8KWeKjjgTHN1zhLv0x1AcOKls/P4mfwizT8CGpmw==
-X-Received: by 2002:a05:600c:4f83:b0:434:f3d8:62db with SMTP id
- 5b1f17b1804b1-4395839dc90mr15094765e9.2.1739346193040; 
- Tue, 11 Feb 2025 23:43:13 -0800 (PST)
+ AJvYcCWeqAOkgjveBSl/fU6mnUZ9G+/3dT69TEk1kURrETvOucrJ86smSdB6bbqx5OwMxsP8UFF3Wu1eR56e@nongnu.org
+X-Gm-Message-State: AOJu0YznehWsG5Wtgg9/Gpr1vxXjl/Aen20kOCl+Av9zjTfxR3dVAxYg
+ j+Dsp7GNqt5ga94RPToJ12BnYz6GL+tW4zhuyKb0Z+QPIVpQoRdRQpBkGbu9YFs=
+X-Gm-Gg: ASbGncuaHXmBn7/yXI49UqMs12W38pGuAzDOpG+Dd45pxS4o5ppT6SmgFdGlbkIXrS/
+ gUrmxDkTBW0UGadncb//wvhGUP+dwx9T5PV985r+QrmdVh4/Iw5slzzAYOCeL8eUdhH+v05pUXG
+ kDSDK5yZY+J4THieMhnZoSc1lDxsg22tINBBSYWnBywXrN4Ud2Od3hmuiq49RzEgg4PGEgrBJi2
+ SZTq+d9F+ZYFMI6TyBYER9O3/7dRdGL7vZlXnGKYy+ep234YybdhnUBxDKh+LdpsJo9y3O9YZSu
+ Bjr1zmTYjY4SmXJuI894R35gSaXDN7weLqmRrZj9T6LPlgEV/EG8gj6kB0U=
+X-Google-Smtp-Source: AGHT+IE8s+zZzR1HelEYIDX5pkqVkyf5pB5dJZ6r8qkUm7bHnjSddHuIDywXanjr3eSTaPAopbCukQ==
+X-Received: by 2002:a5d:6702:0:b0:38c:5ba4:48a3 with SMTP id
+ ffacd0b85a97d-38dea60469cmr1166941f8f.46.1739346346201; 
+ Tue, 11 Feb 2025 23:45:46 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a04f8a2sm11323465e9.2.2025.02.11.23.43.11
+ 5b1f17b1804b1-4395a04cdafsm11852495e9.4.2025.02.11.23.45.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Feb 2025 23:43:12 -0800 (PST)
-Message-ID: <1c08360a-ba01-4bca-8b31-e073ffe30256@linaro.org>
-Date: Wed, 12 Feb 2025 08:43:11 +0100
+ Tue, 11 Feb 2025 23:45:45 -0800 (PST)
+Message-ID: <0e3d0835-c216-4f8c-8b97-e849ecb5ca47@linaro.org>
+Date: Wed, 12 Feb 2025 08:45:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/11] block: Add bdrv_open_blockdev_ref_file()
+Subject: Re: [PATCH 10/11] bochs-rs: Add bochs block driver reimplementation
+ in Rust
 To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
 Cc: hreitz@redhat.com, pbonzini@redhat.com, manos.pitsidianakis@linaro.org,
  qemu-devel@nongnu.org, qemu-rust@nongnu.org
 References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-8-kwolf@redhat.com>
+ <20250211214328.640374-11-kwolf@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250211214328.640374-8-kwolf@redhat.com>
+In-Reply-To: <20250211214328.640374-11-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +104,59 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/2/25 22:43, Kevin Wolf wrote:
-> This is the equivalent of bdrv_open_file_child() to be used in cases
-> where the caller is QAPI based and has a BlockdevRef rather than a
-> filename and an options QDict.
+> This adds a separate block driver for the bochs image format called
+> 'bochs-rs' so that for the moment both the C implementation and the Rust
+> implementation can be present in the same build. The intention is to
+> remove the C implementation eventually and rename this one into 'bochs'.
+> This can only happen once Rust can be a hard build dependency for QEMU.
 > 
 > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->   include/block/block-global-state.h |  4 ++++
->   block.c                            | 30 +++++++++++++++++++++++++++---
->   2 files changed, 31 insertions(+), 3 deletions(-)
+>   rust/block/Cargo.toml    |   2 +-
+>   rust/block/src/bochs.rs  | 296 +++++++++++++++++++++++++++++++++++++++
+>   rust/block/src/driver.rs |   5 -
+>   rust/block/src/lib.rs    |   1 +
+>   4 files changed, 298 insertions(+), 6 deletions(-)
+>   create mode 100644 rust/block/src/bochs.rs
 
 
-> +BlockDriverState *bdrv_open_blockdev_ref_file(BlockdevRef *ref,
-> +                                              BlockDriverState *parent,
-> +                                              Error **errp)
-> +{
-> +    BdrvChildRole role;
-> +
-> +    /* commit_top and mirror_top don't use this function */
-> +    assert(!parent->drv->filtered_child_is_backing);
-> +    role = parent->drv->is_filter ?
-> +        (BDRV_CHILD_FILTERED | BDRV_CHILD_PRIMARY) : BDRV_CHILD_IMAGE;
+> diff --git a/rust/block/src/bochs.rs b/rust/block/src/bochs.rs
+> new file mode 100644
+> index 0000000000..388ac5ef03
+> --- /dev/null
+> +++ b/rust/block/src/bochs.rs
+> @@ -0,0 +1,296 @@
+> +// SPDX-License-Identifier: MIT
+> +/*
+> + * Block driver for the various disk image formats used by Bochs
+> + * Currently only for "growing" type in read-only mode
+> + *
+> + * Copyright (c) 2005 Alex Beregszaszi
+> + * Copyright (c) 2024 Red Hat
+> + *
+> + * Authors:
+> + *   Alex Beregszaszi
+> + *   Kevin Wolf <kwolf@redhat.com>
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
+> + */
 
-Nitpicking style:
-
-        role = parent->drv->is_filter
-               ? (BDRV_CHILD_FILTERED | BDRV_CHILD_PRIMARY)
-               : BDRV_CHILD_IMAGE;
-
-> +    return bdrv_open_blockdev_ref_common(ref, parent, &child_of_bds, role,
-> +                                         true, errp);
-> +}
+As an addition, we don't have to add the full license boilerplate IMO...
 
 
