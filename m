@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A43BC021A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517D2C02198
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 13:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiD3r-0006UV-PI; Wed, 12 Feb 2025 08:45:55 -0500
+	id 1tiD47-0006Wv-1x; Wed, 12 Feb 2025 08:46:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=131cd17d8=graf@amazon.de>)
- id 1tiD3q-0006U3-Hq; Wed, 12 Feb 2025 08:45:54 -0500
-Received: from smtp-fw-80007.amazon.com ([99.78.197.218])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tiD45-0006WN-6t
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:46:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=131cd17d8=graf@amazon.de>)
- id 1tiD3o-0002qk-CB; Wed, 12 Feb 2025 08:45:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1739367952; x=1770903952;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=8nNDiYVOIzb50G8u/FMD6qLfVR5OxkQy/ZxxsYWuLR4=;
- b=OvnF2QibsSWW2RmFaSbTQF8TXnQgDNX5xY5pFTxBHWepbEFn6j3LtXME
- 7NALqnPaa5r014hi3VkZTknJbcmRDSsUPJ9naY/MjFuuiplOL1qHorrjh
- ZWs8t9dUYANma6ohRcJM57XcFQjrgDfytb6JtaKIkptDFhcBBQ/QYrarJ o=;
-X-IronPort-AV: E=Sophos;i="6.13,280,1732579200"; d="scan'208";a="376710266"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
- by smtp-border-fw-80007.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2025 13:45:48 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [10.0.38.20:50646]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.63.65:2525]
- with esmtp (Farcaster)
- id 229e485f-f479-4442-ae6b-8afd477a348f; Wed, 12 Feb 2025 13:45:47 +0000 (UTC)
-X-Farcaster-Flow-ID: 229e485f-f479-4442-ae6b-8afd477a348f
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Wed, 12 Feb 2025 13:45:47 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Wed, 12 Feb 2025
- 13:45:43 +0000
-Message-ID: <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
-Date: Wed, 12 Feb 2025 14:45:41 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tiD42-0002sm-FI
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 08:46:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739367964;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LxbrKVGIhCNaP9XKMjQzlsuimwCBIC2QQbpDRBkecM4=;
+ b=cEmgIz2K266WIqEBu5FTAlgoMZMdOcApH8P/jXyIRAzUPIJiy9w6pqaETaD/kOBCN7oFoX
+ 3zSHbDod16doHNY2hNP4KB4bzuyjyhAqX4CLPXODkXj2JHExPUt+Y+tnJdJEm1+al/7SM7
+ 5igjW4KfI22Higs+6Pn1WguTAEwes1A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-H9F64VsXNzWsk6yvqgb-Gg-1; Wed,
+ 12 Feb 2025 08:46:02 -0500
+X-MC-Unique: H9F64VsXNzWsk6yvqgb-Gg-1
+X-Mimecast-MFC-AGG-ID: H9F64VsXNzWsk6yvqgb-Gg_1739367961
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A366C1956050
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:46:01 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.66])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E315418004A7; Wed, 12 Feb 2025 13:46:00 +0000 (UTC)
+Date: Wed, 12 Feb 2025 08:45:59 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PULL 0/7] Functional tests and Gitlab-CI patches
+Message-ID: <20250212134559.GA195827@fedora>
+References: <20250211123144.37617-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
-To: Gerd Hoffmann <kraxel@redhat.com>
-CC: <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
- <thuth@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, <qemu-arm@nongnu.org>, Michael Roth
- <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Ard Biesheuvel
- <ardb@kernel.org>
-References: <20250211092324.965440-1-kraxel@redhat.com>
- <20250211092324.965440-10-kraxel@redhat.com>
- <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
- <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
- <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
- <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D044UWB002.ant.amazon.com (10.13.139.188) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=99.78.197.218;
- envelope-from=prvs=131cd17d8=graf@amazon.de; helo=smtp-fw-80007.amazon.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="75gF11pVuVfhEncI"
+Content-Disposition: inline
+In-Reply-To: <20250211123144.37617-1-thuth@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +86,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 12.02.25 13:28, Gerd Hoffmann wrote:
-> On Wed, Feb 12, 2025 at 12:30:20PM +0100, Alexander Graf wrote:
->> On 12.02.25 11:24, Gerd Hoffmann wrote:
->>> Why do you use confidential computing in the first place if you trust
->>> the host with your EFI variables?  I'd rather see something simliar
->>> running under guest control, in svsm context.
->> That depends heavily on your threat model. You can use a host provided
->> variable store to gain variable persistence for things like boot variables
->> and then have an ephemeral SVSM based TPM that you use to measure the loaded
->> payloads. A malicious host can already replace your root volume, so
->> extending the threat to variables is not the end of the world.
-> If you go depend on measured boot instead of secure boot then yes, this
-> might be a workable model.  Should be doable with a small svsm driver
-> which forwards requests to the host via svsm-controlled bounce buffer
-> (where the svsm has control over page properties).
+--75gF11pVuVfhEncI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Applied, thanks.
 
-In a BYOF world it's even useful without SVSM at all, because the launch 
-digest performs measurement for you, but you still want to find your 
-boot variables.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
 
+--75gF11pVuVfhEncI
+Content-Type: application/pgp-signature; name="signature.asc"
 
->>> The firmware knows all this very well though.  The OS passes a mapping
->>> table to the firmware, efi runtime drivers can subscribe to mapping
->>> updates and can use RT->ConvertPointer to translate addresses from
->>> physical to virtual.
->>>
->>> The edk2 code (https://github.com/tianocore/edk2/pull/10695) does
->>> exactly that.
->>>
->>> I see your driver does that too, so in theory it should work just fine.
->>> I'm wondering what exactly the problem with macOS is?
->> You get to know the new virtual address, but ConvertPointer never tells you
->> what the new *physical* address is. That means you have no idea where to DMA
->> from once you're in virtual land.
-> Yes.  Knowing both physical and virtual address works only for memory
-> you allocated yourself before ExitBootServices.  So you can't pass on
-> pointers from the OS, you have to copy the data to a buffer where you
-> know the physical address instead.  Yes, some overhead.  Should still
-> be much faster than going to pio transfer mode ...
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmesphcACgkQnKSrs4Gr
+c8gYpgf/QnQOpoPbUlgxjBb2V86GTnseX5Y4DFBxz0/X23gLt9H2H4jRHmObUKtH
+9xgrGDIJfBR21Kp04WXoX36OFYUAzKlJfPIuf/mFpMjCpBAUGUu92OS5UXoNNycj
+DE7qD3iS3Q401wLPaZZFzqbYhLwJ1FgxJO3V+fdtsGZ1J3RaOGhXnPUozSbdYjjk
+3ykuKgDbmT/PHvdhiMRpIZFrRIeLf8juPoGhCPWMxVA972Sep9nh5DTXkCRQCjE9
+IGBD9fBLzCan9m9Bi8gq2mleisjJy62jrKUklZMYR74Eozn/Ai5etws/iY5BXBiD
+xju8o4i6vllI6wEfVMmvXSfl34smIw==
+=xIIi
+-----END PGP SIGNATURE-----
 
-MacOS takes over the full physical address map past ExitBootServices: 
-Your code no longer has VA access to random code and it literally 
-memcpy()'s all preserved (virtual available) code and data to different 
-physical addresses. You simply have nothing that is all of 1) RAM 
-(mapped as cacheable on ARM), 2) known VA 3) known PA.
-
-So we really really need a fallback mechanism that works without DMA :).
-
-
-Alex
+--75gF11pVuVfhEncI--
 
 
