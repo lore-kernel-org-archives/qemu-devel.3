@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3505C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 15:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D104C021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 15:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiEQw-0000wk-1B; Wed, 12 Feb 2025 10:13:50 -0500
+	id 1tiEVS-0002Ui-5d; Wed, 12 Feb 2025 10:18:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tiEQr-0000vh-WF
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:13:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tiEVP-0002Tk-Fg
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:18:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tiEQp-0006s4-Lo
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:13:45 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tiEVJ-0007tI-HW
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 10:18:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739373221;
+ s=mimecast20190719; t=1739373500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ikfzaXif5O4UjkldV940638RllzN4Raj95Ue7hkAmlA=;
- b=GSA/UWmuNzIxno0rGIkIEZikCFgjsIPzQvetpTKdUsvR1aY+0ICD4KRy0YyOVA2e4Avzep
- u7M3nA38u07bNWD9k/omgSFmUM92mg6esO3b9sH3K1+yOqPXenJYncRm2EX6Fc7M5d38dF
- LAG6Yxdr1DxUiR31/Kk5jaDQNLUnX2I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=pznjQpNT4cEyd/cN66+L5rE5TyVfq4GkmwObYFdounw=;
+ b=EvzyqKz10OJXR0uBa2/3DAAIDwHVWaeI/qu7DlDJVwBE/4xIacgbGSKYTzApZdRp4FT0xV
+ ZehJXHOktCFxVtIZRwtZy6SoZOHDVTyXSaaEFERt5vg3K2/q1CmqmfdN9EOaMR3lhQYuCR
+ PGkQOylDn3AeUppTXnd+pZDM1j1Ik6E=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-KARjU9MFM4uqcXKksAw1_w-1; Wed,
- 12 Feb 2025 10:13:40 -0500
-X-MC-Unique: KARjU9MFM4uqcXKksAw1_w-1
-X-Mimecast-MFC-AGG-ID: KARjU9MFM4uqcXKksAw1_w_1739373218
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-426-kQ7jVIrkOoW3B5S07dV-tw-1; Wed,
+ 12 Feb 2025 10:18:14 -0500
+X-MC-Unique: kQ7jVIrkOoW3B5S07dV-tw-1
+X-Mimecast-MFC-AGG-ID: kQ7jVIrkOoW3B5S07dV-tw
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 418B719560A1; Wed, 12 Feb 2025 15:13:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.168])
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BCF821955DDD; Wed, 12 Feb 2025 15:18:12 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.69])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F1E9E1800115; Wed, 12 Feb 2025 15:13:35 +0000 (UTC)
-Date: Wed, 12 Feb 2025 16:13:33 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com,
- manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 03/11] rust: Add some block layer bindings
-Message-ID: <Z6y6nUo68dIkryOu@redhat.com>
-References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-4-kwolf@redhat.com>
- <b7b2ab97-acd3-4008-abd6-3da874541113@redhat.com>
- <Z6yecuOmtQKYUwLj@redhat.com>
- <CABgObfb-MXHYY4eM5LUbiRdOqWFG_CEcM-Xkv+v_dNWMwThKHA@mail.gmail.com>
+ id 3DDEB1800570; Wed, 12 Feb 2025 15:18:12 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id BC94018000A6; Wed, 12 Feb 2025 16:18:09 +0100 (CET)
+Date: Wed, 12 Feb 2025 16:18:09 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Alexander Graf <graf@amazon.com>
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Ard Biesheuvel <ardb@kernel.org>
+Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
+Message-ID: <4bwjwcs2k4hbrj6mokc57a5dy57jjssfxnvd4qm5257dgnid3x@yqdx7e47o2mf>
+References: <20250211092324.965440-1-kraxel@redhat.com>
+ <20250211092324.965440-10-kraxel@redhat.com>
+ <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
+ <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
+ <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
+ <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
+ <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfb-MXHYY4eM5LUbiRdOqWFG_CEcM-Xkv+v_dNWMwThKHA@mail.gmail.com>
+In-Reply-To: <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,81 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.02.2025 um 14:47 hat Paolo Bonzini geschrieben:
-> On Wed, Feb 12, 2025 at 2:13 PM Kevin Wolf <kwolf@redhat.com> wrote:
-> > Yes, we definitely need some proper bindings there. I'm already tired of
-> > writing things like this:
-> >
-> >     return -(bindings::EINVAL as std::os::raw::c_int)
-> >
-> > Or even:
-> >
-> >     return e
-> >         .raw_os_error()
-> >         .unwrap_or(-(bindings::EIO as std::os::raw::c_int))
-> 
-> This by the way seemed incorrect to me as it should be
-> 
->      return -(e
->          .raw_os_error()
->          .unwrap_or(bindings::EIO as std::os::raw::c_int))
-> 
-> (leaving aside that raw_os_error does not work on Windows)... But then
-> I noticed that read_raw() also does not negate, which causes the error
-> to print incorrectly...
+  Hi,
 
-Yes, I actually noticed that after sending the email and fixed it (and
-another instances of the same) up locally.
+> > Yes.  Knowing both physical and virtual address works only for memory
+> > you allocated yourself before ExitBootServices.  So you can't pass on
+> > pointers from the OS, you have to copy the data to a buffer where you
+> > know the physical address instead.  Yes, some overhead.  Should still
+> > be much faster than going to pio transfer mode ...
+> 
+> MacOS takes over the full physical address map past ExitBootServices: Your
+> code no longer has VA access to random code
 
-> > Which actually already shows that your errno binding patch does the
-> > opposite direction of what I needed in this series.
-> 
-> ... so my patch already helps a bit: you can still change
-> 
->     if ret < 0 {
->          Err(Error::from_raw_os_error(ret))
->     } else {
->          Ok(())
->     }
-> 
-> to
-> 
->    errno::into_io_result(ret)?;
->    Ok(())
-> 
-> and avoid the positive/negative confusion.
+That is totally fine.  EFI drivers must register everything they need as
+runtime memory.  Anything else can be unmapped by the OS when calling
+EFI services.
 
-No reason to write essentially if (ret != 0) { ret } else { 0 }. This
-one should do:
+> and it literally memcpy()'s all preserved (virtual available) code and
+> data to different physical addresses.
 
-    errno::into_io_result(ret)
+Uhm.  I have my doubts this copying behavior is blessed by the UEFI spec.
 
-And yes, it's already a good improvement.
+> You simply have nothing that is all of 1) RAM (mapped as cacheable on
+> ARM), 2) known VA 3) known PA.
 
-> Anyhow, I guess the first one wouldn't be much better:
-> 
->    return errno::into_negative_errno(ErrorKind::InvalidInput);
-> 
-> whereas the second could be
-> 
->    return errno::into_negative_errno(e);
-> 
-> But then the first is already a special case; it only happens where
-> your bindings are not trivial thanks to the introduction of the
-> Mapping type.
+Bummer.
 
-Yes, the second one seems like the more important one because the other
-one should only happen in bindings eventually. We could still have
-something like an errno!(InvalidInput) to make the code in bindings less
-verbose.
+> So we really really need a fallback mechanism that works without DMA
+> :).
 
-Or if you have to define the constants anyway - you currently do this
-only for Windows, but for into_negative_errno() you might need it on
-Linux, too - and it wouldn't be a problem for the constants to be
-signed (that they are unsigned is the main reason why it becomes so ugly
-with the bindgen constants), you could just make it -errno::EINVAL
-again.
+On arm it should be relatively simple to move the buffer to device
+memory.  Just place one more region on the platform bus, advertise
+address + size via device tree, done.
 
-Kevin
+Not sure how to do that best on x86 though.  Find 64k unused address
+space over ioapic?  Do we have enough free space there?  And how
+future-proof would that be?
+
+take care,
+  Gerd
 
 
