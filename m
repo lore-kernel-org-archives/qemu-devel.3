@@ -4,74 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10167C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 09:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC74C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 09:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ti8pz-0007oJ-3Z; Wed, 12 Feb 2025 04:15:19 -0500
+	id 1ti8tz-0000J4-El; Wed, 12 Feb 2025 04:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ti8pt-0007nJ-BD
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:15:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ti8pq-00058a-55
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:15:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739351709;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=m0BZMlZT23Te3S/Q9txjapM6b3rZEBIlCAVcc4tpnPo=;
- b=IcrA/0kCE7CM7r5UEEMCo85pe/UMADQ/rncwHF64A4iIuLr7D2qwn9pvycSjdQSU6gFq2Z
- +T8Oke0cZp/iXcAuFrnudN2YbfwTVKjIDTUMif5bfy/oF7dMlJ9gSbo+CBY5v5uEYvubH1
- dC7ePHhhfkzOYtnDbVMNGCCsrBop3vQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-aJVUjrkbP4eQRylX53aSXQ-1; Wed,
- 12 Feb 2025 04:15:06 -0500
-X-MC-Unique: aJVUjrkbP4eQRylX53aSXQ-1
-X-Mimecast-MFC-AGG-ID: aJVUjrkbP4eQRylX53aSXQ_1739351705
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 201521800874; Wed, 12 Feb 2025 09:15:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.110])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4314C18004A7; Wed, 12 Feb 2025 09:15:00 +0000 (UTC)
-Date: Wed, 12 Feb 2025 09:14:57 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
- manos.pitsidianakis@linaro.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 10/11] bochs-rs: Add bochs block driver reimplementation
- in Rust
-Message-ID: <Z6xmkfyb37YDBz1o@redhat.com>
-References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-11-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti8tx-0000IU-9d
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:19:25 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ti8tu-000607-7b
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 04:19:24 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38dc6d55ebaso368948f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 01:19:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739351959; x=1739956759; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XoWgCpDwrmO8nNKAIVklfvwLlSH3A7c6sgcpo3s2mU8=;
+ b=zGkPAFXLhAoz0gkSgzTbrARveJ3VQ9Og7gk7r7AHWlVVFg97QBpcKhlBqwOeqfmgWg
+ d/bNH6TN4yvPiTtsj7T6dwQpS95w77HexE764W8id3nSPlhQKQ5Jvw2Spus3o9+XzLHN
+ kvMETzvnq+h7V9/dc9ghCot9ExNmss+UEhxGy0wngmXQ6AA0PQ3LdTt7M8r5lw3GIpVm
+ Lnf6qzinQKaqBTRjb0x38SCKTIG/i5kqOpsIRcWYGBQK40gRwz/M6wV05Q4sOETJCeRU
+ bPTK9csWQeA1q6sY4HD30iVC0BmoTb4LdElp2q10nAa6NNFM5PLSa9D0kOLIUBXRDvJb
+ vTwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739351959; x=1739956759;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XoWgCpDwrmO8nNKAIVklfvwLlSH3A7c6sgcpo3s2mU8=;
+ b=ayyuE4mKLBZJsG+75j0bdyd1iaQAWRKypZZFI+fTAFyigovaLMnY3+srJVPjYqiG+p
+ CEsdgHR+/rsi9+rDK9XtsWl3s9qPZ4Wo99jJWuhGMW/sCbjH6IqWC60vpFh6nz1Cl4qQ
+ /jFjS2MOd9d2p/ymG1kmuFzBoYGaYyjIYelaf4r8OOVUkhizAT2QkJHlKMpkR5VIxEkM
+ gqn/de/dkH/jsxMk+BAJBxIJMCuGNEBGJwvOJLDns/pEltBqk/+DJnPsN61D3eu+qleU
+ +A9eLzXCU7mDUuomjd04KifONENRVWBVT6xZ8HsqfriO5rmgHKHf2QMjZEkTS1LrTq7i
+ FbPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3qb1GLblB3SsZAB27viU36V4gE0amr6wprCiAcHtnb2E2TRK8UwF7uzFQ7/q7422XNYNczzCkTdGn@nongnu.org
+X-Gm-Message-State: AOJu0Yxv4uKwYFFxe0IBs9gbiGhwQ5vqhxa4tVRIpJ4v26061EBaDWlO
+ 5ksnil/8km7oWh4/VO1WrMbNYXE1E8NIQSqe7j9DaJCEDIlWJofeO7+mIT1jh1o=
+X-Gm-Gg: ASbGncsYDZ0HNWQad6tr+lYP/xENVn6o2YPdGkEZ7F84r+47FtHzBCrzL8MHxg39dpJ
+ sdVyiLfGGFxgeL3RTvTx/dYoOQeUp7ZGAsdMSmx0dv2JpicIrHMrnr5Vwa41LfRfbIWCh9xjB7e
+ Y2rio/XDEIdnImYfqUgjA8b/46BcACIzPkVYBOrUNtoTtWir0NwJVN+ElAojI2YQK1QeVdOdw7C
+ z0jDLH46Uwl9LdqxuElvw2hCRWb9oitKzfMdKp62VFRf2ybI79YL5wOtwooI6YpCDW5M7+EnMl1
+ /C38Q26tiukN7sOiAy11ugtO3gkooKptWqm6YgRkhneJiRBvv2/3/yQKLkE=
+X-Google-Smtp-Source: AGHT+IHrMK+aR0+KapkytzRf0g9yYdUG38YQYRpLQ5n7IQv53xLRD+dW4P5l7l61qLvcgtFG6kmQ7g==
+X-Received: by 2002:a05:6000:1867:b0:386:3327:4f21 with SMTP id
+ ffacd0b85a97d-38dea2689f5mr1686874f8f.27.1739351959476; 
+ Wed, 12 Feb 2025 01:19:19 -0800 (PST)
+Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38dd4342502sm11347783f8f.26.2025.02.12.01.19.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Feb 2025 01:19:19 -0800 (PST)
+Message-ID: <03446903-2100-4981-831e-7ee4741ffead@linaro.org>
+Date: Wed, 12 Feb 2025 10:19:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250211214328.640374-11-kwolf@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 04/32] hw/timer/xilinx_timer: Make device endianness
+ configurable
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20250210204204.54407-1-philmd@linaro.org>
+ <20250210204204.54407-5-philmd@linaro.org>
+ <678561c5-4d06-494a-b12c-6013b07f3b05@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <678561c5-4d06-494a-b12c-6013b07f3b05@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,57 +100,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 10:43:27PM +0100, Kevin Wolf wrote:
-> This adds a separate block driver for the bochs image format called
-> 'bochs-rs' so that for the moment both the C implementation and the Rust
-> implementation can be present in the same build. The intention is to
-> remove the C implementation eventually and rename this one into 'bochs'.
-> This can only happen once Rust can be a hard build dependency for QEMU.
+On 12/2/25 09:27, Thomas Huth wrote:
+> On 10/02/2025 21.41, Philippe Mathieu-Daudé wrote:
+>> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
+>> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+>> Add the "little-endian" property to select the device
+>> endianness, defaulting to little endian.
+>> Set the proper endianness for each machine using the device.
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Message-Id: <20250206131052.30207-5-philmd@linaro.org>
+>> ---
+>>   hw/microblaze/petalogix_ml605_mmu.c      |  1 +
+>>   hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
+>>   hw/ppc/virtex_ml507.c                    |  1 +
+>>   hw/timer/xilinx_timer.c                  | 35 +++++++++++++++---------
+>>   4 files changed, 25 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/ 
+>> petalogix_ml605_mmu.c
+>> index cf3b9574db3..bbda70aa93b 100644
+>> --- a/hw/microblaze/petalogix_ml605_mmu.c
+>> +++ b/hw/microblaze/petalogix_ml605_mmu.c
+>> @@ -127,6 +127,7 @@ petalogix_ml605_init(MachineState *machine)
+>>       /* 2 timers at irq 2 @ 100 Mhz.  */
+>>       dev = qdev_new("xlnx.xps-timer");
+>> +    qdev_prop_set_bit(dev, "little-endian", true);
+>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>       qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/ 
+>> petalogix_s3adsp1800_mmu.c
+>> index fbf52ba8f2f..9d4316b4036 100644
+>> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>> @@ -114,6 +114,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>       /* 2 timers at irq 2 @ 62 Mhz.  */
+>>       dev = qdev_new("xlnx.xps-timer");
+>> +    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+>> index 23238119273..f87c221d076 100644
+>> --- a/hw/ppc/virtex_ml507.c
+>> +++ b/hw/ppc/virtex_ml507.c
+>> @@ -230,6 +230,7 @@ static void virtex_init(MachineState *machine)
+>>       /* 2 timers at irq 2 @ 62 Mhz.  */
+>>       dev = qdev_new("xlnx.xps-timer");
+>> +    qdev_prop_set_bit(dev, "little-endian", false);
+>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 > 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  rust/block/Cargo.toml    |   2 +-
->  rust/block/src/bochs.rs  | 296 +++++++++++++++++++++++++++++++++++++++
->  rust/block/src/driver.rs |   5 -
->  rust/block/src/lib.rs    |   1 +
->  4 files changed, 298 insertions(+), 6 deletions(-)
->  create mode 100644 rust/block/src/bochs.rs
+>   Hi,
 > 
-> diff --git a/rust/block/Cargo.toml b/rust/block/Cargo.toml
-> index 70ee02f429..1c06f3a00c 100644
-> --- a/rust/block/Cargo.toml
-> +++ b/rust/block/Cargo.toml
-> @@ -3,7 +3,7 @@ name = "block"
->  version = "0.1.0"
->  edition = "2021"
->  authors = ["Kevin Wolf <kwolf@redhat.com>"]
-> -license = "GPL-2.0-or-later"
-> +license = "GPL-2.0-or-later AND MIT"
->  readme = "README.md"
->  description = "Block backends for QEMU"
->  repository = "https://gitlab.com/qemu-project/qemu/"
-> diff --git a/rust/block/src/bochs.rs b/rust/block/src/bochs.rs
-> new file mode 100644
-> index 0000000000..388ac5ef03
-> --- /dev/null
-> +++ b/rust/block/src/bochs.rs
-> @@ -0,0 +1,296 @@
-> +// SPDX-License-Identifier: MIT
+> with this patch applied, the ppc_virtex_ml507 functional test is now 
+> failing for me ... could you please double-check whether "make check- 
+> functional-ppc" still works for you?
 
-Why MIT instead of our normal GPL-2.0-or-later.
+Thanks, not this patch problem, but patch #2 misses:
 
-Using Rust conversion to eliminate GPL usage for permissive licenses
-like MIT is not something I'd like to see us doing.
+-- >8 --
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index 23238119273..723f62c904b 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -219,2 +219,3 @@ static void virtex_init(MachineState *machine)
+      dev = qdev_new("xlnx.xps-intc");
++    qdev_prop_set_bit(dev, "little-endian", false);
+      qdev_prop_set_uint32(dev, "kind-of-intr", 0);
+---
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Why is my CI green?
 
