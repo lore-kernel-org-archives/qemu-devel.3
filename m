@@ -4,71 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BFC0C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 22:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C224C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 22:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiKya-0008EK-IM; Wed, 12 Feb 2025 17:13:00 -0500
+	id 1tiLJg-00049u-D7; Wed, 12 Feb 2025 17:34:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tiKyZ-0008E0-NX
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 17:12:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tiLJe-00049H-5G; Wed, 12 Feb 2025 17:34:46 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tiKyW-0005zW-B8
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 17:12:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739398375;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v5IUnO/hfkL0PWEq3ilPGk8DUYZUnJnQzDg/S4SsEKI=;
- b=BJx0YD/5Ubt6GoF9JPi2o6vXLXbRemDnIuPvqTs1gP8p5bLuY7JT5AJ336iePl2HfL3HqE
- ajrK4NKd6BknrQyypEt4YbrzzWA5eiXLba7dZsAZwg1fll3Pie3M6ce4r84rII20Ptd60q
- 36RHhaTHwSRNocrl65wFCpRR6xmH0WM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-ZSz_H0JHNjCfwVZZ7uXHAQ-1; Wed,
- 12 Feb 2025 17:12:53 -0500
-X-MC-Unique: ZSz_H0JHNjCfwVZZ7uXHAQ-1
-X-Mimecast-MFC-AGG-ID: ZSz_H0JHNjCfwVZZ7uXHAQ_1739398372
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 923151800980; Wed, 12 Feb 2025 22:12:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.72])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10A8318004A7; Wed, 12 Feb 2025 22:12:48 +0000 (UTC)
-Date: Wed, 12 Feb 2025 16:12:46 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
- hreitz@redhat.com, kwolf@redhat.com
-Subject: Re: [PATCH] qapi: merge common parts of NbdServerOptions and
- nbd-server-start data
-Message-ID: <ky3eygomndpcfsxvcwt3aqdnyqmkerzx6zzmusj432gpof4gge@tsxlpcqazel4>
-References: <20250212143351.274931-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tiLJb-0000H0-Qb; Wed, 12 Feb 2025 17:34:45 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BE9394E6014;
+ Wed, 12 Feb 2025 23:34:38 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id JGP_FBaXw3tH; Wed, 12 Feb 2025 23:34:36 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B7D644E602E; Wed, 12 Feb 2025 23:34:36 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B4FB174577C;
+ Wed, 12 Feb 2025 23:34:36 +0100 (CET)
+Date: Wed, 12 Feb 2025 23:34:36 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
+ QAPI enum
+In-Reply-To: <672045c1-9b09-4b7b-9bed-fa990129ce2c@linaro.org>
+Message-ID: <fb7045a4-20f6-a52d-5531-2410fc803bb4@eik.bme.hu>
+References: <20250212112413.37553-1-philmd@linaro.org>
+ <20250212112413.37553-2-philmd@linaro.org>
+ <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
+ <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
+ <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
+ <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
+ <a3608e43-79ce-403d-8ba7-6735fde66759@linaro.org>
+ <e1436061-a840-0942-2c2c-4f49bfb932b8@eik.bme.hu>
+ <672045c1-9b09-4b7b-9bed-fa990129ce2c@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250212143351.274931-1-vsementsov@yandex-team.ru>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: multipart/mixed; boundary="3866299591-307774331-1739399676=:6103"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,165 +78,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 12, 2025 at 05:33:51PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Instead of comment
-> "Keep this type consistent with the nbd-server-start arguments", we
-> can simply merge these things.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
-> 
-> No problem for me to rebase on top of
-> [PATCH 0/2] nbd: Allow debugging tuning of handshake limit
-> if it goes earlier.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I just sent the pull request for that, so this will indeed need
-rebasing.  But it's still worth reviewing as written.
+--3866299591-307774331-1739399676=:6103
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-> 
-> Also, not that order of nbd-server-start is changed. I think the order
-> could not be a contract of JSON interface.
+On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
+> On 12/2/25 17:23, BALATON Zoltan wrote:
+>> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
+>>> On 12/2/25 14:53, Philippe Mathieu-Daudé wrote:
+>>>> On 12/2/25 13:56, BALATON Zoltan wrote:
+>>>>> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
+>>>>>> On 12/2/25 12:37, Thomas Huth wrote:
+>>>>>>> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
+>>>>>>>> Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
+>>>>>>>> Endianness can be BIG, LITTLE or unspecified (default).
+>>>>>>>> 
+>>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>>> ---
+>>>>>>>>   qapi/common.json                    | 16 ++++++++++++++++
+>>>>>>>>   include/hw/qdev-properties-system.h |  7 +++++++
+>>>>>>>>   hw/core/qdev-properties-system.c    | 11 +++++++++++
+>>>>>>>>   3 files changed, 34 insertions(+)
+>
+>
+>>>>>>>> +{ 'enum': 'EndianMode',
+>>>>>>>> +  'data': [ 'little', 'big', 'unspecified' ] }
+>>>>>>> 
+>>>>>>> Should 'unspecified' come first? ... so that it gets the value 0, i.e. 
+>>>>>>> when someone forgets to properly initialize a related variable, the 
+>>>>>>> chances are higher that it ends up as "unspecified" than as "little" ?
+>>>>>> 
+>>>>>> Hmm but then in this series the dual-endianness regions are defined as:
+>>>>>> 
+>>>>>> +static const MemoryRegionOps pic_ops[2] = {
+>>>>>> +    [0 ... 1] = {
+>>>>> 
+>>>>> This is already confusing as you'd have to know that 0 and 1 here means 
+>>>>> ENDIAN_MODE_LITTLE and ENDIAN_MODE_BIG (using those constants here as 
+>>>>> well might be clearer). It's easy to miss what this does so 
+>>> 
+>>> At this point 0 / 1 only mean "from the index #0 included to the index
+>>> #1 included", 0 being the first one and 1 the last one.
+>>> 
+>>>>> maybe repeating the definitions for each case would be longer but less 
+>>>>> confusing and then it does not matter what the values are.
+>>> 
+>>> This is what I tried to do with:
+>>> 
+>>> +    [ENDIAN_MODE_BIG].endianness = DEVICE_BIG_ENDIAN,
+>>> +    [ENDIAN_MODE_LITTLE].endianness = DEVICE_LITTLE_ENDIAN,
+>>> };
+>>> 
+>>> but in v7 we are back of picking an arbitrary value.
+>>> 
+>>>>> Or what uses the ops.endianness now should look at the property 
+>>>>> introduced by this patch to avoid having to propagate it like below and 
+>>>>> drop the ops.endianness? Or it should move to the memory region and set 
+>>>>> when the ops are assigned?
+>>>> 
+>>>> I'm not understanding well what you ask, but maybe the answer is in v7 :)
+>> 
+>> I'm not sure I understand it well either. I think what I was asking about 
+>> is the same as what Thomas asked if this could be avoided to make it 
+>> necessary to allocate two separate ops for this. Looks like from now on 
+>> this ops struct should really loose the endianness value and this should be 
+>> assigned when the ops is added to the io region because that's where it 
+>> decides which endianness is it based on the property added in this series. 
+>> But I don't know if that could be done or would need deeper changes as what 
+>> later uses this ops struct might not have access to the property and if we 
+>> have a single ops struct it may need to be copied to set different 
+>> endianness intstead of just referencing it. So I'm not sure there's a 
+>> better way but I think this change makes an already cryptic boiler plate 
+>> even more confusing for people less knowledgeable about QEMU and C 
+>> programming so it makes even harder to write devices. But as long as it's 
+>> just a few devices that need to work with different endianness then it 
+>> might be OK. But wasn't that what NATIVE_ENDIAN was meant for? What can't 
+>> that be kept then?
+>
+> Moving toward a single binary able to run heterogeneous machines, we
+> can't rely on a particular target endianness, so we need to remove
+> DEVICE_NATIVE_ENDIAN. The endianness is a property a device / machine,
+> not of the binary.
 
-Correct - QMP does not mandate wire ordering, so although the change
-causes C paramter rearrangement, it is not a breaking change.
+So then can the behaviour of NATIVE_ENDIAN be changed to look at the 
+machine endianness instead of replacing it with a constant? Or would that 
+be too much overhead? If always looking up the endianness is not wanted 
+could the ops declaration keep NATIVE_ENDIAN but when the ops is added to 
+the memory region can the register function replace it with the 
+appropriate constant (if needed copying the struct)? Or is there something 
+that prevents doing that?
 
-> 
-> We could instead of making common base structure go another way
-> and define two structures with same data=NbdServerOptionsCommon, and
-> different bases (will have to define additional base strucutres with
-> SocketAddress and SocketAddressLegacy fields). But it would look a bit
-> unusual in QAPI.
-> 
->  blockdev-nbd.c         |  4 +--
->  qapi/block-export.json | 57 ++++++++++++++++++++----------------------
->  2 files changed, 29 insertions(+), 32 deletions(-)
-> 
-> diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-> index 9e61fbaf2b..b0b8993a1b 100644
-> --- a/blockdev-nbd.c
-> +++ b/blockdev-nbd.c
-> @@ -215,10 +215,10 @@ void nbd_server_start_options(NbdServerOptions *arg, Error **errp)
->                       arg->max_connections, errp);
->  }
->  
-> -void qmp_nbd_server_start(SocketAddressLegacy *addr,
-> -                          const char *tls_creds,
-> +void qmp_nbd_server_start(const char *tls_creds,
->                            const char *tls_authz,
->                            bool has_max_connections, uint32_t max_connections,
-> +                          SocketAddressLegacy *addr,
->                            Error **errp)
->  {
->      SocketAddress *addr_flat = socket_address_flatten(addr);
-> diff --git a/qapi/block-export.json b/qapi/block-export.json
-> index 117b05d13c..5eb94213db 100644
-> --- a/qapi/block-export.json
-> +++ b/qapi/block-export.json
-> @@ -9,13 +9,7 @@
->  { 'include': 'block-core.json' }
->  
->  ##
-> -# @NbdServerOptions:
-> -#
-> -# Keep this type consistent with the nbd-server-start arguments.  The
-> -# only intended difference is using SocketAddress instead of
-> -# SocketAddressLegacy.
-> -#
-> -# @addr: Address on which to listen.
-> +# @NbdServerOptionsBase:
->  #
->  # @tls-creds: ID of the TLS credentials object (since 2.6).
->  #
-> @@ -30,14 +24,35 @@
->  #     server from advertising multiple client support (since 5.2;
->  #     default: 100)
->  #
-> -# Since: 4.2
-> +# Since: 10.0
-
-Markus, when refactoring types like this, should Since stay at the
-point in time where the fields were first introduced (4.2) or at the
-time where the refactoring introduced the new type (10.0)?  Or does
-type inlining make it all moot if this tag never shows up in the docs?
-
->  ##
-> -{ 'struct': 'NbdServerOptions',
-> -  'data': { 'addr': 'SocketAddress',
-> -            '*tls-creds': 'str',
-> +{ 'struct': 'NbdServerOptionsBase',
-> +  'data': { '*tls-creds': 'str',
->              '*tls-authz': 'str',
->              '*max-connections': 'uint32' } }
->  
-> +##
-> +# @NbdServerOptions:
-> +#
-> +# @addr: Address on which to listen.
-
-This might be a good time to add a paragraph on how this is the struct
-used for q-s-d command-line server setup...
-
-> +#
-> +# Since: 10.0
-> +##
-> +{ 'struct': 'NbdServerOptions',
-> +  'base': 'NbdServerOptionsBase',
-> +  'data': { 'addr': 'SocketAddress' } }
-> +
-> +##
-> +# @NbdServerOptionsLegacy:
-> +#
-> +# @addr: Address on which to listen.
-
-...while this is the version for QMP runtime control.
-
-> +#
-> +# Since: 10.0
-> +##
-> +{ 'struct': 'NbdServerOptionsLegacy',
-> +  'base': 'NbdServerOptionsBase',
-> +  'data': { 'addr': 'SocketAddressLegacy' } }
-> +
->  ##
->  # @nbd-server-start:
->  #
-> @@ -50,31 +65,13 @@
->  # intended difference is using SocketAddressLegacy instead of
->  # SocketAddress.
->  #
-> -# @addr: Address on which to listen.
-> -#
-> -# @tls-creds: ID of the TLS credentials object (since 2.6).
-> -#
-> -# @tls-authz: ID of the QAuthZ authorization object used to validate
-> -#     the client's x509 distinguished name.  This object is is only
-> -#     resolved at time of use, so can be deleted and recreated on the
-> -#     fly while the NBD server is active.  If missing, it will default
-> -#     to denying access (since 4.0).
-> -#
-> -# @max-connections: The maximum number of connections to allow at the
-> -#     same time, 0 for unlimited.  Setting this to 1 also stops the
-> -#     server from advertising multiple client support (since 5.2;
-> -#     default: 100).
-> -#
->  # Errors:
->  #     - if the server is already running
->  #
->  # Since: 1.3
->  ##
->  { 'command': 'nbd-server-start',
-> -  'data': { 'addr': 'SocketAddressLegacy',
-> -            '*tls-creds': 'str',
-> -            '*tls-authz': 'str',
-> -            '*max-connections': 'uint32' },
-> +  'data': 'NbdServerOptionsLegacy',
->    'allow-preconfig': true }
-
-At any rate, I like the consolidation.
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+Regards,
+BALATON Zoltan
+--3866299591-307774331-1739399676=:6103--
 
