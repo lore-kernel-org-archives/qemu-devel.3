@@ -4,86 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D75C021A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A241BC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiAsA-0006zI-6x; Wed, 12 Feb 2025 06:25:42 -0500
+	id 1tiAwk-0007ZA-KF; Wed, 12 Feb 2025 06:30:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiArj-0006bC-7G
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:25:18 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiAwQ-0007QO-NL
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:30:09 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiArc-0004m9-0L
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:25:11 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38dc5764fc0so5168386f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 03:25:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiAwO-0006sK-Bi
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:30:05 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4394345e4d5so24244495e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 03:30:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739359504; x=1739964304; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zk8npvpvvWsz3fYv0R1o0ULJq8hATZnhrjaHmw2ltQw=;
- b=CNognFm6sFgAeRIj5QsEIEylGLc40lgtPRNoML62/UHsy7Va/awfHlki0SHl8Jo8xi
- iMYz6oPhlf5xILDicEnN8jSQK6ZpqxWnusPP3v71VV8sT43Ba/fb5wijThZsZli6H0Ey
- vG5Jp6Gat+HjyywFuh8W456ovYgZCa3Ml8my8ryBDYN/vqPO4wbspECFPBe+yk1b8zD5
- 21qGrLCZTnw0zH2UQ0OK93NNAWEDP87H0/V4Gb0TsD+jOKXZs/IRyVM+TRW0DKif+zxi
- OANMb8eT4t2HlIHgBbKixMM326+VyxN3261ceEhlk0SgO8fhrS4NRT18XrQP+FeplGCB
- SV1g==
+ d=linaro.org; s=google; t=1739359800; x=1739964600; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yv/Wx3foFGD7aPDIjRISRWc4lx4Hpogt3SBOSTL89do=;
+ b=CdOSn2g+j6dQabRgUYp80M5tQ78VYDECKY6z7q1gHGoG5GzX4X9VVlsKPvifMXK65F
+ hzH6wT8e+rjPW9Q3NZiLdUXd+8+nNRBXHg/2KmUZYKZRH3wbc6uD3V9FAYleSPsVFqrC
+ TxAbX6TciXAzRYHXAi1IxXk8+H5Enzx92N2br/5mNDPbCDVyTVmTD64FbXebLcOubXvh
+ gQB3CDkenQ+f4/Fm2KEt978+NpgBBESJ03LGtVOrsKcklIOxu+1Rcox31g7MrJGz3a7g
+ UbN5O6cmIToGwoUanHnwvHtEaaqNgbodxNub5ivMxAF1Zmf4UTMui2hdTcnCMi14TQQy
+ qF6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739359504; x=1739964304;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zk8npvpvvWsz3fYv0R1o0ULJq8hATZnhrjaHmw2ltQw=;
- b=ETbthgtVFImQh1UWyWMmtS2ndFKgmhch9HVfO4Pgwl8N/Wi1jmFPGdGgyq/jr4+UnH
- RYi/Cox2qbFDFdqEhAbk3Yz7zRNIsk0P9cJkerNAHkiNlSRyOD52vikb9JjsZF7sFczw
- RdTqLcQDTE4VSWzZhDxd30kZNWYnwn7dS5QZFQDQTBvCkGhLxYOlRdf8Q44VdS6+3D/D
- rnvOoufOiRb9ejtAlYpEQDdzZGaF0bMbo2sid3NnqnPmXRHI3695yHZI2kR81hrqWuoC
- 5Y1zKPWrVAkgir6TqoMpzbWvh+O91Y6C342OyNCdVgCbvexUAT3e0z2fpHw5pXxKvWs2
- wTwA==
-X-Gm-Message-State: AOJu0YzqqmrA69z6HI8rtiYk0z5oIIuPJcbKTjlbYfG1JxCzX3kOkv8n
- 4545yhMRlFM2GExqrd4zlJpyl4GigmzqAJwwriIzXrVgO79T1Iu9XYf4XHt2Iul3ZsSZdYn5Ubl
- U8WE=
-X-Gm-Gg: ASbGncu/1ptq9nhJt9XC1YhfD4lnAYpIPNq/2Ecky6KqNF/bx98nKGhyCokFJzsi4An
- 1jy3bOj/pzpLcZ19MTXXCWtRsPdtcag4fyOD2/ph2gjfjWruqAP6QiYAbm/CT0OgqC3HP7VARDW
- E7rUj1luB25bDbj9ftt4UcJPg4JL+rdYvJmMvV3XUexstbpOqr6I/i3hkiICsEJoU+J5Tu9a1lw
- FImv3+c8VTspOJ8AxpsEYTe+nPArYTQMq3mgWe8qcQcvP+eT55r2J6jQZr/6KRP3ojb0VUy37oY
- g8PboUTuIlp/BDhSuKK8opau7j6zEtCUih+UjQIKo1mA6GYu9oZNnOTXtHpwQP2bjA==
-X-Google-Smtp-Source: AGHT+IG3nBiLmWqXeM+wrtJORgmRECrxXkhFarvFnsabu9nZ7V113AU4vBSCj1hdhWO3SaQLIS6ReQ==
-X-Received: by 2002:a5d:648b:0:b0:38d:c2ef:e291 with SMTP id
- ffacd0b85a97d-38dea2e93ffmr2618859f8f.39.1739359503780; 
- Wed, 12 Feb 2025 03:25:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739359800; x=1739964600;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yv/Wx3foFGD7aPDIjRISRWc4lx4Hpogt3SBOSTL89do=;
+ b=RRhBSQlP8oep1r6D+bWYTHn7YT8x7SQJp7l0q7Ic1eSWhw8ptb4AfiGHF9ESIwqamB
+ yPlEAqttG6qhfrbnqFRI8oePnfzBOKoOgJtTW1/7E/MbtW836+zSHssgRqA0A6sHUp/t
+ O5MDFYbWONUQDdTypPPtAlBamDDty9o4F/X6ptDbjdugPP3PYk0Xq9Tb+Rcnquj1/HiZ
+ d1N64isgX9ltzN//CxtizkxaAgu034XCvHcmEQzIjmWjAy0GeQQiMbw4rAq8c6l1Zx0a
+ jZnmj1c1x2O9uJwHUxT8AVvTn9hNjreickfElHyHW94yC6AH3THsSlNDBomjkX8b1ODE
+ K2VQ==
+X-Gm-Message-State: AOJu0YxtJlv7IYylwMoEYOsAO+SU4zREdp7NaRCen9EVeAyw/C4ODV8X
+ 4Cvr3ar4DX7DQfBtaeqTgjYVCj0nggJlriq3Ph3yASMqq0IAzzauJVX706fWigJzcNVeursHHMh
+ mj5I=
+X-Gm-Gg: ASbGncuHpHm3xYzxCXgoWHlJWYabKoLLIvjSjw0CLUVr0esYPuganm5a1n+4OQWDEnr
+ xvW7NN783zTPrKFir5BxY3vWWrD5R4REI+j7Y8l+TMxrAle7uo3VCWWKx5q5g/9kawO10LTTbuf
+ IJMy6g2aylOn9J0Rh6XKnxjhDVORRT+CaTCiXKy2mckKKijUTmf+kh6tjeoxquFsDGmQEqh33tu
+ SPR5cdS1qWAyvyUlmyNyz/EPb1dLHjtSpoEnBevDhmHm0W+7P236798sm7Xk/2xAXaKxLy34myO
+ nUexqf5nV4eagzQP0xs6NWMb2VSH/L/kBa0U3+D7JsCrsc5A1KEFWbLrwCff/du8Qw==
+X-Google-Smtp-Source: AGHT+IEhL6o5+l8kQkTie3z+c4UV8g6n14atfpDO0yofyqDf3uw4gjNwSpR5s8CMjkbliKETF5zzYQ==
+X-Received: by 2002:a05:600c:444c:b0:439:477c:cf73 with SMTP id
+ 5b1f17b1804b1-43958176299mr33745645e9.11.1739359800135; 
+ Wed, 12 Feb 2025 03:30:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f2103100csm483962f8f.2.2025.02.12.03.25.02
+ ffacd0b85a97d-38dd4c8ca52sm11456892f8f.89.2025.02.12.03.29.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 03:25:03 -0800 (PST)
+ Wed, 12 Feb 2025 03:29:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 10/11] tests/functional: Remove sleep() kludges from
- microblaze tests
-Date: Wed, 12 Feb 2025 12:24:12 +0100
-Message-ID: <20250212112413.37553-11-philmd@linaro.org>
+Subject: [PATCH] meson: Display summary of Darwin libraries detected
+Date: Wed, 12 Feb 2025 12:29:58 +0100
+Message-ID: <20250212112958.38023-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250212112413.37553-1-philmd@linaro.org>
-References: <20250212112413.37553-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,45 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit f0ec14c78c4 ("tests/avocado: Fix console data loss") fixed
-QEMUMachine's problem with console, we don't need to use the sleep()
-kludges.
-
-Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250206131052.30207-15-philmd@linaro.org>
 ---
- tests/functional/test_microblazeel_s3adsp1800.py | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ meson.build | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index 1f0812eec63..d50b98342d7 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -7,8 +7,7 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later. See the COPYING file in the top-level directory.
+diff --git a/meson.build b/meson.build
+index 18cf9e2913b..10f4c9fd30d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4826,6 +4826,13 @@ summary_info += {'libdw':             libdw}
+ if host_os == 'freebsd'
+   summary_info += {'libinotify-kqueue': inotify}
+ endif
++if host_os == 'darwin'
++  summary_info += {'Hypervisor support': hvf}
++  summary_info += {'CoreFoundation support': coref}
++  summary_info += {'IOKit support': iokit}
++  summary_info += {'ParavirtualizedGraphics support': pvg}
++  summary_info += {'Metal support': metal}
++endif
+ summary(summary_info, bool_yn: true, section: 'Dependencies')
  
--import time
--from qemu_test import exec_command, exec_command_and_wait_for_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- 
-@@ -32,9 +31,8 @@ def do_xmaton_le_test(self, machine):
-         self.vm.add_args('-nic', f'user,tftp={tftproot}')
-         self.vm.launch()
-         wait_for_console_pattern(self, 'QEMU Advent Calendar 2023')
--        time.sleep(0.1)
--        exec_command(self, 'root')
--        time.sleep(0.1)
-+        wait_for_console_pattern(self, 'buildroot login:')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-         exec_command_and_wait_for_pattern(self,
-                 'tftp -g -r xmaton.png 10.0.2.2 ; md5sum xmaton.png',
-                 '821cd3cab8efd16ad6ee5acc3642a8ea')
+ if host_arch == 'unknown'
 -- 
 2.47.1
 
