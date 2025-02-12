@@ -4,90 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04438C021A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 17:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 179ADC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 17:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiGuG-0002Sr-Ig; Wed, 12 Feb 2025 12:52:17 -0500
+	id 1tiGv2-0003NS-0v; Wed, 12 Feb 2025 12:53:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiGtx-0002PF-Vl
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:51:59 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiGtv-0007kY-RB
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:51:57 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-220c665ef4cso12035655ad.3
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 09:51:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739382704; x=1739987504; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q+IHgi8A4FQmqHxwR8123uukF761i7mOI5ZqWU1j14A=;
- b=gdTbnCeABwTotk8Dmsi5XAvO6ucE/jHLl07U4OFpoz2tn22O37itPOyZn3VXMF8+g3
- 3XhTWpPrzpx32HlJU1YDr74GDwbMuV6WyQM9WTcis/oxd3TRREQhdO3xf883J5l1Rxnv
- ddGK/OvUci1iAjEQlWyTwhRbowaQVlepYs6uIKdhObaeFnTGO7uxovAzXKD+1w5IDxnw
- 5Mntn7A3SeW3BTB1dHjjjkHSBuXKeFW8etKRZCaj1yEOTFOML/L8bEFUdhuOFpbXWu2b
- n5qV8B5WY7qaHAq9RdxmZW79qwdN6qtg5FH7CUrs10Xm+paFUHH6AXd3ni/XNWjESthm
- vfgA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiGv0-0003N5-S8
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:53:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiGuz-00087w-GU
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 12:53:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739382780;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bhELLUx9YoGh2j2PYZFqjIhRh4apteQaSGqRWWcjOgI=;
+ b=PD8nlGvnRRpMj4ZEeU1Z4jDvs07+Bj7Fuu86ESvEwfFpRn4aeemjUFN+LqvDXMGhuSAfq+
+ R7dx+MtGbEAiQwuUv+fWOf9ftdRMmRVoaRLERjEZ6r93Ol0Z3dt0cVFUyoRScwZG16xA43
+ vE9ea+LKHuAwAe5pFjVUjbMgmk+SS1w=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-299-3wY_dbh_MGeXzjLbJ2yzyQ-1; Wed, 12 Feb 2025 12:52:56 -0500
+X-MC-Unique: 3wY_dbh_MGeXzjLbJ2yzyQ-1
+X-Mimecast-MFC-AGG-ID: 3wY_dbh_MGeXzjLbJ2yzyQ_1739382775
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-726cb11e531so3664146a34.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 09:52:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739382704; x=1739987504;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q+IHgi8A4FQmqHxwR8123uukF761i7mOI5ZqWU1j14A=;
- b=JyhjtaniMe0vC7QfSiSQQNIQ0yCZQNa8HVKbfGaZMaNhi2L/OrX3/DFHw4wZzjMlOX
- tk6P04HS7ehGyijuPyXxSFSzu0Y+qavSkKqxeJBpWr9v9W/k1s3L9u3yc2XKC7RPmPHi
- H+o+BZvrdYqWxSpcotBXfYUlCuUtonmJE+s31gVY43CZJIMHHafl3D9rLPNMCFfh7GUC
- 3RlvbT+yzvxDTxXW1qtdl4kgCVtIeDw/LaU+gnhB3QJgv2OEawkkadCANsyCeNq2YXil
- fQ6UYUv+Yva7RJ79KazW5HhgFjTYFTxAn9wg246pTZ95+eUq7xkxXdR3dUNsOggBUYGL
- 4Cyg==
-X-Gm-Message-State: AOJu0YzYV8dKqNKVz0iYPQ7U1xke68W77HQkmMPfOFFheQEOn48PwwI/
- OW3WLxxh8rs+fvV7j2beRfQlCVn0pgOxvsu3sCF90jU94DI5e16obJqQuyLFAGjtMxha3bCfvyC
- i
-X-Gm-Gg: ASbGncu9qkoljOxNqLLZdnfDb8HV0izHu4eMJGYln4XjwWEbYUPUp8ETqQWr7b+WuaW
- dxS9CejhPc3R+QRuviKg6VCyS1sERbOTUkBTDwfv9+INX5wnFLGJEkhm3552rVzv8I1opPePhcS
- 2MeZ/kcmqu4JiMYbtWaEVqlA6PxpFmh702HsozpwAM8uMeyz1KwpccDmVcZZTMmMvqd6feFPT5q
- yO6SRzQ9QPSw69n3oSiRHEM8Xltlt5+4R0IjPAickQQRZnZMx4bPShcm3NUx/0hbB3ha8zC6Rk9
- Vz7AEO1YCAyOuPPsgYzk7k/oR7QN7z7XDy/Ei80wPi+IGuM5m/TcJ50=
-X-Google-Smtp-Source: AGHT+IGmfYEx1fQDieZrJQVbm6iYRwtQd9TNj+kofspC0Sfqt05bVtkKhiLzypH2tBHtIDbtTq8sag==
-X-Received: by 2002:a17:902:c942:b0:20c:5533:36da with SMTP id
- d9443c01a7336-220bdfec885mr53771605ad.42.1739382704161; 
- Wed, 12 Feb 2025 09:51:44 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ d=1e100.net; s=20230601; t=1739382775; x=1739987575;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bhELLUx9YoGh2j2PYZFqjIhRh4apteQaSGqRWWcjOgI=;
+ b=exrrTOrC1RJx7pKMckEMeFnERtgHPwYSqt/H9YLWyV7EQkzKu8/rUfm9MhQIZJZE71
+ u5lwaSk3oyYG+hs+T2qyp8s5Yeyxdm0VPbIKfH86RmfwE8IU2AKzYBfSrxL2Ku2P6E9f
+ ou3B6+KL17KSCsRUhYS3xdg4zlQrAIPgFf9IytgVikR1JaaqWaVLspgUPlGh4SfttNa7
+ S03qCx5URCkQB9raP06+PtEPuUcHopTNDopcp53y1KqWb7Nu5gTZ29KLsXKDur8R8Cn6
+ Tk49DfWItEYOxJ95+zLN8umXVOth2QOBUHMtuviL4py7tG8C5Kvbs6o7kmRQEuoO7GU8
+ 5u4A==
+X-Gm-Message-State: AOJu0YwTloRnN0tLm3S5GfBOvSbzgZaFo+ntBwZfCwVcmpDrELD+wjWe
+ FdRX1AhZ5LoE9x41050e17f4XYy0tUD5uyPVfcIMKAPlXBIGPpzlg1Dj0HyYM9/e3lB0LOeYoTm
+ BGB9bICM6Aq7SIpdWpQ5ImcEKvfOGkPMwbveii2lV+bBAgk3Q0qQm
+X-Gm-Gg: ASbGncvV/fgHt3qklp7LT5NIeSVd6gZHL6sr5LPHjqtYD/VKA7rLHJqTXvdmZADTa86
+ EIGuYz4HFhnzpCeTd1/Vv4HlIineOON9woGaphzXOFYD2uqmUpF5DZH4zk9ccY9yDrePbrLMslO
+ e5VFoQcKwfwFcejdRTpGPWqts/XfHV4KwmXmy2zuyT/ilLkX0bTWfKetveHpyT55pMl//UTbRJa
+ 6Tx1EavH7ze52BMFw+xYdAAktQ91uvF4fG3XLzmN/zJtrxXngIJesVAE2M=
+X-Received: by 2002:a05:6830:440c:b0:71f:c1df:12c3 with SMTP id
+ 46e09a7af769-726f1c1e679mr2525505a34.8.1739382775457; 
+ Wed, 12 Feb 2025 09:52:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEX69nOnbH3I+3fLS4sfOhAmU6AlC8iB2/7V0t8hVtaLBxFjVbygzZ6ELUSMUWrC+w7ZVI4RA==
+X-Received: by 2002:a05:6830:440c:b0:71f:c1df:12c3 with SMTP id
+ 46e09a7af769-726f1c1e679mr2525489a34.8.1739382774903; 
+ Wed, 12 Feb 2025 09:52:54 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220c1f9794esm13887415ad.235.2025.02.12.09.51.43
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 09:51:43 -0800 (PST)
-Message-ID: <1bbfe907-8cae-435d-ad8b-c2b36b823512@linaro.org>
-Date: Wed, 12 Feb 2025 09:51:42 -0800
+ 46e09a7af769-726af932a55sm4730572a34.16.2025.02.12.09.52.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Feb 2025 09:52:54 -0800 (PST)
+Date: Wed, 12 Feb 2025 12:52:51 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v5 3/5] migration: enable multifd and postcopy together
+Message-ID: <Z6zf84XtuTcVNyuI@x1.local>
+References: <Z6VCxEKxn6-_okRx@x1.local>
+ <CAE8KmOwJSYq2Ok38_sq29cr7JhbLLh1ZEncP13QpDdnYKOAheQ@mail.gmail.com>
+ <Z6YqstgG2bSY45dM@x1.local>
+ <CAE8KmOwMTw-m0w+JbFBZ7mn-ZuSNfpk9xbq-_KbLXu7_kDhDVg@mail.gmail.com>
+ <Z6owYoktb5nk2yRw@x1.local>
+ <CAE8KmOy+C7QzDHJ5hfWg93zSV0ctGYYz30qsQTe-=+iq1vA+fQ@mail.gmail.com>
+ <Z6tqq5jpbDHsVtVw@x1.local>
+ <CAE8KmOwxobOtw0B4UVECFtgTdbMtOU2Sw09WqYryYYzG+d_UJQ@mail.gmail.com>
+ <Z6yyRdDabvoHrYsm@x1.local>
+ <CAE8KmOx7K1h+_99ivNFQENJNCRJ_rnJVJrdP8BP7zqbRMZNTpw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] hw/mips: Mark Loonson3 Virt machine devices as
- little-endian
-To: qemu-devel@nongnu.org
-References: <20250212113938.38692-1-philmd@linaro.org>
- <20250212113938.38692-4-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250212113938.38692-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOx7K1h+_99ivNFQENJNCRJ_rnJVJrdP8BP7zqbRMZNTpw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,18 +113,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/25 03:39, Philippe Mathieu-Daudé wrote:
-> The Loonson3 Virt machine is only built as little-endian.
-> Therefore the DEVICE_NATIVE_ENDIAN definition expand to
-> DEVICE_LITTLE_ENDIAN (besides, the DEVICE_BIG_ENDIAN case
-> isn't tested). Simplify directly using DEVICE_LITTLE_ENDIAN.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   hw/mips/loongson3_virt.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+On Wed, Feb 12, 2025 at 11:06:00PM +0530, Prasad Pandit wrote:
+> * I was going to send a revised series with these changes, but will
+> wait on that for now.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+You were going to send some changes that you don't yet fully understand how
+it works?  How would you do the flush in the new revision if your existing
+code crashes?  Or did you do that in the revised series at all?
 
-r~
+Sorry, no - I don't think this is how it should or could ever work.  I've
+repeated myself multiple times, I'll stop.
+
+-- 
+Peter Xu
+
 
