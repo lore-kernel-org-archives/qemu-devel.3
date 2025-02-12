@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF8FC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39467C021A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 19:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiHMi-0000vp-PJ; Wed, 12 Feb 2025 13:21:40 -0500
+	id 1tiIAT-0007TR-84; Wed, 12 Feb 2025 14:13:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiHMg-0000vg-SX
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:21:38 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiHMe-0004sw-SV
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:21:38 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21f92258aa6so99629335ad.3
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:21:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739384495; x=1739989295; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=p9JEcMGu5ptMk2/xRVhY/euFglLjuR4fpKwJpfP8ISE=;
- b=jenIwhUHnBB4YCYVlSHrjJkHrVgPmQdpYYVxw988FZ/hOX3qvLRCFavJT9V2ad/f2b
- Mt4OruP/Q4eiO7o2rOrUDxSd/CBMNAsgqupY7/EdFjs4U0jrtgSBBSvZtsOrr2Gy2Kv/
- 8D9FGLkej9v1ZPVLIyy1oIVl7S8bgGTeW1FRvNjFqrJwbEp4TAmcy12uhEP5AoRg9QOS
- kEDETqAqSJ3ZA/7ph4eZzujqEgqgWmw4sLfdL/t9lv30JmiKb1Ft9dDNHyxEoNweBPIk
- 6J4FEr2WbSm5f3hYCxvFlkGRR4w3YXB5MusuDUAZjP99IlrSqatJisWnBYB647oUe7RO
- e7BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739384495; x=1739989295;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p9JEcMGu5ptMk2/xRVhY/euFglLjuR4fpKwJpfP8ISE=;
- b=RvDscbNjLi/FBF5xIIx9N1ukhGpFdfFOJExHswLvS5LwjmVsGpgCKMuyGdrg3l5pSz
- COCIwx0ep4IcK9+2OG0XBk/8obZFS7s+M8PtHPJ+ORXFiSU2ETBo9eAmJUOVftMe4ZVE
- zRlUr1ZURq7vhgmE3q0Yu53yzHYfn2TTaXNug92tb/bxG9qmjCu9hEIHHIvsMNiGRgM0
- Z9cHh6+brttiPonq620LjbOY7aW0FIgi6WCn7VUYSMGBSylTPtDdYR2VwEXY8LxUhsh6
- K7SD6eV8AXEA6uNxBaES0oZN+KKCV/pZ9qRPwOJDOuiKzHJ7pFfgXdIKuaYY4veqUa42
- Dw2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWB5wdEXbKQslBZCb1mCtT3jlkYgTM1OvnYu/vkrxYeNxO4pY4GbDqtLFoFJWK+Lpzib+4A7sC6InPQ@nongnu.org
-X-Gm-Message-State: AOJu0Yy9W3fcCqE1L0Mh89Gn8G1qYDttQPcsFuLwcHpxzmcOTYFJdcbl
- J9Tclx8Cjib0neNFZaq1d2D27HsmuhCpEhyaNNT1L58u/KTgF8lHnusIaK0qcuq1qkVDNPOwoEe
- n
-X-Gm-Gg: ASbGncsoJYCdXo4LGJETMe2rj0HqAU+iFHqEVE79YIq/4/XUbvPBMrLRAMqjka1k44v
- HQ3r2yrSt3b0O0upf5kZbAjiMF4h8ezucscD1Fdcm+OcregmC+XE3uTOI4dQhUbCehupJZzPBeW
- +imkwvgF/UHA9rdosu845xqc5jzgTLGqdKfWb8gb05lsDireI9mlBmuKNr3hzt5dCbhviyy73dk
- ezV7V1gbXTf7Smg1sd91aG/FJeFbIPnXfI3lR4noC6EaES2qcig/fGesEVj0iEnHbRyZ0p7FiiJ
- RhsfoW8RyCdzIjCHJEOwwiJwoGl1UMLQTSQ8aj7Gg1OuPOYFGMTNKMs=
-X-Google-Smtp-Source: AGHT+IHjY3GUmpkhcXn6GaGuju9r4FQwkegtQ0kOECieVtMx+yIE3yIISGeww5LVLVZ3cMdkopGSGQ==
-X-Received: by 2002:a17:903:1c7:b0:215:431f:268f with SMTP id
- d9443c01a7336-220bbab3403mr76940985ad.10.1739384495024; 
- Wed, 12 Feb 2025 10:21:35 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21fb8ff3a18sm33977025ad.187.2025.02.12.10.21.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 10:21:34 -0800 (PST)
-Message-ID: <9231fa0b-f7e8-4e53-9acf-7f89d81f6b60@linaro.org>
-Date: Wed, 12 Feb 2025 10:21:33 -0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tiIAQ-0007T6-Dv; Wed, 12 Feb 2025 14:13:03 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tiIAO-00058l-H8; Wed, 12 Feb 2025 14:13:02 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 366AFE99DA;
+ Wed, 12 Feb 2025 22:12:50 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E31FC1B507B;
+ Wed, 12 Feb 2025 22:12:55 +0300 (MSK)
+Message-ID: <9c31241e-96d0-4014-b9ce-42362ea10eaf@tls.msk.ru>
+Date: Wed, 12 Feb 2025 22:12:55 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] accel/tcg: Fix tlb_set_page_with_attrs, tlb_set_page
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
-References: <20250205040341.2056361-1-richard.henderson@linaro.org>
- <20250205040341.2056361-10-richard.henderson@linaro.org>
- <9759c6f3-18c7-4693-a2db-8a10fea182c8@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <9759c6f3-18c7-4693-a2db-8a10fea182c8@linaro.org>
+Subject: Re: [PULL 05/12] vfio/iommufd: Fix SIGSEV in iommufd_cdev_attach()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250211143340.787996-1-clg@redhat.com>
+ <20250211143340.787996-6-clg@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250211143340.787996-6-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,15 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/11/25 23:22, Philippe Mathieu-Daudé wrote:
-> On 5/2/25 05:03, Richard Henderson wrote:
->> The declarations use vaddr for size.
+11.02.2025 17:33, Cédric Le Goater wrote:
+> From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > 
-> Which seems dubious, since TARGET_PAGE_SIZE is int IIUC.
+> When iommufd_cdev_ram_block_discard_disable() fails for whatever reason,
+> errp should be set or else SIGSEV is triggered in vfio_realize() when
+> error_prepend() is called.
+> 
+> By this chance, use the same error message for both legacy and iommufd
+> backend.
+> 
+> Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Link: https://lore.kernel.org/r/20250116102307.260849-1-zhenzhong.duan@intel.com
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/iommufd.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
-This parameter must handle guest huge pages.  Most often this is 2MiB or 1GiB, which do 
-fit in "int", but logically could be any size at all.  So vaddr seems the correct type.
+This seems to be a qemu-stable material (for 9.2).
+Please let me know if it is not.
 
+Thanks,
 
-r~
+/mjt
 
