@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCC3C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B050C021A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 21:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiKMO-00034W-Ml; Wed, 12 Feb 2025 16:33:32 -0500
+	id 1tiKMQ-00034j-Qy; Wed, 12 Feb 2025 16:33:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKML-00033L-8d
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:29 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMQ-00034b-5A
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:34 -0500
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMJ-0000WC-H6
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:28 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiKMO-0000WZ-I7
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 16:33:33 -0500
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43956e3863eso1882075e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:33:27 -0800 (PST)
+ 5b1f17b1804b1-43948021a45so1923865e9.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 13:33:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739396005; x=1740000805; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739396011; x=1740000811; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WQTyyvM1Ut/4hxqH2Y3t7FYtP781gxP4U1LmrtAk4dw=;
- b=cLhJzJL735ge8XUXbknOn8J0mhEoSumK9p9Pn+8tvlArM8i/HDOTpjbGwN17cjx8Qj
- 23TpxyEer0hY1x5/YbL8lQznshno0FaOEr5/RcjL4XCzAaz3v7uYNLlhMXqflYqwIgVU
- jWKN42mKPS1epmhAJ/S3Okw4CbZNLWXAZ7WZDAG4DAnrR31RZ+4heTPaI3CfESCqqFal
- AFb9Cw26JUvJYjd7Vm0Jo+xQE/P7QpWkNQEKGIrYaswqIaVeDxRcxhvMCvJXFwPkbkEf
- SRIaQayXULkmoncSxX5WP+34DzHovIC8a8n1QVPDGigsvvnZBFWv2TBGCr8zctH+9RAE
- k2ZQ==
+ bh=AFP0q4a5BbpXO9N+k9FpLHSVcTPUWaHfXxJUQBy2kxE=;
+ b=xCdlVAZw8bWD5paEKEuKOWCZl7+w3JEyjILngVA2m0qI120a7/ACqaU2cZxHeO+mRw
+ BxnXFfWdSoE3QXVvZjLjMO1dUIB7+8L4X7E6zXKPjK93hxG5vpPWZT3QMVsxypHIBysQ
+ i2wBED4+QZ+ERrjlcyN0zDWsTUQ7PN4UhjGmCqOYZSRBK4LAro2nEwDCUd/cnviZYa2h
+ 5Ri+q/emstyh2tLDVIyQ6o/LgQb1NULp/+2UkKGvILK/BaIamB2UiPbtYWqLeCl6529g
+ hPlbnJkViLEl1VDvMwoHPaBsRaPosLAfxcFojVMa7vbLKYm/1mA+aPESuJqYWbhznDn1
+ B99A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739396005; x=1740000805;
+ d=1e100.net; s=20230601; t=1739396011; x=1740000811;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WQTyyvM1Ut/4hxqH2Y3t7FYtP781gxP4U1LmrtAk4dw=;
- b=F+JIcMCaqHHM9In0yceNAfc11Gnm7QYwa0p0Pec47+QPxW0Yvdyy8b6M1oetIQANRa
- IGjH3zGVE+ig89wqoKKXOkHE/OWCQbdF90W3iuaQWY0tQO5iec2/4bu8dLd0yjvuNqYa
- wCb5bw7hjwJYeB0/NMBpCdTVylacGwPQjZNNuV0794WrX6wXu5rI8aSV+2InwOJFT5R5
- rKXx4wn/fWqvwR9fJq8Jh0wY5zqcb5mofSWkrZuAzpFwouroANso0oAx6xN9zjXLDZEz
- /5XEme323jOR2lTI2qAq0yvYrKj/Won+uO1Ob2PMlWFF1raqNr4KskiItGoez74xkOQx
- QWSA==
-X-Gm-Message-State: AOJu0YyWZ60UZdzkuXHhvwHnrsnpgjq1BzsWkcmIuuzP94anryn9AKxL
- 5k8qMQF1o8eNTWDLb7LyD3E7BI3m+UNpqR/HLMKCkTpgVW3pmKsMFUtBUah0TXVveStyTX/zriJ
- CyAE=
-X-Gm-Gg: ASbGncstILCx3gjUpMEEaEGib9WX9bXRMQNKGRDUOBEqLrNM/us3hMtlkPf6oJd76Bm
- U04jcKLY3dksw1NRxZsXtHspt/WZ5WMNFC4eP0S2v1Twfjfye+T/LLyyTJ/5DIqPgfsr+z7zn5f
- EXO6IYScaR6CYmjMbsoxnnbuVDx1oYaex2a9cGOR3F0UiU6TrV0xYOMJ5xO2JkupufGIUl2qZM2
- DsB2Mf7Ad/No9Uu+5ukdE5szMmYWjM6/eul+Kuj6WnF8/x/Y1BUPGkEdI/72i0U9Cn1Djw9a48H
- V+xVzMaAQ2hqdfKU4w8jQZQpNH/YEHlt9qi/yi9QxWWbYmbBniKP3M4FVsPrEDjNEQ==
-X-Google-Smtp-Source: AGHT+IHS58kwk3oWB/IegAxEQVFIQnKW/mF08yBPC1PsW5/x3xsIFn7Y0QyCV5m7ILTw+xOeGiuTqA==
-X-Received: by 2002:a05:600c:3d99:b0:439:614b:1c15 with SMTP id
- 5b1f17b1804b1-439614b1f2emr431715e9.13.1739396005610; 
- Wed, 12 Feb 2025 13:33:25 -0800 (PST)
+ bh=AFP0q4a5BbpXO9N+k9FpLHSVcTPUWaHfXxJUQBy2kxE=;
+ b=J3jDYqG3u0hNYq73TbOVxRHwLo41LV+fw1M7i1vf70eW2COGFGeTWzMULs1vC6zqYv
+ eJQ4t4P3veVV8eVCUiGp36ed6TlmJJmUjjZbaovALdAMVcVpDeGQ5x2X0EO9OwmAdkYJ
+ zbJxDqMg/4piz0Jvo5G8yjnbVwhu/OVX3oJDtGB4+rldUDY4ujAO+sYwklwJ5RyeKlmd
+ CuPV+Kvvp/OZnrdpVVFOzYX9Y9yi9TCB34iMlPyWfEpFgCnl+0Ae9SXXkccZkACLJ8X3
+ vew8U/q5m0cjxZ+b9O+JpMUQhdiJFUqrk2py6owEfqjxaxER+qlVIE9Kj1wrGb3JJLTN
+ CDrQ==
+X-Gm-Message-State: AOJu0YxiTfJNQVUmSaA8v27Z0wwdmweAz5rTJ2dH8IUp9+VXqo2Tbk4E
+ a88dnDFS9HVUozVfb5GmqzwDQwFUqGrrrlazODob0UQvBPuzNOVq6wPZkTPRJiRTibGFVIAb4AR
+ B84c=
+X-Gm-Gg: ASbGncufwD6qntexQhIerX4UjvSbnS9egCbQQUDJLkDyiJJwAkIhoHGgQjEC6AfG6tU
+ aPUoUSaf6AQwLZzLo9dSMqdMEvad0I1zHQ1fXQUgyEV822ZTau1HKQRcmNYOtzVx8yFSTsU+Oq3
+ ONIL7gMr7d24M+xuOjY3SKClMxHFXInYeuoUs4YwdoLH7x/rODhZyQRnpPZ19/K/dYJjBDyK2/1
+ GPP6hDpAUTaKnf2ax99GXmRHdObBrVgbyD+6uemAafzID8B1ujTKMVGwDDzU/0e/llYb+63kNQ8
+ m0SmB7l+6i9c8D5tnNOO8Hqfz4QyeoVDIoZlNezq76MTJy+rWSzxygn2EQpid610MA==
+X-Google-Smtp-Source: AGHT+IFF2N3A/XD7OM1l05/vSyz0Y0A/WB6aHsP3qelGoXl8VR1GpUMZC9F6AMx8/VzG+KUv8RHTSg==
+X-Received: by 2002:a05:600c:3b82:b0:439:31e0:d9ab with SMTP id
+ 5b1f17b1804b1-439580d3a55mr54219565e9.0.1739396010884; 
+ Wed, 12 Feb 2025 13:33:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a053fb3sm31371155e9.16.2025.02.12.13.33.24
+ ffacd0b85a97d-38f259f7987sm21121f8f.87.2025.02.12.13.33.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 13:33:25 -0800 (PST)
+ Wed, 12 Feb 2025 13:33:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 07/19] target/riscv: Convert misa_mxl_max using GLib macros
-Date: Wed, 12 Feb 2025 22:32:37 +0100
-Message-ID: <20250212213249.45574-8-philmd@linaro.org>
+Subject: [PATCH v3 08/19] qom: Have class_base_init() take a const data
+ argument
+Date: Wed, 12 Feb 2025 22:32:38 +0100
+Message-ID: <20250212213249.45574-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250212213249.45574-1-philmd@linaro.org>
 References: <20250212213249.45574-1-philmd@linaro.org>
@@ -100,73 +101,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use GLib conversion macros to pass misa_mxl_max as
-riscv_cpu_class_init() class data.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/qom/object.h     | 2 +-
+ hw/core/machine.c        | 2 +-
+ hw/core/qdev.c           | 2 +-
+ hw/pci/pci.c             | 2 +-
+ qom/object.c             | 2 +-
+ rust/qemu-api/src/qom.rs | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index f3ad7f88f0e..9fe1b23a297 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2955,7 +2955,7 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
- {
-     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 9192265db76..7bb14ca7067 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -487,7 +487,7 @@ struct TypeInfo
+     size_t class_size;
  
--    mcc->misa_mxl_max = (RISCVMXL)(uintptr_t)data;
-+    mcc->misa_mxl_max = (RISCVMXL)GPOINTER_TO_UINT(data);
-     riscv_cpu_validate_misa_mxl(mcc);
+     void (*class_init)(ObjectClass *klass, void *data);
+-    void (*class_base_init)(ObjectClass *klass, void *data);
++    void (*class_base_init)(ObjectClass *klass, const void *data);
+     void *class_data;
+ 
+     InterfaceInfo *interfaces;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 254cc20c4cb..7bdde9286c2 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1236,7 +1236,7 @@ static void machine_class_init(ObjectClass *oc, void *data)
+         "Memory size configuration");
  }
  
-@@ -3057,7 +3057,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
-         .parent = TYPE_RISCV_CPU,                           \
-         .instance_init = (initfn),                          \
-         .class_init = riscv_cpu_class_init,                 \
--        .class_data = (void *)(misa_mxl_max)                \
-+        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
-     }
+-static void machine_class_base_init(ObjectClass *oc, void *data)
++static void machine_class_base_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+     mc->max_cpus = mc->max_cpus ?: 1;
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index 2745b5e0929..1e0f47cc848 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -693,7 +693,7 @@ static void device_finalize(Object *obj)
+     g_free(dev->id);
+ }
  
- #define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max, initfn) \
-@@ -3066,7 +3066,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
-         .parent = TYPE_RISCV_DYNAMIC_CPU,                   \
-         .instance_init = (initfn),                          \
-         .class_init = riscv_cpu_class_init,                 \
--        .class_data = (void *)(misa_mxl_max)                \
-+        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
-     }
+-static void device_class_base_init(ObjectClass *class, void *data)
++static void device_class_base_init(ObjectClass *class, const void *data)
+ {
+     DeviceClass *klass = DEVICE_CLASS(class);
  
- #define DEFINE_VENDOR_CPU(type_name, misa_mxl_max, initfn)  \
-@@ -3075,7 +3075,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
-         .parent = TYPE_RISCV_VENDOR_CPU,                    \
-         .instance_init = (initfn),                          \
-         .class_init = riscv_cpu_class_init,                 \
--        .class_data = (void *)(misa_mxl_max)                \
-+        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
-     }
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 2afa423925c..00f50e6f2cc 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2712,7 +2712,7 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
+         "access to indirect DMA memory");
+ }
  
- #define DEFINE_BARE_CPU(type_name, misa_mxl_max, initfn)    \
-@@ -3084,7 +3084,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
-         .parent = TYPE_RISCV_BARE_CPU,                      \
-         .instance_init = (initfn),                          \
-         .class_init = riscv_cpu_class_init,                 \
--        .class_data = (void *)(misa_mxl_max)                \
-+        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
-     }
+-static void pci_device_class_base_init(ObjectClass *klass, void *data)
++static void pci_device_class_base_init(ObjectClass *klass, const void *data)
+ {
+     if (!object_class_is_abstract(klass)) {
+         ObjectClass *conventional =
+diff --git a/qom/object.c b/qom/object.c
+index 01618d06bd8..dfd59502d11 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -55,7 +55,7 @@ struct TypeImpl
+     size_t instance_align;
  
- #define DEFINE_PROFILE_CPU(type_name, misa_mxl_max, initfn) \
-@@ -3093,7 +3093,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
-         .parent = TYPE_RISCV_BARE_CPU,                      \
-         .instance_init = (initfn),                          \
-         .class_init = riscv_cpu_class_init,                 \
--        .class_data = (void *)(misa_mxl_max)                \
-+        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
-     }
+     void (*class_init)(ObjectClass *klass, void *data);
+-    void (*class_base_init)(ObjectClass *klass, void *data);
++    void (*class_base_init)(ObjectClass *klass, const void *data);
  
- static const TypeInfo riscv_cpu_type_infos[] = {
+     void *class_data;
+ 
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index f50ee371aac..f3d43e066ef 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -475,7 +475,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+     /// the effects of copying the contents of the parent's class struct
+     /// to the descendants.
+     const CLASS_BASE_INIT: Option<
+-        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
++        unsafe extern "C" fn(klass: *mut ObjectClass, data: *const c_void),
+     > = None;
+ 
+     const TYPE_INFO: TypeInfo = TypeInfo {
 -- 
 2.47.1
 
