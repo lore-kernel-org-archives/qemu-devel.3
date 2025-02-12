@@ -4,94 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B22C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBE0C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiHIl-0007SH-4j; Wed, 12 Feb 2025 13:17:35 -0500
+	id 1tiHIt-0007Vy-8s; Wed, 12 Feb 2025 13:17:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiHIg-0007P1-69
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:17:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiHId-0004Hk-Ba
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:17:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739384245;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2ppYSiZ49FRAqnOLdMKnSsqVw1O5Bi0/tNqWW8vvucc=;
- b=aOzvbDywTD9SYGUDptt/1/stYKBurGyK7Ms5YUyRP0kjnYACWkhVn7zf5LmPEUYxV33jMx
- iIsnvCwK//4g4K79lHSkgyMoMmD+s88epieQzNf+ZBEQfvySsH5wJ8n3CQ+sM3OmNh23r0
- PnnSQV5j6+giQ3dM8E2bIXCdvOlWwUs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-yIOAGbWgNSa2rizaprYA-g-1; Wed, 12 Feb 2025 13:17:24 -0500
-X-MC-Unique: yIOAGbWgNSa2rizaprYA-g-1
-X-Mimecast-MFC-AGG-ID: yIOAGbWgNSa2rizaprYA-g
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38dd1bdf360so2156342f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:17:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiHIs-0007V6-0c
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:17:42 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiHIo-0004JE-OP
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:17:41 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43948021a45so275145e9.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:17:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739384257; x=1739989057; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8Ea/unt4MhP0f/terIThLxNfYeVG+ijIsONPszpxo8g=;
+ b=AUdbiubXbPyEcboVM+q+q5Dsi8v3ISTYnpqnb3yEznC5hWlzQlgZyomiyBD6ow69p7
+ Ylt9/d5r4p3PweqSoAVo7RyMsnB4PrfdGqzGaZy1OBeAidEUKNWAxAhXMKXWIaeocvmv
+ f4uQN+j2RkakwJpSqw/y/CZyINgNrq5VvAYUGI4KP/chK/7TpmZuwxvcM622ov8TcNgp
+ ixQkiljZSOBOPvCZOm6FMuErYWPwBOA6YWxFDoiitYFpSMOlZPxKuaSHdC975P3hsV4B
+ GnJBTzh6I+HNsCxkgoXYlX+wuuQUlZYaiXoHqoPO/3cEFVgcy9xD+D7TH67NJ2RFFVYz
+ pHkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739384243; x=1739989043;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2ppYSiZ49FRAqnOLdMKnSsqVw1O5Bi0/tNqWW8vvucc=;
- b=tgSt/KanKQ77Uoos2Y5MLygA4eoj9AEoEySRIPogZ9iORqlqB3LO3uB+z+6xOFxPhH
- MMU6bo1l1kaU2vYO4igrKIRAe/Z68p664WVeXmjuKQ34BdO0x8Ov36pyCgnIfMbKDKLn
- 4Zg4anQCsZ5X+8rDJAi/Is1mE5WI9QjoxCU9YbgG4da4pLVywnCX7HrxTQhQR0NKZIqy
- ye/oASpt/jVR3GcynX3VBfI5jNSKYQVLiouuqQ1N9TfTtT5185OChjAtILTTyo4bP32P
- CgXAIMCJuKImQmPo1LN440i2iNcHCsa/IW6JPPA/3N6p3DyYUCBohxpnPZd6o1tZXd0k
- ajcw==
+ d=1e100.net; s=20230601; t=1739384257; x=1739989057;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8Ea/unt4MhP0f/terIThLxNfYeVG+ijIsONPszpxo8g=;
+ b=mTaTC+S1kkLts0y8qIs9eH3JMLm3Ghk4a6YzohJheOCcZ4goNSMrfGSdgxIzQW4xoO
+ 6lfLREQrGnlRZc2ck3v2SQEtm5XCnLU6izl5zt2u8T3pWdraIcf/3DDgeW/DCvSy4Nxx
+ tYNGYG1dvTfwp8GmouGP//8OrhLGucShTy2IyxlgBmY2g5FVXzYzX4ZQf+GMO01Vccys
+ /yKtmLNydVkX22nbbqWygIw1i83hFihFI4FfmblXQM2Z+LK5RZtcbPscaEZzmaIMjK3/
+ kEsaZIOp5+a0ouPGc26edKonxE6xGuY1AObJBy71GSTWbH8ntV+MsFW8pDvSCfxCDdRg
+ H+Xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVB2sicFjkKs7yGkgRdgmGrX3z4kDts97MNn+J8RzhWaTu7NdqDw685Akyqpx+3hwWoEwIQt8900snX@nongnu.org
-X-Gm-Message-State: AOJu0Yxir2nDTmgTq3iXN9djWZmSre0j3fvSOuDXNDvQotkmwomrhqnp
- tFQa+rv8C5Fn7zDUMFK53+PhRTEtExk0+UfGjjkIcmww7ppj2IW+RxzTZUNbfLoeSkkWBzV4/6X
- I/tAp3a4vl1R5dXISP0L1IKHAf6+uYK7F2g29gyjLf093fleUsb9lQCZMl/QqJzjN1azGuNL/UN
- 7k1jPJWGNNAP47PVV4wEIULS+rJcw=
-X-Gm-Gg: ASbGnctwlq2amsBdqyZzVW/KSsm5r335tiPpBKfSJMXw+vK1jfdr66B9COkSI0UoFxN
- 2Mio/GZ7+tPAVG2iSCiHoROYBmn4GNvKPEt6bHf4dNolK+Jgikhgip1Y9pedq
-X-Received: by 2002:a5d:64cf:0:b0:38d:ddf2:afe9 with SMTP id
- ffacd0b85a97d-38dea256d45mr3951790f8f.1.1739384242979; 
- Wed, 12 Feb 2025 10:17:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGHZx9qPkbyrT38iyPf1Rj7t2hXNJ3Uea68YaVdq687/zcum0I2GzcAZ0h2qSMVg4jiQ7C17naA2SEUofWT+os=
-X-Received: by 2002:a5d:64cf:0:b0:38d:ddf2:afe9 with SMTP id
- ffacd0b85a97d-38dea256d45mr3951772f8f.1.1739384242680; Wed, 12 Feb 2025
- 10:17:22 -0800 (PST)
+ AJvYcCUKqxzfColbLAmBy5UQMxVFlJ1OK9z0NC7mPjk+Nx05Lzbn6WLo9rRAT1GT5VNA8BZVn34ZjdY6cgW2@nongnu.org
+X-Gm-Message-State: AOJu0Ywpp6AFyFrep0uV6AEvXkuvOUpHYZ4Vgfsyjw57/KVOlNXaW1MX
+ JU//QrCjupqcIRZExySNTf3N1oEbsE5q0ESnRg+xgaP0ictHviTNx4tyERMCffQ=
+X-Gm-Gg: ASbGncviDFZxD6hZHiNKq+E8A1zf6LJnjhLOpmhp1oXITvw2362A91FADqQVUhtUP+b
+ HI6gm45yXu54UhMwQFmsN5hqvNpNMjTZ0t4793VKYP3W6R2DB0r4FBxX0AEvUFPgw268/BIyWJc
+ TnQIvz9uC/Rn4Z6hLJ2yImL6BIuzwZ0c2k2SiKxYojhi3hVv6lbHK0jPX/oq4PXb1YvGAnAWKfE
+ j6D5WDgIcV0UuylkA9TrNcZUxb4Urxd2q9qD9HQHl3bh7g+DUwF4QUTBBBzKHcpGT9jJrAfTW0y
+ 2PNyvW5zoPyL5bnP/ArHK9vWR1pjj/nmWCqcdXQ/UWpNB5V8akfpk3/h2CwbpWqr
+X-Google-Smtp-Source: AGHT+IFu7Eulxz6KMlvkWZaV2p039VNL90nVkNWMJ+vImxpjrtOWLgv15tBEv2sIOr/KlwTugvbNTQ==
+X-Received: by 2002:a5d:5f51:0:b0:38d:d969:39c1 with SMTP id
+ ffacd0b85a97d-38dea25279bmr3560595f8f.5.1739384256931; 
+ Wed, 12 Feb 2025 10:17:36 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f227325bcsm980168f8f.50.2025.02.12.10.17.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Feb 2025 10:17:35 -0800 (PST)
+Message-ID: <672045c1-9b09-4b7b-9bed-fa990129ce2c@linaro.org>
+Date: Wed, 12 Feb 2025 19:17:35 +0100
 MIME-Version: 1.0
-References: <20250211214328.640374-1-kwolf@redhat.com>
- <20250211214328.640374-9-kwolf@redhat.com>
- <7fe0ba58-8d91-49c7-8f93-d17f42c74fbc@redhat.com>
- <Z6zbLVVWu4zxwdVE@redhat.com>
-In-Reply-To: <Z6zbLVVWu4zxwdVE@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 12 Feb 2025 19:17:12 +0100
-X-Gm-Features: AWEUYZk958kicyCMWeAzimEz2qJc0g_4W_3rG6b4JTKBB8CCKkcyrZ3y4pRXZyE
-Message-ID: <CABgObfZ2fgBxwOne0up-y3-beYYf-3yy8JM_wSrHxyxgYR=F7w@mail.gmail.com>
-Subject: Re: [PATCH 08/11] rust/block: Add driver module
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: "open list:Block layer core" <qemu-block@nongnu.org>,
- Hanna Czenczek <hreitz@redhat.com>, 
- Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e9cf85062df5f310"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
+ QAPI enum
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250212112413.37553-1-philmd@linaro.org>
+ <20250212112413.37553-2-philmd@linaro.org>
+ <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
+ <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
+ <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
+ <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
+ <a3608e43-79ce-403d-8ba7-6735fde66759@linaro.org>
+ <e1436061-a840-0942-2c2c-4f49bfb932b8@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e1436061-a840-0942-2c2c-4f49bfb932b8@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,104 +114,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e9cf85062df5f310
-Content-Type: text/plain; charset="UTF-8"
-
-Il mer 12 feb 2025, 18:32 Kevin Wolf <kwolf@redhat.com> ha scritto:
-
-> > > +        mut buf: MaybeUninit<T>,
-> >
-> > I think Rust doesn't guarantee no copies here, so maybe this could be
->
-> Do you think that in practice the compiler won't optimise the copy away?
->
-
-It's possiblr that it does not, because it has to build the io::Result and
-stick the result of assume_init() in there. It all depends on the amount of
-inlining perhaps?
-
-I think Box<MaybeUninit>> is the only way to guarantee no copies
-(assume_init for Box was only stabilized recently but it can be emulated
-with Box::into_raw and Box::from_raw).
-
->    pub async fn read_uninit<T: SizedIoBuffer>(
-> >        &self,
-> >        offset: u64,
-> >        buf: &mut MaybeUninit<T>,
-> >     ) -> io::Result<&mut T>
-> >
-> > using assume_init_mut().
->
-> Are you sure that callers are ok with only getting a &mut T rather than
-> an owned T?
->
-
-The one you have would need to be adjusted but it would work.
-
-Another possibility by the way is to have "pub async fn read_obj<T:
-SizedIoBuffer>(&self, offset: u64) -> io::Result<T>" and hide the usage of
-MaybeUninit inside the function... That one doesn't even try to avoid
-copies though.
-
-Paolo
+On 12/2/25 17:23, BALATON Zoltan wrote:
+> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
+>> On 12/2/25 14:53, Philippe Mathieu-Daudé wrote:
+>>> On 12/2/25 13:56, BALATON Zoltan wrote:
+>>>> On Wed, 12 Feb 2025, Philippe Mathieu-Daudé wrote:
+>>>>> On 12/2/25 12:37, Thomas Huth wrote:
+>>>>>> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
+>>>>>>> Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
+>>>>>>> Endianness can be BIG, LITTLE or unspecified (default).
+>>>>>>>
+>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>> ---
+>>>>>>>   qapi/common.json                    | 16 ++++++++++++++++
+>>>>>>>   include/hw/qdev-properties-system.h |  7 +++++++
+>>>>>>>   hw/core/qdev-properties-system.c    | 11 +++++++++++
+>>>>>>>   3 files changed, 34 insertions(+)
 
 
+>>>>>>> +{ 'enum': 'EndianMode',
+>>>>>>> +  'data': [ 'little', 'big', 'unspecified' ] }
+>>>>>>
+>>>>>> Should 'unspecified' come first? ... so that it gets the value 0, 
+>>>>>> i.e. when someone forgets to properly initialize a related 
+>>>>>> variable, the chances are higher that it ends up as "unspecified" 
+>>>>>> than as "little" ?
+>>>>>
+>>>>> Hmm but then in this series the dual-endianness regions are defined 
+>>>>> as:
+>>>>>
+>>>>> +static const MemoryRegionOps pic_ops[2] = {
+>>>>> +    [0 ... 1] = {
+>>>>
+>>>> This is already confusing as you'd have to know that 0 and 1 here 
+>>>> means ENDIAN_MODE_LITTLE and ENDIAN_MODE_BIG (using those constants 
+>>>> here as well might be clearer). It's easy to miss what this does so 
+>>
+>> At this point 0 / 1 only mean "from the index #0 included to the index
+>> #1 included", 0 being the first one and 1 the last one.
+>>
+>>>> maybe repeating the definitions for each case would be longer but 
+>>>> less confusing and then it does not matter what the values are.
+>>
+>> This is what I tried to do with:
+>>
+>> +    [ENDIAN_MODE_BIG].endianness = DEVICE_BIG_ENDIAN,
+>> +    [ENDIAN_MODE_LITTLE].endianness = DEVICE_LITTLE_ENDIAN,
+>> };
+>>
+>> but in v7 we are back of picking an arbitrary value.
+>>
+>>>> Or what uses the ops.endianness now should look at the property 
+>>>> introduced by this patch to avoid having to propagate it like below 
+>>>> and drop the ops.endianness? Or it should move to the memory region 
+>>>> and set when the ops are assigned?
+>>>
+>>> I'm not understanding well what you ask, but maybe the answer is in 
+>>> v7 :)
+> 
+> I'm not sure I understand it well either. I think what I was asking 
+> about is the same as what Thomas asked if this could be avoided to make 
+> it necessary to allocate two separate ops for this. Looks like from now 
+> on this ops struct should really loose the endianness value and this 
+> should be assigned when the ops is added to the io region because that's 
+> where it decides which endianness is it based on the property added in 
+> this series. But I don't know if that could be done or would need deeper 
+> changes as what later uses this ops struct might not have access to the 
+> property and if we have a single ops struct it may need to be copied to 
+> set different endianness intstead of just referencing it. So I'm not 
+> sure there's a better way but I think this change makes an already 
+> cryptic boiler plate even more confusing for people less knowledgeable 
+> about QEMU and C programming so it makes even harder to write devices. 
+> But as long as it's just a few devices that need to work with different 
+> endianness then it might be OK. But wasn't that what NATIVE_ENDIAN was 
+> meant for? What can't that be kept then?
 
-> Kevin
->
->
-
---000000000000e9cf85062df5f310
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mer 12 feb 2025, 18:32 Kevin Wolf &lt;<a href=3D"ma=
-ilto:kwolf@redhat.com" target=3D"_blank" rel=3D"noreferrer">kwolf@redhat.co=
-m</a>&gt; ha scritto:</div><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
-">
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 mut buf: MaybeUninit&lt;T&gt;,<br>
-&gt; <br>
-&gt; I think Rust doesn&#39;t guarantee no copies here, so maybe this could=
- be<br>
-<br>
-Do you think that in practice the compiler won&#39;t optimise the copy away=
-?<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto"=
->It&#39;s possiblr that it does not, because it has to build the io::Result=
- and stick the result of assume_init() in there. It all depends on the amou=
-nt of inlining perhaps?</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-I think Box&lt;MaybeUninit&gt;&gt; is the only way to guarantee no copies (=
-assume_init for Box was only stabilized recently but it can be emulated wit=
-h Box::into_raw and Box::from_raw).</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">&gt;=C2=A0 =C2=A0 pub async fn read_uninit&lt;T: SizedIoBuffe=
-r&gt;(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;self,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 offset: u64,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 buf: &amp;mut MaybeUninit&lt;T&gt;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0) -&gt; io::Result&lt;&amp;mut T&gt;<br>
-&gt; <br>
-&gt; using assume_init_mut().<br>
-<br>
-Are you sure that callers are ok with only getting a &amp;mut T rather than=
-<br>
-an owned T?<br></blockquote></div></div><div dir=3D"auto"><br></div><div di=
-r=3D"auto">The one you have would need to be adjusted but it would work.</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto">Another possibility by the=
- way is to have &quot;pub async fn read_obj&lt;T: SizedIoBuffer&gt;(&amp;se=
-lf, offset: u64) -&gt; io::Result&lt;T&gt;&quot; and hide the usage of Mayb=
-eUninit inside the function... That one doesn&#39;t even try to avoid copie=
-s though.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div=
- class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Kevin<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000e9cf85062df5f310--
-
+Moving toward a single binary able to run heterogeneous machines, we
+can't rely on a particular target endianness, so we need to remove
+DEVICE_NATIVE_ENDIAN. The endianness is a property a device / machine,
+not of the binary.
 
