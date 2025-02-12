@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98AC7C021A4
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF1BC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiH8x-0002Oh-S7; Wed, 12 Feb 2025 13:07:27 -0500
+	id 1tiHC8-0003Vf-Rb; Wed, 12 Feb 2025 13:10:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiH8t-0002OS-WC
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:07:24 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiHBz-0003U7-NV
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:10:38 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiH8r-0002bd-FJ
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:07:22 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-439585a0544so209335e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:07:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiHBy-00034l-5y
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:10:35 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21f44e7eae4so122141715ad.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:10:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739383640; x=1739988440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739383832; x=1739988632; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vb/oUksy2T0eDVs/WZ+OlTrq9ZEiRMXDXMoP2yaB2MQ=;
- b=qeO6oSW9SKXs2GRE6siTsTIpDgJjXwqOrzCjgajqCSYgnq/q3VhTqOIXGvrU72b/5y
- aOaj1BQExraZh3NwGuOUDWQmvuxefnsAvJtIMPXiS1lkYFjNDTAiko2vaoKYZlGvdE27
- yteDFHbfzQJJgXHcuWgvAhFPdiHDhq8x2vMM5h7lDCPXeIEOUE7cE+XZjVkb5O3E3Y0o
- EaUJEoUIsib8D97sbpk8P/NW9BA3rsRwPIK8swr9uo/OOzFhVxR4Lyr8RChfFOL0Xk14
- Hp8UP3rfyhqFzdrAEg/ydC0Xh2h/IS1THexmAC7AB3lVaMoU68BWw7ilYaJqM7m9dlro
- p27g==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k0VVHu5aShEwTUjLkwOYrYt5Do1lMU4rUfvZMeCpUlg=;
+ b=JQPxxLqUsYStCsuKK45DN2HkOKfq0jH0wkmuc8+DDbkLsDYw1D4Nhg2sA+ZNqpg4qz
+ J04Caq+jG+jIYB/TolAeXU9HoZKUlSmW+6GyUyY5yOhGCxBl6hsG5Slaat02N1AYjDsk
+ 3pcSIpb0jTCJ8wRdlaYbupIPWgcb3X6qhm/S60b+Lp5QKIxenrnONtcvIEtABlxGho2T
+ o3xxVdDwWmtIVbRyWZcCoTFK9ilnGp1N1dQpXE/eQTgVWqdsDCAxNC0LfdtUct74P8m6
+ yct7ErPhC4LUdEjU7pO42h4rQ5Q8XLBFbDXZLa7E3IqkXiBxfwREloY4degejlZP5dMv
+ he8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739383640; x=1739988440;
+ d=1e100.net; s=20230601; t=1739383832; x=1739988632;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vb/oUksy2T0eDVs/WZ+OlTrq9ZEiRMXDXMoP2yaB2MQ=;
- b=QaCIBq76nlyxdwXs/IeytDRFoSLRuEjeDN/gD4UAYakQM95Pgl7j+lC/2QLTyj3VGZ
- BujYaY2TGtt7IeAZ3KBe7XxqYp4KNOjr0UIjTK1ndAF2lJckoSmPJ+cNmIDJftZHHrVf
- wFXTJPwI8Cu2w3jjlMEJVNRWgTRPJBJmE0YY7bd17Zzi4S43NT3dFT8GQ0T3y8btvL0Q
- BoJLwmkku4bX82116uQeqrB+ztRhE7V5tPJnY10BvRqyzOlXmmDNtElQ0nq/nA43Re/e
- Dci0/YgFn8WJa/pU0bbHVOMIaVTodd1qkpatF+5k6ECgvx9dK4mIJcXfjpI6iEGJGlyL
- XmLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHilrvrbJzbtxgpt+DU/Y8ci1XJievdSZZfrDyG3lhOOQn6mSscQ3xw2eCbT3pJ3aFbNYY9eLQBut7@nongnu.org
-X-Gm-Message-State: AOJu0Ywa2TxFYiyYbc4LYm4iHfDpYRwjO+iAMXCPfIx0/WcNWrIr3CaT
- elxz5EHut+niWbePMP9/zL8qe8Lpi1fQTmPJjO1I5SWtWWtXbnWTQrJl3ODoMfI=
-X-Gm-Gg: ASbGncuVRuf3zbDaT6+SOAa7BqvkthM4pmk6V6V7LFReu70aB867UNhiNkDD2Yja3zN
- yuh7uuR/D9mSiHsxAPWzMF9iowifGVPLvb3qxiFYjDzaYPMk+BRZboy2WtY7F7qMyWqbhpTSx/F
- tv6KqcVZPqFdC0kEMGWMitabrBNJ/U7dkxp4xctG1XBtGobvYTO1CnVdJpx80s50+3LvTzrnB6j
- FOa9YgTNYSydLOIVIc5yv0/FIXQNlwV0k3auduFA8yUMMqHJgRhvOf2T4BlmS6txR1Nbh01GRGV
- X2cSmL2xtRR1F/BqsRciaNylKp9y36ZVR5lwQvSnP8L8ED2FfBXkmX2sM2jwjtoU
-X-Google-Smtp-Source: AGHT+IFOie6orGe2C2aMDe9cLFd4HrospoXenp/i55zLUq+ElR5xJaM2mCO32g5sOPS+uCc1cNNz3w==
-X-Received: by 2002:a7b:cbd5:0:b0:439:4b7d:72f1 with SMTP id
- 5b1f17b1804b1-43959a480dcmr35825315e9.15.1739383639603; 
- Wed, 12 Feb 2025 10:07:19 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1b8443sm26943925e9.35.2025.02.12.10.07.18
+ bh=k0VVHu5aShEwTUjLkwOYrYt5Do1lMU4rUfvZMeCpUlg=;
+ b=EUF5uCjnUOA8vvO3C/dYt4ouzqcAqCXIqLHDQqd3tTQbqe5t4N3dto2PgVzlvyLWUU
+ qVuQz6AZDsqfHZqzdZ40rV+MqX5UQ+FOJlStqx6FXjeI6Mvx6jGKPVQD8CVGg5X6akdU
+ 3V/ByuDSD+bXarv3MstGBC2oj+vNfPn78TdCnjttimnvV9xq0cNuxWJGbEnyGZrESHyw
+ sK0LAkXD2JStKWuVDn+2p47AqT77ePy9eNEjebJ5SI+7nexVgl5NmJUn2U367L2wR5vL
+ MfICUPOJgNj5MCYeYBJhSxYd80VycNjtUNCgHLKjpXJyZcLOUUf/1VjkwOOZOvMrQgUz
+ Hn9w==
+X-Gm-Message-State: AOJu0YypAQeU+QaZK4TypGaHc+AN1TMvqRaRGrG0kziLrk5gpybY76d5
+ fDgoreuMLvdcZA2eW5nfh1CFVE1P+wFeTo1WFiGcJVvcU4F4gNiIB1X8OfymuQ77KxpTE96b8qQ
+ 2
+X-Gm-Gg: ASbGncvBzeA/hgiRyPBOrAOMgk84VI53ikVDs3Itr9lzv7j7/VFaJPWiwQ9vp2RksGT
+ r9J4W2wDCNnc1hLGmKv+xc4CidhfJ1hlJO2aJ+KCgeZrIYgM/rmtfQeUnibmhKaJvoQX2q0iwWM
+ EAnSpSpd7y5dG6G91HL61pH4t4OU0iGLvqWB3FmjG8AXVyaRHMBNhPXdGuLAZtrbu2Y3+LYSlKL
+ NH00R7sfs6vGniARJbCWkMbRq4ccxXfamypcAn0rVPWAZ56m7cdJ3+T0vndEmP94jPii2dAFh1O
+ JRSPWmamNSuqO7apL8Ry7pTtIpNuGMWPYMjiLUeokVZzXYS0+eC0VME=
+X-Google-Smtp-Source: AGHT+IFypYCdvDGTMfqQgmsR6dur6gOdwmwX3sJPv91hpuVzfBUt0B0iVZlYHtFpydVGHOeB50rGdw==
+X-Received: by 2002:a05:6a20:d807:b0:1e0:d89e:f5cc with SMTP id
+ adf61e73a8af0-1ee5c7450d2mr7435753637.11.1739383832559; 
+ Wed, 12 Feb 2025 10:10:32 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-ad54bca7d0csm6300069a12.58.2025.02.12.10.10.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 10:07:18 -0800 (PST)
-Message-ID: <07a8be9a-d99e-4d02-b475-671435c11396@linaro.org>
-Date: Wed, 12 Feb 2025 19:07:17 +0100
+ Wed, 12 Feb 2025 10:10:32 -0800 (PST)
+Message-ID: <932bd6db-0b65-4a24-9095-1fde1b7f673a@linaro.org>
+Date: Wed, 12 Feb 2025 10:10:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vdpa: Allow vDPA to work on big-endian machine
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, eperezma@redhat.com
-Cc: mst@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
- qemu-devel@nongnu.org
-References: <20250211161923.1477960-1-kshk@linux.ibm.com>
- <bbee3d53-ac82-407b-91a5-b7e4c3f464bf@linaro.org>
- <23d119e5-ea42-4b0b-a491-0fb7b8c4dfb4@linux.ibm.com>
+Subject: Re: [PATCH v2 5/8] hw/arm/xilinx_zynq: Specify explicitly the GIC has
+ 64 external IRQs
+To: qemu-devel@nongnu.org
+References: <20250212154333.28644-1-philmd@linaro.org>
+ <20250212154333.28644-6-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <23d119e5-ea42-4b0b-a491-0fb7b8c4dfb4@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250212154333.28644-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,46 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 18:24, Konstantin Shkolnyy wrote:
-> On 2/12/2025 08:52, Philippe Mathieu-Daudé wrote:
->> On 11/2/25 17:19, Konstantin Shkolnyy wrote:
->>> Add .set_vnet_le() function that always returns success, assuming that
->>> vDPA h/w always implements LE data format. Otherwise, QEMU disables 
->>> vDPA and
->>> outputs the message:
->>> "backend does not support LE vnet headers; falling back on userspace 
->>> virtio"
->>>
->>> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
->>> ---
->>>   net/vhost-vdpa.c | 6 ++++++
->>>   1 file changed, 6 insertions(+)
->>>
->>> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
->>> index 231b45246c..7219aa2eee 100644
->>> --- a/net/vhost-vdpa.c
->>> +++ b/net/vhost-vdpa.c
->>> @@ -270,6 +270,11 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
->>>   }
->>> +static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool is_le)
->>> +{
->>> +    return 0;
->>> +}
->>> +
->>>   static bool vhost_vdpa_check_peer_type(NetClientState *nc, 
->>> ObjectClass *oc,
->>>                                          Error **errp)
->>>   {
->>> @@ -437,6 +442,7 @@ static NetClientInfo net_vhost_vdpa_info = {
->>>           .cleanup = vhost_vdpa_cleanup,
->>>           .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
->>>           .has_ufo = vhost_vdpa_has_ufo,
->>> +        .set_vnet_le = vhost_vdpa_set_vnet_le,
->>
->> Dubious mismatch with set_vnet_be handler.
+On 2/12/25 07:43, Philippe Mathieu-Daudé wrote:
+> Looking at the Zynq 7000 SoC Technical Reference Manual (UG585 v1.14)
+> on Appendix A: Register Details, the mpcore Interrupt Controller Type
+> Register (ICDICTR) has the IT_Lines_Number field read-only with value
+> 0x2, described as:
 > 
-> I'm not sure what you are suggesting...
+>    IT_Lines_Number
+> 
+>            b00010 = the distributor provides 96 interrupts,
+>                     64 external interrupt lines.
+> 
+> Add a GIC_EXT_IRQS definition (with a comment) to make the number of
+> GIC external IRQs explicit.
+> 
+> Except explicitly setting a property value to its same implicit
+> value, there is no logical change intended.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   hw/arm/xilinx_zynq.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
 
-Implement set_vnet_le for parity?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
