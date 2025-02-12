@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF410C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83ECBC02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiBAV-00088r-Oh; Wed, 12 Feb 2025 06:44:41 -0500
+	id 1tiBBn-0000pN-Eu; Wed, 12 Feb 2025 06:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBAO-00087a-9M
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:44:33 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBBf-0000op-Tk
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:45:55 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBAK-000211-8q
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:44:31 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4394345e4d5so24352565e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 03:44:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiBBa-0002Pe-43
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:45:48 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-38f1e8efe82so434169f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 03:45:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739360665; x=1739965465; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739360744; x=1739965544; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GUtgXWeGjH4fmUCFTN1pAgkStUkgWd6guj/Zi5JuNq0=;
- b=aWmGp5dOtduKglVDbobIIZIOwmXk/tN/cvSGHB/M00j8Ya7vyP/6xg5b4GniaaAqPi
- KLjBAQp1recKH7NX3GD8CoBwnScE4ebdY/Hn0oDjn/FM6f8S8Yv+Yqnyd+W/jUTr0ll6
- cOn+4LG5+hunsAQhOiro3iRVebop03f7yWngQV/1OLah/DhkeRHmmN5DgZf/iSj6ZC22
- fo3UnvHKX0yJh9z7Ehi3FZS2g7NJWAd4mql1Kd1CVsCBQqwrE9uJi/LRxlPHu/owARhg
- 3VFNO0pJVbkzmA6pd0PqRIvSDy7xn5rNCowG2GlBLZFkxKIA++MDRoBdGFwqTb1Hap2w
- r41Q==
+ bh=WOgIeJ4typNleVJOfAL+PFD25x4DDV/I/m2IXd1sD7g=;
+ b=bXsaQAEtb+VHgOXDL/P4Bs2PodWxCU4LCFJFG8FPsDRfvWF+MMS+PoJbNUYQ41XJOX
+ IwLpTSDNsHJ/9iKb+kcNdDCQ0MLc8JLhuU30lTlnvxLsE/FCOBczinLwawTHUZtVsbb3
+ KiPM5oDbo8jl0PLsLScouXyWYNLL3fvFEPaPh26oPYp2G2g82s3ciA/36Ms4EfHqSg+/
+ pRddQyLyvS+BgIXOtzTagzQ7Kq5LJPzXb8aKXCSH49S2dBYULuzga47NwhCNMoxmUJKb
+ /CfnP9s5XAcN0Q5e/1ps7CXVEeZFsItoNhflM2SMO5nmcbaJv8IyU80QLm9AGV+2tvnM
+ c4ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739360665; x=1739965465;
+ d=1e100.net; s=20230601; t=1739360744; x=1739965544;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GUtgXWeGjH4fmUCFTN1pAgkStUkgWd6guj/Zi5JuNq0=;
- b=t52iXJcSj0V0Vll7o4GO9NyEA1D8CZKJs3+3EF2eKdUd/xBCkVT4f6LuDZCf7whDs3
- 1eZXSnnBxPKPHOrjD1KB3xB/9dkRK4X4VA8FMxdeW5rcA5hfY0il2T0ffJ7d8+oUGm1b
- 9Ul6lOOnHL42hE+4hrAm0GBuuAAJ8x5DecsUxF9Dynqcry8pl5Vqb5D3VNJSDzMa6bYZ
- YyP80BaUR1KyL15kpYs0XVD1rOZyUkHrrBdlnTUddFOiJwHl2MSzWYHzWG+rdKO5ffA1
- xe9XunEyycdVcPEczGB+gAkWQO2yzDminaCOJaP7yhO/d1Yg1DX/xD/m3/ptF8smgTjN
- tj7A==
+ bh=WOgIeJ4typNleVJOfAL+PFD25x4DDV/I/m2IXd1sD7g=;
+ b=kmM+1VzD9/Q5as6TkE/Eg7iPEQoHmx0p0F9RaLWU/HQCCNlOR2TtrYeTwQjVv/+Yty
+ jIbB7KgDwfZl8QTrbxPGggWDAGYImuG7oXtdDOMlZSnoXm+hhWhlw+F8lvseJuC6pmFl
+ oSra+XXc+MrcfWWhZGsT46gTVv2aXJkqEGCSgPk8CTu0vx7O+ESxcAb4y3+FLiePCiXb
+ eJIE50s53UrUf6tvSDML+Oke9xlqEmAtUlia/oZ6OE/yOP11SFAntkMJd6vjC0SK8ZRk
+ a1eRs4BNMWuXI7sGRG5SPfy7LyJ0iwhEzSCTuSaK04CHru+Gbr6bBSP6VdzJLTQd+TCm
+ H5hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnUV6Y/5clxOTjajJbeQY+Vp5uy6OrP+KEzgNxPsTLxzyGQS1JpWbOhkFZ6/EsfyfRL0JgU+h8Idc8@nongnu.org
-X-Gm-Message-State: AOJu0Yys++oSnWm2QsqpIryAYFVy4/6xcQEBKaBfEn1vaVlDCLGNMcom
- c7aVe0/xl9iqEGW/92++Xtp4qd37VPf8PIYmDANIXYX8rGQk6IAqYntKJ0BMkrw=
-X-Gm-Gg: ASbGncsda+XffhLPCvSIos3ygKiPG3YWZdQkMIayyS3/NZFA3kd2+OEAhmLOMranLpF
- k+2dEZQu+q9oJ+/2hKcX/oZ91tqkn4buy0G4mjhubfqz41G0iWdt09FulNLc5cE2hWweTb4bQyx
- P4NLZO1euPjW/TlOXOGg5hsaDL9unb9NCbjSmdtUfgxbSg5xsxjcVLtSjt+LtDylVe2y2j+FPM9
- r48gKZYhCIlGZ4UOLq2KXpnXGk/bdc+0pYAslQH9JD2+fM34NtrB/DvhB6ucOQu7xT8oEd9YNnr
- GIFs043q7Ko6GhXxhyhwJiau+xORFJLNdv+IMLcmHGMooy2wpZONl6iqhQk=
-X-Google-Smtp-Source: AGHT+IGNcRPoMzg835nHjPOOSzD9N3UIianWBwLzJQ8vegn4CZ8+aSDXyyDTA77urxJZikfMgJENGg==
-X-Received: by 2002:a05:600c:1d9a:b0:439:5573:932a with SMTP id
- 5b1f17b1804b1-439581cb97bmr27062355e9.29.1739360665149; 
- Wed, 12 Feb 2025 03:44:25 -0800 (PST)
+ AJvYcCWoLVxn6ALQVm/5XNKmjxTkTHqbr+mW2HTgE8zbfYYsY7FKxtuj6jNgfYa/YoZABJ/AARNBXAw9xMSb@nongnu.org
+X-Gm-Message-State: AOJu0YxCOzg+bNDSydxz0oV80iGuYvc/9oW9MfrVDonzv2KA4QwfjQMt
+ G8nzFfllC6s3nOQjmMA8zpSjpip3Wg5LJkZQmGBNRRvGX0B8EILaQwOZ0dwaD0IgZEwqrWuQA2Y
+ WBgA=
+X-Gm-Gg: ASbGncvS7Fmnxc0+BbU3uoYo/PL0a2SfpIfC+kHtK9yAuvyKpDj0Lt5aLMnjrbUfHfS
+ 1K4k3EQebPpCt8btl+dHt5zry3w/eBzHeKQN88zg60tS8DZrEqK8rTjurVv9lAYbDT20/L308lH
+ f71yz6Na9m2Zhe2nJQFgkmC0QrByyopJMpUKmvyt3qrgj+h3RcntUNqgShbJafgqvHZxPYq2Wbt
+ uLbUoRetWXQETt34YS8zAsu1PELytCRZ7OR2hS0fZwb/a1oWqkMSSGBlaPOaNk6/G9NTmf/Wxs5
+ tee5+xx0iPvVV9qdbQmQ/shdN3fdWlvRVzNbUJg5CFfg0ZQMTt+p2Q2mqYc=
+X-Google-Smtp-Source: AGHT+IGeg6ng+ZzTb9D6s4V52znZAv3VHJeewjDufiBvjgqASxK4ZoXtxPJqgN+UAwL2mWVSy87X4Q==
+X-Received: by 2002:a5d:588c:0:b0:38a:2b39:9205 with SMTP id
+ ffacd0b85a97d-38dea2878bfmr2762742f8f.33.1739360744121; 
+ Wed, 12 Feb 2025 03:45:44 -0800 (PST)
 Received: from [192.168.69.198] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a06b1ddsm17519645e9.22.2025.02.12.03.44.23
+ ffacd0b85a97d-38dcd34a39esm14199540f8f.30.2025.02.12.03.45.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 03:44:24 -0800 (PST)
-Message-ID: <e2c0e0fe-dafa-4ed6-be0d-63f9afb5a8b2@linaro.org>
-Date: Wed, 12 Feb 2025 12:44:23 +0100
+ Wed, 12 Feb 2025 03:45:43 -0800 (PST)
+Message-ID: <1746a714-d6da-434e-b631-cd35f0bd9041@linaro.org>
+Date: Wed, 12 Feb 2025 12:45:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/11] hw/intc/xilinx_intc: Make device endianness
+Subject: Re: [PULL 04/32] hw/timer/xilinx_timer: Make device endianness
  configurable
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250212112413.37553-1-philmd@linaro.org>
- <20250212112413.37553-3-philmd@linaro.org>
- <125a3dac-8ef9-4748-a3ce-f8fb97d8cb59@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20250210204204.54407-1-philmd@linaro.org>
+ <20250210204204.54407-5-philmd@linaro.org>
+ <678561c5-4d06-494a-b12c-6013b07f3b05@redhat.com>
+ <03446903-2100-4981-831e-7ee4741ffead@linaro.org>
+ <1a4dc9cf-69bb-4a9e-bd07-e50070fcf9a9@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <125a3dac-8ef9-4748-a3ce-f8fb97d8cb59@redhat.com>
+In-Reply-To: <1a4dc9cf-69bb-4a9e-bd07-e50070fcf9a9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,129 +106,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 12:42, Thomas Huth wrote:
-> On 12/02/2025 12.24, Philippe Mathieu-Daudé wrote:
->> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
->> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
->> Add the "little-endian" property to select the device
->> endianness, defaulting to little endian.
->> Set the proper endianness for each machine using the device.
+On 12/2/25 11:24, Thomas Huth wrote:
+> On 12/02/2025 10.19, Philippe Mathieu-Daudé wrote:
+>> On 12/2/25 09:27, Thomas Huth wrote:
+>>> On 10/02/2025 21.41, Philippe Mathieu-Daudé wrote:
+>>>> Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair
+>>>> of DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+>>>> Add the "little-endian" property to select the device
+>>>> endianness, defaulting to little endian.
+>>>> Set the proper endianness for each machine using the device.
+>>>>
+>>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Message-Id: <20250206131052.30207-5-philmd@linaro.org>
+>>>> ---
+>>>>   hw/microblaze/petalogix_ml605_mmu.c      |  1 +
+>>>>   hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
+>>>>   hw/ppc/virtex_ml507.c                    |  1 +
+>>>>   hw/timer/xilinx_timer.c                  | 35 ++++++++++++++ 
+>>>> +---------
+>>>>   4 files changed, 25 insertions(+), 13 deletions(-)
+>>>>
+>>>> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/ 
+>>>> petalogix_ml605_mmu.c
+>>>> index cf3b9574db3..bbda70aa93b 100644
+>>>> --- a/hw/microblaze/petalogix_ml605_mmu.c
+>>>> +++ b/hw/microblaze/petalogix_ml605_mmu.c
+>>>> @@ -127,6 +127,7 @@ petalogix_ml605_init(MachineState *machine)
+>>>>       /* 2 timers at irq 2 @ 100 Mhz.  */
+>>>>       dev = qdev_new("xlnx.xps-timer");
+>>>> +    qdev_prop_set_bit(dev, "little-endian", true);
+>>>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>>>       qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
+>>>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/ 
+>>>> microblaze/ petalogix_s3adsp1800_mmu.c
+>>>> index fbf52ba8f2f..9d4316b4036 100644
+>>>> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>>>> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+>>>> @@ -114,6 +114,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+>>>>       /* 2 timers at irq 2 @ 62 Mhz.  */
+>>>>       dev = qdev_new("xlnx.xps-timer");
+>>>> +    qdev_prop_set_bit(dev, "little-endian", !TARGET_BIG_ENDIAN);
+>>>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>>>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+>>>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+>>>> index 23238119273..f87c221d076 100644
+>>>> --- a/hw/ppc/virtex_ml507.c
+>>>> +++ b/hw/ppc/virtex_ml507.c
+>>>> @@ -230,6 +230,7 @@ static void virtex_init(MachineState *machine)
+>>>>       /* 2 timers at irq 2 @ 62 Mhz.  */
+>>>>       dev = qdev_new("xlnx.xps-timer");
+>>>> +    qdev_prop_set_bit(dev, "little-endian", false);
+>>>>       qdev_prop_set_uint32(dev, "one-timer-only", 0);
+>>>>       qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+>>>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>
+>>>   Hi,
+>>>
+>>> with this patch applied, the ppc_virtex_ml507 functional test is now 
+>>> failing for me ... could you please double-check whether "make check- 
+>>> functional-ppc" still works for you?
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Thanks, not this patch problem, but patch #2 misses:
+>>
+>> -- >8 --
+>> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+>> index 23238119273..723f62c904b 100644
+>> --- a/hw/ppc/virtex_ml507.c
+>> +++ b/hw/ppc/virtex_ml507.c
+>> @@ -219,2 +219,3 @@ static void virtex_init(MachineState *machine)
+>>       dev = qdev_new("xlnx.xps-intc");
+>> +    qdev_prop_set_bit(dev, "little-endian", false);
+>>       qdev_prop_set_uint32(dev, "kind-of-intr", 0);
 >> ---
->>   hw/intc/xilinx_intc.c                    | 60 ++++++++++++++++++------
->>   hw/microblaze/petalogix_ml605_mmu.c      |  1 +
->>   hw/microblaze/petalogix_s3adsp1800_mmu.c |  3 ++
->>   hw/ppc/virtex_ml507.c                    |  1 +
->>   hw/riscv/microblaze-v-generic.c          |  1 +
->>   5 files changed, 52 insertions(+), 14 deletions(-)
 >>
->> diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
->> index 6930f83907a..523402b688c 100644
->> --- a/hw/intc/xilinx_intc.c
->> +++ b/hw/intc/xilinx_intc.c
->> @@ -3,6 +3,9 @@
->>    *
->>    * Copyright (c) 2009 Edgar E. Iglesias.
->>    *
->> + * https://docs.amd.com/v/u/en-US/xps_intc
->> + * DS572: LogiCORE IP XPS Interrupt Controller (v2.01a)
->> + *
->>    * Permission is hereby granted, free of charge, to any person 
->> obtaining a copy
->>    * of this software and associated documentation files (the 
->> "Software"), to deal
->>    * in the Software without restriction, including without limitation 
->> the rights
->> @@ -23,10 +26,12 @@
->>    */
->>   #include "qemu/osdep.h"
->> +#include "qapi/error.h"
->>   #include "hw/sysbus.h"
->>   #include "qemu/module.h"
->>   #include "hw/irq.h"
->>   #include "hw/qdev-properties.h"
->> +#include "hw/qdev-properties-system.h"
->>   #include "qom/object.h"
->>   #define D(x)
->> @@ -49,6 +54,7 @@ struct XpsIntc
->>   {
->>       SysBusDevice parent_obj;
->> +    EndianMode model_endianness;
->>       MemoryRegion mmio;
->>       qemu_irq parent_irq;
->> @@ -140,18 +146,29 @@ static void pic_write(void *opaque, hwaddr addr,
->>       update_irq(p);
->>   }
->> -static const MemoryRegionOps pic_ops = {
->> -    .read = pic_read,
->> -    .write = pic_write,
->> -    .endianness = DEVICE_NATIVE_ENDIAN,
->> -    .impl = {
->> -        .min_access_size = 4,
->> -        .max_access_size = 4,
->> +static const MemoryRegionOps pic_ops[2] = {
->> +    [0 ... 1] = {
+>> Why is my CI green?
 > 
-> Hmm, ok, so here we have now an assumption that ENDIAN_MODE_BIG and 
-> ENDIAN_MODE_LITTLE match 0 and 1, which would not work anymore when 
-> using 0 as unspecified... a little bit ugly ... so maybe instead of 
-> changing pic_ops into an array ....
-> 
->> +        .read = pic_read,
->> +        .write = pic_write,
->> +        .endianness = DEVICE_BIG_ENDIAN,
->> +        .impl = {
->> +            .min_access_size = 4,
->> +            .max_access_size = 4,
->> +        },
->> +        .valid = {
->> +            /*
->> +             * All XPS INTC registers are accessed through the PLB 
->> interface.
->> +             * The base address for these registers is provided by the
->> +             * configuration parameter, C_BASEADDR. Each register is 
->> 32 bits
->> +             * although some bits may be unused and is accessed on a 
->> 4-byte
->> +             * boundary offset from the base address.
->> +             */
->> +            .min_access_size = 4,
->> +            .max_access_size = 4,
->> +        },
->>       },
->> -    .valid = {
->> -        .min_access_size = 4,
->> -        .max_access_size = 4
->> -    }
->> +    [ENDIAN_MODE_BIG].endianness = DEVICE_BIG_ENDIAN,
->> +    [ENDIAN_MODE_LITTLE].endianness = DEVICE_LITTLE_ENDIAN,
->>   };
->>   static void irq_handler(void *opaque, int irq, int level)
->> @@ -174,13 +191,27 @@ static void xilinx_intc_init(Object *obj)
->>       qdev_init_gpio_in(DEVICE(obj), irq_handler, 32);
->>       sysbus_init_irq(SYS_BUS_DEVICE(obj), &p->parent_irq);
->> -
->> -    memory_region_init_io(&p->mmio, obj, &pic_ops, p, "xlnx.xps-intc",
->> -                          R_MAX * 4);
->>       sysbus_init_mmio(SYS_BUS_DEVICE(obj), &p->mmio);
->>   }
->> +static void xilinx_intc_realize(DeviceState *dev, Error **errp)
->> +{
->> +    XpsIntc *p = XILINX_INTC(dev);
->> +
->> +    if (p->model_endianness == ENDIAN_MODE_UNSPECIFIED) {
->> +        error_setg(errp, TYPE_XILINX_INTC " property 'endianness'"
->> +                         " must be set to 'big' or 'little'");
->> +        return;
->> +    }
-> 
-> ... would it be possible to patch in the right value for pic_ops.endianness
-> here instead?
+> Looking at https://gitlab.com/philmd/qemu/-/pipelines/1664238124 it 
+> seems like you did not start the functional test jobs?
 
-Ah, clever than my reply on the previous patch. I'll give it a try, thanks!
+Doh, while doing my PR process I forgot even using push-ci-now these
+need to be triggered manually :S
 
 > 
 >   Thomas
+> 
 
 
