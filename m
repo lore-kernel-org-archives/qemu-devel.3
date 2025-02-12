@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A241BC02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E09C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 11:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiAwk-0007ZA-KF; Wed, 12 Feb 2025 06:30:26 -0500
+	id 1tiAx3-0007nX-Ra; Wed, 12 Feb 2025 06:30:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiAwQ-0007QO-NL
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:30:09 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiAwO-0006sK-Bi
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 06:30:05 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4394345e4d5so24244495e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 03:30:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=131cd17d8=graf@amazon.de>)
+ id 1tiAww-0007i7-Kg; Wed, 12 Feb 2025 06:30:40 -0500
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=131cd17d8=graf@amazon.de>)
+ id 1tiAwt-00077v-Hv; Wed, 12 Feb 2025 06:30:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739359800; x=1739964600; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yv/Wx3foFGD7aPDIjRISRWc4lx4Hpogt3SBOSTL89do=;
- b=CdOSn2g+j6dQabRgUYp80M5tQ78VYDECKY6z7q1gHGoG5GzX4X9VVlsKPvifMXK65F
- hzH6wT8e+rjPW9Q3NZiLdUXd+8+nNRBXHg/2KmUZYKZRH3wbc6uD3V9FAYleSPsVFqrC
- TxAbX6TciXAzRYHXAi1IxXk8+H5Enzx92N2br/5mNDPbCDVyTVmTD64FbXebLcOubXvh
- gQB3CDkenQ+f4/Fm2KEt978+NpgBBESJ03LGtVOrsKcklIOxu+1Rcox31g7MrJGz3a7g
- UbN5O6cmIToGwoUanHnwvHtEaaqNgbodxNub5ivMxAF1Zmf4UTMui2hdTcnCMi14TQQy
- qF6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739359800; x=1739964600;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yv/Wx3foFGD7aPDIjRISRWc4lx4Hpogt3SBOSTL89do=;
- b=RRhBSQlP8oep1r6D+bWYTHn7YT8x7SQJp7l0q7Ic1eSWhw8ptb4AfiGHF9ESIwqamB
- yPlEAqttG6qhfrbnqFRI8oePnfzBOKoOgJtTW1/7E/MbtW836+zSHssgRqA0A6sHUp/t
- O5MDFYbWONUQDdTypPPtAlBamDDty9o4F/X6ptDbjdugPP3PYk0Xq9Tb+Rcnquj1/HiZ
- d1N64isgX9ltzN//CxtizkxaAgu034XCvHcmEQzIjmWjAy0GeQQiMbw4rAq8c6l1Zx0a
- jZnmj1c1x2O9uJwHUxT8AVvTn9hNjreickfElHyHW94yC6AH3THsSlNDBomjkX8b1ODE
- K2VQ==
-X-Gm-Message-State: AOJu0YxtJlv7IYylwMoEYOsAO+SU4zREdp7NaRCen9EVeAyw/C4ODV8X
- 4Cvr3ar4DX7DQfBtaeqTgjYVCj0nggJlriq3Ph3yASMqq0IAzzauJVX706fWigJzcNVeursHHMh
- mj5I=
-X-Gm-Gg: ASbGncuHpHm3xYzxCXgoWHlJWYabKoLLIvjSjw0CLUVr0esYPuganm5a1n+4OQWDEnr
- xvW7NN783zTPrKFir5BxY3vWWrD5R4REI+j7Y8l+TMxrAle7uo3VCWWKx5q5g/9kawO10LTTbuf
- IJMy6g2aylOn9J0Rh6XKnxjhDVORRT+CaTCiXKy2mckKKijUTmf+kh6tjeoxquFsDGmQEqh33tu
- SPR5cdS1qWAyvyUlmyNyz/EPb1dLHjtSpoEnBevDhmHm0W+7P236798sm7Xk/2xAXaKxLy34myO
- nUexqf5nV4eagzQP0xs6NWMb2VSH/L/kBa0U3+D7JsCrsc5A1KEFWbLrwCff/du8Qw==
-X-Google-Smtp-Source: AGHT+IEhL6o5+l8kQkTie3z+c4UV8g6n14atfpDO0yofyqDf3uw4gjNwSpR5s8CMjkbliKETF5zzYQ==
-X-Received: by 2002:a05:600c:444c:b0:439:477c:cf73 with SMTP id
- 5b1f17b1804b1-43958176299mr33745645e9.11.1739359800135; 
- Wed, 12 Feb 2025 03:30:00 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38dd4c8ca52sm11456892f8f.89.2025.02.12.03.29.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Feb 2025 03:29:59 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] meson: Display summary of Darwin libraries detected
-Date: Wed, 12 Feb 2025 12:29:58 +0100
-Message-ID: <20250212112958.38023-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1739359835; x=1770895835;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=wPowBh902/NMkf3e0FAdBuDE1qyjSLGuJyPelB6y2Tk=;
+ b=VyUhhZKM2euf3UkMEFdRiUaFYRDbIBX9KeZrSFsVLUumVsWtrRw4jcLg
+ ookxL13H6QKJG7ZxUTzXEssS1bG/ncZyHTfJbjc9qqEmvTf5kc1jOlLKD
+ ENPWHA/OpHIlHFpEJ5eWXImbYLFIjUxDDyB90Lzr0b9V0y0ajwXBt7KIQ Y=;
+X-IronPort-AV: E=Sophos;i="6.13,279,1732579200"; d="scan'208";a="471510023"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-6002.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2025 11:30:27 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [10.0.38.20:26382]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.9.187:2525]
+ with esmtp (Farcaster)
+ id 7912e840-784c-440e-9d98-5fc2e8379b8f; Wed, 12 Feb 2025 11:30:26 +0000 (UTC)
+X-Farcaster-Flow-ID: 7912e840-784c-440e-9d98-5fc2e8379b8f
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Wed, 12 Feb 2025 11:30:26 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Wed, 12 Feb 2025
+ 11:30:23 +0000
+Message-ID: <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
+Date: Wed, 12 Feb 2025 12:30:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
+To: Gerd Hoffmann <kraxel@redhat.com>
+CC: <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, <qemu-arm@nongnu.org>, Michael Roth
+ <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Ard Biesheuvel
+ <ardb@kernel.org>
+References: <20250211092324.965440-1-kraxel@redhat.com>
+ <20250211092324.965440-10-kraxel@redhat.com>
+ <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
+ <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D040UWB003.ant.amazon.com (10.13.138.8) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=52.95.49.90;
+ envelope-from=prvs=131cd17d8=graf@amazon.de; helo=smtp-fw-6002.amazon.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.54,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,30 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- meson.build | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 18cf9e2913b..10f4c9fd30d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4826,6 +4826,13 @@ summary_info += {'libdw':             libdw}
- if host_os == 'freebsd'
-   summary_info += {'libinotify-kqueue': inotify}
- endif
-+if host_os == 'darwin'
-+  summary_info += {'Hypervisor support': hvf}
-+  summary_info += {'CoreFoundation support': coref}
-+  summary_info += {'IOKit support': iokit}
-+  summary_info += {'ParavirtualizedGraphics support': pvg}
-+  summary_info += {'Metal support': metal}
-+endif
- summary(summary_info, bool_yn: true, section: 'Dependencies')
- 
- if host_arch == 'unknown'
--- 
-2.47.1
+On 12.02.25 11:24, Gerd Hoffmann wrote:
+>    Hi,
+>
+>>> +    /* read header */
+>>> +    dma_memory_read(&address_space_memory, dma,
+>>> +                    uv->buffer, sizeof(*mhdr),
+>>> +                    MEMTXATTRS_UNSPECIFIED);
+>> Depending on DMA sounds appealing at first, but can fall apart in corner
+>> cases. I know of 2 cases where DMA failed for me in the EC2 equivalent of
+>> this:
+>>
+>> 1) SEV-SNP. If you want the hypervisor to implement UEFI variable services
+>> for you, the buffer region must always be in shared state. Ensuring that
+>> during boot time is tricky but doable. At runtime you no longer really have
+>> control over the sharability of pages.
+> With SEV-SNP I don't see the point in using this.
+>
+> Why do you use confidential computing in the first place if you trust
+> the host with your EFI variables?  I'd rather see something simliar
+> running under guest control, in svsm context.
+
+
+That depends heavily on your threat model. You can use a host provided 
+variable store to gain variable persistence for things like boot 
+variables and then have an ephemeral SVSM based TPM that you use to 
+measure the loaded payloads. A malicious host can already replace your 
+root volume, so extending the threat to variables is not the end of the 
+world.
+
+
+>
+>> 2) Mac OS X. MacOS is the only OS I'm aware of that really makes use of
+>> relocation. They move your physical pages to random locations, give you a
+>> non-1:1 mapping to that and once you're in real OS land, you have no more
+>> knowledge at all about the physical location of anything.
+> On the host side you have no insight into this indeed.
+>
+> The firmware knows all this very well though.  The OS passes a mapping
+> table to the firmware, efi runtime drivers can subscribe to mapping
+> updates and can use RT->ConvertPointer to translate addresses from
+> physical to virtual.
+>
+> The edk2 code (https://github.com/tianocore/edk2/pull/10695) does
+> exactly that.
+>
+> I see your driver does that too, so in theory it should work just fine.
+> I'm wondering what exactly the problem with macOS is?
+
+
+You get to know the new virtual address, but ConvertPointer never tells 
+you what the new *physical* address is. That means you have no idea 
+where to DMA from once you're in virtual land. Most OSs just keep a 1:1 
+map of virtual to physical, but MacOS does not.
+
+
+>> Also, I'm surprised you cut the variable service off at the SMM boundary
+>> instead of the RTS callback boundary. Why is that cleaner/better than
+>> implementing variables completely in QEMU?
+> Well, the variable service /is/ completely in qemu.  See patch #6 which
+> implements getvariable & friends.  edk2 serializes the variable calls
+> into a buffer and sends them over to the SMM side (or to qemu with the
+> patches).
+>
+> I didn't feel like inventing a new serialization protocol if we already
+> have a proven one in the edk2 code base.  Also it is possible to send
+> over more than just the variable call.  There is a variable policy
+> protocol implementation (patch #8), and we also get some events
+> forwarded.  More can easily be added should the need for that arise.
+>
+>> It would be nice to agree on a single external variable store implementation
+>> :).
+> It would be nice to have nitro support merged upstream,
+> especially with BYOF coming.
+
+
+Yes. Or converge on this protocol instead to simplify the firmware 
+implementation so we don't create needless work if someone wants to do 
+an actually trivial (and reusable?) UEFI firmware for BYOF.
+
+
+Alex
 
 
