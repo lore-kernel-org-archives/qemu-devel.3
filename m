@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6C6C02198
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A1D1C02198
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Feb 2025 18:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiH4I-0000l5-VW; Wed, 12 Feb 2025 13:02:39 -0500
+	id 1tiH5U-0001Rz-GS; Wed, 12 Feb 2025 13:03:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiH4G-0000hp-Gt
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:02:36 -0500
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiH4F-0001Um-4F
- for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:02:36 -0500
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2fa8ada664fso76513a91.3
- for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 10:02:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739383354; x=1739988154; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=j11+pggoZt6LWKb7cQUYM2QCVz6453x541Imp61mDT4=;
- b=xIqlu+o6Pj6qbRxiGNQicBCaZNRLpP3eGmFYy69k7rZbm41HnxWoxsov2nQb7jrmH7
- ZKfE183Dklw87M+ADDPZKSNMONSSUfd4p5AwVwIwvhiXuIgMdVfiNHVwpn2+vTQfBvoj
- fpQaEER4PLPXeE6Pb80adZ66ye44qMRDzKerwx1HEToc3yMF4MZOX4pq6i38RB2eSf0B
- wWz0PfHcVfn994YZsh6JEa7+1VrLiu7B+ilN2E1IpJ2R9pGy653iaHRc5Bi+ePxPc6m3
- KAhzEPKMFjvYnO2QnrAzLIyXQNTsIhFnudHF8brRDGdY4mFxXWL0SEG2nA0dBjrxW1ip
- 3Upw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739383354; x=1739988154;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j11+pggoZt6LWKb7cQUYM2QCVz6453x541Imp61mDT4=;
- b=OZFNv1NQFpMUFG6I7esjb6xt71ZFm0nZfoh7tdWhvVM6drRJegeBSxhu1KxNFLQvnT
- lwMv1ONqFQSp9S86xZt1gmIs7XlR4GJfDPZPo5crJKnB8Mfzkwoh1w1UxUvljRlY06eP
- 2CoR3zUTSa3Z30yLRQ6P73RkalbJi168hUDgkohIDcYBD+tge0VzjxaZNIZMNvIhTCdl
- S+pwdpMPWbdFs1ImlGQAKehukkkK403pXqDl/gL3IZZgrkn0rRkvHEU7RPkw5onIBZse
- iZKN+niMJf7iZgEy5fZhW6x6chXJmIz+BiLy7KKiej4xvEFOQpxgC3xDPPYrzRhBgHFK
- CSMQ==
-X-Gm-Message-State: AOJu0YxpXvTDmEN9xzE0QJn2w6Mv7t5cSdgi0p4FX8WT3MqIaQCuRw6O
- l7DHqqMjTmTWFOVWaW67cNm2SpnQ+1q83IpAmV+AP3Cpr7Ds7boiEz16RSVvGj0skMla0L33ewn
- u
-X-Gm-Gg: ASbGncstvEBOycL9BITocUBkUfHoY24PTjPukNbfuEugbGGq0Wp6YeeUPiuh4HL5ags
- F4YR5mYpR0Tju8AIMuhezJWATupqxoPtA948xeYN+IPNDCYStlhcVT6NzCnBHPCtnTZGCoYARzG
- nT8UwTNkuTZtsscF4jGaJCo51XEhmIOBkJsfb/+5Z4CJf+9BN0l/9d1J6B/KJWcWPJeOWu2YF9R
- dbE5gtSAillqidClJObsM7WxwrFxzu/FiEBSSD6yQZbajQk4UqzrusoISmuX4gI9YLBDTyGHddR
- PzLMC17rDtDRAdDpBcnRnQm1mGzgdv0yVWRb9eJpwWri01JLwKNKOPo=
-X-Google-Smtp-Source: AGHT+IGRznOnkaUBixmdOpHK/Dhy4eb5kgRr4lkQ3Sal8BkhF+sRd0z4oySsHYT67RNFX5PFfYTIag==
-X-Received: by 2002:a17:90b:518d:b0:2f4:43ce:dcea with SMTP id
- 98e67ed59e1d1-2fbf5c580c0mr6358861a91.25.1739383353434; 
- Wed, 12 Feb 2025 10:02:33 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220ca43f1cesm5312515ad.37.2025.02.12.10.02.32
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Feb 2025 10:02:33 -0800 (PST)
-Message-ID: <629a0227-d917-4bf2-b723-626a5be6a2fc@linaro.org>
-Date: Wed, 12 Feb 2025 10:02:31 -0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tiH5P-0001R5-8j
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:03:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tiH5N-0001cb-DQ
+ for qemu-devel@nongnu.org; Wed, 12 Feb 2025 13:03:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739383424;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/ebDOWzZutWDYuZyIQcf/VBv7HHqdJRd+jDc0sscLL8=;
+ b=Yz5Yj61/ZL5MC9IBsj3x9IZR19Jao0QvpYk6mvgd86I5ZZxcLdl+6YtSknHMjZNWXbdGsj
+ ANYpANX6FzAT5tKfJoM4v/mXc2qBRtMFkbTzw0JXnN6ffWL7EMDrU5G0B8RfCPmH0zgl9s
+ 5856rFu6aEVHW+58pu+nL7gTYpzUR30=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-kITGtQepPIiuReY-PStvCg-1; Wed,
+ 12 Feb 2025 13:03:40 -0500
+X-MC-Unique: kITGtQepPIiuReY-PStvCg-1
+X-Mimecast-MFC-AGG-ID: kITGtQepPIiuReY-PStvCg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A17B180087A; Wed, 12 Feb 2025 18:03:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.110])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22B5319560A3; Wed, 12 Feb 2025 18:03:33 +0000 (UTC)
+Date: Wed, 12 Feb 2025 18:03:30 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PULL v2 11/14] os: add an ability to lock memory on_fault
+Message-ID: <Z6zicnbD1RRYfC3R@redhat.com>
+References: <20250212173823.214429-1-peterx@redhat.com>
+ <20250212173823.214429-3-peterx@redhat.com>
+ <Z6ze_muL8OkkuAFr@redhat.com> <Z6zg3jr4IUiIdHKG@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] hw/arm/xilinx_zynq: Replace IRQ_OFFSET ->
- GIC_INTERNAL
-To: qemu-devel@nongnu.org
-References: <20250212154333.28644-1-philmd@linaro.org>
- <20250212154333.28644-5-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250212154333.28644-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <Z6zg3jr4IUiIdHKG@x1.local>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,20 +91,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/25 07:43, Philippe Mathieu-Daudé wrote:
-> We already have a definition to distinct GIC internal
-> IRQs versus external ones, use it. No logical changes.
+On Wed, Feb 12, 2025 at 12:56:46PM -0500, Peter Xu wrote:
+> On Wed, Feb 12, 2025 at 05:48:46PM +0000, Daniel P. Berrangé wrote:
+> > On Wed, Feb 12, 2025 at 12:38:23PM -0500, Peter Xu wrote:
+> > > From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> > > 
+> > > This will be used in the following commits to make it possible to only
+> > > lock memory on fault instead of right away.
+> > > 
+> > > Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> > > Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > Link: https://lore.kernel.org/r/20250212143920.1269754-2-d-tatianin@yandex-team.ru
+> > > [peterx: fail os_mlock(on_fault=1) when not supported]
+> > > [peterx: use G_GNUC_UNUSED instead of "(void)on_fault", per Dan]
+> > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > ---
+> > >  meson.build               |  6 ++++++
+> > >  include/system/os-posix.h |  2 +-
+> > >  include/system/os-win32.h |  2 +-
+> > >  migration/postcopy-ram.c  |  2 +-
+> > >  os-posix.c                | 15 +++++++++++++--
+> > >  system/vl.c               |  2 +-
+> > >  6 files changed, 23 insertions(+), 6 deletions(-)
+> > > 
+> > > diff --git a/meson.build b/meson.build
+> > > index 18cf9e2913..59953cbe6b 100644
+> > > --- a/meson.build
+> > > +++ b/meson.build
+> > > @@ -2885,6 +2885,12 @@ config_host_data.set('HAVE_MLOCKALL', cc.links(gnu_source_prefix + '''
+> > >      return mlockall(MCL_FUTURE);
+> > >    }'''))
+> > >  
+> > > +config_host_data.set('HAVE_MLOCK_ONFAULT', cc.links(gnu_source_prefix + '''
+> > > +  #include <sys/mman.h>
+> > > +  int main(void) {
+> > > +      return mlockall(MCL_FUTURE | MCL_ONFAULT);
+> > > +  }'''))
+> > > +
+> > >  have_l2tpv3 = false
+> > >  if get_option('l2tpv3').allowed() and have_system
+> > >    have_l2tpv3 = cc.has_type('struct mmsghdr',
+> > > diff --git a/include/system/os-posix.h b/include/system/os-posix.h
+> > > index b881ac6c6f..ce5b3bccf8 100644
+> > > --- a/include/system/os-posix.h
+> > > +++ b/include/system/os-posix.h
+> > > @@ -53,7 +53,7 @@ bool os_set_runas(const char *user_id);
+> > >  void os_set_chroot(const char *path);
+> > >  void os_setup_limits(void);
+> > >  void os_setup_post(void);
+> > > -int os_mlock(void);
+> > > +int os_mlock(bool on_fault);
+> > >  
+> > >  /**
+> > >   * qemu_alloc_stack:
+> > > diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+> > > index b82a5d3ad9..bc623061d8 100644
+> > > --- a/include/system/os-win32.h
+> > > +++ b/include/system/os-win32.h
+> > > @@ -123,7 +123,7 @@ static inline bool is_daemonized(void)
+> > >      return false;
+> > >  }
+> > >  
+> > > -static inline int os_mlock(void)
+> > > +static inline int os_mlock(bool on_fault G_GNUC_UNUSED)
+> > 
+> > So did this actually generate a warning ? We don' even need
+> > G_GNUC_UNUSED unless we're actually seeing warnings about this.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   hw/arm/xilinx_zynq.c | 34 ++++++++++++++++------------------
->   1 file changed, 16 insertions(+), 18 deletions(-)
+> I didn't try to hit a warning without it, as we can use different compilers
+> and I thought the results could be different, even if I try it and it
+> didn't raise a warning?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+We strictly only permit use of clang & gcc.
 
-r~
+> I do see though that we have plenty of such uses in the current tree,
+> though.  Does it mean it's a broader question to ask, rather than this
+> patch only?
+> 
+> Thanks,
+> 
+> -- 
+> Peter Xu
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
