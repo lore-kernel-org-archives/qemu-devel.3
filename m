@@ -4,57 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D935C02198
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 00:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F8CC0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiMrI-0002WL-CK; Wed, 12 Feb 2025 19:13:36 -0500
+	id 1tiQ10-00078T-UW; Wed, 12 Feb 2025 22:35:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tiMrG-0002Vv-9s; Wed, 12 Feb 2025 19:13:34 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tiQ0v-000784-AR; Wed, 12 Feb 2025 22:35:46 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tiMrD-0004v5-PQ; Wed, 12 Feb 2025 19:13:34 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7D4B04E6019;
- Thu, 13 Feb 2025 01:13:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id fq7rqZcBf77K; Thu, 13 Feb 2025 01:13:24 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2C9124E6014; Thu, 13 Feb 2025 01:13:24 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 28E0974577D;
- Thu, 13 Feb 2025 01:13:24 +0100 (CET)
-Date: Thu, 13 Feb 2025 01:13:24 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH] hw/ppc/e500: Partial implementation of local access
- window registers
-In-Reply-To: <4023E866-442D-408B-9BD7-9036694DD8DF@gmail.com>
-Message-ID: <a4083d0c-acd5-f9da-66da-d796d09a0808@eik.bme.hu>
-References: <20250115211544.307124E602F@zero.eik.bme.hu>
- <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
- <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
- <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
- <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
- <32BC6ABA-EE27-437C-81C0-AEEE3E0DFC9A@gmail.com>
- <81cd9319-848c-93f5-156d-b35226f90966@eik.bme.hu>
- <4023E866-442D-408B-9BD7-9036694DD8DF@gmail.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tiQ0s-0000gz-Ns; Wed, 12 Feb 2025 22:35:45 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 13 Feb
+ 2025 11:35:32 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Thu, 13 Feb 2025 11:35:32 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v3 00/28] Support AST2700 A1
+Date: Thu, 13 Feb 2025 11:35:03 +0800
+Message-ID: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,153 +58,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Feb 2025, Bernhard Beschow wrote:
-> Am 7. Februar 2025 01:12:38 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->> On Thu, 6 Feb 2025, Bernhard Beschow wrote:
->>> Am 2. Februar 2025 01:25:22 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->>>
->>> I had to apply 
->>> <https://github.com/shentok/qemu/commit/56550cbb2805be2913ad9c12d6d9c6a9a3bf6f2c> 
->>> to have the SPL load the whole U-Boot proper.
->>
->> Is that an alternative to commenting out page_aligned = true?
->
-> Well, it's not needed with the patch applied. The patch ensures that all 
-> data gets loaded: 
-> <https://lore.kernel.org/qemu-devel/D62F06C8-5247-4FBC-82A9-9127352B30A6@gmail.com/>
+v1:
+ 1. Refactor INTC model to support both INTC0 and INTC1.
+ 2. Support AST2700 A1.
+ 3. Create ast2700a0-evb machine.
+ 
+v2:
+  To streamline the review process, split the following patch series into
+  three parts.
+  https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.2465942-1-jamin_lin@aspeedtech.com/
+  This patch series focuses on cleaning up the INTC model to
+  facilitate future support for the INTC_IO model.
 
-I think the block layer has a solution for such long running operations 
-and uses coroutines for that but I don't know how that works and I could 
-not find useful documentation on it. But I don't understand the problem 
-either so if you've solved it and submit a patch that can be merged that's 
-good enough for me.
+v3:
+ 1. Update and add functional test for AST2700
+ 2. Add AST2700 INTC design guidance and its block diagram.
+ 3. Retaining the INTC naming and introducing a new INTCIO model to support the AST2700 A1.
+ 4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
+ 5. Fix silicon revision issue and support AST2700 A1.
 
->> There are two U-Boot binaries on the card for some reason (I think 
->> maybe the first one runs from cache as RAM and sets up the memory 
->> controller), then the first one loads some env variables and then the 
->> second U-Boot which then loads the bootloader.
->
-> Yeah, that's the SPL and U-Boot proper. The first one sets up RAM based 
-> on DDR3 data, copies U-Boot proper there (currently broken in QEMU, see 
-> above), and passes control to it.
+With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
+ast2700a0-evb: Designed for AST2700 A0
+ast2700a1-evb: Designed for AST2700 A1
 
-U-Boot proper runs for me too but it may have a bug in the Tabor specific 
-patch (maybe revealed by missing emulation) that prevents the bootloader 
-to find a device but I can run until U-Boot and enter commands to it, it 
-only stops in the bootloader when that calls back to U-Boot. If you 
-extract U-Boot proper from the SD card image, convert it to elf and run it 
-with -bios you'd get a prompt so it works. That's what I do now for 
-experimenting but I'd like it to boot from the SD card the same way as 
-real machine does eventually.
+Test information
+1. QEMU version: https://github.com/qemu/qemu/commit/ffaf7f0376f8040ce9068d71ae9ae8722505c42e
+2. ASPEED SDK v09.05 pre-built image
+   https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
+   ast2700-default-obmc.tar.gz (AST2700 A1)
+   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
+   ast2700-a0-default-obmc.tar.gz (AST2700 A0)
+   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz
 
-> Considering the technical manual it may be possible to compile U-Boot 
-> oneself and replace components of the firmware image. That way, one 
-> could track down why no bootable devices are found, i.e. check whether 
-> and which bootmenu_x variables are populated. That's not on my todo list 
-> though.
+Known Issue:
+The HACE crypto and hash engine is enable by default since AST2700 A1.
+However, aspeed_hace.c(HACE model) currently does not support the CRYPTO command.
+To boot AST2700 A1, I have created a Patch 21 which temporarily resolves the
+issue by sending an interrupt to notify the firmware that the cryptographic
+command has completed. It is a temporary workaround to resolve the boot issue
+in the Crypto Manager SelfTest.
 
-First of all one would need the source for that which should be available 
-because of GPL but it's not, at least I could not find it yet. Eventually 
-I'll get it and may look at this but I'd also like to run binary known to 
-work on real machine to make sure emulation is correct.
+As a result, you will encounter the following kernel warning due to the
+Crypto Manager test failure. If you don't want to see these kernel warning,
+please add the following settings in your kernel config.
 
->> These existing machines set up values in PPCE500MachineClass in their 
->> init methods that the e500.c uses to change its behaviour to match the 
->> machine so to continue adding another board in the classic way I'd 
->> continue like that. I've added another similar board file like those 
->> machines setting the values matching P1022. For the additional devices 
->> in e500.c I've just patched them in for experimenting but these could 
->> be optionally created based on new values in the MachineClass, like 
->> has_2nd_i2c or similar to not change existing machines.
->
-> The challenge is that different variants of the SoC have the same IP 
-> cores mapped at different offsets with possibly (haven't checked) IRQs. 
-> These need to be considered when generating the DTB. To avoid dealing 
-> with this question -- and at the same time explore data-driven machine 
-> creation -- I reversed the process and generated the machine from the 
-> DTB. But this question needs to be answered when implementing a P1022.
+```
+CONFIG_CRYPTO_MANAGER_DISABLE_TESTS=y
+```
 
-Yes, your DTB based board code is a nice way to create different machines 
-as the DTB already describes these offsets and irq connections and your 
-code seems to be quite simple so I think it's a good idea that's worth 
-pursuing, that could enhance the ppce500 machine and make it more generic. 
-It could then also drop the separate mpc85xx machine and put all of these 
-under one ppce500 machine with passing the right dtb to create the 
-different machines. As long as these are similar enough and only differ in 
-the devices they have, this could emulate a lot of these SoCs with the 
-same code.
+```
+alg: skcipher: aspeed-ctr-tdes encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+[    5.035966] alg: self-tests for ctr(des3_ede) using aspeed-ctr-tdes failed (rc=-22)
+[    5.036139] ------------[ cut here ]------------
+[    5.037188] alg: self-tests for ctr(des3_ede) using aspeed-ctr-tdes failed (rc=-22)
+[    5.037312] WARNING: CPU: 2 PID: 109 at /crypto/testmgr.c:5936 alg_test+0x42c/0x548
+[    5.038049] Modules linked in:
+[    5.038302] CPU: 2 PID: 109 Comm: cryptomgr_test Tainted: G        W          6.6.52-v00.06.04-gf52a0cf7c475 #1
+[    5.038787] Hardware name: AST2700-EVB (DT)
+[    5.038988] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    5.039315] pc : alg_test+0x42c/0x548
+[    5.039505] lr : alg_test+0x42c/0x548
+[    5.039697] sp : ffffffc0825e3d50
+[    5.039862] x29: ffffffc0825e3df0 x28: 0000000000000004 x27: 0000000000000000
+[    5.040226] x26: ffffffc080bcada0 x25: ffffffc081dac9d0 x24: 0000000000000004
+[    5.040700] x23: 0000000000001285 x22: ffffff8003ded280 x21: ffffff8003ded200
+[    5.041458] x20: 00000000ffffffff x19: 00000000ffffffea x18: ffffffffffffffff
+[    5.041915] x17: 282064656c696166 x16: 20736564742d7274 x15: 00000000fffffffe
+[    5.042287] x14: 0000000000000000 x13: ffffffc081ba555c x12: 65742d666c657320
+[    5.042684] x11: 00000000fffeffff x10: ffffffc0818ff048 x9 : ffffffc0800a36e4
+[    5.043077] x8 : 000000000017ffe8 x7 : c0000000fffeffff x6 : 000000000057ffa8
+[    5.043461] x5 : 000000000000ffff x4 : 0000000000000000 x3 : 0000000000000000
+[    5.043751] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff800415e740
+[    5.045544] Call trace:
+[    5.045693]  alg_test+0x42c/0x548
+[    5.045878]  cryptomgr_test+0x28/0x48
+[    5.046052]  kthread+0x114/0x120
+[    5.046226]  ret_from_fork+0x10/0x20
+[    5.046413] ---[ end trace 0000000000000000 ]---
+[    5.071510] alg: skcipher: aspeed-ctr-des encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+[    5.072145] alg: self-tests for ctr(des) using aspeed-ctr-des failed (rc=-22)
+```
 
->> I would not go into more elaborate solutions if your fdt based machine 
->> creation replaces this eventually.
->
-> As said before, I'd send an RFC for discussion on how to proceed.
+Jamin Lin (28):
+  hw/intc/aspeed: Support setting different memory and register size
+  hw/intc/aspeed: Introduce helper functions for enable and status
+    registers
+  hw/intc/aspeed: Add object type name to trace events for better
+    debugging
+  hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
+  hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
+  hw/intc/aspeed: Support different memory region ops
+  hw/intc/aspeed: Rename num_ints to num_inpins for clarity
+  hw/intc/aspeed: Add support for multiple output pins in INTC
+  hw/intc/aspeed: Refactor INTC to support separate input and output pin
+    indices
+  hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
+    index and register address
+  hw/intc/aspeed: Introduce IRQ handler function to reduce code
+    duplication
+  hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
+  hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
+  hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
+    Revisions
+  hw/misc/aspeed_scu: Fix the revision ID cannot be set in the SOC layer
+    for AST2700
+  hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
+  hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
+    AST2700 A1
+  hw/arm/aspeed: Add SoC and Machine Support for AST2700 A1
+  hw/misc/aspeed_hace: Fix coding style
+  hw/misc/aspeed_hace: Add AST2700 support
+  hw/misc/aspeed_hace: Fix boot issue in the Crypto Manager Self Test
+  hw/arm/aspeed_ast27x0: Add HACE support for AST2700
+  test/functional/aspeed: Introduce new function to fetch assets
+  tests/functional/aspeed: Introduce start_ast2700_test API and update
+    hwmon path
+  tests/functional/aspeed: Update test ASPEED SDK v09.05
+  tests/functional/aspeed: Renamed test case and machine for AST2700 A0
+  tests/functional/aspeed: Add test case for AST2700 A1
+  docs/specs: add aspeed-intc
 
-As I wrote before I think one issue to solve as a next step would be avoid 
-needing subclasses with comma in names for all compatible devices. I think 
-allowing alternative names for the same type in the types hash table could 
-be enough but to hide these from users and -device which can't take comma 
-names, these might need to go in a separate hash table instead. This could 
-work the same as register_type but would be something like 
-register_compatible_name_for_type that adds only a name for an existing 
-type so it does not need a subclass and duplicate class or type struct 
-when all we need is a different name for the existing type. I don't know 
-if it's best put in a new hash table or the same one that holds type 
-names. E.g. machine names already have aliases for versioned machines for 
-example. This could be similar for devices that could have alias names for 
-compatible property in the DTB. Putting these in a separate hash table 
-might be needed if adding them to the same type name would list them in 
--device help or having names with ',' there would cause a problem but it 
-might even work without that.
+ docs/specs/aspeed-intc.rst              | 136 ++++++
+ docs/specs/index.rst                    |   1 +
+ hw/arm/aspeed.c                         |  21 +-
+ hw/arm/aspeed_ast27x0.c                 | 291 +++++++++---
+ hw/intc/aspeed_intc.c                   | 593 +++++++++++++++++++-----
+ hw/intc/trace-events                    |  25 +-
+ hw/misc/aspeed_hace.c                   |  44 +-
+ hw/misc/aspeed_scu.c                    |   5 +-
+ include/hw/arm/aspeed_soc.h             |   3 +-
+ include/hw/intc/aspeed_intc.h           |  32 +-
+ include/hw/misc/aspeed_hace.h           |   1 +
+ include/hw/misc/aspeed_scu.h            |   2 +
+ tests/functional/test_aarch64_aspeed.py |  47 +-
+ 13 files changed, 963 insertions(+), 238 deletions(-)
+ create mode 100644 docs/specs/aspeed-intc.rst
 
-These are only high level ideas and I don't know how to implement these 
-but maybe you can do something with it. In any case, I'm looking forward 
-for your RFC and try to help reviewing it but I don't have free time to 
-contribute so I'll continue experimenting with the current code upstream 
-that's good enough for what I do and it's faw away to try to upstream it 
-so by then your changes could be merged. What I may contribute is new 
-device emulation for missing parts. I have some dummy sata that does 
-nothing but allows the Linux driver to pass detecting no devices, a half 
-working DIU I made in the last few days that needs more work but I got 
-some image from U-Boot on it and may look at the DMA controller in the 
-future. Let me know if you're interested in these or have something for 
-these or other parts I could use instead. I've tested your SPI flash 
-implementation but it wasn't working with U-Boot for me and may look at 
-your USB eventually.
+-- 
+2.34.1
 
->>> This is implemented on my branch. It pokes the L2 cache registers to 
->>> configure some (but not all) SRAM to load the SPL to. This SPL uses 
->>> cache as RAM which I'm emulating with a modified sparse-mem region 
->>> device.
->>
->> This is new addition from today. I still don't get why you need 
->> sparse-mem when you also have a separate patch for l2cache regs which 
->> could have a memory region itself for this but for now I'm OK with 
->> adding this region from the tabor board code on my branch for 
->> experimenting.
->
-> The stack location is specific to U-Boot, not the chip. It resides in 
-> cache (used as RAM) rather than in SRAM. Modeling a cache with cache 
-> lines etc. was a rabbit hole I didn't want to get into. Hence I extended 
-> sparse-mem for this stack region to be user-creatable. When implementing 
-> a Tabor machine this stack region could be hardcoded there.
-
-I'm not sure I follow what you say but also not sure if you meant cache 
-when writing stack in some places. Sure, the whole cache with all its 
-details does not need to be modelled but what I meant is that if you 
-emulate l2cache controller registers you could emulate the one that maps 
-the cache at some address as sram then the BOOT table at the beginning of 
-the SD card should write that to map it at the right place so if you also 
-have code to parse that then no sparse-mem should be needed on the command 
-line. Or is that some other register not part of l2cache? But this is 
-something that can be sorted later so not a big deal, until then adding s 
-memory region there either from board code or from command line will do. I 
-think I get now that maybe you mean that command line is better because 
-different boards have this at different location so you need to specify 
-the address and that's easier with -device.
-
-Regards,
-BALATON Zoltan
 
