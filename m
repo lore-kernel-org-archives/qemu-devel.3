@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571ACC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBFB4C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:12:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiboj-0006CQ-2o; Thu, 13 Feb 2025 11:11:57 -0500
+	id 1tibey-0000yv-TE; Thu, 13 Feb 2025 11:01:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiboR-0005na-2w
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:11:41 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tiboO-0007CX-Rc
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:11:38 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-220bff984a0so18603885ad.3
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:11:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739463094; x=1740067894; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=97F4M5gBh8WaJTSAqlKUeUulEnWrYq+Z0LMs9GpeJT8=;
- b=JQ3+3dFu172dw2iqwQ1hokxjGCaiSO7heBst33aDzMHxFQUskNdLE1boG9DYCZSVRd
- zRHxVg/puifGknjhEHNTjbUzKos96aL175uM3VEtGsZIUNvvLMEyHb0hjJSpnq90u1Hu
- Y5DIwNTJR0kpKDy4IDYWA1VgE1TS2n4r/0Pg5kPiKxGNmpxqQPgkfh0DJ7Dyx6NTZSyK
- GMGRntePCfDOuUuqMUaWOew5a1tjOW1prYGH7NT7IrfxzwIo+NWXqn6dp/XtHP7/5iIP
- nc8iBcYUDUuI/HnIywyfW9tN6ye38y3PIXIIrJepzlp2SjCFFfl4s8DvrfNTkReEsLMS
- N3uw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tibeo-0000uC-V2
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tibel-0005XQ-4a
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739462496;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S+SMasJt000rT1ae4EhUEs5xt45LQa6MMA6T4RmgKLs=;
+ b=NQFnqXED52jLMFsn1QZhh+SYL1Y+9DG9qjPaUugWWBmpkvLSP3j1J/GjKRr1qa3NR7ouNB
+ L0XzApyNKk/GwVTZcQcrleSTTOJ61w9fVzm0lDkcPT6u5s9REacmEB1X9mk9vv9T060m0h
+ zBHwzLCV+lg20fF+isSUrqg2sTFoVKU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-634-f2meafQUNS-3l7Hzskm6Tw-1; Thu, 13 Feb 2025 11:01:34 -0500
+X-MC-Unique: f2meafQUNS-3l7Hzskm6Tw-1
+X-Mimecast-MFC-AGG-ID: f2meafQUNS-3l7Hzskm6Tw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38f28a4647eso341220f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739463094; x=1740067894;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=97F4M5gBh8WaJTSAqlKUeUulEnWrYq+Z0LMs9GpeJT8=;
- b=mSnTDLC3t5FHO3aO/eNI1++LGv9oBY04HTGUi6xCPJokA5t5uI8A/XjX9re+D42lT7
- 36xfIeKYpE0kRPQass5XTDeCqtbgVQ0mWjDCYulqJan9bT7rdTq8jg2Bt3c1WvximWvu
- 6waQncV7eBLG9bOaznxdKhJxvAZpsni9TXdbbUmyNTQzb1s0uGJnAnyaGmrmK/eki32d
- OrX5GWxpH/aO1CKGBa+VSucYh/+TSeUC4+p3kkq50KLTflE/aiFYhkdrwvxfUF2VEF6n
- 8Ch6KM90aJj/LWdtz18tkkZHiej/asSujvL7p9Ri8gi8wBw/TQV1itXKjBk7jYwMUSFH
- ALJw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRDUglcV0dqytptZUC2LB8rVrM38uW39VNPB7X8xtQMblM957/+RyvX1LZ3EdlNNLilVObfLM+77Ef@nongnu.org
-X-Gm-Message-State: AOJu0Ywt6mHNkcxZMD+F9dp/uXWP1omH3Z/a7Z+6D44fvxkxv5V8qjRh
- QtaeHeDcCQxjwC+q/p4pSdcX/1IYCdMHr3mgXw8gLupBnL4MYHM2EktiVTio9QU=
-X-Gm-Gg: ASbGncvQWxilQgbPnHmH23uQIiaUKZSQuOsmNd0mr6NP0sluZYdPk6jTfl1vwhIYZw3
- Eh7aOYpQ/pbLNGbEgG3H5HLBjLiAFwlJLZO0NqmVsPEIZvOpUff6zGy8Fn95ZrcxneLtuB0inUe
- 2QSF/Pw1XPMq3bPiNClWMTtWkaKeagJtmZ6vKjTPnuPGzLZY9tglAwe/ha4iNqEpfLjH1aSaDx7
- S3fIc/GzfHW8PRbhwdv5vxw1Vc4aCSEqbIuUM8Z8FZEIg/45xh2jes9kugNoKDeU3OW24D6DOTH
- fXCdJfGvCWeSpW4PTPzkxij9OPRXV7VTJsVP3NVLUVp7e/2aS4TGiEg=
-X-Google-Smtp-Source: AGHT+IE4MBEOSqtNF+ko3GkgpFItyWHwntKb+IbjjZy4YjSTeDrmxnaoFT1jBDXCjHmg46PF+GO+mA==
-X-Received: by 2002:a17:903:2f89:b0:21f:3abc:b9e8 with SMTP id
- d9443c01a7336-220d215943dmr60677805ad.43.1739463094621; 
- Thu, 13 Feb 2025 08:11:34 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d5348f7asm14357665ad.23.2025.02.13.08.11.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 08:11:34 -0800 (PST)
-Message-ID: <9dbc295d-9c9a-47d0-8a97-7619b84c5b46@linaro.org>
-Date: Thu, 13 Feb 2025 08:11:31 -0800
+ d=1e100.net; s=20230601; t=1739462492; x=1740067292;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=S+SMasJt000rT1ae4EhUEs5xt45LQa6MMA6T4RmgKLs=;
+ b=jGRNLN8XdaFSh0hPFD0OfW4GcEcwiyDLqTQveIRTXjF0i5bqqJcyGfkqSyaMLH7Yts
+ goralXXDqRGYaYQAbVrqg5UdF0kPukgLI0xAHixkm+P0kL5fF6a9e7fTAaWJWHS02o1W
+ r3oVvFO+gvbMmi50VFq9llQfs61sACSRpoG6awAxGJuyEPHPwVMIo4Y/VqEPurmmSqZR
+ 9HBYb8HMnTnnTHNRPgtexvE+hjCNdEDu2Yne+zIZsOHXanyWvi2vSjfe0sqLJSXAUlef
+ /gzCj/lQROe1j01duYTwtCXoOkXUnbAPONTUDY/A3HiJ3mtBBzIoOornnJ0NaNGepto7
+ w8gg==
+X-Gm-Message-State: AOJu0YwX5EOsxRtA8QJ166kPP61LlNFHSR21UabJVvYDRdnm32IyFk9t
+ GrEGRa46b8cGSN8Bo6vN01t6Gq13tBgK3anaua+C0q97REnio9/OD2sxm71ebePxGhXkUZfeDO1
+ bBTi2JlBFgnsu2jX3BxH5f7p0I4zmneoucb3g5Tn0/lOldK3tlzEEL0TYZpJGQF4V5+lOoYv4GY
+ GC2kC7pHSJlbVg3rGeD3JgOZrg5T+s67yHMU8tq84=
+X-Gm-Gg: ASbGnct526d/tWWkkZlL+0kMzaK8iHQgAad1W7w6zD7qtUfgADjeTsI/pj1ZAa9pwgM
+ kDSamiBQ0tW2NqPEIT+RT/LlEZj6CaljOCoX2KxIdUlZovH9QHH6pUvijLb27f5ZyVlQdq7TVUk
+ TPjvXvPyA/enExIhrPlCvrAoeaNAV77/hsqb7TuXu4KpZjOGcIvYFz8pUwVp1HSUzKRg2Z5BlzK
+ Ae0+JKtH6ROKHOeZ0CsJd6+TkZhVYgD5DnDuzMsnQ3WRwpQkjQQ3JWwQQ3VJB/j4WzyVsoRAfjZ
+ mO/dtghkJN3yuUdPCEzsy+JZxsh8xAbPk4J8sFp/5UmYTQ==
+X-Received: by 2002:a5d:47af:0:b0:38d:de45:bf98 with SMTP id
+ ffacd0b85a97d-38f244d6481mr4693589f8f.8.1739462492186; 
+ Thu, 13 Feb 2025 08:01:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGFwGxN7AEXtFao+iZL6ulae/eZoNGoDW+fdOz5CHBb1iLUDoq6Y+EfHKr41tk5ixLrU/unVg==
+X-Received: by 2002:a5d:47af:0:b0:38d:de45:bf98 with SMTP id
+ ffacd0b85a97d-38f244d6481mr4693419f8f.8.1739462490087; 
+ Thu, 13 Feb 2025 08:01:30 -0800 (PST)
+Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
+ [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258b432asm2207575f8f.6.2025.02.13.08.01.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Feb 2025 08:01:27 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 12/27] rust: chardev, qdev: add bindings to qdev_prop_set_chr
+Date: Thu, 13 Feb 2025 17:00:39 +0100
+Message-ID: <20250213160054.3937012-13-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
+References: <20250213160054.3937012-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] target/microblaze: Use uint64_t for CPUMBState.ear
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, Anton Johansson <anjo@rev.ng>
-References: <20250212220155.1147144-1-richard.henderson@linaro.org>
- <20250212220155.1147144-5-richard.henderson@linaro.org>
- <5b0a2b4c-7c70-4d3d-96ce-855feced435f@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <5b0a2b4c-7c70-4d3d-96ce-855feced435f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,52 +108,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/25 04:42, Philippe Mathieu-Daudé wrote:
-> On 12/2/25 23:01, Richard Henderson wrote:
->> Use an explicit 64-bit type for EAR.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/microblaze/cpu.h       | 2 +-
->>   target/microblaze/translate.c | 2 +-
->>   2 files changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
->> index 45f7f49809..01571d4f86 100644
->> --- a/target/microblaze/cpu.h
->> +++ b/target/microblaze/cpu.h
->> @@ -248,7 +248,7 @@ struct CPUArchState {
->>       uint32_t pc;
->>       uint32_t msr;    /* All bits of MSR except MSR[C] and MSR[CC] */
->>       uint32_t msr_c;  /* MSR[C], in low bit; other bits must be 0 */
->> -    target_ulong ear;
->> +    uint64_t ear;
->>       uint32_t esr;
->>       uint32_t fsr;
->>       uint32_t btr;
->> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
->> index d5c5e650e0..549013d25e 100644
->> --- a/target/microblaze/translate.c
->> +++ b/target/microblaze/translate.c
->> @@ -1842,7 +1842,7 @@ void mb_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->>       }
->>       qemu_fprintf(f, "\nesr=0x%04x fsr=0x%02x btr=0x%08x edr=0x%x\n"
->> -                 "ear=0x" TARGET_FMT_lx " slr=0x%x shr=0x%x\n",
->> +                 "ear=0x%" PRIx64 " slr=0x%x shr=0x%x\n",
->>                    env->esr, env->fsr, env->btr, env->edr,
->>                    env->ear, env->slr, env->shr);
-> 
-> So IIUC no need to worry about the upper 32-bits as Anton
-> suggested in my RFC:
-> https://lore.kernel.org/qemu-devel/ 
-> rbczkcp7whvovj55htcvongsc45xyhia5sgckqunszldag3iey@4vsbsjak4wr2/
+Because the argument to the function is an Owned<Chardev>, this also
+adds an ObjectType implementation to Chardev.
 
-The upper 32 bits can only be written by the 64-bit "extended address" instructions, which 
-are supervisor only.  So certainly the upper 32-bits are not relevant to linux-user.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/src/device.rs |  3 ++-
+ rust/qemu-api/meson.build        |  1 +
+ rust/qemu-api/src/chardev.rs     | 19 +++++++++++++++++++
+ rust/qemu-api/src/lib.rs         |  1 +
+ rust/qemu-api/src/qdev.rs        |  9 +++++++++
+ 5 files changed, 32 insertions(+), 1 deletion(-)
+ create mode 100644 rust/qemu-api/src/chardev.rs
 
-We are not currently, but *should* be writing to ear from linux-user so that ear gets 
-populated in the signal context.  We're missing a record_sigsegv hook.
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 5e4e75133c8..4e959073711 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -12,9 +12,10 @@
+     bindings::{
+         error_fatal, qdev_prop_set_chr, qemu_chr_fe_accept_input, qemu_chr_fe_ioctl,
+         qemu_chr_fe_set_handlers, qemu_chr_fe_write_all, qemu_irq, sysbus_connect_irq,
+-        sysbus_mmio_map, sysbus_realize, CharBackend, Chardev, QEMUChrEvent,
++        sysbus_mmio_map, sysbus_realize, CharBackend, QEMUChrEvent,
+         CHR_IOCTL_SERIAL_SET_BREAK,
+     },
++    chardev::Chardev,
+     c_str, impl_vmstate_forward,
+     irq::InterruptSource,
+     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 80eafc7f6bd..45e30324b29 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -20,6 +20,7 @@ _qemu_api_rs = static_library(
+       'src/bitops.rs',
+       'src/callbacks.rs',
+       'src/cell.rs',
++      'src/chardev.rs',
+       'src/c_str.rs',
+       'src/irq.rs',
+       'src/memory.rs',
+diff --git a/rust/qemu-api/src/chardev.rs b/rust/qemu-api/src/chardev.rs
+new file mode 100644
+index 00000000000..74cfb634e5f
+--- /dev/null
++++ b/rust/qemu-api/src/chardev.rs
+@@ -0,0 +1,19 @@
++// Copyright 2024 Red Hat, Inc.
++// Author(s): Paolo Bonzini <pbonzini@redhat.com>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++//! Bindings for character devices
++
++use std::ffi::CStr;
++
++use crate::{bindings, prelude::*};
++
++pub type Chardev = bindings::Chardev;
++pub type ChardevClass = bindings::ChardevClass;
++
++unsafe impl ObjectType for Chardev {
++    type Class = ChardevClass;
++    const TYPE_NAME: &'static CStr =
++        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_CHARDEV) };
++}
++qom_isa!(Chardev: Object);
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index e4316b21cf2..2a338a888a0 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -18,6 +18,7 @@
+ pub mod c_str;
+ pub mod callbacks;
+ pub mod cell;
++pub mod chardev;
+ pub mod irq;
+ pub mod memory;
+ pub mod module;
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 64ba3d90981..73343e10b96 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -16,6 +16,7 @@
+     bindings::{self, Error, ResettableClass},
+     callbacks::FnCall,
+     cell::bql_locked,
++    chardev::Chardev,
+     prelude::*,
+     qom::{ClassInitImpl, ObjectClass, ObjectImpl, Owned},
+     vmstate::VMStateDescription,
+@@ -297,6 +298,14 @@ fn init_clock_out(&self, name: &str) -> Owned<Clock> {
+             Owned::from(&*clk)
+         }
+     }
++
++    fn prop_set_chr(&self, propname: &str, chr: &Owned<Chardev>) {
++        assert!(bql_locked());
++        let c_propname = CString::new(propname).unwrap();
++        unsafe {
++            bindings::qdev_prop_set_chr(self.as_mut_ptr(), c_propname.as_ptr(), chr.as_mut_ptr());
++        }
++    }
+ }
+ 
+ impl<R: ObjectDeref> DeviceMethods for R where R::Target: IsA<DeviceState> {}
+-- 
+2.48.1
 
-
-r~
 
