@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76458C021A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5461C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibfe-0001SK-TV; Thu, 13 Feb 2025 11:02:35 -0500
+	id 1tibeq-0000vu-Vg; Thu, 13 Feb 2025 11:01:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibfU-00019R-Bl
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tibeU-0000pv-Qf
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibfR-0005ga-5E
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:22 -0500
+ id 1tibeR-0005SQ-7G
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739462540;
+ s=mimecast20190719; t=1739462478;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kAa0SpJOhaviYKcQwZDtYWFA+1EBiCd0TLgglhF27bI=;
- b=fJxDxCMwUo+vESqIeRd3oiOI9dr45hC/9/oOL35EN+Y1KhY10mXp0H5F7fRcp6XdfvvGfL
- PRnupgglG21tlvePBtEs3rDjP3CKi2BfkVXWerps0cj4dsJ57GRiNynihy0Wn1DCR4mweN
- M1yBRKijbo66+jGi9EBlkBWeBBnoOJA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KJKsboCr/rz3b2EwIlGZQLj7iVI/rClT9i/wfrBfAQo=;
+ b=g4VgqoMUvBIy7yO+lSvwgjAqoPpdP2tJ6w8++pwL4+uJXe4WxIZSGHzeXwEfbCoWRICDxP
+ PptYD6sv8+X8QDNreRlP1FRW+8JtyQdUfTjtzKkYd6nQAaIVH1YmQnoWCihugHA0kMFZNn
+ ghpnedpXjV4XuEMEbYNqgd6TYTgbCVM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-Y4heQnClOlG8JmTaVcZQrQ-1; Thu, 13 Feb 2025 11:02:18 -0500
-X-MC-Unique: Y4heQnClOlG8JmTaVcZQrQ-1
-X-Mimecast-MFC-AGG-ID: Y4heQnClOlG8JmTaVcZQrQ_1739462538
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38dd533dae6so476084f8f.2
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:02:18 -0800 (PST)
+ us-mta-284-cN9ZZz2ZPtGDHb5iij73hg-1; Thu, 13 Feb 2025 11:01:15 -0500
+X-MC-Unique: cN9ZZz2ZPtGDHb5iij73hg-1
+X-Mimecast-MFC-AGG-ID: cN9ZZz2ZPtGDHb5iij73hg_1739462474
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4394b2c19ccso8356655e9.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739462537; x=1740067337;
+ d=1e100.net; s=20230601; t=1739462473; x=1740067273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kAa0SpJOhaviYKcQwZDtYWFA+1EBiCd0TLgglhF27bI=;
- b=u+VORsuWz23HXTy4LwKjrJPYQBTpDPgx3TP1ACSQy0GB8wzNpbuZCAYtnlRcS8XW7Z
- QnP1N0MFurTWBNi5t6rJfSF0n5YbkLXJitU38GQGLCRXqIKPrJtVCtBOdEdQIChs5kMM
- oK+idBA1GsKkWrVYCJvzzGUI8GmHkK6BaiCaP6xO4YZ0bpDRVdR5nC2c5CT14vgyZz8X
- kWXuX2H3/96eOAwM/wL4SvjCJRC51q1lTJZhMAhdU/wwaufl81kN4HdB6Eo/tT4d2Wwb
- cjTe0/Yo5604lzx7OLthWYHQoEAwlL2CnKz8D9/WVp1FYecFE9wxDIF1jluNthXN0bKd
- DxLA==
-X-Gm-Message-State: AOJu0YyebYFHJBOVCLoGIiakMC02Rlw5zKeiMb77EtNLixV3pNBD4N1F
- Y9rMrPglS/qnCQrL4AX5bhkE73KiYg2UO93M4MchCchMYKfnuT7JYy0LqXuagVZvWsyWsWNd+PN
- dR2RYwFSGkh+l4nSD+grOTT1Huq3SU06mESF35+JWdjqWp+ssYeVug0Ljrk4nvs7lD+JM7opLjE
- RpSGEIbHjjCNIGjyME2gO7auywwQhpWraGXrT4SEk=
-X-Gm-Gg: ASbGncv78HtK7dqkqNGB+miA9mO3oQj2Vr/X13qcQw1swu/M35W8aBkaOqZcJ/Bp1Q5
- FJCmY1vSDJhOrDdrH5J4RPC8Y3xhd1aBWuyGnmA30jeclHLqaXCd8hjlOe93rT2DedAo0x1a+Hi
- ysAOYJgjbQTdWiSsb7uMaX7fMSTbV8hgm3yRU1IDXaYlzChe/ConhK9y5Zgu0sF19P6cLE3Aoj4
- 3DI+QlwH7sS+VrrKEISTJRva8H3qWykv1j+6/zdtLi23EQDHWNMPDuevpNdmLgbAYUOa6jwk+lw
- 7oz4/UknaRTvXXaUXAP3dQcQ12CeNRqQF9a9MvxeDSSGRQ==
-X-Received: by 2002:a5d:5f55:0:b0:38d:b0fe:8c99 with SMTP id
- ffacd0b85a97d-38dea2ebbd1mr8558459f8f.48.1739462535699; 
- Thu, 13 Feb 2025 08:02:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH05DZOGx7lO/0Wri7A8Tlyc31kB2zVkd29y1pQEpDWm9DlXIKKsWEZCIbncTUQp/sjVPKzQA==
-X-Received: by 2002:a5d:5f55:0:b0:38d:b0fe:8c99 with SMTP id
- ffacd0b85a97d-38dea2ebbd1mr8558151f8f.48.1739462533427; 
- Thu, 13 Feb 2025 08:02:13 -0800 (PST)
+ bh=KJKsboCr/rz3b2EwIlGZQLj7iVI/rClT9i/wfrBfAQo=;
+ b=qkQ40+zvVe066GdnFq1Twk2g20AZhexutJWxw5nif4DZnsFfDWzQjYSJt6fOchVOP3
+ UNR5V4IrhVD/Pv6UqM3J+lxsCMPJ47aiophkDhm9XP2Ql593bgAvtEC3liKnS5fydWUb
+ GMrdnMGyI/c6jQKtOjPJOlZ/IA05ApyWB+oqN9IghlPrOPOnzQH466ZVTdgSwPen83TX
+ OXXEVl5R67jR8WUjdO900rt2Nc9eiVnHx0OiuRFWwqegHAgN2UbPkAO5nCfDZRAy14Wy
+ SAgX7kKIN3x1Pp3+iwvbh9lUIpA2dof0RV90z9wfy98TYTx8+1Ie/+O272Ocyc8g1i4V
+ XLyQ==
+X-Gm-Message-State: AOJu0YyJsjU7nFJADCChUXmvdiqNGzjo6p5rD4KPRQdnYDqZus+n9MWc
+ oRiQSa3geHHXdHEET4fjSlkhzB2CVR1rpnVv9r2Un0eXHzpjjHqu73yDsqHmP6UFxmad/JUBfI6
+ nONrJw6HVGX8ZgEotGLqez0FpVwYPnRZweutGHDqflqqv76yqhTMPSHqfMV3Lkmr/kOoEtbpQAb
+ 4eujITzZAnsIubqZ/viJA6rP6UaxIv01U3zMQf53U=
+X-Gm-Gg: ASbGncsTUZZC8nY+v6uBacrYU5JeUZV0CIL/TYiVoWyfcCJb9ZcHonxVDsCLybsKpub
+ 6lFh8R07qxRX8rx7TiMi+a2LQ5c6kGoixdAIhy9fp6c/Wdw6rpA8VBKgO719Jqj6WanI9nVz707
+ 5ZPxso1nuOy/X5dBuXjl2fUPRFC/Pa4r1GXu3vKSEnBWJcJEaYIOgkqZewmEYHo6UF1Uchb4XFT
+ Gbs7DncrxFVhVVsXgU54lwIyU/BcWzLZmVtbUFTAQwU06XA9PW5a7ELjfyqJkAE/UVSBxkQjT41
+ PVRvgFnvbR3qVgAoJblLBY3B3Fs89i1IdAlN0fW1WLaj2Q==
+X-Received: by 2002:a05:600c:c8c:b0:439:31e0:d9a4 with SMTP id
+ 5b1f17b1804b1-4396018a6ccmr56667245e9.10.1739462472874; 
+ Thu, 13 Feb 2025 08:01:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFRHUW8qwvjg/1btvDVyIM03bqYSZSR0qlQmqgXiFpx3SPgXfRfBHXL6+K61nXB+LRTqcPg0g==
+X-Received: by 2002:a05:600c:c8c:b0:439:31e0:d9a4 with SMTP id
+ 5b1f17b1804b1-4396018a6ccmr56665135e9.10.1739462470816; 
+ Thu, 13 Feb 2025 08:01:10 -0800 (PST)
 Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
  [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d8dd6sm2270907f8f.62.2025.02.13.08.02.11
+ 5b1f17b1804b1-43961885077sm21118335e9.25.2025.02.13.08.01.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:02:11 -0800 (PST)
+ Thu, 13 Feb 2025 08:01:10 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
-Subject: [PULL 27/27] ui/sdl2: reenable the SDL2 Windows keyboard hook
- procedure
-Date: Thu, 13 Feb 2025 17:00:54 +0100
-Message-ID: <20250213160054.3937012-28-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 06/27] rust: qom: allow initializing interface vtables
+Date: Thu, 13 Feb 2025 17:00:33 +0100
+Message-ID: <20250213160054.3937012-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
 References: <20250213160054.3937012-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,125 +108,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+Unlike regular classes, interface vtables can only be obtained via
+object_class_dynamic_cast.  Provide a wrapper that allows accessing
+the vtable and pass it to a ClassInitImpl implementation, for example
+ClassInitImpl<ResettableClass>.
 
-Windows only:
-
-The libSDL2 Windows message loop needs the libSDL2 Windows low
-level keyboard hook procedure to grab the left and right Windows
-keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
-
-Since SDL2 2.30.4 the SDL2 keyboard hook procedure also filters
-out the special left Control key event for every Alt Gr key event
-on keyboards with an international layout. This means the QEMU low
-level keyboard hook procedure is no longer needed. Remove the QEMU
-Windows keyboard hook procedure.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Link: https://lore.kernel.org/r/20241231115950.6732-1-vr_qemu@t-online.de
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- ui/sdl2.c      | 26 --------------------------
- ui/meson.build |  4 ----
- 2 files changed, 30 deletions(-)
+ rust/qemu-api/src/prelude.rs |  1 +
+ rust/qemu-api/src/qom.rs     | 45 ++++++++++++++++++++++++++++++++++--
+ 2 files changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 445eb1dd9f9..cda4293a53e 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -32,7 +32,6 @@
- #include "system/runstate.h"
- #include "system/runstate-action.h"
- #include "system/system.h"
--#include "ui/win32-kbd-hook.h"
- #include "qemu/log.h"
- #include "qemu-main.h"
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index 87e3ce90f26..254edb476dd 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -9,6 +9,7 @@
  
-@@ -263,7 +262,6 @@ static void sdl_grab_start(struct sdl2_console *scon)
+ pub use crate::qdev::DeviceMethods;
+ 
++pub use crate::qom::InterfaceType;
+ pub use crate::qom::IsA;
+ pub use crate::qom::Object;
+ pub use crate::qom::ObjectCast;
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 3e63cb30ca6..3d5ab2d9018 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -66,8 +66,8 @@
+ 
+ use crate::{
+     bindings::{
+-        self, object_dynamic_cast, object_get_class, object_get_typename, object_new, object_ref,
+-        object_unref, TypeInfo,
++        self, object_class_dynamic_cast, object_dynamic_cast, object_get_class,
++        object_get_typename, object_new, object_ref, object_unref, TypeInfo,
+     },
+     cell::bql_locked,
+ };
+@@ -263,6 +263,47 @@ unsafe fn as_object_mut_ptr(&self) -> *mut Object {
      }
-     SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
-     gui_grab = 1;
--    win32_kbd_set_grab(true);
-     sdl_update_caption(scon);
  }
  
-@@ -271,7 +269,6 @@ static void sdl_grab_end(struct sdl2_console *scon)
- {
-     SDL_SetWindowGrab(scon->real_window, SDL_FALSE);
-     gui_grab = 0;
--    win32_kbd_set_grab(false);
-     sdl_show_cursor(scon);
-     sdl_update_caption(scon);
- }
-@@ -372,19 +369,6 @@ static int get_mod_state(void)
-     }
- }
- 
--static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
--{
--#ifdef CONFIG_WIN32
--    SDL_SysWMinfo info;
--
--    SDL_VERSION(&info.version);
--    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
--        return info.info.win.window;
--    }
--#endif
--    return NULL;
--}
--
- static void handle_keydown(SDL_Event *ev)
- {
-     int win;
-@@ -609,10 +593,6 @@ static void handle_windowevent(SDL_Event *ev)
-         sdl2_redraw(scon);
-         break;
-     case SDL_WINDOWEVENT_FOCUS_GAINED:
--        win32_kbd_set_grab(gui_grab);
--        if (qemu_console_is_graphic(scon->dcl.con)) {
--            win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
--        }
-         /* fall through */
-     case SDL_WINDOWEVENT_ENTER:
-         if (!gui_grab && (qemu_input_is_absolute(scon->dcl.con) || absolute_enabled)) {
-@@ -628,9 +608,6 @@ static void handle_windowevent(SDL_Event *ev)
-         scon->ignore_hotkeys = get_mod_state();
-         break;
-     case SDL_WINDOWEVENT_FOCUS_LOST:
--        if (qemu_console_is_graphic(scon->dcl.con)) {
--            win32_kbd_set_window(NULL);
--        }
-         if (gui_grab && !gui_fullscreen) {
-             sdl_grab_end(scon);
-         }
-@@ -870,10 +847,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available since SDL 2.0.8 */
-     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
- #endif
--#ifndef CONFIG_WIN32
--    /* QEMU uses its own low level keyboard hook procedure on Windows */
-     SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
--#endif
- #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
-diff --git a/ui/meson.build b/ui/meson.build
-index 28c7381dd10..35fb04cadf3 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -120,10 +120,6 @@ if gtk.found()
- endif
- 
- if sdl.found()
--  if host_os == 'windows'
--    system_ss.add(files('win32-kbd-hook.c'))
--  endif
--
-   sdl_ss = ss.source_set()
-   sdl_ss.add(sdl, sdl_image, pixman, glib, files(
-     'sdl2-2d.c',
++/// Trait exposed by all structs corresponding to QOM interfaces.
++/// Unlike `ObjectType`, it is implemented on the class type (which provides
++/// the vtable for the interfaces).
++///
++/// # Safety
++///
++/// `TYPE` must match the contents of the `TypeInfo` as found in the C code;
++/// right now, interfaces can only be declared in C.
++pub unsafe trait InterfaceType: Sized {
++    /// The name of the type, which can be passed to
++    /// `object_class_dynamic_cast()` to obtain the pointer to the vtable
++    /// for this interface.
++    const TYPE_NAME: &'static CStr;
++
++    /// Initialize the vtable for the interface; the generic argument `T` is the
++    /// type being initialized, while the generic argument `U` is the type that
++    /// lists the interface in its `TypeInfo`.
++    ///
++    /// # Panics
++    ///
++    /// Panic if the incoming argument if `T` does not implement the interface.
++    fn interface_init<
++        T: ObjectType + ClassInitImpl<Self> + ClassInitImpl<U::Class>,
++        U: ObjectType,
++    >(
++        klass: &mut U::Class,
++    ) {
++        unsafe {
++            // SAFETY: upcasting to ObjectClass is always valid, and the
++            // return type is either NULL or the argument itself
++            let result: *mut Self = object_class_dynamic_cast(
++                (klass as *mut U::Class).cast(),
++                Self::TYPE_NAME.as_ptr(),
++            )
++            .cast();
++
++            <T as ClassInitImpl<Self>>::class_init(result.as_mut().unwrap())
++        }
++    }
++}
++
+ /// This trait provides safe casting operations for QOM objects to raw pointers,
+ /// to be used for example for FFI. The trait can be applied to any kind of
+ /// reference or smart pointers, and enforces correctness through the [`IsA`]
 -- 
 2.48.1
 
