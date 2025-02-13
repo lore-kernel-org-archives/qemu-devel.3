@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F67C021A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EBEC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tidZ9-0001Zu-6H; Thu, 13 Feb 2025 13:03:59 -0500
+	id 1tidn6-0006S5-Hz; Thu, 13 Feb 2025 13:18:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tidWb-0007xS-JH
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:01:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tidWU-0006TM-8v
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:01:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739469673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PHA8H7Nfhjt5Kb3IY8TNt7jOoVxxp24ctQS22ldNZDc=;
- b=N89zblpZkxnz9g5EIIWbaO1KlsxmEbK2QHn5XXnbewez31HKKfxz65D9gEpm9+KfAk8O84
- YRE7DOSI1O9opuFXkC63O0CXyoPVhqaCYLNcCge4Hxfm7RF/m+DW1bfEgNwnRtP7QfRXnd
- oPHA8/BYPfi2HT6Xerz1LzPaxWfryLQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-PFVllV2SOmOhVTfNwESz6A-1; Thu,
- 13 Feb 2025 13:01:12 -0500
-X-MC-Unique: PFVllV2SOmOhVTfNwESz6A-1
-X-Mimecast-MFC-AGG-ID: PFVllV2SOmOhVTfNwESz6A
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 336EB196E078; Thu, 13 Feb 2025 18:01:11 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.157])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 933021800359; Thu, 13 Feb 2025 18:01:10 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Fam Zheng <fam@euphon.net>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- David Hildenbrand <david@redhat.com>, pkrempa@redhat.com,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 09/12] virtio-blk: tidy up iothread_vq_mapping functions
-Date: Thu, 13 Feb 2025 13:00:40 -0500
-Message-ID: <20250213180043.713434-10-stefanha@redhat.com>
-In-Reply-To: <20250213180043.713434-1-stefanha@redhat.com>
-References: <20250213180043.713434-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <atharvd440@gmail.com>)
+ id 1tidn5-0006Rw-32
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:18:23 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atharvd440@gmail.com>)
+ id 1tidn3-0008VW-Jv
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:18:22 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-726feeee4f0so671913a34.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 10:18:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739470699; x=1740075499; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=iF1+I86Ia42rL38I1n84EFM3MkycqzzinBgk2wkIoSQ=;
+ b=Ubb46/8Ui2UnGN/6cLYL7h4CwiucEt1PIK5+VzCdPghvtEzdzGbCrZM2UBAlpdIp16
+ qooK0zgfOJxsYxBWdHGYk4uXufJW7V/v6Btu4g080q/YEHt+jwbbTP5DJ8S3NHEe5fff
+ tdrpvyCh/OvJVeeAWWk6HsN5Orejh+dJjxwPhJ6Rc2yRojzG+RYUqE0TmhLp6pYpiGvv
+ s0kJEKBlBLDK2JkSMmWMY9oslE5YhKFwPKEpQR7zFBa8X02G2GNQ/LEvA9l4M6kxkDk7
+ 0iw8T/ozEEB3+cc0ZgXEbyW5TSTZhLyW7lQ9YRCqgRZVuSqgg0zU8TaJq2hMtMDWpBlg
+ KIaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739470699; x=1740075499;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iF1+I86Ia42rL38I1n84EFM3MkycqzzinBgk2wkIoSQ=;
+ b=qnfmzI1hB/PK9jf8djfgH0gGqIrmVkap1EQOPZYsgqPW0OMphCmxLmGvsHehJBZCFD
+ yzai7OEeonrdjXizfSqABa8YgyChXKapTwPju1BX36GKXjKxbcV+cey2o+DGjetBnSSv
+ wwA9kBwfq9QyB0VbrJXIGkMBAlosuyZ7U4iWeO9XoyV1cRf4laNPWolvLCB0yp3Ztf3Z
+ /QWVfNgYth3kF719igAViwoo8wyezskkoV0CO5C0A36BAdkcC+y/V+GhSa78jqFqCR5n
+ Cbn8xt8nATDGSVWcO4e0KNlBOPZWJUHjpxg4NFrGgFM6ieseCB9gCIl7Fau+Pj/bwdMY
+ 71bw==
+X-Gm-Message-State: AOJu0YwIE0iwcgDQyCauDmLKT3RpWl/bo/XjLvvbtwztqnEU/AR1S7lj
+ mJFLl9M/I3FymDeYX3ym2lMO3LxVH175r/Ra/5QRD6RYDzVtA8dcaSNkqiUcPLaTBvglDOFqQzS
+ xSgX47pI3vZrwfrH0M7xxj8ur+vnBtw==
+X-Gm-Gg: ASbGncvDwApFJYgkyrQOFWv7738ny2H924G3k558p5XdeTwZgH1Kw55b9bMF19uHMMY
+ IhbrWGhiEVI/y7H6wRq7cCFA7mTEABRZ9W4CBONfeOixlFE6rr9RJuT6mo7xo7+72DmhsS7K1A7
+ 0=
+X-Google-Smtp-Source: AGHT+IGT7jUAgMYOWUgyP9OwxBEUs016Ypxzkf28Y25wpD6ZeXZGvTwm/otM1CipBR0M/i9FK/6F5n9nat8vqtqcf20=
+X-Received: by 2002:a05:6871:a085:b0:2ba:11d9:e08d with SMTP id
+ 586e51a60fabf-2ba11da130cmr1615966fac.21.1739470699372; Thu, 13 Feb 2025
+ 10:18:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Atharv Dubey <atharvd440@gmail.com>
+Date: Thu, 13 Feb 2025 23:48:07 +0530
+X-Gm-Features: AWEUYZnJ3zzoJgXFM5e-qdWYXlNvDt8aaMbqd6kIl5n8r6b_N0Hsr27wGl9I72c
+Message-ID: <CAKTQj-53s_n=7qdm5eV8vrCLR-AKHBpq1pqCewNKPmyYtHVZJw@mail.gmail.com>
+Subject: Question Regarding the PowerPC arch Support
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000022275d062e0a1505"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=atharvd440@gmail.com; helo=mail-ot1-x335.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,119 +88,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use noun_verb() function naming instead of verb_noun() because the
-former is the most common naming style for APIs. The next commit will
-move these functions into a header file so that virtio-scsi can call
-them.
+--00000000000022275d062e0a1505
+Content-Type: text/plain; charset="UTF-8"
 
-Shorten iothread_vq_mapping_apply()'s iothread_vq_mapping_list argument
-to just "list" like in the other functions.
+Hello,
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/block/virtio-blk.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+I am new user to qemu and wanted to ask if qemu supports AHCI mode in
+PowerPC emulation.
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9af8c51af0..6464a305d0 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1414,8 +1414,8 @@ static const BlockDevOps virtio_block_ops = {
- };
- 
- static bool
--validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
--        uint16_t num_queues, Error **errp)
-+iothread_vq_mapping_validate(IOThreadVirtQueueMappingList *list, uint16_t
-+        num_queues, Error **errp)
- {
-     g_autofree unsigned long *vqs = bitmap_new(num_queues);
-     g_autoptr(GHashTable) iothreads =
-@@ -1476,22 +1476,22 @@ validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
- }
- 
- /**
-- * apply_iothread_vq_mapping:
-- * @iothread_vq_mapping_list: The mapping of virtqueues to IOThreads.
-+ * iothread_vq_mapping_apply:
-+ * @list: The mapping of virtqueues to IOThreads.
-  * @vq_aio_context: The array of AioContext pointers to fill in.
-  * @num_queues: The length of @vq_aio_context.
-  * @errp: If an error occurs, a pointer to the area to store the error.
-  *
-  * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
-- * the iothread-vq-mapping parameter in @iothread_vq_mapping_list.
-+ * the iothread-vq-mapping parameter in @list.
-  *
-- * cleanup_iothread_vq_mapping() must be called to free IOThread object
-+ * iothread_vq_mapping_cleanup() must be called to free IOThread object
-  * references after this function returns success.
-  *
-  * Returns: %true on success, %false on failure.
-  **/
--static bool apply_iothread_vq_mapping(
--        IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
-+static bool iothread_vq_mapping_apply(
-+        IOThreadVirtQueueMappingList *list,
-         AioContext **vq_aio_context,
-         uint16_t num_queues,
-         Error **errp)
-@@ -1500,16 +1500,15 @@ static bool apply_iothread_vq_mapping(
-     size_t num_iothreads = 0;
-     size_t cur_iothread = 0;
- 
--    if (!validate_iothread_vq_mapping_list(iothread_vq_mapping_list,
--                                           num_queues, errp)) {
-+    if (!iothread_vq_mapping_validate(list, num_queues, errp)) {
-         return false;
-     }
- 
--    for (node = iothread_vq_mapping_list; node; node = node->next) {
-+    for (node = list; node; node = node->next) {
-         num_iothreads++;
-     }
- 
--    for (node = iothread_vq_mapping_list; node; node = node->next) {
-+    for (node = list; node; node = node->next) {
-         IOThread *iothread = iothread_by_id(node->value->iothread);
-         AioContext *ctx = iothread_get_aio_context(iothread);
- 
-@@ -1539,13 +1538,13 @@ static bool apply_iothread_vq_mapping(
- }
- 
- /**
-- * cleanup_iothread_vq_mapping:
-+ * iothread_vq_mapping_cleanup:
-  * @list: The mapping of virtqueues to IOThreads.
-  *
-  * Release IOThread object references that were acquired by
-- * apply_iothread_vq_mapping().
-+ * iothread_vq_mapping_apply().
-  */
--static void cleanup_iothread_vq_mapping(IOThreadVirtQueueMappingList *list)
-+static void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list)
- {
-     IOThreadVirtQueueMappingList *node;
- 
-@@ -1587,7 +1586,7 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
-     s->vq_aio_context = g_new(AioContext *, conf->num_queues);
- 
-     if (conf->iothread_vq_mapping_list) {
--        if (!apply_iothread_vq_mapping(conf->iothread_vq_mapping_list,
-+        if (!iothread_vq_mapping_apply(conf->iothread_vq_mapping_list,
-                                        s->vq_aio_context,
-                                        conf->num_queues,
-                                        errp)) {
-@@ -1621,7 +1620,7 @@ static void virtio_blk_vq_aio_context_cleanup(VirtIOBlock *s)
-     assert(!s->ioeventfd_started);
- 
-     if (conf->iothread_vq_mapping_list) {
--        cleanup_iothread_vq_mapping(conf->iothread_vq_mapping_list);
-+        iothread_vq_mapping_cleanup(conf->iothread_vq_mapping_list);
-     }
- 
-     if (conf->iothread) {
--- 
-2.48.1
+Regards,
+Atharv Dubey
 
+--00000000000022275d062e0a1505
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello,=C2=A0<div><br></div><div>I am new user to qemu and =
+wanted to ask if qemu supports AHCI mode in PowerPC emulation.=C2=A0 =C2=A0=
+</div><div><br></div><div>Regards,=C2=A0</div><div>Atharv Dubey</div></div>
+
+--00000000000022275d062e0a1505--
 
