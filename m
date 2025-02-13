@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2713C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 15:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2DAC0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 15:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibNZ-0002a7-Qr; Thu, 13 Feb 2025 10:43:53 -0500
+	id 1tibPG-0003S2-KY; Thu, 13 Feb 2025 10:45:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tibNX-0002Zn-R1
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:43:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tibNV-0002dz-Ud
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:43:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739461428;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ACyBtYFfCtMsFuuaFrla2QDZZooI4bNTevGfI4ONTBg=;
- b=HWAH7WhLq+MM75uOdNx5gNquijgCN5G4ljnFH04uZRoDMCdxlta1VIEPq33n3m1lqkUf1S
- MjGvXf+KkKkbRo/zzTClTXIg46owWZRFhciEG5ZgOGmnklS18dBOMYHu2K876VKJ7lF9mX
- YpkPW02DsmFRzevyaLElEktFQ4HvpvM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-_qtviuWWMECD3bCtix3LRw-1; Thu, 13 Feb 2025 10:43:43 -0500
-X-MC-Unique: _qtviuWWMECD3bCtix3LRw-1
-X-Mimecast-MFC-AGG-ID: _qtviuWWMECD3bCtix3LRw_1739461420
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4394c0a58e7so7746535e9.0
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 07:43:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tibPE-0003Re-AR
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:45:36 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tibPC-000382-LH
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:45:36 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38f22fe889aso753214f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 07:45:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739461533; x=1740066333; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=O6A4rffOhK7dBT4am3uKeiZAMq8YP3FT36Epy8DTn7M=;
+ b=sKq6+/oCZTe4rmw0MrtLaoecDzXH7PehAXuG3eMmcmgSeDviGeDa2ivv1OM1Za7TUQ
+ rxMhdt4W08w7ZRtfLmvLwiG5QatZeBtBNfSxKNj0rl4sNpLDihVVDx7B1haApwWEpHvZ
+ DOV2kCrPrduFJzcbOjbYU9Op7Yc5u8/dauUH1B1kto4jeOyoId8bcR8ZzS65HcJiqTKd
+ 0O1nae4KyZJIN1shSwF4tQmu6mILL+ecNyPbxmK9/n42Q/orwNOX5fUT68m49hChpeWm
+ U9eudPtX55dPB8H//3VYnmCQ4O0PYrEAL2veljYNijuj7wNvnASfLtAkjzJ9sqFfcOrU
+ +SUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739461420; x=1740066220;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ACyBtYFfCtMsFuuaFrla2QDZZooI4bNTevGfI4ONTBg=;
- b=i+rjpMtyRfy7bXbG9jVjwqdC0iUPHjqC1Uf9/1tJHLmqAxBHxq/7HwCdjHlVZN8BPp
- k+fGkPASU2Qa9SScnoTsvE/HeAOS7H48UrScI4eX/CJZmP5X6FtNr0+a70vES+EtdM9m
- fZGUogg6xHBcIszSGhOo3X787aNKX1zzCL2uy2PVUasn7WUzV7Sra2YX8s8+8pMZr01X
- 21N+lb3S/2GVZQpf+IKdBCW/tYMIGjRnTWNbhCdnfGOf4sdk03QMrq/2BF5Eo24R6E6W
- iyl1einMwMJYHdZohl0wUxSBdZajZLD7/lmmfdhOEtw4KLhz9sMkkIJBjmMkO8iys2X+
- i0QA==
-X-Gm-Message-State: AOJu0YzarEEOA4Peoa7Wz5fkkwPkn34I/bAbSqy+q1oJ7/q7ahVFNcFA
- tPTllQeZDbH/x/gdiJR5RuGKt2vDfOYkEmA6Dv/U2lhB2H8N+dCqn4bK4wV2Pd+gbsEFYVjiBJF
- zXoLL/qbfY6Rkw7ax1Qt1UK9rI9e90wcEUdVn8t143wNabrwjHQbl5G/cSb3P
-X-Gm-Gg: ASbGncsZLHSpnr5l4sc9/O6RpqdOL0XgAUhz2y0RxPUHHngnMDvg6M8T7pacGglUp7O
- kaXWaWtUY8yUjkCDWYxCtcrRIsF8zpWUxLX8QLMLLdITBmIX5CvXSgW9RcVT5UQWVt/4hJ5WEPp
- /D9liXQ/SBWXftdS0X9rGsnodDKtJe56eL7BYLZfI2Km4/fJvd7KIjwzKWk/XAXJL7xlLEFyoqy
- 4wD43lsO2dz9LoOO4jiZlOB3097N+trXiVIxCfyDLJJjNx4PNknNRu5gtdHK+kgp7//BEJw2jAb
- 20nc4HfiyoWF+8DF8hHIvqn/hozJW1Sxiibt8nEca6OYrKdM0623Pw==
-X-Received: by 2002:a05:600c:33a3:b0:439:5a37:815c with SMTP id
- 5b1f17b1804b1-4395a3781dcmr72247695e9.20.1739461419861; 
- Thu, 13 Feb 2025 07:43:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1djmtDElUXYxJxHCg/o5SUO6OrcDtAh6fN7u/mYQtpjxUfHyhqopxqZ38AlF4xIwygpcArA==
-X-Received: by 2002:a05:600c:33a3:b0:439:5a37:815c with SMTP id
- 5b1f17b1804b1-4395a3781dcmr72247065e9.20.1739461419144; 
- Thu, 13 Feb 2025 07:43:39 -0800 (PST)
-Received: from sgarzare-redhat (host-79-46-200-29.retail.telecomitalia.it.
- [79.46.200.29]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d65dfsm2237141f8f.64.2025.02.13.07.43.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 07:43:38 -0800 (PST)
-Date: Thu, 13 Feb 2025 16:43:34 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH] vhost-user-snd: Use virtio_get_config_size()
-Message-ID: <CAGxU2F4Jzi+16Z_JKjhQREJ2FBGPOHheLhSoCOJ=6O-XL+k1NA@mail.gmail.com>
-References: <20250213132513.767709-1-mvaralar@redhat.com>
- <z2bfkwpwfohvmj6xesdm2zmatlcwxta4aexq6x543lpnt47333@ayqfx3yxs5eb>
+ d=1e100.net; s=20230601; t=1739461533; x=1740066333;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O6A4rffOhK7dBT4am3uKeiZAMq8YP3FT36Epy8DTn7M=;
+ b=Kjs6GHJ/NdGfSOM5JTDHo0RNyIKNyV5jOvE1rxgyfp2uDTGxHZwuhjNgtDsMuc+pZj
+ YJ8K5lraNG52dUFA7oR88W5FYpbrekQaHT3vIgjG+m4JFvBRg3xvqtkZ7bBhhhOlRssU
+ hzk2SGIkdvg8QVbjl0btteUV1TG8qVjEukp90bZOq/Q0SiwjW+jt+2PS+n4doMF1A/zW
+ b6LfzeoSn3Xnj+F9+HbImSuHsR4hEmqmUTGnxdsrbNxIpmpxNX+k8UHgXBrb/hZ1YePG
+ qGRn2Zq8pQuKpMzIkvB/4woxWipUTTXzpmUv8LXq57nSl77zLlBcM8GDUl18JHdmki33
+ HOUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVo1dfYTXc5v5dG5v/z8KEI8N6++DXMe28/24r4WiM+3iTmUEfwDX9BPP+u/UYV52nuIDbqSSAQbA68@nongnu.org
+X-Gm-Message-State: AOJu0Yy68B15Qarsb1fc7KFHXrh7T7Wj+RACNtSuvY1P2We6zLPs/BjE
+ 9HrwSYdTAAZOBgW5z8ghbxuK+eeFQhOIJyiihLWWj89OWDsRGktxD9BveRQPK2ywIB+MWRyV1mP
+ 730M=
+X-Gm-Gg: ASbGncsIWS4It8yfLix/YqjxOXvl3nR3aPs4k7yLI5i7IokqO9B7y9iPxmfKLyOgazM
+ 2NHoYjZ0e+ryJpp8ioDM5J1smFHy+lm9u8CjIArYN4PcY3AXWrKrDBtMbBw7SRa6tgYyvr0L6RV
+ 4Oyw1MjRr7wEldplHig8khQFaxsJzgdpIuCZ6JA4SHtB0F/V81eSDreHRe+RFTTXOhHHSgOU0mn
+ tdAJM0C83EsUrZMT/E6GSOQ9aOkqRjCCgkSEZCmgFlV9HbY6s90eOXvLBx26AePJgrmMum7jqu7
+ xkYdMtkSdSWGYaFDxCcBk4qHkDaafvE3z0ttN+NmTVkuz93tsusijbFdjiY77tL5Vu0O74DDyQ=
+ =
+X-Google-Smtp-Source: AGHT+IEr29o2Ny0SME+c1jXB16H5y+64XnogWCPipoqBbCcnWOUPBZ7phYE0NUaR57dNbUd+V7WTag==
+X-Received: by 2002:a05:6000:136b:b0:38d:d8fb:e91a with SMTP id
+ ffacd0b85a97d-38f244edf28mr3437158f8f.27.1739461533039; 
+ Thu, 13 Feb 2025 07:45:33 -0800 (PST)
+Received: from [192.168.1.20] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f25a0fa1esm2172849f8f.100.2025.02.13.07.45.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Feb 2025 07:45:32 -0800 (PST)
+Message-ID: <59d1bd38-2b0f-413a-a6ff-28f8a055dad0@linaro.org>
+Date: Thu, 13 Feb 2025 16:45:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <z2bfkwpwfohvmj6xesdm2zmatlcwxta4aexq6x543lpnt47333@ayqfx3yxs5eb>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] tcg: Introduce the 'z' constraint for a hardware zero
+ register
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250212034617.1079324-1-richard.henderson@linaro.org>
+ <20250212034617.1079324-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250212034617.1079324-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,151 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unrelated to this patch, but since we are talking about
-VIRTIO_SND_F_CTLS, I think it would be good to send a patch to Linux to
-make it clear that `controls` depends on VIRTIO_SND_F_CTLS.
-
-For example in linux/include/uapi/linux/virtio_blk.h we have:
-
-struct virtio_blk_config {
-	/* The capacity (in 512-byte sectors). */
-	__virtio64 capacity;
-	/* The maximum segment size (if VIRTIO_BLK_F_SIZE_MAX) */
-	__virtio32 size_max;
-	/* The maximum number of segments (if VIRTIO_BLK_F_SEG_MAX) */
-	__virtio32 seg_max;
-	....
-
-So I suggest something like this:
-
-diff --git a/include/uapi/linux/virtio_snd.h b/include/uapi/linux/virtio_snd.h
-index 5f4100c2cf04..a4cfb9f6561a 100644
---- a/include/uapi/linux/virtio_snd.h
-+++ b/include/uapi/linux/virtio_snd.h
-@@ -25,7 +25,7 @@ struct virtio_snd_config {
-        __le32 streams;
-        /* # of available channel maps */
-        __le32 chmaps;
--       /* # of available control elements */
-+       /* # of available control elements (if VIRTIO_SND_F_CTLS) */
-        __le32 controls;
- };
-
-Thanks,
-Stefano
+On 12/2/25 04:46, Richard Henderson wrote:
+> For loongarch, mips, riscv and sparc, a zero register is
+> available all the time.  For aarch64, register index 31
+> depends on context: sometimes it is the stack pointer,
+> and sometimes it is the zero register.
+> 
+> Introduce a new general-purpose constraint which maps 0
+> to TCG_REG_ZERO, if defined.  This differs from existing
+> constant constraints in that const_arg[*] is recorded as
+> false, indicating that the value is in a register.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg.h            |  3 ++-
+>   tcg/aarch64/tcg-target.h     |  2 ++
+>   tcg/loongarch64/tcg-target.h |  2 ++
+>   tcg/mips/tcg-target.h        |  2 ++
+>   tcg/riscv/tcg-target.h       |  2 ++
+>   tcg/sparc64/tcg-target.h     |  3 ++-
+>   tcg/tcg.c                    | 29 ++++++++++++++++++++++-------
+>   docs/devel/tcg-ops.rst       |  4 +++-
+>   8 files changed, 37 insertions(+), 10 deletions(-)
 
 
-On Thu, 13 Feb 2025 at 16:31, Stefano Garzarella <sgarzare@redhat.com> wrote:
->
-> For the title, what about this?
->
->    vhost-user-snd: fix incorrect config_size computation
->
-> Or something like that, just to make clear that we are fixing a
-> real issue.
->
-> On Thu, Feb 13, 2025 at 02:25:13PM +0100, Matias Ezequiel Vara Larsen
-> wrote:
-> >Use virtio_get_config_size() rather than sizeof(struct
-> >virtio_snd_config) for the config_size in the vhost-user-snd frontend.
-> >The frontend shall rely on device features for the size of the device
-> >configuration space. This fixes an issue introduced by commit ab0c7fb2
->
-> When we refer to a commit it's a good practice to put both the sha1, but
-> also the title, like this:
-> This fixes an issue introduced by commit ab0c7fb22b ("linux-headers:
-> update to current kvm/next") ...
->
-> >in which the optional field `control` is added to the virtio_snd_config
->
-> s/control/controls
->
-> I would also specify here that the presence of `controls` in the config
-> space depends on VIRTIO_SND_F_CTLS, citing the specification:
->
-> 5.14.4 Device Configuration Layout
->   ...
->   controls
->      (driver-read-only) indicates a total number of all available control
->      elements if VIRTIO_SND_F_CTLS has been negotiated.
->
-> >structure. This breaks vhost-user-device backends that do not implement
-> >the `controls` field.
-> >
->
-> I'd suggest to add the fixes tag:
->
-> Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
->
-> And maybe also:
->
-> Cc: qemu-stable@nongnu.org
->
-> >Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
-> >Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-> >Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-> >---
-> > hw/virtio/vhost-user-snd.c | 18 +++++++++++++++++-
-> > 1 file changed, 17 insertions(+), 1 deletion(-)
-> >
-> >diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-> >index 8610370af8..8da4309470 100644
-> >--- a/hw/virtio/vhost-user-snd.c
-> >+++ b/hw/virtio/vhost-user-snd.c
-> >@@ -16,6 +16,18 @@
-> > #include "standard-headers/linux/virtio_ids.h"
-> > #include "standard-headers/linux/virtio_snd.h"
-> >
-> >+static const VirtIOFeature feature_sizes[] = {
-> >+    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
-> >+    .end = endof(struct virtio_snd_config, controls)},
-> >+    {}
-> >+};
-> >+
-> >+static const VirtIOConfigSizeParams cfg_size_params = {
-> >+    .min_size = endof(struct virtio_snd_config, chmaps),
-> >+    .max_size = sizeof(struct virtio_snd_config),
-> >+    .feature_sizes = feature_sizes
-> >+};
-> >+
-> > static const VMStateDescription vu_snd_vmstate = {
-> >     .name = "vhost-user-snd",
-> >     .unmigratable = 1,
-> >@@ -23,16 +35,20 @@ static const VMStateDescription vu_snd_vmstate = {
-> >
-> > static const Property vsnd_properties[] = {
-> >     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-> >+    DEFINE_PROP_BIT64("config-controls", VHostUserBase,
->
-> In almost all other virtio/vhost-user devices, the property name does
-> not have the prefix `config-`, but usually the thing after F_, in this
-> case CTLS is cryptic, so IMO just `controls` should be fine.
->
-> The only example I found is `config-wce` for vhost-user-blk, but in that
-> case the feature is actually called VIRTIO_BLK_F_CONFIG_WCE.
->
-> Thanks,
-> Stefano
->
-> >+                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
-> > };
-> >
-> > static void vu_snd_base_realize(DeviceState *dev, Error **errp)
-> > {
-> >     VHostUserBase *vub = VHOST_USER_BASE(dev);
-> >     VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
-> >+    VirtIODevice *vdev = &vub->parent_obj;
-> >
-> >     vub->virtio_id = VIRTIO_ID_SOUND;
-> >     vub->num_vqs = 4;
-> >-    vub->config_size = sizeof(struct virtio_snd_config);
-> >+    vub->config_size = virtio_get_config_size(&cfg_size_params,
-> >+                                              vdev->host_features);
-> >     vub->vq_size = 64;
-> >
-> >     vubs->parent_realize(dev, errp);
-> >--
-> >2.42.0
-> >
+> diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+> index 6608a29376..75acb4bd32 100644
+> --- a/docs/devel/tcg-ops.rst
+> +++ b/docs/devel/tcg-ops.rst
+> @@ -927,7 +927,9 @@ operation uses a constant input constraint which does not allow all
+>   constants, it must also accept registers in order to have a fallback.
+>   The constraint '``i``' is defined generically to accept any constant.
+>   The constraint '``r``' is not defined generically, but is consistently
+> -used by each backend to indicate all registers.
+> +used by each backend to indicate all registers.  If ``TCG_REG_ZERO``
+> +is defined by the backend, the constraint '``z``' is defined generically
+
+and/to?
+
+> +map 0 to the hardware zero register.
+>   
+>   The movi_i32 and movi_i64 operations must accept any constants.
+>   
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
