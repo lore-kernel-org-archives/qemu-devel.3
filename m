@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10B8C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803F3C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiQ1c-0007J8-9G; Wed, 12 Feb 2025 22:36:28 -0500
+	id 1tiQ2w-0002mu-Ht; Wed, 12 Feb 2025 22:37:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tiQ14-0007A9-RW; Wed, 12 Feb 2025 22:35:54 -0500
+ id 1tiQ2s-0002Z2-7z; Wed, 12 Feb 2025 22:37:46 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tiQ13-0000hG-I8; Wed, 12 Feb 2025 22:35:54 -0500
+ id 1tiQ2q-0000pw-O2; Wed, 12 Feb 2025 22:37:45 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 13 Feb
- 2025 11:35:34 +0800
+ 2025 11:35:41 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 13 Feb 2025 11:35:34 +0800
+ Transport; Thu, 13 Feb 2025 11:35:41 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 06/28] hw/intc/aspeed: Support different memory region ops
-Date: Thu, 13 Feb 2025 11:35:09 +0800
-Message-ID: <20250213033531.3367697-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 25/28] tests/functional/aspeed: Update test ASPEED SDK
+ v09.05
+Date: Thu, 13 Feb 2025 11:35:28 +0800
+Message-ID: <20250213033531.3367697-26-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
@@ -65,64 +66,30 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous implementation set the "aspeed_intc_ops" struct, containing read
-and write callbacks, to be used when I/O is performed on the INTC region.
-Both "aspeed_intc_read" and "aspeed_intc_write" callback functions were used
-for INTC (CPU Die).
-
-To support the INTCIO (IO Die) model, introduces a new "reg_ops" class
-attribute. This allows setting different memory region operations to support
-different INTC models.
-
-Will introduce "aspeed_intcio_read" and "aspeed_intcio_write" callback
-functions are used for INTCIO.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/intc/aspeed_intc.c         | 5 ++++-
- include/hw/intc/aspeed_intc.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ tests/functional/test_aarch64_aspeed.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 91d8edb261..cc2426fbac 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -340,7 +340,7 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index aa817afa4e..788dd29a6d 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -89,11 +89,11 @@ def start_ast2700_test(self, name):
+         exec_command_and_wait_for_pattern(self,
+             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
  
-     sysbus_init_mmio(sbd, &s->iomem_container);
+-    def test_aarch64_ast2700_evb_sdk_v09_03(self):
++    def test_aarch64_ast2700_evb_sdk_v09_05(self):
+         self.set_machine('ast2700-evb')
  
--    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-+    memory_region_init_io(&s->iomem, OBJECT(s), aic->reg_ops, s,
-                           TYPE_ASPEED_INTC ".regs", aic->reg_size);
+-        self.extra_aspeed_archive('v09.03', 'ast2700-default-obmc.tar.gz',
+-            '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
++        self.extra_aspeed_archive('v09.05', 'ast2700-default-obmc.tar.gz',
++            'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
+         self.start_ast2700_test('ast2700-default')
  
-     memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
-@@ -358,11 +358,14 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
- static void aspeed_intc_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
  
-     dc->desc = "ASPEED INTC Controller";
-     dc->realize = aspeed_intc_realize;
-     device_class_set_legacy_reset(dc, aspeed_intc_reset);
-     dc->vmsd = NULL;
-+
-+    aic->reg_ops = &aspeed_intc_ops;
- }
- 
- static const TypeInfo aspeed_intc_info = {
-diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-index ecaeb15aea..749d7c55be 100644
---- a/include/hw/intc/aspeed_intc.h
-+++ b/include/hw/intc/aspeed_intc.h
-@@ -43,6 +43,7 @@ struct AspeedINTCClass {
-     uint32_t num_ints;
-     uint64_t mem_size;
-     uint64_t reg_size;
-+    const MemoryRegionOps *reg_ops;
- };
- 
- #endif /* ASPEED_INTC_H */
 -- 
 2.34.1
 
