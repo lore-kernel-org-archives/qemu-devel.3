@@ -4,107 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD02DC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A64C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiaKF-0005RM-GF; Thu, 13 Feb 2025 09:36:26 -0500
+	id 1tiaLX-0006JX-Rt; Thu, 13 Feb 2025 09:37:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tiaK6-0005MG-Qr
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:36:15 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiaLW-0006JN-9y
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:37:42 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tiaK4-0000Pg-Hs
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:36:14 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A3A5B1F8BD;
- Thu, 13 Feb 2025 14:36:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739457362; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=8+8ru954tueiSAUG6cNssvTU2aDH5ZuhCuuZVHzEkBM=;
- b=UdkE9zi7jCSfevu0x9+qbtDPOwGLrrbxs7UIv1ZYRj6QGf/71EtxoQz54Nijb6kCVhvkEa
- E4iH9nIkRntobRRD48o7WH4zVbc4/k11OwC/yp6Xcs7b2XY9ODWimVm//GtRfdh/AU/yVW
- w1gkDMmRYE+sC2tWwTUtcSXo8niSgUQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739457362;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=8+8ru954tueiSAUG6cNssvTU2aDH5ZuhCuuZVHzEkBM=;
- b=mOp26QvJXZi9vGdCqzvctrOU5cx33IEBLX8RGEwhBdhDUNTkT6RSAx4SvS04COmtQX+EXo
- J3reFUZm6gdD2KCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UdkE9zi7;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mOp26QvJ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739457362; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=8+8ru954tueiSAUG6cNssvTU2aDH5ZuhCuuZVHzEkBM=;
- b=UdkE9zi7jCSfevu0x9+qbtDPOwGLrrbxs7UIv1ZYRj6QGf/71EtxoQz54Nijb6kCVhvkEa
- E4iH9nIkRntobRRD48o7WH4zVbc4/k11OwC/yp6Xcs7b2XY9ODWimVm//GtRfdh/AU/yVW
- w1gkDMmRYE+sC2tWwTUtcSXo8niSgUQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739457362;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=8+8ru954tueiSAUG6cNssvTU2aDH5ZuhCuuZVHzEkBM=;
- b=mOp26QvJXZi9vGdCqzvctrOU5cx33IEBLX8RGEwhBdhDUNTkT6RSAx4SvS04COmtQX+EXo
- J3reFUZm6gdD2KCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10A6A137DB;
- Thu, 13 Feb 2025 14:36:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GaUKMFADrmd+agAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 13 Feb 2025 14:36:00 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dario Faggioli <dfaggioli@suse.com>
-Subject: [RFC PATCH] elfload: Fix alignment when unmapping excess reservation
-Date: Thu, 13 Feb 2025 11:35:58 -0300
-Message-Id: <20250213143558.10504-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiaLT-0000jO-Nx
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:37:41 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-38dcc6bfbccso541526f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:37:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739457457; x=1740062257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BzyXTXR1SIti5vNjf0DFd0D0clKdjD1pu5eS/vqcSl4=;
+ b=U8QyVjCHbBrv2I4sVkEdspmlCXx/M6cZcMZEAEnf+AgkAOC/PiS1mw0SzDHdcMQE8d
+ gzH6oK49nF28c9CCHno9S3i77JFsVYH8fmmzyTXYzzTWJ9GjNAZwgoOvcgpE2/nDy4pb
+ XWTiZa9cffhBgZxLL9Klo//Vfpkr6iH612C1Aa1LVldEGj2Zd610b/GQmusARTpG73LR
+ MdghVbsmpRxl4o/4r5OHltVDCNYOFHLE+jP5/EUrG/sBjCTduz4cZXEG4SG8tIdpDuZ8
+ X8JXS0azRsoWJFyZXzWnMyhshTm26nxbntLuuM17pf4vqz73sImMQ35u14c1lbU+1mah
+ JjZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739457457; x=1740062257;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BzyXTXR1SIti5vNjf0DFd0D0clKdjD1pu5eS/vqcSl4=;
+ b=j7FCcUCpfvE6U5RgqhpXhSBt9k9sVcQEvyKUwwojcvAR+jnucp0e2ZvGyyT+W8r+0+
+ WLdqJ0duifxRbPXNU/gDULePKPZgi32sPJ818qcjwEoBJkV51oXEMR0M+TgxD1ailvl3
+ BFs1Rj61qBVPoSwmOKglTr0g9oRFdmDN8pzU0boFoafvQtgKhG3LzuxLCzNTUHaiesUw
+ +lYssNePyYXJN8A+oyWegJiFwgxlJgIuJdnJ24+ww9h+2nDuH9VE7jjdklCl6vJWijD6
+ BoOaLra6XGU8BnqqkOVluisXKREbTQ+oJq1y4KsJWgl33iXqmWds6Jfz69Bq7ryZahyZ
+ qK5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhNNCgNgXRuUJPvq9qXrNH0D/S2b4kZTNGuCyOXwhslAlYZouT43l+w5F1hHP7RWjWCJXf0NFfidFo@nongnu.org
+X-Gm-Message-State: AOJu0Yx9kvh0tQ88F4UfNDOLIzL4LVlcwPdhPm6r+9oMJFtlKMRYKKSb
+ HEBUiZJYylzMXprxYlkFgMoO41cS93aaqIwaqFIb89T02lQuBQ72rGXER20EbSk=
+X-Gm-Gg: ASbGncu0qvbfhI+glv2TdmDJGRKGzjXJrMiOkDu9khnpUGNb1/YXBXIe5PCSzkKyqkb
+ kRgO3cpqG9mnkxjYB6U5V0bCAS/y8T1UlPcXFnk0MQvstwZly9aCjXaJTTDaHC1QX5Mnx9DyzQa
+ DIlT0GTBE1ZY3U1J0udbshnfejIpBqBgUvg9NBMDKVX7RDtWaOLZFbpRIjZ5SeGvsfk8ePIonlz
+ R23B+GQaEmRb1Ihdv/WHNbsPlC1qjoq4+/0fs2NbPQMfeGVtMfQN9AjigSB0I/+sVs3S4Pakp3m
+ xqtVqL+G8zN7tYbSbvyr4GIsnDY1h6Qvxp9zOmsqgE6rtS+zvRVCWXa9+E2MF06zDO9djLYteA=
+ =
+X-Google-Smtp-Source: AGHT+IF2jE3IIlt9vy5oj0JK5Dm347x2nBsO0vztBOQvJLgpkJkMU1a0XP0kNPzcUVSDBY6J/Ie6oQ==
+X-Received: by 2002:a05:6000:156f:b0:38e:dcd4:a11 with SMTP id
+ ffacd0b85a97d-38edcd40a7emr6233208f8f.30.1739457457585; 
+ Thu, 13 Feb 2025 06:37:37 -0800 (PST)
+Received: from [192.168.1.20] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f25915688sm2096807f8f.57.2025.02.13.06.37.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Feb 2025 06:37:36 -0800 (PST)
+Message-ID: <314842e6-810b-4f34-bf5b-a419c6a306a7@linaro.org>
+Date: Thu, 13 Feb 2025 15:37:36 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/11] tcg: Drop support for two address registers in
+ gen_ldst
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250205040341.2056361-1-richard.henderson@linaro.org>
+ <20250205040341.2056361-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250205040341.2056361-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A3A5B1F8BD
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[4];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,39 +102,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When complying with the alignment requested in the ELF and unmapping
-the excess reservation, having align_end not aligned to the guest page
-causes the unmap to be rejected by the alignment check at
-target_munmap and later brk adjustments hit an EEXIST.
+On 5/2/25 05:03, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tcg-op-ldst.c | 22 ++++------------------
+>   1 file changed, 4 insertions(+), 18 deletions(-)
 
-Fix by aligning the start of region to be unmapped.
-
-Fixes: c81d1fafa6 ("linux-user: Honor elf alignment when placing images")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1913
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-In the bug there was mention of the vdso landing in the wrong spot,
-but I don't see evidence of this in my testing. Looking at the
-addresses in the bug report, there seems to have been a mistake
-because I don't see an overlap there either.
----
- linux-user/elfload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index a2c152e5ad..05ee5e74fd 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3351,7 +3351,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
- 
-     if (align_size != reserve_size) {
-         abi_ulong align_addr = ROUND_UP(load_addr, align);
--        abi_ulong align_end = align_addr + reserve_size;
-+        abi_ulong align_end = TARGET_PAGE_ALIGN(align_addr + reserve_size);
-         abi_ulong load_end = load_addr + align_size;
- 
-         if (align_addr != load_addr) {
--- 
-2.35.3
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
