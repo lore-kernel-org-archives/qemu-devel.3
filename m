@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788DFC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52580C021A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiber-0000vt-0H; Thu, 13 Feb 2025 11:01:45 -0500
+	id 1tibu8-0003DU-2m; Thu, 13 Feb 2025 11:17:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibeJ-0000op-JW
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:18 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tibu0-0003BA-RK
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:17:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibeD-0005PM-JT
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:10 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tibtx-00080z-Rm
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:17:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739462464;
+ s=mimecast20190719; t=1739463430;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WszW0NxKZSYHFFSiUB5cJcU961As2uXrLrk50UN0l2U=;
- b=ZL92n1OJJupYecXua3K6tOmQDfE1EBXS/9Egz5xhhZTmGj4FjMWUcXs9U4lyrMdgxTc+Zd
- kszC4U6QeMTD9Jd5KaWnJNLz+w7f/zZ5EOIR8PMdkZov+tmq3jYXhx0VUzwKLmXmL2HoZC
- EKSoWqCwwemRRa/nE8hyPT1mwyrjdAY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GeAlL+1AzeNTPsRQ3WHe8FvtX8RVdZ1WH1mrHyX0XPk=;
+ b=EtkdrHZNjv8j0DBfE1bzeU6swDXhioeo2pLhW+zXc0TPOXrAAAccVyLa5RRs0kGyTpP/dh
+ p7R0Lc6FomXwkFrzxe4SNMsBqhYhrpTc32LyUKqPgMGLkU13yzZaD09P6JlEXlGjIe64Rz
+ ZZ9r87vH0ZXLb/WblWBxB0JqPLCAPxs=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-vHSMizb1NX6hT6xb5joKng-1; Thu, 13 Feb 2025 11:01:02 -0500
-X-MC-Unique: vHSMizb1NX6hT6xb5joKng-1
-X-Mimecast-MFC-AGG-ID: vHSMizb1NX6hT6xb5joKng
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43941ad86d4so8422565e9.2
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:02 -0800 (PST)
+ us-mta-53-BSUTO2dPOiebK1IFCxktHg-1; Thu, 13 Feb 2025 11:17:08 -0500
+X-MC-Unique: BSUTO2dPOiebK1IFCxktHg-1
+X-Mimecast-MFC-AGG-ID: BSUTO2dPOiebK1IFCxktHg_1739463427
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38ddcb63ed1so744283f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:17:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739462461; x=1740067261;
+ d=1e100.net; s=20230601; t=1739463427; x=1740068227;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WszW0NxKZSYHFFSiUB5cJcU961As2uXrLrk50UN0l2U=;
- b=uyHngAvOp/AcAyKb3Iwh2mgORbmH/85dRKXAwqh47UrZ3hpLOOFUOstylkcC8jwGW5
- 9Cg5MLSOJ2B+8HTBJH0VOf+A7/b4T0AnPAkFgO9H8cYvQDwGU6RVQRYSnECUJzktzR6V
- C1rSBpx6xWDoYClp5Hitluinek4cp1+t8FCGjbJVPBeTe4YnWeo/QhKn++cZl+83Fanh
- 1/VIYerzEr/t/x2pwg8GX9cHXs8dBJpI873Q86/Bx+Hu/iS9aXEzTyU1yL61opB84Nsz
- HzuaDyKJpihWe1qUoYmgUCOQq3VQfMfgHvT6OdfZQgL+NbsW78tMfALLi3ajH+kpBZEQ
- I2Hw==
-X-Gm-Message-State: AOJu0Yx6lztEu+OuW3G1acnmfovlWyzOvQMfy+VDLHe4dm/fD27D0TNl
- hAtTwdUaL9zVVQ4s24d2ea1HxWAJQvriAQTKTSaKlheqmGtRR5d1NmBocblHp3Dw8wjC1kpLq2T
- OGZOWMeDy4iSc7s8DVROdzz5dwEwGAG2y4u91T5Id3mSg6JgbF4TZEqFCnRrCv/P+dRpS55zj6E
- YVa02MTthQLPgL75HniypraHehn5YgPVra7Ls8FjA=
-X-Gm-Gg: ASbGncu9XeXH1nfQ5c+1IisnsXOMn988Go0v9orxuxOWRA320clSVGngRHGjCXGinQf
- 3Hj1fyicCTCCZ7vKvP9Gj+pmgm+OmxCiuHBAb8T6klw8RNibWwUorVQ2sh92jGWJ4uzFX62JroM
- vL1H83CqaeCbFNIv862mpJZqgu6GhM2lhOkJwKT++bF+6EfjaLr+xzuN+52ZTZ7tmHc5CQvlaU5
- xavVr723WLYsit3SSxoiFrZSVN69gFuiPtESee2MnnH8pJzaO6OxoZ93fuE+uTu7JNJgVYBWpcW
- TqGOHx2OydkTQSF5nIgzZNtaRcpo5Ews4Br87uJbGVacIw==
-X-Received: by 2002:a5d:598e:0:b0:38f:21ce:aa28 with SMTP id
- ffacd0b85a97d-38f21ceb0famr6167230f8f.36.1739462460311; 
- Thu, 13 Feb 2025 08:01:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGV2iV679sLK2Kn6isMwwx8W+PjBeaDA8rvAcFeN/A8HvlbVfbSMlvN/1+ih+wfA+QMrBd4FQ==
-X-Received: by 2002:a5d:598e:0:b0:38f:21ce:aa28 with SMTP id
- ffacd0b85a97d-38f21ceb0famr6167121f8f.36.1739462459383; 
- Thu, 13 Feb 2025 08:00:59 -0800 (PST)
-Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
- [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ccd2csm2318611f8f.30.2025.02.13.08.00.58
- for <qemu-devel@nongnu.org>
+ bh=GeAlL+1AzeNTPsRQ3WHe8FvtX8RVdZ1WH1mrHyX0XPk=;
+ b=ajKMkw4em3loPvm2nkkJTZn5NO973XrbNJdeylgrE887gCN9klNlKe/HUaICxUz/DQ
+ 0hXzlzrJXFsqOnsZ8i0BkuAv0uoqVgoSuO5Q66uhy5ZCbezuu8fmoo6kYWYoK6pqs0bb
+ FdaU480hU4unYYM5R2Qm+gDNGQZaRc3eJaBEGtC7gcn87rlcfDij6mhudNoVC3iL0PXZ
+ zBo6LJ0EJhqDc1GxRU0BHaicf+NycnmvJtVieqw6jo2bEmPZ1MBHbkKqlHmXfr0E443N
+ lQCXk81/XVvNkkcEC1UFWmmQ+CAtzJ23id5cVEbVSELTGNFUYhBVpmvih5mJd9BmHfaX
+ mC/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfggQowtRgU02lQY7w8BvXaBrd8hid3JfN50VtWGJiisaBpCQY6ednF2sN+E2qCqmOMcfKQWQ4OnjJ@nongnu.org
+X-Gm-Message-State: AOJu0YwZFUh4VNwEIuizKT18n/zm6mKXTRROW+rUOy77A+1opCRP1Vo+
+ KLAEOLYPRhdkHkHPJeBjiQQki7T463EO1xmw2nx4YPyYQFcMWcoERseq3vxXuxgP16Ogj76/1yM
+ CeVs+3PjlP3vb/OMMvr7SAQaCgesy+zRVh/ueGvICNHyX0A5tMxQr
+X-Gm-Gg: ASbGncvjRApwWVt615R/M9EsNDYupehD3p7QRC0ZCKuu0sVUvjk+KzLjHhHwz4UW5Y/
+ ek1eBRnoPQD7jhqBj7pxInVOxKMZbawHVHzjZKHRy1sKGNVId8guUNzhBh7BSzZtrDr0CHsasai
+ LeJclTQsQfIKHT5t8xO6dXHpLs4gVpLObQPloHG108qFi8R21bDxJStHLrsSLJcZXh2PrIgFbPs
+ QymiSg7QP9PNB77EjO8xhFbGYgqhWOuBaunYaEZRErIGhwVJ+pp/sVFBvwxds6rsCVbZLjcUbBg
+ Rv3O5mLjoksfD4nrL48WYkJl9jJ0PMfLzy/TuOlSzwiDhhNt6+gE
+X-Received: by 2002:a5d:524c:0:b0:38f:28dc:ec23 with SMTP id
+ ffacd0b85a97d-38f28dced84mr2227719f8f.19.1739463427286; 
+ Thu, 13 Feb 2025 08:17:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlG5uu37yM2Hh719O7QAR1k/85Z+uGhO4V+nOToCFbwcw7kgc+KqK/PqWPFa8yEDY14KdWmA==
+X-Received: by 2002:a5d:524c:0:b0:38f:28dc:ec23 with SMTP id
+ ffacd0b85a97d-38f28dced84mr2227689f8f.19.1739463426933; 
+ Thu, 13 Feb 2025 08:17:06 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258dcc45sm2307145f8f.33.2025.02.13.08.17.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:00:58 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 01/27] rust: docs: document naming convention
-Date: Thu, 13 Feb 2025 17:00:28 +0100
-Message-ID: <20250213160054.3937012-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
-References: <20250213160054.3937012-1-pbonzini@redhat.com>
+ Thu, 13 Feb 2025 08:17:06 -0800 (PST)
+Date: Thu, 13 Feb 2025 17:17:05 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: gaosong <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, QEMU
+ devel <qemu-devel@nongnu.org>, David Hildenbrand <david@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH] target/loongarch: Add full type support for
+ query-cpu-model-expansion
+Message-ID: <20250213171705.6dde38cf@imammedo.users.ipa.redhat.com>
+In-Reply-To: <87a5aqhxpt.fsf@pond.sub.org>
+References: <20250213091626.3650603-1-maobibo@loongson.cn>
+ <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
+ <87a5aqhxpt.fsf@pond.sub.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -108,70 +115,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As agreed in the "vtables and procedural macros" thread on
-the mailing list.
+On Thu, 13 Feb 2025 12:48:30 +0100
+Markus Armbruster <armbru@redhat.com> wrote:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/devel/rust.rst | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+> gaosong <gaosong@loongson.cn> writes:
+> 
+> > Cc: Markus
+> >
+> > hi, Markus
+> >
+> > What is the difference between CPU_MODEL_EXPANSION_TYPE_STATIC and 
+> > CPU_MODEL_EXPANSION_TYPE_FULL?  
 
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 390aae43866..8cccca7a734 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -194,6 +194,50 @@ module           status
-   interface either.  Also, ``unsafe`` interfaces may be replaced by safe interfaces
-   later.
- 
-+Naming convention
-+'''''''''''''''''
-+
-+C function names usually are prefixed according to the data type that they
-+apply to, for example ``timer_mod`` or ``sysbus_connect_irq``.  Furthermore,
-+both function and structs sometimes have a ``qemu_`` or ``QEMU`` prefix.
-+Generally speaking, these are all removed in the corresponding Rust functions:
-+``QEMUTimer`` becomes ``timer::Timer``, ``timer_mod`` becomes ``Timer::modify``,
-+``sysbus_connect_irq`` becomes ``SysBusDeviceMethods::connect_irq``.
-+
-+Sometimes however a name appears multiple times in the QOM class hierarchy,
-+and the only difference is in the prefix.  An example is ``qdev_realize`` and
-+``sysbus_realize``.  In such cases, whenever a name is not unique in
-+the hierarchy, always add the prefix to the classes that are lower in
-+the hierarchy; for the top class, decide on a case by case basis.
-+
-+For example:
-+
-+========================== =========================================
-+``device_cold_reset()``    ``DeviceMethods::cold_reset()``
-+``pci_device_reset()``     ``PciDeviceMethods::pci_device_reset()``
-+``pci_bridge_reset()``     ``PciBridgeMethods::pci_bridge_reset()``
-+========================== =========================================
-+
-+Here, the name is not exactly the same, but nevertheless ``PciDeviceMethods``
-+adds the prefix to avoid confusion, because the functionality of
-+``device_cold_reset()`` and ``pci_device_reset()`` is subtly different.
-+
-+In this case, however, no prefix is needed:
-+
-+========================== =========================================
-+``device_realize()``       ``DeviceMethods::realize()``
-+``sysbus_realize()``       ``SysbusDeviceMethods::sysbus_realize()``
-+``pci_realize()``          ``PciDeviceMethods::pci_realize()``
-+========================== =========================================
-+
-+Here, the lower classes do not add any functionality, and mostly
-+provide extra compile-time checking; the basic *realize* functionality
-+is the same for all devices.  Therefore, ``DeviceMethods`` does not
-+add the prefix.
-+
-+Whenever a name is unique in the hierarchy, instead, you should
-+always remove the class name prefix.
-+
- Common pitfalls
- '''''''''''''''
- 
--- 
-2.48.1
+the only difference is that 'static' expansion will not report properties
+not mentioned in hard-codded CPU model definition see: builtin_x86_defs
+
+while 'full' will iterate over/report all rw properties of CPU object
+created from provided model name.
+
+> I don't know :)
+> 
+> Here's the documentation:
+> 
+>     ##
+>     # @CpuModelExpansionType:
+>     #
+>     # An enumeration of CPU model expansion types.
+>     #
+>     # @static: Expand to a static CPU model, a combination of a static
+>     #     base model name and property delta changes.  As the static base
+>     #     model will never change, the expanded CPU model will be the
+>     #     same, independent of QEMU version, machine type, machine
+>     #     options, and accelerator options.  Therefore, the resulting
+>     #     model can be used by tooling without having to specify a
+>     #     compatibility machine - e.g. when displaying the "host" model.
+>     #     The @static CPU models are migration-safe.
+
+Looking at related x86 code above description sounds like a fiction.
+Both 'static' and 'full' do use
+ qmp_query_cpu_model_expansion()
+     x86_cpu_from_model()
+         cpu = object_new(foo_cpu_class)
+         x86_cpu_expand_features(cpu)
+and the later 2 calls are subjects to being influenced by:
+    "QEMU version, machine type (compat machinery), machine options, and accelerator options"
+and -cpu option
+
+>     #
+>     # @full: Expand all properties.  The produced model is not guaranteed
+>     #     to be migration-safe, but allows tooling to get an insight and
+>     #     work with model details.
+>     #
+>     # .. note:: When a non-migration-safe CPU model is expanded in static
+>     #    mode, some features enabled by the CPU model may be omitted,
+>     #    because they can't be implemented by a static CPU model
+>     #    definition (e.g. cache info passthrough and PMU passthrough in
+>     #    x86).  If you need an accurate representation of the features
+>     #    enabled by a non-migration-safe CPU model, use @full.  If you
+>     #    need a static representation that will keep ABI compatibility
+>     #    even when changing QEMU version or machine-type, use @static (but
+>     #    keep in mind that some features may be omitted).
+>     #
+>     # Since: 2.8
+>     ##
+> 
+> If you have further questions, David Hildenbrand or Eduardo Habkost
+> (cc'ed) might be able to help.
+> 
+> 
+
 
 
