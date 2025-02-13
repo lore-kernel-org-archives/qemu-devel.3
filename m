@@ -4,74 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D48C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 11:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FFFC0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 11:51:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiXi2-0003ur-JC; Thu, 13 Feb 2025 06:48:46 -0500
+	id 1tiXjy-0004fz-2j; Thu, 13 Feb 2025 06:50:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tiXhz-0003ue-Tp
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 06:48:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tiXhx-0005yq-VC
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 06:48:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739447318;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=viO7qmnlWrZt2ER4ZxRJLY7XSgD4+ZaaxRdGbrtL1yw=;
- b=XdiZMl+zYQqBiflvclnjDmV+Bc9Ft1tKwCq5D9Hnam/hJzCM18SPYoW41dnSKiAToI0SPY
- /IeNlv8+5cXR/YvQRC6+S+Bjpo5KdR3NimW/S7B1cvEjiW/tJ9OvNnPbqmYCue68SFzJ8J
- HaBA0JLnDPIvRyHEswnB5Vjl6BzF97E=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-1Sohwg3pPKSfvEck7bkmiw-1; Thu,
- 13 Feb 2025 06:48:35 -0500
-X-MC-Unique: 1Sohwg3pPKSfvEck7bkmiw-1
-X-Mimecast-MFC-AGG-ID: 1Sohwg3pPKSfvEck7bkmiw_1739447314
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDB1F18EB2C3; Thu, 13 Feb 2025 11:48:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD84D300018D; Thu, 13 Feb 2025 11:48:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1EDBD21E6A28; Thu, 13 Feb 2025 12:48:30 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: gaosong <gaosong@loongson.cn>
-Cc: Bibo Mao <maobibo@loongson.cn>,  QEMU devel <qemu-devel@nongnu.org>,
- David Hildenbrand <david@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH] target/loongarch: Add full type support for
- query-cpu-model-expansion
-In-Reply-To: <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
- (gaosong@loongson.cn's message of "Thu, 13 Feb 2025 18:07:06 +0800")
-References: <20250213091626.3650603-1-maobibo@loongson.cn>
- <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
-Date: Thu, 13 Feb 2025 12:48:30 +0100
-Message-ID: <87a5aqhxpt.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tiXjw-0004fl-6t; Thu, 13 Feb 2025 06:50:44 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tiXju-0006Oc-4R; Thu, 13 Feb 2025 06:50:43 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-868f18a629bso56041241.2; 
+ Thu, 13 Feb 2025 03:50:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739447434; x=1740052234; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZwTsUC7qnoyMb0cBsViBWnABsE0czzMRLcT5TQs84zc=;
+ b=l8l3LBvyFXT9WUtllFlkM55uvSWVe/wPwyfv5V9KrHK+NplCiGysnpJw107KRkeOqZ
+ m8566WKs/mXIpfs384qsaeAm8qvNyf3QQ1s0nZRN/lt34US5JtoA62WUmrLLuq5tIyi3
+ Wk6Ibw0P12def1cJrFKz1RqHfXqGC+J1xpAXhQxXrRRf5va3xg0vo1m/o9zGQwZYH4ep
+ 44ytkEuio7xD2gxRJcm6YfXkf21egw6QrEjnTL2pAMVBhbyaze07fUq0eM5FD4pMrpg7
+ dQ8/g3ygHfQxCkb53av5fVyi8VRLD0bPMe1DU/E+lHxh4dBJYm24rz4jR/JVMX0X8C9R
+ oAQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739447434; x=1740052234;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZwTsUC7qnoyMb0cBsViBWnABsE0czzMRLcT5TQs84zc=;
+ b=nzCGZso4l4pYex2QRj3d4YyErjukOGSlPwBBucyOBNNHw3+Ktf/lNJlvBno3T/1wmU
+ PgUgH8ugRd7R2rO+mvd2HkdMj0Cfp/+b9tttN2FTRVtzE+dtD7zGv95hiuhKTdV6k9PZ
+ oyeAbd9g0PS3yUdxpki5LGhy0AmaXbnz4a+PuR58G4ObX7JddZzxGGuq2R5vt3Q5sZgg
+ WUHyt6pUOIgWHBlCPiudqemXo8Hzqsz8nWHuqC+xcQA6wdawkJlbKO7u6AsyWiMKYJxQ
+ xbNibg+vsbP7d3UbMTs42xjweRhoq+RYOjonKHRwi5T213QrkRII8Z0Zo7xuoc9vgnna
+ 0xuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX35VlSZf143U8uKqb+PRwlY/e4WRKoekopj4szvyNtsV6r1i8XbwMk88m2grtGZ5M2GhtvrwXleFxENg==@nongnu.org
+X-Gm-Message-State: AOJu0YzvJC01Tn3xd+oeO9HxhvZeK/jeGQteMhHxvUc0+c6ZMZzO1jQV
+ Y5mZm3h2Ts/WcSh4MStW/HgooUS8ULDOEIKLL3hUOsJ5YvYBufK77L+CO54VQ5jQsZCzcH/trHe
+ JoOBCJr6ueGVlDsQgHxJP+uyiG0c=
+X-Gm-Gg: ASbGnctS3Rr5arHoPMJY1ZPP55AUoC9RkWWQU5CgxmzeVFwEX+zhOy+hTxM9wk3mWtf
+ wYyjBF1bzkODtLOEPBg41AsZwYD4QHvniJQcYdf5F9DAbA1KOiJ6Ii5oKHHrgA7kkBDGi7cs7AA
+ ==
+X-Google-Smtp-Source: AGHT+IE6kdHBCo7NIKrVTWpV1mIiRWcGQ06tLs/1s2Sis9uzCyjdAuHBqae6SjBibt/AQbReGabz5eo2PICran5EVCc=
+X-Received: by 2002:a05:6102:3589:b0:4bb:9b46:3f88 with SMTP id
+ ada2fe7eead31-4bc03591122mr3077403137.11.1739447434645; Thu, 13 Feb 2025
+ 03:50:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250213114541.67515-1-graf@amazon.com>
+In-Reply-To: <20250213114541.67515-1-graf@amazon.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Thu, 13 Feb 2025 17:50:21 +0600
+X-Gm-Features: AWEUYZkwm_xmqCCEyjW7mUXSx_jEgpOW6vIuhceVc5fI1Ml1fgJZonTxXeI43fE
+Message-ID: <CAFfO_h7p8gyxZw34H-YqW5t=QGdCnn7jF3FvJbRSKhX4=t34_g@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio/virtio-nsm: Respond with correct length
+To: Alexander Graf <graf@amazon.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Vikrant Garg <vikrant1garg@gmail.com>, qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000007297d6062e04aab3"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x92e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,51 +93,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gaosong <gaosong@loongson.cn> writes:
+--0000000000007297d6062e04aab3
+Content-Type: text/plain; charset="UTF-8"
 
-> Cc: Markus
+On Thu, Feb 13, 2025, 5:45 PM Alexander Graf <graf@amazon.com> wrote:
+
+> When we return a response packet from NSM, we need to indicate its
+> length according to the content of the response. Prior to this patch, we
+> returned the length of the source buffer, which may confuse guest code
+> that relies on the response size.
 >
-> hi, Markus
+> Fix it by returning the response payload size instead.
 >
-> What is the difference between CPU_MODEL_EXPANSION_TYPE_STATIC and 
-> CPU_MODEL_EXPANSION_TYPE_FULL?
+> Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module
+> device")
+> Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> ---
+>  hw/virtio/virtio-nsm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
 
-I don't know :)
 
-Here's the documentation:
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 
-    ##
-    # @CpuModelExpansionType:
-    #
-    # An enumeration of CPU model expansion types.
-    #
-    # @static: Expand to a static CPU model, a combination of a static
-    #     base model name and property delta changes.  As the static base
-    #     model will never change, the expanded CPU model will be the
-    #     same, independent of QEMU version, machine type, machine
-    #     options, and accelerator options.  Therefore, the resulting
-    #     model can be used by tooling without having to specify a
-    #     compatibility machine - e.g. when displaying the "host" model.
-    #     The @static CPU models are migration-safe.
-    #
-    # @full: Expand all properties.  The produced model is not guaranteed
-    #     to be migration-safe, but allows tooling to get an insight and
-    #     work with model details.
-    #
-    # .. note:: When a non-migration-safe CPU model is expanded in static
-    #    mode, some features enabled by the CPU model may be omitted,
-    #    because they can't be implemented by a static CPU model
-    #    definition (e.g. cache info passthrough and PMU passthrough in
-    #    x86).  If you need an accurate representation of the features
-    #    enabled by a non-migration-safe CPU model, use @full.  If you
-    #    need a static representation that will keep ABI compatibility
-    #    even when changing QEMU version or machine-type, use @static (but
-    #    keep in mind that some features may be omitted).
-    #
-    # Since: 2.8
-    ##
+Thanks for fixing!
 
-If you have further questions, David Hildenbrand or Eduardo Habkost
-(cc'ed) might be able to help.
+Regards,
+dorjoy
 
+--0000000000007297d6062e04aab3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 13, 2025, 5:45 PM Al=
+exander Graf &lt;<a href=3D"mailto:graf@amazon.com">graf@amazon.com</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
+ex;border-left:1px #ccc solid;padding-left:1ex">When we return a response p=
+acket from NSM, we need to indicate its<br>
+length according to the content of the response. Prior to this patch, we<br=
+>
+returned the length of the source buffer, which may confuse guest code<br>
+that relies on the response size.<br>
+<br>
+Fix it by returning the response payload size instead.<br>
+<br>
+Fixes: bb154e3e0cc715 (&quot;device/virtio-nsm: Support for Nitro Secure Mo=
+dule device&quot;)<br>
+Reported-by: Vikrant Garg &lt;<a href=3D"mailto:vikrant1garg@gmail.com" tar=
+get=3D"_blank" rel=3D"noreferrer">vikrant1garg@gmail.com</a>&gt;<br>
+Signed-off-by: Alexander Graf &lt;<a href=3D"mailto:graf@amazon.com" target=
+=3D"_blank" rel=3D"noreferrer">graf@amazon.com</a>&gt;<br>
+---<br>
+=C2=A0hw/virtio/virtio-nsm.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br></blockquote></div><=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Reviewed-by: Dorjoy Chowdhury &lt;<a href=3D"mailto:dorjoychy111@gmail.=
+com">dorjoychy111@gmail.com</a>&gt;</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">Thanks for fixing!</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Regards,</div><div dir=3D"auto">dorjoy=C2=A0</div></div>
+
+--0000000000007297d6062e04aab3--
 
