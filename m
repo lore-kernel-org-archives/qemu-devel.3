@@ -4,150 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108F0C021A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A7DC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tic1k-0005ka-1c; Thu, 13 Feb 2025 11:25:24 -0500
+	id 1ticSQ-0004bn-C3; Thu, 13 Feb 2025 11:52:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tic1h-0005iP-Qa
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:25:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ticSL-0004bC-VF
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:52:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tic1g-0000bm-6L
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:25:21 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ticSH-0005CM-4k
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:52:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739463915;
+ s=mimecast20190719; t=1739465567;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EXhNMHfv7CLCW1I+qL87LnHn2870+kNbR6MQwWll9E8=;
- b=bpPiUU84YKd4giYL+HX2RVfRSEr9xNBK/DkvuSZ9T4+y0dq3kIOktcUdm4KtyN/3pRie2V
- 2pdbgKubA7tEOLAolGHX1pg12exZxSSw4dttFgq3NfY9qAt4UVWeaAGLRYqlSNQ3qBM1Ra
- WRaPVRWXxbrtLruyBlu0RQ0DEV0mlXA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=8nSIx9szDbtbyAtyq/ZEbhmLgwoEFtUgV+Rg06WFGgQ=;
+ b=NOThZJlhNUKx2sGVAOwYR8KOGuh4OFe1U69t2zH+D2nxRkIvobGXWnpwnvsO3yGCPxYYEm
+ UTlHViwa8WCQgG+W7NT5KoUQn+XQsB9vF4O9jdXBjQW46jUcMPKdBR/sqLyArokPtEFOxz
+ yA8BODmnQUETYgqQcR3bdnJxZwNnqo4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-CbRBznlqMe-Zw6oAvbweWA-1; Thu, 13 Feb 2025 11:25:13 -0500
-X-MC-Unique: CbRBznlqMe-Zw6oAvbweWA-1
-X-Mimecast-MFC-AGG-ID: CbRBznlqMe-Zw6oAvbweWA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4394c489babso6054875e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:25:13 -0800 (PST)
+ us-mta-507-zTlmdHbSOfy90-tyOG-SVQ-1; Thu, 13 Feb 2025 11:52:46 -0500
+X-MC-Unique: zTlmdHbSOfy90-tyOG-SVQ-1
+X-Mimecast-MFC-AGG-ID: zTlmdHbSOfy90-tyOG-SVQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f27bddeeeso800385f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:52:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739463912; x=1740068712;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=EXhNMHfv7CLCW1I+qL87LnHn2870+kNbR6MQwWll9E8=;
- b=GgsSEelhiatuOYvlLzI+qHQxV0khKWocMDohV2tKa8ekX8l4tivfdaYxQCwelrd9sj
- TxJsSuDFzbDcmjauqDOtg5u+jNo24sOxFj3H6/SQIK2aqo77LmIG50P7UdYsFDXEOTbC
- ETpVRLQSF0ZmEF9hnZZkPg2Z1tNZEQr807ciT9DPEjfkvuCWed4621neCqBw1lRM9Wrd
- JYIoff1Y6vKITaQ6m/H26Yr5iIPHvA6iWYD2LQd7bAUW6MtD+tdwN0aEQzZc6dNvyani
- Fcv+juAejsfqQo9eJYLGS4z7tQyNBcXFggNOLzTT9Jk3zKbGRLuB/EDXj9LCIcPUjh8q
- aiBA==
+ d=1e100.net; s=20230601; t=1739465564; x=1740070364;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8nSIx9szDbtbyAtyq/ZEbhmLgwoEFtUgV+Rg06WFGgQ=;
+ b=ORBEkuDmiW5x/cCICLBkQ028AC0y1HiIvejhyL/WY+p9U0NKXpY0B3qE+JE9hgDup0
+ tVGvJ1Ox0gq7+m+7UCWrycSM+5RtkSLBiQfx0/QDAiEf8CqOB9pcFl3qFzGRBXEfkohQ
+ LycAED+rBNcrk4AKhwCqMuEAKsPRMxWZ0j+fnuD9egC0nLMeYKgXzWNQc9HUBs64Ommm
+ BQIKA3HAQsOl+xq5Kv2AD3BhujkYBsZGWuZepyEB4x97z+4/QmbjJLk6nDaIPYVcpESD
+ yFtfp9GiMKa/jguKk6cv9km5oCHtW6iVzhsV0OZjiqnqB21Ahoa6AL2cOGaiRAUmBXR3
+ 1/FQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWv5eAGY2GNucxlxcF9H2D9rwgn9Y9+4Zxdsp3tDtbBXeuK9/LEMQnMsX7xF4EoDzLdSN7eXGy9M3pf@nongnu.org
-X-Gm-Message-State: AOJu0Yy7ejn68ty3Q23RII40lNCWBDGcgLlOWHVVfuxO3tnSyCdXwD19
- 40aXLvdWlIaVfzUJ/xZSX9lXpCCA6xfVtNvsgyKO0gZbvJC0ACQRKXMsJ5iHiJVv+370IxNkvNN
- 9ztoHdKCyVWRF3Mhz1XTUZwI0v9Q71yNYd30Hr8go3jlKwcEs/dnf
-X-Gm-Gg: ASbGncvI5r32HqGjk257iCDqSOjXemA86Bfgu4OZG/i+IfkatGjhCzxN+0WvMvugqqJ
- x5Xm2vj/F9Zifw3cX3i7HkXUl2nLmB8yaKXnT3MLqcaM7azjaozXUkqqh4bNM5yyCM/YWUAdJ50
- zRxuS8CvlhU/MvkNM9hOzie7DKDpxvLPahqa8seNApsgVR8GsHjEhoDGv+k4hc1f8bu1uE75O0Q
- lHnVDxnLDWll11dO1j+uEeKSqq3zhPh2nGf5ZuuA/reRRjts/ZIAH4DX7vqUAjeYBVjwJWBzw0t
- p2pyc8gR5taDMIkF67xWMO5dd72HcPkQ6eSzyjbXI6zXvBFqPhSCBZVkC+4hGD7g0+fySj2rnl4
- 1YRbGwUxP4rCxR/8+wywkmhoKUOBpTQ==
-X-Received: by 2002:a05:600c:34cc:b0:439:4696:c071 with SMTP id
- 5b1f17b1804b1-439601a7096mr46616985e9.19.1739463912461; 
- Thu, 13 Feb 2025 08:25:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGD8eF6as7rCwtssuthp9X+mFsme827Wr0JunCjzr/QGDrReFWIcKlcEOeH0GrIbnBKDSV80Q==
-X-Received: by 2002:a05:600c:34cc:b0:439:4696:c071 with SMTP id
- 5b1f17b1804b1-439601a7096mr46616565e9.19.1739463911989; 
- Thu, 13 Feb 2025 08:25:11 -0800 (PST)
-Received: from ?IPV6:2003:cb:c718:100:347d:db94:161d:398f?
- (p200300cbc7180100347ddb94161d398f.dip0.t-ipconnect.de.
- [2003:cb:c718:100:347d:db94:161d:398f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1aa7c7sm53816095e9.27.2025.02.13.08.25.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 08:25:10 -0800 (PST)
-Message-ID: <c1f5c4d2-d131-452f-b414-169bb6685f07@redhat.com>
-Date: Thu, 13 Feb 2025 17:25:08 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ AJvYcCUNlNTdFU+m8iFPbt+ZJl17uOOij2ezZQVFA49zjT0pBwv9OJZF7d33D2mkRwSSwBH4JujoBju45FQ3@nongnu.org
+X-Gm-Message-State: AOJu0YxvdbjAghmXPveAmDog53A4sigStDGnugRgBvs9WYn0zezQsZ1d
+ MGaEp4+FQpKFi5LiRsoBz0xJmMAFOT4F6UcgFGBPszQ86MWQk4NNQK7kGdWCBWwypyWHV7BNYI5
+ BmYN4E6HoNlkTod+ZJDFp/bqDqG2ElrdDbxfQ/FQUcRREgpqNYYS8jLtUgid/
+X-Gm-Gg: ASbGnct2C5ZrKQCWIogRzNZSRWgnBiys4SIGiRA6Z76JL3ZNW6M+XoIdq2htQRNMFu9
+ AkXQ4Al3/N2RchtzZXciz6ym+iFjPZtilntpW26qVcRySpIsyS+MC7quDABbtzgbNFIJn5R42Zy
+ RVN4LFoZwpxr9ylU1P/hOMIsOmjcNOCUaxt+efyDvEzIacz6Uidfx4+hWAyWzdDkBDUZE8IU/PP
+ V74R99jXuMPguF+b13+InQWr/oKHtsLDEquqKShjXhXjAFXZ9xFytcUG7NTlAlATWIUacQn17Cb
+ rUCsfFYVxjmY+LzT9FoURp8+iYMTk64wKgn6UZpDj92BnffkuGws
+X-Received: by 2002:a5d:64cf:0:b0:38d:e33d:d0eb with SMTP id
+ ffacd0b85a97d-38f244da143mr4712030f8f.9.1739465563708; 
+ Thu, 13 Feb 2025 08:52:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE19KG6/E6CMD4a510CdnY+o56NK6yjg5Xuo2YXJw0UoEH+6wCYAlGW1+No1x6ZKg01kkLuVQ==
+X-Received: by 2002:a5d:64cf:0:b0:38d:e33d:d0eb with SMTP id
+ ffacd0b85a97d-38f244da143mr4711982f8f.9.1739465563242; 
+ Thu, 13 Feb 2025 08:52:43 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258ccef7sm2413675f8f.31.2025.02.13.08.52.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Feb 2025 08:52:42 -0800 (PST)
+Date: Thu, 13 Feb 2025 17:52:41 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: bibo mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
 Subject: Re: [PATCH] target/loongarch: Add full type support for
  query-cpu-model-expansion
-To: Igor Mammedov <imammedo@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: gaosong <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- QEMU devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>
+Message-ID: <20250213175241.03bde8c1@imammedo.users.ipa.redhat.com>
+In-Reply-To: <3a1f0744-4795-8f07-7258-0922745906ac@loongson.cn>
 References: <20250213091626.3650603-1-maobibo@loongson.cn>
- <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
- <87a5aqhxpt.fsf@pond.sub.org>
- <20250213171705.6dde38cf@imammedo.users.ipa.redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250213171705.6dde38cf@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ <3a1f0744-4795-8f07-7258-0922745906ac@loongson.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,55 +112,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.02.25 17:17, Igor Mammedov wrote:
-> On Thu, 13 Feb 2025 12:48:30 +0100
-> Markus Armbruster <armbru@redhat.com> wrote:
-> 
->> gaosong <gaosong@loongson.cn> writes:
->>
->>> Cc: Markus
->>>
->>> hi, Markus
->>>
->>> What is the difference between CPU_MODEL_EXPANSION_TYPE_STATIC and
->>> CPU_MODEL_EXPANSION_TYPE_FULL?
-> 
-> the only difference is that 'static' expansion will not report properties
-> not mentioned in hard-codded CPU model definition see: builtin_x86_defs
-> 
-> while 'full' will iterate over/report all rw properties of CPU object
-> created from provided model name.
-> 
->> I don't know :)
->>
->> Here's the documentation:
->>
->>      ##
->>      # @CpuModelExpansionType:
->>      #
->>      # An enumeration of CPU model expansion types.
->>      #
->>      # @static: Expand to a static CPU model, a combination of a static
->>      #     base model name and property delta changes.  As the static base
->>      #     model will never change, the expanded CPU model will be the
->>      #     same, independent of QEMU version, machine type, machine
->>      #     options, and accelerator options.  Therefore, the resulting
->>      #     model can be used by tooling without having to specify a
->>      #     compatibility machine - e.g. when displaying the "host" model.
->>      #     The @static CPU models are migration-safe.
-> 
-> Looking at related x86 code above description sounds like a fiction.
+On Thu, 13 Feb 2025 17:40:56 +0800
+bibo mao <maobibo@loongson.cn> wrote:
 
-On s390x, which added that interface, that is how it's work.
+> please discard this patch :(
+>=20
+> libvirt uses static type already on LoongArch platform, there is=20
+> compatibility issue. Static type cannot be removed, although I do
+> not know the difference between static type and full type.
 
-It resolves to "-base" models that are fixed for all eternity.
+looking at loongarch-qmp-cmds.c:qmp_query_cpu_model_expansion(),
+you do filter reported features by global cpu_model_advertised_features[] l=
+ist.
+Also cpu 'definition' is mainly governed by its initfn() and
+properties mentioned in cpu_model_advertised_features[] are created
+only by loongarch_cpu_post_init() , which is part of la464 and max models.
+The later call however mutates depending on accelerator, which
+sort of contradicts 'static' description and feets more to 'full' category.
 
-x86-64 probably didn't adhere to the description because they were not 
-interested in adding stable base models.
+What I'd suggest doing is to support both
+i.e. do keep 'static' for compat reasons  and run the same code for 'full'
 
--- 
-Cheers,
+In nutshell drop if(type) check or explicitly allow both types.
 
-David / dhildenb
+>=20
+> Regards
+> Bibo Mao
+>=20
+> On 2025/2/13 =E4=B8=8B=E5=8D=885:16, Bibo Mao wrote:
+> > With full type for query-cpu-model-expansion qmp command, it shows that
+> > it is not supported. For instance,
+> >    query-cpu-model-expansion type=3Dfull model=3D{"name":"max"}
+> >=20
+> > Here is is output,
+> >    {"error": {"class": "GenericError", "desc": "The requested expansion=
+ type is not supported"}}
+> >=20
+> > Since full type is not supported and only static type is supported, Here
+> > replace static type with full type for command query-cpu-model-expansio=
+n.
+> >=20
+> > And there is result with this patch,
+> >    {"return": {"model": {"name": "max", "props": {"lbt": true, "lasx": =
+true, "pmu": true, "lsx": true}}}}
+> >=20
+> > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> > ---
+> >   target/loongarch/loongarch-qmp-cmds.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/l=
+oongarch-qmp-cmds.c
+> > index 3fde5a5a20..429c6d35fd 100644
+> > --- a/target/loongarch/loongarch-qmp-cmds.c
+> > +++ b/target/loongarch/loongarch-qmp-cmds.c
+> > @@ -56,7 +56,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(=
+CpuModelExpansionType type,
+> >       const char *name;
+> >       int i;
+> >  =20
+> > -    if (type !=3D CPU_MODEL_EXPANSION_TYPE_STATIC) {
+
+
+> > +    if (type !=3D CPU_MODEL_EXPANSION_TYPE_FULL) {
+> >           error_setg(errp, "The requested expansion type is not support=
+ed");
+> >           return NULL;
+> >       }
+> >=20
+> > base-commit: de278e54aefed143526174335f8286f7437d20be
+> >  =20
+>=20
+>=20
 
 
