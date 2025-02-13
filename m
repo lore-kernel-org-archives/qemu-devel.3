@@ -4,94 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E88C8C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C924C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiaUe-0001Fb-0G; Thu, 13 Feb 2025 09:47:08 -0500
+	id 1tiaWZ-0002EH-BF; Thu, 13 Feb 2025 09:49:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiaUJ-0001DR-0Q
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:46:48 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiaUG-0002Do-VA
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:46:46 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso7064635e9.3
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:46:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739458002; x=1740062802; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bHTGtPq57PXv4pUPdrR5UDSsO8SFpPQJk2kZVsswnOo=;
- b=BXGKJmdZ/sWYjN4xt/BL7VSAV5APwaQmKMfeiA3gmnv3IfldIzN+xrR8vB9sj6sR30
- hucHcvbns1Yx/Ho2XN2OZpElMZKNjTgmmgqrv+7Y9MTghv7+I+4rIdWOTL/eLEGTCBWE
- 7OcDxT0Snud3PxZwgvBbOfzd5CTMv5xwz/sXHo/kHwnx34uCBlVGD0VPTQvAWagJE3Pl
- 2GCfWVu90VfUWwS054COOs5SJgtyQ8u/6OmxyNaGnkSA/hGL63bmTTVMPHB5K71dcmmN
- KiA73rQCaHRjlNBPb5wJlEGbr7tHICxoHPlMbGv/ovEIdJCHLL1FLCfFRKdc7QDkstIG
- aoKw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tiaWV-0002Dq-7Q
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:49:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tiaWT-0002VV-MO
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:49:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739458140;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=dypU5xq5Xc0NlKGVIXfBBoIf/VaRXVZxKgFbdHLtOKE=;
+ b=YsZAHPzRrXrFo5WtxrAFe9f6AXXO6kjzAYuyj2d485Z0+VGiMSLTbpwyhdZb00GYcN3r9P
+ RHLig7RgyAbM+aMAxlise15vgopQEZJ95AZmF8oYRb5aFV64xcwOfBN4qE/JboQmWs5wZj
+ DUYemD+ekHgdMxe8Uv7nyYKHMaKCclI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-55-iGbV4IfPOYC-Cb9Wr1Kajg-1; Thu, 13 Feb 2025 09:48:58 -0500
+X-MC-Unique: iGbV4IfPOYC-Cb9Wr1Kajg-1
+X-Mimecast-MFC-AGG-ID: iGbV4IfPOYC-Cb9Wr1Kajg_1739458137
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38ddee833e0so559355f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:48:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739458002; x=1740062802;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bHTGtPq57PXv4pUPdrR5UDSsO8SFpPQJk2kZVsswnOo=;
- b=JvxJXN6AFW5tLJJWDZZ0bkQa0jj9Z0qGjvw9mDbBo8S4F3GobbrtPRGzS+fiarSr+8
- dSZ5P1YK+C6fuGuFN2iOU6s4ro+Eu4rLLdWBTnVWeWCFyfRpQndKq26/sp/wGwhUN1Ul
- KtiSHntnQvQi7In7aKsgQ9e7dliFYjE+u7CNq5OLCIWMqvGkgA1ld6O09dggag18HoAb
- zxyEsSgpsbdwFcbP9UXi4j7W/AnkAx0llYoBdWGla62xRUFwUPmrPDZJEJOmq3ZC19ib
- ndpeKmmpl8ak1ZbGGYe5kBA7Si/HkBpJLbYtobLBsjTpKhlgb7Jme8SxM7vx1m1pLNWV
- Ugrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCIJIj9Orgwiswo11E1V3vxXZWqxnd0vLlctDPQIy+faum1kkzzA0AxKdYF6WFEhnclOFjqxTnS09k@nongnu.org
-X-Gm-Message-State: AOJu0Yz48YoCwO5qIcAEwyAa85HFuX2r/o72gxEKEXIWU4FvKuWE+Ozf
- cBWK7b9G4+5rttfOOfHoroUXAP5Ihc4WPIKs4LhqaiyTROmCqfY0JwwEsQU/OmI=
-X-Gm-Gg: ASbGncsmGlF1ANhglh6u9dxmb+Ll8t+BLsERG6vBWwU9pj6WhydVKBWGNIN0sH3ac1l
- 5yb7/cR0mvz2J6wuiE+YUvS/1FMqTZ+UBwA/cZzkaXK21OWwgBoGLKlJwb2VsVKu29VFIxYGKss
- xGAwrrfmvlYyg57KbfwRLdWUJCpMHogmerJv9AUd0Wnx9+wilCVWq0gNrXBIvylUFmpgJ25iZKK
- nIB6iU+exLa7+btqpgy+wBXNB9BKepYEW2sGnyb5kuj3r8BjvBPRjG3mkiJcd/LXnH2nsOrz9gR
- jzwy04s6WTcnBU4BDX8XQlSYFMTTv9ZAx1ugYGeKjmFE4m7FtBXYrhxUJXocNlfdn9CqJhoB9g=
- =
-X-Google-Smtp-Source: AGHT+IHV7izYXGLj0MG+10bU+iYRH4xvZ3ZJwje7yJ2B884RYSjy6BJes1WxRB8pSS7HGB9GK9f1Jg==
-X-Received: by 2002:a05:600c:1c92:b0:434:f739:7ce3 with SMTP id
- 5b1f17b1804b1-43958173ef5mr77044265e9.8.1739458001688; 
- Thu, 13 Feb 2025 06:46:41 -0800 (PST)
-Received: from [192.168.1.20] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a04f217sm50363975e9.1.2025.02.13.06.46.40
+ d=1e100.net; s=20230601; t=1739458137; x=1740062937;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dypU5xq5Xc0NlKGVIXfBBoIf/VaRXVZxKgFbdHLtOKE=;
+ b=NJlu2sfXPnDSDzxs8//8MNwzuUuiy9IQ6nhSfLMVTA87kcpPW/Q2Om1QgDhvY8UUx1
+ xBKeoM5ffg8iPQAFYhElgRngbevkWBUhTHGIqpo1bKdH74THCybYnb+q/tUnIFjAipvW
+ rKStcfx7WMAQSIGzEtEuuAQ/Wl23msuLXuSJZQveQWj7WOQqyernapLHGeiZYOTQYU1w
+ H4dl/A081skz6clp3AlM4QSrrLQUqLY1DRYI8LwpcEhurmqSDMRBtWioKwCGCYd5SNAA
+ kXFgR7CSlopfMbLt5zfNnyZ19JFqNOOESIY6n4PArlQ3L7RFgmOFjG74zl+Kvot6yQZ+
+ 5FtA==
+X-Gm-Message-State: AOJu0YzPGXjLa0CVi0cn3pWlGJS97PPd4C3F9TWkk9Kcw1MzYD466wRL
+ 98ESX+RK3uO2VuEClREWKJWYwiDjFDt5KuYVLRt6PNy9FcvZnF00a4F2ei3gQKnRC6GEBxVQKaU
+ aZ62ZS+uuf9KhaKJSPK7xk9D8TyaUYM7Tj4lxFxpnwuutRZB7GIud
+X-Gm-Gg: ASbGncurgZAdTbQKXHnhb6pyGRgePraaGxD4p++eu8K0VwNM7JX/g1u98Os1DOLb2cc
+ HAUzJ0yYsn/UPBKQOPSwPREPVpHGsgO9oMkR1AEyP0+LtDaTfv2BiJIO4t2Lz3rDGfNdRwgDOpX
+ oA6sDikBbdzNCkFiTVbtTmoR3LpwhSfmjfim/BZeRcOug6dgyxAvv1+xyQljDF6m5iC72X3nDCJ
+ QKKOhpoe+HmPGfpdf2L9i+gyWtHkDYN8RrftIt+6WbCmkGEJcjd3Z1sBe8obe7J2NeC/MeUMgzM
+ scwuGrVkk2iNuYKArMC+WdtPLKFm1Fmcr8RA30Ls3go=
+X-Received: by 2002:a5d:6d0a:0:b0:38d:e363:494b with SMTP id
+ ffacd0b85a97d-38f24cfa3f1mr3850021f8f.8.1739458137457; 
+ Thu, 13 Feb 2025 06:48:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUbFy9oIyVrXmue1LFN17ou5V7iaBeGSPpBEyp+gZbsKzjlBo7D4qStJcmtbU+yRwtv1re+w==
+X-Received: by 2002:a5d:6d0a:0:b0:38d:e363:494b with SMTP id
+ ffacd0b85a97d-38f24cfa3f1mr3849090f8f.8.1739458126230; 
+ Thu, 13 Feb 2025 06:48:46 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:ecac:5b28:cd98:868a?
+ ([2a01:e0a:280:24f0:ecac:5b28:cd98:868a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259d8e62sm2077598f8f.71.2025.02.13.06.48.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 06:46:41 -0800 (PST)
-Message-ID: <ba4ea2d8-14d1-4952-b3bd-6dc9aadcb614@linaro.org>
-Date: Thu, 13 Feb 2025 15:46:40 +0100
+ Thu, 13 Feb 2025 06:48:45 -0800 (PST)
+Message-ID: <3bf261e6-2c58-4606-ba1e-66947ca081df@redhat.com>
+Date: Thu, 13 Feb 2025 15:48:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: silent warnings about Smdbltrp/Smrnmi being
- disabled
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Tommy Wu <tommy.wu@sifive.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250213075221.622676-1-cleger@rivosinc.com>
- <6ac67c25-9ad7-42f6-b246-24053ce37ddc@ventanamicro.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6ac67c25-9ad7-42f6-b246-24053ce37ddc@ventanamicro.com>
+Subject: Re: [PATCH v2] vfio: Add property documentation
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Eric Auger <eric.auger@redhat.com>
+References: <20250213135050.1426258-1-clg@redhat.com>
+ <3066bfc4-9681-9d03-cf87-e5d49b8fbc3d@eik.bme.hu>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <3066bfc4-9681-9d03-cf87-e5d49b8fbc3d@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,35 +155,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/2/25 12:32, Daniel Henrique Barboza wrote:
+On 2/13/25 15:17, BALATON Zoltan wrote:
+> On Thu, 13 Feb 2025, Cédric Le Goater wrote:
+>> Investigate the git history to uncover when and why the VFIO
+>> properties were introduced and update the models. This is mostly
+>> targeting vfio-pci device, since vfio-plateform, vfio-ap and vfio-ccw
 > 
-> 
-> On 2/13/25 4:52 AM, Clément Léger wrote:
->> As raised by Richard Henderson, these warnings are displayed in user
->> only as well. Disable them for CONFIG_USER_ONLY.
->>
->> Signed-off-by: Clément Léger <cleger@rivosinc.com>
->> ---
-> 
-> I'm second guessing having these warnings at all.
-> 
-> Sure they serve as a warning for us, developers, that something needs to
-> be revisited (e.g. after an OpenSBI update). However it will degrade user
-> experience with warnings related to something out of the user control.
-> 
-> Instead of adding CONFIG_USER_ONLY gates for these warnings I believe we're
-> better of removing them. We can add TODO/FIXME tags in the code if there's
-> something that we need to revisit at a later time.
+> Typo: vfio-platform
 
-You can also convert them to trace events, which are less invasive,
-or warn_report(). But IIUC this case I agree a comment is good enough.
+French influence ! Thanks,
 
-> Thanks,
-> 
-> Daniel
-> 
-> 
->>   target/riscv/tcg/tcg-cpu.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
+C.
+
 
