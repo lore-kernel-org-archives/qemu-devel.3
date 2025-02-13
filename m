@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1723AC0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 15:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC513C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 15:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiayq-0004uY-Jg; Thu, 13 Feb 2025 10:18:20 -0500
+	id 1tib4z-0006MV-Jo; Thu, 13 Feb 2025 10:24:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiayo-0004uI-CM
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:18:18 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tib4y-0006ME-Nb
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:24:40 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiayk-0006x7-RV
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:18:17 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4395a06cf43so6879015e9.2
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 07:18:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tib4v-0007f2-L5
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:24:40 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-ab7f838b92eso179920266b.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 07:24:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739459888; x=1740064688; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739460275; x=1740065075; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PnDEd1/tJlb5Ei9310dawU1gfaG7VfyufkkVrlIEmeM=;
- b=KefqrW9xy7MgmFdqUd7P1V3dfHUI7QS8JCwhdtkKjXA3cGN8Wb62dqom6Ip/NjRKNy
- egXN5eDd5FddpeX9gjMMF08Rbw+oosKdt97FX829aGqeLfv5OCNrE6O4HItR1aAGhpGm
- SEX7FR24Ex0G78JdG82iAIV1zqtV9Jkqf/siqXk/iVwlWTfPEKsbh39zWyTz6NFjEMsY
- XIiJj/0HOyr/HOUVVr2wKc3NI6UA7fF1pMCim28/7sAPt8IDj9yeqBuhc9f82L2z9sBM
- JiTumhZGlkdG0XzwIaP+3YeEYDbyARjmPovQcKHIqpq7tik85TnkI/hmStuQWuntH1eY
- XSKQ==
+ bh=8tfJRT45b1e3R6ukg2Fbu/yVEjxkCWVWD91D3kg7YMQ=;
+ b=cQLIiqatKvh6MbBdSVAEaan7nEVqrzuaNFJKNIGLmU5ZCdAyvVTTPumDcf0Mrai0/E
+ JW4hMkY+g3nl4K6UlcKgCUuK2xU35e09D2aNjKsmHWGargrEBJqtaa1Hm1En+r1DsdWX
+ Xv+wR69q0+Gext14DIIDy+Dl8jjDKjmWnBvMs+O2MjmOrfMKF4Ikd/dw+wIp0UfzQ9ur
+ uDURhVVi+rb0ZbOAbBP1JWsuTJuI2EI+yvV1BHN256lw/hTW/a9XRGXCkDPE88OeFDZT
+ SbWvhpB2puS7iBcQPZcA/z5u0FZ9hhQxdyd7L4QsEMHsW/i1eeAIzfsmpxYVvWV+rsSf
+ tJhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739459888; x=1740064688;
+ d=1e100.net; s=20230601; t=1739460275; x=1740065075;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PnDEd1/tJlb5Ei9310dawU1gfaG7VfyufkkVrlIEmeM=;
- b=taUbARVQ03ZpP1ouQABdmekLSCWNWSdGFBxvVpMxB7lOY50FodV36x3unJiIe5g8XZ
- chu6bOT7Cxg4E5klTJgwn5UbdeXswNnmxbvuQCHqLoyLZQFuMyZWaNGQhAa7p2cmA6g6
- SS1cLyEr/2h1XTHr34soVIn0oPKKoqG5PvUlnCvdHQ+YkOEhzk4NqcOeaiIQ9lj0d6ru
- bZMRq27d6JHLmC3cTmmlCBq2Tzay2suFK72DIkSR8fmFAHmGHXXkddLUtochVRUbJHa0
- Gz1W3e/puF3A+JiHzisK4KlAaeTPzDIbe6RWMh2iwDzrkpmlP/7v2IfIsODOjD8H5id6
- zIXA==
+ bh=8tfJRT45b1e3R6ukg2Fbu/yVEjxkCWVWD91D3kg7YMQ=;
+ b=BRa+1bnfyAafRcd9/En+45bcRhs4Zh9hTa6nPRxwAbCRlslTigNK54Ny4eVVfIpnSC
+ SybWT6oqNhgpTgr/iQ8YQWFWHu0ml1Zu0YNayPtWIXuiarw6i3MPtAJmLdp+TvlMfOvx
+ KRaiv7eUIqkcjrMQXHUgwNFtvxtl0rabp73/5LynmhBKDbX39Z2wlrKwRR7AptXU1/lc
+ /Cq5asBFRCC3oLAIwxgx9V5NitQLOIoYvLikjsHq+4mraKYPqfxnwEBScWP8QLEE27OM
+ NanbAum+HWhJiKf9lNExBhoMuwnq8nx99pItM0z/yL0tyRaq/1f+zhUlPB6/ffrjEybL
+ EtDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVT6D+MdajKgFIu46pCtuzluVGkhJj4dT97m9Oe9sfXYO83pExTSrM05hRrwO2Z3bitb1DM4rghRsD3@nongnu.org
-X-Gm-Message-State: AOJu0Yw8t80fpBB29KkzXk3eunSsQKZZyNC4jGoPHf7X5GLVjrulBx8H
- ah5WiSm6l6/25OCUpBZtOXAfvQ0aAHgznXOQU006uJ99VgNxtxUBcKnUgDr/ppo=
-X-Gm-Gg: ASbGncvfL4Z3ieVsp/9+ylc9Tw3gzgpcXlGGAXyY51C/DPLzEQIGbJMOKYadgIXh8yG
- A6drzAyZ5D8DgkbLUS4c8o3i8A/HviXKMhsqV2jf7rCqpmzimSlyXXKxzUXLZ9IqG6KACWMe4O9
- CmUrfw/1g20ID3ULf1mK9NGbzKZfbmwZQb0ZCNYRe+SdArIJH5pAg6qk8s/gdF8CK/u+aU7QQ5j
- OAhZv4fp6Y02Dz34fm3IR67nexq/a9XEXEtquVSNytB8xuaGmB9m5xXypxJQ+mH4znbLJgeCnQQ
- v8tw7m+D+8zQT8pk5QbpZFP2ZDMPZOa1P3Zfhv4y1BYx50fc5st4GTfxfd7aAiKVwoNwrs5FqhJ
- 9k0I=
-X-Google-Smtp-Source: AGHT+IG+ueWyQAPQxQzr1RMYZwiP/vfXZBXyo9djTjwa506gxMSOr8pFSzlf1gqgPpfFURYinepKPg==
-X-Received: by 2002:a05:600c:3b9d:b0:434:f5c0:328d with SMTP id
- 5b1f17b1804b1-439601a11bbmr42520685e9.23.1739459888571; 
- Thu, 13 Feb 2025 07:18:08 -0800 (PST)
+ AJvYcCXNskWdDMl8Hfzyqz4TtWzlwqR22ndjZ+EzHrTNyGq/YZnmY4eavr2INDiCsCXKK5NGPuIokZ68awRC@nongnu.org
+X-Gm-Message-State: AOJu0YwNpJY2ziGigp9dJ5kFrzd5d9IlbNhb6MUgRdBsXaYmbgb68HID
+ Pw/JsLVViKrYGr6Uf3mF3iAD1F56S/acQuk7SWyOKnbUwDM1b9vkz5Mw/FqquJu7DGfZomxHwQR
+ 4xAA=
+X-Gm-Gg: ASbGncvDADB6hM6yg+qPyfw6spKFU0fikWwrCvMfI8AXrtZlKM+mByehBOlbiPpMwmE
+ Ozus9qRYvYMRZG9+UExfw3JCBT9D0FuEdjepSCyttQ5kdEnSpu34fT9ndzvbCVRd9G1BW5b2cpF
+ zV1cNfG0c8VooLtIjOg9XWONd+DWk6q28PYmFeEwzh08wp8tPM5OR319N20UP3x0Ubr4BJSzCfz
+ kjQlVcHyCBk+jX6oL/0AAKy3SFKUF1qx+7TJf4VEWgqPyR2k4FfEqTYhU/GEA6FXYzINCIvnMgo
+ aJ6hN3Jg8doSlomblx/R2P9qI8b9heHyC848f2JEqofdOi0fVj8nSsutnZXieS/FGg2qsj9FXoW
+ maSM=
+X-Google-Smtp-Source: AGHT+IFOGtnard8tH6phivXZfwCMQpYQytIcrL3uGxE8g5uGGIgUJsrY7/Kw4DsJy6orXQoHVPHrJQ==
+X-Received: by 2002:a17:907:3d8c:b0:ab7:4632:e3df with SMTP id
+ a640c23a62f3a-aba4ebfb569mr410617966b.31.1739460275189; 
+ Thu, 13 Feb 2025 07:24:35 -0800 (PST)
 Received: from [192.168.1.20] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439618854bbsm20171735e9.32.2025.02.13.07.18.07
+ a640c23a62f3a-aba532585edsm151465466b.48.2025.02.13.07.24.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 07:18:07 -0800 (PST)
-Message-ID: <34dca52b-5b58-417e-880a-872bac6cdbac@linaro.org>
-Date: Thu, 13 Feb 2025 16:18:06 +0100
+ Thu, 13 Feb 2025 07:24:34 -0800 (PST)
+Message-ID: <53e891f0-1c3b-48fc-985e-4b0e8f0b5802@linaro.org>
+Date: Thu, 13 Feb 2025 16:24:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] target/i386: Use correct type for
- get_float_exception_flags() values
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20250213142613.151308-1-peter.maydell@linaro.org>
- <20250213142613.151308-3-peter.maydell@linaro.org>
+Subject: Re: [PATCH] hw/virtio/virtio-nsm: Respond with correct length
+To: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ Vikrant Garg <vikrant1garg@gmail.com>, qemu-stable@nongnu.org
+References: <20250213114541.67515-1-graf@amazon.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250213142613.151308-3-peter.maydell@linaro.org>
+In-Reply-To: <20250213114541.67515-1-graf@amazon.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,25 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/2/25 15:26, Peter Maydell wrote:
-> The softfloat get_float_exception_flags() function returns 'int', but
-> in various places in target/i386 we incorrectly store the returned
-> value into a uint8_t.  This currently has no ill effects because i386
-> doesn't care about any of the float_flag enum values above 0x40.
-> However, we want to start using float_flag_input_denormal_used, which
-> is 0x4000.
+On 13/2/25 12:45, Alexander Graf wrote:
+> When we return a response packet from NSM, we need to indicate its
+> length according to the content of the response. Prior to this patch, we
+> returned the length of the source buffer, which may confuse guest code
+> that relies on the response size.
 > 
-> Switch to using 'int' so that we can handle all the possible valid
-> float_flag_* values. This includes changing the return type of
-> save_exception_flags() and the argument to merge_exception_flags().
+> Fix it by returning the response payload size instead.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
+> Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+> Signed-off-by: Alexander Graf <graf@amazon.com>
 > ---
->   target/i386/ops_sse.h        | 16 +++----
->   target/i386/tcg/fpu_helper.c | 82 ++++++++++++++++++------------------
->   2 files changed, 49 insertions(+), 49 deletions(-)
+>   hw/virtio/virtio-nsm.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
+> index 098e1aeac6..b22aa74e34 100644
+> --- a/hw/virtio/virtio-nsm.c
+> +++ b/hw/virtio/virtio-nsm.c
+> @@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
+>       g_free(req.iov_base);
+>       g_free(res.iov_base);
+>       virtqueue_push(vq, out_elem, 0);
+> -    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
+> +    virtqueue_push(vq, in_elem, sz);
+>       virtio_notify(vdev, vq);
+>       return;
+>   
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+and per 
+https://lore.kernel.org/qemu-devel/CAKXOwk2Eba8qnqKQqCN+=2+N=WRPzAwx3LkoccEwR-3xgt32uw@mail.gmail.com/:
+Tested-by: Vikrant Garg <vikrant1garg@gmail.com>
 
