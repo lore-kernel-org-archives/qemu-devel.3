@@ -4,146 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C2F4C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64032C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tismp-0005aY-1i; Fri, 14 Feb 2025 05:19:07 -0500
+	id 1tisr6-0006mp-MV; Fri, 14 Feb 2025 05:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tisml-0005a4-Sb
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:19:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tisr4-0006mh-Vf
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:23:31 -0500
+Received: from mailout4.samsung.com ([203.254.224.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tismj-0007Et-Of
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:19:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739528339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vWsZAmVt/ayC/zlDSnFOsriQQwG+k+2D4Q0xaZbSRHE=;
- b=fmdm56YlW4itrrABhjoffs/K7SOB52CB5SMAwkN6IxS7/byTeGsUvGCH20fR3UQjWX3A9Z
- F1UK3bwzRIxn9e4vcB18afxwzpV839+vcI5UVnChtd6pxukYOc2uvfOi056utWaN8Sjmst
- D1uMvUowEkeiBY7nsYT4rXAN5j40v48=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-6JpeE2IpPRmmQq6t34QN9g-1; Fri, 14 Feb 2025 05:18:58 -0500
-X-MC-Unique: 6JpeE2IpPRmmQq6t34QN9g-1
-X-Mimecast-MFC-AGG-ID: 6JpeE2IpPRmmQq6t34QN9g_1739528337
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-438e4e9a53fso14080135e9.1
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 02:18:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739528337; x=1740133137;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vWsZAmVt/ayC/zlDSnFOsriQQwG+k+2D4Q0xaZbSRHE=;
- b=jPZf8jLwBId+dkiROSjZ8rT6tR771rzNc1I86EIzSKVrgNtxQeFaUVHdTQf9sXUOQJ
- VVNpsxGBzrGaQXyQmZq3HMmCGrvHFktF8WKzLT9K9OAm0mbnEoZYUIiBnGtwuUTv+pGw
- HQwkKRRqaHtlZkIrZaKCM6FVmfoGsHIvHrOyq+RJTpDeZVwUoSB3GdXUfyEQLsSpVX18
- pX6w61aHIJrkoem42uaKIks+OnQWIawqixl6sNIxjcWEwDvBeTtb5GTM8hEbSdqN8vYV
- JM6YeTPOrYyW/OZI+X5cSDvgRkKPq8mbdrDU91bww53Yr5GLulCu9YFgIvBgD2NWrYfq
- Yx/A==
-X-Gm-Message-State: AOJu0YybsXh4obnBhNYvEcmmhWbIaDtS0gkH6c5yLcJDK+FRpRM52Fas
- LN6kN6yoN8L/4Iwl+24RI8xupLWDt2cFKq9wT+7lAUxpq3GGOm0wuTzIENwCSfNQi6Gprxjrc0D
- 3i5+9aD6fkyTzRSXzxbswmOIcmvza4hccFAmVlu4AjpirOf0627MY
-X-Gm-Gg: ASbGncs+9VktLFz2ClnyARQ/rrp5g91z+cJX6I0rrYTQrCD968Do+1vM0XtExScRvV0
- rv7RFgIVT5O7AtaZx4ZSceoxrzae8g5rayB92DJhSXdrFi7b8qcWBR7CHKhjYAKEFK45lGsb+gO
- qqRTpiTW7+Qk4QVevJVDPueGxoVe8FkT7wogyItKzcC3JV4Ke5gf9bjdiv8A551yx474+WgUIKH
- ZwsJ/ooQShYW+2K/hhDYf3xDbLWi2SX2hGz7cvzv9WPt9MKxCWWmadcAGBNyWlTn54nkd4le6uD
- zavEnrrgTTYMKq3hxfRzifY5ZuJQZLtV1qYalV3IPRI=
-X-Received: by 2002:a05:600c:4ecd:b0:439:6b12:e8b1 with SMTP id
- 5b1f17b1804b1-4396b12ea01mr5829945e9.9.1739528336907; 
- Fri, 14 Feb 2025 02:18:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHAcmByNMwXvoeIDjoefBnh67AMUJP04xg1ROFo19qBkasCV/snSroDXLh70gqmzjkOG6VTKg==
-X-Received: by 2002:a05:600c:4ecd:b0:439:6b12:e8b1 with SMTP id
- 5b1f17b1804b1-4396b12ea01mr5829645e9.9.1739528336506; 
- Fri, 14 Feb 2025 02:18:56 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
- ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43961884251sm39822255e9.31.2025.02.14.02.18.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Feb 2025 02:18:56 -0800 (PST)
-Message-ID: <2c5358eb-1abe-4fce-8b28-7935c71f1cff@redhat.com>
-Date: Fri, 14 Feb 2025 11:18:55 +0100
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tisqz-000826-RG
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:23:30 -0500
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20250214102319epoutp04f7e07dedbc74af91e88af4746ddcadef~kDAtqhXQb0546505465epoutp04B
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 10:23:19 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20250214102319epoutp04f7e07dedbc74af91e88af4746ddcadef~kDAtqhXQb0546505465epoutp04B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1739528599;
+ bh=Y+YmI6Fv+4dx1jCNiVWWElBmtPS0hoZA2vg6Skzhh8I=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=o0fY1m5N2lpQ6hO/7ao1jN3kIbbD1i2Vrs/3N4wj1wkeUpp0Yy9ePaR56toLzIs3T
+ D1+t5+1uFzTvNWbcSfShRaek0XKeNlw03Ix7SNX/sjeg9q2qHqO+nWN8zUULGIcS9g
+ 5mtFuNDpeIGr/GmcBC100XQiGimWD0F94MdoYIcM=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+ 20250214102318epcas5p1ae926a25ac7b6b81a517169295d58415~kDAtBYSiH0495704957epcas5p1j;
+ Fri, 14 Feb 2025 10:23:18 +0000 (GMT)
+Received: from epsmges5p2new.samsung.com (unknown [182.195.38.178]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4YvSn03PSxz4x9Pt; Fri, 14 Feb
+ 2025 10:23:16 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+ epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 9B.B5.19933.4991FA76; Fri, 14 Feb 2025 19:23:16 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250213091631epcas5p12bc4ff8f6f3498f400cf5f2cb1a42e96~judGrUT3r1560415604epcas5p11;
+ Thu, 13 Feb 2025 09:16:31 +0000 (GMT)
+Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250213091631epsmtrp1cf59accc57012985e3c9bcadf7285db1~judGqhZpE2265622656epsmtrp1f;
+ Thu, 13 Feb 2025 09:16:31 +0000 (GMT)
+X-AuditID: b6c32a4a-b87c770000004ddd-f4-67af199452a3
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+ epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 44.94.33707.F68BDA76; Thu, 13 Feb 2025 18:16:31 +0900 (KST)
+Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
+ by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250213091629epsmtip1e54855622dae06f776471d16077ffced~judFQq1Cr2264222642epsmtip1r;
+ Thu, 13 Feb 2025 09:16:29 +0000 (GMT)
+From: Vinayak Holikatti <vinayak.kh@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com, Vinayak Holikatti
+ <vinayak.kh@samsung.com>
+Subject: [PATCH v2 2/3] hw/cxl: factor out calculation of sanitize duration
+ from cmd_santize_overwrite
+Date: Thu, 13 Feb 2025 14:45:57 +0530
+Message-Id: <20250213091558.2294806-3-vinayak.kh@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250213091558.2294806-1-vinayak.kh@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net: vhost-user: add QAPI events to report connection
- state
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Eric Blake <eblake@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Laine Stump <laine@redhat.com>, Stefano Brivio <sbrivio@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250214072629.1033314-1-lvivier@redhat.com>
- <871pw07sdy.fsf@pond.sub.org>
-Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <871pw07sdy.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNJsWRmVeSWpSXmKPExsWy7bCmpu4UyfXpBi/fSVhMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLBYnTm5nB4rNYXfg8tg56y67x5Nrm5k8
+ +rasYvSYOrve4/MmuQDWqGybjNTElNQihdS85PyUzLx0WyXv4HjneFMzA0NdQ0sLcyWFvMTc
+ VFslF58AXbfMHKCblBTKEnNKgUIBicXFSvp2NkX5pSWpChn5xSW2SqkFKTkFJgV6xYm5xaV5
+ 6Xp5qSVWhgYGRqZAhQnZGSf+2xR0ylc0HVjD2sC4QKyLkZNDQsBEYmLDVNYuRi4OIYHdjBIv
+ nuxlgnA+MUrcPviGEc5Z9uoWK0zL0uanbBCJnYwSC189YYdwGpgkWpZtBKtiEzCQeNB8nB3E
+ FhGQlPjddZoZxGYW+MAoseipLogtLJAhsWzHViYQm0VAVeLD0+9gNbwCthLtJ99AbZOX2H/w
+ LFCcg4NTwE5i2stsiBJBiZMzn7BAjJSXaN46mxnkBgmBVg6J31enskP0ukj82LeDEcIWlnh1
+ fAtUXEriZX8blF0sce7iJ6iaGonXXSuYIWx7idZT/WB7mQU0Jdbv0ocIy0pMPbWOCWIvn0Tv
+ 7ydMEHFeiR3zQGwOIFtFYunbTJhNX541Q033kPh46y8zJKgmMkpce/OQbQKjwiwk78xC8s4s
+ hM0LGJlXMUqmFhTnpqcWmxYY5aWWw+M4OT93EyM4lWp57WB8+OCD3iFGJg7GQ4wSHMxKIrwS
+ 09akC/GmJFZWpRblxxeV5qQWH2I0BQb3RGYp0eR8YDLPK4k3NLE0MDEzMzOxNDYzVBLnbd7Z
+ ki4kkJ5YkpqdmlqQWgTTx8TBKdXAlJRw/X72jO0BrnI7FyV0b+22vSJnsXJpaY9O2b3CWwxi
+ 6xKqmvnnekgzSn79vz/H8LnWJ3Xmvl+LDCbXn3FhOaY1x5QptvuDn8H6cGG3kiMFGac2Pzog
+ WP2//cqx4BK/S2+fnvkhIXyq+JC3yBmHtX+7nDdUn1117yjnvd4bHiJWXOeOT544+fFTg098
+ Tvyps4Lm907PKw9eenjKuY/3fz5c1WxmKGXyPGEPn2L5q7Qr4lZycusy3qYleXWGHONvvjKv
+ al946+5/P9+u7UnmvXlhcv1n3VXWefLPWryc2K4UnL4s8f/etmnchT/bAi2WOio8M93Qq2H/
+ /ZfMmdoy+bjg8orvKk7bPr9jzu2wUmIpzkg01GIuKk4EAN1nzb8uBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCLMWRmVeSWpSXmKPExsWy7bCSnG7+jrXpBnfbeCymH1a0+HJ6D5vF
+ 6ptrGC1uHtjJZLFw4zImi/OzTrFY/N22l9HieO8OFosTJ7ezA8XmsDtweeycdZfd48m1zUwe
+ fVtWMXpMnV3v8XmTXABrFJdNSmpOZllqkb5dAlfGif82BZ3yFU0H1rA2MC4Q62Lk5JAQMJFY
+ 2vyUrYuRi0NIYDujROuRl4wQCSmJYzt/skHYwhIr/z1nhyj6xyjRtnEtO0iCTcBA4kHzcTBb
+ REBS4nfXaWaQImaBX4wST3ffB0pwcAgLpEnc+MkKUsMioCrx4el3ZhCbV8BWov3kG1aIBfIS
+ +w+eZQYp5xSwk5j2MhskLARUsrvzGhNEuaDEyZlPWEBKmAXUJdbPEwIJMwN1Nm+dzTyBUXAW
+ kqpZCFWzkFQtYGRexSiaWlCcm56bXGCoV5yYW1yal66XnJ+7iREcEVpBOxiXrf+rd4iRiYPx
+ EKMEB7OSCK/EtDXpQrwpiZVVqUX58UWlOanFhxilOViUxHmVczpThATSE0tSs1NTC1KLYLJM
+ HJxSDUxsBQ2X2ObMM/dzLtl76bG1y9tZis7ZGv8vXVzzdnu9pO8E90tLfjEmV9ZePBe/9doJ
+ 5S1PdwnKHTmi5L7/X9axtjLBKM33rtzTosyXxugLdtfueFgry19f2mX2v6u/taw3/NIHd7uN
+ TGu/8WZbWx41Smzb7fA+Ja/xWrzfr8Ta0MS6pZbJq7h3PPseWPNy11Mdm6zlNu4XfXVShT9N
+ //BLaK5Pb89MBsG4mXpHP4R/n5G56EbSDRdnQ9Up+3kS7jb7zv3ToT/bxln73PddDZlrmWyv
+ F4YEWYQusp2yPlfQ98jHGKaAyO/trY9qmJYr2izO6+SPPta9ZHFwIs/aOexsu8KT5HdqTeqP
+ cbz6T4mlOCPRUIu5qDgRAKNOHPn3AgAA
+X-CMS-MailID: 20250213091631epcas5p12bc4ff8f6f3498f400cf5f2cb1a42e96
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250213091631epcas5p12bc4ff8f6f3498f400cf5f2cb1a42e96
+References: <20250213091558.2294806-1-vinayak.kh@samsung.com>
+ <CGME20250213091631epcas5p12bc4ff8f6f3498f400cf5f2cb1a42e96@epcas5p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=vinayak.kh@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,57 +141,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/02/2025 11:06, Markus Armbruster wrote:
-> Laurent Vivier <lvivier@redhat.com> writes:
-> 
->> The netdev reports NETDEV_VHOST_USER_CONNECTED event when
->> the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
->> when it is disconnected.
->>
->> The NETDEV_VHOST_USER_CONNECTED event includes the ChardevInfo
->> (label, filename and frontend_open).
->>
->> This allows a system manager like libvirt to detect when the server
->> fails.
->>
->> For instance with passt:
->>
->> { 'execute': 'qmp_capabilities' }
->> { "return": { } }
->>
->> [killing passt here]
->>
->> { "timestamp": { "seconds": 1739517243, "microseconds": 115081 },
->>    "event": "NETDEV_VHOST_USER_DISCONNECTED",
->>    "data": { "netdev-id": "netdev0" } }
->>
->> [automatic reconnection with reconnect-ms]
->>
->> { "timestamp": { "seconds": 1739517290, "microseconds": 343777 },
->>    "event": "NETDEV_VHOST_USER_CONNECTED",
->>    "data": { "netdev-id": "netdev0",
->>              "info": { "frontend-open": true,
->>                        "filename": "unix:",
->>                        "label": "chr0" } } }
->>
->> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> 
-> Standard question for events: if a management application misses an
-> event, say because it restarts and reconnects, is there a way to obtain
-> the missed information with a query command?
-> 
+Move the code of calculation of sanitize duration into function
+for usability by other sanitize routines
 
-query-chardev could help but it doesn't provide the netdev id.
+Estimate times based on:
+             https://pmem.io/documents/NVDIMM_DSM_Interface-V1.8.pdf
 
-in HMP, "info network" has the information, but for QMP we had a try with a query-netdev 
-in the past but the series has been reverted.
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 61 ++++++++++++++++++++++----------------
+ 1 file changed, 35 insertions(+), 26 deletions(-)
 
-f9bb0c1f9862 ("Revert "qapi: net: Add query-netdev command"")
-d32ad10a14d4 ("qapi: net: Add query-netdev command")
-
-Thanks,
-Laurent
-Thanks
-Laurent
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index fa38ecf507..d58c20842f 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1656,34 +1656,10 @@ static void __do_sanitization(CXLType3Dev *ct3d)
+     cxl_discard_all_event_records(&ct3d->cxl_dstate);
+ }
+ 
+-/*
+- * CXL r3.1 Section 8.2.9.9.5.1: Sanitize (Opcode 4400h)
+- *
+- * Once the Sanitize command has started successfully, the device shall be
+- * placed in the media disabled state. If the command fails or is interrupted
+- * by a reset or power failure, it shall remain in the media disabled state
+- * until a successful Sanitize command has been completed. During this state:
+- *
+- * 1. Memory writes to the device will have no effect, and all memory reads
+- * will return random values (no user data returned, even for locations that
+- * the failed Sanitize operation didn’t sanitize yet).
+- *
+- * 2. Mailbox commands shall still be processed in the disabled state, except
+- * that commands that access Sanitized areas shall fail with the Media Disabled
+- * error code.
+- */
+-static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+-                                         uint8_t *payload_in,
+-                                         size_t len_in,
+-                                         uint8_t *payload_out,
+-                                         size_t *len_out,
+-                                         CXLCCI *cci)
++static int get_sanitize_duration(uint64_t total_mem)
+ {
+-    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+-    uint64_t total_mem; /* in Mb */
+-    int secs;
++    int secs = 0;
+ 
+-    total_mem = (ct3d->cxl_dstate.vmem_size + ct3d->cxl_dstate.pmem_size) >> 20;
+     if (total_mem <= 512) {
+         secs = 4;
+     } else if (total_mem <= 1024) {
+@@ -1712,6 +1688,39 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+         secs = 240 * 60; /* max 4 hrs */
+     }
+ 
++    return secs;
++}
++
++/*
++ * CXL r3.1 Section 8.2.9.9.5.1: Sanitize (Opcode 4400h)
++ *
++ * Once the Sanitize command has started successfully, the device shall be
++ * placed in the media disabled state. If the command fails or is interrupted
++ * by a reset or power failure, it shall remain in the media disabled state
++ * until a successful Sanitize command has been completed. During this state:
++ *
++ * 1. Memory writes to the device will have no effect, and all memory reads
++ * will return random values (no user data returned, even for locations that
++ * the failed Sanitize operation didn’t sanitize yet).
++ *
++ * 2. Mailbox commands shall still be processed in the disabled state, except
++ * that commands that access Sanitized areas shall fail with the Media Disabled
++ * error code.
++ */
++static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
++                                         uint8_t *payload_in,
++                                         size_t len_in,
++                                         uint8_t *payload_out,
++                                         size_t *len_out,
++                                         CXLCCI *cci)
++{
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    uint64_t total_mem; /* in Mb */
++    int secs;
++
++    total_mem = (ct3d->cxl_dstate.vmem_size + ct3d->cxl_dstate.pmem_size) >> 20;
++    secs = get_sanitize_duration(total_mem);
++
+     /* EBUSY other bg cmds as of now */
+     cci->bg.runtime = secs * 1000UL;
+     *len_out = 0;
+-- 
+2.34.1
 
 
