@@ -4,78 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF71C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 10:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6ACC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 11:07:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiWUV-0002UG-A9; Thu, 13 Feb 2025 05:30:43 -0500
+	id 1tiX36-0003vL-LH; Thu, 13 Feb 2025 06:06:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1325cea77=graf@amazon.de>)
- id 1tiWUU-0002Tr-4i
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 05:30:42 -0500
-Received: from smtp-fw-80008.amazon.com ([99.78.197.219])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tiX32-0003uL-D9
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 06:06:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1325cea77=graf@amazon.de>)
- id 1tiWUS-0002Rr-7P
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 05:30:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1739442640; x=1770978640;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=eTuz5eu7O4IP+PH5YDbiBqcEfIAn/vn5PLPEHQAXhGU=;
- b=ZMI33WNAwmDe+0K2em314UdmGkOX2f1lp7Q65ElSVgMn04ygp6/TZ9Ln
- d6jZLXZG+rWoH7EmfLrLjwy5EEKp3C8LiUfeXA2NuhFIfVhnR4Ip9Jich
- GxwD5Mglhc0iQhVHH4nvyADIM92yjZW4Z72Xwa2vfnl9+GdWf8Mz2T49a g=;
-X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="169327045"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-80008.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 10:30:36 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [10.0.21.151:53410]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.2.31:2525] with
- esmtp (Farcaster)
- id 05f1e083-6d72-4447-ba43-36500331b2db; Thu, 13 Feb 2025 10:30:36 +0000 (UTC)
-X-Farcaster-Flow-ID: 05f1e083-6d72-4447-ba43-36500331b2db
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.204) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 13 Feb 2025 10:30:36 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Thu, 13 Feb 2025
- 10:30:34 +0000
-Message-ID: <6e184a9b-32f2-403b-b499-5d3b618e0bd8@amazon.com>
-Date: Thu, 13 Feb 2025 11:30:31 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tiX30-0007Lo-RK
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 06:06:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739444781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1eZkYUBFWEylhK7h3h1cAdHlAvv4y8qvqeiH+U1ebA=;
+ b=AiVntsqbrCC+28XXzpi+CRAs19mR3sEJwbmvmSDBEujN8CvQVx4jaThn+2HZl9j4HcDncQ
+ ETIn6MFwZcEFSJcE1jLKmUqCpjjeuu/SF06UVuyMzOw0qaOufojexMi8StQi7PltKAQ65Y
+ JJm2qInC3uS69Vtzz6og+U8Z6/RoQA8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-626-GXjXwC6OPxq1pf7XQPEJJw-1; Thu, 13 Feb 2025 06:06:20 -0500
+X-MC-Unique: GXjXwC6OPxq1pf7XQPEJJw-1
+X-Mimecast-MFC-AGG-ID: GXjXwC6OPxq1pf7XQPEJJw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38f20b530dfso738084f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 03:06:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739444779; x=1740049579;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=v1eZkYUBFWEylhK7h3h1cAdHlAvv4y8qvqeiH+U1ebA=;
+ b=GMWCxh+aTFnJfKLT0XL29PzlnZQJWUMG5/DdBuLVNqsAwp6mYluKKEFCpgZTOVEEfQ
+ WiDEG8G4fIfQZI381/ceZHPCIBBkqB715xQq1c0ssotInoqMUH90gBnw3tpRRJ5szznl
+ KBkG86izQ0XosUYeLNrO3/S71Lk5a7qyVB2XOBFic7sK1958ZNJP5WPL8WFiX0jboyym
+ iWsmzgiL+7i3WnLFd+0O6Mk5Wm+IwaSLcrBc9V4eu9IrA1+y+WQ3Q06jhx2xDXoiYhcY
+ r8w+iuDAuIY5AyV6D914LbGBiJgDCbNEG4BzWrjUcClvqt5tdN5F+HvelQAvDdI7WGqt
+ cduQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWOyFiamDTUkCeMMBKMqX2e1hdMsOVF/LWk10l2ofxqY6evpp8tIgjQ5f+6G2JoUBG0FyfUCdpHZz7T@nongnu.org
+X-Gm-Message-State: AOJu0YzdXCV9Y5CqT/Hser8K9RbMxkBNcrMMhqgJSjn0ciPMzGKkCBo9
+ mHQoOaqSbGwlCW0ioQ8RxhMKzEXFcBVLOCAZLVECzey9EhUEfD6/0AcEGsGT6/ktd5XKHllwXdA
+ 9z6d8XxlMXc9UD4svyQ8EjbMXWa/wuocBk+yRPNyy/CiNAm8DPedcq2fa9NnvRYt7FzTWuzK/3N
+ kwSeZgLFlbvfiZGweSx6e4P0CTZgU=
+X-Gm-Gg: ASbGncvWz7uxDFCdwR/0V8UNbZCnuLU7RhfFb+jVCvH1K5ppKJ8S4fDMW1v/V/ClniJ
+ 9lSp7TN1RGyInpNQofk5zFDGHo/KYUj1pynRrnxwc3MxaaLSassXg4KujgHwY/ac=
+X-Received: by 2002:a05:6000:2a5:b0:385:fa3d:1988 with SMTP id
+ ffacd0b85a97d-38dea259847mr6293844f8f.8.1739444778686; 
+ Thu, 13 Feb 2025 03:06:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEYr43NmskIRpGzWJaeWz7wCmCCe8Hu7UIN86ZICwpEwYS9yXLnh/Py7ZwtNJJ53O7wZPmtj94BWcWaFN8kEt0=
+X-Received: by 2002:a05:6000:2a5:b0:385:fa3d:1988 with SMTP id
+ ffacd0b85a97d-38dea259847mr6293805f8f.8.1739444778289; Thu, 13 Feb 2025
+ 03:06:18 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Qemu Nitro Enclave] NSM virtio attestation response is always of
- size 0x3000
-To: Vikrant Garg <vikrant1garg@gmail.com>, <qemu-devel@nongnu.org>
-CC: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-References: <CAKXOwk1_zPNBaQZyiHb8A5D+3euZuvjW__Cqi3_PKgad95rDKg@mail.gmail.com>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <CAKXOwk1_zPNBaQZyiHb8A5D+3euZuvjW__Cqi3_PKgad95rDKg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D045UWC001.ant.amazon.com (10.13.139.223) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=99.78.197.219;
- envelope-from=prvs=1325cea77=graf@amazon.de; helo=smtp-fw-80008.amazon.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+References: <20250211214328.640374-1-kwolf@redhat.com>
+ <20250211214328.640374-4-kwolf@redhat.com>
+ <b7b2ab97-acd3-4008-abd6-3da874541113@redhat.com>
+ <Z6yecuOmtQKYUwLj@redhat.com>
+ <CABgObfb-MXHYY4eM5LUbiRdOqWFG_CEcM-Xkv+v_dNWMwThKHA@mail.gmail.com>
+ <Z6y6nUo68dIkryOu@redhat.com>
+ <a8e79f73-15d0-486c-99da-ad871a57e4ef@redhat.com>
+ <Z6z8EuH2Dw0SQfME@redhat.com>
+In-Reply-To: <Z6z8EuH2Dw0SQfME@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 13 Feb 2025 12:06:06 +0100
+X-Gm-Features: AWEUYZkO6A78NSkQaCcDeD_mY9pMQFl9ODNt25Jn-yWMGTa7lXw7FpDnE-tJr_M
+Message-ID: <CABgObfadubwF0u50dR60g3aYDaZZsbxsSfm2PaY-je2GV7Fm2g@mail.gmail.com>
+Subject: Re: [PATCH 03/11] rust: Add some block layer bindings
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, manos.pitsidianakis@linaro.org, 
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,50 +111,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vikrant,
+On Wed, Feb 12, 2025 at 8:52=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
+:
+> I assume that sooner or later we'll have a reason to include it anyway,
+> so that might honestly be the best option.
 
-On 13.02.25 11:01, Vikrant Garg wrote:
+Sounds good.
 
-> Hello All,
->
-> I am using the QEMU for emulating nitro enclave images. In my enclave 
-> image, I have an attestation service implemented in Rust. This 
-> application fetches attestations using IOCTL command. I have noticed 
-> that response from the nsm virtio device is always of length 0x3000 
-> (i.e. maximum NSM response size). Instead, it should be the actual 
-> size of response bytes. Same case is also happening with the 
-> attestation service implemented in python. On the other hand, the same 
-> Rust attestation service is working with AWS nitro enclaves. It looks 
-> like an NSM emulation issue.
->
-> I would like to confirm if this is the expected behaviour and need 
-> help on further debugging.
+> Do you want to post it as a proper patch? It seems to depend on your
+> errno patch, but that shouldn't be a problem because we still want that
+> one, too.
 
+Yes, I wrote it as an addendum, as a kind of "let's see later what's
+best"; that's also why the patch I posted uses "mod libc" for the
+errno values.  (The attachment gives away the date, too :)).  I'll
+clean up everything and add errno::into_neg_errno(); it should take
+both an unsigned Ok value or Ok(()), and will return i32 or i64.
 
-Thanks a lot for the report! Does this happen with all commands or only 
-the Attest command? The NSM emulation code attempts to trim the response 
-size to the actual payload, but there may well be a bug in that logic.
-
-I do have a hunch on what the problem may be. Can you please quickly try 
-the patch below?
-
-
-Thanks!
-
-Alex
-
-
-index 098e1aeac6..b22aa74e34 100644
---- a/hw/virtio/virtio-nsm.c
-+++ b/hw/virtio/virtio-nsm.c
-@@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev, 
-VirtQueue *vq)
-      g_free(req.iov_base);
-      g_free(res.iov_base);
-      virtqueue_push(vq, out_elem, 0);
--    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
-+    virtqueue_push(vq, in_elem, sz);
-      virtio_notify(vdev, vq);
-      return;
+Paolo
 
 
