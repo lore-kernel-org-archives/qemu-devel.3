@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DBCEC0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 10:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74F0C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 10:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiWEQ-0004c2-6p; Thu, 13 Feb 2025 05:14:06 -0500
+	id 1tiWEm-0004km-1o; Thu, 13 Feb 2025 05:14:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1tiWEI-0004az-Ot; Thu, 13 Feb 2025 05:13:59 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <prvs=1325cea77=graf@amazon.de>)
+ id 1tiWEi-0004iR-PM; Thu, 13 Feb 2025 05:14:24 -0500
+Received: from smtp-fw-80007.amazon.com ([99.78.197.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1tiWEG-00078x-Aw; Thu, 13 Feb 2025 05:13:58 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id B8D8A5C53A1;
- Thu, 13 Feb 2025 10:13:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA05C4CED1;
- Thu, 13 Feb 2025 10:13:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1739441634;
- bh=6Vca/JaGuKes76BeKlU7+5zMdE+wx0RB2G6+FZ9cjoc=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=eqxSAQXqIWGpkjfQAodVEuFzy2L1OumLOdjEcvbFX3LsB30q/eNVPmWDT06nWzkOu
- DJWNxO6hGqT72IQ4FbFZoXySn/vjh5g344yC+e3JvMwCmhPzLkWXk24gy3uOIiinLt
- GHHJJUiomjD8OMYOn15wKy/xdNN7UTwiP+AxV6x0edNTap015gjhaQUPWa6FuQ76oI
- +BauJVkcTKqwRQnpow6ZuH9CVhA45WtwEUrZgX3dqIoQEdopNQ0o8/d/Y0bqTnkkqN
- R0I411I2wLQ4z/nenYw4dAODEcBP1489aXzucqEoaKBp3XxFea2JhCRp/0gmZ3OfMk
- OXXwFNL3QdSiQ==
-Received: by mail-lf1-f46.google.com with SMTP id
- 2adb3069b0e04-545097ff67cso654490e87.2; 
- Thu, 13 Feb 2025 02:13:53 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiZj5X6FOd4nRHkRIbHS8dOUDnJXyXzWEzng+QCVdxXhkGT7HfPYSAQSHaXPgBjTKib17MiXking==@nongnu.org,
- AJvYcCW+g4nXgmOPpJ3HOXxnzYvjB0uRB0sumAQ//j1IB3/MH1xJjIjk10nzCp7Tntnc8eSceYrAxiEuxUq08A==@nongnu.org
-X-Gm-Message-State: AOJu0Yyz3fuVEVX7Nd/yq1iWk4QHav7X0FtFRAIUckNgJHXw4hFJ1Vnl
- cLllBdwsrUA0j5ffe7LcxJyc6AwkKt6wm0C8eHRMbCNQt18EG22j1HajcRciz2UpyxXXemTPQCD
- Bcq9foWBnUsbs1IREf+yOezGSp2o=
-X-Google-Smtp-Source: AGHT+IFGqKWEfyhySzMXVFDBRn2O7H7zq6aSkVOgEAQi6NeHYPFZf7j+9QgD+CTeroYlOa0ebnvJWCu0bfEyJOhp9+Y=
-X-Received: by 2002:a05:6512:e97:b0:545:4b0:8a1d with SMTP id
- 2adb3069b0e04-545184bcfe9mr2162009e87.51.1739441632369; Thu, 13 Feb 2025
- 02:13:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=1325cea77=graf@amazon.de>)
+ id 1tiWEg-00079z-UK; Thu, 13 Feb 2025 05:14:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1739441664; x=1770977664;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=NF6TsSr0bWdAlT9eyk9YvlvoTYhpihpBhptbLVZzBQE=;
+ b=tqIBrf3cEvDvt3frVmxki0QSomYKnw06WUSdU5y9Sc7uM6qIRtKSpUUQ
+ DWPzSFR4xCaCVp1mxan+n7/+nX5qU1wk4fHqc9JIh5PJ9h53k5Z+ngef2
+ BiovCohuiRwciMg2wXwWJVEfhu8VsQmhNHf4myifvhqFWbIu8wrhNehhs Q=;
+X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="376988335"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
+ by smtp-border-fw-80007.pdx80.corp.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 10:14:16 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [10.0.38.20:59877]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.9.187:2525]
+ with esmtp (Farcaster)
+ id 23d80605-072c-4b49-b2af-acac7eaca184; Thu, 13 Feb 2025 10:14:15 +0000 (UTC)
+X-Farcaster-Flow-ID: 23d80605-072c-4b49-b2af-acac7eaca184
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Thu, 13 Feb 2025 10:14:08 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Thu, 13 Feb 2025
+ 10:14:05 +0000
+Message-ID: <f59bb48f-051d-4681-a702-6aed3420c2f7@amazon.com>
+Date: Thu, 13 Feb 2025 11:14:03 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
+To: Gerd Hoffmann <kraxel@redhat.com>
+CC: <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, <qemu-arm@nongnu.org>, Michael Roth
+ <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Ard Biesheuvel
+ <ardb@kernel.org>
 References: <20250211092324.965440-1-kraxel@redhat.com>
- <CAMj1kXE289FkzV=GZSUARF7TFUyRuxYVX-090ic06Erb_RLGrg@mail.gmail.com>
- <cc41f19c-5778-4376-a1a1-762a92c8584c@amazon.com>
-In-Reply-To: <cc41f19c-5778-4376-a1a1-762a92c8584c@amazon.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Thu, 13 Feb 2025 11:13:41 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXFaoZCnXpAsq+i5nzpCOjcrsN4QA2r6Z=F6UUwcUe_qJA@mail.gmail.com>
-X-Gm-Features: AWEUYZlg51Z1Tt_zVC_1CRwzJSq_hfim0Du2WMOrMWNA-JlBE_QiSF49Jd7zHV0
-Message-ID: <CAMj1kXFaoZCnXpAsq+i5nzpCOjcrsN4QA2r6Z=F6UUwcUe_qJA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/23] hw/uefi: add uefi variable service
-To: Alexander Graf <graf@amazon.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
- Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=ardb@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -85
-X-Spam_score: -8.6
-X-Spam_bar: --------
-X-Spam_report: (-8.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20250211092324.965440-10-kraxel@redhat.com>
+ <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
+ <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
+ <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
+ <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
+ <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
+ <4bwjwcs2k4hbrj6mokc57a5dy57jjssfxnvd4qm5257dgnid3x@yqdx7e47o2mf>
+ <2c06a98c-f286-4632-a352-8b47dc4cc43c@amazon.com>
+ <2vgc4scgezmb3med6dypykcym7te7gzlx7wp3vm5ehtfmxj3xr@kswpu35wt5ns>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <2vgc4scgezmb3med6dypykcym7te7gzlx7wp3vm5ehtfmxj3xr@kswpu35wt5ns>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D032UWB003.ant.amazon.com (10.13.139.165) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=99.78.197.218;
+ envelope-from=prvs=1325cea77=graf@amazon.de; helo=smtp-fw-80007.amazon.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Feb 2025 at 11:11, Alexander Graf <graf@amazon.com> wrote:
->
->
-> On 13.02.25 10:41, Ard Biesheuvel wrote:
-> > On Tue, 11 Feb 2025 at 10:23, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> >> This patch adds a virtual device to qemu which the uefi firmware can use
-> >> to store variables.  This moves the UEFI variable management from
-> >> privileged guest code (managing vars in pflash) to the host.  Main
-> >> advantage is that the need to have privilege separation in the guest
-> >> goes away.
-> >>
-> >> On x86 privileged guest code runs in SMM.  It's supported by kvm, but
-> >> not liked much by various stakeholders in cloud space due to the
-> >> complexity SMM emulation brings.
-> >>
-> >> On arm privileged guest code runs in el3 (aka secure world).  This is
-> >> not supported by kvm, which is unlikely to change anytime soon given
-> >> that even el2 support (nested virt) is being worked on for years and is
-> >> not yet in mainline.
-> >>
-> > The secure counterpart of this would never execute at EL3 on ARM, but
-> > at secure EL1 (or potentially at secure EL2 on more recent CPUs). But
-> > the general point that this is difficult to virtualize stands; I've
-> > contemplated doing something similar to SMM emulation using non-secure
-> > EL1 in a separate VM to provide an execution context that could those
-> > the secure EL1 payload (using standalone MM) but I never found the
-> > time to work on this.
->
->
-> Sounds very similar to what Ilias built a few years ago?
->
-> https://lore.kernel.org/all/20200511085205.GD73895@apalos.home/T/
->
-> Which reminds me: How similar is the protocol in this patch set to the
-> one implemented in U-Boot? No need to reinvent the wheel over and over
-> again.
->
 
-Identical afaik
+On 13.02.25 10:52, Gerd Hoffmann wrote:
+>    Hi,
+>
+>> That will bring back all issues with cached vs non-cached memory accesses,
+>> no? So edk2 will always access that memory as device memory which means it
+>> bypasses the cache, while QEMU will access it through the cache. So that
+>> buffer would need to actually be MMIO memory I suppose?
+> I don't think so.  The firmware driver knows this actually is normal ram
+> and can setup mappings and memory attributes accordingly.  The situation
+> is a bit different from vga memory bars which are handled by pci bus
+> management which doesn't know anything about virtualization specifics.
+>
+> Well, unless macos thinks it knows everything better and goes setup
+> uncached mappings ...
+
+
+It's not only macOS. After SetVirtualAddressMap, the OS owns the virtual 
+address space of Runtime Services. So in theory it also owns 
+cacheability attributes of all mappings.
+
+>
+>>> Not sure how to do that best on x86 though.  Find 64k unused address
+>>> space over ioapic?  Do we have enough free space there?  And how
+>>> future-proof would that be?
+>> I'm not worried yet about where we place that memory, but more about
+>> ensuring that we actually have a working path to access it. We can always
+>> find space in the PCI hole, as long as we properly advertise it to all
+>> stakeholders via ACPI and memory map.
+> Well, the host can't easily place stuff in the pci hole because the
+> guest will manage that (map pci bars etc).  But making the pci hole
+> a bit smaller to make room is an option I think.
+
+
+Yes, IIRC we advertise where the hole is. I'm sure we can find a spot. 
+Somewhere next to the HPET :).
+
+
+Alex
+
 
