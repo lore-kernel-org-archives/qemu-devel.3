@@ -4,74 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2711C021A6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14EDC021A4
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tidWZ-0007rJ-OS; Thu, 13 Feb 2025 13:01:21 -0500
+	id 1tidV8-00064H-QC; Thu, 13 Feb 2025 12:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tidWE-0007fw-To
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:00:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tidWC-0006Pf-V4
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:00:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739469653;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=7bpxq8mz8Sv+m+s38czM6zURIi0j+FKNnxHbgG6JYKU=;
- b=RIQXt2cIW+QiddqI5nmM4WpbgHcFoTRn1prE7NS/N3AxgU6hymdXHs1K3tcOpZjlr0SCEu
- 7thBQAt33bclr1Wta8oVu5hOJ5NpLShUJzrnEX0ikzbCWEf9cshJ8N7F1PJrSJXANgTo0C
- /nInwdb72C4A5mVxRo1nSRLCRVqVrkc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-UpybSlBeN0qtdZN6tJzgvQ-1; Thu,
- 13 Feb 2025 13:00:49 -0500
-X-MC-Unique: UpybSlBeN0qtdZN6tJzgvQ-1
-X-Mimecast-MFC-AGG-ID: UpybSlBeN0qtdZN6tJzgvQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tidV6-00063E-HP
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 12:59:49 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tidV4-00068R-RP
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 12:59:48 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B0D01800878; Thu, 13 Feb 2025 18:00:47 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.157])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 69E721955DCE; Thu, 13 Feb 2025 18:00:45 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AAA23225C3;
+ Thu, 13 Feb 2025 17:59:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739469585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0wnieFaULoZsqv7dcoALZa0T7zVyblYiS1hKhyamz3A=;
+ b=AaH9ZLNsl4EahixoKP+XSY+7KAPWHy/Q/8ffjaF4GeEtGWi7ADlAJD5qLOxnImz/rKM06u
+ 31rxNFTzeJ4X68HsSQladaXRiIHQ7iQYCmZj7hU+t4yx4kZ5VenyK2W/OsLFKSGzUYwg/C
+ RnPFz5RAqOPh6hsSBGjMWh5attEIQ0c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739469585;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0wnieFaULoZsqv7dcoALZa0T7zVyblYiS1hKhyamz3A=;
+ b=ru9yeGf3f2WxciXgQJ4Z8FPfqmBHqd4OBXAzAROJRh5kM+JpqeQIWfs9RqTQUzpAlM+mpV
+ UggWhRgqcuj6/qCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739469585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0wnieFaULoZsqv7dcoALZa0T7zVyblYiS1hKhyamz3A=;
+ b=AaH9ZLNsl4EahixoKP+XSY+7KAPWHy/Q/8ffjaF4GeEtGWi7ADlAJD5qLOxnImz/rKM06u
+ 31rxNFTzeJ4X68HsSQladaXRiIHQ7iQYCmZj7hU+t4yx4kZ5VenyK2W/OsLFKSGzUYwg/C
+ RnPFz5RAqOPh6hsSBGjMWh5attEIQ0c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739469585;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0wnieFaULoZsqv7dcoALZa0T7zVyblYiS1hKhyamz3A=;
+ b=ru9yeGf3f2WxciXgQJ4Z8FPfqmBHqd4OBXAzAROJRh5kM+JpqeQIWfs9RqTQUzpAlM+mpV
+ UggWhRgqcuj6/qCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C88BE13874;
+ Thu, 13 Feb 2025 17:59:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OO9XIQ8zrmfqMgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 13 Feb 2025 17:59:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Fam Zheng <fam@euphon.net>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- David Hildenbrand <david@redhat.com>, pkrempa@redhat.com,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 00/12] virtio-scsi: add iothread-vq-mapping parameter
-Date: Thu, 13 Feb 2025 13:00:31 -0500
-Message-ID: <20250213180043.713434-1-stefanha@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 7/9] tests/qtest/migration: Introduce
+ migration_test_add_suffix
+Date: Thu, 13 Feb 2025 14:59:25 -0300
+Message-Id: <20250213175927.19642-8-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250213175927.19642-1-farosas@suse.de>
+References: <20250213175927.19642-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,89 +119,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement --device virtio-scsi-pci,iothread-vq-mapping= support so that
-virtqueues can be assigned to different IOThreads. This improves SMP guest
-scalability where I/O-intensive applications can become bottlenecked on a
-single IOThread.
+Introduce a new migration_test_add_suffix to allow programmatic
+creation of tests based on a suffix. Pass the test name into the test
+so it can know which variant to run.
 
-The following benchmark results show the effect of iothread-vq-mapping. fio
-randread 4k iodepth=64 results from a 4 vCPU guest with an Intel P4800X SSD:
-iothreads IOPS
-------------------------------
-1         189576
-2         312698
-4         346744
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/qtest/migration/migration-util.c | 24 ++++++++++++++++++++++++
+ tests/qtest/migration/migration-util.h |  2 ++
+ 2 files changed, 26 insertions(+)
 
-The virtio-scsi device model and core SCSI emulation currently assume that
-requests are processed in a single AioContext. This patch series goes about
-modifying this as follows:
-
-scsi-disk: drop unused SCSIDiskState->bh field
-dma: use current AioContext for dma_blk_io()
-
-Make dma-helpers.c support the QEMU multi-queue block layer by using
-qemu_get_current_aio_context().
-
-scsi: track per-SCSIRequest AioContext
-scsi: introduce requests_lock
-
-Make the core SCSI emulation code support processing requests in multiple
-AioContexts by protecting the per-SCSIDevice requests list.
-
-virtio-scsi: introduce event and ctrl virtqueue locks
-virtio-scsi: protect events_dropped field
-virtio-scsi: perform TMFs in appropriate AioContexts
-
-Make the virtio-scsi emulation code support processing requests in multiple
-AioContexts. The event and ctrl virtqueues can interact with multiple
-AioContexts. Especially the SCSI Task Management Functions (TMFs) handled by
-the ctrl virtqueue need to be made thread-safe.
-
-virtio-blk: extract cleanup_iothread_vq_mapping() function
-virtio-blk: tidy up iothread_vq_mapping functions
-virtio: extract iothread-vq-mapping.h API
-virtio-scsi: add iothread-vq-mapping parameter
-
-Port over the iothread-vq-mapping qdev property from virtio-blk to virtio-scsi.
-
-virtio-scsi: handle ctrl virtqueue in main loop
-
-Simplify TMF handling now that there is no longer a single AioContext where all
-requests are processed.
-
-Stefan Hajnoczi (12):
-  scsi-disk: drop unused SCSIDiskState->bh field
-  dma: use current AioContext for dma_blk_io()
-  scsi: track per-SCSIRequest AioContext
-  scsi: introduce requests_lock
-  virtio-scsi: introduce event and ctrl virtqueue locks
-  virtio-scsi: protect events_dropped field
-  virtio-scsi: perform TMFs in appropriate AioContexts
-  virtio-blk: extract cleanup_iothread_vq_mapping() function
-  virtio-blk: tidy up iothread_vq_mapping functions
-  virtio: extract iothread-vq-mapping.h API
-  virtio-scsi: add iothread-vq-mapping parameter
-  virtio-scsi: handle ctrl virtqueue in main loop
-
- include/hw/scsi/scsi.h                  |   8 +-
- include/hw/virtio/iothread-vq-mapping.h |  45 ++
- include/hw/virtio/virtio-scsi.h         |  15 +-
- include/system/dma.h                    |   3 +-
- hw/block/virtio-blk.c                   | 132 +-----
- hw/ide/core.c                           |   3 +-
- hw/ide/macio.c                          |   3 +-
- hw/scsi/scsi-bus.c                      | 121 ++++--
- hw/scsi/scsi-disk.c                     |  24 +-
- hw/scsi/virtio-scsi-dataplane.c         |  96 +++--
- hw/scsi/virtio-scsi.c                   | 534 ++++++++++++++----------
- hw/virtio/iothread-vq-mapping.c         | 131 ++++++
- system/dma-helpers.c                    |   8 +-
- hw/virtio/meson.build                   |   1 +
- 14 files changed, 672 insertions(+), 452 deletions(-)
- create mode 100644 include/hw/virtio/iothread-vq-mapping.h
- create mode 100644 hw/virtio/iothread-vq-mapping.c
-
+diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+index 6261d80e4a..642cf50c8d 100644
+--- a/tests/qtest/migration/migration-util.c
++++ b/tests/qtest/migration/migration-util.c
+@@ -236,6 +236,7 @@ char *resolve_machine_version(const char *alias, const char *var1,
+ typedef struct {
+     char *name;
+     void (*func)(void);
++    void (*func_full)(void *);
+ } MigrationTest;
+ 
+ static void migration_test_destroy(gpointer data)
+@@ -265,6 +266,29 @@ void migration_test_add(const char *path, void (*fn)(void))
+                              migration_test_destroy);
+ }
+ 
++static void migration_test_wrapper_full(const void *data)
++{
++    MigrationTest *test = (MigrationTest *)data;
++
++    g_test_message("Running /%s%s", qtest_get_arch(), test->name);
++    test->func_full(test->name);
++}
++
++void migration_test_add_suffix(const char *path, const char *suffix,
++                               void (*fn)(void *))
++{
++    MigrationTest *test = g_new0(MigrationTest, 1);
++
++    g_assert(g_str_has_suffix(path, "/"));
++    g_assert(!g_str_has_prefix(suffix, "/"));
++
++    test->func_full = fn;
++    test->name = g_strconcat(path, suffix, NULL);
++
++    qtest_add_data_func_full(test->name, test, migration_test_wrapper_full,
++                             migration_test_destroy);
++}
++
+ #ifdef O_DIRECT
+ /*
+  * Probe for O_DIRECT support on the filesystem. Since this is used
+diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+index f5f2e4650e..44815e9c42 100644
+--- a/tests/qtest/migration/migration-util.h
++++ b/tests/qtest/migration/migration-util.h
+@@ -51,6 +51,8 @@ static inline bool probe_o_direct_support(const char *tmpfs)
+ bool ufd_version_check(bool *uffd_feature_thread_id);
+ bool kvm_dirty_ring_supported(void);
+ void migration_test_add(const char *path, void (*fn)(void));
++void migration_test_add_suffix(const char *path, const char *suffix,
++                               void (*fn)(void *));
+ char *migrate_get_connect_uri(QTestState *who);
+ void migrate_set_ports(QTestState *to, QList *channel_list);
+ 
 -- 
-2.48.1
+2.35.3
 
 
