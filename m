@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52580C021A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8CA6C021A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibu8-0003DU-2m; Thu, 13 Feb 2025 11:17:32 -0500
+	id 1tibzD-0004MF-UT; Thu, 13 Feb 2025 11:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tibu0-0003BA-RK
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:17:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tibz7-0004Lc-S0
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:22:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tibtx-00080z-Rm
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:17:24 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tibz5-0000AS-Ug
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:22:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739463430;
+ s=mimecast20190719; t=1739463758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GeAlL+1AzeNTPsRQ3WHe8FvtX8RVdZ1WH1mrHyX0XPk=;
- b=EtkdrHZNjv8j0DBfE1bzeU6swDXhioeo2pLhW+zXc0TPOXrAAAccVyLa5RRs0kGyTpP/dh
- p7R0Lc6FomXwkFrzxe4SNMsBqhYhrpTc32LyUKqPgMGLkU13yzZaD09P6JlEXlGjIe64Rz
- ZZ9r87vH0ZXLb/WblWBxB0JqPLCAPxs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jAkB0W8i3pTl71Cm0U1MSXsAyppYow3njArsfL75rcM=;
+ b=chUqostUugG6Q6uibuIXYhFKAHLU2iAc01g3/ooQ+LmMuEBaKaPRQ+aKk/R0uaEyGfE9Wk
+ MZrd/cv7cK1vikEz+f/HhiJeEe2Uubc3W9TbLScGwIxyvm6uxp150O684rNLZnRWcQkIIs
+ OQ67BJfpC2uyljtF4uvPocRwzaN6nqU=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-BSUTO2dPOiebK1IFCxktHg-1; Thu, 13 Feb 2025 11:17:08 -0500
-X-MC-Unique: BSUTO2dPOiebK1IFCxktHg-1
-X-Mimecast-MFC-AGG-ID: BSUTO2dPOiebK1IFCxktHg_1739463427
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38ddcb63ed1so744283f8f.1
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:17:08 -0800 (PST)
+ us-mta-454-uAbs-ebBOBK7PKcTgzR8Dw-1; Thu, 13 Feb 2025 11:22:34 -0500
+X-MC-Unique: uAbs-ebBOBK7PKcTgzR8Dw-1
+X-Mimecast-MFC-AGG-ID: uAbs-ebBOBK7PKcTgzR8Dw
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-6f2bdb560ecso17321157b3.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:22:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739463427; x=1740068227;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GeAlL+1AzeNTPsRQ3WHe8FvtX8RVdZ1WH1mrHyX0XPk=;
- b=ajKMkw4em3loPvm2nkkJTZn5NO973XrbNJdeylgrE887gCN9klNlKe/HUaICxUz/DQ
- 0hXzlzrJXFsqOnsZ8i0BkuAv0uoqVgoSuO5Q66uhy5ZCbezuu8fmoo6kYWYoK6pqs0bb
- FdaU480hU4unYYM5R2Qm+gDNGQZaRc3eJaBEGtC7gcn87rlcfDij6mhudNoVC3iL0PXZ
- zBo6LJ0EJhqDc1GxRU0BHaicf+NycnmvJtVieqw6jo2bEmPZ1MBHbkKqlHmXfr0E443N
- lQCXk81/XVvNkkcEC1UFWmmQ+CAtzJ23id5cVEbVSELTGNFUYhBVpmvih5mJd9BmHfaX
- mC/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUfggQowtRgU02lQY7w8BvXaBrd8hid3JfN50VtWGJiisaBpCQY6ednF2sN+E2qCqmOMcfKQWQ4OnjJ@nongnu.org
-X-Gm-Message-State: AOJu0YwZFUh4VNwEIuizKT18n/zm6mKXTRROW+rUOy77A+1opCRP1Vo+
- KLAEOLYPRhdkHkHPJeBjiQQki7T463EO1xmw2nx4YPyYQFcMWcoERseq3vxXuxgP16Ogj76/1yM
- CeVs+3PjlP3vb/OMMvr7SAQaCgesy+zRVh/ueGvICNHyX0A5tMxQr
-X-Gm-Gg: ASbGncvjRApwWVt615R/M9EsNDYupehD3p7QRC0ZCKuu0sVUvjk+KzLjHhHwz4UW5Y/
- ek1eBRnoPQD7jhqBj7pxInVOxKMZbawHVHzjZKHRy1sKGNVId8guUNzhBh7BSzZtrDr0CHsasai
- LeJclTQsQfIKHT5t8xO6dXHpLs4gVpLObQPloHG108qFi8R21bDxJStHLrsSLJcZXh2PrIgFbPs
- QymiSg7QP9PNB77EjO8xhFbGYgqhWOuBaunYaEZRErIGhwVJ+pp/sVFBvwxds6rsCVbZLjcUbBg
- Rv3O5mLjoksfD4nrL48WYkJl9jJ0PMfLzy/TuOlSzwiDhhNt6+gE
-X-Received: by 2002:a5d:524c:0:b0:38f:28dc:ec23 with SMTP id
- ffacd0b85a97d-38f28dced84mr2227719f8f.19.1739463427286; 
- Thu, 13 Feb 2025 08:17:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHlG5uu37yM2Hh719O7QAR1k/85Z+uGhO4V+nOToCFbwcw7kgc+KqK/PqWPFa8yEDY14KdWmA==
-X-Received: by 2002:a5d:524c:0:b0:38f:28dc:ec23 with SMTP id
- ffacd0b85a97d-38f28dced84mr2227689f8f.19.1739463426933; 
- Thu, 13 Feb 2025 08:17:06 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258dcc45sm2307145f8f.33.2025.02.13.08.17.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:17:06 -0800 (PST)
-Date: Thu, 13 Feb 2025 17:17:05 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: gaosong <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, QEMU
- devel <qemu-devel@nongnu.org>, David Hildenbrand <david@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH] target/loongarch: Add full type support for
- query-cpu-model-expansion
-Message-ID: <20250213171705.6dde38cf@imammedo.users.ipa.redhat.com>
-In-Reply-To: <87a5aqhxpt.fsf@pond.sub.org>
-References: <20250213091626.3650603-1-maobibo@loongson.cn>
- <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
- <87a5aqhxpt.fsf@pond.sub.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1739463754; x=1740068554;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jAkB0W8i3pTl71Cm0U1MSXsAyppYow3njArsfL75rcM=;
+ b=E4PXn3H2tR9KNFF9gnNU6J41yz0qaw5GldCoTw7YPZowYNJLftV2Q+ZK6d2TEaIMaF
+ 5+rTIaAE0GHnDzpyvmm3lHYm5IVpmyyxDFbeuwxot+V3Y3PTd8c0eS0Z4XhlPumpPjlT
+ EDNl9xUy6tUgRKdGd9fu0xefw7eCt/TQNcxVhsh07Fcx7C+9a7iMWW1UMgAPNI113Mgm
+ bmfgucTWt0dZGeuYDxcix2gI8W/OC+i+DDsdLrNDGkRwNzIm2laxDCEpG9kmyn4jmbeB
+ fn9PXLbWMr7/VHLvIFkTLzpoG1o9A0ODF1GGHmn9pVaFoLUH0ZI7d9u1yTnEeXbwU0GX
+ aAuA==
+X-Gm-Message-State: AOJu0YxbWOAjwEsuBDOj/ONwenzij3fGnzZViiQ/gCd8qDj1wLDVX23o
+ 991vq61riloJ3f0S98Awlpi3MJlJshnDORDj6GcILqeSKrnuSKQHsxTI5ccB01Ta8q5+bgExpmG
+ srlFhAn3hk14GMbwlCUFALLk04xCH3c75yf0X4nIu0d0zm8+vkHBTvBNaQJ3U5Zt6+sLe9keoxo
+ z+c+Yeks3lwcpqVZ7e424ZcFsvcSY=
+X-Gm-Gg: ASbGncvLUCCQRYhM8+12/o5rGt2TjxPD6aRCvxZ6r/pgYsQ0WlTUkJ0l2iZrMB7j4uT
+ La0ghVbbNNWrHvd5JZWb+rLMJ7fDjM1Sb1cVwJtf03SWDrHYedMDNHqc2lsES
+X-Received: by 2002:a05:690c:4903:b0:6f5:4304:fb8 with SMTP id
+ 00721157ae682-6fb1f1c7654mr87388497b3.18.1739463754191; 
+ Thu, 13 Feb 2025 08:22:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEMid8IeXJU/qKYjm8szrXIGJZKgBqR2s2pEmx4j0u0lK0EpxUG/5aXs8MzOofLcZ/d9tB+YBuQYPRwQpf8vh0=
+X-Received: by 2002:a05:690c:4903:b0:6f5:4304:fb8 with SMTP id
+ 00721157ae682-6fb1f1c7654mr87388317b3.18.1739463753829; Thu, 13 Feb 2025
+ 08:22:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+References: <20250213132513.767709-1-mvaralar@redhat.com>
+ <z2bfkwpwfohvmj6xesdm2zmatlcwxta4aexq6x543lpnt47333@ayqfx3yxs5eb>
+ <CAGxU2F4Jzi+16Z_JKjhQREJ2FBGPOHheLhSoCOJ=6O-XL+k1NA@mail.gmail.com>
+In-Reply-To: <CAGxU2F4Jzi+16Z_JKjhQREJ2FBGPOHheLhSoCOJ=6O-XL+k1NA@mail.gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Thu, 13 Feb 2025 17:22:22 +0100
+X-Gm-Features: AWEUYZkHpKy1KCiMnuDVey09V1104-Ob3wIG7LdkbU1lRsFGloMHUzGQ1eajoBI
+Message-ID: <CAGxU2F5FWUN8rU-cr9wZyEJBtGH7a8Wd1SQC-1_93G8zifM4aA@mail.gmail.com>
+Subject: Re: [PATCH] vhost-user-snd: Use virtio_get_config_size()
+To: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,74 +103,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Feb 2025 12:48:30 +0100
-Markus Armbruster <armbru@redhat.com> wrote:
+On Thu, 13 Feb 2025 at 16:43, Stefano Garzarella <sgarzare@redhat.com> wrote:
+>
+> Unrelated to this patch, but since we are talking about
+> VIRTIO_SND_F_CTLS, I think it would be good to send a patch to Linux to
+> make it clear that `controls` depends on VIRTIO_SND_F_CTLS.
 
-> gaosong <gaosong@loongson.cn> writes:
-> 
-> > Cc: Markus
+Patch posted here:
+https://lore.kernel.org/virtualization/20250213161825.139952-1-sgarzare@redhat.com/T/#u
+
+Stefano
+
+>
+> For example in linux/include/uapi/linux/virtio_blk.h we have:
+>
+> struct virtio_blk_config {
+>         /* The capacity (in 512-byte sectors). */
+>         __virtio64 capacity;
+>         /* The maximum segment size (if VIRTIO_BLK_F_SIZE_MAX) */
+>         __virtio32 size_max;
+>         /* The maximum number of segments (if VIRTIO_BLK_F_SEG_MAX) */
+>         __virtio32 seg_max;
+>         ....
+>
+> So I suggest something like this:
+>
+> diff --git a/include/uapi/linux/virtio_snd.h b/include/uapi/linux/virtio_snd.h
+> index 5f4100c2cf04..a4cfb9f6561a 100644
+> --- a/include/uapi/linux/virtio_snd.h
+> +++ b/include/uapi/linux/virtio_snd.h
+> @@ -25,7 +25,7 @@ struct virtio_snd_config {
+>         __le32 streams;
+>         /* # of available channel maps */
+>         __le32 chmaps;
+> -       /* # of available control elements */
+> +       /* # of available control elements (if VIRTIO_SND_F_CTLS) */
+>         __le32 controls;
+>  };
+>
+> Thanks,
+> Stefano
+>
+>
+> On Thu, 13 Feb 2025 at 16:31, Stefano Garzarella <sgarzare@redhat.com> wrote:
 > >
-> > hi, Markus
+> > For the title, what about this?
 > >
-> > What is the difference between CPU_MODEL_EXPANSION_TYPE_STATIC and 
-> > CPU_MODEL_EXPANSION_TYPE_FULL?  
-
-the only difference is that 'static' expansion will not report properties
-not mentioned in hard-codded CPU model definition see: builtin_x86_defs
-
-while 'full' will iterate over/report all rw properties of CPU object
-created from provided model name.
-
-> I don't know :)
-> 
-> Here's the documentation:
-> 
->     ##
->     # @CpuModelExpansionType:
->     #
->     # An enumeration of CPU model expansion types.
->     #
->     # @static: Expand to a static CPU model, a combination of a static
->     #     base model name and property delta changes.  As the static base
->     #     model will never change, the expanded CPU model will be the
->     #     same, independent of QEMU version, machine type, machine
->     #     options, and accelerator options.  Therefore, the resulting
->     #     model can be used by tooling without having to specify a
->     #     compatibility machine - e.g. when displaying the "host" model.
->     #     The @static CPU models are migration-safe.
-
-Looking at related x86 code above description sounds like a fiction.
-Both 'static' and 'full' do use
- qmp_query_cpu_model_expansion()
-     x86_cpu_from_model()
-         cpu = object_new(foo_cpu_class)
-         x86_cpu_expand_features(cpu)
-and the later 2 calls are subjects to being influenced by:
-    "QEMU version, machine type (compat machinery), machine options, and accelerator options"
-and -cpu option
-
->     #
->     # @full: Expand all properties.  The produced model is not guaranteed
->     #     to be migration-safe, but allows tooling to get an insight and
->     #     work with model details.
->     #
->     # .. note:: When a non-migration-safe CPU model is expanded in static
->     #    mode, some features enabled by the CPU model may be omitted,
->     #    because they can't be implemented by a static CPU model
->     #    definition (e.g. cache info passthrough and PMU passthrough in
->     #    x86).  If you need an accurate representation of the features
->     #    enabled by a non-migration-safe CPU model, use @full.  If you
->     #    need a static representation that will keep ABI compatibility
->     #    even when changing QEMU version or machine-type, use @static (but
->     #    keep in mind that some features may be omitted).
->     #
->     # Since: 2.8
->     ##
-> 
-> If you have further questions, David Hildenbrand or Eduardo Habkost
-> (cc'ed) might be able to help.
-> 
-> 
-
+> >    vhost-user-snd: fix incorrect config_size computation
+> >
+> > Or something like that, just to make clear that we are fixing a
+> > real issue.
+> >
+> > On Thu, Feb 13, 2025 at 02:25:13PM +0100, Matias Ezequiel Vara Larsen
+> > wrote:
+> > >Use virtio_get_config_size() rather than sizeof(struct
+> > >virtio_snd_config) for the config_size in the vhost-user-snd frontend.
+> > >The frontend shall rely on device features for the size of the device
+> > >configuration space. This fixes an issue introduced by commit ab0c7fb2
+> >
+> > When we refer to a commit it's a good practice to put both the sha1, but
+> > also the title, like this:
+> > This fixes an issue introduced by commit ab0c7fb22b ("linux-headers:
+> > update to current kvm/next") ...
+> >
+> > >in which the optional field `control` is added to the virtio_snd_config
+> >
+> > s/control/controls
+> >
+> > I would also specify here that the presence of `controls` in the config
+> > space depends on VIRTIO_SND_F_CTLS, citing the specification:
+> >
+> > 5.14.4 Device Configuration Layout
+> >   ...
+> >   controls
+> >      (driver-read-only) indicates a total number of all available control
+> >      elements if VIRTIO_SND_F_CTLS has been negotiated.
+> >
+> > >structure. This breaks vhost-user-device backends that do not implement
+> > >the `controls` field.
+> > >
+> >
+> > I'd suggest to add the fixes tag:
+> >
+> > Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
+> >
+> > And maybe also:
+> >
+> > Cc: qemu-stable@nongnu.org
+> >
+> > >Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
+> > >Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+> > >Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+> > >---
+> > > hw/virtio/vhost-user-snd.c | 18 +++++++++++++++++-
+> > > 1 file changed, 17 insertions(+), 1 deletion(-)
+> > >
+> > >diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
+> > >index 8610370af8..8da4309470 100644
+> > >--- a/hw/virtio/vhost-user-snd.c
+> > >+++ b/hw/virtio/vhost-user-snd.c
+> > >@@ -16,6 +16,18 @@
+> > > #include "standard-headers/linux/virtio_ids.h"
+> > > #include "standard-headers/linux/virtio_snd.h"
+> > >
+> > >+static const VirtIOFeature feature_sizes[] = {
+> > >+    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
+> > >+    .end = endof(struct virtio_snd_config, controls)},
+> > >+    {}
+> > >+};
+> > >+
+> > >+static const VirtIOConfigSizeParams cfg_size_params = {
+> > >+    .min_size = endof(struct virtio_snd_config, chmaps),
+> > >+    .max_size = sizeof(struct virtio_snd_config),
+> > >+    .feature_sizes = feature_sizes
+> > >+};
+> > >+
+> > > static const VMStateDescription vu_snd_vmstate = {
+> > >     .name = "vhost-user-snd",
+> > >     .unmigratable = 1,
+> > >@@ -23,16 +35,20 @@ static const VMStateDescription vu_snd_vmstate = {
+> > >
+> > > static const Property vsnd_properties[] = {
+> > >     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+> > >+    DEFINE_PROP_BIT64("config-controls", VHostUserBase,
+> >
+> > In almost all other virtio/vhost-user devices, the property name does
+> > not have the prefix `config-`, but usually the thing after F_, in this
+> > case CTLS is cryptic, so IMO just `controls` should be fine.
+> >
+> > The only example I found is `config-wce` for vhost-user-blk, but in that
+> > case the feature is actually called VIRTIO_BLK_F_CONFIG_WCE.
+> >
+> > Thanks,
+> > Stefano
+> >
+> > >+                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
+> > > };
+> > >
+> > > static void vu_snd_base_realize(DeviceState *dev, Error **errp)
+> > > {
+> > >     VHostUserBase *vub = VHOST_USER_BASE(dev);
+> > >     VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
+> > >+    VirtIODevice *vdev = &vub->parent_obj;
+> > >
+> > >     vub->virtio_id = VIRTIO_ID_SOUND;
+> > >     vub->num_vqs = 4;
+> > >-    vub->config_size = sizeof(struct virtio_snd_config);
+> > >+    vub->config_size = virtio_get_config_size(&cfg_size_params,
+> > >+                                              vdev->host_features);
+> > >     vub->vq_size = 64;
+> > >
+> > >     vubs->parent_realize(dev, errp);
+> > >--
+> > >2.42.0
+> > >
 
 
