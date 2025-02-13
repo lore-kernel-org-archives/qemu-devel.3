@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF64EC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 21:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B5EC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 21:18:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tigSW-0005RP-O8; Thu, 13 Feb 2025 16:09:21 -0500
+	id 1tigal-0007TB-9E; Thu, 13 Feb 2025 16:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tigSU-0005Qq-HK
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 16:09:18 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1tigai-0007SS-OC
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 16:17:48 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tigSS-0003hl-Vl
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 16:09:18 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5deb1266031so2311835a12.2
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 13:09:16 -0800 (PST)
+ id 1tigag-0005Du-Sw
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 16:17:48 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5deb1266031so2325341a12.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 13:17:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739480955; x=1740085755; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739481465; x=1740086265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dIYHRooJD6hgluEJZVvH9n64y4PCXSpPpOmf+gqwDRk=;
- b=ExI6j7lYm6QjfHieTzpgSNRdx27Ao0QWC7y90lE9/Dtr6gWrPS5fGsvq+47IeQ8u5+
- 5VM32RBaQZ+KzhsZiSADhqUIKL99uLXha2Tx6bqQ1NMmV0x5aElDjYGX+EqV1L+ok+oO
- SjXlwHw8eqjC7tee/8ka85oDYe3zuAdcLZ2qSbiyDylsNAVotAqD2sxlJFfA6AtR4QNf
- MtJVikjM4BsXfchrRJKtVimaEG5YtWvYkRbvIVnGujnb0zP73WitaxFvDSjc9obDIeEQ
- 4hF7XdBP9+NXHPIP7fWXqBs5XqE5AUR/JMH3aiyJuWdylaBCtROqgoC2iB+vj6LqkJS7
- UpQA==
+ bh=9KKcX0+NeQcXbUUpZy7P33zfc/8z9DUqpU/IdzsHdBo=;
+ b=Rsd3+cFLyQF7u/3nZ7tSW6IUylmEl5L9vBJhqymtG7wURiqgKzcgiovv4vViO0Wr+O
+ jOI+2zUpLacYPVt3J+RCNuVt9joZ6mOC7XFsGzjSt73s3u5umz0nC0DULZktZxsvHURe
+ tjL3UZHb6+GwmD8EoEPeg6P2ZU7u5dD2M6jvyub/F0wOleEJzISzkA6SV5d2F9CShnAJ
+ EdeOgFpxlAyhiyiX6vh2lfuyed+QqP/xL4m0CV2Hy3wV72Hgt+jsF6YlPY4dV39QqTHq
+ HKz8ai2F24/175MdK8q9ytPT5oNuI18kVq7hSwo9CGZarPjYesG9a7bG/lkjG7KO6GcN
+ X55g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739480955; x=1740085755;
+ d=1e100.net; s=20230601; t=1739481465; x=1740086265;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dIYHRooJD6hgluEJZVvH9n64y4PCXSpPpOmf+gqwDRk=;
- b=tlkIDinWJWIYhnR/59pqGA82OeocnRbDtCavdI4ucNA8SC9SfXb/dFdioC7FniO/iG
- OzB56URYRUaQbfeO2iGgt6DBkLp295QCWT7LoUuF5T8LOV8gogCGKLY81GvPlldyAHb/
- Ge/U4TuSnT2BBpDUNImaMzNBjBvZPuGR0qQlRT2ZsC9nckMghwS6Io3xR/qLIViD0I2J
- alUMvjtOhtli5xA56hDiGZUp0D7QnAlsJ0/t9GWEe/UAoUdeHYhn+mz3mNkGV9JjXyYK
- Py6AWHypQPnzmm7t3ermEYuuS0Z0J9t6JmZs8YA9G4fV88E0Jy1ukMhcD0/TBK5hYWcC
- 1Gqg==
-X-Gm-Message-State: AOJu0Yz3MnPJMjk0aFyDNMmLoa4uo1BbkhBmkQaOR1CtPwiiDSstCRcq
- 3akWuieC5KcLgkfk8j8d0WikwRMJv6VDjs1bfA+hRd7O/aSwcLGpS/lPd3BHqlM=
-X-Gm-Gg: ASbGncsbj/Qh3VOrLYH5mKX2h15+u+ZnBXSsoOZOU/fZ/K65oXJ0ZcHfU8NVejy8lbB
- RtdKcdSba50FW0ERYQAUPgUGFBnxlAsuTUZ6GiNgutCt5mWai2SxLSSAOqplveCC+baRitPO0rJ
- irHW9S8Baq7KKZjcGXkJLaiYcYG3UxmjFVCngfw/9VWlHKxxCWhh+Ele0n6Ol82kTHxZFW29quk
- 1R9AtngPPCwu9FMxikETzh2tdG9Jom51p5rTQA4jAN9RN7khHbaCYvTMjmTBQ8UdVvqSj8z/X3T
- 3fctt+UuySvPA6jKxQ==
-X-Google-Smtp-Source: AGHT+IES4R/SyHF3AuijAe4NdJyDFGdIXWIrJQABVktnHqkxwfFUstlS+MXBFvSMDRYtkDX9h8wlWQ==
-X-Received: by 2002:a17:907:2d91:b0:aae:85a9:e2d with SMTP id
- a640c23a62f3a-ab7f34a2225mr974153966b.45.1739480954966; 
- Thu, 13 Feb 2025 13:09:14 -0800 (PST)
+ bh=9KKcX0+NeQcXbUUpZy7P33zfc/8z9DUqpU/IdzsHdBo=;
+ b=ssJw9UODgo2cdoFW2RG7kiI9gei++fhP7CneNXZ3jD0UOKzxwCYvbCzyVOdp36gPsw
+ o0/ZNfzOzSw6mtBwGTYAIZznZM+F98Wfp1zl/aayO2aaTOEf1ShyG9u1wHNhljEtZ1KO
+ tpOCdFTlm6g/dnT/DIvndeMm0woUIHWIz37IxhWhCJONyPRVDmVMYTxWKVFGd8FyOATd
+ czo+QaGf3Vf6MfuOZy5VHyngwWbGMznT3StIQg3n8cMMnugtdvVZmSQBa5TI+F1pAhJt
+ FPMg3qgRJn5f61pMSIqJJFyJgjiFn3J4tQ/QcAMA0DEKHWbrHardHWF3sxY+vjeksFEO
+ n0SA==
+X-Gm-Message-State: AOJu0YxPGZrx5nj+7KkGP3OJx1fzhaQu+Nn2vmIXSkHYcfVdaaBB+3uh
+ zTP4OVXbT4G2E2uEWuUe4qAEQ3a+4tcn3in6YQzQWRzVK8VpQcyykc2pVMy2S50=
+X-Gm-Gg: ASbGnctFZK41+FThTgiI/M2d7218No+9DjnhgLk7lbRnCASO4UaZjpwynJDWVN2NBPF
+ qiizy5+sgIbCbxx8R5Gm/K0BugSU0Knlb2GMDyiBnpRSUmeuLRd5NZa00hQQuCIomI3vv862oJy
+ GwCOPAVqykh791McKkHXCYylvWb0wBJkIhFeS0LvZYyQZznPq1doe1yxCrCBn6xnQuhBNCT+rbz
+ Z6fNAtm53HXL5DguxM4eslUU/5vQ8Pmm6XMR/Wkt+m6Kki5XOZmq+PVi0EZtnaMHJwXAUJ9B/Cg
+ x48t0N1UtNWhinMEkw==
+X-Google-Smtp-Source: AGHT+IEZ0+1rCF3IonaItnM6YYmFyV1mf5trbua2iSo+6FVj1oVvTdpotLBFHID0ZFivpR7G9tkq/A==
+X-Received: by 2002:a17:906:dc94:b0:ab7:cf4d:9b2d with SMTP id
+ a640c23a62f3a-ab7f33d5730mr652016866b.30.1739481464550; 
+ Thu, 13 Feb 2025 13:17:44 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dece28808fsm1729099a12.75.2025.02.13.13.09.13
+ a640c23a62f3a-aba532581cesm199366366b.45.2025.02.13.13.17.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 13:09:14 -0800 (PST)
+ Thu, 13 Feb 2025 13:17:44 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D273F5F7DE;
- Thu, 13 Feb 2025 21:09:12 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3BA375F7DE;
+ Thu, 13 Feb 2025 21:17:43 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Kashyap Chamarthy <kchamart@redhat.com>
 Cc: qemu-devel@nongnu.org,  maz@kernel.org,  Joel Stanley <joel@jms.id.au>,
@@ -79,20 +79,20 @@ Cc: qemu-devel@nongnu.org,  maz@kernel.org,  Joel Stanley <joel@jms.id.au>,
  sebott@redhat.com,  Steven Lee <steven_lee@aspeedtech.com>,  Zhenzhong
  Duan <zhenzhong.duan@intel.com>,  Troy Lee <leetroy@gmail.com>,  Alistair
  Francis <alistair@alistair23.me>
-Subject: Re: [PATCH v2 1/3] docs/cpu-features: Consistently use vCPU instead
- of VCPU
-In-Reply-To: <20250213135032.2987289-2-kchamart@redhat.com> (Kashyap
- Chamarthy's message of "Thu, 13 Feb 2025 14:50:29 +0100")
+Subject: Re: [PATCH v2 2/3] docs/cpu-features: Update "PAuth" (Pointer
+ Authentication) details
+In-Reply-To: <20250213135032.2987289-3-kchamart@redhat.com> (Kashyap
+ Chamarthy's message of "Thu, 13 Feb 2025 14:50:30 +0100")
 References: <20250213135032.2987289-1-kchamart@redhat.com>
- <20250213135032.2987289-2-kchamart@redhat.com>
+ <20250213135032.2987289-3-kchamart@redhat.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 13 Feb 2025 21:09:12 +0000
-Message-ID: <87v7tdpn5z.fsf@draig.linaro.org>
+Date: Thu, 13 Feb 2025 21:17:43 +0000
+Message-ID: <87pljlpmrs.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -117,11 +117,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Kashyap Chamarthy <kchamart@redhat.com> writes:
 
+> PAuth (Pointer Authentication), a security feature in software, is
+> relevant for both KVM and QEMU.  Relect this fact into the docs:
+>
+>   - For KVM, `pauth` is a binary, "on" vs "off" option.  The host CPU
+>     will choose the cryptographic algorithm.
+>
+>   - For TCG, however, along with `pauth`, a couple of properties can be
+>     controlled -- they're are related to cryptographic algorithm choice.
+>
+> Thanks to Peter Maydell and Marc Zyngier for explaining more about PAuth
+> on IRC (#qemu, OFTC).
+>
 > Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
 
-Should we add vCPU to glossary.rst?
-
-Anyway: Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
