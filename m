@@ -4,138 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FC9C021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92F5C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tie3Z-000116-60; Thu, 13 Feb 2025 13:35:25 -0500
+	id 1tie9R-0002O6-UE; Thu, 13 Feb 2025 13:41:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tie3X-00010r-Kf
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:35:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tie3V-0001tV-G0
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:35:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739471719;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OHiFI4SGM+9KLS4EfQRWGW7U6Z+sGKg7ZXQEOUy00CI=;
- b=Na7388FVBWiy8FRSypVfQQESB5vojNlaNHOxDdFpuR19nObGqiRugKtc6X6PJ4UwErXF+y
- AYm0WfapL056pt4GUVa00TA4LxPK/67br4VrxOyB/V9xg7h9FrFSfhOs+rysuPlywTmFET
- LlpjZxMwW/ss53dNxC7dhYmBrNw722c=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-Qj4Pkw1AOd-pfHQV3wlxdQ-1; Thu, 13 Feb 2025 13:35:18 -0500
-X-MC-Unique: Qj4Pkw1AOd-pfHQV3wlxdQ-1
-X-Mimecast-MFC-AGG-ID: Qj4Pkw1AOd-pfHQV3wlxdQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38dce0d3d34so820323f8f.2
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 10:35:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <atharvd440@gmail.com>)
+ id 1tie9Q-0002Ng-Dr; Thu, 13 Feb 2025 13:41:28 -0500
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atharvd440@gmail.com>)
+ id 1tie9O-0002PB-Rm; Thu, 13 Feb 2025 13:41:28 -0500
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-2b89395a3efso633769fac.2; 
+ Thu, 13 Feb 2025 10:41:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739472085; x=1740076885; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=veGDzPCf0A1jw3PyF+AxYv4rMg+66t7jGc7wC2IlyVQ=;
+ b=H4KTGFnPeUm/DvOirigAAoBPKA3HYpXsetUxMtsF9gTLfpz6jTKjfKEPSzVrtzc40Z
+ V7uBaLz+79H2z9xPnzEX/YsjNwC2PoxQ3b8bPwFhR3LRUMT8lIFrVz7//EDSByinAOBj
+ S77wLYjBxeTi5h5Q4AxVGOhAdxyN/0sRmqedZsp2+P//67qRTMgoy1ziqt+qWfytw9sP
+ k25cfo2S383XfbcffcBIALpJwE1m4Q2EfWKIy1UYy6CImZxDo89OIShHs1UvSAxwKnVx
+ wCPZ0PQcbiXqzPt+mGZJhK3wz5xjZKsgqdwbJOYV0/7+E8c3RIjDbjZJX/hA5nr72ZZF
+ cmaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739471717; x=1740076517;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OHiFI4SGM+9KLS4EfQRWGW7U6Z+sGKg7ZXQEOUy00CI=;
- b=dARADbkOT/sXthMFYzR3CY+wyluw/vPEWoC+zr8V3rCZht5ey+CrMDa8PLqIvSpRdU
- 9/ZTbp/Axk9FVzvYg2vd/DvUeUUJKmq4KtlHMB3FeDchmlh2qNA7GiuOAKPk+uGKKnij
- 6cuUj8gEeKOlKFxjTbWfQvHVu0QjDAEv5cH/RFUgua8YKWqd0uC1Rz3GKZQ57pbPD6TO
- bdBeJrOujIMKIaM1BDXwiISmeydEfzjvYv789i0SX4xw11dj+0IxOcyJA4GU9YLs6ru9
- HsI0LvHKgXRxwKbvnxGDNpRcYN5KgLGlc00EDcu32vStX7KsAV51FU6w2anKQsBgOj43
- NjxA==
+ d=1e100.net; s=20230601; t=1739472085; x=1740076885;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=veGDzPCf0A1jw3PyF+AxYv4rMg+66t7jGc7wC2IlyVQ=;
+ b=jIO1j+BWVjWtL98VOI2BOznb0q8PmUCVEXTdjYmHxndUPwjc6vUuv+p//+U9NmE88L
+ JojG64qr4PRNv8GArlXoo2E3Y4KP28h6gD4ZJ4yqBIW8KLxt5KzUZQjZPs2po30nmSe4
+ 5+6J+Wu31odXfUzmQQTUoLoK1XxI5uXRnAu/lfiZ7Dw/Gz6mnN1ioRFNK/f0ZOHnvakJ
+ sSY0IUEm16ikO1NuMub9u5b6kRAAliE82pwlQ4GmJ9Vwt4q3fZ4aZI7n4vwj8dkfmrR5
+ bNKhH5T0lAm5qqwHcOV7shifRJrknLXh77tXdnxfnviNYegdptqeVO0JC8GTJyWUtyWi
+ Fuxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV15QzMwTtf7vxH6f9PLVCT8mzwE5D8MvJrqbJU3xhgB2BA/DC9p0B0N7Bz14aM4QWqenCpOFXXFbC7@nongnu.org
-X-Gm-Message-State: AOJu0YwRo2Xvgty0bXsVkSP0Hyum7sO9MOixHetEWG7+0OBzzFpuzjVI
- +3E7MgTH/+vUsS7N7+Oc92xv3Cr78Y2GR4fUKt40P2Iutj0NWtRbAQrmivqMVrpbEgxPI40HllA
- uVc78MUIxgEAl+xi5U1hstakAftq1SoTPi/59iOIknaeBJN7UzKVJ
-X-Gm-Gg: ASbGnctObz+A0vzntjMYN6SIYgTtxEv7hoA+5GTgnYAGAvDsPLph6xpCgVRH+cS9U57
- 5kRK3OU5Dt7nCKcquBKmc+Aik8Wwxor3xvockPlDJZfJvmi2mIvQGRv61FEG+yuGs75idFUVr2V
- pLCZOrKxyE9GC3kiTszC3aWSt1Tge3BOMz7IsqULDfGkpDVX0VPa2sKvFZ2itQHZ+M0rrbYvBIK
- RldPIvoNaTqXHhJRtBx4Rh+n6kHAuBvPnTtAvnv+9X8P0lNMekY37+vfJ0xRMWLHwSQl2MU/hbE
- 5RrPJK+rnv4yWQQCDlehNpIG2U+541WgLg==
-X-Received: by 2002:a5d:47ab:0:b0:38f:228b:7844 with SMTP id
- ffacd0b85a97d-38f228b78c3mr7031883f8f.30.1739471717500; 
- Thu, 13 Feb 2025 10:35:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHTZhctq/68tBdoo84zl2WnalWzCVmpyQ9oMtYxu68mQQ0N0qrF+gLr8w+k9zbmsWkuJQxRmw==
-X-Received: by 2002:a5d:47ab:0:b0:38f:228b:7844 with SMTP id
- ffacd0b85a97d-38f228b78c3mr7031859f8f.30.1739471717192; 
- Thu, 13 Feb 2025 10:35:17 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-37.web.vodafone.de. [109.42.48.37])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258dd5acsm2590741f8f.35.2025.02.13.10.35.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 10:35:16 -0800 (PST)
-Message-ID: <ec9c9ae7-e14d-41d3-a7be-559dd21f5478@redhat.com>
-Date: Thu, 13 Feb 2025 19:35:15 +0100
+ AJvYcCXM9X+fBEccTYAZWXXYFK276SnYqL8YCV+/CyoROrhwRm1VbcltpkLXjI8gYDcOnCXJqnyUjDov/Q==@nongnu.org
+X-Gm-Message-State: AOJu0YyXaUuQ+A67BYPzUUifNJ5S/ifQWbZlFVQc7iIAbZzrwf1yij8p
+ 9/3SSwja+cDXSxna9IH8EI5EsVnaHiHkFzx4En/38YYn1l/bZ9KxMOpmaergGt19glDe+5PsDhe
+ 69PYXUrvH4WPJDifjeiN6J9xf6pA=
+X-Gm-Gg: ASbGncv7eIn1IoR/Vgh08kkEkZgJqIWAWJnVDWuAKwlv8ytRo+18Bx2z6kEOzkmVMJx
+ XLcWZJNJgd3KF0mUQnsRN/X45W8E1Mlpn2VkZDlLY+P4+cuV3q3Q36t+8MlkPTBhuDynTPpTClx
+ s=
+X-Google-Smtp-Source: AGHT+IGo/Gb1ISWqTTxwOE2ZQ6XvGgJWqsTfNd94XYSe2KYxf7pwqHrqKAPbWjbyXO95VHlqISts8WA0qICXyFiuyCM=
+X-Received: by 2002:a05:6870:1642:b0:29e:32f2:cd4d with SMTP id
+ 586e51a60fabf-2b8d6448834mr5360406fac.2.1739472085116; Thu, 13 Feb 2025
+ 10:41:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Question Regarding the PowerPC arch Support
-To: Atharv Dubey <atharvd440@gmail.com>, qemu-devel@nongnu.org
 References: <CAKTQj-53s_n=7qdm5eV8vrCLR-AKHBpq1pqCewNKPmyYtHVZJw@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Cc: "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAKTQj-53s_n=7qdm5eV8vrCLR-AKHBpq1pqCewNKPmyYtHVZJw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ <ec9c9ae7-e14d-41d3-a7be-559dd21f5478@redhat.com>
+In-Reply-To: <ec9c9ae7-e14d-41d3-a7be-559dd21f5478@redhat.com>
+From: Atharv Dubey <atharvd440@gmail.com>
+Date: Fri, 14 Feb 2025 00:11:13 +0530
+X-Gm-Features: AWEUYZlCh9dOd38tLWfLQKAs9G7IaA_vWwnNibfGTZPk3A7jnS4zAq64rMq4kiQ
+Message-ID: <CAKTQj-44s2wbF0PFkkncndAvO-ToFUkcmy7QzWxA0iHyZo+Mpg@mail.gmail.com>
+Subject: Re: Question Regarding the PowerPC arch Support
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000baecd5062e0a67eb"
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=atharvd440@gmail.com; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,21 +93,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/02/2025 19.18, Atharv Dubey wrote:
-> Hello,
-> 
-> I am new user to qemu and wanted to ask if qemu supports AHCI mode in 
-> PowerPC emulation.
+--000000000000baecd5062e0a67eb
+Content-Type: text/plain; charset="UTF-8"
 
-  Hi,
+On Fri, 14 Feb, 2025, 00:05 Thomas Huth, <thuth@redhat.com> wrote:
 
-it seems like the "powernv" machine of qemu-system-ppc64 supports AHCI, but 
-I don't have a clue how to use it. So let's put qemu-ppc@nongnu.org in CC:, 
-the PPC experts should be there, maybe someone on that list can answer this 
-question.
+> On 13/02/2025 19.18, Atharv Dubey wrote:
+> > Hello,
+> >
+> > I am new user to qemu and wanted to ask if qemu supports AHCI mode in
+> > PowerPC emulation.
+>
+>   Hi,
+>
+> it seems like the "powernv" machine of qemu-system-ppc64 supports AHCI,
+> but
+> I don't have a clue how to use it. So let's put qemu-ppc@nongnu.org in
+> CC:,
+> the PPC experts should be there, maybe someone on that list can answer
+> this
+> question.
+>
+>   Thomas
+>
+>
+>
+>
 
-  Thomas
+--000000000000baecd5062e0a67eb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"auto"></div><br><div class=3D"gmail_quote gmail_quote_container=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 14 Feb, 2025, 00:05 Thomas =
+Huth, &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrot=
+e:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
+rder-left:1px #ccc solid;padding-left:1ex">On 13/02/2025 19.18, Atharv Dube=
+y wrote:<br>
+&gt; Hello,<br>
+&gt; <br>
+&gt; I am new user to qemu and wanted to ask if qemu supports AHCI mode in =
+<br>
+&gt; PowerPC emulation.<br>
+<br>
+=C2=A0 Hi,<br>
+<br>
+it seems like the &quot;powernv&quot; machine of qemu-system-ppc64 supports=
+ AHCI, but <br>
+I don&#39;t have a clue how to use it. So let&#39;s put <a href=3D"mailto:q=
+emu-ppc@nongnu.org" target=3D"_blank" rel=3D"noreferrer">qemu-ppc@nongnu.or=
+g</a> in CC:, <br>
+the PPC experts should be there, maybe someone on that list can answer this=
+ <br>
+question.<br>
+<br>
+=C2=A0 Thomas<br>
+<br>
+<br>
+<br>
+</blockquote></div>
 
-
+--000000000000baecd5062e0a67eb--
 
