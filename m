@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9741C021A4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2FCC0219D
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiaGT-00006e-Mi; Thu, 13 Feb 2025 09:32:29 -0500
+	id 1tiaGY-000080-PZ; Thu, 13 Feb 2025 09:32:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiaGR-00005Q-Nw
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:32:27 -0500
+ id 1tiaGX-000079-0n
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:32:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiaGN-0007aP-Pg
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:32:26 -0500
+ id 1tiaGR-0007b7-Dm
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:32:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739457142;
+ s=mimecast20190719; t=1739457145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=qea6yNYTrWjUz32+OocmHw0yh1KpywotTecZ1bXmvrw=;
- b=TBR+A+s69OyZnMtTeM5U471R3NyXInWmg/b0Uc7lMRw8+RZY5PuDqXenho3JNvqUMxQsT8
- ru2eQpaMJ2CPvaVXxOoZ60NBtzFKbriowWuqObj5qeKfWQB17d/HV/YbU8GNpMorCLegEe
- SuH8GRGQiP2zQhC96qSaMAQQCGxxmXQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yryMA9lu5caRbBQ9wl4dWEGATUdwTuQ5UZAuYA6oZq0=;
+ b=WN3ZVgRLKwvev/q/Vnick1qL3rtcXHtP5T7e+wk2lMARv+MINFRJOj5DyMzsyJCqeBy+TJ
+ hNKCI6ivg4depPqOsZ+lIMDKCU1CVydu6m8VQTaYJtMQRBSq7m+WLgCT9ot/FGSbMxSAwa
+ GMdRZ6j7phcOrKlkiLuQZ748y/W50MY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-X7Sq_Zh3MeCOcL7O0w0RMg-1; Thu, 13 Feb 2025 09:32:20 -0500
-X-MC-Unique: X7Sq_Zh3MeCOcL7O0w0RMg-1
-X-Mimecast-MFC-AGG-ID: X7Sq_Zh3MeCOcL7O0w0RMg
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38dfede57feso797318f8f.2
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:32:20 -0800 (PST)
+ us-mta-652-xjQLphbIN2OZa_qPta_bEg-1; Thu, 13 Feb 2025 09:32:24 -0500
+X-MC-Unique: xjQLphbIN2OZa_qPta_bEg-1
+X-Mimecast-MFC-AGG-ID: xjQLphbIN2OZa_qPta_bEg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4393535043bso5510915e9.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:32:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739457139; x=1740061939;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qea6yNYTrWjUz32+OocmHw0yh1KpywotTecZ1bXmvrw=;
- b=F7fcmKWW/rvDLH7zt8yC4m4gRBYNbPIuHkYOVLfdoR+l2T5TAWVrm/Yi38/gdU5Sd6
- vuhSxmrRhHw8aXZyYZZPuaF+0Ih97rsUzkrI7cAq2iogOLHKXwQfUSjzGgvKHxIKdgG/
- tvq0Wkb65JLzH8QM2xFGOYca5KRqRONfy7GJQKsuufdJdlEZI+VmTuSrMAMaO7uoac0Y
- 59f9drGX6wHG69ZKHHjgPHn9NS1ue6LIrCfn5XxBnK4lSNftc0Un+8tmGA+2eNWp3qHT
- aHIQj7AXXsSt2WoyXfhE8ax+1dEGVl+/mjpmypeV68w83LN1VN7xdEce2d60SflTEhJ1
- purg==
-X-Gm-Message-State: AOJu0YySu3PHwnbCsJo1PHzWOv6U218wtbu8ghtxYVVHgA1z6+D0zPS4
- JA0upb2Klnl0W09ab4qGlxzfFPA0I0Rthhsev9lREyqLQTLuabIqXbU6GsietHv7wIiRz4bhAuG
- EIyPijkfdBaCFL3QKpfRHaO0F81AT2V3/JNXveUirIQ7iW6sNCxhLkvTRZvPnqHyjl+qdANBLWG
- l0RXMavVYhs0FcVFB4INj7aIHsrnnjOO0yyZIFpFY=
-X-Gm-Gg: ASbGncvSTtLbAmHkvxxDY/XYT2KGF9FQssgfWXFFzlL6g0qOVaXSbWMH39nMXKEAm5b
- m0+QMkIY1+wkBWdQzENzLqwegO7n6x7nn63MOdqiqNs9/5XXdNIlHff8LsgU2kJ5V4HU3lalOwu
- w9L5s4ZtUBJe4AAibVEX0M6rY34fh8cs7XwyvvKL4YlftDc8zXuxkbX6X9zkIwIt4vhKFAgZ2ZL
- dC4rV69oxilniVqpyLjRLb0jpk8XUu2hOtdp0Bt0mPLKPktOKzrZSPMco0EEnlXZFNDlH5GLWrw
- vMYxUPOMb7rqehuVEeB6Lpu0gb+24Ntdd+SJNwRGCHc=
-X-Received: by 2002:a05:6000:1a8b:b0:38d:d8b2:cf14 with SMTP id
- ffacd0b85a97d-38dea28cffemr7169885f8f.30.1739457138792; 
- Thu, 13 Feb 2025 06:32:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFulb0e/UcHB1fD7u4l2gM6zcc/xErWRd9Hf2cdUaOy8xp7y+2KZbiE8tT4DYoEfT47bqK3ww==
-X-Received: by 2002:a05:6000:1a8b:b0:38d:d8b2:cf14 with SMTP id
- ffacd0b85a97d-38dea28cffemr7169837f8f.30.1739457138401; 
- Thu, 13 Feb 2025 06:32:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739457141; x=1740061941;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yryMA9lu5caRbBQ9wl4dWEGATUdwTuQ5UZAuYA6oZq0=;
+ b=D/+sLZNk9K6Syy+9tf2uqFQjpVP9HIXbBE4SN4hsaeRsD1PcXttQ6aE2b1o+yNbrnE
+ 6UYpbL675Bh54aY2dlbX5sB/0Fni+kXvDzI6zNvQ1xEucaGnMIMunZrO9fMoEYT3ESsD
+ G10maGDvV6o8qjk8wG9vL8Wl5chcrlydk6M+e9vqAe123PR4Buz7bOZE7UQbNMXzaxPz
+ mPUmNgBuV6Qf5jZm3DGeHXxBW5eYd8bD/snjxxiJbXlO3+D+naVBhHhWTzCnEzFMbCNZ
+ dCgrerM4RtQH821YrCwNXtQgeqZqmI3hZ268AZAeWxrmb3JlVudwdQA4CvEkZYdnWqql
+ DsoQ==
+X-Gm-Message-State: AOJu0YyOiRrc5ssCvYKDPcGs+O/Mx4M/egfXhImSNtHSS2MSh23xLN8l
+ YUmhuwfSRg+bEP8X7GZ6tv2cS+3SoDGv/7j6TwErZ0SaTi2qvaiqqall8VW15cBS1pchPaXK92U
+ RzTMskh0lOyBgA+lGHskmlRSPZB5WlUQ98vCYCaAXLs28YS/CHPUh9BMHZMs2faxVjmqIOrzwcT
+ LF1tex2M0G7W98IHGZy7TEVF+RC+mT69J6cR3tXjI=
+X-Gm-Gg: ASbGnct3AxYnjbsPOBZlRC8i6UoPMhuxwO8Ag7BchoXHpsvmsJwKBUf4tIiMbrqbB3Q
+ n5KBr1XFuO1V7r1xFQlSV+kfwyw2YmiB/5f4+AMEwGLFvwvAJ18CvdH0zt7zoHD3UJAbWY8gSRt
+ vDnMx29MS6+ACUgPxP8Qot9E2YRlKHdb6kbmBbkaPwwyRZ1gmXmBcQL7sCm0fmMpyIFBHFwew9s
+ muPi1LIa7afjSD9kXcHHbQatTS20q+yEuOVn1dzjYsf3Ip24Q1g+ezCvTghXPnRKWkwHtz4qJQH
+ BlLw9cKFhSJKScALFeR0N/k1FQYEWNbTawJnLCbCLZw=
+X-Received: by 2002:a05:600c:46ce:b0:439:4c1e:d810 with SMTP id
+ 5b1f17b1804b1-43960ea281amr36126065e9.9.1739457141097; 
+ Thu, 13 Feb 2025 06:32:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEiDtESrxaNOArtXgL40VCxvPAzle/jQBIrvyDTfK56+SVpcUpqWCvq7eTzu+IyYMu8/zIccA==
+X-Received: by 2002:a05:600c:46ce:b0:439:4c1e:d810 with SMTP id
+ 5b1f17b1804b1-43960ea281amr36125335e9.9.1739457140467; 
+ Thu, 13 Feb 2025 06:32:20 -0800 (PST)
 Received: from [192.168.126.123] (93-40-58-165.ip37.fastwebnet.it.
  [93.40.58.165]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ccd95sm2049929f8f.25.2025.02.13.06.32.17
+ ffacd0b85a97d-38f25913eb6sm2070717f8f.51.2025.02.13.06.32.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 06:32:17 -0800 (PST)
+ Thu, 13 Feb 2025 06:32:19 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	kwolf@redhat.com,
 	qemu-block@nongnu.org
-Subject: [PATCH v2 0/2] rust: add module to convert between -errno and
- io::Error
-Date: Thu, 13 Feb 2025 15:32:14 +0100
-Message-ID: <20250213143216.3910163-1-pbonzini@redhat.com>
+Subject: [PATCH 1/2] rust: subprojects: add libc crate
+Date: Thu, 13 Feb 2025 15:32:15 +0100
+Message-ID: <20250213143216.3910163-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250213143216.3910163-1-pbonzini@redhat.com>
+References: <20250213143216.3910163-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -108,41 +110,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wrap access to errno, for use in the block layer and character device
-bindings.
+This allows access to errno values.
 
-Supersedes: <20250212093958.3703269-1-pbonzini@redhat.com>
-
-v1->v2:
-- use the libc crate
-- provide separate From<Errno> implementation for io::ErrorKind
-- hide GetErrno trait inside a submodule
-- add into_neg_errno() and corresponding tests
-- add more doctests
-- make Errno field public, so that Errno can have other From<...>
-  implementations (e.g. going from *mut Error to Errno).
-
-
-Paolo Bonzini (2):
-  rust: subprojects: add libc crate
-  rust: add module to convert between -errno and io::Error
-
- rust/Cargo.lock                               |   7 +
- rust/qemu-api/Cargo.toml                      |   1 +
- rust/qemu-api/meson.build                     |   4 +
- rust/qemu-api/src/assertions.rs               |  28 ++
- rust/qemu-api/src/errno.rs                    | 342 ++++++++++++++++++
- rust/qemu-api/src/lib.rs                      |   1 +
- rust/qemu-api/src/prelude.rs                  |   2 +
- scripts/archive-source.sh                     |   2 +-
- scripts/make-release                          |   2 +-
- subprojects/libc-0.2-rs.wrap                  |   7 +
- .../packagefiles/libc-0.2-rs/meson.build      |  36 ++
- 11 files changed, 430 insertions(+), 2 deletions(-)
- create mode 100644 rust/qemu-api/src/errno.rs
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/Cargo.lock                               |  7 ++++
+ rust/qemu-api/Cargo.toml                      |  1 +
+ scripts/archive-source.sh                     |  2 +-
+ scripts/make-release                          |  2 +-
+ subprojects/libc-0.2-rs.wrap                  |  7 ++++
+ .../packagefiles/libc-0.2-rs/meson.build      | 36 +++++++++++++++++++
+ 6 files changed, 53 insertions(+), 2 deletions(-)
  create mode 100644 subprojects/libc-0.2-rs.wrap
  create mode 100644 subprojects/packagefiles/libc-0.2-rs/meson.build
 
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index 79e142723b8..2ebf0a11ea4 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -54,6 +54,12 @@ dependencies = [
+  "either",
+ ]
+ 
++[[package]]
++name = "libc"
++version = "0.2.162"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398"
++
+ [[package]]
+ name = "pl011"
+ version = "0.1.0"
+@@ -100,6 +106,7 @@ dependencies = [
+ name = "qemu_api"
+ version = "0.1.0"
+ dependencies = [
++ "libc",
+  "qemu_api_macros",
+  "version_check",
+ ]
+diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
+index a51dd142852..57747bc9341 100644
+--- a/rust/qemu-api/Cargo.toml
++++ b/rust/qemu-api/Cargo.toml
+@@ -16,6 +16,7 @@ rust-version = "1.63.0"
+ 
+ [dependencies]
+ qemu_api_macros = { path = "../qemu-api-macros" }
++libc = "0.2.162"
+ 
+ [build-dependencies]
+ version_check = "~0.9"
+diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+index 30677c3ec90..e461c1531ed 100755
+--- a/scripts/archive-source.sh
++++ b/scripts/archive-source.sh
+@@ -28,7 +28,7 @@ sub_file="${sub_tdir}/submodule.tar"
+ # different to the host OS.
+ subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
+   berkeley-testfloat-3 arbitrary-int-1-rs bilge-0.2-rs
+-  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs proc-macro2-1-rs
++  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs
+   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+   syn-2-rs unicode-ident-1-rs"
+ sub_deinit=""
+diff --git a/scripts/make-release b/scripts/make-release
+index 2885e872109..4b11082af46 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -40,7 +40,7 @@ fi
+ # Only include wraps that are invoked with subproject()
+ SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
+   berkeley-testfloat-3 arbitrary-int-1-rs bilge-0.2-rs
+-  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs proc-macro2-1-rs
++  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs
+   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+   syn-2-rs unicode-ident-1-rs"
+ 
+diff --git a/subprojects/libc-0.2-rs.wrap b/subprojects/libc-0.2-rs.wrap
+new file mode 100644
+index 00000000000..bbe08f87883
+--- /dev/null
++++ b/subprojects/libc-0.2-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = libc-0.2.162
++source_url = https://crates.io/api/v1/crates/libc/0.2.162/download
++source_filename = libc-0.2.162.tar.gz
++source_hash = 18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398
++#method = cargo
++patch_directory = libc-0.2-rs
+diff --git a/subprojects/packagefiles/libc-0.2-rs/meson.build b/subprojects/packagefiles/libc-0.2-rs/meson.build
+new file mode 100644
+index 00000000000..11c4ada33a5
+--- /dev/null
++++ b/subprojects/packagefiles/libc-0.2-rs/meson.build
+@@ -0,0 +1,37 @@
++project('libc-0.2-rs', 'rust',
++  meson_version: '>=1.5.0',
++  version: '0.2.162',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
++
++_libc_rs = static_library(
++  'libc',
++  files('src/lib.rs'),
++  gnu_symbol_visibility: 'hidden',
++  override_options: ['rust_std=2015', 'build.rust_std=2015'],
++  rust_abi: 'rust',
++  rust_args: [
++    '--cap-lints', 'allow',
++    '--cfg', 'freebsd11',
++    '--cfg', 'libc_priv_mod_use',
++    '--cfg', 'libc_union',
++    '--cfg', 'libc_const_size_of',
++    '--cfg', 'libc_align',
++    '--cfg', 'libc_int128',
++    '--cfg', 'libc_core_cvoid',
++    '--cfg', 'libc_packedN',
++    '--cfg', 'libc_cfg_target_vendor',
++    '--cfg', 'libc_non_exhaustive',
++    '--cfg', 'libc_long_array',
++    '--cfg', 'libc_ptr_addr_of',
++    '--cfg', 'libc_underscore_const_names',
++    '--cfg', 'libc_const_extern_fn',
++  ],
++  dependencies: [],
++)
++
++libc_dep = declare_dependency(
++  link_with: _libc_rs,
++)
++
++meson.override_dependency('libc-0.2-rs', libc_dep)
 -- 
 2.48.1
 
