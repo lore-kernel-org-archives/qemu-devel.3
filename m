@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AD0C021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1642C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiQ1f-0007Kw-4P; Wed, 12 Feb 2025 22:36:31 -0500
+	id 1tiQ1m-0007dq-Q6; Wed, 12 Feb 2025 22:36:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tiQ1A-0007CF-Dv; Wed, 12 Feb 2025 22:36:01 -0500
+ id 1tiQ1k-0007az-RY; Wed, 12 Feb 2025 22:36:36 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tiQ17-0000gz-HW; Wed, 12 Feb 2025 22:36:00 -0500
+ id 1tiQ1j-0000l1-2p; Wed, 12 Feb 2025 22:36:36 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 13 Feb
- 2025 11:35:35 +0800
+ 2025 11:35:37 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 13 Feb 2025 11:35:35 +0800
+ Transport; Thu, 13 Feb 2025 11:35:37 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 09/28] hw/intc/aspeed: Refactor INTC to support separate
- input and output pin indices
-Date: Thu, 13 Feb 2025 11:35:12 +0800
-Message-ID: <20250213033531.3367697-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 15/28] hw/misc/aspeed_scu: Fix the revision ID cannot be
+ set in the SOC layer for AST2700
+Date: Thu, 13 Feb 2025 11:35:18 +0800
+Message-ID: <20250213033531.3367697-16-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
@@ -66,263 +66,58 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactors the INTC to distinguish between input and output pin indices,
-improving interrupt handling clarity and accuracy.
+According to the design of the AST2600, it has a Silicon Revision ID Register,
+specifically SCU004 and SCU014, to set the Revision ID for the AST2600.
+For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to 0x05030303.
+In the "aspeed_ast2600_scu_reset" function, the hardcoded value
+"AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set in
+SCU014. The value of "s->silicon_rev" is set by the SOC layer via the
+"silicon-rev" property.
 
-Updated the functions to handle both input and output pin indices.
-Added detailed logging for input and output pin indices in trace events.
+However, the design of the AST2700 is different. There are two SCU controllers:
+SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads the
+SCU Silicon Revision ID register (SCU0_000) and the SCUIO Silicon Revision ID
+register (SCU1_000) and combines them into a 64-bit value.
+The combined value of SCU0_000[23:16] and SCU1_000[23:16] represents the silicon
+revision. For example, the AST2700-A1 revision is "0x0601010306010103", where
+SCU0_000 should be 06010103 and SCU1_000 should be 06010103.
 
-These changes ensure that the INTC controller can handle multiple input and
-output pins, improving support for the AST2700 A1.
+Reference:
+https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/arch/arm/mach-aspeed/ast2700/cpu-info.c
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/intc/aspeed_intc.c | 97 +++++++++++++++++++++++++++----------------
- hw/intc/trace-events  | 12 +++---
- 2 files changed, 67 insertions(+), 42 deletions(-)
+ hw/misc/aspeed_scu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 32c4a3bb44..4e8f1e291e 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -36,20 +36,32 @@ REG32(GICINT136_STATUS,     0x1804)
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+index 2d9fe78926..b45a36a555 100644
+--- a/hw/misc/aspeed_scu.c
++++ b/hw/misc/aspeed_scu.c
+@@ -911,7 +911,6 @@ static const MemoryRegionOps aspeed_ast2700_scu_ops = {
+ };
  
- #define GICINT_STATUS_BASE     R_GICINT128_STATUS
+ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+-    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
+     [AST2700_HW_STRAP1]             = 0x00000800,
+     [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
+     [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
+@@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
+     AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
  
--static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
-+/*
-+ * Update the state of an interrupt controller pin by setting
-+ * the specified output pin to the given level.
-+ * The input pin index should be between 0 and the number of input pins.
-+ * The output pin index should be between 0 and the number of output pins.
-+ */
-+static void aspeed_intc_update(AspeedINTCState *s, int inpin_idx,
-+                               int outpin_idx, int level)
- {
-     AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
-     const char *name = object_get_typename(OBJECT(s));
- 
--    if (irq >= aic->num_inpins) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: Invalid input pin index: %d\n",
--                      __func__, irq);
-+    if (inpin_idx >= aic->num_inpins) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
-+                      __func__, inpin_idx);
-         return;
-     }
- 
--    trace_aspeed_intc_update_irq(name, irq, level);
--    qemu_set_irq(s->output_pins[irq], level);
-+    if (outpin_idx >= aic->num_outpins) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid output pin index: %d\n",
-+                      __func__, outpin_idx);
-+        return;
-+    }
-+
-+    trace_aspeed_intc_update_irq(name, inpin_idx, outpin_idx, level);
-+    qemu_set_irq(s->output_pins[outpin_idx], level);
+     memcpy(s->regs, asc->resets, asc->nr_regs * 4);
++    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
  }
  
- /*
-@@ -67,6 +79,11 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-     uint32_t select = 0;
-     uint32_t enable;
-     int i;
-+    int inpin_idx;
-+    int outpin_idx;
-+
-+    inpin_idx = irq;
-+    outpin_idx = irq;
+ static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
+@@ -1032,7 +1032,6 @@ static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
+ };
  
-     if (irq >= aic->num_inpins) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
-@@ -74,15 +91,15 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-         return;
-     }
- 
--    trace_aspeed_intc_set_irq(name, irq, level);
--    enable = s->enable[irq];
-+    trace_aspeed_intc_set_irq(name, inpin_idx, level);
-+    enable = s->enable[inpin_idx];
- 
-     if (!level) {
-         return;
-     }
- 
-     for (i = 0; i < aic->num_lines; i++) {
--        if (s->orgates[irq].levels[i]) {
-+        if (s->orgates[inpin_idx].levels[i]) {
-             if (enable & BIT(i)) {
-                 select |= BIT(i);
-             }
-@@ -95,7 +112,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
- 
-     trace_aspeed_intc_select(name, select);
- 
--    if (s->mask[irq] || s->regs[status_addr]) {
-+    if (s->mask[inpin_idx] || s->regs[status_addr]) {
-         /*
-          * a. mask is not 0 means in ISR mode
-          * sources interrupt routine are executing.
-@@ -104,16 +121,17 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-          *
-          * save source interrupt to pending variable.
-          */
--        s->pending[irq] |= select;
--        trace_aspeed_intc_pending_irq(name, irq, s->pending[irq]);
-+        s->pending[inpin_idx] |= select;
-+        trace_aspeed_intc_pending_irq(name, inpin_idx, s->pending[inpin_idx]);
-     } else {
-         /*
-          * notify firmware which source interrupt are coming
-          * by setting status register
-          */
-         s->regs[status_addr] = select;
--        trace_aspeed_intc_trigger_irq(name, irq, s->regs[status_addr]);
--        aspeed_intc_update(s, irq, 1);
-+        trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx,
-+                                      s->regs[status_addr]);
-+        aspeed_intc_update(s, inpin_idx, outpin_idx, 1);
-     }
- }
- 
-@@ -126,13 +144,15 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
-     uint32_t old_enable;
-     uint32_t change;
-     uint32_t irq;
-+    int inpin_idx;
- 
-     irq = (offset & 0x0f00) >> 8;
-+    inpin_idx = irq;
- 
--    if (irq >= aic->num_inpins) {
-+    if (inpin_idx >= aic->num_inpins) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Invalid input pin index: %d\n",
--                      __func__, irq);
-+                      __func__, inpin_idx);
-         return;
-     }
- 
-@@ -143,17 +163,17 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
-      */
- 
-     /* disable all source interrupt */
--    if (!data && !s->enable[irq]) {
-+    if (!data && !s->enable[inpin_idx]) {
-         s->regs[addr] = data;
-         return;
-     }
- 
--    old_enable = s->enable[irq];
--    s->enable[irq] |= data;
-+    old_enable = s->enable[inpin_idx];
-+    s->enable[inpin_idx] |= data;
- 
-     /* enable new source interrupt */
--    if (old_enable != s->enable[irq]) {
--        trace_aspeed_intc_enable(name, s->enable[irq]);
-+    if (old_enable != s->enable[inpin_idx]) {
-+        trace_aspeed_intc_enable(name, s->enable[inpin_idx]);
-         s->regs[addr] = data;
-         return;
-     }
-@@ -161,11 +181,11 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
-     /* mask and unmask source interrupt */
-     change = s->regs[addr] ^ data;
-     if (change & data) {
--        s->mask[irq] &= ~change;
--        trace_aspeed_intc_unmask(name, change, s->mask[irq]);
-+        s->mask[inpin_idx] &= ~change;
-+        trace_aspeed_intc_unmask(name, change, s->mask[inpin_idx]);
-     } else {
--        s->mask[irq] |= change;
--        trace_aspeed_intc_mask(name, change, s->mask[irq]);
-+        s->mask[inpin_idx] |= change;
-+        trace_aspeed_intc_mask(name, change, s->mask[inpin_idx]);
-     }
- 
-     s->regs[addr] = data;
-@@ -178,6 +198,8 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
-     const char *name = object_get_typename(OBJECT(s));
-     uint32_t addr = offset >> 2;
-     uint32_t irq;
-+    int inpin_idx;
-+    int outpin_idx;
- 
-     if (!data) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid data 0\n", __func__);
-@@ -185,11 +207,13 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
-     }
- 
-     irq = (offset & 0x0f00) >> 8;
-+    inpin_idx = irq;
-+    outpin_idx = irq;
- 
--    if (irq >= aic->num_inpins) {
-+    if (inpin_idx >= aic->num_inpins) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Invalid input pin index: %d\n",
--                      __func__, irq);
-+                      __func__, inpin_idx);
-         return;
-     }
- 
-@@ -208,21 +232,22 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
- 
-     /* All source ISR execution are done */
-     if (!s->regs[addr]) {
--        trace_aspeed_intc_all_isr_done(name, irq);
--        if (s->pending[irq]) {
-+        trace_aspeed_intc_all_isr_done(name, inpin_idx);
-+        if (s->pending[inpin_idx]) {
-             /*
-              * handle pending source interrupt
-              * notify firmware which source interrupt are pending
-              * by setting status register
-              */
--            s->regs[addr] = s->pending[irq];
--            s->pending[irq] = 0;
--            trace_aspeed_intc_trigger_irq(name, irq, s->regs[addr]);
--            aspeed_intc_update(s, irq, 1);
-+            s->regs[addr] = s->pending[inpin_idx];
-+            s->pending[inpin_idx] = 0;
-+            trace_aspeed_intc_trigger_irq(name, inpin_idx, outpin_idx,
-+                                          s->regs[addr]);
-+            aspeed_intc_update(s, inpin_idx, outpin_idx, 1);
-         } else {
-             /* clear irq */
--            trace_aspeed_intc_clear_irq(name, irq, 0);
--            aspeed_intc_update(s, irq, 0);
-+            trace_aspeed_intc_clear_irq(name, inpin_idx, outpin_idx, 0);
-+            aspeed_intc_update(s, inpin_idx, outpin_idx, 0);
-         }
-     }
- }
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index e9ca34755e..e97eea820b 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -82,12 +82,12 @@ aspeed_vic_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64
- # aspeed_intc.c
- aspeed_intc_read(const char *s, uint64_t offset, unsigned size, uint32_t value) "%s: From 0x%" PRIx64 " of size %u: 0x%" PRIx32
- aspeed_intc_write(const char *s, uint64_t offset, unsigned size, uint32_t data) "%s: To 0x%" PRIx64 " of size %u: 0x%" PRIx32
--aspeed_intc_set_irq(const char *s, int irq, int level) "%s: Set IRQ %d: %d"
--aspeed_intc_clear_irq(const char *s, int irq, int level) "%s: Clear IRQ %d: %d"
--aspeed_intc_update_irq(const char *s, int irq, int level) "%s: Update IRQ: %d: %d"
--aspeed_intc_pending_irq(const char *s, int irq, uint32_t value) "%s: Pending IRQ: %d: 0x%x"
--aspeed_intc_trigger_irq(const char *s, int irq, uint32_t value) "%s: Trigger IRQ: %d: 0x%x"
--aspeed_intc_all_isr_done(const char *s, int irq) "%s: All source ISR execution are done: %d"
-+aspeed_intc_set_irq(const char *s, int inpin_idx, int level) "%s: Set IRQ %d: %d"
-+aspeed_intc_clear_irq(const char *s, int inpin_idx, int outpin_idx, int level) "%s: Clear IRQ %d-%d: %d"
-+aspeed_intc_update_irq(const char *s, int inpin_idx, int outpin_idx, int level) "%s: Update IRQ: %d-%d: %d"
-+aspeed_intc_pending_irq(const char *s, int inpin_idx, uint32_t value) "%s: Pending IRQ: %d: 0x%x"
-+aspeed_intc_trigger_irq(const char *s, int inpin_idx, int outpin_idx, uint32_t value) "%s: Trigger IRQ: %d-%d: 0x%x"
-+aspeed_intc_all_isr_done(const char *s, int inpin_idx) "%s: All source ISR execution are done: %d"
- aspeed_intc_enable(const char *s, uint32_t value) "%s: Enable: 0x%x"
- aspeed_intc_select(const char *s, uint32_t value) "%s: Select: 0x%x"
- aspeed_intc_mask(const char *s, uint32_t change, uint32_t value) "%s: Mask: 0x%x: 0x%x"
+ static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
+-    [AST2700_SILICON_REV]               = 0x06000003,
+     [AST2700_HW_STRAP1]                 = 0x00000504,
+     [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
+     [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
 -- 
 2.34.1
 
