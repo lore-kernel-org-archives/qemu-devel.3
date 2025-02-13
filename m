@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB14C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692B0C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 03:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiQ2R-0000NP-Bs; Wed, 12 Feb 2025 22:37:19 -0500
+	id 1tiQ1c-0007Il-0e; Wed, 12 Feb 2025 22:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tiQ2L-0008T6-T8; Wed, 12 Feb 2025 22:37:15 -0500
+ id 1tiQ14-0007A7-1O; Wed, 12 Feb 2025 22:35:54 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tiQ2K-0000nL-CJ; Wed, 12 Feb 2025 22:37:13 -0500
+ id 1tiQ12-0000gz-MF; Wed, 12 Feb 2025 22:35:53 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 13 Feb
- 2025 11:35:40 +0800
+ 2025 11:35:33 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 13 Feb 2025 11:35:40 +0800
+ Transport; Thu, 13 Feb 2025 11:35:33 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 21/28] hw/misc/aspeed_hace: Fix boot issue in the Crypto
- Manager Self Test
-Date: Thu, 13 Feb 2025 11:35:24 +0800
-Message-ID: <20250213033531.3367697-22-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 05/28] hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ
+ number
+Date: Thu, 13 Feb 2025 11:35:08 +0800
+Message-ID: <20250213033531.3367697-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
@@ -48,7 +48,8 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,53 +67,90 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, it does not support the CRYPT command. Instead, it only sends an
-interrupt to notify the firmware that the crypt command has completed.
-It is a temporary workaround to resolve the boot issue in the Crypto Manager
-Self Test.
+To improve readability, sort the IRQ table by IRQ number.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_hace.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ hw/arm/aspeed_ast27x0.c | 50 ++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 86422cb3be..4d0999e7e9 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -59,6 +59,7 @@
- /* Other cmd bits */
- #define  HASH_IRQ_EN                    BIT(9)
- #define  HASH_SG_EN                     BIT(18)
-+#define  CRYPT_IRQ_EN                   BIT(12)
- /* Scatter-gather data list */
- #define SG_LIST_LEN_SIZE                4
- #define SG_LIST_LEN_MASK                0x0FFFFFFF
-@@ -343,6 +344,13 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-                 qemu_irq_lower(s->irq);
-             }
-         }
-+        if (data & CRYPT_IRQ) {
-+            data &= ~CRYPT_IRQ;
-+
-+            if (s->regs[addr] & CRYPT_IRQ) {
-+                qemu_irq_lower(s->irq);
-+            }
-+        }
-         break;
-     case R_HASH_SRC:
-         data &= ahc->src_mask;
-@@ -388,6 +396,10 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-     case R_CRYPT_CMD:
-         qemu_log_mask(LOG_UNIMP, "%s: Crypt commands not implemented\n",
-                        __func__);
-+        s->regs[R_STATUS] |= CRYPT_IRQ;
-+        if (data & CRYPT_IRQ_EN) {
-+            qemu_irq_raise(s->irq);
-+        }
-         break;
-     default:
-         break;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 6e3375f5d3..4862b215c1 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -73,27 +73,13 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+ 
+ /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
+ static const int aspeed_soc_ast2700a0_irqmap[] = {
+-    [ASPEED_DEV_UART0]     = 132,
+-    [ASPEED_DEV_UART1]     = 132,
+-    [ASPEED_DEV_UART2]     = 132,
+-    [ASPEED_DEV_UART3]     = 132,
+-    [ASPEED_DEV_UART4]     = 8,
+-    [ASPEED_DEV_UART5]     = 132,
+-    [ASPEED_DEV_UART6]     = 132,
+-    [ASPEED_DEV_UART7]     = 132,
+-    [ASPEED_DEV_UART8]     = 132,
+-    [ASPEED_DEV_UART9]     = 132,
+-    [ASPEED_DEV_UART10]    = 132,
+-    [ASPEED_DEV_UART11]    = 132,
+-    [ASPEED_DEV_UART12]    = 132,
+-    [ASPEED_DEV_FMC]       = 131,
+     [ASPEED_DEV_SDMC]      = 0,
+-    [ASPEED_DEV_SCU]       = 12,
+-    [ASPEED_DEV_ADC]       = 130,
++    [ASPEED_DEV_HACE]      = 4,
+     [ASPEED_DEV_XDMA]      = 5,
+-    [ASPEED_DEV_EMMC]      = 15,
+-    [ASPEED_DEV_GPIO]      = 130,
++    [ASPEED_DEV_UART4]     = 8,
++    [ASPEED_DEV_SCU]       = 12,
+     [ASPEED_DEV_RTC]       = 13,
++    [ASPEED_DEV_EMMC]      = 15,
+     [ASPEED_DEV_TIMER1]    = 16,
+     [ASPEED_DEV_TIMER2]    = 17,
+     [ASPEED_DEV_TIMER3]    = 18,
+@@ -102,19 +88,33 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
+     [ASPEED_DEV_TIMER6]    = 21,
+     [ASPEED_DEV_TIMER7]    = 22,
+     [ASPEED_DEV_TIMER8]    = 23,
+-    [ASPEED_DEV_WDT]       = 131,
+-    [ASPEED_DEV_PWM]       = 131,
++    [ASPEED_DEV_DP]        = 28,
+     [ASPEED_DEV_LPC]       = 128,
+     [ASPEED_DEV_IBT]       = 128,
++    [ASPEED_DEV_KCS]       = 128,
++    [ASPEED_DEV_ADC]       = 130,
++    [ASPEED_DEV_GPIO]      = 130,
+     [ASPEED_DEV_I2C]       = 130,
+-    [ASPEED_DEV_PECI]      = 133,
++    [ASPEED_DEV_FMC]       = 131,
++    [ASPEED_DEV_WDT]       = 131,
++    [ASPEED_DEV_PWM]       = 131,
++    [ASPEED_DEV_I3C]       = 131,
++    [ASPEED_DEV_UART0]     = 132,
++    [ASPEED_DEV_UART1]     = 132,
++    [ASPEED_DEV_UART2]     = 132,
++    [ASPEED_DEV_UART3]     = 132,
++    [ASPEED_DEV_UART5]     = 132,
++    [ASPEED_DEV_UART6]     = 132,
++    [ASPEED_DEV_UART7]     = 132,
++    [ASPEED_DEV_UART8]     = 132,
++    [ASPEED_DEV_UART9]     = 132,
++    [ASPEED_DEV_UART10]    = 132,
++    [ASPEED_DEV_UART11]    = 132,
++    [ASPEED_DEV_UART12]    = 132,
+     [ASPEED_DEV_ETH1]      = 132,
+     [ASPEED_DEV_ETH2]      = 132,
+     [ASPEED_DEV_ETH3]      = 132,
+-    [ASPEED_DEV_HACE]      = 4,
+-    [ASPEED_DEV_KCS]       = 128,
+-    [ASPEED_DEV_DP]        = 28,
+-    [ASPEED_DEV_I3C]       = 131,
++    [ASPEED_DEV_PECI]      = 133,
+     [ASPEED_DEV_SDHCI]     = 133,
+ };
+ 
 -- 
 2.34.1
 
