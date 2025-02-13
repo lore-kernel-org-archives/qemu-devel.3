@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E6CC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAE4C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibeu-0000x5-0H; Thu, 13 Feb 2025 11:01:48 -0500
+	id 1tibey-0000yP-4a; Thu, 13 Feb 2025 11:01:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibeW-0000r2-T7
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:31 -0500
+ id 1tibeJ-0000oq-Ja
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibeS-0005Sg-2k
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:23 -0500
+ id 1tibeC-0005Oj-4y
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739462479;
+ s=mimecast20190719; t=1739462462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fpScOGuqkkpqCWAGOqG2RKOLu/MENt6Jr9VwylD8zsA=;
- b=YQVim5+vwK7FurL4lX8TXoDQKzQPJ+YPvDIXkwK4ZNyR6Sj+OHD+mp02AKd/2yL9ZIrcVg
- MQNiawc5maa5XZO6G66NxYeWsGWSwjRnkT88fAnJ05AaAcLB0frVm+SCCFWhb/Oxei9PF1
- kDv+lDSUubDrKLA1Wcpppag1GoT+6Mw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zcjBoC1B+j7HYq04KLSZk9SffU753eljHxo8vUNW3qE=;
+ b=XgumIok61zEr+rE/McW41bRj+e1CtuD9gbmZgb9o2zwEjp2z8m7/Zb8qTRUkgQKKNiQGnk
+ tOWrvP60s6Lq/GhFk+U7TZ1HUCAIA3vkMmQ7j8bP8nfkh53xgEc2LMQPXb/ByVC4TLk194
+ 8FqXa5AmvmQAPqpF76tgXR2rFqx6GLc=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-Fx7r2193O8yqK6WS-m0rZQ-1; Thu, 13 Feb 2025 11:01:17 -0500
-X-MC-Unique: Fx7r2193O8yqK6WS-m0rZQ-1
-X-Mimecast-MFC-AGG-ID: Fx7r2193O8yqK6WS-m0rZQ_1739462475
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38dd533dad0so1177929f8f.0
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:16 -0800 (PST)
+ us-mta-643-3Y2G7hTvMOiYg9ys1UOkjA-1; Thu, 13 Feb 2025 11:01:00 -0500
+X-MC-Unique: 3Y2G7hTvMOiYg9ys1UOkjA-1
+X-Mimecast-MFC-AGG-ID: 3Y2G7hTvMOiYg9ys1UOkjA
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38de0a98043so613704f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739462474; x=1740067274;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fpScOGuqkkpqCWAGOqG2RKOLu/MENt6Jr9VwylD8zsA=;
- b=eEcefMFlV3x0O7ltfekewHCIr5H3GwN42aK+OstelaInwomejnrpoolQy+FUP79X8Q
- f+THu8/wI1VFXByy/I7Tl9YoJVm+STAbecIga1pW/iv8Q3TDm5JofDJhuHDZ4s9azYt8
- /s47mgqNJMBdBfvUKz1/SnCb+g64WDkv+W9NY/jUIZeBDCvINsP/gIANEx20jAZZ7JIK
- wKQHMgJv9YvkWHqOztfXungrAi5qAAoF6HgtR1DgiM3NfK/oqP9aUUsq9v7QS80KHgNx
- qSCbwXCnIQeCM8yJdJypTMtOvW/nj3leEwUPkmQz7hvgLZkg5jXzILRQUp8joExBbjKP
- ZMVw==
-X-Gm-Message-State: AOJu0YxH2vdlo4C2J2qa5fftPczSupSzERXAvkK1vvQcY/nZbBqGyyPt
- FQqJ1oHxCZbjL3DDy0XcuY0dSKQK/FwrevOIa1GLDkuPeghsrXdLiB2M6KBdcBxlDpuvXrpwjUx
- jGDJRGgtQPDaCXzJ4GE5/j8GLwSz7UkbyPcrWJ3bMkZndc1X+t5cWLdFkmesPsZ1jmtEaSYfyot
- eHeEDJu5eL4mpz7mo6RDk8qNwI7RAIAVaWmQcsiQg=
-X-Gm-Gg: ASbGnctcxgtyper5aSXlQhYUOk86ggOzumu4bmNp6wLTN4ByMEDzBWdLDWZoLnpVPj9
- R8FsrjCaEFMfLNAjDHl2LD4ZbgSvTp8xU/HnBO3q7OmCzeaFr+tjQC03cV1gFdi1RPyDVzS+iQT
- 5NmI5AahPrg8gARORRcsW3k0cDpEdVw4HO6bxgdIOwsi0DoqopneB17PrVCt33c/c73C4Y47qGf
- nu5l5tpIcq84Ne/qLfnCJGTjVzS6G8y7FjK423pH4Z6O5gn3C1f7BP9mZelhroh0dooeW9yPGnH
- OBNXHXwqcChnbD8058ZmevjDONpHwM/kyJ7os0BoQBxtwA==
-X-Received: by 2002:a05:6000:18a7:b0:38d:dfb8:368d with SMTP id
- ffacd0b85a97d-38dea2f76ddmr7278923f8f.50.1739462469856; 
- Thu, 13 Feb 2025 08:01:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE46/BxU0Ec0C8ZUXM85fjiiS60CRxllE+fBxQR+rHcorVSs5iz/bMommZ1x7vXRCkm1tzo7A==
-X-Received: by 2002:a05:6000:18a7:b0:38d:dfb8:368d with SMTP id
- ffacd0b85a97d-38dea2f76ddmr7278847f8f.50.1739462469042; 
- Thu, 13 Feb 2025 08:01:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739462459; x=1740067259;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zcjBoC1B+j7HYq04KLSZk9SffU753eljHxo8vUNW3qE=;
+ b=pPvGn0dFwp9XX35E1eoawZ+gi40sg5Okfa5dhx9ZD2NuJ6GRk6HlgDcqG4PPzyQJze
+ HvUydITv1aYSudsF1gPz4MpLjX3SXttZP/HzYSsUhRVsPN1tLNEjz7G5jyg44z5eCyZE
+ GuqKMvnJkUU//QvhjpTqTvn2eP2jPk6kz4QFat5HzRP4CBd8bD2ZbkIFd51PKeNv94b3
+ xpU5HecI0a91jxNy1zTW1PwYI4qOPrhfVMSPVmMosqFYca/7AID5ROwFqcsFdGDsbEPf
+ 9G1kM7J3bPM8rKRjBi7N5to6jEr0quguYwG9OP3SHuxYOzVgCEU2TVVpMulLNq3APVGY
+ krYw==
+X-Gm-Message-State: AOJu0Yz0jYCn9dfryouiUp4OdB9n72fh5wf26fNMbUp5akSNhJxdmyO5
+ 9S0CYX6yp9jkG7BH02T5wya1gKHM+2K9SBUlIMk21psnPRIYOwG/gabWBeKynyI9lLBXP7K4uuD
+ 2F87kf6j7+GcdvbO5UESOT5+BvgjhkQ19tEl8X+ivEX63fDw2YYcZ9hiIp5iK4haBh6o/m06/yf
+ aZiX/HhD4QW2a+XQYOKpqLLLRBI/QYCabTwBbk+QU=
+X-Gm-Gg: ASbGnctq1WbA6qQVhtbzR/B3ZnUoBg7iW9ewQNdGzBssqnqJCN3Le1zk9MPaUcSKohG
+ 8Gg6eexIG1LznWoloTIZguc/2i+Y2+ozpjujT2zPTdIliEes9lnd7D+zO5Dt8LB1BT44B4TSkUl
+ vh6CUgqXz8fY6hcHAFddjvIH7lozHkrSBF51dTWYNb0RTXcJ3GX2VUtaichpCneFqGAZlgeMIdP
+ owPz3boG4kpwCJk1YKWrDUdfw7kDYjW4Q4p7cBxERLWqmzUeMBmylvAsAljZCB+CvL3yGV0aZta
+ fiOlW23BdW1hfi65y9F1yQ9g/D7efK17Oquy2cKVl70qDg==
+X-Received: by 2002:a5d:5889:0:b0:38f:24f4:93b9 with SMTP id
+ ffacd0b85a97d-38f24f49436mr3758624f8f.28.1739462458860; 
+ Thu, 13 Feb 2025 08:00:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHxYpaoSpx8w5fgA+mrSz/ITH9U0Js+Q68cjABmBpGgKhxA6GE4J5H51+Txp99xTs9wlDpTKQ==
+X-Received: by 2002:a5d:5889:0:b0:38f:24f4:93b9 with SMTP id
+ ffacd0b85a97d-38f24f49436mr3758525f8f.28.1739462457788; 
+ Thu, 13 Feb 2025 08:00:57 -0800 (PST)
 Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
  [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b4123sm2319261f8f.17.2025.02.13.08.01.08
+ ffacd0b85a97d-38f259d8e62sm2235630f8f.71.2025.02.13.08.00.57
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:01:08 -0800 (PST)
+ Thu, 13 Feb 2025 08:00:57 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/27] rust: qdev: add clock creation
-Date: Thu, 13 Feb 2025 17:00:32 +0100
-Message-ID: <20250213160054.3937012-6-pbonzini@redhat.com>
+Subject: [PULL 00/27] rust, Windows patches for 2025-02-13
+Date: Thu, 13 Feb 2025 17:00:27 +0100
+Message-ID: <20250213160054.3937012-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
-References: <20250213160054.3937012-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,269 +105,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a Rust version of qdev_init_clock_in, which can be used in
-instance_init.  There are a couple differences with the C
-version:
+The following changes since commit de278e54aefed143526174335f8286f7437d20be:
 
-- in Rust the object keeps its own reference to the clock (in addition to
-  the one embedded in the NamedClockList), and the reference is dropped
-  automatically by instance_finalize(); this is encoded in the signature
-  of DeviceClassMethods::init_clock_in, which makes the lifetime of the
-  clock independent of that of the object it holds.  This goes unnoticed
-  in the C version and is due to the existence of aliases.
+  Merge tag 'pull-loongarch-20250212' of https://gitlab.com/bibo-mao/qemu into staging (2025-02-12 09:16:36 -0500)
 
-- also, anything that happens during instance_init uses the pinned_init
-  framework to operate on a partially initialized object, and is done
-  through class methods (i.e. through DeviceClassMethods rather than
-  DeviceMethods) because the device does not exist yet.  Therefore, Rust
-  code *must* create clocks from instance_init, which is stricter than C.
+are available in the Git repository at:
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/src/device.rs |  43 +++++--------
- rust/qemu-api/src/prelude.rs     |   2 +
- rust/qemu-api/src/qdev.rs        | 107 ++++++++++++++++++++++++++++++-
- rust/qemu-api/src/vmstate.rs     |   4 +-
- 4 files changed, 125 insertions(+), 31 deletions(-)
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index f5db114b0c7..37936a328b8 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -10,17 +10,16 @@
- 
- use qemu_api::{
-     bindings::{
--        error_fatal, hwaddr, memory_region_init_io, qdev_init_clock_in, qdev_prop_set_chr,
--        qemu_chr_fe_accept_input, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers,
--        qemu_chr_fe_write_all, qemu_irq, sysbus_connect_irq, sysbus_mmio_map, sysbus_realize,
--        CharBackend, Chardev, Clock, ClockEvent, MemoryRegion, QEMUChrEvent,
--        CHR_IOCTL_SERIAL_SET_BREAK,
-+        error_fatal, hwaddr, memory_region_init_io, qdev_prop_set_chr, qemu_chr_fe_accept_input,
-+        qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers, qemu_chr_fe_write_all, qemu_irq,
-+        sysbus_connect_irq, sysbus_mmio_map, sysbus_realize, CharBackend, Chardev, MemoryRegion,
-+        QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
-     },
-     c_str, impl_vmstate_forward,
-     irq::InterruptSource,
-     prelude::*,
--    qdev::{DeviceImpl, DeviceState, Property},
--    qom::{ClassInitImpl, ObjectImpl, ParentField},
-+    qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property},
-+    qom::{ClassInitImpl, ObjectImpl, Owned, ParentField},
-     sysbus::{SysBusDevice, SysBusDeviceClass},
-     vmstate::VMStateDescription,
- };
-@@ -131,7 +130,7 @@ pub struct PL011State {
-     #[doc(alias = "irq")]
-     pub interrupts: [InterruptSource; IRQMASK.len()],
-     #[doc(alias = "clk")]
--    pub clock: NonNull<Clock>,
-+    pub clock: Owned<Clock>,
-     #[doc(alias = "migrate_clk")]
-     pub migrate_clock: bool,
- }
-@@ -485,8 +484,6 @@ impl PL011State {
-     /// location/instance. All its fields are expected to hold unitialized
-     /// values with the sole exception of `parent_obj`.
-     unsafe fn init(&mut self) {
--        const CLK_NAME: &CStr = c_str!("clk");
--
-         // SAFETY:
-         //
-         // self and self.iomem are guaranteed to be valid at this point since callers
-@@ -506,22 +503,16 @@ unsafe fn init(&mut self) {
- 
-         // SAFETY:
-         //
--        // self.clock is not initialized at this point; but since `NonNull<_>` is Copy,
--        // we can overwrite the undefined value without side effects. This is
--        // safe since all PL011State instances are created by QOM code which
--        // calls this function to initialize the fields; therefore no code is
--        // able to access an invalid self.clock value.
--        unsafe {
--            let dev: &mut DeviceState = self.upcast_mut();
--            self.clock = NonNull::new(qdev_init_clock_in(
--                dev,
--                CLK_NAME.as_ptr(),
--                None, /* pl011_clock_update */
--                addr_of_mut!(*self).cast::<c_void>(),
--                ClockEvent::ClockUpdate.0,
--            ))
--            .unwrap();
--        }
-+        // self.clock is not initialized at this point; but since `Owned<_>` is
-+        // not Drop, we can overwrite the undefined value without side effects;
-+        // it's not sound but, because for all PL011State instances are created
-+        // by QOM code which calls this function to initialize the fields, at
-+        // leastno code is able to access an invalid self.clock value.
-+        self.clock = self.init_clock_in("clk", &Self::clock_update, ClockEvent::ClockUpdate);
-+    }
-+
-+    const fn clock_update(&self, _event: ClockEvent) {
-+        /* pl011_trace_baudrate_change(s); */
-     }
- 
-     fn post_init(&self) {
-diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-index 3df6a5c21ec..87e3ce90f26 100644
---- a/rust/qemu-api/src/prelude.rs
-+++ b/rust/qemu-api/src/prelude.rs
-@@ -7,6 +7,8 @@
- pub use crate::cell::BqlCell;
- pub use crate::cell::BqlRefCell;
- 
-+pub use crate::qdev::DeviceMethods;
-+
- pub use crate::qom::IsA;
- pub use crate::qom::Object;
- pub use crate::qom::ObjectCast;
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index f4c75c752f1..176c69a5600 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -4,14 +4,20 @@
- 
- //! Bindings to create devices and access device functionality from Rust.
- 
--use std::{ffi::CStr, ptr::NonNull};
-+use std::{
-+    ffi::{CStr, CString},
-+    os::raw::c_void,
-+    ptr::NonNull,
-+};
- 
--pub use bindings::{DeviceClass, DeviceState, Property};
-+pub use bindings::{Clock, ClockEvent, DeviceClass, DeviceState, Property};
- 
- use crate::{
-     bindings::{self, Error},
-+    callbacks::FnCall,
-+    cell::bql_locked,
-     prelude::*,
--    qom::{ClassInitImpl, ObjectClass},
-+    qom::{ClassInitImpl, ObjectClass, Owned},
-     vmstate::VMStateDescription,
- };
- 
-@@ -143,3 +149,98 @@ unsafe impl ObjectType for DeviceState {
-         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
- }
- qom_isa!(DeviceState: Object);
-+
-+/// Trait for methods exposed by the [`DeviceState`] class.  The methods can be
-+/// called on all objects that have the trait `IsA<DeviceState>`.
-+///
-+/// The trait should only be used through the blanket implementation,
-+/// which guarantees safety via `IsA`.
-+pub trait DeviceMethods: ObjectDeref
-+where
-+    Self::Target: IsA<DeviceState>,
-+{
-+    /// Add an input clock named `name`.  Invoke the callback with
-+    /// `self` as the first parameter for the events that are requested.
-+    ///
-+    /// The resulting clock is added as a child of `self`, but it also
-+    /// stays alive until after `Drop::drop` is called because C code
-+    /// keeps an extra reference to it until `device_finalize()` calls
-+    /// `qdev_finalize_clocklist()`.  Therefore (unlike most cases in
-+    /// which Rust code has a reference to a child object) it would be
-+    /// possible for this function to return a `&Clock` too.
-+    #[inline]
-+    fn init_clock_in<F: for<'a> FnCall<(&'a Self::Target, ClockEvent)>>(
-+        &self,
-+        name: &str,
-+        _cb: &F,
-+        events: ClockEvent,
-+    ) -> Owned<Clock> {
-+        fn do_init_clock_in(
-+            dev: *mut DeviceState,
-+            name: &str,
-+            cb: Option<unsafe extern "C" fn(*mut c_void, ClockEvent)>,
-+            events: ClockEvent,
-+        ) -> Owned<Clock> {
-+            assert!(bql_locked());
-+
-+            // SAFETY: the clock is heap allocated, but qdev_init_clock_in()
-+            // does not gift the reference to its caller; so use Owned::from to
-+            // add one.  The callback is disabled automatically when the clock
-+            // is unparented, which happens before the device is finalized.
-+            unsafe {
-+                let cstr = CString::new(name).unwrap();
-+                let clk = bindings::qdev_init_clock_in(
-+                    dev,
-+                    cstr.as_ptr(),
-+                    cb,
-+                    dev.cast::<c_void>(),
-+                    events.0,
-+                );
-+
-+                Owned::from(&*clk)
-+            }
-+        }
-+
-+        let cb: Option<unsafe extern "C" fn(*mut c_void, ClockEvent)> = if F::is_some() {
-+            unsafe extern "C" fn rust_clock_cb<T, F: for<'a> FnCall<(&'a T, ClockEvent)>>(
-+                opaque: *mut c_void,
-+                event: ClockEvent,
-+            ) {
-+                // SAFETY: the opaque is "this", which is indeed a pointer to T
-+                F::call((unsafe { &*(opaque.cast::<T>()) }, event))
-+            }
-+            Some(rust_clock_cb::<Self::Target, F>)
-+        } else {
-+            None
-+        };
-+
-+        do_init_clock_in(self.as_mut_ptr(), name, cb, events)
-+    }
-+
-+    /// Add an output clock named `name`.
-+    ///
-+    /// The resulting clock is added as a child of `self`, but it also
-+    /// stays alive until after `Drop::drop` is called because C code
-+    /// keeps an extra reference to it until `device_finalize()` calls
-+    /// `qdev_finalize_clocklist()`.  Therefore (unlike most cases in
-+    /// which Rust code has a reference to a child object) it would be
-+    /// possible for this function to return a `&Clock` too.
-+    #[inline]
-+    fn init_clock_out(&self, name: &str) -> Owned<Clock> {
-+        unsafe {
-+            let cstr = CString::new(name).unwrap();
-+            let clk = bindings::qdev_init_clock_out(self.as_mut_ptr(), cstr.as_ptr());
-+
-+            Owned::from(&*clk)
-+        }
-+    }
-+}
-+
-+impl<R: ObjectDeref> DeviceMethods for R where R::Target: IsA<DeviceState> {}
-+
-+unsafe impl ObjectType for Clock {
-+    type Class = ObjectClass;
-+    const TYPE_NAME: &'static CStr =
-+        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_CLOCK) };
-+}
-+qom_isa!(Clock: Object);
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 11d21b8791c..164effc6553 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -470,11 +470,11 @@ macro_rules! vmstate_clock {
-                 $crate::assert_field_type!(
-                     $struct_name,
-                     $field_name,
--                    core::ptr::NonNull<$crate::bindings::Clock>
-+                    $crate::qom::Owned<$crate::bindings::Clock>
-                 );
-                 $crate::offset_of!($struct_name, $field_name)
-             },
--            size: ::core::mem::size_of::<*const $crate::bindings::Clock>(),
-+            size: ::core::mem::size_of::<*const $crate::qdev::Clock>(),
-             flags: VMStateFlags(VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_POINTER.0),
-             vmsd: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_clock) },
-             ..$crate::zeroable::Zeroable::ZERO
+for you to fetch changes up to 4dafba778aa3e5f5fd3b2c6333afd7650dcf54e2:
+
+  ui/sdl2: reenable the SDL2 Windows keyboard hook procedure (2025-02-13 13:50:45 +0100)
+
+----------------------------------------------------------------
+* rust: more qdev bindings
+* rust: HPET device model with timer and GPIO bindings
+* rust: small cleanups and fixes; run doctests during CI
+* ui/sdl2: reenable the SDL2 Windows keyboard hook procedure
+
+----------------------------------------------------------------
+Paolo Bonzini (16):
+      rust: docs: document naming convention
+      rust: qom: add reference counting functionality
+      rust: qom: add object creation functionality
+      rust: callbacks: allow passing optional callbacks as ()
+      rust: qdev: add clock creation
+      rust: qom: allow initializing interface vtables
+      rust: qdev: make ObjectImpl a supertrait of DeviceImpl
+      rust: qdev: switch from legacy reset to Resettable
+      rust: bindings: add Send and Sync markers for types that have bindings
+      rust: bindings for MemoryRegionOps
+      rust: irq: define ObjectType for IRQState
+      rust: chardev, qdev: add bindings to qdev_prop_set_chr
+      rust: pl011: convert pl011_create to safe Rust
+      rust: qemu_api: add a documentation header for all modules
+      rust: vmstate: remove redundant link targets
+      rust: fix doctests
+
+Volker Rümelin (1):
+      ui/sdl2: reenable the SDL2 Windows keyboard hook procedure
+
+Zhao Liu (10):
+      i386/fw_cfg: move hpet_cfg definition to hpet.c
+      rust/qdev: add the macro to define bit property
+      rust/irq: Add a helper to convert [InterruptSource] to pointer
+      rust: add bindings for gpio_{in|out} initialization
+      rust: add bindings for memattrs
+      rust: add bindings for timer
+      rust/timer/hpet: define hpet_fw_cfg
+      rust/timer/hpet: add basic HPET timer and HPETState
+      rust/timer/hpet: add qom and qdev APIs support
+      i386: enable rust hpet for pc when rust is enabled
+
+ docs/devel/rust.rst                      |  46 ++
+ configs/devices/i386-softmmu/default.mak |   1 +
+ meson.build                              |   8 +
+ include/hw/timer/hpet.h                  |   2 +-
+ rust/wrapper.h                           |   3 +
+ hw/i386/fw_cfg.c                         |   6 +-
+ hw/i386/pc.c                             |   2 +-
+ hw/timer/hpet.c                          |  16 +-
+ ui/sdl2.c                                |  26 -
+ .gitlab-ci.d/buildtest.yml               |   6 +
+ hw/timer/Kconfig                         |   2 +-
+ rust/Cargo.lock                          |   8 +
+ rust/Cargo.toml                          |   1 +
+ rust/hw/Kconfig                          |   1 +
+ rust/hw/char/pl011/src/device.rs         | 121 +++--
+ rust/hw/char/pl011/src/lib.rs            |   1 -
+ rust/hw/char/pl011/src/memory_ops.rs     |  34 --
+ rust/hw/meson.build                      |   1 +
+ rust/hw/timer/Kconfig                    |   2 +
+ rust/hw/timer/hpet/Cargo.toml            |  18 +
+ rust/hw/timer/hpet/meson.build           |  18 +
+ rust/hw/timer/hpet/src/fw_cfg.rs         |  69 +++
+ rust/hw/timer/hpet/src/hpet.rs           | 889 +++++++++++++++++++++++++++++++
+ rust/hw/timer/hpet/src/lib.rs            |  15 +
+ rust/hw/timer/meson.build                |   1 +
+ rust/qemu-api/meson.build                |   3 +
+ rust/qemu-api/src/assertions.rs          |   4 +
+ rust/qemu-api/src/bindings.rs            |  48 ++
+ rust/qemu-api/src/c_str.rs               |   8 +
+ rust/qemu-api/src/callbacks.rs           |  97 ++++
+ rust/qemu-api/src/chardev.rs             |  19 +
+ rust/qemu-api/src/irq.rs                 |  23 +-
+ rust/qemu-api/src/lib.rs                 |   3 +
+ rust/qemu-api/src/memory.rs              | 203 +++++++
+ rust/qemu-api/src/offset_of.rs           |   7 +
+ rust/qemu-api/src/prelude.rs             |   6 +
+ rust/qemu-api/src/qdev.rs                | 276 +++++++++-
+ rust/qemu-api/src/qom.rs                 | 226 +++++++-
+ rust/qemu-api/src/sysbus.rs              |  41 +-
+ rust/qemu-api/src/timer.rs               |  98 ++++
+ rust/qemu-api/src/vmstate.rs             |  13 +-
+ rust/qemu-api/src/zeroable.rs            |  12 +-
+ rust/qemu-api/tests/tests.rs             |  45 +-
+ tests/qtest/meson.build                  |   3 +-
+ ui/meson.build                           |   4 -
+ 45 files changed, 2232 insertions(+), 204 deletions(-)
+ delete mode 100644 rust/hw/char/pl011/src/memory_ops.rs
+ create mode 100644 rust/hw/timer/Kconfig
+ create mode 100644 rust/hw/timer/hpet/Cargo.toml
+ create mode 100644 rust/hw/timer/hpet/meson.build
+ create mode 100644 rust/hw/timer/hpet/src/fw_cfg.rs
+ create mode 100644 rust/hw/timer/hpet/src/hpet.rs
+ create mode 100644 rust/hw/timer/hpet/src/lib.rs
+ create mode 100644 rust/hw/timer/meson.build
+ create mode 100644 rust/qemu-api/src/chardev.rs
+ create mode 100644 rust/qemu-api/src/memory.rs
+ create mode 100644 rust/qemu-api/src/timer.rs
 -- 
 2.48.1
 
