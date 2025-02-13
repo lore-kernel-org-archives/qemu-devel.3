@@ -4,85 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D57AC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 09:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E90E6C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 09:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiVWo-0006Ec-NC; Thu, 13 Feb 2025 04:29:02 -0500
+	id 1tiVYn-0007BW-Ax; Thu, 13 Feb 2025 04:31:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1tiVWm-0006EM-OZ; Thu, 13 Feb 2025 04:29:00 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tiVYj-0007Aw-Ui; Thu, 13 Feb 2025 04:31:02 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1tiVWg-0000tr-4T; Thu, 13 Feb 2025 04:28:57 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id C1E195C5218;
- Thu, 13 Feb 2025 09:27:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0670CC4CEE7;
- Thu, 13 Feb 2025 09:28:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1739438904;
- bh=O6XN/eepoD0qQ1NcJ6x8aY6dWe8Sax3t2bAPi2yqgM0=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=XwPXRLQa6alrMU1rgoOBqv9/Vgu5A84PJpZBHGBR+72pCWjzVVmvc+u9Y9XMmZzRV
- xfFukp7v98QSxBlYPZv7bi/yQXYpE93+TFk04sz+z4NRcrmlrGi8wtUA+izAKWOiwv
- rBGCnMPHKdvDJ00QVVs7HgiX7W5FaZK8YccgCT6LcI7L/wIA6PO508uoULeXYQO/1+
- EuVkWeZfu7LEgXyb4JdMUE9bdlY7Mb5CEw5PXY6Zcw5OgUtf/6fD8032Xr11Y4Wnr0
- 1vhSyxCGQI6C2pUyE0h4OU73E70IqERCILWM/CCJEsAWNeN0mTx4P7W1KUPsMbs5ux
- 6N6qhZGHI0LZg==
-Received: by mail-lf1-f44.google.com with SMTP id
- 2adb3069b0e04-5450b91dbc8so590821e87.3; 
- Thu, 13 Feb 2025 01:28:23 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgBjyhzAyTbeq+3X64Odigtb6JVjb2SJyct5h24kGRUeaq74wY0r8GKD+S4GwrhOycq9spo6FyXCpcbw==@nongnu.org,
- AJvYcCWrOWd8E3eIrptjLiPWEOYvnk++EpUdMm/B3DdOF3+aD4BmDL+NpH7hVFuFa9JM0VgCah+8GevVmQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yw0bsfUEDYEtc9w+MRw7RjMcpBjihsrZMcST2qnEeJ5lsD7aRpy
- T2nBzEyvxVNOySelgaHwXieKGBRI0UMU1FnRMBU6JCdDUMrgNkIfzWgAXqfoh1jceIDLnNuHukB
- EHHETiA1zItMoFbqS17R0K/ME18U=
-X-Google-Smtp-Source: AGHT+IH0y14C6AXks5AvBJDlu6KVcSbeXcYX3PqIPq+0N4Y4W/FiJFV6bQMqmcgNeyh/rTw12vh6Q++zMBwnNm1UJ4M=
-X-Received: by 2002:a05:6512:138e:b0:545:5d:a5e2 with SMTP id
- 2adb3069b0e04-545180ea975mr1770581e87.10.1739438902287; Thu, 13 Feb 2025
- 01:28:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tiVYh-0001SV-TG; Thu, 13 Feb 2025 04:31:01 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A0137EA2DE;
+ Thu, 13 Feb 2025 12:30:49 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id EE4361B5508;
+ Thu, 13 Feb 2025 12:30:55 +0300 (MSK)
+Message-ID: <37f1e573-7050-48f0-be8c-0aff590e95b3@tls.msk.ru>
+Date: Thu, 13 Feb 2025 12:30:55 +0300
 MIME-Version: 1.0
-References: <20250211092324.965440-1-kraxel@redhat.com>
- <20250211092324.965440-10-kraxel@redhat.com>
- <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
- <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
- <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
- <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
- <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
- <4bwjwcs2k4hbrj6mokc57a5dy57jjssfxnvd4qm5257dgnid3x@yqdx7e47o2mf>
- <2c06a98c-f286-4632-a352-8b47dc4cc43c@amazon.com>
-In-Reply-To: <2c06a98c-f286-4632-a352-8b47dc4cc43c@amazon.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Thu, 13 Feb 2025 10:28:11 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXHDMCNGG94V8VcnS8busEGs-MwOy+Ne_oRCkvtw9DiX1w@mail.gmail.com>
-X-Gm-Features: AWEUYZmg-J_SVM0li08t7b1-JZye4BO_Qc3OZLPW_VJHfMu3yu423mulzeP44vU
-Message-ID: <CAMj1kXHDMCNGG94V8VcnS8busEGs-MwOy+Ne_oRCkvtw9DiX1w@mail.gmail.com>
-Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
-To: Alexander Graf <graf@amazon.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
- Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=ardb@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 05/12] vfio/iommufd: Fix SIGSEV in iommufd_cdev_attach()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250211143340.787996-1-clg@redhat.com>
+ <20250211143340.787996-6-clg@redhat.com>
+ <9c31241e-96d0-4014-b9ce-42362ea10eaf@tls.msk.ru>
+ <7d076159-d3c9-4b38-bb8c-40645098e28a@redhat.com>
+ <8b54ad8d-9698-4687-a925-d971779dea6c@tls.msk.ru>
+ <a26dfa93-439a-476f-bb47-2f0ddf2d2487@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <a26dfa93-439a-476f-bb47-2f0ddf2d2487@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,76 +110,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Feb 2025 at 22:26, Alexander Graf <graf@amazon.com> wrote:
->
->
-> On 12.02.25 16:18, Gerd Hoffmann wrote:
-> >    Hi,
-> >
-> >>> Yes.  Knowing both physical and virtual address works only for memory
-> >>> you allocated yourself before ExitBootServices.  So you can't pass on
-> >>> pointers from the OS, you have to copy the data to a buffer where you
-> >>> know the physical address instead.  Yes, some overhead.  Should still
-> >>> be much faster than going to pio transfer mode ...
-> >> MacOS takes over the full physical address map past ExitBootServices: Your
-> >> code no longer has VA access to random code
-> > That is totally fine.  EFI drivers must register everything they need as
-> > runtime memory.  Anything else can be unmapped by the OS when calling
-> > EFI services.
-> >
-> >> and it literally memcpy()'s all preserved (virtual available) code and
-> >> data to different physical addresses.
-> > Uhm.  I have my doubts this copying behavior is blessed by the UEFI spec.
->
->
-> I don't remember anything in the spec prohibiting it.
->
+On 13.02.2025 11:48, Cédric Le Goater wrote:
+..
+>> 9.0 & 9.1 are end-of-line at this point, only 9.2 is relevant now.
+> 
+> ok. I didn't know or missed the information.
+> 
+> Is there a stable planning page on the wiki or equivalent else where ?
 
-The UEFI spec clearly states that runtime services must either be
-called using a 1:1 mapping, or via a virtual remapping but in that
-case, SetVirtualAddresMap() must be called to inform the firmware of
-the new virtual mapping.
+I don't think so, no.
 
-Even if this is not clearly stated, this violates the intent of the
-UEFI spec: the code reasons about mappings of physical memory,
-implying that the mapping is the only thing that changes. Moving
-memory contents around can only be done safely after
-SetVirtualAddressMap(), making it mandatory on these systems, whereas
-the spec clearly states that it is entirely optional.
+The general rule is that I try to keep previous series alive until
+the first point release of the next series.  Since 9.2.1 is out,
+previous 9.1.x is end-of-life.  Before, the previous stable series
+were kept up until the next main release.  Additional to that, 7.2
+is an experiment, which is also used on current debian stable, and
+also 8.2.
 
-But whatever OSX does on x86 is irrelevant anyway: it is vertically
-integrated with the firmware, which is vaguely EFI based but does not
-aim for spec compliance. The OSX EULA does not permit running it on
-anything other than Apple hardware. And x86 Apple hardware will be
-reaching obsolescence pretty soon, at least where future development
-is concerned.
+https://wiki.qemu.org/Planning/9.0 etc shows when the series is
+end-of-line too.
 
-My colleague filed a USWG proposal for a EFI_MEMORY_SHARED attribute
-that must be honored by the OS when creating runtime mappings, and map
-the region in a way that allows access by another observer (typically
-the VMM but semantically it could mean other things too)
+Thanks,
 
->
-> >> You simply have nothing that is all of 1) RAM (mapped as cacheable on
-> >> ARM), 2) known VA 3) known PA.
-> > Bummer.
-> >
-> >> So we really really need a fallback mechanism that works without DMA
-> >> :).
-> > On arm it should be relatively simple to move the buffer to device
-> > memory.  Just place one more region on the platform bus, advertise
-> > address + size via device tree, done.
->
->
-> That will bring back all issues with cached vs non-cached memory
-> accesses, no? So edk2 will always access that memory as device memory
-> which means it bypasses the cache, while QEMU will access it through the
-> cache. So that buffer would need to actually be MMIO memory I suppose?
->
-
-Indeed. Presenting memory as MMIO just to trick the guest into mapping
-it shared is not the right approach here, which is why we need
-EFI_MEMORY_SHARED on ARM. On x86, using the EfiMemoryMappedIo type
-happens to work, but it is a hack (e.g., you cannot allocate memory of
-this type)
+/mjt
 
