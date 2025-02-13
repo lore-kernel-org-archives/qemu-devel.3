@@ -4,66 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB65C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 15:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1723AC0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 15:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiat8-0002H0-0C; Thu, 13 Feb 2025 10:12:26 -0500
+	id 1tiayq-0004uY-Jg; Thu, 13 Feb 2025 10:18:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=724e=VF=miszr.win=git@fe-bounces.miszr.win>)
- id 1tiat5-0002DN-DI
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:12:23 -0500
-Received: from smtp.forwardemail.net ([121.127.44.59])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiayo-0004uI-CM
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:18:18 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <SRS0=724e=VF=miszr.win=git@fe-bounces.miszr.win>)
- id 1tiat3-0006E5-Ka
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:12:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=miszr.win;
- h=Content-Transfer-Encoding: Content-Type: MIME-Version: Message-ID:
- References: In-Reply-To: Subject: CC: To: From: Date; q=dns/txt;
- s=fe-257304d8b2; t=1739459537;
- bh=UR82S2K6EFzSIwxw718HLM1RbVbxoOEqCwMiRkyBwyI=;
- b=GbH17xUpJtCtUbD1iZ5Hrhdqg85mCFcSq9Z6tE8SQYjLV4Jbs6rh+yVPVLhkJlw61g+1OlcB+
- RI/0OZe84IJTGKard6WTmxkE7dt8MBwcPyE4c0CDeFyfmGxi2yxiS+C3UFAlTrB3yeA/j7xSYH7
- lGOsgS4X9e7jAVhT9VOPlWs=
-X-Forward-Email-ID: 67ae0bcdb0aa57712a24b5bc
-X-Forward-Email-Sender: rfc822; git@miszr.win, smtp.forwardemail.net,
- 121.127.44.59
-X-Forward-Email-Version: 0.4.40
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
-Date: Thu, 13 Feb 2025 16:12:06 +0100
-From: Mikael Szreder <git@miszr.win>
-To: qemu-devel@nongnu.org
-CC: Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_target/sparc=3A_Fix_gdbstub_?=
- =?US-ASCII?Q?incorrectly_handling_registers_f32-f62?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20250203145056.83567-1-git@miszr.win>
-References: <20250203145056.83567-1-git@miszr.win>
-Message-ID: <D2CA2465-42B0-4D49-AA22-A1DE8BA1CD33@miszr.win>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiayk-0006x7-RV
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 10:18:17 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4395a06cf43so6879015e9.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 07:18:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739459888; x=1740064688; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PnDEd1/tJlb5Ei9310dawU1gfaG7VfyufkkVrlIEmeM=;
+ b=KefqrW9xy7MgmFdqUd7P1V3dfHUI7QS8JCwhdtkKjXA3cGN8Wb62dqom6Ip/NjRKNy
+ egXN5eDd5FddpeX9gjMMF08Rbw+oosKdt97FX829aGqeLfv5OCNrE6O4HItR1aAGhpGm
+ SEX7FR24Ex0G78JdG82iAIV1zqtV9Jkqf/siqXk/iVwlWTfPEKsbh39zWyTz6NFjEMsY
+ XIiJj/0HOyr/HOUVVr2wKc3NI6UA7fF1pMCim28/7sAPt8IDj9yeqBuhc9f82L2z9sBM
+ JiTumhZGlkdG0XzwIaP+3YeEYDbyARjmPovQcKHIqpq7tik85TnkI/hmStuQWuntH1eY
+ XSKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739459888; x=1740064688;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PnDEd1/tJlb5Ei9310dawU1gfaG7VfyufkkVrlIEmeM=;
+ b=taUbARVQ03ZpP1ouQABdmekLSCWNWSdGFBxvVpMxB7lOY50FodV36x3unJiIe5g8XZ
+ chu6bOT7Cxg4E5klTJgwn5UbdeXswNnmxbvuQCHqLoyLZQFuMyZWaNGQhAa7p2cmA6g6
+ SS1cLyEr/2h1XTHr34soVIn0oPKKoqG5PvUlnCvdHQ+YkOEhzk4NqcOeaiIQ9lj0d6ru
+ bZMRq27d6JHLmC3cTmmlCBq2Tzay2suFK72DIkSR8fmFAHmGHXXkddLUtochVRUbJHa0
+ Gz1W3e/puF3A+JiHzisK4KlAaeTPzDIbe6RWMh2iwDzrkpmlP/7v2IfIsODOjD8H5id6
+ zIXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT6D+MdajKgFIu46pCtuzluVGkhJj4dT97m9Oe9sfXYO83pExTSrM05hRrwO2Z3bitb1DM4rghRsD3@nongnu.org
+X-Gm-Message-State: AOJu0Yw8t80fpBB29KkzXk3eunSsQKZZyNC4jGoPHf7X5GLVjrulBx8H
+ ah5WiSm6l6/25OCUpBZtOXAfvQ0aAHgznXOQU006uJ99VgNxtxUBcKnUgDr/ppo=
+X-Gm-Gg: ASbGncvfL4Z3ieVsp/9+ylc9Tw3gzgpcXlGGAXyY51C/DPLzEQIGbJMOKYadgIXh8yG
+ A6drzAyZ5D8DgkbLUS4c8o3i8A/HviXKMhsqV2jf7rCqpmzimSlyXXKxzUXLZ9IqG6KACWMe4O9
+ CmUrfw/1g20ID3ULf1mK9NGbzKZfbmwZQb0ZCNYRe+SdArIJH5pAg6qk8s/gdF8CK/u+aU7QQ5j
+ OAhZv4fp6Y02Dz34fm3IR67nexq/a9XEXEtquVSNytB8xuaGmB9m5xXypxJQ+mH4znbLJgeCnQQ
+ v8tw7m+D+8zQT8pk5QbpZFP2ZDMPZOa1P3Zfhv4y1BYx50fc5st4GTfxfd7aAiKVwoNwrs5FqhJ
+ 9k0I=
+X-Google-Smtp-Source: AGHT+IG+ueWyQAPQxQzr1RMYZwiP/vfXZBXyo9djTjwa506gxMSOr8pFSzlf1gqgPpfFURYinepKPg==
+X-Received: by 2002:a05:600c:3b9d:b0:434:f5c0:328d with SMTP id
+ 5b1f17b1804b1-439601a11bbmr42520685e9.23.1739459888571; 
+ Thu, 13 Feb 2025 07:18:08 -0800 (PST)
+Received: from [192.168.1.20] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439618854bbsm20171735e9.32.2025.02.13.07.18.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Feb 2025 07:18:07 -0800 (PST)
+Message-ID: <34dca52b-5b58-417e-880a-872bac6cdbac@linaro.org>
+Date: Thu, 13 Feb 2025 16:18:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=121.127.44.59;
- envelope-from=SRS0=724e=VF=miszr.win=git@fe-bounces.miszr.win;
- helo=smtp.forwardemail.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/i386: Use correct type for
+ get_float_exception_flags() values
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20250213142613.151308-1-peter.maydell@linaro.org>
+ <20250213142613.151308-3-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250213142613.151308-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_FMBLA_NEWDOM14=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,43 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping
+On 13/2/25 15:26, Peter Maydell wrote:
+> The softfloat get_float_exception_flags() function returns 'int', but
+> in various places in target/i386 we incorrectly store the returned
+> value into a uint8_t.  This currently has no ill effects because i386
+> doesn't care about any of the float_flag enum values above 0x40.
+> However, we want to start using float_flag_input_denormal_used, which
+> is 0x4000.
+> 
+> Switch to using 'int' so that we can handle all the possible valid
+> float_flag_* values. This includes changing the return type of
+> save_exception_flags() and the argument to merge_exception_flags().
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/i386/ops_sse.h        | 16 +++----
+>   target/i386/tcg/fpu_helper.c | 82 ++++++++++++++++++------------------
+>   2 files changed, 49 insertions(+), 49 deletions(-)
 
-On February 3, 2025 3:50:56 PM GMT+01:00, Mikael Szreder <git@miszr=2Ewin>=
- wrote:
->The gdbstub implementation for the Sparc architecture would incorectly
-> calculate the the floating point register offset=2E
->This would cause register pairs(eg f32,f33) to point to the same value=2E
->
->Fixes: 30038fd81808 ("target-sparc: Change fpr representation to doubles=
-=2E")
->Signed-off-by: Mikael Szreder <git@miszr=2Ewin>
->---
-> target/sparc/gdbstub=2Ec | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
->diff --git a/target/sparc/gdbstub=2Ec b/target/sparc/gdbstub=2Ec
->index ec0036e9ef=2E=2E5578fa9813 100644
->--- a/target/sparc/gdbstub=2Ec
->+++ b/target/sparc/gdbstub=2Ec
->@@ -80,7 +80,7 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArra=
-y *mem_buf, int n)
->     }
->     if (n < 80) {
->         /* f32-f62 (double width, even numbers only) */
->-        return gdb_get_reg64(mem_buf, env->fpr[(n - 32) / 2]=2Ell);
->+        return gdb_get_reg64(mem_buf, env->fpr[(n - 64) + 16]=2Ell);
->     }
->     switch (n) {
->     case 80:
->@@ -174,7 +174,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_=
-t *mem_buf, int n)
->         return 4;
->     } else if (n < 80) {
->         /* f32-f62 (double width, even numbers only) */
->-        env->fpr[(n - 32) / 2]=2Ell =3D tmp;
->+        env->fpr[(n - 64) + 16]=2Ell =3D tmp;
->     } else {
->         switch (n) {
->         case 80:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
