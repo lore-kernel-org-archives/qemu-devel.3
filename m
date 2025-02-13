@@ -4,60 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC34C021A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 07:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC41C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 07:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiTML-0004m3-GB; Thu, 13 Feb 2025 02:10:05 -0500
+	id 1tiU2V-0006Y6-IY; Thu, 13 Feb 2025 02:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1tiTMI-0004lW-O3
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 02:10:02 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1tiTMA-0005DP-8h
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 02:10:02 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwC3vAy1mq1nUkubAg--.4945S2;
- Thu, 13 Feb 2025 15:09:41 +0800 (CST)
-Received: from localhost (unknown [123.150.8.50])
- by mail (Coremail) with SMTP id AQAAfwDX3Ymhmq1njoYlAA--.50148S2;
- Thu, 13 Feb 2025 15:09:32 +0800 (CST)
-Date: Thu, 13 Feb 2025 15:09:05 +0800
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: fan.ni@samsung.com, qemu-devel@nongnu.org, chenbaozi@phytium.com.cn,
- linux-cxl@vger.kernel.org
-Subject: Re: [PATCH 1/1] mem/cxl-type3: Add a default value of sn
-Message-ID: <Z62akRdahoGqHN5x@phytium.com.cn>
-References: <20250211022413.80842-1-wangyuquan1236@phytium.com.cn>
- <20250211022413.80842-2-wangyuquan1236@phytium.com.cn>
- <20250211092655.00004310@huawei.com>
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1tiU2M-0006XG-VX
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 02:53:32 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1tiU2J-0003eh-S7
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 02:53:30 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21f55fbb72bso8870435ad.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Feb 2025 23:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1739433205; x=1740038005;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8Xcq/loJ3vQE2fd/7Vvd4R7SRDzNQCt8Syzl1F+omPA=;
+ b=QEt6LF27uYwwBTvAI+Zq6BJnyGNkYZ4ZVDVvW44KNYZfX5BruwkDbWxNZdE4MNf8GA
+ x4+JCM1/UZm9Jqrk7aFipqUggqWCN/YSYoPl/KLCqgy6I/Rr8dvX1fu6D3F+5oVzzc9z
+ 5U3iGLQZ5rC0lcdEUQxdIDhXYcZ0MVY1UFs11aMnRFhGy8F03jAW4J0e0y4+/Swxlldw
+ YAGWfevzBcYKUe+3581IuUzqQFaVbUveFOFPaeTlHuHuzTvQtaWzxL2kicnypdKmddXi
+ LpxlEJ16x7qPxnHrYbY7XAkW9GlR1S2t28SIzbH7HdItGOQUDoOMadzCKdTCFJnCTm2d
+ K3iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739433205; x=1740038005;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8Xcq/loJ3vQE2fd/7Vvd4R7SRDzNQCt8Syzl1F+omPA=;
+ b=Fahd6Y2+GEz+arcSm2kfaThIsC+zKg9Ng4YskX/fc6YcvnKVv3QPFuD2dzTU266QR+
+ eJRMioEUm8i2qaZJyo8g59PXanNGPwrMMawJsBg/Y0CXZhzPJMrU9pWcyelX+yc7LYLU
+ dICmSkd84hRq86f87R0oeR+B2DFt/NjmJt6ygSl6APLawtV/84M5N7cTahdVE+Zuplgr
+ j9Z9a4UTBRuGEzGOvuW/X4DDOizA4AQm+buKMn/eGd5Sl8vFuG7gj1zPzLYhEs2mAj/b
+ i0Wlk2HYk4ErAw4aXK0/+dH7YVlLSvXhrGp6TsLwvCIvJaWsGzosdIbGsQD+51Z4zP1X
+ SoBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOzna6+Cz5BrrJ4t/zqf4uLxsumfscaNTcKfwxufxzkxBJKgBdNAIyECEPaa/SiPm9SvV8mYLYTWVW@nongnu.org
+X-Gm-Message-State: AOJu0YxWHVbItKLtv+nF9IIicLP+Z5Z4wk2wrfc0+AbE+QP1IWqTczmD
+ o7G0C9dDSVT3DbWcryFWJuQ3/GaZz8Fs6r4VzwCOKpN+UJjUBsIV4Fy52WmviTE=
+X-Gm-Gg: ASbGnculaQSj2eqUg2/DJNdkfnWhMnnJvA0tvK7GMyrwE0hS3BbzR5sGu0HHDDtfszC
+ SwwT12g+u4I3CdV7VAgdXuB459bPRSHL8Uv7USrn0QBCn08W5aWnkE+aarYVjGpB+6s8u1xSP4e
+ RKhvbfXXNmT846MRbXfwT2e7wzf4dzhQMebaZJwI9KZFdmBmt+wAxm20na4xsgHYD1+nV8xaoly
+ hx9i1yOJQkLQU/6fTjg/JcB+hpgGREUDL6MMWNlW6bklABpklF5gyNb4n+UH12OuN4Ied//DilS
+ RQb3GDvDu5yXJgIu
+X-Google-Smtp-Source: AGHT+IF4SlBLixhnvID5sNZIDAs5i3uS7SI0vuUxYbP0oqwZ9fTmemQfHFm9676WtvH17E8gMADlEA==
+X-Received: by 2002:a05:6a00:3e04:b0:730:9334:18f3 with SMTP id
+ d2e1a72fcca58-7323c1bcde7mr3792843b3a.19.1739433204886; 
+ Wed, 12 Feb 2025 23:53:24 -0800 (PST)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7324276172asm676903b3a.132.2025.02.12.23.53.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Feb 2025 23:53:24 -0800 (PST)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Tommy Wu <tommy.wu@sifive.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: [PATCH] target/riscv: silent warnings about Smdbltrp/Smrnmi being
+ disabled
+Date: Thu, 13 Feb 2025 08:52:20 +0100
+Message-ID: <20250213075221.622676-1-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250211092655.00004310@huawei.com>
-X-CM-TRANSID: AQAAfwDX3Ymhmq1njoYlAA--.50148S2
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAAAWes-icCNgAFsj
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxJw18KFW7Ar48AFWUAF4ruFg_yoWrWFykpr
- WxtFy5GFs7Ar13JrZ2vw15Xr1rZa1fGFWUCryvkw1rZF90vr9Iqr18Kr4FkFyDZrZ2yw40
- ya12qa4a934j93DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=sgoci-sdnproxy-4.icoremail.net
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=cleger@rivosinc.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,107 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 09:26:55AM +0000, Jonathan Cameron wrote:
-> On Tue, 11 Feb 2025 10:24:13 +0800
-> Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
-> 
-> > The previous default value of sn is UI64_NULL which would cause the
-> > cookie of nd_interleave_set be '0' and the "invalid interleave-set
-> > -cookie" failure in label validation.
-> Hi Yuquan,
-> 
-> Maybe we should harden the nd_interleave_set code to fail
-> to set the cookie in the event of no serial number. That is a
-> device not compliant with the spec, but none the less it is not
-> implausible with test devices etc.
-> 
-Thanks for your suggestions :)
+As raised by Richard Henderson, these warnings are displayed in user
+only as well. Disable them for CONFIG_USER_ONLY.
 
-I have send patch 'cxl/pmem: debug invalid serial number data' trying to
-fix this problem. Welcome more comments to guide me!
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+---
+ target/riscv/tcg/tcg-cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-link: https://lore.kernel.org/linux-cxl/20250213064008.4032730-1-wangyuquan1236@phytium.com.cn/T/#t
-
-Here I have another question about labels. It seems like current kernel
-only deals with nvdimm namespaces labels and leaves cxl region labels to
-do. Therefore, for some dynamically-created cxl pmem regions, users have
-to re-create these regions manually. Does it means CXL drivers could not recover
-a cxl region by cxl region lables now?.
-> > 
-> > As many users maybe not know how to set a unique sn for cxl-type3
-> > device and perhaps be confuesd by the failure of label validation,
-> > so this defines '1' as the default value of serial number to fix the
-> > problem.
-> 
-> That magic value is specifically chosen to be 'undefined' to trigger
-> clean handling of the failure and not provide the serial number
-> capability. 
-> 
-> If you have multiple devices and provide a 'valid' default then
-> there are circumstances in which the device will be seen as a multiheaded
-> single device attached to two places in the PCI topology.
-> 
-> So I'm not keen to change this.  Ideally we'd have made this a required
-> parameter from the start, but we didn't and doing so now would result
-> in a backwards compatibility problem.
-> 
-> So I think this is kind of a 'won't fix' situation on the qemu side.
-Ok, I see.
-
-Maybe we could modify the Example command lines in docs/../cxl.rst to remind
-users to add this parameter. Is this feasible?
-
-> 
-> Jonathan
-> 
-> > 
-> > Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-> > ---
-> >  hw/mem/cxl_type3.c | 17 ++++-------------
-> >  1 file changed, 4 insertions(+), 13 deletions(-)
-> > 
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index 0ae1704a34..a6b5a9f74e 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> > @@ -310,12 +310,6 @@ static void ct3d_config_write(PCIDevice *pci_dev, uint32_t addr, uint32_t val,
-> >      pcie_aer_write_config(pci_dev, addr, val, size);
-> >  }
-> >  
-> > -/*
-> > - * Null value of all Fs suggested by IEEE RA guidelines for use of
-> > - * EU, OUI and CID
-> > - */
-> > -#define UI64_NULL ~(0ULL)
-> > -
-> >  static void build_dvsecs(CXLType3Dev *ct3d)
-> >  {
-> >      CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
-> > @@ -856,12 +850,9 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-> >      pci_config_set_prog_interface(pci_conf, 0x10);
-> >  
-> >      pcie_endpoint_cap_init(pci_dev, 0x80);
-> > -    if (ct3d->sn != UI64_NULL) {
-> > -        pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
-> > -        cxl_cstate->dvsec_offset = 0x100 + 0x0c;
-> > -    } else {
-> > -        cxl_cstate->dvsec_offset = 0x100;
-> > -    }
-> > +
-> > +    pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
-> > +    cxl_cstate->dvsec_offset = 0x100 + 0x0c;
-> >  
-> >      ct3d->cxl_cstate.pdev = pci_dev;
-> >      build_dvsecs(ct3d);
-> > @@ -1225,7 +1216,7 @@ static const Property ct3_props[] = {
-> >                       TYPE_MEMORY_BACKEND, HostMemoryBackend *),
-> >      DEFINE_PROP_LINK("lsa", CXLType3Dev, lsa, TYPE_MEMORY_BACKEND,
-> >                       HostMemoryBackend *),
-> > -    DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
-> > +    DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, 0x1),
-> >      DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
-> >      DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
-> >      DEFINE_PROP_LINK("volatile-dc-memdev", CXLType3Dev, dc.host_dc,
-> 
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 0a137281de..4d0d16576d 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1437,7 +1437,9 @@ static void riscv_init_max_cpu_extensions(Object *obj)
+      */
+     if (cpu->cfg.ext_smrnmi) {
+         isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi), false);
++#ifndef CONFIG_USER_ONLY
+         qemu_log("Smrnmi is disabled in the 'max' type CPU\n");
++#endif
+     }
+ 
+     /*
+@@ -1447,7 +1449,9 @@ static void riscv_init_max_cpu_extensions(Object *obj)
+      */
+     if (cpu->cfg.ext_smdbltrp) {
+         isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smdbltrp), false);
++#ifndef CONFIG_USER_ONLY
+         qemu_log("Smdbltrp is disabled in the 'max' type CPU\n");
++#endif
+     }
+ }
+ 
+-- 
+2.47.2
 
 
