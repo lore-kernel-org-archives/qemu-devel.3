@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4EDC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D977C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibes-0000wf-VU; Thu, 13 Feb 2025 11:01:46 -0500
+	id 1tibfJ-00015M-Gy; Thu, 13 Feb 2025 11:02:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibeo-0000u4-CU
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tibf7-000117-QR
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibel-0005Xu-9A
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:01:42 -0500
+ id 1tibf5-0005c8-EX
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739462497;
+ s=mimecast20190719; t=1739462518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w/1RoRTf0RRS0LThHHY7f3sZLW21yJAIxZIiCZP4N+g=;
- b=WJw1rHk463BkfuMLxVocAYoMBN/Qs19NhLDh1AZnH8Ydy1TLR1yEMu2rw7eeyDlncjfE8/
- hA7Kg/edPrSe3T9elRSSuzzEStenkkQa8h1JvBCOrnWnrqkWROzZnkigSmKspFgc5ia6zY
- TR8qxHsqM2LzMXX5Rz6yiITIASpPtO4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=B9eIPT4SqTnanKoz0+BJuTe5SIxIAvdPZ6BH+2W1Vt4=;
+ b=Lj4rXuBs+/0xA2bV6J6bmZNnoQxzDRlMj5Cnhnn0ozxvXDwpK+kQtG+NFwhtL4sL5qu4ED
+ R91AXRpfgfyJ8a+gHyf1ye+TLRAal9jy23qUdBfLtffIV/S2DZBulywpDstrfGOu8pf02h
+ ZrENYfIF9ieRk35EyIUDP+3Ff4Wgwfo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-2bQRzlyoN6GuTIBHPKwZ6w-1; Thu, 13 Feb 2025 11:01:35 -0500
-X-MC-Unique: 2bQRzlyoN6GuTIBHPKwZ6w-1
-X-Mimecast-MFC-AGG-ID: 2bQRzlyoN6GuTIBHPKwZ6w_1739462494
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43935bcec74so6051025e9.3
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:34 -0800 (PST)
+ us-mta-57-PqNQ5l7JPl-Usg-sK9FBAA-1; Thu, 13 Feb 2025 11:01:56 -0500
+X-MC-Unique: PqNQ5l7JPl-Usg-sK9FBAA-1
+X-Mimecast-MFC-AGG-ID: PqNQ5l7JPl-Usg-sK9FBAA_1739462515
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43935bcec79so8421605e9.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:01:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739462493; x=1740067293;
+ d=1e100.net; s=20230601; t=1739462514; x=1740067314;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w/1RoRTf0RRS0LThHHY7f3sZLW21yJAIxZIiCZP4N+g=;
- b=lDzEH7H8d4tHnzB4ZbpjBsvPN/G2aOx0JTHxm+LcH7kqN29K/7ntuKEarWoSFziWut
- M288eQrdQAnfKRBYjqk139eg5gEcL1lqkZ0Hj89hhU0zTmvOh4ICjnnwfhAGNut9XCKu
- +tzifV3gEBFamF+yNiONfTI70dwo+cb4GQ/PiKPAlKneb6eLjjMatWVV3eBHmEsd0amw
- Q/1/MuTuX4ZBiRcefyIifQgM3cdeXVR6xjWPw8tjlZQ2rwvcU+jV7MhFIoVOSnw4afhN
- SHs3ZR65AOIffPZ6TbF1xjb15LQR44HcAFW/4nHEN+bzzdfTg9RtYeQZVkjCZa1FBSdv
- z7Vw==
-X-Gm-Message-State: AOJu0Yw3thAYlHL9mwN5OrFy6J6JMEENyXhrHrRx4A/p2zqSZKr26SXV
- kGFjIosA+/uQuwZ7LrSOsATHq2ndPDtvWz3c+fJ/AxM/QAhN4cHjFUYB93xe0hzGSwxZXC/mCp/
- QkwMU+L6LyKmxoyziFSVkiI2jUBmtRz5B35Yu8lW1benXXz6J9FBsNa8gRGmLKNJXu5lkiclrV6
- im8A1libvG+MRZq57K0B4Tc2A3Pd+Gc3m5m8fnWzI=
-X-Gm-Gg: ASbGncuxsuAqCRMsCirb5qfEvxXbBQmzfiUfmZETEcx0eqfPwXxBTHezVkZRrOFiW0n
- anJpkkuiveimV6VpdQQQupBQpZ29/X/AvQZeFbEWKlZDKVNFr2/umsmdqrUuW6Pk2PgKsxokFD0
- L4YcUze49zKIrEuhFz3tac8wJ3uyGZw4rSomMzFJ3Q+auP08azfFu/IfolWL+01emOpP858Cc80
- 4tUFaINOAbFAsjN67YAcy7fGshqUV1dsoXhUYPdXjR13hLbnxJ3aikV7NrRbXnwXdHWiLOeqdV8
- dQnCp3bYk2AEFlnIoXpSo8Ai7K7JLPbWCwy9X6I+CEWmhA==
-X-Received: by 2002:a05:600c:1c82:b0:439:5803:414f with SMTP id
- 5b1f17b1804b1-43959925af0mr84072585e9.5.1739462492977; 
- Thu, 13 Feb 2025 08:01:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE2EOwQd0ZXPwQhvNrZMUC/5MaOesFDyO0rSKolEYfI3nA9g633cMsov/u/9oYw9nPKETliKQ==
-X-Received: by 2002:a05:600c:1c82:b0:439:5803:414f with SMTP id
- 5b1f17b1804b1-43959925af0mr84071735e9.5.1739462491899; 
- Thu, 13 Feb 2025 08:01:31 -0800 (PST)
+ bh=B9eIPT4SqTnanKoz0+BJuTe5SIxIAvdPZ6BH+2W1Vt4=;
+ b=V9DfWwP7mZ7WLeyX2itUT4KPEKH8LGNgtq7jEmqnnEYMcI9p4mHzlaymXNQWds3RLO
+ OI8UGni9E3jnx8PoezO+0b4BWpTvpK3AEaYN+OC6ZWZlMDHOu41rIU1Grce0vrKE4C3q
+ EEOgHsgSKowE0dHzbX/trlke+hsAquR4Emo2fL6WTiUO2YuEepMXjHRYylToKj1LhYJ/
+ 1Vpbk1vKnLHCFg48fyrsVQat2UYTin/4DgfyVGODUjA/JJKO60OuA5pSlsPxRzQ6QTWB
+ KufhZrS8+STJvMVO59wdrA6O3pk4lhwda6b7P4stiFZfLW6tzmZ4Gtg1vwBxK9rb35mT
+ bb0g==
+X-Gm-Message-State: AOJu0Yz3qkXGqAFX4GbqfvInm+5VM7a0JpcyzSKgeSYbe60WjC85ap+n
+ ZIRE00XZXOni2MB5OO1Dl7Yi90pv4Xqz8GTGZFjhpxgychk/sbqRRhVmmad6RsnLg9KsoACZLxy
+ SXql8rFHgeQ18wGXRc8v8XaA8tM4S3OITNPwUbMTfYtegwl2smFu5gxyqQLly9kwJgYEWiW20Vg
+ AmSQNC8NEvTh1si6NxfVe63DIsyse9iPt/DLMddZE=
+X-Gm-Gg: ASbGncu4ZKWZiP+AESY1HzpURqov+RDKY2jc/AkyRFX5LYwaZE9wIDqoeYJZE9CPOBf
+ SQOvPpA5XiZ1Kf56JsrAvAlqi7eLlApCiK5LwA+DYvRKSH8e5Z61nZEDKilVp7yXVyvy5fjNHIJ
+ ijsNXlQPCmvPIhVF0GMN7gjA5vChC72a2PQrrAGhnW6Z35DexsOLuriE+rwe1Jdy04cpUzj3M/c
+ EaS5M3HhDNkvPIazQNQDrBNOLNdFNQjgJmV6JFgnJWEH/PYyG+hrgk0SLoJPWDp5LzV+UIGO3dj
+ HaM2t4ajQe1J+Sc3PlgtANjwL+2Fp5Elu2I8CFNRSI2Kww==
+X-Received: by 2002:a05:6000:1a8b:b0:38d:d8b2:cf14 with SMTP id
+ ffacd0b85a97d-38dea28cffemr7631072f8f.30.1739462513856; 
+ Thu, 13 Feb 2025 08:01:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHu7ftjSrsulhgq/qsGntZ/7C+sn6rupvgD/hZR4vjcYcRQY9CJb7o0IN+g4uvK43nd+dC5sA==
+X-Received: by 2002:a05:6000:1a8b:b0:38d:d8b2:cf14 with SMTP id
+ ffacd0b85a97d-38dea28cffemr7630980f8f.30.1739462513012; 
+ Thu, 13 Feb 2025 08:01:53 -0800 (PST)
 Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
  [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b4344sm2299200f8f.13.2025.02.13.08.01.30
+ 5b1f17b1804b1-4395a055859sm52907205e9.10.2025.02.13.08.01.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:01:31 -0800 (PST)
+ Thu, 13 Feb 2025 08:01:52 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 13/27] rust: pl011: convert pl011_create to safe Rust
-Date: Thu, 13 Feb 2025 17:00:40 +0100
-Message-ID: <20250213160054.3937012-14-pbonzini@redhat.com>
+Subject: [PULL 20/27] rust/timer/hpet: define hpet_fw_cfg
+Date: Thu, 13 Feb 2025 17:00:47 +0100
+Message-ID: <20250213160054.3937012-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
 References: <20250213160054.3937012-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,144 +108,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Not a major change but, as a small but significant step in creating
-qdev bindings, show how pl011_create can be written without "unsafe"
-calls (apart from converting pointers to references).
+From: Zhao Liu <zhao1.liu@intel.com>
 
-This also provides a starting point for creating Error** bindings.
+Define HPETFwEntry structure with the same memory layout as
+hpet_fw_entry in C.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Further, define the global hpet_cfg variable in Rust which is the
+same as the C version. This hpet_cfg variable in Rust will replace
+the C version one and allows both Rust code and C code to access it.
+
+The Rust version of hpet_cfg is self-contained, avoiding unsafe
+access to C code.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250210030051.2562726-8-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 37 ++++++++++++++++----------------
- rust/qemu-api/src/sysbus.rs      | 34 ++++++++++++++++++++++++++---
- 2 files changed, 49 insertions(+), 22 deletions(-)
+ rust/Cargo.lock                  |  8 ++++
+ rust/Cargo.toml                  |  1 +
+ rust/hw/meson.build              |  1 +
+ rust/hw/timer/hpet/Cargo.toml    | 18 ++++++++
+ rust/hw/timer/hpet/meson.build   | 18 ++++++++
+ rust/hw/timer/hpet/src/fw_cfg.rs | 71 ++++++++++++++++++++++++++++++++
+ rust/hw/timer/hpet/src/lib.rs    | 10 +++++
+ rust/hw/timer/meson.build        |  1 +
+ rust/qemu-api/src/zeroable.rs    |  6 ++-
+ 9 files changed, 132 insertions(+), 2 deletions(-)
+ create mode 100644 rust/hw/timer/hpet/Cargo.toml
+ create mode 100644 rust/hw/timer/hpet/meson.build
+ create mode 100644 rust/hw/timer/hpet/src/fw_cfg.rs
+ create mode 100644 rust/hw/timer/hpet/src/lib.rs
+ create mode 100644 rust/hw/timer/meson.build
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 4e959073711..fe73771021e 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -10,14 +10,12 @@
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index c0c6069247a..79e142723b8 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -37,6 +37,14 @@ version = "1.12.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b"
  
- use qemu_api::{
-     bindings::{
--        error_fatal, qdev_prop_set_chr, qemu_chr_fe_accept_input, qemu_chr_fe_ioctl,
--        qemu_chr_fe_set_handlers, qemu_chr_fe_write_all, qemu_irq, sysbus_connect_irq,
--        sysbus_mmio_map, sysbus_realize, CharBackend, QEMUChrEvent,
--        CHR_IOCTL_SERIAL_SET_BREAK,
-+        qemu_chr_fe_accept_input, qemu_chr_fe_ioctl, qemu_chr_fe_set_handlers,
-+        qemu_chr_fe_write_all, CharBackend, QEMUChrEvent, CHR_IOCTL_SERIAL_SET_BREAK,
-     },
-     chardev::Chardev,
--    c_str, impl_vmstate_forward,
--    irq::InterruptSource,
-+    impl_vmstate_forward,
-+    irq::{IRQState, InterruptSource},
-     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
-     prelude::*,
-     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
-@@ -698,26 +696,27 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
++[[package]]
++name = "hpet"
++version = "0.1.0"
++dependencies = [
++ "qemu_api",
++ "qemu_api_macros",
++]
++
+ [[package]]
+ name = "itertools"
+ version = "0.11.0"
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+index 5b0cb559286..5041d6291fd 100644
+--- a/rust/Cargo.toml
++++ b/rust/Cargo.toml
+@@ -4,6 +4,7 @@ members = [
+     "qemu-api-macros",
+     "qemu-api",
+     "hw/char/pl011",
++    "hw/timer/hpet",
+ ]
  
- /// # Safety
+ [workspace.lints.rust]
+diff --git a/rust/hw/meson.build b/rust/hw/meson.build
+index 860196645e7..9749d4adfc9 100644
+--- a/rust/hw/meson.build
++++ b/rust/hw/meson.build
+@@ -1 +1,2 @@
+ subdir('char')
++subdir('timer')
+diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
+new file mode 100644
+index 00000000000..147f216e725
+--- /dev/null
++++ b/rust/hw/timer/hpet/Cargo.toml
+@@ -0,0 +1,18 @@
++[package]
++name = "hpet"
++version = "0.1.0"
++edition = "2021"
++authors = ["Zhao Liu <zhao1.liu@intel.com>"]
++license = "GPL-2.0-or-later"
++description = "IA-PC High Precision Event Timer emulation in Rust"
++rust-version = "1.63.0"
++
++[lib]
++crate-type = ["staticlib"]
++
++[dependencies]
++qemu_api = { path = "../../../qemu-api" }
++qemu_api_macros = { path = "../../../qemu-api-macros" }
++
++[lints]
++workspace = true
+diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
+new file mode 100644
+index 00000000000..c2d7c0532ca
+--- /dev/null
++++ b/rust/hw/timer/hpet/meson.build
+@@ -0,0 +1,18 @@
++_libhpet_rs = static_library(
++  'hpet',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi: 'rust',
++  dependencies: [
++    qemu_api,
++    qemu_api_macros,
++  ],
++)
++
++rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
++  link_whole: [_libhpet_rs],
++  # Putting proc macro crates in `dependencies` is necessary for Meson to find
++  # them when compiling the root per-target static rust lib.
++  dependencies: [qemu_api_macros],
++  variables: {'crate': 'hpet'},
++)])
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+new file mode 100644
+index 00000000000..849e277d483
+--- /dev/null
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -0,0 +1,71 @@
++// Copyright (C) 2024 Intel Corporation.
++// Author(s): Zhao Liu <zhai1.liu@intel.com>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++#![allow(dead_code)]
++
++use std::ptr::addr_of_mut;
++
++use qemu_api::{cell::bql_locked, impl_zeroable, zeroable::Zeroable};
++
++/// Each `HPETState` represents a Event Timer Block. The v1 spec supports
++/// up to 8 blocks. QEMU only uses 1 block (in PC machine).
++const HPET_MAX_NUM_EVENT_TIMER_BLOCK: usize = 8;
++
++#[repr(C, packed)]
++#[derive(Copy, Clone, Default)]
++pub struct HPETFwEntry {
++    pub event_timer_block_id: u32,
++    pub address: u64,
++    pub min_tick: u16,
++    pub page_prot: u8,
++}
++impl_zeroable!(HPETFwEntry);
++
++#[repr(C, packed)]
++#[derive(Copy, Clone, Default)]
++pub struct HPETFwConfig {
++    pub count: u8,
++    pub hpet: [HPETFwEntry; HPET_MAX_NUM_EVENT_TIMER_BLOCK],
++}
++impl_zeroable!(HPETFwConfig);
++
++#[allow(non_upper_case_globals)]
++#[no_mangle]
++pub static mut hpet_fw_cfg: HPETFwConfig = HPETFwConfig {
++    count: u8::MAX,
++    ..Zeroable::ZERO
++};
++
++impl HPETFwConfig {
++    pub(crate) fn assign_hpet_id() -> usize {
++        assert!(bql_locked());
++        // SAFETY: all accesses go through these methods, which guarantee
++        // that the accesses are protected by the BQL.
++        let mut fw_cfg = unsafe { *addr_of_mut!(hpet_fw_cfg) };
++
++        if fw_cfg.count == u8::MAX {
++            // first instance
++            fw_cfg.count = 0;
++        }
++
++        if fw_cfg.count == 8 {
++            // TODO: Add error binding: error_setg()
++            panic!("Only 8 instances of HPET is allowed");
++        }
++
++        let id: usize = fw_cfg.count.into();
++        fw_cfg.count += 1;
++        id
++    }
++
++    pub(crate) fn update_hpet_cfg(hpet_id: usize, timer_block_id: u32, address: u64) {
++        assert!(bql_locked());
++        // SAFETY: all accesses go through these methods, which guarantee
++        // that the accesses are protected by the BQL.
++        let mut fw_cfg = unsafe { *addr_of_mut!(hpet_fw_cfg) };
++
++        fw_cfg.hpet[hpet_id].event_timer_block_id = timer_block_id;
++        fw_cfg.hpet[hpet_id].address = address;
++    }
++}
+diff --git a/rust/hw/timer/hpet/src/lib.rs b/rust/hw/timer/hpet/src/lib.rs
+new file mode 100644
+index 00000000000..44e9f3fb8ab
+--- /dev/null
++++ b/rust/hw/timer/hpet/src/lib.rs
+@@ -0,0 +1,10 @@
++// Copyright (C) 2024 Intel Corporation.
++// Author(s): Zhao Liu <zhai1.liu@intel.com>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++//! # HPET QEMU Device Model
++//!
++//! This library implements a device model for the IA-PC HPET (High
++//! Precision Event Timers) device in QEMU.
++
++pub mod fw_cfg;
+diff --git a/rust/hw/timer/meson.build b/rust/hw/timer/meson.build
+new file mode 100644
+index 00000000000..22a84f15536
+--- /dev/null
++++ b/rust/hw/timer/meson.build
+@@ -0,0 +1 @@
++subdir('hpet')
+diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
+index 9f009606b1a..cd424e6ea05 100644
+--- a/rust/qemu-api/src/zeroable.rs
++++ b/rust/qemu-api/src/zeroable.rs
+@@ -56,6 +56,7 @@ pub unsafe trait Zeroable: Default {
+ /// ## Differences with `core::mem::zeroed`
  ///
--/// We expect the FFI user of this function to pass a valid pointer for `chr`.
-+/// We expect the FFI user of this function to pass a valid pointer for `chr`
-+/// and `irq`.
- #[no_mangle]
- pub unsafe extern "C" fn pl011_create(
-     addr: u64,
--    irq: qemu_irq,
-+    irq: *mut IRQState,
-     chr: *mut Chardev,
- ) -> *mut DeviceState {
--    let pl011 = PL011State::new();
--    unsafe {
--        let dev = pl011.as_mut_ptr::<DeviceState>();
--        qdev_prop_set_chr(dev, c_str!("chardev").as_ptr(), chr);
-+    // SAFETY: The callers promise that they have owned references.
-+    // They do not gift them to pl011_create, so use `Owned::from`.
-+    let irq = unsafe { Owned::<IRQState>::from(&*irq) };
-+    let chr = unsafe { Owned::<Chardev>::from(&*chr) };
- 
--        let sysbus = pl011.as_mut_ptr::<SysBusDevice>();
--        sysbus_realize(sysbus, addr_of_mut!(error_fatal));
--        sysbus_mmio_map(sysbus, 0, addr);
--        sysbus_connect_irq(sysbus, 0, irq);
-+    let dev = PL011State::new();
-+    dev.prop_set_chr("chardev", &chr);
-+    dev.sysbus_realize();
-+    dev.mmio_map(0, addr);
-+    dev.connect_irq(0, &irq);
- 
--        // return the pointer, which is kept alive by the QOM tree; drop owned ref
--        pl011.as_mut_ptr()
--    }
-+    // The pointer is kept alive by the QOM tree; drop the owned ref
-+    dev.as_mut_ptr()
+ /// `const_zero` zeroes padding bits, while `core::mem::zeroed` doesn't
++#[macro_export]
+ macro_rules! const_zero {
+     // This macro to produce a type-generic zero constant is taken from the
+     // const_zero crate (v0.1.1):
+@@ -77,10 +78,11 @@ union TypeAsBytes {
  }
  
- #[repr(C)]
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index c27dbf79e43..1f66a5f1e09 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -2,18 +2,18 @@
- // Author(s): Paolo Bonzini <pbonzini@redhat.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::ffi::CStr;
-+use std::{ffi::CStr, ptr::addr_of_mut};
- 
- pub use bindings::{SysBusDevice, SysBusDeviceClass};
- 
- use crate::{
-     bindings,
-     cell::bql_locked,
--    irq::InterruptSource,
-+    irq::{IRQState, InterruptSource},
-     memory::MemoryRegion,
-     prelude::*,
-     qdev::{DeviceClass, DeviceState},
--    qom::ClassInitImpl,
-+    qom::{ClassInitImpl, Owned},
- };
- 
- unsafe impl ObjectType for SysBusDevice {
-@@ -60,6 +60,34 @@ fn init_irq(&self, irq: &InterruptSource) {
-             bindings::sysbus_init_irq(self.as_mut_ptr(), irq.as_ptr());
+ /// A wrapper to implement the `Zeroable` trait through the `const_zero` macro.
++#[macro_export]
+ macro_rules! impl_zeroable {
+     ($type:ty) => {
+-        unsafe impl Zeroable for $type {
+-            const ZERO: Self = unsafe { const_zero!($type) };
++        unsafe impl $crate::zeroable::Zeroable for $type {
++            const ZERO: Self = unsafe { $crate::const_zero!($type) };
          }
-     }
-+
-+    // TODO: do we want a type like GuestAddress here?
-+    fn mmio_map(&self, id: u32, addr: u64) {
-+        assert!(bql_locked());
-+        let id: i32 = id.try_into().unwrap();
-+        unsafe {
-+            bindings::sysbus_mmio_map(self.as_mut_ptr(), id, addr);
-+        }
-+    }
-+
-+    // Owned<> is used here because sysbus_connect_irq (via
-+    // object_property_set_link) adds a reference to the IRQState,
-+    // which can prolong its life
-+    fn connect_irq(&self, id: u32, irq: &Owned<IRQState>) {
-+        assert!(bql_locked());
-+        let id: i32 = id.try_into().unwrap();
-+        unsafe {
-+            bindings::sysbus_connect_irq(self.as_mut_ptr(), id, irq.as_mut_ptr());
-+        }
-+    }
-+
-+    fn sysbus_realize(&self) {
-+        // TODO: return an Error
-+        assert!(bql_locked());
-+        unsafe {
-+            bindings::sysbus_realize(self.as_mut_ptr(), addr_of_mut!(bindings::error_fatal));
-+        }
-+    }
+     };
  }
- 
- impl<R: ObjectDeref> SysBusDeviceMethods for R where R::Target: IsA<SysBusDevice> {}
 -- 
 2.48.1
 
