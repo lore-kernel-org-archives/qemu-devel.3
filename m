@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72EDC021A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76458C021A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibfT-00019Q-Gg; Thu, 13 Feb 2025 11:02:23 -0500
+	id 1tibfe-0001SK-TV; Thu, 13 Feb 2025 11:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibfN-00017t-MQ
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tibfU-00019R-Bl
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibfK-0005fX-4n
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:16 -0500
+ id 1tibfR-0005ga-5E
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739462533;
+ s=mimecast20190719; t=1739462540;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=flZ23sKzW+B6elEVxHhJ87AEPqM0mRFuz9sf5vBkc00=;
- b=c25duyDSk8oNRD2Dz3MYvsdtm50wu/n75CTHh6jt7Q0ELNSpjqB80E2qyu3BjbtOBHxORx
- X2IkeO9OX5gDbbmi3T758rvU0CiE2Z4kx1OirJYDU8W9rq9SQLr1gMlI8nvwEZHyPffxoe
- cJujd7yKoPT5ieYZyLhErPwVAImnLz0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kAa0SpJOhaviYKcQwZDtYWFA+1EBiCd0TLgglhF27bI=;
+ b=fJxDxCMwUo+vESqIeRd3oiOI9dr45hC/9/oOL35EN+Y1KhY10mXp0H5F7fRcp6XdfvvGfL
+ PRnupgglG21tlvePBtEs3rDjP3CKi2BfkVXWerps0cj4dsJ57GRiNynihy0Wn1DCR4mweN
+ M1yBRKijbo66+jGi9EBlkBWeBBnoOJA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-fIGJaf7OM12NsTmOWRJKbQ-1; Thu, 13 Feb 2025 11:02:12 -0500
-X-MC-Unique: fIGJaf7OM12NsTmOWRJKbQ-1
-X-Mimecast-MFC-AGG-ID: fIGJaf7OM12NsTmOWRJKbQ_1739462531
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38dcc9653a7so554637f8f.0
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:02:12 -0800 (PST)
+ us-mta-207-Y4heQnClOlG8JmTaVcZQrQ-1; Thu, 13 Feb 2025 11:02:18 -0500
+X-MC-Unique: Y4heQnClOlG8JmTaVcZQrQ-1
+X-Mimecast-MFC-AGG-ID: Y4heQnClOlG8JmTaVcZQrQ_1739462538
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38dd533dae6so476084f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:02:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739462530; x=1740067330;
+ d=1e100.net; s=20230601; t=1739462537; x=1740067337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=flZ23sKzW+B6elEVxHhJ87AEPqM0mRFuz9sf5vBkc00=;
- b=WXOJQtQSLeVtLH/hOtoFvhI6TOG5cLhOGb5SYd3Ds9se3EkmQFO7tEk7M1RjzOUyhX
- RaXXj+cKJghPMxQO0bFZC6AnpeBCcPyYH9cy2nO6zMbQgFaKOMfQ0VkSeUoSbRptR7F/
- RDyAvQiZzohsRbSO/FdjNdFIEo9rFWkig7TuR2jTcn3fPcdvoIOqWw8lDPgsCDOZtzo6
- /DIgS1qJM60uObzZAYQSkbkoP4+Lfe49JXVAwPYJ1V+W9Ewc6CsUJbQPyNO4Wxd5CZ3h
- T+/9L1swxAt6LGhEFA2AWyPodILF0kguww+MZhac1L4d5p+p4lh2NnRu1hykVJ5Zru6z
- IaNg==
-X-Gm-Message-State: AOJu0YyZXevMNnWvCX8fJ3+rcHyO1TIRHDPPQka7UJGvWIzymkOIww11
- 7bROm0kdtAlgZdovcN2iJTDjoMxTagYGjOTyD94jxh8NXfXxvEkPjjKjAY+jRYKnhLLHHQ+jS/l
- C8DVD5GdLsxxNRciiraULzXBtKWwTvXpib9tkyv/V9ERSwBNBXvHkNvW7KZC8tAF5NiLWZo/ZZs
- XFE5fnGifoDGpEp4JVXetyvZxpE3IHefL4JSsPb04=
-X-Gm-Gg: ASbGncuBPi+EVagL/fudAkh33VXlvywIJSyt1L+cUCrYgUqRoacpXxXFgoO5nRWTF12
- 1LFalcMjprOlFHU7KX6kJml+TJLixpY8qsj9vVThinUdQV3d3YLMJ14sKyLCC+IcCTFrBw+SuHM
- SAKM2KyYmivSPJPsGTb7drAYPxSTAn+E7o34hWzkd2h8aar6zXGRX2cqT+uXKU5Jt/t/yU2RWAl
- PfzSm2tXB6DmrRV2KbtvekQZfXSz/ieJiu3Z5U0JzyYxLCb+SbLUuyES8DQCVtyVPzIma/36a45
- wKe1tGIfE4TrxA3+KE3WnplWqQFiKnEuoXhVF+2ZukM3ig==
-X-Received: by 2002:a05:6000:2cf:b0:38c:5dcb:312e with SMTP id
- ffacd0b85a97d-38f2445d018mr5287761f8f.0.1739462529051; 
- Thu, 13 Feb 2025 08:02:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEAuh4oKbmDkTcacFQwkdnf2a719fxZYLO2PbsTtJhqfR7ILUc3zxJIq318R89MRMTWGOcGkw==
-X-Received: by 2002:a05:6000:2cf:b0:38c:5dcb:312e with SMTP id
- ffacd0b85a97d-38f2445d018mr5287708f8f.0.1739462528561; 
- Thu, 13 Feb 2025 08:02:08 -0800 (PST)
+ bh=kAa0SpJOhaviYKcQwZDtYWFA+1EBiCd0TLgglhF27bI=;
+ b=u+VORsuWz23HXTy4LwKjrJPYQBTpDPgx3TP1ACSQy0GB8wzNpbuZCAYtnlRcS8XW7Z
+ QnP1N0MFurTWBNi5t6rJfSF0n5YbkLXJitU38GQGLCRXqIKPrJtVCtBOdEdQIChs5kMM
+ oK+idBA1GsKkWrVYCJvzzGUI8GmHkK6BaiCaP6xO4YZ0bpDRVdR5nC2c5CT14vgyZz8X
+ kWXuX2H3/96eOAwM/wL4SvjCJRC51q1lTJZhMAhdU/wwaufl81kN4HdB6Eo/tT4d2Wwb
+ cjTe0/Yo5604lzx7OLthWYHQoEAwlL2CnKz8D9/WVp1FYecFE9wxDIF1jluNthXN0bKd
+ DxLA==
+X-Gm-Message-State: AOJu0YyebYFHJBOVCLoGIiakMC02Rlw5zKeiMb77EtNLixV3pNBD4N1F
+ Y9rMrPglS/qnCQrL4AX5bhkE73KiYg2UO93M4MchCchMYKfnuT7JYy0LqXuagVZvWsyWsWNd+PN
+ dR2RYwFSGkh+l4nSD+grOTT1Huq3SU06mESF35+JWdjqWp+ssYeVug0Ljrk4nvs7lD+JM7opLjE
+ RpSGEIbHjjCNIGjyME2gO7auywwQhpWraGXrT4SEk=
+X-Gm-Gg: ASbGncv78HtK7dqkqNGB+miA9mO3oQj2Vr/X13qcQw1swu/M35W8aBkaOqZcJ/Bp1Q5
+ FJCmY1vSDJhOrDdrH5J4RPC8Y3xhd1aBWuyGnmA30jeclHLqaXCd8hjlOe93rT2DedAo0x1a+Hi
+ ysAOYJgjbQTdWiSsb7uMaX7fMSTbV8hgm3yRU1IDXaYlzChe/ConhK9y5Zgu0sF19P6cLE3Aoj4
+ 3DI+QlwH7sS+VrrKEISTJRva8H3qWykv1j+6/zdtLi23EQDHWNMPDuevpNdmLgbAYUOa6jwk+lw
+ 7oz4/UknaRTvXXaUXAP3dQcQ12CeNRqQF9a9MvxeDSSGRQ==
+X-Received: by 2002:a5d:5f55:0:b0:38d:b0fe:8c99 with SMTP id
+ ffacd0b85a97d-38dea2ebbd1mr8558459f8f.48.1739462535699; 
+ Thu, 13 Feb 2025 08:02:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH05DZOGx7lO/0Wri7A8Tlyc31kB2zVkd29y1pQEpDWm9DlXIKKsWEZCIbncTUQp/sjVPKzQA==
+X-Received: by 2002:a5d:5f55:0:b0:38d:b0fe:8c99 with SMTP id
+ ffacd0b85a97d-38dea2ebbd1mr8558151f8f.48.1739462533427; 
+ Thu, 13 Feb 2025 08:02:13 -0800 (PST)
 Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
  [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d8f1csm2269535f8f.69.2025.02.13.08.02.07
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-38f259d8dd6sm2270907f8f.62.2025.02.13.08.02.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:02:07 -0800 (PST)
+ Thu, 13 Feb 2025 08:02:11 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/27] rust: vmstate: remove redundant link targets
-Date: Thu, 13 Feb 2025 17:00:52 +0100
-Message-ID: <20250213160054.3937012-26-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
+Subject: [PULL 27/27] ui/sdl2: reenable the SDL2 Windows keyboard hook
+ procedure
+Date: Thu, 13 Feb 2025 17:00:54 +0100
+Message-ID: <20250213160054.3937012-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
 References: <20250213160054.3937012-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,28 +110,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Volker Rümelin <vr_qemu@t-online.de>
+
+Windows only:
+
+The libSDL2 Windows message loop needs the libSDL2 Windows low
+level keyboard hook procedure to grab the left and right Windows
+keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
+
+Since SDL2 2.30.4 the SDL2 keyboard hook procedure also filters
+out the special left Control key event for every Alt Gr key event
+on keyboards with an international layout. This means the QEMU low
+level keyboard hook procedure is no longer needed. Remove the QEMU
+Windows keyboard hook procedure.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+Link: https://lore.kernel.org/r/20241231115950.6732-1-vr_qemu@t-online.de
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/vmstate.rs | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ ui/sdl2.c      | 26 --------------------------
+ ui/meson.build |  4 ----
+ 2 files changed, 30 deletions(-)
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 164effc6553..c6dfb609356 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -191,10 +191,9 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
- /// * scalar types (integer and `bool`)
- /// * the C struct `QEMUTimer`
- /// * a transparent wrapper for any of the above (`Cell`, `UnsafeCell`,
--///   [`BqlCell`](crate::cell::BqlCell), [`BqlRefCell`](crate::cell::BqlRefCell)
-+///   [`BqlCell`], [`BqlRefCell`]
- /// * a raw pointer to any of the above
--/// * a `NonNull` pointer, a `Box` or an [`Owned`](crate::qom::Owned) for any of
--///   the above
-+/// * a `NonNull` pointer, a `Box` or an [`Owned`] for any of the above
- /// * an array of any of the above
- ///
- /// In order to support other types, the trait `VMState` must be implemented
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 445eb1dd9f9..cda4293a53e 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -32,7 +32,6 @@
+ #include "system/runstate.h"
+ #include "system/runstate-action.h"
+ #include "system/system.h"
+-#include "ui/win32-kbd-hook.h"
+ #include "qemu/log.h"
+ #include "qemu-main.h"
+ 
+@@ -263,7 +262,6 @@ static void sdl_grab_start(struct sdl2_console *scon)
+     }
+     SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
+     gui_grab = 1;
+-    win32_kbd_set_grab(true);
+     sdl_update_caption(scon);
+ }
+ 
+@@ -271,7 +269,6 @@ static void sdl_grab_end(struct sdl2_console *scon)
+ {
+     SDL_SetWindowGrab(scon->real_window, SDL_FALSE);
+     gui_grab = 0;
+-    win32_kbd_set_grab(false);
+     sdl_show_cursor(scon);
+     sdl_update_caption(scon);
+ }
+@@ -372,19 +369,6 @@ static int get_mod_state(void)
+     }
+ }
+ 
+-static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
+-{
+-#ifdef CONFIG_WIN32
+-    SDL_SysWMinfo info;
+-
+-    SDL_VERSION(&info.version);
+-    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
+-        return info.info.win.window;
+-    }
+-#endif
+-    return NULL;
+-}
+-
+ static void handle_keydown(SDL_Event *ev)
+ {
+     int win;
+@@ -609,10 +593,6 @@ static void handle_windowevent(SDL_Event *ev)
+         sdl2_redraw(scon);
+         break;
+     case SDL_WINDOWEVENT_FOCUS_GAINED:
+-        win32_kbd_set_grab(gui_grab);
+-        if (qemu_console_is_graphic(scon->dcl.con)) {
+-            win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
+-        }
+         /* fall through */
+     case SDL_WINDOWEVENT_ENTER:
+         if (!gui_grab && (qemu_input_is_absolute(scon->dcl.con) || absolute_enabled)) {
+@@ -628,9 +608,6 @@ static void handle_windowevent(SDL_Event *ev)
+         scon->ignore_hotkeys = get_mod_state();
+         break;
+     case SDL_WINDOWEVENT_FOCUS_LOST:
+-        if (qemu_console_is_graphic(scon->dcl.con)) {
+-            win32_kbd_set_window(NULL);
+-        }
+         if (gui_grab && !gui_fullscreen) {
+             sdl_grab_end(scon);
+         }
+@@ -870,10 +847,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+ #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available since SDL 2.0.8 */
+     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+ #endif
+-#ifndef CONFIG_WIN32
+-    /* QEMU uses its own low level keyboard hook procedure on Windows */
+     SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
+-#endif
+ #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
+     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+ #endif
+diff --git a/ui/meson.build b/ui/meson.build
+index 28c7381dd10..35fb04cadf3 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -120,10 +120,6 @@ if gtk.found()
+ endif
+ 
+ if sdl.found()
+-  if host_os == 'windows'
+-    system_ss.add(files('win32-kbd-hook.c'))
+-  endif
+-
+   sdl_ss = ss.source_set()
+   sdl_ss.add(sdl, sdl_image, pixman, glib, files(
+     'sdl2-2d.c',
 -- 
 2.48.1
 
