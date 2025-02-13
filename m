@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06CD9C021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 20:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B79DC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 20:59:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tifVG-0000cx-5w; Thu, 13 Feb 2025 15:08:06 -0500
+	id 1tigI6-0001e7-FA; Thu, 13 Feb 2025 15:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tifVE-0000cR-5y
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 15:08:04 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tifVC-0003Sv-CB
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 15:08:03 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38f29a1a93bso578618f8f.1
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 12:08:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739477280; x=1740082080; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=78+LxEkgm8og5imx+lPSGQQlrIzXvf136owDVPSH1WQ=;
- b=RXO6pplMispe/5Ba3zkFe+IzVJn3RGdYUP5ksOZ/aRIn7lKBq97T9G9lFbdDBFc48/
- tRQhIDZv1/27K0Tse0UJ9xXHPpo4T2t7CItqrtEn6cJpmIe4s7+dTcmDykW99G2M396P
- Z3RR3OptnH0umUCSqRiamvRoZEIGgiQwh9MXWX4klWEXJpW6ts18xxKLKFZxJ2HjwQBy
- kCVLBErXjNQ4VsCBPS1mCuy2uf2em6A0tS99RpzxuuqnZH6bNe3hhX1i52r358gDtHP3
- Zp1/8HUMq8PHIS+vDemYKt1iaOcaH4EqzSh+ZugtIuQ0DO/tf0PpqshMf7VpiklRO8sS
- 3hPA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tigI2-0001dZ-6G
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 15:58:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tigI0-0001B6-I4
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 15:58:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739480304;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vIwv28Eg9o+8B62iOwIAut8oKASTwz+J/sQ3Qky9Q8c=;
+ b=DIp3YZ6qLJqMe7kckhUft4TSqpVChtyNKhmU9pjfY65dLi2bSYgZRVYcCBocVLxC3zB5rs
+ 7JHkFIBMOkFgR8fbx090UIM40axugwOFfQ+SYScLs420N8z05aHR7BmDPlEfDk0AXpEIRB
+ mvdYeg3OulXC4BtvKLJn8jlxvGaiJYE=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-324-MwLK_SjCOX-ZO61arXSTzg-1; Thu, 13 Feb 2025 15:58:23 -0500
+X-MC-Unique: MwLK_SjCOX-ZO61arXSTzg-1
+X-Mimecast-MFC-AGG-ID: MwLK_SjCOX-ZO61arXSTzg_1739480302
+Received: by mail-oa1-f70.google.com with SMTP id
+ 586e51a60fabf-2b880ef5905so443593fac.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 12:58:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739477280; x=1740082080;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739480302; x=1740085102;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=78+LxEkgm8og5imx+lPSGQQlrIzXvf136owDVPSH1WQ=;
- b=pT2W7jQv+llojdYa19lfckR3AIT/L+SQCmhQbczj9J1hmFn4HTW7x15z8XOjQeHOqL
- cj+o3it5SAH7V10Td8HiF7viGerkS+sYngYameTzYz35hdPpR3nYccbj380DKiyc21UJ
- tWK/j3233h5WjshtdB8eb5UIjHvYOzLR/uDZp2rnwyxaMMSv7C8ziAnRl7sPKLP3+qcM
- 1rN5UiXETVfCC/RwLR0vckWSU3S6W39Hci4Ih1qNCnU7geH0HPKc4cJDqS7Bdj/+xcFC
- Ll9u3qTafLDfCuJ5prJsUBarbb8kpmPox8THupeUrkgHQn/uD5CHSMWqAy9Ll0P971J1
- 91fg==
-X-Gm-Message-State: AOJu0Yz6yyjFf29DmA23y17gAMYFGuTZZaqHmXIphNqShfpO8fV7CzC7
- mbF76CPJJedz0sHUx4ELITKKrgyiekwYg2p6R35Y5QuXLmSLVzSSlcAflFVx3Lw2WQ7Nbi/wYwS
- J2KM=
-X-Gm-Gg: ASbGncs8dQ1LWlWzbEQTMDftlQwWi2lfPlm9eXQLWkclCYXj0vmkly7AAnAuV7cmAgG
- HaFmOWZRkKiCp52WsXm1t0BWNDrJ8ib6zfS2QOSueB/k5aHPS9E9C5/8CjaB1A1L4aoF3KOukPf
- 4YcKef79A6ZbeMaOdfhmZD/EfhA9ltpqPrUgP+4ghyNFv7Xzl5IkrneWaa/4eOY6fFg4wfUnvgj
- xnhcA6PjLo+qXqr7+3t2pvB6i46YRDKaMWQ2FUJnJ/0FfcAkAFpKh+eMHcQKZ6z/K1YMsQLDsz4
- FxW/vBhv2AvEHXTEgHZo4KtHEVSb5COabGOK6KCSmHpF8Hww5W9AoFvYp607nbtoPaK1DFY+XQ=
- =
-X-Google-Smtp-Source: AGHT+IGDTCRSJ/MbmAZmz8cTVtjTlwJUuii88XWUXFsAdrT9ZidqsHu2ag0bnVZJSaOX+U+ozbWXrg==
-X-Received: by 2002:a05:6000:1a51:b0:38d:e166:8dc2 with SMTP id
- ffacd0b85a97d-38dea27135cmr8666505f8f.16.1739477280364; 
- Thu, 13 Feb 2025 12:08:00 -0800 (PST)
-Received: from [192.168.1.20] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ccd51sm2731716f8f.29.2025.02.13.12.07.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 12:07:59 -0800 (PST)
-Message-ID: <4c493d3b-3113-4be8-99bd-60ec960dd6a0@linaro.org>
-Date: Thu, 13 Feb 2025 21:07:59 +0100
+ bh=vIwv28Eg9o+8B62iOwIAut8oKASTwz+J/sQ3Qky9Q8c=;
+ b=Is2X4rM21DgxX5kZFFpGZpdSWn8VnBGInZVN1M5tqTWVyVJBYraYSS4XO1kX5hdbOd
+ Go6WO86ENz7lGap8AaGPj8vbWVNyhpxE92MrDM9Bwi4d4IH0Zb1XvWIqFKLzBtQpY7gY
+ yxxFNubdK4UHyXePeBYN1QNlolKNXB/xB5SLi/IkODyLwjUVhjSt8MFw/K5jC9KAmtS9
+ LOipwoB7XlDyAlRavC+s9gvsYXJjH3BGkbevagXrC9OQ1NUP3/P2PIXpBRnndi18XNdv
+ 4FqMKgLvit3JLOqAnH62EiK8l4F6rJSa18Fsyx8d9u9AnB5ew7ObDiUZyM7KtC0ez4zD
+ zuIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRZIywyesAfEOxRaQpnOr04TFoNh4oqKfPWdw9xUEEVAFYi7F8CyQSCdg2pXHhTdCVAo7KB7HioGow@nongnu.org
+X-Gm-Message-State: AOJu0Yw5rfRgBq7CgaCg52qDo+oWaJju9K2nwcRbADXF8mQq2MFMpis5
+ 7VYbzKvnB+n96GuM1kkBCB70N55z3C4AkKvPiT8fru2bAlCffStic8hW6Rsb1vcxOYkli1m04KB
+ 3IF8C3mW+7hU8VhAtot9pjOpXTCPqHMr1MpbtNAkRQ6QpTENLD5cQ
+X-Gm-Gg: ASbGncvWMjAZVrq3Ujf60oYmTV50HKI81H6+VEuz571rPA/njZXXgf8XSM8CPCIxOGB
+ PaLiYrfl54g76yj5e0zrFulPtROUxNewMfeCuBXMA9dnN4+7JRNcEyR5kY8rFEYTZ4UDdrPIjkX
+ nuK1VjrD/z9d0zxqTCiJVsx5lg60wasFV2CeWrvzpFr7QWk5Pculbh/YFPM5XiOPpVtNOh5/cv/
+ zqNVtFtX7xvru7pwMpFGh/5juZQG601BfjiYwEUFbdb/zEihE4CqSogwOk=
+X-Received: by 2002:a05:6871:1c5:b0:2b7:f2dc:a4c2 with SMTP id
+ 586e51a60fabf-2b8f8c0129emr2590467fac.18.1739480302170; 
+ Thu, 13 Feb 2025 12:58:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHWzzqKiybCYxvoqt0ORZNtG9ikfVTTgFeeveX24Fss5WGPD09ZaJPAoqXeH/7rIazijBOQ7Q==
+X-Received: by 2002:a05:6871:1c5:b0:2b7:f2dc:a4c2 with SMTP id
+ 586e51a60fabf-2b8f8c0129emr2590455fac.18.1739480301793; 
+ Thu, 13 Feb 2025 12:58:21 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2b954820707sm1112555fac.10.2025.02.13.12.58.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Feb 2025 12:58:20 -0800 (PST)
+Date: Thu, 13 Feb 2025 15:58:17 -0500
+From: Peter Xu <peterx@redhat.com>
+To: William Roche <william.roche@oracle.com>
+Cc: david@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ peter.maydell@linaro.org, joao.m.martins@oracle.com,
+ Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v8 0/3] Poisoned memory recovery on reboot
+Message-ID: <Z65c6W98c9hruUIE@x1.local>
+References: <20250211212707.302391-1-william.roche@oracle.com>
+ <Z6vQvr4dCCsBR2sX@x1.local>
+ <6e8aedfc-f270-4fa8-a1d3-df0389e505cb@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/29] Misc HW patches for 2025-02-12
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20250212155408.29502-1-philmd@linaro.org>
- <CAJSP0QUg0X0E7m2Pm0Ni9HiVeXnaHHTAaxgC1+fkZjFcHHeisg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJSP0QUg0X0E7m2Pm0Ni9HiVeXnaHHTAaxgC1+fkZjFcHHeisg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <6e8aedfc-f270-4fa8-a1d3-df0389e505cb@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,48 +113,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/2/25 19:46, Stefan Hajnoczi wrote:
-> On Wed, Feb 12, 2025 at 10:54 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> The following changes since commit f9edf32ea2e18a56de5d92f57e9d10565c822367:
->>
->>    Merge tag 'pull-request-2025-02-11' of https://gitlab.com/thuth/qemu into staging (2025-02-11 13:27:32 -0500)
->>
->> are available in the Git repository at:
->>
->>    https://github.com/philmd/qemu.git tags/hw-misc-20250212
->>
->> for you to fetch changes up to b374adcae577dddfe6cfd404985014fdd2443428:
->>
->>    hw: Make class data 'const' (2025-02-12 15:39:46 +0100)
->>
->> Since 2025-02-10: Dropped MicroBlaze endianness patches, added constify.
->>
->> ----------------------------------------------------------------
->> Misc HW patches
->>
->> - Use qemu_hexdump_line() in TPM backend (Philippe)
->> - Remove magic number in APIC (Phil)
->> - Disable thread-level cache topology (Zhao)
->> - Xen QOM style cleanups (Bernhard)
->> - Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
->> - Invert logic of machine no_sdcard flag (Philippe)
->> - Housekeeping in MicroBlaze functional tests (Philippe)
+On Thu, Feb 13, 2025 at 08:35:09PM +0100, William Roche wrote:
+> On 2/11/25 23:35, Peter Xu wrote:
+> > On Tue, Feb 11, 2025 at 09:27:04PM +0000, “William Roche wrote:
+> > > From: William Roche <william.roche@oracle.com>
+> > > 
+> > > Here is a very simplified version of my fix only dealing with the
+> > > recovery of huge pages on VM reset.
+> > >   ---
+> > > This set of patches fixes an existing bug with hardware memory errors
+> > > impacting hugetlbfs memory backed VMs and its recovery on VM reset.
+> > > When using hugetlbfs large pages, any large page location being impacted
+> > > by an HW memory error results in poisoning the entire page, suddenly
+> > > making a large chunk of the VM memory unusable.
+> > > 
+> > > The main problem that currently exists in Qemu is the lack of backend
+> > > file repair before resetting the VM memory, resulting in the impacted
+> > > memory to be silently unusable even after a VM reboot.
+> > > 
+> > > In order to fix this issue, we take into account the page size of the
+> > > impacted memory block when dealing with the associated poisoned page
+> > > location.
+> > > 
+> > > Using the page size information we also try to regenerate the memory
+> > > calling ram_block_discard_range() on VM reset when running
+> > > qemu_ram_remap(). So that a poisoned memory backed by a hugetlbfs
+> > > file is regenerated with a hole punched in this file. A new page is
+> > > loaded when the location is first touched.  In case of a discard
+> > > failure we fall back to remapping the memory location.
+> > > 
+> > > But we currently don't reset the memory settings and the 'prealloc'
+> > > attribute is ignored after the remap from the file backend.
+> > 
+> > queued patch 1-2, thanks.
+> > 
 > 
-> Please take a look at this CI failure:
-> https://gitlab.com/qemu-project/qemu/-/jobs/9133190122#L949
+> Thank you very much Peter, and thanks to David too !
 > 
-> Thanks,
-> Stefan
+> According to me, ARM needs more than only error injection messages.
+> For example, the loop of errors that can appear during kdump when dealing
+> with large pages is a real problem, hanging a VM.
 
-Same error of previous PR. I'll drop the tests.
+Maybe it'll be better to post arm patches separately so that it can attract
+more attention from arm developers specifically.
 
->>    tests/functional: Explicit endianness of microblaze assets
->>    tests/functional: Allow microblaze tests to take a machine name
->>      argument
->>    tests/functional: Remove sleep() kludges from microblaze tests
->>    tests/functional: Have microblaze tests inherit common parent class
+I see that PeterM is in the loop, besides you could also try to copy Eric
+Auger <eric.auger@redhat.com>.  I have Eric copied.  I'm not sure whether
+Eric or the team would be interested in this too at some point.
 
+> 
+> There is also the remap notification (to better deal with 'prealloc'
+> attribute for example) that needs to be implemented now.
+
+Right, this one should be easy, IMHO.  And I hope if prealloc is the only
+concern then the impact is low, I mean prefaults for hugetlb pages is less
+important comparing to small pages - fault one 1G page which used to be
+poisoned may not even be detectable from guest as long as there're still
+free 1G available.
+
+> 
+> And finally the kernel KVM enhancement needed on x86 to return a more
+> accurate SIGBUS siginfo.si_addr_lsb value on large pages memory errors.
+> Qemu could than take this information into account to provide more useful
+> feedback about the 'failed' memory size.
+
+I confess this isn't high priority for now.  Before hugetlb pages can be
+split this isn't providing much help indeed, as QEMU knows whatever the
+kernel knows.
+
+It can be more important until someone allows hugetlb pages to split so
+poison may only affect 4k out of 1G.  In that case it must report with 4k
+of part of 1G.  We'll see how that would work out at last, we may need some
+new mm interface to tell the userspace that "when I say 4k is poisoned,
+it's really only that 4k..", or something like that.
+
+> 
+> I don't know yet when I'll have the possibility to come back to these
+> problems, but at least we have the recovery of large pages mostly fixed with
+> the 2 patches queued.
+
+Yes, thanks for fixing it.
+
+-- 
+Peter Xu
 
 
