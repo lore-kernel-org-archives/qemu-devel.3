@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C924C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A26C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:50:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiaWZ-0002EH-BF; Thu, 13 Feb 2025 09:49:07 -0500
+	id 1tiaXZ-0002wj-2w; Thu, 13 Feb 2025 09:50:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tiaWV-0002Dq-7Q
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:49:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tiaXW-0002uc-4M
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:50:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tiaWT-0002VV-MO
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:49:02 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tiaXU-0002j7-0Y
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:50:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739458140;
+ s=mimecast20190719; t=1739458202;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dypU5xq5Xc0NlKGVIXfBBoIf/VaRXVZxKgFbdHLtOKE=;
- b=YsZAHPzRrXrFo5WtxrAFe9f6AXXO6kjzAYuyj2d485Z0+VGiMSLTbpwyhdZb00GYcN3r9P
- RHLig7RgyAbM+aMAxlise15vgopQEZJ95AZmF8oYRb5aFV64xcwOfBN4qE/JboQmWs5wZj
- DUYemD+ekHgdMxe8Uv7nyYKHMaKCclI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wdTgFfONcRUZvA5/oSCvGFr3Kk3bkGg4Y+5Q6uxHqJc=;
+ b=bP5u+TEwe+6ILXQOapqZhJa3aCaSK33dJwMu4xfv+6K7gESrW0M/ZOEoJ8icx5G8uLq59X
+ Ad0oFW9M89jFFmFUx1ijRczHjsUyS7OZv1KmD6gJLg3MG1wkYZGrSwN29hNnBOa6wBG1k3
+ Osd47IPKxLQnHqIrZvNrzK0sL/lB7QE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-iGbV4IfPOYC-Cb9Wr1Kajg-1; Thu, 13 Feb 2025 09:48:58 -0500
-X-MC-Unique: iGbV4IfPOYC-Cb9Wr1Kajg-1
-X-Mimecast-MFC-AGG-ID: iGbV4IfPOYC-Cb9Wr1Kajg_1739458137
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38ddee833e0so559355f8f.1
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:48:58 -0800 (PST)
+ us-mta-664-nP6Q-ozdNxKHXH8yifJA4w-1; Thu, 13 Feb 2025 09:50:01 -0500
+X-MC-Unique: nP6Q-ozdNxKHXH8yifJA4w-1
+X-Mimecast-MFC-AGG-ID: nP6Q-ozdNxKHXH8yifJA4w
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4395f1c4354so7171765e9.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 06:50:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739458137; x=1740062937;
+ d=1e100.net; s=20230601; t=1739458199; x=1740062999;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dypU5xq5Xc0NlKGVIXfBBoIf/VaRXVZxKgFbdHLtOKE=;
- b=NJlu2sfXPnDSDzxs8//8MNwzuUuiy9IQ6nhSfLMVTA87kcpPW/Q2Om1QgDhvY8UUx1
- xBKeoM5ffg8iPQAFYhElgRngbevkWBUhTHGIqpo1bKdH74THCybYnb+q/tUnIFjAipvW
- rKStcfx7WMAQSIGzEtEuuAQ/Wl23msuLXuSJZQveQWj7WOQqyernapLHGeiZYOTQYU1w
- H4dl/A081skz6clp3AlM4QSrrLQUqLY1DRYI8LwpcEhurmqSDMRBtWioKwCGCYd5SNAA
- kXFgR7CSlopfMbLt5zfNnyZ19JFqNOOESIY6n4PArlQ3L7RFgmOFjG74zl+Kvot6yQZ+
- 5FtA==
-X-Gm-Message-State: AOJu0YzPGXjLa0CVi0cn3pWlGJS97PPd4C3F9TWkk9Kcw1MzYD466wRL
- 98ESX+RK3uO2VuEClREWKJWYwiDjFDt5KuYVLRt6PNy9FcvZnF00a4F2ei3gQKnRC6GEBxVQKaU
- aZ62ZS+uuf9KhaKJSPK7xk9D8TyaUYM7Tj4lxFxpnwuutRZB7GIud
-X-Gm-Gg: ASbGncurgZAdTbQKXHnhb6pyGRgePraaGxD4p++eu8K0VwNM7JX/g1u98Os1DOLb2cc
- HAUzJ0yYsn/UPBKQOPSwPREPVpHGsgO9oMkR1AEyP0+LtDaTfv2BiJIO4t2Lz3rDGfNdRwgDOpX
- oA6sDikBbdzNCkFiTVbtTmoR3LpwhSfmjfim/BZeRcOug6dgyxAvv1+xyQljDF6m5iC72X3nDCJ
- QKKOhpoe+HmPGfpdf2L9i+gyWtHkDYN8RrftIt+6WbCmkGEJcjd3Z1sBe8obe7J2NeC/MeUMgzM
- scwuGrVkk2iNuYKArMC+WdtPLKFm1Fmcr8RA30Ls3go=
-X-Received: by 2002:a5d:6d0a:0:b0:38d:e363:494b with SMTP id
- ffacd0b85a97d-38f24cfa3f1mr3850021f8f.8.1739458137457; 
- Thu, 13 Feb 2025 06:48:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGUbFy9oIyVrXmue1LFN17ou5V7iaBeGSPpBEyp+gZbsKzjlBo7D4qStJcmtbU+yRwtv1re+w==
-X-Received: by 2002:a5d:6d0a:0:b0:38d:e363:494b with SMTP id
- ffacd0b85a97d-38f24cfa3f1mr3849090f8f.8.1739458126230; 
- Thu, 13 Feb 2025 06:48:46 -0800 (PST)
+ bh=wdTgFfONcRUZvA5/oSCvGFr3Kk3bkGg4Y+5Q6uxHqJc=;
+ b=af1vipOdD8NEGzOU4U41IZykrDWGfcRyRcMoT4R6jHuFT9748CsFyf2v6HRQ2mzcgp
+ 2GyErYd5ZFaGJqE0vSjhOVayNcxzF4vhvwsGHdcZi3nc9handU0jLpeRGRRj+88wfcCQ
+ 7eI1VbmwSvzzMGnp6/GRNYuIxkfE8o1sxTi15bxG/CLm8wTQlRQf5MO2YXs0NR5IiJLT
+ 27xIJqSfL/WZ7fCoTxiRuHp7jMpeqYnAB7xn/xNAaxxSQNYl18tpEZA0aFunUftQ7CHy
+ MjD5BN73+ywo7T9mv8WG6qEPx1DOgcUbO3650FoOrUJizoO4ejfhD4uFRNap66MraYN/
+ OQ/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRcHhdzzIAxJEE/L4poVUQpKYbcOkgN42IeKr6rgQWdGisKMlizwY6yl0I1ZNjEYuB97cRPBF4+UTN@nongnu.org
+X-Gm-Message-State: AOJu0YzyUerDoZOWa8frBKWuMO8d89L69ZDny5T2gnPmhNv+7V+vgN8n
+ Xf+nMO6UZBEYkAeAQuZPYtD6j96+Oz+Sur5UvaSaLfIQNi/C9EOszIROXCqNe5B3Sg5hncXv2dc
+ 60wNlWKkphHVd6ojg5RV2uyz+kJmkcz+NLR+5dXTolE3fT7aQlDdjs2vcW1pp
+X-Gm-Gg: ASbGncseZGzChGuXIrVCugimcKtJQV5YudvPngV3yPGRenHty00ZaD7cx3z7rnlFnXb
+ 4LZri0s7+5UTvZ+jICSBz06sObqsKigavAwwqiiw8gFhY12sJwh3KuBSRwSrqDD+7xGS0v1ER2O
+ +yrjO6wTAsv8jlB58Z5h0EaaOk0XZYbLxOjCFEtW8Y6scOa8ySsQhjxtyxWlbgqy6/Kaov3jzh8
+ fOzokCdv8SrC5Mf5QJ9ante8kG4oF8QUi3snbQOihvDzlemw4QTOjP/3SMmApYVz5BvxuaB8CuN
+ RQo1rH3EtKCphp+tNJpxD73MVp5rA0Gwwxg+BWxHPuA=
+X-Received: by 2002:a05:600c:1e18:b0:439:6589:e1de with SMTP id
+ 5b1f17b1804b1-4396589e306mr8771725e9.26.1739458199309; 
+ Thu, 13 Feb 2025 06:49:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjy9Ck13gI9iRpZpd8sAx0uuIzYk10uIXFb4iLJ72/7OqV2RRUeualyM7/IueDFPu302lPzw==
+X-Received: by 2002:a05:600c:1e18:b0:439:6589:e1de with SMTP id
+ 5b1f17b1804b1-4396589e306mr8771455e9.26.1739458198911; 
+ Thu, 13 Feb 2025 06:49:58 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:ecac:5b28:cd98:868a?
  ([2a01:e0a:280:24f0:ecac:5b28:cd98:868a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d8e62sm2077598f8f.71.2025.02.13.06.48.45
+ ffacd0b85a97d-38f259f85c2sm2129330f8f.91.2025.02.13.06.49.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 06:48:45 -0800 (PST)
-Message-ID: <3bf261e6-2c58-4606-ba1e-66947ca081df@redhat.com>
-Date: Thu, 13 Feb 2025 15:48:44 +0100
+ Thu, 13 Feb 2025 06:49:58 -0800 (PST)
+Message-ID: <f961628d-f2d4-4957-8b77-0f065c100c67@redhat.com>
+Date: Thu, 13 Feb 2025 15:49:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] vfio: Add property documentation
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Eric Auger <eric.auger@redhat.com>
+To: eric.auger@redhat.com, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
 References: <20250213135050.1426258-1-clg@redhat.com>
- <3066bfc4-9681-9d03-cf87-e5d49b8fbc3d@eik.bme.hu>
+ <a5c82242-0a1d-46ca-9773-4a80d706e64f@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,17 +128,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <3066bfc4-9681-9d03-cf87-e5d49b8fbc3d@eik.bme.hu>
+In-Reply-To: <a5c82242-0a1d-46ca-9773-4a80d706e64f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,16 +156,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/25 15:17, BALATON Zoltan wrote:
-> On Thu, 13 Feb 2025, Cédric Le Goater wrote:
+On 2/13/25 15:45, Eric Auger wrote:
+> Hi Cédric,
+> 
+> 
+> On 2/13/25 2:50 PM, Cédric Le Goater wrote:
 >> Investigate the git history to uncover when and why the VFIO
 >> properties were introduced and update the models. This is mostly
 >> targeting vfio-pci device, since vfio-plateform, vfio-ap and vfio-ccw
-> 
-> Typo: vfio-platform
+>> devices are simpler.
+>>
+>> Organize the vfio-pci properties in topics. It would be great to have
+>> a way to do the same for the output.
+>>
+>> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
+>> Cc: Eric Farman <farman@linux.ibm.com>
+>> Cc: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>
+>>   Changes in v2:
+>>
+>>   - Fixed version numbers
+>>   - Fixed #ifdef in vfio/ccw.c
+>>   - Addressed vfio-pci-nohotplug
+>>   - Organize the vfio-pci properties in topics
+>>
+>>   hw/vfio/ap.c       |   9 +++
+>>   hw/vfio/ccw.c      |  15 +++++
+>>   hw/vfio/pci.c      | 134 +++++++++++++++++++++++++++++++++++++++++++++
+>>   hw/vfio/platform.c |  23 ++++++++
+>>   4 files changed, 181 insertions(+)
+>>
+>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>> index 30b08ad375d5ecae886c5000fbaa364799fe76d0..ec1150e5d627fce83a5a6319af471fd0aa45ae9b 100644
+>> --- a/hw/vfio/ap.c
+>> +++ b/hw/vfio/ap.c
+>> @@ -257,6 +257,15 @@ static void vfio_ap_class_init(ObjectClass *klass, void *data)
+>>       dc->hotpluggable = true;
+>>       device_class_set_legacy_reset(dc, vfio_ap_reset);
+>>       dc->bus_type = TYPE_AP_BUS;
+>> +
+>> +    object_class_property_set_description(klass, /* 3.1 */
+>> +                                          "sysfsdev",
+>> +                                          "Host sysfs path of assigned device");
+>> +#ifdef CONFIG_IOMMUFD
+>> +    object_class_property_set_description(klass, /* 9.0 */
+>> +                                          "iommufd",
+>> +                                          "Set host IOMMUFD backend device ");
+>> +#endif
+>>   }
+>>   
+>>   static const TypeInfo vfio_ap_info = {
+>> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+>> index 67bc137f9be6d43c5970c6271f3cdbfffd8a32de..242dc39660fcd028722093d637b7b64440649863 100644
+>> --- a/hw/vfio/ccw.c
+>> +++ b/hw/vfio/ccw.c
+>> @@ -717,6 +717,21 @@ static void vfio_ccw_class_init(ObjectClass *klass, void *data)
+>>       cdc->handle_halt = vfio_ccw_handle_halt;
+>>       cdc->handle_clear = vfio_ccw_handle_clear;
+>>       cdc->handle_store = vfio_ccw_handle_store;
+>> +
+>> +    object_class_property_set_description(klass, /* 2.10 */
+>> +                                          "sysfsdev",
+>> +                                          "Host sysfs path of assigned device");
+>> +    object_class_property_set_description(klass, /* 3.0 */
+>> +                                          "force-orb-pfch",
+>> +                                          "Force unlimited prefetch");
+>> +#ifdef CONFIG_IOMMUFD
+>> +    object_class_property_set_description(klass, /* 9.0 */
+>> +                                          "iommufd",
+>> +                                          "Set host IOMMUFD backend device ");
+>> +#endif
+>> +    object_class_property_set_description(klass, /* 9.2 */
+>> +                                          "loadparm",
+>> +                                          "Define which devices that can be used for booting");
+>>   }
+>>   
+>>   static const TypeInfo vfio_ccw_info = {
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 9a55e7b77324babf7295132b08e3ba23b482a291..fbd8cf566b1cfd508ccb0042a395e3b79ba781c0 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -3433,6 +3433,133 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+>>       pdc->exit = vfio_exitfn;
+>>       pdc->config_read = vfio_pci_read_config;
+>>       pdc->config_write = vfio_pci_write_config;
+>> +
+>> +    object_class_property_set_description(klass, /* 1.3 */
+>> +                                          "host",
+>> +                                          "Host PCI address [domain:]<bus:slot.function> of assigned device");
+>> +    object_class_property_set_description(klass, /* 2.6 */
+>> +                                          "sysfsdev",
+>> +                                          "Host sysfs path of assigned device");
+>> +    /*
+>> +     * Display
+>> +     */
+>> +
+>> +    object_class_property_set_description(klass, /* 1.5 */
+>> +                                          "x-vga",
+>> +                                          "Add support for VGA MMIO and I/O port access");
+>> +    object_class_property_set_description(klass, /* 2.12 */
+>> +                                          "display",
+>> +                                          "Add display support");
+>> +    object_class_property_set_description(klass, /* 3.2 */
+>> +                                          "xres",
+>> +                                          "Set X display resolution the vgpu should use");
+>> +    object_class_property_set_description(klass, /* 3.2 */
+>> +                                          "yres",
+>> +                                          "Set Y display resolution the vgpu should use");
+>> +
+>> +    /*
+>> +     * IGD
+>> +     */
+>> +
+>> +    object_class_property_set_description(klass, /* 2.7 */
+>> +                                          "x-igd-opregion",
+>> +                                          "Add IGD OpRegion support for (headless system)");
+>> +    object_class_property_set_description(klass, /* 2.7 (See c4c45e943e51) */
+>> +                                          "x-igd-gms",
+>> +                                          "Add Intel graphics legacy mode device assignment support. "
+>> +                                          "Assign 00:02.0 from the host to 00:02.0 in the VM");
+>> +
+>> +    /*
+>> +     * NVIDIA
+>> +     */
+>> +    object_class_property_set_description(klass, /* 2.12 */
+>> +                                          "x-no-geforce-quirks",
+>> +                                          "Disable GeForce quirks (for NVIDIA Quadro/GRID/Tesla). Improves performance");
+>> +    object_class_property_set_description(klass, /* 3.0 */
+>> +                                          "x-no-kvm-ioeventfd",
+>> +                                          "Disable ioeventfd quirk (NVIDIA)");
+>> +    object_class_property_set_description(klass, /* 3.0 */
+>> +                                          "x-no-vfio-ioeventfd",
+>> +                                          "Enable ioeventfd quirks to be handled by VFIO directly. Improves performance");
+>> +    object_class_property_set_description(klass, /* 2.11 */
+>> +                                          "x-nv-gpudirect-clique",
+>> +                                          "Add NVIDIA GPUDirect Cliques support");
+>> +
+>> +    /*
+>> +     * Migration support
+>> +     */
+>> +    object_class_property_set_description(klass, /* 5.2 */
+>> +                                          "x-pre-copy-dirty-page-tracking",
+>> +                                          "Disable dirty pages tracking during iterative phase");
+>> +    object_class_property_set_description(klass, /* 9.1 */
+>> +                                          "x-device-dirty-page-tracking",
+>> +                                          "Disable device dirty page tracking and use container-based dirty page tracking");
+>> +    object_class_property_set_description(klass, /* 5.2, 8.0 non-experimetal */
+>> +                                          "enable-migration",
+>> +                                          "Enale device migration. Also requires a host VFIO PCI variant "
+>> +                                          "driver with migration support enabled");
+>> +    object_class_property_set_description(klass, /* 9.1 */
+>> +                                          "migration-events",
+>> +                                          "Emit VFIO migration QAPI event when a VFIO device changes its migration "
+>> +                                          "state. For management applications");
+>> +    object_class_property_set_description(klass, /* 9.1 */
+>> +                                          "skip-vsc-check",
+>> +                                          "Skip config space check for Vendor Specific Capability. Useful for "
+>> +                                          "NVIDIA vGPU driver migration");
+>> +
+>> +    /*
+>> +     * debug, tracing
+>> +     */
+>> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+>> +                                          "x-no-mmap",
+>> +                                          "Disable MMAP for device. Allows to trace MMIO accesses");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-no-kvm-intx",
+>> +                                          "Bypass INTx interrupts. Allows interrupt tracing");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-no-kvm-msi",
+>> +                                          "Bypass MSI interrupts. Allows interrupt tracing");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-no-kvm-msix",
+>> +                                          "Bypass MSIx interrupts. Allows interrupt tracing");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-pci-vendor-id",
+>> +                                          "Set emulated PCI Vendor ID. Allows testing quirks");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-pci-device-id",
+>> +                                          "Set emulated PCI device ID. Allows testing quirks");
+>> +
+>> +    /*
+>> +     * other
+>> +     */
+>> +    object_class_property_set_description(klass, /* 8.1 */
+>> +                                          "vf-token",
+>> +                                          "Add support for VF token among PF and VFs (Linux 5.7+)");
+>> +    object_class_property_set_description(klass, /* 1.3 */
+>> +                                          "x-intx-mmap-timeout-ms",
+>> +                                          "Timeout value in milliseconds to re-enable BAR mapping when under "
+>> +                                          "INTx interrupts. Improves performance");
+>> +    object_class_property_set_description(klass, /* 2.3 */
+>> +                                          "x-req",
+>> +                                          "Add device request notification support (Linux 4.0+)");
+>> +    object_class_property_set_description(klass, /* 3.1 */
+>> +                                          "x-balloon-allowed",
+>> +                                          "Allow devices to opt-in for ballooning");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-pci-sub-vendor-id",
+>> +                                          "Set emulated PCI Sub-vendor ID");
+>> +    object_class_property_set_description(klass, /* 2.5 */
+>> +                                          "x-pci-sub-device-id",
+>> +                                          "Set emulated PCI Sub-device ID");
+>> +    object_class_property_set_description(klass, /* 2.12 */
+>> +                                          "x-msix-relocation",
+>> +                                          "Allow relocating MSI-X MMIO on systems which page size is larger "
+>> +                                          "than the PCI spec recommendation. Mostly for sPAPR");
+>> +#ifdef CONFIG_IOMMUFD
+>> +    object_class_property_set_description(klass, /* 9.0 */
+>> +                                          "iommufd",
+>> +                                          "Set host IOMMUFD backend device ");
+>> +#endif
+>>   }
+>>   
+>>   static const TypeInfo vfio_pci_dev_info = {
+>> @@ -3461,6 +3588,13 @@ static void vfio_pci_nohotplug_dev_class_init(ObjectClass *klass, void *data)
+>>   
+>>       device_class_set_props(dc, vfio_pci_dev_nohotplug_properties);
+>>       dc->hotpluggable = false;
+>> +    object_class_property_set_description(klass, /* 3.1 */
+>> +                                          "ramfb",
+>> +                                          "Add ramfb support");
+>> +    object_class_property_set_description(klass, /* 8.2 */
+>> +                                          "x-ramfb-migrate",
+>> +                                          "Add ramfb migration support");
+>> +
+>>   }
+>>   
+>>   static const TypeInfo vfio_pci_nohotplug_dev_info = {
+>> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+>> index 1070a2113a17edb9ebafb5066e51ee2bc52a767d..8e646e543692221e86b16fecd8bf40316f064a7d 100644
+>> --- a/hw/vfio/platform.c
+>> +++ b/hw/vfio/platform.c
+>> @@ -674,6 +674,29 @@ static void vfio_platform_class_init(ObjectClass *klass, void *data)
+>>       set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>>       /* Supported by TYPE_VIRT_MACHINE */
+>>       dc->user_creatable = true;
+>> +
+>> +    object_class_property_set_description(klass, /* 2.4 */
+>> +                                          "host",
+>> +                                          "Host device name of assigned device");
+>> +    object_class_property_set_description(klass, /* 2.6 */
+>> +                                          "sysfsdev",
+>> +                                          "Host sysfs path of assigned device");
+>> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+>> +                                          "x-no-mmap",
+>> +                                          "Disable MMAP for device. Allows to trace MMIO accesses");
+>> +    object_class_property_set_description(klass, /* 2.4 */
+>> +                                          "mmap-timeout-ms",
+>> +                                          "Timeout value in milliseconds to re-enable BAR mapping");
+>> +    object_class_property_set_description(klass, /* 2.4 */
+>> +                                          "x-irqfd",
+>> +                                          "Use irqfd for IRQ handling");
+> nit: why not reorder by release of introduction then? Same for other
+> devices.
 
-French influence ! Thanks,
+Yep. I will do that in v3.
+
+
+Thanks,
 
 C.
+
+
+> 
+> Thanks
+> 
+> Eric
+>> +
+>> +#ifdef CONFIG_IOMMUFD
+>> +    object_class_property_set_description(klass, /* 9.0 */
+>> +                                          "iommufd",
+>> +                                          "Set host IOMMUFD backend device ");
+>> +#endif
+>> +
+>>   }
+>>   
+>>   static const TypeInfo vfio_platform_dev_info = {
+> 
 
 
