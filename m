@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51277C021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571ACC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tibfb-0001AE-N5; Thu, 13 Feb 2025 11:02:31 -0500
+	id 1tiboj-0006CQ-2o; Thu, 13 Feb 2025 11:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibfT-00019P-EV
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tibfL-0005fy-UR
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:02:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739462535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FiozA6Zxf3TwsQBbLHJRuHW2pdcPG+mDIT1dc3xOVEE=;
- b=Ifa76a396QMDyY3giPeGSsfqNXsYBBzxnHda6MGKHu7pWIpqPyKkNO7FE/ONRsjE6N3pYQ
- Xr0Be01wTxG9FPH12FDulJCuZ5x93L0/Kmpy3X43Sv959od+b4wDPLgYAjIFswLxdmp9Ux
- cSTZtzEAGLnZzX+A+z2uNBPxqxjuVMM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-445-3VerhEtrMCCVe-x2YRCjpw-1; Thu, 13 Feb 2025 11:02:12 -0500
-X-MC-Unique: 3VerhEtrMCCVe-x2YRCjpw-1
-X-Mimecast-MFC-AGG-ID: 3VerhEtrMCCVe-x2YRCjpw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38dc709f938so1255130f8f.0
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:02:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiboR-0005na-2w
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:11:41 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tiboO-0007CX-Rc
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:11:38 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-220bff984a0so18603885ad.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:11:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739463094; x=1740067894; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=97F4M5gBh8WaJTSAqlKUeUulEnWrYq+Z0LMs9GpeJT8=;
+ b=JQ3+3dFu172dw2iqwQ1hokxjGCaiSO7heBst33aDzMHxFQUskNdLE1boG9DYCZSVRd
+ zRHxVg/puifGknjhEHNTjbUzKos96aL175uM3VEtGsZIUNvvLMEyHb0hjJSpnq90u1Hu
+ Y5DIwNTJR0kpKDy4IDYWA1VgE1TS2n4r/0Pg5kPiKxGNmpxqQPgkfh0DJ7Dyx6NTZSyK
+ GMGRntePCfDOuUuqMUaWOew5a1tjOW1prYGH7NT7IrfxzwIo+NWXqn6dp/XtHP7/5iIP
+ nc8iBcYUDUuI/HnIywyfW9tN6ye38y3PIXIIrJepzlp2SjCFFfl4s8DvrfNTkReEsLMS
+ N3uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739462531; x=1740067331;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FiozA6Zxf3TwsQBbLHJRuHW2pdcPG+mDIT1dc3xOVEE=;
- b=OtejCeB6cYvgm0MDwjBIfc/ODKsXfafGPKzFs/IuydY6SoDikyHYkWE7r0k6HLLfHc
- 4ZaVU9t9kUxK95FczpuZqHm3lV4UQjy1WaZSmVTHpGixFQwFfPR1/ZkMbj+tIuB1jZbV
- z923FfA9uVM2dv/iR74sIRgPqK4lYBMuXMAMNKZrmxGh+aPy9yh6PmdTJB/YLucJmEGm
- UT5N/zO5qok3VPvmAeUx9wHPLbTPEK2RkXDxjv3OQM1Xc9Hh9wFB8xyYeW3CL9beYJJU
- HiGf+Zt8iuqZxy7TO78DwEkV2tmJmesj+eU+T9TsW3vz/Zo/+rgHr5YjC1cxjAut9dkc
- poag==
-X-Gm-Message-State: AOJu0YzwmNnUN/xKTpwXqpf9TrVl2C5yriSg5RoZ7w8H8KpUFbJVuAEE
- iPXL3iVO5VodGDuLMOsQij7N/VJuqbzrvqb5o7Mx72wmMDKdkLwec53oIzYk9pby75Kl+YVrPWn
- +NJeXwpAetzxTBoDOXm7C1h27+K7gxaMq5gUl4s66Es26OHmxLPnZRe2kswvAADXOSr1vOFj24T
- HJXwOhp5qyTpPv8IWeEZH5b6xRKJ9qKYNmGSvcRN4=
-X-Gm-Gg: ASbGncsA5s9emdtykPTcMtga/WPwQD3kKRWmOTx80Ff+SgCOsPQF6Cmc6RtmG7zSCt3
- 00ud8A9PFhau17k7M7WJPuAn52veNysgflfXhgHSZqsBPg+f0ypdMKxhhvNcXfWiUez41tYqbdz
- pPDQeXFjMRm7NIWCWFGprppcIto3N59sScRg3KcGT3OMVoko8CAycaAX2NslP8NkyyqSs3yTJb1
- 3zgZNdFG9O4URF7AhN1CrjoFsGCNf/ANNKPFelXudN6Cgw+Fw0Jwb2NPi9i3L7vDBfJmGZGLd7T
- GcvoB4QVfrQPZBq7on0mMHcQzYbUY4TpinewcsPANiaOtQ==
-X-Received: by 2002:a05:6000:4024:b0:38d:afc8:954e with SMTP id
- ffacd0b85a97d-38f24cfa3dbmr4104954f8f.11.1739462530918; 
- Thu, 13 Feb 2025 08:02:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEV4OUQ/3/DgIPhVyruiRKMRNKMkh6IS9gsA4K/+aJPxOSKPdA6FrwWqAUWbI/N2C4eqqxBRQ==
-X-Received: by 2002:a05:6000:4024:b0:38d:afc8:954e with SMTP id
- ffacd0b85a97d-38f24cfa3dbmr4104859f8f.11.1739462530162; 
- Thu, 13 Feb 2025 08:02:10 -0800 (PST)
-Received: from [192.168.126.123] (93-38-211-213.ip72.fastwebnet.it.
- [93.38.211.213]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a06d1f2sm52061765e9.18.2025.02.13.08.02.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:02:09 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 26/27] rust: fix doctests
-Date: Thu, 13 Feb 2025 17:00:53 +0100
-Message-ID: <20250213160054.3937012-27-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250213160054.3937012-1-pbonzini@redhat.com>
-References: <20250213160054.3937012-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1739463094; x=1740067894;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=97F4M5gBh8WaJTSAqlKUeUulEnWrYq+Z0LMs9GpeJT8=;
+ b=mSnTDLC3t5FHO3aO/eNI1++LGv9oBY04HTGUi6xCPJokA5t5uI8A/XjX9re+D42lT7
+ 36xfIeKYpE0kRPQass5XTDeCqtbgVQ0mWjDCYulqJan9bT7rdTq8jg2Bt3c1WvximWvu
+ 6waQncV7eBLG9bOaznxdKhJxvAZpsni9TXdbbUmyNTQzb1s0uGJnAnyaGmrmK/eki32d
+ OrX5GWxpH/aO1CKGBa+VSucYh/+TSeUC4+p3kkq50KLTflE/aiFYhkdrwvxfUF2VEF6n
+ 8Ch6KM90aJj/LWdtz18tkkZHiej/asSujvL7p9Ri8gi8wBw/TQV1itXKjBk7jYwMUSFH
+ ALJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRDUglcV0dqytptZUC2LB8rVrM38uW39VNPB7X8xtQMblM957/+RyvX1LZ3EdlNNLilVObfLM+77Ef@nongnu.org
+X-Gm-Message-State: AOJu0Ywt6mHNkcxZMD+F9dp/uXWP1omH3Z/a7Z+6D44fvxkxv5V8qjRh
+ QtaeHeDcCQxjwC+q/p4pSdcX/1IYCdMHr3mgXw8gLupBnL4MYHM2EktiVTio9QU=
+X-Gm-Gg: ASbGncvQWxilQgbPnHmH23uQIiaUKZSQuOsmNd0mr6NP0sluZYdPk6jTfl1vwhIYZw3
+ Eh7aOYpQ/pbLNGbEgG3H5HLBjLiAFwlJLZO0NqmVsPEIZvOpUff6zGy8Fn95ZrcxneLtuB0inUe
+ 2QSF/Pw1XPMq3bPiNClWMTtWkaKeagJtmZ6vKjTPnuPGzLZY9tglAwe/ha4iNqEpfLjH1aSaDx7
+ S3fIc/GzfHW8PRbhwdv5vxw1Vc4aCSEqbIuUM8Z8FZEIg/45xh2jes9kugNoKDeU3OW24D6DOTH
+ fXCdJfGvCWeSpW4PTPzkxij9OPRXV7VTJsVP3NVLUVp7e/2aS4TGiEg=
+X-Google-Smtp-Source: AGHT+IE4MBEOSqtNF+ko3GkgpFItyWHwntKb+IbjjZy4YjSTeDrmxnaoFT1jBDXCjHmg46PF+GO+mA==
+X-Received: by 2002:a17:903:2f89:b0:21f:3abc:b9e8 with SMTP id
+ d9443c01a7336-220d215943dmr60677805ad.43.1739463094621; 
+ Thu, 13 Feb 2025 08:11:34 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220d5348f7asm14357665ad.23.2025.02.13.08.11.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Feb 2025 08:11:34 -0800 (PST)
+Message-ID: <9dbc295d-9c9a-47d0-8a97-7619b84c5b46@linaro.org>
+Date: Thu, 13 Feb 2025 08:11:31 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/9] target/microblaze: Use uint64_t for CPUMBState.ear
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: edgar.iglesias@gmail.com, Anton Johansson <anjo@rev.ng>
+References: <20250212220155.1147144-1-richard.henderson@linaro.org>
+ <20250212220155.1147144-5-richard.henderson@linaro.org>
+ <5b0a2b4c-7c70-4d3d-96ce-855feced435f@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <5b0a2b4c-7c70-4d3d-96ce-855feced435f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,59 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Doctests were not being run by CI, and have broken. Fix them.
+On 2/13/25 04:42, Philippe Mathieu-Daudé wrote:
+> On 12/2/25 23:01, Richard Henderson wrote:
+>> Use an explicit 64-bit type for EAR.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/microblaze/cpu.h       | 2 +-
+>>   target/microblaze/translate.c | 2 +-
+>>   2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+>> index 45f7f49809..01571d4f86 100644
+>> --- a/target/microblaze/cpu.h
+>> +++ b/target/microblaze/cpu.h
+>> @@ -248,7 +248,7 @@ struct CPUArchState {
+>>       uint32_t pc;
+>>       uint32_t msr;    /* All bits of MSR except MSR[C] and MSR[CC] */
+>>       uint32_t msr_c;  /* MSR[C], in low bit; other bits must be 0 */
+>> -    target_ulong ear;
+>> +    uint64_t ear;
+>>       uint32_t esr;
+>>       uint32_t fsr;
+>>       uint32_t btr;
+>> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+>> index d5c5e650e0..549013d25e 100644
+>> --- a/target/microblaze/translate.c
+>> +++ b/target/microblaze/translate.c
+>> @@ -1842,7 +1842,7 @@ void mb_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>>       }
+>>       qemu_fprintf(f, "\nesr=0x%04x fsr=0x%02x btr=0x%08x edr=0x%x\n"
+>> -                 "ear=0x" TARGET_FMT_lx " slr=0x%x shr=0x%x\n",
+>> +                 "ear=0x%" PRIx64 " slr=0x%x shr=0x%x\n",
+>>                    env->esr, env->fsr, env->btr, env->edr,
+>>                    env->ear, env->slr, env->shr);
+> 
+> So IIUC no need to worry about the upper 32-bits as Anton
+> suggested in my RFC:
+> https://lore.kernel.org/qemu-devel/ 
+> rbczkcp7whvovj55htcvongsc45xyhia5sgckqunszldag3iey@4vsbsjak4wr2/
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .gitlab-ci.d/buildtest.yml    | 6 ++++++
- rust/qemu-api/src/vmstate.rs  | 2 +-
- rust/qemu-api/src/zeroable.rs | 2 +-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+The upper 32 bits can only be written by the 64-bit "extended address" instructions, which 
+are supervisor only.  So certainly the upper 32-bits are not relevant to linux-user.
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 4265a577834..00f4bfcd9f3 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -131,6 +131,12 @@ build-system-fedora-rust-nightly:
-     CONFIGURE_ARGS: --disable-docs --enable-rust --enable-strict-rust-lints
-     TARGETS: aarch64-softmmu
-     MAKE_CHECK_ARGS: check-build
-+  after_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start test "Running Rust doctests"
-+    - cd build
-+    - pyvenv/bin/meson devenv -w ../rust ${CARGO-cargo} test --doc -p qemu_api
-+
-   allow_failure: true
- 
- check-system-fedora:
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index c6dfb609356..24a4dc81e7f 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -294,7 +294,7 @@ pub const fn with_varray_multiply(mut self, num: u32) -> VMStateField {
- /// # Examples
- ///
- /// ```
--/// # use qemu_api::vmstate::impl_vmstate_forward;
-+/// # use qemu_api::impl_vmstate_forward;
- /// pub struct Fifo([u8; 16]);
- /// impl_vmstate_forward!(Fifo);
- /// ```
-diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
-index a2356cb2f24..47b6977828d 100644
---- a/rust/qemu-api/src/zeroable.rs
-+++ b/rust/qemu-api/src/zeroable.rs
-@@ -7,7 +7,7 @@
- /// behavior.  This trait in principle could be implemented as just:
- ///
- /// ```
--/// pub unsafe trait Zeroable {
-+/// pub unsafe trait Zeroable: Default {
- ///     const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
- /// }
- /// ```
--- 
-2.48.1
+We are not currently, but *should* be writing to ear from linux-user so that ear gets 
+populated in the signal context.  We're missing a record_sigsegv hook.
 
+
+r~
 
