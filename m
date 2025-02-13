@@ -4,85 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C9AC0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7306C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiacE-0004pH-I2; Thu, 13 Feb 2025 09:54:58 -0500
+	id 1tiady-0005pP-KZ; Thu, 13 Feb 2025 09:56:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tiacB-0004ow-Oz
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:54:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tiadk-0005lA-D9; Thu, 13 Feb 2025 09:56:32 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tiacA-0003FE-BX
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 09:54:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739458493;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LsKbHcBxzgAQnpbBX0P++caW4lFP8TmEzYsHS8xMsj0=;
- b=MxRnS/BrMrYznDfBY8jwGkaHWAN1nG42y5yhtBEbxr+136Z6cGC/NK78XBNreR02lGahqY
- LYyQyiv1eSRRi3wmLRI7ml3qmP5UrCI9cKVr0KmhMvEEMNbwyisaxFB/CDx/+hSrhERURW
- E041FEVqCYCyrqqLFNSh5tLN15tOdrQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-oD1ZK_IjNZSjm2WT7juRBw-1; Thu,
- 13 Feb 2025 09:54:49 -0500
-X-MC-Unique: oD1ZK_IjNZSjm2WT7juRBw-1
-X-Mimecast-MFC-AGG-ID: oD1ZK_IjNZSjm2WT7juRBw_1739458487
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA1961801A0D; Thu, 13 Feb 2025 14:54:46 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.224.69])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D7611800359; Thu, 13 Feb 2025 14:54:45 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 977CE1800097; Thu, 13 Feb 2025 15:54:42 +0100 (CET)
-Date: Thu, 13 Feb 2025 15:54:42 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Alexander Graf <graf@amazon.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Ard Biesheuvel <ardb@kernel.org>
-Subject: Re: [PATCH v3 09/23] hw/uefi: add var-service-core.c
-Message-ID: <jnxvyw6q4vkng7jztu7q5rabgeohhpoxojdn4wt6xckc6pzmqz@ateji77pl5j7>
-References: <20250211092324.965440-10-kraxel@redhat.com>
- <da0ac9ed-fdca-433e-b793-5423f430a852@amazon.com>
- <iuwaykfdm7bwtvblyz7lkew3em2ksi5xeztdphqjdv7tsp2ejw@s6j64y3lfmrw>
- <ea1d355b-7e56-47ef-b1e7-158003b6d85f@amazon.com>
- <kk4f5e3olb26qfjveqefkuzrjc45djikkk7uspz4yj7iesdmbj@zointitbvhdp>
- <73fe41f7-dff0-4506-8769-1997323c0a76@amazon.com>
- <4bwjwcs2k4hbrj6mokc57a5dy57jjssfxnvd4qm5257dgnid3x@yqdx7e47o2mf>
- <2c06a98c-f286-4632-a352-8b47dc4cc43c@amazon.com>
- <2vgc4scgezmb3med6dypykcym7te7gzlx7wp3vm5ehtfmxj3xr@kswpu35wt5ns>
- <f59bb48f-051d-4681-a702-6aed3420c2f7@amazon.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tiadi-0003dL-59; Thu, 13 Feb 2025 09:56:32 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F36964E602A;
+ Thu, 13 Feb 2025 15:56:26 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id BGkFooncBxR9; Thu, 13 Feb 2025 15:56:25 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 0247A4E6019; Thu, 13 Feb 2025 15:56:25 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F363174577C;
+ Thu, 13 Feb 2025 15:56:24 +0100 (CET)
+Date: Thu, 13 Feb 2025 15:56:24 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Thomas Huth <thuth@redhat.com>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH v6 01/11] hw/qdev-properties-system: Introduce EndianMode
+ QAPI enum
+In-Reply-To: <babd30e7-0434-436a-852b-7ff1599d3944@redhat.com>
+Message-ID: <10b73553-4044-288e-3788-7a3ed9c41cb2@eik.bme.hu>
+References: <20250212112413.37553-1-philmd@linaro.org>
+ <20250212112413.37553-2-philmd@linaro.org>
+ <cb828dd8-25f6-47c6-9ac7-cae5b0d0932e@redhat.com>
+ <50ba4e4b-4124-46bb-bb84-4758ce9c5e66@linaro.org>
+ <3b3baed4-0d79-3a28-40cd-e1835e078863@eik.bme.hu>
+ <6e707c7f-b94c-47ef-83ab-795605e27963@linaro.org>
+ <a3608e43-79ce-403d-8ba7-6735fde66759@linaro.org>
+ <e1436061-a840-0942-2c2c-4f49bfb932b8@eik.bme.hu>
+ <672045c1-9b09-4b7b-9bed-fa990129ce2c@linaro.org>
+ <fb7045a4-20f6-a52d-5531-2410fc803bb4@eik.bme.hu>
+ <0f7ea6d6-8476-4ba6-9d4f-eeb76aed04fa@redhat.com>
+ <9e121e62-8e6e-61d6-dbfb-4dfda469acc5@eik.bme.hu>
+ <babd30e7-0434-436a-852b-7ff1599d3944@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f59bb48f-051d-4681-a702-6aed3420c2f7@amazon.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,38 +82,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 13, 2025 at 11:14:03AM +0100, Alexander Graf wrote:
-> 
-> > I don't think so.  The firmware driver knows this actually is normal ram
-> > and can setup mappings and memory attributes accordingly.  The situation
-> > is a bit different from vga memory bars which are handled by pci bus
-> > management which doesn't know anything about virtualization specifics.
-> > 
-> > Well, unless macos thinks it knows everything better and goes setup
-> > uncached mappings ...
-> 
-> It's not only macOS. After SetVirtualAddressMap, the OS owns the virtual
-> address space of Runtime Services. So in theory it also owns cacheability
-> attributes of all mappings.
+On Thu, 13 Feb 2025, Thomas Huth wrote:
+> On 13/02/2025 14.59, BALATON Zoltan wrote:
+>> On Thu, 13 Feb 2025, Thomas Huth wrote:
+>>> On 12/02/2025 23.34, BALATON Zoltan wrote:
+> [...]
+>>>> So then can the behaviour of NATIVE_ENDIAN be changed to look at the 
+>>>> machine endianness instead of replacing it with a constant?
+>>> 
+>>> No, that does not work. First, the machine knows about its devices, but a 
+>>> device should not know about the wiring of the global machine (just like 
+>>> in real life).
+>> 
+>> That means all devices should be either big or little endian and there 
+>> should be no native endian ones. Why do we have those then?
+>
+> Some device can indeed be either big or little endian - think of devices that 
+> are synthesized in an FPGA for example. But in most cases, it rather depends 
+> on the bus wiring. Anyway, we need a config knob to allow either the one or 
+> the other endianness for certain devices.
+>
+>> That's why this endianness property should either be removed from ops and 
+>> only attached to it when added to a machine if needed or kept to show which 
+>> machines it can be attached to: only big, little or both endian which is 
+>> what it seems to be doing now.
+>
+> Again, devices should not know about machines, not the other way round. So 
+> the device should offer a config switch (property) and the machine should set 
+> it to the value that it needs.
 
-Hmm.  Played around with the device memory approach a bit today.  Looks
-workable for both arm/sysbus and x86/isa.  Problem is, if that does
-leave any unsolved corner cases on the table it doesn't buy us much, and
-the arm caching issues start to make me a bit nervous ...
+That would mean this endianness in ops should be set when the memory 
+region is mapped in the machine not when defining the device. So all 
+device ops should really be NATIVE_ENDIAN and only assigned an endianness 
+when they are mapped based on the machine/bus/cpu they are connected to.
 
-So, maybe allowing pio data transfers is the better approach after all.
+>>> Second, imagine a board with e.g. a big endian main CPU and a little 
+>>> endian service processor - how should a device know the right endianness 
+>>> here?
+>> 
+>> How would that work with this series? So the proposed solution is to double 
+>> the devices now marked as NATIVE_ENDIAN to have a big and a little endian 
+>> variant for them so the board can choose?
+>
+> This is not doubling the devices. It just introduces a config property to let 
+> the machine switch the endianness.
 
-How do your patches pick the transfer mode?  Is that dictated by the
-host?  Or is the guest free to choose?  In case of the latter:  How does
-the guest decide what to do?
+Yes, I've oversimpified, each ops has its own endianness config not the 
+device. But since the endianness is not a property of the device or its 
+regions but the bus it's connected to, this config switch may be at the 
+wrong place now.
 
-> Yes, IIRC we advertise where the hole is. I'm sure we can find a spot.
-> Somewhere next to the HPET :).
+>> That does not exist in real as you wrote, there's only one device so then 
+>> this is probably not the right way to model it.
+>
+> Some devices can exist in both, big and little endian variants. We could of 
+> course create two devices for this, but that's nonsense if it can simply be 
+> handled by a property instead.
+>
+>>>> Or would that be too much overhead? If always looking up the endianness 
+>>>> is not wanted could the ops declaration keep NATIVE_ENDIAN 
+>>> 
+>>> IMHO we should get rid of NATIVE_ENDIAN completely since there is no 
+>>> "native" endian in multi-CPU boards.
+>> 
+>> If we say NATIVE_ENDIAN means that the device can be attached to either big 
+>> or little endian machine then we can keep this constant but when adding the 
+>> ops to a memory region the board has to then decide which endianness it is 
+>> and replace it with either big or little. Then we don't need two versions 
+>> of the same device and NATIVE_ENDIAN means that the device can be used in 
+>> both machines.
+>
+> Well, it's currently the devices that are calling memory_region_init_io().
 
-0xfef1000 seems to be free, which is kida fun b/c of the 'ef1' in the
-address.
+That answers my question. Then it seems it's not so simple to set 
+endianness when the device is mapped because it would need to be done 
+somewhere else. It may still be possible but might be too much work to 
+find it out.
 
-take care,
-  Gerd
+> And since memory_region_init_io() does not copy the MemoryRegionOps struct,
+> we need two implementations right now for this, one for big and one for 
+> little endian. So I think Philippe's series here is fine.
 
+It could copy the MemoryRegionOps when needed but seems it's not 
+memory_region_init_io that would need to handle that. Given the current 
+way it's implemented doubling the ops region may be the simplest even if 
+not the correct way to do it so it's OK if there's no simple alternative 
+that's more correct.
+
+> But feel free to 
+> suggest clean up patches on top if you think that the memory_region_init_io() 
+> needs to be handled differently in QEMU everywhere.
+
+I think so as I've described above but not enough to try to solve it so 
+I'm OK with Philippe's series if there's no other way to make it less like 
+a workaround for something that could be done clearer. Looks like other 
+way might be too complex for now.
+
+Regards,
+BALATON Zoltan
 
