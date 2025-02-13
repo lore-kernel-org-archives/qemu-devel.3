@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00203C0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 11:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D48C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 11:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiXfN-0002y6-Lq; Thu, 13 Feb 2025 06:46:01 -0500
+	id 1tiXi2-0003ur-JC; Thu, 13 Feb 2025 06:48:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1325cea77=graf@amazon.de>)
- id 1tiXfG-0002xj-5V; Thu, 13 Feb 2025 06:45:56 -0500
-Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tiXhz-0003ue-Tp
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 06:48:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1325cea77=graf@amazon.de>)
- id 1tiXfE-0005hB-DD; Thu, 13 Feb 2025 06:45:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1739447152; x=1770983152;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=lL2Y6LqQ4b46Dr+kJFr/TmMrYftcnjDurs+LN2y3h8E=;
- b=P+Nie4bos4SgnWZOAzyFzqnFhzAs+anJJ1khfMgsCjK++RdlJULG0xWW
- Edo65M1GAObBQDIyK76u3ftsRSAJKDPPtM35yO3ahzsVGa9m2Vk7ciFGr
- dTw+YzH+OUhm5iofJw0CCkTIv63pvcR9QzKmr6uWSykRdRLz4fbLsZVWI A=;
-X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="471830947"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-6002.iad6.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 11:45:46 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [10.0.38.20:65043]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.115:2525]
- with esmtp (Farcaster)
- id 10549cb2-9ec4-4781-8830-434f14aa7401; Thu, 13 Feb 2025 11:45:44 +0000 (UTC)
-X-Farcaster-Flow-ID: 10549cb2-9ec4-4781-8830-434f14aa7401
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 13 Feb 2025 11:45:43 +0000
-Received: from ip-10-253-83-51.amazon.com (10.253.83.51) by
- EX19D020UWC004.ant.amazon.com (10.13.138.149) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 13 Feb 2025 11:45:42 +0000
-From: Alexander Graf <graf@amazon.com>
-To: <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, Dorjoy Chowdhury <dorjoychy111@gmail.com>, Vikrant Garg
- <vikrant1garg@gmail.com>, <qemu-stable@nongnu.org>
-Subject: [PATCH] hw/virtio/virtio-nsm: Respond with correct length
-Date: Thu, 13 Feb 2025 11:45:41 +0000
-Message-ID: <20250213114541.67515-1-graf@amazon.com>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tiXhx-0005yq-VC
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 06:48:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739447318;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=viO7qmnlWrZt2ER4ZxRJLY7XSgD4+ZaaxRdGbrtL1yw=;
+ b=XdiZMl+zYQqBiflvclnjDmV+Bc9Ft1tKwCq5D9Hnam/hJzCM18SPYoW41dnSKiAToI0SPY
+ /IeNlv8+5cXR/YvQRC6+S+Bjpo5KdR3NimW/S7B1cvEjiW/tJ9OvNnPbqmYCue68SFzJ8J
+ HaBA0JLnDPIvRyHEswnB5Vjl6BzF97E=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-1Sohwg3pPKSfvEck7bkmiw-1; Thu,
+ 13 Feb 2025 06:48:35 -0500
+X-MC-Unique: 1Sohwg3pPKSfvEck7bkmiw-1
+X-Mimecast-MFC-AGG-ID: 1Sohwg3pPKSfvEck7bkmiw_1739447314
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDB1F18EB2C3; Thu, 13 Feb 2025 11:48:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD84D300018D; Thu, 13 Feb 2025 11:48:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1EDBD21E6A28; Thu, 13 Feb 2025 12:48:30 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: gaosong <gaosong@loongson.cn>
+Cc: Bibo Mao <maobibo@loongson.cn>,  QEMU devel <qemu-devel@nongnu.org>,
+ David Hildenbrand <david@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH] target/loongarch: Add full type support for
+ query-cpu-model-expansion
+In-Reply-To: <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
+ (gaosong@loongson.cn's message of "Thu, 13 Feb 2025 18:07:06 +0800")
+References: <20250213091626.3650603-1-maobibo@loongson.cn>
+ <30c1c330-32d1-fa36-c0ca-670c94a06736@loongson.cn>
+Date: Thu, 13 Feb 2025 12:48:30 +0100
+Message-ID: <87a5aqhxpt.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D042UWA002.ant.amazon.com (10.13.139.17) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=52.95.49.90;
- envelope-from=prvs=1325cea77=graf@amazon.de; helo=smtp-fw-6002.amazon.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,34 +87,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we return a response packet from NSM, we need to indicate its
-length according to the content of the response. Prior to this patch, we
-returned the length of the source buffer, which may confuse guest code
-that relies on the response size.
+gaosong <gaosong@loongson.cn> writes:
 
-Fix it by returning the response payload size instead.
+> Cc: Markus
+>
+> hi, Markus
+>
+> What is the difference between CPU_MODEL_EXPANSION_TYPE_STATIC and 
+> CPU_MODEL_EXPANSION_TYPE_FULL?
 
-Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
-Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
-Signed-off-by: Alexander Graf <graf@amazon.com>
----
- hw/virtio/virtio-nsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I don't know :)
 
-diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
-index 098e1aeac6..b22aa74e34 100644
---- a/hw/virtio/virtio-nsm.c
-+++ b/hw/virtio/virtio-nsm.c
-@@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
-     g_free(req.iov_base);
-     g_free(res.iov_base);
-     virtqueue_push(vq, out_elem, 0);
--    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
-+    virtqueue_push(vq, in_elem, sz);
-     virtio_notify(vdev, vq);
-     return;
- 
--- 
-2.47.1
+Here's the documentation:
+
+    ##
+    # @CpuModelExpansionType:
+    #
+    # An enumeration of CPU model expansion types.
+    #
+    # @static: Expand to a static CPU model, a combination of a static
+    #     base model name and property delta changes.  As the static base
+    #     model will never change, the expanded CPU model will be the
+    #     same, independent of QEMU version, machine type, machine
+    #     options, and accelerator options.  Therefore, the resulting
+    #     model can be used by tooling without having to specify a
+    #     compatibility machine - e.g. when displaying the "host" model.
+    #     The @static CPU models are migration-safe.
+    #
+    # @full: Expand all properties.  The produced model is not guaranteed
+    #     to be migration-safe, but allows tooling to get an insight and
+    #     work with model details.
+    #
+    # .. note:: When a non-migration-safe CPU model is expanded in static
+    #    mode, some features enabled by the CPU model may be omitted,
+    #    because they can't be implemented by a static CPU model
+    #    definition (e.g. cache info passthrough and PMU passthrough in
+    #    x86).  If you need an accurate representation of the features
+    #    enabled by a non-migration-safe CPU model, use @full.  If you
+    #    need a static representation that will keep ABI compatibility
+    #    even when changing QEMU version or machine-type, use @static (but
+    #    keep in mind that some features may be omitted).
+    #
+    # Since: 2.8
+    ##
+
+If you have further questions, David Hildenbrand or Eduardo Habkost
+(cc'ed) might be able to help.
 
 
