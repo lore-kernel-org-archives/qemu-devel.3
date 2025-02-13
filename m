@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A7DC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCBBAC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 16:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ticSQ-0004bn-C3; Thu, 13 Feb 2025 11:52:58 -0500
+	id 1ticXR-0006QX-0j; Thu, 13 Feb 2025 11:58:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ticSL-0004bC-VF
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:52:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ticSH-0005CM-4k
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:52:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739465567;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8nSIx9szDbtbyAtyq/ZEbhmLgwoEFtUgV+Rg06WFGgQ=;
- b=NOThZJlhNUKx2sGVAOwYR8KOGuh4OFe1U69t2zH+D2nxRkIvobGXWnpwnvsO3yGCPxYYEm
- UTlHViwa8WCQgG+W7NT5KoUQn+XQsB9vF4O9jdXBjQW46jUcMPKdBR/sqLyArokPtEFOxz
- yA8BODmnQUETYgqQcR3bdnJxZwNnqo4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-zTlmdHbSOfy90-tyOG-SVQ-1; Thu, 13 Feb 2025 11:52:46 -0500
-X-MC-Unique: zTlmdHbSOfy90-tyOG-SVQ-1
-X-Mimecast-MFC-AGG-ID: zTlmdHbSOfy90-tyOG-SVQ
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f27bddeeeso800385f8f.3
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:52:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ticXP-0006QD-1X
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:58:07 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ticXN-0005nG-F3
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 11:58:06 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so18846655ad.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 08:58:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739465883; x=1740070683; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yLSbzG6ML45iHZ+vj4SzYhnUOLaM3mfQ4WRjmCJ8nII=;
+ b=nKPMDaX9/zxch8zD5eb8NnBA1kjQ0//ToyiBrVlU9oPE16zr6F2En/1HFju7LoCjit
+ I6nh2My+KdTlyiDPuonZryTIEzRLsxy3wZO+pqUx7uQQrOefcOYENLIFAmrA/Sggd+td
+ DOLQ1ZoG56IdTIWSv4pH0mgKShQq9L8wYlejDO0PvFK1EL/8gmOIW7Enh41Skguo7Wvq
+ cPpmz3xOv6kal1gOhDmj1f8QfDuF2A59sn/N8+jnlCMBt6a9eBAMz4qhEKKHDYdUTVNi
+ EMw//njL8+LphAsStVO3dRjYUKyhEJhPRamVfmKoBi+0EHeYzhL1+gX3jyfjbnzdbw+0
+ nK4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739465564; x=1740070364;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8nSIx9szDbtbyAtyq/ZEbhmLgwoEFtUgV+Rg06WFGgQ=;
- b=ORBEkuDmiW5x/cCICLBkQ028AC0y1HiIvejhyL/WY+p9U0NKXpY0B3qE+JE9hgDup0
- tVGvJ1Ox0gq7+m+7UCWrycSM+5RtkSLBiQfx0/QDAiEf8CqOB9pcFl3qFzGRBXEfkohQ
- LycAED+rBNcrk4AKhwCqMuEAKsPRMxWZ0j+fnuD9egC0nLMeYKgXzWNQc9HUBs64Ommm
- BQIKA3HAQsOl+xq5Kv2AD3BhujkYBsZGWuZepyEB4x97z+4/QmbjJLk6nDaIPYVcpESD
- yFtfp9GiMKa/jguKk6cv9km5oCHtW6iVzhsV0OZjiqnqB21Ahoa6AL2cOGaiRAUmBXR3
- 1/FQ==
+ d=1e100.net; s=20230601; t=1739465883; x=1740070683;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yLSbzG6ML45iHZ+vj4SzYhnUOLaM3mfQ4WRjmCJ8nII=;
+ b=oHAaUvBEUWi3rcMSUnzU9GEMU1c/V9G6rjXB+R3XhwZ89YttOFOsqXGbJsx4b1t9uy
+ k6Hhs6dxJfYfzSqg1bAV6OoDSQIesQSjCvv9uH5KUSmHPrmNRiGOzEjtMNjBBZykbh3i
+ rralEQnMzJ2LjD5cya9GOaiN6sJQg033DdAMiwwVz0LvkYWcTzks2w2EIdJZVgm1Fewt
+ +cJsKaD4YSfxRfHqyeXGrj2hFUfRTYO7f/JR8uzBPfdoLzkuRzuTFu+tDoGeHoa8nAKJ
+ FReriOvDh93NoJuNIdhS2RDXTxCnJwQ9iXNVp/PYXUQJ6cw0PsCRO+RT7nRlRtTNKEeh
+ ym3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNlNTdFU+m8iFPbt+ZJl17uOOij2ezZQVFA49zjT0pBwv9OJZF7d33D2mkRwSSwBH4JujoBju45FQ3@nongnu.org
-X-Gm-Message-State: AOJu0YxvdbjAghmXPveAmDog53A4sigStDGnugRgBvs9WYn0zezQsZ1d
- MGaEp4+FQpKFi5LiRsoBz0xJmMAFOT4F6UcgFGBPszQ86MWQk4NNQK7kGdWCBWwypyWHV7BNYI5
- BmYN4E6HoNlkTod+ZJDFp/bqDqG2ElrdDbxfQ/FQUcRREgpqNYYS8jLtUgid/
-X-Gm-Gg: ASbGnct2C5ZrKQCWIogRzNZSRWgnBiys4SIGiRA6Z76JL3ZNW6M+XoIdq2htQRNMFu9
- AkXQ4Al3/N2RchtzZXciz6ym+iFjPZtilntpW26qVcRySpIsyS+MC7quDABbtzgbNFIJn5R42Zy
- RVN4LFoZwpxr9ylU1P/hOMIsOmjcNOCUaxt+efyDvEzIacz6Uidfx4+hWAyWzdDkBDUZE8IU/PP
- V74R99jXuMPguF+b13+InQWr/oKHtsLDEquqKShjXhXjAFXZ9xFytcUG7NTlAlATWIUacQn17Cb
- rUCsfFYVxjmY+LzT9FoURp8+iYMTk64wKgn6UZpDj92BnffkuGws
-X-Received: by 2002:a5d:64cf:0:b0:38d:e33d:d0eb with SMTP id
- ffacd0b85a97d-38f244da143mr4712030f8f.9.1739465563708; 
- Thu, 13 Feb 2025 08:52:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE19KG6/E6CMD4a510CdnY+o56NK6yjg5Xuo2YXJw0UoEH+6wCYAlGW1+No1x6ZKg01kkLuVQ==
-X-Received: by 2002:a5d:64cf:0:b0:38d:e33d:d0eb with SMTP id
- ffacd0b85a97d-38f244da143mr4711982f8f.9.1739465563242; 
- Thu, 13 Feb 2025 08:52:43 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ccef7sm2413675f8f.31.2025.02.13.08.52.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 08:52:42 -0800 (PST)
-Date: Thu, 13 Feb 2025 17:52:41 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: bibo mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/loongarch: Add full type support for
- query-cpu-model-expansion
-Message-ID: <20250213175241.03bde8c1@imammedo.users.ipa.redhat.com>
-In-Reply-To: <3a1f0744-4795-8f07-7258-0922745906ac@loongson.cn>
-References: <20250213091626.3650603-1-maobibo@loongson.cn>
- <3a1f0744-4795-8f07-7258-0922745906ac@loongson.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCVDchOOMGEMVROSQp3T7Kz/b42UiU3C2zEdIQqTd8GittwLNy9G1BmAzd2iH6ZPHbDXS9yHvLrIyTFj@nongnu.org
+X-Gm-Message-State: AOJu0YwXvOyBmeVBNfwBam9dOU+YMtn2YLYCTr7d4B3J1yFwvQfl6G6q
+ FW3dwQHLaLsnKZCAQbYWUc7rmc3/zcKSJDzVh01TaC5lKD09glIwNb4NpvByHl8=
+X-Gm-Gg: ASbGnctEU/gC3dNXAzCsct3YafoelUS6v8db3xxGxAKK1kEHNZjmCvS0MHYnvvD7GDx
+ ooJf7BiXf2vHMkOpVw7MwmXYxYQFdrybxqlkT97V544zgX8NDUubBr7MkoVqOwBiDFNlLKj5zRy
+ UbXf0feI2j58L8MqUGx/r0TH8mnCuy9I5Fq7F5IsNPmrSQL/9jjufCPOKajUuKTFaZIVok5Hpf9
+ 1WUGhg5RdCSyk9eU+7wcRmCIrbybsLd+ZOP3ol9p5vR0K1rOeyo4OjLbJmHx4Mowx5+q7BLfS5F
+ uJ2XjluIvMXeuAWc1anQs1WU81OQFjwTBoq1PnBEhLGWj7y307Z2JNU=
+X-Google-Smtp-Source: AGHT+IHoKu9no66LZzBuMHWqarQg68mxx1/eK3mwTwqAWk1/9HVKJdT6WG0srm4lhBHXA5H8SgwS7w==
+X-Received: by 2002:a17:902:d543:b0:216:501e:e314 with SMTP id
+ d9443c01a7336-220bbafa000mr128534615ad.20.1739465881759; 
+ Thu, 13 Feb 2025 08:58:01 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220d53499fesm14632425ad.34.2025.02.13.08.58.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Feb 2025 08:58:01 -0800 (PST)
+Message-ID: <ddc4ca31-22ab-4818-88d9-08f299559945@linaro.org>
+Date: Thu, 13 Feb 2025 08:57:59 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/sparc: Fix gdbstub incorrectly handling registers
+ f32-f62
+To: Mikael Szreder <git@miszr.win>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20250203145056.83567-1-git@miszr.win>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250203145056.83567-1-git@miszr.win>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,77 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Feb 2025 17:40:56 +0800
-bibo mao <maobibo@loongson.cn> wrote:
+On 2/3/25 06:50, Mikael Szreder wrote:
+> The gdbstub implementation for the Sparc architecture would incorectly
+>   calculate the the floating point register offset.
+> This would cause register pairs(eg f32,f33) to point to the same value.
+> 
+> Fixes: 30038fd81808 ("target-sparc: Change fpr representation to doubles.")
+> Signed-off-by: Mikael Szreder <git@miszr.win>
+> ---
+>   target/sparc/gdbstub.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+> index ec0036e9ef..5578fa9813 100644
+> --- a/target/sparc/gdbstub.c
+> +++ b/target/sparc/gdbstub.c
+> @@ -80,7 +80,7 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+>       }
+>       if (n < 80) {
+>           /* f32-f62 (double width, even numbers only) */
+> -        return gdb_get_reg64(mem_buf, env->fpr[(n - 32) / 2].ll);
+> +        return gdb_get_reg64(mem_buf, env->fpr[(n - 64) + 16].ll);
 
-> please discard this patch :(
->=20
-> libvirt uses static type already on LoongArch platform, there is=20
-> compatibility issue. Static type cannot be removed, although I do
-> not know the difference between static type and full type.
+I don't understand your issue with f33, since there is no such thing.  Sparc v9 has f0, 
+f1, ... f31, then f32, f34, ... f62.  The odd numbers above 32 do not exist.
 
-looking at loongarch-qmp-cmds.c:qmp_query_cpu_model_expansion(),
-you do filter reported features by global cpu_model_advertised_features[] l=
-ist.
-Also cpu 'definition' is mainly governed by its initfn() and
-properties mentioned in cpu_model_advertised_features[] are created
-only by loongarch_cpu_post_init() , which is part of la464 and max models.
-The later call however mutates depending on accelerator, which
-sort of contradicts 'static' description and feets more to 'full' category.
+Certainly the indexing is incorrect afterward.
 
-What I'd suggest doing is to support both
-i.e. do keep 'static' for compat reasons  and run the same code for 'full'
+Originally,
 
-In nutshell drop if(type) check or explicitly allow both types.
+   f32 = 64 -> (64 - 32) / 2 = 16
+   f34 = 66 -> (66 - 32) / 2 = 17
 
->=20
-> Regards
-> Bibo Mao
->=20
-> On 2025/2/13 =E4=B8=8B=E5=8D=885:16, Bibo Mao wrote:
-> > With full type for query-cpu-model-expansion qmp command, it shows that
-> > it is not supported. For instance,
-> >    query-cpu-model-expansion type=3Dfull model=3D{"name":"max"}
-> >=20
-> > Here is is output,
-> >    {"error": {"class": "GenericError", "desc": "The requested expansion=
- type is not supported"}}
-> >=20
-> > Since full type is not supported and only static type is supported, Here
-> > replace static type with full type for command query-cpu-model-expansio=
-n.
-> >=20
-> > And there is result with this patch,
-> >    {"return": {"model": {"name": "max", "props": {"lbt": true, "lasx": =
-true, "pmu": true, "lsx": true}}}}
-> >=20
-> > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> > ---
-> >   target/loongarch/loongarch-qmp-cmds.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/l=
-oongarch-qmp-cmds.c
-> > index 3fde5a5a20..429c6d35fd 100644
-> > --- a/target/loongarch/loongarch-qmp-cmds.c
-> > +++ b/target/loongarch/loongarch-qmp-cmds.c
-> > @@ -56,7 +56,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(=
-CpuModelExpansionType type,
-> >       const char *name;
-> >       int i;
-> >  =20
-> > -    if (type !=3D CPU_MODEL_EXPANSION_TYPE_STATIC) {
+whereas your replacement gives
+
+   f34 = 66 -> (66 - 64) + 16 = 18.
+
+One could rewrite this as
+
+   (n - 64) / 2 + 16
+
+but that's algebraically identical to what we have now, so I don't see the point.
+
+One plausible adjustment in this area would be to reject odd numbers from this block and 
+let them fall through to 'return 0' at the end.
 
 
-> > +    if (type !=3D CPU_MODEL_EXPANSION_TYPE_FULL) {
-> >           error_setg(errp, "The requested expansion type is not support=
-ed");
-> >           return NULL;
-> >       }
-> >=20
-> > base-commit: de278e54aefed143526174335f8286f7437d20be
-> >  =20
->=20
->=20
-
+r~
 
