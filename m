@@ -4,95 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BABDC021A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 12:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A4C2C0219D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 12:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiYjP-0005Qy-7F; Thu, 13 Feb 2025 07:54:15 -0500
+	id 1tiYki-00066q-Jw; Thu, 13 Feb 2025 07:55:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <madmarri@cisco.com>)
- id 1tiYjL-0005QT-IH
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:54:11 -0500
-Received: from alln-iport-5.cisco.com ([173.37.142.92])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tiYkd-00064M-Ut
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:55:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <madmarri@cisco.com>)
- id 1tiYjJ-0007kw-Vf
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:54:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cisco.com; i=@cisco.com; l=1077; q=dns/txt; s=iport;
- t=1739451249; x=1740660849;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=vfSbWWpJrourxmLHfdvWizUEvZuT+2R0zTs9XRrc2X0=;
- b=MevPAWMd+19mrBs4tUCjOAdiC1Z8b2OJpKm5unwK5GkqnUw42D9txbKX
- /c6KfeJO5fsdOTAZXea22N3okqATIHDD2jW1uT+xWPIILJUvTjdY/4wYR
- rmEFo3+RKIx21CmPv1VPnpXiPGYGIYxxGPb3sFwPgIF4Y4+pRBso3SG9c w=;
-X-CSE-ConnectionGUID: Q3yWZKx1Rf212ey8hNuMTg==
-X-CSE-MsgGUID: gHTXTbpfSO2lZTY7CGRsCw==
-X-IPAS-Result: =?us-ascii?q?A0ATAAA16q1n/4z/Ja1aGwEBAQEBAQEBBQEBARIBAQEDA?=
- =?us-ascii?q?wEBAYF/BgEBAQsBAYJJdllDSIxyiVOaEoQFgSUDVg8BAQEPOQsEAQGFB4sLA?=
- =?us-ascii?q?iY0CQ4BAgQBAQEBAwIDAQEBAQEBAQEBAQELAQEFAQEBAgEHBYEOE4V7DUkBD?=
- =?us-ascii?q?AGGBisLAUaBDESDAgGCZAMRrlOBeTOBAYR82TiBaAaBSAGNSlcZhHcnG4FJR?=
- =?us-ascii?q?IR9gQWEC4V3BIddhzCDeplTSIEhA1ksAVUTDQoLBwWBcQM1DAswFYFGQzeCR?=
- =?us-ascii?q?2lJOgINAjWCHnyCK4RXhENeLwMDAwODMoVYghKCDIlNTkADCxgNSBEsNxQbB?=
- =?us-ascii?q?j5uB55JATyEJgGBAwosIoEvk2ckAZIqoQSEJYRvhymVLhozqlIuh2SQaooHg?=
- =?us-ascii?q?32WRIRmgWc8gVkzGggbFYMiUhkPji0LC4NYxzElMjwCBwsBAQMJjUCEQQEB?=
-IronPort-Data: A9a23:PyoFpatCn0HhODR0QP0duKVSOefnVAdfMUV32f8akzHdYApBsoF/q
- tZmKTzQOP+CMDP9cosnYNu//BhSvMLXx99nTlZorHs9EyMXgMeUXt7xwmUckM+xwmwvaGo9s
- q3yv/GZdJhcokf0/0nrav656yEhjclkf5KkYMbcICd9WAR4fykojBNnioYRj5Vh6TSDK1vlV
- eja/YuGYzdJ5xYuajhJs/ja80s01BjPkGpwUmIWNKgjUGD2zxH5PLpHTYmtIn3xRJVjH+LSb
- 47r0LGj82rFyAwmA9Wjn6yTWhVirmn6ZFXmZtJ+AsBOszAazsAA+v9T2Mk0NS+7vw60c+VZk
- 72hg3AfpTABZcUgkMxFO/VR/roX0aduoNcrKlDn2SCfItGvn3bEm51T4E8K0YIww71mPlNt5
- aUiJmpUNB2S1+KQ3ZeHRbw57igjBJGD0II3oHpsy3TdSP0hW52GG/6M7t5D1zB2jcdLdRrcT
- 5NGMnw0M1KaPkAJYwtPYH49tL/Aan3XdjRUrVuPv6sf6GnIxws327/oWDbQUoDRH58Izh/H/
- woq+Uz2Ii0qCNaHxwGiqHaeut6QtgzBQ6kNQejQGvlCxQf7KnYoIAQbUEb+rfSnh0qWXdVZJ
- EoJvC00osAa91aiXtT5dwe1rH6NolgXXN84LgEhwBuGxqyR50OSAXIJC2YaLtcnr8QxAzct0
- zdlgu/UONCmi5XNIVr1y1tehWra1fQ9RYPaWRI5cA==
-IronPort-HdrOrdr: A9a23:VisY/KkjM9Fnd0cbYesiHo7msQHpDfIn3DAbv31ZSRFFG/FwWf
- rAoB19726QtN9/YhAdcLy7VZVoIkmsl6Kdg7NwAV7KZmCP0wGVxepZg7cKrQeNJ8SHzJ8/6U
- +lGJIOb+EZyjNB/KLH3DU=
-X-Talos-CUID: 9a23:DmE6sGwjPNb+Lh8FBOz6BgUtQdEaQF7NlU3eeRbiBHc5SJuIbGOfrfY=
-X-Talos-MUID: 9a23:V8R23AY7UoSy0eBTuB/QtA1oLMlTxP6qOnw8zr4pgdKvKnkl
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="432258171"
-Received: from rcdn-l-core-03.cisco.com ([173.37.255.140])
- by alln-iport-5.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 13 Feb 2025 12:54:07 +0000
-Received: from sjc-ads-7373.cisco.com (sjc-ads-7373.cisco.com [10.30.220.158])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by rcdn-l-core-03.cisco.com (Postfix) with ESMTPS id 5C41E180001FC;
- Thu, 13 Feb 2025 12:54:07 +0000 (GMT)
-Received: by sjc-ads-7373.cisco.com (Postfix, from userid 1839049)
- id E2462CC12B5; Thu, 13 Feb 2025 04:54:06 -0800 (PST)
-From: Madhu Marri <madmarri@cisco.com>
-To: qemu-devel@nongnu.org
-Cc: kraxel@redhat.com,
-	xe-linux-external@cisco.com,
-	madmarri@cisco.com
-Subject: [master] [PATCH] usb: Check USB_TOKEN_SETUP in
- usb_ep_get(CVE-2024-8354)
-Date: Thu, 13 Feb 2025 04:54:03 -0800
-Message-ID: <20250213125403.4138883-1-madmarri@cisco.com>
-X-Mailer: git-send-email 2.44.1
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tiYkc-000854-EA
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:55:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739451328;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=34aDo8ciuIjSIrc1HEIigZQAB0/DFvc2KzKOnsg2A9A=;
+ b=YZca+NpSrJnoDJ8eeGioNdemu6QSlxvLrspV6TzdxIIvXBFHtz89vzeESILmzdNwiFkCKt
+ OBZURgSZt7fWAmZkweglyZ9uPXRh9dAsPX+SaC6E9AaQXoad5ytKNbuf/z6Wz3hNm3prAH
+ ZBDwtlvu2tEpmnY9q6GG3w2JmXtxcIQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-371-lXtGVy9ePf-JkoaNHX0Xrg-1; Thu, 13 Feb 2025 07:55:26 -0500
+X-MC-Unique: lXtGVy9ePf-JkoaNHX0Xrg-1
+X-Mimecast-MFC-AGG-ID: lXtGVy9ePf-JkoaNHX0Xrg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43943bd1409so6501425e9.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 04:55:26 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739451325; x=1740056125;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=34aDo8ciuIjSIrc1HEIigZQAB0/DFvc2KzKOnsg2A9A=;
+ b=dva67hCnKGrQApVPRjHO0oCBRBkW5Uzk9sUOcuYYhha59rfPwsoHiPoIJG0eyuDul2
+ fwY3RKQDANE+dnVf5NhipNAGrc6H8clAgC89YaoP0jFXZozfJykArdi/rP8n1IUw9wI7
+ S6Zb7CgB84QCSo4G/iF/4R7qAwq13qV1svoFUnu9czskJpQwQZoEdHMTLY35PuIlYoy1
+ xo2gFitrYm3j8bPdN6MOgV8sKr38s83ao/3uv9B6JGRkxZkfUXjX1QMYcQ7Tq0XDci2q
+ uBHhlpVUWBmcqM9A1uh8REdty/xzJFesMOE1YKVSVIOsXYFsj8RC82hHV/omDMGFucRt
+ X0uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVk6Um4eP6+zZ6+FYHGMqt9A2cQzD62RhstaffPmJlBEsI60m5cu+2cvmhqTuVyWnlcmZSMaGoAHHub@nongnu.org
+X-Gm-Message-State: AOJu0Ywesl9jl2UfhT5JE6pnzZQx+1mKhTB2yXXwli4VsrqR8MlifjI3
+ zY0RbEgz2wtLhdfVA4aqUbeJk3HZVmfepBEz77+QNGyVhu6UAjVp5BqgqLqECtARCEj0mTHPCL1
+ 4TqYV1anewfYO4tg7OG/IY9xCHM/hx9aHI1FGEAFUDXwr/AHIIccP
+X-Gm-Gg: ASbGnctccHntxLr4lj0hCfekfvnHFI2G+SQiAUwrHjntbH4J/J5JpGSf7W+ka66ETcl
+ rTove6NVT1CgCrSBBBiGzOT7ESUECZwBHAseJFX5NT95Azx6lXVQdAEX3UTsAfTjW1C0I0clvE8
+ VHQm+JLVZwZwowg861sBjoJdYpEU3tz99BD8LH+Ka++GLxBVNUPgZp3ZSmxfFW+sgCnzpI5Cs+D
+ FR/i20hrELmY5jrLhzy+xptrcUnVngTwDvbadGchjrSU9NNw5X9/2QkWFUknkOkBHi9BkR4Jpl2
+ zsl5que3tywzZUAhkRBFc/X7KqXMo/aB+YcOCzMnb6pDxSa3PfINKmFP2wCRJloAaC6Ap1K+oQB
+ mtnkGWBpnCe4C9z2OELz9aXqWAmkTdw==
+X-Received: by 2002:a05:600c:1d9b:b0:439:60ef:ce88 with SMTP id
+ 5b1f17b1804b1-43960efd0aemr28660155e9.23.1739451325557; 
+ Thu, 13 Feb 2025 04:55:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHSDrqniyt5fMAAWMSitV//U4tinpx9mjKyxJxXd4lJPiH0usApshznBMYNEoZeXECMv1t3ZA==
+X-Received: by 2002:a05:600c:1d9b:b0:439:60ef:ce88 with SMTP id
+ 5b1f17b1804b1-43960efd0aemr28659905e9.23.1739451325160; 
+ Thu, 13 Feb 2025 04:55:25 -0800 (PST)
+Received: from ?IPV6:2003:cb:c718:100:347d:db94:161d:398f?
+ (p200300cbc7180100347ddb94161d398f.dip0.t-ipconnect.de.
+ [2003:cb:c718:100:347d:db94:161d:398f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4395a04f22fsm48032635e9.5.2025.02.13.04.55.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Feb 2025 04:55:23 -0800 (PST)
+Message-ID: <da153767-f9e3-49f3-9462-e625b447ca3e@redhat.com>
+Date: Thu, 13 Feb 2025 13:55:22 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Outbound-SMTP-Client: 10.30.220.158, sjc-ads-7373.cisco.com
-X-Outbound-Node: rcdn-l-core-03.cisco.com
-Received-SPF: pass client-ip=173.37.142.92; envelope-from=madmarri@cisco.com;
- helo=alln-iport-5.cisco.com
-X-Spam_score_int: -118
-X-Spam_score: -11.9
-X-Spam_bar: -----------
-X-Spam_report: (-11.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] physmem: teach cpu_memory_rw_debug() to write to
+ more memory regions
+To: Stefan Zabka <git@zabka.it>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+References: <20250210084648.33798-1-david@redhat.com>
+ <c36fe3a8-9541-4775-a538-91eeb9d6e3a3@zabka.it>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <c36fe3a8-9541-4775-a538-91eeb9d6e3a3@zabka.it>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_NONE=0.001, T_SPF_HELO_PERMERROR=0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +169,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-USB_TOKEN_SETUP packet not being handled in usb_ep_get function.
-This causes the program to hit the assertion that checks for only
-USB_TOKEN_IN or USB_TOKEN_OUT, leading to the failure and core
-dump when the USB_TOKEN_SETUP packet is processed.
+On 13.02.25 00:26, Stefan Zabka wrote:
+> Sorry for the delayed engagement, I failed to apply the patch set from
+> the mailing list and had to remember that David had published this
+> change set on GitHub.
+> 
+> Tested-by: Stefan Zabka <git@zabka.it>
+> 
+> This addresses my initial use case of being able to write to a single
+> MMIO device. I have not set up a scenario with an interleaving of
+> MMIO and RAM/ROM regions to ensure that a single large write is
+> correctly handled there.
+> 
+> Reviewed-by: Stefan Zabka <git@zabka.it>
+> 
 
-Added a check for USB_TOKEN_SETUP to avoid triggering an assertion
-failure and crash.
+Thanks a bunch!
 
-Fixes: CVE-2024-8354
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2548
+> I don't know if this counts for anything, but I've read through the
+> entire patch series, tried to make sense of it and couldn't spot any
+> issues. It should be noted that I am a terrible C programmer and have
+> only written basic devices so far.
+Hard to believe ("terrible C programmer") :) Any review is appreciated!
 
-Signed-off-by: Madhu Marri <madmarri@cisco.com>
----
- hw/usb/core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/hw/usb/core.c b/hw/usb/core.c
-index 975f76250a..df2aec5aca 100644
---- a/hw/usb/core.c
-+++ b/hw/usb/core.c
-@@ -741,6 +741,12 @@ struct USBEndpoint *usb_ep_get(USBDevice *dev, int pid, int ep)
-     if (ep == 0) {
-         return &dev->ep_ctl;
-     }
-+
-+    if (pid == USB_TOKEN_SETUP) {
-+        /* Do not handle setup packets here */
-+        return &dev->ep_ctl;
-+    }
-+
-     assert(pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT);
-     assert(ep > 0 && ep <= USB_MAX_ENDPOINTS);
-     eps = (pid == USB_TOKEN_IN) ? dev->ep_in : dev->ep_out;
 -- 
-2.44.1
+Cheers,
+
+David / dhildenb
 
 
