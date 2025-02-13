@@ -4,103 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2907EC021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 17:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF956C021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 17:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ticm1-0007ft-Lu; Thu, 13 Feb 2025 12:13:13 -0500
+	id 1ticou-0000MM-Iw; Thu, 13 Feb 2025 12:16:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ticlq-0007dZ-4Z
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 12:13:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ticln-0008Lp-GI
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 12:13:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739466775;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zxQypIxJ4HK/TSyQYMIsRDfvv4b0zIaiSvT1oa7a3ys=;
- b=AXbqA6zSLewRwmH2uLUfZ/hFAPVGGfYC735kgblbEnDsatAotOu12Z/uLTeps8KbD0PXcg
- lQnYngBha/nl43hA82sZfI7+whKcBMWm5eX4eApGJSDmQlPYCF5sD+dz5qIR+TSfwF4KyA
- 3eyYhN0waKZtgm9aEBVuorgvOQkT28g=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-258-WGSLDqT6PiOw2U7Wi1iwkQ-1; Thu, 13 Feb 2025 12:12:53 -0500
-X-MC-Unique: WGSLDqT6PiOw2U7Wi1iwkQ-1
-X-Mimecast-MFC-AGG-ID: WGSLDqT6PiOw2U7Wi1iwkQ_1739466773
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38dc6aad9f8so1148869f8f.1
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 09:12:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ticoj-0000L5-Ii
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 12:16:06 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ticof-0000NI-FM
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 12:16:00 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-21f3c119fe6so27638215ad.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 09:15:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739466953; x=1740071753; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WTBB/vDcJh45xA1W/jxGX2kDziq1ZpAFCHIvpkCApvo=;
+ b=TGoLguuaMjJcHxE8f2BUw08ZXAUt3CRCtNkwRYBvFLs44NACTh+dWmJnFLwUD/zYZT
+ ErohILnrJyCuWJAU3yJAnGSFSz8R7HsyQgoF369Ho8Rfy9APP6PFdgCjjTFu4aUzJPxW
+ dcmGBHddeUYrdAB6P58OdtRuC2T067GMBswFLm+3s2qd9KqycD257p9Jp3LkC0+56xC0
+ 6Hg9ess07KXywVbKDEkgfCA4kHzLqWyLtl2FXUJ9mS/d118aMJXA+Hv8bGoiri+UMlJa
+ j/wcdP6SAALndKXDssbOtelP8e52+ZkxYg5qdLEBl+c6ftnKxf2u4cbUAkfbKckz+QTp
+ vEDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739466772; x=1740071572;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zxQypIxJ4HK/TSyQYMIsRDfvv4b0zIaiSvT1oa7a3ys=;
- b=CHE02nsbLUt9X5K5fOWwXv4tCJd7cOHRQpCbn1TAWxbmQVoKa/pt+LMlhfCPf1thOT
- bCZapHLkiacH6TNYcZWvYkX4LgA5oCKUE3GspXAkI2UIaXokkr4HRgkAp7ljtZdaNZ4T
- +/7djYMKz3Lqi3CQ+HetjfdZNVoi7+kMruUZOoVXVk+l/AwmYsX5OJ8ryaHfDdpgeUlT
- 0+8eXUxCiV3/BJr6pKr/xzqvTKTpffPE6wQSthK7qljbY7+N7blrzeW3Oz1EsTjunTHB
- ETot6+467iUXMWOsLWA+uA2bymw9blVgeG1OPhuWQ+ae8l9ZuTlPod1lQo7nu5sfyMIJ
- CMPw==
+ d=1e100.net; s=20230601; t=1739466953; x=1740071753;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WTBB/vDcJh45xA1W/jxGX2kDziq1ZpAFCHIvpkCApvo=;
+ b=hHjpQ3vVrb2XI3+eNntiakS3JadmLEre6I++QevNQrzbjVuG/1ezM9CYqM2xo1FBDi
+ +VQx6ViKGXiOWCxOFdZxIIHNIHuiV+CIUoE8aZ9XvEvOzeNhmGRdVa+cQDFAcWFEFGP0
+ mzbYLlgfVv5361CqxVXGAzDEcxQJcSk5iLM0aLzRfBTgleu4JF/KB6YekR19u3VDQgAk
+ mMMbjSVVVZv/928HFwn52NtPxVQX5hTmv1hDPIWtOcXJq3/jNbnz5robFKdYTOs0dFHZ
+ bgbur/3C1VmAwCMsVYtoY+3dCZrH4llRQB5IcAWELBjwJ+fovJJpeNSebBMv3rNdimJT
+ XiaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVW+ZTPseO1HumNs9tSDTjQGj5g9gadYlLsbsb0aRuOKLmkrkLVrVudZ84eANFgPXXw9+NhKOynOj4w@nongnu.org
-X-Gm-Message-State: AOJu0YxgkjOq8qmnLwZXCVHLI5ChOxoqZAU0xGkuq8iYQFCix/CN6f7k
- u7+b8vbopGq7Q1s1dYRb5yRAFSp15NDTDXVR3luCulHIlUcFinAMt0eIOXYj6v/hMdBqtdhS6Fh
- tmjn9QpQDRkZ1gWzl13/MoMgQxWnT9P9O3Qf7lCaP1I+iy22fvT0o
-X-Gm-Gg: ASbGnctDXc6X7xCS6uoCeta5gYIB9klGe4O1/Ksr2ruh1UDnJNl9s1wpAhXBqsApRo7
- llvxoHieMrrqZUFQfOFPowoyZwfAS8YeRWAcal3MVI16RTt2tklubpLjWjERF/yM9VEsMn5AMuc
- 3xeXeuHgje/Z3T+z1Vt+Mdq8ZkJlDCk72pL+PpPzvxbeo4Lbe2Qtg9a+bxjOTsOIFTawuqIHgNU
- YgiFJEJwbzhkgVP7x1FBak20WJozoWZ/m1fWcBrKkdN7UsN0rGIKw7YdQAHDjVAFVoCUOx6iLWA
- 5P44YxE+IUGRmfipe5VNUD3aaZqYkGhREspJt2tyOFS5RGs7p5wj
-X-Received: by 2002:a05:6000:1fa7:b0:388:c61d:4415 with SMTP id
- ffacd0b85a97d-38f24f7236bmr4417932f8f.18.1739466772426; 
- Thu, 13 Feb 2025 09:12:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFMQfLvg86eVfWFFok8uvvu4KHFRh14/qfBp3koegDBkKbsD7RJO45pZXitfe+2glNFilN48g==
-X-Received: by 2002:a05:6000:1fa7:b0:388:c61d:4415 with SMTP id
- ffacd0b85a97d-38f24f7236bmr4417879f8f.18.1739466771964; 
- Thu, 13 Feb 2025 09:12:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ AJvYcCV4c329syNLr9e5mjmBqiLugVekpKVVFTPN48T1YfBWv6cLLxtLAX+RbdZsnLcHjYcU/xzDYgtaH4AE@nongnu.org
+X-Gm-Message-State: AOJu0Yxv4UF60V8pIEzqPVRl5oAc6KkmCt58rrZoSctXs4G6strIb18S
+ QPde0K3Uo8535WwSLiDWHxAx/HNer3sgi7g287DYCCQp29GlwOmv3oxo5yRGngjEUNbiJZdzHJ8
+ N
+X-Gm-Gg: ASbGnctTTP5FqvmHlsbdL31hV0zqn1Dp95+5vS0aieW3BkhmEMjgNf6+ABw2cVFC672
+ wbmhChfV1DhFmBHpX9jZVtNCz4eL80M7E8f+MURfb6V7R+h/BH69CztsDEA8xOtDADmFJ6eEEy8
+ Vz1PKphCw8HTkl9oYngY6Rx7zGu53UTSVppM/mGoJPsJWguJUVzFTG26CGEy0g0/4mYsKxkj/GG
+ GXjikJcCeENc7bjmRJy3cCWTjsCq2N360jUvMqxC6C2VF2N+Ohj4Sw2EpYSPYEoadxRFKUUuHe1
+ 2O6DH9muJTUEAI24xqahLPgaXmC81L9/Ishu8DqMw2dSCkgHxaTqHi0=
+X-Google-Smtp-Source: AGHT+IE4pq2fkIEnK+/uMTDOWUKBwE9MnldKJAiBOoNG7TN3rbfSUJ/nayx2yl3fcOHkt/gOpZxv6A==
+X-Received: by 2002:a05:6a00:6c8f:b0:72d:9b11:1ebb with SMTP id
+ d2e1a72fcca58-7322c385000mr15955885b3a.8.1739466953050; 
+ Thu, 13 Feb 2025 09:15:53 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259f8115sm2394404f8f.92.2025.02.13.09.12.50
+ d2e1a72fcca58-7324273eac4sm1514322b3a.113.2025.02.13.09.15.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 09:12:51 -0800 (PST)
-Message-ID: <191589e7-69ff-41db-94cd-988c83f623e4@redhat.com>
-Date: Thu, 13 Feb 2025 18:12:49 +0100
+ Thu, 13 Feb 2025 09:15:52 -0800 (PST)
+Message-ID: <4863b4e6-8ce3-4f37-b339-837faf759efb@linaro.org>
+Date: Thu, 13 Feb 2025 09:15:51 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/arm/virt: Support larger highmem MMIO regions
+Subject: Re: [PATCH 1/6] tcg: Introduce the 'z' constraint for a hardware zero
+ register
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250212034617.1079324-1-richard.henderson@linaro.org>
+ <20250212034617.1079324-2-richard.henderson@linaro.org>
+ <59d1bd38-2b0f-413a-a6ff-28f8a055dad0@linaro.org>
 Content-Language: en-US
-To: "Matthew R. Ochs" <mochs@nvidia.com>, qemu-devel@nongnu.org,
- shameerali.kolothum.thodi@huawei.com, nathanc@nvidia.com
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, ddutile@redhat.com,
- nicolinc@nvidia.com, ankita@nvidia.com, philmd@linaro.org, gshan@redhat.com
-References: <20250212145457.1899954-1-mochs@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250212145457.1899954-1-mochs@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <59d1bd38-2b0f-413a-a6ff-28f8a055dad0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,128 +103,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/13/25 07:45, Philippe Mathieu-Daudé wrote:
+> On 12/2/25 04:46, Richard Henderson wrote:
+>> For loongarch, mips, riscv and sparc, a zero register is
+>> available all the time.  For aarch64, register index 31
+>> depends on context: sometimes it is the stack pointer,
+>> and sometimes it is the zero register.
+>>
+>> Introduce a new general-purpose constraint which maps 0
+>> to TCG_REG_ZERO, if defined.  This differs from existing
+>> constant constraints in that const_arg[*] is recorded as
+>> false, indicating that the value is in a register.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/tcg/tcg.h            |  3 ++-
+>>   tcg/aarch64/tcg-target.h     |  2 ++
+>>   tcg/loongarch64/tcg-target.h |  2 ++
+>>   tcg/mips/tcg-target.h        |  2 ++
+>>   tcg/riscv/tcg-target.h       |  2 ++
+>>   tcg/sparc64/tcg-target.h     |  3 ++-
+>>   tcg/tcg.c                    | 29 ++++++++++++++++++++++-------
+>>   docs/devel/tcg-ops.rst       |  4 +++-
+>>   8 files changed, 37 insertions(+), 10 deletions(-)
+> 
+> 
+>> diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+>> index 6608a29376..75acb4bd32 100644
+>> --- a/docs/devel/tcg-ops.rst
+>> +++ b/docs/devel/tcg-ops.rst
+>> @@ -927,7 +927,9 @@ operation uses a constant input constraint which does not allow all
+>>   constants, it must also accept registers in order to have a fallback.
+>>   The constraint '``i``' is defined generically to accept any constant.
+>>   The constraint '``r``' is not defined generically, but is consistently
+>> -used by each backend to indicate all registers.
+>> +used by each backend to indicate all registers.  If ``TCG_REG_ZERO``
+>> +is defined by the backend, the constraint '``z``' is defined generically
+> 
+> and/to?
+> 
+>> +map 0 to the hardware zero register.
 
+Indeed, this was not grammatical.  Fixed as
 
+... the constraint '``z``' is defined generically
+to map constant 0 to the hardware zero register.
 
-On 2/12/25 3:54 PM, Matthew R. Ochs wrote:
-> The MMIO region size required to support virtualized environments with
-> large PCI BAR regions can exceed the hardcoded limit configured in QEMU.
-> For example, a VM with multiple NVIDIA Grace-Hopper GPUs passed through
-> requires more MMIO memory than the amount provided by VIRT_HIGH_PCIE_MMIO
-> (currently 512GB). Instead of updating VIRT_HIGH_PCIE_MMIO, introduce a
-> new parameter, highmem-mmio-size, that specifies the MMIO size required
-> to support the VM configuration.
->
-> Example usage with 1TB MMIO region size:
-> 	-machine virt,gic-version=3,highmem-mmio-size=1T
->
-> Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
-> v4: - Added default size to highmem-mmio-size description
-> v3: - Updated highmem-mmio-size description
-> v2: - Add unit suffix to example in commit message
->     - Use existing "high memory region" terminology
->     - Resolve minor braces nit
->
->  docs/system/arm/virt.rst |  4 ++++
->  hw/arm/virt.c            | 38 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 42 insertions(+)
->
-> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-> index e67e7f0f7c50..6ff1de1ecbba 100644
-> --- a/docs/system/arm/virt.rst
-> +++ b/docs/system/arm/virt.rst
-> @@ -138,6 +138,10 @@ highmem-mmio
->    Set ``on``/``off`` to enable/disable the high memory region for PCI MMIO.
->    The default is ``on``.
->  
-> +highmem-mmio-size
-> +  Set the high memory region size for PCI MMIO. Must be a power-of-2 and
-> +  greater than or equal to the default size (512G).
-> +
->  gic-version
->    Specify the version of the Generic Interrupt Controller (GIC) to provide.
->    Valid values are:
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 49eb0355ef0c..d8d62df43f04 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -2773,6 +2773,36 @@ static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
->      vms->highmem_mmio = value;
->  }
->  
-> +static void virt_get_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
-> +{
-> +    uint64_t size = extended_memmap[VIRT_HIGH_PCIE_MMIO].size;
-> +
-> +    visit_type_size(v, name, &size, errp);
-> +}
-> +
-> +static void virt_set_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
-> +{
-> +    uint64_t size;
-> +
-> +    if (!visit_type_size(v, name, &size, errp)) {
-> +        return;
-> +    }
-> +
-> +    if (!is_power_of_2(size)) {
-> +        error_setg(errp, "highmem_mmio_size is not a power-of-2");
-> +        return;
-> +    }
-> +
-> +    if (size < extended_memmap[VIRT_HIGH_PCIE_MMIO].size) {
-> +        error_setg(errp, "highmem_mmio_size is less than the default (%lu)",
-> +                   extended_memmap[VIRT_HIGH_PCIE_MMIO].size);
-> +        return;
-> +    }
-> +
-> +    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
-> +}
->  
->  static bool virt_get_its(Object *obj, Error **errp)
->  {
-> @@ -3446,6 +3476,14 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
->                                            "Set on/off to enable/disable high "
->                                            "memory region for PCI MMIO");
->  
-> +    object_class_property_add(oc, "highmem-mmio-size", "size",
-> +                                   virt_get_highmem_mmio_size,
-> +                                   virt_set_highmem_mmio_size,
-> +                                   NULL, NULL);
-> +    object_class_property_set_description(oc, "highmem-mmio-size",
-> +                                          "Set the high memory region size "
-> +                                          "for PCI MMIO");
-> +
->      object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
->                                    virt_set_gic_version);
->      object_class_property_set_description(oc, "gic-version",
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The only nitpick I have is that if you read
+Thanks.
 
-static MemMapEntry extended_memmap[] = {
-    /* Additional 64 MB redist region (can contain up to 512
-redistributors) */
-    [VIRT_HIGH_GIC_REDIST2] =   { 0x0, 64 * MiB },
-    [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
-    /* Second PCIe window */
-    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, 512 * GiB },
-};
-and the above comment, it is not obvious that the HIGH_PCI_MMIO can be
-extended by an option. A distracted reader may not get it.
-
-But I don't know if it is worth respinning.
-
-Eric
-
-
+r~
 
