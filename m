@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CCA2C021A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B063BC021A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 18:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tidZm-0003LU-P4; Thu, 13 Feb 2025 13:04:44 -0500
+	id 1tida2-0003oC-7J; Thu, 13 Feb 2025 13:04:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tidWU-0007rp-RX
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:01:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tidWk-0008D0-Bx
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:01:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tidWR-0006SY-EN
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:01:14 -0500
+ id 1tidWd-0006Uw-Ct
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 13:01:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739469670;
+ s=mimecast20190719; t=1739469682;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M2VgBaY3utP/3uyyKQSfSGynGD4UcStG0re8c3gJylE=;
- b=Aak95n2MKW9rxp91Y250vOamD5tRklVVdHrUrgEPgQSD6a3FgJZCzM0PEqBkHxtLFlZXcm
- bPjKcIsFuqEywq3sMrC3+W1QxrCAJyABksZ6WEaxbbLG3GM/oJXKYPd4+ZKL6aiIAgHZw6
- ZH+LoPtoZl3BfbxvsC3IVdg9VGcYtic=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=A3hNBV+UkKwGY0tFbJQKvwyuSF7QrPuDEGRF4vttTig=;
+ b=YpotH1OkEHZiTkGeoa8FuZ8rXGY3NCnPTl7+GdjTS3fXvafyYMbVbr7oVm0v9dI4Vch1em
+ sm4zcCu1ZG/mub2TDPkYH+nYyuuTi6zkaPG0sEo6lu5eF46Dbzj0AVC/PfP13kX667R/WM
+ Dl2OlRFL9tjeclLRSxRf8CES8ov1z2s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-VRFTym_PPeaN-ZL0yZFDUA-1; Thu,
- 13 Feb 2025 13:01:07 -0500
-X-MC-Unique: VRFTym_PPeaN-ZL0yZFDUA-1
-X-Mimecast-MFC-AGG-ID: VRFTym_PPeaN-ZL0yZFDUA_1739469666
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-_w8O2hbmOVKTbj3lYnyLDw-1; Thu,
+ 13 Feb 2025 13:01:19 -0500
+X-MC-Unique: _w8O2hbmOVKTbj3lYnyLDw-1
+X-Mimecast-MFC-AGG-ID: _w8O2hbmOVKTbj3lYnyLDw
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B7771975AFC; Thu, 13 Feb 2025 18:01:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A8251800876; Thu, 13 Feb 2025 18:01:16 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.157])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99BC61800360; Thu, 13 Feb 2025 18:01:05 +0000 (UTC)
+ id 17E991800365; Thu, 13 Feb 2025 18:01:14 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -56,24 +56,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  David Hildenbrand <david@redhat.com>, pkrempa@redhat.com,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 07/12] virtio-scsi: perform TMFs in appropriate AioContexts
-Date: Thu, 13 Feb 2025 13:00:38 -0500
-Message-ID: <20250213180043.713434-8-stefanha@redhat.com>
+Subject: [PATCH 11/12] virtio-scsi: add iothread-vq-mapping parameter
+Date: Thu, 13 Feb 2025 13:00:42 -0500
+Message-ID: <20250213180043.713434-12-stefanha@redhat.com>
 In-Reply-To: <20250213180043.713434-1-stefanha@redhat.com>
 References: <20250213180043.713434-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,395 +89,395 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With IOThread Virtqueue Mapping there will be multiple AioContexts
-processing SCSI requests. scsi_req_cancel() and other SCSI request
-operations must be performed from the AioContext where the request is
-running.
+Allow virtio-scsi virtqueues to be assigned to different IOThreads. This
+makes it possible to take advantage of host multi-queue block layer
+scalability by assigning virtqueues that have affinity with vCPUs to
+different IOThreads that have affinity with host CPUs. The same feature
+was introduced for virtio-blk in the past:
+https://developers.redhat.com/articles/2024/09/05/scaling-virtio-blk-disk-io-iothread-virtqueue-mapping
 
-Introduce a virtio_scsi_defer_tmf_to_aio_context() function and the
-necessary VirtIOSCSIReq->remaining refcount infrastructure to move the
-TMF code into the AioContext where the request is running.
-
-For the time being there is still just one AioContext: the main loop or
-the IOThread. When the iothread-vq-mapping parameter is added in a later
-patch this will be changed to per-virtqueue AioContexts.
+Here are fio randread 4k iodepth=64 results from a 4 vCPU guest with an
+Intel P4800X SSD:
+iothreads IOPS
+------------------------------
+1         189576
+2         312698
+4         346744
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/scsi/virtio-scsi.c | 296 +++++++++++++++++++++++++++++++-----------
- 1 file changed, 219 insertions(+), 77 deletions(-)
+ include/hw/virtio/virtio-scsi.h |  5 +-
+ hw/scsi/virtio-scsi-dataplane.c | 90 ++++++++++++++++++++++++---------
+ hw/scsi/virtio-scsi.c           | 63 ++++++++++++++---------
+ 3 files changed, 107 insertions(+), 51 deletions(-)
 
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 2d796a861b..2045d27289 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -47,7 +47,7 @@ typedef struct VirtIOSCSIReq {
-     /* Used for two-stage request submission and TMFs deferred to BH */
-     QTAILQ_ENTRY(VirtIOSCSIReq) next;
+diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
+index 7b7e3ced7a..086201efa2 100644
+--- a/include/hw/virtio/virtio-scsi.h
++++ b/include/hw/virtio/virtio-scsi.h
+@@ -22,6 +22,7 @@
+ #include "hw/virtio/virtio.h"
+ #include "hw/scsi/scsi.h"
+ #include "chardev/char-fe.h"
++#include "qapi/qapi-types-virtio.h"
+ #include "system/iothread.h"
  
--    /* Used for cancellation of request during TMFs */
-+    /* Used for cancellation of request during TMFs. Atomic. */
-     int remaining;
+ #define TYPE_VIRTIO_SCSI_COMMON "virtio-scsi-common"
+@@ -60,6 +61,7 @@ struct VirtIOSCSIConf {
+     CharBackend chardev;
+     uint32_t boot_tpgt;
+     IOThread *iothread;
++    IOThreadVirtQueueMappingList *iothread_vq_mapping_list;
+ };
  
-     SCSIRequest *sreq;
-@@ -298,19 +298,23 @@ typedef struct {
-     VirtIOSCSIReq  *tmf_req;
- } VirtIOSCSICancelNotifier;
+ struct VirtIOSCSI;
+@@ -97,7 +99,7 @@ struct VirtIOSCSI {
+     QTAILQ_HEAD(, VirtIOSCSIReq) tmf_bh_list;
  
-+static void virtio_scsi_tmf_dec_remaining(VirtIOSCSIReq *tmf)
-+{
-+    if (qatomic_fetch_dec(&tmf->remaining) == 1) {
-+        trace_virtio_scsi_tmf_resp(virtio_scsi_get_lun(tmf->req.tmf.lun),
-+                                   tmf->req.tmf.tag, tmf->resp.tmf.response);
-+
-+        virtio_scsi_complete_req(tmf, &tmf->dev->ctrl_lock);
-+    }
-+}
-+
- static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
- {
-     VirtIOSCSICancelNotifier *n = container_of(notifier,
-                                                VirtIOSCSICancelNotifier,
-                                                notifier);
+     /* Fields for dataplane below */
+-    AioContext *ctx; /* one iothread per virtio-scsi-pci for now */
++    AioContext **vq_aio_context; /* per-virtqueue AioContext pointer */
  
--    if (--n->tmf_req->remaining == 0) {
--        VirtIOSCSIReq *req = n->tmf_req;
--
--        trace_virtio_scsi_tmf_resp(virtio_scsi_get_lun(req->req.tmf.lun),
--                                   req->req.tmf.tag, req->resp.tmf.response);
--        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
--    }
-+    virtio_scsi_tmf_dec_remaining(n->tmf_req);
-     g_free(n);
- }
+     bool dataplane_started;
+     bool dataplane_starting;
+@@ -115,6 +117,7 @@ void virtio_scsi_common_realize(DeviceState *dev,
+ void virtio_scsi_common_unrealize(DeviceState *dev);
  
-@@ -416,7 +420,7 @@ static void virtio_scsi_reset_tmf_bh(VirtIOSCSI *s)
-     }
- }
+ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp);
++void virtio_scsi_dataplane_cleanup(VirtIOSCSI *s);
+ int virtio_scsi_dataplane_start(VirtIODevice *s);
+ void virtio_scsi_dataplane_stop(VirtIODevice *s);
  
--static void virtio_scsi_defer_tmf_to_bh(VirtIOSCSIReq *req)
-+static void virtio_scsi_defer_tmf_to_main_loop(VirtIOSCSIReq *req)
- {
-     VirtIOSCSI *s = req->dev;
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index f49ab98ecc..6bb368c8a5 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -18,6 +18,7 @@
+ #include "system/block-backend.h"
+ #include "hw/scsi/scsi.h"
+ #include "scsi/constants.h"
++#include "hw/virtio/iothread-vq-mapping.h"
+ #include "hw/virtio/virtio-bus.h"
  
-@@ -430,6 +434,137 @@ static void virtio_scsi_defer_tmf_to_bh(VirtIOSCSIReq *req)
-     }
- }
+ /* Context: BQL held */
+@@ -27,8 +28,16 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
++    uint16_t num_vqs = vs->conf.num_queues + VIRTIO_SCSI_VQ_NUM_FIXED;
  
-+static void virtio_scsi_tmf_cancel_req(VirtIOSCSIReq *tmf, SCSIRequest *r)
-+{
-+    VirtIOSCSICancelNotifier *notifier;
-+
-+    assert(r->ctx == qemu_get_current_aio_context());
-+
-+    /* Decremented in virtio_scsi_cancel_notify() */
-+    qatomic_inc(&tmf->remaining);
-+
-+    notifier = g_new(VirtIOSCSICancelNotifier, 1);
-+    notifier->notifier.notify = virtio_scsi_cancel_notify;
-+    notifier->tmf_req = tmf;
-+    scsi_req_cancel_async(r, &notifier->notifier);
-+}
-+
-+/* Execute a TMF on the requests in the current AioContext */
-+static void virtio_scsi_do_tmf_aio_context(void *opaque)
-+{
-+    AioContext *ctx = qemu_get_current_aio_context();
-+    VirtIOSCSIReq *tmf = opaque;
-+    VirtIOSCSI *s = tmf->dev;
-+    SCSIDevice *d = virtio_scsi_device_get(s, tmf->req.tmf.lun);
-+    SCSIRequest *r;
-+    bool match_tag;
-+
-+    if (!d) {
-+        tmf->resp.tmf.response = VIRTIO_SCSI_S_BAD_TARGET;
-+        virtio_scsi_tmf_dec_remaining(tmf);
+-    if (vs->conf.iothread) {
++    if (vs->conf.iothread && vs->conf.iothread_vq_mapping_list) {
++        error_setg(errp,
++                   "iothread and iothread-vq-mapping properties cannot be set "
++                   "at the same time");
 +        return;
 +    }
 +
-+    /*
-+     * This function could handle other subtypes that need to be processed in
-+     * the request's AioContext in the future, but for now only request
-+     * cancelation subtypes are performed here.
-+     */
-+    switch (tmf->req.tmf.subtype) {
-+    case VIRTIO_SCSI_T_TMF_ABORT_TASK:
-+        match_tag = true;
-+        break;
-+    case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
-+    case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET:
-+        match_tag = false;
-+        break;
-+    default:
-+        g_assert_not_reached();
++    if (vs->conf.iothread || vs->conf.iothread_vq_mapping_list) {
+         if (!k->set_guest_notifiers || !k->ioeventfd_assign) {
+             error_setg(errp,
+                        "device is incompatible with iothread "
+@@ -39,15 +48,50 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+             error_setg(errp, "ioeventfd is required for iothread");
+             return;
+         }
+-        s->ctx = iothread_get_aio_context(vs->conf.iothread);
 +    }
 +
-+    WITH_QEMU_LOCK_GUARD(&d->requests_lock) {
-+        QTAILQ_FOREACH(r, &d->requests, next) {
-+            VirtIOSCSIReq *cmd_req = r->hba_private;
-+            assert(cmd_req); /* request has hba_private while enqueued */
++    s->vq_aio_context = g_new(AioContext *, num_vqs);
 +
-+            if (r->ctx != ctx) {
-+                continue;
-+            }
-+            if (match_tag && cmd_req->req.cmd.tag != tmf->req.tmf.tag) {
-+                continue;
-+            }
-+            virtio_scsi_tmf_cancel_req(tmf, r);
++    if (vs->conf.iothread_vq_mapping_list) {
++        if (!iothread_vq_mapping_apply(vs->conf.iothread_vq_mapping_list,
++                                       s->vq_aio_context, num_vqs, errp)) {
++            g_free(s->vq_aio_context);
++            s->vq_aio_context = NULL;
++            return;
 +        }
-+    }
-+
-+    /* Incremented by virtio_scsi_do_tmf() */
-+    virtio_scsi_tmf_dec_remaining(tmf);
-+
-+    object_unref(d);
-+}
-+
-+static void dummy_bh(void *opaque)
-+{
-+    /* Do nothing */
-+}
-+
-+/*
-+ * Wait for pending virtio_scsi_defer_tmf_to_aio_context() BHs.
-+ */
-+static void virtio_scsi_flush_defer_tmf_to_aio_context(VirtIOSCSI *s)
-+{
-+    GLOBAL_STATE_CODE();
-+
-+    assert(!s->dataplane_started);
-+
-+    if (s->ctx) {
-+        /* Our BH only runs after previously scheduled BHs */
-+        aio_wait_bh_oneshot(s->ctx, dummy_bh, NULL);
-+    }
-+}
-+
-+/*
-+ * Run the TMF in a specific AioContext, handling only requests in that
-+ * AioContext. This is necessary because requests can run in different
-+ * AioContext and it is only possible to cancel them from the AioContext where
-+ * they are running.
-+ */
-+static void virtio_scsi_defer_tmf_to_aio_context(VirtIOSCSIReq *tmf,
-+                                                 AioContext *ctx)
-+{
-+    /* Decremented in virtio_scsi_do_tmf_aio_context() */
-+    qatomic_inc(&tmf->remaining);
-+
-+    /* See virtio_scsi_flush_defer_tmf_to_aio_context() cleanup during reset */
-+    aio_bh_schedule_oneshot(ctx, virtio_scsi_do_tmf_aio_context, tmf);
-+}
-+
-+/*
-+ * Returns the AioContext for a given TMF's tag field or NULL. Note that the
-+ * request identified by the tag may have completed by the time you can execute
-+ * a BH in the AioContext, so don't assume the request still exists in your BH.
-+ */
-+static AioContext *find_aio_context_for_tmf_tag(SCSIDevice *d,
-+                                                VirtIOSCSIReq *tmf)
-+{
-+    WITH_QEMU_LOCK_GUARD(&d->requests_lock) {
-+        SCSIRequest *r;
-+        SCSIRequest *next;
-+
-+        QTAILQ_FOREACH_SAFE(r, &d->requests, next, next) {
-+            VirtIOSCSIReq *cmd_req = r->hba_private;
-+
-+            /* hba_private is non-NULL while the request is enqueued */
-+            assert(cmd_req);
-+
-+            if (cmd_req->req.cmd.tag == tmf->req.tmf.tag) {
-+                return r->ctx;
-+            }
++    } else if (vs->conf.iothread) {
++        AioContext *ctx = iothread_get_aio_context(vs->conf.iothread);
++        for (uint16_t i = 0; i < num_vqs; i++) {
++            s->vq_aio_context[i] = ctx;
 +        }
++
++        /* Released in virtio_scsi_dataplane_cleanup() */
++        object_ref(OBJECT(vs->conf.iothread));
+     } else {
+-        if (!virtio_device_ioeventfd_enabled(vdev)) {
+-            return;
++        AioContext *ctx = qemu_get_aio_context();
++        for (unsigned i = 0; i < num_vqs; i++) {
++            s->vq_aio_context[i] = ctx;
+         }
+-        s->ctx = qemu_get_aio_context();
+     }
+ }
+ 
++/* Context: BQL held */
++void virtio_scsi_dataplane_cleanup(VirtIOSCSI *s)
++{
++    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
++
++    if (vs->conf.iothread_vq_mapping_list) {
++        iothread_vq_mapping_cleanup(vs->conf.iothread_vq_mapping_list);
 +    }
-+    return NULL;
++
++    if (vs->conf.iothread) {
++        object_unref(OBJECT(vs->conf.iothread));
++    }
++
++    g_free(s->vq_aio_context);
++    s->vq_aio_context = NULL;
 +}
 +
- /* Return 0 if the request is ready to be completed and return to guest;
-  * -EINPROGRESS if the request is submitted and will be completed later, in the
-  *  case of async cancellation. */
-@@ -437,6 +572,7 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+ static int virtio_scsi_set_host_notifier(VirtIOSCSI *s, VirtQueue *vq, int n)
  {
-     SCSIDevice *d = virtio_scsi_device_get(s, req->req.tmf.lun);
-     SCSIRequest *r, *next;
-+    AioContext *ctx;
-     int ret = 0;
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(s)));
+@@ -66,31 +110,20 @@ static int virtio_scsi_set_host_notifier(VirtIOSCSI *s, VirtQueue *vq, int n)
+ }
  
-     virtio_scsi_ctx_check(s, d);
-@@ -454,7 +590,22 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
-                               req->req.tmf.tag, req->req.tmf.subtype);
+ /* Context: BH in IOThread */
+-static void virtio_scsi_dataplane_stop_bh(void *opaque)
++static void virtio_scsi_dataplane_stop_vq_bh(void *opaque)
+ {
+-    VirtIOSCSI *s = opaque;
+-    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
++    AioContext *ctx = qemu_get_current_aio_context();
++    VirtQueue *vq = opaque;
+     EventNotifier *host_notifier;
+-    int i;
  
-     switch (req->req.tmf.subtype) {
--    case VIRTIO_SCSI_T_TMF_ABORT_TASK:
-+    case VIRTIO_SCSI_T_TMF_ABORT_TASK: {
-+        if (!d) {
-+            goto fail;
-+        }
-+        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
-+            goto incorrect_lun;
-+        }
-+
-+        ctx = find_aio_context_for_tmf_tag(d, req);
-+        if (ctx) {
-+            virtio_scsi_defer_tmf_to_aio_context(req, ctx);
-+            ret = -EINPROGRESS;
-+        }
-+        break;
-+    }
-+
-     case VIRTIO_SCSI_T_TMF_QUERY_TASK:
-         if (!d) {
-             goto fail;
-@@ -462,82 +613,72 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
-         if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
-             goto incorrect_lun;
-         }
--        QTAILQ_FOREACH_SAFE(r, &d->requests, next, next) {
--            VirtIOSCSIReq *cmd_req = r->hba_private;
--            if (cmd_req && cmd_req->req.cmd.tag == req->req.tmf.tag) {
--                break;
-+
-+        WITH_QEMU_LOCK_GUARD(&d->requests_lock) {
-+            QTAILQ_FOREACH(r, &d->requests, next) {
-+                VirtIOSCSIReq *cmd_req = r->hba_private;
-+                assert(cmd_req); /* request has hba_private while enqueued */
-+
-+                if (cmd_req->req.cmd.tag == req->req.tmf.tag) {
-+                    /*
-+                     * "If the specified command is present in the task set,
-+                     * then return a service response set to FUNCTION
-+                     * SUCCEEDED".
-+                     */
-+                    req->resp.tmf.response = VIRTIO_SCSI_S_FUNCTION_SUCCEEDED;
-+                }
-             }
-         }
--        if (r) {
--            /*
--             * Assert that the request has not been completed yet, we
--             * check for it in the loop above.
--             */
--            assert(r->hba_private);
--            if (req->req.tmf.subtype == VIRTIO_SCSI_T_TMF_QUERY_TASK) {
--                /* "If the specified command is present in the task set, then
-+        break;
-+
-+    case VIRTIO_SCSI_T_TMF_LOGICAL_UNIT_RESET:
-+    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET:
-+        virtio_scsi_defer_tmf_to_main_loop(req);
-+        ret = -EINPROGRESS;
-+        break;
-+
-+    case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
-+    case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET: {
-+        if (!d) {
-+            goto fail;
-+        }
-+        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
-+            goto incorrect_lun;
-+        }
-+
-+        qatomic_inc(&req->remaining);
-+
-+        ctx = s->ctx ?: qemu_get_aio_context();
-+        virtio_scsi_defer_tmf_to_aio_context(req, ctx);
-+
-+        virtio_scsi_tmf_dec_remaining(req);
-+        ret = -EINPROGRESS;
-+        break;
-+    }
-+
-+    case VIRTIO_SCSI_T_TMF_QUERY_TASK_SET:
-+        if (!d) {
-+            goto fail;
-+        }
-+        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
-+            goto incorrect_lun;
-+        }
-+
-+        WITH_QEMU_LOCK_GUARD(&d->requests_lock) {
-+            QTAILQ_FOREACH_SAFE(r, &d->requests, next, next) {
-+                /* Request has hba_private while enqueued */
-+                assert(r->hba_private);
-+
-+                /*
-+                 * "If there is any command present in the task set, then
-                  * return a service response set to FUNCTION SUCCEEDED".
-                  */
-                 req->resp.tmf.response = VIRTIO_SCSI_S_FUNCTION_SUCCEEDED;
--            } else {
--                VirtIOSCSICancelNotifier *notifier;
--
--                req->remaining = 1;
--                notifier = g_new(VirtIOSCSICancelNotifier, 1);
--                notifier->tmf_req = req;
--                notifier->notifier.notify = virtio_scsi_cancel_notify;
--                scsi_req_cancel_async(r, &notifier->notifier);
--                ret = -EINPROGRESS;
-+                break;
-             }
-         }
-         break;
+-    virtio_queue_aio_detach_host_notifier(vs->ctrl_vq, s->ctx);
+-    host_notifier = virtio_queue_get_host_notifier(vs->ctrl_vq);
++    virtio_queue_aio_detach_host_notifier(vq, ctx);
++    host_notifier = virtio_queue_get_host_notifier(vq);
  
--    case VIRTIO_SCSI_T_TMF_LOGICAL_UNIT_RESET:
--    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET:
--        virtio_scsi_defer_tmf_to_bh(req);
--        ret = -EINPROGRESS;
--        break;
+     /*
+      * Test and clear notifier after disabling event, in case poll callback
+      * didn't have time to run.
+      */
+     virtio_queue_host_notifier_read(host_notifier);
 -
--    case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
--    case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET:
--    case VIRTIO_SCSI_T_TMF_QUERY_TASK_SET:
--        if (!d) {
--            goto fail;
--        }
--        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
--            goto incorrect_lun;
--        }
+-    virtio_queue_aio_detach_host_notifier(vs->event_vq, s->ctx);
+-    host_notifier = virtio_queue_get_host_notifier(vs->event_vq);
+-    virtio_queue_host_notifier_read(host_notifier);
 -
--        /* Add 1 to "remaining" until virtio_scsi_do_tmf returns.
--         * This way, if the bus starts calling back to the notifiers
--         * even before we finish the loop, virtio_scsi_cancel_notify
--         * will not complete the TMF too early.
--         */
--        req->remaining = 1;
--        QTAILQ_FOREACH_SAFE(r, &d->requests, next, next) {
--            if (r->hba_private) {
--                if (req->req.tmf.subtype == VIRTIO_SCSI_T_TMF_QUERY_TASK_SET) {
--                    /* "If there is any command present in the task set, then
--                     * return a service response set to FUNCTION SUCCEEDED".
--                     */
--                    req->resp.tmf.response = VIRTIO_SCSI_S_FUNCTION_SUCCEEDED;
--                    break;
--                } else {
--                    VirtIOSCSICancelNotifier *notifier;
+-    for (i = 0; i < vs->conf.num_queues; i++) {
+-        virtio_queue_aio_detach_host_notifier(vs->cmd_vqs[i], s->ctx);
+-        host_notifier = virtio_queue_get_host_notifier(vs->cmd_vqs[i]);
+-        virtio_queue_host_notifier_read(host_notifier);
+-    }
+ }
+ 
+ /* Context: BQL held */
+@@ -154,11 +187,14 @@ int virtio_scsi_dataplane_start(VirtIODevice *vdev)
+     smp_wmb(); /* paired with aio_notify_accept() */
+ 
+     if (s->bus.drain_count == 0) {
+-        virtio_queue_aio_attach_host_notifier(vs->ctrl_vq, s->ctx);
+-        virtio_queue_aio_attach_host_notifier_no_poll(vs->event_vq, s->ctx);
++        virtio_queue_aio_attach_host_notifier(vs->ctrl_vq,
++                                              s->vq_aio_context[0]);
++        virtio_queue_aio_attach_host_notifier_no_poll(vs->event_vq,
++                                                      s->vq_aio_context[1]);
+ 
+         for (i = 0; i < vs->conf.num_queues; i++) {
+-            virtio_queue_aio_attach_host_notifier(vs->cmd_vqs[i], s->ctx);
++            AioContext *ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i];
++            virtio_queue_aio_attach_host_notifier(vs->cmd_vqs[i], ctx);
+         }
+     }
+     return 0;
+@@ -207,7 +243,11 @@ void virtio_scsi_dataplane_stop(VirtIODevice *vdev)
+     s->dataplane_stopping = true;
+ 
+     if (s->bus.drain_count == 0) {
+-        aio_wait_bh_oneshot(s->ctx, virtio_scsi_dataplane_stop_bh, s);
++        for (i = 0; i < vs->conf.num_queues + VIRTIO_SCSI_VQ_NUM_FIXED; i++) {
++            VirtQueue *vq = virtio_get_queue(&vs->parent_obj, i);
++            AioContext *ctx = s->vq_aio_context[i];
++            aio_wait_bh_oneshot(ctx, virtio_scsi_dataplane_stop_vq_bh, vq);
++        }
+     }
+ 
+     blk_drain_all(); /* ensure there are no in-flight requests */
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 2045d27289..dabf8ace23 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -27,6 +27,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/scsi/scsi.h"
+ #include "scsi/constants.h"
++#include "hw/virtio/iothread-vq-mapping.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+ #include "trace.h"
+@@ -318,13 +319,6 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
+     g_free(n);
+ }
+ 
+-static inline void virtio_scsi_ctx_check(VirtIOSCSI *s, SCSIDevice *d)
+-{
+-    if (s->dataplane_started && d && blk_is_available(d->conf.blk)) {
+-        assert(blk_get_aio_context(d->conf.blk) == s->ctx);
+-    }
+-}
 -
--                    req->remaining++;
--                    notifier = g_new(VirtIOSCSICancelNotifier, 1);
--                    notifier->notifier.notify = virtio_scsi_cancel_notify;
--                    notifier->tmf_req = req;
--                    scsi_req_cancel_async(r, &notifier->notifier);
--                }
--            }
--        }
--        if (--req->remaining > 0) {
--            ret = -EINPROGRESS;
--        }
--        break;
--
-     case VIRTIO_SCSI_T_TMF_CLEAR_ACA:
-     default:
-         req->resp.tmf.response = VIRTIO_SCSI_S_FUNCTION_REJECTED;
-@@ -941,6 +1082,7 @@ static void virtio_scsi_reset(VirtIODevice *vdev)
+ static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
+ {
+     VirtIOSCSI *s = req->dev;
+@@ -517,9 +511,11 @@ static void virtio_scsi_flush_defer_tmf_to_aio_context(VirtIOSCSI *s)
+ 
      assert(!s->dataplane_started);
  
-     virtio_scsi_reset_tmf_bh(s);
-+    virtio_scsi_flush_defer_tmf_to_aio_context(s);
+-    if (s->ctx) {
++    for (uint32_t i = 0; i < s->parent_obj.conf.num_queues; i++) {
++        AioContext *ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i];
++
+         /* Our BH only runs after previously scheduled BHs */
+-        aio_wait_bh_oneshot(s->ctx, dummy_bh, NULL);
++        aio_wait_bh_oneshot(ctx, dummy_bh, NULL);
+     }
+ }
  
-     qatomic_inc(&s->resetting);
-     bus_cold_reset(BUS(&s->bus));
+@@ -575,7 +571,6 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+     AioContext *ctx;
+     int ret = 0;
+ 
+-    virtio_scsi_ctx_check(s, d);
+     /* Here VIRTIO_SCSI_S_OK means "FUNCTION COMPLETE".  */
+     req->resp.tmf.response = VIRTIO_SCSI_S_OK;
+ 
+@@ -639,6 +634,8 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+ 
+     case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
+     case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET: {
++        g_autoptr(GHashTable) aio_contexts = g_hash_table_new(NULL, NULL);
++
+         if (!d) {
+             goto fail;
+         }
+@@ -648,8 +645,15 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+ 
+         qatomic_inc(&req->remaining);
+ 
+-        ctx = s->ctx ?: qemu_get_aio_context();
+-        virtio_scsi_defer_tmf_to_aio_context(req, ctx);
++        for (uint32_t i = 0; i < s->parent_obj.conf.num_queues; i++) {
++            ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i];
++
++            if (!g_hash_table_add(aio_contexts, ctx)) {
++                continue; /* skip previously added AioContext */
++            }
++
++            virtio_scsi_defer_tmf_to_aio_context(req, ctx);
++        }
+ 
+         virtio_scsi_tmf_dec_remaining(req);
+         ret = -EINPROGRESS;
+@@ -770,9 +774,12 @@ static void virtio_scsi_handle_ctrl_vq(VirtIOSCSI *s, VirtQueue *vq)
+  */
+ static bool virtio_scsi_defer_to_dataplane(VirtIOSCSI *s)
+ {
+-    if (!s->ctx || s->dataplane_started) {
++    if (s->dataplane_started) {
+         return false;
+     }
++    if (s->vq_aio_context[0] == qemu_get_aio_context()) {
++        return false; /* not using IOThreads */
++    }
+ 
+     virtio_device_start_ioeventfd(&s->parent_obj.parent_obj);
+     return !s->dataplane_fenced;
+@@ -946,7 +953,6 @@ static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req)
+         virtio_scsi_complete_cmd_req(req);
+         return -ENOENT;
+     }
+-    virtio_scsi_ctx_check(s, d);
+     req->sreq = scsi_req_new(d, req->req.cmd.tag,
+                              virtio_scsi_get_lun(req->req.cmd.lun),
+                              req->req.cmd.cdb, vs->cdb_size, req);
+@@ -1218,14 +1224,16 @@ static void virtio_scsi_hotplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(hotplug_dev);
+     VirtIOSCSI *s = VIRTIO_SCSI(vdev);
++    AioContext *ctx = s->vq_aio_context[0];
+     SCSIDevice *sd = SCSI_DEVICE(dev);
+-    int ret;
+ 
+-    if (s->ctx && !s->dataplane_fenced) {
+-        ret = blk_set_aio_context(sd->conf.blk, s->ctx, errp);
+-        if (ret < 0) {
+-            return;
+-        }
++    if (ctx != qemu_get_aio_context() && !s->dataplane_fenced) {
++        /*
++         * Try to make the BlockBackend's AioContext match ours. Ignore failure
++         * because I/O will still work although block jobs and other users
++         * might be slower when multiple AioContexts use a BlockBackend.
++         */
++        blk_set_aio_context(sd->conf.blk, ctx, errp);
+     }
+ 
+     if (virtio_vdev_has_feature(vdev, VIRTIO_SCSI_F_HOTPLUG)) {
+@@ -1260,7 +1268,7 @@ static void virtio_scsi_hotunplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ 
+     qdev_simple_device_unplug_cb(hotplug_dev, dev, errp);
+ 
+-    if (s->ctx) {
++    if (s->vq_aio_context[0] != qemu_get_aio_context()) {
+         /* If other users keep the BlockBackend in the iothread, that's ok */
+         blk_set_aio_context(sd->conf.blk, qemu_get_aio_context(), NULL);
+     }
+@@ -1294,7 +1302,7 @@ static void virtio_scsi_drained_begin(SCSIBus *bus)
+ 
+     for (uint32_t i = 0; i < total_queues; i++) {
+         VirtQueue *vq = virtio_get_queue(vdev, i);
+-        virtio_queue_aio_detach_host_notifier(vq, s->ctx);
++        virtio_queue_aio_detach_host_notifier(vq, s->vq_aio_context[i]);
+     }
+ }
+ 
+@@ -1320,10 +1328,12 @@ static void virtio_scsi_drained_end(SCSIBus *bus)
+ 
+     for (uint32_t i = 0; i < total_queues; i++) {
+         VirtQueue *vq = virtio_get_queue(vdev, i);
++        AioContext *ctx = s->vq_aio_context[i];
++
+         if (vq == vs->event_vq) {
+-            virtio_queue_aio_attach_host_notifier_no_poll(vq, s->ctx);
++            virtio_queue_aio_attach_host_notifier_no_poll(vq, ctx);
+         } else {
+-            virtio_queue_aio_attach_host_notifier(vq, s->ctx);
++            virtio_queue_aio_attach_host_notifier(vq, ctx);
+         }
+     }
+ }
+@@ -1430,12 +1440,13 @@ void virtio_scsi_common_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
+ }
+ 
++/* main loop */
+ static void virtio_scsi_device_unrealize(DeviceState *dev)
+ {
+     VirtIOSCSI *s = VIRTIO_SCSI(dev);
+ 
+     virtio_scsi_reset_tmf_bh(s);
+-
++    virtio_scsi_dataplane_cleanup(s);
+     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
+     virtio_scsi_common_unrealize(dev);
+     qemu_mutex_destroy(&s->tmf_bh_lock);
+@@ -1460,6 +1471,8 @@ static const Property virtio_scsi_properties[] = {
+                                                 VIRTIO_SCSI_F_CHANGE, true),
+     DEFINE_PROP_LINK("iothread", VirtIOSCSI, parent_obj.conf.iothread,
+                      TYPE_IOTHREAD, IOThread *),
++    DEFINE_PROP_IOTHREAD_VQ_MAPPING_LIST("iothread-vq-mapping", VirtIOSCSI,
++            parent_obj.conf.iothread_vq_mapping_list),
+ };
+ 
+ static const VMStateDescription vmstate_virtio_scsi = {
 -- 
 2.48.1
 
