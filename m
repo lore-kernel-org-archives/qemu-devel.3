@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A96FC0219D
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 12:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BABDC021A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 12:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiYhR-0004Cc-S0; Thu, 13 Feb 2025 07:52:13 -0500
+	id 1tiYjP-0005Qy-7F; Thu, 13 Feb 2025 07:54:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiYhJ-0004BA-0Q
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:52:05 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tiYhH-0007Ws-1K
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:52:04 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-38de17a5fc9so463599f8f.3
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 04:52:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <madmarri@cisco.com>)
+ id 1tiYjL-0005QT-IH
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:54:11 -0500
+Received: from alln-iport-5.cisco.com ([173.37.142.92])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <madmarri@cisco.com>)
+ id 1tiYjJ-0007kw-Vf
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 07:54:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739451121; x=1740055921; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0i4z+5lKYQ7qoSQK45p6oql43J7nhZHMAKcVcBea9go=;
- b=ZQw4JK5kL6uXy3o0uvJKylMZIzGzmlyMpnFwJidrfV4BeW1Mq+npTYERv2uFNMzU/6
- dJzXwTseMcbUWsvxQx75SyhRXaixDVPRKWjRznridobaK0cTPjHu3/GN9o8jtlEkVaLo
- rOzWhOX51z/iFqVUMLPDKOX4Lgftr3Y7YHydXfmYAA9Bs6QOu0BooOqSZ0IOSBsUxUof
- 5NEhXEZYjCRbGtY2FSEMIJg3D7HRRbpBcsGb3aVLFht3dXoMM/avcyfYp7sOHQSLAuTJ
- NWwLxQxBwYmqoj9UmvnIjkwQAhUkiai+87zmHwP4rpRuL0mNytUpHwQBIF1d5CBMoD03
- Ptkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739451121; x=1740055921;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0i4z+5lKYQ7qoSQK45p6oql43J7nhZHMAKcVcBea9go=;
- b=GVPyXKjvoGmcF200B7eqr8rJVb+sAnx8QV0y8PIGh37Zx+ienG0Bj/u8DFv0ccI5Y4
- oolvHYEQwLpzd/hEaba/oQdIRMCrVzL5ajkG01k+I4Z7FEn44TTZDAALTviXZit1BlRC
- 359NxO9K3FuSazFhxZR2yxUohS85Uo+KR5aojFxASGA4EnIX6ygpVL2bymrXZglzLGrK
- nZUjVULL/IHZWkK2LcHiXpgE0qYJq3NFJnZYUGSn6CmhVs/zhzpovDN6L+ENlPrl5tXV
- 5b1GjumNViqF2moToD2CtZPuz5IgCIYE9twehV0UE7GmacdmzWHofxoiHy/WaVI/+sQO
- 3nFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwRBuPoX9lWwblJURfuAv1YllCopu0x0DaQGp5Uvs8ogQwlmwwGG7e7KzsGMoC6zpmyF6VNSWR+Gu/@nongnu.org
-X-Gm-Message-State: AOJu0YwSLypiXsU4vwA5CBly4dR6vIeqKZ0Dxt6yoBgJMAbG2rjqQXxR
- 5pw02tE5HOgGSbNkj7WatlsS48qPfBrkY7poA0ZCVCe8yUB2D1Zi4dXcpAoad+0=
-X-Gm-Gg: ASbGncsWotUr8dXQGxkCSvAehxPELwim79MuLuTWNKZ7fFrEAxJb07zGxOmoIhvTGiA
- lFb1kOgPOPyokMR6qGEzhTagCauBDhPUDWK7ps3oHhmfKJukf2zHQgRtss4xWMVwDqXsCodkxE2
- sq2dnZyrQ9MAbO5NvQ/nyXakpqvhRu6WMAVX+gLCKgXiesaNwFW0NZbQDjdHmSuS+JOEWvvIijN
- hulXRlfz9EpgzjFGcEdbKH9Uv5Upfz+lUPqFvyfCdzXw1SKwwW2OW2KDSZpfpHCUU6QP0PptUD2
- ED/mG1UYS0+zRzUZXcaNHVWwrmsZD7z77YBmk302t60cUMk=
-X-Google-Smtp-Source: AGHT+IEfpdEIKPEUHZV3Ffd3AYenGSTPqUx2WNFL9BOlHaZIFncXPh4Fi9pGBMxCcXKtSQ8LS55J4g==
-X-Received: by 2002:a05:6000:1fae:b0:38d:e092:3ced with SMTP id
- ffacd0b85a97d-38f244d64b2mr3146284f8f.7.1739451120680; 
- Thu, 13 Feb 2025 04:52:00 -0800 (PST)
-Received: from [10.223.46.213] (6.170.88.92.rev.sfr.net. [92.88.170.6])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439618a98f9sm16986885e9.39.2025.02.13.04.51.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Feb 2025 04:52:00 -0800 (PST)
-Message-ID: <40962db9-e868-420d-b4ce-aff12baad3cf@linaro.org>
-Date: Thu, 13 Feb 2025 13:51:57 +0100
+ d=cisco.com; i=@cisco.com; l=1077; q=dns/txt; s=iport;
+ t=1739451249; x=1740660849;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=vfSbWWpJrourxmLHfdvWizUEvZuT+2R0zTs9XRrc2X0=;
+ b=MevPAWMd+19mrBs4tUCjOAdiC1Z8b2OJpKm5unwK5GkqnUw42D9txbKX
+ /c6KfeJO5fsdOTAZXea22N3okqATIHDD2jW1uT+xWPIILJUvTjdY/4wYR
+ rmEFo3+RKIx21CmPv1VPnpXiPGYGIYxxGPb3sFwPgIF4Y4+pRBso3SG9c w=;
+X-CSE-ConnectionGUID: Q3yWZKx1Rf212ey8hNuMTg==
+X-CSE-MsgGUID: gHTXTbpfSO2lZTY7CGRsCw==
+X-IPAS-Result: =?us-ascii?q?A0ATAAA16q1n/4z/Ja1aGwEBAQEBAQEBBQEBARIBAQEDA?=
+ =?us-ascii?q?wEBAYF/BgEBAQsBAYJJdllDSIxyiVOaEoQFgSUDVg8BAQEPOQsEAQGFB4sLA?=
+ =?us-ascii?q?iY0CQ4BAgQBAQEBAwIDAQEBAQEBAQEBAQELAQEFAQEBAgEHBYEOE4V7DUkBD?=
+ =?us-ascii?q?AGGBisLAUaBDESDAgGCZAMRrlOBeTOBAYR82TiBaAaBSAGNSlcZhHcnG4FJR?=
+ =?us-ascii?q?IR9gQWEC4V3BIddhzCDeplTSIEhA1ksAVUTDQoLBwWBcQM1DAswFYFGQzeCR?=
+ =?us-ascii?q?2lJOgINAjWCHnyCK4RXhENeLwMDAwODMoVYghKCDIlNTkADCxgNSBEsNxQbB?=
+ =?us-ascii?q?j5uB55JATyEJgGBAwosIoEvk2ckAZIqoQSEJYRvhymVLhozqlIuh2SQaooHg?=
+ =?us-ascii?q?32WRIRmgWc8gVkzGggbFYMiUhkPji0LC4NYxzElMjwCBwsBAQMJjUCEQQEB?=
+IronPort-Data: A9a23:PyoFpatCn0HhODR0QP0duKVSOefnVAdfMUV32f8akzHdYApBsoF/q
+ tZmKTzQOP+CMDP9cosnYNu//BhSvMLXx99nTlZorHs9EyMXgMeUXt7xwmUckM+xwmwvaGo9s
+ q3yv/GZdJhcokf0/0nrav656yEhjclkf5KkYMbcICd9WAR4fykojBNnioYRj5Vh6TSDK1vlV
+ eja/YuGYzdJ5xYuajhJs/ja80s01BjPkGpwUmIWNKgjUGD2zxH5PLpHTYmtIn3xRJVjH+LSb
+ 47r0LGj82rFyAwmA9Wjn6yTWhVirmn6ZFXmZtJ+AsBOszAazsAA+v9T2Mk0NS+7vw60c+VZk
+ 72hg3AfpTABZcUgkMxFO/VR/roX0aduoNcrKlDn2SCfItGvn3bEm51T4E8K0YIww71mPlNt5
+ aUiJmpUNB2S1+KQ3ZeHRbw57igjBJGD0II3oHpsy3TdSP0hW52GG/6M7t5D1zB2jcdLdRrcT
+ 5NGMnw0M1KaPkAJYwtPYH49tL/Aan3XdjRUrVuPv6sf6GnIxws327/oWDbQUoDRH58Izh/H/
+ woq+Uz2Ii0qCNaHxwGiqHaeut6QtgzBQ6kNQejQGvlCxQf7KnYoIAQbUEb+rfSnh0qWXdVZJ
+ EoJvC00osAa91aiXtT5dwe1rH6NolgXXN84LgEhwBuGxqyR50OSAXIJC2YaLtcnr8QxAzct0
+ zdlgu/UONCmi5XNIVr1y1tehWra1fQ9RYPaWRI5cA==
+IronPort-HdrOrdr: A9a23:VisY/KkjM9Fnd0cbYesiHo7msQHpDfIn3DAbv31ZSRFFG/FwWf
+ rAoB19726QtN9/YhAdcLy7VZVoIkmsl6Kdg7NwAV7KZmCP0wGVxepZg7cKrQeNJ8SHzJ8/6U
+ +lGJIOb+EZyjNB/KLH3DU=
+X-Talos-CUID: 9a23:DmE6sGwjPNb+Lh8FBOz6BgUtQdEaQF7NlU3eeRbiBHc5SJuIbGOfrfY=
+X-Talos-MUID: 9a23:V8R23AY7UoSy0eBTuB/QtA1oLMlTxP6qOnw8zr4pgdKvKnkl
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="432258171"
+Received: from rcdn-l-core-03.cisco.com ([173.37.255.140])
+ by alln-iport-5.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 13 Feb 2025 12:54:07 +0000
+Received: from sjc-ads-7373.cisco.com (sjc-ads-7373.cisco.com [10.30.220.158])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by rcdn-l-core-03.cisco.com (Postfix) with ESMTPS id 5C41E180001FC;
+ Thu, 13 Feb 2025 12:54:07 +0000 (GMT)
+Received: by sjc-ads-7373.cisco.com (Postfix, from userid 1839049)
+ id E2462CC12B5; Thu, 13 Feb 2025 04:54:06 -0800 (PST)
+From: Madhu Marri <madmarri@cisco.com>
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com,
+	xe-linux-external@cisco.com,
+	madmarri@cisco.com
+Subject: [master] [PATCH] usb: Check USB_TOKEN_SETUP in
+ usb_ep_get(CVE-2024-8354)
+Date: Thu, 13 Feb 2025 04:54:03 -0800
+Message-ID: <20250213125403.4138883-1-madmarri@cisco.com>
+X-Mailer: git-send-email 2.44.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] target/microblaze: Drop DisasContext.r0
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com
-References: <20250212220155.1147144-1-richard.henderson@linaro.org>
- <20250212220155.1147144-9-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250212220155.1147144-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Outbound-SMTP-Client: 10.30.220.158, sjc-ads-7373.cisco.com
+X-Outbound-Node: rcdn-l-core-03.cisco.com
+Received-SPF: pass client-ip=173.37.142.92; envelope-from=madmarri@cisco.com;
+ helo=alln-iport-5.cisco.com
+X-Spam_score_int: -118
+X-Spam_score: -11.9
+X-Spam_bar: -----------
+X-Spam_report: (-11.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_NONE=0.001, T_SPF_HELO_PERMERROR=0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +108,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 23:01, Richard Henderson wrote:
-> Return a constant 0 from reg_for_read, and a new
-> temporary from reg_for_write.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/microblaze/translate.c | 24 ++----------------------
->   1 file changed, 2 insertions(+), 22 deletions(-)
+USB_TOKEN_SETUP packet not being handled in usb_ep_get function.
+This causes the program to hit the assertion that checks for only
+USB_TOKEN_IN or USB_TOKEN_OUT, leading to the failure and core
+dump when the USB_TOKEN_SETUP packet is processed.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Added a check for USB_TOKEN_SETUP to avoid triggering an assertion
+failure and crash.
+
+Fixes: CVE-2024-8354
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2548
+
+Signed-off-by: Madhu Marri <madmarri@cisco.com>
+---
+ hw/usb/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/hw/usb/core.c b/hw/usb/core.c
+index 975f76250a..df2aec5aca 100644
+--- a/hw/usb/core.c
++++ b/hw/usb/core.c
+@@ -741,6 +741,12 @@ struct USBEndpoint *usb_ep_get(USBDevice *dev, int pid, int ep)
+     if (ep == 0) {
+         return &dev->ep_ctl;
+     }
++
++    if (pid == USB_TOKEN_SETUP) {
++        /* Do not handle setup packets here */
++        return &dev->ep_ctl;
++    }
++
+     assert(pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT);
+     assert(ep > 0 && ep <= USB_MAX_ENDPOINTS);
+     eps = (pid == USB_TOKEN_IN) ? dev->ep_in : dev->ep_out;
+-- 
+2.44.1
 
 
