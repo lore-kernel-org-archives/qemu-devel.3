@@ -4,132 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348A6C021A7
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 09:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D533C021A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 09:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tis2c-0002GF-M9; Fri, 14 Feb 2025 04:31:23 -0500
+	id 1tis7N-00041t-Vm; Fri, 14 Feb 2025 04:36:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tis2a-0002G5-E7
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 04:31:20 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tis2Y-0000it-Og
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 04:31:20 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5de51a735acso3432776a12.0
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 01:31:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739525475; x=1740130275; darn=nongnu.org;
- h=user-agent:mime-version:date:autocrypt:references:in-reply-to:cc:to
- :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RumS1TxssgGfR7/2i83oHjeXmfmGJCefT9NZzLt2aUQ=;
- b=NFK/pUq17ydXnzuP6ulVIdlB27BNb53sIGx2IdvYXA2GItOy6P1v4MABTGjsZlmlN0
- F3gg3g54xWBdYdctDm+5V82ejzHKA+Q/fsCmAKZjksUtIlUjDwOJ6u2KaOQKcCNs+8N4
- JOb1HdTD+Nfsn7owunlz0scnA5ZykwHKmAZBdPNaTSQ/QzECrowsOMPIU+PvjRJMZKLL
- 1RjWGJ6pjTEHhWhbNEQjQjwtugLD9UtnSWi64zhzcLLiBHRdIAOTsU9Xe7kYmqJbkPLM
- w+eyFT1li88iuAFODqBNJy9A0Fjcs/eCPhHrLAJ5WMrvo06BYgjh8XKvizYAGBFdFthj
- sVhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739525475; x=1740130275;
- h=user-agent:mime-version:date:autocrypt:references:in-reply-to:cc:to
- :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RumS1TxssgGfR7/2i83oHjeXmfmGJCefT9NZzLt2aUQ=;
- b=NRfw4Ok7taKCSFWTxELKuUYOYGaetRcbR/H3e5HH/q+cf2Qj1xi7rfcmxPG+n4o3k2
- 0Z7qhaKmjQtWYRgVSYPaQ+DTjl2sFQDxkDxKyjqj9dhxa51YHtwIqVHD/yV2CV/e4S7b
- 84lR2ufLNS6IriLuR1RvOC2k5DaJca13nRCjP2vnFcaTjJygFPEsX6sFCCTN0wFr/lhS
- 2kdGcCHyDr7w9UQGObCVf2DegChiV34kiMNzsL+ONmFoAuch20YLJNtKMBJusA/6t94a
- VnKzfT1eUpf825sIhYh4B16tk2X3HTSI5qxegKbkSBnXb8j9R3FHDFNOWeOvXKXF/+v1
- ROwA==
-X-Gm-Message-State: AOJu0YzPZDUzgGIKvZKumWamsekukbxECsFLeyZTDxmdapymGDLUR4Dn
- M486oJpfYZjw7l39XPi7K+FX84iV3riR+QtN+pWTOHZcMmkLzv3VUTdDmBWq
-X-Gm-Gg: ASbGncuXWVEsGKmIie2/zpxJzeYDg3aj5sp9mNIyqh45hsd1yO//a0MqhPvvG8BpThU
- ijGDXKE84VNYLCUL1UrMn+XQRNvS0ZL0Ne7LZCzCN1ARJj8TjwgEFj55dTTvp9snXN2JEFrasG6
- qxJxgRjju+tPpaT2d7H0EvZc5//wDlCPEKTmbkJW/qAHrUr8wy2TCGjfeNkIjexmxOuZcqNxoEZ
- BBF+CArHIWj0qF8jXt3kvtIrFAe6JHayXuG781ImrxevFMRxwLRZpuTMx1UIL0VigNaPEEtvy2M
- urgT3x9m0qVNHfVoX+b1Pu8nx8HY
-X-Google-Smtp-Source: AGHT+IHV90VDCPD54wiWUrKV09FNs1YtuP00XrAOb8hv27GUJX+UC9MhJAOLLeNXW92K/RvynDMUKw==
-X-Received: by 2002:a05:6402:3606:b0:5dc:7fbe:730a with SMTP id
- 4fb4d7f45d1cf-5dec9b70130mr7076222a12.0.1739525475070; 
- Fri, 14 Feb 2025 01:31:15 -0800 (PST)
-Received: from [172.21.178.255] ([195.226.174.194])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dece287d13sm2598695a12.68.2025.02.14.01.31.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 01:31:13 -0800 (PST)
-Message-ID: <ef8108aa73c693cc54c08c81a14201138b14172f.camel@gmail.com>
-Subject: Re: [PATCH v2] vfio: Add property documentation
-From: Corvin =?ISO-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>, 
- =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>, Eric
- Farman	 <farman@linux.ibm.com>, Eric Auger <eric.auger@redhat.com>, 
- tomitamoeko@gmail.com
-In-Reply-To: <20250213144513.32b3241f.alex.williamson@redhat.com>
-References: <20250213135050.1426258-1-clg@redhat.com>
- <20250213144513.32b3241f.alex.williamson@redhat.com>
-Autocrypt: addr=corvin.koehne@gmail.com; prefer-encrypt=mutual;
- keydata=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
- LwksVmgc9s79+9pSpeP5DbIeMzhrIK
-Content-Type: multipart/signed; micalg="pgp-sha256";
- protocol="application/pgp-signature"; boundary="=-v/3sUI8E4SlzamTeMQGz"
-Date: Fri, 14 Feb 2025 10:31:08 +0100
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tis7C-00041E-5I
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 04:36:06 -0500
+Received: from mailout2.samsung.com ([203.254.224.25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tis76-0001cg-0G
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 04:36:05 -0500
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+ by mailout2.samsung.com (KnoxPortal) with ESMTP id
+ 20250214093550epoutp0279c6007750e354b528d35408bfb18a5f~kCXQhrPW71893018930epoutp020
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 09:35:50 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
+ 20250214093550epoutp0279c6007750e354b528d35408bfb18a5f~kCXQhrPW71893018930epoutp020
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1739525750;
+ bh=xi+eGfXc7CLAVfVWod9Ofd5IXXxIwEbBieUdsw5O5V0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=pfZ16XPf5rBChLjUvqCLIr8lKci8BAXWuMvfg/HKd3nWT8wP1RPrCHnyZ1IORQmEU
+ 4u8cBaOgfjvhuxG8X8UmPZunMOY7pTAc9fVNlVJbnsixT0+a2tFU8dqVVNYmrtssTH
+ PJm4zv4yLJ07z48DxSE4zBBRdlK1BRfR57MK86zU=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+ 20250214093550epcas5p4fb494e959e5ddaa570d9f030c3226726~kCXQPvoeW2149321493epcas5p47;
+ Fri, 14 Feb 2025 09:35:50 +0000 (GMT)
+Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.179]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4YvRkC5y9Kz4x9Px; Fri, 14 Feb
+ 2025 09:35:47 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+ epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 28.DC.19710.37E0FA76; Fri, 14 Feb 2025 18:35:47 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250213091629epcas5p1e5435929f701840a7e13f22a83edff22~judFPpdAG1560415604epcas5p1w;
+ Thu, 13 Feb 2025 09:16:29 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250213091629epsmtrp1eec0b2d90dbf156b348d2221abf7f0fc~judFO89rm2265722657epsmtrp1U;
+ Thu, 13 Feb 2025 09:16:29 +0000 (GMT)
+X-AuditID: b6c32a44-36bdd70000004cfe-b7-67af0e73e3fa
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+ epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 60.74.18949.D68BDA76; Thu, 13 Feb 2025 18:16:29 +0900 (KST)
+Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
+ by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250213091628epsmtip11de8558fbcbb9a3079f8c4bcd48226c8~judDu8c6R2263522635epsmtip1h;
+ Thu, 13 Feb 2025 09:16:27 +0000 (GMT)
+From: Vinayak Holikatti <vinayak.kh@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com, Vinayak Holikatti
+ <vinayak.kh@samsung.com>
+Subject: [PATCH v2 1/3] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations discovery commands (8.2.9.9.5.3)
+Date: Thu, 13 Feb 2025 14:45:56 +0530
+Message-Id: <20250213091558.2294806-2-vinayak.kh@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250213091558.2294806-1-vinayak.kh@samsung.com>
 MIME-Version: 1.0
-User-Agent: Evolution 3.54.3 
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGJsWRmVeSWpSXmKPExsWy7bCmum4x3/p0g1mv9CymH1a0+HJ6D5vF
+ 6ptrGC1uHtjJZLFw4zImi/OzTrFY/N22l9HieO8OFosTJ7ezA8XmsDtweeycdZfd48m1zUwe
+ fVtWMXpMnV3v8XmTXABrVLZNRmpiSmqRQmpecn5KZl66rZJ3cLxzvKmZgaGuoaWFuZJCXmJu
+ qq2Si0+ArltmDtBNSgpliTmlQKGAxOJiJX07m6L80pJUhYz84hJbpdSClJwCkwK94sTc4tK8
+ dL281BIrQwMDI1OgwoTsjC8t/SwFvw0r1rc8ZG5gvKjUxcjJISFgInGz+R5LFyMXh5DAbkaJ
+ jQ+bGSGcT4wSE7Y+ZYNwvjFKXL6yCqiMA6zlw6UMkG4hgb2MEm8nukDUNDBJLJ//jgkkwSZg
+ IPGg+Tg7iC0iICnxu+s0M4jNLPCBUWLRU12QOcICpRKnL7CBmCwCqhJ/7ieDVPAK2Eqs/vmI
+ DeI4eYn9B88yg5RwCthJTHuZDVEiKHFy5hMWiIHyEs1bZzNDlP9llzg1xRHiSBeJQ0crIcLC
+ Eq+Ob2GHsKUkXva3QdnFEucufmKEsGskXnetgBpjL9F6qh9sK7OApsT6XfoQYVmJqafWMUFs
+ 5ZPo/f2ECSLOK7FjHogNslVFYunbTJhNX541Q033kGh9s5oZEkwTGSW+T13LNIFRYRaSZ2Yh
+ eWYWwuYFjMyrGCVTC4pz01OTTQsM81LL4dGbnJ+7iRGcQLVcdjDemP9P7xAjEwfjIUYJDmYl
+ EV6JaWvShXhTEiurUovy44tKc1KLDzGaAsN6IrOUaHI+MIXnlcQbmlgamJiZmZlYGpsZKonz
+ Nu9sSRcSSE8sSc1OTS1ILYLpY+LglGpgemZpv/xf6DR1LeslGlcj9iz9N/3sJV6BSdxSorKV
+ fzMKkyaG5stlX0hbsGitl17QpUkinBsbp4qGiPQK2t8uEZ8d7xOn+TV70Z5ixklnvZulZhxW
+ 7mQJqP0TqO2/4Wqg7sMcqRXyWVpzqn/1u+TPFvJj6zns9qziSenUprPqrRkrZbexz013vLJx
+ lZRAfGWUw4+kxyHii95Pqfl7c3Lnckf51cujHZOfqC97trTKq2qJ86Jju80l8o4n89VpM3w5
+ 9I7hxKoo1dL3RwX3PGx4VNC9QOUEl2ZOrHvPnnsZxt0T97e02tfM/rpCR2rnR7WSiJrqCzvf
+ V9hPONSZrneN+UvoXc5/vxexPxQRC1RTYinOSDTUYi4qTgQAS4OyYCkEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrELMWRmVeSWpSXmKPExsWy7bCSnG7ujrXpBnsnKFlMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLBYnTm5nB4rNYXfg8tg56y67x5Nrm5k8
+ +rasYvSYOrve4/MmuQDWKC6blNSczLLUIn27BK6MLy39LAW/DSvWtzxkbmC8qNTFyMEhIWAi
+ 8eFSRhcjF4eQwG5GiclPf7N0MXICxaUkju38yQZhC0us/PecHaLoH6PE0sevmEASbAIGEg+a
+ j7OD2CICkhK/u04zgxQxC/xilHi6+z5YQligWGLChudsINtYBFQl/txPBgnzCthKrP75CGqB
+ vMT+g2eZQUo4Bewkpr3MBgkLAZXs7rzGBFEuKHFy5hOw25iBypu3zmaewCgwC0lqFpLUAkam
+ VYySqQXFuem5xYYFRnmp5XrFibnFpXnpesn5uZsYwcGupbWDcc+qD3qHGJk4GA8xSnAwK4nw
+ Skxbky7Em5JYWZValB9fVJqTWnyIUZqDRUmc99vr3hQhgfTEktTs1NSC1CKYLBMHp1QDk9/R
+ Ex6y/nN+PvwtdUflyZGb7Z8a3x0x3/M80LI9RC/Sfl9p2cwlb55+CjV29WS5tHlS1PTjZyQ9
+ I+5zFq21zrXIerzX6Jrf+oOX7A05RNr7a5ZcP/nT89NXIY855y/s+HDLf3bBJfML3CUCOqtt
+ yie18jRzPzl/fSUzy4uSrz9nVdv/M4wRVmSaVzK/9WLv122R+78wrY1rffDzjOjtRRlddvx/
+ jy1Zmxj2zz5kUWKvryK/rN1C8XSpSCPBy2K7fQ8udVSLOl+pFV+87sLv76+fuTs86nt0rzXk
+ jZedlyJv6JS95xn9lcIzZgv1++Ykh0Sy3OjTSFyYeuj5A9envDNbmI5ynw3MOrOgJTkzW4ml
+ OCPRUIu5qDgRAMLGJ/zlAgAA
+X-CMS-MailID: 20250213091629epcas5p1e5435929f701840a7e13f22a83edff22
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250213091629epcas5p1e5435929f701840a7e13f22a83edff22
+References: <20250213091558.2294806-1-vinayak.kh@samsung.com>
+ <CGME20250213091629epcas5p1e5435929f701840a7e13f22a83edff22@epcas5p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.25;
+ envelope-from=vinayak.kh@samsung.com; helo=mailout2.samsung.com
+X-Spam_score_int: -58
+X-Spam_score: -5.9
+X-Spam_bar: -----
+X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,65 +140,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
+CXL devices supports media operations discovery command.
 
---=-v/3sUI8E4SlzamTeMQGz
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 136 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 136 insertions(+)
 
-T24gVGh1LCAyMDI1LTAyLTEzIGF0IDE0OjQ1IC0wNzAwLCBBbGV4IFdpbGxpYW1zb24gd3JvdGU6
-Cj4gT24gVGh1LCAxMyBGZWIgMjAyNSAxNDo1MDo1MCArMDEwMAo+IEPDqWRyaWMgTGUgR29hdGVy
-IDxjbGdAcmVkaGF0LmNvbT4gd3JvdGU6Cj4gPiArwqDCoMKgIC8qCj4gPiArwqDCoMKgwqAgKiBJ
-R0QKPiA+ICvCoMKgwqDCoCAqLwo+ID4gKwo+ID4gK8KgwqDCoCBvYmplY3RfY2xhc3NfcHJvcGVy
-dHlfc2V0X2Rlc2NyaXB0aW9uKGtsYXNzLCAvKiAyLjcgKi8KPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgICJ4LWlnZC1vcHJlZ2lvbiIsCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCAiQWRkIElHRCBPcFJlZ2lvbiBzdXBwb3J0IGZvcgo+ID4gKGhlYWRsZXNzIHN5c3RlbSkiKTsK
-PiAKPiBbQ2MgVG9taXRhIGFuZCBDb3J2aW4gaGF2ZSBtb3JlIHJlY2VudCB1bmRlcnN0YW5kaW5n
-IG9mIElHRCBvcHRpb25zXQo+IAo+IE5vdCBuZWNlc3NhcmlseSBmb3IgaGVhZGxlc3Mgc3lzdGVt
-cywgdW5sZXNzIG90aGVycyBoYXZlIGJldHRlcgo+IHN1Z2dlc3Rpb25zLCBtYXliZSBqdXN0ICJF
-eHBvc2UgaG9zdCBJR0QgT3BSZWdpb24gdGFibGUgdG8gZ3Vlc3QiLgo+IAoKU291bmRzIGdvb2Qu
-IE5vdGUgdGhhdCBpdCdzIHJlcXVpcmVkIGZvciB0aGUgSW50ZWwgR09QIChFRkkgZHJpdmVyKSBh
-bmQgdGhlCldpbmRvd3MgZHJpdmVyLiBTbywgaXQncyBtYW5kYXRvcnkgZm9yIG5vbiBoZWFkbGVz
-cyBzeXN0ZW1zLgoKPiA+ICvCoMKgwqAgb2JqZWN0X2NsYXNzX3Byb3BlcnR5X3NldF9kZXNjcmlw
-dGlvbihrbGFzcywgLyogMi43IChTZWUgYzRjNDVlOTQzZTUxKQo+ID4gKi8KPiA+ICvCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgICJ4LWlnZC1nbXMiLAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgIkFkZCBJbnRlbCBncmFwaGljcyBsZWdhY3kgbW9kZQo+ID4gZGV2aWNlIGFzc2lnbm1l
-bnQgc3VwcG9ydC4gIgo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgIkFzc2lnbiAwMDow
-Mi4wIGZyb20gdGhlIGhvc3QgdG8KPiA+IDAwOjAyLjAgaW4gdGhlIFZNIik7Cj4gCj4gTm90IHJl
-YWxseS7CoCBUb21pdGEgYWRkZWQgYSB1c2VmdWwgY29tbWVudCBhbmQgY29tbWl0IGxvZyBpbgo+
-IDM3ZjA1YTU5ZTg2OS7CoCBQZXJoYXBzOgo+IAo+ICJPdmVycmlkZSBEVk1UIFByZS1BbGxvY2F0
-ZWQgdmFsdWUgZm9yIElHRCBzdG9sZW4gbWVtb3J5LiAoMzJNaUIgdW5pdHMpIgoKTml0OiBUaGlz
-IHNldHMgdGhlIEdyYXBoaWNzIE1vZGUgU2VsZWN0IHZhbHVlIG9mIHRoZSBHTUNIIEdyYXBoaWNz
-IENvbnRyb2wKcmVnaXN0ZXIuIFdoaWxlIHdlIGN1cnJlbnRseSBvbmx5IHN1cHBvcnQgdmFsdWVz
-IGluIHRoZSByYW5nZSBvZiAweDAwIC0gMHg0MCwgSQpkb24ndCBzZWUgYSByZWFzb24gdG8gbm90
-IHN1cHBvcnQgMHhGMCAtIDB4RkUgd2hpY2ggdXNlcyA0IE1pQiBpbmNyZW1lbnRzLgoKCi0tIApL
-aW5kIHJlZ2FyZHMsCkNvcnZpbgo=
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 9c7ea5bc35..fa38ecf507 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -89,6 +89,7 @@ enum {
+     SANITIZE    = 0x44,
+         #define OVERWRITE     0x0
+         #define SECURE_ERASE  0x1
++        #define MEDIA_OPERATIONS 0x2
+     PERSISTENT_MEM = 0x45,
+         #define GET_SECURITY_STATE     0x0
+     MEDIA_AND_POISON = 0x43,
+@@ -1721,6 +1722,137 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+     return CXL_MBOX_BG_STARTED;
+ }
+ 
++#define CXL_CACHELINE_SIZE 64
++enum {
++    MEDIA_OP_CLASS_GENERAL  = 0x0,
++        #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
++    MEDIA_OP_CLASS_SANITIZE = 0x1,
++        #define MEDIA_OP_SAN_SUBC_SANITIZE 0x0
++        #define MEDIA_OP_SAN_SUBC_ZERO 0x1
++    MEDIA_OP_CLASS_MAX
++};
++
++struct media_op_supported_list_entry {
++    uint8_t media_op_class;
++    uint8_t media_op_subclass;
++};
++
++struct media_op_discovery_out_pl {
++    uint64_t dpa_range_granularity;
++    uint16_t total_supported_operations;
++    uint16_t num_of_supported_operations;
++    struct media_op_supported_list_entry entry[];
++} QEMU_PACKED;
++
++static const struct media_op_supported_list_entry media_op_matrix[] = {
++    {MEDIA_OP_CLASS_GENERAL, MEDIA_OP_GEN_SUBC_DISCOVERY},
++    {MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_SANITIZE},
++    {MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO}
++};
++
++static CXLRetCode media_operations_discovery(uint8_t *payload_in,
++                                                size_t len_in,
++                                                uint8_t *payload_out,
++                                                size_t *len_out)
++{
++    struct {
++        uint8_t media_operation_class;
++        uint8_t media_operation_subclass;
++        uint8_t rsvd[2];
++        uint32_t dpa_range_count;
++        struct {
++            uint16_t start_index;
++            uint16_t num_supported_ops;
++        } discovery_osa;
++    } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
++    int count = 0;
++
++    if (len_in < sizeof(*media_op_in_disc_pl)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
++    struct media_op_discovery_out_pl *media_out_pl =
++                                                  (void *)payload_out;
++    int num_ops = media_op_in_disc_pl->discovery_osa.num_supported_ops;
++    int start_index = media_op_in_disc_pl->discovery_osa.start_index;
++
++    if (start_index + num_ops > ARRAY_SIZE(media_op_matrix)) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    media_out_pl->dpa_range_granularity = CXL_CACHELINE_SIZE;
++    media_out_pl->total_supported_operations =
++                                     ARRAY_SIZE(media_op_matrix);
++    if (num_ops > 0) {
++        for (int i = start_index; i < ARRAY_SIZE(media_op_matrix); i++) {
++            media_out_pl->entry[count].media_op_class =
++                    media_op_matrix[i].media_op_class;
++            media_out_pl->entry[count].media_op_subclass =
++                        media_op_matrix[i].media_op_subclass;
++            count++;
++            if (count == num_ops) {
++                break;
++            }
++        }
++    }
++
++    media_out_pl->num_of_supported_operations = count;
++    *len_out = sizeof(struct media_op_discovery_out_pl) +
++        (sizeof(struct media_op_supported_list_entry) * count);
++    return CXL_MBOX_SUCCESS;
++}
++
++static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
++                                         uint8_t *payload_in,
++                                         size_t len_in,
++                                         uint8_t *payload_out,
++                                         size_t *len_out,
++                                         CXLCCI *cci)
++{
++    struct {
++        uint8_t media_operation_class;
++        uint8_t media_operation_subclass;
++        uint8_t rsvd[2];
++        uint32_t dpa_range_count;
++    } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
++
++    if (len_in < sizeof(*media_op_in_common_pl)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
++    uint8_t media_op_cl = media_op_in_common_pl->media_operation_class;
++    uint8_t media_op_subclass =
++                      media_op_in_common_pl->media_operation_subclass;
++    uint32_t dpa_range_count = media_op_in_common_pl->dpa_range_count;
++
++    switch (media_op_cl) {
++    case MEDIA_OP_CLASS_GENERAL:
++        if (media_op_subclass != MEDIA_OP_GEN_SUBC_DISCOVERY) {
++            return CXL_MBOX_UNSUPPORTED;
++        }
++
++        /*
++         * As per spec CXL 3.1 8.2.9.9.5.3 dpa_range_count
++         * should be zero for discovery sub class command
++         */
++        if (dpa_range_count) {
++            return CXL_MBOX_INVALID_INPUT;
++        }
++
++        return media_operations_discovery(payload_in, len_in, payload_out,
++                                             len_out);
++    case MEDIA_OP_CLASS_SANITIZE:
++        switch (media_op_subclass) {
++        default:
++            return CXL_MBOX_UNSUPPORTED;
++        }
++    default:
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
++    return CXL_MBOX_SUCCESS;
++}
++
+ static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
+                                          uint8_t *payload_in,
+                                          size_t len_in,
+@@ -2864,6 +2996,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+          CXL_MBOX_SECURITY_STATE_CHANGE |
+          CXL_MBOX_BACKGROUND_OPERATION |
+          CXL_MBOX_BACKGROUND_OPERATION_ABORT)},
++    [SANITIZE][MEDIA_OPERATIONS] = { "MEDIA_OPERATIONS", cmd_media_operations,
++        ~0,
++        (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
++         CXL_MBOX_BACKGROUND_OPERATION)},
+     [PERSISTENT_MEM][GET_SECURITY_STATE] = { "GET_SECURITY_STATE",
+         cmd_get_security_state, 0, 0 },
+     [MEDIA_AND_POISON][GET_POISON_LIST] = { "MEDIA_AND_POISON_GET_POISON_LIST",
+-- 
+2.34.1
 
-
---=-v/3sUI8E4SlzamTeMQGz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmevDVYACgkQ2FTaVjFe
-Amq3BA/+OxHCkMagETBg+NMmlv1MX45bMtHrZWIPksXw6opPx4ssBGME7oVfYt64
-xV6BH5rV/sJtQfHXFq56o+Kl1lhJJc6QLfCxkSFcMZZpAi7oOfp84UhdKn6AMrDU
-G9y111Zvx8tNMpCM7sL65sPstQtZIeSNjVu5+2Lk1qsmAG14ADq7EuFXwhHY3NP3
-6eK8zg/GuThW/AG2jHNUaj7RQ2/+tleYBFOIO5xTq/OBngzS39dBIql8KO5DDPVs
-uJdCRV/MFhmatI6xK8dscqdnMs7aL2lLRUQ0hc7kGPM0rMnfV1s1qRDQuTX96KN0
-IO1rabkQZdpo7GX6Mzu2ILzelHG97jUByFA62neIYESj62qftKpTqGhe2zTCyKuq
-YrLYGfSH0EAeMdRPLLMT2fB8EK6MyRj9QnBfL+1rkI8m1/HtUzq3M0n17llr1mz/
-bXXMv4R8a8YynYxlyROj8eBBFJVQxzjcC7VgzcLazi9bC4lvlI04pI3kqzzVlXCi
-ZK5LzIf0TImrWXXYZXmoaeet2T8S5hzLk2JCjZsaRJshYwutzraKfDoH94ZyPn0n
-J9foo6ud5GQJb3Ip91v/NBQXItnH+/ZQK5m2iY3D0pi8K/11NkdQ37HeNATJVb/m
-XpwGhLXVt8woitwk2PPnR7vA096j4Fx3/2DSXrKGyGa2lGowdA4=
-=dqlW
------END PGP SIGNATURE-----
-
---=-v/3sUI8E4SlzamTeMQGz--
 
