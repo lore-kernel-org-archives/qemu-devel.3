@@ -4,69 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD29C021A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA5EC0219D
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Feb 2025 14:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiZuX-0007vO-Pa; Thu, 13 Feb 2025 09:09:49 -0500
+	id 1tiZuY-0007vq-Eh; Thu, 13 Feb 2025 09:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikrant1garg@gmail.com>)
- id 1tiW2w-0006lu-RJ
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 05:02:14 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1tiWjv-0006mw-AP
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 05:46:39 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vikrant1garg@gmail.com>)
- id 1tiW2t-0005LU-RZ
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 05:02:14 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2fa44590eebso1522576a91.3
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 02:02:10 -0800 (PST)
+ id 1tiWjt-0004Mc-KQ
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 05:46:39 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2fbfe16cc39so1447278a91.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 02:46:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739440929; x=1740045729; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=5EP4nQyK89Ky7Y0fsEqPhuRpiFQspYBrVAzOzQFuiUg=;
- b=kJOJkGRSaa5LEEGvZBiznTzViUVcaXp76PLfdNSKv0weWWo5NZh8lJLGtpvqE5FKOj
- Cdv7emown2PL0ayeDzZHvAsvZIN0hQkABBQijmlY5pkn5oDJS2E1AvJ+eE9wTUeB2TIv
- qvJUk8uW7gqmtcJKG/IXPlaqYSaXlRs2hUN8KSMuM6L0pKh2uax/Df78rLpH9l4WwpjK
- 2sYYXIXXppduiCrE+9dGSqgMyrqFaw+Uk5MDlocWJVVjgdmiXNRap2pqF1jBAuFmxW5/
- YihUZ1GKo9pzr0gUsDMqXhVAy2zKCQgpA/VPk0wN8wTeML+cO+/XhNNrdaOfA27T6kCc
- N3JA==
+ d=gmail.com; s=20230601; t=1739443596; x=1740048396; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lKqt/aWtAZjId1Pfu193puqbyjM/WI9iSlYagyYHAj8=;
+ b=DWbaKJLOeak7qKlURJGiq/kQOciZBqA0rY8BD2Ex8Fqeydt4H+DIWDillHNfw9crb3
+ ywF7uVtJYe94iMY5HqiBWstXaD2y5jvqQtDysFFj2kchd0EnFrYMAw80tNWUOPu0/ge2
+ 6vYArLC2gb77zm39RnnZNBLO64nQJ0VYeut3GRIhwfhMb753e1psTarln35jNh38pR5T
+ J08MHBLsUvk2EDdbdHPEStfNnvO09T7kg1UbuIYno3QJJpveu24LbSJ0vAai1r7MrZ76
+ uSqIi3vxXhceu/Plw4H7ICcALo/BXgJeSdxDLyB8n32+DcTomJAkXcIgztm1BiooOBig
+ 5VzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739440929; x=1740045729;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5EP4nQyK89Ky7Y0fsEqPhuRpiFQspYBrVAzOzQFuiUg=;
- b=Gx98UAefvwcHK4WnavQsIz7BVv6WBNNVeoBdjbfTjbcoUpydzetcttjMP/DCj+dp93
- z0FA1Ck89OpmNqQw00OGfLJHZeNuHMqLe6rjX5JsevsCOk4up3VyGu96VfLuF8GHw1UH
- WYKDuTOb/6RKdbYWeP3k5gQVD5gBZUCIUKGi6100qKQUzhE1h5sLryZXhp+Ez+o1Pibh
- KtHZQDJViN3WVoEdchTmrteA9NmV3kqTorfgxqSRQUPaI8KisfHuUcBn/WUE7tZRkArX
- yMAQMfJt81pnSnUXY0k71YCcIOoQCsOVzmcX8gP1PzL7DgY8klahVsyf7DZOe5ia/A4P
- kcyA==
-X-Gm-Message-State: AOJu0Yypz14Ji2q/QYWaagG1yTjTeJetyMcfrm247S2Nb7BL4KATP1Eu
- scG3iPG4I879YlNMcuCCjmpjC7Fy8zcB0Bbmpw4wK+hlVpRLtDvi6xbQedYo4UPguDBCSkPP0Ab
- cgjn7y2FvXmUPmP/c6IkRozH71bAr3tQ7g9M=
-X-Gm-Gg: ASbGnctz9wIimK5zH7DNfrxRU0wHKzn6TTplZmn60VU6RNO90qN0juaHCnW9fFZ7mLg
- J6IXR+FxIocMrJQiH4oZnw+3hUjdzMSPQeENjep0uvZK0YGg8OTp1DOx8Qwon7jiEXGG4campYg
+ d=1e100.net; s=20230601; t=1739443596; x=1740048396;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lKqt/aWtAZjId1Pfu193puqbyjM/WI9iSlYagyYHAj8=;
+ b=l1DA5HZoFAtQum6ADbJCOD151iUNpJT7LWf9xslKom9g8nMzl5sVihzwLuPUJuGes2
+ ZOJx72EjoSmKdWfO3aPCsdR4YQ5tZEuUHcqCMdT1LgHJ9No5h7QRvW3CITWINZluM+9r
+ XkG/D0GISEqTyUUopt+Y6rDy2jzERpZpoBkRSzYgopiHJcFnfq0oVJ7x+kyQHSTyYG1O
+ xfRLayRNl2TmcZ1U+DDIr39wI0tQ2PO3f4x7hgoBkxcxopvsFdgOsC8Dk3m6VdWwReBU
+ FAtStXqF9qNcseyo7wPgSVizBQSdf9M+jApSKKwoJu9+M076vsXC/VZNM094ix9Zkpqz
+ OB1Q==
+X-Gm-Message-State: AOJu0YxFnHp05TPAWQD/YspOIrafs9+RIXxPrx5iUyfq2NLQRTp4UMEU
+ 0DdryoC4UxkUgeiBY8+GaI7bZ4OPIvNLmkixVvawfNYlxylCL0WFN65cFuX6UAwkQeZIw4FY8eh
+ V4ga2LIcpXGCDVtZ31/TQg4YK9KQ=
+X-Gm-Gg: ASbGncthewmCdHy2e7W+5wEr+R7O8XTxbJnhlgjkrfD45c/mSCLDBZqChYp4lCfvr3Z
+ jVL0A2sskatqG+S2b0YlzY2dDQWp9dSRgfcbPYCsgFfOh/KkGQoZtcIIAT8ToAATvTW6Ldfu7Tg
  ==
-X-Google-Smtp-Source: AGHT+IGS+OM1zctga5zs7TnQOiXc4jxEnwE+Idxq0CPl4kksQk2EN0q0sIR2qxdvTtOr0uaxKvqRqNuNH2EARHHKUJI=
-X-Received: by 2002:a17:90b:384d:b0:2f6:f107:fae4 with SMTP id
- 98e67ed59e1d1-2fc0e1c626fmr3817267a91.8.1739440928965; Thu, 13 Feb 2025
- 02:02:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhsjFkJGbsS42Y1hPnTeaH66VJXd9wZPkRv1l4sEVtOwLpfrdp72QsDYZZMbWOJq+LrGQyWKI9I3wLsLNv9Jw=
+X-Received: by 2002:a17:90b:2e4f:b0:2ee:5bc9:75c3 with SMTP id
+ 98e67ed59e1d1-2fbf5bb1cdcmr10274257a91.5.1739443596020; Thu, 13 Feb 2025
+ 02:46:36 -0800 (PST)
 MIME-Version: 1.0
+References: <CAKXOwk1_zPNBaQZyiHb8A5D+3euZuvjW__Cqi3_PKgad95rDKg@mail.gmail.com>
+ <6e184a9b-32f2-403b-b499-5d3b618e0bd8@amazon.com>
+In-Reply-To: <6e184a9b-32f2-403b-b499-5d3b618e0bd8@amazon.com>
 From: Vikrant Garg <vikrant1garg@gmail.com>
-Date: Thu, 13 Feb 2025 15:31:57 +0530
-X-Gm-Features: AWEUYZmRAaZRfxMNbGWbDZIdeWtGyV1UW7dUNLYnsHPMUYimQE1r5ustMAS2wXA
-Message-ID: <CAKXOwk1_zPNBaQZyiHb8A5D+3euZuvjW__Cqi3_PKgad95rDKg@mail.gmail.com>
-Subject: [Qemu Nitro Enclave] NSM virtio attestation response is always of
+Date: Thu, 13 Feb 2025 16:16:24 +0530
+X-Gm-Features: AWEUYZloLuO7H-sbabc9ut81kME0V3-I2svscctyMyd07arMAO7evAtt9xANVUo
+Message-ID: <CAKXOwk2Eba8qnqKQqCN+=2+N=WRPzAwx3LkoccEwR-3xgt32uw@mail.gmail.com>
+Subject: Re: [Qemu Nitro Enclave] NSM virtio attestation response is always of
  size 0x3000
-To: qemu-devel@nongnu.org
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, graf@amazon.com
-Content-Type: multipart/alternative; boundary="000000000000adcf1b062e032604"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=vikrant1garg@gmail.com; helo=mail-pj1-x1030.google.com
+To: Alexander Graf <graf@amazon.com>
+Cc: qemu-devel@nongnu.org, Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000a5d451062e03c507"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=vikrant1garg@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,41 +94,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000adcf1b062e032604
+--000000000000a5d451062e03c507
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello All,
+Thanks a lot, Alex.
 
-I am using the QEMU for emulating nitro enclave images. In my enclave
-image, I have an attestation service implemented in Rust. This application
-fetches attestations using IOCTL command. I have noticed that response from
-the nsm virtio device is always of length 0x3000 (i.e. maximum NSM response
-size). Instead, it should be the actual size of response bytes. Same case
-is also happening with the attestation service implemented in python. On
-the other hand, the same Rust attestation service is working with AWS nitro
-enclaves. It looks like an NSM emulation issue.
+You got the right fix. This is working for me. Expected length of response
+is being returned now.
 
-I would like to confirm if this is the expected behaviour and need help on
-further debugging.
-
-Regards,
 Vikrant
 
---000000000000adcf1b062e032604
+On Thu, Feb 13, 2025 at 4:00=E2=80=AFPM Alexander Graf <graf@amazon.com> wr=
+ote:
+
+> Hi Vikrant,
+>
+> On 13.02.25 11:01, Vikrant Garg wrote:
+>
+> > Hello All,
+> >
+> > I am using the QEMU for emulating nitro enclave images. In my enclave
+> > image, I have an attestation service implemented in Rust. This
+> > application fetches attestations using IOCTL command. I have noticed
+> > that response from the nsm virtio device is always of length 0x3000
+> > (i.e. maximum NSM response size). Instead, it should be the actual
+> > size of response bytes. Same case is also happening with the
+> > attestation service implemented in python. On the other hand, the same
+> > Rust attestation service is working with AWS nitro enclaves. It looks
+> > like an NSM emulation issue.
+> >
+> > I would like to confirm if this is the expected behaviour and need
+> > help on further debugging.
+>
+>
+> Thanks a lot for the report! Does this happen with all commands or only
+> the Attest command? The NSM emulation code attempts to trim the response
+> size to the actual payload, but there may well be a bug in that logic.
+>
+> I do have a hunch on what the problem may be. Can you please quickly try
+> the patch below?
+>
+>
+> Thanks!
+>
+> Alex
+>
+>
+> index 098e1aeac6..b22aa74e34 100644
+> --- a/hw/virtio/virtio-nsm.c
+> +++ b/hw/virtio/virtio-nsm.c
+> @@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev,
+> VirtQueue *vq)
+>       g_free(req.iov_base);
+>       g_free(res.iov_base);
+>       virtqueue_push(vq, out_elem, 0);
+> -    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
+> +    virtqueue_push(vq, in_elem, sz);
+>       virtio_notify(vdev, vq);
+>       return;
+>
+>
+
+--000000000000a5d451062e03c507
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hello All,</div><div><br></div><div>I am using the QE=
-MU for emulating nitro enclave images. In my enclave image, I have an attes=
-tation service implemented in Rust. This application fetches attestations u=
-sing IOCTL command. I have noticed that response from the nsm virtio device=
- is always of length 0x3000 (i.e. maximum NSM response size). Instead, it s=
-hould be the actual size of response bytes. Same case is also happening wit=
-h the attestation service implemented in python. On the other hand, the sam=
-e Rust attestation service is working with AWS nitro enclaves. It looks lik=
-e an NSM emulation issue.</div><div><br></div><div>I would like to confirm =
-if this is the expected behaviour and need help on further debugging.</div>=
-<div><br></div><div>Regards,</div><div>Vikrant</div></div>
+<div dir=3D"ltr"><div>Thanks a lot, Alex.</div><div><br></div><div>You got =
+the right fix. This is working for me. Expected length of response is being=
+ returned now.</div><div><br></div><div>Vikrant</div></div><br><div class=
+=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
+">On Thu, Feb 13, 2025 at 4:00=E2=80=AFPM Alexander Graf &lt;<a href=3D"mai=
+lto:graf@amazon.com">graf@amazon.com</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">Hi Vikrant,<br>
+<br>
+On 13.02.25 11:01, Vikrant Garg wrote:<br>
+<br>
+&gt; Hello All,<br>
+&gt;<br>
+&gt; I am using the QEMU for emulating nitro enclave images. In my enclave =
+<br>
+&gt; image, I have an attestation service implemented in Rust. This <br>
+&gt; application fetches attestations using IOCTL command. I have noticed <=
+br>
+&gt; that response from the nsm virtio device is always of length 0x3000 <b=
+r>
+&gt; (i.e. maximum NSM response size). Instead, it should be the actual <br=
+>
+&gt; size of response bytes. Same case is also happening with the <br>
+&gt; attestation service implemented in python. On the other hand, the same=
+ <br>
+&gt; Rust attestation service is working with AWS nitro enclaves. It looks =
+<br>
+&gt; like an NSM emulation issue.<br>
+&gt;<br>
+&gt; I would like to confirm if this is the expected behaviour and need <br=
+>
+&gt; help on further debugging.<br>
+<br>
+<br>
+Thanks a lot for the report! Does this happen with all commands or only <br=
+>
+the Attest command? The NSM emulation code attempts to trim the response <b=
+r>
+size to the actual payload, but there may well be a bug in that logic.<br>
+<br>
+I do have a hunch on what the problem may be. Can you please quickly try <b=
+r>
+the patch below?<br>
+<br>
+<br>
+Thanks!<br>
+<br>
+Alex<br>
+<br>
+<br>
+index 098e1aeac6..b22aa74e34 100644<br>
+--- a/hw/virtio/virtio-nsm.c<br>
++++ b/hw/virtio/virtio-nsm.c<br>
+@@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev, <br>
+VirtQueue *vq)<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_free(req.iov_base);<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_free(res.iov_base);<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 virtqueue_push(vq, out_elem, 0);<br>
+-=C2=A0=C2=A0=C2=A0 virtqueue_push(vq, in_elem, in_elem-&gt;in_sg-&gt;iov_l=
+en);<br>
++=C2=A0=C2=A0=C2=A0 virtqueue_push(vq, in_elem, sz);<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 virtio_notify(vdev, vq);<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;<br>
+<br>
+</blockquote></div>
 
---000000000000adcf1b062e032604--
+--000000000000a5d451062e03c507--
 
