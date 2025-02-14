@@ -4,81 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F8B9C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 15:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0329C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 15:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tixTI-000201-1U; Fri, 14 Feb 2025 10:19:16 -0500
+	id 1tixaB-0003eA-HW; Fri, 14 Feb 2025 10:26:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tixTF-0001zb-6E
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:19:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tixa9-0003dz-Qf
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:26:21 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tixTD-0007Oq-2U
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:19:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739546349;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A55QoFH/rQCqFBx/bbwSo3JflX/jTWQEPepyTFD/Rhw=;
- b=PuROEVizOyfHv3Ct2Qw9KdI+0d45akKqZnObwd8ZcJtOjfF8AroqWXf/yxr359SdnOfgxm
- YXeyjPm33nA9N5xGRIBB8PW1vHXjCokfJRzx+pgHn3LrvH/uo2VY/QtxzTpvb26hth2noM
- HffH16VtgCOPHDVG48lo6vn6Qf53dkg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-Z9-bzg0nMlunvozPZaQDJA-1; Fri,
- 14 Feb 2025 10:19:04 -0500
-X-MC-Unique: Z9-bzg0nMlunvozPZaQDJA-1
-X-Mimecast-MFC-AGG-ID: Z9-bzg0nMlunvozPZaQDJA_1739546342
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C0DE180087A; Fri, 14 Feb 2025 15:19:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FD131800360; Fri, 14 Feb 2025 15:18:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 03BE321E6A28; Fri, 14 Feb 2025 16:18:57 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,  Dmitry Fleytman
- <dmitry.fleytman@gmail.com>,  Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Luigi Rizzo <rizzo@iet.unipi.it>,  Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>,  Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,  Yuri Benditovich
- <yuri.benditovich@daynix.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Michael Roth <michael.roth@amd.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Lei Yang <leiyang@redhat.com>,  BALATON Zoltan
- <balaton@eik.bme.hu>,  qemu-devel@nongnu.org,  devel@daynix.com
-Subject: Re: [PATCH] qom: Use command line syntax for default values in help
-In-Reply-To: <20250207-bool-v1-1-5749d5d6df24@daynix.com> (Akihiko Odaki's
- message of "Fri, 07 Feb 2025 14:53:43 +0900")
-References: <20250207-bool-v1-1-5749d5d6df24@daynix.com>
-Date: Fri, 14 Feb 2025 16:18:56 +0100
-Message-ID: <87pljk1rmn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tixa8-0000gx-0h
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:26:21 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1739546772; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=SXWPm/Wkz2mWgRLiJk/vbg5jJRBuGpL+8qMbdhzPvywSenPtT/uBJIr20TMrDnpaWOKb8jZjIWlqiMNtStqG5C0fTt0tQeJPc/qbQVkgHPGdAKnVGTfvIrheOOX0eEiHmm0c7nJ6/vGSxq05f2YTRJ4+wNzhl9mKUI8qo3HK09Q=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1739546772;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=AtUm2Q6q6TdJOR+h+LFGHNYqGkxytbKOgqxen7dZHRM=; 
+ b=irwFtz5/DHdNcEIBMZUbqWWVDMlVMFd+vzp46lekM1BsD7FliW2dgyUtdqt0aJuUEKiG+g0lJ6gyfJm/8VkH0avN34WCTz7FtZ6c1BGut5iP1jQYbUQFeQI+3P6Srbgcn/sC51IZty3VyFP94EiB/Owkl0zcWY8aHl5PIqssZ9M=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739546772; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=AtUm2Q6q6TdJOR+h+LFGHNYqGkxytbKOgqxen7dZHRM=;
+ b=AKNwV7tpNYiN8BHB7geGvDPlrpsp5kI7uOQeYcDqB+MhlhKE/AZGE+V1/RFyJvuI
+ DSZbXYrLtCtNhDDbwRR2lHeVwPPUPoos0jhaQt2mMaOcYb/ZMyg9s5OjP6t55Lfi+MW
+ YKtxh25UvUEdx/2gf6eEmEfPSwm9IDHR0HJCeT1w=
+Received: by mx.zohomail.com with SMTPS id 1739546769779125.19517826859078;
+ Fri, 14 Feb 2025 07:26:09 -0800 (PST)
+Message-ID: <657183a6-5c0e-4bfd-9b83-1fa98946c330@collabora.com>
+Date: Fri, 14 Feb 2025 18:26:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ui/gtk-gl-area: Remove extra draw call in refresh
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dongwon Kim <dongwon.kim@intel.com>
+Cc: qemu-devel@nongnu.org
+References: <20250206225304.1739418-1-dongwon.kim@intel.com>
+ <878qq8pqmk.fsf@draig.linaro.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <878qq8pqmk.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -97,32 +82,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On 2/14/25 17:06, Alex Bennée wrote:
+> dongwon.kim@intel.com writes:
+> 
+>> From: Dongwon Kim <dongwon.kim@intel.com>
+>>
+>> This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+>> which causes some guest display corruption when gtk-gl-area
+>> is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+>> simulataneous accesses on the guest frame buffer by host compositor
+>> and the guest.
+>>
+>> Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> Reported-by: Alex Bennée <alex.bennee@linaro.org>
+>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> 
+> This certainly fixes the corruption I was seeing while testing Dimitry's
+> native context patches and doesn't seem to affect the venus test modes.
+> 
+> So:
+> 
+> Tested-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+>> ---
+>>  ui/gtk-gl-area.c | 1 -
+>>  1 file changed, 1 deletion(-)
+>>
+>> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+>> index 2c9a0db425..9f7dc697f2 100644
+>> --- a/ui/gtk-gl-area.c
+>> +++ b/ui/gtk-gl-area.c
+>> @@ -129,7 +129,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+>>  
+>>      if (vc->gfx.guest_fb.dmabuf &&
+>>          qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+>> -        gd_gl_area_draw(vc);
+>>          return;
+>>      }
+> 
 
-> object_property_help() uses the conventional command line syntax instead
-> of the JSON syntax. In particular,
-> - Key-value pairs are written in the command line syntax.
-> - bool description passed to the function says on/off instead of
->   true/false.
->
-> However, there is one exception: default values are formatted into JSON.
-> While the command line and JSON syntaxes are consistent in many cases,
-> there are two types where they disagree:
->
-> string: The command line syntax omits quotes while JSON requires them.
->
-> bool: JSON only accepts true/false for bool but the command line syntax
->       accepts on/off too, and on/off are also more popular than
->       true/false. For example, the docs directory has 2045 "on"
->       occurances while it has only 194 "true" occurances.
->       on/off are also accepted by OnOffAuto so users do not have to
->       remember the type is bool or OnOffAuto to use the values.
->
-> Omit quotes for strings and use on/off for bools when formatting
-> default values for better consistency.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
-
+-- 
+Best regards,
+Dmitry
 
