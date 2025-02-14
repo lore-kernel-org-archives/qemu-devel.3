@@ -4,91 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA851C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D84CC021A6
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwUt-0000mj-6a; Fri, 14 Feb 2025 09:16:51 -0500
+	id 1tiwf1-0002TU-Qy; Fri, 14 Feb 2025 09:27:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwTp-0006P8-Hd
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:47 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwTc-0004jI-Dh
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:38 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtRtR011440;
- Fri, 14 Feb 2025 14:15:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=+P4swyqEuKwf82Z7npEcCzUwXba/Uv9ke6CHl/B23lU=; b=
- OzmzLs34kEN9XB67C9q/0f4Bne8WYk/dnxRJJZltSD+dKWaHm/zIjoQx0jQq265c
- NVjFlxgEOJQWY3Jwu5wgTnx27rfb7JX5rDqVbtgEGI/zPfCxHFcrfwn4hIpwfyBl
- GCjvqG9uPXPOzWewkn/8AZNq27MzZnvNquO2LOEQxCR273KcQqLO5/DPsdLLezb/
- sBtYFQAJx1UaTPd41/VdO5dt6+bONEbrTVmFhcpf/S3Uh0miIkQ/YWuLo4SU0DL1
- hrnyEZ81JVhrk5W408p9twWtGrUqXBEtKfWQYRLT3/c+Abt0dUMFmi4xVyApIrM7
- CIV9Ugt4gYWSH+JJDcw7aA==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0sqbwns-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:15:19 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51ECIvBo025325; Fri, 14 Feb 2025 14:15:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwqksh2y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:15:18 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETQP006920;
- Fri, 14 Feb 2025 14:15:17 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 44nwqksg2h-37; Fri, 14 Feb 2025 14:15:17 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 36/45] vfio/iommufd: invariant device name
-Date: Fri, 14 Feb 2025 06:14:18 -0800
-Message-Id: <1739542467-226739-37-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
-References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-14_06,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- mlxlogscore=999
- phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2501170000 definitions=main-2502140104
-X-Proofpoint-ORIG-GUID: eBzRyyiEyc6R0yDlcg1rsRrW81wLNpPB
-X-Proofpoint-GUID: eBzRyyiEyc6R0yDlcg1rsRrW81wLNpPB
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tiweu-0002Os-15
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:27:12 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tiwer-00065k-O6
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:27:11 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 368782117D;
+ Fri, 14 Feb 2025 14:26:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739543218; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VswUcYznskfzTulnQ9U9d9AkJymYSzp+rHUEvf0mGAw=;
+ b=TgL17yoGWcS7zzbgvxXsM1hCbpYVIG2MiAnQbf6o53ARD1FQnLmoYUbsUJEv8dThMehylR
+ uoo/kJl72ogi+zF3MsoTr8G0EfEehaP+mXtUWOmHG/UnHiLGgeQ6waG2JZV2MyNlUIzF/p
+ H8dsY38+tuNyq3BwvBUC4IE1b8ngAYw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739543218;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VswUcYznskfzTulnQ9U9d9AkJymYSzp+rHUEvf0mGAw=;
+ b=qmm1V/ZVizU5uwcicaW8mlBrEoYHEPsu1Pdl+ccrhAtIlCgwiYxgTnH6CQCnUqiUyixugy
+ QHoA7GgIeEOtitDQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=afu8tVoP;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=iUvpxTyE
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739543213; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VswUcYznskfzTulnQ9U9d9AkJymYSzp+rHUEvf0mGAw=;
+ b=afu8tVoPv1RpRHDXwYpBQ/oZ/t2iGQHnBgRSLf665cJ8eZI+EFXAj8vg4tVS0sRAhiPhNL
+ eWUUQFICl8QvMvGwc+wo7taozosVBLPPEFHouAUs3tFy+oyKsXAgpnr6hoWTXS5dWV25vJ
+ x81T5x3UsUualvjHyNDsimhGS5Y/nUw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739543213;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VswUcYznskfzTulnQ9U9d9AkJymYSzp+rHUEvf0mGAw=;
+ b=iUvpxTyEgIiYF1RtRoI2dJQ3va14wupaYbz6deKTniw0qc6Z6aSubS4ZshgiXIgsH+zcss
+ nKYRIuH12HkLIQBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A47B113285;
+ Fri, 14 Feb 2025 14:26:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id DrKjGKxSr2dkIAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 14:26:52 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: yong.huang@smartx.com, qemu-devel <qemu-devel@nongnu.org>
+Cc: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Hyman Huang <yong.huang@smartx.com>
+Subject: Re: [PATCH v4 RESEND 4/4] guestperf: Add test result data into report
+In-Reply-To: <6303400c2983ffe5647f07caa6406f00ceae4581.1739530098.git.yong.huang@smartx.com>
+References: <cover.1739530098.git.yong.huang@smartx.com>
+ <6303400c2983ffe5647f07caa6406f00ceae4581.1739530098.git.yong.huang@smartx.com>
+Date: Fri, 14 Feb 2025 11:26:49 -0300
+Message-ID: <87cyfkvbyu.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 368782117D
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.38 / 50.00]; BAYES_HAM(-2.87)[99.46%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_NIXSPAM_FAIL(0.00)[2a07:de40:b281:104:10:150:64:97:server fail];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ smartx.com:email, imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,146 +126,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpr-transfer will use the device name as a key to find the value
-of the device descriptor in new QEMU.  However, if the descriptor
-number is specified by a command-line fd parameter, then
-vfio_device_get_name creates a name that includes the fd number.
-This causes a chicken-and-egg problem: new QEMU must know the fd
-number to construct a name to find the fd number.
+yong.huang@smartx.com writes:
 
-To fix, create an invariant name based on the id command-line
-parameter.  If id is not defined, add a CPR blocker.
+> From: Hyman Huang <yong.huang@smartx.com>
+>
+> The migration result data is not included in the guestperf
+> report information; include the result as a report entry
+> so the developer can check whether the migration was successful
+> after running guestperf.
+>
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/vfio/cpr.c              | 21 +++++++++++++++++++++
- hw/vfio/helpers.c          | 10 ++++------
- hw/vfio/iommufd.c          |  2 ++
- include/hw/vfio/vfio-cpr.h |  4 ++++
- 4 files changed, 31 insertions(+), 6 deletions(-)
-
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index a2400ca..e3ea2bf 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -11,6 +11,7 @@
- #include "hw/vfio/pci.h"
- #include "hw/pci/msix.h"
- #include "hw/pci/msi.h"
-+#include "migration/blocker.h"
- #include "migration/cpr.h"
- #include "qapi/error.h"
- #include "system/runstate.h"
-@@ -184,3 +185,23 @@ const VMStateDescription vfio_cpr_pci_vmstate = {
-         VMSTATE_END_OF_LIST()
-     }
- };
-+
-+bool vfio_cpr_set_device_name(VFIODevice *vbasedev, Error **errp)
-+{
-+    if (vbasedev->dev->id) {
-+        vbasedev->name = g_strdup(vbasedev->dev->id);
-+        return true;
-+    } else {
-+        /*
-+         * Assign a name so any function printing it will not break, but the
-+         * fd number changes across processes, so this cannot be used as an
-+         * invariant name for CPR.
-+         */
-+        vbasedev->name = g_strdup_printf("VFIO_FD%d", vbasedev->fd);
-+        error_setg(&vbasedev->cpr.id_blocker,
-+                   "vfio device with fd=%d needs an id property",
-+                   vbasedev->fd);
-+        return migrate_add_blocker_modes(&vbasedev->cpr.id_blocker, errp,
-+                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
-+    }
-+}
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 4b255d4..4ff794c 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -29,6 +29,7 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "migration/cpr.h"
- #include "monitor/monitor.h"
- 
- /*
-@@ -637,6 +638,7 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
- {
-     ERRP_GUARD();
-     struct stat st;
-+    bool ret = true;
- 
-     if (vbasedev->fd < 0) {
-         if (stat(vbasedev->sysfsdev, &st) < 0) {
-@@ -653,16 +655,12 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-             error_setg(errp, "Use FD passing only with iommufd backend");
-             return false;
-         }
--        /*
--         * Give a name with fd so any function printing out vbasedev->name
--         * will not break.
--         */
-         if (!vbasedev->name) {
--            vbasedev->name = g_strdup_printf("VFIO_FD%d", vbasedev->fd);
-+            ret = vfio_cpr_set_device_name(vbasedev, errp);
-         }
-     }
- 
--    return true;
-+    return ret;
- }
- 
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 7c0cdd7..2de2811 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -24,6 +24,7 @@
- #include "system/reset.h"
- #include "qemu/cutils.h"
- #include "qemu/chardev_open.h"
-+#include "migration/blocker.h"
- #include "pci.h"
- #include "exec/ram_addr.h"
- 
-@@ -661,6 +662,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
-     iommufd_cdev_container_destroy(container);
-     vfio_put_address_space(space);
- 
-+    migrate_del_blocker(&vbasedev->cpr.id_blocker);
-     iommufd_cdev_unbind_and_disconnect(vbasedev);
-     close(vbasedev->fd);
- }
-diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-index a9f2fbe..8a30d30 100644
---- a/include/hw/vfio/vfio-cpr.h
-+++ b/include/hw/vfio/vfio-cpr.h
-@@ -22,12 +22,14 @@ typedef struct VFIOContainerCPR {
- typedef struct VFIODeviceCPR {
-     bool reused;
-     Error *mdev_blocker;
-+    Error *id_blocker;
- } VFIODeviceCPR;
- 
- struct VFIOContainer;
- struct VFIOGroup;
- struct VFIOContainerBase;
- struct VFIOPCIDevice;
-+struct VFIODevice;
- 
- int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
-                              Error **errp);
-@@ -53,4 +55,6 @@ void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
-                                int nr);
- 
- extern const VMStateDescription vfio_cpr_pci_vmstate;
-+
-+bool vfio_cpr_set_device_name(struct VFIODevice *vbasedev, Error **errp);
- #endif
--- 
-1.8.3.1
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
