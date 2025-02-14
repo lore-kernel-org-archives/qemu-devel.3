@@ -4,94 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24932C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 17:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A83C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 17:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiz2c-0007za-V1; Fri, 14 Feb 2025 11:59:50 -0500
+	id 1tizEg-0005JA-D1; Fri, 14 Feb 2025 12:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
- id 1tiz2c-0007zQ-18
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:59:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1tizEd-0005Ie-Un
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 12:12:16 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
- id 1tiz2a-0006OO-14
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:59:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739552386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FJWotqOrBzucrLQ6Z8AqPGvMTzVocaRJz8yN2kVcxx8=;
- b=Dkxc8JhLPgV+31BZsYMyjhEyU89yq8sMkmgM23AsEqrfU1ibh+yMceMtND/evMqt/oGVI6
- whJMF53Obcp6Vq3lYuwwqHyy+9fuvO3Zlxsb+1sKboB8LuMsnsjlrr+H4HhfxWJArUXNU4
- Hz8KZrfr6uaHBywPK6wsR6jDEkn6bBk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-75-UVSiKyrNOyWnM4JQk8vJjw-1; Fri, 14 Feb 2025 11:59:44 -0500
-X-MC-Unique: UVSiKyrNOyWnM4JQk8vJjw-1
-X-Mimecast-MFC-AGG-ID: UVSiKyrNOyWnM4JQk8vJjw_1739552384
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4396260f74fso14107235e9.1
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 08:59:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739552384; x=1740157184;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FJWotqOrBzucrLQ6Z8AqPGvMTzVocaRJz8yN2kVcxx8=;
- b=s4IDfrQwRrKOSY5I9pyRC9FCaZCKgC8R+4C2wFrSTSK1BRMCchhF8wlJREbA/svO0G
- qUbAKGP4vs1MYr5LmLB0LTyQsUfis+lkqZ5aeScmFEf0L24u9a+Px5KYbxt9xlz8xM4E
- nW0AR0n4eejRx3i3gafh1i5nJ058UtPquzZfdCwvt5ErMLz4pCJ5K2bna2wGnzCTKAwL
- vJMvsiRFrrIrxaY+Hx+TM55K6KJuLIWtT0CvHjxTxpfQqDp/HTKefKpEifieZOG3LOu1
- /GDj/yK2NuLZjd/uiLkzT64mfwEmvEQwzU131bhGSwdmlEctGBQCv5eYfrnRiFlESZA9
- Gtsg==
-X-Gm-Message-State: AOJu0YycS41J8aiYt0eNdTVL1N4IRAuJhpVxI0eYUt3mPdvK7TkAON2U
- +3SQJlWNdLsZypoPOjac10SWpqQGv+TsAAXluJMJRJh4AFCLu81mTHTfQI/E4v7dlmr2zvHad/f
- Q2jv1HhoKTmRj1lNJej7Xc3PLKxS19D4MhcIO94rzX5yujUv6Y8bw
-X-Gm-Gg: ASbGncvv2LMmEpubuu2WOak1KCZ1s4gHi8Y4ucNGJbUu/SikYfbDyLTBOEMR8Mpdcne
- FVTkOhLKFJtJb3+Y6Xd3Qm4VRW8P9z6eBgqXqhODjnmfUrcIalvm66wUseUpmDjsgeZ1OyQRO3J
- cHMhORhtabs2zFA5UjOB6O7BMS9QrN5dSyUbQrwLQ6/1BJmDLktpP+YaS8D+6LsZMNCGfGb6StH
- ZJbDO7URa37usi8Y9BmnJzLl3mdq9WVpUsJZ5U/SauPbZMiJELpe8cvx2BpqWzBU2kFJbMK
-X-Received: by 2002:a05:600c:458b:b0:439:6dba:addb with SMTP id
- 5b1f17b1804b1-4396dbaaffemr11856115e9.7.1739552383600; 
- Fri, 14 Feb 2025 08:59:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGF3YZerXaEnAZuBpalcgsXMOnzq8xj8fY+X2oELsiIje3WK6qco7Qguwt69JfIoCkSLhi2BQ==
-X-Received: by 2002:a05:600c:458b:b0:439:6dba:addb with SMTP id
- 5b1f17b1804b1-4396dbaaffemr11855765e9.7.1739552383236; 
- Fri, 14 Feb 2025 08:59:43 -0800 (PST)
-Received: from fedora ([37.166.73.236]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1aa779sm79614715e9.30.2025.02.14.08.59.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 08:59:42 -0800 (PST)
-Date: Fri, 14 Feb 2025 17:59:02 +0100
-From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH] vhost-user-snd: Use virtio_get_config_size()
-Message-ID: <Z692Vg6N3Hth3GyH@fedora>
-References: <20250213132513.767709-1-mvaralar@redhat.com>
- <z2bfkwpwfohvmj6xesdm2zmatlcwxta4aexq6x543lpnt47333@ayqfx3yxs5eb>
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1tizEb-00013I-2o
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 12:12:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739553133; x=1771089133;
+ h=from:to:subject:date:message-id:in-reply-to:references:
+ mime-version:content-transfer-encoding;
+ bh=Owxe539c8/NPNVCeBaNuhsnyk4TAdK3I07Vnra6HODY=;
+ b=fTjMgLW9Tdbq0RT0E9wtvNy4YxFbUiyMzunBvTBfp8jIKka2lzcsivm4
+ ALSkxOt8MLruvWm/yAmiW3Uodi8MQOa3S56I2FTCFskTTw+WHrN2ZaCx4
+ vLd/7wHtaEEaFR9IqlNzuOMR+PwX8xbDet4ZU8seqSAACjr0HRSF5eQq1
+ BwZyC8TDQyM70bQKTRAmCSbL/s4/eU7UhJzlbXXI+rtwnR2G26qMcEXBH
+ wfU9b8qy5V2I0LdlZVgaSvWO0Gw6HtvGRU7RHF+h6qQkbddSR2H9rfiWy
+ +gWW8vuxisCUnj/Ae/hs18vd4pNT62x0L9xmwkUoKUq2jdguK83Jiueih w==;
+X-CSE-ConnectionGUID: 833QVL3VTpKbdpbISuTpCQ==
+X-CSE-MsgGUID: emJFP+X9QJqxBlqEp5TppQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11345"; a="50938532"
+X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; d="scan'208";a="50938532"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Feb 2025 09:12:08 -0800
+X-CSE-ConnectionGUID: IhAU9kNwRMWUEaTut+38RA==
+X-CSE-MsgGUID: O9mOJuoOQNmsx4GqVbvAUQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; d="scan'208";a="144360578"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by orviesa002.jf.intel.com with ESMTP; 14 Feb 2025 09:12:08 -0800
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH v2] ui/gtk-gl-area: Remove extra draw call in refresh
+Date: Fri, 14 Feb 2025 09:08:13 -0800
+Message-Id: <20250214170813.2234754-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250206225304.1739418-1-dongwon.kim@intel.com>
+References: <20250206225304.1739418-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <z2bfkwpwfohvmj6xesdm2zmatlcwxta4aexq6x543lpnt47333@ayqfx3yxs5eb>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mvaralar@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,97 +81,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 13, 2025 at 04:31:41PM +0100, Stefano Garzarella wrote:
-> For the title, what about this?
-> 
->   vhost-user-snd: fix incorrect config_size computation
-> 
-> Or something like that, just to make clear that we are fixing a
-> real issue.
-> 
-> On Thu, Feb 13, 2025 at 02:25:13PM +0100, Matias Ezequiel Vara Larsen wrote:
-> > Use virtio_get_config_size() rather than sizeof(struct
-> > virtio_snd_config) for the config_size in the vhost-user-snd frontend.
-> > The frontend shall rely on device features for the size of the device
-> > configuration space. This fixes an issue introduced by commit ab0c7fb2
-> 
-> When we refer to a commit it's a good practice to put both the sha1, but
-> also the title, like this:
-> This fixes an issue introduced by commit ab0c7fb22b ("linux-headers:
-> update to current kvm/next") ...
-> 
-> > in which the optional field `control` is added to the virtio_snd_config
-> 
-> s/control/controls
-> 
-> I would also specify here that the presence of `controls` in the config
-> space depends on VIRTIO_SND_F_CTLS, citing the specification:
-> 
-> 5.14.4 Device Configuration Layout
->  ...
->  controls
->     (driver-read-only) indicates a total number of all available control
->     elements if VIRTIO_SND_F_CTLS has been negotiated.
-> 
-> > structure. This breaks vhost-user-device backends that do not implement
-> > the `controls` field.
-> > 
-> 
-> I'd suggest to add the fixes tag:
-> 
-> Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
-> 
-> And maybe also:
-> 
-> Cc: qemu-stable@nongnu.org
-> 
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
-> > Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-> > Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-> > ---
-> > hw/virtio/vhost-user-snd.c | 18 +++++++++++++++++-
-> > 1 file changed, 17 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-> > index 8610370af8..8da4309470 100644
-> > --- a/hw/virtio/vhost-user-snd.c
-> > +++ b/hw/virtio/vhost-user-snd.c
-> > @@ -16,6 +16,18 @@
-> > #include "standard-headers/linux/virtio_ids.h"
-> > #include "standard-headers/linux/virtio_snd.h"
-> > 
-> > +static const VirtIOFeature feature_sizes[] = {
-> > +    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
-> > +    .end = endof(struct virtio_snd_config, controls)},
-> > +    {}
-> > +};
-> > +
-> > +static const VirtIOConfigSizeParams cfg_size_params = {
-> > +    .min_size = endof(struct virtio_snd_config, chmaps),
-> > +    .max_size = sizeof(struct virtio_snd_config),
-> > +    .feature_sizes = feature_sizes
-> > +};
-> > +
-> > static const VMStateDescription vu_snd_vmstate = {
-> >     .name = "vhost-user-snd",
-> >     .unmigratable = 1,
-> > @@ -23,16 +35,20 @@ static const VMStateDescription vu_snd_vmstate = {
-> > 
-> > static const Property vsnd_properties[] = {
-> >     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-> > +    DEFINE_PROP_BIT64("config-controls", VHostUserBase,
-> 
-> In almost all other virtio/vhost-user devices, the property name does not
-> have the prefix `config-`, but usually the thing after F_, in this case CTLS
-> is cryptic, so IMO just `controls` should be fine.
-> 
-> The only example I found is `config-wce` for vhost-user-blk, but in that
-> case the feature is actually called VIRTIO_BLK_F_CONFIG_WCE.
-> 
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Thanks for the review. I will address all the comments in the next
-version.
+This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+which causes some guest display corruption when gtk-gl-area
+is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+simulataneous accesses on the guest frame buffer by host compositor
+and the guest.
 
-Matias
+v2: Added "Fixes" tag
+
+Fixes: 77bf310084 ("ui/gtk: Draw guest frame at refresh cycle")
+Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ ui/gtk-gl-area.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 2c9a0db425..9f7dc697f2 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -129,7 +129,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ 
+     if (vc->gfx.guest_fb.dmabuf &&
+         qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        gd_gl_area_draw(vc);
+         return;
+     }
+ 
+-- 
+2.34.1
 
 
