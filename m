@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D25C021A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 01:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA9CC021A0
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 01:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tikuu-0006cL-9w; Thu, 13 Feb 2025 20:54:56 -0500
+	id 1tiky5-0001K9-9G; Thu, 13 Feb 2025 20:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tikus-0006cD-1r
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 20:54:54 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tikuq-0004OI-Ca
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 20:54:53 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21f3c119fe6so36764755ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 17:54:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739498091; x=1740102891;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZVFXlsrJ6uqFDQzwPn+Dorbteo5aZgEE94Bb7QudTvo=;
- b=LMvgGEIoGABrSlGSr8VXsIrEch8UBxBpcVxt4Wbg8bjKTtCBTeM8IcT3bdC8mmaAiG
- FwpGVt3ZK1wreJTGgAgReyrItFnhtIjhZJRygHvhLx+K4XuNsV+/AlY2iKIPLE5moqBM
- IS9N1zaBy+qUpyLp5q3IL0MkholIXQJGZb+B7OqTyruHeI76Tz44/dwj8KsagQbbwmQY
- rSz8aLkrOsd6uOWjfeEJa7/cxUwOUug3j94u5xnmrkTHvXkyeqvucRuetHnD9+9JuXPz
- yoRFaAUPyWZTtga9MVmby4qXMgzW3D3FxENYceP3ER9hr6hE6jK82knTfDnvyw0s5bT/
- T8xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739498091; x=1740102891;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZVFXlsrJ6uqFDQzwPn+Dorbteo5aZgEE94Bb7QudTvo=;
- b=XzjEJcAvJGe0Bjvf3/CQ8llRJf0f95IgApwmtNayV6cUmgF9amykg4F3se5Co6E8fF
- Ke5QpaNj9Ymjx4NKo9/1yglsZzoC6QcTLgbSpc0xZ0O+9w9/+vS7ybcI8uncKkkq/9aL
- sYZRrQTHVNG/CrrGxGU4gL31pGZihVJn5+wq4BLTNMzUZYtlUOL2nxlzKuhp3u/gi5u9
- WnjNqlpYYTi2wj68DxoBczDJf6gMKVHAirqeV1iP+mBUWanrvgcymxfcAXJwgxTUx3VE
- +Z4pXNhGMnkZ+/Jqm3nLxrMytuxn5m2DQNNOUuNC6sxzKmzZ+YC2k69MEaJTSVMfdq6c
- qwrw==
-X-Gm-Message-State: AOJu0YyppK4WEsw76IrAMPFf+lUef7qbHQjisUqQ1nRC8OTrpU6vr7i2
- 0xi33m71UPNQyyKMCzRYhpUrgR30ob0XwMHTZmThfYBpq8ELxtHNBubr/r/rhuCrNPhwt5PPmkV
- QNey9Hak+
-X-Gm-Gg: ASbGncsARCtrET1yf4kZjKLf9Ci8ZyuX7/p6Q7WW79omwDVfdYeI3/7ONw5lItu6TQE
- Gq+/bOzeg6z7QPA+ChNk5dc17vapXtQBzghrVIXvGjLnvC94ryWrXWh9neNbpXRiUVEQR59M3Hi
- 74l5ZRp7ArozdlggVtCsFflK7l65pkRJvbRSW1Lml/JKEcnFLiFX5Q/ZruHy42hJMHppLiqrsoz
- IIXMmCE32VaNeFzds8f1KTkjuFgtxGqZv++tdK9CyUABw181vcxTMPHGKSa7m/o97QJF1rmq6S4
- Gzg5XAY5LpZxofT39i0pOK/sxZcS9vY2EsO6Hf87
-X-Google-Smtp-Source: AGHT+IEMr8r1D2mBahIy+3Wi+rk8IKg9kZb7JYZS+mYYyKZBn8MzYAcHSk3duSVqre/rcDQLzIG0jg==
-X-Received: by 2002:a17:902:d511:b0:21a:8d70:3865 with SMTP id
- d9443c01a7336-220bbb21947mr165166025ad.14.1739498090721; 
- Thu, 13 Feb 2025 17:54:50 -0800 (PST)
-Received: from Hyman-Dev-Euler.zelin.local ([154.64.226.178])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d545d67fsm18831515ad.143.2025.02.13.17.54.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Feb 2025 17:54:50 -0800 (PST)
-From: yong.huang@smartx.com
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>
-Subject: [PATCH v4 4/4] guestperf: Add test result data into report
-Date: Fri, 14 Feb 2025 09:53:36 +0800
-Message-Id: <6303400c2983ffe5647f07caa6406f00ceae4581.1739497707.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1739497707.git.yong.huang@smartx.com>
-References: <cover.1739497707.git.yong.huang@smartx.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tiky3-0001K1-Ii
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 20:58:11 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tiky1-0004vP-2f
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 20:58:11 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxaWooo65nP+10AA--.6755S3;
+ Fri, 14 Feb 2025 09:58:01 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMDx_MQlo65nujgRAA--.64019S3;
+ Fri, 14 Feb 2025 09:57:59 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: Add full type support for
+ query-cpu-model-expansion
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+References: <20250213091626.3650603-1-maobibo@loongson.cn>
+ <3a1f0744-4795-8f07-7258-0922745906ac@loongson.cn>
+ <20250213175241.03bde8c1@imammedo.users.ipa.redhat.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <347c5a1b-2346-eff0-2c8f-34fdfa8a4886@loongson.cn>
+Date: Fri, 14 Feb 2025 09:57:24 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20250213175241.03bde8c1@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=yong.huang@smartx.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMDx_MQlo65nujgRAA--.64019S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXr1UZF1DGryrXFy8CFW7GFX_yoW5Ww1kpr
+ WxAF4jya97tF9rAa40y3WYqr1Fvr9rGrW2g3Z0gryUtFnIqF1fAF18ta909F98Z3yxXayY
+ qw4Fk343Za17ZwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.157,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,121 +84,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
 
-The migration result data is not included in the guestperf
-report information; include the result as a report entry
-so the developer can check whether the migration was successful
-after running guestperf.
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- tests/migration-stress/guestperf/engine.py | 10 ++++++++--
- tests/migration-stress/guestperf/report.py | 20 ++++++++++++++++++++
- 2 files changed, 28 insertions(+), 2 deletions(-)
+On 2025/2/14 上午12:52, Igor Mammedov wrote:
+> On Thu, 13 Feb 2025 17:40:56 +0800
+> bibo mao <maobibo@loongson.cn> wrote:
+> 
+>> please discard this patch :(
+>>
+>> libvirt uses static type already on LoongArch platform, there is
+>> compatibility issue. Static type cannot be removed, although I do
+>> not know the difference between static type and full type.
+> 
+> looking at loongarch-qmp-cmds.c:qmp_query_cpu_model_expansion(),
+> you do filter reported features by global cpu_model_advertised_features[] list.
+> Also cpu 'definition' is mainly governed by its initfn() and
+> properties mentioned in cpu_model_advertised_features[] are created
+> only by loongarch_cpu_post_init() , which is part of la464 and max models.
+> The later call however mutates depending on accelerator, which
+> sort of contradicts 'static' description and feets more to 'full' category.
+> 
+> What I'd suggest doing is to support both
+> i.e. do keep 'static' for compat reasons  and run the same code for 'full'
+That is a good idea. will keep static type the same with full type for 
+the present, and implement real static type iff all basic features are 
+implemented and compatible machine requirement is added in future.
 
-diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
-index e11f6a8496..d8462db765 100644
---- a/tests/migration-stress/guestperf/engine.py
-+++ b/tests/migration-stress/guestperf/engine.py
-@@ -24,7 +24,7 @@
- import time
- 
- from guestperf.progress import Progress, ProgressStats
--from guestperf.report import Report
-+from guestperf.report import Report, ReportResult
- from guestperf.timings import TimingRecord, Timings
- 
- sys.path.append(os.path.join(os.path.dirname(__file__),
-@@ -276,7 +276,11 @@ def _migrate(self, hardware, scenario, src,
-                         src_vcpu_time.extend(self._vcpu_timing(src_pid, src_threads))
-                         sleep_secs -= 1
- 
--                return [progress_history, src_qemu_time, src_vcpu_time]
-+                result = ReportResult()
-+                if progress._status == "completed" and not paused:
-+                    result = ReportResult(True)
-+
-+                return [progress_history, src_qemu_time, src_vcpu_time, result]
- 
-             if self._verbose and (loop % 20) == 0:
-                 print("Iter %d: remain %5dMB of %5dMB (total %5dMB @ %5dMb/sec)" % (
-@@ -490,6 +494,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
-             progress_history = ret[0]
-             qemu_timings = ret[1]
-             vcpu_timings = ret[2]
-+            result = ret[3]
-             if uri[0:5] == "unix:" and os.path.exists(uri[5:]):
-                 os.remove(uri[5:])
- 
-@@ -509,6 +514,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
-                           Timings(self._get_timings(src) + self._get_timings(dst)),
-                           Timings(qemu_timings),
-                           Timings(vcpu_timings),
-+                          result,
-                           self._binary, self._dst_host, self._kernel,
-                           self._initrd, self._transport, self._sleep)
-         except Exception as e:
-diff --git a/tests/migration-stress/guestperf/report.py b/tests/migration-stress/guestperf/report.py
-index 1efd40c868..e135e01be6 100644
---- a/tests/migration-stress/guestperf/report.py
-+++ b/tests/migration-stress/guestperf/report.py
-@@ -24,6 +24,22 @@
- from guestperf.progress import Progress
- from guestperf.timings import Timings
- 
-+class ReportResult(object):
-+
-+    def __init__(self, success=False):
-+        self._success = success
-+
-+    def serialize(self):
-+        return {
-+            "success": self._success,
-+        }
-+
-+    @classmethod
-+    def deserialize(cls, data):
-+        return cls(
-+            data["success"])
-+
-+
- class Report(object):
- 
-     def __init__(self,
-@@ -33,6 +49,7 @@ def __init__(self,
-                  guest_timings,
-                  qemu_timings,
-                  vcpu_timings,
-+                 result,
-                  binary,
-                  dst_host,
-                  kernel,
-@@ -46,6 +63,7 @@ def __init__(self,
-         self._guest_timings = guest_timings
-         self._qemu_timings = qemu_timings
-         self._vcpu_timings = vcpu_timings
-+        self._result = result
-         self._binary = binary
-         self._dst_host = dst_host
-         self._kernel = kernel
-@@ -61,6 +79,7 @@ def serialize(self):
-             "guest_timings": self._guest_timings.serialize(),
-             "qemu_timings": self._qemu_timings.serialize(),
-             "vcpu_timings": self._vcpu_timings.serialize(),
-+            "result": self._result.serialize(),
-             "binary": self._binary,
-             "dst_host": self._dst_host,
-             "kernel": self._kernel,
-@@ -78,6 +97,7 @@ def deserialize(cls, data):
-             Timings.deserialize(data["guest_timings"]),
-             Timings.deserialize(data["qemu_timings"]),
-             Timings.deserialize(data["vcpu_timings"]),
-+            ReportResult.deserialize(data["result"]),
-             data["binary"],
-             data["dst_host"],
-             data["kernel"],
--- 
-2.27.0
+Regards
+Bibo Mao
+> 
+> In nutshell drop if(type) check or explicitly allow both types.
+> 
+>>
+>> Regards
+>> Bibo Mao
+>>
+>> On 2025/2/13 下午5:16, Bibo Mao wrote:
+>>> With full type for query-cpu-model-expansion qmp command, it shows that
+>>> it is not supported. For instance,
+>>>     query-cpu-model-expansion type=full model={"name":"max"}
+>>>
+>>> Here is is output,
+>>>     {"error": {"class": "GenericError", "desc": "The requested expansion type is not supported"}}
+>>>
+>>> Since full type is not supported and only static type is supported, Here
+>>> replace static type with full type for command query-cpu-model-expansion.
+>>>
+>>> And there is result with this patch,
+>>>     {"return": {"model": {"name": "max", "props": {"lbt": true, "lasx": true, "pmu": true, "lsx": true}}}}
+>>>
+>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>> ---
+>>>    target/loongarch/loongarch-qmp-cmds.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
+>>> index 3fde5a5a20..429c6d35fd 100644
+>>> --- a/target/loongarch/loongarch-qmp-cmds.c
+>>> +++ b/target/loongarch/loongarch-qmp-cmds.c
+>>> @@ -56,7 +56,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>        const char *name;
+>>>        int i;
+>>>    
+>>> -    if (type != CPU_MODEL_EXPANSION_TYPE_STATIC) {
+> 
+> 
+>>> +    if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
+>>>            error_setg(errp, "The requested expansion type is not supported");
+>>>            return NULL;
+>>>        }
+>>>
+>>> base-commit: de278e54aefed143526174335f8286f7437d20be
+>>>    
+>>
+>>
 
 
