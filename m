@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3DB2C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF80BC021A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1titN7-0003DY-Fr; Fri, 14 Feb 2025 05:56:37 -0500
+	id 1titNG-0003FP-0B; Fri, 14 Feb 2025 05:56:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1titN5-0003D7-Hy
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:56:35 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1titNE-0003Et-FI
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:56:44 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1titN3-00067e-2C
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:56:35 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2fc1c80cdc8so2272084a91.2
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 02:56:31 -0800 (PST)
+ id 1titNC-00069d-Kd
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:56:44 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-220ec47991aso9439135ad.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 02:56:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739530590; x=1740135390;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739530601; x=1740135401;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/zk84E3VOndU9iCHGxi7vjLZZ+ayxet22f2jMNf26vM=;
- b=DRNSuUftK6SBuctgOBPazNa2AMutprknAyG5uu7xsi/LHUHcHoGbQyOp0uHyc42/Yu
- dd1v0xUMW9Trj+DQE//mHmQwJcVUgywqX9v4L+U4odl/HKsGHqaIuPeibA5dDdJILkFr
- jyioVQnebMb75E5e9E2uyHwDo9saAbszzpFeyFQk1qg28YPrcNsXQLaYjnB2XsbK5YG/
- Hwon4LW5yt5RdYW1s9DqaGNZvOErDhtKc9nReil8EIDQXi0FRx1JYPPUYhVMaIof70cd
- G0E4YCx7/cd6o+w86LwfRCxfkvLpqntqDMGRKG013NT4K00DxujusDRDtIER/SVTaU++
- x/ew==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZVFXlsrJ6uqFDQzwPn+Dorbteo5aZgEE94Bb7QudTvo=;
+ b=dgZo/Nt5YdrkQTHGKxUbgFjuw0RG0glfXLoT/qzrABKh/ANW8Uyh6Sr/hE6AVlSuQz
+ lSOWqcZ3/byYHX9UInIOSGebyjHUiWvCRAaNNc+mHYbTdsFaPbqxW9kFVb2ZwDMCQzeU
+ s0zkoxuO7BUZhLMfTstfJVBYkpIXBpLWBO3vNrQQT91k56FX/JgCe7t+D7YFebM7ZDv4
+ eyPMXBUq1k1F0SrnLQabGwmZItSYOjzqO0kHlF8wYD7EbaSWCRcy2Hj4fUNPv4qB9yNp
+ FcL/TFGk6Y+W4BYnmhSHA2ACxVJvUnPNF2d2vggkacu94+q+Vbyww6b78hkgjS+e1lAc
+ 42FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739530590; x=1740135390;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/zk84E3VOndU9iCHGxi7vjLZZ+ayxet22f2jMNf26vM=;
- b=GIZt24fqSkg+peQObwg4Ea6Af25bxKVCNKuKUmd+jXWxPArPC8D1a4wdt+P3vD3/tg
- /4FxXWPj/c1mZUhwzmZCJmw3fE/8oyZUBcS82dINhvFbECa1uVTsvo99sUjXagoCdl4P
- gCl0WnL8d/G7/dm10KVkBuqIG34/W9YRb6FdXHRvHbyc6KN7dUM4Pch86dUIM10aHOxX
- 214UUOsr3ZDFbyjTD4pikwQkarxLQkRE3zkIyZVMJYc5ShfIRTO1i3ieHDROA1t47oi7
- Pez6ESBwk1J50KqM4p3zsOd2iFspeJsVrHQPj5U8Icsjzr03iuX0jEhZ3Us+56m7j9Zv
- N/ig==
-X-Gm-Message-State: AOJu0Yz8iIBpTue3cbJTwABg5rOd5lU3MLNpdFg6MOpxoM9Qs7guNPjX
- ydlDd2umVkiNmsDXuBzSf6qapbi/QrEEC8iqfP/SEHfpvemSz0WqyrJP9WCRdq4CxmIvU7GVFxv
- PveqdJw==
-X-Gm-Gg: ASbGnctG9uqFC/caEj9XFZKWq9YQi87qxAbJ9QCId+C15BQRPDYvK/fqSdLoqKK3rR1
- aUR7x1Bj7dizhK034x2j5h9dVe4XQ+K0bSl5+OWljv9Z/UYn3h6kyoXhl/kN0iO/G1bz5PJjku/
- Px3X3LFYh5tIawXGmpVZiGlsxV/BAgd7+vtW9nrxM8joTq2FaTnOr19OQ9OvaeTWj5bNNEt2ycn
- jFwfsyca/B/A1dsv1XYOOI5BY/fr+I7WMX3ybLzDy/mhiu8uxYf6b8vj8CpScs2brzenu00T9w4
- hkFE97ilAkK0zxZlgHJdd1P4ivjXl/L1TSDqJvnH
-X-Google-Smtp-Source: AGHT+IG/XugB6plzXkQfc2ntaLgPv9ZcBY5gSLrPQy7yaPktyNKb6I8w/e2786Zgq7tDntoHhNyO0w==
-X-Received: by 2002:a05:6a00:3d46:b0:730:76a1:3935 with SMTP id
- d2e1a72fcca58-7322c383f82mr16676111b3a.6.1739530590160; 
- Fri, 14 Feb 2025 02:56:30 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739530601; x=1740135401;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZVFXlsrJ6uqFDQzwPn+Dorbteo5aZgEE94Bb7QudTvo=;
+ b=nJfGJu/bjYERoVDr0A8uV8ASKxWpvTGGnfhx69L6LVE84ziS8a2boVkEDy2zmKgCgg
+ u8KXkNLXK12abQKGDAxF+I/eJvqxeWhTv52Cny7sG4Jyr3O13WqWDW02zmbaZpOAKxI7
+ SOTGHO23wlPBu382AJDIBd+pQx9aVfYROsutmtuqZj7XOCpy3fgeBDoEQRfUPJCCdcSd
+ c2BpTZrMrOoroGmh4r4XwqkWm8KqZEM4vxpTGTf4EQum61mFFNhYWrflWY9mgTbgNr+9
+ VPzjvNZAKsArqLViTkYDIxewdU+9a5aCf8wbUmGhaxhouUjDKpYRdOhWjrGx+9IbAEAF
+ bPWg==
+X-Gm-Message-State: AOJu0Yya0k029fmTU1k1ejlzcHQidIC6M0ms9uIa+ABddG5q4aNWvWx2
+ 6D5fPL3bCtfRPhUAF34QYRqh1iD4rj3w4GWkemdc9QE8bwSAyrpr/0Y5Ra5dP7iH4SfFEhDoWih
+ vFtv3PA==
+X-Gm-Gg: ASbGncuVpBHe/SW0NHp0UyMHHDLfyHkZqPQ4jYRfvN//Gzoe1C0CxFrq9ke8ayXX0JP
+ uTnFq08mm7FUDRgeTmH1adiAmLwRqF710Vh6v9kidP4uiHg4WtGbFJCQKLl9lfQOLPJl45dLElo
+ it22WA69lpVQFTMgNcO2mX2rJJGl71LsSYY2tupJxtlrWvQdGMrl0v6v45YKcwuaSBLt5AdABZL
+ kiv9ILlJaaBz745300jmwO9N/TLYrFr0tSHdaRCVEkyRzH0MYM/Y5B5v4HuswIp0MU8cxa6mEoE
+ K6ySZcHa0B4gigJOAly20oUij50+3ZoiN7+sKAjZ
+X-Google-Smtp-Source: AGHT+IG7qDL6HFucRj/cfgbNRg6VneqkP4zmomZUyyp/wyuyUvPtqsICTm2cDY9Wg8rZ/Rs2HH4bNw==
+X-Received: by 2002:a05:6a21:32a4:b0:1ee:7c01:d20 with SMTP id
+ adf61e73a8af0-1ee7c01118emr7104340637.31.1739530601003; 
+ Fri, 14 Feb 2025 02:56:41 -0800 (PST)
 Received: from Hyman-Dev-Euler.zelin.local ([154.64.226.178])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-add0987b223sm535013a12.17.2025.02.14.02.56.27
+ 41be03b00d2f7-add0987b223sm535013a12.17.2025.02.14.02.56.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 02:56:29 -0800 (PST)
+ Fri, 14 Feb 2025 02:56:40 -0800 (PST)
 From: yong.huang@smartx.com
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Hyman Huang <yong.huang@smartx.com>
-Subject: [PATCH v4 RESEND 0/4] Guestperf: miscellaneous refinement and
- enrichment
-Date: Fri, 14 Feb 2025 18:55:22 +0800
-Message-Id: <cover.1739530098.git.yong.huang@smartx.com>
+Subject: [PATCH v4 RESEND 4/4] guestperf: Add test result data into report
+Date: Fri, 14 Feb 2025 18:55:26 +0800
+Message-Id: <6303400c2983ffe5647f07caa6406f00ceae4581.1739530098.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1739530098.git.yong.huang@smartx.com>
+References: <cover.1739530098.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=yong.huang@smartx.com; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=yong.huang@smartx.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,48 +103,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hyman Huang <yong.huang@smartx.com>
 
-v4:
-1. rebase v3 patchset on master
-2. build initrd-stress.img manually like before as suggested by Peter and Fabiano
-3. drop the [PATCH v3 1/5], [PATCH v3 2/5] patches
-4. add an extra patch: [PATCH v4 4/4] guestperf: Add test result data into report
+The migration result data is not included in the guestperf
+report information; include the result as a report entry
+so the developer can check whether the migration was successful
+after running guestperf.
 
-Please review, thanks
-Yong
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+---
+ tests/migration-stress/guestperf/engine.py | 10 ++++++++--
+ tests/migration-stress/guestperf/report.py | 20 ++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-v3:
-1. Remove the two redundant assignments in [PATCH v2 2/5] suggested by Daniel
-
-v2:
-1. Update the MAINTAINERS section suggested by Fabiano Rosas
-2. Ensure the dependencies when build the initrd-stress.img suggested by Daniel
-3. Fix some bugs
-
-v1:
-The previous patchset:
-https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx.com/
-does not made the necessary changes and tests for the upstream version.
-
-This patchset works for that:
-1. Move the guestperf to scripts directory suggested by Fabiano Rosas
-2. Make initrd-stress.img built by default suggested by Fabiano Rosas
-3. Make the necessary changes to adapt the latest multifd behavior
-4. A nitpick for multifd migration
-5. Support multifd compression option
-
-Hyman Huang (4):
-  guestperf: Support deferred migration for multifd
-  guestperf: Nitpick the inconsistent parameters
-  guestperf: Introduce multifd compression option
-  guestperf: Add test result data into report
-
- .../migration-stress/guestperf/comparison.py  | 15 ++++++-
- tests/migration-stress/guestperf/engine.py    | 43 ++++++++++++++++---
- tests/migration-stress/guestperf/report.py    | 20 +++++++++
- tests/migration-stress/guestperf/scenario.py  |  7 ++-
- tests/migration-stress/guestperf/shell.py     |  3 ++
- 5 files changed, 79 insertions(+), 9 deletions(-)
-
+diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
+index e11f6a8496..d8462db765 100644
+--- a/tests/migration-stress/guestperf/engine.py
++++ b/tests/migration-stress/guestperf/engine.py
+@@ -24,7 +24,7 @@
+ import time
+ 
+ from guestperf.progress import Progress, ProgressStats
+-from guestperf.report import Report
++from guestperf.report import Report, ReportResult
+ from guestperf.timings import TimingRecord, Timings
+ 
+ sys.path.append(os.path.join(os.path.dirname(__file__),
+@@ -276,7 +276,11 @@ def _migrate(self, hardware, scenario, src,
+                         src_vcpu_time.extend(self._vcpu_timing(src_pid, src_threads))
+                         sleep_secs -= 1
+ 
+-                return [progress_history, src_qemu_time, src_vcpu_time]
++                result = ReportResult()
++                if progress._status == "completed" and not paused:
++                    result = ReportResult(True)
++
++                return [progress_history, src_qemu_time, src_vcpu_time, result]
+ 
+             if self._verbose and (loop % 20) == 0:
+                 print("Iter %d: remain %5dMB of %5dMB (total %5dMB @ %5dMb/sec)" % (
+@@ -490,6 +494,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             progress_history = ret[0]
+             qemu_timings = ret[1]
+             vcpu_timings = ret[2]
++            result = ret[3]
+             if uri[0:5] == "unix:" and os.path.exists(uri[5:]):
+                 os.remove(uri[5:])
+ 
+@@ -509,6 +514,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+                           Timings(self._get_timings(src) + self._get_timings(dst)),
+                           Timings(qemu_timings),
+                           Timings(vcpu_timings),
++                          result,
+                           self._binary, self._dst_host, self._kernel,
+                           self._initrd, self._transport, self._sleep)
+         except Exception as e:
+diff --git a/tests/migration-stress/guestperf/report.py b/tests/migration-stress/guestperf/report.py
+index 1efd40c868..e135e01be6 100644
+--- a/tests/migration-stress/guestperf/report.py
++++ b/tests/migration-stress/guestperf/report.py
+@@ -24,6 +24,22 @@
+ from guestperf.progress import Progress
+ from guestperf.timings import Timings
+ 
++class ReportResult(object):
++
++    def __init__(self, success=False):
++        self._success = success
++
++    def serialize(self):
++        return {
++            "success": self._success,
++        }
++
++    @classmethod
++    def deserialize(cls, data):
++        return cls(
++            data["success"])
++
++
+ class Report(object):
+ 
+     def __init__(self,
+@@ -33,6 +49,7 @@ def __init__(self,
+                  guest_timings,
+                  qemu_timings,
+                  vcpu_timings,
++                 result,
+                  binary,
+                  dst_host,
+                  kernel,
+@@ -46,6 +63,7 @@ def __init__(self,
+         self._guest_timings = guest_timings
+         self._qemu_timings = qemu_timings
+         self._vcpu_timings = vcpu_timings
++        self._result = result
+         self._binary = binary
+         self._dst_host = dst_host
+         self._kernel = kernel
+@@ -61,6 +79,7 @@ def serialize(self):
+             "guest_timings": self._guest_timings.serialize(),
+             "qemu_timings": self._qemu_timings.serialize(),
+             "vcpu_timings": self._vcpu_timings.serialize(),
++            "result": self._result.serialize(),
+             "binary": self._binary,
+             "dst_host": self._dst_host,
+             "kernel": self._kernel,
+@@ -78,6 +97,7 @@ def deserialize(cls, data):
+             Timings.deserialize(data["guest_timings"]),
+             Timings.deserialize(data["qemu_timings"]),
+             Timings.deserialize(data["vcpu_timings"]),
++            ReportResult.deserialize(data["result"]),
+             data["binary"],
+             data["dst_host"],
+             data["kernel"],
 -- 
 2.27.0
 
