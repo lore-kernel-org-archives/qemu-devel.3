@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515B6C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 16:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CDBC02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 16:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiyAo-0007Li-9y; Fri, 14 Feb 2025 11:04:14 -0500
+	id 1tiyDS-00089V-Np; Fri, 14 Feb 2025 11:06:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tiyAm-0007LG-Fe
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:04:12 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiyDM-000894-VO
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:06:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tiyAj-0006j7-Pz
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:04:12 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1739549033; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=XInbwdX5djZV2Z0KFx8/ayhRQxXuqE5nbb1lklsvZ9h+jmNUpNGXcA9m4ViMDAA7f6azRE7ryU2XgiYAgKJL5K+MC56NcHtxFPL2U74iivswNaevzUHxRiB32s+mF8nsKsKdHJgazQC8Xdx4e96PZ1lcBDrU3+nkKCwro44EqOQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1739549033;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=pNS0rqdQhnw2bYUdGhnkMFWQBOG/iqYO4P7N9z95eqQ=; 
- b=hzuvzF30EZUyHIYmzNF0cJSr55VWAx/xI3lFLWd6NuXuMmjxhHoqb3yAUDw6DkwLFh1SP/fOXMswA1UGWwAFFlIDjiUp45Lm8ZFIIjjXhOIK1aLxiNFA0njapFDmJx/+Vh4L+z+A6baBvj3atd8xROQRk2uvcRcf7/oKbL1x+ao=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739549033; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=pNS0rqdQhnw2bYUdGhnkMFWQBOG/iqYO4P7N9z95eqQ=;
- b=a3LLkHKfgGk352j/vdNgXcP2PvjD3QCsvQraX0JUB/xWxznFnoljedpOCP766Ls7
- 6fzfywt19xD2TCh5T8X/IeexPuIQVOLu02u5MyFDN7AaoSHrxTkz9MIW5TfoyktFDo8
- PJJZIa1loIlyWZ8TcxpcnCMAqe/mHPzM/uVEhpN4=
-Received: by mx.zohomail.com with SMTPS id 1739549031199302.96870677975323;
- Fri, 14 Feb 2025 08:03:51 -0800 (PST)
-Message-ID: <f58d250d-3831-4ff1-a018-f62f9aeb2527@collabora.com>
-Date: Fri, 14 Feb 2025 19:03:44 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiyDH-0007ER-HC
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:06:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739549205;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B/3GjV8gkdhZxYfknDE8IVTtvzindxk/3Lnu1au8XBc=;
+ b=QsKiMdL0reTei+KE3B2CkQioUAj9e2uNbTRc/01jEvSYKdR6CHLDAa+gk/1l5v46r5XftZ
+ KE1qW41nKZSsSZtRfJlh4SOboENgQbIoovmYKn7xPtUY2uMUhCY5BWhzNHDpV4l517JB5K
+ RUVTJoyJCqOZsx8EbXsiQyNjF2vAR2Q=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-352--TwPH7UKOkqGSbKwYfnS3w-1; Fri, 14 Feb 2025 11:06:43 -0500
+X-MC-Unique: -TwPH7UKOkqGSbKwYfnS3w-1
+X-Mimecast-MFC-AGG-ID: -TwPH7UKOkqGSbKwYfnS3w_1739549203
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-726ea4aa505so1861296a34.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 08:06:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739549203; x=1740154003;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B/3GjV8gkdhZxYfknDE8IVTtvzindxk/3Lnu1au8XBc=;
+ b=IwJtfa9swCScJAOsscvI5DYoB2u5b9ImYXLu5thRnlHj1/HzknhsQuCQMt7QF8/tSh
+ 2GplV6BoK9ArlWH/EMTrrDuyHBFPKOvlt1wf2canLyHjqnDM6MxkpAorPAY3WcZpWF1v
+ 0StdgmkjDQ/o7GyGmK6+egrktp3NS3OQd9o0Bek8MHy4etAyn4vA5VbMoGbeXA4law0E
+ Qt4XJkF0vn53dyHxHj8Jh6JcnXOsKCTQmCjjeYB1r63gnZu0tnU67FrJhMtMOGbFUSmO
+ ObyNna0ZV97pCewtkJVeWGAGBi2tjVp4GWRoJm1Vin1vg0hAf+cmukdguxzblQ6LtjeV
+ Zw9w==
+X-Gm-Message-State: AOJu0YxaGYKEoGQhCDD8JAkjRpwmds3tq41Q3cPX/4Lm6npvLJuTezYG
+ CTn3sNeHNv6JLy17CFi7PkcW7RtxB7tuKZIfK0B4t5j8D8SUOxlewHQxv+kvtxeizL9B9/2jBN4
+ dHjKuuTJ0H+obdhI+56msLm7K3vUOtxBWlxREN39IZO9lbQsco6aR
+X-Gm-Gg: ASbGncvaLgzECuXqKHE+Raaq+ty2N4ESn1+mE/QlovCtSwGsb3AIOaPxy90N9f/VY7d
+ +8BGBGtodFEJZsnTM54XddlxG5F4cR6TxlkCbo1by6JtuHkq03t6bS12eD4MkF6fl24ShuCnZPS
+ JuCV+lycr2eG0Kuoyz8WLH3wEn1SWR6sLFgIMi+U8W9/zNXkp40MVUXwE2Lq6Cme5X9tKimZbv1
+ 7a3jHYNXqzfcJCGG/MoYjy+2MoCqnhf6/EKluHgs+XAC2e8CT8IdXT3NEg=
+X-Received: by 2002:a05:6830:6e9b:b0:726:ff32:3b6a with SMTP id
+ 46e09a7af769-726ff324167mr5317112a34.0.1739549203138; 
+ Fri, 14 Feb 2025 08:06:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGzlP+zJDG4qRPlLJQe8p7ZzuvUUP9x7/3nNjgmZ16m7vPyw18hn1gk4bbqXfqFMmogZiRbNQ==
+X-Received: by 2002:a05:6830:6e9b:b0:726:ff32:3b6a with SMTP id
+ 46e09a7af769-726ff324167mr5317080a34.0.1739549202804; 
+ Fri, 14 Feb 2025 08:06:42 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-72700263af2sm1365934a34.57.2025.02.14.08.06.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Feb 2025 08:06:42 -0800 (PST)
+Date: Fri, 14 Feb 2025 11:06:37 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V2 00/45] Live update: vfio and iommufd
+Message-ID: <Z69qDWTaNCQobUiq@x1.local>
+References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
+ <45420461-ead5-4b72-8f84-cddf53e2b95b@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
- <8734ggpped.fsf@draig.linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <8734ggpped.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <45420461-ead5-4b72-8f84-cddf53e2b95b@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,127 +110,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/25 17:33, Alex Bennée wrote:
-> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-> 
->> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
->>
->> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
->> DRM native context [1] mediates lower level kernel driver UAPI, which
->> reflects in a less CPU overhead and less/simpler code needed to support it.
->> DRM context consists of a host and guest parts that have to be implemented
->> for each GPU driver. On a guest side, DRM context presents a virtual GPU as
->> a real/native host GPU device for GL/VK applications.
->>
-> <snip>
-> 
-> So first the good news. I can now get this up and running (x86/kvm guest
-> with Intel graphics) and as far as I can tell the native context mode is
-> working. With Dongwon Kim's patch the mirroring/corruption I was seeing
-> is gone.
-> 
-> I can successfully run glmark2-wayland (although see bellow) but vkmark
-> completely fails to start reporting:
-> 
->   MESA: info: virtgpu backend not enabling VIRTGPU_PARAM_CREATE_FENCE_PASSING
->   MESA: info: virtgpu backend not enabling VIRTGPU_PARAM_CREATE_GUEST_HANDLE
->   MESA: error: DRM_IOCTL_VIRTGPU_GET_CAPS failed with Invalid argument
->   MESA: error: DRM_IOCTL_VIRTGPU_CONTEXT_INIT failed with Invalid argument, continuing without context...
->   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space left on device
->   MESA: error: Failed to create virtgpu AddressSpaceStream
->   MESA: error: vulkan: Failed to get host connection
->   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space left on device
->   MESA: error: Failed to create virtgpu AddressSpaceStream
->   MESA: error: vulkan: Failed to get host connection
->   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space left on device
->   MESA: error: Failed to create virtgpu AddressSpaceStream
->   MESA: error: vulkan: Failed to get host connection
->   MESA: warning: ../src/gfxstream/guest/vulkan/gfxstream_vk_device.cpp:681: VK_ERROR_DEVICE_LOST
->   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space left on device
->   MESA: error: Failed to create virtgpu AddressSpaceStream
->   MESA: error: vulkan: Failed to get host connection
->   MESA: warning: ../src/gfxstream/guest/vulkan/gfxstream_vk_device.cpp:332: VK_ERROR_DEVICE_LOST
->   === Physical Device 0 ===
->       Vendor ID:      0x8086
->       Device ID:      0xA780
->       Device Name:    Intel(R) Graphics (RPL-S)
->       Driver Version: 101068899
->       Device UUID:    b39e1cf39b101489e3c6039406f78d6c
-> 
-> I was booting with 4G of shared memory.
+On Fri, Feb 14, 2025 at 10:56:02AM -0500, Steven Sistare wrote:
+> Hi all, it would be nice to get this into qemu 10.0.  Without it, the
+> basic support for cpr-transfer already in 10.0 is much less interesting.
 
-Thanks for the testing.
+True..
 
-I assume all these errors are generated by the failing gfxstream. Hence,
-may ignore them since you don't have enabled gfxstream.
+> Soft feature freeze is 2024-03-12.
 
-> Later versions of vkmark (2025.01) fail due to missing the
-> VK_KHR_display extension required as of
-> https://github.com/vkmark/vkmark/commit/7c3189c6482cb84c3c0e69d6dabb9d80e0c0092a
+Said that, targeting 10.0 for such a huge series across multiple modules,
+and especially during the time VFIO review is on heavy load.. may not be
+easily achievable.  It might be more practical, IMHO, to target this 10.1.
+Review can still happen during / after soft-freeze.
 
-This VK_KHR_display problem is only reproducible with your rootfs that
-you shared with me. It could be a trouble with your build configs or a
-buggy package version used by your rootfs build, more likely the former.
-
->> # Note about known performance problem in Qemu:
->>
->> DRM contexts are mapping host blobs extensively and these mapping
->> operations work slowly in Qemu. Exact reason is unknown. Mappings work
->> fast on Crosvm For DRM contexts this problem is more visible than for
->> Venus/Virgl.
-> 
-> And how!
-> 
-> With drm_native I get a lot of stutter while running and barely 100FPS
-> (compared to ~8000 on pure venus). IMHO we need to figure out why there
-> is such a discrepancy before merging because currently it makes more
-> sense to use 
-If you'd run with Xorg/Wayland directly without a DE, then it should
-work okay. This should be a problem with unmapping performance that I'm
-thinking about.
-
-That unmapping problem is partially understood. Unmapping code works
-correctly, but we'll need to optimize the flatview code to perform
-unmapping immediately. Meanwhile, you may apply the QEMU hack below, it
-should resolve most of the stutter, please let me know if it helps.
-
-There is also a pending Mesa intel-virtio blob mapping optimization that
-currently isn't available in my gitlab code, I'll refresh that feature
-and then ask you to try it.
-
-Could be that there is more to the unmapping perf issue in QEMU. I'm
-investigating.
-
-AMDGPU nctx is less affected by the bad unmapping performance. I expect
-it will work well for you.
-
-
-
-diff --git a/util/rcu.c b/util/rcu.c
-index fa32c942e4bb..aac3522c323c 100644
---- a/util/rcu.c
-+++ b/util/rcu.c
-@@ -174,7 +174,7 @@ void synchronize_rcu(void)
- }
-
-
--#define RCU_CALL_MIN_SIZE        30
-+#define RCU_CALL_MIN_SIZE        1
-
- /* Multi-producer, single-consumer queue based on urcu/static/wfqueue.h
-  * from liburcu.  Note that head is only used by the consumer.
-@@ -267,7 +267,7 @@ static void *call_rcu_thread(void *opaque)
-          * added before synchronize_rcu() starts.
-          */
-         while (n == 0 || (n < RCU_CALL_MIN_SIZE && ++tries <= 5)) {
--            g_usleep(10000);
-+            g_usleep(1000);
-             if (n == 0) {
-                 qemu_event_reset(&rcu_call_ready_event);
-                 n = qatomic_read(&rcu_call_count);
-
+Thanks,
 
 -- 
-Best regards,
-Dmitry
+Peter Xu
+
 
