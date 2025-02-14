@@ -4,73 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F36C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 15:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1A5C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 15:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiy5A-0005Gl-2q; Fri, 14 Feb 2025 10:58:24 -0500
+	id 1tiy5k-0005pB-Jp; Fri, 14 Feb 2025 10:59:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thenesk@gmail.com>) id 1tixfp-00055y-KG
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:32:13 -0500
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <thenesk@gmail.com>) id 1tixfo-0001yU-4M
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:32:13 -0500
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e53ef7462b6so1750921276.3
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 07:32:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739547130; x=1740151930; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=k+b9fkI4aWeF+Pn0Mb6Tuc/RCZqY3ta9PW40+82HCgk=;
- b=Xw1dZz07+YbJ8Q0MTGKeWV/hhLvTSJUZJ5//e07LtrIXJRB0OpK07N5g9o9UsBNBkM
- lOvggWyCasJoSiSMbDXTByR4G+Y1Eu+MjzAYgI5kiI4vtohGzrpl1FGsJtJLYq3170Qh
- NSYCFkjgGNWm0I7C88F349mTZxFVHmxMa8SVKBeSbxWh7bDpHI2wT3WhJGYjbzoUF7MI
- Zg8/WyHwFfdRdakTd/yBtE0Nf6qWMKHowt0InecY5WWfDcsGC1M1pM5ebkfQk1DRd0d8
- Mcinz9PR+GjTC1f9EQTNpvqTbLVQUz02PJYp29KYtBDeMfvdNj3y8lryfkm+7Vr+ifNN
- mczQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiy5i-0005oe-Ev
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:58:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiy5g-0005y0-6j
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:58:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739548734;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jpXoA8OzyvtAynR3LPNSYQrou2ydHgNzmo7m6R1BfLc=;
+ b=Si76vu1nrDF2VMN+GIDUEOZmGqCyVYZkag/6uH7t/9/0Y7wr1OX5Fb3urGFQg7bAH6LIqn
+ tMHFw54fXCiNcUyRjCazyvmjpX47epIaBR4jMf8g6ZV0BcNOY0xXJrwau72jK2DfDgJ0RS
+ A5APO/ZGqGm6xrVp86cTt+0QAWzyZnE=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-21-BpkYBUjZMlCS3ZFEBEZTNQ-1; Fri, 14 Feb 2025 10:58:53 -0500
+X-MC-Unique: BpkYBUjZMlCS3ZFEBEZTNQ-1
+X-Mimecast-MFC-AGG-ID: BpkYBUjZMlCS3ZFEBEZTNQ_1739548732
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-2bc63274bd5so2393825fac.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 07:58:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739547130; x=1740151930;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=k+b9fkI4aWeF+Pn0Mb6Tuc/RCZqY3ta9PW40+82HCgk=;
- b=AGd4tbJbMV4duUwJbLAW5T+h0KeN9TbqqT121n/EBd7l87bEprl4fqelaoRUsM6shb
- mNPai2le8cayKM/t3EugcHqUAmDMPzaraMMFcYGhVIdcMqXBOyPc3ppMv9xLL/EeZUOf
- ZanhrrjPU5miSIb43d52DBo85rG1uVT/pemk/QM8d94Emyq9lWytMLjC+LVauozMCT9i
- DUJr1QscNvznxWrg7lDjLxNk87yqX0HVXqoucdHAfflgCRMChEqxGgxq4x4vX1TbtkNY
- lNF4++obPe7Du32SFQ9NiwKF2uxcHgQDq1SBQnPWV4mGmGu8zmkv8pvPgjMumz6Lu6YD
- 3G1A==
-X-Gm-Message-State: AOJu0YzHSCfW3pRDh8ivID79RHui7nWyrlxjWjEnUpmDdHfexzxdU8DQ
- Ftqh9zxYxrV1ZozEaZDLzLcNCGSRKY9Ih0tJD/eqhM3VlRfzrqOntw1kesJjwi5ZvwBfUUTiAZg
- RqsJ1uaqzze/CqD1keRQ4pWqn/ciCaA==
-X-Gm-Gg: ASbGnctaR3/YBfo+uPsy1zrCxEc6dlNjWDutrUOQQEHS5ZznRkmHPon01Lpos/EFrwB
- ryRjOV+200mxfeL+T2iiu9Qbtk47XjJNPn4L0YCkXXPlR1gBzQbMO+GhWniZshw9SGdhDw05R
-X-Google-Smtp-Source: AGHT+IGGnU7umG0BoJtiZIXh0zDlT8jUY8CPLi9hqDnsXRmd3tVEZWinasepTTwZ1QDTPDSr581Vn+ZB2zehj2RtRcU=
-X-Received: by 2002:a05:6902:2383:b0:e5b:248a:bf3a with SMTP id
- 3f1490d57ef6-e5da81e6c47mr6710597276.30.1739547130223; Fri, 14 Feb 2025
- 07:32:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739548732; x=1740153532;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jpXoA8OzyvtAynR3LPNSYQrou2ydHgNzmo7m6R1BfLc=;
+ b=lFnNCtBG7BoZACGe9Nswg75MQCh2s3fpcA9f4td8h6zCSPzSMe+mJVI1yPklpJjeD5
+ yyhegzBgGBQ6rTsdIv/Cz02MYxB0Rc/1ia98URTcFSoo47FJdDYtmTAB5XzHMScnrKfq
+ WttNGDzourhYRwYqNl7/EUeykoHkEUglPlQb8Go65IaNb0iItn00bpf1M22XVLxNZWeX
+ 1dXbCyeer0HoCYOa1X0FCjEaj0zY0i8yGW4mLqwxtDc5pYNPx1W3T73A1fgXwJOwpC+T
+ fdfg9qxQGC7kqtWapgygGRy3AJAqA9cOjAOXoszR7/GphS9lRPpCtNf8GSHNrkHHCXti
+ AbOg==
+X-Gm-Message-State: AOJu0YweiAbZZiY84ofKV+fopWRyXw/v2JDBX4VFOLCkZRE5plTCcU9S
+ HRfq1saGnXc/u/mawseFrfCtCqsKtp3bRLGD6jNRk7wNzK6KTEMWYBH1FGxFjsCojmJTmcOm1He
+ KLPXv8VdKYR3ajMsKJm6dwc8b5nl3stk7f+qJ0orORsOJ9N8OLmD5
+X-Gm-Gg: ASbGncsd2IEi8i9QxBHQj8dg5NHaMzIdBoQcE6EBCTbjyiOS1EdV7t0ZvnXkrYuHc6Q
+ 9fcG5kbTf3m/0NysElKhHfIUoqna4leKXn+uOm5sHYOhbjXfbmIJrACjJ0RetKlH87HZ2M7gKiv
+ MafMP4tb1gyWGyL6PaXuWFtLRgBCTeBGW0mfw45fSBacIDuR0en2y3rz+9hLfV9+Wxb5O9njUSs
+ NR8rCfa3aN1FA5kwpl4cld+gxktcjBMmmfTI6tjwtXr0T8ssnc1uTBBEu0=
+X-Received: by 2002:a05:6870:d3cb:b0:2bc:7acb:b073 with SMTP id
+ 586e51a60fabf-2bc7acbb978mr1857124fac.9.1739548732380; 
+ Fri, 14 Feb 2025 07:58:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFwoQudPGE7KFEX9ar+TNN7ZL/g+d4/EnORDFnK1e2Og3b5ih6LYwzeIWPN627h6eE1fSp0Yw==
+X-Received: by 2002:a05:6870:d3cb:b0:2bc:7acb:b073 with SMTP id
+ 586e51a60fabf-2bc7acbb978mr1857065fac.9.1739548731169; 
+ Fri, 14 Feb 2025 07:58:51 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2bc69a3af4fsm1251601fac.19.2025.02.14.07.58.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Feb 2025 07:58:50 -0800 (PST)
+Date: Fri, 14 Feb 2025 10:58:46 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V2 03/45] migration: lower handler priority
+Message-ID: <Z69oNsdWlf3VpeFi@x1.local>
+References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
+ <1739542467-226739-4-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-From: Mark Nesky <thenesk@gmail.com>
-Date: Fri, 14 Feb 2025 10:31:59 -0500
-X-Gm-Features: AWEUYZlT5ImWwPFsfEDENvaLihpqV31h0FQzCf3TaweToz-TehJz6U6f5_XaM6s
-Message-ID: <CADQ=JkR046QnzWVV2=VshuS14r86riXUzLb3eh+Qer69N1rp0Q@mail.gmail.com>
-Subject: Question: how to add CLI options for custom hw model
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000c4711c062e1be01a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=thenesk@gmail.com; helo=mail-yb1-xb36.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1739542467-226739-4-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 14 Feb 2025 10:58:19 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,49 +110,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c4711c062e1be01a
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Feb 14, 2025 at 06:13:45AM -0800, Steve Sistare wrote:
+> Define a vmstate priority that is lower than the default, so its handlers
+> run after all default priority handlers.  Since 0 is no longer the default
+> priority, translate an uninitialized priority of 0 to MIG_PRI_DEFAULT.
+> 
+> CPR for vfio will use this to install handlers for containers that run
+> after handlers for the devices that they contain.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-Hello,
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-I am new to the QEMU code base and I am working on a project involving a
-custom hardware model representing a customized ppc board.  What is the
-best way to add command line arguments applicable to my model?
+-- 
+Peter Xu
 
-I see options in qemu-options.hx + vl.c, but I am not sure if that is the
-right place for arguments that only apply to one model, and I am not sure
-how to access those options from my model.
-
-I also see the function qemu_opts_create which looks like it can add
-command line arguments at runtime, but I am not sure where to use this in
-my model since it seems like my model code (machine state, class, and
-instance functions) does not run when invoking "qemu-system-ppc -machine
-mymodel -help".
-
-If there is some good documentation or examples, please point me in the
-right direction.
-
-thanks for your help,
-Mark
-
---000000000000c4711c062e1be01a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello,</div><div><br></div><div>I am new to the QEMU =
-code base and I am working on a project involving a custom hardware model r=
-epresenting a customized ppc board.=C2=A0 What is the best way to add comma=
-nd line arguments applicable to my model?=C2=A0=C2=A0</div><div><br></div><=
-div>I see options in qemu-options.hx + vl.c, but I am not sure if that is t=
-he right place for arguments that only apply to one model, and I am not sur=
-e how to access those options from my model.=C2=A0=C2=A0</div><div><br></di=
-v><div>I also see the function qemu_opts_create which looks like it can add=
- command line arguments at runtime, but I am not sure where to use this in =
-my model since it seems like my model code (machine state, class, and insta=
-nce functions) does not run when invoking &quot;qemu-system-ppc -machine my=
-model -help&quot;.</div><div><br></div><div>If there is some good documenta=
-tion or examples, please point me in the right direction.</div><div><br></d=
-iv><div>thanks for your help,</div><div>Mark</div></div>
-
---000000000000c4711c062e1be01a--
 
