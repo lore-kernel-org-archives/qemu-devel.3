@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADADC021A4
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04A6C021A4
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj75A-0004S8-Hq; Fri, 14 Feb 2025 20:35:00 -0500
+	id 1tj74z-0004Bh-Qb; Fri, 14 Feb 2025 20:34:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2MO-0006Zu-IS
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:29 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2NO-0007TM-SQ
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:32 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2ML-0002BD-9c
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:27 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2NM-0002IX-P0
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:30 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8873C1F385;
- Fri, 14 Feb 2025 20:32:16 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5F3D421182;
+ Fri, 14 Feb 2025 20:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565136; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1739565163; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EreF25kc6nSEuxn/0QNex6SABRxl5LZSTkVEq4Kjkcs=;
- b=rGC07swBvHiYdrnnQDYewM1S7ZHE6USotY/iFL6uA1ZWYHhURBrrOVmiHcQ33S6g0FfIXs
- LqekafVoDOGIJ0BUcyzaTe6du+UHM0GFpUanDunqJtOXS9yXhiX7Pu8ptwqvtnRmDTQ+Xw
- mIK4QBV9Rl+m8QiialHE+g7AS/Ms2ME=
+ bh=4seZA57hu09V3I00/1rURrrFtCTriO0ttU2uqwkIA2Q=;
+ b=UizfHk1PIeSVPvWoiuBEgY9S7zcqOokx8t5eCpY+Amc2bXvf9EuB9LaQM4YYRzTcE7Ulz9
+ DehyeK/ssOHaOtkfP6+D0Dk83B+dru7aT02ttmc/YNMnEm0c7s7Fzdvhz0iDv8jhVtZXf9
+ NL87GexbzAeeNny57iFsYzW2tKhWU5Q=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565136;
+ s=susede2_ed25519; t=1739565163;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EreF25kc6nSEuxn/0QNex6SABRxl5LZSTkVEq4Kjkcs=;
- b=zvmGLWQGJ44q2wMVhOzPQI11iw8/jn0TS1bWRuzskrwpDPCMyL2qJ+nzdWv+RaqYhhwwCO
- U5PS21PK2icldtBQ==
-Authentication-Results: smtp-out2.suse.de;
+ bh=4seZA57hu09V3I00/1rURrrFtCTriO0ttU2uqwkIA2Q=;
+ b=JR35HAL7BL4s2VgQoWW1b/GQEQJ/HH95YwfVx6HbvDhJhdp/tkpnOIt4dNDeoZRGYwS1nw
+ HBzjOWfT4OsBquDQ==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565136; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1739565163; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EreF25kc6nSEuxn/0QNex6SABRxl5LZSTkVEq4Kjkcs=;
- b=rGC07swBvHiYdrnnQDYewM1S7ZHE6USotY/iFL6uA1ZWYHhURBrrOVmiHcQ33S6g0FfIXs
- LqekafVoDOGIJ0BUcyzaTe6du+UHM0GFpUanDunqJtOXS9yXhiX7Pu8ptwqvtnRmDTQ+Xw
- mIK4QBV9Rl+m8QiialHE+g7AS/Ms2ME=
+ bh=4seZA57hu09V3I00/1rURrrFtCTriO0ttU2uqwkIA2Q=;
+ b=UizfHk1PIeSVPvWoiuBEgY9S7zcqOokx8t5eCpY+Amc2bXvf9EuB9LaQM4YYRzTcE7Ulz9
+ DehyeK/ssOHaOtkfP6+D0Dk83B+dru7aT02ttmc/YNMnEm0c7s7Fzdvhz0iDv8jhVtZXf9
+ NL87GexbzAeeNny57iFsYzW2tKhWU5Q=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565136;
+ s=susede2_ed25519; t=1739565163;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EreF25kc6nSEuxn/0QNex6SABRxl5LZSTkVEq4Kjkcs=;
- b=zvmGLWQGJ44q2wMVhOzPQI11iw8/jn0TS1bWRuzskrwpDPCMyL2qJ+nzdWv+RaqYhhwwCO
- U5PS21PK2icldtBQ==
+ bh=4seZA57hu09V3I00/1rURrrFtCTriO0ttU2uqwkIA2Q=;
+ b=JR35HAL7BL4s2VgQoWW1b/GQEQJ/HH95YwfVx6HbvDhJhdp/tkpnOIt4dNDeoZRGYwS1nw
+ HBzjOWfT4OsBquDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 68AE613AFC;
- Fri, 14 Feb 2025 20:32:15 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0C91013AEB;
+ Fri, 14 Feb 2025 20:32:41 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id aFLrCU+or2cgEgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:15 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SP6KLmmor2cgEgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:41 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 07/22] migration/multifd: Add a compat property for TLS
- termination
-Date: Fri, 14 Feb 2025 17:31:44 -0300
-Message-Id: <20250214203159.30168-8-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Hyman Huang <yong.huang@smartx.com>
+Subject: [PULL 22/22] guestperf: Add test result data into report
+Date: Fri, 14 Feb 2025 17:31:59 -0300
+Message-Id: <20250214203159.30168-23-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250214203159.30168-1-farosas@suse.de>
 References: <20250214203159.30168-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,156 +119,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're currently changing the way the source multifd migration handles
-the shutdown of the multifd channels when TLS is in use to perform a
-clean termination by calling gnutls_bye().
+From: Hyman Huang <yong.huang@smartx.com>
 
-Older src QEMUs will always close the channel without terminating the
-TLS session. New dst QEMUs treat an unclean termination as an error.
+The migration result data is not included in the guestperf
+report information; include the result as a report entry
+so the developer can check whether the migration was successful
+after running guestperf.
 
-Add multifd_clean_tls_termination (default true) that can be switched
-on the destination whenever a src QEMU <= 9.2 is in use.
-
-(Note that the compat property is only strictly necessary for src
-QEMUs older than 9.1. Due to synchronization coincidences, src QEMUs
-9.1 and 9.2 can put the destination in a condition where it doesn't
-see the unclean termination. Still, make the property more inclusive
-to facilitate potential backports.)
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+Message-ID: <6303400c2983ffe5647f07caa6406f00ceae4581.1739530098.git.yong.huang@smartx.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/core/machine.c     |  1 +
- migration/migration.h | 33 +++++++++++++++++++++++++++++++++
- migration/multifd.c   | 14 ++++++++++++--
- migration/multifd.h   |  2 ++
- migration/options.c   |  2 ++
- 5 files changed, 50 insertions(+), 2 deletions(-)
+ tests/migration-stress/guestperf/engine.py | 10 ++++++++--
+ tests/migration-stress/guestperf/report.py | 20 ++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 254cc20c4c..02cff735b3 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -42,6 +42,7 @@ GlobalProperty hw_compat_9_2[] = {
-     { "virtio-balloon-pci-transitional", "vectors", "0" },
-     { "virtio-balloon-pci-non-transitional", "vectors", "0" },
-     { "virtio-mem-pci", "vectors", "0" },
-+    { "migration", "multifd-clean-tls-termination", "false" },
- };
- const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
+diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
+index e11f6a8496..d8462db765 100644
+--- a/tests/migration-stress/guestperf/engine.py
++++ b/tests/migration-stress/guestperf/engine.py
+@@ -24,7 +24,7 @@
+ import time
  
-diff --git a/migration/migration.h b/migration/migration.h
-index eaebcc2042..eb84f75b4a 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -443,6 +443,39 @@ struct MigrationState {
-      * Default value is false. (since 8.1)
-      */
-     bool multifd_flush_after_each_section;
+ from guestperf.progress import Progress, ProgressStats
+-from guestperf.report import Report
++from guestperf.report import Report, ReportResult
+ from guestperf.timings import TimingRecord, Timings
+ 
+ sys.path.append(os.path.join(os.path.dirname(__file__),
+@@ -276,7 +276,11 @@ def _migrate(self, hardware, scenario, src,
+                         src_vcpu_time.extend(self._vcpu_timing(src_pid, src_threads))
+                         sleep_secs -= 1
+ 
+-                return [progress_history, src_qemu_time, src_vcpu_time]
++                result = ReportResult()
++                if progress._status == "completed" and not paused:
++                    result = ReportResult(True)
 +
-+    /*
-+     * This variable only makes sense when set on the machine that is
-+     * the destination of a multifd migration with TLS enabled. It
-+     * affects the behavior of the last send->recv iteration with
-+     * regards to termination of the TLS session.
-+     *
-+     * When set:
-+     *
-+     * - the destination QEMU instance can expect to never get a
-+     *   GNUTLS_E_PREMATURE_TERMINATION error. Manifested as the error
-+     *   message: "The TLS connection was non-properly terminated".
-+     *
-+     * When clear:
-+     *
-+     * - the destination QEMU instance can expect to see a
-+     *   GNUTLS_E_PREMATURE_TERMINATION error in any multifd channel
-+     *   whenever the last recv() call of that channel happens after
-+     *   the source QEMU instance has already issued shutdown() on the
-+     *   channel.
-+     *
-+     *   Commit 637280aeb2 (since 9.1) introduced a side effect that
-+     *   causes the destination instance to not be affected by the
-+     *   premature termination, while commit 1d457daf86 (since 10.0)
-+     *   causes the premature termination condition to be once again
-+     *   reachable.
-+     *
-+     * NOTE: Regardless of the state of this option, a premature
-+     * termination of the TLS connection might happen due to error at
-+     * any moment prior to the last send->recv iteration.
-+     */
-+    bool multifd_clean_tls_termination;
++                return [progress_history, src_qemu_time, src_vcpu_time, result]
+ 
+             if self._verbose and (loop % 20) == 0:
+                 print("Iter %d: remain %5dMB of %5dMB (total %5dMB @ %5dMb/sec)" % (
+@@ -490,6 +494,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             progress_history = ret[0]
+             qemu_timings = ret[1]
+             vcpu_timings = ret[2]
++            result = ret[3]
+             if uri[0:5] == "unix:" and os.path.exists(uri[5:]):
+                 os.remove(uri[5:])
+ 
+@@ -509,6 +514,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+                           Timings(self._get_timings(src) + self._get_timings(dst)),
+                           Timings(qemu_timings),
+                           Timings(vcpu_timings),
++                          result,
+                           self._binary, self._dst_host, self._kernel,
+                           self._initrd, self._transport, self._sleep)
+         except Exception as e:
+diff --git a/tests/migration-stress/guestperf/report.py b/tests/migration-stress/guestperf/report.py
+index 1efd40c868..e135e01be6 100644
+--- a/tests/migration-stress/guestperf/report.py
++++ b/tests/migration-stress/guestperf/report.py
+@@ -24,6 +24,22 @@
+ from guestperf.progress import Progress
+ from guestperf.timings import Timings
+ 
++class ReportResult(object):
 +
-     /*
-      * This decides the size of guest memory chunk that will be used
-      * to track dirty bitmap clearing.  The size of memory chunk will
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 0296758c08..554035e095 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -1151,6 +1151,7 @@ void multifd_recv_sync_main(void)
- 
- static void *multifd_recv_thread(void *opaque)
- {
-+    MigrationState *s = migrate_get_current();
-     MultiFDRecvParams *p = opaque;
-     Error *local_err = NULL;
-     bool use_packets = multifd_use_packets();
-@@ -1159,18 +1160,27 @@ static void *multifd_recv_thread(void *opaque)
-     trace_multifd_recv_thread_start(p->id);
-     rcu_register_thread();
- 
-+    if (!s->multifd_clean_tls_termination) {
-+        p->read_flags = QIO_CHANNEL_READ_FLAG_RELAXED_EOF;
-+    }
++    def __init__(self, success=False):
++        self._success = success
 +
-     while (true) {
-         uint32_t flags = 0;
-         bool has_data = false;
-         p->normal_num = 0;
- 
-         if (use_packets) {
-+            struct iovec iov = {
-+                .iov_base = (void *)p->packet,
-+                .iov_len = p->packet_len
-+            };
++    def serialize(self):
++        return {
++            "success": self._success,
++        }
 +
-             if (multifd_recv_should_exit()) {
-                 break;
-             }
++    @classmethod
++    def deserialize(cls, data):
++        return cls(
++            data["success"])
++
++
+ class Report(object):
  
--            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
--                                           p->packet_len, &local_err);
-+            ret = qio_channel_readv_full_all_eof(p->c, &iov, 1, NULL, NULL,
-+                                                 p->read_flags, &local_err);
-             if (!ret) {
-                 /* EOF */
-                 assert(!local_err);
-diff --git a/migration/multifd.h b/migration/multifd.h
-index bd785b9873..cf408ff721 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -244,6 +244,8 @@ typedef struct {
-     uint32_t zero_num;
-     /* used for de-compression methods */
-     void *compress_data;
-+    /* Flags for the QIOChannel */
-+    int read_flags;
- } MultiFDRecvParams;
- 
- typedef struct {
-diff --git a/migration/options.c b/migration/options.c
-index 4db340b502..bb259d192a 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -99,6 +99,8 @@ const Property migration_properties[] = {
-                       clear_bitmap_shift, CLEAR_BITMAP_SHIFT_DEFAULT),
-     DEFINE_PROP_BOOL("x-preempt-pre-7-2", MigrationState,
-                      preempt_pre_7_2, false),
-+    DEFINE_PROP_BOOL("multifd-clean-tls-termination", MigrationState,
-+                     multifd_clean_tls_termination, true),
- 
-     /* Migration parameters */
-     DEFINE_PROP_UINT8("x-throttle-trigger-threshold", MigrationState,
+     def __init__(self,
+@@ -33,6 +49,7 @@ def __init__(self,
+                  guest_timings,
+                  qemu_timings,
+                  vcpu_timings,
++                 result,
+                  binary,
+                  dst_host,
+                  kernel,
+@@ -46,6 +63,7 @@ def __init__(self,
+         self._guest_timings = guest_timings
+         self._qemu_timings = qemu_timings
+         self._vcpu_timings = vcpu_timings
++        self._result = result
+         self._binary = binary
+         self._dst_host = dst_host
+         self._kernel = kernel
+@@ -61,6 +79,7 @@ def serialize(self):
+             "guest_timings": self._guest_timings.serialize(),
+             "qemu_timings": self._qemu_timings.serialize(),
+             "vcpu_timings": self._vcpu_timings.serialize(),
++            "result": self._result.serialize(),
+             "binary": self._binary,
+             "dst_host": self._dst_host,
+             "kernel": self._kernel,
+@@ -78,6 +97,7 @@ def deserialize(cls, data):
+             Timings.deserialize(data["guest_timings"]),
+             Timings.deserialize(data["qemu_timings"]),
+             Timings.deserialize(data["vcpu_timings"]),
++            ReportResult.deserialize(data["result"]),
+             data["binary"],
+             data["dst_host"],
+             data["kernel"],
 -- 
 2.35.3
 
