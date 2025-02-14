@@ -4,99 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11320C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 20:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F711C021A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 20:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj2MP-0006Zg-3g; Fri, 14 Feb 2025 15:32:30 -0500
+	id 1tj2LX-0004xK-Sc; Fri, 14 Feb 2025 15:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2M5-0006Ec-Lv
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:11 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2M3-0002A6-DG
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:09 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
+ id 1tj2KU-00049S-RD
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:30:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
+ id 1tj2KT-00022R-84
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:30:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739565028;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OOU0wCWpbF8Ks7g7EwMzl8CZelbsnNtS6EUVGTCCun4=;
+ b=BfI0R9sM69FQB2cES1uYnVm/t3ldUoV1d9HSpVgXJaJvjIM+yNbWBhz6gO78iz2toxoiV1
+ 4kl0N5qsW+Chi0r/nR+P9jNjYaJeElz9Y7d75nPlfKZpeNcAK205ZpY7lWgSETDL2IJKri
+ 2//bdRjq+4k8cex5/7X+Ylh5NqEp7do=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-X8iRNArFPJa5ArR-eIyVQg-1; Fri,
+ 14 Feb 2025 15:30:26 -0500
+X-MC-Unique: X8iRNArFPJa5ArR-eIyVQg-1
+X-Mimecast-MFC-AGG-ID: X8iRNArFPJa5ArR-eIyVQg_1739565025
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0DB7A1F381;
- Fri, 14 Feb 2025 20:32:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565124; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=90B7p/Ym/HeTBXN7OpyW3lFyc2jjlpHhDDJgfh1BI5A=;
- b=ww4uMZu1KkuTyGajEULFdzQDQbj20lDnW/jodkHTqe8V812WKKcDcgoYD5mXmQihKPAJAT
- 5A5yuSnJY+6uDeeAZB2cZnezO+yx6niVAjaT4CvI9KQxgA2kDJ8IZ5iQ8Vtqihm24+RWsg
- ljHgHICOb/CZPXKIHkhEN4+K5CieIac=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565124;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=90B7p/Ym/HeTBXN7OpyW3lFyc2jjlpHhDDJgfh1BI5A=;
- b=BXOrN79TO/JQ0bqOiYHQLNNzMGTaBdeavEkTb5LoFZmJYo6pvfZpEY1WJWzqGuHP/bjmSi
- SOZ5j5R0XRiw0xAw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565124; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=90B7p/Ym/HeTBXN7OpyW3lFyc2jjlpHhDDJgfh1BI5A=;
- b=ww4uMZu1KkuTyGajEULFdzQDQbj20lDnW/jodkHTqe8V812WKKcDcgoYD5mXmQihKPAJAT
- 5A5yuSnJY+6uDeeAZB2cZnezO+yx6niVAjaT4CvI9KQxgA2kDJ8IZ5iQ8Vtqihm24+RWsg
- ljHgHICOb/CZPXKIHkhEN4+K5CieIac=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565124;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=90B7p/Ym/HeTBXN7OpyW3lFyc2jjlpHhDDJgfh1BI5A=;
- b=BXOrN79TO/JQ0bqOiYHQLNNzMGTaBdeavEkTb5LoFZmJYo6pvfZpEY1WJWzqGuHP/bjmSi
- SOZ5j5R0XRiw0xAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DCBA213285;
- Fri, 14 Feb 2025 20:32:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gMFYJUKor2cgEgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62E0019039C8
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 20:30:25 +0000 (UTC)
+Received: from tapioca.redhat.com (unknown [10.44.32.23])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 49BD41800352; Fri, 14 Feb 2025 20:30:21 +0000 (UTC)
+From: Victor Toso <victortoso@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 00/22] Migration patches for 2025-02-14
-Date: Fri, 14 Feb 2025 17:31:37 -0300
-Message-Id: <20250214203159.30168-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+Cc: Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Andrea Bolognani <abologna@redhat.com>
+Subject: [PATCH v4 10/11] qapi: golang: Generate Command sync/async interfaces
+Date: Fri, 14 Feb 2025 21:29:43 +0100
+Message-ID: <20250214202944.69897-11-victortoso@redhat.com>
+In-Reply-To: <20250214202944.69897-1-victortoso@redhat.com>
+References: <20250214202944.69897-1-victortoso@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=victortoso@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,93 +86,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 495de0fd82d8bb2d7035f82d9869cfeb48de2f9e:
+The Command interface is an abstraction that can be used by client and
+server to the manager the Command types albeit with a different
+implementation for sending and receiving.
 
-  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-02-14 08:19:05 -0500)
+The proposal for Sync is defined as Command while the Async is named
+CommandAsync.
 
-are available in the Git repository at:
+The implementation of client/server is not part of this series.
 
-  https://gitlab.com/farosas/qemu.git tags/migration-20250214-pull-request
+Signed-off-by: Victor Toso <victortoso@redhat.com>
+---
+ scripts/qapi/golang/golang.py | 56 +++++++++++++++++++++++++++++++----
+ 1 file changed, 50 insertions(+), 6 deletions(-)
 
-for you to fetch changes up to 5984870e02aa6cf471bc9225ae91640b544b31c8:
-
-  guestperf: Add test result data into report (2025-02-14 15:19:07 -0300)
-
-----------------------------------------------------------------
-Migration pull request
-
-- Proper TLS termination for multifd
-- Fixes for bugs while cancelling migration
-- Fix for a hang after migration failure (#2633)
-- Tests for qmp_migrate_cancel
-- Fix for CID 1590980
-- Fixes and improvements to guestperf.py
-
-----------------------------------------------------------------
-
-Fabiano Rosas (17):
-  crypto: Allow gracefully ending the TLS session
-  io: tls: Add qio_channel_tls_bye
-  crypto: Remove qcrypto_tls_session_get_handshake_status
-  io: Add flags argument to qio_channel_readv_full_all_eof
-  io: Add a read flag for relaxed EOF
-  migration/multifd: Terminate the TLS connection
-  migration/multifd: Add a compat property for TLS termination
-  migration: Check migration error after loadvm
-  migration: Set migration error outside of migrate_cancel
-  migration: Unify migration_cancel and migrate_fd_cancel
-  migration: Change migrate_fd_ to migration_
-  migration: Fix hang after error in destination setup phase
-  migration: Reject qmp_migrate_cancel after postcopy
-  migration: Don't set FAILED state when cancelling
-  tests/qtest/migration: Introduce migration_test_add_suffix
-  tests/qtest/migration: Add a cancel test
-  migration: Update migrate_cancel documentation
-
-Hyman Huang (4):
-  guestperf: Support deferred migration for multifd
-  guestperf: Nitpick the inconsistent parameters
-  guestperf: Introduce multifd compression option
-  guestperf: Add test result data into report
-
-Steve Sistare (1):
-  migration: use parameters.mode in cpr_state_save
-
- crypto/tlssession.c                           |  96 ++++++----
- hw/core/machine.c                             |   1 +
- hw/remote/mpqemu-link.c                       |   2 +-
- include/crypto/tlssession.h                   |  46 +++--
- include/io/channel-tls.h                      |  12 ++
- include/io/channel.h                          |   3 +
- io/channel-tls.c                              |  92 ++++++++-
- io/channel.c                                  |   9 +-
- io/trace-events                               |   5 +
- migration/channel.c                           |   9 +-
- migration/cpr.c                               |   1 +
- migration/migration.c                         |  81 ++++----
- migration/migration.h                         |  37 +++-
- migration/multifd.c                           |  54 +++++-
- migration/multifd.h                           |   2 +
- migration/options.c                           |   2 +
- migration/ram.c                               |   4 +-
- migration/rdma.c                              |   2 +-
- migration/savevm.c                            |   6 +-
- migration/tls.c                               |   5 +
- migration/tls.h                               |   2 +-
- migration/trace-events                        |   4 +-
- qapi/migration.json                           |   4 +-
- .../migration-stress/guestperf/comparison.py  |  15 +-
- tests/migration-stress/guestperf/engine.py    |  43 ++++-
- tests/migration-stress/guestperf/report.py    |  20 ++
- tests/migration-stress/guestperf/scenario.py  |   7 +-
- tests/migration-stress/guestperf/shell.py     |   3 +
- tests/qtest/migration/migration-util.c        |  24 +++
- tests/qtest/migration/migration-util.h        |   2 +
- tests/qtest/migration/precopy-tests.c         | 176 ++++++++++++++++++
- tests/unit/test-crypto-tlssession.c           |  12 +-
- 32 files changed, 651 insertions(+), 130 deletions(-)
-
+diff --git a/scripts/qapi/golang/golang.py b/scripts/qapi/golang/golang.py
+index a14970fb1f..0b7dadff41 100644
+--- a/scripts/qapi/golang/golang.py
++++ b/scripts/qapi/golang/golang.py
+@@ -235,6 +235,20 @@
+ }}
+ """
+ 
++TEMPLATE_COMMAND = """
++// Synchronous interface of all available commands
++type Commands interface {{
++{methods}
++}}
++
++{callbacks}
++
++// Asynchronous interface of all available commands
++type CommandsAsync interface {{
++{async_methods}
++}}
++"""
++
+ 
+ # Takes the documentation object of a specific type and returns
+ # that type's documentation and its member's docs.
+@@ -1009,13 +1023,37 @@ def generate_template_alternate(
+     return "\n" + content
+ 
+ 
+-def generate_template_command(commands: dict[str, Tuple[str, str]]) -> str:
++def generate_template_command(
++    commands: dict[str, Tuple[str, str, str]]
++) -> (str, str):
+     content = ""
++    methods = ""
++    async_methods = ""
++    callbacks = ""
++
+     for name in sorted(commands):
+-        type_name, gocode = commands[name]
++        type_name, gocode, retarg = commands[name]
+         content += gocode
+ 
+-    return content
++        name = type_name[:-7]
++        cbname = f"{name}Complete"
++        syncret = "error"
++        cbarg = "error"
++        if retarg != "":
++            cbarg = f"{retarg}, error"
++            syncret = f"({retarg}, error)"
++        methods += f"\t{name}({type_name}) {syncret}\n"
++        async_methods += f"\t{name}({type_name}, {cbname}) error\n"
++        callbacks += f"type {cbname} func({cbarg})\n"
++
++    iface = string_to_code(
++        TEMPLATE_COMMAND.format(
++            methods=methods[:-1],
++            callbacks=callbacks[:-1],
++            async_methods=async_methods[:-1],
++        )
++    )
++    return content, iface
+ 
+ 
+ def generate_template_event(events: dict[str, Tuple[str, str]]) -> (str, str):
+@@ -1085,12 +1123,13 @@ def __init__(self, _: str):
+             "union": ["encoding/json", "errors", "fmt"],
+         }
+         interfaces = {
++            "command": [],
+             "event": ["time"],
+         }
+ 
+         self.schema: QAPISchema
+         self.events: dict[str, Tuple[str, str]] = {}
+-        self.commands: dict[str, Tuple[str, str]] = {}
++        self.commands: dict[str, Tuple[str, str, str]] = {}
+         self.golang_package_name = "qapi"
+         self.duplicate = list(gofiles)
+         self.enums: dict[str, str] = {}
+@@ -1151,7 +1190,9 @@ def visit_end(self) -> None:
+         self.types["event"] += evtype
+         self.interfaces["event"] += eviface
+ 
+-        self.types["command"] += generate_template_command(self.commands)
++        cmdtype, cmdiface = generate_template_command(self.commands)
++        self.types["command"] += cmdtype
++        self.interfaces["command"] += cmdiface
+ 
+     def visit_object_type(
+         self,
+@@ -1334,7 +1375,10 @@ def visit_command(
+                 )
+             )
+ 
+-        self.commands[name] = (type_name, content)
++        retarg = ""
++        if ret_type:
++            retarg = qapi_schema_type_to_go_type(ret_type.name)
++        self.commands[name] = (type_name, content, retarg)
+ 
+     def visit_event(
+         self,
 -- 
-2.35.3
+2.48.1
 
 
