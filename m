@@ -4,99 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1FEBC02198
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15422C02198
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj74K-0003yP-CA; Fri, 14 Feb 2025 20:34:08 -0500
+	id 1tj74a-00042g-B0; Fri, 14 Feb 2025 20:34:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tj4OT-00017X-Rx
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 17:42:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tj4OR-0000jH-2F
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 17:42:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739572957;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2NX-0007kk-0P
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:40 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2NS-0002Iv-Lj
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:38 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 41E9221186;
+ Fri, 14 Feb 2025 20:32:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739565162; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=og9kfRCOmDbydRkUH4+UsuoDJALXoSYCWQnHUxcgqlo=;
- b=O87orPuRI9P25xyV8dlCv1/1J9cIVqmKyR/1fRlrI8EZFLbVDk0clZR1c9kO3o62SjEUCH
- jYYWBl7sKyL34H1brhQ9al1UdzGz+b55Qt3I89uqlfh+gWaNLGSpNbhVWjjQmGIugncYyt
- 15F3kQgaF8wA3aBGBCI7boCtiVycPH8=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-266-JqhVEL2-PyC5uH7T5jRwZQ-1; Fri, 14 Feb 2025 17:42:35 -0500
-X-MC-Unique: JqhVEL2-PyC5uH7T5jRwZQ-1
-X-Mimecast-MFC-AGG-ID: JqhVEL2-PyC5uH7T5jRwZQ_1739572954
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6e64dac8126so37438056d6.3
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 14:42:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739572954; x=1740177754;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=og9kfRCOmDbydRkUH4+UsuoDJALXoSYCWQnHUxcgqlo=;
- b=BzuRFt74HHDwReXwGLKI+SocRlsdtfaeAkuLphhzPaKp2ZH7ub54OQND66kVGTgktW
- f8y1+7yL4rfpcVTMokmNlSzcF17xX3GkJ/aQOYXcuDhpkVhmAyMax4xnLOCmEBAQKgDm
- EEORWbI4CTjf4NPkxA7I0td/66KWudcL7JZ1HCf18El8XDNS3Ps/XC2W+e/wLsueCGV/
- /dsWDBFyK7arfBgP8LxMqkk49aLrGNt+oE386BZJ0bk/6J+GniwgbUWgtMrBxf9hsTvX
- FX9RBKDTgG6QZcUD4O0uHKuxzU8PHXy9lN6uGx1/NnL47XBjiuulSxNsZrti3NRaey+M
- PyPQ==
-X-Gm-Message-State: AOJu0YxZMYlgKrvIcyUpvtFwZ/P6SE9cxPXGpmM8LzxuS5/HXmITrJ2Z
- vZ+qSrIBb7Yw2QymmounMH7NzCEmjQUAxu463d+cIF7q0wH3OH31jSjE25oEDaryAV7l67LUyio
- Gy7AqbsO5BkTrHeBdbXEUG+zJdHQCCnQJ8AQMilNGy4vF49lmz65k
-X-Gm-Gg: ASbGnct2SRZNy1F2X6tZ79f1kegMV5a/EKJDl2hVyODQwfwgFtTZJYAFrQf8rF29zZY
- 5JrlRr/vj1JudIyW8w0sOzkf9ncMy23jOMwQESG56GB99dF91EIiBFKxA236rwG9LyZoQPPC15S
- Q9Yz9IUdTtNR8LgYy/s4DJ9t4WC2x9Wwo+V0lJ32hl4u20trtEBnJ+OMf2u/SK5dfKyd8YPSNPT
- MhizUu+lZwXNvWYjX5BP8ReRDBrMD4cOeJtwTw+qIyZ4UXbFQc5RV3zaO4=
-X-Received: by 2002:a05:6214:5085:b0:6d8:ada3:26c9 with SMTP id
- 6a1803df08f44-6e66cca5592mr17730206d6.10.1739572954430; 
- Fri, 14 Feb 2025 14:42:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFneiRaUO2+wpyMufKb5oiF3fm53iWpDqSSIhIiR0Q3WM24OCq6jw+l19WSQUo/YekY6gD/2w==
-X-Received: by 2002:a05:6214:5085:b0:6d8:ada3:26c9 with SMTP id
- 6a1803df08f44-6e66cca5592mr17730006d6.10.1739572954118; 
- Fri, 14 Feb 2025 14:42:34 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e65d7793c3sm25988526d6.17.2025.02.14.14.42.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 14:42:33 -0800 (PST)
-Date: Fri, 14 Feb 2025 17:42:30 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH V2 28/45] vfio: return mr from vfio_get_xlat_addr
-Message-ID: <Z6_G1rF7x2Nbzpl4@x1.local>
-References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
- <1739542467-226739-29-git-send-email-steven.sistare@oracle.com>
- <Z69z6oTtaGOC287O@x1.local>
- <b6e19df6-cb38-4576-bdd0-6278997e402e@oracle.com>
+ bh=1N/+cx0LBjfz50VtZgJZ64SClXfdW5+6ckxPdIA8HdQ=;
+ b=D/+cOCaJ5XdJHLVZGK/6sojPNS8jn3M+eRMjM9LL5Gyk4ONB0wby9qWxwNPQD39LEmWGFn
+ +AfKoAlkFI6k7Mi3y5xvtZ3QmFZh9fYKnXc7oalUMZieCxVZFrJaw4o5+QmasJ9Kdd/Vmx
+ l15osbnY4993EAeoOc/KVkS1lhwdUrc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739565162;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1N/+cx0LBjfz50VtZgJZ64SClXfdW5+6ckxPdIA8HdQ=;
+ b=jP0ux9KM2vsRL7sydYfUqxr0KaqcGPQbWk6ShOmLokel06F664gB632kv5p2UI+K8Ts0/8
+ Xu384j2xE60pdJCg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ME5wx3qC;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=pHqTr8A5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739565157; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1N/+cx0LBjfz50VtZgJZ64SClXfdW5+6ckxPdIA8HdQ=;
+ b=ME5wx3qCODYJK1JHNTynEQC0tWgflzi0SAneRD4tLWVlTsyfvYCX/McCYSDxkzFUm2+U1L
+ Dqhax3TZ2pjdFGyG9+IeIkIZ+1C2s2NJdUSz4SF+wJTMSrs26Mnhr89MZpNkQvicxyZzXa
+ jvOghcDXdVS5xMdH3MnkFAL0D1sQXhI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739565157;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1N/+cx0LBjfz50VtZgJZ64SClXfdW5+6ckxPdIA8HdQ=;
+ b=pHqTr8A55WosmztRRIdlBucCKP2Lauf3FbLUoZHe4MD7+wjaUcCP64ay6GD7FfvCeOudH0
+ 9FGb/gwKTu5oLHAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9DA1613285;
+ Fri, 14 Feb 2025 20:32:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eK6pFmOor2cgEgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:35 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 19/22] guestperf: Support deferred migration for multifd
+Date: Fri, 14 Feb 2025 17:31:56 -0300
+Message-Id: <20250214203159.30168-20-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250214203159.30168-1-farosas@suse.de>
+References: <20250214203159.30168-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b6e19df6-cb38-4576-bdd0-6278997e402e@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 41E9221186
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_NIXSPAM_FAIL(0.00)[2a07:de40:b281:104:10:150:64:97:server fail];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,70 +131,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 14, 2025 at 03:40:57PM -0500, Steven Sistare wrote:
-> > > diff --git a/system/memory.c b/system/memory.c
-> > > index 4c82979..755eafe 100644
-> > > --- a/system/memory.c
-> > > +++ b/system/memory.c
-> > > @@ -2183,9 +2183,8 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
-> > >   }
-> > >   /* Called with rcu_read_lock held.  */
-> > > -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-> > > -                          ram_addr_t *ram_addr, bool *read_only,
-> > > -                          bool *mr_has_discard_manager, Error **errp)
-> > > +bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, bool *mr_has_discard_manager,
-> > > +                          MemoryRegion **mr_p, hwaddr *xlat_p, Error **errp)
-> > 
-> > If we're going to return the MR anyway, probably we can drop
-> > mr_has_discard_manager altogether..
-> 
-> To hoist mr_has_discard_manager to the vfio caller, I would need to return len.
-> Your call.
+From: Hyman Huang <yong.huang@smartx.com>
 
-I meant only dropping mr_has_discard_manager parameter from the function
-interface, not the ram_discard_manager_is_populated() check.
+The way to enable multifd migration has been changed by commit,
+82137e6c8c (migration: enforce multifd and postcopy preempt to
+be set before incoming), and guestperf has not made the
+necessary changes. If multifd migration had been enabled in the
+previous manner, the following error would have occurred:
+Multifd must be set before incoming starts
 
-> 
-> > >   {
-> > >       MemoryRegion *mr;
-> > >       hwaddr xlat;
-> > > @@ -2238,18 +2237,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-> > >           return false;
-> > >       }
-> > > -    if (vaddr) {
-> > > -        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
-> > > -    }
-> > > -
-> > > -    if (ram_addr) {
-> > > -        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
-> > > -    }
-> > > -
-> > > -    if (read_only) {
-> > > -        *read_only = !writable || mr->readonly;
-> > > -    }
-> > > -
-> > > +    *xlat_p = xlat;
-> > > +    *mr_p = mr;
-> > 
-> > I suppose current use on the callers are still under RCU so looks ok, but
-> > that'll need to be rich-documented.
-> 
-> I can do that, or ...
-> 
-> > Better way is always taking a MR reference when the MR pointer is returned,
-> > with memory_region_ref().  Then it is even valid if by accident accessed
-> > after rcu_read_unlock(), and caller should unref() after use.
-> 
-> I can do that, but it would add cycles.  Is this considered a high performance
-> path that may be called frequently?
+Supporting deferred migration will fix it.
 
-AFAICT, any vIOMMU mapping isn't high perf path.  In this specific path,
-the refcount op should be buried in any dma map operations..
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <8874e170f890ce0bc6f25cb0d9b9ae307ce2e070.1739530098.git.yong.huang@smartx.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/migration-stress/guestperf/engine.py | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-Personally I slightly prefer this one because it's always safer to take a
-refcount along with a pointer.. easier to follow.
-
+diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
+index 608d7270f6..4b15322e8d 100644
+--- a/tests/migration-stress/guestperf/engine.py
++++ b/tests/migration-stress/guestperf/engine.py
+@@ -106,7 +106,8 @@ def _migrate_progress(self, vm):
+             info.get("dirty-limit-ring-full-time", 0),
+         )
+ 
+-    def _migrate(self, hardware, scenario, src, dst, connect_uri):
++    def _migrate(self, hardware, scenario, src,
++                 dst, connect_uri, defer_migrate):
+         src_qemu_time = []
+         src_vcpu_time = []
+         src_pid = src.get_pid()
+@@ -220,6 +221,8 @@ def _migrate(self, hardware, scenario, src, dst, connect_uri):
+             resp = src.cmd("migrate-set-parameters",
+                            vcpu_dirty_limit=scenario._vcpu_dirty_limit)
+ 
++        if defer_migrate:
++            resp = dst.cmd("migrate-incoming", uri=connect_uri)
+         resp = src.cmd("migrate", uri=connect_uri)
+ 
+         post_copy = False
+@@ -373,11 +376,14 @@ def _get_common_args(self, hardware, tunnelled=False):
+     def _get_src_args(self, hardware):
+         return self._get_common_args(hardware)
+ 
+-    def _get_dst_args(self, hardware, uri):
++    def _get_dst_args(self, hardware, uri, defer_migrate):
+         tunnelled = False
+         if self._dst_host != "localhost":
+             tunnelled = True
+         argv = self._get_common_args(hardware, tunnelled)
++
++        if defer_migrate:
++            return argv + ["-incoming", "defer"]
+         return argv + ["-incoming", uri]
+ 
+     @staticmethod
+@@ -424,6 +430,7 @@ def _get_timings(self, vm):
+ 
+     def run(self, hardware, scenario, result_dir=os.getcwd()):
+         abs_result_dir = os.path.join(result_dir, scenario._name)
++        defer_migrate = False
+ 
+         if self._transport == "tcp":
+             uri = "tcp:%s:9000" % self._dst_host
+@@ -439,6 +446,9 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             except:
+                 pass
+ 
++        if scenario._multifd:
++            defer_migrate = True
++
+         if self._dst_host != "localhost":
+             dstmonaddr = ("localhost", 9001)
+         else:
+@@ -452,7 +462,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+                           monitor_address=srcmonaddr)
+ 
+         dst = QEMUMachine(self._binary,
+-                          args=self._get_dst_args(hardware, uri),
++                          args=self._get_dst_args(hardware, uri, defer_migrate),
+                           wrapper=self._get_dst_wrapper(hardware),
+                           name="qemu-dst-%d" % os.getpid(),
+                           monitor_address=dstmonaddr)
+@@ -461,7 +471,8 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             src.launch()
+             dst.launch()
+ 
+-            ret = self._migrate(hardware, scenario, src, dst, uri)
++            ret = self._migrate(hardware, scenario, src,
++                                dst, uri, defer_migrate)
+             progress_history = ret[0]
+             qemu_timings = ret[1]
+             vcpu_timings = ret[2]
 -- 
-Peter Xu
+2.35.3
 
 
