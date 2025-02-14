@@ -4,61 +4,209 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C698C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25629C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:45:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwrh-0006EK-CJ; Fri, 14 Feb 2025 09:40:25 -0500
+	id 1tiwwU-0008HK-Gj; Fri, 14 Feb 2025 09:45:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tiwrY-0006AX-Ns
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:40:21 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tiwwS-0008Gs-Th
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:45:20 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tiwrT-0001IV-Rj
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:40:14 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YvZQW2KVFz6L6ww;
- Fri, 14 Feb 2025 22:37:39 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id A4897140B63;
- Fri, 14 Feb 2025 22:40:07 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 14 Feb
- 2025 15:40:07 +0100
-Date: Fri, 14 Feb 2025 14:40:05 +0000
-To: Vinayak Holikatti <vinayak.kh@samsung.com>
-CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
- <linux-cxl@vger.kernel.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <vishak.g@samsung.com>, <krish.reddy@samsung.com>,
- <a.manzanares@samsung.com>, <alok.rathore@samsung.com>
-Subject: Re: [PATCH v2 3/3] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations Sanitize and Write Zeros commands (8.2.9.9.5.3)
-Message-ID: <20250214144005.000018d2@huawei.com>
-In-Reply-To: <20250213091558.2294806-4-vinayak.kh@samsung.com>
-References: <20250213091558.2294806-1-vinayak.kh@samsung.com>
- <CGME20250213091632epcas5p2726909f864b50cc2d1b7ceb2415698c2@epcas5p2.samsung.com>
- <20250213091558.2294806-4-vinayak.kh@samsung.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tiwwQ-0001qd-Pq
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:45:20 -0500
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtWtE011579;
+ Fri, 14 Feb 2025 14:45:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=R5zQoH+Z3uEM9JBdb6LOn5EpuiUQYqKQ5pm1+DWuaa8=; b=
+ fwQjK2xNYNf3ozneqQKTsBYyjp987Aj6zKiMsAUjo/Y63mxD6rfodhra/2MVdizn
+ sDJK34j0YdyaPcsx6fT5LTyAVGM/OlzvANqrOrLUfeDXHJL9hm5geR/8yM8gUizN
+ WQkB8uNIYch79DcZhrxs47VlMV1/HmkiYAD1fWUqmMi+VqViX+QCNaZUf7YRFTP2
+ x203EK4N3qKRZuY/COU5XskOzusUMXbzSo59ojvyC7M0K/B8igmR50rV3XhVMfzP
+ bm7iDhBSZ9+Z1b2utv4OPGB6QTpf5Rn6wMvfLDlZr/GBgOR5oe6d4uazoCkxQH1G
+ l5qeBkor2A6pvOhdFH7KvA==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0sqbyk9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 Feb 2025 14:45:14 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 51EEIpdC025381; Fri, 14 Feb 2025 14:45:14 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2043.outbound.protection.outlook.com [104.47.58.43])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44nwqktjvg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 Feb 2025 14:45:14 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LhyydvYquqZdzMAppyaTnKCbtlHqy0WbiKgH2mf942WPR+j9g+Lk9BpinI+mFAZw+Q939DIJ1aY2QHzbqjtk0Dq3JM2gqkwNAFaLC5i79POBohla4Bmh8wR4t1Ncixrl3ftexadO5z3bsT/ez56ZbkfcW8lzGzCftwps+QO5IOTZlObrDuKZyoLMwWjAoLWpJvsiVoOKDSBTsS49SZ7RZE3xd7378uXFPQnetomkBWgg6BG1VAhn+UQQu9OQjyltAAzGn/B6AniPHu/PX17KMc/p7Wm2384j3XNl4RqcDtA1xJK4p3G0tyg32YBDINRv4Bpxy8FBMJoKg3Px4tGULw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=R5zQoH+Z3uEM9JBdb6LOn5EpuiUQYqKQ5pm1+DWuaa8=;
+ b=HLBAHHNB5V+0rmFatkKw3hj3gYs/oVwQCh6oDjS4WnXBH4eMg+l0fAJG9lN/bVTnZzcfuIxO1d5/X0Pv6QTcu+arK0mhOFYS3pNKQV7mBFOqRdmfzwZqEzalgFXLPHFUdWFyxDaK5VRQED+KhmTPNSdfplFFV1UB/oSHolRb1xSCzkD+Qba3HEpqOfU+3JBSPpA5il+nuLvJT0LjgT3BFrmN7+ey9gzSb1Je3Ffa2l/1htetFPgGl9hboROXjJyqjX9UyUs3iN/KUQL5cgZQFGggPLA0pAjerXdd5BtCo5ZYCCGW3ZpgIl5k2Lhu3RVoJ8yBg059Pp8Y6uFkFXFUcg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=R5zQoH+Z3uEM9JBdb6LOn5EpuiUQYqKQ5pm1+DWuaa8=;
+ b=CZh5yDt4RHcCZadsuKSIslfAwfDPkbbmFCQGZV3lTvB/2MaCa7NXewec7AFTy90fun6l7E2Y3YtjBsrNM9JPS1pkrgnJceWKL5WRdt4/WGN9RcAQo+EN2PowTQnJUUJ+ZcDqNenm5lXIkH7yrFhyRPxnVe820TOZEITnFnWPGFY=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by PH7PR10MB6555.namprd10.prod.outlook.com (2603:10b6:510:206::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.13; Fri, 14 Feb
+ 2025 14:45:11 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.8445.008; Fri, 14 Feb 2025
+ 14:45:11 +0000
+Message-ID: <ee59365c-707b-441c-adb2-4db4e7758cda@oracle.com>
+Date: Fri, 14 Feb 2025 09:45:09 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 15/45] pci: export msix_is_pending
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
+ <1739542467-226739-16-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <1739542467-226739-16-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-ClientProxiedBy: BN8PR12CA0007.namprd12.prod.outlook.com
+ (2603:10b6:408:60::20) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH7PR10MB6555:EE_
+X-MS-Office365-Filtering-Correlation-Id: f65ef08a-8bb7-46b3-5eba-08dd4d062f4a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|1800799024|376014|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QlRlR1AvYTVlSjF2bFpXYXk2VmFMdXFlbnhDZnlZTG9HTUZXb3hxOEZIS292?=
+ =?utf-8?B?alBISFJHbUp6RWN3dUlEb3k2cGZhVkRjMk5wNTFKVUpUa0Z0eFR6RXdoaGxE?=
+ =?utf-8?B?UHFpYW9BSGwvV2RJcnJzaEV1bFFCc3NwUU56NkpaR1JBM1pBRDJSU1hLaE9I?=
+ =?utf-8?B?MXNjcW04S3FXV21PcUh2Q1RlL0FDT0czR01IaERnNXhrVVhhcEh2WEJXMmR4?=
+ =?utf-8?B?UkczTC92aG1NZTIxYkdXbHpoR2pNdnI1TjExNFhLVlBub1hLcWI1b3dyTDYw?=
+ =?utf-8?B?aWVzR2pkNFpIUzlnOU9HZ3VuWklNMVpTNmExZ1hvYU9TbmlFRVlFUHQza2hT?=
+ =?utf-8?B?Y3F4SWFQQUlBWjV2QWwxVGhGK1dsRVZrNVFoZ1FJcGpWa3RRQkoraUpEOWhp?=
+ =?utf-8?B?ei9kbCtVVDIxQ2hzTTRmS0FEeTAyRmljazBrVmpPeTNsaVhPZUZlNWlJM2I2?=
+ =?utf-8?B?TFhYNmJ0RDBuTUxZZlVOZ2dMOENCSmVvL2J0elBOK1puNFRFUGhBNWFZb1k1?=
+ =?utf-8?B?T2VLTWNOeWRydnptUG03bzBrcVVxZDhOajNPenpHMmQrVERiMlJPbWdRbmFX?=
+ =?utf-8?B?Qkl2TVNNbys5RTB3My9rN0hRUVU4K2lRRWM2cld4Z3R4K2k3SFBwOVRuNVp6?=
+ =?utf-8?B?VURpaVdidXo3emd2NHpOTXZVWGJYdXJWNFJPdEdwWmlYeVZqYkd0QUljTG1a?=
+ =?utf-8?B?UVFlOFlPWWpuUUNEaUluK2I0emJEaUIxc1NhZjZNcEpPVTZYRzhMMm1XMy9H?=
+ =?utf-8?B?bUZRbUY4NXpSdmI5ZTJkSGhQQzR6Z1dzb3FVZUk4b1pQK0tzL3I1U0Y1eC9T?=
+ =?utf-8?B?ZlBtWnhIVm5VN3ZCOFpmdHFOdS9LeXRnSUpWekJYeTRLZGNOdFd1aW05UlJR?=
+ =?utf-8?B?VmMwcnpoeWE0UGJVWjRnUTBqNnkyclJXLzc1YjJuZm05QklqVmo3VDBNZVV3?=
+ =?utf-8?B?SEhFVGJ5d2JvUllURm1tT0JNWitGZVcvUHBma1FwZ2dPQVRRUnB5d0Nlc0Ev?=
+ =?utf-8?B?Nm5zbUhuTW03TUlEU2hhV09DcGxzZzErRC9BamJHYVBRa3ZlMFIwYmhPZ2tO?=
+ =?utf-8?B?VTFyREpCaWVJVk5zaHg2a0VJemhFclBKYmptNS94bjlEbm5yMVV6K0JVZUQx?=
+ =?utf-8?B?QVRNMzcwMzR4VlBhS3BIbHZpN1A1RXdEV3Jvb1pVSHJOT245ZDNVOFN3N2ZL?=
+ =?utf-8?B?MThDeVJXYWNSL3Y2emVHcTNoSEpGVnptWkhCdGVhOXFhNDFFb0h3a0NBM1NS?=
+ =?utf-8?B?Y3liVkMrWEQ3MFlmQXEzSFVuYnZ2NmxrTUVnV0JaR2haWHRHQ1hDRHhjTFFQ?=
+ =?utf-8?B?NVJVY0E3b0IxWTdLRnZiSXFvWWcvaCs4dUlpUGJXWW1zSUVMSmppL3UxcGZl?=
+ =?utf-8?B?M3VSeXArbUp3WTFuVm1LNUFMOEd3NlcwSEZtbEJTaE00U0NKd0N0ODlwRCtF?=
+ =?utf-8?B?eGxzQ3RXYitvSTJLWkNPeUJ1L3gxSnNKYXFzN0pwNmwwUmJ4ekZhdWoyN1Bx?=
+ =?utf-8?B?d2swOXV6MG5lTjh0NjA1MUhxRXdFWmNDYlFIN1d0eXM1L29LTWRQMXh4M2hL?=
+ =?utf-8?B?SUt2V1k5ZkdDZ1laSC9DdkhIaGRDOXFGMjdHSkkrdjBuRDU1c3dqZzYxV3dm?=
+ =?utf-8?B?NlRjU0IvK3N2c09WTXVQb2NwV3FsdXZwdG1DeHQyTThJM2dXV2FCdGZEL2oz?=
+ =?utf-8?B?TWlpR08vSlcvZGtzaFphWmlzcXBIU1VyVnlTb0RoSVRWdHptRyt0Q2xqaW13?=
+ =?utf-8?B?Q3J3Qnd4Y012OEUwYlgyYUVRU2dPOE40aGdYQW5vZXYwV0FLSFZtazAzdkRP?=
+ =?utf-8?B?NmJ1aFVBYVpEd1FUMEg1cWVBREt4WCtOQjJEQlBuVlVLbjFTYzJRME1EZmRG?=
+ =?utf-8?Q?A+CipL8UlUVtZ?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(376014)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OWFRMGhpQkM4bDExQndWeFg4WDFNQThZcHpqOEs0YXNaYlZ2M1R5a203WTdr?=
+ =?utf-8?B?OHhNb2F0SnZFZEVac0lyWk1UUDBYdXhORXJpdm90QmphcGt2WDZFTncrN3JX?=
+ =?utf-8?B?WThlZVlzbk92UnF6Z2U0MzRGUXo2Z3U5KzhnWFlvVmJzY3FPRzFINWxhR2lo?=
+ =?utf-8?B?MnBEdmFjUWNyRzJweHVhdERxYjlucEh2ejNnRmZmblFVZGNWKzRNL2ZZUDJE?=
+ =?utf-8?B?aG5oMWFmK2ZKTjYwbjU5TUVLZHhOdU9kQ0U0YjJxaFoxeXU3NmNRWGU3Z1pi?=
+ =?utf-8?B?d2RxeWJrcnRiZnkwQzVZQndBNVVLNG9SVFR0K2dadGhEbGhKYldKTzNXZWdO?=
+ =?utf-8?B?UjYrZFUwdzF1a1VvRXNVWlNBRy9SMnQvZms5VW53Z05saDlXVVlsMnJBR1V0?=
+ =?utf-8?B?djJkcnZDRmZxbDFMelNnMzRrOXpoamZHTThKMkwwbVZQZnIzdm5keWMwQ0x6?=
+ =?utf-8?B?aW5pQlowV01HWlJLNTI5UmMxaUhiRm0xVG1ybmY4TnNKRUJIdlhmZHE3bURs?=
+ =?utf-8?B?emxIYUQ3cU5qdFpQcm9xN3JHUHRKU0hkNUJ6NWluenV1RjNwUjRGUTlRRG1z?=
+ =?utf-8?B?ZHRmMllPbFRyYVhvMkNXa3I3eXJIbG9ZUDhEMWgwUEdkS2xHRlVpTExDdWdl?=
+ =?utf-8?B?eXdXM1VYNlc3cDJKSzYzRG9YOFRGVzljU29ScjdjL1ZLd1RhZ0NqU2srY2kz?=
+ =?utf-8?B?UnRiZkJReWJuTkliQnAwVkFwalRaL2ZYMWhzVVNlUnU2cC9aTGdvOEV5WlNj?=
+ =?utf-8?B?WHgzdE00aUg1YjJTaGR4Y253YzBEcXFpOEcvSVRPV3AwelIwT0piREVUaFFm?=
+ =?utf-8?B?WjFMbVg4b1hMK1k3SXR5RmlBTmdJZHZ1RnBValJFZ0UweUN1YzBaSGdOdDRi?=
+ =?utf-8?B?d0loTVVIeDFIK0oyYS9DV1VwdHdHTkJHZXNiUnk0TzV4U3Z4ak5JRmpHYVpS?=
+ =?utf-8?B?cEk1NUVURGFCK29RQjdwTGN0UWI3bHp6YndDcGU5REdDLzMzVXZJRGs3RjY3?=
+ =?utf-8?B?cE8rK0FzMTBCcEsyV1p2UDF6amhWWXBpZ3BYWEptNWwzWTBKenU3aFFtWENY?=
+ =?utf-8?B?VEcydVVZS04zN21WektTWVM5aWFwUk54dU50WXM1Q00xTVA3dkh6alhXOENW?=
+ =?utf-8?B?Y0VBYkNPbFpjN25mVmE0V0o0MDJXOG1jYWZ2ZTVLNkNFRjRIWmk3VjJHTHd2?=
+ =?utf-8?B?U0lxUUYrSXV3Z2wwZDhLVmY3UjhRR1J4VzkxVWZrYmNkWG4vamdsdG5OM2FY?=
+ =?utf-8?B?NU5va0xrU1ZESm05aVlGU21EdmlHYnEvR0pCcWdxRS9qeHNSQktoSGswdUUw?=
+ =?utf-8?B?bFBtQkFhMkdweUxiT0dQSG81WjRXT0FzdlpNMHIwcWgxcFlJd25HY3JVSWdx?=
+ =?utf-8?B?MzFtZTNNOE5vNUZMNFIyNVAxdVRuZXorcElNM1h3Vnc0cHNkTXdrL1ZUWFo1?=
+ =?utf-8?B?MXJVSEpOOTRRQWdNZGZjOEJ0QUVPeHFSakZCeVhRWFcralFER2UwV1Rwc3JN?=
+ =?utf-8?B?T1JwRGhydkJsTFdOSGllNGozRUZ4cVQrTGlxTXNXYnh0dGhhVEpZV3ZjOFZr?=
+ =?utf-8?B?RldtbHJHVlpoa0QvS3NZblcrN1ZDaHJwZGpiYTcyRE5ReGNIazZhZFlyUUVm?=
+ =?utf-8?B?U0p4WHhCYzF5elVCbk1ZaG5oUFJ3bFBoZ2hVU1MrT0FYdjBRUTcyZ0lnd2VB?=
+ =?utf-8?B?SnhCRUpLTEwrMElxRHdpRlZLejZTc3NKOTBYVlp0Nm02MkJaRGVtckc2K3RL?=
+ =?utf-8?B?NDY3a2hqWWxMY3M1LzRYb01YTURzaDF1ZlJKSEh3VUdPMEVBWjJ4MmhYaWwv?=
+ =?utf-8?B?MTZBVjNnVTh2clpzemVIWE9zS1JvajlscDVlVWFOK0RHUUhjL2JhODQ0a1U1?=
+ =?utf-8?B?RytyK1k0bXd1QWtCNnduVlZLMERnU2R3ejFsRnBvMjdYTlErZm9GR254N1B1?=
+ =?utf-8?B?UHdrVFdhdFJZUEpuMWZVUnFaWlpBV1huTi9CTW1RZVNZeEhaRFpKYjJiaE55?=
+ =?utf-8?B?cEhuSkFQYlRxV0Vza3NnSnArQmhRRkNURVNaUEJoaXdub1pKc3lrQW45VEps?=
+ =?utf-8?B?ejNUNkNuQlFxbUlsMGc4NWN4SEZ0cWdBQTIvdnl4cXVmOWwrQXkvSC9XM0c0?=
+ =?utf-8?B?UzF3VXBGWE4xZ1paSGpFNjQyVmlCV3lKOHE3NlgwSzVkU0Q0WU5zYVJEZXpk?=
+ =?utf-8?B?Znc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: LilrMWoebjX2tH3RPLCtSzixBcxKDxAItWuWksm0TwSJgZUbODhmT40nmGhNmf4tYSgT3Cl5VtFmrd54dbanMfKJwLOzxGxFsbhtW+l15m2S/uAxxW0DrKFf4zlc6F5s7jqrBmVPugU3W/E+1TGznDOfPxks4CMttFvhRlSF2iWfC5Tbrj/hr1MvX1y8Qs3nWQK4H+N6aw8r4E0zstWwyUUza0E70fzK8gcnLrVsNCTfxkhKENR634ztxzjpOW364Hf/ilZ7fCeMUx07Eq37AAspRRYsTrGuh7sEoYGovcbG5qX7XOC816HbIJWid4NLS/gX+eVqOWDRvsN/a+UaFhDCZ7UKfyd3AIahIUbIrYoCXkuPHnADIjYKSIzBvJaGi5cECUTu05u6LG9iTPTlrN4A+V/1rguLAH2AQiZZqrrekA3tng05yR0ph0SYPjgfobaRq40tMb2KmEVh7Rmo8kJ4A+s5XahxszyrNWBcJCs9sSbMSTFvQdGeQSpgSw73GX0arxQdN3IurH0SKJsIAPvM2wOinMGfE5wdYyvSPUXzeBNaV1aB60d60U/8FtqfWKrhqY52ilcCdNabIy2MA7tZPLPYiD44+pOnDgRhoFI=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f65ef08a-8bb7-46b3-5eba-08dd4d062f4a
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2025 14:45:11.6441 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: C+DaTp9fOnS1amoVVg8P1VpkAzIQ6u0hVcVAIw8aQiV9W1yOK0m3LjSP8Gaf2Bhm0hXhR2WPrUD+86b/H8GYzFNUIBQ2uoc0ZD35lfjyXnw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6555
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-14_06,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ mlxlogscore=999
+ phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2501170000 definitions=main-2502140107
+X-Proofpoint-ORIG-GUID: F4OsdpV10J07F8MGBsmpJR4DXgk5QEEK
+X-Proofpoint-GUID: F4OsdpV10J07F8MGBsmpJR4DXgk5QEEK
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,387 +219,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Feb 2025 14:45:58 +0530
-Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
+Hi Michael,
 
-> CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
-As in previous - please update to the r3.2 spec.
+You previously acked "pci: export msix_is_pending" -- thank you!
 
-A few comments inline.
+This patch also needs your attention.
 
-Thanks,
+There are no other changes in the core pci area.
 
-Jonathan
+- Steve
 
-> CXL devices supports media operations Sanitize and Write zero command.
+On 2/14/2025 9:13 AM, Steve Sistare wrote:
+> Export msix_is_pending for use by cpr.  No functional change.
 > 
-> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c  | 217 +++++++++++++++++++++++++++++++++++-
->  include/hw/cxl/cxl_device.h |   4 +
->  2 files changed, 216 insertions(+), 5 deletions(-)
+>   hw/pci/msix.c         | 2 +-
+>   include/hw/pci/msix.h | 1 +
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index d58c20842f..2d8d1171b4 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -1732,6 +1732,130 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
->  }
->  
->  #define CXL_CACHELINE_SIZE 64
-> +struct CXLSanitizeInfo {
-> +    uint32_t dpa_range_count;
-> +    uint8_t fill_value;
-> +    struct {
-> +            uint64_t starting_dpa;
-> +            uint64_t length;
-> +    } dpa_range_list[];
-> +};
-> +
-> +struct dpa_range_list_entry {
-> +    uint64_t starting_dpa;
-> +    uint64_t length;
-> +};
-
-Declare it above and use in CXLSanitizeInfo
-
-> +
-> +static uint64_t get_vmr_size(CXLType3Dev *ct3d, MemoryRegion **vmr)
-> +{
-> +    uint64_t vmr_size = 0;
-> +    if (ct3d->hostvmem) {
-> +        *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-> +        vmr_size = memory_region_size(*vmr);
-> +    }
-> +    return vmr_size;
-> +}
-> +
-
-I would write as
-
-static uint64_t get_pmr_size(CXLTYpe3Dev *ct3d, MemoryRegion **pmr)
-{
-    MemoryRegion *mr;
-    if (ct3d->hostpmem) {
-        mr = host_memory_region_backend_get_memory(ct3d->hostpmem);
-        if (pmr) {
-            *pmr = mr;
-        }
-	return memory_region_size(mr);
-    }
-    return 0;
-}
-
-Making the pmr argument optional for when you don't need it.
-
-> +static uint64_t get_pmr_size(CXLType3Dev *ct3d, MemoryRegion **pmr)
-> +{
-> +    uint64_t pmr_size = 0;
-> +    if (ct3d->hostpmem) {
-> +        *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-> +        pmr_size = memory_region_size(*pmr);
-> +    }
-> +    return pmr_size;
-> +}
-> +
-> +static uint64_t get_dc_size(CXLType3Dev *ct3d, MemoryRegion **dc_mr)
-> +{
-> +    uint64_t dc_size = 0;
-> +    if (ct3d->dc.host_dc) {
-> +        *dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> +        dc_size = memory_region_size(*dc_mr);
-> +    }
-> +    return dc_size;
-> +}
-> +
-> +static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
-> +                             size_t length)
-> +{
-> +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
-> +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
-
-overwritten in all paths were we use them. So don't assign initial values.
-
-> +
-> +    if ((dpa_addr % CXL_CACHELINE_SIZE) ||
-> +         (length % CXL_CACHELINE_SIZE)  ||
-> +         (length <= 0)) {
-Align as
-    if ((dpa_addr % CXL_CACHELINE_SIZE) ||
-        (length % CXL_CACHELINE_SIZE) ||
-        (length <= 0)) {
-
-> +        return -EINVAL;
-> +    }
-> +
-> +    vmr_size = get_vmr_size(ct3d, &vmr);
-> +    pmr_size = get_pmr_size(ct3d, &pmr);
-> +    dc_size = get_dc_size(ct3d, &dc_mr);
-> +
-> +    if (!vmr && !pmr && !dc_mr) {
-
-That's a bit late given you used them to get the sizes.
-Do this before filling sizes.
-
-> +        return -ENODEV;
-> +    }
-> +
-> +    if ((dpa_addr + length) > vmr_size + pmr_size + dc_size) {
-Skip inner brackets.
-
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (dpa_addr > vmr_size + pmr_size) {
-> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
-> +            return -ENODEV;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
-> +                          uint8_t fill_value)
-> +{
-> +
-> +    MemoryRegion *vmr = NULL, *pmr = NULL;
-> +    uint64_t vmr_size = 0, pmr_size = 0;
-> +    AddressSpace *as = NULL;
-> +    MemTxAttrs mem_attrs = {0};
-> +
-> +    vmr_size = get_vmr_size(ct3d, &vmr);
-> +    pmr_size = get_pmr_size(ct3d, &pmr);
-> +
-> +    if (dpa_addr < vmr_size) {
-> +        as = &ct3d->hostvmem_as;
-> +    } else if (dpa_addr < vmr_size + pmr_size) {
-> +        as = &ct3d->hostpmem_as;
-> +    } else {
-> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
-> +            return -ENODEV;
-> +        }
-> +        as = &ct3d->dc.host_dc_as;
-> +    }
-> +
-> +    return address_space_set(as, dpa_addr,
-> +                              fill_value, length, mem_attrs);
-
-Odd wrap.  Put as much as fits on line under 80 chars on first line
-then align next line to just after (
-
-> +}
-> +
-> +/* Perform the actual device zeroing */
-> +static void __do_sanitize(CXLType3Dev *ct3d)
-> +{
-> +    struct CXLSanitizeInfo  *san_info = ct3d->media_op_sanitize;
-> +    int dpa_range_count = san_info->dpa_range_count;
-> +    int rc = 0;
-> +
-> +    for (int i = 0; i < dpa_range_count; i++) {
-
-Declare i outside loop (match local style).
-
-> +        rc = sanitize_range(ct3d, san_info->dpa_range_list[i].starting_dpa,
-> +                san_info->dpa_range_list[i].length, san_info->fill_value);
-
-Either align 4 spaces after start of line above, or immediately after (
-
-> +        if (rc) {
-> +            goto exit;
-> +        }
-> +    }
-> +exit:
-> +    g_free(ct3d->media_op_sanitize);
-> +    ct3d->media_op_sanitize = NULL;
-> +    return;
-> +}
-> +
->  enum {
->      MEDIA_OP_CLASS_GENERAL  = 0x0,
->          #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
-> @@ -1760,9 +1884,9 @@ static const struct media_op_supported_list_entry media_op_matrix[] = {
->  };
->  
->  static CXLRetCode media_operations_discovery(uint8_t *payload_in,
-> -                                                size_t len_in,
-> -                                                uint8_t *payload_out,
-> -                                                size_t *len_out)
-> +                                             size_t len_in,
-> +                                             uint8_t *payload_out,
-> +                                             size_t *len_out)
-
-Ah. Drag this to earlier patch.
-
->  {
->      struct {
->          uint8_t media_operation_class;
-> @@ -1811,6 +1935,66 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +static CXLRetCode media_operations_sanitize(CXLType3Dev *ct3d,
-> +                                            uint8_t *payload_in,
-> +                                            size_t len_in,
-> +                                            uint8_t *payload_out,
-> +                                            size_t *len_out,
-> +                                            uint8_t fill_value,
-> +                                            CXLCCI *cci)
-> +{
-> +    struct media_operations_sanitize {
-> +        uint8_t media_operation_class;
-> +        uint8_t media_operation_subclass;
-> +        uint8_t rsvd[2];
-> +        uint32_t dpa_range_count;
-> +        struct {
-> +            uint64_t starting_dpa;
-> +            uint64_t length;
-> +        } dpa_range_list[];
-> +    } QEMU_PACKED *media_op_in_sanitize_pl = (void *)payload_in;
-> +    uint32_t dpa_range_count = media_op_in_sanitize_pl->dpa_range_count;
-> +    uint64_t total_mem = 0;
-> +    int secs = 0;
-> +
-> +    if (len_in < (sizeof(*media_op_in_sanitize_pl) +
-> +           (dpa_range_count * sizeof(struct dpa_range_list_entry)))) {
-> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> +    }
-> +
-> +    for (int i = 0; i < dpa_range_count; i++) {
-
-Declare outside of there (to match local style)
-
-> +        if (validate_dpa_addr(ct3d,
-> +            media_op_in_sanitize_pl->dpa_range_list[i].starting_dpa,
-
-Hmm. This is tricky to read because of alignment.  I'd have local
-start_dpa nad length variables.
-
-    for (i = 0; i < dpa_range_count; i++) {
-        uint64_t start_dpa = media_op_in_sanitize_pl->dpa_range_list[i].starting_dpa;
-        uint64_t length = media_op_in_sanitize_pl->dpa_range_list[i].length;
-
-	if (validate_dpa_addr(ct3d, dpa_start, length)) {
-
-> +            media_op_in_sanitize_pl->dpa_range_list[i].length)) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        total_mem += media_op_in_sanitize_pl->dpa_range_list[i].length;
-> +    }
-> +    ct3d->media_op_sanitize = g_malloc0(sizeof(struct CXLSanitizeInfo) +
-> +                                  (dpa_range_count *
-> +                                  sizeof(struct dpa_range_list_entry)));
-> +
-> +    if (ct3d->media_op_sanitize) {
-> +        ct3d->media_op_sanitize->dpa_range_count = dpa_range_count;
-> +        ct3d->media_op_sanitize->fill_value = fill_value;
-> +        memcpy(ct3d->media_op_sanitize->dpa_range_list,
-> +                  media_op_in_sanitize_pl->dpa_range_list,
-> +                  (dpa_range_count *
-> +                  sizeof(struct dpa_range_list_entry)));
-> +        secs = get_sanitize_duration(total_mem >> 20);
-> +    }
-> +
-> +    /* EBUSY other bg cmds as of now */
-> +    cci->bg.runtime = secs * 1000UL;
-> +    *len_out = 0;
-> +    /*
-> +     * media op sanitize is targeted so no need to disable media or
-> +     * clear event logs
-> +     */
-> +    return CXL_MBOX_BG_STARTED;
-> +
-
-No blank line here.
-
-> +}
-> +
->  static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
->                                           uint8_t *payload_in,
->                                           size_t len_in,
-> @@ -1825,6 +2009,9 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
->          uint32_t dpa_range_count;
->      } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
->  
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    uint8_t fill_value = 0;
-
-Maybe just put this value in directly into where it is used?
-
-> +
->      if (len_in < sizeof(*media_op_in_common_pl)) {
->          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
->      }
-> @@ -1851,15 +2038,29 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
->          return media_operations_discovery(payload_in, len_in, payload_out,
->                                               len_out);
->      case MEDIA_OP_CLASS_SANITIZE:
-> +        if (dpa_range_count == 0) {
-> +            return CXL_MBOX_SUCCESS;
-> +        }
->          switch (media_op_subclass) {
-> +        case MEDIA_OP_SAN_SUBC_SANITIZE:
-> +            fill_value = 0xF;
-> +            return media_operations_sanitize(ct3d, payload_in, len_in,
-> +                                             payload_out, len_out, fill_value,
-> +                                             cci);
-> +            break;
-
-Can reach this break so remove it.
-
-> +        case MEDIA_OP_SAN_SUBC_ZERO:
-> +            fill_value = 0;
-> +            return media_operations_sanitize(ct3d, payload_in, len_in,
-> +                                             payload_out, len_out, fill_value,
-> +                                             cci);
-> +            break;
-
-Can't reach this break either.
-
->          default:
->              return CXL_MBOX_UNSUPPORTED;
->          }
-> +        break;
->      default:
->          return CXL_MBOX_UNSUPPORTED;
->      }
-> -
-> -    return CXL_MBOX_SUCCESS;
-
-This removal belongs in patch 1
-
->  }
-
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index a64739be25..b391a293a8 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -581,6 +581,8 @@ typedef struct CXLSetFeatureInfo {
->      size_t data_size;
->  } CXLSetFeatureInfo;
->  
-> +struct CXLSanitizeInfo;
-> +
->  struct CXLType3Dev {
->      /* Private */
->      PCIDevice parent_obj;
-> @@ -651,6 +653,8 @@ struct CXLType3Dev {
->          uint8_t num_regions; /* 0-8 regions */
->          CXLDCRegion regions[DCD_MAX_NUM_REGION];
->      } dc;
-> +
-> +    struct CXLSanitizeInfo  *media_op_sanitize;
-
-Only one place before *
-
->  };
->  
->  #define TYPE_CXL_TYPE3 "cxl-type3"
+> diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+> index 57ec708..c7b40cd 100644
+> --- a/hw/pci/msix.c
+> +++ b/hw/pci/msix.c
+> @@ -71,7 +71,7 @@ static uint8_t *msix_pending_byte(PCIDevice *dev, int vector)
+>       return dev->msix_pba + vector / 8;
+>   }
+>   
+> -static int msix_is_pending(PCIDevice *dev, int vector)
+> +int msix_is_pending(PCIDevice *dev, unsigned int vector)
+>   {
+>       return *msix_pending_byte(dev, vector) & msix_pending_mask(vector);
+>   }
+> diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
+> index 0e6f257..11ef945 100644
+> --- a/include/hw/pci/msix.h
+> +++ b/include/hw/pci/msix.h
+> @@ -32,6 +32,7 @@ int msix_present(PCIDevice *dev);
+>   bool msix_is_masked(PCIDevice *dev, unsigned vector);
+>   void msix_set_pending(PCIDevice *dev, unsigned vector);
+>   void msix_clr_pending(PCIDevice *dev, int vector);
+> +int msix_is_pending(PCIDevice *dev, unsigned vector);
+>   
+>   void msix_vector_use(PCIDevice *dev, unsigned vector);
+>   void msix_vector_unuse(PCIDevice *dev, unsigned vector);
 
 
