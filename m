@@ -4,94 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DD7C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 16:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD65C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 16:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiyh2-0007uk-5i; Fri, 14 Feb 2025 11:37:32 -0500
+	id 1tiylc-0001Js-4x; Fri, 14 Feb 2025 11:42:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiygz-0007uD-4h
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:37:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tiyla-0001HZ-51
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:42:14 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiygx-0003On-7Z
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:37:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739551044;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3fVKMF+PPgv0KUBsKA3U5DA2a5TEheTxHMzAFbNYv4A=;
- b=VPcMnef6ouiz9TpC9Z/Y1LctA7uSTXX6W2nXddXBkFdDjcFPGWiGsPTcUrJ18XL2Y71Hax
- HBQxl6V8ZQDmKpCszDhnisvYDh/aB6c8yLEmBrwMX6nOFxZ+QFZCH6xFUhoc0ZURVV9KzW
- c/5S/HJ/xEtDAMlnxrWSFnJm0v45ONk=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-sBO-I_UkM86PFsEQ8Hbr5w-1; Fri, 14 Feb 2025 11:37:22 -0500
-X-MC-Unique: sBO-I_UkM86PFsEQ8Hbr5w-1
-X-Mimecast-MFC-AGG-ID: sBO-I_UkM86PFsEQ8Hbr5w_1739551042
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5fc0058d68eso605270eaf.0
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 08:37:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739551042; x=1740155842;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3fVKMF+PPgv0KUBsKA3U5DA2a5TEheTxHMzAFbNYv4A=;
- b=Kok0itMZ5+669S3HRR51HP2hQGvRR8VUxBXryC3BVwu0XkB/SryKkBPze6Tnm9UE75
- sdtnRXkm8Sa3OnoHfvi/4teC4WnkAxV+XhHVwYTILPWWWcaPXR/9tlm22UP9Ie9Y+lmF
- lP5rUIky+4AkokbiOzBY9GtQ/QEYFeuuvPvBTovUxOfhmD6g8uBDQ+0oRjUT3aKxrQgu
- 3dfnGB0MXhHHOLZ+WCHVX2ePZf5EX5NhTGT5USPv+WLZhVM7h96BscsHZaDYpSlZH1+v
- Kr1dzGLpyuURBEEalEGR65ViLyW3z+6XC6sodoPbXSBd1FHvJJWBwnW/LimTeTafQMFk
- Q6/A==
-X-Gm-Message-State: AOJu0YwM9fzO3PYtTqt5Nv0QsyL+RpiL6HJgquf/U6VHSkKcgSzq5oxL
- CSOZiB4dk4qndEWmbv7tsoalaHfML7pEe9zk+/9S+JyCyXiEJHDrr1EzmoCfhcwoHvhZIhq82wJ
- o1e30fN5p2b4zb8dgWh+amcvB8QV+mye0vLK5b0JkA0cACye13iZv
-X-Gm-Gg: ASbGnctCdhadZZbjniWLEWCzMUAr8uAqIvEBKfQQt5mW3BwIJkXJg/2EPN/bZs90sOR
- h0qBqVsiVmshPQnKUWxovexI01M3jXkXYWNzNEMB1b0MDL8lUy8MM0V4Ufm46ZDWAn6Hc/Y9UFQ
- TrPmH4y47pGfLig3Z0KQ+YUvoKcH4r+fC0JzOXZlWEuJAoq8YSWBOsOc/ne5dInzmrEeMYW50Vt
- 2awfV3CnHx4myHIPQVBqhJLi2NhdYA9SUI9a+sYAKLR6alObyKNpTajJI4=
-X-Received: by 2002:a05:6808:38ce:b0:3f3:b4d4:835 with SMTP id
- 5614622812f47-3f3d8da186cmr5625344b6e.3.1739551042096; 
- Fri, 14 Feb 2025 08:37:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE794sU22Xtwn6P7uMLPZV0w+xWHI8RbLM1o61ZQ2ApTLPvh7mtjBb/vidEx4ZIyFYI+V3sMw==
-X-Received: by 2002:a05:6808:38ce:b0:3f3:b4d4:835 with SMTP id
- 5614622812f47-3f3d8da186cmr5625323b6e.3.1739551041751; 
- Fri, 14 Feb 2025 08:37:21 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3f3da9fdf72sm1364857b6e.33.2025.02.14.08.37.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 08:37:20 -0800 (PST)
-Date: Fri, 14 Feb 2025 11:37:17 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH V2 02/45] migration: cpr helpers
-Message-ID: <Z69xPYAJcOjlSpff@x1.local>
-References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
- <1739542467-226739-3-git-send-email-steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tiylX-00041z-Si
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:42:13 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1739551325; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Dgjfv2r92Rsh2m+UpZNtCJ25yJeGS5OkrXvsqO3PurwwwWuRxPsy80Zj3mKRe46Knn8jXleWRQSkMrOoQy12JhAmva9vRLs/v9jOCmfZLJEalFhpaMq0BaTFroyWkxg5wkUm9EmLpFlJm8hSMGBscNQ5ULH7rLRJPfGmqMOjZqk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1739551325;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=QgmrKJdzqk2r43GXIETwRI4R4YAzfhHMJ/bV0OVmiCc=; 
+ b=hrI1dMUk2/lNZWtlejdxYYvyEcg2TY9PxWIBJyi/NZtMrQmr+YQUznl4iwrIXSSFzZDwuWrkAayPt0zp41GHnBweWAx5JwzbC9CiZo1kG12BIxwu6RuiGVqbVzG3g2KgHwrW+WvcuHDf2KdDBdSPSWxCpTVpYK8i2rRfbqoQjDo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739551325; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=QgmrKJdzqk2r43GXIETwRI4R4YAzfhHMJ/bV0OVmiCc=;
+ b=Ebtb7/g0KUIvqYBdoGRvNjnS72t7/ANRoWGAUdCEGRWB+cNYPo9mLhQ2kmky6NvR
+ nGsZr+DX0gmjZEF+zI42XCpJiS3QJxHaHm7axz4ejvFQgBnihCuAh0lN0zQOAxCYc/r
+ xk7M5wSfaso+dfgUKSP7r5IRJdWoNXZmfl5VJTqg=
+Received: by mx.zohomail.com with SMTPS id 1739551322436727.316081658748;
+ Fri, 14 Feb 2025 08:42:02 -0800 (PST)
+Message-ID: <a3361068-5522-42b3-8da2-260821d5fb2a@collabora.com>
+Date: Fri, 14 Feb 2025 19:41:59 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1739542467-226739-3-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ui/gtk-gl-area: Remove extra draw call in refresh
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dongwon Kim <dongwon.kim@intel.com>
+Cc: qemu-devel@nongnu.org
+References: <20250206225304.1739418-1-dongwon.kim@intel.com>
+ <878qq8pqmk.fsf@draig.linaro.org>
+ <657183a6-5c0e-4bfd-9b83-1fa98946c330@collabora.com>
+Content-Language: en-US
+In-Reply-To: <657183a6-5c0e-4bfd-9b83-1fa98946c330@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -110,128 +83,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 14, 2025 at 06:13:44AM -0800, Steve Sistare wrote:
-> Add cpr_needed_for_reuse, cpr_resave_fd helpers, cpr_is_incoming, and
-> cpr_open_fd, for use when adding cpr support for vfio and iommufd.
+On 2/14/25 18:26, Dmitry Osipenko wrote:
+> On 2/14/25 17:06, Alex Bennée wrote:
+>> dongwon.kim@intel.com writes:
+>>
+>>> From: Dongwon Kim <dongwon.kim@intel.com>
+>>>
+>>> This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+>>> which causes some guest display corruption when gtk-gl-area
+>>> is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+>>> simulataneous accesses on the guest frame buffer by host compositor
+>>> and the guest.
+>>>
+>>> Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Reported-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+>>
+>> This certainly fixes the corruption I was seeing while testing Dimitry's
+>> native context patches and doesn't seem to affect the venus test modes.
+>>
+>> So:
+>>
+>> Tested-by: Alex Bennée <alex.bennee@linaro.org>
+>> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+>>
+>>> ---
+>>>  ui/gtk-gl-area.c | 1 -
+>>>  1 file changed, 1 deletion(-)
+>>>
+>>> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+>>> index 2c9a0db425..9f7dc697f2 100644
+>>> --- a/ui/gtk-gl-area.c
+>>> +++ b/ui/gtk-gl-area.c
+>>> @@ -129,7 +129,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+>>>  
+>>>      if (vc->gfx.guest_fb.dmabuf &&
+>>>          qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+>>> -        gd_gl_area_draw(vc);
+>>>          return;
+>>>      }
+>>
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  include/migration/cpr.h |  6 ++++++
->  migration/cpr.c         | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 50 insertions(+)
-> 
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index 3a6deb7..6ad04d4 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -18,15 +18,21 @@
->  void cpr_save_fd(const char *name, int id, int fd);
->  void cpr_delete_fd(const char *name, int id);
->  int cpr_find_fd(const char *name, int id);
-> +void cpr_resave_fd(const char *name, int id, int fd);
-> +int cpr_open_fd(const char *path, int flags, const char *name, int id,
-> +                bool *reused, Error **errp);
->  
->  MigMode cpr_get_incoming_mode(void);
->  void cpr_set_incoming_mode(MigMode mode);
-> +bool cpr_is_incoming(void);
->  
->  int cpr_state_save(MigrationChannel *channel, Error **errp);
->  int cpr_state_load(MigrationChannel *channel, Error **errp);
->  void cpr_state_close(void);
->  struct QIOChannel *cpr_state_ioc(void);
->  
-> +bool cpr_needed_for_reuse(void *opaque);
-> +
->  QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->  QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->  
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index 584b0b9..12c489b 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -95,6 +95,39 @@ int cpr_find_fd(const char *name, int id)
->      trace_cpr_find_fd(name, id, fd);
->      return fd;
->  }
-> +
-> +void cpr_resave_fd(const char *name, int id, int fd)
-> +{
-> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-> +    int old_fd = elem ? elem->fd : -1;
-> +
-> +    if (old_fd < 0) {
-> +        cpr_save_fd(name, id, fd);
-> +    } else if (old_fd != fd) {
-> +        error_setg(&error_fatal,
-> +                   "internal error: cpr fd '%s' id %d value %d "
-> +                   "already saved with a different value %d",
-> +                   name, id, fd, old_fd);
+> Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-How bad it is to trigger this?
+I now noticed that the fixes tag is missing in the commit message. It
+should be added as described in [1]. Also, use the get_maintainers.pl
+script to CC all interested people. Submitting patches to QEMU works
+same like in Linux kernel.
 
-I wonder if cpr_save_fd() should have checked this already on duplicated
-entries; it looks risky there too if this happens to existing cpr_save_fd()
-callers.
-
-> +    }
-> +}
-> +
-> +int cpr_open_fd(const char *path, int flags, const char *name, int id,
-> +                bool *reused, Error **errp)
-> +{
-> +    int fd = cpr_find_fd(name, id);
-> +
-> +    if (reused) {
-> +        *reused = (fd >= 0);
-> +    }
-> +    if (fd < 0) {
-> +        fd = qemu_open(path, flags, errp);
-> +        if (fd >= 0) {
-> +            cpr_save_fd(name, id, fd);
-> +        }
-> +    }
-> +    return fd;
-> +}
-> +
->  /*************************************************************************/
->  #define CPR_STATE "CprState"
->  
-> @@ -128,6 +161,11 @@ void cpr_set_incoming_mode(MigMode mode)
->      incoming_mode = mode;
->  }
->  
-> +bool cpr_is_incoming(void)
-> +{
-> +    return incoming_mode != MIG_MODE_NONE;
-> +}
-
-Maybe it'll be helpful to document either this function or incoming_mode;
-it's probably not yet obvious to most readers incoming_mode is only set to
-!NONE during a small window when VM loads.
-
-> +
->  int cpr_state_save(MigrationChannel *channel, Error **errp)
->  {
->      int ret;
-> @@ -222,3 +260,9 @@ void cpr_state_close(void)
->          cpr_state_file = NULL;
->      }
->  }
-> +
-> +bool cpr_needed_for_reuse(void *opaque)
-> +{
-> +    MigMode mode = migrate_mode();
-
-Nit: can drop the var.
-
-> +    return mode == MIG_MODE_CPR_TRANSFER;
-> +}
-> -- 
-> 1.8.3.1
-> 
+[1] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
 
 -- 
-Peter Xu
-
+Best regards,
+Dmitry
 
