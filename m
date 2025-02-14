@@ -4,106 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C946EC02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E730EC02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwpq-0004gM-1t; Fri, 14 Feb 2025 09:38:30 -0500
+	id 1tiwqK-00053V-73; Fri, 14 Feb 2025 09:39:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
- id 1tiwpn-0004fp-EO
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:38:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tiwqI-0004wE-07
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:38:58 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
- id 1tiwpl-0000fQ-Fi
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:38:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739543904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JkzE2c+qAVXPmCyAu0H+trYpMUewBsr9GkQeZruPd7E=;
- b=Nvi8qAOCQM2todz+iYgoUHZhppEmI1Y1pfSMSPUp2iHMXMy9fHnik4K8uWasXuAJaUGsDq
- g/jl+Gl4YCuoErLD5dm1vokJMEseZMcen1LjY/DSyrrezajD1Qt51/cI3k/dC6b3KFmeSC
- 45VFF5byXWX+g54ehwaArqhqTKx/duU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-CrDEXXWgONSXIMgdAwjJQw-1; Fri, 14 Feb 2025 09:38:23 -0500
-X-MC-Unique: CrDEXXWgONSXIMgdAwjJQw-1
-X-Mimecast-MFC-AGG-ID: CrDEXXWgONSXIMgdAwjJQw_1739543902
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4393ed818ccso19150205e9.3
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 06:38:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739543901; x=1740148701;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JkzE2c+qAVXPmCyAu0H+trYpMUewBsr9GkQeZruPd7E=;
- b=cEfR553wKQF0IhJ1kpo7d1sTFC/1gXJgc8CtbobmLPUUGHIrQ6TXC/bkB+cWL1ASRH
- QgJcnsDhw5gXHTIk7xQFvxsVemtYtv2JA8xK7o/qPcO3ej/2YMF9n+SHejaFM0xnfR9m
- gb7hK9JqVp0fxXAhqBOeur7ZnwIg2ZHrAD/UsQ58hUMtU6YADlwF593ymPVbgymICzFa
- UJ8HRjzv4SFp80UhtrNeJAA93wlGqeCzRJJ+rWEcybjkv/usIQNnM4+ds9zBrryo43lL
- xvNT5lY+fqpUrGWEPz5SFybl41RwRAkhmdhX6jBXd0mpyh3rR/s4YdzBnUtgAoM5NmjP
- isHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhycU/CXWTZ09RW1AW7jKfO4yP2BJdnbzEdUsIIPkrfCcg+sLs4kRWN8qWjzDBxTkTdiVXEkvpsEFU@nongnu.org
-X-Gm-Message-State: AOJu0YziABlb1W/0Pe4SMgm4YoqnPAACsTJu0XfSKwTqDERFozZSoCSK
- MpsVJiS2o/ZVXh2WPlUCOPmVkLfWhm0VxB1pq+XduWOoMiLBrDebxjhRBEb8V7GZ1+bJv65OUst
- 85Vh6Cq1dHNUytj0N2ZDdZL7prrAbdXiGLPhvHenu3JFf/NpsfTJ6jhDQCCI4b7s6EnNjJrsvYR
- EsFbHC4CL9einEtWg96fC/9X2bzabg5TDQ5uY=
-X-Gm-Gg: ASbGncu8uy4il3ZQYUyCc/Q5wXaTiQ+6LBX1T+oEyXw96pg13SG2U2brxAK8Z/GV/9H
- 9x9cgKYdn1msCs1c1QqhN7UkOtM+OXZHvf0PG5nnQFEZvlvx0GshJ0v7wUbkAH+Fwbxnh2vLh3a
- +dRO2UHhro+tttjIn5YNLDR5XtpY50HJNC8PHz7StDEmMwepYGW0Tp73xIStWxUEFmpf3srp1Jc
- g/ITv4nASETt2CIeYCEglpQ5u04PAwyuQ3DJ+cxfXpQfB7qjvBkb3oTZhJa9z5g6qNUllfO9mh0
- cO+34GDdL84ktKcFWv3oUwNO7HOl+YpzDA==
-X-Received: by 2002:a05:600c:1c91:b0:438:c18c:5ad8 with SMTP id
- 5b1f17b1804b1-439581cab45mr142461985e9.31.1739543901226; 
- Fri, 14 Feb 2025 06:38:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHcnexl+F4M/5JV9T/EKoashURzCI4xmNF7vNBYuMxohCOOX7o/TbCKXu3fQY5L1U8/cSbGuw==
-X-Received: by 2002:a05:600c:1c91:b0:438:c18c:5ad8 with SMTP id
- 5b1f17b1804b1-439581cab45mr142461455e9.31.1739543900742; 
- Fri, 14 Feb 2025 06:38:20 -0800 (PST)
-Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud. [176.103.220.4])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1b83a3sm76632215e9.33.2025.02.14.06.38.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 06:38:20 -0800 (PST)
-Date: Fri, 14 Feb 2025 15:38:19 +0100
-From: Stefano Brivio <sbrivio@redhat.com>
-To: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>
-Cc: Laurent Vivier <lvivier@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, qemu-devel@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?=
- Lureau <marcandre.lureau@redhat.com>, Eric Blake <eblake@redhat.com>, Jason
- Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Laine
- Stump <laine@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] net: vhost-user: add QAPI events to report connection
- state
-Message-ID: <20250214153819.286365e4@elisabeth>
-In-Reply-To: <Z69TxVIQS16yDiS2@redhat.com>
-References: <20250214072629.1033314-1-lvivier@redhat.com>
- <871pw07sdy.fsf@pond.sub.org>
- <2c5358eb-1abe-4fce-8b28-7935c71f1cff@redhat.com>
- <Z69MOEAuE9WHjLjT@redhat.com> <Z69Q4bhElTS9bOO_@redhat.com>
- <20250214152834.68f5c9df@elisabeth> <Z69TxVIQS16yDiS2@redhat.com>
-Organization: Red Hat
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tiwqD-0000jO-L9
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:38:57 -0500
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtSa3001893;
+ Fri, 14 Feb 2025 14:38:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=8UmXcQoNq1f0ELQBGb7wHDMOHBfKl5aJ4WurcP5OptA=; b=
+ F6VWolqpURYnc+O2YvyaE1rkKqcPRnz9Do1HEaCYeMWKyQkNyrj2kwhKWvgibAOJ
+ O91OsSds3diAyZ2I7INCYaisWKfvTrvNkuvKmQ7cLizedbk1RzGYEi9X6h3q/+r+
+ i+PhVXCbSogcGC7XlAB8SjS3LDo8CwkZdP6AT5q8a1fYI/qSSu4VsiUFfCCmzjcP
+ 9mgqiZmLrljiutBI9Q/V+4vSgeLWIF65OH2ROdmfGyKjELNLMbyoe4XE+CjLBgd7
+ IY2Qcge6iH0clNKtE1FGk5nY7tE6omNbjLhlCaGPnMX23BSWxTmJ+9jOFefZwJ5s
+ tzlG7oSPJSf7l+MuJNYZ3w==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0qyuuf5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 Feb 2025 14:38:46 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 51EDe4tc001112; Fri, 14 Feb 2025 14:38:45 GMT
+Received: from nam10-bn7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10lp2043.outbound.protection.outlook.com [104.47.70.43])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44p633np6x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 Feb 2025 14:38:45 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eskCNQ9Pa9RXboVYpNGnGAwXcUITwbVfIBHQwNfW1JmPEUMdMgiJeMbZjlbKOKSxtz33mAGFZ7EOhRLtbY1NFR8tQXmYxvrHXEv8Fx8usC3zwrNhNuLD9PJhumeycoYbjPJoBG+D2ayETGG8xcLsjBrVn6J8BUrkM8R1GSvqYR5+vyn1tEarZ94dsJ+JFOlI5PRiG/rxyY8bFS4l6iblDLI8DTz/xnJhsmR3YucXqTiMymg1jgO5iLZmr1kmtpjZk8ri42pHj6PwXtU2e6XIpHi7TmJEBn3rimFfIFUElN09QZKeaX4BiPkqwkLG8W3hk4h7d78JYSRzeIAmFmbxkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8UmXcQoNq1f0ELQBGb7wHDMOHBfKl5aJ4WurcP5OptA=;
+ b=G3dXv8Ut3c9jYiJoYYRvY5VRvgBBWkHVwdQ3ZjWAkzbvd9TgEmSy0W+rja+Dauab554MpGEYcAjTAWWDxujOEDXBGrspO3QOkKEd7LrERG8y3M0IN0vd/z41IgViP9r8iqEz95W5ugXuySJIPIxk6T/nJAoBIzhguGU6g4f9Uf0C4WpC3dAthzCuO7aM7CGRu+gLEgARHM2Y6USwiYtri1iKhiwNUF8T8Vq0A7ep6keezx9LbjHYxxu/KGaXrvBVtMtGVZ1v6sX+8kY9X6xDema+7VsVLzJDIHE3xL7EKlCsfKvPN3xB7B1tUqSG+Wkp1YeNe5Lm6q+2fVzJ2nU+eQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8UmXcQoNq1f0ELQBGb7wHDMOHBfKl5aJ4WurcP5OptA=;
+ b=hrqmKzQ1ADo5XID9jy4yXihQohex380rrYzy9QKkBpJxdINNMsNr5wGZeHUpZZxZOK9YDYWk8zZBflFtPUbMmK7DeB3IqcnLeM46qXpkt3g7ilIj3IdLYk4Ru3xE6so2C6H10x1HMYKHKewU2qeQj8R5Lf1DLJAFZRNhdBDXUnk=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by PH7PR10MB6555.namprd10.prod.outlook.com (2603:10b6:510:206::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.13; Fri, 14 Feb
+ 2025 14:38:42 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.8445.008; Fri, 14 Feb 2025
+ 14:38:42 +0000
+Message-ID: <52a6a93c-a6a5-47de-8a81-6da5d5612e4c@oracle.com>
+Date: Fri, 14 Feb 2025 09:38:36 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 28/45] vfio: return mr from vfio_get_xlat_addr
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ "Philippe Mathieu-Daude\"" <philmd@linaro.org>
+References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
+ <1739542467-226739-29-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <1739542467-226739-29-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR07CA0088.namprd07.prod.outlook.com
+ (2603:10b6:a03:12b::29) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sbrivio@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH7PR10MB6555:EE_
+X-MS-Office365-Filtering-Correlation-Id: c3512872-25de-49f3-8a13-08dd4d054737
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?N3pwelVaV0ZGdVlOc3FScGI2ZFRkRVZhdzVYcHYzMGZrOWswVzdvK3pwYk9D?=
+ =?utf-8?B?M2Mwb0ZDQlZPQkJoVUtpQUd6Yk1aRGZiZEpBeGhCdFRXbUt3MTJ5dU40UmJY?=
+ =?utf-8?B?OXFxNU1IUGkzVkY4cnRjR29McGY3WTVoWlQwaXF6aDZnMWxjNzQvTWZKK1U4?=
+ =?utf-8?B?bU1hdTk3N1ZycGtMMUYyZUhpQmpWd2ozamFMeHJsOTU1VmZ5eUwzSGg1NGw4?=
+ =?utf-8?B?SmRkUUdUU3FDQXhCeVlvcmJlUjFoaTZoKys0WXUxSXh3MmIrK0pDeUgxdllL?=
+ =?utf-8?B?ekFwZTlKblFHYjY0NVkrek1KaENKK2xsVVdrRWZkUmJEQWVNa0doQ0xHTEl6?=
+ =?utf-8?B?ZE5ITStxU1dZMEVwNkJFaG1xMFRiZG9jYlg5eThGaExESHg3NGVJOGxUVHhY?=
+ =?utf-8?B?NlI4TzJkZ29nVm9aY1daekZpSVF3L2pwSG9Ba3R2TUl5VlVPYTFBd0FZemo4?=
+ =?utf-8?B?RVFYYXVYOGxmQ1pUa2l5aXMydk5EZEovcXl0NHRnRi9NZEwzc3JudGIzZG1V?=
+ =?utf-8?B?OXNMNUhtL3J3YnZYSWVHK1RUWlphZXJCRFRwRU0rTjhmOStrQVI2Uk5CdTJG?=
+ =?utf-8?B?NkVHb2cwMWRqbkNFY2NzWlJURzJ0WE5zNWlNUVNVU0JpMUpSR0N5RStELzJo?=
+ =?utf-8?B?ZVQ0OXpSWmdUN3gvRFh5TW96QzFuRVRwMDhTNU9BRHFRVVNuNnNEa3J2b3hB?=
+ =?utf-8?B?RDg0S1B5NWJIVG1jOEVuS0J3c0RYZDdBSFl4MWM0WFBkNmRiNmFzd3A4NU5z?=
+ =?utf-8?B?aWFOTCtqblE4WmJQaFdkbHlTaXdZR21VMmFIL3QzUEIybEYxMmJ2TkRNNStP?=
+ =?utf-8?B?UDNycG5qT2lmYjlmVWJickQwVDYvc3BoS3k2QXJSc1BsN1JDMlZOZ1BFR2li?=
+ =?utf-8?B?R2JBeDhrSXFIaUNlTEs4eTc5WktKOEJwMWptVmp2ek04WnlQWm96Rk9yYUlp?=
+ =?utf-8?B?My8weFU0ekNUa0dFWFFhbG5NYk00VzdSOGZlNFh1aHVDVlFoajJlNjRoTGZu?=
+ =?utf-8?B?cTl0UldlR3c0dWVndkZrKzAxTzZaVlk1Ykd5eTdhZ0RsN05VVlU0M3JWK1hy?=
+ =?utf-8?B?K2xIa1NkU3RzdE9qVmkvYnJWTjMwRTZlUlM5WUF1UG1HOW5jUHo3VTBRK0RB?=
+ =?utf-8?B?UlpWQlJ0SkxTQnV1dzl3c25VVUlrSHZRWDIxS1VNQTNxckE1WS9mSEFrL3BP?=
+ =?utf-8?B?OHNTdkRPeGRJNjJML0JwbUVEK2JZU292N3lVOElnREl5ZU9MemJrYVgvWkhK?=
+ =?utf-8?B?eEc3Wk1SSFdNdStHM1F3MmFrcUVDOXVpT1c3YnJqOVZpUjY4ZkhkMzgyTUhP?=
+ =?utf-8?B?eFppQXVabnFqUTJ6cTRBd2pCNVdmeVpzZUNYUkR3T0d6dmFIYm1idGEzYkhI?=
+ =?utf-8?B?NWJkNUUwaHoxWUw1aFBxRVVkWksrYVFqMXVRaVU2WEpnQkE4dStjclI1cDZq?=
+ =?utf-8?B?aGpLYW1GK3RNWHJBYjNmbmhaemE0QzIxSWlqcXNIbER0NWs0MnNxNUMwT2hW?=
+ =?utf-8?B?cVFwSCt2STdIUVlDWmdsTDlZN0dUMFN6SjhEZnZqTTUvRmcvZm0wM2I3Z0FL?=
+ =?utf-8?B?S3dyUEtYTHRxZUdtZkdRSjI5blgreWR5MytmeUpxNGhnd05UNUU3SHgxTm5k?=
+ =?utf-8?B?UWJ0Z0lPV3RYZ3hjeXNKVEVKQVNhMjVjUDNJTEd3ekR3eDBzK3RYSFNjdnQr?=
+ =?utf-8?B?ekdBYit4RTRWMklKeEVzOFVXUG5MbVNnVllscHJxbWVaMElCZmwzU3FNMUlJ?=
+ =?utf-8?B?bTBZY3dTVWwwVk9FN1hGaUpSUkJvcHp1ZHU0cDN4UGFtOFdNRE1GSUs1cEZo?=
+ =?utf-8?B?TDdjMzZ6Zy9WOFhmVlVxWjA3OUlqdEthLzlGK2h3R2I0S2VFQWN4VHZkS1JH?=
+ =?utf-8?Q?PtpeJTOX7XYx7?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?czh2YWxvbk12QjArNHVTQVpqSllsT0NYM2RDT2Nwb1Vzc2xLeTVzME1HWjRL?=
+ =?utf-8?B?MGhBd3pjbWRQTUd4UlhBaXFCMnlodkxoYlpqMU9WUDNmV0pFK096TUhBWU1X?=
+ =?utf-8?B?M0o4bkxCMFpTbm5PUHVDdkJHTlo2SVJXV3dXTzdIMW9zN2I4cGNDcjlOb1I4?=
+ =?utf-8?B?ak1DUFoyNDA0Mkt5cUwrdXlsMStTZVAxdUhpcGx5U3ZRY2RnRTYzNWNpUnFC?=
+ =?utf-8?B?WlR3aU1ZdzBjQWR2Q0RMK0tZU25RR1BEWWlhVUwxNVFOWWcxVXY2SUFQV2Y2?=
+ =?utf-8?B?UHRPZ01NbnIwcDlmZUw2YnllNXkyTHBxMzhhTHMxTUdQNEgyYzEwQXFGNmRo?=
+ =?utf-8?B?dVZwVk9FL3Q4aXVRVG11NjNoSUsyOTI5clJqdGdBOENDSEpxTCs1VzZ4dFd5?=
+ =?utf-8?B?TGZHUnNZaVFLMU9hWFhjejZNbkY2b2dKRGZNNUtwKy9hejdWZzloVndaN1Ev?=
+ =?utf-8?B?eUtIOFl3OTFhYkExS3hGQVdnSFpxTHFCWlc1U2gyYXh1d3pzaFFGdFliWmxT?=
+ =?utf-8?B?Y0NnUHp5VzEvVVY1eVJrNzVTUjdQczVtdXdyYXFUemc3L0p2Y055MDhpYXp4?=
+ =?utf-8?B?ZlhPMlMwOHdUME9oQ204V0xhNnhHczRYK2IyUW5PVnpLaS94SXdzUmh2OWFE?=
+ =?utf-8?B?T1Jnbk01TjJadG9nSVNJN1hISXBoRjcwKy8yNkZ5MHBjY0RJdFRQSmVHQTVU?=
+ =?utf-8?B?OENPQUhIbmIyZzlRVEJ3QW1Mb3hJMjJMcUVLZnVSRzV0ZnU4ZlY4Vi9ndnFH?=
+ =?utf-8?B?eFlteVBiQkFNaEJSdDNBRDNWY0RRb3VxR1pnQVhXa2ZKWHovYWJ5QkQyZzlN?=
+ =?utf-8?B?cmVLcVlYWEpSZ2FhWXpjSlIybUQ4a3MyMUJDcXJicUxGci9jMHlaTjFtNkMw?=
+ =?utf-8?B?a2ZxWllxN1pzL2d2SHI5ZG9iUEd5b0xnaVZTTVFHUGVORmtkL1ZzVE5LMlNa?=
+ =?utf-8?B?RDBOZWplcVB1dEN0OTl5NVVpSTRSbG1BR1EzRU1zdlFKd2E5WEI4MkNXRnhS?=
+ =?utf-8?B?d3ZVTHFleEhrdjZHK3JLaWNQQTJqRnZjR2s5VE1lTzhldUhZdHlqa2FNVVRs?=
+ =?utf-8?B?REcwNGJYMWVPY1hsbWZDZTJRUkxGbEpOZCtlL1FKTzlncFpDaE0rS09pTFpz?=
+ =?utf-8?B?bFpGN0NBam91R3VKQitBakhMMGdFcWxkYU02MUtnTWQzUDkycUtCT0x0alN5?=
+ =?utf-8?B?aGJMdWhGZ1ZGNTJSbjFxZTh0Z3dXNU9JcHdiMjl0MTE1Z3ZNdExsSWh2M3ox?=
+ =?utf-8?B?b2d5clI2cXlWVW0zd0Z3Q1F4ODN6c1BGOFMramppSCsvNlBzUkQ3VFdwMmoy?=
+ =?utf-8?B?R1JIUnkyNUszM3ZLaEZhNVBjUXU0OXlVblVWZ1d0QS9VaHIrUDhCVzU2b3Fw?=
+ =?utf-8?B?dXFCR1d2ZWJPdGJ4cjFHcnN6U1F4Z3FJZkRNT1BqZ1Z0OGV6ZVFDazhZaHkx?=
+ =?utf-8?B?Y0oyV21DY001OEV6NStoR0V1a2szb0tzV1Zmbi8xWVZveUZObWkyZ0NCWHJQ?=
+ =?utf-8?B?cUF1N3RMelk0UzJoelZtSDVZRG9PZ2tLNXpYaSszL3UxYk11VTF1bzNxTFN2?=
+ =?utf-8?B?cGMvLysxVC9HejlHSVhsdTNtWm1ERlU1dGNyS3VFdmU1UEVITzFkeDJBRXBE?=
+ =?utf-8?B?MUprMThPMnNlREZOUDZpSzVpdkxReGZCejdhUXRKb0lYQzhEY1p5MjBIVGU1?=
+ =?utf-8?B?N2pER0tyL3c1TFQ3dHdLUktEMERZWG0zZWkvR0ZGR1FmNlBYV09yank4ODd5?=
+ =?utf-8?B?cFkxK3NsV1JhNlIycnZPZkkvdkhvaHJoVm9weHRzdzhTMVlqaEd1bVNyT2cz?=
+ =?utf-8?B?QU1ROUxUTnpVM2RENGNMNkZsNTFTaTNRL0MwWG83cEFpSW01MCtrSjdJcmxy?=
+ =?utf-8?B?bEdDUys2YU5jT0h3VmlaeVVHWDdOU25zRm9vSXlNV0VQM3F6NTJ4Ui9TWm1Y?=
+ =?utf-8?B?QklReWJlVU9xUW45RytGUmtJcUducXQvbHVkRUhVSSs5c2J2dU43c1hXQmtp?=
+ =?utf-8?B?MmdlOGJGZHZDejdyRmFubUZSTFJtM1EvK1Q3N0tlN3UrNVZHNzBSM1Z4UjN0?=
+ =?utf-8?B?aWtrTW1YdFlwdnZsTG5CL0k3VzI2V2VueGI3Q1lrdER0cFJOd1Z1SE1ubkNq?=
+ =?utf-8?B?Y0NkZ3REL3duZllOQnM2bWpudlBKeU5KMGFhRnI1WTAyRWp5ZzJ2MERMK252?=
+ =?utf-8?B?ZlE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: mKe8XJB6Gl+XL8wWf5+2Y42Z5txpi1PiPJbjp25GEDrwRfUKIf8QD7nz0s86528PCqTo5kg8Y3lbWaRLWIkVX894GLGkb7TGmGIPOf97ME5kYrX/BWCQ8nW+Rs2ZMxKLuLABuSg6qe/bvZtUn4Bzwtlomtoaz4fzN9z9AHc3SKZA0Y0lguhZ7+h8tUoFxUdzWbD4xVei+XbxAoN82af+dEYSSOw329Dit9C4DBoHoYif2dUTX84M6lvqdNQyvnJ7s5cvnu97ovbMujJdH9uLIp+EJ2y0BesP6q/51Xypxgvj+dzwRd1onMqSlUG7o2Q35Qh3yj+shOL9UzJ4NtMXJtKWphB0idRbG4UusXbb5u6N9/BfKI5lRGmzJXsq4CIeNQ5beWtnjFkFLcbvXYi8v6jHBFuhlBuzL0lN34sTNUHtVbVaOr6NoDdZJ/WyeKUtkQxF1Fstw8sju8vX0kWSp6VrLCJNv8NWEgYqnYMRhfqEyIshC1rw+mm+uW1lXlgvAnbuqoWEmd6/+kZBYV8bFWRdll874Y/z07ZlZx9taPEq7OYo+x7vkaRJAKrheY97YkEYzh2UnFJuaDTxAosUYKBqYMm9SAsOyorOA5cszKc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3512872-25de-49f3-8a13-08dd4d054737
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2025 14:38:42.4203 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lgqaojFpgVwIeJgbBsDKm3DmyT8WFwBaK8i/Z5X1QF3Jp2k7t0+AzYQNamvLFJNLQ23QVfLmJSyjkNFEHD5o9uTKyVWk1DVayZWxrX2WU5U=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6555
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-14_06,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ bulkscore=0
+ phishscore=0 spamscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2501170000 definitions=main-2502140106
+X-Proofpoint-ORIG-GUID: S3aPWQRyGQ87Ra3r0F3rjHrkVTT1QJbw
+X-Proofpoint-GUID: S3aPWQRyGQ87Ra3r0F3rjHrkVTT1QJbw
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,92 +222,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 14 Feb 2025 14:31:33 +0000
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+cc memory reviewers.
+The series is here:
+   https://lore.kernel.org/qemu-devel/1739542467-226739-1-git-send-email-steven.sistare@oracle.com/
 
-> On Fri, Feb 14, 2025 at 03:28:34PM +0100, Stefano Brivio wrote:
-> > On Fri, 14 Feb 2025 14:19:13 +0000
-> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
-> >  =20
-> > > On Fri, Feb 14, 2025 at 01:59:20PM +0000, Daniel P. Berrang=C3=A9 wro=
-te: =20
-> > > > On Fri, Feb 14, 2025 at 11:18:55AM +0100, Laurent Vivier wrote:   =
-=20
-> > > > > On 14/02/2025 11:06, Markus Armbruster wrote:   =20
-> > > > > > Laurent Vivier <lvivier@redhat.com> writes:
-> > > > > >    =20
-> > > > > > > The netdev reports NETDEV_VHOST_USER_CONNECTED event when
-> > > > > > > the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
-> > > > > > > when it is disconnected.
-> > > > > > >=20
-> > > > > > > The NETDEV_VHOST_USER_CONNECTED event includes the ChardevInfo
-> > > > > > > (label, filename and frontend_open).
-> > > > > > >=20
-> > > > > > > This allows a system manager like libvirt to detect when the =
-server
-> > > > > > > fails.
-> > > > > > >=20
-> > > > > > > For instance with passt:
-> > > > > > >=20
-> > > > > > > { 'execute': 'qmp_capabilities' }
-> > > > > > > { "return": { } }
-> > > > > > >=20
-> > > > > > > [killing passt here]
-> > > > > > >=20
-> > > > > > > { "timestamp": { "seconds": 1739517243, "microseconds": 11508=
-1 },
-> > > > > > >    "event": "NETDEV_VHOST_USER_DISCONNECTED",
-> > > > > > >    "data": { "netdev-id": "netdev0" } }
-> > > > > > >=20
-> > > > > > > [automatic reconnection with reconnect-ms]
-> > > > > > >=20
-> > > > > > > { "timestamp": { "seconds": 1739517290, "microseconds": 34377=
-7 },
-> > > > > > >    "event": "NETDEV_VHOST_USER_CONNECTED",
-> > > > > > >    "data": { "netdev-id": "netdev0",
-> > > > > > >              "info": { "frontend-open": true,
-> > > > > > >                        "filename": "unix:",
-> > > > > > >                        "label": "chr0" } } }
-> > > > > > >=20
-> > > > > > > Signed-off-by: Laurent Vivier <lvivier@redhat.com>   =20
-> > > > > >=20
-> > > > > > Standard question for events: if a management application misse=
-s an
-> > > > > > event, say because it restarts and reconnects, is there a way t=
-o obtain
-> > > > > > the missed information with a query command?
-> > > > > >    =20
-> > > > >=20
-> > > > > query-chardev could help but it doesn't provide the netdev id.   =
-=20
-> > > >=20
-> > > > It doesn't have to IMHO. The application that created the NIC shoul=
-d know
-> > > > what ID it assigned to both the netdev and chardev, and thus should=
- be
-> > > > able to use query-chardev to identify the chardev it previously
-> > > > associated with the netdev.   =20
-> > >=20
-> > > That said I kind of wonder whether we should be adding events against
-> > > the chardev directly, instead of against the netdev use of chardev. =
-=20
-> >=20
-> > What is the advantage? This already works and is consistent with the
-> > existing non-vhost-user mechanism. =20
->=20
-> The advantage is that chardevs are used in many places across QEMU, so
-> emitting the events against the chardev is more broadly useful to
-> consumers of QEMU, than doing a special case that only benefit vhostuser
-> NICS.
+- Steve
 
-It's not so much of a special case because it would be perfectly in
-line with the NETDEV_STREAM_DISCONNECTED event and its usage in
-applications (the only current user being libvirt).
-
-That's a proven approach and the matching implementation for passt is
-trivial because of that.
-
---=20
-Stefano
+On 2/14/2025 9:14 AM, Steve Sistare wrote:
+> Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
+> region that the translated address is found in.  This will be needed by
+> CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
+> 
+> Also return the xlat offset, so we can simplify the interface by removing
+> the out parameters that can be trivially derived from mr and xlat.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>   hw/vfio/common.c       | 21 ++++++++++++++-------
+>   hw/virtio/vhost-vdpa.c |  8 ++++++--
+>   include/exec/memory.h  |  6 +++---
+>   system/memory.c        | 19 ++++---------------
+>   4 files changed, 27 insertions(+), 27 deletions(-)
+> 
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index c536698..3b0c520 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -246,14 +246,13 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+>   }
+>   
+>   /* Called with rcu_read_lock held.  */
+> -static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+> -                               ram_addr_t *ram_addr, bool *read_only,
+> -                               Error **errp)
+> +static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, MemoryRegion **mr_p,
+> +                               hwaddr *xlat_p, Error **errp)
+>   {
+>       bool ret, mr_has_discard_manager;
+>   
+> -    ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+> -                               &mr_has_discard_manager, errp);
+> +    ret = memory_get_xlat_addr(iotlb, &mr_has_discard_manager, mr_p, xlat_p,
+> +                               errp);
+>       if (ret && mr_has_discard_manager) {
+>           /*
+>            * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+> @@ -281,6 +280,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+>       VFIOContainerBase *bcontainer = giommu->bcontainer;
+>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+> +    MemoryRegion *mr;
+> +    hwaddr xlat;
+>       void *vaddr;
+>       int ret;
+>       Error *local_err = NULL;
+> @@ -300,10 +301,13 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>           bool read_only;
+>   
+> -        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
+> +        if (!vfio_get_xlat_addr(iotlb, &mr, &xlat, &local_err)) {
+>               error_report_err(local_err);
+>               goto out;
+>           }
+> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
+> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+> +
+>           /*
+>            * vaddr is only valid until rcu_read_unlock(). But after
+>            * vfio_dma_map has set up the mapping the pages will be
+> @@ -1259,6 +1263,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       ram_addr_t translated_addr;
+>       Error *local_err = NULL;
+>       int ret = -EINVAL;
+> +    MemoryRegion *mr;
+> +    ram_addr_t xlat;
+>   
+>       trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+>   
+> @@ -1269,10 +1275,11 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       }
+>   
+>       rcu_read_lock();
+> -    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
+> +    if (!vfio_get_xlat_addr(iotlb, &mr, &xlat, &local_err)) {
+>           error_report_err(local_err);
+>           goto out_unlock;
+>       }
+> +    translated_addr = memory_region_get_ram_addr(mr) + xlat;
+>   
+>       ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+>                                   translated_addr, &local_err);
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index 3cdaa12..5dfe51e 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -209,6 +209,8 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       int ret;
+>       Int128 llend;
+>       Error *local_err = NULL;
+> +    MemoryRegion *mr;
+> +    hwaddr xlat;
+>   
+>       if (iotlb->target_as != &address_space_memory) {
+>           error_report("Wrong target AS \"%s\", only system memory is allowed",
+> @@ -228,11 +230,13 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>           bool read_only;
+>   
+> -        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
+> -                                  &local_err)) {
+> +        if (!memory_get_xlat_addr(iotlb, NULL, &mr, &xlat, &local_err)) {
+>               error_report_err(local_err);
+>               return;
+>           }
+> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
+> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+> +
+>           ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
+>                                    iotlb->addr_mask + 1, vaddr, read_only);
+>           if (ret) {
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index ea5d33a..8590838 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -747,13 +747,13 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>    * @read_only: indicates if writes are allowed
+>    * @mr_has_discard_manager: indicates memory is controlled by a
+>    *                          RamDiscardManager
+> + * @mr_p: return the MemoryRegion containing the @iotlb translated addr
+>    * @errp: pointer to Error*, to store an error if it happens.
+>    *
+>    * Return: true on success, else false setting @errp with error.
+>    */
+> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+> -                          ram_addr_t *ram_addr, bool *read_only,
+> -                          bool *mr_has_discard_manager, Error **errp);
+> +bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, bool *mr_has_discard_manager,
+> +                          MemoryRegion **mr_p, hwaddr *xlat_p, Error **errp);
+>   
+>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+> diff --git a/system/memory.c b/system/memory.c
+> index 4c82979..755eafe 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2183,9 +2183,8 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>   }
+>   
+>   /* Called with rcu_read_lock held.  */
+> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+> -                          ram_addr_t *ram_addr, bool *read_only,
+> -                          bool *mr_has_discard_manager, Error **errp)
+> +bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, bool *mr_has_discard_manager,
+> +                          MemoryRegion **mr_p, hwaddr *xlat_p, Error **errp)
+>   {
+>       MemoryRegion *mr;
+>       hwaddr xlat;
+> @@ -2238,18 +2237,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>           return false;
+>       }
+>   
+> -    if (vaddr) {
+> -        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
+> -    }
+> -
+> -    if (ram_addr) {
+> -        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
+> -    }
+> -
+> -    if (read_only) {
+> -        *read_only = !writable || mr->readonly;
+> -    }
+> -
+> +    *xlat_p = xlat;
+> +    *mr_p = mr;
+>       return true;
+>   }
+>   
 
 
