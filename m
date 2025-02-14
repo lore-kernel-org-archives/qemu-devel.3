@@ -4,123 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1ACFC02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 16:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DD7C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 16:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiycR-0006JV-AU; Fri, 14 Feb 2025 11:32:47 -0500
+	id 1tiyh2-0007uk-5i; Fri, 14 Feb 2025 11:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiycP-0006JE-Ow
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:32:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiygz-0007uD-4h
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:37:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiycN-0002sg-BB
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:32:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tiygx-0003On-7Z
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 11:37:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739550761;
+ s=mimecast20190719; t=1739551044;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YMgd0IGrQ9/HXheJqZBUOiHsVPPWWanm9OCSB6YejEo=;
- b=f3fcwz4p8dDTllHeGfZ5ygjZ8GI2Jc5enIeHWVOLhxVNBsNin0YLuY6I2Xjvr5QZin8sdo
- XraUqWbJQTMWwr5yMDODy6F+4VXRyIsEu7U01gKHZ9OTXISC9K9tcU06km7OEfpXswwHJW
- A3HzsmPGvluN6kZ0X/2/kDxirmvzQEU=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3fVKMF+PPgv0KUBsKA3U5DA2a5TEheTxHMzAFbNYv4A=;
+ b=VPcMnef6ouiz9TpC9Z/Y1LctA7uSTXX6W2nXddXBkFdDjcFPGWiGsPTcUrJ18XL2Y71Hax
+ HBQxl6V8ZQDmKpCszDhnisvYDh/aB6c8yLEmBrwMX6nOFxZ+QFZCH6xFUhoc0ZURVV9KzW
+ c/5S/HJ/xEtDAMlnxrWSFnJm0v45ONk=
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
+ [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-ltH4OuEwNFyos5CUHq2kfA-1; Fri, 14 Feb 2025 11:32:40 -0500
-X-MC-Unique: ltH4OuEwNFyos5CUHq2kfA-1
-X-Mimecast-MFC-AGG-ID: ltH4OuEwNFyos5CUHq2kfA_1739550759
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ab7ee92898fso278280466b.0
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 08:32:40 -0800 (PST)
+ us-mta-215-sBO-I_UkM86PFsEQ8Hbr5w-1; Fri, 14 Feb 2025 11:37:22 -0500
+X-MC-Unique: sBO-I_UkM86PFsEQ8Hbr5w-1
+X-Mimecast-MFC-AGG-ID: sBO-I_UkM86PFsEQ8Hbr5w_1739551042
+Received: by mail-oo1-f70.google.com with SMTP id
+ 006d021491bc7-5fc0058d68eso605270eaf.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 08:37:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739550758; x=1740155558;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YMgd0IGrQ9/HXheJqZBUOiHsVPPWWanm9OCSB6YejEo=;
- b=J6XLJRXhwuOMGSe+g9hyZeKTNYR10FE0pQ30qNImMiH2srXw1qvdlGOMNOk7pKVYCz
- kEGkaj3omtVdPltJNRG+40RmK83sxcuqaAiMPb1V6j56PApK6ndCZV+Z+tdk5Xxd/gbD
- OUTrDpnKR4vx/4siyzqaCltrmXBa7jBluCTiJIeQhBYsMUSUtodM/o9Y26uEKiONLjiL
- Zkcqp23w+9tZS4cpAiBEZ0eHfYZl5A1qIPY8PQj6fUm0A+nD9+S3/b4GTI16O5nxnejj
- AnbvK+bvtqTcaGJ/TDijGLJAS8DyYfCdphilQslRED6098GLxBfMNsGBiLlxfBxq2kWn
- f3Rg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUz+yhizmg8QVplCVwNxk808a0r8tScRT4LjLHE6Ikbm/bZmcfi0yXEiu5+ILncCqS5kbOWFOZMSen8@nongnu.org
-X-Gm-Message-State: AOJu0YxJNJsGLnFtN1xpaRodNU8ebObHu5cLIdYh3lDviD6GKkVMg7Qt
- 46U6qjjsttCC2qZ+6E2pltEzXlfhW6fXhfU5kjUpv3ZyDLiOCHXUtVnlX8Bj7ZQ0MuHwElPLzJN
- Xpjni0nwqt0P/f8UFHv6XF+TI2+uZ0fFLxnjJn/Qr5wazRkkaAm6dsLBewhA6tRU=
-X-Gm-Gg: ASbGncts+j0uk6OpXKQOETFgnGq8TRYUPwC8Ym+qrMea2J7OEdOdqaJB5jpg6Z0BueS
- v+4ePj29wa3AR6ICRFL+GK8JYa4KKV1s9YTqHuvDtXhzsQadKsRdcsGdRnImS2ZHb/P5AngoRW+
- fyodnmOHfpsXb6Ug7nFQgS2I1Yl1fDCMN6fSyJadMVyMSqRsCYyMg5rRnb+LNrsZU2vXlKqmbHu
- +/oux9dUNZgzFEC57ACZ8X3grDkyv2TwF/izgKHA6kNUnmCovLtXLaGfkWJP5zIqdHNxt9IKOzB
- NkcUWdXLsAifrQ==
-X-Received: by 2002:a17:907:940b:b0:ab6:5210:7c8b with SMTP id
- a640c23a62f3a-ab7f347c1c0mr1386387766b.37.1739550758342; 
- Fri, 14 Feb 2025 08:32:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEavSFWwGCY6sN5Kh0fugmnrcHUmZlyMVV2RozvJqIutVoegLEteYnWKY+h2J3nskTr9hCmlg==
-X-Received: by 2002:a17:907:940b:b0:ab6:5210:7c8b with SMTP id
- a640c23a62f3a-ab7f347c1c0mr1386383966b.37.1739550757898; 
- Fri, 14 Feb 2025 08:32:37 -0800 (PST)
-Received: from [192.168.126.123] ([176.206.122.109])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-aba533998e2sm371327266b.134.2025.02.14.08.32.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Feb 2025 08:32:37 -0800 (PST)
-Message-ID: <176dd370-ee5d-4c28-8075-47dbc2bd1751@redhat.com>
-Date: Fri, 14 Feb 2025 17:32:36 +0100
+ d=1e100.net; s=20230601; t=1739551042; x=1740155842;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3fVKMF+PPgv0KUBsKA3U5DA2a5TEheTxHMzAFbNYv4A=;
+ b=Kok0itMZ5+669S3HRR51HP2hQGvRR8VUxBXryC3BVwu0XkB/SryKkBPze6Tnm9UE75
+ sdtnRXkm8Sa3OnoHfvi/4teC4WnkAxV+XhHVwYTILPWWWcaPXR/9tlm22UP9Ie9Y+lmF
+ lP5rUIky+4AkokbiOzBY9GtQ/QEYFeuuvPvBTovUxOfhmD6g8uBDQ+0oRjUT3aKxrQgu
+ 3dfnGB0MXhHHOLZ+WCHVX2ePZf5EX5NhTGT5USPv+WLZhVM7h96BscsHZaDYpSlZH1+v
+ Kr1dzGLpyuURBEEalEGR65ViLyW3z+6XC6sodoPbXSBd1FHvJJWBwnW/LimTeTafQMFk
+ Q6/A==
+X-Gm-Message-State: AOJu0YwM9fzO3PYtTqt5Nv0QsyL+RpiL6HJgquf/U6VHSkKcgSzq5oxL
+ CSOZiB4dk4qndEWmbv7tsoalaHfML7pEe9zk+/9S+JyCyXiEJHDrr1EzmoCfhcwoHvhZIhq82wJ
+ o1e30fN5p2b4zb8dgWh+amcvB8QV+mye0vLK5b0JkA0cACye13iZv
+X-Gm-Gg: ASbGnctCdhadZZbjniWLEWCzMUAr8uAqIvEBKfQQt5mW3BwIJkXJg/2EPN/bZs90sOR
+ h0qBqVsiVmshPQnKUWxovexI01M3jXkXYWNzNEMB1b0MDL8lUy8MM0V4Ufm46ZDWAn6Hc/Y9UFQ
+ TrPmH4y47pGfLig3Z0KQ+YUvoKcH4r+fC0JzOXZlWEuJAoq8YSWBOsOc/ne5dInzmrEeMYW50Vt
+ 2awfV3CnHx4myHIPQVBqhJLi2NhdYA9SUI9a+sYAKLR6alObyKNpTajJI4=
+X-Received: by 2002:a05:6808:38ce:b0:3f3:b4d4:835 with SMTP id
+ 5614622812f47-3f3d8da186cmr5625344b6e.3.1739551042096; 
+ Fri, 14 Feb 2025 08:37:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE794sU22Xtwn6P7uMLPZV0w+xWHI8RbLM1o61ZQ2ApTLPvh7mtjBb/vidEx4ZIyFYI+V3sMw==
+X-Received: by 2002:a05:6808:38ce:b0:3f3:b4d4:835 with SMTP id
+ 5614622812f47-3f3d8da186cmr5625323b6e.3.1739551041751; 
+ Fri, 14 Feb 2025 08:37:21 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3f3da9fdf72sm1364857b6e.33.2025.02.14.08.37.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Feb 2025 08:37:20 -0800 (PST)
+Date: Fri, 14 Feb 2025 11:37:17 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V2 02/45] migration: cpr helpers
+Message-ID: <Z69xPYAJcOjlSpff@x1.local>
+References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
+ <1739542467-226739-3-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Question: how to add CLI options for custom hw model
-To: Mark Nesky <thenesk@gmail.com>, qemu-devel@nongnu.org
-References: <CADQ=JkR046QnzWVV2=VshuS14r86riXUzLb3eh+Qer69N1rp0Q@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CADQ=JkR046QnzWVV2=VshuS14r86riXUzLb3eh+Qer69N1rp0Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1739542467-226739-3-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -145,50 +110,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/25 16:31, Mark Nesky wrote:
-> Hello,
+On Fri, Feb 14, 2025 at 06:13:44AM -0800, Steve Sistare wrote:
+> Add cpr_needed_for_reuse, cpr_resave_fd helpers, cpr_is_incoming, and
+> cpr_open_fd, for use when adding cpr support for vfio and iommufd.
 > 
-> I am new to the QEMU code base and I am working on a project involving a 
-> custom hardware model representing a customized ppc board.  What is the 
-> best way to add command line arguments applicable to my model?
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  include/migration/cpr.h |  6 ++++++
+>  migration/cpr.c         | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 50 insertions(+)
 > 
-> I see options in qemu-options.hx + vl.c, but I am not sure if that is 
-> the right place for arguments that only apply to one model, and I am not 
-> sure how to access those options from my model.
+> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> index 3a6deb7..6ad04d4 100644
+> --- a/include/migration/cpr.h
+> +++ b/include/migration/cpr.h
+> @@ -18,15 +18,21 @@
+>  void cpr_save_fd(const char *name, int id, int fd);
+>  void cpr_delete_fd(const char *name, int id);
+>  int cpr_find_fd(const char *name, int id);
+> +void cpr_resave_fd(const char *name, int id, int fd);
+> +int cpr_open_fd(const char *path, int flags, const char *name, int id,
+> +                bool *reused, Error **errp);
+>  
+>  MigMode cpr_get_incoming_mode(void);
+>  void cpr_set_incoming_mode(MigMode mode);
+> +bool cpr_is_incoming(void);
+>  
+>  int cpr_state_save(MigrationChannel *channel, Error **errp);
+>  int cpr_state_load(MigrationChannel *channel, Error **errp);
+>  void cpr_state_close(void);
+>  struct QIOChannel *cpr_state_ioc(void);
+>  
+> +bool cpr_needed_for_reuse(void *opaque);
+> +
+>  QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+>  QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+>  
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index 584b0b9..12c489b 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -95,6 +95,39 @@ int cpr_find_fd(const char *name, int id)
+>      trace_cpr_find_fd(name, id, fd);
+>      return fd;
+>  }
+> +
+> +void cpr_resave_fd(const char *name, int id, int fd)
+> +{
+> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
+> +    int old_fd = elem ? elem->fd : -1;
+> +
+> +    if (old_fd < 0) {
+> +        cpr_save_fd(name, id, fd);
+> +    } else if (old_fd != fd) {
+> +        error_setg(&error_fatal,
+> +                   "internal error: cpr fd '%s' id %d value %d "
+> +                   "already saved with a different value %d",
+> +                   name, id, fd, old_fd);
 
-Hi,
+How bad it is to trigger this?
 
-options that apply to only a machine or device can use, respectively, 
-the -machine or -device options.
+I wonder if cpr_save_fd() should have checked this already on duplicated
+entries; it looks risky there too if this happens to existing cpr_save_fd()
+callers.
 
-For -device this is done using the DEFINE_PROP_* macros.
+> +    }
+> +}
+> +
+> +int cpr_open_fd(const char *path, int flags, const char *name, int id,
+> +                bool *reused, Error **errp)
+> +{
+> +    int fd = cpr_find_fd(name, id);
+> +
+> +    if (reused) {
+> +        *reused = (fd >= 0);
+> +    }
+> +    if (fd < 0) {
+> +        fd = qemu_open(path, flags, errp);
+> +        if (fd >= 0) {
+> +            cpr_save_fd(name, id, fd);
+> +        }
+> +    }
+> +    return fd;
+> +}
+> +
+>  /*************************************************************************/
+>  #define CPR_STATE "CprState"
+>  
+> @@ -128,6 +161,11 @@ void cpr_set_incoming_mode(MigMode mode)
+>      incoming_mode = mode;
+>  }
+>  
+> +bool cpr_is_incoming(void)
+> +{
+> +    return incoming_mode != MIG_MODE_NONE;
+> +}
 
-For -machine, which I assume is the case for you, the process is a bit 
-more complex.  A good example, including a varied set of types, can be 
-found in the spapr_instance_init function of hw/ppc/spapr.c.
+Maybe it'll be helpful to document either this function or incoming_mode;
+it's probably not yet obvious to most readers incoming_mode is only set to
+!NONE during a small window when VM loads.
 
-Another possibility for -machine is to pass the option down to a 
-specific device, which usually will be created at startup.  For example 
-this snipped from hw/i386/pc.c adds a "-machine pcspk-audiodev" option:
+> +
+>  int cpr_state_save(MigrationChannel *channel, Error **errp)
+>  {
+>      int ret;
+> @@ -222,3 +260,9 @@ void cpr_state_close(void)
+>          cpr_state_file = NULL;
+>      }
+>  }
+> +
+> +bool cpr_needed_for_reuse(void *opaque)
+> +{
+> +    MigMode mode = migrate_mode();
 
-     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
-     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
-                               OBJECT(pcms->pcspk), "audiodev");
+Nit: can drop the var.
 
-Thanks,
-
-Paolo
-
-> I also see the function qemu_opts_create which looks like it can add 
-> command line arguments at runtime, but I am not sure where to use this 
-> in my model since it seems like my model code (machine state, class, and 
-> instance functions) does not run when invoking "qemu-system-ppc -machine 
-> mymodel -help".
+> +    return mode == MIG_MODE_CPR_TRANSFER;
+> +}
+> -- 
+> 1.8.3.1
 > 
-> If there is some good documentation or examples, please point me in the 
-> right direction.
-> 
-> thanks for your help,
-> Mark
+
+-- 
+Peter Xu
 
 
