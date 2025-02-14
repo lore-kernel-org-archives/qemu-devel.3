@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF243C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 13:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F06C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 13:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwDR-0005xI-Sg; Fri, 14 Feb 2025 08:58:49 -0500
+	id 1tiwED-0006aT-Ub; Fri, 14 Feb 2025 08:59:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiwDB-0005ug-Cq
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:58:35 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tiwEB-0006Uz-Vd
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:59:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tiwD8-0001dR-9Q
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:58:31 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tiwE8-0001lo-Vp
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:59:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739541509;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=jtNzr8uYuWTsnD/A8rhDCCpOJ/XgomM+/PA3Y3Q8jKo=;
- b=V8by4t06LGqW94sQArG298kLGkAmCwsSutk9c9nVp7VIe194RUTXMuoChTiMuPvcIeExxy
- w7a1Zg6uTFnBHZxAIcOQ80hNiXsPNT2TMySLiER4dfTeOx3KZ9Gbomg+WJQgB/qWEC2qx+
- ksabgT02QTnS9bcfQy7ZsqTWQicH6m8=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-DrEpiT8VPQ6WS7Jq2nLQfw-1; Fri, 14 Feb 2025 08:58:26 -0500
-X-MC-Unique: DrEpiT8VPQ6WS7Jq2nLQfw-1
-X-Mimecast-MFC-AGG-ID: DrEpiT8VPQ6WS7Jq2nLQfw_1739541506
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-abafbdf4399so22513266b.0
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 05:58:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739541505; x=1740146305;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jtNzr8uYuWTsnD/A8rhDCCpOJ/XgomM+/PA3Y3Q8jKo=;
- b=g/Ab/u0ZiEr/o22/3Q/VfDXu0V5M9AOPD1j5lv2k6LpP17Bz34YbjH4AZOzd45cyyz
- lAngCr59baF9Wt0FCwAXtw4x5ITAlqfDVCyYtg8YT+1vMyWUAzjD5o+DksSS3+Dd+YjR
- XkYdEsmIWQs7t62Cd+473N9e7aWmySH1D3qhyK2FGRfbKwG/X2PGm5YgGW6F7Vn05/hK
- m/lukeNuh9zV/S9Uzzr4rKoEiyCsFIKBpTrDFxfC3C46FCG/T6/eW0ntaVM6QPGTSXYa
- nNG0/n2Nn13mhmPxJfRTcq/GC3US4YhZ+h9LQ6k+aPyqm0pw8/XHhVxwLeG9cwESHkqc
- s90g==
-X-Gm-Message-State: AOJu0YwGtgDRwpLDBluTT79FYyHXypxoCAAcMr0ymytO6AZq8R6f0tAk
- vtg/TTgCJug90gTkHCoiE+8J9m2jD+1llSryupDKk3uZBJO1PmrqOVZThVWeVfMuWxAoeeLfQbd
- Xrm+RdwhnQT76jNIGdN+nrkWUsF6hMn1qNwznbJa7a4n7cagKCVd/HP6VrAVke/yATfpU28FhY/
- xomgtha7v6GzhktP87hZ63qTZ4JTMGE3MIh/QFeRA=
-X-Gm-Gg: ASbGnctWYq+dVC8jhMSdsNFN0M++ATo/7SRYpMoKEgNEDaaMwtS7AJ1fnI1OzlWmez1
- ACWgrwGnRiAYMAFU0oZN2tHV5mOjZL0knlnZR001vJFeL9z7XN/TMflxPWS2mdBwMC3fK3aaXIa
- sIRukrk78zFjBa+gCazxI3FUyJgdnvqZ5JxpFDroy0FS9zls/bK642JmrEPMeGCQGVTBJyjLpCR
- yny1AnhIo9rYRX3m4RB67eof0CYxAcum9h5k1a4ygfRAakdCaLMF3At/vmN4cDycTL/+BAwKa/K
- ELZtcM9o+Hb2
-X-Received: by 2002:a17:906:7151:b0:abb:5b02:9e7 with SMTP id
- a640c23a62f3a-abb5b020aa8mr2969766b.12.1739541504893; 
- Fri, 14 Feb 2025 05:58:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnd4L+j5QGaGaudDq+u5OiHlAq07wQAxYnMKf3Q+05rOF+4KgPrZDiR0QtGxX9p2WukgnYuQ==
-X-Received: by 2002:a17:906:7151:b0:abb:5b02:9e7 with SMTP id
- a640c23a62f3a-abb5b020aa8mr2966866b.12.1739541504471; 
- Fri, 14 Feb 2025 05:58:24 -0800 (PST)
-Received: from [192.168.126.123] ([151.49.218.237])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aba532580c5sm350436966b.56.2025.02.14.05.58.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 05:58:23 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH] rust: tests: do not import bindings::*
-Date: Fri, 14 Feb 2025 14:58:22 +0100
-Message-ID: <20250214135822.4076174-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
+ s=mimecast20190719; t=1739541570;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Mktj/4QrixXXz8rYhnyNAIXsfNZtfQaMcqkmP8FhiEs=;
+ b=VXOBFlB+Y52Oa2XwnA0/1nrhXmd/NKwzQEdm6L67QukKScqw4Aau919Vs3u3tdF2j8xsPj
+ cO2H/5xboAKN+f4BA5OvI8YqCV03oXBbqK4p92yuNFDTBRo73l3p9ONbQAU3UM9nGo4GOJ
+ cxtzwlFJWiUFS5Rl6JEcu//3GsKqcvI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-4XZAHoiQMb2dMjUKqTRT3Q-1; Fri,
+ 14 Feb 2025 08:59:29 -0500
+X-MC-Unique: 4XZAHoiQMb2dMjUKqTRT3Q-1
+X-Mimecast-MFC-AGG-ID: 4XZAHoiQMb2dMjUKqTRT3Q_1739541568
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 901E719560B9
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 13:59:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.144])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 316AE300018D; Fri, 14 Feb 2025 13:59:23 +0000 (UTC)
+Date: Fri, 14 Feb 2025 13:59:20 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laine Stump <laine@redhat.com>,
+ Stefano Brivio <sbrivio@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] net: vhost-user: add QAPI events to report connection
+ state
+Message-ID: <Z69MOEAuE9WHjLjT@redhat.com>
+References: <20250214072629.1033314-1-lvivier@redhat.com>
+ <871pw07sdy.fsf@pond.sub.org>
+ <2c5358eb-1abe-4fce-8b28-7935c71f1cff@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2c5358eb-1abe-4fce-8b28-7935c71f1cff@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -102,38 +89,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similar to the devices, spell the exact set of C functions that are
-called directly.
+On Fri, Feb 14, 2025 at 11:18:55AM +0100, Laurent Vivier wrote:
+> On 14/02/2025 11:06, Markus Armbruster wrote:
+> > Laurent Vivier <lvivier@redhat.com> writes:
+> > 
+> > > The netdev reports NETDEV_VHOST_USER_CONNECTED event when
+> > > the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
+> > > when it is disconnected.
+> > > 
+> > > The NETDEV_VHOST_USER_CONNECTED event includes the ChardevInfo
+> > > (label, filename and frontend_open).
+> > > 
+> > > This allows a system manager like libvirt to detect when the server
+> > > fails.
+> > > 
+> > > For instance with passt:
+> > > 
+> > > { 'execute': 'qmp_capabilities' }
+> > > { "return": { } }
+> > > 
+> > > [killing passt here]
+> > > 
+> > > { "timestamp": { "seconds": 1739517243, "microseconds": 115081 },
+> > >    "event": "NETDEV_VHOST_USER_DISCONNECTED",
+> > >    "data": { "netdev-id": "netdev0" } }
+> > > 
+> > > [automatic reconnection with reconnect-ms]
+> > > 
+> > > { "timestamp": { "seconds": 1739517290, "microseconds": 343777 },
+> > >    "event": "NETDEV_VHOST_USER_CONNECTED",
+> > >    "data": { "netdev-id": "netdev0",
+> > >              "info": { "frontend-open": true,
+> > >                        "filename": "unix:",
+> > >                        "label": "chr0" } } }
+> > > 
+> > > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> > 
+> > Standard question for events: if a management application misses an
+> > event, say because it restarts and reconnects, is there a way to obtain
+> > the missed information with a query command?
+> > 
+> 
+> query-chardev could help but it doesn't provide the netdev id.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/tests/tests.rs | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+It doesn't have to IMHO. The application that created the NIC should know
+what ID it assigned to both the netdev and chardev, and thus should be
+able to use query-chardev to identify the chardev it previously
+associated with the netdev.
 
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 92dbfb8a0c8..03569e4a44c 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -8,13 +8,14 @@
- };
- 
- use qemu_api::{
--    bindings::*,
-+    bindings::{module_call_init, module_init_type, object_new, object_unref, qdev_prop_bool},
-     c_str,
-     cell::{self, BqlCell},
-     declare_properties, define_property,
-     prelude::*,
-     qdev::{DeviceClass, DeviceImpl, DeviceState, Property, ResettablePhasesImpl},
-     qom::{ClassInitImpl, ObjectImpl, ParentField},
-+    sysbus::SysBusDevice,
-     vmstate::VMStateDescription,
-     zeroable::Zeroable,
- };
+
+With regards,
+Daniel
 -- 
-2.48.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
