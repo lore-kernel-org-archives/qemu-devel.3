@@ -4,61 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753A9C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F18C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwNK-0002sG-NS; Fri, 14 Feb 2025 09:09:02 -0500
+	id 1tiwRu-0003qT-VT; Fri, 14 Feb 2025 09:13:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tiwNI-0002s6-Ex
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:09:00 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tiwRp-0003q8-K7
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:13:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tiwNF-0003YW-Js
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:09:00 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YvYjk51knz6L59c;
- Fri, 14 Feb 2025 22:05:46 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 4C339140134;
- Fri, 14 Feb 2025 22:08:53 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 14 Feb
- 2025 15:08:52 +0100
-Date: Fri, 14 Feb 2025 14:08:51 +0000
-To: Vinayak Holikatti <vinayak.kh@samsung.com>
-CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
- <linux-cxl@vger.kernel.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <vishak.g@samsung.com>, <krish.reddy@samsung.com>,
- <a.manzanares@samsung.com>, <alok.rathore@samsung.com>
-Subject: Re: [PATCH v2 1/3] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations discovery commands (8.2.9.9.5.3)
-Message-ID: <20250214140851.000073fe@huawei.com>
-In-Reply-To: <20250213091558.2294806-2-vinayak.kh@samsung.com>
-References: <20250213091558.2294806-1-vinayak.kh@samsung.com>
- <CGME20250213091629epcas5p1e5435929f701840a7e13f22a83edff22@epcas5p1.samsung.com>
- <20250213091558.2294806-2-vinayak.kh@samsung.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tiwRn-0004N5-M4
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:13:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739542418;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=36CjYwTEUcHO4/JbHGS7Xj4yo6RfgXq7p5Y2nepD+XI=;
+ b=ELnew1biOINRlEHd7dg2pMroN2Kihc7FbRwOR6FpOgyE8dh89zYFC11KFGKkjJ0+YYJzpy
+ 4LBp4mMI5A4L8lR2c7p2oTty1SPkTjcexvJYmV+siWFueHwmIgr4k0QHm49LZiAp8kRPzS
+ 0KF93NBIRS7e1FbskfP3+pfx7lv1iqQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-120-Pp2HsP7UMVCeypMEvAcgTQ-1; Fri, 14 Feb 2025 09:13:35 -0500
+X-MC-Unique: Pp2HsP7UMVCeypMEvAcgTQ-1
+X-Mimecast-MFC-AGG-ID: Pp2HsP7UMVCeypMEvAcgTQ_1739542415
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f27bddeeeso1750083f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 06:13:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739542414; x=1740147214;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=36CjYwTEUcHO4/JbHGS7Xj4yo6RfgXq7p5Y2nepD+XI=;
+ b=JJpO2OSOBzzytD2PPIVA7cocNdyJHEVByo9G3cgCaRvocV28tO+juLzn0x8ni8rUXd
+ jAHWbw6Fcyvs7w6m/PN9balXk7ReCRNYZL3l99c9BBOrmJ50CUg+jfYDYCiD7vjj9Dnc
+ qGXcD8rATJvZhTo6Ur+V71o8hOaAYNRv4NkBP6u5hxzfbGRCZ8AAsLhRkHWd2PrIIq2z
+ K/zcGcerAZunAyPx8QQt8UtEgpadk6zIYxfl8eOyhDpGdntR/qyoJds1QoBcvgpF1tsX
+ PRsw43DYTi2o5rgbLrh5DU7UoPcTiriWq4PvlItd0xpLXnxYXLfYjlHb2FYo/NvAB6cv
+ jqhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWwimiHlvdensy0u4NbvF3AASxW4Cj7mbSjj9vP1qEFWDQA6kAUNO898yVxCyXKe9d1aArFK2UV+oeL@nongnu.org
+X-Gm-Message-State: AOJu0Yz3gInEdG9tKOKx/le3CRk6n1bgWsk0cdQ0tByejfOsexY7wKGB
+ cN0LwF7YEvWOfH+nhuopsSa7XClcRjDPrbl3unupM/qVJQdC17jW85vloU0wiU/ZnQJUeMDTfa6
+ kaVlkuBAduYZUROjoH1q2OScvXH5V646qVHIwsAjP0Jio6xy5wQFN21+mQM/MSLlC06WojlGwVW
+ F2FawUa6hD8PzeCApJXCVgToUPQYcXvsXsn+A=
+X-Gm-Gg: ASbGncuwHqouSD7TbYWU0cLe7GMZFREcXrjrObyzXYMryCPGyFG6fzc0ta1kC7Q3DuX
+ vNxHALQOqRnnq3Rk4omign1MaeAKl510FlYtlo6VfEcxQEsYKEsv5ReXidVG6QYfhEvl0JmkZUe
+ Lql0kF3Xtx8qZz/3r5Cyg0lh4OQIfvZv/VAzdf5ddgetnT3th1+qy9Hbvt1MQrhRYk8c+qEkeU9
+ CrYd+osAfmfHIDcyi3HCYxB7itXu91tBiOc8eGAEde8qS1Qwj+1bdwXx0O11NAhCfHEoBW8m7D+
+ yYWGQifPIIuBxfw8UVqhYopBIcw+oHH/gA==
+X-Received: by 2002:a5d:64cc:0:b0:38d:c087:98d5 with SMTP id
+ ffacd0b85a97d-38f244da15dmr9371032f8f.8.1739542414044; 
+ Fri, 14 Feb 2025 06:13:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF+Hdvmxt2BNBI4+7N1fLDBgknT5/OaTas19vFF16kDKbQYDxeAuwo2Ep/3GXzY0aI+oE0bXw==
+X-Received: by 2002:a5d:64cc:0:b0:38d:c087:98d5 with SMTP id
+ ffacd0b85a97d-38f244da15dmr9370945f8f.8.1739542413456; 
+ Fri, 14 Feb 2025 06:13:33 -0800 (PST)
+Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud. [176.103.220.4])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259d9be9sm4807277f8f.79.2025.02.14.06.13.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Feb 2025 06:13:33 -0800 (PST)
+Date: Fri, 14 Feb 2025 15:13:30 +0100
+From: Stefano Brivio <sbrivio@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>, Eric
+ Blake <eblake@redhat.com>, Jason Wang <jasowang@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Laine Stump <laine@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>
+Subject: Re: [PATCH] net: vhost-user: add QAPI events to report connection
+ state
+Message-ID: <20250214151330.0f0be3dd@elisabeth>
+In-Reply-To: <87a5ao3a3q.fsf@pond.sub.org>
+References: <20250214072629.1033314-1-lvivier@redhat.com>
+ <871pw07sdy.fsf@pond.sub.org>
+ <2c5358eb-1abe-4fce-8b28-7935c71f1cff@redhat.com>
+ <87a5ao3a3q.fsf@pond.sub.org>
+Organization: Red Hat
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sbrivio@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,223 +118,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Feb 2025 14:45:56 +0530
-Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
+On Fri, 14 Feb 2025 14:54:33 +0100
+Markus Armbruster <armbru@redhat.com> wrote:
 
-> CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
-
-Given the CXL consortium only makes the latest spec available,
-generally we try to reference that.
-It's move to 8.2.10.9.5.3 in r3.2
-
-Otherwise mostly minor style comments inline.
-
-Thanks,
-
-Jonathan
-
-
-
-> CXL devices supports media operations discovery command.
+> Laurent Vivier <lvivier@redhat.com> writes:
 > 
-> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 136 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 136 insertions(+)
+> > On 14/02/2025 11:06, Markus Armbruster wrote:  
+> >> Laurent Vivier <lvivier@redhat.com> writes:
+> >>   
+> >>> The netdev reports NETDEV_VHOST_USER_CONNECTED event when
+> >>> the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
+> >>> when it is disconnected.
+> >>>
+> >>> The NETDEV_VHOST_USER_CONNECTED event includes the ChardevInfo
+> >>> (label, filename and frontend_open).
+> >>>
+> >>> This allows a system manager like libvirt to detect when the server
+> >>> fails.
+> >>>
+> >>> For instance with passt:
+> >>>
+> >>> { 'execute': 'qmp_capabilities' }
+> >>> { "return": { } }
+> >>>
+> >>> [killing passt here]
+> >>>
+> >>> { "timestamp": { "seconds": 1739517243, "microseconds": 115081 },
+> >>>    "event": "NETDEV_VHOST_USER_DISCONNECTED",
+> >>>    "data": { "netdev-id": "netdev0" } }
+> >>>
+> >>> [automatic reconnection with reconnect-ms]
+> >>>
+> >>> { "timestamp": { "seconds": 1739517290, "microseconds": 343777 },
+> >>>    "event": "NETDEV_VHOST_USER_CONNECTED",
+> >>>    "data": { "netdev-id": "netdev0",
+> >>>              "info": { "frontend-open": true,
+> >>>                        "filename": "unix:",
+> >>>                        "label": "chr0" } } }
+> >>>
+> >>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>  
+> >> 
+> >> Standard question for events: if a management application misses an
+> >> event, say because it restarts and reconnects, is there a way to obtain
+> >> the missed information with a query command?  
+> >
+> > query-chardev could help but it doesn't provide the netdev id.
+> >
+> > in HMP, "info network" has the information, but for QMP we had a try with a query-netdev in the past but the series has been reverted.
+> >
+> > f9bb0c1f9862 ("Revert "qapi: net: Add query-netdev command"")
+> > d32ad10a14d4 ("qapi: net: Add query-netdev command")  
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 9c7ea5bc35..fa38ecf507 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -89,6 +89,7 @@ enum {
->      SANITIZE    = 0x44,
->          #define OVERWRITE     0x0
->          #define SECURE_ERASE  0x1
-> +        #define MEDIA_OPERATIONS 0x2
->      PERSISTENT_MEM = 0x45,
->          #define GET_SECURITY_STATE     0x0
->      MEDIA_AND_POISON = 0x43,
-> @@ -1721,6 +1722,137 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
->      return CXL_MBOX_BG_STARTED;
->  }
->  
-> +#define CXL_CACHELINE_SIZE 64
+> Hmm.  Can management applications use these events without a matching
+> query?
 
-Already defined in include/hw/cxl/cxl.h
+Yes, see https://lore.kernel.org/all/20250214095338.344063fa@elisabeth/
+and the existing libvirt implementation for NETDEV_STREAM_DISCONNECTED.
 
-> +enum {
-> +    MEDIA_OP_CLASS_GENERAL  = 0x0,
-> +        #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
-> +    MEDIA_OP_CLASS_SANITIZE = 0x1,
-> +        #define MEDIA_OP_SAN_SUBC_SANITIZE 0x0
-> +        #define MEDIA_OP_SAN_SUBC_ZERO 0x1
-> +    MEDIA_OP_CLASS_MAX
-> +};
-> +
-> +struct media_op_supported_list_entry {
-> +    uint8_t media_op_class;
-> +    uint8_t media_op_subclass;
-> +};
-> +
-> +struct media_op_discovery_out_pl {
-> +    uint64_t dpa_range_granularity;
-> +    uint16_t total_supported_operations;
-> +    uint16_t num_of_supported_operations;
-> +    struct media_op_supported_list_entry entry[];
-> +} QEMU_PACKED;
-> +
-> +static const struct media_op_supported_list_entry media_op_matrix[] = {
-> +    {MEDIA_OP_CLASS_GENERAL, MEDIA_OP_GEN_SUBC_DISCOVERY},
-> +    {MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_SANITIZE},
-> +    {MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO}
-Add trailing comma as we may well get more of these in future.
-In general use a trailing comma whenever there isn't a definite reason
-we will never get them.
-
-Also I'd prefer space after { and before } to match local style.
-    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO },
-
-> +};
-> +
-> +static CXLRetCode media_operations_discovery(uint8_t *payload_in,
-> +                                                size_t len_in,
-> +                                                uint8_t *payload_out,
-> +                                                size_t *len_out)
-Align to opening bracket (just after it)
-> +{
-> +    struct {
-> +        uint8_t media_operation_class;
-> +        uint8_t media_operation_subclass;
-> +        uint8_t rsvd[2];
-> +        uint32_t dpa_range_count; 
-> +        struct {
-> +            uint16_t start_index;
-> +            uint16_t num_supported_ops;
-
-I'd just call this num or num_ops
-
-
-> +        } discovery_osa;
-> +    } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
-> +    int count = 0;
-> +
-> +    if (len_in < sizeof(*media_op_in_disc_pl)) {
-> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> +    }
-> +
-> +    struct media_op_discovery_out_pl *media_out_pl =
-> +                                                  (void *)payload_out;
-> +    int num_ops = media_op_in_disc_pl->discovery_osa.num_supported_ops;
-> +    int start_index = media_op_in_disc_pl->discovery_osa.start_index;
-
-Generally we don't mix declarations and code. So move these local variable
-declarations up.
-
-
-> +
-> +    if (start_index + num_ops > ARRAY_SIZE(media_op_matrix)) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    media_out_pl->dpa_range_granularity = CXL_CACHELINE_SIZE;
-> +    media_out_pl->total_supported_operations =
-> +                                     ARRAY_SIZE(media_op_matrix);
-> +    if (num_ops > 0) {
-> +        for (int i = start_index; i < ARRAY_SIZE(media_op_matrix); i++) {
-
-Given you already checked for going out of range, can just do 
-i < start_index + num_ops
-I think and avoid the need to break or keep a count.
-
-Keep to local style and declare i outside the loop
-
-
-> +            media_out_pl->entry[count].media_op_class =
-> +                    media_op_matrix[i].media_op_class;
-> +            media_out_pl->entry[count].media_op_subclass =
-> +                        media_op_matrix[i].media_op_subclass;
-> +            count++;
-> +            if (count == num_ops) {
-> +                break;
-> +            }
-> +        }
-> +    }
-> +
-> +    media_out_pl->num_of_supported_operations = count;
-> +    *len_out = sizeof(struct media_op_discovery_out_pl) +
-> +        (sizeof(struct media_op_supported_list_entry) * count);
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
-> +static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
-> +                                         uint8_t *payload_in,
-
-Alignment should be to opening bracket.
-
-> +                                         size_t len_in,
-> +                                         uint8_t *payload_out,
-> +                                         size_t *len_out,
-> +                                         CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint8_t media_operation_class;
-> +        uint8_t media_operation_subclass;
-> +        uint8_t rsvd[2];
-> +        uint32_t dpa_range_count;
-> +    } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
-> +
-> +    if (len_in < sizeof(*media_op_in_common_pl)) {
-> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> +    }
-> +
-> +    uint8_t media_op_cl = media_op_in_common_pl->media_operation_class;
-> +    uint8_t media_op_subclass =
-> +                      media_op_in_common_pl->media_operation_subclass;
-> +    uint32_t dpa_range_count = media_op_in_common_pl->dpa_range_count;
-
-As above, traditional c style with declarations before code.
-
-> +
-> +    switch (media_op_cl) {
-> +    case MEDIA_OP_CLASS_GENERAL:
-> +        if (media_op_subclass != MEDIA_OP_GEN_SUBC_DISCOVERY) {
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-> +
-> +        /*
-> +         * As per spec CXL 3.1 8.2.9.9.5.3 dpa_range_count
-> +         * should be zero for discovery sub class command
-> +         */
-
-I would move this into media_operations_discovery.
-
-> +        if (dpa_range_count) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +
-> +        return media_operations_discovery(payload_in, len_in, payload_out,
-> +                                             len_out);
-> +    case MEDIA_OP_CLASS_SANITIZE:
-
-Easier to introduce this case in next patch.  Until then can just let
-the default deal with it.
-
-> +        switch (media_op_subclass) {
-> +        default:
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-> +    default:
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
-
+-- 
+Stefano
 
 
