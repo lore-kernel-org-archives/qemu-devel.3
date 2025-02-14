@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C868C021A6
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 05:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B01C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 05:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiofn-0000bB-Rg; Fri, 14 Feb 2025 00:55:36 -0500
+	id 1tiofh-0000YB-8o; Fri, 14 Feb 2025 00:55:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tiofl-0000aq-Ni; Fri, 14 Feb 2025 00:55:33 -0500
+ id 1tioff-0000Xf-Dh; Fri, 14 Feb 2025 00:55:27 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tiofk-00084f-3G; Fri, 14 Feb 2025 00:55:33 -0500
+ id 1tiofd-00083f-2x; Fri, 14 Feb 2025 00:55:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C7B2AEAB0F;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6AABEAB0B;
  Fri, 14 Feb 2025 08:55:12 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C6BF81B5FC5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B24411B5FC1;
  Fri, 14 Feb 2025 08:55:20 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B08B453466; Fri, 14 Feb 2025 08:55:20 +0300 (MSK)
+ id A779D5345E; Fri, 14 Feb 2025 08:55:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, qemu-trivial@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-stable@nongnu.org
-Subject: [PULL 4/4] make-release: don't rely on $CWD when excluding subproject
- directories
-Date: Fri, 14 Feb 2025 08:55:20 +0300
-Message-Id: <20250214055520.3159764-5-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 0/4] Trivial patches for 2025-02-14
+Date: Fri, 14 Feb 2025 08:55:16 +0300
+Message-Id: <20250214055520.3159764-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250214055520.3159764-1-mjt@tls.msk.ru>
-References: <20250214055520.3159764-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,71 +60,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Roth <michael.roth@amd.com>
+The following changes since commit ce315328f8e9bf5201db4217f3ffe0784110aa4b:
 
-The current logic scans qemu.git/subprojects/ from *.wrap files to
-determine whether or not to include the associated directories in the
-release tarballs. However, the script assumes that it is being run from
-the top-level of the source directory, which may not always be the case.
-In particular, when generating releases via, e.g.:
+  Merge tag 'tracing-pull-request' of https://gitlab.com/stefanha/qemu into staging (2025-02-13 11:23:57 -0500)
 
-  make qemu-9.2.1.tar.xz
+are available in the Git repository at:
 
-the $CWD will either be an arbitrary external build directory, or
-qemu.git/build, and the exclusions will not be processed as expected.
-Fix this by using the $src parameter passed to the script as the root
-directory for the various subproject/ paths referenced by this logic.
+  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
 
-Also, the error case at the beginning of the subproject_dir() will not
-result in the error message being printed, and will instead produce an
-error message about "error" not being a valid command. Fix this by using
-basic shell commands.
+for you to fetch changes up to b79b05d1a06a013447ea93b81c07612766b735f2:
 
-Fixes: be27b5149c86 ("make-release: only leave tarball of wrap-file subprojects")
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- scripts/make-release | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+  make-release: don't rely on $CWD when excluding subproject directories (2025-02-14 08:49:57 +0300)
 
-diff --git a/scripts/make-release b/scripts/make-release
-index 2885e87210..1b89b3423a 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -11,8 +11,9 @@
- # See the COPYING file in the top-level directory.
- 
- function subproject_dir() {
--    if test ! -f "subprojects/$1.wrap"; then
--      error "scripts/archive-source.sh should only process wrap subprojects"
-+    if test ! -f "$src/subprojects/$1.wrap"; then
-+      echo "scripts/archive-source.sh should only process wrap subprojects"
-+      exit 1
-     fi
- 
-     # Print the directory key of the wrap file, defaulting to the
-@@ -26,7 +27,7 @@ function subproject_dir() {
-       -e    's///p' \
-       -e    'q' \
-       -e '}' \
--      "subprojects/$1.wrap")
-+      "$src/subprojects/$1.wrap")
- 
-     echo "${dir:-$1}"
- }
-@@ -76,7 +77,7 @@ popd
- exclude=(--exclude=.git)
- # include the tarballs in subprojects/packagecache but not their expansion
- for sp in $SUBPROJECTS; do
--    if grep -xqF "[wrap-file]" subprojects/$sp.wrap; then
-+    if grep -xqF "[wrap-file]" $src/subprojects/$sp.wrap; then
-       exclude+=(--exclude=subprojects/"$(subproject_dir $sp)")
-     fi
- done
--- 
-2.39.5
+----------------------------------------------------------------
+trivial patches for 2025-02-14
 
+There's nothing exciting here, just 4 very simple patches,
+but one of them is important for qemu-stable.
+
+----------------------------------------------------------------
+Michael Roth (1):
+      make-release: don't rely on $CWD when excluding subproject directories
+
+Philippe Mathieu-Daudé (2):
+      overall: Remove unnecessary g_strdup_printf() calls
+      qemu/timer: Clarify timer_new*() must be freed with timer_free()
+
+Rob Bradford (1):
+      target/riscv: Fix minor whitespace issue in riscv_cpu_properties
+
+ crypto/hash-afalg.c  |  2 +-
+ hw/ppc/spapr_caps.c  |  2 +-
+ include/qemu/timer.h | 10 ++++++++++
+ plugins/loader.c     |  2 +-
+ scripts/make-release |  9 +++++----
+ target/i386/cpu.c    |  2 +-
+ target/riscv/cpu.c   |  6 +++---
+ trace/simple.c       |  2 +-
+ ui/console.c         |  4 +---
+ ui/gtk.c             |  3 +--
+ util/module.c        |  2 +-
+ 11 files changed, 26 insertions(+), 18 deletions(-)
 
