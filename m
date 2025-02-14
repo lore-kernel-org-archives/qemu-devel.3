@@ -4,78 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D9CC02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD23C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tisaV-0003QA-JD; Fri, 14 Feb 2025 05:06:24 -0500
+	id 1tisga-0004Y2-Bn; Fri, 14 Feb 2025 05:12:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tisaM-0003Po-4A
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:06:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tisgV-0004Wx-6g; Fri, 14 Feb 2025 05:12:35 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tisaK-0005VT-5D
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:06:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739527568;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gsr2zRLLvV3682MBxfKov1AISQlIrHN2xvELlCGIsjQ=;
- b=dO3KvrgDhFxym2lQbrs9PTZu4FXm44XG5pvroLQaHwleQcr8dmIXdwl9dgLv8HmnPX8Mex
- +lPrXyGsHwkMNlOiSdUOH4wq3HxLVFbffqEQdCALWmX9X8fv5iQTQrW/8i3w2tqV45HgvN
- MiM0PUqxTiZ8gAsEO4VdqmcFEmuxw3s=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-_blCAcIdP-KfXp2V4erMSw-1; Fri,
- 14 Feb 2025 05:06:07 -0500
-X-MC-Unique: _blCAcIdP-KfXp2V4erMSw-1
-X-Mimecast-MFC-AGG-ID: _blCAcIdP-KfXp2V4erMSw_1739527566
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42EBA1979057
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 10:06:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE2211955E93
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 10:06:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 63F0D21E6A28; Fri, 14 Feb 2025 11:06:01 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>,  Jason Wang <jasowang@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Laine Stump <laine@redhat.com>,  Stefano
- Brivio <sbrivio@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] net: vhost-user: add QAPI events to report connection
- state
-In-Reply-To: <20250214072629.1033314-1-lvivier@redhat.com> (Laurent Vivier's
- message of "Fri, 14 Feb 2025 08:26:25 +0100")
-References: <20250214072629.1033314-1-lvivier@redhat.com>
-Date: Fri, 14 Feb 2025 11:06:01 +0100
-Message-ID: <871pw07sdy.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tisgM-00064O-KM; Fri, 14 Feb 2025 05:12:30 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YvSTX66dVz6M4XV;
+ Fri, 14 Feb 2025 18:09:52 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id DAF941400DA;
+ Fri, 14 Feb 2025 18:12:20 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 14 Feb
+ 2025 11:12:20 +0100
+Date: Fri, 14 Feb 2025 10:12:18 +0000
+To: Gavin Shan <gshan@redhat.com>, Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <mst@redhat.com>,
+ <imammedo@redhat.com>, <anisinha@redhat.com>, <gengdongjiu1@gmail.com>,
+ <peter.maydell@linaro.org>, <pbonzini@redhat.com>, <shan.gavin@gmail.com>
+Subject: Re: [PATCH 0/4] target/arm: Improvement on memory error handling
+Message-ID: <20250214101158.00004f69@huawei.com>
+In-Reply-To: <20250214041635.608012-1-gshan@redhat.com>
+References: <20250214041635.608012-1-gshan@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,45 +66,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Laurent Vivier <lvivier@redhat.com> writes:
+On Fri, 14 Feb 2025 14:16:31 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-> The netdev reports NETDEV_VHOST_USER_CONNECTED event when
-> the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
-> when it is disconnected.
->
-> The NETDEV_VHOST_USER_CONNECTED event includes the ChardevInfo
-> (label, filename and frontend_open).
->
-> This allows a system manager like libvirt to detect when the server
-> fails.
->
-> For instance with passt:
->
-> { 'execute': 'qmp_capabilities' }
-> { "return": { } }
->
-> [killing passt here]
->
-> { "timestamp": { "seconds": 1739517243, "microseconds": 115081 },
->   "event": "NETDEV_VHOST_USER_DISCONNECTED",
->   "data": { "netdev-id": "netdev0" } }
->
-> [automatic reconnection with reconnect-ms]
->
-> { "timestamp": { "seconds": 1739517290, "microseconds": 343777 },
->   "event": "NETDEV_VHOST_USER_CONNECTED",
->   "data": { "netdev-id": "netdev0",
->             "info": { "frontend-open": true,
->                       "filename": "unix:",
->                       "label": "chr0" } } }
->
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> Currently, there is only one CPER buffer (entry), meaning only one
+> memory error can be reported. In extreme case, multiple memory errors
+> can be raised on different vCPUs. For example, a singile memory error
+> on a 64KB page of the host can results in 16 memory errors to 4KB
+> pages of the guest. Unfortunately, the virtual machine is simply aborted
+> by multiple concurrent memory errors, as the following call trace shows.
+> A SEA exception is injected to the guest so that the CPER buffer can
+> be claimed if the error is successfully pushed by acpi_ghes_memory_errors(),
+> Otherwise, abort() is triggered to crash the virtual machine.
+> 
+>   kvm_vcpu_thread_fn
+>     kvm_cpu_exec
+>       kvm_arch_on_sigbus_vcpu
+>         kvm_cpu_synchronize_state
+>         acpi_ghes_memory_errors         (a)
+>         kvm_inject_arm_sea | abort
+> 
+> It's arguably to crash the virtual machine in this case. The better
+> behaviour would be to retry on pushing the memory errors, to keep the
+> virtual machine alive so that the administrator has chance to chime
+> in, for example to dump the important data with luck. This series
+> adds one more parameter to acpi_ghes_memory_errors() so that it will
+> be tried to push the memory error until it succeeds.
+Hi Gavin,
 
-Standard question for events: if a management application misses an
-event, say because it restarts and reconnects, is there a way to obtain
-the missed information with a query command?
+If the ultimate aim is to support multiple memory errors why not
+just do that?  Been a while since I look at how that works, but 
+the spec definitely allows it.  I think by just queuing up the errors
+and updating the Error Status Address as each one is handled.
+I think that's what GHESv2 ack is all about as it prevents the
+RAS firmware updating the error record until it is acknowledged
+at which point the RAS firmware can report the next one.
+
+Or... Given the usecase above of a 64KiB host page and 4KiB guest
+can we inject a single error record with multiple CPER entries and
+just handle it all in one go?
+
+Set the Error record header -> section count to 16 and provide
+16 Memory Error Sections or equivalent.
+
+Doesn't help with multiple errors in unrelated memory addresses but
+maybe removes one problem case.
+
+I've not checked all the information makes it to the right places
+however or that we don't end up with a deadlock when multiple vCPU
+involved.
+
+If doing the more significant surgery this would involve, I'd
+love to see Mauro's series land first as it cleans up a lot of
+how HEST is handled etc.
+
+Jonathan
+
+> 
+> Gavin Shan (4):
+>   acpi/ghes: Make ghes_record_cper_errors() static
+>   acpi/ghes: Use error_report() in ghes_record_cper_errors()
+>   acpi/ghes: Allow retry to write CPER errors
+>   target/arm: Retry pushing CPER error if necessary
+> 
+>  hw/acpi/ghes-stub.c    |  3 ++-
+>  hw/acpi/ghes.c         | 45 +++++++++++++++++++++---------------------
+>  include/hw/acpi/ghes.h |  5 ++---
+>  target/arm/kvm.c       | 31 +++++++++++++++++++++++------
+>  4 files changed, 51 insertions(+), 33 deletions(-)
+> 
 
 
