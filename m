@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070B1C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7D8C021A6
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwSw-0004Q2-4E; Fri, 14 Feb 2025 09:14:50 -0500
+	id 1tiwSm-0004LM-Pg; Fri, 14 Feb 2025 09:14:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwSt-0004P2-Ur
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:14:48 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1tiwSl-0004Jn-9c
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:14:39 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwSr-0004SK-Ix
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:14:47 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtpWp019370;
- Fri, 14 Feb 2025 14:14:43 GMT
+ id 1tiwSi-0004Qe-SB
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:14:39 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtTtK028522;
+ Fri, 14 Feb 2025 14:14:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=Jtd5qFBF4U2CM51CoANTy5520jQ5bgifXFgTF7QEBVo=; b=
- CfXCemX3HUd1NVQqLse/jB6kjauGZb/00uG5cOs/PPU/IdLp80AxZ+0lHu7SFKSz
- 0ZIwY5aVCkj5pU2sATPT2ibNf3Ug8x87Swz/miAHx7V5Vpz8yBgUTTHgcD2Ipuyy
- 8KSTvai5JFn3ta+9kG2J1/x8IvZyOunqAf2IkbHkvR+Qe4hK69WIxiG3H2QBOWkS
- NAdxgph444fup2KJeE0blvqlowyuLXrkW+F+bHU48h/YFcyj8F+xG1RxD4Ay8Y3s
- bDRWW3PI4dMXZDIqABzghvB8/dNl0YKq0fbmSQ4CTn1O97QW7/8ArqdI/7AElVRK
- lR7JXUmK7S3iDcTXZ8bKUA==
+ corp-2023-11-20; bh=9oVLojoVLLhWzzkSHfDhB/9yMWQHtFgvTEYgp18yT7Q=; b=
+ mUIcq/CuWThR1fxtFfHy8LnsmHB/X/q9C5+vQgL6C+LtyYpNiMQ/nCaZeMGvrky8
+ PwyQCnMzQ+ObL/aWiN3J2ph2KG6INwTC9i/Letsydcs5bFDjfpBXcnaQw3znnJSG
+ EMTBpTNapnLBjlkEIUUOHJ1ZohMPChSyN8kWcFzL6zHlPbcXUA7KKtx6XBFWvTtG
+ yNShQ8GTuDXchyylgfs7f5tmyFTvFKaPdMlzdEP5FZSz+6IflndU7DlcXEKGYHRN
+ yMoazLc+amlHzbmuBE+LMN+eBv8V8GiPXXnKtrZdmMNXsiD62Fxl39aEAJWhalwv
+ Ep/olYxoSeTmIDa19STPLQ==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0t4bmum-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0tnbnmk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:43 +0000 (GMT)
+ Fri, 14 Feb 2025 14:14:31 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51ECuXh1025256; Fri, 14 Feb 2025 14:14:41 GMT
+ with ESMTP id 51ECfZO1025148; Fri, 14 Feb 2025 14:14:31 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwqksg8f-1
+ 44nwqksg3j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:41 +0000
+ Fri, 14 Feb 2025 14:14:31 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETPV006920;
- Fri, 14 Feb 2025 14:14:41 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETPF006920;
+ Fri, 14 Feb 2025 14:14:30 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 44nwqksg2h-10; Fri, 14 Feb 2025 14:14:41 +0000
+ ESMTP id 44nwqksg2h-2; Fri, 14 Feb 2025 14:14:30 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 09/45] vfio/container: preserve descriptors
-Date: Fri, 14 Feb 2025 06:13:51 -0800
-Message-Id: <1739542467-226739-10-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 01/45] MAINTAINERS: Add reviewer for CPR
+Date: Fri, 14 Feb 2025 06:13:43 -0800
+Message-Id: <1739542467-226739-2-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
 References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
@@ -77,16 +77,16 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2501170000 definitions=main-2502140104
-X-Proofpoint-ORIG-GUID: p-LjDkH3VTpyqEoNYiwuYSecgpuGGcva
-X-Proofpoint-GUID: p-LjDkH3VTpyqEoNYiwuYSecgpuGGcva
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-GUID: aDA1EmxwxYiRajvdqOfjn-5NlwB3Kkm9
+X-Proofpoint-ORIG-GUID: aDA1EmxwxYiRajvdqOfjn-5NlwB3Kkm9
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,303 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At vfio creation time, save the value of vfio container, group, and device
-descriptors in CPR state.  On qemu restart, vfio_realize() finds and uses
-the saved descriptors, and remembers the reused status for subsequent
-patches.  The reused status is cleared when vmstate load finishes.
-
-During reuse, device and iommu state is already configured, so operations
-in vfio_realize that would modify the configuration, such as vfio ioctl's,
-are skipped.  The result is that vfio_realize constructs qemu data
-structures that reflect the current state of the device.
+CPR is integrated with live migration, and has the same maintainers.
+But, add a CPR section to add a reviewer.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/container.c           | 57 +++++++++++++++++++++++++++++++++++++------
- hw/vfio/cpr-legacy.c          | 45 ++++++++++++++++++++++++++++++++++
- include/hw/vfio/vfio-common.h |  1 +
- include/hw/vfio/vfio-cpr.h    |  9 +++++++
- 4 files changed, 104 insertions(+), 8 deletions(-)
+ MAINTAINERS | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index eca3362..21f2706 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -31,6 +31,8 @@
- #include "system/reset.h"
- #include "trace.h"
- #include "qapi/error.h"
-+#include "migration/cpr.h"
-+#include "migration/blocker.h"
- #include "pci.h"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3848d37..2f9a6da 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2951,6 +2951,17 @@ F: include/qemu/co-shared-resource.h
+ T: git https://gitlab.com/jsnow/qemu.git jobs
+ T: git https://gitlab.com/vsementsov/qemu.git block
  
- VFIOGroupList vfio_group_list =
-@@ -413,7 +415,7 @@ static bool vfio_set_iommu(int container_fd, int group_fd,
- }
- 
- static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
--                                            Error **errp)
-+                                            bool cpr_reused, Error **errp)
- {
-     int iommu_type;
-     const char *vioc_name;
-@@ -424,7 +426,11 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
-         return NULL;
-     }
- 
--    if (!vfio_set_iommu(fd, group->fd, &iommu_type, errp)) {
-+    /*
-+     * If container is reused, just set its type and skip the ioctls, as the
-+     * container and group are already configured in the kernel.
-+     */
-+    if (!cpr_reused && !vfio_set_iommu(fd, group->fd, &iommu_type, errp)) {
-         return NULL;
-     }
- 
-@@ -432,6 +438,7 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
- 
-     container = VFIO_IOMMU_LEGACY(object_new(vioc_name));
-     container->fd = fd;
-+    container->cpr.reused = cpr_reused;
-     container->iommu_type = iommu_type;
-     return container;
- }
-@@ -591,6 +598,7 @@ static bool vfio_container_group_add(VFIOContainer *container, VFIOGroup *group,
-     group->container = container;
-     QLIST_INSERT_HEAD(&container->group_list, group, container_next);
-     vfio_kvm_device_add_group(group);
-+    cpr_resave_fd("vfio_container_for_group", group->groupid, container->fd);
-     return true;
- }
- 
-@@ -600,6 +608,7 @@ static void vfio_container_group_del(VFIOContainer *container, VFIOGroup *group)
-     group->container = NULL;
-     vfio_kvm_device_del_group(group);
-     vfio_ram_block_discard_disable(container, false);
-+    cpr_delete_fd("vfio_container_for_group", group->groupid);
- }
- 
- static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-@@ -612,17 +621,37 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-     VFIOIOMMUClass *vioc = NULL;
-     bool new_container = false;
-     bool group_was_added = false;
-+    bool cpr_reused;
- 
-     space = vfio_get_address_space(as);
-+    fd = cpr_find_fd("vfio_container_for_group", group->groupid);
-+    cpr_reused = (fd > 0);
++CheckPoint and Restart (CPR)
++M: Peter Xu <peterx@redhat.com>
++M: Fabiano Rosas <farosas@suse.de>
++R: Steve Sistare <steven.sistare@oracle.com>
++S: Supported
++F: hw/vfio/cpr*
++F: include/migration/cpr.h
++F: migration/cpr*
++F: tests/qtest/migration/cpr*
++F: docs/devel/migration/CPR.rst
 +
-+    /*
-+     * If the container is reused, then the group is already attached in the
-+     * kernel.  If a container with matching fd is found, then update the
-+     * userland group list and return.  If not, then after the loop, create
-+     * the container struct and group list.
-+     */
- 
-     QLIST_FOREACH(bcontainer, &space->containers, next) {
-         container = container_of(bcontainer, VFIOContainer, bcontainer);
--        if (!ioctl(group->fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
--            return vfio_container_group_add(container, group, errp);
-+
-+        if (cpr_reused) {
-+            if (!vfio_cpr_container_match(container, group, &fd)) {
-+                continue;
-+            }
-+        } else if (ioctl(group->fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
-+            continue;
-         }
-+
-+        return vfio_container_group_add(container, group, errp);
-+    }
-+
-+    if (!cpr_reused) {
-+        fd = qemu_open("/dev/vfio/vfio", O_RDWR, errp);
-     }
- 
--    fd = qemu_open("/dev/vfio/vfio", O_RDWR, errp);
-     if (fd < 0) {
-         goto fail;
-     }
-@@ -634,7 +663,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-         goto fail;
-     }
- 
--    container = vfio_create_container(fd, group, errp);
-+    container = vfio_create_container(fd, group, cpr_reused, errp);
-     if (!container) {
-         goto fail;
-     }
-@@ -700,6 +729,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
- 
-     QLIST_REMOVE(group, container_next);
-     group->container = NULL;
-+    cpr_delete_fd("vfio_container_for_group", group->groupid);
- 
-     /*
-      * Explicitly release the listener first before unset container,
-@@ -753,7 +783,7 @@ static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
-     group = g_malloc0(sizeof(*group));
- 
-     snprintf(path, sizeof(path), "/dev/vfio/%d", groupid);
--    group->fd = qemu_open(path, O_RDWR, errp);
-+    group->fd = cpr_open_fd(path, O_RDWR, "vfio_group", groupid, NULL, errp);
-     if (group->fd < 0) {
-         goto free_group_exit;
-     }
-@@ -785,6 +815,7 @@ static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
-     return group;
- 
- close_fd_exit:
-+    cpr_delete_fd("vfio_group", groupid);
-     close(group->fd);
- 
- free_group_exit:
-@@ -806,6 +837,7 @@ static void vfio_put_group(VFIOGroup *group)
-     vfio_disconnect_container(group);
-     QLIST_REMOVE(group, next);
-     trace_vfio_put_group(group->fd);
-+    cpr_delete_fd("vfio_group", group->groupid);
-     close(group->fd);
-     g_free(group);
- }
-@@ -815,8 +847,14 @@ static bool vfio_get_device(VFIOGroup *group, const char *name,
- {
-     g_autofree struct vfio_device_info *info = NULL;
-     int fd;
-+    bool cpr_reused;
-+
-+    fd = cpr_find_fd(name, 0);
-+    cpr_reused = (fd >= 0);
-+    if (!cpr_reused) {
-+        fd = ioctl(group->fd, VFIO_GROUP_GET_DEVICE_FD, name);
-+    }
- 
--    fd = ioctl(group->fd, VFIO_GROUP_GET_DEVICE_FD, name);
-     if (fd < 0) {
-         error_setg_errno(errp, errno, "error getting device from group %d",
-                          group->groupid);
-@@ -861,6 +899,8 @@ static bool vfio_get_device(VFIOGroup *group, const char *name,
-     vbasedev->num_irqs = info->num_irqs;
-     vbasedev->num_regions = info->num_regions;
-     vbasedev->flags = info->flags;
-+    vbasedev->cpr.reused = cpr_reused;
-+    cpr_resave_fd(name, 0, fd);
- 
-     trace_vfio_get_device(name, info->flags, info->num_regions, info->num_irqs);
- 
-@@ -877,6 +917,7 @@ static void vfio_put_base_device(VFIODevice *vbasedev)
-     QLIST_REMOVE(vbasedev, next);
-     vbasedev->group = NULL;
-     trace_vfio_put_base_device(vbasedev->fd);
-+    cpr_delete_fd(vbasedev->name, 0);
-     close(vbasedev->fd);
- }
- 
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index d0557af..cee0f4e 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -30,10 +30,27 @@ static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
-     }
- }
- 
-+static int vfio_container_post_load(void *opaque, int version_id)
-+{
-+    VFIOContainer *container = opaque;
-+    VFIOGroup *group;
-+    VFIODevice *vbasedev;
-+
-+    container->cpr.reused = false;
-+
-+    QLIST_FOREACH(group, &container->group_list, container_next) {
-+        QLIST_FOREACH(vbasedev, &group->device_list, next) {
-+            vbasedev->cpr.reused = false;
-+        }
-+    }
-+    return 0;
-+}
-+
- static const VMStateDescription vfio_container_vmstate = {
-     .name = "vfio-container",
-     .version_id = 0,
-     .minimum_version_id = 0,
-+    .post_load = vfio_container_post_load,
-     .needed = cpr_needed_for_reuse,
-     .fields = (VMStateField[]) {
-         VMSTATE_END_OF_LIST()
-@@ -67,3 +84,31 @@ void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
-     migrate_del_blocker(&container->cpr.blocker);
-     vmstate_unregister(NULL, &vfio_container_vmstate, container);
- }
-+
-+static bool same_device(int fd1, int fd2)
-+{
-+    struct stat st1, st2;
-+
-+    return !fstat(fd1, &st1) && !fstat(fd2, &st2) && st1.st_dev == st2.st_dev;
-+}
-+
-+bool vfio_cpr_container_match(VFIOContainer *container, VFIOGroup *group,
-+                              int *pfd)
-+{
-+    if (container->fd == *pfd) {
-+        return true;
-+    }
-+    if (!same_device(container->fd, *pfd)) {
-+        return false;
-+    }
-+    /*
-+     * Same device, different fd.  This occurs when the container fd is
-+     * cpr_save'd multiple times, once for each groupid, so SCM_RIGHTS
-+     * produces duplicates.  De-dup it.
-+     */
-+    cpr_delete_fd("vfio_container_for_group", group->groupid);
-+    close(*pfd);
-+    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd);
-+    *pfd = container->fd;
-+    return true;
-+}
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index c482364..780646e 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -152,6 +152,7 @@ typedef struct VFIODevice {
-     IOMMUFDBackend *iommufd;
-     VFIOIOASHwpt *hwpt;
-     QLIST_ENTRY(VFIODevice) hwpt_next;
-+    VFIODeviceCPR cpr;
- } VFIODevice;
- 
- struct VFIODeviceOps {
-diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-index d4f8346..1a3eee9 100644
---- a/include/hw/vfio/vfio-cpr.h
-+++ b/include/hw/vfio/vfio-cpr.h
-@@ -12,9 +12,15 @@
- 
- typedef struct VFIOContainerCPR {
-     Error *blocker;
-+    bool reused;
- } VFIOContainerCPR;
- 
-+typedef struct VFIODeviceCPR {
-+    bool reused;
-+} VFIODeviceCPR;
-+
- struct VFIOContainer;
-+struct VFIOGroup;
- 
- int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
-                              Error **errp);
-@@ -22,4 +28,7 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
- bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
-                                         Error **errp);
- void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
-+
-+bool vfio_cpr_container_match(struct VFIOContainer *container,
-+                              struct VFIOGroup *group, int *fd);
- #endif
+ Compute Express Link
+ M: Jonathan Cameron <jonathan.cameron@huawei.com>
+ R: Fan Ni <fan.ni@samsung.com>
 -- 
 1.8.3.1
 
