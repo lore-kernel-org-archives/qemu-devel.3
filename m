@@ -4,58 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8901C02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 17:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBFE4C021A6
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 18:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tizjZ-0004Wy-UP; Fri, 14 Feb 2025 12:44:14 -0500
+	id 1tj0CK-0000Sy-0g; Fri, 14 Feb 2025 13:13:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tizjV-0004Wc-C7
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 12:44:10 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tizjR-0005rp-Hz
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 12:44:09 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YvfTy4lxNz6L531;
- Sat, 15 Feb 2025 01:40:54 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id C4DC31402CB;
- Sat, 15 Feb 2025 01:44:01 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 14 Feb
- 2025 18:44:01 +0100
-Date: Fri, 14 Feb 2025 17:43:59 +0000
-To: Sweta Kumari <s5.kumari@samsung.com>
-CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
- <linux-cxl@vger.kernel.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <vishak.g@samsung.com>, <krish.reddy@samsung.com>,
- <a.manzanares@samsung.com>, <alok.rathore@samsung.com>
-Subject: Re: [PATCH v2] CXL CCI Get/Set Alert Configuration commands
- implmented as per CXL Specification 3.2 section 8.2.10.9.3
-Message-ID: <20250214174359.0000368a@huawei.com>
-In-Reply-To: <20250214132211.528019-1-s5.kumari@samsung.com>
-References: <CGME20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b@epcas5p3.samsung.com>
- <20250214132211.528019-1-s5.kumari@samsung.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj0CH-0000Sf-JX
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 13:13:53 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj0CF-0000zu-GA
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 13:13:53 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 722772117D;
+ Fri, 14 Feb 2025 18:13:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739556828; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kRHfVXcXJyosCHXVmxJXjGwvRnGYmykGlXkOhodHe1A=;
+ b=O7h0CslNoKspkl4WiMxb/+h01RlydLOs+E378ExYSTtBqDorc+Rk6VHGwqSoQeKguE7bgN
+ 9QbCTct3DB8taNVHLAJMnjj3yot857rINZpF8y/Z+SCze9khf2OZcjGBWSjRsC0+Hvv28R
+ dx+SSJapoEbkeqhcSE71pNdfC6nwnBU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739556828;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kRHfVXcXJyosCHXVmxJXjGwvRnGYmykGlXkOhodHe1A=;
+ b=FJ2HVkvlkOBkpSS0spf9Cf4nIug/j/58Z9JM94ZHHTBSkd5atp6T1XNgIKSeQhd6A0b/rv
+ SobJB54yKuRhfLBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739556827; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kRHfVXcXJyosCHXVmxJXjGwvRnGYmykGlXkOhodHe1A=;
+ b=M9ss0aOOecYY5joObL1gewrr4m9gPzMnK2d3tZWUIAeBMRDq4NzK/AbXSv3DUIoZK/hKkB
+ +KkQrBOUKTEdg7pFT7Qlr6khK6darjhP2QQc9X/ATiELJCyZdketTRlzO0bYk0D/XQfp+c
+ AQxQP3MssKF5+eoXeYIIzzjk2tcAsGk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739556827;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kRHfVXcXJyosCHXVmxJXjGwvRnGYmykGlXkOhodHe1A=;
+ b=eiHtLE9a9RBhG2DvxfV2VXdW+RHKnWYLCj6ZUR7YHJ6eiChzkcbvswrUWSpFkl8NRIwYLM
+ PdYXWXYs3zikHzCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DC02813285;
+ Fri, 14 Feb 2025 18:13:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zLQFJtqHr2cragAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 18:13:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: yong.huang@smartx.com, qemu-devel <qemu-devel@nongnu.org>
+Cc: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Hyman Huang <yong.huang@smartx.com>
+Subject: Re: [PATCH v4 RESEND 0/4] Guestperf: miscellaneous refinement and
+ enrichment
+In-Reply-To: <cover.1739530098.git.yong.huang@smartx.com>
+References: <cover.1739530098.git.yong.huang@smartx.com>
+Date: Fri, 14 Feb 2025 15:13:44 -0300
+Message-ID: <87a5aov1gn.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[smartx.com:email, imap1.dmz-prg2.suse.org:helo,
+ suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,249 +114,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 14 Feb 2025 18:52:11 +0530
-Sweta Kumari <s5.kumari@samsung.com> wrote:
+yong.huang@smartx.com writes:
 
-> 1)get alert configuration(Opcode 4201h)
-> 2)set alert configuration(Opcode 4202h)
+> From: Hyman Huang <yong.huang@smartx.com>
+>
+> v4:
+> 1. rebase v3 patchset on master
+> 2. build initrd-stress.img manually like before as suggested by Peter and Fabiano
+> 3. drop the [PATCH v3 1/5], [PATCH v3 2/5] patches
+> 4. add an extra patch: [PATCH v4 4/4] guestperf: Add test result data into report
+>
+> Please review, thanks
+> Yong
+>
+> v3:
+> 1. Remove the two redundant assignments in [PATCH v2 2/5] suggested by Daniel
+>
+> v2:
+> 1. Update the MAINTAINERS section suggested by Fabiano Rosas
+> 2. Ensure the dependencies when build the initrd-stress.img suggested by Daniel
+> 3. Fix some bugs
+>
+> v1:
+> The previous patchset:
+> https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx.com/
+> does not made the necessary changes and tests for the upstream version.
+>
+> This patchset works for that:
+> 1. Move the guestperf to scripts directory suggested by Fabiano Rosas
+> 2. Make initrd-stress.img built by default suggested by Fabiano Rosas
+> 3. Make the necessary changes to adapt the latest multifd behavior
+> 4. A nitpick for multifd migration
+> 5. Support multifd compression option
+>
+> Hyman Huang (4):
+>   guestperf: Support deferred migration for multifd
+>   guestperf: Nitpick the inconsistent parameters
+>   guestperf: Introduce multifd compression option
+>   guestperf: Add test result data into report
+>
+>  .../migration-stress/guestperf/comparison.py  | 15 ++++++-
+>  tests/migration-stress/guestperf/engine.py    | 43 ++++++++++++++++---
+>  tests/migration-stress/guestperf/report.py    | 20 +++++++++
+>  tests/migration-stress/guestperf/scenario.py  |  7 ++-
+>  tests/migration-stress/guestperf/shell.py     |  3 ++
+>  5 files changed, 79 insertions(+), 9 deletions(-)
 
-Move the change log to below the ---
-The key thing being git then doesn't pick it up whilst applying the patch.
-Whilst changed logs are very useful during the review process we don't
-typically want to keep them in the git history for ever!
-
-Otherwise, main comment here is shorten more names.
-
-Jonathan
-
-> 
-> This v2 patch addresses the feedback from the v1 patch and include some minor new changes.
-> 
-> Changes in V2:
-> - Removed cover letter as it's a single patch
-> - Added latest spec reference
-> - Fixed alignment issues
-> - Updated shorter variable names to be more descriptive
-> - Replaced field-by-field initialization in 'init_alert_config' with structured initialization for improved readability.
-> - Replaced bit fields with 'uint8_t' and added defines for individual bits.
-> 
-> The patch is generated against the Johnathan's tree
-> https://gitlab.com/jic23/qemu.git and branch cxl-2024-11-27.
-> 
-> Signed-off-by: Sweta Kumari <s5.kumari@samsung.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c  | 116 ++++++++++++++++++++++++++++++++++++
->  hw/mem/cxl_type3.c          |  16 +++++
->  include/hw/cxl/cxl_device.h |  15 +++++
->  3 files changed, 147 insertions(+)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 9c7ea5bc35..105c63fdec 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -28,6 +28,11 @@
->  #define CXL_DC_EVENT_LOG_SIZE 8
->  #define CXL_NUM_EXTENTS_SUPPORTED 512
->  #define CXL_NUM_TAGS_SUPPORTED 0
-> +#define CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD (1 << 0)
-> +#define CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD (1 << 1)
-> +#define CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD (1 << 2)
-> +#define CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD (1 << 3)
-> +#define CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD (1 << 4)
-Let's shorten these as they are very ugly to use when a line long!
-
-#define CXL_ALERTS_OVER_TEMP_WARN_THRESH
-etc. Similar to comments below.
-
->  
->  /*
->   * How to add a new command, example. The command set FOO, with cmd BAR.
-> @@ -86,6 +91,9 @@ enum {
->          #define GET_PARTITION_INFO     0x0
->          #define GET_LSA       0x2
->          #define SET_LSA       0x3
-> +    HEALTH_INFO_ALERTS = 0x42,
-> +        #define GET_ALERT_CONFIGURATION 0x1
-> +        #define SET_ALERT_CONFIGURATION 0x2
-CONFIG maybe enough?
-
->      SANITIZE    = 0x44,
->          #define OVERWRITE     0x0
->          #define SECURE_ERASE  0x1
-> @@ -1625,6 +1633,110 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +/* CXL r3.2 Section 8.2.10.9.3.2 Get Alert Configuration (Opcode 4201h) */
-> +static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
-> +                                       uint8_t *payload_in,
-> +                                       size_t len_in,
-> +                                       uint8_t *payload_out,
-> +                                       size_t *len_out,
-> +                                       CXLCCI *cci)
-> +{
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLAlertConfig *out = (void *)payload_out;
-
-In this case we can cast to the right type (can't do that if we don't
-name that type which happens in a lot these structures). So prefer
-    CXLAlertConfig *out = (CXLAlertConfig *)payload_out;
- 
-
-> +
-> +    memcpy(out, &ct3d->alert_config, sizeof(ct3d->alert_config));
-> +    *len_out = sizeof(ct3d->alert_config);
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
-> +/* CXL r3.2 Section 8.2.10.9.3.3 Set Alert Configuration (Opcode 4202h) */
-> +static CXLRetCode cmd_set_alert_config(const struct cxl_cmd *cmd,
-> +                                       uint8_t *payload_in,
-> +                                       size_t len_in,
-> +                                       uint8_t *payload_out,
-> +                                       size_t *len_out,
-> +                                       CXLCCI *cci)
-> +{
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLAlertConfig *alert_config = &ct3d->alert_config;
-> +    struct {
-> +        uint8_t valid_alert_actions;
-> +        uint8_t enable_alert_actions;
-> +        uint8_t life_used_warning_threshold;
-> +        uint8_t rsvd;
-> +        uint16_t device_over_temperature_warning_threshold;
-> +        uint16_t device_under_temperature_warning_threshold;
-> +        uint16_t Corrected_volatile_memory_error_warning_threshold;
-> +        uint16_t Corrected_persistent_memory_error_warning_threshold;
-
-Shorten these as well. Similar to suggestions below.  They are
-just too long to make for nice code!
-
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +
-> +    if (in->valid_alert_actions & CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD) {
-> +        /*
-> +         * CXL 3.2 Table 8-149 The life used warning threshold shall be
-> +         * less than the life used critical alert value.
-> +         */
-> +        if (in->life_used_warning_threshold >=
-> +            alert_config->life_used_critical_alert_threshold) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        alert_config->life_used_warning_threshold =
-> +            in->life_used_warning_threshold;
-> +        alert_config->enable_alerts |= CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD;
-> +    }
-> +
-> +    if (in->valid_alert_actions &
-> +        CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD) {
-> +        /*
-> +         * CXL 3.2 Table 8-149 The Device Over-Temperature Warning Threshold
-> +         * shall be less than the the Device Over-Temperature Critical
-> +         * Alert Threshold.
-> +         */
-> +        if (in->device_over_temperature_warning_threshold >=
-> +            alert_config->device_over_temperature_critical_alert_threshold) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        alert_config->device_over_temperature_warning_threshold =
-> +            in->device_over_temperature_warning_threshold;
-> +        alert_config->enable_alerts |=
-> +            CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD;
-> +    }
-> +
-> +    if (in->valid_alert_actions &
-> +        CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD) {
-> +        /*
-> +         * CXL 3.2 Table 8-149 The Device Under-Temperature Warning Threshold
-> +         * shall be higher than the the Device Under-Temperature Critical
-> +         * Alert Threshold.
-> +         */
-> +        if (in->device_under_temperature_warning_threshold <=
-> +            alert_config->device_under_temperature_critical_alert_threshold) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        alert_config->device_under_temperature_warning_threshold =
-> +            in->device_under_temperature_warning_threshold;
-> +        alert_config->enable_alerts |=
-> +            CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD;
-> +    }
-> +
-> +    if (in->valid_alert_actions &
-> +        CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD) {
-> +        alert_config->Corrected_volatile_memory_error_warning_threshold =
-> +            in->Corrected_volatile_memory_error_warning_threshold;
-> +        alert_config->enable_alerts |=
-> +            CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD;
-> +    }
-> +
-> +    if (in->valid_alert_actions &
-> +        CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD) {
-> +        alert_config->Corrected_persistent_memory_error_warning_threshold =
-> +            in->Corrected_persistent_memory_error_warning_threshold;
-> +        alert_config->enable_alerts |=
-> +            CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD;
-> +    }
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  /* Perform the actual device zeroing */
->  static void __do_sanitization(CXLType3Dev *ct3d)
->  {
-> @@ -2859,6 +2971,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
->      [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
->          ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
-> +    [HEALTH_INFO_ALERTS][GET_ALERT_CONFIGURATION] = {"GET_ALERT_CONFIGURATION",
-
-Space after { to match local style.
-
-> +        cmd_get_alert_config, 0, 0 },
-> +    [HEALTH_INFO_ALERTS][SET_ALERT_CONFIGURATION] = {"SET_ALERT_CONFIGURATION",
-> +        cmd_set_alert_config, 12, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
->      [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
->          (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
->           CXL_MBOX_SECURITY_STATE_CHANGE |
-
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index a64739be25..1da23bf553 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -581,6 +581,19 @@ typedef struct CXLSetFeatureInfo {
->      size_t data_size;
->  } CXLSetFeatureInfo;
->  
-> +typedef struct CXLAlertConfig {
-> +    uint8_t valid_alerts;
-> +    uint8_t enable_alerts;
-> +    uint8_t life_used_critical_alert_threshold;
-> +    uint8_t life_used_warning_threshold;
-> +    uint16_t device_over_temperature_critical_alert_threshold;
-I think we can shorten these at least a bit without lost of meaning!
-It's on a device so can drop that entirely. Perhaps
-
-    uint8_t life_used_crit_alert_thresh;
-    uint8_t life_used_warn_thresh;
-    uint16_t over_temp_crit_alert_thresh;
-    uint16_t under_temp_crit_alert_thresh;
-    uint16_t over_temp_warn_thresh;
-    uint16_t under_temp_warn_thresh;
-    uint16_t cor_volatile_mem_err_warn_thresh;
-    uint16_t cor_persistent_mem_err_warn_thresh;
-
-> +    uint16_t device_under_temperature_critical_alert_threshold;
-> +    uint16_t device_over_temperature_warning_threshold;
-> +    uint16_t device_under_temperature_warning_threshold;
-> +    uint16_t Corrected_volatile_memory_error_warning_threshold;
-Capital in just this one doesn't make much sense.
-> +    uint16_t Corrected_persistent_memory_error_warning_threshold;
-> +} QEMU_PACKED CXLAlertConfig;
-
-
+Queued, thanks!
 
