@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF80BC021A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 10:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37DBC021A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 11:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1titNG-0003FP-0B; Fri, 14 Feb 2025 05:56:46 -0500
+	id 1titTx-0007A1-3h; Fri, 14 Feb 2025 06:03:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1titNE-0003Et-FI
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:56:44 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1titTv-00079m-P3
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 06:03:39 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1titNC-00069d-Kd
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 05:56:44 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-220ec47991aso9439135ad.1
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 02:56:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1titTu-0006oY-8M
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 06:03:39 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-220bfdfb3f4so39245235ad.2
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 03:03:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739530601; x=1740135401;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZVFXlsrJ6uqFDQzwPn+Dorbteo5aZgEE94Bb7QudTvo=;
- b=dgZo/Nt5YdrkQTHGKxUbgFjuw0RG0glfXLoT/qzrABKh/ANW8Uyh6Sr/hE6AVlSuQz
- lSOWqcZ3/byYHX9UInIOSGebyjHUiWvCRAaNNc+mHYbTdsFaPbqxW9kFVb2ZwDMCQzeU
- s0zkoxuO7BUZhLMfTstfJVBYkpIXBpLWBO3vNrQQT91k56FX/JgCe7t+D7YFebM7ZDv4
- eyPMXBUq1k1F0SrnLQabGwmZItSYOjzqO0kHlF8wYD7EbaSWCRcy2Hj4fUNPv4qB9yNp
- FcL/TFGk6Y+W4BYnmhSHA2ACxVJvUnPNF2d2vggkacu94+q+Vbyww6b78hkgjS+e1lAc
- 42FA==
+ d=gmail.com; s=20230601; t=1739531016; x=1740135816; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NqbdYFoBt8oeHTnPGHDpmggaUCavRYcVRDCzKVS1730=;
+ b=a7WsMHpf00/PYrtSSRnEy9sexmmd2sH4MIyFPrPkYYCeJcfQmPVGcext7f+qMoBp6M
+ H0+PwaqWZDJehvDk43JylCjfF8CJHqwud1VSoKB22XSIKwrEQgBQe3hB2IhBfl7Lmacr
+ 88zrHFBPepsjkb8SF3M/G+ZSQhaDXYttqMellYwRCTe75g4yt255ukkWDrx8R04T8S/D
+ x46TJYXPhfes1u/CyUtj/rSRxTxGyKwm+Ad2HKqXqvqxVwDGwY4GAE3cr8Q077EgiLhG
+ uMGiE2prtRGeDr+ByaLUDsBnqpLIjSza99s1VH/8j5h3TEjktxOdT9G1t3AbkOvTn5fd
+ Tkqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739530601; x=1740135401;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZVFXlsrJ6uqFDQzwPn+Dorbteo5aZgEE94Bb7QudTvo=;
- b=nJfGJu/bjYERoVDr0A8uV8ASKxWpvTGGnfhx69L6LVE84ziS8a2boVkEDy2zmKgCgg
- u8KXkNLXK12abQKGDAxF+I/eJvqxeWhTv52Cny7sG4Jyr3O13WqWDW02zmbaZpOAKxI7
- SOTGHO23wlPBu382AJDIBd+pQx9aVfYROsutmtuqZj7XOCpy3fgeBDoEQRfUPJCCdcSd
- c2BpTZrMrOoroGmh4r4XwqkWm8KqZEM4vxpTGTf4EQum61mFFNhYWrflWY9mgTbgNr+9
- VPzjvNZAKsArqLViTkYDIxewdU+9a5aCf8wbUmGhaxhouUjDKpYRdOhWjrGx+9IbAEAF
- bPWg==
-X-Gm-Message-State: AOJu0Yya0k029fmTU1k1ejlzcHQidIC6M0ms9uIa+ABddG5q4aNWvWx2
- 6D5fPL3bCtfRPhUAF34QYRqh1iD4rj3w4GWkemdc9QE8bwSAyrpr/0Y5Ra5dP7iH4SfFEhDoWih
- vFtv3PA==
-X-Gm-Gg: ASbGncuVpBHe/SW0NHp0UyMHHDLfyHkZqPQ4jYRfvN//Gzoe1C0CxFrq9ke8ayXX0JP
- uTnFq08mm7FUDRgeTmH1adiAmLwRqF710Vh6v9kidP4uiHg4WtGbFJCQKLl9lfQOLPJl45dLElo
- it22WA69lpVQFTMgNcO2mX2rJJGl71LsSYY2tupJxtlrWvQdGMrl0v6v45YKcwuaSBLt5AdABZL
- kiv9ILlJaaBz745300jmwO9N/TLYrFr0tSHdaRCVEkyRzH0MYM/Y5B5v4HuswIp0MU8cxa6mEoE
- K6ySZcHa0B4gigJOAly20oUij50+3ZoiN7+sKAjZ
-X-Google-Smtp-Source: AGHT+IG7qDL6HFucRj/cfgbNRg6VneqkP4zmomZUyyp/wyuyUvPtqsICTm2cDY9Wg8rZ/Rs2HH4bNw==
-X-Received: by 2002:a05:6a21:32a4:b0:1ee:7c01:d20 with SMTP id
- adf61e73a8af0-1ee7c01118emr7104340637.31.1739530601003; 
- Fri, 14 Feb 2025 02:56:41 -0800 (PST)
-Received: from Hyman-Dev-Euler.zelin.local ([154.64.226.178])
+ d=1e100.net; s=20230601; t=1739531016; x=1740135816;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NqbdYFoBt8oeHTnPGHDpmggaUCavRYcVRDCzKVS1730=;
+ b=UtC9IYcmyxtU7kOPcP5CMNlAo3KYNK+yNqde4Hu9qEaDccCotUzRN8pX/T1Y7IdRA1
+ uY5FrW4ndbhENa4fG/G7ooynVuhYqsR2lGg0IIgm7D3ec4gKnbCLmKtR2Cn83rp7k60i
+ HNLY3o5JG/JPpXRH2K8/sFvXbhz/IGNP1gPrDy4B+1xPGrSVBJ5LWuNjXC7ln37S+zy+
+ AAoPEhG/+unhJgo3JWmvMzgUkSRPjzp/Z+UAipWi4f0Y4tSGQs7P4pdBHEPfBlpjR+c0
+ elMNJ2X37+TC2FfewZnUND8nuIVYelXMGBzn1nXM8vI6wWtvhzf1G1KAj1EBiF2D2zjn
+ mDNA==
+X-Gm-Message-State: AOJu0Yz/JNYFwITtPrdoGXeV0AinRzq27UEaFDJMxTLD1I1w65jXLERW
+ IyIhlWpDTXqDfETpEsMVr9lnYpYHK1UHLLIt1OID0b1o9k6R7UJbLsC8arqepw==
+X-Gm-Gg: ASbGncunXZM6aSGXrss45vYkdwZsllwB1WaNne43hao+twzIILlHfPxezFBVXR+dTl2
+ q/OXN5Hn+wmv8b8u9HvyKEIpyTQIrV9ijBbFU2/zzgncn5Ftu05yJT4HAwYLLjYI8vjOyN1KebD
+ m+sT5INP+JjtK3ZUy/6EGOFgwXyAm2LbcuIiRO2L1kb2NdVm0Wn3uAAVFUudAdFYNZjlPo/T/nW
+ XjUn889DshxHuEk+/DtYo7vQHeLpKGPgZaZ2mtpJiVDpwU0JZaTXUaZMyYGBY2h/wnIqUkwvKT9
+ vX3c5RScERnI9RQwi5vMEg==
+X-Google-Smtp-Source: AGHT+IGUPx1ZWqqtHq7gYWNoHrcuBYwfW9yta6DLttmL/bsiQQ7eeHnaHsYWxSBHXAVpjV7uhDt99g==
+X-Received: by 2002:a17:903:2ac6:b0:216:725c:a12c with SMTP id
+ d9443c01a7336-220bbab3e4emr157320575ad.9.1739531016241; 
+ Fri, 14 Feb 2025 03:03:36 -0800 (PST)
+Received: from [192.168.0.113] ([116.232.67.252])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-add0987b223sm535013a12.17.2025.02.14.02.56.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Feb 2025 02:56:40 -0800 (PST)
-From: yong.huang@smartx.com
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>
-Subject: [PATCH v4 RESEND 4/4] guestperf: Add test result data into report
-Date: Fri, 14 Feb 2025 18:55:26 +0800
-Message-Id: <6303400c2983ffe5647f07caa6406f00ceae4581.1739530098.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1739530098.git.yong.huang@smartx.com>
-References: <cover.1739530098.git.yong.huang@smartx.com>
+ d9443c01a7336-220d5349019sm26775705ad.36.2025.02.14.03.03.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 14 Feb 2025 03:03:35 -0800 (PST)
+Message-ID: <6038be5f-4e25-48e4-bec4-666be4f5ed36@gmail.com>
+Date: Fri, 14 Feb 2025 19:03:32 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio: Add property documentation
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Eric Auger <eric.auger@redhat.com>
+References: <20250213135050.1426258-1-clg@redhat.com>
+ <20250213144513.32b3241f.alex.williamson@redhat.com>
+ <ef8108aa73c693cc54c08c81a14201138b14172f.camel@gmail.com>
+Content-Language: en-US
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <ef8108aa73c693cc54c08c81a14201138b14172f.camel@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=yong.huang@smartx.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,121 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
 
-The migration result data is not included in the guestperf
-report information; include the result as a report entry
-so the developer can check whether the migration was successful
-after running guestperf.
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- tests/migration-stress/guestperf/engine.py | 10 ++++++++--
- tests/migration-stress/guestperf/report.py | 20 ++++++++++++++++++++
- 2 files changed, 28 insertions(+), 2 deletions(-)
+On 2/14/25 17:31, Corvin Köhne wrote:
+> On Thu, 2025-02-13 at 14:45 -0700, Alex Williamson wrote:
+>> On Thu, 13 Feb 2025 14:50:50 +0100
+>> Cédric Le Goater <clg@redhat.com> wrote:
+>>> +    /*
+>>> +     * IGD
+>>> +     */
+>>> +
+>>> +    object_class_property_set_description(klass, /* 2.7 */
+>>> +                                          "x-igd-opregion",
+>>> +                                          "Add IGD OpRegion support for
+>>> (headless system)");
+>>
+>> [Cc Tomita and Corvin have more recent understanding of IGD options]
+>>
+>> Not necessarily for headless systems, unless others have better
+>> suggestions, maybe just "Expose host IGD OpRegion table to guest".
+>>
+> 
+> Sounds good. Note that it's required for the Intel GOP (EFI driver) and the
+> Windows driver. So, it's mandatory for non headless systems.
 
-diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
-index e11f6a8496..d8462db765 100644
---- a/tests/migration-stress/guestperf/engine.py
-+++ b/tests/migration-stress/guestperf/engine.py
-@@ -24,7 +24,7 @@
- import time
- 
- from guestperf.progress import Progress, ProgressStats
--from guestperf.report import Report
-+from guestperf.report import Report, ReportResult
- from guestperf.timings import TimingRecord, Timings
- 
- sys.path.append(os.path.join(os.path.dirname(__file__),
-@@ -276,7 +276,11 @@ def _migrate(self, hardware, scenario, src,
-                         src_vcpu_time.extend(self._vcpu_timing(src_pid, src_threads))
-                         sleep_secs -= 1
- 
--                return [progress_history, src_qemu_time, src_vcpu_time]
-+                result = ReportResult()
-+                if progress._status == "completed" and not paused:
-+                    result = ReportResult(True)
-+
-+                return [progress_history, src_qemu_time, src_vcpu_time, result]
- 
-             if self._verbose and (loop % 20) == 0:
-                 print("Iter %d: remain %5dMB of %5dMB (total %5dMB @ %5dMb/sec)" % (
-@@ -490,6 +494,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
-             progress_history = ret[0]
-             qemu_timings = ret[1]
-             vcpu_timings = ret[2]
-+            result = ret[3]
-             if uri[0:5] == "unix:" and os.path.exists(uri[5:]):
-                 os.remove(uri[5:])
- 
-@@ -509,6 +514,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
-                           Timings(self._get_timings(src) + self._get_timings(dst)),
-                           Timings(qemu_timings),
-                           Timings(vcpu_timings),
-+                          result,
-                           self._binary, self._dst_host, self._kernel,
-                           self._initrd, self._transport, self._sleep)
-         except Exception as e:
-diff --git a/tests/migration-stress/guestperf/report.py b/tests/migration-stress/guestperf/report.py
-index 1efd40c868..e135e01be6 100644
---- a/tests/migration-stress/guestperf/report.py
-+++ b/tests/migration-stress/guestperf/report.py
-@@ -24,6 +24,22 @@
- from guestperf.progress import Progress
- from guestperf.timings import Timings
- 
-+class ReportResult(object):
-+
-+    def __init__(self, success=False):
-+        self._success = success
-+
-+    def serialize(self):
-+        return {
-+            "success": self._success,
-+        }
-+
-+    @classmethod
-+    def deserialize(cls, data):
-+        return cls(
-+            data["success"])
-+
-+
- class Report(object):
- 
-     def __init__(self,
-@@ -33,6 +49,7 @@ def __init__(self,
-                  guest_timings,
-                  qemu_timings,
-                  vcpu_timings,
-+                 result,
-                  binary,
-                  dst_host,
-                  kernel,
-@@ -46,6 +63,7 @@ def __init__(self,
-         self._guest_timings = guest_timings
-         self._qemu_timings = qemu_timings
-         self._vcpu_timings = vcpu_timings
-+        self._result = result
-         self._binary = binary
-         self._dst_host = dst_host
-         self._kernel = kernel
-@@ -61,6 +79,7 @@ def serialize(self):
-             "guest_timings": self._guest_timings.serialize(),
-             "qemu_timings": self._qemu_timings.serialize(),
-             "vcpu_timings": self._vcpu_timings.serialize(),
-+            "result": self._result.serialize(),
-             "binary": self._binary,
-             "dst_host": self._dst_host,
-             "kernel": self._kernel,
-@@ -78,6 +97,7 @@ def deserialize(cls, data):
-             Timings.deserialize(data["guest_timings"]),
-             Timings.deserialize(data["qemu_timings"]),
-             Timings.deserialize(data["vcpu_timings"]),
-+            ReportResult.deserialize(data["result"]),
-             data["binary"],
-             data["dst_host"],
-             data["kernel"],
--- 
-2.27.0
+"Expose host IGD OpRegion to guest" sounds more accurate I think.
+OpRegion is not a table, it contains Video BIOS Table (VBT) for display
+output port info.
 
+>>> +    object_class_property_set_description(klass, /* 2.7 (See c4c45e943e51)
+>>> */
+>>> +                                          "x-igd-gms",
+>>> +                                          "Add Intel graphics legacy mode
+>>> device assignment support. "
+>>> +                                          "Assign 00:02.0 from the host to
+>>> 00:02.0 in the VM");
+>>
+>> Not really.  Tomita added a useful comment and commit log in
+>> 37f05a59e869.  Perhaps:
+>>
+>> "Override DVMT Pre-Allocated value for IGD stolen memory. (32MiB units)"
+
+"Override IGD data stolen memory size. (32MiB units)" might be better.
+
+> Nit: This sets the Graphics Mode Select value of the GMCH Graphics Control
+> register. While we currently only support values in the range of 0x00 - 0x40, I
+> don't see a reason to not support 0xF0 - 0xFE which uses 4 MiB increments.
+
+I skipped the 4MiB values before for keeping the conditions simple and
+these 32 MiB values should cover most cases. We can consider supporting
+4MiB values.
 
