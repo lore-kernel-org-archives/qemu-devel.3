@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A6DFC02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C6EC021A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwSu-0004PU-KH; Fri, 14 Feb 2025 09:14:48 -0500
+	id 1tiwUZ-0007PV-7B; Fri, 14 Feb 2025 09:16:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwSt-0004Ox-QR
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:14:47 -0500
+ id 1tiwTj-0006Ey-1f
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:39 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwSs-0004SU-CD
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:14:47 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtRAx011445;
- Fri, 14 Feb 2025 14:14:44 GMT
+ id 1tiwTX-0004il-C6
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:31 -0500
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtT5A001920;
+ Fri, 14 Feb 2025 14:15:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=Uq/w+DXMHomToGU2bYKJT7qBPRUqltM3NGgb7hJdbvA=; b=
- Q3V76ZSgefR0rs8plV3i6apVA/i1zhnLyaT3xm0pCtJHMSyxbv290rTdv3W5H0Bf
- 5WFzsoHlniYJQlarRfI0YYOGYXFSGofQ/toTDhy5XCXTXobLuSrjXxzlH+WYzDCf
- zvh3KZCSZqNxUcjWAD9S9iJhnjwsTBSAd41BTUdmYbjVdAwcAT12A/2Cw75GXXud
- XlNAg/BPBuk9ac/W0r5RxUnBv7oN5TAY+fFu1fMP0ibRblJs3dVqOhoiCKiYipQp
- bUlI71dSH0eBYJuHpTPueSJPGcV06tkNGJNkLQGxLADKsjzTWxIWm2vADX+aboTj
- tdM254GrxTgJ9I+eN2oQMQ==
+ corp-2023-11-20; bh=Wts3mBRNqK+I2caIjXiPPXIryy+hjiXMI9LaT5gNu9k=; b=
+ UhIcg1HHoAhnFk5BBfYN67UIMWrr8BCXCRuAaUqQ9DkUHGLp8RT7G+D/TWERkGyF
+ A0hbq5PBVZeTEKsIruKwv+xR9I6Xg26XNrolj2S3YXUGH+j8+qCcwnPH1Rq2BTHz
+ Yl6pJFiHLZEeYjfwvk/ZyrQBF/GR3WSb4RawAeiU0wlbsrts2MIogP2oj3GpjaaV
+ 7tIHjFD29ETuntodcEwyBX9oYWZauuiKkqIYHc1enLzAZThGEGv+/2twoJkNoYZB
+ 0224udrLoItyQRvjV/L8yYk9Yk8pE3sAnRI6J9DLSCHT47Ai3gfp/Zlx9hws/3Vi
+ tHfty37h6EIWy31a6u7Jlg==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0sqbwmc-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0qyuswp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:43 +0000 (GMT)
+ Fri, 14 Feb 2025 14:15:13 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51ECxs2X025360; Fri, 14 Feb 2025 14:14:43 GMT
+ with ESMTP id 51ECO40k025170; Fri, 14 Feb 2025 14:15:12 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwqksg90-1
+ 44nwqksgx7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:43 +0000
+ Fri, 14 Feb 2025 14:15:12 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETPX006920;
- Fri, 14 Feb 2025 14:14:42 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETQH006920;
+ Fri, 14 Feb 2025 14:15:12 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 44nwqksg2h-11; Fri, 14 Feb 2025 14:14:42 +0000
+ ESMTP id 44nwqksg2h-33; Fri, 14 Feb 2025 14:15:12 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 10/45] vfio/container: export vfio_legacy_dma_map
-Date: Fri, 14 Feb 2025 06:13:52 -0800
-Message-Id: <1739542467-226739-11-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 32/45] physmem: qemu_ram_get_fd_offset
+Date: Fri, 14 Feb 2025 06:14:14 -0800
+Message-Id: <1739542467-226739-33-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
 References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
@@ -77,8 +77,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2501170000 definitions=main-2502140104
-X-Proofpoint-ORIG-GUID: PmCt7Nza1NjjnMBDL9F7SkI-bQUmyz9_
-X-Proofpoint-GUID: PmCt7Nza1NjjnMBDL9F7SkI-bQUmyz9_
+X-Proofpoint-ORIG-GUID: hU3oG7veGmF700wue36VZAvuTpjpqnn3
+X-Proofpoint-GUID: hU3oG7veGmF700wue36VZAvuTpjpqnn3
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,44 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Export vfio_legacy_dma_map so it may be referenced outside the file
-in a subsequent patch.
+Define qemu_ram_get_fd_offset, so CPR can map a memory region using
+IOMMU_IOAS_MAP_FILE in a subsequent patch.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/container.c           | 4 ++--
- include/hw/vfio/vfio-common.h | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/exec/cpu-common.h | 1 +
+ system/physmem.c          | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 21f2706..931c435 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -176,8 +176,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
-     return 0;
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index b1d76d6..0cab252 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -95,6 +95,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
+ const char *qemu_ram_get_idstr(RAMBlock *rb);
+ void *qemu_ram_get_host_addr(RAMBlock *rb);
+ ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
++ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
+ ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
+ ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
+ bool qemu_ram_is_shared(RAMBlock *rb);
+diff --git a/system/physmem.c b/system/physmem.c
+index 0bcfc6c..c41a80b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1569,6 +1569,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
+     return rb->offset;
  }
  
--static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
--                               ram_addr_t size, void *vaddr, bool readonly)
-+int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-+                        ram_addr_t size, void *vaddr, bool readonly)
- {
-     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-                                                   bcontainer);
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 780646e..7f33476 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -280,6 +280,9 @@ void vfio_reset_bytes_transferred(void);
- bool vfio_device_state_is_running(VFIODevice *vbasedev);
- bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
- 
-+int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-+                        ram_addr_t size, void *vaddr, bool readonly);
++ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
++{
++    return rb->fd_offset;
++}
 +
- #ifdef CONFIG_LINUX
- int vfio_get_region_info(VFIODevice *vbasedev, int index,
-                          struct vfio_region_info **info);
+ ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
+ {
+     return rb->used_length;
 -- 
 1.8.3.1
 
