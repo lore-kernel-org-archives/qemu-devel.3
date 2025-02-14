@@ -4,115 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E991C021A6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F5BC021A9
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 20:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj2O1-0008W2-Mm; Fri, 14 Feb 2025 15:34:13 -0500
+	id 1tj2PD-0001Ba-MJ; Fri, 14 Feb 2025 15:35:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2Mi-0006b5-KM
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:55 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2Mz-0006er-N7
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:08 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2MU-0002Ci-VV
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:37 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2Mx-0002Fg-05
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:04 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 56C1C21182;
- Fri, 14 Feb 2025 20:32:13 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 5E5471F395;
+ Fri, 14 Feb 2025 20:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565135; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1739565149; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=E+/qPCrz8sghjtJGKRQ0DdsNhIuqXJV4GeH4Pm7Ur9pT2ZC1MiekwMzcO3SyF+ARzUa8IA
- dokJBvf4nviHbyBQHD3+UtRZFwtky56pDeQHJYU0qgT3y+2MojUJSRYzGuoZYbLI7hb6Nu
- DmdnFYRs0oMFr1VADZC520hiCmOlMzo=
+ bh=9jMS6Erz+zBLxX49XMODJ4Sas/Uf3cEfXpntQP6Ber8=;
+ b=ddDHfPnw9ssBREw5EPpIglL9RqyBFCdlzBHhfLVNiOj8tBoe0QejsgFBn8uzYuYnP7+Cwq
+ YDG0gQKFrI8gWBpEexAhEmFCaTMSadKahf1cR7EHgcirUyJSYOpK0AgzPV6jXG07ODSXWt
+ hlnfq7Fd+F3S4QHhD3y8vhGXPpHGY1c=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565135;
+ s=susede2_ed25519; t=1739565149;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=z5G7zDmeydLV6uw35Q+H7N6F+yIBJtUwahZ3GCFuSCvetutKQ9IWFf31m5kVuyugy7N9dR
- F9lp32X7Er4dR6AA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=x8pdgiw+;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lyMv7fAx
+ bh=9jMS6Erz+zBLxX49XMODJ4Sas/Uf3cEfXpntQP6Ber8=;
+ b=rsK5QbMUKdQKCc2fRKEkc+FqGhMVGZdlQ9g/C+snJF9ZokKMTueP4e/bso2FcGjWmbGICz
+ 3fybGHjUYfPnEsAg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IAemkKhP;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=u7FlOXD3
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565133; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1739565146; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=x8pdgiw+aUpEJ0lwDudZ2egHcP4kPNXYw3heL1k1lTI1oagRXhRCl+jPw7e1mo6k28evRk
- nRcF1sW1Q58VCk48FUyGYUe3iJgjmDFzzYMbKgnrbkTqCFmEXue106J6WK2qPeg5qRb6Sj
- dLGY+XeR6sX3dKCifKbkD04tYMIfiSo=
+ bh=9jMS6Erz+zBLxX49XMODJ4Sas/Uf3cEfXpntQP6Ber8=;
+ b=IAemkKhPvNxZYcxp3eU85xpLSABlcqsXcJgiI0KtT1yUn/u79hmakVVg+YL5EjUjEEfq6b
+ IeSeB42Ri18SlV93MahgfdqhNWetO5U+vtaSLXKToEi/9Xf1aP/wWokjHZP0XTJVwxYXaL
+ Re5rkfYw77QR2cExUPol9P8xUSiYECo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565133;
+ s=susede2_ed25519; t=1739565146;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z7/MJJlGz7WcMfSW1AjO9ksPI7pky5U+1f5GQNmsyWM=;
- b=lyMv7fAx5s+iiGSSv7DqbM1NUWGPx18i1ow8rKZP7AKL2WUS15jmmmt48r1E6WdSi4FEhu
- V6Ce/VnNvvbwXGBg==
+ bh=9jMS6Erz+zBLxX49XMODJ4Sas/Uf3cEfXpntQP6Ber8=;
+ b=u7FlOXD3Kzqp1HkVSolvswJyTgnqw3N3n/qooud3cHbUzKwILrHzc4WAvdC7pj2APIBA/h
+ XKiu+x3ZlKJ+iPBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EDCC813AF0;
- Fri, 14 Feb 2025 20:32:11 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 41EAF13AFC;
+ Fri, 14 Feb 2025 20:32:25 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8I4zKkuor2cgEgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:11 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OMwUAFmor2cgEgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:25 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 05/22] io: Add a read flag for relaxed EOF
-Date: Fri, 14 Feb 2025 17:31:42 -0300
-Message-Id: <20250214203159.30168-6-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 13/22] migration: Reject qmp_migrate_cancel after postcopy
+Date: Fri, 14 Feb 2025 17:31:50 -0300
+Message-Id: <20250214203159.30168-14-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250214203159.30168-1-farosas@suse.de>
 References: <20250214203159.30168-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 56C1C21182
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+X-Rspamd-Queue-Id: 5E5471F395
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
  RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
  RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RBL_NIXSPAM_FAIL(0.00)[2a07:de40:b281:104:10:150:64:97:server fail];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCPT_COUNT_THREE(0.00)[3];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_NIXSPAM_FAIL(0.00)[2a07:de40:b281:104:10:150:64:97:server fail];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,45 +129,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a read flag that can inform a channel that it's ok to receive an
-EOF at any moment. Channels that have some form of strict EOF
-tracking, such as TLS session termination, may choose to ignore EOF
-errors with the use of this flag.
+After postcopy has started, it's not possible to recover the source
+machine in case a migration error occurs because the destination has
+already been changing the state of the machine. For that same reason,
+it doesn't make sense to try to cancel the migration after postcopy
+has started. Reject the cancel command during postcopy.
 
-This is being added for compatibility with older migration streams
-that do not include a TLS termination step.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-ID: <20250213175927.19642-6-farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/io/channel.h | 1 +
- io/channel-tls.c     | 1 +
- 2 files changed, 2 insertions(+)
+ migration/migration.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 58940eead5..62b657109c 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -35,6 +35,7 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
- #define QIO_CHANNEL_WRITE_FLAG_ZERO_COPY 0x1
+diff --git a/migration/migration.c b/migration/migration.c
+index c39cedef3b..48c9ad3c96 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2251,7 +2251,18 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
  
- #define QIO_CHANNEL_READ_FLAG_MSG_PEEK 0x1
-+#define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
+ void qmp_migrate_cancel(Error **errp)
+ {
+-    migration_cancel(NULL);
++    /*
++     * After postcopy migration has started, the source machine is not
++     * recoverable in case of a migration error. This also means the
++     * cancel command cannot be used as cancel should allow the
++     * machine to continue operation.
++     */
++    if (migration_in_postcopy()) {
++        error_setg(errp, "Postcopy migration in progress, cannot cancel.");
++        return;
++    }
++
++    migration_cancel();
+ }
  
- typedef enum QIOChannelFeature QIOChannelFeature;
- 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index ecde6b57bf..caf8301a9e 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -359,6 +359,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-             tioc->session,
-             iov[i].iov_base,
-             iov[i].iov_len,
-+            flags & QIO_CHANNEL_READ_FLAG_RELAXED_EOF ||
-             qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
-             errp);
-         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+ void qmp_migrate_continue(MigrationStatus state, Error **errp)
 -- 
 2.35.3
 
