@@ -4,105 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26CE1C02198
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB5FC02198
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj74b-00043f-RL; Fri, 14 Feb 2025 20:34:26 -0500
+	id 1tj74u-000471-R2; Fri, 14 Feb 2025 20:34:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2MB-0006Si-Vj
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:21 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2NI-0007Cn-O6
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:26 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2MA-0002AT-05
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:32:15 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tj2NG-0002IB-Ca
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:33:24 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B4EB41F385;
- Fri, 14 Feb 2025 20:32:07 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8231221181;
+ Fri, 14 Feb 2025 20:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565127; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1739565161; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IJaxIoaIwwVEqMpumZlQRNSiUpoW128yjQ9npoemM5w=;
- b=hVJXZ2yI3vuZyO/kyrLSfJyTD9KL/WjgOSNgxKyY5lqSn4NOES5gJ0GinHp9aBY9lcll/F
- M+VFpcCWhjCBJwlfHjdU2tBMxUYqbjwH2aTJDOoGZmvDGBPKcUnJvF7CS2pZ+eveSnNO90
- l0KuI0yEfGsIG2aQlglcAHIDituyXoI=
+ bh=eQh8sI+kCzbFwwHvCWXBzG2ovyzZMFf40klEDt6MXs8=;
+ b=0yMoyLeK28ggmzI+vAbJ/gpZqNFXqs8lYtQQOTXGegPIquP8ORqzYvx1KdKgN0zegegnGf
+ 5bWLj5+VKJ0Wa4K++gVgKqwxKFNW8NYKD8kK/JhHZonHL2ts2sGPskpQ7cgG3TduXWjc8U
+ qU1L7Z09PQenNoRIfSnW/M2g2S9Y+XM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565127;
+ s=susede2_ed25519; t=1739565161;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IJaxIoaIwwVEqMpumZlQRNSiUpoW128yjQ9npoemM5w=;
- b=ot7WBMmXY5HM/C2J2pVqly2HkYYuxs+PF/hGzVIBnLjH9YlbnqKUgvuAGX8dIfIlMwkYqm
- 1OlxBVJmhXh6lpAQ==
-Authentication-Results: smtp-out2.suse.de;
+ bh=eQh8sI+kCzbFwwHvCWXBzG2ovyzZMFf40klEDt6MXs8=;
+ b=pAKE+b+//bndH2c1MefjpXtTs9b2NfK8sNh+B0R6JDNJJ3QhtAB62EDhCUNQNFqzXycY+K
+ ds68H9VSMZyMTdDA==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739565127; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1739565161; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IJaxIoaIwwVEqMpumZlQRNSiUpoW128yjQ9npoemM5w=;
- b=hVJXZ2yI3vuZyO/kyrLSfJyTD9KL/WjgOSNgxKyY5lqSn4NOES5gJ0GinHp9aBY9lcll/F
- M+VFpcCWhjCBJwlfHjdU2tBMxUYqbjwH2aTJDOoGZmvDGBPKcUnJvF7CS2pZ+eveSnNO90
- l0KuI0yEfGsIG2aQlglcAHIDituyXoI=
+ bh=eQh8sI+kCzbFwwHvCWXBzG2ovyzZMFf40klEDt6MXs8=;
+ b=0yMoyLeK28ggmzI+vAbJ/gpZqNFXqs8lYtQQOTXGegPIquP8ORqzYvx1KdKgN0zegegnGf
+ 5bWLj5+VKJ0Wa4K++gVgKqwxKFNW8NYKD8kK/JhHZonHL2ts2sGPskpQ7cgG3TduXWjc8U
+ qU1L7Z09PQenNoRIfSnW/M2g2S9Y+XM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739565127;
+ s=susede2_ed25519; t=1739565161;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IJaxIoaIwwVEqMpumZlQRNSiUpoW128yjQ9npoemM5w=;
- b=ot7WBMmXY5HM/C2J2pVqly2HkYYuxs+PF/hGzVIBnLjH9YlbnqKUgvuAGX8dIfIlMwkYqm
- 1OlxBVJmhXh6lpAQ==
+ bh=eQh8sI+kCzbFwwHvCWXBzG2ovyzZMFf40klEDt6MXs8=;
+ b=pAKE+b+//bndH2c1MefjpXtTs9b2NfK8sNh+B0R6JDNJJ3QhtAB62EDhCUNQNFqzXycY+K
+ ds68H9VSMZyMTdDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5B71D13AEB;
- Fri, 14 Feb 2025 20:32:06 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DAB9C13AEB;
+ Fri, 14 Feb 2025 20:32:39 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qNSuBkaor2cgEgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:06 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GJyoJWeor2cgEgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 20:32:39 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
+Cc: Peter Xu <peterx@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 02/22] io: tls: Add qio_channel_tls_bye
-Date: Fri, 14 Feb 2025 17:31:39 -0300
-Message-Id: <20250214203159.30168-3-farosas@suse.de>
+Subject: [PULL 21/22] guestperf: Introduce multifd compression option
+Date: Fri, 14 Feb 2025 17:31:58 -0300
+Message-Id: <20250214203159.30168-22-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250214203159.30168-1-farosas@suse.de>
 References: <20250214203159.30168-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_HAS_DN(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,167 +118,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a task dispatcher for gnutls_bye similar to the
-qio_channel_tls_handshake_task(). The gnutls_bye() call might be
-interrupted and so it needs to be rescheduled.
+From: Hyman Huang <yong.huang@smartx.com>
 
-The migration code will make use of this to help the migration
-destination identify a premature EOF. Once the session termination is
-in place, any EOF that happens before the source issued gnutls_bye()
-will be considered an error.
+Guestperf tool does not cover the multifd compression option
+currently, it is worth supporting so that developers can
+analysis the migration performance with different
+compression algorithms.
 
+Multifd support 4 compression algorithms currently:
+zlib, zstd, qpl, uadk
+
+To request that multifd with the specified compression
+algorithm such as zlib:
+$ ./tests/migration-stress/guestperf.py \
+    --multifd --multifd-channels 4 --multifd-compression zlib \
+    --output output.json
+
+To run the entire standardized set of multifd compression
+comparisons, with unix migration:
+$ ./tests/migration-stress/guestperf-batch.py \
+    --dst-host localhost --transport unix \
+    --filter compr-multifd-compression* --output outputdir
+
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <c0e3313d81e8130f8119ef4f242e4625886278cf.1739530098.git.yong.huang@smartx.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/io/channel-tls.h | 12 ++++++
- io/channel-tls.c         | 84 ++++++++++++++++++++++++++++++++++++++++
- io/trace-events          |  5 +++
- 3 files changed, 101 insertions(+)
+ tests/migration-stress/guestperf/comparison.py | 13 +++++++++++++
+ tests/migration-stress/guestperf/engine.py     | 14 ++++++++++++++
+ tests/migration-stress/guestperf/scenario.py   |  7 +++++--
+ tests/migration-stress/guestperf/shell.py      |  3 +++
+ 4 files changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-index 26c67f17e2..7e9023570d 100644
---- a/include/io/channel-tls.h
-+++ b/include/io/channel-tls.h
-@@ -49,8 +49,20 @@ struct QIOChannelTLS {
-     QCryptoTLSSession *session;
-     QIOChannelShutdown shutdown;
-     guint hs_ioc_tag;
-+    guint bye_ioc_tag;
- };
+diff --git a/tests/migration-stress/guestperf/comparison.py b/tests/migration-stress/guestperf/comparison.py
+index 40e9d2eb1d..dee3ac25e4 100644
+--- a/tests/migration-stress/guestperf/comparison.py
++++ b/tests/migration-stress/guestperf/comparison.py
+@@ -158,4 +158,17 @@ def __init__(self, name, scenarios):
+         Scenario("compr-dirty-limit-50MB",
+                  dirty_limit=True, vcpu_dirty_limit=50),
+     ]),
++
++    # Looking at effect of multifd with
++    # different compression algorithms
++    Comparison("compr-multifd-compression", scenarios = [
++        Scenario("compr-multifd-compression-zlib",
++                 multifd=True, multifd_channels=2, multifd_compression="zlib"),
++        Scenario("compr-multifd-compression-zstd",
++                 multifd=True, multifd_channels=2, multifd_compression="zstd"),
++        Scenario("compr-multifd-compression-qpl",
++                 multifd=True, multifd_channels=2, multifd_compression="qpl"),
++        Scenario("compr-multifd-compression-uadk",
++                 multifd=True, multifd_channels=2, multifd_compression="uadk"),
++    ]),
+ ]
+diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
+index 4b15322e8d..e11f6a8496 100644
+--- a/tests/migration-stress/guestperf/engine.py
++++ b/tests/migration-stress/guestperf/engine.py
+@@ -31,6 +31,8 @@
+                              '..', '..', '..', 'python'))
+ from qemu.machine import QEMUMachine
  
-+/**
-+ * qio_channel_tls_bye:
-+ * @ioc: the TLS channel object
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Perform the TLS session termination. This method will return
-+ * immediately and the termination will continue in the background,
-+ * provided the main loop is running.
-+ */
-+void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
-+
- /**
-  * qio_channel_tls_new_server:
-  * @master: the underlying channel object
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index aab630e5ae..517ce190a4 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -247,6 +247,85 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
-     qio_channel_tls_handshake_task(ioc, task, context);
- }
++# multifd supported compression algorithms
++MULTIFD_CMP_ALGS = ("zlib", "zstd", "qpl", "uadk")
  
-+static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
-+                                       gpointer user_data);
-+
-+static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-+                                     GMainContext *context)
-+{
-+    GIOCondition condition;
-+    QIOChannelTLSData *data;
-+    int status;
-+    Error *err = NULL;
-+
-+    status = qcrypto_tls_session_bye(ioc->session, &err);
-+
-+    if (status < 0) {
-+        trace_qio_channel_tls_bye_fail(ioc);
-+        qio_task_set_error(task, err);
-+        qio_task_complete(task);
-+        return;
-+    }
-+
-+    if (status == QCRYPTO_TLS_BYE_COMPLETE) {
-+        qio_task_complete(task);
-+        return;
-+    }
-+
-+    data = g_new0(typeof(*data), 1);
-+    data->task = task;
-+    data->context = context;
-+
-+    if (context) {
-+        g_main_context_ref(context);
-+    }
-+
-+    if (status == QCRYPTO_TLS_BYE_SENDING) {
-+        condition = G_IO_OUT;
-+    } else {
-+        condition = G_IO_IN;
-+    }
-+
-+    trace_qio_channel_tls_bye_pending(ioc, status);
-+    ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
-+                                                  qio_channel_tls_bye_io,
-+                                                  data, NULL, context);
-+}
-+
-+
-+static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
-+                                       gpointer user_data)
-+{
-+    QIOChannelTLSData *data = user_data;
-+    QIOTask *task = data->task;
-+    GMainContext *context = data->context;
-+    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
-+
-+    tioc->bye_ioc_tag = 0;
-+    g_free(data);
-+    qio_channel_tls_bye_task(tioc, task, context);
-+
-+    if (context) {
-+        g_main_context_unref(context);
-+    }
-+
-+    return FALSE;
-+}
-+
-+static void propagate_error(QIOTask *task, gpointer opaque)
-+{
-+    qio_task_propagate_error(task, opaque);
-+}
-+
-+void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
-+{
-+    QIOTask *task;
-+
-+    task = qio_task_new(OBJECT(ioc), propagate_error, errp, NULL);
-+
-+    trace_qio_channel_tls_bye_start(ioc);
-+    qio_channel_tls_bye_task(ioc, task, NULL);
-+}
+ class Engine(object):
  
- static void qio_channel_tls_init(Object *obj G_GNUC_UNUSED)
- {
-@@ -379,6 +458,11 @@ static int qio_channel_tls_close(QIOChannel *ioc,
-         g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
-     }
+@@ -191,6 +193,12 @@ def _migrate(self, hardware, scenario, src,
+                                scenario._compression_xbzrle_cache))
  
-+    if (tioc->bye_ioc_tag) {
-+        trace_qio_channel_tls_bye_cancel(ioc);
-+        g_clear_handle_id(&tioc->bye_ioc_tag, g_source_remove);
-+    }
+         if scenario._multifd:
++            if (scenario._multifd_compression and
++                (scenario._multifd_compression not in MULTIFD_CMP_ALGS)):
++                    raise Exception("unsupported multifd compression "
++                                    "algorithm: %s" %
++                                    scenario._multifd_compression)
 +
-     return qio_channel_close(tioc->master, errp);
- }
+             resp = src.cmd("migrate-set-capabilities",
+                            capabilities = [
+                                { "capability": "multifd",
+@@ -206,6 +214,12 @@ def _migrate(self, hardware, scenario, src,
+             resp = dst.cmd("migrate-set-parameters",
+                            multifd_channels=scenario._multifd_channels)
  
-diff --git a/io/trace-events b/io/trace-events
-index d4c0f84a9a..dc3a63ba1f 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -44,6 +44,11 @@ qio_channel_tls_handshake_pending(void *ioc, int status) "TLS handshake pending
- qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
- qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
- qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
-+qio_channel_tls_bye_start(void *ioc) "TLS termination start ioc=%p"
-+qio_channel_tls_bye_pending(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
-+qio_channel_tls_bye_fail(void *ioc) "TLS termination fail ioc=%p"
-+qio_channel_tls_bye_complete(void *ioc) "TLS termination complete ioc=%p"
-+qio_channel_tls_bye_cancel(void *ioc) "TLS termination cancel ioc=%p"
- qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
- qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
++            if scenario._multifd_compression:
++                resp = src.cmd("migrate-set-parameters",
++                    multifd_compression=scenario._multifd_compression)
++                resp = dst.cmd("migrate-set-parameters",
++                    multifd_compression=scenario._multifd_compression)
++
+         if scenario._dirty_limit:
+             if not hardware._dirty_ring_size:
+                 raise Exception("dirty ring size must be configured when "
+diff --git a/tests/migration-stress/guestperf/scenario.py b/tests/migration-stress/guestperf/scenario.py
+index 154c4f5d5f..4be7fafebf 100644
+--- a/tests/migration-stress/guestperf/scenario.py
++++ b/tests/migration-stress/guestperf/scenario.py
+@@ -30,7 +30,7 @@ def __init__(self, name,
+                  auto_converge=False, auto_converge_step=10,
+                  compression_mt=False, compression_mt_threads=1,
+                  compression_xbzrle=False, compression_xbzrle_cache=10,
+-                 multifd=False, multifd_channels=2,
++                 multifd=False, multifd_channels=2, multifd_compression="",
+                  dirty_limit=False, x_vcpu_dirty_limit_period=500,
+                  vcpu_dirty_limit=1):
  
+@@ -61,6 +61,7 @@ def __init__(self, name,
+ 
+         self._multifd = multifd
+         self._multifd_channels = multifd_channels
++        self._multifd_compression = multifd_compression
+ 
+         self._dirty_limit = dirty_limit
+         self._x_vcpu_dirty_limit_period = x_vcpu_dirty_limit_period
+@@ -85,6 +86,7 @@ def serialize(self):
+             "compression_xbzrle_cache": self._compression_xbzrle_cache,
+             "multifd": self._multifd,
+             "multifd_channels": self._multifd_channels,
++            "multifd_compression": self._multifd_compression,
+             "dirty_limit": self._dirty_limit,
+             "x_vcpu_dirty_limit_period": self._x_vcpu_dirty_limit_period,
+             "vcpu_dirty_limit": self._vcpu_dirty_limit,
+@@ -109,4 +111,5 @@ def deserialize(cls, data):
+             data["compression_xbzrle"],
+             data["compression_xbzrle_cache"],
+             data["multifd"],
+-            data["multifd_channels"])
++            data["multifd_channels"],
++            data["multifd_compression"])
+diff --git a/tests/migration-stress/guestperf/shell.py b/tests/migration-stress/guestperf/shell.py
+index 046afeb84e..63bbe3226c 100644
+--- a/tests/migration-stress/guestperf/shell.py
++++ b/tests/migration-stress/guestperf/shell.py
+@@ -131,6 +131,8 @@ def __init__(self):
+                             action="store_true")
+         parser.add_argument("--multifd-channels", dest="multifd_channels",
+                             default=2, type=int)
++        parser.add_argument("--multifd-compression", dest="multifd_compression",
++                            default="")
+ 
+         parser.add_argument("--dirty-limit", dest="dirty_limit", default=False,
+                             action="store_true")
+@@ -167,6 +169,7 @@ def get_scenario(self, args):
+ 
+                         multifd=args.multifd,
+                         multifd_channels=args.multifd_channels,
++                        multifd_compression=args.multifd_compression,
+ 
+                         dirty_limit=args.dirty_limit,
+                         x_vcpu_dirty_limit_period=\
 -- 
 2.35.3
 
