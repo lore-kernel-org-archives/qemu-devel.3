@@ -4,83 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB9EC021A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 12:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40958C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 13:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tivBh-0006qI-4G; Fri, 14 Feb 2025 07:52:57 -0500
+	id 1tivIo-0008Mb-Pz; Fri, 14 Feb 2025 08:00:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1tivBf-0006q6-KW
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 07:52:56 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1tivBd-0008IV-UP
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 07:52:55 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-aaec111762bso453505966b.2
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 04:52:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1739537571; x=1740142371; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=owhvxhaazV6aC+vk1VDvoO/TSQgrcGu/+wvMUSru++E=;
- b=C5lYAU8THpq5oYSGGCdUPK4A6qVYwqxMIoy6a8o6k3G435OEppkfu6q1q2aiUWlKha
- +M5LwQ3oSarr37gcvvAcuTQ20kQRrR3Pqhp/uK4bpgG9T1hmfc7AjWwDDYQxe9xuljGE
- lQPtgvI+30iDYO5pjmltTRm7ff1PEMGdGwGBDAelSKbZbYZNRsuSChdUd9/++YB6upS3
- rSRkkPHN+PUR/lDgqjSn3wpA0lIvNtmdRJDSpM8UmuA2NlumpwsL1QWHfaPrQB7EyqYi
- 6vHg8qwOddNm20atmDn+i5drS8e/4/dQnOMEMdncaXl57zq2oreEG42c6ERIkXdqeWQN
- yTKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739537571; x=1740142371;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=owhvxhaazV6aC+vk1VDvoO/TSQgrcGu/+wvMUSru++E=;
- b=gxREPY58TR7x9tjLRtPuGM+o1ZxWqfgrhZPPYEQ2MmcMTvpJ3Akek7Xp0wVPb5vKnD
- UB93Ia0RIGngTvJ2zX8mncnqlprdEGc3D6LORqBxi1IosfoeLL6fs9oYQ3PqnRPz4mfP
- ldLBeGh2bxDQNZY9i36MqPRlTBuPUEdSr7KoePPhNzSQalZZpPVa04z2g6KN2M/9Mowb
- i3kcHTUDDgZNsuGrfPVuxQv5VMzjy8devcvJ/Cb34bOnR01Goj/jeBon79lQf3Nouc0X
- vbozEcgQELiB5z3HEgfocdViL/ADxjMzgduBY83oQiRPawRTfs0m5kcUwmxycUf3pvlb
- oSfg==
-X-Gm-Message-State: AOJu0YwrTHeH673hpZ27mhBv1iBniIWshq6f6q2IgzwG2HnPLo4ra+mP
- 5FKFFIzS0kU8D873rriaknVW6A3B/dDxV9d1gSOGAWbp7YffP6eL7qT5zNVLoxdGdmIk/iRTtAv
- 0Bn+yeqay7o5Pmbe0f8WJfOTPJznSdp1Jx/btpyTcmHH/aaQojQ==
-X-Gm-Gg: ASbGncsc47hRS1Q7D4JQ/ZdTvoq2y9JWNtgqZts+5gmjuYHdiExc7X3bNxU5/+K8gOZ
- dpgx6NgSlOEhDN3cK8fSKkXfuRnDzyVpcPCIytWGCs3cYhnPRScXa9QmSC2YR7TzIWCz0c8m5PO
- fSYNeBbuLWucbX4vUXtcJI3Y0oXqrgTxs=
-X-Google-Smtp-Source: AGHT+IGF1DDblLKLr2AJebhd3yLO89HnK6IfjFHaOCPgFrMqT2cqUlXbM+4vvIJgrs74DlVfMP6p+ZFQCTpnaQVAfq4=
-X-Received: by 2002:a17:907:7251:b0:ab6:d7c5:124 with SMTP id
- a640c23a62f3a-ab7f347db92mr1228558866b.43.1739537571492; Fri, 14 Feb 2025
- 04:52:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tivIm-0008Jf-By; Fri, 14 Feb 2025 08:00:16 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tivIg-0000yH-S0; Fri, 14 Feb 2025 08:00:15 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 38154A42955;
+ Fri, 14 Feb 2025 12:58:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC04AC4CED1;
+ Fri, 14 Feb 2025 12:59:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1739537998;
+ bh=b7jEQVxRxS7duBNkhVIGCKZV1lnGUW/SzqQxaUyGNAg=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=tH06c+WV9rB154/hPW3OP4pVrJoVzM5FKFH73aNMtVmKjxx0z1r5GgMpodwrlTJqm
+ kRtUBPxPicxz8x613JG254Ol1AvHOpMa80A7NKWwKIbdJnUf8DhOPHPWt3huJEWV8U
+ AeqfYFjh9I6+MwKKE9WHmo0JS77maS4v6NnaRMaNMyJsJngk84oWMKBF4eEKtw2/3v
+ iTj4LLMdxF8DjTPdAyW71iQBkytfs14ai+YD7Ii3X12l6nU71XFh4wpDGV9jCjj9Vr
+ hi9PCzeqc/POjHfDzlU8UyUy4ZB1N4o+PjdcEkvJ9vH26CMqPHkpuKjWL5P29VKDz1
+ PKHmb/NYW8iFg==
+Date: Fri, 14 Feb 2025 13:59:52 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, gengdongjiu1@gmail.com,
+ peter.maydell@linaro.org, pbonzini@redhat.com, shan.gavin@gmail.com
+Subject: Re: [PATCH 0/4] target/arm: Improvement on memory error handling
+Message-ID: <20250214135945.322319cc@foz.lan>
+In-Reply-To: <20250214041635.608012-1-gshan@redhat.com>
+References: <20250214041635.608012-1-gshan@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20241031035319.731906-1-alistair.francis@wdc.com>
- <20241031035319.731906-16-alistair.francis@wdc.com>
-In-Reply-To: <20241031035319.731906-16-alistair.francis@wdc.com>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Fri, 14 Feb 2025 13:52:40 +0100
-X-Gm-Features: AWEUYZlNlEQSlkiL_cE60fjRrOJtT031gnZcWdYP7qZ7sgh7Y2oc7mVURr-mpiU
-Message-ID: <CAJ307EhFCpK8aO7r7PHF7H=k=f9tstPe=aVKrMWv1y7m3_HSNw@mail.gmail.com>
-Subject: Re: [PULL 15/50] hw/char: sifive_uart: Print uart characters async
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=chigot@adacore.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,27 +72,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+Em Fri, 14 Feb 2025 14:16:31 +1000
+Gavin Shan <gshan@redhat.com> escreveu:
 
-I've an issue following this patch. When the system is reset (e.g
-using HTIF syscalls), the fifo might not be empty and thus some
-characters are lost.
-I discovered it on a Windows host. But by extending
-"TX_INTERRUPT_TRIGGER_DELAY_NS" to a huge value, I'm able to reproduce
-on Linux as well.
+> Currently, there is only one CPER buffer (entry), meaning only one
+> memory error can be reported. In extreme case, multiple memory errors
+> can be raised on different vCPUs. For example, a singile memory error
+> on a 64KB page of the host can results in 16 memory errors to 4KB
+> pages of the guest. 
 
-I've tried to flush within an unrealized function but it didn't work.
-Any suggestions ?
+There is already a patchset allowing to have multiple CPER entries
+floating around since last year:
 
->  static void sifive_uart_reset_enter(Object *obj, ResetType type)
->  {
-> ...
-> +    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
+	https://lore.kernel.org/qemu-devel/cover.1738345063.git.mchehab+huawei@kernel.org/
 
-I'm also wondering if that part could not lead to memory leak.
-`fifo8_destroy` is never called and AFAIK, there are ways to reset a
-device dynamically (e.g snapshot, though not sure if it's supported
-here).
+I guess it is almost ready for being merged, needing just some
+nitpick changes to satisfy ACPI maintainers. Such changeset already
+adds a second CPER entry for GED, and allows to easily add more as
+needed. 
 
-Thanks, Cl=C3=A9ment
+> In extreme case, multiple memory errors
+> can be raised on different vCPUs. For example, a singile memory error
+> on a 64KB page of the host can results in 16 memory errors to 4KB
+> pages of the guest. 
+
+> Unfortunately, the virtual machine is simply aborted
+> by multiple concurrent memory errors, as the following call trace shows.
+> A SEA exception is injected to the guest so that the CPER buffer can
+> be claimed if the error is successfully pushed by acpi_ghes_memory_errors(),
+> Otherwise, abort() is triggered to crash the virtual machine.
+> 
+>   kvm_vcpu_thread_fn
+>     kvm_cpu_exec
+>       kvm_arch_on_sigbus_vcpu
+>         kvm_cpu_synchronize_state
+>         acpi_ghes_memory_errors         (a)
+>         kvm_inject_arm_sea | abort
+> 
+> It's arguably to crash the virtual machine in this case. The better
+> behaviour would be to retry on pushing the memory errors, to keep the
+> virtual machine alive so that the administrator has chance to chime
+> in, for example to dump the important data with luck. This series
+> adds one more parameter to acpi_ghes_memory_errors() so that it will
+> be tried to push the memory error until it succeeds.
+
+Having a retry buffer might be interesting for some types of errors,
+like error-injected and corrected errors. Yet, it doesn't sound right 
+to buffer uncorrected errors that would affect the virtual machine.
+
+> 
+> Gavin Shan (4):
+>   acpi/ghes: Make ghes_record_cper_errors() static
+>   acpi/ghes: Use error_report() in ghes_record_cper_errors()
+>   acpi/ghes: Allow retry to write CPER errors
+>   target/arm: Retry pushing CPER error if necessary
+> 
+>  hw/acpi/ghes-stub.c    |  3 ++-
+>  hw/acpi/ghes.c         | 45 +++++++++++++++++++++---------------------
+>  include/hw/acpi/ghes.h |  5 ++---
+>  target/arm/kvm.c       | 31 +++++++++++++++++++++++------
+>  4 files changed, 51 insertions(+), 33 deletions(-)
+> 
+
+
+
+Thanks,
+Mauro
 
