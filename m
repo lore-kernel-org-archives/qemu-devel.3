@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10112C021A0
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 00:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAA2C021A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 01:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tijzG-0000qt-4K; Thu, 13 Feb 2025 19:55:22 -0500
+	id 1tikun-0006bF-5u; Thu, 13 Feb 2025 20:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3c5SuZwYKCpoM84HD6AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--seanjc.bounces.google.com>)
- id 1tijzF-0000qj-7R
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 19:55:21 -0500
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tikul-0006aX-00
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 20:54:47 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3c5SuZwYKCpoM84HD6AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--seanjc.bounces.google.com>)
- id 1tijzC-0005ec-I3
- for qemu-devel@nongnu.org; Thu, 13 Feb 2025 19:55:20 -0500
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2f46b7851fcso5082217a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 16:55:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tikuj-0004NF-00
+ for qemu-devel@nongnu.org; Thu, 13 Feb 2025 20:54:46 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-220d398bea9so21093085ad.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Feb 2025 17:54:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1739494515; x=1740099315; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=vGzMcm2EJx62xp3i+ETr3ep/fnfxZsEgR2IjUXZxvfM=;
- b=UD+Snak2/lEi21OkGPBGEct153yXT2dmOwgbLPV8Ru7Kz/JQc1XkVKPQEYLUdIS55Q
- ojzGzNx5yYrRoohP2IkOCSEuoSzJI6C4WtI73lZDCa1yVUz731T0A1p9MGt7mpaJSSck
- ynuovTMaHjar6hUqj0NI2MvdOkGn62dAXywPv5PMYnY2XQ67LYcY/lhHMaS6otc74T+L
- +kqfxJI8VyTwBszn0DZWlI+aG9+y0j49TJ61iZC66kG5VxDhA7i3/jxWTZkptgMUpxRA
- V5Y3ft8b7xOtrg3Vs/OWqhVqdf/6W0z/YaTc2Y2vir7Ykba/TT2+7OBCEpgsSWxjbbzZ
- lvEw==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739498083; x=1740102883;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NdqCgSxKf8rhz7PsW2KR1K7z/q/nMu6KnVnCzC9I9Hc=;
+ b=kzPXP/K1+CdZlIC6hoGTRXeE7zW/j5t1zU+eACV7LmhUuMxkCgWSyvJdaqMumZfz7b
+ IwRJy1JzJdJfBv5nbgj+ax2m0Cs+9RudAF/KSwvwE50HJ0+DBbsbI1jNsArmXISVZleF
+ UXkF3gXHxCgRgvkSoyEhmXNdtdNEDMGHCc5i6PM1e+GCvaQ2LYleuAkvz9IE7kXVQdVU
+ OIzMGTyr9LSd7vnpMuPZ8g184Ow/P//UwCpTcWuuoLCwk4E/hnnlfrG48Bh3U1cJQTru
+ ITq1ZWYDp1UiCYZJWpj4Cy8UKUqupQ/JptsvinS7gHtwsZ1rfE5niqKHu1AOVJ3nYdPg
+ m8Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739494515; x=1740099315;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vGzMcm2EJx62xp3i+ETr3ep/fnfxZsEgR2IjUXZxvfM=;
- b=g4XV8z/9BNEMnFh6A/zmiRnkPci9aTptHXOTAUsb4FHNdn3vizIGpPnR16Gl6oG90I
- MolIhgiIRXhcgPV2tN7a8lFtu27w5EBcd6vnNk2vH/qc9pgQRKccqB4ud/XhoZXvIiwA
- 1DUk4p7RQPmavlLcuAmsioZPVpyPQ83rnl5yIOGs+XZOhsj53WfjYJo8sapbp3oJ+PN0
- TAzgPeaDQiLoq1xZltorg+Fpuli3mNu4ZgO4nNE8ETQZjjn7dHRImAg+7amAmHtrBlpB
- 5/4R3xdyuRsoIAFsGgZtQ/CgxxqvRWyt+2CdrrmWwf8qATtZ4/yHztwM5VIkAZ4B2Y2V
- BIrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlrSxbWtYd5fBj9Y3PfQKZx30X8uob/nOL08SeorGef/2iFlijC1wl39nUAcHwQKIvPKje3XqpbY/Y@nongnu.org
-X-Gm-Message-State: AOJu0YwNr6e/zBbQRKfjzQMx0KcX8WPpqTNlD74+MK3pTv38ef+dD6RL
- XHXu4vbNQoFZ6Wh/sKKZFU68/l1iMHLbxO1vZyiAUgsu99/O3/GIrjO0uOD/qnF5WXnmyK/1saI
- 17w==
-X-Google-Smtp-Source: AGHT+IG5ngeMiNOMVZUFHXMBuyybKCp3WjbtkfdfiVwv29ZoD5+1hFfkQhTBVR4sfR9gbDecEXlqXPEFSd8=
-X-Received: from pji8.prod.google.com ([2002:a17:90b:3fc8:b0:2fa:1b0c:4150])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:540c:b0:2f9:c56b:6ec8
- with SMTP id 98e67ed59e1d1-2fbf5be6b9amr15999928a91.10.1739494515423; Thu, 13
- Feb 2025 16:55:15 -0800 (PST)
-Date: Thu, 13 Feb 2025 16:55:13 -0800
-In-Reply-To: <6829cf75-5bf3-4a89-afbe-cfd489b2b24b@amd.com>
-Mime-Version: 1.0
-References: <20250207233410.130813-1-kim.phillips@amd.com>
- <20250207233410.130813-3-kim.phillips@amd.com>
- <4eb24414-4483-3291-894a-f5a58465a80d@amd.com> <Z6vFSTkGkOCy03jN@google.com>
- <6829cf75-5bf3-4a89-afbe-cfd489b2b24b@amd.com>
-Message-ID: <Z66UcY8otZosvnxY@google.com>
-Subject: Re: [PATCH v3 2/2] KVM: SEV: Configure "ALLOWED_SEV_FEATURES" VMCB
- Field
-From: Sean Christopherson <seanjc@google.com>
-To: Kim Phillips <kim.phillips@amd.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, 
- Michael Roth <michael.roth@amd.com>, Ashish Kalra <ashish.kalra@amd.com>, 
- "Nikunj A . Dadhania" <nikunj@amd.com>, Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Kishon Vijay Abraham I <kvijayab@amd.com>
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=3c5SuZwYKCpoM84HD6AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--seanjc.bounces.google.com;
- helo=mail-pj1-x104a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1739498083; x=1740102883;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NdqCgSxKf8rhz7PsW2KR1K7z/q/nMu6KnVnCzC9I9Hc=;
+ b=rLBPWY9QvwlrHx2yq18qeJNdVzMDUJkWtn/lzBxApuM61M1QP0c4il8rQbAZPUcdgR
+ LgI4+OifungEzZvHDSEodXaHLzI7xd9wFWR6MHSP2H3YntGBQ4F2fSijW/CNzJkLbmlJ
+ mR0dJ2oRVxtiVvIwS3vmd2RI1HOk0c/4H1ePloyfdt+Lj4qCRp3npDSqBXjXA6MLpB/l
+ PipWWd/cryf9QYiuiHAUedrzV64Jo/D10x3KmzqQgz6bESRRTCxhHl3agpkMgU+nxe7F
+ G1ake0ySzqQZBnhlE76jkYdvcA5/X4jMnki70qb40QbTuFlu//CmO+XLwffQMZAivtYV
+ oYug==
+X-Gm-Message-State: AOJu0YyQh/JHZikghF51NsbkoJb/mqK2Qc52GHPfop6YJDsdiVxcpcQD
+ sR12K6Mu2u3Iw65pyUuWUFbVZx8dop0BukD3XghP73StmN0yRvpd/9mW07q0y7BGM9JEeQ4GW6b
+ AJUzpN2hq
+X-Gm-Gg: ASbGnctgH/2toUdpPf+5knM9+T5aRsf1/Z+O+DuK/umVA8o42vBe3DrD7Ctt9j7EMIl
+ ryGaSj8telQDzUzUGsNHiAg8QivI6y5nvlCZ5egTYhWDRr0RvfmMMrBawTiJb5kKbo9r7vhhdT8
+ 1ArsK4sUUbMmHl3JeYNwl/5jBmgZvgiCGe+ayrthDeC0Z1xdJOGhVSrjMbe4xGa/1T2rLNFsaQj
+ ktfjEFSv7dKfk+6KIGxIkaMSEiUsPedJDsQD6BQm/YvlYKrw1e9FgwSxFH+zEgPS65MAXI8icza
+ iLprOnqpYiv+aTQPLE9ill7g+3MnfFEc3+gfnZn6
+X-Google-Smtp-Source: AGHT+IHV8wdPMGuQjFRK0boX5C7OVrhUUpz62b/tGTU0/evOQeUUbE0pzPKqderg0FdTnK91IJk64Q==
+X-Received: by 2002:a17:903:18e:b0:220:ea90:191e with SMTP id
+ d9443c01a7336-220ea901a6emr29415115ad.4.1739498082595; 
+ Thu, 13 Feb 2025 17:54:42 -0800 (PST)
+Received: from Hyman-Dev-Euler.zelin.local ([154.64.226.178])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220d545d67fsm18831515ad.143.2025.02.13.17.54.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Feb 2025 17:54:42 -0800 (PST)
+From: yong.huang@smartx.com
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 1/4] guestperf: Support deferred migration for multifd
+Date: Fri, 14 Feb 2025 09:53:33 +0800
+Message-Id: <8874e170f890ce0bc6f25cb0d9b9ae307ce2e070.1739497707.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1739497707.git.yong.huang@smartx.com>
+References: <cover.1739497707.git.yong.huang@smartx.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=yong.huang@smartx.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,67 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 13, 2025, Kim Phillips wrote:
-> On 2/11/25 3:46 PM, Sean Christopherson wrote:
-> > On Mon, Feb 10, 2025, Tom Lendacky wrote:
-> > > On 2/7/25 17:34, Kim Phillips wrote:
-> > > > diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-> > > > index a2a794c32050..a9e16792cac0 100644
-> > > > --- a/arch/x86/kvm/svm/sev.c
-> > > > +++ b/arch/x86/kvm/svm/sev.c
-> > > > @@ -894,9 +894,19 @@ static int sev_es_sync_vmsa(struct vcpu_svm *svm)
-> > > >   	return 0;
-> > > >   }
-> > > > +static u64 allowed_sev_features(struct kvm_sev_info *sev)
-> > > > +{
-> > > > +	if (cpu_feature_enabled(X86_FEATURE_ALLOWED_SEV_FEATURES) &&
-> > > 
-> > > Not sure if the cpu_feature_enabled() check is necessary, as init should
-> > > have failed if SVM_SEV_FEAT_ALLOWED_SEV_FEATURES wasn't set in
-> > > sev_supported_vmsa_features.
-> > 
-> > Two things missing from this series:
-> > 
-> >   1: KVM enforcement.  No way is KVM going to rely on userspace to opt-in to
-> >      preventing the guest from enabling features.
-> >   2: Backwards compatilibity if KVM unconditionally enforces ALLOWED_SEV_FEATURES.
-> >      Although maybe there's nothing to do here?  I vaguely recall all of the gated
-> >      features being unsupported, or something...
-> 
-> This contradicts your review comment from the previous version of the series [1].
+From: Hyman Huang <yong.huang@smartx.com>
 
-First off, my comment was anything but decisive.  I don't see how anyone can read
-this and come away thinking "this is exactly what Sean wants".
+The way to enable multifd migration has been changed by commit,
+82137e6c8c (migration: enforce multifd and postcopy preempt to
+be set before incoming), and guestperf has not made the
+necessary changes. If multifd migration had been enabled in the
+previous manner, the following error would have occurred:
+Multifd must be set before incoming starts
 
-  This may need additional uAPI so that userspace can opt-in.  Dunno.  I hope guests
-  aren't abusing features, but IIUC, flipping this on has the potential to break
-  existing VMs, correct?
+Supporting deferred migration will fix it.
 
-Second, there's a clear question there that went unanswered.  Respond to questions
-and elaborate as needed until we're all on the same page.  Don't just send patches.
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/migration-stress/guestperf/engine.py | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-Third, letting userspace opt-in to something doesn't necessarily mean giving
-userspace full control.  Which is the entire reason I asked the question about
-whether or not this can break userspace.  E.g. we can likely get away with only
-making select features opt-in, and enforcing everything else by default.
+diff --git a/tests/migration-stress/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
+index 608d7270f6..4b15322e8d 100644
+--- a/tests/migration-stress/guestperf/engine.py
++++ b/tests/migration-stress/guestperf/engine.py
+@@ -106,7 +106,8 @@ def _migrate_progress(self, vm):
+             info.get("dirty-limit-ring-full-time", 0),
+         )
+ 
+-    def _migrate(self, hardware, scenario, src, dst, connect_uri):
++    def _migrate(self, hardware, scenario, src,
++                 dst, connect_uri, defer_migrate):
+         src_qemu_time = []
+         src_vcpu_time = []
+         src_pid = src.get_pid()
+@@ -220,6 +221,8 @@ def _migrate(self, hardware, scenario, src, dst, connect_uri):
+             resp = src.cmd("migrate-set-parameters",
+                            vcpu_dirty_limit=scenario._vcpu_dirty_limit)
+ 
++        if defer_migrate:
++            resp = dst.cmd("migrate-incoming", uri=connect_uri)
+         resp = src.cmd("migrate", uri=connect_uri)
+ 
+         post_copy = False
+@@ -373,11 +376,14 @@ def _get_common_args(self, hardware, tunnelled=False):
+     def _get_src_args(self, hardware):
+         return self._get_common_args(hardware)
+ 
+-    def _get_dst_args(self, hardware, uri):
++    def _get_dst_args(self, hardware, uri, defer_migrate):
+         tunnelled = False
+         if self._dst_host != "localhost":
+             tunnelled = True
+         argv = self._get_common_args(hardware, tunnelled)
++
++        if defer_migrate:
++            return argv + ["-incoming", "defer"]
+         return argv + ["-incoming", uri]
+ 
+     @staticmethod
+@@ -424,6 +430,7 @@ def _get_timings(self, vm):
+ 
+     def run(self, hardware, scenario, result_dir=os.getcwd()):
+         abs_result_dir = os.path.join(result_dir, scenario._name)
++        defer_migrate = False
+ 
+         if self._transport == "tcp":
+             uri = "tcp:%s:9000" % self._dst_host
+@@ -439,6 +446,9 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             except:
+                 pass
+ 
++        if scenario._multifd:
++            defer_migrate = True
++
+         if self._dst_host != "localhost":
+             dstmonaddr = ("localhost", 9001)
+         else:
+@@ -452,7 +462,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+                           monitor_address=srcmonaddr)
+ 
+         dst = QEMUMachine(self._binary,
+-                          args=self._get_dst_args(hardware, uri),
++                          args=self._get_dst_args(hardware, uri, defer_migrate),
+                           wrapper=self._get_dst_wrapper(hardware),
+                           name="qemu-dst-%d" % os.getpid(),
+                           monitor_address=dstmonaddr)
+@@ -461,7 +471,8 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             src.launch()
+             dst.launch()
+ 
+-            ret = self._migrate(hardware, scenario, src, dst, uri)
++            ret = self._migrate(hardware, scenario, src,
++                                dst, uri, defer_migrate)
+             progress_history = ret[0]
+             qemu_timings = ret[1]
+             vcpu_timings = ret[2]
+-- 
+2.27.0
 
-I don't think RESTRICTED_INJECTION or ALTERNATE_INJECTION can work without KVM
-cooperation, so enforcing those shouldn't break anything.
-
-It's still not clear to me that we don't have a bug with DEBUG_SWAP.  AIUI,
-DEBUG_SWAP is allowed by default.  I.e. if ALLOWED_FEATURES is unsupported, then
-the guest can use DEBUG_SWAP via SVM_VMGEXIT_AP_CREATE without KVM's knowledge.
-
-So _maybe_ we have to let userspace opt-in to enforcing DEBUG_SWAP, but I suspect
-we can get away with fully enabling ALLOWED_FEATURES without userspace's blessing.
-
-> If KVM enforces ALLOWED_SEV_FEATURES, it can break existing VMs, thus
-> the explicit userspace allowed-sev-features=on opt-in [2].
-> 
-> Thanks,
-> 
-> Kim
-> 
-> [1] https://lore.kernel.org/kvm/ZsfKYHFkWA-Rh23C@google.com/
-> [2] https://lore.kernel.org/kvm/20250207233327.130770-1-kim.phillips@amd.com/
 
