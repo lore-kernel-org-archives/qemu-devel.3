@@ -4,144 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C0FEC02198
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 13:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DC0C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 13:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tivOK-0002jR-FM; Fri, 14 Feb 2025 08:06:00 -0500
+	id 1tivWe-0004BQ-JA; Fri, 14 Feb 2025 08:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tivOJ-0002j8-03
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:05:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tivOG-0002Kp-E2
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:05:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739538353;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tivWb-0004BC-BN
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:14:33 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tivWX-0003T1-BC
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 08:14:32 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 948C21F385;
+ Fri, 14 Feb 2025 13:14:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739538856; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kJzcm2eNhH7GPkNAHl3KZzZy7kdajjYBEnZ/X9zRKIY=;
- b=LOhD6PkqwOcEtRzo5ULcYSr0aHvO0dg66q1Jq8DnpTBBmB2fYyTjqZP2mUE348c0g0v3rx
- 8fGGNgCjQOs9joiQrJLlXkFK7JrE2E6qrrqotX06zSr9uCD8UjfWEHRxUiZQV2280IlJmH
- mgu7YcPX0ukVsQ0JeCkj9vv80tUEQt4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-6lxYJy49MxaCygsi24lonQ-1; Fri, 14 Feb 2025 08:05:52 -0500
-X-MC-Unique: 6lxYJy49MxaCygsi24lonQ-1
-X-Mimecast-MFC-AGG-ID: 6lxYJy49MxaCygsi24lonQ_1739538351
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4394c489babso11636485e9.1
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 05:05:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739538351; x=1740143151;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kJzcm2eNhH7GPkNAHl3KZzZy7kdajjYBEnZ/X9zRKIY=;
- b=Iv+ZKQm0GhK9ZdPA/jfLOtaflknm73YXph/d9bK4zkG1b2XPaBKdWMg6ZqWkfYeXPD
- 0HFOptIO5gG9KyjsIvCo5eQzkH3YMDqLe+cf7DPKgtdXV6DaWP1qrIvmPNQrLqwqDxaI
- sju+fW5wYhhbqq7xlnoHpUi8zxijlFdkFXhTwk0ySugxgLHronOBR07o5wvp7nIbii1S
- 8Exc3e5ROxPNJLi2PK45S1ZGHJoBebwDATqadPBM72dOaZQKNlFXQRpu+9A7RcoYmXHZ
- MHlybsjkqFbDTn9/t6PDsrO3jP+6hzkKU6wWfjmYohoBYwhg6VBJ4SQOZjgaOlWM9dQq
- B8ZQ==
-X-Gm-Message-State: AOJu0YyuhFd7+gnVCKRPrlk+zJXP9GcBMLOdHEEcSn2X95LllXgH/YWJ
- IGu7n0UVlmdDpiezF/n0mmifrqs1XRFark2I2U7YhOu8YOjLby5kCuEwApyh3iFnMngB1lMPi8z
- rZtoCRTxSxyIRidT4/is9N1MT4baZGnlJtI/La4DblsL2ShSG39CZ
-X-Gm-Gg: ASbGncurDOmHyTbnxVPaj5/BWnHpFDk2dyVksTMrVRP08jVW9AkMptQPcRcnGfw0pOH
- TvP83wOQVFwnQzPQqlw3mIsxlPbUPF+ys1npQtU4ZavgFuaxGjl4RG1tos8kvVDBO4r7yEtqbre
- ewKzcq8uOu8sNLwB5FsD1XzB3Va8CDF3oxKDzNxvsQ4dqUG6HKbxfNgTLEo7L+tb9LQ0P17uk02
- /rO0Vjy/jZdSLSRQhi2Il2oGi4cOKF68w90M/CBZG7BE7nCccgOB7tBvbl1dHQGGHLrBCfBbR/w
- C+ZaX6mCoKVuZHyhvN/hvY4LLJR2cGishKQXNDUPeAw=
-X-Received: by 2002:a05:600c:500e:b0:439:4b7d:72de with SMTP id
- 5b1f17b1804b1-43960185ca0mr104893595e9.15.1739538351216; 
- Fri, 14 Feb 2025 05:05:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFwq8R9f55g44rFb7V5+XUSm80BP99oZuZ94sxV7XdxD3GmjAPtCsX+2M6zdxO74gum78Kmhg==
-X-Received: by 2002:a05:600c:500e:b0:439:4b7d:72de with SMTP id
- 5b1f17b1804b1-43960185ca0mr104893005e9.15.1739538350726; 
- Fri, 14 Feb 2025 05:05:50 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a055910sm75193835e9.9.2025.02.14.05.05.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Feb 2025 05:05:50 -0800 (PST)
-Message-ID: <995ef2ed-a5e0-469e-b780-6800f26d7b22@redhat.com>
-Date: Fri, 14 Feb 2025 14:05:49 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=x5yfkZRU8CPrPI0m9Q+4t3NeRGC0X2JvvOIBZVmif1Y=;
+ b=zd5yh9MLcjMbkichZJn8bDoIwutV0cTqol3c3vjwoUCcdTBHPqL+skESphK9pf5gd5AN+R
+ MUDvduHh8Ts51nxVOO6NevT3yk5KdwX79hga/7hrkNZBuzNJVBePllWufsOyGlqXagi6hB
+ 7cFfKM+RXtaBfH+bURA91aKN6dOV3zQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739538856;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x5yfkZRU8CPrPI0m9Q+4t3NeRGC0X2JvvOIBZVmif1Y=;
+ b=IugnT3dVjsr2XzrlA89ZRI+X0ncoiolrndGdtAUJ6JYOKmVEodeD8smqWAFlnX+DrNFXHv
+ PRzV6lzZa4GtCfCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=t5F9Fm36;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=uQduSE9t
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1739538851; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x5yfkZRU8CPrPI0m9Q+4t3NeRGC0X2JvvOIBZVmif1Y=;
+ b=t5F9Fm36yKGducpG7bIXjU1KCsk/PRIl/5g2TnF6KHl1pXfTnU0qm9+Iclc4PyYRHGcMyw
+ m9mz9DiG4YJ0+SW6eiQWISNaeoN5TgCdew82y6XGYAiDHc4cMxKeS9UbeNpx6QQMsIWbWW
+ OpzsicGsJTZ7TW/1PjZh1Dtll0vBEGI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1739538851;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x5yfkZRU8CPrPI0m9Q+4t3NeRGC0X2JvvOIBZVmif1Y=;
+ b=uQduSE9toXc7M/U1VBTi52MZGXnWpuCUUOQ7mBNyzvLGUHFQZl38E25DPiopjb+pmNWRn5
+ PQcfCKhWrTBhYZCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 01FC0137DB;
+ Fri, 14 Feb 2025 13:14:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aDFsLKJBr2cOCAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Feb 2025 13:14:10 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steven Sistare <steven.sistare@oracle.com>, Peter Xu
+ <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration: use parameters.mode in cpr_state_save
+In-Reply-To: <5dfa4bc5-fa4d-4047-b212-dec3b57457f6@oracle.com>
+References: <1738788841-211843-1-git-send-email-steven.sistare@oracle.com>
+ <Z6PX-Shf7UREfLD7@x1.local>
+ <b30ab9b0-2ca2-4bfa-ab11-a09d73bd85b4@oracle.com>
+ <5dfa4bc5-fa4d-4047-b212-dec3b57457f6@oracle.com>
+Date: Fri, 14 Feb 2025 10:14:08 -0300
+Message-ID: <87h64wvfbz.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vfio: Add property documentation
-To: Alex Williamson <alex.williamson@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Eric Auger <eric.auger@redhat.com>,
- tomitamoeko@gmail.com, corvin.koehne@gmail.com
-References: <20250213135050.1426258-1-clg@redhat.com>
- <20250213144513.32b3241f.alex.williamson@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250213144513.32b3241f.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 948C21F385
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_NIXSPAM_FAIL(0.00)[2a07:de40:b281:104:10:150:64:97:query timed out];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,37 +135,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Kirti
-+Joao
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-On 2/13/25 22:45, Alex Williamson wrote:
->> +
->> +    /*
->> +     * Migration support
->> +     */
->> +    object_class_property_set_description(klass, /* 5.2 */
->> +                                          "x-pre-copy-dirty-page-tracking",
->> +                                          "Disable dirty pages tracking during iterative phase");
->> +    object_class_property_set_description(klass, /* 9.1 */
->> +                                          "x-device-dirty-page-tracking",
->> +                                          "Disable device dirty page tracking and use container-based dirty page tracking");
-> These are really debug as well, right?  They just happen to be
-> migration related debug.
+> On 2/5/2025 4:52 PM, Steven Sistare wrote:
+>> On 2/5/2025 4:28 PM, Peter Xu wrote:
+>>> On Wed, Feb 05, 2025 at 12:54:01PM -0800, Steve Sistare wrote:
+>>>> qmp_migrate guarantees that cpr_channel is not null for
+>>>> MIG_MODE_CPR_TRANSFER when cpr_state_save is called:
+>>>>
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 qmp_migrate()
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (s->parameters.mod=
+e =3D=3D MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 return;
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpr_state_save(cpr_ch=
+annel)
+>>>>
+>>>> but cpr_state_save checks for mode differently before using channel,
+>>>> and Coverity cannot infer that they are equivalent in outgoing QEMU,
+>>>> and warns that channel may be NULL:
+>>>>
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 cpr_state_save(channel)
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 MigMode mode =3D migr=
+ate_mode();
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (mode =3D=3D MIG_M=
+ODE_CPR_TRANSFER) {
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 f =3D cpr_transfer_output(channel, errp);
+>>>>
+>>>> To make Coverity happy, use parameters.mode in cpr_state_save.
+>>>>
+>>>> Resolves: Coverity CID 1590980
+>>>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>> ---
+>>>> =C2=A0 migration/cpr.c | 3 ++-
+>>>> =C2=A0 1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/migration/cpr.c b/migration/cpr.c
+>>>> index 584b0b9..7f20bd5 100644
+>>>> --- a/migration/cpr.c
+>>>> +++ b/migration/cpr.c
+>>>> @@ -8,6 +8,7 @@
+>>>> =C2=A0 #include "qemu/osdep.h"
+>>>> =C2=A0 #include "qapi/error.h"
+>>>> =C2=A0 #include "migration/cpr.h"
+>>>> +#include "migration/migration.h"
+>>>> =C2=A0 #include "migration/misc.h"
+>>>> =C2=A0 #include "migration/options.h"
+>>>> =C2=A0 #include "migration/qemu-file.h"
+>>>> @@ -132,7 +133,7 @@ int cpr_state_save(MigrationChannel *channel, Erro=
+r **errp)
+>>>> =C2=A0 {
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int ret;
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 QEMUFile *f;
+>>>> -=C2=A0=C2=A0=C2=A0 MigMode mode =3D migrate_mode();
+>>>> +=C2=A0=C2=A0=C2=A0 MigMode mode =3D migrate_get_current()->parameters=
+.mode;
+>>>
+>>> Are we sure this can make coverity happy?
+>>=20
+>> It should, based on Peter Maydell's analysis, but I would appreciate
+>> if he could apply and test the fix.
+>>=20
+>>> Another more straightforward change is caching migrate mode in
+>>> qmp_migrate() and also check that before invoking cpr_state_save().
+>>=20
+>> Surely anyone would consider my one-line change to be straight forward.
+>
+>
+> Given that Coverity complains about channel, and not mode, this is the
+> most direct fix:
+>
+> ----------------------------------------
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index 59644e8..224b6ff 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -160,6 +160,7 @@ int cpr_state_save(MigrationChannel *channel, Error *=
+*errp)
+>       trace_cpr_state_save(MigMode_str(mode));
+>
+>       if (mode =3D=3D MIG_MODE_CPR_TRANSFER) {
+> +        g_assert(channel);
+>           f =3D cpr_transfer_output(channel, errp);
+>       } else {
+>           return 0;
+> -------------------------------
+>
+> - Steve
 
-I suppose so. I would rather keep them under the migration topic
-and add 'debug' in the comment.
-
-Changes :
-
-   commit bb0990d1740f ("vfio: Change default dirty pages tracking behavior during migration")
-   commit 30b916778517 ("vfio/common: Allow disabling device dirty page tracking")
-
-do not explicitly explain why these properties are useful in any way.
-
-Kirti, Joao, could you ?
-
-Thanks,
-
-C.
-
+Queueing this^ version. Thanks
 
