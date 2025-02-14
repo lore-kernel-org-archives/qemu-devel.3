@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0047DC021A6
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B44C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwTR-0005tU-05; Fri, 14 Feb 2025 09:15:21 -0500
+	id 1tiwV8-00025e-Iy; Fri, 14 Feb 2025 09:17:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwTG-0005SU-Sl
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:10 -0500
+ id 1tiwTp-0006PC-Hd
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:47 -0500
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwTE-0004UO-TJ
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:10 -0500
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtqaT022708;
- Fri, 14 Feb 2025 14:14:56 GMT
+ id 1tiwTh-0004kJ-UB
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:41 -0500
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtVTK017784;
+ Fri, 14 Feb 2025 14:15:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=2mDboa9BzWXJq3YMdxxt/EVvHBYpzTQW6ZaFp5O6CRY=; b=
- Ojnp9x/phf6rxFX1bL6AgQ4Ldz6+v2IBfoeWsC5BgyUwZdgUsUmNpv/Kjivntn7j
- 7sXeDsz5zGJZbfiTESxjyfR6GgeNOIJ/b/SIBspX1rJbgBZHc/vr9QuSN+UfGsit
- QeccnMLHJrabmB2cZYlNC2IdyIWnp2bJrs7+dAJ/aPqjAS5mc3of6WqGrjs8odnY
- OKu1dX8VfGuS4adOVPWruYyt4TroP75tBxjXMcdzdn20mzsXyQX64cprlanXzGhZ
- eDvpf/XqDDIOInr5Zaxhv0XMUUZMzKtTXyOs24us2UpVChX5hf3tScDxge7jWNrj
- fve2IFGhnjcjlw1CiWeqdQ==
+ corp-2023-11-20; bh=dKRcX6DHqijWWZrMD4CJ2+AikL+wSCrqQlK6hbgIOdk=; b=
+ WgZPnIsg1qiP6LoYYv6LbdCAkdZcZ29+8aNzrjAS8n4AUgdH56cQQQ8dMC3MNpm9
+ nMJfeged8ZsTc5x3O7m3X6Zo342ipEfclyBgVl/kxDMvRw4PRuMOhY+m5qy1uJFX
+ /2L7fk/mKjRC1kQzfldiR7QNMre3FnUDKD/dIzonlv75N7N0cVZ18uWoOdLxgXSu
+ +Ma0aMbKhIrZ6m452iC/vZYnCAW23KFMN4o4sy+ZImEIU0x8K+GeaaFR4gKpTRz2
+ Ko8xSytamhSNJaJX0COGQ7+eTfJ8TGpaYxe+FGsgyt1GScZYBzqu5x4g/8OmDbSO
+ ++PUVE1KMOHNh3HtDVLmQg==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0s43q6u-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0tgbtwy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:56 +0000 (GMT)
+ Fri, 14 Feb 2025 14:15:25 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51ECsnOL025169; Fri, 14 Feb 2025 14:14:55 GMT
+ with ESMTP id 51ECSfc2025328; Fri, 14 Feb 2025 14:15:23 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwqksgff-1
+ 44nwqksh82-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:55 +0000
+ Fri, 14 Feb 2025 14:15:23 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETPp006920;
- Fri, 14 Feb 2025 14:14:54 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETQX006920;
+ Fri, 14 Feb 2025 14:15:23 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 44nwqksg2h-20; Fri, 14 Feb 2025 14:14:54 +0000
+ ESMTP id 44nwqksg2h-41; Fri, 14 Feb 2025 14:15:23 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 19/45] vfio/pci: vfio_notifier_init
-Date: Fri, 14 Feb 2025 06:14:01 -0800
-Message-Id: <1739542467-226739-20-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 40/45] vfio/iommufd: reconstruct device
+Date: Fri, 14 Feb 2025 06:14:22 -0800
+Message-Id: <1739542467-226739-41-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
 References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
@@ -77,8 +77,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2501170000 definitions=main-2502140104
-X-Proofpoint-GUID: r0pZRckNK6Eu0BYXlfyKfB-75GXLXBR-
-X-Proofpoint-ORIG-GUID: r0pZRckNK6Eu0BYXlfyKfB-75GXLXBR-
+X-Proofpoint-GUID: BCWYvWp9vdbwTwDQvTzHQAp2VaxarUgx
+X-Proofpoint-ORIG-GUID: BCWYvWp9vdbwTwDQvTzHQAp2VaxarUgx
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,133 +104,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move event_notifier_init calls to a helper vfio_notifier_init.
-This version is trivial, but it will be expanded to support CPR
-in subsequent patches.  No functional change.
+Reconstruct userland device state after CPR.  During vfio_realize, skip
+all ioctls that configure the device, as it was already configured in old
+QEMU.
+
+Save the ioas_id in vmstate, and skip its allocation in vfio_realize.
+Because we skip ioctl's, it is not needed at realize time.  However, we do
+need the range info, so defer the call to iommufd_cdev_get_info_iova_range
+to a post_load handler, at which time the ioas_id is known.
+
+This reconstruction is not complete.  hwpt_id and devid need special
+treatment, handled in subsequent patches.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/pci.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ hw/vfio/cpr-iommufd.c |  8 ++++++++
+ hw/vfio/iommufd.c     | 23 +++++++++++++++++++++--
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 883257a..688b7d3 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -54,6 +54,16 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
- static void vfio_msi_disable_common(VFIOPCIDevice *vdev);
- 
-+static bool vfio_notifier_init(EventNotifier *e, const char *name, Error **errp)
-+{
-+    int ret = event_notifier_init(e, 0);
-+
-+    if (ret) {
-+        error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
-+    }
-+    return !ret;
-+}
-+
- /*
-  * Disabling BAR mmaping can be slow, but toggling it around INTx can
-  * also be a huge overhead.  We try to get the best of both worlds by
-@@ -134,8 +144,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     pci_irq_deassert(&vdev->pdev);
- 
-     /* Get an eventfd for resample/unmask */
--    if (event_notifier_init(&vdev->intx.unmask, 0)) {
--        error_setg(errp, "event_notifier_init failed eoi");
-+    if (!vfio_notifier_init(&vdev->intx.unmask, "intx-unmask", errp)) {
-         goto fail;
-     }
- 
-@@ -266,7 +275,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-     Error *err = NULL;
-     int32_t fd;
--    int ret;
- 
- 
-     if (!pin) {
-@@ -289,9 +297,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     }
- #endif
- 
--    ret = event_notifier_init(&vdev->intx.interrupt, 0);
--    if (ret) {
--        error_setg_errno(errp, -ret, "event_notifier_init failed");
-+    if (!vfio_notifier_init(&vdev->intx.interrupt, "intx-interrupt", errp)) {
-         return false;
-     }
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-@@ -473,11 +479,13 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
- 
- static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
- {
-+    const char *name = "kvm_interrupt";
-+
-     if (vector->virq < 0) {
-         return;
-     }
- 
--    if (event_notifier_init(&vector->kvm_interrupt, 0)) {
-+    if (!vfio_notifier_init(&vector->kvm_interrupt, name, NULL)) {
-         goto fail_notifier;
-     }
- 
-@@ -515,11 +523,12 @@ static void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
- {
-     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
-     PCIDevice *pdev = &vdev->pdev;
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+index 8c2fa3a..8453d76 100644
+--- a/hw/vfio/cpr-iommufd.c
++++ b/hw/vfio/cpr-iommufd.c
+@@ -30,6 +30,13 @@ static int vfio_container_post_load(void *opaque, int version_id)
+     VFIOIOMMUFDContainer *container = opaque;
+     VFIOContainerBase *bcontainer = &container->bcontainer;
+     VFIODevice *vbasedev;
 +    Error *err = NULL;
- 
-     vector->vdev = vdev;
-     vector->virq = -1;
--    if (event_notifier_init(&vector->interrupt, 0)) {
--        error_report("vfio: Error: event_notifier_init failed");
-+    if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
++    uint32_t ioas_id = container->ioas_id;
++
++    if (!iommufd_cdev_get_info_iova_range(container, ioas_id, &err)) {
 +        error_report_err(err);
++        return -1;
++    }
+ 
+     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
+         vbasedev->cpr.reused = false;
+@@ -46,6 +53,7 @@ static const VMStateDescription vfio_container_vmstate = {
+     .post_load = vfio_container_post_load,
+     .needed = cpr_needed_for_reuse,
+     .fields = (VMStateField[]) {
++        VMSTATE_UINT32(ioas_id, VFIOIOMMUFDContainer),
+         VMSTATE_END_OF_LIST()
      }
-     vector->use = true;
-     if (vdev->interrupt == VFIO_INT_MSIX) {
-@@ -746,13 +755,14 @@ retry:
+ };
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 6c44303..3fc530d 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -99,6 +99,10 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+         goto err_kvm_device_add;
+     }
  
-     for (i = 0; i < vdev->nr_vectors; i++) {
-         VFIOMSIVector *vector = &vdev->msi_vectors[i];
-+        Error *err = NULL;
- 
-         vector->vdev = vdev;
-         vector->virq = -1;
-         vector->use = true;
- 
--        if (event_notifier_init(&vector->interrupt, 0)) {
--            error_report("vfio: Error: event_notifier_init failed");
-+        if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+            error_report_err(err);
++    if (vbasedev->cpr.reused) {
++        goto skip_bind;
++    }
++
+     /* Bind device to iommufd */
+     bind.iommufd = iommufd->fd;
+     if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
+@@ -110,6 +114,8 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+     vbasedev->devid = bind.out_devid;
+     trace_iommufd_cdev_connect_and_bind(bind.iommufd, vbasedev->name,
+                                         vbasedev->fd, vbasedev->devid);
++
++skip_bind:
+     return true;
+ err_bind:
+     iommufd_cdev_kvm_device_del(vbasedev);
+@@ -541,7 +547,8 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+             vbasedev->iommufd != container->be) {
+             continue;
          }
+-        if (!iommufd_cdev_attach_container(vbasedev, container, &err)) {
++        if (!vbasedev->cpr.reused &&
++            !iommufd_cdev_attach_container(vbasedev, container, &err)) {
+             const char *msg = error_get_pretty(err);
  
-         qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
-@@ -2864,8 +2874,8 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    if (event_notifier_init(&vdev->err_notifier, 0)) {
--        error_report("vfio: Unable to init event notifier for error detection");
-+    if (!vfio_notifier_init(&vdev->err_notifier, "err_notifier", &err)) {
-+        error_report_err(err);
-         vdev->pci_aer = false;
-         return;
-     }
-@@ -2930,8 +2940,8 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
-         return;
+             trace_iommufd_cdev_fail_attach_existing_container(msg);
+@@ -558,6 +565,11 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+         }
      }
  
--    if (event_notifier_init(&vdev->req_notifier, 0)) {
--        error_report("vfio: Unable to init event notifier for device request");
-+    if (!vfio_notifier_init(&vdev->req_notifier, "req_notifier", &err)) {
-+        error_report_err(err);
-         return;
++    if (vbasedev->cpr.reused) {
++        ioas_id = -1;           /* ioas_id will be received from vmstate */
++        goto skip_ioas_alloc;
++    }
++
+     /* Need to allocate a new dedicated container */
+     if (!iommufd_backend_alloc_ioas(vbasedev->iommufd, &ioas_id, errp)) {
+         goto err_alloc_ioas;
+@@ -565,6 +577,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+ 
+     trace_iommufd_cdev_alloc_ioas(vbasedev->iommufd->fd, ioas_id);
+ 
++skip_ioas_alloc:
+     container = VFIO_IOMMU_IOMMUFD(object_new(TYPE_VFIO_IOMMU_IOMMUFD));
+     container->be = vbasedev->iommufd;
+     container->ioas_id = ioas_id;
+@@ -573,7 +586,8 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+     bcontainer = &container->bcontainer;
+     vfio_address_space_insert(space, bcontainer);
+ 
+-    if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
++    if (!vbasedev->cpr.reused &&
++        !iommufd_cdev_attach_container(vbasedev, container, errp)) {
+         goto err_attach_container;
      }
+ 
+@@ -583,6 +597,10 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+         goto err_discard_disable;
+     }
+ 
++    if (vbasedev->cpr.reused) {
++        goto skip_info;
++    }
++
+     if (!iommufd_cdev_get_info_iova_range(container, ioas_id, &err)) {
+         error_append_hint(&err,
+                    "Fallback to default 64bit IOVA range and 4K page size\n");
+@@ -591,6 +609,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+         bcontainer->pgsizes = qemu_real_host_page_size();
+     }
+ 
++skip_info:
+     bcontainer->listener = vfio_memory_listener;
+     memory_listener_register(&bcontainer->listener, bcontainer->space->as);
  
 -- 
 1.8.3.1
