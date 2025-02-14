@@ -4,124 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F027C021A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 15:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8664C02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 15:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tixm3-0007Aq-9e; Fri, 14 Feb 2025 10:38:39 -0500
+	id 1tixsB-0008QA-QQ; Fri, 14 Feb 2025 10:44:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
- id 1tixm0-0007Ai-OV
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:38:36 -0500
-Received: from mailout3.samsung.com ([203.254.224.33])
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tixs9-0008Pr-Ic
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:44:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
- id 1tixlv-0002ww-II
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:38:36 -0500
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20250214153823epoutp037c13602dc8eb5544e0f0b92ddc696c61~kHTzPG5r61677716777epoutp03G
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 15:38:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20250214153823epoutp037c13602dc8eb5544e0f0b92ddc696c61~kHTzPG5r61677716777epoutp03G
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1739547503;
- bh=E1aP9RKpBHNGwpMkk0EF5JxcX1s1gfUwARLKxmP4nxo=;
- h=From:To:Cc:Subject:Date:References:From;
- b=N4V4UqE4Pw1szV10FrqX3IzT8/c51ngoA0Xgt9/dVaySuLuysgUAWNCXYbxMHgf1Z
- 0eDgtWq2gPa9EcTeunBy3LPoqMUW0zryEyYUbJkYGq1Uu9yMwfO2SjL2oSoYyQ3orr
- cPjEXLA6C5A8YMh+3Sby0tLqZmNnW2BffQTyPSKc=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTP id
- 20250214153822epcas5p1a22cc8fa4fe0014a305504dbb7ee2f77~kHTy60w2F2356723567epcas5p1P;
- Fri, 14 Feb 2025 15:38:22 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.182]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4YvbmX4l4nz4x9Pr; Fri, 14 Feb
- 2025 15:38:20 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
- epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 0C.22.29212.C636FA76; Sat, 15 Feb 2025 00:38:20 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
- 20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b~kFd2MO7nR2344923449epcas5p3Z;
- Fri, 14 Feb 2025 13:23:17 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20250214132317epsmtrp167415ff88f8fbee2afc993a76db24d3c~kFd2IGKSG0681306813epsmtrp1h;
- Fri, 14 Feb 2025 13:23:17 +0000 (GMT)
-X-AuditID: b6c32a50-7ebff7000000721c-19-67af636c8a8a
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
- epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 08.78.18949.5C34FA76; Fri, 14 Feb 2025 22:23:17 +0900 (KST)
-Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
- by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250214132315epsmtip2b28d51ba4e78bc3c1b5357d8f8d0b8ce~kFd0kiHky0884608846epsmtip2T;
- Fri, 14 Feb 2025 13:23:15 +0000 (GMT)
-From: Sweta Kumari <s5.kumari@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
- dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
- a.manzanares@samsung.com, alok.rathore@samsung.com, Sweta Kumari
- <s5.kumari@samsung.com>
-Subject: [PATCH v2] CXL CCI Get/Set Alert Configuration commands implmented
- as per CXL Specification 3.2 section 8.2.10.9.3
-Date: Fri, 14 Feb 2025 18:52:11 +0530
-Message-Id: <20250214132211.528019-1-s5.kumari@samsung.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tixs6-0003un-F4
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 10:44:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739547892;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aGGaVv+akGxkMyDryYDQJcyoPGfBpa0qvxnEQxw9yio=;
+ b=G6Cmn+fxd8Iv+O2mBW8RjWbm28MLSU8xir/RDJcaz7j6tN5M+rx9jTQ4Z1Z5Eeven8bsEZ
+ 1fnHpWani3tvak4mI8xu2zEqNtgSCeYB4ls2OY8gP8XwkiWsZMf8pGWdOdWzQhOc0/QmQS
+ WplcKu0Qrb178dshRA5SSBD8C3N8zbA=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-T_Hbp2IcNYqpUaNIgUmSgg-1; Fri, 14 Feb 2025 10:44:50 -0500
+X-MC-Unique: T_Hbp2IcNYqpUaNIgUmSgg-1
+X-Mimecast-MFC-AGG-ID: T_Hbp2IcNYqpUaNIgUmSgg_1739547890
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-3d18f59b9d0so426465ab.2
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 07:44:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739547890; x=1740152690;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aGGaVv+akGxkMyDryYDQJcyoPGfBpa0qvxnEQxw9yio=;
+ b=bZXLHAbN+Wi8P1h7Tg49pfXWb4mSJ9ICHlDSLrIROaR+vhKTatV+W7C2jtZrcQJ2cR
+ MJzf21pHiwpxO25Za9SvzQEDIqpAQbvM+dhoPZaygu2rDEZAzZqNRRRx6OKspEx6Ofwv
+ HuyefZ+7I8TTOkN8lzUkbdUjLcalQ07TNUf4tX5r25Tg2lcfeNPTmq6mjt9hQtJyEMSU
+ sbzTGx1Lt8Ao14z7kIduZJNqnF754tIgO6Wq9gor9DerW1iF3QUEL+tE+omJVnyeXbNJ
+ 0ZLId2O22lmlE71yc1JTBjYvezPkYl9jI9Eu3/+Suj77aQ6/X4auNEG050PPcdqUpeYw
+ lzSg==
+X-Gm-Message-State: AOJu0Yy950tBCFKHELrF+L5hbUYEyCCfvXPW/7ke3raytoXkD2W3pd+q
+ SyzcRIbGDShjd4e7hBND/ulKd5yseuikuVhj9I36Ce56iDzP6wZ6bWvHWSbKgvaOw8hn49Zu/sc
+ vzYSkJPbTo/JVnyuYOFIYbFIFRaVjQPwXE659qB5BdIS5JqAN8Yrl
+X-Gm-Gg: ASbGncvME1bDCKctwLWhNmZzCW7qBu9pds2DTZF0I1TNwTlsyJ0uR9Bh6VGONHbN/Pc
+ MxDbyulxIrK9O/XHXcd05/eDnw2wM0OniNoJU8r0jFB7nC559dQ2gSz35OnT4M2MXuFTVae2WyK
+ Eq2mrZbH4LFlTG5dRYx7UIcbv3v1CwS9qE4UoSwgZWRfGvftSsbg4dZ0kOELOlvyuQO7SkmqE1Y
+ AUGWYSSzG+2a7wjm1SuDjgo9A69V99VCiqwqjr1/lTdvFhiMh95gJDWew7JcIpGuz3ufP1FxLER
+ VIGtH2e1
+X-Received: by 2002:a05:6e02:320f:b0:3cf:c62c:761b with SMTP id
+ e9e14a558f8ab-3d1999bbab4mr6830865ab.6.1739547889618; 
+ Fri, 14 Feb 2025 07:44:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFHcX5J1MfmTuxC+GJP0g/psGjD2+/gdOFlZRaYOMmE2gdnUnTi/KLN88BxhLlVBHaIAE8U0g==
+X-Received: by 2002:a05:6e02:320f:b0:3cf:c62c:761b with SMTP id
+ e9e14a558f8ab-3d1999bbab4mr6830835ab.6.1739547888844; 
+ Fri, 14 Feb 2025 07:44:48 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4ed281487f0sm869396173.9.2025.02.14.07.44.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Feb 2025 07:44:48 -0800 (PST)
+Date: Fri, 14 Feb 2025 08:44:45 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, tomitamoeko@gmail.com, corvin.koehne@gmail.com,
+ Kirti Wankhede <kwankhede@nvidia.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Tony Krowiak <akrowiak@linux.ibm.com>, Eric
+ Farman <farman@linux.ibm.com>, Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v3] vfio: Add property documentation
+Message-ID: <20250214084445.339f3476.alex.williamson@redhat.com>
+In-Reply-To: <20250214143415.1686526-1-clg@redhat.com>
+References: <20250214143415.1686526-1-clg@redhat.com>
+Organization: Red Hat
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIJsWRmVeSWpSXmKPExsWy7bCmhm5O8vp0gxs/lCymH1a0+HJ6D5vF
- 6ptrGC1uHtjJZLFw4zImi/OzTrFY/N22l9HieO8OFos15z6zAMXmsDtweeycdZfd48m1zUwe
- fVtWMXpMnV3v8XmTXABrVLZNRmpiSmqRQmpecn5KZl66rZJ3cLxzvKmZgaGuoaWFuZJCXmJu
- qq2Si0+ArltmDtBNSgpliTmlQKGAxOJiJX07m6L80pJUhYz84hJbpdSClJwCkwK94sTc4tK8
- dL281BIrQwMDI1OgwoTsjOtrp7AUNPlVfFnTwd7AuN66i5GTQ0LARGLz/elMXYxcHEICexgl
- ujb/hnI+MUp8mrcPyvnGKLH4xBl2mJaL3Q/AbCGBvYwSC7eEQBQ1MEncvnyXBSTBJqAl8ePz
- A2YQW0RAUuJ312lmkCJmgVeMEhs3tLKBJIQFaiUa9j9hArFZBFQlvnw8B2bzClhLdJxsZ4PY
- Ji+x/+BZZoi4oMTJmU/AFjADxZu3zgYbKiFwi12iYfUBoGYOIMdF4vu7UIheYYlXx7dAXS0l
- 8bK/DcrOlri7tRNqfonEh9u7mSBse4nWU/3MIGOYBTQl1u/ShwjLSkw9tY4JYi2fRO/vJ1Dl
- vBI75sHYyhJb/i1nhbAlJVZ8XgJle0hc/7iMBRJYsRJNJxvZJjDKz0LyzSwk38xC2LyAkXkV
- o1RqQXFuemqyaYGhbl5qOTxmk/NzNzGC06ZWwA7G1Rv+6h1iZOJgPMQowcGsJMIrMW1NuhBv
- SmJlVWpRfnxRaU5q8SFGU2AYT2SWEk3OBybuvJJ4QxNLAxMzMzMTS2MzQyVx3uadLelCAumJ
- JanZqakFqUUwfUwcnFINTM3Ou3uUw3ndJyhI+nHO/Ca3Zx7rz5iS3IuH5/jtMeqP570kXD7x
- wtlJXVZ56vM1p5pMenD9e86sBz63SqecvbDvpZHaL3Wd6eWNASazytbOZOpWart9qyzhlqyK
- Utams4dfT36qKnfHbuarwk717blnTkR8FeHe88Pu3wYmVc+fNxnnNzfvKb8l6NzVqbrp19G8
- v7e7rvce1A7Y95i7I3zKmet+3rZKt4schXcImDveZ1j2tTRY8Lnoz7v/86fGSqdOCdm9+03n
- lGU39+ybmj+9NK5q0ZvcuZaLe3yMPVWuOb5kNb1wsCzznk6/aPW/B/O0Kqtbluqpulw/UFEh
- L31j0zI2NYezEaXbH66IXanEUpyRaKjFXFScCAAGuUlNJAQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLLMWRmVeSWpSXmKPExsWy7bCSvO5R5/XpBj8fcltMP6xo8eX0HjaL
- 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLBZrzn1mAYrNYXfg8tg56y67x5Nrm5k8
- +rasYvSYOrve4/MmuQDWKC6blNSczLLUIn27BK6M62unsBQ0+VV8WdPB3sC43rqLkZNDQsBE
- 4mL3A/YuRi4OIYHdjBJtP3rYIRKSEm/PXGKEsIUlVv57DlX0j1Hi9a9eZpAEm4CWxI/PD8Bs
- EaCG312nmUGKmAW+MEpMafjKBJIQFqiWuL+8BWwqi4CqxJeP58DivALWEh0n29kgNshL7D94
- lhkiLihxcuYTFhCbGSjevHU28wRGvllIUrOQpBYwMq1ilEwtKM5Nzy02LDDKSy3XK07MLS7N
- S9dLzs/dxAgOYS2tHYx7Vn3QO8TIxMF4iFGCg1lJhFdi2pp0Id6UxMqq1KL8+KLSnNTiQ4zS
- HCxK4rzfXvemCAmkJ5akZqemFqQWwWSZODilGpjqA3e/NtHg8lS8K9MdJX/qytKXHJzfjHe1
- J/1NfML+ms1o9qfPSlE+kUH2y5M/BTowTym/vWJXuymjRI9tg19M1qoChXNrFvM+jri/UKkn
- 6fSWZzNiRPeejCi/Y58++fs9l0XGlgHbeKYn6epbpfKsOyC+UtxqT9W0u2sCY7/pP9lT2lBu
- H3Fwxwy5xbtXFHpUX8xmtXDh/mq1w1IoJ0IgNbzjuruuYdG3268b/OK9Jsmn342a+lnPrvFW
- jm+iwQ3+i7r6dufO5ir7KmatLRMqlRMr8LKSUPx0JfNctOpEWeXJeuU+XLcmn/Jau+X/zFeb
- +V69umQ3df+LuIm/sxXOfpjWPEFz8gdZtmTveUosxRmJhlrMRcWJAE/TDIXQAgAA
-X-CMS-MailID: 20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b
-References: <CGME20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b@epcas5p3.samsung.com>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=s5.kumari@samsung.com; helo=mailout3.samsung.com
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,245 +111,369 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1)get alert configuration(Opcode 4201h)
-2)set alert configuration(Opcode 4202h)
+On Fri, 14 Feb 2025 15:34:15 +0100
+C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 
-This v2 patch addresses the feedback from the v1 patch and include some minor new changes.
+> Investigate the git history to uncover when and why the VFIO
+> properties were introduced and update the models. This is mostly
+> targeting vfio-pci device, since vfio-platform, vfio-ap and vfio-ccw
+> devices are simpler.
+>=20
+> Sort the properties based on the QEMU version in which they were
+> introduced.
+>=20
+> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
+> Cc: Eric Farman <farman@linux.ibm.com>
+> Cc: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>=20
+>  Should we introduce documentation for properties like the kernel has
+>  in Documentation/ABI/*/sysfs-* ?
+>=20
+>  Changes in v3:
+>=20
+>  - Re-organized the vfio-pci properties based on the QEMU version in
+>    which they were introduced
+>  - Added property labels
+>  - Improved description as suggested by Alex, Tomita and Corvin
+>=20
+>  Changes in v2:
+>=20
+>  - Fixed version numbers
+>  - Fixed #ifdef in vfio/ccw.c
+>  - Addressed vfio-pci-nohotplug
+>  - Organize the vfio-pci properties in topics
+> =20
+>  hw/vfio/ap.c       |   9 ++++
+>  hw/vfio/ccw.c      |  15 ++++++
+>  hw/vfio/pci.c      | 122 +++++++++++++++++++++++++++++++++++++++++++++
+>  hw/vfio/platform.c |  25 ++++++++++
+>  4 files changed, 171 insertions(+)
+>=20
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 30b08ad375d5ecae886c5000fbaa364799fe76d0..c7ab4ff57ada0ed0e5a76f52b=
+5a05c86ca4fe0b4 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -257,6 +257,15 @@ static void vfio_ap_class_init(ObjectClass *klass, v=
+oid *data)
+>      dc->hotpluggable =3D true;
+>      device_class_set_legacy_reset(dc, vfio_ap_reset);
+>      dc->bus_type =3D TYPE_AP_BUS;
+> +
+> +    object_class_property_set_description(klass, /* 3.1 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+>  }
+> =20
+>  static const TypeInfo vfio_ap_info =3D {
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index 67bc137f9be6d43c5970c6271f3cdbfffd8a32de..ea766ae26c744c05515e1cc80=
+a486a3462d82834 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -717,6 +717,21 @@ static void vfio_ccw_class_init(ObjectClass *klass, =
+void *data)
+>      cdc->handle_halt =3D vfio_ccw_handle_halt;
+>      cdc->handle_clear =3D vfio_ccw_handle_clear;
+>      cdc->handle_store =3D vfio_ccw_handle_store;
+> +
+> +    object_class_property_set_description(klass, /* 2.10 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +    object_class_property_set_description(klass, /* 3.0 */
+> +                                          "force-orb-pfch",
+> +                                          "Force unlimited prefetch");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+> +    object_class_property_set_description(klass, /* 9.2 */
+> +                                          "loadparm",
+> +                                          "Define which devices that can=
+ be used for booting");
+>  }
+> =20
+>  static const TypeInfo vfio_ccw_info =3D {
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9a55e7b77324babf7295132b08e3ba23b482a291..cdf4cdcf88c143ff145427cae=
+3fd64239a2d1e74 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3433,6 +3433,119 @@ static void vfio_pci_dev_class_init(ObjectClass *=
+klass, void *data)
+>      pdc->exit =3D vfio_exitfn;
+>      pdc->config_read =3D vfio_pci_read_config;
+>      pdc->config_write =3D vfio_pci_write_config;
+> +
+> +    object_class_property_set_description(klass, /* 1.3 */
+> +                                          "host",
+> +                                          "Host PCI address [domain:]<bu=
+s:slot.function> of assigned device");
+> +    object_class_property_set_description(klass, /* 1.3 */
+> +                                          "x-intx-mmap-timeout-ms",
+> +                                          "When EOI is not provided by K=
+VM/QEMU, wait time "
+> +                                          "(milliseconds) to re-enable d=
+evice direct access "
+> +                                          "after INTx (DEBUG)");
+> +    object_class_property_set_description(klass, /* 1.5 */
+> +                                          "x-vga",
+> +                                          "Expose VGA address spaces for=
+ device");
+> +    object_class_property_set_description(klass, /* 2.3 */
+> +                                          "x-req",
+> +                                          "Disable device request notifi=
+cation support (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+> +                                          "x-no-mmap",
+> +                                          "Disable MMAP for device. Allo=
+ws to trace MMIO "
+> +                                          "accesses (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-no-kvm-intx",
+> +                                          "Disable direct VFIO->KVM INTx=
+ injection. Allows to "
+> +                                          "trace INTx interrupts (DEBUG)=
+");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-no-kvm-msi",
+> +                                          "Disable direct VFIO->KVM MSI =
+injection. Allows to "
+> +                                          "trace MSI interrupts (DEBUG)"=
+);
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-no-kvm-msix",
+> +                                          "Disable direct VFIO->KVM MSIx=
+ injection. Allows to "
+> +                                          "trace MSIx interrupts (DEBUG)=
+");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-vendor-id",
+> +                                          "Override PCI Vendor ID with p=
+rovided value (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-device-id",
+> +                                          "Override PCI device ID with p=
+rovided value (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-sub-vendor-id",
+> +                                          "Override PCI Sub Vendor ID wi=
+th provided value (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-sub-device-id",
+> +                                          "Override PCI Sub Device ID wi=
+th provided value (DEBUG)");
 
-Changes in V2:
-- Removed cover letter as it's a single patch
-- Added latest spec reference
-- Fixed alignment issues
-- Updated shorter variable names to be more descriptive
-- Replaced field-by-field initialization in 'init_alert_config' with structured initialization for improved readability.
-- Replaced bit fields with 'uint8_t' and added defines for individual bits.
+Nit, we don't seem to have a character limit, so I'd go ahead and
+s/Sub/Subsystem/.
 
-The patch is generated against the Johnathan's tree
-https://gitlab.com/jic23/qemu.git and branch cxl-2024-11-27.
 
-Signed-off-by: Sweta Kumari <s5.kumari@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c  | 116 ++++++++++++++++++++++++++++++++++++
- hw/mem/cxl_type3.c          |  16 +++++
- include/hw/cxl/cxl_device.h |  15 +++++
- 3 files changed, 147 insertions(+)
+> +    object_class_property_set_description(klass, /* 2.6 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +    object_class_property_set_description(klass, /* 2.7 */
+> +                                          "x-igd-opregion",
+> +                                          "Expose host IGD OpRegion to g=
+uest");
+> +    object_class_property_set_description(klass, /* 2.7 (See c4c45e943e5=
+1) */
+> +                                          "x-igd-gms",
+> +                                          "Override IGD data stolen memo=
+ry size (32MiB units). "
+> +                                          "Assign 00:02.0 from the host =
+to 00:02.0 in the VM");
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 9c7ea5bc35..105c63fdec 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -28,6 +28,11 @@
- #define CXL_DC_EVENT_LOG_SIZE 8
- #define CXL_NUM_EXTENTS_SUPPORTED 512
- #define CXL_NUM_TAGS_SUPPORTED 0
-+#define CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD (1 << 0)
-+#define CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD (1 << 1)
-+#define CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD (1 << 2)
-+#define CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD (1 << 3)
-+#define CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD (1 << 4)
- 
- /*
-  * How to add a new command, example. The command set FOO, with cmd BAR.
-@@ -86,6 +91,9 @@ enum {
-         #define GET_PARTITION_INFO     0x0
-         #define GET_LSA       0x2
-         #define SET_LSA       0x3
-+    HEALTH_INFO_ALERTS = 0x42,
-+        #define GET_ALERT_CONFIGURATION 0x1
-+        #define SET_ALERT_CONFIGURATION 0x2
-     SANITIZE    = 0x44,
-         #define OVERWRITE     0x0
-         #define SECURE_ERASE  0x1
-@@ -1625,6 +1633,110 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/* CXL r3.2 Section 8.2.10.9.3.2 Get Alert Configuration (Opcode 4201h) */
-+static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
-+                                       uint8_t *payload_in,
-+                                       size_t len_in,
-+                                       uint8_t *payload_out,
-+                                       size_t *len_out,
-+                                       CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLAlertConfig *out = (void *)payload_out;
-+
-+    memcpy(out, &ct3d->alert_config, sizeof(ct3d->alert_config));
-+    *len_out = sizeof(ct3d->alert_config);
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+/* CXL r3.2 Section 8.2.10.9.3.3 Set Alert Configuration (Opcode 4202h) */
-+static CXLRetCode cmd_set_alert_config(const struct cxl_cmd *cmd,
-+                                       uint8_t *payload_in,
-+                                       size_t len_in,
-+                                       uint8_t *payload_out,
-+                                       size_t *len_out,
-+                                       CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLAlertConfig *alert_config = &ct3d->alert_config;
-+    struct {
-+        uint8_t valid_alert_actions;
-+        uint8_t enable_alert_actions;
-+        uint8_t life_used_warning_threshold;
-+        uint8_t rsvd;
-+        uint16_t device_over_temperature_warning_threshold;
-+        uint16_t device_under_temperature_warning_threshold;
-+        uint16_t Corrected_volatile_memory_error_warning_threshold;
-+        uint16_t Corrected_persistent_memory_error_warning_threshold;
-+    } QEMU_PACKED *in = (void *)payload_in;
-+
-+    if (in->valid_alert_actions & CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD) {
-+        /*
-+         * CXL 3.2 Table 8-149 The life used warning threshold shall be
-+         * less than the life used critical alert value.
-+         */
-+        if (in->life_used_warning_threshold >=
-+            alert_config->life_used_critical_alert_threshold) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        alert_config->life_used_warning_threshold =
-+            in->life_used_warning_threshold;
-+        alert_config->enable_alerts |= CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD;
-+    }
-+
-+    if (in->valid_alert_actions &
-+        CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD) {
-+        /*
-+         * CXL 3.2 Table 8-149 The Device Over-Temperature Warning Threshold
-+         * shall be less than the the Device Over-Temperature Critical
-+         * Alert Threshold.
-+         */
-+        if (in->device_over_temperature_warning_threshold >=
-+            alert_config->device_over_temperature_critical_alert_threshold) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        alert_config->device_over_temperature_warning_threshold =
-+            in->device_over_temperature_warning_threshold;
-+        alert_config->enable_alerts |=
-+            CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD;
-+    }
-+
-+    if (in->valid_alert_actions &
-+        CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD) {
-+        /*
-+         * CXL 3.2 Table 8-149 The Device Under-Temperature Warning Threshold
-+         * shall be higher than the the Device Under-Temperature Critical
-+         * Alert Threshold.
-+         */
-+        if (in->device_under_temperature_warning_threshold <=
-+            alert_config->device_under_temperature_critical_alert_threshold) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        alert_config->device_under_temperature_warning_threshold =
-+            in->device_under_temperature_warning_threshold;
-+        alert_config->enable_alerts |=
-+            CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD;
-+    }
-+
-+    if (in->valid_alert_actions &
-+        CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD) {
-+        alert_config->Corrected_volatile_memory_error_warning_threshold =
-+            in->Corrected_volatile_memory_error_warning_threshold;
-+        alert_config->enable_alerts |=
-+            CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD;
-+    }
-+
-+    if (in->valid_alert_actions &
-+        CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD) {
-+        alert_config->Corrected_persistent_memory_error_warning_threshold =
-+            in->Corrected_persistent_memory_error_warning_threshold;
-+        alert_config->enable_alerts |=
-+            CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD;
-+    }
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- /* Perform the actual device zeroing */
- static void __do_sanitization(CXLType3Dev *ct3d)
- {
-@@ -2859,6 +2971,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
-     [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
-         ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
-+    [HEALTH_INFO_ALERTS][GET_ALERT_CONFIGURATION] = {"GET_ALERT_CONFIGURATION",
-+        cmd_get_alert_config, 0, 0 },
-+    [HEALTH_INFO_ALERTS][SET_ALERT_CONFIGURATION] = {"SET_ALERT_CONFIGURATION",
-+        cmd_set_alert_config, 12, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
-     [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
-         (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
-          CXL_MBOX_SECURITY_STATE_CHANGE |
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 5f365afb4d..5f01684ffc 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -956,6 +956,21 @@ static DOEProtocol doe_comp_prot[] = {
-     { }
- };
- 
-+/*
-+ * Initialize CXL device alerts with default threshold values.
-+ */
-+static void init_alert_config(CXLType3Dev *ct3d)
-+{
-+    ct3d->alert_config = (CXLAlertConfig) {
-+        .life_used_critical_alert_threshold = 75,
-+        .life_used_warning_threshold = 40,
-+        .device_over_temperature_critical_alert_threshold = 35,
-+        .device_under_temperature_critical_alert_threshold = 10,
-+        .device_over_temperature_warning_threshold = 25,
-+        .device_under_temperature_warning_threshold = 20
-+    };
-+}
-+
- void ct3_realize(PCIDevice *pci_dev, Error **errp)
- {
-     ERRP_GUARD();
-@@ -1030,6 +1045,7 @@ void ct3_realize(PCIDevice *pci_dev, Error **errp)
-         goto err_free_special_ops;
-     }
- 
-+    init_alert_config(ct3d);
-     pcie_cap_deverr_init(pci_dev);
-     /* Leave a bit of room for expansion */
-     rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, NULL);
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index a64739be25..1da23bf553 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -581,6 +581,19 @@ typedef struct CXLSetFeatureInfo {
-     size_t data_size;
- } CXLSetFeatureInfo;
- 
-+typedef struct CXLAlertConfig {
-+    uint8_t valid_alerts;
-+    uint8_t enable_alerts;
-+    uint8_t life_used_critical_alert_threshold;
-+    uint8_t life_used_warning_threshold;
-+    uint16_t device_over_temperature_critical_alert_threshold;
-+    uint16_t device_under_temperature_critical_alert_threshold;
-+    uint16_t device_over_temperature_warning_threshold;
-+    uint16_t device_under_temperature_warning_threshold;
-+    uint16_t Corrected_volatile_memory_error_warning_threshold;
-+    uint16_t Corrected_persistent_memory_error_warning_threshold;
-+} QEMU_PACKED CXLAlertConfig;
-+
- struct CXLType3Dev {
-     /* Private */
-     PCIDevice parent_obj;
-@@ -605,6 +618,8 @@ struct CXLType3Dev {
-     CXLCCI vdm_fm_owned_ld_mctp_cci;
-     CXLCCI ld0_cci;
- 
-+    CXLAlertConfig alert_config;
-+
-     /* PCIe link characteristics */
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
--- 
-2.34.1
+Maybe it's a good general hint to assign IGD identity mapped to the
+same PCI address in the guest as on the host, but it doesn't seem
+particularly relevant to this specific option.
+
+> +    object_class_property_set_description(klass, /* 2.11 */
+> +                                          "x-nv-gpudirect-clique",
+> +                                          "Add NVIDIA GPUDirect capabili=
+ty indicating P2P DMA "
+> +                                          "clique for device [0-15]");
+> +    object_class_property_set_description(klass, /* 2.12 */
+> +                                          "x-no-geforce-quirks",
+> +                                          "Disable GeForce quirks (for N=
+VIDIA Quadro/GRID/Tesla). "
+> +                                          "Improves performance");
+> +    object_class_property_set_description(klass, /* 2.12 */
+> +                                          "display",
+> +                                          "Enable display support for de=
+vice, ex. vGPU");
+> +    object_class_property_set_description(klass, /* 2.12 */
+> +                                          "x-msix-relocation",
+> +                                          "Specify MSI-X MMIO relocation=
+ to the end of specified "
+> +                                          "existing BAR or new BAR to av=
+oid virtualization overhead "
+> +                                          "due to adjacent device regist=
+ers (sPAPR)");
+
+I'd drop sPAPR reference, there are other reasons it can be useful.
+
+> +    object_class_property_set_description(klass, /* 3.0 */
+> +                                          "x-no-kvm-ioeventfd",
+> +                                          "Disable registration of ioeve=
+ntfds with KVM (DEBUG)");
+> +    object_class_property_set_description(klass, /* 3.0 */
+> +                                          "x-no-vfio-ioeventfd",
+> +                                          "Disable linking of KVM ioeven=
+tfds to VFIO ioeventfds"
+> +                                          " (NVIDIA, DEBUG)");
+
+Likewise dropping NVIDIA here.  Only currently used by an NVIDIA quirk,
+but that could change.
+
+> +    object_class_property_set_description(klass, /* 3.1 */
+> +                                          "x-balloon-allowed",
+> +                                          "Override allowing ballooning =
+with device (DEBUG, DANGER)");
+> +    object_class_property_set_description(klass, /* 3.2 */
+> +                                          "xres",
+> +                                          "Set X display resolution the =
+vGPU should use");
+> +    object_class_property_set_description(klass, /* 3.2 */
+> +                                          "yres",
+> +                                          "Set Y display resolution the =
+vGPU should use");
+> +    object_class_property_set_description(klass, /* 5.2 */
+> +                                          "x-pre-copy-dirty-page-trackin=
+g",
+> +                                          "Disable dirty pages tracking =
+during iterative phase");
+> +    object_class_property_set_description(klass, /* 5.2, 8.0 non-experim=
+etal */
+> +                                          "enable-migration",
+> +                                          "Enale device migration. Also =
+requires a host VFIO PCI "
+> +                                          "variant driver with migration=
+ support enabled");
+
+Variant or mdev.
+
+> +    object_class_property_set_description(klass, /* 8.1 */
+> +                                          "vf-token",
+> +                                          "Specify UUID VF token. Requir=
+ed for VF when PF is owned "
+> +                                          "by another VFIO driver");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+> +    object_class_property_set_description(klass, /* 9.1 */
+> +                                          "x-device-dirty-page-tracking",
+> +                                          "Disable device dirty page tra=
+cking and use "
+> +                                          "container-based dirty page tr=
+acking");
+
+This sounds like debug to me.
+
+> +    object_class_property_set_description(klass, /* 9.1 */
+> +                                          "migration-events",
+> +                                          "Emit VFIO migration QAPI even=
+t when a VFIO device "
+> +                                          "changes its migration state. =
+For management applications");
+> +    object_class_property_set_description(klass, /* 9.1 */
+> +                                          "skip-vsc-check",
+> +                                          "Skip config space check for V=
+endor Specific Capability "
+> +                                          "(NVIDIA, DEBUG)");
+
+Required for a specific migration use case with NVIDIA, but the option
+is generic.  Given the polarity is by default true for the current
+machine type, we might also indicate this provides an option for strict
+VSC content enforcement.
+
+>  }
+> =20
+>  static const TypeInfo vfio_pci_dev_info =3D {
+> @@ -3461,6 +3574,15 @@ static void vfio_pci_nohotplug_dev_class_init(Obje=
+ctClass *klass, void *data)
+> =20
+>      device_class_set_props(dc, vfio_pci_dev_nohotplug_properties);
+>      dc->hotpluggable =3D false;
+> +
+> +    object_class_property_set_description(klass, /* 3.1 */
+> +                                          "ramfb",
+> +                                          "Enable ramfb to provide pre-b=
+oot graphics for devices "
+> +                                          "enabling display option");
+> +    object_class_property_set_description(klass, /* 8.2 */
+> +                                          "x-ramfb-migrate",
+> +                                          "Override default migration su=
+pport for ramfb support "
+> +                                          "(DEBUG)");
+>  }
+> =20
+>  static const TypeInfo vfio_pci_nohotplug_dev_info =3D {
+> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+> index 1070a2113a17edb9ebafb5066e51ee2bc52a767d..61b8b856fac26e26a4805dc2d=
+5e65266b907ef58 100644
+> --- a/hw/vfio/platform.c
+> +++ b/hw/vfio/platform.c
+> @@ -674,6 +674,31 @@ static void vfio_platform_class_init(ObjectClass *kl=
+ass, void *data)
+>      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>      /* Supported by TYPE_VIRT_MACHINE */
+>      dc->user_creatable =3D true;
+> +
+> +    object_class_property_set_description(klass, /* 2.4 */
+> +                                          "host",
+> +                                          "Host device name of assigned =
+device");
+> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+> +                                          "x-no-mmap",
+> +                                          "Disable MMAP for device. Allo=
+ws to trace MMIO "
+> +                                          "accesses (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.4 */
+> +                                          "mmap-timeout-ms",
+> +                                          "When EOI is not provided by K=
+VM/QEMU, wait time "
+> +                                          "(milliseconds) to re-enable d=
+evice direct access "
+> +                                          "after INTx (DEBUG)");
+
+INTx is a PCI-ism, maybe we should just call it level interrupts.
+
+Thanks!
+Alex
+
+> +    object_class_property_set_description(klass, /* 2.4 */
+> +                                          "x-irqfd",
+> +                                          "Allow disabling irqfd support=
+ (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.6 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+> +
+>  }
+> =20
+>  static const TypeInfo vfio_platform_dev_info =3D {
 
 
