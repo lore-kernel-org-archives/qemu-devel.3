@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35DBC021A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B2DC02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwTC-0005EK-5f; Fri, 14 Feb 2025 09:15:06 -0500
+	id 1tiwUp-0000Zp-V0; Fri, 14 Feb 2025 09:16:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwT8-00056P-9B
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:02 -0500
+ id 1tiwTp-0006P4-3U
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:47 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwT6-0004Ue-K6
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:02 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECteQB002102;
- Fri, 14 Feb 2025 14:14:57 GMT
+ id 1tiwTa-0004j2-9G
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:36 -0500
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtRB2011445;
+ Fri, 14 Feb 2025 14:15:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=1TLnU8WpA/v27WOQ3L6Dkn5Vvy+ojGBtj2U5fbK8qRo=; b=
- j2IyHA7t9QqvkcM7lWGS5mDNu8j4Bq7rjlR2DtR9zT/hZvu5xGCLyTeEbj1PekOF
- 6FbAX9MtXoMdiYgtRZclgDS9C++jXP9g5xu9EVtmAGturyO4xG107Zl+23hjlBwc
- aOpBHQmVEmkb8pdPGHttn3pG6viFj9F7ozwuosR2H9VjddV/p9jiSzdrPHiu55vj
- tfCQIevmMG67ZheoVlq+NERdZlLFaW35BnJxYyWPBrgJ8Ef9u36Vw7i+VOQrsHx1
- hgyKQLzGDh1g/39gQUs0KVWHOuqScnXJQWNaz6Rl1rvtKeu38NlbAmZecp7NXYHB
- MKEWz3K7Nmk1zh8FCAZ4cg==
+ corp-2023-11-20; bh=zurSjh+ycUk+qDKlD1hF4rXDMsLxZM0vRjOuN/brrwY=; b=
+ fk/a4MZZGuMbCrSxeosBSjyAMdsF/l2zc7m/FBWNuwdoGLQ3W7lA9SPfNQwzEM1m
+ Fv0cy9boUQPapFDi0eF9bYgIDaSdFT1X6R1TwIEf2HpHrlUaJHvcDLSAJbH/Zymv
+ kDO/K8QRxwRlnonVb0GRW1OLXg0OMI9lk5mLfYodpZSCifAxCv76bTjSqwOyAoZb
+ Gp5mh7ZFValnr3C8FrFH2dYQQ4wA1guIq3dZUS1wl0Ol0NogGnnlNllhw6Hepoyu
+ hh/vXWEsBoIX7MVFvyVTJycqY/+aA1+pO+to7zXnx8b90Sc/X/AuPUwyGFGSREOg
+ fywTinP9eoBivzNrVOJMBg==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0qyusvt-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0sqbwnp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:56 +0000 (GMT)
+ Fri, 14 Feb 2025 14:15:16 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51ECog1I025151; Fri, 14 Feb 2025 14:14:56 GMT
+ with ESMTP id 51ECZ4jA025433; Fri, 14 Feb 2025 14:15:15 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwqksgg8-1
+ 44nwqksh08-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:14:56 +0000
+ Fri, 14 Feb 2025 14:15:15 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETPr006920;
- Fri, 14 Feb 2025 14:14:55 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETQL006920;
+ Fri, 14 Feb 2025 14:15:14 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 44nwqksg2h-21; Fri, 14 Feb 2025 14:14:55 +0000
+ ESMTP id 44nwqksg2h-35; Fri, 14 Feb 2025 14:15:14 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 20/45] vfio/pci: pass vector to virq functions
-Date: Fri, 14 Feb 2025 06:14:02 -0800
-Message-Id: <1739542467-226739-21-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 34/45] vfio/iommufd: export iommufd_cdev_get_info_iova_range
+Date: Fri, 14 Feb 2025 06:14:16 -0800
+Message-Id: <1739542467-226739-35-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
 References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
@@ -77,8 +77,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2501170000 definitions=main-2502140104
-X-Proofpoint-ORIG-GUID: jJH0Nzfuc1Eqh9o82nAMlzOLf74cQ3yx
-X-Proofpoint-GUID: jJH0Nzfuc1Eqh9o82nAMlzOLf74cQ3yx
+X-Proofpoint-ORIG-GUID: kT9CuHhFyKTZH1ZSyTtmrRJNEp-9WHlI
+X-Proofpoint-GUID: kT9CuHhFyKTZH1ZSyTtmrRJNEp-9WHlI
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,74 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the vector number to vfio_connect_kvm_msi_virq and
-vfio_remove_kvm_msi_virq, so it can be passed to their subroutines in
-a subsequent patch.  No functional change.
+Export iommufd_cdev_get_info_iova_range, for use by CPR in a subsequent
+patch to reconstruct the userland device state.  No functional change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/pci.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ hw/vfio/iommufd.c             | 4 ++--
+ include/hw/vfio/vfio-common.h | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 688b7d3..7b2d185 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -477,7 +477,7 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-                                              vector_n, &vdev->pdev);
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index ea40da5..a6e24a7 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -429,8 +429,8 @@ static int iommufd_cdev_ram_block_discard_disable(bool state)
+     return ram_block_uncoordinated_discard_disable(state);
  }
  
--static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
-+static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+-static bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
+-                                             uint32_t ioas_id, Error **errp)
++bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
++                                      uint32_t ioas_id, Error **errp)
  {
-     const char *name = "kvm_interrupt";
+     VFIOContainerBase *bcontainer = &container->bcontainer;
+     g_autofree struct iommu_ioas_iova_ranges *info = NULL;
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 78e4f12..9ca40d0 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -264,6 +264,9 @@ void vfio_kvm_device_close(void);
+ bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
+ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer);
  
-@@ -503,7 +503,8 @@ fail_notifier:
-     vector->virq = -1;
- }
- 
--static void vfio_remove_kvm_msi_virq(VFIOMSIVector *vector)
-+static void vfio_remove_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-+                                     int nr)
- {
-     kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vector->kvm_interrupt,
-                                           vector->virq);
-@@ -561,7 +562,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-      */
-     if (vector->virq >= 0) {
-         if (!msg) {
--            vfio_remove_kvm_msi_virq(vector);
-+            vfio_remove_kvm_msi_virq(vdev, vector, nr);
-         } else {
-             vfio_update_kvm_msi_virq(vector, *msg, pdev);
-         }
-@@ -573,7 +574,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-                 vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
-                 vfio_add_kvm_msi_virq(vdev, vector, nr, true);
-                 kvm_irqchip_commit_route_changes(&vfio_route_change);
--                vfio_connect_kvm_msi_virq(vector);
-+                vfio_connect_kvm_msi_virq(vector, nr);
-             }
-         }
-     }
-@@ -680,7 +681,7 @@ static void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
-     kvm_irqchip_commit_route_changes(&vfio_route_change);
- 
-     for (i = 0; i < vdev->nr_vectors; i++) {
--        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i]);
-+        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
-     }
- }
- 
-@@ -817,7 +818,7 @@ static void vfio_msi_disable_common(VFIOPCIDevice *vdev)
-         VFIOMSIVector *vector = &vdev->msi_vectors[i];
-         if (vdev->msi_vectors[i].use) {
-             if (vector->virq >= 0) {
--                vfio_remove_kvm_msi_virq(vector);
-+                vfio_remove_kvm_msi_virq(vdev, vector, i);
-             }
-             qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
-                                 NULL, NULL, NULL);
++bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
++                                      uint32_t ioas_id, Error **errp);
++
+ extern const MemoryRegionOps vfio_region_ops;
+ typedef QLIST_HEAD(VFIOGroupList, VFIOGroup) VFIOGroupList;
+ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
 -- 
 1.8.3.1
 
