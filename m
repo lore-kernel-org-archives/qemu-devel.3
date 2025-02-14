@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE5EC021A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B6DEC02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwXX-0005Ef-8u; Fri, 14 Feb 2025 09:19:35 -0500
+	id 1tiwVZ-0002Yx-0G; Fri, 14 Feb 2025 09:17:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tiwXP-00054i-8G
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:19:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tiwVS-0002Tz-MD
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:17:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tiwXM-000576-SQ
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:19:26 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tiwVM-0004xP-U0
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:17:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739542763;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1739542639;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=akTXZD9bp3KcmxxqCVDuMhT0zCgv/f6BVQpEIXtj/Xc=;
- b=RuX+Mfl5iUHtTr/BIa693nhBGMdOMNo4ct/4iqOPM4hk++lWulBNNyF/mLEeCo/6JjL57y
- hH5tN1gjUldZEtWn1YHOGXYWTE0lTrzcPKN9V7GI982RABlteEAwgC1TsVAUe8db5hLO+V
- GXFUXs7GWEd9NAPpbZM0GFh2/RWSdUQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-7snTw_JTOTuBti83E2DdHQ-1; Fri,
- 14 Feb 2025 09:19:22 -0500
-X-MC-Unique: 7snTw_JTOTuBti83E2DdHQ-1
-X-Mimecast-MFC-AGG-ID: 7snTw_JTOTuBti83E2DdHQ_1739542761
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5362A190FF83
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 14:19:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.144])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA2BF300018D; Fri, 14 Feb 2025 14:19:16 +0000 (UTC)
-Date: Fri, 14 Feb 2025 14:19:13 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Laine Stump <laine@redhat.com>,
- Stefano Brivio <sbrivio@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] net: vhost-user: add QAPI events to report connection
- state
-Message-ID: <Z69Q4bhElTS9bOO_@redhat.com>
-References: <20250214072629.1033314-1-lvivier@redhat.com>
- <871pw07sdy.fsf@pond.sub.org>
- <2c5358eb-1abe-4fce-8b28-7935c71f1cff@redhat.com>
- <Z69MOEAuE9WHjLjT@redhat.com>
+ bh=rv2W2LfFlKyt7tQHeo3XVObgcyNEjRJHMjOl/SRINPc=;
+ b=G/Gj5A5ZYgQnQUT60K+ZK0OoNBEx0Ql8l5vzB9wNuo8wZ9OZkTFLwq8cQ24aWp7TK10ZU2
+ zZ2OzPS338BQRmAEa1EEPoYtR+R719q2Nw8AFtjybDU5AVMfpNODcu7kH4Y+N/JZ1+eqFi
+ wlCeXx+nnRcFwlMgmQ8g5y+VC/tg044=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-tDlkmhYPNuy5zGDZG9Zk6w-1; Fri, 14 Feb 2025 09:17:16 -0500
+X-MC-Unique: tDlkmhYPNuy5zGDZG9Zk6w-1
+X-Mimecast-MFC-AGG-ID: tDlkmhYPNuy5zGDZG9Zk6w_1739542635
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4394c489babso12081385e9.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 06:17:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739542635; x=1740147435;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rv2W2LfFlKyt7tQHeo3XVObgcyNEjRJHMjOl/SRINPc=;
+ b=Mxgh0YGpxg+RjLPT2MrRYPV6DxwgO3ED6IUgTSMxx+IljGIsWgDB3xyAIcp6vLcsF/
+ IYV51x0WUy5rvrCyih9bIyc9xSDNPcq7tjAXimlG8KGudoPMbwA1p/g3nLGX0qmXt7uC
+ LNQMtSxoxfV2DV8oktuoGK4nChJL/1hU55/8x2zir6KkvafUjV7FSgrjtY2P2y6nJzzK
+ 8iZVi9n9InD9JLnj/oPvp2gF6+fl6wYcPixYauEP9pXI/64lOzXbbY/bnciLpDXbFJMo
+ ZkWYeJJXcpmHx6aBbPNqlzhEIL/MUDQWbj+B+pdkLRd1bEQFs37feoT6fyOk/SSLkJwb
+ 4cBA==
+X-Gm-Message-State: AOJu0YyQ+IbBn/BAxvo3FTbFwb18wB1t42K98dKrVGgSVfGLiS8eatul
+ X3ORtO2arhedJJaWW6oNglaoFZSQ3KwKClxpePc1EZZgnfJeABakQbA/CuBkJQbQnGe8t612k5s
+ /08orwBUfti3hmNjbPs2vtezjMUBCyEVd4DrbKaxAyYqt0O9Hhv4edUGrC5hHZtyAfsrH7s1XUp
+ dQcNqtW8+/EWtgdhotFc4jG+LouBE=
+X-Gm-Gg: ASbGncsGsLMLaILeMJrAU46N5wUiQSE+kdLR3tivz8QPbV+4qj6zR4QF0Fdf1u7hBVm
+ 9gbDGojQK8ZsEFwl2wciNw3FK+K9ud4i4vmGZuPxrunz+szGNc4mharMTdg5fjMg=
+X-Received: by 2002:a05:600c:46cc:b0:439:54d3:d076 with SMTP id
+ 5b1f17b1804b1-439601694e7mr80498735e9.1.1739542635131; 
+ Fri, 14 Feb 2025 06:17:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE6G7zw7tqBlE3GAP76Pmg5POhLGPjr3k1mhKuDviOi58LL/EmcL4AZj4MgsjCrExr6r5q63PZQnIUgLobc9HI=
+X-Received: by 2002:a05:600c:46cc:b0:439:54d3:d076 with SMTP id
+ 5b1f17b1804b1-439601694e7mr80498445e9.1.1739542634787; Fri, 14 Feb 2025
+ 06:17:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z69MOEAuE9WHjLjT@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <20250214135822.4076174-1-pbonzini@redhat.com>
+ <Z69MxsDrLUwOxtuD@redhat.com>
+In-Reply-To: <Z69MxsDrLUwOxtuD@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 14 Feb 2025 15:17:02 +0100
+X-Gm-Features: AWEUYZliU0-NP3A6tIAeQEr6O2NwqpEc5yXG57IoySb-qyq2namsTE0GyYyUP_g
+Message-ID: <CABgObfZg=su=k4T5Xf=cOig7MF7beQ7bof84gUWqpD5-Cv_T9g@mail.gmail.com>
+Subject: Re: [PATCH] rust: tests: do not import bindings::*
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
 X-Spam_bar: ---
 X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,73 +97,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 14, 2025 at 01:59:20PM +0000, Daniel P. Berrangé wrote:
-> On Fri, Feb 14, 2025 at 11:18:55AM +0100, Laurent Vivier wrote:
-> > On 14/02/2025 11:06, Markus Armbruster wrote:
-> > > Laurent Vivier <lvivier@redhat.com> writes:
-> > > 
-> > > > The netdev reports NETDEV_VHOST_USER_CONNECTED event when
-> > > > the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
-> > > > when it is disconnected.
-> > > > 
-> > > > The NETDEV_VHOST_USER_CONNECTED event includes the ChardevInfo
-> > > > (label, filename and frontend_open).
-> > > > 
-> > > > This allows a system manager like libvirt to detect when the server
-> > > > fails.
-> > > > 
-> > > > For instance with passt:
-> > > > 
-> > > > { 'execute': 'qmp_capabilities' }
-> > > > { "return": { } }
-> > > > 
-> > > > [killing passt here]
-> > > > 
-> > > > { "timestamp": { "seconds": 1739517243, "microseconds": 115081 },
-> > > >    "event": "NETDEV_VHOST_USER_DISCONNECTED",
-> > > >    "data": { "netdev-id": "netdev0" } }
-> > > > 
-> > > > [automatic reconnection with reconnect-ms]
-> > > > 
-> > > > { "timestamp": { "seconds": 1739517290, "microseconds": 343777 },
-> > > >    "event": "NETDEV_VHOST_USER_CONNECTED",
-> > > >    "data": { "netdev-id": "netdev0",
-> > > >              "info": { "frontend-open": true,
-> > > >                        "filename": "unix:",
-> > > >                        "label": "chr0" } } }
-> > > > 
-> > > > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> > > 
-> > > Standard question for events: if a management application misses an
-> > > event, say because it restarts and reconnects, is there a way to obtain
-> > > the missed information with a query command?
-> > > 
-> > 
-> > query-chardev could help but it doesn't provide the netdev id.
-> 
-> It doesn't have to IMHO. The application that created the NIC should know
-> what ID it assigned to both the netdev and chardev, and thus should be
-> able to use query-chardev to identify the chardev it previously
-> associated with the netdev.
+First of all, thanks for taking a look!!
 
-That said I kind of wonder whether we should be adding events against
-the chardev directly, instead of against the netdev use of chardev.
+> >      prelude::*,
+>
+> Should this be expanded too if we want to discourage wildcard imports ?
 
-ie CHARDEV_OPENED / CHARDEV_CLOSED events. For OPENED it is trivially
-equivalent. For CLOSED it is a little trickier, since this patch does
-delayed event dispatch from a bottom-half. If the chardev code was
-able to emit this event from a bottom half itself, that could be OK
-though.
+The prelude is a bit special; it provides a subset of items that most
+users will want to include into the namespace. You're right that it
+goes against the rule of discouraging wildcard imports, and in fact
+that's why it almost entirely consists of extension traits (e.g.
+DeviceMethods, SysBusDeviceMethods, ObjectCast, ObjectDeref,
+ObjectClassMethods). You shouldn't have to name the traits at all if
+the API works, and having them in the prelude lowers the cognitive
+load.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+There are a few more symbols that are imported in the prelude: for
+example the BqlCell and BqlRefCell, the ObjectType and IsA traits, or
+the qom_isa macro; those will be used almost everywhere.
+
+The exact shape of the prelude might change in the future, since
+qemu_api might get split into separate crates to enable using Rust in
+tools (which do not have qdev). For example there could be separate
+block, qdev and qom preludes.
+
+In any case, it's an exception and for this reason the amount of
+non-extension-traits symbols that it includes should be limited.
+
+> >      qdev::{DeviceClass, DeviceImpl, DeviceState, Property, ResettablePhasesImpl},
+> >      qom::{ClassInitImpl, ObjectImpl, ParentField},
+> > +    sysbus::SysBusDevice,
+>
+> This addition seems distinct from the bindings::* removal. Should it
+> have been a separate patch ?
+
+SysBusDevice is re-exported from sysbus, similar to DeviceState or
+VMStateDescription that you see in the context. This is done because
+in general using "bindings" is an anti-pattern; you should use APIs
+that have been wrapped properly as is the case for SysBusDevice.
+
+The tests use some "bindings::foo" symbols either because they're
+setting up the test environment (module_call_init) or because they're
+intentionally bypassing the high-level API (object_new/unref). The
+only case where something isn't yet covered by safe wrappers is
+qdev_prop_bool.
+
+In fact, a lot of the structs that the tests need were imported twice,
+once from bindings and once from e.g. qdev or vmstate. SysBusDevice
+was the odd one out that was imported only from bindings, so it has
+added.
+
+Paolo
+
+> >      vmstate::VMStateDescription,
+> >      zeroable::Zeroable,
+> >  };
+>
+> With regards,
+> Daniel
 
 
