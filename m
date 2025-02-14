@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC83DC021A4
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDD8FC02198
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 01:39:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj74i-000447-1s; Fri, 14 Feb 2025 20:34:33 -0500
+	id 1tj750-0004DX-CK; Fri, 14 Feb 2025 20:34:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tj2jK-0003fW-Oa
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:56:10 -0500
+ id 1tj2lW-0003n1-Ow
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:58:26 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tj2jI-0004tH-6y
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:56:10 -0500
+ id 1tj2lU-00051g-4s
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 15:58:26 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tj2j2-00000007HoU-34vJ; Fri, 14 Feb 2025 21:55:52 +0100
-Message-ID: <1ab2d96f-f37d-466e-83db-0e3d39581bc7@maciej.szmigiero.name>
-Date: Fri, 14 Feb 2025 21:55:47 +0100
+ id 1tj2lO-00000007HpC-1Eyv; Fri, 14 Feb 2025 21:58:18 +0100
+Message-ID: <50715039-1eb8-454b-9ab7-fb1490e27841@maciej.szmigiero.name>
+Date: Fri, 14 Feb 2025 21:58:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 26/33] vfio/migration: Multifd device state transfer
- support - receive init/cleanup
+Subject: Re: [PATCH v4 27/33] vfio/migration: Multifd device state transfer
+ support - received buffers queuing
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <1fcf182307e8e1f67a3c226e62d26cad3a2f60d0.1738171076.git.maciej.szmigiero@oracle.com>
- <6c337aec-d004-4ede-a86b-0c934b275fa9@redhat.com>
+ <74c4bbaaccd81e883504ae478e84394ddd96bbae.1738171076.git.maciej.szmigiero@oracle.com>
+ <1b708674-e14d-46c2-8373-a0b12cf08b10@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <6c337aec-d004-4ede-a86b-0c934b275fa9@redhat.com>
+In-Reply-To: <1b708674-e14d-46c2-8373-a0b12cf08b10@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -110,161 +110,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.02.2025 11:55, Cédric Le Goater wrote:
+On 12.02.2025 14:47, Cédric Le Goater wrote:
 > On 1/30/25 11:08, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Add support for VFIOMultifd data structure that will contain most of the
->> receive-side data together with its init/cleanup methods.
+>> The multifd received data needs to be reassembled since device state
+>> packets sent via different multifd channels can arrive out-of-order.
+>>
+>> Therefore, each VFIO device state packet carries a header indicating its
+>> position in the stream.
+>> The raw device state data is saved into a VFIOStateBuffer for later
+>> in-order loading into the device.
+>>
+>> The last such VFIO device state packet should have
+>> VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 >> ---
->>   hw/vfio/migration.c           | 52 +++++++++++++++++++++++++++++++++--
->>   include/hw/vfio/vfio-common.h |  5 ++++
->>   2 files changed, 55 insertions(+), 2 deletions(-)
+>>   hw/vfio/migration.c           | 116 ++++++++++++++++++++++++++++++++++
+>>   hw/vfio/pci.c                 |   2 +
+>>   hw/vfio/trace-events          |   1 +
+>>   include/hw/vfio/vfio-common.h |   1 +
+>>   4 files changed, 120 insertions(+)
 >>
 >> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index 3211041939c6..bcdf204d5cf4 100644
+>> index bcdf204d5cf4..0c0caec1bd64 100644
 >> --- a/hw/vfio/migration.c
 >> +++ b/hw/vfio/migration.c
->> @@ -300,6 +300,9 @@ typedef struct VFIOStateBuffer {
->>       size_t len;
+>> @@ -301,6 +301,12 @@ typedef struct VFIOStateBuffer {
 >>   } VFIOStateBuffer;
->> +typedef struct VFIOMultifd {
->> +} VFIOMultifd;
->> +
+>>   typedef struct VFIOMultifd {
+>> +    VFIOStateBuffers load_bufs;
+>> +    QemuCond load_bufs_buffer_ready_cond;
+>> +    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+>> +    uint32_t load_buf_idx;
+>> +    uint32_t load_buf_idx_last;
+>> +    uint32_t load_buf_queued_pending_buffers;
+>>   } VFIOMultifd;
 >>   static void vfio_state_buffer_clear(gpointer data)
->>   {
->>       VFIOStateBuffer *lb = data;
->> @@ -398,6 +401,18 @@ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
->>       return qemu_file_get_error(f);
+>> @@ -346,6 +352,103 @@ static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
+>>       return &g_array_index(bufs->array, VFIOStateBuffer, idx);
 >>   }
->> +static VFIOMultifd *vfio_multifd_new(void)
+> Each routine executed from a migration thread should have a preliminary
+> comment saying from which context it is called: migration or VFIO
+
+Do you mean like whether it is called from the code in qemu/migration/
+directory or the code in hw/vfio/ directory?
+
+What about internal linkage ("static") functions?
+Do they need such comment too? That would actually decrease the readability
+of these one-or-two line helpers due to high comment-to-code ratio.
+
+As far as I can see, pretty much no existing VFIO migration function
+has such comment.
+
+>> +static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+>> +                                          VFIODeviceStatePacket *packet,
+>> +                                          size_t packet_total_size,
+>> +                                          Error **errp)
 >> +{
->> +    VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
->> +
->> +    return multifd;
->> +}
->> +
->> +static void vfio_multifd_free(VFIOMultifd *multifd)
->> +{
->> +    g_free(multifd);
->> +}
->> +
->>   static void vfio_migration_cleanup(VFIODevice *vbasedev)
->>   {
->>       VFIOMigration *migration = vbasedev->migration;
->> @@ -785,14 +800,47 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->>   static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
->>   {
->>       VFIODevice *vbasedev = opaque;
 >> +    VFIOMigration *migration = vbasedev->migration;
->> +    int ret;
+>> +    VFIOMultifd *multifd = migration->multifd;
+>> +    VFIOStateBuffer *lb;
+>> +
+>> +    vfio_state_buffers_assert_init(&multifd->load_bufs);
+>> +    if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
+>> +        vfio_state_buffers_size_set(&multifd->load_bufs, packet->idx + 1);
+>> +    }
+>> +
+>> +    lb = vfio_state_buffers_at(&multifd->load_bufs, packet->idx);
+>> +    if (lb->is_present) {
+>> +        error_setg(errp, "state buffer %" PRIu32 " already filled",
+>> +                   packet->idx);
+>> +        return false;
+>> +    }
+>> +
+>> +    assert(packet->idx >= multifd->load_buf_idx);
+>> +
+>> +    multifd->load_buf_queued_pending_buffers++;
+>> +    if (multifd->load_buf_queued_pending_buffers >
+>> +        vbasedev->migration_max_queued_buffers) {
+>> +        error_setg(errp,
+>> +                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
+>> +                   packet->idx, vbasedev->migration_max_queued_buffers);
+>> +        return false;
+>> +    }
+> 
+> AFAICT, attributes multifd->load_buf_queued_pending_buffers and
+> vbasedev->migration_max_queued_buffers are not strictly necessary.
+> They allow to count buffers and check an arbitrary limit, which
+> is UINT64_MAX today. It makes me wonder how useful they are.
+
+You are right they aren't strictly necessary and in fact they weren't
+there in early versions of this patch set.
+
+It was introduced upon Peter's request since otherwise the source
+could theoretically cause the target QEMU to allocate unlimited
+amounts of memory for buffers-in-flight:
+https://lore.kernel.org/qemu-devel/9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name/
+(scroll to the "Risk of OOM on unlimited VFIO buffering" section).
+
+If that's an actual risk in someone's use case then that person
+could lower that limit from UINT64_MAX to, for example, 10 buffers.
+
+> Please introduce them in a separate patch at the end of the series,
+> adding documentation on the "x-migration-max-queued-buffers" property
+> and also general documentation on why and how to use it.
+
+I can certainly move it to the end of the series - done now.
+
+>> +
+>> +    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+>> +    lb->len = packet_total_size - sizeof(*packet);
+>> +    lb->is_present = true;
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +static bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
+>> +                                   Error **errp)
+>> +{
+>> +    VFIODevice *vbasedev = opaque;
+>> +    VFIOMigration *migration = vbasedev->migration;
+>> +    VFIOMultifd *multifd = migration->multifd;
+>> +    VFIODeviceStatePacket *packet = (VFIODeviceStatePacket *)data;
 >> +
 >> +    /*
->> +     * Make a copy of this setting at the start in case it is changed
->> +     * mid-migration.
+>> +     * Holding BQL here would violate the lock order and can cause
+>> +     * a deadlock once we attempt to lock load_bufs_mutex below.
 >> +     */
->> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
->> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
-> 
-> Attribute "migration->multifd_transfer" is not necessary. It can be
-> replaced by a small inline helper testing pointer migration->multifd
-> and this routine can use a local variable instead.
-
-It's necessary for the send side since it does not need/allocate VFIOMultifd
-at migration->multifd, so this (receive) side can use it for commonality too.
-
-> I don't think the '_transfer' suffix adds much to the understanding.
-
-The migration->multifd was already taken by VFIOMultifd struct, but
-it could use other name (migration->multifd_switch? migration->multifd_on?).
-
->> +    } else {
->> +        migration->multifd_transfer =
->> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
->> +    }
+>> +    assert(!bql_locked());
 >> +
->> +    if (migration->multifd_transfer && !vfio_multifd_transfer_supported()) {
+>> +    if (!migration->multifd_transfer) {
 >> +        error_setg(errp,
->> +                   "%s: Multifd device transfer requested but unsupported in the current config",
->> +                   vbasedev->name);
->> +        return -EINVAL;
->> +    }
-> 
-> The above checks are also introduced in vfio_save_setup(). Please
-> implement a common routine vfio_multifd_is_enabled() or some other
-> name.
-
-Done (as common vfio_multifd_transfer_setup()).
-
->> +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->> +                                   migration->device_state, errp);
->> +    if (ret) {
->> +        return ret;
+>> +                   "got device state packet but not doing multifd transfer");
+>> +        return false;
 >> +    }
 >> +
->> +    if (migration->multifd_transfer) {
->> +        assert(!migration->multifd);
->> +        migration->multifd = vfio_multifd_new();
+>> +    assert(multifd);
+>> +
+>> +    if (data_size < sizeof(*packet)) {
+>> +        error_setg(errp, "packet too short at %zu (min is %zu)",
+>> +                   data_size, sizeof(*packet));
+>> +        return false;
 >> +    }
->> -    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->> -                                    vbasedev->migration->device_state, errp);
->> +    return 0;
->>   }
->>   static int vfio_load_cleanup(void *opaque)
->>   {
->>       VFIODevice *vbasedev = opaque;
->> +    VFIOMigration *migration = vbasedev->migration;
 >> +
->> +    g_clear_pointer(&migration->multifd, vfio_multifd_free);
+>> +    if (packet->version != 0) {
 > 
-> please add a vfio_multifd_cleanup() routine.
-> 
+> Please add a define for version, even if 0.
 
-Done.
+I've introduced a new define VFIO_DEVICE_STATE_PACKET_VER_CURRENT.
 
->>       vfio_migration_cleanup(vbasedev);
->>       trace_vfio_load_cleanup(vbasedev->name);
->> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->> index 153d03745dc7..c0c9c0b1b263 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -61,6 +61,8 @@ typedef struct VFIORegion {
->>       uint8_t nr; /* cache the region number for debug */
->>   } VFIORegion;
->> +typedef struct VFIOMultifd VFIOMultifd;
+>> +        error_setg(errp, "packet has unknown version %" PRIu32,
+>> +                   packet->version);
+>> +        return false;
+>> +    }
 >> +
->>   typedef struct VFIOMigration {
->>       struct VFIODevice *vbasedev;
->>       VMChangeStateEntry *vm_state;
->> @@ -72,6 +74,8 @@ typedef struct VFIOMigration {
->>       uint64_t mig_flags;
->>       uint64_t precopy_init_size;
->>       uint64_t precopy_dirty_size;
->> +    bool multifd_transfer;
->> +    VFIOMultifd *multifd;
->>       bool initial_data_sent;
->>       bool event_save_iterate_started;
->> @@ -133,6 +137,7 @@ typedef struct VFIODevice {
->>       bool no_mmap;
->>       bool ram_block_discard_allowed;
->>       OnOffAuto enable_migration;
->> +    OnOffAuto migration_multifd_transfer;
+>> +    if (packet->idx == UINT32_MAX) {
+>> +        error_setg(errp, "packet has too high idx %" PRIu32,
+>> +                   packet->idx);
 > 
-> This property should be added at the end of the series, with documentation,
-> and used in the vfio_multifd_some_name() routine I mentioned above.
+> I don't think printing out packet->idx is useful here.
+
+Yeah, it's unlikely that the value of UINT32_MAX will ever change :)
+
+Removed now.
+
+>> +        return false;
+>> +    }
+>> +
+>> +    trace_vfio_load_state_device_buffer_incoming(vbasedev->name, packet->idx);
 > 
+> I wonder if we can add thread ids to trace events. It would be useful.
 
-The property behind this variable *is* in fact introduced at the end of the series -
-in a commit called "vfio/migration: Add x-migration-multifd-transfer VFIO property"
-after which there are only commits adding the related compat entry and a VFIO
-developer doc update.
+load_state_buffer is called from multifd channel receive threads
+so passing multifd channel id there would require adding this multifd-specific
+parameter to qemu_loadvm_load_state_buffer() and load_state_buffer
+SaveVMHandler.
 
-The variable itself needs to be introduced earlier since various newly
-introduced code blocks depend on its value to only get activated when multifd
-transfer is enabled.
+>> +
+>> +    QEMU_LOCK_GUARD(&multifd->load_bufs_mutex);
+>> +
+>> +    /* config state packet should be the last one in the stream */
+>> +    if (packet->flags & VFIO_DEVICE_STATE_CONFIG_STATE) {
+>> +        multifd->load_buf_idx_last = packet->idx;
+>> +    }
+>> +
+>> +    if (!vfio_load_state_buffer_insert(vbasedev, packet, data_size, errp)) {
+> 
+> So the migration thread calling multifd_device_state_recv() will
+> exit 
 
+The thread is calling multifd_device_state_recv() is a multifd
+channel receive thread.
+
+> and the vfio thread loading the state into the device will
+> hang until its aborted ?
+
+In the normal (successful) migration flow the vfio_load_bufs_thread()
+will exit after loading (write()'ing) all buffers into the device
+and then loading its config state.
+
+In the aborted/error/unsuccessful migration flow it will get
+terminated from vfio_load_cleanup() -> vfio_multifd_free() ->
+vfio_load_cleanup_load_bufs_thread().
+
+vfio_load_cleanup_load_bufs_thread() will signal
+load_bufs_buffer_ready_cond and load_bufs_iter_done_cond since
+the load thread indeed could be waiting on them.
+
+> 
+> This sequence is expected to be called to release the vfio thread
+> 
+>         while (multifd->load_bufs_thread_running) {
+>              multifd->load_bufs_thread_want_exit = true;
+> 
+>              qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
+>          ...
+>         }
+> 
+> right ?
+
+Right, that's a part of the code in vfio_load_cleanup_load_bufs_thread().
+
+> 
+> The way the series is presented makes it a bit complex to follow the
+> proposition, especially regarding the creation and termination of
+> threads, something the reader should be aware of.
+> 
+> As an initial step in clarifying the design, I would have preferred
+> a series of patches introducing the various threads, migration threads
+> and VFIO threads, without any workload. Once the creation and termination
+> points are established I would then introduce the work load for each
+> thread.
+
+When I am doing review of anything more complex (though it's not usually
+in QEMU) I mainly follow the final code flow as an operation is handled
+since looking just from top to down at individual commits rarely gives
+enough context to see how every part interacts together.
+
+But for this the reviewer needs to see the whole code for the logical
+operation, rather than just a part of it.
+
+I think that adding the load operation in parts doesn't really
+help since the reason why things are done such way in earlier patches
+are only apparent in later patches and the earlier parts doesn't
+really have much sense on their own.
+Not to mention extra code churn when rebasing/reworking that increases
+chance of a typo or a copy-paste mistake happening at some point.
+
+I also see that in comments to a later patch you dislike that
+a dummy vfio_load_bufs_thread_load_config() gets added in one patch
+then immediately replaced by the real implementation in the next patch.
+Previously, you also said that vfio_load_config_after_iter() seems
+to be unused in the patch that adds it - that's exactly the kind of
+issues that bringing the complete operation in one patch avoids.
+
+I agree that, for example, x-migration-load-config-after-iter feature
+could be a separate patch as it is a relatively simple change.
+
+Same goes for x-migration-max-queued-buffers checking/enforcement,
+compat changes, exporting existing settings (variables) as properties
+or adding a g_autoptr() cleanup function for an existing type.
+
+That's why originally the VFIO part of the series was divided into two
+parts - receive and send, since these are two separate, yet internally
+complete operations.
+
+I also export the whole series (including the current WiP state, with
+code moved to migration-multifd.{c,h} files, etc.) as a git tree at
+https://gitlab.com/maciejsszmigiero/qemu/-/commits/multifd-device-state-transfer-vfio
+since this way it can be easily seen how the QEMU code currently
+looks after the whole patch set or set of patches there.
+
+> 
 > Thanks,
 > 
 > C.
