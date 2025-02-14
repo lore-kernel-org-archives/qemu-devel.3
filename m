@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2F5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB3DC02198
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Feb 2025 14:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tiwUH-0006w5-6l; Fri, 14 Feb 2025 09:16:21 -0500
+	id 1tiwUv-0000uv-9m; Fri, 14 Feb 2025 09:16:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwTW-0006Bu-9S
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:38 -0500
+ id 1tiwTp-0006P9-I3
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:47 -0500
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tiwTU-0004iG-5W
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:25 -0500
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECtVTI017784;
- Fri, 14 Feb 2025 14:15:12 GMT
+ id 1tiwTd-0004jW-Ii
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 09:15:43 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ECuA16019644;
+ Fri, 14 Feb 2025 14:15:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=9W2Rnyiz7DlZBNIAAKjFZqi0y6Hw0lmu+7DsnzAaMvw=; b=
- G0f+1rMjeo4iGuG+kXb61HphqiQySInWSVvUB29xzN2az0QxliJUgURyUj2gi5DU
- S6+FusFzXxHX6ljHX+oXiJ+PmbLc00kN5XIwCa0lLef95zuO5vEXacfxgBQf7Hqv
- 1fClAjTYB1o8deChL/YHIEv2p/DY06QMguyVbKqDXHb+mQSX4OU71NqxU9dTP/KR
- ffeLR9mrd5ulHtxbcXDhaZe9jCi8P8Uf8ZnakabnD1ut13EQQztv+lv5BAm7irfj
- lEKHju3yV81JBh/f/vvSaV4aThSfigH4ulchJKVcsNWIJ6LEEuq89nHgdYPQnPTL
- 5WJqnpoyGDmyVHgppnG79w==
+ corp-2023-11-20; bh=b2G/sU4A3dYc8xXBcjXxdR20Ew4Qo4gFlTYVkFtXgBA=; b=
+ oICfJTax26do+pJhQ57fwC9g+Hgnml95gksk1Ac61StBTAcXl+UHUqAtO680vB8B
+ F/McVZnY1r6DTlFTkAWwq3KcdHBW02gNtdXuIfmhsBiH0Yut2eux2isL3aQot7i8
+ uglhBIZHCHXwQjJks9Ghj2wGLOuTO85JfcbnHZq1odaIUx+AdlceNsFfbvW0EmDs
+ Kn10jM2FQlMRsY10Hh5E2cGp+Ee7lysIqkN0YP1gQlwihLrstG7rhwZ4aItQiWri
+ p/wEoj+XJfjHsMo2aaid2JmJ+uyJv6YXxoX9ykAqztaMAX/l6pqvNCbgkQzYxNuc
+ 7n2RnK5C0qBT436QSd0WOA==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0tgbtwk-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44p0t4bmvf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:15:11 +0000 (GMT)
+ Fri, 14 Feb 2025 14:15:21 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51ECSfbq025328; Fri, 14 Feb 2025 14:15:10 GMT
+ with ESMTP id 51ECihHR025381; Fri, 14 Feb 2025 14:15:20 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 44nwqksgus-1
+ 44nwqksh4g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Feb 2025 14:15:10 +0000
+ Fri, 14 Feb 2025 14:15:19 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETQD006920;
- Fri, 14 Feb 2025 14:15:09 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EEETQR006920;
+ Fri, 14 Feb 2025 14:15:19 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 44nwqksg2h-31; Fri, 14 Feb 2025 14:15:09 +0000
+ ESMTP id 44nwqksg2h-38; Fri, 14 Feb 2025 14:15:19 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 30/45] backends/iommufd: iommufd_backend_map_file_dma
-Date: Fri, 14 Feb 2025 06:14:12 -0800
-Message-Id: <1739542467-226739-31-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 37/45] vfio/iommufd: fix cpr register
+Date: Fri, 14 Feb 2025 06:14:19 -0800
+Message-Id: <1739542467-226739-38-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
 References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
@@ -77,8 +77,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2501170000 definitions=main-2502140104
-X-Proofpoint-GUID: N3sumdBFR6hBqlquk8lAj4WP51b2x7bJ
-X-Proofpoint-ORIG-GUID: N3sumdBFR6hBqlquk8lAj4WP51b2x7bJ
+X-Proofpoint-ORIG-GUID: eZMYzM_SbgIS2PXqHOP9zou5OrCquI0Y
+X-Proofpoint-GUID: eZMYzM_SbgIS2PXqHOP9zou5OrCquI0Y
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,90 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define iommufd_backend_map_file_dma to implement IOMMU_IOAS_MAP_FILE.
-This will be called as a substitute for iommufd_backend_map_dma, so
-the error conditions for BARs are copied as-is from that function.
+iommufd_cdev_attach should not call vfio_cpr_register_container if an
+existing container is found.  Fix that by registering earlier in the
+code flow, which requires an additional call to unregister during error
+recovery.  Note it is safe to call unregister even if register has not
+been called.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- backends/iommufd.c       | 36 ++++++++++++++++++++++++++++++++++++
- backends/trace-events    |  1 +
- include/system/iommufd.h |  3 +++
- 3 files changed, 40 insertions(+)
+ hw/vfio/iommufd.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index d57da44..612de78 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -172,6 +172,42 @@ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
-     return ret;
- }
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 2de2811..87c3bc2c 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -596,6 +596,10 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
  
-+int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-+                                 hwaddr iova, ram_addr_t size,
-+                                 int mfd, unsigned long start, bool readonly)
-+{
-+    int ret, fd = be->fd;
-+    struct iommu_ioas_map_file map = {
-+        .size = sizeof(map),
-+        .flags = IOMMU_IOAS_MAP_READABLE |
-+                 IOMMU_IOAS_MAP_FIXED_IOVA,
-+        .ioas_id = ioas_id,
-+        .fd = mfd,
-+        .start = start,
-+        .iova = iova,
-+        .length = size,
-+    };
-+
-+    if (!readonly) {
-+        map.flags |= IOMMU_IOAS_MAP_WRITEABLE;
+     bcontainer->initialized = true;
+ 
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
++        goto err_listener_register;
 +    }
 +
-+    ret = ioctl(fd, IOMMU_IOAS_MAP_FILE, &map);
-+    trace_iommufd_backend_map_file_dma(fd, ioas_id, iova, size, mfd, start,
-+                                       readonly, ret);
-+    if (ret) {
-+        ret = -errno;
-+
-+        /* TODO: Not support mapping hardware PCI BAR region for now. */
-+        if (errno == EFAULT) {
-+            warn_report("IOMMU_IOAS_MAP_FILE failed: %m, PCI BAR?");
-+        } else {
-+            error_report("IOMMU_IOAS_MAP_FILE failed: %m");
-+        }
-+    }
-+    return ret;
-+}
-+
- int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-                               hwaddr iova, ram_addr_t size)
- {
-diff --git a/backends/trace-events b/backends/trace-events
-index 40811a3..f478e18 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -11,6 +11,7 @@ iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d user
- iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
- iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
- iommufd_backend_map_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, void *vaddr, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" addr=%p readonly=%d (%d)"
-+iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int fd, unsigned long start, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" fd=%d start=%ld readonly=%d (%d)"
- iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index cbab75b..ac700b8 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -43,6 +43,9 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be);
- bool iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
-                                 Error **errp);
- void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id);
-+int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-+                                 hwaddr iova, ram_addr_t size, int fd,
-+                                 unsigned long start, bool readonly);
- int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
-                             ram_addr_t size, void *vaddr, bool readonly);
- int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+ found_container:
+     ret = ioctl(devfd, VFIO_DEVICE_GET_INFO, &dev_info);
+     if (ret) {
+@@ -603,10 +607,6 @@ found_container:
+         goto err_listener_register;
+     }
+ 
+-    if (!vfio_cpr_register_container(bcontainer, errp)) {
+-        goto err_listener_register;
+-    }
+-
+     /*
+      * TODO: examine RAM_BLOCK_DISCARD stuff, should we do group level
+      * for discarding incompatibility check as well?
+@@ -629,6 +629,7 @@ found_container:
+     return true;
+ 
+ err_listener_register:
++    vfio_cpr_unregister_container(bcontainer);
+     iommufd_cdev_ram_block_discard_disable(false);
+ err_discard_disable:
+     iommufd_cdev_detach_container(vbasedev, container);
 -- 
 1.8.3.1
 
