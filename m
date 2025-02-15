@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB011C021A0
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 18:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9F1BC021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 18:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjMpq-0003cx-EU; Sat, 15 Feb 2025 13:24:14 -0500
+	id 1tjN7e-0006Rh-Lj; Sat, 15 Feb 2025 13:42:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjMpn-0003cf-Cz
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 13:24:11 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tjN7d-0006RU-0D
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 13:42:37 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjMpl-0001pu-Ch
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 13:24:11 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-221050f3f00so12356855ad.2
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 10:24:08 -0800 (PST)
+ id 1tjN7Z-0004KK-90
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 13:42:36 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2fc3fa00323so1801836a91.3
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 10:42:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739643847; x=1740248647; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=00MwxISFON973UfmPErVkRmXf6tS6H7O803nfq6hrZ8=;
- b=FdczA5eF7PNE1WHg4ZGmlsuoP/74AzvGeDjnNcH9twSXaSnuJ1MQPwXvFRdo6Tla4t
- +wWAwgu/7eC4HXPKlltlZMueSBGmJnx4ooSg70hx0801A82M8GN2PCfrircP7tjcESZ8
- Hq1IkiRZBYYU0DE+pcWRaF/SBkfTmOiJNl6I57i22qDP0IkxFIIY6Z1ha+Fh/A6KGfNU
- 48w1ms/33fd0JKPEILYvciTGRmw0+9KwjmdyQc6Tv7bxWyAMz+IHyuab18a+ubom3bj1
- IYSOBKC+f8LuuHNJnmbtSvz0y8BjZjVCeHvkQnIl3+Z3YXsPeRNE7GgcybdV2F3Ae57Z
- 2uxA==
+ d=linaro.org; s=google; t=1739644946; x=1740249746; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fDZ2c/5pwLdUWjHYDxkuCU+dmLSGu0I40qDFF2WWkfY=;
+ b=nNnj/6ofQ3JWIPHKE83kX4XKZph+e0pd6YTU4HsDtvIenvt8TyTqmDNrTdZNDffOCw
+ XTRyAU3pc6VoN1YtRYWwM1JzYK781WlCF3sp0VOdq4byAvKoWVB1LTucJUDlAiF4elsF
+ ablQV73Q8OomNSmkn1c5ovSU/fkRxuDDn6Ahoj8xVJxbaLAgjWq+So39Kc01EdVpkdHm
+ DSTRThVCPwn910hahff2yqw68vdJu351ZiZMSxgvMR2xtuKLHbDvEcwPlRG5Tsz3pI2A
+ dAh1ck4q0rJ2sIptrVwz0WeB8qB59pbq/v8z+rLlNJq2aSwhSt+D0gx0KR+8BmYkDSFh
+ m6xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739643847; x=1740248647;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739644946; x=1740249746;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=00MwxISFON973UfmPErVkRmXf6tS6H7O803nfq6hrZ8=;
- b=SHQOvtSoWaYKvQe3C2HR843hsx+Ods31IkJK6DxlTRpPILh86v1HFYAxt061jp3tLj
- e/yi+otBT5I2Ep/2HbAwn7DICobMPBJnxdFmGO0sejYTEWXTmVmNnWtk1ldSbgHMv+RG
- 97Cq2+sI4T+XhetoLgBQBwI2Rbi9aK8LMbFq/hnD5Uch20fF+Yb4ZWKK/pNBFTvigG9F
- 9SbxQ3rugCNyRyFQvAlBTOJQnnoety/UrvkozqtRh1zHJIK/4QYUHtTxNOEi3Zkci6BF
- 16Bwub5wtsb2CbbUvOFdGfGWYeFvZqLPOCGRUhv+2WqGWmaL6tU5fOjcVuOvpt60lJw+
- k3rw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVOPQmn4PGrQ5nhMh00BHJPzieUxfd71M4omfe+d2D7e4ZWpRgPwQ62vpQUJJGRU/Qs0kVCjE9A4ug@nongnu.org
-X-Gm-Message-State: AOJu0Yzp2s48VGmz6B6oUELBzSNvVaxpGOzgPW/tUpabfFNsB3/+JxbD
- z1Sm1/vTvzpv7B2OUilMjtMgsp51ji2eKWPULv+f+lD7qNXgUt9WA1y5dbmG7pc=
-X-Gm-Gg: ASbGncsRYbgtvCVDK+SPQVr1e99+HrhBuxrPn/k/2NtENkYyx0pnljnA23o1bph3IAd
- pE4A+8GFMCyBQuus5MJfX3Kh38yFOixj1bJ6nJeUOmMbfETJmQtO+t3O1I1vECcGwlmk1uuHL1Z
- Cy5+yUG33EfYhxsRhAHcqyJe+GtXa+4UI4D4nuj+f1+51cjtBs8Tp8R12yRiQxv0tQZwVlih70M
- tMFzuRqBJ4cWiJHadmWGn2eoy/NrZEbeztYFvqBQ2GtQ5qGvVnTnLQ9VT54U9QI+80q1ZV2scx1
- GMGSG0ZBSp4+ybb6py2MOYWX0CbwDslEaErFotzAw7WQE/Ww2RdghY8=
-X-Google-Smtp-Source: AGHT+IHe95YDOmvpzFVDtzCQhiWxRvC5dTdphkqcfNSYSXyuMfCjg3yYD67ZK9ag2O09+jfl9hpgpg==
-X-Received: by 2002:a17:903:283:b0:215:ae3d:1dd7 with SMTP id
- d9443c01a7336-221040269bbmr60175705ad.19.1739643847099; 
- Sat, 15 Feb 2025 10:24:07 -0800 (PST)
+ bh=fDZ2c/5pwLdUWjHYDxkuCU+dmLSGu0I40qDFF2WWkfY=;
+ b=hQTjvKn+qZ8a5rSDDAYnrl2+7/JqqPZOb4xSjd61pFJbjTAUT6vm1xLOmahhHSfHfu
+ lbvrCxgGI1F6MsdhpvFtzMmHqxXrzpoMwTB9I0l1N32Zhzn1vu1jp16APJMzefphK5cY
+ h3l/3WMgDjCizLG2qujO9ScIQsaXfznlxXCEQMfATRMJsC4HExAKVJnY4O9WBrA32M+R
+ wJeNordDvGqIpBELY2sPdh2QjVb8ww3uMh0PBXBDVNM18qsLEiqUAvBxKTii0ro8r9GG
+ PUnQBIsZ9JDbHMEydoEZEQT8sb9GsvV7u1Qaby1/WU4cQyRj81lYvRV1OdwPoea0NDV6
+ mD+g==
+X-Gm-Message-State: AOJu0YysheQybTDFIYZEqNTSYLnT0L+SDb4zSEa761jgstecSjF1g1Uy
+ lwoIFuKEgjp6zBEz8Yvehckz0KcQMfDHFeQGaAXeNqvw3ETYub+HSW7USnSq6bRY4JNe35BrOGY
+ 3
+X-Gm-Gg: ASbGncvzf3PiH+L8VN0bUq07FG8XOpNn+NkkNOxlUiId4KWekaPDCZFVheGbXtowBY3
+ xguyP/916sS+oePzRlEecS+7dHkuHy5Whb0HoUYt1fiYi2r1tVHgxGnfwjocj6W1zWuYkHyp4Na
+ nDu/qtTzfpth9rcREKAIscDU6d3qoPE6SYgPHVJWECNIlesdbsvCgNLatKlpHH/KwSzLV7q1nXs
+ J96SkWRKMChE5ur0SudUUeSLgZuqIeAG0xL3C0IvOek6SqHBTmav9zIxGMW7KayHd22ngHQlN03
+ DjQnyJqGAPkBT5W2ImmS3VVafUt6ee6NntsVPdL9m7o8lupCde6vk3M=
+X-Google-Smtp-Source: AGHT+IESS0YEJRZo8ydLoolkVw4uvl21/z5bYEM/nZIUb4mjPSKmibgKJ8Fe1bdYLEyWNa7177BNdA==
+X-Received: by 2002:a05:6a00:3096:b0:732:6248:ff73 with SMTP id
+ d2e1a72fcca58-7326248ffd7mr5128990b3a.3.1739644945784; 
+ Sat, 15 Feb 2025 10:42:25 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d5584dccsm46215905ad.205.2025.02.15.10.24.06
+ d2e1a72fcca58-7326ace1270sm897278b3a.114.2025.02.15.10.42.25
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Feb 2025 10:24:06 -0800 (PST)
-Message-ID: <f7c1e671-f114-40a6-a02b-575bde2de4c4@linaro.org>
-Date: Sat, 15 Feb 2025 10:24:05 -0800
+ Sat, 15 Feb 2025 10:42:25 -0800 (PST)
+Message-ID: <24b0147e-6825-4daa-afcd-a493685f9f6b@linaro.org>
+Date: Sat, 15 Feb 2025 10:42:23 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] target/rx: Load reset vector from memory after first
- run
-To: Keith Packard <keithp@keithp.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250215021654.1786679-5-keithp@keithp.com>
-Content-Language: en-US
+Subject: Re: [PATCH 5/5] target/rx: Remove TCG_CALL_NO_WG from helpers which
+ write env
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250215021654.1786679-5-keithp@keithp.com>
+To: qemu-devel@nongnu.org
+References: <20250215021654.1786679-1-keithp@keithp.com>
+ <20250215021654.1786679-6-keithp@keithp.com> <87jz9r1s3h.fsf@keithp.com>
+ <21d559fc-1d81-4725-9523-60949a41e5a7@linaro.org>
+Content-Language: en-US
+In-Reply-To: <21d559fc-1d81-4725-9523-60949a41e5a7@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,23 +104,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/25 18:16, Keith Packard via wrote:
-> The ROM images all get deleted as they've been loaded to memory, so we
-> can't go fetch the reset vector from there. Instead, fetch it from
-> memory. To make that work, we need to execute the delayed mmu setup
-> function tcg_commit_cpu as that wires up memory dispatching.
+On 2/15/25 09:09, Richard Henderson wrote:
+> On 2/15/25 01:21, Keith Packard via wrote:
+>>
+>>> Functions which modify virtual machine state (such as virtual
+>>> registers stored in memory) must not be marked TCG_CALL_NO_WG as that
+>>> tells the optimizer that virtual registers values already loaded in
+>>> machine registers are still valid, hence discards any changes which
+>>> these helpers may have made.
+>>
+>> I still don't understand the restrictions on using these flags. I just
+>> had to disable this flag for other helpers which only set conditions
+>> codes in PSW and FPSW. Is that expected? When are these flags supposed
+>> to be valid?
 > 
-> Signed-off-by: Keith Packard <keithp@keithp.com>
-> ---
->   target/rx/cpu.c | 24 +++++++++++++++++++-----
->   1 file changed, 19 insertions(+), 5 deletions(-)
+> Yes, that's expected.
+> 
+> The state of affairs is not helped by the rx target's misuse of tcg globals.
+> 
+> A target should define tcg globals for values that are used frequently for emulation.  The 
+> bits of the PSW certainly fit that bill, because they're touched by most arithmetic 
+> operations.
+> 
+> However, fpsw, bpsw, bpc, isp, fintv, and intb are only used in move_to/from_cr and RTFI. 
+> This is infrequent, so simply loading and storing to env is preferred.  E.g.
+> 
+>      tcg_gen_ld_i32(value, tcg_env, offsetof(CPURXState, fpsw));
+> 
 
-IIRC this is where the cpu needs to be part of the 3-phase reset process.
-ROM gets reset too, but with unspecified ordering wrt the cpu itself.
-By delaying the load of the reset vector to the reset_exit phase,
-you can always load from rom.
+To finish my thought here,
 
-I believe Peter most recently handled a very similar situation with armv7m.
+> +DEF_HELPER_2(set_psw_rte, void, env, i32)
+> +DEF_HELPER_2(set_psw, void, env, i32)
+> +DEF_HELPER_1(scmpu, void, env)
+> +DEF_HELPER_2(swhile, void, env, i32)
+> +DEF_HELPER_2(suntil, void, env, i32)
+> +DEF_HELPER_2(rmpa, void, env, i32)
+
+are absolutely correct, in that they modify all of the psw_* globals.
+
+> +DEF_HELPER_2(racw, void, env, i32)
+
+is currently correct, in that it modifies cpu_acc.  That said, there's no reason that 
+function could not be expanded inline:
+
+     tcg_gen_shli_i64(cpu_acc, cpu_acc, imm);
+     tcg_gen_addi_i64(cpu_acc, cpu_acc, 0x0000000080000000ull);
+     tcg_gen_smin_i64(cpu_acc, cpu_acc, tcg_constant_i64(0x00007fff00000000ull));
+     tcg_gen_smax_i64(cpu_acc, cpu_acc, tcg_constant_i64(0xffff800000000000ull));
+     tcg_gen_andi_i64(cpu_acc, cpu_acc, 0xffffffff00000000ull);
 
 
 r~
