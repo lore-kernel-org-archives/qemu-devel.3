@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F42C021A4
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 19:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2127C021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 19:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjNqe-0004qu-IC; Sat, 15 Feb 2025 14:29:08 -0500
+	id 1tjOGE-0007Xy-0I; Sat, 15 Feb 2025 14:55:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjNqX-0004qZ-L0
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:29:04 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tjOG5-0007XD-N5
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:55:27 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjNqV-0001K3-E3
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:29:00 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-220c2a87378so44228535ad.1
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 11:28:58 -0800 (PST)
+ id 1tjOG3-00040l-SF
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:55:25 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-21f78b1fb7dso53376285ad.3
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 11:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739647737; x=1740252537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739649322; x=1740254122; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ottySth3oETnK4sq8l5c4h2Zeg3wAls/HNv9d3+p5cQ=;
- b=Q+LzQNelD0P26B+jZ2uTQattlbBGIbJSW2922nVaTArr4zLdwno4s6em8Kr/1tI7LQ
- 3vlhBWoK9IJVWBpQ0haEQLw4DauIfm0+tTfGy926StN+6uP4wJ6b5a2GHjGr9Kf2Qs0M
- 5paO8IrKiNouKhfll6WUSS9r6jPQmAlb8txvEQHs21a+Q1LzQ3YeGdnmQeQ/wDaQUeR4
- ljwp0eajaJgFM0OttQd/+dehhTLmlIsPacMtGJQGKHUt0hn/dyyJrrRixbHv0xyv5O45
- 6Xjl62SlhACRJhNOnltj+tZoIBDwe9N8eg/SC98VDu1/YF9w7QtcitM6Oj0HVt1WaYIk
- DXYw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TYvOPNy3AHVGI6v9Pk1o7GCHynUoxThyleQTiXT1d94=;
+ b=D7rDxYyJ9GyxbLFJnjX35i3gVbTvlU/BL4RE8MgnjEZ3gxU9EkrY2tz7u7Toe3yDQc
+ 3MsGyh5Tlwn9T3sf/x/rIQ34txEoaAY9wbpUkvqw+W/DRyH8gZnnpuzL+Zy++aP20LQS
+ TIh370R/aDluTzq9CiZBLyM/cK58N4HRZ9fZtzG36rK7KF3J5L+B3m3VdoJz8xut37qM
+ VELn6NAnrUZyGIraUl3Wmxp/rzApCUderh4M4S98u77XUEk2R+5CA0GPFM6kOj4YE1U9
+ oLm4K/8v63laqTqEjUQeaB2g4GTVsf5SH8PRmFMMVt7HXc7/S38SPcRkU/jiG8PvpKYL
+ T1gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739647737; x=1740252537;
+ d=1e100.net; s=20230601; t=1739649322; x=1740254122;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ottySth3oETnK4sq8l5c4h2Zeg3wAls/HNv9d3+p5cQ=;
- b=IRDuYwgbIREU66BwEZlMYbo2RdF27lEdRd+30eO+cEC2velHkVelVHSGvdgdP8HhWL
- WHUqqOoSt/iHYhArklhhg8FAwBaS7TbClOvtli5BRO8ebt9oceL6g2gtPnPvQAUNL2el
- A/s6wKzqgstZNUmfKxTtStgiQVfBK5Wv5BQjJoY3L1N6GHt00rcPPukLkjB4TonvvaUr
- AwDU9pI8eQxwnKpaf8K8MIafGQnvQkriDM/h94jP0N/0nNkUPI97heI0H9PNwexU7Nju
- d7LUtbYkYab1ojOovQt4edE/Yz1BzCfVmaO7Zpsm9tJ260NNEuHYSCRclboord0GmV2U
- 3+Iw==
-X-Gm-Message-State: AOJu0YwQZ9sxeR45Q11Skgl+wchHPO7qQRcfCICdMhEdV/bQewujPUv3
- hvO98fanmqEi8EleCruuYh4vH8peLJCbEdWjeHwaf3+jGkplhnO1GUewcoflzQo2EC/Dtc09kp0
- v
-X-Gm-Gg: ASbGncsSABfW1Afma55b2MIvQC+D4MFESvRsU/2GrWp1ZOLCv0ygGTVA4vsPnzj5EL7
- Uc+XlqGgknHDJhpdiMBvhBymPRUd24YT+hwYnSv33lDUS4z8Xrmp+h/9raG23NGeZU91u1ksb9W
- K2c4HdzD7gwvulBRnFjlsAkAjy2pbTKaoA4I+OnMezr9ozjRKNE17dRKObbBluDUaK2clU7/Nmp
- d8XGFbAOb/pViHHmhBZCfLL6lx6YWBAz9JOpIB8mRsUdBNoOXwEUTWyTQIsVumOMg6mg9r7xxP+
- yMEnPEDUuhDBKN7Kibtk+UYAhlL4qtm9G172HAMLE/R+gTQ7FTDdyPQ=
-X-Google-Smtp-Source: AGHT+IGDKeRoaXD909C5CJeOS0jE5yoCeEZpyX0Rcny/Fv1tOPd6snbz8lDk+l+4yBbgg/c7cH74tA==
-X-Received: by 2002:a17:902:e841:b0:21f:4144:a06f with SMTP id
- d9443c01a7336-22103f14b7cmr63025275ad.13.1739647737349; 
- Sat, 15 Feb 2025 11:28:57 -0800 (PST)
+ bh=TYvOPNy3AHVGI6v9Pk1o7GCHynUoxThyleQTiXT1d94=;
+ b=KAxEARNyCuqgZjVkPsWnQMKkl7Qo//9ZbJ3y7oKWHRS1QqSQrC7fqKCqzUKTJJclHz
+ mEW698MCqY4NIz3Zxk/d3hJCpOA9fv552K65EE4EFoi71GXUTqOTGAf5h4XtawKe7+vL
+ rbVf224QmJpbZ4bGSD2InL4IxDAjFUWfqObGi0DapBLKDrcpWBKLo9UYIYQgUm0DQ6yC
+ rP27UWJibhY3B8IqM2MCvvZeVAlD1OknwHZdm+rg1z0oVJZaj9NiCPMLipIx+sU402BD
+ 2zk/OLgVpGX1XSqZM9GnEn1nswcGuQQoSBJzHpew/XfLOET2YAycoEthat1sOd+khjZB
+ kviA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsn0YWKft+4ctusT/5PD+6sQvysHR4AchI0t9L5bR3QXdSH7NMxg9kxjygvBWkHMvaeqD63gxbVJx0@nongnu.org
+X-Gm-Message-State: AOJu0Yx+E9iR+0Og5UaD79Hj5/JOXv+YD8dpIQ86jBGPyU8zFFBr6Dtn
+ NM8lE+2Jp/KDCNZMVPBbJY8oHb4YrY1CLbyvXx84mPX7RPZ1Nt0FITTvirLsIrU=
+X-Gm-Gg: ASbGncuGU4GW5oXhLgnJ+We+KIlQbWVHlWT+TGcK8tLfxw8YEwY/tPqU4D4ydI3oC6D
+ v5BkA2w7iWt/6b0s5eWFc0tAq6JOTfpEB7me3+xfJdkeOYUPEoO3K+6e2xqWN86n2JIBWJgjvKl
+ RNyqm96IvyhoGWW8sXi77gSWi5qZCWM6KhiX2ngOhG+PeWMiZA5m0z/DedwXr33VclwwPy1gUxq
+ XsME8s7+jd/rPalig3fQ4p3v4npOe7DEDSB/LIOQ3wy9Ts6Z+bw7lIn8Kckj3YHRsrowcAza1UK
+ F154IO4VJE+Hm06itDYBVgiq2MN+gU9+FybnixBN4oYOcSn4rghNu+s=
+X-Google-Smtp-Source: AGHT+IFzwzSpWaf6m9K24r5Npn6uF289oZJn18U+wD95h9cuRXhPmJp/zXERAK2ekv5yMOkvQGTQJg==
+X-Received: by 2002:a17:902:e80e:b0:220:e362:9b1a with SMTP id
+ d9443c01a7336-221040623acmr62338805ad.25.1739649321911; 
+ Sat, 15 Feb 2025 11:55:21 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d5584d94sm46620425ad.207.2025.02.15.11.28.56
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-220d545d638sm47217485ad.147.2025.02.15.11.55.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Feb 2025 11:28:56 -0800 (PST)
-Message-ID: <8ae3bbc8-bde8-4d92-b059-7435afaf7cd8@linaro.org>
-Date: Sat, 15 Feb 2025 11:28:55 -0800
+ Sat, 15 Feb 2025 11:55:21 -0800 (PST)
+Message-ID: <1139f48f-301b-4d85-b099-6209326973b7@linaro.org>
+Date: Sat, 15 Feb 2025 11:55:19 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Move TARGET_SA_RESTORER out of
- generic/signal.h
-To: qemu-devel@nongnu.org
-References: <mvmed060xc9.fsf@suse.de>
+Subject: Re: [PATCH v2 0/2] target/sparc: Fix register selection for all F*TOx
+ and FxTO* instructions
+To: Mikael Szreder <git@miszr.win>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20250205090333.19626-1-git@miszr.win>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <mvmed060xc9.fsf@suse.de>
+In-Reply-To: <20250205090333.19626-1-git@miszr.win>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/25 04:59, Andreas Schwab wrote:
-> SA_RESTORER and the associated sa_restorer field of struct sigaction are
-> an obsolete feature, not expected to be used by future architectures.
-> They are also absent on RISC-V, LoongArch, Hexagon and OpenRISC, but
-> defined due to their use of generic/signal.h.  This leads to corrupted
-> data and out-of-bounds accesses.
-> 
-> Move the definition of TARGET_SA_RESTORER out of generic/signal.h into the
-> target_signal.h files that need it.  Note that m68k has the sa_restorer
-> field, but does not use it and does not define SA_RESTORER.
-> 
-> Reported-by: Thomas Weißschuh <thomas@t-8ch.de>
-> Signed-off-by: Andreas Schwab <schwab@suse.de>
-> ---
->   linux-user/aarch64/target_signal.h    | 2 ++
->   linux-user/arm/target_signal.h        | 2 ++
->   linux-user/generic/signal.h           | 1 -
->   linux-user/i386/target_signal.h       | 2 ++
->   linux-user/m68k/target_signal.h       | 1 +
->   linux-user/microblaze/target_signal.h | 2 ++
->   linux-user/ppc/target_signal.h        | 2 ++
->   linux-user/s390x/target_signal.h      | 2 ++
->   linux-user/sh4/target_signal.h        | 2 ++
->   linux-user/x86_64/target_signal.h     | 2 ++
->   linux-user/xtensa/target_signal.h     | 2 ++
->   11 files changed, 19 insertions(+), 1 deletion(-)
+On 2/5/25 01:03, Mikael Szreder wrote:
+> Changelog:
+> v2:
+> - Corrected a mistake I made in the FqTOx instruction
+> - Fixed issues in the FsTOx, FxTOs, FxTOd, FxTOq instructions as well
 
-Queued, thanks.
+Queued, squashing the two patches together.
 
 
 r~
