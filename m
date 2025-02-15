@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8654BC021A0
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 17:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B695C021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 17:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjM5F-0004Vq-Fz; Sat, 15 Feb 2025 12:36:06 -0500
+	id 1tjMRX-0007wZ-9c; Sat, 15 Feb 2025 12:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tjM5D-0004Vf-Gt
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:36:03 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tjM5B-0005TY-DN
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:36:03 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 655F5EB7D9;
- Sat, 15 Feb 2025 20:35:38 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A71A51B6A67;
- Sat, 15 Feb 2025 20:35:48 +0300 (MSK)
-Message-ID: <a826f77b-1abd-4706-82f1-854cfe9fc54a@tls.msk.ru>
-Date: Sat, 15 Feb 2025 20:35:48 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tjMRT-0007ul-0y
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:59:03 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tjMRR-0007rB-24
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:59:02 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-221057b6ac4so10640205ad.2
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 09:58:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739642339; x=1740247139; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HuUZGJlz7fsLnNXiRXyUJUAUWT8LSchwOnIGXmCtzGs=;
+ b=N3PcErosLzy7gGk97EiJ/1XpAS8QbnuK3XG/FMq7ZouOFkWvxN89ukh9Y28jXCJ+OL
+ hgnTQvm55AVnZhFJHug2KCjcixzZ53ZaEIKhR+trk6oVuz6ZEsSDGLjplBpp0cOphGVn
+ uI5UnVL0vDMzdXjlleSUyRnAvnWQt/iNBEf1+oV1kE1Z1dHZtr8qjjkTZKjvc7auOFdn
+ A4wCXq5vVmKf/M1jROLbqGLvoVTgTgi2ieM8VK9O41mSKRoWW3R/gGN818ka5OlFWHfZ
+ a2X/qMc1VWhk71M8OR0g5T+6YmN790ig1CLAgigSpWaeZgFFl+xyalfkN1z2uWFIYRxc
+ jbDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739642339; x=1740247139;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HuUZGJlz7fsLnNXiRXyUJUAUWT8LSchwOnIGXmCtzGs=;
+ b=uUsV13vQUHR8jOBQOYg9/HU8Y1gXS1Muce0J+a8vv14RniF0BLzL79d9sltId7gMjH
+ BM+S9tmPzrH7lXn8mZePT/IxuokwpCnW5KnTQujJlv8FULJHZ209Mw7WmkS8iLVYtbI/
+ 4FAgOFSze0pUjZyF5BGA1MRk8tnjcj37crP1xzCEymlB6YSRTKCy+us2EazdG86N52WO
+ 9Z7YFYjOO9ueHvObapS43cY/9OuTdDHkMjjkYzu5oS1n00NS+k/Y2AjmpBGV/j4pFC9q
+ Ywb+IIs9QP5XxkmzWCtc7jPdzxnnGSYwf2zywHxPlFrN3dPn3bh3mzPCNi6c9nph0gtc
+ N0UA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXy263l2GPg2lydyaILH4I1cxvwpRLy8shXAMAJSOyomTqQNIW0u+5NHQN6RC0imQeIWyk1B48QHQeL@nongnu.org
+X-Gm-Message-State: AOJu0Yxpbv3ixDeZYY5r4xoJkLDHjDI53U8nw/TQceQCOPSOVrephzbL
+ BXD1zuHzDOrnDtiS4CJkHO1/4NTzfpZ0rWeNeKSwsF3p5szn0AjTAgKOrQEClIk=
+X-Gm-Gg: ASbGncungKary5W40+nps90z5nCWB4qITdEN4Cm4qXy+5Y+5S4x/WbIHweLy9QKadUt
+ vUF3oCYHGkiIz1dE9dq2tvaVsLsVKDi4gd28It3yY6PHLuBYYxGkE4C/dhg4Lsxf0pJvjl0PNFM
+ pCbTTJC3e5oAvPMHJBk3y9vLvFGKM6gSlXzLpMoxcjIbk09ruXSjteDeflaG/bwyLrGkUjcO6I1
+ nwUiBqv7oVNJMGqhjyHD/F1G0w8QB/1mynpEWuANNRZT4/DZIxg2iSwOqc3bD/6pIbjEClk1Y0T
+ Nl2bBbhemSZzSKj4HroUYaDiBZ0UwDPOoXiFdbaW/bEG3gufktCfnFM=
+X-Google-Smtp-Source: AGHT+IEQy6z65bbcamaqqgMICfN57MfShDYRkl9SpGxnxOB9aak2x3l+q0dW4FXRRDvx6ieNmNEcAg==
+X-Received: by 2002:a17:902:d507:b0:216:2dc4:50ab with SMTP id
+ d9443c01a7336-22103efc1d9mr59280025ad.2.1739642338778; 
+ Sat, 15 Feb 2025 09:58:58 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220d5349056sm46763935ad.22.2025.02.15.09.58.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 15 Feb 2025 09:58:58 -0800 (PST)
+Message-ID: <a62ee246-4249-458c-9f9b-bad79816ce5e@linaro.org>
+Date: Sat, 15 Feb 2025 09:58:56 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 27/27] ui/sdl2: reenable the SDL2 Windows keyboard hook
- procedure
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Bernhard Beschow <shentey@gmail.com>
-References: <20250213160054.3937012-1-pbonzini@redhat.com>
- <20250213160054.3937012-28-pbonzini@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250213160054.3937012-28-pbonzini@redhat.com>
+Subject: Re: [PATCH] tcg: refactor pool data for simplicity and comprehension
+To: Michael Clark <michael@anarch128.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250215021120.1647083-1-michael@anarch128.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250215021120.1647083-1-michael@anarch128.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,34 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.02.2025 19:00, Paolo Bonzini wrote:
-> From: Volker Rümelin <vr_qemu@t-online.de>
+On 2/14/25 18:11, Michael Clark wrote:
+> the intent of this patch is more conventional nomenclature
+> but the constant pool data code is also simplified a little.
 > 
-> Windows only:
-> 
-> The libSDL2 Windows message loop needs the libSDL2 Windows low
-> level keyboard hook procedure to grab the left and right Windows
-> keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
-> 
-> Since SDL2 2.30.4 the SDL2 keyboard hook procedure also filters
-> out the special left Control key event for every Alt Gr key event
-> on keyboards with an international layout. This means the QEMU low
-> level keyboard hook procedure is no longer needed. Remove the QEMU
-> Windows keyboard hook procedure.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
-> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-> Link: https://lore.kernel.org/r/20241231115950.6732-1-vr_qemu@t-online.de
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   ui/sdl2.c      | 26 --------------------------
->   ui/meson.build |  4 ----
->   2 files changed, 30 deletions(-)
+> - merge new_pool_{alloc,insert} -> new_pool_data.
+> - rename TCGLabelPoolData -> TCGData.
+> - rename pool_labels -> pool_data.
+> - rename macro TCG_TARGET_NEED_POOL_DATA.
+> - move TCGData struct definition into tcg.h.
+> - comment translation block epilogue members.
 
-This looks like a qemu-stable material.  Please let me know if it is not.
+You can see from this list that this should be multiple patches.
 
-Thanks,
+> TCGLabelPoolData is ambiguous and asks for potential confusion
+> with the unrelated TCGLabel type. there is no label in the sense
+> of TCGLabel.
 
-/mjt
+Fair.
+
+> the label member is merely a pointer to the instruction text to
+> be updated with the relative address of the constant, the primary
+> data is the constant data pool at the end of translation blocks.
+> this relates more closely to .data sections in offline codegen
+> if we were to imagine a translation block has .text and .data.
+
+No, it doesn't.  It relates most closely to data emitted within .text, accessed via 
+pc-relative instructions with limited offsets.
+
+This isn't a thing you'd have ever seen on x86 or x86_64, but it is quite common for arm32 
+(12-bit offsets), sh4 (8-bit offsets), m68k (16-bit offsets) and such.  Because the 
+offsets are so small, they could even be placed *within* functions not just between them.
+
+> thus TCGData is more succinct and more reflective of what the
+> structure contains; data emitted in the constant data pool at
+> the end of translation blocks. also, pool_labels is renamed to
+> pool_data as the primary contents of the list is constant data.
+
+I guess.  TCGData is perhaps too short, but we can certainly avoid the confusion of "labels".
+
+> 
+> finally, new_pool_alloc and new_pool_insert are merged into a
+> single function named new_pool_data, which moves nlongs to the
+> end of the parameter list with varargs to allocate, copy, and
+> insert constant data items to simplify new_pool_label et al.
+> a successive step would be to collapse callers into calling
+> new_pool_data and remove a layer of indirection.
+
+Why?  varargs generally produces horrible code.
+The split between alloc and insert was intentional to avoid this.
+
+> diff --git a/tcg/tci/tcg-target.h b/tcg/tci/tcg-target.h
+> index a9ca493d20f6..448c2330ef0f 100644
+> --- a/tcg/tci/tcg-target.h
+> +++ b/tcg/tci/tcg-target.h
+> @@ -72,6 +72,6 @@ typedef enum {
+>   } TCGReg;
+>   
+>   #define HAVE_TCG_QEMU_TB_EXEC
+> -#define TCG_TARGET_NEED_POOL_LABELS
+> +#define TCG_TARGET_NEED_POOL_DATA
+
+Oops, this should have been removed with a417ef83.
+
+
+r~
 
