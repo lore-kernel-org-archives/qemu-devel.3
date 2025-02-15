@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6437C021A0
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 22:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC908C021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 22:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjQq0-0006Lo-GW; Sat, 15 Feb 2025 17:40:40 -0500
+	id 1tjR7J-0000qK-3J; Sat, 15 Feb 2025 17:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tjQpz-0006LK-9K
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 17:40:39 -0500
+ id 1tjR7G-0000q9-EG
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 17:58:30 -0500
 Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tjQpx-0006bB-LW
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 17:40:39 -0500
+ id 1tjR7E-0008Gt-81
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 17:58:29 -0500
 Received: from [192.168.1.8] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
  (may be forged)) (authenticated bits=0)
  by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 51FMeV333796686
+ 51FMwLOS3797476
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
- Sat, 15 Feb 2025 22:40:34 GMT
+ Sat, 15 Feb 2025 22:58:24 GMT
 Authentication-Results: anarch128.org; auth=pass;
  dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=alEZUOfN header.a=rsa-sha256 header.s=100003;
+ header.i=@anarch128.org header.b=MNIUG/el header.a=rsa-sha256 header.s=100003;
  x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org); 
  x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1739659235;
- bh=/2hhOhZ1yzncjsnLPeiIX1Z/s8JyhNNcOSkopkaBJk0=;
- h=Date:Subject:To:References:From:In-Reply-To:From;
- b=alEZUOfN1TmMV5puUOuDmCuyMygKukvYQdUfm7hbmA74MpBNb0pxRxXf9DAEdZBC1
- FqUkwiJJeRieIRpnwvWBG2VLgrUh5fLUraU6r8uImPyaS78ga6OdXMHDYBacnBAUSW
- VRWMWOWcB9vv6hzCXEXMBJ6YjCPqUB+9WhnK68C23xmGo7YE4+qWJXpLjYBnlu9ouI
- e6go7UB6Suxslj1AYmtkklh12arrdE3Z7o+IVYrKbCagOFgiW1n5tVO/o8nqwGtHP3
- JW8CM64RrDMdgClDl3C+8/FKa9Fgdg1Uw7uEhIjVq5qhHGnd2IBXaKQvJQNB8B2OMn
- CcFlpnPCbmHRw==
-Message-ID: <6b9d6600-d430-4bcc-9f37-8d8d96d31e06@anarch128.org>
-Date: Sun, 16 Feb 2025 11:40:25 +1300
+ s=100003; t=1739660305;
+ bh=oGgKFRNB+p1CvAEl+mSKaH5SzGY8waQ+SUmfQKyfqQU=;
+ h=Date:Subject:From:To:References:In-Reply-To:From;
+ b=MNIUG/elkQCldiih1rgJ65WX0EYYR/EIKyrXN1Q3yrA9bV77KMWugkDinlmKn59Mq
+ gVnK4u2pc7CWJx4RpFFvkFRK/9bR7nMcJFu7S6JrmL/INI1ZW4XU+D9sqoNrs7zF9d
+ /mJiuA+zlIjtNwEfZPGG7ne62i5gprVeT01BT52TVN+jbHdeRhZlult4kAvsOtAqGB
+ hLFiPi0s0CECuqNCFptuHrx9WLi3+Acq7XT6kMxXz0s+p8QRiB1538+FbbeMikvuPQ
+ r1r4ANzBiNR+CJN1n3SN4Bqjoe4jtTAaLjr2OapnmXsIBiA0CyEFkhB8SUDzzXH4vM
+ I+y0ionzP/ZzQ==
+Message-ID: <6816c366-7a9d-4357-a70c-44626195bda2@anarch128.org>
+Date: Sun, 16 Feb 2025 11:58:16 +1300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tcg: refactor pool data for simplicity and comprehension
+From: Michael Clark <michael@anarch128.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250215021120.1647083-1-michael@anarch128.org>
  <a62ee246-4249-458c-9f9b-bad79816ce5e@linaro.org>
  <8f107cd4-f5a2-4d3e-b023-5e53225511d4@anarch128.org>
- <38bfbaac-329c-45c8-a672-68cad965201b@linaro.org>
 Content-Language: en-US
-From: Michael Clark <michael@anarch128.org>
-In-Reply-To: <38bfbaac-329c-45c8-a672-68cad965201b@linaro.org>
+In-Reply-To: <8f107cd4-f5a2-4d3e-b023-5e53225511d4@anarch128.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
@@ -82,32 +81,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/25 10:50, Richard Henderson wrote:
-> On 2/15/25 12:24, Michael Clark wrote:
->>> Why?  varargs generally produces horrible code.
->>> The split between alloc and insert was intentional to avoid this.
->>
->> it's pretty good code on SysV because it goes via registers except for 
->> perhaps new_pool_l8 which will spill to stack and get copied unless 
->> the inliner can eliminate the copies. maybe windows has bad varargs. 
->> but I like the style better than deeper layers of wrapper functions. 
->> they should fix the compiler so that it produces better code.
-> 
-> varargs will generally prevent inlining.
-> 
-> Indeed, just a quick look at aarch64 tcg_out_movi shows that without 
-> your change, new_pool_label, new_pool_data and new_pool_insert are all 
-> inlined.  With your change, new_pool_data is not inlined, all the 
-> argument regs are dumped to the stack, etc.
-> 
-> I don't think this is a good change to make.
+On 2/16/25 09:24, Michael Clark wrote:
+> I actually have a VM in mind that has a constant stream with it's own 
+> counter that branches called IB (immediate base). IB is set in call 
+> procedure and we pack a vector into the link register with the relative 
+> offset of the program counter and immediate base register (i32,i32) 
+> gives call ±2GiB reach. link register no longer has absolute address. 
+> and there is a branch instruction for the constant stream. return needs 
+> two immediate offsets displaced from the text and constant entry points 
+> to compute the return address.
 
-fixing varargs codegen in GCC/Clang would be a good change. count based 
-varargs can be reasoned about statically relatively easily. what is it 
-like with an explicit inline as opposed to just static? I will inspect 
-anyhow. as varargs with the argument count moved and long as opposed to 
-format strings is a reasonable pattern for generics in C given C is so 
-bad at generics. saves lots of long form delegating functions.
+btw here this is the instruction packet I have in mind for a CPU with 
+immediate blocks. it has much simpler length decoding than RISC-V and 
+less instruction forms too. two regslots can be bonded for a larger 
+indirect immediate slot using a constant from the current constant block 
+in the constant stream relative to PC/IB. 64-bit instructions can have 6 
+inputs/outputs which I have packed for vector in a sketch and it works. 
+it doesn't have 48-bit instructions because we simplified length 
+decoding compared to RISC-V. and decoding can be more easily vectorized 
+than RISC-V but we lost 1 bit in the 16-bit packet due to that. and I 
+have a python model that synthesizes logic for parallel decoders
 
-I like the representation but understand if you don't take the patch.
+https://anarch128.org/~mclark/VLI.pdf
+
+I'm filling out the 16-bit opcode space. I need to add a constant with a 
+(i32,i32) relative immediate to ret to adjust for relative link register 
+so the return also needs a constant from the constant block aswell. it's 
+symmetrical but I don't have a software model yet.
+
+https://gist.github.com/michaeljclark/8f9b81e5e40488035dc252c9da3ecc2e
+
+in two to three years I may have a POC translator. I'm still working on 
+codegen for a new X86 backend. for VLI, 16-wide or 8 x 32-bit packets 
+(256-bits) is plausible with vastly simpler decode logic than X86. 
+that's like a 16/32/64-bit RISC front-end. at the moment I am thinking 
+of allowing 16-bit alignment for larger instruction words but I haven't 
+tried to synthesize a decoder yet. but I think much simpler than RISC-V 
+because 2 wires per packet for length vs up-to 7.
 
