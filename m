@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3104AC02198
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 02:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27B7C021A4
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 02:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj7k3-0004GZ-0A; Fri, 14 Feb 2025 21:17:15 -0500
+	id 1tj7k5-0004HU-H5; Fri, 14 Feb 2025 21:17:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jz-0004F5-E0
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jz-0004F8-GV
  for qemu-devel@nongnu.org; Fri, 14 Feb 2025 21:17:11 -0500
 Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jw-0006dD-Fd
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jw-0006dT-Fe
  for qemu-devel@nongnu.org; Fri, 14 Feb 2025 21:17:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739585823; bh=xwnweW21dRad/7sKoMcG8gqMmvOWqaVF1Wl/xjaIWB0=;
- h=From:To:Cc:Subject:Date:From;
- b=TlNToTgB6MSKxMjFV0VBBP1VU7U2Truo026rAt5njzWDGSf91As6b62+QQUBFzwND
- NMmT5WkHkWUQjuWLW0neHt93zKNhthYLY3KdprPI25UFrsMFyWeAZ5GR4ERxg3vpT7
- KW+CHAIseyXXQTqXzRHnIzpy237fik9e7u9Qg73H+emJd4ScVzDXyzqZJppANHyg5b
- bdQbYZHW+JZmVqOc5NafiOffgmQiP5LaM/D6ViIXeoMKpeq4EzMeMhFxb5fR5mvFsC
- HOPlhebEfRaUrpd1dKwTKJDuRZzh9vK8JQ/IvQsYJVpV4oBjuuOmUldk77pFQmYoY7
- HmQnBka2/ELSA==
+ t=1739585825; bh=T0TGaowpdk7Flput3BYwaWvnKQsX4zXMW7/eTHVce+E=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=cU9rrJmNhjkJCPHeoNIkpWi05+0TAveSw6Jvfu2btUgmYRd0BoQiI+oB0xJM/xkt9
+ /saKF+ZFfgXcvDMulZtMPrQdfTz9JBwDQAFselAdmkkUpFBodrSVwVsgK5nOJX4fHq
+ ApGe2bNFw3kvnQ52HwYP1ZvInB48d4LYaVkeA7guNe3qunV6bYBKPkPD8ix3nBImnJ
+ aaIHyb0eO6r8hSkoxQd3pGh6r12fIPhzu5ghWmba+L7rcLgT84UyKKKGxxqXq+E3uQ
+ /92HpQeHZ9g6ZrNPxir+7PeG+gL40gXt0n3pQCFBrSn2Zl0nh5ITyD4lv8FPNCzIjj
+ kL2B0Vaup3vRA==
 Received: from localhost (localhost [127.0.0.1])
- by elaine.keithp.com (Postfix) with ESMTP id 749913F22BFA
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 18:17:03 -0800 (PST)
+ by elaine.keithp.com (Postfix) with ESMTP id E598B3F22BEA
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 18:17:05 -0800 (PST)
 X-Virus-Scanned: Debian amavis at keithp.com
 Received: from elaine.keithp.com ([127.0.0.1])
  by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id E-lwy7D3nP-7; Fri, 14 Feb 2025 18:17:02 -0800 (PST)
+ id 87LtWDR2-FFZ; Fri, 14 Feb 2025 18:17:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739585822; bh=xwnweW21dRad/7sKoMcG8gqMmvOWqaVF1Wl/xjaIWB0=;
- h=From:To:Cc:Subject:Date:From;
- b=W3UH4xw07B7ieELbbTACsvIQjE/J2iQ8uINnGiuzmsyMq6WVVbNQHAHLYhmqNu7Yo
- 6/NDXatUYi3wAdo78/EWw1KfsaMX0xtk7ts0gljFWTgzw1Nj7b09wNfTuI9R+uW+z2
- RnjCPtBXj3vWSA4o2+Q6kGsjjAQOu292bPGzFm+06+xKs9YlrdI1JYxef7/2yysGUU
- 4FO73sFCxwjv0b5n9nFbNgmGJG27Ib62OvTBtx4jzXi/iiMmLZvyrRZ2xL+O40VytN
- 2ssqAUwW79pd1fnCVV70kFPH0IykTRflQ/Q4jmDwda5iyXGg4EHpMhuNpa6GGlw+4H
- gjBYkp5BtE0Zg==
+ t=1739585822; bh=T0TGaowpdk7Flput3BYwaWvnKQsX4zXMW7/eTHVce+E=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=VmE0ZYgXkEOC7k04Mh9lVuf/J+QnThwl6qmd31rgGtVHuyzfBBk+3H+CqmqZqXpSP
+ /hkW1mN9CAauEK3A2wMjIN3+ZzCQUfSTTFWCTuj5dor5Fqv8rkF/jki+LmvV1dY02X
+ vEd4QFFcqdjACOUOjWZgFCf2bilmp2ucx27c8mbbFztAp4xbUyRmfDOaDkqDGtNAwb
+ DSLEAmyFw+Oa33aN+ttUg93dSSuy1sEYzh8FyQ05uFwTu766EP/l5NMmgqtAZ1kcHM
+ QMP1ljchznmcKe0iG5nBzBp4qQ4opzsRtievgwEEjVgSi/43PvXXBTa75kFt4DGdzy
+ XMgaoBsK9NmMg==
 Received: from keithp.com (koto.keithp.com [192.168.11.2])
- by elaine.keithp.com (Postfix) with ESMTPSA id 909C93F22BE0;
+ by elaine.keithp.com (Postfix) with ESMTPSA id 7F3943F2076E;
  Fri, 14 Feb 2025 18:17:02 -0800 (PST)
 Received: by keithp.com (Postfix, from userid 1000)
- id 544DD1E60096; Fri, 14 Feb 2025 18:17:02 -0800 (PST)
+ id 5613E1E6007A; Fri, 14 Feb 2025 18:17:02 -0800 (PST)
 To: qemu-devel@nongnu.org
 Cc: Keith Packard <keithp@keithp.com>
-Subject: [PATCH 0/5] Renesas RX target fixes
-Date: Fri, 14 Feb 2025 18:16:49 -0800
-Message-ID: <20250215021654.1786679-1-keithp@keithp.com>
+Subject: [PATCH 1/5] hw/rx: Allow execution without either bios or kernel
+Date: Fri, 14 Feb 2025 18:16:50 -0800
+Message-ID: <20250215021654.1786679-2-keithp@keithp.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250215021654.1786679-1-keithp@keithp.com>
+References: <20250215021654.1786679-1-keithp@keithp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=63.227.221.253; envelope-from=keithp@keithp.com;
@@ -82,38 +84,28 @@ From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm getting a Renesas toolchain working and found a couple of bugs
-and a few fixes in the qemu target code for this device.
+Users can use -device loader to get an ELF file loaded to
+memory, so we don't need to require one of these options.
 
-The two critical bugs which are fixed:
+Signed-off-by: Keith Packard <keithp@keithp.com>
+---
+ hw/rx/rx-gdbsim.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
- 1. Exception vector base address is incorrect. The
-    right value is 0xffffff80.
-
- 2. A bunch of opcode helper functions are incorrectly labeled as
-    TCG_CALL_NO_WG. These helpers read and write virtual registers out
-    of the global environment and so must not be marked with this flag.
-
-The other changes included are sufficient to use qemu without needing
-to start gdb as well, starting the machine using the reset vector
-found in the exception table and then re-loading that vector during
-subsequent reset operations.
-
-With these fixes, the picolibc CI tests are now passing.
-
-Keith Packard (5):
-  hw/rx: Allow execution without either bios or kernel
-  target/rx: Set exception vector base to 0xffffff80
-  target/rx: Reset the CPU at qemu reset time
-  target/rx: Load reset vector from memory after first run
-  target/rx: Remove TCG_CALL_NO_WG from helpers which write env
-
- hw/rx/rx-gdbsim.c  |  3 ---
- target/rx/cpu.c    | 35 +++++++++++++++++++++++++++++------
- target/rx/helper.c |  2 +-
- target/rx/helper.h | 14 +++++++-------
- 4 files changed, 37 insertions(+), 17 deletions(-)
-
+diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
+index 88c8f12c10..4afd77efd5 100644
+--- a/hw/rx/rx-gdbsim.c
++++ b/hw/rx/rx-gdbsim.c
+@@ -110,9 +110,6 @@ static void rx_gdbsim_init(MachineState *machine)
+     if (!kernel_filename) {
+         if (machine->firmware) {
+             rom_add_file_fixed(machine->firmware, RX62N_CFLASH_BASE, 0);
+-        } else if (!qtest_enabled()) {
+-            error_report("No bios or kernel specified");
+-            exit(1);
+         }
+     }
+ 
 -- 
 2.47.2
 
