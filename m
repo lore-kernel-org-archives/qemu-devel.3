@@ -4,94 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B2DC021A0
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 08:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78BAAC021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 09:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjDRH-0002Cg-KY; Sat, 15 Feb 2025 03:22:15 -0500
+	id 1tjEMQ-00046F-M4; Sat, 15 Feb 2025 04:21:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tjDRG-0002CW-Lc
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 03:22:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tjEMN-000412-LW
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 04:21:15 -0500
+Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tjDRE-0002xV-JN
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 03:22:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739607729;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=toyqc7tktzE1b2NwBepmBYC9Fc+/B8mATGi47Mt63XQ=;
- b=Us08cdap3GUVqwNXKG4JDzdGBa1STOYATcoVnJ8SuqGcdvHZftZGyOufQ7cheox7EyCd5u
- YRMUXNvnUho9lqx4y4b1UawRZjSr5zw6NHLGzSsh3vA9aULgwTWdc/6oHyPLCuvancBvTP
- CHAqfKrue+af30sIUdcAmDLpmQ7yPbk=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-kx8Bzp8FMyS7q7CUsgNFdQ-1; Sat, 15 Feb 2025 03:22:07 -0500
-X-MC-Unique: kx8Bzp8FMyS7q7CUsgNFdQ-1
-X-Mimecast-MFC-AGG-ID: kx8Bzp8FMyS7q7CUsgNFdQ_1739607727
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5ded802b571so1899728a12.1
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 00:22:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739607726; x=1740212526;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=toyqc7tktzE1b2NwBepmBYC9Fc+/B8mATGi47Mt63XQ=;
- b=FQmfKaNdR4Z/XWkEY7LVxxafrtaPG9HlmYSVHNfl7L1on9wpppmOvdkhGV1OcUqQFw
- EXswxhc/B2asnOZ+vfUUEj8d97JhZFYTA1X/5/l82/1KabtJSYkg/H6RbcIzSJBJgKmj
- iyw+lGvYNNQ99HGmcgsAE8gZUWsXbTlqy1mrXH+cIFV7p5vwDGAhDCamz8hj0A/yZ5kH
- g6Dt5i63d7mJ7c7KvDSA2X46Q4qTrgfJ0Jm9qJiGnKYDZta+0hf7w82KO8weSG8Hjikw
- 4zJUKYcgZ1p31ZI7KxQZAh/hy+yk7wE5e1zSjO6pwv1fjwT9e8HS9SQut/VrnACXn6PZ
- 0tFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7akZ3ASFfOhDjyVtO6+r4C05zhpIZ3yoIs4E86An/jTABzmIjjmG1U/2OlwKszJr2vS8z+7AUgri1@nongnu.org
-X-Gm-Message-State: AOJu0Yzzr+1RCICcQxJabmd4f60dQGi//0UTF82iGV4gL2HrZvCenU86
- vQg7C72xMWkBsvduDFjRkvW5tYT1AOjjaEu/6fJW7jjOQtGwhiNKw+M98w/PWrxDyTGsveKq3+n
- RHXbw7skj2IkWNBF7RLe1wKaPOafmDZT+hLhK/4pOc3mx+6tlsUKXDB+LX1oc+HH7GMqjM/rTTf
- EhZI9RWgfI06wjneGc0w+Y+TMzrIA=
-X-Gm-Gg: ASbGncuCmP1Pd/nj2ywAOpI6flIJD93ngryyNpSpLW4V5czymUH12qcrpZRbtfvXNnk
- DL04728u1jjlj1mrgGmEI317eMtLiFCoAKqz/t+jUxYMWV7lwdUw+oYYNe1cLLTA=
-X-Received: by 2002:a05:6402:50d2:b0:5d9:f9b8:e7fb with SMTP id
- 4fb4d7f45d1cf-5e0361ccea1mr2177392a12.22.1739607726586; 
- Sat, 15 Feb 2025 00:22:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFkNeEFDwIyTPEMcv83zaxvCpRaU9hYusxO5nsLPbD4fiNg1Iy+mX1wTfHtj7yNNOXT25XCOVq2IDyCH2DcnU=
-X-Received: by 2002:a05:6402:50d2:b0:5d9:f9b8:e7fb with SMTP id
- 4fb4d7f45d1cf-5e0361ccea1mr2177372a12.22.1739607726304; Sat, 15 Feb 2025
- 00:22:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tjEMK-00016D-Ki
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 04:21:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
+ t=1739611269; bh=T/lBQQUEjYxoF++jTScOVESLCoMUCLXIdWXrkSCEQ9g=;
+ h=From:To:Subject:In-Reply-To:References:Date:From;
+ b=vJFEj0dlHF9D2bU2n+F1/cYsWR9Bb6oMfJj+Zu1M/6RPP+39ZsShOEue74WcmNXRU
+ asQ+UOo1zpQOkkypu2+NJGIuvr5zxhi7ELTed6YJh5ARiWkQsqmQJMCK0zHcCkJc/g
+ ZVkFa0yTdoSw1z2/RMOmKtbdkfhuTNFCFcFRagERURhQSxtulWpohnJ6DAnKTiXrLb
+ cZmRLk4WiEGGZwCEovCWSy7sumDhzQxn8hhokiNukXY/chGUSacPTzaevCtuiN48oF
+ wDl4joFJH12tjHnq5LySdDZ9d1bFp4VsdPklcflDubZVKd2+V8aVUfQruhPaxC3fDT
+ oa+jZJrE0IV2g==
+Received: from localhost (localhost [127.0.0.1])
+ by elaine.keithp.com (Postfix) with ESMTP id 45C703F22326
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 01:21:09 -0800 (PST)
+X-Virus-Scanned: Debian amavis at keithp.com
+Received: from elaine.keithp.com ([127.0.0.1])
+ by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
+ id r4tOMikMeNll for <qemu-devel@nongnu.org>;
+ Sat, 15 Feb 2025 01:21:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
+ t=1739611266; bh=T/lBQQUEjYxoF++jTScOVESLCoMUCLXIdWXrkSCEQ9g=;
+ h=From:To:Subject:In-Reply-To:References:Date:From;
+ b=rFr3VASc8uIs+IKTrzAnpRztPMXD/ZEvEyC4dXv2QAmeWZos6bnN9kB44R/p6uU5w
+ lISC8KwiSaLLa2HjB0vocJfFM58MAPjZdRZDysKokjyFNez3GCvEm1lQRAz9rgZOv/
+ woDqQ98lQKgECxxGrdqLKcBN+nNttLp7f5lgSUOU59jLw0PXejtG2Pyptf7kBvkJGo
+ qMLKc5WsZBZo/u+rIjh6pQF+LIkaCkAr2Lor8ioARxPWrxRn5aIwrdi82ZgJRxmjnQ
+ hxZcVAyFqKxFukp2/67mxiQSsbmzmrvLPhaoHcC3Afw8ecwmUwA0nhUJugZpdfHBHh
+ JQUpCTWoePbtw==
+Received: from keithp.com (koto.keithp.com [192.168.11.2])
+ by elaine.keithp.com (Postfix) with ESMTPSA id E8EF03F207AB
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 01:21:06 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1000)
+ id ACF8A1E60096; Sat, 15 Feb 2025 01:21:06 -0800 (PST)
+To: qemu-devel@nongnu.org
+Subject: Re: [PATCH 5/5] target/rx: Remove TCG_CALL_NO_WG from helpers which
+ write env
+In-Reply-To: <20250215021654.1786679-6-keithp@keithp.com>
+References: <20250215021654.1786679-1-keithp@keithp.com>
+ <20250215021654.1786679-6-keithp@keithp.com>
+Date: Sat, 15 Feb 2025 01:21:06 -0800
+Message-ID: <87jz9r1s3h.fsf@keithp.com>
 MIME-Version: 1.0
-References: <20250212164923.1971538-1-kshk@linux.ibm.com>
- <CAJaqyWeHB_+ATn3cvtVrpiFp4NjNLoKpPP1ijs4C7eyRL7gpKQ@mail.gmail.com>
- <CAPpAL=w-0kgngVYiep2+K_WEGnuv1T_mTFTUbz9JPmH93HHzBg@mail.gmail.com>
- <0ea941fd-e293-4307-a9ed-16e3055279e9@linux.ibm.com>
-In-Reply-To: <0ea941fd-e293-4307-a9ed-16e3055279e9@linux.ibm.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Sat, 15 Feb 2025 16:21:29 +0800
-X-Gm-Features: AWEUYZmV5FJn7kigtcdzrqRNQm7v1yNMzt04FoywGtDBmvtW5N231XwxEBsBKtE
-Message-ID: <CAPpAL=zA8RHS44SgK9QHJiESKp4SLFty-HUTXff2SnbbN+4EKg@mail.gmail.com>
-Subject: Re: [PATCH v2] vdpa: Fix endian bugs in shadow virtqueue
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: mst@redhat.com, sgarzare@redhat.com, 
- Eugenio Perez Martin <eperezma@redhat.com>, mjrosato@linux.ibm.com,
- qemu-devel@nongnu.org, 
- Sahil <icegambit91@gmail.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.732,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha256; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=63.227.221.253; envelope-from=keithp@keithp.com;
+ helo=elaine.keithp.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,22 +81,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Keith Packard <keithp@keithp.com>
+From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 14, 2025 at 9:02=E2=80=AFPM Konstantin Shkolnyy <kshk@linux.ibm=
-.com> wrote:
->
-> On 2/13/2025 20:24, Lei Yang wrote:
-> > I tested this patch with vdpa's regression tests, everything works fine=
-.
-> >
-> > Tested-by: Lei Yang <leiyang@redhat.com>
->
-> Could you point me to those tests?
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Sure, the test scenarios include ping, mq tests under netperf stress,
-hotplug/unplug, reboot,shutdown, pxe_boot etc.
->
 
+> Functions which modify virtual machine state (such as virtual
+> registers stored in memory) must not be marked TCG_CALL_NO_WG as that
+> tells the optimizer that virtual registers values already loaded in
+> machine registers are still valid, hence discards any changes which
+> these helpers may have made.
+
+I still don't understand the restrictions on using these flags. I just
+had to disable this flag for other helpers which only set conditions
+codes in PSW and FPSW. Is that expected? When are these flags supposed
+to be valid?
+
+=2D-=20
+=2Dkeith
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAmewXIIACgkQ2yIaaQAA
+ABFy7A//Y37uywu0XpRQYjb4KCoWkV1pJkmqp8p42vlGE46clEQ0TXBuZtAUB6vf
+4k7xm79iXVsmsz+MImZ5nidH+6crbJ/o3Hrtvnz++r55To4n61kdiU2KCgawoPGP
+y/7phUJzrEkc7z3AbA310L0memBHDjRdBCxHlT/x+iGLVaHf4JeuMW7XGH7fqH6c
+rru+L3iFSNV0sMiob/+DglilOAyg5OzlbLiNmYbITNXUuBvQfxz4MGGM9PT4n2tU
+AM5O3tjbAUYScigOOjJehithON2hg5571dVWgTjqVi6g1qmj1R2H9+md//WMuoBB
+ZHub1o2IeU8ofg2xarL1nvY6kznja1XxW+G5pPwAY//KO9Jgc3E5dtil4XvdOGCQ
+sEoWoKQSqtfv7wzQZEy0znEjfnttdKX9jXWW1GjnF1er2Y9Pm6yXKVhGz78ftCfk
+2KJ+8ia2YO7NKgvmB/LmXQAJlQz8uexZ3CqPVPfbv52zXD6d8BBaGPIWeUXGWQdO
+qGD5vyVq53FXI9+EB08DYximMrzB7hdVqLeamG5euTW5Lgx/NN2wlCp0aLJFk5A2
+G4SQPdoC5NAqrq5S7xlzcNT2nzOwzDjmfL6rsByQnqKKdQonOLPzgduVOfSIYHTQ
+RLezv6Ygo+VJLkYxd7FmbtE8oPYEFuOcHuA+mCOwpTQDseShUZ4=
+=KqAo
+-----END PGP SIGNATURE-----
+--=-=-=--
 
