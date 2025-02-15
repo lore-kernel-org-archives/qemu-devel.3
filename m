@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E92C021A0
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 19:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F42C021A4
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 19:29:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjNXJ-00028q-Co; Sat, 15 Feb 2025 14:09:09 -0500
+	id 1tjNqe-0004qu-IC; Sat, 15 Feb 2025 14:29:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjNXF-00028V-C2
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:09:05 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1tjNqX-0004qZ-L0
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:29:04 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjNXD-0007Jh-DY
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:09:05 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2fc3a14f6fbso1676868a91.3
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 11:09:02 -0800 (PST)
+ id 1tjNqV-0001K3-E3
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:29:00 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-220c2a87378so44228535ad.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 11:28:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739646541; x=1740251341; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TmIbWHe8iXnwEhGxSOwFiJM8JZGblOKLEWGTPJ9goOw=;
- b=WoCtX9n9avysQPCH4s2+vUB0P41GM/pcAsZydw20Xd4KQZSgBmXmoKuCAdNBeguIyf
- 4wVSdsJkXJ9hHbOjx7e7J9kVxiB+CcS6Vt/jIyxpbe5U3IvsuRO7fBBGuyiktrOKQ+gE
- AFBphmvxmSVh8P3t9wlcSfbVcBi8yZiWYlVeBDzolX6FjFnu6alEx9ZXs7B1MqZzad5N
- zZTdGC7mjwIWvjd+2E21uxS7pPXy306foqDsmtE0TcYRVn84jkfgibrEjV95socI3vfw
- /WvgFuXcY2eQUK28QYV4lZHfriSuqm9Ssh07T6V58ggfve5Wv4u/AL393adl3k5dRG5l
- A/SA==
+ d=linaro.org; s=google; t=1739647737; x=1740252537; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ottySth3oETnK4sq8l5c4h2Zeg3wAls/HNv9d3+p5cQ=;
+ b=Q+LzQNelD0P26B+jZ2uTQattlbBGIbJSW2922nVaTArr4zLdwno4s6em8Kr/1tI7LQ
+ 3vlhBWoK9IJVWBpQ0haEQLw4DauIfm0+tTfGy926StN+6uP4wJ6b5a2GHjGr9Kf2Qs0M
+ 5paO8IrKiNouKhfll6WUSS9r6jPQmAlb8txvEQHs21a+Q1LzQ3YeGdnmQeQ/wDaQUeR4
+ ljwp0eajaJgFM0OttQd/+dehhTLmlIsPacMtGJQGKHUt0hn/dyyJrrRixbHv0xyv5O45
+ 6Xjl62SlhACRJhNOnltj+tZoIBDwe9N8eg/SC98VDu1/YF9w7QtcitM6Oj0HVt1WaYIk
+ DXYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739646541; x=1740251341;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739647737; x=1740252537;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TmIbWHe8iXnwEhGxSOwFiJM8JZGblOKLEWGTPJ9goOw=;
- b=UdOGwElcQWW8TrpGWEuQ73NJQQQDhJR+8wwk4akgVOgEBJXUijJjpQ6wYocvhsEAut
- 5R+NrloRI4p9vsDvkGep92RErebkSoCEDj51JEUWahJNCvYDNBERTLzDjKecGtRNw3db
- Ci7JIXS5axK29+rOYekVggI+T3joMiODVde5sKYpyK5kCWdy/hicI3my1N+KDxAxtpHy
- 8sRsrAjByzmq3M6V5R1veGUTjOjlm9KAXE/V2A517zCtUDP6FhVKthtyY+tP7hRqYZp9
- Q1wz2JFCx8vkvcYJLHApBSLpGJeA0OlqK7uGYo+g6uD5FKXx1rUoRG+tlYLFR93KR1pa
- 2yLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlYyJ/hav9OQ3aHlpT/COmiCigCg6jZTqFMO3/mqiagZqCKqf2LYy4igmly10ju6liKIUb7wefJ3xk@nongnu.org
-X-Gm-Message-State: AOJu0Ywdzu5+i33aNOajZ0J5lam/SN2A4/nAkRH4Mb7+iHRzBIg1gS15
- f3AoWhtAf1db8+42gVXEmSUDAYNkXyjLPA+RjTO6+vHJnzdZ+xIGYAkGAgwSVa/0GjpuaHzxmNu
- H
-X-Gm-Gg: ASbGncvxjbGMsTxiKQTf8WBhhbRqZJ84Uo7WwroEDjO1+YEdeamd5qOkYFJZnYD+SnX
- 9VSIq59ncG8qCsxlCtN3Vcuq3lhZKpG47GFhyCLOjuP5UT8eKniufNb5RJxWtstL0eTb/MgQPmf
- vwnzcTa8qvD8jUDyOjCyHYdIhKeq6VLR0JRIi90HotyXpP45BO3V4t53zluYbGAd5y0SYB6eJ/m
- JQORnbTm1gECUvSHw0MlWGT8HweHVlh500zh2vk84o4rtTWxRyitbwAQyh7rE+A0xJwybwSis6o
- +/ud10HoPTG3ItYaPg+jjMnuLKubO7bO0TnfTCl3BweeouYTeTpkwWs=
-X-Google-Smtp-Source: AGHT+IEv3Iemykp+Y1YNz5kXY2tGy+iZAJtouZE1htV1/oYW/TIdRy2w7BwbSeh6b1XWhfzrko/U+Q==
-X-Received: by 2002:a17:90b:3851:b0:2ee:bbd8:2b9d with SMTP id
- 98e67ed59e1d1-2fc4115401dmr5253997a91.34.1739646539464; 
- Sat, 15 Feb 2025 11:08:59 -0800 (PST)
+ bh=ottySth3oETnK4sq8l5c4h2Zeg3wAls/HNv9d3+p5cQ=;
+ b=IRDuYwgbIREU66BwEZlMYbo2RdF27lEdRd+30eO+cEC2velHkVelVHSGvdgdP8HhWL
+ WHUqqOoSt/iHYhArklhhg8FAwBaS7TbClOvtli5BRO8ebt9oceL6g2gtPnPvQAUNL2el
+ A/s6wKzqgstZNUmfKxTtStgiQVfBK5Wv5BQjJoY3L1N6GHt00rcPPukLkjB4TonvvaUr
+ AwDU9pI8eQxwnKpaf8K8MIafGQnvQkriDM/h94jP0N/0nNkUPI97heI0H9PNwexU7Nju
+ d7LUtbYkYab1ojOovQt4edE/Yz1BzCfVmaO7Zpsm9tJ260NNEuHYSCRclboord0GmV2U
+ 3+Iw==
+X-Gm-Message-State: AOJu0YwQZ9sxeR45Q11Skgl+wchHPO7qQRcfCICdMhEdV/bQewujPUv3
+ hvO98fanmqEi8EleCruuYh4vH8peLJCbEdWjeHwaf3+jGkplhnO1GUewcoflzQo2EC/Dtc09kp0
+ v
+X-Gm-Gg: ASbGncsSABfW1Afma55b2MIvQC+D4MFESvRsU/2GrWp1ZOLCv0ygGTVA4vsPnzj5EL7
+ Uc+XlqGgknHDJhpdiMBvhBymPRUd24YT+hwYnSv33lDUS4z8Xrmp+h/9raG23NGeZU91u1ksb9W
+ K2c4HdzD7gwvulBRnFjlsAkAjy2pbTKaoA4I+OnMezr9ozjRKNE17dRKObbBluDUaK2clU7/Nmp
+ d8XGFbAOb/pViHHmhBZCfLL6lx6YWBAz9JOpIB8mRsUdBNoOXwEUTWyTQIsVumOMg6mg9r7xxP+
+ yMEnPEDUuhDBKN7Kibtk+UYAhlL4qtm9G172HAMLE/R+gTQ7FTDdyPQ=
+X-Google-Smtp-Source: AGHT+IGDKeRoaXD909C5CJeOS0jE5yoCeEZpyX0Rcny/Fv1tOPd6snbz8lDk+l+4yBbgg/c7cH74tA==
+X-Received: by 2002:a17:902:e841:b0:21f:4144:a06f with SMTP id
+ d9443c01a7336-22103f14b7cmr63025275ad.13.1739647737349; 
+ Sat, 15 Feb 2025 11:28:57 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fc13ac0a06sm5215304a91.15.2025.02.15.11.08.58
+ d9443c01a7336-220d5584d94sm46620425ad.207.2025.02.15.11.28.56
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Feb 2025 11:08:58 -0800 (PST)
-Message-ID: <5c33021b-7bf4-409e-8ea4-fd2473455adc@linaro.org>
-Date: Sat, 15 Feb 2025 11:08:57 -0800
+ Sat, 15 Feb 2025 11:28:56 -0800 (PST)
+Message-ID: <8ae3bbc8-bde8-4d92-b059-7435afaf7cd8@linaro.org>
+Date: Sat, 15 Feb 2025 11:28:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] elfload: Fix alignment when unmapping excess
- reservation
-From: Richard Henderson <richard.henderson@linaro.org>
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dario Faggioli <dfaggioli@suse.com>
-References: <20250213143558.10504-1-farosas@suse.de>
- <92d268c0-ba67-454a-b22b-688122eccd7b@linaro.org>
+Subject: Re: [PATCH] linux-user: Move TARGET_SA_RESTORER out of
+ generic/signal.h
+To: qemu-devel@nongnu.org
+References: <mvmed060xc9.fsf@suse.de>
 Content-Language: en-US
-In-Reply-To: <92d268c0-ba67-454a-b22b-688122eccd7b@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <mvmed060xc9.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,42 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/25 11:06, Richard Henderson wrote:
-> On 2/13/25 06:35, Fabiano Rosas wrote:
->> When complying with the alignment requested in the ELF and unmapping
->> the excess reservation, having align_end not aligned to the guest page
->> causes the unmap to be rejected by the alignment check at
->> target_munmap and later brk adjustments hit an EEXIST.
->>
->> Fix by aligning the start of region to be unmapped.
->>
->> Fixes: c81d1fafa6 ("linux-user: Honor elf alignment when placing images")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1913
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->> In the bug there was mention of the vdso landing in the wrong spot,
->> but I don't see evidence of this in my testing. Looking at the
->> addresses in the bug report, there seems to have been a mistake
->> because I don't see an overlap there either.
->> ---
->>   linux-user/elfload.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
->> index a2c152e5ad..05ee5e74fd 100644
->> --- a/linux-user/elfload.c
->> +++ b/linux-user/elfload.c
->> @@ -3351,7 +3351,7 @@ static void load_elf_image(const char *image_name, const 
->> ImageSource *src,
->>       if (align_size != reserve_size) {
->>           abi_ulong align_addr = ROUND_UP(load_addr, align);
->> -        abi_ulong align_end = align_addr + reserve_size;
->> +        abi_ulong align_end = TARGET_PAGE_ALIGN(align_addr + reserve_size);
->>           abi_ulong load_end = load_addr + align_size;
+On 2/10/25 04:59, Andreas Schwab wrote:
+> SA_RESTORER and the associated sa_restorer field of struct sigaction are
+> an obsolete feature, not expected to be used by future architectures.
+> They are also absent on RISC-V, LoongArch, Hexagon and OpenRISC, but
+> defined due to their use of generic/signal.h.  This leads to corrupted
+> data and out-of-bounds accesses.
 > 
-> Both align_end and load_end must be aligned.
+> Move the definition of TARGET_SA_RESTORER out of generic/signal.h into the
+> target_signal.h files that need it.  Note that m68k has the sa_restorer
+> field, but does not use it and does not define SA_RESTORER.
+> 
+> Reported-by: Thomas Weißschuh <thomas@t-8ch.de>
+> Signed-off-by: Andreas Schwab <schwab@suse.de>
+> ---
+>   linux-user/aarch64/target_signal.h    | 2 ++
+>   linux-user/arm/target_signal.h        | 2 ++
+>   linux-user/generic/signal.h           | 1 -
+>   linux-user/i386/target_signal.h       | 2 ++
+>   linux-user/m68k/target_signal.h       | 1 +
+>   linux-user/microblaze/target_signal.h | 2 ++
+>   linux-user/ppc/target_signal.h        | 2 ++
+>   linux-user/s390x/target_signal.h      | 2 ++
+>   linux-user/sh4/target_signal.h        | 2 ++
+>   linux-user/x86_64/target_signal.h     | 2 ++
+>   linux-user/xtensa/target_signal.h     | 2 ++
+>   11 files changed, 19 insertions(+), 1 deletion(-)
 
-Bah, hit ctrl-enter, not enter.  I'll fix and queue.
+Queued, thanks.
 
 
 r~
