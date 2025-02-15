@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8089C02198
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 02:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DACFC021A4
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 02:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tj7jz-0004F1-Iw; Fri, 14 Feb 2025 21:17:11 -0500
+	id 1tj7k3-0004Gy-Ln; Fri, 14 Feb 2025 21:17:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jy-0004Er-6i
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 21:17:10 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7k0-0004GL-NQ
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 21:17:12 -0500
 Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jw-0006dF-Fk
- for qemu-devel@nongnu.org; Fri, 14 Feb 2025 21:17:09 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tj7jz-0006dn-6r
+ for qemu-devel@nongnu.org; Fri, 14 Feb 2025 21:17:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739585824; bh=w/8IuRHPVdUTbyl/MhQywFst50Ay9Yr9V+RwhgAhxLY=;
+ t=1739585826; bh=/tsRwvbTOyoVzLtmCyEuFpgz4OrTtgDazD6Mn8+RzLY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=B7XDEs0iIAh+SmUnqqVGDBITNEdxdy8Z+23jybGm/dHySe1MnWPWhzil6R31+gOWl
- t6SZ+PJpl0fskAnbDPacD7oyXqrhUrsZh/00HhJM2w1m6BrU/FwfGrJbH0gVv+qEHO
- FtyZEdNOepmp2qGfVdozHdNdn8g/Bt6XS/5mAN2ZMi3/z08EtR0RQVJfcWnvezWF9D
- r+JvgLviJbx9RBtnbMoFp3gLxI04b8DjmaTm1+FkJ8XQgBI+1vMjnJsQ1TFX4QQvk/
- R/MtOk6ZCgRsaS6ncoEDekbUO7duLFl0hNKFuv1Az0ODXDpZ88z8EuZmDRMFLq0of5
- q5o2AYIwguo4w==
+ b=NQvCmP90k8rStqP9DgH4pcctkymMcQ/Len6NV524h6CjRH1Ls3XoW9H5BKXx2ufkM
+ oeV3/5m9/6P/oYRKnCyI3+U2avKai4TMQuz3jrgrwfbRA60Vgfyimonxf5EhoOF1pG
+ L36mymGUmiYurVqp+/7DEBHCHA2oQCmgZ4094kY7gIf9o7JtF4eUrOfLSoBWe74E6d
+ G6h6lLFMpkENXFCDMQlX5f+fQbwvEREbfvzZ7eaQLfHE9dt7QW7kht6CyZ4RTa/YCO
+ POONiNgkDCAysn0d6yzFYGAhQrYaWindL31GkFRS/vS+pdVlLp+cK9Ny0hl5j9dkyy
+ BHRNi4zQCmHeA==
 Received: from localhost (localhost [127.0.0.1])
- by elaine.keithp.com (Postfix) with ESMTP id 89D1C3F22BE0
- for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 18:17:04 -0800 (PST)
+ by elaine.keithp.com (Postfix) with ESMTP id 81D583F2294E
+ for <qemu-devel@nongnu.org>; Fri, 14 Feb 2025 18:17:06 -0800 (PST)
 X-Virus-Scanned: Debian amavis at keithp.com
 Received: from elaine.keithp.com ([127.0.0.1])
  by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id mhTFRvRwtR3H; Fri, 14 Feb 2025 18:17:03 -0800 (PST)
+ id iuS5Aqj3FqQs; Fri, 14 Feb 2025 18:17:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739585822; bh=w/8IuRHPVdUTbyl/MhQywFst50Ay9Yr9V+RwhgAhxLY=;
+ t=1739585822; bh=/tsRwvbTOyoVzLtmCyEuFpgz4OrTtgDazD6Mn8+RzLY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=VkFGz2UuBDy3UBL0VkJFsmMgspTF3ZxLf/XVorY5Z+C6vCQhvKJ/6ziDaOUSx97lJ
- nP1rJwUPnmUeoAgPeFYROP9rhgugztkeqYolNle6k/38ueFj6ZL4r7xbHxzGHQ3WUI
- ZH6APIUf2ib+/b2GnIhKSokMRmVVePAt/SjfBEUs/1Ym9LETXSUYNQDJIpuE0l7SbP
- 7Icp6gT65ie4WRs23YCjWG6PR1hNBI3Vc8gyht1WqOXeaHqbgbcc3LTEV7CYaH4CFQ
- cc8EqYyvRgI42mv7zbZQZecnPb6ZOaUrNmVgewlJ/dMx60naMMxa7osWaTmKIuJidc
- koP0hxawri2Pw==
+ b=mF+fCKjJ3lZaHlce9Es/pvfa9Qd2wG5xAOYTsR1plyUjN6OeGY3iIu0MfLpYoBwX/
+ Jm1yfdKycyn05pV2Yjq+Prqvf56ZQBwz0LIKYNY1OBJlrDmVf68JNe5iA/eIQ4x3II
+ Os+f+R5m5TSFmtyotDepaoOSAieqU6T26Hxqi5W0i35HJzEQPzfpSMaFWhsCl+/pkD
+ uYpHpgquyvuaSs/G9fTcE09aVIyT4LEUX35r3CXF+0P3Erdz7zNLG4RdXQ+mgxClWM
+ 34bWSRUF7gtB/q6NLn2P90ke2+W3iIL+gaSd28bllCr87g1wt41uFvm91DI0hz2fPg
+ SqJ+e6Q8YTorg==
 Received: from keithp.com (koto.keithp.com [192.168.11.2])
- by elaine.keithp.com (Postfix) with ESMTPSA id 857D33F2294E;
+ by elaine.keithp.com (Postfix) with ESMTPSA id A41203F22BF3;
  Fri, 14 Feb 2025 18:17:02 -0800 (PST)
 Received: by keithp.com (Postfix, from userid 1000)
- id 5B5811E6009E; Fri, 14 Feb 2025 18:17:02 -0800 (PST)
+ id 60A0A1E600A0; Fri, 14 Feb 2025 18:17:02 -0800 (PST)
 To: qemu-devel@nongnu.org
 Cc: Keith Packard <keithp@keithp.com>
-Subject: [PATCH 3/5] target/rx: Reset the CPU at qemu reset time
-Date: Fri, 14 Feb 2025 18:16:52 -0800
-Message-ID: <20250215021654.1786679-4-keithp@keithp.com>
+Subject: [PATCH 5/5] target/rx: Remove TCG_CALL_NO_WG from helpers which write
+ env
+Date: Fri, 14 Feb 2025 18:16:54 -0800
+Message-ID: <20250215021654.1786679-6-keithp@keithp.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250215021654.1786679-1-keithp@keithp.com>
 References: <20250215021654.1786679-1-keithp@keithp.com>
@@ -84,51 +85,47 @@ From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This ensure that the CPU gets reset every time QEMU resets.
+Functions which modify virtual machine state (such as virtual
+registers stored in memory) must not be marked TCG_CALL_NO_WG as that
+tells the optimizer that virtual registers values already loaded in
+machine registers are still valid, hence discards any changes which
+these helpers may have made.
 
 Signed-off-by: Keith Packard <keithp@keithp.com>
 ---
- target/rx/cpu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ target/rx/helper.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index 37a6fdd569..04dd34b310 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -27,6 +27,7 @@
- #include "hw/loader.h"
- #include "fpu/softfloat.h"
- #include "tcg/debug-assert.h"
-+#include "system/reset.h"
- 
- static void rx_cpu_set_pc(CPUState *cs, vaddr value)
- {
-@@ -129,6 +130,13 @@ static ObjectClass *rx_cpu_class_by_name(const char *cpu_model)
-     return oc;
- }
- 
-+static void rx_cpu_reset(void *opaque)
-+{
-+    RXCPU *cpu = opaque;
-+
-+    cpu_reset(CPU(cpu));
-+}
-+
- static void rx_cpu_realize(DeviceState *dev, Error **errp)
- {
-     CPUState *cs = CPU(dev);
-@@ -142,9 +150,10 @@ static void rx_cpu_realize(DeviceState *dev, Error **errp)
-     }
- 
-     qemu_init_vcpu(cs);
--    cpu_reset(cs);
- 
-     rcc->parent_realize(dev, errp);
-+
-+    qemu_register_reset(rx_cpu_reset, RX_CPU(cs));
- }
- 
- static void rx_cpu_set_irq(void *opaque, int no, int request)
+diff --git a/target/rx/helper.h b/target/rx/helper.h
+index ebb4739474..ac21f4fddd 100644
+--- a/target/rx/helper.h
++++ b/target/rx/helper.h
+@@ -13,18 +13,18 @@ DEF_HELPER_FLAGS_2(ftoi, TCG_CALL_NO_WG, i32, env, f32)
+ DEF_HELPER_FLAGS_2(round, TCG_CALL_NO_WG, i32, env, f32)
+ DEF_HELPER_FLAGS_2(itof, TCG_CALL_NO_WG, f32, env, i32)
+ DEF_HELPER_2(set_fpsw, void, env, i32)
+-DEF_HELPER_FLAGS_2(racw, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(set_psw_rte, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(set_psw, TCG_CALL_NO_WG, void, env, i32)
++DEF_HELPER_2(racw, void, env, i32)
++DEF_HELPER_2(set_psw_rte, void, env, i32)
++DEF_HELPER_2(set_psw, void, env, i32)
+ DEF_HELPER_1(pack_psw, i32, env)
+ DEF_HELPER_FLAGS_3(div, TCG_CALL_NO_WG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_1(scmpu, TCG_CALL_NO_WG, void, env)
++DEF_HELPER_1(scmpu, void, env)
+ DEF_HELPER_1(smovu, void, env)
+ DEF_HELPER_1(smovf, void, env)
+ DEF_HELPER_1(smovb, void, env)
+ DEF_HELPER_2(sstr, void, env, i32)
+-DEF_HELPER_FLAGS_2(swhile, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(suntil, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(rmpa, TCG_CALL_NO_WG, void, env, i32)
++DEF_HELPER_2(swhile, void, env, i32)
++DEF_HELPER_2(suntil, void, env, i32)
++DEF_HELPER_2(rmpa, void, env, i32)
+ DEF_HELPER_1(satr, void, env)
 -- 
 2.47.2
 
