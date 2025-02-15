@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9F1BC021A0
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 18:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D754C021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 19:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjN7e-0006Rh-Lj; Sat, 15 Feb 2025 13:42:38 -0500
+	id 1tjNUu-0001JD-9v; Sat, 15 Feb 2025 14:06:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjN7d-0006RU-0D
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 13:42:37 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1tjNUo-0001J1-Tg
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:06:37 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjN7Z-0004KK-90
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 13:42:36 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2fc3fa00323so1801836a91.3
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 10:42:26 -0800 (PST)
+ id 1tjNUl-0006s3-76
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 14:06:33 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2fc0d44a876so4544159a91.3
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 11:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739644946; x=1740249746; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fDZ2c/5pwLdUWjHYDxkuCU+dmLSGu0I40qDFF2WWkfY=;
- b=nNnj/6ofQ3JWIPHKE83kX4XKZph+e0pd6YTU4HsDtvIenvt8TyTqmDNrTdZNDffOCw
- XTRyAU3pc6VoN1YtRYWwM1JzYK781WlCF3sp0VOdq4byAvKoWVB1LTucJUDlAiF4elsF
- ablQV73Q8OomNSmkn1c5ovSU/fkRxuDDn6Ahoj8xVJxbaLAgjWq+So39Kc01EdVpkdHm
- DSTRThVCPwn910hahff2yqw68vdJu351ZiZMSxgvMR2xtuKLHbDvEcwPlRG5Tsz3pI2A
- dAh1ck4q0rJ2sIptrVwz0WeB8qB59pbq/v8z+rLlNJq2aSwhSt+D0gx0KR+8BmYkDSFh
- m6xA==
+ d=linaro.org; s=google; t=1739646388; x=1740251188; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=E7+4lc7cPF+3BVMN/yhfVUQukqSRX9OOK4Kw0SKKvAU=;
+ b=PQ4rCSf1zXIbOVZFnh14ogWPYU9ruPxufAwuF5iv7cZSMMzP0Wb9NeB7twDOfKaRuN
+ KOq2Aw0eFPI4o2K5ehVKIJQUErahgYhyCW+EvLj1AIjYBgmi9S2smFfVhw6iVtEXt7DR
+ 15bhO2QEuD4eJe5NWU+w8qcvq6wOtP1wwjmU87WjNXasxAO49uWjTRo8bybwrCQBtpu+
+ GBcLtzdHdVT1dMvp/im/fCZSwLk4MGH00y8QPKvDK51Q8tkDPPfEheQcxO76l6WI4FW5
+ jYUycWMmIM0bOR20jAdNHlq8B16dt0lPCXrbI4ZutOT9tgMAQZ+BORKfjMf1UMmnevTd
+ JEsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739644946; x=1740249746;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739646388; x=1740251188;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fDZ2c/5pwLdUWjHYDxkuCU+dmLSGu0I40qDFF2WWkfY=;
- b=hQTjvKn+qZ8a5rSDDAYnrl2+7/JqqPZOb4xSjd61pFJbjTAUT6vm1xLOmahhHSfHfu
- lbvrCxgGI1F6MsdhpvFtzMmHqxXrzpoMwTB9I0l1N32Zhzn1vu1jp16APJMzefphK5cY
- h3l/3WMgDjCizLG2qujO9ScIQsaXfznlxXCEQMfATRMJsC4HExAKVJnY4O9WBrA32M+R
- wJeNordDvGqIpBELY2sPdh2QjVb8ww3uMh0PBXBDVNM18qsLEiqUAvBxKTii0ro8r9GG
- PUnQBIsZ9JDbHMEydoEZEQT8sb9GsvV7u1Qaby1/WU4cQyRj81lYvRV1OdwPoea0NDV6
- mD+g==
-X-Gm-Message-State: AOJu0YysheQybTDFIYZEqNTSYLnT0L+SDb4zSEa761jgstecSjF1g1Uy
- lwoIFuKEgjp6zBEz8Yvehckz0KcQMfDHFeQGaAXeNqvw3ETYub+HSW7USnSq6bRY4JNe35BrOGY
- 3
-X-Gm-Gg: ASbGncvzf3PiH+L8VN0bUq07FG8XOpNn+NkkNOxlUiId4KWekaPDCZFVheGbXtowBY3
- xguyP/916sS+oePzRlEecS+7dHkuHy5Whb0HoUYt1fiYi2r1tVHgxGnfwjocj6W1zWuYkHyp4Na
- nDu/qtTzfpth9rcREKAIscDU6d3qoPE6SYgPHVJWECNIlesdbsvCgNLatKlpHH/KwSzLV7q1nXs
- J96SkWRKMChE5ur0SudUUeSLgZuqIeAG0xL3C0IvOek6SqHBTmav9zIxGMW7KayHd22ngHQlN03
- DjQnyJqGAPkBT5W2ImmS3VVafUt6ee6NntsVPdL9m7o8lupCde6vk3M=
-X-Google-Smtp-Source: AGHT+IESS0YEJRZo8ydLoolkVw4uvl21/z5bYEM/nZIUb4mjPSKmibgKJ8Fe1bdYLEyWNa7177BNdA==
-X-Received: by 2002:a05:6a00:3096:b0:732:6248:ff73 with SMTP id
- d2e1a72fcca58-7326248ffd7mr5128990b3a.3.1739644945784; 
- Sat, 15 Feb 2025 10:42:25 -0800 (PST)
+ bh=E7+4lc7cPF+3BVMN/yhfVUQukqSRX9OOK4Kw0SKKvAU=;
+ b=gzhmPwftAxZhIqbkTHfbt0QR4UqaOiof5PeyViZ/NgpsEd03zM3msB8QcxsVR8se/o
+ t670SjXQ0HK78BARDWrTIjyyUxS5jB9zSuKSeQVYe1zc+8kf5pDroirzcuSH2mjCbi/4
+ +iImw7lUP8sbuylQDKSyO9/sXbbTWRdADktE4uLZI/fepJj97z+5p5yrXtmlCG9H/OcU
+ pdIQYyL9nIiyFfMfHAW4+unGNPyQ+CS2UStimkyDdJErQ81l/+2jmKhM8lySGZQQEo+a
+ R7qV7Jo1puXJO0CQyamj/s0Pjf8bBvEU7UVhAcZ16Ztqf8j5cBonmI9361I3Xa+S5Ye9
+ o/4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqaXw/KzAMtzEtF96wRLwMQ30pbCpzqRUBPvnkSr/m/NlpuBMVsMzxZLE6EPaUOfL6yp2aACKt/eLp@nongnu.org
+X-Gm-Message-State: AOJu0YxHDsguVDoZLaib8/38D4uWVcHJsP5aygwIJh4RLcvcPZeLfekx
+ htdeajVOYNm+XQ71r5wnIgIzMt/ZHPpShY5j8eogYgRhtRsjBtAJJK8SHa8+f/c=
+X-Gm-Gg: ASbGncsAMu/5JilaQpqJ4Zxt4JZXBqJEdcU66yn4b9AYNoUGIXD5S5bvDDULkIYm1Z+
+ 0nYuSXKPoM7/bJBxdBBSJs2sM4Z0lbNE2uVpk6jQvxABkzePVpTeeS523d5AXhN1b3MJv7L7Rp9
+ fZtk/3fSiVcLCXvrVAJrhvGeFgKdeFxgenCtXsEQrANtZMOMZlWs7rQwFfWwG4zGfg/z8iufL3W
+ JNY3RQnAQobpMpcdGQOnQBO9m5kpOEIx5c4O/jNGEdNGD226+SpsIvVyIQmWpvOG+Uz4EDagsUT
+ vbdJ5SO7+jw2fvV6LlXptB0zJgcasQVWKgZFFDwgLgww3YEPS7XKI7U=
+X-Google-Smtp-Source: AGHT+IHK5A6qN1WebfKuOoQSj0lRznem0ZO8WaI8n9ZDlrowamvSaURoj4GmSwGho5zQ2HQ4zHDnpQ==
+X-Received: by 2002:a17:90b:1e09:b0:2f4:f7f8:fc8b with SMTP id
+ 98e67ed59e1d1-2fc410493edmr5681231a91.27.1739646387895; 
+ Sat, 15 Feb 2025 11:06:27 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7326ace1270sm897278b3a.114.2025.02.15.10.42.25
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-2fc13b91588sm5224561a91.37.2025.02.15.11.06.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Feb 2025 10:42:25 -0800 (PST)
-Message-ID: <24b0147e-6825-4daa-afcd-a493685f9f6b@linaro.org>
-Date: Sat, 15 Feb 2025 10:42:23 -0800
+ Sat, 15 Feb 2025 11:06:27 -0800 (PST)
+Message-ID: <92d268c0-ba67-454a-b22b-688122eccd7b@linaro.org>
+Date: Sat, 15 Feb 2025 11:06:26 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target/rx: Remove TCG_CALL_NO_WG from helpers which
- write env
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250215021654.1786679-6-keithp@keithp.com> <87jz9r1s3h.fsf@keithp.com>
- <21d559fc-1d81-4725-9523-60949a41e5a7@linaro.org>
+Subject: Re: [RFC PATCH] elfload: Fix alignment when unmapping excess
+ reservation
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dario Faggioli <dfaggioli@suse.com>
+References: <20250213143558.10504-1-farosas@suse.de>
 Content-Language: en-US
-In-Reply-To: <21d559fc-1d81-4725-9523-60949a41e5a7@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250213143558.10504-1-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,56 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/25 09:09, Richard Henderson wrote:
-> On 2/15/25 01:21, Keith Packard via wrote:
->>
->>> Functions which modify virtual machine state (such as virtual
->>> registers stored in memory) must not be marked TCG_CALL_NO_WG as that
->>> tells the optimizer that virtual registers values already loaded in
->>> machine registers are still valid, hence discards any changes which
->>> these helpers may have made.
->>
->> I still don't understand the restrictions on using these flags. I just
->> had to disable this flag for other helpers which only set conditions
->> codes in PSW and FPSW. Is that expected? When are these flags supposed
->> to be valid?
+On 2/13/25 06:35, Fabiano Rosas wrote:
+> When complying with the alignment requested in the ELF and unmapping
+> the excess reservation, having align_end not aligned to the guest page
+> causes the unmap to be rejected by the alignment check at
+> target_munmap and later brk adjustments hit an EEXIST.
 > 
-> Yes, that's expected.
+> Fix by aligning the start of region to be unmapped.
 > 
-> The state of affairs is not helped by the rx target's misuse of tcg globals.
+> Fixes: c81d1fafa6 ("linux-user: Honor elf alignment when placing images")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1913
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+> In the bug there was mention of the vdso landing in the wrong spot,
+> but I don't see evidence of this in my testing. Looking at the
+> addresses in the bug report, there seems to have been a mistake
+> because I don't see an overlap there either.
+> ---
+>   linux-user/elfload.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> A target should define tcg globals for values that are used frequently for emulation.  The 
-> bits of the PSW certainly fit that bill, because they're touched by most arithmetic 
-> operations.
-> 
-> However, fpsw, bpsw, bpc, isp, fintv, and intb are only used in move_to/from_cr and RTFI. 
-> This is infrequent, so simply loading and storing to env is preferred.  E.g.
-> 
->      tcg_gen_ld_i32(value, tcg_env, offsetof(CPURXState, fpsw));
-> 
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index a2c152e5ad..05ee5e74fd 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -3351,7 +3351,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+>   
+>       if (align_size != reserve_size) {
+>           abi_ulong align_addr = ROUND_UP(load_addr, align);
+> -        abi_ulong align_end = align_addr + reserve_size;
+> +        abi_ulong align_end = TARGET_PAGE_ALIGN(align_addr + reserve_size);
+>           abi_ulong load_end = load_addr + align_size;
 
-To finish my thought here,
-
-> +DEF_HELPER_2(set_psw_rte, void, env, i32)
-> +DEF_HELPER_2(set_psw, void, env, i32)
-> +DEF_HELPER_1(scmpu, void, env)
-> +DEF_HELPER_2(swhile, void, env, i32)
-> +DEF_HELPER_2(suntil, void, env, i32)
-> +DEF_HELPER_2(rmpa, void, env, i32)
-
-are absolutely correct, in that they modify all of the psw_* globals.
-
-> +DEF_HELPER_2(racw, void, env, i32)
-
-is currently correct, in that it modifies cpu_acc.  That said, there's no reason that 
-function could not be expanded inline:
-
-     tcg_gen_shli_i64(cpu_acc, cpu_acc, imm);
-     tcg_gen_addi_i64(cpu_acc, cpu_acc, 0x0000000080000000ull);
-     tcg_gen_smin_i64(cpu_acc, cpu_acc, tcg_constant_i64(0x00007fff00000000ull));
-     tcg_gen_smax_i64(cpu_acc, cpu_acc, tcg_constant_i64(0xffff800000000000ull));
-     tcg_gen_andi_i64(cpu_acc, cpu_acc, 0xffffffff00000000ull);
-
+Both align_end and load_end must be aligned.
 
 r~
 
