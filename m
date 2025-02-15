@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E3AC021A4
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 17:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8654BC021A0
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 17:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjLfz-0000gh-0w; Sat, 15 Feb 2025 12:09:59 -0500
+	id 1tjM5F-0004Vq-Fz; Sat, 15 Feb 2025 12:36:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjLfx-0000gY-Bc
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:09:57 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjLfv-0002tm-ML
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:09:57 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21f44e7eae4so58553685ad.2
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 09:09:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739639393; x=1740244193; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jb3Y2VqacpSG4XbrCYC4Oc49d4+mYGSqoEfeHFyZtuQ=;
- b=zYk8Y60zxKmtUTAibFZsXr+vy1lsag097vuFeef14ynjpWNqctJQWie3wdDbYONuZO
- vD5BSQeg457xVI5uLIjXuuQrfbjCsG2hWhFnzScL83PMqOkkzPE2wl4KIJQYDpFMU7Dl
- 9wYr6KhNa418EIXrfEgjwKOu++KMH05Mu/suFmFx/TCK3iG9js+wel8AZJn1AuJsfNcL
- qdCkTP45VDzfFiExZ+LRb3EXuW6Oerc93ISKHoo80G0BsmJVZIOFDMbEwJUoYR+pdYjT
- s7XxaICjf4TTKyLvmKmfgRalK4+aerST+dhb4wblOa+vrV1UXFb/WnThuKdCg/ANYdbi
- rGig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739639393; x=1740244193;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jb3Y2VqacpSG4XbrCYC4Oc49d4+mYGSqoEfeHFyZtuQ=;
- b=rtEvdXFQA4p6+swFMUDDXxbtwDdd4JbHZYZQ+dQkcwMPiiuIlD2RUBUvTO3TimYHt2
- z2GzLFzhvGV652lO9C9MU1M/FINpTyHFiwwAnKOFYjT528w5rZd1Z/6S7rOPbZohJY+d
- IXL3Yuh5mAZhYXiLniYIjl9NAq13NbCocZnUuHr3RUFht0z/0x0jaXMxbkPWZfTvPc01
- 0B1EiOeYsTDfbfWnGNBiN/3k/Oaa3mMjmXm1HFMejYqxXBuATqIl0RX6JbdEiQbuh6cX
- JW7VU+rWNwd5IR+o7M/li+QiEDpupHNkVr6sxRd6AfGnMgE5ILZ2/9LMfh0wtQ1b7EPZ
- y/wg==
-X-Gm-Message-State: AOJu0YxN9YJGUhwkU7kHPeSn2gK2DM1RNh2hle5iIyV8Pj+WamiYpeQO
- 4hf0J0ogU197GfvDYgwUk71ciFRQPxAIVVVg8nfzSi1SQZEYwyOB6m1hYpNiJf5075lp9DYq6PO
- G
-X-Gm-Gg: ASbGncvGaoc2HBdz9KNL3KkdRPoE9+Qa5+vByx6VYmHQfK3e5Rx/pCJxCO5GS+L7TW5
- EVaU62WiKGJSKiZ91zTNAXlJAQv6n791DHk4oh84Jyvus4nGvnpF/PpP8NGCaPgo3FCtFWyCdrx
- 5giYFu4PZj6kzaRqOo05qAt2bExe9lavch0OiVwOhXWRbBcMoYzFcc0WNRxvA60IepKfp7fJ9O3
- fl3Fw11dFUPiy8GMlFXjdL521dgEEVFyrjHqMeCQjTvZo9mC2coXQ/2paDTav/rMi2C0lhtxFMK
- qgAhYY6uTNBI+K/ejOuTLcnfrMpN9SUrqEbSbQ5PrQkFCZ5jTEr1PWM=
-X-Google-Smtp-Source: AGHT+IFiS4EeEduzMF/Wu0L8Lmuthg7uQqoB466Jc40rrnBje36qxt4ZdxDiF2IE2f1YCI1BoMwxXA==
-X-Received: by 2002:a17:903:41c8:b0:220:c9e5:f94e with SMTP id
- d9443c01a7336-2210401243cmr58513935ad.23.1739639393423; 
- Sat, 15 Feb 2025 09:09:53 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220ea7a9348sm31660485ad.211.2025.02.15.09.09.52
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Feb 2025 09:09:52 -0800 (PST)
-Message-ID: <21d559fc-1d81-4725-9523-60949a41e5a7@linaro.org>
-Date: Sat, 15 Feb 2025 09:09:51 -0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tjM5D-0004Vf-Gt
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:36:03 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tjM5B-0005TY-DN
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 12:36:03 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 655F5EB7D9;
+ Sat, 15 Feb 2025 20:35:38 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A71A51B6A67;
+ Sat, 15 Feb 2025 20:35:48 +0300 (MSK)
+Message-ID: <a826f77b-1abd-4706-82f1-854cfe9fc54a@tls.msk.ru>
+Date: Sat, 15 Feb 2025 20:35:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target/rx: Remove TCG_CALL_NO_WG from helpers which
- write env
-To: qemu-devel@nongnu.org
-References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250215021654.1786679-6-keithp@keithp.com> <87jz9r1s3h.fsf@keithp.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <87jz9r1s3h.fsf@keithp.com>
+Subject: Re: [PULL 27/27] ui/sdl2: reenable the SDL2 Windows keyboard hook
+ procedure
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Bernhard Beschow <shentey@gmail.com>
+References: <20250213160054.3937012-1-pbonzini@redhat.com>
+ <20250213160054.3937012-28-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250213160054.3937012-28-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/25 01:21, Keith Packard via wrote:
+13.02.2025 19:00, Paolo Bonzini wrote:
+> From: Volker Rümelin <vr_qemu@t-online.de>
 > 
->> Functions which modify virtual machine state (such as virtual
->> registers stored in memory) must not be marked TCG_CALL_NO_WG as that
->> tells the optimizer that virtual registers values already loaded in
->> machine registers are still valid, hence discards any changes which
->> these helpers may have made.
+> Windows only:
 > 
-> I still don't understand the restrictions on using these flags. I just
-> had to disable this flag for other helpers which only set conditions
-> codes in PSW and FPSW. Is that expected? When are these flags supposed
-> to be valid?
+> The libSDL2 Windows message loop needs the libSDL2 Windows low
+> level keyboard hook procedure to grab the left and right Windows
+> keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
+> 
+> Since SDL2 2.30.4 the SDL2 keyboard hook procedure also filters
+> out the special left Control key event for every Alt Gr key event
+> on keyboards with an international layout. This means the QEMU low
+> level keyboard hook procedure is no longer needed. Remove the QEMU
+> Windows keyboard hook procedure.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
+> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+> Link: https://lore.kernel.org/r/20241231115950.6732-1-vr_qemu@t-online.de
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   ui/sdl2.c      | 26 --------------------------
+>   ui/meson.build |  4 ----
+>   2 files changed, 30 deletions(-)
 
-Yes, that's expected.
+This looks like a qemu-stable material.  Please let me know if it is not.
 
-The state of affairs is not helped by the rx target's misuse of tcg globals.
+Thanks,
 
-A target should define tcg globals for values that are used frequently for emulation.  The 
-bits of the PSW certainly fit that bill, because they're touched by most arithmetic 
-operations.
-
-However, fpsw, bpsw, bpc, isp, fintv, and intb are only used in move_to/from_cr and RTFI. 
-This is infrequent, so simply loading and storing to env is preferred.  E.g.
-
-     tcg_gen_ld_i32(value, tcg_env, offsetof(CPURXState, fpsw));
-
-
-r~
+/mjt
 
