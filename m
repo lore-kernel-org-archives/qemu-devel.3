@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22D7C021A6
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 20:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 540CEC021A4
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Feb 2025 20:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjOQR-0001F7-GP; Sat, 15 Feb 2025 15:06:07 -0500
+	id 1tjORD-0001QU-Te; Sat, 15 Feb 2025 15:06:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjOQM-0001Ee-IJ
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 15:06:03 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tjORC-0001Q7-DW
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 15:06:54 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjOQK-0005Mj-KO
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 15:06:02 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21f61b01630so66724245ad.1
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 12:05:59 -0800 (PST)
+ id 1tjORA-0005Q8-Gv
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 15:06:54 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-220e6028214so48435285ad.0
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 12:06:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739649959; x=1740254759; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SSSdUnQ4S5ygzPSji2bp9jnNnEJdH8XgxBLP0EcH82Q=;
- b=SGFRJa2tzjm/uMGBeVQlijYRTkZKdWHIg/raJNtXEmEj7OudX98WpailrB1pgsTil+
- B4tXm+V1EcUfOosb163q9nU6GUPOhhR+rwFDR6E7hrEp/FPLZsV8CCAG8tLdlmOm/W1+
- WjKVJD9qGHpMsihZpsL4rLmKWfa9goIdWb9QgaKLDMzcmuJ0xlQMqeh+dWdEUHUcUeRe
- 3K73jIwAwqrnwqgR19RxXGJqP6w+nNB70JHFkZlYgD6et4zQk5UeucL/J0Iiq6w3xz/A
- +3rXPaIArYv6J5V3ddVSZEmaKT5PCW/iF3G/XTy/b+zEcKwb2IW0Yu+pD/DTullarXl0
- 808Q==
+ d=linaro.org; s=google; t=1739650011; x=1740254811; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HGrF7bWHQlQuccblAQ3TQgqcIclFALt4AgreR1jmSKE=;
+ b=wbgAxQS87g65Qoj0wBpTW0eoX8tKrVkqNnmBl3awjYoBek8LMehJE/Q5/p7IORURmB
+ 845n8uJ1nNKgojESK6WZMMgYkPx7qL/RZtQqE2dykdJzHQg6xI5+upCUTXIfl8L9dfxB
+ UM/jq32zrykoHv5djHUgyYZ+pCSDkzEnqY5g85yvZEe8tTdCKfK3ULrRVwCIHEeDQ9cS
+ A6UkvQgShuBhwqtyaBob2CvG1crLdDFst/vzeS9LvkWYwPILrIU4ZymzKirhjBiRuou4
+ lcagNJViHv6C7Xj2A50aEemtF79jfYn/oylALKzKfqSeZdEiJYjxjpkRhQ1YG+B96MRF
+ T5qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739649959; x=1740254759;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739650011; x=1740254811;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SSSdUnQ4S5ygzPSji2bp9jnNnEJdH8XgxBLP0EcH82Q=;
- b=Vr6KVBl40lmANOyZ4jtOxfJ3N2TWdzKJl7GjBGZRJNoW/OYZeAGZI9Aaa2eryw9Q41
- caih/p8a1Lk6em2noGl9UTPK1jjVkvMIo2/avH+DaIyYLCBNUnbDNLV6Wli7M4E0YB8p
- t5DbbfA0r/Dtg6H95J6HgPE/4XdkRZ9DZtnlWRFh0sOneY5ixjnmgnpAcL6Mg2fmTAlL
- 1K8GADithWxFuLLdQcKLs3goKBrlLwcMJJ1O9D9/G2W7Oxrnf7lqnmyJ+ku2RVPiEVQE
- wsVnuvQqCKJX1RSCNM91jEazLDHbHKCxKwQfzZijLbVSmte+oohhQ3pw8ZQrpzdzUx15
- S+7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViHTVVtHKDFDDTrUNnKjDUgrYq1s2YwmmfEGb3wkCjOaaRWw0mBeGRh8DKnw9xNIrek+L/GMn+FItN@nongnu.org
-X-Gm-Message-State: AOJu0YyaipXcGsue3lB5NM7q7Q/51+CfUhhOinh6cQUJUyGjG5JUUaUp
- Am3CyrV38BXNwfyUeXKVvYS9HQe5hJgY9M6iGcpqpNkXSjoyBnbQHzVo5YW/3fI=
-X-Gm-Gg: ASbGncsYftyWg2MxOEgpW2nswF3dv/LKlRE8q6ieuH1/mv34HLTsWsb9ZXXneivQ6+j
- 2rBKuNO/nOsi47dtOlHhocjGyfPWeMOKt69DMSdcdFDK483hV4o9OLcAK3kTkWEOCoeTjUFsJbq
- Vx/2Ut9TDsIm/tta/w8LyJCfMZrDN+yX1OMo+Dbf4KKHrcdJu5ixf84qo1gvlhZFeNcAp59u777
- yC3Ui2RCov4MQLYjIC2SPKX3Dw9+W9eBgc/aj7mMuWUw68tsmjeUhUQhPSBpx5gimIjl1hPRmNc
- L2lUMM3e3hEuiK/tzGCS0Xu192Ujyucq5QjST70FF9TZUcHSymvpyGA=
-X-Google-Smtp-Source: AGHT+IEvmEFbSge5adVVNgBvOEYaTgcrveVL2Hqb3nztRTSR4cAtbn4YiDbPBb3rud+QpiPOxm0Gkg==
-X-Received: by 2002:a05:6a00:3d55:b0:728:15fd:dabb with SMTP id
- d2e1a72fcca58-73262200ec7mr7504562b3a.8.1739649958734; 
- Sat, 15 Feb 2025 12:05:58 -0800 (PST)
+ bh=HGrF7bWHQlQuccblAQ3TQgqcIclFALt4AgreR1jmSKE=;
+ b=sgPmvBBaEbs26lx2uQFesXXXXiVpi3IfddVpAilG/tp7EwFPEDHgnR3QOVMZOPEniL
+ SvP8B38nPQyeOtZwCROGhHlWRYxVmz9sidlqn0n8F7WjuUxCpN3zmzNF7SA5XIqp07KG
+ 98Vwc1nbjfhBGjo3Yez0BOhFamdQ4R2vUVvvtFSXUKEWfDcUSEerLvbVEpse9YXztCsE
+ JpUBKFEnL26wRxEAVOAiIbtbjyJwkhde85RVXWN/+fsuNGhetLFnrUXrMcBFrQCU3uso
+ ksSg5TQvHNBl0JN79SJg3LCTXAI/6fiIrK+e5/5i47VTENxSjphYatPW0atF9JMYyU0t
+ wcqQ==
+X-Gm-Message-State: AOJu0Yz0hf4Ls3cNTjaGXwmd+s3uIQaQZRXq/r66fLi6YzXdA7Kv3eLp
+ csHD/U6vqiGWJIQ05h0RwEeIdvFKn0E3Vq1qwimZpstlWaQ5eBbhbLqV/ghEZ0CzjQnuZEAYeaP
+ f
+X-Gm-Gg: ASbGnctJTH3d/frc6wqOnIMGMrH27Yt9NM4j6UE+0f7YHOddjFbe7zIOkwORGTi9TC/
+ cHpcchocV67hy6We50XNFsFiNGVzjF87eO0AtA0NdGYOBWH8w5fCxc7BADXLxzXnhzeaUTpBJUN
+ KnU9jM33y1B7uJRxgpTakDa9Fbbm9yTgy8gxkbCnmUz8vM1oVjg7MIJhCFvdEOLYdXvlZUNUJMV
+ 7OqyZP5PLFS2To+R+02zsPkKygMWpzlCN2TPR990TnsEJ6FSj5TrnTg6AUBhH3MgxsCHGZbjrh/
+ Bgdsi/eLF6y+oSn4nu8wc9TmYUqbjxgsefkvt1g/TiBIYVaXxJYT8wo=
+X-Google-Smtp-Source: AGHT+IGoyoehxDGyXjffgYDaiSpHTYqjqBVcC25R8yUj0Oelu5NTtl/Lmm9bIX+vKvJCEyh9fRe1sg==
+X-Received: by 2002:a05:6a21:6e91:b0:1ee:391a:8119 with SMTP id
+ adf61e73a8af0-1ee8cb49991mr7566742637.12.1739650011062; 
+ Sat, 15 Feb 2025 12:06:51 -0800 (PST)
 Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7324276171fsm5433570b3a.144.2025.02.15.12.05.58
+ d2e1a72fcca58-73271a02648sm253682b3a.107.2025.02.15.12.06.50
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Feb 2025 12:05:58 -0800 (PST)
-Message-ID: <bc1be819-241c-4f62-9874-7f2683c04252@linaro.org>
-Date: Sat, 15 Feb 2025 12:05:56 -0800
+ Sat, 15 Feb 2025 12:06:50 -0800 (PST)
+Message-ID: <3689674a-fa0a-4a9b-a447-8d706d7e3e4d@linaro.org>
+Date: Sat, 15 Feb 2025 12:06:48 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/sparc: fake UltraSPARC T1 PCR and PIC registers
-To: Artyom Tarasenko <atar4qemu@gmail.com>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <99ea71e8-b978-41c6-8ba5-f056935ea39e@linaro.org>
- <20250209211248.50383-1-atar4qemu@gmail.com>
-Content-Language: en-US
+Subject: Re: [PATCH 0/6] tcg: Introduce constraint for zero register
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250209211248.50383-1-atar4qemu@gmail.com>
+To: qemu-devel@nongnu.org
+References: <20250212034617.1079324-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250212034617.1079324-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,25 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/9/25 13:12, Artyom Tarasenko wrote:
-> fake access to
-> PCR Performance Control Register
-> and
-> PIC Performance Instrumentation Counter.
+On 2/11/25 19:46, Richard Henderson wrote:
+> Based-on:20250205040341.2056361-1-richard.henderson@linaro.org
+> ("[PATCH 00/11] tcg: Cleanups after disallowing 64-on-32")
 > 
-> Ignore writes in privileged mode, and return 0 on reads.
+> Introduce a new general-purpose constraint which maps 0
+> to TCG_REG_ZERO, if defined.  This differs from existing
+> constant constraints in that const_arg[*] is recorded as
+> false, indicating that the value is in a register.
 > 
-> This allows booting Tribblix, MilaX and v9os under Niagara target.
+> This doesn't make much difference to the current tree, but as a
+> prelude to [1], where small output functions are categorized by
+> register vs immediate arguments, then this provides a way to
+> send a constant zero as a register argument.
 > 
-> Signed-off-by: Artyom Tarasenko <atar4qemu@gmail.com>
-> ---
->   target/sparc/insns.decode |  7 ++++++-
->   target/sparc/translate.c  | 19 +++++++++++++++++++
->   2 files changed, 25 insertions(+), 1 deletion(-)
+> 
+> r~
+> 
+> 
+> [1]https://patchew.org/QEMU/20250107080112.1175095-1-richard.henderson@linaro.org/
+> 
+> Richard Henderson (6):
+>    tcg: Introduce the 'z' constraint for a hardware zero register
+>    tcg/aarch64: Use 'z' constraint
+>    tcg/loongarch64: Use 'z' constraint
+>    tcg/mips: Use 'z' constraint
+>    tcg/riscv: Use 'z' constraint
+>    tcg/sparc64: Use 'z' constraint
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-and queued, thanks.
+Queued.
 
 
 r~
