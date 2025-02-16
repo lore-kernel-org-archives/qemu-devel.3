@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9E2C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 19:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5313C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 20:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjjwd-0008S0-NK; Sun, 16 Feb 2025 14:04:47 -0500
+	id 1tjlVS-0007Eq-P6; Sun, 16 Feb 2025 15:44:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjjwb-0008RZ-TC
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 14:04:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tjlVR-0007Eh-PX
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 15:44:49 -0500
+Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjjwZ-0003BV-Ro
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 14:04:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-439846bc7eeso1248945e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 11:04:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tjlVQ-0005f2-2k
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 15:44:49 -0500
+Received: by mail-io1-xd30.google.com with SMTP id
+ ca18e2360f4ac-855799b9d1cso36672639f.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 12:44:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739732681; x=1740337481; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OJPFV1jhZAYXywQhgbQi4s8w/5CfRhWcLWHhO2EvHrI=;
- b=RPsgU7KLg99ofYiT7N/7Q3yHvyaLi7B6NGbKk7cuCx1mnDlzcbscpnrIszQDCIpu6k
- SND2CrTiCpaD7poBRFN64hrPbxWfDL9I+QyWh4r2aKQhctSz65mLa8wSG3epe1R8nfxK
- mHuriKfk7g91tjpkKG0Zou90yVj2L6T8NKtMLs0Nxr8CNaBDIG6ZsWLQK4gtHnMYDGrX
- LlNi03IzSfMiXfMSFiWN6EE12GodvsLSHHZevCLZvHDmBOoMNbUzwIP4tdkQm9sx4IlG
- zqXNuP8s8e3MhvraZzzUWnTk8e9NkKMO7NxXA6V+9LsJiC9vtytA4NBVUU+9ua5R2SNo
- aGBA==
+ d=chromium.org; s=google; t=1739738686; x=1740343486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9o36hZKDCWruTMgvAe6c+Acq8fbx9dtL4I2IvxRSnR4=;
+ b=kcJ5MSjHFSJZy9DB6f0l2QOu8UslCo36AoOKmqbMXhAObu8b8tmnywuJJKwhrgTaV2
+ Zp9D7Zm2vWCqAPQTOKRyzFyRyd3VHLSvkERTkErZO3fxZhROeMnymqBG0v7kT3Hxw9xi
+ x6ABbAK4hdgWJumaKZ2Tq/qdZmJp7e7snUtyU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739732681; x=1740337481;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OJPFV1jhZAYXywQhgbQi4s8w/5CfRhWcLWHhO2EvHrI=;
- b=BeGWqBNQiyVsb7xBOYB7n0I9DhjgPNQhXzB9t36190OtPBAS5O97L8aejWI2iy64JT
- wY8EB7NqgAbhlAs2WTpTBIHa6eKop6ts776tqAdgv0JdDn77phKdE2ktDGK/EBvRgyq4
- ilnPzVFnflOPMUqo8+zIr2+kwx6FS1vqSIhGGKd9wV+zDxheajLuNG84wtEMxmgfPiNv
- /aLHFlvfbPlyjAYt2KLQATZ3+KcXuPGpAYhklxo/WFgFIa3rVq0ngkEIFWesNLz7X3mB
- BxBSclm3U5GJPw1urGJuz4Bzyz6RPmuX5eMIq37yvtpUVOajzI6EaRHop5fUnjK78Q9N
- fS8w==
+ d=1e100.net; s=20230601; t=1739738686; x=1740343486;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9o36hZKDCWruTMgvAe6c+Acq8fbx9dtL4I2IvxRSnR4=;
+ b=hAD5itOTNFNVzNCPid8y6j/Pg32Wx3mxRnuZyREwTvREtb2MF+nGxzTffyI3hB5Ywk
+ woSvtPOrRGaXfEaLa8Mv5FYQ2TaQtrRIBY4+UoU+x+X4MFKwtdWhI3uw2QQHINyarOa9
+ x3AmHzp0ni8mwvQS776MOl/SqaTHq1afwwIn5KqKxPNdS6LfMltdPUAkstYWGda636ZP
+ aWgzZjH7ir1a3UPZpH4rKG1I+3KA33EdiFVOsymQItLpu8KA/+FCsnqYBnqN+1caj9sH
+ xM8F/7i4Pt6NtXlpXe+bL6V2wThhZVL9/ooqD0XsvQMZj6Skk0GbNBtPJYQD0oovz7TQ
+ ZW5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUET00EU2xKu5tcQCpq971sPgGjdQOsuJcAxvsxtNzkNBG4gay0S42oDTrFaV5on3mydj0QNJ0I/eM@nongnu.org
-X-Gm-Message-State: AOJu0Yx3qLWpMFQbhZXFuHRD8shZ5Rw1a7GO1rX5z5HVd493otlkSPEc
- vTJD+uBrmbr39bi++qG/S/ADjes7YM9FANB5YiraEPYpeD0b8bE3FSeTHezShfmqZrskg96UdQ6
- WZP8=
-X-Gm-Gg: ASbGnctOiCgrDErzX6jBjkI58QUqQBLJOkpLpbX6AP18vDVOk00ggAy9Ww8ouzsBgLd
- OToSS3ndbEUDMTzK+5/UEQxqEWLypDOFc/28CxXgcX6b53xuH5I4LHsJw5NDgn8fJSazf7b1aqy
- gy4bJiQFxukg0eajIBL0KVzIr3NV/HMIbovtuyjdkg20Y1vjtaeXlaHrq2oUzDncxelmuuqg/5G
- hOjeD5SykI+FwlDpUa7fvXMQaefXD4BVwpw5CFHtidAY6UAQy1gD8Cj2v7ID1wZ7isDuEIuP7eG
- /RO7Vh89y6txY476aCe+KMJV3zg7fDAuk1i/Dsw+HUfYkeGtCwnY9qUvmPw=
-X-Google-Smtp-Source: AGHT+IFedRLb2PCp1eqJ6hZjSb1ImsKyiy1Ba94Xy0G+bwP0xIUh9jfgry/DPl0zRUzYnYtNdHBHAQ==
-X-Received: by 2002:a05:600c:1c97:b0:439:403a:6b77 with SMTP id
- 5b1f17b1804b1-4396e6c944dmr70896755e9.10.1739732681662; 
- Sun, 16 Feb 2025 11:04:41 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1aa7bcsm131581945e9.28.2025.02.16.11.04.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 11:04:40 -0800 (PST)
-Message-ID: <59a4c4f6-341b-45b5-82af-472e2930889a@linaro.org>
-Date: Sun, 16 Feb 2025 20:04:39 +0100
+ AJvYcCVJ7PwrFUKyElT6BO7ZR96IlVOUmWScMDO+lJriiFe6IMJBaUMTTWAaiWXOBGbVJDQ2P6jbbtSc9K7P@nongnu.org
+X-Gm-Message-State: AOJu0Yynu//dlNXKv5KUx5mUMN1u9g+uK+8eVEV+5CE6g+g4eMPlO+O/
+ ot49/P+YdUSH0/8WUs8Vsu9aG7+KyF2QIiaV8oD2MZQJjtRP7SA8x68jc5x4fQ==
+X-Gm-Gg: ASbGnctwmnwOl/f+kBB+wOt3j0gNJoz30nov67/k37nkzsg3Mw2q/W5DtRHZ9nEoK+g
+ xQMiwEfnE4iaXLU7EGcAkMCmkPpxH8z7FrBtqJw8UOfThS3h3eQysQ5dQS/OLX4NthWwMhb6rkX
+ IhWKwDjgF6KekuUGJLFILb1MTafNUonq/OAmI3N+o64egS6V6VVNSAtTXbh54BP9Uj2cLwLtUgB
+ 08Gixo4wn9xFjAlLlh0OqbIkaJEHs0elGrTJ9uRk/blo9uoPuCKNUeVhZJLuI8nBPAT7bnbeZsf
+ pyFQr64ucCgaiu0gCsHUqTEMfBOhkUs8vPdfyaXXNEA6C3yxyvZP
+X-Google-Smtp-Source: AGHT+IFXGBJhpKuAnjOnDsrHsy6/84yGXy9ofKXFEeQ34NCD2J6ShVa/NF09vbWUthX1c4jj7VhV0w==
+X-Received: by 2002:a05:6e02:2686:b0:3d1:bbc2:a324 with SMTP id
+ e9e14a558f8ab-3d28076e074mr71196395ab.4.1739738685752; 
+ Sun, 16 Feb 2025 12:44:45 -0800 (PST)
+Received: from chromium.org (c-73-203-119-151.hsd1.co.comcast.net.
+ [73.203.119.151]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4ed281718f4sm1854186173.45.2025.02.16.12.44.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 16 Feb 2025 12:44:44 -0800 (PST)
+From: Simon Glass <sjg@chromium.org>
+To: U-Boot Mailing List <u-boot@lists.denx.de>
+Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
+ Andrew Goodbody <andrew.goodbody@linaro.org>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Angelo Dureghello <angelo@kernel-space.org>,
+ Love Kumar <love.kumar@amd.com>,
+ Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+ Philip Oberfichtner <pro@denx.de>, Stephen Warren <swarren@nvidia.com>,
+ Stephen Warren <swarren@wwwdotorg.org>, Tom Rini <trini@konsulko.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2 00/28] x86: Improve operation under QEMU
+Date: Sun, 16 Feb 2025 13:43:45 -0700
+Message-ID: <20250216204421.3560012-1-sjg@chromium.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tcg: Remove TCG_TARGET_HAS_{br, set}cond2 from riscv
- and loongarch64
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250216024709.2624325-1-richard.henderson@linaro.org>
- <20250216024709.2624325-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216024709.2624325-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d30;
+ envelope-from=sjg@chromium.org; helo=mail-io1-xd30.google.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,51 +100,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/2/25 03:47, Richard Henderson wrote:
-> These defines never should have been added as they were
-> never used.  Only 32-bit hosts may have these opcodes and
-> they have them unconditionally.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/loongarch64/tcg-target-has.h | 2 --
->   tcg/riscv/tcg-target-has.h       | 2 --
->   2 files changed, 4 deletions(-)
-> 
-> diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-target-has.h
-> index ac88522eef..188b00799f 100644
-> --- a/tcg/loongarch64/tcg-target-has.h
-> +++ b/tcg/loongarch64/tcg-target-has.h
-> @@ -37,8 +37,6 @@
->   #define TCG_TARGET_HAS_clz_i32          1
->   #define TCG_TARGET_HAS_ctz_i32          1
->   #define TCG_TARGET_HAS_ctpop_i32        0
-> -#define TCG_TARGET_HAS_brcond2          0
-> -#define TCG_TARGET_HAS_setcond2         0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
+U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
+is not perfect.
 
-Fixes: 6cb14e4de29 ("tcg/loongarch64: Add the tcg-target.h file")
+With both builds, executing the VESA ROM causes an intermittent hang, at
+least on some AMD CPUs.
 
-Missed in 0a16d036154 ("tcg/loongarch64: Extract TCG_TARGET_HAS_foo defs 
-to 'tcg-target-has.h'")
+With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit)
+is done in a way that works on real hardware but not with QEMU. This
+means that performance is 4-5x slower than it could be, at least on my
+CPU.
 
-> diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
-> index f35f9b31f5..98081084f2 100644
-> --- a/tcg/riscv/tcg-target-has.h
-> +++ b/tcg/riscv/tcg-target-has.h
-> @@ -37,8 +37,6 @@
->   #define TCG_TARGET_HAS_clz_i32          (cpuinfo & CPUINFO_ZBB)
->   #define TCG_TARGET_HAS_ctz_i32          (cpuinfo & CPUINFO_ZBB)
->   #define TCG_TARGET_HAS_ctpop_i32        (cpuinfo & CPUINFO_ZBB)
-> -#define TCG_TARGET_HAS_brcond2          1
-> -#define TCG_TARGET_HAS_setcond2         1
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
+We can work around the first problem by using Bochs, which is anyway a
+better choice than VESA for QEMU. The second can be addressed by using
+the same descriptor across the jump to long mode.
 
-Fixes: fb1f70f3685 ("tcg/riscv: Add the tcg-target.h file")
+With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
 
-Missed in 0242532b45d ("tcg/riscv: Extract TCG_TARGET_HAS_foo defs to 
-'tcg-target-has.h'")
+Changes in v2:
+- Redo commit message
+- Add new patch to rename the _D dirty flag
+- Add new patch to support CPU functions in long mode
+- Add new patch to tidy up address size in MTRR calculations
+- Add new patch with a 64-bit version of is_power_of_2()
+- Add new patch to set an MTRR for the RAM in QEMU
+- Add new patch with a helper to send characters
+- Add new patch to allow tests to be filtered by role
+- Add more patches to support booting with kvm
+- Add new patch with a test for booting Ubuntu 24.04
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Simon Glass (28):
+  x86: Expand x86_64 early memory
+  x86: qemu: Switch to bochs display
+  x86: qemu: Enable dhrystone
+  x86: qemu: Avoid accessing BSS too early
+  x86: Drop mpspec from the SPL build
+  x86: Add some log categories
+  x86: Drop use of CONFIG_REALMODE_DEBUG
+  x86: Avoid clearing the VESA display
+  x86: Add 64-bit entries to the GDT
+  x86: Use defines for the cache flags
+  x86: spl: Drop duplicate CPU init
+  x86: Drop the message about features missing in 64-bit
+  x86: Include stdbool.h in interrupt header
+  x86: Tidy up the GDT size in start/16.S
+  x86: Disable paging before changing to long mode
+  x86: Use the same GDT when jumping to long mode
+  x86: Use a simple jump into long mode
+  x86: Rename the _D dirty flag
+  x86: Support CPU functions in long mode
+  x86: Tidy up address size in MTRR calculations
+  Add a 64-bit version of is_power_of_2()
+  x86: Support MTRRs of 4GB on 32-bit machines
+  x86: emulation: Set an MTRR for the RAM
+  scripts: Expand a few options
+  test/py: Add a helper to send characters
+  test/py: Allow tests to be filtered by role
+  RFC: test/py: Deal with timeouts
+  test: Add a test for booting Ubuntu 24.04
+
+ .gitlab-ci.yml                   |  5 +++
+ arch/x86/cpu/cpu.c               | 24 +++++++++++++++
+ arch/x86/cpu/i386/call64.S       | 35 +++++++++------------
+ arch/x86/cpu/i386/cpu.c          | 41 +++++++++---------------
+ arch/x86/cpu/mtrr.c              | 12 +++++---
+ arch/x86/cpu/qemu/dram.c         | 15 +++++++++
+ arch/x86/cpu/qemu/qemu.c         | 20 ++++++++----
+ arch/x86/cpu/start.S             |  4 ++-
+ arch/x86/cpu/start16.S           |  3 +-
+ arch/x86/cpu/x86_64/cpu.c        |  5 ---
+ arch/x86/include/asm/cpu.h       | 35 ++++++++++++++++++---
+ arch/x86/include/asm/interrupt.h |  1 +
+ arch/x86/include/asm/processor.h |  5 ++-
+ arch/x86/lib/Makefile            |  2 ++
+ arch/x86/lib/bios.c              | 27 +++++++++-------
+ arch/x86/lib/bios_interrupts.c   |  8 ++---
+ arch/x86/lib/i8259.c             |  2 ++
+ arch/x86/lib/spl.c               |  4 +--
+ configs/qemu-x86_64_defconfig    | 10 +++---
+ configs/qemu-x86_defconfig       |  6 ++--
+ include/linux/log2.h             |  6 ++++
+ scripts/build-qemu.sh            |  4 +--
+ test/py/conftest.py              | 22 +++++++++++++
+ test/py/console_base.py          | 33 ++++++++++++--------
+ test/py/pytest.ini               |  1 +
+ test/py/tests/test_distro.py     | 53 ++++++++++++++++++++++++++++++++
+ test/py/tests/test_sleep.py      |  1 +
+ 27 files changed, 273 insertions(+), 111 deletions(-)
+ create mode 100644 test/py/tests/test_distro.py
+
+-- 
+2.43.0
 
 
