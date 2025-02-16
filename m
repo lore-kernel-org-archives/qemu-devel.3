@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C29EC02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 23:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B34C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 23:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjnxC-0005hc-0G; Sun, 16 Feb 2025 18:21:39 -0500
+	id 1tjnuG-00045C-BK; Sun, 16 Feb 2025 18:18:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjnwf-0004OP-T0
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 18:21:08 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1tjntQ-00030W-R1
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 18:17:45 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjnwb-0006SS-PL
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 18:21:04 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2fc737aeeb1so494036a91.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 15:20:59 -0800 (PST)
+ id 1tjntL-000657-Fa
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 18:17:44 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-220d601886fso48364065ad.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 15:17:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739748059; x=1740352859; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739747858; x=1740352658; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LqmYFS+mKTMDWnN+D+k8G+NOtETf6n0r4FRDF3yV52U=;
- b=mju1/b+nByUdSfZeMEo2lEQMjkIlySv//yVkKAUTasBYOEEi3z+XoKjalbPWYIJ06/
- THCJXpZGhJxhClAuDgzlqXm2wmiBPdf+e+FYJS8rGdy8OhTiTAlA9SXTnsnnYtmgwZLp
- 6/ukmPMW9vPWqHqJk4xMuMFwDMD2ccby52BDJvclnxz3sgiy7VfwP76pIMp90mMFeq95
- FQIakfBXRIpr+dnkn9pVGG45HH81bceFRjPL4xC2LyVu5UBmxtZMoUZrwE+yIqdr+rYu
- sB3cZCnWLvyqbalaKZtJbWjxPZN2aElxcQnV8HMVuLt37Du2kzM70xym3zvi3WD880JQ
- UtGg==
+ :reply-to; bh=NLEWRgNJjSKS+qFBrKiQh4Pg9wICWUywDwjjDa7Dnr0=;
+ b=rh48NUbFP2fZdi0mgtzgj9BLtqLZB6ti1EzSWpNyRdEVAx0D7IwPeoCrBu44k0Du5+
+ k8DopBWlV5bFr8L8i8+0os+sjjjIA+4Bqjx2t2jznQgVbq3NN4oOXfy1J6kqW0BhHlDh
+ 4iuKzSOjzwhnBG2V/2eSq2a2hlMjLulx4K4eINgiFDRZXDb2szDEMZHwQnbXuYTSL1hU
+ ggxlaZEZc/yY3oVIimqz+xZqrDLBUH3fT9qm0GydgHbnDqN0j3LMB4+KsJ27ix+jIJd9
+ a1q8TF6bezKLZpWkaqFbpkUrUFEjpRWq24DfLKH2Mqbg4CDz1Lre8cnuB8LX8j2lImTK
+ QTSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739748059; x=1740352859;
+ d=1e100.net; s=20230601; t=1739747858; x=1740352658;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LqmYFS+mKTMDWnN+D+k8G+NOtETf6n0r4FRDF3yV52U=;
- b=sU3nOORvTCme7z95LpobEsOi85DVRI0wppAdaYkb/rfMCE9OrWLpOXs0AQR55FE3o3
- uBiZUwC825JcT1javrV/XhOS9L8aBmJ7tGk4eCsoZBUJVZW3+Ev2ILGfF3QCk7sBSBOg
- cWmliX4ROerGMhiU9OINWbyoh0wgqvJ5Xrs8roNPkEccv/jSwRkQ1j0MHov/Zz2tdBeW
- M7/FzRlFbkGbdG4RTla02Wtcn6RUOlAEZIZjwaax8aJFdILarpg67f+rIsJQUy8MSLM3
- T8Jgx+tu5dk/QwSIz0f4Rv2o9nx4RkwbcUXb1pSFchGv3A3XhK3oXHMk2YNDMfVaUEgx
- kLGA==
-X-Gm-Message-State: AOJu0YzQi83VhuQkVRqULxrI8Vq0RcIgyocFQDx4sJ0X9Hf/j+V9HNXr
- VzR7tH+VTUyz+gQ13R4UfDhSqD3QwYRliGwv7OXw/KzClMc4WvN5AKBr06fLZeRbItTSrsZiKjr
- 6
-X-Gm-Gg: ASbGnctSGuf7GT/rs62WgM0W3V3GyzNhHUX6m0M9fMRSn99k+gRhbSkjYJC71WgorcA
- +9je4Yqk1jiZC5TCkdNw4DhmKu8xrXPSXCn27rcdqAPdGdaWtpUNTkh8alUwKlG9X42MlEbER3D
- +8d7CJhq1X099unA8KJvrmwjqY8nEG0J1fNjlnh9BvOZTRc8hyUd04l0mk771bGIrHyTox7/6DD
- w5LTfjh8j3+PzOcxsOCjtHG3mMPpIsmu1ozPsLFcXxqbA1CpUtXc9rVN4lS3Ol36uQp6BpLprqO
- q4myDkXPVz5f5GPtRikzcgwmqLkGN/WsREKZYehVEkijV6Y=
-X-Google-Smtp-Source: AGHT+IEu2a+QWVjF8UKXgDSXw6nwl/dIhz2OHSFOezChs18crFqiV59tIKGavr/Ig6cbC1cGRHn0og==
-X-Received: by 2002:a17:90a:e7d1:b0:2f2:ab09:c256 with SMTP id
- 98e67ed59e1d1-2fc41153ec4mr12669336a91.33.1739748058817; 
- Sun, 16 Feb 2025 15:20:58 -0800 (PST)
+ bh=NLEWRgNJjSKS+qFBrKiQh4Pg9wICWUywDwjjDa7Dnr0=;
+ b=PAAUIey6pbyWDDeKIGN8G3lxa7QCzRT24IvNiCXJYYTKAVesC6mf7dT767b8L4QtOJ
+ 2rZyIJg9gujgTFfrZ7k3OE8hL0BhCtg+VBenh28hAWfPF/3qkIQdc3NwRRED5kXtNdKt
+ 4DeO7HYnZGh10MQCOCe79urFt4Wp2c/L1aJFxK1dg77rt+T7vmxwWfZ71GnzJfsi7dzS
+ I8BVBvnxJduI2iYO9rJUwb72UTD79mcnejxA8is4TZ9NGZXm6ovg1PAh4oWjn45JPosc
+ FU0qNS6yvnSxxzcIcE0ug7fZQEYrq+agmtBMejnnAkDOPgKw3geYBivG1pKvO5nZJHP9
+ C1og==
+X-Gm-Message-State: AOJu0YyDgWADAxn/GLrF9Pp0dKpoOAeDijNzhUzP8YArqYa1p9TsibiW
+ Uc6A6iQAjf0tpE/LPdhvdWnvJei8s2ImJfXy5kfIFm7NAFyyu97V9XCixVOlQpvZvFPsPQdvBm+
+ E
+X-Gm-Gg: ASbGncsJDILdmZe+Vd+OdBpCeFpZcV1SGCAo31Azltdk0tVpMrtTLX07thbP8Xuz3JE
+ cBj5CulMv9P5iTLZNcvTQFCWL9sRV+sUQlK+TKU/3P2DqYJQhVYkqo+Eh2BYs+U+jQuixdJ7Jso
+ no0xCsnRiyQNGAyskuqVJNmc22fMKlMwO7vB828s2i9wwVa5iBB5zClLc3gsIcG7JNgBbHrd9CE
+ KMAtj0+mNM+J4kA7ZfODtY7Ks8S3DUnMudVKgXEw2RraxHAaXw+QMOQglyFYrfrrJKGM0pv3Nsb
+ /C2i4AWXGBbVlNmgn4gJm0rrwOPGwRSxzho3OHqo+E7h/9U=
+X-Google-Smtp-Source: AGHT+IH/5zwKJbs43vPOdJD1lhGi9f54OUMl2C9B+mi2WB4vmDvMeNW42AberDeGC+JYsoMoNmTpLQ==
+X-Received: by 2002:a17:903:2f8f:b0:21f:515:d61 with SMTP id
+ d9443c01a7336-22104028a15mr126446875ad.21.1739747857658; 
+ Sun, 16 Feb 2025 15:17:37 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fc13ad4391sm6783744a91.27.2025.02.16.15.20.58
+ d9443c01a7336-2213394d6c8sm5449885ad.181.2025.02.16.15.17.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Feb 2025 15:20:58 -0800 (PST)
+ Sun, 16 Feb 2025 15:17:37 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 137/162] tcg/ppc: Remove support for add2/sub2
-Date: Sun, 16 Feb 2025 15:09:46 -0800
-Message-ID: <20250216231012.2808572-138-richard.henderson@linaro.org>
+Subject: [PATCH v3 111/162] tcg: Sink def, nb_iargs,
+ nb_oargs loads in liveness_pass_1
+Date: Sun, 16 Feb 2025 15:09:20 -0800
+Message-ID: <20250216231012.2808572-112-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250216231012.2808572-1-richard.henderson@linaro.org>
 References: <20250216231012.2808572-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,135 +99,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have replaced this with support for add/sub carry.
+Sink the sets of the def, nb_iargs, nb_oargs variables to
+the default and do_not_remove labels.  They're not really
+needed beforehand, and it avoids preceding code from having
+to keep them up-to-date.  Note that def was *not* kept
+up-to-date; thankfully only def->flags had been used and
+those bits were constant between opcode changes.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/ppc/tcg-target-con-set.h |  2 --
- tcg/ppc/tcg-target-has.h     | 11 +++----
- tcg/ppc/tcg-target.c.inc     | 60 ------------------------------------
- 3 files changed, 4 insertions(+), 69 deletions(-)
+ tcg/tcg.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/tcg/ppc/tcg-target-con-set.h b/tcg/ppc/tcg-target-con-set.h
-index 9ea26c40ae..da7a383bff 100644
---- a/tcg/ppc/tcg-target-con-set.h
-+++ b/tcg/ppc/tcg-target-con-set.h
-@@ -41,5 +41,3 @@ C_O1_I4(r, r, r, rU, rC)
- C_O2_I1(r, r, r)
- C_N1O1_I1(o, m, r)
- C_O2_I2(r, r, r, r)
--C_O2_I4(r, r, rI, rZM, r, r)
--C_O2_I4(r, r, r, r, rI, rZM)
-diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
-index 8d832ce99c..4dda668706 100644
---- a/tcg/ppc/tcg-target-has.h
-+++ b/tcg/ppc/tcg-target-has.h
-@@ -18,16 +18,13 @@
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 74911962a4..019bf2d48f 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -4071,8 +4071,6 @@ liveness_pass_1(TCGContext *s)
+         case INDEX_op_sub2_i64:
+             opc_new = INDEX_op_sub;
+         do_addsub2:
+-            nb_iargs = 4;
+-            nb_oargs = 2;
+             /* Test if the high part of the operation is dead, but not
+                the low part.  The result can be optimized to a simple
+                add or sub.  This happens often for x86_64 guest when the
+@@ -4087,8 +4085,6 @@ liveness_pass_1(TCGContext *s)
+                 op->args[1] = op->args[2];
+                 op->args[2] = op->args[4];
+                 /* Fall through and mark the single-word operation live.  */
+-                nb_iargs = 2;
+-                nb_oargs = 1;
+             }
+             goto do_not_remove;
  
- /* optional instructions */
- #define TCG_TARGET_HAS_qemu_st8_i32     0
+@@ -4100,8 +4096,6 @@ liveness_pass_1(TCGContext *s)
+             opc_new = INDEX_op_mul;
+             opc_new2 = INDEX_op_muluh;
+         do_mul2:
+-            nb_iargs = 2;
+-            nb_oargs = 2;
+             if (arg_temp(op->args[1])->state == TS_DEAD) {
+                 if (arg_temp(op->args[0])->state == TS_DEAD) {
+                     /* Both parts of the operation are dead.  */
+@@ -4122,19 +4116,15 @@ liveness_pass_1(TCGContext *s)
+                 goto do_not_remove;
+             }
+             /* Mark the single-word operation live.  */
+-            nb_oargs = 1;
+             goto do_not_remove;
+ 
+         default:
+-            /* XXX: optimize by hardcoding common cases (e.g. triadic ops) */
+-            nb_iargs = def->nb_iargs;
+-            nb_oargs = def->nb_oargs;
 -
--#if TCG_TARGET_REG_BITS == 64
- #define TCG_TARGET_HAS_add2_i32         0
- #define TCG_TARGET_HAS_sub2_i32         0
+             /* Test if the operation can be removed because all
+                its outputs are dead. We assume that nb_oargs == 0
+                implies side effects */
+-            if (!(def->flags & TCG_OPF_SIDE_EFFECTS) && nb_oargs != 0) {
+-                for (int i = 0; i < nb_oargs; i++) {
++            def = &tcg_op_defs[opc];
++            if (!(def->flags & TCG_OPF_SIDE_EFFECTS) && def->nb_oargs != 0) {
++                for (int i = def->nb_oargs - 1; i >= 0; i--) {
+                     if (arg_temp(op->args[i])->state != TS_DEAD) {
+                         goto do_not_remove;
+                     }
+@@ -4148,6 +4138,10 @@ liveness_pass_1(TCGContext *s)
+             break;
+ 
+         do_not_remove:
++            def = &tcg_op_defs[opc];
++            nb_iargs = def->nb_iargs;
++            nb_oargs = def->nb_oargs;
 +
-+#if TCG_TARGET_REG_BITS == 64
- #define TCG_TARGET_HAS_extr_i64_i32     0
--#define TCG_TARGET_HAS_add2_i64         1
--#define TCG_TARGET_HAS_sub2_i64         1
--#else
--#define TCG_TARGET_HAS_add2_i32         1
--#define TCG_TARGET_HAS_sub2_i32         1
-+#define TCG_TARGET_HAS_add2_i64         0
-+#define TCG_TARGET_HAS_sub2_i64         0
- #endif
+             for (int i = 0; i < nb_oargs; i++) {
+                 ts = arg_temp(op->args[i]);
  
- #define TCG_TARGET_HAS_qemu_ldst_i128   \
-diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index 0b151db0e4..91df9610ec 100644
---- a/tcg/ppc/tcg-target.c.inc
-+++ b/tcg/ppc/tcg-target.c.inc
-@@ -3663,8 +3663,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-                        const TCGArg args[TCG_MAX_OP_ARGS],
-                        const int const_args[TCG_MAX_OP_ARGS])
- {
--    TCGArg a0, a1;
--
-     switch (opc) {
-     case INDEX_op_goto_ptr:
-         tcg_out32(s, MTSPR | RS(args[0]) | CTR);
-@@ -3760,57 +3758,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], false);
-         break;
- 
--#if TCG_TARGET_REG_BITS == 64
--    case INDEX_op_add2_i64:
--#else
--    case INDEX_op_add2_i32:
--#endif
--        /* Note that the CA bit is defined based on the word size of the
--           environment.  So in 64-bit mode it's always carry-out of bit 63.
--           The fallback code using deposit works just as well for 32-bit.  */
--        a0 = args[0], a1 = args[1];
--        if (a0 == args[3] || (!const_args[5] && a0 == args[5])) {
--            a0 = TCG_REG_R0;
--        }
--        if (const_args[4]) {
--            tcg_out32(s, ADDIC | TAI(a0, args[2], args[4]));
--        } else {
--            tcg_out32(s, ADDC | TAB(a0, args[2], args[4]));
--        }
--        if (const_args[5]) {
--            tcg_out32(s, (args[5] ? ADDME : ADDZE) | RT(a1) | RA(args[3]));
--        } else {
--            tcg_out32(s, ADDE | TAB(a1, args[3], args[5]));
--        }
--        if (a0 != args[0]) {
--            tcg_out_mov(s, TCG_TYPE_REG, args[0], a0);
--        }
--        break;
--
--#if TCG_TARGET_REG_BITS == 64
--    case INDEX_op_sub2_i64:
--#else
--    case INDEX_op_sub2_i32:
--#endif
--        a0 = args[0], a1 = args[1];
--        if (a0 == args[5] || (!const_args[3] && a0 == args[3])) {
--            a0 = TCG_REG_R0;
--        }
--        if (const_args[2]) {
--            tcg_out32(s, SUBFIC | TAI(a0, args[4], args[2]));
--        } else {
--            tcg_out32(s, SUBFC | TAB(a0, args[4], args[2]));
--        }
--        if (const_args[3]) {
--            tcg_out32(s, (args[3] ? SUBFME : SUBFZE) | RT(a1) | RA(args[5]));
--        } else {
--            tcg_out32(s, SUBFE | TAB(a1, args[5], args[3]));
--        }
--        if (a0 != args[0]) {
--            tcg_out_mov(s, TCG_TYPE_REG, args[0], a0);
--        }
--        break;
--
-     case INDEX_op_mb:
-         tcg_out_mb(s, args[0]);
-         break;
-@@ -4456,13 +4403,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_st_i64:
-         return C_O0_I2(r, r);
- 
--    case INDEX_op_add2_i64:
--    case INDEX_op_add2_i32:
--        return C_O2_I4(r, r, r, r, rI, rZM);
--    case INDEX_op_sub2_i64:
--    case INDEX_op_sub2_i32:
--        return C_O2_I4(r, r, rI, rZM, r, r);
--
-     case INDEX_op_qemu_ld_i32:
-         return C_O1_I1(r, r);
-     case INDEX_op_qemu_ld_i64:
 -- 
 2.43.0
 
