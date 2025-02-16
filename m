@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE7E6C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 13:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD34C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 14:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjeLk-0008K7-LR; Sun, 16 Feb 2025 08:06:20 -0500
+	id 1tjfIL-0000Hj-16; Sun, 16 Feb 2025 09:06:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjeLh-0008Jr-IE
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 08:06:17 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjfII-0000HG-QX
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 09:06:50 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjeLf-00011Q-Pr
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 08:06:17 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5e058ca6806so359057a12.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 05:06:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjfIG-0001zU-Tu
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 09:06:50 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-439685e14f1so13945025e9.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 06:06:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739711173; x=1740315973; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739714807; x=1740319607; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hMZDhZmpxn7+zfYGgjSte8K0gBiKHgb+KvKwwfFtCjw=;
- b=jY0P0ciMCZDjBkWeJG4aXcSPcu1vYLjJr5MaBMMLforabDWGTAB9hwSSkXNbC7Phj8
- rkqBJp2Sc02VRTxCIdP2jg6bKChiuh37ljbqr0XJw6NIrWIWLvPRAZpCgPBPyXNRxwKe
- M2G8JDla8X2mcnWo1945GEp8xk6orPf2v3CvDXUYSru8mIN0Xyg12+LKQfvTbCKisOZ/
- sDrb4PlaNf8yG9h/aJExKCcDJK6aBZFYjmNaYbjz+FcrPwcRtlRoJ4c7JkyIDV0YnNwd
- jVKLznY7HmSlzxjokwn60pLXSsYuZWL8kYitUlxsP3h/6onT0Cmt+bsxHrB2VsLfRxf0
- VTZA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SQrC5z24yGMnmTKX++/C9e4myUSCLYL/6Grg+lbS6pg=;
+ b=CNN+0QAMHKEVpiTD4T35hu6I0uVgZfr1zYAXBxGaJhILfH2c/l3MRyR4Km/ZKeLQka
+ tLFemjKz1q2bVposyf4nh/JnrcSeYZNJEXCRWqo4hXdjat/eKVwLMO3qkfX3w3kHXRR7
+ /NjQehRVpMaXCrnA7LpvgfK47RkCaDRHVGe5kt//bMaugrg7zQdCuEbDxstofT3J3qSi
+ dUIsDnNflxc6jWuGaOmdh4I8Y7wEtMC9+w0udYpzExloIu/mysrXu0JTgAVVwi8fzRyg
+ sPHpdPCW8lrS2b+rP16IgYPSAXu7fFOJMsQOJJAmhi/rTxX5iIHNT17mtgVrYbb5t7xv
+ 9cIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739711173; x=1740315973;
+ d=1e100.net; s=20230601; t=1739714807; x=1740319607;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hMZDhZmpxn7+zfYGgjSte8K0gBiKHgb+KvKwwfFtCjw=;
- b=LBasNj9kXff45aSk39ICZPXtsFjxuaSCla5LECQtZ+/2ci6+LsPDL331uZfQEX9M7d
- OQVlUGbgN0jW6LnYq0iKKUVXIOA8DjcfoAQ8s3G8yejaIUtpRN+YDfCX/sYMTblm/URA
- +sfwIQOP1aGlmUnFFyxhNFpYA5VtRpPPkAAY0A7qQTaittRpBjbk6lxiCjmjDaBWDJ1s
- OMTNbikunJwiMJBNGLamuVabwczYKFMqD9dMAnYsZ9wsIksCkTtjRmtqcv0ETGBki1WS
- LScC0gedEO7IBJhnFT60LEQ4nbhz9N9oI5w0mcz3GFbESUIhz47t/ytfVl1phAfX08mM
- ot3g==
+ bh=SQrC5z24yGMnmTKX++/C9e4myUSCLYL/6Grg+lbS6pg=;
+ b=romJeQSsXmOyceCfVqi07C2KcMX8qkZpfiu86ekHT8FE+D9fsF4egjzwAKsuJ9dkFv
+ wJQj9LEh+untmJnJfJYlKiu4vrl3/RJue8m4/v45DCAH+OyW/I2vXxlBS0V5ZHWdGJJ1
+ d+ogcqW5zeV2wpCvGRHjhvsoTk1EpaA/GaEo/SQw30rOgtK8y1h9zibLSeRIKN1Sx98E
+ g3TZLH1lz3bECbvWBqteueiqNt1ZxswkiGFpWjpqv7Vr70iXP6M6Z6BRmC64nyj6M7RO
+ iXvW/SOUao7zhmXXLkIed9AMYtoHIKAHb5z2+XV+vtg7rXuMvACLmGM17R0ytrcRo1Oi
+ zAQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjk4DcKd2yuPpxo+DU0PSBSr5vyfO55rHizTuhvrP/dbqEYPguuGaIHuR/4XAm8Uo/Re1qO+y8VcjU@nongnu.org
-X-Gm-Message-State: AOJu0YwSqDANpKiLFtcn0KZjvFt5/nALHFHILi0CdUEtSNdtTzb+KT3+
- I2qGlQE8BcdKnBjQMY8IA7fNCrHGgxtb6XEkGmi5Iz00YhrBtb7xrSq/Icl0MZk=
-X-Gm-Gg: ASbGnctfVMfFOberCB6IswFvazQEo6Kizwny6tgqtFaUee7VQq52rmrSV1WZUHC+aOH
- ms3K5WfJc11YY0rS8h7zrXV7wOeFWR1dBGUwhtzdVRkcP1Q/LpUzoxpEdi6KcwvcRbxK0S2f6jh
- et13oiSyuZrrbpxX6CIv038Jd6F76cX5g60CdT/2RWqFic92p9+OVupK5NnovdJqDWSvK/27490
- Aohb0T53YmI8Gp299x1fEjiEFLpRcYmdlsMNZvPHZcMyr9Uo5bMnTUqpkET0V7sD24ZoNSKCqt3
- X/4HbRMj1D9z90mWuI45APaQY0I4G9HHoUJswa946BO+U69n47pL
-X-Google-Smtp-Source: AGHT+IFNNkHni3IErKVpvBSLY0EWfE73HVWsrwFzTFSscimrOBouDfgbUp4Vjn7qwXaSbV596VUT6w==
-X-Received: by 2002:a05:6402:2108:b0:5de:dd44:929e with SMTP id
- 4fb4d7f45d1cf-5e0361c0409mr4253344a12.21.1739711173295; 
- Sun, 16 Feb 2025 05:06:13 -0800 (PST)
+ AJvYcCXq8nz7YBx6oXDtrx57sul8FVryFjpfnJnhcptkvKuMZbE7Cj2DI3LHpNJ7RRyMiLKOLZEb9eKzrWTU@nongnu.org
+X-Gm-Message-State: AOJu0YwBiWpIFx8bdepP/V/zDR/pPhBekcaE8J2OsRanY9pOhjAGIA1J
+ /QlxAGspBpwY8zLcLGnpFwod8OHZkaCVYxjxr1UmRvGzvrMEvJBGHlZ49/5wqE8=
+X-Gm-Gg: ASbGnctjP9i/+3VDjapok58vJCQO2/EDgU1HxrvOKpl4yte3+pfnF4MV8fLof+C9y/u
+ 8yRewU5MxJDs3brjRC3Ov6YM9unn1OSJqesexH1AsVle6dcq8z8Jps2lGNMeqE6fEbOU5CXtHRk
+ R3L3/fXxRQE/ytgFWtIrDtY+Dm2QecVgs1MvM2wNfcXP+j0PVR/RfFFSRFROnXsm8U+blLX1QIf
+ VvkXpxpo+NFj3Zgzv9bky55I5MrHio6WxBd8Jt19bZtOuxTQl7MRQ/9q2wLQrwiwkpy3ksKknte
+ Vf5HUbHxgdpOey0xZ15R7a/bIcjZunREep85kAMfnODKrsWi2e6bRiwR6g==
+X-Google-Smtp-Source: AGHT+IGs6NAo1qUHd3aG3FriREJxbZ5xNjs4fVHgbRTMX0GZeGd2JmnTohhAGo5/sWIhUfWCL/EQlQ==
+X-Received: by 2002:a05:600c:470e:b0:439:6741:ed98 with SMTP id
+ 5b1f17b1804b1-4396e5bbc88mr74656375e9.0.1739714807155; 
+ Sun, 16 Feb 2025 06:06:47 -0800 (PST)
 Received: from [10.223.46.213] (108.170.88.92.rev.sfr.net. [92.88.170.108])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dedd35b0aasm4327962a12.52.2025.02.16.05.06.10
+ 5b1f17b1804b1-439618264a3sm94530395e9.23.2025.02.16.06.06.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 05:06:12 -0800 (PST)
-Message-ID: <154d2b06-a735-4ab3-860d-442564d4d0e6@linaro.org>
-Date: Sun, 16 Feb 2025 14:06:07 +0100
+ Sun, 16 Feb 2025 06:06:45 -0800 (PST)
+Message-ID: <04b7f67c-6926-41d5-b887-2f988c4f54c0@linaro.org>
+Date: Sun, 16 Feb 2025 15:06:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] tcg/aarch64: Use 'z' constraint
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250212034617.1079324-1-richard.henderson@linaro.org>
- <20250212034617.1079324-3-richard.henderson@linaro.org>
+Subject: Re: [PATCH 5/5] hw/riscv: Configurable MPFS CLINT timebase freq
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+ Bin Meng <bin.meng@windriver.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
+ <20250214062443.9936-6-sebastian.huber@embedded-brains.de>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250212034617.1079324-3-richard.henderson@linaro.org>
+In-Reply-To: <20250214062443.9936-6-sebastian.huber@embedded-brains.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,15 +103,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 04:46, Richard Henderson wrote:
-> Note that 'Z' is still used for addsub2.
+On 14/2/25 07:24, Sebastian Huber wrote:
+> This property enables the setting of the CLINT timebase frequency
+> through the command line, for example:
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>    -machine microchip-icicle-kit,clint-timebase-frequency=10000000
+> 
+> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 > ---
->   tcg/aarch64/tcg-target-con-set.h | 12 ++++-----
->   tcg/aarch64/tcg-target.c.inc     | 46 ++++++++++++++------------------
->   2 files changed, 26 insertions(+), 32 deletions(-)
+>   hw/riscv/microchip_pfsoc.c         | 49 +++++++++++++++++++++++++++---
+>   include/hw/riscv/microchip_pfsoc.h |  1 +
+>   2 files changed, 46 insertions(+), 4 deletions(-)
 
+OK, so:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Although few comments related to pre-existing code inlined.
+
+> 
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index 76a2c56419..c83d588962 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -39,6 +39,7 @@
+>   #include "qemu/units.h"
+>   #include "qemu/cutils.h"
+>   #include "qapi/error.h"
+> +#include "qapi/visitor.h"
+>   #include "hw/boards.h"
+>   #include "hw/loader.h"
+>   #include "hw/sysbus.h"
+> @@ -61,9 +62,6 @@
+>   #define BIOS_FILENAME   "hss.bin"
+>   #define RESET_VECTOR    0x20220000
+>   
+> -/* CLINT timebase frequency */
+> -#define CLINT_TIMEBASE_FREQ 1000000
+> -
+>   /* GEM version */
+>   #define GEM_REVISION    0x0107010c
+>   
+> @@ -193,6 +191,7 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
+>   static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>   {
+>       MachineState *ms = MACHINE(qdev_get_machine());
+> +    MicrochipIcicleKitState *iks = MICROCHIP_ICICLE_KIT_MACHINE(ms);
+>       MicrochipPFSoCState *s = MICROCHIP_PFSOC(dev);
+>       const MemMapEntry *memmap = microchip_pfsoc_memmap;
+>       MemoryRegion *system_memory = get_system_memory();
+> @@ -253,7 +252,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>           memmap[MICROCHIP_PFSOC_CLINT].base + RISCV_ACLINT_SWI_SIZE,
+>           RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+>           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+> -        CLINT_TIMEBASE_FREQ, false);
+> +        iks->clint_timebase_freq, false);
+
+1/ Ideally TYPE_RISCV_ACLINT_MTIMER should take a Clock input.
+
+>   
+>       /* L2 cache controller */
+>       create_unimplemented_device("microchip.pfsoc.l2cc",
+> @@ -665,6 +664,40 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+>       }
+>   }
+>   
+> +static void microchip_icicle_kit_set_clint_timebase_freq(Object *obj,
+> +                                                         Visitor *v,
+> +                                                         const char *name,
+> +                                                         void *opaque,
+> +                                                         Error **errp)
+> +{
+> +    MicrochipIcicleKitState *s = MICROCHIP_ICICLE_KIT_MACHINE(obj);
+> +    uint32_t value;
+> +
+> +    if (!visit_type_uint32(v, name, &value, errp)) {
+
+2/ Could we use qemu_strtosz_metric() here?
+
+Better would be to implement visit_type_frequency(), similar
+to visit_type_size(), to parse a 'Hz' suffix.
+
+> +        return;
+> +    }
+> +
+> +    s->clint_timebase_freq = value;
+> +}
+> +
+> +static void microchip_icicle_kit_get_clint_timebase_freq(Object *obj,
+> +                                                         Visitor *v,
+> +                                                         const char *name,
+> +                                                         void *opaque,
+> +                                                         Error **errp)
+> +{
+> +    MicrochipIcicleKitState *s = MICROCHIP_ICICLE_KIT_MACHINE(obj);
+> +    uint32_t value = s->clint_timebase_freq;
+> +
+> +    visit_type_uint32(v, name, &value, errp);
+> +}
+> +
+> +static void microchip_icicle_kit_machine_instance_init(Object *obj)
+> +{
+> +    MicrochipIcicleKitState *m = MICROCHIP_ICICLE_KIT_MACHINE(obj);
+> +    m->clint_timebase_freq = 1000000;
+> +}
+
+3/ If MachineState were inheriting QDev, we could use qdev-properties.h
+API. I'm not sure why we have to use duplicated QOM boiler plate code
+here.
+
+Peter, Paolo, Markus, do you have views on this?
+
+Thanks,
+
+Phil.
+
+>   static void microchip_icicle_kit_machine_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -685,12 +718,20 @@ static void microchip_icicle_kit_machine_class_init(ObjectClass *oc, void *data)
+>        * See memory_tests() in mss_ddr.c in the HSS source code.
+>        */
+>       mc->default_ram_size = 1537 * MiB;
+> +
+> +    object_class_property_add(oc, "clint-timebase-frequency", "uint32_t",
+> +                              microchip_icicle_kit_get_clint_timebase_freq,
+> +                              microchip_icicle_kit_set_clint_timebase_freq,
+> +                              NULL, NULL);
+> +    object_class_property_set_description(oc, "clint-timebase-frequency",
+> +                                  "Set CLINT timebase frequency in Hz.");
+>   }
+>   
+>   static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
+>       .name       = MACHINE_TYPE_NAME("microchip-icicle-kit"),
+>       .parent     = TYPE_MACHINE,
+>       .class_init = microchip_icicle_kit_machine_class_init,
+> +    .instance_init = microchip_icicle_kit_machine_instance_init,
+>       .instance_size = sizeof(MicrochipIcicleKitState),
+>   };
+>   
+> diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
+> index daef086da6..7ca9b976c1 100644
+> --- a/include/hw/riscv/microchip_pfsoc.h
+> +++ b/include/hw/riscv/microchip_pfsoc.h
+> @@ -67,6 +67,7 @@ typedef struct MicrochipIcicleKitState {
+>       MachineState parent_obj;
+>   
+>       /*< public >*/
+> +    uint32_t clint_timebase_freq;
+>       MicrochipPFSoCState soc;
+>   } MicrochipIcicleKitState;
+>   
 
 
