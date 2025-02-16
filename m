@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD34C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 14:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C66C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 18:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjfIL-0000Hj-16; Sun, 16 Feb 2025 09:06:53 -0500
+	id 1tjixP-000609-PF; Sun, 16 Feb 2025 13:01:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjfII-0000HG-QX
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 09:06:50 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tjixM-0005zl-02
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 13:01:28 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjfIG-0001zU-Tu
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 09:06:50 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-439685e14f1so13945025e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 06:06:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tjixJ-00021o-TU
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 13:01:27 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-220c2a87378so50040595ad.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 10:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739714807; x=1740319607; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739728882; x=1740333682; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SQrC5z24yGMnmTKX++/C9e4myUSCLYL/6Grg+lbS6pg=;
- b=CNN+0QAMHKEVpiTD4T35hu6I0uVgZfr1zYAXBxGaJhILfH2c/l3MRyR4Km/ZKeLQka
- tLFemjKz1q2bVposyf4nh/JnrcSeYZNJEXCRWqo4hXdjat/eKVwLMO3qkfX3w3kHXRR7
- /NjQehRVpMaXCrnA7LpvgfK47RkCaDRHVGe5kt//bMaugrg7zQdCuEbDxstofT3J3qSi
- dUIsDnNflxc6jWuGaOmdh4I8Y7wEtMC9+w0udYpzExloIu/mysrXu0JTgAVVwi8fzRyg
- sPHpdPCW8lrS2b+rP16IgYPSAXu7fFOJMsQOJJAmhi/rTxX5iIHNT17mtgVrYbb5t7xv
- 9cIg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1ea4n7JPWKwr4uaFUdOWtkbUszakYylFc74wRblmi2s=;
+ b=IP5nm3+VrvKUA+6Yx41Hiy0tvZJNxyTkdzm/N03oHPN/fRc+vTO9gIpAEfjhMWlDNU
+ Kyns+YJqwoW9t5G4fFbPLbg8/5TDaqWOZGiHnn19niX/SXv2/jYx2jwIRQP05OsV0I1c
+ YibHubFxrhk1lzW50fldmwqlb3yUVvbR+QTcn2FKv2YLy+AKOrvQJdr4W4Q/GBQIlQTU
+ em37q2BOVZxdX9CLXJgcTOeMz0519pU27Zb++kVohIpzP1p9JIS9isCT+605vu+Xuejh
+ hwJXdqZo5+/DqBlN34vovTCuDbfe4lCHsncfIYbLhtPtYi/tiEuTRUWr1hx9GhuAV5xD
+ 9HuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739714807; x=1740319607;
+ d=1e100.net; s=20230601; t=1739728882; x=1740333682;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SQrC5z24yGMnmTKX++/C9e4myUSCLYL/6Grg+lbS6pg=;
- b=romJeQSsXmOyceCfVqi07C2KcMX8qkZpfiu86ekHT8FE+D9fsF4egjzwAKsuJ9dkFv
- wJQj9LEh+untmJnJfJYlKiu4vrl3/RJue8m4/v45DCAH+OyW/I2vXxlBS0V5ZHWdGJJ1
- d+ogcqW5zeV2wpCvGRHjhvsoTk1EpaA/GaEo/SQw30rOgtK8y1h9zibLSeRIKN1Sx98E
- g3TZLH1lz3bECbvWBqteueiqNt1ZxswkiGFpWjpqv7Vr70iXP6M6Z6BRmC64nyj6M7RO
- iXvW/SOUao7zhmXXLkIed9AMYtoHIKAHb5z2+XV+vtg7rXuMvACLmGM17R0ytrcRo1Oi
- zAQQ==
+ bh=1ea4n7JPWKwr4uaFUdOWtkbUszakYylFc74wRblmi2s=;
+ b=FIDlGx5mjN2AQkKGf3zAF9YWSmWeyZs9Bc3Z8+uyICX/pNhyHUXR8rrfB4x4OgbIlt
+ OJ7uCIETReceu2tXT/qvEYWfkWxRuAo6PHyyw9uoyDLWrg42QrGrUuXOG6OKXkbe8P8h
+ 6oJ0eL2iTR9A8ULdbsLzISqYaQKCP2yEzU28Yv+Ivljl+Km+6HwprcxwTBaaxVhyjRw+
+ DaWtgYfLRTca9hWCw7XAvicWsCiw+rd3bk4qiietBuU7GMw2dTks9aqhfsfwOx1Xjgcc
+ bzoX1efbFO7sbpsfD4w9wd3NOFHR92261X2V3VM9LwymwiJR1KqjAF5byl0ASvNxaiGx
+ hOQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXq8nz7YBx6oXDtrx57sul8FVryFjpfnJnhcptkvKuMZbE7Cj2DI3LHpNJ7RRyMiLKOLZEb9eKzrWTU@nongnu.org
-X-Gm-Message-State: AOJu0YwBiWpIFx8bdepP/V/zDR/pPhBekcaE8J2OsRanY9pOhjAGIA1J
- /QlxAGspBpwY8zLcLGnpFwod8OHZkaCVYxjxr1UmRvGzvrMEvJBGHlZ49/5wqE8=
-X-Gm-Gg: ASbGnctjP9i/+3VDjapok58vJCQO2/EDgU1HxrvOKpl4yte3+pfnF4MV8fLof+C9y/u
- 8yRewU5MxJDs3brjRC3Ov6YM9unn1OSJqesexH1AsVle6dcq8z8Jps2lGNMeqE6fEbOU5CXtHRk
- R3L3/fXxRQE/ytgFWtIrDtY+Dm2QecVgs1MvM2wNfcXP+j0PVR/RfFFSRFROnXsm8U+blLX1QIf
- VvkXpxpo+NFj3Zgzv9bky55I5MrHio6WxBd8Jt19bZtOuxTQl7MRQ/9q2wLQrwiwkpy3ksKknte
- Vf5HUbHxgdpOey0xZ15R7a/bIcjZunREep85kAMfnODKrsWi2e6bRiwR6g==
-X-Google-Smtp-Source: AGHT+IGs6NAo1qUHd3aG3FriREJxbZ5xNjs4fVHgbRTMX0GZeGd2JmnTohhAGo5/sWIhUfWCL/EQlQ==
-X-Received: by 2002:a05:600c:470e:b0:439:6741:ed98 with SMTP id
- 5b1f17b1804b1-4396e5bbc88mr74656375e9.0.1739714807155; 
- Sun, 16 Feb 2025 06:06:47 -0800 (PST)
-Received: from [10.223.46.213] (108.170.88.92.rev.sfr.net. [92.88.170.108])
+ AJvYcCW/kDkGzTzpydx8bFlC8bJn2DuFUmN+e2dkwVnJJVYJy6jbQYw/pe7Z0Pg57fznF9Vo7Cj1BgoAh/qH@nongnu.org
+X-Gm-Message-State: AOJu0YzeGQ3GhkBWEVBgMJxddC7nZ8kg/Cd5RlN40alnlcam/zyC87+2
+ Zr7ECwtB1TIEb3NhnYTooivI7qvXAC7ZgdMAhl2cqhRNcQjUgQ3qKdGz0WnvJtA=
+X-Gm-Gg: ASbGncsWN8fCUx0teQ/wy/gekimOkSIwjobdHzxMsFiRHbFrQNiTdpNZ7w6f/dpncTV
+ 3Oxv9lGxx9VX0//AGQwtAdeANttj7yIjYcco4Akbm6Ib8pDJUlP1X1n5ZhLVK/bsl7iECK4bxWB
+ m6K7rQ6Zrk+dJK0XAhAobWb7/gNJJXNqi2Jn3L0PzzLP2+PYENhC57SeDzjxmQ/LBoc5NQNrfmd
+ CQYvQX7lMdI+gFDdNZNwLRLUmeML4jjfItOtd0W27UrsDdB7PoVgymzR89hlWk+sUZ5GLpHIDT5
+ MyKKH0fY4ZJFALjlOo/pdP2Z7IFYYf3VMU5fod/6vCu96lK1UMd62Bw=
+X-Google-Smtp-Source: AGHT+IFUndwYhsUU5Agg7bHR7F749DRZm2oHRQqHE4Aakg8s9eloFRnDDCutWixld52be+p+DUZAgw==
+X-Received: by 2002:a17:903:1d1:b0:216:501e:e314 with SMTP id
+ d9443c01a7336-22104056963mr101528235ad.20.1739728882381; 
+ Sun, 16 Feb 2025 10:01:22 -0800 (PST)
+Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439618264a3sm94530395e9.23.2025.02.16.06.06.45
+ 41be03b00d2f7-adb5a92d3basm6042711a12.75.2025.02.16.10.01.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 06:06:45 -0800 (PST)
-Message-ID: <04b7f67c-6926-41d5-b887-2f988c4f54c0@linaro.org>
-Date: Sun, 16 Feb 2025 15:06:43 +0100
+ Sun, 16 Feb 2025 10:01:21 -0800 (PST)
+Message-ID: <05f94ee7-a0ea-4e8f-bf84-0674a98cdb96@linaro.org>
+Date: Sun, 16 Feb 2025 10:01:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/riscv: Configurable MPFS CLINT timebase freq
-To: Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org
-Cc: Conor Dooley <conor.dooley@microchip.com>,
- Bin Meng <bin.meng@windriver.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
- <20250214062443.9936-6-sebastian.huber@embedded-brains.de>
+Subject: Re: [PATCH] tcg: refactor pool data for simplicity and comprehension
+To: Michael Clark <michael@anarch128.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250215021120.1647083-1-michael@anarch128.org>
+ <a62ee246-4249-458c-9f9b-bad79816ce5e@linaro.org>
+ <aedcfd05-96fc-4e8a-9fcb-3763e30a6663@anarch128.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250214062443.9936-6-sebastian.huber@embedded-brains.de>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <aedcfd05-96fc-4e8a-9fcb-3763e30a6663@anarch128.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,155 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/2/25 07:24, Sebastian Huber wrote:
-> This property enables the setting of the CLINT timebase frequency
-> through the command line, for example:
+On 2/16/25 00:00, Michael Clark wrote:
+> On 2/16/25 06:58, Richard Henderson wrote:
+>>
+>>> the label member is merely a pointer to the instruction text to
+>>> be updated with the relative address of the constant, the primary
+>>> data is the constant data pool at the end of translation blocks.
+>>> this relates more closely to .data sections in offline codegen
+>>> if we were to imagine a translation block has .text and .data.
+>>
+>> No, it doesn't.  It relates most closely to data emitted within .text, accessed via pc- 
+>> relative instructions with limited offsets.
+>>
+>> This isn't a thing you'd have ever seen on x86 or x86_64, but it is quite common for 
+>> arm32 (12-bit offsets), sh4 (8-bit offsets), m68k (16- bit offsets) and such.  Because 
+>> the offsets are so small, they could even be placed *within* functions not just between 
+>> them.
 > 
->    -machine microchip-icicle-kit,clint-timebase-frequency=10000000
+> I mentioned before I like the idea and have thought about architectures with constant 
+> streams and constant branch units.
 > 
-> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
-> ---
->   hw/riscv/microchip_pfsoc.c         | 49 +++++++++++++++++++++++++++---
->   include/hw/riscv/microchip_pfsoc.h |  1 +
->   2 files changed, 46 insertions(+), 4 deletions(-)
+> say for arguments sake we considered it 'TCData' with embedded label and reloc (the 
+> purpose is the constant after after all, just it is not a TCGTemp, it's an explicitly 
+> reified constant in the codegen emitters). wondering if we could add a "disposition" field 
+> to control placement. TCG_DISP_TEXT_TB, TCG_DISP_DATA, etc. this way you could ask the 
+> code generator to do something more conventional while still supporting the short relative 
+> constant islands. "disposition" might be better than section as a name. also a DATA 
+> section could be mmap R without X perms to lessen the risk of injecting code as constants.
 
-OK, so:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I don't think there's any point to doing anything differently than we currently do: place 
+the data at the end of the TB.
 
-Although few comments related to pre-existing code inlined.
+(1) The architectures that we host and use the constant pool currently have
+     relatively large displacements: aarch64 (21 bit), x86_64 (32 bit),
+     ppc (16 or 34 bit (power10 only)), riscv (32 bit), s390x (34 bit).
 
-> 
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index 76a2c56419..c83d588962 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -39,6 +39,7 @@
->   #include "qemu/units.h"
->   #include "qemu/cutils.h"
->   #include "qapi/error.h"
-> +#include "qapi/visitor.h"
->   #include "hw/boards.h"
->   #include "hw/loader.h"
->   #include "hw/sysbus.h"
-> @@ -61,9 +62,6 @@
->   #define BIOS_FILENAME   "hss.bin"
->   #define RESET_VECTOR    0x20220000
->   
-> -/* CLINT timebase frequency */
-> -#define CLINT_TIMEBASE_FREQ 1000000
-> -
->   /* GEM version */
->   #define GEM_REVISION    0x0107010c
->   
-> @@ -193,6 +191,7 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
->   static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
->   {
->       MachineState *ms = MACHINE(qdev_get_machine());
-> +    MicrochipIcicleKitState *iks = MICROCHIP_ICICLE_KIT_MACHINE(ms);
->       MicrochipPFSoCState *s = MICROCHIP_PFSOC(dev);
->       const MemMapEntry *memmap = microchip_pfsoc_memmap;
->       MemoryRegion *system_memory = get_system_memory();
-> @@ -253,7 +252,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
->           memmap[MICROCHIP_PFSOC_CLINT].base + RISCV_ACLINT_SWI_SIZE,
->           RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
->           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
-> -        CLINT_TIMEBASE_FREQ, false);
-> +        iks->clint_timebase_freq, false);
+(2) The size of a TB pretty generally maxes out at 3-4k, but is firmly capped at 64k
+     by uint16_t TranslationBlock.jmp_reset_offset.
 
-1/ Ideally TYPE_RISCV_ACLINT_MTIMER should take a Clock input.
+(3) The 16 and 21-bit offsets are not large enough to stretch to a read-only mapping.
 
->   
->       /* L2 cache controller */
->       create_unimplemented_device("microchip.pfsoc.l2cc",
-> @@ -665,6 +664,40 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
->       }
->   }
->   
-> +static void microchip_icicle_kit_set_clint_timebase_freq(Object *obj,
-> +                                                         Visitor *v,
-> +                                                         const char *name,
-> +                                                         void *opaque,
-> +                                                         Error **errp)
-> +{
-> +    MicrochipIcicleKitState *s = MICROCHIP_ICICLE_KIT_MACHINE(obj);
-> +    uint32_t value;
-> +
-> +    if (!visit_type_uint32(v, name, &value, errp)) {
+(4) Memory management of TranslationBlocks becomes *much* more complicated.
 
-2/ Could we use qemu_strtosz_metric() here?
+> TCGConstant is another alternative I would consider as okay. distinct from TCGTemp of type 
+> TEMP_CONST which is heavier weight. it makes one wonder about reification of large 
+> implicit constants as opposed to the explicitly emitted ones we are talking about here.
 
-Better would be to implement visit_type_frequency(), similar
-to visit_type_size(), to parse a 'Hz' suffix.
+TCGConstant isn't bad, but I think I prefer TCGPoolData as mooted before.
 
-> +        return;
-> +    }
-> +
-> +    s->clint_timebase_freq = value;
-> +}
-> +
-> +static void microchip_icicle_kit_get_clint_timebase_freq(Object *obj,
-> +                                                         Visitor *v,
-> +                                                         const char *name,
-> +                                                         void *opaque,
-> +                                                         Error **errp)
-> +{
-> +    MicrochipIcicleKitState *s = MICROCHIP_ICICLE_KIT_MACHINE(obj);
-> +    uint32_t value = s->clint_timebase_freq;
-> +
-> +    visit_type_uint32(v, name, &value, errp);
-> +}
-> +
-> +static void microchip_icicle_kit_machine_instance_init(Object *obj)
-> +{
-> +    MicrochipIcicleKitState *m = MICROCHIP_ICICLE_KIT_MACHINE(obj);
-> +    m->clint_timebase_freq = 1000000;
-> +}
+> i'm looking at a TCG source-compatible code generator as an option so I may experiment 
+> locally. it is a private interface at the moment anyhow. that just seemed inconsistent as 
+> most structure definitions are in the header. but I understand it is a private interface.
 
-3/ If MachineState were inheriting QDev, we could use qdev-properties.h
-API. I'm not sure why we have to use duplicated QOM boiler plate code
-here.
+The organization of tcg.h is from antiquity.  I am actively trying to reduce the size of 
+the exported API.
 
-Peter, Paolo, Markus, do you have views on this?
 
-Thanks,
-
-Phil.
-
->   static void microchip_icicle_kit_machine_class_init(ObjectClass *oc, void *data)
->   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -685,12 +718,20 @@ static void microchip_icicle_kit_machine_class_init(ObjectClass *oc, void *data)
->        * See memory_tests() in mss_ddr.c in the HSS source code.
->        */
->       mc->default_ram_size = 1537 * MiB;
-> +
-> +    object_class_property_add(oc, "clint-timebase-frequency", "uint32_t",
-> +                              microchip_icicle_kit_get_clint_timebase_freq,
-> +                              microchip_icicle_kit_set_clint_timebase_freq,
-> +                              NULL, NULL);
-> +    object_class_property_set_description(oc, "clint-timebase-frequency",
-> +                                  "Set CLINT timebase frequency in Hz.");
->   }
->   
->   static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
->       .name       = MACHINE_TYPE_NAME("microchip-icicle-kit"),
->       .parent     = TYPE_MACHINE,
->       .class_init = microchip_icicle_kit_machine_class_init,
-> +    .instance_init = microchip_icicle_kit_machine_instance_init,
->       .instance_size = sizeof(MicrochipIcicleKitState),
->   };
->   
-> diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
-> index daef086da6..7ca9b976c1 100644
-> --- a/include/hw/riscv/microchip_pfsoc.h
-> +++ b/include/hw/riscv/microchip_pfsoc.h
-> @@ -67,6 +67,7 @@ typedef struct MicrochipIcicleKitState {
->       MachineState parent_obj;
->   
->       /*< public >*/
-> +    uint32_t clint_timebase_freq;
->       MicrochipPFSoCState soc;
->   } MicrochipIcicleKitState;
->   
-
+r~
 
