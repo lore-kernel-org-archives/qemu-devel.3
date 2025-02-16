@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2375C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B57AC021A4
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjllO-0002x3-Uf; Sun, 16 Feb 2025 16:01:20 -0500
+	id 1tjllK-0002vs-13; Sun, 16 Feb 2025 16:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllK-0002vt-1D
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:14 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllH-0002v9-Fu
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:11 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllI-0007tb-Cy
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:13 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4395f66a639so21898585e9.0
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:01:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllF-0007t8-3s
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:11 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so2346979f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:01:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739739670; x=1740344470; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VkyzUhB3/r5FKmFNHJ6alO+UuiYZhYCsq602cNE3EOo=;
- b=jymf0gLwQMEy7QfHBPrwjW0GTc1jwHr0dsDGUfij0vI4bgeNsiJzy/B6XePN1Vj3Ui
- ovxkToQPSetMY5KWvVmneNTaqGhR0l9NrXHazT3z+xXXhvmMEMuochewsXoocwU+vC1H
- rwt18fiv3GDXP3NBlaZdgd82vM62UUgNuu3i+ewE2LU+G7+GCnwiqf1daQBhGg/aQLd3
- uD+BM2a1p9o0CG2ccu6CmqSBs4BtMDrWsfNIr98P6+i2vHUhYH6Z8i2FdHU5J8/f257Z
- FScQDeXQ/FOaFrBqRe28Tzk1nOqFrAbNhith7c2yPfLWT/lPhplgVdlZqE+umCcKRjFF
- augA==
+ d=linaro.org; s=google; t=1739739665; x=1740344465; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ftPSbevSBRqmtogAzGCsM4h9pDskfrjNtyoZjF1T/JU=;
+ b=Tdx2uKdXD668q6ZiZ4dEiwM9PJZnAiGvMTZ8ikdaokX9GU7yws0s+GWX4wda03xpnR
+ uKiIEOSpSKBEJxvZD9Ap6wAS+sojirZpLDGgXGysR8yJ/+nFK2v2ozxb/BlRdulJJpQV
+ A1J0sjZR85JcDUT38L6kXTErxin6efpQZE/gHueGpv2vQa49z6aOyDdvUwK3StCm2a3r
+ uC7cOzThgr7+ntuA4LkskuG4dWLOkFL/JRooYRD4FPckrVHqyPdpLHG5n3BZnwfm5Y+6
+ kvED+bAI6Gc/gHyTurfkUml9aG1d/XAZ4FQr/oVBRwD2faYENjZjItEafovzi8S4Z+ho
+ r9rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739739670; x=1740344470;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VkyzUhB3/r5FKmFNHJ6alO+UuiYZhYCsq602cNE3EOo=;
- b=a9bMG7p0MGB06AWWzAMNwev+URY8pPo/pxNHyNpUJp6HBP3blgZTJ445HmMhqBRCuX
- DB/8qCWYP8nc1q8ON6I1qJnUTd+VhdslceUWBZQDp5oucrXnpod6M3d6RsV4KO6obMX+
- 0R1nfkeg24OE0azy4kdwRWIIcPh3+cOCMijc/3JP/s/TQCOrMjjhp3F/CFYzr3tMRC61
- +Y/KaUiSPmolU1ZWba7PrcAmB7wKNjHK8kDKznJ2D+9WL+l7lyBODsui+Sp6XfAuhGAW
- 4426YzxRChr49kXW0y4K0C73WFZGRlBsiber0s+JD697dvPM6esc7RwcncX9ydJUIi2q
- nt7w==
-X-Gm-Message-State: AOJu0Yz+cgnFSIADlXy2+wE8Zj5gYUdsja9pNcApHn6yG2bt/r5xnQ4u
- to0QVy1h4pc7xNatJ6vJZRwSBdyIJd06QeNVgsQ8v+RqEhH+jtPe6wdVO2o8wwRbJCnhyZwK73f
- 6sz4=
-X-Gm-Gg: ASbGncsSxqO5KPh9uiGK8vD3EYAN8dv3UEB1Jjp8DDr/WG84lx/wrzRE1TaztoopVZk
- PiPa7mPbtr1tirMeW1o8nHZgOcDjpwuqBfhGFPkKiG09Au2lPtHWVSG8BjUmJ7Pe7DaAi7OP5u3
- RarrRC+Yjs2gWC7TGmxNP7BBY4zIofglC0SE5EH6ynn7ltQZvw/oFELlmfQjWGl6Q70wtFGvOfo
- b/p8IwTduxAS5Kx8C6BecdGJ6Vtfjq+ivyH/tbdqTg6li2zz6RmEANM2cUsfJYkrK7Gu2MXWK9n
- j5Ypwm/oV38sd74PozStKEI2JI5iR8BWNZ/P9+80ASPJtTz9ueUiBCe5ZrYUmSKGUaQ4L8M=
-X-Google-Smtp-Source: AGHT+IEjykP/JMg5uTAdLtI7PAKHhBbeDyNSyYJAvbnSPaQLenaMk32iR8v79ugLaSSp+nGTyrLwJQ==
-X-Received: by 2002:a5d:4a91:0:b0:38f:2ef1:dd2b with SMTP id
- ffacd0b85a97d-38f33f2f2d5mr4541276f8f.22.1739739670333; 
- Sun, 16 Feb 2025 13:01:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739739665; x=1740344465;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ftPSbevSBRqmtogAzGCsM4h9pDskfrjNtyoZjF1T/JU=;
+ b=X1580DWOLCCjaN2tkDzaauvqPWkb69Uln+zNFJBb+8U2g30ZFnWmjgzegvQxnJavGB
+ lWQCJmTnM4JNg8YpJrcJOd5AbOLuFD1Ys2Kv9wYXo1Ph4bTlnPFXOpjXKTeEgoNPVPwr
+ d/gnjqE/iRTJ+uhZe0Aru5yrUTZNkzMCSnsbE+XTZOzlcTmCTbFTUfQ5U1qsW7quaMPU
+ r4J53KKXYCZ+MSyZ6PhWVYhBzMMPfpwDLEPqzX0E7ykKexdxwQMp6HCm2311IiiruZZU
+ LQwL7YOuZmOxrSm/ybHfn4LvUY5Q1XBpKLf13RScdyj6UddjCXWeMTG5UhOXKyM8uGfd
+ hGpw==
+X-Gm-Message-State: AOJu0YxhIADvGRfmnH56x7xIduksb5e0nkngftYgfjIhs4JKsSr5duBm
+ TivaVUVATr8nA00NYt5RDjcc5OuezDFBDF4vYXtCxuxQwHkwdaPw3tmhps6NW22p2O1qtm/oTZ2
+ 9fYE=
+X-Gm-Gg: ASbGncumNPYJU6hWPifB8zkZMJE1gLlSQ3r+E88Tp/bMSb+z5AIvx1Ke+ugRR1Ov56C
+ ciKiwLMX9/FFG+N9VJ0RccarAu9e46br9VG537SFCuCNv56FjI6CecsDfrMyLxDh3Qxq+mZAmaG
+ ze8Av/3AwM5Z9zDbbusflegbKg2g1w0XITQnHU34LtLTXGFSqC85OdmXyJfdP6+UCmRMfV7Zv9b
+ GyesynU2XbmKqH4kn7yMoawMzQzLOkRluEhDs0PDwj0Sjw/t3daGx/Lq1uYKoIuSUBnVBVwLaTd
+ i4qS6GcqxORVylvLM+VcB3YhURgaWi+WLk/j92tFDDxyrRXWdrPNl0eBSBVQPujEURsA8ho=
+X-Google-Smtp-Source: AGHT+IG2Z9/MqFiVrIN44w+I77maAQWHhU9ERMEUSGKDmJDHr5OoUh17/7TVakXrbh2EOQ09xwIiRw==
+X-Received: by 2002:a5d:5a4c:0:b0:38b:f44b:8663 with SMTP id
+ ffacd0b85a97d-38f3417165fmr6392733f8f.55.1739739665414; 
+ Sun, 16 Feb 2025 13:01:05 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d94acsm10599645f8f.75.2025.02.16.13.01.09
+ ffacd0b85a97d-38f258fc8b4sm10584842f8f.50.2025.02.16.13.01.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Feb 2025 13:01:09 -0800 (PST)
+ Sun, 16 Feb 2025 13:01:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 29/39] hw/qdev-properties-system: Introduce EndianMode QAPI enum
-Date: Sun, 16 Feb 2025 22:00:53 +0100
-Message-ID: <20250216210103.70235-2-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/39] Misc HW patches for 2025-02-16
+Date: Sun, 16 Feb 2025 22:00:52 +0100
+Message-ID: <20250216210103.70235-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250216210103.70235-1-philmd@linaro.org>
-References: <20250216210103.70235-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,84 +95,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
-Endianness can be BIG, LITTLE or unspecified (default).
+The following changes since commit 495de0fd82d8bb2d7035f82d9869cfeb48de2f9e:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250213122217.62654-2-philmd@linaro.org>
----
- qapi/common.json                    | 14 ++++++++++++++
- include/hw/qdev-properties-system.h |  7 +++++++
- hw/core/qdev-properties-system.c    | 11 +++++++++++
- 3 files changed, 32 insertions(+)
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-02-14 08:19:05 -0500)
 
-diff --git a/qapi/common.json b/qapi/common.json
-index 6ffc7a37890..0e3a0bbbfb0 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -212,3 +212,17 @@
- ##
- { 'struct': 'HumanReadableText',
-   'data': { 'human-readable-text': 'str' } }
-+
-+##
-+# @EndianMode:
-+#
-+# @unspecified: Endianness not specified
-+#
-+# @little: Little endianness
-+#
-+# @big: Big endianness
-+#
-+# Since: 10.0
-+##
-+{ 'enum': 'EndianMode',
-+  'data': [ 'unspecified', 'little', 'big' ] }
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index 7ec37f6316c..ead4dfc2f02 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -30,6 +30,7 @@ extern const PropertyInfo qdev_prop_pcie_link_speed;
- extern const PropertyInfo qdev_prop_pcie_link_width;
- extern const PropertyInfo qdev_prop_cpus390entitlement;
- extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
-+extern const PropertyInfo qdev_prop_endian_mode;
- 
- #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
-@@ -97,4 +98,10 @@ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
-     DEFINE_PROP(_name, _state, _field, qdev_prop_iothread_vq_mapping_list, \
-                 IOThreadVirtQueueMappingList *)
- 
-+#define DEFINE_PROP_ENDIAN(_name, _state, _field, _default) \
-+    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
-+                         qdev_prop_endian_mode, EndianMode)
-+#define DEFINE_PROP_ENDIAN_NODEFAULT(_name, _state, _field) \
-+    DEFINE_PROP_ENDIAN(_name, _state, _field, ENDIAN_MODE_UNSPECIFIED)
-+
- #endif
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index a96675beb0d..89f954f569e 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -1283,3 +1283,14 @@ const PropertyInfo qdev_prop_iothread_vq_mapping_list = {
-     .set = set_iothread_vq_mapping_list,
-     .release = release_iothread_vq_mapping_list,
- };
-+
-+/* --- Endian modes */
-+
-+const PropertyInfo qdev_prop_endian_mode = {
-+    .name = "EndianMode",
-+    .description = "Endian mode, big/little/unspecified",
-+    .enum_table = &EndianMode_lookup,
-+    .get = qdev_propinfo_get_enum,
-+    .set = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/hw-misc-20250216
+
+for you to fetch changes up to 5bf24ec9c4d4771a9469cadd19cf534e9a32a9db:
+
+  hw/rx: Allow execution without either bios or kernel (2025-02-16 14:45:38 +0100)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Use qemu_hexdump_line() in TPM backend (Philippe)
+- Remove magic number in APIC (Phil)
+- Disable thread-level cache topology (Zhao)
+- Xen QOM style cleanups (Bernhard)
+- Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE (Philippe)
+- Invert logic of machine no_sdcard flag (Philippe)
+- Housekeeping in MicroBlaze functional tests (Philippe)
+- Prevent out-of-bound access in SMC91C111 RX path (Peter)
+- Declare more fields / arguments as const (Philippe)
+- Introduce EndianMode QAPI enum (Philippe)
+- Make various Xilinx devices endianness configurable (Philippe)
+- Mark some devices memory regions as little-endian (Philippe)
+- Allow execution RX gdbsim machine without BIOS/kernel (Keith)
+
+Ignoring a pair of "line over 80 characters" checkpatch warnings in:
+
+#141: FILE: hw/net/xilinx_ethlite.c:382:
++    DEFINE_PROP_ENDIAN_NODEFAULT("endianness", XlnxXpsEthLite, model_endianness),
+#72: FILE: hw/char/xilinx_uartlite.c:185:
++    DEFINE_PROP_ENDIAN_NODEFAULT("endianness", XilinxUARTLite, model_endianness),
+
+----------------------------------------------------------------
+
+Bernhard Beschow (1):
+  hw/xen: Prefer QOM cast for XenLegacyDevice
+
+Keith Packard (1):
+  hw/rx: Allow execution without either bios or kernel
+
+Peter Maydell (1):
+  hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
+
+Phil Dennis-Jordan (1):
+  hw/intc/apic: Fixes magic number use, removes outdated comment
+
+Philippe Mathieu-Daudé (34):
+  backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
+  hw/arm/xlnx-zynqmp: Use &error_abort for programming errors
+  hw/sysbus: Use sizeof(BusState) in main_system_bus_create()
+  hw/sysbus: Declare QOM types using DEFINE_TYPES() macro
+  hw/sysbus: Introduce TYPE_DYNAMIC_SYS_BUS_DEVICE
+  hw/vfio: Have VFIO_PLATFORM devices inherit from
+    DYNAMIC_SYS_BUS_DEVICE
+  hw/display: Have RAMFB device inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/i386: Have X86_IOMMU devices inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/net: Have eTSEC device inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/tpm: Have TPM TIS sysbus device inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/xen: Have legacy Xen backend inherit from DYNAMIC_SYS_BUS_DEVICE
+  hw/boards: Convert no_sdcard flag to OnOffAuto tri-state
+  hw/boards: Explicit no_sdcard=false as ON_OFF_AUTO_OFF
+  hw/boards: Rename no_sdcard -> auto_create_sdcard
+  hw/boards: Do not create unusable default if=sd drives
+  hw/arm: Remove all invalid uses of auto_create_sdcard=true
+  hw/riscv: Remove all invalid uses of auto_create_sdcard=true
+  hw/boards: Ensure machine setting auto_create_sdcard expose a SD Bus
+  hw/riscv/opentitan: Include missing 'exec/address-spaces.h' header
+  tests/functional: Explicit endianness of microblaze assets
+  tests/functional: Allow microblaze tests to take a machine name
+    argument
+  tests/functional: Remove sleep() kludges from microblaze tests
+  hw: Declare various const data as 'const'
+  hw: Make class data 'const'
+  hw/qdev-properties-system: Introduce EndianMode QAPI enum
+  hw/intc/xilinx_intc: Make device endianness configurable
+  hw/net/xilinx_ethlite: Make device endianness configurable
+  hw/timer/xilinx_timer: Make device endianness configurable
+  hw/char/xilinx_uartlite: Make device endianness configurable
+  hw/ssi/xilinx_spi: Make device endianness configurable
+  hw/arm: Mark Allwinner Technology devices as little-endian
+  hw/mips: Mark Boston machine devices as little-endian
+  hw/mips: Mark Loonson3 Virt machine devices as little-endian
+  hw/pci-host: Mark versatile regions as little-endian
+
+Zhao Liu (1):
+  hw/core/machine: Reject thread level cache
+
+ qapi/common.json                              | 14 +++++
+ hw/sd/sdhci-internal.h                        |  2 +-
+ include/hw/boards.h                           |  2 +-
+ include/hw/qdev-properties-system.h           |  7 +++
+ include/hw/sysbus.h                           |  2 +
+ include/hw/xen/xen_pvdev.h                    |  5 +-
+ backends/tpm/tpm_util.c                       | 24 ++++----
+ hw/arm/allwinner-a10.c                        |  2 +-
+ hw/arm/allwinner-h3.c                         |  8 +--
+ hw/arm/allwinner-r40.c                        |  2 +-
+ hw/arm/aspeed.c                               | 20 +++++++
+ hw/arm/bananapi_m2u.c                         |  1 +
+ hw/arm/cubieboard.c                           |  1 +
+ hw/arm/exynos4_boards.c                       |  2 +
+ hw/arm/fby35.c                                |  1 +
+ hw/arm/imx25_pdk.c                            |  1 +
+ hw/arm/integratorcp.c                         |  1 +
+ hw/arm/mcimx6ul-evk.c                         |  1 +
+ hw/arm/mcimx7d-sabre.c                        |  1 +
+ hw/arm/npcm7xx_boards.c                       |  5 ++
+ hw/arm/omap_sx1.c                             |  2 +
+ hw/arm/orangepi.c                             |  1 +
+ hw/arm/raspi.c                                |  5 ++
+ hw/arm/raspi4b.c                              |  1 +
+ hw/arm/realview.c                             |  4 ++
+ hw/arm/sabrelite.c                            |  1 +
+ hw/arm/stellaris.c                            |  1 +
+ hw/arm/versatilepb.c                          |  2 +
+ hw/arm/vexpress.c                             |  2 +
+ hw/arm/xilinx_zynq.c                          |  1 -
+ hw/arm/xlnx-versal-virt.c                     |  1 +
+ hw/arm/xlnx-zcu102.c                          |  1 +
+ hw/arm/xlnx-zynqmp.c                          | 38 ++++--------
+ hw/char/xilinx_uartlite.c                     | 34 +++++++----
+ hw/core/machine-smp.c                         |  7 +++
+ hw/core/null-machine.c                        |  1 -
+ hw/core/qdev-properties-system.c              | 11 ++++
+ hw/core/sysbus.c                              | 54 ++++++++++-------
+ hw/display/ramfb-standalone.c                 |  3 +-
+ hw/i2c/allwinner-i2c.c                        |  2 +-
+ hw/i386/amd_iommu.c                           |  2 -
+ hw/i386/intel_iommu.c                         |  2 -
+ hw/i386/x86-iommu.c                           |  2 +-
+ hw/intc/allwinner-a10-pic.c                   |  2 +-
+ hw/intc/apic.c                                |  3 +-
+ hw/intc/xilinx_intc.c                         | 59 +++++++++++++-----
+ hw/isa/vt82c686.c                             |  2 +-
+ hw/microblaze/petalogix_ml605_mmu.c           |  5 ++
+ hw/microblaze/petalogix_s3adsp1800_mmu.c      |  6 ++
+ hw/mips/boston.c                              |  6 +-
+ hw/mips/loongson3_virt.c                      |  4 +-
+ hw/misc/allwinner-a10-ccm.c                   |  2 +-
+ hw/misc/allwinner-a10-dramc.c                 |  2 +-
+ hw/misc/allwinner-cpucfg.c                    |  2 +-
+ hw/misc/allwinner-h3-ccu.c                    |  2 +-
+ hw/misc/allwinner-h3-dramc.c                  |  6 +-
+ hw/misc/allwinner-h3-sysctrl.c                |  2 +-
+ hw/misc/allwinner-r40-ccu.c                   |  2 +-
+ hw/misc/allwinner-r40-dramc.c                 | 10 ++--
+ hw/misc/allwinner-sid.c                       |  2 +-
+ hw/misc/allwinner-sramc.c                     |  2 +-
+ hw/net/allwinner-sun8i-emac.c                 |  2 +-
+ hw/net/allwinner_emac.c                       |  2 +-
+ hw/net/fsl_etsec/etsec.c                      |  4 +-
+ hw/net/smc91c111.c                            |  9 +++
+ hw/net/xilinx_ethlite.c                       | 29 +++++++--
+ hw/pci-host/versatile.c                       |  4 +-
+ hw/ppc/virtex_ml507.c                         |  2 +
+ hw/riscv/microblaze-v-generic.c               |  5 ++
+ hw/riscv/microchip_pfsoc.c                    |  1 +
+ hw/riscv/opentitan.c                          |  1 +
+ hw/riscv/sifive_u.c                           |  1 +
+ hw/rtc/allwinner-rtc.c                        |  2 +-
+ hw/rtc/m48t59-isa.c                           |  2 +-
+ hw/rtc/m48t59.c                               |  2 +-
+ hw/rx/rx-gdbsim.c                             |  3 -
+ hw/s390x/s390-virtio-ccw.c                    |  1 -
+ hw/sd/allwinner-sdhost.c                      |  2 +-
+ hw/sd/sdhci.c                                 |  2 +-
+ hw/sensor/emc141x.c                           |  2 +-
+ hw/sensor/isl_pmbus_vr.c                      |  2 +-
+ hw/sensor/tmp421.c                            |  2 +-
+ hw/ssi/allwinner-a10-spi.c                    |  2 +-
+ hw/ssi/xilinx_spi.c                           | 32 +++++++---
+ hw/timer/allwinner-a10-pit.c                  |  2 +-
+ hw/timer/xilinx_timer.c                       | 43 +++++++++----
+ hw/tpm/tpm_tis_sysbus.c                       |  3 +-
+ hw/usb/hcd-ehci-pci.c                         |  2 +-
+ hw/usb/hcd-uhci.c                             |  2 +-
+ hw/usb/xen-usb.c                              |  6 +-
+ hw/vfio/amd-xgbe.c                            |  2 -
+ hw/vfio/calxeda-xgmac.c                       |  2 -
+ hw/vfio/platform.c                            |  4 +-
+ hw/watchdog/allwinner-wdt.c                   |  2 +-
+ hw/xen/xen-legacy-backend.c                   |  9 +--
+ hw/xen/xen_pvdev.c                            |  2 +-
+ system/vl.c                                   | 24 ++++++--
+ .../functional/test_microblaze_s3adsp1800.py  | 11 ++--
+ .../test_microblazeel_s3adsp1800.py           | 19 +++---
+ tests/qemu-iotests/172.out                    | 60 -------------------
+ 100 files changed, 425 insertions(+), 281 deletions(-)
+
 -- 
 2.47.1
 
