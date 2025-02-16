@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F50C021A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD96C021A6
 	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 00:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjS6d-0007kM-H2; Sat, 15 Feb 2025 19:01:55 -0500
+	id 1tjS6g-0007lg-7v; Sat, 15 Feb 2025 19:01:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjS6J-0007e8-2K
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:35 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tjS6A-0007cy-IO
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:32 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjS68-0006Gw-CF
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:27 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-220f4dd756eso30974445ad.3
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 16:01:23 -0800 (PST)
+ id 1tjS66-0006GW-Fh
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:25 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2211cd4463cso3736385ad.2
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 16:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739664082; x=1740268882; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739664080; x=1740268880; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JhOCjaCEdODZDzVDXbbcrJWRHEHJ4tXKXvv0DPCf8Os=;
- b=BWdJXUyhnLR+aqZK/VQFIo/1bMQIculWcj1M9PxjPXzFB9mgDoGPwAvs+dAm4A9v4T
- Jg/loUnlOri7J2VFRaQu6STU1iQJjkjWMclNzNMmheHgEqeOuzmMz1zACNnc9PBFPujO
- QCdlQwa4VRQb1TF/LDemdC+hxtdIZHQdk9fKJFRKOPyUqjm63oVY36L9CQ5wKICaNF/x
- 4T3XKo+YsfpEGjlpMQnuJLgm5E4vAB0WzMT2vUBXIFZyeEQIPHOk97TSizfpZtuxtngT
- DgCKHq//GqeiwlXHz9BeDokGtNsVc2+aRnngnhB3MTaUdSG7BqwxmnR29SpO7TjagAmP
- 2hCQ==
+ bh=0w1nAz3ZZyz0kW9yi4rO7ndLN0hIyYSz6AGDjBaQFXE=;
+ b=KnUO7jbnh3ce3SMoQOsCx7SN/GLcSf2AXR5EzPLLvfYMcnu0tNyAd2HTl9oAx1YAPD
+ CZLU3vtz31bdWlZCnWqRPsDzRuH1kkaPvjJdK7brxLghnJ0cGubmsIHAwhvLNaKsKFNC
+ XgBzGB84yJnlhwnAGJKWyQBnZaalECf1HrGXgKOtZ8DYHOzc7IK0/mTSl3uh0lGliXlM
+ fpWScWJv9yPZgoK0R2wBA8eTbu4AGsK4yx6ybtFxlyMQPaFirRJqXNUCybI052HkrcDz
+ HrbvTAcwKDghgNu2gG2wJrvIO/y4i3BvI+44W/FelrZ+nmj8S5uU/suK/n7hClXBgi05
+ qvKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739664082; x=1740268882;
+ d=1e100.net; s=20230601; t=1739664080; x=1740268880;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JhOCjaCEdODZDzVDXbbcrJWRHEHJ4tXKXvv0DPCf8Os=;
- b=G8Hu4wPkyl6Z+wRu/pObAKJ7d8Xq1LAhFuxYGJkcf7qOE8CQbkDPkyeZWxJzs2UdMf
- KaZk3GLdip+IK/q8CLoyYKOw9KxCSfUGmJMl0oiDypAKyimWzZQafYWS75qHFg7n7htX
- qvrJzF6V+h/t3eIxNv5oS27oSFv46GtYKI2DLrCT+X87oM6rfFSD4TBiR80UZudYUH+N
- 1VjBu8yzDRcysbJoYwx7raxr4ihGAokenguaFHlWLmnqHYtTeOf1v1OYv8C//ovz6HJd
- PXEWXPrvlP6dk4+bYWatwuX5YCRiUT8nyA/xp2Sm45XX5R9/VSq3RIhX4BDxFTlI/sYA
- BoWA==
-X-Gm-Message-State: AOJu0YzPrAnMPDK8FUriF9QOe0aEacijuX4+Zq+egr/XpNEOgUtgtKZM
- qDb9XJ2z+62K+SqgUJaVK8iSCQyKDcWdCbg9IPoe3WzuIV8kfLzj+JKPAmn66/3y4ywJx9dtMUz
- O
-X-Gm-Gg: ASbGncsmKURejv7m+Oum4P8Arg/dwPQjtpzYmedul+eW1CUpb0ehTT2pC9dcMogd/0x
- uHr/GuLkgLTEFESmDVEpZl0P1ONytiiSOm0kPlFuG22gOgGqC2P8WaiMkI93TaOHVZ0zbXNMXmo
- Scg1F8HHVWHG+9SxYdrzQjXy7dcl4mDQK8MbwOPxU31WHxGbclHqpBEQqAJn4lWwLWL3OOv5/Mq
- UBCfmabHogey/P2HqIvl6Ogq1iWRvNPWfi6rQEKdyRCYYq0eDZxOzuKi4NV5UT1zB+JF4mJC9Gd
- hV/HrVR4eeshVUizoHbApfDcKmk+KPDcoYwwgXakpTJ3Bq0=
-X-Google-Smtp-Source: AGHT+IHZXZGC9T5bcyauO4qGTp4wfSgz1VLb3Hg4E4QALtZyGtFrwSjfJYk2h59BbyjIn38z7rPzSg==
-X-Received: by 2002:a17:902:f789:b0:21f:61a9:be7d with SMTP id
- d9443c01a7336-221040d75abmr75887625ad.49.1739664082021; 
- Sat, 15 Feb 2025 16:01:22 -0800 (PST)
+ bh=0w1nAz3ZZyz0kW9yi4rO7ndLN0hIyYSz6AGDjBaQFXE=;
+ b=cHgtduWnElUlGsrVXlqKaaZzo+fqj6YkDUtV5PiDbSxGGMrkvJAHZXnygFGbSfS8E0
+ 1Pvl9nKFRAK3yTXNGyrW8bH8UKL0jb3vA5El3ta1YNYdp4WquPDqAen3V/cmH+vOmkvz
+ 1AKyKv9ahWBLk1p+d8ybtJGR4+E1sbHVupD6G+3o0chZui4fTypKK9CeHuGJl9/mMIBC
+ 2YdZiYLLVFAgU8mpYyvPXyGQyM1gXxkb06eP+eF6KkC0moxUr8bLnEe66gFIeCpMW3j+
+ UQjtX9heKap7mJ53dIXvqFCZMb6d0Fu32jYlzJTtyqKciJas7FaVjHXOLu35YlxORTlb
+ ArGg==
+X-Gm-Message-State: AOJu0YzzR1QnzVBSs+Uud7EqevhBYHwFQo01wNpuKiz06gl0zhB+P97O
+ ecXRYlkfJiMDC5Ep3s0mZdgEIPxqLWysz5kR7HIInRmrVRMUep0kbLGDf8ZsdzzuywsY1SwbWVl
+ B
+X-Gm-Gg: ASbGncss3hcH8yMWNB68UV0U/gofQDc/0JsEw/OI914FJWqeOJ9D3YRe7WAindyLCOo
+ P7PpmXqD0ZTER5LIGQIK1WO6bt6dIc8jCrOtndOSjaGLN5adF5gTKie2QNSGtzZVLiPN2fRlv8m
+ U7vXC5kenBlEiatwJkhS/l4/CMhyzFH10DTKxwd2BRh99vVqDIx9dQHEfbmdWRVLiB5BX83uIsd
+ IAkBpQ5YH5V1WWvXpy/VWiSbE9TOZXKdM9zw7yfF2QjEqWXXKo6mxxah4VDngWrZmZpPmndzcKF
+ XIMPswzEPA+9VKMe0tpsnqPqsAUeflLU+7R6GXhZ9uCIzQE=
+X-Google-Smtp-Source: AGHT+IFsTf64zQOmuyjY6EZGX0Whxgdtq4nhSgC6vF2T1Q/C3TCiYu6fIuGdUdEcW19O2vqVPuERtw==
+X-Received: by 2002:a17:903:22c7:b0:215:5a53:edee with SMTP id
+ d9443c01a7336-221040136afmr69580765ad.9.1739664080111; 
+ Sat, 15 Feb 2025 16:01:20 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d5366729sm48960315ad.79.2025.02.15.16.01.20
+ d9443c01a7336-220d5366729sm48960315ad.79.2025.02.15.16.01.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Feb 2025 16:01:21 -0800 (PST)
+ Sat, 15 Feb 2025 16:01:19 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 14/24] tcg: Introduce the 'z' constraint for a hardware zero
- register
-Date: Sat, 15 Feb 2025 16:00:58 -0800
-Message-ID: <20250216000109.2606518-15-richard.henderson@linaro.org>
+Subject: [PULL 12/24] include/exec: Change vaddr to uintptr_t
+Date: Sat, 15 Feb 2025 16:00:56 -0800
+Message-ID: <20250216000109.2606518-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250216000109.2606518-1-richard.henderson@linaro.org>
 References: <20250216000109.2606518-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,164 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For loongarch, mips, riscv and sparc, a zero register is
-available all the time.  For aarch64, register index 31
-depends on context: sometimes it is the stack pointer,
-and sometimes it is the zero register.
-
-Introduce a new general-purpose constraint which maps 0
-to TCG_REG_ZERO, if defined.  This differs from existing
-constant constraints in that const_arg[*] is recorded as
-false, indicating that the value is in a register.
+Since we no longer support 64-bit guests on 32-bit hosts,
+we can use a 32-bit type on a 32-bit host.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg.h            |  3 ++-
- tcg/aarch64/tcg-target.h     |  2 ++
- tcg/loongarch64/tcg-target.h |  2 ++
- tcg/mips/tcg-target.h        |  2 ++
- tcg/riscv/tcg-target.h       |  2 ++
- tcg/sparc64/tcg-target.h     |  3 ++-
- tcg/tcg.c                    | 29 ++++++++++++++++++++++-------
- docs/devel/tcg-ops.rst       |  4 +++-
- 8 files changed, 37 insertions(+), 10 deletions(-)
+ include/exec/vaddr.h | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 1d1d668f52..84d99508b6 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -713,7 +713,8 @@ void tb_target_set_jmp_target(const TranslationBlock *, int,
- 
- void tcg_set_frame(TCGContext *s, TCGReg reg, intptr_t start, intptr_t size);
- 
--#define TCG_CT_CONST  1 /* any constant of register size */
-+#define TCG_CT_CONST      1  /* any constant of register size */
-+#define TCG_CT_REG_ZERO   2  /* zero, in TCG_REG_ZERO */
- 
- typedef struct TCGArgConstraint {
-     unsigned ct : 16;
-diff --git a/tcg/aarch64/tcg-target.h b/tcg/aarch64/tcg-target.h
-index 0dd6e1f069..3f3df5176d 100644
---- a/tcg/aarch64/tcg-target.h
-+++ b/tcg/aarch64/tcg-target.h
-@@ -45,6 +45,8 @@ typedef enum {
-     TCG_AREG0  = TCG_REG_X19,
- } TCGReg;
- 
-+#define TCG_REG_ZERO TCG_REG_XZR
-+
- #define TCG_TARGET_NB_REGS 64
- 
- #endif /* AARCH64_TCG_TARGET_H */
-diff --git a/tcg/loongarch64/tcg-target.h b/tcg/loongarch64/tcg-target.h
-index 8533284631..6a206fb97e 100644
---- a/tcg/loongarch64/tcg-target.h
-+++ b/tcg/loongarch64/tcg-target.h
-@@ -85,4 +85,6 @@ typedef enum {
-     TCG_VEC_TMP0 = TCG_REG_V23,
- } TCGReg;
- 
-+#define TCG_REG_ZERO  TCG_REG_ZERO
-+
- #endif /* LOONGARCH_TCG_TARGET_H */
-diff --git a/tcg/mips/tcg-target.h b/tcg/mips/tcg-target.h
-index 3090acc4f5..bd4ca5f852 100644
---- a/tcg/mips/tcg-target.h
-+++ b/tcg/mips/tcg-target.h
-@@ -70,4 +70,6 @@ typedef enum {
-     TCG_AREG0 = TCG_REG_S8,
- } TCGReg;
- 
-+#define TCG_REG_ZERO  TCG_REG_ZERO
-+
- #endif
-diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
-index db5f3d8b72..6dc77d944b 100644
---- a/tcg/riscv/tcg-target.h
-+++ b/tcg/riscv/tcg-target.h
-@@ -57,4 +57,6 @@ typedef enum {
-     TCG_REG_TMP2       = TCG_REG_T4,
- } TCGReg;
- 
-+#define TCG_REG_ZERO  TCG_REG_ZERO
-+
- #endif
-diff --git a/tcg/sparc64/tcg-target.h b/tcg/sparc64/tcg-target.h
-index f7d75d5806..1b9adccd85 100644
---- a/tcg/sparc64/tcg-target.h
-+++ b/tcg/sparc64/tcg-target.h
-@@ -64,6 +64,7 @@ typedef enum {
-     TCG_REG_I7,
- } TCGReg;
- 
--#define TCG_AREG0 TCG_REG_I0
-+#define TCG_AREG0     TCG_REG_I0
-+#define TCG_REG_ZERO  TCG_REG_G0
+diff --git a/include/exec/vaddr.h b/include/exec/vaddr.h
+index b9844afc77..28bec632fb 100644
+--- a/include/exec/vaddr.h
++++ b/include/exec/vaddr.h
+@@ -6,13 +6,15 @@
+ /**
+  * vaddr:
+  * Type wide enough to contain any #target_ulong virtual address.
++ * We do not support 64-bit guest on 32-host and detect at configure time.
++ * Therefore, a host pointer width will always fit a guest pointer.
+  */
+-typedef uint64_t vaddr;
+-#define VADDR_PRId PRId64
+-#define VADDR_PRIu PRIu64
+-#define VADDR_PRIo PRIo64
+-#define VADDR_PRIx PRIx64
+-#define VADDR_PRIX PRIX64
+-#define VADDR_MAX UINT64_MAX
++typedef uintptr_t vaddr;
++#define VADDR_PRId PRIdPTR
++#define VADDR_PRIu PRIuPTR
++#define VADDR_PRIo PRIoPTR
++#define VADDR_PRIx PRIxPTR
++#define VADDR_PRIX PRIXPTR
++#define VADDR_MAX UINTPTR_MAX
  
  #endif
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 55cb9b3ac7..e8950df2ad 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -3223,6 +3223,11 @@ static void process_constraint_sets(void)
-                 case 'i':
-                     args_ct[i].ct |= TCG_CT_CONST;
-                     break;
-+#ifdef TCG_REG_ZERO
-+                case 'z':
-+                    args_ct[i].ct |= TCG_CT_REG_ZERO;
-+                    break;
-+#endif
- 
-                 /* Include all of the target-specific constraints. */
- 
-@@ -5074,13 +5079,23 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-         arg_ct = &args_ct[i];
-         ts = arg_temp(arg);
- 
--        if (ts->val_type == TEMP_VAL_CONST
--            && tcg_target_const_match(ts->val, arg_ct->ct, ts->type,
--                                      op_cond, TCGOP_VECE(op))) {
--            /* constant is OK for instruction */
--            const_args[i] = 1;
--            new_args[i] = ts->val;
--            continue;
-+        if (ts->val_type == TEMP_VAL_CONST) {
-+#ifdef TCG_REG_ZERO
-+            if (ts->val == 0 && (arg_ct->ct & TCG_CT_REG_ZERO)) {
-+                /* Hardware zero register: indicate register via non-const. */
-+                const_args[i] = 0;
-+                new_args[i] = TCG_REG_ZERO;
-+                continue;
-+            }
-+#endif
-+
-+            if (tcg_target_const_match(ts->val, arg_ct->ct, ts->type,
-+                                       op_cond, TCGOP_VECE(op))) {
-+                /* constant is OK for instruction */
-+                const_args[i] = 1;
-+                new_args[i] = ts->val;
-+                continue;
-+            }
-         }
- 
-         reg = ts->reg;
-diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
-index 6608a29376..688984fd39 100644
---- a/docs/devel/tcg-ops.rst
-+++ b/docs/devel/tcg-ops.rst
-@@ -927,7 +927,9 @@ operation uses a constant input constraint which does not allow all
- constants, it must also accept registers in order to have a fallback.
- The constraint '``i``' is defined generically to accept any constant.
- The constraint '``r``' is not defined generically, but is consistently
--used by each backend to indicate all registers.
-+used by each backend to indicate all registers.  If ``TCG_REG_ZERO``
-+is defined by the backend, the constraint '``z``' is defined generically
-+to map constant 0 to the hardware zero register.
- 
- The movi_i32 and movi_i64 operations must accept any constants.
- 
 -- 
 2.43.0
 
