@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2E5C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 20:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2375C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjlVa-0007Fk-SW; Sun, 16 Feb 2025 15:44:59 -0500
+	id 1tjllO-0002x3-Uf; Sun, 16 Feb 2025 16:01:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tjlVV-0007FJ-LB
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 15:44:53 -0500
-Received: from mail-io1-xd2e.google.com ([2607:f8b0:4864:20::d2e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllK-0002vt-1D
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:14 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tjlVT-0005fu-Qr
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 15:44:53 -0500
-Received: by mail-io1-xd2e.google.com with SMTP id
- ca18e2360f4ac-84a012f7232so137134339f.0
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 12:44:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllI-0007tb-Cy
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:13 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4395f66a639so21898585e9.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:01:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1739738690; x=1740343490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739739670; x=1740344470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DreV9NBWw1rAAKxQDwzKoQMmZrapH2rDpG7DGjQOfBQ=;
- b=cv0NN7fr2Xg5l8NFJT0ZAcCKr6hIlbelXZ/n6KYU1z4Q0AzvKSwTfSiDv/JByAhX27
- kfMkAKImwmPV+ozEZ2/GetdC3YW2Fl0JmDohKfGmWB4UTUPi5wqLElLW/Wvm7zaf5Rhb
- ylQoH4RXrIz2IAnQuBd278CucjQDfyReRxt+A=
+ bh=VkyzUhB3/r5FKmFNHJ6alO+UuiYZhYCsq602cNE3EOo=;
+ b=jymf0gLwQMEy7QfHBPrwjW0GTc1jwHr0dsDGUfij0vI4bgeNsiJzy/B6XePN1Vj3Ui
+ ovxkToQPSetMY5KWvVmneNTaqGhR0l9NrXHazT3z+xXXhvmMEMuochewsXoocwU+vC1H
+ rwt18fiv3GDXP3NBlaZdgd82vM62UUgNuu3i+ewE2LU+G7+GCnwiqf1daQBhGg/aQLd3
+ uD+BM2a1p9o0CG2ccu6CmqSBs4BtMDrWsfNIr98P6+i2vHUhYH6Z8i2FdHU5J8/f257Z
+ FScQDeXQ/FOaFrBqRe28Tzk1nOqFrAbNhith7c2yPfLWT/lPhplgVdlZqE+umCcKRjFF
+ augA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739738690; x=1740343490;
+ d=1e100.net; s=20230601; t=1739739670; x=1740344470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DreV9NBWw1rAAKxQDwzKoQMmZrapH2rDpG7DGjQOfBQ=;
- b=Cb/XOW8b0HtscwJSM2t6KR91M5fma69qKlWA5LlAiu5IxMRWEn8eBNb6FC/roIEAXQ
- Zmj/tHyxXxnTb+uxBMM/5ydXnh4PSWX538O9EYo+GcENkdfsoinRTZ4g/H3qywILVlVN
- xe9l6YIl9uvJzyuBmyuFfUtdyftyffLIjn99ukZLd0q2G4AhbF6FCfZwNCVGjZzJWlJ7
- 9i/2WmkBGR/2H6/8NLr6foZOOQtls8xN/qcUtkYGxjLLdlSSAruRkd8fk0RQ2q6R3OZp
- 8Qp+aH76SeCYwhYvrt13/aK2f5vIFk0gDQKrs0eEqszJLp4JSLyqkg7whgTXeWXteKJh
- Bb8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgC6kCyuETAq0cnMOG251utykwXE1R3cl8jnIKnKd8Eo5CQq7zaE/LJwdxcawL/k1zKDinl+OvPGe8@nongnu.org
-X-Gm-Message-State: AOJu0Yx6+urCuOotUbGd68UNaSx9kiP9Q3hv2myypQkrVG/Vk9GEaakv
- Cb/vRzkyuSIx7wmzcQD7VjXPEmciRKhL371lddEAAyTZdpCznXcPhjDUAHH7Hg==
-X-Gm-Gg: ASbGnctD4cZLvxiUQMpPnyDSJOpdYjn33F3MaQbCN3cl/yF13Ndwm9r8QQiZlLfn+mJ
- sHSJu23Wo2jL6kLuuKZS03UVXdOWN4sTLyaiGA8EckaFml5XZvhxUOTedTARmYxL8A4WTFnvpMq
- og0/D5F0bvf+WrZHq59jyYc14Jdq7wMPC4yh3DyDgGXcLkyvurKYydD2YnByWDNuKYsPnsG3BQI
- ue/RHKcf5w2OxI2gtVVTMhLdg8XJq9A1BPWs0dqbxNtvM+0pfLvb1MNqc2DrpBSDXqQIl8FzLrK
- a5QttVZmiBLF7yZDUjM3o3SooTHgqRruENNYlWhXFXYHIutcCv3N
-X-Google-Smtp-Source: AGHT+IFVW4sYH36KMd/WtC0pieXo6dZkD4DFQF6MqOw1XkQ0XCh5/OjhdzlMOChRjesLs4sLeAimXA==
-X-Received: by 2002:a92:d34f:0:b0:3d1:5dce:5105 with SMTP id
- e9e14a558f8ab-3d18cc7476amr85680815ab.4.1739738690507; 
- Sun, 16 Feb 2025 12:44:50 -0800 (PST)
-Received: from chromium.org (c-73-203-119-151.hsd1.co.comcast.net.
- [73.203.119.151]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4ed281718f4sm1854186173.45.2025.02.16.12.44.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Feb 2025 12:44:49 -0800 (PST)
-From: Simon Glass <sjg@chromium.org>
-To: U-Boot Mailing List <u-boot@lists.denx.de>
-Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
- Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 02/28] x86: qemu: Switch to bochs display
-Date: Sun, 16 Feb 2025 13:43:47 -0700
-Message-ID: <20250216204421.3560012-3-sjg@chromium.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250216204421.3560012-1-sjg@chromium.org>
-References: <20250216204421.3560012-1-sjg@chromium.org>
+ bh=VkyzUhB3/r5FKmFNHJ6alO+UuiYZhYCsq602cNE3EOo=;
+ b=a9bMG7p0MGB06AWWzAMNwev+URY8pPo/pxNHyNpUJp6HBP3blgZTJ445HmMhqBRCuX
+ DB/8qCWYP8nc1q8ON6I1qJnUTd+VhdslceUWBZQDp5oucrXnpod6M3d6RsV4KO6obMX+
+ 0R1nfkeg24OE0azy4kdwRWIIcPh3+cOCMijc/3JP/s/TQCOrMjjhp3F/CFYzr3tMRC61
+ +Y/KaUiSPmolU1ZWba7PrcAmB7wKNjHK8kDKznJ2D+9WL+l7lyBODsui+Sp6XfAuhGAW
+ 4426YzxRChr49kXW0y4K0C73WFZGRlBsiber0s+JD697dvPM6esc7RwcncX9ydJUIi2q
+ nt7w==
+X-Gm-Message-State: AOJu0Yz+cgnFSIADlXy2+wE8Zj5gYUdsja9pNcApHn6yG2bt/r5xnQ4u
+ to0QVy1h4pc7xNatJ6vJZRwSBdyIJd06QeNVgsQ8v+RqEhH+jtPe6wdVO2o8wwRbJCnhyZwK73f
+ 6sz4=
+X-Gm-Gg: ASbGncsSxqO5KPh9uiGK8vD3EYAN8dv3UEB1Jjp8DDr/WG84lx/wrzRE1TaztoopVZk
+ PiPa7mPbtr1tirMeW1o8nHZgOcDjpwuqBfhGFPkKiG09Au2lPtHWVSG8BjUmJ7Pe7DaAi7OP5u3
+ RarrRC+Yjs2gWC7TGmxNP7BBY4zIofglC0SE5EH6ynn7ltQZvw/oFELlmfQjWGl6Q70wtFGvOfo
+ b/p8IwTduxAS5Kx8C6BecdGJ6Vtfjq+ivyH/tbdqTg6li2zz6RmEANM2cUsfJYkrK7Gu2MXWK9n
+ j5Ypwm/oV38sd74PozStKEI2JI5iR8BWNZ/P9+80ASPJtTz9ueUiBCe5ZrYUmSKGUaQ4L8M=
+X-Google-Smtp-Source: AGHT+IEjykP/JMg5uTAdLtI7PAKHhBbeDyNSyYJAvbnSPaQLenaMk32iR8v79ugLaSSp+nGTyrLwJQ==
+X-Received: by 2002:a5d:4a91:0:b0:38f:2ef1:dd2b with SMTP id
+ ffacd0b85a97d-38f33f2f2d5mr4541276f8f.22.1739739670333; 
+ Sun, 16 Feb 2025 13:01:10 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259d94acsm10599645f8f.75.2025.02.16.13.01.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 16 Feb 2025 13:01:09 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 29/39] hw/qdev-properties-system: Introduce EndianMode QAPI enum
+Date: Sun, 16 Feb 2025 22:00:53 +0100
+Message-ID: <20250216210103.70235-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250216210103.70235-1-philmd@linaro.org>
+References: <20250216210103.70235-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2e;
- envelope-from=sjg@chromium.org; helo=mail-io1-xd2e.google.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,57 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vesa display is widely used on hardware, but it is a bit of a pain
-with QEMU. It requires executing option ROMs, which either doesn't work
-with kvm, or is difficult to do in a kvm/QEMU-friendly way.
+Introduce the EndianMode type and the DEFINE_PROP_ENDIAN() macros.
+Endianness can be BIG, LITTLE or unspecified (default).
 
-THe bochs display is probably better anyway, so switch to that. It works
-fine with kvm as it doesn't need an option ROM.
-
-Signed-off-by: Simon Glass <sjg@chromium.org>
-Fixes: https://source.denx.de/u-boot/custodians/u-boot-dm/-/issues/31
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250213122217.62654-2-philmd@linaro.org>
 ---
+ qapi/common.json                    | 14 ++++++++++++++
+ include/hw/qdev-properties-system.h |  7 +++++++
+ hw/core/qdev-properties-system.c    | 11 +++++++++++
+ 3 files changed, 32 insertions(+)
 
-Changes in v2:
-- Redo commit message
-
- configs/qemu-x86_64_defconfig | 5 ++---
- configs/qemu-x86_defconfig    | 5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/configs/qemu-x86_64_defconfig b/configs/qemu-x86_64_defconfig
-index af275e8ce8f..ff2a192ee7d 100644
---- a/configs/qemu-x86_64_defconfig
-+++ b/configs/qemu-x86_64_defconfig
-@@ -83,9 +83,8 @@ CONFIG_SYS_NS16550_PORT_MAPPED=y
- CONFIG_SPI=y
- CONFIG_USB_KEYBOARD=y
- CONFIG_CONSOLE_TRUETYPE=y
--CONFIG_FRAMEBUFFER_SET_VESA_MODE=y
--CONFIG_FRAMEBUFFER_VESA_MODE_USER=y
--CONFIG_FRAMEBUFFER_VESA_MODE=0x144
-+CONFIG_VIDEO_BOCHS=y
-+# CONFIG_VIDEO_VESA is not set
- CONFIG_CONSOLE_SCROLL_LINES=5
- CONFIG_SPL_VIDEO=y
- # CONFIG_SPL_USE_TINY_PRINTF is not set
-diff --git a/configs/qemu-x86_defconfig b/configs/qemu-x86_defconfig
-index 0b0e10c795f..ee5b150e062 100644
---- a/configs/qemu-x86_defconfig
-+++ b/configs/qemu-x86_defconfig
-@@ -62,9 +62,8 @@ CONFIG_SYS_NS16550_PORT_MAPPED=y
- CONFIG_SPI=y
- CONFIG_USB_KEYBOARD=y
- CONFIG_CONSOLE_TRUETYPE=y
--CONFIG_FRAMEBUFFER_SET_VESA_MODE=y
--CONFIG_FRAMEBUFFER_VESA_MODE_USER=y
--CONFIG_FRAMEBUFFER_VESA_MODE=0x144
-+CONFIG_VIDEO_BOCHS=y
-+# CONFIG_VIDEO_VESA is not set
- CONFIG_CONSOLE_SCROLL_LINES=5
- CONFIG_GENERATE_ACPI_TABLE=y
- # CONFIG_GZIP is not set
+diff --git a/qapi/common.json b/qapi/common.json
+index 6ffc7a37890..0e3a0bbbfb0 100644
+--- a/qapi/common.json
++++ b/qapi/common.json
+@@ -212,3 +212,17 @@
+ ##
+ { 'struct': 'HumanReadableText',
+   'data': { 'human-readable-text': 'str' } }
++
++##
++# @EndianMode:
++#
++# @unspecified: Endianness not specified
++#
++# @little: Little endianness
++#
++# @big: Big endianness
++#
++# Since: 10.0
++##
++{ 'enum': 'EndianMode',
++  'data': [ 'unspecified', 'little', 'big' ] }
+diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
+index 7ec37f6316c..ead4dfc2f02 100644
+--- a/include/hw/qdev-properties-system.h
++++ b/include/hw/qdev-properties-system.h
+@@ -30,6 +30,7 @@ extern const PropertyInfo qdev_prop_pcie_link_speed;
+ extern const PropertyInfo qdev_prop_pcie_link_width;
+ extern const PropertyInfo qdev_prop_cpus390entitlement;
+ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
++extern const PropertyInfo qdev_prop_endian_mode;
+ 
+ #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
+     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
+@@ -97,4 +98,10 @@ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
+     DEFINE_PROP(_name, _state, _field, qdev_prop_iothread_vq_mapping_list, \
+                 IOThreadVirtQueueMappingList *)
+ 
++#define DEFINE_PROP_ENDIAN(_name, _state, _field, _default) \
++    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
++                         qdev_prop_endian_mode, EndianMode)
++#define DEFINE_PROP_ENDIAN_NODEFAULT(_name, _state, _field) \
++    DEFINE_PROP_ENDIAN(_name, _state, _field, ENDIAN_MODE_UNSPECIFIED)
++
+ #endif
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index a96675beb0d..89f954f569e 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -1283,3 +1283,14 @@ const PropertyInfo qdev_prop_iothread_vq_mapping_list = {
+     .set = set_iothread_vq_mapping_list,
+     .release = release_iothread_vq_mapping_list,
+ };
++
++/* --- Endian modes */
++
++const PropertyInfo qdev_prop_endian_mode = {
++    .name = "EndianMode",
++    .description = "Endian mode, big/little/unspecified",
++    .enum_table = &EndianMode_lookup,
++    .get = qdev_propinfo_get_enum,
++    .set = qdev_propinfo_set_enum,
++    .set_default_value = qdev_propinfo_set_default_value_enum,
++};
 -- 
-2.43.0
+2.47.1
 
 
