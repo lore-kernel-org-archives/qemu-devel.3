@@ -4,58 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7E4C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 05:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6241C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 08:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjXfm-00087H-5P; Sun, 16 Feb 2025 00:58:34 -0500
+	id 1tjZZj-0001dZ-2A; Sun, 16 Feb 2025 03:00:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s23adhik@csclub.uwaterloo.ca>)
- id 1tjVk1-0003o8-An; Sat, 15 Feb 2025 22:54:49 -0500
-Received: from mail.csclub.uwaterloo.ca ([129.97.134.52])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <s23adhik@csclub.uwaterloo.ca>)
- id 1tjVjz-000340-3j; Sat, 15 Feb 2025 22:54:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=csclub.uwaterloo.ca;
- s=csc; t=1739678083;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=JmtHLnlzelDiMG/aaAhaae/vF1+y41ZDzU76AdNWZlM=;
- b=tqJopBqybRmYP3sSVvS/W4ny0Z/5LJpT9w8GxjOit1iN4v93RaVnoAJvr2iiONPhn0A+w0
- +pzbfC6HoxwICHlQF5JSlxs7OaIJFOfIKqvM6qregBnqFjtOCJ7EtIn4cYXDjn6byOUJBS
- IdZ3zKmedoKaMYsdo4O4T+kk/omwBjI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=csclub.uwaterloo.ca;
- s=202502e; t=1739678083;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=JmtHLnlzelDiMG/aaAhaae/vF1+y41ZDzU76AdNWZlM=;
- b=XGNIuT/chy/ms9JubnMhf+jaY3Sy8Maib76ovN+NH9p17ebODeaaH7lgGFpZi6utvLtoaw
- 6c0VcoI35tT7aHBQ==
-Message-ID: <3cca4eb3-09d1-4467-81fd-27a5bfe19a3e@csclub.uwaterloo.ca>
-Date: Sat, 15 Feb 2025 22:54:42 -0500
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tjZZh-0001dN-Nx
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 03:00:25 -0500
+Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tjZZg-0006Vn-59
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 03:00:25 -0500
+Received: from [192.168.1.8] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
+ (may be forged)) (authenticated bits=0)
+ by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
+ 51G808w73826314
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+ Sun, 16 Feb 2025 08:00:11 GMT
+Authentication-Results: anarch128.org; auth=pass;
+ dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
+ header.i=@anarch128.org header.b=eBHm74W9 header.a=rsa-sha256 header.s=100003;
+ x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org); 
+ x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
+ s=100003; t=1739692812;
+ bh=JKNPh4w3ovf0XwBBxyTep80IR1Zb0Bt24HXzPGYr3mQ=;
+ h=Date:Subject:To:References:From:In-Reply-To:From;
+ b=eBHm74W9z9VlBVyINmyW/+ziJrA20dGDKP0Ve3HTv0uIlg7RTAsARYIi07ZtNaCYD
+ Oyk4sJ1Q2QPzZyo1+mfscDH/9N9WnoycbLzTh15wB0AbiX5j5BnFwomxwSqaaHlsxS
+ wnXkBmsjLw4UonBNUJD4A23dPKRyXwGTiMhoUgianf49PYYBAu6FBDUGcrX67gFX0n
+ 6NwPZfaRT3E5tmEXL5BAeKRvwQlRjnY9++pMLwbbJ9FDAO1jiIryg8aubFPA6K5m0r
+ TCRZlXx38UHamwl7jRxMF/LPGRcZc/nQss1t5JGI2TTqWz2haCodI3ZpP7RTLHn1fN
+ MQ6eIdwDPhP5g==
+Message-ID: <aedcfd05-96fc-4e8a-9fcb-3763e30a6663@anarch128.org>
+Date: Sun, 16 Feb 2025 21:00:02 +1300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg: refactor pool data for simplicity and comprehension
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250215021120.1647083-1-michael@anarch128.org>
+ <a62ee246-4249-458c-9f9b-bad79816ce5e@linaro.org>
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-From: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
-Cc: peter.maydell@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org
-Subject: [PATCH] bcm2838: Add GIC-400 timer interupt connections
+From: Michael Clark <michael@anarch128.org>
+In-Reply-To: <a62ee246-4249-458c-9f9b-bad79816ce5e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=129.97.134.52;
- envelope-from=s23adhik@csclub.uwaterloo.ca; helo=mail.csclub.uwaterloo.ca
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
+ envelope-from=michael@anarch128.org; helo=anarch128.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 16 Feb 2025 00:58:33 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,57 +80,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello everyone,
+On 2/16/25 06:58, Richard Henderson wrote:
+> 
+>> the label member is merely a pointer to the instruction text to
+>> be updated with the relative address of the constant, the primary
+>> data is the constant data pool at the end of translation blocks.
+>> this relates more closely to .data sections in offline codegen
+>> if we were to imagine a translation block has .text and .data.
+> 
+> No, it doesn't.  It relates most closely to data emitted within .text, 
+> accessed via pc-relative instructions with limited offsets.
+> 
+> This isn't a thing you'd have ever seen on x86 or x86_64, but it is 
+> quite common for arm32 (12-bit offsets), sh4 (8-bit offsets), m68k (16- 
+> bit offsets) and such.  Because the offsets are so small, they could 
+> even be placed *within* functions not just between them.
 
-This patch adds support for the system timer interrupts
-in QEMU's BCM2838 model. It defines a new constant
-called GIC400_TIMER_INT, and connects 4 timer interupts
-to the GIC-400.
-Previously timer interupts were not being routed to the
-interupt controller, causing scheduling, and some other
-stuff to have issues (me and a few friends bumped into
-this, and that's why this was written lol).
+I mentioned before I like the idea and have thought about architectures 
+with constant streams and constant branch units.
 
-Signed-off-by: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
----
-  hw/arm/bcm2838.c | 11 +++++++++++
-  1 file changed, 11 insertions(+)
+say for arguments sake we considered it 'TCData' with embedded label and 
+reloc (the purpose is the constant after after all, just it is not a 
+TCGTemp, it's an explicitly reified constant in the codegen emitters). 
+wondering if we could add a "disposition" field to control placement. 
+TCG_DISP_TEXT_TB, TCG_DISP_DATA, etc. this way you could ask the code 
+generator to do something more conventional while still supporting the 
+short relative constant islands. "disposition" might be better than 
+section as a name. also a DATA section could be mmap R without X perms 
+to lessen the risk of injecting code as constants.
 
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index ddb7c5f..0a4179f 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -21,6 +21,8 @@
-  #define GIC400_TIMER_S_EL1_IRQ      13
-  #define GIC400_TIMER_NS_EL1_IRQ     14
-  #define GIC400_LEGACY_IRQ           15
-+#define GIC400_TIMER_INT            (96 - 32)
-+
+disposition; "the way in which something is placed or arranged, 
+especially in relation to other things."
 
-  /* Number of external interrupt lines to configure the GIC with */
-  #define GIC_NUM_IRQS                192
-@@ -176,6 +178,15 @@ static void bcm2838_realize(DeviceState *dev, Error 
-**errp)
-                      qdev_get_gpio_in(gicdev, PPI(n, VIRTUAL_PMU_IRQ)));
-      }
+TCGConstant is another alternative I would consider as okay. distinct 
+from TCGTemp of type TEMP_CONST which is heavier weight. it makes one 
+wonder about reification of large implicit constants as opposed to the 
+explicitly emitted ones we are talking about here.
 
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->systmr), 0,
-+        qdev_get_gpio_in(DEVICE(&s->gic), GIC400_TIMER_INT + 
-INTERRUPT_TIMER0));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->systmr), 1,
-+        qdev_get_gpio_in(DEVICE(&s->gic), GIC400_TIMER_INT + 
-INTERRUPT_TIMER1));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->systmr), 2,
-+        qdev_get_gpio_in(DEVICE(&s->gic), GIC400_TIMER_INT + 
-INTERRUPT_TIMER2));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->systmr), 3,
-+        qdev_get_gpio_in(DEVICE(&s->gic), GIC400_TIMER_INT + 
-INTERRUPT_TIMER3));
-+
-      /* Connect UART0 to the interrupt controller */
-      sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->uart0), 0,
-                         qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_UART0));
--- 
-2.48.1
+TCGConstant might be better.
 
+i'm looking at a TCG source-compatible code generator as an option so I 
+may experiment locally. it is a private interface at the moment anyhow. 
+that just seemed inconsistent as most structure definitions are in the 
+header. but I understand it is a private interface.
+
+the patch was code comprehension. i'm studying TCG interfaces and code 
+at the moment. i'd like to stay source compatible as much as possible.
+
+Michael.
 
