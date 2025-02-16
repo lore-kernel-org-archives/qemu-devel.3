@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6775FC021A4
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6652AC021A4
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjllp-000307-Uu; Sun, 16 Feb 2025 16:01:45 -0500
+	id 1tjlnS-0008Di-99; Sun, 16 Feb 2025 16:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllg-0002yW-F4
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:39 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlnO-0007uE-3n
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:03:22 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllc-0007vB-CR
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:35 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4396a4d5e3bso21810905e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:01:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlnL-0007zu-1f
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:03:21 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4396a24118dso22048355e9.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:03:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739739690; x=1740344490; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vcyVI0kPFXhH981sg+d29nPiWvZ9LL1zDe7HaHRgPOQ=;
- b=wmXjjD6I3wCUhgRib1v1ewxQrQMxh9AOtG4m+ZoQOqOrATKTBXdIDYVdWTwhIQlYNa
- ylLT+5luSRxd+XKDPljujUNoK2YJ9hv6LmixozpJbuWKzbPyltxZ1Zzzt3ZiOzr6B9rX
- ybiC9T3h7eAP6i511//mzyZMcyuJx2joKN8mVMO6rqVWYqa4iw5YOpAud7h6uhxNQNyZ
- XnjahJLeMouIiLA4Phnu+oLSKeDLM27MvexDa2z+skV39isRrMG3hXq4b1bxiNW4QU3A
- n6Y7qscwGeO3QeNKwjS1ZAulIF9IjBZNigIcIYAYg+xkMmt5b9os9yq2KX3jAL/HpxnD
- 9PsQ==
+ d=linaro.org; s=google; t=1739739797; x=1740344597; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qPXnTP3mseIxnWi5iwGj0e5kf+IUC/Zf2WfBfSwUIyQ=;
+ b=N80bRGaCrRZuPaYgn8bsIHidBUvFPGTTjYowD72J91lKZzv+vfJ7HYKRppuiXVJ5bG
+ qv8+nGZ3mPx4W5OYdBWbE8xgEKkmZvaMCaj8HlN77SmElaOwuywaAlurhjFR2fVbsuuu
+ YuMWv7Qm5ghV+gx9KYaHG+hnt6N5H2bcq4WC86ik6YXBIaUVm4KTKG7OOjYiQs3WKren
+ KTAR6wjasfuRAqPdbj5WdxJbtt0t4Qzy2XstLFi2c+dDxVb/DA3nwmQA731Yt7gb53cB
+ pQd87i0lSi8dlGC6sRvZJ7ks0vyH8Wnw2imdml44m/n8fdZogjEYiW95DYOMYipthjJR
+ xGlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739739690; x=1740344490;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vcyVI0kPFXhH981sg+d29nPiWvZ9LL1zDe7HaHRgPOQ=;
- b=V/WA8GztHRFe9BlZgMSP42cy87qDchkHB5YY1vVG3q+ImOBAAXBU8fxbqZM88thTjV
- CUEOwCPDt5oo+llP2+TpkukbGcStLCeYRYnJ4Aitpn6f1F2FbqB+zpypM/aPSJMHQl3d
- H7S2ck7VVnx+gxvXnbDFmOIHHlkTaYthlYM1qgFjuSal9E9fl/BwIM1SCFpCSlNMoFeA
- EMlpVqkXi/pYXXgYWLzpyF15cMe4MxfDY3XDFTwxBqZdKl9iOs/DskWabH4ygqjXM2jt
- rkaPT9RElcTnxEoz9NomHTvmeSItMak9eiYuLCtor1onp+SzyctVjYOrOOnZGbS9GdbX
- sJrg==
-X-Gm-Message-State: AOJu0YyAAjpr7DJA+s41t12A1Nh1oHu2QquJNTi3PUvTvwbXBpkxnM6a
- OpYdE1PjXloiNeWGLJPkUOov3bMXqBR35njbmhraMMJgt7fLZEBHOlvf9rsDks+UiWJA046v5qj
- 23A0=
-X-Gm-Gg: ASbGncua1lQTWZGs3UctBE5hI+ULQVdYLmcYWYRJ74UcJwz7z7qZW/t7iNfb7IvX0YZ
- 1kU+7DzmS9vwnFIhBAOGSw2BvrMVEC1SBd/TF+G0rOq/DW6f6jyo9D7rJFWxYw1qXimBePxiUVN
- I6spVrzbWWWefgpPHGwyoSFBIB6gZ6c1ymjeaAak483eWJhX0rPKYpk8Xv3y1AfvjJvaBKVGt4G
- suzbCrB9BPerL2Jq0+MLzmtcfPR4d44CBFLBaNN4Ck2z2hvmfy3X2w+g9EJeY7IPFNlRHmKfU8b
- p6AKIPxxlJn2z+cRXUZrriOuEieyIHyMLHU5R1Az6UqEx2pkag179klKMRtnxf7GyvzyrFw=
-X-Google-Smtp-Source: AGHT+IFdyOBdynkCEGwXLHZ4wIaFIcEo6twxikU+6ClxguiWHZKgu8vllLzz1d+tm0OGlSEvHLHl4w==
-X-Received: by 2002:a05:600c:310e:b0:439:57bb:2aa with SMTP id
- 5b1f17b1804b1-4396e6aa7d3mr84051405e9.11.1739739690378; 
- Sun, 16 Feb 2025 13:01:30 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1739739797; x=1740344597;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qPXnTP3mseIxnWi5iwGj0e5kf+IUC/Zf2WfBfSwUIyQ=;
+ b=NKXtYMMHJt/qkMvxCGm4nyTLmlB83O9Z3WGTzDKtwcyDnd/B/iGPwnii0bNUbGvxGy
+ UxHssKxUQYkSr5xVSSCzN1t3anCEf9BwKN7SR0wlvrcGgGnTzjUyUsXgcGdEFCe6sq8r
+ c10h41NAbkl3B/yS0NgeE3Ln78LqXb3sKuVhks033FHGbNuQLHi9mIeEouZe5vHC7Hz0
+ 0MlPw63d7mSnqGQ4qqBIoID+5H/S/ESJK+Zw6qPlPeP1xLZWRUZ1m/n1dP87xDTLQjRP
+ QJOpKdGuEQeKVLRFXn22sTOUGAJiWJ1sJyTmTDMnPBtA85zb8cm4VoY9N/bUvV34bAN+
+ qqOw==
+X-Gm-Message-State: AOJu0YyIp3mv7ZCTjvoK4KgSSgcA011VzqwphMstWG1HbLOnYgf1yxmR
+ Hj2tJVKg9e77rSoUMEw3Hp4sl+YDJsf/uuFik3vbY+AU4GVigmyb8zcr7JpfpSgxUY0hPhzMOvr
+ AYwg=
+X-Gm-Gg: ASbGncsgu92ALGk/ek2Gz/jCUrkXRGP4zr3YlmrfovKClZkiX4uch/r2OEbcvO5S7ox
+ 0B8E2YTKXZned4UTnvTWmpQboXP2zoCD7rwCk1Lk63ZnFOqpVdGedJCAgArf8joendfQsNcmEsh
+ IyoWCW3OtkmUAe7WlPNp0yXvQkmxYO/o3YCvmlKm+XJG+ya0aqL850S9Zf+wDG3jRAdtGI+sLBj
+ 27Gr3cn2lGpz65CQJEgRXOs3PSJif497GI0fNpEXkJ6chFNt91V/sgDFyt3zkOOULjvpdXsWzTc
+ Ya2+ipUEIS1iSvsMSJhEBGTSq7MpgqksSAODwO/LmkziuxNSOcuxbmpw5MZZbDYm
+X-Google-Smtp-Source: AGHT+IGe9IKju6xLCRnsjrM2PR3gKvWlBbJW3BKX00jwJvVvLQIb5sYlpdBXYK4zSlD7Kqf6S3GwYw==
+X-Received: by 2002:a05:600c:4f94:b0:439:30bd:7df9 with SMTP id
+ 5b1f17b1804b1-4396e6aa4a4mr57876685e9.9.1739739796980; 
+ Sun, 16 Feb 2025 13:03:16 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43961884e88sm101602185e9.26.2025.02.16.13.01.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Feb 2025 13:01:29 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 33/39] hw/char/xilinx_uartlite: Make device endianness
- configurable
-Date: Sun, 16 Feb 2025 22:00:57 +0100
-Message-ID: <20250216210103.70235-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250216210103.70235-1-philmd@linaro.org>
-References: <20250216210103.70235-1-philmd@linaro.org>
+ 5b1f17b1804b1-4395a1aa7e8sm135359705e9.26.2025.02.16.13.03.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 16 Feb 2025 13:03:15 -0800 (PST)
+Message-ID: <ff65a241-5035-41a7-beb3-d1c3232430d4@linaro.org>
+Date: Sun, 16 Feb 2025 22:03:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/6] hw/microblaze: Allow running cross-endian vCPUs
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250213122217.62654-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250213122217.62654-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,126 +101,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the DEVICE_NATIVE_ENDIAN MemoryRegionOps by a pair of
-DEVICE_LITTLE_ENDIAN / DEVICE_BIG_ENDIAN.
+On 13/2/25 13:22, Philippe Mathieu-Daudé wrote:
 
-Add the "endianness" property to select the device endianness.
-This property is unspecified by default, and machines need to
-set it explicitly.
+> Philippe Mathieu-Daudé (6):
+>    hw/qdev-properties-system: Introduce EndianMode QAPI enum
+>    hw/intc/xilinx_intc: Make device endianness configurable
+>    hw/net/xilinx_ethlite: Make device endianness configurable
+>    hw/timer/xilinx_timer: Make device endianness configurable
+>    hw/char/xilinx_uartlite: Make device endianness configurable
+>    hw/ssi/xilinx_spi: Make device endianness configurable
 
-Set the proper endianness for each machine using the device.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250213122217.62654-6-philmd@linaro.org>
----
- hw/char/xilinx_uartlite.c                | 34 ++++++++++++++++--------
- hw/microblaze/petalogix_s3adsp1800_mmu.c |  1 +
- hw/riscv/microblaze-v-generic.c          |  1 +
- 3 files changed, 25 insertions(+), 11 deletions(-)
-
-diff --git a/hw/char/xilinx_uartlite.c b/hw/char/xilinx_uartlite.c
-index 56955e0d74a..4037c937eeb 100644
---- a/hw/char/xilinx_uartlite.c
-+++ b/hw/char/xilinx_uartlite.c
-@@ -24,6 +24,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "qapi/error.h"
- #include "hw/char/xilinx_uartlite.h"
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
-@@ -57,6 +58,7 @@
- struct XilinxUARTLite {
-     SysBusDevice parent_obj;
- 
-+    EndianMode model_endianness;
-     MemoryRegion mmio;
-     CharBackend chr;
-     qemu_irq irq;
-@@ -166,17 +168,21 @@ uart_write(void *opaque, hwaddr addr,
-     uart_update_irq(s);
- }
- 
--static const MemoryRegionOps uart_ops = {
--    .read = uart_read,
--    .write = uart_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--    .valid = {
--        .min_access_size = 1,
--        .max_access_size = 4
--    }
-+static const MemoryRegionOps uart_ops[2] = {
-+    [0 ... 1] = {
-+        .read = uart_read,
-+        .write = uart_write,
-+        .valid = {
-+            .min_access_size = 1,
-+            .max_access_size = 4,
-+        },
-+    },
-+    [0].endianness = DEVICE_LITTLE_ENDIAN,
-+    [1].endianness = DEVICE_BIG_ENDIAN,
- };
- 
- static const Property xilinx_uartlite_properties[] = {
-+    DEFINE_PROP_ENDIAN_NODEFAULT("endianness", XilinxUARTLite, model_endianness),
-     DEFINE_PROP_CHR("chardev", XilinxUARTLite, chr),
- };
- 
-@@ -214,6 +220,15 @@ static void xilinx_uartlite_realize(DeviceState *dev, Error **errp)
- {
-     XilinxUARTLite *s = XILINX_UARTLITE(dev);
- 
-+    if (s->model_endianness == ENDIAN_MODE_UNSPECIFIED) {
-+        error_setg(errp, TYPE_XILINX_UARTLITE " property 'endianness'"
-+                         " must be set to 'big' or 'little'");
-+        return;
-+    }
-+
-+    memory_region_init_io(&s->mmio, OBJECT(dev),
-+                          &uart_ops[s->model_endianness == ENDIAN_MODE_BIG],
-+                          s, "xlnx.xps-uartlite", R_MAX * 4);
-     qemu_chr_fe_set_handlers(&s->chr, uart_can_rx, uart_rx,
-                              uart_event, NULL, s, NULL, true);
- }
-@@ -223,9 +238,6 @@ static void xilinx_uartlite_init(Object *obj)
-     XilinxUARTLite *s = XILINX_UARTLITE(obj);
- 
-     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
--
--    memory_region_init_io(&s->mmio, obj, &uart_ops, s,
--                          "xlnx.xps-uartlite", R_MAX * 4);
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
- }
- 
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index caaea222a8c..bdba2006b72 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -109,6 +109,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     }
- 
-     dev = qdev_new(TYPE_XILINX_UARTLITE);
-+    qdev_prop_set_enum(dev, "endianness", endianness);
-     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
-diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-index 3c79f5733b2..d8e67906d26 100644
---- a/hw/riscv/microblaze-v-generic.c
-+++ b/hw/riscv/microblaze-v-generic.c
-@@ -92,6 +92,7 @@ static void mb_v_generic_init(MachineState *machine)
- 
-     /* Uartlite */
-     dev = qdev_new(TYPE_XILINX_UARTLITE);
-+    qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
-     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
--- 
-2.47.1
-
+Series queued again, thanks.
 
