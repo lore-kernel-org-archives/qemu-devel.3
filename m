@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2439EC021A0
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 00:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAFDC021A6
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 00:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjS6R-0007hN-Gr; Sat, 15 Feb 2025 19:01:43 -0500
+	id 1tjS6P-0007gY-Lx; Sat, 15 Feb 2025 19:01:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjS68-0007c1-L5
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:26 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1tjS64-0007bg-TR
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:23 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tjS64-0006GB-Bg
- for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:24 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2fc3027c7aeso3249528a91.0
- for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 16:01:19 -0800 (PST)
+ id 1tjS60-0006Fg-3X
+ for qemu-devel@nongnu.org; Sat, 15 Feb 2025 19:01:20 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-220c92c857aso51555145ad.0
+ for <qemu-devel@nongnu.org>; Sat, 15 Feb 2025 16:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739664078; x=1740268878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739664075; x=1740268875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5JcTFhEmt/GmA4i7xwN3/fTGwcsSGIfQEr5FASNX2Lc=;
- b=bvAFWREcDORuTC0pGLo0SIH+XEzG/3O05VpS7wxjBj2F4NyuOItbbFIMkpdjqKP/B+
- cLoILUtD1r48dxbkf5CIETF651S+bePssKaM4VPjetQ0hQOp2WZLoIaib60BRPrKxh9q
- cE4/G5o4SEhqf5nxBbbxym8ONgVDBNchMtVFWSybmBLQgbrq2PB7GptPhcbD7rV9odqI
- hfMcTcCL2i2Oi9obpUHxMa2+aGnLgl3ITjhHr4YRqINf5QIGfcSP9DM3iJHTPqFFvYhA
- j3cCrJ1YGCksN7zifQfYWO32cQ5wtu17R3qvFpO9kNkw3hBqVWy5d6w7VYw77WfeIAN2
- vKIg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9h4h/F2ApY245CurTqcISpF3IqQ73ar7nOUMwrlXXuA=;
+ b=S0Il9gw+Kl3fFTMioS9G9mu1TflA1/XNKPkiaTeIpCgoYmhF99hNFgjp1dF+DmIWT5
+ RApXXqSu6LO08zwbQ0Gyw+siSAyJWUt85ttPbg9Gqon0IYufG8xy8zTdd0ZhjrRStba0
+ dJDepj4o4O+L4chHi99yjCWxsrEFfbeIwoCzwEF8+2XwNVP+UqboijHUjGT5m+UqpolA
+ o0SJharWfiotPzPFzB5AQ/WssxZdOu4tVzJ64xQvw79DbE/GaelJY39nmwVDl0xq9pGT
+ goqj0ysyQwc9s4PPQQw5A8zV8Dui9/eA9C2Xl8kzPmAWulskzSNfInwQlnWy+RmKm2mo
+ fbQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739664078; x=1740268878;
+ d=1e100.net; s=20230601; t=1739664075; x=1740268875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5JcTFhEmt/GmA4i7xwN3/fTGwcsSGIfQEr5FASNX2Lc=;
- b=Iq2BR366rgUTVl9OLHuiUm0ApBJxLda7MJLK3YYDxhmpZI8wFSMtHxPRW4W7jFkkj0
- LvZnGzscT4+QFwroAvs64xViLf+Y15j4tJFKHCt3TGk/6lHTQP48EBH+TLFbcarDG3fe
- MoalNzdGx32lw/kbz9Mc5y4loSSeI9HKP8SYBZQ35b+vMX575xY1J9duXnDxK1ACjR/e
- pXFA5OqcRit0nQG9v5qBGdSMxKlPVbAfJd1dtfMhnsQZP7R3ajnVmjiUfhKhQQV/Uf4Y
- E47ZGJD7NFYch5lvcURIDye6ELnKjhpNPXGorfoQO7iDpSUeMNsO/0RnMXM+sDBqNZgO
- 3j2A==
-X-Gm-Message-State: AOJu0YxxWd5QIK6p9n+kq435jI80rvIDbClZLejtHO8vNK3GU3GxPlvd
- 47vqXJM2PAUJ3baPj++SwOrr6pYzkFsv6zEBDdBYTDtgh/IguXgoA8EzqrHa1sT+Gzo7azwQn9z
- j
-X-Gm-Gg: ASbGncsOjnGAzeDPr25U21Uo2UkCub6l9Ylryu+1TZumQTg73IQ6ERm1ohqo7Ug4OqQ
- lz1l7LtaJQjU6lOYUv33t8zd6eFvvVF2iK6+7qgwZ14rUybm7UzJ02PgS9aViyCAfFTEuIfThnD
- 61MOUPMezTcZf9BupNxwq6FtM9BU8+SSoS+PmE0kZYdly9Wzk45j8JxBuakLNWvf9E9yt3W2yJK
- CA7c458+jNQzGx2mh5xrBbiD5bmFrz+BDqdd3P0Sd2a9HEpnY/f3E7qfriY6LIeQk8mkP9xumS+
- Id4Nh3lap0EuDl45TlqoC83LiHDlKJ/RT66osLNUSA14+/g=
-X-Google-Smtp-Source: AGHT+IHoMdZQeYLjP+tChVB646qwiuDqx1pVFcimgKRwNbI9w+joyNSpHqxIUN7XqSgqrAOPtUWSzg==
-X-Received: by 2002:a17:90b:3c82:b0:2fa:13f7:960 with SMTP id
- 98e67ed59e1d1-2fc40f0e9dbmr7219765a91.13.1739664078098; 
- Sat, 15 Feb 2025 16:01:18 -0800 (PST)
+ bh=9h4h/F2ApY245CurTqcISpF3IqQ73ar7nOUMwrlXXuA=;
+ b=axuAsvMd3DCfxVJ6mJBbLL3ZLzXHI7+FzuTrRlkItQZzbMI720wYojZRDlaIrn8L9s
+ 29Jg3toYjlG5Ck8cxayHtoNM9qrFAcPwbswOm7YDqtL231GI2i1zjw5MWkEnTBYbBHk1
+ /Jjo3yKr1gwNqc74cmAI8PS7DA9xrTcC6F4xl2nZhcWe3319jLmDr3K1GYqRLr5CL4S4
+ EQXcShFZPGptLBe8LQnutTtyFWXUbJOPc22llfs4G6/30lS1BYy006vA4GMhcUB7yOOx
+ jq9BjjpkvaS2Q1UyiqbYfeUkSTHj4zpwjd7ycr/kO5nLLc77UqevEa2bGAVn7aSdrIFc
+ AKPg==
+X-Gm-Message-State: AOJu0Yx55hlof2S88O9hr/CAT58drZRzXdhhCK76MWXBv5JOD4PgUBYs
+ HiRiwF6FENj1DcjY8Tuwc4hH9jmcfpVnj3FvPEoQK7hDquOkd8MjT6ze5fmKRSsIWfpL9hlevkx
+ U
+X-Gm-Gg: ASbGncvk9dwpLQNRQbG+b5D2ggJRH7liWQqIPHaxMHU7xGOSod6VDfGAge78tYlUFXI
+ rU/yERzyqCXJYMKxGsE2nXzrdq79kCK3L89Bwmtk4x1RMD4k2ATp7Zdd9WdfB9RHbuzNoJ2x3/O
+ vyi27MiVCbtMb4O5jeoZO7iFSUsu/MM+2lpCiCfU9fXhPsuW2SWPGWpI5K8peMNloQb+2Y/kp4t
+ klQiInAfN+y6wjxrs9lMhFRaZeWSSGn/tb2pMC0VugwvgUxOwQxJjxSuMKck3LZkLUotnxloLvC
+ 2TUxgjU2FxigwEV4cbIU0Z4+w1+D1d3dI7XVp3RcVuhb28M=
+X-Google-Smtp-Source: AGHT+IHLhNSv5dNoh2YyKiRiTxjYNw9fPb864FFjwuEdIXsH/Yh9acl27LoyyeTn4f9iIN5B4I5Rzw==
+X-Received: by 2002:a17:902:d482:b0:220:c813:dfbe with SMTP id
+ d9443c01a7336-220d357aa30mr181020255ad.17.1739664074422; 
+ Sat, 15 Feb 2025 16:01:14 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d5366729sm48960315ad.79.2025.02.15.16.01.17
+ d9443c01a7336-220d5366729sm48960315ad.79.2025.02.15.16.01.13
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Feb 2025 16:01:17 -0800 (PST)
+ Sat, 15 Feb 2025 16:01:13 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/24] tcg: Replace addr{lo,
- hi}_reg with addr_reg in TCGLabelQemuLdst
-Date: Sat, 15 Feb 2025 16:00:53 -0800
-Message-ID: <20250216000109.2606518-10-richard.henderson@linaro.org>
+Subject: [PULL 04/24] tcg: Merge INDEX_op_qemu_*_{a32,a64}_*
+Date: Sat, 15 Feb 2025 16:00:48 -0800
+Message-ID: <20250216000109.2606518-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250216000109.2606518-1-richard.henderson@linaro.org>
 References: <20250216000109.2606518-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,289 +98,1364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is now always only one guest address register.
+Since 64-on-32 is now unsupported, guest addresses always
+fit in one host register.  Drop the replication of opcodes.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg.c                        | 18 +++++++++---------
- tcg/aarch64/tcg-target.c.inc     |  4 ++--
- tcg/arm/tcg-target.c.inc         |  4 ++--
- tcg/i386/tcg-target.c.inc        |  4 ++--
- tcg/loongarch64/tcg-target.c.inc |  4 ++--
- tcg/mips/tcg-target.c.inc        |  4 ++--
- tcg/ppc/tcg-target.c.inc         |  4 ++--
- tcg/riscv/tcg-target.c.inc       |  4 ++--
- tcg/s390x/tcg-target.c.inc       |  4 ++--
- tcg/sparc64/tcg-target.c.inc     |  4 ++--
- 10 files changed, 27 insertions(+), 27 deletions(-)
+ include/tcg/tcg-opc.h            |  28 ++------
+ tcg/optimize.c                   |  21 ++----
+ tcg/tcg-op-ldst.c                |  82 +++++----------------
+ tcg/tcg.c                        |  42 ++++-------
+ tcg/tci.c                        | 119 ++++++-------------------------
+ tcg/aarch64/tcg-target.c.inc     |  36 ++++------
+ tcg/arm/tcg-target.c.inc         |  40 +++--------
+ tcg/i386/tcg-target.c.inc        |  69 ++++--------------
+ tcg/loongarch64/tcg-target.c.inc |  36 ++++------
+ tcg/mips/tcg-target.c.inc        |  51 +++----------
+ tcg/ppc/tcg-target.c.inc         |  68 ++++--------------
+ tcg/riscv/tcg-target.c.inc       |  24 +++----
+ tcg/s390x/tcg-target.c.inc       |  36 ++++------
+ tcg/sparc64/tcg-target.c.inc     |  24 +++----
+ tcg/tci/tcg-target.c.inc         |  60 ++++------------
+ 15 files changed, 177 insertions(+), 559 deletions(-)
 
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index 9383e295f4..5bf78b0764 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -188,36 +188,22 @@ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+ DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
+ DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
+ 
+-/* Replicate ld/st ops for 32 and 64-bit guest addresses. */
+-DEF(qemu_ld_a32_i32, 1, 1, 1,
++DEF(qemu_ld_i32, 1, 1, 1,
+     TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st_a32_i32, 0, 1 + 1, 1,
++DEF(qemu_st_i32, 0, 1 + 1, 1,
+     TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_ld_a32_i64, DATA64_ARGS, 1, 1,
++DEF(qemu_ld_i64, DATA64_ARGS, 1, 1,
+     TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st_a32_i64, 0, DATA64_ARGS + 1, 1,
+-    TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-
+-DEF(qemu_ld_a64_i32, 1, DATA64_ARGS, 1,
+-    TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st_a64_i32, 0, 1 + DATA64_ARGS, 1,
+-    TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_ld_a64_i64, DATA64_ARGS, DATA64_ARGS, 1,
+-    TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st_a64_i64, 0, DATA64_ARGS + DATA64_ARGS, 1,
++DEF(qemu_st_i64, 0, DATA64_ARGS + 1, 1,
+     TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+ 
+ /* Only used by i386 to cope with stupid register constraints. */
+-DEF(qemu_st8_a32_i32, 0, 1 + 1, 1,
+-    TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st8_a64_i32, 0, 1 + DATA64_ARGS, 1,
++DEF(qemu_st8_i32, 0, 1 + 1, 1,
+     TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+ 
+ /* Only for 64-bit hosts at the moment. */
+-DEF(qemu_ld_a32_i128, 2, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_ld_a64_i128, 2, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st_a32_i128, 0, 3, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+-DEF(qemu_st_a64_i128, 0, 3, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
++DEF(qemu_ld_i128, 2, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
++DEF(qemu_st_i128, 0, 3, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS)
+ 
+ /* Host vector support.  */
+ 
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index bca11cc427..f922f86a1d 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -3011,29 +3011,22 @@ void tcg_optimize(TCGContext *s)
+         CASE_OP_32_64_VEC(orc):
+             done = fold_orc(&ctx, op);
+             break;
+-        case INDEX_op_qemu_ld_a32_i32:
+-        case INDEX_op_qemu_ld_a64_i32:
++        case INDEX_op_qemu_ld_i32:
+             done = fold_qemu_ld_1reg(&ctx, op);
+             break;
+-        case INDEX_op_qemu_ld_a32_i64:
+-        case INDEX_op_qemu_ld_a64_i64:
++        case INDEX_op_qemu_ld_i64:
+             if (TCG_TARGET_REG_BITS == 64) {
+                 done = fold_qemu_ld_1reg(&ctx, op);
+                 break;
+             }
+             QEMU_FALLTHROUGH;
+-        case INDEX_op_qemu_ld_a32_i128:
+-        case INDEX_op_qemu_ld_a64_i128:
++        case INDEX_op_qemu_ld_i128:
+             done = fold_qemu_ld_2reg(&ctx, op);
+             break;
+-        case INDEX_op_qemu_st8_a32_i32:
+-        case INDEX_op_qemu_st8_a64_i32:
+-        case INDEX_op_qemu_st_a32_i32:
+-        case INDEX_op_qemu_st_a64_i32:
+-        case INDEX_op_qemu_st_a32_i64:
+-        case INDEX_op_qemu_st_a64_i64:
+-        case INDEX_op_qemu_st_a32_i128:
+-        case INDEX_op_qemu_st_a64_i128:
++        case INDEX_op_qemu_st8_i32:
++        case INDEX_op_qemu_st_i32:
++        case INDEX_op_qemu_st_i64:
++        case INDEX_op_qemu_st_i128:
+             done = fold_qemu_st(&ctx, op);
+             break;
+         CASE_OP_32_64(rem):
+diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
+index 7ba9a3ef7e..73838e2701 100644
+--- a/tcg/tcg-op-ldst.c
++++ b/tcg/tcg-op-ldst.c
+@@ -217,7 +217,6 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+     MemOp orig_memop;
+     MemOpIdx orig_oi, oi;
+     TCGv_i64 copy_addr;
+-    TCGOpcode opc;
+ 
+     tcg_gen_req_mo(TCG_MO_LD_LD | TCG_MO_ST_LD);
+     orig_memop = memop = tcg_canonicalize_memop(memop, 0, 0);
+@@ -233,12 +232,8 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+     }
+ 
+     copy_addr = plugin_maybe_preserve_addr(addr);
+-    if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-        opc = INDEX_op_qemu_ld_a32_i32;
+-    } else {
+-        opc = INDEX_op_qemu_ld_a64_i32;
+-    }
+-    gen_ldst(opc, TCG_TYPE_I32, tcgv_i32_temp(val), NULL, addr, oi);
++    gen_ldst(INDEX_op_qemu_ld_i32, TCG_TYPE_I32,
++             tcgv_i32_temp(val), NULL, addr, oi);
+     plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
+                                  QEMU_PLUGIN_MEM_R);
+ 
+@@ -295,17 +290,9 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+     }
+ 
+     if (TCG_TARGET_HAS_qemu_st8_i32 && (memop & MO_SIZE) == MO_8) {
+-        if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-            opc = INDEX_op_qemu_st8_a32_i32;
+-        } else {
+-            opc = INDEX_op_qemu_st8_a64_i32;
+-        }
++        opc = INDEX_op_qemu_st8_i32;
+     } else {
+-        if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-            opc = INDEX_op_qemu_st_a32_i32;
+-        } else {
+-            opc = INDEX_op_qemu_st_a64_i32;
+-        }
++        opc = INDEX_op_qemu_st_i32;
+     }
+     gen_ldst(opc, TCG_TYPE_I32, tcgv_i32_temp(val), NULL, addr, oi);
+     plugin_gen_mem_callbacks_i32(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
+@@ -329,7 +316,6 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+     MemOp orig_memop;
+     MemOpIdx orig_oi, oi;
+     TCGv_i64 copy_addr;
+-    TCGOpcode opc;
+ 
+     if (TCG_TARGET_REG_BITS == 32 && (memop & MO_SIZE) < MO_64) {
+         tcg_gen_qemu_ld_i32_int(TCGV_LOW(val), addr, idx, memop);
+@@ -355,12 +341,7 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+     }
+ 
+     copy_addr = plugin_maybe_preserve_addr(addr);
+-    if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-        opc = INDEX_op_qemu_ld_a32_i64;
+-    } else {
+-        opc = INDEX_op_qemu_ld_a64_i64;
+-    }
+-    gen_ldst_i64(opc, val, addr, oi);
++    gen_ldst_i64(INDEX_op_qemu_ld_i64, val, addr, oi);
+     plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
+                                  QEMU_PLUGIN_MEM_R);
+ 
+@@ -397,7 +378,6 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+ {
+     TCGv_i64 swap = NULL;
+     MemOpIdx orig_oi, oi;
+-    TCGOpcode opc;
+ 
+     if (TCG_TARGET_REG_BITS == 32 && (memop & MO_SIZE) < MO_64) {
+         tcg_gen_qemu_st_i32_int(TCGV_LOW(val), addr, idx, memop);
+@@ -428,12 +408,7 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+         oi = make_memop_idx(memop, idx);
+     }
+ 
+-    if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-        opc = INDEX_op_qemu_st_a32_i64;
+-    } else {
+-        opc = INDEX_op_qemu_st_a64_i64;
+-    }
+-    gen_ldst_i64(opc, val, addr, oi);
++    gen_ldst_i64(INDEX_op_qemu_st_i64, val, addr, oi);
+     plugin_gen_mem_callbacks_i64(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
+ 
+     if (swap) {
+@@ -545,7 +520,6 @@ static void tcg_gen_qemu_ld_i128_int(TCGv_i128 val, TCGTemp *addr,
+ {
+     MemOpIdx orig_oi;
+     TCGv_i64 ext_addr = NULL;
+-    TCGOpcode opc;
+ 
+     check_max_alignment(memop_alignment_bits(memop));
+     tcg_gen_req_mo(TCG_MO_LD_LD | TCG_MO_ST_LD);
+@@ -573,12 +547,7 @@ static void tcg_gen_qemu_ld_i128_int(TCGv_i128 val, TCGTemp *addr,
+             hi = TCGV128_HIGH(val);
+         }
+ 
+-        if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-            opc = INDEX_op_qemu_ld_a32_i128;
+-        } else {
+-            opc = INDEX_op_qemu_ld_a64_i128;
+-        }
+-        gen_ldst(opc, TCG_TYPE_I128, tcgv_i64_temp(lo),
++        gen_ldst(INDEX_op_qemu_ld_i128, TCG_TYPE_I128, tcgv_i64_temp(lo),
+                  tcgv_i64_temp(hi), addr, oi);
+ 
+         if (need_bswap) {
+@@ -594,12 +563,6 @@ static void tcg_gen_qemu_ld_i128_int(TCGv_i128 val, TCGTemp *addr,
+         canonicalize_memop_i128_as_i64(mop, memop);
+         need_bswap = (mop[0] ^ memop) & MO_BSWAP;
+ 
+-        if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-            opc = INDEX_op_qemu_ld_a32_i64;
+-        } else {
+-            opc = INDEX_op_qemu_ld_a64_i64;
+-        }
+-
+         /*
+          * Since there are no global TCGv_i128, there is no visible state
+          * changed if the second load faults.  Load directly into the two
+@@ -613,7 +576,8 @@ static void tcg_gen_qemu_ld_i128_int(TCGv_i128 val, TCGTemp *addr,
+             y = TCGV128_LOW(val);
+         }
+ 
+-        gen_ldst_i64(opc, x, addr, make_memop_idx(mop[0], idx));
++        gen_ldst_i64(INDEX_op_qemu_ld_i64, x, addr,
++                     make_memop_idx(mop[0], idx));
+ 
+         if (need_bswap) {
+             tcg_gen_bswap64_i64(x, x);
+@@ -629,7 +593,8 @@ static void tcg_gen_qemu_ld_i128_int(TCGv_i128 val, TCGTemp *addr,
+             addr_p8 = tcgv_i64_temp(t);
+         }
+ 
+-        gen_ldst_i64(opc, y, addr_p8, make_memop_idx(mop[1], idx));
++        gen_ldst_i64(INDEX_op_qemu_ld_i64, y, addr_p8,
++                     make_memop_idx(mop[1], idx));
+         tcg_temp_free_internal(addr_p8);
+ 
+         if (need_bswap) {
+@@ -663,7 +628,6 @@ static void tcg_gen_qemu_st_i128_int(TCGv_i128 val, TCGTemp *addr,
+ {
+     MemOpIdx orig_oi;
+     TCGv_i64 ext_addr = NULL;
+-    TCGOpcode opc;
+ 
+     check_max_alignment(memop_alignment_bits(memop));
+     tcg_gen_req_mo(TCG_MO_ST_LD | TCG_MO_ST_ST);
+@@ -694,13 +658,8 @@ static void tcg_gen_qemu_st_i128_int(TCGv_i128 val, TCGTemp *addr,
+             hi = TCGV128_HIGH(val);
+         }
+ 
+-        if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-            opc = INDEX_op_qemu_st_a32_i128;
+-        } else {
+-            opc = INDEX_op_qemu_st_a64_i128;
+-        }
+-        gen_ldst(opc, TCG_TYPE_I128, tcgv_i64_temp(lo),
+-                 tcgv_i64_temp(hi), addr, oi);
++        gen_ldst(INDEX_op_qemu_st_i128, TCG_TYPE_I128,
++                 tcgv_i64_temp(lo), tcgv_i64_temp(hi), addr, oi);
+ 
+         if (need_bswap) {
+             tcg_temp_free_i64(lo);
+@@ -713,12 +672,6 @@ static void tcg_gen_qemu_st_i128_int(TCGv_i128 val, TCGTemp *addr,
+ 
+         canonicalize_memop_i128_as_i64(mop, memop);
+ 
+-        if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+-            opc = INDEX_op_qemu_st_a32_i64;
+-        } else {
+-            opc = INDEX_op_qemu_st_a64_i64;
+-        }
+-
+         if ((memop & MO_BSWAP) == MO_LE) {
+             x = TCGV128_LOW(val);
+             y = TCGV128_HIGH(val);
+@@ -733,7 +686,8 @@ static void tcg_gen_qemu_st_i128_int(TCGv_i128 val, TCGTemp *addr,
+             x = b;
+         }
+ 
+-        gen_ldst_i64(opc, x, addr, make_memop_idx(mop[0], idx));
++        gen_ldst_i64(INDEX_op_qemu_st_i64, x, addr,
++                     make_memop_idx(mop[0], idx));
+ 
+         if (tcg_ctx->addr_type == TCG_TYPE_I32) {
+             TCGv_i32 t = tcg_temp_ebb_new_i32();
+@@ -747,10 +701,12 @@ static void tcg_gen_qemu_st_i128_int(TCGv_i128 val, TCGTemp *addr,
+ 
+         if (b) {
+             tcg_gen_bswap64_i64(b, y);
+-            gen_ldst_i64(opc, b, addr_p8, make_memop_idx(mop[1], idx));
++            gen_ldst_i64(INDEX_op_qemu_st_i64, b, addr_p8,
++                         make_memop_idx(mop[1], idx));
+             tcg_temp_free_i64(b);
+         } else {
+-            gen_ldst_i64(opc, y, addr_p8, make_memop_idx(mop[1], idx));
++            gen_ldst_i64(INDEX_op_qemu_st_i64, y, addr_p8,
++                         make_memop_idx(mop[1], idx));
+         }
+         tcg_temp_free_internal(addr_p8);
+     } else {
 diff --git a/tcg/tcg.c b/tcg/tcg.c
-index fef93b25ff..55cb9b3ac7 100644
+index 14c2d38160..fef93b25ff 100644
 --- a/tcg/tcg.c
 +++ b/tcg/tcg.c
-@@ -100,8 +100,7 @@ struct TCGLabelQemuLdst {
-     bool is_ld;             /* qemu_ld: true, qemu_st: false */
-     MemOpIdx oi;
-     TCGType type;           /* result type of a load */
--    TCGReg addrlo_reg;      /* reg index for low word of guest virtual addr */
--    TCGReg addrhi_reg;      /* reg index for high word of guest virtual addr */
-+    TCGReg addr_reg;        /* reg index for guest virtual addr */
-     TCGReg datalo_reg;      /* reg index for low word to be loaded or stored */
-     TCGReg datahi_reg;      /* reg index for high word to be loaded or stored */
-     const tcg_insn_unit *raddr;   /* addr of the next IR of qemu_ld/st IR */
-@@ -6061,7 +6060,7 @@ static void tcg_out_ld_helper_args(TCGContext *s, const TCGLabelQemuLdst *ldst,
-          */
-         tcg_out_helper_add_mov(mov, loc + HOST_BIG_ENDIAN,
-                                TCG_TYPE_I32, TCG_TYPE_I32,
--                               ldst->addrlo_reg, -1);
-+                               ldst->addr_reg, -1);
-         tcg_out_helper_load_slots(s, 1, mov, parm);
+@@ -2147,24 +2147,17 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_exit_tb:
+     case INDEX_op_goto_tb:
+     case INDEX_op_goto_ptr:
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_ld_i64:
++    case INDEX_op_qemu_st_i64:
+         return true;
  
-         tcg_out_helper_load_imm(s, loc[!HOST_BIG_ENDIAN].arg_slot,
-@@ -6069,7 +6068,7 @@ static void tcg_out_ld_helper_args(TCGContext *s, const TCGLabelQemuLdst *ldst,
-         next_arg += 2;
-     } else {
-         nmov = tcg_out_helper_add_mov(mov, loc, TCG_TYPE_I64, s->addr_type,
--                                      ldst->addrlo_reg, ldst->addrhi_reg);
-+                                      ldst->addr_reg, -1);
-         tcg_out_helper_load_slots(s, nmov, mov, parm);
-         next_arg += nmov;
-     }
-@@ -6226,21 +6225,22 @@ static void tcg_out_st_helper_args(TCGContext *s, const TCGLabelQemuLdst *ldst,
+-    case INDEX_op_qemu_st8_a32_i32:
+-    case INDEX_op_qemu_st8_a64_i32:
++    case INDEX_op_qemu_st8_i32:
+         return TCG_TARGET_HAS_qemu_st8_i32;
  
-     /* Handle addr argument. */
-     loc = &info->in[next_arg];
--    if (TCG_TARGET_REG_BITS == 32 && s->addr_type == TCG_TYPE_I32) {
-+    tcg_debug_assert(s->addr_type <= TCG_TYPE_REG);
-+    if (TCG_TARGET_REG_BITS == 32) {
-         /*
--         * 32-bit host with 32-bit guest: zero-extend the guest address
-+         * 32-bit host (and thus 32-bit guest): zero-extend the guest address
-          * to 64-bits for the helper by storing the low part.  Later,
-          * after we have processed the register inputs, we will load a
-          * zero for the high part.
-          */
-         tcg_out_helper_add_mov(mov, loc + HOST_BIG_ENDIAN,
-                                TCG_TYPE_I32, TCG_TYPE_I32,
--                               ldst->addrlo_reg, -1);
-+                               ldst->addr_reg, -1);
-         next_arg += 2;
-         nmov += 1;
-     } else {
-         n = tcg_out_helper_add_mov(mov, loc, TCG_TYPE_I64, s->addr_type,
--                                   ldst->addrlo_reg, ldst->addrhi_reg);
-+                                   ldst->addr_reg, -1);
-         next_arg += n;
-         nmov += n;
-     }
-@@ -6288,7 +6288,7 @@ static void tcg_out_st_helper_args(TCGContext *s, const TCGLabelQemuLdst *ldst,
-         g_assert_not_reached();
-     }
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_ld_i128:
++    case INDEX_op_qemu_st_i128:
+         return TCG_TARGET_HAS_qemu_ldst_i128;
  
--    if (TCG_TARGET_REG_BITS == 32 && s->addr_type == TCG_TYPE_I32) {
-+    if (TCG_TARGET_REG_BITS == 32) {
-         /* Zero extend the address by loading a zero for the high part. */
-         loc = &info->in[1 + !HOST_BIG_ENDIAN];
-         tcg_out_helper_load_imm(s, loc->arg_slot, TCG_TYPE_I32, 0, parm);
+     case INDEX_op_mov_i32:
+@@ -2862,20 +2855,13 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+                 }
+                 i = 1;
+                 break;
+-            case INDEX_op_qemu_ld_a32_i32:
+-            case INDEX_op_qemu_ld_a64_i32:
+-            case INDEX_op_qemu_st_a32_i32:
+-            case INDEX_op_qemu_st_a64_i32:
+-            case INDEX_op_qemu_st8_a32_i32:
+-            case INDEX_op_qemu_st8_a64_i32:
+-            case INDEX_op_qemu_ld_a32_i64:
+-            case INDEX_op_qemu_ld_a64_i64:
+-            case INDEX_op_qemu_st_a32_i64:
+-            case INDEX_op_qemu_st_a64_i64:
+-            case INDEX_op_qemu_ld_a32_i128:
+-            case INDEX_op_qemu_ld_a64_i128:
+-            case INDEX_op_qemu_st_a32_i128:
+-            case INDEX_op_qemu_st_a64_i128:
++            case INDEX_op_qemu_ld_i32:
++            case INDEX_op_qemu_st_i32:
++            case INDEX_op_qemu_st8_i32:
++            case INDEX_op_qemu_ld_i64:
++            case INDEX_op_qemu_st_i64:
++            case INDEX_op_qemu_ld_i128:
++            case INDEX_op_qemu_st_i128:
+                 {
+                     const char *s_al, *s_op, *s_at;
+                     MemOpIdx oi = op->args[k++];
+diff --git a/tcg/tci.c b/tcg/tci.c
+index 8c1c53424d..d223258efe 100644
+--- a/tcg/tci.c
++++ b/tcg/tci.c
+@@ -154,16 +154,6 @@ static void tci_args_rrrbb(uint32_t insn, TCGReg *r0, TCGReg *r1,
+     *i4 = extract32(insn, 26, 6);
+ }
+ 
+-static void tci_args_rrrrr(uint32_t insn, TCGReg *r0, TCGReg *r1,
+-                           TCGReg *r2, TCGReg *r3, TCGReg *r4)
+-{
+-    *r0 = extract32(insn, 8, 4);
+-    *r1 = extract32(insn, 12, 4);
+-    *r2 = extract32(insn, 16, 4);
+-    *r3 = extract32(insn, 20, 4);
+-    *r4 = extract32(insn, 24, 4);
+-}
+-
+ static void tci_args_rrrr(uint32_t insn,
+                           TCGReg *r0, TCGReg *r1, TCGReg *r2, TCGReg *r3)
+ {
+@@ -912,43 +902,21 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tb_ptr = ptr;
+             break;
+ 
+-        case INDEX_op_qemu_ld_a32_i32:
++        case INDEX_op_qemu_ld_i32:
+             tci_args_rrm(insn, &r0, &r1, &oi);
+-            taddr = (uint32_t)regs[r1];
+-            goto do_ld_i32;
+-        case INDEX_op_qemu_ld_a64_i32:
+-            if (TCG_TARGET_REG_BITS == 64) {
+-                tci_args_rrm(insn, &r0, &r1, &oi);
+-                taddr = regs[r1];
+-            } else {
+-                tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+-                taddr = tci_uint64(regs[r2], regs[r1]);
+-                oi = regs[r3];
+-            }
+-        do_ld_i32:
++            taddr = regs[r1];
+             regs[r0] = tci_qemu_ld(env, taddr, oi, tb_ptr);
+             break;
+ 
+-        case INDEX_op_qemu_ld_a32_i64:
+-            if (TCG_TARGET_REG_BITS == 64) {
+-                tci_args_rrm(insn, &r0, &r1, &oi);
+-                taddr = (uint32_t)regs[r1];
+-            } else {
+-                tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+-                taddr = (uint32_t)regs[r2];
+-                oi = regs[r3];
+-            }
+-            goto do_ld_i64;
+-        case INDEX_op_qemu_ld_a64_i64:
++        case INDEX_op_qemu_ld_i64:
+             if (TCG_TARGET_REG_BITS == 64) {
+                 tci_args_rrm(insn, &r0, &r1, &oi);
+                 taddr = regs[r1];
+             } else {
+-                tci_args_rrrrr(insn, &r0, &r1, &r2, &r3, &r4);
+-                taddr = tci_uint64(regs[r3], regs[r2]);
+-                oi = regs[r4];
++                tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
++                taddr = regs[r2];
++                oi = regs[r3];
+             }
+-        do_ld_i64:
+             tmp64 = tci_qemu_ld(env, taddr, oi, tb_ptr);
+             if (TCG_TARGET_REG_BITS == 32) {
+                 tci_write_reg64(regs, r1, r0, tmp64);
+@@ -957,47 +925,23 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             }
+             break;
+ 
+-        case INDEX_op_qemu_st_a32_i32:
++        case INDEX_op_qemu_st_i32:
+             tci_args_rrm(insn, &r0, &r1, &oi);
+-            taddr = (uint32_t)regs[r1];
+-            goto do_st_i32;
+-        case INDEX_op_qemu_st_a64_i32:
+-            if (TCG_TARGET_REG_BITS == 64) {
+-                tci_args_rrm(insn, &r0, &r1, &oi);
+-                taddr = regs[r1];
+-            } else {
+-                tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+-                taddr = tci_uint64(regs[r2], regs[r1]);
+-                oi = regs[r3];
+-            }
+-        do_st_i32:
++            taddr = regs[r1];
+             tci_qemu_st(env, taddr, regs[r0], oi, tb_ptr);
+             break;
+ 
+-        case INDEX_op_qemu_st_a32_i64:
+-            if (TCG_TARGET_REG_BITS == 64) {
+-                tci_args_rrm(insn, &r0, &r1, &oi);
+-                tmp64 = regs[r0];
+-                taddr = (uint32_t)regs[r1];
+-            } else {
+-                tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+-                tmp64 = tci_uint64(regs[r1], regs[r0]);
+-                taddr = (uint32_t)regs[r2];
+-                oi = regs[r3];
+-            }
+-            goto do_st_i64;
+-        case INDEX_op_qemu_st_a64_i64:
++        case INDEX_op_qemu_st_i64:
+             if (TCG_TARGET_REG_BITS == 64) {
+                 tci_args_rrm(insn, &r0, &r1, &oi);
+                 tmp64 = regs[r0];
+                 taddr = regs[r1];
+             } else {
+-                tci_args_rrrrr(insn, &r0, &r1, &r2, &r3, &r4);
++                tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+                 tmp64 = tci_uint64(regs[r1], regs[r0]);
+-                taddr = tci_uint64(regs[r3], regs[r2]);
+-                oi = regs[r4];
++                taddr = regs[r2];
++                oi = regs[r3];
+             }
+-        do_st_i64:
+             tci_qemu_st(env, taddr, tmp64, oi, tb_ptr);
+             break;
+ 
+@@ -1269,42 +1213,21 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
+                            str_r(r3), str_r(r4), str_r(r5));
+         break;
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_st_a32_i32:
+-        len = 1 + 1;
+-        goto do_qemu_ldst;
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-        len = 1 + DIV_ROUND_UP(64, TCG_TARGET_REG_BITS);
+-        goto do_qemu_ldst;
+-    case INDEX_op_qemu_ld_a64_i64:
+-    case INDEX_op_qemu_st_a64_i64:
+-        len = 2 * DIV_ROUND_UP(64, TCG_TARGET_REG_BITS);
+-        goto do_qemu_ldst;
+-    do_qemu_ldst:
+-        switch (len) {
+-        case 2:
+-            tci_args_rrm(insn, &r0, &r1, &oi);
+-            info->fprintf_func(info->stream, "%-12s  %s, %s, %x",
+-                               op_name, str_r(r0), str_r(r1), oi);
+-            break;
+-        case 3:
++    case INDEX_op_qemu_ld_i64:
++    case INDEX_op_qemu_st_i64:
++        if (TCG_TARGET_REG_BITS == 32) {
+             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+             info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s",
+                                op_name, str_r(r0), str_r(r1),
+                                str_r(r2), str_r(r3));
+             break;
+-        case 4:
+-            tci_args_rrrrr(insn, &r0, &r1, &r2, &r3, &r4);
+-            info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s, %s",
+-                               op_name, str_r(r0), str_r(r1),
+-                               str_r(r2), str_r(r3), str_r(r4));
+-            break;
+-        default:
+-            g_assert_not_reached();
+         }
++        /* fall through */
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_st_i32:
++        tci_args_rrm(insn, &r0, &r1, &oi);
++        info->fprintf_func(info->stream, "%-12s  %s, %s, %x",
++                           op_name, str_r(r0), str_r(r1), oi);
+         break;
+ 
+     case 0:
 diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 45dc2c649b..6f383c1592 100644
+index 66eb4b73b5..45dc2c649b 100644
 --- a/tcg/aarch64/tcg-target.c.inc
 +++ b/tcg/aarch64/tcg-target.c.inc
-@@ -1775,7 +1775,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr_reg;
-+        ldst->addr_reg = addr_reg;
+@@ -2398,24 +2398,18 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
+         tcg_out_insn(s, 3506, CSEL, ext, a0, REG0(3), REG0(4), args[5]);
+         break;
  
-         mask_type = (s->page_bits + s->tlb_dyn_max_bits > 32
-                      ? TCG_TYPE_I64 : TCG_TYPE_I32);
-@@ -1837,7 +1837,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_ld_i64:
+         tcg_out_qemu_ld(s, a0, a1, a2, ext);
+         break;
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_st_i64:
+         tcg_out_qemu_st(s, REG0(0), a1, a2, ext);
+         break;
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         tcg_out_qemu_ldst_i128(s, a0, a1, a2, args[3], true);
+         break;
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         tcg_out_qemu_ldst_i128(s, REG0(0), REG0(1), a2, args[3], false);
+         break;
  
-             ldst->is_ld = is_ld;
-             ldst->oi = oi;
--            ldst->addrlo_reg = addr_reg;
-+            ldst->addr_reg = addr_reg;
+@@ -3084,21 +3078,15 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_movcond_i64:
+         return C_O1_I4(r, r, rC, rZ, rZ);
  
-             /* tst addr, #mask */
-             tcg_out_logicali(s, I3404_ANDSI, 0, TCG_REG_XZR, addr_reg, a_mask);
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_ld_i64:
+         return C_O1_I1(r, r);
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         return C_O2_I1(r, r, r);
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_st_i64:
+         return C_O0_I2(rZ, r);
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         return C_O0_I3(rZ, rZ, r);
+ 
+     case INDEX_op_deposit_i32:
 diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 252d9aa7e5..865aab0ccd 100644
+index 12dad7307f..05bb367a39 100644
 --- a/tcg/arm/tcg-target.c.inc
 +++ b/tcg/arm/tcg-target.c.inc
-@@ -1491,7 +1491,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr;
-+        ldst->addr_reg = addr;
+@@ -2071,37 +2071,21 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                         ARITH_MOV, args[0], 0, 0);
+         break;
  
-         /* Load cpu->neg.tlb.f[mmu_idx].{mask,table} into {r0,r1}.  */
-         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, mask) != 0);
-@@ -1558,7 +1558,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr;
-+        ldst->addr_reg = addr;
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, args[0], -1, args[1], -1, args[2], TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a64_i32:
+-        tcg_out_qemu_ld(s, args[0], -1, args[1], args[2],
+-                        args[3], TCG_TYPE_I32);
+-        break;
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         tcg_out_qemu_ld(s, args[0], args[1], args[2], -1,
+                         args[3], TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_ld_a64_i64:
+-        tcg_out_qemu_ld(s, args[0], args[1], args[2], args[3],
+-                        args[4], TCG_TYPE_I64);
+-        break;
  
-         /* We are expecting alignment to max out at 7 */
-         tcg_debug_assert(a_mask <= 0xff);
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, args[0], -1, args[1], -1, args[2], TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a64_i32:
+-        tcg_out_qemu_st(s, args[0], -1, args[1], args[2],
+-                        args[3], TCG_TYPE_I32);
+-        break;
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         tcg_out_qemu_st(s, args[0], args[1], args[2], -1,
+                         args[3], TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_st_a64_i64:
+-        tcg_out_qemu_st(s, args[0], args[1], args[2], args[3],
+-                        args[4], TCG_TYPE_I64);
+-        break;
+ 
+     case INDEX_op_bswap16_i32:
+         tcg_out_bswap16(s, COND_AL, args[0], args[1], args[2]);
+@@ -2243,22 +2227,14 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_setcond2_i32:
+         return C_O1_I4(r, r, r, rI, rI);
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         return C_O1_I1(r, q);
+-    case INDEX_op_qemu_ld_a64_i32:
+-        return C_O1_I2(r, q, q);
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         return C_O2_I1(e, p, q);
+-    case INDEX_op_qemu_ld_a64_i64:
+-        return C_O2_I2(e, p, q, q);
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         return C_O0_I2(q, q);
+-    case INDEX_op_qemu_st_a64_i32:
+-        return C_O0_I3(q, q, q);
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         return C_O0_I3(Q, p, q);
+-    case INDEX_op_qemu_st_a64_i64:
+-        return C_O0_I4(Q, p, q, q);
+ 
+     case INDEX_op_st_vec:
+         return C_O0_I2(w, r);
 diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-index b33fe7fe23..cfea4c496d 100644
+index 2cac151331..ca6e8abc57 100644
 --- a/tcg/i386/tcg-target.c.inc
 +++ b/tcg/i386/tcg-target.c.inc
-@@ -2201,7 +2201,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr;
-+        ldst->addr_reg = addr;
+@@ -2879,62 +2879,33 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_NOT, a0);
+         break;
  
+-    case INDEX_op_qemu_ld_a64_i32:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_ld(s, a0, -1, a1, a2, args[3], TCG_TYPE_I32);
+-            break;
+-        }
+-        /* fall through */
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, a0, -1, a1, -1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
          if (TCG_TARGET_REG_BITS == 64) {
-             ttype = s->addr_type;
-@@ -2257,7 +2257,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr;
-+        ldst->addr_reg = addr;
+             tcg_out_qemu_ld(s, a0, -1, a1, -1, a2, TCG_TYPE_I64);
+         } else {
+             tcg_out_qemu_ld(s, a0, a1, a2, -1, args[3], TCG_TYPE_I64);
+         }
+         break;
+-    case INDEX_op_qemu_ld_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_qemu_ld(s, a0, -1, a1, -1, a2, TCG_TYPE_I64);
+-        } else {
+-            tcg_out_qemu_ld(s, a0, a1, a2, args[3], args[4], TCG_TYPE_I64);
+-        }
+-        break;
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+         tcg_out_qemu_ld(s, a0, a1, a2, -1, args[3], TCG_TYPE_I128);
+         break;
  
-         /* jne slow_path */
-         jcc = tcg_out_cmp(s, TCG_COND_TSTNE, addr, a_mask, true, false);
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_st8_a64_i32:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_st(s, a0, -1, a1, a2, args[3], TCG_TYPE_I32);
+-            break;
+-        }
+-        /* fall through */
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st8_a32_i32:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_st8_i32:
+         tcg_out_qemu_st(s, a0, -1, a1, -1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         if (TCG_TARGET_REG_BITS == 64) {
+             tcg_out_qemu_st(s, a0, -1, a1, -1, a2, TCG_TYPE_I64);
+         } else {
+             tcg_out_qemu_st(s, a0, a1, a2, -1, args[3], TCG_TYPE_I64);
+         }
+         break;
+-    case INDEX_op_qemu_st_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_qemu_st(s, a0, -1, a1, -1, a2, TCG_TYPE_I64);
+-        } else {
+-            tcg_out_qemu_st(s, a0, a1, a2, args[3], args[4], TCG_TYPE_I64);
+-        }
+-        break;
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+         tcg_out_qemu_st(s, a0, a1, a2, -1, args[3], TCG_TYPE_I128);
+         break;
+@@ -3824,36 +3795,24 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_clz_i64:
+         return have_lzcnt ? C_N1_I2(r, r, rW) : C_N1_I2(r, r, r);
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         return C_O1_I1(r, L);
+-    case INDEX_op_qemu_ld_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, L) : C_O1_I2(r, L, L);
+ 
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         return C_O0_I2(L, L);
+-    case INDEX_op_qemu_st_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(L, L) : C_O0_I3(L, L, L);
+-    case INDEX_op_qemu_st8_a32_i32:
++    case INDEX_op_qemu_st8_i32:
+         return C_O0_I2(s, L);
+-    case INDEX_op_qemu_st8_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(s, L) : C_O0_I3(s, L, L);
+ 
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, L) : C_O2_I1(r, r, L);
+-    case INDEX_op_qemu_ld_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, L) : C_O2_I2(r, r, L, L);
+ 
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(L, L) : C_O0_I3(L, L, L);
+-    case INDEX_op_qemu_st_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(L, L) : C_O0_I4(L, L, L, L);
+ 
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+         return C_O2_I1(r, r, L);
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+         return C_O0_I3(L, L, L);
+ 
 diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 4f32bf3e97..dd67e8f6bc 100644
+index cebe8dd354..4f32bf3e97 100644
 --- a/tcg/loongarch64/tcg-target.c.inc
 +++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1010,7 +1010,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr_reg;
-+        ldst->addr_reg = addr_reg;
+@@ -1675,28 +1675,22 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_ldst(s, OPC_ST_D, a0, a1, a2);
+         break;
  
-         tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP0, TCG_AREG0, mask_ofs);
-         tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP1, TCG_AREG0, table_ofs);
-@@ -1055,7 +1055,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i64:
+         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         tcg_out_qemu_ldst_i128(s, a0, a1, a2, a3, true);
+         break;
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i64:
+         tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         tcg_out_qemu_ldst_i128(s, a0, a1, a2, a3, false);
+         break;
  
-             ldst->is_ld = is_ld;
-             ldst->oi = oi;
--            ldst->addrlo_reg = addr_reg;
-+            ldst->addr_reg = addr_reg;
+@@ -2233,18 +2227,14 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_st32_i64:
+     case INDEX_op_st_i32:
+     case INDEX_op_st_i64:
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_st_i64:
+         return C_O0_I2(rZ, r);
  
-             /*
-              * Without micro-architecture details, we don't know which of
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         return C_N2_I1(r, r, r);
+ 
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         return C_O0_I3(r, r, r);
+ 
+     case INDEX_op_brcond_i32:
+@@ -2290,10 +2280,8 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_ld32u_i64:
+     case INDEX_op_ld_i32:
+     case INDEX_op_ld_i64:
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_ld_i64:
+         return C_O1_I1(r, r);
+ 
+     case INDEX_op_andc_i32:
 diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-index 153ce1f3c3..d744b853cd 100644
+index 99f6ef6c76..b1d512ca2a 100644
 --- a/tcg/mips/tcg-target.c.inc
 +++ b/tcg/mips/tcg-target.c.inc
-@@ -1244,7 +1244,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr;
-+        ldst->addr_reg = addr;
+@@ -2095,53 +2095,27 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_setcond2(s, args[5], a0, a1, a2, args[3], args[4]);
+         break;
  
-         /* Load tlb_mask[mmu_idx] and tlb_table[mmu_idx].  */
-         tcg_out_ld(s, TCG_TYPE_PTR, TCG_TMP0, TCG_AREG0, mask_off);
-@@ -1309,7 +1309,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+-    case INDEX_op_qemu_ld_a64_i32:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_ld(s, a0, 0, a1, a2, args[3], TCG_TYPE_I32);
+-            break;
+-        }
+-        /* fall through */
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, a0, 0, a1, 0, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         if (TCG_TARGET_REG_BITS == 64) {
+             tcg_out_qemu_ld(s, a0, 0, a1, 0, a2, TCG_TYPE_I64);
+         } else {
+             tcg_out_qemu_ld(s, a0, a1, a2, 0, args[3], TCG_TYPE_I64);
+         }
+         break;
+-    case INDEX_op_qemu_ld_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_qemu_ld(s, a0, 0, a1, 0, a2, TCG_TYPE_I64);
+-        } else {
+-            tcg_out_qemu_ld(s, a0, a1, a2, args[3], args[4], TCG_TYPE_I64);
+-        }
+-        break;
  
-             ldst->is_ld = is_ld;
-             ldst->oi = oi;
--            ldst->addrlo_reg = addr;
-+            ldst->addr_reg = addr;
+-    case INDEX_op_qemu_st_a64_i32:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_st(s, a0, 0, a1, a2, args[3], TCG_TYPE_I32);
+-            break;
+-        }
+-        /* fall through */
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, a0, 0, a1, 0, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         if (TCG_TARGET_REG_BITS == 64) {
+             tcg_out_qemu_st(s, a0, 0, a1, 0, a2, TCG_TYPE_I64);
+         } else {
+             tcg_out_qemu_st(s, a0, a1, a2, 0, args[3], TCG_TYPE_I64);
+         }
+         break;
+-    case INDEX_op_qemu_st_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_qemu_st(s, a0, 0, a1, 0, a2, TCG_TYPE_I64);
+-        } else {
+-            tcg_out_qemu_st(s, a0, a1, a2, args[3], args[4], TCG_TYPE_I64);
+-        }
+-        break;
  
-             /* We are expecting a_bits to max out at 7, much lower than ANDI. */
-             tcg_debug_assert(a_bits < 16);
+     case INDEX_op_add2_i32:
+         tcg_out_addsub2(s, a0, a1, a2, args[3], args[4], args[5],
+@@ -2301,23 +2275,14 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_brcond2_i32:
+         return C_O0_I4(rZ, rZ, rZ, rZ);
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         return C_O1_I1(r, r);
+-    case INDEX_op_qemu_ld_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O1_I2(r, r, r);
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         return C_O0_I2(rZ, r);
+-    case INDEX_op_qemu_st_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(rZ, r) : C_O0_I3(rZ, r, r);
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I1(r, r, r);
+-    case INDEX_op_qemu_ld_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I2(r, r, r, r);
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(rZ, r) : C_O0_I3(rZ, rZ, r);
+-    case INDEX_op_qemu_st_a64_i64:
+-        return (TCG_TARGET_REG_BITS == 64 ? C_O0_I2(rZ, r)
+-                : C_O0_I4(rZ, rZ, r, r));
+ 
+     default:
+         return C_NotImplemented;
 diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index 74b93f4b57..2d16807ec7 100644
+index 6e711cd53f..801cb6f3cb 100644
 --- a/tcg/ppc/tcg-target.c.inc
 +++ b/tcg/ppc/tcg-target.c.inc
-@@ -2473,7 +2473,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr;
-+        ldst->addr_reg = addr;
+@@ -3308,17 +3308,10 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out32(s, MODUD | TAB(args[0], args[1], args[2]));
+         break;
  
-         /* Load tlb_mask[mmu_idx] and tlb_table[mmu_idx].  */
-         tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP1, TCG_AREG0, mask_off);
-@@ -2577,7 +2577,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-             ldst = new_ldst_label(s);
-             ldst->is_ld = is_ld;
-             ldst->oi = oi;
--            ldst->addrlo_reg = addr;
-+            ldst->addr_reg = addr;
+-    case INDEX_op_qemu_ld_a64_i32:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_ld(s, args[0], -1, args[1], args[2],
+-                            args[3], TCG_TYPE_I32);
+-            break;
+-        }
+-        /* fall through */
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, args[0], -1, args[1], -1, args[2], TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         if (TCG_TARGET_REG_BITS == 64) {
+             tcg_out_qemu_ld(s, args[0], -1, args[1], -1,
+                             args[2], TCG_TYPE_I64);
+@@ -3327,32 +3320,15 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                             args[3], TCG_TYPE_I64);
+         }
+         break;
+-    case INDEX_op_qemu_ld_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_qemu_ld(s, args[0], -1, args[1], -1,
+-                            args[2], TCG_TYPE_I64);
+-        } else {
+-            tcg_out_qemu_ld(s, args[0], args[1], args[2], args[3],
+-                            args[4], TCG_TYPE_I64);
+-        }
+-        break;
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+         tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], true);
+         break;
  
-             /* We are expecting a_bits to max out at 7, much lower than ANDI. */
-             tcg_debug_assert(a_bits < 16);
+-    case INDEX_op_qemu_st_a64_i32:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_st(s, args[0], -1, args[1], args[2],
+-                            args[3], TCG_TYPE_I32);
+-            break;
+-        }
+-        /* fall through */
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, args[0], -1, args[1], -1, args[2], TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
++    case INDEX_op_qemu_st_i64:
+         if (TCG_TARGET_REG_BITS == 64) {
+             tcg_out_qemu_st(s, args[0], -1, args[1], -1,
+                             args[2], TCG_TYPE_I64);
+@@ -3361,17 +3337,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                             args[3], TCG_TYPE_I64);
+         }
+         break;
+-    case INDEX_op_qemu_st_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_qemu_st(s, args[0], -1, args[1], -1,
+-                            args[2], TCG_TYPE_I64);
+-        } else {
+-            tcg_out_qemu_st(s, args[0], args[1], args[2], args[3],
+-                            args[4], TCG_TYPE_I64);
+-        }
+-        break;
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+         tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], false);
+         break;
+@@ -4306,29 +4272,19 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_sub2_i32:
+         return C_O2_I4(r, r, rI, rZM, r, r);
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         return C_O1_I1(r, r);
+-    case INDEX_op_qemu_ld_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O1_I2(r, r, r);
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I1(r, r, r);
+-    case INDEX_op_qemu_ld_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I2(r, r, r, r);
+ 
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         return C_O0_I2(r, r);
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(r, r) : C_O0_I3(r, r, r);
+-    case INDEX_op_qemu_st_a32_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(r, r) : C_O0_I3(r, r, r);
+-    case INDEX_op_qemu_st_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(r, r) : C_O0_I4(r, r, r, r);
+ 
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         return C_N1O1_I1(o, m, r);
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         return C_O0_I3(o, m, r);
+ 
+     case INDEX_op_add_vec:
 diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index 55a3398712..689fbea0df 100644
+index 61dc310c1a..55a3398712 100644
 --- a/tcg/riscv/tcg-target.c.inc
 +++ b/tcg/riscv/tcg-target.c.inc
-@@ -1727,7 +1727,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, TCGReg *pbase,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr_reg;
-+        ldst->addr_reg = addr_reg;
+@@ -2309,20 +2309,16 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                         args[3], const_args[3], args[4], const_args[4]);
+         break;
  
-         init_setting_vtype(s);
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i64:
+         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i64:
+         tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I64);
+         break;
  
-@@ -1790,7 +1790,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, TCGReg *pbase,
-             ldst = new_ldst_label(s);
-             ldst->is_ld = is_ld;
-             ldst->oi = oi;
--            ldst->addrlo_reg = addr_reg;
-+            ldst->addr_reg = addr_reg;
+@@ -2761,15 +2757,11 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_sub2_i64:
+         return C_O2_I4(r, r, rZ, rZ, rM, rM);
  
-             init_setting_vtype(s);
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_ld_i64:
+         return C_O1_I1(r, r);
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_st_i64:
+         return C_O0_I2(rZ, r);
  
+     case INDEX_op_st_vec:
 diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index 6786e7b316..b2e1cd60ff 100644
+index dc7722dc31..6786e7b316 100644
 --- a/tcg/s390x/tcg-target.c.inc
 +++ b/tcg/s390x/tcg-target.c.inc
-@@ -1920,7 +1920,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr_reg;
-+        ldst->addr_reg = addr_reg;
+@@ -2455,28 +2455,22 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                      args[2], const_args[2], args[3], const_args[3], args[4]);
+         break;
  
-         tcg_out_sh64(s, RSY_SRLG, TCG_TMP0, addr_reg, TCG_REG_NONE,
-                      s->page_bits - CPU_TLB_ENTRY_BITS);
-@@ -1974,7 +1974,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-             ldst = new_ldst_label(s);
-             ldst->is_ld = is_ld;
-             ldst->oi = oi;
--            ldst->addrlo_reg = addr_reg;
-+            ldst->addr_reg = addr_reg;
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, args[0], args[1], args[2], TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i64:
+         tcg_out_qemu_ld(s, args[0], args[1], args[2], TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, args[0], args[1], args[2], TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i64:
+         tcg_out_qemu_st(s, args[0], args[1], args[2], TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], true);
+         break;
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], false);
+         break;
  
-             tcg_debug_assert(a_mask <= 0xffff);
-             tcg_out_insn(s, RI, TMLL, addr_reg, a_mask);
+@@ -3366,21 +3360,15 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_ctpop_i64:
+         return C_O1_I1(r, r);
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_ld_i64:
+         return C_O1_I1(r, r);
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i64:
++    case INDEX_op_qemu_st_i32:
+         return C_O0_I2(r, r);
+-    case INDEX_op_qemu_ld_a32_i128:
+-    case INDEX_op_qemu_ld_a64_i128:
++    case INDEX_op_qemu_ld_i128:
+         return C_O2_I1(o, m, r);
+-    case INDEX_op_qemu_st_a32_i128:
+-    case INDEX_op_qemu_st_a64_i128:
++    case INDEX_op_qemu_st_i128:
+         return C_O0_I3(o, m, r);
+ 
+     case INDEX_op_deposit_i32:
 diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-index ea0a3b8692..527af5665d 100644
+index 733cb51651..ea0a3b8692 100644
 --- a/tcg/sparc64/tcg-target.c.inc
 +++ b/tcg/sparc64/tcg-target.c.inc
-@@ -1127,7 +1127,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-     ldst = new_ldst_label(s);
-     ldst->is_ld = is_ld;
-     ldst->oi = oi;
--    ldst->addrlo_reg = addr_reg;
-+    ldst->addr_reg = addr_reg;
-     ldst->label_ptr[0] = s->code_ptr;
+@@ -1426,20 +1426,16 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_arithi(s, a1, a0, 32, SHIFT_SRLX);
+         break;
  
-     /* bne,pn %[xi]cc, label0 */
-@@ -1147,7 +1147,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst = new_ldst_label(s);
-         ldst->is_ld = is_ld;
-         ldst->oi = oi;
--        ldst->addrlo_reg = addr_reg;
-+        ldst->addr_reg = addr_reg;
-         ldst->label_ptr[0] = s->code_ptr;
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
++    case INDEX_op_qemu_ld_i32:
+         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i64:
+         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I64);
+         break;
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i32:
+         tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I32);
+         break;
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i64:
+         tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I64);
+         break;
  
-         /* bne,pn %icc, label0 */
+@@ -1570,10 +1566,8 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extract_i64:
+     case INDEX_op_sextract_i64:
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_ld_a64_i64:
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_ld_i64:
+         return C_O1_I1(r, r);
+ 
+     case INDEX_op_st8_i32:
+@@ -1583,10 +1577,8 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_st_i32:
+     case INDEX_op_st32_i64:
+     case INDEX_op_st_i64:
+-    case INDEX_op_qemu_st_a32_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_st_a32_i64:
+-    case INDEX_op_qemu_st_a64_i64:
++    case INDEX_op_qemu_st_i32:
++    case INDEX_op_qemu_st_i64:
+         return C_O0_I2(rZ, r);
+ 
+     case INDEX_op_add_i32:
+diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+index d6c77325a3..36e018dd19 100644
+--- a/tcg/tci/tcg-target.c.inc
++++ b/tcg/tci/tcg-target.c.inc
+@@ -169,22 +169,14 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_setcond2_i32:
+         return C_O1_I4(r, r, r, r, r);
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
++    case INDEX_op_qemu_ld_i32:
+         return C_O1_I1(r, r);
+-    case INDEX_op_qemu_ld_a64_i32:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O1_I2(r, r, r);
+-    case INDEX_op_qemu_ld_a32_i64:
++    case INDEX_op_qemu_ld_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I1(r, r, r);
+-    case INDEX_op_qemu_ld_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O1_I1(r, r) : C_O2_I2(r, r, r, r);
+-    case INDEX_op_qemu_st_a32_i32:
++    case INDEX_op_qemu_st_i32:
+         return C_O0_I2(r, r);
+-    case INDEX_op_qemu_st_a64_i32:
++    case INDEX_op_qemu_st_i64:
+         return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(r, r) : C_O0_I3(r, r, r);
+-    case INDEX_op_qemu_st_a32_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(r, r) : C_O0_I3(r, r, r);
+-    case INDEX_op_qemu_st_a64_i64:
+-        return TCG_TARGET_REG_BITS == 64 ? C_O0_I2(r, r) : C_O0_I4(r, r, r, r);
+ 
+     default:
+         return C_NotImplemented;
+@@ -422,20 +414,6 @@ static void tcg_out_op_rrrbb(TCGContext *s, TCGOpcode op, TCGReg r0,
+     tcg_out32(s, insn);
+ }
+ 
+-static void tcg_out_op_rrrrr(TCGContext *s, TCGOpcode op, TCGReg r0,
+-                             TCGReg r1, TCGReg r2, TCGReg r3, TCGReg r4)
+-{
+-    tcg_insn_unit insn = 0;
+-
+-    insn = deposit32(insn, 0, 8, op);
+-    insn = deposit32(insn, 8, 4, r0);
+-    insn = deposit32(insn, 12, 4, r1);
+-    insn = deposit32(insn, 16, 4, r2);
+-    insn = deposit32(insn, 20, 4, r3);
+-    insn = deposit32(insn, 24, 4, r4);
+-    tcg_out32(s, insn);
+-}
+-
+ static void tcg_out_op_rrrr(TCGContext *s, TCGOpcode op,
+                             TCGReg r0, TCGReg r1, TCGReg r2, TCGReg r3)
+ {
+@@ -833,29 +811,21 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_op_rrrr(s, opc, args[0], args[1], args[2], args[3]);
+         break;
+ 
+-    case INDEX_op_qemu_ld_a32_i32:
+-    case INDEX_op_qemu_st_a32_i32:
+-        tcg_out_op_rrm(s, opc, args[0], args[1], args[2]);
+-        break;
+-    case INDEX_op_qemu_ld_a64_i32:
+-    case INDEX_op_qemu_st_a64_i32:
+-    case INDEX_op_qemu_ld_a32_i64:
+-    case INDEX_op_qemu_st_a32_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_op_rrm(s, opc, args[0], args[1], args[2]);
+-        } else {
++    case INDEX_op_qemu_ld_i64:
++    case INDEX_op_qemu_st_i64:
++        if (TCG_TARGET_REG_BITS == 32) {
+             tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, args[3]);
+             tcg_out_op_rrrr(s, opc, args[0], args[1], args[2], TCG_REG_TMP);
++            break;
+         }
+-        break;
+-    case INDEX_op_qemu_ld_a64_i64:
+-    case INDEX_op_qemu_st_a64_i64:
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            tcg_out_op_rrm(s, opc, args[0], args[1], args[2]);
++        /* fall through */
++    case INDEX_op_qemu_ld_i32:
++    case INDEX_op_qemu_st_i32:
++        if (TCG_TARGET_REG_BITS == 64 && s->addr_type == TCG_TYPE_I32) {
++            tcg_out_ext32u(s, TCG_REG_TMP, args[1]);
++            tcg_out_op_rrm(s, opc, args[0], TCG_REG_TMP, args[2]);
+         } else {
+-            tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, args[4]);
+-            tcg_out_op_rrrrr(s, opc, args[0], args[1],
+-                             args[2], args[3], TCG_REG_TMP);
++            tcg_out_op_rrm(s, opc, args[0], args[1], args[2]);
+         }
+         break;
+ 
 -- 
 2.43.0
 
