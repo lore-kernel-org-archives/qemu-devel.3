@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCC2C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B74EC02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjllz-0003FU-Q2; Sun, 16 Feb 2025 16:01:58 -0500
+	id 1tjlmF-0003gT-CJ; Sun, 16 Feb 2025 16:02:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllu-00037x-KQ
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:50 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlm9-0003YO-2S
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:02:08 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlls-0007wH-1C
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:49 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43963935585so36582625e9.0
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:01:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlm7-0007xk-IX
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:02:04 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-38dcac27bcbso2857620f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:02:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739739706; x=1740344506; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739739722; x=1740344522; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f2SZToQUGAon9B+NPJXa9k1BqlC2qKJH86P1xDJbKio=;
- b=MjPXibZrEzX6WvzpTo/cupGjFvP6w9YrsM4BJapAH8PHKk+Bp2lcnrv7cgsZCloXbF
- KHo5w18RJa/nzXjuY6AP2/bxtmQXqFXvvjL+fT6/DuIU7x0ctYABSKqUaFw3RS8KLI+P
- KkcgcfUnMbhbDincJ6fSeQFDQVzizHwWsgu20knyAo9XREmKdNNvgwRRKCgYbqYKH9Yn
- KE6RRbE63SLy7/zMBUB1D1TCHTbO/L3LWkdUmDtt9gn0DecUW8CDCTmUit/h8ooj6d68
- tprYlYP2HxEMfeDkKnFyuQzAELQ4EOpTW77xYRmYwd1j0pjfU2AX+fm4hHq7X4G7cU3Y
- /qYw==
+ bh=mX8deahLJd9g/czOO8F+DTVRecS9AsmpyHYz1+koZZ0=;
+ b=ZzxqfvIwCUff/A50ax3KHIBt7kzq1SvTXvItWtY8Y3YAeJzfUDADS2s+gx3I381DT3
+ JGdFG/jehFiQXygr5patrWhIFvaMuovAyVmFkEuhr4wWuy2zcQ4WEAbSDW7XaSxKaXYo
+ jB9h73aMZIP/ksw062MAipbdPIIvPT8LkZBNYXe1Ro881Pl27cgS3kpBTyO/fqbO4iG5
+ 8Ekp1bPuG1pmFa36boNbhbuJWcvmwIi1bE8RSzCRGdm3tEQx2Ty8B4SOpEoOCwRbe5tN
+ lprTxMSgINDlaFrrs4NKSYqYWeDnwsOtRjlbWf2swwLX3BNnyl41yhS24LSBMlIa6A9a
+ 73EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739739706; x=1740344506;
+ d=1e100.net; s=20230601; t=1739739722; x=1740344522;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f2SZToQUGAon9B+NPJXa9k1BqlC2qKJH86P1xDJbKio=;
- b=u3LLw3PYCAeAWPeZ/ZV+juUjoECCtAoKjsfaxNSRbBMK4AP4iPSVRRmDV4aTJZI0zI
- 5X6/qxT3Di2mj5IJNYGxG7QSY6bg38BU+NYfU0bPxTqXTwm74c6uK6pgmOyhAML0MkMv
- r/YRTCt56MBTZNgMxwkZrLLYY+FzCPz8X2hSCCIqnlOBt7AiMV3fTZCLr54dE0nDRdOC
- JI2c8agHGQgqJropWw+7psHIqZZ7MXJqhtEEZ2woZbNGRxp/TuCJCxiI0GK0hREFy/r5
- atmdtyYVIY2LnvjsfM0cg/bC42EKhrNyGKI7S7pg7BB9lqnbGI8cFPx8+cm/otw/Rna2
- MudQ==
-X-Gm-Message-State: AOJu0YzQooIeoDYs+UqQAwNLcYufHRpmmSF6L2TFQ9aAiFisFArWklQh
- NnRK6qCEXs/IUWJnfgHNfeMjItU05QvD4cu6UhWueNHo0/UFmyCmZ3VPgq3CPOQ2mpGL/0VWeBc
- uIXQ=
-X-Gm-Gg: ASbGncum9Z8wYOMRJwoNXv/aR7p6GQHLcTZ8aSKVp/e9nk1HThxmq2AV90uXsHnjga0
- 3/1QVhKfu1MDPvbgQirDPmbH9I6POS8eLERHmOtD+ap24mHySf2Lzh1CXfIeutHkvIU2fJNGC9A
- oRIqDdZ0ZTJshM2OI2UZT/V353k6uRlsIL2e84TGmTgV8KOpF/Jv16dfV097OOEoX/YrjvfcK5D
- v05Ii3YtY8wVjtap90g8e4tzTrpGwJyMK2q5zyVn2z3Y5ycEqIYgSFwIxvMkMgqLTb6QiLOryvp
- wLg33A5kPiwOqAximnrr5NSLvPAK67ShiQ/mP6bjhzPh2+vQ5B7Qb6aFGURmHTIDi17YljM=
-X-Google-Smtp-Source: AGHT+IGkdOzMH8hw/qjzMvNzTmuOZ7PVnyVu3Vl2rUrVbTMzUj+Ea88ptOoNWxNcCKWMq2aqdDTauQ==
-X-Received: by 2002:a05:600c:4711:b0:439:60ef:ce88 with SMTP id
- 5b1f17b1804b1-4396e710d27mr71142705e9.23.1739739706082; 
- Sun, 16 Feb 2025 13:01:46 -0800 (PST)
+ bh=mX8deahLJd9g/czOO8F+DTVRecS9AsmpyHYz1+koZZ0=;
+ b=YaNsJA+gdJeqD2Hk16u+UADXP8J4OuJ8RFedoZvup8q/+g/gyzY2WRXUc9TJGJ2ZK7
+ jECAjGuaTYijzDGDCHhrfnKc1BS3mZsRm3kNFMScgWAeZpXa0gHeIUh1YcIDSLqIBHlW
+ X81e1gAs/h4Uy+imqGDQ3EbF7qxeFZh+r3qCBz5dV6bEmRpWFSEMubzspOvO12kY3Qtt
+ YNc0YByHep1M+8O0A4LYL4mY6m10bMPJ+NLCIpr5MoKyBpFtN+fG1rx/DEYABH3qg6Qi
+ H4KYXVpAW5Z1jdFv7YjCTDw7lRAFYgqRpylyIxDneYn/ZuHYVi9zGaxKRU7avun3hFbr
+ TZsA==
+X-Gm-Message-State: AOJu0YzM5ZUKW3kE0iwPlu7/3nWqXErrhEmxsxhA64lKaMsjYVPUtLpC
+ ObDLDE6j9Pi2imtiwncHOl9lLptiegFXRN+ys/JIMtUzmpHcedQ7XYL1saKTq1tbenanhMLbSyd
+ bo4A=
+X-Gm-Gg: ASbGnctxG5cyC9hQ5S0cR+2zgsS9V+tWCke5pXf4YR3FVRe+QYXdiR17xA8wxzk+9u8
+ m5EUofp8PWfpJbXUP1NZo5aobZcFmBbenflcFNsm1jiGLg4VSuejVMNyBNq43q/WKRDlc0X7+4I
+ Cgvx3P1yFliFur2O0Wpo4QcHKnr+8pe069n4ELUiwYo/bmmjbQIO+BlNsWw0s5aD+OntWwuwEVv
+ 0LExpmV8QMJy6dkQ0BBIoNzLhEWbk7+V3Z5ZHdArt/z40bF24BJkAOmUKnrDlwkuI312WpcNaPP
+ Sk4dobsLs9/6BDhGkX0kAoXL25cn009uyDoN3puoSRWkOrFGSDQtj+hDQyTHiIZOYrwDHtY=
+X-Google-Smtp-Source: AGHT+IFQo9SGkpWDZBdZBKoF59I+BynJ+8ezYFrY5v3y8IG8Qo9MHc0lShH7uNs+f8bJTd6SKmr2hw==
+X-Received: by 2002:a5d:5889:0:b0:38d:b8fd:591f with SMTP id
+ ffacd0b85a97d-38f24ce76d0mr16806733f8f.5.1739739721676; 
+ Sun, 16 Feb 2025 13:02:01 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439618264a3sm102167645e9.23.2025.02.16.13.01.44
+ ffacd0b85a97d-38f259f8115sm10579717f8f.92.2025.02.16.13.02.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Feb 2025 13:01:44 -0800 (PST)
+ Sun, 16 Feb 2025 13:02:01 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 36/39] hw/mips: Mark Boston machine devices as little-endian
-Date: Sun, 16 Feb 2025 22:01:00 +0100
-Message-ID: <20250216210103.70235-9-philmd@linaro.org>
+Cc: Keith Packard <keithp@keithp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 39/39] hw/rx: Allow execution without either bios or kernel
+Date: Sun, 16 Feb 2025 22:01:03 +0100
+Message-ID: <20250216210103.70235-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250216210103.70235-1-philmd@linaro.org>
 References: <20250216210103.70235-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Boston machine is only built as little-endian.
-Therefore the DEVICE_NATIVE_ENDIAN definition expand to
-DEVICE_LITTLE_ENDIAN (besides, the DEVICE_BIG_ENDIAN case
-isn't tested). Simplify directly using DEVICE_LITTLE_ENDIAN.
+From: Keith Packard <keithp@keithp.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Users can use -device loader to get an ELF file loaded to
+memory, so we don't need to require one of these options.
+
+Signed-off-by: Keith Packard <keithp@keithp.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250212113938.38692-3-philmd@linaro.org>
+Message-ID: <20250215021654.1786679-2-keithp@keithp.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/mips/boston.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/rx/rx-gdbsim.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/hw/mips/boston.c b/hw/mips/boston.c
-index 364c328032a..4690b254dda 100644
---- a/hw/mips/boston.c
-+++ b/hw/mips/boston.c
-@@ -220,7 +220,7 @@ static void boston_lcd_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps boston_lcd_ops = {
-     .read = boston_lcd_read,
-     .write = boston_lcd_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
+index 88c8f12c101..4afd77efd56 100644
+--- a/hw/rx/rx-gdbsim.c
++++ b/hw/rx/rx-gdbsim.c
+@@ -110,9 +110,6 @@ static void rx_gdbsim_init(MachineState *machine)
+     if (!kernel_filename) {
+         if (machine->firmware) {
+             rom_add_file_fixed(machine->firmware, RX62N_CFLASH_BASE, 0);
+-        } else if (!qtest_enabled()) {
+-            error_report("No bios or kernel specified");
+-            exit(1);
+         }
+     }
  
- static uint64_t boston_platreg_read(void *opaque, hwaddr addr,
-@@ -299,7 +299,7 @@ static void boston_platreg_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps boston_platreg_ops = {
-     .read = boston_platreg_read,
-     .write = boston_platreg_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void mips_boston_instance_init(Object *obj)
-@@ -758,7 +758,7 @@ static void boston_mach_init(MachineState *machine)
- 
-     s->uart = serial_mm_init(sys_mem, boston_memmap[BOSTON_UART].base, 2,
-                              get_cps_irq(&s->cps, 3), 10000000,
--                             serial_hd(0), DEVICE_NATIVE_ENDIAN);
-+                             serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
-     lcd = g_new(MemoryRegion, 1);
-     memory_region_init_io(lcd, NULL, &boston_lcd_ops, s, "boston-lcd", 0x8);
 -- 
 2.47.1
 
