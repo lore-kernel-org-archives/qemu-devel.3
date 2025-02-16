@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5FEC02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 18:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6231C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 18:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjjYA-0003F9-Or; Sun, 16 Feb 2025 13:39:31 -0500
+	id 1tjjdY-0004C5-1k; Sun, 16 Feb 2025 13:45:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjjY7-0003Em-Rt
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 13:39:28 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjjdW-0004Bc-Eg
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 13:45:02 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjjY6-0007X7-4d
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 13:39:27 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4395dddb07dso38389505e9.2
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 10:39:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjjdU-0008QW-N6
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 13:45:02 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4395f81db4dso21426575e9.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 10:44:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739731164; x=1740335964; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739731498; x=1740336298; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D2xPG3XKCkdLHxBzNUyPi7X3K6Pl9xEeosT53qYT+q8=;
- b=NGSEGkkqk8Tg6tPVyjt3fI+yjScLWKRpohw9Pt9DZApFXwOZ7ND+OjwDE/rmYAXLhD
- ySfcARXH7DYax4pH1OX/kukaM1UenoQdHl9rUmBxzzF3wJcmziWolKICxeHnCmDkDkW8
- C9Oi5wVIbUw1OkNPl3Ilxx2IIhKwqUgNVkKOpO0w25QLZfqwqPdFztZYBxjy6LlkpHvd
- 9dxGNw/AoJDv3d0bICRcRC0Ws+3D+PAJkvxbPSZ+36okwOT7HUOJaYBHY7JDA1dIEozX
- GIhduu0bSHQYz/vcASPemyFXJTRtQkNJnUKQqFuDoTHX8p8LQYvhbsxBXKsSLnAE5Mis
- aciw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qcnIFrOxZaP/eIZdkFb3O6hln+uhL7G3fm3F7+b+k5s=;
+ b=c3iYSo/R1SKRXSyZwd7G3SfQw0X1sdhdf7H7N199ekM1QGz1ZIje8oqtijuuYP6ShR
+ 1p2RYydTpTqzty6oL2crfidP7MZU7ThusndRuWFffbH25EVZxY8lJJgc/TXjpK7Ke1i+
+ /fXbdoyFP3Htv0GJBphi+vTfI0HfYvkmO8cn0vrYmC0GAOCmPuUsXeoHykPSvLDWDJrg
+ epmK35tqLmc4UeiuNjxQrcyk9L1GTJkRGmZvi5pnw0C1oyjFK+l5Q9pIhcEu8G7yhmmq
+ 5THAby0CEsYioJzoP+uAV8n5eHb6VdphoRAkQd3ebclWkPeyCdYOLXL4NYxN4x03NFuk
+ ZkCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739731164; x=1740335964;
+ d=1e100.net; s=20230601; t=1739731498; x=1740336298;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D2xPG3XKCkdLHxBzNUyPi7X3K6Pl9xEeosT53qYT+q8=;
- b=gu0FXJUqKgdo7idt503wgXLHvT8L9z1JTnIHQbNtMD6rmfkfpxDSivvOoFDaPb2Oh7
- r5VmPHbuiftRuASC658Kv64LKzdjPgNiO1+P//3cvOdxdNNRLFn+7oZxJeDggzr2JqN7
- kOaeX2njR1+WYSKELH/GP1yHfMqnYNsURn2Pb7eLvHTpZ6acMDa/a4MaFIRluQOwDIbq
- UFaLtDPjHXVjtVXKtnyxc5V6Y+YgOAFViek18awxfkeFnqBbJJcK7p596OmHrhEaltpR
- yKzTnPqgTuFkGQpF8LRNf8hz3i5QlmgANK89qoJdwrmsXRicSp9qbHILpe74DnqyDJ3N
- MG1w==
-X-Gm-Message-State: AOJu0Ywf3/lo+TwddTtv4AiRSBbbhlmYwqKLa4RZX6RMPqfpFYlgaNLl
- a8d102utEigezU/HtiE5vppZ/2oUKX1CyN4LXToTlGM43tIglIJyj6YWfeXSlzs=
-X-Gm-Gg: ASbGnctet3zSgk23O89Loe1/fZ8VrjQTdoEq/WzMWaQo6TaMGcdJLBhUqMmW4MSZof7
- S9qrBY/0or3xzYo/QOEz9fy6J7Yrkt8i5Mljtimh2ZeY62Z92iU5GIxVsdRSKDS9t9/2R8vquAv
- HM9IbDM5sMIsBclqzT8XDBl3haU1Zbj+/LPr7Eqp97CP9sePT8bGMCoffIKLnH1J3EOk26bs3Ut
- RLcC01ZkhAtBXw23taeZ1u/SMYfiJSE9A8/NqqDx25byWx4DKTOyGJ7VmvktoPREJ4ysGyoQybo
- 8r/Ezi8gUbPiGYIBUswiM2+Kz9zSWb4sm00qKLIXlURLMcxvEFjOR6lTqII=
-X-Google-Smtp-Source: AGHT+IFUdMkeTbUucZFZcqkfkT1ixMd7J12T3Crrqeiz4w6ctykaKZT+vler5YClYa3TAgwMH95Bzw==
-X-Received: by 2002:a05:600c:1906:b0:439:6dba:adfc with SMTP id
- 5b1f17b1804b1-4396e70a3e0mr69234225e9.13.1739731163826; 
- Sun, 16 Feb 2025 10:39:23 -0800 (PST)
+ bh=qcnIFrOxZaP/eIZdkFb3O6hln+uhL7G3fm3F7+b+k5s=;
+ b=j0cX3pl4ed84pWoEUkyC1s3bjeAlmDnkTIB9eCnr8P5lZh4vDi0NlDoVN0xMlBwBV0
+ Do737G66mQS+pheFaZRImOKBnf+v1TggkGlCeDEpPUY1ZvepImUB/euffrc/hCuOkx4y
+ ytxgNhwt1XvFqtIIn6l2HhJcRiZ9r3RKDVfpcQEQ1uE0K/pYVqHk3ak4LE7gDNQwgPfD
+ P83ICkjq3VYnmdfI6cKTvo9es4Y2OCn705Xyz9udBHPyLCxJgl+zz+dZxejOnoGDeG2t
+ a03bZEAwOVV9mM+oNKIvV/xNDBBdq3n2OA0clz4hfyhD87aZBQ1xpJ72KOugz4aWo4Fl
+ JD8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+xGBs+AfeLLOSiSEZq/VsOaFmhQc/nfOpx2B+iOf59hKuJenwQQZ8myXTxUyqIv6EIZGVaiex8jV6@nongnu.org
+X-Gm-Message-State: AOJu0Yy7AZpYBRagQVTSjjvE/fz6rBOZWHxWs/ZWVs8MavrL2Nr4YpaX
+ 34mSfd2U2pGOqtOMr4/HWXz1Ab5sRGtfUjl7ep2IQxhMG+LavqTrIRCzvNOJdkU=
+X-Gm-Gg: ASbGncsYVrU+SQMLmvQrimeNkdOyXYiEDMrYlooehHhPrknQf6rl3eROfdVlzSCkkNF
+ 88u4/m8fBYKW2KQQfIbYHr2jgXDDqVnlyHQofuFpIM2uduGsTm1Zz0uvhThN+nvzwHRUi4/E4fR
+ zPp52F18rif0PHDN6T+Tx1RmqC7C/vT7g7w4gMk6VI+o0gd45okefVt/EVVv2r2jjnmWG29yXvZ
+ Zf/KnXEXrUWNt/7KOuMRIF7SomHb7LLrmFnvGKbm8dQE8JLXrzIDm5U1l0C+yz9US9Dns0Aq7TC
+ u1wP49uaKTzAV7CMoz5N8S59jhfBCO74ynu9fzPv+52jPszMI7v5yLAH8hE=
+X-Google-Smtp-Source: AGHT+IFgWMFN9imhMTn6E0ahoqgQFDeVGmt591o9c98vHRHW9sS9uw0ykyZ+g5bHwfmRzHP7NA+5yw==
+X-Received: by 2002:a05:600c:314c:b0:434:f1bd:1e40 with SMTP id
+ 5b1f17b1804b1-4396ec29183mr56169215e9.6.1739731498191; 
+ Sun, 16 Feb 2025 10:44:58 -0800 (PST)
 Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4396b296afesm56684555e9.0.2025.02.16.10.39.22
+ 5b1f17b1804b1-4395a06d20bsm132410865e9.20.2025.02.16.10.44.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 10:39:23 -0800 (PST)
-Message-ID: <249ee391-5e18-43f7-a836-c8ba974f0421@linaro.org>
-Date: Sun, 16 Feb 2025 19:39:21 +0100
+ Sun, 16 Feb 2025 10:44:56 -0800 (PST)
+Message-ID: <81cb5917-802f-4d76-967e-d357f87f08a0@linaro.org>
+Date: Sun, 16 Feb 2025 19:44:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 06/11] pcie_sriov: Do not manually unrealize
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com
-References: <20250116-reuse-v20-0-7cb370606368@daynix.com>
- <20250116-reuse-v20-6-7cb370606368@daynix.com>
+Subject: Re: [PATCH 1/2] tcg/i386: Use tcg_{high, unsigned}_cond in
+ tcg_out_brcond2
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216024709.2624325-1-richard.henderson@linaro.org>
+ <20250216024709.2624325-2-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250116-reuse-v20-6-7cb370606368@daynix.com>
+In-Reply-To: <20250216024709.2624325-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,36 +101,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/25 10:00, Akihiko Odaki wrote:
-> A device gets automatically unrealized when being unparented.
-
-Correct, so:
+On 16/2/25 03:47, Richard Henderson wrote:
+> Eliminate code repetition by using the appropriate helpers.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/i386/tcg-target.c.inc | 65 +++++----------------------------------
+>   1 file changed, 8 insertions(+), 57 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-However this is totally undocumented, I was not even aware of that...
-
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   hw/pci/pcie_sriov.c | 4 ----
->   1 file changed, 4 deletions(-)
-> 
-> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index e9b23221d713..499becd5273f 100644
-> --- a/hw/pci/pcie_sriov.c
-> +++ b/hw/pci/pcie_sriov.c
-> @@ -204,11 +204,7 @@ static void unregister_vfs(PCIDevice *dev)
->       trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
->                                  PCI_FUNC(dev->devfn), num_vfs);
->       for (i = 0; i < num_vfs; i++) {
-> -        Error *err = NULL;
->           PCIDevice *vf = dev->exp.sriov_pf.vf[i];
-> -        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
-> -            error_reportf_err(err, "Failed to unplug: ");
-> -        }
->           object_unparent(OBJECT(vf));
->           object_unref(OBJECT(vf));
->       }
-> 
 
 
