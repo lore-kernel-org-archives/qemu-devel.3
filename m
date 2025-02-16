@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82EF8C02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 09:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C51FAC02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 11:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjaxX-0006Y6-PC; Sun, 16 Feb 2025 04:29:07 -0500
+	id 1tjcoK-0004ye-Qr; Sun, 16 Feb 2025 06:27:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tjaxW-0006Xv-6n
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 04:29:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tjcoI-0004y5-1B; Sun, 16 Feb 2025 06:27:42 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tjaxU-0000mj-Er
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 04:29:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739698140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=nqCS8aVqo48MHLwS9VGBeK8SxpnR9X2XLdWh3HfIHf8=;
- b=DBNECjAfmq5kS55fj0OC73FItXW1Kq8AXmim9AIvahWK2RBMF/9TYol1bmcB7kQBuEtxlq
- vzDya8IatxLTDC6aQZ+zIrImS0wIfPwzIsaywb2BOQ0yAn+sw0Yh5/TVmLXrVwAViVumCN
- ZBdDxzqtTWSa+bF4Fq6RYk96L5567UQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-R_qR3rXXO6qJnFyp_IMhig-1; Sun, 16 Feb 2025 04:28:57 -0500
-X-MC-Unique: R_qR3rXXO6qJnFyp_IMhig-1
-X-Mimecast-MFC-AGG-ID: R_qR3rXXO6qJnFyp_IMhig_1739698136
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43935bcec74so18728095e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 01:28:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739698135; x=1740302935;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nqCS8aVqo48MHLwS9VGBeK8SxpnR9X2XLdWh3HfIHf8=;
- b=rQDi4YZl9x9vbD9DymY60V4mwx8/5LXefIHu8q6G2dD//a4AAuA7N8Cc0PmPOxncVV
- yLU3D/ARcWQFm8Jt46ut7K1X9IcPA/e70Lbh1xHS03TrMgTdw5BuG4l0hd0MOuKSeiYZ
- Zh44V0/+Ia/ZpJFBlEkaHnNvNbGkm+eD9ElD0s/fiwQut5dmakOeotwtIfHZ5Vjr1SBN
- 7xWR/2M2NJ7yVrqleA/HZQ4dbFeneqsC6pWwaiXK4PbppA2ytEIUCI17NzVRTXEHJXuU
- adFev7IZTErta2pQf5CExyTM1E+KEFqDC8REyXqxpB0tPiDwNdCUdxoOTGL24TngpwuU
- /ZEw==
-X-Gm-Message-State: AOJu0YwAvknf32JJj87VGEm2zb4JQaKsIhlkRtMoVbgGRuGj8lRUyEl1
- rnUNd1pagVrq65SymFffwTfgim3XOWQ/3ulDJqC3MZ1A9+x5ijeSBTE/QCM1q5jUkRYKaTXKsTG
- wwiqQXdMTU4kr0UVd/nLyOAsmOm4wwgE0TH0tzkRFXSLHf5yqfa+YFze3baCZHFJPgGGuYiCJtx
- Q0nFR7aJAx07UOVIRJqUlTerLowJe888EW7v84vQQ=
-X-Gm-Gg: ASbGncuHPx4cnExGvKCuT0Geu+Z59Fe5DIjQGxjZRU+QbZX+zHf9NjL4xRMYSPZldlr
- XYwxHHiWbXgrVCnm+Z7OCyxBDIxNQ2b3HIDhK0/mAe6dNbJDXl7u2qSD8OV82YuRORm5ILr3UHQ
- vaCpBDfnO/JtDD/HUEpK28mamwmrOYrD7S3K9pETLuA6g4E69GIDgFyKhryYbS6YhEPC0nAAjv2
- W7rg3qZ0SPakMVCPelDyORU0ygE3JXDImois5Yjk4Eu8aH3ETkDouxqZHmjUUD4ZqUVcxf2cuVC
- u2I0240TOZU=
-X-Received: by 2002:a05:600c:4711:b0:439:4700:9eb1 with SMTP id
- 5b1f17b1804b1-4396e69992fmr46801225e9.2.1739698135548; 
- Sun, 16 Feb 2025 01:28:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGC2Y/7Li0lTpEYpTm4ugAjug/zDU8BVpUme382e1mNsFV6jAwjOCx5POX/u7el/rLirzTAqg==
-X-Received: by 2002:a05:600c:4711:b0:439:4700:9eb1 with SMTP id
- 5b1f17b1804b1-4396e69992fmr46801085e9.2.1739698135051; 
- Sun, 16 Feb 2025 01:28:55 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.122.109])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1aa7f3sm123259345e9.29.2025.02.16.01.28.54
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Feb 2025 01:28:54 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2] hpet: do not overwrite properties on post_load
-Date: Sun, 16 Feb 2025 10:28:53 +0100
-Message-ID: <20250216092853.4169458-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tjcoE-0001G7-FP; Sun, 16 Feb 2025 06:27:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739705258; x=1771241258;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=skh4bQ2t97KY8d+tx+gGGRpHVl1qmREwLCPXTtFQgiM=;
+ b=k0dzPamA9XrgwNLi+s2YafWcBk8OzlFlhKTjA7ugXlEakWS6ccfgOhnz
+ lgDEOP1XMboAc8lEYLEu2TO33+KGXwx472hM+Ps1vzb2lBV5qqF5FAsr+
+ MfYeZ9D+8+X/QFypZ7ndaou9rosvrm/v9H4YJoPWUKTwMzp8ulln12zlV
+ W8+IXO7EPIhtXJUAFzZIal0sJzaTUWQfIrE3HLyVV/xaGQg7I4LTcB5fZ
+ YH3kiUbH41kq1F5WAARHSGuBW4gFQHGSVFxyYmmi8Hk1F3Wu+hPywfqx5
+ V7TpLFXuw9515PJgdhb5g4rXHJuCTrYyL2WMFXCxYaYo38qTMiKKYn2H9 g==;
+X-CSE-ConnectionGUID: rCY0mu+ISWq4R6hhaUH6hw==
+X-CSE-MsgGUID: GitZjZIJTaK9JTCmXUIHMw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11346"; a="40327330"
+X-IronPort-AV: E=Sophos;i="6.13,290,1732608000"; d="scan'208";a="40327330"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Feb 2025 03:27:33 -0800
+X-CSE-ConnectionGUID: GVpNehOJSFycEQ3jpxN0wQ==
+X-CSE-MsgGUID: ls0MjM4pTXWJ7fp6iTNYDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,290,1732608000"; d="scan'208";a="113746215"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 16 Feb 2025 03:27:31 -0800
+Date: Sun, 16 Feb 2025 19:47:04 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 01/10] i386/fw_cfg: move hpet_cfg definition to hpet.c
+Message-ID: <Z7HQONYiq5GFIw9+@intel.com>
+References: <20250210030051.2562726-1-zhao1.liu@intel.com>
+ <20250210030051.2562726-2-zhao1.liu@intel.com>
+ <CABgObfb6PhiKO9=iWne9AoXQ+Ek7FddoW8D0VcWvw3Qa3TW-9w@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.195,
+In-Reply-To: <CABgObfb6PhiKO9=iWne9AoXQ+Ek7FddoW8D0VcWvw3Qa3TW-9w@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -55
+X-Spam_score: -5.6
+X-Spam_bar: -----
+X-Spam_report: (-5.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.195,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,101 +90,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration relies on having the same device configuration on the source
-and destination.  Therefore, there is no need to modify flags,
-timer capabilities and the fw_cfg HPET block id on migration;
-it was set to exactly the same values by realize.
+On Thu, Feb 13, 2025 at 12:25:55PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 13 Feb 2025 12:25:55 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH v2 01/10] i386/fw_cfg: move hpet_cfg definition to
+>  hpet.c
+> 
+> On Mon, Feb 10, 2025 at 3:41 AM Zhao Liu <zhao1.liu@intel.com> wrote:
+> > diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+> > index d2cb08715a21..546de63123e6 100644
+> > --- a/hw/i386/fw_cfg.c
+> > +++ b/hw/i386/fw_cfg.c
+> > @@ -26,8 +26,6 @@
+> >  #include CONFIG_DEVICES
+> >  #include "target/i386/cpu.h"
+> >
+> > -struct hpet_fw_config hpet_cfg = {.count = UINT8_MAX};
+> 
+> This must be kept for the case where HPET is not enabled at all in the
+> build; removing the FW_CFG_HPET file changes the guest API and I'd
+> prefer to merge the Rust HPET implementation without having to figure
+> out the safety of that change.
+> 
+> No need to do anything, I'll just make it
+> 
+> #if !defined(CONFIG_HPET) && !defined(CONFIG_X_HPET_RUST)
+> const struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
+> #endif
+> 
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
-        v1->v2: also do not overwrite num_timers
+Thanks! This makes sense.
 
- hw/timer/hpet.c | 38 ++++++++++----------------------------
- 1 file changed, 10 insertions(+), 28 deletions(-)
-
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index dcff18a9871..ccb97b68066 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -77,6 +77,7 @@ struct HPETState {
-     uint8_t rtc_irq_level;
-     qemu_irq pit_enabled;
-     uint8_t num_timers;
-+    uint8_t num_timers_save;
-     uint32_t intcap;
-     HPETTimer timer[HPET_MAX_TIMERS];
- 
-@@ -237,15 +238,12 @@ static int hpet_pre_save(void *opaque)
-         s->hpet_counter = hpet_get_ticks(s);
-     }
- 
--    return 0;
--}
--
--static int hpet_pre_load(void *opaque)
--{
--    HPETState *s = opaque;
--
--    /* version 1 only supports 3, later versions will load the actual value */
--    s->num_timers = HPET_MIN_TIMERS;
-+    /*
-+     * The number of timers must match on source and destination, but it was
-+     * also added to the migration stream.  Check that it matches the value
-+     * that was configured.
-+     */
-+    s->num_timers_save = s->num_timers;
-     return 0;
- }
- 
-@@ -253,12 +251,7 @@ static bool hpet_validate_num_timers(void *opaque, int version_id)
- {
-     HPETState *s = opaque;
- 
--    if (s->num_timers < HPET_MIN_TIMERS) {
--        return false;
--    } else if (s->num_timers > HPET_MAX_TIMERS) {
--        return false;
--    }
--    return true;
-+    return s->num_timers == s->num_timers_save;
- }
- 
- static int hpet_post_load(void *opaque, int version_id)
-@@ -277,16 +270,6 @@ static int hpet_post_load(void *opaque, int version_id)
-                         - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     }
- 
--    /* Push number of timers into capability returned via HPET_ID */
--    s->capability &= ~HPET_ID_NUM_TIM_MASK;
--    s->capability |= (s->num_timers - 1) << HPET_ID_NUM_TIM_SHIFT;
--    hpet_fw_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
--
--    /* Derive HPET_MSI_SUPPORT from the capability of the first timer. */
--    s->flags &= ~(1 << HPET_MSI_SUPPORT);
--    if (s->timer[0].config & HPET_TN_FSB_CAP) {
--        s->flags |= 1 << HPET_MSI_SUPPORT;
--    }
-     return 0;
- }
- 
-@@ -347,14 +330,13 @@ static const VMStateDescription vmstate_hpet = {
-     .version_id = 2,
-     .minimum_version_id = 1,
-     .pre_save = hpet_pre_save,
--    .pre_load = hpet_pre_load,
-     .post_load = hpet_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64(config, HPETState),
-         VMSTATE_UINT64(isr, HPETState),
-         VMSTATE_UINT64(hpet_counter, HPETState),
--        VMSTATE_UINT8_V(num_timers, HPETState, 2),
--        VMSTATE_VALIDATE("num_timers in range", hpet_validate_num_timers),
-+        VMSTATE_UINT8_V(num_timers_save, HPETState, 2),
-+        VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
-         VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
-                                     vmstate_hpet_timer, HPETTimer),
-         VMSTATE_END_OF_LIST()
--- 
-2.48.1
+Zhao
 
 
