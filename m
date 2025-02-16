@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B74EC02198
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E32C02198
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Feb 2025 21:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjlmF-0003gT-CJ; Sun, 16 Feb 2025 16:02:11 -0500
+	id 1tjlmC-0003Uu-Hf; Sun, 16 Feb 2025 16:02:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlm9-0003YO-2S
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:02:08 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjllz-0003G8-VJ
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:58 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlm7-0007xk-IX
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:02:04 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38dcac27bcbso2857620f8f.0
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:02:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjlly-0007wb-7B
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 16:01:55 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4395dddb07dso39108685e9.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 13:01:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739739722; x=1740344522; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739739711; x=1740344511; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mX8deahLJd9g/czOO8F+DTVRecS9AsmpyHYz1+koZZ0=;
- b=ZzxqfvIwCUff/A50ax3KHIBt7kzq1SvTXvItWtY8Y3YAeJzfUDADS2s+gx3I381DT3
- JGdFG/jehFiQXygr5patrWhIFvaMuovAyVmFkEuhr4wWuy2zcQ4WEAbSDW7XaSxKaXYo
- jB9h73aMZIP/ksw062MAipbdPIIvPT8LkZBNYXe1Ro881Pl27cgS3kpBTyO/fqbO4iG5
- 8Ekp1bPuG1pmFa36boNbhbuJWcvmwIi1bE8RSzCRGdm3tEQx2Ty8B4SOpEoOCwRbe5tN
- lprTxMSgINDlaFrrs4NKSYqYWeDnwsOtRjlbWf2swwLX3BNnyl41yhS24LSBMlIa6A9a
- 73EQ==
+ bh=cGBjSRjjs0GVgebNeH/me8dl0WzvlQD2wvlUH4yfoyo=;
+ b=CpvqOj058UEylZPXKNkKotvRYyF4ZllA8P9DwtX3gyrvM92UJr4DqwSFofV/na29mI
+ yY6Fg1WThiSGTSkiwl2J5ILTyPYV0aL04hdH0EoDshV6maQWr7QP5DGKaLH1EsCYqenH
+ kmRQWxgHtdXevzna5CEWUbI7/GS5XYIClXEA+bjZo6seM+oCReQdccDoG5j4HuSlV0h5
+ tW0axBW7SpWkGKQ+HcKIX10H6/0YxHNVLZGeOePVAtAojvEzb2wKfEjBa/q1wK8sYbsi
+ YW6qqIGzppu7KRlxVqOnFRkikfd2N8eWGzlghCW2aiI6rZN+wvupi5Y6i6Oz9B7sxbZq
+ bYIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739739722; x=1740344522;
+ d=1e100.net; s=20230601; t=1739739711; x=1740344511;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mX8deahLJd9g/czOO8F+DTVRecS9AsmpyHYz1+koZZ0=;
- b=YaNsJA+gdJeqD2Hk16u+UADXP8J4OuJ8RFedoZvup8q/+g/gyzY2WRXUc9TJGJ2ZK7
- jECAjGuaTYijzDGDCHhrfnKc1BS3mZsRm3kNFMScgWAeZpXa0gHeIUh1YcIDSLqIBHlW
- X81e1gAs/h4Uy+imqGDQ3EbF7qxeFZh+r3qCBz5dV6bEmRpWFSEMubzspOvO12kY3Qtt
- YNc0YByHep1M+8O0A4LYL4mY6m10bMPJ+NLCIpr5MoKyBpFtN+fG1rx/DEYABH3qg6Qi
- H4KYXVpAW5Z1jdFv7YjCTDw7lRAFYgqRpylyIxDneYn/ZuHYVi9zGaxKRU7avun3hFbr
- TZsA==
-X-Gm-Message-State: AOJu0YzM5ZUKW3kE0iwPlu7/3nWqXErrhEmxsxhA64lKaMsjYVPUtLpC
- ObDLDE6j9Pi2imtiwncHOl9lLptiegFXRN+ys/JIMtUzmpHcedQ7XYL1saKTq1tbenanhMLbSyd
- bo4A=
-X-Gm-Gg: ASbGnctxG5cyC9hQ5S0cR+2zgsS9V+tWCke5pXf4YR3FVRe+QYXdiR17xA8wxzk+9u8
- m5EUofp8PWfpJbXUP1NZo5aobZcFmBbenflcFNsm1jiGLg4VSuejVMNyBNq43q/WKRDlc0X7+4I
- Cgvx3P1yFliFur2O0Wpo4QcHKnr+8pe069n4ELUiwYo/bmmjbQIO+BlNsWw0s5aD+OntWwuwEVv
- 0LExpmV8QMJy6dkQ0BBIoNzLhEWbk7+V3Z5ZHdArt/z40bF24BJkAOmUKnrDlwkuI312WpcNaPP
- Sk4dobsLs9/6BDhGkX0kAoXL25cn009uyDoN3puoSRWkOrFGSDQtj+hDQyTHiIZOYrwDHtY=
-X-Google-Smtp-Source: AGHT+IFQo9SGkpWDZBdZBKoF59I+BynJ+8ezYFrY5v3y8IG8Qo9MHc0lShH7uNs+f8bJTd6SKmr2hw==
-X-Received: by 2002:a5d:5889:0:b0:38d:b8fd:591f with SMTP id
- ffacd0b85a97d-38f24ce76d0mr16806733f8f.5.1739739721676; 
- Sun, 16 Feb 2025 13:02:01 -0800 (PST)
+ bh=cGBjSRjjs0GVgebNeH/me8dl0WzvlQD2wvlUH4yfoyo=;
+ b=XGP+jIazLm9FX6eGZ93Fw3tVgZ7yxpkyLbT/i2nMjZ7BgkKnSCGl/0pyOQ6QCmv8/h
+ 6J7nIWRUejUj8Z/rDm0iP0qNZCce9sHXYPn4WoIGNUuNua8aX+oCDU0ajJ08lamDHYVy
+ F92A7DpVYOJP9RKkDB3GCqp9cyfed4JJh8ZzVK17ZfXblSLGpqvkLN2PDInVN7eiZEjk
+ AuKMmlHhTTHkrS7NoINnLQo2pux3FJeZEHfucmYQL6G52ThJOdYCmaVsYihqjARUdU7w
+ ykPzHEBlwhZJYKQn+KIAuSte/zkj1je2DwpfjQfLEPGb+jn9IksvRP9BG7XK/qin0yhk
+ osbQ==
+X-Gm-Message-State: AOJu0YysLPrivJLsQLwTmhwwB3Y1RfH07giLnerSrZIcozcwoHUYUUO4
+ nPzDeThBKYXTIjNlqfrIGqEaBc+ohMI+qS8WEjR3fXAP1YgHETYNNOGkYhCn+6RZMR3wYXieD5z
+ iW5w=
+X-Gm-Gg: ASbGncvcTY1zFPdsNzkOzLJuuWpDeSHCqq/J0rjiUlyIyZjcuh3WBt9/n298a4GyKBB
+ v9CQzB082Bull/v6T/j8ugLamZLRO1rs6aRI+q0lsal5BLG/f8FwPWIUGpzFrMsoC8OTZYaVw6m
+ R2ecyHP14DDBG+9wtS9gXg0d7pcIvAnD8aTogpbn5kyJOpZIR1yWAAmCsecOocqnB1PUQfskEoB
+ sUxuzJ7x1nwhdcYqnqMGmtiWnMESOaP4/S4/KQ7Pnu5JK1JT9GukUbCKWGPeYQkiBUMPiB5dB6v
+ 1rLisEWW/FxI2aq/2la4aFRqSpKbGCKzPRNwYZQ3rUNiACk0+6etfOKCLm3Ekgqk0XSEMPg=
+X-Google-Smtp-Source: AGHT+IGkdTnA2e3/AFe67Pf4Uq80vrTsPEEkcbO9yKSxPtcBZUwRWCXDxDkoreyWpakWT2jbcnoZRw==
+X-Received: by 2002:a05:600c:1e23:b0:439:8346:506b with SMTP id
+ 5b1f17b1804b1-4398346535emr12923435e9.19.1739739711465; 
+ Sun, 16 Feb 2025 13:01:51 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259f8115sm10579717f8f.92.2025.02.16.13.02.00
+ 5b1f17b1804b1-43984924201sm10830115e9.6.2025.02.16.13.01.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Feb 2025 13:02:01 -0800 (PST)
+ Sun, 16 Feb 2025 13:01:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Keith Packard <keithp@keithp.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 39/39] hw/rx: Allow execution without either bios or kernel
-Date: Sun, 16 Feb 2025 22:01:03 +0100
-Message-ID: <20250216210103.70235-12-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 37/39] hw/mips: Mark Loonson3 Virt machine devices as
+ little-endian
+Date: Sun, 16 Feb 2025 22:01:01 +0100
+Message-ID: <20250216210103.70235-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250216210103.70235-1-philmd@linaro.org>
 References: <20250216210103.70235-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,33 +100,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Keith Packard <keithp@keithp.com>
+The Loonson3 Virt machine is only built as little-endian.
+Therefore the DEVICE_NATIVE_ENDIAN definition expand to
+DEVICE_LITTLE_ENDIAN (besides, the DEVICE_BIG_ENDIAN case
+isn't tested). Simplify directly using DEVICE_LITTLE_ENDIAN.
 
-Users can use -device loader to get an ELF file loaded to
-memory, so we don't need to require one of these options.
-
-Signed-off-by: Keith Packard <keithp@keithp.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250215021654.1786679-2-keithp@keithp.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250212113938.38692-4-philmd@linaro.org>
 ---
- hw/rx/rx-gdbsim.c | 3 ---
- 1 file changed, 3 deletions(-)
+ hw/mips/loongson3_virt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
-index 88c8f12c101..4afd77efd56 100644
---- a/hw/rx/rx-gdbsim.c
-+++ b/hw/rx/rx-gdbsim.c
-@@ -110,9 +110,6 @@ static void rx_gdbsim_init(MachineState *machine)
-     if (!kernel_filename) {
-         if (machine->firmware) {
-             rom_add_file_fixed(machine->firmware, RX62N_CFLASH_BASE, 0);
--        } else if (!qtest_enabled()) {
--            error_report("No bios or kernel specified");
--            exit(1);
-         }
-     }
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 831fddb1bd7..db1cc513147 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -144,7 +144,7 @@ static void loongson3_pm_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps loongson3_pm_ops = {
+     .read  = loongson3_pm_read,
+     .write = loongson3_pm_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1
+@@ -560,7 +560,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
  
+     serial_mm_init(address_space_mem, virt_memmap[VIRT_UART].base, 0,
+                    qdev_get_gpio_in(liointc, UART_IRQ), 115200, serial_hd(0),
+-                   DEVICE_NATIVE_ENDIAN);
++                   DEVICE_LITTLE_ENDIAN);
+ 
+     sysbus_create_simple("goldfish_rtc", virt_memmap[VIRT_RTC].base,
+                          qdev_get_gpio_in(liointc, RTC_IRQ));
 -- 
 2.47.1
 
