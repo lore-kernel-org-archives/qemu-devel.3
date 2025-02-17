@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DD6C021A0
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A567C021A0
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjwKU-0002Es-VR; Mon, 17 Feb 2025 03:18:14 -0500
+	id 1tjwLF-000307-T4; Mon, 17 Feb 2025 03:19:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tjwKS-0002Bo-Cm
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:13 -0500
-Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tjwKP-00011k-TE
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:12 -0500
-Received: by mail-qv1-xf29.google.com with SMTP id
- 6a1803df08f44-6e67f377236so5729076d6.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 00:18:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1739780289; x=1740385089; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=CIOoUkbjk51N51acNzDriCfyDC8X79FyXFjaBdinybo=;
- b=fqX7TDd+On4XSKBsKIVBgrG7w7ssHrSo+jj2zIRXaxfhRB29xtqt9Al8yH7a5UvZNw
- eqMsbT/y0J4cT89O7XbwR9idbtH9+K/9MC28pJkfVlP7lzy7Xd8xgtMolOJil3ocrRb0
- RLA3JVdHbfx8bMINoT+B4oB91mQzRARfolGGoolz2Z1nGedkLbgxRknr0oLh0d10CJ5V
- XTZolUOdY0LwFK9/KFqkmw+UyCD9D2tPGj8pDB8y/EPgddMYsTvmDc+3hjG7GHXnqQ3e
- FOBMaOsQTT9XEL6ncNGWeV2wcFN28BGvuDJ+221zzmdMycJjDzMqJ6dhzVWZgArfnL5K
- x1Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739780289; x=1740385089;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CIOoUkbjk51N51acNzDriCfyDC8X79FyXFjaBdinybo=;
- b=VaWuvTaKRCxxpBJzKmFO3zz72ItZyK/cEIDb7Km+ldAimqfd/botrqqxbGTu/2SYDf
- jC8XckcX7pPu0uQPXq3v0ogrIsFlLs1kGN657HUrWP3aN1K7ph9HgAsndI59+lL0y/AF
- giNqoFOzpLA1GVUMM6HXNXGio+kSWnh9MDNIQP40ubsK4+H09WDeD28CC0wKFjHgzLFV
- t2sxn/oPstopKQBcdT1TrdDgr/J8xI9sEbCavNH7RmMx9IwI5vrCMEe8UL37ldaBte9Y
- n6zCWs0DEh2zb0Gmrk6YZrDV8w5CuLJsIomvD+19zL1AYviarrWP9QEl9sHvs+saTf2f
- 0LYg==
-X-Gm-Message-State: AOJu0Yx6meCu6mQUJZaKUr7vm1Vhr/dEehx2dHYHHRR0CXMdXXZh7Ow/
- g6Nw1o0oPpNrCcV27+40Fv3AGe64cULOk4y1ReJd7g1TFJ2hI+eKR9fbI09Pw8MSt2sdVsERQBv
- jYsxWu+pcgBW2KDjk69/bFPvidAzxLHmUTYEvvm3HEIkbXtY2z0d+sIjqi+eIbg2Rg2Mp/v8Xoc
- QtYBezQerIQ0LQUdEicFInR1ZJr566MXxwtn/rN+1P2w==
-X-Gm-Gg: ASbGncuq9novyPLsoKpxSbi69CDWJ7cwRj51/sYcmzanHFe/U6jBmb2g90ywrLPVh/9
- ARSAvtXjZLCZ5kZzZbDOGmGfJARSA/QHCB1py0OJ5I7QDPo3EMWuoorKhr9dzLkxQLXyr/r6QTe
- m+f6vTgyxFuOAzRZ+bVpwf5rrxmZTmYXcI7tC35G3EAeyGuxoBl50fcMnt/t7hoSnKAKQ+flnil
- 0W0aYWNL4Iib94vJDAxQjAf9RpYxa29hGu36tqZzbSxrGGvObKIBIUoQ/OkZD6B5tnkgW3cUwMa
- 0hs7kloQn8kfjfBf6p306jh+nsUVZwKMlB4MQdaE3UnSrA==
-X-Google-Smtp-Source: AGHT+IEfZANQhcZDUv0bTis6sSavH9H1aY3LSqVQvrgPQLJ8aH649IbHLwd7nLcMsDV/2jlrYwF8Gw==
-X-Received: by 2002:a05:6214:262c:b0:6dd:d317:e0aa with SMTP id
- 6a1803df08f44-6e66cc85b7emr143122026d6.8.1739780288589; 
- Mon, 17 Feb 2025 00:18:08 -0800 (PST)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e65d9f38absm49673346d6.88.2025.02.17.00.18.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 00:18:08 -0800 (PST)
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
- jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 4/8] target/riscv: add helper to get CSR name
-Date: Mon, 17 Feb 2025 16:17:24 +0800
-Message-Id: <20250217081730.9000-5-yongxuan.wang@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250217081730.9000-1-yongxuan.wang@sifive.com>
-References: <20250217081730.9000-1-yongxuan.wang@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-qv1-xf29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tjwLC-0002q3-VX
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:59 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tjwLA-00015F-KF
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739780336; x=1771316336;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=aCF+b4RwfnVnsui1hr69IimEOU4HkOAhxYc97Sd88Us=;
+ b=nJoLgxcbrzRQPWDWguX9koZHSPQAajpV4VhURMkb463Gaf6UqihmjDk4
+ BvZhB86V7VKy0c/+Jzr5sIbBPsprKT3LR+GF5qdrY0iNAgmPwy7bxJW5t
+ Pxrp37CWFRnaldVN2+zjpsY+bFK4x+9h6D/aqfU9OS6Oz4GvtpVuBVc4Z
+ sHBOMA9EoTfmq2EWSPVpd7X7Axg1PSAS32MAAd44uS1EOBZ7GvfEm3lF5
+ M70c/e8sBXdx/x8VqTLyauG+6kP1G7OOxghWHGDmNesvjo7pklhE9taH8
+ xkNp7RI8ASi12YA7wbNGtEU1t8lrORqxW+ZLuz0oRq1kV3Iinxs5JebuO w==;
+X-CSE-ConnectionGUID: PrlBThrgQ+umbez0gNLUvQ==
+X-CSE-MsgGUID: 3kevUiZPSvG9wOC37GhlRQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11347"; a="50668975"
+X-IronPort-AV: E=Sophos;i="6.13,292,1732608000"; d="scan'208";a="50668975"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 00:18:54 -0800
+X-CSE-ConnectionGUID: bJsn2YPTQ6OurDEqgpOlMw==
+X-CSE-MsgGUID: DYuhebGISKS+FiChk3Xkeg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="118690184"
+Received: from emr-bkc.sh.intel.com ([10.112.230.82])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 00:18:52 -0800
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: [PATCH v2 2/6] memory: Change memory_region_set_ram_discard_manager()
+ to return the result
+Date: Mon, 17 Feb 2025 16:18:21 +0800
+Message-ID: <20250217081833.21568-3-chenyi.qiang@intel.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250217081833.21568-1-chenyi.qiang@intel.com>
+References: <20250217081833.21568-1-chenyi.qiang@intel.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.11;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +89,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper function to get CSR name from CSR number.
+Modify memory_region_set_ram_discard_manager() to return false if a
+RamDiscardManager is already set in the MemoryRegion. The caller must
+handle this failure, such as having virtio-mem undo its actions and fail
+the realize() process. Opportunistically move the call earlier to avoid
+complex error handling.
 
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+This change is beneficial when introducing a new RamDiscardManager
+instance besides virtio-mem. After
+ram_block_coordinated_discard_require(true) unlocks all
+RamDiscardManager instances, only one instance is allowed to be set for
+a MemoryRegion at present.
+
+Suggested-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
- target/riscv/cpu.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Changes in v2:
+    - newly added.
+---
+ hw/virtio/virtio-mem.c | 30 +++++++++++++++++-------------
+ include/exec/memory.h  |  6 +++---
+ system/memory.c        | 11 ++++++++---
+ 3 files changed, 28 insertions(+), 19 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 616c3bdc1c24..133d1852ee1e 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -920,8 +920,12 @@ extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
- void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
- void riscv_set_csr_ops(int csrno, riscv_csr_operations *ops);
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 21f16e4912..ef818a2cdf 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -1074,6 +1074,18 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+                         vmem->block_size;
+     vmem->bitmap = bitmap_new(vmem->bitmap_size);
  
--void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
-+static inline const char *riscv_get_csr_name(int csr_no)
-+{
-+    return csr_ops[csr_no & (CSR_TABLE_SIZE - 1)].name;
-+}
++    /*
++     * Set ourselves as RamDiscardManager before the plug handler maps the
++     * memory region and exposes it via an address space.
++     */
++    if (memory_region_set_ram_discard_manager(&vmem->memdev->mr,
++                                              RAM_DISCARD_MANAGER(vmem))) {
++        error_setg(errp, "Failed to set RamDiscardManager");
++        g_free(vmem->bitmap);
++        ram_block_coordinated_discard_require(false);
++        return;
++    }
++
+     virtio_init(vdev, VIRTIO_ID_MEM, sizeof(struct virtio_mem_config));
+     vmem->vq = virtio_add_queue(vdev, 128, virtio_mem_handle_request);
  
-+void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
- target_ulong riscv_new_csr_seed(target_ulong new_value,
-                                 target_ulong write_mask);
+@@ -1124,13 +1136,6 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
+     vmem->system_reset->vmem = vmem;
+     qemu_register_resettable(obj);
+-
+-    /*
+-     * Set ourselves as RamDiscardManager before the plug handler maps the
+-     * memory region and exposes it via an address space.
+-     */
+-    memory_region_set_ram_discard_manager(&vmem->memdev->mr,
+-                                          RAM_DISCARD_MANAGER(vmem));
+ }
  
+ static void virtio_mem_device_unrealize(DeviceState *dev)
+@@ -1138,12 +1143,6 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIOMEM *vmem = VIRTIO_MEM(dev);
+ 
+-    /*
+-     * The unplug handler unmapped the memory region, it cannot be
+-     * found via an address space anymore. Unset ourselves.
+-     */
+-    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+-
+     qemu_unregister_resettable(OBJECT(vmem->system_reset));
+     object_unref(OBJECT(vmem->system_reset));
+ 
+@@ -1155,6 +1154,11 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
+     host_memory_backend_set_mapped(vmem->memdev, false);
+     virtio_del_queue(vdev, 0);
+     virtio_cleanup(vdev);
++    /*
++     * The unplug handler unmapped the memory region, it cannot be
++     * found via an address space anymore. Unset ourselves.
++     */
++    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
+     g_free(vmem->bitmap);
+     ram_block_coordinated_discard_require(false);
+ }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 3bebc43d59..390477b588 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2487,13 +2487,13 @@ static inline bool memory_region_has_ram_discard_manager(MemoryRegion *mr)
+  *
+  * This function must not be called for a mapped #MemoryRegion, a #MemoryRegion
+  * that does not cover RAM, or a #MemoryRegion that already has a
+- * #RamDiscardManager assigned.
++ * #RamDiscardManager assigned. Return 0 if the rdm is set successfully.
+  *
+  * @mr: the #MemoryRegion
+  * @rdm: #RamDiscardManager to set
+  */
+-void memory_region_set_ram_discard_manager(MemoryRegion *mr,
+-                                           RamDiscardManager *rdm);
++int memory_region_set_ram_discard_manager(MemoryRegion *mr,
++                                          RamDiscardManager *rdm);
+ 
+ /**
+  * memory_region_find: translate an address/size relative to a
+diff --git a/system/memory.c b/system/memory.c
+index b17b5538ff..297a3dbcd4 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2115,12 +2115,17 @@ RamDiscardManager *memory_region_get_ram_discard_manager(MemoryRegion *mr)
+     return mr->rdm;
+ }
+ 
+-void memory_region_set_ram_discard_manager(MemoryRegion *mr,
+-                                           RamDiscardManager *rdm)
++int memory_region_set_ram_discard_manager(MemoryRegion *mr,
++                                          RamDiscardManager *rdm)
+ {
+     g_assert(memory_region_is_ram(mr));
+-    g_assert(!rdm || !mr->rdm);
++    if (mr->rdm && rdm != NULL) {
++        return -1;
++    }
++
++    /* !rdm || !mr->rdm */
+     mr->rdm = rdm;
++    return 0;
+ }
+ 
+ uint64_t ram_discard_manager_get_min_granularity(const RamDiscardManager *rdm,
 -- 
-2.17.1
+2.43.5
 
 
