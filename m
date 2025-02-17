@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2DFC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEEFC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0mz-0001CX-Sr; Mon, 17 Feb 2025 08:03:57 -0500
+	id 1tk0pX-00025W-AZ; Mon, 17 Feb 2025 08:06:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk0mu-0001Bx-Gv
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:03:52 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0pR-00025B-L2
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:06:31 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk0mr-0004Bo-SP
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:03:52 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-6fb0200b193so39814027b3.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:03:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0pP-0004hQ-EI
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:06:28 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2fa7465baceso8801562a91.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:06:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739797428; x=1740402228; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=N36CzgkxQ/ZEegvCvcDE6yqLGkrsappvLNmw9W/A26w=;
- b=zQFa+bM5cUeM/5BVetYRXM9xATljn7HHo+81XM1TmHfpTHKHfJuH4DRUzlPxNT4adg
- brWXiA5pjhdGrrGiNLsPuFBgejeNGYH6jiSCvCkIeRCtTirz4835n/Im5hzx7I3u7EM9
- 4SLpAenV4XfPtT/EadWLfJyygfTuPEQiUKuDkZnbZQchqRaLH5cVorglu+Agu7SET1VQ
- fAr4TCzWMGzWONbB7I/g/wA0PurYfRACe4IA/MXB5OtbkMhnp5XyJ9EMo+7vFWW88MZn
- yErFYDbupl2Ilf51NfR+lbcXFM0d0FI8ClgRLRLmeNlfQBngMxb1nkxc5Rdlwj9YdPE7
- CDUg==
+ d=linaro.org; s=google; t=1739797582; x=1740402382; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LAiD6jNMlnvOxC6RFwTNse4mAN9kNlx9AjExQlpN6Gw=;
+ b=vSfK3XXhI+VcOvF/mCqxDbPpB05uQ5Pe0jz2H3nYh24lus9MJLof0rWazn3Mk9WvzB
+ 9i8+4urzmPIHMfIxTszVzYMfx4cUfp8+gfS4nx7JH8GVb8zUykqdnrVJJR9nTl51VMA/
+ ThOZgBuXx4KP+400RyyW2ZIEoLIhQIKX5qbcY/FwZdZ/GXDRKkWeJvL6y3rMFVU7MltZ
+ zCe5PE2tgvp4Vi9RHDGhoXGqGxj879mEK+60T3QCg00jcrNWbc3oMTCxzgZ1kbGVWEGL
+ 2//jU/u6E8nUZizyQWhJnggW7Zbn2BcbkduJMYxds+yAW/QP+DSBOs3kmJ5kzukkgJHb
+ ifRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739797428; x=1740402228;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1739797582; x=1740402382;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=N36CzgkxQ/ZEegvCvcDE6yqLGkrsappvLNmw9W/A26w=;
- b=mlFUca/LKHgx+tfF26+8C2WcgTuYxKw9DkiWjbrPq6sYEZPp2IjiSZOrPPxTX+XeYS
- uHZ6VvYnsBsvFTrSjboLA7QyY3/XFbQ4FKdNAX0dsqH7K8SfmbDEzHXSa67w6FlcemC7
- y2n5V2fEV9S0QzQk8dMrEjBJ+Bk9OKLYrttBptp45aiY0s91B1BLefyOq41Wkwig5rZ6
- nRTHQSwE2h7IXswwzIPJLwojv70KxGA9k9BMFpzCLabbvDluL2XDZ5apcMbG6atw/lzV
- 17+woPJOZI7EerIeRVI1UBLUCjy83xj0rpxuceRCkZSBYwZYB09v84MEibeQWNUxErDh
- pTbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXV5mLdJ7IS9vhzVb+yhnQJeCh+7lD/sOBetdCSQMoZVahhy+Dzzuq4B/DwaRL4L1zZiJMQ9DG30ZQs@nongnu.org
-X-Gm-Message-State: AOJu0YxQyQKkje8+810EbtQThOQmgrDywY6cJYu3TtyRApvgt8lVLB1N
- p9SiGePm/Qv5BNknJo7NWa+poz+4EinpCCUgWtGsuRsdZeyp0jey/SIVBuzKuekUdCEpxOu6pSB
- lTkAN2H6fWiGMSypY26qJzADJsVCDZKVVwzclNg==
-X-Gm-Gg: ASbGncuAtleUz/wz8al8ZmzcmqEuBf3q/fwqSJ+1RkQN0HZffSy0MsES9fDtLr/gM8C
- S/42h4R9u8zauy0/AQGjlbhW6afe67tLVngyM0wXvvP3LcwQpqcd/Dx4ZaB8jLoavrB90InXNHA
- ==
-X-Google-Smtp-Source: AGHT+IENE0Cju4mftk2h0n2ehKOp9lk0IWmTzda6lNphejbPUkAkZn+/brOOv93bXVXhZgC1l0fqBmecdM3trT5FJPQ=
-X-Received: by 2002:a05:690c:950b:b0:6fb:8e5b:bd16 with SMTP id
- 00721157ae682-6fb8e5bc027mr2021957b3.25.1739797427874; Mon, 17 Feb 2025
- 05:03:47 -0800 (PST)
+ bh=LAiD6jNMlnvOxC6RFwTNse4mAN9kNlx9AjExQlpN6Gw=;
+ b=n5+4vMf8hepKLoLWq11gB/Mi4A7xKmMq+DPX5zH6HCiITW7L2+zqOOL7qaj7QYyzB6
+ A1F1PVHbg/QqWtPoBItVNrKcjec7VahfGvoM65QKM3TldCGfvfOrYm81uWNJ7ObZQZ3K
+ DJrwIqtfHgJrmr4S+OcigpgbU20vK6UbkvbOmcqhLayPrbCUMqAThBtWD2gO6c5a4j7f
+ zAEpy9lvL9RCdw6tu7BddzDpIrP+aUI9QBh84zgcDtqLSq2LBti4xmcLYdYqclapP+J0
+ WIYHbABPBanqynU9qWdLr2SxQ/U5DJRmecfqDhPS2oqiUgFdEE3L7w9SbtmpMRr8+p3F
+ TK3A==
+X-Gm-Message-State: AOJu0Yxi0u5FPdQ3hmRiPy+2j2a4CZP6Y2d0u/aVQObuCj7SjgSfeAtR
+ iCULDoRjUSj58GVq5N8odKyECBI7ep+qUCk/GFFHmzDFyDsUDRjbNQcy0NqIGVMh3vHLsfcLO1u
+ 4ljc=
+X-Gm-Gg: ASbGncuXDKk9tJKkOcvD2INqYP5pcZnR94anYM6gltpKwBGW90fwvfQmwgtpYtnJ3uB
+ zWAlTEkatucPqVknZa0R2UjkjHmOeKlCcYIppThQhCQy8D3JRDXgkLInHcU2lYBR3ne8jeYL11h
+ C6DdHpxiNxy4PEyOXPdnJHT3A7pGJ9rf20ZLVV3zJpgQ7ze54O8pV0BmTgM/O1OxTr1RJe+DWED
+ JVOW7Nm3mA9rwyP234dYAElc01sErMV3BKX5ewrQ1Y4CILfi01hzy5CGehgm+LhmRUnSdcT0Srm
+ 2sOTkkWojIXntB6GzppohqSEVEZzJVzXqh/dOM3ISAA=
+X-Google-Smtp-Source: AGHT+IFqFZ2pYXJhjCyZv4x9ytBw5t4mNjH5Dhr40oA051q86mnKRcNsMpCZZEYTWfe9T/TqzmUL7g==
+X-Received: by 2002:a17:90b:3812:b0:2f4:434d:c7ed with SMTP id
+ 98e67ed59e1d1-2fc40f1f83cmr17033499a91.16.1739797582624; 
+ Mon, 17 Feb 2025 05:06:22 -0800 (PST)
+Received: from localhost.localdomain ([176.167.144.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2fbf98cff80sm10031309a91.16.2025.02.17.05.06.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 17 Feb 2025 05:06:22 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/5] accel/tcg: Clean cpu_memory_rw_debug() up
+Date: Mon, 17 Feb 2025 14:06:05 +0100
+Message-ID: <20250217130610.18313-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <6866d6b6-24af-4743-8407-26ae2998dd21@gmail.com>
- <CAFEAcA9B40F21r9RgeDd7k09juy35k9QWewzgkmyNkYVK_K0-g@mail.gmail.com>
-In-Reply-To: <CAFEAcA9B40F21r9RgeDd7k09juy35k9QWewzgkmyNkYVK_K0-g@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 13:03:35 +0000
-X-Gm-Features: AWEUYZnkzrX1v18ZYMZvoZ93bAJK3Nd33aB0NJ3a3785YfVzVmi_SzfJwZGOnTg
-Message-ID: <CAFEAcA-U3QTWKhNr4Nd39hX7e+i+HDEyu8EZfSOm37GvvaH-hw@mail.gmail.com>
-Subject: Re: ldrd implementation issue?
-To: Stu Grossman <stu.grossman@gmail.com>
-Cc: qemu-arm@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,35 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Feb 2025 at 10:46, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> (added qemu-devel to the cc list)
->
-> On Mon, 10 Feb 2025 at 17:26, Stu Grossman <stu.grossman@gmail.com> wrote:
-> >
-> > I've been getting SIGBUS cores with a bunch of user apps running under
-> > linux 5.15 and qemu-system-aarch64.  These happen to be 32 bit (T32?)
-> > programs.
+Address Richard' suggestions from [*], cleaning
+cpu_memory_rw_debug() user implementation.
 
-> > The fix is to defer the register stores till after both words have been
-> > read from memory.
-> >
-> > Here is my fix:
+branch: https://gitlab.com/philmd/qemu/-/commits/user_cpu_memory_rw_debug
 
-[snip patch]
+Based-on: <20250123234415.59850-14-philmd@linaro.org>
+[*] https://lore.kernel.org/qemu-devel/20250123234415.59850-1-philmd@linaro.org/
 
-> Yes, this fix looks correct to me. Can you provide a
-> Signed-off-by: tag for it? We can't accept it as a patch
-> without that. (I can do the other administrative tidying
-> up of it into a commit, but the signed-off-by is what says
-> you have the legal right and are happy to submit it to QEMU
-> under our license (LGPLv2.1+ in this case)).
+Philippe Mathieu-Daudé (5):
+  accel/accel-cpu-target.h: Include missing 'cpu.h' header
+  accel/tcg: Include missing bswap headers in user-exec.c
+  accel/tcg: Take mmap lock in the whole cpu_memory_rw_debug() function
+  accel/tcg: Avoid using lock_user() in cpu_memory_rw_debug()
+  accel/tcg: Move cpu_memory_rw_debug() user implementation to
+    user-exec.c
 
-Hi -- this is just a nudge about whether you can provide
-a signed-off-by line for this fix. I'd love to take it,
-but can't without a signed-off-by. (Otherwise I'll have to
-reimplement it from scratch, which I'll do at some point.)
+ include/accel/accel-cpu-target.h |   3 +
+ accel/tcg/user-exec.c            |  82 +++++++++++++++++++++++++
+ cpu-target.c                     | 101 +------------------------------
+ 3 files changed, 87 insertions(+), 99 deletions(-)
 
-thanks
--- PMM
+-- 
+2.47.1
+
 
