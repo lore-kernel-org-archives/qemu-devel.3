@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01FD2C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 19:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF5C8C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 19:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk6ZQ-0003SK-M5; Mon, 17 Feb 2025 14:14:20 -0500
+	id 1tk6ji-0004mN-Up; Mon, 17 Feb 2025 14:24:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tk6ZN-0003Rk-ED
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:14:17 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tk6ja-0004ls-QX
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:24:51 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tk6ZL-0006B6-Pj
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:14:17 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22128b7d587so24904815ad.3
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 11:14:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tk6jV-0007GV-Ub
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:24:47 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-72720daed05so951547a34.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 11:24:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739819654; x=1740424454; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DbqZtIzdDFi8NakJhKcPrL8jLc3qBB0GLCEIjGY0R6E=;
- b=P5db6Pzyv9syz2O0TgW1BEJOKhGZCSHjettDcieEvdy66I9Orxh1O6ahAlqm3Pwit0
- AKNkM114DhFw3WBzC0Do0wTLx7dvLjOL0eu73TSBWtFu7WqBeX1jkVQuWFn/wzKKcMP/
- zEmZQJUapgaKpKy6bkffC/w5XlykY0UIgAgVwaRBDEQUGRzlM/bYi7c2DkYRM04nd5nB
- +EwM4aycGwsI7SQPYdSIjqjXo1vTNJ6ApUjvDWQk/4KXyxkuVeic0odnDTRWsnvC4Kpp
- +Z3A4OktXS0c7evY+OIfkZjZbdY4bnspqRP9TAbyaR983MzQY1a29B5CwQ6MptBHVyKB
- UD2w==
+ d=ventanamicro.com; s=google; t=1739820284; x=1740425084; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Z57rBUpy+3bXfxd7SLy4EaQ+Xx2PXfEUSe2X0cbH7dw=;
+ b=PNpO5tsIg/1mBrEtKtTQyphK18v4R+HMrH8sF6QK0TmiVdLVyKL2y8KO0/Va5TZ9ha
+ Hn2iLRcl/jkXsxzCAG7Ak+q61LwUCgEvR0TAoSeU4GKFTNcOGyYRGu7/8S3Y/jvzfxxc
+ f/DSZXMrkE1aJNTy1hdVi9waLdyxcBDJ84A4opydGvCngHVlA6mTCBdZrAy669KfTt9Z
+ QKRkQBIEaStEzMl5agKlTprFgsHKjaof5I8KYssaxlFrIaW4FFc8UJjv1yWQcW44JT2Z
+ QU20Un1Zr0Smjwn6iv6TKc/DoVHD3KT6xSFBjTQfAY3argtguVNl5V9mP6iZ1xnh6BoY
+ Xkrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739819654; x=1740424454;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1739820284; x=1740425084;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DbqZtIzdDFi8NakJhKcPrL8jLc3qBB0GLCEIjGY0R6E=;
- b=vrgVaDLiAAUzD+JaBf6cGY0CkNMWsa+dB38lQipsIgu/L3dfMGU5dYHFqTNqXX0zVd
- 5V3oXZkH8CACF5d0Bbut4DxLQMOFevpHrZ0Ec8MiRT7Dk6cQTpxyyYmUBanE3aZjdhyj
- iEbnxiiBhwAPIEAVK0tmBwDWKx5Ie5p1FoZD/vQQLXicnTBLf2LYXaWS4n+TRt6Cj+Eq
- JgZGSSCnRxNTnd0aE6J45NG8X1M0eqzo1sb03z2i7isQfIFMEBJIpumRJGXpYZy2Daz0
- v+8kfbB6VVnpuHlIZWErRBV15PsCPJ+SmUxzrtrbOJFh5KzKfje6m6Tcfc8libwhmUoB
- sngA==
+ bh=Z57rBUpy+3bXfxd7SLy4EaQ+Xx2PXfEUSe2X0cbH7dw=;
+ b=ClDnACK+UE5x3+Aefg/krxlXbbVd6ZLqFG6Z1MlOzs4ufyov8DfeV7Njr415EAZxuI
+ HmNzH3jzT549vfINDHAyO7GD9enzgOueHN2j7l1BOKP8m2NOIwVSPqlWLWavr6n9T/xq
+ IBm1nXhzMqb5rXYkFfhsh2zZl+Cs0RPW42FEyg9KPAR9fmAvDCto2TLZAvmDd5nZz0tO
+ /R5arQ5rYFu9tm2iWXIwlMCdFIqjwN8ZJGgUMAB6PcgKkdga+Lq55gz+H6oULQrJUeDc
+ 3ti02Oq7jVUSgCbpTB5LswBd77qYTyg/HPng+mezK4N3n97VLU8DtXAygGUgAK8OY0lU
+ AU1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGv7LyaGbq7azBXl8o2BNAVx4rfelZbW9+kK6Vn+1rBJ0RzTWPzR6Ejz//R+ZY+JQGsQMcwd4i9gRT@nongnu.org
-X-Gm-Message-State: AOJu0YwJSksqIHOwDpygMHZv4FsJDkd+F8NS7I7wlbY0oK5huCkz4P1C
- sVA0aQNwRr/J9yTSDKYwEQ4dn7RlDjLN0lnmbyHK4mtpwodixyCuyo23wZ0FCcubjO4s9zeOoDK
- t
-X-Gm-Gg: ASbGncvzGpiIjTzDS/ixjnDayap0+hua29w/1pGjv3YKdR1KELHEKju7zTv7kfGNW5+
- vOYnrCtbSXYR3pFL0XWs+xrsC6sfspkOlLleN6wU5nwtk+4r0vD2Der8r20C4pGPLwtG8aGWW06
- sU+umXdB9qUnvkQt2rOeIuF8Vz7kaynvZSK08S9A9/cuqxDchg6OZzUGKPLTMnFqTa6PJXX7LDH
- LgD9gCJAZlWc1E9nKttnpfXpGOhjF5cBy6T5YdxTwFLWqT8ub5YJM0DxPXTjA3sAshZlq2+J0or
- moBJKMt4LkJnjwg9R1AwvE25kdUhNOcxcUN4PXPoxGd/9AhQ+uewhFg=
-X-Google-Smtp-Source: AGHT+IGXVTIcguF1cTNjc6/51Kg6ZDTQxeEXLzOIh/NcPyICU1dS7AXeT4IN/VVd5ubeGBV50TjB2w==
-X-Received: by 2002:a17:902:f546:b0:220:e63c:5b13 with SMTP id
- d9443c01a7336-221040c092bmr127299115ad.46.1739819653873; 
- Mon, 17 Feb 2025 11:14:13 -0800 (PST)
-Received: from [192.168.0.4] (71-212-39-66.tukw.qwest.net. [71.212.39.66])
+ AJvYcCW3X4LpjY5FT0517FMT3ico9QCBG0zID5TjVR8x+NmWpWv0DtUbU6lp6AwVeJwf+fZ8SRfLJhEpRc+N@nongnu.org
+X-Gm-Message-State: AOJu0YwW/M99F/tWieQ1OYVlKwQ39S5IfLQnY7s2/s6ke4LJX6X2EqdX
+ Esbd7MWZoK0T4LAZnChf3dFoRvwX4r8DpEgbna6jn/MYh5tJsr4xH/gD8Pb1irw=
+X-Gm-Gg: ASbGncsLzptcTbcATrN2se3sEVdHtJuyOUwsAjmSF8Pzx3bdk0PXqsbE/y41zbZRji2
+ Haz2CaZ6cb/SawMQzkrjMv1bzhMn2v7irv1GuwKSXkolkEY45XoMIo+uIythnIIDr2kGKpbPq6w
+ 52QlLaecIeMsXK5IfrrM98GnxeYO5EzlGffzhG8PQOMiaOOU2HWWX6BQCjqwVX8ujikZFV8yYvO
+ cO1idt4wMcKu8954/PECHwiV0SJdlzHXHUNJzJCLVvZuV+rjxIVOcJuFWNzEbdeVy1JJnQwlwdN
+ ekhbw2Q476/M69ETwnLuSjBYD4+kcUFhGXKKpZzDeziP56yX8S/AR4BdMlSrK/xMeruqWA==
+X-Google-Smtp-Source: AGHT+IHxegcxtxQi1dqfkSq0Wq1JAlHSW9B5g5r8/7gauYJsFxC971a5M8ZF4vTIRv+aRNKQf9pwmw==
+X-Received: by 2002:a05:6830:380a:b0:727:13e:f26d with SMTP id
+ 46e09a7af769-7271203636dmr6431658a34.2.1739820283891; 
+ Mon, 17 Feb 2025 11:24:43 -0800 (PST)
+Received: from ?IPV6:2804:7f0:bcc0:6edb:f473:a9df:d551:443b?
+ ([2804:7f0:bcc0:6edb:f473:a9df:d551:443b])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d545d07dsm73738205ad.138.2025.02.17.11.14.13
+ 46e09a7af769-727001cdc37sm3365169a34.3.2025.02.17.11.24.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 11:14:13 -0800 (PST)
-Message-ID: <64deaf4f-b999-41aa-ae44-876a1860a10c@linaro.org>
-Date: Mon, 17 Feb 2025 11:14:12 -0800
+ Mon, 17 Feb 2025 11:24:43 -0800 (PST)
+Message-ID: <37cbfff3-9571-47e5-b955-41a85c7ef730@ventanamicro.com>
+Date: Mon, 17 Feb 2025 16:24:39 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] fpu: Move m68k_denormal fmt flag into
- floatx80_behaviour
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <20250217125055.160887-7-peter.maydell@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH 1/4] hw/riscv/virt: KVM AIA refinement
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
+ jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20250217081927.10613-1-yongxuan.wang@sifive.com>
+ <20250217081927.10613-2-yongxuan.wang@sifive.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250217125055.160887-7-peter.maydell@linaro.org>
+In-Reply-To: <20250217081927.10613-2-yongxuan.wang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,67 +108,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/25 04:50, Peter Maydell wrote:
-> Currently we compile-time set an 'm68k_denormal' flag in the FloatFmt
-> for floatx80 for m68k.  This controls our handling of what the Intel
-> documentation calls a "pseudo-denormal": a value where the exponent
-> field is zero and the explicit integer bit is set.
+
+
+On 2/17/25 5:19 AM, Yong-Xuan Wang wrote:
+> KVM AIA is only needed to be set when the virt machine use the AIA MSI.
+> So we can move the KVM AIA configuration into virt_create_aia() to reduce
+> the condition checking.
 > 
-> For x86, the x87 FPU is supposed to accept a pseudo-denormal as
-> input, but never generate one on output.  For m68k, these values are
-> permitted on input and may be produced on output.
-> 
-> Replace the flag in the FloatFmt with a flag indicating whether the
-> float format has an explicit bit (which will be true for floatx80 for
-> all targets, and false for every other float type).  Then we can gate
-> the handling of these pseudo-denormals on the setting of a
-> floatx80_behaviour flag.
-> 
-> As far as I can see from the code we don't actually handle the
-> x86-mandated "accept on input but don't generate" behaviour, because
-> the handling in partsN(canonicalize) looked at fmt->m68k_denormal.
-> So I have added TODO comments to that effect.
-> 
-> This commit doesn't change any behaviour for any target.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 > ---
-> I'm confident this commit preserves existing behaviour, but
-> somewhat less confident that I've correctly analysed what our
-> current code does, in particular that it doesn't do the x86
-> mandated "handle pseudo-denormals on input" part.
 
-Test case:
+Unfortunately this doesn't work.
 
-#include <stdio.h>
-
-int main()
-{
-     union {
-         struct {
-             unsigned long long m;
-             unsigned short e;
-         } i;
-         long double f;
-     } u[2] = { };
-     unsigned short sw;
-
-     asm volatile("fnclex" : : : "memory");
-
-     u[0].i.m = 0xc000000000000000ull;
-     u[0].f += u[1].f;  /* denormal + zero -> renormalize */
-
-     asm volatile("fstsw %w0" : "=a"(sw) : : "memory");
-
-     printf("%04x %016llx  %04x\n", u[0].i.e, u[0].i.m, sw);
-     return 0;
-}
-
-Expected behaviour is setting DE for consuming a denormal.
-
-As you say, this patch preserves existing behaviour so,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The reason is that kvm_riscv_aia_create(), as it is now, is called only once
+during virt_machine_init() and it's already handling initialization for each socket:
 
 
-r~
+     for (socket = 0; socket < socket_count; socket++) {
+         socket_imsic_base = imsic_base + socket * (1U << group_shift);
+         hart_count = riscv_socket_hart_count(machine, socket);
+         base_hart = riscv_socket_first_hartid(machine, socket);
+
+         if (max_hart_per_socket < hart_count) {
+             max_hart_per_socket = hart_count;
+         }
+
+         for (i = 0; i < hart_count; i++) {
+             imsic_addr = socket_imsic_base + i * IMSIC_HART_SIZE(guest_bits);
+             ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_ADDR,
+                                     KVM_DEV_RISCV_AIA_ADDR_IMSIC(i + base_hart),
+                                     &imsic_addr, true, NULL);
+             if (ret < 0) {
+                 error_report("KVM AIA: failed to set the IMSIC address for hart %d", i);
+                 exit(1);
+             }
+         }
+     }
+
+After this change, kvm_riscv_aia_create() is being called once for each socket since it's
+now being called inside virt_create_aia(). And this will cause errors when running qemu-kvm
+with more than one socket:
+
+./qemu-system-riscv64 \
+	-machine virt,accel=kvm,aia=aplic-imsic -m 2G \
+	-object memory-backend-ram,size=1G,id=m0 \
+	-object memory-backend-ram,size=1G,id=m1 \
+	-smp 2,sockets=2,cores=1,threads=1 \
+	-numa node,memdev=m0,cpus=0,nodeid=0 \
+	-numa node,memdev=m1,cpus=1,nodeid=1 \
+         (...)
+qemu-system-riscv64: KVM AIA: failed to set the IMSIC address for hart 0
+
+
+To make this patch work we would need changes in kvm_riscv_aia_create() to handle just the
+current socket. The loop I mentioned above is one place, and there's another place where
+we set group_bits and group_shift if socket_count > 1.
+
+To be honest I'm not sure if all these extra required changes are worth the simplification
+this patch is proposing.
+
+
+Thanks,
+
+Daniel
+
+
+
+
+
+>   hw/riscv/virt.c | 79 +++++++++++++++++++++++--------------------------
+>   1 file changed, 37 insertions(+), 42 deletions(-)
+> 
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index dae46f4733cd..a52117ef71ee 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -58,14 +58,6 @@
+>   #include "qapi/qapi-visit-common.h"
+>   #include "hw/virtio/virtio-iommu.h"
+>   
+> -/* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+> -static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+> -{
+> -    bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
+> -
+> -    return riscv_is_kvm_aia_aplic_imsic(msimode);
+> -}
+> -
+>   static bool virt_use_emulated_aplic(RISCVVirtAIAType aia_type)
+>   {
+>       bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
+> @@ -1298,10 +1290,12 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
+>       return ret;
+>   }
+>   
+> -static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+> +static DeviceState *virt_create_aia(RISCVVirtState *s,
+>                                       const MemMapEntry *memmap, int socket,
+>                                       int base_hartid, int hart_count)
+>   {
+> +    RISCVVirtAIAType aia_type = s->aia_type;
+> +    int aia_guests = s->aia_guests;
+>       int i;
+>       hwaddr addr = 0;
+>       uint32_t guest_bits;
+> @@ -1309,6 +1303,28 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+>       DeviceState *aplic_m = NULL;
+>       bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
+>   
+> +    if (!kvm_enabled()) {
+> +        /* Per-socket M-level APLIC */
+> +        aplic_m = riscv_aplic_create(memmap[VIRT_APLIC_M].base +
+> +                                     socket * memmap[VIRT_APLIC_M].size,
+> +                                     memmap[VIRT_APLIC_M].size,
+> +                                     (msimode) ? 0 : base_hartid,
+> +                                     (msimode) ? 0 : hart_count,
+> +                                     VIRT_IRQCHIP_NUM_SOURCES,
+> +                                     VIRT_IRQCHIP_NUM_PRIO_BITS,
+> +                                     msimode, true, NULL);
+> +    }
+> +
+> +    /* Per-socket S-level APLIC */
+> +    aplic_s = riscv_aplic_create(memmap[VIRT_APLIC_S].base +
+> +                                 socket * memmap[VIRT_APLIC_S].size,
+> +                                 memmap[VIRT_APLIC_S].size,
+> +                                 (msimode) ? 0 : base_hartid,
+> +                                 (msimode) ? 0 : hart_count,
+> +                                 VIRT_IRQCHIP_NUM_SOURCES,
+> +                                 VIRT_IRQCHIP_NUM_PRIO_BITS,
+> +                                 msimode, false, aplic_m);
+> +
+>       if (msimode) {
+>           if (!kvm_enabled()) {
+>               /* Per-socket M-level IMSICs */
+> @@ -1329,32 +1345,20 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+>                                  base_hartid + i, false, 1 + aia_guests,
+>                                  VIRT_IRQCHIP_NUM_MSIS);
+>           }
+> -    }
+>   
+> -    if (!kvm_enabled()) {
+> -        /* Per-socket M-level APLIC */
+> -        aplic_m = riscv_aplic_create(memmap[VIRT_APLIC_M].base +
+> -                                     socket * memmap[VIRT_APLIC_M].size,
+> -                                     memmap[VIRT_APLIC_M].size,
+> -                                     (msimode) ? 0 : base_hartid,
+> -                                     (msimode) ? 0 : hart_count,
+> -                                     VIRT_IRQCHIP_NUM_SOURCES,
+> -                                     VIRT_IRQCHIP_NUM_PRIO_BITS,
+> -                                     msimode, true, NULL);
+> -    }
+>   
+> -    /* Per-socket S-level APLIC */
+> -    aplic_s = riscv_aplic_create(memmap[VIRT_APLIC_S].base +
+> -                                 socket * memmap[VIRT_APLIC_S].size,
+> -                                 memmap[VIRT_APLIC_S].size,
+> -                                 (msimode) ? 0 : base_hartid,
+> -                                 (msimode) ? 0 : hart_count,
+> +        if (kvm_irqchip_in_kernel()) {
+> +            kvm_riscv_aia_create(MACHINE(s), IMSIC_MMIO_GROUP_MIN_SHIFT,
+>                                    VIRT_IRQCHIP_NUM_SOURCES,
+> -                                 VIRT_IRQCHIP_NUM_PRIO_BITS,
+> -                                 msimode, false, aplic_m);
+> +                                 VIRT_IRQCHIP_NUM_MSIS,
+> +                                 memmap[VIRT_APLIC_S].base,
+> +                                 memmap[VIRT_IMSIC_S].base,
+> +                                 aia_guests);
+> +        }
+>   
+> -    if (kvm_enabled() && msimode) {
+> -        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
+> +        if (kvm_enabled()) {
+> +            riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
+> +        }
+>       }
+>   
+>       return kvm_enabled() ? aplic_s : aplic_m;
+> @@ -1621,9 +1625,8 @@ static void virt_machine_init(MachineState *machine)
+>               s->irqchip[i] = virt_create_plic(memmap, i,
+>                                                base_hartid, hart_count);
+>           } else {
+> -            s->irqchip[i] = virt_create_aia(s->aia_type, s->aia_guests,
+> -                                            memmap, i, base_hartid,
+> -                                            hart_count);
+> +            s->irqchip[i] = virt_create_aia(s, memmap, i,
+> +                                            base_hartid, hart_count);
+>           }
+>   
+>           /* Try to use different IRQCHIP instance based device type */
+> @@ -1641,14 +1644,6 @@ static void virt_machine_init(MachineState *machine)
+>           }
+>       }
+>   
+> -    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
+> -        kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
+> -                             VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP_NUM_MSIS,
+> -                             memmap[VIRT_APLIC_S].base,
+> -                             memmap[VIRT_IMSIC_S].base,
+> -                             s->aia_guests);
+> -    }
+> -
+>       if (riscv_is_32bit(&s->soc[0])) {
+>   #if HOST_LONG_BITS == 64
+>           /* limit RAM size in a 32-bit system */
+
 
