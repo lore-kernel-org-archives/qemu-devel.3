@@ -4,67 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41D7C021A0
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 04:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A652CC021A6
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 05:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjt9z-0003h9-HG; Sun, 16 Feb 2025 23:55:11 -0500
+	id 1tjtNG-0005zT-Kz; Mon, 17 Feb 2025 00:08:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=ae45=VI=miszr.win=git@fe-bounces.miszr.win>)
- id 1tjt9t-0003gm-9p
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 23:55:05 -0500
-Received: from smtp.forwardemail.net ([121.127.44.73])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tjtNC-0005zK-Am
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 00:08:50 -0500
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <SRS0=ae45=VI=miszr.win=git@fe-bounces.miszr.win>)
- id 1tjt9q-0004l0-V9
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 23:55:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=miszr.win;
- h=Content-Transfer-Encoding: Content-Type: MIME-Version: Message-ID:
- References: In-Reply-To: Subject: CC: To: From: Date; q=dns/txt;
- s=fe-257304d8b2; t=1739768098;
- bh=ugKhaarWZtOlGe1Ks8zorRMcgrLsdI+SxA4cyhH4+5U=;
- b=FUBLR1ppluk8Bny8M5X1xDH0nzOwjKOeN0BAk4KTiFqZ8gTQCVkJ6k9y5KjquhkmSfE+Kfswy
- Fb/Rtxt+0n72PDwpDEKNp270hBTIIprLQYPd9AAq277C4QfFtdz1OJ9eB4IxU1j4r3gDy1cXe6x
- Ki+aVTKeZclQXMLtiPqke9A=
-X-Forward-Email-ID: 67b2c11f2860b3d889bd3d18
-X-Forward-Email-Sender: rfc822; git@miszr.win, smtp.forwardemail.net,
- 121.127.44.73
-X-Forward-Email-Version: 0.4.40
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
-Date: Mon, 17 Feb 2025 05:54:41 +0100
-From: Mikael Szreder <git@miszr.win>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-CC: Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2=5D_target/sparc=3A_Fix_gdbstu?=
- =?US-ASCII?Q?b_incorrectly_handling_registers_f32-f62?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <5e9d9e51-1950-45d5-9580-9f1072e3b1b4@linaro.org>
-References: <20250214070343.11501-1-git@miszr.win>
- <5e9d9e51-1950-45d5-9580-9f1072e3b1b4@linaro.org>
-Message-ID: <49B12FB6-60E2-49AD-A832-1D8D7B25F9B2@miszr.win>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tjtNA-00068l-M7
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 00:08:50 -0500
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4bbdf3081acso2622952137.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 21:08:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739768927; x=1740373727; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mbdJAzPRRJfVSoISKGDG0D/SJNoUvNMPCjl9nb/D/zI=;
+ b=AnMr4VqWZxJVYdX94aFeL7iVFFwqKN66Vrp4OUFszGzBhqX9SkX1zDWcpJqufnf4wj
+ WOCNHKrOtZahiV/1aDK47Nk/Tj8mD3GxcmSrUWpF8KO6ujcH5YUFAxAjtZ3DEHswVxI4
+ hZ6G8BXlVOtIIwMIB4eys3G2yLuNyi9XHceDm3kyTUyF0RR9dIWLrFx0nsvb8hggmR7c
+ TZr9qTYCp6ex/RBBMPTfP8Q2S3sIQ286XEfD32sqDTmlMIb3YsumAe7HAoTs0JjjP1rn
+ PyU6FtmyCJbJZLmigz3kLjLIBka6oA9VooA+bGD6bunlK3j1GMdj61MTUGLuUvb63QeX
+ Sx7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739768927; x=1740373727;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mbdJAzPRRJfVSoISKGDG0D/SJNoUvNMPCjl9nb/D/zI=;
+ b=wgkAAlrCTVvb/enFqKSXIXX+pPp1GC2yochiaAw9jpeWsea0ktA14hYXWdDFYLYUKq
+ hPgLzAhphr9GeCfXhhwZ4P5ul3CK7G7opWG7q1E3Fpq3Xd3+9qyF0pq0tBrw+/eSrNVm
+ YikNZ/WWg/Q6/hbQAUm7Qmmm8XyIyrV5lASUGIABVYPGk+uFBGXdfObFRlTrmOaAcMsJ
+ NjXLXy5MynMGN35Gb5aRn1Za9wWJ92ioH7Qf3U0XF+bnZTurNiM3SGJc0Tq7B2EvUDML
+ 8yr+mclCUhYOZtqutKoqZUFuPKy/Dn79yRe7fz7qaMoXDggeg2l0mD8KFzlA5pndwQRk
+ kJcA==
+X-Gm-Message-State: AOJu0YwMpBAb0KY2pmLbLWriR71pQEgbzqoeU/dtdFIVIrJM3hrS5r60
+ shPz+yTLe7+hJKiDeWglM0djuV81Du6SbGoM5BLkIJsUWYfUVf8/rvcRVCu2YQwsbd8Ce+aH5Bp
+ srlsH6wXz2TXBgfK/FzglkYPKidU=
+X-Gm-Gg: ASbGnctuwsfjCWo89dnegCDAfxpcFoX0a/bWfB0SPE/ZwhIVx41t6t9xVirW3Fi5jOR
+ YFJZJCe6VppPwgCZCbPQetoF/6V2fGqVJMCEFQUkc5+UTQ7iQOddIXRM6ox8zLZfbjHfSABcu01
+ BEG6apsCDTuGEITGlKefenW3aP0w==
+X-Google-Smtp-Source: AGHT+IF6n0P0gbL9umXNE9Av3ya7B1G8+ysYT7UIPn1qjhzOarvD4ZwgadcQQWOc2DbUR1FDhdQQQaxfdGRodFQVy1E=
+X-Received: by 2002:a05:6102:419e:b0:4bb:9b46:3f92 with SMTP id
+ ada2fe7eead31-4bd3fc8b8b7mr3954022137.1.1739768927473; Sun, 16 Feb 2025
+ 21:08:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20250212213249.45574-1-philmd@linaro.org>
+ <20250212213249.45574-7-philmd@linaro.org>
+In-Reply-To: <20250212213249.45574-7-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 17 Feb 2025 15:08:21 +1000
+X-Gm-Features: AWEUYZmqoFQ_U9w9_sBoMQtEx300UL-maxpbS__68vo0FOUeI_8sLYFn8WXS-qM
+Message-ID: <CAKmqyKMBZ_d_DmfRayfjGiOnVbZ_Tb7rMZzT2CXomp-+vt4rfw@mail.gmail.com>
+Subject: Re: [PATCH v3 06/19] target/riscv: Declare RISCVCPUClass::misa_mxl_max
+ as RISCVMXL
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=121.127.44.73;
- envelope-from=SRS0=ae45=VI=miszr.win=git@fe-bounces.miszr.win;
- helo=smtp.forwardemail.net
-X-Spam_score_int: -12
-X-Spam_score: -1.3
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_FMBLA_NEWDOM28=0.8, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,75 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch should be applicable to the stable releases as well, as the issu=
-e has existed since a while back=2E
+On Thu, Feb 13, 2025 at 7:37=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Best regards
-Mikael Szreder
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-On February 15, 2025 8:58:09 PM GMT+01:00, Richard Henderson <richard=2Ehe=
-nderson@linaro=2Eorg> wrote:
->On 2/13/25 23:03, Mikael Szreder wrote:
->> The gdbstub implementation for the Sparc architecture would
->> incorrectly calculate the the floating point register offset=2E
->> This resulted in, for example, registers f32 and f34 to point to
->> the same value=2E
->>=20
->> The issue was caused by the confusion between even register numbers
->> and even register indexes=2E For example, the register index of f32 is =
-64
->> and f34 is 65=2E
->>=20
->> Fixes: 30038fd81808 ("target-sparc: Change fpr representation to double=
-s=2E")
->> Signed-off-by: Mikael Szreder <git@miszr=2Ewin>
->> ---
->>   target/sparc/gdbstub=2Ec | 18 ++++++++++++++----
->>   1 file changed, 14 insertions(+), 4 deletions(-)
->>=20
->> diff --git a/target/sparc/gdbstub=2Ec b/target/sparc/gdbstub=2Ec
->> index ec0036e9ef=2E=2E134617fb23 100644
->> --- a/target/sparc/gdbstub=2Ec
->> +++ b/target/sparc/gdbstub=2Ec
->> @@ -79,8 +79,13 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteA=
-rray *mem_buf, int n)
->>           }
->>       }
->>       if (n < 80) {
->> -        /* f32-f62 (double width, even numbers only) */
->> -        return gdb_get_reg64(mem_buf, env->fpr[(n - 32) / 2]=2Ell);
->> +        /* f32-f62 (16 double width registers, even register numbers o=
-nly)
->> +         * n =3D=3D 64: f32 : env->fpr[16]
->> +         * n =3D=3D 65: f34 : env->fpr[17]
->> +         * etc=2E=2E=2E
->> +         * n =3D=3D 79: f62 : env->fpr[31]
->> +         */
->> +        return gdb_get_reg64(mem_buf, env->fpr[(n - 64) + 16]=2Ell);
->>       }
->>       switch (n) {
->>       case 80:
->> @@ -173,8 +178,13 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uin=
-t8_t *mem_buf, int n)
->>           }
->>           return 4;
->>       } else if (n < 80) {
->> -        /* f32-f62 (double width, even numbers only) */
->> -        env->fpr[(n - 32) / 2]=2Ell =3D tmp;
->> +        /* f32-f62 (16 double width registers, even register numbers o=
-nly)
->> +         * n =3D=3D 64: f32 : env->fpr[16]
->> +         * n =3D=3D 65: f34 : env->fpr[17]
->> +         * etc=2E=2E=2E
->> +         * n =3D=3D 79: f62 : env->fpr[31]
->> +         */
->> +        env->fpr[(n - 64) + 16]=2Ell =3D tmp;
->>       } else {
->>           switch (n) {
->>           case 80:
+Alistair
+
+> ---
+>  target/riscv/cpu.h | 2 +-
+>  target/riscv/cpu.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
->Queued, thanks=2E
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 97713681cbe..fbe5548cf5a 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -529,7 +529,7 @@ struct RISCVCPUClass {
+>
+>      DeviceRealize parent_realize;
+>      ResettablePhases parent_phases;
+> -    uint32_t misa_mxl_max;  /* max mxl for this cpu */
+> +    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
+>  };
+>
+>  static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 3d4bd157d2c..f3ad7f88f0e 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2955,7 +2955,7 @@ static void riscv_cpu_class_init(ObjectClass *c, vo=
+id *data)
+>  {
+>      RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
+>
+> -    mcc->misa_mxl_max =3D (uint32_t)(uintptr_t)data;
+> +    mcc->misa_mxl_max =3D (RISCVMXL)(uintptr_t)data;
+>      riscv_cpu_validate_misa_mxl(mcc);
+>  }
+>
+> --
+> 2.47.1
 >
 >
->r~
 
