@@ -4,89 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F9FC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63703C021AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0vs-00062k-S4; Mon, 17 Feb 2025 08:13:10 -0500
+	id 1tk0wD-00066u-K8; Mon, 17 Feb 2025 08:13:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
- id 1tk0vp-000623-7P
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:13:05 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tk0w2-00064T-FC
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:13:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
- id 1tk0vn-00062C-2a
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:13:04 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tk0vz-00064L-Sb
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:13:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739797980;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=DlqQ3uBHgTWfPPrHtLWbuiQ4oCE7jE+CS/eG0yKen/M=;
- b=E0BtbtzJ51MihBgmvwxbcpi4z8/c/dXoy7tykxmWk4bTlrt0ZXvKLwjSpkyJ98tUEE7fFd
- JnzzLPgchNxQA3UHhpfD2FFiq8tX+2mo8YpC35/LdjNv31FUyEoN60b3VN0Wah8QioVRwj
- PE3u26YTNje7NoOIogkrLr6QA5Y/hvc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-11ykxxSmPLCiOvlwazp6fA-1; Mon, 17 Feb 2025 08:12:58 -0500
-X-MC-Unique: 11ykxxSmPLCiOvlwazp6fA-1
-X-Mimecast-MFC-AGG-ID: 11ykxxSmPLCiOvlwazp6fA_1739797978
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43935bcec0aso35161235e9.3
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:12:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739797977; x=1740402777;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DlqQ3uBHgTWfPPrHtLWbuiQ4oCE7jE+CS/eG0yKen/M=;
- b=u8ESJAJTBzbfXGMk4MOHu07MVrTdkbsDaSr5r0LSrZtIRt5P271D7aWEmO95+HXCSJ
- +jLuSlAUwQ48TOlJL/m0orfEMuG0WTVO02/OundIwY7gXxvoFcKIpixSWMFxvhG2+AWw
- r1VlF3guGFTHUqdpefEqbWWVWNGm5e/IgiJ+TmIxS8AENytmKU8ARbI0QGYwsBaV4Yd4
- VZC+l1RBlGEhkqyI7W00Nk9IexYG63L2M5P2YYj0bzCKP85Ff3y6w/pVLNWQIabwYUJE
- czN78UsFOh70/i70Bh4Y30zRu76L8DiAZMMT6LTX1f3Yhj8nVhDAQPzRYTpF1UXO360a
- gn4w==
-X-Gm-Message-State: AOJu0YyNrKpleG45X6zjUizeXLL0Li+2LHWxjjly1mLpBz9bT3UinvOH
- Hd57ORLUgxY1+jdmB7eGI8Fh6bBf7V6aLvoMhC4OUYr3WNzVvze/HH/BmmhDGE8V6FdEwGMkp3b
- PxpSAEIQX/JxXkVIRbL4UkXkNRiWDN/PexBOayZTI3WOmaCuo08wICZLCY2Iqtrc65pwPl9aOIR
- UNKYV1wEKoU41XtKg35Hzz0XA1KwCuCMbfdiqa
-X-Gm-Gg: ASbGncuzFgMB11yfIapXL8e5SoflSwLA6XQ+8aVZEIwXDiP+XrOQWAcP4kFovq0Uadr
- GO3TyT55h32Zjjguqtkoje2eMvUiTHbLTYgMgTC6kUpa9PS3EV8kUNlqIW+q1Jy2XJ2YUoZ5F5y
- KuaESQllkohlaGCe9N0y2iJwc5e1O01Rl4TLYWCSZS1c1Rcky0SIgdhGw+9tGah4Q9HJTtpE0K7
- X6MgIRnIPg3QD1Stc3ywI862MaXejk6qKjUiy3ilSfVNzENyy7hUkqOinXma7TtgVY2iu8JHZZh
- kzjgpkzr
-X-Received: by 2002:a5d:5f4a:0:b0:38f:4244:68cb with SMTP id
- ffacd0b85a97d-38f42446bfbmr3931378f8f.12.1739797976818; 
- Mon, 17 Feb 2025 05:12:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGP8+aGi0L6I+IR6Yutrd+OtI/EySe+9HZGMNtU34qhBiVC/oWP4OBchWXWZhRI6vT0O+zOgw==
-X-Received: by 2002:a5d:5f4a:0:b0:38f:4244:68cb with SMTP id
- ffacd0b85a97d-38f42446bfbmr3931328f8f.12.1739797976379; 
- Mon, 17 Feb 2025 05:12:56 -0800 (PST)
-Received: from localhost ([2a01:e0a:257:8c60:80f1:cdf8:48d0:b0a1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b44b2sm12070898f8f.20.2025.02.17.05.12.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 05:12:56 -0800 (PST)
-From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] vhost-user-snd: correct the calculation of config_size
-Date: Mon, 17 Feb 2025 14:12:55 +0100
-Message-ID: <20250217131255.829892-1-mvaralar@redhat.com>
-X-Mailer: git-send-email 2.42.0
+ s=mimecast20190719; t=1739797995;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=vu27oeaNtRXeUmurY1gbWdovJB6GwFsj2ieju83i+Pg=;
+ b=Eu4mtMzGVzSFe0Z9oL+Ivj8eErmWMfM7E7AfJq1Y8+MjlLsRaVBv/VeyBayOk8pWEY6pUN
+ rDAYvZ72oS1t79eaWMADOt0N4sebQaFvrOhiv+IoBn1Rjsq/5+Q4XrOu0x7ijIz5FLs1ya
+ uCGxPCLAFdBK5F1Guk6lgYygO4d+u4E=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-nQpZJNglO2Sd0PNFpmo1Nw-1; Mon,
+ 17 Feb 2025 08:13:13 -0500
+X-MC-Unique: nQpZJNglO2Sd0PNFpmo1Nw-1
+X-Mimecast-MFC-AGG-ID: nQpZJNglO2Sd0PNFpmo1Nw_1739797993
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFDA918D95EE
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 13:13:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.176])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDB731956048; Mon, 17 Feb 2025 13:13:10 +0000 (UTC)
+Date: Mon, 17 Feb 2025 13:13:06 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Victor Toso <victortoso@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ John Snow <jsnow@redhat.com>, Andrea Bolognani <abologna@redhat.com>
+Subject: Re: [PATCH v4 00/11]
+Message-ID: <Z7M14rif3RGFOXbM@redhat.com>
+References: <20250214202944.69897-1-victortoso@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mvaralar@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250214202944.69897-1-victortoso@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,86 +83,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use virtio_get_config_size() rather than sizeof(struct
-virtio_snd_config) for the config_size in the vhost-user-snd frontend.
-The frontend shall rely on device features for the size of the device
-configuration space. The presence of `controls` in the config space
-depends on VIRTIO_SND_F_CTLS according to the specification (v1.3):
-`
-5.14.4 Device Configuration Layout
-...
+On Fri, Feb 14, 2025 at 09:29:33PM +0100, Victor Toso wrote:
+> Hi again,
+> 
+> This patch series intent is to introduce a generator that produces a Go
+> module for Go applications to interact over QMP with QEMU.
+> 
+> Previous version (10 Jan 2025)
+>     https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg01530.html
+> 
+> The generated code was mostly tested using existing examples in the QAPI
+> documentation, 192 instances that might have multiple QMP messages each.
 
-controls
-(driver-read-only) indicates a total number of all available control
-elements if VIRTIO_SND_F_CTLS has been negotiated.
-`
-This fixes an issue introduced by commit ab0c7fb2 ("linux-headers:
-update to current kvm/next") in which the optional field `controls` is
-added to the virtio_snd_config structure. This breaks vhost-user-device
-backends that do not implement the `controls` field.
+snip
 
-Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
----
-Changes in v2: 
- - Addressed comments from Stefano Garzarella about commit msg and the
-   property name. 
----
- hw/virtio/vhost-user-snd.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+> 1. Daniel wrote a demo on top of v3 and proposed changes that would
+>    result in more interesting module to build on top:
+>    https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg03052.html
+>    
+>    I've implemented all the suggestions that are relevant for this
+>    introductory series, they are:
+> 
+>   a. New struct type Message, that shall be used for a 1st level
+>      unmarshalling of the JSON message.
+>   b. Removal of Marshal/Unmarshal code in both Events and Comands,
+>      together with utility code that is not relevant anymore.
+>   c. Declaration of 3 new interfaces:
+>     i.   Events
+>     ii.  Commands
+>     iii. CommandsAsync
+> 
+> 2. I've moved the code to a new folder: scripts/qapi/golang. This
+>    allowed me to move templates out of golang.py, keeping go related
+>    code self-contained in the new directory.
 
-diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-index 8610370af8..b414c75c06 100644
---- a/hw/virtio/vhost-user-snd.c
-+++ b/hw/virtio/vhost-user-snd.c
-@@ -16,6 +16,18 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_snd.h"
- 
-+static const VirtIOFeature feature_sizes[] = {
-+    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
-+    .end = endof(struct virtio_snd_config, controls)},
-+    {}
-+};
-+
-+static const VirtIOConfigSizeParams cfg_size_params = {
-+    .min_size = endof(struct virtio_snd_config, chmaps),
-+    .max_size = sizeof(struct virtio_snd_config),
-+    .feature_sizes = feature_sizes
-+};
-+
- static const VMStateDescription vu_snd_vmstate = {
-     .name = "vhost-user-snd",
-     .unmigratable = 1,
-@@ -23,16 +35,20 @@ static const VMStateDescription vu_snd_vmstate = {
- 
- static const Property vsnd_properties[] = {
-     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-+    DEFINE_PROP_BIT64("controls", VHostUserBase,
-+                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
- };
- 
- static void vu_snd_base_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-     VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
-+    VirtIODevice *vdev = &vub->parent_obj;
- 
-     vub->virtio_id = VIRTIO_ID_SOUND;
-     vub->num_vqs = 4;
--    vub->config_size = sizeof(struct virtio_snd_config);
-+    vub->config_size = virtio_get_config_size(&cfg_size_params,
-+                                              vdev->host_features);
-     vub->vq_size = 64;
- 
-     vubs->parent_realize(dev, errp);
+When I think about the code generator and how this will all
+evolve over time, I have a strong feeling that none of this
+should be in qemu.git.
+
+Taking those three interfaces in (1)(c), when we come to actually
+generate implementations of them, the generated code is going to
+be intimately tied to the client/server API framework we need to
+plumb into.
+
+IMHO qemu.git should not have any knowledge of this, as it will
+create a bidirectional dependency betweeen qemu.git and the
+qemu-go.git repo, requiring them to evolve in lockstep.
+
+We'll need 3 releases of the Go code per year, to match the
+introduction the new QAPI schema versions, but outside that I
+think there ought to be the freedom to have other Go releases
+independently.
+
+The need for this to be part of qemu.git is fairly narrow. It
+provides a new hook into the QAPI generator code, and the QAPI
+generator is not installed by 'make install', it is in-tree
+only.
+
+Can we solve this linkage ? We would need to be able to:
+
+ * Have a mechanism for the QAPI code generator to load
+   new genrator backends
+ * Have a mechanism to tell the QAPI code generator to
+   only run a single backend.
+ * Have a mechanism to consume the QAPI code genrfator
+   from outside qemu.git
+
+The first point there could be addressable using the python "entry-points"
+concept
+
+  https://packaging.python.org/en/latest/specifications/entry-points/
+  https://setuptools.pypa.io/en/latest/pkg_resources.html#entry-points
+
+Or, alternatively by passing the name of a python module on the CLI.
+
+The second point is just a bit of glue code to wire up a new CLI arg
+
+The third point either involves having 'make install' put the QAPI
+code generator into /usr/share/qemu, or /usr/lib/python3.x. The
+latter would be if QAPI code generator were a formally release python
+module on pypi. The former would be if we're just trying a QAPI code
+generator as a local tool, not for pypi. A fallback would be to
+consume qemu.git as a git submodule from qapi-go.git. The gitmodule
+commit would not have to match the version of the QAPI schema we are
+generating code for.
+
+The least effort approach would be making QAPI code genrator accept
+a python module name, and call it via a git submodule. This would
+avoid declaring a long term support policy for the QAPI code gen
+python APIs as a blocker.
+
+> 
+> 3. As mentioned in (2), created protocol.go and utils.go that are 100%
+>    hand generated Go code. Message mentioned in (1a) is under
+>    protocol.go
+> 
+> 4. Defined license using SPDX-License-Identifier.
+>   a. Every Go source code written by hand is 100% MIT-0
+>   b. Every Go source code generated is dual licensed as MIT-0 and
+>      GPL-2.0-or-later
+>   c. The binary code is expected to be MIT-0 only but not really
+>      relevant for this series.
+> 
+>   If you want more information, please check the thread:
+>   https://lists.gnu.org/archive/html/qemu-devel/2024-11/msg01621.html
+> 
+> 5. I've renamed the generated files.
+>   a. Any type related file is now prefixed with "gen_type_"
+>   b. Any interface related file is prefixed as "gen_iface_"
+> 
+> 6. Relevant changes were made to the doc but it is not complete. I plan
+>    that follow-up proposals would add to the documentation.
+> 
+> 7. Improvements to the generator were made to.
+> 
+> 8. Also worth to mention that resulting generated code does not have any
+>    diff with gofmt and goimport tools, as requested in the past.
+
+With regards,
+Daniel
 -- 
-2.42.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
