@@ -4,150 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99FE8C021A4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC46C021A7
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 09:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjxaT-0006vd-T5; Mon, 17 Feb 2025 04:38:49 -0500
+	id 1tjxb0-0006x6-QU; Mon, 17 Feb 2025 04:39:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tjxaQ-0006vF-Tf
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:38:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
+ id 1tjxau-0006ww-L4
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:39:17 -0500
+Received: from mailout3.samsung.com ([203.254.224.33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tjxaO-0002Iq-FR
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:38:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739785122;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BL3J11jDAOtZMkoT3BA+cibVN4Qe+20Md/Ho1vLr314=;
- b=WV+XYeZ37Xi22mjJkogpSK4474X2P3iSJhP1UEUSYLB6gkBObYhMQQ8FQEFKncm0CpuvZ4
- qdN2ua17K3/gXqsSUGuHSIiqZ17ksy+U4Ks59hnDQZxOt/UEoCK/ePaoDClpYIqETjcw8k
- O1IEgDoL1G49at9NlCKCx+9njCtnL3E=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-Tvuzv54XO4mS6INAxJ3a-w-1; Mon, 17 Feb 2025 04:38:39 -0500
-X-MC-Unique: Tvuzv54XO4mS6INAxJ3a-w-1
-X-Mimecast-MFC-AGG-ID: Tvuzv54XO4mS6INAxJ3a-w_1739785118
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4393e89e910so21665875e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 01:38:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739785118; x=1740389918;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BL3J11jDAOtZMkoT3BA+cibVN4Qe+20Md/Ho1vLr314=;
- b=Z4m9hGHTjxR+O3msd3uaOEGXYN7+HNchlYHhP7Qx4UKceWwsRyxiBrmywdccNyOXBR
- YgkwAADjEIuFGY9wEyLEGShQV2vYzbbDhehDErXhrLfllDxn7IE26a/VVyp+tAZV0ABg
- V520XL3f0pNCq+smK48++AEK+FFOcXAu45CxmBUZaO8++HyvWNt2sXOLR1FlHB6LVYFZ
- e7ZaTKWD+G8mAxUmZaLV/Xnn3VchzcVO+nhmgaljuCpnJVQa9yGUyHTgw9wtcdlE05Zm
- y2Fn3sfYLTn2SS2Uz+fT4HRQthGY2kf5Chd+aXAe35ZYC60vTsDIK4iyXEgQ4fJ/hkoe
- hugw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV6qOUSuMCxyXpPJSONVCre2aKunmsaYOn9Jp5jFUC2Mnw8nuUV+4iIS40AoOKZwyE7/zEI/PGfEZNr@nongnu.org
-X-Gm-Message-State: AOJu0YyEnLy4cPZvbcVw7ST0fixcwXyJzA04a+JKnygIltaYGclOfv1H
- eHaaTm8TiVzjQgthAYWXU5FPlc7EI49mEIKSR0+Bdwlj2Q1e4tYfwCwyZR9B9XiwxfY3DU2J8Q0
- eC7uMszQoRBFNOfxxLjy163Jzd/PxJMiMNcqB5UL7tr6krMVbT3Nc
-X-Gm-Gg: ASbGncu8bLgMMFb0cjlhW/1Useh6MSGvN1UB7Xd2hlrUdflyDWDJ1kn9+AtH2l4hxeo
- K+fDKx0Ny+C0ltcmIo8qH1LT4SNd5KsnSvnUY5x1FXJlNmwoDzpxFrxpTnNvqAiT3hSjfXyNCCb
- xzyj1wMSBLl4QuXyjV9mqyqqOvl1u7d6BhG1xj9rxctrUjGjTvvKR5p48xdYe4Ni57/5dke0b5v
- FamYvXJ47PkXohE647q6cI1VdTE3pw6MOWYgzmL6ewJhqO0T611uVDjc60D7OBbObptII7GYv4p
- mVOC2gjNZtxKuBzOwCrlij4JhDnDNds640IyA7lL
-X-Received: by 2002:a05:600c:3b03:b0:439:57b5:f8a0 with SMTP id
- 5b1f17b1804b1-4396e739a6dmr63184395e9.24.1739785118269; 
- Mon, 17 Feb 2025 01:38:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHnF9HUFdzyS1CiagMvf+jWwkU6Bob5opKPYea0+mSC0Is7DQlwJBrhCaMKlC2QDysQh/S0Ug==
-X-Received: by 2002:a05:600c:3b03:b0:439:57b5:f8a0 with SMTP id
- 5b1f17b1804b1-4396e739a6dmr63184085e9.24.1739785117811; 
- Mon, 17 Feb 2025 01:38:37 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
- ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ddbe0sm11893516f8f.39.2025.02.17.01.38.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 01:38:37 -0800 (PST)
-Message-ID: <c614346e-a625-427e-a6a7-03a885e7fce4@redhat.com>
-Date: Mon, 17 Feb 2025 10:38:36 +0100
+ (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
+ id 1tjxao-0002JM-Jx
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:39:16 -0500
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20250217093859epoutp032304a269b723d3a3089c0a070d9669eb~k9V3cGvP53159631596epoutp03h
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 09:38:59 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20250217093859epoutp032304a269b723d3a3089c0a070d9669eb~k9V3cGvP53159631596epoutp03h
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1739785139;
+ bh=sy6dlm46RivPu+uzqtCThlfV9c35JXwDl1zw0oX06cw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=e09cMCFO6ni8nebAAf79mOjrR3QZw8hGmP/44ZGvnwDC6MY+u1/+JTptccy/h9f80
+ /mj8S/ijxfZFyK7L1kLy4Wp7ghxz6BiElkt3+tZ/CfS7hBfawR4zgCvL3nppslx777
+ ylO8vJ+GgYq7jW2jXIhiNZXm88Tum8wT5pYuBBE0=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+ 20250217093859epcas5p18de803dc50e596673f94a72fe71e844a~k9V28VKxr2060920609epcas5p1G;
+ Mon, 17 Feb 2025 09:38:59 +0000 (GMT)
+Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.178]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4YxHfT0DLGz4x9Py; Mon, 17 Feb
+ 2025 09:38:57 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+ epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ BF.D4.29212.0B303B76; Mon, 17 Feb 2025 18:38:56 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+ 20250217093732epcas5p34a9841ca77c60e02522232f00090074b~k9Ul_Kzke0862108621epcas5p3O;
+ Mon, 17 Feb 2025 09:37:32 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250217093732epsmtrp16ed253934e606437dd030b0528ecf98e~k9Ul9HHEa2392023920epsmtrp1Q;
+ Mon, 17 Feb 2025 09:37:32 +0000 (GMT)
+X-AuditID: b6c32a50-801fa7000000721c-5c-67b303b0afda
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ F2.56.18729.B5303B76; Mon, 17 Feb 2025 18:37:31 +0900 (KST)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250217093729epsmtip2f9f3c6d990ce9ebf70633cc86f0e27da~k9Uj7XLXr0985409854epsmtip2N;
+ Mon, 17 Feb 2025 09:37:29 +0000 (GMT)
+Date: Mon, 17 Feb 2025 15:07:24 +0530
+From: Sweta Kumari <s5.kumari@samsung.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
+ krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com
+Subject: Re: CXL CCI Get/Set Alert Configuration commands implmented as per
+ CXL Specification 3.2 section 8.2.10.9.3
+Message-ID: <20250217093724.f64zqdhk727bhk5b@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 26/33] vfio/migration: Multifd device state transfer
- support - receive init/cleanup
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1738171076.git.maciej.szmigiero@oracle.com>
- <1fcf182307e8e1f67a3c226e62d26cad3a2f60d0.1738171076.git.maciej.szmigiero@oracle.com>
- <6c337aec-d004-4ede-a86b-0c934b275fa9@redhat.com>
- <1ab2d96f-f37d-466e-83db-0e3d39581bc7@maciej.szmigiero.name>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1ab2d96f-f37d-466e-83db-0e3d39581bc7@maciej.szmigiero.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+In-Reply-To: <20250214174359.0000368a@huawei.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCJsWRmVeSWpSXmKPExsWy7bCmuu4G5s3pBhMum1lMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLVwmtsFgs3LmOyOD/rFIvF3217GS2O9+5gAXLnsDtweeycdZfdo+XIW1aP
+ J9c2M3n0bVnF6DF1dr3H501yAWxR2TYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbm
+ Sgp5ibmptkouPgG6bpk5QIcpKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgpMCvSK
+ E3OLS/PS9fJSS6wMDQyMTIEKE7IzZj+ZwlxwKrziwguVBsZu5y5GTg4JAROJTxsOsHYxcnEI
+ CexhlLg57SI7hPOJUaKpoZEZwvnGKHHk9F4WmJZbS9vZIBJ7GSV2Lu9kgWv58+A2M0gVi4Cq
+ xNfH3WAdbAJaEj8+PwCLiwgYSby7MYkRpIFZ4CajROOkZ2wgCWGBMomuGQvAGngFnCXWXVjC
+ BmELSpyc+QQszilgKPFnM8SBEgK9HBLNPz+zQdzkIjH15mwmCFtY4tXxLewQtpTEy/42KDtb
+ 4u7WTqj6EokPt3dD1dtLtJ7qB7uOWSBD4v+iZ6wQcVmJqafWMUHE+SR6fz+BqueV2DEPxlaW
+ 2PJvOVS9pMSKz0ugbA+J6x+XQYNlG6PEpgl32Ccwys1C8tAsJPsgbCuJzg9NQDYHkC0tsfwf
+ B4SpKbF+l/4CRtZVjFKpBcW56anJpgWGunmp5fB4Ts7P3cQITq5aATsYV2/4q3eIkYmD8RCj
+ BAezkgjvoa4N6UK8KYmVValF+fFFpTmpxYcYTYFRNJFZSjQ5H5je80riDU0sDUzMzMxMLI3N
+ DJXEeZt3tqQLCaQnlqRmp6YWpBbB9DFxcEo1MEV++f+f36C8/MEzDY7blvNW35K+aV2umOLw
+ qlk0kqWjSqhiNXfysqhJR868lOM68Oh5xusyJT2tyQvSJjQUaB0/rNDedytt80m5XRcW8hpa
+ f37BJDato/hQXc0ytsnnpqXvfy+YbLfctvlCa+qc3IAikWWrs0Inu3YFtk6QWbdr0V4+Lj6+
+ 0A+aN9s+tig1eEi8/2Bf/8FuldC0vghPTsE9Oj8ZwhX47PZvsEhYsuPvjw++HwLSNnQvfvC+
+ 0cTg06ocvj+5FRvSXi3Vi500tfvXqtgbuxim/NbRv5H701n0z03Dte1+MskvUwvby1TMmO9Y
+ sbyTPWYUoefWWbYlYcbMea/frBZ2/mQ/UZupX4mlOCPRUIu5qDgRAOrfB9Q3BAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCLMWRmVeSWpSXmKPExsWy7bCSvG408+Z0gzvXLC2mH1a0+HJ6D5vF
+ 6ptrGC1uHtjJZLFq4TU2i4UblzFZnJ91isXi77a9jBbHe3ewALlz2B24PHbOusvu0XLkLavH
+ k2ubmTz6tqxi9Jg6u97j8ya5ALYoLpuU1JzMstQifbsErow5j68zF/wJqXh6/zBbA+N1hy5G
+ Tg4JAROJW0vb2boYuTiEBHYzSjx+8ZsdIiEp8fbMJUYIW1hi5b/n7BBFHxgldi5YAVbEIqAq
+ 8fVxNwuIzSagJfHj8wNmEFtEwEji3Y1JjCANzAK3GSV+774HViQsUCbRNWMBmM0r4Cyx7sIS
+ NhBbSGAbo8S6e4UQcUGJkzOfgNUwC5hJzNv8EGgoB5AtLbH8HwdImFPAUOLP5ovsExgFZiHp
+ mIWkYxZCxwJG5lWMkqkFxbnpucWGBYZ5qeV6xYm5xaV56XrJ+bmbGMERoaW5g3H7qg96hxiZ
+ OBgPMUpwMCuJ8B7q2pAuxJuSWFmVWpQfX1Sak1p8iFGag0VJnFf8RW+KkEB6YklqdmpqQWoR
+ TJaJg1OqgSm62Lno74SUTobvq5a+LGV2SlnhO9dMVfnDVJuA+KX3vRdszD35xUBbucJ433ep
+ 7R2VS2/oyhex/S/6o+9sfPpDrEKQQr/HJin9NWvja+ZezFvSNSd/eYlG4o7jsS+/T48+dGXZ
+ SZcHrmui7h9T3ND3b2psbJDE0Q93L20+JOqgqpsrGM27MJKjbllR+E/33hNWV/qqLi+uCZV/
+ ccHz/umvF3SinaUdzfYuf7Foxu3UjB/ez5JqvnuJiuQw1f2zqOtZNHl/qugc+xmuSk/T7j9k
+ uDuzOOH2vGePNu0XuPv91amDrh+ythxbuCds2veKCjueScEfZ+4z0V9dUrxn2aK2TuNZF5Y3
+ Sy56zB9ktjtFiaU4I9FQi7moOBEAUaeNffcCAAA=
+X-CMS-MailID: 20250217093732epcas5p34a9841ca77c60e02522232f00090074b
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b
+References: <CGME20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b@epcas5p3.samsung.com>
+ <20250214132211.528019-1-s5.kumari@samsung.com>
+ <20250214174359.0000368a@huawei.com>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=s5.kumari@samsung.com; helo=mailout3.samsung.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,186 +139,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/25 21:55, Maciej S. Szmigiero wrote:
-> On 12.02.2025 11:55, Cédric Le Goater wrote:
->> On 1/30/25 11:08, Maciej S. Szmigiero wrote:
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> Add support for VFIOMultifd data structure that will contain most of the
->>> receive-side data together with its init/cleanup methods.
->>>
->>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>> ---
->>>   hw/vfio/migration.c           | 52 +++++++++++++++++++++++++++++++++--
->>>   include/hw/vfio/vfio-common.h |  5 ++++
->>>   2 files changed, 55 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->>> index 3211041939c6..bcdf204d5cf4 100644
->>> --- a/hw/vfio/migration.c
->>> +++ b/hw/vfio/migration.c
->>> @@ -300,6 +300,9 @@ typedef struct VFIOStateBuffer {
->>>       size_t len;
->>>   } VFIOStateBuffer;
->>> +typedef struct VFIOMultifd {
->>> +} VFIOMultifd;
->>> +
->>>   static void vfio_state_buffer_clear(gpointer data)
->>>   {
->>>       VFIOStateBuffer *lb = data;
->>> @@ -398,6 +401,18 @@ static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
->>>       return qemu_file_get_error(f);
->>>   }
->>> +static VFIOMultifd *vfio_multifd_new(void)
->>> +{
->>> +    VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
->>> +
->>> +    return multifd;
->>> +}
->>> +
->>> +static void vfio_multifd_free(VFIOMultifd *multifd)
->>> +{
->>> +    g_free(multifd);
->>> +}
->>> +
->>>   static void vfio_migration_cleanup(VFIODevice *vbasedev)
->>>   {
->>>       VFIOMigration *migration = vbasedev->migration;
->>> @@ -785,14 +800,47 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->>>   static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       VFIODevice *vbasedev = opaque;
->>> +    VFIOMigration *migration = vbasedev->migration;
->>> +    int ret;
->>> +
->>> +    /*
->>> +     * Make a copy of this setting at the start in case it is changed
->>> +     * mid-migration.
->>> +     */
->>> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
->>> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
+
+On 14/02/25 05:43PM, Jonathan Cameron wrote:
+>On Fri, 14 Feb 2025 18:52:11 +0530
+>Sweta Kumari <s5.kumari@samsung.com> wrote:
+>
+>> 1)get alert configuration(Opcode 4201h)
+>> 2)set alert configuration(Opcode 4202h)
+>
+>Move the change log to below the ---
+>The key thing being git then doesn't pick it up whilst applying the patch.
+>Whilst changed logs are very useful during the review process we don't
+>typically want to keep them in the git history for ever!
+>
+>Otherwise, main comment here is shorten more names.
+>
+>Jonathan
+>
+Thank you for the feedback, will make the changes accordingly in the v3
+patch.
 >>
->> Attribute "migration->multifd_transfer" is not necessary. It can be
->> replaced by a small inline helper testing pointer migration->multifd
->> and this routine can use a local variable instead.
-> 
-> It's necessary for the send side since it does not need/allocate VFIOMultifd
-> at migration->multifd, so this (receive) side can use it for commonality too.
-
-Hmm, we can allocate migration->multifd on the send side too, even
-if the attributes are unused and it is up to vfio_multifd_free() to
-make the difference between the send/recv side.
-
-
-Something that is bothering me is the lack of introspection tools
-and statistics. What could be possibly added under VFIOMultifd and
-VfioStats ?
-
->> I don't think the '_transfer' suffix adds much to the understanding.
-> 
-> The migration->multifd was already taken by VFIOMultifd struct, but
-> it could use other name (migration->multifd_switch? migration->multifd_on?).
-
-yeah. Let's try to get rid of it first.
-  
->>> +    } else {
->>> +        migration->multifd_transfer =
->>> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
->>> +    }
->>> +
->>> +    if (migration->multifd_transfer && !vfio_multifd_transfer_supported()) {
->>> +        error_setg(errp,
->>> +                   "%s: Multifd device transfer requested but unsupported in the current config",
->>> +                   vbasedev->name);
->>> +        return -EINVAL;
->>> +    }
+>> This v2 patch addresses the feedback from the v1 patch and include some minor new changes.
 >>
->> The above checks are also introduced in vfio_save_setup(). Please
->> implement a common routine vfio_multifd_is_enabled() or some other
->> name.
-> 
-> Done (as common vfio_multifd_transfer_setup()).
-
-vfio_multifd_is_enabled() please, returning a bool.
-
-> 
->>> +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->>> +                                   migration->device_state, errp);
->>> +    if (ret) {
->>> +        return ret;
->>> +    }
->>> +
->>> +    if (migration->multifd_transfer) {
->>> +        assert(!migration->multifd);
->>> +        migration->multifd = vfio_multifd_new();
->>> +    }
->>> -    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
->>> -                                    vbasedev->migration->device_state, errp);
->>> +    return 0;
->>>   }
->>>   static int vfio_load_cleanup(void *opaque)
->>>   {
->>>       VFIODevice *vbasedev = opaque;
->>> +    VFIOMigration *migration = vbasedev->migration;
->>> +
->>> +    g_clear_pointer(&migration->multifd, vfio_multifd_free);
+>> Changes in V2:
+>> - Removed cover letter as it's a single patch
+>> - Added latest spec reference
+>> - Fixed alignment issues
+>> - Updated shorter variable names to be more descriptive
+>> - Replaced field-by-field initialization in 'init_alert_config' with structured initialization for improved readability.
+>> - Replaced bit fields with 'uint8_t' and added defines for individual bits.
 >>
->> please add a vfio_multifd_cleanup() routine.
+>> The patch is generated against the Johnathan's tree
+>> https://gitlab.com/jic23/qemu.git and branch cxl-2024-11-27.
 >>
-> 
-> Done.
-> 
->>>       vfio_migration_cleanup(vbasedev);
->>>       trace_vfio_load_cleanup(vbasedev->name);
->>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->>> index 153d03745dc7..c0c9c0b1b263 100644
->>> --- a/include/hw/vfio/vfio-common.h
->>> +++ b/include/hw/vfio/vfio-common.h
->>> @@ -61,6 +61,8 @@ typedef struct VFIORegion {
->>>       uint8_t nr; /* cache the region number for debug */
->>>   } VFIORegion;
->>> +typedef struct VFIOMultifd VFIOMultifd;
->>> +
->>>   typedef struct VFIOMigration {
->>>       struct VFIODevice *vbasedev;
->>>       VMChangeStateEntry *vm_state;
->>> @@ -72,6 +74,8 @@ typedef struct VFIOMigration {
->>>       uint64_t mig_flags;
->>>       uint64_t precopy_init_size;
->>>       uint64_t precopy_dirty_size;
->>> +    bool multifd_transfer;
->>> +    VFIOMultifd *multifd;
->>>       bool initial_data_sent;
->>>       bool event_save_iterate_started;
->>> @@ -133,6 +137,7 @@ typedef struct VFIODevice {
->>>       bool no_mmap;
->>>       bool ram_block_discard_allowed;
->>>       OnOffAuto enable_migration;
->>> +    OnOffAuto migration_multifd_transfer;
+>> Signed-off-by: Sweta Kumari <s5.kumari@samsung.com>
+>> ---
+>>  hw/cxl/cxl-mailbox-utils.c  | 116 ++++++++++++++++++++++++++++++++++++
+>>  hw/mem/cxl_type3.c          |  16 +++++
+>>  include/hw/cxl/cxl_device.h |  15 +++++
+>>  3 files changed, 147 insertions(+)
 >>
->> This property should be added at the end of the series, with documentation,
->> and used in the vfio_multifd_some_name() routine I mentioned above.
+>> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>> index 9c7ea5bc35..105c63fdec 100644
+>> --- a/hw/cxl/cxl-mailbox-utils.c
+>> +++ b/hw/cxl/cxl-mailbox-utils.c
+>> @@ -28,6 +28,11 @@
+>>  #define CXL_DC_EVENT_LOG_SIZE 8
+>>  #define CXL_NUM_EXTENTS_SUPPORTED 512
+>>  #define CXL_NUM_TAGS_SUPPORTED 0
+>> +#define CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD (1 << 0)
+>> +#define CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD (1 << 1)
+>> +#define CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD (1 << 2)
+>> +#define CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD (1 << 3)
+>> +#define CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD (1 << 4)
+>Let's shorten these as they are very ugly to use when a line long!
+>
+>#define CXL_ALERTS_OVER_TEMP_WARN_THRESH
+>etc. Similar to comments below.
+>
+Ok, will shorten the macro names as suggested in v3 patch.
 >>
-> 
-> The property behind this variable *is* in fact introduced at the end of the series -
-> in a commit called "vfio/migration: Add x-migration-multifd-transfer VFIO property"
-> after which there are only commits adding the related compat entry and a VFIO
-> developer doc update.
-> 
-> The variable itself needs to be introduced earlier since various newly
-> introduced code blocks depend on its value to only get activated when multifd
-> transfer is enabled.
+>>  /*
+>>   * How to add a new command, example. The command set FOO, with cmd BAR.
+>> @@ -86,6 +91,9 @@ enum {
+>>          #define GET_PARTITION_INFO     0x0
+>>          #define GET_LSA       0x2
+>>          #define SET_LSA       0x3
+>> +    HEALTH_INFO_ALERTS = 0x42,
+>> +        #define GET_ALERT_CONFIGURATION 0x1
+>> +        #define SET_ALERT_CONFIGURATION 0x2
+>CONFIG maybe enough?
+>
+Okay.
+>>      SANITIZE    = 0x44,
+>>          #define OVERWRITE     0x0
+>>          #define SECURE_ERASE  0x1
+>> @@ -1625,6 +1633,110 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
+>>      return CXL_MBOX_SUCCESS;
+>>  }
+>>
+>> +/* CXL r3.2 Section 8.2.10.9.3.2 Get Alert Configuration (Opcode 4201h) */
+>> +static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
+>> +                                       uint8_t *payload_in,
+>> +                                       size_t len_in,
+>> +                                       uint8_t *payload_out,
+>> +                                       size_t *len_out,
+>> +                                       CXLCCI *cci)
+>> +{
+>> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>> +    CXLAlertConfig *out = (void *)payload_out;
+>
+>In this case we can cast to the right type (can't do that if we don't
+>name that type which happens in a lot these structures). So prefer
+>    CXLAlertConfig *out = (CXLAlertConfig *)payload_out;
+>
+>
+Okay, will fix this in v3 patch
+>> +
+>> +    memcpy(out, &ct3d->alert_config, sizeof(ct3d->alert_config));
+>> +    *len_out = sizeof(ct3d->alert_config);
+>> +
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>> +/* CXL r3.2 Section 8.2.10.9.3.3 Set Alert Configuration (Opcode 4202h) */
+>> +static CXLRetCode cmd_set_alert_config(const struct cxl_cmd *cmd,
+>> +                                       uint8_t *payload_in,
+>> +                                       size_t len_in,
+>> +                                       uint8_t *payload_out,
+>> +                                       size_t *len_out,
+>> +                                       CXLCCI *cci)
+>> +{
+>> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>> +    CXLAlertConfig *alert_config = &ct3d->alert_config;
+>> +    struct {
+>> +        uint8_t valid_alert_actions;
+>> +        uint8_t enable_alert_actions;
+>> +        uint8_t life_used_warning_threshold;
+>> +        uint8_t rsvd;
+>> +        uint16_t device_over_temperature_warning_threshold;
+>> +        uint16_t device_under_temperature_warning_threshold;
+>> +        uint16_t Corrected_volatile_memory_error_warning_threshold;
+>> +        uint16_t Corrected_persistent_memory_error_warning_threshold;
+>
+>Shorten these as well. Similar to suggestions below.  They are
+>just too long to make for nice code!
+>
+Got it.
+>> +    } QEMU_PACKED *in = (void *)payload_in;
+>> +
+>> +    if (in->valid_alert_actions & CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD) {
+>> +        /*
+>> +         * CXL 3.2 Table 8-149 The life used warning threshold shall be
+>> +         * less than the life used critical alert value.
+>> +         */
+>> +        if (in->life_used_warning_threshold >=
+>> +            alert_config->life_used_critical_alert_threshold) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +        alert_config->life_used_warning_threshold =
+>> +            in->life_used_warning_threshold;
+>> +        alert_config->enable_alerts |= CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions &
+>> +        CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD) {
+>> +        /*
+>> +         * CXL 3.2 Table 8-149 The Device Over-Temperature Warning Threshold
+>> +         * shall be less than the the Device Over-Temperature Critical
+>> +         * Alert Threshold.
+>> +         */
+>> +        if (in->device_over_temperature_warning_threshold >=
+>> +            alert_config->device_over_temperature_critical_alert_threshold) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +        alert_config->device_over_temperature_warning_threshold =
+>> +            in->device_over_temperature_warning_threshold;
+>> +        alert_config->enable_alerts |=
+>> +            CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions &
+>> +        CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD) {
+>> +        /*
+>> +         * CXL 3.2 Table 8-149 The Device Under-Temperature Warning Threshold
+>> +         * shall be higher than the the Device Under-Temperature Critical
+>> +         * Alert Threshold.
+>> +         */
+>> +        if (in->device_under_temperature_warning_threshold <=
+>> +            alert_config->device_under_temperature_critical_alert_threshold) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +        alert_config->device_under_temperature_warning_threshold =
+>> +            in->device_under_temperature_warning_threshold;
+>> +        alert_config->enable_alerts |=
+>> +            CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions &
+>> +        CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD) {
+>> +        alert_config->Corrected_volatile_memory_error_warning_threshold =
+>> +            in->Corrected_volatile_memory_error_warning_threshold;
+>> +        alert_config->enable_alerts |=
+>> +            CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD;
+>> +    }
+>> +
+>> +    if (in->valid_alert_actions &
+>> +        CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD) {
+>> +        alert_config->Corrected_persistent_memory_error_warning_threshold =
+>> +            in->Corrected_persistent_memory_error_warning_threshold;
+>> +        alert_config->enable_alerts |=
+>> +            CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD;
+>> +    }
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>>  /* Perform the actual device zeroing */
+>>  static void __do_sanitization(CXLType3Dev *ct3d)
+>>  {
+>> @@ -2859,6 +2971,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>>      [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
+>>      [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
+>>          ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
+>> +    [HEALTH_INFO_ALERTS][GET_ALERT_CONFIGURATION] = {"GET_ALERT_CONFIGURATION",
+>
+>Space after { to match local style.
+>
+Ok, will address this in v3 patch.
+>> +        cmd_get_alert_config, 0, 0 },
+>> +    [HEALTH_INFO_ALERTS][SET_ALERT_CONFIGURATION] = {"SET_ALERT_CONFIGURATION",
+>> +        cmd_set_alert_config, 12, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
+>>      [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
+>>          (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
+>>           CXL_MBOX_SECURITY_STATE_CHANGE |
+>
+>> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>> index a64739be25..1da23bf553 100644
+>> --- a/include/hw/cxl/cxl_device.h
+>> +++ b/include/hw/cxl/cxl_device.h
+>> @@ -581,6 +581,19 @@ typedef struct CXLSetFeatureInfo {
+>>      size_t data_size;
+>>  } CXLSetFeatureInfo;
+>>
+>> +typedef struct CXLAlertConfig {
+>> +    uint8_t valid_alerts;
+>> +    uint8_t enable_alerts;
+>> +    uint8_t life_used_critical_alert_threshold;
+>> +    uint8_t life_used_warning_threshold;
+>> +    uint16_t device_over_temperature_critical_alert_threshold;
+>I think we can shorten these at least a bit without lost of meaning!
+>It's on a device so can drop that entirely. Perhaps
+>
+>    uint8_t life_used_crit_alert_thresh;
+>    uint8_t life_used_warn_thresh;
+>    uint16_t over_temp_crit_alert_thresh;
+>    uint16_t under_temp_crit_alert_thresh;
+>    uint16_t over_temp_warn_thresh;
+>    uint16_t under_temp_warn_thresh;
+>    uint16_t cor_volatile_mem_err_warn_thresh;
+>    uint16_t cor_persistent_mem_err_warn_thresh;
+>
+Ok, will shorten the field names as suggested.
+>> +    uint16_t device_under_temperature_critical_alert_threshold;
+>> +    uint16_t device_over_temperature_warning_threshold;
+>> +    uint16_t device_under_temperature_warning_threshold;
+>> +    uint16_t Corrected_volatile_memory_error_warning_threshold;
+>Capital in just this one doesn't make much sense.
+>> +    uint16_t Corrected_persistent_memory_error_warning_threshold;
+>> +} QEMU_PACKED CXLAlertConfig;
+>
+>
 
-Not if you introduce a vfio_multifd_is_enabled() routine hiding
-the details. In that case, the property and attribute can be added
-at the end of the series and you don't need to add the attribute
-earlier.
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_
+Content-Type: text/plain; charset="utf-8"
 
 
-Thanks,
-
-C.
-
-
-
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_--
 
