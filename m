@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16068C021A6
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24453C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjwQv-0006uk-G8; Mon, 17 Feb 2025 03:24:53 -0500
+	id 1tjwRk-000864-84; Mon, 17 Feb 2025 03:25:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tjwQs-0006uG-QI
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:24:50 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tjwRj-00085g-7A
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:25:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tjwQm-0001kD-PM
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:24:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739780685; x=1771316685;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=CuIT/DSW+7c6MXjNpTu3KqgUd3IuJQjeCONMJ87IwE4=;
- b=flK7tFC1LnDx4air1vuYhtnt4ULqJhs9ZYrX+rsevEgWM5DQJ+OsTLEO
- jv0FdU2xy1eYtcTf30VMz5Ve1yIQswVG79Ee2Z0WntJLJu+VNMf2Ve9NB
- YKvuJNRGkCuD6y8O/MJDmxrbdCE0+5BkxHO8B1vixDLgmCFGGsp+iwj0K
- dy0Nzb5NpWExtq97Nv7sZisVYW3QQnK9IIo53JP/D2u7lSKmwPKBAoAB4
- +9Tdd1pUaWFzpFYZ3AX0wdfZLeJnzUbii4Zkf2yEbCtCxqMSU+R3kdlaR
- l0130EMqM96JPBAwINPh4HQpP4W+jytvqcdty35wG1CCzKn7vM/LjgQfb A==;
-X-CSE-ConnectionGUID: s3XWmVQMQO+auEAMauoeXQ==
-X-CSE-MsgGUID: 3791jUAaQriqmfK20bqMJA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11347"; a="40482650"
-X-IronPort-AV: E=Sophos;i="6.13,292,1732608000"; d="scan'208";a="40482650"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Feb 2025 00:24:42 -0800
-X-CSE-ConnectionGUID: SUpDHisKQT2AM257A6wX0Q==
-X-CSE-MsgGUID: QGrn1bytQz+qCIRGJBmumw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,292,1732608000"; d="scan'208";a="113991582"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 17 Feb 2025 00:24:42 -0800
-Date: Mon, 17 Feb 2025 16:44:15 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2] hpet: do not overwrite properties on post_load
-Message-ID: <Z7L2338isu0OBprC@intel.com>
-References: <20250216092853.4169458-1-pbonzini@redhat.com>
- <Z7LdS0JkMBqUugRZ@intel.com>
- <CABgObfanbj8bxibKOVfk3erKMx8o6_ar-X7OqEKhxnde3iyCNA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tjwRf-0001y8-Qu
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:25:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739780737;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hv0DzEqKRfrI7HQm+WUlnfp7DuMtZq0j6YlXIxy9/oQ=;
+ b=C/EGs6tzAzuIRsx4257z1yp564OtjtzasbpvSF5emcebOep8IQ8ZgVMFrS7EcFCVcQk2BF
+ CxBcrXVsbmFXB8xy2k1X9jkLZsGQHAddKVqGWZ2bS5KKVNsXorljGWGrQpPoxwIpOqJHkg
+ qsApp0xpHVRBUNlSmsc7ke4LcYR8888=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-TPIWY7JgPmaB1zzLmu0IGQ-1; Mon,
+ 17 Feb 2025 03:25:35 -0500
+X-MC-Unique: TPIWY7JgPmaB1zzLmu0IGQ-1
+X-Mimecast-MFC-AGG-ID: TPIWY7JgPmaB1zzLmu0IGQ_1739780734
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BFF3190F9C9; Mon, 17 Feb 2025 08:25:34 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.15])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ECC3219560AA; Mon, 17 Feb 2025 08:25:32 +0000 (UTC)
+Date: Mon, 17 Feb 2025 16:25:29 +0800
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PULL 00/39] Misc HW patches for 2025-02-16
+Message-ID: <20250217082529.GA788063@fedora>
+References: <20250216210103.70235-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="uZBDWSoayaHePlyB"
 Content-Disposition: inline
-In-Reply-To: <CABgObfanbj8bxibKOVfk3erKMx8o6_ar-X7OqEKhxnde3iyCNA@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+In-Reply-To: <20250216210103.70235-1-philmd@linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,49 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 17, 2025 at 09:02:24AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 17 Feb 2025 09:02:24 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH v2] hpet: do not overwrite properties on post_load
-> 
-> Il lun 17 feb 2025, 07:35 Zhao Liu <zhao1.liu@intel.com> ha scritto:
-> 
-> > > @@ -347,14 +330,13 @@ static const VMStateDescription vmstate_hpet = {
-> > >      .version_id = 2,
-> > >      .minimum_version_id = 1,
-> > >      .pre_save = hpet_pre_save,
-> > > -    .pre_load = hpet_pre_load,
-> > >      .post_load = hpet_post_load,
-> > >      .fields = (const VMStateField[]) {
-> > >          VMSTATE_UINT64(config, HPETState),
-> > >          VMSTATE_UINT64(isr, HPETState),
-> > >          VMSTATE_UINT64(hpet_counter, HPETState),
-> > > -        VMSTATE_UINT8_V(num_timers, HPETState, 2),
-> > > -        VMSTATE_VALIDATE("num_timers in range",
-> > hpet_validate_num_timers),
-> > > +        VMSTATE_UINT8_V(num_timers_save, HPETState, 2),
-> >
-> > This change is safe since it doesn't change the vmstate layout so that
-> > there's no need for bumping up the version.
-> >
-> > But I still have the question as the comment in v1 [*]. User doesn't
-> > have any way to modify the number of timers, why not just replace this
-> > vmstate field with "VMSTATE_UNUSED_V(2, 1)"?
-> >
-> 
-> Because I didn't want to bump the version; your suggestion is indeed
-> simpler but it would break migration to past versions of QEMU, which check
-> that num_timers is in range. VMSTATE_UNUSED would write a zero.
 
-Yes, this way needs to tweak num_timers in post_load.
+--uZBDWSoayaHePlyB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> For Rust, I think it's easier to place the check in the post_load callback
-> BTW.
+Applied, thanks.
 
-Yes, I agree. Will honor this change on Rust side.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
 
-Well, pls let me add my r/b tag as well,
+--uZBDWSoayaHePlyB
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmey8nkACgkQnKSrs4Gr
+c8igjAf/bSIVh+GLAUsYPSF0GS70YUyhLAkP9CxtYY16/bpfD1HZC0lptiPxNo6c
+rb4TaoxBFUZTJEJWm0GQOkidn+qmt/UOw7zIS6aji7a5+a93cSNfLim3/28zGRm/
+4BDJ5SAMGYrWEHXpe9P/CuN5PJAyiJbtmriHZiPHw0b+5OzbTOF9PcCreX52cka5
+fHMj8tbvj3wn7hizMPhP7VPI0HhaZcoL0ufEt/JfrYLDYDZtmIbqdGUkx6YD0qYy
+gEem9wTrjLYUx8AQDPNYsA6Xx1k0u4+DhaObPILbtEP4LTHDCVKHKy+QRRK/jDoH
+pr5l3iRwxXPFMKtR6iLdTh6l2K9dIQ==
+=aKqz
+-----END PGP SIGNATURE-----
+
+--uZBDWSoayaHePlyB--
 
 
