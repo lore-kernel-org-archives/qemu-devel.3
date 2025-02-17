@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875DFC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95336C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk26P-0003Uu-Ti; Mon, 17 Feb 2025 09:28:05 -0500
+	id 1tk28Q-0004q9-Nr; Mon, 17 Feb 2025 09:30:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk26N-0003UI-Kf
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:28:03 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk28O-0004nV-03
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:30:08 -0500
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk26L-0001d8-Qo
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:28:03 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38f3913569fso970818f8f.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 06:28:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk28K-0001nT-8T
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:30:05 -0500
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e479e529ebcso3248649276.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 06:30:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739802480; x=1740407280; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nYfrGSIDxdchE3ANH3gk9IIefX1mYNMdAm4HKnvo4cw=;
- b=ONLEebNI6LlY49FikmjsMvkQcjdC8uKVRgRsrcCg8gbUwujrPloO3JACSe/msf1k0A
- c3qTYkIsx44r7rq4tprZJAE6zDqkUROCTwO0AJzGqjDm6Cob1Dqhv5X0rsbWTuqPRtXN
- +SwDvNxFnWLY+fRhqq2LHo8rKOYSOzMs46MtaLIV5s5ErFxJhe7oaspZ9agI5MCBd2Jc
- DsJV+nc73vpZVeeiUcUjNrwXiQhsmf5x4kaHLk4j4KCOm6kOHtct3NNEtesyWZQFsZ3p
- Af8MiahKomumkUL9JfqD+JtI5Cpz/2e89Z12BBuEXfxi+SWv0JFIYLeHMs0vGWtYqu9r
- HBFQ==
+ d=linaro.org; s=google; t=1739802603; x=1740407403; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=liAnHmT5fS5HSmio2jxDsDuUAn+/oAc2qvcRTq1qX04=;
+ b=gT9vyfEqQW21WLjG2gQh7q7YjTlRL0AKLs9p9ZldJFgXwDMsztQXsUqNZlFOcFpGdk
+ h1V76t4w9hQg3wbyXCMIXPetY/LylBhdjn6Zqq03LFNHMHHDah5cq2a0tw6EVCjqZqlk
+ 1RMT1I1QRymJVF7NkIIFwK2yEdmeg4lJoqxSqMGd6VjCV/jMpXiryixqauOn110amKBu
+ bom3L9C1kMlmNG/vygkSG85j5dlyTDJW4NiGHUsuYOIYbyI0SOPNqySFLCDzIpsniYdi
+ r5uVulErxR0LhhD2b9HQN/kOYP1u0waaFi0OmzBbM6kcbqcWbwIM9zhSz1czzDk0WDVw
+ uXLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739802480; x=1740407280;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nYfrGSIDxdchE3ANH3gk9IIefX1mYNMdAm4HKnvo4cw=;
- b=ATP8nhTTRvlmEt/QcuPLmC7quxudHO6iVfYgEl1Z7GbkpKgNWmp2sInSucjk7J9kjg
- 0g7zwN6pOdwlEk7jKewRZTTjwtLDoppX7eL/CmRPUpeQtGJ9xt1kE7WhyT7tM/F+TZKD
- 8/gjOZsboxIxvQg1GKF/7iYLPXzOs+2Lc0+KSKevaL595aJksWPxp+e9PAYC8S5JUn/O
- LngcDB/eHqOS/aWgV7gOTN/FmhGP+6pqCAFC1mV49kTJQtx3FNiDz8tnbk4iCx12T2Lk
- KLHOfYDtWJHM7tzXoMvAkE6SE/HYVhHFTvdCjuGkPFAZnFRBRfgYhzdfz3wOu6X2tMi0
- J9kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU+kYN/kD/JQTaVMaB6GB272DubBHZ895dW2PhLRUBgXTuEKo4gEhx41lP6jbBCR9QmHgSyfqqy97Ns@nongnu.org
-X-Gm-Message-State: AOJu0YyrDKBnofet4dcoR3VbYj9svC3xS4cqNG/SVcnPRdh1AK3jHS2+
- PDmyx+KE5x193QLkNO6fEgQ0FFgZrArzgcvQ15CZVrKwyR3h3THwa4pCzeJ9+wQ=
-X-Gm-Gg: ASbGncsIGNt9/S8sU1yfsRKCsv12e6EwRtJvD5K5MXdSGm9t7PaS7RJhK3tE9c+ATWu
- cdbQ7H/2MV9zk3AcRTvfzlOMSYURb5rXyTw/jtLGgk0UVN6bJzduYqeQ7BeqYEI33ygpvIwzs32
- rXTnm+HKe1nZ92Sxe/XyL1672juZKFLOm2j/SbJ08XYdT6/mTxjTJT+LZkO8wx6WExhWyotloT0
- gAeTJsIvwEy2lhBAUy/CuAZksNTJm2EHtvE/upcyC9n3GPpTrGB0SWoTjySEANRzIScS94QROHo
- iko9xDNgCY8UiJbsrMcVsqe7GbOWy86HFsU=
-X-Google-Smtp-Source: AGHT+IGt2az7ERmV+OxHYS82tkIzi6q/Gx8/VzaBUY/nnFl+Hz8P9Kdj7Os8rNAZluuc8+84e2gGcg==
-X-Received: by 2002:a5d:64e6:0:b0:38d:e3da:8b4f with SMTP id
- ffacd0b85a97d-38f3398735amr9744788f8f.0.1739802480191; 
- Mon, 17 Feb 2025 06:28:00 -0800 (PST)
-Received: from [192.168.1.121] ([176.167.144.216])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f25913f5asm12570331f8f.52.2025.02.17.06.27.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 06:27:59 -0800 (PST)
-Message-ID: <1acf5b50-cce6-4750-abe7-9283436f8439@linaro.org>
-Date: Mon, 17 Feb 2025 15:27:58 +0100
+ d=1e100.net; s=20230601; t=1739802603; x=1740407403;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=liAnHmT5fS5HSmio2jxDsDuUAn+/oAc2qvcRTq1qX04=;
+ b=BCfLiQwb1BoZ7OFL3IQLUf7DD/le+7KfZswkBT0SC9rK6fVNZiimLdS0W23fEPP4Me
+ x6NoKnnhKFGoY7HXOjrRsnxf9o0KfWRMlyGxufM+yw/s5/NUal7CULM3DyrdIbVVYLXX
+ cWj0vkd1SqNbTOMJvG87JzaoBIB8BojfevkQaLaa2J7yhQXzRXCAf/rAPpKOsgToWEFO
+ MK0+dytYtKPIehEWozxngydkRhhJeSc/m41Apj+dfwJ4W8qk7ne9bRPzEiGwbR8bANkd
+ ywS84CJgTF7YABi6Q7qP5jPgQ/yrRIL4T+kO2PCEdbo78cMaXBZnvmn7WnfkPEHUVkZ0
+ lifQ==
+X-Gm-Message-State: AOJu0YxU/y3NE/r0ddyyvflU4Aqh32GXNkSXTHGvuvhtZlKR7kKs9MF4
+ zSdaBTp+dvxocBaWiuTRn/Ngv57i+ZJ8NPkKdarJ/nEGG3wpVgFN2k/La64tGG+MCg8DYUYnleB
+ eHWVINnLgcf+ioLv7g5u6oWg+KaGGQtlwC5Vnfg==
+X-Gm-Gg: ASbGnctC5whXQfYqiTPy6QaWcqyJX2KTh7i90WMiIx6XE4msMrfqF9uAgAKwUWlqW4A
+ UuHOiAcOM2EOtKIsCIAfeye0sy0l0uTm+biy2WWq83WvmWt8xguUySil5hUIosemPit3D+zLGgA
+ ==
+X-Google-Smtp-Source: AGHT+IG50ql8EQiHUVNWvGjBgvI5c/kmmunIki99/t0huXXueWLxUaVzQfeucE+X8qbvWvU20j9f8DIEnbY6JZ91IME=
+X-Received: by 2002:a05:6902:2283:b0:e5d:d514:3b5e with SMTP id
+ 3f1490d57ef6-e5dd5143c3cmr3965017276.37.1739802603061; Mon, 17 Feb 2025
+ 06:30:03 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 01/24] tcg: Remove last traces of
- TCG_TARGET_NEED_POOL_LABELS
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250216000109.2606518-1-richard.henderson@linaro.org>
- <20250216000109.2606518-2-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216000109.2606518-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+References: <20250208163911.54522-1-philmd@linaro.org>
+ <20250208163911.54522-6-philmd@linaro.org>
+In-Reply-To: <20250208163911.54522-6-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Feb 2025 14:29:51 +0000
+X-Gm-Features: AWEUYZnUxAf4Ru77U3xAqCkMj9tdTGm2v0XTUscKEcCf_6EjA_UYhitmEbbzrx0
+Message-ID: <CAFEAcA8ZSSD=TxCier0Ji8+DVDspgqKQeKJyVDZ+LEBy=j9=Lw@mail.gmail.com>
+Subject: Re: [PATCH v6 5/7] hw/char/pl011: Consider TX FIFO overrun error
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,18 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/2/25 01:00, Richard Henderson wrote:
-> These should have been removed with the rest.  There are
-> a couple of hosts which can emit guest_base into the
-> constant pool: aarch64, mips64, ppc64, riscv64.
-> 
-> Fixes: a417ef835058 ("tcg: Remove TCG_TARGET_NEED_LDST_LABELS and TCG_TARGET_NEED_POOL_LABELS")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> When transmission is disabled, characters are still queued
+> to the FIFO which eventually overruns. Report that error
+> condition in the status register.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->   tcg/tci/tcg-target.h | 1 -
->   tcg/tcg.c            | 4 ----
->   2 files changed, 5 deletions(-)
+>  hw/char/pl011.c      | 20 ++++++++++++++++++++
+>  hw/char/trace-events |  2 ++
+>  2 files changed, 22 insertions(+)
+>
+> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> index 447f185e2d5..ef39ab666a2 100644
+> --- a/hw/char/pl011.c
+> +++ b/hw/char/pl011.c
+> @@ -61,6 +61,9 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Ch=
+ardev *chr)
+>  /* Data Register, UARTDR */
+>  #define DR_BE   (1 << 10)
+>
+> +/* Receive Status Register/Error Clear Register, UARTRSR/UARTECR */
+> +#define RSR_OE  (1 << 3)
+> +
+>  /* Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC */
+>  #define INT_OE (1 << 10)
+>  #define INT_BE (1 << 9)
+> @@ -158,6 +161,16 @@ static inline unsigned pl011_get_fifo_depth(PL011Sta=
+te *s)
+>      return pl011_is_fifo_enabled(s) ? PL011_FIFO_DEPTH : 1;
+>  }
+>
+> +static bool pl011_is_tx_fifo_full(PL011State *s)
+> +{
+> +    if (pl011_is_fifo_enabled(s)) {
+> +        trace_pl011_fifo_tx_is_full("FIFO", fifo8_is_full(&s->xmit_fifo)=
+);
+> +        return fifo8_is_full(&s->xmit_fifo);
+> +    }
+> +    trace_pl011_fifo_tx_is_full("CHAR", !fifo8_is_empty(&s->xmit_fifo));
+> +    return !fifo8_is_empty(&s->xmit_fifo);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+More repetition of expressions, but anyway
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
