@@ -4,99 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881B6C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AF3C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:31:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk3Jz-0008GZ-HI; Mon, 17 Feb 2025 10:46:11 -0500
+	id 1tk411-0004Ao-I0; Mon, 17 Feb 2025 11:30:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dantan@linux.ibm.com>)
- id 1tk3Jx-0008GC-21; Mon, 17 Feb 2025 10:46:09 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dantan@linux.ibm.com>)
- id 1tk3Js-0005Ha-Jx; Mon, 17 Feb 2025 10:46:08 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51HAYUKi029535;
- Mon, 17 Feb 2025 15:45:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nY02Z9
- unjNhlICgDCQWo0N7MdIljjOyUwb6lt3AU0Fk=; b=NW+xzMc/YG9YKDBYaHioh+
- 0j3BaGJuALzw9pwLQwQ//IIq9UWkaSEtck+h5VM5CY7j9xbFgH3VcnjRyBpxzHaB
- 55BaKXmYo7TrEuOMHnlOWwKW5EcX330P/5nhlsC4epJV8qZdExPPjOjsbiXuPz2x
- 4kLjxgx1PhvWLanLBFrYhh4paSYkmuYH0zFs0udNQDfQssoS8SoPYtziGJi99hAC
- m0ibFLu8eciPA5l6tBxLmtWQfXR/ZuB0nxaLW5BFVXTIJSvL9oUtplSF4fKVYPHZ
- mfqhlu4JldAflQondZOBe2pWQYtCWsU0EzP//urDptjjkBMU3qGQKEczHpyvTt8w
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk40z-0004AS-Vb
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:30:37 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk40x-0006Db-PM
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:30:37 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-6f768e9be1aso45068417b3.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 08:30:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739809834; x=1740414634; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6j7y5fwAj/00iKVpT6Y8e40xdu1PrDltjUFeJ8hW3Zk=;
+ b=Pg5C/+3d8wu96EmvBosJcy4eqc2MMx/Xe8m+Gz6N7WqocPYuA7OSU/Ty/hxdVxHSRH
+ J5YonU4OVA3NwvzwoS7e1+6P7sF9NYqs8qWVmLQzAM2eVGSxfGMOSgizK9aY7+Kdymm9
+ fwgFURSLSRQGLlo6b6jEcXZpnfMG+GyRs+AOxjJibNxgBXfS9jJ4KEHKRrlxEMdWT68M
+ 0ezgZl9zlPPJwaUECrQtfmwpVh0N1bgdEPKuboPX97obqtJtcop4Z9kV+4MwqAGYRRFH
+ wyzwMOFDffiQbENbQVOQyP0/RCEr68eXcJJWlWwonbCLWFR7EHuuZuOrXFgluyZJrWAo
+ 7p3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739809834; x=1740414634;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6j7y5fwAj/00iKVpT6Y8e40xdu1PrDltjUFeJ8hW3Zk=;
+ b=M/LM7Ij2QCL6S1thEBeZUcz53SWPOL2Ox7kWB5yF8HZ6N1fPCFHy//+QhYF+Kq0Jpj
+ RFdw3WMrN81S/zZNv20ZkhAvWVsI62DrrmV2W52V5yjW0+PaJSYWWlOGNETSKTr7aHJq
+ Db/hTRhvb5WZzv2Cf/d6uHJPQEzO+cLUT19hB+yNiRJA7cU4rxtOAHbvq2/gXi0Ca3ez
+ SXlWwo4x6feRzAgFZAJlcg3MUV4MaKI+0eLzS8QSpIpSYAdIH4/NiwqeuVdWvPwNNP1a
+ dvmNIhLfq33/j2cGBq03ChROdtnX1v77K936J3mUgev+XvoTa4mpyW2nGYhlqZYVMcjl
+ y1Jg==
+X-Gm-Message-State: AOJu0Yw2PpgDyCXtc5FZ1nh3hrcBxl3I3FcEThb3JSbz9LwU7QLlxnKp
+ dv0fcUcTqgUlP/KSWJAdu5CKddp2+skD+Co08VTujx/8aof6eOiN8lZQTwg8YB2mHA3tzKceQEy
+ UX6T1SE4Vr/szeLV65KjpWGbycmQu8BAPRjLvbA==
+X-Gm-Gg: ASbGnctVFm4zr2fSo039ybLCirzOLKWSx5Aq9U6Pk3T7nAgRaHzjkMnsCprf0t0WfGh
+ NkxIvtZmoYVBMHXg7Pq4BVi0/dDP7wCGYR3MnhiRMCOMubrooQ1EdRR8xRs7sm+CRPOgdSAN9sg
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44us5a4696-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Feb 2025 15:45:57 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51HDXq78032427;
- Mon, 17 Feb 2025 15:45:56 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44u6rkpntx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Feb 2025 15:45:56 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51HFjtjv36176472
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Feb 2025 15:45:55 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 92D3858055;
- Mon, 17 Feb 2025 15:45:55 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2BBB958059;
- Mon, 17 Feb 2025 15:45:55 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Feb 2025 15:45:55 +0000 (GMT)
+X-Google-Smtp-Source: AGHT+IF15qdRadTGJh11kJIS86k+95RCNcRPRtQYr+RMTXewIvhn61qZ/iY4776tM2DfO4KRNNW+UvpMHjUbxu657rw=
+X-Received: by 2002:a05:6902:3408:b0:e58:36ad:a1ba with SMTP id
+ 3f1490d57ef6-e5dc98b2a49mr7287514276.16.1739809833930; Mon, 17 Feb 2025
+ 08:30:33 -0800 (PST)
 MIME-Version: 1.0
-Date: Mon, 17 Feb 2025 09:45:54 -0600
-From: dan tan <dantan@linux.ibm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
- farosas@suse.de, lvivier@redhat.com
-Subject: Re: [PATCH v9 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
- Peripheral Interface)
-In-Reply-To: <b13a02f2-c41f-4d51-8f60-5c97cd96c488@linaro.org>
-References: <20250216221155.30013-1-dantan@linux.vnet.ibm.com>
- <20250216221155.30013-2-dantan@linux.vnet.ibm.com>
- <b13a02f2-c41f-4d51-8f60-5c97cd96c488@linaro.org>
-Message-ID: <7a2d40456f37459e00e7d69bea27b342@linux.ibm.com>
-X-Sender: dantan@linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Ga1WCOPW7N4YmqXcidWecd27drQPQ3Hj
-X-Proofpoint-GUID: Ga1WCOPW7N4YmqXcidWecd27drQPQ3Hj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-17_06,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 malwarescore=0
- mlxlogscore=999 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
- spamscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502170129
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=dantan@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250110131754.2769814-1-alex.bennee@linaro.org>
+ <20250110131754.2769814-24-alex.bennee@linaro.org>
+In-Reply-To: <20250110131754.2769814-24-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Feb 2025 16:30:22 +0000
+X-Gm-Features: AWEUYZnJJhE-eSMqEP6pcLauS0o1XaV6wHO-47q30QTnWliK5Hx-6pnCF8tc6hA
+Message-ID: <CAFEAcA8Kf4eF-nxEsxhPZnV3pwU+9kXLq1zXDi61ODQEQXaAYw@mail.gmail.com>
+Subject: Re: [PULL 23/32] tests/functional: extend test_aarch64_virt with
+ vulkan test
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ "open list:Virt" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,96 +96,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yes, good point, Philippe!
+On Fri, 10 Jan 2025 at 13:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+> Now that we have virtio-gpu Vulkan support, let's add a test for it.
+> Currently this is using images build by buildroot:
+>
+>   https://lists.buildroot.org/pipermail/buildroot/2024-December/768196.ht=
+ml
+>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Message-Id: <20250108121054.1126164-24-alex.bennee@linaro.org>
 
-I will send an update in a few days in case there are additional
-changes to be made.
+Hi; this test currently fails for me with a clang sanitizer
+build (ubuntu 24.04 host). It seems to run weston in the guest,
+which fails with:
 
-thank you,
----
-dan tan
-power simulation
-phone:+1.7373.099.138
-email:dantan@linux.ibm.com
+2025-02-17 16:11:10,218: [16:11:10.672] Command line: weston -B
+headless --renderer gl --shell kiosk -- vkmark -b:duration=3D1.0
+2025-02-17 16:11:10,224: [16:11:10.675] OS: Linux, 6.11.10, #2 SMP Thu
+Dec  5 16:27:12 GMT 2024, aarch64
+2025-02-17 16:11:10,225: [16:11:10.680] Flight recorder: enabled
+2025-02-17 16:11:10,226: [16:11:10.681] warning: XDG_RUNTIME_DIR
+"/tmp" is not configured
+2025-02-17 16:11:10,226: correctly.  Unix access mode must be 0700
+(current mode is 0777),
+2025-02-17 16:11:10,226: and must be owned by the user UID 0 (current
+owner is UID 0).
+2025-02-17 16:11:10,227: Refer to your distribution on how to get it, or
+2025-02-17 16:11:10,227:
+http://www.freedesktop.org/wiki/Specifications/basedir-spec
+2025-02-17 16:11:10,228: on how to implement it.
+2025-02-17 16:11:10,240: [16:11:10.695] Starting with no config file.
+2025-02-17 16:11:10,253: [16:11:10.707] Output repaint window is 7 ms maxim=
+um.
+2025-02-17 16:11:10,262: [16:11:10.716] Loading module
+'/usr/lib/libweston-14/headless-backend.so'
+2025-02-17 16:11:10,313: [16:11:10.768] Loading module
+'/usr/lib/libweston-14/gl-renderer.so'
+2025-02-17 16:11:21,858: libEGL warning: egl: failed to create dri2 screen
+2025-02-17 16:11:21,959: libEGL warning: egl: failed to create dri2 screen
+2025-02-17 16:11:22,023: libEGL warning: egl: failed to create dri2 screen
+2025-02-17 16:11:22,032: [16:11:22.486] failed to initialize display
+2025-02-17 16:11:22,033: [16:11:22.488] EGL error state:
+EGL_NOT_INITIALIZED (0x3001)
+2025-02-17 16:11:22,036: [16:11:22.490] fatal: failed to create
+compositor backend
 
+Then eventually the test framework times it ou and sends it
+a SIGTERM, and QEMU SEGVs inside libEGL trying to run an
+exit handler:
 
-On 2025-02-17 01:31, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 16/2/25 23:11, dan tan wrote:
->> Implement support for TPM via SPI interface. The SPI bus master
->> is provided by PowerNV SPI device which is an SSI peripheral.
->> It can uses the tpm_emulator driver backend with the external
->> swtpm.
->> 
->> Signed-off-by: dan tan <dantan@linux.ibm.com>
->> ---
->> 
->> v3:
->> - moved variable tis_addr from TPMStateSPI struct to local
->> - added the VM suspend/resume support:
->>    - added vmstate_tpm_tis_spi declaration
->>    - added tpm_tis_spi_pre_save() function
->> - fixed trace formatting string
->> 
->> v4:
->> - git commit amend only
->> 
->> v5:
->> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
->>    from tpm_tis_spi_properties
->> - In tpm.rst document, under section 'The QEMU TPM emulator device',
->>    moved the 'PowerNV machine' section to immeidately below 'pSeriese
->>    machine'.
->> 
->> v6:
->> - amend commit description
->> - amend hw/tpm/tpm_tis_spi.c prolog to reflect the generic nature
->>    of the implementation
->> - remove irrelevant define of IBM_PONQ
->> - correct the function names to comply with the convention of
->>    beginning with tpm_tis_spi_xxxx()
->> 
->> v7:
->> - Reduce SPI wait states to improve performace.
->>    Although the real SPI buses have four wait states to accomodate
->>    the timing of various slave devices, there is no need to emulate
->>    that for this behavior model.
->> 
->> v8:
->> - re-package the email to comply with the convention.
->> 
->> v9:
->> - conform with the latest device property definition after rebase
->> 
->> ---
->>   docs/specs/tpm.rst   |  15 ++
->>   include/system/tpm.h |   3 +
->>   hw/tpm/tpm_tis_spi.c | 358 
->> +++++++++++++++++++++++++++++++++++++++++++
->>   hw/tpm/Kconfig       |   6 +
->>   hw/tpm/meson.build   |   1 +
->>   hw/tpm/trace-events  |   7 +
->>   6 files changed, 390 insertions(+)
->>   create mode 100644 hw/tpm/tpm_tis_spi.c
-> 
-> 
->> diff --git a/hw/tpm/Kconfig b/hw/tpm/Kconfig
->> index a46663288c..5951c225cc 100644
->> --- a/hw/tpm/Kconfig
->> +++ b/hw/tpm/Kconfig
->> @@ -5,6 +5,12 @@ config TPM_TIS_I2C
->>       select I2C
->>       select TPM_TIS
->>   +config TPM_TIS_SPI
->> +    bool
->> +    depends on TPM
->> +    select TPM_BACKEND
->> +    select TPM_TIS
-> 
->        depends on SSI?
-> 
->>   config TPM_TIS_ISA
->>       bool
->>       depends on TPM && ISA_BUS
+qemu-system-aarch64: terminating on signal 15 from pid 242824
+(/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/pyth=
+on3)
+UndefinedBehaviorSanitizer:DEADLYSIGNAL
+=3D=3D243045=3D=3DERROR: UndefinedBehaviorSanitizer: SEGV on unknown addres=
+s
+0x73fbfefe6a31 (pc 0x73fbba9788e9 bp 0x73fbbbe0af80 sp 0x7ffd676fbfe0
+T243045)
+=3D=3D243045=3D=3DThe signal is caused by a READ memory access.
+    #0 0x73fbba9788e9
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #1 0x73fbbaafc178
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16fc178)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #2 0x73fbba62564f
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x122564f)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #3 0x73fbbab067d7
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x17067d7)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #4 0x73fbba63b786
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x123b786)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #5 0x73fbba96290a
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x156290a)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #6 0x73fbba941c5c
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x1541c5c)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+    #7 0x73fbc2041f20
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f20) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #8 0x73fbc2041f68
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f68) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #9 0x73fbc2034ca9
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x34ca9) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #10 0x73fbc203ae90
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3ae90) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #11 0x73fbc203aeda
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3aeda) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #12 0x73fbc20a45f5
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa45f5) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #13 0x73fbc20a2bfc
+(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa2bfc) (BuildId:
+6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+    #14 0x73fbd3047a75 in __run_exit_handlers stdlib/exit.c:108:8
+    #15 0x73fbd3047bbd in exit stdlib/exit.c:138:3
+    #16 0x5a5bab5e3fdb in qemu_default_main
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mai=
+n.c:52:5
+    #17 0x5a5bab5e3f9e in main
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mai=
+n.c:76:9
+    #18 0x73fbd302a1c9 in __libc_start_call_main
+csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #19 0x73fbd302a28a in __libc_start_main csu/../csu/libc-start.c:360:3
+    #20 0x5a5ba9c5b554 in _start
+(/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-aar=
+ch64+0x15dc554)
+(BuildId: 8efda3601b42aa2644dde35d1d63f7b22b649a33)
+
+UndefinedBehaviorSanitizer can not provide additional info.
+SUMMARY: UndefinedBehaviorSanitizer: SEGV
+(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
+(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+=3D=3D243045=3D=3DABORTING
+
+thanks
+-- PMM
 
