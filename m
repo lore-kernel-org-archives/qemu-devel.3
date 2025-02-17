@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB17C0219E
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 10:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB43C0219E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 11:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjyj0-0004C8-Mm; Mon, 17 Feb 2025 05:51:42 -0500
+	id 1tjz6P-0000du-Dq; Mon, 17 Feb 2025 06:15:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tjyiz-0004Bd-3u
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 05:51:41 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1tjz67-0000dO-E3
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 06:15:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tjyiv-0002ET-Ve
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 05:51:40 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1tjz63-0004h2-RE
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 06:15:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739789495;
+ s=mimecast20190719; t=1739790927;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+/FqI76pWU4l0S/G7A5qmaHXQw95Fl/sUsulGPtCujI=;
- b=C8VD/7HkhlxwdubOinxyfA1fBQ7C8PlbIkncDOSN9Uz1cEIueTgA9q8KCskLpMdm6BgYDD
- S/jPERBTA/JCqepwop8IJYkMGFUjLqWvSXfvEnM2WPrSIFuvJL3ho6sH1LbKUOgyCcqKKr
- 6SDWMCyMaJ1ZCy/y+ujkuKk988EawL0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZDaAFZjYp6krCLrGEEqbGU8z4vy7L6m7xm4a2izfV/A=;
+ b=RSNdn61GFSRfz57Zt6rhuw9A2YHQKHU8y0FYNectdSvPKCKzcKSiZPoBgumSIvbbfTA+Ij
+ GFY0kcO/JHzLeGhRb2/ESS8+q0do0W/etanmIMs2GmUAgHXuTjb2SNQqonl7g17t37i24X
+ uf5p7P6vxgg5f+vXpoqWlIyN1XdOqKg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-aPjhJtnyP_WD0OO7pj4lhw-1; Mon,
- 17 Feb 2025 05:51:29 -0500
-X-MC-Unique: aPjhJtnyP_WD0OO7pj4lhw-1
-X-Mimecast-MFC-AGG-ID: aPjhJtnyP_WD0OO7pj4lhw_1739789487
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-357--LOL1UssPDurLgOXyf9UlQ-1; Mon,
+ 17 Feb 2025 06:15:25 -0500
+X-MC-Unique: -LOL1UssPDurLgOXyf9UlQ-1
+X-Mimecast-MFC-AGG-ID: -LOL1UssPDurLgOXyf9UlQ_1739790925
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DB26193578F; Mon, 17 Feb 2025 10:51:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F2AC1800365; Mon, 17 Feb 2025 10:51:25 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E63C621E6A28; Mon, 17 Feb 2025 11:51:22 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
- Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
- Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
- <jasowang@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH 29/42] qapi: Add "Details:" disambiguation marker
-In-Reply-To: <20250205231208.1480762-30-jsnow@redhat.com> (John Snow's message
- of "Wed, 5 Feb 2025 18:11:55 -0500")
-References: <20250205231208.1480762-1-jsnow@redhat.com>
- <20250205231208.1480762-30-jsnow@redhat.com>
-Date: Mon, 17 Feb 2025 11:51:22 +0100
-Message-ID: <87pljgsv2t.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4DE019373D9; Mon, 17 Feb 2025 11:15:24 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 89F171800360; Mon, 17 Feb 2025 11:15:22 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: pierre-eric.pelloux-prayer@amd.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] ui/sdl: only compile dmabuf support if CONFIG_GBM
+Date: Mon, 17 Feb 2025 15:15:18 +0400
+Message-ID: <20250217111518.93617-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -95,27 +83,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-> This clarifies sections that are mistaken by the parser as "intro"
-> sections to be "details" sections instead.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+Fix SDL backend compilation for win32.
 
-Is this missing announce-self in net.json?
+Fixes: commit 31287d1af4 ("ui/sdl2: Implement dpy dmabuf functions")
 
-diff --git a/qapi/net.json b/qapi/net.json
-index 49bc7de64e..44ed72dbe9 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -948,7 +948,7 @@
- # switches.  This can be useful when network bonds fail-over the
- # active slave.
- #
--# TODO: This line is a hack to separate the example from the body
-+# Details:
- #
- # .. qmp-example::
- #
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ ui/sdl2-gl.c | 2 ++
+ ui/sdl2.c    | 4 ++++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 31f8fbe032..6bceeed565 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -251,6 +251,7 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+     SDL_GL_SwapWindow(scon->real_window);
+ }
+ 
++#ifdef CONFIG_GBM
+ void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+                             QemuDmaBuf *dmabuf)
+ {
+@@ -312,3 +313,4 @@ void sdl2_gl_console_init(struct sdl2_console *scon)
+     scon->surface = NULL;
+     scon->hidden = hidden;
+ }
++#endif /* CONFIG_GBM */
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 9439745443..8c9df23343 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -806,9 +806,11 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
+     .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
+     .dpy_gl_update           = sdl2_gl_scanout_flush,
+ 
++#ifdef CONFIG_GBM
+     .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
+     .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
+     .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
++#endif
+ };
+ 
+ static bool
+@@ -939,7 +941,9 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+         sdl2_console[i].kbd = qkbd_state_init(con);
+         if (display_opengl) {
+             qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
++#ifdef CONFIG_GBM
+             sdl2_gl_console_init(&sdl2_console[i]);
++#endif
+         }
+         register_displaychangelistener(&sdl2_console[i].dcl);
+ 
+-- 
+2.47.0
 
 
