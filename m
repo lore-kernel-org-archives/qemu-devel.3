@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEEFC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34844C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0pX-00025W-AZ; Mon, 17 Feb 2025 08:06:35 -0500
+	id 1tk0px-0002Nd-Av; Mon, 17 Feb 2025 08:07:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0pR-00025B-L2
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:06:31 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0pu-0002Mb-PU
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:06:58 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0pP-0004hQ-EI
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:06:28 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2fa7465baceso8801562a91.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:06:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0ps-0004oU-2c
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:06:58 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-220ca204d04so56797655ad.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:06:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739797582; x=1740402382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LAiD6jNMlnvOxC6RFwTNse4mAN9kNlx9AjExQlpN6Gw=;
- b=vSfK3XXhI+VcOvF/mCqxDbPpB05uQ5Pe0jz2H3nYh24lus9MJLof0rWazn3Mk9WvzB
- 9i8+4urzmPIHMfIxTszVzYMfx4cUfp8+gfS4nx7JH8GVb8zUykqdnrVJJR9nTl51VMA/
- ThOZgBuXx4KP+400RyyW2ZIEoLIhQIKX5qbcY/FwZdZ/GXDRKkWeJvL6y3rMFVU7MltZ
- zCe5PE2tgvp4Vi9RHDGhoXGqGxj879mEK+60T3QCg00jcrNWbc3oMTCxzgZ1kbGVWEGL
- 2//jU/u6E8nUZizyQWhJnggW7Zbn2BcbkduJMYxds+yAW/QP+DSBOs3kmJ5kzukkgJHb
- ifRQ==
+ d=linaro.org; s=google; t=1739797614; x=1740402414; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7O0UWINckwcSYd7NHNQigdFexck5lWKOcbh3yCa7cb0=;
+ b=ke3/3RieAy5QBQzHEn5NMU2IIfeNj1RI1fZFg2+UFwVuoxQb5cUNKSD56Hpg1OVjV4
+ qMCDMZepFeyXW7yRDlEinV6WJHbFeYKm6AezoiZ4Pgbwj8OjiKZvJKPGoNH1x7SHKcMM
+ fpoJxATCmVPy7KgAxKAC8d5jRJsuqwUDlUT8FF9Fk60NawQSGj/iEIVUSD41HR8/J8vR
+ zLcmOul5gqWSSHht35J1452gxsvplBbgSa6fsPK6qixBa0tmjpAVfTpBpHlCmbeySpK5
+ nes7aqvOyv7wXS4VwQ0UFtQJAM1cKgWn7SkYZ1Emdl3szbtHeiTLvDhoMoUuOtD8BIKH
+ +99Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739797582; x=1740402382;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LAiD6jNMlnvOxC6RFwTNse4mAN9kNlx9AjExQlpN6Gw=;
- b=n5+4vMf8hepKLoLWq11gB/Mi4A7xKmMq+DPX5zH6HCiITW7L2+zqOOL7qaj7QYyzB6
- A1F1PVHbg/QqWtPoBItVNrKcjec7VahfGvoM65QKM3TldCGfvfOrYm81uWNJ7ObZQZ3K
- DJrwIqtfHgJrmr4S+OcigpgbU20vK6UbkvbOmcqhLayPrbCUMqAThBtWD2gO6c5a4j7f
- zAEpy9lvL9RCdw6tu7BddzDpIrP+aUI9QBh84zgcDtqLSq2LBti4xmcLYdYqclapP+J0
- WIYHbABPBanqynU9qWdLr2SxQ/U5DJRmecfqDhPS2oqiUgFdEE3L7w9SbtmpMRr8+p3F
- TK3A==
-X-Gm-Message-State: AOJu0Yxi0u5FPdQ3hmRiPy+2j2a4CZP6Y2d0u/aVQObuCj7SjgSfeAtR
- iCULDoRjUSj58GVq5N8odKyECBI7ep+qUCk/GFFHmzDFyDsUDRjbNQcy0NqIGVMh3vHLsfcLO1u
- 4ljc=
-X-Gm-Gg: ASbGncuXDKk9tJKkOcvD2INqYP5pcZnR94anYM6gltpKwBGW90fwvfQmwgtpYtnJ3uB
- zWAlTEkatucPqVknZa0R2UjkjHmOeKlCcYIppThQhCQy8D3JRDXgkLInHcU2lYBR3ne8jeYL11h
- C6DdHpxiNxy4PEyOXPdnJHT3A7pGJ9rf20ZLVV3zJpgQ7ze54O8pV0BmTgM/O1OxTr1RJe+DWED
- JVOW7Nm3mA9rwyP234dYAElc01sErMV3BKX5ewrQ1Y4CILfi01hzy5CGehgm+LhmRUnSdcT0Srm
- 2sOTkkWojIXntB6GzppohqSEVEZzJVzXqh/dOM3ISAA=
-X-Google-Smtp-Source: AGHT+IFqFZ2pYXJhjCyZv4x9ytBw5t4mNjH5Dhr40oA051q86mnKRcNsMpCZZEYTWfe9T/TqzmUL7g==
-X-Received: by 2002:a17:90b:3812:b0:2f4:434d:c7ed with SMTP id
- 98e67ed59e1d1-2fc40f1f83cmr17033499a91.16.1739797582624; 
- Mon, 17 Feb 2025 05:06:22 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739797614; x=1740402414;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7O0UWINckwcSYd7NHNQigdFexck5lWKOcbh3yCa7cb0=;
+ b=Sb7z9oM3xWfaGx/WGg6R50NxufMe3fhMfi71A8iIYQO+4YTyK/io9JcWwa5GdAmIfG
+ QXn5SLAZuE1KAxQpc+JEoff6fmD4wC9JV0CMJ2wDkqTtNeDp4+grH/QTUMfapnQ9B6oS
+ MhTWqrl/cVhYNv/KEDlkVp4jAasUvdMR5i36vYX/wgxy7FVQSNKSnBFllVArUPGlW1cE
+ EeSWv03ur1fO8xRKOjvLK/LanoKVZC03C/o+Ujg2gTlVZ5Xvsu72Mag7T5a0mcpMoSyj
+ jW6JEwX1sn0tKbqiFqdzragjy9kzbW4B0KALtDFrSNT0KobAr9ALwU/80jE+O7Qzd+oT
+ Gp2Q==
+X-Gm-Message-State: AOJu0YzCZjpJquRJS8MLT75Djq+G8Ld+z5i6lpXo+xSEy18NaCrKYbIY
+ 9ZI1V1CcLOtu5exX7Ug78Fb0IpvCM/iwGLaf7EK1w5NNnwymQKTfAkHCp9H8lUGquB5KL2jSaw5
+ c+bM=
+X-Gm-Gg: ASbGncvDNrntD6eiGJlVhvO0phoBM9bP7A8hYCZK+QKUh1medf1yuJUf8tfPwlSLXF0
+ pun3vkUWC+sRt6CdpWxUWTcnRb1BuBsrcLrAQzU0vbQXt8UlumwujGw7ogEun8qBIzO2/I3JxfB
+ Z+9t+4XE/ejKXRKp+zslGUItAFnKaqbRAopKsTE+Tf7IwbTyVaxwhB7TwklqBvotxST+Zxq13tv
+ 7HCt5OJm2pbC1snP2T6a8DvNd0VDz6mWlPQdyhSstPn48C7am9zLT331XJDExW0WDsBEZKofFAW
+ FnLUgG3o9Cnheahx83c56A407vMV3CDl0VPSLdsG7RI=
+X-Google-Smtp-Source: AGHT+IHNpLdbC7JJNI0xd+b7ktdHbHeBChauQsr6IBEYGduSzv32MYUVq4aMNsxYr+pM/3ooBCYfxw==
+X-Received: by 2002:a05:6a00:1408:b0:732:2923:b70f with SMTP id
+ d2e1a72fcca58-732617bf52cmr15434269b3a.11.1739797612678; 
+ Mon, 17 Feb 2025 05:06:52 -0800 (PST)
 Received: from localhost.localdomain ([176.167.144.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fbf98cff80sm10031309a91.16.2025.02.17.05.06.17
+ d2e1a72fcca58-732425463ebsm8306546b3a.19.2025.02.17.05.06.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Feb 2025 05:06:22 -0800 (PST)
+ Mon, 17 Feb 2025 05:06:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Riku Voipio <riku.voipio@iki.fi>,
@@ -69,15 +70,17 @@ Cc: Riku Voipio <riku.voipio@iki.fi>,
  Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/5] accel/tcg: Clean cpu_memory_rw_debug() up
-Date: Mon, 17 Feb 2025 14:06:05 +0100
-Message-ID: <20250217130610.18313-1-philmd@linaro.org>
+Subject: [PATCH 2/5] accel/tcg: Include missing bswap headers in user-exec.c
+Date: Mon, 17 Feb 2025 14:06:07 +0100
+Message-ID: <20250217130610.18313-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250217130610.18313-1-philmd@linaro.org>
+References: <20250217130610.18313-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,27 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Address Richard' suggestions from [*], cleaning
-cpu_memory_rw_debug() user implementation.
+Commit 35c653c4029 ("tcg: Add 128-bit guest memory
+primitives") introduced the use of bswap128() which is
+declared in "qemu/int128.h", commit de95016dfbf ("accel/tcg:
+Implement helper_{ld,st}*_mmu for user-only") introduced the
+other bswap*() uses, which are declared in "qemu/bswap.h".
+Include the missing headers.
 
-branch: https://gitlab.com/philmd/qemu/-/commits/user_cpu_memory_rw_debug
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/user-exec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Based-on: <20250123234415.59850-14-philmd@linaro.org>
-[*] https://lore.kernel.org/qemu-devel/20250123234415.59850-1-philmd@linaro.org/
-
-Philippe Mathieu-Daudé (5):
-  accel/accel-cpu-target.h: Include missing 'cpu.h' header
-  accel/tcg: Include missing bswap headers in user-exec.c
-  accel/tcg: Take mmap lock in the whole cpu_memory_rw_debug() function
-  accel/tcg: Avoid using lock_user() in cpu_memory_rw_debug()
-  accel/tcg: Move cpu_memory_rw_debug() user implementation to
-    user-exec.c
-
- include/accel/accel-cpu-target.h |   3 +
- accel/tcg/user-exec.c            |  82 +++++++++++++++++++++++++
- cpu-target.c                     | 101 +------------------------------
- 3 files changed, 87 insertions(+), 99 deletions(-)
-
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index c4454100ad7..9d53c9440ea 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -30,6 +30,8 @@
+ #include "exec/page-protection.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/atomic128.h"
++#include "qemu/bswap.h"
++#include "qemu/int128.h"
+ #include "trace.h"
+ #include "tcg/tcg-ldst.h"
+ #include "internal-common.h"
 -- 
 2.47.1
 
