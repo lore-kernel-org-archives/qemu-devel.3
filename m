@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99CC2C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7016BC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0qT-0003U8-HC; Mon, 17 Feb 2025 08:07:33 -0500
+	id 1tk0qr-00046G-OG; Mon, 17 Feb 2025 08:08:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0qO-0003I3-31
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:07:29 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0qb-0003rc-Lz
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:07:44 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0qM-0004st-4s
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:07:27 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2fa5af6d743so6549454a91.3
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:07:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0qZ-0004vA-Hy
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:07:41 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2fc20e0f0ceso5291574a91.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:07:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739797642; x=1740402442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739797657; x=1740402457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u9uCPjDW0dErB0lZ2crkMfUrfBy4bGr0Qf3z7+OEIYI=;
- b=ur/7CNUMxXx/T6FcW++52hSYwKp055Oqi0MrhaRJ7ja3fFIHEdaPO6YRtLrkh6dOgP
- wFoO+PQw5rXIwuusMbICafGmg1aGIyX48YvlmNYCB5uA7OWiKpMOa7ReAh2pLEXe6LlM
- IFCypIVZW8hcj9QKENGxES5PyXT733KypA5banQfhbQN5E86rlYq/BVqDKJjRV3Y/OVG
- +5ujSRnC/8HpPDvy9jJQ7w/Ya2+wJlUsUhuai/N06RM0B2H9/7lmaL4i+lZ286z0fky6
- Mh0iCGeTX/dOQqeG67DoXqL8iV1oQGK0Bn5pOo50XMIKHAKFGa1YBXUVPkcyiT/5/5io
- BsEg==
+ bh=FJIia44DGrjZyTLCck3b7pQzZNSq4mcpp1g0jS1BWP4=;
+ b=DxiiGDvG/5ByU23p9y4vixrCgoL7+Ys36YAH3YwTkpuHvstltWvOiXZSh2s8SpuZO6
+ SXtbturKzolzmE6gfWqUiWEcq1EV5s7RuEx+w9TTJhzhL4WsaWWc6U4xDnbdFwXQ+xTG
+ iOIfGLghwQcCVJCG033E/qOrJY93NYh1Ie3AxYVY2jlmr5nP0cqKmN07kIBxId6UEaLz
+ TkFWluVdbjtGM5S01/SGOUAIZXVLGNmsahqtepUQjonbrMrA9z2bTk3wZtU6UGJEvNyK
+ y7gpW4/HSjwaKRS6qRsm2Yy4ySz8clP97t4fqd5FMMfZf0Mc0XXq4/vdsV2b8lHtOgw1
+ RIyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739797642; x=1740402442;
+ d=1e100.net; s=20230601; t=1739797657; x=1740402457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u9uCPjDW0dErB0lZ2crkMfUrfBy4bGr0Qf3z7+OEIYI=;
- b=EiWmZ5aRnsBS1YR2BWQisVA5BmX+1TyT2kn3tzmbmfUM1bNbJbAalCdtAw9d9Z5fZs
- RQPKTpSX9M3LNFUTwnz1nwLUhdsQ5KgzJTIg5BdS/AF5ZXFj/Lk9KQgdnZSzPbOsO0PH
- tBDXgw84xCMmtmFnhPmV+bIJI8Nr0ErtHzO8/iVx65OEbIHXDJcCGT/WvQxUnL1qGhci
- K3FIg8GBswmo5TAcrM17s8xJ4GMSi5WhctLEwa2gdBk4RJ1OgoK8yduBEEdX8T7DZlUG
- YpPDDWnLRsJ3heAW92ikhhVF9/H51Jg3xHc8mBe96AzXQPAbf8yiIMw68pOa/AgxwI4O
- dDsw==
-X-Gm-Message-State: AOJu0Yy2qp+8EtmCxtrHyeCq8DnA+HvIFz8J8b18pEDH3ZCJYQ3CpDZQ
- py4tv2aX2UkIxpF/NNwHVaema7Jiu9dwUlglgUqVKvwXkQnOoy2BgIO//RGoIUi41w1cGjUbAEy
- E/4o=
-X-Gm-Gg: ASbGncuNzodyML9anF03AmQcv01xTFrFShBqaSoFlgXlfeBhrg0Sc78d9G/Dz40Tv8Z
- SBVRAs0YqKgulebP10KDEYvTIosj/L3+6xCc6WO5e1FNeGaJpSFPkBNdnQMTkwPWL6Fp7KLsYUp
- W7p2N5/Gr8Csv2Z5BbGhPYZOL8/y4tMhZvmEkEFVp5OY5wg+8FB6S0bOVet5xvATcqpXlcmLlQ6
- oGMiFrLkmO8ygNIMbqVSvJ8mBGgKIOoVQ4lZJf5spZbZp53LX8zK5ebcvfIWttbbGHS8CjVqbTe
- PyjqD4Re/WdWu/OT6hkTnWaxfdurJtZfAG3MuyGwa7k=
-X-Google-Smtp-Source: AGHT+IH6yTdofAF2NC9fr9HQ3FFjmz4Og3BHEARe3y+Z2u7w1PT7IYs9sBG2DTWerJuPremGI/oS/A==
-X-Received: by 2002:a17:90a:e7c3:b0:2f4:49d8:e718 with SMTP id
- 98e67ed59e1d1-2fc40f1049cmr14477229a91.9.1739797642407; 
- Mon, 17 Feb 2025 05:07:22 -0800 (PST)
+ bh=FJIia44DGrjZyTLCck3b7pQzZNSq4mcpp1g0jS1BWP4=;
+ b=owxCnVuJoM8s236NeVmqRiK8psDiJAxySm9FLNXzwe5C1w7ALqsydD0CCo9oN6dwRv
+ JfgZEgt78qHoxvCj+1lW1ZDDSIYWEJNjIiy4CgHNeD6qHgg4UJ6mGnbT6s+EiVPa2LCO
+ lj8OO96WwgB9bP9sp9hhA9wLGMJNQQHo0FKNfMGmK12bULQVIVN+XGi5Ew3NEJMo8fMF
+ Om0sKL7yEeaajxFZ0Q1OATVCH6JkNpcIZu85HeKAdxuX5KUgwHLrqGKht6wahNP4phxe
+ hZAuCtXNtNAxn3rt6Lfu/UTDUAaGu0WcZRHUqYWaLDvNYZq6ZJ9ejHYfj6eCytFMpXXK
+ UilA==
+X-Gm-Message-State: AOJu0YxtkVTaEKYwGzdE3awWyS249d9OwPGrbWX/JvQnFhePgvxXR19G
+ irZwhECJYhpVALSsQWGdP0hwy9eYTPYydBhvY7JtdVIHxQrxog0vgklr5WRJWkqoF/NdSVAl5KO
+ sQpA=
+X-Gm-Gg: ASbGncvJGKQWKYRt6bR13IdB5GXKtfADUp1iMonq/y+5t+V8S6V0za9Cx03+2V9v3jg
+ sRSEzK2aTtq3uGsdhBCN23FS6sKDnReaWmiBDjEaBBWcGbf9Vgw5D0Ll/0Xdklks5OJkfuEWcmL
+ zjRSmVln+wNLu1fuMsvmwImGBq/YZyAx6tyDOiNpOl3PfWhjLogkHc9FHh3JPmT+tx4TKDuB70d
+ S7o9duyhrcqbiWTxZMVn09kjpCSSNQuAy1HSMcWf/JLgEplFYi12pGlBcFjoim9LbfMbMoQCcoz
+ WTjOUoymCiZSkLx7vsNv8fFVoBnw8zz+RNe76Me0bJk=
+X-Google-Smtp-Source: AGHT+IEIdYjO9G+dts1wVsvojDNY9xhxoX2XLKs3F1nGPDUr7F8qqHL6sN39GCj6ItrqoNQ5rCo/Ww==
+X-Received: by 2002:a17:90b:3ec5:b0:2fa:20f4:d27a with SMTP id
+ 98e67ed59e1d1-2fc40d12e34mr16599021a91.7.1739797657466; 
+ Mon, 17 Feb 2025 05:07:37 -0800 (PST)
 Received: from localhost.localdomain ([176.167.144.216])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2211eafd20dsm24132925ad.182.2025.02.17.05.07.16
+ d9443c01a7336-220d5596133sm71399385ad.259.2025.02.17.05.07.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Feb 2025 05:07:21 -0800 (PST)
+ Mon, 17 Feb 2025 05:07:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Riku Voipio <riku.voipio@iki.fi>,
@@ -70,18 +70,18 @@ Cc: Riku Voipio <riku.voipio@iki.fi>,
  Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/5] accel/tcg: Avoid using lock_user() in
- cpu_memory_rw_debug()
-Date: Mon, 17 Feb 2025 14:06:09 +0100
-Message-ID: <20250217130610.18313-5-philmd@linaro.org>
+Subject: [PATCH 5/5] accel/tcg: Move cpu_memory_rw_debug() user implementation
+ to user-exec.c
+Date: Mon, 17 Feb 2025 14:06:10 +0100
+Message-ID: <20250217130610.18313-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250217130610.18313-1-philmd@linaro.org>
 References: <20250217130610.18313-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +104,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We checked the page flags with page_get_flags(), so
-locking the page is superfluous. Remove the lock_user()
-calls and directly use g2h() in place.
+cpu_memory_rw_debug() system implementation is defined in
+system/physmem.c. Move the user one to accel/tcg/user-exec.c
+to simplify cpu-target.c maintenance.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- cpu-target.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ accel/tcg/user-exec.c | 80 ++++++++++++++++++++++++++++++++++++++
+ cpu-target.c          | 90 +------------------------------------------
+ 2 files changed, 82 insertions(+), 88 deletions(-)
 
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 9d53c9440ea..2322181b151 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "disas/disas.h"
++#include "exec/vaddr.h"
+ #include "exec/exec-all.h"
+ #include "tcg/tcg.h"
+ #include "qemu/bitops.h"
+@@ -971,6 +972,85 @@ static void *cpu_mmu_lookup(CPUState *cpu, vaddr addr,
+     return ret;
+ }
+ 
++/* physical memory access (slow version, mainly for debug) */
++int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
++                        void *ptr, size_t len, bool is_write)
++{
++    int flags;
++    vaddr l, page;
++    uint8_t *buf = ptr;
++    ssize_t written;
++    int ret = -1;
++    int fd = -1;
++
++    mmap_lock();
++
++    while (len > 0) {
++        page = addr & TARGET_PAGE_MASK;
++        l = (page + TARGET_PAGE_SIZE) - addr;
++        if (l > len) {
++            l = len;
++        }
++        flags = page_get_flags(page);
++        if (!(flags & PAGE_VALID)) {
++            goto out_close;
++        }
++        if (is_write) {
++            if (flags & PAGE_WRITE) {
++                memcpy(g2h(cpu, addr), buf, l);
++            } else {
++                /* Bypass the host page protection using ptrace. */
++                if (fd == -1) {
++                    fd = open("/proc/self/mem", O_WRONLY);
++                    if (fd == -1) {
++                        goto out;
++                    }
++                }
++                /*
++                 * If there is a TranslationBlock and we weren't bypassing the
++                 * host page protection, the memcpy() above would SEGV,
++                 * ultimately leading to page_unprotect(). So invalidate the
++                 * translations manually. Both invalidation and pwrite() must
++                 * be under mmap_lock() in order to prevent the creation of
++                 * another TranslationBlock in between.
++                 */
++                tb_invalidate_phys_range(addr, addr + l - 1);
++                written = pwrite(fd, buf, l,
++                                 (off_t)(uintptr_t)g2h_untagged(addr));
++                if (written != l) {
++                    goto out_close;
++                }
++            }
++        } else if (flags & PAGE_READ) {
++            memcpy(buf, g2h(cpu, addr), l);
++        } else {
++            /* Bypass the host page protection using ptrace. */
++            if (fd == -1) {
++                fd = open("/proc/self/mem", O_RDONLY);
++                if (fd == -1) {
++                    goto out;
++                }
++            }
++            if (pread(fd, buf, l,
++                      (off_t)(uintptr_t)g2h_untagged(addr)) != l) {
++                goto out_close;
++            }
++        }
++        len -= l;
++        buf += l;
++        addr += l;
++    }
++    ret = 0;
++out_close:
++    if (fd != -1) {
++        close(fd);
++    }
++out:
++    mmap_unlock();
++
++    return ret;
++}
++
+ #include "ldst_atomicity.c.inc"
+ 
+ static uint8_t do_ld1_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
 diff --git a/cpu-target.c b/cpu-target.c
-index b5230ce1837..3892ce12229 100644
+index 3892ce12229..83688f1d508 100644
 --- a/cpu-target.c
 +++ b/cpu-target.c
-@@ -374,7 +374,6 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
- {
-     int flags;
-     vaddr l, page;
--    void * p;
-     uint8_t *buf = ptr;
-     ssize_t written;
-     int ret = -1;
-@@ -393,13 +392,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-         }
-         if (is_write) {
-             if (flags & PAGE_WRITE) {
--                /* XXX: this code should not depend on lock_user */
--                p = lock_user(VERIFY_WRITE, addr, l, 0);
--                if (!p) {
+@@ -19,18 +19,12 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-
+-#include "exec/target_page.h"
+-#include "exec/page-protection.h"
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "qemu/error-report.h"
+ #include "qemu/qemu-print.h"
+ #include "migration/vmstate.h"
+-#ifdef CONFIG_USER_ONLY
+-#include "qemu.h"
+-#include "user/page-protection.h"
+-#else
++#ifndef CONFIG_USER_ONLY
+ #include "hw/core/sysemu-cpu-ops.h"
+ #include "exec/address-spaces.h"
+ #include "exec/memory.h"
+@@ -43,11 +37,11 @@
+ #include "exec/cpu-common.h"
+ #include "exec/exec-all.h"
+ #include "exec/tb-flush.h"
+-#include "exec/translation-block.h"
+ #include "exec/log.h"
+ #include "accel/accel-cpu-target.h"
+ #include "trace/trace-root.h"
+ #include "qemu/accel.h"
++#include "hw/core/cpu.h"
+ 
+ #ifndef CONFIG_USER_ONLY
+ static int cpu_common_post_load(void *opaque, int version_id)
+@@ -367,86 +361,6 @@ void cpu_abort(CPUState *cpu, const char *fmt, ...)
+     abort();
+ }
+ 
+-/* physical memory access (slow version, mainly for debug) */
+-#if defined(CONFIG_USER_ONLY)
+-int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+-                        void *ptr, size_t len, bool is_write)
+-{
+-    int flags;
+-    vaddr l, page;
+-    uint8_t *buf = ptr;
+-    ssize_t written;
+-    int ret = -1;
+-    int fd = -1;
+-
+-    mmap_lock();
+-
+-    while (len > 0) {
+-        page = addr & TARGET_PAGE_MASK;
+-        l = (page + TARGET_PAGE_SIZE) - addr;
+-        if (l > len)
+-            l = len;
+-        flags = page_get_flags(page);
+-        if (!(flags & PAGE_VALID)) {
+-            goto out_close;
+-        }
+-        if (is_write) {
+-            if (flags & PAGE_WRITE) {
+-                memcpy(g2h(cpu, addr), buf, l);
+-            } else {
+-                /* Bypass the host page protection using ptrace. */
+-                if (fd == -1) {
+-                    fd = open("/proc/self/mem", O_WRONLY);
+-                    if (fd == -1) {
+-                        goto out;
+-                    }
+-                }
+-                /*
+-                 * If there is a TranslationBlock and we weren't bypassing the
+-                 * host page protection, the memcpy() above would SEGV,
+-                 * ultimately leading to page_unprotect(). So invalidate the
+-                 * translations manually. Both invalidation and pwrite() must
+-                 * be under mmap_lock() in order to prevent the creation of
+-                 * another TranslationBlock in between.
+-                 */
+-                tb_invalidate_phys_range(addr, addr + l - 1);
+-                written = pwrite(fd, buf, l,
+-                                 (off_t)(uintptr_t)g2h_untagged(addr));
+-                if (written != l) {
 -                    goto out_close;
 -                }
--                memcpy(p, buf, l);
--                unlock_user(p, addr, l);
-+                memcpy(g2h(cpu, addr), buf, l);
-             } else {
-                 /* Bypass the host page protection using ptrace. */
-                 if (fd == -1) {
-@@ -424,13 +417,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-                 }
-             }
-         } else if (flags & PAGE_READ) {
--            /* XXX: this code should not depend on lock_user */
--            p = lock_user(VERIFY_READ, addr, l, 1);
--            if (!p) {
+-            }
+-        } else if (flags & PAGE_READ) {
+-            memcpy(buf, g2h(cpu, addr), l);
+-        } else {
+-            /* Bypass the host page protection using ptrace. */
+-            if (fd == -1) {
+-                fd = open("/proc/self/mem", O_RDONLY);
+-                if (fd == -1) {
+-                    goto out;
+-                }
+-            }
+-            if (pread(fd, buf, l,
+-                      (off_t)(uintptr_t)g2h_untagged(addr)) != l) {
 -                goto out_close;
 -            }
--            memcpy(buf, p, l);
--            unlock_user(p, addr, 0);
-+            memcpy(buf, g2h(cpu, addr), l);
-         } else {
-             /* Bypass the host page protection using ptrace. */
-             if (fd == -1) {
+-        }
+-        len -= l;
+-        buf += l;
+-        addr += l;
+-    }
+-    ret = 0;
+-out_close:
+-    if (fd != -1) {
+-        close(fd);
+-    }
+-out:
+-    mmap_unlock();
+-
+-    return ret;
+-}
+-#endif
+-
+ bool target_words_bigendian(void)
+ {
+     return TARGET_BIG_ENDIAN;
 -- 
 2.47.1
 
