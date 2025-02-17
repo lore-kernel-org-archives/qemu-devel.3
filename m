@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19602C021A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:19:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD8DC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjwKW-0002Gn-5r; Mon, 17 Feb 2025 03:18:16 -0500
+	id 1tjwLg-0004BJ-Hn; Mon, 17 Feb 2025 03:19:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tjwKS-0002Ah-0d
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:12 -0500
-Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tjwKK-00011G-Kw
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:11 -0500
-Received: by mail-qv1-xf35.google.com with SMTP id
- 6a1803df08f44-6e67fad4671so5279856d6.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 00:18:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1739780283; x=1740385083; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Q3Bh+vRBI9kfj9ST5eVx6et/EgzdN8R/GNSb/Gp3tTc=;
- b=AR4t6kSdBbCbrfWDp2C3jGUae6hAmlFF/q4AStgkCXHt6VFaXNl70Rpo/EtXrvWszh
- uPNDL7oT1DpRRGy60zYo87YcSJzDbJhz9M8FJylKT9Vfh+UymP0bUkPBccoPPIuZjFZJ
- Lna9WssefCbLh1zbjz/6CjKgJRyuT0D30eakmqS1tPfJbs25Rgj9oFtkWMHHKQFyDqOL
- uIrvOQICS0dnTtygNnyP10B5PuT2W8SFZhWunQOstvu4LTpB+oNf1pfGk1PXghCQ60Hh
- LUA507/tlj3lw29FT8UL1MZNaWNZxRXv5qf2dUVwjwNYiyDZfewjf8UTfcbti9m4k+lI
- r4+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739780283; x=1740385083;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q3Bh+vRBI9kfj9ST5eVx6et/EgzdN8R/GNSb/Gp3tTc=;
- b=LGzukSWxkM5Lpr3QNSQgAHuG3lUm7nlLJmrR4/aPY3jOyMRIBCc/ns5YYXHdLVpQu7
- e8sXEr1C8n4Y8DxKTbiNxI/T6TBwRuqXgfM6Jd4bb5zQwff0ii/qyaymREN+Kea2SAT9
- 6W3NjruqmXo+sE1t0256iePvE43LLvuFU90nxK/lHj0MF4HvKXpR3v0OwzUbhIs0EsMv
- 6w9bKEIM3sJOaTGp7v/W8fxD9Cm+subso0raK5TND1GRYsNhUKMo1pZyTRnVc6J+ujZy
- Dtv4zWs+QAa57OyDKVH7RjXtQ6zWb9myA7bhX/a6Y5Qnbk8SbmJ0eV1bE8HI8axKEnSj
- zyCQ==
-X-Gm-Message-State: AOJu0YyBtOx9S+6ZdLMyZCCR9mCj1aw4w8swp3TnZXWdlZ969Qa7LyZP
- /PGJCd2KFXcsDkb24Zkiy9nuy6i2VV+bxKII+M70kGgxqKOcG8M8D2QUIm6odpNYaDT3gtnTRBk
- ApnxFdfGrgKF0YfQbvR6d4Ct6HYN8m4PQgW3ztQ5CjSie5urUYX2dzMtsKEZ3tml/1u8KHyr8LO
- 6bYyvAo9hWxpodGiAreEI/il5BCWehjqLPUGlBFVKuqQ==
-X-Gm-Gg: ASbGnctPqAfmKZmpuGwCfo/g/8kInppHQO7wQDERxYCBSVDuGptr1bkUvzh2whCxJ6C
- WElJt1ixbd9Y31Ict84a2ltBDubUPak9yOYlcPmL6DbqoEvT2qc1XPJY+JRjHkLYxv8jkNdYu+2
- tCpJbOgTKy0zNJHDIMxpd2DcMjpEhFsm6NXx6eOD8lGn18Il5VAqRqfPkeuCjab64q8lZhdSCVD
- oEANTyUp8KaRykDom3xCyAsZ4GssM8pTWQscRNfqsyd85/L+yv08wUhyQ5AryLkLN3+mfyGF7ex
- kk7nxjqKz2D58xNBxNFnnfAURU8JBYG8hY9QyvR6IT0MZA==
-X-Google-Smtp-Source: AGHT+IELU3mvD3QGaGLyVLLCYxlaAzw2k6zmPzfP4iFKRKx5g0Z/GQMRrS41GCT/aq/PTxQfoKWdyA==
-X-Received: by 2002:a05:6214:29cb:b0:6e4:2ef4:2a01 with SMTP id
- 6a1803df08f44-6e66ccccc72mr131501216d6.22.1739780283120; 
- Mon, 17 Feb 2025 00:18:03 -0800 (PST)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e65d9f38absm49673346d6.88.2025.02.17.00.17.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 00:18:02 -0800 (PST)
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
- jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/8] target/riscv/kvm: add KVM_REG_RISCV_CSR_SMSTATEEN
-Date: Mon, 17 Feb 2025 16:17:23 +0800
-Message-Id: <20250217081730.9000-4-yongxuan.wang@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250217081730.9000-1-yongxuan.wang@sifive.com>
-References: <20250217081730.9000-1-yongxuan.wang@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-qv1-xf35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tjwLN-0003KK-Rp
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:19:10 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tjwLL-00016L-UO
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:19:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739780348; x=1771316348;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=et457s5gxOACczlEdsQV3JpgBTp1+3xW6hMwzsrYsk0=;
+ b=YTsltjjBP8pYj6fyjVtU8FewUgjBfvXMe4Ut+2qX907rmnOHGweRfKL0
+ RBUtVrXis2aW/lqcKIquSbLvfiY2SQShGKbwDxRbgdWl1cTxA9bdlivFS
+ IxaiD9mws3LeroQ0zhOyN9dHjemnB054+1NhFiGe1xJyOx7Ce11c6bJHc
+ Gv8NBPjYZfEp57s8mjfYU8kWsVWmsXRvbvc45STJkmJrpDKFIRnYci2z+
+ kTgUuLSvF6BxMZqjuKE6ZlkvODoycbjq4GQUbMnA3VEcqkjtrsH1QU72W
+ ODxUnNDsIX8osq2OqYrfoTwx7oEaE0L8FshIGzO7e0zJi/G4m3hetOPj3 g==;
+X-CSE-ConnectionGUID: AhNI4sneSsKAtuz6c89uXA==
+X-CSE-MsgGUID: cCzvFtLXSYa2d9No98kcIA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11347"; a="50669002"
+X-IronPort-AV: E=Sophos;i="6.13,292,1732608000"; d="scan'208";a="50669002"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 00:19:04 -0800
+X-CSE-ConnectionGUID: l51kerAISVmk9QAqliXkng==
+X-CSE-MsgGUID: xdV2eWBVTKyB3H50d8XF5Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="118690254"
+Received: from emr-bkc.sh.intel.com ([10.112.230.82])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 00:19:02 -0800
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: [PATCH v2 5/6] memory: Attach MemoryAttributeManager to
+ guest_memfd-backed RAMBlocks
+Date: Mon, 17 Feb 2025 16:18:24 +0800
+Message-ID: <20250217081833.21568-6-chenyi.qiang@intel.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250217081833.21568-1-chenyi.qiang@intel.com>
+References: <20250217081833.21568-1-chenyi.qiang@intel.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.11;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,69 +89,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add KVM_REG_RISCV_CSR_SMSTATEEN support to get/set the context of
-Smstateen extension in VS mode.
+Introduce a new field, memory_attribute_manager, in RAMBlock to link to
+an MemoryAttributeManager object. This change centralizes all
+guest_memfd state information (like fd and shared_bitmap) within a
+RAMBlock, making it easier to manage.
 
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Use the realize()/unrealize() helpers to initialize/uninitialize the
+MemoryAttributeManager object. Register/unregister the object in the
+target RAMBlock's MemoryRegion when creating guest_memfd. Upon memory
+state changes in kvm_convert_memory(), invoke the
+memory_attribute_manager_state_change() helper to notify the registered
+RamDiscardListener.
+
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Changes in v2:
+    - Introduce a new field memory_attribute_manager in RAMBlock.
+    - Move the state_change() handling during page conversion in this patch.
+    - Undo what we did if it fails to set.
+    - Change the order of close(guest_memfd) and memory_attribute_manager cleanup.
+---
+ accel/kvm/kvm-all.c     |  9 +++++++++
+ include/exec/ramblock.h |  2 ++
+ system/physmem.c        | 13 +++++++++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index e74c1d7cdcee..79e80cdf7406 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -135,6 +135,9 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
- #define RISCV_AIA_CSR_REG(name) \
-     (KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CSR_AIA_REG(name))
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index c1fea69d58..c0d15c48ad 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -48,6 +48,7 @@
+ #include "kvm-cpus.h"
+ #include "system/dirtylimit.h"
+ #include "qemu/range.h"
++#include "system/memory-attribute-manager.h"
  
-+#define RISCV_SMSTATEEN_CSR_REG(name) \
-+    (KVM_REG_RISCV_CSR_SMSTATEEN | KVM_REG_RISCV_CSR_SMSTATEEN_REG(name))
-+
- #define KVM_RISCV_GET_CSR(cs, env, idx, reg) \
-     do { \
-         int _ret = kvm_get_one_reg(cs, RISCV_CSR_REG(env, idx), &reg); \
-@@ -684,10 +687,31 @@ static int kvm_riscv_put_regs_aia_csr(CPUState *cs)
-     return 0;
- }
+ #include "hw/boards.h"
+ #include "system/stats.h"
+@@ -3088,6 +3089,14 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
+     rb = qemu_ram_block_from_host(addr, false, &offset);
  
-+static int kvm_riscv_get_regs_smstateen_csr(CPUState *cs)
-+{
-+    CPURISCVState *env = &RISCV_CPU(cs)->env;
++    ret = memory_attribute_manager_state_change(MEMORY_ATTRIBUTE_MANAGER(mr->rdm),
++                                                offset, size, to_private);
++    if (ret) {
++        warn_report("Failed to notify the listener the state change of "
++                    "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
++                    start, size, to_private ? "private" : "shared");
++    }
 +
-+    KVM_RISCV_GET_CSR(cs, env,
-+                      RISCV_SMSTATEEN_CSR_REG(sstateen0), env->sstateen[0]);
-+
-+    return 0;
-+}
-+
-+static int kvm_riscv_put_regs_smstateen_csr(CPUState *cs)
-+{
-+    CPURISCVState *env = &RISCV_CPU(cs)->env;
-+
-+    KVM_RISCV_SET_CSR(cs, env,
-+                      RISCV_SMSTATEEN_CSR_REG(sstateen0), env->sstateen[0]);
-+
-+    return 0;
-+}
-+
- static int kvm_riscv_get_regs_csr(CPUState *cs)
- {
-     kvm_riscv_get_regs_general_csr(cs);
-     kvm_riscv_get_regs_aia_csr(cs);
-+    kvm_riscv_get_regs_smstateen_csr(cs);
+     if (to_private) {
+         if (rb->page_size != qemu_real_host_page_size()) {
+             /*
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 0babd105c0..06fd365326 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -23,6 +23,7 @@
+ #include "cpu-common.h"
+ #include "qemu/rcu.h"
+ #include "exec/ramlist.h"
++#include "system/memory-attribute-manager.h"
  
-     return 0;
- }
-@@ -696,6 +720,7 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
- {
-     kvm_riscv_put_regs_general_csr(cs);
-     kvm_riscv_put_regs_aia_csr(cs);
-+    kvm_riscv_put_regs_smstateen_csr(cs);
+ struct RAMBlock {
+     struct rcu_head rcu;
+@@ -42,6 +43,7 @@ struct RAMBlock {
+     int fd;
+     uint64_t fd_offset;
+     int guest_memfd;
++    MemoryAttributeManager *memory_attribute_manager;
+     size_t page_size;
+     /* dirty bitmap used during migration */
+     unsigned long *bmap;
+diff --git a/system/physmem.c b/system/physmem.c
+index c76503aea8..0ed394c5d2 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -54,6 +54,7 @@
+ #include "system/hostmem.h"
+ #include "system/hw_accel.h"
+ #include "system/xen-mapcache.h"
++#include "system/memory-attribute-manager.h"
+ #include "trace.h"
  
-     return 0;
- }
+ #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
+@@ -1885,6 +1886,16 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             qemu_mutex_unlock_ramlist();
+             goto out_free;
+         }
++
++        new_block->memory_attribute_manager = MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
++        if (memory_attribute_manager_realize(new_block->memory_attribute_manager, new_block->mr)) {
++            error_setg(errp, "Failed to realize memory attribute manager");
++            object_unref(OBJECT(new_block->memory_attribute_manager));
++            close(new_block->guest_memfd);
++            ram_block_discard_require(false);
++            qemu_mutex_unlock_ramlist();
++            goto out_free;
++        }
+     }
+ 
+     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+@@ -2138,6 +2149,8 @@ static void reclaim_ramblock(RAMBlock *block)
+     }
+ 
+     if (block->guest_memfd >= 0) {
++        memory_attribute_manager_unrealize(block->memory_attribute_manager);
++        object_unref(OBJECT(block->memory_attribute_manager));
+         close(block->guest_memfd);
+         ram_block_discard_require(false);
+     }
 -- 
-2.17.1
+2.43.5
 
 
