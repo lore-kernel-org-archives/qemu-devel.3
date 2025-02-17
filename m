@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B51C021AA
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 737D5C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk29O-0005et-9T; Mon, 17 Feb 2025 09:31:10 -0500
+	id 1tk2D5-0006lH-Ea; Mon, 17 Feb 2025 09:34:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk29L-0005dv-Ee
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:31:07 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk2Cv-0006ko-Hj
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:34:51 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk29I-00024W-PJ
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:31:07 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-6f7031ea11cso38608547b3.2
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 06:31:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk2Cs-0002i5-IJ
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:34:48 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436ce2ab251so30204605e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 06:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739802663; x=1740407463; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ARq/1TRKqEsZ4gBUkE4hvwxgchz6MW1Tv8bqqoM9pc4=;
- b=g38mFwCG415+eh+MyqAu0vew/3DJKqy5VbeaeEJ02S3kYkpOiEN+46Y01ITDo8TSid
- Il6XH3ljLci3gKxOW4k67ROUrkfVHjNetodV8tks4SviEU0YcS1+8GTk+zSjh6PhlJqd
- kcrBe/GDq5nofwZod+wlD8OR0brXkJi/V3W4clD+ZRNfM6tFcidfSd+ZPoQhRR3BXqzR
- UirXib1yyKi9RKwiAgYXDZQrJK6g6Ymjp3gZvPNa8s9Avf0Rib9iP+Ghv12sPIotOXy4
- yTdHnsTKGEswZS47+159IFLotdRPFb/6y5BHkTF0Lr9S+ASvPCmJriii7WO6sMYycjwx
- duuA==
+ d=linaro.org; s=google; t=1739802884; x=1740407684; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sxy6CdutpgQGkUcbc3MpVSTPOMJ7aKTf3YUD7NcXiWc=;
+ b=aavXCbypnGp9x7DqLrs+HSc1ORI1Ap+jZHo0FQDjKg0IItKtlmDK+dXc2B6i5f/65s
+ PPUsLWt7O2A3e4aC1ee+yZaJLaDw8RMc6tF5J2VPjTC2w/H7IATz9tw+IUijovqPif/D
+ m3PhiGwtr7DWnM4T5AOxS5OIRsJPs+ozeoNxlBOctE9KBjlBJNGiu7WdJNLBZ5FB4VQR
+ bHPb00Ni1XgqRVl1cd0ox5HR16Rwtv1Q2yY0aG1Se+Ciepe7kM1e30dQoaCsnQv6+ot3
+ zoTzgnwjlnnvf0zlkvu6XXZxoJnN/YBmQRoZayIOXIbZAbEXIqjhHZv9vn+8wsPw8lN5
+ KkYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739802663; x=1740407463;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ARq/1TRKqEsZ4gBUkE4hvwxgchz6MW1Tv8bqqoM9pc4=;
- b=KMCW/a/NrE0U8HlsFngErxjj7aV3J49kjH0cAlEbaADlZaFXhczqy1F198hA8ATS6U
- HmmOGgaAhasMEFfrtbfUxlJsrPkN0b0oDsNEsqMSRzX3vAPbkDOZ6YJL7W04OV6JVcYp
- r22fXDsT1r8YO/l8Pl5WlaCRBM1bAOJ+QySkTIvwtMxaIl0nvSVVaYW3O06xwbJ2UNLD
- teAZbIjcx8AvqXwM3TeUU3GaPF1NMVRhqie4Pp34OjQ9a29OH/n0uHG65A5mHmjryPbr
- 1AZ0iUxBx6o/Dc0s+XMRyvvfRD8Ni3k2Xi6cSyW5SOeTLL7HZfHorfe7s2NvPwVt34NR
- rnpg==
-X-Gm-Message-State: AOJu0Yw51KvrwxZtwn2wUZIYeNQQjQkT3tXn1l8NG13kXNEk31iMd8yH
- uv3EG+1gEH/0Ik3whr0t/Oi+pqYYsBhNQeSrZaS9in1CHLI8alEGHszIH+fr0LiSaKwtHE+0qkk
- TWoJjpzHJty7pAWaPseAZkaHWTXiChQqD3xXGKQ==
-X-Gm-Gg: ASbGncvFR8MrhBm8hRt8AzjXl88lQuCJHQ9ZOvC4q4PNExpDvWCWLMs7TzdgYyDYpNp
- cPLc41gmxXiptPCTP/pR1FcRxD9ZQmBGlLubzc6VDDJCw/FV3smFHOh3yccsRnJXS4MHnmrnsWA
- ==
-X-Google-Smtp-Source: AGHT+IHmvT+gFOph3mDwoljmjoy7ZNxzNndZtzsN7fnMHh+0YlTlpJxc21zZ11RVTxNieiA4Iy0UP3Qipb1fp4hN2l4=
-X-Received: by 2002:a05:6902:f86:b0:e57:37d5:e271 with SMTP id
- 3f1490d57ef6-e5dc930450fmr6829252276.47.1739802663008; Mon, 17 Feb 2025
- 06:31:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739802884; x=1740407684;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sxy6CdutpgQGkUcbc3MpVSTPOMJ7aKTf3YUD7NcXiWc=;
+ b=kqtCJZlCuEJk7LKGaBSe660wTjc3GkC0bzZRqRglfn1aO8SYq76BSWosUy+5yzxves
+ ssncUEhgazLkScfUiUCHpbrvEOdjC8sXi2bogits5iL2Ri7NsF4P22Ob1dk77P7YWnIR
+ sQ+3ccgLy7dvwKFJJGXGsxZcnk4nJFraIOJDo5WYBkm1JX/tfYDi29iTx3PIqpo+MsYF
+ HqSM4Em6wy4Xv5J49B5PJR9fjT1bY7LhuxHA+cnd0k2zbuLCc6JKt35Q9fOT+IcypOIz
+ RFY1DiBvFs6L63J0cZAWevd/GFti266kkrNBnJermHnugYLgaQYMhPv4nWyCOdv642Ll
+ 4V1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSSigMJ1F/ZWMHH/01fdby+i7q8y7QpP52bIPQhCbOz7hOpAPqAyZF08aom4UemnJKihPxd0KZ1zrf@nongnu.org
+X-Gm-Message-State: AOJu0YyZFFCsz0T6CtTcYumdySxnAHc/IlPjzldtBmiIqrf+ocbDbYfr
+ xqP44qN252LcPyK8d7tUvblyfLVec+Q/a0+luyo9MmB2g6FgDR8hxIgs1oB7SRQ=
+X-Gm-Gg: ASbGncu/ilQSChOQljiRFmx9pfecuPfkxePF86vSo42d+fIdctHZ74R5ht9duMpWT/I
+ lPS8lb/PvlUkW7yTImAtfyaN5PJivVyCleyK0PqomKafYVD+QL8Qv9buI73EboIdHPu3aiSXV8a
+ vLfObaHiDyNbI3SkvRHcheK6AqwjXnqncKHC1FTNJBAQSl2QW6h11g4XIgdMsyZrPnD+j7eF45g
+ zFSMGhY708dSQlhucg77ywJaKYaBcb39oppirqHQLNIDr2LVYUxjGpJgGSaaIHG8x0gfyBPKw/O
+ +I9efYxZxv6tevqxRO7XWpJpRs4512Xv2F8=
+X-Google-Smtp-Source: AGHT+IFl4JfYJQp1WM+iV1aILAgzcBMBFGPhl/WWXMxiqP1Fh27CczfuEj4CuEnJ69yzQh98OcEJoA==
+X-Received: by 2002:a05:600c:5247:b0:439:5016:3867 with SMTP id
+ 5b1f17b1804b1-4396e7527e9mr89957585e9.23.1739802884439; 
+ Mon, 17 Feb 2025 06:34:44 -0800 (PST)
+Received: from [192.168.1.121] ([176.167.144.216])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439831f209bsm34481195e9.13.2025.02.17.06.34.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Feb 2025 06:34:43 -0800 (PST)
+Message-ID: <aee87bbe-e5dc-44af-98ea-be3ce7237af9@linaro.org>
+Date: Mon, 17 Feb 2025 15:34:42 +0100
 MIME-Version: 1.0
-References: <20250208163911.54522-1-philmd@linaro.org>
- <20250208163911.54522-7-philmd@linaro.org>
-In-Reply-To: <20250208163911.54522-7-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 14:30:51 +0000
-X-Gm-Features: AWEUYZlnXlI-NGSvZYeCcYu0_dJAUTjh3skvtj6zlgRnXy4GpGwjgmm_sR2rS_E
-Message-ID: <CAFEAcA-r80Di9snxMQ-7x6-9Hn93RUEoR-C8wkw40nRnN7BLjQ@mail.gmail.com>
-Subject: Re: [PATCH v6 6/7] hw/char/pl011: Drain TX FIFO when no backend
- connected
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qapi: pluggable backend code generators
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Victor Toso <victortoso@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Markus Armbruster <armbru@redhat.com>
+References: <20250217134927.1288486-1-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250217134927.1288486-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,16 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> When no character backend is connected, the PL011 frontend
-> just drains the FIFO.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 17/2/25 14:49, Daniel P. Berrangé wrote:
+> The 'qapi.backend.QAPIBackend' class defines an API contract for
+> code generators. The current generator is put into a new class
+> 'qapi.backend.QAPICBackend' and made to be the default impl.
+> 
+> A custom generator can be requested using the '-k' arg which takes
+> a fully qualified python class name
+> 
+>     qapi-gen.py -k the.python.module.QAPIMyBackend
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+> 
+> This is an impl of the idea I mentioned at:
+> 
+>     https://lists.nongnu.org/archive/html/qemu-devel/2025-02/msg03475.html
+> 
+> With this change, it is possible for the Go generator code to live
+> outside of qemu.git, invoked using:
+> 
+>    $ PYTHONPATH=/path/to/qemu.git/scripts \
+>      python /path/to/qemu.git/scripts/qapi-gen.py \
+>        -o somedir \
+>        -k qapi.golang.golang.QAPIGoBackend \
+>        /path/to/qemu.git/qga/qapi-schema.json
+> 
+> The external app could just expect qemu.git to be checkedout somewhere
+> convenient, or could use a git submodule to reference it.
+> 
+>   scripts/qapi/backend.py | 96 +++++++++++++++++++++++++++++++++++++++++
+>   scripts/qapi/main.py    | 65 ++++++++--------------------
+>   2 files changed, 113 insertions(+), 48 deletions(-)
+>   create mode 100644 scripts/qapi/backend.py
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Good idea.
 
-thanks
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
