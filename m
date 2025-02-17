@@ -4,83 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E750BC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881B6C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk3Hu-0007SW-Oo; Mon, 17 Feb 2025 10:44:02 -0500
+	id 1tk3Jz-0008GZ-HI; Mon, 17 Feb 2025 10:46:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk3Ht-0007Rz-3q
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:44:01 -0500
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk3Hr-0004no-8T
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:44:00 -0500
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e5ddd781316so998793276.2
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 07:43:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739807037; x=1740411837; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0ZhaA44eEXDUwObb4QOA7d1Iu1Es0Cz6k4D4/ctTUhI=;
- b=D19EaSY0qL4+yihXocJrg8CWNrlDwO+f4EvqCWsfbvI+sryKlJLGNu7vpYGuIxTTaS
- QAAmwqh7vBvcly+yT2vMY6P3otNpj92Wz5ZMt5pwh4CXrYcg3cicSXAoXKth9TKCOsJK
- OgthU3xroMr3k/qbUAMZMDaKkckg6YkNlNQA+mp45QNUaMNEB7X2GTj9pERTir5RWDTd
- w/0cm3wweb8ZFpfIq97n0oH0ML224ljWG/FmATDTt2soJHL6CaDcCbRNrEKIPL2z9hg+
- oWs8dkYcto+pxIQbxJX8ocl9V8gJPZKYJphQpwix3o5ZUclbfsnz1uysvdExAX6yHhoj
- LC5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739807037; x=1740411837;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0ZhaA44eEXDUwObb4QOA7d1Iu1Es0Cz6k4D4/ctTUhI=;
- b=ipSNF4jynTlQjsTISgYrQsWvhmVtMa4w526jiI78BAHZMQEbdVBBHTmKIZdW1RCUMO
- +xOeoMgsYG2rpTRhvnw3/VvacRkF09PBMjwrgZmYpiB7J1bmi7iK/LuMrISnXIimPDW0
- 7eVPhPuvz0iXGpyXRh+B49jBSh6tWPhohAGlM4l86DP12jE+GGCxVa0o5A1UZKlWlsXs
- SpjZGklivoyzhZF/dVO/oZhiG06ZkHo2cYvUAs0svGqYHI8OUJ9Lh8dnvQMQ9YXkJYAx
- JSOobP2+e0kjhVvlF0MfShSvbNGGIXrqKJ3seB8O5YmMfmLORUlFnb43xJD7S81epZ7a
- 2PJg==
-X-Gm-Message-State: AOJu0YwB3FMwJsVQ/cxaKt/li+5WhRCs8lPVK2E+l+lPCehoHVhdgqma
- cUaAlJ/brm1d81/j82d06r0A960WYz/7dee1HQv5kAv1vGu2YJfMaPwoHF+7JlDOW4KNj8htjpz
- fHNKfM9hGPIvxUSpDneZhjh04igxVlhFfg5suJg==
-X-Gm-Gg: ASbGnctAKlwjX6aOo8qD/IbbKWS2pxrquuiu0QgYjVIP1zmy+KRD5mT/b+d8JQ7kcUH
- SKRkKL1lvao6hUSyEGKId9JMHElT+TY+YjeeJrg/CI+Mr5uXhLv9fmEiblOzUQe5JytlJoAlYsA
+ (Exim 4.90_1) (envelope-from <dantan@linux.ibm.com>)
+ id 1tk3Jx-0008GC-21; Mon, 17 Feb 2025 10:46:09 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dantan@linux.ibm.com>)
+ id 1tk3Js-0005Ha-Jx; Mon, 17 Feb 2025 10:46:08 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51HAYUKi029535;
+ Mon, 17 Feb 2025 15:45:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nY02Z9
+ unjNhlICgDCQWo0N7MdIljjOyUwb6lt3AU0Fk=; b=NW+xzMc/YG9YKDBYaHioh+
+ 0j3BaGJuALzw9pwLQwQ//IIq9UWkaSEtck+h5VM5CY7j9xbFgH3VcnjRyBpxzHaB
+ 55BaKXmYo7TrEuOMHnlOWwKW5EcX330P/5nhlsC4epJV8qZdExPPjOjsbiXuPz2x
+ 4kLjxgx1PhvWLanLBFrYhh4paSYkmuYH0zFs0udNQDfQssoS8SoPYtziGJi99hAC
+ m0ibFLu8eciPA5l6tBxLmtWQfXR/ZuB0nxaLW5BFVXTIJSvL9oUtplSF4fKVYPHZ
+ mfqhlu4JldAflQondZOBe2pWQYtCWsU0EzP//urDptjjkBMU3qGQKEczHpyvTt8w
  ==
-X-Google-Smtp-Source: AGHT+IGOzWVXwFQJA/8baRe/V5gOSsryBdIDyXfPSKlkbFCaL2kHImxuthotVbLHymUVk9X4Go+8iQqiNy+TPl2ZkYY=
-X-Received: by 2002:a05:6902:230f:b0:e58:dbf:ed09 with SMTP id
- 3f1490d57ef6-e5dc9038eaamr8213890276.3.1739807037523; Mon, 17 Feb 2025
- 07:43:57 -0800 (PST)
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44us5a4696-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Feb 2025 15:45:57 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51HDXq78032427;
+ Mon, 17 Feb 2025 15:45:56 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44u6rkpntx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Feb 2025 15:45:56 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51HFjtjv36176472
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Feb 2025 15:45:55 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 92D3858055;
+ Mon, 17 Feb 2025 15:45:55 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2BBB958059;
+ Mon, 17 Feb 2025 15:45:55 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Feb 2025 15:45:55 +0000 (GMT)
 MIME-Version: 1.0
-References: <20250212154333.28644-1-philmd@linaro.org>
-In-Reply-To: <20250212154333.28644-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 15:43:46 +0000
-X-Gm-Features: AWEUYZl_10_fWPu_ufGPbFmphxTHwnwPtq3k43WitvsAD-kUI4E1WUYoZZo1HWk
-Message-ID: <CAFEAcA-4rdTWsBYKL05OKBQc2pLWoPsYm+Qdhb-ZD0qs0t8MQA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] hw/arm: Explicit number of GIC external IRQs for
- Cortex A9/A15 MPCore
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>, Rob Herring <robh@kernel.org>, 
- Igor Mitsyanko <i.mitsyanko@gmail.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Mon, 17 Feb 2025 09:45:54 -0600
+From: dan tan <dantan@linux.ibm.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
+ farosas@suse.de, lvivier@redhat.com
+Subject: Re: [PATCH v9 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
+ Peripheral Interface)
+In-Reply-To: <b13a02f2-c41f-4d51-8f60-5c97cd96c488@linaro.org>
+References: <20250216221155.30013-1-dantan@linux.vnet.ibm.com>
+ <20250216221155.30013-2-dantan@linux.vnet.ibm.com>
+ <b13a02f2-c41f-4d51-8f60-5c97cd96c488@linaro.org>
+Message-ID: <7a2d40456f37459e00e7d69bea27b342@linux.ibm.com>
+X-Sender: dantan@linux.ibm.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Ga1WCOPW7N4YmqXcidWecd27drQPQ3Hj
+X-Proofpoint-GUID: Ga1WCOPW7N4YmqXcidWecd27drQPQ3Hj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-17_06,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 malwarescore=0
+ mlxlogscore=999 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502170129
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=dantan@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,31 +113,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Feb 2025 at 15:43, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Some boards based on Cortex-A9MP / Cortex-A15MP do not explicit
-> the number of external GIC IRQs, using some (implicit) default value,
-> not always trivial to figure out. Change that by removing the default
-> value, requiring MPCore objects to be created with the "num-irq" set.
->
-> Since v1:
-> - Remove generic comments (Peter)
->
-> Philippe Mathieu-Daud=C3=A9 (8):
->   hw/arm/exynos4210: Replace magic 32 by proper 'GIC_INTERNAL'
->     definition
->   hw/arm/exynos4210: Specify explicitly the GIC has 64 external IRQs
->   hw/arm/realview: Specify explicitly the GIC has 64 external IRQs
->   hw/arm/xilinx_zynq: Replace IRQ_OFFSET -> GIC_INTERNAL
->   hw/arm/xilinx_zynq: Specify explicitly the GIC has 64 external IRQs
->   hw/arm/vexpress: Specify explicitly the GIC has 64 external IRQs
->   hw/arm/highbank: Specify explicitly the GIC has 128 external IRQs
->   hw/cpu/arm_mpcore: Remove default values for GIC external IRQs
+Yes, good point, Philippe!
+
+I will send an update in a few days in case there are additional
+changes to be made.
+
+thank you,
+---
+dan tan
+power simulation
+phone:+1.7373.099.138
+email:dantan@linux.ibm.com
 
 
-
-Applied to target-arm.next, thanks.
-
--- PMM
+On 2025-02-17 01:31, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> On 16/2/25 23:11, dan tan wrote:
+>> Implement support for TPM via SPI interface. The SPI bus master
+>> is provided by PowerNV SPI device which is an SSI peripheral.
+>> It can uses the tpm_emulator driver backend with the external
+>> swtpm.
+>> 
+>> Signed-off-by: dan tan <dantan@linux.ibm.com>
+>> ---
+>> 
+>> v3:
+>> - moved variable tis_addr from TPMStateSPI struct to local
+>> - added the VM suspend/resume support:
+>>    - added vmstate_tpm_tis_spi declaration
+>>    - added tpm_tis_spi_pre_save() function
+>> - fixed trace formatting string
+>> 
+>> v4:
+>> - git commit amend only
+>> 
+>> v5:
+>> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
+>>    from tpm_tis_spi_properties
+>> - In tpm.rst document, under section 'The QEMU TPM emulator device',
+>>    moved the 'PowerNV machine' section to immeidately below 'pSeriese
+>>    machine'.
+>> 
+>> v6:
+>> - amend commit description
+>> - amend hw/tpm/tpm_tis_spi.c prolog to reflect the generic nature
+>>    of the implementation
+>> - remove irrelevant define of IBM_PONQ
+>> - correct the function names to comply with the convention of
+>>    beginning with tpm_tis_spi_xxxx()
+>> 
+>> v7:
+>> - Reduce SPI wait states to improve performace.
+>>    Although the real SPI buses have four wait states to accomodate
+>>    the timing of various slave devices, there is no need to emulate
+>>    that for this behavior model.
+>> 
+>> v8:
+>> - re-package the email to comply with the convention.
+>> 
+>> v9:
+>> - conform with the latest device property definition after rebase
+>> 
+>> ---
+>>   docs/specs/tpm.rst   |  15 ++
+>>   include/system/tpm.h |   3 +
+>>   hw/tpm/tpm_tis_spi.c | 358 
+>> +++++++++++++++++++++++++++++++++++++++++++
+>>   hw/tpm/Kconfig       |   6 +
+>>   hw/tpm/meson.build   |   1 +
+>>   hw/tpm/trace-events  |   7 +
+>>   6 files changed, 390 insertions(+)
+>>   create mode 100644 hw/tpm/tpm_tis_spi.c
+> 
+> 
+>> diff --git a/hw/tpm/Kconfig b/hw/tpm/Kconfig
+>> index a46663288c..5951c225cc 100644
+>> --- a/hw/tpm/Kconfig
+>> +++ b/hw/tpm/Kconfig
+>> @@ -5,6 +5,12 @@ config TPM_TIS_I2C
+>>       select I2C
+>>       select TPM_TIS
+>>   +config TPM_TIS_SPI
+>> +    bool
+>> +    depends on TPM
+>> +    select TPM_BACKEND
+>> +    select TPM_TIS
+> 
+>        depends on SSI?
+> 
+>>   config TPM_TIS_ISA
+>>       bool
+>>       depends on TPM && ISA_BUS
 
