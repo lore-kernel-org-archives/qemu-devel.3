@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C28C021A0
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96134C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 08:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjwKc-0002Jc-9G; Mon, 17 Feb 2025 03:18:22 -0500
+	id 1tjwLI-00035X-Kx; Mon, 17 Feb 2025 03:19:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tjwKZ-0002JD-Mx
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:21 -0500
-Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tjwKX-00012D-SI
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:18:19 -0500
-Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-7c09a30e14dso142784585a.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 00:18:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1739780296; x=1740385096; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WSMPQ783pz0wo6KPO/CsW7bAJCl7WJZGQCgE4WKR3Zk=;
- b=i5xHQ8pEF/UEUxr2ZSmtXyP5LNFzh+mdTsQC7P8LLG8VW+t/vWl7UTgPK7UlatpSB/
- T1GyKZm5OvN0tR8DCOVVkEwOj4x9tbEX/+wXN69qLXa8BURouweN2n1it1jgCYT3mjpB
- KNJNTSpS38630mwolTR78plpGgjPdPLEVwViv9I86JS6z92aNUNfJDZlz7a3uWm/JgpT
- TFd5aPXvfjd0MwJAuyayTTOllxgW3Nn1AJSX/y8R+5q4BGgkHQDShqSL5OA+B1tITJ8P
- 0N49JyYW5RB2AvyO3Xv8P4YM/pBc4kceaqfAeOpLueo1qQ9Uve3Z8mfMYxI/A4ismFaO
- 5fAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739780296; x=1740385096;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WSMPQ783pz0wo6KPO/CsW7bAJCl7WJZGQCgE4WKR3Zk=;
- b=WfcaSuGEWdgo/d9gKhOz1QiFGVjfo13iNTtRrPulehxvaz59Oh8xigZaZ249CkJL/X
- MYat6+lx1tvTn3ASwnuSWvuHdiV+CeMzQUWZt07IwcKGQecFSxu8Epx4Y8M5fC5YlUNO
- YS16t9Pwzor1LaMY+g6Swzue82Ag4CtpWtt6GUnnrV5C8e5sStKVqacwyttk0v0mS+UU
- jDJmrbfqic2LlV60pl+UzzHy61nZlSeZu7xqfcFOTuVy2yS7Ln793SbDvhmYBm5J0DeZ
- m04tYK8i0j64KpqlpQFgwor+RgaNwNtzvtvVbWAekLDPAwVJYXWeNUI+eW5qu1SUy+SY
- 1b4w==
-X-Gm-Message-State: AOJu0YwJlsaoW7VJFqRz0Q/+9kSqLNxiyWvpxI6293/tMnEbhDM7/vFS
- a/LnFd2+0+meH/DvDyi8UhM7gMgfitFKD9SVjBzE8hzvNMSa+EWvYkDVUUn0oaqvj5ukgfg4nL0
- AhGaHfZUYwtKx6Fqb2ELtVhgKeNOBuadBVDCvJ9docNMWz+K00rCaC/iWjc7hNaJ+gZpNovkcMC
- LPwpV1mqv9/7EzFLlfnFuu3rCrrPwby+JiDzBd2EQwww==
-X-Gm-Gg: ASbGnctazh/YQ9xStOVzYVZA3pMwMr2Dqj29fMT5wx4hzoZ8elPWpHAZ3Bvg1qeuUjz
- z4m8qO9fDslIWeFcmURnAp1lOaNwFuzT1ilD6RYOb/034aD4Vnot61jqbaM7C1kfsLaKcMC1Ddb
- p2cnzvGnL+kbuA8xY16mVkRiq0N2sgN6QKO0onDJ1MyML07QrRC9jnawCfTbuKumRueHbcMVhyI
- GWJZDZKg5UxNsU0JGivJHptj7piXEFiViWiAftC8soFzFB7iDNqkh/5u8w9aEs4V6mhzJNNij99
- nNcXmwtG0rYHzjKJdye8qgrxHEV57aypIC35s+pgFi6M0g==
-X-Google-Smtp-Source: AGHT+IHM6UE0Sdy5iJb7kr/1XKQMxNFWhtrYASUGG9yY/wUN/Pk1itW9CuXbu/pvDa8RKrYve4H4qA==
-X-Received: by 2002:a05:620a:439e:b0:7c0:6045:b8ad with SMTP id
- af79cd13be357-7c08a9c890amr1131653485a.15.1739780296016; 
- Mon, 17 Feb 2025 00:18:16 -0800 (PST)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e65d9f38absm49673346d6.88.2025.02.17.00.18.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 00:18:15 -0800 (PST)
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
- jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/8] target/riscv/kvm: rewrite kvm_riscv_handle_csr
-Date: Mon, 17 Feb 2025 16:17:25 +0800
-Message-Id: <20250217081730.9000-6-yongxuan.wang@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250217081730.9000-1-yongxuan.wang@sifive.com>
-References: <20250217081730.9000-1-yongxuan.wang@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-qk1-x72f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tjwLG-00030b-3Z
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:19:02 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tjwLD-00015F-B1
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 03:19:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739780339; x=1771316339;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=s6pqC5vUpmDBSKOPqcIdeYtY5SKjjfh0VkIpfTUsAwE=;
+ b=EeJcIjVqEbywJbCh/uHPHXsLP99fJSzinTEHQeRaKK+P14bBCUH6Z6sW
+ s+ghCFOTYeTyIHXKFCv2opXhdeUIjreUUM9364XeYoZrcmOkqtzwR3BpT
+ W3wMBiwaIeAyyAxwfPiv3iWho76X3RGywOCdyLlI6U1nWBM/sl9NbgvfK
+ Uz9SV/bkMOOeC7+s2EhztYqzbGkPTkTdKxBte8VynxJqwG5gxJkfsM3mH
+ N7SzG3J+7FK/T8JDIrjZ/q992LMWO2b/I1JJdLxnxNEzG5Ag/hws3vcg6
+ +S4QV8BVJJVWv4hiuq0RNw/YpLoGR16Zw3o5CmYu+3H30wSiueMftU9id g==;
+X-CSE-ConnectionGUID: LgnNeVv6QCu0f26OoBn5gQ==
+X-CSE-MsgGUID: IpsRTTCRQAea7sQo263g2Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11347"; a="50668985"
+X-IronPort-AV: E=Sophos;i="6.13,292,1732608000"; d="scan'208";a="50668985"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 00:18:58 -0800
+X-CSE-ConnectionGUID: d/k2H8RBTby5fb9aR2w1yA==
+X-CSE-MsgGUID: +c31eibPQwKxlZJH4fjoJw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="118690199"
+Received: from emr-bkc.sh.intel.com ([10.112.230.82])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 00:18:55 -0800
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: [PATCH v2 3/6] memory-attribute-manager: Introduce
+ MemoryAttributeManager to manage RAMBLock with guest_memfd
+Date: Mon, 17 Feb 2025 16:18:22 +0800
+Message-ID: <20250217081833.21568-4-chenyi.qiang@intel.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250217081833.21568-1-chenyi.qiang@intel.com>
+References: <20250217081833.21568-1-chenyi.qiang@intel.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.11;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,159 +89,429 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rewrite the kvm_riscv_handle_csr() to support additional CSR emulation
-in user space with KVM acceleration. This update reuses the TCG CSR
-emulation function to simplify the implementation and reduce the
-redundant work. Also it introduces two hook functions for certain CSRs.
-Before emulation, the related VS mode context of the CSR can be loaded
-from host in context_load() hook. After the CSR handling, the modified
-VS context is written back in context_put() hook.
+As the commit 852f0048f3 ("RAMBlock: make guest_memfd require
+uncoordinated discard") highlighted, some subsystems like VFIO may
+disable ram block discard. However, guest_memfd relies on the discard
+operation to perform page conversion between private and shared memory.
+This can lead to stale IOMMU mapping issue when assigning a hardware
+device to a confidential VM via shared memory. To address this, it is
+crucial to ensure systems like VFIO refresh its IOMMU mappings.
 
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+RamDiscardManager is an existing concept (used by virtio-mem) to adjust
+VFIO mappings in relation to VM page assignment. Effectively page
+conversion is similar to hot-removing a page in one mode and adding it
+back in the other. Therefore, similar actions are required for page
+conversion events. Introduce the RamDiscardManager to guest_memfd to
+facilitate this process.
+
+Since guest_memfd is not an object, it cannot directly implement the
+RamDiscardManager interface. One potential attempt is to implement it in
+HostMemoryBackend. This is not appropriate because guest_memfd is per
+RAMBlock. Some RAMBlocks have a memory backend but others do not. In
+particular, the ones like virtual BIOS calling
+memory_region_init_ram_guest_memfd() do not.
+
+To manage the RAMBlocks with guest_memfd, define a new object named
+MemoryAttributeManager to implement the RamDiscardManager interface. The
+object stores guest_memfd information such as shared_bitmap, and handles
+page conversion notification. Using the name of MemoryAttributeManager is
+aimed to make it more generic. The term "Memory" emcompasses not only RAM
+but also private MMIO in TEE I/O, which might rely on this
+object/interface to handle page conversion events in the future. The
+term "Attribute" allows for the management of various attributes beyond
+shared and private. For instance, it could support scenarios where
+discard vs. populated and shared vs. private states co-exists, such as
+supporting virtio-mem or something similar in the future.
+
+In the current context, MemoryAttributeManager signifies discarded state
+as private and populated state as shared. Memory state is tracked at the
+host page size granularity, as the minimum memory conversion size can be one
+page per request. Additionally, VFIO expects the DMA mapping for a
+specific iova to be mapped and unmapped with the same granularity.
+Confidential VMs may perform  partial conversions, e.g. conversion
+happens on a small region within a large region. To prevent such invalid
+cases and until cut_mapping operation support is introduced, all
+operations are performed with 4K granularity.
+
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
- target/riscv/cpu.h         |  2 --
- target/riscv/csr.c         | 18 +++-------
- target/riscv/kvm/kvm-cpu.c | 68 ++++++++++++++++++++++++++++++++------
- 3 files changed, 61 insertions(+), 27 deletions(-)
+Changes in v2:
+    - Rename the object name to MemoryAttributeManager
+    - Rename the bitmap to shared_bitmap to make it more clear.
+    - Remove block_size field and get it from a helper. In future, we
+      can get the page_size from RAMBlock if necessary.
+    - Remove the unncessary "struct" before GuestMemfdReplayData
+    - Remove the unncessary g_free() for the bitmap
+    - Add some error report when the callback failure for
+      populated/discarded section.
+    - Move the realize()/unrealize() definition to this patch.
+---
+ include/system/memory-attribute-manager.h |  42 ++++
+ system/memory-attribute-manager.c         | 292 ++++++++++++++++++++++
+ system/meson.build                        |   1 +
+ 3 files changed, 335 insertions(+)
+ create mode 100644 include/system/memory-attribute-manager.h
+ create mode 100644 system/memory-attribute-manager.c
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 133d1852ee1e..e30c4aa0e778 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -926,8 +926,6 @@ static inline const char *riscv_get_csr_name(int csr_no)
- }
- 
- void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
--target_ulong riscv_new_csr_seed(target_ulong new_value,
--                                target_ulong write_mask);
- 
- uint8_t satp_mode_max_from_map(uint32_t map);
- const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index a62c50f057f4..df724575a5a0 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5241,8 +5241,10 @@ static int write_mnstatus(CPURISCVState *env, int csrno, target_ulong val)
- #endif
- 
- /* Crypto Extension */
--target_ulong riscv_new_csr_seed(target_ulong new_value,
--                                target_ulong write_mask)
-+static RISCVException rmw_seed(CPURISCVState *env, int csrno,
-+                               target_ulong *ret_value,
-+                               target_ulong new_value,
-+                               target_ulong write_mask)
- {
-     uint16_t random_v;
-     Error *random_e = NULL;
-@@ -5266,18 +5268,6 @@ target_ulong riscv_new_csr_seed(target_ulong new_value,
-         rval = random_v | SEED_OPST_ES16;
-     }
- 
--    return rval;
--}
--
--static RISCVException rmw_seed(CPURISCVState *env, int csrno,
--                               target_ulong *ret_value,
--                               target_ulong new_value,
--                               target_ulong write_mask)
--{
--    target_ulong rval;
--
--    rval = riscv_new_csr_seed(new_value, write_mask);
--
-     if (ret_value) {
-         *ret_value = rval;
-     }
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 79e80cdf7406..bcd28a355a66 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1623,26 +1623,72 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
-     return ret;
- }
- 
-+/* User-space CSR emulation */
-+struct kvm_riscv_emu_csr_data {
-+    target_ulong csr_num;
-+    int (*context_load)(CPUState *cs);
-+    int (*context_put)(CPUState *cs);
+diff --git a/include/system/memory-attribute-manager.h b/include/system/memory-attribute-manager.h
+new file mode 100644
+index 0000000000..72adc0028e
+--- /dev/null
++++ b/include/system/memory-attribute-manager.h
+@@ -0,0 +1,42 @@
++/*
++ * QEMU memory attribute manager
++ *
++ * Copyright Intel
++ *
++ * Author:
++ *      Chenyi Qiang <chenyi.qiang@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory
++ *
++ */
++
++#ifndef SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
++#define SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
++
++#include "system/hostmem.h"
++
++#define TYPE_MEMORY_ATTRIBUTE_MANAGER "memory-attribute-manager"
++
++OBJECT_DECLARE_TYPE(MemoryAttributeManager, MemoryAttributeManagerClass, MEMORY_ATTRIBUTE_MANAGER)
++
++struct MemoryAttributeManager {
++    Object parent;
++
++    MemoryRegion *mr;
++
++    /* 1-setting of the bit represents the memory is populated (shared) */
++    int32_t bitmap_size;
++    unsigned long *shared_bitmap;
++
++    QLIST_HEAD(, RamDiscardListener) rdl_list;
 +};
 +
-+struct kvm_riscv_emu_csr_data kvm_riscv_emu_csr_data[] = {
-+    { CSR_SEED, NULL, NULL },
++struct MemoryAttributeManagerClass {
++    ObjectClass parent_class;
 +};
 +
- static int kvm_riscv_handle_csr(CPUState *cs, struct kvm_run *run)
- {
-+    CPURISCVState *env = cpu_env(cs);
-     target_ulong csr_num = run->riscv_csr.csr_num;
-     target_ulong new_value = run->riscv_csr.new_value;
-     target_ulong write_mask = run->riscv_csr.write_mask;
--    int ret = 0;
-+    struct kvm_riscv_emu_csr_data *emu_csr_data = NULL;
-+    target_ulong ret_value;
-+    RISCVException ret_excp;
-+    int i, ret;
- 
--    switch (csr_num) {
--    case CSR_SEED:
--        run->riscv_csr.ret_value = riscv_new_csr_seed(new_value, write_mask);
--        break;
--    default:
-+    for (i = 0; i < ARRAY_SIZE(kvm_riscv_emu_csr_data); i++) {
-+        if (csr_num == kvm_riscv_emu_csr_data[i].csr_num) {
-+            emu_csr_data = &kvm_riscv_emu_csr_data[i];
++int memory_attribute_manager_realize(MemoryAttributeManager *mgr, MemoryRegion *mr);
++void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr);
 +
-+            break;
-+        }
-+    }
++#endif
+diff --git a/system/memory-attribute-manager.c b/system/memory-attribute-manager.c
+new file mode 100644
+index 0000000000..ed97e43dd0
+--- /dev/null
++++ b/system/memory-attribute-manager.c
+@@ -0,0 +1,292 @@
++/*
++ * QEMU memory attribute manager
++ *
++ * Copyright Intel
++ *
++ * Author:
++ *      Chenyi Qiang <chenyi.qiang@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory
++ *
++ */
 +
-+    if (!emu_csr_data) {
-         qemu_log_mask(LOG_UNIMP,
--                      "%s: un-handled CSR EXIT for CSR %lx\n",
--                      __func__, csr_num);
--        ret = -1;
--        break;
-+                      "%s: un-handled CSR EXIT for CSR %s\n",
-+                      __func__, riscv_get_csr_name(csr_num));
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "system/memory-attribute-manager.h"
 +
-+        return -1;
-     }
- 
--    return ret;
-+    if (emu_csr_data->context_load) {
-+        ret = emu_csr_data->context_load(cs);
-+        if (ret) {
-+            goto handle_failed;
-+        }
-+    }
++OBJECT_DEFINE_TYPE_WITH_INTERFACES(MemoryAttributeManager,
++                                   memory_attribute_manager,
++                                   MEMORY_ATTRIBUTE_MANAGER,
++                                   OBJECT,
++                                   { TYPE_RAM_DISCARD_MANAGER },
++                                   { })
 +
-+    ret_excp = riscv_csrrw(env, csr_num, &ret_value, new_value, write_mask);
-+    if (ret_excp != RISCV_EXCP_NONE) {
-+        goto handle_failed;
-+    }
-+    run->riscv_csr.ret_value = ret_value;
++static int memory_attribute_manager_get_block_size(const MemoryAttributeManager *mgr)
++{
++    /*
++     * Because page conversion could be manipulated in the size of at least 4K or 4K aligned,
++     * Use the host page size as the granularity to track the memory attribute.
++     * TODO: if necessary, switch to get the page_size from RAMBlock.
++     * i.e. mgr->mr->ram_block->page_size.
++     */
++    return qemu_real_host_page_size();
++}
 +
-+    if (emu_csr_data->context_put) {
-+        ret = emu_csr_data->context_put(cs);
-+        if (ret) {
-+            goto handle_failed;
-+        }
-+    }
++
++static bool memory_attribute_rdm_is_populated(const RamDiscardManager *rdm,
++                                              const MemoryRegionSection *section)
++{
++    const MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
++    int block_size = memory_attribute_manager_get_block_size(mgr);
++    uint64_t first_bit = section->offset_within_region / block_size;
++    uint64_t last_bit = first_bit + int128_get64(section->size) / block_size - 1;
++    unsigned long first_discard_bit;
++
++    first_discard_bit = find_next_zero_bit(mgr->shared_bitmap, last_bit + 1, first_bit);
++    return first_discard_bit > last_bit;
++}
++
++typedef int (*memory_attribute_section_cb)(MemoryRegionSection *s, void *arg);
++
++static int memory_attribute_notify_populate_cb(MemoryRegionSection *section, void *arg)
++{
++    RamDiscardListener *rdl = arg;
++
++    return rdl->notify_populate(rdl, section);
++}
++
++static int memory_attribute_notify_discard_cb(MemoryRegionSection *section, void *arg)
++{
++    RamDiscardListener *rdl = arg;
++
++    rdl->notify_discard(rdl, section);
 +
 +    return 0;
++}
 +
-+handle_failed:
-+    qemu_log_mask(LOG_UNIMP,
-+                  "%s: failed to handle CSR EXIT for CSR %s\n",
-+                  __func__, riscv_get_csr_name(csr_num));
++static int memory_attribute_for_each_populated_section(const MemoryAttributeManager *mgr,
++                                                       MemoryRegionSection *section,
++                                                       void *arg,
++                                                       memory_attribute_section_cb cb)
++{
++    unsigned long first_one_bit, last_one_bit;
++    uint64_t offset, size;
++    int block_size = memory_attribute_manager_get_block_size(mgr);
++    int ret = 0;
 +
-+    return -1;
- }
- 
- static bool kvm_riscv_handle_debug(CPUState *cs)
++    first_one_bit = section->offset_within_region / block_size;
++    first_one_bit = find_next_bit(mgr->shared_bitmap, mgr->bitmap_size, first_one_bit);
++
++    while (first_one_bit < mgr->bitmap_size) {
++        MemoryRegionSection tmp = *section;
++
++        offset = first_one_bit * block_size;
++        last_one_bit = find_next_zero_bit(mgr->shared_bitmap, mgr->bitmap_size,
++                                          first_one_bit + 1) - 1;
++        size = (last_one_bit - first_one_bit + 1) * block_size;
++
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
++            break;
++        }
++
++        ret = cb(&tmp, arg);
++        if (ret) {
++            error_report("%s: Failed to notify RAM discard listener: %s", __func__,
++                         strerror(-ret));
++            break;
++        }
++
++        first_one_bit = find_next_bit(mgr->shared_bitmap, mgr->bitmap_size,
++                                      last_one_bit + 2);
++    }
++
++    return ret;
++}
++
++static int memory_attribute_for_each_discarded_section(const MemoryAttributeManager *mgr,
++                                                       MemoryRegionSection *section,
++                                                       void *arg,
++                                                       memory_attribute_section_cb cb)
++{
++    unsigned long first_zero_bit, last_zero_bit;
++    uint64_t offset, size;
++    int block_size = memory_attribute_manager_get_block_size(mgr);
++    int ret = 0;
++
++    first_zero_bit = section->offset_within_region / block_size;
++    first_zero_bit = find_next_zero_bit(mgr->shared_bitmap, mgr->bitmap_size,
++                                        first_zero_bit);
++
++    while (first_zero_bit < mgr->bitmap_size) {
++        MemoryRegionSection tmp = *section;
++
++        offset = first_zero_bit * block_size;
++        last_zero_bit = find_next_bit(mgr->shared_bitmap, mgr->bitmap_size,
++                                      first_zero_bit + 1) - 1;
++        size = (last_zero_bit - first_zero_bit + 1) * block_size;
++
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
++            break;
++        }
++
++        ret = cb(&tmp, arg);
++        if (ret) {
++            error_report("%s: Failed to notify RAM discard listener: %s", __func__,
++                         strerror(-ret));
++            break;
++        }
++
++        first_zero_bit = find_next_zero_bit(mgr->shared_bitmap, mgr->bitmap_size,
++                                            last_zero_bit + 2);
++    }
++
++    return ret;
++}
++
++static uint64_t memory_attribute_rdm_get_min_granularity(const RamDiscardManager *rdm,
++                                                         const MemoryRegion *mr)
++{
++    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
++
++    g_assert(mr == mgr->mr);
++    return memory_attribute_manager_get_block_size(mgr);
++}
++
++static void memory_attribute_rdm_register_listener(RamDiscardManager *rdm,
++                                                   RamDiscardListener *rdl,
++                                                   MemoryRegionSection *section)
++{
++    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
++    int ret;
++
++    g_assert(section->mr == mgr->mr);
++    rdl->section = memory_region_section_new_copy(section);
++
++    QLIST_INSERT_HEAD(&mgr->rdl_list, rdl, next);
++
++    ret = memory_attribute_for_each_populated_section(mgr, section, rdl,
++                                                      memory_attribute_notify_populate_cb);
++    if (ret) {
++        error_report("%s: Failed to register RAM discard listener: %s", __func__,
++                     strerror(-ret));
++    }
++}
++
++static void memory_attribute_rdm_unregister_listener(RamDiscardManager *rdm,
++                                                     RamDiscardListener *rdl)
++{
++    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
++    int ret;
++
++    g_assert(rdl->section);
++    g_assert(rdl->section->mr == mgr->mr);
++
++    ret = memory_attribute_for_each_populated_section(mgr, rdl->section, rdl,
++                                                      memory_attribute_notify_discard_cb);
++    if (ret) {
++        error_report("%s: Failed to unregister RAM discard listener: %s", __func__,
++                     strerror(-ret));
++    }
++
++    memory_region_section_free_copy(rdl->section);
++    rdl->section = NULL;
++    QLIST_REMOVE(rdl, next);
++
++}
++
++typedef struct MemoryAttributeReplayData {
++    void *fn;
++    void *opaque;
++} MemoryAttributeReplayData;
++
++static int memory_attribute_rdm_replay_populated_cb(MemoryRegionSection *section, void *arg)
++{
++    MemoryAttributeReplayData *data = arg;
++
++    return ((ReplayRamPopulate)data->fn)(section, data->opaque);
++}
++
++static int memory_attribute_rdm_replay_populated(const RamDiscardManager *rdm,
++                                                 MemoryRegionSection *section,
++                                                 ReplayRamPopulate replay_fn,
++                                                 void *opaque)
++{
++    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
++    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque = opaque };
++
++    g_assert(section->mr == mgr->mr);
++    return memory_attribute_for_each_populated_section(mgr, section, &data,
++                                                       memory_attribute_rdm_replay_populated_cb);
++}
++
++static int memory_attribute_rdm_replay_discarded_cb(MemoryRegionSection *section, void *arg)
++{
++    MemoryAttributeReplayData *data = arg;
++
++    ((ReplayRamDiscard)data->fn)(section, data->opaque);
++    return 0;
++}
++
++static void memory_attribute_rdm_replay_discarded(const RamDiscardManager *rdm,
++                                                  MemoryRegionSection *section,
++                                                  ReplayRamDiscard replay_fn,
++                                                  void *opaque)
++{
++    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
++    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque = opaque };
++
++    g_assert(section->mr == mgr->mr);
++    memory_attribute_for_each_discarded_section(mgr, section, &data,
++                                                memory_attribute_rdm_replay_discarded_cb);
++}
++
++int memory_attribute_manager_realize(MemoryAttributeManager *mgr, MemoryRegion *mr)
++{
++    uint64_t bitmap_size;
++    int block_size = memory_attribute_manager_get_block_size(mgr);
++    int ret;
++
++    bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
++
++    mgr->mr = mr;
++    mgr->bitmap_size = bitmap_size;
++    mgr->shared_bitmap = bitmap_new(bitmap_size);
++
++    ret = memory_region_set_ram_discard_manager(mgr->mr, RAM_DISCARD_MANAGER(mgr));
++    if (ret) {
++        g_free(mgr->shared_bitmap);
++    }
++
++    return ret;
++}
++
++void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr)
++{
++    memory_region_set_ram_discard_manager(mgr->mr, NULL);
++
++    g_free(mgr->shared_bitmap);
++}
++
++static void memory_attribute_manager_init(Object *obj)
++{
++    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(obj);
++
++    QLIST_INIT(&mgr->rdl_list);
++}
++
++static void memory_attribute_manager_finalize(Object *obj)
++{
++}
++
++static void memory_attribute_manager_class_init(ObjectClass *oc, void *data)
++{
++    RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
++
++    rdmc->get_min_granularity = memory_attribute_rdm_get_min_granularity;
++    rdmc->register_listener = memory_attribute_rdm_register_listener;
++    rdmc->unregister_listener = memory_attribute_rdm_unregister_listener;
++    rdmc->is_populated = memory_attribute_rdm_is_populated;
++    rdmc->replay_populated = memory_attribute_rdm_replay_populated;
++    rdmc->replay_discarded = memory_attribute_rdm_replay_discarded;
++}
+diff --git a/system/meson.build b/system/meson.build
+index 4952f4b2c7..ab07ff1442 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -15,6 +15,7 @@ system_ss.add(files(
+   'dirtylimit.c',
+   'dma-helpers.c',
+   'globals.c',
++  'memory-attribute-manager.c',
+   'memory_mapping.c',
+   'qdev-monitor.c',
+   'qtest.c',
 -- 
-2.17.1
+2.43.5
 
 
