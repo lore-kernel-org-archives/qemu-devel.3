@@ -4,84 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70BCC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCCCBC021AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk16W-0003Tj-K1; Mon, 17 Feb 2025 08:24:08 -0500
+	id 1tk1BD-0004P1-IV; Mon, 17 Feb 2025 08:28:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk16U-0003TP-Nd
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:24:06 -0500
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ id 1tk1BB-0004Oh-74
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:28:57 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk16S-0007fg-Sp
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:24:06 -0500
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e5dc39ede40so2109435276.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:24:04 -0800 (PST)
+ id 1tk1B9-0000Dy-9y
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:28:56 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e587cca1e47so3879420276.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:28:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739798643; x=1740403443; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739798934; x=1740403734; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ImPdxCbzLfZbm+Im9GPC7SBy2QXQei9F05/Rwvm6ey8=;
- b=D4JuoNL7VTQPJr+Zh2R8E5vc9IDJ8aCsTm3xRemP5o5kt8VlUJqYeIkF7MohMtR/El
- V/sdqjT5wU+2cZ2AnJihFQ8NGd3chG+WLBt2trATNJoXyQeVDhlhaQAEtPEjsPdmRTdG
- Q0dFcnwKQCQOnwMhkhmlerBYAQ1TkaAs5lwxwflsr03/BHmlSnmhWahNxDLtauX7xYOl
- VPZn/9tpD8aTbLGCnTsFo9EKOhHC0ZEtCS9t32kqsciWq1p9fYMT1v7KZEM5PHN4oS0F
- 9oie5cxz+6t8ENLMwgugCBm4fuuLoT9CqqDeUXDCOiR81fTiV4vKCJAm5VvpTtunWeuE
- nqaQ==
+ bh=yryzwN+0NclVxJ3n1GoDSP0hqF7jJNbPE6p7nvejvqI=;
+ b=y1QIf5F1IcW05g+Lhoc3GecySBNvWYhMxlcbrcm/bEeRH24hlqO/Uyq8ipgeUrHY+0
+ I7XGAdYpEqLsxgcHVOAY1K9U+vomxtVi29d1FRAuQ4eF22Wje8d5balTp4+4rXD0JeLk
+ aG98+9UG2bKrk8E4ZBkbPdAAziwk8TvMvdkRbHYLHUAFF3JWw6djyC/BHrN+3YHg8Ssm
+ 4ROm7l028B8BJ2/N1c0UyCQHZH/x6bJyRwQBL9W8zNeKrc2oUDqBfmcKrjGZ6GnNxDYD
+ kRdB/N45I0rSaldsBTz4TqMRHQkX6tfxisuTw6Wan/ngXAwzm89S2fVyKJ03bCYRgnBc
+ kB5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739798643; x=1740403443;
+ d=1e100.net; s=20230601; t=1739798934; x=1740403734;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ImPdxCbzLfZbm+Im9GPC7SBy2QXQei9F05/Rwvm6ey8=;
- b=wwqfH51t7yeCGgAJDslcTEOUh45X1vBG4WxyeTSOMF415PZF0Bo6GnL8z6SZJHq0/Z
- WCg8JcKlzPjSPylSDYXDC3boZk9fKuUpZ8HPM0xNp7LXiXZCp9knmMgn3QOA8TJGA6Yv
- NW48eGlB62aAHSWy5gAxzxoFwHLM4FMNIUv+/ka5Wn5DLIUXAmxWOAiCuOfrCqD3evIO
- f+ezGpVKhNk8R+gygca0+qkA1YMHMVXfFK0/OUZjNaYyN8XBoaGuRmSIK2WWQPJQdwX6
- iDGD0d5Q84rA/Rzw1JHBbY4jlIPDQNdIc+HceMpLrgTmTu66NE1z+Wh95WXPG9PrsUrt
- hdNw==
-X-Gm-Message-State: AOJu0YzbKySU08cH0D0Nph//GM5HFZRcyH/CSQKWN4y8lLATxOqTPMR3
- bR8COwYvnW5AUEv0I5pqbUWybRKB6f9rxu1bUbJSPbbRhzM1slFWh0AaTTVWRBoFLLorQMjP6Ac
- 3Q3qGUbX2CNGPnYU6C22wZPbgJe3810bdE2adTA==
-X-Gm-Gg: ASbGncs+dArGeIENpwHDou6tbU3jw3/EVuePehzjcThY/N0RhmXwLg5psUdKEezgYkR
- q5M5p/W75kOMt07RzovB7Nu8YOxc9N3uZcrmCDPqv+LjQXr0jONqPTJI9mfr1W62mFy3wIde0AA
+ bh=yryzwN+0NclVxJ3n1GoDSP0hqF7jJNbPE6p7nvejvqI=;
+ b=celjEoY1uLvopJdIh9mqqDkX59MeCIjwwPhwHZSIL6X7jU4lZQ7hjBchVNr22phOku
+ GjDNEYWzAxrXy4XSnid6CIf8/zZN+hKH/n19vBLUjMy2zxjpaRQ11ixj5VqtvdNHbVlH
+ YR97gwmjWy6P527gDSjv5NPaJZ/f0qnTbxHdfMVcy698wte1tZkpjTCNJt9zGYxdS9dP
+ pE27maRVvbyNPpVGz/5UlmvJZ9nXSdlygL812Jga0PvgQSPz3Vr4EEbhTa2InET3ApR0
+ pU5hWuPrggb+T1DEdYBSWu6ny6oncSYhU0DUTU9evRfyYPHuQDnEUwiF1sgiwHSvnSFr
+ HdNQ==
+X-Gm-Message-State: AOJu0YxRYrXnos09Z0SGh9BUheuLvjdsmfS7cJkQBoiGbOKKoV1sp9XQ
+ 7SQ1XHsmCzJpdxY4p14o+fEYhDZOzFSZjQGCFO8nZnE6PHu/xTwkOmEyR3eu8ccg7Jn5++WWZyW
+ 0evircxTC3Lp6MPYXq8CvGcLYkC87aaf+hDyNYA==
+X-Gm-Gg: ASbGncvxHllg0+If5TzJUqo3vdmp2oKgVMDIn28xwIU10nhDupgVuEXeFROn7py2mjM
+ qwIRHA87Xaf55P7v0h3CNuE69+YE8kNmDvAfiuzyLk4XENOqSjo0kEf92dPxI7ILEAP0a8U3ToA
  ==
-X-Google-Smtp-Source: AGHT+IHn/5uBYEcEfuf62osQsmwewhf+q1KS62zCpfLr5PMh/z61PR2M9Ke8u9oq3nM+YguGO1gA787hgV4h8xEOMy8=
-X-Received: by 2002:a05:6902:18c2:b0:e57:fd58:ad51 with SMTP id
- 3f1490d57ef6-e5dc9034483mr6776156276.1.1739798643063; Mon, 17 Feb 2025
- 05:24:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGtfT+euHGH//RpcNhv6aydXvIJG30dtk3HLM/A5NM1+wYZ9Veq12JhD6pNlf6Ba77p70uhZy4M1QVfrjx4mM8=
+X-Received: by 2002:a05:6902:1027:b0:e5d:ae04:1e42 with SMTP id
+ 3f1490d57ef6-e5dc906b6a3mr5551988276.22.1739798933789; Mon, 17 Feb 2025
+ 05:28:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20250213084219.2975727-1-kchamart@redhat.com>
-In-Reply-To: <20250213084219.2975727-1-kchamart@redhat.com>
+References: <20250204092112.26957-1-shentey@gmail.com>
+ <20250204092112.26957-17-shentey@gmail.com>
+In-Reply-To: <20250204092112.26957-17-shentey@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 13:23:51 +0000
-X-Gm-Features: AWEUYZkcmvJY6s5eLDYtzmVvSJljIFAjCX8XkYb2BhFxcVOHEA5Paai8F7oB1hw
-Message-ID: <CAFEAcA9MgeaCQspu=4dCusTQVP3KOvpze55vshPJCaNS_E43yg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] docs: Small changes to system/arm/cpu-features and
- more
-To: Kashyap Chamarthy <kchamart@redhat.com>
-Cc: qemu-devel@nongnu.org, maz@kernel.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Yi Liu <yi.l.liu@intel.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Alistair Francis <alistair@alistair23.me>, 
- Tyrone Ting <kfting@nuvoton.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org, 
- Alexandre Iooss <erdnaxe@crans.org>, Joel Stanley <joel@jms.id.au>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, 
- Hao Wu <wuhaotsh@google.com>, sebott@redhat.com,
- Eric Auger <eric.auger@redhat.com>, Ninad Palsule <ninad@linux.ibm.com>
+Date: Mon, 17 Feb 2025 13:28:42 +0000
+X-Gm-Features: AWEUYZkbk0rPIphVtCUbMA3GIJdZVqihIG-mSdTsPhuwvYfgptdU6T-3_Lv1fc4
+Message-ID: <CAFEAcA_Kasz0jMTQO1F32bMwSh6tRoDTaS2DE0sSruLENdcu8g@mail.gmail.com>
+Subject: Re: [PATCH v2 16/18] hw/arm/fsl-imx8mp: Add boot ROM
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Feb 2025 at 08:44, Kashyap Chamarthy <kchamart@redhat.com> wrote:
+On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> In v2:
+> On a real device, the boot ROM contains the very first instructions the CPU
+> executes. Also, U-Boot calls into the ROM to determine the boot device. While
+> we're not actually implementing this here, let's create the infrastructure and
+> add a dummy ROM with all zeros. This allows for implementing a ROM later without
+> touching the source code and even allows for users to provide their own ROMs.
 >
->   - Add live-migration context to the PAuth docs (Marc Zyngier)
->
->   - Fix the Arm capitlalization (Peter Maydell)
->     - Context here:
->       (https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg05137.html)
+> The imx8mp-boot.rom was created with
+> `dd if=/dev/zero of=imx8mp-boot.rom bs=1 count=258048`.
 
-
-> Kashyap Chamarthy (3):
-
-Hi -- it looks like only patches 1 and 2 ever made it to
-the list. Would you mind resending, please?
-
->   docs/cpu-features: Consistently use vCPU instead of VCPU
->   docs/cpu-features: Update "PAuth" (Pointer Authentication) details
->   docs: Fix "Arm" capitaliaztion
-
-(nit: "capitalization")
+If it's all zeroes, we don't need to commit it to git as a binary,
+we can generate it at build time. (We should avoid having
+binaries in git as much as we can manage.)
 
 thanks
 -- PMM
