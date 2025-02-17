@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7E14C021AA
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB31DC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk2Zx-0001SW-82; Mon, 17 Feb 2025 09:58:37 -0500
+	id 1tk2dA-00034e-Dp; Mon, 17 Feb 2025 10:01:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tk2Zu-0001S4-N0
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:58:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tk2Zs-0006Ve-Cp
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:58:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739804310;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=OA7DltHqI14IuLpK6i36CFDU2j26iWGZRN7zI4pQxUs=;
- b=eLKmqYj1kipFpXzTxQlAi8Bx4WrHeAuepHrEIcaaWutlCFA/Q+oWUgPsEhG/VLE8TiznN8
- A7tp5QEHQrmwzh2lyZWcs1FQyv272TLcfokPrHPeHHTu0YO6+6YneDRr+iHJypbS/83mzQ
- FWpCHtFAKGgAwSumt3lzCOM+QX1yG2o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-bFSeKE_SNMGTTkFhP7OmqA-1; Mon,
- 17 Feb 2025 09:58:28 -0500
-X-MC-Unique: bFSeKE_SNMGTTkFhP7OmqA-1
-X-Mimecast-MFC-AGG-ID: bFSeKE_SNMGTTkFhP7OmqA_1739804308
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA67D19783B5
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 14:58:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.176])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 194A11955BD4; Mon, 17 Feb 2025 14:58:25 +0000 (UTC)
-Date: Mon, 17 Feb 2025 14:58:22 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Victor Toso <victortoso@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- John Snow <jsnow@redhat.com>, Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [PATCH v4 00/11]
-Message-ID: <Z7NOjiz20gzBQhX5@redhat.com>
-References: <20250214202944.69897-1-victortoso@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk2d8-00034N-S7
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:01:54 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk2d6-0006xk-UY
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:01:54 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38f325dd90eso1461978f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 07:01:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739804510; x=1740409310; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6AAzIQyMN9qYAjU2Tp3QEwJMsCO2X01fJXoL87c9eZM=;
+ b=usWzgJC7HCl/VhhkxOWTm7VZUjiY72HqiDkOsRekE+YH2yDPXj0SMyF0TeOsfG8/9V
+ hvYxAMU3fR1JHR+tzDjxnALSCDT1q8nwh/kAbq9EfYaP2yBFTE4dalIu0OD6XOhQwP+H
+ 2IjCAdtQcRWRlW6wf/LhTldylmCWF1/QuRyQYaGubrNvbBnxvQhqmyDoW71vStMb7MpI
+ c69ZYiNw0ALqxxEZVBSBmJjMS9Ih2yhngWHJ5JCYFzyVomHPHfacxGefuZbEXFIRonFl
+ 27Ls5kFRD5N0IKwZHWO3ACmeV6jHDFzu08DKJFVR5U5wQyKfaaeFW3FFaKRCgbz/Hr/m
+ O9Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739804510; x=1740409310;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6AAzIQyMN9qYAjU2Tp3QEwJMsCO2X01fJXoL87c9eZM=;
+ b=dhtqpObAq7W4G0ZdC5+3Z/uEzgLASj4/ef+qCcdLRLw8d9pZ57KfCiqupTOZcRoFHv
+ lQFz8RKtEc9Bbe4tilRLdtxohNca0i6uduD5YccQRqJNP0KjSrfNJfVYs/vG0OSNs1IT
+ 5D44StdXc0A/NClI7nAUc8BgFMd9PPRb6Fdz7lhJZSUNtJA+mAlWdwzSE5rCxM6nCWKF
+ 5kpibW1h3a950LZQWWBjLZp1XIbXS+PrbRVup+tz9N4GnsT/jGHHvF2pYLXOdQB1mL6+
+ j1kJQuKlGNFz8hq952NmVeRHKjrBsreeimUvLRtNs346BIt0R243aGYSWdBtMyvvfd9a
+ wRGg==
+X-Gm-Message-State: AOJu0Yzm0EVUQi5V9veW5BcQZzHo7hPxz9rdWwKPWLho/gPCKRZ9XwwC
+ NlL1O1PiW3XsQp5qE+5TY97/2S9+iP1griAYii3ldTlFYiaOn38WGDOI05JIhPM=
+X-Gm-Gg: ASbGncsafe6sfoh8rh/26mF5+bXK3VyeqEnYx8pCXxutMiMT+85JPBo0tdZc97IMRdS
+ HtWdOjJ11eQ2oBDXxAPxEfRlZBYN+irQlG47fwDt9f+J+0h5R3lxImltQO8Sgr4p5oMcZhA4SaM
+ c8cQvbJaqTS/e3PV6k7ZvevFFBpR835BwToFo03ZPDwl2hD50+m3YHxpDngN+bGLpuFZSvQermL
+ zrxtuNOGGgZuh5r598SmFc6fFpEivHfSa+jgw8aHWp//rxycQNPNXz2am9Bfg3Pi+aKkVR6sDCu
+ d+kSgSKhUK8mQei8XKjfExDMa9drHg==
+X-Google-Smtp-Source: AGHT+IFgDPjon7CRTeHv9/585GbSQr6lPZYnnAggj/PUO7tDZNXLK2wK8w5zFFGob2D/MOxoGAi5KA==
+X-Received: by 2002:a05:6000:1862:b0:38f:4c8a:d5ea with SMTP id
+ ffacd0b85a97d-38f4c8ad67cmr1782672f8f.22.1739804510055; 
+ Mon, 17 Feb 2025 07:01:50 -0800 (PST)
+Received: from [192.168.1.121] ([176.167.144.216])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258b432asm12235412f8f.6.2025.02.17.07.01.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Feb 2025 07:01:49 -0800 (PST)
+Message-ID: <17651f42-8a9d-444c-8598-b0a6c099cbe6@linaro.org>
+Date: Mon, 17 Feb 2025 16:01:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250214202944.69897-1-victortoso@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 5/7] hw/char/pl011: Consider TX FIFO overrun error
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20250208163911.54522-1-philmd@linaro.org>
+ <20250208163911.54522-6-philmd@linaro.org>
+ <CAFEAcA8ZSSD=TxCier0Ji8+DVDspgqKQeKJyVDZ+LEBy=j9=Lw@mail.gmail.com>
+ <CAFEAcA_MLUCqBPLfdwp1u-TEFLz-u5MsmAFeGEYfpOgC0cX8zQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_MLUCqBPLfdwp1u-TEFLz-u5MsmAFeGEYfpOgC0cX8zQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,121 +101,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 14, 2025 at 09:29:33PM +0100, Victor Toso wrote:
-> Hi again,
+On 17/2/25 15:52, Peter Maydell wrote:
+> On Mon, 17 Feb 2025 at 14:29, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>>
+>>> When transmission is disabled, characters are still queued
+>>> to the FIFO which eventually overruns. Report that error
+>>> condition in the status register.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   hw/char/pl011.c      | 20 ++++++++++++++++++++
+>>>   hw/char/trace-events |  2 ++
+>>>   2 files changed, 22 insertions(+)
+>>>
+>>> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+>>> index 447f185e2d5..ef39ab666a2 100644
+>>> --- a/hw/char/pl011.c
+>>> +++ b/hw/char/pl011.c
+>>> @@ -61,6 +61,9 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+>>>   /* Data Register, UARTDR */
+>>>   #define DR_BE   (1 << 10)
+>>>
+>>> +/* Receive Status Register/Error Clear Register, UARTRSR/UARTECR */
+>>> +#define RSR_OE  (1 << 3)
+>>> +
+>>>   /* Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC */
+>>>   #define INT_OE (1 << 10)
+>>>   #define INT_BE (1 << 9)
+>>> @@ -158,6 +161,16 @@ static inline unsigned pl011_get_fifo_depth(PL011State *s)
+>>>       return pl011_is_fifo_enabled(s) ? PL011_FIFO_DEPTH : 1;
+>>>   }
+>>>
+>>> +static bool pl011_is_tx_fifo_full(PL011State *s)
+>>> +{
+>>> +    if (pl011_is_fifo_enabled(s)) {
+>>> +        trace_pl011_fifo_tx_is_full("FIFO", fifo8_is_full(&s->xmit_fifo));
+>>> +        return fifo8_is_full(&s->xmit_fifo);
+>>> +    }
+>>> +    trace_pl011_fifo_tx_is_full("CHAR", !fifo8_is_empty(&s->xmit_fifo));
+>>> +    return !fifo8_is_empty(&s->xmit_fifo);
+>>
+>> More repetition of expressions, but anyway
+>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > 
-> This patch series intent is to introduce a generator that produces a Go
-> module for Go applications to interact over QMP with QEMU.
+> Here I propose to squash in this tweak:
 > 
-> Previous version (10 Jan 2025)
->     https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg01530.html
+> --- a/hw/char/pl011.c
+> +++ b/hw/char/pl011.c
+> @@ -165,12 +165,13 @@ static inline unsigned pl011_get_fifo_depth(PL011State *s)
 > 
-> The generated code was mostly tested using existing examples in the QAPI
-> documentation, 192 instances that might have multiple QMP messages each.
+>   static bool pl011_is_tx_fifo_full(PL011State *s)
+>   {
+> -    if (pl011_is_fifo_enabled(s)) {
+> -        trace_pl011_fifo_tx_is_full("FIFO", fifo8_is_full(&s->xmit_fifo));
+> -        return fifo8_is_full(&s->xmit_fifo);
+> -    }
+> -    trace_pl011_fifo_tx_is_full("CHAR", !fifo8_is_empty(&s->xmit_fifo));
+> -    return !fifo8_is_empty(&s->xmit_fifo);
+> +    bool fifo_enabled = pl011_is_fifo_enabled(s);
+> +    bool tx_fifo_full = fifo_enabled ?
+> +        fifo8_is_full(&s->xmit_fifo) : !fifo8_is_empty(&s->xmit_fifo);
+> +
+> +    trace_pl011_fifo_tx_is_full(fifo_enabled ? "FIFO" : "CHAR",
+> +                                tx_fifo_full);
+> +    return tx_fifo_full;
+>   }
+
+Thank you, appreciated!
+
 > 
-> You can find the the tests and the generated code in my personal repo,
-> main branch:
-> 
->     https://gitlab.com/victortoso/qapi-go
-> 
-> If you want to see the generated code from QEMU's master but per patch:
-> 
->     https://gitlab.com/victortoso/qapi-go/-/commits/qapi-golang-v4-by-patch
-
-In terms of generated code, my only real feedback is that the
-re-wrapping of docs comments is having undesirable effets
-on formatting
-
-##
-# @add_client:
-#
-# Allow client connections for VNC, Spice and socket based character
-# devices to be passed in to QEMU via SCM_RIGHTS.
-#
-# If the FD associated with @fdname is not a socket, the command will
-# fail and the FD will be closed.
-#
-# @protocol: protocol name.  Valid names are "vnc", "spice",
-#     "@dbus-display" or the name of a character device (e.g. from
-#     -chardev id=XXXX)
-#
-# @fdname: file descriptor name previously passed via 'getfd' command
-#
-# @skipauth: whether to skip authentication.  Only applies to "vnc"
-#     and "spice" protocols
-#
-# @tls: whether to perform TLS.  Only applies to the "spice" protocol
-#
-# Since: 0.14
-#
-# .. qmp-example::
-#
-#     -> { "execute": "add_client", "arguments": { "protocol": "vnc",
-#                                                  "fdname": "myclient" } }
-#     <- { "return": {} }
-##
-
-
-is getting turned into
-
-
-// Allow client connections for VNC, Spice and socket based character
-// devices to be passed in to QEMU via SCM_RIGHTS.  If the FD
-// associated with @fdname is not a socket, the command will fail and
-// the FD will be closed.
-//
-// Since: 0.14
-//
-// .. qmp-example::    -> { "execute": "add_client", "arguments": {
-// "protocol": "vnc",                          "fdname": "myclient" }
-// }   <- { "return": {} }
-
-
-the '.. qmp-example' bit is what's particularly badly affected.
-
-If we assume that the input QAPI schemas are nicely lined wrapped,
-we could probably just preserve the docs lines as-is with no change
-in wrapping.
-
-That said I'm not sure if we'll need some docs syntax changes to
-make it render nicely - hard to say until the code appears up on
-pkg.go.dev, so can probably worry about that aspect later.
-
-
-> ################
-> # Expectations #
-> ################
-> 
-> As is, this still is a PoC that works. I'd like to have the generated
-> code included in QEMU's gitlab [0] in order to write library and tools
-> on top. Initial version should be considered alpha. Moving to
-> beta/stable would require functional libraries and tools, but this work
-> needs to be merged before one commit to that.
-
-We don't need to overthink this. I don't think we're best served by
-continuing to post many more rounds of this series. Better to just
-get it into a dedicated git repo and iterate via pull requests IMHO.
-
-Golang uses semver, so we could start publishing the generated code in
-a Go module as it is today, as long as we pick a v0.XXX.0 version number.
-'XXX' would be a packing of QEMU's 3 digit version into the semver 2nd
-digit. This lets us indicate this is not considered a stable API, letting
-us iterate on further imlp details, while also getting us in the habit of
-publishing releases to track schema updates for each new QEMU.
-
-We just need the patch for qapi-gen.py to support plugins for code
-generation to make this happen, so we can decouple ongoing development
-from QEMU's main git repo & release cycle.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> thanks
+> -- PMM
 
 
