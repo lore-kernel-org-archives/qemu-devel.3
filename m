@@ -4,75 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9A1C021AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04614C021AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk48n-00014Z-DD; Mon, 17 Feb 2025 11:38:41 -0500
+	id 1tk4Bl-0004MO-2K; Mon, 17 Feb 2025 11:41:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1tk48m-0000ys-1Q
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:38:40 -0500
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1tk4Bf-0004Ln-If
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:41:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1tk48i-0007HP-Lr
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:38:39 -0500
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1tk4BZ-0007ss-Tt
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:41:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739810315;
+ s=mimecast20190719; t=1739810491;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bsG5WkBUSHhnlbbV7Wp53MqkLhuAKX+CBzyXQNBeBUw=;
- b=P3QTpfWgTAb+yHBXUpEsyAPh/uyUL8hXeEUYQnfUfUU1lNPQFyNYNU2wYqdwKT44oWC9cM
- RP+1Ec9G2HIZn3jgxTqSBHyA/0F2nYsBLPFE/Pe4P74hotFH1GYG7+0rzsNYSXaVU79IF2
- BYUa6QlKRffBbUa259nLHSHkjmPIHqQ=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=sg2lkku03GRDUzTf6xQC4Gtad59C5/+VDo1OvyFCd5A=;
+ b=XHqGkhzSCp7lZXt6HWlwelU0Hk88X9zWBELVOG9HkAuyTghz5LAwsERJZYLccH/4cLRhkB
+ qDPuTK8jhODcAFVF2DsD7T84Xe9ZiC++xtsF8Mx5k1XMOciQEc+0EJq5usmKb2r9vv6MDr
+ qCbEsXHNhqcKdMEU1vT1hAGY1zyYuDY=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-XsVANGnrPHKagJHa6CkQuQ-1; Mon,
- 17 Feb 2025 11:38:30 -0500
-X-MC-Unique: XsVANGnrPHKagJHa6CkQuQ-1
-X-Mimecast-MFC-AGG-ID: XsVANGnrPHKagJHa6CkQuQ_1739810308
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-tIuEfYs_ODCBDMp1V-gBTA-1; Mon,
+ 17 Feb 2025 11:40:20 -0500
+X-MC-Unique: tIuEfYs_ODCBDMp1V-gBTA-1
+X-Mimecast-MFC-AGG-ID: tIuEfYs_ODCBDMp1V-gBTA_1739810419
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B15F01800268; Mon, 17 Feb 2025 16:38:26 +0000 (UTC)
-Received: from gezellig.redhat.com (unknown [10.44.32.23])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 38FD519560AB; Mon, 17 Feb 2025 16:38:14 +0000 (UTC)
-From: Kashyap Chamarthy <kchamart@redhat.com>
+ id 462F6180087C; Mon, 17 Feb 2025 16:40:19 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.45.225.252])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0A564180056F; Mon, 17 Feb 2025 16:40:13 +0000 (UTC)
+From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, sebott@redhat.com, maz@kernel.org,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+Cc: slp@redhat.com, stevensd@chromium.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Joel Stanley <joel@jms.id.au>, Eric Auger <eric.auger@redhat.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Yi Liu <yi.l.liu@intel.com>,
- qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- Kashyap Chamarthy <kchamart@redhat.com>
-Subject: [PATCH v2 3/3] docs: Fix "Arm" capitalization
-Date: Mon, 17 Feb 2025 22:07:29 +0530
-Message-ID: <20250217163732.3718617-4-kchamart@redhat.com>
-In-Reply-To: <20250217163732.3718617-1-kchamart@redhat.com>
-References: <20250217163732.3718617-1-kchamart@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>, stefanha@redhat.com,
+ david@redhat.com, hi@alyssa.is, mst@redhat.com, jasowang@redhat.com,
+ Albert Esteve <aesteve@redhat.com>
+Subject: [PATCH v4 0/9] vhost-user: Add SHMEM_MAP/UNMAP requests
+Date: Mon, 17 Feb 2025 17:40:03 +0100
+Message-ID: <20250217164012.246727-1-aesteve@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,8 +69,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,284 +85,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is based on Peter's suggestion here[1].
+Hi all,
 
-I simply addrressed the occurrences that I found with `git grep "ARM "`
-in the docs/ directory.  I didn't touch stuff like these "StrongARM",
-ARM926EJ-S, ARM1176JZS, etc.  Related commit[2].
+v3->v4
+- Change mmap strategy to use RAM blocks
+  and subregions.
+- Add new bitfield to qmp feature map
+- Followed most review comments from
+  last iteration.
+- Merged documentation patch again with
+  this one. Makes more sense to
+  review them together after all.
+- Add documentation for MEM_READ/WRITE
+  messages.
 
-[1] https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg05137.html
-    - docs/cpu-features: Update "PAuth" (Pointer Authentication) details
+The goal of this patch is to support
+dynamic fd-backed memory maps initiated
+from vhost-user backends.
+There are many devices that could already
+benefit of this feature, e.g.,
+virtiofs or virtio-gpu.
 
-[2] 6fe6d6c9a9 (docs: Be consistent about capitalization of 'Arm',
-    2020-03-09)
+After receiving the SHMEM_MAP/UNMAP request,
+the frontend creates the RAMBlock form the
+fd and maps it by adding it as a subregion
+of the shared memory region container.
 
-Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
----
- docs/devel/testing/qgraph.rst        |  8 ++++----
- docs/devel/vfio-iommufd.rst          |  2 +-
- docs/specs/fsi.rst                   |  2 +-
- docs/system/arm/aspeed.rst           |  6 +++---
- docs/system/arm/b-l475e-iot01a.rst   |  2 +-
- docs/system/arm/nrf.rst              |  4 ++--
- docs/system/arm/nuvoton.rst          |  4 ++--
- docs/system/arm/stm32.rst            | 12 ++++++------
- docs/system/arm/xlnx-versal-virt.rst | 12 ++++++------
- docs/system/arm/xlnx-zynq.rst        |  2 +-
- docs/system/guest-loader.rst         |  2 +-
- 11 files changed, 28 insertions(+), 28 deletions(-)
+The VIRTIO Shared Memory Region list is
+declared in the `VirtIODevice` struct
+to make it generic.
 
-diff --git a/docs/devel/testing/qgraph.rst b/docs/devel/testing/qgraph.rst
-index 43342d9d65..30ff055fae 100644
---- a/docs/devel/testing/qgraph.rst
-+++ b/docs/devel/testing/qgraph.rst
-@@ -8,7 +8,7 @@ take care of booting QEMU with the right machine and devices.
- This makes each test "hardcoded" for a specific configuration, reducing
- the possible coverage that it can reach.
- 
--For example, the sdhci device is supported on both x86_64 and ARM boards,
-+For example, the sdhci device is supported on both x86_64 and Arm boards,
- therefore a generic sdhci test should test all machines and drivers that
- support that device.
- Using only libqos APIs, the test has to manually take care of
-@@ -195,7 +195,7 @@ there.
- The ``arm/raspi2b`` machine node is listed as "UNAVAILABLE". Although it is
- reachable from the root via '' -> 'arm/raspi2b' the node is unavailable because
- the QEMU binary did not list it when queried by the framework. This is expected
--because we used the ``qemu-system-x86_64`` binary which does not support ARM
-+because we used the ``qemu-system-x86_64`` binary which does not support Arm
- machine types.
- 
- If a test is unexpectedly listed as "UNAVAILABLE", first check that the "ALL
-@@ -214,9 +214,9 @@ Here we continue the ``sdhci`` use case, with the following scenario:
- 
- - ``sdhci-test`` aims to test the ``read[q,w], writeq`` functions
-   offered by the ``sdhci`` drivers.
--- The current ``sdhci`` device is supported by both ``x86_64/pc`` and ``ARM``
-+- The current ``sdhci`` device is supported by both ``x86_64/pc`` and ``Arm``
-   (in this example we focus on the ``arm-raspi2b``) machines.
--- QEMU offers 2 types of drivers: ``QSDHCI_MemoryMapped`` for ``ARM`` and
-+- QEMU offers 2 types of drivers: ``QSDHCI_MemoryMapped`` for ``Arm`` and
-   ``QSDHCI_PCI`` for ``x86_64/pc``. Both implement the
-   ``read[q,w], writeq`` functions.
- 
-diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
-index 3d1c11f175..fe8a7365e3 100644
---- a/docs/devel/vfio-iommufd.rst
-+++ b/docs/devel/vfio-iommufd.rst
-@@ -122,7 +122,7 @@ container:
- Supported platform
- ==================
- 
--Supports x86, ARM and s390x currently.
-+Supports x86, Arm, and s390x currently.
- 
- Caveats
- =======
-diff --git a/docs/specs/fsi.rst b/docs/specs/fsi.rst
-index af87822531..f7d86d3e37 100644
---- a/docs/specs/fsi.rst
-+++ b/docs/specs/fsi.rst
-@@ -40,7 +40,7 @@ for the implementation are: (see the `FSI specification`_ for more details)
-    MMIO-mapping of the CFAM address straight onto a sub-region of the OPB
-    address space.
- 
--5. An APB-to-OPB bridge enabling access to the OPB from the ARM core in the
-+5. An APB-to-OPB bridge enabling access to the OPB from the Arm core in the
-    AST2600. Hardware limitations prevent the OPB from being directly mapped
-    into APB, so all accesses are indirect through the bridge.
- 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index fa4aa28eef..42096fb941 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -5,8 +5,8 @@ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
- Aspeed SoC : the AST2400 integrating an ARM926EJ-S CPU (400MHz), the
- AST2500 with an ARM1176JZS CPU (800MHz), the AST2600
--with dual cores ARM Cortex-A7 CPUs (1.2GHz) and more recently the AST2700
--with quad cores ARM Cortex-A35 64 bits CPUs (1.6GHz)
-+with dual cores Arm Cortex-A7 CPUs (1.2GHz) and more recently the AST2700
-+with quad cores Arm Cortex-A35 64 bits CPUs (1.6GHz)
- 
- The SoC comes with RAM, Gigabit ethernet, USB, SD/MMC, USB, SPI, I2C,
- etc.
-@@ -275,7 +275,7 @@ Aspeed minibmc family boards (``ast1030-evb``)
- 
- The QEMU Aspeed machines model mini BMCs of various Aspeed evaluation
- boards. They are based on different releases of the
--Aspeed SoC : the AST1030 integrating an ARM Cortex M4F CPU (200MHz).
-+Aspeed SoC : the AST1030 integrating an Arm Cortex M4F CPU (200MHz).
- 
- The SoC comes with SRAM, SPI, I2C, etc.
- 
-diff --git a/docs/system/arm/b-l475e-iot01a.rst b/docs/system/arm/b-l475e-iot01a.rst
-index 2adcc4b4c1..7f891719d5 100644
---- a/docs/system/arm/b-l475e-iot01a.rst
-+++ b/docs/system/arm/b-l475e-iot01a.rst
-@@ -2,7 +2,7 @@ B-L475E-IOT01A IoT Node (``b-l475e-iot01a``)
- ============================================
- 
- The B-L475E-IOT01A IoT Node uses the STM32L475VG SoC which is based on
--ARM Cortex-M4F core. It is part of STMicroelectronics
-+Arm Cortex-M4F core. It is part of STMicroelectronics
- :doc:`STM32 boards </system/arm/stm32>` and more specifically the STM32L4
- ultra-low power series. The STM32L4x5 chip runs at up to 80 MHz and
- integrates 128 KiB of SRAM and up to 1MiB of Flash. The B-L475E-IOT01A board
-diff --git a/docs/system/arm/nrf.rst b/docs/system/arm/nrf.rst
-index eda87bd760..e0ea6a8b7e 100644
---- a/docs/system/arm/nrf.rst
-+++ b/docs/system/arm/nrf.rst
-@@ -1,7 +1,7 @@
- Nordic nRF boards (``microbit``)
- ================================
- 
--The `Nordic nRF`_ chips are a family of ARM-based System-on-Chip that
-+The `Nordic nRF`_ chips are a family of Arm-based System-on-Chip that
- are designed to be used for low-power and short-range wireless solutions.
- 
- .. _Nordic nRF: https://www.nordicsemi.com/Products
-@@ -18,7 +18,7 @@ supported by QEMU.
- Supported devices
- -----------------
- 
-- * ARM Cortex-M0 (ARMv6-M)
-+ * Arm Cortex-M0 (ARMv6-M)
-  * Serial ports (UART)
-  * Clock controller
-  * Timers
-diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
-index 05059378e5..e0da2297ff 100644
---- a/docs/system/arm/nuvoton.rst
-+++ b/docs/system/arm/nuvoton.rst
-@@ -1,9 +1,9 @@
- Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
- =====================================================================================================
- 
--The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
-+The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of Arm-based SoCs that are
- designed to be used as Baseboard Management Controllers (BMCs) in various
--servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
-+servers. They all feature one or two Arm Cortex-A9 CPU cores, as well as an
- assortment of peripherals targeted for either Enterprise or Data Center /
- Hyperscale applications. The former is a superset of the latter, so NPCM750 has
- all the peripherals of NPCM730 and more.
-diff --git a/docs/system/arm/stm32.rst b/docs/system/arm/stm32.rst
-index 511e3eb9ac..381d2c4386 100644
---- a/docs/system/arm/stm32.rst
-+++ b/docs/system/arm/stm32.rst
-@@ -1,24 +1,24 @@
- STMicroelectronics STM32 boards (``netduino2``, ``netduinoplus2``, ``olimex-stm32-h405``, ``stm32vldiscovery``)
- ===============================================================================================================
- 
--The `STM32`_ chips are a family of 32-bit ARM-based microcontroller by
-+The `STM32`_ chips are a family of 32-bit Arm-based microcontroller by
- STMicroelectronics.
- 
- .. _STM32: https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html
- 
--The STM32F1 series is based on ARM Cortex-M3 core. The following machines are
-+The STM32F1 series is based on Arm Cortex-M3 core. The following machines are
- based on this chip :
- 
- - ``stm32vldiscovery``  STM32VLDISCOVERY board with STM32F100RBT6 microcontroller
- 
--The STM32F2 series is based on ARM Cortex-M3 core. The following machines are
-+The STM32F2 series is based on Arm Cortex-M3 core. The following machines are
- based on this chip :
- 
- - ``netduino2``         Netduino 2 board with STM32F205RFT6 microcontroller
- 
--The STM32F4 series is based on ARM Cortex-M4F core, as well as the STM32L4
-+The STM32F4 series is based on Arm Cortex-M4F core, as well as the STM32L4
- ultra-low-power series. The STM32F4 series is pin-to-pin compatible with STM32F2 series.
--The following machines are based on this ARM Cortex-M4F chip :
-+The following machines are based on this Arm Cortex-M4F chip :
- 
- - ``netduinoplus2``     Netduino Plus 2 board with STM32F405RGT6 microcontroller
- - ``olimex-stm32-h405`` Olimex STM32 H405 board with STM32F405RGT6 microcontroller
-@@ -29,7 +29,7 @@ There are many other STM32 series that are currently not supported by QEMU.
- Supported devices
- -----------------
- 
-- * ARM Cortex-M3, Cortex M4F
-+ * Arm Cortex-M3, Cortex M4F
-  * Analog to Digital Converter (ADC)
-  * EXTI interrupt
-  * Serial ports (USART)
-diff --git a/docs/system/arm/xlnx-versal-virt.rst b/docs/system/arm/xlnx-versal-virt.rst
-index c5f35f28e4..1b3a0ad6a5 100644
---- a/docs/system/arm/xlnx-versal-virt.rst
-+++ b/docs/system/arm/xlnx-versal-virt.rst
-@@ -19,12 +19,12 @@ limitations. Currently, we support the following cores and devices:
- 
- Implemented CPU cores:
- 
--- 2 ACPUs (ARM Cortex-A72)
-+- 2 ACPUs (Arm Cortex-A72)
- 
- Implemented devices:
- 
--- Interrupt controller (ARM GICv3)
--- 2 UARTs (ARM PL011)
-+- Interrupt controller (Arm GICv3)
-+- 2 UARTs (Arm PL011)
- - An RTC (Versal built-in)
- - 2 GEMs (Cadence MACB Ethernet MACs)
- - 8 ADMA (Xilinx zDMA) channels
-@@ -70,7 +70,7 @@ provides EL3 firmware to handle PSCI.
- 
- A few examples:
- 
--Direct Linux boot of a generic ARM64 upstream Linux kernel:
-+Direct Linux boot of a generic Arm64 upstream Linux kernel:
- 
- .. code-block:: bash
- 
-@@ -95,7 +95,7 @@ Direct Linux boot of PetaLinux 2019.2:
-       -device virtio-rng-device,bus=virtio-mmio-bus.0,rng=rng0 \
-       -object rng-random,filename=/dev/urandom,id=rng0
- 
--Boot PetaLinux 2019.2 via ARM Trusted Firmware (2018.3 because the 2019.2
-+Boot PetaLinux 2019.2 via Arm Trusted Firmware (2018.3 because the 2019.2
- version of ATF tries to configure the CCI which we don't model) and U-boot:
- 
- .. code-block:: bash
-@@ -149,7 +149,7 @@ Run the following at the U-Boot prompt:
-   fdt set /chosen/dom0 reg <0x00000000 0x40000000 0x0 0x03100000>
-   booti 30000000 - 20000000
- 
--Boot Linux as Dom0 on Xen via ARM Trusted Firmware and U-Boot:
-+Boot Linux as Dom0 on Xen via Arm Trusted Firmware and U-Boot:
- 
- .. code-block:: bash
- 
-diff --git a/docs/system/arm/xlnx-zynq.rst b/docs/system/arm/xlnx-zynq.rst
-index ade18a3fe1..94eedf0e81 100644
---- a/docs/system/arm/xlnx-zynq.rst
-+++ b/docs/system/arm/xlnx-zynq.rst
-@@ -29,7 +29,7 @@ QEMU xilinx-zynq-a9 board supports following devices:
- 
- Running
- """""""
--Direct Linux boot of a generic ARM upstream Linux kernel:
-+Direct Linux boot of a generic Arm upstream Linux kernel:
- 
- .. code-block:: bash
- 
-diff --git a/docs/system/guest-loader.rst b/docs/system/guest-loader.rst
-index 304ee5d531..12436cc791 100644
---- a/docs/system/guest-loader.rst
-+++ b/docs/system/guest-loader.rst
-@@ -32,7 +32,7 @@ size. Additional information can be passed with by using additional
- arguments.
- 
- Currently the only supported machines which use FDT data to boot are
--the ARM and RiscV ``virt`` machines.
-+the Arm and RiscV ``virt`` machines.
- 
- Arguments
- ^^^^^^^^^
+TODO: There was a conversation on the
+previous version around adding tests
+to the patch (which I have acknowledged).
+However, given the numerous changes
+that the patch already has, I have
+decided to send it early and collect
+some feedback while I work on the
+tests for the next iteration.
+Given that I have been able to
+test the implementation with
+my local setup, I am more or less
+confident that, at least, the code
+is in a relatively sane state
+so that no reviewing time is
+wasted on broken patches.
+
+This patch also includes:
+- SHMEM_CONFIG frontend request that is
+specifically meant to allow generic
+vhost-user-device frontend to be able to
+query VIRTIO Shared Memory settings from the
+backend (as this device is generic and agnostic
+of the actual backend configuration).
+
+- MEM_READ/WRITE backend requests are
+added to deal with a potential issue when having
+multiple backends sharing a file descriptor.
+When a backend calls SHMEM_MAP it makes
+accessing to the region fail for other
+backend as it is missing from their translation
+table. So these requests are a fallback
+for vhost-user memory translation fails.
+
+Albert Esteve (9):
+  vhost-user: Add VirtIO Shared Memory map request
+  vhost_user.rst: Align VhostUserMsg excerpt members
+  vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+  vhost_user: Add frontend get_shmem_config command
+  vhost_user.rst: Add GET_SHMEM_CONFIG message
+  qmp: add shmem feature map
+  vhost-user-devive: Add shmem BAR
+  vhost_user: Add mem_read/write backend requests
+  vhost_user.rst: Add MEM_READ/WRITE messages
+
+ docs/interop/vhost-user.rst               | 110 +++++++++
+ hw/virtio/vhost-user-base.c               |  47 +++-
+ hw/virtio/vhost-user-device-pci.c         |  36 ++-
+ hw/virtio/vhost-user.c                    | 272 ++++++++++++++++++++--
+ hw/virtio/virtio-qmp.c                    |   3 +
+ hw/virtio/virtio.c                        |  81 +++++++
+ include/hw/virtio/vhost-backend.h         |   9 +
+ include/hw/virtio/vhost-user.h            |   1 +
+ include/hw/virtio/virtio.h                |  29 +++
+ subprojects/libvhost-user/libvhost-user.c | 160 +++++++++++++
+ subprojects/libvhost-user/libvhost-user.h |  92 ++++++++
+ 11 files changed, 813 insertions(+), 27 deletions(-)
+
 -- 
 2.48.1
 
