@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745A7C021AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 11:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12529C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 11:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjziX-0003g5-TC; Mon, 17 Feb 2025 06:55:17 -0500
+	id 1tjziP-0003eE-NM; Mon, 17 Feb 2025 06:55:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tjziW-0003fw-Lq
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 06:55:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tjziU-0002fM-W6
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 06:55:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739793314;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hUUOIBoe74pk6PM1o/3S+l81F8n5gorOIxRS8qvQnMA=;
- b=FBjbTGTpKgAgcB2wHG+FjL+/zmU4mjX8cE0xD6dfz4BQiad+bUi3wuVR9uBRAXFgs3VBH9
- t4zczbNdH1ad6k4TFjrrDwY9g5EgP1RRBGlI+PrPgfvb16d3Co7D6JWj4H1oYvbss/ghDM
- SLxX2y1fLeRaMOUwo4yCbkJSJGgkgYg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-H9lnoi67O_S9sZZPJIYXSQ-1; Mon,
- 17 Feb 2025 06:55:08 -0500
-X-MC-Unique: H9lnoi67O_S9sZZPJIYXSQ-1
-X-Mimecast-MFC-AGG-ID: H9lnoi67O_S9sZZPJIYXSQ_1739793307
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9175319560AF; Mon, 17 Feb 2025 11:55:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D42431800352; Mon, 17 Feb 2025 11:55:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2D50F21E6A28; Mon, 17 Feb 2025 12:55:02 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
- Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
- Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
- <jasowang@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH 29/42] qapi: Add "Details:" disambiguation marker
-In-Reply-To: <20250205231208.1480762-30-jsnow@redhat.com> (John Snow's message
- of "Wed, 5 Feb 2025 18:11:55 -0500")
-References: <20250205231208.1480762-1-jsnow@redhat.com>
- <20250205231208.1480762-30-jsnow@redhat.com>
-Date: Mon, 17 Feb 2025 12:55:02 +0100
-Message-ID: <87seocrdk9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tjziN-0003dM-Qi
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 06:55:07 -0500
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tjziM-0002Tm-0d
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 06:55:07 -0500
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-471f16f4b73so6671171cf.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 03:55:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739793304; x=1740398104; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kiQbsePGizEeW1k4o93v0zTlwG1UoOlrzsKnA8rGeBA=;
+ b=BKHqbpyCvbDe6njSxCNcgDqY9H6Y/7EsV0xHgD1rwVmKKn62f4BmgjdDsF9Zobkduf
+ Dejcd7OwsDQTybImn3UaYu7dDCTVE9x8XAh1Db68paT0h5/sTujs2aW6y0zMM5tjxIRD
+ qyxPi12b2YoPgdyNpUAndqjK0QKqXO3Hhg5SbAu+aDoP78ceWuGmTXFUh56mr3NG/LHW
+ jqw4Y2TsLDsAC2nYANtenwTUCwgJ1Q/ndHCZONguF1aeeTy7joTTklPyMZFGGQZAWmA5
+ vIYUw0zPRCFcsEQMf7sZb4K5/y6sxuLfwcISMJ6lZOrGNDOQwiC6SnE2FfKOvcFKtfg8
+ XoqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739793304; x=1740398104;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kiQbsePGizEeW1k4o93v0zTlwG1UoOlrzsKnA8rGeBA=;
+ b=s7QDoIX2B0TcHkisT/eptbQPEpCuuZDOqgNia7cZ7Fnh8kUCd/GenZsG8Q+rw4dpwx
+ 6TKaOfTP1dDY06Q+i0CRxgFUUCWc5kTp5Vc3zSnPIDyVdmDgCIMtznwTZyzqKjxSKZ5j
+ agPcfdMF0zPCdO9+nbXC+Z6DkS9n7ojL+Bavv92ne7rkVosn4R+KqjtMwBLyHj8NS1N/
+ ytWBrdRfrFDpz6KQteKaFVfA+Pvl2iQFefquHZ5CkwgBV1K+MA5gpQqnxiTBsrMd0Lno
+ dhQPq+HW0bI5sWylaR3LzZLSqr/xC9gmMZCtQGY/l1XuBqk7cJa7z2chyC+LIcKKmZ41
+ VmHA==
+X-Gm-Message-State: AOJu0YwWDSVFobbs2I06m/tyUOHYG1DerN5ctalsLcqAtVS8BenE696A
+ meXoc41wHYIwM8ASztNIMw4urY/CkoqYEm/DMpuB9WjWBkX/WB54fLsAtTiYGTyMBSZGi7rVbwe
+ 3P7D805ALmClrw8w0ZaaeFO1DyUP6ph5FYNo=
+X-Gm-Gg: ASbGncsbPwsQQxHsmfvxymyTL0vVHFIANu2QhzNv/kiwoyMZax4LaBRADy3Zy/EB51z
+ xw9VdtIWTDspYCHj/VB+zFIl2C4UpakU35SFV40Dy4lhND78tecFqUNQ8UHjxKp2A6ALyVTcy1x
+ e8sOmRJ9RnZBTkKh6ONBd7HmPklZ8JoA==
+X-Google-Smtp-Source: AGHT+IEnNwalJmJ7WZkUYl7VvXAQ3vD9/3EjOuMUimFttzqEdEG0QAvm3ZTbGBagELcVed1D0EXb/F7gJ/P/qVu2wTo=
+X-Received: by 2002:a05:622a:81:b0:471:9774:a03a with SMTP id
+ d75a77b69052e-471dbd1a1d5mr134318231cf.15.1739793304210; Mon, 17 Feb 2025
+ 03:55:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250217111518.93617-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20250217111518.93617-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 17 Feb 2025 15:54:52 +0400
+X-Gm-Features: AWEUYZlOrTma7X4ZUBtgZYrACJP125cRomQPCzZD2n8JUUC8RZD0QOVztPso3wE
+Message-ID: <CAJ+F1CLqHphYkrk-M+mRT8_+a7487gGo530vfCou-8i-vpbjHg@mail.gmail.com>
+Subject: Re: [PATCH] ui/sdl: only compile dmabuf support if CONFIG_GBM
+To: qemu-devel@nongnu.org
+Cc: pierre-eric.pelloux-prayer@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x835.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,51 +93,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Hi
 
-> This clarifies sections that are mistaken by the parser as "intro"
-> sections to be "details" sections instead.
+On Mon, Feb 17, 2025 at 3:16=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
+:
 >
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Fix SDL backend compilation for win32.
+>
+> Fixes: commit 31287d1af4 ("ui/sdl2: Implement dpy dmabuf functions")
+
+Pierre-Eric, I realize this is not yet upstream. Can you update your
+patch? thanks
+
+
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->  qapi/machine.json      | 2 ++
->  qapi/migration.json    | 4 ++++
->  qapi/qom.json          | 4 ++++
->  qapi/yank.json         | 2 ++
->  scripts/qapi/parser.py | 8 ++++++++
->  5 files changed, 20 insertions(+)
+>  ui/sdl2-gl.c | 2 ++
+>  ui/sdl2.c    | 4 ++++
+>  2 files changed, 6 insertions(+)
+>
+> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+> index 31f8fbe032..6bceeed565 100644
+> --- a/ui/sdl2-gl.c
+> +++ b/ui/sdl2-gl.c
+> @@ -251,6 +251,7 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl=
+,
+>      SDL_GL_SwapWindow(scon->real_window);
+>  }
+>
+> +#ifdef CONFIG_GBM
+>  void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+>                              QemuDmaBuf *dmabuf)
+>  {
+> @@ -312,3 +313,4 @@ void sdl2_gl_console_init(struct sdl2_console *scon)
+>      scon->surface =3D NULL;
+>      scon->hidden =3D hidden;
+>  }
+> +#endif /* CONFIG_GBM */
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index 9439745443..8c9df23343 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -806,9 +806,11 @@ static const DisplayChangeListenerOps dcl_gl_ops =3D=
+ {
+>      .dpy_gl_scanout_texture  =3D sdl2_gl_scanout_texture,
+>      .dpy_gl_update           =3D sdl2_gl_scanout_flush,
+>
+> +#ifdef CONFIG_GBM
+>      .dpy_gl_scanout_dmabuf   =3D sdl2_gl_scanout_dmabuf,
+>      .dpy_gl_release_dmabuf   =3D sdl2_gl_release_dmabuf,
+>      .dpy_has_dmabuf          =3D sdl2_gl_has_dmabuf,
+> +#endif
+>  };
+>
+>  static bool
+> @@ -939,7 +941,9 @@ static void sdl2_display_init(DisplayState *ds, Displ=
+ayOptions *o)
+>          sdl2_console[i].kbd =3D qkbd_state_init(con);
+>          if (display_opengl) {
+>              qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
+> +#ifdef CONFIG_GBM
+>              sdl2_gl_console_init(&sdl2_console[i]);
+> +#endif
+>          }
+>          register_displaychangelistener(&sdl2_console[i].dcl);
+>
+> --
+> 2.47.0
+>
+>
 
-Missing updates for the new syntax
 
-* Documentation: docs/devel/qapi-code-gen.rst
-
-* Positive test case(s): tests/qapi-schema/doc-good.json
-
-* Maybe a negative test case for _tag_check() failure
-
-[...]
-
-> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> index c5d2b950a82..5890a13b5ba 100644
-> --- a/scripts/qapi/parser.py
-> +++ b/scripts/qapi/parser.py
-> @@ -544,6 +544,14 @@ def _tag_check(what: str) -> None:
->                          raise QAPIParseError(
->                              self, 'feature descriptions expected')
->                      have_tagged = True
-> +                elif line == 'Details:':
-> +                    _tag_check("Details")
-
-This one.
-
-> +                    self.accept(False)
-> +                    line = self.get_doc_line()
-> +                    while line == '':
-> +                        self.accept(False)
-> +                        line = self.get_doc_line()
-> +                    have_tagged = True
->                  elif match := self._match_at_name_colon(line):
->                      # description
->                      if have_tagged:
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
