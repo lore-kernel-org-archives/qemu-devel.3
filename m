@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA0D3C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E750BC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk3CD-00058Q-6H; Mon, 17 Feb 2025 10:38:09 -0500
+	id 1tk3Hu-0007SW-Oo; Mon, 17 Feb 2025 10:44:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk3CB-00057h-87
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:38:07 -0500
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ id 1tk3Ht-0007Rz-3q
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:44:01 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk3C9-0003wn-KE
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:38:06 -0500
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e5dd164ee34so1536135276.2
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 07:38:05 -0800 (PST)
+ id 1tk3Hr-0004no-8T
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:44:00 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e5ddd781316so998793276.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 07:43:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739806684; x=1740411484; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4wLnYmRin/+YWBkevN2cOEiMcojJOaA8Kgd0qzfJ3RA=;
- b=hmoy/eY5YCOgIZvbVysdtVtLVyM/ltj2aqyI4NFw6pLQUKaIepWk6d9qvl9fd4gNv2
- 5/j6d1DPLADb6IuQJ+spyoFBPplWARdiHnkIslwRMYgP/BuMo99np98IQS9nspR1v9P+
- fTqr7WH2UQNGOSFY/p0me++uS4ix7w1cAKsZcyYCI65fNM4osgkHa/x874IYOaXtyPiz
- fNcGXkYutkjIQUa0fuoq2FkohnLnpK4nREiVASkBESHBpEmxZlv+q1XEWB+hlavMCRwN
- 6dAY+yd+twc3nZmKKwIjYGZKlOqZXpf+H9etlN7UZzYOWVOwPR8EXq37V9mmBfM/FbrK
- imYg==
+ d=linaro.org; s=google; t=1739807037; x=1740411837; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0ZhaA44eEXDUwObb4QOA7d1Iu1Es0Cz6k4D4/ctTUhI=;
+ b=D19EaSY0qL4+yihXocJrg8CWNrlDwO+f4EvqCWsfbvI+sryKlJLGNu7vpYGuIxTTaS
+ QAAmwqh7vBvcly+yT2vMY6P3otNpj92Wz5ZMt5pwh4CXrYcg3cicSXAoXKth9TKCOsJK
+ OgthU3xroMr3k/qbUAMZMDaKkckg6YkNlNQA+mp45QNUaMNEB7X2GTj9pERTir5RWDTd
+ w/0cm3wweb8ZFpfIq97n0oH0ML224ljWG/FmATDTt2soJHL6CaDcCbRNrEKIPL2z9hg+
+ oWs8dkYcto+pxIQbxJX8ocl9V8gJPZKYJphQpwix3o5ZUclbfsnz1uysvdExAX6yHhoj
+ LC5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739806684; x=1740411484;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4wLnYmRin/+YWBkevN2cOEiMcojJOaA8Kgd0qzfJ3RA=;
- b=GP5C+kvrsHdoxarfoAFZMq3qFyb/M+gTT2RirVmFny665se22Ce6bz3ULYVef1uoXi
- /joFlkw87atmhyCuHsoZR7CW/NP3r6Shp93HvC1JlBLcnatGRj5RZF6S3CD6UdlxWWdQ
- Nu2lYckRNtJyzEoKZJrUjh2gb0htnannSky4V3Q3dEVbXHA9sVtshnV461XhN5v3Qvod
- Jt9G4t9rk8R+sbqlRuZrdCp87belfJFcZ6apjkVMXfCKyRQSK1YhCjEIPXjXUNe20yIm
- CmHuZJLRIheQ2ZANSJTdPkoWT+4Zr8fGkLzprOrRYuzWjpFP4HdYqwza5L1grOXNlmcM
- ji1Q==
-X-Gm-Message-State: AOJu0YyjIuvDLwsoXHDi7ZovDMWpMy7YHOLg8eFDBr5T0xeZof8S4pui
- KujJaXsi+Cce4cfyssxq39YMAw72sr8nZDVc4I3QySEShMbJBfAbIb0fB3mmCpcSqb4gZN1Sa1P
- J1q5AcDuvb570m1OwskFnlDPrL15bREnO6x9ACA==
-X-Gm-Gg: ASbGncs6h1DXPoDMre6GUBeMAStPdEDC57M6YCJUJsVv9vnR8F04H9n7lJ7tRQynErg
- 5AdTyDWO968oxkw/P4xk1usWppcfoSHAZ1/4ekih6uo0JDA97cRZswu/aU3dIKLBce9oM0N4ARg
+ d=1e100.net; s=20230601; t=1739807037; x=1740411837;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0ZhaA44eEXDUwObb4QOA7d1Iu1Es0Cz6k4D4/ctTUhI=;
+ b=ipSNF4jynTlQjsTISgYrQsWvhmVtMa4w526jiI78BAHZMQEbdVBBHTmKIZdW1RCUMO
+ +xOeoMgsYG2rpTRhvnw3/VvacRkF09PBMjwrgZmYpiB7J1bmi7iK/LuMrISnXIimPDW0
+ 7eVPhPuvz0iXGpyXRh+B49jBSh6tWPhohAGlM4l86DP12jE+GGCxVa0o5A1UZKlWlsXs
+ SpjZGklivoyzhZF/dVO/oZhiG06ZkHo2cYvUAs0svGqYHI8OUJ9Lh8dnvQMQ9YXkJYAx
+ JSOobP2+e0kjhVvlF0MfShSvbNGGIXrqKJ3seB8O5YmMfmLORUlFnb43xJD7S81epZ7a
+ 2PJg==
+X-Gm-Message-State: AOJu0YwB3FMwJsVQ/cxaKt/li+5WhRCs8lPVK2E+l+lPCehoHVhdgqma
+ cUaAlJ/brm1d81/j82d06r0A960WYz/7dee1HQv5kAv1vGu2YJfMaPwoHF+7JlDOW4KNj8htjpz
+ fHNKfM9hGPIvxUSpDneZhjh04igxVlhFfg5suJg==
+X-Gm-Gg: ASbGnctAKlwjX6aOo8qD/IbbKWS2pxrquuiu0QgYjVIP1zmy+KRD5mT/b+d8JQ7kcUH
+ SKRkKL1lvao6hUSyEGKId9JMHElT+TY+YjeeJrg/CI+Mr5uXhLv9fmEiblOzUQe5JytlJoAlYsA
  ==
-X-Google-Smtp-Source: AGHT+IGf4mJQi/Pkq172KKvhvizv91DycK3Z98LfLq1aOuECvPkuZBcxaTLy04LgliSy4dm03LnNE47gnB8kAatp310=
-X-Received: by 2002:a05:6902:1103:b0:e5d:c686:fe02 with SMTP id
- 3f1490d57ef6-e5dc9043cc3mr6113106276.16.1739806684115; Mon, 17 Feb 2025
- 07:38:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGOzWVXwFQJA/8baRe/V5gOSsryBdIDyXfPSKlkbFCaL2kHImxuthotVbLHymUVk9X4Go+8iQqiNy+TPl2ZkYY=
+X-Received: by 2002:a05:6902:230f:b0:e58:dbf:ed09 with SMTP id
+ 3f1490d57ef6-e5dc9038eaamr8213890276.3.1739807037523; Mon, 17 Feb 2025
+ 07:43:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20250212145457.1899954-1-mochs@nvidia.com>
- <CAFEAcA8VN=M1ysRGTEY4dVd-PJHnK+bw8L2zH2x2bt2DKJ-OgQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8VN=M1ysRGTEY4dVd-PJHnK+bw8L2zH2x2bt2DKJ-OgQ@mail.gmail.com>
+References: <20250212154333.28644-1-philmd@linaro.org>
+In-Reply-To: <20250212154333.28644-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 15:37:52 +0000
-X-Gm-Features: AWEUYZlcLA8dtHhAFrmXl_uUIP-UO9fl042BMfId-WqLdhUlw57izfGQ4sS-bj4
-Message-ID: <CAFEAcA-GhpfX2xg+nCOfeu3+p8rg9QC=9LeP9UyLyY4nPUWS_A@mail.gmail.com>
-Subject: Re: [PATCH v4] hw/arm/virt: Support larger highmem MMIO regions
-To: "Matthew R. Ochs" <mochs@nvidia.com>
-Cc: qemu-devel@nongnu.org, shameerali.kolothum.thodi@huawei.com, 
- nathanc@nvidia.com, qemu-arm@nongnu.org, ddutile@redhat.com, 
- eric.auger@redhat.com, nicolinc@nvidia.com, ankita@nvidia.com, 
- philmd@linaro.org, gshan@redhat.com
+Date: Mon, 17 Feb 2025 15:43:46 +0000
+X-Gm-Features: AWEUYZl_10_fWPu_ufGPbFmphxTHwnwPtq3k43WitvsAD-kUI4E1WUYoZZo1HWk
+Message-ID: <CAFEAcA-4rdTWsBYKL05OKBQc2pLWoPsYm+Qdhb-ZD0qs0t8MQA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] hw/arm: Explicit number of GIC external IRQs for
+ Cortex A9/A15 MPCore
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Alistair Francis <alistair@alistair23.me>, Rob Herring <robh@kernel.org>, 
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,22 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Feb 2025 at 15:35, Peter Maydell <peter.maydell@linaro.org> wrote:
-> /* If changing this, update the docs for highmem-mmio-size */
-> #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
-> #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
+On Wed, 12 Feb 2025 at 15:43, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> and use it in the definition of extended_memmap[] and in
-> the "if (size < ...)" test for the "smaller than default" check.
+> Some boards based on Cortex-A9MP / Cortex-A15MP do not explicit
+> the number of external GIC IRQs, using some (implicit) default value,
+> not always trivial to figure out. Change that by removing the default
+> value, requiring MPCore objects to be created with the "num-irq" set.
 >
-> Have the error message say
->    "highmem_mmio_size cannot be set to a lower value than the default (%d GiB)",
->    DEFAULT_HIGH_PCIE_MMIO_SIZE_GB
+> Since v1:
+> - Remove generic comments (Peter)
+>
+> Philippe Mathieu-Daud=C3=A9 (8):
+>   hw/arm/exynos4210: Replace magic 32 by proper 'GIC_INTERNAL'
+>     definition
+>   hw/arm/exynos4210: Specify explicitly the GIC has 64 external IRQs
+>   hw/arm/realview: Specify explicitly the GIC has 64 external IRQs
+>   hw/arm/xilinx_zynq: Replace IRQ_OFFSET -> GIC_INTERNAL
+>   hw/arm/xilinx_zynq: Specify explicitly the GIC has 64 external IRQs
+>   hw/arm/vexpress: Specify explicitly the GIC has 64 external IRQs
+>   hw/arm/highbank: Specify explicitly the GIC has 128 external IRQs
+>   hw/cpu/arm_mpcore: Remove default values for GIC external IRQs
 
-...or better, use size_to_str() from qemu/cutils.h,
-which will pretty-print a number into a human-readable
-form with a GiB or whatever suffix.
 
-thanks
+
+Applied to target-arm.next, thanks.
+
 -- PMM
 
