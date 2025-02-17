@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEC4C021A0
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 07:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF09FC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 07:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjvXF-0006ng-JP; Mon, 17 Feb 2025 02:27:21 -0500
+	id 1tjvbj-0007pV-BX; Mon, 17 Feb 2025 02:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjvWv-0006mE-5O
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:27:02 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjvbi-0007mX-5O
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:31:58 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjvWs-0003kx-Jn
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:27:00 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43932b9b09aso42844675e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 23:26:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjvbg-0004T6-8E
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:31:57 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43971025798so7562835e9.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 23:31:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739777216; x=1740382016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739777514; x=1740382314; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UVbVeK9AKAsRavh71VAB7hZ4oZ4YjMZXGKKRgd33qIk=;
- b=RvnPrpSo1OpJAyXhVxfaKYdST0/JNvsDYk488nIWCWNXPoCb0mZgaBwvYmBey21/dP
- J34UqGBVnwuTH96K1dlQUyVBWtsE3ZczZ0g8IMUaoRrvNKTng2eal/WYnwTgkBPr/YYi
- 1NOoo2Jsod8lUJOzlRzhdgJ6uIwGhnfLScyVJqU099AQ7VmaAEV3Lbd/Y+W+g3Vc9W9H
- r3D0mJfyqH/Y79H4yHkLvaxTgz3zPT6CLFuN18LGdhcxYy3ssfvYTDVKK6rsBU9Zs9cX
- KV77QU6vfmqUo/l4k3rSUE0kCMuhu3pylUdJjh+ChTzbFcppe7ny/H40cOXdjBZRKWeq
- 4+2A==
+ bh=oWtO0tCA7Cjri5BY0+EOuoEkHHmD6A5uSTSzVNfGZzo=;
+ b=jG7gt2Wodoq7dpgUOZpaKPWm/nuGWwCgmbhLnuhcJtU60RW+XBHRhdABeNsVBtiX9A
+ sVWXTdYClAR2VXxly7kxgBpQT7fIsLQlvYzCAtusoHvvcUS65cPemNcgNeAQjC2S7twJ
+ Ody8CT4CoIEYJLJIHRzekAZF9toSTzs857sEL1g8txrUQNNW+tBmEAL/GZ6Xfe0Sfq65
+ u4iUe3NBHNIMyzpUK/2X/UyBwdx7eXLxr1gAkl9snGjz8T174+WvLZ56jkqMPoRYEGHU
+ pFq0VItVWu/dlbaLalwo7QccdGYTRBTtYKQ4H4VHoo73nDE6XHLVrWB3X3eoG5P6QHUT
+ WCpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739777216; x=1740382016;
+ d=1e100.net; s=20230601; t=1739777514; x=1740382314;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UVbVeK9AKAsRavh71VAB7hZ4oZ4YjMZXGKKRgd33qIk=;
- b=wDe/nYEahiuy7fo4tubtr3QkiNUiKxnNFGMtaFD9M8KsVBe6viLA/jLmUMH5ng8Jhi
- 3azxgDXSOibZYyiB25KNY36n/ZaEfoX0O6i1HkvLJpYD9htnMQt9vEzVmae73TqGXMom
- Vm3nksEll8xpU3NFg1NWrLyv/WRcEHcZshs8Q2U5X2T9Gv+G6CKBImUrAslsP+i+Z4Rk
- x6nQKaApaq0UeF/TwMHMpx7iQ070tMOQfXYLgLMncH+eFosAZUugeYZbQjJc333zWkwV
- WcEd0o+luAlSmu6zG6pDoUKUUe74WlGkXle+QAOUKfyMTXn2Eb+6mKj1viuKdq5lKS9P
- ZJWA==
+ bh=oWtO0tCA7Cjri5BY0+EOuoEkHHmD6A5uSTSzVNfGZzo=;
+ b=c7TQp/5e3nrqdwFnSdGtafek/ec1gax7proT+9y9NAVxChFwk4q/6MQ3h/bKJeCaAn
+ Y3jrwZ+qZeAucEgrjeQiQjtrDorPFqLnf9ThN3Yl1Bvt0CNsYmWdgJvauXtodYwKz8/e
+ oEXBYzFyolmevSXcSOFgbfnnMcM2JF1XWCBEoWLGjPFsrqCV7LZ0wEOOgbJsEVdylTLW
+ PdFAMB8y6LklFB9fgt3RVJYC74gyQTfGH6KbDcMTXr+p4whimDaONpmAZ+dMb7g0ZDzU
+ SjtBF3BFTlSi9EOwpI+AKGoQBgr8cKa6qnXPf6Ap3kjIX2RH7XjYeXqsJQLy2myKWdxK
+ J1uA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVm9J+ko4fkC6ffQM3r6Onxg9hO/GN+Srfay/dg+QrXZIRTmD59daSFUUEIDzwIL022tVUV7L5GXAWu@nongnu.org
-X-Gm-Message-State: AOJu0YxrQOVPZThdXUZd0nyV0o80N4iW5aXpwA+YzWNHaNytb4ceSASD
- GmtKuRLD3EAC77xD3mnHByANOK4n60sOWi0UlyrmUAhcVZsjOnpaphD21YjCfNM=
-X-Gm-Gg: ASbGnct+kE1xPjiOId6Jajp12FqhFIKON9NUOnlTc1VKuPY/l3iGygsfLoMw2iBtP3w
- rnHi2PLC9Dya3lQ3rbbC/meWF265tUQuBGgcec+e7DPSnzZf2FLQ94w6MWpeINWJyx3b4Xw9oZq
- 11iSakulELj7dUWg8C7gKOR/fPOSjgM8MPbkcCSVNOMC/wetIfS5fa2v55iSXx/FhDcMcqJb5YM
- okJFdUeMREuUfO1IGSAzWhN2CR3ZtkCoriV89afrJck8P3uF2IDs6Z/2d7QRXD1qhIAEZnqe/qL
- vXOj3x/RJQZp59AKTiEisDml3+HNP6a6UHc=
-X-Google-Smtp-Source: AGHT+IHJjsl9QlulRLU+hpLQWuR81aH+BgzQ+Rkx+WD5jG2XkxS8WyeCZUh/znvJysyumABRmND+4w==
-X-Received: by 2002:a05:6000:1f84:b0:38d:d9e4:9ba0 with SMTP id
- ffacd0b85a97d-38f33f308d9mr9275415f8f.25.1739777216433; 
- Sun, 16 Feb 2025 23:26:56 -0800 (PST)
+ AJvYcCXGp+llfTEO4Ncqj/0n1Lrz9WVRRQDvtXiERiKMr5KeIlrq18/SEmaKEAPEgVVrhf4VaVgbzAcl4eSn@nongnu.org
+X-Gm-Message-State: AOJu0YwqXO93esiIuvAPI6HWc9AZPThISQ08HIUwf5I3Md8H1SA+Ped+
+ YRK93eoCwTNZ5qq0GGZGDC4ZDmRT7D18/cRVLgFi7pLR+oHDQlA1RPD/D3cI+qI=
+X-Gm-Gg: ASbGncvcBSiEj553/DH8affI1hZj0AAOIsgCyjQtnKkHIp6M2/RJP8R28q2nb28V7Ms
+ V7Wmt8G9NbHOZu3h2dDV5S5FoGiJYP7rCUMQGIm45g2zyRuw2Z/kabC0jh2oD/S2xY4RrqyId/3
+ tJ9SUUcTDjB7OHWl52zaXV55s/B+QVjzlBfB770MgDiIcnv92Fb3Kqwe/Y0uzWfJgZ6OnR1YVdM
+ Df8I/H/Sgn9UFn9ZtjCaQ32qNYzsCssRKbZtiLhuogEMcwGq6ZeYPtAKgyQq0iOmI97fJFvIPWZ
+ aevd6ZJhl5OJPPOtB9JScbNUkaSRCi+zgjw=
+X-Google-Smtp-Source: AGHT+IEQktbSavh5BkGVkbD6ZXILO8e7ks9o9XSVox1cUJW7W/Crwv1c/2sTxfniV3DSmp6GPq7qew==
+X-Received: by 2002:a05:600c:5247:b0:439:4589:1a9f with SMTP id
+ 5b1f17b1804b1-4396e6ec028mr73935575e9.14.1739777513402; 
+ Sun, 16 Feb 2025 23:31:53 -0800 (PST)
 Received: from [192.168.1.121] ([176.167.144.216])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ccef7sm11672668f8f.31.2025.02.16.23.26.54
+ 5b1f17b1804b1-4395a1b8443sm144722165e9.35.2025.02.16.23.31.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 23:26:55 -0800 (PST)
-Message-ID: <5a220564-313a-44e9-8ae9-a2faec14ebb5@linaro.org>
-Date: Mon, 17 Feb 2025 08:26:53 +0100
+ Sun, 16 Feb 2025 23:31:52 -0800 (PST)
+Message-ID: <b13a02f2-c41f-4d51-8f60-5c97cd96c488@linaro.org>
+Date: Mon, 17 Feb 2025 08:31:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/amd_iommu: Don't leak memory in
- amdvi_update_iotlb()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240731170019.3590563-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v9 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
+ Peripheral Interface)
+To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, dantan@linux.ibm.com
+References: <20250216221155.30013-1-dantan@linux.vnet.ibm.com>
+ <20250216221155.30013-2-dantan@linux.vnet.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240731170019.3590563-1-peter.maydell@linaro.org>
+In-Reply-To: <20250216221155.30013-2-dantan@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,50 +103,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/7/24 19:00, Peter Maydell wrote:
-> In amdvi_update_iotlb() we will only put a new entry in the hash
-> table if to_cache.perm is not IOMMU_NONE.  However we allocate the
-> memory for the new AMDVIIOTLBEntry and for the hash table key
-> regardless.  This means that in the IOMMU_NONE case we will leak the
-> memory we alloacted.
-> 
-> Move the allocations into the if() to the point where we know we're
-> going to add the item to the hash table.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2452
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Tested with 'make check' and 'make check-avocado' only, but the
-> bug and fix seem straightforward...
+Hi,
 
-Oh now I remembered:
-https://lore.kernel.org/qemu-devel/CACGkMEtjmpX8G9HYZ0r3n5ErhAENKhQ81f4ocfCYrh=XoF=5hw@mail.gmail.com/
-
-> ---
->   hw/i386/amd_iommu.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+On 16/2/25 23:11, dan tan wrote:
+> Implement support for TPM via SPI interface. The SPI bus master
+> is provided by PowerNV SPI device which is an SSI peripheral.
+> It can uses the tpm_emulator driver backend with the external
+> swtpm.
 > 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 6d4fde72f9b..87643d28917 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -357,12 +357,12 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
->                                  uint64_t gpa, IOMMUTLBEntry to_cache,
->                                  uint16_t domid)
->   {
-> -    AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
-> -    uint64_t *key = g_new(uint64_t, 1);
-> -    uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
-> -
->       /* don't cache erroneous translations */
->       if (to_cache.perm != IOMMU_NONE) {
-> +        AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
-> +        uint64_t *key = g_new(uint64_t, 1);
-> +        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
-> +
->           trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
->                   PCI_FUNC(devid), gpa, to_cache.translated_addr);
+> Signed-off-by: dan tan <dantan@linux.ibm.com>
+> ---
+> 
+> v3:
+> - moved variable tis_addr from TPMStateSPI struct to local
+> - added the VM suspend/resume support:
+>    - added vmstate_tpm_tis_spi declaration
+>    - added tpm_tis_spi_pre_save() function
+> - fixed trace formatting string
+> 
+> v4:
+> - git commit amend only
+> 
+> v5:
+> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
+>    from tpm_tis_spi_properties
+> - In tpm.rst document, under section 'The QEMU TPM emulator device',
+>    moved the 'PowerNV machine' section to immeidately below 'pSeriese
+>    machine'.
+> 
+> v6:
+> - amend commit description
+> - amend hw/tpm/tpm_tis_spi.c prolog to reflect the generic nature
+>    of the implementation
+> - remove irrelevant define of IBM_PONQ
+> - correct the function names to comply with the convention of
+>    beginning with tpm_tis_spi_xxxx()
+> 
+> v7:
+> - Reduce SPI wait states to improve performace.
+>    Although the real SPI buses have four wait states to accomodate
+>    the timing of various slave devices, there is no need to emulate
+>    that for this behavior model.
+> 
+> v8:
+> - re-package the email to comply with the convention.
+> 
+> v9:
+> - conform with the latest device property definition after rebase
+> 
+> ---
+>   docs/specs/tpm.rst   |  15 ++
+>   include/system/tpm.h |   3 +
+>   hw/tpm/tpm_tis_spi.c | 358 +++++++++++++++++++++++++++++++++++++++++++
+>   hw/tpm/Kconfig       |   6 +
+>   hw/tpm/meson.build   |   1 +
+>   hw/tpm/trace-events  |   7 +
+>   6 files changed, 390 insertions(+)
+>   create mode 100644 hw/tpm/tpm_tis_spi.c
+
+
+> diff --git a/hw/tpm/Kconfig b/hw/tpm/Kconfig
+> index a46663288c..5951c225cc 100644
+> --- a/hw/tpm/Kconfig
+> +++ b/hw/tpm/Kconfig
+> @@ -5,6 +5,12 @@ config TPM_TIS_I2C
+>       select I2C
+>       select TPM_TIS
 >   
+> +config TPM_TIS_SPI
+> +    bool
+> +    depends on TPM
+> +    select TPM_BACKEND
+> +    select TPM_TIS
+
+        depends on SSI?
+
+>   config TPM_TIS_ISA
+>       bool
+>       depends on TPM && ISA_BUS
 
 
