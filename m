@@ -4,103 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9F1C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40049C021AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk37V-0002KX-Cb; Mon, 17 Feb 2025 10:33:17 -0500
+	id 1tk38u-00033C-A6; Mon, 17 Feb 2025 10:34:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tk37S-0002K1-Pn
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:33:16 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tk37O-0003Bk-6k
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:33:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D47EE21167;
- Mon, 17 Feb 2025 15:33:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739806386; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1tk38s-00032v-Em
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:34:42 -0500
+Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1tk38o-0003SU-S8
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:34:41 -0500
+Received: from [IPV6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c] (unknown
+ [IPv6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c])
+ by apollo.dupie.be (Postfix) with ESMTPSA id 1312E1520F67;
+ Mon, 17 Feb 2025 16:34:29 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1739806469;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q3No0asvmWbPmMJaDRuUacl1UCbWpTNF1eoo1H4DdLI=;
- b=g36JL4xEWM7dCh9ExSdZ96cusijhOUAVLqzrjN/RVjbnGjs+KW8WklP6LQ0bgtTkeg5cxX
- Ug7Q4z2F0y09eFtgH7H8TMzGbNzfQ1KZlOTfSGHUD1vWvad0vX5njpdX+UZsNrP0tDTSL7
- 0qgYie+9U9cJafvIZ1no1PmECnRocWI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739806386;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=q3No0asvmWbPmMJaDRuUacl1UCbWpTNF1eoo1H4DdLI=;
- b=TRvvCwWEQjGABWOrlg5sP3j4jYwP1NeDGFFtjMBc7iUXbbcsInTRC1Jyo2dOewDHt1pKRw
- yTnPrKmhqZh4PmAA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=op5IY5V3;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rDUKI0Rl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739806385; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=q3No0asvmWbPmMJaDRuUacl1UCbWpTNF1eoo1H4DdLI=;
- b=op5IY5V3ajRsMsIcBaLFLJRymAmcS42Wx/d6o1Fpe4U47Hn487fSar11jXa4FlBkAXk5/3
- LcEWdhNZ1/7hssLzAjhAjvyir1v1wroWOxQK5rxQ09rFdRFARAgScPYxFSnaB7aEp3PvWP
- bZJDfyGOBUEXU+Tgp/pfgL+afQkC/UE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739806385;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=q3No0asvmWbPmMJaDRuUacl1UCbWpTNF1eoo1H4DdLI=;
- b=rDUKI0Rl7LqxyQLdu3NeXCqxb3pgI4gvK9QnYfcE+TOEREM26LPWTPHJ1I+XzuIU7sCD/H
- Jk7DmqsyPwCyUGBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 45A281379D;
- Mon, 17 Feb 2025 15:33:05 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id h9aEAbFWs2esOgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 17 Feb 2025 15:33:05 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, berrange@redhat.com, Prasad Pandit
- <pjp@fedoraproject.org>
-Subject: Re: [PATCH v6 4/4] tests/qtest/migration: add postcopy tests with
- multifd
-In-Reply-To: <20250215123119.814345-5-ppandit@redhat.com>
-References: <20250215123119.814345-1-ppandit@redhat.com>
- <20250215123119.814345-5-ppandit@redhat.com>
-Date: Mon, 17 Feb 2025 12:33:02 -0300
-Message-ID: <871pvwvb69.fsf@suse.de>
+ bh=1JAyd5xzXeqLKkLuiweN6739YV+kfG8V41BQ9FE5OtA=;
+ b=ey16goZ8GcQDzOq9dev6DzaFJLHdpD5nDsowGMc0b8+BB2C+i2sV6MtvAWhfz6RsB+W/GB
+ 2yGdhtzO43l7sHwfCPZvCHiLEEh3xfw+XEI0fGeY6+eN0Ef5uXpjfj8t0PaffzSnpju4zC
+ S+w8jyPF3ClF1Q66CcVXgiTq3IhAJlF6nEn+lKxlpXoJv1xuCHgon7PkSTIDks2g51CujG
+ 3+rA5qlqYqfCIh+W08XQEGZ0ePP5KbD/EdiJJWzqjy8tNftA7K+Cnpmjsw/waIq6kbANA/
+ i5GqwoyLtRYXXVbLHherMTRSR3LwTUDmadbaw8x9aDsjgX5MSxshg2T3gffTCQ==
+Message-ID: <a652c543-faa4-4c26-85b6-4fd56183aa66@dupond.be>
+Date: Mon, 17 Feb 2025 16:34:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: D47EE21167
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH v2 1/2] qcow2: handle discard-no-unref in measure
+To: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ kwolf@redhat.com, andrey.drobyshev@virtuozzo.com
+References: <20240605132539.3668497-2-jean-louis@dupond.be>
+ <80a77456-da98-4346-aa56-a7389934cdcf@redhat.com>
+Content-Language: en-US
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+In-Reply-To: <80a77456-da98-4346-aa56-a7389934cdcf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
+ envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,261 +73,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
+Hi,
 
-> From: Prasad Pandit <pjp@fedoraproject.org>
->
-> Add new qtests to run postcopy migration with multifd
-> channels enabled.
->
-> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-> ---
->  tests/qtest/migration/compression-tests.c | 13 ++++++++
->  tests/qtest/migration/framework.c         |  4 +++
->  tests/qtest/migration/postcopy-tests.c    | 23 +++++++++++++
->  tests/qtest/migration/precopy-tests.c     | 19 +++++++++++
->  tests/qtest/migration/tls-tests.c         | 40 +++++++++++++++++++++++
->  5 files changed, 99 insertions(+)
->
-> v6:
-> - Reorder, make this the second patch in this series.
->
-> v5:
-> - https://lore.kernel.org/qemu-devel/20250205122712.229151-1-ppandit@redhat.com/T/#t
->
-> diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-> index 4558a7b9ff..d4d6b3c4de 100644
-> --- a/tests/qtest/migration/compression-tests.c
-> +++ b/tests/qtest/migration/compression-tests.c
-> @@ -40,6 +40,17 @@ static void test_multifd_tcp_zstd(void)
->      };
->      test_precopy_common(&args);
->  }
-> +
-> +static void test_multifd_postcopy_tcp_zstd(void)
-> +{
-> +    MigrateCommon args = {
-> +        .listen_uri = "defer",
-> +        .caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] = true,
-> +        .start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
-> +    };
-> +
-> +    test_precopy_common(&args);
-> +}
->  #endif /* CONFIG_ZSTD */
->  
->  #ifdef CONFIG_QATZIP
-> @@ -172,6 +183,8 @@ void migration_test_add_compression(MigrationTestEnv *env)
->  #ifdef CONFIG_ZSTD
->      migration_test_add("/migration/multifd/tcp/plain/zstd",
->                         test_multifd_tcp_zstd);
-> +    migration_test_add("/migration/multifd+postcopy/tcp/plain/zstd",
-> +                       test_multifd_postcopy_tcp_zstd);
->  #endif
->  
->  #ifdef CONFIG_QATZIP
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> index 82aaa13e85..2396405b51 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -469,6 +469,10 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
->      args->caps[MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME] = true;
->      args->caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] = true;
->      set_migration_capabilities(from, to, args);
-> +    if (args->caps[MIGRATION_CAPABILITY_MULTIFD]) {
-> +        migrate_set_parameter_int(from, "multifd-channels", 8);
-> +        migrate_set_parameter_int(to, "multifd-channels", 8);
-> +    }
->  
->      migrate_ensure_non_converge(from);
->      migrate_prepare_for_dirty_mem(from);
-> diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-> index b0e70a6367..32fe7b0324 100644
-> --- a/tests/qtest/migration/postcopy-tests.c
-> +++ b/tests/qtest/migration/postcopy-tests.c
-> @@ -90,6 +90,25 @@ static void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
->      }
->  }
->  
-> +static void test_multifd_postcopy(void)
-> +{
-> +    MigrateCommon args = {
-> +        .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
-> +    };
-> +
-> +    test_postcopy_common(&args);
-> +}
-> +
-> +static void test_multifd_postcopy_preempt(void)
-> +{
-> +    MigrateCommon args = {
-> +        .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
-> +        .caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true,
-> +    };
-> +
-> +    test_postcopy_common(&args);
-> +}
-> +
->  void migration_test_add_postcopy(MigrationTestEnv *env)
->  {
->      migration_test_add_postcopy_smoke(env);
-> @@ -110,6 +129,10 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
->              "/migration/postcopy/recovery/double-failures/reconnect",
->              test_postcopy_recovery_fail_reconnect);
->  
-> +        migration_test_add("/migration/multifd+postcopy/plain",
-> +                           test_multifd_postcopy);
-> +        migration_test_add("/migration/multifd+postcopy/preempt/plain",
-> +                           test_multifd_postcopy_preempt);
+First of all sorry for the huge delay, but didn't had time to follow-up 
+on this lately.
+And it got some lower priority, as we don't hit it often and have a 
+fairly easy workaround (fill the empty blocks again in the snapshot by 
+writing data to the disk).
 
-For postcopy-tests.c I'd use /migration/postcopy/multifd so we can run
-them all via command-line. These are also the only ones actually doing
-postcopy migration. We need to distinguish multifd+postcopy proper from
-merely postcopy-ram=true.
+On 7/10/24 14:58, Hanna Czenczek wrote:
+> On 05.06.24 15:25, Jean-Louis Dupond wrote:
+>> When doing a measure on an image with a backing file and
+>> discard-no-unref is enabled, the code should take this into account.
+>
+> That doesn’t make sense to me.  As far as I understand, 'measure' is 
+> supposed to report how much space you need for a given image, i.e. if 
+> you were to convert it to a new image.  discard-no-unref doesn’t 
+> factor into that, because for a 'convert' target (a new image), 
+> nothing can be discarded.
+>
+> Reading the issue, I understand that oVirt uses measure to determine 
+> the size of the target of a 'commit' operation.  Seems a bit like 
+> abuse to me, precisely because of the issue you’re facing.  More 
+> specifically, a 'commit' operation is a complex thing with a lot of 
+> variables, so the outcome depends on a lot.
+Correct. oVirt uses the measure command to find out how big the 
+destination volume needs to be when running a commit/merge of 2 disks.
+This way it can resize the container (Logical Volume here) to the 
+correct size in order to succeed the commit.
+>
+> For example, this patch just checks the discard-no-unref setting on 
+> the top image.  But AFAIU it doesn’t matter what the setting on the 
+> top image is, it matters what the setting on the commit target is. 
+> 'measure' can’t know this because it doesn’t know what the commit 
+> target is.  As far as I can see, this patch actually assumes the 
+> commit target is the first backing image (it specifically checks in 
+> the image whether a block is allocated) – why?
+By default it would check the top image indeed, but not when using the 
+complex json parameters to qemu-img measure.
+For example:
+./build/qemu-img create -f qcow2 /tmp/test.qcow2 128M
+./build/qemu-io -c 'open /tmp/test.qcow2' -c 'write 0 8M' -c 'write 56M 
+20M' -c 'write 10M 8M' -c 'write 24M 32M'
+./build/qemu-img create -f qcow2 -b /tmp/test.qcow2 -F qcow2 
+/tmp/test_snap.qcow2
+./build/qemu-io -c 'open -o discard=unmap,discard-no-unref=on 
+/tmp/test_snap.qcow2' -c 'write 16M 8M' -c 'discard 60M 20M' -c 'write 
+84M 10M'
 
->          if (env->is_x86) {
->              migration_test_add("/migration/postcopy/suspend",
->                                 test_postcopy_suspend);
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index e5d8c49dbe..2126cb8e2c 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -33,6 +33,7 @@
->  #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
->  
->  static char *tmpfs;
-> +static bool postcopy_ram = false;
->  
->  static void test_precopy_unix_plain(void)
->  {
-> @@ -465,6 +466,11 @@ static void test_multifd_tcp_cancel(void)
->      migrate_ensure_non_converge(from);
->      migrate_prepare_for_dirty_mem(from);
->  
-> +    if (postcopy_ram) {
-> +        migrate_set_capability(from, "postcopy-ram", true);
-> +        migrate_set_capability(to, "postcopy-ram", true);
-> +    }
-> +
->      migrate_set_parameter_int(from, "multifd-channels", 16);
->      migrate_set_parameter_int(to, "multifd-channels", 16);
->  
-> @@ -506,6 +512,10 @@ static void test_multifd_tcp_cancel(void)
->          return;
->      }
->  
-> +    if (postcopy_ram) {
-> +        migrate_set_capability(to2, "postcopy-ram", true);
-> +    }
-> +
->      migrate_set_parameter_int(to2, "multifd-channels", 16);
->  
->      migrate_set_capability(to2, "multifd", true);
-> @@ -529,6 +539,13 @@ static void test_multifd_tcp_cancel(void)
->      migrate_end(from, to2, true);
->  }
->  
-> +static void test_multifd_postcopy_tcp_cancel(void)
-> +{
-> +    postcopy_ram = true;
-> +    test_multifd_tcp_cancel();
-> +    postcopy_ram = false;
 
-You could pass this in, there's just one other caller.
+The following commands will give the current output:
+[jean-louis@lt-jeanlouis qemu]$ ./build/qemu-img measure --output json 
+-O qcow2 'json:{"file": {"driver": "file", "filename": 
+"/tmp/test_snap.qcow2"}, "driver": "qcow2", "discard":"unmap", 
+"discard-no-unref":true, "backing": {"driver": "qcow2", 
+"discard-no-unref":false, "file": {"driver": "file", "filename": 
+"/tmp/test.qcow2"}, "backing": null}}'
+{
+     "bitmaps": 0,
+     "required": 71630848,
+     "fully-allocated": 134545408
+}
+[jean-louis@lt-jeanlouis qemu]$ ./build/qemu-img measure --output json 
+-O qcow2 /tmp/test_snap.qcow2
+{
+     "bitmaps": 0,
+     "required": 71630848,
+     "fully-allocated": 134545408
+}
+[jean-louis@lt-jeanlouis qemu]$ ./build/qemu-img measure --output json 
+-O qcow2 'json:{"file": {"driver": "file", "filename": 
+"/tmp/test_snap.qcow2"}, "driver": "qcow2", "backing": {"driver": 
+"qcow2", "file": {"driver": "file", "filename": "/tmp/test.qcow2"}, 
+"backing": null}}'
+{
+     "bitmaps": 0,
+     "required": 71630848,
+     "fully-allocated": 134545408
+}
 
-> +}
-> +
->  static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
->  {
->      qtest_qmp_assert_success(who,
-> @@ -1001,6 +1018,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
->                         test_multifd_tcp_zero_page_legacy);
->      migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
->                         test_multifd_tcp_no_zero_page);
-> +    migration_test_add("migration/multifd+postcopy/tcp/plain/cancel",
-> +                       test_multifd_postcopy_tcp_cancel);
->      if (g_str_equal(env->arch, "x86_64")
->          && env->has_kvm && env->has_dirty_ring) {
->  
-> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-> index 30ab79e058..ce57f0cb5d 100644
-> --- a/tests/qtest/migration/tls-tests.c
-> +++ b/tests/qtest/migration/tls-tests.c
-> @@ -393,6 +393,17 @@ static void test_postcopy_recovery_tls_psk(void)
->      test_postcopy_recovery_common(&args);
->  }
->  
-> +static void test_multifd_postcopy_recovery_tls_psk(void)
-> +{
-> +    MigrateCommon args = {
-> +        .start_hook = migrate_hook_start_tls_psk_match,
-> +        .end_hook = migrate_hook_end_tls_psk,
-> +        .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
-> +    };
-> +
-> +    test_postcopy_recovery_common(&args);
-> +}
-> +
->  /* This contains preempt+recovery+tls test altogether */
->  static void test_postcopy_preempt_all(void)
->  {
-> @@ -405,6 +416,17 @@ static void test_postcopy_preempt_all(void)
->      test_postcopy_recovery_common(&args);
->  }
->  
-> +static void test_multifd_postcopy_preempt_recovery_tls_psk(void)
-> +{
-> +    MigrateCommon args = {
-> +        .start_hook = migrate_hook_start_tls_psk_match,
-> +        .end_hook = migrate_hook_end_tls_psk,
-> +        .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
-> +    };
-> +
-> +    test_postcopy_recovery_common(&args);
-> +}
-> +
->  static void test_precopy_unix_tls_psk(void)
->  {
->      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-> @@ -651,6 +673,18 @@ static void test_multifd_tcp_tls_psk_mismatch(void)
->      test_precopy_common(&args);
->  }
->  
-> +static void test_multifd_postcopy_tcp_tls_psk_match(void)
-> +{
-> +    MigrateCommon args = {
-> +        .listen_uri = "defer",
-> +        .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
-> +        .start_hook = migrate_hook_start_multifd_tcp_tls_psk_match,
-> +        .end_hook = migrate_hook_end_tls_psk,
-> +    };
-> +
-> +    test_precopy_common(&args);
-> +}
-> +
->  #ifdef CONFIG_TASN1
->  static void test_multifd_tcp_tls_x509_default_host(void)
->  {
-> @@ -762,6 +796,10 @@ void migration_test_add_tls(MigrationTestEnv *env)
->                             test_postcopy_preempt_tls_psk);
->          migration_test_add("/migration/postcopy/preempt/recovery/tls/psk",
->                             test_postcopy_preempt_all);
-> +        migration_test_add("/migration/multifd+postcopy/recovery/tls/psk",
-> +                           test_multifd_postcopy_recovery_tls_psk);
-> +        migration_test_add("/migration/multifd+postcopy/preempt/recovery/tls/psk",
-> +                           test_multifd_postcopy_preempt_recovery_tls_psk);
->      }
->  #ifdef CONFIG_TASN1
->      migration_test_add("/migration/precopy/unix/tls/x509/default-host",
-> @@ -793,6 +831,8 @@ void migration_test_add_tls(MigrationTestEnv *env)
->                         test_multifd_tcp_tls_psk_match);
->      migration_test_add("/migration/multifd/tcp/tls/psk/mismatch",
->                         test_multifd_tcp_tls_psk_mismatch);
-> +    migration_test_add("/migration/multifd+postcopy/tcp/tls/psk/match",
-> +                       test_multifd_postcopy_tcp_tls_psk_match);
->  #ifdef CONFIG_TASN1
->      migration_test_add("/migration/multifd/tcp/tls/x509/default-host",
->                         test_multifd_tcp_tls_x509_default_host);
-> --
-> 2.48.1
+Cause it will not take into account the discard-no-unref flag. And will 
+give the output like you have in the current version.
+
+
+But when running measure with the following options:
+./build/qemu-img measure --output json -O qcow2 'json:{"file": 
+{"driver": "file", "filename": "/tmp/test_snap.qcow2"}, "driver": 
+"qcow2", "discard":"unmap", "discard-no-unref":true, "backing": 
+{"driver": "qcow2", "discard-no-unref":true, "file": {"driver": "file", 
+"filename": "/tmp/test.qcow2"}, "backing": null}}'
+
+It will give a bigger required size:
+{
+     "bitmaps": 0,
+     "required": 88408064,
+     "fully-allocated": 134545408
+}
+
+
+Why? if a block has already been allocated (either with data or contains 
+an allocated ZERO block), we want to include its size in the calculation.
+Because with discard-no-unref, an allocated block will not be reused for 
+some other cluster, so it's not available for data in the snapshot layer.
+So if the cluster was not yet allocated in the destination image, a new 
+cluster will need to be allocated to fit the new data from the snapshot 
+layer.
+
+>
+> So to me that means if 'measure' is supposed to give reliable data on 
+> the commit case, it needs to be extended.  Best thing I can come up 
+> with off the top of my head would be to add an option e.g. 
+> 'commit=<target-node-name>', so we (A) that we’re looking at a commit 
+> and not a convert, and (B) we know what data will be collapsed into 
+> which image and where we need to check for discard-no-unref.
+I think that is what can be achieved by using the json argument. Cause 
+there we can specify the target with its flags.
+And it's then the responsibility of oVirt (or whatever other tool), to 
+pass the correct flags.
+>
+> Hanna
+Thanks for the review
+
+Jean-Louis
+>
+>> If for example you have a snapshot image with a base, and you do a
+>> discard within the snapshot, it will be ZERO and ALLOCATED, but without
+>> host offset.
+>> Now if we commit this snapshot, and the clusters in the base image have
+>> a host offset, the clusters will only be set to ZERO, but the host 
+>> offset
+>> will not be cleared.
+>> Therefor non-data clusters in the top image need to check the
+>> base to see if space will be freed or not, to have a correct measure
+>> output.
+>>
+>> Bug-Url: https://gitlab.com/qemu-project/qemu/-/issues/2369
+>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+>> ---
+>>   block/qcow2.c | 32 +++++++++++++++++++++++++++++---
+>>   1 file changed, 29 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/block/qcow2.c b/block/qcow2.c
+>> index 956128b409..50354e5b98 100644
+>> --- a/block/qcow2.c
+>> +++ b/block/qcow2.c
+>> @@ -5163,9 +5163,16 @@ static BlockMeasureInfo 
+>> *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+>>           } else {
+>>               int64_t offset;
+>>               int64_t pnum = 0;
+>> +            BlockDriverState *parent = bdrv_filter_or_cow_bs(in_bs);
+>> +            BDRVQcow2State *s = NULL;
+>> +
+>> +            if (parent) {
+>> +                s = parent->opaque;
+>> +            }
+>>                 for (offset = 0; offset < ssize; offset += pnum) {
+>>                   int ret;
+>> +                int retp = 0;
+>>                     ret = bdrv_block_status_above(in_bs, NULL, offset,
+>>                                                 ssize - offset, 
+>> &pnum, NULL,
+>> @@ -5176,10 +5183,29 @@ static BlockMeasureInfo 
+>> *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+>>                       goto err;
+>>                   }
+>>   -                if (ret & BDRV_BLOCK_ZERO) {
+>> +                /* If we have a parent in the chain and the current 
+>> block is not data,
+>> +                 * then we want to check the allocation state of the 
+>> parent block.
+>> +                 * If it has a valid offset, then we want to include 
+>> it into
+>> +                 * the calculation, cause blocks with an offset will 
+>> not be freed when
+>> +                 * committing the top into base with 
+>> discard-no-unref enabled.
+>> +                 */
+>> +                if (parent && s->discard_no_unref && !(ret & 
+>> BDRV_BLOCK_DATA)) {
+>> +                        int64_t pnum_parent = 0;
+>> +                        retp = bdrv_block_status_above(parent, NULL, 
+>> offset,
+>> +                                              ssize - offset, 
+>> &pnum_parent, NULL,
+>> +                                              NULL);
+>> +                        /* If the parent continuous block is 
+>> smaller, use that pnum,
+>> +                         * so the next iteration starts with the 
+>> smallest offset.
+>> +                         */
+>> +                        if (pnum_parent < pnum) {
+>> +                            pnum = pnum_parent;
+>> +                        }
+>> +                }
+>> +                if (ret & BDRV_BLOCK_ZERO && !parent && !(parent && 
+>> s->discard_no_unref)) {
+>>                       /* Skip zero regions (safe with no backing 
+>> file) */
+>> -                } else if ((ret & (BDRV_BLOCK_DATA | 
+>> BDRV_BLOCK_ALLOCATED)) ==
+>> -                           (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
+>> +                } else if (((ret & (BDRV_BLOCK_DATA | 
+>> BDRV_BLOCK_ALLOCATED)) ==
+>> +                            (BDRV_BLOCK_DATA | 
+>> BDRV_BLOCK_ALLOCATED)) ||
+>> +                           (retp & BDRV_BLOCK_OFFSET_VALID)) {
+>>                       /* Extend pnum to end of cluster for next 
+>> iteration */
+>>                       pnum = ROUND_UP(offset + pnum, cluster_size) - 
+>> offset;
+>
 
