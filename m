@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AF3C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 664D9C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk411-0004Ao-I0; Mon, 17 Feb 2025 11:30:39 -0500
+	id 1tk43l-0006kn-To; Mon, 17 Feb 2025 11:33:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk40z-0004AS-Vb
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:30:37 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tk43k-0006kX-8o; Mon, 17 Feb 2025 11:33:28 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk40x-0006Db-PM
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:30:37 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-6f768e9be1aso45068417b3.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 08:30:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tk43i-0006gW-DG; Mon, 17 Feb 2025 11:33:27 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-aaec111762bso1053063366b.2; 
+ Mon, 17 Feb 2025 08:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739809834; x=1740414634; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1739810004; x=1740414804; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6j7y5fwAj/00iKVpT6Y8e40xdu1PrDltjUFeJ8hW3Zk=;
- b=Pg5C/+3d8wu96EmvBosJcy4eqc2MMx/Xe8m+Gz6N7WqocPYuA7OSU/Ty/hxdVxHSRH
- J5YonU4OVA3NwvzwoS7e1+6P7sF9NYqs8qWVmLQzAM2eVGSxfGMOSgizK9aY7+Kdymm9
- fwgFURSLSRQGLlo6b6jEcXZpnfMG+GyRs+AOxjJibNxgBXfS9jJ4KEHKRrlxEMdWT68M
- 0ezgZl9zlPPJwaUECrQtfmwpVh0N1bgdEPKuboPX97obqtJtcop4Z9kV+4MwqAGYRRFH
- wyzwMOFDffiQbENbQVOQyP0/RCEr68eXcJJWlWwonbCLWFR7EHuuZuOrXFgluyZJrWAo
- 7p3w==
+ bh=prUa2diEnEeJXeNZX3iDb7yAW70/AEkniWxY+/HiH/Q=;
+ b=GkaGlOR3sU4mdxJRPMg+BOS8VrVV37RyULJz4TOopohWIvnXlM2/UnHqKb2A9+5WFU
+ HO1Qn3p0bxls5rgxXVQNe3gqhwduqPImiyHB2IhUZvxoX4m+5swT+KkmAmKuL0WrPWJn
+ uDFupt9YV9vwTa3JcG6eEw/5sMMpa9eTpTcKOYaM8XW1OWfI9fO1RP7qax/EsueMe8Ux
+ C8mzvWNAlZnV/r6+sTl6JVu1EtfLf4ldsmIS4Aa4hl7NagFfazbzWwv+x0aPmiW96+ZA
+ eTp9mg6PcEcc5mPwBDlmIA9PUoSeE2Png9v7jxIjN+5PCSdc78hvQEkdNjodORylPF14
+ kH2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739809834; x=1740414634;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1739810004; x=1740414804;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6j7y5fwAj/00iKVpT6Y8e40xdu1PrDltjUFeJ8hW3Zk=;
- b=M/LM7Ij2QCL6S1thEBeZUcz53SWPOL2Ox7kWB5yF8HZ6N1fPCFHy//+QhYF+Kq0Jpj
- RFdw3WMrN81S/zZNv20ZkhAvWVsI62DrrmV2W52V5yjW0+PaJSYWWlOGNETSKTr7aHJq
- Db/hTRhvb5WZzv2Cf/d6uHJPQEzO+cLUT19hB+yNiRJA7cU4rxtOAHbvq2/gXi0Ca3ez
- SXlWwo4x6feRzAgFZAJlcg3MUV4MaKI+0eLzS8QSpIpSYAdIH4/NiwqeuVdWvPwNNP1a
- dvmNIhLfq33/j2cGBq03ChROdtnX1v77K936J3mUgev+XvoTa4mpyW2nGYhlqZYVMcjl
- y1Jg==
-X-Gm-Message-State: AOJu0Yw2PpgDyCXtc5FZ1nh3hrcBxl3I3FcEThb3JSbz9LwU7QLlxnKp
- dv0fcUcTqgUlP/KSWJAdu5CKddp2+skD+Co08VTujx/8aof6eOiN8lZQTwg8YB2mHA3tzKceQEy
- UX6T1SE4Vr/szeLV65KjpWGbycmQu8BAPRjLvbA==
-X-Gm-Gg: ASbGnctVFm4zr2fSo039ybLCirzOLKWSx5Aq9U6Pk3T7nAgRaHzjkMnsCprf0t0WfGh
- NkxIvtZmoYVBMHXg7Pq4BVi0/dDP7wCGYR3MnhiRMCOMubrooQ1EdRR8xRs7sm+CRPOgdSAN9sg
- ==
-X-Google-Smtp-Source: AGHT+IF15qdRadTGJh11kJIS86k+95RCNcRPRtQYr+RMTXewIvhn61qZ/iY4776tM2DfO4KRNNW+UvpMHjUbxu657rw=
-X-Received: by 2002:a05:6902:3408:b0:e58:36ad:a1ba with SMTP id
- 3f1490d57ef6-e5dc98b2a49mr7287514276.16.1739809833930; Mon, 17 Feb 2025
- 08:30:33 -0800 (PST)
+ bh=prUa2diEnEeJXeNZX3iDb7yAW70/AEkniWxY+/HiH/Q=;
+ b=ixYUD0JG3JCVIpgJ9VqgIaAsi4E5dHh9k96xTs7/1PQ6gAY8NlRoi2q2KINQ1YijaK
+ kB3fVSJpDCBeopinXSwjl7zBhOzAIWkiYixz/DCHwRCQQ69pddzEC70UFwe/9mDKH7Ne
+ dDUNQGt5ie63ytWZTI3uradQ3RY6PPdjIFnNaYOvZU529OQMoZRe9wOMOofSPPfcU70k
+ 1aw0pKNavGIwKtrg4mzlsG+Lwvn6CjbYJ1/H3oaPlHmlfbtiLD0A+Nu0MQinNFVicvQj
+ qOA+HU14nbhWgY8fDhLqY2dPPhSehQUNiSOyWH/UicfFgZ0EzMnbDFyJzflhgboCH78T
+ XRQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX84Ie+w72uxJbiCPOtEP0YK6E/FBPnD54iXE/Ie9c5zZviR+VU96xs9OrZNvQa7h6DmwMZ8eQDiw==@nongnu.org
+X-Gm-Message-State: AOJu0Yzh/AZhiXzW51yy8tZli69RlOCpvPSbKXPT+s1UVTt/H4QKAVor
+ UIJl/vd6WznLxKXHEBkxkNzuiMq+eO/mBbuDZrvQe0CjTDU2PCvZ
+X-Gm-Gg: ASbGncs9+EDSr7Supb14ea5SJMpm3Vmuqku3dQDbAKjhwZRC39Br30dJzMCGLh6jMLh
+ YHushTuyADvU7D7f+/1HGyncbUqHfGrbu4uFeMWD1gpePRUrdTFAl3SpBSci5Rg4LNpAwfy9LQN
+ qz08aFDkQkjBoUTOUu1OLrDnDeH/8ty5RtQVm+sRuisgVrz1jJZt0PYrUQUD9g9fU7iI8WpvroD
+ iTFsigXmFHY3T2zbrNdOt4Rz92Tgttm7fb3AFOaW+LVb02iflYGxw/OS4l+vzm5eh46Njrs3y2P
+ Kpfa/pzKEJc=
+X-Google-Smtp-Source: AGHT+IFaxPcAm2kU0HK7u4IttnSmA3ucoMw53Ax8ExITUjjIm831RDTQr7WQ0/E9hyk0WiJLyPScNQ==
+X-Received: by 2002:a17:907:2da7:b0:ab7:eff8:f92e with SMTP id
+ a640c23a62f3a-abb70d36233mr975119666b.21.1739810003841; 
+ Mon, 17 Feb 2025 08:33:23 -0800 (PST)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abb9f3a695dsm185382866b.2.2025.02.17.08.33.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Feb 2025 08:33:23 -0800 (PST)
+Date: Mon, 17 Feb 2025 16:33:20 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 08/18] hw/arm/fsl-imx8mp: Add PCIe support
+In-Reply-To: <CAFEAcA8Ravyh4_iVXvmHzQzXa=gOTu8+-OPNLRLVB78if8i4Ww@mail.gmail.com>
+References: <20250204092112.26957-1-shentey@gmail.com>
+ <20250204092112.26957-9-shentey@gmail.com>
+ <CAFEAcA8Ravyh4_iVXvmHzQzXa=gOTu8+-OPNLRLVB78if8i4Ww@mail.gmail.com>
+Message-ID: <A84E9FE5-390E-42C4-8DCE-8C796D21E7C0@gmail.com>
 MIME-Version: 1.0
-References: <20250110131754.2769814-1-alex.bennee@linaro.org>
- <20250110131754.2769814-24-alex.bennee@linaro.org>
-In-Reply-To: <20250110131754.2769814-24-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 16:30:22 +0000
-X-Gm-Features: AWEUYZnJJhE-eSMqEP6pcLauS0o1XaV6wHO-47q30QTnWliK5Hx-6pnCF8tc6hA
-Message-ID: <CAFEAcA8Kf4eF-nxEsxhPZnV3pwU+9kXLq1zXDi61ODQEQXaAYw@mail.gmail.com>
-Subject: Re: [PULL 23/32] tests/functional: extend test_aarch64_virt with
- vulkan test
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- "open list:Virt" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,130 +102,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Jan 2025 at 13:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
-> Now that we have virtio-gpu Vulkan support, let's add a test for it.
-> Currently this is using images build by buildroot:
+
+
+Am 17=2E Februar 2025 13:40:48 UTC schrieb Peter Maydell <peter=2Emaydell@=
+linaro=2Eorg>:
+>On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>> Linux checks for the PLLs in the PHY to be locked, so implement a model
+>> emulating that=2E
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
 >
->   https://lists.buildroot.org/pipermail/buildroot/2024-December/768196.ht=
-ml
+>> +static const VMStateDescription fsl_imx8m_pcie_phy_vmstate =3D {
+>> +    =2Ename =3D "fsl-imx8m-pcie-phy",
+>> +    =2Eversion_id =3D 1,
+>> +    =2Eminimum_version_id =3D 1,
+>> +    =2Efields =3D (const VMStateField[]) {
+>> +        VMSTATE_UINT8_ARRAY(data, FslImx8mPciePhyState,
+>> +                            ARRAY_SIZE(((FslImx8mPciePhyState *)NULL)-=
+>data)),
 >
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Message-Id: <20250108121054.1126164-24-alex.bennee@linaro.org>
+>Use a defined constant for the number of array elements, please=2E
+>We don't do this thing with ARRAY_SIZE of a cast NULL pointer
+>anywhere else in the codebase=2E
 
-Hi; this test currently fails for me with a clang sanitizer
-build (ubuntu 24.04 host). It seems to run weston in the guest,
-which fails with:
+Ack -- will change to a named constant=2E I think I took inspiration from =
+<https://gitlab=2Ecom/qemu-project/qemu/-/blob/v9=2E2=2E1/hw/scsi/vmw_pvscs=
+i=2Ec?ref_type=3Dtags#L1276>
 
-2025-02-17 16:11:10,218: [16:11:10.672] Command line: weston -B
-headless --renderer gl --shell kiosk -- vkmark -b:duration=3D1.0
-2025-02-17 16:11:10,224: [16:11:10.675] OS: Linux, 6.11.10, #2 SMP Thu
-Dec  5 16:27:12 GMT 2024, aarch64
-2025-02-17 16:11:10,225: [16:11:10.680] Flight recorder: enabled
-2025-02-17 16:11:10,226: [16:11:10.681] warning: XDG_RUNTIME_DIR
-"/tmp" is not configured
-2025-02-17 16:11:10,226: correctly.  Unix access mode must be 0700
-(current mode is 0777),
-2025-02-17 16:11:10,226: and must be owned by the user UID 0 (current
-owner is UID 0).
-2025-02-17 16:11:10,227: Refer to your distribution on how to get it, or
-2025-02-17 16:11:10,227:
-http://www.freedesktop.org/wiki/Specifications/basedir-spec
-2025-02-17 16:11:10,228: on how to implement it.
-2025-02-17 16:11:10,240: [16:11:10.695] Starting with no config file.
-2025-02-17 16:11:10,253: [16:11:10.707] Output repaint window is 7 ms maxim=
-um.
-2025-02-17 16:11:10,262: [16:11:10.716] Loading module
-'/usr/lib/libweston-14/headless-backend.so'
-2025-02-17 16:11:10,313: [16:11:10.768] Loading module
-'/usr/lib/libweston-14/gl-renderer.so'
-2025-02-17 16:11:21,858: libEGL warning: egl: failed to create dri2 screen
-2025-02-17 16:11:21,959: libEGL warning: egl: failed to create dri2 screen
-2025-02-17 16:11:22,023: libEGL warning: egl: failed to create dri2 screen
-2025-02-17 16:11:22,032: [16:11:22.486] failed to initialize display
-2025-02-17 16:11:22,033: [16:11:22.488] EGL error state:
-EGL_NOT_INITIALIZED (0x3001)
-2025-02-17 16:11:22,036: [16:11:22.490] fatal: failed to create
-compositor backend
+>
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>> +static void fsl_imx8m_pcie_phy_class_init(ObjectClass *klass, void *da=
+ta)
+>> +{
+>> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+>> +
+>> +    dc->realize =3D fsl_imx8m_pcie_phy_realize;
+>> +    dc->vmsd =3D &fsl_imx8m_pcie_phy_vmstate;
+>> +}
+>
+>This is missing the reset method=2E
 
-Then eventually the test framework times it ou and sends it
-a SIGTERM, and QEMU SEGVs inside libEGL trying to run an
-exit handler:
+Indeed=2E I'll add it=2E
 
-qemu-system-aarch64: terminating on signal 15 from pid 242824
-(/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/pyth=
-on3)
-UndefinedBehaviorSanitizer:DEADLYSIGNAL
-=3D=3D243045=3D=3DERROR: UndefinedBehaviorSanitizer: SEGV on unknown addres=
-s
-0x73fbfefe6a31 (pc 0x73fbba9788e9 bp 0x73fbbbe0af80 sp 0x7ffd676fbfe0
-T243045)
-=3D=3D243045=3D=3DThe signal is caused by a READ memory access.
-    #0 0x73fbba9788e9
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #1 0x73fbbaafc178
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16fc178)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #2 0x73fbba62564f
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x122564f)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #3 0x73fbbab067d7
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x17067d7)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #4 0x73fbba63b786
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x123b786)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #5 0x73fbba96290a
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x156290a)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #6 0x73fbba941c5c
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x1541c5c)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-    #7 0x73fbc2041f20
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f20) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #8 0x73fbc2041f68
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f68) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #9 0x73fbc2034ca9
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x34ca9) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #10 0x73fbc203ae90
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3ae90) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #11 0x73fbc203aeda
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3aeda) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #12 0x73fbc20a45f5
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa45f5) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #13 0x73fbc20a2bfc
-(/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa2bfc) (BuildId:
-6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
-    #14 0x73fbd3047a75 in __run_exit_handlers stdlib/exit.c:108:8
-    #15 0x73fbd3047bbd in exit stdlib/exit.c:138:3
-    #16 0x5a5bab5e3fdb in qemu_default_main
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mai=
-n.c:52:5
-    #17 0x5a5bab5e3f9e in main
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/mai=
-n.c:76:9
-    #18 0x73fbd302a1c9 in __libc_start_call_main
-csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #19 0x73fbd302a28a in __libc_start_main csu/../csu/libc-start.c:360:3
-    #20 0x5a5ba9c5b554 in _start
-(/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-aar=
-ch64+0x15dc554)
-(BuildId: 8efda3601b42aa2644dde35d1d63f7b22b649a33)
+Thanks for the review,
+Bernhard
 
-UndefinedBehaviorSanitizer can not provide additional info.
-SUMMARY: UndefinedBehaviorSanitizer: SEGV
-(/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
-(BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-=3D=3D243045=3D=3DABORTING
-
-thanks
--- PMM
+>
+>thanks
+>-- PMM
 
