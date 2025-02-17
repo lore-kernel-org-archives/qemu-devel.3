@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FDEC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF97FC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 15:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk2tG-0007bW-31; Mon, 17 Feb 2025 10:18:34 -0500
+	id 1tk2xJ-00007s-OU; Mon, 17 Feb 2025 10:22:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tk2tD-0007V5-Tk
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:18:32 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1tk2xF-00006t-AX
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:22:42 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tk2tB-0000q8-U2
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:18:31 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5ded46f323fso5655370a12.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 07:18:29 -0800 (PST)
+ id 1tk2xD-0001Qh-3l
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 10:22:41 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-abb8d63b447so167427266b.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 07:22:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739805507; x=1740410307; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739805757; x=1740410557; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K2Y0zFfXopWu4WzN003ye9VQ5YyGl8LE3MEeNy82QtQ=;
- b=ilAHdoNl9KhC4jadz6N7qTAxB3jRm/npYzbOmhC7TGbukmcnkT/nG+YdRlzNgtcPas
- xOtaE71oqOGgcqbjU7tUEBE09u1wDd7eUDRNiv3CDsDVZ6yRZJwMucD0+MEG7YnjJ9gS
- 6wcvIwLQ/en9DocQnkNt1UsXbsFV3OoMeX/sXTl2ZknP3vB31AvSbjajKDMMXpLF0pE8
- uDnpm+WWfaA/mi0aS7naxXnlZ/y/pxaKsfIZm95eb3tLJmuyFEeCP53fJY6gCQdn7VYi
- EB0lXXZ7Dj0zHNFqH50d85i0RdtS4Md2SqbbAaeHsMk9V85VgqLu6ID7Apcbg0IHE38L
- J6PQ==
+ bh=+WWGKNxiozGh75XkklhUkHM2qBIGifIFRLsE6JUAYtc=;
+ b=v5nkVGWXeh5HK0NyHPe4Z2VN69FhrMWZe3ASgS8m8Bqgusbv3Ee1gWx+WEDH6oSSZ2
+ qkbU3FY7ntyB7mxMRKG9fmTyfAaBcQha7m3bs7/8RN9BtFnHsmjk73OFA8oNWbDzMpOX
+ pp6wYlgbhC4CLhGk9Vx5z7duGn8f9G2WCqZJx2klzEfCXJiqwdkiF5aFP/6P1lG0woti
+ jbALcTSy5XuBpuBurtn2DFbP5rWx/f+GPT3/cp6FtZ1eBCaywpaj9WIsCPXvsWWgmR6F
+ xXj9PBnBIT2GNmWXvvCbN5mxkaK2mdJD5N+0+Mf0TmwvI4FjGFHDmBBEnYn+k/c0bjm+
+ h81A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739805507; x=1740410307;
+ d=1e100.net; s=20230601; t=1739805757; x=1740410557;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=K2Y0zFfXopWu4WzN003ye9VQ5YyGl8LE3MEeNy82QtQ=;
- b=AtvXNUAHQI8t1DpozKxV+C6QNfOsdSJQ4Epcb6bFoQ+Wele6FysNJqk9tItZf3kIvJ
- 4XxCNa4Cgr4/FYBUblglLzVJuP1GIIzOv3XKg2JAz9K33saaKT06uKOgQ4fwe4rhBder
- LHey54d/BhV6WMIvMvUCr43cXTwukbQ8/uQXx5ZD8nUHx74h0wcxtee3YXYA7GdJYo37
- cq+qdny9+M7Gt1bRLQHNMALh1R1t+5EZiKg3ljyaKdWAkMGMhxT3OjQjR4boYYfuiKZv
- OX3MQxKb59fHE5+cTS6xk01lP+IGKHXUPWdnRqNXbMdD7RgJ0eqOtlObyo9N7rJd1pmu
- sGwg==
+ bh=+WWGKNxiozGh75XkklhUkHM2qBIGifIFRLsE6JUAYtc=;
+ b=RVS8mP5z0gUHhV7c+fgWtFze0clVhOdSkpqySKQjKKjKUjX0wLcFnyfJkLHPZvzyDl
+ 1SQsJu2qV/6rGcOduPD5/bXoJSuJJIBgMDIxfb92oOTEU2t2tAx0DWc37yw8TRouq0DT
+ 4K/c5Nnns/kRWwHuBz0cwicvKWJN0OJW97Fw6l25pS3rz96AFzfmeQjzbqS5biHI7wXR
+ zEM6l1/Cmgfc/3gfrOlu+g+Gc8+T6ztSUFqLAd7uuWEwaPqsHhEH5BTEKkZD8QGLAg35
+ 54ftA4Av4FohdJdv+TmgrYDZ1Y61pc9994A/ACqwgIq2UsbjYdGObMfXVgqTydoy/xCV
+ jLbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzEFT++agrvZMwA83iRPPNTSUet46UWUduYuRXTSaELTDjZOXA+4C53TgofH5szvpL/D5VivgZ+tDe@nongnu.org
-X-Gm-Message-State: AOJu0Yxef0L3HrNWrFBqRmRDTq8zGGOqCWLT+ILQYE5sl3C/wcftn9I5
- et2hlAM4NLQTp0C5gLpBGEdBh/N86liCWqAbcIIsvHY9ixtbce7KFsHboiFVJm8=
-X-Gm-Gg: ASbGncvtY+SxUcOsvJ/qI4bg5SaCPD3XevCoSYeV6WXcjNqQBYUzXyl/0Sy/zIpsH59
- Ng8UjLGapMrH3UKZbeitWytBCnGCC/NEQKA2+dEnP9rZHfHu69V/XUUlUZXm8mp8vEz38bFQ8ji
- B4Y7+Y6V275WTn3RgBm/nfTz62eWdijZNc2T9n55D0AM87xaWzHPDht3ptDn2DJkY3fvmc5y9ts
- xZp+Yk72rECCfYr8gNgLOJq7OkXiycKYzyMW2GHZBPVuZnC0oskByNN8J04yIm65Q4hTyE3Vifq
- eKuMj2m/V4OWQANt7g==
-X-Google-Smtp-Source: AGHT+IGVeweK40fYZr2FdYlgJSSL3FNMKPqZC3VvwUH4Hrl1nMkqoMdnfF1JkcZEHfQ/crfbMYyhrg==
-X-Received: by 2002:a17:907:1dd6:b0:abb:b1ce:b4f0 with SMTP id
- a640c23a62f3a-abbb1ced563mr55800566b.4.1739805507160; 
- Mon, 17 Feb 2025 07:18:27 -0800 (PST)
+ AJvYcCXs0CvNZn0llwWIP+q4GI5tfYcTmoPVBpHzJugEXMAxWY/SJHCaL3r6eBdTy5yALt7ltmZi7/FAsadL@nongnu.org
+X-Gm-Message-State: AOJu0Yy3S3NttnqEg5k++twSJjEXxoNohyZeaCmlhF+L5NbNZ80G2fQp
+ a8XFD224Gvv7p0zO+rVlIzZX63qLNAJKe2Vwnl6cCJfiQHv0cMeZscZZTp1WCoQ=
+X-Gm-Gg: ASbGnctY1Hs3HhRWkbmOZlUeqFINr+gRfjJJZQX+r6YTjPAsAanO67CAy2P1TjeslMV
+ upgPtyNfB75ffgN5PlrYOWGzrOma15JOET+MCKh9kv519cHZaf+dRNVE3uAlxxTR2MgJX0n1WAf
+ pxL+Jfk1gVWx6oi7Qwu7xYfpX8H5xjoQBuhQB8Kj2OuXJgPKwLt5rsP/XTyghwDtvH/8fcbQ5uA
+ Ld9YkYrhAeb2QjaPHNMalICAfLhpWwW+xPegqw5yTGKWN/q62PLsT8HQRcDP5iwje4Q1NUYlD1q
+ LFAqIjJcN0X1YP17qg==
+X-Google-Smtp-Source: AGHT+IGBU8JyPxlo67GfMYxtmsxmejrUaTtVzeau0aOtFEo0gAPGM/4o5qeLPaAoaS6zwz+HmHmnoQ==
+X-Received: by 2002:a17:906:6a02:b0:ab7:e1d5:d0c3 with SMTP id
+ a640c23a62f3a-abb70e3fc7fmr992525766b.51.1739805756572; 
+ Mon, 17 Feb 2025 07:22:36 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abb88c69c1bsm365736266b.110.2025.02.17.07.18.26
+ a640c23a62f3a-abb804fc0b3sm434856366b.11.2025.02.17.07.22.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 07:18:26 -0800 (PST)
+ Mon, 17 Feb 2025 07:22:36 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7A2A35F936;
- Mon, 17 Feb 2025 15:18:25 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 4F4E45F936;
+ Mon, 17 Feb 2025 15:22:35 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
@@ -87,19 +87,19 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
  <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
  <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
 Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
-In-Reply-To: <18bb7aa3-93cc-4a38-9641-31e6e988c64e@collabora.com> (Dmitry
- Osipenko's message of "Fri, 31 Jan 2025 20:13:35 +0300")
+In-Reply-To: <f58d250d-3831-4ff1-a018-f62f9aeb2527@collabora.com> (Dmitry
+ Osipenko's message of "Fri, 14 Feb 2025 19:03:44 +0300")
 References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
- <87cyg844fr.fsf@draig.linaro.org>
- <18bb7aa3-93cc-4a38-9641-31e6e988c64e@collabora.com>
+ <8734ggpped.fsf@draig.linaro.org>
+ <f58d250d-3831-4ff1-a018-f62f9aeb2527@collabora.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Mon, 17 Feb 2025 15:18:25 +0000
-Message-ID: <87h64slhvi.fsf@draig.linaro.org>
+Date: Mon, 17 Feb 2025 15:22:35 +0000
+Message-ID: <87bjv0lhok.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -124,7 +124,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-> On 1/27/25 19:17, Alex Benn=C3=A9e wrote:
+> On 2/14/25 17:33, Alex Benn=C3=A9e wrote:
 >> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 >>=20
 >>> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
@@ -139,29 +139,137 @@ ted
 U as
 >>> a real/native host GPU device for GL/VK applications.
 >>>
->>> [1] https://www.youtube.com/watch?v=3D9sFP_yddLLQ
->>>
->>> Today there are four DRM native context drivers existing in a wild:
->>>
->>>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->>>   - AMDGPU, completely upstreamed
+>> <snip>
 >>=20
->> Well good news and bad news.
+>> So first the good news. I can now get this up and running (x86/kvm guest
+>> with Intel graphics) and as far as I can tell the native context mode is
+>> working. With Dongwon Kim's patch the mirroring/corruption I was seeing
+>> is gone.
 >>=20
->> I can verify that AMD native context works when I run my Aarch64 guest
->> on my Aarch64 host with -accel TCG (therefor avoiding KVM all together).
->> I get potato frame rates though (~150FPS) although I suspect that is
->> because the PCI errata workaround.
+>> I can successfully run glmark2-wayland (although see bellow) but vkmark
+>> completely fails to start reporting:
 >>=20
->> When it comes to graphics memory allocation is there anything I can do
->> to force all allocations to be very aligned? Is this in the purview of
->> the AMD drm drivers or TTM itself?
+>>   MESA: info: virtgpu backend not enabling VIRTGPU_PARAM_CREATE_FENCE_PA=
+SSING
+>>   MESA: info: virtgpu backend not enabling VIRTGPU_PARAM_CREATE_GUEST_HA=
+NDLE
+>>   MESA: error: DRM_IOCTL_VIRTGPU_GET_CAPS failed with Invalid argument
+>>   MESA: error: DRM_IOCTL_VIRTGPU_CONTEXT_INIT failed with Invalid argume=
+nt, continuing without context...
+>>   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space lef=
+t on device
+>>   MESA: error: Failed to create virtgpu AddressSpaceStream
+>>   MESA: error: vulkan: Failed to get host connection
+>>   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space lef=
+t on device
+>>   MESA: error: Failed to create virtgpu AddressSpaceStream
+>>   MESA: error: vulkan: Failed to get host connection
+>>   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space lef=
+t on device
+>>   MESA: error: Failed to create virtgpu AddressSpaceStream
+>>   MESA: error: vulkan: Failed to get host connection
+>>   MESA: warning: ../src/gfxstream/guest/vulkan/gfxstream_vk_device.cpp:6=
+81: VK_ERROR_DEVICE_LOST
+>>   MESA: error: DRM_VIRTGPU_RESOURCE_CREATE_BLOB failed with No space lef=
+t on device
+>>   MESA: error: Failed to create virtgpu AddressSpaceStream
+>>   MESA: error: vulkan: Failed to get host connection
+>>   MESA: warning: ../src/gfxstream/guest/vulkan/gfxstream_vk_device.cpp:3=
+32: VK_ERROR_DEVICE_LOST
+>>   =3D=3D=3D Physical Device 0 =3D=3D=3D
+>>       Vendor ID:      0x8086
+>>       Device ID:      0xA780
+>>       Device Name:    Intel(R) Graphics (RPL-S)
+>>       Driver Version: 101068899
+>>       Device UUID:    b39e1cf39b101489e3c6039406f78d6c
+>>=20
+>> I was booting with 4G of shared memory.
 >
-> All GPU allocations should be aligned to a page size. Alignment is
-> specified by AMD driver. I don't expect that alignment is the problem.
-> What's the size of your host and guest pages?
+> Thanks for the testing.
+>
+> I assume all these errors are generated by the failing gfxstream. Hence,
+> may ignore them since you don't have enabled gfxstream.
+>
+>> Later versions of vkmark (2025.01) fail due to missing the
+>> VK_KHR_display extension required as of
+>> https://github.com/vkmark/vkmark/commit/7c3189c6482cb84c3c0e69d6dabb9d80=
+e0c0092a
+>
+> This VK_KHR_display problem is only reproducible with your rootfs that
+> you shared with me. It could be a trouble with your build configs or a
+> buggy package version used by your rootfs build, more likely the
+> former.
 
-4k AFAIK.
+So you have built that latest vkmark? This is a recent addition to
+vkmark for the 2025.1 release.
+
+Does vulkaninfo --summary show the extension available for you? It is
+certainly available on the host side:
+
+VK_KHR_display                         : extension revision 23
+
+>>> # Note about known performance problem in Qemu:
+>>>
+>>> DRM contexts are mapping host blobs extensively and these mapping
+>>> operations work slowly in Qemu. Exact reason is unknown. Mappings work
+>>> fast on Crosvm For DRM contexts this problem is more visible than for
+>>> Venus/Virgl.
+>>=20
+>> And how!
+>>=20
+>> With drm_native I get a lot of stutter while running and barely 100FPS
+>> (compared to ~8000 on pure venus). IMHO we need to figure out why there
+>> is such a discrepancy before merging because currently it makes more
+>> sense to use=20
+> If you'd run with Xorg/Wayland directly without a DE, then it should
+> work okay. This should be a problem with unmapping performance that I'm
+> thinking about.
+>
+> That unmapping problem is partially understood. Unmapping code works
+> correctly, but we'll need to optimize the flatview code to perform
+> unmapping immediately.
+
+Why immediately? Surely if we are unmapping we can defer it. Or is this
+a case of having stale mappings making the life of new allocations
+harder?
+
+> Meanwhile, you may apply the QEMU hack below, it
+> should resolve most of the stutter, please let me know if it helps.
+>
+> There is also a pending Mesa intel-virtio blob mapping optimization that
+> currently isn't available in my gitlab code, I'll refresh that feature
+> and then ask you to try it.
+>
+> Could be that there is more to the unmapping perf issue in QEMU. I'm
+> investigating.
+>
+> AMDGPU nctx is less affected by the bad unmapping performance. I expect
+> it will work well for you.
+>
+>
+>
+> diff --git a/util/rcu.c b/util/rcu.c
+> index fa32c942e4bb..aac3522c323c 100644
+> --- a/util/rcu.c
+> +++ b/util/rcu.c
+> @@ -174,7 +174,7 @@ void synchronize_rcu(void)
+>  }
+>
+>
+> -#define RCU_CALL_MIN_SIZE        30
+> +#define RCU_CALL_MIN_SIZE        1
+>
+>  /* Multi-producer, single-consumer queue based on urcu/static/wfqueue.h
+>   * from liburcu.  Note that head is only used by the consumer.
+> @@ -267,7 +267,7 @@ static void *call_rcu_thread(void *opaque)
+>           * added before synchronize_rcu() starts.
+>           */
+>          while (n =3D=3D 0 || (n < RCU_CALL_MIN_SIZE && ++tries <=3D 5)) {
+> -            g_usleep(10000);
+> +            g_usleep(1000);
+>              if (n =3D=3D 0) {
+>                  qemu_event_reset(&rcu_call_ready_event);
+>                  n =3D qatomic_read(&rcu_call_count);
 
 --=20
 Alex Benn=C3=A9e
