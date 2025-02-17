@@ -4,85 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89736C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 18:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90A5C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 18:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk5Sz-00026L-Du; Mon, 17 Feb 2025 13:03:37 -0500
+	id 1tk5VR-0003ij-Qz; Mon, 17 Feb 2025 13:06:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tk5St-0001yy-1b
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 13:03:33 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tk5Sq-0004sV-5q
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 13:03:30 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1739815388; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=jtMRpG73FXiAS9Yhb3VFM8jQofpxc3zcwofuoO90lvhWHUCHnAomqHbHT/61wGUm3eisz4D1KCrcXg+QituXgRd3Jjawq045YWZgMG88+SdvZe8G3SbBx7BnCkxR7FBPgupyu6KPCnYWc4MjFBl67tvENQhU7QCkYsqRBjTV2Po=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1739815388;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=StZ+j9Bn6VQGEz9sNLSQ+A5EWQZynslB1DaE0phWMx4=; 
- b=bUOfI8aVOpEG5Nt6jdfFwx1PbojTWdR3HryttBoo7rufP1y5Pt9AVz0KQf07npdEfiOxWxaTXUtnI3m1UebAJYF4VeiryRqYAdb97mJS711ag8YgEr99HSAR7UfssGbGWBoa45NMQiQpPj/82lF4XE/vv9b2ECGJgh+EANeHiJU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739815388; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=StZ+j9Bn6VQGEz9sNLSQ+A5EWQZynslB1DaE0phWMx4=;
- b=bMo3MkrMi7qsQf5r0mNm3EHK1UPihUYE+M8BfISr8N9o6d+1KStRwsXbVS5bZCUi
- jEfDvicBzFrrHtRtJ266ts/UTGm4uKn/OiMPPyDvE56w7JiGsAElh7t+4b0bSBmYfah
- tUwH/3B8jQkKZ1UCkXNh898VBYZRnQ/RwsFvSrqo=
-Received: by mx.zohomail.com with SMTPS id 1739815386177439.1455086184113;
- Mon, 17 Feb 2025 10:03:06 -0800 (PST)
-Message-ID: <c6e5b341-12fb-4580-a9df-2a016f2571b3@collabora.com>
-Date: Mon, 17 Feb 2025 21:02:59 +0300
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tk5VQ-0003iP-5U; Mon, 17 Feb 2025 13:06:08 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tk5VO-0005Nx-Fu; Mon, 17 Feb 2025 13:06:07 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5e04064af07so3751057a12.0; 
+ Mon, 17 Feb 2025 10:06:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739815564; x=1740420364; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vaN2sSPFFiwBnMfqYqsl5cyD2PC40+ClPj2oGdRuNAw=;
+ b=fFr3u/T4BjYZX4rxftcOzo5jDC5iQzi0rpuND7aM79FW1BsFK2aZ8j6r2C85arzDAY
+ s9SQst3zNPGS82jBJjUkyTAyxT7xgvRcomgM1hiEUZ6f6T89inuoc9QA/msfaglKOpy4
+ bAI0QSLLOSa4swPxcdsODfJgFvy6jRcgfLHdh9zqqGmUtZCr8wkRTYbanGv5S5tUEp6l
+ n6XMaNuFINDq1jn+HE7G/qGNfgq/MCRMpV7mgfmkaaeHQL/2p9rTnxXKQkonXMZuqYgD
+ MOsmNxhSx1vINupZXN/t4gujZOe/1O1LNBPM/t2lw4RzV37sNqm6if7kS0yztPZuZN01
+ 316A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739815564; x=1740420364;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vaN2sSPFFiwBnMfqYqsl5cyD2PC40+ClPj2oGdRuNAw=;
+ b=gXtb3X/FlgViR3rNCTjUxUHox/c9Jlj+IFHHY/eMajfa0USCVtO+50YtrWvYjNBijB
+ hcBKYRoZfQGGXvgne+fgY7CoWrlXcxTrk9eskkUDZwPK37dS4JURprN10xoRjzwJKJqX
+ mAw6pu6JoymkrXfYliYkaF+mLKHiV2ZYWq1SZtDHyQascwPO4/gMfby/L9pHBp6XhQ74
+ kv6o8s0+97jIllRoUL2qgV2UBcCmdqBRixMtefRVr5/QWMABGjQEbZTHn3l6/mu95FRu
+ F0quougCwSNp3bU3vDwzT3FzFmRZfeNNpi9SVXfVDt+3k8vo4JpU/inA8m1n9SXxN8u0
+ jVVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUabD0QendhZ4fzp0JNJ2Hin0VL4Ryk3HX73KOpVR/H2mXXJSW0u5K9iVKD7A7T1RTGYudaNHfW/A==@nongnu.org,
+ AJvYcCUsUFN9+07B7fGexP5ILwwrhIksAfD5EyfKLVIQybjLtjx41vpaHODuzRHlXC2x4wYAxzxrSdOd42bBkw==@nongnu.org
+X-Gm-Message-State: AOJu0YwkJ0JXwXqLGMtvx1GDo8EMd2IUfOkh6G+yyDb+IatiQT7INwuE
+ fb+20wz4gHHAxyAKqIlYoi7RWVlNKl8ICi5TH/JaSH3ibYQ+FF5R
+X-Gm-Gg: ASbGncsLWFAv5gq3A71eV83wUxaPpPCweiMoCyidusG1w4buTH1VYnaLjWHu2/wM6/A
+ W18z5GukBE0OegExQvYKDdrwItfhP7JLpAWIYkcrj9wU5/r6CpRu9xwjLj5lSFvR0YIUM5Boyiy
+ oWVYAp71JHBHfX5oJNTrlYqBPABf9GZfeyAINJ8ccwIPNI1sxCs+iknhmOC53i3U62i5UELTTmG
+ hgbsq6IiKCB3LHgm8iGbQAed8fJVB+vqn6hQoKtGP8RJr63Dj/UcVsrvuKNEsakb9t+U5ypD96P
+ j1BzjyXV2VE=
+X-Google-Smtp-Source: AGHT+IHLuKYdW2FaIMOTwy4X6diFtHVZy+8wsq88+M4SIVCVNzTkDi0Qpk9+EB9Shqvx9sL12qvLAw==
+X-Received: by 2002:a05:6402:4413:b0:5dc:d0be:c348 with SMTP id
+ 4fb4d7f45d1cf-5e0361cc69amr10060460a12.20.1739815563764; 
+ Mon, 17 Feb 2025 10:06:03 -0800 (PST)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dece1b4debsm7544846a12.15.2025.02.17.10.06.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Feb 2025 10:06:03 -0800 (PST)
+Date: Mon, 17 Feb 2025 18:06:01 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Dmitriy Sharikhin <d.sharikhin@yadro.com>,
+ "sai.pavan.boddu@amd.com" <sai.pavan.boddu@amd.com>,
+ "edgar.iglesias@amd.com" <edgar.iglesias@amd.com>,
+ "francisco.iglesias@amd.com" <francisco.iglesias@amd.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+CC: "andrew.smirnov@gmail.com" <andrew.smirnov@gmail.com>,
+ "alistair@alistair23.me" <alistair@alistair23.me>,
+ "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>,
+ "jcd@tribudubois.net" <jcd@tribudubois.net>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 20/21] hw/i2c: Import TCA6416 emulation from Xilinx
+In-Reply-To: <bfe7bca1df7d420266ec804d00a5352ef187c13c.camel@yadro.com>
+References: <20250120203748.4687-1-shentey@gmail.com>
+ <20250120203748.4687-21-shentey@gmail.com>
+ <df0ed59a-fe1b-44b0-a0cc-c62303294d7b@linaro.org>
+ <32A9B14A-A0F9-4768-A28F-80702FA93960@gmail.com>
+ <9d957453-5749-47c7-aad1-6977dac9aeea@linaro.org>
+ <bfe7bca1df7d420266ec804d00a5352ef187c13c.camel@yadro.com>
+Message-ID: <10A067EA-99B7-4898-BA08-15657BE841C4@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/10] Support virtio-gpu DRM native context
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250126201121.470990-1-dmitry.osipenko@collabora.com>
- <8734ggpped.fsf@draig.linaro.org>
- <f58d250d-3831-4ff1-a018-f62f9aeb2527@collabora.com>
- <87bjv0lhok.fsf@draig.linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <87bjv0lhok.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,49 +116,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/17/25 18:22, Alex Bennée wrote:
-...
->> This VK_KHR_display problem is only reproducible with your rootfs that
->> you shared with me. It could be a trouble with your build configs or a
->> buggy package version used by your rootfs build, more likely the
->> former.
-> So you have built that latest vkmark? This is a recent addition to
-> vkmark for the 2025.1 release.
 
-Yes, latest 2025.1 from git/master.
 
-> Does vulkaninfo --summary show the extension available for you? It is
-> certainly available on the host side:
-> 
-> VK_KHR_display                         : extension revision 23
-> 
+Am 3=2E Februar 2025 05:42:55 UTC schrieb Dmitriy Sharikhin <d=2Esharikhin=
+@yadro=2Ecom>:
+>At Sun, 02/02/2025 at 18:09 +0100, Philippe Mathieu-Daud=C3=A9 writes:
+>> No clue about compatibility=2E If you unfortunately need to add it,
+>> then please address my comments in the next version=2E
+>TCA6416 is _way_ more complex device than PCF8574=2E Basically PCF8574 is
+>shift register directly connected to IO lines, while TCA6416 is more like
+>fully-fledged GPIO controller with output direction, drive strength, inte=
+rrupt
+>mask configuration etc etc=2E
+>
+>In Linux kernel these devices are handled by family-compatible driver
+>   drivers/gpio/gpio-pca953x=2Ec
+>Closest things by implementation in QEMU source tree are
+>   hw/gpio/pca9552=2Ec and
+>   hw/gpio/pca9554=2Ec
+>However they are NOT register-compatible with pca953x=2E I suppose, best
+>decision would be new driver for TCA6416 which eventually should support =
+whole
+>pca953x family of I2C GPIO expanders=2E
 
-Have it on guest with my rootfs, not with yours. I'd suspect problem is
-with the your Mesa build flags, maybe you haven't enabled necessary
-flags related to WSI.
+Just for the record: There has been an attempt to implement it: <https://l=
+ore=2Ekernel=2Eorg/qemu-devel/20241107195453=2E2684138-3-titusr@google=2Eco=
+m/>
 
-..
->>> With drm_native I get a lot of stutter while running and barely 100FPS
->>> (compared to ~8000 on pure venus). IMHO we need to figure out why there
->>> is such a discrepancy before merging because currently it makes more
->>> sense to use 
->> If you'd run with Xorg/Wayland directly without a DE, then it should
->> work okay. This should be a problem with unmapping performance that I'm
->> thinking about.
->>
->> That unmapping problem is partially understood. Unmapping code works
->> correctly, but we'll need to optimize the flatview code to perform
->> unmapping immediately.
-> Why immediately? Surely if we are unmapping we can defer it. Or is this
-> a case of having stale mappings making the life of new allocations
-> harder?
-
-Unmapping currently works synchronously for virtio-gpu in QEMU, hence
-deferring it blocks whole virtio-gpu up to 100+ ms. And if multiple
-unmappings are done in a row, then it's 100ms multiplied by the number
-of unmappings.
-
--- 
-Best regards,
-Dmitry
+>
+>Best regards,
+>Dmitrii
 
