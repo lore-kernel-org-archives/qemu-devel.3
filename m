@@ -4,100 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C00EC02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 00:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F62C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 00:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjp1D-000257-3n; Sun, 16 Feb 2025 19:29:51 -0500
+	id 1tjpDr-0000Gj-CJ; Sun, 16 Feb 2025 19:42:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tjp1A-00024Q-Rw
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 19:29:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1tjp18-00045j-Fa
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 19:29:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739752183;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vXJNdbq4maba12nquUSj5Dc56qd2/s7ETawfKG9qXSg=;
- b=aR3obX9zdyYNxHLlt9E858JZEZKbwu2dyVz3V5H0UuD3vtH0USszleD+OSRZDXXKMn45Xc
- FktZn3TKcStE8PeIX4aKTQuDUftkrRcoXo4KUBsGIhh1r62HpiCkCimaIH5UfnCX3Qqe59
- StdThYnCJjI2W+cAH9s1v4UpSCV9y2Y=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-Vrnz3Xa_P4ibE7KtcLRgEw-1; Sun, 16 Feb 2025 19:29:40 -0500
-X-MC-Unique: Vrnz3Xa_P4ibE7KtcLRgEw-1
-X-Mimecast-MFC-AGG-ID: Vrnz3Xa_P4ibE7KtcLRgEw_1739752180
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-22101839788so35608395ad.3
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 16:29:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tjpDp-0000Ga-QS
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 19:42:53 -0500
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tjpDo-0005Pf-71
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 19:42:53 -0500
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-52099627b5aso1380403e0c.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 16:42:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739752971; x=1740357771; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vT55sVX5ZLx6CH/Mf+QtMFKYunWnY36uNJALCzmguLA=;
+ b=nrvwvDU6arGJ/tLUkUzWQMrZxj6BbvPY2Jr222ViDl4nWhw2HFMz8uADBkdKXKD65K
+ puWMhxiKy+AVIJIUnP08fNPa5q2+RUqU/NPEa7Ku/PXkV7ujD6YPuayEMfNxq3Q61/kO
+ Rk4waEv1tSpgSbximqASZKt+tUjAPQ4VdZAD1y2Wh2AJfdvXNCKTGIzO0MkWbY/5pqnj
+ SdurbKwjTcoN1cul88wU9Rd88+2WRZ6xK8K1hs9aY8UYXjWr7uzVmZrXDxgqBxsfOsvt
+ 51/xo9GhJzkQl05bYX4oWFxaMxDC/89r0K2EB7Ua8EAcDUnKHV5AStfAKADs9W0UcUDk
+ WrKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739752180; x=1740356980;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vXJNdbq4maba12nquUSj5Dc56qd2/s7ETawfKG9qXSg=;
- b=M55RWN7CuCXYGA8FbJzBR0fXn2dbWxoe6knP7e7DVDUK2d6lt/kQ4jgp7KRCq5QGF5
- IAL03ukfk9Qz1D2kRrZARqCMQcqMoPwOOWxjkTUPyaZznkKLVWOUZ23HUNGmXRTnlNwI
- enRH/j7+2xjx/FM4OIh316thOcnK7ZKFIKESkjNB5KBwGE/2WndeTKwQ1RDuVSkBCuUM
- G9+nk3SEXXR+0uaQqeksamyuLIAaeiWwJ3gTtb6jhQRRjMJmZ2hZRAzutM7gOnt1JTOi
- 6nt22v4RkxCt2vRiZqSRtFTA2NNkP1QiYa/IO3h/mGZXpJ51AVyWR0qFYSo6b17kstw8
- wPqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNpu26DnoPfMCfxqRN/HD0BS1yLsM0EXXgRfAnlxIwQjNFrJjTQ+4VSsiBbhVF3ecA54RhFqYy/iEV@nongnu.org
-X-Gm-Message-State: AOJu0YygGSlH37VFtmxdI0NouX38Fu5couwaEiya0aD30WOsS4sV4q0l
- sUhf4X7Dpl+t6tumJobq8E5Zmavd+mrx7feC+/Fn2tham+rrgLk06kxKFCXFfc0kF6RPwpeKCm0
- yZdsJZXxAeWrCladB+EbiRMo54jpRZcXxuprHWj+EWZWUIYsS0oGi
-X-Gm-Gg: ASbGnctZJdkMSnafb221NZErSxYv3TLpxjp0xfh1RSlE382kTzZ5Wlnfw731JFq+vGl
- w+Kap3aqDQuYnJR5r7YsTYLmrZGmokAFVHrTo21APePJDk1cSqwVxFZdYXQH35cL7S2G0xZICyL
- bjJ1VL0Amx0qij2fJaaRimhVQmsmzoxoUDK/KKQnXI4crbu0gt0z7h7dabM62QdoAgtjCVtguzy
- lZDlOd9ynAifL7lJXV2VwyrQYAUmFvl2yq2F/QMxlKq60H/01S27gIsYq95s7DegSeRrj48SWZf
- rc10zw==
-X-Received: by 2002:a17:902:cec9:b0:220:bc9e:ff4 with SMTP id
- d9443c01a7336-22104062cebmr123387365ad.28.1739752179786; 
- Sun, 16 Feb 2025 16:29:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH8Iiq/Z42clWvfadWkyFFA9PHMUM0Hj/NRZoVODo8HG8gV8SluVOUO53FXzfsFVIouXoHmsg==
-X-Received: by 2002:a17:902:cec9:b0:220:bc9e:ff4 with SMTP id
- d9443c01a7336-22104062cebmr123387045ad.28.1739752179352; 
- Sun, 16 Feb 2025 16:29:39 -0800 (PST)
-Received: from [192.168.68.55] ([180.233.125.64])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d558527dsm60793765ad.219.2025.02.16.16.29.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 16:29:38 -0800 (PST)
-Message-ID: <b6699187-a720-4fbd-a57c-a7bd86d7621b@redhat.com>
-Date: Mon, 17 Feb 2025 10:29:31 +1000
+ d=1e100.net; s=20230601; t=1739752971; x=1740357771;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vT55sVX5ZLx6CH/Mf+QtMFKYunWnY36uNJALCzmguLA=;
+ b=rABT8IrdWa+2dS/MrFUWJmB8tgv6uH+tMCebl8yXIJuip+3f8iEtUyxtmWoBxaA7ym
+ 42B8TYlv5ArICb02cL7+0La/TtbtoSBkiR3IKUK5/3bP2D6y2Ut0NJ2OlZ4+oxfBRaqO
+ y5JdgMJV/wqSW2B3Y2xIYXfEPY9seSv8pDYYkASR0XhF3IL/2Lp1gvkDCWAKZB5/DcNB
+ HSF90SZIVH5aMq1rMFkTEDNtWBpD6u+eJMXgT9lbElTJ6dOzE4B+iCuYJBR+Iwgm9A6X
+ u4z5VLcFUskblF+z4O4lhmg6lmosTbVVyLyKGMzGz52XEoihtV1F7jMLkmddiyEMb0cO
+ Nhtw==
+X-Gm-Message-State: AOJu0YxmI9CNSesBl8eMLhv/K7GMFh+G2bRV1OHap9tp8+zJ23tkOWVj
+ UcEbY074ZyIRcXOtBsuMm029qB07FyzckpEilHkJ1XaefGrWSy8CfZ37TrtZpwNwsZjORcDV9sh
+ I6GH6NfKN6jsjVBjWF2/dkdoSSYw=
+X-Gm-Gg: ASbGncu4uNzfz9S01QRUL3LjGT8ImG3ik9yvZS2MdSHo6dtuXs78l+plYrRFb5kOLaf
+ ecYIqYx9ZC6WCA8xgiIjbc6YH0YeIps3tEqyk3XhPXtnl0dYofshfbYylks4O6jL09y22gFx8Kw
+ Oiib+YGSB2ucwi+8Sgpqbcgr60BQ==
+X-Google-Smtp-Source: AGHT+IEAhzK8jRV5H+JubGpCdxnc7lpFW3ovJzAHiAgpsn+W8cjumyFuXDtTL5AVx+tUgisSzD21Rhxej9WIs1W+oi8=
+X-Received: by 2002:ac5:c85b:0:b0:520:abfc:4f10 with SMTP id
+ 71dfb90a1353d-520abfc5121mr1330210e0c.3.1739752970692; Sun, 16 Feb 2025
+ 16:42:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] target/arm: Improvement on memory error handling
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, gengdongjiu1@gmail.com,
- peter.maydell@linaro.org, pbonzini@redhat.com, shan.gavin@gmail.com,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-References: <20250214041635.608012-1-gshan@redhat.com>
- <20250214095353.00007afc@huawei.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20250214095353.00007afc@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250216024709.2624325-1-richard.henderson@linaro.org>
+ <20250216024709.2624325-3-richard.henderson@linaro.org>
+In-Reply-To: <20250216024709.2624325-3-richard.henderson@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 17 Feb 2025 10:42:24 +1000
+X-Gm-Features: AWEUYZm2SAUwn3gbXh6ePJMFe6mo7P_joz8tOM7gDFiYmpntRv7ktdMjlCAE7jk
+Message-ID: <CAKmqyKNsKAtMY6VFnTFZN7kkH31x-r3HXrNYxTXQTHrNnnDFGA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tcg: Remove TCG_TARGET_HAS_{br, set}cond2 from riscv
+ and loongarch64
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,68 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/25 7:53 PM, Jonathan Cameron wrote:
-> On Fri, 14 Feb 2025 14:16:31 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
-> 
->> Currently, there is only one CPER buffer (entry), meaning only one
->> memory error can be reported. In extreme case, multiple memory errors
->> can be raised on different vCPUs. For example, a singile memory error
->> on a 64KB page of the host can results in 16 memory errors to 4KB
->> pages of the guest. Unfortunately, the virtual machine is simply aborted
->> by multiple concurrent memory errors, as the following call trace shows.
->> A SEA exception is injected to the guest so that the CPER buffer can
->> be claimed if the error is successfully pushed by acpi_ghes_memory_errors(),
->> Otherwise, abort() is triggered to crash the virtual machine.
->>
->>    kvm_vcpu_thread_fn
->>      kvm_cpu_exec
->>        kvm_arch_on_sigbus_vcpu
->>          kvm_cpu_synchronize_state
->>          acpi_ghes_memory_errors         (a)
->>          kvm_inject_arm_sea | abort
->>
->> It's arguably to crash the virtual machine in this case. The better
->> behaviour would be to retry on pushing the memory errors, to keep the
->> virtual machine alive so that the administrator has chance to chime
->> in, for example to dump the important data with luck. This series
->> adds one more parameter to acpi_ghes_memory_errors() so that it will
->> be tried to push the memory error until it succeeds.
-> 
-> Hi Gavin,
-> 
-> +CC Mauro given:
-> https://lore.kernel.org/all/cover.1738345063.git.mchehab+huawei@kernel.org/
-> 
-> is more or less reviewed subject to some requested patch reordering and
-> whilst I haven't checked, seems unlikely that there won't be a
-> clash with this series (might just be some fuzz)
-> 
+On Sun, Feb 16, 2025 at 12:49=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> These defines never should have been added as they were
+> never used.  Only 32-bit hosts may have these opcodes and
+> they have them unconditionally.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Jonathan, thanks for the pointer. I didn't notice there are pending acpi/hest
-changes. The changes clash with those included in this series, I will take a
-close look.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thanks,
-Gavin
+Alistair
 
-> Jonathan
-> 
-> 
-> 
->>
->> Gavin Shan (4):
->>    acpi/ghes: Make ghes_record_cper_errors() static
->>    acpi/ghes: Use error_report() in ghes_record_cper_errors()
->>    acpi/ghes: Allow retry to write CPER errors
->>    target/arm: Retry pushing CPER error if necessary
->>
->>   hw/acpi/ghes-stub.c    |  3 ++-
->>   hw/acpi/ghes.c         | 45 +++++++++++++++++++++---------------------
->>   include/hw/acpi/ghes.h |  5 ++---
->>   target/arm/kvm.c       | 31 +++++++++++++++++++++++------
->>   4 files changed, 51 insertions(+), 33 deletions(-)
->>
-> 
-
+> ---
+>  tcg/loongarch64/tcg-target-has.h | 2 --
+>  tcg/riscv/tcg-target-has.h       | 2 --
+>  2 files changed, 4 deletions(-)
+>
+> diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-targe=
+t-has.h
+> index ac88522eef..188b00799f 100644
+> --- a/tcg/loongarch64/tcg-target-has.h
+> +++ b/tcg/loongarch64/tcg-target-has.h
+> @@ -37,8 +37,6 @@
+>  #define TCG_TARGET_HAS_clz_i32          1
+>  #define TCG_TARGET_HAS_ctz_i32          1
+>  #define TCG_TARGET_HAS_ctpop_i32        0
+> -#define TCG_TARGET_HAS_brcond2          0
+> -#define TCG_TARGET_HAS_setcond2         0
+>  #define TCG_TARGET_HAS_qemu_st8_i32     0
+>
+>  /* 64-bit operations */
+> diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
+> index f35f9b31f5..98081084f2 100644
+> --- a/tcg/riscv/tcg-target-has.h
+> +++ b/tcg/riscv/tcg-target-has.h
+> @@ -37,8 +37,6 @@
+>  #define TCG_TARGET_HAS_clz_i32          (cpuinfo & CPUINFO_ZBB)
+>  #define TCG_TARGET_HAS_ctz_i32          (cpuinfo & CPUINFO_ZBB)
+>  #define TCG_TARGET_HAS_ctpop_i32        (cpuinfo & CPUINFO_ZBB)
+> -#define TCG_TARGET_HAS_brcond2          1
+> -#define TCG_TARGET_HAS_setcond2         1
+>  #define TCG_TARGET_HAS_qemu_st8_i32     0
+>
+>  #define TCG_TARGET_HAS_negsetcond_i64   1
+> --
+> 2.43.0
+>
+>
 
