@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57366C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 12:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFD1C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 12:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0F1-0006PO-Ed; Mon, 17 Feb 2025 07:28:51 -0500
+	id 1tk0b7-0001it-LY; Mon, 17 Feb 2025 07:51:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0F0-0006PC-Mm
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:28:50 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk0ac-0001cW-U7
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:51:15 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tk0Ey-0007Pt-HI
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:28:50 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so44632895e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 04:28:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk0aZ-0002G0-6x
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:51:10 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4394a0c65fcso46954215e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 04:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739795326; x=1740400126; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n9pR11CqElgBkGL518PlgwWMuY2BtIqMUUGOLOFfaMs=;
- b=sj5KGchPjcOwr8tUf84N/4XgC3LwLPpeJbpt6qGcj8HMEk4HWPHG5+hp95WS/R2Bcj
- YtWtYCLwzwUYhnTd6/zrvZMDqoiz6jRtsOWTsmjN+hW9DXwG/uQyTrTs8k/bBG5IpYjz
- E2j2OM5u7Xd//tp8yVEUxlMdY6tHKH0hWvZD1sce/j5IeJQJlsl4detur6ePs906eFAL
- 2VHizYm6NqT6HrI1Nriyr9R8LeInbyGcJ/Pn6G5AF11bskiS9A8aNwVtsYBpYERIWUme
- N366ASRRLTOP/XssjhO5PzZjlj/PuRN0HP+6QRgOwA0SOU58t+1YSoVDbfEdPVcIU7ul
- GsoQ==
+ d=linaro.org; s=google; t=1739796664; x=1740401464; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NiePYr4R2lPPeGmP7plfEQSYVmoy1fTzZ+m/7c9OtK4=;
+ b=OGPNK5PkIh9I+zB79BBL2qsrr5Sg4XfyAvJUzXrxmvMSkt9/VWkC34nrqcMtsoa4xn
+ wEONP6XAhv5qx95uo1ruMVqaFY7JK22UVIijbIb+A7Ry+OqOW/cWxTh5CHsH+WAgcPNw
+ wZoVlQf6KaY04MYLR3A2Lpj7aJCbdynMSAj90zkSnJMmNUPY9q32FmuhmrtOrWIZi/0L
+ pGszgke2SuogTRSrXadfynqL+/7Fjm5RcvrlATgHxq5VTpCzOypb2FoGQGY9aY7rVW5R
+ 7S2O/ZI1eFXnfMd0qY9393ZtdjdoUwtTGm/hHlPSu0ORxtkC9QKcG4wIb1Igr5o5zGZ4
+ 4wqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739795326; x=1740400126;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n9pR11CqElgBkGL518PlgwWMuY2BtIqMUUGOLOFfaMs=;
- b=aARpsL0jF6baxeoWYf0NDQ67dElkaKIvSbEDJmmVjRrxLoo8yRhmUcgtyL/N5eeuYx
- KGayaAGJktPHNAG2owLMHf2WLtHKQchpVdE2p58+h0WPGW5JH18qujGfHdX8iJCoYPzt
- FrfviawaEv6JTbFKCuAXXa4YTxZDGBenmUpaHtuwf7cMp9bIjNdc1iYzEBjsuZKWxogz
- 2TIcA4pfOaugLNXaJTROpyuzLXHKbgPPZYKgh7QdUfU7IqS1opmhVJ5fNAeVIjmqAaQ2
- ke3lVs1qMcCJwoW134GhVZYb3Jg4szTgoXLQQY/6MsUQCA+Q1w4q3f1xCuaiOACOFTmq
- vNXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0vjAUWa/O9Xi80OMYcFoInya9+l400FvWSAOdmNCDkBsSm9i6Hc6N2f7utsGZZFT24xnF/Ir+rtUR@nongnu.org
-X-Gm-Message-State: AOJu0Yw8+3NLvj1IGiWoCTQUkr+/Z4e+4DY3r4gNeJ/aasJQw+1q5Q3L
- 4161yhmNkXqFbwNjhHOzSGoJsXWM1+wK7NMNweAhkg5XxGkYRl0amqWcQ0un4lI=
-X-Gm-Gg: ASbGncv8DScUJOg+X0TRNhW+Z1J3Y+YWmp5kzxXxrt16st8/pCcSWAQnz5K+H5VEEBM
- bn50MB9kwdzN8o8s6jlbBLG/Kw7YHjMbPfc4cnv+qfgW3YE9cdKsz9sbgc8CAUyHEq2jT8XgWs+
- LKr1zPB9cpbzx+ErXpz7yEE1SA9nOb1C8odqK4Cs/ztFiiINw2mVGRheLdFrYcK/fCo5AC7fjOI
- 9QbrpPsenobc1WDGBUe+9sAjFfNF6PldWnv82+fP8lzZn6FX9Yirnfj/z7ShwIlhugEyHs61WZk
- 2mJBSVuL/NI7B4eWPYDXw7U5v6u0hoBS28I=
-X-Google-Smtp-Source: AGHT+IHDM++yfLfonwXfte8D9fUTHHCdi1GORP0f/fZvACbx3IbqhzOo46EwgHIcdZW9LWqNOacc0w==
-X-Received: by 2002:a05:600c:190b:b0:439:8ef6:5782 with SMTP id
- 5b1f17b1804b1-4398ef65927mr1335245e9.10.1739795326036; 
- Mon, 17 Feb 2025 04:28:46 -0800 (PST)
-Received: from [192.168.1.121] ([176.167.144.216])
+ d=1e100.net; s=20230601; t=1739796664; x=1740401464;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NiePYr4R2lPPeGmP7plfEQSYVmoy1fTzZ+m/7c9OtK4=;
+ b=WG9/VEriyAl78kFqezJL6NV+kMIcEbr/iLd4aHzITsWGO8F4XU/YW73eT25ZAbzJOL
+ YKs5j62bq/slT3wFTNQFk2wkIsNAgoX6wqQc2NeN/fVoRq6pNxfj0WON2FyFLoZuK4L5
+ QwX6kbV7jbWJI/AnKqVZyFB+Hs43a7D4BOGK0yXgKq3gpNXIU04kbseHEGGfuj9OZCW9
+ luyI0GzMO/uYlrLa1cHWT+ymeXjxHLLtlb7CJVQCuybqLvwU4gOzPd26SOtUN3VJgPYy
+ PL1Ib8MG3FI2DzGl5rZ7U3iCOAPYXicqUDCNsuaCkY9rB1w4Q1eS3147izJY08RqOACk
+ bROQ==
+X-Gm-Message-State: AOJu0Yxpt8Ynr7RS6Bss0CW4E2mONfGOjGi3UTj64tjdyDDLWVRZsni7
+ urrFBpfP475FZTgaQHaEuvblfj3SNhihcNBFkZMetfjTxYjkAtzOkR+omK5kkeHZD4VdAKVzp8/
+ /
+X-Gm-Gg: ASbGncujPnY0ykEYaP5GOw0p2OR12kpeh+cuDNS5dztK3a2w5A+KhHTTtNRRyQH6BT5
+ p70gRY02RlMKUIwZWn2Ejx0/6BL0q2+XKhbJtWqUg8U2LypjKlwCrbauKCdAKBrSd8DMe7dZFRJ
+ 9elRIUeLjVKBORm413J1358pX0X1WRccpkcGpw8F+vDUjwTJ7TJ8JxM4lGq46LeNOAse2znU9b7
+ xbPopyQ/sirg/Pk0cnq3xbjGTrAGQx4yydeV1Zf7vbeoh6OZtuV6bOKAdDGbfHXzOw6kDLWO2Zb
+ h9qEvsfoaWTvMyBtpDU2kg==
+X-Google-Smtp-Source: AGHT+IElPVSunQDoj/LR1wcuGU5Drvuf/9A5RYMYQmgm9PQYjhi4/urSiFNfZQDg/wbJTds7Iu0Guw==
+X-Received: by 2002:a05:600c:a384:b0:439:88bb:d023 with SMTP id
+ 5b1f17b1804b1-43988bbd481mr27389535e9.11.1739796663906; 
+ Mon, 17 Feb 2025 04:51:03 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439617da91asm122701335e9.2.2025.02.17.04.28.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 04:28:45 -0800 (PST)
-Message-ID: <051e10cb-7cb1-430d-956d-b508b7f7db5a@linaro.org>
-Date: Mon, 17 Feb 2025 13:28:43 +0100
+ 5b1f17b1804b1-4398e84efb9sm3562455e9.10.2025.02.17.04.51.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Feb 2025 04:51:03 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH 06/10] fpu: Move m68k_denormal fmt flag into floatx80_behaviour
+Date: Mon, 17 Feb 2025 12:50:51 +0000
+Message-ID: <20250217125055.160887-7-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250217125055.160887-1-peter.maydell@linaro.org>
+References: <20250217125055.160887-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] physmem: replace assertion with error
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-stable@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Brijesh Singh
- <brijesh.singh@amd.com>, Pankaj Gupta <pankaj.gupta@amd.com>
-References: <20250217120812.396522-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250217120812.396522-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,62 +102,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+Currently we compile-time set an 'm68k_denormal' flag in the FloatFmt
+for floatx80 for m68k.  This controls our handling of what the Intel
+documentation calls a "pseudo-denormal": a value where the exponent
+field is zero and the explicit integer bit is set.
 
-On 17/2/25 13:08, Paolo Bonzini wrote:
-> It is possible to start QEMU with a confidential-guest-support object
-> even in TCG mode.  While there is already a check in qemu_machine_creation_done:
-> 
->      if (machine->cgs && !machine->cgs->ready) {
->          error_setg(errp, "accelerator does not support confidential guest %s",
->                     object_get_typename(OBJECT(machine->cgs)));
->          exit(1);
->      }
-> 
-> the creation of RAMBlocks happens earlier, in qemu_init_board(), if
-> the command line does not override the default memory backend with
-> -M memdev.  Then the RAMBlock will try to use guest_memfd (because
-> machine_require_guest_memfd correctly returns true; at least correctly
-> according to the current implementation) and trigger the assertion
-> failure for kvm_enabled().  This happend with a command line as
-> simple as the following:
-> 
->      qemu-system-x86_64 -m 512 -nographic -object sev-snp-guest,reduced-phys-bits=48,id=sev0 \
->         -M q35,kernel-irqchip=split,confidential-guest-support=sev0
->      qemu-system-x86_64: ../system/physmem.c:1871: ram_block_add: Assertion `kvm_enabled()' failed.
+For x86, the x87 FPU is supposed to accept a pseudo-denormal as
+input, but never generate one on output.  For m68k, these values are
+permitted on input and may be produced on output.
 
-I'd expect sev-snp-guest to bail out early enough.
+Replace the flag in the FloatFmt with a flag indicating whether the
+float format has an explicit bit (which will be true for floatx80 for
+all targets, and false for every other float type).  Then we can gate
+the handling of these pseudo-denormals on the setting of a
+floatx80_behaviour flag.
 
-Is a KVM-enabled check in sev_snp_guest_instance_init() missing?
+As far as I can see from the code we don't actually handle the
+x86-mandated "accept on input but don't generate" behaviour, because
+the handling in partsN(canonicalize) looked at fmt->m68k_denormal.
+So I have added TODO comments to that effect.
 
-> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   system/physmem.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 67c9db9daad..1ddf9fb10d0 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -1882,7 +1882,11 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->       if (new_block->flags & RAM_GUEST_MEMFD) {
->           int ret;
->   
-> -        assert(kvm_enabled());
-> +        if (!kvm_enabled()) {
-> +            error_setg(errp, "cannot set up private guest memory for %s: KVM required",
-> +                       object_get_typename(OBJECT(current_machine->cgs)));
+This commit doesn't change any behaviour for any target.
 
-Common code should be SW vs HW accel, so IMHO your check
-should go within sev_snp_guest_instance_init(), removing
-the assertion here. That said I have no clue about SEV.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I'm confident this commit preserves existing behaviour, but
+somewhat less confident that I've correctly analysed what our
+current code does, in particular that it doesn't do the x86
+mandated "handle pseudo-denormals on input" part.
+---
+ include/fpu/softfloat-types.h | 10 ++++++++++
+ fpu/softfloat.c               |  9 ++++-----
+ target/m68k/cpu.c             |  3 ++-
+ fpu/softfloat-parts.c.inc     | 20 +++++++++++++++++---
+ 4 files changed, 33 insertions(+), 9 deletions(-)
 
-> +            goto out_free;
-> +        }
->           assert(new_block->guest_memfd < 0);
->   
->           ret = ram_block_discard_require(true);
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index b1941384aef..f57c7193653 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -349,6 +349,16 @@ typedef enum __attribute__((__packed__)) {
+      * and using them as inputs to a float op will raise Invalid.
+      */
+     floatx80_unnormal_valid = 8,
++    /*
++     * If the exponent is 0 and the Integer bit is set, Intel call
++     * this a "pseudo-denormal"; x86 supports that only on input
++     * (treating them as denormals). m68k calls these a type of
++     * normalized number, and may both input and output them.
++     * TODO: currently we only support "handle on both input and
++     * output" or "don't handle and don't generate".
++     * floatx80_invalid_encoding() will always accept them.
++     */
++    floatx80_pseudo_denormal_output_valid = 16,
+ } FloatX80Behaviour;
+ 
+ /*
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index 2a20ae871eb..b299cfaf860 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -537,7 +537,8 @@ typedef struct {
+  *   round_mask: bits below lsb which must be rounded
+  * The following optional modifiers are available:
+  *   arm_althp: handle ARM Alternative Half Precision
+- *   m68k_denormal: explicit integer bit for extended precision may be 1
++ *   has_explicit_bit: has an explicit integer bit; this affects whether
++ *   the float_status floatx80_behaviour handling applies
+  */
+ typedef struct {
+     int exp_size;
+@@ -547,7 +548,7 @@ typedef struct {
+     int frac_size;
+     int frac_shift;
+     bool arm_althp;
+-    bool m68k_denormal;
++    bool has_explicit_bit;
+     uint64_t round_mask;
+ } FloatFmt;
+ 
+@@ -600,9 +601,7 @@ static const FloatFmt floatx80_params[3] = {
+     [floatx80_precision_d] = { FLOATX80_PARAMS(52) },
+     [floatx80_precision_x] = {
+         FLOATX80_PARAMS(64),
+-#ifdef TARGET_M68K
+-        .m68k_denormal = true,
+-#endif
++        .has_explicit_bit = true,
+     },
+ };
+ 
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 505fa97a53f..b21813a1b96 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -139,7 +139,8 @@ static void m68k_cpu_reset_hold(Object *obj, ResetType type)
+     set_floatx80_behaviour(floatx80_default_inf_int_bit_is_zero |
+                            floatx80_pseudo_inf_valid |
+                            floatx80_pseudo_nan_valid |
+-                           floatx80_unnormal_valid,
++                           floatx80_unnormal_valid |
++                           floatx80_pseudo_denormal_output_valid,
+                            &env->fp_status);
+ 
+     nan = floatx80_default_nan(&env->fp_status);
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 1d09f066c5d..6abd6b28b85 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -195,6 +195,18 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
+                                  const FloatFmt *fmt)
+ {
++    /*
++     * It's target-dependent whether exponent 0 and Integer bit set
++     * is valid. TODO: the x86 manual says that the x87 FPU will
++     * accept these on inputs, treating them as denormals, but will
++     * never output them. However we seem to not handle them on
++     * either input or output. Also we think of them as denormal
++     * numbers for m68k, though that doesn't matter since m68k doesn't
++     * use the input_denormal_used flag.
++     */
++    bool has_pseudo_denormals = fmt->has_explicit_bit &&
++        (status->floatx80_behaviour & floatx80_pseudo_denormal_output_valid);
++
+     if (unlikely(p->exp == 0)) {
+         if (likely(frac_eqz(p))) {
+             p->cls = float_class_zero;
+@@ -206,7 +218,7 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
+             int shift = frac_normalize(p);
+             p->cls = float_class_denormal;
+             p->exp = fmt->frac_shift - fmt->exp_bias
+-                   - shift + !fmt->m68k_denormal;
++                   - shift + !has_pseudo_denormals;
+         }
+     } else if (likely(p->exp < fmt->exp_max) || fmt->arm_althp) {
+         p->cls = float_class_normal;
+@@ -342,13 +354,15 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+         frac_clear(p);
+     } else {
+         bool is_tiny = s->tininess_before_rounding || exp < 0;
++        bool has_pseudo_denormals = fmt->has_explicit_bit &&
++            (s->floatx80_behaviour & floatx80_pseudo_denormal_output_valid);
+ 
+         if (!is_tiny) {
+             FloatPartsN discard;
+             is_tiny = !frac_addi(&discard, p, inc);
+         }
+ 
+-        frac_shrjam(p, !fmt->m68k_denormal - exp);
++        frac_shrjam(p, !has_pseudo_denormals - exp);
+ 
+         if (p->frac_lo & round_mask) {
+             /* Need to recompute round-to-even/round-to-odd. */
+@@ -379,7 +393,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+             p->frac_lo &= ~round_mask;
+         }
+ 
+-        exp = (p->frac_hi & DECOMPOSED_IMPLICIT_BIT) && !fmt->m68k_denormal;
++        exp = (p->frac_hi & DECOMPOSED_IMPLICIT_BIT) && !has_pseudo_denormals;
+         frac_shr(p, frac_shift);
+ 
+         if (is_tiny) {
+-- 
+2.43.0
 
 
