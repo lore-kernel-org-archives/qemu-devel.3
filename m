@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA237C021AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE93BC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk2RU-0005ht-LI; Mon, 17 Feb 2025 09:49:52 -0500
+	id 1tk2U4-0008Bx-AX; Mon, 17 Feb 2025 09:52:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1tk2RT-0005ha-GC
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:49:51 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1tk2RR-0005FB-LQ
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:49:51 -0500
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51HEMZX6001808;
- Mon, 17 Feb 2025 14:49:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=bY8BmlAw/xageBiERV7ZAwcWOjAiKjgeX3stpudwP4c=; b=
- l5iQ6qfy1yts8Bmio0qSzR+EwIBfxZlnXSF2WozE4z233rKKeHCsvlmmI/n8YrzK
- H0RS09tJTVYOP650fn265bCCMyK0jG0RszFTEuSTOnbN0hedst/HGZoBkGL6lw3u
- anOrP1LoFo1gK2PClxRjtZ8kSCmn8Nky7v8iBvI6Ngnlt7fWjb0X6rhyzpXSZ6DA
- gHU/qqmaHn9wccBswmRiHbj3IVXgR1rSNq2CvquZIWHsZeaBPDAckQJ2Fgp01cpi
- MMW/dAsLd0QclLRBq6k6v9wajQHm1CAvHK1SQLWrPlE4BG7We30bV5jQ1wjJ7Dk0
- QRIygnTwXuyO2dh1q+Yg1Q==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44tkft4ebd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Feb 2025 14:49:48 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51HDqXYS025113; Mon, 17 Feb 2025 14:49:47 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44thc8039f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Feb 2025 14:49:47 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51HEndFe020797;
- Mon, 17 Feb 2025 14:49:47 GMT
-Received: from jonah-ol8.us.oracle.com
- (dhcp-10-43-68-193.usdhcp.oraclecorp.com [10.43.68.193])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 44thc8033q-4; Mon, 17 Feb 2025 14:49:46 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: eperezma@redhat.com, mst@redhat.com, leiyang@redhat.com, peterx@redhat.com,
- dtatulea@nvidia.com, jasowang@redhat.com, si-wei.liu@oracle.com,
- boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [PATCH v2 3/3] vhost-iova-tree: Update documentation
-Date: Mon, 17 Feb 2025 09:49:34 -0500
-Message-ID: <20250217144936.3589907-4-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250217144936.3589907-1-jonah.palmer@oracle.com>
-References: <20250217144936.3589907-1-jonah.palmer@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk2U3-0008Bf-3g
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:52:31 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk2U1-0005gO-0J
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:52:30 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e3978c00a5aso3278055276.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 06:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739803948; x=1740408748; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CqtaUJztx7c6sd2bjll+P+Uj2HyIK5rXC/EFxbrXhlg=;
+ b=mFnYmo469azZEEf2MWF0dCIYRx7W2I6ZOYlpDpqHMxkyN1NzrjH33u9O05/1SSYVKn
+ nAcfJ9jFBlf3XQ48q5jPsVtT9Diyhl7LQb1b/uMIIOG11dcFRnobtWP0ywhpJk3fj3pr
+ bR4trvHtYLm+EO2+4xXKtEJqB3SxzqxIXqkCH8G8XbT/EjyyfOoYme+mPBgGz1MzaGCN
+ w5RLkdDSDt9qb3JVfe+bj3ARBg4CdvKSbpMvfFYsvL4SfBwM+9MjTcg42CEKPl6LQp3J
+ MmqE5OoXgJpE9hJvldOmSRE+7YPjdq8UvDH9VLxTrra3w202lnCFdhlvBhMh4nmDQ+lZ
+ aUmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739803948; x=1740408748;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CqtaUJztx7c6sd2bjll+P+Uj2HyIK5rXC/EFxbrXhlg=;
+ b=MfQXJWuGFaUd1A5DjNeEr4YI90Wk6vC2mr1uPslEDBJyB6twjse9hnZPmQC5FXOF6i
+ eOUNWOaAl0K4QP7AUJvkXEE3IBAFCoptmSWeCPdvL08TjE2AjUAvRxw3thZ4JI6B2B2u
+ xTevBKmJOC4efwAHfhlvkftZa51Y8lBOK9qmrOCBFE1uMKO1Zu70uXLhco70kvMhmee3
+ cAEXbnbABN0t5nkKIwD9qG1I1hLzsHRmNQNAGHbk88Zq5uzRAnqN11uyFbgeSw9OESsP
+ b/geLlhmARNM+FeCw/Th5KjQWcJmK3eMQ7sFur3Y1rJaRjFa2dDll/bdjUxbaU6DDw2E
+ 2W4Q==
+X-Gm-Message-State: AOJu0YzVr6ELRFcDoojKDAX72FSE43yN99Lzd4evS7ra7DaYDE84LKXQ
+ njRVLt4A4kKQ2+mXKDsGsCITRwm6maRqimXYFx/uFlMnqnAnXBW82pkF30KJ46E87U1r+udKbM0
+ GUF7vFWUnzY3RMD7FJA0vLC67ShSx2RPzfWy4EA==
+X-Gm-Gg: ASbGncscu2UAGlCn3Rs5tRl6ZI+XOoUvRT9nC/BVimKwosVVUSU/a8p+XAnlH55o0En
+ tpCWOqaB5dXADGEdlWr39ZStN8sPUtlDwkIZdqAHds7s8xcBeJrarFaR+pZDmIiBOGEKIBW/6Sw
+ ==
+X-Google-Smtp-Source: AGHT+IHOi5+JQv9/btkuGxeRHSPIcijQJFNR0SJ47z8FkjPdYCzCS1iTg67k7YlWyGCQbaxfFCNJwKg5zOlyee9c+X0=
+X-Received: by 2002:a05:6902:2b8f:b0:e5d:bef4:30bb with SMTP id
+ 3f1490d57ef6-e5dc931d3fcmr6798607276.47.1739803947800; Mon, 17 Feb 2025
+ 06:52:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-17_06,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- adultscore=0 spamscore=0
- mlxlogscore=999 phishscore=0 bulkscore=0 suspectscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2501170000
- definitions=main-2502170125
-X-Proofpoint-ORIG-GUID: zHBQwtmYm8vFTI3rlIhIz1FLpf9URkDd
-X-Proofpoint-GUID: zHBQwtmYm8vFTI3rlIhIz1FLpf9URkDd
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20250208163911.54522-1-philmd@linaro.org>
+ <20250208163911.54522-6-philmd@linaro.org>
+ <CAFEAcA8ZSSD=TxCier0Ji8+DVDspgqKQeKJyVDZ+LEBy=j9=Lw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8ZSSD=TxCier0Ji8+DVDspgqKQeKJyVDZ+LEBy=j9=Lw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Feb 2025 14:52:16 +0000
+X-Gm-Features: AWEUYZkhhfhvNltNh-iUagXLGbpu8Pe8XubVGT6L4jlk_wWHH0BBDa9JD-Eh-Dc
+Message-ID: <CAFEAcA_MLUCqBPLfdwp1u-TEFLz-u5MsmAFeGEYfpOgC0cX8zQ@mail.gmail.com>
+Subject: Re: [PATCH v6 5/7] hw/char/pl011: Consider TX FIFO overrun error
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,90 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Minor update to some of the documentation / comments in
-hw/virtio/vhost-iova-tree.c.
+On Mon, 17 Feb 2025 at 14:29, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
+rg> wrote:
+> >
+> > When transmission is disabled, characters are still queued
+> > to the FIFO which eventually overruns. Report that error
+> > condition in the status register.
+> >
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > ---
+> >  hw/char/pl011.c      | 20 ++++++++++++++++++++
+> >  hw/char/trace-events |  2 ++
+> >  2 files changed, 22 insertions(+)
+> >
+> > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> > index 447f185e2d5..ef39ab666a2 100644
+> > --- a/hw/char/pl011.c
+> > +++ b/hw/char/pl011.c
+> > @@ -61,6 +61,9 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, =
+Chardev *chr)
+> >  /* Data Register, UARTDR */
+> >  #define DR_BE   (1 << 10)
+> >
+> > +/* Receive Status Register/Error Clear Register, UARTRSR/UARTECR */
+> > +#define RSR_OE  (1 << 3)
+> > +
+> >  /* Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC */
+> >  #define INT_OE (1 << 10)
+> >  #define INT_BE (1 << 9)
+> > @@ -158,6 +161,16 @@ static inline unsigned pl011_get_fifo_depth(PL011S=
+tate *s)
+> >      return pl011_is_fifo_enabled(s) ? PL011_FIFO_DEPTH : 1;
+> >  }
+> >
+> > +static bool pl011_is_tx_fifo_full(PL011State *s)
+> > +{
+> > +    if (pl011_is_fifo_enabled(s)) {
+> > +        trace_pl011_fifo_tx_is_full("FIFO", fifo8_is_full(&s->xmit_fif=
+o));
+> > +        return fifo8_is_full(&s->xmit_fifo);
+> > +    }
+> > +    trace_pl011_fifo_tx_is_full("CHAR", !fifo8_is_empty(&s->xmit_fifo)=
+);
+> > +    return !fifo8_is_empty(&s->xmit_fifo);
+>
+> More repetition of expressions, but anyway
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
----
- hw/virtio/vhost-iova-tree.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Here I propose to squash in this tweak:
 
-diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
-index 9d2d6a7af2..fa4147b773 100644
---- a/hw/virtio/vhost-iova-tree.c
-+++ b/hw/virtio/vhost-iova-tree.c
-@@ -37,9 +37,9 @@ struct VhostIOVATree {
- };
- 
- /**
-- * Create a new IOVA tree
-+ * Create a new VhostIOVATree
-  *
-- * Returns the new IOVA tree
-+ * Returns the new VhostIOVATree.
-  */
- VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
- {
-@@ -56,7 +56,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
- }
- 
- /**
-- * Delete an iova tree
-+ * Delete a VhostIOVATree
-  */
- void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
- {
-@@ -69,10 +69,10 @@ void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
- /**
-  * Find the IOVA address stored from a memory address
-  *
-- * @tree: The iova tree
-+ * @tree: The VhostIOVATree
-  * @map: The map with the memory address
-  *
-- * Return the stored mapping, or NULL if not found.
-+ * Returns the stored IOVA->HVA mapping, or NULL if not found.
-  */
- const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *tree,
-                                         const DMAMap *map)
-@@ -81,10 +81,10 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *tree,
- }
- 
- /**
-- * Allocate a new mapping
-+ * Allocate a new IOVA range and add the mapping to the IOVA->HVA tree
-  *
-- * @tree: The iova tree
-- * @map: The iova map
-+ * @tree: The VhostIOVATree
-+ * @map: The IOVA mapping
-  * @taddr: The translated address (HVA)
-  *
-  * Returns:
-@@ -92,7 +92,7 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *tree,
-  * - IOVA_ERR_INVALID if the map does not make sense (like size overflow)
-  * - IOVA_ERR_NOMEM if tree cannot allocate more space.
-  *
-- * It returns assignated iova in map->iova if return value is VHOST_DMA_MAP_OK.
-+ * It returns an assigned IOVA in map->iova if the return value is IOVA_OK.
-  */
- int vhost_iova_tree_map_alloc(VhostIOVATree *tree, DMAMap *map, hwaddr taddr)
- {
-@@ -117,9 +117,9 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *tree, DMAMap *map, hwaddr taddr)
- }
- 
- /**
-- * Remove existing mappings from iova tree
-+ * Remove existing mappings from the IOVA-only and IOVA->HVA trees
-  *
-- * @iova_tree: The vhost iova tree
-+ * @iova_tree: The VhostIOVATree
-  * @map: The map to remove
-  */
- void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map)
--- 
-2.43.5
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -165,12 +165,13 @@ static inline unsigned pl011_get_fifo_depth(PL011Stat=
+e *s)
 
+ static bool pl011_is_tx_fifo_full(PL011State *s)
+ {
+-    if (pl011_is_fifo_enabled(s)) {
+-        trace_pl011_fifo_tx_is_full("FIFO", fifo8_is_full(&s->xmit_fifo));
+-        return fifo8_is_full(&s->xmit_fifo);
+-    }
+-    trace_pl011_fifo_tx_is_full("CHAR", !fifo8_is_empty(&s->xmit_fifo));
+-    return !fifo8_is_empty(&s->xmit_fifo);
++    bool fifo_enabled =3D pl011_is_fifo_enabled(s);
++    bool tx_fifo_full =3D fifo_enabled ?
++        fifo8_is_full(&s->xmit_fifo) : !fifo8_is_empty(&s->xmit_fifo);
++
++    trace_pl011_fifo_tx_is_full(fifo_enabled ? "FIFO" : "CHAR",
++                                tx_fifo_full);
++    return tx_fifo_full;
+ }
+
+thanks
+-- PMM
 
