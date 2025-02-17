@@ -4,126 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC46C021A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 09:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF07C021A0
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 09:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjxb0-0006x6-QU; Mon, 17 Feb 2025 04:39:22 -0500
+	id 1tjxkj-0000uG-II; Mon, 17 Feb 2025 04:49:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
- id 1tjxau-0006ww-L4
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:39:17 -0500
-Received: from mailout3.samsung.com ([203.254.224.33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
- id 1tjxao-0002JM-Jx
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:39:16 -0500
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20250217093859epoutp032304a269b723d3a3089c0a070d9669eb~k9V3cGvP53159631596epoutp03h
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 09:38:59 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20250217093859epoutp032304a269b723d3a3089c0a070d9669eb~k9V3cGvP53159631596epoutp03h
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1739785139;
- bh=sy6dlm46RivPu+uzqtCThlfV9c35JXwDl1zw0oX06cw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=e09cMCFO6ni8nebAAf79mOjrR3QZw8hGmP/44ZGvnwDC6MY+u1/+JTptccy/h9f80
- /mj8S/ijxfZFyK7L1kLy4Wp7ghxz6BiElkt3+tZ/CfS7hBfawR4zgCvL3nppslx777
- ylO8vJ+GgYq7jW2jXIhiNZXm88Tum8wT5pYuBBE0=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTP id
- 20250217093859epcas5p18de803dc50e596673f94a72fe71e844a~k9V28VKxr2060920609epcas5p1G;
- Mon, 17 Feb 2025 09:38:59 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.178]) by
- epsnrtp2.localdomain (Postfix) with ESMTP id 4YxHfT0DLGz4x9Py; Mon, 17 Feb
- 2025 09:38:57 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
- epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
- BF.D4.29212.0B303B76; Mon, 17 Feb 2025 18:38:56 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
- 20250217093732epcas5p34a9841ca77c60e02522232f00090074b~k9Ul_Kzke0862108621epcas5p3O;
- Mon, 17 Feb 2025 09:37:32 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20250217093732epsmtrp16ed253934e606437dd030b0528ecf98e~k9Ul9HHEa2392023920epsmtrp1Q;
- Mon, 17 Feb 2025 09:37:32 +0000 (GMT)
-X-AuditID: b6c32a50-801fa7000000721c-5c-67b303b0afda
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
- epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- F2.56.18729.B5303B76; Mon, 17 Feb 2025 18:37:31 +0900 (KST)
-Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
- epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250217093729epsmtip2f9f3c6d990ce9ebf70633cc86f0e27da~k9Uj7XLXr0985409854epsmtip2N;
- Mon, 17 Feb 2025 09:37:29 +0000 (GMT)
-Date: Mon, 17 Feb 2025 15:07:24 +0530
-From: Sweta Kumari <s5.kumari@samsung.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
- nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
- krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com
-Subject: Re: CXL CCI Get/Set Alert Configuration commands implmented as per
- CXL Specification 3.2 section 8.2.10.9.3
-Message-ID: <20250217093724.f64zqdhk727bhk5b@test-PowerEdge-R740xd>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tjxkh-0000tt-NF
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:49:23 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tjxkg-0003X9-23
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 04:49:23 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e545c1e8a15so4158160276.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 01:49:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739785760; x=1740390560; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yeyfPRoMCd3CAM/mZuxouvxsYVmXxbr0WoHT5lqisMQ=;
+ b=gOOm82ZeEZI6r1ApF1bM6mPBLs6OYgNu6TlMwjO6VXXsZllFCl7OQdeFdX6hRyaJOq
+ D+0IHErNZ5j3KmvDpQvK78ALHtY5Fr0aFbzqqyoQm8QA/7KmZ9omSYBE3/QGzw8j6HO7
+ 0Bic73bO5tREJSSmiza9jQM1oeLuKdCl0aDoXw+8IqTAMrXamszll609pqw4iMBoVxbo
+ c/nTXVMtKQWJ7UmP3S57n9VzFv3GDkskaSq9j8LjRl2ySZWUGxQhE38N1bU6/0HdB/97
+ 9Jtto8yYLAzuW+tWGvg4HLnMrxH0QVZkyKAsKKI0W8cMdxKiAAZGpwxKZmXeHsNFkiDF
+ tjHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739785760; x=1740390560;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yeyfPRoMCd3CAM/mZuxouvxsYVmXxbr0WoHT5lqisMQ=;
+ b=IzQcquAVw7s5SyH23nfj+wueh2gosmZ1IUKVB+KgpPVCBQ0yxj878/u4wQ65XGbiQN
+ g9/vcm5c4k/J8tOkSXDC7Mflmwq3GXtxyGOp0c1An/DZG6tgXq2fvYtoVp3f1s1Up2zL
+ 98EyXrh8H9wDmtn2zVzTPJXRcn+xKpn709zYJ/MeMFI+ajN/9GScJWwrfoD9e0UOgAdA
+ yVctWDEsBKtrEeXrzH/mo5Y2gAqaow3WBTkONTudcBX/fb76uk3YWsMFgmgUiBWI8/XE
+ 7x8XYkz5eSSuHAiSTEBALI61R92o0G/iJsZaILfz8jYcZAhAtfsaKNmYSN8p0LFI/fLP
+ kctg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUH/Y+g3hbe0Qt1BAYY0tRtmr2JRNcFVshSApv4vt7gEPofqtS9CxPI+arxRdXzm9JfjbHtL+4116rV@nongnu.org
+X-Gm-Message-State: AOJu0YzR5oGyi9L5CQ1e10GisdhoLq05zcEYmOO8ktBLMeXhl6Id+bX3
+ K5Ueu4lxSKwpwvNwodE83fOp64TmRQWR8k9ZelqelhX1+Ql7uK80pOCei9JcXfflClKG36vkWiD
+ u5od1i6/W+72cLuBREga1fVclIV7JRDvAh1Kdew==
+X-Gm-Gg: ASbGnctzfUuGLX2TP/yk/Ek9nKLomC4Vr0SoiUXPHA0bI8O7gcppRWBHupxfSAxTE5N
+ EvId/PULXMWgqjm2PIfj6Hg6MUNl2seXl51r9HNRobOOtPkTEegXc42mC5kxAMzEU1h4NzxAq8A
+ ==
+X-Google-Smtp-Source: AGHT+IFFFGoUugvc0Y9IHWzaCNv3Xq74fZKTgWMC0jyMSfw8jvp6hanxr1Gfu3truY2ZH3nhk98kxwDs7S+FLDuLWUU=
+X-Received: by 2002:a05:6902:707:b0:e58:14b:6f99 with SMTP id
+ 3f1490d57ef6-e5dc901f547mr6924885276.1.1739785760394; Mon, 17 Feb 2025
+ 01:49:20 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20250214174359.0000368a@huawei.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCJsWRmVeSWpSXmKPExsWy7bCmuu4G5s3pBhMum1lMP6xo8eX0HjaL
- 1TfXMFrcPLCTyWLVwmtsFgs3LmOyOD/rFIvF3217GS2O9+5gAXLnsDtweeycdZfdo+XIW1aP
- J9c2M3n0bVnF6DF1dr3H501yAWxR2TYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbm
- Sgp5ibmptkouPgG6bpk5QIcpKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgpMCvSK
- E3OLS/PS9fJSS6wMDQyMTIEKE7IzZj+ZwlxwKrziwguVBsZu5y5GTg4JAROJTxsOsHYxcnEI
- CexhlLg57SI7hPOJUaKpoZEZwvnGKHHk9F4WmJZbS9vZIBJ7GSV2Lu9kgWv58+A2M0gVi4Cq
- xNfH3WAdbAJaEj8+PwCLiwgYSby7MYkRpIFZ4CajROOkZ2wgCWGBMomuGQvAGngFnCXWXVjC
- BmELSpyc+QQszilgKPFnM8SBEgK9HBLNPz+zQdzkIjH15mwmCFtY4tXxLewQtpTEy/42KDtb
- 4u7WTqj6EokPt3dD1dtLtJ7qB7uOWSBD4v+iZ6wQcVmJqafWMUHE+SR6fz+BqueV2DEPxlaW
- 2PJvOVS9pMSKz0ugbA+J6x+XQYNlG6PEpgl32Ccwys1C8tAsJPsgbCuJzg9NQDYHkC0tsfwf
- B4SpKbF+l/4CRtZVjFKpBcW56anJpgWGunmp5fB4Ts7P3cQITq5aATsYV2/4q3eIkYmD8RCj
- BAezkgjvoa4N6UK8KYmVValF+fFFpTmpxYcYTYFRNJFZSjQ5H5je80riDU0sDUzMzMxMLI3N
- DJXEeZt3tqQLCaQnlqRmp6YWpBbB9DFxcEo1MEV++f+f36C8/MEzDY7blvNW35K+aV2umOLw
- qlk0kqWjSqhiNXfysqhJR868lOM68Oh5xusyJT2tyQvSJjQUaB0/rNDedytt80m5XRcW8hpa
- f37BJDato/hQXc0ytsnnpqXvfy+YbLfctvlCa+qc3IAikWWrs0Inu3YFtk6QWbdr0V4+Lj6+
- 0A+aN9s+tig1eEi8/2Bf/8FuldC0vghPTsE9Oj8ZwhX47PZvsEhYsuPvjw++HwLSNnQvfvC+
- 0cTg06ocvj+5FRvSXi3Vi500tfvXqtgbuxim/NbRv5H701n0z03Dte1+MskvUwvby1TMmO9Y
- sbyTPWYUoefWWbYlYcbMea/frBZ2/mQ/UZupX4mlOCPRUIu5qDgRAOrfB9Q3BAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCLMWRmVeSWpSXmKPExsWy7bCSvG408+Z0gzvXLC2mH1a0+HJ6D5vF
- 6ptrGC1uHtjJZLFq4TU2i4UblzFZnJ91isXi77a9jBbHe3ewALlz2B24PHbOusvu0XLkLavH
- k2ubmTz6tqxi9Jg6u97j8ya5ALYoLpuU1JzMstQifbsErow5j68zF/wJqXh6/zBbA+N1hy5G
- Tg4JAROJW0vb2boYuTiEBHYzSjx+8ZsdIiEp8fbMJUYIW1hi5b/n7BBFHxgldi5YAVbEIqAq
- 8fVxNwuIzSagJfHj8wNmEFtEwEji3Y1JjCANzAK3GSV+774HViQsUCbRNWMBmM0r4Cyx7sIS
- NhBbSGAbo8S6e4UQcUGJkzOfgNUwC5hJzNv8EGgoB5AtLbH8HwdImFPAUOLP5ovsExgFZiHp
- mIWkYxZCxwJG5lWMkqkFxbnpucWGBYZ5qeV6xYm5xaV56XrJ+bmbGMERoaW5g3H7qg96hxiZ
- OBgPMUpwMCuJ8B7q2pAuxJuSWFmVWpQfX1Sak1p8iFGag0VJnFf8RW+KkEB6YklqdmpqQWoR
- TJaJg1OqgSm62Lno74SUTobvq5a+LGV2SlnhO9dMVfnDVJuA+KX3vRdszD35xUBbucJ433ep
- 7R2VS2/oyhex/S/6o+9sfPpDrEKQQr/HJin9NWvja+ZezFvSNSd/eYlG4o7jsS+/T48+dGXZ
- SZcHrmui7h9T3ND3b2psbJDE0Q93L20+JOqgqpsrGM27MJKjbllR+E/33hNWV/qqLi+uCZV/
- ccHz/umvF3SinaUdzfYuf7Foxu3UjB/ez5JqvnuJiuQw1f2zqOtZNHl/qugc+xmuSk/T7j9k
- uDuzOOH2vGePNu0XuPv91amDrh+ythxbuCds2veKCjueScEfZ+4z0V9dUrxn2aK2TuNZF5Y3
- Sy56zB9ktjtFiaU4I9FQi7moOBEAUaeNffcCAAA=
-X-CMS-MailID: 20250217093732epcas5p34a9841ca77c60e02522232f00090074b
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b
-References: <CGME20250214132317epcas5p3732f86a4aa3cee5c396e18c2bf98a82b@epcas5p3.samsung.com>
- <20250214132211.528019-1-s5.kumari@samsung.com>
- <20250214174359.0000368a@huawei.com>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=s5.kumari@samsung.com; helo=mailout3.samsung.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250215021654.1786679-1-keithp@keithp.com>
+ <20250215021654.1786679-5-keithp@keithp.com>
+ <f7c1e671-f114-40a6-a02b-575bde2de4c4@linaro.org>
+In-Reply-To: <f7c1e671-f114-40a6-a02b-575bde2de4c4@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Feb 2025 09:49:08 +0000
+X-Gm-Features: AWEUYZlejb0hgZHTgmbhgdce8dFeE_u53f_sm0HD9QbqRkYBQOBusbaNx5mAvSA
+Message-ID: <CAFEAcA9uGeJoVGpHBU=830ZrNBojsVT6fER6OBkDw0vDfxXU8g@mail.gmail.com>
+Subject: Re: [PATCH 4/5] target/rx: Load reset vector from memory after first
+ run
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Keith Packard <keithp@keithp.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,263 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
+On Sat, 15 Feb 2025 at 18:24, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 2/14/25 18:16, Keith Packard via wrote:
+> > The ROM images all get deleted as they've been loaded to memory, so we
+> > can't go fetch the reset vector from there. Instead, fetch it from
+> > memory. To make that work, we need to execute the delayed mmu setup
+> > function tcg_commit_cpu as that wires up memory dispatching.
+> >
+> > Signed-off-by: Keith Packard <keithp@keithp.com>
+> > ---
+> >   target/rx/cpu.c | 24 +++++++++++++++++++-----
+> >   1 file changed, 19 insertions(+), 5 deletions(-)
+>
+> IIRC this is where the cpu needs to be part of the 3-phase reset process.
+> ROM gets reset too, but with unspecified ordering wrt the cpu itself.
+> By delaying the load of the reset vector to the reset_exit phase,
+> you can always load from rom.
+>
+> I believe Peter most recently handled a very similar situation with armv7m.
 
-On 14/02/25 05:43PM, Jonathan Cameron wrote:
->On Fri, 14 Feb 2025 18:52:11 +0530
->Sweta Kumari <s5.kumari@samsung.com> wrote:
->
->> 1)get alert configuration(Opcode 4201h)
->> 2)set alert configuration(Opcode 4202h)
->
->Move the change log to below the ---
->The key thing being git then doesn't pick it up whilst applying the patch.
->Whilst changed logs are very useful during the review process we don't
->typically want to keep them in the git history for ever!
->
->Otherwise, main comment here is shorten more names.
->
->Jonathan
->
-Thank you for the feedback, will make the changes accordingly in the v3
-patch.
->>
->> This v2 patch addresses the feedback from the v1 patch and include some minor new changes.
->>
->> Changes in V2:
->> - Removed cover letter as it's a single patch
->> - Added latest spec reference
->> - Fixed alignment issues
->> - Updated shorter variable names to be more descriptive
->> - Replaced field-by-field initialization in 'init_alert_config' with structured initialization for improved readability.
->> - Replaced bit fields with 'uint8_t' and added defines for individual bits.
->>
->> The patch is generated against the Johnathan's tree
->> https://gitlab.com/jic23/qemu.git and branch cxl-2024-11-27.
->>
->> Signed-off-by: Sweta Kumari <s5.kumari@samsung.com>
->> ---
->>  hw/cxl/cxl-mailbox-utils.c  | 116 ++++++++++++++++++++++++++++++++++++
->>  hw/mem/cxl_type3.c          |  16 +++++
->>  include/hw/cxl/cxl_device.h |  15 +++++
->>  3 files changed, 147 insertions(+)
->>
->> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
->> index 9c7ea5bc35..105c63fdec 100644
->> --- a/hw/cxl/cxl-mailbox-utils.c
->> +++ b/hw/cxl/cxl-mailbox-utils.c
->> @@ -28,6 +28,11 @@
->>  #define CXL_DC_EVENT_LOG_SIZE 8
->>  #define CXL_NUM_EXTENTS_SUPPORTED 512
->>  #define CXL_NUM_TAGS_SUPPORTED 0
->> +#define CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD (1 << 0)
->> +#define CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD (1 << 1)
->> +#define CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD (1 << 2)
->> +#define CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD (1 << 3)
->> +#define CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD (1 << 4)
->Let's shorten these as they are very ugly to use when a line long!
->
->#define CXL_ALERTS_OVER_TEMP_WARN_THRESH
->etc. Similar to comments below.
->
-Ok, will shorten the macro names as suggested in v3 patch.
->>
->>  /*
->>   * How to add a new command, example. The command set FOO, with cmd BAR.
->> @@ -86,6 +91,9 @@ enum {
->>          #define GET_PARTITION_INFO     0x0
->>          #define GET_LSA       0x2
->>          #define SET_LSA       0x3
->> +    HEALTH_INFO_ALERTS = 0x42,
->> +        #define GET_ALERT_CONFIGURATION 0x1
->> +        #define SET_ALERT_CONFIGURATION 0x2
->CONFIG maybe enough?
->
-Okay.
->>      SANITIZE    = 0x44,
->>          #define OVERWRITE     0x0
->>          #define SECURE_ERASE  0x1
->> @@ -1625,6 +1633,110 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
->>      return CXL_MBOX_SUCCESS;
->>  }
->>
->> +/* CXL r3.2 Section 8.2.10.9.3.2 Get Alert Configuration (Opcode 4201h) */
->> +static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
->> +                                       uint8_t *payload_in,
->> +                                       size_t len_in,
->> +                                       uint8_t *payload_out,
->> +                                       size_t *len_out,
->> +                                       CXLCCI *cci)
->> +{
->> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
->> +    CXLAlertConfig *out = (void *)payload_out;
->
->In this case we can cast to the right type (can't do that if we don't
->name that type which happens in a lot these structures). So prefer
->    CXLAlertConfig *out = (CXLAlertConfig *)payload_out;
->
->
-Okay, will fix this in v3 patch
->> +
->> +    memcpy(out, &ct3d->alert_config, sizeof(ct3d->alert_config));
->> +    *len_out = sizeof(ct3d->alert_config);
->> +
->> +    return CXL_MBOX_SUCCESS;
->> +}
->> +
->> +/* CXL r3.2 Section 8.2.10.9.3.3 Set Alert Configuration (Opcode 4202h) */
->> +static CXLRetCode cmd_set_alert_config(const struct cxl_cmd *cmd,
->> +                                       uint8_t *payload_in,
->> +                                       size_t len_in,
->> +                                       uint8_t *payload_out,
->> +                                       size_t *len_out,
->> +                                       CXLCCI *cci)
->> +{
->> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
->> +    CXLAlertConfig *alert_config = &ct3d->alert_config;
->> +    struct {
->> +        uint8_t valid_alert_actions;
->> +        uint8_t enable_alert_actions;
->> +        uint8_t life_used_warning_threshold;
->> +        uint8_t rsvd;
->> +        uint16_t device_over_temperature_warning_threshold;
->> +        uint16_t device_under_temperature_warning_threshold;
->> +        uint16_t Corrected_volatile_memory_error_warning_threshold;
->> +        uint16_t Corrected_persistent_memory_error_warning_threshold;
->
->Shorten these as well. Similar to suggestions below.  They are
->just too long to make for nice code!
->
-Got it.
->> +    } QEMU_PACKED *in = (void *)payload_in;
->> +
->> +    if (in->valid_alert_actions & CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD) {
->> +        /*
->> +         * CXL 3.2 Table 8-149 The life used warning threshold shall be
->> +         * less than the life used critical alert value.
->> +         */
->> +        if (in->life_used_warning_threshold >=
->> +            alert_config->life_used_critical_alert_threshold) {
->> +            return CXL_MBOX_INVALID_INPUT;
->> +        }
->> +        alert_config->life_used_warning_threshold =
->> +            in->life_used_warning_threshold;
->> +        alert_config->enable_alerts |= CXL_ALERTS_LIFE_USED_WARNING_THRESHOLD;
->> +    }
->> +
->> +    if (in->valid_alert_actions &
->> +        CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD) {
->> +        /*
->> +         * CXL 3.2 Table 8-149 The Device Over-Temperature Warning Threshold
->> +         * shall be less than the the Device Over-Temperature Critical
->> +         * Alert Threshold.
->> +         */
->> +        if (in->device_over_temperature_warning_threshold >=
->> +            alert_config->device_over_temperature_critical_alert_threshold) {
->> +            return CXL_MBOX_INVALID_INPUT;
->> +        }
->> +        alert_config->device_over_temperature_warning_threshold =
->> +            in->device_over_temperature_warning_threshold;
->> +        alert_config->enable_alerts |=
->> +            CXL_ALERTS_DEVICE_OVER_TEMP_WARNING_THRESHOLD;
->> +    }
->> +
->> +    if (in->valid_alert_actions &
->> +        CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD) {
->> +        /*
->> +         * CXL 3.2 Table 8-149 The Device Under-Temperature Warning Threshold
->> +         * shall be higher than the the Device Under-Temperature Critical
->> +         * Alert Threshold.
->> +         */
->> +        if (in->device_under_temperature_warning_threshold <=
->> +            alert_config->device_under_temperature_critical_alert_threshold) {
->> +            return CXL_MBOX_INVALID_INPUT;
->> +        }
->> +        alert_config->device_under_temperature_warning_threshold =
->> +            in->device_under_temperature_warning_threshold;
->> +        alert_config->enable_alerts |=
->> +            CXL_ALERTS_DEVICE_UNDER_TEMP_WARNING_THRESHOLD;
->> +    }
->> +
->> +    if (in->valid_alert_actions &
->> +        CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD) {
->> +        alert_config->Corrected_volatile_memory_error_warning_threshold =
->> +            in->Corrected_volatile_memory_error_warning_threshold;
->> +        alert_config->enable_alerts |=
->> +            CXL_ALERTS_CORRECTED_VOLATILE_MEMORY_ERROR_WARNING_THRESHOLD;
->> +    }
->> +
->> +    if (in->valid_alert_actions &
->> +        CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD) {
->> +        alert_config->Corrected_persistent_memory_error_warning_threshold =
->> +            in->Corrected_persistent_memory_error_warning_threshold;
->> +        alert_config->enable_alerts |=
->> +            CXL_ALERTS_CORRECTED_PERSISTENT_MEMORY_ERROR_WARNING_THRESHOLD;
->> +    }
->> +    return CXL_MBOX_SUCCESS;
->> +}
->> +
->>  /* Perform the actual device zeroing */
->>  static void __do_sanitization(CXLType3Dev *ct3d)
->>  {
->> @@ -2859,6 +2971,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
->>      [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
->>      [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
->>          ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
->> +    [HEALTH_INFO_ALERTS][GET_ALERT_CONFIGURATION] = {"GET_ALERT_CONFIGURATION",
->
->Space after { to match local style.
->
-Ok, will address this in v3 patch.
->> +        cmd_get_alert_config, 0, 0 },
->> +    [HEALTH_INFO_ALERTS][SET_ALERT_CONFIGURATION] = {"SET_ALERT_CONFIGURATION",
->> +        cmd_set_alert_config, 12, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
->>      [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
->>          (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
->>           CXL_MBOX_SECURITY_STATE_CHANGE |
->
->> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
->> index a64739be25..1da23bf553 100644
->> --- a/include/hw/cxl/cxl_device.h
->> +++ b/include/hw/cxl/cxl_device.h
->> @@ -581,6 +581,19 @@ typedef struct CXLSetFeatureInfo {
->>      size_t data_size;
->>  } CXLSetFeatureInfo;
->>
->> +typedef struct CXLAlertConfig {
->> +    uint8_t valid_alerts;
->> +    uint8_t enable_alerts;
->> +    uint8_t life_used_critical_alert_threshold;
->> +    uint8_t life_used_warning_threshold;
->> +    uint16_t device_over_temperature_critical_alert_threshold;
->I think we can shorten these at least a bit without lost of meaning!
->It's on a device so can drop that entirely. Perhaps
->
->    uint8_t life_used_crit_alert_thresh;
->    uint8_t life_used_warn_thresh;
->    uint16_t over_temp_crit_alert_thresh;
->    uint16_t under_temp_crit_alert_thresh;
->    uint16_t over_temp_warn_thresh;
->    uint16_t under_temp_warn_thresh;
->    uint16_t cor_volatile_mem_err_warn_thresh;
->    uint16_t cor_persistent_mem_err_warn_thresh;
->
-Ok, will shorten the field names as suggested.
->> +    uint16_t device_under_temperature_critical_alert_threshold;
->> +    uint16_t device_over_temperature_warning_threshold;
->> +    uint16_t device_under_temperature_warning_threshold;
->> +    uint16_t Corrected_volatile_memory_error_warning_threshold;
->Capital in just this one doesn't make much sense.
->> +    uint16_t Corrected_persistent_memory_error_warning_threshold;
->> +} QEMU_PACKED CXLAlertConfig;
->
->
+v7m still does the same thing this patch does, where you call
+rom_ptr_for_as() and look at the return value to see what's
+going on -- see the code and comments in
+target/arm/cpu.c:arm_cpu_reset_hold() ("Load the initial SP and PC").
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_
-Content-Type: text/plain; charset="utf-8"
+Now that we do a full three phase reset for everything, I
+think this probably could be cleaned up, but there's a
+fair chance that there's some unexpected issue in there
+that I won't find out until I try it. So I'm definitely
+not going to require that somebody else does that before
+I've had a go at it on the v7m code.
 
+So I'm OK with this patch doing this the way it does,
+except that I have one question: what's that
+process_queued_cpu_work() call doing? We don't need
+that on the Arm equivalent...
 
-------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_5ebd2_--
+Also, if() statements always have braces in QEMU, even
+if the body of the if is a single statement. But since
+if you don't set env->pc it is zero anyway, you don't
+need the if() at all I think and can directly set
+env->pc unconditionally.
+
+thanks
+-- PMM
 
