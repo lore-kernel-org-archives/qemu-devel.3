@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C28EC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 19:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F842C021AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 19:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk6pj-0002bN-1L; Mon, 17 Feb 2025 14:31:11 -0500
+	id 1tk6pj-0002eR-QR; Mon, 17 Feb 2025 14:31:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tk6p8-0001yh-8O
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:30:38 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1tk6p2-0001xC-F5
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:30:28 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tk6p3-0008QE-Q0
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:30:32 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2fbf77b2b64so8698828a91.2
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 11:30:28 -0800 (PST)
+ id 1tk6ow-0008O5-Gb
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 14:30:24 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22100006bc8so42906375ad.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 11:30:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739820627; x=1740425427; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739820621; x=1740425421; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ArewPxzX2L3g8+NIrXN+9y4T1awyV4Vx9ORorXETkQs=;
- b=la7DW/W/yYvIeHXxeU7vw3EXenGtRJR2au5sIqfegcu8346raRUms/46aufTBUhP7h
- WySLoD4Qs+RxAKlxZnDRzPHw5YXzm85YE+Pptq9137FgxVow3GjbXTPA+aU5sgJDiDtP
- RJyCQwL/+KQlfXcUWEl7Os9rYJ0jmCRBzCcnd6mPoSTCyx3l2STSgP3pF2+UPO9Y+sgu
- RyV9oFMdwUyDLZYuHl2KRhvTgUe2kFhEOBc6rtws96OK8jK3Z/W16UOl+8xVt0079QYN
- AxWjvKP4D4jKtJfopk2LjGxgm2uQmdMlNaT7NrxpBkv/SUpbpA2yBpksKjwRk5AYU05W
- R9Mg==
+ bh=jSqS9kMTvyRTGLGgXwsTZ3V17qWRY5dQH7PE/q6TsPI=;
+ b=PJd+4S7EkQkLxdfLfKdsL35JffUT2hDkDRReAOgmbwIO+jJW0j5cT2mvrc7NrRbyxY
+ ziPqUl+BZSgMFXlQA6Vg7CGty/y/fssIUXULhBUE8z/CjM2M50lQiOcRu95KApSyMMp7
+ AkNDrRPpEvFeMLKIWNnT+NV4RdACHCvOERklsR/qnKNcHjvqxr1l6XXMqxLaoUCBDqCo
+ wxfv7TsJ+/M2VN04D50sMLQ+vOOrbY9DK6ptjYm2uSwHTzxni8WhGvK3rpc96w++djMW
+ esoQNmOCJk1ov8bSqPtrSbTq7pRnj5di1dtYTXuz54yDuMHUHut6BNFAom1w058dRi2Q
+ nUcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739820627; x=1740425427;
+ d=1e100.net; s=20230601; t=1739820621; x=1740425421;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ArewPxzX2L3g8+NIrXN+9y4T1awyV4Vx9ORorXETkQs=;
- b=u1mgWuVY0XVzRtdnhIGKkkA0JqZS8ufuS5CiMdk9GV8osbTvYGDo5UwS4MlF3fObFT
- vsf+jVQvR+C5oH8g4R6zKzXXnCM6/ZtdAMmHhcYtpo57J1jXwdGfyrqA9qpzHk3GGcp+
- wcvuAPaHPj6idTkS2HT4znCSGUwyZqjKA9+W+fMzKdW1rf1AbkgKAXHbbVp3hS1CfL99
- 6QTANDausEzjf9Fsn0jb8PtrTJM8cP4QtEDDn3oalPl7BuqDJNAq85R+ZXoC4Us/Ac3H
- O6EHFk4T8JJ4mfybQc+CYCtU8m5LPDnvLw6W4NO/vfSTQPN7o1bpwArhWnFzzamUvio+
- tMkQ==
-X-Gm-Message-State: AOJu0YxP0HFh7EuuoP2kMmfqYBcPlENhFXiA2huLH80Tyn7zz3dfwUHn
- /YK65LJBojmymv/UDoeG9K0Yaao58Bm+4TD4bXUg+/R1gt1nlRzYLf2aarydNdYsv6A6GF8K3tr
- g
-X-Gm-Gg: ASbGncv5Y6pUP7EIHAAtXU3MxOxUXwDir5Zyi8DaB4UdzaAlgXSeMSma0K29bh0V+5V
- ABfzna/5O1n1YtOnj3ftlJMUGb4wv3qYOwSzW4yszcBOLZ215rWEKVzeaeJ4T4fcFtjzW83qJRy
- JE2zyA3toQTbvwBEI1kai4JhHYXMNBRxP+rfSVWa8bvpC9/9TeDQehTKOvQQcZ19yCTOOJiM6uR
- lO0ueA5j9cbfVymA/aJcziufe+nF7OaunPrcm4YzexOrDKd2Por6V25bxEzeNg3Ep9p8oLNjXc9
- Ez/dNyaRpngoDrX/FvTVmz54bcE49+XDlV45PWezAuDTtOI=
-X-Google-Smtp-Source: AGHT+IG9RMOVw4eSssyv75nfaoAu5e44Rpph41zO26ZLXj2AIIlo6QWbn9nwYPww5+EoU+mkPPDgAQ==
-X-Received: by 2002:a05:6a00:2447:b0:732:7fc1:92b with SMTP id
- d2e1a72fcca58-7327fc109efmr6331735b3a.14.1739820627446; 
- Mon, 17 Feb 2025 11:30:27 -0800 (PST)
+ bh=jSqS9kMTvyRTGLGgXwsTZ3V17qWRY5dQH7PE/q6TsPI=;
+ b=QWZ2X3h6zUHeYVdXX7vs4a/aCE6A6s/2i/6odJcnLWuXOfhrmreFwGxol76wy3T7hA
+ MfgsPE6Vo8CsIND1ZpGgkLZuf7E16UwyHj6Z/gyLJOfIsLYWjy0HdApKA79DOQRKfJwm
+ EEXX4Kt9Fmy4GRym1xYyUMIamXeVAL+ytR9cVuV+mDAsGHa5QVhWrt5VGNsZE+xG7PBM
+ FSjn6uQuRp70kMbfJ1YpzuDGLNMBBh0oRZp4Mh6OFx/+Gl7HDYhnUoEw5mTG8npgdjvs
+ 8QxI2GLpTT+d51glGa8IpiyXTSWN9j2ke1E365A6LITKQ5nj+QL6/CtBP4eTtZ/twZYy
+ YwiQ==
+X-Gm-Message-State: AOJu0YxoZtevAfkbB2pkhDwclmVOndmi8jT8sYIDrCdnS80OjwzhOevV
+ KDr1cAQIsyZ7RDHlaWQ48eZJDMwh9evYvhHbJR0cLM/EaAHGYYG0gcCMi8zf68BfSvMT0FEJuDn
+ 6
+X-Gm-Gg: ASbGncseVwRxMSKqccO1WnH6ATrv3dwCTeLiXIkg/ZiGeX80qdAbXwAe7WTYFc2vJL9
+ AUi/lI5md4By0/ATTvnnfExYv9lf7nNiaRd/mtQPZo7pvezUFscHZufUYydlDBiOIHqxbknIQ7g
+ Rory03Q2BcVAX2FzJuwICEV5NbtaIMWLnb9fXyYcc2MhVyZhrjirpYtUmi9e0ck89yxr6OEed3q
+ /V8XnmVD6lYKNzHrOTOWadjKn+DQ2yn6gXZVjxjFwHo6nCMhnn4CDpG/e54IaqBeHN0psbcqKeI
+ Duxtu4uS9Aj1U2SUgb9mZ1Dt0m3mLMUAxs3y1lEnKYXhO+s=
+X-Google-Smtp-Source: AGHT+IEBksIDENC1Qd5hXD8KzIMsvKJVkORExFP9Mf9JzNrCHpnx3ogiDTKvv+smSd3HikLzYulGcA==
+X-Received: by 2002:a05:6a21:483:b0:1e1:ccf3:a72 with SMTP id
+ adf61e73a8af0-1ee8cbc1de0mr19814638637.28.1739820620739; 
+ Mon, 17 Feb 2025 11:30:20 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7326a38ff76sm4347164b3a.160.2025.02.17.11.30.27
+ d2e1a72fcca58-7326a38ff76sm4347164b3a.160.2025.02.17.11.30.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 11:30:27 -0800 (PST)
+ Mon, 17 Feb 2025 11:30:20 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 20/27] tcg/sparc64: Use 'z' constraint
-Date: Mon, 17 Feb 2025 11:30:01 -0800
-Message-ID: <20250217193009.2873875-21-richard.henderson@linaro.org>
+Subject: [PULL v2 14/27] include/exec: Use uintptr_t in CPUTLBEntry
+Date: Mon, 17 Feb 2025 11:29:55 -0800
+Message-ID: <20250217193009.2873875-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250217193009.2873875-1-richard.henderson@linaro.org>
 References: <20250217193009.2873875-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,107 +100,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace target-specific 'Z' with generic 'z'.
+Since we no longer support 64-bit guests on 32-bit hosts,
+we can use a 32-bit type on a 32-bit host.  This shrinks
+the size of the structure to 16 bytes on a 32-bit host.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/sparc64/tcg-target-con-set.h | 12 ++++++------
- tcg/sparc64/tcg-target-con-str.h |  1 -
- tcg/sparc64/tcg-target.c.inc     | 17 +++++++----------
- 3 files changed, 13 insertions(+), 17 deletions(-)
+ include/exec/tlb-common.h | 10 +++++-----
+ accel/tcg/cputlb.c        | 21 ++++-----------------
+ tcg/arm/tcg-target.c.inc  |  1 -
+ tcg/mips/tcg-target.c.inc | 12 +++++-------
+ tcg/ppc/tcg-target.c.inc  | 21 +++++----------------
+ 5 files changed, 19 insertions(+), 46 deletions(-)
 
-diff --git a/tcg/sparc64/tcg-target-con-set.h b/tcg/sparc64/tcg-target-con-set.h
-index 434bf25072..61f9fa3d9f 100644
---- a/tcg/sparc64/tcg-target-con-set.h
-+++ b/tcg/sparc64/tcg-target-con-set.h
-@@ -10,11 +10,11 @@
-  * tcg-target-con-str.h; the constraint combination is inclusive or.
-  */
- C_O0_I1(r)
--C_O0_I2(rZ, r)
--C_O0_I2(rZ, rJ)
-+C_O0_I2(rz, r)
-+C_O0_I2(rz, rJ)
- C_O1_I1(r, r)
- C_O1_I2(r, r, r)
--C_O1_I2(r, rZ, rJ)
--C_O1_I4(r, rZ, rJ, rI, 0)
--C_O2_I2(r, r, rZ, rJ)
--C_O2_I4(r, r, rZ, rZ, rJ, rJ)
-+C_O1_I2(r, rz, rJ)
-+C_O1_I4(r, rz, rJ, rI, 0)
-+C_O2_I2(r, r, rz, rJ)
-+C_O2_I4(r, r, rz, rz, rJ, rJ)
-diff --git a/tcg/sparc64/tcg-target-con-str.h b/tcg/sparc64/tcg-target-con-str.h
-index 0577ec4942..2f033b3ac2 100644
---- a/tcg/sparc64/tcg-target-con-str.h
-+++ b/tcg/sparc64/tcg-target-con-str.h
-@@ -16,4 +16,3 @@ REGS('r', ALL_GENERAL_REGS)
-  */
- CONST('I', TCG_CT_CONST_S11)
- CONST('J', TCG_CT_CONST_S13)
--CONST('Z', TCG_CT_CONST_ZERO)
-diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-index 527af5665d..7c722f59a8 100644
---- a/tcg/sparc64/tcg-target.c.inc
-+++ b/tcg/sparc64/tcg-target.c.inc
-@@ -76,7 +76,6 @@ static const char * const tcg_target_reg_names[TCG_TARGET_NB_REGS] = {
+diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
+index dc5a5faa0b..03b5a8ffc7 100644
+--- a/include/exec/tlb-common.h
++++ b/include/exec/tlb-common.h
+@@ -19,14 +19,14 @@
+ #ifndef EXEC_TLB_COMMON_H
+ #define EXEC_TLB_COMMON_H 1
  
- #define TCG_CT_CONST_S11  0x100
- #define TCG_CT_CONST_S13  0x200
--#define TCG_CT_CONST_ZERO 0x400
+-#define CPU_TLB_ENTRY_BITS 5
++#define CPU_TLB_ENTRY_BITS (HOST_LONG_BITS == 32 ? 4 : 5)
  
- #define ALL_GENERAL_REGS  MAKE_64BIT_MASK(0, 32)
+ /* Minimalized TLB entry for use by TCG fast path. */
+ typedef union CPUTLBEntry {
+     struct {
+-        uint64_t addr_read;
+-        uint64_t addr_write;
+-        uint64_t addr_code;
++        uintptr_t addr_read;
++        uintptr_t addr_write;
++        uintptr_t addr_code;
+         /*
+          * Addend to virtual address to get host address.  IO accesses
+          * use the corresponding iotlb value.
+@@ -37,7 +37,7 @@ typedef union CPUTLBEntry {
+      * Padding to get a power of two size, as well as index
+      * access to addr_{read,write,code}.
+      */
+-    uint64_t addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(uint64_t)];
++    uintptr_t addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(uintptr_t)];
+ } CPUTLBEntry;
  
-@@ -340,9 +339,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
-         val = (int32_t)val;
+ QEMU_BUILD_BUG_ON(sizeof(CPUTLBEntry) != (1 << CPU_TLB_ENTRY_BITS));
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 75d075d044..ad158050a1 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -104,22 +104,15 @@ static inline uint64_t tlb_read_idx(const CPUTLBEntry *entry,
+ {
+     /* Do not rearrange the CPUTLBEntry structure members. */
+     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_read) !=
+-                      MMU_DATA_LOAD * sizeof(uint64_t));
++                      MMU_DATA_LOAD * sizeof(uintptr_t));
+     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_write) !=
+-                      MMU_DATA_STORE * sizeof(uint64_t));
++                      MMU_DATA_STORE * sizeof(uintptr_t));
+     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_code) !=
+-                      MMU_INST_FETCH * sizeof(uint64_t));
++                      MMU_INST_FETCH * sizeof(uintptr_t));
+ 
+-#if TARGET_LONG_BITS == 32
+-    /* Use qatomic_read, in case of addr_write; only care about low bits. */
+-    const uint32_t *ptr = (uint32_t *)&entry->addr_idx[access_type];
+-    ptr += HOST_BIG_ENDIAN;
+-    return qatomic_read(ptr);
+-#else
+-    const uint64_t *ptr = &entry->addr_idx[access_type];
++    const uintptr_t *ptr = &entry->addr_idx[access_type];
+     /* ofs might correspond to .addr_write, so use qatomic_read */
+     return qatomic_read(ptr);
+-#endif
+ }
+ 
+ static inline uint64_t tlb_addr_write(const CPUTLBEntry *entry)
+@@ -899,14 +892,8 @@ static void tlb_reset_dirty_range_locked(CPUTLBEntry *tlb_entry,
+         addr &= TARGET_PAGE_MASK;
+         addr += tlb_entry->addend;
+         if ((addr - start) < length) {
+-#if TARGET_LONG_BITS == 32
+-            uint32_t *ptr_write = (uint32_t *)&tlb_entry->addr_write;
+-            ptr_write += HOST_BIG_ENDIAN;
+-            qatomic_set(ptr_write, *ptr_write | TLB_NOTDIRTY);
+-#else
+             qatomic_set(&tlb_entry->addr_write,
+                         tlb_entry->addr_write | TLB_NOTDIRTY);
+-#endif
+         }
      }
+ }
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 83f6eb6099..cec3d761d4 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -1500,7 +1500,6 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+          * Add the tlb_table pointer, creating the CPUTLBEntry address in R1.
+          * Load the tlb comparator into R2 and the fast path addend into R1.
+          */
+-        QEMU_BUILD_BUG_ON(HOST_BIG_ENDIAN);
+         if (cmp_off == 0) {
+             tcg_out_ld32_rwb(s, COND_AL, TCG_REG_R2, TCG_REG_R1, TCG_REG_R0);
+         } else {
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index d744b853cd..14b3cb1eba 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -1262,18 +1262,16 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+         /* Add the tlb_table pointer, creating the CPUTLBEntry address.  */
+         tcg_out_opc_reg(s, ALIAS_PADD, TCG_TMP3, TCG_TMP3, TCG_TMP1);
  
--    if ((ct & TCG_CT_CONST_ZERO) && val == 0) {
--        return 1;
--    } else if ((ct & TCG_CT_CONST_S11) && check_fit_tl(val, 11)) {
-+    if ((ct & TCG_CT_CONST_S11) && check_fit_tl(val, 11)) {
-         return 1;
-     } else if ((ct & TCG_CT_CONST_S13) && check_fit_tl(val, 13)) {
-         return 1;
-@@ -1579,7 +1576,7 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_st_i64:
-     case INDEX_op_qemu_st_i32:
-     case INDEX_op_qemu_st_i64:
--        return C_O0_I2(rZ, r);
-+        return C_O0_I2(rz, r);
+-        if (TCG_TARGET_REG_BITS == 32 || addr_type == TCG_TYPE_I32) {
+-            /* Load the (low half) tlb comparator.  */
++        /* Load the tlb comparator.  */
++        if (TCG_TARGET_REG_BITS == 64 && addr_type == TCG_TYPE_I32) {
+             tcg_out_ld(s, TCG_TYPE_I32, TCG_TMP0, TCG_TMP3,
+                        cmp_off + HOST_BIG_ENDIAN * 4);
+         } else {
+-            tcg_out_ld(s, TCG_TYPE_I64, TCG_TMP0, TCG_TMP3, cmp_off);
++            tcg_out_ld(s, TCG_TYPE_REG, TCG_TMP0, TCG_TMP3, cmp_off);
+         }
  
-     case INDEX_op_add_i32:
-     case INDEX_op_add_i64:
-@@ -1611,22 +1608,22 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_setcond_i64:
-     case INDEX_op_negsetcond_i32:
-     case INDEX_op_negsetcond_i64:
--        return C_O1_I2(r, rZ, rJ);
-+        return C_O1_I2(r, rz, rJ);
+-        if (TCG_TARGET_REG_BITS == 64 || addr_type == TCG_TYPE_I32) {
+-            /* Load the tlb addend for the fast path.  */
+-            tcg_out_ld(s, TCG_TYPE_PTR, TCG_TMP3, TCG_TMP3, add_off);
+-        }
++        /* Load the tlb addend for the fast path.  */
++        tcg_out_ld(s, TCG_TYPE_PTR, TCG_TMP3, TCG_TMP3, add_off);
  
-     case INDEX_op_brcond_i32:
-     case INDEX_op_brcond_i64:
--        return C_O0_I2(rZ, rJ);
-+        return C_O0_I2(rz, rJ);
-     case INDEX_op_movcond_i32:
-     case INDEX_op_movcond_i64:
--        return C_O1_I4(r, rZ, rJ, rI, 0);
-+        return C_O1_I4(r, rz, rJ, rI, 0);
-     case INDEX_op_add2_i32:
-     case INDEX_op_add2_i64:
-     case INDEX_op_sub2_i32:
-     case INDEX_op_sub2_i64:
--        return C_O2_I4(r, r, rZ, rZ, rJ, rJ);
-+        return C_O2_I4(r, r, rz, rz, rJ, rJ);
-     case INDEX_op_mulu2_i32:
-     case INDEX_op_muls2_i32:
--        return C_O2_I2(r, r, rZ, rJ);
-+        return C_O2_I2(r, r, rz, rJ);
-     case INDEX_op_muluh_i64:
-         return C_O1_I2(r, r, r);
+         /*
+          * Mask the page bits, keeping the alignment bits to compare against.
+diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+index 2d16807ec7..822925a19b 100644
+--- a/tcg/ppc/tcg-target.c.inc
++++ b/tcg/ppc/tcg-target.c.inc
+@@ -2490,27 +2490,16 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+         tcg_out32(s, AND | SAB(TCG_REG_TMP1, TCG_REG_TMP1, TCG_REG_R0));
  
+         /*
+-         * Load the (low part) TLB comparator into TMP2.
++         * Load the TLB comparator into TMP2.
+          * For 64-bit host, always load the entire 64-bit slot for simplicity.
+          * We will ignore the high bits with tcg_out_cmp(..., addr_type).
+          */
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            if (cmp_off == 0) {
+-                tcg_out32(s, LDUX | TAB(TCG_REG_TMP2,
+-                                        TCG_REG_TMP1, TCG_REG_TMP2));
+-            } else {
+-                tcg_out32(s, ADD | TAB(TCG_REG_TMP1,
+-                                       TCG_REG_TMP1, TCG_REG_TMP2));
+-                tcg_out_ld(s, TCG_TYPE_I64, TCG_REG_TMP2,
+-                           TCG_REG_TMP1, cmp_off);
+-            }
+-        } else if (cmp_off == 0 && !HOST_BIG_ENDIAN) {
+-            tcg_out32(s, LWZUX | TAB(TCG_REG_TMP2,
+-                                     TCG_REG_TMP1, TCG_REG_TMP2));
++        if (cmp_off == 0) {
++            tcg_out32(s, (TCG_TARGET_REG_BITS == 64 ? LDUX : LWZUX)
++                      | TAB(TCG_REG_TMP2, TCG_REG_TMP1, TCG_REG_TMP2));
+         } else {
+             tcg_out32(s, ADD | TAB(TCG_REG_TMP1, TCG_REG_TMP1, TCG_REG_TMP2));
+-            tcg_out_ld(s, TCG_TYPE_I32, TCG_REG_TMP2, TCG_REG_TMP1,
+-                       cmp_off + 4 * HOST_BIG_ENDIAN);
++            tcg_out_ld(s, TCG_TYPE_PTR, TCG_REG_TMP2, TCG_REG_TMP1, cmp_off);
+         }
+ 
+         /*
 -- 
 2.43.0
 
