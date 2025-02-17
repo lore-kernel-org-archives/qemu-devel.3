@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C1DC021AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 12:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9087AC021AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 12:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0b3-0001gN-76; Mon, 17 Feb 2025 07:51:37 -0500
+	id 1tk0b6-0001hz-4L; Mon, 17 Feb 2025 07:51:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk0ae-0001ca-Jc
+ id 1tk0ae-0001cZ-Iu
  for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:51:16 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk0ac-0002H4-6L
+ id 1tk0ac-0002GQ-67
  for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:51:11 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-38f265c6cb0so1919682f8f.2
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 04:51:08 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43932b9b09aso46831705e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 04:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739796668; x=1740401468; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739796666; x=1740401466; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+Cujq0JdaQMnA+2txZe7tmirzkEMEUejhzVFg8j4HZI=;
- b=h8hR6dXdj27ac+naQgTSuJwxhf4pe6F2W/Cl+sqjqJyCfjJkJ/m5sp7hET/AUsYyzc
- BP4ecWM53qceYD7b5mdSmLxkxex2Lhpm+vlwjaqbyhmQ6De7zLn79sg51JCPeANpyPat
- bunoxcwYdUOGJ4u3TYNsV9JSARVu0aKV+CwwOQCfmVQuuU91UPdpWctEs5xQz8rFX2je
- cI1yE0rQm4SBHdbQD8ewhwb/UHOpSdtz4s0w5bnQYiJOYTvrxq6k/xbYJDKizWlRfvp9
- +dzjy5cQWPvbJktrJ50re+8vPlyqy73zRFvPAstXZf9y8uN8jmh5Vgj91xs8w0d2JxJV
- WzOA==
+ bh=Cy/6YVWpf8F5PvLPoIpeVzTAzLrwFHmrf3eRGC9gQWw=;
+ b=c/cmn6S92WpcTkQ5l7uheprHIbdr0rvBtbyrxt/vEi8y0Ksgo/azK7Z1Bg/D5DQIYi
+ Uk4IuXZoo3vR3N+VTT8eR8QvrjNzeZIJcQZA1+HAJkifhlStbmT9+gE1RSgzoR7Elohk
+ r/9G0p8h6oRh2r/iVr00xnKQQteDJHS56DB+QpZlGUuPvu16AqNhT1ZgshVMYSx13v15
+ JmRbG39++O+pSJD/FKu/ARaQklkN0Moa0aHnMIHhJE6wQ3nAe13fYEkDR/E47UnLzUwI
+ 8Y8Qil20Eic0bHyR3FNOQ5SXNUnlxzDqGHryxCMhDC/5GZ663Hgs6Btrwb0z2cux6sFz
+ As0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739796668; x=1740401468;
+ d=1e100.net; s=20230601; t=1739796666; x=1740401466;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+Cujq0JdaQMnA+2txZe7tmirzkEMEUejhzVFg8j4HZI=;
- b=KqKxDc7FcL1YjIXpYbAw3naUJPEZxTl5hbx/T+FXvlmnisqfrFliHPj9levj1pH2lW
- pbncMFdKY4hUOEqr6nG5AGjy1f6Fb46vAd/W1HKjj4ZdyBc/STaj5FK5bwCupydbGw/R
- onzuDGh+f/Z3Cv0y6/z3koOic0K1QwzSsmVLVfzciPSc4sU084LKQd46Je2iesau/bFx
- YeruI8Curyrc+3MnGYpVgV1ZhdxUn4Ta4eyHZZzQEkbrcNYavsnC5ICZQgadP1MUTDEn
- uYgvJgYSMLa2ZvKyn0F5D3eyumG4DjKDBIolk8KZZMZsTWglsKuA/I6MUfVMMnmxipFS
- JMBw==
-X-Gm-Message-State: AOJu0Yz7X0c0KXiEy2H0vVfZ6XVCXPOvv16LX1JJpvgcaoIOmL6Qxodh
- 1glXS5DjYcyrcKgFPiQVLjvvu/wA1GReJtb4ozGQSiAXWhZgUhkeeyMTKABm5DmmcwkZXRTgmrE
- O
-X-Gm-Gg: ASbGncsDZ16q83r8JVafHDuwMnVXCM28nss8FwoydxpCrnBF7PorRxXJSdr4sXVsmRv
- 1M87erxa1gDaQoIdlD0b6uNJ5EbShtAE8crHKeSq5zuqnL8MtyV35Rlb+gmJgdsJIU9ChLDfYZH
- fV8+zH606yY/9FGEbZD/ha9lEMWnZ9tB8cCu150V+LRM9ywTJxXJ6mnk72xr4DFpJ0UB0HCHUpx
- E3POHKOT+WDN4wYLT2w4R5+Yb6GsQiYzB159ituggO9mkn5/H186c/U9QQIE4bQfHPCv8sNDLMd
- HQc86Nj0NEyHKAzhg1qbjQ==
-X-Google-Smtp-Source: AGHT+IEpBsbtY0Aem+F0l68jtu6VlQLwA+tIq8owsFtd2HUh4YIGGsgGTjOrHvWeq3/orQdGdckEFw==
-X-Received: by 2002:a05:6000:1f87:b0:38f:23f4:2d7a with SMTP id
- ffacd0b85a97d-38f33f43751mr9201569f8f.40.1739796667646; 
- Mon, 17 Feb 2025 04:51:07 -0800 (PST)
+ bh=Cy/6YVWpf8F5PvLPoIpeVzTAzLrwFHmrf3eRGC9gQWw=;
+ b=XxYtZohT3K7/VIC3zahvt+KqGkDaW0rJeugDVl7prQJPPZZs+6uz4LkrxZntbeWuBZ
+ MWIUqg+NzRRhJkRC//igepSENPvVlp4UOtckasGHbY/7ZINpJ82Bs4H5nW1BUDb1iW7z
+ D0jgHy5RNu+UuzTFfK6ogmu8wwRXnmObx+SfLoX+cN4Lj+WhaZlVQ5aBiXH/SLAt5JVp
+ USsjVQN13aILRDb68U4k6dibUD2SBixGFYhz6iWvnj4EQwnqbWeHIL3zAlO/LP3lrZl+
+ X4KE/ISeUy9MmrUvz/O/pjqLqoTRX8iHoVBMGd2CUtr3nyktubhcOL4fqoEc2pveL3tk
+ q2Mw==
+X-Gm-Message-State: AOJu0Yz8POZUolQN3vRBpoO5RKPHPTsInAIITKr/IizDIiMqW1N4PeBM
+ munqmfnfYYKnE6I6pz+gP5Ilkzeq+4orlXv3IQUm/bL5rt7kWp5jDUsAOJ0f6gAxtu25BKUFmx4
+ K
+X-Gm-Gg: ASbGnctWQnlCpaiFdGRwvmQVC+gvOXfgBATQpu+t7q1ytGeEy12Kvp+JPC4tZ6mpK/e
+ yPsIMwx3IXkOQiZTJDxpWhCj4f3MIPJmizaJHgwb92GqO9ElNsSAYhNGSTllRZZ9tJsp1iByMPJ
+ Y8gEsp0RLsr05HrGwY9LNulT07DCKFslCECs/7aLz+U/PbDE4FAOHjnI5rhsy7geYBm0o6QElrm
+ NsZdqcXpybvFnE5WhGSJ7ksb4LMbjo4MnEgyK+auOf0tOY5px5Nq+ST6Js+Efwu8IgyK8HEHqO/
+ VTPRolnLTMgtvrdlfnbNCA==
+X-Google-Smtp-Source: AGHT+IHcrHSdOCqAXtZeiuJ6HQQTx2bll2yJjPnTnkLIHxQ+5CEqyaTaNXGlYLs7HL9Y3e255+qVig==
+X-Received: by 2002:a05:600c:3b87:b0:439:553c:2a34 with SMTP id
+ 5b1f17b1804b1-4396e698eebmr98661425e9.4.1739796665774; 
+ Mon, 17 Feb 2025 04:51:05 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4398e84efb9sm3562455e9.10.2025.02.17.04.51.06
+ 5b1f17b1804b1-4398e84efb9sm3562455e9.10.2025.02.17.04.51.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 04:51:07 -0800 (PST)
+ Mon, 17 Feb 2025 04:51:05 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 10/10] fpu: Build only once
-Date: Mon, 17 Feb 2025 12:50:55 +0000
-Message-ID: <20250217125055.160887-11-peter.maydell@linaro.org>
+Subject: [PATCH 08/10] fpu: Always decide snan_bit_is_one() at runtime
+Date: Mon, 17 Feb 2025 12:50:53 +0000
+Message-ID: <20250217125055.160887-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250217125055.160887-1-peter.maydell@linaro.org>
 References: <20250217125055.160887-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have removed all the target-specifics from the softfloat code,
-we can switch to building it once for the whole system rather than
-once per target.
+Currently we have a compile-time shortcut where we return a hardcode
+value from snan_bit_is_one() on everything except MIPS, because we
+know that's the only target that needs to change
+status->no_signaling_nans at runtime.
+
+Remove the ifdef, so we always look at the status flag.  This means
+we must update the two targets (HPPA and SH4) that were previously
+hardcoded to return true so that they set the status flag correctly.
+
+This has no behavioural change, but will be necessary if we want to
+build softfloat once for all targets.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- fpu/softfloat.c | 3 ---
- fpu/meson.build | 2 +-
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ target/hppa/fpu_helper.c       | 1 +
+ target/sh4/cpu.c               | 1 +
+ fpu/softfloat-specialize.c.inc | 7 -------
+ 3 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index b38eea8d879..34c962d6bd9 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -79,9 +79,6 @@ this code that are retained.
-  * version 2 or later. See the COPYING file in the top-level directory.
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 8ff4b448049..a62d9d30831 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -67,6 +67,7 @@ void HELPER(loaded_fr0)(CPUHPPAState *env)
+     set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
+     /* Default NaN: sign bit clear, msb-1 frac bit set */
+     set_float_default_nan_pattern(0b00100000, &env->fp_status);
++    set_snan_bit_is_one(true, &env->fp_status);
+     /*
+      * "PA-RISC 2.0 Architecture" says it is IMPDEF whether the flushing
+      * enabled by FPSR.D happens before or after rounding. We pick "before"
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 4ac693d99bd..ccfe222bdf3 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -128,6 +128,7 @@ static void superh_cpu_reset_hold(Object *obj, ResetType type)
+     set_flush_to_zero(1, &env->fp_status);
+ #endif
+     set_default_nan_mode(1, &env->fp_status);
++    set_snan_bit_is_one(true, &env->fp_status);
+     /* sign bit clear, set all frac bits other than msb */
+     set_float_default_nan_pattern(0b00111111, &env->fp_status);
+     /*
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index a2c6afad5da..ba4fa08b7be 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -93,17 +93,10 @@ static inline bool no_signaling_nans(float_status *status)
+  * In IEEE 754-1985 this was implementation defined, but in IEEE 754-2008
+  * the msb must be zero.  MIPS is (so far) unique in supporting both the
+  * 2008 revision and backward compatibility with their original choice.
+- * Thus for MIPS we must make the choice at runtime.
   */
+ static inline bool snan_bit_is_one(float_status *status)
+ {
+-#if defined(TARGET_MIPS)
+     return status->snan_bit_is_one;
+-#elif defined(TARGET_HPPA) || defined(TARGET_SH4)
+-    return 1;
+-#else
+-    return 0;
+-#endif
+ }
  
--/* softfloat (and in particular the code in softfloat-specialize.h) is
-- * target-dependent and needs the TARGET_* macros.
-- */
- #include "qemu/osdep.h"
- #include <math.h>
- #include "qemu/bitops.h"
-diff --git a/fpu/meson.build b/fpu/meson.build
-index 1a9992ded56..646c76f0c69 100644
---- a/fpu/meson.build
-+++ b/fpu/meson.build
-@@ -1 +1 @@
--specific_ss.add(when: 'CONFIG_TCG', if_true: files('softfloat.c'))
-+common_ss.add(when: 'CONFIG_TCG', if_true: files('softfloat.c'))
+ /*----------------------------------------------------------------------------
 -- 
 2.43.0
 
