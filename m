@@ -4,69 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B564EC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 17:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CF8C021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 17:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk51f-0000Fp-0P; Mon, 17 Feb 2025 12:35:23 -0500
+	id 1tk59I-0002y6-Nc; Mon, 17 Feb 2025 12:43:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tk51Z-0000EF-FL
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 12:35:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tk59H-0002xX-28
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 12:43:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tk51W-0001Iq-65
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 12:35:17 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tk59E-00029c-LQ
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 12:43:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739813712;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=K8BxtlK81ZNB9rUny3j/nBp+Y7FWYfYeQxJcPYtU2DE=;
- b=BEGmA6j4hhYiq0YUQW9R5zbKWyAqOdY1yj4ufQty3Udh8hC4DHQdX8vKTOEMe18lNW6pEi
- kd6Zjunsz78DUv/5FvYEyGWz5Wmr9kNgcFJKIqKzgvnuyg/sUokLm/xfrUwfVNw1OPXaR6
- gmdLiJfmPiYT5WbGK8UHaoFrv2qio+c=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-sQ201f0PNruBcE4VTIa6BA-1; Mon,
- 17 Feb 2025 12:35:05 -0500
-X-MC-Unique: sQ201f0PNruBcE4VTIa6BA-1
-X-Mimecast-MFC-AGG-ID: sQ201f0PNruBcE4VTIa6BA_1739813704
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C730180087A; Mon, 17 Feb 2025 17:35:03 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.52])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 484711955BCB; Mon, 17 Feb 2025 17:34:58 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, tomitamoeko@gmail.com,
- corvin.koehne@gmail.com, Kirti Wankhede <kwankhede@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PATCH v4] vfio: Add property documentation
-Date: Mon, 17 Feb 2025 18:34:55 +0100
-Message-ID: <20250217173455.449983-1-clg@redhat.com>
+ s=mimecast20190719; t=1739814190;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Kbj9ZpABHxzJoglYG0rKlqkNfqUb/eFtc0o/zMlWoRY=;
+ b=hgk4i0UQ9zJBlarh7PiEbTuIaX4AjXrMOp64OtcN3COPNiKVWMCDQGmD/CJrpQGaYF5tfS
+ CdFiG2Iy29dkVZUbpU3mMF7e6/cpWO6p/K7treRcvf8KG9IPDeILHcRXbVAhCydtRrcHk6
+ igx+H/zaDKKA8wZLLQewQ9GqMM95+G4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-Fwktr7nkMTis7imihixaYQ-1; Mon, 17 Feb 2025 12:43:09 -0500
+X-MC-Unique: Fwktr7nkMTis7imihixaYQ-1
+X-Mimecast-MFC-AGG-ID: Fwktr7nkMTis7imihixaYQ_1739814188
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38ddf4fa345so3286762f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 09:43:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739814188; x=1740418988;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Kbj9ZpABHxzJoglYG0rKlqkNfqUb/eFtc0o/zMlWoRY=;
+ b=OpyV6SF7jysj/DfZMdCMuC8k8OKsmYSJZEktlz2XVn/RHqLXN5KvAf0OBnKR5gGYsv
+ zwCDe33zt73MCM+lXw0v24PEWnN/fADBkSMCbTvN18iWaSLcV3HOflqmyfevw/MVrdgd
+ pQ/8GGNrBeLMqxCMLGMKF2ltg9qP33dmgdJ0AVA9BborUTjUYfo/3eDpQ8EcLRoF7H2h
+ pK+Ej4waDJTh4lUE7ukqjBj2UtHGVsrjGFvHgWuIoOVwAOkKhIci/LQYVPJqrLVrLPt3
+ i/cq0ATiJdkBER67Anyrrs8x8JcAqn0eBA/lbsV5B559sYftB0baO9w47WzULxw0wJtw
+ mZqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPCUzATJQdGK+Y0ZJjCwnQ8WNT+faN0b19K77EU4RykJ29qZqn+CSU4wVhUCOEWU+IpIPonr2bSA/x@nongnu.org
+X-Gm-Message-State: AOJu0YxC7DXIbmjsZ96fkVewfUhKGUMpdQ/qYdlhzHNWb+jZgeeJFc3n
+ uT3s1lBJxbkD2whbc06qrNf4XdgKIeLT+zYmILcadd2dqE5F191HgBXAorNIVj6SxYOtqy6q8Zo
+ IKidlDgXKDNV4KxSHhHXIz/rvByhh9daCa6Jg53iq3S10+4NrhbFy
+X-Gm-Gg: ASbGncvyvwzNxB3IB4kTzkm9UnK4qSM8HKr1z3ZCQ/rW+E1sGeRqa6tJYFcy/qoO9kA
+ EUf8DtO1N+8+Qfh8tW8bMJycx2Xmxny6I7InikXduEJHgch4zvDzmQtm/MOewb8Ft4UHE29b4kH
+ U+csqsfh+Yw7CBb5Un5fB/4Z7BG5hoXpW2UDKBsdVTbTDVteit7Yfw9heYbYmbn49sN8VfUI+D2
+ q+OI7P5lgKCA6Hz2L8tqMWs2bqoZm9194S3HGggnqKZMHpbAI1zKATjXkm8tcyvlvLIZFHZsPG2
+ MDyoOri2p+HGDTk0YuDJzsbldz/saHIpCIICgOvwMs3wNjYeF0M3
+X-Received: by 2002:a5d:44d1:0:b0:38f:2176:45a0 with SMTP id
+ ffacd0b85a97d-38f33f511edmr8659842f8f.33.1739814187844; 
+ Mon, 17 Feb 2025 09:43:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZOz8M7HvrvJ9GfUM1EUfwUeeVYkqcULc0SmmwFuZWcjIYYQgIiHcXccGO5318pB988Uxe5Q==
+X-Received: by 2002:a5d:44d1:0:b0:38f:2176:45a0 with SMTP id
+ ffacd0b85a97d-38f33f511edmr8659813f8f.33.1739814187445; 
+ Mon, 17 Feb 2025 09:43:07 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259d5b40sm12967828f8f.68.2025.02.17.09.43.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Feb 2025 09:43:06 -0800 (PST)
+Message-ID: <ff481ffd-545f-4d0c-b53a-3cf9e0f8f388@redhat.com>
+Date: Mon, 17 Feb 2025 18:43:01 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] docs/cpu-features: Update "PAuth" (Pointer
+ Authentication) details
+Content-Language: en-US
+To: Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org
+Cc: Ninad Palsule <ninad@linux.ibm.com>, sebott@redhat.com, maz@kernel.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Yi Liu <yi.l.liu@intel.com>,
+ qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>
+References: <20250217163732.3718617-1-kchamart@redhat.com>
+ <20250217163732.3718617-3-kchamart@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250217163732.3718617-3-kchamart@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,275 +124,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Investigate the git history to uncover when and why the VFIO
-properties were introduced and update the models. This is mostly
-targeting vfio-pci device, since vfio-platform, vfio-ap and vfio-ccw
-devices are simpler.
+Hi Kashyap,
 
-Sort the properties based on the QEMU version in which they were
-introduced.
 
-Cc: Tony Krowiak <akrowiak@linux.ibm.com>
-Cc: Eric Farman <farman@linux.ibm.com>
-Cc: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
+On 2/17/25 5:37 PM, Kashyap Chamarthy wrote:
+> PAuth (Pointer Authentication), a security feature in software, is
+> relevant for both KVM and QEMU.  Relect this fact into the docs:
+>
+>   - For KVM, `pauth` is a binary, "on" vs "off" option.  The host CPU
+>     will choose the cryptographic algorithm.
+>
+>   - For TCG, however, along with `pauth`, a couple of properties can be
+>     controlled -- they're are related to cryptographic algorithm choice.
+>
+> Thanks to Peter Maydell and Marc Zyngier for explaining more about PAuth
+> on IRC (#qemu, OFTC).
+>
+> Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
+> ---
+> v2: address Marc Zyngier's comments:
+>     https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg03451.html
+> ---
+>  docs/system/arm/cpu-features.rst | 46 +++++++++++++++++++++++++++++---
+>  1 file changed, 42 insertions(+), 4 deletions(-)
+>
+> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+> index a596316384..94d260b573 100644
+> --- a/docs/system/arm/cpu-features.rst
+> +++ b/docs/system/arm/cpu-features.rst
+> @@ -204,11 +204,49 @@ the list of KVM vCPU features and their descriptions.
+>    the guest scheduler behavior and/or be exposed to the guest
+>    userspace.
+>  
+> -TCG vCPU Features
+> -=================
+> +"PAuth" (Pointer Authentication)
+> +================================
+> +
+> +PAuth (Pointer Authentication) is a security feature in software that
+> +was introduced in Armv8.3-A.  It aims to protect against ROP
+> +(return-oriented programming) attacks.
+> +
+> +KVM
+> +---
+> +
+> +``pauth``
+> +
+> +  Enable or disable ``FEAT_Pauth``.  No other properties can be
+> +  controlled.
+> +
+> +  The host CPU will define the PAC (pointer authentication
+> +  code) cryptographic algorithm.
+> +
+> +  There are different "levels" of PAuth support.  The host CPU
+> +  definition will define that level (e.g. PAuth, EPAC, PAuth2, FPAC,
+> +  FPACCOMBINE, etc).  Refer to the Arm architecture extension documents
+> +  for details about the description of these features.
+> +
+> +Live migration and PAuth
+> +~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +The level of PAuth support depends on which Arm architecture a given CPU
+> +supports (e.g. Armv8.3 vs. Armv8.6).  This gradation in PAuth support
+> +has implications for live migration.  For example, to be able to
+> +live-migrate from host-A (with Armv8.3) to host-B (with Arm v8.6):
+> +
+> +  - the source and destination hosts must "agree" on (a) the PAC
+> +    signature algorithm, and (b) all the sub-features of PAuth; or
+> +
+> +  - the alternative (and less desirable) option is to turn off PAuth
+> +    off on both source and destination — this is generally not
+> +    recommended, as PAuth is a security feature.
+> +
+> +TCG
+> +---
+>  
+> -TCG vCPU features are CPU features that are specific to TCG.
+> -Below is the list of TCG vCPU features and their descriptions.
 
- Should we introduce documentation for properties like the kernel has
- in Documentation/ABI/*/sysfs-* ?
+The resulting header layout seems weird to me.
+Initially we had at top level (assuming ===):
 
- Changes in v4:
+KVM vCPU Features
+TCG vCPU Features
+SVE CPU Properties
+SME CPU Properties
+RME CPU Properties
 
- - Latest improvements from Alex 
+and now
 
- Changes in v3:
+TCG vCPU Features has somehow disappeared giving the impression that
+there are none.
 
- - Re-organized the vfio-pci properties based on the QEMU version in
-   which they were introduced
- - Added property labels
- - Improved description as suggested by Alex, Tomita and Corvin
+SME and RME and TCG only if am not wrong while PAUTH and SVE are both
+KVM and TCG
 
- Changes in v2:
+Maybe we shall
+- rename KVM vCPU Features -> KVM only vCPU Features
+- Add a TCG only vCPU features including both SME and RME ones
+- introduce a top level KVM and TCG vCPU features with below:
+PAUTH, SVE, detailing potential different semantic for both KVM and TCG mode
 
- - Fixed version numbers
- - Fixed #ifdef in vfio/ccw.c
- - Addressed vfio-pci-nohotplug
- - Organize the vfio-pci properties in topics
+Also while we are at it, we may use vCPU everywhere instead of CPU (SVE
+CPU Properties) and just skip CPU if it lays within the KVM and TCG vCPU
+Features
 
- hw/vfio/ap.c       |   9 ++++
- hw/vfio/ccw.c      |  15 ++++++
- hw/vfio/pci.c      | 125 +++++++++++++++++++++++++++++++++++++++++++++
- hw/vfio/platform.c |  24 +++++++++
- 4 files changed, 173 insertions(+)
+Thanks
 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 30b08ad375d5ecae886c5000fbaa364799fe76d0..c7ab4ff57ada0ed0e5a76f52b5a05c86ca4fe0b4 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -257,6 +257,15 @@ static void vfio_ap_class_init(ObjectClass *klass, void *data)
-     dc->hotpluggable = true;
-     device_class_set_legacy_reset(dc, vfio_ap_reset);
-     dc->bus_type = TYPE_AP_BUS;
-+
-+    object_class_property_set_description(klass, /* 3.1 */
-+                                          "sysfsdev",
-+                                          "Host sysfs path of assigned device");
-+#ifdef CONFIG_IOMMUFD
-+    object_class_property_set_description(klass, /* 9.0 */
-+                                          "iommufd",
-+                                          "Set host IOMMUFD backend device");
-+#endif
- }
- 
- static const TypeInfo vfio_ap_info = {
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 6bb8882d3f2b965eb47cc9e65d7e74bbdb5e7685..e5e0d9e3e7ed124f242b3eda345bc973e418a64c 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -709,6 +709,21 @@ static void vfio_ccw_class_init(ObjectClass *klass, void *data)
-     cdc->handle_halt = vfio_ccw_handle_halt;
-     cdc->handle_clear = vfio_ccw_handle_clear;
-     cdc->handle_store = vfio_ccw_handle_store;
-+
-+    object_class_property_set_description(klass, /* 2.10 */
-+                                          "sysfsdev",
-+                                          "Host sysfs path of assigned device");
-+    object_class_property_set_description(klass, /* 3.0 */
-+                                          "force-orb-pfch",
-+                                          "Force unlimited prefetch");
-+#ifdef CONFIG_IOMMUFD
-+    object_class_property_set_description(klass, /* 9.0 */
-+                                          "iommufd",
-+                                          "Set host IOMMUFD backend device");
-+#endif
-+    object_class_property_set_description(klass, /* 9.2 */
-+                                          "loadparm",
-+                                          "Define which devices that can be used for booting");
- }
- 
- static const TypeInfo vfio_ccw_info = {
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 89d900e9cf0ce364f7c813d81b0317bb3b3e80ca..4f92b50b133060c9199079a0ab620793ecdac0ee 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3433,6 +3433,122 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-     pdc->exit = vfio_exitfn;
-     pdc->config_read = vfio_pci_read_config;
-     pdc->config_write = vfio_pci_write_config;
-+
-+    object_class_property_set_description(klass, /* 1.3 */
-+                                          "host",
-+                                          "Host PCI address [domain:]<bus:slot.function> of assigned device");
-+    object_class_property_set_description(klass, /* 1.3 */
-+                                          "x-intx-mmap-timeout-ms",
-+                                          "When EOI is not provided by KVM/QEMU, wait time "
-+                                          "(milliseconds) to re-enable device direct access "
-+                                          "after INTx (DEBUG)");
-+    object_class_property_set_description(klass, /* 1.5 */
-+                                          "x-vga",
-+                                          "Expose VGA address spaces for device");
-+    object_class_property_set_description(klass, /* 2.3 */
-+                                          "x-req",
-+                                          "Disable device request notification support (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.4 and 2.5 */
-+                                          "x-no-mmap",
-+                                          "Disable MMAP for device. Allows to trace MMIO "
-+                                          "accesses (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-no-kvm-intx",
-+                                          "Disable direct VFIO->KVM INTx injection. Allows to "
-+                                          "trace INTx interrupts (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-no-kvm-msi",
-+                                          "Disable direct VFIO->KVM MSI injection. Allows to "
-+                                          "trace MSI interrupts (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-no-kvm-msix",
-+                                          "Disable direct VFIO->KVM MSIx injection. Allows to "
-+                                          "trace MSIx interrupts (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-pci-vendor-id",
-+                                          "Override PCI Vendor ID with provided value (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-pci-device-id",
-+                                          "Override PCI device ID with provided value (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-pci-sub-vendor-id",
-+                                          "Override PCI Subsystem Vendor ID with provided value "
-+                                          "(DEBUG)");
-+    object_class_property_set_description(klass, /* 2.5 */
-+                                          "x-pci-sub-device-id",
-+                                          "Override PCI Subsystem Device ID with provided value "
-+                                          "(DEBUG)");
-+    object_class_property_set_description(klass, /* 2.6 */
-+                                          "sysfsdev",
-+                                          "Host sysfs path of assigned device");
-+    object_class_property_set_description(klass, /* 2.7 */
-+                                          "x-igd-opregion",
-+                                          "Expose host IGD OpRegion to guest");
-+    object_class_property_set_description(klass, /* 2.7 (See c4c45e943e51) */
-+                                          "x-igd-gms",
-+                                          "Override IGD data stolen memory size (32MiB units)");
-+    object_class_property_set_description(klass, /* 2.11 */
-+                                          "x-nv-gpudirect-clique",
-+                                          "Add NVIDIA GPUDirect capability indicating P2P DMA "
-+                                          "clique for device [0-15]");
-+    object_class_property_set_description(klass, /* 2.12 */
-+                                          "x-no-geforce-quirks",
-+                                          "Disable GeForce quirks (for NVIDIA Quadro/GRID/Tesla). "
-+                                          "Improves performance");
-+    object_class_property_set_description(klass, /* 2.12 */
-+                                          "display",
-+                                          "Enable display support for device, ex. vGPU");
-+    object_class_property_set_description(klass, /* 2.12 */
-+                                          "x-msix-relocation",
-+                                          "Specify MSI-X MMIO relocation to the end of specified "
-+                                          "existing BAR or new BAR to avoid virtualization overhead "
-+                                          "due to adjacent device registers");
-+    object_class_property_set_description(klass, /* 3.0 */
-+                                          "x-no-kvm-ioeventfd",
-+                                          "Disable registration of ioeventfds with KVM (DEBUG)");
-+    object_class_property_set_description(klass, /* 3.0 */
-+                                          "x-no-vfio-ioeventfd",
-+                                          "Disable linking of KVM ioeventfds to VFIO ioeventfds "
-+                                          "(DEBUG)");
-+    object_class_property_set_description(klass, /* 3.1 */
-+                                          "x-balloon-allowed",
-+                                          "Override allowing ballooning with device (DEBUG, DANGER)");
-+    object_class_property_set_description(klass, /* 3.2 */
-+                                          "xres",
-+                                          "Set X display resolution the vGPU should use");
-+    object_class_property_set_description(klass, /* 3.2 */
-+                                          "yres",
-+                                          "Set Y display resolution the vGPU should use");
-+    object_class_property_set_description(klass, /* 5.2 */
-+                                          "x-pre-copy-dirty-page-tracking",
-+                                          "Disable dirty pages tracking during iterative phase "
-+                                          "(DEBUG)");
-+    object_class_property_set_description(klass, /* 5.2, 8.0 non-experimetal */
-+                                          "enable-migration",
-+                                          "Enale device migration. Also requires a host VFIO PCI "
-+                                          "variant or mdev driver with migration support enabled");
-+    object_class_property_set_description(klass, /* 8.1 */
-+                                          "vf-token",
-+                                          "Specify UUID VF token. Required for VF when PF is owned "
-+                                          "by another VFIO driver");
-+#ifdef CONFIG_IOMMUFD
-+    object_class_property_set_description(klass, /* 9.0 */
-+                                          "iommufd",
-+                                          "Set host IOMMUFD backend device");
-+#endif
-+    object_class_property_set_description(klass, /* 9.1 */
-+                                          "x-device-dirty-page-tracking",
-+                                          "Disable device dirty page tracking and use "
-+                                          "container-based dirty page tracking (DEBUG)");
-+    object_class_property_set_description(klass, /* 9.1 */
-+                                          "migration-events",
-+                                          "Emit VFIO migration QAPI event when a VFIO device "
-+                                          "changes its migration state. For management applications");
-+    object_class_property_set_description(klass, /* 9.1 */
-+                                          "skip-vsc-check",
-+                                          "Skip config space check for Vendor Specific Capability. "
-+                                          "Setting to false will enforce strict checking of VSC content "
-+                                          "(DEBUG)");
- }
- 
- static const TypeInfo vfio_pci_dev_info = {
-@@ -3461,6 +3577,15 @@ static void vfio_pci_nohotplug_dev_class_init(ObjectClass *klass, void *data)
- 
-     device_class_set_props(dc, vfio_pci_dev_nohotplug_properties);
-     dc->hotpluggable = false;
-+
-+    object_class_property_set_description(klass, /* 3.1 */
-+                                          "ramfb",
-+                                          "Enable ramfb to provide pre-boot graphics for devices "
-+                                          "enabling display option");
-+    object_class_property_set_description(klass, /* 8.2 */
-+                                          "x-ramfb-migrate",
-+                                          "Override default migration support for ramfb support "
-+                                          "(DEBUG)");
- }
- 
- static const TypeInfo vfio_pci_nohotplug_dev_info = {
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index f491f4dc9543c2ea3a7af4e51ee82fbc7ee6e4bb..d9faaa73959ad36aa3a835b87964ab940928bd9f 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -672,6 +672,30 @@ static void vfio_platform_class_init(ObjectClass *klass, void *data)
-     dc->desc = "VFIO-based platform device assignment";
-     sbc->connect_irq_notifier = vfio_start_irqfd_injection;
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+
-+    object_class_property_set_description(klass, /* 2.4 */
-+                                          "host",
-+                                          "Host device name of assigned device");
-+    object_class_property_set_description(klass, /* 2.4 and 2.5 */
-+                                          "x-no-mmap",
-+                                          "Disable MMAP for device. Allows to trace MMIO "
-+                                          "accesses (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.4 */
-+                                          "mmap-timeout-ms",
-+                                          "When EOI is not provided by KVM/QEMU, wait time "
-+                                          "(milliseconds) to re-enable device direct access "
-+                                          "after level interrupt (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.4 */
-+                                          "x-irqfd",
-+                                          "Allow disabling irqfd support (DEBUG)");
-+    object_class_property_set_description(klass, /* 2.6 */
-+                                          "sysfsdev",
-+                                          "Host sysfs path of assigned device");
-+#ifdef CONFIG_IOMMUFD
-+    object_class_property_set_description(klass, /* 9.0 */
-+                                          "iommufd",
-+                                          "Set host IOMMUFD backend device");
-+#endif
- }
- 
- static const TypeInfo vfio_platform_dev_info = {
--- 
-2.48.1
+Eric
+
+
+
+
+> +For TCG, along with ``pauth``, it is possible to control a few other
+> +properties of PAuth:
+>  
+>  ``pauth``
+>    Enable or disable ``FEAT_Pauth`` entirely.
 
 
