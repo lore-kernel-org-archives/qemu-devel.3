@@ -4,80 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEEE5C02198
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 01:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5B8C02198
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 01:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjpao-0003k4-Ve; Sun, 16 Feb 2025 20:06:43 -0500
+	id 1tjpk8-0006Yw-5K; Sun, 16 Feb 2025 20:16:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1tjpal-0003jW-8I
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 20:06:35 -0500
-Received: from smtpx.feld.cvut.cz ([2001:718:2:1516::210:153]
- helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1tjpai-0007ot-Cs
- for qemu-devel@nongnu.org; Sun, 16 Feb 2025 20:06:34 -0500
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 85461453B7;
- Mon, 17 Feb 2025 02:06:23 +0100 (CET)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id kyB4IIHV3tgN; Mon, 17 Feb 2025 02:06:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1739754170;
- bh=yi4STwWmcp44Wbln4NZOAd/RduLnEbwCM5Tsm5+qJZ0=;
- h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=FQdmRlroAQH7HAlFCq+84ZFMKTV/iIbD1fZqS0sFJAWmwUk5x2R5c7E27FCCW7m+J
- WMbY5k4CUtGYybSWeC/99D53YCUqtirCnRNrdD+igPEGJPkcD0tfJwb/TrTwCmRiuo
- VhksnGcSpKGL5uELvdleODaPU4STgIghusJ5T3qARzNdeuJWIFlXtlTefNZvmxdJCm
- w7Y6mExeSVuckOwzZq8UaAdYhmHpeyuthUdT6iDqJhp1We+KtMSzwjy23pvIdHsf18
- irg4m8h9YdAl/p9paql0VgDPQALISDPK/cszJn4VQVuf2qFwjorT8Y3g+ChK3VVuxc
- TOIN+Gp4nyNnw==
-Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
- [84.242.78.234])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id E33A0452DB;
- Mon, 17 Feb 2025 02:02:49 +0100 (CET)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: Deniz Eren <deniz.eren@icloud.com>
-Subject: Re: hw/net/can: PCI MSI suport for SJA1000 based addon card Was:
- [PATCH] hw/net/can: ... to meson build.
-Date: Mon, 17 Feb 2025 02:03:01 +0100
-User-Agent: KMail/1.9.10
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Marek Vasut <marex@denx.de>, Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Jiri Novak <jnovak@fel.cvut.cz>, Stefan Hajnoczi <stefanha@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- Frederic Konrad <frederic.konrad@adacore.com>,
- Jan Kiszka <jan.kiszka@siemens.com>,
- Jan Charvat <jancharvat.charvat@gmail.com>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Ondrej Ille <ondrej.ille@gmail.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>
-References: <202009232013.52889.pisa@cmp.felk.cvut.cz>
- <3A8C14E4-3709-4866-B547-7AC621F5C368@icloud.com>
-In-Reply-To: <3A8C14E4-3709-4866-B547-7AC621F5C368@icloud.com>
-X-KMail-QuotePrefix: > 
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1tjpk5-0006YG-87
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 20:16:13 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1tjpk2-0000S9-KN
+ for qemu-devel@nongnu.org; Sun, 16 Feb 2025 20:16:12 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxIK_PjbJnJEJ4AA--.9116S3;
+ Mon, 17 Feb 2025 09:15:59 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMDx_MTOjbJnJ0kXAA--.20105S2;
+ Mon, 17 Feb 2025 09:15:58 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn, maobibo@loongson.cn
+Subject: [PATCH 1/1] target/loongarch: fix 'make check-functional failed'
+Date: Mon, 17 Feb 2025 08:54:39 +0800
+Message-Id: <20250217005439.249587-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Disposition: inline
-Message-Id: <202502170203.01317.pisa@fel.cvut.cz>
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:718:2:1516::210:153;
- envelope-from=pisa@fel.cvut.cz; helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.533, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMDx_MTOjbJnJ0kXAA--.20105S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,114 +63,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Deniz,
+For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+the tlb_ps may be 0,this may case UndefinedBehavior
+Add a check-tlb_ps fuction to check tlb_ps, when use
+csrwr insn to write CRMD PG=1, check the tlb_ps, and when
+use csrwr insn to write STLBPS, check the tlb_ps value.
 
-On Saturday 15 of February 2025 14:30:58 Deniz Eren wrote:
-> I have implemented support for PCI MSI capability CANbus card support;
-> fully tested using QNX operating system guest image. How can I go about
-> contributing this to the main repo:
->
-> https://github.com/Deniz-Eren/qemu/blob/feature/can-sja100-pci-msi-suppor=
-t/
->hw/net/can/can_pcm26d2ca_pci.c
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/helper.h                     |  2 +
+ target/loongarch/internals.h                  |  1 +
+ target/loongarch/tcg/csr_helper.c             | 52 +++++++++++++++++++
+ .../tcg/insn_trans/trans_privileged.c.inc     |  2 +
+ target/loongarch/tcg/tlb_helper.c             |  4 ++
+ 5 files changed, 61 insertions(+)
 
-the first thanks for information and work done.
+diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+index 943517b5f2..4f1490a465 100644
+--- a/target/loongarch/helper.h
++++ b/target/loongarch/helper.h
+@@ -100,6 +100,8 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_2(csrwr_crmd, i64, env,tl)
++DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+ DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 7b254c5f49..bb1644f0a0 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -43,6 +43,7 @@ enum {
+     TLBRET_PE = 7,
+ };
+ 
++void check_tlb_ps(CPULoongArchState *env);
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 6c95be9910..32c9716f42 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -97,6 +97,58 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+     return old_v;
+ }
+ 
++void check_tlb_ps(CPULoongArchState *env)
++{
++    for (int i=0; i<LOONGARCH_TLB_MAX; i++)
++    {
++        LoongArchTLB*tlb =&env->tlb[i];
++        uint8_t tlb_ps;
++        if(i >= LOONGARCH_STLB) {
++            tlb_ps = FIELD_EX64(tlb->tlb_misc,TLB_MISC,PS);
++	    if (tlb_ps < 12) {
++                tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, 12);
++            }
++        } else {
++            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS,PS);
++            if (tlb_ps < 12) {
++               env->CSR_STLBPS= FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, 12);
++           }
++       }
++    }
++}
++
++target_ulong helper_csrwr_crmd(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t pg;
++    int64_t old_v = env->CSR_CRMD;
++
++    pg = FIELD_EX64(val, CSR_CRMD, PG);
++    if (pg) {
++        check_tlb_ps(env);
++    }
++    env->CSR_CRMD = val;
++    return old_v;
++}
++
++target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t tlb_ps;
++    int64_t old_v = env->CSR_STLBPS;
++
++    /*
++     * The real hardware only supports the min tlb_ps is 12
++     * tlb_ps=0 may cause undefined-behavior.
++     */
++    tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
++    if (tlb_ps  < 12) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Attempted set ps %d\n",tlb_ps);
++        val = FIELD_DP64(val, CSR_STLBPS, PS, 12);
++    }
++    env->CSR_STLBPS = val;
++    return old_v;
++}
++
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+     int shift;
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 3afa23af79..d6b1f8319f 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -74,6 +74,8 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+ 
+ void loongarch_csr_translate_init(void)
+ {
++    SET_CSR_FUNC(CRMD, NULL,gen_helper_csrwr_crmd);
++    SET_CSR_FUNC(STLBPS, NULL,gen_helper_csrwr_stlbps);
+     SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index a323606e5a..fc9c7823e7 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -449,7 +449,11 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+                                   target_ulong info, target_ulong addr)
+ {
+     uint16_t asid = info & 0x3ff;
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
+ 
++    if (!pg) {
++        return;
++    }
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         LoongArchTLB *tlb = &env->tlb[i];
+         uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+-- 
+2.34.1
 
-I am replying to all addressees of your e-mail but if the others
-do not respond, I suggest to limit and would limit the recipients
-list only to me, other QEMU CAN subsystem maintainers:
-
-  Francisco Iglesias <francisco.iglesias@amd.com>
-  Vikram Garhwal <vikram.garhwal@bytedance.com>
-
-QEMU list
-
-  qemu-devel@nongnu.org
-
-and some QEMU core developers who could accept the code
-for mainline, my previous changes have been accepted
-for mainline by one of the following developers
-
-  Peter Maydell <peter.maydell@linaro.org>
-  Michael Tokarev<mjt@tls.msk.ru>
-  Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-  Paolo Bonzini <pbonzini@redhat.com>
-
-The patches should be send in plain text format (git format-patch)
-to qemu-devel@nongnu.org and me and other QEMU CAN maintainers.
-
-As for the format and other details, look at=20
-
-  https://www.qemu.org/docs/master/devel/submitting-a-patch.html
-
-Check the source formating and basic requirements by
-
-  scripts/checkpatch.pl
-
-As for the actual changes you propose, I have looked
-into your repository. I would like to discuss a little
-changes to generic SJA1000 code
-
- =20
-https://github.com/Deniz-Eren/qemu/commit/a2f593f21946328821f8456274c9c688d=
-5f1c4de
-
-Because my understanding is that the emulated board is some
-Advantech board PCM-26D2CA
-
- =20
-https://www.advantech.com/en/products/14263729-aaa3-4552-b990-99d16cdfee24/=
-pcm-26d2ca/mod_9a1e9dbf-e22d-4770-a896-cecf40607084
-
-which has PCIe MSI capable interface. The datasheet states
-NXP SJA-1000 used as the controller. But I do not expect
-that this chip allows distinguish interrupt source directly
-to map it to PCIe MSI signal. So one option is complete controller
-logic in FPGA, another is somehow read and map interrupt PeliCAN
-register to MSI messages. But that mapping can be specific
-to different boards and SJA1000 compatible controllers
-implementations.
-
-I am not sure if your code is prepared to make mapping
-so generic.
-
-In the fact, I am not sure if whole PCIe MSI details
-should be pushed to the bare SJA1000 controller implementation.
-
-I would suggest to think about option to register callback
-for interrupt state update which would receive interrupt
-register state as argument and move actual mapping to PCIe
-MSI writes outside of the core SJA1000 implementation.
-
-This way it could be mapped even to other bus technologies
-which allows multiple even boxes per single addon
-card/controller source. I can imagine VME for example
-even that it probably not common today but even some
-SoC with SJA1000 compatible CAN controller which maps
-it to multiple interrupts.
-
-We should discuse this probably within smaller group, me
-and Francisco Iglesias and Vikram Garhwal with CC to
-qemu-devel@nongnu.org and when we agree on the patche
-series in the review process we should ask some
-other QEMU developers to accept result for mainline.=20
-
-
-Best wishes,
-
-                Pavel
-=2D-
-                Pavel Pisa
-    phone:      +420 603531357
-    e-mail:     pisa@cmp.felk.cvut.cz
-    Department of Control Engineering FEE CVUT
-    Karlovo namesti 13, 121 35, Prague 2
-    university: http://control.fel.cvut.cz/
-    personal:   http://cmp.felk.cvut.cz/~pisa
-    social:     https://social.kernel.org/ppisa
-    projects:   https://www.openhub.net/accounts/ppisa
-    CAN related:http://canbus.pages.fel.cvut.cz/
-    RISC-V education: https://comparch.edu.cvut.cz/
-    Open Technologies Research Education and Exchange Services
-    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
