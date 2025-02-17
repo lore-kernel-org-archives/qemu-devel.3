@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC58EC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4627AC021AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 14:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk2Hg-0000Xk-3Y; Mon, 17 Feb 2025 09:39:44 -0500
+	id 1tk2Hl-0000sv-AO; Mon, 17 Feb 2025 09:39:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1tjuuD-0008W9-Rp
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 01:47:01 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1tjuuC-0007Uw-3E
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 01:47:01 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 623A45C565E;
- Mon, 17 Feb 2025 06:46:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD2BC4CED1;
- Mon, 17 Feb 2025 06:46:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1739774816;
- bh=wGEp05+aP4nRVSEcYNqbBBmVcNgBfNoXnSxpARVudB0=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=KqW1KybLXuKVrnFDHFiQ39uSkMrSQZORRAhuHSiVZBF030Qsx+WxRZfbHsWxSnCr1
- lYXE4MV+3LXcdbe9KSG+s042q9N0Zuk+9yXyhS+3TjCkB2K0VIsa8qNvwe0erUdv9Q
- C3929Be6vAhdTnetgcUlcKcxdgKNcaCX3VFaqJ+oMuF0I0uX5IcZamIAmlgwIniZh1
- ExJtlbTAMkIOlUEIs6y6s2q1mV4Q0bp4RZcCKoCCgh9KtCKJrtiFm8usbtKMACjjgZ
- iEd/F0KTKoG2b6WDv8aSwLQHrHefSYfXkdh8hUymZnLW7SAkvN82MhZW4KC0h2TC7B
- 9AqPlIoo2jDjw==
-Date: Mon, 17 Feb 2025 12:13:15 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Sean Christopherson <seanjc@google.com>
-Cc: Kim Phillips <kim.phillips@amd.com>, 
- Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, 
- Michael Roth <michael.roth@amd.com>, Ashish Kalra <ashish.kalra@amd.com>, 
- "Nikunj A . Dadhania" <nikunj@amd.com>, Borislav Petkov <bp@alien8.de>, 
- Dave Hansen <dave.hansen@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kishon Vijay Abraham I <kvijayab@amd.com>, Alexey Kardashevskiy <aik@amd.com>
-Subject: Re: [PATCH v3 2/2] KVM: SEV: Configure "ALLOWED_SEV_FEATURES" VMCB
- Field
-Message-ID: <gxyvqeslwhw6dirfg7jb7wavotlguctnxf5ystqfcnn5mk74qa@nlqbruetef22>
-References: <20250207233410.130813-1-kim.phillips@amd.com>
- <20250207233410.130813-3-kim.phillips@amd.com>
- <4eb24414-4483-3291-894a-f5a58465a80d@amd.com>
- <Z6vFSTkGkOCy03jN@google.com>
- <6829cf75-5bf3-4a89-afbe-cfd489b2b24b@amd.com>
- <Z66UcY8otZosvnxY@google.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk2He-0000ZH-VI
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:39:43 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk2Ha-0003gm-9c
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 09:39:40 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-6f9aa66cbe8so34771837b3.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 06:39:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739803177; x=1740407977; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7RfeVFL/7Pgf5C8rBy/PRDnAc2i72PnzzwI+WiTIYms=;
+ b=GOzEbT3BWXkCsvKghb6EjIZtCDGEfv6XS3CiGNEA7d0fRDNH4/2H0zywpnVw/65zMm
+ zCFyDWfiFo5mBQK6U2sD6Rsj0v8MafvPIFvtsoSXEfFRKXb4KsoxqDXYTXzMG7it0Z+t
+ zBcrBQ5wmqVUlbbwvAm+pgsCa52fjXBTF8ymfPO4dNGYyGxFgHf1TnJpJQUkrilIQmUJ
+ 8bRGypoc8uRZ131yQo7cfczVJwvDDU/vMWQ7bxY2SqjjV2Tozf6gUluCTQZGsq5xc73a
+ DzMJZrukH/qbVbFp0svSKxbGVmm69YypERqx1RZMWVmmjZQlOkz5rq/2oSZQnTlP8JIL
+ X6RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739803177; x=1740407977;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7RfeVFL/7Pgf5C8rBy/PRDnAc2i72PnzzwI+WiTIYms=;
+ b=GBK0meJj9UKy4cvAzRKHGaUfKovt4AfiIOk0WP+ZgaBTsWKF8GW3HnedXPoYROpaUG
+ GtkcpDfnKR27RBRHNtqtiK5ofbEOXTmNK14Zi+wMJEeOfkKVueVC57yETPjHuHFDRTnW
+ UoMI5BEjl9uFB51hYGODINtZzjYPLU8yOGWrrBr6vSFY1od9LHTX+eRysSaq046TsJ72
+ ddq/i242tQPQA3IpjlvVtKnR6EDDB/XgDHLZy+lBEqbtMGw+nrof3vAIaJEYaLvfJk/k
+ FcFqp3HSIqCE9dsyhW913IV27PYVfpuc4TPyEqEsRFi1dZCEAXxlgJO9ZK2XGzyxbYE7
+ XwHQ==
+X-Gm-Message-State: AOJu0YzniI8tk1lp22ob3Q1Q3zCkU7foI64wHpeoW0ute+Ngvwv3JKO2
+ Eo1ZLf275ItPDmyBQpt/WVLj25uDOin7NsHwaLWRAP3ZM31EEvfGkR+J3nF66smFNRvOhQ3lCvz
+ vgNCVpr8OLgaX5zeUhsrTm5GY9ob4FBint9xynA==
+X-Gm-Gg: ASbGncvlZ776SDo9Qb3taBTcep0RmiYoJ/R4k4sMlN1YU/fcMwUHGHryM10FoGkL0iR
+ vErtn7CdubNTvHo3rX/B3w5NIWjhCKfs9T75x4g5eSsOv8ATuOQ/bMy2+Yrvlo3Fo+Rrd9Clxqw
+ ==
+X-Google-Smtp-Source: AGHT+IGXVSI+MhROu/JHs+t7/bs+/l0JMYC5jDsDKt+onl42dVXRN8dUnMLoxO2J8UMn5QjA0dbgcNkUCThhm1xo1NE=
+X-Received: by 2002:a05:6902:2684:b0:e5d:c30f:22ec with SMTP id
+ 3f1490d57ef6-e5dc900e896mr6436762276.9.1739803177030; Mon, 17 Feb 2025
+ 06:39:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z66UcY8otZosvnxY@google.com>
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=naveen@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250208163911.54522-1-philmd@linaro.org>
+ <20250208163911.54522-5-philmd@linaro.org>
+ <CAFEAcA-tQUL2Rt4Y_eNFxCFXzNXupzQz3qYdEupB6Bb3HFyhfw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-tQUL2Rt4Y_eNFxCFXzNXupzQz3qYdEupB6Bb3HFyhfw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Feb 2025 14:39:25 +0000
+X-Gm-Features: AWEUYZkdzG9yLQ6nYHX4IOYClySz87ahHbKy-fvk_EjfzGW3nOgJBUSVgoHuAnk
+Message-ID: <CAFEAcA_66f2t2UQv5eKwspDTBs+kfvpGsMPG6f31aqs6FWMx=w@mail.gmail.com>
+Subject: Re: [PATCH v6 4/7] hw/char/pl011: Trace FIFO enablement
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 17 Feb 2025 09:39:19 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,37 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 13, 2025 at 04:55:13PM -0800, Sean Christopherson wrote:
-> On Thu, Feb 13, 2025, Kim Phillips wrote:
-> > On 2/11/25 3:46 PM, Sean Christopherson wrote:
-> > > On Mon, Feb 10, 2025, Tom Lendacky wrote:
-> > > > On 2/7/25 17:34, Kim Phillips wrote:
-> 
-> Third, letting userspace opt-in to something doesn't necessarily mean giving
-> userspace full control.  Which is the entire reason I asked the question about
-> whether or not this can break userspace.  E.g. we can likely get away with only
-> making select features opt-in, and enforcing everything else by default.
-> 
-> I don't think RESTRICTED_INJECTION or ALTERNATE_INJECTION can work without KVM
-> cooperation, so enforcing those shouldn't break anything.
-> 
-> It's still not clear to me that we don't have a bug with DEBUG_SWAP.  AIUI,
-> DEBUG_SWAP is allowed by default.  I.e. if ALLOWED_FEATURES is unsupported, then
-> the guest can use DEBUG_SWAP via SVM_VMGEXIT_AP_CREATE without KVM's knowledge.
+On Mon, 17 Feb 2025 at 14:27, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
+rg> wrote:
+> >
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > ---
+> >  hw/char/pl011.c      | 4 +++-
+> >  hw/char/trace-events | 2 ++
+> >  2 files changed, 5 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> > index b9c9e5b5983..447f185e2d5 100644
+> > --- a/hw/char/pl011.c
+> > +++ b/hw/char/pl011.c
+> > @@ -148,6 +148,7 @@ static bool pl011_loopback_enabled(PL011State *s)
+> >
+> >  static bool pl011_is_fifo_enabled(PL011State *s)
+> >  {
+> > +    trace_pl011_fifo_is_enabled((s->lcr & LCR_FEN) !=3D 0);
+> >      return (s->lcr & LCR_FEN) !=3D 0;
+>
+> Might be neater having a local variable rather than
+> repeating the expression twice.
 
-In sev_es_prepare_switch_to_guest(), we save host debug register state 
-(DR0-DR3) only if KVM is aware of DEBUG_SWAP being enabled in the guest 
-(via vmsa_features). So, from what I can tell, it looks like the guest 
-will end up overwriting host state if it enables DEBUG_SWAP without 
-KVM's knowledge?
+I'll squash in this tweak:
 
-Not sure if that's reason enough to enforce ALLOWED_SEV_FEATURES for 
-DEBUG_SWAP :)
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -148,8 +148,10 @@ static bool pl011_loopback_enabled(PL011State *s)
 
-If ALLOWED_SEV_FEATURES is not supported, we may still have to 
-unconditionally save the host DR0-DR3 registers.
+ static bool pl011_is_fifo_enabled(PL011State *s)
+ {
+-    trace_pl011_fifo_is_enabled((s->lcr & LCR_FEN) !=3D 0);
+-    return (s->lcr & LCR_FEN) !=3D 0;
++    bool enabled =3D (s->lcr & LCR_FEN) !=3D 0;
++
++    trace_pl011_fifo_is_enabled(enabled);
++    return enabled;
+ }
 
+ static inline unsigned pl011_get_fifo_depth(PL011State *s)
 
-- Naveen
-
+thanks
+-- PMM
 
