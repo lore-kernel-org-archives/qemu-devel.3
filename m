@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B60C021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 12:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C1DC021AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 12:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0b8-0001jR-Ky; Mon, 17 Feb 2025 07:51:42 -0500
+	id 1tk0b3-0001gN-76; Mon, 17 Feb 2025 07:51:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk0ae-0001cb-KF
+ id 1tk0ae-0001ca-Jc
  for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:51:16 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tk0aa-0002GH-M8
+ id 1tk0ac-0002H4-6L
  for qemu-devel@nongnu.org; Mon, 17 Feb 2025 07:51:11 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43971025798so10034155e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 04:51:05 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38f265c6cb0so1919682f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 04:51:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739796665; x=1740401465; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739796668; x=1740401468; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y6pbiMjKPNJA8EY4vkWYZrebB7w+9UsObWGKtAK8Oy4=;
- b=m7ZtQflq7BQOsUxROjKdyeXwZaeP2a9dxZmK8qXnWXd88zZPHhrvGSlH9KuxdJKw+x
- EYfgacfo6ZBphJovHZkQNwCNtyqYUM73uVclC4/ilw+YH2IpsV095NJ+muTVMCZtVYnD
- y+pQVCsY0vLc3TFgywbdb7x1XMJCTXIMXNblXQHkA/wgB+llXSFMMRMyb1bZ/NChBDjD
- X6lvZuXXApw+6fhf/LY6VXnmPcWnZOQmgC5pUPrbwCo9voxfifFGB91T50ba66qp9ja9
- uL5B9ts01mE/Lm94+hC4iLWO5DZOkHja8GxTW6C5b1qQSVa8DaYgl2A9L3h8/D+6Rq3h
- 0wPg==
+ bh=+Cujq0JdaQMnA+2txZe7tmirzkEMEUejhzVFg8j4HZI=;
+ b=h8hR6dXdj27ac+naQgTSuJwxhf4pe6F2W/Cl+sqjqJyCfjJkJ/m5sp7hET/AUsYyzc
+ BP4ecWM53qceYD7b5mdSmLxkxex2Lhpm+vlwjaqbyhmQ6De7zLn79sg51JCPeANpyPat
+ bunoxcwYdUOGJ4u3TYNsV9JSARVu0aKV+CwwOQCfmVQuuU91UPdpWctEs5xQz8rFX2je
+ cI1yE0rQm4SBHdbQD8ewhwb/UHOpSdtz4s0w5bnQYiJOYTvrxq6k/xbYJDKizWlRfvp9
+ +dzjy5cQWPvbJktrJ50re+8vPlyqy73zRFvPAstXZf9y8uN8jmh5Vgj91xs8w0d2JxJV
+ WzOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739796665; x=1740401465;
+ d=1e100.net; s=20230601; t=1739796668; x=1740401468;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y6pbiMjKPNJA8EY4vkWYZrebB7w+9UsObWGKtAK8Oy4=;
- b=Py35JLVsOwea1FZbGN8cFZ2ANld8RVvPeJy9uspx4nlD4ElX8lglo9spPMEuVAiaAe
- TxvnxrLAdXNYxMMzlewZ7dd0bLJ1OFOTwmB6tbrtDI9HnacoUivsHbOADzMmZluDA+zz
- U7d4kHDNg8U/eoKcjK+voAd9WYlYJRUzgPo15dtH3GLyeOiNwO79YiJ2QNZfBJWhW9Kt
- m7UmXyOzLVT/aGf6AiXwHNrYcekd/1upae75t0S3WROJIBQFySk/3EKggT3BC1zQSv2P
- 0LUMvc9ustrnVRCefKHE4ZldOrIcCOZDWCkqzvP43KqE8eHB9loYG2OyjKx0q/WG7LNl
- 52xQ==
-X-Gm-Message-State: AOJu0YxNQmJmXC8s+yMkGXumm05S+6EOtlzxm5sDB2NpSMb2As5a4Mjd
- X2evbmNjtth94PQzYYLfQ0RUzudDgKCJ+DX6qArEbnwzdo9riL8oA+/32TshpB6Ix4u0VxvXDZA
- g
-X-Gm-Gg: ASbGncuLqLzrhbUc9KtlRZRUGm9LQ/iviYrMEkJRadmA4FZaLfuxziSc6Q+vyyQzVyc
- ITfuQCBGI2vzUGrHpFRnJFrUT4J1uo0G6pJWsfy+mnUi+qoEJWd1KBbfAu7A7UhuJqIWa0L5Sk2
- 4b19+S86iDZNMD//qH94f0p7gGHFZBO0ShZn00NKLOzIQ4BYa1YEYwS/fW+VAmrtyWrdOomoqXu
- ggHl9XLBKqIc06ZEJvCVrISwKeFaruTOc/MtaeWdI8Dsb2kijKq5eBk0SdP+wrvoxCuyuagVPDY
- iO633/GKHVCVMKU+0wJJfg==
-X-Google-Smtp-Source: AGHT+IH2L2SuPhxfMIs7Wox6D4haTaYCW3+CL6ncu5iRZgoIorEvoqkI69CXNLDagmAMvvntxvcxvg==
-X-Received: by 2002:a05:600c:3ba5:b0:439:3e90:c535 with SMTP id
- 5b1f17b1804b1-4396e5bbc42mr100989695e9.0.1739796664819; 
- Mon, 17 Feb 2025 04:51:04 -0800 (PST)
+ bh=+Cujq0JdaQMnA+2txZe7tmirzkEMEUejhzVFg8j4HZI=;
+ b=KqKxDc7FcL1YjIXpYbAw3naUJPEZxTl5hbx/T+FXvlmnisqfrFliHPj9levj1pH2lW
+ pbncMFdKY4hUOEqr6nG5AGjy1f6Fb46vAd/W1HKjj4ZdyBc/STaj5FK5bwCupydbGw/R
+ onzuDGh+f/Z3Cv0y6/z3koOic0K1QwzSsmVLVfzciPSc4sU084LKQd46Je2iesau/bFx
+ YeruI8Curyrc+3MnGYpVgV1ZhdxUn4Ta4eyHZZzQEkbrcNYavsnC5ICZQgadP1MUTDEn
+ uYgvJgYSMLa2ZvKyn0F5D3eyumG4DjKDBIolk8KZZMZsTWglsKuA/I6MUfVMMnmxipFS
+ JMBw==
+X-Gm-Message-State: AOJu0Yz7X0c0KXiEy2H0vVfZ6XVCXPOvv16LX1JJpvgcaoIOmL6Qxodh
+ 1glXS5DjYcyrcKgFPiQVLjvvu/wA1GReJtb4ozGQSiAXWhZgUhkeeyMTKABm5DmmcwkZXRTgmrE
+ O
+X-Gm-Gg: ASbGncsDZ16q83r8JVafHDuwMnVXCM28nss8FwoydxpCrnBF7PorRxXJSdr4sXVsmRv
+ 1M87erxa1gDaQoIdlD0b6uNJ5EbShtAE8crHKeSq5zuqnL8MtyV35Rlb+gmJgdsJIU9ChLDfYZH
+ fV8+zH606yY/9FGEbZD/ha9lEMWnZ9tB8cCu150V+LRM9ywTJxXJ6mnk72xr4DFpJ0UB0HCHUpx
+ E3POHKOT+WDN4wYLT2w4R5+Yb6GsQiYzB159ituggO9mkn5/H186c/U9QQIE4bQfHPCv8sNDLMd
+ HQc86Nj0NEyHKAzhg1qbjQ==
+X-Google-Smtp-Source: AGHT+IEpBsbtY0Aem+F0l68jtu6VlQLwA+tIq8owsFtd2HUh4YIGGsgGTjOrHvWeq3/orQdGdckEFw==
+X-Received: by 2002:a05:6000:1f87:b0:38f:23f4:2d7a with SMTP id
+ ffacd0b85a97d-38f33f43751mr9201569f8f.40.1739796667646; 
+ Mon, 17 Feb 2025 04:51:07 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4398e84efb9sm3562455e9.10.2025.02.17.04.51.04
+ 5b1f17b1804b1-4398e84efb9sm3562455e9.10.2025.02.17.04.51.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 04:51:04 -0800 (PST)
+ Mon, 17 Feb 2025 04:51:07 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 07/10] fpu: Always decide no_signaling_nans() at runtime
-Date: Mon, 17 Feb 2025 12:50:52 +0000
-Message-ID: <20250217125055.160887-8-peter.maydell@linaro.org>
+Subject: [PATCH 10/10] fpu: Build only once
+Date: Mon, 17 Feb 2025 12:50:55 +0000
+Message-ID: <20250217125055.160887-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250217125055.160887-1-peter.maydell@linaro.org>
 References: <20250217125055.160887-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,36 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have a compile-time shortcut where we
-return false from no_signaling_nans() on everything except
-Xtensa, because we know that's the only target that
-might ever set status->no_signaling_nans.
-
-Remove the ifdef, so we always look at the status flag;
-this has no behavioural change, but will be necessary
-if we want to build softfloat once for all targets.
+Now we have removed all the target-specifics from the softfloat code,
+we can switch to building it once for the whole system rather than
+once per target.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- fpu/softfloat-specialize.c.inc | 4 ----
- 1 file changed, 4 deletions(-)
+ fpu/softfloat.c | 3 ---
+ fpu/meson.build | 2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 8327f727861..a2c6afad5da 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -85,11 +85,7 @@ this code that are retained.
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index b38eea8d879..34c962d6bd9 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -79,9 +79,6 @@ this code that are retained.
+  * version 2 or later. See the COPYING file in the top-level directory.
   */
- static inline bool no_signaling_nans(float_status *status)
- {
--#if defined(TARGET_XTENSA)
-     return status->no_signaling_nans;
--#else
--    return false;
--#endif
- }
  
- /* Define how the architecture discriminates signaling NaNs.
+-/* softfloat (and in particular the code in softfloat-specialize.h) is
+- * target-dependent and needs the TARGET_* macros.
+- */
+ #include "qemu/osdep.h"
+ #include <math.h>
+ #include "qemu/bitops.h"
+diff --git a/fpu/meson.build b/fpu/meson.build
+index 1a9992ded56..646c76f0c69 100644
+--- a/fpu/meson.build
++++ b/fpu/meson.build
+@@ -1 +1 @@
+-specific_ss.add(when: 'CONFIG_TCG', if_true: files('softfloat.c'))
++common_ss.add(when: 'CONFIG_TCG', if_true: files('softfloat.c'))
 -- 
 2.43.0
 
