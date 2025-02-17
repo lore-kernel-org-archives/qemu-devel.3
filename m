@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF082C021AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 20:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496DFC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 20:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk7cv-0008Ep-6O; Mon, 17 Feb 2025 15:22:01 -0500
+	id 1tk7dy-0000PS-5q; Mon, 17 Feb 2025 15:23:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tk7ct-0008EO-Og; Mon, 17 Feb 2025 15:21:59 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tk7dv-0000Ox-05
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 15:23:03 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tk7cs-0007Yr-2t; Mon, 17 Feb 2025 15:21:59 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5e04c044224so2861395a12.0; 
- Mon, 17 Feb 2025 12:21:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tk7ds-0007d2-Eg
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 15:23:01 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5e0452f859cso2849744a12.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 12:23:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739823716; x=1740428516; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1739823779; x=1740428579; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZREVhBW3YhrKhq8Mmtpeghu4/sgYahbIKLxpHaZzI+U=;
- b=aRcET85iRw6XspJFGMqdhcaea5Y/AHY4VyrJueL3zJ7RYMACWXaTwH6e3fOcnT9YV/
- qpti1/muv2lA3QNB17l+sexgsEiaIUtcYE5QW/vF3vhs2zr8zO4BuMMGYKtDVte+ZfHw
- 21WwjME8sxUuXG3XPqt8I+l5fPbki022UuCkJ15ExwMG+5ecT+HVDRKZy4MtvbbfBlMW
- zlwRT1CYeqTHJRYtlkoUiMzVIHLY8mWz2re8SAXATJyyDKF6LuUI/4rPWGa07gpogYUd
- IS2zuOCm2Hfrvvvl8vHRNgCZOWPKrx52QOEdGxXZpAOI4EHYYa3NQGKx4LVKhgVhNjjN
- N+EA==
+ bh=3TYWyrchUK6/kz4m4SFvU74GuvLK7pWit2+MOlwNuSA=;
+ b=jY20xu/fiibJ/zmEqkLHemg6yk9BJ8QHzj4yV9swow98Ps3eF0P6KYTXVeKXJJfCUw
+ gdUExsz2ppeH+/llqR9T9Qjg/GMWPhYw+yAXrB2fDy6SwXlJ5893KDhdAsaj/mZtJUYq
+ RQaAK6+i00kue1Mze1VTF6xe+gCoFX3gml8FsFOJ0cOzPbKNEetwiLkCEpBC8h452AS0
+ C0/4X7PSV17jCAnN2J7DSIDPIf4UjROk7meatXD4Cc8YUR+aivESKnBqV+i3b1pTivZQ
+ Z39hG5gMhOkCIwzjBpJ0tmxd5xTGF1WJEkeraGR3Nv+GkEnB4rU7rbkXDXvEPs55EsnT
+ ab+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739823716; x=1740428516;
+ d=1e100.net; s=20230601; t=1739823779; x=1740428579;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZREVhBW3YhrKhq8Mmtpeghu4/sgYahbIKLxpHaZzI+U=;
- b=PgHJQ7d/LZZ/i4wxwyCD7dTnGJQmUYMZXiPFXu0UuX51wxPrFsRQaoV7OEo6nGFXP7
- fjC7tZi8PQ1wGmA5I0xjMh09PCz33uyVSeDNWPx3fOX69SA95DiGK2FLq1L4aa2v2C7a
- XB/Q6/bax8aYt8+8i+IZxX3jLnoirsGeNHnrJGAqppwsEJLoDAFihCetgsJUk5fZ5ms+
- FbxegXe7WkM/V0ttAcn31vrT4ndv34luyFa5jXeVKKmwwzDd2VspEFV32icFEfAxCWsD
- n08QLuyRg/ztKWEvchMqXzTr08400+GYvTAZ0vsV8xFlEcdhpqb9kyt8diKFJsZeHm2K
- ecZw==
+ bh=3TYWyrchUK6/kz4m4SFvU74GuvLK7pWit2+MOlwNuSA=;
+ b=E9hno8cXWU4Mqpo4NrnfhgTo73FU2UFDkLMG/c9SytcuzvcFTvWupIncHhTLxTXBp4
+ EimLLKO7wb2EndrhlKeX8UPsv335XHh9TsRH4QGRUoTK5rWJes7XnhyDUlvw4f3UsWEL
+ au/J9ajRLj1WbyiV7ZAyE3K1GieiiBUudTmB/8x+pswH1sA/RpjKHJWU5ltPocuNCfmO
+ 2I/gGgpkqEMASGYqgWrMrIV/di+6awWLr21X4s7lukAxOmA+4OOJ3/NQRz7Ncxrpyw6W
+ nJOu+zBzPjUh8ft8ZPGtsVo61KEAl+YT4q0ttwF3aqIl0gDpJKS7xVLkS1LctHex9CUu
+ VlwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVY03KB9VSAZSoPFOxph7GTl/YtMHubPwmLWPoTuoaen5ip8kMySIOyzkTU56Gc3wSLtkzg2LAgvw==@nongnu.org
-X-Gm-Message-State: AOJu0YxhSY7/CWnWq7ZtIwUrZNHKkQApJCijo71xwGOeRbI14DtC8qwb
- DlC2tceE9T3U7azJAsGQV3MHSCKLSeDo4V6wZuE/Nk27J8J0Vg5g
-X-Gm-Gg: ASbGncvMaF8zolIv09/GE3RzGaMpbw1H/9Wz8DTevpixV+V/gQPTRpc92KuvInh+NoF
- ZSwVZeqw8DACl/MxWYkk5W8k4JWWloHtMJARntNzvzkN+ZIhicmHjayZXwocrwgHg13y79/qCLL
- nn7i81mYhrLWbA8xgCQwVEH5Ts17CGzYmEhcyohcJTFAexbe/JkO8OXey0a/j7JWV8yLHfZt6az
- ej7cRXJ4f09Vk9RhYK5AkrqEPnxFDJtiDx5q9ocMlsxsxQveJC+jUeyi5Nf3UYId883a80hYWk3
- MXajM9Kfo8WqKAmicX98J/X9O3Qfe7NASmsqG1E92D7K561DZD7I0SXNoQ0mHEHkrp4=
-X-Google-Smtp-Source: AGHT+IGB+mXrZxdoCgvz0cS1ItCP9y/c0lo4fDogI3gBVx6GCPITv6JcAhkjS8+n5Cf41bHcid5klw==
-X-Received: by 2002:a05:6402:27d3:b0:5d0:ed71:3ce4 with SMTP id
- 4fb4d7f45d1cf-5e036049b1fmr12517559a12.6.1739823715616; 
- Mon, 17 Feb 2025 12:21:55 -0800 (PST)
+ AJvYcCUzUuC2wpu7w0e7a5uVXD3lrBwibjRCwU0Tj4oV+6Us252oGkV2JI5Qc22dvs20kiI6zloLFRAX/xP2@nongnu.org
+X-Gm-Message-State: AOJu0Yxm1yPQTShE6zwsV3fxjlDVCL82TKRECIu3Tm7y8qaQxkEKAXWG
+ nzlFd8hkZZIDY/2MqCp2+DQVeGUesg7QigGxW9VCd0BT4tpTGAtQ
+X-Gm-Gg: ASbGncvmg2OveHjBFppkCvzE4B39kRnxt/eFWNh+PifP//JoWbg50Gud4i2OTL85EWs
+ o3qqkNFbGhOF3KV55U2ZQcsl7ruSuQj4h205fu2Rm0+MiQvMgbBw0sLbN/HLTYgGx+I/9PRLBm8
+ q2kRx+epwyJ0MaXB/rYVtpYtE3QraODRQw9fILdA0XcOY32FIajONoFz6xVsI2sxjuloz6ESIhP
+ wmf87XSrgaASmqRDN+4vW+9BuHjybFfyXQaGO+7pgj4WXmOdCVAInVD953j30UGZLdvmTg8ng7K
+ Fa4AnN5ghD96UREjy/HYJWSFaPU2ExKJcSmasj4sJ93F2JRBpykMU1Q6dlPpAORtB7E=
+X-Google-Smtp-Source: AGHT+IFYlYu4n9DPiLospEBVzR1cxAjCdB2K96I8AOXpD/QX6t23P40cdu5FS9Vn6t0Jxo1Lc1x1kQ==
+X-Received: by 2002:a05:6402:13cf:b0:5e0:7199:5495 with SMTP id
+ 4fb4d7f45d1cf-5e071995c7cmr1913816a12.6.1739823778583; 
+ Mon, 17 Feb 2025 12:22:58 -0800 (PST)
 Received: from [127.0.0.1] (dynamic-077-191-175-027.77.191.pool.telefonica.de.
  [77.191.175.27]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e075f59e3csm244342a12.43.2025.02.17.12.21.54
+ 4fb4d7f45d1cf-5dece1d3693sm7609593a12.39.2025.02.17.12.22.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 12:21:55 -0800 (PST)
-Date: Mon, 17 Feb 2025 19:39:02 +0000
+ Mon, 17 Feb 2025 12:22:58 -0800 (PST)
+Date: Mon, 17 Feb 2025 20:22:56 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_03/18=5D_hw/gpio/pca955*=3A_Mov?=
- =?US-ASCII?Q?e_Kconfig_switches_next_to_implementations?=
-In-Reply-To: <CAFEAcA8yayMSe+64VDV8TwSMi7u0_wLM+y9-TKsnaZS5seNKZA@mail.gmail.com>
-References: <20250204092112.26957-1-shentey@gmail.com>
- <20250204092112.26957-4-shentey@gmail.com>
- <CAFEAcA8yayMSe+64VDV8TwSMi7u0_wLM+y9-TKsnaZS5seNKZA@mail.gmail.com>
-Message-ID: <18125593-7729-40FA-9FC1-7DC912287503@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH 0/2] Move Fuloong2e PCI IRQ mapping to board code
+In-Reply-To: <ba385271-bad2-9df2-e3e0-9f7018a77b81@linaro.org>
+References: <20230105154440.259361-1-shentey@gmail.com>
+ <ba385271-bad2-9df2-e3e0-9f7018a77b81@linaro.org>
+Message-ID: <F7FB9E8F-6DC5-4DB0-A82E-0D7E1ADF851B@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,46 +103,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 17=2E Februar 2025 13:35:04 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> While at it and since they are user-creatable, build them when
->> CONFIG_I2C_DEVICES is set=2E
+Am 16=2E Oktober 2023 09:05:00 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
+philmd@linaro=2Eorg>:
+>On 5/1/23 16:44, Bernhard Beschow wrote:
 >
->The patch subject says this is just a rearrangement
->of the Kconfig stanzas with no behaviour change, but then the
->commit message body includes one=2E
+>> Bernhard Beschow (2):
+>>    hw/pci-host/bonito: Inline pci_register_root_bus()
+>>    hw/pci-host/bonito: Map PCI IRQs in board code
 >
->If you want to build these when CONFIG_I2C_DEVICES is set,
->that should be its own patch that does that=2E
->
->(The move of the Kconfig bits to hw/gpio is fixing a bug
->in 6328d8ffa6cb9d ("misc/pca955*: Move models under hw/gpio"),
->which moved the code but forgot to move the Kconfig sections=2E)
+>Thanks, queued to mips-next=2E
 
-Okay, I'll split the patch and use above commit message=2E
-
->
->Separately, it's unclear to me how worthwhile it is to add
->these to CONFIG_I2C_DEVICES, because they're GPIO devices,
->which means there's not much you can do with them as a user:
->as far as I know you can't wire the output/input GPIO lines
->up to anything=2E We have the device models mainly for boards
->which provide them, so that guest code that expects to see
->them doesn't fall over on bootup, and because the board
->model code does have the APIs to wire up the GPIO lines=2E
-
-It's basically to satisfy Linux which will clog the i2c bus if such a GPIO=
- expander is configured in the DTB but missing in the emulation (it will de=
-fer probing which will never make progress)=2E Once it is its own patch we =
-can decide separately how to proceed with it, e=2Eg=2E dropping=2E
-
-Best regards,
-Bernhard
-
->
->thanks
->-- PMM
+Ping=2E I think it's not merged into master yet, is it?
 
