@@ -4,90 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF09FC021A4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51FCC021A7
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 07:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjvbj-0007pV-BX; Mon, 17 Feb 2025 02:31:59 -0500
+	id 1tjvbc-0007m1-JE; Mon, 17 Feb 2025 02:31:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjvbi-0007mX-5O
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:31:58 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tjvbg-0004T6-8E
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:31:57 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43971025798so7562835e9.1
- for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 23:31:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739777514; x=1740382314; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oWtO0tCA7Cjri5BY0+EOuoEkHHmD6A5uSTSzVNfGZzo=;
- b=jG7gt2Wodoq7dpgUOZpaKPWm/nuGWwCgmbhLnuhcJtU60RW+XBHRhdABeNsVBtiX9A
- sVWXTdYClAR2VXxly7kxgBpQT7fIsLQlvYzCAtusoHvvcUS65cPemNcgNeAQjC2S7twJ
- Ody8CT4CoIEYJLJIHRzekAZF9toSTzs857sEL1g8txrUQNNW+tBmEAL/GZ6Xfe0Sfq65
- u4iUe3NBHNIMyzpUK/2X/UyBwdx7eXLxr1gAkl9snGjz8T174+WvLZ56jkqMPoRYEGHU
- pFq0VItVWu/dlbaLalwo7QccdGYTRBTtYKQ4H4VHoo73nDE6XHLVrWB3X3eoG5P6QHUT
- WCpA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tjvbG-0007kU-1g
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:31:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tjvbC-0004SI-Hl
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 02:31:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739777483;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1mgPwNvFo80Y/h1i6hS2G2/GiYmVIt1qcN3yJXz5F+s=;
+ b=GpvL5OR2DWEvXgTMh7WDqw/lj3NN8SOhQqwaMACA6cF8aw+cdKIHc2CkTul5ofEzVaZ4fA
+ 2MBsLveWLQRoRWZ97Ab5cGY/2/pZvUJ1Eo98D/DLjFmwTx4h6vbad81xdLNpE0VHMb8Awy
+ kGrXnWdEvLJRiL7ESAhhj74r9SG/Tas=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-81--WUD5pBIMWqiv9avCdEtRA-1; Mon, 17 Feb 2025 02:31:20 -0500
+X-MC-Unique: -WUD5pBIMWqiv9avCdEtRA-1
+X-Mimecast-MFC-AGG-ID: -WUD5pBIMWqiv9avCdEtRA_1739777480
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4393b6763a3so21270475e9.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Feb 2025 23:31:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739777514; x=1740382314;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oWtO0tCA7Cjri5BY0+EOuoEkHHmD6A5uSTSzVNfGZzo=;
- b=c7TQp/5e3nrqdwFnSdGtafek/ec1gax7proT+9y9NAVxChFwk4q/6MQ3h/bKJeCaAn
- Y3jrwZ+qZeAucEgrjeQiQjtrDorPFqLnf9ThN3Yl1Bvt0CNsYmWdgJvauXtodYwKz8/e
- oEXBYzFyolmevSXcSOFgbfnnMcM2JF1XWCBEoWLGjPFsrqCV7LZ0wEOOgbJsEVdylTLW
- PdFAMB8y6LklFB9fgt3RVJYC74gyQTfGH6KbDcMTXr+p4whimDaONpmAZ+dMb7g0ZDzU
- SjtBF3BFTlSi9EOwpI+AKGoQBgr8cKa6qnXPf6Ap3kjIX2RH7XjYeXqsJQLy2myKWdxK
- J1uA==
+ d=1e100.net; s=20230601; t=1739777480; x=1740382280;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1mgPwNvFo80Y/h1i6hS2G2/GiYmVIt1qcN3yJXz5F+s=;
+ b=rpc9VzUNrQUlLwn/K9xzwY6feH+OYF6i7xZ6BWiyVZwNOTdqeNntewZgctzmgd55G6
+ sEkpkKdkGS5oR1oSWR4EkfKeMtfudOVFQUytGqO+M/tWZ0fTD73L2EjuWzTrS7aauJ21
+ Wem3fdQqb8HA+w4LoWhPNON0KQrH0A7SMkrgEcowuRdb+MgB1vkOgMH+HkAgU3b6jVW2
+ PIDjQIVPS3LuK16SGSTpAAO7ibM/dDeHIonoLjS+SI8+sTfdYbpI1CmdYkbZ9ZV5PAGU
+ 9FJQGIrPq2Zx2DHyydN4h9oyfbWvTjltS65uqB1NTSpJjLU5CJ/BKsa57Li9Z9Wa3rla
+ ybYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGp+llfTEO4Ncqj/0n1Lrz9WVRRQDvtXiERiKMr5KeIlrq18/SEmaKEAPEgVVrhf4VaVgbzAcl4eSn@nongnu.org
-X-Gm-Message-State: AOJu0YwqXO93esiIuvAPI6HWc9AZPThISQ08HIUwf5I3Md8H1SA+Ped+
- YRK93eoCwTNZ5qq0GGZGDC4ZDmRT7D18/cRVLgFi7pLR+oHDQlA1RPD/D3cI+qI=
-X-Gm-Gg: ASbGncvcBSiEj553/DH8affI1hZj0AAOIsgCyjQtnKkHIp6M2/RJP8R28q2nb28V7Ms
- V7Wmt8G9NbHOZu3h2dDV5S5FoGiJYP7rCUMQGIm45g2zyRuw2Z/kabC0jh2oD/S2xY4RrqyId/3
- tJ9SUUcTDjB7OHWl52zaXV55s/B+QVjzlBfB770MgDiIcnv92Fb3Kqwe/Y0uzWfJgZ6OnR1YVdM
- Df8I/H/Sgn9UFn9ZtjCaQ32qNYzsCssRKbZtiLhuogEMcwGq6ZeYPtAKgyQq0iOmI97fJFvIPWZ
- aevd6ZJhl5OJPPOtB9JScbNUkaSRCi+zgjw=
-X-Google-Smtp-Source: AGHT+IEQktbSavh5BkGVkbD6ZXILO8e7ks9o9XSVox1cUJW7W/Crwv1c/2sTxfniV3DSmp6GPq7qew==
-X-Received: by 2002:a05:600c:5247:b0:439:4589:1a9f with SMTP id
- 5b1f17b1804b1-4396e6ec028mr73935575e9.14.1739777513402; 
- Sun, 16 Feb 2025 23:31:53 -0800 (PST)
-Received: from [192.168.1.121] ([176.167.144.216])
+ AJvYcCXgiR1RLmUV1NRi1Hf+IpqFgYnHhRYpEZ6jetQOFPwzHNiK7sK10SYYjuQMMrjbH4aAsasM3goCtwIq@nongnu.org
+X-Gm-Message-State: AOJu0Yy8DqlJs/xIjotfL7U8KrGJ5HbfTKCcq8yjKa4CPlavtL5km7ba
+ TqIdB0ooXXojequ7TIQ8S+F4q6d6tbQfWENHDaQh/Q+agwNOO+tg1rgt+EpJKyCCchY6UI/X1vv
+ TJwQV0NWaFbg8QjaaV6Nxaf0V+m/m/DyiARA+sNvNdhycbEYagQcL
+X-Gm-Gg: ASbGncsVJueTD/5dcJrxhy0YhSDKrmCtANRhMZh+rjZLEpgNvPbp+yA9Rz+ohO9FAfQ
+ HXzA6kn3Zinnt6dT4aeIwB5knJoJiiaFweZJparZ2F95n0v5HEXg/rR/S9G1XtM/75c5ObtUQuY
+ Qgq+lLObQZ+Y0hUAj/VsfCm3IH2Neg7Kfd7//QG44lFu7ML5Zcp3xPDOD7eBifcO1HAfn21cCpW
+ j2gzH8542+j+g4aJueK/gLdFVxsUjUaJgci1R5SFER21vrlFZDOVSb0Ei+KTqYAEuFg/n/fw9aW
+ Zu4bIRs9396Irg0wvcjsWK07NJo4JmDplV31zxtRq4e37n7YRR3T
+X-Received: by 2002:a05:600c:1c21:b0:439:45e2:897f with SMTP id
+ 5b1f17b1804b1-4396e6e32a7mr99796815e9.11.1739777479745; 
+ Sun, 16 Feb 2025 23:31:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEzlycmL13mme1B4nuzhQWUAK2Zqbv6n6wVgbWxBL4hko8tk2yjvXZ7CDP+VvHw0xxBhFaKIg==
+X-Received: by 2002:a05:600c:1c21:b0:439:45e2:897f with SMTP id
+ 5b1f17b1804b1-4396e6e32a7mr99796535e9.11.1739777479386; 
+ Sun, 16 Feb 2025 23:31:19 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1b8443sm144722165e9.35.2025.02.16.23.31.51
+ 5b1f17b1804b1-4396b0aa4e9sm74734875e9.16.2025.02.16.23.31.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Feb 2025 23:31:52 -0800 (PST)
-Message-ID: <b13a02f2-c41f-4d51-8f60-5c97cd96c488@linaro.org>
-Date: Mon, 17 Feb 2025 08:31:50 +0100
+ Sun, 16 Feb 2025 23:31:18 -0800 (PST)
+Message-ID: <ad754ae8-0d0d-4a19-bde7-b3df1e56546c@redhat.com>
+Date: Mon, 17 Feb 2025 08:31:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 1/3] tpm/tpm_tis_spi: Support TPM for SPI (Serial
- Peripheral Interface)
-To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, stefanb@linux.vnet.ibm.com, pbonzini@redhat.com,
- farosas@suse.de, lvivier@redhat.com, dantan@linux.ibm.com
-References: <20250216221155.30013-1-dantan@linux.vnet.ibm.com>
- <20250216221155.30013-2-dantan@linux.vnet.ibm.com>
+Subject: Re: [PATCH 3/5] hw/i386/intel_iommu: Tear down address spaces before
+ IOMMU reset
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216221155.30013-2-dantan@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "ddutile@redhat.com" <ddutile@redhat.com>
+References: <20250206142307.921070-1-eric.auger@redhat.com>
+ <20250206142307.921070-4-eric.auger@redhat.com>
+ <SJ0PR11MB67444138EAFE0660733B315D92FB2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <SJ0PR11MB67444138EAFE0660733B315D92FB2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.382,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,86 +123,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 16/2/25 23:11, dan tan wrote:
-> Implement support for TPM via SPI interface. The SPI bus master
-> is provided by PowerNV SPI device which is an SSI peripheral.
-> It can uses the tpm_emulator driver backend with the external
-> swtpm.
-> 
-> Signed-off-by: dan tan <dantan@linux.ibm.com>
-> ---
-> 
-> v3:
-> - moved variable tis_addr from TPMStateSPI struct to local
-> - added the VM suspend/resume support:
->    - added vmstate_tpm_tis_spi declaration
->    - added tpm_tis_spi_pre_save() function
-> - fixed trace formatting string
-> 
-> v4:
-> - git commit amend only
-> 
-> v5:
-> - removed DEFINE_PROP_UINT32("irq", TPMStateSPI, tpm_state.irq_num, 0)
->    from tpm_tis_spi_properties
-> - In tpm.rst document, under section 'The QEMU TPM emulator device',
->    moved the 'PowerNV machine' section to immeidately below 'pSeriese
->    machine'.
-> 
-> v6:
-> - amend commit description
-> - amend hw/tpm/tpm_tis_spi.c prolog to reflect the generic nature
->    of the implementation
-> - remove irrelevant define of IBM_PONQ
-> - correct the function names to comply with the convention of
->    beginning with tpm_tis_spi_xxxx()
-> 
-> v7:
-> - Reduce SPI wait states to improve performace.
->    Although the real SPI buses have four wait states to accomodate
->    the timing of various slave devices, there is no need to emulate
->    that for this behavior model.
-> 
-> v8:
-> - re-package the email to comply with the convention.
-> 
-> v9:
-> - conform with the latest device property definition after rebase
-> 
-> ---
->   docs/specs/tpm.rst   |  15 ++
->   include/system/tpm.h |   3 +
->   hw/tpm/tpm_tis_spi.c | 358 +++++++++++++++++++++++++++++++++++++++++++
->   hw/tpm/Kconfig       |   6 +
->   hw/tpm/meson.build   |   1 +
->   hw/tpm/trace-events  |   7 +
->   6 files changed, 390 insertions(+)
->   create mode 100644 hw/tpm/tpm_tis_spi.c
+Hi Zhenzhong,
 
 
-> diff --git a/hw/tpm/Kconfig b/hw/tpm/Kconfig
-> index a46663288c..5951c225cc 100644
-> --- a/hw/tpm/Kconfig
-> +++ b/hw/tpm/Kconfig
-> @@ -5,6 +5,12 @@ config TPM_TIS_I2C
->       select I2C
->       select TPM_TIS
->   
-> +config TPM_TIS_SPI
-> +    bool
-> +    depends on TPM
-> +    select TPM_BACKEND
-> +    select TPM_TIS
+On 2/17/25 4:02 AM, Duan, Zhenzhong wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Subject: [PATCH 3/5] hw/i386/intel_iommu: Tear down address spaces before
+>> IOMMU reset
+>>
+>> From: Peter Xu <peterx@redhat.com>
+>>
+>> No bug report for this, but logically tearing down of existing address
+>> space should happen before reset of IOMMU state / registers, because the
+>> current address spaces may still rely on those information.
+>>
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>> hw/i386/intel_iommu.c | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+>> index 21a8bf45f8..1bd9ae403b 100644
+>> --- a/hw/i386/intel_iommu.c
+>> +++ b/hw/i386/intel_iommu.c
+>> @@ -4702,8 +4702,8 @@ static void vtd_reset_exit(Object *obj, ResetType type)
+>>     IntelIOMMUState *s = INTEL_IOMMU_DEVICE(obj);
+>>
+>>     trace_vtd_reset_exit();
+>> -    vtd_init(s);
+>>     vtd_address_space_refresh_all(s);
+>> +    vtd_init(s);
+> I'm not sure if we should have this change. vtd_switch_address_space() checks s->dmar_enabled and vtd_init() updates s->dmar_enabled. With this change, will we leave stale mapping there after reset?
+Yes I do agree. This could break the as switch. I will remove this patch.
 
-        depends on SSI?
-
->   config TPM_TIS_ISA
->       bool
->       depends on TPM && ISA_BUS
+Eric
+>
+> Thanks
+> Zhenzhong
+>
+>> }
+>>
+>> static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int
+>> devfn)
+>> --
+>> 2.47.1
 
 
