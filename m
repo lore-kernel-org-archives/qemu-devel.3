@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 848C6C021AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B89CEC021AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 16:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk47v-0008Vt-Hz; Mon, 17 Feb 2025 11:37:47 -0500
+	id 1tk48Z-0000bs-8G; Mon, 17 Feb 2025 11:38:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tk47u-0008Vb-TI
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:37:46 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tk47s-0007CV-UX
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:37:46 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2fc0d44a876so6465220a91.3
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 08:37:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1739810263; x=1740415063; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QJAnQ6KSRQeLxo5DrQ1/+9lnEZmxA9TeBMNZXMAlfU0=;
- b=lYMAMOo1PDKIprCi+ln56C8KezYkmuTof5syGHbP3RySZBJNgS/wgNdHPkVp9BDeu8
- ebVg/Uq8fIuMXhOTUgiWn7hMKrVB7AShppijPlXeH52IGZAvKC3ukqq3Oql0ca3RG0xe
- yaRwyPYrWcltan65T7P0fgbEEByukEKJHeoPFzDRe2rioK99JDZsgIvMFcw+wGnwMVwH
- nkKTRZQVnY1osHO4AX18Km9Rzah0ABbnVc89dabRq7YSk8+lbqznBotd9mFe5TjUxvDx
- m+FC44f6UY5q2zLvEHxBfPKAcR2Q8h0EX+hSDslydfB7DUcMaBgwINa1/nUFjDQj6T9g
- ZRNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739810263; x=1740415063;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QJAnQ6KSRQeLxo5DrQ1/+9lnEZmxA9TeBMNZXMAlfU0=;
- b=uYntY2MB562gZhGuCf/lvk2+erPNJx8oiHvL2jd3OZg3pmmbwXf9eaTsHYLU6kfB6P
- vhq+61f/R284MpKACPz6UpewY/UC5hj+DD4HtirsuInz030YfZ2Hn/BTEC866EfTfrIT
- Hf88DGwV3FoU/W7oWQNn6Btwlib9IQ2w/piArB2Mr5iGCV7ihlFlHAwtCaoAfUTZAQAu
- izT4jA6azcYrZ0hzXu5jN9GKbz8SzbWIx2yHG4vSvkK7Yl9WMtA6KyxTTWKEcb1BwkkM
- jg6eyaqwaVeojiFOzecPbmVmL3GRvUTDjgLjwUngSRx/cboIktUCv5WV7SrUIaiNEm4g
- oMDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1WISwIBM0280hqll5TNMWNaKNQ12DBwE5UMfKujsBl45WjNpIb6T+SyjrM2z7Uls8eFnAWpoz5Fqs@nongnu.org
-X-Gm-Message-State: AOJu0Ywa6LNHoEeKSwRfW2HzFcFPzMgMnyIfmYAo0nseHDUC1BpjMH5Q
- XQl/bXVaz0i/PqwsJRK5p3IDaxwoAY9gd1Mhi6hJbuBfJvN30qpRu4EbRDLOj34=
-X-Gm-Gg: ASbGncv9FhVXzcr1bwnncgrejpRaZ1NM3V78KilYLMdraoVvrtFHA7vKTYagisW5hbB
- f3wCkf/uS5vC95IQnVzYUxrexhi8fj+141XcbKlQmvfTTYcrMkjo+9DnLgk297p1oCV+uvo2uq6
- SbAf68WH01smTc39yJqc9SnbuFy/7shyrqe3MIQOqQT+Z34zmxip6eg0eNbm0aP1tPf/ERE9v6E
- YOa+DLdDq2OYrU3+NdzkVhOUHbrQbYnDLhiLl+aOhQRB081ht4+3PWPZyihQlWaqUlQZg8P5kqE
- GpZOhfq7yFLL5GrEiyZk0j935HOrx/sJfkOBlcVPl2AI32hBHp3TVALUvcCaVRAT
-X-Google-Smtp-Source: AGHT+IH825bkQck0StXWlhdENnRDaIpTJwiimi1Dj/JaAOoL82WE1H6EdtnQ4gFWPg4gqpDGSSMl3g==
-X-Received: by 2002:a17:90b:2e46:b0:2ee:b6c5:1def with SMTP id
- 98e67ed59e1d1-2fc40f0f46dmr14739663a91.8.1739810262960; 
- Mon, 17 Feb 2025 08:37:42 -0800 (PST)
-Received: from [192.168.68.110] (201-68-240-180.dsl.telesp.net.br.
- [201.68.240.180]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fc13ac19aesm8301249a91.17.2025.02.17.08.37.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 08:37:42 -0800 (PST)
-Message-ID: <ca0c6853-2968-4e3c-84ef-6656b33a51e2@ventanamicro.com>
-Date: Mon, 17 Feb 2025 13:37:37 -0300
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tk48X-0000Xl-58
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:38:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tk48U-0007G9-O5
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 11:38:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739810302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v3Ka5DD552tfRB8O8dTkD7Lnt3ngyuMwpr7Jbz6905c=;
+ b=ZrhR1e/v7eHpFQHLfem5JKyrX+mhQ/cnA11S53lhxDFFPriTaBjsvf4t+yPW9EKQiinfht
+ nAE94epGTcSj4UgzYlA/tdimzDWXtkrjvvwDJOBHaFBZcTHcaSRd9NcTtzgaCH3pZqnxxH
+ OC5FNe1q0+T7Y+8Pl9Fmt3GcdkSP3gc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-mGn3oMIpPp6L2x004nL3jA-1; Mon,
+ 17 Feb 2025 11:38:18 -0500
+X-MC-Unique: mGn3oMIpPp6L2x004nL3jA-1
+X-Mimecast-MFC-AGG-ID: mGn3oMIpPp6L2x004nL3jA_1739810296
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5176D18EB2C3; Mon, 17 Feb 2025 16:38:14 +0000 (UTC)
+Received: from gezellig.redhat.com (unknown [10.44.32.23])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 24DFD19560AA; Mon, 17 Feb 2025 16:38:02 +0000 (UTC)
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Ninad Palsule <ninad@linux.ibm.com>, sebott@redhat.com, maz@kernel.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, Eric Auger <eric.auger@redhat.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Yi Liu <yi.l.liu@intel.com>,
+ qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
+ Kashyap Chamarthy <kchamart@redhat.com>
+Subject: [PATCH v2 2/3] docs/cpu-features: Update "PAuth" (Pointer
+ Authentication) details
+Date: Mon, 17 Feb 2025 22:07:28 +0530
+Message-ID: <20250217163732.3718617-3-kchamart@redhat.com>
+In-Reply-To: <20250217163732.3718617-1-kchamart@redhat.com>
+References: <20250217163732.3718617-1-kchamart@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Respect mseccfg.RLB bit for TOR mode PMP
- entry
-To: Rob Bradford <rbradford@rivosinc.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20250210153713.343626-1-rbradford@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250210153713.343626-1-rbradford@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kchamart@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ PP_MIME_FAKE_ASCII_TEXT=0.24, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+PAuth (Pointer Authentication), a security feature in software, is
+relevant for both KVM and QEMU.  Relect this fact into the docs:
 
+  - For KVM, `pauth` is a binary, "on" vs "off" option.  The host CPU
+    will choose the cryptographic algorithm.
 
-On 2/10/25 12:37 PM, Rob Bradford wrote:
-> When running in TOR mode (Top of Range) the next PMP entry controls
-> whether the entry is locked. However simply checking if the PMP_LOCK bit
-> is set is not sufficient with the Smepmp extension which now provides a
-> bit (mseccfg.RLB (Rule Lock Bypass)) to disregard the lock bits. In
-> order to respect this bit use the convenience pmp_is_locked() function
-> rather than directly checking PMP_LOCK since this function checks
-> mseccfg.RLB.
-> 
-> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
-> ---
+  - For TCG, however, along with `pauth`, a couple of properties can be
+    controlled -- they're are related to cryptographic algorithm choice.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Thanks to Peter Maydell and Marc Zyngier for explaining more about PAuth
+on IRC (#qemu, OFTC).
 
+Signed-off-by: Kashyap Chamarthy <kchamart@redhat.com>
+---
+v2: address Marc Zyngier's comments:
+    https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg03451.html
+---
+ docs/system/arm/cpu-features.rst | 46 +++++++++++++++++++++++++++++---
+ 1 file changed, 42 insertions(+), 4 deletions(-)
 
->   target/riscv/pmp.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index a185c246d6..85ab270dad 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -524,7 +524,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
->               uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
->               is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
->   
-> -            if (pmp_cfg & PMP_LOCK && is_next_cfg_tor) {
-> +            if (pmp_is_locked(env, addr_index + 1) && is_next_cfg_tor) {
->                   qemu_log_mask(LOG_GUEST_ERROR,
->                                 "ignoring pmpaddr write - pmpcfg + 1 locked\n");
->                   return;
+diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+index a596316384..94d260b573 100644
+--- a/docs/system/arm/cpu-features.rst
++++ b/docs/system/arm/cpu-features.rst
+@@ -204,11 +204,49 @@ the list of KVM vCPU features and their descriptions.
+   the guest scheduler behavior and/or be exposed to the guest
+   userspace.
+ 
+-TCG vCPU Features
+-=================
++"PAuth" (Pointer Authentication)
++================================
++
++PAuth (Pointer Authentication) is a security feature in software that
++was introduced in Armv8.3-A.  It aims to protect against ROP
++(return-oriented programming) attacks.
++
++KVM
++---
++
++``pauth``
++
++  Enable or disable ``FEAT_Pauth``.  No other properties can be
++  controlled.
++
++  The host CPU will define the PAC (pointer authentication
++  code) cryptographic algorithm.
++
++  There are different "levels" of PAuth support.  The host CPU
++  definition will define that level (e.g. PAuth, EPAC, PAuth2, FPAC,
++  FPACCOMBINE, etc).  Refer to the Arm architecture extension documents
++  for details about the description of these features.
++
++Live migration and PAuth
++~~~~~~~~~~~~~~~~~~~~~~~~
++
++The level of PAuth support depends on which Arm architecture a given CPU
++supports (e.g. Armv8.3 vs. Armv8.6).  This gradation in PAuth support
++has implications for live migration.  For example, to be able to
++live-migrate from host-A (with Armv8.3) to host-B (with Arm v8.6):
++
++  - the source and destination hosts must "agree" on (a) the PAC
++    signature algorithm, and (b) all the sub-features of PAuth; or
++
++  - the alternative (and less desirable) option is to turn off PAuth
++    off on both source and destination — this is generally not
++    recommended, as PAuth is a security feature.
++
++TCG
++---
+ 
+-TCG vCPU features are CPU features that are specific to TCG.
+-Below is the list of TCG vCPU features and their descriptions.
++For TCG, along with ``pauth``, it is possible to control a few other
++properties of PAuth:
+ 
+ ``pauth``
+   Enable or disable ``FEAT_Pauth`` entirely.
+-- 
+2.48.1
 
 
