@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12EEC021A0
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 09:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E771C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 09:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tjxQI-0001m9-Nr; Mon, 17 Feb 2025 04:28:18 -0500
+	id 1tjxQK-0001mr-Hu; Mon, 17 Feb 2025 04:28:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1tjxQG-0001lq-Nu; Mon, 17 Feb 2025 04:28:16 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tjxQJ-0001mY-3B; Mon, 17 Feb 2025 04:28:19 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1tjxQE-0000te-N2; Mon, 17 Feb 2025 04:28:16 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-220c665ef4cso60786505ad.3; 
- Mon, 17 Feb 2025 01:28:13 -0800 (PST)
+ id 1tjxQH-0000tk-GD; Mon, 17 Feb 2025 04:28:18 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-220d398bea9so56899335ad.3; 
+ Mon, 17 Feb 2025 01:28:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739784491; x=1740389291; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+h6jY0pZl3z4LJ1S1KOykpQQjaQw002zPbOWSHZ19fM=;
- b=SvP2rVTKeZFE3Ek6wkPfX176qifNxNWyO0xdoBAPL9tIpdkhHovNbYgrUgHwO+nJR1
- qFWLfqC6F9+2Lo48w+ZITGfNw1VAeRUi3SybWJkztS4toOJCKUT4ccZk4H6Qp8t506j+
- trFEMsHlXdGZiOp/ZlQ1MavpyUXvS1nUgX+BDwoJOizE/kDMIk2bAYNpqVEfiq8l96Ia
- +8761sdbao2V48Qc4/fIsuKv50bAI6yqHG8Xmu4sOpyfwuAIysuaJ9zA4tD8p+gcePrL
- 3zDDYvK08C5t1jlWxo1ImozVBzh9wZlBbcDQJUvoaTRStc7SWxZANlHybzNk59WDPLIX
- /Riw==
+ d=gmail.com; s=20230601; t=1739784495; x=1740389295; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6SlIFB3WP82RVd1Q14vVuPTlJIZYz7Qf7AIBQ3NxgnE=;
+ b=bARneLpDgxP/JmqYD9gQd3iOEDOer+uPVUmw9yZdus/E06JWAn0DATWlJsYAuk0f5q
+ txi1lrhlNC0Y0xvagYQr8orTEFZcbqBltlu+RdEvWXoUVShX0VkkvglF7aHv2v+MY0LE
+ 2fzI5nGNYqeGuaidGzsD0T3y9ZaqCR24C+janCqyTEISOHtbKxtHuy0sF56g85v37fkr
+ Fp2fES+xwJYz7ArDVPWVUDsqqdI7saRdzUKbwn87sftN3yXMdmKd4kmWaDJLvCzM6k4s
+ KdKHAvUJKi12RW5SxAkfjdBQ/oz36Juh0fJWgF7z49hb9zKfRe1UjIOOFDZ4Y3+GITL3
+ 5WlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739784491; x=1740389291;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+h6jY0pZl3z4LJ1S1KOykpQQjaQw002zPbOWSHZ19fM=;
- b=pCkeHRmGWnsx119CZ1UU9OX58w0lI35znLLVfE9UGZcBBxXLFFHqf0hPe4Dgz8FSdL
- hWneQscSroS27pQv0xo1dgqC3PyGWpHskH0y6UqmOiL1QfFjlHbFfm6D81Gmaqfyx1Lw
- wV53oa7AyomgSeYvwqzE8rvut1phU+Pxlho8ukF74s4sA6elFPnzGNi3UfFcn+PHiiz4
- R2Ka9IeXhJMJK1OBs6K/q/LmcAhclCf+dW0ZtOrxpH31p6l8oJMWmwBxbyjb0y8Fyp89
- 1wTT8GhilhmirJpieg2ap6HYkIetFD+qR8bm7ghWOi7v5Uuvp4VS17jyChbyiGqIhCDU
- +pBw==
+ d=1e100.net; s=20230601; t=1739784495; x=1740389295;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6SlIFB3WP82RVd1Q14vVuPTlJIZYz7Qf7AIBQ3NxgnE=;
+ b=rgGCxOflhEj9hmWdkglxMoCR+bo3WbSCyCS9bKmVVjeAEj2lID14dP5p7rBr83YnUn
+ hgxzUvJsLpIzsGWyxm9YuFBxAp7MSmF8yxtG+kIp2qxrwliBuFp5Hsy4SDXVaW5fnMDo
+ So1ajAUDGo5rrDxCglhA0H/uOxAglgC8MyyuKgi7RiUhxEuaAvSBRaHw5rwZ/HEnLIU2
+ b7xDVLlz6Tlv8RmIs4pC1qvUS4uxYkcDthTdGJQU0qf1ork/fXwluP6TbK7NPz7y2KnA
+ Cwc2Y0b2pJKCcp12vdfasmW2An7hRqjtBpyLUyvQxcHgCa8dPCqGnVNpBl9EKUDArftv
+ GurQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXaQNA5PszWo4g6kS/jfwjXnwv/1ai1cbeEkvoGom0U7CMfqGyH+e+9G/c/gMKsNLsrZDn7dUqdMXTG@nongnu.org
-X-Gm-Message-State: AOJu0YyHVth6TvDdUeLws1urQxp/bIjECXZsfLJauLmp3vp5umZgaiZN
- zUB9DsnX70o302LCwPtNLWDsKW6ui4jgh24kSeL50raILHgtdVnnHmLBag==
-X-Gm-Gg: ASbGncuHtYvJUd33spBotrwLQSzVf9Da6FCJvhg9Hy2c48ft+B7t6tacx0KbsEHSSCd
- FdqVoMV7NYySS6PQQluibrM0kAmcgJc6h3fvMTUy9Wj5iqeVNJuILRKZ/1HdrpwgPEZEnu55QMI
- xKLc17qYoviodS15jiY6GbYYW42K0P1XixZPrUvtAMz0OtTXmXfL2lepEAqYlYajMAxhPdWx70u
- /DE/o4GceZPBnexV+8IrM6k40ucNGkNduQfZ6wTWGS8XUETOC9RmKP1HcHoldZ39Bcdof3s1uCT
- FN/Cewzun2hI074hvvA=
-X-Google-Smtp-Source: AGHT+IGcKf0o2stO4YybS+QREyO5zpFQKAgh7cXAr2fO1nzCRxCeLeRguIh+XfoI5QhyTolDDJVHJQ==
-X-Received: by 2002:a05:6a20:6a05:b0:1ee:3116:1b66 with SMTP id
- adf61e73a8af0-1ee8cc03457mr19511898637.34.1739784491239; 
- Mon, 17 Feb 2025 01:28:11 -0800 (PST)
+ AJvYcCXL34j0Khwwg1JQo913WYKlxks3j3Sm2luRwkLSzTh79gqNVqlnYqXx/A/BsajtJq3tue8h4b+3DT3c@nongnu.org
+X-Gm-Message-State: AOJu0Yw+1FD4lOzs6RaNlZU+vwH2BnPvn9SaA6Pn/AuCcr5Fok4NMCEe
+ NCLEhPrXbVOQGBzZbRuWBi062C4ZxB0lGQrhsfDMoIo6M+OG7llY36yceQ==
+X-Gm-Gg: ASbGncttVOn4wyqh9sUZClCxA95yoTiCa3QxV48yxtR22Jsrb6Z9CQeufLP6RbqGXxA
+ +22rYeYecrDm8vFhg+WHvNTv9ddbeGfPUDAMEeV5MP2qW2t2GlxKpKVyDFTLLmjoUttOMxXJ7Ft
+ UL2jTRoPRm+1fMo76bLBuMtXGpgCRefBt9/EhF1CmgQbWp8GR6gL04RqRisMSstwzjTfmrjGr7+
+ oIihsORXkCwSOiLhn8n/ZI4yEgcx5gScdQhga6lRT4cgM4+OgJqQQTpqzbO8v4EE01LVekDP1AG
+ V3EynTjkuzwiM4CMHEo=
+X-Google-Smtp-Source: AGHT+IFHaKIC3YYS2r/5HUqVvmRkIPObMqPxoYJ6S36c96Pb9vacEx1vAf9qfzprU6lB8/s3Omu1Bw==
+X-Received: by 2002:a05:6a21:7899:b0:1ee:73bc:5f2 with SMTP id
+ adf61e73a8af0-1ee8cac56cemr15268689637.2.1739784494712; 
+ Mon, 17 Feb 2025 01:28:14 -0800 (PST)
 Received: from jeuk-MS-7D42.. ([175.119.5.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73265f98e18sm4152940b3a.106.2025.02.17.01.28.08
+ d2e1a72fcca58-73265f98e18sm4152940b3a.106.2025.02.17.01.28.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 01:28:10 -0800 (PST)
+ Mon, 17 Feb 2025 01:28:14 -0800 (PST)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org,
 	stefanha@redhat.com
 Cc: pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
- j-young.choi@samsung.com, farosas@suse.de, lvivier@redhat.com
-Subject: [PULL 0/4] ufs queue
-Date: Mon, 17 Feb 2025 18:27:51 +0900
-Message-ID: <cover.1739784105.git.jeuk20.kim@samsung.com>
+ j-young.choi@samsung.com, farosas@suse.de, lvivier@redhat.com,
+ Jeuk Kim <jeuk20.kim@gmail.com>
+Subject: [PULL 1/4] hw/ufs: Fix legacy single doorbell support bit
+Date: Mon, 17 Feb 2025 18:27:52 +0900
+Message-ID: <f8af22afec5092ce641fb5e5305f2bb9b232f206.1739784105.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1739784105.git.jeuk20.kim@samsung.com>
+References: <cover.1739784105.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,36 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+QEMU UFS has supported both legacy single doorbell and MCQ,
+but the LSDBS value was incorrectly set. This change corrects
+the LSDBS value to 0.
 
-The following changes since commit db7aa99ef894e88fc5eedf02ca2579b8c344b2ec:
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+---
+ hw/ufs/ufs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  Merge tag 'hw-misc-20250216' of https://github.com/philmd/qemu into staging (2025-02-16 20:48:06 -0500)
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 428fe927ad..1ccd6f88b6 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -1635,7 +1635,7 @@ static void ufs_init_hc(UfsHc *u)
+     cap = FIELD_DP32(cap, CAP, OODDS, 0);
+     cap = FIELD_DP32(cap, CAP, UICDMETMS, 0);
+     cap = FIELD_DP32(cap, CAP, CS, 0);
+-    cap = FIELD_DP32(cap, CAP, LSDBS, 1);
++    cap = FIELD_DP32(cap, CAP, LSDBS, 0);
+     cap = FIELD_DP32(cap, CAP, MCQS, u->params.mcq);
+     u->reg.cap = cap;
+ 
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20250217
-
-for you to fetch changes up to a54596a96006096798b172a368ae952a231f9f72:
-
-  tests/qtest/ufs-test: Add test code for MCQ functionality (2025-02-17 18:20:53 +0900)
-
-----------------------------------------------------------------
-ufs updates for MCQ testing  
-
-- Remove unused task management request code  
-- Implement bitmap-based command descriptor slot allocation for MCQ  
-- Add test cases for MCQ initialization and basic read/write operations  
-- Fix LSDBS value for legacy single doorbell mode  
-
-----------------------------------------------------------------
-Jeuk Kim (4):
-      hw/ufs: Fix legacy single doorbell support bit
-      tests/qtest/ufs-test: Cleanup unused code
-      tests/qtest/ufs-test: Prepare for MCQ test
-      tests/qtest/ufs-test: Add test code for MCQ functionality
-
- hw/ufs/ufs.c           |   2 +-
- tests/qtest/ufs-test.c | 724 +++++++++++++++++++++++++++++--------------------
- 2 files changed, 429 insertions(+), 297 deletions(-)
 
