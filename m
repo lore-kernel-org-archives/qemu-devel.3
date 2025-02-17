@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CAAC021A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70BCC021A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Feb 2025 13:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tk0yy-0001na-Pj; Mon, 17 Feb 2025 08:16:20 -0500
+	id 1tk16W-0003Tj-K1; Mon, 17 Feb 2025 08:24:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tk0yw-0001g8-Rr
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:16:19 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk16U-0003TP-Nd
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:24:06 -0500
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tk0yu-0006iA-Hb
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:16:18 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5dee07e51aaso5869116a12.3
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:16:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tk16S-0007fg-Sp
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 08:24:06 -0500
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e5dc39ede40so2109435276.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 05:24:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1739798174; x=1740402974; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JVXHTcZJbuBhQaBn+fqYCdWjlzuNb1I/9f3EwiJRMZE=;
- b=F51SItKycaDkx9CkWllZhnUd5eKXxSl6XpbUeClkpHQKKWna5N0Lh3Hv3f5eve91Zz
- oWA3bwv+gDHLuCOSTHIbtX2vvOhwkupj5kgP1ikrwqxUhkqq1AGIsW0ey1o3CVy9jUKA
- 81U+2gBKrsahhlG1dej+2t4a19jKKOL9QXs2g=
+ d=linaro.org; s=google; t=1739798643; x=1740403443; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ImPdxCbzLfZbm+Im9GPC7SBy2QXQei9F05/Rwvm6ey8=;
+ b=D4JuoNL7VTQPJr+Zh2R8E5vc9IDJ8aCsTm3xRemP5o5kt8VlUJqYeIkF7MohMtR/El
+ V/sdqjT5wU+2cZ2AnJihFQ8NGd3chG+WLBt2trATNJoXyQeVDhlhaQAEtPEjsPdmRTdG
+ Q0dFcnwKQCQOnwMhkhmlerBYAQ1TkaAs5lwxwflsr03/BHmlSnmhWahNxDLtauX7xYOl
+ VPZn/9tpD8aTbLGCnTsFo9EKOhHC0ZEtCS9t32kqsciWq1p9fYMT1v7KZEM5PHN4oS0F
+ 9oie5cxz+6t8ENLMwgugCBm4fuuLoT9CqqDeUXDCOiR81fTiV4vKCJAm5VvpTtunWeuE
+ nqaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739798174; x=1740402974;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JVXHTcZJbuBhQaBn+fqYCdWjlzuNb1I/9f3EwiJRMZE=;
- b=uxSzxJZs9nIGU7JiOzCWw284VdsqoxCW+5qmr1tlKafVgINy++GqpIZNmVm/pTuUMb
- i4nofrtD+YbM9rwgRiHzdw6c+7SdhAeq4Hxd76cRGkkc1Gan9i39WxEjccpeE1xEQsNS
- bnt1AZXglOPWQ+q77tWOAp90ZWhXF+tqptr+/3eWR4UNqukqT9pG/OWWdCrv2f4+sGTc
- JZqD6+hgJw7jqKpZf/fFbfTEh4SD6JKmA8pkL3HkXk7MsVC7+fH9jTfZEB1+Iw+OSPKB
- x9Qu4mbAe9fEgO2mQ2mCtU0zgtXGuIaAdXsLSFM8NyGstVJ94hUwvQyHoT1OWdrAcCTT
- JHNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPRS6Jbp/tmEmk90MGWB1cO5RnTFWOWzFEnyFM8zjBryo6IFCc8Cr9c9Ae/tJAOnPSHi+1PXVE/Mdl@nongnu.org
-X-Gm-Message-State: AOJu0Yy1NlMHJK8JAHgjf9t1cluGVlUcfMLfatT/eN0HmUgJlrusGzHw
- n18ZEjtLaPPCqbdc2VqEadOj867KTWEZDrZhWzkgJs9VmTPQIe9COgay2mIyR7fehDV8RHXK7uj
- MS4H3Xzt8OLWpqigWnEqzpzxsePAR+4yJZRmh/dzBPhxgYK8=
-X-Gm-Gg: ASbGncuXQ2Muvof0R0w43GHhE73gIvtPlxRTxCW8YUhGQmwT8rPLli7Ryx5VnDqstve
- 5gbKat8i2r+wMqM7DSgpbMgfzN//lwp/D5TweSqSFwpUtDoH6n6y6ZOdSuKZpWNc0jic+SZKY1w
+ d=1e100.net; s=20230601; t=1739798643; x=1740403443;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ImPdxCbzLfZbm+Im9GPC7SBy2QXQei9F05/Rwvm6ey8=;
+ b=wwqfH51t7yeCGgAJDslcTEOUh45X1vBG4WxyeTSOMF415PZF0Bo6GnL8z6SZJHq0/Z
+ WCg8JcKlzPjSPylSDYXDC3boZk9fKuUpZ8HPM0xNp7LXiXZCp9knmMgn3QOA8TJGA6Yv
+ NW48eGlB62aAHSWy5gAxzxoFwHLM4FMNIUv+/ka5Wn5DLIUXAmxWOAiCuOfrCqD3evIO
+ f+ezGpVKhNk8R+gygca0+qkA1YMHMVXfFK0/OUZjNaYyN8XBoaGuRmSIK2WWQPJQdwX6
+ iDGD0d5Q84rA/Rzw1JHBbY4jlIPDQNdIc+HceMpLrgTmTu66NE1z+Wh95WXPG9PrsUrt
+ hdNw==
+X-Gm-Message-State: AOJu0YzbKySU08cH0D0Nph//GM5HFZRcyH/CSQKWN4y8lLATxOqTPMR3
+ bR8COwYvnW5AUEv0I5pqbUWybRKB6f9rxu1bUbJSPbbRhzM1slFWh0AaTTVWRBoFLLorQMjP6Ac
+ 3Q3qGUbX2CNGPnYU6C22wZPbgJe3810bdE2adTA==
+X-Gm-Gg: ASbGncs+dArGeIENpwHDou6tbU3jw3/EVuePehzjcThY/N0RhmXwLg5psUdKEezgYkR
+ q5M5p/W75kOMt07RzovB7Nu8YOxc9N3uZcrmCDPqv+LjQXr0jONqPTJI9mfr1W62mFy3wIde0AA
  ==
-X-Google-Smtp-Source: AGHT+IEd0bb7JlHqbvqKvKHlKs0GbDXZyEvMvZ1xLXm79Qkl/EkClX2eYBr3MkgKCUphln4ZYOcfgzYltcr80u/2lSA=
-X-Received: by 2002:a17:907:1ca1:b0:aa6:6885:e2fa with SMTP id
- a640c23a62f3a-abb70b2087dmr1015940366b.14.1739798173866; Mon, 17 Feb 2025
- 05:16:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHn/5uBYEcEfuf62osQsmwewhf+q1KS62zCpfLr5PMh/z61PR2M9Ke8u9oq3nM+YguGO1gA787hgV4h8xEOMy8=
+X-Received: by 2002:a05:6902:18c2:b0:e57:fd58:ad51 with SMTP id
+ 3f1490d57ef6-e5dc9034483mr6776156276.1.1739798643063; Mon, 17 Feb 2025
+ 05:24:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20250216204421.3560012-1-sjg@chromium.org>
- <2af835ff-e93f-4674-a6ee-9e697109651c@redhat.com>
-In-Reply-To: <2af835ff-e93f-4674-a6ee-9e697109651c@redhat.com>
-From: Simon Glass <sjg@chromium.org>
-Date: Mon, 17 Feb 2025 06:16:01 -0700
-X-Gm-Features: AWEUYZn7dQD6byprZ8zUKcYYz9pu2gmV8mhQfn9AKRUa88BsGV7IEK9V7g0RkB0
-Message-ID: <CAFLszThsMgmgAULOXS1TtqMQ8KCfmpZqApnoSAGnLHyBQaB6aQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/28] x86: Improve operation under QEMU
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>, Bin Meng <bmeng.cn@gmail.com>, 
- Andrew Goodbody <andrew.goodbody@linaro.org>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Angelo Dureghello <angelo@kernel-space.org>, Love Kumar <love.kumar@amd.com>, 
- Mattijs Korpershoek <mkorpershoek@baylibre.com>,
- Philip Oberfichtner <pro@denx.de>, 
- Stephen Warren <swarren@nvidia.com>, Stephen Warren <swarren@wwwdotorg.org>,
- qemu-devel@nongnu.org, Tom Rini <trini@konsulko.com>
+References: <20250213084219.2975727-1-kchamart@redhat.com>
+In-Reply-To: <20250213084219.2975727-1-kchamart@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Feb 2025 13:23:51 +0000
+X-Gm-Features: AWEUYZkcmvJY6s5eLDYtzmVvSJljIFAjCX8XkYb2BhFxcVOHEA5Paai8F7oB1hw
+Message-ID: <CAFEAcA9MgeaCQspu=4dCusTQVP3KOvpze55vshPJCaNS_E43yg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] docs: Small changes to system/arm/cpu-features and
+ more
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org, maz@kernel.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Yi Liu <yi.l.liu@intel.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Tyrone Ting <kfting@nuvoton.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org, 
+ Alexandre Iooss <erdnaxe@crans.org>, Joel Stanley <joel@jms.id.au>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, 
+ Hao Wu <wuhaotsh@google.com>, sebott@redhat.com,
+ Eric Auger <eric.auger@redhat.com>, Ninad Palsule <ninad@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=sjg@chromium.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,149 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
-
-On Sun, 16 Feb 2025 at 14:14, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Thu, 13 Feb 2025 at 08:44, Kashyap Chamarthy <kchamart@redhat.com> wrote:
 >
-> On 2/16/25 21:43, Simon Glass wrote:
-> > U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
-> > is not perfect.
-> >
-> > With both builds, executing the VESA ROM causes an intermittent hang, a=
-t
-> > least on some AMD CPUs.
-> >
-> > With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit=
-)
-> > is done in a way that works on real hardware but not with QEMU. This
-> > means that performance is 4-5x slower than it could be, at least on my
-> > CPU.
+> In v2:
 >
-> Do you have a reproducer for this?  It shouldn't happen... also, do you
-> know if this is broken for both Intel and AMD CPUs?
-
-You can see this if you build the right commit (e52e307c7ca) from my
-tree[1], i.e. after U-Boot changes to Bochs and before it changes the
-64-bit entry mechanism:
-
-04:57 $ pe
-e52e307c7ca (HEAD) x86: qemu: Switch to bochs display
-83f8b00df47 x86: Expand x86_64 early memory
-71a6c3eb3d8 Revert "efi_memory: do not add U-Boot memory to the memory map"
-d9d87e11e97 test: Make net tests depend on CONFIG_CMD_NET
-3c67e62b109 test/py: Show info about module-loading
-7059d976d22 test/py: Drop assigning ubman to cons
-e361abfc638 test/py: Drop importing utils as util
-460ecb6e5cd test/py: Drop u_boot_ prefix on test files
-cc5600e734c test/py: Shorten u_boot_console
-777c7a0c20e test: Update documentation
-=E2=9C=94 ~/u [:e52e307c7ca|=E2=80=A66=E2=9A=91 1160]
-04:57 $ ./tools/buildman/buildman --bo qemu-x86_64 -o /tmp/b/qemu-x86_64/ -=
-w
-Building current source for 1 boards (1 thread, 32 jobs per thread)
-    1    0    0 /1              qemu-x86_64
-Completed: 1 total built, 1 newly), duration 0:00:02, rate 0.50
-=E2=9C=94 ~/u [:e52e307c7ca|=E2=80=A66=E2=9A=91 1160]
-04:57 $ qemu-system-x86_64 -bios /tmp/b/qemu-x86_64/u-boot.rom
--enable-kvm    -nographic
-Running qemu-system-x86_64  -display none -serial mon:stdio
-
-U-Boot SPL 2025.01-rc3-00635-ge52e307c7ca8 (Feb 17 2025 - 04:57:59 -0700)
-Trying to boot from SPI
-Jumping to 64-bit U-Boot: Note many features are missing
-(hangs here)
-QEMU: Terminated
-
-I am running this on an AMD system. But I just tried it on an Intel
-laptop and it has the same issue.
+>   - Add live-migration context to the PAuth docs (Marc Zyngier)
 >
-> Thanks,
->
-> Paolo
->
-Regards,
-Simon
+>   - Fix the Arm capitlalization (Peter Maydell)
+>     - Context here:
+>       (https://lists.gnu.org/archive/html/qemu-devel/2025-01/msg05137.html)
 
-> > We can work around the first problem by using Bochs, which is anyway a
-> > better choice than VESA for QEMU. The second can be addressed by using
-> > the same descriptor across the jump to long mode.
-> >
-> > With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
-> >
-> > Changes in v2:
-> > - Redo commit message
-> > - Add new patch to rename the _D dirty flag
-> > - Add new patch to support CPU functions in long mode
-> > - Add new patch to tidy up address size in MTRR calculations
-> > - Add new patch with a 64-bit version of is_power_of_2()
-> > - Add new patch to set an MTRR for the RAM in QEMU
-> > - Add new patch with a helper to send characters
-> > - Add new patch to allow tests to be filtered by role
-> > - Add more patches to support booting with kvm
-> > - Add new patch with a test for booting Ubuntu 24.04
-> >
-> > Simon Glass (28):
-> >    x86: Expand x86_64 early memory
-> >    x86: qemu: Switch to bochs display
-> >    x86: qemu: Enable dhrystone
-> >    x86: qemu: Avoid accessing BSS too early
-> >    x86: Drop mpspec from the SPL build
-> >    x86: Add some log categories
-> >    x86: Drop use of CONFIG_REALMODE_DEBUG
-> >    x86: Avoid clearing the VESA display
-> >    x86: Add 64-bit entries to the GDT
-> >    x86: Use defines for the cache flags
-> >    x86: spl: Drop duplicate CPU init
-> >    x86: Drop the message about features missing in 64-bit
-> >    x86: Include stdbool.h in interrupt header
-> >    x86: Tidy up the GDT size in start/16.S
-> >    x86: Disable paging before changing to long mode
-> >    x86: Use the same GDT when jumping to long mode
-> >    x86: Use a simple jump into long mode
-> >    x86: Rename the _D dirty flag
-> >    x86: Support CPU functions in long mode
-> >    x86: Tidy up address size in MTRR calculations
-> >    Add a 64-bit version of is_power_of_2()
-> >    x86: Support MTRRs of 4GB on 32-bit machines
-> >    x86: emulation: Set an MTRR for the RAM
-> >    scripts: Expand a few options
-> >    test/py: Add a helper to send characters
-> >    test/py: Allow tests to be filtered by role
-> >    RFC: test/py: Deal with timeouts
-> >    test: Add a test for booting Ubuntu 24.04
-> >
-> >   .gitlab-ci.yml                   |  5 +++
-> >   arch/x86/cpu/cpu.c               | 24 +++++++++++++++
-> >   arch/x86/cpu/i386/call64.S       | 35 +++++++++------------
-> >   arch/x86/cpu/i386/cpu.c          | 41 +++++++++---------------
-> >   arch/x86/cpu/mtrr.c              | 12 +++++---
-> >   arch/x86/cpu/qemu/dram.c         | 15 +++++++++
-> >   arch/x86/cpu/qemu/qemu.c         | 20 ++++++++----
-> >   arch/x86/cpu/start.S             |  4 ++-
-> >   arch/x86/cpu/start16.S           |  3 +-
-> >   arch/x86/cpu/x86_64/cpu.c        |  5 ---
-> >   arch/x86/include/asm/cpu.h       | 35 ++++++++++++++++++---
-> >   arch/x86/include/asm/interrupt.h |  1 +
-> >   arch/x86/include/asm/processor.h |  5 ++-
-> >   arch/x86/lib/Makefile            |  2 ++
-> >   arch/x86/lib/bios.c              | 27 +++++++++-------
-> >   arch/x86/lib/bios_interrupts.c   |  8 ++---
-> >   arch/x86/lib/i8259.c             |  2 ++
-> >   arch/x86/lib/spl.c               |  4 +--
-> >   configs/qemu-x86_64_defconfig    | 10 +++---
-> >   configs/qemu-x86_defconfig       |  6 ++--
-> >   include/linux/log2.h             |  6 ++++
-> >   scripts/build-qemu.sh            |  4 +--
-> >   test/py/conftest.py              | 22 +++++++++++++
-> >   test/py/console_base.py          | 33 ++++++++++++--------
-> >   test/py/pytest.ini               |  1 +
-> >   test/py/tests/test_distro.py     | 53 +++++++++++++++++++++++++++++++=
-+
-> >   test/py/tests/test_sleep.py      |  1 +
-> >   27 files changed, 273 insertions(+), 111 deletions(-)
-> >   create mode 100644 test/py/tests/test_distro.py
-> >
->
 
-[1] https://ci.u-boot.org/u-boot/u-boot/-/commits/qemu?ref_type=3Dheads
+> Kashyap Chamarthy (3):
+
+Hi -- it looks like only patches 1 and 2 ever made it to
+the list. Would you mind resending, please?
+
+>   docs/cpu-features: Consistently use vCPU instead of VCPU
+>   docs/cpu-features: Update "PAuth" (Pointer Authentication) details
+>   docs: Fix "Arm" capitaliaztion
+
+(nit: "capitalization")
+
+thanks
+-- PMM
 
