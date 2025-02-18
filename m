@@ -4,90 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B75EC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 08:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDD8C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 09:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkJRg-0001Yo-Oh; Tue, 18 Feb 2025 03:59:12 -0500
+	id 1tkJUF-00038A-7D; Tue, 18 Feb 2025 04:01:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tkJRb-0001YJ-D0
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 03:59:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tkJU8-00037K-AC; Tue, 18 Feb 2025 04:01:46 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tkJRZ-00054F-Mr
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 03:59:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739869145;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qIwuXD6/ONz2171hIJuj+xhguDKZYXrMniDXK/rZZdw=;
- b=ZKR40Zw1dtgNokOnwmuZT3nskPgQqskTrMNMHixtumMCelfce/91GYJh/XfOjsxhgRaOGG
- kzpuHfCeRXdVgTlkshzwNjBPeB9UliPNS2EGZqGSUNMuRx9HJWTgLD5lSwWwO3jw0tCbvK
- LL86n7GZqEhZCCpfpVYSwzaAIG3iumM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-195-yl0tTTylO1-vVTbxeRiAgw-1; Tue, 18 Feb 2025 03:59:03 -0500
-X-MC-Unique: yl0tTTylO1-vVTbxeRiAgw-1
-X-Mimecast-MFC-AGG-ID: yl0tTTylO1-vVTbxeRiAgw_1739869142
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f28a4647eso2835316f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 00:59:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739869141; x=1740473941;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qIwuXD6/ONz2171hIJuj+xhguDKZYXrMniDXK/rZZdw=;
- b=Oryz5wzTUdLPvAKbCsg1ycqY6aZugEqNkHO9zOisk8SB/SUG+XJVLNQd+6+dEcOJhl
- QH8kAaQDESGKGsu4sBcKk0MF/84d+QrdQ7HVly6JESuA+bu0+3D1zZLLVBTyYMQ4EtAU
- H2ypYcf9TCQx+e6ZrTlpqs7tmJlZRdS1lJmcZeYB1S9UYY+QOclrSLr22Mx4zTfde3so
- OJxuWy64Cuo1fcn/Te1OmnRBgL60BQSPOVuAaVBNN4b53D5QAZ7aOzsd7kdLMhO7fec6
- 9rQuYLbXkDqnk6JyDkJ61VIMOAG40/jsHCxzEw+wxPQeVInQ4NMIwp6aHKoPCaFgkZ+P
- SoWw==
-X-Gm-Message-State: AOJu0YwP/rynyrQPUGFF+nc1LNSS9nM2pDzU8rd494dtlSdwt547dK1t
- Gn8E5rgA7ZKejjfvjqX0kpVzZbWng1cm9L2HTaiuGABCmBgeOPntaOOxL3WHjmbi61NFjbQoikC
- fGmVVinNahSlOkoLmfKelznEpo0y6jSgvWXbdzwJtL/HgFeEVN5e2yaBU3iMCuhWbSpXk0A4/zM
- s94htNyiT7YGDTcR256q5QAPz/8IQghWcdZ2vSQA==
-X-Gm-Gg: ASbGncu5Xf90MCjzIU8x5/9EVa1m8qWDSzJGidd1WNT0A2UVDOmpbA9vguetZdPEyKo
- 0699BqnOKnSqnVcyQ/wk0mMTHLnWt1AGw0F112LDEaTKxNFFk5jSkXqge45Xmj9tX
-X-Received: by 2002:a05:600c:3ba5:b0:439:9377:fa21 with SMTP id
- 5b1f17b1804b1-4399377fbccmr12667295e9.19.1739869141512; 
- Tue, 18 Feb 2025 00:59:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOx99PiL6zXdxdaM6BzAGuNmGRrf4IMqAV/8pJMq3qtj/ygPczmiGVIdzLmhVi80M++jBtX4DgMRPJKEjTplY=
-X-Received: by 2002:a05:600c:3ba5:b0:439:9377:fa21 with SMTP id
- 5b1f17b1804b1-4399377fbccmr12667135e9.19.1739869141217; Tue, 18 Feb 2025
- 00:59:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tkJU5-0005WF-DS; Tue, 18 Feb 2025 04:01:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739869302; x=1771405302;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=qIHNCAX6kyKPE7zvr1dVSW7aT1fzA5e5v+pzLCf8QME=;
+ b=IQkyFaL5s8npnsc+blO0iEHLoZgN/Rb3eJhPtr2KFznTgsOOW10wg4qN
+ DldTiidRdYbmRDdQ7tfuuNaa+MohlxHhq3Zh+rUX67nK1yaLPAQya8vaR
+ I+V5nWxchFYcGEuL566qOu5Xw2VwCmFXgajO0bLNBjr8l6C8RXYaBgMhi
+ gR4CmNTSm0YSRH3iTVKQxqOBl8pi3ohZhZ9uoeDdZgqPxRWR0UjygF7Ro
+ g/oKggVJ5S1I2dOnzqDX2Ptst+D4zIZlPC5ViiFyJP6vvLGysHYoKpA4V
+ rBFs5FL6+Z0BG1vLWcS3xFcJFfXAoeD3q2MBaoDx1f3u4Lf42qewgRZ+m w==;
+X-CSE-ConnectionGUID: EjqdGlEURqKcsg3lJ2a0Sw==
+X-CSE-MsgGUID: bOBQnGiXQueXUKITpNX9zQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51176438"
+X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="51176438"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2025 01:01:36 -0800
+X-CSE-ConnectionGUID: GeGp+u36RumwEyYKVKywCw==
+X-CSE-MsgGUID: BGd/NjZ/Q06CLpCe5nFYgA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="118973143"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 18 Feb 2025 01:01:35 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] rust: Fix the typos in doc
+Date: Tue, 18 Feb 2025 17:21:08 +0800
+Message-Id: <20250218092108.3347963-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250215123119.814345-1-ppandit@redhat.com>
- <20250215123119.814345-5-ppandit@redhat.com>
- <871pvwvb69.fsf@suse.de>
-In-Reply-To: <871pvwvb69.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 18 Feb 2025 14:28:44 +0530
-X-Gm-Features: AWEUYZmuB9odVLEksm8uqsEHzHGkT8JV4ZDfZLY28CVVlnG2W0bpRPuHKk_O-5U
-Message-ID: <CAE8KmOzknFTcKnSp3iQwhV__e0_r-kJnXDy3x3zeyrohH5B6Tg@mail.gmail.com>
-Subject: Re: [PATCH v6 4/4] tests/qtest/migration: add postcopy tests with
- multifd
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,38 +77,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Feb 2025 at 21:03, Fabiano Rosas <farosas@suse.de> wrote:
-> > @@ -110,6 +129,10 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
-> >              "/migration/postcopy/recovery/double-failures/reconnect",
-> >              test_postcopy_recovery_fail_reconnect);
-> >
-> > +        migration_test_add("/migration/multifd+postcopy/plain",
-> > +                           test_multifd_postcopy);
-> > +        migration_test_add("/migration/multifd+postcopy/preempt/plain",
-> > +                           test_multifd_postcopy_preempt);
->
-> For postcopy-tests.c I'd use /migration/postcopy/multifd so we can run
-> them all via command-line. These are also the only ones actually doing
-> postcopy migration. We need to distinguish multifd+postcopy proper from
-> merely postcopy-ram=true.
+These typos are found by "cargo spellcheck". Though it outputs a lot of
+noise and false positives, there still are some real typos.
 
-* ie. repalce 'multifd+postcopy'  with '../postcopy/multifd/' only in
-postcopy-tests.c? And keep other instances unchanged?
-
-...
-> >
-> > +static void test_multifd_postcopy_tcp_cancel(void)
-> > +{
-> > +    postcopy_ram = true;
-> > +    test_multifd_tcp_cancel();
-> > +    postcopy_ram = false;
->
-> You could pass this in, there's just one other caller.
-
-* Sorry, what do you mean here?
-
-Thank you.
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-  - Prasad
+ rust/hw/char/pl011/src/device.rs | 4 ++--
+ rust/qemu-api/src/qom.rs         | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index fe73771021e7..e064da31be96 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -477,13 +477,13 @@ pub fn post_load(&mut self) -> Result<(), ()> {
+ }
+ 
+ impl PL011State {
+-    /// Initializes a pre-allocated, unitialized instance of `PL011State`.
++    /// Initializes a pre-allocated, uninitialized instance of `PL011State`.
+     ///
+     /// # Safety
+     ///
+     /// `self` must point to a correctly sized and aligned location for the
+     /// `PL011State` type. It must not be called more than once on the same
+-    /// location/instance. All its fields are expected to hold unitialized
++    /// location/instance. All its fields are expected to hold uninitialized
+     /// values with the sole exception of `parent_obj`.
+     unsafe fn init(&mut self) {
+         static PL011_OPS: MemoryRegionOps<PL011State> = MemoryRegionOpsBuilder::<PL011State>::new()
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 3d5ab2d90186..72e637868a9e 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -245,7 +245,7 @@ fn as_object(&self) -> &Object {
+     }
+ 
+     /// Return the receiver as a const raw pointer to Object.
+-    /// This is preferrable to `as_object_mut_ptr()` if a C
++    /// This is preferable to `as_object_mut_ptr()` if a C
+     /// function only needs a `const Object *`.
+     fn as_object_ptr(&self) -> *const Object {
+         self.as_ptr().cast()
+@@ -517,7 +517,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+     /// `INSTANCE_INIT` functions have been called.
+     const INSTANCE_POST_INIT: Option<fn(&Self)> = None;
+ 
+-    /// Called on descendent classes after all parent class initialization
++    /// Called on descendant classes after all parent class initialization
+     /// has occurred, but before the class itself is initialized.  This
+     /// is only useful if a class is not a leaf, and can be used to undo
+     /// the effects of copying the contents of the parent's class struct
+-- 
+2.34.1
 
 
