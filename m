@@ -4,109 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B88C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D0AC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkPQi-0005J8-WD; Tue, 18 Feb 2025 10:22:37 -0500
+	id 1tkPU3-0006vi-AY; Tue, 18 Feb 2025 10:26:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tkPQX-0005Hn-V8
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:22:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tkPQR-0007GR-W4
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:22:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739892139;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ot+fYgSVKyy+rAYXe+wg7VR70oe9I02rM5x2Ee3gz8M=;
- b=cdUAWoN3C9IixDYkPjXuI6S5VB+61OJAvv4HB2bEDktAnLB3qy4CkHVWirWacuAxo+guxA
- 0zaTgUa4ouxcZipsY714CACzXjliWKG0+pMjwKeQeW8Ebo6ijVXN0em6jhIHGfem1nJhLJ
- oIXmdRG79utoKyTIrX7o95bJtZGAa7g=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-qi9b2W7cPbKSCwLCPk47Fw-1; Tue, 18 Feb 2025 10:22:17 -0500
-X-MC-Unique: qi9b2W7cPbKSCwLCPk47Fw-1
-X-Mimecast-MFC-AGG-ID: qi9b2W7cPbKSCwLCPk47Fw_1739892137
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f4e6e004fso1659286f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:22:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkPU2-0006vK-11
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:26:02 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkPTz-0007gb-L0
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:26:01 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4393dc02b78so38019005e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:25:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739892357; x=1740497157; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kO8ZjQjaFKbnEHTOpCzz+11SR4934oDmM1CC/TSqYe0=;
+ b=JuhzjHm+LdmJx/+9zkipcIXV+UFON4QR5uApch8nu/cbk2x4GfKnJKan1xy+Hq0oIQ
+ I6/fNeCg5XSnsB8B62iF20s7BcoaZJvCwscLZ+XrCNL1Z76ec6DWI2jv96FuoNOHfadD
+ 5opiD/tFEZf4I2qOd26xOqbhMkh2o8772Gn9xFRX1IsPHrRcGfwCRfr00U+gBtfznOGq
+ 082jsV0h9PN7pYCbREamQRd+Bj6laIgxjgksvz98imiBH3lM57jP9UmwRPgX52D2wao4
+ 2gJ8fbuiLLFvAzngqztNxkaX4g/Uul1EeH2RwlC+1Y9X/p0zgLtDx0eiJRMYDM9b2Sl0
+ nxiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739892136; x=1740496936;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ot+fYgSVKyy+rAYXe+wg7VR70oe9I02rM5x2Ee3gz8M=;
- b=r/mb9gc+kfnV1oUfUsQ64EOZZYnTFzV88O3CBnSJ30LNUl1gM/FMMF0FcTRHJ3BYO3
- nbNkZDAkoRHGK7TX1e8A69xhHOpKX9encUYoMX1Yv52L30MikgGCJE36rhMPxVf4Sehg
- n2YlFCuKVPAL5K2LvSU8NvpzYLw6YXNC38sadoz1lAzYltiBDWjvQgdepMbxkGf6FdsG
- D2BfKfls+PdhcpINJ2u856WAaCEnwMhDT4NOFLJfLdLtQbIijpCLzGi3Tm/NBHlYSU6i
- aiQLrgcw9KWnj3UgoRvJNpGoX/U9uJxaU5ThEXY7+A2bmbsVKTSwEB/buUJ+LsmMsSjG
- 4EOQ==
+ d=1e100.net; s=20230601; t=1739892357; x=1740497157;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kO8ZjQjaFKbnEHTOpCzz+11SR4934oDmM1CC/TSqYe0=;
+ b=KNlwGPFWSGiF6Bb+hDD9cqy16cKXvolePXiGAUldxAjZckRVa344p7UiX3RDF1R+p4
+ aZuKRugmjFXRWOkixKFIt7WdHk6l4QxFbXhUuNLA1EgPbMnXQ9izg3hccWxbZllmeUqt
+ JUWxP4uWzTFunlabRFU7/dNS44fTGPW88DW3Cvo8BJhFZZpaje51WTtM8yoQj/NypXA/
+ hmpzy4clNXSSrxfgRbzHAIY63RzYjyZf+EJeUVq8P0Kw2Zk1EmAQV+jyCjpIiVCqU7+/
+ UPllb123sBC3aXbploveN4V7pNr2nG/yHHShtPLLlKt8nC23SP4WUnTGvAWwuW7AED/L
+ qFIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhAag14A+mUKVwaMlN3ZL88n6nj3QUaspEowWgkrsCD+ztlSfAm9JAcXMC6GzeId/NFGcOUMPO3AsY@nongnu.org
-X-Gm-Message-State: AOJu0YxoBDawbci8/dy81OPvfPgZdgT6wIzwjHwN1zzYQEhLJU7E4iAF
- Z/6sqKSM+hSHDMX+QzOkcN5+8KtENLKJViRk9EwQbKmCpoQ1YopTWDXxja8ZrMJy0eRGepkIgv5
- yQhc5Hf3AAbQ6xc5gOyInTW7ZBvfGrcBB0KxYBQSkfKIOccn2Ozgn
-X-Gm-Gg: ASbGncu/ycTpFtTG5irScm7bDI0ssmj69c5rvYIAPGvamDb4e1QDAEQAq940FlyoJcA
- 5wWiRZp5kWbeKNzem6Tq2w4DU/rGm58VxMig8pMjNVPeXvS+RnQIjYT5ObG5DrvO0TifSH4219t
- iIUgEAOpXMDZwUQNAzL+HmzyQodrUrilbb06e9+mdSBwdYG7qBcsCUT2zs+NIlr+MyAsXtB8BPh
- nBalbteoaL1/Akzboc8+4i7bR8ec1g851yOkZ7owKV7unOLCHNDeug3fhF3hTOx0gd15qjMnbVw
- /GUEscJ/cLE3lgm7pkn90I/KK+Ezk7Gg5aHtxDa+3sZVm/McKBAc
-X-Received: by 2002:a05:6000:2a7:b0:38d:e190:b713 with SMTP id
- ffacd0b85a97d-38f33f4acbdmr9880404f8f.37.1739892136443; 
- Tue, 18 Feb 2025 07:22:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEMnTLi7/TR+3t7v4Awn2y8jepWE1m8Q0WLeR24iE4GrUJAg7Jv+YiQ6wp1cS+aqYQDUDQPzQ==
-X-Received: by 2002:a05:6000:2a7:b0:38d:e190:b713 with SMTP id
- ffacd0b85a97d-38f33f4acbdmr9880373f8f.37.1739892136005; 
- Tue, 18 Feb 2025 07:22:16 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258f5fb6sm15062981f8f.44.2025.02.18.07.22.13
+ AJvYcCUf08B1i82tyN4C3kYfwqhkIPtgsrZhXxvKE3z8frR3Xalf1zYg3RfjcygsheqdEEhMjq771ma+WxaG@nongnu.org
+X-Gm-Message-State: AOJu0Yx+6HetsaJncCr8vGwsPP9jkdy+Vz1V33CcEbTodTWE5/6TIU3l
+ Zm26t2ijWrCLuTlpqDb62/8sMAu72omEj321kCBpdqstCag6EANA6jq01/Eoyi8=
+X-Gm-Gg: ASbGncu1lOEcOb0vAnXtOngzbaLMtogBmgJo2Z4M3w6IJfuDzsSyX11a1ew1x/dxoaV
+ 42t3pkqA4l8OtY9yBcyUgPGiJU2aV3bE3w/NWeyEqxt9T8s5v49iild2RAorM86wrfNSrMySDnn
+ bXLgPCp6YQ3vSRfaox6S09gj5HlQXVfPWolji9NkfDURPOHkjgiCtX7SEOqBEs6PEZ/qmGGmcES
+ jBZ/W7VbM+ZtsZrKxZXrc5ISN6W/3Xibp4wYoq6AwG0Rx9MhbZnAdut2qYdWqdkuwLovDIyuQ3m
+ YNTv5CPVWGcN4o3MDgs+CFm60GAkZD45rk75vYTBZSOyX1cd6tlkaurf9+I=
+X-Google-Smtp-Source: AGHT+IEfQkZCEMZr8K3W+1iS/umucsBFRf5X6CifaRXiFtiDEf5G7/tN5hMhY5suxFVLoEfx6kpx6w==
+X-Received: by 2002:a05:600c:1552:b0:439:90f5:3942 with SMTP id
+ 5b1f17b1804b1-43990f53d17mr32639405e9.25.1739892356885; 
+ Tue, 18 Feb 2025 07:25:56 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43996aa820dsm16090465e9.5.2025.02.18.07.25.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 07:22:15 -0800 (PST)
-Message-ID: <6030fd76-e7f1-47ca-9eb7-8cafe48bd639@redhat.com>
-Date: Tue, 18 Feb 2025 16:22:12 +0100
+ Tue, 18 Feb 2025 07:25:56 -0800 (PST)
+Message-ID: <3fb630f4-ebd2-4f14-a1fe-4e84786a1400@linaro.org>
+Date: Tue, 18 Feb 2025 16:25:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/15] arm/cpu: Add sysreg definitions in cpu-sysregs.h
+Subject: Re: [PULL 3/9] meson: Disallow 64-bit on 32-bit Xen emulation
+To: Andrew Cooper <andrew.cooper3@citrix.com>, qemu-devel@nongnu.org,
+ David Woodhouse <dwmw2@infradead.org>,
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
+ Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-arm <qemu-arm@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250208205725.568631-1-richard.henderson@linaro.org>
+ <20250208205725.568631-4-richard.henderson@linaro.org>
+ <aeaf0f19-0f14-4a02-9c51-09521e7c75e1@linaro.org>
+ <9b22d0ff-5902-4ec7-ae54-e974482ebd87@citrix.com>
 Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-References: <20250207110248.1580465-1-cohuck@redhat.com>
- <20250207110248.1580465-2-cohuck@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250207110248.1580465-2-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <9b22d0ff-5902-4ec7-ae54-e974482ebd87@citrix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,246 +110,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Connie,
++Vikram
 
+On 18/2/25 15:10, Andrew Cooper wrote:
+> On 18/02/2025 11:20 am, Philippe Mathieu-Daudé wrote:
+>> Hi,
+>>
+>> Adding Xen community.
+>>
+>> On 8/2/25 21:57, Richard Henderson wrote:
+>>> Require a 64-bit host binary to spawn a 64-bit guest.
+>>>
+>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>> ---
+>>>    meson.build | 9 +++++++--
+>>>    1 file changed, 7 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/meson.build b/meson.build
+>>> index 1af8aeb194..911955cfa8 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -304,9 +304,14 @@ else
+>>>    endif
+>>>    accelerator_targets = { 'CONFIG_KVM': kvm_targets }
+>>>    -if cpu in ['x86', 'x86_64']
+>>> +if cpu == 'x86'
+>>> +  xen_targets = ['i386-softmmu']
+>>> +elif cpu == 'x86_64'
+>>>      xen_targets = ['i386-softmmu', 'x86_64-softmmu']
+>>> -elif cpu in ['arm', 'aarch64']
+>>> +elif cpu == 'arm'
+>>> +  # i386 emulator provides xenpv machine type for multiple
+>>> architectures
+>>> +  xen_targets = ['i386-softmmu']
+>>
+>> Is actually someone *testing* this config? I'm having hard time building
+>> it, so am very suspicious about how it runs, and start to wonder if I'm
+>> not just wasting my time (as could be our CI).
+> 
+> It was intentional.  I believe it was Stefano (CC'd) who introduced it.
 
-On 2/7/25 12:02 PM, Cornelia Huck wrote:
-> From: Eric Auger <eric.auger@redhat.com>
->
-> This new header contains macros that define aarch64 registers.
-> In a subsequent patch, this will be replaced by a more exhaustive
-> version that will be generated from linux arch/arm64/tools/sysreg
-> file. Those macros are sufficient to migrate the storage of those
-> ID regs from named fields in isar struct to an array cell.
->
-> [CH: reworked to use different structures]
-> [CH: moved accessors from the patches first using them to here,
->      dropped interaction with writable registers, which will happen
->      later]
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/cpu-sysregs.h | 131 +++++++++++++++++++++++++++++++++++++++
->  target/arm/cpu.h         |  42 +++++++++++++
->  2 files changed, 173 insertions(+)
->  create mode 100644 target/arm/cpu-sysregs.h
->
-> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-> new file mode 100644
-> index 000000000000..de09ebae91a5
-> --- /dev/null
-> +++ b/target/arm/cpu-sysregs.h
-> @@ -0,0 +1,131 @@
-> +#ifndef ARM_CPU_SYSREGS_H
-> +#define ARM_CPU_SYSREGS_H
-> +
-> +/*
-> + * Following is similar to the coprocessor regs encodings, but with an argument
-> + * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
-> + * that actually are the same as the equivalent KVM_REG_ values.
-> + */
-> +#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
-> +    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
-> +     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
-> +     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
-> +     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
-> +     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
-> +
-> +typedef enum ARMIDRegisterIdx {
-> +    ID_AA64PFR0_EL1_IDX,
-> +    ID_AA64PFR1_EL1_IDX,
-> +    ID_AA64SMFR0_EL1_IDX,
-> +    ID_AA64DFR0_EL1_IDX,
-> +    ID_AA64DFR1_EL1_IDX,
-> +    ID_AA64ISAR0_EL1_IDX,
-> +    ID_AA64ISAR1_EL1_IDX,
-> +    ID_AA64ISAR2_EL1_IDX,
-> +    ID_AA64MMFR0_EL1_IDX,
-> +    ID_AA64MMFR1_EL1_IDX,
-> +    ID_AA64MMFR2_EL1_IDX,
-> +    ID_AA64MMFR3_EL1_IDX,
-> +    ID_PFR0_EL1_IDX,
-> +    ID_PFR1_EL1_IDX,
-> +    ID_DFR0_EL1_IDX,
-> +    ID_MMFR0_EL1_IDX,
-> +    ID_MMFR1_EL1_IDX,
-> +    ID_MMFR2_EL1_IDX,
-> +    ID_MMFR3_EL1_IDX,
-> +    ID_ISAR0_EL1_IDX,
-> +    ID_ISAR1_EL1_IDX,
-> +    ID_ISAR2_EL1_IDX,
-> +    ID_ISAR3_EL1_IDX,
-> +    ID_ISAR4_EL1_IDX,
-> +    ID_ISAR5_EL1_IDX,
-> +    ID_MMFR4_EL1_IDX,
-> +    ID_ISAR6_EL1_IDX,
-> +    MVFR0_EL1_IDX,
-> +    MVFR1_EL1_IDX,
-> +    MVFR2_EL1_IDX,
-> +    ID_PFR2_EL1_IDX,
-> +    ID_DFR1_EL1_IDX,
-> +    ID_MMFR5_EL1_IDX,
-> +    ID_AA64ZFR0_EL1_IDX,
-> +    CTR_EL0_IDX,
-> +    NUM_ID_IDX,
-> +} ARMIDRegisterIdx;
-> +
-> +typedef enum ARMSysRegs {
-> +    SYS_ID_AA64PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 0),
-> +    SYS_ID_AA64PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 1),
-> +    SYS_ID_AA64SMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 5),
-> +    SYS_ID_AA64DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 0),
-> +    SYS_ID_AA64DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 1),
-> +    SYS_ID_AA64ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 0),
-> +    SYS_ID_AA64ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 1),
-> +    SYS_ID_AA64ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 2),
-> +    SYS_ID_AA64MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 0),
-> +    SYS_ID_AA64MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 1),
-> +    SYS_ID_AA64MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 2),
-> +    SYS_ID_AA64MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 3),
-> +    SYS_ID_PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 0),
-> +    SYS_ID_PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 1),
-> +    SYS_ID_DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 2),
-> +    SYS_ID_MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 4),
-> +    SYS_ID_MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 5),
-> +    SYS_ID_MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 6),
-> +    SYS_ID_MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 7),
-> +    SYS_ID_ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 0),
-> +    SYS_ID_ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 1),
-> +    SYS_ID_ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 2),
-> +    SYS_ID_ISAR3_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 3),
-> +    SYS_ID_ISAR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 4),
-> +    SYS_ID_ISAR5_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 5),
-> +    SYS_ID_MMFR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 6),
-> +    SYS_ID_ISAR6_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 7),
-> +    SYS_MVFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 0),
-> +    SYS_MVFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 1),
-> +    SYS_MVFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 2),
-> +    SYS_ID_PFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 4),
-> +    SYS_ID_DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 5),
-> +    SYS_ID_MMFR5_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 6),
-> +    SYS_ID_AA64ZFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 4),
-> +    SYS_CTR_EL0 = ENCODE_ID_REG(3, 3, 0, 0, 1),
-> +} ARMSysRegs;
-> +
-> +static const uint32_t id_register_sysreg[NUM_ID_IDX] = {
-> +    [ID_AA64PFR0_EL1_IDX] = SYS_ID_AA64PFR0_EL1,
-> +    [ID_AA64PFR1_EL1_IDX] = SYS_ID_AA64PFR1_EL1,
-> +    [ID_AA64SMFR0_EL1_IDX] = SYS_ID_AA64SMFR0_EL1,
-> +    [ID_AA64DFR0_EL1_IDX] = SYS_ID_AA64DFR0_EL1,
-> +    [ID_AA64DFR1_EL1_IDX] = SYS_ID_AA64DFR1_EL1,
-> +    [ID_AA64ISAR0_EL1_IDX] = SYS_ID_AA64ISAR0_EL1,
-> +    [ID_AA64ISAR1_EL1_IDX] = SYS_ID_AA64ISAR1_EL1,
-> +    [ID_AA64ISAR2_EL1_IDX] = SYS_ID_AA64ISAR2_EL1,
-> +    [ID_AA64MMFR0_EL1_IDX] = SYS_ID_AA64MMFR0_EL1,
-> +    [ID_AA64MMFR1_EL1_IDX] = SYS_ID_AA64MMFR1_EL1,
-> +    [ID_AA64MMFR2_EL1_IDX] = SYS_ID_AA64MMFR2_EL1,
-> +    [ID_AA64MMFR3_EL1_IDX] = SYS_ID_AA64MMFR3_EL1,
-> +    [ID_PFR0_EL1_IDX] = SYS_ID_PFR0_EL1,
-> +    [ID_PFR1_EL1_IDX] = SYS_ID_PFR1_EL1,
-> +    [ID_DFR0_EL1_IDX] = SYS_ID_DFR0_EL1,
-> +    [ID_MMFR0_EL1_IDX] = SYS_ID_MMFR0_EL1,
-> +    [ID_MMFR1_EL1_IDX] = SYS_ID_MMFR1_EL1,
-> +    [ID_MMFR2_EL1_IDX] = SYS_ID_MMFR2_EL1,
-> +    [ID_MMFR3_EL1_IDX] = SYS_ID_MMFR3_EL1,
-> +    [ID_ISAR0_EL1_IDX] = SYS_ID_ISAR0_EL1,
-> +    [ID_ISAR1_EL1_IDX] = SYS_ID_ISAR1_EL1,
-> +    [ID_ISAR2_EL1_IDX] = SYS_ID_ISAR2_EL1,
-> +    [ID_ISAR3_EL1_IDX] = SYS_ID_ISAR3_EL1,
-> +    [ID_ISAR4_EL1_IDX] = SYS_ID_ISAR4_EL1,
-> +    [ID_ISAR5_EL1_IDX] = SYS_ID_ISAR5_EL1,
-> +    [ID_MMFR4_EL1_IDX] = SYS_ID_MMFR4_EL1,
-> +    [ID_ISAR6_EL1_IDX] = SYS_ID_ISAR6_EL1,
-> +    [MVFR0_EL1_IDX] = SYS_MVFR0_EL1,
-> +    [MVFR1_EL1_IDX] = SYS_MVFR1_EL1,
-> +    [MVFR2_EL1_IDX] = SYS_MVFR2_EL1,
-> +    [ID_PFR2_EL1_IDX] = SYS_ID_PFR2_EL1,
-> +    [ID_DFR1_EL1_IDX] = SYS_ID_DFR1_EL1,
-> +    [ID_MMFR5_EL1_IDX] = SYS_ID_MMFR5_EL1,
-> +    [ID_AA64ZFR0_EL1_IDX] = SYS_ID_AA64ZFR0_EL1,
-> +    [CTR_EL0_IDX] = SYS_CTR_EL0,
-> +};
-> +
-> +#endif /* ARM_CPU_SYSREGS_H */
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 2213c277348d..4bbce34e268d 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -30,6 +30,7 @@
->  #include "qapi/qapi-types-common.h"
->  #include "target/arm/multiprocessing.h"
->  #include "target/arm/gtimer.h"
-> +#include "target/arm/cpu-sysregs.h"
->  
->  #ifdef TARGET_AARCH64
->  #define KVM_HAVE_MCE_INJECTION 1
-> @@ -832,6 +833,46 @@ typedef struct {
->      uint32_t map, init, supported;
->  } ARMVQMap;
->  
-> +static inline uint64_t _get_idreg(uint64_t *idregs, uint32_t index)
-> +{
-> +    return idregs[index];
-> +}
-> +
-> +static inline void _set_idreg(uint64_t *idregs, uint32_t index, uint64_t value)
-> +{
-> +    idregs[index] = value;
-> +}
-> +
-> +/* REG is ID_XXX */
-nit: we have MVFRx too so maybe we shall rather say that REG is the
+In the introduction commit, "ARM targets" is used, so apparently both
+32/64bit were picked deliberately:
 
-ARMIDRegisterIdx litteral without  _EL1_IDX suffix or just remove the comment
+---
+commit aaea616d54317b8a0154adf52303a51da2d8d56f
+Author: Vikram Garhwal <vikram.garhwal@amd.com>
+Date:   Wed Jun 14 17:03:38 2023 -0700
 
- 
-> +#define FIELD_DP64_IDREG(ARRAY, REG, FIELD, VALUE)              \
-> +{                                                             \
-> +    uint64_t regval = _get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX);   \
-> +        regval = FIELD_DP64(regval, REG, FIELD, VALUE);                 \
-> +    _set_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX, regval);             \
-> +}
-> +
-> +#define FIELD_DP32_IDREG(ARRAY, REG, FIELD, VALUE)              \
-> +{                                                             \
-> +uint64_t regval = _get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX);       \
-> +regval = FIELD_DP32(regval, REG, FIELD, VALUE);               \
-> +_set_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX, regval);                 \
-> +}
-> +
-> +#define FIELD_EX64_IDREG(ARRAY, REG, FIELD)                     \
-> +FIELD_EX64(_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX), REG, FIELD)  \
-> +
-> +#define FIELD_EX32_IDREG(ARRAY, REG, FIELD)                     \
-> +FIELD_EX32(_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX), REG, FIELD)  \
-> +
-> +#define FIELD_SEX64_IDREG(ARRAY, REG, FIELD)                     \
-> +FIELD_SEX64(_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX), REG, FIELD)  \
-> +
-> +#define SET_IDREG(ARRAY, REG, VALUE)                            \
-> +_set_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX, VALUE)
-> +
-> +#define GET_IDREG(ARRAY, REG)                                   \
-> +_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX)
-> +
->  /**
->   * ARMCPU:
->   * @env: #CPUARMState
-> @@ -1040,6 +1081,7 @@ struct ArchCPU {
->          uint64_t id_aa64zfr0;
->          uint64_t id_aa64smfr0;
->          uint64_t reset_pmcr_el0;
-> +        uint64_t idregs[NUM_ID_IDX];
->      } isar;
->      uint64_t midr;
->      uint32_t revidr;
+     meson.build: enable xenpv machine build for ARM
 
-Thanks
+     Add CONFIG_XEN for aarch64 device to support build for ARM targets.
 
-Eric
+     Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+     Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+     Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 
+diff --git a/meson.build b/meson.build
+index 481865bfa97..cfa98e9e25f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -136,7 +136,7 @@ endif
+  if cpu in ['x86', 'x86_64', 'arm', 'aarch64']
+    # i386 emulator provides xenpv machine type for multiple architectures
+    accelerator_targets += {
+-    'CONFIG_XEN': ['i386-softmmu', 'x86_64-softmmu'],
++    'CONFIG_XEN': ['i386-softmmu', 'x86_64-softmmu', 'aarch64-softmmu'],
+    }
+  endif
+  if cpu in ['x86', 'x86_64']
+---
+
+> Xen uses qemu-system-i386 everywhere because qemu-system-x86_64 doesn't
+> make compatible VMs.  I'm not sure why; I suspect it's bugs in the Xen
+> machine types, but I don't know QEMU well enough to be sure.
+> 
+> Another thing that (at least, was) tied to qemu-system-i386 was using
+> Qemu as a XenBlk <-> QCOW adapter, at which point it wasn't even really
+> a system emulator, just a paravirtual disk implementation.
+> 
+> This is, AIUI, what ARM wants with the xenpv machine.  If there's a
+> better way to do this, please do say.
+
+No, I concur.
+
+> Looking through Xen's CI, I can't see any of the ARM builds building
+> QEMU at all.  I think it's quite possible it's not tested any more.
+
+We only cross-build, see our cross-arm64-xen-only job:
+https://gitlab.com/qemu-project/qemu/-/jobs/9165958873
+
+Note, if it is not clear, the problem I have is to test Xen on
+32-bit ARM hosts; I don't have any problem with 64-bit ones.
+
+Regards,
+
+Phil.
 
