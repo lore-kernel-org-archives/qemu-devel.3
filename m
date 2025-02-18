@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7355C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 622EFC021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQZo-0004Yf-AZ; Tue, 18 Feb 2025 11:36:04 -0500
+	id 1tkQal-00059Q-Ro; Tue, 18 Feb 2025 11:37:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1tkQZm-0004YD-RF; Tue, 18 Feb 2025 11:36:02 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1tkQZl-0002AB-1W; Tue, 18 Feb 2025 11:36:02 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5dee07e51aaso8708517a12.3; 
- Tue, 18 Feb 2025 08:36:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739896559; x=1740501359; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=y39IuXLb8+Yv2MA9uCKmIr6MY5yiNZEZ7BG41cUuj8Y=;
- b=iwrlBRAsHN8WnNJxZnbbz6Y+F3jXMu4G2n+jjACwPbR45p78B2hKmTi8EaQQwSBD0A
- iVTwiIcL4BrXk3UmK9xAgAw9Hr2hwQvuw6YzQVgkRU2EX0CEOHAQaXh4jVodj7IVNZ6q
- 0Z8tUZPRgCGOGqQOeXHWTtIk6Od4wgbIW8VFREfN9NagsdUyJsk3Y67nss2e2X391d/T
- GBztxjpKyTu290DO7K3pmPsQKFdhycGOyMcAevgpbuGNXTcKroG1xJGKhawziKUHL+jy
- UVt+5VTKYn7tzm+PDS5wc9LtNz5P69zhG2Qe0BjGLwC5U81u3Yt2XqeCwX0w9EOOsqpM
- AeTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739896559; x=1740501359;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=y39IuXLb8+Yv2MA9uCKmIr6MY5yiNZEZ7BG41cUuj8Y=;
- b=VBh9+/myLIv2PocVdkYGVHr+ejoJt3VLyB5wKx4ccCDPQFKzzYHA5ug+2aUP+TRo8Z
- vTiMneWoxdcwHkvkPVjaILH7191t+VpDUxGsDJ8h+6bVKvqR8cX5rM5sIakE9H+CAjgy
- N6O5SFJ2xB6KMSrsrUqpDXufCb/LfsJzlhNAjh51xjKWBgdENNTdo1t/mcVv06wOxLAV
- RlB5OnDU7kAkTpqlyP1XGuCbzBjtsbNLW2VMXcn03YldTb0rb4FtBsFMl+ZuidFix3i7
- vuMlJSD+ENnVYViGWNnzWfz2kNcdjs0LdNViOnej18O52Qk6DXP3kB9hEKs3saDa9UT2
- W/YA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBjYcGwb0VEcYcgaw5kk/3DZ+3PN/vrrCDsiW/PiIuBCVRtcrOQi6oPU28KrTNCnrV+9LSiFs8IA==@nongnu.org
-X-Gm-Message-State: AOJu0YxI5I3hV/lDXH/aXEpOwKdrZKmuo9kVj1R6TpU/aTbJBTsfYyuO
- 5ST5Tw4Hg9gmnUVXUL78yeE/Sh4zyIY01nBbWxcdr6NNmsRcZx4VvZ+4KJLxpLuyjTaZE/CO5jL
- bG7HotBcSi8wGvLFJRH/q5mymJrGVXvmHBVk=
-X-Gm-Gg: ASbGncuwca/vfrqyrAu0AbqdHgxvz8B+YgDkj7fDGMMjHEcd8oug0TdgV356gFZ5ziR
- v7upDdU3Xb8JvS1ExG5YpY5X82Yy15bP7hYanutyTuS/xEVrUO66v9L+y3CmOnkrmESMYJTOR
-X-Google-Smtp-Source: AGHT+IGsi6pDp5KGIzXDY9W2Eu6c+PAcuUiMEkChzpkJPE4hiwDK0DmLJGWyZs2Hu/Why8gso05aXw6DKWENPyl43og=
-X-Received: by 2002:a05:6402:5246:b0:5db:f5e9:6745 with SMTP id
- 4fb4d7f45d1cf-5e035f4cbcemr15926636a12.0.1739896558995; Tue, 18 Feb 2025
- 08:35:58 -0800 (PST)
-MIME-Version: 1.0
-References: <20250218162618.46167-1-philmd@linaro.org>
- <20250218162618.46167-2-philmd@linaro.org>
-In-Reply-To: <20250218162618.46167-2-philmd@linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Tue, 18 Feb 2025 10:35:45 -0600
-X-Gm-Features: AWEUYZngkCBYmTsrxRCCzUblDe0MPj8n_01v-kvqpONaymoS4p_xVYJeHIFfDo4
-Message-ID: <CAJy5ezoHT1RehKYvLJtU7=0SR_Ahs2AUBpu==cqvo6zVj1+vXg@mail.gmail.com>
-Subject: Re: [PATCH 1/8] accel/Kconfig: Link XenPVH with GPEX PCIe bridge
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org, 
- Anthony PERARD <anthony@xenproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>, 
- Paul Durrant <paul@xen.org>, Andrew Cooper <andrew.cooper3@citrix.com>, 
- Juergen Gross <jgross@suse.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tkQaW-00056S-RC
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:36:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tkQaU-0002Cv-3v
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:36:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739896603;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6B3dpA5+FyAf3b1nXZlew/K+efL2wlMhh7BQM1SzDbY=;
+ b=ViuRtQeizy18fP39m/jQcV4ZoO89yl5/016Vfs8EdkSu+reHVbe2AfbObBVJbIiz8d361T
+ YP/niQm8lOh3KOsCG/jo2I38hUbtXoraLIMoAf8sgHP5UZ6X+ZIL3+j0vvNDRSc98CeSyh
+ KnoYU43xN1DbgaclB3FWlk7ZKOKAF4Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-MWvgu0Y6OFKBVLq39tlFJQ-1; Tue,
+ 18 Feb 2025 11:36:40 -0500
+X-MC-Unique: MWvgu0Y6OFKBVLq39tlFJQ-1
+X-Mimecast-MFC-AGG-ID: MWvgu0Y6OFKBVLq39tlFJQ_1739896599
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D188A19373DC; Tue, 18 Feb 2025 16:36:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.158])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9369819560AA; Tue, 18 Feb 2025 16:36:35 +0000 (UTC)
+Date: Tue, 18 Feb 2025 16:36:31 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>, David Woodhouse <dwmw2@infradead.org>, 
- Vikram Garhwal <vikram.garhwal@bytedance.com>, Thomas Huth <thuth@redhat.com>, 
- Jan Beulich <jbeulich@suse.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000005856d9062e6d3cc9"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PULL v2 11/14] os: add an ability to lock memory on_fault
+Message-ID: <Z7S3D_JYdayPhVVd@redhat.com>
+References: <20250212173823.214429-1-peterx@redhat.com>
+ <20250212173823.214429-3-peterx@redhat.com>
+ <Z6ze_muL8OkkuAFr@redhat.com> <Z6zg3jr4IUiIdHKG@x1.local>
+ <Z6zicnbD1RRYfC3R@redhat.com> <Z60TvzQZQW3j4tiY@x1.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z60TvzQZQW3j4tiY@x1.local>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,134 +92,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005856d9062e6d3cc9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Feb 12, 2025 at 04:33:51PM -0500, Peter Xu wrote:
+> On Wed, Feb 12, 2025 at 06:03:30PM +0000, Daniel P. Berrangé wrote:
+> > On Wed, Feb 12, 2025 at 12:56:46PM -0500, Peter Xu wrote:
+> > > On Wed, Feb 12, 2025 at 05:48:46PM +0000, Daniel P. Berrangé wrote:
+> > > > On Wed, Feb 12, 2025 at 12:38:23PM -0500, Peter Xu wrote:
+> > > > > From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> > > > > 
+> > > > > This will be used in the following commits to make it possible to only
+> > > > > lock memory on fault instead of right away.
+> > > > > 
+> > > > > Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> > > > > Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > > > Link: https://lore.kernel.org/r/20250212143920.1269754-2-d-tatianin@yandex-team.ru
+> > > > > [peterx: fail os_mlock(on_fault=1) when not supported]
+> > > > > [peterx: use G_GNUC_UNUSED instead of "(void)on_fault", per Dan]
+> > > > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > > > ---
+> > > > >  meson.build               |  6 ++++++
+> > > > >  include/system/os-posix.h |  2 +-
+> > > > >  include/system/os-win32.h |  2 +-
+> > > > >  migration/postcopy-ram.c  |  2 +-
+> > > > >  os-posix.c                | 15 +++++++++++++--
+> > > > >  system/vl.c               |  2 +-
+> > > > >  6 files changed, 23 insertions(+), 6 deletions(-)
+> > > > > 
+> > > > > diff --git a/meson.build b/meson.build
+> > > > > index 18cf9e2913..59953cbe6b 100644
+> > > > > --- a/meson.build
+> > > > > +++ b/meson.build
+> > > > > @@ -2885,6 +2885,12 @@ config_host_data.set('HAVE_MLOCKALL', cc.links(gnu_source_prefix + '''
+> > > > >      return mlockall(MCL_FUTURE);
+> > > > >    }'''))
+> > > > >  
+> > > > > +config_host_data.set('HAVE_MLOCK_ONFAULT', cc.links(gnu_source_prefix + '''
+> > > > > +  #include <sys/mman.h>
+> > > > > +  int main(void) {
+> > > > > +      return mlockall(MCL_FUTURE | MCL_ONFAULT);
+> > > > > +  }'''))
+> > > > > +
+> > > > >  have_l2tpv3 = false
+> > > > >  if get_option('l2tpv3').allowed() and have_system
+> > > > >    have_l2tpv3 = cc.has_type('struct mmsghdr',
+> > > > > diff --git a/include/system/os-posix.h b/include/system/os-posix.h
+> > > > > index b881ac6c6f..ce5b3bccf8 100644
+> > > > > --- a/include/system/os-posix.h
+> > > > > +++ b/include/system/os-posix.h
+> > > > > @@ -53,7 +53,7 @@ bool os_set_runas(const char *user_id);
+> > > > >  void os_set_chroot(const char *path);
+> > > > >  void os_setup_limits(void);
+> > > > >  void os_setup_post(void);
+> > > > > -int os_mlock(void);
+> > > > > +int os_mlock(bool on_fault);
+> > > > >  
+> > > > >  /**
+> > > > >   * qemu_alloc_stack:
+> > > > > diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+> > > > > index b82a5d3ad9..bc623061d8 100644
+> > > > > --- a/include/system/os-win32.h
+> > > > > +++ b/include/system/os-win32.h
+> > > > > @@ -123,7 +123,7 @@ static inline bool is_daemonized(void)
+> > > > >      return false;
+> > > > >  }
+> > > > >  
+> > > > > -static inline int os_mlock(void)
+> > > > > +static inline int os_mlock(bool on_fault G_GNUC_UNUSED)
+> > > > 
+> > > > So did this actually generate a warning ? We don' even need
+> > > > G_GNUC_UNUSED unless we're actually seeing warnings about this.
+> > > 
+> > > I didn't try to hit a warning without it, as we can use different compilers
+> > > and I thought the results could be different, even if I try it and it
+> > > didn't raise a warning?
+> > 
+> > We strictly only permit use of clang & gcc.
+> 
+> I meant I am also not sure whether the versions could matter.. Totally not
+> expert on compilers.  Hence I chose to be safe with the attribute applied,
+> because I know it'll always be safe when with it.
+> 
+> I tried to grep QEMU code base:
+> 
+> $ git grep unused-parameter
+> $ git grep -w Wall
+> pc-bios/optionrom/Makefile:override CFLAGS += -march=i486 -Wall $(EXTRA_CFLAGS) -m16
+> pc-bios/s390-ccw/Makefile:EXTRA_CFLAGS += -Wall
+> tests/multiboot/Makefile:CCFLAGS=-m32 -Wall -Wextra -Werror -fno-stack-protector -nostdinc -fno-builtin
+> tests/tcg/Makefile.target:CFLAGS+=-Wall -Werror -O0 -g -fno-strict-aliasing
+> tests/tcg/mips/user/isa/r5900/Makefile:CFLAGS  = -Wall -mabi=32 -march=r5900 -static
+> 
+> We don't seem to have explicit requirement on that (as I grepped nothing
+> for "unused-parameter"), meanwhile indeed we also seem to have zero usage
+> at least in qemu root with enabling -Wall.  I'm not sure whether other
+> compiler option could matter here.
+> 
+> Can this be justifed as we can safely drop G_GNUC_UNUSED in this patch?
+> 
+> OTOH:
+> 
+> $ git grep G_GNUC_UNUSED | wc -l
+> 169
+> 
+> So we have 169 existing such use cases.  Does it also mean we could
+> potentially drop all of them?
 
-On Tue, Feb 18, 2025 at 10:26=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philm=
-d@linaro.org>
-wrote:
+Yes, or actually turn on the warning about unused params and mark
+the rest. It is initially noisey, but IME does end up flagging
+real problems periodically. Anyway, given we're inconsistent already
+there's no need to respin this series.
 
-> XenPVH requires the PCIe/GPEX device. Add it to Kconfig
-> to avoid when configuring using --without-default-devices:
->
->   /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-pvh-common.c.o: in
-> function `xenpvh_gpex_init':
->   hw/xen/xen-pvh-common.c:174: undefined reference to `gpex_set_irq_num'
->   /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-hvm-common.c.o: in
-> function `pci_dev_bus_num':
->   include/hw/pci/pci.h:337: undefined reference to `pci_bus_num'
->   /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to
-> `pci_bus_num'
->   /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to
-> `pci_bus_num'
->   /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to
-> `pci_bus_num'
->   /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to
-> `pci_bus_num'
->   /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-hvm-common.c.o: in
-> function `cpu_ioreq_config':
->   hw/xen/xen-hvm-common.c:412: undefined reference to
-> `pci_host_config_read_common'
->   /usr/bin/ld: hw/xen/xen-hvm-common.c:428: undefined reference to
-> `pci_host_config_read_common'
->   /usr/bin/ld: hw/xen/xen-hvm-common.c:438: undefined reference to
-> `pci_host_config_write_common'
->
-> Fixes: f22e598a72c ("hw/xen: pvh-common: Add support for creating
-> PCIe/GPEX")
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
+> 
+> It'll definitely be easier for me (and hopefully Stefan too..) if this can
+> be done later, but I'm OK respin v3.
+> 
+> Dan, do you have any preference / suggestion?
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-
-
-> ---
->  accel/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/accel/Kconfig b/accel/Kconfig
-> index 794e0d18d21..4263cab7227 100644
-> --- a/accel/Kconfig
-> +++ b/accel/Kconfig
-> @@ -16,4 +16,5 @@ config KVM
->  config XEN
->      bool
->      select FSDEV_9P if VIRTFS
-> +    select PCI_EXPRESS_GENERIC_BRIDGE
->      select XEN_BUS
-> --
-> 2.47.1
->
->
-
---0000000000005856d9062e6d3cc9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Tue, Feb 18, 2025 at 10:26=E2=80=AFAM =
-Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd=
-@linaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_conta=
-iner"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">XenPVH requires the=
- PCIe/GPEX device. Add it to Kconfig<br>
-to avoid when configuring using --without-default-devices:<br>
-<br>
-=C2=A0 /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-pvh-common.c.o: =
-in function `xenpvh_gpex_init&#39;:<br>
-=C2=A0 hw/xen/xen-pvh-common.c:174: undefined reference to `gpex_set_irq_nu=
-m&#39;<br>
-=C2=A0 /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-hvm-common.c.o: =
-in function `pci_dev_bus_num&#39;:<br>
-=C2=A0 include/hw/pci/pci.h:337: undefined reference to `pci_bus_num&#39;<b=
-r>
-=C2=A0 /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_b=
-us_num&#39;<br>
-=C2=A0 /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_b=
-us_num&#39;<br>
-=C2=A0 /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_b=
-us_num&#39;<br>
-=C2=A0 /usr/bin/ld: include/hw/pci/pci.h:337: undefined reference to `pci_b=
-us_num&#39;<br>
-=C2=A0 /usr/bin/ld: libqemu-aarch64-softmmu.a.p/hw_xen_xen-hvm-common.c.o: =
-in function `cpu_ioreq_config&#39;:<br>
-=C2=A0 hw/xen/xen-hvm-common.c:412: undefined reference to `pci_host_config=
-_read_common&#39;<br>
-=C2=A0 /usr/bin/ld: hw/xen/xen-hvm-common.c:428: undefined reference to `pc=
-i_host_config_read_common&#39;<br>
-=C2=A0 /usr/bin/ld: hw/xen/xen-hvm-common.c:438: undefined reference to `pc=
-i_host_config_write_common&#39;<br>
-<br>
-Fixes: f22e598a72c (&quot;hw/xen: pvh-common: Add support for creating PCIe=
-/GPEX&quot;)<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.ig=
-lesias@amd.com">edgar.iglesias@amd.com</a>&gt;</div><div><br></div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0accel/Kconfig | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/accel/Kconfig b/accel/Kconfig<br>
-index 794e0d18d21..4263cab7227 100644<br>
---- a/accel/Kconfig<br>
-+++ b/accel/Kconfig<br>
-@@ -16,4 +16,5 @@ config KVM<br>
-=C2=A0config XEN<br>
-=C2=A0 =C2=A0 =C2=A0bool<br>
-=C2=A0 =C2=A0 =C2=A0select FSDEV_9P if VIRTFS<br>
-+=C2=A0 =C2=A0 select PCI_EXPRESS_GENERIC_BRIDGE<br>
-=C2=A0 =C2=A0 =C2=A0select XEN_BUS<br>
--- <br>
-2.47.1<br>
-<br>
-</blockquote></div></div>
-
---0000000000005856d9062e6d3cc9--
 
