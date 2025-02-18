@@ -4,101 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB46C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC07C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQ7t-00065h-KY; Tue, 18 Feb 2025 11:07:13 -0500
+	id 1tkQAs-0007Ro-4u; Tue, 18 Feb 2025 11:10:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tkQ7p-000652-Fh
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:07:09 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkQAo-0007QH-Sw
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:10:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tkQ7m-0006Pr-0l
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:07:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkQAm-0006wG-7O
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:10:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739894824;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1739895010;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=s3g9jows/4/+ShPFJxsYWAQAkLb0y/5Wvk4/3mwEv5w=;
- b=LWGpSukJ/IDiMnGJ7BReCwl+2dxGFgXcPkS3GmTnPmfxeeRa7SLxXXzIaRb7k3FAuzYK0k
- Ta+RjWStse+7gMff1Z9sFd57ffGagbebuetTj93SdN9DBg9416jrLN/lD7xVCYc2uqKrUI
- hoKClYfBdMWr3MM/+xZrUEXPOG9gSIQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2Wdo9d1ANnBCo+/gLLTKI7BQXI6Su6vcINsTE9viuWw=;
+ b=PHrY3om+91fsXhyzuKVVnIEUuiX0gUFxoUmN8Mt+olsZgONRzNdNLza2ObCn0Yu2xKB313
+ 3qKzjELHfdp5ToJXIaVIsWU4Y7RBe4jeXcq5pFSv7i4/Nt5QsRxsAW2jNo2/YDCAMuuQqg
+ LYMRG06fL0NMKdUTO1b3lKO93JD5tJg=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-V0_5MLOvNnG9hqp9BCFH6A-1; Tue, 18 Feb 2025 11:07:03 -0500
-X-MC-Unique: V0_5MLOvNnG9hqp9BCFH6A-1
-X-Mimecast-MFC-AGG-ID: V0_5MLOvNnG9hqp9BCFH6A_1739894822
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4393e8738b3so47511615e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:07:03 -0800 (PST)
+ us-mta-644-eQz0Bu57NiqbfC3uq8zvRA-1; Tue, 18 Feb 2025 11:10:09 -0500
+X-MC-Unique: eQz0Bu57NiqbfC3uq8zvRA-1
+X-Mimecast-MFC-AGG-ID: eQz0Bu57NiqbfC3uq8zvRA_1739895008
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-471d66d2a89so76560391cf.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:10:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739894822; x=1740499622;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s3g9jows/4/+ShPFJxsYWAQAkLb0y/5Wvk4/3mwEv5w=;
- b=nR48JST2qQtBzJBl8e8m6mOuiFtNzNoVo1qVewNkUDM3EIQVEw6VPFP0gEAhVrHKHd
- +aM8q0uwWdd784QPlrJQsowuwhT0TAu6/ZGeyk+WHjIA2KFvnyi5bUeWqMYuUbpO2T64
- g+RbfowwBN+fQeKdFzJAkP7GBX3a7XiENI4Kif8DHb9pOtUbGTH7rlhVO97Z3YkdAeWQ
- Ht4xWbsy7SFCC/6A10FbrDJimSWz466YTBAYO6gbYlsGow2eJnNb6F1voVOjA8dIgNSx
- 84UsdfdEDuC5B/db37UDTzzGNfmXs/O87UxiM0mKz1yhp05+xS3nAbVb8ZzyYlEalo4i
- pCnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5SOady25ojuTKaWNA2cUL/MbbjJZl9v+XtfuFdY8+uFWcLmmZQrf8AleFSlBIjVY7D10aelWKgQ8p@nongnu.org
-X-Gm-Message-State: AOJu0YyDJCaMJ6GlVgDa+qVVKuw57d8cGMxIRhjHhuDki8rsybbwxCRw
- lPxzPF2QkrexKvJRmP0BQwRgE2JG0bnrV7F/AhZmjIgXiRkBH8XDPI8z/bHfrOTQOb9Z/JbJUhA
- tZLHOxYlCNo8+lxpkBgpT81hKe/pnif781Kc5j+6BuOBTvjlDqmaZ
-X-Gm-Gg: ASbGnctwD+6No26a76gQJaN9T0RfZa77vcL8T8ZnkvzF9FZkgIYG+oYeY22oKEcOKsH
- vk7px4K2xRxE2nEj9Hyd86GlOMlfMaIwNImWj9EoLINMEtXXIa5EvZugNXXeX5ozsm7oYsoj6wL
- 1EUvuq0Jonv7UUkKGUwXFCazm1Q1hOoFYeKkU5v5aq/hwxPd6efW/O77lF/Fd7jS+T4JH6S2lud
- sRknkwHn5k/0Vx2HGJGAz7h2e7jehkxhh6kYCuaL7NNtbY9C1d2Kh5v2Ka9+OdUZrG8y+gPpx41
- saVh1JV6pGkFlWnxr7jSlQ/WlYz7wp9PQblrjIAUGOJzbsk4kKiY
-X-Received: by 2002:a05:600c:4e8c:b0:439:33dd:48ea with SMTP id
- 5b1f17b1804b1-43999d72091mr2202805e9.2.1739894822018; 
- Tue, 18 Feb 2025 08:07:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsMyDHKAgJhzDk32tn0Woebs43BToX7M4ssqeiTBNIv2bgE7wYwZvGEHmCB35LNPrWcIT0yg==
-X-Received: by 2002:a05:600c:4e8c:b0:439:33dd:48ea with SMTP id
- 5b1f17b1804b1-43999d72091mr2202075e9.2.1739894821469; 
- Tue, 18 Feb 2025 08:07:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ d=1e100.net; s=20230601; t=1739895008; x=1740499808;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2Wdo9d1ANnBCo+/gLLTKI7BQXI6Su6vcINsTE9viuWw=;
+ b=guXYpiGJb52TdojXqgGIaMymDolt5Cng9lRlEPWyCMybnHNjunEIDmfQM7jc5qzuW8
+ rw6dPpIfcT6pq05WsVB+17W8oEL868rPZ/Y+G3mpnCEb0RTTzgYeRpi1/vAHvZq0lSLK
+ EqSG2LNXvxt7qyL1jle/FV4MThxJLqBAFghIzOf7YmePCAr+UqFJzwo8CEPYlAuduo2a
+ hd6XDYZf2P1NY9B93xAvzoeEKAWXRvq/j4sr4YH3c3v60EDg8A9fs97NEgiLPxvz5gM0
+ COFOQnnODDRbnpppREngLtfTo6TTzAhwd9usBiEq9Y0hTr5lIG24H9u1Hy/9fJ71mKJL
+ cVIw==
+X-Gm-Message-State: AOJu0YypzZ7TW4e9RGistjCNxvSvTAYyV1WvBgViUmjILAOsfk2wt0hH
+ UpeTBh5QXgHAug4cWdLxbXvU3ol8lxkmZ3AYuwUCeUtgNBnCi0udZyUa0tMbpOsji1Kf8Bl7WrP
+ J6Z6EUDTbITYzahxHsyQm4P2Cu0h92DcPOVexCMKkpMMcp7rTlfEm
+X-Gm-Gg: ASbGncvfoIip9O+3xt5WuAUDqIDGKw9KeC1BzAMDLo5T9qtxdtcI+8v/WGMF1VhVWO4
+ 0AGRbR0+wNsx8NqhB6hFArnnQnkPDXrAOa59PcgvykyDioxDM7uUKcQ+Xw3WuniCzZT70JD+Yqr
+ XaqLhBmKG/0m27A76NjUYTMXvvH4D9mcWGcP+qmxS2juMOgIWCsMNeQfNnMwq2ILLusCtok9+Xe
+ TAsp08UbcrxtLwNJsPevtRhR3hcShch3qY5VSoYrxcBs4b1DukM1XLRE9Q=
+X-Received: by 2002:a05:622a:282:b0:472:6ed:a7c5 with SMTP id
+ d75a77b69052e-47206edab2bmr16624601cf.14.1739895008510; 
+ Tue, 18 Feb 2025 08:10:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFsNv8zpOoq4cJTvIfn5BRBYunzyX93i8HWFaYDOlWJ7Ht5fZs9VvdNly6wEAJQUYzX2edxxQ==
+X-Received: by 2002:a05:622a:282:b0:472:6ed:a7c5 with SMTP id
+ d75a77b69052e-47206edab2bmr16623821cf.14.1739895007785; 
+ Tue, 18 Feb 2025 08:10:07 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4398872fa85sm53409035e9.28.2025.02.18.08.06.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 08:07:00 -0800 (PST)
-Message-ID: <05a1c41e-3436-4117-a22f-61b4e1e2de20@redhat.com>
-Date: Tue, 18 Feb 2025 17:06:58 +0100
+ d75a77b69052e-471f10a035esm23711951cf.75.2025.02.18.08.10.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Feb 2025 08:10:06 -0800 (PST)
+Date: Tue, 18 Feb 2025 11:10:03 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] migration: ram block cpr blockers
+Message-ID: <Z7Sw228UUsmGD3_t@x1.local>
+References: <1737135971-132839-1-git-send-email-steven.sistare@oracle.com>
+ <Z4qelNxnBcgO87go@x1n>
+ <814d9205-8ba5-48a8-9940-6f16bbb097eb@oracle.com>
+ <Z4ruhpH28-GnnTq7@x1n>
+ <20674b54-3c88-4d2c-a590-3b0ddaff86f9@oracle.com>
+ <Z5uwUNtYhQfJJlg3@x1.local>
+ <f1f1c640-367d-4966-93f5-a98e3b764e28@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/15] arm/cpu: Add infra to handle generated ID register
- definitions
-Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-References: <20250207110248.1580465-1-cohuck@redhat.com>
- <20250207110248.1580465-14-cohuck@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250207110248.1580465-14-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f1f1c640-367d-4966-93f5-a98e3b764e28@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -119,186 +109,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Connie,
+On Fri, Feb 14, 2025 at 03:12:22PM -0500, Steven Sistare wrote:
+> On 1/30/2025 12:01 PM, Peter Xu wrote:
+> > On Wed, Jan 29, 2025 at 01:20:13PM -0500, Steven Sistare wrote:
+> > > On 1/17/2025 6:57 PM, Peter Xu wrote:
+> > > > On Fri, Jan 17, 2025 at 02:10:14PM -0500, Steven Sistare wrote:
+> > > > > On 1/17/2025 1:16 PM, Peter Xu wrote:
+> > > > > > On Fri, Jan 17, 2025 at 09:46:11AM -0800, Steve Sistare wrote:
+> > > > > > > +/*
+> > > > > > > + * Return true if ram contents would be lost during CPR.
+> > > > > > > + * Return false for ram_device because it is remapped in new QEMU.  Do not
+> > > > > > > + * exclude rom, even though it is readonly, because the rom file could change
+> > > > > > > + * in new QEMU.  Return false for non-migratable blocks.  They are either
+> > > > > > > + * re-created in new QEMU, or are handled specially, or are covered by a
+> > > > > > > + * device-level CPR blocker.  Return false for an fd, because it is visible and
+> > > > > > > + * can be remapped in new QEMU.
+> > > > > > > + */
+> > > > > > > +static bool ram_is_volatile(RAMBlock *rb)
+> > > > > > > +{
+> > > > > > > +    MemoryRegion *mr = rb->mr;
+> > > > > > > +
+> > > > > > > +    return mr &&
+> > > > > > > +        memory_region_is_ram(mr) &&
+> > > > > > > +        !memory_region_is_ram_device(mr) &&
+> > > > > > > +        (!qemu_ram_is_shared(rb) || !qemu_ram_is_named_file(rb)) &&
+> > > > > > > +        qemu_ram_is_migratable(rb) &&
+> > > > > > > +        rb->fd < 0;
+> > > > > > > +}
+> > > > > > 
+> > > > > > Blocking guest_memfd looks ok, but comparing to add one more block
+> > > > > > notifier, can we check all ramblocks once in migrate_prepare(), and fail
+> > > > > > that command directly if it fails the check?
+> > > > > 
+> > > > > In an upcoming patch, I will be adding an option analogous to only-migratable which
+> > > > > prevents QEMU from starting if anything would block cpr-transfer.  That option
+> > > > > will be checked when blockers are added, like for only-migratable. migrate_prepare
+> > > > > is too late.
+> > > > > 
+> > > > > > OTOH, is there any simpler way to simplify the check conditions?  It'll be
+> > > > > > at least nice to break these checks into smaller if conditions for
+> > > > > > readability..
+> > > > > 
+> > > > > I thought the function header comments made it clear, but I could move each
+> > > > > comment next to each condition:
+> > > > > 
+> > > > >       ...
+> > > > >       /*
+> > > > >        * Return false for an fd, because it is visible and can be remapped in
+> > > > >        * new QEMU.
+> > > > >        */
+> > > > >       if (rb->fd >= 0) {
+> > > > >           return false;
+> > > > >       }
+> > > > >       ...
+> > > > > 
+> > > > > > I wonder if we could stick with looping over all ramblocks, then make sure
+> > > > > > each of them is on the cpr saved fd list.  It may need to make
+> > > > > > cpr_save_fd() always register with the name of ramblock to do such lookup,
+> > > > > > or maybe we could also cache the ramblock pointer in CprFd, then the lookup
+> > > > > > will be a pointer match check.
+> > > > > 
+> > > > > Some ramblocks are not on the list, such as named files.  Plus looping in
+> > > > > migrate_prepare is too late as noted above.
+> > > > > 
+> > > > > IMO what I have already implemented using blockers is clean and elegant.
+> > > > 
+> > > > OK if we need to fail it early at boot, then yes blockers are probably
+> > > > better.
+> > > > 
+> > > > We'll need one more cmdline parameter. I've no objection, but I don't know
+> > > > how to judge when it's ok to add, when it's better not.. I'll leave others
+> > > > to comment on this.
+> > > > 
+> > > > But still, could we check it when ramblocks are created?  So in that way
+> > > > whatever is forbidden is clear in its own path, I feel like that could be
+> > > > clearer (like what you did with gmemfd).
+> > > 
+> > > When the ramblock is created, we don't yet know if it is migratable. A
+> > > ramblock that is not migratable does not block cpr. Migratable is not known
+> > > until vmstate_register_ram calls qemu_ram_set_migratable.  Hence that is
+> > > where I evaluate conditions and install a blocker.
+> > > 
+> > > Because that is the only place where ram_block_add_cpr_blocker is called,
+> > > the test qemu_ram_is_migratable() inside ram_block_add_cpr_blocker is
+> > > redundant, and I should delete it.
+> > 
+> > Hmm.. sounds reasonable.
+> > 
+> > > 
+> > > > For example, if I start to convert some of your requirements above, then
+> > > > memory_region_is_ram_device() implies RAM_PREALLOC.  Actually, ram_device
+> > > > is not the only RAM_PREALLOC user..  Say, would it also not work with all
+> > > > memory_region_init_ram_ptr() users (even if they're not ram_device)?  An
+> > > > example is, looks like virtio-gpu can create random ramblocks on the fly
+> > > > with prealloced buffers.  I am not sure whether they can be pinned by VFIO
+> > > > too.  You may know better.
+> > > 
+> > > That memory is not visible to the guest.  It is not part of system_memory,
+> > > and is not marked migratable.
+> > 
+> > I _think_ that can still be visible at least for the virtio-gpu use case,
+> > which hangs under VirtIOGPUBase.hostmem.  Relevant code for reference:
+> > 
+> > virtio_gpu_virgl_map_resource_blob:
+> >      memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+> >      memory_region_add_subregion(&b->hostmem, offset, mr);
+> >      memory_region_set_enabled(mr, true);
 
+[1]
 
-On 2/7/25 12:02 PM, Cornelia Huck wrote:
-> From: Eric Auger <eric.auger@redhat.com>
->
-> The known ID regs are described in a new initialization function
-> dubbed initialize_cpu_sysreg_properties(). That code will be
-> automatically generated from linux arch/arm64/tools/sysreg. For the
-> time being let's just describe a single id reg, CTR_EL0. In this
-> description we only care about non RES/RAZ fields, ie. named fields.
->
-> The registers are populated in an array indexed by ARMIDRegisterIdx
-> and their fields are added in a sorted list.
+> > 
+> > virtio_gpu_pci_base_realize:
+> >          memory_region_init(&g->hostmem, OBJECT(g), "virtio-gpu-hostmem",
+> >                             g->conf.hostmem);
+> >          pci_register_bar(&vpci_dev->pci_dev, 4,
+> >                           PCI_BASE_ADDRESS_SPACE_MEMORY |
+> >                           PCI_BASE_ADDRESS_MEM_PREFETCH |
+> >                           PCI_BASE_ADDRESS_MEM_TYPE_64,
+> >                           &g->hostmem);
 
-I don't think we need all the infra related to properties in this
-prerequisite series. I would postpone it until the main CPU model series.
+[2]
 
-You can just keep scripts/gen-cpu-sysregs-header.awk to generate the
-sysreg definitions
->
-> [CH: adapted to reworked register storage]
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/cpu-custom.h            | 55 ++++++++++++++++++++++++++++++
->  target/arm/cpu-sysreg-properties.c | 41 ++++++++++++++++++++++
->  target/arm/cpu64.c                 |  2 ++
->  target/arm/meson.build             |  1 +
->  4 files changed, 99 insertions(+)
->  create mode 100644 target/arm/cpu-custom.h
->  create mode 100644 target/arm/cpu-sysreg-properties.c
->
-> diff --git a/target/arm/cpu-custom.h b/target/arm/cpu-custom.h
-by the custom we may get rid of the 'custom' terminology
-> new file mode 100644
-> index 000000000000..17533765dacd
-> --- /dev/null
-> +++ b/target/arm/cpu-custom.h
-> @@ -0,0 +1,55 @@
-> +#ifndef ARM_CPU_CUSTOM_H
-> +#define ARM_CPU_CUSTOM_H
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "cpu.h"
-> +#include "cpu-sysregs.h"
-> +
-> +typedef struct ARM64SysRegField {
-> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
-> +    int index;
-> +    int lower;
-> +    int upper;
-> +} ARM64SysRegField;
-> +
-> +typedef struct ARM64SysReg {
-> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
-> +    ARMSysRegs sysreg;
-> +    int index;
-> +    GList *fields; /* list of named fields, excluding RES* */
-> +} ARM64SysReg;
-> +
-> +void initialize_cpu_sysreg_properties(void);
-> +
-> +/*
-> + * List of exposed ID regs (automatically populated from linux
-> + * arch/arm64/tools/sysreg)
-> + */
-> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
-> +
-> +/* Allocate a new field and insert it at the head of the @reg list */
-> +static inline GList *arm64_sysreg_add_field(ARM64SysReg *reg, const char *name,
-> +                                     uint8_t min, uint8_t max) {
-> +
-> +     ARM64SysRegField *field = g_new0(ARM64SysRegField, 1);
-> +
-> +     field->name = name;
-> +     field->lower = min;
-> +     field->upper = max;
-> +     field->index = reg->index;
-> +
-> +     reg->fields = g_list_append(reg->fields, field);
-> +     return reg->fields;
-> +}
-> +
-> +static inline ARM64SysReg *arm64_sysreg_get(ARMIDRegisterIdx index)
-> +{
-> +        ARM64SysReg *reg = &arm64_id_regs[index];
-> +
-> +        reg->index = index;
-> +        reg->sysreg = id_register_sysreg[index];
-> +        return reg;
-> +}
-> +
-> +#endif
-> diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-properties.c
-> new file mode 100644
-> index 000000000000..8b7ef5badfb9
-> --- /dev/null
-> +++ b/target/arm/cpu-sysreg-properties.c
-> @@ -0,0 +1,41 @@
-> +/*
-> + * QEMU ARM CPU SYSREG PROPERTIES
-> + * to be generated from linux sysreg
-> + *
-> + * Copyright (c) Red Hat, Inc. 2024
-> + *
-> + * This program is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU General Public License
-> + * as published by the Free Software Foundation; either version 2
-> + * of the License, or (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU General Public License
-> + * along with this program; if not, see
-> + * <http://www.gnu.org/licenses/gpl-2.0.html>
-> + */
-> +
-> +#include "cpu-custom.h"
-> +
-> +ARM64SysReg arm64_id_regs[NUM_ID_IDX];
-> +
-> +void initialize_cpu_sysreg_properties(void)
-> +{
-> +    memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NUM_ID_IDX);
-> +    /* CTR_EL0 */
-> +    ARM64SysReg *CTR_EL0 = arm64_sysreg_get(CTR_EL0_IDX);
-> +    CTR_EL0->name = "CTR_EL0";
-> +    arm64_sysreg_add_field(CTR_EL0, "TminLine", 32, 37);
-> +    arm64_sysreg_add_field(CTR_EL0, "DIC", 29, 29);
-> +    arm64_sysreg_add_field(CTR_EL0, "IDC", 28, 28);
-> +    arm64_sysreg_add_field(CTR_EL0, "CWG", 24, 27);
-> +    arm64_sysreg_add_field(CTR_EL0, "ERG", 20, 23);
-> +    arm64_sysreg_add_field(CTR_EL0, "DminLine", 16, 19);
-> +    arm64_sysreg_add_field(CTR_EL0, "L1Ip", 14, 15);
-> +    arm64_sysreg_add_field(CTR_EL0, "IminLine", 0, 3);
-> +}
-> +
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index beba1733c99f..8371aabce5f4 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -35,6 +35,7 @@
->  #include "internals.h"
->  #include "cpu-features.h"
->  #include "cpregs.h"
-> +#include "cpu-custom.h"
->  
->  void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
->  {
-> @@ -894,6 +895,7 @@ static void aarch64_cpu_register_types(void)
->  {
->      size_t i;
->  
-> +    initialize_cpu_sysreg_properties();
->      type_register_static(&aarch64_cpu_type_info);
->  
->      for (i = 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index 2e10464dbb6b..9c7a04ee1b26 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -14,6 +14,7 @@ arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
->  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->    'cpu64.c',
->    'gdbstub64.c',
-> +  'cpu-sysreg-properties.c',
->  ))
->  
->  arm_system_ss = ss.source_set()
-Thanks
+> > 
+> > pci_update_mappings:
+> >              memory_region_add_subregion_overlap(r->address_space,
+> >                                                  r->addr, r->memory, 1);
 
-Eric
+[3]
+
+> > 
+> > but indeed I'm not sure how it work with migration so far, because it
+> > doesn't have RAM_MIGRATABLE set. So at least cpr didn't make it more
+> > special.  I assume this isn't something we must figure out as of now
+> > then.. but if you do, please kindly share.
+> 
+> AFAICT this memory cannot be pinned, because it is not attached to the
+> "system_memory" mr and the "address_space_memory" address space.  The
+> listener than maps/pins is attached to address_space_memory.
+
+I still think it's part of system_memory - every PCI bar that got mapped as
+MMIO regions could be part of guest system memory, and IIUC could be
+pinned.
+
+Normally these MMIOs are IO regions so "pinning" may not make much
+difference IIUC, but here looks like it's real RAM backing it when
+emulated, even though they're "MMIO regions"..
+
+Above code clips are paths that I think how they got attached to
+system_memory.  It isn't more special than a generic PCI device's bars got
+mapped to system_memory, though:
+
+  - Firstly, at [1], the blob is part of VirtIOGPUBase.hostmem as subregion
+
+  - Then, at [2], the VirtIOGPUBase.hostmem is registered as a pci bar, in
+    this case, it's BAR4.
+
+  - Then, it's the same as other pci device BARs where they can logically
+    be mapped into guest physical address space and be part of system_memory.
+    Above [3] was when the bar memory got added into PCIIORegion.address_space.
+
+Then if to fill up the last missing piece: taking i440fx as example,
+ultimately the pci bus memory address space will be attached to
+system_memory here:
+
+i440fx_pcihost_realize:
+    /* setup pci memory mapping */
+    pc_pci_as_mapping_init(s->system_memory, s->pci_address_space);
+
+Again, not requesting to resolve this immediately: I have no idea how
+migration works at all with random new ramblocks being added.. but I'd
+still like to check we're on the same page on this specific case, though.
+
+-- 
+Peter Xu
 
 
