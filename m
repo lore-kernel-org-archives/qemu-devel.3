@@ -4,112 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C5BC021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 21:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428A6C021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 21:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkUl5-0006Ax-HB; Tue, 18 Feb 2025 16:03:59 -0500
+	id 1tkV2J-00034J-5B; Tue, 18 Feb 2025 16:21:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tkUl2-00064j-C9
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:03:56 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tkUl0-0000U5-2t
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:03:55 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id BD99D21125;
- Tue, 18 Feb 2025 21:03:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739912631; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VrFqb/ogX6fknbO8+VTLPZlMfewlx34p1CU7qyyIDBU=;
- b=ME4vu8PaYhrPcQ2DCcIyTDrg/ARFKiDnbVsMgjkOLPm+HDBicZvXjU4L9ljD4NpMqzy/Zq
- +xYminWFE+jKJmHENAUPto9ZUIdrwV+0ychedbHGVa/72H5tlBcJGUHk9IiK1E6IwTzBCS
- SZQZpxm3lNl4niXoacmpQ+28Fa2MGuI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739912631;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VrFqb/ogX6fknbO8+VTLPZlMfewlx34p1CU7qyyIDBU=;
- b=f7+7g30JnewKEjKz198KeoFCeNhw/HwwcbOX51eGJij/s1lpH3XpKdj9ydtp2a0GVkRdvJ
- C/ErYjVN7tREmBAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ME4vu8Pa;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=f7+7g30J
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1739912631; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VrFqb/ogX6fknbO8+VTLPZlMfewlx34p1CU7qyyIDBU=;
- b=ME4vu8PaYhrPcQ2DCcIyTDrg/ARFKiDnbVsMgjkOLPm+HDBicZvXjU4L9ljD4NpMqzy/Zq
- +xYminWFE+jKJmHENAUPto9ZUIdrwV+0ychedbHGVa/72H5tlBcJGUHk9IiK1E6IwTzBCS
- SZQZpxm3lNl4niXoacmpQ+28Fa2MGuI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1739912631;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VrFqb/ogX6fknbO8+VTLPZlMfewlx34p1CU7qyyIDBU=;
- b=f7+7g30JnewKEjKz198KeoFCeNhw/HwwcbOX51eGJij/s1lpH3XpKdj9ydtp2a0GVkRdvJ
- C/ErYjVN7tREmBAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 257A9132C7;
- Tue, 18 Feb 2025 21:03:50 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OLpmNLb1tGcFXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 18 Feb 2025 21:03:50 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Li Zhijian via <qemu-devel@nongnu.org>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 2/2] [NOT-FOR-MERGE] Add qtest for migration over RDMA
-In-Reply-To: <20250218074345.638203-2-lizhijian@fujitsu.com>
-References: <20250218074345.638203-1-lizhijian@fujitsu.com>
- <20250218074345.638203-2-lizhijian@fujitsu.com>
-Date: Tue, 18 Feb 2025 18:03:48 -0300
-Message-ID: <87zfij7yob.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2E-00032z-Tz
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:42 -0500
+Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2B-00033L-LQ
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
+ t=1739913697; bh=rseh06rZwnj1XEKSik48UBym2dlowjYs00+a91IMU/Q=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=pPyVDpbilkb/Lg87lqPdvESOf7R6IernWyIfrys9+F8ybiZPtQn/KOiGR9eCzitaV
+ XP4G7+4VmuLwFa24EfadqwFnkzMjtdDTqJoXjOIJDVYb/EPaV2SKVLMOR8XvaMUDI9
+ BUCdedCH/bWoOl+L3g2x9itiOqy+slNTW2vcTYS+Eveo41UtfohIIUsvl2lOqwNmQW
+ wwydC3Yj8LjloV2QV3F+NlW3ptefB3E7A8ySAQhr4eftdhb7CEVbEPmsRf/Ew2jjxG
+ C0qUJP4bK9GertIf12m0ose74JKejvkTsFmX6ZEA6YbD5yyTETHmdvV1GiiBEenvWb
+ pUeR02TpqH+hQ==
+Received: from localhost (localhost [127.0.0.1])
+ by elaine.keithp.com (Postfix) with ESMTP id ECF073F20DB1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 13:21:37 -0800 (PST)
+X-Virus-Scanned: Debian amavis at keithp.com
+Received: from elaine.keithp.com ([127.0.0.1])
+ by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
+ id 0UXT2VrVZUh2; Tue, 18 Feb 2025 13:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
+ t=1739913694; bh=rseh06rZwnj1XEKSik48UBym2dlowjYs00+a91IMU/Q=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=wMFItj/5ACqrAqmuVNiG8L9uwxpcVyUlUSrfdAMBRau7AteCr7S4+vHZmLmPmpDUX
+ HdZPKt2cBxGj6AiKbPgNM/e/DVqpcLBUusrVeHXFFKxkdy3ZGwZadCpQhZsghxIRI4
+ E31jChVom6NpQm1nu5cKEoTzUNfGuRd2qFC8NuMhs/qtaKFhSD21dELC14eJU8UvEQ
+ 0Kg021iSmExX9XEScKcMzWEaE8a1VsRAlZ5iELoyZXWrdtrf4tsrz51ngd2xCDLcWy
+ iIvtlK+ELgCr6MfE/+PDOTfk/9ydSjYYJ3kXPjV3gDj0zd8OsiFsC+pFWy1tx/j1BM
+ e2mF3fXGXpqZA==
+Received: from keithp.com (koto.keithp.com [192.168.11.2])
+ by elaine.keithp.com (Postfix) with ESMTPSA id DD39E3F20C61;
+ Tue, 18 Feb 2025 13:21:34 -0800 (PST)
+Received: by keithp.com (Postfix, from userid 1000)
+ id BAAFB1E6009D; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
+To: qemu-devel@nongnu.org
+Cc: Keith Packard <keithp@keithp.com>
+Subject: [PATCH 2/4] target/rx: Remove TCG_CALL_NO_WG from helpers which write
+ env
+Date: Tue, 18 Feb 2025 13:21:01 -0800
+Message-ID: <20250218212103.2024039-3-keithp@keithp.com>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250218212103.2024039-1-keithp@keithp.com>
+References: <20250215021654.1786679-1-keithp@keithp.com>
+ <20250218212103.2024039-1-keithp@keithp.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: BD99D21125
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,fujitsu.com:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: permerror client-ip=195.135.223.130;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=63.227.221.253; envelope-from=keithp@keithp.com;
+ helo=elaine.keithp.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,226 +81,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Keith Packard <keithp@keithp.com>
+From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Li Zhijian via <qemu-devel@nongnu.org> writes:
+Functions which modify virtual machine state (such as virtual
+registers stored in memory) must not be marked TCG_CALL_NO_WG as that
+tells the optimizer that virtual registers values already loaded in
+machine registers are still valid, hence discards any changes which
+these helpers may have made. This seems to also mean that functions which
+set condition codes may also not use this flag
 
-> This qtest requirs there is RXE link in the host.
->
-> Here is an example to show how to add this RXE link:
-> $ ./new-rdma-link.sh
-> 192.168.22.93
->
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> ---
-> The RDMA migration was broken again...due to lack of sufficient test/qtest.
->
-> It's urgly to add and execute a script to establish an RDMA link in
-> the C program. If anyone has a better suggestion, please let me know.
->
-> $ cat ./new-rdma-link.sh
-> get_ipv4_addr() {
->         ip -4 -o addr show dev "$1" |
->                 sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p'
-> }
->
-> has_soft_rdma() {
->         rdma link | grep -q " netdev $1[[:blank:]]*\$"
-> }
->
-> start_soft_rdma() {
->         local type
->
->         modprobe rdma_rxe || return $?
->         type=rxe
->         (
->                 cd /sys/class/net &&
->                         for i in *; do
->                                 [ -e "$i" ] || continue
->                                 [ "$i" = "lo" ] && continue
->                                 [ "$(<"$i/addr_len")" = 6 ] || continue
->                                 [ "$(<"$i/carrier")" = 1 ] || continue
->                                 has_soft_rdma "$i" && break
->                                 rdma link add "${i}_$type" type $type netdev "$i" && break
->                         done
->                 has_soft_rdma "$i" && echo $i
->         )
->
-> }
->
-> rxe_link=$(start_soft_rdma)
-> [[ "$rxe_link" ]] && get_ipv4_addr $rxe_link
->
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> ---
->  tests/qtest/migration/new-rdma-link.sh |  34 ++++++++
->  tests/qtest/migration/precopy-tests.c  | 103 +++++++++++++++++++++++++
->  2 files changed, 137 insertions(+)
->  create mode 100644 tests/qtest/migration/new-rdma-link.sh
->
-> diff --git a/tests/qtest/migration/new-rdma-link.sh b/tests/qtest/migration/new-rdma-link.sh
-> new file mode 100644
-> index 00000000000..ca20594eaae
-> --- /dev/null
-> +++ b/tests/qtest/migration/new-rdma-link.sh
-> @@ -0,0 +1,34 @@
-> +#!/bin/bash
-> +
-> +# Copied from blktests
-> +get_ipv4_addr() {
-> +	ip -4 -o addr show dev "$1" |
-> +		sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p'
-> +}
-> +
-> +has_soft_rdma() {
-> +	rdma link | grep -q " netdev $1[[:blank:]]*\$"
-> +}
-> +
-> +start_soft_rdma() {
-> +	local type
-> +
-> +	modprobe rdma_rxe || return $?
-> +	type=rxe
-> +	(
-> +		cd /sys/class/net &&
-> +			for i in *; do
-> +				[ -e "$i" ] || continue
-> +				[ "$i" = "lo" ] && continue
-> +				[ "$(<"$i/addr_len")" = 6 ] || continue
-> +				[ "$(<"$i/carrier")" = 1 ] || continue
-> +				has_soft_rdma "$i" && break
-> +				rdma link add "${i}_$type" type $type netdev "$i" && break
-> +			done
-> +		has_soft_rdma "$i" && echo $i
-> +	)
-> +
-> +}
-> +
-> +rxe_link=$(start_soft_rdma)
-> +[[ "$rxe_link" ]] && get_ipv4_addr $rxe_link
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index 162fa695318..d2a1c9c9438 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -98,6 +98,105 @@ static void test_precopy_unix_dirty_ring(void)
->      test_precopy_common(&args);
->  }
->  
-> +static int new_rdma_link(char *buffer) {
-> +    // Copied from blktests
-> +    const char *script =
-> +        "#!/bin/bash\n"
-> +        "\n"
-> +        "get_ipv4_addr() {\n"
-> +        "    ip -4 -o addr show dev \"$1\" |\n"
-> +        "    sed -n 's/.*[[:blank:]]inet[[:blank:]]*\\([^[:blank:]/]*\\).*/\\1/p'\n"
-> +        "}\n"
-> +        "\n"
-> +        "has_soft_rdma() {\n"
-> +        "    rdma link | grep -q \" netdev $1[[:blank:]]*\\$\"\n"
-> +        "}\n"
-> +        "\n"
-> +        "start_soft_rdma() {\n"
-> +        "    local type\n"
-> +        "\n"
-> +        "    modprobe rdma_rxe || return $?\n"
-> +        "    type=rxe\n"
-> +        "    (\n"
-> +        "        cd /sys/class/net &&\n"
-> +        "        for i in *; do\n"
-> +        "            [ -e \"$i\" ] || continue\n"
-> +        "            [ \"$i\" = \"lo\" ] && continue\n"
-> +        "            [ \"$(<$i/addr_len)\" = 6 ] || continue\n"
-> +        "            [ \"$(<$i/carrier)\" = 1 ] || continue\n"
-> +        "            has_soft_rdma \"$i\" && break\n"
-> +        "            rdma link add \"${i}_$type\" type $type netdev \"$i\" && break\n"
-> +        "        done\n"
-> +        "        has_soft_rdma \"$i\" && echo $i\n"
-> +        "    )\n"
-> +        "}\n"
-> +        "\n"
-> +        "rxe_link=$(start_soft_rdma)\n"
-> +        "[[ \"$rxe_link\" ]] && get_ipv4_addr $rxe_link\n";
-> +
-> +    char script_filename[] = "/tmp/temp_scriptXXXXXX";
-> +    int fd = mkstemp(script_filename);
-> +    if (fd == -1) {
-> +        perror("Failed to create temporary file");
-> +        return 1;
-> +    }
-> +
-> +    FILE *fp = fdopen(fd, "w");
-> +    if (fp == NULL) {
-> +        perror("Failed to open file stream");
-> +        close(fd);
-> +        return 1;
-> +    }
-> +    fprintf(fp, "%s", script);
-> +    fclose(fp);
-> +
-> +    if (chmod(script_filename, 0700) == -1) {
-> +        perror("Failed to set execute permission");
-> +        return 1;
-> +    }
-> +
-> +    FILE *pipe = popen(script_filename, "r");
-> +    if (pipe == NULL) {
-> +        perror("Failed to run script");
-> +        return 1;
-> +    }
-> +
-> +    int idx = 0;
-> +    while (fgets(buffer + idx, 128 - idx, pipe) != NULL) {
-> +        idx += strlen(buffer);
-> +    }
-> +    if (buffer[idx - 1] == '\n')
-> +        buffer[idx - 1] = 0;
-> +
-> +    int status = pclose(pipe);
-> +    if (status == -1) {
-> +        perror("Error reported by pclose()");
-> +    } else if (!WIFEXITED(status)) {
-> +        printf("Script did not terminate normally\n");
-> +    }
-> +
-> +    remove(script_filename);
-> +
-> +    return 0;
-> +}
-> +
-> +static void test_precopy_rdma_plain(void)
-> +{
-> +    char buffer[128] = {};
-> +
-> +    if (new_rdma_link(buffer))
-> +        return;
-> +
-> +    g_autofree char *uri = g_strdup_printf("rdma:%s:7777", buffer);
-> +
-> +    MigrateCommon args = {
-> +        .listen_uri = uri,
-> +        .connect_uri = uri,
-> +    };
-> +
-> +    test_precopy_common(&args);
-> +}
-> +
->  static void test_precopy_tcp_plain(void)
->  {
->      MigrateCommon args = {
-> @@ -968,6 +1067,10 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
->                         test_multifd_tcp_uri_none);
->      migration_test_add("/migration/multifd/tcp/plain/cancel",
->                         test_multifd_tcp_cancel);
-> +#ifdef CONFIG_RDMA
-> +    migration_test_add("/migration/precopy/rdma/plain",
-> +                       test_precopy_rdma_plain);
-> +#endif
->  }
->  
->  void migration_test_add_precopy(MigrationTestEnv *env)
+Signed-off-by: Keith Packard <keithp@keithp.com>
+---
+ target/rx/helper.h | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-Thanks, that's definitely better than nothing. I'll experiment with this
-locally, see if I can at least run it before sending a pull request.
+diff --git a/target/rx/helper.h b/target/rx/helper.h
+index ebb4739474..8cc38b0cb7 100644
+--- a/target/rx/helper.h
++++ b/target/rx/helper.h
+@@ -4,27 +4,27 @@ DEF_HELPER_1(raise_privilege_violation, noreturn, env)
+ DEF_HELPER_1(wait, noreturn, env)
+ DEF_HELPER_2(rxint, noreturn, env, i32)
+ DEF_HELPER_1(rxbrk, noreturn, env)
+-DEF_HELPER_FLAGS_3(fadd, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fsub, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fmul, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fdiv, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmp, TCG_CALL_NO_WG, void, env, f32, f32)
+-DEF_HELPER_FLAGS_2(ftoi, TCG_CALL_NO_WG, i32, env, f32)
+-DEF_HELPER_FLAGS_2(round, TCG_CALL_NO_WG, i32, env, f32)
+-DEF_HELPER_FLAGS_2(itof, TCG_CALL_NO_WG, f32, env, i32)
++DEF_HELPER_3(fadd, f32, env, f32, f32)
++DEF_HELPER_3(fsub, f32, env, f32, f32)
++DEF_HELPER_3(fmul, f32, env, f32, f32)
++DEF_HELPER_3(fdiv, f32, env, f32, f32)
++DEF_HELPER_3(fcmp, void, env, f32, f32)
++DEF_HELPER_2(ftoi, i32, env, f32)
++DEF_HELPER_2(round, i32, env, f32)
++DEF_HELPER_2(itof, f32, env, i32)
+ DEF_HELPER_2(set_fpsw, void, env, i32)
+-DEF_HELPER_FLAGS_2(racw, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(set_psw_rte, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(set_psw, TCG_CALL_NO_WG, void, env, i32)
++DEF_HELPER_2(racw, void, env, i32)
++DEF_HELPER_2(set_psw_rte, void, env, i32)
++DEF_HELPER_2(set_psw, void, env, i32)
+ DEF_HELPER_1(pack_psw, i32, env)
+-DEF_HELPER_FLAGS_3(div, TCG_CALL_NO_WG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
+-DEF_HELPER_FLAGS_1(scmpu, TCG_CALL_NO_WG, void, env)
++DEF_HELPER_3(div, i32, env, i32, i32)
++DEF_HELPER_3(divu, i32, env, i32, i32)
++DEF_HELPER_1(scmpu, void, env)
+ DEF_HELPER_1(smovu, void, env)
+ DEF_HELPER_1(smovf, void, env)
+ DEF_HELPER_1(smovb, void, env)
+ DEF_HELPER_2(sstr, void, env, i32)
+-DEF_HELPER_FLAGS_2(swhile, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(suntil, TCG_CALL_NO_WG, void, env, i32)
+-DEF_HELPER_FLAGS_2(rmpa, TCG_CALL_NO_WG, void, env, i32)
++DEF_HELPER_2(swhile, void, env, i32)
++DEF_HELPER_2(suntil, void, env, i32)
++DEF_HELPER_2(rmpa, void, env, i32)
+ DEF_HELPER_1(satr, void, env)
+-- 
+2.47.2
+
 
