@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE39C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2416C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkH51-0002e7-MQ; Tue, 18 Feb 2025 01:27:39 -0500
+	id 1tkH8E-0003nC-1D; Tue, 18 Feb 2025 01:30:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tkH50-0002Xn-8Q
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:27:38 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
+ id 1tkH88-0003me-IB; Tue, 18 Feb 2025 01:30:52 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tkH4v-0004VS-H1
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:27:37 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1739860038; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Q2cMG1nfxmPVaCBdZQCMfdSgj9qRqz81jjU0eaPAp9evLeF0rcAI3vPePvVXTj0WmnexZrfhbXh1JLoMyWHG/QyKg02gtOtucPqJoxDN+zpB355v9ikl0TJi+DCxjRl+SSwvAsYrounaYqy+tezGsj2mRVzlO9PXopbrrxu+Hyo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1739860038;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=vVMsX+wubt1Dg9va3EwUPrJqL6sabED33dTj9Ow0JA8=; 
- b=VztEO9K6VEdXpeRC2STOhl8cr6SzL11PvUsZ3ZUoYCIqKvnnFqoEcKPhn7FMpIKdOstKrCbZDraokOnBORWSHxS9wxFNQg1/t3mfWu+rXJB74J1e2jHNPOFTDCSZFDa50uqbbys8IYxqHg335CsrSlWrmiE+yYgh+x8CCXKEvd4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739860038; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=vVMsX+wubt1Dg9va3EwUPrJqL6sabED33dTj9Ow0JA8=;
- b=O0upR/1D4fIovrAusVgCYY8O7BF+gIL46inwPSjUdliWfX5iruvxP7HRMXXTjXU6
- 6UAphJIC1YGqK3JOG9l8KnfiGJ0cRewuy39yXbu3Pya4zT2L6ryc9QV+MEsITN6DAYz
- 2JJ/666azBr3Cn4OOBLLIebWYZxtZ5Q04BkmqH7g=
-Received: by mx.zohomail.com with SMTPS id 1739860036120617.7497462384239;
- Mon, 17 Feb 2025 22:27:16 -0800 (PST)
-Message-ID: <6714cca4-7367-4d99-84b6-c83df80140e6@collabora.com>
-Date: Tue, 18 Feb 2025 09:27:08 +0300
+ (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
+ id 1tkH86-0004yR-5h; Tue, 18 Feb 2025 01:30:52 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxqQs2gCVz4x0t;
+ Tue, 18 Feb 2025 17:30:45 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxqQp4BvVz4wcm;
+ Tue, 18 Feb 2025 17:30:42 +1100 (AEDT)
+Message-ID: <bb348626-7a99-4b2d-8476-38976f647ed7@kaod.org>
+Date: Tue, 18 Feb 2025 07:30:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] docs/system: Expand the virtio-gpu documentation
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
- <20250119220050.15167-9-dmitry.osipenko@collabora.com>
- <c2e1c362-5d02-488e-b849-d0b14781a60f@daynix.com>
- <87ikq9r7wj.fsf@draig.linaro.org>
- <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
- <ea866d19-90f6-4bb9-a3f6-f84b2ea2c457@collabora.com>
- <86dce86b-03bf-4abe-b825-1341e93eb88d@daynix.com>
- <920043a8-9294-4b40-8d8e-3611727e4cd2@collabora.com>
- <0f88994f-1a93-4049-addc-a62e8ca49904@daynix.com>
- <d85f6669-8c46-4678-85d6-59240935d197@collabora.com>
- <fdd8b7ca-e4ad-405d-a58e-fbcb82183ec8@daynix.com>
- <59f70c1d-4c66-4440-a102-5f478749c8f3@collabora.com>
- <a8fc06f0-0197-4394-bac4-733f3fcef103@daynix.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <a8fc06f0-0197-4394-bac4-733f3fcef103@daynix.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v3 23/28] test/functional/aspeed: Introduce new function
+ to fetch assets
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-24-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250213033531.3367697-24-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,130 +113,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/25 07:32, Akihiko Odaki wrote:
-> On 2025/02/10 6:03, Dmitry Osipenko wrote:
->> On 2/6/25 08:41, Akihiko Odaki wrote:
->>> On 2025/02/06 2:40, Dmitry Osipenko wrote:
->>>> On 2/3/25 08:31, Akihiko Odaki wrote:
->>>> ...
->>>>>> Requirements don't vary much. For example virglrenderer minigbm
->>>>>> support
->>>>>> is mandatory for crosvm, while for QEMU it's not.
->>>>>
->>>>> Is that true? It seems that virglrenderer uses builds without minigbm
->>>>> support to run tests on GitLab CI.
->>>>
->>>> CI is running in a headless mode using software renderer. For a
->>>> full-featured crosvm support running on a baremetal, minigbm should be
->>>> needed, along with other downstream features.
->>>
->>> That makes sense.
->>>
->>> Based on your input, for QEMU, I don't think we need a separate
->>> documentation to describe libvirglrenderer's build flags though crosvm
->>> should have some documentation saying it requires minigbm.
->>>
->>>>
->>>>> Anyway, if there is any variance in the build procedure, that may
->>>>> justify having a separate build instruction in QEMU tree to avoid
->>>>> confusion. Otherwise, it's better to have a documentation shared with
->>>>> other VMMs.
->>>>>
->>>>>>
->>>>>>> I'm not entirely sure the documentation will stay as is for that
->>>>>>> long.
->>>>>>> The requirements of Intel native context refer to merge requests
->>>>>>> that
->>>>>>> can be merged sooner or later. Asahi may need more updates if you
->>>>>>> document it too because its DRM ABI is still unstable.
->>>>>>
->>>>>> The unstable parts of course will need to be updated sooner, but the
->>>>>> stable should be solid for years. I expect that about a year later
->>>>>> requirements will need to be revisited.
->>>>>>
->>>>>
->>>>> It will be some burden in the future. Now you are adding this
->>>>> documentation just for QEMU, but crosvm and libkrun may gain similar
->>>>> documentation. The DRM native context support for Intel and Asahi
->>>>> is in
->>>>> development, and I guess nvk will support it someday.
->>>>>
->>>>> So, a very rough estimation of future documentation updates will be:
->>>>> (number of VMMs) * (number of DRM native contexts in development)
->>>>> = 3 * 3
->>>>> = 9
->>>>>
->>>>> That's manageable but suboptimal.
->>>>
->>>> I don't mind deferring the doc addition if that's preferred. Either way
->>>> is fine with me. Yet it's better to have doc than not.
->>>
->>> My suggestion is not to defer the addition, but to add it to Mesa, which
->>> does not require deferring.
->>>
->>>>
->>>> In my view crosvm and libkrun exist separately from QEMU, they serve a
->>>> different purpose. Majority of QEMU users likely never heard about
->>>> those
->>>> other VMMs. A unified doc won't be a worthwhile effort, IMO.
->>>>
->>>
->>> When evaluating the utility of a unified documentation, Whether the
->>> majority of Mesa/Virgl users care VMMs other than QEMU matters more. And
->>> I think it is true; libkrun and crosvm are excellent options for
->>> graphics-accelerated VMs.
->>>
->>> If we have a unified documentation, any VM can point to it for the build
->>> instruction of Mesa and virglrenderer. Once that's done, QEMU users who
->>> want graphics acceleration can take the following steps:
->>> 1. See docs/system/devices/virtio-gpu.rst
->>> 2. Figure out that they need Mesa and virglrenderer
->>> 3. Click the link to the unified documentation
->>> 4. Build Mesa and virglrenderer accordingly
->>>
->>> No other VMMs will bother them in this procedure.
->>
->> Will see. For the starter, adding example build flags to QEMU doesn't
->> hurt, it's a very minimal information. Later on, if and when all
->> relevant Mesa/virglrenderer doc pages will appear, it won't be a problem
->> replace QEMU flags with the links. Please let's do it step-by-step, one
->> step at a time :)
->>
+On 2/13/25 04:35, Jamin Lin wrote:
+> This method simplifies the process of fetching and extracting assets from the
+> Aspeed GitHub repository.
 > 
-> To be honest, I'm concerned that you may be using QEMU as a staging tree
-> for Mesa/virglrenderer. Submitting a documentation to QEMU as a
-> preparation to submit one to Mesa is not OK.
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/functional/test_aarch64_aspeed.py | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> You shouldn't submit a documentation to QEMU if upstream
-> Mesa developers rejects it because it contains too little information.
-> It may not hurt QEMU, but still lacks a valid reasoning.
+> diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+> index 9595498ace..f3d7c8331a 100755
+> --- a/tests/functional/test_aarch64_aspeed.py
+> +++ b/tests/functional/test_aarch64_aspeed.py
+> @@ -27,14 +27,15 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+>           wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+>           wait_for_console_pattern(self, 'Starting kernel ...')
+>   
+> -    ASSET_SDK_V903_AST2700 = Asset(
+> -            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.03/ast2700-default-obmc.tar.gz',
+> -            '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
 
-Don't understand what you're talking about here. I may remind that this
-is not my QEMU doc patch to begin with, hence it has nothing to do with
-Mesa nor with virglrenderer. Alex wants to help QEMU users by adding
-more QEMU documentation.
 
-Maybe you're also not very familiar with the Mesa development process.
-This is okay, no problems.
+We need to keep the ASSET_SDK_V903_AST2700 definition for pre-caching the
+assets. See :
 
-> Mesa should have more people who care virtio-gpu as there are people
-> using other VMMs and perhaps it may be difficult to convince them to add
-> a documentation like this. It is still not a good idea to workaround
-> that by adding one to QEMU. The documentation submitted to QEMU is
-> mostly reviewed only by me, who barely used Venus and DRM native
-> contexts, which is not a good sign. Getting reviewed by more people is
-> one of the advantage of open-source contribution after all so let's keep
-> it.
-> 
-> I can help you add a documentation to Mesa by reviewing and supporting
-> one if you want, but I cannot support adding one to QEMU if it's done to
-> avoid a potential challenge to add it to Mesa.
+https://qemu.readthedocs.io/en/v9.2.0/devel/testing/functional.html#asset-handling
 
-Thanks a lot! More reviewers always good to have, will definitely ping
-you. Right now writing more Mesa documentation isn't a priority, hence
-will take time to get to it.
 
--- 
-Best regards,
-Dmitry
+Thanks,
+
+C.
+
+
+> +    def extra_aspeed_archive(self, version, file, checksum):
+> +        url = 'https://github.com/AspeedTech-BMC/openbmc/releases/download'
+> +        self.archive_extract(Asset(f'{url}/{version}/{file}', f'{checksum}'))
+>   
+>       def test_aarch64_ast2700_evb_sdk_v09_03(self):
+>           self.set_machine('ast2700-evb')
+>   
+> -        self.archive_extract(self.ASSET_SDK_V903_AST2700)
+> +        self.extra_aspeed_archive('v09.03', 'ast2700-default-obmc.tar.gz',
+> +            '91225f50d255e2905ba8d8e0c80b71b9d157c3609770c7a740cd786370d85a77')
+>   
+>           num_cpu = 4
+>           uboot_size = os.path.getsize(self.scratch_file('ast2700-default',
+
 
