@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17418C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 05:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10BDAC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 05:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkGTJ-0003Fw-Uq; Tue, 18 Feb 2025 00:48:41 -0500
+	id 1tkGU5-0004AP-0e; Tue, 18 Feb 2025 00:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkGTH-0003AU-F1; Tue, 18 Feb 2025 00:48:39 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1tkGU0-00049x-Pp; Tue, 18 Feb 2025 00:49:25 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkGTF-00016A-Dj; Tue, 18 Feb 2025 00:48:39 -0500
+ id 1tkGTy-00018k-Hc; Tue, 18 Feb 2025 00:49:24 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxpVC0hf7z4wyk;
- Tue, 18 Feb 2025 16:48:35 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxpW40d4Fz4wyw;
+ Tue, 18 Feb 2025 16:49:20 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxpV82KP0z4wbR;
- Tue, 18 Feb 2025 16:48:32 +1100 (AEDT)
-Message-ID: <6829160b-5950-47e8-98f7-fb82543d069d@kaod.org>
-Date: Tue, 18 Feb 2025 06:48:30 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxpW12NkBz4wbR;
+ Tue, 18 Feb 2025 16:49:17 +1100 (AEDT)
+Message-ID: <b3fe4c33-3a88-43f9-acc9-e764a34269db@kaod.org>
+Date: Tue, 18 Feb 2025 06:49:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/28] hw/intc/aspeed: Support different memory region
- ops
+Subject: Re: [PATCH v3 07/28] hw/intc/aspeed: Rename num_ints to num_inpins
+ for clarity
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
- <20250213033531.3367697-7-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-8-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +86,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250213033531.3367697-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250213033531.3367697-8-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,17 +114,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/13/25 04:35, Jamin Lin wrote:
-> The previous implementation set the "aspeed_intc_ops" struct, containing read
-> and write callbacks, to be used when I/O is performed on the INTC region.
-> Both "aspeed_intc_read" and "aspeed_intc_write" callback functions were used
-> for INTC (CPU Die).
-> 
-> To support the INTCIO (IO Die) model, introduces a new "reg_ops" class
-> attribute. This allows setting different memory region operations to support
-> different INTC models.
-> 
-> Will introduce "aspeed_intcio_read" and "aspeed_intcio_write" callback
-> functions are used for INTCIO.
+> To support AST2700 A1, some registers of the INTC(CPU Die) support one input
+> pin to multiple output pins. Renamed "num_ints" to "num_inpins" in the INTC
+> controller code for better clarity and consistency in naming conventions.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -136,49 +129,152 @@ C.
 
 
 > ---
->   hw/intc/aspeed_intc.c         | 5 ++++-
->   include/hw/intc/aspeed_intc.h | 1 +
->   2 files changed, 5 insertions(+), 1 deletion(-)
+>   hw/arm/aspeed_ast27x0.c       |  2 +-
+>   hw/intc/aspeed_intc.c         | 31 +++++++++++++++++--------------
+>   include/hw/intc/aspeed_intc.h | 11 ++++++-----
+>   3 files changed, 24 insertions(+), 20 deletions(-)
 > 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 4862b215c1..18e14a7914 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -520,7 +520,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>                       sc->memmap[ASPEED_DEV_INTC]);
+>   
+>       /* GICINT orgates -> INTC -> GIC */
+> -    for (i = 0; i < ic->num_ints; i++) {
+> +    for (i = 0; i < ic->num_inpins; i++) {
+>           qdev_connect_gpio_out(DEVICE(&a->intc.orgates[i]), 0,
+>                                   qdev_get_gpio_in(DEVICE(&a->intc), i));
+>           sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), i,
 > diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 91d8edb261..cc2426fbac 100644
+> index cc2426fbac..95b40e1935 100644
 > --- a/hw/intc/aspeed_intc.c
 > +++ b/hw/intc/aspeed_intc.c
-> @@ -340,7 +340,7 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+> @@ -41,8 +41,9 @@ static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
+>       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+>       const char *name = object_get_typename(OBJECT(s));
 >   
->       sysbus_init_mmio(sbd, &s->iomem_container);
+> -    if (irq >= aic->num_ints) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
+> +    if (irq >= aic->num_inpins) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Invalid input pin index: %d\n",
+>                         __func__, irq);
+>           return;
+>       }
+> @@ -54,7 +55,7 @@ static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
+>   /*
+>    * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
+>    * Utilize "address & 0x0f00" to get the irq and irq output pin index
+> - * The value of irq should be 0 to num_ints.
+> + * The value of irq should be 0 to num_inpins.
+>    * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
+>    */
+>   static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+> @@ -67,8 +68,8 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+>       uint32_t enable;
+>       int i;
 >   
-> -    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-> +    memory_region_init_io(&s->iomem, OBJECT(s), aic->reg_ops, s,
->                             TYPE_ASPEED_INTC ".regs", aic->reg_size);
+> -    if (irq >= aic->num_ints) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
+> +    if (irq >= aic->num_inpins) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid input pin index: %d\n",
+>                         __func__, irq);
+>           return;
+>       }
+> @@ -128,8 +129,9 @@ static void aspeed_intc_enable_handler(AspeedINTCState *s, hwaddr offset,
+>   
+>       irq = (offset & 0x0f00) >> 8;
+>   
+> -    if (irq >= aic->num_ints) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
+> +    if (irq >= aic->num_inpins) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Invalid input pin index: %d\n",
+>                         __func__, irq);
+>           return;
+>       }
+> @@ -184,8 +186,9 @@ static void aspeed_intc_status_handler(AspeedINTCState *s, hwaddr offset,
+>   
+>       irq = (offset & 0x0f00) >> 8;
+>   
+> -    if (irq >= aic->num_ints) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
+> +    if (irq >= aic->num_inpins) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Invalid input pin index: %d\n",
+>                         __func__, irq);
+>           return;
+>       }
+> @@ -309,8 +312,8 @@ static void aspeed_intc_instance_init(Object *obj)
+>       AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+>       int i;
+>   
+> -    assert(aic->num_ints <= ASPEED_INTC_NR_INTS);
+> -    for (i = 0; i < aic->num_ints; i++) {
+> +    assert(aic->num_inpins <= ASPEED_INTC_MAX_INPINS);
+> +    for (i = 0; i < aic->num_inpins; i++) {
+>           object_initialize_child(obj, "intc-orgates[*]", &s->orgates[i],
+>                                   TYPE_OR_IRQ);
+>           object_property_set_int(OBJECT(&s->orgates[i]), "num-lines",
+> @@ -345,9 +348,9 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
 >   
 >       memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
-> @@ -358,11 +358,14 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
->   static void aspeed_intc_class_init(ObjectClass *klass, void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
 >   
->       dc->desc = "ASPEED INTC Controller";
->       dc->realize = aspeed_intc_realize;
->       device_class_set_legacy_reset(dc, aspeed_intc_reset);
->       dc->vmsd = NULL;
-> +
-> +    aic->reg_ops = &aspeed_intc_ops;
+> -    qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
+> +    qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_inpins);
+>   
+> -    for (i = 0; i < aic->num_ints; i++) {
+> +    for (i = 0; i < aic->num_inpins; i++) {
+>           if (!qdev_realize(DEVICE(&s->orgates[i]), NULL, errp)) {
+>               return;
+>           }
+> @@ -385,7 +388,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+>   
+>       dc->desc = "ASPEED 2700 INTC Controller";
+>       aic->num_lines = 32;
+> -    aic->num_ints = 9;
+> +    aic->num_inpins = 9;
+>       aic->mem_size = 0x4000;
+>       aic->reg_size = 0x2000;
 >   }
->   
->   static const TypeInfo aspeed_intc_info = {
 > diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> index ecaeb15aea..749d7c55be 100644
+> index 749d7c55be..5f0429c7f9 100644
 > --- a/include/hw/intc/aspeed_intc.h
 > +++ b/include/hw/intc/aspeed_intc.h
-> @@ -43,6 +43,7 @@ struct AspeedINTCClass {
->       uint32_t num_ints;
->       uint64_t mem_size;
->       uint64_t reg_size;
-> +    const MemoryRegionOps *reg_ops;
+> @@ -18,6 +18,7 @@ OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+>   
+>   #define ASPEED_INTC_NR_REGS (0x2000 >> 2)
+>   #define ASPEED_INTC_NR_INTS 9
+> +#define ASPEED_INTC_MAX_INPINS 9
+>   
+>   struct AspeedINTCState {
+>       /*< private >*/
+> @@ -28,19 +29,19 @@ struct AspeedINTCState {
+>       MemoryRegion iomem_container;
+>   
+>       uint32_t regs[ASPEED_INTC_NR_REGS];
+> -    OrIRQState orgates[ASPEED_INTC_NR_INTS];
+> +    OrIRQState orgates[ASPEED_INTC_MAX_INPINS];
+>       qemu_irq output_pins[ASPEED_INTC_NR_INTS];
+>   
+> -    uint32_t enable[ASPEED_INTC_NR_INTS];
+> -    uint32_t mask[ASPEED_INTC_NR_INTS];
+> -    uint32_t pending[ASPEED_INTC_NR_INTS];
+> +    uint32_t enable[ASPEED_INTC_MAX_INPINS];
+> +    uint32_t mask[ASPEED_INTC_MAX_INPINS];
+> +    uint32_t pending[ASPEED_INTC_MAX_INPINS];
 >   };
 >   
->   #endif /* ASPEED_INTC_H */
+>   struct AspeedINTCClass {
+>       SysBusDeviceClass parent_class;
+>   
+>       uint32_t num_lines;
+> -    uint32_t num_ints;
+> +    uint32_t num_inpins;
+>       uint64_t mem_size;
+>       uint64_t reg_size;
+>       const MemoryRegionOps *reg_ops;
 
 
