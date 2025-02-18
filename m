@@ -4,70 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D404C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 07:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF91DC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 07:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkIFU-0007BG-Do; Tue, 18 Feb 2025 02:42:32 -0500
+	id 1tkILy-0000Li-IH; Tue, 18 Feb 2025 02:49:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tkIFR-0007B4-UJ
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 02:42:29 -0500
-Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tkILw-0000LE-B5; Tue, 18 Feb 2025 02:49:12 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tkIFP-0005GM-Vc
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 02:42:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1739864548; x=1771400548;
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tkILs-0005uX-Oo; Tue, 18 Feb 2025 02:49:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739864949; x=1771400949;
  h=from:to:cc:subject:date:message-id:mime-version:
  content-transfer-encoding;
- bh=WCqnUjd5oll7mPcm5XczAQ+EKeWGdIxE1HaRweDdfFM=;
- b=EmViTFyqrtYIIi4Q7+bS2yrY0h9yLKdmgVef5MnneaI6gYiDPfPMqRvi
- pbM7Zt1a+XkaIM5bsC34AZLx6o6fyvl0UsOrUqP5fKcGv8mzjGZgQAk6T
- f7frgsrulLGgxCz9UkQUsNTr+W2uT4hYNtxxyMoMHhICMkqgsuXMazofP
- ZJjTf47fx/aP/eGVPhAWyQjtM3wGwivniofJf+ZaKOh5BRBGT333Z+7up
- gKp7p9FYBEgZ549hp0dwKRSiIR6Y4ycbTISzJVQvDDF87SJQedBm/aR5s
- CF0f3mtMMHz5iuh6e5FjqHx0leG29BmZKESvdep9oIkDiBe/zym8sp2QB Q==;
-X-CSE-ConnectionGUID: /EmTYLTWRXyfgkk6MNWwWA==
-X-CSE-MsgGUID: S82Ohc8hQXKNlQQNiUFo3w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="190317210"
-X-IronPort-AV: E=Sophos;i="6.13,295,1732546800"; d="scan'208";a="190317210"
-Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
- by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2025 16:42:24 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 898BADBB94
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 16:42:21 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 4A47BBF4B5
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 16:42:21 +0900 (JST)
-Received: from iaas-rdma.. (unknown [10.167.135.44])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 8C7B71A000B;
- Tue, 18 Feb 2025 15:42:20 +0800 (CST)
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH 1/2] migration: Prioritize RDMA in ram_save_target_page()
-Date: Tue, 18 Feb 2025 15:43:44 +0800
-Message-ID: <20250218074345.638203-1-lizhijian@fujitsu.com>
-X-Mailer: git-send-email 2.44.0
+ bh=xbrKOGJ3m9gms1trzv21PXPE753tlMOzvuu2KDFvoZk=;
+ b=TU6fr4TtpQAYNOso7ntK3cjOrPRPh+rWa4zU/NT3YEcdSDxjb7eJZkc1
+ FM3rB2AOeB3RTYRMvYanNVFW77W83aG8vWhwn1iMs/AW3pzQYs9oV0qnm
+ dJNA6iNALO10yBwlawpbiLbKKA16VbC7gbTNXbNAkjtIH7a/JjtUBt0LT
+ /qw2nk135o/dUdoPSMD0mn8yhsK4O/nt1ciSRDP0FddV5qoHZPkh8soaC
+ a9Nru8WJFT3SrOjCl2iSkk2AD2Ra9gSGqw2tERnBPbCZ4SOlX2PTB+Uyj
+ 1YhlqqYIMzDPHxle1DufkqotZV5jeg2WwXlphxXpKKAECHofKygFGmp3T w==;
+X-CSE-ConnectionGUID: qS/7g2SkQlKKgXyY7rc2mA==
+X-CSE-MsgGUID: zpnkbZCSSuiNWT5INAkAxw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51190819"
+X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="51190819"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 23:49:05 -0800
+X-CSE-ConnectionGUID: c5vcaEq6QXOozNFMZRIeww==
+X-CSE-MsgGUID: b58VZPcnTGuQ9e9woxbVMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119529994"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa005.jf.intel.com with ESMTP; 17 Feb 2025 23:49:04 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] rust: Prefer std::ptr over core::ptr
+Date: Tue, 18 Feb 2025 16:08:35 +0800
+Message-Id: <20250218080835.3341082-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=207.54.90.49; envelope-from=lizhijian@fujitsu.com;
- helo=esa3.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,66 +74,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
-From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Address an error in RDMA-based migration by ensuring RDMA is prioritized
-when saving pages in `ram_save_target_page()`.
+The std::ptr is same as core::ptr, but std has already been used in many
+cases and there's no need to choose non-std library.
 
-Previously, the RDMA protocol's page-saving step was placed after other
-protocols due to a refactoring in commit bc38dc2f5f3. This led to migration
-failures characterized by unknown control messages and state loading errors
-destination:
-(qemu) qemu-system-x86_64: Unknown control message QEMU FILE
-qemu-system-x86_64: error while loading state section id 1(ram)
-qemu-system-x86_64: load of migration failed: Operation not permitted
-source:
-(qemu) qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
-qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
-qemu-system-x86_64: rdma migration: recv polling control error!
-qemu-system-x86_64: warning: Early error. Sending error.
-qemu-system-x86_64: warning: rdma migration: send polling control error
+So, use std::ptr directly to make the used ptr library as consistent as
+possible.
 
-RDMA migration implemented its own protocol/method to send pages to
-destination side, hand over to RDMA first to prevent pages being saved by
-other protocol.
-
-Fixes: bc38dc2f5f3 ("migration: refactor ram_save_target_page functions")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- migration/ram.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ rust/hw/char/pl011/src/device.rs       | 2 +-
+ rust/hw/char/pl011/src/device_class.rs | 6 ++++--
+ rust/qemu-api/src/irq.rs               | 3 +--
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 6f460fd22d2..635a2fe443a 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1964,6 +1964,11 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-     ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
-     int res;
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index fe73771021e7..59a689fdcd77 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -2,10 +2,10 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
-+    /* Hand over to RDMA first */
-+    if (control_save_page(pss, offset, &res)) {
-+        return res;
-+    }
-+
-     if (!migrate_multifd()
-         || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
-         if (save_zero_page(rs, pss, offset)) {
-@@ -1976,10 +1981,6 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-         return ram_save_multifd_page(block, offset);
-     }
+-use core::ptr::{addr_of, addr_of_mut, NonNull};
+ use std::{
+     ffi::CStr,
+     os::raw::{c_int, c_void},
++    ptr::{addr_of, addr_of_mut, NonNull},
+ };
  
--    if (control_save_page(pss, offset, &res)) {
--        return res;
--    }
--
-     return ram_save_page(rs, pss);
- }
+ use qemu_api::{
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index dbef93f6cb3e..0b2076ddaa0f 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -2,8 +2,10 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
+-use core::ptr::NonNull;
+-use std::os::raw::{c_int, c_void};
++use std::{
++    os::raw::{c_int, c_void},
++    ptr::NonNull,
++};
+ 
+ use qemu_api::{
+     bindings::*, c_str, prelude::*, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
+diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
+index d1c9dc96eff3..34c19263c233 100644
+--- a/rust/qemu-api/src/irq.rs
++++ b/rust/qemu-api/src/irq.rs
+@@ -4,8 +4,7 @@
+ 
+ //! Bindings for interrupt sources
+ 
+-use core::ptr;
+-use std::{ffi::CStr, marker::PhantomData, os::raw::c_int};
++use std::{ffi::CStr, marker::PhantomData, os::raw::c_int, ptr};
+ 
+ use crate::{
+     bindings::{self, qemu_set_irq},
 -- 
-2.44.0
+2.34.1
 
 
