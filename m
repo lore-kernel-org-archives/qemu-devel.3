@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB460C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 20:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D55C021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 20:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkU6s-0001XF-2W; Tue, 18 Feb 2025 15:22:26 -0500
+	id 1tkU90-0002Dr-52; Tue, 18 Feb 2025 15:24:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkU6n-0001Wf-5H
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:22:21 -0500
-Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkU8w-0002Da-U1
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:24:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkU6k-0003xd-Ak
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:22:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739910135; bh=5DJYctcBOU4hdUoWUSfAKVatoqUDQyn3Z45VnZ/hBN4=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=HNk7FNRxcKwuOaXchJc9qEjGXZzkQAl9QeRVNQavH7PfwTFQyfay/2vlMnbFJ3tY4
- CvxFu0t0vvEQqNr9iFRRepP8cJ4V+lrbM9u93EQnlgKroSAJojJ7O8zYP34gox909u
- GlvsmMFdd7fBR0pPaCNMlU/YUbDNE6us6NOYYoLA5Y9WvwM+OJSZ6QkqOYeh+gpqz6
- f4add8zXuE3Nr9cEpfoNOeNGtigZWAL4q9hQQMHiXBhckyWoSCr9FrcsP3dGeKStHU
- SdwJxGiIacugpF26kvB5Rav/zWXHh+HvchPi5oAhdHhypzyu+mRJigYCqV5rMaPuKV
- dHo/EBPGy6Qjg==
-Received: from localhost (localhost [127.0.0.1])
- by elaine.keithp.com (Postfix) with ESMTP id 9C3693F20D3C;
- Tue, 18 Feb 2025 12:22:15 -0800 (PST)
-X-Virus-Scanned: Debian amavis at keithp.com
-Received: from elaine.keithp.com ([127.0.0.1])
- by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id jGQo3uLbV8_e; Tue, 18 Feb 2025 12:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739910134; bh=5DJYctcBOU4hdUoWUSfAKVatoqUDQyn3Z45VnZ/hBN4=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=RU8U9jzw7WEhGxQdwLA1I1dweIWqp6ZCYebRcuyUB8wGBGkNnHv3Gl1jA14qlsqY9
- LowSnTM95crrlbcpJiK7QhGWQilpJlxg2DVcynEqy3riAlRhrae6cBHmjXvaVxPpH7
- E5F9pKl288tMSIU+P9RsW1dYxVDgsrHm8owl8jk45ZPr5RyFkxccPUUTbAlm1hOM+y
- I2tQUo4s5o9oEGOUduv4/uMEfbqnjNGW+c6MI06mLTVSjaEYldtEP/zXzxl9kOY5kK
- wrQRZQMpRfAaEOWiyrnHjcK/L8l+RqxhxMmofAsiJfh/Y+qjFyWUaoELUX0vfysfaG
- JPz50d8EgiLUw==
-Received: from keithp.com (koto.keithp.com [192.168.11.2])
- by elaine.keithp.com (Postfix) with ESMTPSA id 0DDBB3F20C61;
- Tue, 18 Feb 2025 12:22:14 -0800 (PST)
-Received: by keithp.com (Postfix, from userid 1000)
- id E62521E60096; Tue, 18 Feb 2025 12:22:13 -0800 (PST)
-To: Peter Maydell <peter.maydell@linaro.org>, Richard Henderson
- <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 4/5] target/rx: Load reset vector from memory after
- first run
-In-Reply-To: <CAFEAcA9uGeJoVGpHBU=830ZrNBojsVT6fER6OBkDw0vDfxXU8g@mail.gmail.com>
-References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250215021654.1786679-5-keithp@keithp.com>
- <f7c1e671-f114-40a6-a02b-575bde2de4c4@linaro.org>
- <CAFEAcA9uGeJoVGpHBU=830ZrNBojsVT6fER6OBkDw0vDfxXU8g@mail.gmail.com>
-Date: Tue, 18 Feb 2025 12:22:13 -0800
-Message-ID: <87ldu3ype2.fsf@keithp.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkU8u-00043g-5C
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:24:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739910270;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
+ references:references; bh=ZZ/t/8/FZmKqnWA3kAbRbMXw7cqMzx1tsylUiw4pJLs=;
+ b=NdxadgQN35UZ2EiaGtrLmwm8ClW4mbPrdg3St16+hBKM/ZLPEVrLOIAf7uk5YVKnWvrwlc
+ pCUdS8+ywJNCKYno8yMSybdPRaPOcwKEmTIyOf3fzfCOsgTjg+ABZwvUPKrCi4Y99Y3pi2
+ jiHxs0Uf81gkr14X+rwKj1tjECxkvvg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-OmL61PJqOn-p5YmNzuoUiA-1; Tue,
+ 18 Feb 2025 15:24:28 -0500
+X-MC-Unique: OmL61PJqOn-p5YmNzuoUiA-1
+X-Mimecast-MFC-AGG-ID: OmL61PJqOn-p5YmNzuoUiA_1739910267
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9F111801A10; Tue, 18 Feb 2025 20:24:26 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71BE4300019F; Tue, 18 Feb 2025 20:24:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2240821E6A28; Tue, 18 Feb 2025 21:24:23 +0100 (CET)
+Resent-To: qemu-devel@nongnu.org, yong.huang@smartx.com, farosas@suse.de
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Tue, 18 Feb 2025 21:24:23 +0100
+Resent-Message-ID: <878qq39f2g.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: yong.huang@smartx.com,  qemu-devel@nongnu.org,  Fabiano Rosas
+ <farosas@suse.de>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [RFC] migration: Introduce migration throttle event
+In-Reply-To: <Z7TOXfn6BQBhS5uG@x1.local> (Peter Xu's message of "Tue, 18 Feb
+ 2025 13:15:57 -0500")
+References: <4df13a8005170ad42cbbc883a0a8fdbb1ab94ac1.1739846274.git.yong.huang@smartx.com>
+ <Z7TOXfn6BQBhS5uG@x1.local>
+Date: Tue, 18 Feb 2025 20:21:59 +0100
+Message-ID: <87jz9n9hyg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha256; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=63.227.221.253; envelope-from=keithp@keithp.com;
- helo=elaine.keithp.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,59 +87,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Keith Packard <keithp@keithp.com>
-From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Peter Xu <peterx@redhat.com> writes:
 
+> On Tue, Feb 18, 2025 at 10:39:55AM +0800, yong.huang@smartx.com wrote:
+>> From: Hyman Huang <yong.huang@smartx.com>
+>> 
+>> When the developer is examining the time distribution of
+>> the migration, it is useful to record the migration throttle
+>> timestamp. Consequently, include the migration throttle event.
+>
+> Would trace_cpu_throttle_set() work too?  That can provide a timestamp and
+> also the new percentage of throttle.
+>
+> I don't feel strongly that we must not introduce qmp events for debugging,
+> but allowing that to happen means we can get tons of events at last.. as
+> people can start requesting many more events, and we'll need one way to
+> justify them at last.
+>
+> One way to justify events can be that it could be consumed by mgmt.  On
+> that, this one I'm not yet sure.. so ideally tracepoints could work already.
 
-> So I'm OK with this patch doing this the way it does,
-> except that I have one question: what's that
-> process_queued_cpu_work() call doing? We don't need
-> that on the Arm equivalent...
+Good point.
 
-Yup, I needed that because I was running this bit at cpu_reset_hold
-time, not waiting until after cpu reset was finished. At cpu_reset_hold
-time, the re-initialization of memory_dispatch hadn't been executed yet,
-so attempts to resolve addresses crashed unless I synchronously flushed
-the work queue where the call to tcg_commit_cpu was pending.
-
-All fixed now that I'm setting the pc after the call to cpu_reset has
-completed.
-
-> Also, if() statements always have braces in QEMU, even
-> if the body of the if is a single statement. But since
-> if you don't set env->pc it is zero anyway, you don't
-> need the if() at all I think and can directly set
-> env->pc unconditionally.
-
-Thanks for the formatting advice; I'll get it cleaned up.
-
-=2D-=20
-=2Dkeith
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAme06/UACgkQ2yIaaQAA
-ABHpHg//eWZbl6s119sIzYYk1oqLHs3VsGSkcL04T7FDqEhX814tbOXX73djx2Xy
-Omf4zMo+g3iajQh3e+bd72N930hyj9JZyHYFcWeTV3j6DOqPeZWdMm0BdgTkS1+e
-4Ls+qi+9q2McN0cXsmCJrC18G4UZcNlUdsEw/gTZpU71+c0olzckdIY+KQRQ6V5D
-sWXDei+Vsc9OlzVdQ7FgoZE0Hv70fYnLAwBjUG2i/gyO6tXq52aiPN7L4rG8TEuW
-D3FrlBHuIK7SF3XxhwCwpxsknabq9OFRR4G6O6aw8kSCaskZKcZm7VIVv0V9Fip7
-UawnRSofQzJXcCtuxzXjV5Brs3Cx5uJgbvkwC6a3qsqjKyyYQb9I4TbTCBfAwXBl
-X2Z9ZGbKvsQ6yh7M0Jipvl7ILtqzBrDQ479YASSPgFeDPcikrhrlNSwThXwQtdbS
-4JAMoxc2blASAuCZbS/LpABVgXiLF+/yF2n9nyW/Pz7rH+MBigWiuTru+rX5qiD3
-hcukzsm3imbX9wYDkVJRsnVfRVLw3/+0MxoI7SDowmtfBMeAtpDVw4yrdpqUV33O
-m0IWtAeZOhIAeHpwsWFpzmVfdUmo/691mvJYR90Pte2KDJ1oL3JxkfZuPVxHb3wB
-6wL4zs4h13PGPjCqHT/2ynhUJgIdejY9DJishgVr0E+bw1+M3Mc=
-=eTqX
------END PGP SIGNATURE-----
---=-=-=--
 
