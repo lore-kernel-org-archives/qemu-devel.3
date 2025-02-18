@@ -4,73 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B34AC021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 18:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5921AC021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 18:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkSKM-0006Nl-NW; Tue, 18 Feb 2025 13:28:14 -0500
+	id 1tkSPZ-00044o-Qj; Tue, 18 Feb 2025 13:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tkSKK-0006NQ-EF
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:28:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tkSKI-0008QZ-Nm
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:28:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739903290;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7e0yvKdeKjYjXuavY6rL0tjgXFmYPvHLmA5XFR1YAco=;
- b=JIcBNbnePDV1WNIJul+OTEzBewuIGh3/2C7X/z/+BT8UHVHInOgn/U0px+azyF8XhoUxME
- wPx43eMBgubfV0HOKldSGFH5nYb53y8xMJVIXqrSyxzjHMTSk1r+YXOL63IgRyMIcl39Zi
- H9LVrJntDRVhPAHw+MT7It5fMf+86Uk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-Qwd6eTv6MSOaQIV7Xwwcag-1; Tue,
- 18 Feb 2025 13:28:06 -0500
-X-MC-Unique: Qwd6eTv6MSOaQIV7Xwwcag-1
-X-Mimecast-MFC-AGG-ID: Qwd6eTv6MSOaQIV7Xwwcag_1739903283
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C64CA193578F; Tue, 18 Feb 2025 18:28:03 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.45.224.254])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 56E6D1800359; Tue, 18 Feb 2025 18:27:57 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
- jasowang@redhat.com, imammedo@redhat.com, peterx@redhat.com,
- alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org,
- zhenzhong.duan@intel.com, ddutile@redhat.com
-Subject: [PATCH v3 3/5] hw/arm/smmuv3: Move reset to exit phase
-Date: Tue, 18 Feb 2025 19:25:33 +0100
-Message-ID: <20250218182737.76722-4-eric.auger@redhat.com>
-In-Reply-To: <20250218182737.76722-1-eric.auger@redhat.com>
-References: <20250218182737.76722-1-eric.auger@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ (Exim 4.90_1) (envelope-from
+ <3e9K0ZwYKCjgmYUhdWaiiafY.WigkYgo-XYpYfhihaho.ila@flex--seanjc.bounces.google.com>)
+ id 1tkSPY-00044c-D6
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:33:36 -0500
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3e9K0ZwYKCjgmYUhdWaiiafY.WigkYgo-XYpYfhihaho.ila@flex--seanjc.bounces.google.com>)
+ id 1tkSPW-0000qJ-Fh
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:33:36 -0500
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-2fc45101191so6058469a91.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 10:33:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1739903611; x=1740508411; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=RXlNUKi1nXILcNxScCTGDcCAb7tkH8J9nCCjyi/czMs=;
+ b=XtQYh+bs6tjcn7w2jzKmeAPdoQzHuO8lNkX6k1RTgrxvok74ybZghMiNRFtYQ1W2Ui
+ 6UmHTt4sKd1/rsBlDKmvZPfMygeVFcvqykQfhOoI69geeCx4fKQNL0brn4ELhBqldDBk
+ lV7ZqPNyMtzj94KX1ihZGnOnBQc3a8ABQKj12IgwT9S1VEUMYjVBFdMQ55biCi7t5rEa
+ CqSvEw/PS0WynCub1TEI9OOcemCLnVK+rP08W0hw3sAy9YwdwYcCiPyHoEHQdWKKnQpN
+ ceEJ+SqXmMi/U2MelcKhoZ4fOojvjB4a66ZL1wz88EVup8OUE0MIqLxOqMsvBEi/3V3b
+ j/0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739903611; x=1740508411;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RXlNUKi1nXILcNxScCTGDcCAb7tkH8J9nCCjyi/czMs=;
+ b=UJoQ/gJSBJh9uPifjzBSYQYWKpaPnDXEo0okYPB8sS4fiXp+GFVbWVESddeWmLms5R
+ ZtDIpDHz24DAd5X28fYuDlZyWi2JCUKDXjqRgUUrX+4U+Q0GhM0hGh2bqpJBVHP2CTzX
+ UcZeBJlcvtbarMx7UmFCgInwdE3GFQa9oo8CCfgdxIxW5UJhNJwrWY/e9ZlR6CT76q+c
+ ST0FINU2e6UKlsMLxSUHO8Wqa7alAZzQYbO3XejGEiJULQV58OR5M9pj8BsdZJMp+Kms
+ hSWmfnkSQqKA762rKhZCVYlOMOipWHsei0HohI3V7RM6Hnp4QbHoTYnh/e0FOtuuarFC
+ yk6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXww6oTkcamekFT/fixQYQ1EPq+4z9ryIOk85xviY6Rbjoa1ex649fqo/DLzht2qWp+Jb/SRhTxtvVL@nongnu.org
+X-Gm-Message-State: AOJu0YxXf0ddZJxYb+TuPVhG8W57C3yNlXh3ZIB6QrxWaL9r0QJL6ayJ
+ nNe8ysQar1QNns4WgVYadiu3ilE5EziiOG0+pAYlBJikvozTbfe8VrfgVzrtY/jZOelETaA/Ldg
+ uLQ==
+X-Google-Smtp-Source: AGHT+IEcW7Bb+oVUdOJFQR7wversG/+Mi/U5uft9ooKkzX2p+pew6XYKq/ofkOd7HS18VAqSMoPIlTSlOmw=
+X-Received: from pfbfr18.prod.google.com
+ ([2002:a05:6a00:8112:b0:730:76c4:7144])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:14c2:b0:730:9659:ff4b
+ with SMTP id d2e1a72fcca58-732618e4fccmr18645840b3a.19.1739903611200; Tue, 18
+ Feb 2025 10:33:31 -0800 (PST)
+Date: Tue, 18 Feb 2025 10:33:29 -0800
+In-Reply-To: <gxyvqeslwhw6dirfg7jb7wavotlguctnxf5ystqfcnn5mk74qa@nlqbruetef22>
+Mime-Version: 1.0
+References: <20250207233410.130813-1-kim.phillips@amd.com>
+ <20250207233410.130813-3-kim.phillips@amd.com>
+ <4eb24414-4483-3291-894a-f5a58465a80d@amd.com> <Z6vFSTkGkOCy03jN@google.com>
+ <6829cf75-5bf3-4a89-afbe-cfd489b2b24b@amd.com> <Z66UcY8otZosvnxY@google.com>
+ <gxyvqeslwhw6dirfg7jb7wavotlguctnxf5ystqfcnn5mk74qa@nlqbruetef22>
+Message-ID: <Z7TSef290IQxQhT2@google.com>
+Subject: Re: [PATCH v3 2/2] KVM: SEV: Configure "ALLOWED_SEV_FEATURES" VMCB
+ Field
+From: Sean Christopherson <seanjc@google.com>
+To: Naveen N Rao <naveen@kernel.org>
+Cc: Kim Phillips <kim.phillips@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>,
+ qemu-devel@nongnu.org, 
+ kvm@vger.kernel.org, Michael Roth <michael.roth@amd.com>, 
+ Ashish Kalra <ashish.kalra@amd.com>, "Nikunj A . Dadhania" <nikunj@amd.com>,
+ Borislav Petkov <bp@alien8.de>, 
+ Dave Hansen <dave.hansen@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kishon Vijay Abraham I <kvijayab@amd.com>, Alexey Kardashevskiy <aik@amd.com>
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3e9K0ZwYKCjgmYUhdWaiiafY.WigkYgo-XYpYfhihaho.ila@flex--seanjc.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,112 +105,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the iommu may be reset before the devices
-it protects. For example this happens with virtio-scsi-pci.
-when system_reset is issued from qmp monitor: spurious
-"virtio: zero sized buffers are not allowed" warnings can
-be observed. This happens because outstanding DMA requests
-are still happening while the SMMU gets reset.
+On Mon, Feb 17, 2025, Naveen N Rao wrote:
+> On Thu, Feb 13, 2025 at 04:55:13PM -0800, Sean Christopherson wrote:
+> > On Thu, Feb 13, 2025, Kim Phillips wrote:
+> > > On 2/11/25 3:46 PM, Sean Christopherson wrote:
+> > > > On Mon, Feb 10, 2025, Tom Lendacky wrote:
+> > > > > On 2/7/25 17:34, Kim Phillips wrote:
+> > 
+> > Third, letting userspace opt-in to something doesn't necessarily mean giving
+> > userspace full control.  Which is the entire reason I asked the question about
+> > whether or not this can break userspace.  E.g. we can likely get away with only
+> > making select features opt-in, and enforcing everything else by default.
+> > 
+> > I don't think RESTRICTED_INJECTION or ALTERNATE_INJECTION can work without KVM
+> > cooperation, so enforcing those shouldn't break anything.
+> > 
+> > It's still not clear to me that we don't have a bug with DEBUG_SWAP.  AIUI,
+> > DEBUG_SWAP is allowed by default.  I.e. if ALLOWED_FEATURES is unsupported, then
+> > the guest can use DEBUG_SWAP via SVM_VMGEXIT_AP_CREATE without KVM's knowledge.
+> 
+> In sev_es_prepare_switch_to_guest(), we save host debug register state 
+> (DR0-DR3) only if KVM is aware of DEBUG_SWAP being enabled in the guest 
+> (via vmsa_features). So, from what I can tell, it looks like the guest 
+> will end up overwriting host state if it enables DEBUG_SWAP without 
+> KVM's knowledge?
+> 
+> Not sure if that's reason enough to enforce ALLOWED_SEV_FEATURES for 
+> DEBUG_SWAP :)
+> 
+> If ALLOWED_SEV_FEATURES is not supported, we may still have to 
+> unconditionally save the host DR0-DR3 registers.
 
-This can also happen with VFIO devices. In that case
-spurious DMA translation faults can be observed on host.
+Aha!  We do not.  The existing KVM code is actually flawed in the opposite
+direction, in that saving host DR0..DR3 during sev_es_prepare_switch_to_guest()
+is superfluous.
 
-Make sure the SMMU is reset in the 'exit' phase after
-all DMA capable devices have been reset during the 'enter'
-or 'hold' phase.
+DR7 is reset on #VMEXIT (swap type "C"), and so KVM only needs to ensure DR0..DR3
+are restored before loading DR7 with the host's value.  KVM takes care of that in
+common x86 code via hw_breakpoint_restore().
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+However, there is still a bug, as the AMD-specific *masks* are not restored.  KVM
+doesn't support MSR_F16H_DRx_ADDR_MASK emulation or passthrough for normal guests,
+so the guest can't set those values either, i.e. will get a #VC.  But the masks
+do need to be restored, because the CPU will clobber them with '0' when DebugSwap
+is enabled.
 
----
+And of course the DR0..DR3 loads in sev_es_prepare_switch_to_guest() are a
+complete waste of cycles.
 
-v1 -> v2:
-- also migrate smmu_base_reset_hold to smmu_base_reset_exit
-  which was an oversight of v1
-- add a comment emphasizing the importance of doing the reset
-  in 'exit' phase.
----
- hw/arm/smmu-common.c |  9 +++++++--
- hw/arm/smmuv3.c      | 14 ++++++++++----
- hw/arm/trace-events  |  1 +
- 3 files changed, 18 insertions(+), 6 deletions(-)
+*sigh*
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index dd74c2e558..8c1b407b82 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -924,7 +924,12 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
--static void smmu_base_reset_hold(Object *obj, ResetType type)
-+/*
-+ * Make sure the IOMMU is reset in 'exit' phase after
-+ * all outstanding DMA requests have been quiesced during
-+ * the 'enter' or 'hold' reset phases
-+ */
-+static void smmu_base_reset_exit(Object *obj, ResetType type)
- {
-     SMMUState *s = ARM_SMMU(obj);
- 
-@@ -949,7 +954,7 @@ static void smmu_base_class_init(ObjectClass *klass, void *data)
-     device_class_set_props(dc, smmu_dev_properties);
-     device_class_set_parent_realize(dc, smmu_base_realize,
-                                     &sbc->parent_realize);
--    rc->phases.hold = smmu_base_reset_hold;
-+    rc->phases.exit = smmu_base_reset_exit;
- }
- 
- static const TypeInfo smmu_base_info = {
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index c0cf5df0f6..b49a59b64c 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1870,13 +1870,19 @@ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
-     }
- }
- 
--static void smmu_reset_hold(Object *obj, ResetType type)
-+/*
-+ * Make sure the IOMMU is reset in 'exit' phase after
-+ * all outstanding DMA requests have been quiesced during
-+ * the 'enter' or 'hold' reset phases
-+ */
-+static void smmu_reset_exit(Object *obj, ResetType type)
- {
-     SMMUv3State *s = ARM_SMMUV3(obj);
-     SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
- 
--    if (c->parent_phases.hold) {
--        c->parent_phases.hold(obj, type);
-+    trace_smmu_reset_exit();
-+    if (c->parent_phases.exit) {
-+        c->parent_phases.exit(obj, type);
-     }
- 
-     smmuv3_init_regs(s);
-@@ -1999,7 +2005,7 @@ static void smmuv3_class_init(ObjectClass *klass, void *data)
-     SMMUv3Class *c = ARM_SMMUV3_CLASS(klass);
- 
-     dc->vmsd = &vmstate_smmuv3;
--    resettable_class_set_parent_phases(rc, NULL, smmu_reset_hold, NULL,
-+    resettable_class_set_parent_phases(rc, NULL, NULL, smmu_reset_exit,
-                                        &c->parent_phases);
-     device_class_set_parent_realize(dc, smmu_realize,
-                                     &c->parent_realize);
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index c64ad344bd..7790db780e 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -56,6 +56,7 @@ smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
- smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
- smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
- smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
-+smmu_reset_exit(void) ""
- 
- # strongarm.c
- strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
--- 
-2.47.1
+Ugh, it gets worse.  The awfulness goes in both direction.  Unless I've misunderstood
+how this all works, just because *KVM* enables DebugSwap for the BSP doesn't mean
+the guest will enable DebugSwap for APs.  And so KVM _can't_ rely on DebugSwap to
+actually swap DR0..DR3, because KVM has no way of knowing whether or not a given
+vCPU actually has it enabled.  And that's true even when SEV_ALLOWED_FEATURES
+comes along, which means treating DR0..DR3 as swap type B is utterly worthless.
 
+What a mess.  I'll send a small series to try and clean things up.
+
+Also, I told y'all so: https://lore.kernel.org/all/YWnbfCet84Vup6q9@google.com
+
+P.S. Can someone please get the APM updated to actually explain WTF enabling
+     Debug Virtualization in SEV_FEATURES does?  The APM does not at all match
+     what y'all have told me.  A sane reading of the APM would be that DRs are
+     *unconditionally* swap type B when DebugSwap is supported, whereas I've been
+     told from the very beginning[*] that treating them as type B requires software
+     enabling:
+
+         AMD Milan introduces support for the swapping, as type 'B', of DR[0-3]
+         and DR[0-3]_ADDR_MASK registers. It requires that SEV_FEATURES[5] be set
+         in the VMSA.
+
+[*] https://lore.kernel.org/all/20221201021948.9259-3-aik@amd.com
 
