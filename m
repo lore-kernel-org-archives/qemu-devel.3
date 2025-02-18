@@ -4,203 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E191C021A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 09:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B1FC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 10:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkK6e-0000IO-FS; Tue, 18 Feb 2025 04:41:32 -0500
+	id 1tkKR4-00036M-E1; Tue, 18 Feb 2025 05:02:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tkK6c-0000I9-DS
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 04:41:30 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tkKR2-000360-BI
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 05:02:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tkK6S-0001fj-EO
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 04:41:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739871680; x=1771407680;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=DB7fZ6SYurr5a5BM5EY1qDCS6SzJbT7pvdtA+X0O5Gc=;
- b=cPfzYNrYAOUtL0EvYBC3hSvjn1q+x3sAYDGQ47KTtFmaxCpHG73M1555
- ObA4yQ/JeGF/PkrHp3ppAqYY+Vj5C/FuZ5qpi97y+EeiQNX82CEHpD6mY
- Cvi4Mau5N3hO7horL4mTTIH/aRfng9dhjUA4+/Arp8SoRzmi5OTuyHuBg
- LTTevDqjnhu+A7Z4W6a2JEqqbvYbbur0vUOdYmdVmWewMnJX60NAA/Bgz
- 6XkBHUoS7zTFeDmms1Zm/pDq8eexEOaoqorsVB/jX9hbNqZ8sxiJp7/Jo
- Gm/Uaa3qVXfAMBwvSvGM/JXim3cw+7tgnsgFSgof/s7bgP7GXy5qUoh7+ g==;
-X-CSE-ConnectionGUID: 0lWeFKjRRL63YxKBRsuv5Q==
-X-CSE-MsgGUID: Fkel60lITMqGZI838ZGqDw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40480090"
-X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="40480090"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2025 01:41:17 -0800
-X-CSE-ConnectionGUID: GiXUEIJJTWm+rYL/BlNoVw==
-X-CSE-MsgGUID: sAKcupdJSme7NSRHNok3XQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="119337704"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 18 Feb 2025 01:41:16 -0800
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Tue, 18 Feb 2025 01:41:16 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Tue, 18 Feb 2025 01:41:16 -0800
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.42) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Tue, 18 Feb 2025 01:41:15 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cSzikfzcF7b2J+X9mVspbuHlF5j2grHQv9GscWGSXrTGxFRZAKteB/TR+WJtQO3mZMD1jQs2qEXbXO4qYibRuZKUspaE3KiCDvnu+fUp/zmPfh68Zvu8l4fbY52ZIG8t3xQJbIxFXezJWjsbMgihlBDEIbroBn15dl8q3+OTRsJ0+M+SHf4HBghS1m2DbGUDa1+mwc7xPtFX/Zoe2+LHCTtTY5ISJbZehRAdIIBHm7squbpw6nh/v43CgP82MINMO7rOSQ588Ra7SZ/hqndrv+ERQ9jyoLZeJBvoTciWWaGTXlTVcxo51HW0JM81NhIqhwrlyhcLB4uSGB1elaDZSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AvfUh6CZo3mlrwRfvlJ5hLNiQ+qnjCGURLSbvLbyPZA=;
- b=Kgo9piq72tXEMpsY05nAKR2rwHJHbSVXgeVxKm/3hliwrLIHHkwO+p3IeW61MncmhCk9Aod5BB735wlvz01vYW4nv28hDZAr17LLcD/iQcF0Lbd2p3xtblgl+/OhJmY9UIeXPOPwf+mS+JXV+aC6TZymu8bFZWb/E/cxXUxC2sKDmZDG89u0w6OW9VSzdy6E5fdwtoZu67r7pQLU5Sh5cCn/a1+xGQ7j/Rmgxh8jLsckOdT7yCoOFmMflbPUQE2B3YvZCM+YOjWLi/yt+fxu4dVUw4q49OB70nvglmS/HOTx09S0DD/hqjgbbKDb366ZxAafYX6aOmC3H1SG155b3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- SA1PR11MB6661.namprd11.prod.outlook.com (2603:10b6:806:255::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Tue, 18 Feb
- 2025 09:41:13 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%7]) with mapi id 15.20.8445.017; Tue, 18 Feb 2025
- 09:41:13 +0000
-Message-ID: <db018f12-2075-41ca-a3d2-d263a7785edf@intel.com>
-Date: Tue, 18 Feb 2025 17:41:04 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] memory: Change
- memory_region_set_ram_discard_manager() to return the result
-To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
- <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
- <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao
- <xiaoyao.li@intel.com>
-References: <20250217081833.21568-1-chenyi.qiang@intel.com>
- <20250217081833.21568-3-chenyi.qiang@intel.com>
- <10029ca9-a239-4d3f-9999-e1059bc17d85@amd.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <10029ca9-a239-4d3f-9999-e1059bc17d85@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SG2P153CA0048.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::17)
- To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tkKQy-0005Ce-Ta
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 05:02:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739872950;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=vM8oQcw56iDzIkBNo5F9NbF7jvyuOGdoibeV82EJTvo=;
+ b=LD0Cg1qGvsZwMLPW9MLTLFZca4J27IJm7zSbkbit4w8HAH3mETwXgFYHslIrnhyDDuoBJp
+ bPWQunJcNOTPCzO0mHmZAnxRMAC3PmXkXb5RWm9E3QJJp7mqVNJCzkDlLR5/awwSaloQJ9
+ FYfA26YxvWGdU8T4nMLBcTk4lpxzV1M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-460-_h3Zs_SIPgmWXQaVOycpPQ-1; Tue, 18 Feb 2025 05:02:28 -0500
+X-MC-Unique: _h3Zs_SIPgmWXQaVOycpPQ-1
+X-Mimecast-MFC-AGG-ID: _h3Zs_SIPgmWXQaVOycpPQ_1739872947
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43970e7df5bso14604055e9.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 02:02:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739872947; x=1740477747;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vM8oQcw56iDzIkBNo5F9NbF7jvyuOGdoibeV82EJTvo=;
+ b=piLxYUJBXPKIyV3mO3WvCSpBx0/knmMaCozIErJigA/tc2OFoNhjsjXLqV+JDEP6SN
+ 2aiwNj+Ax6kaAiPjOhZjm+AFh3Fo3oWCZUvhHYuas9QRVHEGuH2xjj3PrCQG5BXDYDZ8
+ VeY2U3aKTMUJjUx/PtAlIpB1wyq89SO/InsIRWvdEA3b8sL6plgOlT3xQuChL9mArg+9
+ LxGQaaDvM+33wCkejv4mZtZstsmb27yKtDngJ3FEGL+lHmvEFz7zxe9FbFWnQQC39ADV
+ hhE2nijAdvIpVxHJaegLshbrkoEvfw0AJVaicT8o5qnVTncIKkA2E1qIH60CihTv8/oo
+ JTyA==
+X-Gm-Message-State: AOJu0YzGg+1IN7RWd+nFC3rTlgAnNnlpTqcuFvVba48bjPY4AWmd+Pj0
+ xH2Fyzf6/ekC/aixbsBY9TMEEdsxTX0+Ys4hZzT2ReaMnu11CCrnqDwRnp0zyreMop4DpSIRn0K
+ 9rHEyBKOWBxK6Kuezd5znKiURidqIFcPij2vvcP7DEoZvX7OVUIca
+X-Gm-Gg: ASbGnctksQJVNscMZY/JFcUdo/tz0YpJ8y+pPe4JRN1SEYsA4bC7Engx43qV4EfTRnW
+ MJLqgAgI94BChHtTOyH0LkB8p2GhaOMyFemsGN1F+YgD56WqAC2kveNknKa4yQ9sFk39xiJXnSj
+ 5TT+pWqN50pWQ8eTqMavphB/7Ewczv8tP2evrTJdHodlC7AMsmdfoA7QBjS++vlVkoy0QqWjbU5
+ 4FjMCGgebrUeBgWWIQip61JqlBg3j6otgelUcQ3Q0SX4vefLTg4TaLKoINpwMzlIqh80kYPpvy8
+ abx88w+7y48/u0aNCnpvqfA7SEsTO5c8rPlwHC58k2Q=
+X-Received: by 2002:a05:600c:3b12:b0:439:96b2:e9b with SMTP id
+ 5b1f17b1804b1-43996b212d9mr9103135e9.9.1739872946890; 
+ Tue, 18 Feb 2025 02:02:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNh/kIsdvirdjqAJEuNmlyW7FlbOcN76OpnaQ4ayGhPyVyoZhU/OhApcslDLslyjeXRRXPjg==
+X-Received: by 2002:a05:600c:3b12:b0:439:96b2:e9b with SMTP id
+ 5b1f17b1804b1-43996b212d9mr9102755e9.9.1739872946420; 
+ Tue, 18 Feb 2025 02:02:26 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4398ba53406sm35956735e9.14.2025.02.18.02.02.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Feb 2025 02:02:25 -0800 (PST)
+Message-ID: <a6e6ffa7-5536-487d-a9b1-126ec054eb13@redhat.com>
+Date: Tue, 18 Feb 2025 11:02:25 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|SA1PR11MB6661:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0dc1ca7-2006-4443-bf67-08dd500061d8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZnAzWCswNUlGNWNYUGd2QjlZTEwrMnpUaUN2SjVWczdudDRMeU9rc1NocTkw?=
- =?utf-8?B?VW0zUkU3c3JtaFBhNTA0Z1JjemExa3NkZkpZZWo0ODVKaXRIRHRvOGVVakdl?=
- =?utf-8?B?NzR6Z1Q4ck9RcngvZ2tkNXZWWG8yZkV6Z3c5Z2RYbFFxaEpDeGZQeERBNGNu?=
- =?utf-8?B?NFlnU09GeG5aQVZCUTFVVmNoQmg4Ny9Bc25jTnVuSm95YVNOMjRYaWFkUHg1?=
- =?utf-8?B?VXdqMzhQMWJUZmFTNCtmemsrT1ZZRGRtUHpoc0tSTGl1VnNmd2pZN29Od0RK?=
- =?utf-8?B?NEVFVXMrSmZpWnpJbUsxTlNIUmVRRCtObWZ6RUlYSUxId1hoRzFzY0VWSnVO?=
- =?utf-8?B?S0dhVjBYbkhLci8yOWNKQnNiK05VaEx5NmQreXdISXVMWlNUQVhvVERSOXBN?=
- =?utf-8?B?Q1dYMEc0TFFVUWVabzEvK1pNRlRpSzR6SlE2OXpxb2pMcXJJQVVvSlFaWDdC?=
- =?utf-8?B?REZoVXJvRFQ5cDdzTWRzYW9Bd0ZnWFJydStybFNGcjNHV2U2ekxaQ3I2N0VD?=
- =?utf-8?B?VUdiUWRoSzJyMUNENE5PNnQxSU1JQ20wWTJ0eXQyaFlmTzRnejJEVGFWN21p?=
- =?utf-8?B?ZklOVExyMUpQUExnaC9tbUtLNno2cUV0NFZXcVB1K09INXZ6UnRBZ3hnTWsw?=
- =?utf-8?B?NW04MHBlRUEzS1Q1aUdLbTNjNFpPVER1a1dOSmF3eWR1WXlRT000MmJ1dGd6?=
- =?utf-8?B?NlBoaFFJaWFSNXlpMXFEb0syVnpiM0JQS2ZjSzIwaCswSS9BUk9FWkpDZEZh?=
- =?utf-8?B?LzZBZFVkbkJ3d1hxVXpQNHJGb0RkQlpUSCs1VGhCdjRjdExJOXpQNE1RSCtv?=
- =?utf-8?B?MEFkb1g0NG8ranBkNVREcHBySkZGSEdvNUZaWDB2YUxCcExsRHNPbGFJTE9q?=
- =?utf-8?B?VERSV29jSmZjdUtGMFJza1czZVp3NzYvckVrZDArMHVaRG5ETTEweG5uSnZ3?=
- =?utf-8?B?YXJzZW1ySzV4Zks4Q2J6UUtjbDZxeWNjNjNQVC9pL0F3d3RyZEpxMDhNQWVn?=
- =?utf-8?B?NkNodVliY1dlRUoxbko0VmRXd21pckpNQUhpdythSlNNRXduT3hLQ0dLd3pB?=
- =?utf-8?B?RnZvNldTVDJPcHVKNG5XQ0x4QWJJOFowaUdMSVZHaUFnaHhVemNQRklzaUtE?=
- =?utf-8?B?VTRjOXllTFA2dktkWFc1Q0RWSVg0NTFoVks2M3dGbllJWVpUVkkxRE85eW1q?=
- =?utf-8?B?SnFySGVkcy9JN3lOU1k1ZGNtTzZFSUpyRUVIVFVac1g3amRvUkhKTlF4QlFY?=
- =?utf-8?B?MHgxZjNLTHJtNTB6YU14NTFPMVphb3pmVHFsWDdPOGVNRnB6Y2Z3MytGcnF0?=
- =?utf-8?B?dWFjMDJYUGdxVTIyWVMvdlFKSlNHNVhLUjUrN3ovMVp4c0F6Q3pSMnhJR3VE?=
- =?utf-8?B?eU55OFZXZGYrby9ZN1VFS0thYjZJekwwSWtlRzN0TVAzQlRqSHJyOFdiMXk0?=
- =?utf-8?B?YnhXQWkyM2FvNXZjZlFaUGpOTmdGSzV6RGJDL3FKZ0Qra2dkNGxNQmtOOVgw?=
- =?utf-8?B?NDB5aVUzMWpzYmVCNkkvSUpydWpVNGVGNmQvRi90VXVvNzAzQjdHSzVhdlFp?=
- =?utf-8?B?TDhmdE1QYmR2VHZRK3dkY1puaDJpUnloSnAwV2tsck40ZWN1UjdZQ3pDVVV5?=
- =?utf-8?B?VU1JUDFjYWI1M0Jzbm5wR05WVlZraS9NTjBhM1JsVkJjZ0trNjQ0MFlaeXBS?=
- =?utf-8?B?QURaRnN2NitzTHR1SzhDZWxlOXVXLzBQVktWekFNQzUrUWhGcXlzY0pMUDd5?=
- =?utf-8?B?RVl2WHB0QnFSSUx2ellHWVFoaFltTWR5QkhLR1plVkFnNDdFdW5HNlJYZU5r?=
- =?utf-8?B?NmhiQlFRM1pHbTZuUFhDODlyME1JSE16eUlKbUVRWnJibjdGNFBldkl0L2xn?=
- =?utf-8?Q?x8UgMmewwYsl0?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aTNRVmh1OElXaTg0TXdBRWV5UFBxdmZqeTBaMk9uS2hjaUk3RDVvaXMrZ212?=
- =?utf-8?B?L3RjVnUrbTlvcVcwSkN0czFCSkVUcDRIVDhBK2p2amptYzNqckVmYzZzbnQy?=
- =?utf-8?B?dmg3aXBoVmJYZzZ4eEdVYVZYQzhUQjJtWkRwT0x6SmVwU0FXYVZsSXl0c3Ni?=
- =?utf-8?B?V1hFNXYrZHRKbG9TTEUycVJzaXBtS3BLNC9UZlBlM2N6VlhaQlF1cFVJcEZ2?=
- =?utf-8?B?cnVqc3U5VmphQjRub3dreHZIUDgwNTFNMHZ5aDRkY2NKUlA1cjBYci90Slhu?=
- =?utf-8?B?QnB4cEIxdUduM25mZStDWHdibVowMGQvS0JpOTltdG9DVjVGYkhOZ2IxUVkx?=
- =?utf-8?B?T1g4TEpYWjBGYUc0UTZERHpFQ08rQkI3SjE5a3dvelBSMC9TZXNnNGZOUEsy?=
- =?utf-8?B?enRESDJqMU40clBmREMwUlk2MUxLUXBqY3U1QmlYMVpSdFI1TE9jR1dYYTlQ?=
- =?utf-8?B?clVvWmEwVU83NUhuRGhFek1IemdLZU13N0xua05ubWhEenZnOXBTUjRyNm1N?=
- =?utf-8?B?NFRLdzNERFBrcC8rNTFFajFRRlArYW9NOG5qTnhxcmNYclg0M1Ruak5yc05G?=
- =?utf-8?B?eTk2SHFNUnBLRTRaOE9aLzZQK1g4cVRFWVc4eWRYUlB2Q2QxNXgyei8yZ0sy?=
- =?utf-8?B?UW1LNTVWb1MrcmtQMy9HRlBjdTQxcTNzcml0VDhlMHlaNmdFeml2SE45Rkt2?=
- =?utf-8?B?QjdMRGdKWVhBOEZVc3YxbzZDNDllTWN5NXZqQ1NGZXhHMEI1QS9MMGtUdWhw?=
- =?utf-8?B?bDJseWRmcjJacFlic0hlWVdrUVY3WUJRZVpoam9vQS9heXZOd1MvcGtxbVFU?=
- =?utf-8?B?b0I2TjJpQ3NjeTBSQVBEdFRKZEYxLzMvYkVvbUxlWHNOcEpaNXJId1phRDcr?=
- =?utf-8?B?SlFpb2tqUkpnN1owcy9ya1NsaG1IdzlnbWJrZHBsYWU5dmpiVENZR01PcEky?=
- =?utf-8?B?Z0M1QmI4RnZXTnl6bkNFV29wbGZhL0hneFRQdkgzZzJDdm83WkhEMzBRY24r?=
- =?utf-8?B?VnlESE1wU0c3ZUZST3V4RzAxK3hPdjhKV2txL3M1OE5IeDRSNFUvbGNEWlNQ?=
- =?utf-8?B?U3QxZVF0UWwyRGpURGZ6eHJWVWlhclFCZWtaVmFPZUFJckE3alEyUEI5L01v?=
- =?utf-8?B?aWZYL3MrNHJJWHMvNmxXWm1aUTMySk9YLzhTTUp5RVhkcDFSbTMrdmVpQWFV?=
- =?utf-8?B?c1EvVUozT2ZEdkYzdXZrdElTWExkamF3OG0wN083Q3JsV29LRDRpMG52clIx?=
- =?utf-8?B?MjFGMmhTclcwRjYzUXpzTzVHQWhZMkRiMlZ1Sm9jU0xUUVcya3BoK3ViZ2sv?=
- =?utf-8?B?S2l6QnoxVDRrQ3NCTktOb3lEajUrM0FLM1JLME1BUmlrVWFUZ1Z2NXhBNG5o?=
- =?utf-8?B?L3VRK0wvM2x4TnlsMTVSWllnTHJqSHgwSFlST2syZkNHUUdxZVdySFJIdFJM?=
- =?utf-8?B?ZkZEai9pUWtNRU00Y2IvSjlsYzhlQXBaQW5DYWIvYmJ0MU8xL0x6ZURrSEdn?=
- =?utf-8?B?TVlXMzR3R2VPWndVN25mbXlyVmRsOTBjMG5HbjBpRUc3aENwTS9UN1JJbGVz?=
- =?utf-8?B?d1Q2NG0xRDdmdVZIczYvRjA5Q0Z3NzZjU1YrTkkzdWw0SVEvR0ZYU3NicHNp?=
- =?utf-8?B?bTI3Mm9SYkFHZ2N0eUlGVDRjRU5Qc2tLMVJUcWlVdVJOdnpSTHY3WlJsNVlR?=
- =?utf-8?B?ZTlVMmxLVTJZZ0JSdWI4NlJIcThBMVhaaGdUdGlacFFwR2Nab09ZYVhrZ243?=
- =?utf-8?B?NzNYdUZLYk9ENVlFRjhnN1VKZGJrN2FDdGdPSFloNVorOTRoS3BkTnBHVEgw?=
- =?utf-8?B?YU9zZ3lsZktkMk45M3ZGQm0yQTNYc1ptVi9KUXRpQW50Rm1FNzgrZi81dXF4?=
- =?utf-8?B?cmJmM0J4YzdWSXZmamFNdDBic1lka3ZDakNJU3RaOE9xaW9CRWlOQ0xYN1hV?=
- =?utf-8?B?MVMxNUZmUUl1N2VJN29xTVc2TXg2aTZ4eVM2U2xXYzA5dHNzRzBadzdMSUNo?=
- =?utf-8?B?UW9DUlpnditLQ1g4VzhONXkwd1NZM3E4cm1rSHZYdU5NcXJ4TktuQnZOelc3?=
- =?utf-8?B?RFN6QkhNRXRMZUdjWW9VVXVZVkpqWCtEQ1VFWjZ3YkhseHUzQkU0M25VelJy?=
- =?utf-8?B?VGNML1BvMm5lU29EeUg5LzZFdE5wY0trUVhXdG1PQk1pZ1Q4TmxJNDd4OWdI?=
- =?utf-8?B?MlE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0dc1ca7-2006-4443-bf67-08dd500061d8
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2025 09:41:13.1975 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hosE8xdoyFfPSe67w3CmtvkMxs9w+xqwtxir+D7UeNxqqcydwZzTLmru0ACnXKlEiXOM4/dG+hn/mVgl0ZtZwQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB6661
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] net: vhost-user: add QAPI events to report connection
+ state
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Brivio <sbrivio@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Laine Stump <laine@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20250217092550.1172055-1-lvivier@redhat.com>
+ <87ldu3heti.fsf@pond.sub.org>
+Content-Language: en-US
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ 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
+In-Reply-To: <87ldu3heti.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -218,176 +159,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/18/2025 5:19 PM, Alexey Kardashevskiy wrote:
+On 18/02/2025 08:50, Markus Armbruster wrote:
+> Laurent Vivier <lvivier@redhat.com> writes:
 > 
-> 
-> On 17/2/25 19:18, Chenyi Qiang wrote:
->> Modify memory_region_set_ram_discard_manager() to return false if a
->> RamDiscardManager is already set in the MemoryRegion. The caller must
->> handle this failure, such as having virtio-mem undo its actions and fail
->> the realize() process. Opportunistically move the call earlier to avoid
->> complex error handling.
+>> The netdev reports NETDEV_VHOST_USER_CONNECTED event when
+>> the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
+>> when it is disconnected.
 >>
->> This change is beneficial when introducing a new RamDiscardManager
->> instance besides virtio-mem. After
->> ram_block_coordinated_discard_require(true) unlocks all
->> RamDiscardManager instances, only one instance is allowed to be set for
->> a MemoryRegion at present.
+>> The NETDEV_VHOST_USER_CONNECTED event includes the chardev id.
 >>
->> Suggested-by: David Hildenbrand <david@redhat.com>
->> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> This allows a system manager like libvirt to detect when the server
+>> fails.
+>>
+>> For instance with passt:
+>>
+>> { 'execute': 'qmp_capabilities' }
+>> { "return": { } }
+>>
+>> [killing passt here]
+>>
+>> { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
+>>    "event": "NETDEV_VHOST_USER_DISCONNECTED",
+>>    "data": { "netdev-id": "netdev0" } }
+>>
+>> [automatic reconnection with reconnect-ms]
+>>
+>> { "timestamp": { "seconds": 1739538638, "microseconds": 354181 },
+>>    "event": "NETDEV_VHOST_USER_CONNECTED",
+>>    "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
+>>
+>> Tested-by: Stefano Brivio <sbrivio@redhat.com>
+>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 >> ---
->> Changes in v2:
->>      - newly added.
->> ---
->>   hw/virtio/virtio-mem.c | 30 +++++++++++++++++-------------
->>   include/exec/memory.h  |  6 +++---
->>   system/memory.c        | 11 ++++++++---
->>   3 files changed, 28 insertions(+), 19 deletions(-)
 >>
->> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
->> index 21f16e4912..ef818a2cdf 100644
->> --- a/hw/virtio/virtio-mem.c
->> +++ b/hw/virtio/virtio-mem.c
->> @@ -1074,6 +1074,18 @@ static void
->> virtio_mem_device_realize(DeviceState *dev, Error **errp)
->>                           vmem->block_size;
->>       vmem->bitmap = bitmap_new(vmem->bitmap_size);
->>   +    /*
->> +     * Set ourselves as RamDiscardManager before the plug handler
->> maps the
->> +     * memory region and exposes it via an address space.
->> +     */
->> +    if (memory_region_set_ram_discard_manager(&vmem->memdev->mr,
->> +                                             
->> RAM_DISCARD_MANAGER(vmem))) {
->> +        error_setg(errp, "Failed to set RamDiscardManager");
->> +        g_free(vmem->bitmap);
->> +        ram_block_coordinated_discard_require(false);
->> +        return;
->> +    }
-> 
-> Looks like this can move before vmem->bitmap is allocated (or even
-> before ram_block_coordinated_discard_require(true)?). Then you can drop
-> g_free() and avoid having a stale pointer in vmem->bitmap (not that it
-> matters here though).
-
-I'm not sure if moving up the memory_region_set_ram_discard_manager()
-will have bring any side effect (seems no requirement for the operation
-order here). But Maybe it's better to put after
-ram_block_coordinated_discard_require(true) as
-ram_block_coordinated_discard_require(true) unlocks RDM users.
-
-> 
+>> Notes:
+>>      v4:
+>>        - as ChardevInfo is not needed, move events definition from
+>>          qapi/char.json to qapi/net.json
+>>      
+>>      v3:
+>>        - remove ChardevInfo, provides only the chardev id
+>>      
+>>      v2:
+>>        - remove duplicate line info.frontend_open
+>>
+>>   qapi/net.json    | 40 ++++++++++++++++++++++++++++++++++++++++
+>>   net/vhost-user.c |  3 +++
+>>   2 files changed, 43 insertions(+)
+>>
+>> diff --git a/qapi/net.json b/qapi/net.json
+>> index 2739a2f42332..310cc4fd1907 100644
+>> --- a/qapi/net.json
+>> +++ b/qapi/net.json
+>> @@ -1031,3 +1031,43 @@
+>>   ##
+>>   { 'event': 'NETDEV_STREAM_DISCONNECTED',
+>>     'data': { 'netdev-id': 'str' } }
 >> +
->>       virtio_init(vdev, VIRTIO_ID_MEM, sizeof(struct virtio_mem_config));
->>       vmem->vq = virtio_add_queue(vdev, 128, virtio_mem_handle_request);
->>   vmem->bitmap
->> @@ -1124,13 +1136,6 @@ static void
->> virtio_mem_device_realize(DeviceState *dev, Error **errp)
->>       vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
->>       vmem->system_reset->vmem = vmem;
->>       qemu_register_resettable(obj);
->> -
->> -    /*
->> -     * Set ourselves as RamDiscardManager before the plug handler
->> maps the
->> -     * memory region and exposes it via an address space.
->> -     */
->> -    memory_region_set_ram_discard_manager(&vmem->memdev->mr,
->> -                                          RAM_DISCARD_MANAGER(vmem));
->>   }
->>     static void virtio_mem_device_unrealize(DeviceState *dev)
->> @@ -1138,12 +1143,6 @@ static void
->> virtio_mem_device_unrealize(DeviceState *dev)
->>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->>       VirtIOMEM *vmem = VIRTIO_MEM(dev);
->>   -    /*
->> -     * The unplug handler unmapped the memory region, it cannot be
->> -     * found via an address space anymore. Unset ourselves.
->> -     */
->> -    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
->> -
->>       qemu_unregister_resettable(OBJECT(vmem->system_reset));
->>       object_unref(OBJECT(vmem->system_reset));
->>   @@ -1155,6 +1154,11 @@ static void
->> virtio_mem_device_unrealize(DeviceState *dev)
->>       host_memory_backend_set_mapped(vmem->memdev, false);
->>       virtio_del_queue(vdev, 0);
->>       virtio_cleanup(vdev);
->> +    /*
->> +     * The unplug handler unmapped the memory region, it cannot be
->> +     * found via an address space anymore. Unset ourselves.
->> +     */
->> +    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
->>       g_free(vmem->bitmap);
->>       ram_block_coordinated_discard_require(false);
->>   }
->> diff --git a/include/exec/memory.h b/include/exec/memory.h
->> index 3bebc43d59..390477b588 100644
->> --- a/include/exec/memory.h
->> +++ b/include/exec/memory.h
->> @@ -2487,13 +2487,13 @@ static inline bool
->> memory_region_has_ram_discard_manager(MemoryRegion *mr)
->>    *
->>    * This function must not be called for a mapped #MemoryRegion, a
->> #MemoryRegion
->>    * that does not cover RAM, or a #MemoryRegion that already has a
->> - * #RamDiscardManager assigned.
->> + * #RamDiscardManager assigned. Return 0 if the rdm is set successfully.
->>    *
->>    * @mr: the #MemoryRegion
->>    * @rdm: #RamDiscardManager to set
->>    */
->> -void memory_region_set_ram_discard_manager(MemoryRegion *mr,
->> -                                           RamDiscardManager *rdm);
->> +int memory_region_set_ram_discard_manager(MemoryRegion *mr,
->> +                                          RamDiscardManager *rdm);
->>     /**
->>    * memory_region_find: translate an address/size relative to a
->> diff --git a/system/memory.c b/system/memory.c
->> index b17b5538ff..297a3dbcd4 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -2115,12 +2115,17 @@ RamDiscardManager
->> *memory_region_get_ram_discard_manager(MemoryRegion *mr)
->>       return mr->rdm;
->>   }
->>   -void memory_region_set_ram_discard_manager(MemoryRegion *mr,
->> -                                           RamDiscardManager *rdm)
->> +int memory_region_set_ram_discard_manager(MemoryRegion *mr,
->> +                                          RamDiscardManager *rdm)
->>   {
->>       g_assert(memory_region_is_ram(mr));
->> -    g_assert(!rdm || !mr->rdm);
->> +    if (mr->rdm && rdm != NULL) {
-> 
-> Drop "!= NULL".
-> 
->> +        return -1;
-> 
-> -EBUSY?
-
-[..]
-
-> 
->> +    }
+>> +##
+>> +# @NETDEV_VHOST_USER_CONNECTED:
+>> +#
+>> +# Emitted when the vhost-user chardev is connected
+>> +#
+>> +# @netdev-id: QEMU netdev id that is connected
+>> +#
+>> +# @chardev-id: The character device id used by the QEMU netdev
+>> +#
+>> +# Since: 10.0
+>> +#
+>> +# .. qmp-example::
+>> +#
+>> +#     <- { "timestamp": {"seconds": 1739538638, "microseconds": 354181 },
+>> +#          "event": "NETDEV_VHOST_USER_CONNECTED",
+>> +#          "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
+>> +#
+>> +##
+>> +{ 'event': 'NETDEV_VHOST_USER_CONNECTED',
+>> +  'data': { 'netdev-id': 'str', 'chardev-id': 'str' } }
 >> +
->> +    /* !rdm || !mr->rdm */
+>> +##
+>> +# @NETDEV_VHOST_USER_DISCONNECTED:
+>> +#
+>> +# Emitted when the vhost-user chardev is disconnected
+>> +#
+>> +# @netdev-id: QEMU netdev id that is disconnected
+>> +#
+>> +# Since: 10.0
+>> +#
+>> +# .. qmp-example::
+>> +#
+>> +#     <- { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
+>> +#          "event": "NETDEV_VHOST_USER_DISCONNECTED",
+>> +#          "data": { "netdev-id": "netdev0" } }
+>> +#
+>> +##
+>> +{ 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
+>> +  'data': { 'netdev-id': 'str' } }
+>> diff --git a/net/vhost-user.c b/net/vhost-user.c
+>> index 12555518e838..0b235e50c650 100644
+>> --- a/net/vhost-user.c
+>> +++ b/net/vhost-user.c
+>> @@ -16,6 +16,7 @@
+>>   #include "chardev/char-fe.h"
+>>   #include "qapi/error.h"
+>>   #include "qapi/qapi-commands-net.h"
+>> +#include "qapi/qapi-events-net.h"
+>>   #include "qemu/config-file.h"
+>>   #include "qemu/error-report.h"
+>>   #include "qemu/option.h"
+>> @@ -271,6 +272,7 @@ static void chr_closed_bh(void *opaque)
+>>       if (err) {
+>>           error_report_err(err);
+>>       }
+>> +    qapi_event_send_netdev_vhost_user_disconnected(name);
+>>   }
+>>   
+>>   static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+>> @@ -300,6 +302,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+>>                                            net_vhost_user_watch, s);
+>>           qmp_set_link(name, true, &err);
+>>           s->started = true;
+>> +        qapi_event_send_netdev_vhost_user_connected(name, chr->label);
 > 
-> See, like here - no "!= NULL" :) (and the comment is useless). Thanks,
+> We seem to use "label" and "id" interchangeably.  Unfortunate.
+> 
+> 
+>>           break;
+>>       case CHR_EVENT_CLOSED:
+>>           /* a close event may happen during a read/write, but vhost
+> 
+> Like Daniel, I wonder whether provding events for chardevs instead would
+> be more broadly useful.
 
-LGTM, will change it. Thanks!
+In fact, it depends on what libvirt needs or wants.
+
+If we implement the event for chardev, libvirt will have to find internally which netdev 
+it belongs to, if we implement the event for netdev it has directly the netdev id.
+
+But no one never asked for a chardev event until now, not sure it's useful.
+
+Stefano shown that vhost-user event is really easy to use with existing code of libvirt.
 
 > 
+> That said, there's nothing wrong with the patch itself, so
+> Acked-by: Markus Armbruster <armbru@redhat.com>
 > 
->>       mr->rdm = rdm;
->> +    return 0;
->>   }
->>     uint64_t ram_discard_manager_get_min_granularity(const
->> RamDiscardManager *rdm,
-> 
+
+Thanks,
+Laurent
 
 
