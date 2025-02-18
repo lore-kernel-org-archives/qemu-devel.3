@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B949C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 13:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70610C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 13:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkNfI-0001Tc-Mz; Tue, 18 Feb 2025 08:29:32 -0500
+	id 1tkO49-0005mH-I9; Tue, 18 Feb 2025 08:55:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tkNfI-0001TQ-0y
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 08:29:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tkNfF-00078v-59
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 08:29:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739885366;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=X3AIpFMd4JJU2+UhTVJtkJ0tyhc383x4G16IJtfpa2E=;
- b=LaUMKwFPp0ITJXxfdLJkjb87LPsjHyUvuASK70azX6aJTSnGlFRowPPVja8xmKYM2TlNr4
- ffSjM9iROTrptPXksEqb+ODtxvxdb8pj8hclv6tkJSaQ84pqlnsZ5MqjJhtGqdk0sOlYRQ
- Thbh/pQj3PkxU2rAeKLmqVbdxvkEyr0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-Z7enATAsNjK9b5NctcjEYg-1; Tue,
- 18 Feb 2025 08:29:21 -0500
-X-MC-Unique: Z7enATAsNjK9b5NctcjEYg-1
-X-Mimecast-MFC-AGG-ID: Z7enATAsNjK9b5NctcjEYg_1739885360
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13F3E1800876; Tue, 18 Feb 2025 13:29:20 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.111])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 339B11800352; Tue, 18 Feb 2025 13:29:17 +0000 (UTC)
-Date: Tue, 18 Feb 2025 21:25:16 +0800
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, slp@redhat.com, stevensd@chromium.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, david@redhat.com,
- hi@alyssa.is, mst@redhat.com, jasowang@redhat.com
-Subject: Re: [PATCH v4 7/9] vhost-user-devive: Add shmem BAR
-Message-ID: <20250218132516.GA28047@fedora>
-References: <20250217164012.246727-1-aesteve@redhat.com>
- <20250217164012.246727-8-aesteve@redhat.com>
- <20250218104116.GK10767@fedora>
- <CADSE00+-uisJfHWCe0sFTy1fXrqB7K_yWnm-xZSxAmf1=fVpAA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tkO46-0005kt-S2
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 08:55:11 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tkO45-0001gL-1u
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 08:55:10 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-6f972c031efso54095547b3.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 05:55:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739886907; x=1740491707; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=39fn1BS3vuf40TnRJ0SE8lCne6FUxR6xiuWLRie0Qos=;
+ b=bNjaeLvB4PxaLI1f3flawagnnuieDjeeYJdt+cBnVAzqHwKuf9gnny9LZVVf2WMJEW
+ lcYkKkHWoWm60fWTAFxacbAEyTtWH+siuf1Al3MgVSsz+i1o7JCK9ngxSwCjYGgKp9BT
+ qFCwaDxfZdKu+dPFVgmvtWLugH2fQ/Ftqu9+Qv4MGH/IFhNgM1syZzW1ytGWRokftehS
+ obeWGmwNKyw8G+yhRCQggp2knqfAljl529hVw/EwAaemfZMZA4OtUruvM23crtbx3/YI
+ MQvPObaHQe6P983Sj9gZuBP5Evp6Fd11LDBuHR5pzH4vd/F0A4tLxyTvo5NOTDQwCBX3
+ USyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739886907; x=1740491707;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=39fn1BS3vuf40TnRJ0SE8lCne6FUxR6xiuWLRie0Qos=;
+ b=Z16YtDR17SykF19Aw50qI3AmxpIvMVm83vYh1FFB1zdCieqrniCHMZUjEm7k4qQB5W
+ sKh+aJYdDXrgGxythy0MlB/hr3K3gf1PQCW9YnjafKNbSZqXqu7IlTukwZBVD+Gh6LRE
+ TfJatahBtcKCtgPiflIA29ZJf0a663ENcQnYKEZFvKFocsp2WX6Vpy2quClzullGGJMj
+ 3H0p8IcYnUF5FFdNc50RfCJk0WaePz3bE7c/RGD4VU/dwCgJ8EXp2fch4Lb9TPqjlF+h
+ e2mn3O75CXV4SXKadsyyoQTDcdqIsZ+uVF4rr/weU3CXDRWImhaHyxROh75BLyFbXdfI
+ BSGQ==
+X-Gm-Message-State: AOJu0YxQNep+gKCgg1/Adh9mlfUYCU6GIroH9llLj2dm8mJqaK9C41RS
+ plsmLzNvIRdphnw+Ze+Q6KW2+bNz6gX2QlDvmbLQ1zS4LQ32i2zjH1h1vsvpnoDHoEvxlmriDYt
+ e/dVLHvmJzGoxOPMCZjmmzHYcm3dfGZ8Yrra4bA==
+X-Gm-Gg: ASbGncsBVXwV7B6RADM/jJ0Ltf/xFr2NbwjC3w/qp1tAdClL53sw9441BFpgDX8e1Le
+ COMtI3W9E33Hqh69NuHVveq4/sxdqdrsGqscKUlNEbUmrqSS+riDqjGlj4zgA6V09REDxheFtNg
+ ==
+X-Google-Smtp-Source: AGHT+IGVCuthWFQAA8eqh0bykJgVjjswKOY+Z0sUC4HSC9ekQacmG8hCajtYaV/IzJ3UQLdLUTaTpYlud97iDLd85Nw=
+X-Received: by 2002:a05:6902:c06:b0:e5b:3d71:bff1 with SMTP id
+ 3f1490d57ef6-e5da9eb14f1mr17190459276.0.1739886907134; Tue, 18 Feb 2025
+ 05:55:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="MmHLaugt0pq71LVJ"
-Content-Disposition: inline
-In-Reply-To: <CADSE00+-uisJfHWCe0sFTy1fXrqB7K_yWnm-xZSxAmf1=fVpAA@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20250208163911.54522-1-philmd@linaro.org>
+ <CAFEAcA8PYv3-JX66THwj-mDM0es6V5gVVWJsHTqkd9wTEVor4A@mail.gmail.com>
+In-Reply-To: <CAFEAcA8PYv3-JX66THwj-mDM0es6V5gVVWJsHTqkd9wTEVor4A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Feb 2025 13:54:55 +0000
+X-Gm-Features: AWEUYZnAZ3KPEu27SvYRa3093KcYYrD48TSXN3xhNyE1aBE_lWOl7Fze5E7ctQE
+Message-ID: <CAFEAcA-ioFgThGJ70cyhe7rA0kbnDULsr-BuAqE+3b3TE0BGwg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/7] hw/char/pl011: Implement TX (async) FIFO to avoid
+ blocking the main loop
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,252 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---MmHLaugt0pq71LVJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Feb 18, 2025 at 11:55:33AM +0100, Albert Esteve wrote:
-> On Tue, Feb 18, 2025 at 11:41=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat=
-=2Ecom> wrote:
+On Mon, 17 Feb 2025 at 14:55, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
+rg> wrote:
 > >
-> > On Mon, Feb 17, 2025 at 05:40:10PM +0100, Albert Esteve wrote:
-> > > Add a shmem BAR block in the vhost-user-device,
-> > > which files can be directly mapped into.
-> > >
-> > > The number, shmid, and size of the VIRTIO Shared
-> > > Memory subregions is retrieved through a
-> > > get_shmem_config message sent by the
-> > > vhost-user-base module on the realize step,
-> > > after virtio_init().
-> > >
-> > > By default, if VHOST_USER_PROTOCOL_F_SHMEM
-> > > feature is not supported by the backend,
-> > > there is no cache.
-> > >
-> > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> > > ---
-> > >  hw/virtio/vhost-user-base.c       | 47 +++++++++++++++++++++++++++++=
---
-> > >  hw/virtio/vhost-user-device-pci.c | 36 +++++++++++++++++++++--
-> > >  2 files changed, 78 insertions(+), 5 deletions(-)
-> > >
-> > > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> > > index 2bc3423326..8d4bca98a8 100644
-> > > --- a/hw/virtio/vhost-user-base.c
-> > > +++ b/hw/virtio/vhost-user-base.c
-> > > @@ -16,6 +16,7 @@
-> > >  #include "hw/virtio/virtio-bus.h"
-> > >  #include "hw/virtio/vhost-user-base.h"
-> > >  #include "qemu/error-report.h"
-> > > +#include "migration/blocker.h"
-> > >
-> > >  static void vub_start(VirtIODevice *vdev)
-> > >  {
-> > > @@ -271,7 +272,8 @@ static void vub_device_realize(DeviceState *dev, =
-Error **errp)
-> > >  {
-> > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> > >      VHostUserBase *vub =3D VHOST_USER_BASE(dev);
-> > > -    int ret;
-> > > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-> > > +    int i, ret, nregions;
-> > >
-> > >      if (!vub->chardev.chr) {
-> > >          error_setg(errp, "vhost-user-base: missing chardev");
-> > > @@ -314,7 +316,7 @@ static void vub_device_realize(DeviceState *dev, =
-Error **errp)
-> > >
-> > >      /* Allocate queues */
-> > >      vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
-> > > -    for (int i =3D 0; i < vub->num_vqs; i++) {
-> > > +    for (i =3D 0; i < vub->num_vqs; i++) {
-> > >          g_ptr_array_add(vub->vqs,
-> > >                          virtio_add_queue(vdev, vub->vq_size,
-> > >                                           vub_handle_output));
-> > > @@ -328,11 +330,50 @@ static void vub_device_realize(DeviceState *dev=
-, Error **errp)
-> > >                           VHOST_BACKEND_TYPE_USER, 0, errp);
-> > >
-> > >      if (ret < 0) {
-> > > -        do_vhost_user_cleanup(vdev, vub);
-> > > +        goto err;
-> > > +    }
-> > > +
-> > > +    ret =3D vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->v=
-host_dev,
-> > > +                                                           &nregions,
-> > > +                                                           memory_si=
-zes,
-> > > +                                                           errp);
-> > > +
-> > > +    if (ret < 0) {
-> > > +        goto err;
-> > > +    }
-> > > +
-> > > +    for (i =3D 0; i < nregions; i++) {
-> > > +        if (memory_sizes[i]) {
-> > > +            if (vub->vhost_dev.migration_blocker =3D=3D NULL) {
-> > > +                error_setg(&vub->vhost_dev.migration_blocker,
-> > > +                       "Migration disabled: devices with VIRTIO Shar=
-ed Memory "
-> > > +                       "Regions do not support migration yet.");
-> > > +                ret =3D migrate_add_blocker_normal(
-> > > +                    &vub->vhost_dev.migration_blocker,
-> > > +                    errp);
-> > > +
-> > > +                if (ret < 0) {
-> > > +                    goto err;
-> > > +                }
-> > > +            }
-> > > +
-> > > +            if (memory_sizes[i] % qemu_real_host_page_size() !=3D 0)=
- {
-> > > +                error_setg(errp, "Shared memory %d size must be a po=
-wer of 2 "
-> > > +                                 "no smaller than the page size", i);
-> > > +                goto err;
-> > > +            }
-> > > +
-> > > +            memory_region_init(virtio_new_shmem_region(vdev)->mr,
+> > Hi,
 > >
-> > Does this code support non-contiguous shmids? For example, if a device
-> > has two Shared Memory Regions defined in its spec but the first one is
-> > optional, then the device might have memory_sizes[0] =3D=3D 0 and
-> > memory_sizes[1] > 0. In that case the Shared Memory Region must have
-> > shmid 1 and not shmid 0.
->=20
-> Yes, it does. That is guarded by ` if (memory_sizes[i]) {`, which only
-> initializes the region if memory_sizes[i] > 0. The main downsize of
-> that, is that it requires to send as many `memory_sizes` elements as
-> the highest shmid for the device. But as it is, it is supported by
-> this code.
-
-shmids are not preserved when there are gaps:
-
-  for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-      memory_region_add_subregion(&dev->shmembar, offset, mr);
-      virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
-                             offset, mr->size, i);
-			                       ^
-
-vdev->n_shmem_regions is incremented by virtio_new_shmem_region().
-virtio_new_shmem_region() is only called on non-empty Shared Memory
-Regions.
-
-In the example I gave with empty shmid 0 and non-empty shmid 1 I think
-we end up with vdev->n_shmem_regions =3D=3D 1. shmdid 1 is exposed to the
-guest with shmid 0.
-
-Have I missed something?
-
+> > This series add support for (async) FIFO on the transmit path
+> > of the PL011 UART.
 > >
-> > > +                               OBJECT(vdev), "vub-shm-" + i,
-> > > +                               memory_sizes[i]);
-> > > +        }
-> > >      }
-> > >
-> > >      qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, N=
-ULL,
-> > >                               dev, NULL, true);
-> > > +    return;
-> > > +err:
-> > > +    do_vhost_user_cleanup(vdev, vub);
-> > >  }
-> > >
-> > >  static void vub_device_unrealize(DeviceState *dev)
-> > > diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user=
--device-pci.c
-> > > index efaf55d3dd..f215cae925 100644
-> > > --- a/hw/virtio/vhost-user-device-pci.c
-> > > +++ b/hw/virtio/vhost-user-device-pci.c
-> > > @@ -8,14 +8,18 @@
-> > >   */
-> > >
-> > >  #include "qemu/osdep.h"
-> > > +#include "qapi/error.h"
-> > >  #include "hw/qdev-properties.h"
-> > >  #include "hw/virtio/vhost-user-base.h"
-> > >  #include "hw/virtio/virtio-pci.h"
-> > >
-> > > +#define VIRTIO_DEVICE_PCI_SHMEM_BAR 2
-> > > +
-> > >  struct VHostUserDevicePCI {
-> > >      VirtIOPCIProxy parent_obj;
-> > >
-> > >      VHostUserBase vub;
-> > > +    MemoryRegion shmembar;
-> > >  };
-> > >
-> > >  #define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
-> > > @@ -25,10 +29,38 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VH=
-OST_USER_DEVICE_PCI)
-> > >  static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, =
-Error **errp)
-> > >  {
-> > >      VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(vpci_dev);
-> > > -    DeviceState *vdev =3D DEVICE(&dev->vub);
-> > > +    DeviceState *dev_state =3D DEVICE(&dev->vub);
-> > > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);
-> > > +    MemoryRegion *mr;
-> > > +    uint64_t offset =3D 0, shmem_size =3D 0;
-> > > +    int i;
-> > >
-> > >      vpci_dev->nvectors =3D 1;
-> > > -    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-> > > +    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
-> > > +
-> > > +    for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-> > > +        mr =3D vdev->shmem_list[i].mr;
-> > > +        if (mr->size > UINT64_MAX - shmem_size) {
-> > > +            error_setg(errp, "Total shared memory required overflow"=
-);
-> > > +            return;
-> > > +        }
-> > > +        shmem_size =3D shmem_size + mr->size;
-> > > +    }
-> > > +    if (shmem_size) {
-> > > +        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
-> > > +                           "vhost-device-pci-shmembar", shmem_size);
-> > > +        for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-> > > +            memory_region_add_subregion(&dev->shmembar, offset, mr);
-> > > +            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM=
-_BAR,
-> > > +                                   offset, mr->size, i);
-> > > +            offset =3D offset + mr->size;
-> > > +        }
-> > > +        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHMEM=
-_BAR,
-> > > +                        PCI_BASE_ADDRESS_SPACE_MEMORY |
-> > > +                        PCI_BASE_ADDRESS_MEM_PREFETCH |
-> > > +                        PCI_BASE_ADDRESS_MEM_TYPE_64,
-> > > +                        &dev->shmembar);
-> > > +    }
-> > >  }
-> > >
-> > >  static void vhost_user_device_pci_class_init(ObjectClass *klass, voi=
-d *data)
-> > > --
-> > > 2.48.1
-> > >
->=20
+>
+> Applied to target-arm.next, thanks (with a couple of minor
+> tweaks to two of the patches).
 
---MmHLaugt0pq71LVJ
-Content-Type: application/pgp-signature; name="signature.asc"
+Unfortunately I seem to get failures in 'make check-functional'
+with the last patch of this series applied. This is with a
+clang sanitizer build on ubuntu 24.04:
+'../../configure' '--cc=3Dclang' '--cxx=3Dclang++' '--enable-ubsan'
+'--target-list=3Darm-softmmu,arm-linux-user,aarch64-softmmu,aarch64-linux-u=
+ser'
 
------BEGIN PGP SIGNATURE-----
+and the tests that fail are:
+42/44 qemu:func-thorough+func-aarch64-thorough+thorough /
+func-aarch64-aarch64_xlnx_versal     TIMEOUT          90.01s   killed
+by signal 15 SIGTERM
+43/44 qemu:func-thorough+func-aarch64-thorough+thorough /
+func-aarch64-aarch64_raspi4          TIMEOUT         480.01s   killed
+by signal 15 SIGTERM
+44/44 qemu:func-thorough+func-aarch64-thorough+thorough /
+func-aarch64-aarch64_virt            TIMEOUT         720.01s   killed
+by signal 15 SIGTERM
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAme0ijwACgkQnKSrs4Gr
-c8hIYgf/ReXKr50DystLpeb9xil2dFbTru61Cvph2cgEVZJtIDeUYAsGrxDt9XwU
-S7uIhy3L1RSblRp6vbBq2FOSS1pTPDmImjXI8s7ueTqv2RZlsoCAJy4Cp/SgnHx/
-JAjbo8SwDqkXiNBVlzMiFYE3YQUwd7TmFIblfCIlleteDzOByB8ILCFLKK/sCqsq
-p9BJWBIX1gtgrUow/bb76ggzzbWlgc6LT1JMnfoaY9+tpzMDpzoQSidDbfXzRWSy
-HXHkiSR3iNnjT0RlNV64vRR36giYhTEpesrb75CfYyJDNuPFmPa/Ph8ucCxZrTZ7
-HT2ybRg2MMj4To5Sr23ua0HXXjKZqA==
-=0+25
------END PGP SIGNATURE-----
+Looking at the test logs it looks like the test framework
+starts QEMU but there is never any output from the guest
+console.
 
---MmHLaugt0pq71LVJ--
+I've dropped the patchset from target-arm.next for the moment.
 
+thanks
+-- PMM
 
