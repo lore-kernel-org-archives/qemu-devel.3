@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA836C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61AAEC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkHOe-0001Nh-Gu; Tue, 18 Feb 2025 01:47:56 -0500
+	id 1tkHQQ-00022u-60; Tue, 18 Feb 2025 01:49:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkHOU-0001Mm-3D; Tue, 18 Feb 2025 01:47:46 -0500
+ id 1tkHQN-00022R-Qg; Tue, 18 Feb 2025 01:49:43 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkHOQ-00070K-Dv; Tue, 18 Feb 2025 01:47:44 -0500
+ id 1tkHQL-00076r-IF; Tue, 18 Feb 2025 01:49:43 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxqpK3CcGz4x0t;
- Tue, 18 Feb 2025 17:47:37 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yxqrg1x8jz4x0t;
+ Tue, 18 Feb 2025 17:49:39 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxqpG4zbHz4wcw;
- Tue, 18 Feb 2025 17:47:34 +1100 (AEDT)
-Message-ID: <33698876-0408-4d10-89fe-2348829bfd6e@kaod.org>
-Date: Tue, 18 Feb 2025 07:47:32 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yxqrc3nHjz4wcr;
+ Tue, 18 Feb 2025 17:49:36 +1100 (AEDT)
+Message-ID: <ca2ad388-2bb0-4583-88c1-7821064592e6@kaod.org>
+Date: Tue, 18 Feb 2025 07:49:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/28] hw/misc/aspeed_scu: Fix the revision ID cannot
- be set in the SOC layer for AST2700
+Subject: Re: [PATCH v3 18/28] hw/arm/aspeed: Add SoC and Machine Support for
+ AST2700 A1
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
- <20250213033531.3367697-16-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-19-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250213033531.3367697-16-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250213033531.3367697-19-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -113,73 +113,157 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/13/25 04:35, Jamin Lin wrote:
-> According to the design of the AST2600, it has a Silicon Revision ID Register,
-> specifically SCU004 and SCU014, to set the Revision ID for the AST2600.
-> For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is set to 0x05030303.
-> In the "aspeed_ast2600_scu_reset" function, the hardcoded value
-> "AST2600_A3_SILICON_REV" is set in SCU004, and "s->silicon_rev" is set in
-> SCU014. The value of "s->silicon_rev" is set by the SOC layer via the
-> "silicon-rev" property.
-> 
-> However, the design of the AST2700 is different. There are two SCU controllers:
-> SCU0 (CPU Die) and SCU1 (IO Die). In the AST2700, the firmware reads the
-> SCU Silicon Revision ID register (SCU0_000) and the SCUIO Silicon Revision ID
-> register (SCU1_000) and combines them into a 64-bit value.
-> The combined value of SCU0_000[23:16] and SCU1_000[23:16] represents the silicon
-> revision. For example, the AST2700-A1 revision is "0x0601010306010103", where
-> SCU0_000 should be 06010103 and SCU1_000 should be 06010103.
-
-Are both these values supposed to be identical ? if not, we should
-plan for changes at machine/SoC level too.
-
-
-> 
-> Reference:
-> https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/arch/arm/mach-aspeed/ast2700/cpu-info.c
+> The memory map for AST2700 A1 remains compatible with AST2700 A0. However, the
+> IRQ mapping has been updated for AST2700 A1, with GIC interrupts now ranging
+> from 192 to 201. Add a new IRQ map table for AST2700 A1.
+> Add "aspeed_soc_ast2700a1_class_init" to initialize the AST2700 A1 SoC.
+> Introduce "aspeed_machine_ast2700a1_evb_class_init" to initialize the
+> AST2700 A1 EVB.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/misc/aspeed_scu.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>   hw/arm/aspeed.c         | 13 +++++++
+>   hw/arm/aspeed_ast27x0.c | 80 +++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 93 insertions(+)
 > 
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index 2d9fe78926..b45a36a555 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -911,7 +911,6 @@ static const MemoryRegionOps aspeed_ast2700_scu_ops = {
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 6ddfdbdeba..c0539e5950 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1672,6 +1672,15 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
+>       mc->default_ram_size = 1 * GiB;
+>       aspeed_machine_class_init_cpus_defaults(mc);
+>   }
+> +
+> +static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> +
+> +    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
+> +    amc->soc_name  = "ast2700-a1";
+> +}
+>   #endif
+>   
+>   static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+> @@ -1798,6 +1807,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_ast2700a0_evb_class_init,
+> +        }, {
+> +        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+> +        .parent        = MACHINE_TYPE_NAME("ast2700a0-evb"),
+
+Shouldn't the parent be TYPE_ASPEED_MACHINE instead ?
+
+> +        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+>   #endif
+>       }, {
+>           .name          = TYPE_ASPEED_MACHINE,
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 0ccec774de..926b4c3e76 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -119,6 +119,52 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
+>       [ASPEED_DEV_SDHCI]     = 133,
 >   };
 >   
->   static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
-> -    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
->       [AST2700_HW_STRAP1]             = 0x00000800,
->       [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
->       [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
-> @@ -940,6 +939,7 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
->       AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
->   
->       memcpy(s->regs, asc->resets, asc->nr_regs * 4);
-> +    s->regs[AST2700_SILICON_REV] = s->silicon_rev;
->
+> +static const int aspeed_soc_ast2700a1_irqmap[] = {
+> +    [ASPEED_DEV_SDMC]      = 0,
+> +    [ASPEED_DEV_HACE]      = 4,
+> +    [ASPEED_DEV_XDMA]      = 5,
+> +    [ASPEED_DEV_UART4]     = 8,
+> +    [ASPEED_DEV_SCU]       = 12,
+> +    [ASPEED_DEV_RTC]       = 13,
+> +    [ASPEED_DEV_EMMC]      = 15,
+> +    [ASPEED_DEV_TIMER1]    = 16,
+> +    [ASPEED_DEV_TIMER2]    = 17,
+> +    [ASPEED_DEV_TIMER3]    = 18,
+> +    [ASPEED_DEV_TIMER4]    = 19,
+> +    [ASPEED_DEV_TIMER5]    = 20,
+> +    [ASPEED_DEV_TIMER6]    = 21,
+> +    [ASPEED_DEV_TIMER7]    = 22,
+> +    [ASPEED_DEV_TIMER8]    = 23,
+> +    [ASPEED_DEV_DP]        = 28,
+> +    [ASPEED_DEV_LPC]       = 192,
+> +    [ASPEED_DEV_IBT]       = 192,
+> +    [ASPEED_DEV_KCS]       = 192,
+> +    [ASPEED_DEV_I2C]       = 194,
+> +    [ASPEED_DEV_ADC]       = 194,
+> +    [ASPEED_DEV_GPIO]      = 194,
+> +    [ASPEED_DEV_FMC]       = 195,
+> +    [ASPEED_DEV_WDT]       = 195,
+> +    [ASPEED_DEV_PWM]       = 195,
+> +    [ASPEED_DEV_I3C]       = 195,
+> +    [ASPEED_DEV_UART0]     = 196,
+> +    [ASPEED_DEV_UART1]     = 196,
+> +    [ASPEED_DEV_UART2]     = 196,
+> +    [ASPEED_DEV_UART3]     = 196,
+> +    [ASPEED_DEV_UART5]     = 196,
+> +    [ASPEED_DEV_UART6]     = 196,
+> +    [ASPEED_DEV_UART7]     = 196,
+> +    [ASPEED_DEV_UART8]     = 196,
+> +    [ASPEED_DEV_UART9]     = 196,
+> +    [ASPEED_DEV_UART10]    = 196,
+> +    [ASPEED_DEV_UART11]    = 196,
+> +    [ASPEED_DEV_UART12]    = 196,
+> +    [ASPEED_DEV_ETH1]      = 196,
+> +    [ASPEED_DEV_ETH2]      = 196,
+> +    [ASPEED_DEV_ETH3]      = 196,
+> +    [ASPEED_DEV_PECI]      = 197,
+> +    [ASPEED_DEV_SDHCI]     = 197,
+> +};
+> +
+>   /* GICINT 128 */
+>   /* GICINT 192 */
+>   static const int ast2700_gic128_gic192_intcmap[] = {
+> @@ -838,6 +884,34 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
+>       sc->get_irq      = aspeed_soc_ast2700_get_irq;
 >   }
 >   
->   static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
-> @@ -1032,7 +1032,6 @@ static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
+> +static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, void *data)
+> +{
+> +    static const char * const valid_cpu_types[] = {
+> +        ARM_CPU_TYPE_NAME("cortex-a35"),
+> +        NULL
+> +    };
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+> +
+> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
+> +    dc->user_creatable = false;
+> +    dc->realize      = aspeed_soc_ast2700_realize;
+> +
+> +    sc->name         = "ast2700-a1";
+> +    sc->valid_cpu_types = valid_cpu_types;
+> +    sc->silicon_rev  = AST2700_A1_SILICON_REV;
+> +    sc->sram_size    = 0x20000;
+> +    sc->spis_num     = 3;
+> +    sc->wdts_num     = 8;
+> +    sc->macs_num     = 3;
+> +    sc->uarts_num    = 13;
+> +    sc->num_cpus     = 4;
+> +    sc->uarts_base   = ASPEED_DEV_UART0;
+> +    sc->irqmap       = aspeed_soc_ast2700a1_irqmap;
+> +    sc->memmap       = aspeed_soc_ast2700_memmap;
+> +    sc->get_irq      = aspeed_soc_ast2700_get_irq;
+> +}
+> +
+>   static const TypeInfo aspeed_soc_ast27x0_types[] = {
+>       {
+>           .name           = TYPE_ASPEED27X0_SOC,
+> @@ -850,6 +924,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
+>           .instance_init  = aspeed_soc_ast2700_init,
+>           .class_init     = aspeed_soc_ast2700a0_class_init,
+>       },
+> +    {
+> +        .name           = "ast2700-a1",
+> +        .parent         = TYPE_ASPEED27X0_SOC,
+> +        .instance_init  = aspeed_soc_ast2700_init,
+> +        .class_init     = aspeed_soc_ast2700a1_class_init,
+> +    },
 >   };
 >   
->   static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
-> -    [AST2700_SILICON_REV]               = 0x06000003,
->       [AST2700_HW_STRAP1]                 = 0x00000504,
-
-why isn't AST2700_HW_STRAP1 assigned with s->hw_strap1 property ?
-
-The above changes could be merged as a fix.
-
-Thanks,
-
-C.
-
-
->       [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
->       [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
+>   DEFINE_TYPES(aspeed_soc_ast27x0_types)
 
 
