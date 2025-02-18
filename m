@@ -4,143 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEC7C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 19:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94AAEC021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 19:31:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkTAM-0000y8-W9; Tue, 18 Feb 2025 14:21:59 -0500
+	id 1tkTIm-0005ZG-Lz; Tue, 18 Feb 2025 14:30:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tkTAL-0000ww-4V; Tue, 18 Feb 2025 14:21:57 -0500
-Received: from mail-mw2nam04on20620.outbound.protection.outlook.com
- ([2a01:111:f403:240a::620]
- helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1tkTIU-0005WW-Ep; Tue, 18 Feb 2025 14:30:23 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tkTAJ-0006E7-3w; Tue, 18 Feb 2025 14:21:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TgEA/kzp+RY+HtWzcCNBKb/CzM/97KWUVrobcV2k1QBMQaETVGnJ4eW03P+OPYtOwDq4OV8e6FhXvUjNFz8u+zHK3Qznw+eCR9p2jKhArNraa0KEDJJMQrI9Y8bntauj25AcrS3RMKwdDfaWZddgNpQhjb4JSjVLJKBTwXwJQdsZL4OtLho8mtDEhpYvZf8wiQHAbi/KpEq5Lt32atdlWJ34o/rIGk8uvQngbESAG8ASHM9sgW67Hq2rrlNmly4oWqGwae83IS3zoQb2kmQCp0iwwt7e3nvqZgg+Y2gT1qd0NDfKB/pCAgPSNnp5LuDPWULH8xQIvr14sMZLygXCMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=phVOR3vWw5KeWTzx+0ZwZKsI+ZyZTWXHdcid3T2UUic=;
- b=SAU3Z1I389R0rxrmi02zxu5T0u7R/Z06yFOzoa1N3HULOO/h8e67ln4/kX83Ni5nH2mlkM2JCsEQM1WTfVe5TsIvSvlK5Kn4UWx4f9ydKrh0FVagaEqqNW5pXmyuO9Z7rEpCIpSSASnnjQ8MrEuHbgEmeYfFXfiz70taLCxWPNkexYzmu2PBn8kMEHddZ37idlnqfMjJ10RT5TuoHwnJtZ6nNH268LeLOb3O/WwVGQN9ZqGuSOsRh4S34ktcu5VpQ8noEUAK2HXnLvmCp4RlSbf6xLWiq40rI3V6PbUIpg1cZdbLD+sDpRWk+7k/9UK3DC0mFV1vejnOYIH+ZbzCgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=phVOR3vWw5KeWTzx+0ZwZKsI+ZyZTWXHdcid3T2UUic=;
- b=Voecw4Hroc9MdShG42rlFMrDbmo/fK1VRnqaKSI37m3LVs1DaiW7H3N5ElXtyRQdv+lZc5+y6l5ZHRuSx8OVcPfO5Pp3bgS1gaO4EoA9uN9RArKEJwo+0pIXqYM8sk985TuzYyARGyiwrO8V5i6UBpxzqTgr40rI/Zn2TVoK9y2XscknjRikiQinBpNmdASFSCQszxtxPqrwRD3WcRzyrPwqhutccLJQVtNAq4wrqRQ02lbxGJGlGSNYWMogNAepNZRHWIsXNfmx2gtmMuVUGKkI4iSJzQmfPjP4zD3F6NTfaxVC6K/ek+ondeJpBKk7Wul/diGOeV6lh1alLYVQiQ==
-Received: from DM6PR11CA0008.namprd11.prod.outlook.com (2603:10b6:5:190::21)
- by PH0PR12MB7862.namprd12.prod.outlook.com (2603:10b6:510:26d::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.14; Tue, 18 Feb
- 2025 19:21:41 +0000
-Received: from DS1PEPF0001709D.namprd05.prod.outlook.com
- (2603:10b6:5:190:cafe::54) by DM6PR11CA0008.outlook.office365.com
- (2603:10b6:5:190::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8445.18 via Frontend Transport; Tue,
- 18 Feb 2025 19:21:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DS1PEPF0001709D.mail.protection.outlook.com (10.167.18.107) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8466.11 via Frontend Transport; Tue, 18 Feb 2025 19:21:39 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 18 Feb
- 2025 11:21:29 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 18 Feb
- 2025 11:21:29 -0800
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 18 Feb 2025 11:21:28 -0800
-Date: Tue, 18 Feb 2025 11:21:26 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Matthew R. Ochs" <mochs@nvidia.com>
-CC: <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
- <eric.auger@redhat.com>, <nathanc@nvidia.com>, <qemu-arm@nongnu.org>,
- <shameerali.kolothum.thodi@huawei.com>, <ddutile@redhat.com>,
- <ankita@nvidia.com>, <philmd@linaro.org>, <gshan@redhat.com>
-Subject: Re: [PATCH v5] hw/arm/virt: Support larger highmem MMIO regions
-Message-ID: <Z7TdtjCd9dBNesJK@nvidia.com>
-References: <20250218190240.3070040-1-mochs@nvidia.com>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1tkTIR-0007J3-Ll; Tue, 18 Feb 2025 14:30:22 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 8D0DF5C544A;
+ Tue, 18 Feb 2025 19:29:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3091AC4CEE2;
+ Tue, 18 Feb 2025 19:30:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1739907014;
+ bh=D0SmKXnflUF1ENknpmghSoPwbGW+dV6iEGQTiKLiGkM=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=Q9b0bNzo2GKJ3P5Xaenndxxjunnkiowf73I3YoZMkGzz/9m3DI5W6nlgJZbijiPdE
+ y05lVFMBHQkfh29eo3Hia6sY/NC6jyoMwGGIS4ox0x1aA9txS0r3CSNtf47kb7XXn3
+ 2jw0eyggkxm0fYjvyx72eXB8AzDztykIyjtKjKH3IH6K+v4fMajnUj6LQJ1OXH5JTH
+ PSwyUXYMNnC71CMOUmru8M9Q8+uBE5k5nGif0Wl9US2432af4b9M1yHqUyJ7WRhu03
+ ZA/NlJiRNrF5IKgzuIDvdc+iGOLJFcUhQEGwjz/Pk1FsfXo0Mz0T6lvieZMho5k24X
+ jVzw/uqhFU4WA==
+Date: Tue, 18 Feb 2025 11:30:10 -0800 (PST)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, David Woodhouse <dwmw2@infradead.org>, 
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>, 
+ Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ qemu-arm <qemu-arm@nongnu.org>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PULL 3/9] meson: Disallow 64-bit on 32-bit Xen emulation
+In-Reply-To: <9b22d0ff-5902-4ec7-ae54-e974482ebd87@citrix.com>
+Message-ID: <alpine.DEB.2.22.394.2502181120100.1085376@ubuntu-linux-20-04-desktop>
+References: <20250208205725.568631-1-richard.henderson@linaro.org>
+ <20250208205725.568631-4-richard.henderson@linaro.org>
+ <aeaf0f19-0f14-4a02-9c51-09521e7c75e1@linaro.org>
+ <9b22d0ff-5902-4ec7-ae54-e974482ebd87@citrix.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250218190240.3070040-1-mochs@nvidia.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF0001709D:EE_|PH0PR12MB7862:EE_
-X-MS-Office365-Filtering-Correlation-Id: d1c38756-9191-405a-0d8f-08dd50517882
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|376014|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?l4wP4io1aoS3OmABH6kC7XyZuGe9pCEO9bjmYh2FAOjHsTOwatiEIwQ4rRfh?=
- =?us-ascii?Q?Sh+vOPgVcm8jGAGbX/OqpvtJ9VBJvVqLdzHE/nocVTfJW/cwLe/xPz2gvUOe?=
- =?us-ascii?Q?GGniVGEAYxFcSSYZOMiIWDqq0Yi2amcex7IGQLAs9ypFtBiL9Z3Msg760R9t?=
- =?us-ascii?Q?/oz3UbXwHhzsh2tALvwlFakpOJIBPTTNirbydPCNsSrN3YtVGpR4IN+KACEs?=
- =?us-ascii?Q?38MdqRxus7OeuLNr8e0TModar+Q5TIsq1xRbqfna7TjCSmIIUjnShngaaADV?=
- =?us-ascii?Q?ZpHhFqX52vYxBKRc7rgwD9tCgzzvp6az1tW4dJRBLz7DPsD3G56ESeLeyuxN?=
- =?us-ascii?Q?tGAw5hUdP6gr/407IAly41Vo9YvMOvJeXiGsVUThDzj24Flh+BWqeYnHGcD4?=
- =?us-ascii?Q?AeG3OayjAJPR1Jwjhy1h1SJuvjRb4lZrvfjSqzaI1Lzv7RRYqFzJWsZXN3Ll?=
- =?us-ascii?Q?1t2dZUq9je8QR4RVqKi6RJ8a3lTTg0upvZrs3GwnWdLnA+kUBF4+q8qyD03B?=
- =?us-ascii?Q?zBseVcIvUeRFbZc66o3jno9VpG9/4NVQRpl3FsrWa5FOwrTmjucdGGNIMtHx?=
- =?us-ascii?Q?0cWioqgfcDh81pskzb1yFnw/mjXowtLttyKFgnFVumPg3kqVq4gbgAbH1etd?=
- =?us-ascii?Q?fSZEj/QanTOKIXGlDg3sDNHK84yRGlV0Acnr4PsFizOKYjUBf9k7XiaW25WF?=
- =?us-ascii?Q?igiWDWofow8Zj/rkd/h6zNve030+Ezn/id7dU1Xsd5LuI+5BgZLDvEjo7eam?=
- =?us-ascii?Q?FZUv5TvgoV8BrkrL0YX/JnfgYkwXTai91ldlmK1Oq0G9zxLvT+rUCiU2soB6?=
- =?us-ascii?Q?ady2Y8v75M2IAH/FRDbi/EcVA8g83VDYqe8hRVeG1r+n4BHwgBUKILsZ3nCy?=
- =?us-ascii?Q?YRQuhSMWZTphuFKxM8V3+6tuhSBbqXqYozafJYHvFm1yPTA5m1YvchmjcwLP?=
- =?us-ascii?Q?jtL4OHLZ7aR3pIhR8tvnC+sEfWkKgTmJqdtPJtLdoMV1MlAgDwyWsAhq717D?=
- =?us-ascii?Q?FfCNE3ZlW5TGNbAlRkS6dvRysFXbTVScQS3ORaHEilwUBlZHByqWMOJ8BdTX?=
- =?us-ascii?Q?RIW9rm+F7CKZzezFA9fs4yi5U118hX38k0w+lEukfQ7HjN7qYQ3Y/4tctuqa?=
- =?us-ascii?Q?7U0NgdSNhGO/b6MUdOh/E4H2mzQMzMHpzP9SPPG300zl04jrKSaFLOTPdCVg?=
- =?us-ascii?Q?rOlh0CiNUUU8FxjIdrpbTEZJHks3txqz+WcZggxNaBJKhkF5W7cOzRCy0Hbf?=
- =?us-ascii?Q?MqV/vjNfwnKRu4agtkNiFfmeOUqZRF99/VumusYOUBBg0A8MVFO4+zAjWhy8?=
- =?us-ascii?Q?dm5M985xbTKTri9akVCHfUIyXuaJybeWdzihw7e0/CR+YrHvH+UUNMGn3Shz?=
- =?us-ascii?Q?Onl6u95lrol+ulik8tGzD4WQlUkef4H1wcDue65cTSbV3NsMihzheQEgVd4P?=
- =?us-ascii?Q?LLG5OaoNFBgFImeK/1bVQiT59iijsp5WvnW4RZfLf9yF8mM9cxczApNrzSwE?=
- =?us-ascii?Q?4YDVBkdeP3+dSbY=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(376014)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2025 19:21:39.9434 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1c38756-9191-405a-0d8f-08dd50517882
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0001709D.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7862
-Received-SPF: softfail client-ip=2a01:111:f403:240a::620;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+Content-Type: multipart/mixed;
+ BOUNDARY="8323329-1975763779-1739906423=:1085376"
+Content-ID: <alpine.DEB.2.22.394.2502181121020.1085376@ubuntu-linux-20-04-desktop>
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -74
+X-Spam_score: -7.5
+X-Spam_bar: -------
+X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,21 +86,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 11:02:40AM -0800, Matthew R. Ochs wrote:
-> +static void virt_get_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Just some coding style nit:
+--8323329-1975763779-1739906423=:1085376
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.DEB.2.22.394.2502181121021.1085376@ubuntu-linux-20-04-desktop>
 
-static void virt_get_highmem_mmio_size(Object *obj, Visitor *v,
-                                       const char *name, void *opaque,
-                                       Error **errp)
+On Tue, 18 Feb 2025, Andrew Cooper wrote:
+> On 18/02/2025 11:20 am, Philippe Mathieu-Daudé wrote:
+> > Hi,
+> >
+> > Adding Xen community.
+> >
+> > On 8/2/25 21:57, Richard Henderson wrote:
+> >> Require a 64-bit host binary to spawn a 64-bit guest.
+> >>
+> >> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> >> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> >> ---
+> >>   meson.build | 9 +++++++--
+> >>   1 file changed, 7 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/meson.build b/meson.build
+> >> index 1af8aeb194..911955cfa8 100644
+> >> --- a/meson.build
+> >> +++ b/meson.build
+> >> @@ -304,9 +304,14 @@ else
+> >>   endif
+> >>   accelerator_targets = { 'CONFIG_KVM': kvm_targets }
+> >>   -if cpu in ['x86', 'x86_64']
+> >> +if cpu == 'x86'
+> >> +  xen_targets = ['i386-softmmu']
+> >> +elif cpu == 'x86_64'
+> >>     xen_targets = ['i386-softmmu', 'x86_64-softmmu']
+> >> -elif cpu in ['arm', 'aarch64']
+> >> +elif cpu == 'arm'
+> >> +  # i386 emulator provides xenpv machine type for multiple
+> >> architectures
+> >> +  xen_targets = ['i386-softmmu']
+> >
+> > Is actually someone *testing* this config? I'm having hard time building
+> > it, so am very suspicious about how it runs, and start to wonder if I'm
+> > not just wasting my time (as could be our CI).
+> 
+> It was intentional.  I believe it was Stefano (CC'd) who introduced it.
+> 
+> Xen uses qemu-system-i386 everywhere because qemu-system-x86_64 doesn't
+> make compatible VMs.  I'm not sure why; I suspect it's bugs in the Xen
+> machine types, but I don't know QEMU well enough to be sure.
+> 
+> Another thing that (at least, was) tied to qemu-system-i386 was using
+> Qemu as a XenBlk <-> QCOW adapter, at which point it wasn't even really
+> a system emulator, just a paravirtual disk implementation.
+> 
+> This is, AIUI, what ARM wants with the xenpv machine.  If there's a
+> better way to do this, please do say.
+> 
+> 
+> Looking through Xen's CI, I can't see any of the ARM builds building
+> QEMU at all.  I think it's quite possible it's not tested any more.
 
-> +static void virt_set_highmem_mmio_size(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
+Hi all,
 
-Ditto.
+I answered on a similar question recently:
+https://marc.info/?l=qemu-devel&m=173862237031104&w=2
 
-Otherwise,
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+In short, while QEMU for x86 HVM guest is required, QEMU is not required
+for x86 PVH guests, and ARM guests. The model is different and QEMU is
+only providing PV backends or virtio backends if the VM is configured
+that way. You can have a fully functional VM without QEMU (or other
+virtio backends provider).
+
+In this context, the original integration of QEMU for Xen on ARM was
+done reusing the qemu-system-i386 target. But Edgar recently upstreamed
+a much better newer machine that is cleaner, simpler and faster: XenPVH
+(see hw/arm/xen-pvh.c and hw/i386/xen/xen-pvh.c). So we don't need
+qemu-system-i386 on either ARM32 or ARM64 anymore.
+
+Moreover, for ARM32 specifically, I think it would be OK to remove QEMU
+support for ARM32 Xen machines in general because of the reasons I wrote
+in the other email and above here.
+--8323329-1975763779-1739906423=:1085376--
 
