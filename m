@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF67C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24625C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkGzJ-0000Gx-Mn; Tue, 18 Feb 2025 01:21:45 -0500
+	id 1tkH3d-0001Sa-Pd; Tue, 18 Feb 2025 01:26:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkGzB-00009K-Tc; Tue, 18 Feb 2025 01:21:38 -0500
+ id 1tkH3b-0001Rz-KV; Tue, 18 Feb 2025 01:26:11 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkGz9-00044j-P5; Tue, 18 Feb 2025 01:21:37 -0500
+ id 1tkH3Z-0004RK-LW; Tue, 18 Feb 2025 01:26:11 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxqDF31wYz4x0t;
- Tue, 18 Feb 2025 17:21:33 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxqKV6xzNz4x0t;
+ Tue, 18 Feb 2025 17:26:06 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxqDB4l4Zz4wc3;
- Tue, 18 Feb 2025 17:21:30 +1100 (AEDT)
-Message-ID: <3f6b39e6-7bdf-42c2-9e28-8c09ca118972@kaod.org>
-Date: Tue, 18 Feb 2025 07:21:28 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxqKS1Xlvz4wbp;
+ Tue, 18 Feb 2025 17:26:03 +1100 (AEDT)
+Message-ID: <51b4d012-db0c-42b1-ae0e-2b28751bc2a4@kaod.org>
+Date: Tue, 18 Feb 2025 07:26:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 19/28] hw/misc/aspeed_hace: Fix coding style
+Subject: Re: [PATCH v3 21/28] hw/misc/aspeed_hace: Fix boot issue in the
+ Crypto Manager Self Test
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -40,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
- <20250213033531.3367697-20-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-22-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,9 +86,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250213033531.3367697-20-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250213033531.3367697-22-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -112,51 +113,63 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/13/25 04:35, Jamin Lin wrote:
-> Fix coding style issues from checkpatch.pl.
+> Currently, it does not support the CRYPT command. Instead, it only sends an
+> interrupt to notify the firmware that the crypt command has completed.
+> It is a temporary workaround to resolve the boot issue in the Crypto Manager
+> Self Test.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
+Please add an AspeedHACEClass class attribute (bool) to handle
+this workaround and a comment in the code mentioning the issue.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
+
 > ---
->   hw/misc/aspeed_hace.c | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
+>   hw/misc/aspeed_hace.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
 > 
 > diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-> index e3f7df2e86..18b85081c7 100644
+> index 86422cb3be..4d0999e7e9 100644
 > --- a/hw/misc/aspeed_hace.c
 > +++ b/hw/misc/aspeed_hace.c
-> @@ -75,9 +75,12 @@ static const struct {
->       { HASH_ALGO_SHA1, QCRYPTO_HASH_ALGO_SHA1 },
->       { HASH_ALGO_SHA224, QCRYPTO_HASH_ALGO_SHA224 },
->       { HASH_ALGO_SHA256, QCRYPTO_HASH_ALGO_SHA256 },
-> -    { HASH_ALGO_SHA512_SERIES | HASH_ALGO_SHA512_SHA512, QCRYPTO_HASH_ALGO_SHA512 },
-> -    { HASH_ALGO_SHA512_SERIES | HASH_ALGO_SHA512_SHA384, QCRYPTO_HASH_ALGO_SHA384 },
-> -    { HASH_ALGO_SHA512_SERIES | HASH_ALGO_SHA512_SHA256, QCRYPTO_HASH_ALGO_SHA256 },
-> +    { HASH_ALGO_SHA512_SERIES | HASH_ALGO_SHA512_SHA512,
-> +      QCRYPTO_HASH_ALGO_SHA512 },
-> +    { HASH_ALGO_SHA512_SERIES | HASH_ALGO_SHA512_SHA384,
-> +      QCRYPTO_HASH_ALGO_SHA384 },
-> +    { HASH_ALGO_SHA512_SERIES | HASH_ALGO_SHA512_SHA256,
-> +      QCRYPTO_HASH_ALGO_SHA256 },
->   };
->   
->   static int hash_algo_lookup(uint32_t reg)
-> @@ -201,7 +204,8 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
->               haddr = address_space_map(&s->dram_as, addr, &plen, false,
->                                         MEMTXATTRS_UNSPECIFIED);
->               if (haddr == NULL) {
-> -                qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
-> +                qemu_log_mask(LOG_GUEST_ERROR,
-> +                              "%s: qcrypto failed\n", __func__);
->                   return;
+> @@ -59,6 +59,7 @@
+>   /* Other cmd bits */
+>   #define  HASH_IRQ_EN                    BIT(9)
+>   #define  HASH_SG_EN                     BIT(18)
+> +#define  CRYPT_IRQ_EN                   BIT(12)
+>   /* Scatter-gather data list */
+>   #define SG_LIST_LEN_SIZE                4
+>   #define SG_LIST_LEN_MASK                0x0FFFFFFF
+> @@ -343,6 +344,13 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+>                   qemu_irq_lower(s->irq);
 >               }
->               iov[i].iov_base = haddr;
+>           }
+> +        if (data & CRYPT_IRQ) {
+> +            data &= ~CRYPT_IRQ;
+> +
+> +            if (s->regs[addr] & CRYPT_IRQ) {
+> +                qemu_irq_lower(s->irq);
+> +            }
+> +        }
+>           break;
+>       case R_HASH_SRC:
+>           data &= ahc->src_mask;
+> @@ -388,6 +396,10 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+>       case R_CRYPT_CMD:
+>           qemu_log_mask(LOG_UNIMP, "%s: Crypt commands not implemented\n",
+>                          __func__);
+> +        s->regs[R_STATUS] |= CRYPT_IRQ;
+> +        if (data & CRYPT_IRQ_EN) {
+> +            qemu_irq_raise(s->irq);
+> +        }
+>           break;
+>       default:
+>           break;
 
 
