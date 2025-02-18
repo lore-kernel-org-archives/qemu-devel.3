@@ -4,94 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFBDC021A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC8EC021A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkHDS-00066r-FQ; Tue, 18 Feb 2025 01:36:22 -0500
+	id 1tkHD2-0005AP-JP; Tue, 18 Feb 2025 01:35:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tkHDI-0005v8-TO
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:36:12 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tkHDG-0005Za-06
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:36:12 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1739860553; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Xc3jSrnae5bGBflpSCq4KIczziWXLJFgi4//R2WAc6SkbPHCR0T0mZonQ1dNIiuhujTplRDTRjsDzWGvzED6UfTAMso8cBl+Algj4gqbr+8V8ByOntM5C1vWg7ixUvDmHd8geKhntZtPfS7RRxah47clIJ0Xqmo5Km/ddyru6B0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1739860553;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=9wolAYOwQfGM1xzonTV3RSpiPlRS3jF1V4GHMfHc4EM=; 
- b=Wq2iVZdgx8g7f+PzMc+iwi8Awh7OfuG6zZUboG27MlmefOJEPVD9zVjTEKRBmaWO6xXlwVd5z4OfnnOAoIFJX3grF5Y6x0+1arCjOG6Lo2tngAAzzzvOjbR0xVfyVJVm4Jhur64BqzcxRvie4AXlQkrI2OzHlATcWJw6Us8DlpI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739860553; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=9wolAYOwQfGM1xzonTV3RSpiPlRS3jF1V4GHMfHc4EM=;
- b=NBPk5L+KigGPwHEd43bNc3JtObVe4yMsVDO3SvdYDvYjkqwKvlqMnAzB+tmmKyc5
- njCTFp4K3RFCyMEuY2o5TI1wzYVkx9c2sKzSJZoSxODeVQVvKoSvmYyW5O0FENnVXMb
- skanK8sSZYRf2N7G+NiG5b0Jbw2VDH2J9Ohj2s+4=
-Received: by mx.zohomail.com with SMTPS id 1739860549317366.42934638323925;
- Mon, 17 Feb 2025 22:35:49 -0800 (PST)
-Message-ID: <71fba414-3668-4936-83e4-c6c0818bc560@collabora.com>
-Date: Tue, 18 Feb 2025 09:35:42 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tkHCu-00058C-Ez
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:35:49 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tkHCl-0005Wp-A9
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:35:45 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx12kwKrRnEIZ5AA--.13296S3;
+ Tue, 18 Feb 2025 14:35:28 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxb8ctKrRn_MgZAA--.32810S3;
+ Tue, 18 Feb 2025 14:35:28 +0800 (CST)
+Subject: Re: [PATCH 1/1] target/loongarch: fix 'make check-functional failed'
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn
+References: <20250217005439.249587-1-gaosong@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <2a05b1a2-ac29-ac39-d96f-3ed9fa046f29@loongson.cn>
+Date: Tue, 18 Feb 2025 14:34:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] docs/system: Expand the virtio-gpu documentation
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
- <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250119220050.15167-1-dmitry.osipenko@collabora.com>
- <20250119220050.15167-9-dmitry.osipenko@collabora.com>
- <c2e1c362-5d02-488e-b849-d0b14781a60f@daynix.com>
- <87ikq9r7wj.fsf@draig.linaro.org>
- <171b1cd3-1077-438c-a27c-3b9b3ce25f0f@daynix.com>
- <ea866d19-90f6-4bb9-a3f6-f84b2ea2c457@collabora.com>
- <86dce86b-03bf-4abe-b825-1341e93eb88d@daynix.com>
- <920043a8-9294-4b40-8d8e-3611727e4cd2@collabora.com>
- <0f88994f-1a93-4049-addc-a62e8ca49904@daynix.com>
- <d85f6669-8c46-4678-85d6-59240935d197@collabora.com>
- <fdd8b7ca-e4ad-405d-a58e-fbcb82183ec8@daynix.com>
- <59f70c1d-4c66-4440-a102-5f478749c8f3@collabora.com>
- <a8fc06f0-0197-4394-bac4-733f3fcef103@daynix.com>
- <6714cca4-7367-4d99-84b6-c83df80140e6@collabora.com>
+In-Reply-To: <20250217005439.249587-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-In-Reply-To: <6714cca4-7367-4d99-84b6-c83df80140e6@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxb8ctKrRn_MgZAA--.32810S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxtF47Wr1UKF43KF45Jr1rZrc_yoW7Zr1rpF
+ W7CrWqkFW8KrZ7A3WSq3W5tr1DZw4UKw4xZan3K34FkanxXrZ7XrWvq3sIgF1kJ3y5WF1I
+ vF1vyry8uFW5XacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.369,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,44 +82,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/18/25 09:27, Dmitry Osipenko wrote:
->> To be honest, I'm concerned that you may be using QEMU as a staging tree
->> for Mesa/virglrenderer. Submitting a documentation to QEMU as a
->> preparation to submit one to Mesa is not OK.
->>
->> You shouldn't submit a documentation to QEMU if upstream
->> Mesa developers rejects it because it contains too little information.
->> It may not hurt QEMU, but still lacks a valid reasoning.
-> Don't understand what you're talking about here. I may remind that this
-> is not my QEMU doc patch to begin with, hence it has nothing to do with
-> Mesa nor with virglrenderer. Alex wants to help QEMU users by adding
-> more QEMU documentation.
-> 
-> Maybe you're also not very familiar with the Mesa development process.
-> This is okay, no problems.
-> 
->> Mesa should have more people who care virtio-gpu as there are people
->> using other VMMs and perhaps it may be difficult to convince them to add
->> a documentation like this. It is still not a good idea to workaround
->> that by adding one to QEMU. The documentation submitted to QEMU is
->> mostly reviewed only by me, who barely used Venus and DRM native
->> contexts, which is not a good sign. Getting reviewed by more people is
->> one of the advantage of open-source contribution after all so let's keep
->> it.
->>
->> I can help you add a documentation to Mesa by reviewing and supporting
->> one if you want, but I cannot support adding one to QEMU if it's done to
->> avoid a potential challenge to add it to Mesa.
-> Thanks a lot! More reviewers always good to have, will definitely ping
-> you. Right now writing more Mesa documentation isn't a priority, hence
-> will take time to get to it.
 
-To finish this thread, I'll repeat what was said on the v8 that I'll
-drop the build flags from the QEMU doc since they are bothering you too
-much and your voice has a high value. Thanks again for helping with the
-reviewing, very appreciate it! :)
 
--- 
-Best regards,
-Dmitry
+On 2025/2/17 上午8:54, Song Gao wrote:
+> For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+> the tlb_ps may be 0,this may case UndefinedBehavior
+> Add a check-tlb_ps fuction to check tlb_ps, when use
+> csrwr insn to write CRMD PG=1, check the tlb_ps, and when
+> use csrwr insn to write STLBPS, check the tlb_ps value.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/helper.h                     |  2 +
+>   target/loongarch/internals.h                  |  1 +
+>   target/loongarch/tcg/csr_helper.c             | 52 +++++++++++++++++++
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  2 +
+>   target/loongarch/tcg/tlb_helper.c             |  4 ++
+>   5 files changed, 61 insertions(+)
+> 
+> diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+> index 943517b5f2..4f1490a465 100644
+> --- a/target/loongarch/helper.h
+> +++ b/target/loongarch/helper.h
+> @@ -100,6 +100,8 @@ DEF_HELPER_1(rdtime_d, i64, env)
+>   DEF_HELPER_1(csrrd_pgd, i64, env)
+>   DEF_HELPER_1(csrrd_cpuid, i64, env)
+>   DEF_HELPER_1(csrrd_tval, i64, env)
+> +DEF_HELPER_2(csrwr_crmd, i64, env,tl)
+> +DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+>   DEF_HELPER_2(csrwr_estat, i64, env, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+>   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index 7b254c5f49..bb1644f0a0 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -43,6 +43,7 @@ enum {
+>       TLBRET_PE = 7,
+>   };
+>   
+> +void check_tlb_ps(CPULoongArchState *env);
+>   extern const VMStateDescription vmstate_loongarch_cpu;
+>   
+>   void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 6c95be9910..32c9716f42 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -97,6 +97,58 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> +void check_tlb_ps(CPULoongArchState *env)
+> +{
+> +    for (int i=0; i<LOONGARCH_TLB_MAX; i++)
+> +    {
+> +        LoongArchTLB*tlb =&env->tlb[i];
+> +        uint8_t tlb_ps;
+> +        if(i >= LOONGARCH_STLB) {
+> +            tlb_ps = FIELD_EX64(tlb->tlb_misc,TLB_MISC,PS);
+It is strange why tlb entries is check here? If I am understanding 
+right, TLB page size should comes from these two areas:
+    FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE); or
+    FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS,PS);
+
+If page size of CSR_PWCL is equal to CSR_STLBPS, it is put to STLB, else 
+it is put to MTLB. If so, it will be ok if these CSR registers are checked.
+    FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE)
+    FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS,PS)
+
+And when system is set with Page-mode by writing CRMD register, TLB 
+entry should be empty in theory.
+
+> +	    if (tlb_ps < 12) {
+> +                tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, 12);
+> +            }
+> +        } else {
+> +            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS,PS);
+> +            if (tlb_ps < 12) {
+> +               env->CSR_STLBPS= FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, 12);
+> +           }
+> +       }
+> +    }
+> +}
+> +
+> +target_ulong helper_csrwr_crmd(CPULoongArchState *env, target_ulong val)
+> +{
+> +    uint8_t pg;
+> +    int64_t old_v = env->CSR_CRMD;
+> +
+> +    pg = FIELD_EX64(val, CSR_CRMD, PG);
+Do you mean that it is the first time that Page-mode is set. If so, it 
+had better be:
+        old = FIELD_EX64(old_v, CSR_CRMD, PG);
+        if (pg && !old) {
+
+Regards
+Bibo Mao
+> +    if (pg) {
+> +        check_tlb_ps(env);
+> +    }
+> +    env->CSR_CRMD = val;
+> +    return old_v;
+> +}
+> +
+> +target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +{
+> +    uint8_t tlb_ps;
+> +    int64_t old_v = env->CSR_STLBPS;
+> +
+> +    /*
+> +     * The real hardware only supports the min tlb_ps is 12
+> +     * tlb_ps=0 may cause undefined-behavior.
+> +     */
+> +    tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
+> +    if (tlb_ps  < 12) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Attempted set ps %d\n",tlb_ps);
+> +        val = FIELD_DP64(val, CSR_STLBPS, PS, 12);
+> +    }
+> +    env->CSR_STLBPS = val;
+> +    return old_v;
+> +}
+> +
+>   target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+>   {
+>       int shift;
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 3afa23af79..d6b1f8319f 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -74,6 +74,8 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+>   
+>   void loongarch_csr_translate_init(void)
+>   {
+> +    SET_CSR_FUNC(CRMD, NULL,gen_helper_csrwr_crmd);
+> +    SET_CSR_FUNC(STLBPS, NULL,gen_helper_csrwr_stlbps);
+>       SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+>       SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+>       SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index a323606e5a..fc9c7823e7 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -449,7 +449,11 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+>                                     target_ulong info, target_ulong addr)
+>   {
+>       uint16_t asid = info & 0x3ff;
+> +    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
+>   
+> +    if (!pg) {
+> +        return;
+> +    }
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+>           LoongArchTLB *tlb = &env->tlb[i];
+>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+> 
+
 
