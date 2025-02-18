@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF9CC021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 17:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCA6C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 17:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkRRC-0007nv-4F; Tue, 18 Feb 2025 12:31:15 -0500
+	id 1tkRqU-0005kN-3S; Tue, 18 Feb 2025 12:57:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkRR5-0007nF-J1; Tue, 18 Feb 2025 12:31:09 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkRqN-0005in-Ts
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 12:57:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkRQz-0001lY-5r; Tue, 18 Feb 2025 12:31:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739899861; x=1771435861;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=vrbtIkajmTzzwRv+nIlgYsykkmPfEN/3RskWFbENmKo=;
- b=F6WiByEBgh8Z7pq5QWpOrtm7ezWtqbjZWRkUn5PuyXIXt5mGFFj0xy5k
- PWzg8PkZVFZBMUpGdX+bfAEsk5oCIsoz2iDxwKBpS/agvle6TwUa1e+07
- l0W8PEWHW6UKJW5BFaKun/9/VCvnHAko1ZPz1uFXEZx5rxaEYtT6s87A2
- SI7Lm88zPkPvR93AEaerZWeVigMIHSFQEI3TiWjXdeIFEhMHCpzDoQqoN
- JpOU6SkTyENjTkcCxiXrMvgztmjlcaR9eY7fPekDJyUWqExVf25OGCGhE
- MSVi6xm5UcNCLU5gpFCHpOa+LLj6y9H84bPZ3kpTCjES7zSWa1SJi8/AM A==;
-X-CSE-ConnectionGUID: MWnhIyw2S+OYTttOcSVhfw==
-X-CSE-MsgGUID: YcyHZkR4RDC+NdErAdwJ2A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51230082"
-X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; d="scan'208";a="51230082"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2025 09:30:54 -0800
-X-CSE-ConnectionGUID: c2EeLITaTYmjm8tS4jcXRg==
-X-CSE-MsgGUID: B2UXB1xLRIC0323uFfyQZQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; d="scan'208";a="114644628"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 18 Feb 2025 09:30:53 -0800
-Date: Wed, 19 Feb 2025 01:50:27 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkRqL-0004MH-FC
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 12:57:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739901430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7ohJmjIYbWqme2VjU7sggvr/n9MoswYfmC4VSlh5edw=;
+ b=h+SHHjxcy7gn/c+gJSkqIc8ugWdwJxNzDEuNMf4HbztX0wum+7dsMA/lDvesKNZp2q7ia5
+ +pXNMXmzOj2Urb8O+KsOh5rxE2tTBS+zmnDKHFXh1F6B8s8XyYGAmEfyMpDcbI8jRGSIAg
+ woaN9l1M8aIse4s7genHEdlbgi5zYuc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-mFfBn5L5OxS6UEgd8evCAg-1; Tue,
+ 18 Feb 2025 12:57:09 -0500
+X-MC-Unique: mFfBn5L5OxS6UEgd8evCAg-1
+X-Mimecast-MFC-AGG-ID: mFfBn5L5OxS6UEgd8evCAg_1739901428
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1059B1800878; Tue, 18 Feb 2025 17:57:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.66])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C6821955BCB; Tue, 18 Feb 2025 17:57:04 +0000 (UTC)
+Date: Tue, 18 Feb 2025 18:57:02 +0100
+From: Kevin Wolf <kwolf@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH] rust: Prefer link_with over link_whole
-Message-ID: <Z7TIY2YWBahIElOb@intel.com>
-References: <20250218083734.3345966-1-zhao1.liu@intel.com>
- <88a20e34-5aa8-4351-a33f-4df110933e35@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH 2/2] rust: add module to convert between -errno and
+ io::Error
+Message-ID: <Z7TJ7hM8PcIOVOg2@redhat.com>
+References: <20250213143216.3910163-1-pbonzini@redhat.com>
+ <20250213143216.3910163-3-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <88a20e34-5aa8-4351-a33f-4df110933e35@redhat.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+In-Reply-To: <20250213143216.3910163-3-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,44 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 09:58:44AM +0100, Paolo Bonzini wrote:
-> Date: Tue, 18 Feb 2025 09:58:44 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH] rust: Prefer link_with over link_whole
+Am 13.02.2025 um 15:32 hat Paolo Bonzini geschrieben:
+> It is a common convention in QEMU to return a positive value in case of
+> success, and a negated errno value in case of error.  Unfortunately,
+> using errno portably in Rust is a bit complicated; on Unix the errno
+> values are supported natively by io::Error, but on Windows they are not;
+> so, use the libc crate.
 > 
-> On 2/18/25 09:37, Zhao Liu wrote:
-> > The commit fccb744f41c6 ("gdbstub: Try unlinking the unix socket before
-> > binding") causes the compilation of rust-qemu-api-integration to fail,
-> > because rust-qemu-api-integration uses link_whole which meets the
-> > duplicate symbol linker error.
-> > 
-> > Though it's not the issue of link_whole used by Rust side, there's no
-> > need to use link_whole.
-> > 
-> > Use link_with, which may also bring some benefits, such as faster
-> > linking or smaller output files.
+> This is a set of utility functions that are used by both chardev and
+> block layer bindings.
 > 
-> link_with, if I remember correctly, drops the constructors.  Using it in
-> rust_devices_ss therefore prevents the devices from being registered with
-> QOM.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Interesting, I test with link_with and HPET QOM type can be registered.
+'make rustdoc' fails for me with this patch applied:
 
-I find this is because `module_init` macro adds `#[used]` for `LOAD_MODULE`,
-which prevents linker dropping QOM type.
+error: unresolved link to `io::Result`
+   --> qemu-api/src/errno.rs:105:55
+    |
+105 |     /// A signed type that can be converted into an [`io::Result`]
+    |                                                       ^^^^^^^^^^ no item named `io` in scope
+    |
+    = note: requested on the command line with `-D rustdoc::broken-intra-doc-links`
 
-Without `#[used]`, both link_with and link_whole will optimize
-`LOAD_MODULE`... So here `#[used]` is the key to getting everything to work
-properly.
+error: unresolved link to `io::Result`
+   --> qemu-api/src/errno.rs:114:46
+    |
+114 |     /// A type that can be taken out of an [`io::Result`] and converted
+    |                                              ^^^^^^^^^^ no item named `io` in scope
 
-> The real issue is lack of support for "objects" in Meson for Rust
-> executables.  A patch to fix that is under review, after which it will be
-> possible to build Rust executables using the same "dependency" objects as C
-> code.
+error: unresolved link to `into_neg_errno`
+   --> qemu-api/src/errno.rs:118:15
+    |
+118 |         /// [`into_neg_errno`].
+    |               ^^^^^^^^^^^^^^ no item named `into_neg_errno` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
 
-HMM, but with link_with, everything seems to compile fine?
+error: could not document `qemu_api`
 
-Thanks,
-Zhao
+Kevin
 
 
