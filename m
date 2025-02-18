@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD7DC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 11:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A0DC021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 11:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkLbU-0005ol-A5; Tue, 18 Feb 2025 06:17:28 -0500
+	id 1tkLeD-0006fR-Fj; Tue, 18 Feb 2025 06:20:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tkLbQ-0005o4-TM
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 06:17:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tkLbO-000591-Ep
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 06:17:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739877441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SlUf+viXXTYLM1n9QT9615QO/y5+q5MUvUOhZnSke3I=;
- b=GafkRu55doz7QN11bk6/4i5yZuC3xzOlSN9+iKo5IMdPGKxuAvbPglrHTlN+HxNe2MRUoB
- 4SarVHgvP+Xa9J77d9E6tz1Ioy52MDcBJJdlx9cWTrBtDZwk6ZGlQcTsSxHCfFyWfwMo6g
- DY8fc2pthB3CswN17ojwgkmWVl7OxY4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-_HF4zoTuNlCWtFXtP1Ztdg-1; Tue, 18 Feb 2025 06:17:19 -0500
-X-MC-Unique: _HF4zoTuNlCWtFXtP1Ztdg-1
-X-Mimecast-MFC-AGG-ID: _HF4zoTuNlCWtFXtP1Ztdg_1739877439
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4398e841963so8212325e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 03:17:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkLeA-0006ec-7i
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 06:20:14 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkLe8-0005fH-9d
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 06:20:13 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43948021a45so54918365e9.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 03:20:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739877609; x=1740482409; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b9/3DjAFxI/v4Ul4XBqPwJ9mqca8bUx0Fi7qKIYKz4c=;
+ b=Be6Cl/cDsw4lRakmJNkuRsy97xBpAIkNEi0eNPwfGyDmQb/xhZEPkjJFhttef7V3EI
+ IpjkRZkJU7NVmutgpaOapFO1owvdsik3UlmZx7I4lOFMuVAcv4dTf8UVqPl1PgHNxLPx
+ WWCt1IC8yxiV72wJPrYsK5Ak7mbHst5NGDortXO+IQT6ILxxmsfCFnlTTrXcNQurLp7h
+ kqap9/rfJBB25zhro13eSnCME5Yqq504i+Jm6FMZ+7gZYE8y2uI0azG0fMc48IcSybsf
+ fXcmLeoECXe0bDJono7Ex2IdwR9yynF19zO5n7iYNBhgi/m6mzFkCHEVqUwIMcMCQIWR
+ UkVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739877439; x=1740482239;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SlUf+viXXTYLM1n9QT9615QO/y5+q5MUvUOhZnSke3I=;
- b=MafmAfkgGaH7BkaauBHEPOM2xFYcFnhnPaTrKv/9O24zqvrcNY17xTMe/Jdh4rEyJX
- gqojQ77mGziyuGb9vStVCyHvbSbk0Aaku0/Xb6QJDZo67iKa9nn/VKUve60kOBPWAgod
- ++mtwCLJuDhXEV1UmQjMRhO2V+1/bqwy/I8OJav7WUpxuKLaLcCrK4vJhgd7kPs1p5d4
- +6/G+caP4EcTBp5j6ZRBhHrx3t5YmCa0kOP8KNWwGALQvNE6Wulgh/hh3Aw5uNdzrx3C
- fg2tF7AeEN8bUfBgZb4HbAETctPUYkNmco5AHs9Ac/5T2qtp0g7B6/a2e/HtHZgZaDle
- ODkA==
-X-Gm-Message-State: AOJu0YzYpQOdp0WvoKGCmouwtwHYzcTL85EMn/6C1zDj2qFat4M8pPr8
- hAISW/SD82oMzF5lL0f/UpkVaxoVhJ/fTxmKMosz3xX9ojxXPjt0vEqP9Ow3vyDbCARjFEalv3v
- Mt8MfDTLFFrM/nSvAAnJOPPZs8+YVnLYJHyOp7+zoKboKzMobKCR7
-X-Gm-Gg: ASbGncsYzUTkXLoKoHYZ3YVUlYQiRs5n+mS7ahSg86XD/i2ljcAtc99vmaqLh+n0dSV
- RmhNypI1PntVLVFDdiDIEyfYzt9AYY5s3YSDtPP0ru+jOSAmdLGui4W8yJHyUFeP7T2RbgN9ujh
- o0i4Glgrfm4lXcmW3udv+/Mta8TxOANKq3b60lF7Gwm3mG+KnPXMgvdNgHEoqs9ndRu6Mqc4/3i
- XWWxTmlWnx2D/FRzaUZFNUgfKoREZFuIJY6rVKGOexc5xOHfUmmFSenEydgzKllQuBmCMDNVlnn
- p9vo2fMylfKx91Jd2dLmIiACwQ==
-X-Received: by 2002:a05:600c:4750:b0:439:9828:c446 with SMTP id
- 5b1f17b1804b1-4399828c67amr4970975e9.11.1739877438635; 
- Tue, 18 Feb 2025 03:17:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH+DXCum9ggkpDpdyApx6VU78NelSENIaLHXcfu0/KB6ZuBQHg3gC4oRCJ9yS3mQO2Iuuru9Q==
-X-Received: by 2002:a05:600c:4750:b0:439:9828:c446 with SMTP id
- 5b1f17b1804b1-4399828c67amr4970635e9.11.1739877438178; 
- Tue, 18 Feb 2025 03:17:18 -0800 (PST)
-Received: from rh-jmarcin (nat-pool-brq-t.redhat.com. [213.175.37.10])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439872b5a46sm46928585e9.32.2025.02.18.03.17.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Feb 2025 03:17:17 -0800 (PST)
-Date: Tue, 18 Feb 2025 12:17:14 +0100
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
- berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v6 2/4] migration: enable multifd and postcopy together
-Message-ID: <3abdrwrfqm2vxbdtprqjckkgwmdb4xf2rcjld6eiljyx5uwepv@plbn2lz6nrug>
-References: <20250215123119.814345-1-ppandit@redhat.com>
- <20250215123119.814345-3-ppandit@redhat.com>
+ d=1e100.net; s=20230601; t=1739877609; x=1740482409;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b9/3DjAFxI/v4Ul4XBqPwJ9mqca8bUx0Fi7qKIYKz4c=;
+ b=jgEAzLO0ec0bjeeDqyNhtU5Rmwez66YcVgIVb4xxKf3dOXbbiPDFudxRdmWNm/Xr06
+ IvexjSSDpQ2Ve+X6k/RSUapkdrgqrs9kKlLFfKRheCwFjtaKMIQIjwsuxWA4qUGyumZY
+ 151jy/o/8gYzNA/6ZPAw8A2zQGZBFUGPKZazMC5/DjMLRDdIHiQ/rGbJRbshiGjv+RqC
+ rUNgeFEy8AO44+RXR7K9pbx9fYbgBE+hvuQIcVoEZXDYeI72WpYQhnlmARwde0o0IJV9
+ FLWCK+s+ErLOZrMNgGTusNnvFJeEjmRVI3QL0r2X4fPm4mWkdh0UREDD05Lpz55fFZ1Y
+ vQEA==
+X-Gm-Message-State: AOJu0YxPdAmJitCJYV4AdYsMNCc+Oe2dp9zeTxX63hB2zg4G/n54+TgU
+ vjhyhIKSMizEKekVr+wifpBca7UeKDvKZrAYvyrmM6Aid+eMA6q2vELZ5qTL0z9ml7fPdW/j0fd
+ EYro=
+X-Gm-Gg: ASbGncugDbTbnEDZ5Dv7iWyncSwZf9Y3F4QqJj9zoxQT+Lt9AlmnGpqo4Fwhm8MTwCt
+ SqhlWIUZcLinNIVVVG8Mwvo/5sEN1CXVBDvFSqbA6w1dRIHFdkCDtGfHnNTMmyBFpBp3u/ny22y
+ eUpcT6CXLLr6nv0pdTU6VaQCnn1AvO2eZF2Pl1gfHSFITGGp7TXulmddda8wxDdfBP3clPSdX8h
+ GuhVS1KQMa7vqB0egbePG+stCTAkeHPaKKmvzAmeb5tpfPX66PKq6jvDwpMJNxUFDkR0UXXZNKy
+ mrqs+3K/Q17NyUQRIdUZMdJ2JFk+Gj/bkyWKeVXjOhPTpNm9OG6+2WcLAMU=
+X-Google-Smtp-Source: AGHT+IGQ2Y/CQJvytuSzQ8bn6E1HTuNsvy6h2hib1hr/tIxCj4phhTrfkdFlTDkp4pKM2tI2/ftZfA==
+X-Received: by 2002:a05:600c:1c24:b0:439:6304:e28a with SMTP id
+ 5b1f17b1804b1-4396e5b56e7mr147751645e9.0.1739877609433; 
+ Tue, 18 Feb 2025 03:20:09 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f25913f5asm14935008f8f.52.2025.02.18.03.20.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Feb 2025 03:20:08 -0800 (PST)
+Message-ID: <aeaf0f19-0f14-4a02-9c51-09521e7c75e1@linaro.org>
+Date: Tue, 18 Feb 2025 12:20:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250215123119.814345-3-ppandit@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 3/9] meson: Disallow 64-bit on 32-bit Xen emulation
+To: qemu-devel@nongnu.org, David Woodhouse <dwmw2@infradead.org>,
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
+ Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-arm <qemu-arm@nongnu.org>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250208205725.568631-1-richard.henderson@linaro.org>
+ <20250208205725.568631-4-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250208205725.568631-4-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,325 +108,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Prasad,
+Hi,
 
-On 2025-02-15 18:01, Prasad Pandit wrote:
-> From: Prasad Pandit <pjp@fedoraproject.org>
+Adding Xen community.
+
+On 8/2/25 21:57, Richard Henderson wrote:
+> Require a 64-bit host binary to spawn a 64-bit guest.
 > 
-> Enable Multifd and Postcopy migration together.
-> The migration_ioc_process_incoming() routine
-> checks magic value sent on each channel and
-> helps to properly setup multifd and postcopy
-> channels.
-> 
-> The Precopy and Multifd threads work during the
-> initial guest RAM transfer. When migration moves
-> to the Postcopy phase, the multifd threads are
-> shutdown and Postcopy threads on the destination
-> request/pull data from the source side.
-> 
-> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  migration/migration.c      | 107 ++++++++++++++++++++-----------------
->  migration/multifd-nocomp.c |   3 +-
->  migration/multifd.c        |   4 +-
->  migration/options.c        |   5 --
->  migration/ram.c            |   7 ++-
->  5 files changed, 64 insertions(+), 62 deletions(-)
+>   meson.build | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
 > 
-> v6:
-> - Shutdown multifd threads before postcopy_start()
-> - Reorder tests/qtest/migration/ patches
-> - Some refactoring of functions
-> 
-> v5:
-> - https://lore.kernel.org/qemu-devel/20250205122712.229151-1-ppandit@redhat.com/T/#t
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 396928513a..38697182e8 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -95,6 +95,9 @@ enum mig_rp_message_type {
->      MIG_RP_MSG_MAX
->  };
->  
-> +/* Migration channel types */
-> +enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
-> +
->  /* When we add fault tolerance, we could have several
->     migrations at once.  For now we don't need to add
->     dynamic creation of migration */
-> @@ -959,28 +962,19 @@ void migration_fd_process_incoming(QEMUFile *f)
->      migration_incoming_process();
->  }
->  
-> -/*
-> - * Returns true when we want to start a new incoming migration process,
-> - * false otherwise.
-> - */
-> -static bool migration_should_start_incoming(bool main_channel)
-> +static bool migration_has_main_and_multifd_channels(void)
->  {
-> -    /* Multifd doesn't start unless all channels are established */
-> -    if (migrate_multifd()) {
-> -        return migration_has_all_channels();
-> +    MigrationIncomingState *mis = migration_incoming_get_current();
-> +    if (!mis->from_src_file) {
-> +        /* main channel not established */
-> +        return false;
->      }
->  
-> -    /* Preempt channel only starts when the main channel is created */
-> -    if (migrate_postcopy_preempt()) {
-> -        return main_channel;
-> +    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
-> +        return false;
->      }
->  
-> -    /*
-> -     * For all the rest types of migration, we should only reach here when
-> -     * it's the main channel that's being created, and we should always
-> -     * proceed with this channel.
-> -     */
-> -    assert(main_channel);
-> +    /* main channel and all multifd channels are established */
->      return true;
->  }
->  
-> @@ -989,13 +983,12 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->      MigrationIncomingState *mis = migration_incoming_get_current();
->      Error *local_err = NULL;
->      QEMUFile *f;
-> -    bool default_channel = true;
->      uint32_t channel_magic = 0;
-> +    uint8_t channel = CH_MAIN;
->      int ret = 0;
->  
-> -    if (migrate_multifd() && !migrate_mapped_ram() &&
-> -        !migrate_postcopy_ram() &&
-> -        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-> +    if (!migration_has_main_and_multifd_channels()) {
-> +        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
->          /*
->           * With multiple channels, it is possible that we receive channels
->           * out of order on destination side, causing incorrect mapping of
-> @@ -1006,42 +999,58 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->           * tls handshake while initializing main channel so with tls this
->           * issue is not possible.
->           */
-> -        ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-> -                                          sizeof(channel_magic), errp);
-> +            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-> +                                              sizeof(channel_magic), errp);
-> +            if (ret != 0) {
-> +                return;
-> +            }
->  
-> -        if (ret != 0) {
-> -            return;
-> +            if (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC)) {
-> +                channel = CH_MAIN;
-> +            } else if (channel_magic == cpu_to_be32(MULTIFD_MAGIC)) {
-> +                channel = CH_MULTIFD;
-> +            } else if (!mis->from_src_file
-> +                        && mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-> +                /* reconnect default channel for postcopy recovery */
-> +                channel = CH_MAIN;
-> +            } else {
-> +                error_report("%s: unknown channel magic: %u",
-> +                                __func__, channel_magic);
+> diff --git a/meson.build b/meson.build
+> index 1af8aeb194..911955cfa8 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -304,9 +304,14 @@ else
+>   endif
+>   accelerator_targets = { 'CONFIG_KVM': kvm_targets }
+>   
+> -if cpu in ['x86', 'x86_64']
+> +if cpu == 'x86'
+> +  xen_targets = ['i386-softmmu']
+> +elif cpu == 'x86_64'
+>     xen_targets = ['i386-softmmu', 'x86_64-softmmu']
+> -elif cpu in ['arm', 'aarch64']
+> +elif cpu == 'arm'
+> +  # i386 emulator provides xenpv machine type for multiple architectures
+> +  xen_targets = ['i386-softmmu']
 
-Here, the number reported in the error will have incorrect endianness on
-a non-BE system. I think it would be better to convert channel_magic to
-the system endianness right after reading it. On top of that, then there
-is no need to convert constants with magic numbers when comparing.
+Is actually someone *testing* this config? I'm having hard time building
+it, so am very suspicious about how it runs, and start to wonder if I'm
+not just wasting my time (as could be our CI).
 
-> +                return;
-> +            }
-> +        } else if (mis->from_src_file
-> +                && (!strcmp(ioc->name, "migration-tls-incoming")
-> +                || !strcmp(ioc->name, "migration-file-incoming"))) {
-> +            channel = CH_MULTIFD;
->          }
-> -
-> -        default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
-> -    } else {
-> -        default_channel = !mis->from_src_file;
-> +    } else if (mis->from_src_file) {
-> +        channel = CH_POSTCOPY;
->      }
->  
->      if (multifd_recv_setup(errp) != 0) {
->          return;
->      }
->  
-> -    if (default_channel) {
-> +    if (channel == CH_MAIN) {
->          f = qemu_file_new_input(ioc);
->          migration_incoming_setup(f);
-> -    } else {
-> +    } else if (channel == CH_MULTIFD) {
->          /* Multiple connections */
-> -        assert(migration_needs_multiple_sockets());
->          if (migrate_multifd()) {
->              multifd_recv_new_channel(ioc, &local_err);
-> -        } else {
-> -            assert(migrate_postcopy_preempt());
-> -            f = qemu_file_new_input(ioc);
-> -            postcopy_preempt_new_channel(mis, f);
->          }
->          if (local_err) {
->              error_propagate(errp, local_err);
->              return;
->          }
-> +    } else if (channel == CH_POSTCOPY) {
-> +        assert(migrate_postcopy_preempt());
-> +        assert(!mis->postcopy_qemufile_dst);
-> +        f = qemu_file_new_input(ioc);
-> +        postcopy_preempt_new_channel(mis, f);
->      }
->  
-> -    if (migration_should_start_incoming(default_channel)) {
-> +    if (channel != CH_POSTCOPY && migration_has_main_and_multifd_channels()) {
->          /* If it's a recovery, we're done */
->          if (postcopy_try_recover()) {
->              return;
-> @@ -1058,20 +1067,15 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->   */
->  bool migration_has_all_channels(void)
->  {
-> +    if (!migration_has_main_and_multifd_channels()) {
-> +        return false;
-> +    }
-> +
->      MigrationIncomingState *mis = migration_incoming_get_current();
-> -
-> -    if (!mis->from_src_file) {
-> +    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
->          return false;
->      }
->  
-> -    if (migrate_multifd()) {
-> -        return multifd_recv_all_channels_created();
-> -    }
-> -
-> -    if (migrate_postcopy_preempt()) {
-> -        return mis->postcopy_qemufile_dst != NULL;
-> -    }
-> -
->      return true;
->  }
->  
-> @@ -1482,6 +1486,8 @@ static void migrate_fd_cleanup(MigrationState *s)
->  
->      assert(!migration_is_active());
->  
-> +    file_cleanup_outgoing_migration();
-> +    socket_cleanup_outgoing_migration();
->      if (s->state == MIGRATION_STATUS_CANCELLING) {
->          migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
->                            MIGRATION_STATUS_CANCELLED);
-> @@ -3373,8 +3379,11 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->      }
->  
->      /* Still a significant amount to transfer */
-> -    if (!in_postcopy && must_precopy <= s->threshold_size && can_switchover &&
-> -        qatomic_read(&s->start_postcopy)) {
-> +    if (!in_postcopy && must_precopy <= s->threshold_size
-> +        && can_switchover && qatomic_read(&s->start_postcopy)) {
-> +        if (migrate_multifd()) {
-> +            multifd_send_shutdown();
-> +        }
->          if (postcopy_start(s, &local_err)) {
->              migrate_set_error(s, local_err);
->              error_report_err(local_err);
-> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-> index 1325dba97c..d0edec7cd1 100644
-> --- a/migration/multifd-nocomp.c
-> +++ b/migration/multifd-nocomp.c
-> @@ -16,6 +16,7 @@
->  #include "file.h"
->  #include "multifd.h"
->  #include "options.h"
-> +#include "migration.h"
->  #include "qapi/error.h"
->  #include "qemu/cutils.h"
->  #include "qemu/error-report.h"
-> @@ -391,7 +392,7 @@ int multifd_ram_flush_and_sync(QEMUFile *f)
->      MultiFDSyncReq req;
->      int ret;
->  
-> -    if (!migrate_multifd()) {
-> +    if (!migrate_multifd() || migration_in_postcopy()) {
->          return 0;
->      }
->  
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 97ce831775..fa83a43778 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -467,8 +467,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
->  
->  static void multifd_send_cleanup_state(void)
->  {
-> -    file_cleanup_outgoing_migration();
-> -    socket_cleanup_outgoing_migration();
->      qemu_sem_destroy(&multifd_send_state->channels_created);
->      qemu_sem_destroy(&multifd_send_state->channels_ready);
->      g_free(multifd_send_state->params);
-> @@ -481,7 +479,7 @@ void multifd_send_shutdown(void)
->  {
->      int i;
->  
-> -    if (!migrate_multifd()) {
-> +    if (!migrate_multifd() || !multifd_send_state) {
->          return;
->      }
->  
-> diff --git a/migration/options.c b/migration/options.c
-> index 4db340b502..c4dfe89edd 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -480,11 +480,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
->              error_setg(errp, "Postcopy is not compatible with ignore-shared");
->              return false;
->          }
-> -
-> -        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
-> -            error_setg(errp, "Postcopy is not yet compatible with multifd");
-> -            return false;
-> -        }
->      }
->  
->      if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 6f460fd22d..8f22745aba 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -1297,7 +1297,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
->          pss->page = 0;
->          pss->block = QLIST_NEXT_RCU(pss->block, next);
->          if (!pss->block) {
-> -            if (multifd_ram_sync_per_round()) {
-> +            if (multifd_ram_sync_per_round() && !migration_in_postcopy()) {
->                  QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
->                  int ret = multifd_ram_flush_and_sync(f);
->                  if (ret < 0) {
-> @@ -1971,9 +1971,8 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
->          }
->      }
->  
-> -    if (migrate_multifd()) {
-> -        RAMBlock *block = pss->block;
-> -        return ram_save_multifd_page(block, offset);
-> +    if (migrate_multifd() && !migration_in_postcopy()) {
-> +        return ram_save_multifd_page(pss->block, offset);
->      }
->  
->      if (control_save_page(pss, offset, &res)) {
-> --
-> 2.48.1
-> 
-> 
+> +elif cpu == 'aarch64'
+>     # i386 emulator provides xenpv machine type for multiple architectures
+>     xen_targets = ['i386-softmmu', 'x86_64-softmmu', 'aarch64-softmmu']
+>   else
+
+Regards,
+
+Phil.
 
 
