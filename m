@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43CAC021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 21:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159EDC021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 21:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkV2G-00033q-V4; Tue, 18 Feb 2025 16:21:44 -0500
+	id 1tkV2G-00033W-5h; Tue, 18 Feb 2025 16:21:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2E-00032f-Ii
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:42 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2D-00032J-C2
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:41 -0500
 Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2A-000335-RP
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:42 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2A-000336-Sh
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739913696; bh=hEdGGrdRnyKcM0NWUuU9kjR/8KwYnsAxspFYskjaN3Q=;
+ t=1739913695; bh=7MkVBQfa/QDS9tzkbgaSyr0CpRT/Zux2KixYtMSdhvI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZM6lnfK4B8qYV33BPavYbeZ4Ok/JALi4AFz4TL8hLKSQEq57zzncuvGxlJk6YkVN0
- Sraejzp1ZOcZgmG5GXkCPWHD1cPaCmA+YGs4IAujWknJBUL4d5kDHWiqlDYGZuSVNE
- gc4L8ZaAe8GtdpEKk6kYgfcXe0Icm62t6sKX8yuVEEEoXkJZc1TXSH3TzVYZDxDs0f
- Lu1zb+bugpS+TLy2uZUJ+PcuVyYW98d/hNFtIh44n2/2AODgrgnFwfwmAA0YFaDKPN
- 0ZdHZxKZDZ0kMhmPolEimSLcWB7E4QnThjOxK5/xddgmHU4QIkxTGXnbqqVY3gi1+D
- FCLnJhm67KF3g==
+ b=My8Az+iugNF1JKtBfgZFx5DZJI+elk2NKdjVHj56cDau7nB9EiEB0RXZrqmUmtinC
+ oR6eTq0uW0Ih6/Tty9ugxV0dzwo0FjP22R57pa4RU9azPQ80ORmvLWfK1gZstkRD1R
+ pjtcK+PTsi9U7i1EeykI2T5wcT102qvTq4HqPmFDEqhgEgzlCJ/SYBn7jrSd79T+QR
+ +bHYlk5DQr9bHvNOP20QXIQqk5rrnaJaTcKK4CaYQViu3OoytFMlC4gXd50iQcflvJ
+ FcDortA8UehkFBNDA1vo5iPeztP6PPti8TpAd8XSiRd89bAEsrC8/wCnLXyOdMRi3e
+ P64wSV6pDEqBg==
 Received: from localhost (localhost [127.0.0.1])
- by elaine.keithp.com (Postfix) with ESMTP id 5178C3F22879
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 13:21:36 -0800 (PST)
+ by elaine.keithp.com (Postfix) with ESMTP id C9ADC3F22AED
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 13:21:35 -0800 (PST)
 X-Virus-Scanned: Debian amavis at keithp.com
 Received: from elaine.keithp.com ([127.0.0.1])
  by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id ThcbEjBnbYD7; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
+ id 9xxpqjs8ffs8; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739913694; bh=hEdGGrdRnyKcM0NWUuU9kjR/8KwYnsAxspFYskjaN3Q=;
+ t=1739913694; bh=7MkVBQfa/QDS9tzkbgaSyr0CpRT/Zux2KixYtMSdhvI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MJSt5ORqY3ukYJWqkUsjCvT5dAnv3rLwlZFvw3YIZf1JT2etDza8VtZ+8PPVl3XmI
- hAQnMiO4z5UIpMmmRA7AMvfaxVnd5KRni25VIpGKuwU+pgK//ipeM1zL8HZwRn3dj0
- HMHK7Cm/8oaMn+nfD7h32tHzD8LOsQ1d0/6iq9I1UaurX0YMtYZYljVS33OsGGSA04
- q/YTlYIBzA8pLPlWzy9wWRXGOHvgo3NAApKFnOnV+YGFJErq9jGPdUbAPasgyi6awv
- Q9VLwwc/uFoknJTztTKd2Kb3nVXpw2OmMML2jeqJcTMWZz4GXNazS0RyuFa5YISu1X
- kWERFAAsL3RBQ==
+ b=Un8m6yvv1pgaQ90FBOzC7rMQkAzItWumTTRc666/2KrWPSKlbzC3GfescWoqG5DaV
+ Fe1InjWMbjtUGduTnhtyQwzJQAQBLARmN1S/7caX/VZE0qz48I1ZtUGc8SzL5j0WCZ
+ vO7ohU1Q9IFukFpQufkp3wNCTCA0xA3rG9GIaI290aYzz5gghEg5JT2ylh+WeGnHIO
+ TKi1tGWrA5AudrV/gjBvi5c1UYI2Fr+kQQhmtc6SWbXE8sPp7C3LoTSSL29bQcLvh+
+ pL9SJKYALRDQJg+0VgbRroRiP0/arWYt7SDyhsUNU1gRcPsDEkHAM3nCQgfAyl4RT9
+ /+iGQp+87GVNA==
 Received: from keithp.com (koto.keithp.com [192.168.11.2])
- by elaine.keithp.com (Postfix) with ESMTPSA id E155B3F20D3C;
+ by elaine.keithp.com (Postfix) with ESMTPSA id D01873F204E1;
  Tue, 18 Feb 2025 13:21:34 -0800 (PST)
 Received: by keithp.com (Postfix, from userid 1000)
- id B79FE1E6007A; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
+ id B5EA01E60096; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
 To: qemu-devel@nongnu.org
 Cc: Keith Packard <keithp@keithp.com>
-Subject: [PATCH 1/4] target/rx: Set exception vector base to 0xffffff80
-Date: Tue, 18 Feb 2025 13:21:00 -0800
-Message-ID: <20250218212103.2024039-2-keithp@keithp.com>
+Subject: [PATCH 0/4] Renesas RX target fixes (v2)
+Date: Tue, 18 Feb 2025 13:20:59 -0800
+Message-ID: <20250218212103.2024039-1-keithp@keithp.com>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250218212103.2024039-1-keithp@keithp.com>
+In-Reply-To: <20250215021654.1786679-1-keithp@keithp.com>
 References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250218212103.2024039-1-keithp@keithp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=63.227.221.253; envelope-from=keithp@keithp.com;
@@ -85,29 +84,50 @@ From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation says the vector is at 0xffffff80, instead of the
-previous value of 0xffffffc0. That value must have been a bug because
-the standard vector values (20, 21, 23, 25, 30) were all
-past the end of the array.
+With feedback from Peter Maydell and Richard Henderson, I've updated
+this series to address two concerns:
 
-Signed-off-by: Keith Packard <keithp@keithp.com>
----
- target/rx/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ 1. The hardware model is now responsible for guiding the CPU reset
+    process.
 
-diff --git a/target/rx/helper.c b/target/rx/helper.c
-index 80912e8dcb..55e2ae4a11 100644
---- a/target/rx/helper.c
-+++ b/target/rx/helper.c
-@@ -90,7 +90,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
-         cpu_stl_data(env, env->isp, env->pc);
- 
-         if (vec < 0x100) {
--            env->pc = cpu_ldl_data(env, 0xffffffc0 + vec * 4);
-+            env->pc = cpu_ldl_data(env, 0xffffff80 + vec * 4);
-         } else {
-             env->pc = cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
-         }
+ 2. Loading the reset vector from memory is now delayed until cpu_reset
+    is finished to ensure memory_dispatch is initialized.
+
+First, there are two critical flaws in the emulation. These are
+needed for this model to work correctly:
+
+ 1. The exception vector base is 0xffffff80 not 0xffffffc0. This
+    prevents exceptions from working at all.
+
+ 2. Many tcg helpers inappropriately used TCG_CALL_NO_WG even though
+    they modified virtual registers stored in global memory. This
+    causes these operations to fail unless one-insn-per-tb was enabled.
+
+The third patch changes how the cpu is reset so that it is driven by
+the hw code instead of the target code. Now the cpu is reset each time
+qemu is reset and the initial PC value is either set from the loaded
+kernel or from the reset vector. This should look a lot more like how
+other models manage this process.
+
+The final patch adds the ability to load an ELF file rather than
+a binary memory image. It's purely a new feature and not required for
+this model to be usable; without this, it's fairly easy to use
+the loader device; that just requires the loaded image to include the
+exception vectors with the correct reset vector value.
+
+Keith Packard (4):
+  target/rx: Set exception vector base to 0xffffff80
+  target/rx: Remove TCG_CALL_NO_WG from helpers which write env
+  hw/rx: Reset the CPU at qemu reset time
+  rx: Support loading of ELF files too
+
+ hw/rx/rx-gdbsim.c  | 72 +++++++++++++++++++++++++++++++++++++++++++++-
+ target/rx/cpu.c    |  9 ++----
+ target/rx/cpu.h    |  3 ++
+ target/rx/helper.c |  2 +-
+ target/rx/helper.h | 34 +++++++++++-----------
+ 5 files changed, 94 insertions(+), 26 deletions(-)
+
 -- 
 2.47.2
 
