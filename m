@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C51C021A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 02:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CEDC021A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 02:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkDJ5-0007qP-M5; Mon, 17 Feb 2025 21:25:55 -0500
+	id 1tkDXv-0001yq-4h; Mon, 17 Feb 2025 21:41:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tkDJ4-0007qC-AK; Mon, 17 Feb 2025 21:25:54 -0500
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tkDXs-0001yS-NC
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 21:41:12 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tkDJ2-0005MX-3V; Mon, 17 Feb 2025 21:25:53 -0500
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-5208736db3fso968899e0c.3; 
- Mon, 17 Feb 2025 18:25:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tkDXq-0006s5-4u
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 21:41:12 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2fbffe0254fso9218134a91.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 18:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739845550; x=1740450350; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IY5kWlXvpGwPlUFdmrybvEqIBPOuaYXZZfvKf4rFUgQ=;
- b=eAMrmLM6QW51Zrq+MyTXu8fe9RXVa8kT4TIilfIY4FaPLpzDW7JHyKg1h5LZEfVl27
- JOry0u9w8+Bky+ThZxuisPGnGerNOobwBRCv5xLLIMlP+ozwbn6nuvFxfF0cK1I2lH6k
- AhkpPqAWxwKMLsfW6EArnkTBHwAGKZH9mzOBFjUoBUl/oiEIdEjXiBvAnMMDm4J+psdc
- Tbi67REyjbhg9qNnBVf0qTW+t9gpiV+1CcLyfq1FbdmXiP7HRXyU2jSASDAH8WWFFCH+
- 9x/3OQYwCcDEVt4tgAVc6g9zmcn0sJzscTSWhz8TJOaEVV4waULl7bXwLVNRyE0nUUFl
- 2K5w==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739846467; x=1740451267;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1AOeiJdqiiI5aRq2ttuarwBGGm5TOHJs5D4HyEE5s4U=;
+ b=HQSWiWDWLU6eXbwQcxBrlx5BMdEf01s1c6u004HoCsin10L491QL0ja0nOAqJ649mO
+ OFaLeW+tVlUE2M5GVBl+TMg+EYOOaIcseFFYIFpUNStUCi9LfFPK6KIhAn+0o0EN74kD
+ 0Q2t9MeO/7pNM5Dl8a4+7XDHeOL+nW7e3rC91fDd2g3Z0XcIJmI0qp44MC/VTTYoFxm+
+ 4QAedNRa1PkV4qLiS/tGE5hlaPz/WEq7T5ceQqVZ8EBtUVRGTcBV52HjIi6CkRW/SX8u
+ 0AwikEebP/n1/tMDcX1ccsULYnBu3sz+C8dIdcATiYoSeg5LmK/jq88XUkG0vRxgexIF
+ Tcag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739845550; x=1740450350;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IY5kWlXvpGwPlUFdmrybvEqIBPOuaYXZZfvKf4rFUgQ=;
- b=tNF/Islax58aYcdxCex59xHiIk2/Q9Z+jtiY7bwQ8n/J94fzcJr8sSIWTAXntuCHb1
- GOjObn4WAT0g6eUQixPkQ7UXFLNxkB6X12AbG2PdGch01Wjf13d1KN/H/TnXM7S11DFk
- 4W+jVFUG6+k21ALwXxnd1fOreXMIufwgyT4E1CqqI2CFlW+T9rVolXGN7U4b/nGBZH4L
- u16AeI8MIOsvEcfutA/kqJji9ta8Z/mQ/+F5jvxZoabRDFyFj+ANEHSKf2nNdEYmdjRh
- tBGOJAm9AiLViKDvndMUCAr/j9ggBF4u5M6rGC99h4/lyb+5fDhP4ZtQVaUtnEZjSekl
- wRKQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZkyIo2tWJGr9MaXk29HrkoJY68dptVkk7bC79lc4YgXN8dOS4Bu/EFxQsPmCXAIs5W86+elE3geQy@nongnu.org
-X-Gm-Message-State: AOJu0YyRhFI02dokkyXDIYbYGgsI6X8GUtUzYESab+CYKN7Zizd/m02M
- doC569umAniNP4PKWgPO69xfgV/I03lqCZrebGC8L5JH0AxMiahzS9W2O+YNWPLiP6noN4vSHLZ
- FgyrFRi8zhp+w/wp96iUG0qE23z4=
-X-Gm-Gg: ASbGnctECuhN5HiJUAcG0s1xlAJdackyp5c4TeXi3pOrGCqM6r6wCvExi2nfgLns0jY
- c6bg23aZ+b6G3wI+UnfIFsOZZmJ1X75PBn6+sEV5TYlVd6ek3mcd7KW4TYgn5mVRPyAxWWU9TwT
- slsvrFWkB2rvpwKcIlOFU+VSeYUQ==
-X-Google-Smtp-Source: AGHT+IGQY4azRoy/2Pzo2seBBIP3ND63Ib9fta5wL4dkDAxIoDVIGIPwCoLIZNeoFQydUrkjlB8fVyncrcVf9ZZEH9I=
-X-Received: by 2002:a05:6122:9002:b0:520:3987:ce0b with SMTP id
- 71dfb90a1353d-5209da1b40fmr6055598e0c.2.1739845549949; Mon, 17 Feb 2025
- 18:25:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739846467; x=1740451267;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1AOeiJdqiiI5aRq2ttuarwBGGm5TOHJs5D4HyEE5s4U=;
+ b=U82lbL16SAh7ALHYRxiKWX5Iws3LIg/Obr3vDO5jzZMQlBEgsi/ZcNwXGILR9DHRoR
+ 63pDecAeXqgEWBldMAtW1zMnZtvc93guZ8bk5Nwq20zz9G+ER03bjjyrwxpk8CI2ovsr
+ Sl495GdnDLVW9Ox94xHPAn1REI//+XxzGdV7wJvd5kh029cUKQxh2XsEGyQKGp7n6iBF
+ KHonoBCLHAgUk+NgI/m0LlgVsHjIVT9cyCa/HzdsaoISGJzW/zX6d46uO5lpDHEN5DwV
+ Ld2+R+9A71TsBVsNsbdPyd4yETK5Tt35nzWIEI5RPs0trormn/ZQOWljwtdhkHuubtyJ
+ s/7Q==
+X-Gm-Message-State: AOJu0Yxrf8gmln3uKqyKwZylrF0OZlR5gdh4uv01rFDltiOTzouve/13
+ veCL4kaz3v/jhgvPZAspJpK8/XbsSqcZtDXBPAIy7V3ktgbcrBhyRK08fi0oaxCV5YjfW2r+vjj
+ HEx2Z1g==
+X-Gm-Gg: ASbGncs4iyENzQ7kKyBup0QWnhjKrCofrVKyuO2GCKWb6eFiYYdgU2RqdytgqQkDGcI
+ UzvLSXISJlNz3g2dGcmQuYLt8E997sKOldjuD+h5LGCCt1vGcmdSc7zbqPtM8A4pA1A0XkfkkOM
+ b4JoR2m6GaEMKzXsXWCdSGXKCw9oJ2UXryl7zlEUwrEpLHh94ET+DFVDKGKmtJGc5HmSNdu8Xxe
+ EPG3AmoZeg7zSZBPI2MM5ZyNzZJdiiLGjVodykNuY+hnewkBTsssFOkE6kw44Cg//4c2F3QFpAA
+ /YJZKm2eV7MQwHJ/rZekEyV2rJFgeAhBg9IKpYJB
+X-Google-Smtp-Source: AGHT+IFdh0k3rnhsBaJxSDvpAKnJNaj9CJZTCWV70suzZI6BW3MDRQu6sPQeyms+uUnFYmdJ+glCJQ==
+X-Received: by 2002:a17:90a:d44b:b0:2ef:2f49:7d7f with SMTP id
+ 98e67ed59e1d1-2fc40f22d72mr22170952a91.18.1739846466865; 
+ Mon, 17 Feb 2025 18:41:06 -0800 (PST)
+Received: from Hyman-Dev-Euler.zelin.local ([154.64.226.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220f8682181sm55625905ad.209.2025.02.17.18.41.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Feb 2025 18:41:06 -0800 (PST)
+From: yong.huang@smartx.com
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>
+Subject: [RFC] migration: Introduce migration throttle event
+Date: Tue, 18 Feb 2025 10:39:55 +0800
+Message-Id: <4df13a8005170ad42cbbc883a0a8fdbb1ab94ac1.1739846274.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <20250210153713.343626-1-rbradford@rivosinc.com>
-In-Reply-To: <20250210153713.343626-1-rbradford@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 18 Feb 2025 12:25:24 +1000
-X-Gm-Features: AWEUYZmwnJXByFInV6j7rGRRZPKAZo9aMQS8PG_BMGswim4wITWO2C9KDpuP8cc
-Message-ID: <CAKmqyKMikm_TjEL06Ys=ZUCqRX=c+b2zGaJvuXE3+p86Pjj_vQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Respect mseccfg.RLB bit for TOR mode PMP
- entry
-To: Rob Bradford <rbradford@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=yong.huang@smartx.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,48 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 11, 2025 at 1:38=E2=80=AFAM Rob Bradford <rbradford@rivosinc.co=
-m> wrote:
->
-> When running in TOR mode (Top of Range) the next PMP entry controls
-> whether the entry is locked. However simply checking if the PMP_LOCK bit
-> is set is not sufficient with the Smepmp extension which now provides a
-> bit (mseccfg.RLB (Rule Lock Bypass)) to disregard the lock bits. In
-> order to respect this bit use the convenience pmp_is_locked() function
-> rather than directly checking PMP_LOCK since this function checks
-> mseccfg.RLB.
->
-> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+From: Hyman Huang <yong.huang@smartx.com>
 
-Thanks!
+When the developer is examining the time distribution of
+the migration, it is useful to record the migration throttle
+timestamp. Consequently, include the migration throttle event.
 
-Applied to riscv-to-apply.next
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+---
+ migration/ram.c     |  1 +
+ qapi/migration.json | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-Alistair
+diff --git a/migration/ram.c b/migration/ram.c
+index 589b6505eb..725e029927 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -524,6 +524,7 @@ static void mig_throttle_guest_down(uint64_t bytes_dirty_period,
+ 
+     /* We have not started throttling yet. Let's start it. */
+     if (!cpu_throttle_active()) {
++        qapi_event_send_migration_throttle();
+         cpu_throttle_set(pct_initial);
+     } else {
+         /* Throttling already on, just increase the rate */
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8b9c53595c..0495065b5d 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1393,6 +1393,21 @@
+ { 'event': 'MIGRATION_PASS',
+   'data': { 'pass': 'int' } }
+ 
++##
++# @MIGRATION_THROTTLE:
++#
++# Emitted from the source side of a migration at the start of vCPU throttle
++#
++# Since: 10.0
++#
++# Example:
++#
++# <- { "event": "MIGRATION_THROTTLE",
++#      "timestamp": { "seconds": 1267041730, "microseconds": 281295 } }
++#
++##
++{ 'event': 'MIGRATION_THROTTLE' }
++
+ ##
+ # @COLOMessage:
+ #
+-- 
+2.27.0
 
-> ---
->  target/riscv/pmp.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index a185c246d6..85ab270dad 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -524,7 +524,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->              uint8_t pmp_cfg =3D env->pmp_state.pmp[addr_index + 1].cfg_r=
-eg;
->              is_next_cfg_tor =3D PMP_AMATCH_TOR =3D=3D pmp_get_a_field(pm=
-p_cfg);
->
-> -            if (pmp_cfg & PMP_LOCK && is_next_cfg_tor) {
-> +            if (pmp_is_locked(env, addr_index + 1) && is_next_cfg_tor) {
->                  qemu_log_mask(LOG_GUEST_ERROR,
->                                "ignoring pmpaddr write - pmpcfg + 1 locke=
-d\n");
->                  return;
-> --
-> 2.48.1
->
->
 
