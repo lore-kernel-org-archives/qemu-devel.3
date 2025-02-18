@@ -4,141 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C22C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0FCC021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkHCQ-0004xD-GG; Tue, 18 Feb 2025 01:35:18 -0500
+	id 1tkHCn-00055I-Bq; Tue, 18 Feb 2025 01:35:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkHCF-0004uE-CQ
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:35:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tkHCd-00053x-UL
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:35:33 -0500
+Received: from mailout4.samsung.com ([203.254.224.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkHCC-0005IM-CE
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:35:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739860501;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=x5AhtQ12gH8aBCtU16EhV/9L7NlWQ+Hp7XX+wS4vcjM=;
- b=K10RU+ymUG2y9cULph4JuUJna3rE/wtm95Bcr7HNs9DGu7AHNq9bSMhPxb4emoM1Slob3h
- IZgaZQm8ufsGJKQnaeyq2uXqcC15J+fWExeFzC2cEiKzOtOh93scu4gbHQOgNeTV+ACRtn
- wYiWYDLIoVPuAngdugQrf9mXJX6K/n4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-poiVdFiwMFeDDqSGkj-wxQ-1; Tue, 18 Feb 2025 01:34:58 -0500
-X-MC-Unique: poiVdFiwMFeDDqSGkj-wxQ-1
-X-Mimecast-MFC-AGG-ID: poiVdFiwMFeDDqSGkj-wxQ_1739860497
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso40718355e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 22:34:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739860497; x=1740465297;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x5AhtQ12gH8aBCtU16EhV/9L7NlWQ+Hp7XX+wS4vcjM=;
- b=U//Cu+Lv9w9DOw2EzQ6sdBazQvtxTUT4dl4LXmJzWhicqKQxzoFRuZIqgGE6vfZ2uM
- ipPTryonRDtgTcGkJcA1A/uWIkHdwPkDwc8+lZitkIeAIDMxYxslknCnPTgXuJbydiOH
- S8CHoC4lqUeLLim2mqClPzmrq3/RL/MifffykrfwLOsruKsGgAznytJtiN5Rpdt2HZV7
- HFCSChNCoAryXBq4A7GWzNiCy/E7xcnhWddJ9R/6fb1dRPh9dTCefd3ZtBei+Q1SqYHC
- 1ql5Bxx/SerZAl6gstyM2lelog0fl5fHS5ioSmUNZcWpzgvtRvT88MiP2RD4eGIb2knV
- 9Yuw==
-X-Gm-Message-State: AOJu0YzEeLJQ1Yo5diYjt/4cD1VPOlTuyYn1H5RU/nv4pGGCW8WbvtJf
- jQcN3S8NQ2L58TAXDU/2+gv1CVPCNeIL8/SodBFXm6gXwzo3NBc/RW5zP8dEMJdYZ095SItOkd8
- zhxJRMnrk9P7kbKXLOJCu+fiMxckqk2einj2ZEXv3TgG1WIyw1RAr
-X-Gm-Gg: ASbGncuGLUWrTUdBN6xbWmY8NH22wrLZioewIXhoZ/eIj9Qtdy9pDiQ00UBErGbgIlH
- e4FN0MTTOs3Wh4aUJwAEaAcn52/vu8PJ9FRUh+3heWxJvhdPZrs5eDCy2L6oGJZ3Mme/kXokbQ/
- UEKSkUY6X/rUqmACyN8JedngkGu5V1upDWSFAns+sG+VMwbZ4mp6P/KaTh1KphU5v6ZFBLzigYk
- hCpluMOwjag7reNa7SJPdsc/Vh2TMiP46bSmNxSnMKq8NYHKfAIOKlq7fJBG+utV0823e7OQGlY
- gG4kaoGDEysKSjudhUtiMRAQxWHY9yEyfGDt
-X-Received: by 2002:a05:600c:1910:b0:439:96aa:e502 with SMTP id
- 5b1f17b1804b1-43996aae68amr3182655e9.12.1739860497283; 
- Mon, 17 Feb 2025 22:34:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFxINo9OVYzVxnB39Sku8KHCuIQ8/pkmEA+NAPaRNTubF7xuEfqIJKpy2lSK+Jc8hWn0e/IIw==
-X-Received: by 2002:a05:600c:1910:b0:439:96aa:e502 with SMTP id
- 5b1f17b1804b1-43996aae68amr3182435e9.12.1739860496843; 
- Mon, 17 Feb 2025 22:34:56 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-157.web.vodafone.de.
- [109.42.51.157]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a1b824dsm171358935e9.34.2025.02.17.22.34.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Feb 2025 22:34:55 -0800 (PST)
-Message-ID: <6d1cad85-4824-4912-b209-60a8070c59af@redhat.com>
-Date: Tue, 18 Feb 2025 07:34:53 +0100
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tkHCY-0005Vx-MV
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:35:31 -0500
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20250218063519epoutp04f8c446dccf0d36b29e8ca22235dc18d9~lOeyT5piP0846908469epoutp04p
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 06:35:19 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20250218063519epoutp04f8c446dccf0d36b29e8ca22235dc18d9~lOeyT5piP0846908469epoutp04p
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1739860519;
+ bh=kxLXLTaipK9NvSvIBbpusfTX0FTRfA810yNwfQYXV9A=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=pjFeIwHhRahuGByldpo4fP4a2eGHq7Ef89UHyjIDni8fwM5ETCOyu0nBZvFQ8n8mE
+ jY2Kz+KpJ/QsMa2mSMPWMGc+pQWKj+EboprDA3weykKZMXjmmnRxljCD179DA0iBku
+ dfHNTtfN3/BI94A0kbJd9mqx+pM12vcLvN9bYPWo=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+ 20250218063519epcas5p45334159e0be8606b14f04b2ef067010c~lOeyCHa2n3065030650epcas5p4q;
+ Tue, 18 Feb 2025 06:35:19 +0000 (GMT)
+Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.179]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4YxqX45q1yz4x9Q1; Tue, 18 Feb
+ 2025 06:35:16 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+ epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 15.66.29212.42A24B76; Tue, 18 Feb 2025 15:35:16 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20250218063456epcas5p413d843dc7ea0e14c6209cfb70d0e921e~lOedA6XoH2881028810epcas5p4x;
+ Tue, 18 Feb 2025 06:34:56 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250218063456epsmtrp18c7a52d34370f49f362bcef22e9de53c~lOedALZHm1527615276epsmtrp1T;
+ Tue, 18 Feb 2025 06:34:56 +0000 (GMT)
+X-AuditID: b6c32a50-801fa7000000721c-a7-67b42a2427c5
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 19.E2.18729.01A24B76; Tue, 18 Feb 2025 15:34:56 +0900 (KST)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250218063454epsmtip2d4865ec0e6013a4bc0b0f21264257000~lOebe_MEF2300323003epsmtip2O;
+ Tue, 18 Feb 2025 06:34:54 +0000 (GMT)
+Date: Tue, 18 Feb 2025 12:04:49 +0530
+From: Vinayak Holikatti <vinayak.kh@samsung.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
+ krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com
+Subject: Re: [PATCH v2 3/3] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations Sanitize and Write Zeros commands (8.2.9.9.5.3)
+Message-ID: <20250218063449.awya3h57p4qn3yak@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 23/32] tests/functional: extend test_aarch64_virt with
- vulkan test
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, "open list:Virt" <qemu-arm@nongnu.org>
-References: <20250110131754.2769814-1-alex.bennee@linaro.org>
- <20250110131754.2769814-24-alex.bennee@linaro.org>
- <CAFEAcA8Kf4eF-nxEsxhPZnV3pwU+9kXLq1zXDi61ODQEQXaAYw@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA8Kf4eF-nxEsxhPZnV3pwU+9kXLq1zXDi61ODQEQXaAYw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250214144005.000018d2@huawei.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIJsWRmVeSWpSXmKPExsWy7bCmpq6K1pZ0g1srtC2mH1a0+HJ6D5vF
+ 6ptrGC1uHtjJZLFq4TU2i4UblzFZnJ91isXi77a9jBbHe3ewALlz2B24PHbOusvu0XLkLavH
+ k2ubmTz6tqxi9Jg6u97j8ya5ALaobJuM1MSU1CKF1Lzk/JTMvHRbJe/geOd4UzMDQ11DSwtz
+ JYW8xNxUWyUXnwBdt8wcoMOUFMoSc0qBQgGJxcVK+nY2RfmlJakKGfnFJbZKqQUpOQUmBXrF
+ ibnFpXnpenmpJVaGBgZGpkCFCdkZvzemFPxMq3h3rIWlgXGCexcjJ4eEgInExAnTmLsYuTiE
+ BPYwSrxctoMJwvnEKPG0YRobhPONUWLZqiWMMC0LFiyESuxllHhzcgI7XMu76/3MIFUsAqoS
+ 79o3sIHYbAIGEg+aj7OD2CICRhLvbkxiBGlgFrjJKNE46RnYKGGBDkaJ5r1vwHbwCjhLXN60
+ ggnCFpQ4OfMJC4jNKWAosXbeUbBuCYFODom3PQ9ZII5ykZh77zoThC0s8er4FnYIW0riZX8b
+ lF0sce7iJ6gnaiRed61ghrDtJVpPgZzNAXRShsTST7YQYVmJqafWgY1kFuCT6P39BGo8r8SO
+ eSA2B5CtIrH0bSbMpi/Pmhkhwh4Sp+6VQALlDaPEwXerWCcwys1C8s0shGWzwBZYSXR+aGKF
+ CEtLLP/HAWFqSqzfpb+AkXUVo1RqQXFuemqyaYGhbl5qOTySk/NzNzGC06pWwA7G1Rv+6h1i
+ ZOJgPMQowcGsJMJ7qGtDuhBvSmJlVWpRfnxRaU5q8SFGU2D8TGSWEk3OByb2vJJ4QxNLAxMz
+ MzMTS2MzQyVx3uadLelCAumJJanZqakFqUUwfUwcnFINTEvWKEbKHmQOO6u7jDlWOkvg2VKh
+ TzOvLd382WeDhgOfmPKRljPbDr13jPt5Jzq7LsWF2/XNWpM27Q8s1i9q/y8V6dsg9H7GcQfr
+ zkCN2z8nzr8R3K3c11Av2mEhNnmmwo/0eYpCC/aavA2LXOguWcUoddckR9Dl4cftl61O/jkt
+ xbSf+W0mt+xMSY3S4/f+he326VSczHNS8cWtlX/7Gvbks544kuYjncAXku+YMNMxPuKmO4Oe
+ 4uTQh+9qWFklbXZNuqKh6C695vLDZJGi1Mc3TCz3rtp08GXwuT1Wkwx184X3JS4wZmF5kqxx
+ S/uy8q9Pjw4tWdXFLXj12+29udParkT9SH8tv/VchrSAthJLcUaioRZzUXEiAOkDUdg0BAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCLMWRmVeSWpSXmKPExsWy7bCSvK6A1pZ0gzl/RC2mH1a0+HJ6D5vF
+ 6ptrGC1uHtjJZLFq4TU2i4UblzFZnJ91isXi77a9jBbHe3ewALlz2B24PHbOusvu0XLkLavH
+ k2ubmTz6tqxi9Jg6u97j8ya5ALYoLpuU1JzMstQifbsErozjvx8wF6xOqdh0j7eB8Y5LFyMn
+ h4SAicSCBQvZQGwhgd2MEqseM0HEpSSO7fzJBmELS6z895y9i5ELqOYDo8Sc9afAilgEVCXe
+ tW8AK2ITMJB40HycHcQWETCSeHdjEiNIA7PAbUaJ37vvsYA4wgIdjBLNe98wglTxCjhLXN60
+ ggli7BtGiVt9S6ESghInZz5hAbGZBcwk5m1+yNzFyAFkS0ss/8cBEuYUMJRYO+8o4wRGgVlI
+ OmYh6ZiF0LGAkXkVo2RqQXFuem6xYYFhXmq5XnFibnFpXrpecn7uJkZwRGhp7mDcvuqD3iFG
+ Jg7GQ4wSHMxKIryHujakC/GmJFZWpRblxxeV5qQWH2KU5mBREucVf9GbIiSQnliSmp2aWpBa
+ BJNl4uCUamC6lMlbOWdnkZJq+cWmrAexHzQcKqznf7t7OHvvQY+mFvmMF48kr8q0lDtvk7+/
+ sfmbkc8sTaO/epfSmpd5qGfLPDtSHXgsrzt33oEXPxqKxM6cYfkox5UqIvgv6vtv1YthswVP
+ rWqerqOhKMqkU+jrLtxsUeZ96/cH/20sarnapyZv3TB1Tf5K3wU1Z/Ueu7JunlHOU2bQ+8Vv
+ bhVb6lHBeUqVjae/yPKeyTEtCZW6Xtlioajdv3KOYsP1h2rqbgn6C7iLFabLsqnbmrFmyN2z
+ Fah+0Geq5WB0Z+W+PeWqP574pP28ymsTtdT86+eMacWZc4yu/3afOtXkacs2ljO/Eup2va3e
+ l+x+ScOqWYmlOCPRUIu5qDgRANNsTN33AgAA
+X-CMS-MailID: 20250218063456epcas5p413d843dc7ea0e14c6209cfb70d0e921e
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_629ef_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250213091632epcas5p2726909f864b50cc2d1b7ceb2415698c2
+References: <20250213091558.2294806-1-vinayak.kh@samsung.com>
+ <CGME20250213091632epcas5p2726909f864b50cc2d1b7ceb2415698c2@epcas5p2.samsung.com>
+ <20250213091558.2294806-4-vinayak.kh@samsung.com>
+ <20250214144005.000018d2@huawei.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=vinayak.kh@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,167 +140,413 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/02/2025 17.30, Peter Maydell wrote:
-> On Fri, 10 Jan 2025 at 13:23, Alex Bennée <alex.bennee@linaro.org> wrote:
->> Now that we have virtio-gpu Vulkan support, let's add a test for it.
->> Currently this is using images build by buildroot:
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_629ef_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
+
+On 14/02/25 02:40PM, Jonathan Cameron wrote:
+>On Thu, 13 Feb 2025 14:45:58 +0530
+>Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
+>
+>> CXL spec 3.1 section 8.2.9.9.5.3 describes media operations commands.
+>As in previous - please update to the r3.2 spec.
+>
+ok will update as per 3.2
+>A few comments inline.
+>
+>Thanks,
+>
+>Jonathan
+>
+Thank you for feedback will address them in V3 patch
+
+>> CXL devices supports media operations Sanitize and Write zero command.
 >>
->>    https://lists.buildroot.org/pipermail/buildroot/2024-December/768196.html
+>> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+>> ---
+>>  hw/cxl/cxl-mailbox-utils.c  | 217 +++++++++++++++++++++++++++++++++++-
+>>  include/hw/cxl/cxl_device.h |   4 +
+>>  2 files changed, 216 insertions(+), 5 deletions(-)
 >>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->> Message-Id: <20250108121054.1126164-24-alex.bennee@linaro.org>
-> 
-> Hi; this test currently fails for me with a clang sanitizer
-> build (ubuntu 24.04 host). It seems to run weston in the guest,
-> which fails with:
-> 
-> 2025-02-17 16:11:10,218: [16:11:10.672] Command line: weston -B
-> headless --renderer gl --shell kiosk -- vkmark -b:duration=1.0
-> 2025-02-17 16:11:10,224: [16:11:10.675] OS: Linux, 6.11.10, #2 SMP Thu
-> Dec  5 16:27:12 GMT 2024, aarch64
-> 2025-02-17 16:11:10,225: [16:11:10.680] Flight recorder: enabled
-> 2025-02-17 16:11:10,226: [16:11:10.681] warning: XDG_RUNTIME_DIR
-> "/tmp" is not configured
-> 2025-02-17 16:11:10,226: correctly.  Unix access mode must be 0700
-> (current mode is 0777),
-> 2025-02-17 16:11:10,226: and must be owned by the user UID 0 (current
-> owner is UID 0).
-> 2025-02-17 16:11:10,227: Refer to your distribution on how to get it, or
-> 2025-02-17 16:11:10,227:
-> http://www.freedesktop.org/wiki/Specifications/basedir-spec
-> 2025-02-17 16:11:10,228: on how to implement it.
-> 2025-02-17 16:11:10,240: [16:11:10.695] Starting with no config file.
-> 2025-02-17 16:11:10,253: [16:11:10.707] Output repaint window is 7 ms maximum.
-> 2025-02-17 16:11:10,262: [16:11:10.716] Loading module
-> '/usr/lib/libweston-14/headless-backend.so'
-> 2025-02-17 16:11:10,313: [16:11:10.768] Loading module
-> '/usr/lib/libweston-14/gl-renderer.so'
-> 2025-02-17 16:11:21,858: libEGL warning: egl: failed to create dri2 screen
-> 2025-02-17 16:11:21,959: libEGL warning: egl: failed to create dri2 screen
-> 2025-02-17 16:11:22,023: libEGL warning: egl: failed to create dri2 screen
-> 2025-02-17 16:11:22,032: [16:11:22.486] failed to initialize display
-> 2025-02-17 16:11:22,033: [16:11:22.488] EGL error state:
-> EGL_NOT_INITIALIZED (0x3001)
-> 2025-02-17 16:11:22,036: [16:11:22.490] fatal: failed to create
-> compositor backend
-> 
-> Then eventually the test framework times it ou and sends it
-> a SIGTERM, and QEMU SEGVs inside libEGL trying to run an
-> exit handler:
-> 
-> qemu-system-aarch64: terminating on signal 15 from pid 242824
-> (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3)
-> UndefinedBehaviorSanitizer:DEADLYSIGNAL
-> ==243045==ERROR: UndefinedBehaviorSanitizer: SEGV on unknown address
-> 0x73fbfefe6a31 (pc 0x73fbba9788e9 bp 0x73fbbbe0af80 sp 0x7ffd676fbfe0
-> T243045)
-> ==243045==The signal is caused by a READ memory access.
->      #0 0x73fbba9788e9
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #1 0x73fbbaafc178
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16fc178)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #2 0x73fbba62564f
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x122564f)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #3 0x73fbbab067d7
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x17067d7)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #4 0x73fbba63b786
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x123b786)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #5 0x73fbba96290a
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x156290a)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #6 0x73fbba941c5c
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x1541c5c)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->      #7 0x73fbc2041f20
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f20) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #8 0x73fbc2041f68
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f68) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #9 0x73fbc2034ca9
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x34ca9) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #10 0x73fbc203ae90
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3ae90) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #11 0x73fbc203aeda
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3aeda) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #12 0x73fbc20a45f5
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa45f5) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #13 0x73fbc20a2bfc
-> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa2bfc) (BuildId:
-> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
->      #14 0x73fbd3047a75 in __run_exit_handlers stdlib/exit.c:108:8
->      #15 0x73fbd3047bbd in exit stdlib/exit.c:138:3
->      #16 0x5a5bab5e3fdb in qemu_default_main
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/main.c:52:5
->      #17 0x5a5bab5e3f9e in main
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/main.c:76:9
->      #18 0x73fbd302a1c9 in __libc_start_call_main
-> csu/../sysdeps/nptl/libc_start_call_main.h:58:16
->      #19 0x73fbd302a28a in __libc_start_main csu/../csu/libc-start.c:360:3
->      #20 0x5a5ba9c5b554 in _start
-> (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-aarch64+0x15dc554)
-> (BuildId: 8efda3601b42aa2644dde35d1d63f7b22b649a33)
-> 
-> UndefinedBehaviorSanitizer can not provide additional info.
-> SUMMARY: UndefinedBehaviorSanitizer: SEGV
-> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
-> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
-> ==243045==ABORTING
+>> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>> index d58c20842f..2d8d1171b4 100644
+>> --- a/hw/cxl/cxl-mailbox-utils.c
+>> +++ b/hw/cxl/cxl-mailbox-utils.c
+>> @@ -1732,6 +1732,130 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+>>  }
+>>
+>>  #define CXL_CACHELINE_SIZE 64
+>> +struct CXLSanitizeInfo {
+>> +    uint32_t dpa_range_count;
+>> +    uint8_t fill_value;
+>> +    struct {
+>> +            uint64_t starting_dpa;
+>> +            uint64_t length;
+>> +    } dpa_range_list[];
+>> +};
+>> +
+>> +struct dpa_range_list_entry {
+>> +    uint64_t starting_dpa;
+>> +    uint64_t length;
+>> +};
+>
+>Declare it above and use in CXLSanitizeInfo
+>
+ok
+>> +
+>> +static uint64_t get_vmr_size(CXLType3Dev *ct3d, MemoryRegion **vmr)
+>> +{
+>> +    uint64_t vmr_size = 0;
+>> +    if (ct3d->hostvmem) {
+>> +        *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+>> +        vmr_size = memory_region_size(*vmr);
+>> +    }
+>> +    return vmr_size;
+>> +}
+>> +
+>
+>I would write as
+>
+>static uint64_t get_pmr_size(CXLTYpe3Dev *ct3d, MemoryRegion **pmr)
+>{
+>    MemoryRegion *mr;
+>    if (ct3d->hostpmem) {
+>        mr = host_memory_region_backend_get_memory(ct3d->hostpmem);
+>        if (pmr) {
+>            *pmr = mr;
+>        }
+>	return memory_region_size(mr);
+>    }
+>    return 0;
+>}
+>
+ok
+>Making the pmr argument optional for when you don't need it.
+>
+>> +static uint64_t get_pmr_size(CXLType3Dev *ct3d, MemoryRegion **pmr)
+>> +{
+>> +    uint64_t pmr_size = 0;
+>> +    if (ct3d->hostpmem) {
+>> +        *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+>> +        pmr_size = memory_region_size(*pmr);
+>> +    }
+>> +    return pmr_size;
+>> +}
+>> +
+>> +static uint64_t get_dc_size(CXLType3Dev *ct3d, MemoryRegion **dc_mr)
+>> +{
+>> +    uint64_t dc_size = 0;
+>> +    if (ct3d->dc.host_dc) {
+>> +        *dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+>> +        dc_size = memory_region_size(*dc_mr);
+>> +    }
+>> +    return dc_size;
+>> +}
+>> +
+>> +static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+>> +                             size_t length)
+>> +{
+>> +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
+>> +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
+>
+>overwritten in all paths were we use them. So don't assign initial values.
+>
+ok
+>> +
+>> +    if ((dpa_addr % CXL_CACHELINE_SIZE) ||
+>> +         (length % CXL_CACHELINE_SIZE)  ||
+>> +         (length <= 0)) {
+>Align as
+>    if ((dpa_addr % CXL_CACHELINE_SIZE) ||
+>        (length % CXL_CACHELINE_SIZE) ||
+>        (length <= 0)) {
+>
+ok
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    vmr_size = get_vmr_size(ct3d, &vmr);
+>> +    pmr_size = get_pmr_size(ct3d, &pmr);
+>> +    dc_size = get_dc_size(ct3d, &dc_mr);
+>> +
+>> +    if (!vmr && !pmr && !dc_mr) {
+>
+>That's a bit late given you used them to get the sizes.
+>Do this before filling sizes.
+>
+ok
+>> +        return -ENODEV;
+>> +    }
+>> +
+>> +    if ((dpa_addr + length) > vmr_size + pmr_size + dc_size) {
+>Skip inner brackets.
+>
+ok
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    if (dpa_addr > vmr_size + pmr_size) {
+>> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
+>> +            return -ENODEV;
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
+>> +                          uint8_t fill_value)
+>> +{
+>> +
+>> +    MemoryRegion *vmr = NULL, *pmr = NULL;
+>> +    uint64_t vmr_size = 0, pmr_size = 0;
+>> +    AddressSpace *as = NULL;
+>> +    MemTxAttrs mem_attrs = {0};
+>> +
+>> +    vmr_size = get_vmr_size(ct3d, &vmr);
+>> +    pmr_size = get_pmr_size(ct3d, &pmr);
+>> +
+>> +    if (dpa_addr < vmr_size) {
+>> +        as = &ct3d->hostvmem_as;
+>> +    } else if (dpa_addr < vmr_size + pmr_size) {
+>> +        as = &ct3d->hostpmem_as;
+>> +    } else {
+>> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
+>> +            return -ENODEV;
+>> +        }
+>> +        as = &ct3d->dc.host_dc_as;
+>> +    }
+>> +
+>> +    return address_space_set(as, dpa_addr,
+>> +                              fill_value, length, mem_attrs);
+>
+>Odd wrap.  Put as much as fits on line under 80 chars on first line
+>then align next line to just after (
+>
+ok
+>> +}
+>> +
+>> +/* Perform the actual device zeroing */
+>> +static void __do_sanitize(CXLType3Dev *ct3d)
+>> +{
+>> +    struct CXLSanitizeInfo  *san_info = ct3d->media_op_sanitize;
+>> +    int dpa_range_count = san_info->dpa_range_count;
+>> +    int rc = 0;
+>> +
+>> +    for (int i = 0; i < dpa_range_count; i++) {
+>
+>Declare i outside loop (match local style).
+>
+ok
+>> +        rc = sanitize_range(ct3d, san_info->dpa_range_list[i].starting_dpa,
+>> +                san_info->dpa_range_list[i].length, san_info->fill_value);
+>
+>Either align 4 spaces after start of line above, or immediately after (
+>
+>> +        if (rc) {
+>> +            goto exit;
+>> +        }
+>> +    }
+>> +exit:
+>> +    g_free(ct3d->media_op_sanitize);
+>> +    ct3d->media_op_sanitize = NULL;
+>> +    return;
+>> +}
+>> +
+>>  enum {
+>>      MEDIA_OP_CLASS_GENERAL  = 0x0,
+>>          #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
+>> @@ -1760,9 +1884,9 @@ static const struct media_op_supported_list_entry media_op_matrix[] = {
+>>  };
+>>
+>>  static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+>> -                                                size_t len_in,
+>> -                                                uint8_t *payload_out,
+>> -                                                size_t *len_out)
+>> +                                             size_t len_in,
+>> +                                             uint8_t *payload_out,
+>> +                                             size_t *len_out)
+>
+>Ah. Drag this to earlier patch.
+>
+ok
+>>  {
+>>      struct {
+>>          uint8_t media_operation_class;
+>> @@ -1811,6 +1935,66 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+>>      return CXL_MBOX_SUCCESS;
+>>  }
+>>
+>> +static CXLRetCode media_operations_sanitize(CXLType3Dev *ct3d,
+>> +                                            uint8_t *payload_in,
+>> +                                            size_t len_in,
+>> +                                            uint8_t *payload_out,
+>> +                                            size_t *len_out,
+>> +                                            uint8_t fill_value,
+>> +                                            CXLCCI *cci)
+>> +{
+>> +    struct media_operations_sanitize {
+>> +        uint8_t media_operation_class;
+>> +        uint8_t media_operation_subclass;
+>> +        uint8_t rsvd[2];
+>> +        uint32_t dpa_range_count;
+>> +        struct {
+>> +            uint64_t starting_dpa;
+>> +            uint64_t length;
+>> +        } dpa_range_list[];
+>> +    } QEMU_PACKED *media_op_in_sanitize_pl = (void *)payload_in;
+>> +    uint32_t dpa_range_count = media_op_in_sanitize_pl->dpa_range_count;
+>> +    uint64_t total_mem = 0;
+>> +    int secs = 0;
+>> +
+>> +    if (len_in < (sizeof(*media_op_in_sanitize_pl) +
+>> +           (dpa_range_count * sizeof(struct dpa_range_list_entry)))) {
+>> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+>> +    }
+>> +
+>> +    for (int i = 0; i < dpa_range_count; i++) {
+>
+>Declare outside of there (to match local style)
+>
+ok
+>> +        if (validate_dpa_addr(ct3d,
+>> +            media_op_in_sanitize_pl->dpa_range_list[i].starting_dpa,
+>
+>Hmm. This is tricky to read because of alignment.  I'd have local
+>start_dpa nad length variables.
+>
+ok
+>    for (i = 0; i < dpa_range_count; i++) {
+>        uint64_t start_dpa = media_op_in_sanitize_pl->dpa_range_list[i].starting_dpa;
+>        uint64_t length = media_op_in_sanitize_pl->dpa_range_list[i].length;
+>
+>	if (validate_dpa_addr(ct3d, dpa_start, length)) {
+>
+>> +            media_op_in_sanitize_pl->dpa_range_list[i].length)) {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +        total_mem += media_op_in_sanitize_pl->dpa_range_list[i].length;
+>> +    }
+>> +    ct3d->media_op_sanitize = g_malloc0(sizeof(struct CXLSanitizeInfo) +
+>> +                                  (dpa_range_count *
+>> +                                  sizeof(struct dpa_range_list_entry)));
+>> +
+>> +    if (ct3d->media_op_sanitize) {
+>> +        ct3d->media_op_sanitize->dpa_range_count = dpa_range_count;
+>> +        ct3d->media_op_sanitize->fill_value = fill_value;
+>> +        memcpy(ct3d->media_op_sanitize->dpa_range_list,
+>> +                  media_op_in_sanitize_pl->dpa_range_list,
+>> +                  (dpa_range_count *
+>> +                  sizeof(struct dpa_range_list_entry)));
+>> +        secs = get_sanitize_duration(total_mem >> 20);
+>> +    }
+>> +
+>> +    /* EBUSY other bg cmds as of now */
+>> +    cci->bg.runtime = secs * 1000UL;
+>> +    *len_out = 0;
+>> +    /*
+>> +     * media op sanitize is targeted so no need to disable media or
+>> +     * clear event logs
+>> +     */
+>> +    return CXL_MBOX_BG_STARTED;
+>> +
+>
+>No blank line here.
+>
+ok
+>> +}
+>> +
+>>  static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
+>>                                           uint8_t *payload_in,
+>>                                           size_t len_in,
+>> @@ -1825,6 +2009,9 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
+>>          uint32_t dpa_range_count;
+>>      } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
+>>
+>> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>> +    uint8_t fill_value = 0;
+>
+>Maybe just put this value in directly into where it is used?
+>
+ok
+>> +
+>>      if (len_in < sizeof(*media_op_in_common_pl)) {
+>>          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+>>      }
+>> @@ -1851,15 +2038,29 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
+>>          return media_operations_discovery(payload_in, len_in, payload_out,
+>>                                               len_out);
+>>      case MEDIA_OP_CLASS_SANITIZE:
+>> +        if (dpa_range_count == 0) {
+>> +            return CXL_MBOX_SUCCESS;
+>> +        }
+>>          switch (media_op_subclass) {
+>> +        case MEDIA_OP_SAN_SUBC_SANITIZE:
+>> +            fill_value = 0xF;
+>> +            return media_operations_sanitize(ct3d, payload_in, len_in,
+>> +                                             payload_out, len_out, fill_value,
+>> +                                             cci);
+>> +            break;
+>
+>Can reach this break so remove it.
+>
+ok
+>> +        case MEDIA_OP_SAN_SUBC_ZERO:
+>> +            fill_value = 0;
+>> +            return media_operations_sanitize(ct3d, payload_in, len_in,
+>> +                                             payload_out, len_out, fill_value,
+>> +                                             cci);
+>> +            break;
+>
+>Can't reach this break either.
+>
+ok
+>>          default:
+>>              return CXL_MBOX_UNSUPPORTED;
+>>          }
+>> +        break;
+>>      default:
+>>          return CXL_MBOX_UNSUPPORTED;
+>>      }
+>> -
+>> -    return CXL_MBOX_SUCCESS;
+>
+>This removal belongs in patch 1
+>
+>>  }
+>
+>> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>> index a64739be25..b391a293a8 100644
+>> --- a/include/hw/cxl/cxl_device.h
+>> +++ b/include/hw/cxl/cxl_device.h
+>> @@ -581,6 +581,8 @@ typedef struct CXLSetFeatureInfo {
+>>      size_t data_size;
+>>  } CXLSetFeatureInfo;
+>>
+>> +struct CXLSanitizeInfo;
+>> +
+>>  struct CXLType3Dev {
+>>      /* Private */
+>>      PCIDevice parent_obj;
+>> @@ -651,6 +653,8 @@ struct CXLType3Dev {
+>>          uint8_t num_regions; /* 0-8 regions */
+>>          CXLDCRegion regions[DCD_MAX_NUM_REGION];
+>>      } dc;
+>> +
+>> +    struct CXLSanitizeInfo  *media_op_sanitize;
+>
+>Only one place before *
+>
+ok
 
-FWIW, I just saw this test also failing in a normal clang build (without 
-sanitizers enabled). In the console log:
+>>  };
+>>
+>>  #define TYPE_CXL_TYPE3 "cxl-type3"
+>
 
-2025-02-18 07:08:47,497: [06:08:47.588] Loading module 
-'/usr/lib/weston/kiosk-shell.so'
-2025-02-18 07:08:47,914: =======================================================
-2025-02-18 07:08:47,915: vkmark 2017.08
-2025-02-18 07:08:47,915: =======================================================
-2025-02-18 07:08:47,915: Vendor ID:      0x8086
-2025-02-18 07:08:47,915: Device ID:      0x9A60
-2025-02-18 07:08:47,916: Device Name:    Virtio-GPU Venus (Intel(R) UHD 
-Graphics (TGL GT1))
-2025-02-18 07:08:47,916: Driver Version: 100675584
-2025-02-18 07:08:47,916: Device UUID:    c5930b2b12677aad53343f8a072209af
-2025-02-18 07:08:47,916: =======================================================
-2025-02-18 07:08:52,277: [vertex] device-local=true:MESA-VIRTIO: debug: 
-stuck in fence wait with iter at 1024
-2025-02-18 07:09:03,142: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 2048
-2025-02-18 07:09:24,640: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 3072
-2025-02-18 07:09:46,192: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 4096
-2025-02-18 07:10:28,665: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 5120
-2025-02-18 07:11:11,067: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 6144
-2025-02-18 07:11:53,619: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 7168
-2025-02-18 07:12:36,397: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 8192
-2025-02-18 07:14:01,431: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 9216
-2025-02-18 07:15:26,387: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 10240
-2025-02-18 07:16:51,349: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 11264
-2025-02-18 07:18:16,409: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 12288
-2025-02-18 07:19:41,439: MESA-VIRTIO: debug: stuck in fence wait with iter 
-at 13312
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_629ef_
+Content-Type: text/plain; charset="utf-8"
 
-Should we maybe mark it as flaky for the time being?
 
-  Thomas
-
+------MTAFpDJBIS7x0DorxmyomC-IKR7RHdtq514vGN5lDcSFRf5o=_629ef_--
 
