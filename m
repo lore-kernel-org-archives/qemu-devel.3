@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0742EC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FA5C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkP99-0000sZ-7o; Tue, 18 Feb 2025 10:04:27 -0500
+	id 1tkPOR-0003vT-Ij; Tue, 18 Feb 2025 10:20:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1tkP97-0000rw-Iq
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:04:25 -0500
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tkPON-0003tp-Kn
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:20:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1tkP95-00048e-5E
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:04:25 -0500
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tkPOH-0006kP-Q3
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:20:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739891061;
+ s=mimecast20190719; t=1739892002;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f+QUCUKOG/ZLCL2Bj+1396e6XOhmqUB0EHip1Xhcq20=;
- b=GGQkwHvXpjOUTk8XLfkRlLVk9d+iexDwI4B7W+H33AMa2u4mQcNzC8K6XkxWAEez6Q6xGD
- SwiwC7MLPz22Zpjo1zwn5MOJkv1ccSnJZp34b1Ic1XXfNRfNOrFTjqDxL5Lw3dN3Xq7cCx
- vdgxuKGhLwE/6bTosYG/Kqd1ot18Co0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+dqiMdOqvbsj/eOfHi8v2rwXuPrIwccDTNhNy41PIso=;
+ b=a8dMbvIOsEKJfGzlXhobuQDC2cbeqd/z9+flZo6xpFZ5JvRHhiXGtOF5bQGfzxivcIo5jM
+ KsU2Yc/ANIQR2SF0kqtoCKoeIaUM9F/zkAZFFa75An88jiN0N7n2aiIcoQxaXq6kSzhJh8
+ kFwlmpz6Kwnqqc0li0qn67cE/TqXYhM=
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-eXNccJHZO1eWTn2WX4PDEA-1; Tue, 18 Feb 2025 10:04:15 -0500
-X-MC-Unique: eXNccJHZO1eWTn2WX4PDEA-1
-X-Mimecast-MFC-AGG-ID: eXNccJHZO1eWTn2WX4PDEA_1739891055
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2fc57652924so5594241a91.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:04:15 -0800 (PST)
+ us-mta-76-nUFC55zENQWe0arab8Xagw-1; Tue, 18 Feb 2025 10:20:00 -0500
+X-MC-Unique: nUFC55zENQWe0arab8Xagw-1
+X-Mimecast-MFC-AGG-ID: nUFC55zENQWe0arab8Xagw_1739891999
+Received: by mail-il1-f199.google.com with SMTP id
+ e9e14a558f8ab-3d2a939f02fso1402905ab.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:20:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739891055; x=1740495855;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1739891999; x=1740496799;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f+QUCUKOG/ZLCL2Bj+1396e6XOhmqUB0EHip1Xhcq20=;
- b=lN3y8HVnKHd55VuPyMcnjefl6LT+5Ue+iCJw+/fQDVBY4Peqh7gCsHaopPsrHwgd6L
- W7JMgrCCyfoC4ThDJasU5pCjZztrbYzVckMwqM6nTcQUSWowiqPVzL5aFKLaZkRhMvzA
- kZJk1lQRzkMJYJMiyXlYzlq/pb2wpRUBbtc/6yBMamZVndTxrRrnkwTxuMcc6HrCEfQX
- Ve2R2XOHTSQAKsvnYMceQU+4ry5wZ1LtONyI9zBNwrzCI4BRddbQiQBjTDOCOuhq/IJq
- sDooeOapU5FO0Hq9xcJyZa7QSvWloKsYECVdx5ENrX8qVqGDj0MOu/T8zmqCjKUscFtC
- c+3w==
-X-Gm-Message-State: AOJu0YwAY5wVJhH2I/MAJidJNLJ5dL/5jJhNASxUQv7dxp/qeJBCfFrH
- YaF8wK0deJa3uqv8ZCtcvE05em9ljuyJg3ZmAT1VgwPth7DCzZ21Q06fI0dCiSSJ0blMlOrNvSI
- LlLX4xYFEcmF8/If6lp/K0+zoXgGAecJ/jRAJvO3VLP0gsU/UvE4UGRui71rNUbsdRoLmiFTiA1
- czwvYkKN5zQV+3vtmD+1z0R7/pM+E=
-X-Gm-Gg: ASbGncvFjy4EKFQMiHEcHqP+WXRVL54grGDfNyLkC0wYbnAnyDWlwz2Eo2ThhgGnC3w
- jbikEuWWIANEUZ29x0bW8Q00ASmAiBYl+3fVkw1DCAW5BmkgDyuGsnNRmTsjXHo+i
-X-Received: by 2002:a17:90b:4cd2:b0:2fa:1e56:5d82 with SMTP id
- 98e67ed59e1d1-2fcb4d80a53mr39774a91.17.1739891054727; 
- Tue, 18 Feb 2025 07:04:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFSDFKdEgOrrUWDx/RKupBpHSOj2F0DfGN3rARyr7xLHEQ1W+euZdeqq5PSTdSTy5oRY5K2aUdDSnu/g6il/Fo=
-X-Received: by 2002:a17:90b:4cd2:b0:2fa:1e56:5d82 with SMTP id
- 98e67ed59e1d1-2fcb4d80a53mr39723a91.17.1739891054296; Tue, 18 Feb 2025
- 07:04:14 -0800 (PST)
+ bh=+dqiMdOqvbsj/eOfHi8v2rwXuPrIwccDTNhNy41PIso=;
+ b=AOIhwgBDCyrdz9B/tmVQJuC+vvVfUQU3eprsr1fayHAh4Ss8YbnJ8S417JkDQ1+lO5
+ qmEMcrXYK9Y1DHwQOzmhv/cYGXdggT4E+MncYFOy7kl4RhAoMe+efJBXq0BM/KhpJV76
+ fir5JLM2n0YMoldrgpewMCww7PBP2EdqLQFvdlVl97nnj69CTFzHGqXWnDCsJAKSeKV6
+ t++TsaFt11h5StKjFhVG7GahyEyW8tsoWgSMmuG8b4kCgEC5IpoQYQ+tcaEUB32Rgqex
+ xGLJS5v0j9H8nOAEHjPcmYXbPzWyWF/IRAw1qAGgtjWo+Zk3FODQD6unaCGYesaek1uH
+ D82A==
+X-Gm-Message-State: AOJu0Yw/BMhAwRZhSmk1DqNUJTLqXK2nuijO2+awkrmTFKSUyI5nTBEG
+ aqiD97uLfnKeBZgnC+KWNsxGNSclxbigIrqnOhjri2ETv33kyTgmVrjhEEXAj2nsFuxrXCUDOl2
+ 0rVJuJkMt5lDRAQEvAbBYzwReJlYZhnIEoB0LMzNsCa+WQlxmbHI7
+X-Gm-Gg: ASbGncsa8w7bGt/jMOrYo+CHlN94yHyOMt2szr6kpzVsxZXUWVMiNKe6LWgMmvBc7Qg
+ qNttAci4YDBvnvd5h+eZbH/BpV+vA/9XbZZbUWI8mT/+84hMvj7uM3G4Kg1hxpAj/oqn+kgNTNC
+ 3nvDimbtxn5JB+SIngpSCsJyk3lttHiyGEJhK09ckYr4HXQ3MEyHnDSM3t9IOENQ2PxcMAaPKA6
+ 5pGKmkjdamxtO+WOpFFJI0H9/m2WzuUVIqJkJo/iVurQc5zZ7BVHNoVsxprwM4b3hNwU3esClqQ
+ U/0rdGQ9
+X-Received: by 2002:a05:6602:6408:b0:81f:86e1:5a84 with SMTP id
+ ca18e2360f4ac-8557a0d2a4fmr347170539f.2.1739891999348; 
+ Tue, 18 Feb 2025 07:19:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEn8piJZLv4ChhuHi0r7wRBBPSJ8gdo2Ehs/gGoBHjLCs46anv9hcG0tAIPs3dxzOc8FuEG2w==
+X-Received: by 2002:a05:6602:6408:b0:81f:86e1:5a84 with SMTP id
+ ca18e2360f4ac-8557a0d2a4fmr347168139f.2.1739891998742; 
+ Tue, 18 Feb 2025 07:19:58 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4ed282b1066sm2632438173.101.2025.02.18.07.19.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Feb 2025 07:19:57 -0800 (PST)
+Date: Tue, 18 Feb 2025 08:19:55 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, tomitamoeko@gmail.com, corvin.koehne@gmail.com,
+ Kirti Wankhede <kwankhede@nvidia.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Tony Krowiak <akrowiak@linux.ibm.com>, Eric
+ Farman <farman@linux.ibm.com>, Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v4] vfio: Add property documentation
+Message-ID: <20250218081955.50c733fb.alex.williamson@redhat.com>
+In-Reply-To: <20250217173455.449983-1-clg@redhat.com>
+References: <20250217173455.449983-1-clg@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250217164012.246727-1-aesteve@redhat.com>
- <20250217164012.246727-8-aesteve@redhat.com>
- <20250218104116.GK10767@fedora>
- <CADSE00+-uisJfHWCe0sFTy1fXrqB7K_yWnm-xZSxAmf1=fVpAA@mail.gmail.com>
- <20250218132516.GA28047@fedora>
-In-Reply-To: <20250218132516.GA28047@fedora>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Tue, 18 Feb 2025 16:04:02 +0100
-X-Gm-Features: AWEUYZkc2A6xX80q7i7kmznBjcGYzYnq7DcvAe--sDh-nYdmg-BPBQ-Ua2MgzHA
-Message-ID: <CADSE00JX4g+j6ic+ATQ1r7FXogZRZsRwqJiyTLJ=wWaPi2Mgww@mail.gmail.com>
-Subject: Re: [PATCH v4 7/9] vhost-user-devive: Add shmem BAR
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, slp@redhat.com, stevensd@chromium.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Stefano Garzarella <sgarzare@redhat.com>, david@redhat.com, hi@alyssa.is,
- mst@redhat.com, jasowang@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -92,7 +95,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,247 +111,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 2:29=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Tue, Feb 18, 2025 at 11:55:33AM +0100, Albert Esteve wrote:
-> > On Tue, Feb 18, 2025 at 11:41=E2=80=AFAM Stefan Hajnoczi <stefanha@redh=
-at.com> wrote:
-> > >
-> > > On Mon, Feb 17, 2025 at 05:40:10PM +0100, Albert Esteve wrote:
-> > > > Add a shmem BAR block in the vhost-user-device,
-> > > > which files can be directly mapped into.
-> > > >
-> > > > The number, shmid, and size of the VIRTIO Shared
-> > > > Memory subregions is retrieved through a
-> > > > get_shmem_config message sent by the
-> > > > vhost-user-base module on the realize step,
-> > > > after virtio_init().
-> > > >
-> > > > By default, if VHOST_USER_PROTOCOL_F_SHMEM
-> > > > feature is not supported by the backend,
-> > > > there is no cache.
-> > > >
-> > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> > > > ---
-> > > >  hw/virtio/vhost-user-base.c       | 47 +++++++++++++++++++++++++++=
-++--
-> > > >  hw/virtio/vhost-user-device-pci.c | 36 +++++++++++++++++++++--
-> > > >  2 files changed, 78 insertions(+), 5 deletions(-)
-> > > >
-> > > > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-bas=
-e.c
-> > > > index 2bc3423326..8d4bca98a8 100644
-> > > > --- a/hw/virtio/vhost-user-base.c
-> > > > +++ b/hw/virtio/vhost-user-base.c
-> > > > @@ -16,6 +16,7 @@
-> > > >  #include "hw/virtio/virtio-bus.h"
-> > > >  #include "hw/virtio/vhost-user-base.h"
-> > > >  #include "qemu/error-report.h"
-> > > > +#include "migration/blocker.h"
-> > > >
-> > > >  static void vub_start(VirtIODevice *vdev)
-> > > >  {
-> > > > @@ -271,7 +272,8 @@ static void vub_device_realize(DeviceState *dev=
-, Error **errp)
-> > > >  {
-> > > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> > > >      VHostUserBase *vub =3D VHOST_USER_BASE(dev);
-> > > > -    int ret;
-> > > > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-> > > > +    int i, ret, nregions;
-> > > >
-> > > >      if (!vub->chardev.chr) {
-> > > >          error_setg(errp, "vhost-user-base: missing chardev");
-> > > > @@ -314,7 +316,7 @@ static void vub_device_realize(DeviceState *dev=
-, Error **errp)
-> > > >
-> > > >      /* Allocate queues */
-> > > >      vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
-> > > > -    for (int i =3D 0; i < vub->num_vqs; i++) {
-> > > > +    for (i =3D 0; i < vub->num_vqs; i++) {
-> > > >          g_ptr_array_add(vub->vqs,
-> > > >                          virtio_add_queue(vdev, vub->vq_size,
-> > > >                                           vub_handle_output));
-> > > > @@ -328,11 +330,50 @@ static void vub_device_realize(DeviceState *d=
-ev, Error **errp)
-> > > >                           VHOST_BACKEND_TYPE_USER, 0, errp);
-> > > >
-> > > >      if (ret < 0) {
-> > > > -        do_vhost_user_cleanup(vdev, vub);
-> > > > +        goto err;
-> > > > +    }
-> > > > +
-> > > > +    ret =3D vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub-=
->vhost_dev,
-> > > > +                                                           &nregio=
-ns,
-> > > > +                                                           memory_=
-sizes,
-> > > > +                                                           errp);
-> > > > +
-> > > > +    if (ret < 0) {
-> > > > +        goto err;
-> > > > +    }
-> > > > +
-> > > > +    for (i =3D 0; i < nregions; i++) {
-> > > > +        if (memory_sizes[i]) {
-> > > > +            if (vub->vhost_dev.migration_blocker =3D=3D NULL) {
-> > > > +                error_setg(&vub->vhost_dev.migration_blocker,
-> > > > +                       "Migration disabled: devices with VIRTIO Sh=
-ared Memory "
-> > > > +                       "Regions do not support migration yet.");
-> > > > +                ret =3D migrate_add_blocker_normal(
-> > > > +                    &vub->vhost_dev.migration_blocker,
-> > > > +                    errp);
-> > > > +
-> > > > +                if (ret < 0) {
-> > > > +                    goto err;
-> > > > +                }
-> > > > +            }
-> > > > +
-> > > > +            if (memory_sizes[i] % qemu_real_host_page_size() !=3D =
-0) {
-> > > > +                error_setg(errp, "Shared memory %d size must be a =
-power of 2 "
-> > > > +                                 "no smaller than the page size", =
-i);
-> > > > +                goto err;
-> > > > +            }
-> > > > +
-> > > > +            memory_region_init(virtio_new_shmem_region(vdev)->mr,
-> > >
-> > > Does this code support non-contiguous shmids? For example, if a devic=
-e
-> > > has two Shared Memory Regions defined in its spec but the first one i=
-s
-> > > optional, then the device might have memory_sizes[0] =3D=3D 0 and
-> > > memory_sizes[1] > 0. In that case the Shared Memory Region must have
-> > > shmid 1 and not shmid 0.
-> >
-> > Yes, it does. That is guarded by ` if (memory_sizes[i]) {`, which only
-> > initializes the region if memory_sizes[i] > 0. The main downsize of
-> > that, is that it requires to send as many `memory_sizes` elements as
-> > the highest shmid for the device. But as it is, it is supported by
-> > this code.
->
-> shmids are not preserved when there are gaps:
->
->   for (i =3D 0; i < vdev->n_shmem_regions; i++) {
->       memory_region_add_subregion(&dev->shmembar, offset, mr);
->       virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
->                              offset, mr->size, i);
->                                                ^
->
-> vdev->n_shmem_regions is incremented by virtio_new_shmem_region().
-> virtio_new_shmem_region() is only called on non-empty Shared Memory
-> Regions.
->
-> In the example I gave with empty shmid 0 and non-empty shmid 1 I think
-> we end up with vdev->n_shmem_regions =3D=3D 1. shmdid 1 is exposed to the
-> guest with shmid 0.
+On Mon, 17 Feb 2025 18:34:55 +0100
+C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 
-Ah, right. I considered your example when I was doing it, but the code
-is buggy indeed. The code that I tested is mostly on the shm map API
-part, with a custom pci device.
-
-As mentioned in the initial message, I will add tests for the next
-iteration. Thanks for finding this one!
-
->
-> Have I missed something?
->
-> > >
-> > > > +                               OBJECT(vdev), "vub-shm-" + i,
-> > > > +                               memory_sizes[i]);
-> > > > +        }
-> > > >      }
-> > > >
-> > > >      qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event,=
- NULL,
-> > > >                               dev, NULL, true);
-> > > > +    return;
-> > > > +err:
-> > > > +    do_vhost_user_cleanup(vdev, vub);
-> > > >  }
-> > > >
-> > > >  static void vub_device_unrealize(DeviceState *dev)
-> > > > diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-us=
-er-device-pci.c
-> > > > index efaf55d3dd..f215cae925 100644
-> > > > --- a/hw/virtio/vhost-user-device-pci.c
-> > > > +++ b/hw/virtio/vhost-user-device-pci.c
-> > > > @@ -8,14 +8,18 @@
-> > > >   */
-> > > >
-> > > >  #include "qemu/osdep.h"
-> > > > +#include "qapi/error.h"
-> > > >  #include "hw/qdev-properties.h"
-> > > >  #include "hw/virtio/vhost-user-base.h"
-> > > >  #include "hw/virtio/virtio-pci.h"
-> > > >
-> > > > +#define VIRTIO_DEVICE_PCI_SHMEM_BAR 2
-> > > > +
-> > > >  struct VHostUserDevicePCI {
-> > > >      VirtIOPCIProxy parent_obj;
-> > > >
-> > > >      VHostUserBase vub;
-> > > > +    MemoryRegion shmembar;
-> > > >  };
-> > > >
-> > > >  #define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
-> > > > @@ -25,10 +29,38 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, =
-VHOST_USER_DEVICE_PCI)
-> > > >  static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev=
-, Error **errp)
-> > > >  {
-> > > >      VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(vpci_dev);
-> > > > -    DeviceState *vdev =3D DEVICE(&dev->vub);
-> > > > +    DeviceState *dev_state =3D DEVICE(&dev->vub);
-> > > > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);
-> > > > +    MemoryRegion *mr;
-> > > > +    uint64_t offset =3D 0, shmem_size =3D 0;
-> > > > +    int i;
-> > > >
-> > > >      vpci_dev->nvectors =3D 1;
-> > > > -    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-> > > > +    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
-> > > > +
-> > > > +    for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-> > > > +        mr =3D vdev->shmem_list[i].mr;
-> > > > +        if (mr->size > UINT64_MAX - shmem_size) {
-> > > > +            error_setg(errp, "Total shared memory required overflo=
-w");
-> > > > +            return;
-> > > > +        }
-> > > > +        shmem_size =3D shmem_size + mr->size;
-> > > > +    }
-> > > > +    if (shmem_size) {
-> > > > +        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
-> > > > +                           "vhost-device-pci-shmembar", shmem_size=
-);
-> > > > +        for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-> > > > +            memory_region_add_subregion(&dev->shmembar, offset, mr=
-);
-> > > > +            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHM=
-EM_BAR,
-> > > > +                                   offset, mr->size, i);
-> > > > +            offset =3D offset + mr->size;
-> > > > +        }
-> > > > +        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHM=
-EM_BAR,
-> > > > +                        PCI_BASE_ADDRESS_SPACE_MEMORY |
-> > > > +                        PCI_BASE_ADDRESS_MEM_PREFETCH |
-> > > > +                        PCI_BASE_ADDRESS_MEM_TYPE_64,
-> > > > +                        &dev->shmembar);
-> > > > +    }
-> > > >  }
-> > > >
-> > > >  static void vhost_user_device_pci_class_init(ObjectClass *klass, v=
+> Investigate the git history to uncover when and why the VFIO
+> properties were introduced and update the models. This is mostly
+> targeting vfio-pci device, since vfio-platform, vfio-ap and vfio-ccw
+> devices are simpler.
+>=20
+> Sort the properties based on the QEMU version in which they were
+> introduced.
+>=20
+> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
+> Cc: Eric Farman <farman@linux.ibm.com>
+> Cc: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>=20
+>  Should we introduce documentation for properties like the kernel has
+>  in Documentation/ABI/*/sysfs-* ?
+>=20
+>  Changes in v4:
+>=20
+>  - Latest improvements from Alex=20
+>=20
+>  Changes in v3:
+>=20
+>  - Re-organized the vfio-pci properties based on the QEMU version in
+>    which they were introduced
+>  - Added property labels
+>  - Improved description as suggested by Alex, Tomita and Corvin
+>=20
+>  Changes in v2:
+>=20
+>  - Fixed version numbers
+>  - Fixed #ifdef in vfio/ccw.c
+>  - Addressed vfio-pci-nohotplug
+>  - Organize the vfio-pci properties in topics
+>=20
+>  hw/vfio/ap.c       |   9 ++++
+>  hw/vfio/ccw.c      |  15 ++++++
+>  hw/vfio/pci.c      | 125 +++++++++++++++++++++++++++++++++++++++++++++
+>  hw/vfio/platform.c |  24 +++++++++
+>  4 files changed, 173 insertions(+)
+>=20
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 30b08ad375d5ecae886c5000fbaa364799fe76d0..c7ab4ff57ada0ed0e5a76f52b=
+5a05c86ca4fe0b4 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -257,6 +257,15 @@ static void vfio_ap_class_init(ObjectClass *klass, v=
 oid *data)
-> > > > --
-> > > > 2.48.1
-> > > >
-> >
+>      dc->hotpluggable =3D true;
+>      device_class_set_legacy_reset(dc, vfio_ap_reset);
+>      dc->bus_type =3D TYPE_AP_BUS;
+> +
+> +    object_class_property_set_description(klass, /* 3.1 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+>  }
+> =20
+>  static const TypeInfo vfio_ap_info =3D {
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index 6bb8882d3f2b965eb47cc9e65d7e74bbdb5e7685..e5e0d9e3e7ed124f242b3eda3=
+45bc973e418a64c 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -709,6 +709,21 @@ static void vfio_ccw_class_init(ObjectClass *klass, =
+void *data)
+>      cdc->handle_halt =3D vfio_ccw_handle_halt;
+>      cdc->handle_clear =3D vfio_ccw_handle_clear;
+>      cdc->handle_store =3D vfio_ccw_handle_store;
+> +
+> +    object_class_property_set_description(klass, /* 2.10 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +    object_class_property_set_description(klass, /* 3.0 */
+> +                                          "force-orb-pfch",
+> +                                          "Force unlimited prefetch");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+> +    object_class_property_set_description(klass, /* 9.2 */
+> +                                          "loadparm",
+> +                                          "Define which devices that can=
+ be used for booting");
+>  }
+> =20
+>  static const TypeInfo vfio_ccw_info =3D {
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 89d900e9cf0ce364f7c813d81b0317bb3b3e80ca..4f92b50b133060c9199079a0a=
+b620793ecdac0ee 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3433,6 +3433,122 @@ static void vfio_pci_dev_class_init(ObjectClass *=
+klass, void *data)
+>      pdc->exit =3D vfio_exitfn;
+>      pdc->config_read =3D vfio_pci_read_config;
+>      pdc->config_write =3D vfio_pci_write_config;
+> +
+> +    object_class_property_set_description(klass, /* 1.3 */
+> +                                          "host",
+> +                                          "Host PCI address [domain:]<bu=
+s:slot.function> of assigned device");
+> +    object_class_property_set_description(klass, /* 1.3 */
+> +                                          "x-intx-mmap-timeout-ms",
+> +                                          "When EOI is not provided by K=
+VM/QEMU, wait time "
+> +                                          "(milliseconds) to re-enable d=
+evice direct access "
+> +                                          "after INTx (DEBUG)");
+> +    object_class_property_set_description(klass, /* 1.5 */
+> +                                          "x-vga",
+> +                                          "Expose VGA address spaces for=
+ device");
+> +    object_class_property_set_description(klass, /* 2.3 */
+> +                                          "x-req",
+> +                                          "Disable device request notifi=
+cation support (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+> +                                          "x-no-mmap",
+> +                                          "Disable MMAP for device. Allo=
+ws to trace MMIO "
+> +                                          "accesses (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-no-kvm-intx",
+> +                                          "Disable direct VFIO->KVM INTx=
+ injection. Allows to "
+> +                                          "trace INTx interrupts (DEBUG)=
+");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-no-kvm-msi",
+> +                                          "Disable direct VFIO->KVM MSI =
+injection. Allows to "
+> +                                          "trace MSI interrupts (DEBUG)"=
+);
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-no-kvm-msix",
+> +                                          "Disable direct VFIO->KVM MSIx=
+ injection. Allows to "
+> +                                          "trace MSIx interrupts (DEBUG)=
+");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-vendor-id",
+> +                                          "Override PCI Vendor ID with p=
+rovided value (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-device-id",
+> +                                          "Override PCI device ID with p=
+rovided value (DEBUG)");
+
+nit for consistency, s/device/Device/  Otherwise:
+
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+
+
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-sub-vendor-id",
+> +                                          "Override PCI Subsystem Vendor=
+ ID with provided value "
+> +                                          "(DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.5 */
+> +                                          "x-pci-sub-device-id",
+> +                                          "Override PCI Subsystem Device=
+ ID with provided value "
+> +                                          "(DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.6 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +    object_class_property_set_description(klass, /* 2.7 */
+> +                                          "x-igd-opregion",
+> +                                          "Expose host IGD OpRegion to g=
+uest");
+> +    object_class_property_set_description(klass, /* 2.7 (See c4c45e943e5=
+1) */
+> +                                          "x-igd-gms",
+> +                                          "Override IGD data stolen memo=
+ry size (32MiB units)");
+> +    object_class_property_set_description(klass, /* 2.11 */
+> +                                          "x-nv-gpudirect-clique",
+> +                                          "Add NVIDIA GPUDirect capabili=
+ty indicating P2P DMA "
+> +                                          "clique for device [0-15]");
+> +    object_class_property_set_description(klass, /* 2.12 */
+> +                                          "x-no-geforce-quirks",
+> +                                          "Disable GeForce quirks (for N=
+VIDIA Quadro/GRID/Tesla). "
+> +                                          "Improves performance");
+> +    object_class_property_set_description(klass, /* 2.12 */
+> +                                          "display",
+> +                                          "Enable display support for de=
+vice, ex. vGPU");
+> +    object_class_property_set_description(klass, /* 2.12 */
+> +                                          "x-msix-relocation",
+> +                                          "Specify MSI-X MMIO relocation=
+ to the end of specified "
+> +                                          "existing BAR or new BAR to av=
+oid virtualization overhead "
+> +                                          "due to adjacent device regist=
+ers");
+> +    object_class_property_set_description(klass, /* 3.0 */
+> +                                          "x-no-kvm-ioeventfd",
+> +                                          "Disable registration of ioeve=
+ntfds with KVM (DEBUG)");
+> +    object_class_property_set_description(klass, /* 3.0 */
+> +                                          "x-no-vfio-ioeventfd",
+> +                                          "Disable linking of KVM ioeven=
+tfds to VFIO ioeventfds "
+> +                                          "(DEBUG)");
+> +    object_class_property_set_description(klass, /* 3.1 */
+> +                                          "x-balloon-allowed",
+> +                                          "Override allowing ballooning =
+with device (DEBUG, DANGER)");
+> +    object_class_property_set_description(klass, /* 3.2 */
+> +                                          "xres",
+> +                                          "Set X display resolution the =
+vGPU should use");
+> +    object_class_property_set_description(klass, /* 3.2 */
+> +                                          "yres",
+> +                                          "Set Y display resolution the =
+vGPU should use");
+> +    object_class_property_set_description(klass, /* 5.2 */
+> +                                          "x-pre-copy-dirty-page-trackin=
+g",
+> +                                          "Disable dirty pages tracking =
+during iterative phase "
+> +                                          "(DEBUG)");
+> +    object_class_property_set_description(klass, /* 5.2, 8.0 non-experim=
+etal */
+> +                                          "enable-migration",
+> +                                          "Enale device migration. Also =
+requires a host VFIO PCI "
+> +                                          "variant or mdev driver with m=
+igration support enabled");
+> +    object_class_property_set_description(klass, /* 8.1 */
+> +                                          "vf-token",
+> +                                          "Specify UUID VF token. Requir=
+ed for VF when PF is owned "
+> +                                          "by another VFIO driver");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+> +    object_class_property_set_description(klass, /* 9.1 */
+> +                                          "x-device-dirty-page-tracking",
+> +                                          "Disable device dirty page tra=
+cking and use "
+> +                                          "container-based dirty page tr=
+acking (DEBUG)");
+> +    object_class_property_set_description(klass, /* 9.1 */
+> +                                          "migration-events",
+> +                                          "Emit VFIO migration QAPI even=
+t when a VFIO device "
+> +                                          "changes its migration state. =
+For management applications");
+> +    object_class_property_set_description(klass, /* 9.1 */
+> +                                          "skip-vsc-check",
+> +                                          "Skip config space check for V=
+endor Specific Capability. "
+> +                                          "Setting to false will enforce=
+ strict checking of VSC content "
+> +                                          "(DEBUG)");
+>  }
+> =20
+>  static const TypeInfo vfio_pci_dev_info =3D {
+> @@ -3461,6 +3577,15 @@ static void vfio_pci_nohotplug_dev_class_init(Obje=
+ctClass *klass, void *data)
+> =20
+>      device_class_set_props(dc, vfio_pci_dev_nohotplug_properties);
+>      dc->hotpluggable =3D false;
+> +
+> +    object_class_property_set_description(klass, /* 3.1 */
+> +                                          "ramfb",
+> +                                          "Enable ramfb to provide pre-b=
+oot graphics for devices "
+> +                                          "enabling display option");
+> +    object_class_property_set_description(klass, /* 8.2 */
+> +                                          "x-ramfb-migrate",
+> +                                          "Override default migration su=
+pport for ramfb support "
+> +                                          "(DEBUG)");
+>  }
+> =20
+>  static const TypeInfo vfio_pci_nohotplug_dev_info =3D {
+> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+> index f491f4dc9543c2ea3a7af4e51ee82fbc7ee6e4bb..d9faaa73959ad36aa3a835b87=
+964ab940928bd9f 100644
+> --- a/hw/vfio/platform.c
+> +++ b/hw/vfio/platform.c
+> @@ -672,6 +672,30 @@ static void vfio_platform_class_init(ObjectClass *kl=
+ass, void *data)
+>      dc->desc =3D "VFIO-based platform device assignment";
+>      sbc->connect_irq_notifier =3D vfio_start_irqfd_injection;
+>      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +
+> +    object_class_property_set_description(klass, /* 2.4 */
+> +                                          "host",
+> +                                          "Host device name of assigned =
+device");
+> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+> +                                          "x-no-mmap",
+> +                                          "Disable MMAP for device. Allo=
+ws to trace MMIO "
+> +                                          "accesses (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.4 */
+> +                                          "mmap-timeout-ms",
+> +                                          "When EOI is not provided by K=
+VM/QEMU, wait time "
+> +                                          "(milliseconds) to re-enable d=
+evice direct access "
+> +                                          "after level interrupt (DEBUG)=
+");
+> +    object_class_property_set_description(klass, /* 2.4 */
+> +                                          "x-irqfd",
+> +                                          "Allow disabling irqfd support=
+ (DEBUG)");
+> +    object_class_property_set_description(klass, /* 2.6 */
+> +                                          "sysfsdev",
+> +                                          "Host sysfs path of assigned d=
+evice");
+> +#ifdef CONFIG_IOMMUFD
+> +    object_class_property_set_description(klass, /* 9.0 */
+> +                                          "iommufd",
+> +                                          "Set host IOMMUFD backend devi=
+ce");
+> +#endif
+>  }
+> =20
+>  static const TypeInfo vfio_platform_dev_info =3D {
 
 
