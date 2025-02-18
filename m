@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF94C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 05:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17418C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 05:48:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkGT3-0002iY-37; Tue, 18 Feb 2025 00:48:26 -0500
+	id 1tkGTJ-0003Fw-Uq; Tue, 18 Feb 2025 00:48:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkGSu-0002e2-MY; Tue, 18 Feb 2025 00:48:18 -0500
+ id 1tkGTH-0003AU-F1; Tue, 18 Feb 2025 00:48:39 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkGSs-00014s-6I; Tue, 18 Feb 2025 00:48:16 -0500
+ id 1tkGTF-00016A-Dj; Tue, 18 Feb 2025 00:48:39 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxpTl4YFyz4x0L;
- Tue, 18 Feb 2025 16:48:11 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxpVC0hf7z4wyk;
+ Tue, 18 Feb 2025 16:48:35 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxpTh6By8z4wyk;
- Tue, 18 Feb 2025 16:48:08 +1100 (AEDT)
-Message-ID: <b9253431-b946-4ebc-873a-07479a2a3e3b@kaod.org>
-Date: Tue, 18 Feb 2025 06:48:06 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxpV82KP0z4wbR;
+ Tue, 18 Feb 2025 16:48:32 +1100 (AEDT)
+Message-ID: <6829160b-5950-47e8-98f7-fb82543d069d@kaod.org>
+Date: Tue, 18 Feb 2025 06:48:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/28] hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ
- number
+Subject: Re: [PATCH v3 06/28] hw/intc/aspeed: Support different memory region
+ ops
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
- <20250213033531.3367697-6-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-7-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250213033531.3367697-6-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250213033531.3367697-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -96,8 +96,7 @@ X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,7 +113,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/13/25 04:35, Jamin Lin wrote:
-> To improve readability, sort the IRQ table by IRQ number.
+> The previous implementation set the "aspeed_intc_ops" struct, containing read
+> and write callbacks, to be used when I/O is performed on the INTC region.
+> Both "aspeed_intc_read" and "aspeed_intc_write" callback functions were used
+> for INTC (CPU Die).
+> 
+> To support the INTCIO (IO Die) model, introduces a new "reg_ops" class
+> attribute. This allows setting different memory region operations to support
+> different INTC models.
+> 
+> Will introduce "aspeed_intcio_read" and "aspeed_intcio_write" callback
+> functions are used for INTCIO.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -127,85 +136,49 @@ C.
 
 
 > ---
->   hw/arm/aspeed_ast27x0.c | 50 ++++++++++++++++++++---------------------
->   1 file changed, 25 insertions(+), 25 deletions(-)
+>   hw/intc/aspeed_intc.c         | 5 ++++-
+>   include/hw/intc/aspeed_intc.h | 1 +
+>   2 files changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 6e3375f5d3..4862b215c1 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -73,27 +73,13 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+> index 91d8edb261..cc2426fbac 100644
+> --- a/hw/intc/aspeed_intc.c
+> +++ b/hw/intc/aspeed_intc.c
+> @@ -340,7 +340,7 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
 >   
->   /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
->   static const int aspeed_soc_ast2700a0_irqmap[] = {
-> -    [ASPEED_DEV_UART0]     = 132,
-> -    [ASPEED_DEV_UART1]     = 132,
-> -    [ASPEED_DEV_UART2]     = 132,
-> -    [ASPEED_DEV_UART3]     = 132,
-> -    [ASPEED_DEV_UART4]     = 8,
-> -    [ASPEED_DEV_UART5]     = 132,
-> -    [ASPEED_DEV_UART6]     = 132,
-> -    [ASPEED_DEV_UART7]     = 132,
-> -    [ASPEED_DEV_UART8]     = 132,
-> -    [ASPEED_DEV_UART9]     = 132,
-> -    [ASPEED_DEV_UART10]    = 132,
-> -    [ASPEED_DEV_UART11]    = 132,
-> -    [ASPEED_DEV_UART12]    = 132,
-> -    [ASPEED_DEV_FMC]       = 131,
->       [ASPEED_DEV_SDMC]      = 0,
-> -    [ASPEED_DEV_SCU]       = 12,
-> -    [ASPEED_DEV_ADC]       = 130,
-> +    [ASPEED_DEV_HACE]      = 4,
->       [ASPEED_DEV_XDMA]      = 5,
-> -    [ASPEED_DEV_EMMC]      = 15,
-> -    [ASPEED_DEV_GPIO]      = 130,
-> +    [ASPEED_DEV_UART4]     = 8,
-> +    [ASPEED_DEV_SCU]       = 12,
->       [ASPEED_DEV_RTC]       = 13,
-> +    [ASPEED_DEV_EMMC]      = 15,
->       [ASPEED_DEV_TIMER1]    = 16,
->       [ASPEED_DEV_TIMER2]    = 17,
->       [ASPEED_DEV_TIMER3]    = 18,
-> @@ -102,19 +88,33 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
->       [ASPEED_DEV_TIMER6]    = 21,
->       [ASPEED_DEV_TIMER7]    = 22,
->       [ASPEED_DEV_TIMER8]    = 23,
-> -    [ASPEED_DEV_WDT]       = 131,
-> -    [ASPEED_DEV_PWM]       = 131,
-> +    [ASPEED_DEV_DP]        = 28,
->       [ASPEED_DEV_LPC]       = 128,
->       [ASPEED_DEV_IBT]       = 128,
-> +    [ASPEED_DEV_KCS]       = 128,
-> +    [ASPEED_DEV_ADC]       = 130,
-> +    [ASPEED_DEV_GPIO]      = 130,
->       [ASPEED_DEV_I2C]       = 130,
-> -    [ASPEED_DEV_PECI]      = 133,
-> +    [ASPEED_DEV_FMC]       = 131,
-> +    [ASPEED_DEV_WDT]       = 131,
-> +    [ASPEED_DEV_PWM]       = 131,
-> +    [ASPEED_DEV_I3C]       = 131,
-> +    [ASPEED_DEV_UART0]     = 132,
-> +    [ASPEED_DEV_UART1]     = 132,
-> +    [ASPEED_DEV_UART2]     = 132,
-> +    [ASPEED_DEV_UART3]     = 132,
-> +    [ASPEED_DEV_UART5]     = 132,
-> +    [ASPEED_DEV_UART6]     = 132,
-> +    [ASPEED_DEV_UART7]     = 132,
-> +    [ASPEED_DEV_UART8]     = 132,
-> +    [ASPEED_DEV_UART9]     = 132,
-> +    [ASPEED_DEV_UART10]    = 132,
-> +    [ASPEED_DEV_UART11]    = 132,
-> +    [ASPEED_DEV_UART12]    = 132,
->       [ASPEED_DEV_ETH1]      = 132,
->       [ASPEED_DEV_ETH2]      = 132,
->       [ASPEED_DEV_ETH3]      = 132,
-> -    [ASPEED_DEV_HACE]      = 4,
-> -    [ASPEED_DEV_KCS]       = 128,
-> -    [ASPEED_DEV_DP]        = 28,
-> -    [ASPEED_DEV_I3C]       = 131,
-> +    [ASPEED_DEV_PECI]      = 133,
->       [ASPEED_DEV_SDHCI]     = 133,
+>       sysbus_init_mmio(sbd, &s->iomem_container);
+>   
+> -    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
+> +    memory_region_init_io(&s->iomem, OBJECT(s), aic->reg_ops, s,
+>                             TYPE_ASPEED_INTC ".regs", aic->reg_size);
+>   
+>       memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
+> @@ -358,11 +358,14 @@ static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+>   static void aspeed_intc_class_init(ObjectClass *klass, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+>   
+>       dc->desc = "ASPEED INTC Controller";
+>       dc->realize = aspeed_intc_realize;
+>       device_class_set_legacy_reset(dc, aspeed_intc_reset);
+>       dc->vmsd = NULL;
+> +
+> +    aic->reg_ops = &aspeed_intc_ops;
+>   }
+>   
+>   static const TypeInfo aspeed_intc_info = {
+> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+> index ecaeb15aea..749d7c55be 100644
+> --- a/include/hw/intc/aspeed_intc.h
+> +++ b/include/hw/intc/aspeed_intc.h
+> @@ -43,6 +43,7 @@ struct AspeedINTCClass {
+>       uint32_t num_ints;
+>       uint64_t mem_size;
+>       uint64_t reg_size;
+> +    const MemoryRegionOps *reg_ops;
 >   };
 >   
+>   #endif /* ASPEED_INTC_H */
 
 
