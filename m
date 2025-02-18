@@ -4,83 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B75E2C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5D7C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQoT-000333-P2; Tue, 18 Feb 2025 11:51:13 -0500
+	id 1tkQpK-0003HC-Pp; Tue, 18 Feb 2025 11:52:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkQoQ-00032Z-Ce
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:51:10 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tkQpH-0003Gw-Oa
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:52:04 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkQoO-0003iw-FX
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:51:09 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38f29a1a93bso3724907f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:51:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tkQpG-0003pt-66
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:52:03 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-6f4bc408e49so44396467b3.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739897466; x=1740502266; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7CWeBBFbyvgm068mE6Y6Rbh2Sn6NIPxzakzmct2FlY0=;
- b=rkSe/InSuURNpmrxkHftLNfTldVzq3C3pPt31uVBr/16Tb0n7YrzGzxx3wNPdO7Mqi
- 7HPzd2L/AdUXzmrVYV5+O9u36q7YOU68itJ0FcI74/IbxEPT1QzypbQlESR8GAS3GcUX
- d/hPFoGzj4oKAl08xPHqlMtKmzeP6vnLJRu5XEfTZF2KodxsLviMfXvb2Wx2AGls+Uqx
- wCCD1Usvnq2qdGqB8gS3eiJKReowhvlFz41HJ8F1EyjGDtcDXFKVp7pY4Qsz0uJ6XICl
- iI9nQlVhzR6grN33SRGJhoqjZGP+frTjDuEhihgVaAIxe+NF1JsUZQLrmfxr6c6FCQ7G
- MEhQ==
+ d=linaro.org; s=google; t=1739897521; x=1740502321; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SUg5hRemBTl583agbqIXv+TU9BbZVBk0hFvd+grZogk=;
+ b=wTf2AkEXFcq1EL5mneP4Ceu80DO39nv5pH0mXB1ZOj/3cGylSwxR0KL7LCek9JHB7o
+ Of5FO4W+Z8vF2nv7Vn3h2E/QbTUp2mNy9V7EI/40thzLrXiZezv+VXtt7ju19wMS4AH8
+ a0TkHYNqMnGWTTnqm6powjc2XkzlVj38iMg2rqUQbmKusD37SNtzEqES9JImYWjW3IWN
+ d9P/6wn5oSD9XZTbBOMC7OmYPSfgjJZ9D5wK2r8o4V8u702IzL1JZN+e2DMHvH4b8h3w
+ oe+PJQoFXT6MopX/QviDsV3/NCOZ3DVSyQsca/1Td1qtCVGeYrKJ4eR6X8CWLdzeSNGR
+ /fzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739897466; x=1740502266;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7CWeBBFbyvgm068mE6Y6Rbh2Sn6NIPxzakzmct2FlY0=;
- b=RbS/B1tZhleJVvDlX9mSt0+/H3oOqJD3m+ptcwP2bDjbtYHfXkNeyusADigvuDbXee
- GeMVZZKYP9CVA6Ufaj9rmmhMShm0s27HmY749NnEkIKiSKSQ8b+DTr1MMNcvC3hEmR+w
- vc4L7cswzrCt5CGgqyreT5M+cLuMlBMPNwhb7gHXAAz0Y5euyEaCpeRh9Uz8glEYwUav
- w8RkPWN1de+To85xvxSHXNSASMMDwwU7sZuoF35s+V1OP3pNpAUg2eiSct6w/fiwZ8SK
- +LmBYk5ZmZAj1re/2Pjcb0hfgGhpqGMclweN6bLBs3csqh93TldNtn/ekzVwn7nFCw7y
- x3uw==
+ d=1e100.net; s=20230601; t=1739897521; x=1740502321;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SUg5hRemBTl583agbqIXv+TU9BbZVBk0hFvd+grZogk=;
+ b=b/BiCmSPh5SjFCC4w3ZSoUJQOM3ByC0vBhvbheFe+yLrWzLgq6mPQKi10zpkVmuXhn
+ j2A5rQfwGNHZ1NcJdKfU5AbfDqpzzEy+fwcdJwQCDI0TbIETJpguzVTf6xVW3ywfAFLy
+ Hy2tk9zYmM30ANhkj6uu+pxaXEY1rJuRuV/muYlxPZSnZy9UDIyd3Hj+oyslAcZxxhJT
+ CU7wXu1tU34C61LIi7kV1QKUdjNCtuUhI27YWyHkpSlecNmaZUVHd1QaXITBnt50EYfu
+ c9LJMuWlkPjbswele3GmJzIuam2lY3lRMZ0/ktEDX95WhLeiJYYgqdxx0m6PtTST2rxv
+ rCxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYvSiFMbwsPPzu0oFEET09G9aq33YjM1XeBAIEAoDfu/AQqpc5/BQ/553CcvAsGbbKfsV8ig3P1JOi@nongnu.org
-X-Gm-Message-State: AOJu0Ywvnx/kZ/0AWr+2iNYte0MBtR5fQvHpaXsmgo7Lo8E/Xw3FRPbv
- csZEwGUKu1nk83kBErjeh/UnDUeJt8i0Y3O+FgPnUtmEfUEkEeLUw0NPoDB5qcw=
-X-Gm-Gg: ASbGncu1WRu/yNewysHyF086CS4J/AMwf7EMI7q9oKL0UnQIwFzE7KAAoenSvMvdWFd
- dKu+SRw6VFsCgcr3xjgwHzCFN39qJJBWAFuIsWvIUhaAJ4XP37BiYEnHEo1pEAltTJ+iTP6b/TM
- 1C1Xj4SHkq7ujzI0LuTJ6F0vTqmfoZThdJ3IMq8pN3Ij8IpqIPYRfCwEwgEVQJTVPhmWHBWMwIC
- XDLQsOruSQXtlhTlUzcDssP7WTfWJIxuTO4/vUMEsFv7svXrMwQN56aniJTEpoBRyGQAhih1Cl5
- F792sXPQMrRDSKVhyy8KMsxn+UJCayqe1CFiC0dj8X2btWUGP1K2YvB+20s=
-X-Google-Smtp-Source: AGHT+IHJtHP6+twHGnGF3l/G5UYk/1yKE+7dOqg08qW+cEBXFmew6lWgeyrmRGlIAuLZKqLdZulLfA==
-X-Received: by 2002:a05:6000:1866:b0:38d:d223:f8e6 with SMTP id
- ffacd0b85a97d-38f585ea6cfmr199818f8f.0.1739897465327; 
- Tue, 18 Feb 2025 08:51:05 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b431fsm15313687f8f.2.2025.02.18.08.51.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 08:51:04 -0800 (PST)
-Message-ID: <aa821006-9cef-489c-8414-288985666989@linaro.org>
-Date: Tue, 18 Feb 2025 17:51:04 +0100
+ AJvYcCWWKryirn07vCaP0Lyy7F8TaEK4f6ywPgCmg0YvYrmiDaq2cqIvTDEjobdFV8Sc2UHKnpoysdLavdqC@nongnu.org
+X-Gm-Message-State: AOJu0YyJvSqFS0TX3S3xYppkLmm/4kWGP4Ukd255ZjkdoRJEdtzI8X8l
+ w2cGRl5PajSValmh+cnZV4F9V1tlFAM4gatGANNO6pJWGHjW60mRlQhsNORV38MfA4RLKuyc2cT
+ 0PrYV6DtSYZilUxyDioPk8ApfW9XSb+ckdTCTIA==
+X-Gm-Gg: ASbGncsnQKPYZOSb3XVRKJQBxrsUuBWxnTJ80JIc19ZeVAhmRJlkCH0w26OQ4Lt6+Sz
+ tCtPZG/S1Ec8aRGNM733ay3OzyrOC5juMHhMXl28Ax4IF6Z+cHQWH86KjNN7kowqiolaMur/GDw
+ ==
+X-Google-Smtp-Source: AGHT+IFSBDMDskdJZhM3j45Vj5qf+6sGvSLwRxA4uxaIfiGTNEtJqe17CHndY3nC9BvVA1V5yZtmyJXNtiEBVwndkDo=
+X-Received: by 2002:a05:690c:3703:b0:6f7:56f7:2398 with SMTP id
+ 00721157ae682-6fba56589bbmr4990197b3.7.1739897520952; Tue, 18 Feb 2025
+ 08:52:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 19/19] qom: Require TypeInfo::class_data points to
- const data
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20250212213249.45574-1-philmd@linaro.org>
- <20250212213249.45574-20-philmd@linaro.org>
- <40b1b0b1-e019-400b-9d06-079ca472b7e1@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <40b1b0b1-e019-400b-9d06-079ca472b7e1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+References: <87jz9sq23d.fsf@draig.linaro.org> <87o6yzjlni.fsf@draig.linaro.org>
+ <887b8dba-2a23-4e14-8388-729cbbccfd6e@linaro.org>
+In-Reply-To: <887b8dba-2a23-4e14-8388-729cbbccfd6e@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Feb 2025 16:51:49 +0000
+X-Gm-Features: AWEUYZnhooUUKPz4K6eif7fw_HZkSe6YUG5lBtFhqMgDa0ez7TpBtReD30u6aKo
+Message-ID: <CAFEAcA8-yKK9ud4dUF2bEiK=VLpZdw53+smoxdHB48NeMHsw8g@mail.gmail.com>
+Subject: Re: KVM/QEMU community call agenda items for 18/2/25
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Alessandro Di Federico <ale@rev.ng>, Anton Johansson <anjo@rev.ng>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>, 
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org, 
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com, 
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
+ Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, 
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ mdean@redhat.com, 
+ mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, 
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Wei Wang <wei.w.wang@intel.com>, 
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,47 +125,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 23:11, Richard Henderson wrote:
-> On 2/12/25 13:32, Philippe Mathieu-Daudé wrote:
->> All TypeInfo::class_data point to const data.
->> Enforce that in the structure, so future class_data
->> stays in .rodata.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/qom/object.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/include/qom/object.h b/include/qom/object.h
->> index 1d5b0337242..31adc2ef174 100644
->> --- a/include/qom/object.h
->> +++ b/include/qom/object.h
->> @@ -488,7 +488,7 @@ struct TypeInfo
->>       void (*class_init)(ObjectClass *klass, const void *data);
->>       void (*class_base_init)(ObjectClass *klass, const void *data);
->> -    const void *class_data;
->> +    const void *const class_data;
->>       const InterfaceInfo *interfaces;
->>   };
-> 
-> 
-> This doesn't do what you think it does.
+On Tue, 18 Feb 2025 at 16:42, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+> - About { embedded / heap allocated } QOM objects: In C developers
+>    don't want to give away the embedded model, as it offers free
+>    type checks (while heap-alloc must use runtime checks). IIUC with
+>    Rust it is the opposite, you mentioned is simpler to get build time
+>    checks with the heap-alloc version, is that right? (I didn't took
+>    particular notes about it). I'm interested because for declarative
+>    dynamic machines modelling, it is simpler to use the heap to allocate
+>    the objects, and I'd like to promote that more.
 
-Per cdecl(1):
+Mmm, I vaguely recall a discussion in a QEMU Summit a few years
+back about this; we've got a mix of embedded-allocation and
+the (older style) heap-alloc, but we aren't necessarily
+completely wedded to embedded-allocation and for dynamic
+machine creation heap-alloc is more natural.
 
-const void *class_data;
-// declare class_data as pointer to const void
-
-const void *const class_data;
-// declare class_data as const pointer to const void
-
-> I'm surprised it compiles.
-
-I had to add the previous and virtio-pci patches to make it compile.
-
-How should be what I'm looking for, or how should I describe it?
-
-Thanks,
-
-Phil.
+-- PMM
 
