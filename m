@@ -4,64 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF91DC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 07:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9206C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 07:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkILy-0000Li-IH; Tue, 18 Feb 2025 02:49:15 -0500
+	id 1tkINE-00014D-45; Tue, 18 Feb 2025 02:50:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkILw-0000LE-B5; Tue, 18 Feb 2025 02:49:12 -0500
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkINC-00013x-Dc
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 02:50:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkILs-0005uX-Oo; Tue, 18 Feb 2025 02:49:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739864949; x=1771400949;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=xbrKOGJ3m9gms1trzv21PXPE753tlMOzvuu2KDFvoZk=;
- b=TU6fr4TtpQAYNOso7ntK3cjOrPRPh+rWa4zU/NT3YEcdSDxjb7eJZkc1
- FM3rB2AOeB3RTYRMvYanNVFW77W83aG8vWhwn1iMs/AW3pzQYs9oV0qnm
- dJNA6iNALO10yBwlawpbiLbKKA16VbC7gbTNXbNAkjtIH7a/JjtUBt0LT
- /qw2nk135o/dUdoPSMD0mn8yhsK4O/nt1ciSRDP0FddV5qoHZPkh8soaC
- a9Nru8WJFT3SrOjCl2iSkk2AD2Ra9gSGqw2tERnBPbCZ4SOlX2PTB+Uyj
- 1YhlqqYIMzDPHxle1DufkqotZV5jeg2WwXlphxXpKKAECHofKygFGmp3T w==;
-X-CSE-ConnectionGUID: qS/7g2SkQlKKgXyY7rc2mA==
-X-CSE-MsgGUID: zpnkbZCSSuiNWT5INAkAxw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51190819"
-X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="51190819"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Feb 2025 23:49:05 -0800
-X-CSE-ConnectionGUID: c5vcaEq6QXOozNFMZRIeww==
-X-CSE-MsgGUID: b58VZPcnTGuQ9e9woxbVMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119529994"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 17 Feb 2025 23:49:04 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] rust: Prefer std::ptr over core::ptr
-Date: Tue, 18 Feb 2025 16:08:35 +0800
-Message-Id: <20250218080835.3341082-1-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkIN9-0006KB-Vr
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 02:50:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739865024;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1pW9vj1JbK/QZTI/c7l5Mlw74/pV+SKfA6C+c/f4ZGc=;
+ b=c/Pq9pVmZkb37XTUGY3tQXsXMCcOGJDlibYtoC/z1xYo0cuAv34mRPO9jwcmOOMMk5zHAj
+ QPQbkJ1yagxiEH2FGRfhzSaQHFteY8hvJA6x8DYElocNRITbUEgQ+3b1zQ6Aee0D57rmD5
+ 59/oNCKZrsB9ecjJKQp/mmRuSBAeKJk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-gq1s6KTbMlKg_F1jPSBD-w-1; Tue,
+ 18 Feb 2025 02:50:21 -0500
+X-MC-Unique: gq1s6KTbMlKg_F1jPSBD-w-1
+X-Mimecast-MFC-AGG-ID: gq1s6KTbMlKg_F1jPSBD-w_1739865020
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AE0501800980
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:50:20 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.22])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 634EA1956094
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:50:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1A2EE21E6A28; Tue, 18 Feb 2025 08:50:17 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org,  Stefano Brivio <sbrivio@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Jason Wang <jasowang@redhat.com>,
+ Laine Stump <laine@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v4] net: vhost-user: add QAPI events to report
+ connection state
+In-Reply-To: <20250217092550.1172055-1-lvivier@redhat.com> (Laurent Vivier's
+ message of "Mon, 17 Feb 2025 10:25:50 +0100")
+References: <20250217092550.1172055-1-lvivier@redhat.com>
+Date: Tue, 18 Feb 2025 08:50:17 +0100
+Message-ID: <87ldu3heti.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,67 +91,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The std::ptr is same as core::ptr, but std has already been used in many
-cases and there's no need to choose non-std library.
+Laurent Vivier <lvivier@redhat.com> writes:
 
-So, use std::ptr directly to make the used ptr library as consistent as
-possible.
+> The netdev reports NETDEV_VHOST_USER_CONNECTED event when
+> the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
+> when it is disconnected.
+>
+> The NETDEV_VHOST_USER_CONNECTED event includes the chardev id.
+>
+> This allows a system manager like libvirt to detect when the server
+> fails.
+>
+> For instance with passt:
+>
+> { 'execute': 'qmp_capabilities' }
+> { "return": { } }
+>
+> [killing passt here]
+>
+> { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
+>   "event": "NETDEV_VHOST_USER_DISCONNECTED",
+>   "data": { "netdev-id": "netdev0" } }
+>
+> [automatic reconnection with reconnect-ms]
+>
+> { "timestamp": { "seconds": 1739538638, "microseconds": 354181 },
+>   "event": "NETDEV_VHOST_USER_CONNECTED",
+>   "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
+>
+> Tested-by: Stefano Brivio <sbrivio@redhat.com>
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> ---
+>
+> Notes:
+>     v4:
+>       - as ChardevInfo is not needed, move events definition from
+>         qapi/char.json to qapi/net.json
+>     
+>     v3:
+>       - remove ChardevInfo, provides only the chardev id
+>     
+>     v2:
+>       - remove duplicate line info.frontend_open
+>
+>  qapi/net.json    | 40 ++++++++++++++++++++++++++++++++++++++++
+>  net/vhost-user.c |  3 +++
+>  2 files changed, 43 insertions(+)
+>
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 2739a2f42332..310cc4fd1907 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -1031,3 +1031,43 @@
+>  ##
+>  { 'event': 'NETDEV_STREAM_DISCONNECTED',
+>    'data': { 'netdev-id': 'str' } }
+> +
+> +##
+> +# @NETDEV_VHOST_USER_CONNECTED:
+> +#
+> +# Emitted when the vhost-user chardev is connected
+> +#
+> +# @netdev-id: QEMU netdev id that is connected
+> +#
+> +# @chardev-id: The character device id used by the QEMU netdev
+> +#
+> +# Since: 10.0
+> +#
+> +# .. qmp-example::
+> +#
+> +#     <- { "timestamp": {"seconds": 1739538638, "microseconds": 354181 },
+> +#          "event": "NETDEV_VHOST_USER_CONNECTED",
+> +#          "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
+> +#
+> +##
+> +{ 'event': 'NETDEV_VHOST_USER_CONNECTED',
+> +  'data': { 'netdev-id': 'str', 'chardev-id': 'str' } }
+> +
+> +##
+> +# @NETDEV_VHOST_USER_DISCONNECTED:
+> +#
+> +# Emitted when the vhost-user chardev is disconnected
+> +#
+> +# @netdev-id: QEMU netdev id that is disconnected
+> +#
+> +# Since: 10.0
+> +#
+> +# .. qmp-example::
+> +#
+> +#     <- { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
+> +#          "event": "NETDEV_VHOST_USER_DISCONNECTED",
+> +#          "data": { "netdev-id": "netdev0" } }
+> +#
+> +##
+> +{ 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
+> +  'data': { 'netdev-id': 'str' } }
+> diff --git a/net/vhost-user.c b/net/vhost-user.c
+> index 12555518e838..0b235e50c650 100644
+> --- a/net/vhost-user.c
+> +++ b/net/vhost-user.c
+> @@ -16,6 +16,7 @@
+>  #include "chardev/char-fe.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-commands-net.h"
+> +#include "qapi/qapi-events-net.h"
+>  #include "qemu/config-file.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/option.h"
+> @@ -271,6 +272,7 @@ static void chr_closed_bh(void *opaque)
+>      if (err) {
+>          error_report_err(err);
+>      }
+> +    qapi_event_send_netdev_vhost_user_disconnected(name);
+>  }
+>  
+>  static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+> @@ -300,6 +302,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+>                                           net_vhost_user_watch, s);
+>          qmp_set_link(name, true, &err);
+>          s->started = true;
+> +        qapi_event_send_netdev_vhost_user_connected(name, chr->label);
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/hw/char/pl011/src/device.rs       | 2 +-
- rust/hw/char/pl011/src/device_class.rs | 6 ++++--
- rust/qemu-api/src/irq.rs               | 3 +--
- 3 files changed, 6 insertions(+), 5 deletions(-)
+We seem to use "label" and "id" interchangeably.  Unfortunate.
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index fe73771021e7..59a689fdcd77 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -2,10 +2,10 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use core::ptr::{addr_of, addr_of_mut, NonNull};
- use std::{
-     ffi::CStr,
-     os::raw::{c_int, c_void},
-+    ptr::{addr_of, addr_of_mut, NonNull},
- };
- 
- use qemu_api::{
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-index dbef93f6cb3e..0b2076ddaa0f 100644
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ b/rust/hw/char/pl011/src/device_class.rs
-@@ -2,8 +2,10 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use core::ptr::NonNull;
--use std::os::raw::{c_int, c_void};
-+use std::{
-+    os::raw::{c_int, c_void},
-+    ptr::NonNull,
-+};
- 
- use qemu_api::{
-     bindings::*, c_str, prelude::*, vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct,
-diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
-index d1c9dc96eff3..34c19263c233 100644
---- a/rust/qemu-api/src/irq.rs
-+++ b/rust/qemu-api/src/irq.rs
-@@ -4,8 +4,7 @@
- 
- //! Bindings for interrupt sources
- 
--use core::ptr;
--use std::{ffi::CStr, marker::PhantomData, os::raw::c_int};
-+use std::{ffi::CStr, marker::PhantomData, os::raw::c_int, ptr};
- 
- use crate::{
-     bindings::{self, qemu_set_irq},
--- 
-2.34.1
+
+>          break;
+>      case CHR_EVENT_CLOSED:
+>          /* a close event may happen during a read/write, but vhost
+
+Like Daniel, I wonder whether provding events for chardevs instead would
+be more broadly useful.
+
+That said, there's nothing wrong with the patch itself, so
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
