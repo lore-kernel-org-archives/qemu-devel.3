@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F493C021AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 18:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E2BC021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 18:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkSEx-0007fp-2X; Tue, 18 Feb 2025 13:22:39 -0500
+	id 1tkSEy-0007mJ-AT; Tue, 18 Feb 2025 13:22:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDP-00060J-Gl
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:21:10 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDG-0005yC-53
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:20:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDN-0007cF-QB
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:21:03 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDA-0007Zp-Jl
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:20:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739902860;
+ s=mimecast20190719; t=1739902848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RojwfcvaPIioswIr6xkmp9TE4iMBjxyjAWt5PRgmLUk=;
- b=bUaPQXb02fPO3pNYZEDQPISKkyvN0zCuDle44Rj+zqe9kOTvgw4BVIfDbLk//dh3zUGrwj
- uiEbN47hS1WTF1hfsqrYFNDrvr5KXtY9ZV22zRq20ven6/+tvt8CZbH1rP/O3h9c8G6L3A
- W9Ye0E8QiQzSrWw4fY/kqeVJlKpje4U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=jMQenbHLn/1pZniLXOVbC7HAYOgpvtVLQZY6e2XjTLM=;
+ b=JOojkbg99d5EoLMDsEhLQ4eeww6/Sj9OXl/60ztJeiavKEkG9tLGR7nna2Eo/x1Kf9+Y2e
+ F+Do7NZBwdIff0+XnCq/X4Ek2E4rzGkCVapqWX2eEiS0Fq5fGt4niUBhGN9erQcMBBE1Fg
+ iLIMqGIP96VQHlXcXKvogKecwflboe4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-TStjDlV4Paim0gcrIHmAcw-1; Tue,
- 18 Feb 2025 13:20:57 -0500
-X-MC-Unique: TStjDlV4Paim0gcrIHmAcw-1
-X-Mimecast-MFC-AGG-ID: TStjDlV4Paim0gcrIHmAcw_1739902856
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-TnjzJrzRNm6PKoSkgdXdEA-1; Tue,
+ 18 Feb 2025 13:20:45 -0500
+X-MC-Unique: TnjzJrzRNm6PKoSkgdXdEA-1
+X-Mimecast-MFC-AGG-ID: TnjzJrzRNm6PKoSkgdXdEA_1739902843
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2FF11180087D; Tue, 18 Feb 2025 18:20:56 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D23C6190F9CB; Tue, 18 Feb 2025 18:20:43 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.66])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88497180034D; Tue, 18 Feb 2025 18:20:53 +0000 (UTC)
+ id 4CD0C1800358; Tue, 18 Feb 2025 18:20:41 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
  manos.pitsidianakis@linaro.org, philmd@linaro.org, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
-Subject: [PATCH v2 09/11] rust/block: Add read support for block drivers
-Date: Tue, 18 Feb 2025 19:20:17 +0100
-Message-ID: <20250218182019.111467-10-kwolf@redhat.com>
+Subject: [PATCH v2 05/11] rust/block: Add empty crate
+Date: Tue, 18 Feb 2025 19:20:13 +0100
+Message-ID: <20250218182019.111467-6-kwolf@redhat.com>
 In-Reply-To: <20250218182019.111467-1-kwolf@redhat.com>
 References: <20250218182019.111467-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -83,145 +83,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds a map() function to the BlockDriver trait and makes use of it
-to implement reading from an image.
-
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- rust/block/src/driver.rs | 95 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 95 insertions(+)
+ MAINTAINERS            |  1 +
+ rust/Cargo.lock        |  8 ++++++++
+ rust/Cargo.toml        |  1 +
+ rust/block/Cargo.toml  | 16 ++++++++++++++++
+ rust/block/README.md   |  3 +++
+ rust/block/meson.build | 20 ++++++++++++++++++++
+ rust/block/src/lib.rs  |  1 +
+ rust/meson.build       |  1 +
+ 8 files changed, 51 insertions(+)
+ create mode 100644 rust/block/Cargo.toml
+ create mode 100644 rust/block/README.md
+ create mode 100644 rust/block/meson.build
+ create mode 100644 rust/block/src/lib.rs
 
-diff --git a/rust/block/src/driver.rs b/rust/block/src/driver.rs
-index fe19f4b88f..022d50ffbc 100644
---- a/rust/block/src/driver.rs
-+++ b/rust/block/src/driver.rs
-@@ -9,10 +9,45 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3848d37a38..97cc04ae32 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2874,6 +2874,7 @@ S: Supported
+ F: block*
+ F: block/
+ F: hw/block/
++F: rust/block/
+ F: qapi/block*.json
+ F: qapi/transaction.json
+ F: include/block/
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index 2ebf0a11ea..a2525052dd 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -31,6 +31,14 @@ dependencies = [
+  "syn",
+ ]
  
- use crate::{IoBuffer, SizedIoBuffer};
- use qemu_api::bindings;
-+use qemu_api::errno::Errno;
-+use qemu_api::futures::qemu_co_run_future;
-+use std::cmp::min;
- use std::ffi::c_void;
- use std::io::{self, Error, ErrorKind};
- use std::mem::MaybeUninit;
- use std::ptr;
-+use std::sync::Arc;
++[[package]]
++name = "block"
++version = "0.1.0"
++dependencies = [
++ "libc",
++ "qemu_api",
++]
 +
-+/// A request to a block driver
-+pub enum Request {
-+    Read { offset: u64, len: u64 },
-+}
+ [[package]]
+ name = "either"
+ version = "1.12.0"
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+index 5041d6291f..2135273dfb 100644
+--- a/rust/Cargo.toml
++++ b/rust/Cargo.toml
+@@ -3,6 +3,7 @@ resolver = "2"
+ members = [
+     "qemu-api-macros",
+     "qemu-api",
++    "block",
+     "hw/char/pl011",
+     "hw/timer/hpet",
+ ]
+diff --git a/rust/block/Cargo.toml b/rust/block/Cargo.toml
+new file mode 100644
+index 0000000000..fbc2f2d6ef
+--- /dev/null
++++ b/rust/block/Cargo.toml
+@@ -0,0 +1,16 @@
++[package]
++name = "block"
++version = "0.1.0"
++edition = "2021"
++authors = ["Kevin Wolf <kwolf@redhat.com>"]
++license = "GPL-2.0-or-later"
++readme = "README.md"
++description = "Block backends for QEMU"
++repository = "https://gitlab.com/qemu-project/qemu/"
++publish = false
++keywords = []
++categories = []
 +
-+/// The target for a number of guest blocks, e.g. a location in a child node or the information
-+/// that the described blocks are unmapped.
-+pub enum MappingTarget {
-+    /// The described blocks are unallocated. Reading from them yields zeros.
-+    Unmapped,
++[dependencies]
++qemu_api = { path = "../qemu-api" }
++libc = "0.2.162"
+diff --git a/rust/block/README.md b/rust/block/README.md
+new file mode 100644
+index 0000000000..debcc9d815
+--- /dev/null
++++ b/rust/block/README.md
+@@ -0,0 +1,3 @@
++# QEMU block backends
 +
-+    /// The described blocks are stored in a child node.
-+    Data {
-+        /// Child node in which the data is stored
-+        node: Arc<BdrvChild>,
++This library implements block drivers for QEMU.
+diff --git a/rust/block/meson.build b/rust/block/meson.build
+new file mode 100644
+index 0000000000..ca93afd939
+--- /dev/null
++++ b/rust/block/meson.build
+@@ -0,0 +1,20 @@
++_block_rs = static_library(
++  'block',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi: 'rust',
++  dependencies: [
++    qemu_api_tools,
++    qemu_api_macros,
++    libc_dep,
++  ],
++  rust_dependency_map: {'qemu_api_tools': 'qemu_api'},
++)
 +
-+        /// Offset in the child node at which the data is stored
-+        offset: u64,
-+    },
-+}
++rust_block_ss.add(if_true: [declare_dependency(
++  link_whole: [_block_rs],
++  # Putting proc macro crates in `dependencies` is necessary for Meson to find
++  # them when compiling the root per-target static rust lib.
++  dependencies: [qemu_api_macros],
++  variables: {'crate': 'block'},
++)])
+diff --git a/rust/block/src/lib.rs b/rust/block/src/lib.rs
+new file mode 100644
+index 0000000000..8b13789179
+--- /dev/null
++++ b/rust/block/src/lib.rs
+@@ -0,0 +1 @@
 +
-+/// A mapping for a number of contiguous guest blocks
-+pub struct Mapping {
-+    /// Offset of the mapped blocks from the perspective of the guest
-+    pub offset: u64,
-+    /// Length of the mapping in bytes
-+    pub len: u64,
-+    /// Where the data for the described blocks is stored
-+    pub target: MappingTarget,
-+}
+diff --git a/rust/meson.build b/rust/meson.build
+index 50eb23b072..d959809fda 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -1,6 +1,7 @@
+ subdir('qemu-api-macros')
+ subdir('qemu-api')
  
- /// A trait for writing block drivers.
- ///
-@@ -37,6 +72,11 @@ unsafe fn open(
++subdir('block')
+ subdir('hw')
  
-     /// Returns the size of the image in bytes
-     fn size(&self) -> u64;
-+
-+    /// Returns the mapping for the first part of `req`. If the returned mapping is shorter than
-+    /// the request, the function can be called again with a shortened request to get the mapping
-+    /// for the remaining part.
-+    async fn map(&self, req: &Request) -> io::Result<Mapping>;
- }
- 
- /// Represents the connection between a parent and its child node.
-@@ -166,6 +206,60 @@ pub async fn read_uninit<T: SizedIoBuffer>(
-     }
- }
- 
-+#[doc(hidden)]
-+pub unsafe extern "C" fn bdrv_co_preadv_part<D: BlockDriver>(
-+    bs: *mut bindings::BlockDriverState,
-+    offset: i64,
-+    bytes: i64,
-+    qiov: *mut bindings::QEMUIOVector,
-+    mut qiov_offset: usize,
-+    flags: bindings::BdrvRequestFlags,
-+) -> std::os::raw::c_int {
-+    let s = unsafe { &mut *((*bs).opaque as *mut D) };
-+
-+    let mut offset = offset as u64;
-+    let mut bytes = bytes as u64;
-+
-+    while bytes > 0 {
-+        let req = Request::Read { offset, len: bytes };
-+        let mapping = match qemu_co_run_future(s.map(&req)) {
-+            Ok(mapping) => mapping,
-+            Err(e) => return -i32::from(Errno::from(e).0),
-+        };
-+
-+        let mapping_offset = offset - mapping.offset;
-+        let cur_bytes = min(bytes, mapping.len - mapping_offset);
-+
-+        match mapping.target {
-+            MappingTarget::Unmapped => unsafe {
-+                bindings::qemu_iovec_memset(qiov, qiov_offset, 0, cur_bytes.try_into().unwrap());
-+            },
-+            MappingTarget::Data {
-+                node,
-+                offset: target_offset,
-+            } => unsafe {
-+                let ret = bindings::bdrv_co_preadv_part(
-+                    node.child,
-+                    (target_offset + mapping_offset) as i64,
-+                    cur_bytes as i64,
-+                    qiov,
-+                    qiov_offset,
-+                    flags,
-+                );
-+                if ret < 0 {
-+                    return ret;
-+                }
-+            },
-+        }
-+
-+        offset += cur_bytes;
-+        qiov_offset += cur_bytes as usize;
-+        bytes -= cur_bytes;
-+    }
-+
-+    0
-+}
-+
- /// Declare a format block driver. This macro is meant to be used at the top level.
- ///
- /// `typ` is a type implementing the [`BlockDriver`] trait to handle the image format with the
-@@ -179,6 +273,7 @@ macro_rules! block_driver {
-                     instance_size: ::std::mem::size_of::<$typ>() as i32,
-                     bdrv_open: Some($crate::driver::bdrv_open::<$typ>),
-                     bdrv_close: Some($crate::driver::bdrv_close::<$typ>),
-+                    bdrv_co_preadv_part: Some($crate::driver::bdrv_co_preadv_part::<$typ>),
-                     bdrv_child_perm: Some(::qemu_api::bindings::bdrv_default_perms),
-                     is_format: true,
-                     ..::qemu_api::zeroable::Zeroable::ZERO
+ cargo = find_program('cargo', required: false)
 -- 
 2.48.1
 
