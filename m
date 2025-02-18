@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE24C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 18:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F493C021AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 18:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkSDs-0006Dn-8I; Tue, 18 Feb 2025 13:21:33 -0500
+	id 1tkSEx-0007fp-2X; Tue, 18 Feb 2025 13:22:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDJ-0005z7-CO
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:21:01 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDP-00060J-Gl
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:21:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDH-0007b7-NY
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:20:57 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tkSDN-0007cF-QB
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 13:21:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739902854;
+ s=mimecast20190719; t=1739902860;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZL6MhAWrd4tLPqhBzrw0oeGzfhv+jDg7uLxyhTF7330=;
- b=DJQAKWVBsscJML9PETeBnFMxY1qes+f+T6U7wFI+/Hcypux1iX78maNbUlqdUniToNW8uT
- jJVasFvFhKvuNE9L+OOptBWm2qyDAEnagtrcm3WjhYArsZRxdnGZVnIkD/kesCywSh1jQa
- LKknDa8Iogxd4eUqmPYA+lkWaM+1+G4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RojwfcvaPIioswIr6xkmp9TE4iMBjxyjAWt5PRgmLUk=;
+ b=bUaPQXb02fPO3pNYZEDQPISKkyvN0zCuDle44Rj+zqe9kOTvgw4BVIfDbLk//dh3zUGrwj
+ uiEbN47hS1WTF1hfsqrYFNDrvr5KXtY9ZV22zRq20ven6/+tvt8CZbH1rP/O3h9c8G6L3A
+ W9Ye0E8QiQzSrWw4fY/kqeVJlKpje4U=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-6O4hdOprNFaAE-NCmWYf-Q-1; Tue,
- 18 Feb 2025 13:20:51 -0500
-X-MC-Unique: 6O4hdOprNFaAE-NCmWYf-Q-1
-X-Mimecast-MFC-AGG-ID: 6O4hdOprNFaAE-NCmWYf-Q_1739902850
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-TStjDlV4Paim0gcrIHmAcw-1; Tue,
+ 18 Feb 2025 13:20:57 -0500
+X-MC-Unique: TStjDlV4Paim0gcrIHmAcw-1
+X-Mimecast-MFC-AGG-ID: TStjDlV4Paim0gcrIHmAcw_1739902856
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 063021801A24; Tue, 18 Feb 2025 18:20:50 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2FF11180087D; Tue, 18 Feb 2025 18:20:56 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.66])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7BADD180034D; Tue, 18 Feb 2025 18:20:47 +0000 (UTC)
+ id 88497180034D; Tue, 18 Feb 2025 18:20:53 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
  manos.pitsidianakis@linaro.org, philmd@linaro.org, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
-Subject: [PATCH v2 07/11] block: Add bdrv_open_blockdev_ref_file()
-Date: Tue, 18 Feb 2025 19:20:15 +0100
-Message-ID: <20250218182019.111467-8-kwolf@redhat.com>
+Subject: [PATCH v2 09/11] rust/block: Add read support for block drivers
+Date: Tue, 18 Feb 2025 19:20:17 +0100
+Message-ID: <20250218182019.111467-10-kwolf@redhat.com>
 In-Reply-To: <20250218182019.111467-1-kwolf@redhat.com>
 References: <20250218182019.111467-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -83,86 +83,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the equivalent of bdrv_open_file_child() to be used in cases
-where the caller is QAPI based and has a BlockdevRef rather than a
-filename and an options QDict.
+This adds a map() function to the BlockDriver trait and makes use of it
+to implement reading from an image.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/block-global-state.h |  4 ++++
- block.c                            | 31 +++++++++++++++++++++++++++---
- 2 files changed, 32 insertions(+), 3 deletions(-)
+ rust/block/src/driver.rs | 95 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 95 insertions(+)
 
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index 9be34b3c99..861e19cfe6 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -100,6 +100,10 @@ bdrv_open_blockdev_ref(BlockdevRef *ref, Error **errp);
- BlockDriverState * coroutine_fn no_co_wrapper
- bdrv_co_open_blockdev_ref(BlockdevRef *ref, Error **errp);
+diff --git a/rust/block/src/driver.rs b/rust/block/src/driver.rs
+index fe19f4b88f..022d50ffbc 100644
+--- a/rust/block/src/driver.rs
++++ b/rust/block/src/driver.rs
+@@ -9,10 +9,45 @@
  
-+BlockDriverState * no_coroutine_fn
-+bdrv_open_blockdev_ref_file(BlockdevRef *ref, BlockDriverState *parent,
-+                            Error **errp);
+ use crate::{IoBuffer, SizedIoBuffer};
+ use qemu_api::bindings;
++use qemu_api::errno::Errno;
++use qemu_api::futures::qemu_co_run_future;
++use std::cmp::min;
+ use std::ffi::c_void;
+ use std::io::{self, Error, ErrorKind};
+ use std::mem::MaybeUninit;
+ use std::ptr;
++use std::sync::Arc;
 +
- int bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
-                         Error **errp);
- int GRAPH_WRLOCK
-diff --git a/block.c b/block.c
-index 0ece805e41..cd53c84f84 100644
---- a/block.c
-+++ b/block.c
-@@ -3847,7 +3847,11 @@ int bdrv_open_file_child(const char *filename,
-  * TODO Future callers may need to specify parent/child_class in order for
-  * option inheritance to work. Existing callers use it for the root node.
-  */
--BlockDriverState *bdrv_open_blockdev_ref(BlockdevRef *ref, Error **errp)
-+static BlockDriverState * no_coroutine_fn
-+bdrv_open_blockdev_ref_common(BlockdevRef *ref, BlockDriverState *parent,
-+                              const BdrvChildClass *child_class,
-+                              BdrvChildRole child_role, bool parse_filename,
-+                              Error **errp)
- {
-     BlockDriverState *bs = NULL;
-     QObject *obj = NULL;
-@@ -3880,14 +3884,35 @@ BlockDriverState *bdrv_open_blockdev_ref(BlockdevRef *ref, Error **errp)
++/// A request to a block driver
++pub enum Request {
++    Read { offset: u64, len: u64 },
++}
++
++/// The target for a number of guest blocks, e.g. a location in a child node or the information
++/// that the described blocks are unmapped.
++pub enum MappingTarget {
++    /// The described blocks are unallocated. Reading from them yields zeros.
++    Unmapped,
++
++    /// The described blocks are stored in a child node.
++    Data {
++        /// Child node in which the data is stored
++        node: Arc<BdrvChild>,
++
++        /// Offset in the child node at which the data is stored
++        offset: u64,
++    },
++}
++
++/// A mapping for a number of contiguous guest blocks
++pub struct Mapping {
++    /// Offset of the mapped blocks from the perspective of the guest
++    pub offset: u64,
++    /// Length of the mapping in bytes
++    pub len: u64,
++    /// Where the data for the described blocks is stored
++    pub target: MappingTarget,
++}
  
-     }
+ /// A trait for writing block drivers.
+ ///
+@@ -37,6 +72,11 @@ unsafe fn open(
  
--    bs = bdrv_open_inherit(NULL, reference, qdict, 0, NULL, NULL, 0, false,
--                           errp);
-+    bs = bdrv_open_inherit(NULL, reference, qdict, 0, parent, child_class,
-+                           child_role, parse_filename, errp);
-     obj = NULL;
-     qobject_unref(obj);
-     visit_free(v);
-     return bs;
+     /// Returns the size of the image in bytes
+     fn size(&self) -> u64;
++
++    /// Returns the mapping for the first part of `req`. If the returned mapping is shorter than
++    /// the request, the function can be called again with a shortened request to get the mapping
++    /// for the remaining part.
++    async fn map(&self, req: &Request) -> io::Result<Mapping>;
  }
  
-+BlockDriverState *bdrv_open_blockdev_ref_file(BlockdevRef *ref,
-+                                              BlockDriverState *parent,
-+                                              Error **errp)
-+{
-+    BdrvChildRole role;
+ /// Represents the connection between a parent and its child node.
+@@ -166,6 +206,60 @@ pub async fn read_uninit<T: SizedIoBuffer>(
+     }
+ }
+ 
++#[doc(hidden)]
++pub unsafe extern "C" fn bdrv_co_preadv_part<D: BlockDriver>(
++    bs: *mut bindings::BlockDriverState,
++    offset: i64,
++    bytes: i64,
++    qiov: *mut bindings::QEMUIOVector,
++    mut qiov_offset: usize,
++    flags: bindings::BdrvRequestFlags,
++) -> std::os::raw::c_int {
++    let s = unsafe { &mut *((*bs).opaque as *mut D) };
 +
-+    /* commit_top and mirror_top don't use this function */
-+    assert(!parent->drv->filtered_child_is_backing);
-+    role = parent->drv->is_filter
-+           ? (BDRV_CHILD_FILTERED | BDRV_CHILD_PRIMARY)
-+           : BDRV_CHILD_IMAGE;
++    let mut offset = offset as u64;
++    let mut bytes = bytes as u64;
 +
-+    return bdrv_open_blockdev_ref_common(ref, parent, &child_of_bds, role,
-+                                         true, errp);
++    while bytes > 0 {
++        let req = Request::Read { offset, len: bytes };
++        let mapping = match qemu_co_run_future(s.map(&req)) {
++            Ok(mapping) => mapping,
++            Err(e) => return -i32::from(Errno::from(e).0),
++        };
++
++        let mapping_offset = offset - mapping.offset;
++        let cur_bytes = min(bytes, mapping.len - mapping_offset);
++
++        match mapping.target {
++            MappingTarget::Unmapped => unsafe {
++                bindings::qemu_iovec_memset(qiov, qiov_offset, 0, cur_bytes.try_into().unwrap());
++            },
++            MappingTarget::Data {
++                node,
++                offset: target_offset,
++            } => unsafe {
++                let ret = bindings::bdrv_co_preadv_part(
++                    node.child,
++                    (target_offset + mapping_offset) as i64,
++                    cur_bytes as i64,
++                    qiov,
++                    qiov_offset,
++                    flags,
++                );
++                if ret < 0 {
++                    return ret;
++                }
++            },
++        }
++
++        offset += cur_bytes;
++        qiov_offset += cur_bytes as usize;
++        bytes -= cur_bytes;
++    }
++
++    0
 +}
 +
-+BlockDriverState *bdrv_open_blockdev_ref(BlockdevRef *ref, Error **errp)
-+{
-+    return bdrv_open_blockdev_ref_common(ref, NULL, NULL, 0, false, errp);
-+}
-+
- static BlockDriverState *bdrv_append_temp_snapshot(BlockDriverState *bs,
-                                                    int flags,
-                                                    QDict *snapshot_options,
+ /// Declare a format block driver. This macro is meant to be used at the top level.
+ ///
+ /// `typ` is a type implementing the [`BlockDriver`] trait to handle the image format with the
+@@ -179,6 +273,7 @@ macro_rules! block_driver {
+                     instance_size: ::std::mem::size_of::<$typ>() as i32,
+                     bdrv_open: Some($crate::driver::bdrv_open::<$typ>),
+                     bdrv_close: Some($crate::driver::bdrv_close::<$typ>),
++                    bdrv_co_preadv_part: Some($crate::driver::bdrv_co_preadv_part::<$typ>),
+                     bdrv_child_perm: Some(::qemu_api::bindings::bdrv_default_perms),
+                     is_format: true,
+                     ..::qemu_api::zeroable::Zeroable::ZERO
 -- 
 2.48.1
 
