@@ -4,85 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F11C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 08:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90552C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 08:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkJK9-0007Ws-RM; Tue, 18 Feb 2025 03:51:26 -0500
+	id 1tkJLr-0008BG-Te; Tue, 18 Feb 2025 03:53:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tkJJw-0007WB-LS
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 03:51:14 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tkJLq-0008B3-VI
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 03:53:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tkJJu-0004LM-1j
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 03:51:12 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9BB86ED808
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 11:50:43 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E5431B8602
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 11:50:58 +0300 (MSK)
-Message-ID: <138bb61b-d7a4-47e0-b746-f1d3a14c6dc8@tls.msk.ru>
-Date: Tue, 18 Feb 2025 11:50:57 +0300
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tkJLo-0004Tm-JM
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 03:53:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739868786;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=iIA9otTJD1FRqfT0P+Uav97EfYwiOXUG7z+vKOYnjSg=;
+ b=E/Boa+EqIeTa0PyuRlOamPcZef2QvXMyr339r+gx8k4dpr/2kFo0b4FEW/A95myk7nA0zJ
+ xyi5+Ym3AWTQg1KGgPTkBPO2ok16SLs3LU67THH5PLRdcLkKgR6TOMSUOsw0I4DDCSED7J
+ GD0ImTPKLnsv/fxWxlB2l/LZ7835ufU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-PZ7DeohIM-SrOdJC_11FKA-1; Tue, 18 Feb 2025 03:53:03 -0500
+X-MC-Unique: PZ7DeohIM-SrOdJC_11FKA-1
+X-Mimecast-MFC-AGG-ID: PZ7DeohIM-SrOdJC_11FKA_1739868783
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f42f21f54so954153f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 00:53:03 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739868782; x=1740473582;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iIA9otTJD1FRqfT0P+Uav97EfYwiOXUG7z+vKOYnjSg=;
+ b=iiXS1Uuj9vtx7oVD5/qCzYmjDdsRBqzRuMHBFZER1CfqqOYoTXTFiDx3YCQFIDEpwn
+ ljKTiOMR5135K1lYOFVDUJ1hl1uXrrP083gYpFMzBpBrkbFh7Cs1XFWCC0D2JSWIEYVc
+ adWAfo+bZEFlW1AjJwZltj2y0HG4iURUJfXlJmTp5IBBuhM1agUaHq8f172Udk/EOaW4
+ v/McgNkvnte9VEo+cvoyHLQh/c/8kfEh8CulJ0XLo/3+DhksVusfandht7kQ6mD/49G/
+ LfwgZKrJCwtDZ+RJ63T2ByM2t/hzMSVnc7VAIVe6atXKD34Eqt23mhUpDTTmx84E/5tp
+ B19A==
+X-Gm-Message-State: AOJu0YwgHTz87bklNMIEy/5iOrvpJlNxJSzAZN2JPFHfAF74/TWYqME5
+ MGxHlawNe7FJJ9cacSjQlLUkXqlKBUJMv0n3hfSxoSwKwgOsBP8ifA0Dt8aIvZdyxG02IhnWpDF
+ wjyOVFUlMyIeGYbX5pga7CqfCHyaxRXtfDbUZxvI/LK4xV7FGSEcEOtDGFSy2mSg=
+X-Gm-Gg: ASbGncv76eouuBaoZC8k8p8SmYfOZVJa2uwoIokN3+tGjMmQqdxup0yM45qRtkgBV/k
+ CnNZpFXRZib8hvDj4lVf35L8WGEP64Kqt9ALhHTtti57+8bwNE4rwJidvhcz5MIasS43X5nKfVE
+ itffjtLfRWPnhGXJv0gxfNhKNoEXnhR2LaH+sG4s+LZPs0umWE/jA42QqXiOZTIRTqTs5NDR2WB
+ pHL6Ik+kkCjj6q/ZXrmVjpdKjJiWcNXqULTAG9bHxLdxmG9DLmeGe2+geVA2OP+xYK0cCcKHps6
+ Tsli8bqI7yg=
+X-Received: by 2002:a05:6000:1aca:b0:38f:37f3:5ca9 with SMTP id
+ ffacd0b85a97d-38f37f36159mr10133213f8f.50.1739868782292; 
+ Tue, 18 Feb 2025 00:53:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaeXCaOKlCQdGOcMT7mpHOgtG1G0IpKtlwucq6dGJUF8mfqguWv88IKVlQ0dfHgzlya9rF2g==
+X-Received: by 2002:a05:6000:1aca:b0:38f:37f3:5ca9 with SMTP id
+ ffacd0b85a97d-38f37f36159mr10133186f8f.50.1739868781864; 
+ Tue, 18 Feb 2025 00:53:01 -0800 (PST)
+Received: from [192.168.10.81] ([176.206.122.109])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-4399558f8d1sm8554185e9.19.2025.02.18.00.53.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Feb 2025 00:53:01 -0800 (PST)
+Message-ID: <53739259-69a5-4d7e-9178-f09e1d6ede89@redhat.com>
+Date: Tue, 18 Feb 2025 09:53:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: qemu-devel <qemu-devel@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: qemu 10.0 release and the next debian stable release (trixie)
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+Subject: Re: [PATCH] hw/timer/hpet: Detect invalid access to TN registers
+To: Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250218073702.3299300-1-zhao1.liu@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250218073702.3299300-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,30 +145,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+On 2/18/25 08:37, Zhao Liu wrote:
+> "addr & 0x18" ignores invalid address, so that the trace in default
+> branch (trace_hpet_ram_{read|write}_invalid()) doesn't work.
+> 
+> Mask addr by "0x1f & ~4", in which 0x1f means to get the complete TN
+> registers access and ~4 means to keep any invalid address offset.
 
-It so happened that current schedule for debian and qemu clashes with
-each other in a fun way.  2025-04-15 is the date planned for qemu 10.0
-release (if no rc4 is needed), and is it the date of debian 13.0 trixe
-freeze.
+I think this is less readable.
 
-Can we move the qemu release date a little bit earlier, so I'll have
-a chance to upload qemu 10.0 to debian trixie?
+The reason to use !4 in the Rust code is because the initial AND is done
+in a separate function, timer_and_addr().  In C you don't have the same
+thing.  If anything you could do something like this:
 
-The "prob" here is the removal of 64-on-32 architectures in 10.0, which
-is definitely a good change, but in debian it is a bit more challenging
-since others expect all qemu emulators are freely available on every
-architecture, and there might be some issues in this area on the debian
-side.  I'm trying to reflect this removal now with 9.2 packages, to have
-more time when 10.0 is released.
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index ccb97b68066..7c011204971 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -425,6 +425,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+      int shift = (addr & 4) * 8;
+      uint64_t cur_tick;
+  
++    addr &= ~4;
+      trace_hpet_ram_read(addr);
+  
+      /*address range of all TN regs*/
+@@ -437,7 +438,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+              return 0;
+          }
+  
+-        switch (addr & 0x18) {
++        switch (addr & 0x1f) {
+          case HPET_TN_CFG: // including interrupt capabilities
+              return timer->config >> shift;
+          case HPET_TN_CMP: // comparator register
+@@ -449,7 +450,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+              break;
+          }
+      } else {
+-        switch (addr & ~4) {
++        switch (addr) {
+          case HPET_ID: // including HPET_PERIOD
+              return s->capability >> shift;
+          case HPET_CFG:
 
-At the same time, due to code simplification after 64-on-32 removal,
-further fixes will be difficult to back-port to releases before 10.0, so
-I'd rather avoid supporting such a release in debian for long (2+ years).
+and the same in the write function, but that's also different from the Rust
+code.
 
-It'd be really nice if we release 10.0 a week earlier :)
+Paolo
 
-Thanks,
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   * Note: This patch applies the changes from Rust HPET [*] to C HPET to
+>     ensure logic consistency.
+>     [*]: The original comment should use "(0x1f & ~4)":
+>          https://lore.kernel.org/qemu-devel/Z6edKxYFzA6suDlj@intel.com/
+> ---
+>   hw/timer/hpet.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index dcff18a9871d..0f786047e54f 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -455,7 +455,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+>               return 0;
+>           }
+>   
+> -        switch (addr & 0x18) {
+> +        switch (addr & (0x1f & ~4)) {
+>           case HPET_TN_CFG: // including interrupt capabilities
+>               return timer->config >> shift;
+>           case HPET_TN_CMP: // comparator register
+> @@ -511,7 +511,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+>               trace_hpet_timer_id_out_of_range(timer_id);
+>               return;
+>           }
+> -        switch (addr & 0x18) {
+> +
+> +        switch (addr & (0x1f & ~4)) {
+>           case HPET_TN_CFG:
+>               trace_hpet_ram_write_tn_cfg(addr & 4);
+>               old_val = timer->config;
 
-/mjt
 
