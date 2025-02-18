@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A3DC021AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5BEDC021AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQQX-0004oh-SM; Tue, 18 Feb 2025 11:26:29 -0500
+	id 1tkQQz-00053U-W3; Tue, 18 Feb 2025 11:26:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkQQU-0004nm-AF
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:26:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkQQO-0000g6-BE
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:26:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739895970;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uavT6ke0J/Cha3gANcNa3suBK9qxNe2HKl0rgsg+kBo=;
- b=jWmIEWEK/1P2UZWhf3AVZfYdL4Vnl0zPXRWFxP1s1u1qmv4LsZecfEICdLiA6pgUEZ/r2q
- o7zlzH/O8HuytfHoGObt0DUwPq4QDdnnjZL5e3ZityAnJ9LS44S8WXDgn1Q0QfT94pcUPe
- EZpQHQUAq6AX+ezT1InDh+Pj1W9uGBI=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-288-auFYr9xaNIWK5edXmjSmFg-1; Tue, 18 Feb 2025 11:26:09 -0500
-X-MC-Unique: auFYr9xaNIWK5edXmjSmFg-1
-X-Mimecast-MFC-AGG-ID: auFYr9xaNIWK5edXmjSmFg_1739895968
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3f40e8dabdbso63791b6e.2
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:26:08 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739895968; x=1740500768;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkQQx-0004zJ-F2
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:26:55 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkQQv-0000lw-Vh
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:26:55 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4398c8c8b2cso21247915e9.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:26:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739896012; x=1740500812; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uavT6ke0J/Cha3gANcNa3suBK9qxNe2HKl0rgsg+kBo=;
- b=C4sZq1pb0qds6WKNlaAtGalASnjeSzq/duaaEcWnbzv7mGsLGVX8GZYKxXVq97UBn2
- njDRgYE0GRN8mFK3Lx56qMyARNwSqtQKDBTkztbeHUCrW6ob6lHrWIUoZA7tgFMx8eVq
- p2RZPDjRfYkv+zQSfNu4pP6SszFws21F98HNA0o216qH/+O2U0rrXab/cgDnfJxlEXsA
- 9F41weYhb45Som9J74o+icKAbmLCB+Aq4gkvDZNpZpxmjoCCvEIwP01cpQ8aJo1Ge792
- T05R9SB73NK/0Vt/Rug9d/szytksxIIOz+nZQKZRIH9YUnsRKzFKBg253gj2c1bqKVbi
- dAUQ==
-X-Gm-Message-State: AOJu0YyV8CnpPAnsG982tgwNqJ7iGdao9GtRZsVlKWLjxtu+l+PjbfXR
- /VITr3SD+24y4gISyp2s7w6vxY7MXQ4FY6DGgLs/qIiBdnWXForNtMbDj9HFMqBdxLYtxy2PstO
- HdE4YN1F+2rbiqtoJ58F3/CmbPJ7bIZ86MKAPKN90328POVWFE3zE
-X-Gm-Gg: ASbGnctO5PH6/pvnNs2aC09L2lfh58cC+tkME7mEwZT5u75xEqCGm8wIzwqq0JlmFu6
- ovz0S1bN31B7wzt2zVIzOcutBf/pO/kei0G1IIFNUrOE2oYRW8wdmpZo8BmuRuFVOyZHyyF8qzJ
- 6YT1XttsivTBUMi0B4jWWXZbzlqytLsammphO7e4OcGW7YQW/PsCSVEA8G4/fc9513bgrft6GZA
- iLS5jqdIiTx3SCWQB8HituhLT52dBNhWnrN9mJ54sO7W4dyicd5G19CAI8=
-X-Received: by 2002:a05:6808:1b08:b0:3f4:ad3:d666 with SMTP id
- 5614622812f47-3f40ad3d850mr1902125b6e.21.1739895968265; 
- Tue, 18 Feb 2025 08:26:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHA2EUJP2VAnOKsJeknxOF8RtMHYdINLCw8IrWZucbm9qF11cMEO9eWUd+sc2YHn/yWbGbc6g==
-X-Received: by 2002:a05:6808:1b08:b0:3f4:ad3:d666 with SMTP id
- 5614622812f47-3f40ad3d850mr1902098b6e.21.1739895967906; 
- Tue, 18 Feb 2025 08:26:07 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5fcb16e0458sm3609565eaf.20.2025.02.18.08.26.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Feb 2025 08:26:07 -0800 (PST)
-Date: Tue, 18 Feb 2025 11:26:03 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ bh=mperaQfcVOBqRRYRjHccBT2TwBZt0VUagowA4iRkLpA=;
+ b=xd+xG20vd2eayFJ+youg2RjBW6E435A0yO4Owqzf7dLSkrGYVUPltNWIwTMp8zOyX7
+ Mx2h2PfhS1G310h+tzwBOv0cA6+qZxyZBhg4IugyW8RxZ3hxlda6WRYoummZsj7H4x9j
+ 0lhKlhSPFiLIwrgcYmnIV94Z6MT59DpMTxc7DYTW9UgeSrHCXdAC/BymPvtPEO4UAhyi
+ oeKiumEdFq7Q1sOaTzfSD0hw/lMR4QbhmNwAYvOO+GHt6RjbUmVZMcPu3mPjRSfJPx2M
+ ERW1C9qBbWdX/bdST8JzYKPp+WBr2xRkzgp37KTxImntJq80DqeyiteOcdZlj8u6gE2f
+ uhLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739896012; x=1740500812;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mperaQfcVOBqRRYRjHccBT2TwBZt0VUagowA4iRkLpA=;
+ b=daKdy1BPbxRbGJFct0lddVcY2M/fTUSLYxs27ih17A6TU8/zpz7/KcXsff+mmyRBGN
+ A28C8mJigwWKbzpmh2a2OLntzfb7ubetDUgy1bQNuZNe4vAHzcIGG5o3ExAWptgUNa4H
+ yhXgaCuPb2ZInHiw6dz/u69XoFx0hDK50Ye2EJc+eVM9jcOB/uEnuXB57D8O+az9TpiI
+ cRODlPDQxndnPKNy/UKn2S/bPkGZGfSPpqnBpikk6ZAX2oTtICpP0j6EY/GfX4dGxrcs
+ J1kR1eyTwyUxLLPWWxqi01tOXa5DUp/n/GtBbE6WbfpWveRenMJK6qPEtH6Jf1FGjiPC
+ SIig==
+X-Gm-Message-State: AOJu0YyBRBRZoIP4OaCy3Ac8TMh6f6v1u9CWov5Ev3JEqhrxhMfof9Vk
+ npLXENDGsC3hlKeIskuuiQpInBBa+JJUBosMwLfrxsjI14MBUOr7+9FD6ZolAWeYXGirvSV+KUa
+ Xmms=
+X-Gm-Gg: ASbGncvodcdfdozjzV/v1vRIzq0YMx8jBm+JSHqsVYB4Q8n/WAwkWBcUHP9F3o9Amad
+ tdqv3/VDXZyDa6DZFb/Zs+6y4wfBp/84renHw649QBfnDwX004/4ed9GRszyYlsDr4Flv1Bdtbs
+ +VYIWdVmZ5KnytVRuJVI3GcqsoB1BQt9Pj3czKkNmdan87UFSqPZRKHwu0RnoLFWzDBfZHy3KHE
+ kf6uWFUxuKlDvuN8GIoVIN6r5EiWAOa3yRAd2z32GjZZ6nAAfyKcMVVQUxfOM5Bjco6dpLlz6TI
+ qO+f1JSep7+WkxXaCN6O4rWTzXuMc3uc3iAmxeYjy5C/pU4o/SqEpJp+Gf/Ffyh0Tw==
+X-Google-Smtp-Source: AGHT+IF7J9TVuOyN/e8Zf762aLNRW9ueMObB9uugOr+4mEzA/SYgnf7ANAVSmsXQfhVb+gVyh0mcig==
+X-Received: by 2002:a05:600c:511f:b0:439:43b1:e60 with SMTP id
+ 5b1f17b1804b1-4396e6df40amr143667775e9.17.1739896011980; 
+ Tue, 18 Feb 2025 08:26:51 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43990f53847sm35280935e9.1.2025.02.18.08.26.50
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 18 Feb 2025 08:26:51 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Andrew Cooper <andrew.cooper3@citrix.com>, Juergen Gross <jgross@suse.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH V2 02/45] migration: cpr helpers
-Message-ID: <Z7S0m1dnIv674huu@x1.local>
-References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
- <1739542467-226739-3-git-send-email-steven.sistare@oracle.com>
- <Z69xPYAJcOjlSpff@x1.local>
- <ee12d6ec-13fa-4e66-ba27-97fdb1f49f74@oracle.com>
+ David Woodhouse <dwmw2@infradead.org>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Thomas Huth <thuth@redhat.com>, Jan Beulich <jbeulich@suse.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 6/8] hw/xen/xen-bus: Reduce included headers
+Date: Tue, 18 Feb 2025 17:26:16 +0100
+Message-ID: <20250218162618.46167-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250218162618.46167-1-philmd@linaro.org>
+References: <20250218162618.46167-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ee12d6ec-13fa-4e66-ba27-97fdb1f49f74@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,91 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 14, 2025 at 03:31:29PM -0500, Steven Sistare wrote:
-> On 2/14/2025 11:37 AM, Peter Xu wrote:
-> > On Fri, Feb 14, 2025 at 06:13:44AM -0800, Steve Sistare wrote:
-> > > Add cpr_needed_for_reuse, cpr_resave_fd helpers, cpr_is_incoming, and
-> > > cpr_open_fd, for use when adding cpr support for vfio and iommufd.
-> > > 
-> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > > ---
-> > >   include/migration/cpr.h |  6 ++++++
-> > >   migration/cpr.c         | 44 ++++++++++++++++++++++++++++++++++++++++++++
-> > >   2 files changed, 50 insertions(+)
-> > > 
-> > > diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> > > index 3a6deb7..6ad04d4 100644
-> > > --- a/include/migration/cpr.h
-> > > +++ b/include/migration/cpr.h
-> > > @@ -18,15 +18,21 @@
-> > >   void cpr_save_fd(const char *name, int id, int fd);
-> > >   void cpr_delete_fd(const char *name, int id);
-> > >   int cpr_find_fd(const char *name, int id);
-> > > +void cpr_resave_fd(const char *name, int id, int fd);
-> > > +int cpr_open_fd(const char *path, int flags, const char *name, int id,
-> > > +                bool *reused, Error **errp);
-> > >   MigMode cpr_get_incoming_mode(void);
-> > >   void cpr_set_incoming_mode(MigMode mode);
-> > > +bool cpr_is_incoming(void);
-> > >   int cpr_state_save(MigrationChannel *channel, Error **errp);
-> > >   int cpr_state_load(MigrationChannel *channel, Error **errp);
-> > >   void cpr_state_close(void);
-> > >   struct QIOChannel *cpr_state_ioc(void);
-> > > +bool cpr_needed_for_reuse(void *opaque);
-> > > +
-> > >   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
-> > >   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
-> > > diff --git a/migration/cpr.c b/migration/cpr.c
-> > > index 584b0b9..12c489b 100644
-> > > --- a/migration/cpr.c
-> > > +++ b/migration/cpr.c
-> > > @@ -95,6 +95,39 @@ int cpr_find_fd(const char *name, int id)
-> > >       trace_cpr_find_fd(name, id, fd);
-> > >       return fd;
-> > >   }
-> > > +
-> > > +void cpr_resave_fd(const char *name, int id, int fd)
-> > > +{
-> > > +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-> > > +    int old_fd = elem ? elem->fd : -1;
-> > > +
-> > > +    if (old_fd < 0) {
-> > > +        cpr_save_fd(name, id, fd);
-> > > +    } else if (old_fd != fd) {
-> > > +        error_setg(&error_fatal,
-> > > +                   "internal error: cpr fd '%s' id %d value %d "
-> > > +                   "already saved with a different value %d",
-> > > +                   name, id, fd, old_fd);
-> > 
-> > How bad it is to trigger this?
-> 
-> Bad, cpr will likely fail the next time it is used.
-> I suppose I could add a blocker instead of using error_fatal.
-> But, fundamentally something unknown has gone wrong, like for
-> any assertion failure, so continuing to run in an uncertain
-> state seems unwise.
-> 
-> I have only ever seen this during development after adding buggy code.
-> 
-> > I wonder if cpr_save_fd() should have checked this already on duplicated
-> > entries; it looks risky there too if this happens to existing cpr_save_fd()
-> > callers.
-> 
-> Yes, I could check for dups in cpr_save_fd, though it would cost O(N) instead
-> of O(1).  That seems like overkill for a bug that should only bite during new
-> code development.
-> 
-> cpr_resave_fd is O(N), but not for error checking.  Callers use it when they
-> know the fd was (or may have been) already created.  It is a programming
-> convenience that simplifies the call sites.
+Have "hw/xen/xen-bus" include the bare minimal set of headers.
 
-If the caller know the fd was created, then IIUC the caller shouldn't
-invoke the call.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/xen/xen-bus.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-For the other case, could you give an example when the caller may have been
-created, but maybe not?  I'm a bit surprised we have such use case.
-
+diff --git a/include/hw/xen/xen-bus.h b/include/hw/xen/xen-bus.h
+index 2adb2af8391..bdbf1ed6fd0 100644
+--- a/include/hw/xen/xen-bus.h
++++ b/include/hw/xen/xen-bus.h
+@@ -8,9 +8,10 @@
+ #ifndef HW_XEN_BUS_H
+ #define HW_XEN_BUS_H
+ 
++#include "hw/qdev-core.h"
+ #include "hw/xen/xen_backend_ops.h"
+-#include "hw/sysbus.h"
+ #include "qemu/notify.h"
++#include "qemu/queue.h"
+ #include "qom/object.h"
+ 
+ typedef struct XenEventChannel XenEventChannel;
 -- 
-Peter Xu
+2.47.1
 
 
