@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29B5C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 14:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0742EC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:05:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkP0L-0006Ur-PS; Tue, 18 Feb 2025 09:55:21 -0500
+	id 1tkP99-0000sZ-7o; Tue, 18 Feb 2025 10:04:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tkP0H-0006Uc-PJ
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 09:55:17 -0500
-Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tkP0F-00035f-0G
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 09:55:17 -0500
-Received: by mail-vs1-xe29.google.com with SMTP id
- ada2fe7eead31-4be625c5365so615869137.2
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 06:55:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1739890512; x=1740495312;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hMiy2UFMzUkGmLu1KGYV/EwwK9kZERQBJ1K+sJAQkfI=;
- b=jChTy/jo9ROWlG0ATcnjv5LYpJvVt9RF346rkIX7PM7jUGylJHT+4XWYlBhVCCSqKo
- DC1nHZ9BM+U35YeJGPYa5BLXfTynb+rCOPNbXhc9CjdNJbk9avX+AJIZY8ov8hcZHJwu
- BeLGDgjS6vYfrCivRJl0Q+naLa3A9YioqBswRqWGkUMMBwX//s24PR2U+tnVvVG1h9oA
- t/ywwJVlCNoLFeOvXWUEbuhfAFws3KgMlQ4JjVUgNHmaGehpNV405jQ1nTLfLij38NDM
- AWGR0F9aDc+QFLlZHZOBYnulMWjiZnJF8V6gJ4q6GogIWR12v0pkaPN0/JptM+ExoYpU
- Cybw==
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1tkP97-0000rw-Iq
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:04:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1tkP95-00048e-5E
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:04:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739891061;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=f+QUCUKOG/ZLCL2Bj+1396e6XOhmqUB0EHip1Xhcq20=;
+ b=GGQkwHvXpjOUTk8XLfkRlLVk9d+iexDwI4B7W+H33AMa2u4mQcNzC8K6XkxWAEez6Q6xGD
+ SwiwC7MLPz22Zpjo1zwn5MOJkv1ccSnJZp34b1Ic1XXfNRfNOrFTjqDxL5Lw3dN3Xq7cCx
+ vdgxuKGhLwE/6bTosYG/Kqd1ot18Co0=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-eXNccJHZO1eWTn2WX4PDEA-1; Tue, 18 Feb 2025 10:04:15 -0500
+X-MC-Unique: eXNccJHZO1eWTn2WX4PDEA-1
+X-Mimecast-MFC-AGG-ID: eXNccJHZO1eWTn2WX4PDEA_1739891055
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2fc57652924so5594241a91.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:04:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739890512; x=1740495312;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hMiy2UFMzUkGmLu1KGYV/EwwK9kZERQBJ1K+sJAQkfI=;
- b=asTsPu0DcbtubIN72zNipEP6YaMRnKAUOl5oQ/PayxiXgrSCYNoThArQVn9h1Z3Q2T
- V8T2T3y/AH7LXw5y1oNGTqfT+VYBDaGSP7QU1J3YRwqbLpSXSz3jfOVSMPBwLISl+8gJ
- xb3A28iliwlx6rrnfdtR+bHv4IjFjYTvDTp1nh1+4JUQvb3nSuqVXZd/1rVLKO6Wqbb6
- UVML6zs5GG2wj5uGfz9jcVgqSqcs2FevSbZ5F6FRoHl7CH/B5T2vsWnEx/uq2LJkhLmR
- M7eChYSopeaUQXYbxKMWy1ICEWbpTqZj8/2eyr4wF3yOS/9StCzIrxoUmh5pnVWYz4Ru
- 7A6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXihw5HZ5VPHP7ZWHvH+4sTLUq0EE1VreZCCGJMcN/r5GEP3T6wODMJGq3ID0nCZz7M8yCG8n7rqv+Y@nongnu.org
-X-Gm-Message-State: AOJu0Yw57bXa2/+c567yT905Sw6l7HNpG+fxNuaWvhDJ/70cHgOREpAZ
- iby1o5EqLYknxaeI4mM6XfX0lXyGtrq0r2i4Y6Vur40APslaWElV0RzmZL5Urn8v/BJ84fgT6t4
- 3QDbirjLpVEw/MiDsg8MkvBFImWrr/0oVYbYl
-X-Gm-Gg: ASbGncsH6oc7e5BG6wBMxCPkShSg2j8Ei7/cdadlrZAviFGu5s6w4rzHqPNrTxHkefs
- IAyy0ypR2825djUNbPdaMLp/TgrihpSb0ZmachMArJsZWliGwqE9dVgG57ZXIHTdKrQJOp/aa
-X-Google-Smtp-Source: AGHT+IHY2W1hH0I6Bxfo1LXqzilRr/FMyNri5b7qmwD5SuCmFuHtiy8gvGXBODghAr1XWEmsCUc50tdjuJKSOnmEIvQ=
-X-Received: by 2002:a05:6102:290a:b0:4b9:bc52:e050 with SMTP id
- ada2fe7eead31-4bd3fc66f5cmr7755967137.2.1739890512608; Tue, 18 Feb 2025
- 06:55:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739891055; x=1740495855;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f+QUCUKOG/ZLCL2Bj+1396e6XOhmqUB0EHip1Xhcq20=;
+ b=lN3y8HVnKHd55VuPyMcnjefl6LT+5Ue+iCJw+/fQDVBY4Peqh7gCsHaopPsrHwgd6L
+ W7JMgrCCyfoC4ThDJasU5pCjZztrbYzVckMwqM6nTcQUSWowiqPVzL5aFKLaZkRhMvzA
+ kZJk1lQRzkMJYJMiyXlYzlq/pb2wpRUBbtc/6yBMamZVndTxrRrnkwTxuMcc6HrCEfQX
+ Ve2R2XOHTSQAKsvnYMceQU+4ry5wZ1LtONyI9zBNwrzCI4BRddbQiQBjTDOCOuhq/IJq
+ sDooeOapU5FO0Hq9xcJyZa7QSvWloKsYECVdx5ENrX8qVqGDj0MOu/T8zmqCjKUscFtC
+ c+3w==
+X-Gm-Message-State: AOJu0YwAY5wVJhH2I/MAJidJNLJ5dL/5jJhNASxUQv7dxp/qeJBCfFrH
+ YaF8wK0deJa3uqv8ZCtcvE05em9ljuyJg3ZmAT1VgwPth7DCzZ21Q06fI0dCiSSJ0blMlOrNvSI
+ LlLX4xYFEcmF8/If6lp/K0+zoXgGAecJ/jRAJvO3VLP0gsU/UvE4UGRui71rNUbsdRoLmiFTiA1
+ czwvYkKN5zQV+3vtmD+1z0R7/pM+E=
+X-Gm-Gg: ASbGncvFjy4EKFQMiHEcHqP+WXRVL54grGDfNyLkC0wYbnAnyDWlwz2Eo2ThhgGnC3w
+ jbikEuWWIANEUZ29x0bW8Q00ASmAiBYl+3fVkw1DCAW5BmkgDyuGsnNRmTsjXHo+i
+X-Received: by 2002:a17:90b:4cd2:b0:2fa:1e56:5d82 with SMTP id
+ 98e67ed59e1d1-2fcb4d80a53mr39774a91.17.1739891054727; 
+ Tue, 18 Feb 2025 07:04:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSDFKdEgOrrUWDx/RKupBpHSOj2F0DfGN3rARyr7xLHEQ1W+euZdeqq5PSTdSTy5oRY5K2aUdDSnu/g6il/Fo=
+X-Received: by 2002:a17:90b:4cd2:b0:2fa:1e56:5d82 with SMTP id
+ 98e67ed59e1d1-2fcb4d80a53mr39723a91.17.1739891054296; Tue, 18 Feb 2025
+ 07:04:14 -0800 (PST)
 MIME-Version: 1.0
-References: <20250212112958.38023-1-philmd@linaro.org>
- <c33817a1-74d4-47b0-93d3-000cfd6200be@redhat.com>
-In-Reply-To: <c33817a1-74d4-47b0-93d3-000cfd6200be@redhat.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Tue, 18 Feb 2025 15:55:01 +0100
-X-Gm-Features: AWEUYZnfCrWFV3dXwom-xuAH5qCr6xrkbsdOWtc07P-dBYFaJyqdAUgRjiqqJXs
-Message-ID: <CAAibmn2Ohd_-k5LGqo5m1xzLrrs2UYxCT6U_XEKsJYScfCpx6g@mail.gmail.com>
-Subject: Re: [PATCH] meson: Display summary of Darwin libraries detected
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f3d96d062e6bd3dd"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::e29;
- envelope-from=phil@philjordan.eu; helo=mail-vs1-xe29.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+References: <20250217164012.246727-1-aesteve@redhat.com>
+ <20250217164012.246727-8-aesteve@redhat.com>
+ <20250218104116.GK10767@fedora>
+ <CADSE00+-uisJfHWCe0sFTy1fXrqB7K_yWnm-xZSxAmf1=fVpAA@mail.gmail.com>
+ <20250218132516.GA28047@fedora>
+In-Reply-To: <20250218132516.GA28047@fedora>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Tue, 18 Feb 2025 16:04:02 +0100
+X-Gm-Features: AWEUYZkc2A6xX80q7i7kmznBjcGYzYnq7DcvAe--sDh-nYdmg-BPBQ-Ua2MgzHA
+Message-ID: <CADSE00JX4g+j6ic+ATQ1r7FXogZRZsRwqJiyTLJ=wWaPi2Mgww@mail.gmail.com>
+Subject: Re: [PATCH v4 7/9] vhost-user-devive: Add shmem BAR
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, slp@redhat.com, stevensd@chromium.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Stefano Garzarella <sgarzare@redhat.com>, david@redhat.com, hi@alyssa.is,
+ mst@redhat.com, jasowang@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,182 +108,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f3d96d062e6bd3dd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, 17 Feb 2025 at 19:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
-
-> On 2/12/25 12:29, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> >   meson.build | 7 +++++++
-> >   1 file changed, 7 insertions(+)
+On Tue, Feb 18, 2025 at 2:29=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Tue, Feb 18, 2025 at 11:55:33AM +0100, Albert Esteve wrote:
+> > On Tue, Feb 18, 2025 at 11:41=E2=80=AFAM Stefan Hajnoczi <stefanha@redh=
+at.com> wrote:
+> > >
+> > > On Mon, Feb 17, 2025 at 05:40:10PM +0100, Albert Esteve wrote:
+> > > > Add a shmem BAR block in the vhost-user-device,
+> > > > which files can be directly mapped into.
+> > > >
+> > > > The number, shmid, and size of the VIRTIO Shared
+> > > > Memory subregions is retrieved through a
+> > > > get_shmem_config message sent by the
+> > > > vhost-user-base module on the realize step,
+> > > > after virtio_init().
+> > > >
+> > > > By default, if VHOST_USER_PROTOCOL_F_SHMEM
+> > > > feature is not supported by the backend,
+> > > > there is no cache.
+> > > >
+> > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > > ---
+> > > >  hw/virtio/vhost-user-base.c       | 47 +++++++++++++++++++++++++++=
+++--
+> > > >  hw/virtio/vhost-user-device-pci.c | 36 +++++++++++++++++++++--
+> > > >  2 files changed, 78 insertions(+), 5 deletions(-)
+> > > >
+> > > > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-bas=
+e.c
+> > > > index 2bc3423326..8d4bca98a8 100644
+> > > > --- a/hw/virtio/vhost-user-base.c
+> > > > +++ b/hw/virtio/vhost-user-base.c
+> > > > @@ -16,6 +16,7 @@
+> > > >  #include "hw/virtio/virtio-bus.h"
+> > > >  #include "hw/virtio/vhost-user-base.h"
+> > > >  #include "qemu/error-report.h"
+> > > > +#include "migration/blocker.h"
+> > > >
+> > > >  static void vub_start(VirtIODevice *vdev)
+> > > >  {
+> > > > @@ -271,7 +272,8 @@ static void vub_device_realize(DeviceState *dev=
+, Error **errp)
+> > > >  {
+> > > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > > >      VHostUserBase *vub =3D VHOST_USER_BASE(dev);
+> > > > -    int ret;
+> > > > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+> > > > +    int i, ret, nregions;
+> > > >
+> > > >      if (!vub->chardev.chr) {
+> > > >          error_setg(errp, "vhost-user-base: missing chardev");
+> > > > @@ -314,7 +316,7 @@ static void vub_device_realize(DeviceState *dev=
+, Error **errp)
+> > > >
+> > > >      /* Allocate queues */
+> > > >      vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
+> > > > -    for (int i =3D 0; i < vub->num_vqs; i++) {
+> > > > +    for (i =3D 0; i < vub->num_vqs; i++) {
+> > > >          g_ptr_array_add(vub->vqs,
+> > > >                          virtio_add_queue(vdev, vub->vq_size,
+> > > >                                           vub_handle_output));
+> > > > @@ -328,11 +330,50 @@ static void vub_device_realize(DeviceState *d=
+ev, Error **errp)
+> > > >                           VHOST_BACKEND_TYPE_USER, 0, errp);
+> > > >
+> > > >      if (ret < 0) {
+> > > > -        do_vhost_user_cleanup(vdev, vub);
+> > > > +        goto err;
+> > > > +    }
+> > > > +
+> > > > +    ret =3D vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub-=
+>vhost_dev,
+> > > > +                                                           &nregio=
+ns,
+> > > > +                                                           memory_=
+sizes,
+> > > > +                                                           errp);
+> > > > +
+> > > > +    if (ret < 0) {
+> > > > +        goto err;
+> > > > +    }
+> > > > +
+> > > > +    for (i =3D 0; i < nregions; i++) {
+> > > > +        if (memory_sizes[i]) {
+> > > > +            if (vub->vhost_dev.migration_blocker =3D=3D NULL) {
+> > > > +                error_setg(&vub->vhost_dev.migration_blocker,
+> > > > +                       "Migration disabled: devices with VIRTIO Sh=
+ared Memory "
+> > > > +                       "Regions do not support migration yet.");
+> > > > +                ret =3D migrate_add_blocker_normal(
+> > > > +                    &vub->vhost_dev.migration_blocker,
+> > > > +                    errp);
+> > > > +
+> > > > +                if (ret < 0) {
+> > > > +                    goto err;
+> > > > +                }
+> > > > +            }
+> > > > +
+> > > > +            if (memory_sizes[i] % qemu_real_host_page_size() !=3D =
+0) {
+> > > > +                error_setg(errp, "Shared memory %d size must be a =
+power of 2 "
+> > > > +                                 "no smaller than the page size", =
+i);
+> > > > +                goto err;
+> > > > +            }
+> > > > +
+> > > > +            memory_region_init(virtio_new_shmem_region(vdev)->mr,
+> > >
+> > > Does this code support non-contiguous shmids? For example, if a devic=
+e
+> > > has two Shared Memory Regions defined in its spec but the first one i=
+s
+> > > optional, then the device might have memory_sizes[0] =3D=3D 0 and
+> > > memory_sizes[1] > 0. In that case the Shared Memory Region must have
+> > > shmid 1 and not shmid 0.
 > >
-> > diff --git a/meson.build b/meson.build
-> > index 18cf9e2913b..10f4c9fd30d 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -4826,6 +4826,13 @@ summary_info +=3D {'libdw':             libdw}
-> >   if host_os =3D=3D 'freebsd'
-> >     summary_info +=3D {'libinotify-kqueue': inotify}
-> >   endif
-> > +if host_os =3D=3D 'darwin'
-> > +  summary_info +=3D {'Hypervisor support': hvf}
-> > +  summary_info +=3D {'CoreFoundation support': coref}
-> > +  summary_info +=3D {'IOKit support': iokit}
-> > +  summary_info +=3D {'ParavirtualizedGraphics support': pvg}
-> > +  summary_info +=3D {'Metal support': metal}
-> > +endif
-> I think all of these are going to be present anyway, because they're
-> mandatory (except IOKit which _is_ going to be there, and HVF which is
-> present elsewhere) and there's no version indication for Apple frameworks=
-.
-
-
-Realistically, all of these are always present on supported Darwin versions=
-.
-
-
-> However, adding pvg and metal here makes sense if:
+> > Yes, it does. That is guarded by ` if (memory_sizes[i]) {`, which only
+> > initializes the region if memory_sizes[i] > 0. The main downsize of
+> > that, is that it requires to send as many `memory_sizes` elements as
+> > the highest shmid for the device. But as it is, it is supported by
+> > this code.
 >
-> - "config PVG" is added to Kconfig.host with the corresponding
-> assignment to host_kconfig
+> shmids are not preserved when there are gaps:
 >
-> - "depends on PVG" is added to "config MAC_PVG"
+>   for (i =3D 0; i < vdev->n_shmem_regions; i++) {
+>       memory_region_add_subregion(&dev->shmembar, offset, mr);
+>       virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
+>                              offset, mr->size, i);
+>                                                ^
 >
-> - after which, host_os =3D "darwin" is not needed anymore in
-> hw/display/meson.build
+> vdev->n_shmem_regions is incremented by virtio_new_shmem_region().
+> virtio_new_shmem_region() is only called on non-empty Shared Memory
+> Regions.
 >
-> Also, it's not clear to me if PVG can also work with TCG, and therefore
-> the MMIO version can be used on x86 Macs?  If so the 'if cpu =3D
-> "aarch64"' in hw/display/meson.build seems wrong.
+> In the example I gave with empty shmid 0 and non-empty shmid 1 I think
+> we end up with vdev->n_shmem_regions =3D=3D 1. shmdid 1 is exposed to the
+> guest with shmid 0.
 
+Ah, right. I considered your example when I was doing it, but the code
+is buggy indeed. The code that I tested is mostly on the shm map API
+part, with a custom pci device.
 
-This bit I can answer.
-PVG is not in any way tied to HVF and so can be used with TCG.
-HOWEVER
-It is not cross-architecture. So, the PVG guest drivers with x86-64 macOS
-don't give useful results with the aarch64 macOS host PVG framework. (I
-suspect a mismatch in texture memory layout and perhaps some other data
-format issues - Apple's GPUs use a "swizzled" memory layout, whereas
-Intel/AMD/NVIDIA's do not.)
+As mentioned in the initial message, I will add tests for the next
+iteration. Thanks for finding this one!
 
-Additionally, the MMIO variant in particular uses the IOSurfaceMapper APIs
-(PGIOSurfaceHostDevice, PGIOSurfaceHostDeviceDescriptor,
-usingIOSurfaceMapper) which are only present in the aarch64 version of the
-host ParavirtualizedGraphics.framework.
-
-In summary, hw/display/apple-gfx-mmio.m has a hard dependency on aarch64
-*host* systems, and both apple-gfx device variants only make sense when
-host arch matches guest arch. (Unless you're a developer attempting to find
-a workaround to the incompatibility.)
-
-I'm very much not a Meson expert, so this was my best attempt at encoding
-these facts in the build system. (And nobody suggested anything better
-during review.)
-
-
-> Either way, the Kconfig file does not need "depends on AARCH64" and it
-> should have just
 >
->      depends on MAC_PVG
+> Have I missed something?
 >
-> with an "imply" somewhere in hw/arm/Kconfig.
->
-> Paolo
->
->
-Phil
+> > >
+> > > > +                               OBJECT(vdev), "vub-shm-" + i,
+> > > > +                               memory_sizes[i]);
+> > > > +        }
+> > > >      }
+> > > >
+> > > >      qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event,=
+ NULL,
+> > > >                               dev, NULL, true);
+> > > > +    return;
+> > > > +err:
+> > > > +    do_vhost_user_cleanup(vdev, vub);
+> > > >  }
+> > > >
+> > > >  static void vub_device_unrealize(DeviceState *dev)
+> > > > diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-us=
+er-device-pci.c
+> > > > index efaf55d3dd..f215cae925 100644
+> > > > --- a/hw/virtio/vhost-user-device-pci.c
+> > > > +++ b/hw/virtio/vhost-user-device-pci.c
+> > > > @@ -8,14 +8,18 @@
+> > > >   */
+> > > >
+> > > >  #include "qemu/osdep.h"
+> > > > +#include "qapi/error.h"
+> > > >  #include "hw/qdev-properties.h"
+> > > >  #include "hw/virtio/vhost-user-base.h"
+> > > >  #include "hw/virtio/virtio-pci.h"
+> > > >
+> > > > +#define VIRTIO_DEVICE_PCI_SHMEM_BAR 2
+> > > > +
+> > > >  struct VHostUserDevicePCI {
+> > > >      VirtIOPCIProxy parent_obj;
+> > > >
+> > > >      VHostUserBase vub;
+> > > > +    MemoryRegion shmembar;
+> > > >  };
+> > > >
+> > > >  #define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
+> > > > @@ -25,10 +29,38 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, =
+VHOST_USER_DEVICE_PCI)
+> > > >  static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev=
+, Error **errp)
+> > > >  {
+> > > >      VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(vpci_dev);
+> > > > -    DeviceState *vdev =3D DEVICE(&dev->vub);
+> > > > +    DeviceState *dev_state =3D DEVICE(&dev->vub);
+> > > > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);
+> > > > +    MemoryRegion *mr;
+> > > > +    uint64_t offset =3D 0, shmem_size =3D 0;
+> > > > +    int i;
+> > > >
+> > > >      vpci_dev->nvectors =3D 1;
+> > > > -    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+> > > > +    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
+> > > > +
+> > > > +    for (i =3D 0; i < vdev->n_shmem_regions; i++) {
+> > > > +        mr =3D vdev->shmem_list[i].mr;
+> > > > +        if (mr->size > UINT64_MAX - shmem_size) {
+> > > > +            error_setg(errp, "Total shared memory required overflo=
+w");
+> > > > +            return;
+> > > > +        }
+> > > > +        shmem_size =3D shmem_size + mr->size;
+> > > > +    }
+> > > > +    if (shmem_size) {
+> > > > +        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
+> > > > +                           "vhost-device-pci-shmembar", shmem_size=
+);
+> > > > +        for (i =3D 0; i < vdev->n_shmem_regions; i++) {
+> > > > +            memory_region_add_subregion(&dev->shmembar, offset, mr=
+);
+> > > > +            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHM=
+EM_BAR,
+> > > > +                                   offset, mr->size, i);
+> > > > +            offset =3D offset + mr->size;
+> > > > +        }
+> > > > +        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHM=
+EM_BAR,
+> > > > +                        PCI_BASE_ADDRESS_SPACE_MEMORY |
+> > > > +                        PCI_BASE_ADDRESS_MEM_PREFETCH |
+> > > > +                        PCI_BASE_ADDRESS_MEM_TYPE_64,
+> > > > +                        &dev->shmembar);
+> > > > +    }
+> > > >  }
+> > > >
+> > > >  static void vhost_user_device_pci_class_init(ObjectClass *klass, v=
+oid *data)
+> > > > --
+> > > > 2.48.1
+> > > >
+> >
 
---000000000000f3d96d062e6bd3dd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 17 Feb =
-2025 at 19:37, Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com">pbo=
-nzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">On 2/12/25 12:29, Philippe Mathieu-Daud=C3=A9 wrote:<br>
-&gt; Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philm=
-d@linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0meson.build | 7 +++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 7 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/meson.build b/meson.build<br>
-&gt; index 18cf9e2913b..10f4c9fd30d 100644<br>
-&gt; --- a/meson.build<br>
-&gt; +++ b/meson.build<br>
-&gt; @@ -4826,6 +4826,13 @@ summary_info +=3D {&#39;libdw&#39;:=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0libdw}<br>
-&gt;=C2=A0 =C2=A0if host_os =3D=3D &#39;freebsd&#39;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0summary_info +=3D {&#39;libinotify-kqueue&#39;: ino=
-tify}<br>
-&gt;=C2=A0 =C2=A0endif<br>
-&gt; +if host_os =3D=3D &#39;darwin&#39;<br>
-&gt; +=C2=A0 summary_info +=3D {&#39;Hypervisor support&#39;: hvf}<br>
-&gt; +=C2=A0 summary_info +=3D {&#39;CoreFoundation support&#39;: coref}<br=
->
-&gt; +=C2=A0 summary_info +=3D {&#39;IOKit support&#39;: iokit}<br>
-&gt; +=C2=A0 summary_info +=3D {&#39;ParavirtualizedGraphics support&#39;: =
-pvg}<br>
-&gt; +=C2=A0 summary_info +=3D {&#39;Metal support&#39;: metal}<br>
-&gt; +endif<br>
-I think all of these are going to be present anyway, because they&#39;re <b=
-r>
-mandatory (except IOKit which _is_ going to be there, and HVF which is <br>
-present elsewhere) and there&#39;s no version indication for Apple framewor=
-ks.</blockquote><div><br></div><div>Realistically, all of these are always =
-present on supported Darwin versions.</div><div>=C2=A0</div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">
-However, adding pvg and metal here makes sense if:<br>
-<br>
-- &quot;config PVG&quot; is added to Kconfig.host with the corresponding <b=
-r>
-assignment to host_kconfig<br>
-<br>
-- &quot;depends on PVG&quot; is added to &quot;config MAC_PVG&quot;<br>
-<br>
-- after which, host_os =3D &quot;darwin&quot; is not needed anymore in <br>
-hw/display/meson.build<br>
-<br>
-Also, it&#39;s not clear to me if PVG can also work with TCG, and therefore=
- <br>
-the MMIO version can be used on x86 Macs?=C2=A0 If so the &#39;if cpu =3D <=
-br>
-&quot;aarch64&quot;&#39; in hw/display/meson.build seems wrong.</blockquote=
-><div><br></div><div>This bit I can answer.</div><div>PVG is not in any way=
- tied to HVF and so can be used with TCG. <br></div><div>HOWEVER</div><div>=
-It is not cross-architecture. So, the PVG guest drivers with x86-64 macOS d=
-on&#39;t give useful results with the aarch64 macOS host PVG framework. (I =
-suspect a mismatch in texture memory layout and perhaps some other data for=
-mat issues - Apple&#39;s GPUs use a &quot;swizzled&quot; memory layout, whe=
-reas Intel/AMD/NVIDIA&#39;s do not.)</div><div><br></div><div>Additionally,=
- the MMIO variant in particular uses the IOSurfaceMapper APIs (PGIOSurfaceH=
-ostDevice, PGIOSurfaceHostDeviceDescriptor, usingIOSurfaceMapper) which are=
- only present in the aarch64 version of the host ParavirtualizedGraphics.fr=
-amework.</div><div><br></div><div>In summary, hw/display/apple-gfx-mmio.m h=
-as a hard dependency on aarch64 *host* systems, and both apple-gfx device v=
-ariants only make sense when host arch matches guest arch. (Unless you&#39;=
-re a developer attempting to find a workaround to the incompatibility.)</di=
-v><div><br></div><div>I&#39;m very much not a Meson expert, so this was my =
-best attempt at encoding these facts in the build system. (And nobody sugge=
-sted anything better during review.)</div><div>=C2=A0</div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">
-Either way, the Kconfig file does not need &quot;depends on AARCH64&quot; a=
-nd it <br>
-should have just<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0depends on MAC_PVG<br>
-<br>
-with an &quot;imply&quot; somewhere in hw/arm/Kconfig.<br>
-<br>
-Paolo<br>
-<br></blockquote><div><br></div><div>Phil <br></div></div></div>
-
---000000000000f3d96d062e6bd3dd--
 
