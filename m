@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0E9C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 08:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF9FC021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 08:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkIo7-0000Gr-1t; Tue, 18 Feb 2025 03:18:19 -0500
+	id 1tkIr9-0001zv-1d; Tue, 18 Feb 2025 03:21:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkIo4-0000G9-Jy; Tue, 18 Feb 2025 03:18:16 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ id 1tkIr6-0001zA-4j; Tue, 18 Feb 2025 03:21:24 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkIo1-0000f8-GK; Tue, 18 Feb 2025 03:18:16 -0500
+ id 1tkIr4-00016l-67; Tue, 18 Feb 2025 03:21:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739866694; x=1771402694;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=ta7ruJQrhzCAITHV7W8qvhvnYjlScHvFo6LkCTQJ5nc=;
- b=m4yKmxKEhaTAAbcd5oPinfaqdHBBFrO7WOzMWRFgw4IDQnybeABJRHU3
- ZHP/yFDOZXpsZ7l4xW5xe0WVoVfLdP348+q4qhK6LKnmXTANPiFWKyrRm
- sZvHKEBE2CKDOYTiHc7nNlmLFfbwDYNqtpmnhwgZ+15I6poUQ+I7JHcAp
- P+ZSZ7BJktnWoQW/FcjIxoYUqWv7P5o5n1IQP7NsROlQf34B1l28ZkfT0
- 1BIHgziU88sPgrJ8Q9s82kzO2ICxP7oTZL3RV6dcM5vz7q+FxR/iS2/d5
- FPnmlpNPjMZJUBcmVRVZEVYixtnV1hW01WO63dQyWV7TmT2QvgdFDh7wA w==;
-X-CSE-ConnectionGUID: 7qri/VGSRMC5ZPjq6K6bfA==
-X-CSE-MsgGUID: pRjQQXMWSlGrr+zEFmFl9Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51957379"
-X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="51957379"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2025 00:18:09 -0800
-X-CSE-ConnectionGUID: BYDHgN5VQAa930+H1VTMfA==
-X-CSE-MsgGUID: T4DrovEoTvq1QH/+NPKq5Q==
+ t=1739866882; x=1771402882;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=gtUfZTFBrpSiRhD1YiYX57VNWMSKg8+WuLdttZUdjTQ=;
+ b=SPUDHHdf/XGwBRy3RcFnEcSfRFZQn54pvDUcF/abUZhHpYgh6Ac9l3K9
+ etS4ymGjj6yd+U9fckYnVtrhuTQHs04/S4PAtncWa1LVUXIej3qS0cTvi
+ 9DKrFuZw4JFHUm0nLyHkhXpnBDXd/oKUVywOWXaEcsohoHadT+umFjWR6
+ pTWj/gKNGLF8uzZ6bDkxEYKmfJ8J379gCUQBcKcgrByVGvfKmQh7SoJO5
+ R7pXde4DdMNHnZp5XzkIDWn3XI0Tl4aGG3MHOVjZWvxe1sGH0qjGz+p5q
+ H5EM2mHdrnFJPmPkNvYXNXKLY/ymtM4LBS8SDNWEWQjRjiCs0HfOK2Eul w==;
+X-CSE-ConnectionGUID: uexrVhPaSsKxu5qEE5vSfg==
+X-CSE-MsgGUID: baGylXERR02qvCWdzCX/+w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="58087786"
+X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="58087786"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2025 00:21:20 -0800
+X-CSE-ConnectionGUID: 0rnF1547QgW5g8lWr6grhA==
+X-CSE-MsgGUID: BjqEu0hqQlG6jPItSV/EtQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="114521691"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 18 Feb 2025 00:18:07 -0800
+X-IronPort-AV: E=Sophos;i="6.13,295,1732608000"; d="scan'208";a="114302862"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 18 Feb 2025 00:21:19 -0800
+Date: Tue, 18 Feb 2025 16:40:53 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] rust: Prefer link_with over link_whole
-Date: Tue, 18 Feb 2025 16:37:34 +0800
-Message-Id: <20250218083734.3345966-1-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH] i386: Fix the missing Rust HPET configuration option
+Message-ID: <Z7RHlbXUQuz1gfj7@intel.com>
+References: <20250217154416.3144571-1-zhao1.liu@intel.com>
+ <e43f8169-4017-4a3a-9274-4daf9919c290@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e43f8169-4017-4a3a-9274-4daf9919c290@redhat.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -77,64 +81,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The commit fccb744f41c6 ("gdbstub: Try unlinking the unix socket before
-binding") causes the compilation of rust-qemu-api-integration to fail,
-because rust-qemu-api-integration uses link_whole which meets the
-duplicate symbol linker error.
+> The config item is already declared in rust/hw/timer/Kconfig, so it's enough
+> to do
+> 
+> diff --git b/rust/hw/timer/Kconfig a/rust/hw/timer/Kconfig
+> index afd98033503..42e421317a5 100644
+> --- b/rust/hw/timer/Kconfig
+> +++ a/rust/hw/timer/Kconfig
+> @@ -1,2 +1,3 @@
+>  config X_HPET_RUST
+>      bool
+> +    default y if PC && HAVE_RUST
+> 
+> I applied it with your commit message.
+> 
 
-Though it's not the issue of link_whole used by Rust side, there's no
-need to use link_whole.
+Ah, thanks! I misunderstood your comment before...
 
-Use link_with, which may also bring some benefits, such as faster
-linking or smaller output files.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/hw/char/pl011/meson.build | 2 +-
- rust/hw/timer/hpet/meson.build | 2 +-
- rust/qemu-api/meson.build      | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index 547cca5a96f7..4ba9089fcf8e 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -18,7 +18,7 @@ _libpl011_rs = static_library(
- )
- 
- rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
--  link_whole: [_libpl011_rs],
-+  link_with: [_libpl011_rs],
-   # Putting proc macro crates in `dependencies` is necessary for Meson to find
-   # them when compiling the root per-target static rust lib.
-   dependencies: [bilge_impl_dep, qemu_api_macros],
-diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
-index c2d7c0532ca4..ce90cc4f021a 100644
---- a/rust/hw/timer/hpet/meson.build
-+++ b/rust/hw/timer/hpet/meson.build
-@@ -10,7 +10,7 @@ _libhpet_rs = static_library(
- )
- 
- rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
--  link_whole: [_libhpet_rs],
-+  link_with: [_libhpet_rs],
-   # Putting proc macro crates in `dependencies` is necessary for Meson to find
-   # them when compiling the root per-target static rust lib.
-   dependencies: [qemu_api_macros],
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 2e9c1078b9b2..e825671b694b 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -63,7 +63,7 @@ test('rust-qemu-api-integration',
-         rust_args: ['--test'],
-         install: false,
-         dependencies: [qemu_api, qemu_api_macros],
--        link_whole: [rust_qemu_api_objs, libqemuutil]),
-+        link_with: [rust_qemu_api_objs, libqemuutil]),
-     args: [
-         '--test', '--test-threads', '1',
-         '--format', 'pretty',
--- 
-2.34.1
+Regards,
+Zhao
 
 
