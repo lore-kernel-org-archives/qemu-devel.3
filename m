@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64430C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CB9C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkPW8-0007zO-RX; Tue, 18 Feb 2025 10:28:12 -0500
+	id 1tkPWc-0008Dz-Et; Tue, 18 Feb 2025 10:28:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPW5-0007ur-Mo
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPWH-000843-AP
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPW3-00083G-KM
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:09 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPWE-00089T-9x
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739892486;
+ s=mimecast20190719; t=1739892495;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fRfKvGR+8jAFT6+AmAAHyKeK5vSHfj38tAANfksM8iE=;
- b=OHZf3w9fepxwKuskfiVeonsQlPj5CNut1+g9z9RR2SZ5uCZAWbZ/WrQ2mfA+60eqQf2sQ+
- j5dVRhVBShsPT4TCwYvDbfJduwva5M+ghvuJs2LaPZRM05pBact7KtIaaewhuZYa93HogQ
- hUTdvhu8HiIrV+B32E4Mj7/MapLi0Ss=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=KhCgi2h2ku27kRwbwRubTePo8m/jVKWP+KckeRjbJKI=;
+ b=CI2JVWKoJ03/YWjUH05P14lVM5ev98it7ay8uX/Gl1lZU0d7t458VEzFb4ehBqsJk8MU51
+ tNpqAyPfjki7UBUgRs57gDSp4PoPPXG7so0fiiEXoN3XA2NGP0vgZh7Uh0Q+fQuhvvEYQ4
+ 7yn/PWiihlR3ePvcYx7UNYYB5Xd6kjU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-gk-WQ32mP4WZrsM-vUhuTA-1; Tue,
- 18 Feb 2025 10:28:03 -0500
-X-MC-Unique: gk-WQ32mP4WZrsM-vUhuTA-1
-X-Mimecast-MFC-AGG-ID: gk-WQ32mP4WZrsM-vUhuTA_1739892482
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-4sasMI-4NA-6ntn3QB3aUQ-1; Tue,
+ 18 Feb 2025 10:28:10 -0500
+X-MC-Unique: 4sasMI-4NA-6ntn3QB3aUQ-1
+X-Mimecast-MFC-AGG-ID: 4sasMI-4NA-6ntn3QB3aUQ_1739892489
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 758C31801A17; Tue, 18 Feb 2025 15:28:01 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC14519039C2; Tue, 18 Feb 2025 15:28:09 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.187])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0F83D1800359; Tue, 18 Feb 2025 15:27:57 +0000 (UTC)
+ id B7C521800359; Tue, 18 Feb 2025 15:28:07 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 04/14] tests/functional: Convert the 32-bit ppc replay avocado
+Subject: [PATCH 07/14] tests/functional: Convert the microblaze replay avocado
  tests
-Date: Tue, 18 Feb 2025 16:27:34 +0100
-Message-ID: <20250218152744.228335-5-thuth@redhat.com>
+Date: Tue, 18 Feb 2025 16:27:37 +0100
+Message-ID: <20250218152744.228335-8-thuth@redhat.com>
 In-Reply-To: <20250218152744.228335-1-thuth@redhat.com>
 References: <20250218152744.228335-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -90,65 +90,53 @@ framework, each file is run with one specific qemu-system-* binary).
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/replay_kernel.py      | 24 --------------------
- tests/functional/meson.build        |  1 +
- tests/functional/test_ppc_replay.py | 34 +++++++++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 24 deletions(-)
- create mode 100755 tests/functional/test_ppc_replay.py
+ tests/avocado/replay_kernel.py             | 11 ---------
+ tests/functional/meson.build               |  1 +
+ tests/functional/test_microblaze_replay.py | 28 ++++++++++++++++++++++
+ 3 files changed, 29 insertions(+), 11 deletions(-)
+ create mode 100755 tests/functional/test_microblaze_replay.py
 
 diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index 412bf9e06e1..89ba6bb3e8b 100644
+index 397f7500463..b2097afc302 100644
 --- a/tests/avocado/replay_kernel.py
 +++ b/tests/avocado/replay_kernel.py
-@@ -363,27 +363,3 @@ def test_or1k_sim(self):
-                    '/qac-best-of-multiarch/download/day20.tar.xz')
+@@ -296,14 +296,3 @@ def test_m68k_mcf5208evb(self):
+                    '/qac-best-of-multiarch/download/day07.tar.xz')
          file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
-         self.do_test_advcal_2018(file_path, 'vmlinux')
+         self.do_test_advcal_2018(file_path, 'sanity-clause.elf')
 -
--    def test_ppc_g3beige(self):
+-    def test_microblaze_s3adsp1800(self):
 -        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:g3beige
+-        :avocado: tags=arch:microblaze
+-        :avocado: tags=machine:petalogix-s3adsp1800
 -        """
--        tar_hash = 'e0b872a5eb8fdc5bed19bd43ffe863900ebcedfc'
+-        tar_hash = '08bf3e3bfb6b6c7ce1e54ab65d54e189f2caf13f'
 -        tar_url = ('https://qemu-advcal.gitlab.io'
--                   '/qac-best-of-multiarch/download/day15.tar.xz')
+-                   '/qac-best-of-multiarch/download/day17.tar.xz')
 -        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        self.do_test_advcal_2018(file_path, 'invaders.elf',
--                                 args=('-M', 'graphics=off'))
--
--    def test_ppc_mac99(self):
--        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:mac99
--        """
--        tar_hash = 'e0b872a5eb8fdc5bed19bd43ffe863900ebcedfc'
--        tar_url = ('https://qemu-advcal.gitlab.io'
--                   '/qac-best-of-multiarch/download/day15.tar.xz')
--        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        self.do_test_advcal_2018(file_path, 'invaders.elf',
--                                 args=('-M', 'graphics=off'))
+-        self.do_test_advcal_2018(file_path, 'ballerina.bin')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index fec140ee1fe..15ead47769c 100644
+index e97c96d3ef4..d59ac2be9da 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -199,6 +199,7 @@ tests_ppc_system_thorough = [
-   'ppc_bamboo',
-   'ppc_mac',
-   'ppc_mpc8544ds',
-+  'ppc_replay',
-   'ppc_sam460ex',
-   'ppc_tuxrun',
-   'ppc_virtex_ml507',
-diff --git a/tests/functional/test_ppc_replay.py b/tests/functional/test_ppc_replay.py
+@@ -152,6 +152,7 @@ tests_m68k_system_thorough = [
+ ]
+ 
+ tests_microblaze_system_thorough = [
++  'microblaze_replay',
+   'microblaze_s3adsp1800'
+ ]
+ 
+diff --git a/tests/functional/test_microblaze_replay.py b/tests/functional/test_microblaze_replay.py
 new file mode 100755
-index 00000000000..8382070abd1
+index 00000000000..7484c4186f3
 --- /dev/null
-+++ b/tests/functional/test_ppc_replay.py
-@@ -0,0 +1,34 @@
++++ b/tests/functional/test_microblaze_replay.py
+@@ -0,0 +1,28 @@
 +#!/usr/bin/env python3
 +#
-+# Replay tests for ppc machines
++# Replay test that boots a Linux kernel on an microblaze machine
++# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
@@ -156,26 +144,19 @@ index 00000000000..8382070abd1
 +from replay_kernel import ReplayKernelBase
 +
 +
-+class PpcReplay(ReplayKernelBase):
++class MicroblazeReplay(ReplayKernelBase):
 +
-+    ASSET_DAY15 = Asset(
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day15.tar.xz',
-+        '03e0757c131d2959decf293a3572d3b96c5a53587165bf05ce41b2818a2bccd5')
++    ASSET_DAY17 = Asset(
++        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
++         'day17.tar.xz'),
++        '3ba7439dfbea7af4876662c97f8e1f0cdad9231fc166e4861d17042489270057')
 +
-+    def do_day15_test(self):
-+        self.require_accelerator("tcg")
-+        kernel_path = self.archive_extract(self.ASSET_DAY15,
-+                                           member='day15/invaders.elf')
++    def test_microblaze_s3adsp1800(self):
++        self.set_machine('petalogix-s3adsp1800')
++        kernel_path = self.archive_extract(self.ASSET_DAY17,
++                                           member='day17/ballerina.bin')
 +        self.run_rr(kernel_path, self.REPLAY_KERNEL_COMMAND_LINE,
-+                    'QEMU advent calendar', args=('-M', 'graphics=off'))
-+
-+    def test_g3beige(self):
-+        self.set_machine('g3beige')
-+        self.do_day15_test()
-+
-+    def test_mac99(self):
-+        self.set_machine('mac99')
-+        self.do_day15_test()
++                    'QEMU advent calendar')
 +
 +
 +if __name__ == '__main__':
