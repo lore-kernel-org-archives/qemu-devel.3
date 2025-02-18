@@ -4,90 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FA5C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B88C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkPOR-0003vT-Ij; Tue, 18 Feb 2025 10:20:15 -0500
+	id 1tkPQi-0005J8-WD; Tue, 18 Feb 2025 10:22:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tkPON-0003tp-Kn
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:20:11 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tkPQX-0005Hn-V8
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:22:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tkPOH-0006kP-Q3
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:20:11 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tkPQR-0007GR-W4
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:22:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739892002;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1739892139;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+dqiMdOqvbsj/eOfHi8v2rwXuPrIwccDTNhNy41PIso=;
- b=a8dMbvIOsEKJfGzlXhobuQDC2cbeqd/z9+flZo6xpFZ5JvRHhiXGtOF5bQGfzxivcIo5jM
- KsU2Yc/ANIQR2SF0kqtoCKoeIaUM9F/zkAZFFa75An88jiN0N7n2aiIcoQxaXq6kSzhJh8
- kFwlmpz6Kwnqqc0li0qn67cE/TqXYhM=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ot+fYgSVKyy+rAYXe+wg7VR70oe9I02rM5x2Ee3gz8M=;
+ b=cdUAWoN3C9IixDYkPjXuI6S5VB+61OJAvv4HB2bEDktAnLB3qy4CkHVWirWacuAxo+guxA
+ 0zaTgUa4ouxcZipsY714CACzXjliWKG0+pMjwKeQeW8Ebo6ijVXN0em6jhIHGfem1nJhLJ
+ oIXmdRG79utoKyTIrX7o95bJtZGAa7g=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-nUFC55zENQWe0arab8Xagw-1; Tue, 18 Feb 2025 10:20:00 -0500
-X-MC-Unique: nUFC55zENQWe0arab8Xagw-1
-X-Mimecast-MFC-AGG-ID: nUFC55zENQWe0arab8Xagw_1739891999
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-3d2a939f02fso1402905ab.3
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:20:00 -0800 (PST)
+ us-mta-352-qi9b2W7cPbKSCwLCPk47Fw-1; Tue, 18 Feb 2025 10:22:17 -0500
+X-MC-Unique: qi9b2W7cPbKSCwLCPk47Fw-1
+X-Mimecast-MFC-AGG-ID: qi9b2W7cPbKSCwLCPk47Fw_1739892137
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f4e6e004fso1659286f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:22:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739891999; x=1740496799;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+dqiMdOqvbsj/eOfHi8v2rwXuPrIwccDTNhNy41PIso=;
- b=AOIhwgBDCyrdz9B/tmVQJuC+vvVfUQU3eprsr1fayHAh4Ss8YbnJ8S417JkDQ1+lO5
- qmEMcrXYK9Y1DHwQOzmhv/cYGXdggT4E+MncYFOy7kl4RhAoMe+efJBXq0BM/KhpJV76
- fir5JLM2n0YMoldrgpewMCww7PBP2EdqLQFvdlVl97nnj69CTFzHGqXWnDCsJAKSeKV6
- t++TsaFt11h5StKjFhVG7GahyEyW8tsoWgSMmuG8b4kCgEC5IpoQYQ+tcaEUB32Rgqex
- xGLJS5v0j9H8nOAEHjPcmYXbPzWyWF/IRAw1qAGgtjWo+Zk3FODQD6unaCGYesaek1uH
- D82A==
-X-Gm-Message-State: AOJu0Yw/BMhAwRZhSmk1DqNUJTLqXK2nuijO2+awkrmTFKSUyI5nTBEG
- aqiD97uLfnKeBZgnC+KWNsxGNSclxbigIrqnOhjri2ETv33kyTgmVrjhEEXAj2nsFuxrXCUDOl2
- 0rVJuJkMt5lDRAQEvAbBYzwReJlYZhnIEoB0LMzNsCa+WQlxmbHI7
-X-Gm-Gg: ASbGncsa8w7bGt/jMOrYo+CHlN94yHyOMt2szr6kpzVsxZXUWVMiNKe6LWgMmvBc7Qg
- qNttAci4YDBvnvd5h+eZbH/BpV+vA/9XbZZbUWI8mT/+84hMvj7uM3G4Kg1hxpAj/oqn+kgNTNC
- 3nvDimbtxn5JB+SIngpSCsJyk3lttHiyGEJhK09ckYr4HXQ3MEyHnDSM3t9IOENQ2PxcMAaPKA6
- 5pGKmkjdamxtO+WOpFFJI0H9/m2WzuUVIqJkJo/iVurQc5zZ7BVHNoVsxprwM4b3hNwU3esClqQ
- U/0rdGQ9
-X-Received: by 2002:a05:6602:6408:b0:81f:86e1:5a84 with SMTP id
- ca18e2360f4ac-8557a0d2a4fmr347170539f.2.1739891999348; 
- Tue, 18 Feb 2025 07:19:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEn8piJZLv4ChhuHi0r7wRBBPSJ8gdo2Ehs/gGoBHjLCs46anv9hcG0tAIPs3dxzOc8FuEG2w==
-X-Received: by 2002:a05:6602:6408:b0:81f:86e1:5a84 with SMTP id
- ca18e2360f4ac-8557a0d2a4fmr347168139f.2.1739891998742; 
- Tue, 18 Feb 2025 07:19:58 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4ed282b1066sm2632438173.101.2025.02.18.07.19.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Feb 2025 07:19:57 -0800 (PST)
-Date: Tue, 18 Feb 2025 08:19:55 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, tomitamoeko@gmail.com, corvin.koehne@gmail.com,
- Kirti Wankhede <kwankhede@nvidia.com>, Joao Martins
- <joao.m.martins@oracle.com>, Tony Krowiak <akrowiak@linux.ibm.com>, Eric
- Farman <farman@linux.ibm.com>, Eric Auger <eric.auger@redhat.com>
-Subject: Re: [PATCH v4] vfio: Add property documentation
-Message-ID: <20250218081955.50c733fb.alex.williamson@redhat.com>
-In-Reply-To: <20250217173455.449983-1-clg@redhat.com>
-References: <20250217173455.449983-1-clg@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1739892136; x=1740496936;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ot+fYgSVKyy+rAYXe+wg7VR70oe9I02rM5x2Ee3gz8M=;
+ b=r/mb9gc+kfnV1oUfUsQ64EOZZYnTFzV88O3CBnSJ30LNUl1gM/FMMF0FcTRHJ3BYO3
+ nbNkZDAkoRHGK7TX1e8A69xhHOpKX9encUYoMX1Yv52L30MikgGCJE36rhMPxVf4Sehg
+ n2YlFCuKVPAL5K2LvSU8NvpzYLw6YXNC38sadoz1lAzYltiBDWjvQgdepMbxkGf6FdsG
+ D2BfKfls+PdhcpINJ2u856WAaCEnwMhDT4NOFLJfLdLtQbIijpCLzGi3Tm/NBHlYSU6i
+ aiQLrgcw9KWnj3UgoRvJNpGoX/U9uJxaU5ThEXY7+A2bmbsVKTSwEB/buUJ+LsmMsSjG
+ 4EOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhAag14A+mUKVwaMlN3ZL88n6nj3QUaspEowWgkrsCD+ztlSfAm9JAcXMC6GzeId/NFGcOUMPO3AsY@nongnu.org
+X-Gm-Message-State: AOJu0YxoBDawbci8/dy81OPvfPgZdgT6wIzwjHwN1zzYQEhLJU7E4iAF
+ Z/6sqKSM+hSHDMX+QzOkcN5+8KtENLKJViRk9EwQbKmCpoQ1YopTWDXxja8ZrMJy0eRGepkIgv5
+ yQhc5Hf3AAbQ6xc5gOyInTW7ZBvfGrcBB0KxYBQSkfKIOccn2Ozgn
+X-Gm-Gg: ASbGncu/ycTpFtTG5irScm7bDI0ssmj69c5rvYIAPGvamDb4e1QDAEQAq940FlyoJcA
+ 5wWiRZp5kWbeKNzem6Tq2w4DU/rGm58VxMig8pMjNVPeXvS+RnQIjYT5ObG5DrvO0TifSH4219t
+ iIUgEAOpXMDZwUQNAzL+HmzyQodrUrilbb06e9+mdSBwdYG7qBcsCUT2zs+NIlr+MyAsXtB8BPh
+ nBalbteoaL1/Akzboc8+4i7bR8ec1g851yOkZ7owKV7unOLCHNDeug3fhF3hTOx0gd15qjMnbVw
+ /GUEscJ/cLE3lgm7pkn90I/KK+Ezk7Gg5aHtxDa+3sZVm/McKBAc
+X-Received: by 2002:a05:6000:2a7:b0:38d:e190:b713 with SMTP id
+ ffacd0b85a97d-38f33f4acbdmr9880404f8f.37.1739892136443; 
+ Tue, 18 Feb 2025 07:22:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEMnTLi7/TR+3t7v4Awn2y8jepWE1m8Q0WLeR24iE4GrUJAg7Jv+YiQ6wp1cS+aqYQDUDQPzQ==
+X-Received: by 2002:a05:6000:2a7:b0:38d:e190:b713 with SMTP id
+ ffacd0b85a97d-38f33f4acbdmr9880373f8f.37.1739892136005; 
+ Tue, 18 Feb 2025 07:22:16 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258f5fb6sm15062981f8f.44.2025.02.18.07.22.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Feb 2025 07:22:15 -0800 (PST)
+Message-ID: <6030fd76-e7f1-47ca-9eb7-8cafe48bd639@redhat.com>
+Date: Tue, 18 Feb 2025 16:22:12 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/15] arm/cpu: Add sysreg definitions in cpu-sysregs.h
+Content-Language: en-US
+To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+References: <20250207110248.1580465-1-cohuck@redhat.com>
+ <20250207110248.1580465-2-cohuck@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250207110248.1580465-2-cohuck@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -95,7 +105,8 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,350 +119,246 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Feb 2025 18:34:55 +0100
-C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+Hi Connie,
 
-> Investigate the git history to uncover when and why the VFIO
-> properties were introduced and update the models. This is mostly
-> targeting vfio-pci device, since vfio-platform, vfio-ap and vfio-ccw
-> devices are simpler.
->=20
-> Sort the properties based on the QEMU version in which they were
-> introduced.
->=20
-> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
-> Cc: Eric Farman <farman@linux.ibm.com>
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+
+On 2/7/25 12:02 PM, Cornelia Huck wrote:
+> From: Eric Auger <eric.auger@redhat.com>
+>
+> This new header contains macros that define aarch64 registers.
+> In a subsequent patch, this will be replaced by a more exhaustive
+> version that will be generated from linux arch/arm64/tools/sysreg
+> file. Those macros are sufficient to migrate the storage of those
+> ID regs from named fields in isar struct to an array cell.
+>
+> [CH: reworked to use different structures]
+> [CH: moved accessors from the patches first using them to here,
+>      dropped interaction with writable registers, which will happen
+>      later]
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 > ---
->=20
->  Should we introduce documentation for properties like the kernel has
->  in Documentation/ABI/*/sysfs-* ?
->=20
->  Changes in v4:
->=20
->  - Latest improvements from Alex=20
->=20
->  Changes in v3:
->=20
->  - Re-organized the vfio-pci properties based on the QEMU version in
->    which they were introduced
->  - Added property labels
->  - Improved description as suggested by Alex, Tomita and Corvin
->=20
->  Changes in v2:
->=20
->  - Fixed version numbers
->  - Fixed #ifdef in vfio/ccw.c
->  - Addressed vfio-pci-nohotplug
->  - Organize the vfio-pci properties in topics
->=20
->  hw/vfio/ap.c       |   9 ++++
->  hw/vfio/ccw.c      |  15 ++++++
->  hw/vfio/pci.c      | 125 +++++++++++++++++++++++++++++++++++++++++++++
->  hw/vfio/platform.c |  24 +++++++++
->  4 files changed, 173 insertions(+)
->=20
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 30b08ad375d5ecae886c5000fbaa364799fe76d0..c7ab4ff57ada0ed0e5a76f52b=
-5a05c86ca4fe0b4 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -257,6 +257,15 @@ static void vfio_ap_class_init(ObjectClass *klass, v=
-oid *data)
->      dc->hotpluggable =3D true;
->      device_class_set_legacy_reset(dc, vfio_ap_reset);
->      dc->bus_type =3D TYPE_AP_BUS;
+>  target/arm/cpu-sysregs.h | 131 +++++++++++++++++++++++++++++++++++++++
+>  target/arm/cpu.h         |  42 +++++++++++++
+>  2 files changed, 173 insertions(+)
+>  create mode 100644 target/arm/cpu-sysregs.h
+>
+> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+> new file mode 100644
+> index 000000000000..de09ebae91a5
+> --- /dev/null
+> +++ b/target/arm/cpu-sysregs.h
+> @@ -0,0 +1,131 @@
+> +#ifndef ARM_CPU_SYSREGS_H
+> +#define ARM_CPU_SYSREGS_H
 > +
-> +    object_class_property_set_description(klass, /* 3.1 */
-> +                                          "sysfsdev",
-> +                                          "Host sysfs path of assigned d=
-evice");
-> +#ifdef CONFIG_IOMMUFD
-> +    object_class_property_set_description(klass, /* 9.0 */
-> +                                          "iommufd",
-> +                                          "Set host IOMMUFD backend devi=
-ce");
-> +#endif
->  }
-> =20
->  static const TypeInfo vfio_ap_info =3D {
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 6bb8882d3f2b965eb47cc9e65d7e74bbdb5e7685..e5e0d9e3e7ed124f242b3eda3=
-45bc973e418a64c 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -709,6 +709,21 @@ static void vfio_ccw_class_init(ObjectClass *klass, =
-void *data)
->      cdc->handle_halt =3D vfio_ccw_handle_halt;
->      cdc->handle_clear =3D vfio_ccw_handle_clear;
->      cdc->handle_store =3D vfio_ccw_handle_store;
+> +/*
+> + * Following is similar to the coprocessor regs encodings, but with an argument
+> + * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
+> + * that actually are the same as the equivalent KVM_REG_ values.
+> + */
+> +#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
+> +    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
+> +     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
+> +     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
+> +     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
+> +     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
 > +
-> +    object_class_property_set_description(klass, /* 2.10 */
-> +                                          "sysfsdev",
-> +                                          "Host sysfs path of assigned d=
-evice");
-> +    object_class_property_set_description(klass, /* 3.0 */
-> +                                          "force-orb-pfch",
-> +                                          "Force unlimited prefetch");
-> +#ifdef CONFIG_IOMMUFD
-> +    object_class_property_set_description(klass, /* 9.0 */
-> +                                          "iommufd",
-> +                                          "Set host IOMMUFD backend devi=
-ce");
-> +#endif
-> +    object_class_property_set_description(klass, /* 9.2 */
-> +                                          "loadparm",
-> +                                          "Define which devices that can=
- be used for booting");
->  }
-> =20
->  static const TypeInfo vfio_ccw_info =3D {
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 89d900e9cf0ce364f7c813d81b0317bb3b3e80ca..4f92b50b133060c9199079a0a=
-b620793ecdac0ee 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3433,6 +3433,122 @@ static void vfio_pci_dev_class_init(ObjectClass *=
-klass, void *data)
->      pdc->exit =3D vfio_exitfn;
->      pdc->config_read =3D vfio_pci_read_config;
->      pdc->config_write =3D vfio_pci_write_config;
+> +typedef enum ARMIDRegisterIdx {
+> +    ID_AA64PFR0_EL1_IDX,
+> +    ID_AA64PFR1_EL1_IDX,
+> +    ID_AA64SMFR0_EL1_IDX,
+> +    ID_AA64DFR0_EL1_IDX,
+> +    ID_AA64DFR1_EL1_IDX,
+> +    ID_AA64ISAR0_EL1_IDX,
+> +    ID_AA64ISAR1_EL1_IDX,
+> +    ID_AA64ISAR2_EL1_IDX,
+> +    ID_AA64MMFR0_EL1_IDX,
+> +    ID_AA64MMFR1_EL1_IDX,
+> +    ID_AA64MMFR2_EL1_IDX,
+> +    ID_AA64MMFR3_EL1_IDX,
+> +    ID_PFR0_EL1_IDX,
+> +    ID_PFR1_EL1_IDX,
+> +    ID_DFR0_EL1_IDX,
+> +    ID_MMFR0_EL1_IDX,
+> +    ID_MMFR1_EL1_IDX,
+> +    ID_MMFR2_EL1_IDX,
+> +    ID_MMFR3_EL1_IDX,
+> +    ID_ISAR0_EL1_IDX,
+> +    ID_ISAR1_EL1_IDX,
+> +    ID_ISAR2_EL1_IDX,
+> +    ID_ISAR3_EL1_IDX,
+> +    ID_ISAR4_EL1_IDX,
+> +    ID_ISAR5_EL1_IDX,
+> +    ID_MMFR4_EL1_IDX,
+> +    ID_ISAR6_EL1_IDX,
+> +    MVFR0_EL1_IDX,
+> +    MVFR1_EL1_IDX,
+> +    MVFR2_EL1_IDX,
+> +    ID_PFR2_EL1_IDX,
+> +    ID_DFR1_EL1_IDX,
+> +    ID_MMFR5_EL1_IDX,
+> +    ID_AA64ZFR0_EL1_IDX,
+> +    CTR_EL0_IDX,
+> +    NUM_ID_IDX,
+> +} ARMIDRegisterIdx;
 > +
-> +    object_class_property_set_description(klass, /* 1.3 */
-> +                                          "host",
-> +                                          "Host PCI address [domain:]<bu=
-s:slot.function> of assigned device");
-> +    object_class_property_set_description(klass, /* 1.3 */
-> +                                          "x-intx-mmap-timeout-ms",
-> +                                          "When EOI is not provided by K=
-VM/QEMU, wait time "
-> +                                          "(milliseconds) to re-enable d=
-evice direct access "
-> +                                          "after INTx (DEBUG)");
-> +    object_class_property_set_description(klass, /* 1.5 */
-> +                                          "x-vga",
-> +                                          "Expose VGA address spaces for=
- device");
-> +    object_class_property_set_description(klass, /* 2.3 */
-> +                                          "x-req",
-> +                                          "Disable device request notifi=
-cation support (DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
-> +                                          "x-no-mmap",
-> +                                          "Disable MMAP for device. Allo=
-ws to trace MMIO "
-> +                                          "accesses (DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-no-kvm-intx",
-> +                                          "Disable direct VFIO->KVM INTx=
- injection. Allows to "
-> +                                          "trace INTx interrupts (DEBUG)=
-");
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-no-kvm-msi",
-> +                                          "Disable direct VFIO->KVM MSI =
-injection. Allows to "
-> +                                          "trace MSI interrupts (DEBUG)"=
-);
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-no-kvm-msix",
-> +                                          "Disable direct VFIO->KVM MSIx=
- injection. Allows to "
-> +                                          "trace MSIx interrupts (DEBUG)=
-");
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-pci-vendor-id",
-> +                                          "Override PCI Vendor ID with p=
-rovided value (DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-pci-device-id",
-> +                                          "Override PCI device ID with p=
-rovided value (DEBUG)");
+> +typedef enum ARMSysRegs {
+> +    SYS_ID_AA64PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 0),
+> +    SYS_ID_AA64PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 1),
+> +    SYS_ID_AA64SMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 5),
+> +    SYS_ID_AA64DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 0),
+> +    SYS_ID_AA64DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 5, 1),
+> +    SYS_ID_AA64ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 0),
+> +    SYS_ID_AA64ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 1),
+> +    SYS_ID_AA64ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 6, 2),
+> +    SYS_ID_AA64MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 0),
+> +    SYS_ID_AA64MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 1),
+> +    SYS_ID_AA64MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 2),
+> +    SYS_ID_AA64MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 7, 3),
+> +    SYS_ID_PFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 0),
+> +    SYS_ID_PFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 1),
+> +    SYS_ID_DFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 2),
+> +    SYS_ID_MMFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 4),
+> +    SYS_ID_MMFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 5),
+> +    SYS_ID_MMFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 6),
+> +    SYS_ID_MMFR3_EL1 = ENCODE_ID_REG(3, 0, 0, 1, 7),
+> +    SYS_ID_ISAR0_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 0),
+> +    SYS_ID_ISAR1_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 1),
+> +    SYS_ID_ISAR2_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 2),
+> +    SYS_ID_ISAR3_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 3),
+> +    SYS_ID_ISAR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 4),
+> +    SYS_ID_ISAR5_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 5),
+> +    SYS_ID_MMFR4_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 6),
+> +    SYS_ID_ISAR6_EL1 = ENCODE_ID_REG(3, 0, 0, 2, 7),
+> +    SYS_MVFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 0),
+> +    SYS_MVFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 1),
+> +    SYS_MVFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 2),
+> +    SYS_ID_PFR2_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 4),
+> +    SYS_ID_DFR1_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 5),
+> +    SYS_ID_MMFR5_EL1 = ENCODE_ID_REG(3, 0, 0, 3, 6),
+> +    SYS_ID_AA64ZFR0_EL1 = ENCODE_ID_REG(3, 0, 0, 4, 4),
+> +    SYS_CTR_EL0 = ENCODE_ID_REG(3, 3, 0, 0, 1),
+> +} ARMSysRegs;
+> +
+> +static const uint32_t id_register_sysreg[NUM_ID_IDX] = {
+> +    [ID_AA64PFR0_EL1_IDX] = SYS_ID_AA64PFR0_EL1,
+> +    [ID_AA64PFR1_EL1_IDX] = SYS_ID_AA64PFR1_EL1,
+> +    [ID_AA64SMFR0_EL1_IDX] = SYS_ID_AA64SMFR0_EL1,
+> +    [ID_AA64DFR0_EL1_IDX] = SYS_ID_AA64DFR0_EL1,
+> +    [ID_AA64DFR1_EL1_IDX] = SYS_ID_AA64DFR1_EL1,
+> +    [ID_AA64ISAR0_EL1_IDX] = SYS_ID_AA64ISAR0_EL1,
+> +    [ID_AA64ISAR1_EL1_IDX] = SYS_ID_AA64ISAR1_EL1,
+> +    [ID_AA64ISAR2_EL1_IDX] = SYS_ID_AA64ISAR2_EL1,
+> +    [ID_AA64MMFR0_EL1_IDX] = SYS_ID_AA64MMFR0_EL1,
+> +    [ID_AA64MMFR1_EL1_IDX] = SYS_ID_AA64MMFR1_EL1,
+> +    [ID_AA64MMFR2_EL1_IDX] = SYS_ID_AA64MMFR2_EL1,
+> +    [ID_AA64MMFR3_EL1_IDX] = SYS_ID_AA64MMFR3_EL1,
+> +    [ID_PFR0_EL1_IDX] = SYS_ID_PFR0_EL1,
+> +    [ID_PFR1_EL1_IDX] = SYS_ID_PFR1_EL1,
+> +    [ID_DFR0_EL1_IDX] = SYS_ID_DFR0_EL1,
+> +    [ID_MMFR0_EL1_IDX] = SYS_ID_MMFR0_EL1,
+> +    [ID_MMFR1_EL1_IDX] = SYS_ID_MMFR1_EL1,
+> +    [ID_MMFR2_EL1_IDX] = SYS_ID_MMFR2_EL1,
+> +    [ID_MMFR3_EL1_IDX] = SYS_ID_MMFR3_EL1,
+> +    [ID_ISAR0_EL1_IDX] = SYS_ID_ISAR0_EL1,
+> +    [ID_ISAR1_EL1_IDX] = SYS_ID_ISAR1_EL1,
+> +    [ID_ISAR2_EL1_IDX] = SYS_ID_ISAR2_EL1,
+> +    [ID_ISAR3_EL1_IDX] = SYS_ID_ISAR3_EL1,
+> +    [ID_ISAR4_EL1_IDX] = SYS_ID_ISAR4_EL1,
+> +    [ID_ISAR5_EL1_IDX] = SYS_ID_ISAR5_EL1,
+> +    [ID_MMFR4_EL1_IDX] = SYS_ID_MMFR4_EL1,
+> +    [ID_ISAR6_EL1_IDX] = SYS_ID_ISAR6_EL1,
+> +    [MVFR0_EL1_IDX] = SYS_MVFR0_EL1,
+> +    [MVFR1_EL1_IDX] = SYS_MVFR1_EL1,
+> +    [MVFR2_EL1_IDX] = SYS_MVFR2_EL1,
+> +    [ID_PFR2_EL1_IDX] = SYS_ID_PFR2_EL1,
+> +    [ID_DFR1_EL1_IDX] = SYS_ID_DFR1_EL1,
+> +    [ID_MMFR5_EL1_IDX] = SYS_ID_MMFR5_EL1,
+> +    [ID_AA64ZFR0_EL1_IDX] = SYS_ID_AA64ZFR0_EL1,
+> +    [CTR_EL0_IDX] = SYS_CTR_EL0,
+> +};
+> +
+> +#endif /* ARM_CPU_SYSREGS_H */
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 2213c277348d..4bbce34e268d 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -30,6 +30,7 @@
+>  #include "qapi/qapi-types-common.h"
+>  #include "target/arm/multiprocessing.h"
+>  #include "target/arm/gtimer.h"
+> +#include "target/arm/cpu-sysregs.h"
+>  
+>  #ifdef TARGET_AARCH64
+>  #define KVM_HAVE_MCE_INJECTION 1
+> @@ -832,6 +833,46 @@ typedef struct {
+>      uint32_t map, init, supported;
+>  } ARMVQMap;
+>  
+> +static inline uint64_t _get_idreg(uint64_t *idregs, uint32_t index)
+> +{
+> +    return idregs[index];
+> +}
+> +
+> +static inline void _set_idreg(uint64_t *idregs, uint32_t index, uint64_t value)
+> +{
+> +    idregs[index] = value;
+> +}
+> +
+> +/* REG is ID_XXX */
+nit: we have MVFRx too so maybe we shall rather say that REG is the
 
-nit for consistency, s/device/Device/  Otherwise:
+ARMIDRegisterIdx litteral without  _EL1_IDX suffix or just remove the comment
 
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-
-
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-pci-sub-vendor-id",
-> +                                          "Override PCI Subsystem Vendor=
- ID with provided value "
-> +                                          "(DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.5 */
-> +                                          "x-pci-sub-device-id",
-> +                                          "Override PCI Subsystem Device=
- ID with provided value "
-> +                                          "(DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.6 */
-> +                                          "sysfsdev",
-> +                                          "Host sysfs path of assigned d=
-evice");
-> +    object_class_property_set_description(klass, /* 2.7 */
-> +                                          "x-igd-opregion",
-> +                                          "Expose host IGD OpRegion to g=
-uest");
-> +    object_class_property_set_description(klass, /* 2.7 (See c4c45e943e5=
-1) */
-> +                                          "x-igd-gms",
-> +                                          "Override IGD data stolen memo=
-ry size (32MiB units)");
-> +    object_class_property_set_description(klass, /* 2.11 */
-> +                                          "x-nv-gpudirect-clique",
-> +                                          "Add NVIDIA GPUDirect capabili=
-ty indicating P2P DMA "
-> +                                          "clique for device [0-15]");
-> +    object_class_property_set_description(klass, /* 2.12 */
-> +                                          "x-no-geforce-quirks",
-> +                                          "Disable GeForce quirks (for N=
-VIDIA Quadro/GRID/Tesla). "
-> +                                          "Improves performance");
-> +    object_class_property_set_description(klass, /* 2.12 */
-> +                                          "display",
-> +                                          "Enable display support for de=
-vice, ex. vGPU");
-> +    object_class_property_set_description(klass, /* 2.12 */
-> +                                          "x-msix-relocation",
-> +                                          "Specify MSI-X MMIO relocation=
- to the end of specified "
-> +                                          "existing BAR or new BAR to av=
-oid virtualization overhead "
-> +                                          "due to adjacent device regist=
-ers");
-> +    object_class_property_set_description(klass, /* 3.0 */
-> +                                          "x-no-kvm-ioeventfd",
-> +                                          "Disable registration of ioeve=
-ntfds with KVM (DEBUG)");
-> +    object_class_property_set_description(klass, /* 3.0 */
-> +                                          "x-no-vfio-ioeventfd",
-> +                                          "Disable linking of KVM ioeven=
-tfds to VFIO ioeventfds "
-> +                                          "(DEBUG)");
-> +    object_class_property_set_description(klass, /* 3.1 */
-> +                                          "x-balloon-allowed",
-> +                                          "Override allowing ballooning =
-with device (DEBUG, DANGER)");
-> +    object_class_property_set_description(klass, /* 3.2 */
-> +                                          "xres",
-> +                                          "Set X display resolution the =
-vGPU should use");
-> +    object_class_property_set_description(klass, /* 3.2 */
-> +                                          "yres",
-> +                                          "Set Y display resolution the =
-vGPU should use");
-> +    object_class_property_set_description(klass, /* 5.2 */
-> +                                          "x-pre-copy-dirty-page-trackin=
-g",
-> +                                          "Disable dirty pages tracking =
-during iterative phase "
-> +                                          "(DEBUG)");
-> +    object_class_property_set_description(klass, /* 5.2, 8.0 non-experim=
-etal */
-> +                                          "enable-migration",
-> +                                          "Enale device migration. Also =
-requires a host VFIO PCI "
-> +                                          "variant or mdev driver with m=
-igration support enabled");
-> +    object_class_property_set_description(klass, /* 8.1 */
-> +                                          "vf-token",
-> +                                          "Specify UUID VF token. Requir=
-ed for VF when PF is owned "
-> +                                          "by another VFIO driver");
-> +#ifdef CONFIG_IOMMUFD
-> +    object_class_property_set_description(klass, /* 9.0 */
-> +                                          "iommufd",
-> +                                          "Set host IOMMUFD backend devi=
-ce");
-> +#endif
-> +    object_class_property_set_description(klass, /* 9.1 */
-> +                                          "x-device-dirty-page-tracking",
-> +                                          "Disable device dirty page tra=
-cking and use "
-> +                                          "container-based dirty page tr=
-acking (DEBUG)");
-> +    object_class_property_set_description(klass, /* 9.1 */
-> +                                          "migration-events",
-> +                                          "Emit VFIO migration QAPI even=
-t when a VFIO device "
-> +                                          "changes its migration state. =
-For management applications");
-> +    object_class_property_set_description(klass, /* 9.1 */
-> +                                          "skip-vsc-check",
-> +                                          "Skip config space check for V=
-endor Specific Capability. "
-> +                                          "Setting to false will enforce=
- strict checking of VSC content "
-> +                                          "(DEBUG)");
->  }
-> =20
->  static const TypeInfo vfio_pci_dev_info =3D {
-> @@ -3461,6 +3577,15 @@ static void vfio_pci_nohotplug_dev_class_init(Obje=
-ctClass *klass, void *data)
-> =20
->      device_class_set_props(dc, vfio_pci_dev_nohotplug_properties);
->      dc->hotpluggable =3D false;
+ 
+> +#define FIELD_DP64_IDREG(ARRAY, REG, FIELD, VALUE)              \
+> +{                                                             \
+> +    uint64_t regval = _get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX);   \
+> +        regval = FIELD_DP64(regval, REG, FIELD, VALUE);                 \
+> +    _set_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX, regval);             \
+> +}
 > +
-> +    object_class_property_set_description(klass, /* 3.1 */
-> +                                          "ramfb",
-> +                                          "Enable ramfb to provide pre-b=
-oot graphics for devices "
-> +                                          "enabling display option");
-> +    object_class_property_set_description(klass, /* 8.2 */
-> +                                          "x-ramfb-migrate",
-> +                                          "Override default migration su=
-pport for ramfb support "
-> +                                          "(DEBUG)");
->  }
-> =20
->  static const TypeInfo vfio_pci_nohotplug_dev_info =3D {
-> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-> index f491f4dc9543c2ea3a7af4e51ee82fbc7ee6e4bb..d9faaa73959ad36aa3a835b87=
-964ab940928bd9f 100644
-> --- a/hw/vfio/platform.c
-> +++ b/hw/vfio/platform.c
-> @@ -672,6 +672,30 @@ static void vfio_platform_class_init(ObjectClass *kl=
-ass, void *data)
->      dc->desc =3D "VFIO-based platform device assignment";
->      sbc->connect_irq_notifier =3D vfio_start_irqfd_injection;
->      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +#define FIELD_DP32_IDREG(ARRAY, REG, FIELD, VALUE)              \
+> +{                                                             \
+> +uint64_t regval = _get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX);       \
+> +regval = FIELD_DP32(regval, REG, FIELD, VALUE);               \
+> +_set_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX, regval);                 \
+> +}
 > +
-> +    object_class_property_set_description(klass, /* 2.4 */
-> +                                          "host",
-> +                                          "Host device name of assigned =
-device");
-> +    object_class_property_set_description(klass, /* 2.4 and 2.5 */
-> +                                          "x-no-mmap",
-> +                                          "Disable MMAP for device. Allo=
-ws to trace MMIO "
-> +                                          "accesses (DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.4 */
-> +                                          "mmap-timeout-ms",
-> +                                          "When EOI is not provided by K=
-VM/QEMU, wait time "
-> +                                          "(milliseconds) to re-enable d=
-evice direct access "
-> +                                          "after level interrupt (DEBUG)=
-");
-> +    object_class_property_set_description(klass, /* 2.4 */
-> +                                          "x-irqfd",
-> +                                          "Allow disabling irqfd support=
- (DEBUG)");
-> +    object_class_property_set_description(klass, /* 2.6 */
-> +                                          "sysfsdev",
-> +                                          "Host sysfs path of assigned d=
-evice");
-> +#ifdef CONFIG_IOMMUFD
-> +    object_class_property_set_description(klass, /* 9.0 */
-> +                                          "iommufd",
-> +                                          "Set host IOMMUFD backend devi=
-ce");
-> +#endif
->  }
-> =20
->  static const TypeInfo vfio_platform_dev_info =3D {
+> +#define FIELD_EX64_IDREG(ARRAY, REG, FIELD)                     \
+> +FIELD_EX64(_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX), REG, FIELD)  \
+> +
+> +#define FIELD_EX32_IDREG(ARRAY, REG, FIELD)                     \
+> +FIELD_EX32(_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX), REG, FIELD)  \
+> +
+> +#define FIELD_SEX64_IDREG(ARRAY, REG, FIELD)                     \
+> +FIELD_SEX64(_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX), REG, FIELD)  \
+> +
+> +#define SET_IDREG(ARRAY, REG, VALUE)                            \
+> +_set_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX, VALUE)
+> +
+> +#define GET_IDREG(ARRAY, REG)                                   \
+> +_get_idreg((uint64_t *)ARRAY, REG ## _EL1_IDX)
+> +
+>  /**
+>   * ARMCPU:
+>   * @env: #CPUARMState
+> @@ -1040,6 +1081,7 @@ struct ArchCPU {
+>          uint64_t id_aa64zfr0;
+>          uint64_t id_aa64smfr0;
+>          uint64_t reset_pmcr_el0;
+> +        uint64_t idregs[NUM_ID_IDX];
+>      } isar;
+>      uint64_t midr;
+>      uint32_t revidr;
+
+Thanks
+
+Eric
 
 
