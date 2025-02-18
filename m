@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589E2C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F550C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkPXm-0001Fr-T5; Tue, 18 Feb 2025 10:29:55 -0500
+	id 1tkPWX-0008A8-0m; Tue, 18 Feb 2025 10:28:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPWO-00086M-KH
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:32 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPW8-0007zi-R4
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPWM-0008EX-DM
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tkPW6-00084z-Pv
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:28:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739892504;
+ s=mimecast20190719; t=1739892489;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PyOj8aVm/MZIW0oCN+aSGjzlP3/vwj69dj2qqQBOens=;
- b=AaECiAnkKVP6eoRxMSAwhDs0fDbRek5XzW+gcc2y3LwGocV7uMkFhGiDGb/pZPXEg5G/5I
- o5APPltZ2/J7CsAW/QmtnltOxQy9uDVl9oOZsZGTl71iOnlgVohRCQ6NJ7B+yqrzwLs772
- zLZq/w2i2kFjts/dSt3Go5gtJ4VPktg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8WWfpUza2m71OYz3Tf7HaZtZOjFUiR8iLdnQmx+UkEU=;
+ b=ZqbC7kTpBEyA291GIAbHggXMcmvPldIRV8cI9nBbuDC0IWqi2okC4xU40d8X3MYG4FuOwW
+ ze2aLczcrzb94Sk2/8pQFWJT/ZHra6NyPLRtrflEmu17HcN0sTvAwph/y161y8ZxtGQwLn
+ UIEiqLmnwO0mBJWzOxxCGjZs35tX39o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-h-Tu-n2IP4eOsNQmCBDUTA-1; Tue,
- 18 Feb 2025 10:28:21 -0500
-X-MC-Unique: h-Tu-n2IP4eOsNQmCBDUTA-1
-X-Mimecast-MFC-AGG-ID: h-Tu-n2IP4eOsNQmCBDUTA_1739892500
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-1Ou-qWzLPTejm5qi2tb1sw-1; Tue,
+ 18 Feb 2025 10:28:08 -0500
+X-MC-Unique: 1Ou-qWzLPTejm5qi2tb1sw-1
+X-Mimecast-MFC-AGG-ID: 1Ou-qWzLPTejm5qi2tb1sw_1739892487
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 634621800989; Tue, 18 Feb 2025 15:28:20 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A5DD180056F; Tue, 18 Feb 2025 15:28:07 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.187])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5AD57180035F; Tue, 18 Feb 2025 15:28:18 +0000 (UTC)
+ id 27BAA1800359; Tue, 18 Feb 2025 15:28:04 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 11/14] tests/functional: Convert the s390x replay avocado tests
-Date: Tue, 18 Feb 2025 16:27:41 +0100
-Message-ID: <20250218152744.228335-12-thuth@redhat.com>
+Subject: [PATCH 06/14] tests/functional: Convert the ppc64 replay avocado tests
+Date: Tue, 18 Feb 2025 16:27:36 +0100
+Message-ID: <20250218152744.228335-7-thuth@redhat.com>
 In-Reply-To: <20250218152744.228335-1-thuth@redhat.com>
 References: <20250218152744.228335-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,61 +84,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Put the tests into a separate file now (in the functional framework,
-each file is run with one specific qemu-system-* binary).
+Put the tests into a separate file now (since in the functional
+framework, each file is run with one specific qemu-system-* binary).
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/replay_kernel.py        | 15 --------------
+ tests/avocado/replay_kernel.py        | 45 ------------------------
  tests/functional/meson.build          |  1 +
- tests/functional/test_s390x_replay.py | 28 +++++++++++++++++++++++++++
- 3 files changed, 29 insertions(+), 15 deletions(-)
- create mode 100755 tests/functional/test_s390x_replay.py
+ tests/functional/test_ppc64_replay.py | 49 +++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 45 deletions(-)
+ create mode 100755 tests/functional/test_ppc64_replay.py
 
 diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index 4347d202742..49543604613 100644
+index ef72b1622e4..397f7500463 100644
 --- a/tests/avocado/replay_kernel.py
 +++ b/tests/avocado/replay_kernel.py
-@@ -161,18 +161,3 @@ def test_aarch64_virt(self):
-         console_pattern = 'VFS: Cannot open root device'
+@@ -242,39 +242,6 @@ def test_alpha_clipper(self):
+         self.run_rr(uncompressed_kernel, kernel_command_line, console_pattern, shift=9,
+             args=('-nodefaults', ))
  
-         self.run_rr(kernel_path, kernel_command_line, console_pattern)
--
--    def test_s390x_s390_ccw_virtio(self):
+-    def test_ppc64_pseries(self):
 -        """
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
+-        :avocado: tags=arch:ppc64
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=accel:tcg
 -        """
 -        kernel_url = ('https://archives.fedoraproject.org/pub/archive'
--                      '/fedora-secondary/releases/29/Everything/s390x/os/images'
--                      '/kernel.img')
--        kernel_hash = 'e8e8439103ef8053418ef062644ffd46a7919313'
+-                      '/fedora-secondary/releases/29/Everything/ppc64le/os'
+-                      '/ppc/ppc64/vmlinuz')
+-        kernel_hash = '3fe04abfc852b66653b8c3c897a59a689270bc77'
 -        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
 -
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=sclp0'
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=9)
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=hvc0'
+-        console_pattern = 'VFS: Cannot open root device'
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern)
+-
+-    def test_ppc64_powernv(self):
+-        """
+-        :avocado: tags=arch:ppc64
+-        :avocado: tags=machine:powernv
+-        :avocado: tags=accel:tcg
+-        """
+-        kernel_url = ('https://archives.fedoraproject.org/pub/archive'
+-                      '/fedora-secondary/releases/29/Everything/ppc64le/os'
+-                      '/ppc/ppc64/vmlinuz')
+-        kernel_hash = '3fe04abfc852b66653b8c3c897a59a689270bc77'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + \
+-                              'console=tty0 console=hvc0'
+-        console_pattern = 'VFS: Cannot open root device'
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern)
+-
+     def test_m68k_q800(self):
+         """
+         :avocado: tags=arch:m68k
+@@ -340,15 +307,3 @@ def test_microblaze_s3adsp1800(self):
+                    '/qac-best-of-multiarch/download/day17.tar.xz')
+         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+         self.do_test_advcal_2018(file_path, 'ballerina.bin')
+-
+-    def test_ppc64_e500(self):
+-        """
+-        :avocado: tags=arch:ppc64
+-        :avocado: tags=machine:ppce500
+-        :avocado: tags=cpu:e5500
+-        """
+-        tar_hash = '6951d86d644b302898da2fd701739c9406527fe1'
+-        tar_url = ('https://qemu-advcal.gitlab.io'
+-                   '/qac-best-of-multiarch/download/day19.tar.xz')
+-        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        self.do_test_advcal_2018(file_path, 'uImage')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 884b5aabc50..24cd0746b6e 100644
+index 1c9fe67f037..e97c96d3ef4 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -249,6 +249,7 @@ tests_rx_system_thorough = [
- 
- tests_s390x_system_thorough = [
-   's390x_ccw_virtio',
-+  's390x_replay',
-   's390x_topology',
-   's390x_tuxrun',
- ]
-diff --git a/tests/functional/test_s390x_replay.py b/tests/functional/test_s390x_replay.py
+@@ -215,6 +215,7 @@ tests_ppc64_system_thorough = [
+   'ppc64_hv',
+   'ppc64_powernv',
+   'ppc64_pseries',
++  'ppc64_replay',
+   'ppc64_reverse_debugging',
+   'ppc64_tuxrun',
+   'ppc64_mac99',
+diff --git a/tests/functional/test_ppc64_replay.py b/tests/functional/test_ppc64_replay.py
 new file mode 100755
-index 00000000000..33b5843adae
+index 00000000000..48ce1b7f1e1
 --- /dev/null
-+++ b/tests/functional/test_s390x_replay.py
-@@ -0,0 +1,28 @@
++++ b/tests/functional/test_ppc64_replay.py
+@@ -0,0 +1,49 @@
 +#!/usr/bin/env python3
 +#
-+# Replay test that boots a Linux kernel on an s390x machine
++# Replay test that boots a Linux kernel on ppc64 machines
 +# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
@@ -147,19 +184,40 @@ index 00000000000..33b5843adae
 +from replay_kernel import ReplayKernelBase
 +
 +
-+class S390xReplay(ReplayKernelBase):
++class Ppc64Replay(ReplayKernelBase):
++
++    ASSET_DAY19 = Asset(
++        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
++         'day19.tar.xz'),
++        '20b1bb5a8488c664defbb5d283addc91a05335a936c63b3f5ff7eee74b725755')
++
++    def test_ppc64_e500(self):
++        self.set_machine('ppce500')
++        self.cpu = 'e5500'
++        kernel_path = self.archive_extract(self.ASSET_DAY19,
++                                           member='day19/uImage')
++        self.run_rr(kernel_path, self.REPLAY_KERNEL_COMMAND_LINE,
++                    'QEMU advent calendar')
 +
 +    ASSET_KERNEL = Asset(
 +        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-+         'releases/29/Everything/s390x/os/images/kernel.img'),
-+        'dace03b8ae0c9f670ebb9b8d6ce5eb24b62987f346de8f1300a439bb00bb99e7')
++         'releases/29/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
++        '383c2f5c23bc0d9d32680c3924d3fd7ee25cc5ef97091ac1aa5e1d853422fc5f')
 +
-+    def test_s390_ccw_virtio(self):
-+        self.set_machine('s390-ccw-virtio')
++    def test_ppc64_pseries(self):
++        self.set_machine('pseries')
 +        kernel_path = self.ASSET_KERNEL.fetch()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=sclp0'
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=9)
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=hvc0'
++        console_pattern = 'VFS: Cannot open root device'
++        self.run_rr(kernel_path, kernel_command_line, console_pattern)
++
++    def test_ppc64_powernv(self):
++        self.set_machine('powernv')
++        kernel_path = self.ASSET_KERNEL.fetch()
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + \
++                              'console=tty0 console=hvc0'
++        console_pattern = 'VFS: Cannot open root device'
++        self.run_rr(kernel_path, kernel_command_line, console_pattern)
 +
 +
 +if __name__ == '__main__':
