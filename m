@@ -4,101 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A54C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D47C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 15:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkPjQ-0006pN-RO; Tue, 18 Feb 2025 10:41:56 -0500
+	id 1tkPnL-00086W-PI; Tue, 18 Feb 2025 10:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkPjN-0006oX-B6
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:41:54 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkPjK-0002bf-Qm
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:41:52 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43996e95114so5133185e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:41:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739893308; x=1740498108; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=rftezDm0PXXAzXVMv5QO3Kp9pkZEb9I5IaKVIiUl1+w=;
- b=PCpEU+822rOiuTQGRwY3qSB5Qa1LjDmn/5aOgKv22/aha3g8VqxwBcK7hNJiZmm3nu
- U19O1DnsXVcr5TwlgraO2YCKJwLdGoCePX1XnJCe9atL+1gjPw0Xw788AXUDpYMyWbcZ
- dF8Wm0G0+n34yptvDr4Xtwn5IvF0fFeChfv3QdyMTQFlC0YyLz1hP7OPgZJAP0hqpMkx
- qkG64w84Gx52sc2hxYwYTSYc2HRm8x+AihFq+Yezp3zUOTNOAsdqniqZISazEUOaynV1
- awII52P0B4g0wjXdhWusN/sHYKNtGE1Af0rMdFwWKPn0plCWo1C2Z5YFz/cJzNspo9Z2
- 8GMg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tkPnG-00086B-IZ
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:45:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tkPnE-0003RC-Fx
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 10:45:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739893551;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FNQ2XNfElEwbmT0QaEglmXQcqeqTJVVES9TIY7DE+lo=;
+ b=AodyBtQpcH9iHpAZyvS9PXvB5CAgLNATt2si4rkKWPaR8EBQ8tuToWvYu1mOGKZ1sxgyW7
+ Mfk1YvNjndOt0h18/FPwcdeh/oY8BBiv2FDuVyF6XNr/Q8dWK206sE6wPyFQJAijj7iK5c
+ 4QZKqjZuwcusLa+2raZwlShNQqAqa4g=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-500--lpOtgbiODqMmwitsXxrhA-1; Tue, 18 Feb 2025 10:45:49 -0500
+X-MC-Unique: -lpOtgbiODqMmwitsXxrhA-1
+X-Mimecast-MFC-AGG-ID: -lpOtgbiODqMmwitsXxrhA_1739893548
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43935e09897so47186595e9.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 07:45:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739893308; x=1740498108;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rftezDm0PXXAzXVMv5QO3Kp9pkZEb9I5IaKVIiUl1+w=;
- b=CNJmF8I0x1MhS3xHVh2eHubYW+FwgZrE/O4w4+ir/j8ArvgOcduFIsZCecHN/OrPzB
- jLPfka5IQ+ziKx5OCrmsDWS2ykKh5rPF5pgZECf0GBUksTsB0N54YGWt1q9rta3XFR5H
- GYQU1lKVMVMnzXrh0a1Qz5gnE7APM8cJk1YAsIS0UUiSTyJYk3I3BDjNZfllu/UvJFYW
- HdRf3fT1SPtGPvDV4x+wgxkhiRZkxzhAMC6siastwe1A/xIVdDbKmE4QpL+VcR2Fx9mE
- WL+Yov22FtgTGuvxMSL8w6je4oDCrd0eezNWqms2JtBQvhpuoMHVV/3ssMc/As1OhZj7
- /oQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYNvogbGwr86xCiQKj0ecb4nG32O7IeL+SkMmFoklNL0Ihp8bXpJWmULRqbnlHu8NuKjkN39AFFCPv@nongnu.org
-X-Gm-Message-State: AOJu0YyEO7asE6qf/auuFJoai2C0NQL+2vb5Ha1hlNh25e+ZTW2y1zPl
- BtVku2+wcyx8KIgTb7oUJmWGSPXq8hEajHGMLH76JLvV0cSnl77IOtqaNVi4cMw=
-X-Gm-Gg: ASbGnct7GMerHcgU6MgRbpawpJ94uwmcoksEyO437ggBuZY56lt757FDj3t8CV2TQeW
- pFNZS/Rhs3kLi8/U0lC5uc1jzPE9l6S/2JYL2GlY/YPE3iAZZYi7UpRrHSP/hffDWwCkfWaUm8a
- LcM0AxZ19IkR+MUbxfEFomJECl3stzOqRY+XynZ0QhlVcrLDMQ04YlVekUEvdeGREySi9y7HhGk
- jMFdhD5jMxT8C6Fxmd/HeHz0PeOsFSDz3k3iUkK0LDs8zgtDjkzJi7pUMG6Qve8zw/M3VM7xd81
- tNV2RynJhkapxzX2taJUlKaT2VTXD/4sL3PBt7yIBkv3dFcH6vMBVZWQ2uA=
-X-Google-Smtp-Source: AGHT+IF/8ntl9BcDGAADsSp5RSNssX1/saVLS8T4n7eb/VsqHM+B23KD2LwLr97A98aYw1YdA9oepQ==
-X-Received: by 2002:a05:600c:1ca8:b0:439:8a44:1e65 with SMTP id
- 5b1f17b1804b1-4398a441f98mr62729005e9.7.1739893308542; 
- Tue, 18 Feb 2025 07:41:48 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4398cb4de78sm41912265e9.24.2025.02.18.07.41.46
+ d=1e100.net; s=20230601; t=1739893548; x=1740498348;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FNQ2XNfElEwbmT0QaEglmXQcqeqTJVVES9TIY7DE+lo=;
+ b=N4yKCwjpRK735Jzi3j6VMYe5c1yb6b1GXA+HjG4+TMhygRXiyj5YVNyIgRWnZKlUV7
+ 2tig30a/+KcUVdvN1BAk8MCqsVKsrgIvZTbuNXQ5k7tk73R5asKV4Cmi35E8Ve2VFEdo
+ Oy+lBSi0oT9eo5knEXppsowAK/8YltiSM+3v7ck9VAexD190q7haOqHJpDISQhbCnkcq
+ lAbPJONp8KXLDNa6YAf3sF9Q1mNMAT6izWCD2HHKb6vByPf5sXvHM3zZChaWMy0Kpm0a
+ nvr8aq6sJbyfAVT2yzxEzpBMrWR/7tCuXabOKrZmsqv6HrolsFjTtAQm0YHBAwkb7iA6
+ FTzQ==
+X-Gm-Message-State: AOJu0YwX3T8vXB5++CLYQS3IzMwn4isLkHc4hkvUMnNgy9ugJAErPR1S
+ nKA1CSX3PTYlYJQGopFtDZYAycGo+Uy86cE6SqHqK6int6EEP+ic+7We5iXs64VYzbEyKVuC5NJ
+ WmzPc+Ko3QCmlCaOdueudaGoPVIye6CXm9GHVm7L+ms688BOieULtc9aNXil8fz6k3bSvtmOEcX
+ +8nQv73M+D2fDeHXTFnpuz1see4tu8DCjg0V8=
+X-Gm-Gg: ASbGnctsHPhIdKB6LlAryDUA465GDe+aJo2/5qzCd6X5zg2F9kUaofXDKpcUSkrLpWa
+ OTeTxA1+am9njO93fm6aCc3sd9d141LKUjsnYBeMaj5etnT8ZOVegk39bc/46TOUEo69vIXlUrv
+ wRZdUx4dxaDFo9ZPkbPjR3GaDl3Wm+HxRoGakqNmykKCpFTXrZJsCf12zSgM4l3hbNvBKV3znA9
+ UD+mA+uS0Y3bAfBipstGT02CtpCa/Gj1bQjoQ+pIJmGIoo476zWI9Xyj9y90gxk4wraM6EuhEgK
+ ycYiQMVLVpiIiGybs4TOQxAQs2ucUjkzhrI6UVERPDZVJLFKvXm09PigD2wLGp65ej3OMpQAul7
+ 2CzFSnv+xf6W07hLkcOai8LwJHwgZSHUo
+X-Received: by 2002:a05:600c:3ba6:b0:439:9543:9488 with SMTP id
+ 5b1f17b1804b1-43999dd1f1dmr754485e9.21.1739893548019; 
+ Tue, 18 Feb 2025 07:45:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvbFP0cCWvaSCkEL8TmSq85dKzYOYadFymi8tzlDJ16RKbaKy/yogQaJdVMmQ84Epvw5xB2g==
+X-Received: by 2002:a05:600c:3ba6:b0:439:9543:9488 with SMTP id
+ 5b1f17b1804b1-43999dd1f1dmr754195e9.21.1739893547508; 
+ Tue, 18 Feb 2025 07:45:47 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70d:fb00:d3ed:5f44:1b2d:12af?
+ (p200300cbc70dfb00d3ed5f441b2d12af.dip0.t-ipconnect.de.
+ [2003:cb:c70d:fb00:d3ed:5f44:1b2d:12af])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259d65bcsm15418407f8f.65.2025.02.18.07.45.45
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 07:41:48 -0800 (PST)
-Message-ID: <5580a9e6-c1bc-44c8-9edc-d98ba4985123@linaro.org>
-Date: Tue, 18 Feb 2025 16:41:45 +0100
+ Tue, 18 Feb 2025 07:45:46 -0800 (PST)
+Message-ID: <9ce7fbe6-7a74-4749-8de6-c601c386214a@redhat.com>
+Date: Tue, 18 Feb 2025 16:45:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/9] meson: Disallow 64-bit on 32-bit Xen emulation
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Andrew Cooper <andrew.cooper3@citrix.com>, qemu-devel@nongnu.org,
- David Woodhouse <dwmw2@infradead.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
- Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
-Cc: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250208205725.568631-1-richard.henderson@linaro.org>
- <20250208205725.568631-4-richard.henderson@linaro.org>
- <aeaf0f19-0f14-4a02-9c51-09521e7c75e1@linaro.org>
- <9b22d0ff-5902-4ec7-ae54-e974482ebd87@citrix.com>
- <3fb630f4-ebd2-4f14-a1fe-4e84786a1400@linaro.org>
+Subject: Re: [PATCH] physmem: replace assertion with error
+To: qemu-devel@nongnu.org
+References: <20250217120812.396522-1-pbonzini@redhat.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-In-Reply-To: <3fb630f4-ebd2-4f14-a1fe-4e84786a1400@linaro.org>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250217120812.396522-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,160 +157,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/2/25 16:25, Philippe Mathieu-Daudé wrote:
-> +Vikram
+On 17.02.25 13:08, Paolo Bonzini wrote:
+> It is possible to start QEMU with a confidential-guest-support object
+> even in TCG mode.  While there is already a check in qemu_machine_creation_done:
 > 
-> On 18/2/25 15:10, Andrew Cooper wrote:
->> On 18/02/2025 11:20 am, Philippe Mathieu-Daudé wrote:
->>> Hi,
->>>
->>> Adding Xen community.
->>>
->>> On 8/2/25 21:57, Richard Henderson wrote:
->>>> Require a 64-bit host binary to spawn a 64-bit guest.
->>>>
->>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>>> ---
->>>>    meson.build | 9 +++++++--
->>>>    1 file changed, 7 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/meson.build b/meson.build
->>>> index 1af8aeb194..911955cfa8 100644
->>>> --- a/meson.build
->>>> +++ b/meson.build
->>>> @@ -304,9 +304,14 @@ else
->>>>    endif
->>>>    accelerator_targets = { 'CONFIG_KVM': kvm_targets }
->>>>    -if cpu in ['x86', 'x86_64']
->>>> +if cpu == 'x86'
->>>> +  xen_targets = ['i386-softmmu']
->>>> +elif cpu == 'x86_64'
->>>>      xen_targets = ['i386-softmmu', 'x86_64-softmmu']
->>>> -elif cpu in ['arm', 'aarch64']
->>>> +elif cpu == 'arm'
->>>> +  # i386 emulator provides xenpv machine type for multiple
->>>> architectures
->>>> +  xen_targets = ['i386-softmmu']
->>>
->>> Is actually someone *testing* this config? I'm having hard time building
->>> it, so am very suspicious about how it runs, and start to wonder if I'm
->>> not just wasting my time (as could be our CI).
->>
->> It was intentional.  I believe it was Stefano (CC'd) who introduced it.
+>      if (machine->cgs && !machine->cgs->ready) {
+>          error_setg(errp, "accelerator does not support confidential guest %s",
+>                     object_get_typename(OBJECT(machine->cgs)));
+>          exit(1);
+>      }
 > 
-> In the introduction commit, "ARM targets" is used, so apparently both
-> 32/64bit were picked deliberately:
+> the creation of RAMBlocks happens earlier, in qemu_init_board(), if
+> the command line does not override the default memory backend with
+> -M memdev.  Then the RAMBlock will try to use guest_memfd (because
+> machine_require_guest_memfd correctly returns true; at least correctly
+> according to the current implementation) and trigger the assertion
+> failure for kvm_enabled().  This happend with a command line as
+> simple as the following:
 > 
+>      qemu-system-x86_64 -m 512 -nographic -object sev-snp-guest,reduced-phys-bits=48,id=sev0 \
+>         -M q35,kernel-irqchip=split,confidential-guest-support=sev0
+>      qemu-system-x86_64: ../system/physmem.c:1871: ram_block_add: Assertion `kvm_enabled()' failed.
+> 
+> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
-> commit aaea616d54317b8a0154adf52303a51da2d8d56f
-> Author: Vikram Garhwal <vikram.garhwal@amd.com>
-> Date:   Wed Jun 14 17:03:38 2023 -0700
+>   system/physmem.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
 > 
->      meson.build: enable xenpv machine build for ARM
-> 
->      Add CONFIG_XEN for aarch64 device to support build for ARM targets.
-> 
->      Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
->      Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
->      Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> diff --git a/meson.build b/meson.build
-> index 481865bfa97..cfa98e9e25f 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -136,7 +136,7 @@ endif
->   if cpu in ['x86', 'x86_64', 'arm', 'aarch64']
->     # i386 emulator provides xenpv machine type for multiple architectures
->     accelerator_targets += {
-> -    'CONFIG_XEN': ['i386-softmmu', 'x86_64-softmmu'],
-> +    'CONFIG_XEN': ['i386-softmmu', 'x86_64-softmmu', 'aarch64-softmmu'],
->     }
->   endif
->   if cpu in ['x86', 'x86_64']
-> ---
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 67c9db9daad..1ddf9fb10d0 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1882,7 +1882,11 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>       if (new_block->flags & RAM_GUEST_MEMFD) {
+>           int ret;
+>   
+> -        assert(kvm_enabled());
+> +        if (!kvm_enabled()) {
+> +            error_setg(errp, "cannot set up private guest memory for %s: KVM required",
+> +                       object_get_typename(OBJECT(current_machine->cgs)));
+> +            goto out_free;
+> +        }
+>           assert(new_block->guest_memfd < 0);
+>   
+>           ret = ram_block_discard_require(true);
 
-Hmm wrong commit apparently, but the history isn't clear. See:
 
--- >8 --
-commit 3b6b75506de44c5070639943c30a0ad5850f5d02
-Author: Paolo Bonzini <pbonzini@redhat.com>
-Date:   Mon Sep 17 11:59:41 2012 +0200
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-     configure: factor out list of supported Xen/KVM/HAX targets
+-- 
+Cheers,
 
-     This will be useful when the functions are called, early in the 
-configure
-     process, to filter out targets that do not support hardware 
-acceleration.
-
-     Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-diff --git a/configure b/configure
-...
-+supported_xen_target() {
-+    test "$xen" = "yes" || return 1
-+    glob "$1" "*-softmmu" || return 1
-+    case "${1%-softmmu}:$cpu" in
-+        arm:arm | aarch64:aarch64 | \
-+        i386:i386 | i386:x86_64 | x86_64:i386 | x86_64:x86_64)
-+            return 0
-+        ;;
-+    esac
-+    return 1
-+}
-+
-  # default parameters
-  source_path=$(dirname "$0")
-  cpu=""
-@@ -6178,46 +6222,22 @@ echo "TARGET_ABI_DIR=$TARGET_ABI_DIR" >> 
-$config_target_mak
-  if [ "$HOST_VARIANT_DIR" != "" ]; then
-      echo "HOST_VARIANT_DIR=$HOST_VARIANT_DIR" >> $config_target_mak
-  fi
--case "$target_name" in
--  i386|x86_64)
--    if test "$xen" = "yes" -a "$target_softmmu" = "yes" ; then
--      echo "CONFIG_XEN=y" >> $config_target_mak
--      if test "$xen_pci_passthrough" = yes; then
-+
-+if supported_xen_target $target; then
-+    echo "CONFIG_XEN=y" >> $config_target_mak
-+    if test "$xen_pci_passthrough" = yes; then
-          echo "CONFIG_XEN_PCI_PASSTHROUGH=y" >> "$config_target_mak"
--      fi
-      fi
--    ;;
--  *)
----
-
-Paolo, Alex, was this intentional?
-
->> Xen uses qemu-system-i386 everywhere because qemu-system-x86_64 doesn't
->> make compatible VMs.  I'm not sure why; I suspect it's bugs in the Xen
->> machine types, but I don't know QEMU well enough to be sure.
->>
->> Another thing that (at least, was) tied to qemu-system-i386 was using
->> Qemu as a XenBlk <-> QCOW adapter, at which point it wasn't even really
->> a system emulator, just a paravirtual disk implementation.
->>
->> This is, AIUI, what ARM wants with the xenpv machine.  If there's a
->> better way to do this, please do say.
-> 
-> No, I concur.
-> 
->> Looking through Xen's CI, I can't see any of the ARM builds building
->> QEMU at all.  I think it's quite possible it's not tested any more.
-> 
-> We only cross-build, see our cross-arm64-xen-only job:
-> https://gitlab.com/qemu-project/qemu/-/jobs/9165958873
-> 
-> Note, if it is not clear, the problem I have is to test Xen on
-> 32-bit ARM hosts; I don't have any problem with 64-bit ones.
-> 
-> Regards,
-> 
-> Phil.
+David / dhildenb
 
 
