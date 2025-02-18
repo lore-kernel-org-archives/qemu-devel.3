@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26CE3C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 20:10:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C3AC021AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 20:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkTud-0006EQ-0K; Tue, 18 Feb 2025 15:09:47 -0500
+	id 1tkTwR-00073F-13; Tue, 18 Feb 2025 15:11:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkTub-0006Ce-6R
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:09:45 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkTwP-00072k-CD
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:11:37 -0500
 Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkTuZ-0002NN-3f
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:09:44 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkTwN-0002uz-Pv
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 15:11:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739909376; bh=b8O/9LNZnwiHfCC4oEqC0GG4kJY5GHEVp1JOkMCwDeY=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=r4EckUBDhRJfn/0oiZN5ATEigYUXWpG9UL0TFwewBrHQuNTp10n+dXu3LtRK2n9Q6
- z52RBSNL7NVWmCMwuvyGlX8nMXZW5q+U9BbCuM4rvMieswbvKBgSQMB93RCSN1bKYJ
- Xy/fn2Hok4QyEk8cgcCbb6WDFOSdMuxGMwvDocRlLgQic1SqORsgJ4iTYdIkFBQIxy
- MaUVfq39CdBX71u0GqFk3eUdqpYVsFW2YzDEtpRtav4IBWHIVSQpWy5SH8b6c0Uv/o
- nhPYj4wuqe8KwWSsXPKWzvCKZplHmp2ZUUdlvhESJeOSd7palDUjY034PLNRWL+b61
- eRrgcmDmnR2cA==
+ t=1739909493; bh=VuMr9nHQ6DS0Qlja1BtkaDckoizJdxsPWlTJdUOr7t8=;
+ h=From:To:Subject:In-Reply-To:References:Date:From;
+ b=AfOOB16O5ayjPXTPZaMAe+U24rffcOWM9CJCpIK3IF/Dx91Y1TEwyQJ/0nhdgGqwu
+ qn+FkKZ5JS5D3IUOZziFSwKah4ETAAGVWYzwSXo0pIR8tdUz0hPpJz3WIZX8hc3/Vj
+ o0UcgvNSMeWflfg/xq0MO6e78VpLwHOXpc/zHjpDACdP/SHkirtC41KWHMn9CL7IhC
+ UG0ki/t6UFrDW7lJYabBZ3QxHBHZwj++WhqQl2hU8B6lGDJqdPR873gfIWx0jOU8oP
+ J68ofs1Rqpg1MDOqkLQ/TtSvLztdJNWprE3+g8L9UvxemOByo2czbGcWudTaanE/EK
+ d0eU8R54prwYA==
 Received: from localhost (localhost [127.0.0.1])
- by elaine.keithp.com (Postfix) with ESMTP id 8EDD03F20C61;
- Tue, 18 Feb 2025 12:09:36 -0800 (PST)
+ by elaine.keithp.com (Postfix) with ESMTP id D41F33F20D3C;
+ Tue, 18 Feb 2025 12:11:33 -0800 (PST)
 X-Virus-Scanned: Debian amavis at keithp.com
 Received: from elaine.keithp.com ([127.0.0.1])
  by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id 4z5zNqjt6o-Q; Tue, 18 Feb 2025 12:09:35 -0800 (PST)
+ id h91KEQ-AJmN4; Tue, 18 Feb 2025 12:11:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739909375; bh=b8O/9LNZnwiHfCC4oEqC0GG4kJY5GHEVp1JOkMCwDeY=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=WvlDXZMclgkL9G9G6c4ZGEfr73pKTFgp9kWlCCJpc6Bf4YWn8qWlLaGx2mPOFJGTY
- RGbS78eoLye5I/mcZsuSEHwneT/+2LnThlH2eA+vGTSxhOadkQrSoNiAogl3dzF0jg
- LcQS5/ZLnJhxMdZmjnmImWXhGVRKj/rxGJNbXbkSWbFKfgPGtAXRi9SpuZvDAL8TEd
- TMKRaI2JxWG5vdNUKuajgdwhinmeYNpA5T+xd1yHfvojmpI1B007hCxyxS7KQeLLuw
- Qzc/t1mgFbQkFek9Dv6Y0CS1PmVqwE6qHcdRbN1XdlHpn6O0cnhtO+Y8BbVBeAFkNr
- Qkbys8XaFBwzQ==
+ t=1739909492; bh=VuMr9nHQ6DS0Qlja1BtkaDckoizJdxsPWlTJdUOr7t8=;
+ h=From:To:Subject:In-Reply-To:References:Date:From;
+ b=QnSCIPVwY9lY5fdkCBgnMg7xGRLipLfskVa9eQxXFGd8gDelRurprPDaKbrMO1WzP
+ P6PnBrVuKG3vXaix4YTBvthfpLkpA5F/eFRsvLFU5faY7kUxdIU2O4sFC5rtZnH1BM
+ 3KaxWAkeEy0fQgKcMIvcpUppzTeSlwCnzMBuixBLLCipRyZgPllBlwLDBLbJLOfT3m
+ EVIjQvUcZcRUsw1nNQ7kpkF+c5PtVR6Zp328e7K74CPw6UinMosCR4Xfg8nzBIjKFj
+ EvhVQe3UGl4sVFuyHFc1NnSGHwOG+fbTDf+yvLpxD5UN6ohfoZ5aYqXeUdkmeUa2MC
+ dedXJLDtRS8PA==
 Received: from keithp.com (koto.keithp.com [192.168.11.2])
- by elaine.keithp.com (Postfix) with ESMTPSA id 923BD3F22241;
- Tue, 18 Feb 2025 12:09:35 -0800 (PST)
+ by elaine.keithp.com (Postfix) with ESMTPSA id 98E0B3F20C61;
+ Tue, 18 Feb 2025 12:11:32 -0800 (PST)
 Received: by keithp.com (Postfix, from userid 1000)
- id 62E011E60096; Tue, 18 Feb 2025 12:09:35 -0800 (PST)
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/5] target/rx: Reset the CPU at qemu reset time
-In-Reply-To: <CAFEAcA-Z13YZaHWfdp0xnW2tQL88OtxwF0nTdSoj2eJkULSbFw@mail.gmail.com>
+ id 86FAC1E60096; Tue, 18 Feb 2025 12:11:32 -0800 (PST)
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 4/5] target/rx: Load reset vector from memory after
+ first run
+In-Reply-To: <f7c1e671-f114-40a6-a02b-575bde2de4c4@linaro.org>
 References: <20250215021654.1786679-1-keithp@keithp.com>
- <20250215021654.1786679-4-keithp@keithp.com>
- <CAFEAcA-Z13YZaHWfdp0xnW2tQL88OtxwF0nTdSoj2eJkULSbFw@mail.gmail.com>
-Date: Tue, 18 Feb 2025 12:09:35 -0800
-Message-ID: <87v7t7ypz4.fsf@keithp.com>
+ <20250215021654.1786679-5-keithp@keithp.com>
+ <f7c1e671-f114-40a6-a02b-575bde2de4c4@linaro.org>
+Date: Tue, 18 Feb 2025 12:11:32 -0800
+Message-ID: <87seobypvv.fsf@keithp.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
  micalg=pgp-sha256; protocol="application/pgp-signature"
@@ -90,27 +91,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Feb 2025 09:53:58 +0000
+From: Richard Henderson <richard.henderson@linaro.org>
+Date: Sat, 15 Feb 2025 10:24:05 -0800
 
-> Reset of devices not plugged into buses (of which CPUs
-> are the most common kind) is a mess. But having them
-> call qemu_register_reset() themselves in their own
-> realize method isn't the usual workaround. Instead we
-> get the board code to do it (usually in the same function
-> that handles arranging to sort out the in-QEMU boot
-> loader, see eg hw/arm/boot.c).
+> By delaying the load of the reset vector to the reset_exit phase,
+> you can always load from rom.
 
-Oh, thanks so much! I was confused about how to select the right
-starting PC value -- when loading a kernel image, the code wanted to
-set the PC to the kernel entry point, but otherwise it wanted to use the
-reset vector. That "worked" because the kernel loading code set the PC
-after the reset vector was loaded from ROM.
-
-With your advice, I've made the hardware layer register the reset
-handler which just calls cpu_reset and then sets the initial PC value,
-either from the loaded kernel or using the reset vector contents. So
-much cleaner and "obviously" doing what we want.
+I'm not sure how -- the ROM image is discarded when it gets loaded into
+read-only memory. If loaded to read-write memory, I bet it would
+stay around.
 
 =2D-=20
 =2Dkeith
@@ -120,19 +109,19 @@ Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAme06P8ACgkQ2yIaaQAA
-ABH+zA//TcUZR//Y24L7JBfOvoXeEpOVw3bMExkMbegM/JGC2CkYS0bcHUTvp2gX
-LCE2GMfC1plkMGgLSTBVGM8EBPp3VzEidNfFA5MBJeKjLVyQJQrA23hePo9qWRER
-3uwuubnWqcylKUnLERceknryd982k3O/SfxNXjbCGcIwx+us+eSfjZ4ZH652odm9
-udZQrwr/Kgz9Vt5z3aVMp6TzkBPQCCkJTXBQ+LRnOrVl/fBcve1bJACBpc87ucNF
-D/5YlgoXqJypAk+YSoeaN3V758CMl4E6db09FIhnoN/jqX3yWyK2zIGDg2whfDIK
-TFd1C03slB4MW8dT60ftFITBwMVdcsY3l8AJBM38VH5RHS7JRRqA17dEYaxO5R/H
-6Gmoy9AKRmUk1084SAgTcQ/eDfMLtIP/N/XGqpLsIVgh34j6bhOCAhyhUrf8/IV7
-+XPMaAAODfIEOi9yZwoUSdBCfpmeneDP4aPTlQahPvHJs0Rxh/X/8JP+YXgYuu+N
-dnV40Zx30rHq3Xw+ub0TUgzsOLhpYhGmzUJnlWuAyX627NPwQ4i1NqvuxYfmBz6Z
-szk77zSciK0m7SyJlq3QnMqAtb4u5wt174GC69Wq7KsxGVu7qitQGSkPZbXUH65s
-8CuMpgWp2iNIqJDMhmjD4msynfgs9W4FfdQY7L5VeUZUZBy7fwI=
-=RCfP
+iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAme06XQACgkQ2yIaaQAA
+ABE46xAAnKURkbX6xGPzzYGKtwgmly1BgiCDBZ7Q/JPkZzvCFB1Bk0nIn8C6kKUY
+6ucgYEJ75V6PhVz+RLyVf9atczUSLkTNTjQsD0LlU7uqo27WacVXYFzrPca9nT1q
+7HOUddo0iXCM5orVwlvW+l3IYUVcNQyKmkI+qLlF60EtD7LFyXOnEy22LFUHThD1
+iElJ73tGtUn26SVV+iucNId1K3l2JFHnzN4mAZKkn8Gg/jK9k8E/FklfaHzYL6bI
+llR3krUhkLIcufSkPki2FR7uE6+XqOxsdoscYvgY/IFjlWr4KemZnGts969KjIWI
+qU3OZj+ylIjb5wkhKvfu921WLDH54bhfKmD1c//lWeeqkq12nIC3aw9w9hgQ75Tv
+17Xz6LMK39K89qRfhESVTYKA+q7n5bI1apiPp9ZogvE1suEU16eJVx6xGwuj6TFo
+zYPYe6YZfwV+Q9gaq5JAtZuuKZQyiV/j5ncbuy15a7+Ar1NgaPvu02rEL5ys+BLx
+ccOp5d4y3oGh4rw7HvWl0eDTnIfHBIoBcdbEQb1EmC5euK+9Df2sUwR04B27cp6w
+dCEn3YxYqV2ZpD8RQxBLbZI3u7S4YugOlEDPeN5aIXBmaDNEeuMiKRNB+Za2ibpX
+9+R13apYTKzGrPIK5QTJxP/ofoW73ZgL74l8RohtL+nrMJBhhCo=
+=JC4z
 -----END PGP SIGNATURE-----
 --=-=-=--
 
