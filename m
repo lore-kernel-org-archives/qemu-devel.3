@@ -4,83 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC78C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 22:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9154C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 22:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkVgx-0006H4-Qr; Tue, 18 Feb 2025 17:03:47 -0500
+	id 1tkVk1-0007a0-1v; Tue, 18 Feb 2025 17:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkVgw-0006GU-AU
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 17:03:46 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkVjz-0007Zs-Qk
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 17:06:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkVgu-0007ww-Cl
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 17:03:46 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkVjx-0008Sc-ON
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 17:06:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739916222;
+ s=mimecast20190719; t=1739916412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sC4i6GZ94d9ZvRQs2CIiDkPIVfWV0UXKGIz1obnXpmw=;
- b=RUlq046/T3utPo/JClBNxjHU5sO+3UUUFjUrUxeG7E+2Vrb7wKgA15bKPP996B7dOIcCn+
- HwJ3jVF53OiqneX4loOTAJ+hemB3LjPOBhXRO2zdhbtDGmv9+lTZgSFuUw86gqk5u1pRSI
- s5JyS7Im53hhzhT22w88n7XWkdKSuh0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VhGTagA8Bni0qxTNoasDGULEzESbL2KSfpwSU2W1+T0=;
+ b=RoCo+9XSSp5MgKgBl3Mw7USvLqdRX9U1WczyAZyATW2m/XtB5eODPUxdIlTKfoPjPOeei1
+ m/sz5psNrMF2uzxeNP0cYW3LVP971xQH8gK3n16BEbcPF8l0pJmonIq1gM1LAF3DYBItFf
+ 65p3P0AxBlVRLXYEySWQXv94ZK83HiE=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-dZPzX3uKMgyCXxbJlg3Fpg-1; Tue, 18 Feb 2025 17:03:40 -0500
-X-MC-Unique: dZPzX3uKMgyCXxbJlg3Fpg-1
-X-Mimecast-MFC-AGG-ID: dZPzX3uKMgyCXxbJlg3Fpg_1739916220
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c09be677e7so48556385a.0
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 14:03:40 -0800 (PST)
+ us-mta-663-pHjaLwwMMQm4CQ0Dgm1Ceg-1; Tue, 18 Feb 2025 17:06:47 -0500
+X-MC-Unique: pHjaLwwMMQm4CQ0Dgm1Ceg-1
+X-Mimecast-MFC-AGG-ID: pHjaLwwMMQm4CQ0Dgm1Ceg_1739916407
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-47207b66f3eso10497801cf.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 14:06:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739916220; x=1740521020;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sC4i6GZ94d9ZvRQs2CIiDkPIVfWV0UXKGIz1obnXpmw=;
- b=C9cOWqp518vBwaqIhuxXk/hCOnVRAgx1u+0od3O84DP7JpcIE3yyeoKq1PAgJIt3H2
- O1N0mppr3O6RR/EHY9BeEoH9fXRdNsO1zx/Y3LtMrYwW/eOBWkNaU2TKuLClJ9XSFt62
- a2BOGYxKRAwBhH1VsyAkKG64/SAbK7bIc5CuxqQ0IKa240lhuR7GUUr01s1fTHndgnzx
- UpGEfacM7qSQwhRlyRIB+C2lOJKlVtj+YOyQoLArrNzI0f7ybAapTfd9wOi/bd1qqMHC
- tB3g4HMgB/gU7+0bwVAWg3LN+r8z2/gSgI3BcUAiNJ+fLIPm8oGIwcLQx6lM06R36tM1
- LO8Q==
-X-Gm-Message-State: AOJu0Yz1IrkZXETHpXGW5camSn8fzijXNg9xofxCtawRqgnRDmM1CPXH
- tGCtcjlwv9yuynvogX1goOShyzuPBaxrFxg1RXJTZypTN5UrkYyX49txfWWFsJCtaRJngSJgz4Q
- 29lwQnOyzhLnxwx/F7FAK1eXoI/mKwFx1sczLlHytkqF7HWDa2Rme
-X-Gm-Gg: ASbGncuL29zD3ukUpRBjNNMPI1qoRAZLtxHgysuwd8xxzGxyaskbYe5RyZpVhZi7fTw
- tuECVq/r4GSy+vAuJPWvzbYMybUmDKgyy8IxOzQvi72gsdImrcQ26HRaEmpkR4BqFmDpn/vK6El
- LnttcL215zlbV0urb5csXNE2g+MTzLfaSx90C9eT3UjnuEpKA3I8B7g4l4NGWvQMcTd0wUBs23o
- dgxClVWmUzwvraiqyHO/h2HV538ivRhk5UCI699lEfXXbQgQzMLqwWqnNs=
-X-Received: by 2002:a05:620a:640a:b0:7b1:44ee:644d with SMTP id
- af79cd13be357-7c0b4cfa745mr202439485a.10.1739916219968; 
- Tue, 18 Feb 2025 14:03:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFjxnrSTV1hOw6DFott4ZdcB943FTkV0HKdmEGeRcXt+aR8EsMhcTMbjzzIvTBktXel0Av5vA==
-X-Received: by 2002:a05:620a:640a:b0:7b1:44ee:644d with SMTP id
- af79cd13be357-7c0b4cfa745mr202435885a.10.1739916219541; 
- Tue, 18 Feb 2025 14:03:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739916407; x=1740521207;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VhGTagA8Bni0qxTNoasDGULEzESbL2KSfpwSU2W1+T0=;
+ b=SPKgxNeeszHzMJ2CtZR767OsePmk0GnqLGEVRVrvrYYCUtSI1CmU/u3q008TyrR3nT
+ uFNp5fPT1crGndyEMsZGJsZXNiv2wmvLLVhijYTxL/kpTulxbQddW2W8/AV1MOdCkWfx
+ 2D065yx8Qs+fvXWkA4+hlpoe814iY6tGz5mGecnk2nyS1FXJFWov0lf3tWGPQyTCO9fC
+ cRvC9IMd4RcDNDWDJ6d/abtXzDfS+lNsfVynmetLM4A/8rYfimiQ0UU5zngvTi6SQtua
+ AIOFNqcee1LK0rW2vTBWsYim70+5+BQns7zzY5gW9PDL8FSrk5sqlf1EySedjCeqt2pd
+ xj8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUORzCkchxphHrBJ/i6CoZH1kI1O4Hh2HDBTqPBjnDay+UalhqqGOqfzH7wB39d7DOFpNgfXb5sO5zg@nongnu.org
+X-Gm-Message-State: AOJu0YwQ4z129P956L1xv9wLw/Pb/C84QFWszfVX3Plt5GbsWa0U4Ni1
+ Libbr9nPoM1uIVEUeY0E+XAkEYYun+AJSuZphlfc8AnrXrlHJKaNJ1/fy004gR8OW/isOgHkfiN
+ czxSshrcprfiWQC5ec3Z16w1c2KG1Svd4TePPCCvNmtVxTCG1h0WM
+X-Gm-Gg: ASbGncuT9FpU/1muk+vqPKupRKHqx9/JdXrtDfyuyI52eycD6kIn4UnOVDrBzxvZAfo
+ YfDypPvl54zoNew+LezidsABty3SNukO7flMYC8On3oYNCKX2sIpo0I5bkPxpAZmOWgipovk9Ki
+ BRqwBohGvT6wD1GCuAkWhA+f5HXz657MYzpwGdotWBe8VcFgMsfgzlSWcjIrB+v9XefxKEM2AmI
+ H6xpG+GfPx2mrgMJTMk4kZECBW/h++a6VJOMpzgs+pCmAVaoEB2vWyZ4QQ=
+X-Received: by 2002:a05:6214:27e2:b0:6e6:684f:7f6f with SMTP id
+ 6a1803df08f44-6e66cc7fe37mr223604936d6.7.1739916407278; 
+ Tue, 18 Feb 2025 14:06:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHd5t5ZzPMGn+mWbgT6EQaCEhUPDINLeQlySHTs4HSHEJdkgiYc9f5AHjrgrG482rD5Q56FPg==
+X-Received: by 2002:a05:6214:27e2:b0:6e6:684f:7f6f with SMTP id
+ 6a1803df08f44-6e66cc7fe37mr223604686d6.7.1739916406944; 
+ Tue, 18 Feb 2025 14:06:46 -0800 (PST)
 Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c0b1027932sm88071985a.115.2025.02.18.14.03.37
+ 6a1803df08f44-6e65daff4a8sm68121406d6.97.2025.02.18.14.06.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Feb 2025 14:03:38 -0800 (PST)
-Date: Tue, 18 Feb 2025 17:03:35 -0500
+ Tue, 18 Feb 2025 14:06:46 -0800 (PST)
+Date: Tue, 18 Feb 2025 17:06:44 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Li Zhijian via <qemu-devel@nongnu.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 1/2] migration: Prioritize RDMA in ram_save_target_page()
-Message-ID: <Z7UDtxdNSS-Jqm-y@x1.local>
-References: <20250218074345.638203-1-lizhijian@fujitsu.com>
- <8734gb9erz.fsf@suse.de>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PULL v2 11/14] os: add an ability to lock memory on_fault
+Message-ID: <Z7UEdN0ogdi4u4rC@x1.local>
+References: <20250212173823.214429-1-peterx@redhat.com>
+ <20250212173823.214429-3-peterx@redhat.com>
+ <Z6ze_muL8OkkuAFr@redhat.com> <Z6zg3jr4IUiIdHKG@x1.local>
+ <Z6zicnbD1RRYfC3R@redhat.com> <Z60TvzQZQW3j4tiY@x1.local>
+ <Z7S3D_JYdayPhVVd@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8734gb9erz.fsf@suse.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z7S3D_JYdayPhVVd@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -106,79 +117,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 05:30:40PM -0300, Fabiano Rosas wrote:
-> Li Zhijian via <qemu-devel@nongnu.org> writes:
-> 
-> > Address an error in RDMA-based migration by ensuring RDMA is prioritized
-> > when saving pages in `ram_save_target_page()`.
-> >
-> > Previously, the RDMA protocol's page-saving step was placed after other
-> > protocols due to a refactoring in commit bc38dc2f5f3. This led to migration
-> > failures characterized by unknown control messages and state loading errors
-> > destination:
-> > (qemu) qemu-system-x86_64: Unknown control message QEMU FILE
-> > qemu-system-x86_64: error while loading state section id 1(ram)
-> > qemu-system-x86_64: load of migration failed: Operation not permitted
-> > source:
-> > (qemu) qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
-> > qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
-> > qemu-system-x86_64: rdma migration: recv polling control error!
-> > qemu-system-x86_64: warning: Early error. Sending error.
-> > qemu-system-x86_64: warning: rdma migration: send polling control error
-> >
-> > RDMA migration implemented its own protocol/method to send pages to
-> > destination side, hand over to RDMA first to prevent pages being saved by
-> > other protocol.
-> >
-> > Fixes: bc38dc2f5f3 ("migration: refactor ram_save_target_page functions")
-> > Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> > ---
-> >  migration/ram.c | 9 +++++----
-> >  1 file changed, 5 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index 6f460fd22d2..635a2fe443a 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -1964,6 +1964,11 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-> >      ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
-> >      int res;
-> >  
-> > +    /* Hand over to RDMA first */
-> > +    if (control_save_page(pss, offset, &res)) {
-> > +        return res;
-> > +    }
-> > +
-> 
-> Can we hoist that migrate_rdma() from inside the function? Since the
-> other paths already check first before calling their functions.
+On Tue, Feb 18, 2025 at 04:36:31PM +0000, Daniel P. Berrangé wrote:
+> Yes, or actually turn on the warning about unused params and mark
+> the rest. It is initially noisey, but IME does end up flagging
+> real problems periodically. Anyway, given we're inconsistent already
+> there's no need to respin this series.
 
-If we're talking about hoist and stuff.. and if we want to go slightly
-further, I wonder if we could also drop RAM_SAVE_CONTROL_NOT_SUPP.
+Thanks, Dan.
 
-    if (!migrate_rdma() || migration_in_postcopy()) {
-        return RAM_SAVE_CONTROL_NOT_SUPP;
-    }
-
-We should make sure rdma_control_save_page() won't get invoked at all in
-either case above..  For postcopy, maybe we could fail in the QMP migrate /
-migrate_incoming cmd, at migration_channels_and_transport_compatible().
-
-> 
-> >      if (!migrate_multifd()
-> >          || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
-> >          if (save_zero_page(rs, pss, offset)) {
-> > @@ -1976,10 +1981,6 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
-> >          return ram_save_multifd_page(block, offset);
-> >      }
-> >  
-> > -    if (control_save_page(pss, offset, &res)) {
-> > -        return res;
-> > -    }
-> > -
-> >      return ram_save_page(rs, pss);
-> >  }
-> 
+Stefan, I hope this PR can still be picked up.  If I need a repost, please
+let me know!
 
 -- 
 Peter Xu
