@@ -4,125 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73CC2C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 09:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5109AC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 09:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkJgj-0005yl-OL; Tue, 18 Feb 2025 04:14:45 -0500
+	id 1tkJi0-0007oq-0U; Tue, 18 Feb 2025 04:16:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1tkJgi-0005ya-64
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 04:14:44 -0500
-Received: from mailout4.samsung.com ([203.254.224.34])
+ (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
+ id 1tkJhw-0007Yn-U3; Tue, 18 Feb 2025 04:16:00 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1tkJgd-0006hX-E2
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 04:14:43 -0500
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20250218091430epoutp04c796d3f0215da74558be90f80dc6700d~lQpxVh8lw0650906509epoutp04P
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 09:14:30 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20250218091430epoutp04c796d3f0215da74558be90f80dc6700d~lQpxVh8lw0650906509epoutp04P
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1739870070;
- bh=HcZHltFL7jn1Mql4lVVdvfwYZ6LbevSpFPN2Ve7VETM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=JXFdg4GjQH05gQKB4S1QA9/lRWC+g7FS6Xgr/HPWcNUwY/IX5CmmLIQkgYRZvpEK7
- x2EVC2hxpWm5C0qIpQPWJvqk4kRdEoDuHOeCqEqtpdJWt0whqUSiW1SksygySYheTx
- Ln9eBwqMzk+pIxzQ965gHdgePKhf7KTrRZIS75ao=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTP id
- 20250218091429epcas5p24e55180c10ec70523481cda98af26100~lQpw_uew31780717807epcas5p2k;
- Tue, 18 Feb 2025 09:14:29 +0000 (GMT)
-Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.175]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4Yxv3l1hjnz4x9Q7; Tue, 18 Feb
- 2025 09:14:27 +0000 (GMT)
-Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
- epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 60.7E.19710.37F44B76; Tue, 18 Feb 2025 18:14:27 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
- 20250218085812epcas5p3981d9649c89f876d59724a24c0ed8d80~lQbipeBry1166411664epcas5p3n;
- Tue, 18 Feb 2025 08:58:12 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20250218085812epsmtrp18f0c5a59d732f9358b2a8cf5bdc9fcf6~lQbiorSRH0197301973epsmtrp1R;
- Tue, 18 Feb 2025 08:58:12 +0000 (GMT)
-X-AuditID: b6c32a44-363dc70000004cfe-3b-67b44f739f8b
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
- epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- DC.0E.18949.4AB44B76; Tue, 18 Feb 2025 17:58:12 +0900 (KST)
-Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
- by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20250218085810epsmtip17068f6c2cd445cd3b5c4c724710cda67~lQbhMmSLW1084010840epsmtip1Y;
- Tue, 18 Feb 2025 08:58:10 +0000 (GMT)
-From: Arpit Kumar <arpit1.kumar@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
- dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
- a.manzanares@samsung.com, alok.rathore@samsung.com, Arpit Kumar
- <arpit1.kumar@samsung.com>
-Subject: [PATCH v2 2/3] hw/cxl/cxl-mailbox-utils.c: Added support for Clear
- Log (Opcode 0403h)
-Date: Tue, 18 Feb 2025 14:27:30 +0530
-Message-Id: <20250218085731.550029-3-arpit1.kumar@samsung.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250218085731.550029-1-arpit1.kumar@samsung.com>
+ (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
+ id 1tkJht-0006zT-SQ; Tue, 18 Feb 2025 04:16:00 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yxv5N1905z4x5k;
+ Tue, 18 Feb 2025 20:15:52 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yxv5K05qKz4wb0;
+ Tue, 18 Feb 2025 20:15:46 +1100 (AEDT)
+Message-ID: <a2b2ea6f-44f9-4c2d-aebb-3652f7b781ad@kaod.org>
+Date: Tue, 18 Feb 2025 10:15:41 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDJsWRmVeSWpSXmKPExsWy7bCmpm6x/5Z0g96D3BbTDytafDm9h82i
- d/ESVovVN9cwWtw8sJPJYuHGZUwW52edYrH4u20vo8Xx3h0sQO4cdgcuj52z7rJ7PLm2mcmj
- b8sqRo+ps+s9Pm+SC2CNyrbJSE1MSS1SSM1Lzk/JzEu3VfIOjneONzUzMNQ1tLQwV1LIS8xN
- tVVy8QnQdcvMAbpJSaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrlFqQklNgUqBXnJhbXJqX
- rpeXWmJlaGBgZApUmJCd8fDRA5aCV0IVT5cuZ29g7OXtYuTgkBAwkWg4I9vFyMUhJLCbUWJx
- 8wEmCOcTo8Tl2TOYIZxvjBI7Tv8EcjjBOq4sWgqV2Mso8eDGD7CEkEADk0TPbCkQm01AR+L8
- 7blsILaIgKTE767TYA3MAm+AGq4uAGsQFkiQ+DfpApjNIqAq8e38JVYQm1fATuLB5CYWiG3y
- EvsPngWr4RSwl7j9/js7RI2gxMmZT8BqmIFqmrfOhrruJ7vE18cxELaLxK3Nv1khbGGJV8e3
- sEPYUhIv+9ug7GyJP/Pb2SDsAolFP2dCxe0lWk/1M4PCiFlAU2L9Ln2IsKzE1FPrmCDW8kn0
- /n7CBBHnldgxD8ZWk2jfMR9qjIzEm1+LocZ7SDzZ188ICbhJjBLzX69insCoMAvJO7OQvDML
- YfUCRuZVjJKpBcW56anJpgWGeanl8EhOzs/dxAhOplouOxhvzP+nd4iRiYPxEKMEB7OSCO+h
- rg3pQrwpiZVVqUX58UWlOanFhxhNgeE9kVlKNDkfmM7zSuINTSwNTMzMzEwsjc0MlcR5m3e2
- pAsJpCeWpGanphakFsH0MXFwSjUwBSWyi2bI3+w1ezXJJOV+ns7E961cP24dYPlv9OMV36Q7
- ebKZEtO0TrX/4zZtCA5mSli63io7J6zyhNQ8R8GsopjVXD80/FfK6/y1V8+PsPf559hkOPXi
- iukvPXl+MPtc+atq4SEnp514+3vUg/X71uimvMtPqPr9UNNBeWLw5sRgjZ/3n+0w3/BlpV7B
- Mp3c8N43qkGMHUmqWT5XGp4tCd/gy9304UoWS0z1lZ/6UcdPPC6wlhDc1q598Rv3E4s/6vPm
- cQi9FxbcpvzkRcRGn8Aix9JH4qw+j9w0yta/DpkZ/2/HhirjVbsdGiXWlRS9DuHol+rSEeAN
- +zDN4vU+p+vbJ9Xd7j3QLcjKe0KJpTgj0VCLuag4EQB1PDuwLwQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMLMWRmVeSWpSXmKPExsWy7bCSnO4S7y3pBot+CFlMP6xo8eX0HjaL
- 3sVLWC1W31zDaHHzwE4mi4UblzFZnJ91isXi77a9jBbHe3ewALlz2B24PHbOusvu8eTaZiaP
- vi2rGD2mzq73+LxJLoA1issmJTUnsyy1SN8ugSvj4aMHLAWvhCqeLl3O3sDYy9vFyMkhIWAi
- cWXRUuYuRi4OIYHdjBIHrn1lhUjISFyc+ZgFwhaWWPnvOTuILSTwj1FiyXo2EJtNQEfi/O25
- YLaIgKTE767TYIOYBb4xSsy59QJoEAeHsECcxK0TKiA1LAKqEt/OXwKbzytgJ/FgchPUfHmJ
- /QfPMoPYnAL2Erfff4faZSexoesvI0S9oMTJmU/A6pmB6pu3zmaewCgwC0lqFpLUAkamVYyS
- qQXFuem5xYYFRnmp5XrFibnFpXnpesn5uZsYweGupbWDcc+qD3qHGJk4GA8xSnAwK4nwHura
- kC7Em5JYWZValB9fVJqTWnyIUZqDRUmc99vr3hQhgfTEktTs1NSC1CKYLBMHp1QD0yaWc+F8
- vdYKbPUBC77WzDzB8PHEw83LQsUSVVxXCv3sNb5682vZpFKp7asiHVTC5wTXSAR+qPNteXpX
- Wirg69vCm7syZE2OLtzzXU7UoFDX/kJYVC2TdP372YY3Bb/dW/SGgfdM6Xq2tCt8p5/fnvaP
- 5zPvsc9Lqn9GshsX/DvdMiWnqzyKe4OftOjTNu71l+YsbXOU+HZp587I4IwvPocM7u182xH+
- 3rfTjUs21mWTqsh0m4fHG7z5ed+/bOblOqk7O7hay+Ok2sOV7p3GOTab+BsYjq1PVWS1PFR+
- pt9rz86ly2//rq8MfL79fDX3JkHDZWvmchq7flyhm7Q3m3XfN/Ygo6R5isb7j8VfVWIpzkg0
- 1GIuKk4EAOGfQoXmAgAA
-X-CMS-MailID: 20250218085812epcas5p3981d9649c89f876d59724a24c0ed8d80
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250218085812epcas5p3981d9649c89f876d59724a24c0ed8d80
-References: <20250218085731.550029-1-arpit1.kumar@samsung.com>
- <CGME20250218085812epcas5p3981d9649c89f876d59724a24c0ed8d80@epcas5p3.samsung.com>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=arpit1.kumar@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 13/28] hw/intc/aspeed: Add Support for AST2700 INTCIO
+ Controller
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-14-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250213033531.3367697-14-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -140,67 +113,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CXL spec 3.2 section 8.2.10.5.4 describes clear log.
-It clears the content of the specified log.
+On 2/13/25 04:35, Jamin Lin wrote:
+> Introduce a new ast2700 INTCIO class to support AST2700 INTCIO.
+> Added new register definitions for INTCIO, including enable and status
+> registers for IRQs GICINT192 through GICINT197.
+> Created a dedicated IRQ array for INTCIO, supporting six input pins and six
+> output pins, aligning with the newly defined registers.
+> Implemented "aspeed_intcio_read" and "aspeed_intcio_write" to handle
+> INTCIO-specific register access.
+> 
+>   To GICINT196                                                                                |
+> 
+>         ETH1    |-----------|                    |--------------------------|
+>        -------->|0          |                    |         INTCIO           |
+>         ETH2    |          4|   orgates[0]------>|inpin[0]-------->outpin[0]|
+>        -------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|
+>         ETH3    |          6|   orgates[2]------>|inpin[2]-------->outpin[2]|
+>        -------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|
+>         UART0   |         20|-->orgates[4]------>|inpin[4]-------->outpin[4]|
+>        -------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|
+>         UART1   |         22|                    |--------------------------|
+>        -------->|8        23|
+>         UART2   |         24|
+>        -------->|9        25|
+>         UART3   |         26|
+>        ---------|10       27|
+>         UART5   |         28|
+>        -------->|11       29|
+>         UART6   |           |
+>        -------->|12       30|
+>         UART7   |         31|
+>        -------->|13         |
+>         UART8   |  OR[0:31] |
+>        -------->|14         |
+>         UART9   |           |
+>        -------->|15         |
+>         UART10  |           |
+>        -------->|16         |
+>         UART11  |           |
+>        -------->|17         |
+>         UART12  |           |
+>        -------->|18         |
+>                 |-----------|
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/intc/aspeed_intc.c         | 121 ++++++++++++++++++++++++++++++++++
+>   include/hw/intc/aspeed_intc.h |   1 +
+>   2 files changed, 122 insertions(+)
+> 
+> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+> index 1a9e2bf8ce..a3bf935789 100644
+> --- a/hw/intc/aspeed_intc.c
+> +++ b/hw/intc/aspeed_intc.c
+> @@ -36,6 +36,20 @@ REG32(GICINT136_STATUS,     0x1804)
+>   REG32(GICINT192_201_EN,         0x1B00)
+>   REG32(GICINT192_201_STATUS,     0x1B04)
+>   
+> +/* INTCIO Registers */
+> +REG32(GICINT192_EN,         0x100)
+> +REG32(GICINT192_STATUS,     0x104)
+> +REG32(GICINT193_EN,         0x110)
+> +REG32(GICINT193_STATUS,     0x114)
+> +REG32(GICINT194_EN,         0x120)
+> +REG32(GICINT194_STATUS,     0x124)
+> +REG32(GICINT195_EN,         0x130)
+> +REG32(GICINT195_STATUS,     0x134)
+> +REG32(GICINT196_EN,         0x140)
+> +REG32(GICINT196_STATUS,     0x144)
+> +REG32(GICINT197_EN,         0x150)
+> +REG32(GICINT197_STATUS,     0x154)
+> +
+>   static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
+>       {0, 0, 10, R_GICINT192_201_EN, R_GICINT192_201_STATUS},
+>       {1, 10, 1, R_GICINT128_EN, R_GICINT128_STATUS},
+> @@ -49,6 +63,15 @@ static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
+>       {9, 18, 1, R_GICINT136_EN, R_GICINT136_STATUS},
+>   };
+>   
+> +static AspeedINTCIRQ aspeed_2700_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
+> +    {0, 0, 1, R_GICINT192_EN, R_GICINT192_STATUS},
+> +    {1, 1, 1, R_GICINT193_EN, R_GICINT193_STATUS},
+> +    {2, 2, 1, R_GICINT194_EN, R_GICINT194_STATUS},
+> +    {3, 3, 1, R_GICINT195_EN, R_GICINT195_STATUS},
+> +    {4, 4, 1, R_GICINT196_EN, R_GICINT196_STATUS},
+> +    {5, 5, 1, R_GICINT197_EN, R_GICINT197_STATUS},
+> +};
+> +
 
-Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+I would move the array definition just before routine
+aspeed_2700_intcio_class_init().
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 5b0f793ac5..1caee3f058 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -77,6 +77,7 @@ enum {
-         #define GET_SUPPORTED 0x0
-         #define GET_LOG       0x1
-         #define GET_LOG_CAPABILITIES   0x2
-+        #define CLEAR_LOG     0x3
-     FEATURES    = 0x05,
-         #define GET_SUPPORTED 0x0
-         #define GET_FEATURE   0x1
-@@ -1113,6 +1114,30 @@ static CXLRetCode cmd_logs_get_log_capabilities(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/* CXL r3.2 Section 8.2.10.5.4: Clear Log (Opcode 0403h) */
-+static CXLRetCode cmd_logs_clear_log(const struct cxl_cmd *cmd,
-+                                     uint8_t *payload_in,
-+                                     size_t len_in,
-+                                     uint8_t *payload_out,
-+                                     size_t *len_out,
-+                                     CXLCCI *cci)
-+{
-+    const CXLLogCapabilities *cap;
-+    struct {
-+        QemuUUID uuid;
-+    } QEMU_PACKED QEMU_ALIGNED(8) * clear_log = (void *)payload_in;
-+
-+    cap = find_log_index(&clear_log->uuid, cci);
-+    if (!cap) {
-+        return CXL_MBOX_INVALID_LOG;
-+    }
-+
-+    if (!(cap->param_flags & CXL_LOG_CAP_CLEAR_SUPPORTED)) {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- /* CXL r3.1 section 8.2.9.6: Features */
- /*
-  * Get Supported Features output payload
-@@ -2880,6 +2905,8 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-     [LOGS][GET_LOG_CAPABILITIES] = { "LOGS_GET_LOG_CAPABILITIES",
-                                      cmd_logs_get_log_capabilities, 0x10, 0 },
-+    [LOGS][CLEAR_LOG] = { "LOGS_CLEAR_LOG", cmd_logs_clear_log, 0x10,
-+                          CXL_MBOX_IMMEDIATE_LOG_CHANGE},
-     [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
-                                   cmd_features_get_supported, 0x8, 0 },
-     [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
--- 
-2.34.1
+>   static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
+>                                                   uint32_t addr)
+>   {
+> @@ -463,6 +486,71 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>       return;
+>   }
+>   
+> +static uint64_t aspeed_intcio_read(void *opaque, hwaddr offset,
+> +                                   unsigned int size)
+> +{
+> +    AspeedINTCState *s = ASPEED_INTC(opaque);
+> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    uint32_t addr = offset >> 2;
+
+s/addr/reg/ ? I find that "reg" makes more sense.
+
+> +    uint32_t value = 0;
+> +
+> +    if (offset >= aic->reg_size) {
+
+as said in patch 1, this is dead code bc the MMIO aperture has the same
+size. You could remove the check.
+
+
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
+> +                      __func__, offset);
+> +        return 0;
+> +    }
+> +
+> +    value = s->regs[addr];
+> +    trace_aspeed_intc_read(name, offset, size, value);
+> +
+> +    return value;
+> +}
+> +
+> +static void aspeed_intcio_write(void *opaque, hwaddr offset, uint64_t data,
+> +                                        unsigned size)
+> +{
+> +    AspeedINTCState *s = ASPEED_INTC(opaque);
+> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    uint32_t addr = offset >> 2;
+> +
+> +    if (offset >= aic->reg_size) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
+> +                      __func__, offset);
+> +        return;
+> +    }
+> +
+> +    trace_aspeed_intc_write(name, offset, size, data);
+> +
+> +    switch (addr) {
+> +    case R_GICINT192_EN:
+> +    case R_GICINT193_EN:
+> +    case R_GICINT194_EN:
+> +    case R_GICINT195_EN:
+> +    case R_GICINT196_EN:
+> +    case R_GICINT197_EN:
+> +        aspeed_intc_enable_handler(s, offset, data);
+> +        break;
+> +    case R_GICINT192_STATUS:
+> +    case R_GICINT193_STATUS:
+> +    case R_GICINT194_STATUS:
+> +    case R_GICINT195_STATUS:
+> +    case R_GICINT196_STATUS:
+> +    case R_GICINT197_STATUS:
+> +        aspeed_intc_status_handler(s, offset, data);
+> +        break;
+> +    default:
+> +        s->regs[addr] = data;
+> +        break;
+> +    }
+> +
+> +    return;
+> +}
+> +
+> +
+>   static const MemoryRegionOps aspeed_intc_ops = {
+>       .read = aspeed_intc_read,
+>       .write = aspeed_intc_write,
+> @@ -473,6 +561,16 @@ static const MemoryRegionOps aspeed_intc_ops = {
+>       }
+>   };
+>   
+> +static const MemoryRegionOps aspeed_intcio_ops = {
+> +    .read = aspeed_intcio_read,
+> +    .write = aspeed_intcio_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    }
+> +};
+> +
+>   static void aspeed_intc_instance_init(Object *obj)
+>   {
+>       AspeedINTCState *s = ASPEED_INTC(obj);
+> @@ -572,10 +670,33 @@ static const TypeInfo aspeed_2700_intc_info = {
+>       .class_init = aspeed_2700_intc_class_init,
+>   };
+>   
+> +static void aspeed_2700_intcio_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+> +
+> +    dc->desc = "ASPEED 2700 INTC IO Controller";
+> +    aic->num_lines = 32;
+> +    aic->num_inpins = 6;
+> +    aic->num_outpins = 6;
+> +    aic->mem_size = 0x400;
+> +    aic->reg_size = 0x3d8;
+> +    aic->reg_ops = &aspeed_intcio_ops;
+> +    aic->irq_table = aspeed_2700_intcio_irqs;
+> +    aic->irq_table_count = ARRAY_SIZE(aspeed_2700_intcio_irqs);
+> +}
+> +
+> +static const TypeInfo aspeed_2700_intcio_info = {
+> +    .name = TYPE_ASPEED_2700_INTCIO,
+> +    .parent = TYPE_ASPEED_INTC,
+> +    .class_init = aspeed_2700_intcio_class_init,
+> +};
+> +
+>   static void aspeed_intc_register_types(void)
+>   {
+>       type_register_static(&aspeed_intc_info);
+>       type_register_static(&aspeed_2700_intc_info);
+> +    type_register_static(&aspeed_2700_intcio_info);
+>   }
+>   
+>   type_init(aspeed_intc_register_types);
+> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+> index 57146db2ce..e8ead15491 100644
+> --- a/include/hw/intc/aspeed_intc.h
+> +++ b/include/hw/intc/aspeed_intc.h
+> @@ -14,6 +14,7 @@
+>   
+>   #define TYPE_ASPEED_INTC "aspeed.intc"
+>   #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
+> +#define TYPE_ASPEED_2700_INTCIO TYPE_ASPEED_INTC "io" "-ast2700"
+
+You could use "io-ast2700". Minor.
+
+Thanks,
+
+C.
+
+
+>   OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+>   
+>   #define ASPEED_INTC_NR_REGS (0x2000 >> 2)
 
 
