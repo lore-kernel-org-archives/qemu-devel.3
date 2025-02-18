@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428A6C021AD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D168C021AF
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 21:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkV2J-00034J-5B; Tue, 18 Feb 2025 16:21:47 -0500
+	id 1tkV2E-00032b-Jv; Tue, 18 Feb 2025 16:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2E-00032z-Tz
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:42 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2D-00032M-FX
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:41 -0500
 Received: from home.keithp.com ([63.227.221.253] helo=elaine.keithp.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2B-00033L-LQ
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:42 -0500
+ (Exim 4.90_1) (envelope-from <keithp@keithp.com>) id 1tkV2A-00033B-Sh
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 16:21:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739913697; bh=rseh06rZwnj1XEKSik48UBym2dlowjYs00+a91IMU/Q=;
+ t=1739913697; bh=teoTsh+CvtnyfxlQFH0EO7DMOroSayuJqtpkRTSKTfg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pPyVDpbilkb/Lg87lqPdvESOf7R6IernWyIfrys9+F8ybiZPtQn/KOiGR9eCzitaV
- XP4G7+4VmuLwFa24EfadqwFnkzMjtdDTqJoXjOIJDVYb/EPaV2SKVLMOR8XvaMUDI9
- BUCdedCH/bWoOl+L3g2x9itiOqy+slNTW2vcTYS+Eveo41UtfohIIUsvl2lOqwNmQW
- wwydC3Yj8LjloV2QV3F+NlW3ptefB3E7A8ySAQhr4eftdhb7CEVbEPmsRf/Ew2jjxG
- C0qUJP4bK9GertIf12m0ose74JKejvkTsFmX6ZEA6YbD5yyTETHmdvV1GiiBEenvWb
- pUeR02TpqH+hQ==
+ b=n3NvL8NiPH/rHw8FKMJbdXIIFYgY/Dn/528dNZloXwAR0nZk7aqo4EQNDLQAT5qYO
+ oDcrJt1ge11oux8z2WSAzNC2H5woJhxDudH50rTicVRO5LM8hTVQgSB9h6FpbH6Coh
+ oHj+sRo98S9Bg0R6t3WA2nIz2dOm888vUldBemsRzUM89N6d96jnaNjiH2C48LhGtU
+ yzEzApIseB0Putu4AOwbMCnOB5/bmxWl4qDsFLg9SM2Ql9EspwcGTNszhe8xz06grq
+ W/1HcVZURLsE09jiluxgsBP/RQhRuBCPyKYSEvxEiagwkdL0AshxlMjjUSnKcNo4nK
+ zCMzyas+cdiyg==
 Received: from localhost (localhost [127.0.0.1])
- by elaine.keithp.com (Postfix) with ESMTP id ECF073F20DB1
+ by elaine.keithp.com (Postfix) with ESMTP id 428253F20D3C
  for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 13:21:37 -0800 (PST)
 X-Virus-Scanned: Debian amavis at keithp.com
 Received: from elaine.keithp.com ([127.0.0.1])
  by localhost (elaine.keithp.com [127.0.0.1]) (amavis, port 10024) with LMTP
- id 0UXT2VrVZUh2; Tue, 18 Feb 2025 13:21:35 -0800 (PST)
+ id kI16fiP6pMAe; Tue, 18 Feb 2025 13:21:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
- t=1739913694; bh=rseh06rZwnj1XEKSik48UBym2dlowjYs00+a91IMU/Q=;
+ t=1739913694; bh=teoTsh+CvtnyfxlQFH0EO7DMOroSayuJqtpkRTSKTfg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=wMFItj/5ACqrAqmuVNiG8L9uwxpcVyUlUSrfdAMBRau7AteCr7S4+vHZmLmPmpDUX
- HdZPKt2cBxGj6AiKbPgNM/e/DVqpcLBUusrVeHXFFKxkdy3ZGwZadCpQhZsghxIRI4
- E31jChVom6NpQm1nu5cKEoTzUNfGuRd2qFC8NuMhs/qtaKFhSD21dELC14eJU8UvEQ
- 0Kg021iSmExX9XEScKcMzWEaE8a1VsRAlZ5iELoyZXWrdtrf4tsrz51ngd2xCDLcWy
- iIvtlK+ELgCr6MfE/+PDOTfk/9ydSjYYJ3kXPjV3gDj0zd8OsiFsC+pFWy1tx/j1BM
- e2mF3fXGXpqZA==
+ b=K2w1gBLPfGrank0tzejcTv8+SNqFbR80HEIxJXYTmi+ZZhpROaKFjVScIn0DID26Q
+ 0lYczHqQthQebWpzUNqV8eY32wLg/NfqoDsqvNA3aHHF9NRaqGdq3pA4ZuECLcBLXb
+ V3hrCRCvJDKkjgPMhx0P0//bVsEXqOFwS1e1TZu3iSLgM6LfedQr1YSp78ymffHzVU
+ msFeuns179kYgC/LGzzqYFgkoDxLPOFkaOjvYh8nwvmG7GoAXgf3lN6gOX9T9jJYbm
+ iQMpkUaiL02nQ8d+CIXCl6g/m15195BPJLTrOFKU/kWPtrTBLRYO1rmT2TIcXxvy5o
+ Kz2jGhVZYVHVA==
 Received: from keithp.com (koto.keithp.com [192.168.11.2])
- by elaine.keithp.com (Postfix) with ESMTPSA id DD39E3F20C61;
+ by elaine.keithp.com (Postfix) with ESMTPSA id E7EBE3F20DB1;
  Tue, 18 Feb 2025 13:21:34 -0800 (PST)
 Received: by keithp.com (Postfix, from userid 1000)
- id BAAFB1E6009D; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
+ id BDBC21E6009E; Tue, 18 Feb 2025 13:21:34 -0800 (PST)
 To: qemu-devel@nongnu.org
 Cc: Keith Packard <keithp@keithp.com>
-Subject: [PATCH 2/4] target/rx: Remove TCG_CALL_NO_WG from helpers which write
- env
-Date: Tue, 18 Feb 2025 13:21:01 -0800
-Message-ID: <20250218212103.2024039-3-keithp@keithp.com>
+Subject: [PATCH 3/4] hw/rx: Reset the CPU at qemu reset time
+Date: Tue, 18 Feb 2025 13:21:02 -0800
+Message-ID: <20250218212103.2024039-4-keithp@keithp.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250218212103.2024039-1-keithp@keithp.com>
 References: <20250215021654.1786679-1-keithp@keithp.com>
@@ -86,67 +85,146 @@ From:  Keith Packard via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions which modify virtual machine state (such as virtual
-registers stored in memory) must not be marked TCG_CALL_NO_WG as that
-tells the optimizer that virtual registers values already loaded in
-machine registers are still valid, hence discards any changes which
-these helpers may have made. This seems to also mean that functions which
-set condition codes may also not use this flag
+This ensure that the CPU gets reset every time QEMU resets. Use either
+the kernel entry point or the reset vector if no kernel was loaded.
 
 Signed-off-by: Keith Packard <keithp@keithp.com>
 ---
- target/rx/helper.h | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ hw/rx/rx-gdbsim.c | 36 +++++++++++++++++++++++++++++++++++-
+ target/rx/cpu.c   |  9 ++-------
+ target/rx/cpu.h   |  3 +++
+ 3 files changed, 40 insertions(+), 8 deletions(-)
 
-diff --git a/target/rx/helper.h b/target/rx/helper.h
-index ebb4739474..8cc38b0cb7 100644
---- a/target/rx/helper.h
-+++ b/target/rx/helper.h
-@@ -4,27 +4,27 @@ DEF_HELPER_1(raise_privilege_violation, noreturn, env)
- DEF_HELPER_1(wait, noreturn, env)
- DEF_HELPER_2(rxint, noreturn, env, i32)
- DEF_HELPER_1(rxbrk, noreturn, env)
--DEF_HELPER_FLAGS_3(fadd, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fsub, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fmul, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fdiv, TCG_CALL_NO_WG, f32, env, f32, f32)
--DEF_HELPER_FLAGS_3(fcmp, TCG_CALL_NO_WG, void, env, f32, f32)
--DEF_HELPER_FLAGS_2(ftoi, TCG_CALL_NO_WG, i32, env, f32)
--DEF_HELPER_FLAGS_2(round, TCG_CALL_NO_WG, i32, env, f32)
--DEF_HELPER_FLAGS_2(itof, TCG_CALL_NO_WG, f32, env, i32)
-+DEF_HELPER_3(fadd, f32, env, f32, f32)
-+DEF_HELPER_3(fsub, f32, env, f32, f32)
-+DEF_HELPER_3(fmul, f32, env, f32, f32)
-+DEF_HELPER_3(fdiv, f32, env, f32, f32)
-+DEF_HELPER_3(fcmp, void, env, f32, f32)
-+DEF_HELPER_2(ftoi, i32, env, f32)
-+DEF_HELPER_2(round, i32, env, f32)
-+DEF_HELPER_2(itof, f32, env, i32)
- DEF_HELPER_2(set_fpsw, void, env, i32)
--DEF_HELPER_FLAGS_2(racw, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(set_psw_rte, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(set_psw, TCG_CALL_NO_WG, void, env, i32)
-+DEF_HELPER_2(racw, void, env, i32)
-+DEF_HELPER_2(set_psw_rte, void, env, i32)
-+DEF_HELPER_2(set_psw, void, env, i32)
- DEF_HELPER_1(pack_psw, i32, env)
--DEF_HELPER_FLAGS_3(div, TCG_CALL_NO_WG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_1(scmpu, TCG_CALL_NO_WG, void, env)
-+DEF_HELPER_3(div, i32, env, i32, i32)
-+DEF_HELPER_3(divu, i32, env, i32, i32)
-+DEF_HELPER_1(scmpu, void, env)
- DEF_HELPER_1(smovu, void, env)
- DEF_HELPER_1(smovf, void, env)
- DEF_HELPER_1(smovb, void, env)
- DEF_HELPER_2(sstr, void, env, i32)
--DEF_HELPER_FLAGS_2(swhile, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(suntil, TCG_CALL_NO_WG, void, env, i32)
--DEF_HELPER_FLAGS_2(rmpa, TCG_CALL_NO_WG, void, env, i32)
-+DEF_HELPER_2(swhile, void, env, i32)
-+DEF_HELPER_2(suntil, void, env, i32)
-+DEF_HELPER_2(rmpa, void, env, i32)
- DEF_HELPER_1(satr, void, env)
+diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
+index 4afd77efd5..9e395ae345 100644
+--- a/hw/rx/rx-gdbsim.c
++++ b/hw/rx/rx-gdbsim.c
+@@ -22,6 +22,7 @@
+ #include "qemu/guest-random.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
++#include "exec/cpu_ldst.h"
+ #include "hw/loader.h"
+ #include "hw/rx/rx62n.h"
+ #include "system/qtest.h"
+@@ -56,6 +57,34 @@ DECLARE_OBJ_CHECKERS(RxGdbSimMachineState, RxGdbSimMachineClass,
+                      RX_GDBSIM_MACHINE, TYPE_RX_GDBSIM_MACHINE)
+ 
+ 
++static void rx_cpu_reset(void *opaque)
++{
++    RXCPU *cpu = opaque;
++    CPUState *cs = CPU(cpu);
++    CPURXState *env = cpu_env(cs);
++
++    cpu_reset(cs);
++
++    if (env->use_reset_pc) {
++        /*
++         * Load the PC with the starting address for the kernel
++         */
++        env->pc = env->reset_pc;
++    } else {
++        /*
++         * Load the initial PC from the reset vector. If there is
++         * a ROM containing that vector use that, otherwise read
++         * it from target memory.
++         */
++        uint32_t *resetvec_p = rom_ptr_for_as(cs->as, 0xfffffffc, 4);
++        if (resetvec_p) {
++            env->pc = ldl_p(resetvec_p);
++        } else {
++            env->pc = cpu_ldl_data(env, 0xfffffffc);
++        }
++    }
++}
++
+ static void rx_load_image(RXCPU *cpu, const char *filename,
+                           uint32_t start, uint32_t size)
+ {
+@@ -68,7 +97,8 @@ static void rx_load_image(RXCPU *cpu, const char *filename,
+         fprintf(stderr, "qemu: could not load kernel '%s'\n", filename);
+         exit(1);
+     }
+-    cpu->env.pc = start;
++    cpu->env.reset_pc = start;
++    cpu->env.use_reset_pc = true;
+ 
+     /* setup exception trap trampoline */
+     /* linux kernel only works little-endian mode */
+@@ -87,6 +117,7 @@ static void rx_gdbsim_init(MachineState *machine)
+     const char *kernel_filename = machine->kernel_filename;
+     const char *dtb_filename = machine->dtb;
+     uint8_t rng_seed[32];
++    CPUState *cs;
+ 
+     if (machine->ram_size < mc->default_ram_size) {
+         char *sz = size_to_str(mc->default_ram_size);
+@@ -153,6 +184,9 @@ static void rx_gdbsim_init(MachineState *machine)
+             s->mcu.cpu.env.regs[1] = SDRAM_BASE + dtb_offset;
+         }
+     }
++    for (cs = first_cpu; cs; cs = CPU_NEXT(cs)) {
++        qemu_register_reset(rx_cpu_reset, RX_CPU(cs));
++    }
+ }
+ 
+ static void rx_gdbsim_class_init(ObjectClass *oc, void *data)
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 37a6fdd569..528cda486c 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -76,7 +76,6 @@ static void rx_cpu_reset_hold(Object *obj, ResetType type)
+     CPUState *cs = CPU(obj);
+     RXCPUClass *rcc = RX_CPU_GET_CLASS(obj);
+     CPURXState *env = cpu_env(cs);
+-    uint32_t *resetvec;
+ 
+     if (rcc->parent_phases.hold) {
+         rcc->parent_phases.hold(obj, type);
+@@ -84,11 +83,6 @@ static void rx_cpu_reset_hold(Object *obj, ResetType type)
+ 
+     memset(env, 0, offsetof(CPURXState, end_reset_fields));
+ 
+-    resetvec = rom_ptr(0xfffffffc, 4);
+-    if (resetvec) {
+-        /* In the case of kernel, it is ignored because it is not set. */
+-        env->pc = ldl_p(resetvec);
+-    }
+     rx_cpu_unpack_psw(env, 0, 1);
+     env->regs[0] = env->isp = env->usp = 0;
+     env->fpsw = 0;
+@@ -142,7 +136,6 @@ static void rx_cpu_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     qemu_init_vcpu(cs);
+-    cpu_reset(cs);
+ 
+     rcc->parent_realize(dev, errp);
+ }
+@@ -189,6 +182,8 @@ static void rx_cpu_init(Object *obj)
+ {
+     RXCPU *cpu = RX_CPU(obj);
+ 
++    cpu->env.reset_pc = 0;
++    cpu->env.use_reset_pc = false;
+     qdev_init_gpio_in(DEVICE(cpu), rx_cpu_set_irq, 2);
+ }
+ 
+diff --git a/target/rx/cpu.h b/target/rx/cpu.h
+index 5ba1874bd7..c42a03efb3 100644
+--- a/target/rx/cpu.h
++++ b/target/rx/cpu.h
+@@ -98,6 +98,9 @@ typedef struct CPUArchState {
+     uint32_t ack_ipl;           /* execute ipl */
+     float_status fp_status;
+     qemu_irq ack;               /* Interrupt acknowledge */
++
++    bool use_reset_pc;          /* Use reset_pc instead of reset vector */
++    uint32_t reset_pc;          /* PC reset value when use_reset_pc */
+ } CPURXState;
+ 
+ /*
 -- 
 2.47.2
 
