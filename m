@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A0EC021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 12:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C3DC021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 12:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkMK1-00006g-OY; Tue, 18 Feb 2025 07:03:29 -0500
+	id 1tkMPq-0002Rj-19; Tue, 18 Feb 2025 07:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1tkMJu-0008QJ-A7
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 07:03:24 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkMPl-0002RR-0H
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 07:09:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1tkMJs-0003Ko-IN
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 07:03:21 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkMPg-00046n-7A
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 07:09:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739880198;
+ s=mimecast20190719; t=1739880558;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tl5jWt1jY+CS4reZsM+ZcrEsJGS2JjPTAKSIDHPZXuQ=;
- b=J51hxAXw/s9GW43Djcpg2ocPIINLRhB8RwIRFeOb3XLbZ36OcxuKGHNsvXA9H/H+GQ84aE
- PFGwFTCniVWTTiQihsRSwcc9A4RAhvQb4arxgiIIS4riGXYswT3jhda41i8OnBcMglGM6T
- Vk9rIZJHUmmhguhingYiB+fL4uTHEqA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3XDkTUj0mpVFaIQDbae/lmO7G+0fgtZ7kULDZiE1sfA=;
+ b=fRbde0gN1bkZkIyJEhYwcXYVgTP5cbPhKbH2RDG1kAcNvsZ71kCZMN+UJ2lLl4nKUPprQ6
+ 8ELon83VwvYODRBGRA/3HBTxW7qabC1NzwKGfPx74vMa7LLXVNjWjCvMopY9dPjNcE52y4
+ SrxUTjDG4dggdYT5fubAyrvP14btPSo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-amhCjBS9M62iSJguWJGg7g-1; Tue,
- 18 Feb 2025 07:03:15 -0500
-X-MC-Unique: amhCjBS9M62iSJguWJGg7g-1
-X-Mimecast-MFC-AGG-ID: amhCjBS9M62iSJguWJGg7g_1739880193
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-UpAz2koRPAerdrlAreuC2g-1; Tue,
+ 18 Feb 2025 07:09:16 -0500
+X-MC-Unique: UpAz2koRPAerdrlAreuC2g-1
+X-Mimecast-MFC-AGG-ID: UpAz2koRPAerdrlAreuC2g_1739880555
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76D121978C99; Tue, 18 Feb 2025 12:03:11 +0000 (UTC)
-Received: from gezellig (unknown [10.44.34.39])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C63C19560A3; Tue, 18 Feb 2025 12:02:51 +0000 (UTC)
-Date: Tue, 18 Feb 2025 17:32:47 +0530
-From: Kashyap Chamarthy <kchamart@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Eric Auger <eric.auger@redhat.com>, qemu-devel@nongnu.org,
- Ninad Palsule <ninad@linux.ibm.com>, sebott@redhat.com,
- maz@kernel.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Joel Stanley <joel@jms.id.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Yi Liu <yi.l.liu@intel.com>,
- qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- richard.henderson@linaro.org
-Subject: Re: [PATCH v2 2/3] docs/cpu-features: Update "PAuth" (Pointer
- Authentication) details
-Message-ID: <Z7R259Pl1218TsOC@gezellig>
-References: <20250217163732.3718617-1-kchamart@redhat.com>
- <20250217163732.3718617-3-kchamart@redhat.com>
- <ff481ffd-545f-4d0c-b53a-3cf9e0f8f388@redhat.com>
- <Z7Qnsm02w6gao_ui@gezellig>
- <CAFEAcA8H0P14JaAtpcwG99SYkqAdhoNzyQBuO++YjJjM1rUbPw@mail.gmail.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63C24180087C; Tue, 18 Feb 2025 12:09:15 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.33.141])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B24301800361; Tue, 18 Feb 2025 12:09:14 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 349A918000AC; Tue, 18 Feb 2025 13:09:11 +0100 (CET)
+Date: Tue, 18 Feb 2025 13:09:11 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: ROM files and non-x86
+Message-ID: <b7xkiw3cz2wh4mp47gj4f6ogbk2wvfl6tbardpaemoptkbzwsg@oojekkoz22kq>
+References: <a430de0f-1c27-4c52-97d4-b881efa47131@tls.msk.ru>
+ <Z7RpEvbg7ecBN1vf@kitsune.suse.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA8H0P14JaAtpcwG99SYkqAdhoNzyQBuO++YjJjM1rUbPw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
+In-Reply-To: <Z7RpEvbg7ecBN1vf@kitsune.suse.cz>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,42 +84,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 11:34:38AM +0000, Peter Maydell wrote:
-> On Tue, 18 Feb 2025 at 11:29, Kashyap Chamarthy <kchamart@redhat.com> wrote:
+  Hi,
 
-[...]
-
-> > > Maybe we shall
-> > > - rename KVM vCPU Features -> KVM only vCPU Features
-> > > - Add a TCG only vCPU features including both SME and RME ones
-> > > - introduce a top level KVM and TCG vCPU features with below:
-> > > PAUTH, SVE, detailing potential different semantic for both KVM and TCG mode
-> >
-> > Yeah, it can be done.  Would you be okay if I do it as a follow-up?  As
-> > this a re-work of the entire doc with several features.
+> > A similar question exists about seabios and vgabios - for example,
+> > virtio-vga device always tries to load vgabios.rom on all architectures,
+> > while on non-x86 it is useless.
 > 
-> I think personally I would favour not having the split of
-> "KVM only", "TCG only", etc sections. Instead document
-> all of the properties in the same format, and have each
-> property say whether it is TCG-specific, KVM-specific, etc.
-> 
-> Some of these properties may at some point in the future
-> change, after all -- SME is currently TCG only but may get
-> support in KVM and HVF in future; "aarch64" is currently
-> KVM only but we might some day support it in TCG.
+> In this case it is more dodgy. I vaguely recall some code for
+> interpreting these BIOSes somewhere. That is the x86 BIOS can run in
+> some emulation to provide the BIOS functionality on non-x86. Not sure
+> how much it's actually used in practice for the kinds of cards that qemu
+> emulates.
 
-I agree.  As the PAuth case demonstrated, it only makes sense to
-entirely do away with KVM- and TCG-specific sections and use a
-consistent format througout.  That way, no need to remember to update
-outdated sections.  It's also consistent with the x86 docs[1], where we
-don't draw attention to KVM- or TCG-specific features.
+Only relevant in software museums.  X11 has a vesa driver doing exactly
+this.  It's only used in case your linux kernel is so old that it does
+not ship drm drivers for qemu vga devices.
 
-I can rework the doc and send a follow-up.  (Eric: I assume you're also
-fine with Peter's suggestion above :))
-
-[1] https://www.qemu.org/docs/master/system/i386/cpu.html
-
--- 
-/kashyap
+take care,
+  Gerd
 
 
