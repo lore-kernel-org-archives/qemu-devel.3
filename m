@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8750EC021A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 00:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115DFC021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 00:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkBOj-00042e-4P; Mon, 17 Feb 2025 19:23:37 -0500
+	id 1tkBQZ-0004zS-AO; Mon, 17 Feb 2025 19:25:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tkBOh-00042S-Py
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 19:23:35 -0500
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ id 1tkBQX-0004z5-Cf
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 19:25:29 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tkBOf-0000iw-P0
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 19:23:35 -0500
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-8641c7574a5so1911675241.1
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 16:23:33 -0800 (PST)
+ id 1tkBQV-000120-F0
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 19:25:28 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-8692998b124so624348241.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 16:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739838212; x=1740443012; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1739838326; x=1740443126; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tuZjw9CUWSFhNa+rEkY2Qg+58HIBrfbGM3czgcTa9g4=;
- b=jo6ocWcPa0INQ0DFQTPOoNcjsPHuHvOzG758QY1ebTZbHEGRzBE7/1qhoLcsnXFwfE
- 8QA9QoCfmrqZsHn9P47/f9JVurU1r5+8wPP3q8BlS+pKi+5TKKM/Pelf1l0GQ38j875w
- S4lfuEjMe+VOUxdAIhCy+YaucMlLA99+SdZDZk1JVTQwp8qfy0J/fwqmBKIbeI/bGzuA
- 1T4SFgXMaxOkfHFDrgZxu5oJyGDhxkjRZs4oYQbo8xW3WdtDPci9P9UXeb23CxLTXSPw
- 4M+G+hX1TQKLFyZbsSbqlAZ55X1YFx8LGmCk2e2KrzuCRVsAOvz4gTNwKfKRMN89uj5L
- PNeQ==
+ bh=Im61S4+Gc/Ol5Y+wW523xtSwxxa6TZMe51C4ePK5v1g=;
+ b=LqltorJU9guViUiehiQ+r45D1r372B0b+1nVZMHITphNuJ/dANhxa36y2Ds826OVbr
+ VL9j7Pl6i2gDLEmEh67pAoeulerXSiDouTtI/zd52FuYABvGFJNQXycebwIFzVcRtMYx
+ bvCQDaxJayxDFdjGFWfXRV/GQjf85lwShv46lkOptDnYWsxeap/Lu8j4KK1vo1H8Quyk
+ RUw0xEhWi5Qcc4NxYp+nsKxndChgc86YUqxiP2m++3NHVJOgF8Y4llagnzPXz2qmsS4e
+ /e6CiTPpTRqJoDJJrxMLJ6sXzQkZKjpy4XNCTfbMG2r+G1leJTeYJiikdTBO2gLo31hF
+ vlzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739838212; x=1740443012;
+ d=1e100.net; s=20230601; t=1739838326; x=1740443126;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tuZjw9CUWSFhNa+rEkY2Qg+58HIBrfbGM3czgcTa9g4=;
- b=coiYQjpo7k6sTxq146V3jFyNn6+jzQtDgNIn235wrK6zwQDBpk2hP5nHWDaVsoBNi7
- X8hi+x6bkzbwF5I1t5O+BsvKMAjSjkNDrR7+Ux46LGlop8jw7OTw3YyZUk0VrEcdvpBb
- qZeJ4Y3yJtppTYzefIlBBnUpmYHidyXZr3P1kuEwumxLePvy5uCgX+n+bLKxkpyTnXqe
- bNFfKsCO/QyixmTYT3YjoWfVv55J0NIrCSdgRv6hHJ0F2lYDALQdfKIl1IX7ncC0uYrA
- 3u+fI8nsf5KMOxVpTTaYnFz7O5hm4vMYfmT5Z/XYG+rjrIXFaTFHLCAoILPc3siLGhNN
- kZuA==
-X-Gm-Message-State: AOJu0YwXrgguVVZwRFn5EDBur3y8fwrOvzAOnNsW3JKF6a4FnU2tvCbD
- cH/DLr4yliJtw0rkXgvpuotGNXIvQ1no7StZALHkBB7GG1/1j7GPrn/ku1r9kLN1frHjuYN+N5B
- CkMM4O+S26VV518DLgWIkTC91lHib+YUMMwQ=
-X-Gm-Gg: ASbGncuO8INJ+0WtKIlpXDa5DZ+6rmjQ2OKlTFbBgI1klCfxsguTBJkhTWDVncqoqMj
- s2PJ05OSSaFCRRRytYRCQgGmrvA92mDCc3MZw/pg9AsYtt3wke6/lWVNihq4XuDQmAadKjM1NrX
- JFSxxVwXWvjEUfSpMUE9p3CGZclA==
-X-Google-Smtp-Source: AGHT+IHdVFAisQIzq0VXEOuojRvBwE9zILB6GHzhTRtP3KtOSE6z1LCqzCA4h5Vn3YFYyG9usVdBwbb7bbkyPTKnBIU=
-X-Received: by 2002:a05:6102:5129:b0:4bb:e8c5:b149 with SMTP id
- ada2fe7eead31-4bd3fc9f40cmr6242911137.7.1739838212304; Mon, 17 Feb 2025
- 16:23:32 -0800 (PST)
+ bh=Im61S4+Gc/Ol5Y+wW523xtSwxxa6TZMe51C4ePK5v1g=;
+ b=LAPjAPrMX095zvvZ/6bTU3SgzyMmMHHNhnkNDkmzcC/y5WTUpZfM7YJDEkZZIFdtLW
+ K6vx9bR2WBvty5eMOoOc03RqSqVoXifBTMxEyLaxazvX6tIcsIC+do5qzBp6mLjhjQCp
+ gqwOXaHynhYnN4Cfq1rNbA1NGRP6wQL8l/VutBy4qbvFIAwli0HYAcOwuqoea7t7AGQG
+ amb++duvlRLuBVtAzOeWIwF/7EIw8bvef0k00DeD/g1axoK1I5aGFg19vxyY163AQxcY
+ I2eUNFX91o0rp6EtQMxbPhIoLj8zyzNeFhNZCZuJnjwU0kt/g4YeByIZbtBltPhgfiRK
+ hZew==
+X-Gm-Message-State: AOJu0Yz1fB2FaK03eClACugYZ9gHECHalgsndu8o56WUYB0l0G3+VZtk
+ 78KmE5omLcZXvPjO0PR8+Uibfpft4kqFd888xpAm7ArnrnRpRqNdM1aOIZ2UmLjWJGUYEl8opOf
+ uMV7Jje2mfjWnJMBQtJ6Dzs4UTvQ=
+X-Gm-Gg: ASbGncv3Xhw28PVx2nXi8c2HBQF+FPAN7ccYiXAHFddSAhugZAebpC/9IpM/JvFC4T1
+ Gogu/eXZvV+nzQ4ENgJ9geUuHKPnsk0c1VqLlW9iAKHy5CDyStZ73I1FwQil3jtuAG61Ciuz8WI
+ mCC02gAhE0CnfL6chPCHrysFW1+A==
+X-Google-Smtp-Source: AGHT+IGKWo/lRVn+16m6/Obpb73M5MtMD8iG5z4XxibaPzSakKGB4nf1B9AK/jYtJIzzkwdtLLVc8iH+StWK/hg7Ioc=
+X-Received: by 2002:a05:6102:150f:b0:4bb:c8e5:aa6d with SMTP id
+ ada2fe7eead31-4bd3fe46605mr7160726137.17.1739838326073; Mon, 17 Feb 2025
+ 16:25:26 -0800 (PST)
 MIME-Version: 1.0
 References: <20250206182711.2420505-1-pbonzini@redhat.com>
- <20250206182711.2420505-7-pbonzini@redhat.com>
-In-Reply-To: <20250206182711.2420505-7-pbonzini@redhat.com>
+In-Reply-To: <20250206182711.2420505-1-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 18 Feb 2025 10:23:05 +1000
-X-Gm-Features: AWEUYZkOVnPFjbbx1GWudX5U1Kb-rlWu85sAclRj0n8O0Ocl0g4E3-hgR6IeqGo
-Message-ID: <CAKmqyKN2Og+uA00i8a_WMVV_885iU8uw7stoxRRS7VoGLrRONA@mail.gmail.com>
-Subject: Re: [PATCH 06/22] target/riscv: add more RISCVCPUDef fields
+Date: Tue, 18 Feb 2025 10:25:00 +1000
+X-Gm-Features: AWEUYZl14wwVNvax7Yrivde2UmMeI4HhYnxJem_M6Y6yWfTPm9xfc88fbWjxhek
+Message-ID: <CAKmqyKNhc3WAkSee0TOsziKO8HJReg0qrxD04WXp3j90O=O9cQ@mail.gmail.com>
+Subject: Re: [PATCH 00/22] target/riscv: declarative CPU definitions
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,180 +94,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 7, 2025 at 4:29=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> =
+On Fri, Feb 7, 2025 at 4:28=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> =
 wrote:
 >
-> Allow using RISCVCPUDef to replicate all the logic of custom .instance_in=
-it
-> functions.  To simulate inheritance, merge the child's RISCVCPUDef with
-> the parent and then finally move it to the CPUState at the end of
-> TYPE_RISCV_CPU's own instance_init function.
+> Hi Alastair,
 >
-> STRUCT_FIELD is introduced here because I am not sure it is needed;
-> it is a bit ugly and I wanted not to have it in the patch that
-> introduces cpu_cfg_fields.h.inc.  I don't really understand why satp_mode
-> is included in RISCVCPUConfig; therefore, the end of the series includes
+> the subject is a slightly underhanded description, in that what I really
+> wanted to achieve was removing RISC-V's use of .instance_post_init; that'=
+s
+> because RISC-V operate with an opposite conception of .instance_post_init
+> compared to everyone else: RISC-V wants to register properties there,
+> whereas x86 and hw/pci-bridge/pcie_root_port.c want to set them.
+> While it's possible to move RISC-V's code to instance_init, the others
+> have to run after global properties have been set by device_post_init().
+>
+> However, I think the result is an improvement anyway, in that it makes
+> CPU definitions entirely declarative.  Previously, multiple instance_init
+> functions each override the properties that were set by the superclass,
+> and the code used a mix of subclassing and direct invocation of other
+> functions.  Now, instead, after .class_init all the settings for each
+> model are available in a RISCVCPUDef struct, and the result is copied
+> into the RISCVCPU at .instance_init time.  This is done with a single
+> function that starts from the parent's RISCVCPUDef and applies the delta
+> stored in the CPU's class_data.
 
-I don't follow. `satp_mode` is a configurable option, hence the
-inclusion in `RISCVCPUConfig`
+That is nice!
+
+I don't love the ifdef-ery around `#include "cpu_cfg_fields.h.inc"`
+but overall the patches look fine.
+
+>
+> Apart from the small reduction in line count, one advantage is that
+> more validation of the models can be done unconditionally at startup,
+> instead of happening dynamically if a CPU model is chosen.
+>
+> Tested by running query-cpu-model-expansion on all concrete models,
+> before and after applying the patches, with no change except the bugfix
+> noted in patch 10.  The 64-bit variant of the script is as follows:
+>
+>   for i in \
+>     "max" "max32" "rv32" "rv64" "x-rv128" "rv32i" "rv32e" "rv64i" "rv64e"=
+ \
+>     "rva22u64" "rva22s64" "lowrisc-ibex" "shakti-c" "sifive-e31" "sifive-=
+e34" \
+>     "sifive-e51" "sifive-u34" "sifive-u54" "thead-c906" "veyron-v1" \
+>     "tt-ascalon" "xiangshan-nanhu"
+>   do
+>   echo $i
+>   echo "
+>   {'execute': 'qmp_capabilities'}
+>   {'execute': 'query-cpu-model-expansion', 'arguments':{'type': 'full', '=
+model': {'name': '$i'}}}
+>   {'execute': 'quit'}
+>   " | ./qemu-system-riscv64 -qmp stdio -display none -M none | jq .return=
+.model > list-new/$i
+>   echo "
+>   {'execute': 'qmp_capabilities'}
+>   {'execute': 'query-cpu-model-expansion', 'arguments':{'type': 'full', '=
+model': {'name': '$i'}}}
+>   {'execute': 'quit'}
+>   " | ../../qemu-rust/+build/qemu-system-riscv64 -qmp stdio -display none=
+ -M none | jq .return.model > list-old/$i
+>   done
+>
+> Do you think this is a good approach?
+
+Seems fine to me :)
 
 Alistair
-
-> a patch to move satp_mode directly in RISCVCPU, thus removing the need
-> for STRUCT_FIELD; it can be moved before this one in a non-RFC posting.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/riscv/cpu.h                |  6 ++++
->  target/riscv/cpu_cfg.h            |  1 +
->  target/riscv/cpu_cfg_fields.h.inc |  6 +++-
->  target/riscv/cpu.c                | 48 ++++++++++++++++++++++++++++++-
->  4 files changed, 59 insertions(+), 2 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index f757f0b6210..9b25c0c889b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -519,6 +519,12 @@ struct ArchCPU {
->
->  typedef struct RISCVCPUDef {
->      RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
-> +    uint32_t misa_ext;
-> +    int priv_spec;
-> +    int32_t vext_spec;
-> +    int satp_mode32;
-> +    int satp_mode64;
-> +    RISCVCPUConfig cfg;
->  } RISCVCPUDef;
->
->  /**
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index ad02693fa66..07789a9de88 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -39,6 +39,7 @@ typedef struct {
->  struct RISCVCPUConfig {
->  #define BOOL_FIELD(x) bool x;
->  #define TYPED_FIELD(type, x) type x;
-> +#define STRUCT_FIELD(type, x) type x;
->  #include "cpu_cfg_fields.h.inc"
->  };
->
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc
-> index 56fffb5f177..cbedf0a703b 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -4,6 +4,9 @@
->  #ifndef TYPED_FIELD
->  #define TYPED_FIELD(type, x)
->  #endif
-> +#ifndef STRUCT_FIELD
-> +#define STRUCT_FIELD(type, x)
-> +#endif
->
->  BOOL_FIELD(ext_zba)
->  BOOL_FIELD(ext_zbb)
-> @@ -160,8 +163,9 @@ TYPED_FIELD(uint16_t, cbop_blocksize)
->  TYPED_FIELD(uint16_t, cboz_blocksize)
->
->  #ifndef CONFIG_USER_ONLY
-> -TYPED_FIELD(RISCVSATPMap, satp_mode);
-> +STRUCT_FIELD(RISCVSATPMap, satp_mode)
->  #endif
->
->  #undef BOOL_FIELD
->  #undef TYPED_FIELD
-> +#undef STRUCT_FIELD
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index baf4dd017b2..1d999488465 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -74,6 +74,15 @@ bool riscv_cpu_option_set(const char *optname)
->      return g_hash_table_contains(general_user_opts, optname);
->  }
->
-> +static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, RISCVCPUConfig *sr=
-c)
-> +{
-> +#define BOOL_FIELD(x) dest->x |=3D src->x;
-> +#define TYPED_FIELD(type, x) if (src->x) dest->x =3D src->x;
-> +    /* only satp_mode, which is initialized by instance_init */
-> +#define STRUCT_FIELD(type, x)
-> +#include "cpu_cfg_fields.h.inc"
-> +}
-> +
->  #define ISA_EXT_DATA_ENTRY(_name, _min_ver, _prop) \
->      {#_name, _min_ver, CPU_CFG_OFFSET(_prop)}
->
-> @@ -432,7 +441,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_=
-32_bit)
->  }
->
->  static void set_satp_mode_max_supported(RISCVCPU *cpu,
-> -                                        uint8_t satp_mode)
-> +                                        int satp_mode)
->  {
->      bool rv32 =3D riscv_cpu_mxl(&cpu->env) =3D=3D MXL_RV32;
->      const bool *valid_vm =3D rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
-> @@ -1476,6 +1485,24 @@ static void riscv_cpu_init(Object *obj)
->      cpu->cfg.cbop_blocksize =3D 64;
->      cpu->cfg.cboz_blocksize =3D 64;
->      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
-> +
-> +    env->misa_ext_mask =3D env->misa_ext =3D mcc->def->misa_ext;
-> +    riscv_cpu_cfg_merge(&cpu->cfg, &mcc->def->cfg);
-> +
-> +    if (mcc->def->priv_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +        cpu->env.priv_ver =3D mcc->def->priv_spec;
-> +    }
-> +    if (mcc->def->vext_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +        cpu->env.vext_ver =3D mcc->def->vext_spec;
-> +    }
-> +#ifndef CONFIG_USER_ONLY
-> +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32 && mcc->def->satp_mode32 !=3D=
- RISCV_PROFILE_ATTR_UNUSED) {
-> +        set_satp_mode_max_supported(RISCV_CPU(obj), mcc->def->satp_mode3=
-2);
-> +    }
-> +    if (riscv_cpu_mxl(env) >=3D MXL_RV64 && mcc->def->satp_mode64 !=3D R=
-ISCV_PROFILE_ATTR_UNUSED) {
-> +        set_satp_mode_max_supported(RISCV_CPU(obj), mcc->def->satp_mode6=
-4);
-> +    }
-> +#endif
->  }
->
->  static void riscv_bare_cpu_init(Object *obj)
-> @@ -2968,6 +2995,25 @@ static void riscv_cpu_class_base_init(ObjectClass =
-*c, void *data)
->              assert(def->misa_mxl_max <=3D MXL_RV128);
->              mcc->def->misa_mxl_max =3D def->misa_mxl_max;
->          }
-> +        if (def->priv_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +            assert(def->priv_spec <=3D PRIV_VERSION_LATEST);
-> +            mcc->def->priv_spec =3D def->priv_spec;
-> +        }
-> +        if (def->vext_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +            assert(def->vext_spec !=3D 0);
-> +            mcc->def->vext_spec =3D def->vext_spec;
-> +        }
-> +        if (def->satp_mode32 !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +            assert(def->satp_mode32 <=3D VM_1_10_SV32);
-> +            mcc->def->satp_mode32 =3D def->satp_mode32;
-> +        }
-> +        if (def->satp_mode64 !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +            assert(def->satp_mode64 <=3D VM_1_10_SV64);
-> +            mcc->def->satp_mode64 =3D def->satp_mode64;
-> +        }
-> +        mcc->def->misa_ext |=3D def->misa_ext;
-> +
-> +        riscv_cpu_cfg_merge(&mcc->def->cfg, &def->cfg);
->      }
->
->      if (!object_class_is_abstract(c)) {
-> --
-> 2.48.1
->
->
 
