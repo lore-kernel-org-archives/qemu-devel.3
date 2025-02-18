@@ -4,105 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5D7C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51769C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:52:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQpK-0003HC-Pp; Tue, 18 Feb 2025 11:52:06 -0500
+	id 1tkQpn-0003oi-9f; Tue, 18 Feb 2025 11:52:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tkQpH-0003Gw-Oa
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:52:04 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkQph-0003mT-E6
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:52:29 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tkQpG-0003pt-66
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:52:03 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6f4bc408e49so44396467b3.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:52:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkQpf-0003tk-TY
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:52:29 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4396d2e32b7so26004575e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:52:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739897521; x=1740502321; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SUg5hRemBTl583agbqIXv+TU9BbZVBk0hFvd+grZogk=;
- b=wTf2AkEXFcq1EL5mneP4Ceu80DO39nv5pH0mXB1ZOj/3cGylSwxR0KL7LCek9JHB7o
- Of5FO4W+Z8vF2nv7Vn3h2E/QbTUp2mNy9V7EI/40thzLrXiZezv+VXtt7ju19wMS4AH8
- a0TkHYNqMnGWTTnqm6powjc2XkzlVj38iMg2rqUQbmKusD37SNtzEqES9JImYWjW3IWN
- d9P/6wn5oSD9XZTbBOMC7OmYPSfgjJZ9D5wK2r8o4V8u702IzL1JZN+e2DMHvH4b8h3w
- oe+PJQoFXT6MopX/QviDsV3/NCOZ3DVSyQsca/1Td1qtCVGeYrKJ4eR6X8CWLdzeSNGR
- /fzg==
+ d=linaro.org; s=google; t=1739897546; x=1740502346; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wgQIXygvM+I2a2L+051aRwgTFxhuGIVIJLESI8PGuE0=;
+ b=DSH0FOdSqbyHDMiYRSVYByUESDKdhcvRUG80KHuvJjqSE6x9jbQ8L9w+UWqoOUeOiu
+ R26rbOxMZtXmaKOj89fwSdmEpCA/87jCrX5IzyrBdTQmhN8c8zpX5h3eRRZUT2DSzFOY
+ oNhlDraBMFhPwr4akotSyRcrdQ5Zokm+q+jZqgNOaEUJdMkDnvokmrsGJEQmSdhkqWfF
+ hRUCr1YvJEyXqAThUNIxhknhyOk/BExG4EDBaK6LBzLuPnOTjfXBxkW8zHtdyTWKOL2+
+ ork6i4CH8kiVO9C5+uuTOKR/tJcKBIRcgOCQdY7eY5O5Ck+BVJ2RgnCQJucciqxGGx+R
+ ix6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739897521; x=1740502321;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SUg5hRemBTl583agbqIXv+TU9BbZVBk0hFvd+grZogk=;
- b=b/BiCmSPh5SjFCC4w3ZSoUJQOM3ByC0vBhvbheFe+yLrWzLgq6mPQKi10zpkVmuXhn
- j2A5rQfwGNHZ1NcJdKfU5AbfDqpzzEy+fwcdJwQCDI0TbIETJpguzVTf6xVW3ywfAFLy
- Hy2tk9zYmM30ANhkj6uu+pxaXEY1rJuRuV/muYlxPZSnZy9UDIyd3Hj+oyslAcZxxhJT
- CU7wXu1tU34C61LIi7kV1QKUdjNCtuUhI27YWyHkpSlecNmaZUVHd1QaXITBnt50EYfu
- c9LJMuWlkPjbswele3GmJzIuam2lY3lRMZ0/ktEDX95WhLeiJYYgqdxx0m6PtTST2rxv
- rCxg==
+ d=1e100.net; s=20230601; t=1739897546; x=1740502346;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wgQIXygvM+I2a2L+051aRwgTFxhuGIVIJLESI8PGuE0=;
+ b=HSv6vK23fjQ1mCTlrC39ySJluvTHlpmCHpaJL0HhGGHvSy3PywafOyUEUmOiOOphWN
+ ko+UzDe32+hSjYoGtuqcq8evz/Ac7/ivUQk1RR2sCKfGPPimCnRR04zQY6Ey5bpJOgrQ
+ rA/awfp6ZYVtMlF0XT4P2xUJzChqVdxYKJ1jRd92HeJz2G1jiwt0ByP7HDZ6Jd83LO5J
+ Gqk/6Y9TQb5YgPdWli3V5giK2pImaifOebVCUYkZFBrZCLyyBzxcOSvjtPr9mMeex5zR
+ 45v8bA+BVWpsF4kOQGLGRmQiMJo4Q4EO7W3JbLs/QSLCKhUorzFqVvP+Tj2fWuuN1grM
+ +jQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWKryirn07vCaP0Lyy7F8TaEK4f6ywPgCmg0YvYrmiDaq2cqIvTDEjobdFV8Sc2UHKnpoysdLavdqC@nongnu.org
-X-Gm-Message-State: AOJu0YyJvSqFS0TX3S3xYppkLmm/4kWGP4Ukd255ZjkdoRJEdtzI8X8l
- w2cGRl5PajSValmh+cnZV4F9V1tlFAM4gatGANNO6pJWGHjW60mRlQhsNORV38MfA4RLKuyc2cT
- 0PrYV6DtSYZilUxyDioPk8ApfW9XSb+ckdTCTIA==
-X-Gm-Gg: ASbGncsnQKPYZOSb3XVRKJQBxrsUuBWxnTJ80JIc19ZeVAhmRJlkCH0w26OQ4Lt6+Sz
- tCtPZG/S1Ec8aRGNM733ay3OzyrOC5juMHhMXl28Ax4IF6Z+cHQWH86KjNN7kowqiolaMur/GDw
- ==
-X-Google-Smtp-Source: AGHT+IFSBDMDskdJZhM3j45Vj5qf+6sGvSLwRxA4uxaIfiGTNEtJqe17CHndY3nC9BvVA1V5yZtmyJXNtiEBVwndkDo=
-X-Received: by 2002:a05:690c:3703:b0:6f7:56f7:2398 with SMTP id
- 00721157ae682-6fba56589bbmr4990197b3.7.1739897520952; Tue, 18 Feb 2025
- 08:52:00 -0800 (PST)
+ AJvYcCXQeoKjm5hUhp+bFrsv6t/IvNBdwdYs9FMtIONBZrjOB/SgqaOldqjzZJM/hT+dKinXT6gijNcjfOYw@nongnu.org
+X-Gm-Message-State: AOJu0YyQ3XXyYWQfpG9tzucYH4gYOLVXUOjw15xodoaUkXzg7t4WUa3v
+ QsmH895b1hFBDOlseH+RdNkN3S6MEUl2etG78Rxbx5vuqcS/0P1Sdo+P8hkMwnI=
+X-Gm-Gg: ASbGncuNki9Hu/r8TbH64ZdGGEZyOepBr8u4rtf7t1sQGWS1CrfKnJEKUhFwfpbhh0a
+ cYhVh5ELATMl8iK1GwKIZ5pLXdxx+llkmvGcmg+xlD7zsiF2SzKYq8zCk2CT4BgSkEgYUcw/wOr
+ fyaZL8PQleRhSPbqvghBZhbXW4XjracLTZFNSAqQZQB1sLg4Ae1zdxodSfjbzKRmF2lNSOtAlNQ
+ C4mmdCiQL+q5AYenAC1wOJVy1TAjUPZtYWoSGSaqYSjia4ye4992LBPGqQSp2znvPBNnVp/tl0i
+ VhLz8FLGg3pdN8MiJlIZoKOvRcGc37z9XldoHBFEgD0BrNXQdFikC/eF+MM=
+X-Google-Smtp-Source: AGHT+IEauRg6jm/6Zg3iaAKDUti4KhDizMeNwByTlQcDkm7QS+RI8vivWo6R5S+GGnG2fUbs6TEWeQ==
+X-Received: by 2002:a05:600c:3d0b:b0:439:88bb:d02d with SMTP id
+ 5b1f17b1804b1-43988bbd322mr62595755e9.2.1739897546069; 
+ Tue, 18 Feb 2025 08:52:26 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4398e84efb9sm38355465e9.10.2025.02.18.08.52.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Feb 2025 08:52:25 -0800 (PST)
+Message-ID: <3f1387aa-3f8d-4f46-8370-3668ebcbc4ec@linaro.org>
+Date: Tue, 18 Feb 2025 17:52:24 +0100
 MIME-Version: 1.0
-References: <87jz9sq23d.fsf@draig.linaro.org> <87o6yzjlni.fsf@draig.linaro.org>
- <887b8dba-2a23-4e14-8388-729cbbccfd6e@linaro.org>
-In-Reply-To: <887b8dba-2a23-4e14-8388-729cbbccfd6e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 18 Feb 2025 16:51:49 +0000
-X-Gm-Features: AWEUYZnhooUUKPz4K6eif7fw_HZkSe6YUG5lBtFhqMgDa0ez7TpBtReD30u6aKo
-Message-ID: <CAFEAcA8-yKK9ud4dUF2bEiK=VLpZdw53+smoxdHB48NeMHsw8g@mail.gmail.com>
-Subject: Re: KVM/QEMU community call agenda items for 18/2/25
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] hw/i386/amd_iommu: Orphanize & QDev cleanups
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Wei Huang <wei.huang2@amd.com>, qemu-devel@nongnu.org,
+ Jason Wang <jasowang@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Ani Sinha
+ <ani@anisinha.ca>, Peter Xu <peterx@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Alessandro Di Federico <ale@rev.ng>, Anton Johansson <anjo@rev.ng>,
- Markus Armbruster <armbru@redhat.com>, 
- Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>, 
- Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org, 
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com, 
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
- Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
- Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, 
- Luc Michel <luc@lmichel.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com, 
- mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>,
- QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, 
- Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Wei Wang <wei.w.wang@intel.com>, 
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20230313153031.86107-1-philmd@linaro.org>
+ <a2af5477-d124-e8f7-32e3-1b194769bf2e@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a2af5477-d124-e8f7-32e3-1b194769bf2e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,22 +108,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Feb 2025 at 16:42, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
-> - About { embedded / heap allocated } QOM objects: In C developers
->    don't want to give away the embedded model, as it offers free
->    type checks (while heap-alloc must use runtime checks). IIUC with
->    Rust it is the opposite, you mentioned is simpler to get build time
->    checks with the heap-alloc version, is that right? (I didn't took
->    particular notes about it). I'm interested because for declarative
->    dynamic machines modelling, it is simpler to use the heap to allocate
->    the objects, and I'd like to promote that more.
+Hi,
 
-Mmm, I vaguely recall a discussion in a QEMU Summit a few years
-back about this; we've got a mix of embedded-allocation and
-the (older style) heap-alloc, but we aren't necessarily
-completely wedded to embedded-allocation and for dynamic
-machine creation heap-alloc is more natural.
+ > On 13/3/23 16:30, Philippe Mathieu-Daudé wrote:
+>> Following [*]:
+>>
+>>    "Last time I tried AMD vIOMMU it didn't even boot."
+>>
+>> mark amd_iommu as orphan in preparation of deprecating it
+>> (or should we do that directly?).
 
--- PMM
+Almost 2 years passed, should I respin?
+
+>> [*] https://lore.kernel.org/qemu-devel/ 
+>> CACGkMEtjmpX8G9HYZ0r3n5ErhAENKhQ81f4ocfCYrh=XoF=5hw@mail.gmail.com/
+>>
+>> Philippe Mathieu-Daudé (6):
+>>    MAINTAINERS: Mark AMD-Vi emulation as orphan
+>>    hw/i386/amd_iommu: Explicit use of AMDVI_BASE_ADDR in amdvi_init
+>>    hw/i386/amd_iommu: Remove intermediate AMDVIState::devid field
+>>    hw/i386/amd_iommu: Move capab_offset from AMDVIState to AMDVIPCIState
+>>    hw/i386/amd_iommu: Set PCI static/const fields via PCIDeviceClass
+>>    hw/i386/amd_iommu: Factor amdvi_pci_realize out of
+>>      amdvi_sysbus_realize
+
 
