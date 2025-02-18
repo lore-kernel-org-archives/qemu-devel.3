@@ -4,146 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B1FC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 10:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB4EC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 10:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkKR4-00036M-E1; Tue, 18 Feb 2025 05:02:38 -0500
+	id 1tkKUh-0004c0-QN; Tue, 18 Feb 2025 05:06:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tkKR2-000360-BI
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 05:02:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tkKQy-0005Ce-Ta
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 05:02:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739872950;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vM8oQcw56iDzIkBNo5F9NbF7jvyuOGdoibeV82EJTvo=;
- b=LD0Cg1qGvsZwMLPW9MLTLFZca4J27IJm7zSbkbit4w8HAH3mETwXgFYHslIrnhyDDuoBJp
- bPWQunJcNOTPCzO0mHmZAnxRMAC3PmXkXb5RWm9E3QJJp7mqVNJCzkDlLR5/awwSaloQJ9
- FYfA26YxvWGdU8T4nMLBcTk4lpxzV1M=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-_h3Zs_SIPgmWXQaVOycpPQ-1; Tue, 18 Feb 2025 05:02:28 -0500
-X-MC-Unique: _h3Zs_SIPgmWXQaVOycpPQ-1
-X-Mimecast-MFC-AGG-ID: _h3Zs_SIPgmWXQaVOycpPQ_1739872947
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43970e7df5bso14604055e9.2
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 02:02:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739872947; x=1740477747;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tkKUf-0004ad-M4
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 05:06:21 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tkKUd-0005h6-A8
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 05:06:21 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5ded69e6134so7915228a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 02:06:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739873177; x=1740477977; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vM8oQcw56iDzIkBNo5F9NbF7jvyuOGdoibeV82EJTvo=;
- b=piLxYUJBXPKIyV3mO3WvCSpBx0/knmMaCozIErJigA/tc2OFoNhjsjXLqV+JDEP6SN
- 2aiwNj+Ax6kaAiPjOhZjm+AFh3Fo3oWCZUvhHYuas9QRVHEGuH2xjj3PrCQG5BXDYDZ8
- VeY2U3aKTMUJjUx/PtAlIpB1wyq89SO/InsIRWvdEA3b8sL6plgOlT3xQuChL9mArg+9
- LxGQaaDvM+33wCkejv4mZtZstsmb27yKtDngJ3FEGL+lHmvEFz7zxe9FbFWnQQC39ADV
- hhE2nijAdvIpVxHJaegLshbrkoEvfw0AJVaicT8o5qnVTncIKkA2E1qIH60CihTv8/oo
- JTyA==
-X-Gm-Message-State: AOJu0YzGg+1IN7RWd+nFC3rTlgAnNnlpTqcuFvVba48bjPY4AWmd+Pj0
- xH2Fyzf6/ekC/aixbsBY9TMEEdsxTX0+Ys4hZzT2ReaMnu11CCrnqDwRnp0zyreMop4DpSIRn0K
- 9rHEyBKOWBxK6Kuezd5znKiURidqIFcPij2vvcP7DEoZvX7OVUIca
-X-Gm-Gg: ASbGnctksQJVNscMZY/JFcUdo/tz0YpJ8y+pPe4JRN1SEYsA4bC7Engx43qV4EfTRnW
- MJLqgAgI94BChHtTOyH0LkB8p2GhaOMyFemsGN1F+YgD56WqAC2kveNknKa4yQ9sFk39xiJXnSj
- 5TT+pWqN50pWQ8eTqMavphB/7Ewczv8tP2evrTJdHodlC7AMsmdfoA7QBjS++vlVkoy0QqWjbU5
- 4FjMCGgebrUeBgWWIQip61JqlBg3j6otgelUcQ3Q0SX4vefLTg4TaLKoINpwMzlIqh80kYPpvy8
- abx88w+7y48/u0aNCnpvqfA7SEsTO5c8rPlwHC58k2Q=
-X-Received: by 2002:a05:600c:3b12:b0:439:96b2:e9b with SMTP id
- 5b1f17b1804b1-43996b212d9mr9103135e9.9.1739872946890; 
- Tue, 18 Feb 2025 02:02:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGNh/kIsdvirdjqAJEuNmlyW7FlbOcN76OpnaQ4ayGhPyVyoZhU/OhApcslDLslyjeXRRXPjg==
-X-Received: by 2002:a05:600c:3b12:b0:439:96b2:e9b with SMTP id
- 5b1f17b1804b1-43996b212d9mr9102755e9.9.1739872946420; 
- Tue, 18 Feb 2025 02:02:26 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
- ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4398ba53406sm35956735e9.14.2025.02.18.02.02.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 02:02:25 -0800 (PST)
-Message-ID: <a6e6ffa7-5536-487d-a9b1-126ec054eb13@redhat.com>
-Date: Tue, 18 Feb 2025 11:02:25 +0100
+ bh=uVHmn2di7wEz8AAfK2RCNiymNJ8Gb2ufA4Im3UFonq0=;
+ b=YjjwRtn+hAEVtaPCBemiEBbJrpTrpGQTgSxRCJSbmtnha+3geMUJyNmVC2AIB0csn+
+ DSgVjqVVqlyWy+PBAMTyuZNQMo6r9iFvONIBgf9hUNMV2wqpzqKP+M/qg0yFOuAS2dhs
+ JWUXO508G554iHQUL/+sVjLdjxaNRcwlPGiJbH9Lbfv7nXHp9Z/Caqt0DIcDj/+A81uP
+ 0VYSoTysPhKZePELYRAxiJ0ezqYkRe8G3oRjPZKAaEAO06dgMOUAY71leZ2UFB2Py6D8
+ dZuzmDaihx45d02paQpNx/OrGmCNRT3lLKh8VCo62q9VWGEtKu5uLDeXDfFeORz1iol/
+ cVPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739873177; x=1740477977;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uVHmn2di7wEz8AAfK2RCNiymNJ8Gb2ufA4Im3UFonq0=;
+ b=SSiHCU51C85B6Y8Frgksaf2sSlcv7Qei3Pf3Q9OOk2k5eRQpqsK0VUep5BgIlik9ia
+ IPvCwLWFQV1HQvvzZb0HmxifYwvpcAmQ5QmbpWw2rYRhxDlegsJU/jbNA7mpgv+TNBdz
+ BE4noL1t3AVXSFwRtDsfCn1SSCRgc/AYbfKeHJ9qbDsE9kIYZzVfchXg2eXGVFUFl0e3
+ 2809+xnkF0gs129jkJhiYjJC9i0ZkpRV/ZsfFIEqe2eCQlQDYb+4VZ2ZogaaK+n0Uytu
+ 5do3+14ZKHJCKNeMUaf5zkU5rKEWBfu9k+hzqfNCkNe48XU0t7RM8v29i8aEVw+e5Dca
+ H+4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZJQPOjynfYDJY3oNSplHIS7APxVOmr2GRIos0NdnshoFiVIAHpcinGyOL3va8lq30UBEFfCzuZsuR@nongnu.org
+X-Gm-Message-State: AOJu0YyBsVirRvQ9VSgOizL0cG3ilHLOWTbBpPb7JqQx58JoIwE4VM2l
+ GFycOHMp9T1S4LjSOg44fzq51zg94qnDkiSvullqRGh9eRam5F70YyQqUhQNTCI4pITyRjXhaZ1
+ r3gw=
+X-Gm-Gg: ASbGncs8lExwrqaEg+kNw3nvPl2SaujJiiCmi1ZtOpC0kk/MiuaOMBRPRyMeXaq1wET
+ vCwUCkwNzJ1j8qO3FGavYfHFokhOXyRL1YGg4/ayeVu4s8bv23+Hg23Fb0dISYz/LN1qPwwYlBU
+ bP9XoD91Iv1Ho1C7XqgIBBbOW1Uzv+PrXOzjbG1RUyAScULZopt3KF0wxN+USGYDwc3GHNKqYv3
+ uOuPplirCmO4nM5hUkHIz16mBf5ihtD/HXsOieocFJcCjHdhwbDCmp2I254T8szW+DzSbTBQGDO
+ hDCkt6YEQXrKBMWtoQ==
+X-Google-Smtp-Source: AGHT+IF7efTaNttSE20ZvER2UL1TfOQ56UDB9IEMAqVg1BVs/5389TpdaMsO0DJwVwGi3EcsLpbo0A==
+X-Received: by 2002:a05:6402:210a:b0:5dc:74f1:8a31 with SMTP id
+ 4fb4d7f45d1cf-5e0361c273fmr13074780a12.26.1739873176807; 
+ Tue, 18 Feb 2025 02:06:16 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dece1b4e3bsm8388608a12.11.2025.02.18.02.06.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Feb 2025 02:06:15 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 942225F843;
+ Tue, 18 Feb 2025 10:06:14 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,  "open
+ list:Virt" <qemu-arm@nongnu.org>
+Subject: Re: [PULL 23/32] tests/functional: extend test_aarch64_virt with
+ vulkan test
+In-Reply-To: <6d1cad85-4824-4912-b209-60a8070c59af@redhat.com> (Thomas Huth's
+ message of "Tue, 18 Feb 2025 07:34:53 +0100")
+References: <20250110131754.2769814-1-alex.bennee@linaro.org>
+ <20250110131754.2769814-24-alex.bennee@linaro.org>
+ <CAFEAcA8Kf4eF-nxEsxhPZnV3pwU+9kXLq1zXDi61ODQEQXaAYw@mail.gmail.com>
+ <6d1cad85-4824-4912-b209-60a8070c59af@redhat.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Tue, 18 Feb 2025 10:06:14 +0000
+Message-ID: <87tt8rk1nt.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] net: vhost-user: add QAPI events to report connection
- state
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Brivio <sbrivio@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Laine Stump <laine@redhat.com>,
- Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250217092550.1172055-1-lvivier@redhat.com>
- <87ldu3heti.fsf@pond.sub.org>
-Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <87ldu3heti.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,153 +110,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/02/2025 08:50, Markus Armbruster wrote:
-> Laurent Vivier <lvivier@redhat.com> writes:
-> 
->> The netdev reports NETDEV_VHOST_USER_CONNECTED event when
->> the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
->> when it is disconnected.
->>
->> The NETDEV_VHOST_USER_CONNECTED event includes the chardev id.
->>
->> This allows a system manager like libvirt to detect when the server
->> fails.
->>
->> For instance with passt:
->>
->> { 'execute': 'qmp_capabilities' }
->> { "return": { } }
->>
->> [killing passt here]
->>
->> { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
->>    "event": "NETDEV_VHOST_USER_DISCONNECTED",
->>    "data": { "netdev-id": "netdev0" } }
->>
->> [automatic reconnection with reconnect-ms]
->>
->> { "timestamp": { "seconds": 1739538638, "microseconds": 354181 },
->>    "event": "NETDEV_VHOST_USER_CONNECTED",
->>    "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
->>
->> Tested-by: Stefano Brivio <sbrivio@redhat.com>
->> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
->> ---
->>
->> Notes:
->>      v4:
->>        - as ChardevInfo is not needed, move events definition from
->>          qapi/char.json to qapi/net.json
->>      
->>      v3:
->>        - remove ChardevInfo, provides only the chardev id
->>      
->>      v2:
->>        - remove duplicate line info.frontend_open
->>
->>   qapi/net.json    | 40 ++++++++++++++++++++++++++++++++++++++++
->>   net/vhost-user.c |  3 +++
->>   2 files changed, 43 insertions(+)
->>
->> diff --git a/qapi/net.json b/qapi/net.json
->> index 2739a2f42332..310cc4fd1907 100644
->> --- a/qapi/net.json
->> +++ b/qapi/net.json
->> @@ -1031,3 +1031,43 @@
->>   ##
->>   { 'event': 'NETDEV_STREAM_DISCONNECTED',
->>     'data': { 'netdev-id': 'str' } }
->> +
->> +##
->> +# @NETDEV_VHOST_USER_CONNECTED:
->> +#
->> +# Emitted when the vhost-user chardev is connected
->> +#
->> +# @netdev-id: QEMU netdev id that is connected
->> +#
->> +# @chardev-id: The character device id used by the QEMU netdev
->> +#
->> +# Since: 10.0
->> +#
->> +# .. qmp-example::
->> +#
->> +#     <- { "timestamp": {"seconds": 1739538638, "microseconds": 354181 },
->> +#          "event": "NETDEV_VHOST_USER_CONNECTED",
->> +#          "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
->> +#
->> +##
->> +{ 'event': 'NETDEV_VHOST_USER_CONNECTED',
->> +  'data': { 'netdev-id': 'str', 'chardev-id': 'str' } }
->> +
->> +##
->> +# @NETDEV_VHOST_USER_DISCONNECTED:
->> +#
->> +# Emitted when the vhost-user chardev is disconnected
->> +#
->> +# @netdev-id: QEMU netdev id that is disconnected
->> +#
->> +# Since: 10.0
->> +#
->> +# .. qmp-example::
->> +#
->> +#     <- { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
->> +#          "event": "NETDEV_VHOST_USER_DISCONNECTED",
->> +#          "data": { "netdev-id": "netdev0" } }
->> +#
->> +##
->> +{ 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
->> +  'data': { 'netdev-id': 'str' } }
->> diff --git a/net/vhost-user.c b/net/vhost-user.c
->> index 12555518e838..0b235e50c650 100644
->> --- a/net/vhost-user.c
->> +++ b/net/vhost-user.c
->> @@ -16,6 +16,7 @@
->>   #include "chardev/char-fe.h"
->>   #include "qapi/error.h"
->>   #include "qapi/qapi-commands-net.h"
->> +#include "qapi/qapi-events-net.h"
->>   #include "qemu/config-file.h"
->>   #include "qemu/error-report.h"
->>   #include "qemu/option.h"
->> @@ -271,6 +272,7 @@ static void chr_closed_bh(void *opaque)
->>       if (err) {
->>           error_report_err(err);
->>       }
->> +    qapi_event_send_netdev_vhost_user_disconnected(name);
->>   }
->>   
->>   static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
->> @@ -300,6 +302,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
->>                                            net_vhost_user_watch, s);
->>           qmp_set_link(name, true, &err);
->>           s->started = true;
->> +        qapi_event_send_netdev_vhost_user_connected(name, chr->label);
-> 
-> We seem to use "label" and "id" interchangeably.  Unfortunate.
-> 
-> 
->>           break;
->>       case CHR_EVENT_CLOSED:
->>           /* a close event may happen during a read/write, but vhost
-> 
-> Like Daniel, I wonder whether provding events for chardevs instead would
-> be more broadly useful.
+Thomas Huth <thuth@redhat.com> writes:
 
-In fact, it depends on what libvirt needs or wants.
+> On 17/02/2025 17.30, Peter Maydell wrote:
+>> On Fri, 10 Jan 2025 at 13:23, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+>>> Now that we have virtio-gpu Vulkan support, let's add a test for it.
+>>> Currently this is using images build by buildroot:
+>>>
+>>>    https://lists.buildroot.org/pipermail/buildroot/2024-December/768196=
+.html
+>>>
+>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>> Message-Id: <20250108121054.1126164-24-alex.bennee@linaro.org>
+>> Hi; this test currently fails for me with a clang sanitizer
+>> build (ubuntu 24.04 host). It seems to run weston in the guest,
+>> which fails with:
+>> 2025-02-17 16:11:10,218: [16:11:10.672] Command line: weston -B
+>> headless --renderer gl --shell kiosk -- vkmark -b:duration=3D1.0
+>> 2025-02-17 16:11:10,224: [16:11:10.675] OS: Linux, 6.11.10, #2 SMP Thu
+>> Dec  5 16:27:12 GMT 2024, aarch64
+>> 2025-02-17 16:11:10,225: [16:11:10.680] Flight recorder: enabled
+>> 2025-02-17 16:11:10,226: [16:11:10.681] warning: XDG_RUNTIME_DIR
+>> "/tmp" is not configured
+>> 2025-02-17 16:11:10,226: correctly.  Unix access mode must be 0700
+>> (current mode is 0777),
+>> 2025-02-17 16:11:10,226: and must be owned by the user UID 0 (current
+>> owner is UID 0).
+>> 2025-02-17 16:11:10,227: Refer to your distribution on how to get it, or
+>> 2025-02-17 16:11:10,227:
+>> http://www.freedesktop.org/wiki/Specifications/basedir-spec
+>> 2025-02-17 16:11:10,228: on how to implement it.
+>> 2025-02-17 16:11:10,240: [16:11:10.695] Starting with no config file.
+>> 2025-02-17 16:11:10,253: [16:11:10.707] Output repaint window is 7 ms ma=
+ximum.
+>> 2025-02-17 16:11:10,262: [16:11:10.716] Loading module
+>> '/usr/lib/libweston-14/headless-backend.so'
+>> 2025-02-17 16:11:10,313: [16:11:10.768] Loading module
+>> '/usr/lib/libweston-14/gl-renderer.so'
+>> 2025-02-17 16:11:21,858: libEGL warning: egl: failed to create dri2 scre=
+en
+>> 2025-02-17 16:11:21,959: libEGL warning: egl: failed to create dri2 scre=
+en
+>> 2025-02-17 16:11:22,023: libEGL warning: egl: failed to create dri2 scre=
+en
+>> 2025-02-17 16:11:22,032: [16:11:22.486] failed to initialize display
+>> 2025-02-17 16:11:22,033: [16:11:22.488] EGL error state:
+>> EGL_NOT_INITIALIZED (0x3001)
+>> 2025-02-17 16:11:22,036: [16:11:22.490] fatal: failed to create
+>> compositor backend
+>> Then eventually the test framework times it ou and sends it
+>> a SIGTERM, and QEMU SEGVs inside libEGL trying to run an
+>> exit handler:
+>> qemu-system-aarch64: terminating on signal 15 from pid 242824
+>> (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/p=
+ython3)
+>> UndefinedBehaviorSanitizer:DEADLYSIGNAL
+>> =3D=3D243045=3D=3DERROR: UndefinedBehaviorSanitizer: SEGV on unknown add=
+ress
+>> 0x73fbfefe6a31 (pc 0x73fbba9788e9 bp 0x73fbbbe0af80 sp 0x7ffd676fbfe0
+>> T243045)
+>> =3D=3D243045=3D=3DThe signal is caused by a READ memory access.
+>>      #0 0x73fbba9788e9
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #1 0x73fbbaafc178
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16fc178)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #2 0x73fbba62564f
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x122564f)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #3 0x73fbbab067d7
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x17067d7)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #4 0x73fbba63b786
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x123b786)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #5 0x73fbba96290a
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x156290a)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #6 0x73fbba941c5c
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x1541c5c)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>>      #7 0x73fbc2041f20
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f20) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #8 0x73fbc2041f68
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x41f68) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #9 0x73fbc2034ca9
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x34ca9) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #10 0x73fbc203ae90
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3ae90) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #11 0x73fbc203aeda
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0x3aeda) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #12 0x73fbc20a45f5
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa45f5) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #13 0x73fbc20a2bfc
+>> (/lib/x86_64-linux-gnu/libEGL_nvidia.so.0+0xa2bfc) (BuildId:
+>> 6cd9e3e571aa104d4fa5512a5c7196617fea6b51)
+>>      #14 0x73fbd3047a75 in __run_exit_handlers stdlib/exit.c:108:8
+>>      #15 0x73fbd3047bbd in exit stdlib/exit.c:138:3
+>>      #16 0x5a5bab5e3fdb in qemu_default_main
+>> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/=
+main.c:52:5
+>>      #17 0x5a5bab5e3f9e in main
+>> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/=
+main.c:76:9
+>>      #18 0x73fbd302a1c9 in __libc_start_call_main
+>> csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+>>      #19 0x73fbd302a28a in __libc_start_main csu/../csu/libc-start.c:360=
+:3
+>>      #20 0x5a5ba9c5b554 in _start
+>> (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-=
+aarch64+0x15dc554)
+>> (BuildId: 8efda3601b42aa2644dde35d1d63f7b22b649a33)
+>> UndefinedBehaviorSanitizer can not provide additional info.
+>> SUMMARY: UndefinedBehaviorSanitizer: SEGV
+>> (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15788e9)
+>> (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>> =3D=3D243045=3D=3DABORTING
+>
+> FWIW, I just saw this test also failing in a normal clang build
+> (without sanitizers enabled). In the console log:
+>
+> 2025-02-18 07:08:47,497: [06:08:47.588] Loading module
+> '/usr/lib/weston/kiosk-shell.so'
+> 2025-02-18 07:08:47,914: =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> 2025-02-18 07:08:47,915: vkmark 2017.08
+> 2025-02-18 07:08:47,915: =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> 2025-02-18 07:08:47,915: Vendor ID:      0x8086
+> 2025-02-18 07:08:47,915: Device ID:      0x9A60
+> 2025-02-18 07:08:47,916: Device Name:    Virtio-GPU Venus (Intel(R)
+> UHD Graphics (TGL GT1))
+> 2025-02-18 07:08:47,916: Driver Version: 100675584
+> 2025-02-18 07:08:47,916: Device UUID:    c5930b2b12677aad53343f8a072209af
+> 2025-02-18 07:08:47,916: =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> 2025-02-18 07:08:52,277: [vertex] device-local=3Dtrue:MESA-VIRTIO:
+> debug: stuck in fence wait with iter at 1024
+> 2025-02-18 07:09:03,142: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 2048
+> 2025-02-18 07:09:24,640: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 3072
+> 2025-02-18 07:09:46,192: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 4096
+> 2025-02-18 07:10:28,665: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 5120
+> 2025-02-18 07:11:11,067: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 6144
+> 2025-02-18 07:11:53,619: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 7168
+> 2025-02-18 07:12:36,397: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 8192
+> 2025-02-18 07:14:01,431: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 9216
+> 2025-02-18 07:15:26,387: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 10240
+> 2025-02-18 07:16:51,349: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 11264
+> 2025-02-18 07:18:16,409: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 12288
+> 2025-02-18 07:19:41,439: MESA-VIRTIO: debug: stuck in fence wait with
+> iter at 13312
+>
+> Should we maybe mark it as flaky for the time being?
 
-If we implement the event for chardev, libvirt will have to find internally which netdev 
-it belongs to, if we implement the event for netdev it has directly the netdev id.
+I think the tests are too sensitive to host conditions
+(mesa/virglrenderer builds/flags and underlying graphics hardware). I'd
+rather detect the known flakiness and report it as a skip so they still
+run on known good setups.
 
-But no one never asked for a chardev event until now, not sure it's useful.
+Hopefully this will work itself out as distros update and we can narrow
+down requirements in configure.
 
-Stefano shown that vhost-user event is really easy to use with existing code of libvirt.
+>
+>  Thomas
 
-> 
-> That said, there's nothing wrong with the patch itself, so
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> 
-
-Thanks,
-Laurent
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
