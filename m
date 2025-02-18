@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E67C021AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 17:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80349C021AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 17:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkR5S-0006XJ-9t; Tue, 18 Feb 2025 12:08:46 -0500
+	id 1tkRKj-0004Xr-CX; Tue, 18 Feb 2025 12:24:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tkR5Q-0006WT-K8
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 12:08:44 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tkRKg-0004Wu-WA
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 12:24:31 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tkR5P-000680-13
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 12:08:44 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-221057b6ac4so55930215ad.2
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 09:08:42 -0800 (PST)
+ id 1tkRKf-00080d-EU
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 12:24:30 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-220d39a5627so85176985ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 09:24:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739898521; x=1740503321; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739899468; x=1740504268; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to; bh=3K22+YVskyblSXAB4oUB8qk58s8rMjdxRxPhzIex0rc=;
- b=QifGozvef9pUlRW+yetzUkVPt1qtDIaIN9hT72zXYrYu2hXqglc1lub6kcNwgymF9/
- cSE+nahzyjp9FluIz23AIupM8PYdjyn7nT+oAMDM/ZqnRbXsLEZgoO7BGvqiZjSU6PMh
- Ps1vjrUOZgIxstHvDD0LXfBfU+N0DDwqQ7hJ9YyN64QzqLy6EHNpYM8mcRbYUDMfxkTm
- twkJGbG8IDe57bxxWfSw8aD79PBk77MS1YQhkO+d4taQMQK7eJG6l8LZZlR9efdRXUOJ
- sJK3m6PjOmi83UqYZJlUJ5QFQvMILA7++tL4Ys/h051QLIIIMU2kWhtd42taz5JWBnvM
- 3feg==
+ b=Pw/LkEpZQcMjsnX4wtbx/ODYz3r1mUn7+h9UW40QdmQQG+Qm4QgbnkRQN+hSx7AI9K
+ nLhg7tn6u+PxKcxsNDPMK7M/wYcDT5n4e1mvVJRjFypHqE1CjF1Nza+wy+NecgtECDmi
+ Lje+OkMOM1GFOhgXsNT5hKMYn9f7N2Bk8I72UgPV2PaxeqhUsfl1jfUE9HEBEoyg+sAh
+ O2Q9cfJa9p+WVW3vE5buVgfahOQubqzWruV+SiZ3cV4zU2SEeqrP7IrW3sBdpooevtww
+ nlZWXD2soZ8A/bn9IlZSB7VnIWFgYg0aIaK5t0P+PpovK3U30whKzvLcX7FC2IpUy2An
+ ZvNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739898521; x=1740503321;
+ d=1e100.net; s=20230601; t=1739899468; x=1740504268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=3K22+YVskyblSXAB4oUB8qk58s8rMjdxRxPhzIex0rc=;
- b=BtANtExVto1hOFIl4OKVTvqRcY9JAACS2Fo2xg8c/2c66CHR6Z/KBr4Pqp9SNmnRl8
- Pq+/JaXTB/rFzBAocNdWiu5NyHovMb3VyYfNp27sN3+UmHfV6l17cgIHG2kWykUe+i0f
- bILnNPHzPHJvAwQ3G76Qz5siP5w477drkLVgo7zmty9PGrv21jOXpH+ylPANipbaUb7q
- cCKbAkCuW35Jc+zMLwXaQlvwnoD7iHfjxgCeEUcMy9RAt/GYil/Oe/QkwUZB8knPAYO+
- pcEXIvuOYXjwRaGOyhI4zg4GKSdkmxusQ1/gflLKxrNYLLh528mWeVC1eQ0pOoO4c8Pp
- 8vMQ==
-X-Gm-Message-State: AOJu0YwhB3GLxP4QFkZHN4gzMZPRCBLROU2RHHtj/kO50dV0LsO5kDQ5
- /YS/lr6e5Iu0PJbK+JpODKS4LdyqOXyEKOKkZ0HgqUbGE60VURasvIHosZfwqayvYGf9wfFrT4j
- W
-X-Gm-Gg: ASbGncvl501F8TMNjkWPwK921t5yvdmCXET1ZdT2IhAaV/KwB7cp5H+x1bdEdgxzAli
- VQfY5v9cFjHn7GPsybr+OsYienozdxmr8IC6GNSvOSj41ELie7I4mij5EdCPptK3JaAUr7eTyAl
- oBHzNB0ehzr98+/7hC+dmdMuEP5/8cngfOosUB0JwkK2dyscdIHPG+WOtE42WtjMThAjl+AqD9Q
- ecp739B3+G6sxhO1RW0JUf90aCcY+kRc1s4O+Kfvc1D/XfxahJsAIhOmiCTkJ6JEA15uXcnmb1x
- QBggipBIB37q0D4CMk21s07KTe4SCruuOUFi3qjhFTpOVkg=
-X-Google-Smtp-Source: AGHT+IHQmKdeK7qkCmDqfi7oIoWu78MspEnjfq1lH0D1JtXxRAzW8t6ux9KYZZPOTGSWWpwtzrePFQ==
-X-Received: by 2002:a17:902:e88d:b0:215:bb50:6a05 with SMTP id
- d9443c01a7336-22103efc0c7mr226848015ad.9.1739898521463; 
- Tue, 18 Feb 2025 09:08:41 -0800 (PST)
+ b=jWqVoQX8V2wLUydfNw8nnwv+q1WC+2Gb7Udzx+gCeilRyFkaHI3Czc9BIincJYTQi+
+ zUS4HQsVCqIFnFVooPwBTT/3RQ+JpUpskoA5TQ/zIDljOoUUn3Z+lvaOQNjuDDwAbuWA
+ dvuJAr4e4Qyvb3V1aUeXbcrzavBRJ44jkP9drvceOL+k7eP4yQPzOo8q36g6xQO4J877
+ VuCHowAMccc4zUUgSC4LduJDdK6qH17u4WutfC4xR9MYu9CyKxKolNuNSUnWh4UEqCkA
+ 99Ms71u/mb8amL539qdugxinBzE1Xo8NsDHs2WGoWOg4FuKAs4hhCJf1z85qtNej6l0V
+ NPCA==
+X-Gm-Message-State: AOJu0Yyzk1SnRF7tLraCer2qJY8/hj5f1sCnb097QdXYc96+QcLMkNf+
+ 7jODYQY6KiZ4GXybD0kPL5ksfzNCdhNiPyA3vYHW6vDaUmTMCBe+NyktFHT1YbWFRriz4Rps/Q2
+ +
+X-Gm-Gg: ASbGncuKamNcy6Nb1SKccCboHZnYv/rXbO6cnXRTWu6c93P/C0w74pJeFOv/vGQuyQx
+ GuaYwj2eolsEYIcRt6yTHaj7Ddv1nLnbOmY4h6XOV3TIcujYchWsQ99gFedRvZZaK+T2Czc9j7v
+ d9Kb2DQ26KlYI2jaxAAAgHDFEmHeL5mRy8dMznUutfZjux5z9cKe3mpIQH3DuSzmkwaQNcAbH1X
+ c+yjL85rz48dtNEsw9w0NJ8o9tk1WP4E3TgvWIc06P+7XilhIH2DDXP+I/YQVPPInJwb7XpvwJY
+ GDfKRlxw/PVUyDIyQ5LtP8DI1Q+0JXEfYf8AKoxlbExNvqM=
+X-Google-Smtp-Source: AGHT+IFSXeZTLwdIYFr69OeMH/Bgq0wYtit3BMaUKxMXaf5EXNPTz9DrTt9hz5RU1PL/O/v/A0+k3g==
+X-Received: by 2002:a05:6a00:3d04:b0:728:e906:e45a with SMTP id
+ d2e1a72fcca58-73261958231mr21956982b3a.24.1739899468036; 
+ Tue, 18 Feb 2025 09:24:28 -0800 (PST)
 Received: from stoup.. (71-212-39-66.tukw.qwest.net. [71.212.39.66])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d5585faasm91917875ad.225.2025.02.18.09.08.40
+ d2e1a72fcca58-73261a0c0b8sm7015981b3a.164.2025.02.18.09.24.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Feb 2025 09:08:41 -0800 (PST)
+ Tue, 18 Feb 2025 09:24:27 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 13/28] target/mips: Use VADDR_PRIx for logging pc_next
-Date: Tue, 18 Feb 2025 09:08:39 -0800
-Message-ID: <20250218170839.81501-2-richard.henderson@linaro.org>
+Subject: [PULL v3 13/28] target/mips: Use VADDR_PRIx for logging pc_next
+Date: Tue, 18 Feb 2025 09:24:26 -0800
+Message-ID: <20250218172426.81706-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250218170839.81501-1-richard.henderson@linaro.org>
-References: <20250218170839.81501-1-richard.henderson@linaro.org>
+In-Reply-To: <20250218172426.81706-1-richard.henderson@linaro.org>
+References: <20250218172426.81706-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
