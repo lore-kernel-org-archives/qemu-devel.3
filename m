@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CEDC021A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 02:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFAF4C021AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 02:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkDXv-0001yq-4h; Mon, 17 Feb 2025 21:41:15 -0500
+	id 1tkDlK-00048D-VO; Mon, 17 Feb 2025 21:55:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tkDXs-0001yS-NC
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 21:41:12 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1tkDlD-00045o-Qw
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 21:55:01 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tkDXq-0006s5-4u
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 21:41:12 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2fbffe0254fso9218134a91.3
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 18:41:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1tkDl8-0000Uy-UI
+ for qemu-devel@nongnu.org; Mon, 17 Feb 2025 21:54:58 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-220d28c215eso69925495ad.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 18:54:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739846467; x=1740451267;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1739847292; x=1740452092;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1AOeiJdqiiI5aRq2ttuarwBGGm5TOHJs5D4HyEE5s4U=;
- b=HQSWiWDWLU6eXbwQcxBrlx5BMdEf01s1c6u004HoCsin10L491QL0ja0nOAqJ649mO
- OFaLeW+tVlUE2M5GVBl+TMg+EYOOaIcseFFYIFpUNStUCi9LfFPK6KIhAn+0o0EN74kD
- 0Q2t9MeO/7pNM5Dl8a4+7XDHeOL+nW7e3rC91fDd2g3Z0XcIJmI0qp44MC/VTTYoFxm+
- 4QAedNRa1PkV4qLiS/tGE5hlaPz/WEq7T5ceQqVZ8EBtUVRGTcBV52HjIi6CkRW/SX8u
- 0AwikEebP/n1/tMDcX1ccsULYnBu3sz+C8dIdcATiYoSeg5LmK/jq88XUkG0vRxgexIF
- Tcag==
+ bh=jMUW/GnUYvHdgMBPniAILJ6d8IoxDISMulVgOjY7AJs=;
+ b=2cNRhxML4+5/kBihZKinNo2+/u8MRWnltw7H6eQYRX5AiTrTW3nzwCDBJO59FJG5e6
+ DI2uO9Q6ohg0aKzwdH8L7H3hnrF23yhkdI0PI0CCwmxvVktt4AjllTSZRhl5QPHw6lZx
+ dl5tbqQ//uI86vMBYxMC2Y/4ltAknakioGmQCIt4j2bS/L52VBmVQTqa1ZZNjYIaHFmk
+ zDUjsTHo6AOVGyDuedVLif3E0nbIlbWUNR0gxkKMrHIA6P1Y/A5inEZwNQJj10R0Mbcv
+ +q9lYFktJ0vY5QbOYWRHF2uiHbatqLG2brjognhg/nCQDnUFSSzr2LdqvG189xO/UznU
+ GplA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739846467; x=1740451267;
+ d=1e100.net; s=20230601; t=1739847292; x=1740452092;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1AOeiJdqiiI5aRq2ttuarwBGGm5TOHJs5D4HyEE5s4U=;
- b=U82lbL16SAh7ALHYRxiKWX5Iws3LIg/Obr3vDO5jzZMQlBEgsi/ZcNwXGILR9DHRoR
- 63pDecAeXqgEWBldMAtW1zMnZtvc93guZ8bk5Nwq20zz9G+ER03bjjyrwxpk8CI2ovsr
- Sl495GdnDLVW9Ox94xHPAn1REI//+XxzGdV7wJvd5kh029cUKQxh2XsEGyQKGp7n6iBF
- KHonoBCLHAgUk+NgI/m0LlgVsHjIVT9cyCa/HzdsaoISGJzW/zX6d46uO5lpDHEN5DwV
- Ld2+R+9A71TsBVsNsbdPyd4yETK5Tt35nzWIEI5RPs0trormn/ZQOWljwtdhkHuubtyJ
- s/7Q==
-X-Gm-Message-State: AOJu0Yxrf8gmln3uKqyKwZylrF0OZlR5gdh4uv01rFDltiOTzouve/13
- veCL4kaz3v/jhgvPZAspJpK8/XbsSqcZtDXBPAIy7V3ktgbcrBhyRK08fi0oaxCV5YjfW2r+vjj
- HEx2Z1g==
-X-Gm-Gg: ASbGncs4iyENzQ7kKyBup0QWnhjKrCofrVKyuO2GCKWb6eFiYYdgU2RqdytgqQkDGcI
- UzvLSXISJlNz3g2dGcmQuYLt8E997sKOldjuD+h5LGCCt1vGcmdSc7zbqPtM8A4pA1A0XkfkkOM
- b4JoR2m6GaEMKzXsXWCdSGXKCw9oJ2UXryl7zlEUwrEpLHh94ET+DFVDKGKmtJGc5HmSNdu8Xxe
- EPG3AmoZeg7zSZBPI2MM5ZyNzZJdiiLGjVodykNuY+hnewkBTsssFOkE6kw44Cg//4c2F3QFpAA
- /YJZKm2eV7MQwHJ/rZekEyV2rJFgeAhBg9IKpYJB
-X-Google-Smtp-Source: AGHT+IFdh0k3rnhsBaJxSDvpAKnJNaj9CJZTCWV70suzZI6BW3MDRQu6sPQeyms+uUnFYmdJ+glCJQ==
-X-Received: by 2002:a17:90a:d44b:b0:2ef:2f49:7d7f with SMTP id
- 98e67ed59e1d1-2fc40f22d72mr22170952a91.18.1739846466865; 
- Mon, 17 Feb 2025 18:41:06 -0800 (PST)
-Received: from Hyman-Dev-Euler.zelin.local ([154.64.226.180])
+ bh=jMUW/GnUYvHdgMBPniAILJ6d8IoxDISMulVgOjY7AJs=;
+ b=dWQd8adv3Xn5o2NISntQPIZNEFeA9iWNkoDiA71M6DJ+tBrqu4Jts65uMsHxSY7+nq
+ r8l0yT16iHUhXZZUPPePtXhifyxRlIOneZkXPQSaZN+poTe4ME2FRQS7glLvZnat5dcK
+ xmu/7rSyC9zlQm0HzVppLwRrgVLWUAiaKd5vorroeAOiFJwfGqc3k6K46pw81Im9qTbI
+ AkWT7snk3G/bpyrlpMVSm5/P+70QDSdvmJsEVqhO7Ek0fDTX0lPv+nifsjqugrjM0L/7
+ g/Lvt3AOhrIMOKqVPrU4yxli/yjEpeR7YY976MehvUjJyFtmrggemJlmhdmCDOTr9MqW
+ d70w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhERkYfUWUX966wYjMf5OSMR4ApbBotljR90HF7JqAItkaBmjkSB1mFqbFrSfHv+NLIiKIVJA56VPK@nongnu.org
+X-Gm-Message-State: AOJu0Ywq1aBccDS/aMaEmXiOzELX2kgJBr7h1tpUzZW4U1TucsZhSuwl
+ 436/zgsXLtWo81whwauiqZyZXs0GoJ7LKGpHdeWWfB18YBgUzo9FMIzbcBvNbP0=
+X-Gm-Gg: ASbGncsGWb2gGtcFYLXk8UVgFoxB4lTwmbFDqOj8udSIOak10tW/0Pj1NKXchUZDdbf
+ HcmnRQzC+CioTJvd2j488ZBIP4vssSV87EDKs34kcPRg1vxPtfC5Vx4n6n7iU8bXk2VFM17u3Jf
+ Nl0ioJNpxP2OHLLrpVpW16kpsKzDSo/IWGdWDU8jMfxGMvnhBSPW8bb5riWQ/eO1f15crzx5zv5
+ 54O03x0vGNmszkrj7YF5fDFkfQdF0K1OlYGuUhlwZA2B2AEhEG5goyRmsSvP1MuSn0cm4fMvJtJ
+ 7aug/T9/rP5q1TL5Ay1+gqykzg==
+X-Google-Smtp-Source: AGHT+IHcTqgc4/lvSBqE2D6EQZhGZRrp93z7bvsvT3PjZbtKYZAv/aJrdATgWP36QjF8aIHEJJqcqA==
+X-Received: by 2002:a17:902:d58b:b0:216:2426:767f with SMTP id
+ d9443c01a7336-221040cec77mr201836485ad.49.1739847292053; 
+ Mon, 17 Feb 2025 18:54:52 -0800 (PST)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220f8682181sm55625905ad.209.2025.02.17.18.41.02
+ d9443c01a7336-220d556d473sm78293595ad.166.2025.02.17.18.54.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Feb 2025 18:41:06 -0800 (PST)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>
-Subject: [RFC] migration: Introduce migration throttle event
-Date: Tue, 18 Feb 2025 10:39:55 +0800
-Message-Id: <4df13a8005170ad42cbbc883a0a8fdbb1ab94ac1.1739846274.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
+ Mon, 17 Feb 2025 18:54:51 -0800 (PST)
+From: Deepak Gupta <debug@rivosinc.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>,
+ Adam Zabrocki <azabrocki@nvidia.com>
+Subject: [PATCH 1/2] target/riscv: fix access permission checks for CSR_SSP
+Date: Mon, 17 Feb 2025 18:54:45 -0800
+Message-Id: <20250218025446.2452254-1-debug@rivosinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=yong.huang@smartx.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,57 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
+zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
+to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
+rather rules clearly specified in section "2.2.4. Shadow Stack Pointer"
+of `zicfiss` specification. Thanks to Adam Zabrocki for bringing this
+to attention.
 
-When the developer is examining the time distribution of
-the migration, it is useful to record the migration throttle
-timestamp. Consequently, include the migration throttle event.
+Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
+for zicfiss"
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+Reported-by: Adam Zabrocki <azabrocki@nvidia.com>
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 ---
- migration/ram.c     |  1 +
- qapi/migration.json | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ target/riscv/csr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 589b6505eb..725e029927 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -524,6 +524,7 @@ static void mig_throttle_guest_down(uint64_t bytes_dirty_period,
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index afb7544f07..75c661d2a1 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -191,6 +191,11 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
  
-     /* We have not started throttling yet. Let's start it. */
-     if (!cpu_throttle_active()) {
-+        qapi_event_send_migration_throttle();
-         cpu_throttle_set(pct_initial);
-     } else {
-         /* Throttling already on, just increase the rate */
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8b9c53595c..0495065b5d 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1393,6 +1393,21 @@
- { 'event': 'MIGRATION_PASS',
-   'data': { 'pass': 'int' } }
- 
-+##
-+# @MIGRATION_THROTTLE:
-+#
-+# Emitted from the source side of a migration at the start of vCPU throttle
-+#
-+# Since: 10.0
-+#
-+# Example:
-+#
-+# <- { "event": "MIGRATION_THROTTLE",
-+#      "timestamp": { "seconds": 1267041730, "microseconds": 281295 } }
-+#
-+##
-+{ 'event': 'MIGRATION_THROTTLE' }
++    /* If ext implemented, M-mode always have access to SSP CSR */
++    if (env->priv == PRV_M) {
++        return RISCV_EXCP_NONE;
++    }
 +
- ##
- # @COLOMessage:
- #
+     /* if bcfi not active for current env, access to csr is illegal */
+     if (!cpu_get_bcfien(env)) {
+ #if !defined(CONFIG_USER_ONLY)
 -- 
-2.27.0
+2.34.1
 
 
