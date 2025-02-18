@@ -4,97 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E8C9C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 09:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760ABC02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 09:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkJrg-0005Qf-If; Tue, 18 Feb 2025 04:26:04 -0500
+	id 1tkJwC-0006TC-Pb; Tue, 18 Feb 2025 04:30:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkJrf-0005QS-JW; Tue, 18 Feb 2025 04:26:03 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tkJw4-0006SD-4K
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 04:30:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkJrZ-0008CK-Ti; Tue, 18 Feb 2025 04:26:03 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxvJw0L1Bz4x5h;
- Tue, 18 Feb 2025 20:25:52 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxvJs26Brz4x33;
- Tue, 18 Feb 2025 20:25:49 +1100 (AEDT)
-Message-ID: <4bbd5a9e-934e-4535-b829-1d4fe070d63d@kaod.org>
-Date: Tue, 18 Feb 2025 10:25:46 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tkJvu-0000ZG-3f
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 04:30:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739871023;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fKxbREbYYut+UzJL+lxoM94dklK9mlMdBL1wz8/W0EM=;
+ b=IEG0vsrEcDDzVP0jvr5rlAEzuqkLSQ/P+P/0VvGdkxJ2Eva+1ceVte53a6lXrZJCTb4c1R
+ lCIM3UmzAQGmXT8m+8oosOXwuUkGbieh4xs3q1opgIfxWQ/amEYnQUaiLB9wF/3UmcJTxR
+ XXWncDlZ3UngN5h8JwC7jsWrnh32iY4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-475-bs8xyhT0Ob6a-B4WvAwJgg-1; Tue, 18 Feb 2025 04:30:22 -0500
+X-MC-Unique: bs8xyhT0Ob6a-B4WvAwJgg-1
+X-Mimecast-MFC-AGG-ID: bs8xyhT0Ob6a-B4WvAwJgg_1739871021
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4393e873962so28534255e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 01:30:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739871021; x=1740475821;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fKxbREbYYut+UzJL+lxoM94dklK9mlMdBL1wz8/W0EM=;
+ b=mE+x/B83lzjeSZGbuPn8MPbF94/mwt31+OYysf1nzwza+4N5neiMK/xVMTJKcfVwTN
+ 3i5PCI5aWo09mn2Z7ZXGITr3pYmaQODMmR/OhEfy6zU18upAyNo4UWcRXqrYUuWWj/80
+ RVWqvoZCzQRVncIOQODawkojZC7BWUisGNxvqhSQUHI8/IwcctP3MEOHWvGOR+boHt5W
+ 5ULHpWyM5LH80Qp20EUki2+uyvHH3FhxBZJY2cUoWjbiCyph/EIh9P+oPg7Khyb5AA0o
+ LTGkYo/Nmx2g7xhKtvtdC7nMpuPv6mK+9ugQ/jaqKNfakjL4NX0c3WfClbEvRhWESPlS
+ s5TQ==
+X-Gm-Message-State: AOJu0YytyXkuaPkqvhbIToWmxuMosNpeBoS5UfypnSP4QVS0wpF+oOvc
+ WL2MLPJOe4ZgIb/E1dw+3EHbZu0M2A5+Ml513huvKNHCAtKreTwRXnDUjwQrEXGUpvHrGvPj53s
+ BS4tIod7DrdkqTSIREWJw9LAKbYFFpt8Grqxso5TLjItekGAs1I4j
+X-Gm-Gg: ASbGncsQVCV0GMFGNeveOw/JKSoC6JRJSVAfrz1ULVP/NFPVWc2b4Q0cc8CqktIEIqh
+ SUXuO8ujlQFENLmjX+JrRvBbdPimlw4oL3PzYusYzBLEgYVwjcq7nK/tSxfv2H+w5WJvof9vbik
+ k4hJwHfz9PPisWhN1IbouAu/6rbCG5FvKPf+wpkUlnqXsqycZS5m8LAcy+RNTniCWqHqTxv2euX
+ 0oecI1RfKFiMLEE+Lmmij1UoIGAT+MVFRFlkHRWnq0bsBl5b8Po8CfKu3IHA7BG95fJ1UuDJaJA
+ ONFfQMxj5sg=
+X-Received: by 2002:a05:600c:470a:b0:434:f5c0:328d with SMTP id
+ 5b1f17b1804b1-4396e752a98mr114863135e9.23.1739871020876; 
+ Tue, 18 Feb 2025 01:30:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEoLZqvcpCETBLrHseQsw1T8dvPlao5k4MSApjE4pKB/trIUBiEN16ptYEbh5UxHeSjrpnbIg==
+X-Received: by 2002:a05:600c:470a:b0:434:f5c0:328d with SMTP id
+ 5b1f17b1804b1-4396e752a98mr114862855e9.23.1739871020481; 
+ Tue, 18 Feb 2025 01:30:20 -0800 (PST)
+Received: from [192.168.10.81] ([176.206.122.109])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-439858ec5fasm49436255e9.29.2025.02.18.01.30.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Feb 2025 01:30:19 -0800 (PST)
+Message-ID: <be838a82-6ca5-4e28-99c5-23e88c17c84e@redhat.com>
+Date: Tue, 18 Feb 2025 10:30:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/28] Support AST2700 A1
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH 06/22] target/riscv: add more RISCVCPUDef fields
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com
+References: <20250206182711.2420505-1-pbonzini@redhat.com>
+ <20250206182711.2420505-7-pbonzini@redhat.com>
+ <CAKmqyKN2Og+uA00i8a_WMVV_885iU8uw7stoxRRS7VoGLrRONA@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CAKmqyKN2Og+uA00i8a_WMVV_885iU8uw7stoxRRS7VoGLrRONA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,131 +147,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
-
-
-On 2/13/25 04:35, Jamin Lin wrote:
-> v1:
->   1. Refactor INTC model to support both INTC0 and INTC1.
->   2. Support AST2700 A1.
->   3. Create ast2700a0-evb machine.
->   
-> v2:
->    To streamline the review process, split the following patch series into
->    three parts.
->    https://patchwork.kernel.org/project/qemu-devel/cover/20250121070424.2465942-1-jamin_lin@aspeedtech.com/
->    This patch series focuses on cleaning up the INTC model to
->    facilitate future support for the INTC_IO model.
+On 2/18/25 01:23, Alistair Francis wrote:
+> On Fri, Feb 7, 2025 at 4:29 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> Allow using RISCVCPUDef to replicate all the logic of custom .instance_init
+>> functions.  To simulate inheritance, merge the child's RISCVCPUDef with
+>> the parent and then finally move it to the CPUState at the end of
+>> TYPE_RISCV_CPU's own instance_init function.
+>>
+>> STRUCT_FIELD is introduced here because I am not sure it is needed;
+>> it is a bit ugly and I wanted not to have it in the patch that
+>> introduces cpu_cfg_fields.h.inc.  I don't really understand why satp_mode
+>> is included in RISCVCPUConfig; therefore, the end of the series includes
 > 
-> v3:
->   1. Update and add functional test for AST2700
->   2. Add AST2700 INTC design guidance and its block diagram.
->   3. Retaining the INTC naming and introducing a new INTCIO model to support the AST2700 A1.
->   4. Create ast2700a1-evb machine and rename ast2700a0-evb machine
->   5. Fix silicon revision issue and support AST2700 A1.
+> I don't follow. `satp_mode` is a configurable option, hence the
+> inclusion in `RISCVCPUConfig`
+
+My understanding is that satp_mode is a combination of:
+
+- the maximum supported satp mode; this is stored in 
+cpu->satp_modes.supported and actually comes from the instance_init 
+function.
+
+- the value of the properties, which is stored in satp_map->map and 
+satp_map->init
+
+For non-bare CPU models, including all vendor CPU models, 
+cpu->satp_modes.supported also acts as the default value for the mode 
+properties.  Furthermore, for all vendor CPU models all modes are 
+supported up to the max mode, for example you never have a CPU that 
+supports sv48 but not sv39.
+
+So it seems that the CPU config is really the supported satp modes, it's 
+just bare CPU models that have the further restriction that you have to 
+specify at least one mode by hand.  Under this interpretation:
+
+- all that needs to be in RISCVCPUConfig is what I called satp_mode32 
+and satp_mode64
+
+- satp_mode32 or satp_mode64 therefore can be removed from RISCVCPUDef
+
+- init and map would be moved to RISCVCPU because they are purely a QOM 
+concept
+
+Paolo
+
+> Alistair
 > 
-> With the patch applied, QEMU now supports two machines for running AST2700 SoCs:
-> ast2700a0-evb: Designed for AST2700 A0
-> ast2700a1-evb: Designed for AST2700 A1
+>> a patch to move satp_mode directly in RISCVCPU, thus removing the need
+>> for STRUCT_FIELD; it can be moved before this one in a non-RFC posting.
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   target/riscv/cpu.h                |  6 ++++
+>>   target/riscv/cpu_cfg.h            |  1 +
+>>   target/riscv/cpu_cfg_fields.h.inc |  6 +++-
+>>   target/riscv/cpu.c                | 48 ++++++++++++++++++++++++++++++-
+>>   4 files changed, 59 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>> index f757f0b6210..9b25c0c889b 100644
+>> --- a/target/riscv/cpu.h
+>> +++ b/target/riscv/cpu.h
+>> @@ -519,6 +519,12 @@ struct ArchCPU {
+>>
+>>   typedef struct RISCVCPUDef {
+>>       RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
+>> +    uint32_t misa_ext;
+>> +    int priv_spec;
+>> +    int32_t vext_spec;
+>> +    int satp_mode32;
+>> +    int satp_mode64;
+>> +    RISCVCPUConfig cfg;
+>>   } RISCVCPUDef;
+>>
+>>   /**
+>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+>> index ad02693fa66..07789a9de88 100644
+>> --- a/target/riscv/cpu_cfg.h
+>> +++ b/target/riscv/cpu_cfg.h
+>> @@ -39,6 +39,7 @@ typedef struct {
+>>   struct RISCVCPUConfig {
+>>   #define BOOL_FIELD(x) bool x;
+>>   #define TYPED_FIELD(type, x) type x;
+>> +#define STRUCT_FIELD(type, x) type x;
+>>   #include "cpu_cfg_fields.h.inc"
+>>   };
+>>
+>> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+>> index 56fffb5f177..cbedf0a703b 100644
+>> --- a/target/riscv/cpu_cfg_fields.h.inc
+>> +++ b/target/riscv/cpu_cfg_fields.h.inc
+>> @@ -4,6 +4,9 @@
+>>   #ifndef TYPED_FIELD
+>>   #define TYPED_FIELD(type, x)
+>>   #endif
+>> +#ifndef STRUCT_FIELD
+>> +#define STRUCT_FIELD(type, x)
+>> +#endif
+>>
+>>   BOOL_FIELD(ext_zba)
+>>   BOOL_FIELD(ext_zbb)
+>> @@ -160,8 +163,9 @@ TYPED_FIELD(uint16_t, cbop_blocksize)
+>>   TYPED_FIELD(uint16_t, cboz_blocksize)
+>>
+>>   #ifndef CONFIG_USER_ONLY
+>> -TYPED_FIELD(RISCVSATPMap, satp_mode);
+>> +STRUCT_FIELD(RISCVSATPMap, satp_mode)
+>>   #endif
+>>
+>>   #undef BOOL_FIELD
+>>   #undef TYPED_FIELD
+>> +#undef STRUCT_FIELD
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index baf4dd017b2..1d999488465 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -74,6 +74,15 @@ bool riscv_cpu_option_set(const char *optname)
+>>       return g_hash_table_contains(general_user_opts, optname);
+>>   }
+>>
+>> +static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, RISCVCPUConfig *src)
+>> +{
+>> +#define BOOL_FIELD(x) dest->x |= src->x;
+>> +#define TYPED_FIELD(type, x) if (src->x) dest->x = src->x;
+>> +    /* only satp_mode, which is initialized by instance_init */
+>> +#define STRUCT_FIELD(type, x)
+>> +#include "cpu_cfg_fields.h.inc"
+>> +}
+>> +
+>>   #define ISA_EXT_DATA_ENTRY(_name, _min_ver, _prop) \
+>>       {#_name, _min_ver, CPU_CFG_OFFSET(_prop)}
+>>
+>> @@ -432,7 +441,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
+>>   }
+>>
+>>   static void set_satp_mode_max_supported(RISCVCPU *cpu,
+>> -                                        uint8_t satp_mode)
+>> +                                        int satp_mode)
+>>   {
+>>       bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
+>>       const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
+>> @@ -1476,6 +1485,24 @@ static void riscv_cpu_init(Object *obj)
+>>       cpu->cfg.cbop_blocksize = 64;
+>>       cpu->cfg.cboz_blocksize = 64;
+>>       cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+>> +
+>> +    env->misa_ext_mask = env->misa_ext = mcc->def->misa_ext;
+>> +    riscv_cpu_cfg_merge(&cpu->cfg, &mcc->def->cfg);
+>> +
+>> +    if (mcc->def->priv_spec != RISCV_PROFILE_ATTR_UNUSED) {
+>> +        cpu->env.priv_ver = mcc->def->priv_spec;
+>> +    }
+>> +    if (mcc->def->vext_spec != RISCV_PROFILE_ATTR_UNUSED) {
+>> +        cpu->env.vext_ver = mcc->def->vext_spec;
+>> +    }
+>> +#ifndef CONFIG_USER_ONLY
+>> +    if (riscv_cpu_mxl(env) == MXL_RV32 && mcc->def->satp_mode32 != RISCV_PROFILE_ATTR_UNUSED) {
+>> +        set_satp_mode_max_supported(RISCV_CPU(obj), mcc->def->satp_mode32);
+>> +    }
+>> +    if (riscv_cpu_mxl(env) >= MXL_RV64 && mcc->def->satp_mode64 != RISCV_PROFILE_ATTR_UNUSED) {
+>> +        set_satp_mode_max_supported(RISCV_CPU(obj), mcc->def->satp_mode64);
+>> +    }
+>> +#endif
+>>   }
+>>
+>>   static void riscv_bare_cpu_init(Object *obj)
+>> @@ -2968,6 +2995,25 @@ static void riscv_cpu_class_base_init(ObjectClass *c, void *data)
+>>               assert(def->misa_mxl_max <= MXL_RV128);
+>>               mcc->def->misa_mxl_max = def->misa_mxl_max;
+>>           }
+>> +        if (def->priv_spec != RISCV_PROFILE_ATTR_UNUSED) {
+>> +            assert(def->priv_spec <= PRIV_VERSION_LATEST);
+>> +            mcc->def->priv_spec = def->priv_spec;
+>> +        }
+>> +        if (def->vext_spec != RISCV_PROFILE_ATTR_UNUSED) {
+>> +            assert(def->vext_spec != 0);
+>> +            mcc->def->vext_spec = def->vext_spec;
+>> +        }
+>> +        if (def->satp_mode32 != RISCV_PROFILE_ATTR_UNUSED) {
+>> +            assert(def->satp_mode32 <= VM_1_10_SV32);
+>> +            mcc->def->satp_mode32 = def->satp_mode32;
+>> +        }
+>> +        if (def->satp_mode64 != RISCV_PROFILE_ATTR_UNUSED) {
+>> +            assert(def->satp_mode64 <= VM_1_10_SV64);
+>> +            mcc->def->satp_mode64 = def->satp_mode64;
+>> +        }
+>> +        mcc->def->misa_ext |= def->misa_ext;
+>> +
+>> +        riscv_cpu_cfg_merge(&mcc->def->cfg, &def->cfg);
+>>       }
+>>
+>>       if (!object_class_is_abstract(c)) {
+>> --
+>> 2.48.1
+>>
+>>
 > 
-> Test information
-> 1. QEMU version: https://github.com/qemu/qemu/commit/ffaf7f0376f8040ce9068d71ae9ae8722505c42e
-> 2. ASPEED SDK v09.05 pre-built image
->     https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.05
->     ast2700-default-obmc.tar.gz (AST2700 A1)
->     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz
->     ast2700-a0-default-obmc.tar.gz (AST2700 A0)
->     https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz
-
-The part adding new functional tests needs a rework. See comment.
-
-> Known Issue:
-> The HACE crypto and hash engine is enable by default since AST2700 A1.
-> However, aspeed_hace.c(HACE model) currently does not support the CRYPTO command.
-> To boot AST2700 A1, I have created a Patch 21 which temporarily resolves the
-> issue by sending an interrupt to notify the firmware that the cryptographic
-> command has completed. It is a temporary workaround to resolve the boot issue
-> in the Crypto Manager SelfTest.
 > 
-> As a result, you will encounter the following kernel warning due to the
-> Crypto Manager test failure. If you don't want to see these kernel warning,
-> please add the following settings in your kernel config.
-> 
-> ```
-> CONFIG_CRYPTO_MANAGER_DISABLE_TESTS=y
-> ```
-
-Would it be possible to send the hace changes in its own series ?
-
-
-> 
-> Jamin Lin (28):
->    hw/intc/aspeed: Support setting different memory and register size
->    hw/intc/aspeed: Introduce helper functions for enable and status
->      registers
->    hw/intc/aspeed: Add object type name to trace events for better
->      debugging
->    hw/arm/aspeed: Rename IRQ table and machine name for AST2700 A0
->    hw/arm/aspeed_ast27x0: Sort the IRQ table by IRQ number
->    hw/intc/aspeed: Support different memory region ops
->    hw/intc/aspeed: Rename num_ints to num_inpins for clarity
->    hw/intc/aspeed: Add support for multiple output pins in INTC
->    hw/intc/aspeed: Refactor INTC to support separate input and output pin
->      indices
->    hw/intc/aspeed: Introduce AspeedINTCIRQ structure to save the irq
->      index and register address
->    hw/intc/aspeed: Introduce IRQ handler function to reduce code
->      duplication
->    hw/intc/aspeed: Add Support for Multi-Output IRQ Handling
->    hw/intc/aspeed: Add Support for AST2700 INTCIO Controller
->    hw/misc/aspeed_scu: Add Support for AST2700/AST2750 A1 Silicon
->      Revisions
->    hw/misc/aspeed_scu: Fix the revision ID cannot be set in the SOC layer
->      for AST2700
->    hw/arm/aspeed_ast27x0.c Support AST2700 A1 GIC Interrupt Mapping
->    hw/arm/aspeed_ast27x0: Support two levels of INTC controllers for
->      AST2700 A1
->    hw/arm/aspeed: Add SoC and Machine Support for AST2700 A1
->    hw/misc/aspeed_hace: Fix coding style
->    hw/misc/aspeed_hace: Add AST2700 support
->    hw/misc/aspeed_hace: Fix boot issue in the Crypto Manager Self Test
->    hw/arm/aspeed_ast27x0: Add HACE support for AST2700
->    test/functional/aspeed: Introduce new function to fetch assets
->    tests/functional/aspeed: Introduce start_ast2700_test API and update
->      hwmon path
->    tests/functional/aspeed: Update test ASPEED SDK v09.05
->    tests/functional/aspeed: Renamed test case and machine for AST2700 A0
->    tests/functional/aspeed: Add test case for AST2700 A1
->    docs/specs: add aspeed-intc
-> 
->   docs/specs/aspeed-intc.rst              | 136 ++++++
->   docs/specs/index.rst                    |   1 +
->   hw/arm/aspeed.c                         |  21 +-
->   hw/arm/aspeed_ast27x0.c                 | 291 +++++++++---
->   hw/intc/aspeed_intc.c                   | 593 +++++++++++++++++++-----
->   hw/intc/trace-events                    |  25 +-
->   hw/misc/aspeed_hace.c                   |  44 +-
->   hw/misc/aspeed_scu.c                    |   5 +-
->   include/hw/arm/aspeed_soc.h             |   3 +-
->   include/hw/intc/aspeed_intc.h           |  32 +-
->   include/hw/misc/aspeed_hace.h           |   1 +
->   include/hw/misc/aspeed_scu.h            |   2 +
->   tests/functional/test_aarch64_aspeed.py |  47 +-
->   13 files changed, 963 insertions(+), 238 deletions(-)
->   create mode 100644 docs/specs/aspeed-intc.rst
-> 
-
-Patch 1-9 and the hace changes could be merged quickly.
-
-
-I need  some help on patch 10,12,16,17.
-
-Andrew,
-
-Would you have time please ?
-
-Thanks,
-
-C.
 
 
