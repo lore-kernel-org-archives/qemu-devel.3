@@ -4,99 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61AAEC02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 844F5C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 06:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkHQQ-00022u-60; Tue, 18 Feb 2025 01:49:46 -0500
+	id 1tkHRa-0002yT-0l; Tue, 18 Feb 2025 01:50:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkHQN-00022R-Qg; Tue, 18 Feb 2025 01:49:43 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
- id 1tkHQL-00076r-IF; Tue, 18 Feb 2025 01:49:43 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yxqrg1x8jz4x0t;
- Tue, 18 Feb 2025 17:49:39 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yxqrc3nHjz4wcr;
- Tue, 18 Feb 2025 17:49:36 +1100 (AEDT)
-Message-ID: <ca2ad388-2bb0-4583-88c1-7821064592e6@kaod.org>
-Date: Tue, 18 Feb 2025 07:49:34 +0100
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tkHRY-0002yE-7q
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:50:56 -0500
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tkHRV-0007ML-N5
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 01:50:56 -0500
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-5fc0c06e1deso2339843eaf.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 22:50:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1739861452; x=1740466252;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8zZGbwlXGZiTogtB63SL5UmsCOdhGO0rFVW3ofx7WKU=;
+ b=AgnRDT7KYbOdjA4lwGRtALmr/leuGhyhhgxJas3aD3tqvacRbJSqdfFV1xmZceeUMe
+ +7Sm1YSXgJZZpfqRnWnO7WYgXL7pqNDZjl8yMB0vuVXxgFZSG+09/NiG17Em6TeWW+eu
+ fbpDvQqN5sNbE+vSiCI34ogV/H24MC2PHt+8Z9tHdlR1F/9ToAVL/9XRQ7cQA09SyHkk
+ P4T3LwlZfBCv9wz+Xt/EVEdjgYyDWu/DptfmFfoUh7Z7zgOPTDPu3hhMoPB/5dkKbQ7l
+ zBODoJPW3n8jTDgFYoVeHg/2yomG9AOQGuVznr4UgwK31OZqvgeNzgXnEfpe0bXi7uMg
+ v8MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739861452; x=1740466252;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8zZGbwlXGZiTogtB63SL5UmsCOdhGO0rFVW3ofx7WKU=;
+ b=QrUFHqUsqT9GA2um4b10025WTiF3ii/bvFaK1JocMIh6ZK+zbz8AaDBuoc2U7w6sCH
+ UuDEcA2Tajem5/25CFySo8k7HZTy67XQ88Drqpdrl45KGzwar2NaXfO63nXZ5CPZdvh4
+ aLcurfM328cia6Ot4hGTCeUJplju/HxjJt06/t9ZNplINuDlRw97QeOYGj3cb39Feryg
+ 8wqBB9dDT7OyeBfWg4Cp99K66or8hFOXnxnKS/iDa7+lM/dvggl+ov0kgt0EPLkQvr0m
+ M31p6fKF2b48yhx/UJc0pHS0Z/cGXkTY+OxLlT35QYvoFJQQEDXxpTVJiYiyM38HmoWn
+ jGYQ==
+X-Gm-Message-State: AOJu0YxdIteCsMPtyk6O1/+feEDM4OAFNG7ti/x30K9gUGv0AyykN9zf
+ 1FTRXoRdwd9cZ0vYMU5xREjFNGntRO7ZJWubx2GgbZGk7980MIwYJnON1H4afRar1Xfb2ZZIPFR
+ LcpzUkBMstHA2T+cSr2GAby1c5+eArD5uTsZhOA==
+X-Gm-Gg: ASbGnctgTeszhhGtIU3KjqNmrFc2/h0AU4UmvuBPSEXOWntQRWVt2Ri39vhvfXRUJHx
+ z1RWBioiebuE0Hqo4aL8R8PPYcwMpuZozYjo9OEuU5FHe7ldzImPR5VteKPsGw8r8xFXmPsXiEk
+ w=
+X-Google-Smtp-Source: AGHT+IG9EkVSLUaV6pFU0o8LkyoXzSqRBK78FY8Z+SMUm8QaIWzbiCwpeXCq3ojfat/s1C3ay9L26b/ML+g3nE0J91E=
+X-Received: by 2002:a05:6808:2dcb:b0:3f3:d963:3e2 with SMTP id
+ 5614622812f47-3f3eb0c04bbmr8878706b6e.19.1739861451508; Mon, 17 Feb 2025
+ 22:50:51 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/28] hw/arm/aspeed: Add SoC and Machine Support for
- AST2700 A1
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
- <20250213033531.3367697-19-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250213033531.3367697-19-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <4df13a8005170ad42cbbc883a0a8fdbb1ab94ac1.1739846274.git.yong.huang@smartx.com>
+ <87cyffiz7d.fsf@pond.sub.org>
+In-Reply-To: <87cyffiz7d.fsf@pond.sub.org>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 18 Feb 2025 14:50:34 +0800
+X-Gm-Features: AWEUYZnyCL15Hm2T6AZYJT6tRPjPhqATJvnOkNauJF2vPmI_kTFoLx-R2m2jyoU
+Message-ID: <CAK9dgmY2jHXOZbdngREwUOYazwbw+rd1yu=WywASjM1pZr-6AA@mail.gmail.com>
+Subject: Re: [RFC] migration: Introduce migration throttle event
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000c6a6f7062e650f66"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc33.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,158 +93,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/25 04:35, Jamin Lin wrote:
-> The memory map for AST2700 A1 remains compatible with AST2700 A0. However, the
-> IRQ mapping has been updated for AST2700 A1, with GIC interrupts now ranging
-> from 192 to 201. Add a new IRQ map table for AST2700 A1.
-> Add "aspeed_soc_ast2700a1_class_init" to initialize the AST2700 A1 SoC.
-> Introduce "aspeed_machine_ast2700a1_evb_class_init" to initialize the
-> AST2700 A1 EVB.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/arm/aspeed.c         | 13 +++++++
->   hw/arm/aspeed_ast27x0.c | 80 +++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 93 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 6ddfdbdeba..c0539e5950 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -1672,6 +1672,15 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
->       mc->default_ram_size = 1 * GiB;
->       aspeed_machine_class_init_cpus_defaults(mc);
->   }
-> +
-> +static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-> +
-> +    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
-> +    amc->soc_name  = "ast2700-a1";
-> +}
->   #endif
->   
->   static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-> @@ -1798,6 +1807,10 @@ static const TypeInfo aspeed_machine_types[] = {
->           .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
->           .parent        = TYPE_ASPEED_MACHINE,
->           .class_init    = aspeed_machine_ast2700a0_evb_class_init,
-> +        }, {
-> +        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
-> +        .parent        = MACHINE_TYPE_NAME("ast2700a0-evb"),
+--000000000000c6a6f7062e650f66
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Shouldn't the parent be TYPE_ASPEED_MACHINE instead ?
+On Tue, Feb 18, 2025 at 1:44=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-> +        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
->   #endif
->       }, {
->           .name          = TYPE_ASPEED_MACHINE,
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 0ccec774de..926b4c3e76 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -119,6 +119,52 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
->       [ASPEED_DEV_SDHCI]     = 133,
->   };
->   
-> +static const int aspeed_soc_ast2700a1_irqmap[] = {
-> +    [ASPEED_DEV_SDMC]      = 0,
-> +    [ASPEED_DEV_HACE]      = 4,
-> +    [ASPEED_DEV_XDMA]      = 5,
-> +    [ASPEED_DEV_UART4]     = 8,
-> +    [ASPEED_DEV_SCU]       = 12,
-> +    [ASPEED_DEV_RTC]       = 13,
-> +    [ASPEED_DEV_EMMC]      = 15,
-> +    [ASPEED_DEV_TIMER1]    = 16,
-> +    [ASPEED_DEV_TIMER2]    = 17,
-> +    [ASPEED_DEV_TIMER3]    = 18,
-> +    [ASPEED_DEV_TIMER4]    = 19,
-> +    [ASPEED_DEV_TIMER5]    = 20,
-> +    [ASPEED_DEV_TIMER6]    = 21,
-> +    [ASPEED_DEV_TIMER7]    = 22,
-> +    [ASPEED_DEV_TIMER8]    = 23,
-> +    [ASPEED_DEV_DP]        = 28,
-> +    [ASPEED_DEV_LPC]       = 192,
-> +    [ASPEED_DEV_IBT]       = 192,
-> +    [ASPEED_DEV_KCS]       = 192,
-> +    [ASPEED_DEV_I2C]       = 194,
-> +    [ASPEED_DEV_ADC]       = 194,
-> +    [ASPEED_DEV_GPIO]      = 194,
-> +    [ASPEED_DEV_FMC]       = 195,
-> +    [ASPEED_DEV_WDT]       = 195,
-> +    [ASPEED_DEV_PWM]       = 195,
-> +    [ASPEED_DEV_I3C]       = 195,
-> +    [ASPEED_DEV_UART0]     = 196,
-> +    [ASPEED_DEV_UART1]     = 196,
-> +    [ASPEED_DEV_UART2]     = 196,
-> +    [ASPEED_DEV_UART3]     = 196,
-> +    [ASPEED_DEV_UART5]     = 196,
-> +    [ASPEED_DEV_UART6]     = 196,
-> +    [ASPEED_DEV_UART7]     = 196,
-> +    [ASPEED_DEV_UART8]     = 196,
-> +    [ASPEED_DEV_UART9]     = 196,
-> +    [ASPEED_DEV_UART10]    = 196,
-> +    [ASPEED_DEV_UART11]    = 196,
-> +    [ASPEED_DEV_UART12]    = 196,
-> +    [ASPEED_DEV_ETH1]      = 196,
-> +    [ASPEED_DEV_ETH2]      = 196,
-> +    [ASPEED_DEV_ETH3]      = 196,
-> +    [ASPEED_DEV_PECI]      = 197,
-> +    [ASPEED_DEV_SDHCI]     = 197,
-> +};
-> +
->   /* GICINT 128 */
->   /* GICINT 192 */
->   static const int ast2700_gic128_gic192_intcmap[] = {
-> @@ -838,6 +884,34 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
->       sc->get_irq      = aspeed_soc_ast2700_get_irq;
->   }
->   
-> +static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, void *data)
-> +{
-> +    static const char * const valid_cpu_types[] = {
-> +        ARM_CPU_TYPE_NAME("cortex-a35"),
-> +        NULL
-> +    };
-> +    DeviceClass *dc = DEVICE_CLASS(oc);
-> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
-> +
-> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
-> +    dc->user_creatable = false;
-> +    dc->realize      = aspeed_soc_ast2700_realize;
-> +
-> +    sc->name         = "ast2700-a1";
-> +    sc->valid_cpu_types = valid_cpu_types;
-> +    sc->silicon_rev  = AST2700_A1_SILICON_REV;
-> +    sc->sram_size    = 0x20000;
-> +    sc->spis_num     = 3;
-> +    sc->wdts_num     = 8;
-> +    sc->macs_num     = 3;
-> +    sc->uarts_num    = 13;
-> +    sc->num_cpus     = 4;
-> +    sc->uarts_base   = ASPEED_DEV_UART0;
-> +    sc->irqmap       = aspeed_soc_ast2700a1_irqmap;
-> +    sc->memmap       = aspeed_soc_ast2700_memmap;
-> +    sc->get_irq      = aspeed_soc_ast2700_get_irq;
-> +}
-> +
->   static const TypeInfo aspeed_soc_ast27x0_types[] = {
->       {
->           .name           = TYPE_ASPEED27X0_SOC,
-> @@ -850,6 +924,12 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
->           .instance_init  = aspeed_soc_ast2700_init,
->           .class_init     = aspeed_soc_ast2700a0_class_init,
->       },
-> +    {
-> +        .name           = "ast2700-a1",
-> +        .parent         = TYPE_ASPEED27X0_SOC,
-> +        .instance_init  = aspeed_soc_ast2700_init,
-> +        .class_init     = aspeed_soc_ast2700a1_class_init,
-> +    },
->   };
->   
->   DEFINE_TYPES(aspeed_soc_ast27x0_types)
+> yong.huang@smartx.com writes:
+>
+> > From: Hyman Huang <yong.huang@smartx.com>
+> >
+> > When the developer is examining the time distribution of
+> > the migration, it is useful to record the migration throttle
+> > timestamp. Consequently, include the migration throttle event.
+>
+> Can you explain what you'd like to do with the information in a little
+> more detail?
 
+
+Throttle degrades guest performance during live migration;
+with respect to the performance degradation aspect, migration
+can be divided into the following phases when there is an excessive
+memory load:
+
+1. setup -> throttle
+2. throttle -> switch-over
+3. switch-over->finished
+
+In the 1st phase, performance degradation is mostly affected by dirty
+tracking.
+In the 2nd phase, performance degradation is affected by dirty tracking +
+throttle
+In the 3nd phase, performance degradation is affected by stopping vCPU
+
+To help differentiate between these three stages, determine which
+has the biggest influence on performance degradation, and do some
+performance optimization or generate a performance report or whatever,
+a throttling timestamp can be included.
+
+This patch has 2 goals, logging the throttle timestamp and generating
+an event for management applications.
+
+
+>
+> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> > ---
+> >  migration/ram.c     |  1 +
+> >  qapi/migration.json | 15 +++++++++++++++
+> >  2 files changed, 16 insertions(+)
+> >
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 589b6505eb..725e029927 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -524,6 +524,7 @@ static void mig_throttle_guest_down(uint64_t
+> bytes_dirty_period,
+> >
+> >      /* We have not started throttling yet. Let's start it. */
+> >      if (!cpu_throttle_active()) {
+> > +        qapi_event_send_migration_throttle();
+> >          cpu_throttle_set(pct_initial);
+> >      } else {
+> >          /* Throttling already on, just increase the rate */
+>
+> I guess the percentage is uninteresting because it changes too quickly.
+> Correct?
+>
+>
+QMP could query the throttle percentage already, but there is no way
+to peer the throttle initiation timestamp.
+
+
+> Would it make sense to track cpu_throttle_stop(), too?
+>
+
+IMHO, the CPU throttle stop event might be less helpful when considering
+the three phases I described above because it isn't an essential event for
+guest performance deterioration investigation.
+
+
+>
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 8b9c53595c..0495065b5d 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -1393,6 +1393,21 @@
+> >  { 'event': 'MIGRATION_PASS',
+> >    'data': { 'pass': 'int' } }
+> >
+> > +##
+> > +# @MIGRATION_THROTTLE:
+> > +#
+> > +# Emitted from the source side of a migration at the start of vCPU
+> throttle
+> > +#
+> > +# Since: 10.0
+> > +#
+> > +# Example:
+> > +#
+> > +# <- { "event": "MIGRATION_THROTTLE",
+> > +#      "timestamp": { "seconds": 1267041730, "microseconds": 281295 } =
+}
+> > +#
+> > +##
+> > +{ 'event': 'MIGRATION_THROTTLE' }
+> > +
+> >  ##
+> >  # @COLOMessage:
+> >  #
+>
+> Standard question for events: if a management application misses an
+> event, say because it restarts and reconnects, is there a way to obtain
+> the missed information with a query command?
+>
+
+During live migration, such an event is not inevitable: the management
+application ought to be aware of this.
+
+Thanks for the comment,
+Yong
+--=20
+Best regards
+
+--000000000000c6a6f7062e650f66
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Tue, Feb 18, 2025 at 1:44=E2=80=AFPM Markus Armbruster &lt;<a href=
+=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padd=
+ing-left:1ex"><a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yo=
+ng.huang@smartx.com</a> writes:<br>
+<br>
+&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
+=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt;<br>
+&gt; When the developer is examining the time distribution of<br>
+&gt; the migration, it is useful to record the migration throttle<br>
+&gt; timestamp. Consequently, include the migration throttle event.<br>
+<br>
+Can you explain what you&#39;d like to do with the information in a little<=
+br>
+more detail?</blockquote><div><span class=3D"gmail_default" style=3D"font-f=
+amily:&quot;comic sans ms&quot;,sans-serif"><br></span></div><div><span cla=
+ss=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
+rif">Throttle degrades guest performance during live migration;</span></div=
+><div><span class=3D"gmail_default" style=3D"font-family:&quot;comic sans m=
+s&quot;,sans-serif">with respect to the performance degradation aspect, mig=
+ration</span></div><div><span class=3D"gmail_default" style=3D"font-family:=
+&quot;comic sans ms&quot;,sans-serif">can be divided into the following pha=
+ses when there is an excessive</span></div><div><span class=3D"gmail_defaul=
+t" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">memory load:<=
+br></span></div><div><span class=3D"gmail_default" style=3D"font-family:&qu=
+ot;comic sans ms&quot;,sans-serif"><br></span></div><div><span class=3D"gma=
+il_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">1. s=
+etup -&gt; throttle</span><br></div><div><span class=3D"gmail_default" styl=
+e=3D"font-family:&quot;comic sans ms&quot;,sans-serif">2. throttle -&gt; sw=
+itch-over</span></div><div><span class=3D"gmail_default" style=3D"font-fami=
+ly:&quot;comic sans ms&quot;,sans-serif">3. switch-over-&gt;finished</span>=
+</div><div><span class=3D"gmail_default" style=3D"font-family:&quot;comic s=
+ans ms&quot;,sans-serif"><br></span></div><div><span style=3D"font-family:&=
+quot;comic sans ms&quot;,sans-serif;color:rgb(0,0,0)">In the 1st phase, per=
+formance degradation is mostly affected by dirty tracking.</span><span clas=
+s=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-ser=
+if"><br></span></div><div><font face=3D"comic sans ms, sans-serif"><span cl=
+ass=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-s=
+erif">In the 2nd phase,=C2=A0</span></font><span style=3D"font-family:&quot=
+;comic sans ms&quot;,sans-serif">performance degradation is affected by dir=
+ty tracking<span class=3D"gmail_default" style=3D"font-family:&quot;comic s=
+ans ms&quot;,sans-serif">=C2=A0+ throttle</span></span></div><div><span sty=
+le=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><span class=3D"gmai=
+l_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">In th=
+e 3nd phase,=C2=A0</span></span><span style=3D"font-family:&quot;comic sans=
+ ms&quot;,sans-serif">performance degradation</span><span class=3D"gmail-Ap=
+ple-converted-space" style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
+rif">=C2=A0<span class=3D"gmail_default" style=3D"font-family:&quot;comic s=
+ans ms&quot;,sans-serif">is affected by stopping vCPU</span></span></div><d=
+iv><span class=3D"gmail-Apple-converted-space" style=3D"font-family:&quot;c=
+omic sans ms&quot;,sans-serif"><span class=3D"gmail_default" style=3D"font-=
+family:&quot;comic sans ms&quot;,sans-serif"><br></span></span></div><div><=
+span class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;=
+,sans-serif">To help differentiate between these three stages, determine wh=
+ich</span></div><div><span class=3D"gmail_default" style=3D"font-family:&qu=
+ot;comic sans ms&quot;,sans-serif">has the biggest influence on performance=
+ degradation, and do some</span></div><div><span class=3D"gmail_default" st=
+yle=3D"font-family:&quot;comic sans ms&quot;,sans-serif">performance optimi=
+zation or generate a performance report or whatever,</span></div><div><span=
+ class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,san=
+s-serif">a=C2=A0</span><span style=3D"font-family:&quot;comic sans ms&quot;=
+,sans-serif">throttling timestamp can be included.</span></div><div><span s=
+tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><br></span></div>=
+<div><span style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><span=
+ class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,san=
+s-serif">This patch has 2 goals, logging the throttle timestamp and generat=
+ing</span><br></span></div><div><span style=3D"font-family:&quot;comic sans=
+ ms&quot;,sans-serif"><span class=3D"gmail_default" style=3D"font-family:&q=
+uot;comic sans ms&quot;,sans-serif">an event for management applications.</=
+span></span></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
+border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
+" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
+&gt;=C2=A0 qapi/migration.json | 15 +++++++++++++++<br>
+&gt;=C2=A0 2 files changed, 16 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/migration/ram.c b/migration/ram.c<br>
+&gt; index 589b6505eb..725e029927 100644<br>
+&gt; --- a/migration/ram.c<br>
+&gt; +++ b/migration/ram.c<br>
+&gt; @@ -524,6 +524,7 @@ static void mig_throttle_guest_down(uint64_t bytes=
+_dirty_period,<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 /* We have not started throttling yet. Let&#39;s s=
+tart it. */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (!cpu_throttle_active()) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qapi_event_send_migration_throttle();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_throttle_set(pct_initial);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Throttling already on, just incre=
+ase the rate */<br>
+<br>
+I guess the percentage is uninteresting because it changes too quickly.<br>
+Correct?<br>
+<br></blockquote><div><br></div><div><font face=3D"comic sans ms, sans-seri=
+f">QMP could query the throttle percentage<span class=3D"gmail_default" sty=
+le=3D"font-family:&quot;comic sans ms&quot;,sans-serif"> already</span>, bu=
+t there is no way</font></div><div><font face=3D"comic sans ms, sans-serif"=
+>to peer<span class=3D"gmail_default" style=3D"font-family:&quot;comic sans=
+ ms&quot;,sans-serif">=C2=A0</span></font><span style=3D"font-family:&quot;=
+comic sans ms&quot;,sans-serif">the throttle initiation timestamp.</span><s=
+pan class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,=
+sans-serif"></span></div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:=
+solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+Would it make sense to track cpu_throttle_stop(), too?<br></blockquote><div=
+><br></div><div><span class=3D"gmail_default" style=3D"font-family:&quot;co=
+mic sans ms&quot;,sans-serif">IMHO, the CPU throttle stop event might be le=
+ss helpful when considering</span></div><div><span class=3D"gmail_default" =
+style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">the three phases=
+ I described above because it isn&#39;t an essential event for</span></div>=
+<div><span class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms=
+&quot;,sans-serif">guest performance deterioration investigation.<br></span=
+></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-=
+color:rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; diff --git a/qapi/migration.json b/qapi/migration.json<br>
+&gt; index 8b9c53595c..0495065b5d 100644<br>
+&gt; --- a/qapi/migration.json<br>
+&gt; +++ b/qapi/migration.json<br>
+&gt; @@ -1393,6 +1393,21 @@<br>
+&gt;=C2=A0 { &#39;event&#39;: &#39;MIGRATION_PASS&#39;,<br>
+&gt;=C2=A0 =C2=A0 &#39;data&#39;: { &#39;pass&#39;: &#39;int&#39; } }<br>
+&gt;=C2=A0 <br>
+&gt; +##<br>
+&gt; +# @MIGRATION_THROTTLE:<br>
+&gt; +#<br>
+&gt; +# Emitted from the source side of a migration at the start of vCPU th=
+rottle<br>
+&gt; +#<br>
+&gt; +# Since: 10.0<br>
+&gt; +#<br>
+&gt; +# Example:<br>
+&gt; +#<br>
+&gt; +# &lt;- { &quot;event&quot;: &quot;MIGRATION_THROTTLE&quot;,<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0 &quot;timestamp&quot;: { &quot;seconds&quot;: 1=
+267041730, &quot;microseconds&quot;: 281295 } }<br>
+&gt; +#<br>
+&gt; +##<br>
+&gt; +{ &#39;event&#39;: &#39;MIGRATION_THROTTLE&#39; }<br>
+&gt; +<br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 # @COLOMessage:<br>
+&gt;=C2=A0 #<br>
+<br>
+Standard question for events: if a management application misses an<br>
+event, say because it restarts and reconnects, is there a way to obtain<br>
+the missed information with a query command?<br></blockquote><div><br></div=
+><div><font face=3D"comic sans ms, sans-serif">During live migration, such =
+an event is not inevitable: the management</font></div><div><font face=3D"c=
+omic sans ms, sans-serif">application ought to be aware of this.</font><br>=
+</div></div><div><br></div><div><span class=3D"gmail_default" style=3D"font=
+-family:&quot;comic sans ms&quot;,sans-serif">Thanks for the comment,</span=
+><br></div><div><span class=3D"gmail_default" style=3D"font-family:&quot;co=
+mic sans ms&quot;,sans-serif">Yong</span><br></div><span class=3D"gmail_sig=
+nature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><di=
+v dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font><=
+/div></div></div>
+
+--000000000000c6a6f7062e650f66--
 
