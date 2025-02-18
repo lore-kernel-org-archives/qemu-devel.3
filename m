@@ -4,92 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFEDC021A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 01:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA40EC021A9
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 01:32:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkCCA-0003mW-C7; Mon, 17 Feb 2025 20:14:42 -0500
+	id 1tkCSG-0006oA-MG; Mon, 17 Feb 2025 20:31:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tkCC8-0003mI-Nb
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 20:14:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tkCS6-0006nY-3X; Mon, 17 Feb 2025 20:31:11 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tkCC7-00065k-AE
- for qemu-devel@nongnu.org; Mon, 17 Feb 2025 20:14:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739841278;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JlUytGWMnvbmK4f4oX+kdzLnB9J92mhbar11srDT/3U=;
- b=Sw4+pVv/sQX8jJ4ASyWaBf7N+lV1No07O15THf7Rg2eBqQ7HEKtr/df/Mhd4XsNs1dM6PE
- z9NNBt1R1QgrGvjzOcBXbb9+vED5k1VLpxNUFY9ccaloiLGeo8bir51WDYYC5PnKad2fyh
- 489/C4wkuzOBDhCBp0wGNjm06LyW4HI=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-3nmzDNcDMo6qgiA-JYglew-1; Mon, 17 Feb 2025 20:14:36 -0500
-X-MC-Unique: 3nmzDNcDMo6qgiA-JYglew-1
-X-Mimecast-MFC-AGG-ID: 3nmzDNcDMo6qgiA-JYglew_1739841275
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2fc0bc05afdso9865353a91.0
- for <qemu-devel@nongnu.org>; Mon, 17 Feb 2025 17:14:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739841275; x=1740446075;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JlUytGWMnvbmK4f4oX+kdzLnB9J92mhbar11srDT/3U=;
- b=mOowM5eySbrsV/cN75Trg2Ggf5pizFRiSvrc82fnRj5uRV80sgoM0VI8lX1ort9eQJ
- 1GTg+PvweXvRDDrw2WzR8XWolz0I0gSzBpSg9omaO73zCBIAZ4ywiPfzNS2Kj+QlUORA
- hQm1crOgNStFUq6wtvzqdeU0tZHW/WmNQUC9J6tEqAlkUnU0iWte3sGNOJvHl1h3BQBl
- C+KGAZl+ny/jVg/w8uSg+D9ZhndNyB6WnlDQoAgvOcb3r1nvGQCOoiumXC7JugLNEXb8
- slypnbu3HC1Svdy69LQWTkLUmKjFDYLzHcb+fvpE8BLtw4TNX0r4z2hqMFNbCnkiPb2s
- iBfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/4v+ff54+WmTEMemO/o1Kw4QKmMc3kOZx4cBzNPBJVwWEdP5RFEcJHXbA0ZNlyrusgGobBvHZcKUR@nongnu.org
-X-Gm-Message-State: AOJu0YzY/X1ejxtLOtWAfD4uuf6XUz/Q9lmFBbaz5HEsEvuMOlcCAcTa
- Euv0YFn9Jx3HHpj4pA/iCy57pE6xma4d82iX2EPKi7whi7OyKBEVhQrC+cCBXBDR9IocwYDuPsJ
- YO2X5wJ74FS5sCfCGBNuwfkupNVAXexhDzAOfhIG9AIElRQtaV1iddfEudtBrIEAvxuXwk+szC7
- hdJS7qhVhb9zMWUesjtgtGFQnU/KU=
-X-Gm-Gg: ASbGncuU4o8AK6ty/Vn3glHS1StqkF1uk9spX/UQG/mmhOT6hjPG29LRxT1C5kS2+BG
- SQ+xbJKjy4SGbQ3Ph0iT3NkP4uWD4trej0gqeJcnA3q2uKP6ZSR+2Cg8xPhxm30A=
-X-Received: by 2002:a17:90b:3c0e:b0:2ee:c2df:5d30 with SMTP id
- 98e67ed59e1d1-2fc41049570mr15485542a91.26.1739841275255; 
- Mon, 17 Feb 2025 17:14:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHiOf2Fw9P6pkf1SuKJcyixE46bVqtkvZGZW0In01nKp516PcRq66GF1f3a8mU71OigpybJ7scu4tyQ9SzBwJc=
-X-Received: by 2002:a17:90b:3c0e:b0:2ee:c2df:5d30 with SMTP id
- 98e67ed59e1d1-2fc41049570mr15485519a91.26.1739841274953; Mon, 17 Feb 2025
- 17:14:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tkCRz-0007sI-PN; Mon, 17 Feb 2025 20:31:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739842264; x=1771378264;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=D3nt0FvopqfK1AIdRkjzth47H089lFwJTkPvYnO/q0c=;
+ b=fmW1E+raSVxzyKcTSfsWUDZLqHU63CJHS3vo+QnFrrPDV7BHkvt33Enz
+ aC52Dj3Je9MZjZhT9rwAMnMiGhNokX08aWGIKsA/R7XKNz4xQ2RbNdla8
+ UwH0MvCKSjSiXsH9uIM8A+tNPhX3SphTO6gqiGcJAmhSc1s+qastMy115
+ 1KYFyTECTFRj8OHRm+ek2LH9ATGGDLFtuZ+yN8chvEjLTkx2V5lIKaGKV
+ HSjPAvaXtuW50HMYg6ZJGTGKh/1CO5bZilnySp+BK7Iwo1HlBYM1Jv8h+
+ W/kijqeJhnhEoECJlg/0S7S4je0dUuwaBJgGBVzdZ/BnmHmoC7s3ce18h Q==;
+X-CSE-ConnectionGUID: lclTVrbfTn2WFcuKnH736A==
+X-CSE-MsgGUID: cspi2CjBQpWdp7lqmgZq+Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51931922"
+X-IronPort-AV: E=Sophos;i="6.13,294,1732608000"; d="scan'208";a="51931922"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 17:30:58 -0800
+X-CSE-ConnectionGUID: DJMF4BZxRnyTeBFR4y9inw==
+X-CSE-MsgGUID: QJg3CKcGRhyRSWkPhREpqw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="118384471"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Feb 2025 17:30:56 -0800
+Message-ID: <be7be014-8652-4a3c-8a5b-a851d5bf4958@intel.com>
+Date: Tue, 18 Feb 2025 09:30:54 +0800
 MIME-Version: 1.0
-References: <20250217133746.6801-1-eric.auger@redhat.com>
- <20250217133746.6801-3-eric.auger@redhat.com>
-In-Reply-To: <20250217133746.6801-3-eric.auger@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 18 Feb 2025 09:14:23 +0800
-X-Gm-Features: AWEUYZlemt7CdyCxs3gTTPsy35o4E62-eO8fjj4mFeDyR3v_ATbsmttI1QkZuZw
-Message-ID: <CACGkMEst7Q5Zdu3AahgKaTnCh46b+-8f+wkFx0e3Apc+jSKRGw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] hw/i386/intel-iommu: Migrate to 3-phase reset
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- peter.maydell@linaro.org, mst@redhat.com, imammedo@redhat.com, 
- peterx@redhat.com, alex.williamson@redhat.com, clg@redhat.com, 
- philmd@linaro.org, zhenzhong.duan@intel.com, ddutile@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] physmem: replace assertion with error
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20250217120812.396522-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250217120812.396522-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,24 +83,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 17, 2025 at 9:38=E2=80=AFPM Eric Auger <eric.auger@redhat.com> =
-wrote:
->
-> Currently the IOMMU may be reset before the devices
-> it protects. For example this happens with virtio devices
-> but also with VFIO devices. In this latter case this
-> produces spurious translation faults on host.
->
-> Let's use 3-phase reset mechanism and reset the IOMMU on
-> exit phase after all DMA capable devices have been reset
-> on 'enter' or 'hold' phase.
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->
+On 2/17/2025 8:08 PM, Paolo Bonzini wrote:
+> It is possible to start QEMU with a confidential-guest-support object
+> even in TCG mode.  While there is already a check in qemu_machine_creation_done:
+> 
+>      if (machine->cgs && !machine->cgs->ready) {
+>          error_setg(errp, "accelerator does not support confidential guest %s",
+>                     object_get_typename(OBJECT(machine->cgs)));
+>          exit(1);
+>      }
+> 
+> the creation of RAMBlocks happens earlier, in qemu_init_board(), if
+> the command line does not override the default memory backend with
+> -M memdev.  Then the RAMBlock will try to use guest_memfd (because
+> machine_require_guest_memfd correctly returns true; at least correctly
+> according to the current implementation) and trigger the assertion
+> failure for kvm_enabled().  This happend with a command line as
+> simple as the following:
+> 
+>      qemu-system-x86_64 -m 512 -nographic -object sev-snp-guest,reduced-phys-bits=48,id=sev0 \
+>         -M q35,kernel-irqchip=split,confidential-guest-support=sev0
+>      qemu-system-x86_64: ../system/physmem.c:1871: ram_block_add: Assertion `kvm_enabled()' failed.
+> 
+> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Thanks
+> ---
+>   system/physmem.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 67c9db9daad..1ddf9fb10d0 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1882,7 +1882,11 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>       if (new_block->flags & RAM_GUEST_MEMFD) {
+>           int ret;
+>   
+> -        assert(kvm_enabled());
+> +        if (!kvm_enabled()) {
+> +            error_setg(errp, "cannot set up private guest memory for %s: KVM required",
+> +                       object_get_typename(OBJECT(current_machine->cgs)));
+> +            goto out_free;
+> +        }
+>           assert(new_block->guest_memfd < 0);
+>   
+>           ret = ram_block_discard_require(true);
 
 
