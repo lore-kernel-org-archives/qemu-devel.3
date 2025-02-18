@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D426C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A3DC021AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQMa-0003my-RJ; Tue, 18 Feb 2025 11:22:24 -0500
+	id 1tkQQX-0004oh-SM; Tue, 18 Feb 2025 11:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tkQMY-0003mT-1m
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:22:22 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tkQMV-00005n-Ns
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:22:21 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2210d92292eso83862755ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:22:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739895736; x=1740500536; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9Xp4Z9/HmR+OSwLghu/zsJpTEJ/uMatbp0fonrfAci4=;
- b=e+k94yFwUk/ta1wJyl3Wp3dP+Zevc0UT7GlPGxO77DnaCLjOxxfLmOVeSY/0jEkH1d
- Y6PhaaQ8keBGbFKLgRF8DbWO1laHlnr/WUtuuxWHART+92oi59EClGFbv/sYDtJBFEnT
- 0fuybV5Wc9l7BI+sWpsgkM7H7nlPYYGMcfaLCy7llEGKt4+mvidtcvZlfEWd9oCyCfi0
- stifiAn4OMhConu++5PsTD90jxcy8+iaAZHr3mig3fKbno5Nqzc+C4Tf+cD7XlCgRbpH
- GENPi6bXsLSIaC7jh9pFt688Hu+FWmTDad4XiMS61MCIth+ow7Bj4vjzCL3Ehptfh1Qk
- ZKkQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkQQU-0004nm-AF
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:26:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkQQO-0000g6-BE
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:26:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739895970;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uavT6ke0J/Cha3gANcNa3suBK9qxNe2HKl0rgsg+kBo=;
+ b=jWmIEWEK/1P2UZWhf3AVZfYdL4Vnl0zPXRWFxP1s1u1qmv4LsZecfEICdLiA6pgUEZ/r2q
+ o7zlzH/O8HuytfHoGObt0DUwPq4QDdnnjZL5e3ZityAnJ9LS44S8WXDgn1Q0QfT94pcUPe
+ EZpQHQUAq6AX+ezT1InDh+Pj1W9uGBI=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-288-auFYr9xaNIWK5edXmjSmFg-1; Tue, 18 Feb 2025 11:26:09 -0500
+X-MC-Unique: auFYr9xaNIWK5edXmjSmFg-1
+X-Mimecast-MFC-AGG-ID: auFYr9xaNIWK5edXmjSmFg_1739895968
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3f40e8dabdbso63791b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:26:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739895736; x=1740500536;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9Xp4Z9/HmR+OSwLghu/zsJpTEJ/uMatbp0fonrfAci4=;
- b=sI8bdViXekKG8fbVHZ6eil5LjxzzgJr18kp11TejjRA62AUInMV3uhlZLeX/lxdgjn
- gMh9HTzthCOwKrG7t7Y449pJtXR2oAiWRCe1iSGPkug3BBy5opin5I0AIbUqtCVDsrzb
- SkhQ9pF54pIKaMeIbub4f1WQpRvchkazmTP1Isk0zlN6fQsEbNYgruSLnnoCddov+4xq
- KwxixlFFI+50xaRqRfCYcc/mbwrrE4Ov+0iCCHCXs4nYidyMv+JyMWm9/JrWWtVC3/aC
- e84IkkUhjOCeecu1VJW2evEhNG2o8VIRUaf08zKorH3W2RdOnnV0vthQhML6+sBI48Ma
- kDCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvyIqwNtIPW4yd8GDQzRGvAOFCQ9JvEPG+VVU/PMvNSCXcu6YbtmZ0nzK149boLdlkbnkCOO0az+4i@nongnu.org
-X-Gm-Message-State: AOJu0YzxKFL6NBrRErA0DjvjY+8hy/p8eIFCnvATPO6BwcUJwcW3GChx
- LryJXnydu6RBm4S4/2Sz9s96g8hOBTwLIHZmkR3to5BednDzqmfIfYY/nVYGMlQ=
-X-Gm-Gg: ASbGnctNfy8ID/QEqwLQeiJSVZ3udQBFWUr1SOugcmDPWUQscdxmQdR/HFZuz/oBE7W
- aTlhcYXq4M9O8RhZmvJnqASLZz0InneGwSR1NT8axRecaPG5YGIgbIpw/lBVb5ZkKzKpP3YrkgY
- 91olxnVUCcW7jFItVBhB5LuG01b+OMtteKzPOUDp93YcjNdMP3p55fe1uU1tb26X1oQQlxc7G6K
- h9lW0f7fVR0L7vkT/QojKIHWS68nf3YduvzhShK7mDJncaACpRxIOazSrHNRVQj8RUTH87kOyqU
- Gyg5I7tmoGv+2Ow7kEw33WyYVXtU
-X-Google-Smtp-Source: AGHT+IF5lt6Q9knZAhxS1GZtZOUoHgbgEbMDaeDVKXLy4rEqRIXV8XRlLHSGKb/OKUrAGZIrtvzJWA==
-X-Received: by 2002:a05:6a21:102:b0:1ee:85b2:ef7c with SMTP id
- adf61e73a8af0-1ee8cbbcc1cmr22838441637.27.1739895736026; 
- Tue, 18 Feb 2025 08:22:16 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
+ d=1e100.net; s=20230601; t=1739895968; x=1740500768;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uavT6ke0J/Cha3gANcNa3suBK9qxNe2HKl0rgsg+kBo=;
+ b=C4sZq1pb0qds6WKNlaAtGalASnjeSzq/duaaEcWnbzv7mGsLGVX8GZYKxXVq97UBn2
+ njDRgYE0GRN8mFK3Lx56qMyARNwSqtQKDBTkztbeHUCrW6ob6lHrWIUoZA7tgFMx8eVq
+ p2RZPDjRfYkv+zQSfNu4pP6SszFws21F98HNA0o216qH/+O2U0rrXab/cgDnfJxlEXsA
+ 9F41weYhb45Som9J74o+icKAbmLCB+Aq4gkvDZNpZpxmjoCCvEIwP01cpQ8aJo1Ge792
+ T05R9SB73NK/0Vt/Rug9d/szytksxIIOz+nZQKZRIH9YUnsRKzFKBg253gj2c1bqKVbi
+ dAUQ==
+X-Gm-Message-State: AOJu0YyV8CnpPAnsG982tgwNqJ7iGdao9GtRZsVlKWLjxtu+l+PjbfXR
+ /VITr3SD+24y4gISyp2s7w6vxY7MXQ4FY6DGgLs/qIiBdnWXForNtMbDj9HFMqBdxLYtxy2PstO
+ HdE4YN1F+2rbiqtoJ58F3/CmbPJ7bIZ86MKAPKN90328POVWFE3zE
+X-Gm-Gg: ASbGnctO5PH6/pvnNs2aC09L2lfh58cC+tkME7mEwZT5u75xEqCGm8wIzwqq0JlmFu6
+ ovz0S1bN31B7wzt2zVIzOcutBf/pO/kei0G1IIFNUrOE2oYRW8wdmpZo8BmuRuFVOyZHyyF8qzJ
+ 6YT1XttsivTBUMi0B4jWWXZbzlqytLsammphO7e4OcGW7YQW/PsCSVEA8G4/fc9513bgrft6GZA
+ iLS5jqdIiTx3SCWQB8HituhLT52dBNhWnrN9mJ54sO7W4dyicd5G19CAI8=
+X-Received: by 2002:a05:6808:1b08:b0:3f4:ad3:d666 with SMTP id
+ 5614622812f47-3f40ad3d850mr1902125b6e.21.1739895968265; 
+ Tue, 18 Feb 2025 08:26:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHA2EUJP2VAnOKsJeknxOF8RtMHYdINLCw8IrWZucbm9qF11cMEO9eWUd+sc2YHn/yWbGbc6g==
+X-Received: by 2002:a05:6808:1b08:b0:3f4:ad3:d666 with SMTP id
+ 5614622812f47-3f40ad3d850mr1902098b6e.21.1739895967906; 
+ Tue, 18 Feb 2025 08:26:07 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fc13ab127esm10065582a91.1.2025.02.18.08.22.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 08:22:15 -0800 (PST)
-Message-ID: <71254e1d-3e17-4082-968f-db7fe6cea590@linaro.org>
-Date: Tue, 18 Feb 2025 08:22:14 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>,
- Stefan Weil <stefan.weil@weilnetz.de>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ 006d021491bc7-5fcb16e0458sm3609565eaf.20.2025.02.18.08.26.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Feb 2025 08:26:07 -0800 (PST)
+Date: Tue, 18 Feb 2025 11:26:03 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
- <b3ef0b9f-df09-4444-b0aa-3b2a36f7cd3a@weilnetz.de>
- <4e788add-ee40-4d98-b065-6745e6e2fce5@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <4e788add-ee40-4d98-b065-6745e6e2fce5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V2 02/45] migration: cpr helpers
+Message-ID: <Z7S0m1dnIv674huu@x1.local>
+References: <1739542467-226739-1-git-send-email-steven.sistare@oracle.com>
+ <1739542467-226739-3-git-send-email-steven.sistare@oracle.com>
+ <Z69xPYAJcOjlSpff@x1.local>
+ <ee12d6ec-13fa-4e66-ba27-97fdb1f49f74@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ee12d6ec-13fa-4e66-ba27-97fdb1f49f74@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,84 +112,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQnJpYW4sDQoNCk9uIDIvMTcvMjUgMjA6MTEsIEJyaWFuIENhaW4gd3JvdGU6DQo+IA0K
-PiBPbiAxLzExLzIwMjUgNDowOCBQTSwgU3RlZmFuIFdlaWwgdmlhIHdyb3RlOg0KPj4gQW0g
-MTAuMDEuMjUgdW0gMjE6MzMgc2NocmllYiBQaWVycmljayBCb3V2aWVyOg0KPj4+IEZvciBu
-b3csIGl0IHdhcyBvbmx5IHBvc3NpYmxlIHRvIGJ1aWxkIHBsdWdpbnMgdXNpbmcgR0NDIG9u
-IFdpbmRvd3MuDQo+Pj4gSG93ZXZlciwNCj4+PiB3aW5kb3dzLWFhcmNoNjQgb25seSBzdXBw
-b3J0cyBDbGFuZy4NCj4+PiBUaGlzIGJpZ2dlc3Qgcm9hZGJsb2NrIHdhcyB0byBnZXQgcmlk
-IG9mIGdjY19zdHJ1Y3QgYXR0cmlidXRlLCB3aGljaA0KPj4+IGlzIG5vdA0KPj4+IHN1cHBv
-cnRlZCBieSBDbGFuZy4gQWZ0ZXIgaW52ZXN0aWdhdGlvbiwgd2UgcHJvdmVkIGl0IHdhcyBz
-YWZlIHRvDQo+Pj4gZHJvcCBpdC4NCj4+Pg0KPj4+IEJ1aWx0IGFuZCB0ZXN0ZWQgb24gV2lu
-ZG93cyAoYWxsIG1zeXMgZW52KS9MaW51eC9NYWNPUyBmb3IgeDg2XzY0IGFuZA0KPj4+IGFh
-cmNoNjQNCj4+PiBob3N0cy4NCj4+Pg0KPj4+IHYxIGNvbnRhaW5lZCB3YXJuaW5nIGZpeGVz
-IGFuZCB2YXJpb3VzIGJpdHMgdGhhdCBoYXZlIGJlZW4gdXBzdHJlYW1lZA0KPj4+IGFscmVh
-ZHkuDQo+Pj4gVGhlIG9ubHkgYml0cyBsZWZ0IGluIHRoaXMgc2VyaWVzIGFyZSB0aGUgZ2Nj
-X3N0cnVjdCByZW1vdmFsLCBhbmQNCj4+PiBmaXhpbmcgdGhlDQo+Pj4gcGx1Z2lucyBidWls
-ZCB3aXRoIGNsYW5nLg0KPj4+DQo+Pj4gVGhpcyBzZXJpZXMgaXMgZm9yIDEwLjAsIGFzIHdl
-IGRlY2lkZWQgdG8gbm90IGluY2x1ZGUgdGhlIGdjY19zdHJ1Y3QNCj4+PiByZW1vdmFsIGlz
-DQo+Pj4gOS4yIHJlbGVhc2UuDQo+Pj4NCj4+PiBBbGwgcGF0Y2hlcyBhcmUgbm93IHJldmll
-d2VkLCBzbyB0aGlzIHNlcmllcyBjYW4gYmUgcHVsbGVkLiBJJ2xsDQo+Pj4gcmVwb3J0IHRo
-YXQgdG8NCj4+PiBNU1lTMiB0b28sIHNvIHdlIGNhbiBlbmFibGUgY2xhbmcgZW52aXJvbm1l
-bnRzIGZvciBRRU1VLg0KPj4+DQo+Pj4gdjE6DQo+Pj4gaHR0cHM6Ly9wYXRjaGV3Lm9yZy9R
-RU1VLzIwMjQxMDMxMDQwNDI2Ljc3MjYwNC0xLXBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9y
-Zy8NCj4+Pg0KPj4+IHYyOg0KPj4+IC0gZHJvcCBhdHRyaWJ1dGUgZ2NjX3N0cnVjdCBpbnN0
-ZWFkIG9mIHVzaW5nIC1tbm8tbXMtYml0ZmllbGRzIG9wdGlvbg0KPj4+IC0gYWRkIGEgc2Vj
-dGlvbiBhYm91dCBiaXRmaWVsZHMgaW4gZG9jdW1lbnRhdGlvbg0KPj4+DQo+Pj4gdjM6DQo+
-Pj4gLSBleHBsYWluIHdoeSBnY2Nfc3RydWN0IGF0dHJpYnV0ZSBtYXR0ZXJzIGluIHBhY2tl
-ZCBzdHJ1Y3RzIGluDQo+Pj4gY29tbWl0IG1lc3NhZ2UNCj4+PiAtIHJld29yZCB0aGUgYml0
-ZmllbGRzIGRvY3VtZW50YXRpb24gd2l0aCBzdWdnZXN0aW9ucyBnaXZlbg0KPj4+DQo+Pj4g
-djQ6DQo+Pj4gLSBlZGl0IGZvciBiaXRmaWVsZHMgZG9jIHJlcXVlc3RlZCBieSBQaGlsaXBw
-ZQ0KPj4+DQo+Pj4gUGllcnJpY2sgQm91dmllciAoMyk6DQo+Pj4gIMKgwqAgd2luMzI6IHJl
-bW92ZSB1c2FnZSBvZiBhdHRyaWJ1dGUgZ2NjX3N0cnVjdA0KPj4+ICDCoMKgIGRvY3MvZGV2
-ZWwvc3R5bGU6IGFkZCBhIHNlY3Rpb24gYWJvdXQgYml0ZmllbGQsIGFuZCBkaXNhbGxvdyB0
-aGVtIGZvcg0KPj4+ICDCoMKgwqDCoCBwYWNrZWQgc3RydWN0dXJlcw0KPj4+ICDCoMKgIHBs
-dWdpbnM6IGVuYWJsZSBsaW5raW5nIHdpdGggY2xhbmcvbGxkDQo+Pj4NCj4+PiAgwqAgZG9j
-cy9kZXZlbC9zdHlsZS5yc3TCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgfCAyMCArKysrKysrKysrKysrKysrKysrDQo+Pj4gIMKgIG1lc29uLmJ1aWxkwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIHzCoCA2ICsrKy0tLQ0KPj4+ICDCoCBpbmNsdWRlL3FlbXUvY29tcGlsZXIuaMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgNyArLS0tLS0tDQo+Pj4gIMKg
-IHNjcmlwdHMvY29jY2ktbWFjcm8tZmlsZS5owqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIHzCoCA2ICstLS0tLQ0KPj4+ICDCoCBzdWJwcm9qZWN0cy9saWJ2aG9zdC11c2VyL2xp
-YnZob3N0LXVzZXIuaCB8wqAgNiArLS0tLS0NCj4+PiAgwqAgY29udHJpYi9wbHVnaW5zL21l
-c29uLmJ1aWxkwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMiArLQ0KPj4+ICDC
-oCBwbHVnaW5zL21lc29uLmJ1aWxkwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgfCAyNCArKysrKysrKysrKysrKysrKysrLS0tLQ0KPj4+ICDCoCB0ZXN0
-cy90Y2cvcGx1Z2lucy9tZXNvbi5idWlsZMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAg
-MyArLS0NCj4+PiAgwqAgOCBmaWxlcyBjaGFuZ2VkLCA0OCBpbnNlcnRpb25zKCspLCAyNiBk
-ZWxldGlvbnMoLSkNCj4+DQo+PiBUaGlzIG5pY2Ugc2VyaWVzIGFsbG93cyBidWlsZGluZyBR
-RU1VIGZvciBXaW5kb3dzIHdpdGggdGhlIExMVk0gY3Jvc3MNCj4+IGNvbXBpbGVyIG9uIG15
-IEFSTTY0IG1hY2hpbmUsIHNvIHlvdSBjYW4gYWRkDQo+IA0KPiBJcyB0aGlzIHRvb2xjaGFp
-biBhdmFpbGFibGUgcHVibGljbHkgb3IgZGlkIHlvdSBidWlsZCBpdCB5b3Vyc2VsZj/CoCBJ
-dA0KPiB3b3VsZCBiZSBoYW5keSBpZiB0aGVyZSB3ZXJlIGEgbGludXggeDg2XzY0IGhvc3Rl
-ZCBjcm9zcy10b29sY2hhaW4gdGhhdA0KPiBjYW4gdGFyZ2V0IFdpbmRvd3MtYWFyY2g2NC7C
-oCBPciBsaW51eCBhYXJjaDY0IGhvc3RlZCB3b3VsZCBiZSBwcmV0dHkNCj4gZ29vZCwgdG9v
-Lg0KPiANCg0KQXQgdGhlIG1vbWVudCwgdGhlIG9ubHkgb3BlbiBzb3VyY2UgdG9vbGNoYWlu
-IHN1cHBvcnRpbmcgd2luZG93cy1hcm02NCANCmlzIGxsdm0tbWluZ3cgKGh0dHBzOi8vZ2l0
-aHViLmNvbS9tc3RvcnNqby9sbHZtLW1pbmd3KS4NClRoZXJlIGlzIHNvbWUgcHJvZ3Jlc3Mg
-b24gZ2NjLCBidXQgaXQgaXMgbm90IHlldCBmdWxseSB1cHN0cmVhbS4NCk1TWVMyIHVzZXMg
-bGx2bS1taW5ndyBmb3Igd2luZG93cy1hcm02NCBlbnZpcm9ubWVudC4NCg0KT24gbXkgc2lk
-ZSwgSSB1c2VkIGEgd2luZG93cy1hcm02NCBtYWNoaW5lIHdpdGggTVNZUzIgbmF0aXZlIGVu
-dmlyb25tZW50Lg0KDQpJdCB3b3VsZCBiZSBoYW5keSB0byBjcm9zcyBjb21waWxlLCBhbmQg
-dGhlIHByb2JsZW0gaXMgbm90IHJlYWxseSBRRU1VIA0KaXRzZWxmLCBidXQgdG8gY3Jvc3Mg
-Y29tcGlsZSBhbGwgdGhlIGRlcGVuZGVuY2llcy4NCkZvciB4ODZfNjQsIHdlIHVzZSBmZWRv
-cmEsIHdoaWNoIHByb3ZpZGVzIGNvbnZlbmllbnQgcHJlY29tcGlsZWQgbWluZ3cgDQpwYWNr
-YWdlcyBmb3IgZGVwZW5kZW5jaWVzLg0KSXQncyBkZWZpbml0ZWx5IG5vdCBpbXBvc3NpYmxl
-IHRvIGRvIHRoZSBzYW1lIGZvciB3aW5kb3dzLWFybTY0LCBidXQgaXQgDQpqdXN0IHRha2Vz
-IG11Y2ggbW9yZSBlZmZvcnQuDQoNCj4gSXMgdGhlcmUgYW4gTVNZUzIgb3Igb3RoZXIgZGlz
-dHJpYnV0b3IgdGhhdCBwcm92aWRlcyB3aW5kb3dzLWFhcmNoNjQNCj4gYnVpbGRzIG9mIHRo
-ZSBnbGliIGFuZCBvdGhlciBsaWJyYXJ5IGRlcGVuZGVuY2llcz8NCj4gDQoNCk1TWVMyIGRv
-ZXMsIGJ1dCBpdCdzIGNvbXBsaWNhdGVkIHRvIGRvd25sb2FkIHBhY2thZ2VzIGJ5IGhhbmQg
-aWYgaXQncyANCnlvdXIgaWRlYS4gQmV0dGVyIHRvIGNyb3NzIGNvbXBpbGUgaXQuDQoNClJl
-Z2FyZHMsDQpQaWVycmljaw0KDQo+Pg0KPj4gVGVzdGVkLWJ5OiBTdGVmYW4gV2VpbCA8c3dA
-d2VpbG5ldHouZGU+DQo+Pg0KPj4gSSBvbmx5IG5lZWRlZCBhIHRyaXZpYWwgYWRkaXRpb25h
-bCBmaXggaW4gc2NyaXB0cy9uc2lzLnB5IGZvciBgbWFrZQ0KPj4gaW5zdGFsbGVyYCBiZWNh
-dXNlIHRoZSB1c3VhbCBHTlUgb2JqZHVtcCBhbmQgdGhlIExMVk0gb2JqZHVtcCAob3IgdGhl
-DQo+PiBjcm9zcyB4ODZfNjQtdzY0LW1pbmd3MzItb2JqZHVtcCBpbiBteSB0ZXN0KSBwcm9k
-dWNlIHNsaWdodGx5DQo+PiBkaWZmZXJlbnQgb3V0cHV0IChpbmRlbnRhdGlvbiB3aXRoIFx0
-LCBpbmRlbnRhdGlvbiB3aXRoIGZvdXIgc3BhY2VzKS4NCj4+IEknbGwgcHJlcGFyZSBhIHBh
-dGNoIHdoaWNoIGVsaW1pbmF0ZXMgdGhlIG5lZWQgZm9yIG9iamR1bXAsIHNvIG5vDQo+PiBp
-bnRlcm1lZGlhdGUgZml4IGlzIG5lZWRlZCBmb3IgdGhpcy4NCj4+DQo+PiBTdGVmYW4gVy4N
-Cj4+DQoNCg==
+On Fri, Feb 14, 2025 at 03:31:29PM -0500, Steven Sistare wrote:
+> On 2/14/2025 11:37 AM, Peter Xu wrote:
+> > On Fri, Feb 14, 2025 at 06:13:44AM -0800, Steve Sistare wrote:
+> > > Add cpr_needed_for_reuse, cpr_resave_fd helpers, cpr_is_incoming, and
+> > > cpr_open_fd, for use when adding cpr support for vfio and iommufd.
+> > > 
+> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > > ---
+> > >   include/migration/cpr.h |  6 ++++++
+> > >   migration/cpr.c         | 44 ++++++++++++++++++++++++++++++++++++++++++++
+> > >   2 files changed, 50 insertions(+)
+> > > 
+> > > diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> > > index 3a6deb7..6ad04d4 100644
+> > > --- a/include/migration/cpr.h
+> > > +++ b/include/migration/cpr.h
+> > > @@ -18,15 +18,21 @@
+> > >   void cpr_save_fd(const char *name, int id, int fd);
+> > >   void cpr_delete_fd(const char *name, int id);
+> > >   int cpr_find_fd(const char *name, int id);
+> > > +void cpr_resave_fd(const char *name, int id, int fd);
+> > > +int cpr_open_fd(const char *path, int flags, const char *name, int id,
+> > > +                bool *reused, Error **errp);
+> > >   MigMode cpr_get_incoming_mode(void);
+> > >   void cpr_set_incoming_mode(MigMode mode);
+> > > +bool cpr_is_incoming(void);
+> > >   int cpr_state_save(MigrationChannel *channel, Error **errp);
+> > >   int cpr_state_load(MigrationChannel *channel, Error **errp);
+> > >   void cpr_state_close(void);
+> > >   struct QIOChannel *cpr_state_ioc(void);
+> > > +bool cpr_needed_for_reuse(void *opaque);
+> > > +
+> > >   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+> > >   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+> > > diff --git a/migration/cpr.c b/migration/cpr.c
+> > > index 584b0b9..12c489b 100644
+> > > --- a/migration/cpr.c
+> > > +++ b/migration/cpr.c
+> > > @@ -95,6 +95,39 @@ int cpr_find_fd(const char *name, int id)
+> > >       trace_cpr_find_fd(name, id, fd);
+> > >       return fd;
+> > >   }
+> > > +
+> > > +void cpr_resave_fd(const char *name, int id, int fd)
+> > > +{
+> > > +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
+> > > +    int old_fd = elem ? elem->fd : -1;
+> > > +
+> > > +    if (old_fd < 0) {
+> > > +        cpr_save_fd(name, id, fd);
+> > > +    } else if (old_fd != fd) {
+> > > +        error_setg(&error_fatal,
+> > > +                   "internal error: cpr fd '%s' id %d value %d "
+> > > +                   "already saved with a different value %d",
+> > > +                   name, id, fd, old_fd);
+> > 
+> > How bad it is to trigger this?
+> 
+> Bad, cpr will likely fail the next time it is used.
+> I suppose I could add a blocker instead of using error_fatal.
+> But, fundamentally something unknown has gone wrong, like for
+> any assertion failure, so continuing to run in an uncertain
+> state seems unwise.
+> 
+> I have only ever seen this during development after adding buggy code.
+> 
+> > I wonder if cpr_save_fd() should have checked this already on duplicated
+> > entries; it looks risky there too if this happens to existing cpr_save_fd()
+> > callers.
+> 
+> Yes, I could check for dups in cpr_save_fd, though it would cost O(N) instead
+> of O(1).  That seems like overkill for a bug that should only bite during new
+> code development.
+> 
+> cpr_resave_fd is O(N), but not for error checking.  Callers use it when they
+> know the fd was (or may have been) already created.  It is a programming
+> convenience that simplifies the call sites.
+
+If the caller know the fd was created, then IIUC the caller shouldn't
+invoke the call.
+
+For the other case, could you give an example when the caller may have been
+created, but maybe not?  I'm a bit surprised we have such use case.
+
+-- 
+Peter Xu
+
 
