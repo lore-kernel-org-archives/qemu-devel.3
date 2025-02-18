@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7653C021AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA81BC021AD
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 16:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkQco-0006re-On; Tue, 18 Feb 2025 11:39:10 -0500
+	id 1tkQcj-0006ps-CC; Tue, 18 Feb 2025 11:39:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tkQcn-0006r3-5t
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:39:09 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tkQch-0006pZ-LW
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:39:03 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tkQcl-0002Ln-Kf
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:39:08 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22128b7d587so45183135ad.3
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:39:07 -0800 (PST)
+ id 1tkQcf-0002Kl-TA
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 11:39:03 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2fc6272259cso3657052a91.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 08:39:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1739896746; x=1740501546; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TYUkm0URlvt/fEHggYoxirTMYLe7QUj525r8nmoUuyU=;
- b=HSLKx+9/NxxZQJ6O2m27KiDT7MWeehDia9ORGxWrm57Qdo/gAMA3wLGzm+aVToA8lr
- uD/j25MJfdnK+42QKTVkHENg8R9f0T743TIXfgLO4VdRdT5ovbbHJ9ioTX5IUT+OyoGF
- 9NhCnp0GduUnzy1lwIJC9kzb7qT1yebVfPvbgTezBcLD9dv+4hqYblzUD5l1STX1XoVk
- 660sH08Z+mwc3WYbJqMsYc3kAZQOhWA/OogKm0PeIO/vR/L+p7CzMloF55oiC+bcBycm
- lsxrE0Tp09QO2pfnBXukNYP/UxcNG2UVy79ykyHNKt1XbWYEvGfthYfiGnXc6Huh+QRt
- trVA==
+ d=ventanamicro.com; s=google; t=1739896740; x=1740501540; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fl0Tqxaz2PzXbJb4Af+tTD/1mJfnRKKhXco3/bT6eew=;
+ b=XZjgaGbSxwHa3BQ4+RurtXz7UeGxaVYKiICFK4tKleBo7EJjd9Tz6QSb5Hk68xeIMC
+ P6bydfHOBivy/mT2GPryuwbGZTz6Y4B6pk6ZNyKBX9AF84cUsfEcOdF/Ex+lUyQ+9eP+
+ z1ZHG24DZ2pIUQipjnYOltXwxS7hbOCjOY+kZrfIsIIY3LIAB6TfzaEfygV0aaoy5TKZ
+ 3vTGtfAd1yQg0FtbSzPgLsYDjcE24csEy3jRlFMKQrX8dYrVOiMrg8LBL1BcRCh2fdZS
+ XsbgyoQAkoNi7IwvGZ9heCCXQ+yas7n0vdRQ0SijYa4gSvmwG5A42wL1f7zY8RV9UGL4
+ t8OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739896746; x=1740501546;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TYUkm0URlvt/fEHggYoxirTMYLe7QUj525r8nmoUuyU=;
- b=Tjnhmrt81I1Ihi1g162WxjsiDaxNjs+qUVEkrIPwY83EfdRVEddO9fhEVIidih3e0O
- uX+m+D9v+jCFml0kSt7Y6B7kEYl8WTr5KjxcwjN4bTOViPMQZb7JkVMlb6bMCJwSuYnl
- f547QPsX1TbwI1k3n4x9DV0IVIHVxub/tw494BU+GYSn24JnjI/ce6GXbxEDeXHS/Knu
- HQLaxX73SoJm2Ykl40mLwXctV9JHmRyD//uSQs4Asyani8ox2e1zvVX23pVwHEhx0+oe
- /UKc5LMPCBaLHSMnSSy9G5R1jbNaQWaHwAduZh+F3Gz847OKgVu/jIVhu+1ENqRTrAxh
- yQeA==
-X-Gm-Message-State: AOJu0YwfJHuCG2B59KWZOwMXebacXHiNOLEyRrQj1yBcxcIb2WHPevuK
- pfvL64c8fI+C2CDKKdspbMZ9WCsmdqmiTfRGAQRqA5BpWLIXcFbn3amg3KPgZl4yrUvim5xQ+fZ
- 6
-X-Gm-Gg: ASbGncu9lKaeShzjc7VHYhBZSqzJS0sN1FTsJ2Sv8iS7n9mqb4tjrnjIkT5g3udILQ/
- kUNuVMYTugdKOre9A1U7TCOHO6nhxuE8J9MuDKzW2Oy52KsU8pu+buSgb89YGiayjIJ/txyvqDy
- ITuYVCo9FEcFCgC6EZbCgAZycu3KdmLSgGJkh6/oUSGWMPkzq2Ho6mgoIPorXjzzDq+21XsovGS
- hlDA91IXvaK32ztdbSSP3WDd5bRO8AKuqQEf8by0x9iU2mhvm5yaH5TRh7j6a7mxH7KNWXcZCl+
- 7RTvMyW2dHvh8ZT7mmRU5dsncrqKI/01Vo/NAykAkzpg3KnMiy6e
-X-Google-Smtp-Source: AGHT+IHtTeK7YiNntz8FIcfbRLXiFgTpoBDoe3qIcisBZRjXMGXrcSzcH+qOvAHyc2QRheznYF6HsA==
-X-Received: by 2002:a05:6a00:3d06:b0:730:9204:f0c6 with SMTP id
- d2e1a72fcca58-732618c2a69mr24657445b3a.16.1739896745820; 
- Tue, 18 Feb 2025 08:39:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739896740; x=1740501540;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fl0Tqxaz2PzXbJb4Af+tTD/1mJfnRKKhXco3/bT6eew=;
+ b=tJ9lhHg0IThvCZ6kymIc92dT/+Tggd7jBkKQssWvDDlassmwA9yeBIelfWqNIHxWx6
+ RGQKZa0m/y0C3cealnKBEx7MS+KSlUgeJPzNYA+ez/brTt+cw4UV4FV236PrJjcFBpjB
+ awts7Y0uyLS3yGCI2Kfiy4LfcKAkyh8hBQyvGppm4V5PJlkBp2y96Kb0PGCLcq1YjnV8
+ LUWEgog0tA1mhX2WChz3zW72gugjhtIAWeTMnRlCnW/BDeqzPzd8baGe5pudkCc54QQt
+ EKfN4a+UE2X9eHgDaJCufnC41hxOxTLAqieb26v+sWi+IKwfBwNxmIcLi5pJn7WjWqHA
+ Gj5w==
+X-Gm-Message-State: AOJu0YzJdB468sLWoqYDo7OPmLe4hnRxh4QuOAe93w/po43cxEkvlGhV
+ LhEVoCQ5wvijesUnucv4iRUpJZzSHTPyUudMkmmJZCp7n7gXQkiPpNf6yHo0sv3FoaFQImiVvi2
+ M
+X-Gm-Gg: ASbGnctuGdIeoToDBjGezvWuALhuI1eRT+u32TnS5TKc7v0iE6sFuMSc3JLGwXgbAIV
+ oYUAGkoQ5pZquCvCKk3ekG3UdPWqVJOg1ZdkM0/yetn89rS/UuMNafygqYUDg5Du/on14wTd9b6
+ pTITJsMQZWx1MaIRKgKFZZ+JtB58M262sdzymFMy4JQi99iGEDIsabdYOfq1EjuvbVhGqRz4hpo
+ RbbddcRjUCsmBNd+nfHwKbaAWXZA4DFBuU81ouTVhlbadVQ3Czs4yOlYOc4BDInIh6iwEY8i2LA
+ PKb4MCvMmJgA4nydBWLt6w+Lf5yNs6VlvVJwW5vW/YNa7OT74E+k
+X-Google-Smtp-Source: AGHT+IHh3YcraYbvA5G21lrqSIFtbb1CCWYTmRYBZgcHd+isrt09zo8zmW4gZfKOccAPag8L7jfTDw==
+X-Received: by 2002:a05:6a00:3a07:b0:732:5b10:572b with SMTP id
+ d2e1a72fcca58-732617bd3c5mr21617989b3a.10.1739896739947; 
+ Tue, 18 Feb 2025 08:38:59 -0800 (PST)
 Received: from grind.. (201-68-240-180.dsl.telesp.net.br. [201.68.240.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73278d09228sm4595533b3a.117.2025.02.18.08.39.03
+ d2e1a72fcca58-73278d09228sm4595533b3a.117.2025.02.18.08.38.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Feb 2025 08:39:05 -0800 (PST)
+ Tue, 18 Feb 2025 08:38:59 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 2/3] target/riscv/cpu.c: create flag for ziccrse
-Date: Tue, 18 Feb 2025 13:38:53 -0300
-Message-ID: <20250218163854.425607-3-dbarboza@ventanamicro.com>
+Subject: [PATCH 0/3] target/riscv/kvm: update to Linux 6.14-rc3
+Date: Tue, 18 Feb 2025 13:38:51 -0300
+Message-ID: <20250218163854.425607-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250218163854.425607-1-dbarboza@ventanamicro.com>
-References: <20250218163854.425607-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,45 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At this moment ziccrse is a TCG always enable ext that has no flag. KVM
-will expose ziccrse to users, allowing them to turn it on/off.
+Hi,
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu.c     | 5 +++++
- target/riscv/cpu_cfg.h | 3 +++
- 2 files changed, 8 insertions(+)
+I'm sending our usual KVM capabilities update, following an update on
+linux-headers.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 522d6584e4..0b8d2c0c25 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1711,6 +1711,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zvksc", ext_zvksc, false),
-     MULTI_EXT_CFG_BOOL("zvksg", ext_zvksg, false),
- 
-+    /*
-+     * KVM can turn it on/off. For TCG this is always
-+     * enabled if priv_ver >= 1.11.
-+     */
-+    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
-     { },
- };
- 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 3f3c1118c0..88565e29fd 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -157,6 +157,9 @@ struct RISCVCPUConfig {
-     bool ext_ssstateen;
-     bool ext_sha;
- 
-+    /* Always enabled for TCG, KVM wants to switch it on/off */
-+    bool ext_ziccrse;
-+
-     /*
-      * Always 'true' booleans for named features
-      * TCG always implement/can't be user disabled,
+This time I had to include an extra patch (patch 2) because KVM is
+exporting ziccrse to be enabled/disabled by users, while our current
+implementation treats the ext as always enabled in TCG.
+
+Daniel Henrique Barboza (3):
+  linux-headers: Update to Linux v6.14-rc3
+  target/riscv/cpu.c: create flag for ziccrse
+  target/riscv/kvm: add extensions after 6.14-rc3 update
+
+ include/standard-headers/linux/ethtool.h      |  4 +
+ include/standard-headers/linux/fuse.h         | 76 ++++++++++++++++++-
+ .../linux/input-event-codes.h                 |  1 +
+ include/standard-headers/linux/pci_regs.h     | 16 ++--
+ include/standard-headers/linux/virtio_pci.h   | 14 ++++
+ linux-headers/asm-arm64/kvm.h                 |  3 -
+ linux-headers/asm-loongarch/kvm_para.h        |  1 +
+ linux-headers/asm-riscv/kvm.h                 |  7 +-
+ linux-headers/asm-x86/kvm.h                   |  1 +
+ linux-headers/linux/iommufd.h                 | 35 ++++++---
+ linux-headers/linux/kvm.h                     |  8 +-
+ linux-headers/linux/stddef.h                  | 13 +++-
+ linux-headers/linux/vduse.h                   |  2 +-
+ target/riscv/cpu.c                            |  5 ++
+ target/riscv/cpu_cfg.h                        |  3 +
+ target/riscv/kvm/kvm-cpu.c                    |  3 +
+ 16 files changed, 157 insertions(+), 35 deletions(-)
+
 -- 
 2.48.1
 
