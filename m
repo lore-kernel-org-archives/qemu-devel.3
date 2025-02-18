@@ -4,122 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E17E1C02198
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 05:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA436C02198
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 05:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkGS1-0001hx-VG; Tue, 18 Feb 2025 00:47:21 -0500
+	id 1tkGST-00022n-K6; Tue, 18 Feb 2025 00:47:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
- id 1tkGS0-0001he-Ah
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 00:47:20 -0500
-Received: from mailout4.samsung.com ([203.254.224.34])
+ (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
+ id 1tkGSR-0001yP-6B; Tue, 18 Feb 2025 00:47:47 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s5.kumari@samsung.com>)
- id 1tkGRu-00012H-48
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 00:47:20 -0500
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20250218054703epoutp04f0d1bcecb1eb884342c78717fa01d357~lN0pht9cx2314023140epoutp04J
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 05:47:03 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20250218054703epoutp04f0d1bcecb1eb884342c78717fa01d357~lN0pht9cx2314023140epoutp04J
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1739857623;
- bh=OhDGtxEtqMboNDEnDtHKf6de49csfyXC2Q6EUnrKIdg=;
- h=From:To:Cc:Subject:Date:References:From;
- b=qp91sVxCBIOzE1GMuq7iohy88wO3S3K7MdrBh4PT6X2uNK529BonO+jd1cchLLf2r
- uy9K0kQNVgSAvEqpWv/SAaGxPa4F5y6uxXrGvNCEJi8V6pAcTicG4+NTI0Nfg4C1xD
- AVm0QYUBEY67MCqjz2gIIsXflxvp8l79n+qhnM3g=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTP id
- 20250218054703epcas5p23c025dcd905809e506186e35d27cac7b~lN0pDX2Te0575405754epcas5p2V;
- Tue, 18 Feb 2025 05:47:03 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.178]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4YxpSP0g3sz4x9Q2; Tue, 18 Feb
- 2025 05:47:01 +0000 (GMT)
-Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
- epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
- AD.CA.29212.3DE14B76; Tue, 18 Feb 2025 14:46:59 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20250218052813epcas5p2834e4e039b4aa130af45b90459e14881~lNkMjPYkx2994529945epcas5p2z;
- Tue, 18 Feb 2025 05:28:13 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
- epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
- 20250218052813epsmtrp249ebac93ad71bd3df1af19d98154c739~lNkMhwlzj2736827368epsmtrp2n;
- Tue, 18 Feb 2025 05:28:12 +0000 (GMT)
-X-AuditID: b6c32a50-801fa7000000721c-76-67b41ed3a3ac
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
- epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 89.69.18729.C6A14B76; Tue, 18 Feb 2025 14:28:12 +0900 (KST)
-Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
- by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250218052811epsmtip2303007b70f71098f2fa69b3f69035f40~lNkK_-q-w1360313603epsmtip2e;
- Tue, 18 Feb 2025 05:28:11 +0000 (GMT)
-From: Sweta Kumari <s5.kumari@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
- dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
- a.manzanares@samsung.com, alok.rathore@samsung.com, Sweta Kumari
- <s5.kumari@samsung.com>
-Subject: [PATCH v3] hw/cxl/cxl-mailbox-utils: CXL CCI Get/Set alert config
- commands implmented as per CXL Specification 3.2 section 8.2.10.9.3
-Date: Tue, 18 Feb 2025 10:58:00 +0530
-Message-Id: <20250218052800.134176-1-s5.kumari@samsung.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org>)
+ id 1tkGSO-00013V-Tt; Tue, 18 Feb 2025 00:47:46 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YxpT85Rf7z4wyw;
+ Tue, 18 Feb 2025 16:47:40 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YxpT601VJz4wbR;
+ Tue, 18 Feb 2025 16:47:37 +1100 (AEDT)
+Message-ID: <f3dd3423-8f6d-48ce-80f2-3381550948b7@kaod.org>
+Date: Tue, 18 Feb 2025 06:47:36 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEJsWRmVeSWpSXmKPExsWy7bCmpu5luS3pBovXm1hMP6xo8eX0HjaL
- 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLBZrzn1mAYrNYXfg8tg56y67x5Nrm5k8
- +rasYvSYOrve4/MmuQDWqGybjNTElNQihdS85PyUzLx0WyXv4HjneFMzA0NdQ0sLcyWFvMTc
- VFslF58AXbfMHKCblBTKEnNKgUIBicXFSvp2NkX5pSWpChn5xSW2SqkFKTkFJgV6xYm5xaV5
- 6Xp5qSVWhgYGRqZAhQnZGT8bXrMVrHer+LXnDlsD422TLkZODgkBE4mrX/ezdTFycQgJ7GGU
- +DGhhRXC+cQocXfdY1aQKiGBb4wSO05XwXTsf9zGCFG0l1HiSf8lFgingUni66xbYB1sAloS
- Pz4/YAaxRQQkJX53nWYGKWIWeMUosXFDK9hCYYEJjBLH3n9iA6liEVCV+NS2HqyDV8Ba4ljT
- CjaIffIS+w+ehYoLSpyc+YQFxGYGijdvnQ02VULgEbtE/6+dUA0uEq/2HGOBsIUlXh3fwg5h
- S0l8frcXqiZb4u7WTii7ROLD7d1MELa9ROupfqChHEALNCXW79KHCMtKTD21jgliL59E7+8n
- UOW8EjvmwdjKElv+LWeFsCUlVnxeAmV7SHx/u4MFZKSQQKxEy3GdCYzys5B8MwvJN7MQFi9g
- ZF7FKJVaUJybnppsWmCom5daDo/a5PzcTYzgxKkVsINx9Ya/eocYmTgYDzFKcDArifAe6tqQ
- LsSbklhZlVqUH19UmpNafIjRFBjGE5mlRJPzgak7ryTe0MTSwMTMzMzE0tjMUEmct3lnS7qQ
- QHpiSWp2ampBahFMHxMHp1QDk/6xnNjk5o12CZmrPY6dkpmbnGwyoyfTiO/0oqaPohfC/vg7
- n3DQ/z7DXFaGpf3nLc+srJsJvDlKe2tCn7n/eJvTeMHhUdIk/f2vz07gutLHJ9krcMT7bKN0
- wZ5eq8xXmZ+eTj3OOuvbvNyas3wW00MDRQ4oPRacxNpn9HaTomPvlDz1o2Vxpf8+cW9T883g
- d1xzy/eT1v3utyLSk0tOhkTE79j90mrxXIXzNy85HNo3zSzZ6sHHwOQgHRax5uC7nAJ39gVs
- nn50UuuHNaXbuV76i7/4K6uUta/t69r5NlqGVzfYbFm4qW+GjbKauphuTVGLrcPlXZo8HZNM
- 0x0j308ROyr55P6sSZLzbpk7KbEUZyQaajEXFScCAHd1nNwlBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLLMWRmVeSWpSXmKPExsWy7bCSvG6O1JZ0gyNXDSymH1a0+HJ6D5vF
- 6ptrGC1uHtjJZLFw4zImi/OzTrFY/N22l9HieO8OFos15z6zAMXmsDtweeycdZfd48m1zUwe
- fVtWMXpMnV3v8XmTXABrFJdNSmpOZllqkb5dAlfGz4bXbAXr3Sp+7bnD1sB426SLkZNDQsBE
- Yv/jNsYuRi4OIYHdjBKrVr9gh0hISrw9c4kRwhaWWPnvOVhcSOAfo8TaTl0Qm01AS+LH5wfM
- ILYIUP3vrtPMIIOYBb4wSkxp+MoE4ggL9DFKXFnfAzaJRUBV4lPberAOXgFriWNNK9ggNshL
- 7D94FiouKHFy5hMWEJsZKN68dTbzBEa+WUhSs5CkFjAyrWKUTC0ozk3PLTYsMMxLLdcrTswt
- Ls1L10vOz93ECA5hLc0djNtXfdA7xMjEwXiIUYKDWUmE91DXhnQh3pTEyqrUovz4otKc1OJD
- jNIcLErivOIvelOEBNITS1KzU1MLUotgskwcnFINTOn3OZQ/CuVr9jFece3833z40frf+ySr
- Hs51WVV8YsmKmf9ufvSrbM28FThTrVra1Fbk6O/n7t0XKz6uYd4qzCNc8j++JTm88mXX57Wi
- qWw64pprPM4ZVh/nfutX4pkhd2v78m8KX240brMW22njs1t7x90n4irPmJqu8vb6fry0LXpX
- a/DdSUuTMli83e70PS7ZsSVX99dc6X6hyPYAx4ZJIW9nSq+tqZ17OfpZ33yPDTahj3ifq0+c
- e+hV2V7tdXOz1s6NE4v7cOwFl1dyRnUe3/e0WHX1Z5M27HGXWl/2uYv5nVDmj4UJ6Yrb/M2T
- NOws9lhe+fjHMHHaj+v9K5a7/9/y73LNzaKXz48osSixFGckGmoxFxUnAgBU0p/s0AIAAA==
-X-CMS-MailID: 20250218052813epcas5p2834e4e039b4aa130af45b90459e14881
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250218052813epcas5p2834e4e039b4aa130af45b90459e14881
-References: <CGME20250218052813epcas5p2834e4e039b4aa130af45b90459e14881@epcas5p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=s5.kumari@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/28] hw/arm/aspeed: Rename IRQ table and machine name
+ for AST2700 A0
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-5-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250213033531.3367697-5-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=OI5l=VJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -137,236 +113,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1)get alert configuration(Opcode 4201h)
-2)set alert configuration(Opcode 4202h)
+On 2/13/25 04:35, Jamin Lin wrote:
+> Currently, AST2700 SoC only supports A0. To support AST2700 A1, rename its IRQ
+> table and machine name.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed.c         | 8 ++++----
+>   hw/arm/aspeed_ast27x0.c | 8 ++++----
+>   2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index d9418e2b9f..6ddfdbdeba 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1654,12 +1654,12 @@ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
+>                               TYPE_TMP105, 0x4d);
+>   }
+>   
+> -static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+> +static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>       AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+>   
+> -    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
+> +    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
+>       amc->soc_name  = "ast2700-a0";
+>       amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+>       amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
+> @@ -1795,9 +1795,9 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+>   #ifdef TARGET_AARCH64
+>       }, {
+> -        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
+> +        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
 
-The patch is generated against the Johnathan's tree
-https://gitlab.com/jic23/qemu.git and branch cxl-2024-11-27.
+machine "ast2700-evb" has now disappeared from QEMU. You need to add
+an alias with "mc->alias" to restore the initial machine name, or
+follow the deprecation process :
 
-Signed-off-by: Sweta Kumari <s5.kumari@samsung.com>
----
-Changes in V2:
-- Removed cover letter as it's a single patch
-- Added latest spec reference
-- Fixed alignment issues
-- Updated shorter variable names to be more descriptive
-- Replaced field-by-field initialization in 'init_alert_config' with structured initialization for improved readability.
-- Replaced bit fields with 'uint8_t' and added defines for individual bits.
+   https://qemu.readthedocs.io/en/v9.2.0/about/deprecated.html
 
-Changes in v3:
-- Addressed the review comments from Jonathan Cameron.
-- Shortened macro and field names for improved readability.
+Thanks,
 
- hw/cxl/cxl-mailbox-utils.c  | 105 ++++++++++++++++++++++++++++++++++++
- hw/mem/cxl_type3.c          |  16 ++++++
- include/hw/cxl/cxl_device.h |  15 ++++++
- 3 files changed, 136 insertions(+)
+C.
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 9c7ea5bc35..5187f1605e 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -28,6 +28,11 @@
- #define CXL_DC_EVENT_LOG_SIZE 8
- #define CXL_NUM_EXTENTS_SUPPORTED 512
- #define CXL_NUM_TAGS_SUPPORTED 0
-+#define CXL_ALERTS_LIFE_USED_WARN_THRESH (1 << 0)
-+#define CXL_ALERTS_OVER_TEMP_WARN_THRESH (1 << 1)
-+#define CXL_ALERTS_UNDER_TEMP_WARN_THRESH (1 << 2)
-+#define CXL_ALERTS_COR_VMEM_ERR_WARN_THRESH (1 << 3)
-+#define CXL_ALERTS_COR_PMEM_ERR_WARN_THRESH (1 << 4)
- 
- /*
-  * How to add a new command, example. The command set FOO, with cmd BAR.
-@@ -86,6 +91,9 @@ enum {
-         #define GET_PARTITION_INFO     0x0
-         #define GET_LSA       0x2
-         #define SET_LSA       0x3
-+    HEALTH_INFO_ALERTS = 0x42,
-+        #define GET_ALERT_CONFIG 0x1
-+        #define SET_ALERT_CONFIG 0x2
-     SANITIZE    = 0x44,
-         #define OVERWRITE     0x0
-         #define SECURE_ERASE  0x1
-@@ -1625,6 +1633,97 @@ static CXLRetCode cmd_ccls_set_lsa(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/* CXL r3.2 Section 8.2.10.9.3.2 Get Alert Configuration (Opcode 4201h) */
-+static CXLRetCode cmd_get_alert_config(const struct cxl_cmd *cmd,
-+                                       uint8_t *payload_in,
-+                                       size_t len_in,
-+                                       uint8_t *payload_out,
-+                                       size_t *len_out,
-+                                       CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLAlertConfig *out = (CXLAlertConfig *)payload_out;
-+
-+    memcpy(out, &ct3d->alert_config, sizeof(ct3d->alert_config));
-+    *len_out = sizeof(ct3d->alert_config);
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+/* CXL r3.2 Section 8.2.10.9.3.3 Set Alert Configuration (Opcode 4202h) */
-+static CXLRetCode cmd_set_alert_config(const struct cxl_cmd *cmd,
-+                                       uint8_t *payload_in,
-+                                       size_t len_in,
-+                                       uint8_t *payload_out,
-+                                       size_t *len_out,
-+                                       CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLAlertConfig *alert_config = &ct3d->alert_config;
-+    struct {
-+        uint8_t valid_alert_actions;
-+        uint8_t enable_alert_actions;
-+        uint8_t life_used_warn_thresh;
-+        uint8_t rsvd;
-+        uint16_t over_temp_warn_thresh;
-+        uint16_t under_temp_warn_thresh;
-+        uint16_t cor_vmem_err_warn_thresh;
-+        uint16_t cor_pmem_err_warn_thresh;
-+    } QEMU_PACKED *in = (void *)payload_in;
-+
-+    if (in->valid_alert_actions & CXL_ALERTS_LIFE_USED_WARN_THRESH) {
-+        /*
-+         * CXL 3.2 Table 8-149 The life used warning threshold shall be
-+         * less than the life used critical alert value.
-+         */
-+        if (in->life_used_warn_thresh >=
-+            alert_config->life_used_crit_alert_thresh) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        alert_config->life_used_warn_thresh = in->life_used_warn_thresh;
-+        alert_config->enable_alerts |= CXL_ALERTS_LIFE_USED_WARN_THRESH;
-+    }
-+
-+    if (in->valid_alert_actions & CXL_ALERTS_OVER_TEMP_WARN_THRESH) {
-+        /*
-+         * CXL 3.2 Table 8-149 The Device Over-Temperature Warning Threshold
-+         * shall be less than the the Device Over-Temperature Critical
-+         * Alert Threshold.
-+         */
-+        if (in->over_temp_warn_thresh >=
-+            alert_config->over_temp_crit_alert_thresh) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        alert_config->over_temp_warn_thresh = in->over_temp_warn_thresh;
-+        alert_config->enable_alerts |= CXL_ALERTS_OVER_TEMP_WARN_THRESH;
-+    }
-+
-+    if (in->valid_alert_actions & CXL_ALERTS_UNDER_TEMP_WARN_THRESH) {
-+        /*
-+         * CXL 3.2 Table 8-149 The Device Under-Temperature Warning Threshold
-+         * shall be higher than the the Device Under-Temperature Critical
-+         * Alert Threshold.
-+         */
-+        if (in->under_temp_warn_thresh <=
-+            alert_config->under_temp_crit_alert_thresh) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        alert_config->under_temp_warn_thresh = in->under_temp_warn_thresh;
-+        alert_config->enable_alerts |= CXL_ALERTS_UNDER_TEMP_WARN_THRESH;
-+    }
-+
-+    if (in->valid_alert_actions & CXL_ALERTS_COR_VMEM_ERR_WARN_THRESH) {
-+        alert_config->cor_vmem_err_warn_thresh = in->cor_vmem_err_warn_thresh;
-+        alert_config->enable_alerts |= CXL_ALERTS_COR_VMEM_ERR_WARN_THRESH;
-+    }
-+
-+    if (in->valid_alert_actions & CXL_ALERTS_COR_PMEM_ERR_WARN_THRESH) {
-+        alert_config->cor_pmem_err_warn_thresh = in->cor_pmem_err_warn_thresh;
-+        alert_config->enable_alerts |= CXL_ALERTS_COR_PMEM_ERR_WARN_THRESH;
-+    }
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- /* Perform the actual device zeroing */
- static void __do_sanitization(CXLType3Dev *ct3d)
- {
-@@ -2859,6 +2958,12 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
-     [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
-         ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
-+    [HEALTH_INFO_ALERTS][GET_ALERT_CONFIG] = {
-+        "HEALTH_INFO_ALERTS_GET_ALERT_CONFIG",
-+        cmd_get_alert_config, 0, 0 },
-+    [HEALTH_INFO_ALERTS][SET_ALERT_CONFIG] = {
-+        "HEALTH_INFO_ALERTS_SET_ALERT_CONFIG",
-+        cmd_set_alert_config, 12, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
-     [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
-         (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
-          CXL_MBOX_SECURITY_STATE_CHANGE |
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 5f365afb4d..ecbaa60210 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -956,6 +956,21 @@ static DOEProtocol doe_comp_prot[] = {
-     { }
- };
- 
-+/*
-+ * Initialize CXL device alerts with default threshold values.
-+ */
-+static void init_alert_config(CXLType3Dev *ct3d)
-+{
-+    ct3d->alert_config = (CXLAlertConfig) {
-+        .life_used_crit_alert_thresh = 75,
-+        .life_used_warn_thresh = 40,
-+        .over_temp_crit_alert_thresh = 35,
-+        .under_temp_crit_alert_thresh = 10,
-+        .over_temp_warn_thresh = 25,
-+        .under_temp_warn_thresh = 20
-+    };
-+}
-+
- void ct3_realize(PCIDevice *pci_dev, Error **errp)
- {
-     ERRP_GUARD();
-@@ -1030,6 +1045,7 @@ void ct3_realize(PCIDevice *pci_dev, Error **errp)
-         goto err_free_special_ops;
-     }
- 
-+    init_alert_config(ct3d);
-     pcie_cap_deverr_init(pci_dev);
-     /* Leave a bit of room for expansion */
-     rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, NULL);
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index a64739be25..7f96bd8637 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -581,6 +581,19 @@ typedef struct CXLSetFeatureInfo {
-     size_t data_size;
- } CXLSetFeatureInfo;
- 
-+typedef struct CXLAlertConfig {
-+    uint8_t valid_alerts;
-+    uint8_t enable_alerts;
-+    uint8_t life_used_crit_alert_thresh;
-+    uint8_t life_used_warn_thresh;
-+    uint16_t over_temp_crit_alert_thresh;
-+    uint16_t under_temp_crit_alert_thresh;
-+    uint16_t over_temp_warn_thresh;
-+    uint16_t under_temp_warn_thresh;
-+    uint16_t cor_vmem_err_warn_thresh;
-+    uint16_t cor_pmem_err_warn_thresh;
-+} QEMU_PACKED CXLAlertConfig;
-+
- struct CXLType3Dev {
-     /* Private */
-     PCIDevice parent_obj;
-@@ -605,6 +618,8 @@ struct CXLType3Dev {
-     CXLCCI vdm_fm_owned_ld_mctp_cci;
-     CXLCCI ld0_cci;
- 
-+    CXLAlertConfig alert_config;
-+
-     /* PCIe link characteristics */
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
--- 
-2.34.1
+
+
+>           .parent        = TYPE_ASPEED_MACHINE,
+> -        .class_init    = aspeed_machine_ast2700_evb_class_init,
+> +        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
+>   #endif
+>       }, {
+>           .name          = TYPE_ASPEED_MACHINE,
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 2d0c99f159..6e3375f5d3 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -72,7 +72,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>   #define AST2700_MAX_IRQ 256
+>   
+>   /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
+> -static const int aspeed_soc_ast2700_irqmap[] = {
+> +static const int aspeed_soc_ast2700a0_irqmap[] = {
+>       [ASPEED_DEV_UART0]     = 132,
+>       [ASPEED_DEV_UART1]     = 132,
+>       [ASPEED_DEV_UART2]     = 132,
+> @@ -740,7 +740,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>       create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
+>   }
+>   
+> -static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
+> +static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
+>   {
+>       static const char * const valid_cpu_types[] = {
+>           ARM_CPU_TYPE_NAME("cortex-a35"),
+> @@ -763,7 +763,7 @@ static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
+>       sc->uarts_num    = 13;
+>       sc->num_cpus     = 4;
+>       sc->uarts_base   = ASPEED_DEV_UART0;
+> -    sc->irqmap       = aspeed_soc_ast2700_irqmap;
+> +    sc->irqmap       = aspeed_soc_ast2700a0_irqmap;
+>       sc->memmap       = aspeed_soc_ast2700_memmap;
+>       sc->get_irq      = aspeed_soc_ast2700_get_irq;
+>   }
+> @@ -778,7 +778,7 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
+>           .name           = "ast2700-a0",
+>           .parent         = TYPE_ASPEED27X0_SOC,
+>           .instance_init  = aspeed_soc_ast2700_init,
+> -        .class_init     = aspeed_soc_ast2700_class_init,
+> +        .class_init     = aspeed_soc_ast2700a0_class_init,
+>       },
+>   };
+>   
 
 
