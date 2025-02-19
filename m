@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A861C021AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 07:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D381C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 07:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkeJP-0003C6-L9; Wed, 19 Feb 2025 02:16:05 -0500
+	id 1tkeJb-0003by-5A; Wed, 19 Feb 2025 02:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeIR-0002KN-H5
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:15:04 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeIr-0002c8-IR
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:15:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeIL-000524-9E
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:15:00 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeIo-0005Nc-IJ
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:15:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739949295;
+ s=mimecast20190719; t=1739949323;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dihYdzQJoxG55KPRUrzoXBvN3cz1o1fWZpT8/A+vLW4=;
- b=U0cQAOX66M/YisqKBHARFy9stTxJLB8k6l2PHlVeZb/MJSGAIVelZx1DPG2TDQCvN7Odia
- jADleW9Ba9qRVSIWr313JDa//1rlgt6WNQ7kx+5vJn+7OtiiI/s4KQK8RurovJe+PphBvG
- k0FpWvGpTSwgUbrIM3qNSQ8n9RiCOdU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=erzI/Ncs6Hnb/gTlWEX/91dVhKQq6/Z2g6NMnZjQjkY=;
+ b=Vu/zKjIbcyhFxz+026Ai6+1dUtw4cPevvD24TU+w/qe7heaatREkjY73LQ9Uxy/s/Y+zIA
+ 63fQSB1ezYYrDFtkiY3tx9FN3o7UvZoY5l7yp9CH97kPa1pnfyr/HplOLmVokrCxK+qART
+ CyhuSYZXUI6JM1gaU2MXVJoIvQlxWUM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-1JRYKyyEPsGd9uWKVPgDSg-1; Wed,
- 19 Feb 2025 02:14:50 -0500
-X-MC-Unique: 1JRYKyyEPsGd9uWKVPgDSg-1
-X-Mimecast-MFC-AGG-ID: 1JRYKyyEPsGd9uWKVPgDSg_1739949288
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-4w4Dkaf9MIWrXhTPG0cc_g-1; Wed,
+ 19 Feb 2025 02:15:18 -0500
+X-MC-Unique: 4w4Dkaf9MIWrXhTPG0cc_g-1
+X-Mimecast-MFC-AGG-ID: 4w4Dkaf9MIWrXhTPG0cc_g_1739949317
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B2D218EB2C9; Wed, 19 Feb 2025 07:14:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2314B1800985; Wed, 19 Feb 2025 07:15:17 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.78])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25CC81800940; Wed, 19 Feb 2025 07:14:47 +0000 (UTC)
+ id 8356C1800944; Wed, 19 Feb 2025 07:15:16 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 503631801A91; Wed, 19 Feb 2025 08:14:32 +0100 (CET)
+ id A1E371801B34; Wed, 19 Feb 2025 08:14:33 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
@@ -61,9 +61,9 @@ Cc: qemu-arm@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  graf@amazon.com, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v4 06/24] hw/uefi: add var-service-utils.c
-Date: Wed, 19 Feb 2025 08:14:08 +0100
-Message-ID: <20250219071431.50626-7-kraxel@redhat.com>
+Subject: [PATCH v4 24/24] docs: add uefi variable service documentation
+Date: Wed, 19 Feb 2025 08:14:26 +0100
+Message-ID: <20250219071431.50626-25-kraxel@redhat.com>
 In-Reply-To: <20250219071431.50626-1-kraxel@redhat.com>
 References: <20250219071431.50626-1-kraxel@redhat.com>
 MIME-Version: 1.0
@@ -78,7 +78,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,262 +94,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add utility functions.  Helpers for UEFI (ucs2) string handling.
-Helpers for readable trace messages.  Compare UEFI time stamps.
-
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/uefi/var-service-utils.c | 241 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 241 insertions(+)
- create mode 100644 hw/uefi/var-service-utils.c
+ docs/devel/index-internals.rst |  1 +
+ docs/devel/uefi-vars.rst       | 68 ++++++++++++++++++++++++++++++++++
+ hw/uefi/LIMITATIONS.md         |  7 ++++
+ 3 files changed, 76 insertions(+)
+ create mode 100644 docs/devel/uefi-vars.rst
+ create mode 100644 hw/uefi/LIMITATIONS.md
 
-diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
+diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
+index bca597c65895..7a0678cbdd3a 100644
+--- a/docs/devel/index-internals.rst
++++ b/docs/devel/index-internals.rst
+@@ -20,6 +20,7 @@ Details about QEMU's various subsystems including how to add features to them.
+    s390-cpu-topology
+    s390-dasd-ipl
+    tracing
++   uefi-vars
+    vfio-iommufd
+    writing-monitor-commands
+    virtio-backends
+diff --git a/docs/devel/uefi-vars.rst b/docs/devel/uefi-vars.rst
 new file mode 100644
-index 000000000000..c9ef46570f48
+index 000000000000..0151a26a0a6f
 --- /dev/null
-+++ b/hw/uefi/var-service-utils.c
-@@ -0,0 +1,241 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * uefi vars device - helper functions for ucs2 strings and tracing
-+ */
-+#include "qemu/osdep.h"
-+#include "system/dma.h"
++++ b/docs/devel/uefi-vars.rst
+@@ -0,0 +1,68 @@
++==============
++UEFI variables
++==============
 +
-+#include "hw/uefi/var-service.h"
++Guest UEFI variable management
++==============================
 +
-+#include "trace/trace-hw_uefi.h"
++The traditional approach for UEFI Variable storage in qemu guests is
++to work as close as possible to physical hardware.  That means
++providing pflash as storage and leaving the management of variables
++and flash to the guest.
 +
-+/* ------------------------------------------------------------------ */
++Secure boot support comes with the requirement that the UEFI variable
++storage must be protected against direct access by the OS.  All update
++requests must pass the sanity checks.  (Parts of) the firmware must
++run with a higher privilege level than the OS so this can be enforced
++by the firmware.  On x86 this has been implemented using System
++Management Mode (SMM) in qemu and kvm, which again is the same
++approach taken by physical hardware.  Only privileged code running in
++SMM mode is allowed to access flash storage.
 +
-+/*
-+ * string helper functions.
-+ *
-+ * Most of the time uefi ucs2 strings are NULL-terminated, except
-+ * sometimes when they are not (for example in variable policies).
-+ */
++Communication with the firmware code running in SMM mode works by
++serializing the requests to a shared buffer, then trapping into SMM
++mode via SMI.  The SMM code processes the request, stores the reply in
++the same buffer and returns.
 +
-+gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
-+                           gboolean must_be_null_terminated)
-+{
-+    size_t pos = 0;
++Host UEFI variable service
++==========================
 +
-+    for (;;) {
-+        if (pos == len) {
-+            if (must_be_null_terminated) {
-+                return false;
-+            } else {
-+                return true;
-+            }
-+        }
-+        switch (str[pos]) {
-+        case 0:
-+            /* end of string */
-+            return true;
-+        case 0xd800 ... 0xdfff:
-+            /* reject surrogates */
-+            return false;
-+        default:
-+            /* char is good, check next */
-+            break;
-+        }
-+        pos++;
-+    }
-+}
++Instead of running the privileged code inside the guest we can run it
++on the host.  The serialization protocol can be reused.  The
++communication with the host uses a virtual device, which essentially
++configures the shared buffer location and size, and traps to the host
++to process the requests.
 +
-+size_t uefi_strlen(const uint16_t *str, size_t len)
-+{
-+    size_t pos = 0;
++The ``uefi-vars`` device implements the UEFI virtual device.  It comes
++in ``uefi-vars-x86`` and ``uefi-vars-sysbus`` flavours.  The device
++reimplements the handlers needed, specifically
++``EfiSmmVariableProtocol`` and ``VarCheckPolicyLibMmiHandler``.  It
++also consumes events (``EfiEndOfDxeEventGroup``,
++``EfiEventReadyToBoot`` and ``EfiEventExitBootServices``).
 +
-+    for (;;) {
-+        if (pos == len) {
-+            return pos;
-+        }
-+        if (str[pos] == 0) {
-+            return pos;
-+        }
-+        pos++;
-+    }
-+}
++The advantage of the approach is that we do not need a special
++privilege level for the firmware to protect itself, i.e. it does not
++depend on SMM emulation on x64, which allows the removal of a bunch of
++complex code for SMM emulation from the linux kernel
++(CONFIG_KVM_SMM=n).  It also allows support for secure boot on arm
++without implementing secure world (el3) emulation in kvm.
 +
-+gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
-+                           const uint16_t *b, size_t blen,
-+                           gboolean wildcards_in_a)
-+{
-+    size_t pos = 0;
++Of course there are also downsides.  The added device increases the
++attack surface of the host, and we are adding some code duplication
++because we have to reimplement some edk2 functionality in qemu.
 +
-+    alen = alen / 2;
-+    blen = blen / 2;
-+    for (;;) {
-+        if (pos == alen && pos == blen) {
-+            return true;
-+        }
-+        if (pos == alen && b[pos] == 0) {
-+            return true;
-+        }
-+        if (pos == blen && a[pos] == 0) {
-+            return true;
-+        }
-+        if (pos == alen || pos == blen) {
-+            return false;
-+        }
-+        if (a[pos] == 0 && b[pos] == 0) {
-+            return true;
-+        }
++usage on x86_64
++---------------
 +
-+        if (wildcards_in_a && a[pos] == '#') {
-+            if (!isxdigit(b[pos])) {
-+                return false;
-+            }
-+        } else {
-+            if (a[pos] != b[pos]) {
-+                return false;
-+            }
-+        }
-+        pos++;
-+    }
-+}
++.. code::
 +
-+gboolean uefi_str_equal(const uint16_t *a, size_t alen,
-+                        const uint16_t *b, size_t blen)
-+{
-+    return uefi_str_equal_ex(a, alen, b, blen, false);
-+}
++   qemu-system-x86_64 \
++      -device uefi-vars-x86,jsonfile=/path/to/vars.json
 +
-+char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
-+{
-+    char *str = g_malloc0(ucs2_size / 2 + 1);
-+    int i;
++usage on aarch64
++----------------
 +
-+    for (i = 0; i * 2 < ucs2_size; i++) {
-+        if (ucs2[i] == 0) {
-+            break;
-+        }
-+        if (ucs2[i] < 128) {
-+            str[i] = ucs2[i];
-+        } else {
-+            str[i] = '?';
-+        }
-+    }
-+    str[i] = 0;
-+    return str;
-+}
++.. code::
 +
-+/* ------------------------------------------------------------------ */
-+/* time helper functions                                              */
++   qemu-system-aarch64 -M virt \
++      -device uefi-vars-sysbus,jsonfile=/path/to/vars.json
+diff --git a/hw/uefi/LIMITATIONS.md b/hw/uefi/LIMITATIONS.md
+new file mode 100644
+index 000000000000..29308bd587aa
+--- /dev/null
++++ b/hw/uefi/LIMITATIONS.md
+@@ -0,0 +1,7 @@
++known issues and limitations
++----------------------------
 +
-+int uefi_time_compare(efi_time *a, efi_time *b)
-+{
-+    if (a->year < b->year) {
-+        return -1;
-+    }
-+    if (a->year > b->year) {
-+        return 1;
-+    }
-+
-+    if (a->month < b->month) {
-+        return -1;
-+    }
-+    if (a->month > b->month) {
-+        return 1;
-+    }
-+
-+    if (a->day < b->day) {
-+        return -1;
-+    }
-+    if (a->day > b->day) {
-+        return 1;
-+    }
-+
-+    if (a->hour < b->hour) {
-+        return -1;
-+    }
-+    if (a->hour > b->hour) {
-+        return 1;
-+    }
-+
-+    if (a->minute < b->minute) {
-+        return -1;
-+    }
-+    if (a->minute > b->minute) {
-+        return 1;
-+    }
-+
-+    if (a->second < b->second) {
-+        return -1;
-+    }
-+    if (a->second > b->second) {
-+        return 1;
-+    }
-+
-+    if (a->nanosecond < b->nanosecond) {
-+        return -1;
-+    }
-+    if (a->nanosecond > b->nanosecond) {
-+        return 1;
-+    }
-+
-+    return 0;
-+}
-+
-+/* ------------------------------------------------------------------ */
-+/* tracing helper functions                                           */
-+
-+void uefi_trace_variable(const char *action, QemuUUID guid,
-+                         const uint16_t *name, uint64_t name_size)
-+{
-+    QemuUUID be = qemu_uuid_bswap(guid);
-+    char *str_uuid = qemu_uuid_unparse_strdup(&be);
-+    char *str_name = uefi_ucs2_to_ascii(name, name_size);
-+
-+    trace_uefi_variable(action, str_name, name_size, str_uuid);
-+
-+    g_free(str_name);
-+    g_free(str_uuid);
-+}
-+
-+void uefi_trace_status(const char *action, efi_status status)
-+{
-+    switch (status) {
-+    case EFI_SUCCESS:
-+        trace_uefi_status(action, "success");
-+        break;
-+    case EFI_INVALID_PARAMETER:
-+        trace_uefi_status(action, "invalid parameter");
-+        break;
-+    case EFI_UNSUPPORTED:
-+        trace_uefi_status(action, "unsupported");
-+        break;
-+    case EFI_BAD_BUFFER_SIZE:
-+        trace_uefi_status(action, "bad buffer size");
-+        break;
-+    case EFI_BUFFER_TOO_SMALL:
-+        trace_uefi_status(action, "buffer too small");
-+        break;
-+    case EFI_WRITE_PROTECTED:
-+        trace_uefi_status(action, "write protected");
-+        break;
-+    case EFI_OUT_OF_RESOURCES:
-+        trace_uefi_status(action, "out of resources");
-+        break;
-+    case EFI_NOT_FOUND:
-+        trace_uefi_status(action, "not found");
-+        break;
-+    case EFI_ACCESS_DENIED:
-+        trace_uefi_status(action, "access denied");
-+        break;
-+    case EFI_ALREADY_STARTED:
-+        trace_uefi_status(action, "already started");
-+        break;
-+    case EFI_SECURITY_VIOLATION:
-+        trace_uefi_status(action, "security violation");
-+        break;
-+    default:
-+        trace_uefi_status(action, "unknown error");
-+        break;
-+    }
-+}
++* works only on little endian hosts
++  - accessing structs in guest ram is done without endian conversion.
++* works only for 64-bit guests
++  - UINTN is mapped to uint64_t, for 32-bit guests that would be uint32_t
 -- 
 2.48.1
 
