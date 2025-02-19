@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58CBC021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 17:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00678C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 17:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkoDN-0004yc-Vn; Wed, 19 Feb 2025 12:50:30 -0500
+	id 1tkoIH-0007U5-Ju; Wed, 19 Feb 2025 12:55:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <slopezpa@redhat.com>)
- id 1tkoDL-0004vq-GX
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 12:50:27 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tkoIB-0007TY-Pc
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 12:55:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <slopezpa@redhat.com>)
- id 1tkoDJ-0008LI-9R
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 12:50:27 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tkoIA-0001Ih-02
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 12:55:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739987422;
+ s=mimecast20190719; t=1739987725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7gCe5UVaGw9AQknVZGGe5+i3g/s0v6GAA8hRwe2QAPA=;
- b=UppdnG1WK4UBJZWmgX6Vs6JwASpAm4ESTsPfza3br+/FonQ+dMnXimUSKQybOaZq75PSjx
- 5SVtnXTxDgwDCLUxxiWJ5si74LWSBkSHXjRWq9QLtZQJroYJuVnuB4ZEVMdRGTTcYpopvy
- Ry6rXPsr3LuF9hrV3hWflumbUe8X8tQ=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ja272GOSac81WNMuQ/dxI36+9cjnhmMdrmPs6R3fh9w=;
+ b=G3yjZWZipGerUQA1kwjASY3PjtZuIkNWD7mz8neLT+CkDnNRYd9OK6xwJ1EbhWG5oqw7d2
+ iHm/RgAs3wTxXUAo4sODErilH0NjITsgnX5qd44TVMnfqdn6fhGQvnIvLT9yWz4a2Xpu6Y
+ cLgnjpA+C6BZ51bpkaKsP3umqvLMl3I=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-382-O5d3kYZXOf2qvTkpxXya3w-1; Wed, 19 Feb 2025 12:50:20 -0500
-X-MC-Unique: O5d3kYZXOf2qvTkpxXya3w-1
-X-Mimecast-MFC-AGG-ID: O5d3kYZXOf2qvTkpxXya3w_1739987420
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2fc1eadf5a8so96746a91.3
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 09:50:20 -0800 (PST)
+ us-mta-662-qHj4FEW0PUOV2ayZxa-D6A-1; Wed, 19 Feb 2025 12:55:22 -0500
+X-MC-Unique: qHj4FEW0PUOV2ayZxa-D6A-1
+X-Mimecast-MFC-AGG-ID: qHj4FEW0PUOV2ayZxa-D6A_1739987721
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4399c32efb4so4570105e9.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 09:55:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739987419; x=1740592219;
- h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7gCe5UVaGw9AQknVZGGe5+i3g/s0v6GAA8hRwe2QAPA=;
- b=hMTkVtR1ilGsA4W/eea64wqoiqY2Eyz1//O2lpE4e1/up9vJ04/Q/VYAsS0uhjyw8G
- FhUvoDIk0I1poBdxXfjTiMXMCW2x0mifhjHKVSnZjmoh8REpRKEtx/ikYl+6xkUmbWlZ
- e2AikGER1OdKXMUfqn2m7+WYlBszEFTFhz/V6esskBbgX22w9LTLA/BEZCKLn+DhubXz
- g8GI3wU1HVudYRQv3SfjN5eebmIJXNm+vvox7iUra1qdmR2ALnhxOS9I6VB6EIUZ6nnU
- 289VmjaH62dIYYPDw4S/dcKOOepF2Wayr9KiuuQkl5+UYwF8xRcqmpdS1P3pY7adOc2J
- +lGw==
+ d=1e100.net; s=20230601; t=1739987721; x=1740592521;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ja272GOSac81WNMuQ/dxI36+9cjnhmMdrmPs6R3fh9w=;
+ b=t1dNX6vFmGejHoaCmvwgzOQnaCCUpWih1pjlwel73GdPNBHVAljI2P+MhWT2esFa/E
+ lsi8oDSJoYir3tgxcsrP7g4Dt5MHcQp0lRFxWiQNdKMct9A0Q7RRehi6cgVxdZH+GK6I
+ GSbh+Jt5vTvdB0TCvniQJd5T5POUZqXj+0pi1/ObYUK7qxLO8qj2ZNfM/ltOc3Dfj7mi
+ m6JwFOJmW04awyHxUBB1tYvLVgTukbYdhScTQRH4pgG4F5umG2rpgXvVybLm+bS8bdJ1
+ Z5U4YJtFl0MsxUjEYpeMC3M2HvUaiw5n5b1NsBDl4LsCr3m0CaI0saJiT52cquex/P9Y
+ Beeg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHdmQoY/dwYXOBOtb0YQQSSDXjqGBqZesHe1o85mbsEUlzy7YiRd2FzXHOTRUKbrlSrOtpFMuPR9oE@nongnu.org
-X-Gm-Message-State: AOJu0Yw4iQLcfzXHwKVBuEa9T0il8AB+0C9UtKk6Owy4+IoiWOhdRPsr
- p47nb8E03JVQbNWCmIvoY+8+kL/Fv2H4KSxiHAZHU46KNq2Uw2SmZAZeNidZtqnrO1n7/5Gm9nu
- qx5WAq+X2E8VSCafBuFXy4WeKXQaqQKEJBpDVU4TqyFAnVhVYzZpwa9uIKcKErkQHMoR6YYqwVy
- z4nQbGw1jZsW3mEF2qv+bCbZ2JhAA=
-X-Gm-Gg: ASbGncswGml+EaLiy+qBtBeCW0b49cKnfet2+1HE21epvE3TGIHCafWZd/8nK9uZcU5
- 1T0IXK/JAfAWJMwnscjAzXozT7pi70eG1SRWMB3cpJITLv59mnALPXMpfyQ==
-X-Received: by 2002:a17:90b:47:b0:2ee:d96a:5816 with SMTP id
- 98e67ed59e1d1-2fcb5a12ee4mr7635713a91.10.1739987419661; 
- Wed, 19 Feb 2025 09:50:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0AdA6pS2KePj74plGONkQn60b3InqZ4ndGVV7tnHWiYPc0sSQl3RrYmsDCG/Hc3Jl1tpRLsZt15p0gcrMLMs=
-X-Received: by 2002:a17:90b:47:b0:2ee:d96a:5816 with SMTP id
- 98e67ed59e1d1-2fcb5a12ee4mr7635611a91.10.1739987418693; Wed, 19 Feb 2025
- 09:50:18 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Feb 2025 09:50:17 -0800
-From: Sergio Lopez Pascual <slp@redhat.com>
-In-Reply-To: <20250213094100.129358-1-anisinha@redhat.com>
-References: <20250213094100.129358-1-anisinha@redhat.com>
+ AJvYcCVZfA1n7g3ijVj6aQHeePZ/BHaLRm6dr2/Eo64vTJkPYlUFtYW38J2GKbL3ybJpgQOm00dU0ePG6li5@nongnu.org
+X-Gm-Message-State: AOJu0YxiH0zWQKtm+CK2j8br4vEl6h3vILaJooat8G3+1N6gSn0nrlp6
+ oetZQuZsnl5o3LQfcd+wZAKsWeTiJiuFQtGT0CNrnNgyW/Hqh9XaeKYujpvH3L+MNIyaNlA8JwQ
+ Poi85dwMGcMFcO9lJk2S+PRx7g7Nz5F9QZO5XwMuvP2lxCBSxlENT
+X-Gm-Gg: ASbGncsjYgwlPsFwafzIraOLCEOSD8wB0R6JHn+Ope5SkK+2rj/fzle3nv33tkp4LEz
+ JsLFyIzCL1CGn8Rl981M7u4tO+W2CCvb3AwREVNCrDzWGVndrYG3hWlyIVK796AbumfPl9uQDN9
+ 0WVhdo8XeMp/Q1QKpPkNGjL3LBlnvjOMNUJs/09ZEaFWBp5QGdH3JBdFMru8n/6mQy7CnLdVVMh
+ LkbuFTCxB0yaavatyKkop/6NK+7Ukl6S3pTneHUGkC8B9C3BCLEvn1f6Pz+wTMbSu+EvAAMRsvJ
+ PKkutVBoMYt6Uo534Eh2jWm6wYojJpUd2dRlO8C2dw+xPX54mRkC
+X-Received: by 2002:a05:600c:1c9d:b0:439:968b:6669 with SMTP id
+ 5b1f17b1804b1-439a2faf7d8mr1777185e9.1.1739987720822; 
+ Wed, 19 Feb 2025 09:55:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE4gUGDkqJYO809rE4EgPcbnx2pLboOtSx2NX5AORYgafRgmx9zKDfWGzSBF4CcimQNsT9RMg==
+X-Received: by 2002:a05:600c:1c9d:b0:439:968b:6669 with SMTP id
+ 5b1f17b1804b1-439a2faf7d8mr1776915e9.1.1739987720417; 
+ Wed, 19 Feb 2025 09:55:20 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259f7fe6sm18117958f8f.86.2025.02.19.09.55.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Feb 2025 09:55:19 -0800 (PST)
+Date: Wed, 19 Feb 2025 18:55:18 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com, Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>
+Subject: Re: [PATCH 4/4] target/arm: Retry pushing CPER error if necessary
+Message-ID: <20250219185518.767a48d9@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250214041635.608012-5-gshan@redhat.com>
+References: <20250214041635.608012-1-gshan@redhat.com>
+ <20250214041635.608012-5-gshan@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Date: Wed, 19 Feb 2025 09:50:17 -0800
-X-Gm-Features: AWEUYZmlS4GMLZYmz9c8Yy1aegaILqB5L1s3zsPlPcLrL7Lbi-MLkfrA2dsD7Yk
-Message-ID: <CAAiTLFU9U_XVdPWdO1w-nu7__GxPkwd09tibx+-VRVed43M6Xw@mail.gmail.com>
-Subject: Re: [PATCH] microvm: do not use the lastest cpu version
-To: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
-Cc: imammedo@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=slopezpa@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -106,22 +114,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ani Sinha <anisinha@redhat.com> writes:
+On Fri, 14 Feb 2025 14:16:35 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-> Microvm machines are not versioned and therefore there is no requirement to use
-> the latest cpu model by default. Let microvms use the non-versioned cpu model.
-> Those users who need spefific cpu versions can use explicit commandline to
-> select the cpu version desired.
->
-> CC: imammedo@redhat.com
-> CC: zhao1.liu@intel.com
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> The error -1 is returned if the previously reported CPER error
+> hasn't been claimed. The virtual machine is terminated due to
+> abort(). It's conflicting to the ideal behaviour that the affected
+> vCPU retries pushing the CPER error in this case since the vCPU
+> can't proceed its execution.
+> 
+> Move the chunk of code to push CPER error to a separate helper
+> report_memory_errors() and retry the request when the return
+> value from acpi_ghes_memory_errors() is greater than zero.
+> 
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
 > ---
->  hw/i386/microvm.c |  2 +-
->  target/i386/cpu.c | 15 ---------------
->  target/i386/cpu.h |  4 ----
->  3 files changed, 1 insertion(+), 20 deletions(-)
+>  target/arm/kvm.c | 31 +++++++++++++++++++++++++------
+>  1 file changed, 25 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 5c0bf99aec..9f063f6053 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -2362,6 +2362,30 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+>      return ret;
+>  }
+>  
+> +static void report_memory_error(CPUState *c, hwaddr paddr)
+> +{
+> +    int ret;
+> +
+> +    while (true) {
+> +        /* Retry if the previously report error hasn't been claimed */
+> +        ret = acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr, true);
+> +        if (ret <= 0) {
+> +            break;
+> +        }
+> +
+> +        bql_unlock();
+> +        g_usleep(1000);
+even with bql released it's not safe to loop in here.
+consider,
+  a guest with 2 vcpus
+    * vcpu 1 gets SIGBUS due to error
+    * vcpu 2 trips over the same error and gets into this loop
+    * on guest side vcpu 1 continues to run to handle SEA but
+      might need to acquire a lock that vcpu 2 holds
 
-Reviewed-by: Sergio Lopez <slp@redhat.com>
+GHESv2 error source we support, can report several errors,
+currently QEMU supports only 1 'error status block' which
+can hold several error records (CPER) (though storage size is limited)
+
+1:
+We can potentially add support for more GHESv2 error sources
+with their own Read ACK registers (let's say =max_cpus)
+(that is under assumption that no other error will be
+triggered while guest VCPUs handle their own SEA (upto clearing Read ACK))
+
+2:
+Another way could be for QEMU to allocate more error status _blocks_
+for the only one error source it has now and try to find
+empty status block to inject new error(s).
+ * it can be saturated with high rate of errors (so what do we do in case it happens?)
+ * subject to race between clearing/setting Read ACK
+    (maybe it can dealt with that on side by keeping internal read_ack counter)
+
+3:
+And alternatively, queue incoming errors until read ack is cleared
+and then inject pending errors in one go.
+(problem with that is that at the moment QEMU doesn't monitor
+read ack register memory so it won't notice guest clearing that)
+
+
+Given spec has provision for multiple error status blocks/error data entries
+it seems that #2 is an expected way to deal with the problem.
+
+PS:
+I'd prefer Mauro's series being merged 1st (once it's resplit),
+for it refactors a bunch of original code and hopefully makes
+code easier to follow/extend.
+
+> +        bql_lock();
+> +    }
+> +
+> +    if (ret == 0) {
+> +        kvm_inject_arm_sea(c);
+> +    } else {
+> +        error_report("Error %d to report memory error", ret);
+> +        abort();
+> +    }
+> +}
+> +
+>  void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>  {
+>      ram_addr_t ram_addr;
+> @@ -2387,12 +2411,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>               */
+>              if (code == BUS_MCEERR_AR) {
+>                  kvm_cpu_synchronize_state(c);
+> -                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr, false)) {
+> -                    kvm_inject_arm_sea(c);
+> -                } else {
+> -                    error_report("failed to record the error");
+> -                    abort();
+> -                }
+> +                report_memory_error(c, paddr);
+>              }
+>              return;
+>          }
 
 
