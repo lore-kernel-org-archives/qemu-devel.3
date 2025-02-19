@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF76C021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 18:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D4AC021B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 18:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkp5s-00033l-6z; Wed, 19 Feb 2025 13:46:48 -0500
+	id 1tkp5l-00030e-Fx; Wed, 19 Feb 2025 13:46:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3DSe2ZwgKCngsqdWkpodckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--wuhaotsh.bounces.google.com>)
- id 1tkp5k-000309-V2
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:40 -0500
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ <3Bie2ZwgKCnEljWPdihWVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--wuhaotsh.bounces.google.com>)
+ id 1tkp5f-0002wg-Qm
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:36 -0500
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3DSe2ZwgKCngsqdWkpodckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--wuhaotsh.bounces.google.com>)
- id 1tkp5i-0004kY-Vc
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:40 -0500
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2fc318bd470so238229a91.0
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 10:46:38 -0800 (PST)
+ <3Bie2ZwgKCnEljWPdihWVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--wuhaotsh.bounces.google.com>)
+ id 1tkp5c-0004i0-Sp
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:34 -0500
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-2fc3e239675so331060a91.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 10:46:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1739990797; x=1740595597; darn=nongnu.org;
+ d=google.com; s=20230601; t=1739990790; x=1740595590; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=VIS7B0doPqXPA0DimDPiGrF3NBmPrbLpQSgpHjMhPUs=;
- b=TLxT9LFkkVuqcP1lAvhPQFG/WaVjuvT/RN0Yh36DOcpMjyTlXGbnMw6fK1QE6cJENp
- OVIzR2ZXp7Rx06QWWmQPuwPGYgD7CoAVne/LLBo9qUQnlR9oCy7pViPTHT7tYVCOhorF
- VEFO0E6pr4pyF2+4vTfZpWWO8HaqVBCXnYvIGy7UT1RE52aGbt/OY7IqVJbSHz0CZcHr
- tlsBWqJYuj3ds91ErVYZ7ee5xw4whTJRyjJvrzcDgHWASO7F54QzbP8Og0DWsdAnAk8r
- BnfCkTddtQj8Xw5TPtJAyFqPwn/ZHcwEKtbS9x29aqf646WyWYlqRJBJw13cOF94pd05
- ojbw==
+ bh=HBwUiikiGOfgCxanP9f6qzV84BwbvfIj1V8/CZyi2UA=;
+ b=Tj6/E4/5w43q/ct9FeX/ZakTNUMhDfYy0nDc4704cNTUpxWSmXaoQVGYXw/bcXlae9
+ Sbhv0LH6pIJewzr2n3s2axcKgU61LAaNgy3dPjH6wUNWTlLAXz6pq4k/3pIMzim3psxs
+ v3Y9zwZhiXdycfiuds8CDW7AWmTX93XkKCfgqwhqGXRJ40tf0L4uTj1LtVRxbEdalS+x
+ 4hW23Me7ly8lqGbVgJll156UUvf64zH5hUWK+DebTv8K+xTrvW6Nd3h66GbHHZvv30c5
+ yYKgBVl2EAdlcIOw5PZirV5DWXsPEG8OxuB0cgZO4X5YI9IU3EHT0S4N8hTaUg64y7Ww
+ a63g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739990797; x=1740595597;
+ d=1e100.net; s=20230601; t=1739990790; x=1740595590;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VIS7B0doPqXPA0DimDPiGrF3NBmPrbLpQSgpHjMhPUs=;
- b=coeaxYXGv4mofH/TfbBaxrJYroAm/kDcU/WxBm69/M8gSQtsub0wJdvvK5oWZ+1bpA
- oGn+b76SaCngy9SNeR+D0uuCleXfqXEl0jMl17HaYAez9BAmpEBgqsrGTTEm97wAlsS1
- +NeSFVAtyYDjgPMF7fvEZnHC/Q1aZoGo9qzo895l198g0N0+Iy/EE41cpw6b5nfmBB9k
- NhgMFIteGtOHtHMlPuTufNRhxUnobdc/YPgJ8fa7xtZaRmKaB/JFGjtVNVjcOs2ntP5n
- NOza870BkinNgR3nrqyCd2HFuL3LwVsHMsYSvkx0jMRT2uWSPvJ1qvUJWc9oAeXo9G6D
- TXmw==
+ bh=HBwUiikiGOfgCxanP9f6qzV84BwbvfIj1V8/CZyi2UA=;
+ b=AJXpMtJpPn2JXNUs3jXLmCxSOCBOkr02NbtpNRne59cM1/J6xH018YD4TRASQQhAGb
+ ne1ZwCRU+gazpn6pgWdxfR7NED9i1UCSXjSXTkh5bgeuB3BY23ualGhvUCnz9UJtMG2G
+ 1kxH/zk3iY3WwRsZPXv5npzmVsWYnYB4dmKy4a896i5wFUb52BKM2S+5z2q9uMeQsmuY
+ w2SXYBpqw8n3OnFQ2dZfdFB8sXH7T22eR82ZoPDpr4dOv625NhHWIljqe1zR/23+OWMS
+ XRkhWagshCP+uMLug9IDtkXO6tGUCuC9Fd3+jqApfO4FJf0y1L+web5GnNRQvOf7KJF2
+ xfgQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/OYebuk94LKgvQQbXlUdF3ZQPQ0ydkQ0DxiTczw2vdjAdOeQOtR/ufyRrHIcUVLniNvuBnKN4OHY7@nongnu.org
-X-Gm-Message-State: AOJu0Yws3xDYViAsKBedrRVkSlA4hnz3uJAo+FDRufGue67kcH7IIhpe
- 5pK5dsSbjR/RR0FXDMRp3DhcYLPkGybDSiPoE7l5AtflnGESLiz+H/qHa97irIzwVZYmXs8BGHF
- L25dLDr2I6A==
-X-Google-Smtp-Source: AGHT+IFs/PGD8mt+wsnEIUa46JrvoWBPPX/oqoOdWSJZhijUXiHdr7XSK/kQwq3Dp2vESWD0TFz8LRSptGhgQQ==
-X-Received: from pgbfe24.prod.google.com ([2002:a05:6a02:2898:b0:ad5:5920:367])
+ AJvYcCXYDjyTa4p3Fn9wI7cSEA19GIfgnRorAZtKuXRRXHz5b0Z+oU4n4L9hkDUpLsaO1DtF0wKoe2Mw8Tqc@nongnu.org
+X-Gm-Message-State: AOJu0YyRSzrPYZwFSZuORlhs2eD22QY4Bupv2yWRDu9lmc5ADuM0gror
+ 1Dd49k8SR4N7Q+Nsj4Lvotysex+qXU6+VvvWMSdxl/QWN+90DTyByPY8ABLlm7eXHLf7KYu1BLB
+ mJkC516bM8Q==
+X-Google-Smtp-Source: AGHT+IEwwD2lu/hPJqm85pgmkpOiSYrUHGpIAUlJO8gmjmTJYcjdXJFMGwdUx+BBzSN3CXlvpOMZQ53B4cZr6Q==
+X-Received: from pjg8.prod.google.com ([2002:a17:90b:3f48:b0:2ef:82a8:7171])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:150a:b0:1ee:e08b:4318 with SMTP id
- adf61e73a8af0-1eee08b4672mr2191543637.25.1739990797203; 
- Wed, 19 Feb 2025 10:46:37 -0800 (PST)
-Date: Wed, 19 Feb 2025 10:45:59 -0800
+ 2002:a17:90a:e7cc:b0:2ee:5bc9:75c3 with SMTP id
+ 98e67ed59e1d1-2fc40c1d6e4mr27228277a91.5.1739990790450; 
+ Wed, 19 Feb 2025 10:46:30 -0800 (PST)
+Date: Wed, 19 Feb 2025 10:45:55 -0800
 In-Reply-To: <20250219184609.1839281-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250219184609.1839281-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.601.g30ceb7b040-goog
-Message-ID: <20250219184609.1839281-9-wuhaotsh@google.com>
-Subject: [PATCH v5 08/17] hw/misc: Store DRAM size in NPCM8XX GCR Module
+Message-ID: <20250219184609.1839281-5-wuhaotsh@google.com>
+Subject: [PATCH v5 04/17] hw/misc: Rename npcm7xx_gcr to npcm_gcr
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -73,9 +73,9 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  chli30@nuvoton.corp-partner.google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=3DSe2ZwgKCngsqdWkpodckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--wuhaotsh.bounces.google.com;
- helo=mail-pj1-x104a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3Bie2ZwgKCnEljWPdihWVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,89 +98,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NPCM8XX boot block stores the DRAM size in SCRPAD_B register in GCR
-module. Since we don't simulate a detailed memory controller, we
-need to store this information directly similar to the NPCM7XX's
-INCTR3 register.
+NPCM7XX and NPCM8XX have a different set of GCRs and the GCR module
+needs to fit both. This commit changes the name of the GCR module.
+Future commits will add the support for NPCM8XX GCRs.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- hw/misc/npcm_gcr.c         | 24 ++++++++++++++++++++++++
- include/hw/misc/npcm_gcr.h |  1 +
- 2 files changed, 25 insertions(+)
+ hw/misc/meson.build                           | 2 +-
+ hw/misc/{npcm7xx_gcr.c => npcm_gcr.c}         | 2 +-
+ include/hw/arm/npcm7xx.h                      | 2 +-
+ include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+ rename hw/misc/{npcm7xx_gcr.c => npcm_gcr.c} (99%)
+ rename include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} (96%)
 
-diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
-index ac22fb08cb..9e4a6aee61 100644
---- a/hw/misc/npcm_gcr.c
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 55f493521b..554eb8df5b 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -70,7 +70,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+ ))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+   'npcm7xx_clk.c',
+-  'npcm7xx_gcr.c',
++  'npcm_gcr.c',
+   'npcm7xx_mft.c',
+   'npcm7xx_pwm.c',
+   'npcm7xx_rng.c',
+diff --git a/hw/misc/npcm7xx_gcr.c b/hw/misc/npcm_gcr.c
+similarity index 99%
+rename from hw/misc/npcm7xx_gcr.c
+rename to hw/misc/npcm_gcr.c
+index 07464a4dc9..826fd41123 100644
+--- a/hw/misc/npcm7xx_gcr.c
 +++ b/hw/misc/npcm_gcr.c
-@@ -280,6 +280,19 @@ static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
-     s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
- }
+@@ -16,7 +16,7 @@
  
-+static void npcm8xx_gcr_enter_reset(Object *obj, ResetType type)
-+{
-+    NPCMGCRState *s = NPCM_GCR(obj);
-+    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(obj);
-+
-+    memcpy(s->regs, c->cold_reset_values, c->nr_regs * sizeof(uint32_t));
-+    /* These 3 registers are at the same location in both 7xx and 8xx. */
-+    s->regs[NPCM8XX_GCR_PWRON] = s->reset_pwron;
-+    s->regs[NPCM8XX_GCR_MDLR] = s->reset_mdlr;
-+    s->regs[NPCM8XX_GCR_INTCR3] = s->reset_intcr3;
-+    s->regs[NPCM8XX_GCR_SCRPAD_B] = s->reset_scrpad_b;
-+}
-+
- static void npcm_gcr_realize(DeviceState *dev, Error **errp)
- {
-     ERRP_GUARD();
-@@ -323,6 +336,14 @@ static void npcm_gcr_realize(DeviceState *dev, Error **errp)
-      * https://github.com/Nuvoton-Israel/u-boot/blob/2aef993bd2aafeb5408dbaad0f3ce099ee40c4aa/board/nuvoton/poleg/poleg.c#L244
-      */
-     s->reset_intcr3 |= ctz64(dram_size / NPCM7XX_GCR_MIN_DRAM_SIZE) << 8;
-+
-+    /*
-+     * The boot block starting from 0.0.6 for NPCM8xx SoCs stores the DRAM size
-+     * in the SCRPAD2 registers. We need to set this field correctly since
-+     * the initialization is skipped as we mentioned above.
-+     * https://github.com/Nuvoton-Israel/u-boot/blob/npcm8mnx-v2019.01_tmp/board/nuvoton/arbel/arbel.c#L737
-+     */
-+    s->reset_scrpad_b = dram_size;
- }
+ #include "qemu/osdep.h"
  
- static void npcm_gcr_init(Object *obj)
-@@ -370,16 +391,19 @@ static void npcm7xx_gcr_class_init(ObjectClass *klass, void *data)
- 
-     c->nr_regs = NPCM7XX_GCR_NR_REGS;
-     c->cold_reset_values = npcm7xx_cold_reset_values;
-+    rc->phases.enter = npcm7xx_gcr_enter_reset;
- }
- 
- static void npcm8xx_gcr_class_init(ObjectClass *klass, void *data)
- {
-     NPCMGCRClass *c = NPCM_GCR_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     dc->desc = "NPCM8xx System Global Control Registers";
-     c->nr_regs = NPCM8XX_GCR_NR_REGS;
-     c->cold_reset_values = npcm8xx_cold_reset_values;
-+    rc->phases.enter = npcm8xx_gcr_enter_reset;
- }
- 
- static const TypeInfo npcm_gcr_info[] = {
-diff --git a/include/hw/misc/npcm_gcr.h b/include/hw/misc/npcm_gcr.h
-index 9ac76ca9ab..d81bb9afb2 100644
---- a/include/hw/misc/npcm_gcr.h
+-#include "hw/misc/npcm7xx_gcr.h"
++#include "hw/misc/npcm_gcr.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
+index 4e0d210188..510170471e 100644
+--- a/include/hw/arm/npcm7xx.h
++++ b/include/hw/arm/npcm7xx.h
+@@ -24,7 +24,7 @@
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/mem/npcm7xx_mc.h"
+ #include "hw/misc/npcm7xx_clk.h"
+-#include "hw/misc/npcm7xx_gcr.h"
++#include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+ #include "hw/misc/npcm7xx_rng.h"
+diff --git a/include/hw/misc/npcm7xx_gcr.h b/include/hw/misc/npcm_gcr.h
+similarity index 96%
+rename from include/hw/misc/npcm7xx_gcr.h
+rename to include/hw/misc/npcm_gcr.h
+index c0bbdda77e..9b4998950c 100644
+--- a/include/hw/misc/npcm7xx_gcr.h
 +++ b/include/hw/misc/npcm_gcr.h
-@@ -68,6 +68,7 @@ typedef struct NPCMGCRState {
-     uint32_t reset_pwron;
-     uint32_t reset_mdlr;
-     uint32_t reset_intcr3;
-+    uint32_t reset_scrpad_b;
- } NPCMGCRState;
+@@ -13,8 +13,8 @@
+  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+  * for more details.
+  */
+-#ifndef NPCM7XX_GCR_H
+-#define NPCM7XX_GCR_H
++#ifndef NPCM_GCR_H
++#define NPCM_GCR_H
  
- typedef struct NPCMGCRClass {
+ #include "exec/memory.h"
+ #include "hw/sysbus.h"
+@@ -70,4 +70,4 @@ struct NPCM7xxGCRState {
+ #define TYPE_NPCM7XX_GCR "npcm7xx-gcr"
+ OBJECT_DECLARE_SIMPLE_TYPE(NPCM7xxGCRState, NPCM7XX_GCR)
+ 
+-#endif /* NPCM7XX_GCR_H */
++#endif /* NPCM_GCR_H */
 -- 
 2.48.1.601.g30ceb7b040-goog
 
