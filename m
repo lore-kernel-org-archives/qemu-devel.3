@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BEFC021B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBDBC021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqnF-0002HZ-BP; Wed, 19 Feb 2025 15:35:41 -0500
+	id 1tkqmo-00014f-48; Wed, 19 Feb 2025 15:35:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqn3-0001eD-5l
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:29 -0500
+ id 1tkqml-0000yb-Jd
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:11 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmz-0004hF-TI
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:28 -0500
+ id 1tkqmj-0004fZ-Kv
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:11 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmv-00000007VT9-18U9; Wed, 19 Feb 2025 21:35:21 +0100
+ id 1tkqmf-00000007VSf-3b1v; Wed, 19 Feb 2025 21:35:05 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 11/36] migration/multifd: Device state transfer support -
- receive side
-Date: Wed, 19 Feb 2025 21:33:53 +0100
-Message-ID: <8857884d14e5e854629a32dfb96011b43945088f.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 08/36] error: define g_autoptr() cleanup function for the
+ Error type
+Date: Wed, 19 Feb 2025 21:33:50 +0100
+Message-ID: <ad55083dc5efbff6f483b6f2df8e064d1da532ae.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -68,267 +68,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Add a basic support for receiving device state via multifd channels -
-channels that are shared with RAM transfers.
-
-Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
-packet header either device state (MultiFDPacketDeviceState_t) or RAM
-data (existing MultiFDPacket_t) is read.
-
-The received device state data is provided to
-qemu_loadvm_load_state_buffer() function for processing in the
-device's load_state_buffer handler.
+Automatic memory management helps avoid memory safety issues.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd.c | 99 ++++++++++++++++++++++++++++++++++++++++-----
- migration/multifd.h | 26 +++++++++++-
- 2 files changed, 113 insertions(+), 12 deletions(-)
+ include/qapi/error.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 3b47e63c2c4a..700a385447c7 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -21,6 +21,7 @@
- #include "file.h"
- #include "migration.h"
- #include "migration-stats.h"
-+#include "savevm.h"
- #include "socket.h"
- #include "tls.h"
- #include "qemu-file.h"
-@@ -252,14 +253,24 @@ static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
-     return 0;
- }
+diff --git a/include/qapi/error.h b/include/qapi/error.h
+index f5fe2162623e..41e381638049 100644
+--- a/include/qapi/error.h
++++ b/include/qapi/error.h
+@@ -437,6 +437,8 @@ Error *error_copy(const Error *err);
+  */
+ void error_free(Error *err);
  
--static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
-+                                                   Error **errp)
-+{
-+    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free)
 +
-+    packet->instance_id = be32_to_cpu(packet->instance_id);
-+    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-+
-+    return 0;
-+}
-+
-+static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
- {
-     const MultiFDPacket_t *packet = p->packet;
-     int ret = 0;
- 
-     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-     p->packet_num = be64_to_cpu(packet->packet_num);
--    p->packets_recved++;
- 
-     /* Always unfill, old QEMUs (<9.0) send data along with SYNC */
-     ret = multifd_ram_unfill_packet(p, errp);
-@@ -270,6 +281,17 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-     return ret;
- }
- 
-+static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+{
-+    p->packets_recved++;
-+
-+    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
-+        return multifd_recv_unfill_packet_device_state(p, errp);
-+    }
-+
-+    return multifd_recv_unfill_packet_ram(p, errp);
-+}
-+
- static bool multifd_send_should_exit(void)
- {
-     return qatomic_read(&multifd_send_state->exiting);
-@@ -1057,6 +1079,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
-+    g_clear_pointer(&p->packet_dev_state, g_free);
-     g_free(p->normal);
-     p->normal = NULL;
-     g_free(p->zero);
-@@ -1158,6 +1181,32 @@ void multifd_recv_sync_main(void)
-     trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
- }
- 
-+static int multifd_device_state_recv(MultiFDRecvParams *p, Error **errp)
-+{
-+    g_autofree char *idstr = NULL;
-+    g_autofree char *dev_state_buf = NULL;
-+    int ret;
-+
-+    dev_state_buf = g_malloc(p->next_packet_size);
-+
-+    ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, errp);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+
-+    idstr = g_strndup(p->packet_dev_state->idstr,
-+                      sizeof(p->packet_dev_state->idstr));
-+
-+    if (!qemu_loadvm_load_state_buffer(idstr,
-+                                       p->packet_dev_state->instance_id,
-+                                       dev_state_buf, p->next_packet_size,
-+                                       errp)) {
-+        ret = -1;
-+    }
-+
-+    return ret;
-+}
-+
- static void *multifd_recv_thread(void *opaque)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1176,6 +1225,7 @@ static void *multifd_recv_thread(void *opaque)
-     while (true) {
-         MultiFDPacketHdr_t hdr;
-         uint32_t flags = 0;
-+        bool is_device_state = false;
-         bool has_data = false;
-         uint8_t *pkt_buf;
-         size_t pkt_len;
-@@ -1209,8 +1259,14 @@ static void *multifd_recv_thread(void *opaque)
-                 break;
-             }
- 
--            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
--            pkt_len = p->packet_len - sizeof(hdr);
-+            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
-+            if (is_device_state) {
-+                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
-+                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
-+            } else {
-+                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
-+                pkt_len = p->packet_len - sizeof(hdr);
-+            }
- 
-             ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
-                                            &local_err);
-@@ -1235,12 +1291,17 @@ static void *multifd_recv_thread(void *opaque)
-             /* recv methods don't know how to handle the SYNC flag */
-             p->flags &= ~MULTIFD_FLAG_SYNC;
- 
--            /*
--             * Even if it's a SYNC packet, this needs to be set
--             * because older QEMUs (<9.0) still send data along with
--             * the SYNC packet.
--             */
--            has_data = p->normal_num || p->zero_num;
-+            if (is_device_state) {
-+                has_data = p->next_packet_size > 0;
-+            } else {
-+                /*
-+                 * Even if it's a SYNC packet, this needs to be set
-+                 * because older QEMUs (<9.0) still send data along with
-+                 * the SYNC packet.
-+                 */
-+                has_data = p->normal_num || p->zero_num;
-+            }
-+
-             qemu_mutex_unlock(&p->mutex);
-         } else {
-             /*
-@@ -1269,14 +1330,29 @@ static void *multifd_recv_thread(void *opaque)
-         }
- 
-         if (has_data) {
--            ret = multifd_recv_state->ops->recv(p, &local_err);
-+            if (is_device_state) {
-+                assert(use_packets);
-+                ret = multifd_device_state_recv(p, &local_err);
-+            } else {
-+                ret = multifd_recv_state->ops->recv(p, &local_err);
-+            }
-             if (ret != 0) {
-                 break;
-             }
-+        } else if (is_device_state) {
-+            error_setg(&local_err,
-+                       "multifd: received empty device state packet");
-+            break;
-         }
- 
-         if (use_packets) {
-             if (flags & MULTIFD_FLAG_SYNC) {
-+                if (is_device_state) {
-+                    error_setg(&local_err,
-+                               "multifd: received SYNC device state packet");
-+                    break;
-+                }
-+
-                 qemu_sem_post(&multifd_recv_state->sem_sync);
-                 qemu_sem_wait(&p->sem_sync);
-             }
-@@ -1345,6 +1421,7 @@ int multifd_recv_setup(Error **errp)
-             p->packet_len = sizeof(MultiFDPacket_t)
-                 + sizeof(uint64_t) * page_count;
-             p->packet = g_malloc0(p->packet_len);
-+            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
-         }
-         p->name = g_strdup_printf(MIGRATION_THREAD_DST_MULTIFD, i);
-         p->normal = g_new0(ram_addr_t, page_count);
-diff --git a/migration/multifd.h b/migration/multifd.h
-index f7156f66c0f6..c2ebef2d319e 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -62,6 +62,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
- #define MULTIFD_FLAG_UADK (8 << 1)
- #define MULTIFD_FLAG_QATZIP (16 << 1)
- 
-+/*
-+ * If set it means that this packet contains device state
-+ * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
-+ */
-+#define MULTIFD_FLAG_DEVICE_STATE (32 << 1)
-+
- /* This value needs to be a multiple of qemu_target_page_size() */
- #define MULTIFD_PACKET_SIZE (512 * 1024)
- 
-@@ -94,6 +100,16 @@ typedef struct {
-     uint64_t offset[];
- } __attribute__((packed)) MultiFDPacket_t;
- 
-+typedef struct {
-+    MultiFDPacketHdr_t hdr;
-+
-+    char idstr[256] QEMU_NONSTRING;
-+    uint32_t instance_id;
-+
-+    /* size of the next packet that contains the actual data */
-+    uint32_t next_packet_size;
-+} __attribute__((packed)) MultiFDPacketDeviceState_t;
-+
- typedef struct {
-     /* number of used pages */
-     uint32_t num;
-@@ -111,6 +127,13 @@ struct MultiFDRecvData {
-     off_t file_offset;
- };
- 
-+typedef struct {
-+    char *idstr;
-+    uint32_t instance_id;
-+    char *buf;
-+    size_t buf_len;
-+} MultiFDDeviceState_t;
-+
- typedef enum {
-     MULTIFD_PAYLOAD_NONE,
-     MULTIFD_PAYLOAD_RAM,
-@@ -227,8 +250,9 @@ typedef struct {
- 
-     /* thread local variables. No locking required */
- 
--    /* pointer to the packet */
-+    /* pointers to the possible packet types */
-     MultiFDPacket_t *packet;
-+    MultiFDPacketDeviceState_t *packet_dev_state;
-     /* size of the next packet that contains pages */
-     uint32_t next_packet_size;
-     /* packets received through this channel */
+ /*
+  * Convenience function to assert that *@errp is set, then silently free it.
+  */
 
