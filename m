@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD3BC3ABA0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37693C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkfPc-0005Sm-A1; Wed, 19 Feb 2025 03:26:33 -0500
+	id 1tkfQB-0005YT-UL; Wed, 19 Feb 2025 03:27:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPY-0005SK-KZ
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:28 -0500
+ id 1tkfQ4-0005Xg-KC
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:27:00 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPS-0004Za-9F
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:28 -0500
+ id 1tkfQ2-0004bS-0K
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:27:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739953582; x=1771489582;
+ t=1739953618; x=1771489618;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XVdv5gWUOU2aVOqYrjh81efF2mZVpI8Jj4EkhPdEab8=;
- b=DaIcN+ZjxsaL0MEyS2RwGQW8L8jWsYnlS4FIuizK5a6v8+YSvkDFIYRO
- Lt/kCeJtj4Pim/LNwtSH/YaS5XihFj+HHlVdDDXny3TqydGn/jBhv2ya1
- 4uYG0AdAPG5BjFkHCIbNM0oa2xDdyuBeGELGYXdLWnSpMw/JYoASKPMcl
- PvWUL4WFl3D+jRjWy7GPiUlk2a2LDrYjC/LAlaSt/iyDcO6IPNuQW3U9o
- AEioAKyUicF4jtRxpCJJhpVyR+Ijej6JAzHn0vB+rsETZ3q6Fv7U0tNWk
- 3qwU7FjDHW1L2sx/nZAku9Hxq5UDAi1HzL2w3zdHQi2892viX0jsFCmQq w==;
-X-CSE-ConnectionGUID: KzBuC2lBTbmCz/KWWDlfjw==
-X-CSE-MsgGUID: Wq1qZlXOSDqGLAGjtjsw9Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544064"
-X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544064"
+ bh=YkKG3U4URwqi/DdDGTpyXo93ZK+iuSB6xF85FkczKCU=;
+ b=RVdSvWdHBtbKnpDz0ExFOrBGCi8srG4tmN6jRUtgbFUnJPm6rkr4mcWR
+ x3oN4IOMw2ImHodOZxZFdHvjOPNH0BtCVCHEwpFIIzNhP35lEglQ+CA9u
+ 1Usmm/+Nf17br/L/L0RmFIk2Sda0uCNK/pmp1EpgpL5r/EuN9BHGsdszu
+ mGLs8l9esLceTkj15dGrE2ZscvIcHCMRgLJeMAUs/93sMJyj523GwdqhQ
+ Mmqc1Rw4n01+LsGtzZCB2hJNi/dRO+nLhYvhJnaRgrl8uzuVaFhG/0nk6
+ Kkkjg+kQUeolxYk+IzFnWIyckJn5ZI9MS6tpbyRWZ0e2k0RBeeygw/FLM w==;
+X-CSE-ConnectionGUID: 8aSCvewAR76oUfh7CYoVnA==
+X-CSE-MsgGUID: Mf0PcxSjRtG0rbOKut6MnQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544177"
+X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544177"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:14 -0800
-X-CSE-ConnectionGUID: pipGzqtCR76Z9rAxOAnUvw==
-X-CSE-MsgGUID: L0b805NbSMmHlrDb1/kuIg==
+ 19 Feb 2025 00:26:57 -0800
+X-CSE-ConnectionGUID: 6pA7Z+QOTtyNUZOvEhlqZg==
+X-CSE-MsgGUID: 1zxlyqKPSpi0XiQUr3ShiA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119850861"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119851135"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:10 -0800
+ 19 Feb 2025 00:26:51 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,11 +53,15 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH rfcv2 02/20] vfio/iommufd: Add properties and handlers to
- TYPE_HOST_IOMMU_DEVICE_IOMMUFD
-Date: Wed, 19 Feb 2025 16:22:10 +0800
-Message-Id: <20250219082228.3303163-3-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH rfcv2 11/20] intel_iommu: Check for compatibility with IOMMUFD
+ backed device when x-flts=on
+Date: Wed, 19 Feb 2025 16:22:19 +0800
+Message-Id: <20250219082228.3303163-12-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
 References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
@@ -88,127 +92,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-New added properties include IOMMUFD handle, devid and hwpt_id.
-IOMMUFD handle and devid are used to allocate/free ioas and hwpt.
-hwpt_id is used to re-attach IOMMUFD backed device to its default
-VFIO sub-system created hwpt, i.e., when vIOMMU is disabled by
-guest. These properties are initialized in .realize_late() handler.
+When vIOMMU is configured x-flts=on in scalable mode, stage-1 page table
+is passed to host to construct nested page table. We need to check
+compatibility of some critical IOMMU capabilities between vIOMMU and
+host IOMMU to ensure guest stage-1 page table could be used by host.
 
-New added handlers include [at|de]tach_hwpt. They are used to
-attach/detach hwpt. VFIO and VDPA have different way to attach
-and detach, so implementation will be in sub-class instead of
-HostIOMMUDeviceIOMMUFD.
+For instance, vIOMMU supports stage-1 1GB huge page mapping, but host
+does not, then this IOMMUFD backed device should be failed.
 
-Add two wrappers host_iommu_device_iommufd_[at|de]tach_hwpt to
-wrap the two handlers.
+Declare an enum type host_iommu_device_iommu_hw_info_type aliased to
+iommu_hw_info_type which come from iommufd header file. This can avoid
+build failure on windows which doesn't support iommufd.
 
-This is a prerequisite patch for following ones.
-
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/system/iommufd.h | 50 ++++++++++++++++++++++++++++++++++++++++
- backends/iommufd.c       | 22 ++++++++++++++++++
- 2 files changed, 72 insertions(+)
+ include/system/host_iommu_device.h | 13 ++++++++++++
+ hw/i386/intel_iommu.c              | 34 ++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 5d02e9d148..a871601df5 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -66,4 +66,54 @@ int iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t hwpt_id,
-                                      uint32_t *entry_num, void *data_ptr);
+diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+index 250600fc1d..aa3885d7ee 100644
+--- a/include/system/host_iommu_device.h
++++ b/include/system/host_iommu_device.h
+@@ -133,5 +133,18 @@ struct HostIOMMUDeviceClass {
+ #define HOST_IOMMU_DEVICE_CAP_FS1GP             3
+ #define HOST_IOMMU_DEVICE_CAP_ERRATA            4
  
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
-+OBJECT_DECLARE_TYPE(HostIOMMUDeviceIOMMUFD, HostIOMMUDeviceIOMMUFDClass,
-+                    HOST_IOMMU_DEVICE_IOMMUFD)
-+
-+/* Abstract of host IOMMU device with iommufd backend */
-+struct HostIOMMUDeviceIOMMUFD {
-+    HostIOMMUDevice parent_obj;
-+
-+    IOMMUFDBackend *iommufd;
-+    uint32_t devid;
-+    uint32_t hwpt_id;
++/**
++ * enum host_iommu_device_iommu_hw_info_type - IOMMU Hardware Info Types
++ * @HOST_IOMMU_DEVICE_IOMMU_HW_INFO_TYPE_NONE: Used by the drivers that do not
++ *                                             report hardware info
++ * @HOST_IOMMU_DEVICE_IOMMU_HW_INFO_TYPE_INTEL_VTD: Intel VT-d iommu info type
++ *
++ * This is alias to enum iommu_hw_info_type but for general purpose.
++ */
++enum host_iommu_device_iommu_hw_info_type {
++    HOST_IOMMU_DEVICE_IOMMU_HW_INFO_TYPE_NONE,
++    HOST_IOMMU_DEVICE_IOMMU_HW_INFO_TYPE_INTEL_VTD,
 +};
 +
-+struct HostIOMMUDeviceIOMMUFDClass {
-+    HostIOMMUDeviceClass parent_class;
-+
-+    /**
-+     * @attach_hwpt: attach host IOMMU device to IOMMUFD hardware page table.
-+     * VFIO and VDPA device can have different implementation.
-+     *
-+     * Mandatory callback.
-+     *
-+     * @idev: host IOMMU device backed by IOMMUFD backend.
-+     *
-+     * @hwpt_id: ID of IOMMUFD hardware page table.
-+     *
-+     * @errp: pass an Error out when attachment fails.
-+     *
-+     * Returns: true on success, false on failure.
-+     */
-+    bool (*attach_hwpt)(HostIOMMUDeviceIOMMUFD *idev, uint32_t hwpt_id,
-+                        Error **errp);
-+    /**
-+     * @detach_hwpt: detach host IOMMU device from IOMMUFD hardware page table.
-+     * VFIO and VDPA device can have different implementation.
-+     *
-+     * Mandatory callback.
-+     *
-+     * @idev: host IOMMU device backed by IOMMUFD backend.
-+     *
-+     * @errp: pass an Error out when attachment fails.
-+     *
-+     * Returns: true on success, false on failure.
-+     */
-+    bool (*detach_hwpt)(HostIOMMUDeviceIOMMUFD *idev, Error **errp);
-+};
-+
-+bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+                                           uint32_t hwpt_id, Error **errp);
-+bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+                                           Error **errp);
+ #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
  #endif
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index fc32aad5cb..574f330c27 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -341,6 +341,26 @@ int iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t hwpt_id,
-     return ret;
- }
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 7709f55be5..9de60e607d 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -39,6 +39,7 @@
+ #include "kvm/kvm_i386.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
++#include "system/iommufd.h"
  
-+bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+                                           uint32_t hwpt_id, Error **errp)
-+{
-+    HostIOMMUDeviceIOMMUFDClass *idevc =
-+        HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(idev);
-+
-+    g_assert(idevc->attach_hwpt);
-+    return idevc->attach_hwpt(idev, hwpt_id, errp);
-+}
-+
-+bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+                                           Error **errp)
-+{
-+    HostIOMMUDeviceIOMMUFDClass *idevc =
-+        HOST_IOMMU_DEVICE_IOMMUFD_GET_CLASS(idev);
-+
-+    g_assert(idevc->detach_hwpt);
-+    return idevc->detach_hwpt(idev, errp);
-+}
-+
- static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
- {
-     HostIOMMUDeviceCaps *caps = &hiod->caps;
-@@ -379,6 +399,8 @@ static const TypeInfo types[] = {
-     }, {
-         .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
-         .parent = TYPE_HOST_IOMMU_DEVICE,
-+        .instance_size = sizeof(HostIOMMUDeviceIOMMUFD),
-+        .class_size = sizeof(HostIOMMUDeviceIOMMUFDClass),
-         .class_init = hiod_iommufd_class_init,
-         .abstract = true,
+ /* context entry operations */
+ #define VTD_CE_GET_RID2PASID(ce) \
+@@ -4346,6 +4347,39 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         return true;
      }
+ 
++    /* Remaining checks are all stage-1 translation specific */
++    if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
++        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
++        return false;
++    }
++
++    ret = hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE, errp);
++    if (ret < 0) {
++        return false;
++    }
++    if (ret != HOST_IOMMU_DEVICE_IOMMU_HW_INFO_TYPE_INTEL_VTD) {
++        error_setg(errp, "Incompatible host platform IOMMU type %d", ret);
++        return false;
++    }
++
++    ret = hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_NESTING, errp);
++    if (ret < 0) {
++        return false;
++    }
++    if (ret != 1) {
++        error_setg(errp, "Host IOMMU doesn't support nested translation");
++        return false;
++    }
++
++    ret = hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_FS1GP, errp);
++    if (ret < 0) {
++        return false;
++    }
++    if (s->fs1gp && ret != 1) {
++        error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
++        return false;
++    }
++
+     error_setg(errp, "host device is uncompatible with stage-1 translation");
+     return false;
+ }
 -- 
 2.34.1
 
