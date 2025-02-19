@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FF1C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 19:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488C6C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 19:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkpfi-0003yF-3Q; Wed, 19 Feb 2025 14:23:50 -0500
+	id 1tkpg4-00042W-Dm; Wed, 19 Feb 2025 14:24:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkpfg-0003xz-2u
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 14:23:48 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkpfp-0003zV-NE
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 14:23:59 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkpfd-0002Od-Gp
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 14:23:47 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43996e95114so626485e9.3
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 11:23:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkpfm-0002PD-NY
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 14:23:56 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38f1e8efe82so187538f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 11:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739993023; x=1740597823; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lyMSEWw4O34IZe8YNuqu9EXefQ7KPkJGawHI7O5vSGI=;
- b=a9CK/4i1rSCQ4Y+rAqdPOtnz12d36eGJqp0jUaC8dVSHtdwZIq+HIZvXwO+jyz69BM
- VlM0g5ufG98f0Y0slg9/VxASZG6Jzxox39CQ4PjYXGvgs8reEWUXDsFhlqpWkYe/8Hxs
- QXOrFcwGEaUGlPYWIbFbbeSyIDrhJWzzOuOYb/CrMwZ4S21BMC0GgLeztBFQPTdpP60p
- P0UL9LNQIKKt8nqMtQZ1+pEiST/nM5HHpX/ttUFPsCbJsTT9oTUqzQ+W8/aYaPGKrW8K
- bYFiCO5QoIEqYGz20v88SCRCSkgMZ+k52/Uoq8AKjA0BmMjQmH0Rg2KsOt4MbFmWBAPw
- SDYA==
+ d=linaro.org; s=google; t=1739993033; x=1740597833; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dpCypAtbAdRfHr1nP5vbTeramo1Dr981PUBxWlWPTN0=;
+ b=lxuIgT16SpXPlM/5NfOLFvVtmZcXIKdD8+9kfVD6Vf3fqpZxVOpBaegi+Eot4eNzLx
+ 4UbOSCIk9KmW99F/wMjkcZ2aFtG0tjyBPqkLeGUMeYWb/46g52bdi71dxhraOSeWlOxW
+ 8gV4WNpVSjR7kkZqGsIcDeETcuahCdeUlKVgen3kIL1TNZbEMMF1RUzvg4tczmU28yDu
+ jsfh16tPY/2yG+ZWJU7NOO06cIANc3JSVGxPFuEn9jcBHYEKNvXTFjCoxwSXiRvuO8ms
+ Y4Y7CeTEpjax5EatdJbIvKutAfY5gjolGT2Ytzb9TaxDXf88hl2humDYiFUkTEtxG8mV
+ RckQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739993023; x=1740597823;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lyMSEWw4O34IZe8YNuqu9EXefQ7KPkJGawHI7O5vSGI=;
- b=YJSjneMl4h2vlNalPHG4d1wQ4IqKl5+Xb2pv711ZTwXGhRX4YS3S2MHnMDLPtrqVhR
- 7IQ60ZdCmJ0ANTX7CFG2fUNreSVl5zd+OziBEL1xzNA6ZRR7xsMFNp9NS0OCuMjXlb0C
- us81JUCcB02EQAH7P4p2Wank0oHmZmMIiNRZ0r62b+4pDDkyc+5ocGuM8y1SiD/hL0HI
- 0yyhk2UW47uqIn1TCcuJT9CU4Gaa1Bwzlr07Cg6P9a6ipUcgLJ67Sw86WBOQ91OsFNfI
- DcWpJCb6MQpWwUeXWhLAdPdMiEOhOOczOfgZ7gl4tEZ4liPcaZSrIgClKFppMMTvzG3V
- OoCQ==
-X-Gm-Message-State: AOJu0YxbnA6WNrB6MaiJcZOsa3FPWRx+XQBEL7Z6AWBLOpvcJKScn3r4
- 5pFvLdfhbhqRMJP/Q0cC0j4/37BTiO2s2R5bEOm4XXiPXWDTLB94Wxn8Eiv8i6Sf1E0IJ9lc9yM
- unjk=
-X-Gm-Gg: ASbGnctIRWvedJ0mfqjmSjEJVjnfT0fA+o9d1jm0/9RFBSO4KOOiT2VC8PznNFt5zTM
- o1ClnFMYQZWJJBoRvpmfRhjSefmhwoSIwMCtmQNxJ3G+rEpy2xfqG6CX9xieQvPpKUS7bFs8oKa
- Isn9mqSGkAsvWcrK9gKpZMYu4mXwlRP2HIfUAMcZnL7zZVKjDaYQxwoJDeIlmH+OqlBkIsm1BPi
- VW4/ouaLDeLR0hDN6EW5xVe7lkBhedKm+McxujVHe87wZxWx+UKW7aZG3BNWXoF51qKXkeQwWva
- +TG5oCNgHIptpNy4Cm2Xb+1AX/zxoC26/jiel8MrP6/x6cMw4ZQoaMyYBRyoj6ZmBQ==
-X-Google-Smtp-Source: AGHT+IEpzmsuLQeAJ8P+IFfFjryTMKFUBFzw8KRRAJYslp7ENaAwbdEK9JGQMXetiiKSrktklTkRIg==
-X-Received: by 2002:a05:600c:5101:b0:439:9496:181c with SMTP id
- 5b1f17b1804b1-43994961a51mr77372295e9.29.1739993022824; 
- Wed, 19 Feb 2025 11:23:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1739993033; x=1740597833;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dpCypAtbAdRfHr1nP5vbTeramo1Dr981PUBxWlWPTN0=;
+ b=P0tV4lDp3GpLsT/mawVv4ZTWhV9uhpHCmuKbc6flDCY2eUS2VBCzSHfQ8wUNSpQG3p
+ mN+UCh7B6rXGjPySVpaFY5vBSxqh8QfObY039Xtw3hmYdKC8+8M+InDjJu/Eyyme53Wg
+ 4MS/Nd1B/6LBiFzuEp7UDIWyHHZkH8k4XaPdc0XfvtvEWG0TRfaxKfn94szf7zDcNf5z
+ uxSNtvUiNQAjMd2aYwZ+Ro5bJe04DT+2TdRt9FRspO3SFIpRLzQzvRw4i8eTzptq+CcO
+ D0cQkMTWoceSVOG+AmcaosTcvR1rfPwaaiuECwvdbVG1ZpOPpNNxsx98fyFlPmHDtXAb
+ yWfQ==
+X-Gm-Message-State: AOJu0YxOutJmO8wzoqoP4bXgOU88Gh78CAabTa1+Yyd/dTdihBd5uKvh
+ DnHj+a2sE4JMauP/Bzc3CKcUOddKh3Zx099+Mw04FDUQ9DK7IT+t7dgeiNTWalWzpj1G8JlTxli
+ toyU=
+X-Gm-Gg: ASbGncvKWSfWTl+YJNHgUKQPf5HP/SbpxUs/mDnStYtTBd/gytNkE5SJ0WdkNvkOtTM
+ L8TClDrSVD31/5mGlWWRkC4O7/BMoeUGz77jKLpqmyWP9zBEU7WJxJKVrf2AYXjaj+fUnBqxNUE
+ S2UhyJkyJ52gQQxtrP/c3IRtMtt8A5ytA7BlFl393hVFqGpAzd4aY2fX0SBrme0QTmrg/LZBE+3
+ YpAfDFCcAIIxxv4ZRLHnRh252sJaAe3qSISZSL2O3fyTqNhzQQd5zn/A8lFtplcQr8Vw4SeukGB
+ ZUr2XozZsUSULPnmhiSSlX5+AP249yRFWs5a94De17XBxssVxYEpeShQ0QIEP1sgOg==
+X-Google-Smtp-Source: AGHT+IEDmHfCKkm/pw/w9ptMt13XYdS6/32Np9zwYkINtLaBDp/CTK/rNyfM3NNbaui8T/u439M+gA==
+X-Received: by 2002:a05:6000:11d0:b0:38d:af14:cb1 with SMTP id
+ ffacd0b85a97d-38f33f58dbdmr15159987f8f.54.1739993032672; 
+ Wed, 19 Feb 2025 11:23:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399c41022csm25419685e9.40.2025.02.19.11.23.41
+ ffacd0b85a97d-38f258b44b2sm18385648f8f.20.2025.02.19.11.23.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 19 Feb 2025 11:23:42 -0800 (PST)
+ Wed, 19 Feb 2025 11:23:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -71,15 +72,18 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Yonggang Luo <luoyonggang@gmail.com>
-Subject: [PATCH 0/2] tests/functional: Allow running TCG plugins tests on macOS
-Date: Wed, 19 Feb 2025 20:23:38 +0100
-Message-ID: <20250219192340.92240-1-philmd@linaro.org>
+Subject: [PATCH 2/2] tests/functional: Allow running TCG plugins tests on
+ non-Linux/BSD hosts
+Date: Wed, 19 Feb 2025 20:23:40 +0100
+Message-ID: <20250219192340.92240-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250219192340.92240-1-philmd@linaro.org>
+References: <20250219192340.92240-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,82 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick kindly helped me to resolve this issue which ended
-being trivial (to him!). Not tested on Windows so far.
+Not all platforms use the '.so' suffix for shared libraries,
+which is how plugins are built. Use the recently introduced
+dso_suffix() helper to get the proper host suffix.
 
-I'm still having some meson dependency problem, even on Linux:
-
-  $ make check-functional-aarch64
-  ...
-  Traceback (most recent call last):
-    File "python/qemu/qmp/protocol.py", line 834, in _bh_close_stream
-      await wait_closed(self._writer)
-    File "python/qemu/qmp/util.py", line 130, in wait_closed
-      await writer.wait_closed()
-    File "/usr/lib/python3.10/asyncio/streams.py", line 343, in wait_closed
-      await self._protocol._get_close_waiter(self)
-    File "/usr/lib/python3.10/asyncio/selector_events.py", line 862, in _read_ready__data_received
-      data = self._sock.recv(self.max_size)
-  ConnectionResetError: [Errno 104] Connection reset by peer
-
-  The above exception was the direct cause of the following exception:
-
-  Traceback (most recent call last):
-    File "python/qemu/machine/machine.py", line 448, in launch
-      self._launch()
-    File "python/qemu/machine/machine.py", line 497, in _launch
-      self._post_launch()
-    File "python/qemu/machine/machine.py", line 381, in _post_launch
-      self._qmp.connect()
-    File "python/qemu/qmp/legacy.py", line 153, in connect
-      self._sync(
-    File "python/qemu/qmp/legacy.py", line 102, in _sync
-      return self._aloop.run_until_complete(
-    File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
-      return future.result()
-    File "/usr/lib/python3.10/asyncio/tasks.py", line 408, in wait_for
-      return await fut
-    File "python/qemu/qmp/protocol.py", line 382, in connect
-      await self._session_guard(
-    File "python/qemu/qmp/protocol.py", line 456, in _session_guard
-      raise ConnectError(emsg, err) from err
-  qemu.qmp.protocol.ConnectError: Failed to establish session: [Errno 104] Connection reset by peer
-
-  The above exception was the direct cause of the following exception:
-
-  Traceback (most recent call last):
-    File "tests/functional/test_aarch64_tcg_plugins.py", line 80, in test_aarch64_virt_insn
-      self.run_vm(kernel_path, kernel_command_line,
-    File "tests/functional/test_aarch64_tcg_plugins.py", line 52, in run_vm
-      raise excp
-    File "tests/functional/test_aarch64_tcg_plugins.py", line 46, in run_vm
-      vm.launch()
-    File "python/qemu/machine/machine.py", line 461, in launch
-      raise VMLaunchFailure(
-  qemu.machine.machine.VMLaunchFailure: ConnectError: Failed to establish session: [Errno 104] Connection reset by peer
-      Exit code: 1
-      Command: build/plugins/qemu-system-aarch64 -display none -vga none -chardev socket,id=mon,fd=6 -mon chardev=mon,mode=control -machine virt -chardev socket,id=console,fd=11 -serial chardev:console -cpu cortex-a53 -kernel /home/philippe.mathieu-daude/.cache/qemu/download/ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7 -append printk.time=1 panic=-1 console=ttyAMA0 -plugin tests/tcg/plugins/libinsn.so -d plugin -D /tmp/plugini36uailv.log -net none -no-reboot
-      Output: qemu-system-aarch64: Could not load plugin tests/tcg/plugins/libinsn.so: tests/tcg/plugins/libinsn.so: cannot open shared object file: No such file or directory
-  make[1]: *** [Makefile.mtest:26: do-meson-check] Error 1
-
-I don't mind much building the plugins manually:
-
-  $ make tests/tcg/plugins/libinsn.so
-  [1/2] Compiling C object tests/tcg/plugins/libinsn.so.p/insn.c.o
-  [2/2] Linking target tests/tcg/plugins/libinsn.so
-
-Then tests pass.
-
-Philippe Mathieu-Daudé (2):
-  tests/functional: Introduce the dso_suffix() helper
-  tests/functional: Allow running TCG plugins tests on non-Linux/BSD
-    hosts
-
- tests/functional/qemu_test/__init__.py       |  2 +-
- tests/functional/qemu_test/cmd.py            |  6 ++++++
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2804
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  tests/functional/test_aarch64_tcg_plugins.py | 10 +++++++---
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
+diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
+index 7e8beacc833..306e46c7972 100755
+--- a/tests/functional/test_aarch64_tcg_plugins.py
++++ b/tests/functional/test_aarch64_tcg_plugins.py
+@@ -16,7 +16,7 @@
+ import re
+ 
+ from qemu.machine.machine import VMLaunchFailure
+-from qemu_test import LinuxKernelTest, Asset
++from qemu_test import LinuxKernelTest, Asset, dso_suffix
+ 
+ 
+ class PluginKernelBase(LinuxKernelTest):
+@@ -62,6 +62,10 @@ class PluginKernelNormal(PluginKernelBase):
+         ('https://storage.tuxboot.com/20230331/arm64/Image'),
+         'ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7')
+ 
++    def plugin_file(self, plugin_name):
++        suffix = dso_suffix()
++        return f'tests/tcg/plugins/{plugin_name}.{suffix}'
++
+     def test_aarch64_virt_insn(self):
+         self.set_machine('virt')
+         self.cpu='cortex-a53'
+@@ -74,7 +78,7 @@ def test_aarch64_virt_insn(self):
+                                                  suffix=".log")
+ 
+         self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
++                    self.plugin_file('libinsn'), plugin_log.name,
+                     console_pattern)
+ 
+         with plugin_log as lf, \
+@@ -100,7 +104,7 @@ def test_aarch64_virt_insn_icount(self):
+                                                  suffix=".log")
+ 
+         self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
++                    self.plugin_file('libinsn'), plugin_log.name,
+                     console_pattern,
+                     args=('-icount', 'shift=1'))
+ 
 -- 
 2.47.1
 
