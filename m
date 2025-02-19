@@ -4,95 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A47C021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D59C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkhTS-0000Pw-Rq; Wed, 19 Feb 2025 05:38:38 -0500
+	id 1tkhn3-0002kU-Gs; Wed, 19 Feb 2025 05:58:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tkhTP-0000Pk-0V
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:38:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tkhTN-0002mY-6d
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:38:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739961511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MrcWK78FTlUhDvIDiXJ7tczaxY13U6NnZhzx4kbsy1A=;
- b=MdRY4pdZRAXFVxzUiy7D5dLjH7OQ0hFBkBafDoaCyRuX87hay9jWEbzN4UFvV1fqXqwqDR
- 1KrjWXG3w1aKTLEXki2c+b+Udaxl4KTAjKKM2JyI3LXXvCbw2fPsiDvrlrcTHiB4oFyuuW
- a385YtI/qQSucN/rgdXvFzmLPR14SZs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-qxYGpaSDMwCifN7YZJ837Q-1; Wed, 19 Feb 2025 05:38:29 -0500
-X-MC-Unique: qxYGpaSDMwCifN7YZJ837Q-1
-X-Mimecast-MFC-AGG-ID: qxYGpaSDMwCifN7YZJ837Q_1739961508
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f2ef5f0dbso2481458f8f.2
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:38:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
+ id 1tkhn1-0002kF-Ln
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:58:51 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
+ id 1tkhmz-0005Z9-Un
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:58:51 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38f378498b0so3299430f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:58:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739962728; x=1740567528; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=hWa0KcU05B95Kj4EgP8ZhPIrYp6WCMUxD6IImKVDfu8=;
+ b=ax9UdhB6w7tQuBlSSfOtsNucBqmzYBEaYfoas16Y5RfA4OExLf4D+v/YKSdUZrOuWL
+ /FSJ3fFviGOp09Yp3Dvz0yxfC5wqK9TiowCVsOvdZx2/AMzhHD8hc86SFsP0wj+vntZb
+ 92L9z5bOmqHgIZLXolJBkSalkMkEPMQgAl8g/sxyzmykDOjC7+G9yEVJIMxdWBV73EH4
+ qqDkj9tFjwRwQfAxZXnkBEnFZ1R9R4vu54LGQScCg7LG07gOLovV5iUAh+TkgljhwMIX
+ HRXBIaWXPoZxWveBSMP0UA7gZkZ+Bo+K7D93kQj6MslBpS3ohn/NaM68FGBgy/ScFoBn
+ aGVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739961508; x=1740566308;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MrcWK78FTlUhDvIDiXJ7tczaxY13U6NnZhzx4kbsy1A=;
- b=uEYY05+0423WBcDBpHg0nanHvBV7mr8wH6vx/xh0q4ryPrIZW7M8+sPvbRzf4iwVdq
- WPDK4L3PTbtKnpxBwo8wefl8fKYnJtTJWzKfrgsTc5lKQTx2G/K6ZtO9XuOOBYK0YnQ9
- AsncOuCkMcZWogxIro0/ccIkcK9gaqfY1v6g9CARHLWhEX1//Ekv4M0TDyAsMXykFE8+
- v+GF47Jzz9g96jqaT6LT+udbfRGgMiVW/BG+B8Vfj2U8ZJiNoDC71YqKv5eFCqKLzuZB
- vWRT16kOBTAf8JZev72/OIGqEHOa9buQtWwG2dHv+sC7XKdYXANkthtGmFk42SEVP+CV
- bDgA==
+ d=1e100.net; s=20230601; t=1739962728; x=1740567528;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hWa0KcU05B95Kj4EgP8ZhPIrYp6WCMUxD6IImKVDfu8=;
+ b=nbYAm/1YE4fzr8a3FZTy8XB1geptI8ltSE/P3bgOKj34htPgRqoxhpMxgOW6wlUn9g
+ p0i0WHCcv80uTREwWiIkSTXEgeeGNE/6y/GEhEI9cxMLKG48iK+Gb0i6el4L1sAq9jeh
+ gCimyxELGnPaxuKgQuK4bzqvGj0JR8GkoOeNVAUTrVt42i3v3dpHX2krF5ZwOWe+DgYP
+ 8yxnOSUnZBInR9b920V0eB8cnlSSc0G8uCszGBAlfqFywDr5UKCt4rCaaQ+SJ3ZxK2n/
+ 2zHkBHQAvcpO9t0aIxc2SiUKmZ9jq9NSfvu5Jy10g6phETMNMX7cSnCnPbrvQrICLfUU
+ WNHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUN8VQq6S+hmlZJ2o9PJTJym+DALkT9Xw19GI4gXQRhvfPfe6X9bgje9CSLQaTIFAzbhkL0jpnhbIa@nongnu.org
-X-Gm-Message-State: AOJu0YzwytPFwJ/r6ZwIOAZ9JKWCL11FSF8LmxbhgHgBXUhYtxSwfkxE
- Un8NI9BCnoOGwpPReDSgWuHt4SGW7CEtRZERRuOjSBfYTljzFU2Mw9Am5Jct3Ytu5YhX9Pz66EG
- XeVDeAmod6EDFT/M13q2WOO4DgeOxpbsQEaVPCteYKnDbXTbQ9f6co5Xato8EFUM4OI4dupuWy6
- WdQqEFU0IlWGL6lkBHvIS2ciWG460=
-X-Gm-Gg: ASbGncuaL+m38yNlltpulPgS+0q3O09xjPfogwmZXFs2qF7wPCnOvB8X+NmwPE8oYIa
- 6lng4QvrgzOYO/h9dVFJIlsh0PvKR/ts4FmewApJmxlkBwEtYqXKW6G7idAfUNO8C
-X-Received: by 2002:a05:6000:402a:b0:38d:e48b:1766 with SMTP id
- ffacd0b85a97d-38f33f118c8mr14890863f8f.6.1739961508122; 
- Wed, 19 Feb 2025 02:38:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEmXqNyO4nYSbe47MgBKSEfyZx4/oIhcCEQcCOJKFvIl19M5e+qqB1knIk050IBtal63qMTkXoeQK0yphTs1IU=
-X-Received: by 2002:a05:6000:402a:b0:38d:e48b:1766 with SMTP id
- ffacd0b85a97d-38f33f118c8mr14890842f8f.6.1739961507844; Wed, 19 Feb 2025
- 02:38:27 -0800 (PST)
-MIME-Version: 1.0
-References: <20250212112958.38023-1-philmd@linaro.org>
- <c33817a1-74d4-47b0-93d3-000cfd6200be@redhat.com>
- <CAAibmn2Ohd_-k5LGqo5m1xzLrrs2UYxCT6U_XEKsJYScfCpx6g@mail.gmail.com>
- <CABgObfaq2m42tBUAmskSXm-fR6zKDtApAsR4rYYqg8dnMq+Bog@mail.gmail.com>
- <CAAibmn3MvZtng=4vAGx6yNfMkM+u_HRbT0CAA6WhdbTtLDE5xQ@mail.gmail.com>
-In-Reply-To: <CAAibmn3MvZtng=4vAGx6yNfMkM+u_HRbT0CAA6WhdbTtLDE5xQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 19 Feb 2025 11:38:14 +0100
-X-Gm-Features: AWEUYZlT81xW43eFQJ1dhUOiuYOp70PVUEuDuguYdr2vf4M1i54fhPRLZCf86-g
-Message-ID: <CABgObfZzLs+yByD=736PFw8ZtH-OcJkxZiScaTWktdrY1+5e5g@mail.gmail.com>
-Subject: Re: [PATCH] meson: Display summary of Darwin libraries detected
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
+ AJvYcCVc8FUPUAL01uYjKoXA/dDK/wEYdBtw8Rf5tPGn63P2T3uRYz8X9anLfsZ7dboZSbY2QIDySDkMqH59@nongnu.org
+X-Gm-Message-State: AOJu0YykVf/vO11MKPipGNFysVa33xqNoWJVSvVRXGwsA9c+kG2rXyiw
+ PNHJi8JPJNsCnhFjhMIy/K8vrJ2bnQLxqlzWCLQrRJnkr6K2FbXN
+X-Gm-Gg: ASbGncsJ6yRUC3vs+5wVqM9EKZORD2sHXmbkvPy37zA4FMH2dyWSLRa9I+dWMaiFGK5
+ D+2N4yKnOA59SwSWRWKMFS4usgs1AUQIzcBg3EYiXEDsbkesgEDANwNGaME8SogbXQyUywrn9W9
+ yFLp64KAn9xSZSDpBWM09AfYG9WAjv/rbrGFyd7GbQI6HeoHJ/PPOPyI1WKcc6I4X2OK82Ci0Ty
+ UaZir1PmFqi1cBNoDwiPr5M7kjZkEus9cJA4PVQbyNGQk0t9zlfB9HLcqGA+ugeiRH6BFFZvWTS
+ lJx2UJAgYUuRD207iSszoquUiERuwUfqupF9UYYhmQwFa44Uj1i0F0+OoUQwgK7FWb3n83ll
+X-Google-Smtp-Source: AGHT+IHXKJZTfwSLoxDWU99PQefFxQjd9dujVTOF/9TaLmnFIFk3O7jX4E7v8WovkAveBu/o59Cu3A==
+X-Received: by 2002:a05:6000:1a54:b0:38f:4e50:8b0b with SMTP id
+ ffacd0b85a97d-38f58796ab6mr2280770f8f.31.1739962728096; 
+ Wed, 19 Feb 2025 02:58:48 -0800 (PST)
+Received: from ?IPv6:2001:b07:5d29:f42d:64f1:54a0:5dc5:6dd1?
+ ([2001:b07:5d29:f42d:64f1:54a0:5dc5:6dd1])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259f7979sm17280250f8f.83.2025.02.19.02.58.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Feb 2025 02:58:47 -0800 (PST)
+Message-ID: <7e8ef2dc3958bf9ea68ac3feb68fc216a9107411.camel@gmail.com>
+Subject: Re: [PATCH v7 16/52] i386/tdvf: Introduce function to parse TDVF
+ metadata
+From: Francesco Lavra <francescolavra.fl@gmail.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=
+ <berrange@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Marcelo Tosatti
+ <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Rick Edgecombe
+ <rick.p.edgecombe@intel.com>,  qemu-devel@nongnu.org, kvm@vger.kernel.org
+Date: Wed, 19 Feb 2025 11:58:46 +0100
+In-Reply-To: <20250124132048.3229049-17-xiaoyao.li@intel.com>
+References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+ <20250124132048.3229049-17-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.46.4-2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=francescolavra.fl@gmail.com; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,23 +111,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 11:36=E2=80=AFAM Phil Dennis-Jordan <phil@philjorda=
-n.eu> wrote:
->> ... which boards should enable MAC_PVG_MMIO? Is it only VIRT, or somethi=
-ng
->> else?
->
-> I doubt anyone will be able to use it productively with virt, but I am re=
-gularly surprised by people's creativity.
-
-Ah okay, so for now it's effectively dead code.
-
-> The intended target machine is vmapple, which is the only known way
-> to run aarch64 macOS guests. [...]
-> I'll try to rebase that series and re-post it in the next few days
-
-Thanks, I'll keep an eye on that.
-
-Paolo
+T24gRnJpLCAyMDI1LTAxLTI0IGF0IDA4OjIwIC0wNTAwLCBYaWFveWFvIExpIHdyb3RlOgo+ICtp
+bnQgdGR2Zl9wYXJzZV9tZXRhZGF0YShUZHhGaXJtd2FyZSAqZncsIHZvaWQgKmZsYXNoX3B0ciwg
+aW50IHNpemUpCj4gK3sKPiArwqDCoMKgIGdfYXV0b2ZyZWUgVGR2ZlNlY3Rpb25FbnRyeSAqc2Vj
+dGlvbnMgPSBOVUxMOwo+ICvCoMKgwqAgVGR2Zk1ldGFkYXRhICptZXRhZGF0YTsKPiArwqDCoMKg
+IHNzaXplX3QgZW50cmllc19zaXplOwo+ICvCoMKgwqAgaW50IGk7Cj4gKwo+ICvCoMKgwqAgbWV0
+YWRhdGEgPSB0ZHZmX2dldF9tZXRhZGF0YShmbGFzaF9wdHIsIHNpemUpOwo+ICvCoMKgwqAgaWYg
+KCFtZXRhZGF0YSkgewo+ICvCoMKgwqDCoMKgwqDCoCByZXR1cm4gLUVJTlZBTDsKPiArwqDCoMKg
+IH0KPiArCj4gK8KgwqDCoCAvKiBsb2FkIGFuZCBwYXJzZSBtZXRhZGF0YSBlbnRyaWVzICovCj4g
+K8KgwqDCoCBmdy0+bnJfZW50cmllcyA9IGxlMzJfdG9fY3B1KG1ldGFkYXRhLT5OdW1iZXJPZlNl
+Y3Rpb25FbnRyaWVzKTsKPiArwqDCoMKgIGlmIChmdy0+bnJfZW50cmllcyA8IDIpIHsKPiArwqDC
+oMKgwqDCoMKgwqAgZXJyb3JfcmVwb3J0KCJJbnZhbGlkIG51bWJlciBvZiBmdyBlbnRyaWVzICgl
+dSkgaW4gVERWRgo+IE1ldGFkYXRhIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBmdy0+bnJfZW50cmllcyk7Cj4gK8KgwqDCoMKgwqDCoMKgIHJldHVybiAtRUlO
+VkFMOwo+ICvCoMKgwqAgfQo+ICsKPiArwqDCoMKgIGVudHJpZXNfc2l6ZSA9IGZ3LT5ucl9lbnRy
+aWVzICogc2l6ZW9mKFRkdmZTZWN0aW9uRW50cnkpOwo+ICvCoMKgwqAgaWYgKG1ldGFkYXRhLT5M
+ZW5ndGggIT0gc2l6ZW9mKCptZXRhZGF0YSkgKyBlbnRyaWVzX3NpemUpIHsKPiArwqDCoMKgwqDC
+oMKgwqAgZXJyb3JfcmVwb3J0KCJURFZGIG1ldGFkYXRhIGxlbiAoMHgleCkgbWlzbWF0Y2gsIGV4
+cGVjdGVkCj4gKDB4JXgpIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCBtZXRhZGF0YS0+TGVuZ3RoLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgICh1aW50MzJfdCkoc2l6ZW9mKCptZXRhZGF0YSkgKyBlbnRyaWVzX3NpemUpKTsK
+PiArwqDCoMKgwqDCoMKgwqAgcmV0dXJuIC1FSU5WQUw7Cj4gK8KgwqDCoCB9Cj4gKwo+ICvCoMKg
+wqAgZnctPmVudHJpZXMgPSBnX25ldyhUZHhGaXJtd2FyZUVudHJ5LCBmdy0+bnJfZW50cmllcyk7
+Cj4gK8KgwqDCoCBzZWN0aW9ucyA9IGdfbmV3KFRkdmZTZWN0aW9uRW50cnksIGZ3LT5ucl9lbnRy
+aWVzKTsKPiArCj4gK8KgwqDCoCBpZiAoIW1lbWNweShzZWN0aW9ucywgKHZvaWQgKiltZXRhZGF0
+YSArIHNpemVvZigqbWV0YWRhdGEpLAo+IGVudHJpZXNfc2l6ZSkpIHsKPiArwqDCoMKgwqDCoMKg
+wqAgZXJyb3JfcmVwb3J0KCJGYWlsZWQgdG8gcmVhZCBURFZGIHNlY3Rpb24gZW50cmllcyIpOwoK
+bWVtY3B5KCkgY2Fubm90IGZhaWwuLi4KCg==
 
 
