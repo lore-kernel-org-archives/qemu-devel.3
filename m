@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A168C021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 21:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A3BC021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 21:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkrVN-00045K-58; Wed, 19 Feb 2025 16:21:18 -0500
+	id 1tkrsO-0001us-UT; Wed, 19 Feb 2025 16:45:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tkrVD-0003vf-NM
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:21:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tkrVA-0001a7-TO
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:21:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740000061;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZrVW92jt1gRceo133ItBkVRsIJzgOqkZv8gKQbPQZ2Y=;
- b=N8fXWifhSf69X7Io5apeJVMOGS2ksCLfG94ahUskmXlkcHDIwVJk8fR4b07NgzCvkIHjvS
- Izw28grQqyfQE16IfMq52QS41/fYmSvYNh4D8ksNJJSC3NrEjTm6MZy/Kx+oZCo4iaSHxu
- 5FBTtpKm+14wUT/AqAsW1qTulAQtKCc=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-jhVX6Ib6OLSZCpOLB19vlw-1; Wed, 19 Feb 2025 16:19:51 -0500
-X-MC-Unique: jhVX6Ib6OLSZCpOLB19vlw-1
-X-Mimecast-MFC-AGG-ID: jhVX6Ib6OLSZCpOLB19vlw_1739999990
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-84990d44b31so2972739f.3
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 13:19:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tkrsM-0001tP-Ih; Wed, 19 Feb 2025 16:45:02 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tkrsK-0004HI-JS; Wed, 19 Feb 2025 16:45:02 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-abb7f539c35so64753566b.1; 
+ Wed, 19 Feb 2025 13:44:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740001498; x=1740606298; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qMUMjboRNAy18NMEZj699jQWyk6xIgQJY40hHkPwU6E=;
+ b=He/iNt0PK/4KQsjbY3PsACNSA4G6bJMg2YFei4OmYInm2J9+iNsAPhyoSMQvhbAoQi
+ mHq4wijEAhB0HFkeS2x4q75zMX8lsiiEhFs6uSIdro5bdSivpA0RwbXoWfmRjyeStMDe
+ cVMlPZO8toYU5mORA207mONkKns4XdPQG2E9M8uY9CHvRztvy63tnIjhMybs9xHwQPUP
+ 8FG8FuMJbyD+prqWgA9ijHjgrW0adKVkBHfn3sbJG869F7dEXF3587y+8LTQuZwAkOHh
+ etGziJQuWdonZHfZGxmSvxKuS/PUY6MeJRa8PRm3FL25mQU3ExdYezt7HKmRUjQD4TBo
+ j1YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739999990; x=1740604790;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1740001498; x=1740606298;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZrVW92jt1gRceo133ItBkVRsIJzgOqkZv8gKQbPQZ2Y=;
- b=WvVpUI2JjOuHiCK7Cwvuw0pU9OUjQ8ZfeClPytHW72mTloYodlqKH1A4OUYJnvtymP
- 1yQlS4B9gpJztYLBXZTNQopNx05udizt4iVvFQ7WMnW+L6JuyEqdJUuFEdW3zAhxfvsv
- NPUBT98VK/8rpb34CphLN+I1Z8fCX/uM3d3D+1j0S+yGSV8LskBCYqULefNNyiUHoZgM
- 92SJ1J4Bfd/tmV4w7S5c9kdQwmuVcMXxV5et6lWf19yzpd0k9TA4VAI7eJXi4y2JTaVT
- Qy5C8pJYD09qboZngrLNohRiFWVB4XS+doHNyRcUdP3ghZPmLlr57FHraWlR/7xKHMRh
- XBlw==
+ bh=qMUMjboRNAy18NMEZj699jQWyk6xIgQJY40hHkPwU6E=;
+ b=DyST+CgcgHLLMofo3DCQ0Z7F1fnualcfw71vLfBKmAN7M8SlzLQTvY8zfvfrPi0o3m
+ tZOSH+n44l0Rf3FscWgyG02NhhzEu04+hgMoGcROgKfFB6bqcwq2fSx6Q0OkcCaNTZ5j
+ E04jqjltxu1Iwsk5ZaXqO3fDNWQYBsm6Qvs9qhVVOcleMvb4VXMTS6s/7gXU7rce6D6R
+ pKznaskX24BpMaC0bpAEiXtfueGf0XdOi2bjH/T0iz7b8iF4tNAJk23Al1X+YxBuaaq+
+ Bldz8A3L1vF3K7juB685zZuHoU0mJGbeuWilcg/lkEa49ZrreCqf5bbnvSQNF/3d0fXF
+ oIhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyaSQuzIDOk2YU9LMKd444oH49CRkVEzPtD3F4ocWhucihIeyd1VhWbBPkmSeXzcUa2MvLpFKahPlf@nongnu.org
-X-Gm-Message-State: AOJu0YzbA8q8CQ309FKZm3hSEEGpV8e8eq7y1/VIwRqFou9Q/5+m3Z3T
- NV4Q7if5S8UKGb9MG+PN6+jptQKUJX3c/xXEII6Qt5R706SgCzMCljPTlvUUl6ve6KfxczL4zCI
- cJ+duOiouETHqbs5rUxnsw9+vtT+NNv3hdQSMlAI/E+IR0h3+fg4l
-X-Gm-Gg: ASbGncs34CV5gb8cscaDwALjJ6wrcdpAxcxNwqBHVz3gknmU9v0+4c+RevoNdJhOrWV
- rXhFD4jdE3wa8BSAiG+Wq5F1837xeH1/Gyu1ScWH+N6DYjGKuDhNFU2Ek1At20Sk0zhVee1E9w5
- 21AoBrFnmgwtAn126vXejXt41DXYULM2qgQdOtV6oOhQVg9fpYaYTq1Vt6vnGeKRocve1DMLJjy
- Mo8SD/xVWwUiq4S9Jt/g7b9y2V9hReqj7O9SXs74XaHPGz9QhZNBf58smMD2PbLRxyqoQ9VOgEH
- jnNB0duc
-X-Received: by 2002:a05:6e02:1fc3:b0:3d2:b5f8:87a6 with SMTP id
- e9e14a558f8ab-3d2b5f88ab1mr15195075ab.7.1739999990252; 
- Wed, 19 Feb 2025 13:19:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHcpecwwSjIPDqVFjPe09SyTChGQKKTnrV9FxdjFX16NWlHkhiYe1YHNi8k7pgfldw0MkpV4Q==
-X-Received: by 2002:a05:6e02:1fc3:b0:3d2:b5f8:87a6 with SMTP id
- e9e14a558f8ab-3d2b5f88ab1mr15194995ab.7.1739999989882; 
- Wed, 19 Feb 2025 13:19:49 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d2bc19dbe3sm3203025ab.9.2025.02.19.13.19.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 13:19:48 -0800 (PST)
-Date: Wed, 19 Feb 2025 14:19:45 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, clg@redhat.com,
- zhenzhong.duan@intel.com
-Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
- d3hot state
-Message-ID: <20250219141945.5e74c7f3.alex.williamson@redhat.com>
-In-Reply-To: <20250219115844.062c5513.alex.williamson@redhat.com>
-References: <20250219175941.135390-1-eric.auger@redhat.com>
- <20250219115844.062c5513.alex.williamson@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCXpvraQKU4oE5DoCaEiULvnaj9/8e1HDb7BovoKwr7/UXH+1QC2bSNmn1C+psiN9N6HkPKZqijB5A==@nongnu.org
+X-Gm-Message-State: AOJu0YyHdAJaNzL7eW31506K7l+ddhyX5QIQy1XpOj6A6vhkQaDHzqgt
+ YRuP6UkrXVrAo2RFFaWK3NlTS5MWlY+Dk2G27j9eyv0iMDqx8S13
+X-Gm-Gg: ASbGncvNf/gVrclFRGCcWVoeNk58I6va7rHoUOpJhpQqGfMXBFwMIVH6i9KFuRNkWjZ
+ Zvn96XnMe3Kcwi2mg4xPrLcDFOxeATLkga7W1CXQCYPA3YUdKb4eWKY/I9caWNp+BrwxkbCwAmx
+ MF3y6VOYe4uf6yaZ1ndjfcfDvyyeU4tiz5Iiytif5p5917VOr7sPUEqCQWXS5nPMJS5jR/cyzDG
+ KEy+PjknvwG7yLquEIUWS6xS5lkUmvJ4NKbktBjwAjVFWPEwe9qac3vk4eEiQyovMNduICx4WdN
+ 0fFg6SsF032yclsimmkj++XbiKZcMXQ07W+8LGZGz8V9pZg3KswQO9sS7YhQAIg12Vg=
+X-Google-Smtp-Source: AGHT+IE3rtRkykFi0q3EMY6UzuGdS8WAl0OIn3SBTC2KuIFg/+4NRUmz6P726J7x+mRRVbE7kvwEvA==
+X-Received: by 2002:a17:907:d9e:b0:ab3:2b85:5d5 with SMTP id
+ a640c23a62f3a-abb70df3417mr2171594466b.49.1740001498082; 
+ Wed, 19 Feb 2025 13:44:58 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-077-183-067-186.77.183.pool.telefonica.de.
+ [77.183.67.186]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abbdf076360sm161654066b.110.2025.02.19.13.44.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Feb 2025 13:44:57 -0800 (PST)
+Date: Wed, 19 Feb 2025 21:43:50 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_03/18=5D_hw/gpio/pca955*=3A_Mov?=
+ =?US-ASCII?Q?e_Kconfig_switches_next_to_implementations?=
+In-Reply-To: <CAFEAcA_4ONvJB0xSSGKo4RXVfjBxck8N3mD6G=n=DKbfK4r41g@mail.gmail.com>
+References: <20250204092112.26957-1-shentey@gmail.com>
+ <20250204092112.26957-4-shentey@gmail.com>
+ <CAFEAcA8yayMSe+64VDV8TwSMi7u0_wLM+y9-TKsnaZS5seNKZA@mail.gmail.com>
+ <18125593-7729-40FA-9FC1-7DC912287503@gmail.com>
+ <CAFEAcA_4ONvJB0xSSGKo4RXVfjBxck8N3mD6G=n=DKbfK4r41g@mail.gmail.com>
+Message-ID: <6DE88581-5B09-4599-ABE0-780D1BC76E66@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,55 +106,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Feb 2025 11:58:44 -0700
-Alex Williamson <alex.williamson@redhat.com> wrote:
 
-> On Wed, 19 Feb 2025 18:58:58 +0100
-> Eric Auger <eric.auger@redhat.com> wrote:
-> 
-> > Since kernel commit:
-> > 2b2c651baf1c ("vfio/pci: Invalidate mmaps and block the access
-> > in D3hot power state")
-> > any attempt to do an mmap access to a BAR when the device is in d3hot
-> > state will generate a fault.
-> > 
-> > On system_powerdown, if the VFIO device is translated by an IOMMU,
-> > the device is moved to D3hot state and then the vIOMMU gets disabled
-> > by the guest. As a result of this later operation, the address space is
-> > swapped from translated to untranslated. When re-enabling the aliased
-> > regions, the RAM regions are dma-mapped again and this causes DMA_MAP
-> > faults when attempting the operation on BARs.
-> > 
-> > To avoid doing the remap on those BARs, we compute whether the
-> > device is in D3hot state and if so, skip the DMA MAP.  
-> 
-> Thinking on this some more, QEMU PCI code already manages the device
-> BARs appearing in the address space based on the memory enable bit in
-> the command register.  Should we do the same for PM state?
-> 
-> IOW, the device going into low power state should remove the BARs from
-> the AddressSpace and waking the device should re-add them.  The BAR DMA
-> mapping should then always be consistent, whereas here nothing would
-> remap the BARs when the device is woken.
-> 
-> I imagine we'd need an interface to register the PM capability with the
-> core QEMU PCI code, where address space updates are performed relative
-> to both memory enable and power status.  There might be a way to
-> implement this just for vfio-pci devices by toggling the enable state
-> of the BAR mmaps relative to PM state, but doing it at the PCI core
-> level seems like it'd provide behavior more true to physical hardware.
 
-I took a stab at this approach here, it doesn't obviously break
-anything in my configs, but I haven't yet tried to reproduce this exact
-scenario.
+Am 18=2E Februar 2025 10:33:26 UTC schrieb Peter Maydell <peter=2Emaydell@=
+linaro=2Eorg>:
+>On Mon, 17 Feb 2025 at 20:21, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
+e:
+>>
+>>
+>>
+>> Am 17=2E Februar 2025 13:35:04 UTC schrieb Peter Maydell <peter=2Emayde=
+ll@linaro=2Eorg>:
+>> >On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wr=
+ote:
+>> >>
+>> >> While at it and since they are user-creatable, build them when
+>> >> CONFIG_I2C_DEVICES is set=2E
+>> >
+>> >The patch subject says this is just a rearrangement
+>> >of the Kconfig stanzas with no behaviour change, but then the
+>> >commit message body includes one=2E
+>> >
+>> >If you want to build these when CONFIG_I2C_DEVICES is set,
+>> >that should be its own patch that does that=2E
+>> >
+>> >(The move of the Kconfig bits to hw/gpio is fixing a bug
+>> >in 6328d8ffa6cb9d ("misc/pca955*: Move models under hw/gpio"),
+>> >which moved the code but forgot to move the Kconfig sections=2E)
+>>
+>> Okay, I'll split the patch and use above commit message=2E
+>>
+>> >
+>> >Separately, it's unclear to me how worthwhile it is to add
+>> >these to CONFIG_I2C_DEVICES, because they're GPIO devices,
+>> >which means there's not much you can do with them as a user:
+>> >as far as I know you can't wire the output/input GPIO lines
+>> >up to anything=2E We have the device models mainly for boards
+>> >which provide them, so that guest code that expects to see
+>> >them doesn't fall over on bootup, and because the board
+>> >model code does have the APIs to wire up the GPIO lines=2E
+>>
+>> It's basically to satisfy Linux which will clog the i2c bus if such a G=
+PIO expander is configured in the DTB but missing in the emulation (it will=
+ defer probing which will never make progress)=2E Once it is its own patch =
+we can decide separately how to proceed with it, e=2Eg=2E dropping=2E
+>
+>If Linux wants to see it because it's in the dtb for the
+>hardware it sounds like the right answer is that we
+>should create it in the board code, which we can do
+>without adding it to CONFIG_I2C_DEVICES, because we
+>can make the board code's Kconfig do "select PCA9552",
+>like the aspeed board does already=2E
 
-https://gitlab.com/alex.williamson/qemu/-/tree/pci-pm-power-state
+These devices are primarily intended for modeling our custom hardware on t=
+he command line, for the purpose explained in [1]=2E While the real imx8mp-=
+evk has a tca6416, I'd rather avoid creating it in board code, even if ther=
+e was a model for it in QEMU=2E The reason is that the machine works fine w=
+ithout it as is, and that omitting hardcoded peripherals seems to increase =
+the utility of the machine because it allows users to customize their machi=
+nes without hardcoded peripherals getting into their way=2E
 
-There's another pm_cap on the PCIExpressDevice that needs to be
-consolidated as well, once I do some research to figure out why a
-non-express capability is tracked only by express devices and what
-they're doing with it.  Thanks,
+Since the two device models in this patch work by chance if other machines=
+ select them I'm fine with not implying CONFIG_I2C_DEVICES=2E
 
-Alex
+Best regards,
+Bernhard
 
+[1] https://lore=2Ekernel=2Eorg/qemu-devel/831901E4-69B2-4637-8507-77C7BF4=
+DA65D@gmail=2Ecom/
+
+>
+>thanks
+>-- PMM
 
