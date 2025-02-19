@@ -4,80 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45864C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 07:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A455AC021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 07:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkeHI-0001gV-0I; Wed, 19 Feb 2025 02:13:53 -0500
+	id 1tkeIT-0002HZ-0I; Wed, 19 Feb 2025 02:15:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tkeHB-0001ei-Aw
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:13:46 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeID-00029l-5L
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:14:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tkeH8-0004kL-RL
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:13:45 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeI8-0004x1-KP
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:14:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739949221;
+ s=mimecast20190719; t=1739949282;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=H1OQmW/545m6vLkAaXGANmHgJQOp+/h/1m9CYCxBnQM=;
- b=fY72PMbek1FM5iFvfi/HYlzOk9R7mQ2PNK4U1/qsnauo0spdmhp4Gc2P5xQ/WHe8sv5qOX
- 74Itnr2R4vy1zEJFk1I2ANxvWEIgbhUrqBbjty16NUG/mIZ0qUJ+N9I9eQCF96c8GXGfMh
- Io/J3maQLh4lSXTvtqupX7PZCuyInRE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-2yjxOaKhOBOLPH79-II0cQ-1; Wed, 19 Feb 2025 02:13:39 -0500
-X-MC-Unique: 2yjxOaKhOBOLPH79-II0cQ-1
-X-Mimecast-MFC-AGG-ID: 2yjxOaKhOBOLPH79-II0cQ_1739949218
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4398a60b61fso13308815e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 23:13:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739949218; x=1740554018;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H1OQmW/545m6vLkAaXGANmHgJQOp+/h/1m9CYCxBnQM=;
- b=m1/H1X8yZd7JexXz6FZJdYfw9w7Ropu1jCVCHdkwFzwStqi9KXQxuWQGF/wyynYP5i
- X5joXCToGMOuyMzsxIz7fU/QSggMdsEY9aaYXQKDhY7djNLjMobf78VTIlxZMqdyJ9Xx
- aJG8nd//yggQxSjoJXqLcB/a+DULUdNytqpftv/tUDNl9vBDzkiPqk4kN/qJHI/g/V6g
- 8jNn4UdBr/tM7tpWuiV8ClKw/rWdYXX/qdi/ZN5LAGBgQfBC9xsBXCX35mHQCzIb/1DK
- zYp4cjj/cEYsv0oz/EFavOLwgUuhHUgq/uwrxjfzpPzq1Ss+6zGwOv3S8YBzPNTN4nJk
- Jnxg==
-X-Gm-Message-State: AOJu0YznWC/AcBIAsAZrLkymL7O4+BVz2rXcDjVjmvjMH1NJsgEAk3eg
- CdBOyo/mEiPObPyBaLNvoAAQJrdyjQTqKg1uzjghWo9jny/r0qtAwx2+cnQKUtG6i/fYUxdXutl
- 1wF4Rur8EYh4lLT7rNRp49oB8Yc9Kp4zC4m9akbxxRjRy8bVPWjQ5RND0HQF45N1jtKMkuzBtwp
- iOeDPq1Su8WntjCSuLGPXuV84BghI=
-X-Gm-Gg: ASbGncvPRU1XbY1BFvWSVJ310bOxKy5eQ+idTs6YOn5DjyKZRpj3U1MSPH5EUgT8N3Y
- jgH2OmJMbM7FLTrgF4AgF6eTVbBT/S1hl5jPedEyCQ/+ZUgqzVsdc3mRzrSh2BUru
-X-Received: by 2002:a05:600c:314d:b0:439:9898:f18c with SMTP id
- 5b1f17b1804b1-4399898f441mr28016305e9.26.1739949218123; 
- Tue, 18 Feb 2025 23:13:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG6YkpF1Xl2ah5WW3gdvRtWXOhDfbCp+Zl4yxQEj9RgfGmcou3Uzt8N7y1eaPUfd9d2P1DeeGU/iP2u2bRHEWk=
-X-Received: by 2002:a05:600c:314d:b0:439:9898:f18c with SMTP id
- 5b1f17b1804b1-4399898f441mr28016235e9.26.1739949217883; Tue, 18 Feb 2025
- 23:13:37 -0800 (PST)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=H0ly+Ik9R8QxBVmgfFGjfY1mlDOzgNavtHRoKYMQm7Y=;
+ b=EAp9XS3izwQQOZfAunjw3ehuDPpcJ3HjIJaeiQH2/sBZRDyFECvMnlx3c0LyD8zvA/gfS5
+ hA8cawV25awzlEORzse5NY56JlSS9QADHFcEG9dLWckQStGrJbhl9UlG8+5azG2Fxj2taV
+ jwJK2jUSI2bvRKkARWNoNJZwfiXAITo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-M7A5Lu5jPxeZ2gLUX3aq0w-1; Wed,
+ 19 Feb 2025 02:14:38 -0500
+X-MC-Unique: M7A5Lu5jPxeZ2gLUX3aq0w-1
+X-Mimecast-MFC-AGG-ID: M7A5Lu5jPxeZ2gLUX3aq0w_1739949276
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5947A180036F; Wed, 19 Feb 2025 07:14:36 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.78])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EAB21955BCB; Wed, 19 Feb 2025 07:14:34 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id E07521800082; Wed, 19 Feb 2025 08:14:31 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
+ Michael Roth <michael.roth@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ graf@amazon.com, Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v4 00/24] hw/uefi: add uefi variable service
+Date: Wed, 19 Feb 2025 08:14:02 +0100
+Message-ID: <20250219071431.50626-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20250215123119.814345-1-ppandit@redhat.com>
- <20250215123119.814345-3-ppandit@redhat.com>
- <3abdrwrfqm2vxbdtprqjckkgwmdb4xf2rcjld6eiljyx5uwepv@plbn2lz6nrug>
-In-Reply-To: <3abdrwrfqm2vxbdtprqjckkgwmdb4xf2rcjld6eiljyx5uwepv@plbn2lz6nrug>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Wed, 19 Feb 2025 12:43:21 +0530
-X-Gm-Features: AWEUYZniANEUnjSIQPfcB20Cnqiad04WRCZv0uf3xjWYgZqWFnf-v0jm6nS4wFc
-Message-ID: <CAE8KmOyEA-768kb+5s+4vTRVnng0pd0yTwZtDSexTe6bvq+egg@mail.gmail.com>
-Subject: Re: [PATCH v6 2/4] migration: enable multifd and postcopy together
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
- berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -102,19 +92,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Feb 2025 at 16:47, Juraj Marcin <jmarcin@redhat.com> wrote:
-> > +                error_report("%s: unknown channel magic: %u",
-> > +                                __func__, channel_magic);
->
-> Here, the number reported in the error will have incorrect endianness on
-> a non-BE system. I think it would be better to convert channel_magic to
-> the system endianness right after reading it. On top of that, then there
-> is no need to convert constants with magic numbers when comparing.
+This patch adds a virtual device to qemu which the uefi firmware can use
+to store variables.  This moves the UEFI variable management from
+privileged guest code (managing vars in pflash) to the host.  Main
+advantage is that the need to have privilege separation in the guest
+goes away.
 
-* Okay.
+On x86 privileged guest code runs in SMM.  It's supported by kvm, but
+not liked much by various stakeholders in cloud space due to the
+complexity SMM emulation brings.
 
-Thank you.
----
-  - Prasad
+On arm privileged guest code runs in el3 (aka secure world).  This is
+not supported by kvm, which is unlikely to change anytime soon given
+that even el2 support (nested virt) is being worked on for years and is
+not yet in mainline.
+
+The design idea is to reuse the request serialization protocol edk2 uses
+for communication between SMM and non-SMM code, so large chunks of the
+edk2 variable driver stack can be used unmodified.  Only the driver
+which traps into SMM mode must be replaced by a driver which talks to
+qemu instead.
+
+A edk2 test branch can be found here (build with "-D QEMU_PV_VARS=TRUE").
+https://github.com/kraxel/edk2/commits/devel/secure-boot-external-vars
+
+The uefi-vars device re-implements the privileged edk2 protocols
+(i.e. the code running in SMM mode).
+
+v4 changes:
+ - drop the isa variant in favor of a x64-specific sysbus variant using
+   mmio to expose the device registers.
+ - use etc/hardware-info for device discovery on x64.
+ - add pio transfer mode support.
+v3 changes:
+ - switch sysbus device variant to use the qemu platform bus.
+ - misc minor changes.
+v2 changes:
+ - fully implement authenticated variables.
+ - various cleanups and fixes.
+
+enjoy & take care,
+  Gerd
+
+Gerd Hoffmann (24):
+  Add support for etc/hardware-info fw_cfg file
+  hw/uefi: add include/hw/uefi/var-service-api.h
+  hw/uefi: add include/hw/uefi/var-service-edk2.h
+  hw/uefi: add include/hw/uefi/var-service.h
+  hw/uefi: add var-service-guid.c
+  hw/uefi: add var-service-utils.c
+  hw/uefi: add var-service-vars.c
+  hw/uefi: add var-service-auth.c
+  hw/uefi: add var-service-policy.c
+  hw/uefi: add var-service-core.c
+  hw/uefi: add var-service-pkcs7.c
+  hw/uefi: add var-service-pkcs7-stub.c
+  hw/uefi: add var-service-siglist.c
+  hw/uefi: add var-service-json.c + qapi for NV vars.
+  hw/uefi: add trace-events
+  hw/uefi: add UEFI_VARS to Kconfig
+  hw/uefi: add to meson
+  hw/uefi: add uefi-vars-sysbus device
+  hw/uefi-vars-sysbus: qemu platform bus support
+  hw/uefi-vars-sysbus: add x64 variant
+  hw/uefi-vars-sysbus: allow for arm virt
+  hw/uefi-vars-sysbus: allow for pc and q35
+  hw/uefi: add MAINTAINERS entry
+  docs: add uefi variable service documentation
+
+ include/hw/uefi/hardware-info.h    |  35 ++
+ include/hw/uefi/var-service-api.h  |  48 ++
+ include/hw/uefi/var-service-edk2.h | 227 +++++++++
+ include/hw/uefi/var-service.h      | 191 ++++++++
+ hw/arm/virt.c                      |   2 +
+ hw/core/sysbus-fdt.c               |  24 +
+ hw/i386/pc_piix.c                  |   2 +
+ hw/i386/pc_q35.c                   |   2 +
+ hw/uefi/hardware-info.c            |  33 ++
+ hw/uefi/var-service-auth.c         | 361 ++++++++++++++
+ hw/uefi/var-service-core.c         | 321 +++++++++++++
+ hw/uefi/var-service-guid.c         |  99 ++++
+ hw/uefi/var-service-json.c         | 243 ++++++++++
+ hw/uefi/var-service-pkcs7-stub.c   |  16 +
+ hw/uefi/var-service-pkcs7.c        | 436 +++++++++++++++++
+ hw/uefi/var-service-policy.c       | 370 +++++++++++++++
+ hw/uefi/var-service-siglist.c      | 212 +++++++++
+ hw/uefi/var-service-sysbus.c       | 124 +++++
+ hw/uefi/var-service-utils.c        | 241 ++++++++++
+ hw/uefi/var-service-vars.c         | 725 +++++++++++++++++++++++++++++
+ MAINTAINERS                        |   6 +
+ docs/devel/index-internals.rst     |   1 +
+ docs/devel/uefi-vars.rst           |  68 +++
+ hw/Kconfig                         |   1 +
+ hw/meson.build                     |   1 +
+ hw/uefi/Kconfig                    |   3 +
+ hw/uefi/LIMITATIONS.md             |   7 +
+ hw/uefi/meson.build                |  21 +
+ hw/uefi/trace-events               |  17 +
+ meson.build                        |   1 +
+ qapi/meson.build                   |   1 +
+ qapi/qapi-schema.json              |   1 +
+ qapi/uefi.json                     |  45 ++
+ 33 files changed, 3885 insertions(+)
+ create mode 100644 include/hw/uefi/hardware-info.h
+ create mode 100644 include/hw/uefi/var-service-api.h
+ create mode 100644 include/hw/uefi/var-service-edk2.h
+ create mode 100644 include/hw/uefi/var-service.h
+ create mode 100644 hw/uefi/hardware-info.c
+ create mode 100644 hw/uefi/var-service-auth.c
+ create mode 100644 hw/uefi/var-service-core.c
+ create mode 100644 hw/uefi/var-service-guid.c
+ create mode 100644 hw/uefi/var-service-json.c
+ create mode 100644 hw/uefi/var-service-pkcs7-stub.c
+ create mode 100644 hw/uefi/var-service-pkcs7.c
+ create mode 100644 hw/uefi/var-service-policy.c
+ create mode 100644 hw/uefi/var-service-siglist.c
+ create mode 100644 hw/uefi/var-service-sysbus.c
+ create mode 100644 hw/uefi/var-service-utils.c
+ create mode 100644 hw/uefi/var-service-vars.c
+ create mode 100644 docs/devel/uefi-vars.rst
+ create mode 100644 hw/uefi/Kconfig
+ create mode 100644 hw/uefi/LIMITATIONS.md
+ create mode 100644 hw/uefi/meson.build
+ create mode 100644 hw/uefi/trace-events
+ create mode 100644 qapi/uefi.json
+
+-- 
+2.48.1
 
 
