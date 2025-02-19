@@ -4,52 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7228C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D50C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 21:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqp7-0001hP-2v; Wed, 19 Feb 2025 15:37:37 -0500
+	id 1tkrJq-00025u-MI; Wed, 19 Feb 2025 16:09:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqp5-0001bP-1Q
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:35 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqp3-0004ur-7e
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:34 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqop-00000007VX5-2L8X; Wed, 19 Feb 2025 21:37:19 +0100
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Peter Xu <peterx@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 34/36] vfio/migration: Max in-flight VFIO device state
- buffer count limit
-Date: Wed, 19 Feb 2025 21:34:16 +0100
-Message-ID: <719b309bb7bc13542d14e6ce0026cb9bb67e9f31.1739994627.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
-References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkrJi-00021f-VV
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:09:16 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkrJh-00007O-7A
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:09:14 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-439350f1a0bso1672195e9.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 13:09:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1739999351; x=1740604151; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JhwkxvyKpTQZAt9mirHnFUfpe4JfORLzfwmDQNOghTo=;
+ b=UKbdE6q47vKyzx8BxWVf2/iEOXagu9xtHPhXkyT3a5o/87nMVkTbKXDdjHcYcLS0T8
+ rgfT5aRd1PTaw5q6xS/csfWIJvZmo++9zsvM+nQ6PrpCxI4UiMIGczr3x6bvQEXx/u3T
+ 02cQqQwW7XpZyuBD7bGlNxfgEKiy7aMq7ITfHVtiEqL2fZnqDdgb1yVxc+FXsr/cdCe5
+ 7pO9nuSvYKzbawcrXUApdxr+owcUwe1dnbc3jV6YTGJRaO8hvFusnIPV0slBo5tKP+So
+ cB7El1n/POo7rVW9LsjswKN/xrX8sI17W0kFs22xl9OBrW7NfXLQM1i0CS1KK9vJ1ow+
+ H8uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739999351; x=1740604151;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JhwkxvyKpTQZAt9mirHnFUfpe4JfORLzfwmDQNOghTo=;
+ b=DDkNfZPXJgG7OR3YjN5+X75ShuJPXrRB3oFNoWfbZjp/X4zcg09ffug5jIxKAWg2lp
+ 2mDfCx2P/CxOEUaKsbA873k4ejs4bML784jPRkdHI8M0pslZh/0lSzpaeGTzHqAkR77n
+ +qhPZ5Iw7qJ1rU2i6Ta9GjGjHqtulDrNPKoPTrw0ragCoX27Q0a/wKZD9MCvxj3Ve4J6
+ +Fymrxv3b2lUSqJCIH2mzmbJFamUcSW4jnyd4nbm943OEWBQebD6QdZv5SYFdhqyU/l+
+ Akeify96nQ7VR7wJ3r1HhLcQN5DTZX57rY6UT4QXRNp8BtJr032lT/cvF9o+fkuLG6MP
+ xX/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXU1s9N2wKPoZY7V79hWvpZUiYpCcbsHawF97imkFo11y/z2njhPwD0+msYgnr5IZw+VMplH1Ih2J+W@nongnu.org
+X-Gm-Message-State: AOJu0YzGZ7Bxzui/ohrmYhgU3qYn2l0uInToFdTyVhYHfNKbkV1hKK3U
+ OawPKScqEZaDcA/O0fhosjXCC05pire+ch5TfcMx9/PYn+qsxaXLnzUGofMLlkg=
+X-Gm-Gg: ASbGnct2W2QzSWJyct8ybNZx45K2qdFSBy7cbOE0Q/iQKQV0NqAmpIStKeiNl5lXwdT
+ ugct6ZBL/iSs6MazFilB7Qj3DpOczuj4j/2qOf9ld1ik+aciruuyN9XV2EcSEyOJ/2sY7hzmAsZ
+ R/LQH7ys4QrRZlhNscMmhhdu50zcUFbN9pn0ejy7ZZvpVQqDHhuGHXVBiDCZpgqoFUpvLuCRH2d
+ Rk8TdWmsM6f2IvifCCg7miJaYn6GcNZTCbGe84tvR4H24l5xhM7hdSf3/AnbikIJp5prsh069o4
+ AIf5nBFMbH+iuDzVbby/QNTlJO2nF1b7uDYHj1fYg2qYPc7zBKO0M0pBIy0L40nubw==
+X-Google-Smtp-Source: AGHT+IEI16QFgqjS4YLiNsbF7FC5EAyrAmAmr5Kq4LgCYvD6TfwsSDQwGj/4TwXMSh/XFWbKXqJFiQ==
+X-Received: by 2002:a05:600c:4e8d:b0:439:892c:dfd0 with SMTP id
+ 5b1f17b1804b1-439a30e91femr5924815e9.14.1739999351505; 
+ Wed, 19 Feb 2025 13:09:11 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43986320899sm93060315e9.38.2025.02.19.13.09.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 19 Feb 2025 13:09:11 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
+ Rayhan Faizel <rayhan.faizel@gmail.com>, Luc Michel <luc.michel@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <huth@tuxfamily.org>,
+ Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org
+Subject: [PATCH 5/9] hw/char/bcm2835_aux: Really use RX FIFO depth
+Date: Wed, 19 Feb 2025 22:08:37 +0100
+Message-ID: <20250219210841.94797-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250219210841.94797-1-philmd@linaro.org>
+References: <20250219210841.94797-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,93 +110,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+While we model a 8-elements RX FIFO since the PL011 model was
+introduced in commit 97398d900ca ("bcm2835_aux: add emulation
+of BCM2835 AUX block") we only read 1 char at a time!
 
-Allow capping the maximum count of in-flight VFIO device state buffers
-queued at the destination, otherwise a malicious QEMU source could
-theoretically cause the target QEMU to allocate unlimited amounts of memory
-for buffers-in-flight.
+Have the IOCanReadHandler handler return how many elements are
+available, and use that in the IOReadHandler handler.
 
-Since this is not expected to be a realistic threat in most of VFIO live
-migration use cases and the right value depends on the particular setup
-disable the limit by default by setting it to UINT64_MAX.
-
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/vfio/migration-multifd.c   | 14 ++++++++++++++
- hw/vfio/pci.c                 |  2 ++
- include/hw/vfio/vfio-common.h |  1 +
- 3 files changed, 17 insertions(+)
+ hw/char/bcm2835_aux.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index 18a5ff964a37..04aa3f4a6596 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -53,6 +53,7 @@ typedef struct VFIOMultifd {
-     QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
-     uint32_t load_buf_idx;
-     uint32_t load_buf_idx_last;
-+    uint32_t load_buf_queued_pending_buffers;
- } VFIOMultifd;
+diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
+index 73ad5934067..c6e7eccf7dd 100644
+--- a/hw/char/bcm2835_aux.c
++++ b/hw/char/bcm2835_aux.c
+@@ -221,7 +221,7 @@ static int bcm2835_aux_can_receive(void *opaque)
+ {
+     BCM2835AuxState *s = opaque;
  
- static void vfio_state_buffer_clear(gpointer data)
-@@ -121,6 +122,15 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+-    return s->read_count < BCM2835_AUX_RX_FIFO_LEN;
++    return BCM2835_AUX_RX_FIFO_LEN - s->read_count;
+ }
  
-     assert(packet->idx >= multifd->load_buf_idx);
+ static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
+@@ -243,7 +243,9 @@ static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
  
-+    multifd->load_buf_queued_pending_buffers++;
-+    if (multifd->load_buf_queued_pending_buffers >
-+        vbasedev->migration_max_queued_buffers) {
-+        error_setg(errp,
-+                   "queuing state buffer %" PRIu32 " would exceed the max of %" PRIu64,
-+                   packet->idx, vbasedev->migration_max_queued_buffers);
-+        return false;
+ static void bcm2835_aux_receive(void *opaque, const uint8_t *buf, int size)
+ {
+-    bcm2835_aux_put_fifo(opaque, *buf);
++    for (int i = 0; i < size; i++) {
++        bcm2835_aux_put_fifo(opaque, buf[i]);
 +    }
-+
-     lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
-     lb->len = packet_total_size - sizeof(*packet);
-     lb->is_present = true;
-@@ -374,6 +384,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
-             goto ret_signal;
-         }
+ }
  
-+        assert(multifd->load_buf_queued_pending_buffers > 0);
-+        multifd->load_buf_queued_pending_buffers--;
-+
-         if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
-             trace_vfio_load_state_device_buffer_end(vbasedev->name);
-         }
-@@ -408,6 +421,7 @@ VFIOMultifd *vfio_multifd_new(void)
- 
-     multifd->load_buf_idx = 0;
-     multifd->load_buf_idx_last = UINT32_MAX;
-+    multifd->load_buf_queued_pending_buffers = 0;
-     qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
- 
-     multifd->load_bufs_thread_running = false;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9111805ae06c..247418f0fce2 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3383,6 +3383,8 @@ static const Property vfio_pci_dev_properties[] = {
-                 vbasedev.migration_multifd_transfer,
-                 qdev_prop_on_off_auto_mutable, OnOffAuto,
-                 .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
-+                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-                      vbasedev.migration_events, false),
-     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 3006931accf6..30a5bb9af61b 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -155,6 +155,7 @@ typedef struct VFIODevice {
-     bool ram_block_discard_allowed;
-     OnOffAuto enable_migration;
-     OnOffAuto migration_multifd_transfer;
-+    uint64_t migration_max_queued_buffers;
-     bool migration_events;
-     VFIODeviceOps *ops;
-     unsigned int num_irqs;
+ static const MemoryRegionOps bcm2835_aux_ops = {
+-- 
+2.47.1
+
 
