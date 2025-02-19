@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE91EC021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 15:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86018C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 15:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tklYv-0004Y8-Ro; Wed, 19 Feb 2025 10:00:34 -0500
+	id 1tklYv-0004XQ-54; Wed, 19 Feb 2025 10:00:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tklYg-0004P6-Nb
+ id 1tklYg-0004PH-Po
  for qemu-devel@nongnu.org; Wed, 19 Feb 2025 10:00:20 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tklYc-00013Z-DN
+ id 1tklYc-00013l-E9
  for qemu-devel@nongnu.org; Wed, 19 Feb 2025 10:00:18 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-abb81285d33so777158266b.0
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-aaf900cc7fbso1028755166b.3
  for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 07:00:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739977212; x=1740582012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739977213; x=1740582013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LZ0Ad8q73aLBySL6ollEIfx4rPD1OsbtsagYMD1pCOs=;
- b=d4DJca9Um77NyYDruy9Ou6xpwEO/p7wMPv19eJc8eb+gDczYr5fWm7eeaMjd3Ud0nX
- KYDRNGw08z65BZzOftZFPLu9i/1m92zxgsKbLdOktKQ316dX8J8FBxu5EonfZ8vaYpQR
- 4Zhxjs7OjI9aZM4HLv8xoXVPdz+DSoU+BVB7wxFMysPvIdfVkXNG4IYjazA3M5i6f59Q
- 4jfppH84mfG2l+bX5cAR+MMjENIyR7w5C7lXIXLKhVk6MkAn2OVN57vqYrnH+PV1gEbQ
- tY3+luw/t+kj0F+gXSFxbrpCsN+uIq5Td9smZocdpr27rccn0Ye3AtIYEIYPrt30nd7+
- g6Tw==
+ bh=poeknxWi50g64JDj5A78TCHXdGRSIYJF5+UH+RyZNs4=;
+ b=DQLm1A1b0P/WmzEQ9fhNRs4u7yf1vLOB7EhJlwVGOnHmvoN+qmRU8+H8867nRPm0CV
+ MQyOwRkrhwXVYDfX0pt4k/CnkPOKx+bmRb7aDdNLsb7R+Al7W/5cXVFFt+sCLMFxymuS
+ E6EScUh00YkHPA7ppagaup67mnTepcCBiVjH9QVUFXOgikorpLEGs5K9yqxxkVKJLOus
+ aBdMbbE4wCZlg1gjoEPFatesT65GUaKm6y6l51ilnWI5ErRR7QAP2TIDs7C81m/OgnXM
+ sCd9ENuCLr949JSBgakLjbxhuTMmtcdSIyjdeeZYUeDGHP83TR27ygITc12AkeO096VJ
+ jPhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739977212; x=1740582012;
+ d=1e100.net; s=20230601; t=1739977213; x=1740582013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LZ0Ad8q73aLBySL6ollEIfx4rPD1OsbtsagYMD1pCOs=;
- b=Qhh63tuvNIqV2Kxm/Ux3rm4F4QmOmqSMVIGGZaFlzKF4/0H3K10FK4PVns3HfhkWrX
- 1VAz9vtlw9a7Foo/g3aRTNoJwifVucREwHUG6gpou2rgpga8xArry104zcafcqK1s+nA
- i3jq3GZ25VHnZybnQplfdsnVpUFyZbspPBUlmc8YD5pStrge/WR3xsL90AkyQmnE4QgM
- bRVdb0pu3FjpNh5fG+RItEHA5eOqhwp8gfsBqv+jL/3aCp7naM0cita+jIv8EimhPg6N
- QFk/CNstrWBInAjSk618hFVJBW2WFk5mW0tSjSGrrSEABJxLQOtZzPZEXniuoW8GPRuF
- XEag==
-X-Gm-Message-State: AOJu0Ywq1K++DdTxNJn2zRf7W1Htr6QroSHuCD+c9SqtJUTjvK+E1Zc+
- DUQWKyzMMcKvcr5fEYZ9LTNYVb3opZcGcX2o4js9vpdkUmoRDvld6eUnpgZabNs=
-X-Gm-Gg: ASbGncvIGyZznJI/ywjqVY/ZVKM8SwVpwPHO0qrFraP5qLNIKXvAK2nIADPOH9NWUm8
- AK2KSLky+NQNVWH0tREscbqQRVo8CPDR32pLz2e1JJUKHkvK8tvTn2DW+ngLHK9SoODLepx2qH/
- OgqGcalhRoV6TGlFmSNznAzUofIdm15YHI0YM90GvDjhQNoUXYafJTH+R+bIiovsYV3bZ7Nxl5Q
- 73bXyItN7EwHeEzhe6hq+YrCwvIklzuspM4au4Dm0mX2PEYFJyVDlP+QfKGWnhKgzBq+Sai19z1
- gjQF2HOv+ZHJNdTL4g==
-X-Google-Smtp-Source: AGHT+IHvAkv6fFG09NRsN/r+rHOkT01L3V4RCgy9iezjQMCFTpliYNqoQOul+kDGEEqNy2ys5EyPpA==
-X-Received: by 2002:a17:906:c154:b0:aaf:74dc:5dbc with SMTP id
- a640c23a62f3a-abb70bbe128mr2133723366b.29.1739977212350; 
+ bh=poeknxWi50g64JDj5A78TCHXdGRSIYJF5+UH+RyZNs4=;
+ b=bkWDtikAVfvgAarsC3rn9/x6+/4g8+Lsyuj8kTXAszrwaqfZZa6hDP6IUSnvWZHlY9
+ i/Wz3eMlazwB0+1vXFgsDpKiAKSgo4HctG0pC1jKubbmxboDZ1vY/tRaPoUkJMfUm/fz
+ uMjzmzaXiFDHtBlp6EHUq6IE5MQFqHlD/jG+xJCKJ+Ou3uzOsoztGIRTWyQNzIKqaGtw
+ S8hxvZlOaUiq8Ni8aG8Uaj7pC1QMSdxvJVhaRX++PqmKPxFhGQpq+44wUSzhGQKtTXjR
+ C4M8BQqKqp1EyM+2/8WGSmGKXE+NtvkdnLVRUatjEfAchl5rb3HfmnTiCtDsKEL6HWKD
+ EZJQ==
+X-Gm-Message-State: AOJu0YwWtSs4bT4K5bg9CnJ3WGf5HO+pCOwbePN1cIxrhYFVz705vtNb
+ Zqhpj/TJXU9BKEto1ALVy/WkqW9zj4Xusqe2b4Nt+puldStIW8tHtqtZyz5V2viQoTn4eGwoLq7
+ VouQ=
+X-Gm-Gg: ASbGnctwtlkMgGiD/eG6TUSWxWyMDWx4eIkirMSSZg0Dh2W9lNe6bZIJH/8ub4LRN8P
+ pKevKD0HEguNhFVrRs2H0Qz1/pmVRqaY8rCmjdlEl+fAvdKICJUFECuAr9L2oLhw+yHSjYsieh/
+ BzLvmOVwQe/PouBC9KgErTjO7u3HxPTOhK0EAGTXER5QjuLd4m0rv118NWwHJkzFCg4nh8CYCZc
+ N+QgXPbQ8z1ZkDiW/KN8kxxF5cV+yXB8EOXxdgzy21iVXxg0NPvI6iUwK4795IYLBscuxZMY7bB
+ begU4TcprN7haIifgQ==
+X-Google-Smtp-Source: AGHT+IEbTW/LckbUhR2a1qrKFxTB42wG0pp1HKBb1VTi8lkagUCiOMQSDEKltfYxtPjCgeaEjX3rLw==
+X-Received: by 2002:a17:907:9709:b0:ab7:d87f:665b with SMTP id
+ a640c23a62f3a-abb70de2845mr1743803266b.48.1739977212695; 
  Wed, 19 Feb 2025 07:00:12 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aba5323202dsm1280699166b.6.2025.02.19.07.00.09
+ a640c23a62f3a-abb7e29be33sm843467366b.94.2025.02.19.07.00.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 19 Feb 2025 07:00:10 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4C384619BA;
+ by draig.lan (Postfix) with ESMTP id 76844619C8;
  Wed, 19 Feb 2025 15:00:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
  qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/4] tests/functional: factor out common code in gpu test
-Date: Wed, 19 Feb 2025 15:00:07 +0000
-Message-Id: <20250219150009.1662688-3-alex.bennee@linaro.org>
+Subject: [PATCH 4/4] tests/functional: expand tests to cover virgl
+Date: Wed, 19 Feb 2025 15:00:09 +0000
+Message-Id: <20250219150009.1662688-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250219150009.1662688-1-alex.bennee@linaro.org>
 References: <20250219150009.1662688-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -103,69 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for handling more tests split out the common machine
-setup details from the test specific stuff.
+Add two more test modes using glmark2-wayland to exercise the OpenGL
+pass-through modes with virgl. Virgl can run with or without the
+hostmem blob support.
+
+We might want to eventually add more directed tests and individual
+features later on but the glmark/vkmark tests are a good general
+smoke test for accelerated 3D.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/test_aarch64_virt_gpu.py | 30 +++++++++++------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ tests/functional/test_aarch64_virt_gpu.py | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index f21ae18392..06093c6b60 100755
+index c9463d7285..7a8471d1ca 100755
 --- a/tests/functional/test_aarch64_virt_gpu.py
 +++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -39,12 +39,7 @@ def wait_for_console_pattern(self, success_message, vm=None):
-         'rootfs.ext4.zstd',
-         '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
+@@ -89,6 +89,26 @@ def _run_virt_gpu_test(self, gpu_device,  weston_cmd, weston_pattern):
+         full_cmd = f"weston -B headless --renderer gl --shell kiosk -- {weston_cmd}"
+         exec_command_and_wait_for_pattern(self, full_cmd, weston_pattern)
  
--    @skipIfMissingCommands('zstd')
--    def test_aarch64_virt_with_vulkan_gpu(self):
--        # This tests boots with a buildroot test image that contains
--        # vkmark and other GPU exercising tools. We run a headless
--        # weston that nevertheless still exercises the virtio-gpu
--        # backend.
-+    def _run_virt_gpu_test(self, gpu_device,  weston_cmd, weston_pattern):
- 
-         self.set_machine('virt')
-         self.require_accelerator("tcg")
-@@ -62,10 +57,10 @@ def test_aarch64_virt_with_vulkan_gpu(self):
-                          '-kernel', kernel_path,
-                          '-append', kernel_command_line)
-         self.vm.add_args("-smp", "2", "-m", "2048")
--        self.vm.add_args("-device",
--                         "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
--        self.vm.add_args("-display", "egl-headless")
--        self.vm.add_args("-display", "dbus,gl=on")
-+        self.vm.add_args("-device", gpu_device)
-+        for opt in ["egl-headless", "dbus,gl=on"]:
-+            self.vm.add_args("-display", opt)
++    @skipIfMissingCommands('zstd')
++    def test_aarch64_virt_with_virgl_gpu(self):
 +
-         self.vm.add_args("-device", "virtio-blk-device,drive=hd0")
-         self.vm.add_args("-blockdev",
-                          "driver=raw,file.driver=file,"
-@@ -91,12 +86,15 @@ def test_aarch64_virt_with_vulkan_gpu(self):
-         self.wait_for_console_pattern('buildroot login:')
-         exec_command(self, 'root')
-         exec_command(self, 'export XDG_RUNTIME_DIR=/tmp')
--        exec_command_and_wait_for_pattern(self,
--                                          "weston -B headless "
--                                          "--renderer gl "
--                                          "--shell kiosk "
--                                          "-- vkmark -b:duration=1.0",
--                                          "vkmark Score")
-+        full_cmd = f"weston -B headless --renderer gl --shell kiosk -- {weston_cmd}"
-+        exec_command_and_wait_for_pattern(self, full_cmd, weston_pattern)
++        self.require_device('virtio-gpu-gl-pci')
++
++        gpu_device = "virtio-gpu-gl-pci"
++        weston_cmd = "glmark2-wayland -b:duration=1.0"
++        weston_pattern = "glmark2 Score"
++        self._run_virt_gpu_test(gpu_device, weston_cmd, weston_pattern)
 +
 +    @skipIfMissingCommands('zstd')
-+    def test_aarch64_virt_with_vulkan_gpu(self):
-+        gpu_device = "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on"
-+        weston_cmd = "vkmark -b:duration=1.0"
-+        weston_pattern = "vkmark Score"
++    def test_aarch64_virt_with_virgl_blobs_gpu(self):
++
++        self.require_device('virtio-gpu-gl-pci')
++
++        gpu_device = "virtio-gpu-gl-pci,hostmem=4G,blob=on"
++        weston_cmd = "glmark2-wayland -b:duration=1.0"
++        weston_pattern = "glmark2 Score"
 +        self._run_virt_gpu_test(gpu_device, weston_cmd, weston_pattern)
++
+     @skipIfMissingCommands('zstd')
+     def test_aarch64_virt_with_vulkan_gpu(self):
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
 -- 
 2.39.5
 
