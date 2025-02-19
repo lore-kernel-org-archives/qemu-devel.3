@@ -4,73 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27DCAC021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 03:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D4FC021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 03:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkaYV-0001lT-6R; Tue, 18 Feb 2025 22:15:23 -0500
+	id 1tkb6J-00077K-0i; Tue, 18 Feb 2025 22:50:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkaYT-0001lG-00
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 22:15:21 -0500
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1tkb6H-00076t-Mq
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 22:50:17 -0500
+Received: from mail-sn1nam02on2062c.outbound.protection.outlook.com
+ ([2a01:111:f403:2406::62c]
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkaYQ-0003fC-FG
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 22:15:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739934919; x=1771470919;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=Oxjfc1/h9rhfAuzQMt/cjsFTPdlczPI6KI9XxAov4dY=;
- b=M+pCoo4HAruFCBLHYYiIRJ22+pItf0pZROx3dXBpIZhJPYpKswCY53g/
- GwyRbCOX1x63muxSwrh4brWcLv1sgSoFNlk3XgzRvi9MMIZnRX/IHohEE
- tQ/9H7s0vI8eNKEC5HZ12fApMhQFPHcJjeHa03j7y5kEBCr6EAutO/p2B
- 8hFKblLG8Xy9B9nIH3RWdLXRROX7lTvoM14DTQALzjndWLVcyA1U6tv89
- g4VEBdbk8fxArob36nKduQIOaK6EcbOJKfGt8M+Rt11BNp4ddoVTHqBrp
- u5ncktG7ZZELIBigviY0wh4uXL6Xd2LfDDAQxek3dnJ71S9kzeFuUEHYk w==;
-X-CSE-ConnectionGUID: LGUmnPVRRfqgnOnu5gOK2Q==
-X-CSE-MsgGUID: /5k+yufdS0ObvZ2/uBQnWQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="44575264"
-X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; d="scan'208";a="44575264"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2025 19:15:14 -0800
-X-CSE-ConnectionGUID: JACMt5ptRp69Nl+KNMz60A==
-X-CSE-MsgGUID: P2EIFEIaTJGCXQgj2ktReA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; d="scan'208";a="114571232"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 18 Feb 2025 19:15:13 -0800
-Date: Wed, 19 Feb 2025 11:34:47 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/timer/hpet: Detect invalid access to TN registers
-Message-ID: <Z7VRVwirDMqbF4LZ@intel.com>
-References: <20250218073702.3299300-1-zhao1.liu@intel.com>
- <53739259-69a5-4d7e-9178-f09e1d6ede89@redhat.com>
- <cf10367d-90da-48d4-8440-7afb8b083883@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1tkb6E-0007AV-QH
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 22:50:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FeFI6DE4BWOppzAkVDFmkTBRYaF7Eys8A84DjGOeUPWYJ8g2zzqWVFTSnAqMuE/WH2//7nsv4s8rtmn7Vw7ZCkYGsbYoLSfwk2mnahGzjwBLsnbSz73HxR85YjQ0buXrQigwJMicgK8s6WksjPcnDYYo49CHfKpofTC9IbxxZ5B+HDN1A3SLkHRDO0lQA69ZDCMnsNQ9D5y6Ku4tM8pVKC0jMldLXH+jqJlJzqPqfZ8gRhUxahiuQ7VcLMTT38Xf9J9Vl3NcI5nXXsd1euZATPBk6dC6AkH0c0Y0i5yiW6j1G4lHlHvpSUaMZTyXxIxWvxOqfPLqoyeGdWzKn9qPVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XGo8cTIr6wruZKmDBPZ5I3Fh6se4whg+E1TDW/fbRt8=;
+ b=Hx7tQmnEAAgWXloDF+lYRHJMnB05nJSK8cu1coJ28hX68piaTiqd1OQMkJUgYl/OW6gLDA+Av6jwOUsyAq61cU5F62EbK/PHlM5O0QBbd6yQsya9/GiAehJ5GCM9/tuAKtno6Qb1SWuvFHxWSpPkMlsITpdpmogpjmuZFPzlPtCa5cy08ROwyYq/4fqUvJ6fYgcaf8D25dKucOff0RRfIjmxAKx8bWNWDFv0Eimy1KpH9t3G//rSOtFUrh/HK5/fMnAvka+ktOJKm1r6O1jQx8rul204zO4fHObAYbMo1z/jMK8DbtgO/JItTkkMjEWIC6BWMaIh10hM5NI/5nubKg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XGo8cTIr6wruZKmDBPZ5I3Fh6se4whg+E1TDW/fbRt8=;
+ b=hSpuVoahJ0rtnNCnWfvpnh5Sdil0ZTwuVAiTzs/Nq2v89KmggJZ/b2M98pnYYE6NuBtTGacSpUfcq7uwe+NZTTZdOfWSA+2xYeD0hefXVsoq642b2KiArKD+Sqz99sAhFnQ2kSsBfrg7RD9zb4WnXIFpOOPRfZNL9PZ+DGlO64k=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
+ by DS7PR12MB6047.namprd12.prod.outlook.com (2603:10b6:8:84::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Wed, 19 Feb
+ 2025 03:49:59 +0000
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8445.016; Wed, 19 Feb 2025
+ 03:49:58 +0000
+Message-ID: <23e2553b-0390-4215-a19d-0422b55efa38@amd.com>
+Date: Wed, 19 Feb 2025 14:49:50 +1100
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v2 3/6] memory-attribute-manager: Introduce
+ MemoryAttributeManager to manage RAMBLock with guest_memfd
+Content-Language: en-US
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20250217081833.21568-1-chenyi.qiang@intel.com>
+ <20250217081833.21568-4-chenyi.qiang@intel.com>
+ <60c9ddb7-7f3e-4066-a165-c583af2411ea@amd.com>
+ <c5682028-b84c-4b4c-8c4d-f3b43d412e83@intel.com>
+From: Alexey Kardashevskiy <aik@amd.com>
+In-Reply-To: <c5682028-b84c-4b4c-8c4d-f3b43d412e83@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cf10367d-90da-48d4-8440-7afb8b083883@linaro.org>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+X-ClientProxiedBy: MEWPR01CA0291.ausprd01.prod.outlook.com
+ (2603:10c6:220:1f0::18) To CH3PR12MB9194.namprd12.prod.outlook.com
+ (2603:10b6:610:19f::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|DS7PR12MB6047:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9e1d8a49-9b1c-43c3-e581-08dd50987b0d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YTdSZEkvQnpsd3drWXpUSjkvLzlxcnpNb014RWgyTUtya2xnaE1COXN6RVlo?=
+ =?utf-8?B?b0RWWDljSUpORmkvS0ZkTi84QVRTRXdPaFRhY1JrWlVFTllYQ2U4VXRaM3dX?=
+ =?utf-8?B?THFuSy9YZjh4OU01V2xKN3BiUWdwWU9RN3JlQUNCZ24rRWpub1dHOHkvb0Zu?=
+ =?utf-8?B?K1J1TklmTEF2cVpHcCt0S28rYWcyT2ZDaVphc3hWTkQ1UG5YT0ZsdG50WWVy?=
+ =?utf-8?B?SCtmYWhWL1NON0pXZU5aRkUvSGxFaVVNalBPRGNOUUVrajR6Znd5QWN3Zy8z?=
+ =?utf-8?B?elpFZUswZHBCMmlRZXBnYWc0OXAzQkJDSUVBVUNFNXQrTjR5MjdhQlNQVXl6?=
+ =?utf-8?B?NE14TUEzSHJFZUFiQjAxQitYQ2cxRDkxZ1BCbDZYK2F4TjNJM2Y4REh1Q2pr?=
+ =?utf-8?B?TXJab1dwaFdGL2xDc2ZyWmZTYmE5YkZ1aVpXZitteUFOWVVocEkyWjNoeElv?=
+ =?utf-8?B?bGZtNCtDektCVkJwc3ZKNWNyUW5PaUdBbjB5S2VMRnhaZkk3aWFhTHpXMFA2?=
+ =?utf-8?B?dE5XQ1pIOW5wYVJRampQd3BUNk9OZytMbG9iQStBMEFtbjB6TDZqT0lCSEl1?=
+ =?utf-8?B?a3lxMjYwS2ZTZExqYmJHUXo1Smx5dStWeFFCSUpKWDFVMHFOSmVsTzhoOU5U?=
+ =?utf-8?B?TTU5VDhMMWZ2RUc4alI4dlRoZ0NjdWVXYlRoMHMvYTdXN0J4U3AzQU10T2ty?=
+ =?utf-8?B?TEYyMWt4ZGNLS1dSdmF1OVYzUDc2TXVBdmsrKytJTTJUZVQ3Njljcm5teERR?=
+ =?utf-8?B?ay8rUEhmRndUMlFOVER3dWR6VENXK3VpR1Q2OVBqSWsweWg3Vm8yUVl2emtt?=
+ =?utf-8?B?M3JqQmxGTFlUU01hU1ZjZ0JrTm8yaTRJY3dhUmZTYURyT0cxOTkrTzMxeWlY?=
+ =?utf-8?B?SmZDd2lTbUJGaDdybmoyVnNLelJmWkZmV0FkK0F0ZTdkR2hhaE9MMTdYYjgr?=
+ =?utf-8?B?ZjRzTUdyaVJtRGR0bVY5YlFpcjgzWFAzUHR3TkVOYTVCdnpQTUg5c2NkWU9I?=
+ =?utf-8?B?NWoxUTVETERpZVdVY3BGbFp5Z3IxMi84YmgyRTlwSTVpeWQzRnhkZm1EbDRu?=
+ =?utf-8?B?ckRPRm5uUmdxaEhWazlVdXlCbjV5NUNFbllaZjN3M0pCVzVVLzlSNHh5RG9x?=
+ =?utf-8?B?R0xiaEVIb210YSs0SnZtd2RKWDUrMEdQOFFwRTVFWjVpMWQ3QnNwQkR5MVk5?=
+ =?utf-8?B?V1cyVjN0YzM5YjVjemFDd0dtQVFib3BNd1ZIUGh3RmRkUDJkaFRZbVNNOVRJ?=
+ =?utf-8?B?OThBRUhlM0ErWmFJNitKeUY0aWMxblkySTRkVGZJcXkzYXp1SEVwU0trNWxQ?=
+ =?utf-8?B?Nkg0dFBHUndwVFlaK3FnMWhuTHlSY3p4dWxZTy9Qckg3UXBzQTZHK1VvMW9i?=
+ =?utf-8?B?R1BjUGRnUVd2VW8rRG03T09iUlZsWmJqdGMvNEUvYm1kSTl0TmthWWxEa0xG?=
+ =?utf-8?B?YmZWWExwNTNISlgwaWFodGZVNzZLNTI3QisvelZJTGdtYVhhR2Y0TDN3ZWxJ?=
+ =?utf-8?B?QVgyeHdteGs3NnNMRGpLSUZpRVo5d3JjQzNkaXhBVHJuYm9RK05rejdWSDFU?=
+ =?utf-8?B?QThuR0c1NGw0QlpxdFlKNENKSG94WmRVcGlpTGhNOHA2cklMZDVpZ21GVThr?=
+ =?utf-8?B?YmszQTJJQ1ZFcmZabTArcGlPWHRZcllYVHpiNnhibnZMU1hJR0xieDc5VFBx?=
+ =?utf-8?B?MnJBRXlKUm5rZWtYZE9EZG9mNnRNeTJRcjlsM1hZekRTQlRQZnowZnFQMVVq?=
+ =?utf-8?B?MTNOWFlmTVgxb1FLeGtMU2hYUmYraTNaSFBRampRbVh0dnZ4WXhUUmo5dnV0?=
+ =?utf-8?B?d0VMTGpFdVZPRlNzdFloekFCN1ZBUzJBK3dqM2ZGeUUwR3ltUk1IbkwyWUZK?=
+ =?utf-8?Q?EzEzyUOOmJgHv?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NFBoNXh5Tit6dEtZQ3JZMVl0UHdiWXI3QjhweDVCSC9KUVB2cVNWY0JzMVVJ?=
+ =?utf-8?B?dWVEc2kxTElZZ1F4SU01Sml2cDFjREhzRGFOTWxHQVh5Si9xajBjTUVhUEh2?=
+ =?utf-8?B?UmtTU3RGa0FCdDI5UjhkZHRsa0JrUWpoc2VoZ2xtYWZtdmgzRDBEeFBleGZ2?=
+ =?utf-8?B?ekdYa0VodzIwWHBYRTFwUDl5TUVtczdDNXhTVG1FYUZuZ0VBYzRYaFhWT2gr?=
+ =?utf-8?B?eFpkZklPbkgwZU1wWDJnbmNuMHlwZU4xdU9jaGZDRTg2OTRFSWthZU1HSGlK?=
+ =?utf-8?B?cytCbmg2dU03dnZ0NU9TdCtJZGloYU42Sk9qQ2kxNGQycFJJdDlWQ0NtT1pt?=
+ =?utf-8?B?TXJpUWUvcFMrVVZGdGJpTEV5VVFOb1JSa05XVDVvODl2clhuRnF5QnB4UENx?=
+ =?utf-8?B?R2E2TmEyNVAwOWRLaVowMkhNYXl6OFZmcWY1NituZTJydzg0MWJ2UzhzUzBX?=
+ =?utf-8?B?dE5CQitVekJCTW9LTkpaamVoVW82M21BaVliY29yYXQzVU9QR0VVcFIzd0Q4?=
+ =?utf-8?B?UkdUNzZCNDMzMDg4K09wWGVWS0V1TG5Hc2U4aVJZNkJQOEYrV3JmZ2VVWm5n?=
+ =?utf-8?B?OGt1cDFYVnE4aVEzTGtSbVNtZElwYkJQQ2tpSHRkYklYZHhDc05ENHhUd0F5?=
+ =?utf-8?B?Sm1aMHplR1UrQnZDdEZ6SEFWYkxTczlPakVuQnVucTBpSUNLQzRZWjRZYUpL?=
+ =?utf-8?B?MFVqM0Urc2R6bUVYSUxid3BUeDhHRSsrUVVSUmpUa2haY0hEUSs2OVE0MGJi?=
+ =?utf-8?B?aGxMZC90bkdNb2RRR3RWd3dyWUtwMm13Y1hhSm54RklSWVFQVUJLQTczcFdE?=
+ =?utf-8?B?TzVncDhLUXgrY3VnUVdqdENhMVRVbkdTUXRQRWhJeDBmay9OUm5ocW5WcEZP?=
+ =?utf-8?B?N2k0d2FJRjRITWJ3UjRNWlgwVGZTNXR3KzJuUHloRlY0dCtFSnI2aVZqU2NH?=
+ =?utf-8?B?WXpDWXpjWlA1TysrWGFYTWp2QzJoREhyZElHaHU5Nkgra3FwU1dhZVd3Tnh1?=
+ =?utf-8?B?YSsrNlFOMm1XeEVJVTZ4dis2VjlwMThRSENWYXFKUWxDY29PQkZaenJ0ck1Q?=
+ =?utf-8?B?Yi9WcmpWN3FoSVF5a3VnVkhSOWs4MVhJS3NYcjk1b1BDbjhmUWVmL2toWVpG?=
+ =?utf-8?B?NkhBMERJMmNnYVhiWDU0SUhQMTdvMm5GaE5hYkxhTlkwMnJScmdudTJwbXRT?=
+ =?utf-8?B?SnpMZWZKdkxZcVZZcW5DUXNaekxPbGc0bEZRUzloV1FKNUhkclpFNDFEWHE0?=
+ =?utf-8?B?T25nM3k2ZE5JRjJaZVZuTS9MUGMwVUNRSVJiLzI0cXYwSE1tc3Y1NzBBNEd5?=
+ =?utf-8?B?MnNwQ0srMzFUYTVEN2YzWDRLeU9rb0ZZS2lhMEJPRFNCTFhwbUxoSmVSczln?=
+ =?utf-8?B?MlZCK1h5V3pkeXQxWllxRC9rVm9MNk9kOVJsaUlpaXBnVGduMTBhOHBBalhF?=
+ =?utf-8?B?YklNQ3JqSnRXUmRGOWMxd0Z3WlJYN3phT3RKT0NiOXRxYkFZOHU0L0M4cStN?=
+ =?utf-8?B?OGoxZisxanlKNUVYd3Zsd0RSK0I4ZU9ZMG1VS2ZYS3hoSlh6MWtNTEFCTEpK?=
+ =?utf-8?B?aGJzNk1qL3JxYndSUXBxNkxDUkE2cjJ4eHVqaklpMzc4L0FuMFdUeE5EVS9w?=
+ =?utf-8?B?UGEwMXNuTFVuNXFhUG11UGVFY09wK0FlWGNzVFF3TERsemlHNFVjSG5TQlhh?=
+ =?utf-8?B?N2pKeng1RFZubDNic2drck82bEp6RDZWT3I1NVlVK281ZnBvaUJDaTBIMTg3?=
+ =?utf-8?B?UzdWanQ3VEFuV21ZVTJPNmRFMUtxNkNOcysrREdzdzZhT1lPMmNEaEtZY2ov?=
+ =?utf-8?B?WEVkaWErVElDejlVU1BydzZMWFlpU21KOXJiSzdBMUNlTm93S1BHbU1qSHdP?=
+ =?utf-8?B?R2xYV0dpSlE0UmtFallXNk5Nd1Frd01ucWlUTE9iWnJ6eWN6UmUvZlI1TWFR?=
+ =?utf-8?B?Ykk3M3NWZnFoRzBMOWk5cFpMSUE4NDdVMStVMUlSNEY2WTQyaTJScHZzRnZu?=
+ =?utf-8?B?VjlSeTM1VkczTmRlMkFvMk50SURDOTdmOVFuZUplOVBXRVFQL1lnYkVqanhl?=
+ =?utf-8?B?Wk5RQjFmaEhIdDRMQVM0TTZ5eUs4M3doMGFDNmZ1TzFET2tqK1VxMDdCM3Rt?=
+ =?utf-8?Q?3DcPBusDEbEQcML1oNBD5upo/?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e1d8a49-9b1c-43c3-e581-08dd50987b0d
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2025 03:49:58.7854 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: e9ZMz1lZI1IXYVNfb7VyElN3IsT1N+o0UhhEhdIV6khpnWeFbCtp4Wsqg2ePmpMAmLjtIFiUbVhQ0qide1R7Mw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6047
+Received-SPF: permerror client-ip=2a01:111:f403:2406::62c;
+ envelope-from=Alexey.Kardashevskiy@amd.com;
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,61 +188,430 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 10:07:18AM +0100, Philippe Mathieu-Daud� wrote:
-> Date: Tue, 18 Feb 2025 10:07:18 +0100
-> From: Philippe Mathieu-Daud� <philmd@linaro.org>
-> Subject: Re: [PATCH] hw/timer/hpet: Detect invalid access to TN registers
-> 
-> On 18/2/25 09:53, Paolo Bonzini wrote:
-> > On 2/18/25 08:37, Zhao Liu wrote:
-> > > "addr & 0x18" ignores invalid address, so that the trace in default
-> > > branch (trace_hpet_ram_{read|write}_invalid()) doesn't work.
-> > > 
-> > > Mask addr by "0x1f & ~4", in which 0x1f means to get the complete TN
-> > > registers access and ~4 means to keep any invalid address offset.
-> > 
-> > I think this is less readable.
-> > 
-> > The reason to use !4 in the Rust code is because the initial AND is done
-> > in a separate function, timer_and_addr().
-> 
-> Having a quick look at the model without looking at the specs:
-> 
-> include/hw/timer/hpet.h:20:#define HPET_LEN                0x400
-> 
-> hw/timer/hpet.c:439:static uint64_t hpet_ram_read(...,
-> hw/timer/hpet.c-441-{
-> hw/timer/hpet.c-448-    /*address range of all TN regs*/
-> hw/timer/hpet.c-449-    if (addr >= 0x100 && addr <= 0x3ff) {
-> hw/timer/hpet.c-450-        uint8_t timer_id = (addr - 0x100) / 0x20;
->                             ...
-> hw/timer/hpet.c-469-    } else {
-> hw/timer/hpet.c-470-        switch (addr & ~4) {
->                                  ...
-> hw/timer/hpet.c-488-        }
-> hw/timer/hpet.c-489-    }
-> hw/timer/hpet.c-490-    return 0;
-> hw/timer/hpet.c-491-}
-> 
-> hw/timer/hpet.c:699:    memory_region_init_io(&s->iomem, obj,
->                                               &hpet_ram_ops, s,
->                                               "hpet", HPET_LEN);
-> 
-> I suppose we want to register multiple timers of I/O size 0x20 at 0x100,
-> and the I/O size of 0x20 at 0x000 is a generic control region.
 
-Range of general control region is from 0x00 to 0xff.
 
-> Maybe split hpet_ram_ops in 2 (hpet_cfg_ops and hpet_tmr_ops), mapping
-> the first one once at 0x000 and the other 24 times at 0x100-0x3ff?
+On 19/2/25 12:20, Chenyi Qiang wrote:
 > 
-> My 2 cents looking at QDev modelling to avoid these address
-> manipulations.
+> 
+> On 2/18/2025 5:19 PM, Alexey Kardashevskiy wrote:
+>>
+>>
+> 
+> [..]
+> 
+>>> diff --git a/include/system/memory-attribute-manager.h b/include/
+>>> system/memory-attribute-manager.h
+>>> new file mode 100644
+>>> index 0000000000..72adc0028e
+>>> --- /dev/null
+>>> +++ b/include/system/memory-attribute-manager.h
+>>> @@ -0,0 +1,42 @@
+>>> +/*
+>>> + * QEMU memory attribute manager
+>>> + *
+>>> + * Copyright Intel
+>>> + *
+>>> + * Author:
+>>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
+>>> + *
+>>> + * This work is licensed under the terms of the GNU GPL, version 2 or
+>>> later.
+>>> + * See the COPYING file in the top-level directory
+>>> + *
+>>> + */
+>>> +
+>>> +#ifndef SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
+>>> +#define SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
+>>> +
+>>> +#include "system/hostmem.h"
+>>> +
+>>> +#define TYPE_MEMORY_ATTRIBUTE_MANAGER "memory-attribute-manager"
+>>> +
+>>> +OBJECT_DECLARE_TYPE(MemoryAttributeManager,
+>>> MemoryAttributeManagerClass, MEMORY_ATTRIBUTE_MANAGER)
+>>> +
+>>> +struct MemoryAttributeManager {
+>>> +    Object parent;
+>>> +
+>>> +    MemoryRegion *mr;
+>>> +
+>>> +    /* 1-setting of the bit represents the memory is populated
+>>> (shared) */
+>>> +    int32_t bitmap_size;
+>>
+>> unsigned.
+>>
+>> Also, do either s/bitmap_size/shared_bitmap_size/ or
+>> s/shared_bitmap/bitmap/
+> 
+> Will change it. Thanks.
+> 
+>>
+>>
+>>
+>>> +    unsigned long *shared_bitmap;
+>>> +
+>>> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
+>>> +};
+>>> +
+>>> +struct MemoryAttributeManagerClass {
+>>> +    ObjectClass parent_class;
+>>> +};
+>>> +
+>>> +int memory_attribute_manager_realize(MemoryAttributeManager *mgr,
+>>> MemoryRegion *mr);
+>>> +void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr);
+>>> +
+>>> +#endif
+>>> diff --git a/system/memory-attribute-manager.c b/system/memory-
+>>> attribute-manager.c
+>>> new file mode 100644
+>>> index 0000000000..ed97e43dd0
+>>> --- /dev/null
+>>> +++ b/system/memory-attribute-manager.c
+>>> @@ -0,0 +1,292 @@
+>>> +/*
+>>> + * QEMU memory attribute manager
+>>> + *
+>>> + * Copyright Intel
+>>> + *
+>>> + * Author:
+>>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
+>>> + *
+>>> + * This work is licensed under the terms of the GNU GPL, version 2 or
+>>> later.
+>>> + * See the COPYING file in the top-level directory
+>>> + *
+>>> + */
+>>> +
+>>> +#include "qemu/osdep.h"
+>>> +#include "qemu/error-report.h"
+>>> +#include "system/memory-attribute-manager.h"
+>>> +
+>>> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(MemoryAttributeManager,
+>>> +                                   memory_attribute_manager,
+>>> +                                   MEMORY_ATTRIBUTE_MANAGER,
+>>> +                                   OBJECT,
+>>> +                                   { TYPE_RAM_DISCARD_MANAGER },
+>>> +                                   { })
+>>> +
+>>> +static int memory_attribute_manager_get_block_size(const
+>>> MemoryAttributeManager *mgr)
+>>> +{
+>>> +    /*
+>>> +     * Because page conversion could be manipulated in the size of at
+>>> least 4K or 4K aligned,
+>>> +     * Use the host page size as the granularity to track the memory
+>>> attribute.
+>>> +     * TODO: if necessary, switch to get the page_size from RAMBlock.
+>>> +     * i.e. mgr->mr->ram_block->page_size.
+>>
+>> I'd assume it is rather necessary already.
+> 
+> OK, Will return the page_size of RAMBlock directly.
+> 
+>>
+>>> +     */
+>>> +    return qemu_real_host_page_size();
+>>> +}
+>>> +
+>>> +
+>>> +static bool memory_attribute_rdm_is_populated(const RamDiscardManager
+>>> *rdm,
+>>> +                                              const
+>>> MemoryRegionSection *section)
+>>> +{
+>>> +    const MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>>> +    uint64_t first_bit = section->offset_within_region / block_size;
+>>> +    uint64_t last_bit = first_bit + int128_get64(section->size) /
+>>> block_size - 1;
+>>> +    unsigned long first_discard_bit;
+>>> +
+>>> +    first_discard_bit = find_next_zero_bit(mgr->shared_bitmap,
+>>> last_bit + 1, first_bit);
+>>> +    return first_discard_bit > last_bit;
+>>> +}
+>>> +
+>>> +typedef int (*memory_attribute_section_cb)(MemoryRegionSection *s,
+>>> void *arg);
+>>> +
+>>> +static int memory_attribute_notify_populate_cb(MemoryRegionSection
+>>> *section, void *arg)
+>>> +{
+>>> +    RamDiscardListener *rdl = arg;
+>>> +
+>>> +    return rdl->notify_populate(rdl, section);
+>>> +}
+>>> +
+>>> +static int memory_attribute_notify_discard_cb(MemoryRegionSection
+>>> *section, void *arg)
+>>> +{
+>>> +    RamDiscardListener *rdl = arg;
+>>> +
+>>> +    rdl->notify_discard(rdl, section);
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static int memory_attribute_for_each_populated_section(const
+>>> MemoryAttributeManager *mgr,
+>>> +
+>>> MemoryRegionSection *section,
+>>> +                                                       void *arg,
+>>> +
+>>> memory_attribute_section_cb cb)
+>>> +{
+>>> +    unsigned long first_one_bit, last_one_bit;
+>>> +    uint64_t offset, size;
+>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>>> +    int ret = 0;
+>>> +
+>>> +    first_one_bit = section->offset_within_region / block_size;
+>>> +    first_one_bit = find_next_bit(mgr->shared_bitmap, mgr-
+>>>> bitmap_size, first_one_bit);
+>>> +
+>>> +    while (first_one_bit < mgr->bitmap_size) {
+>>> +        MemoryRegionSection tmp = *section;
+>>> +
+>>> +        offset = first_one_bit * block_size;
+>>> +        last_one_bit = find_next_zero_bit(mgr->shared_bitmap, mgr-
+>>>> bitmap_size,
+>>> +                                          first_one_bit + 1) - 1;
+>>> +        size = (last_one_bit - first_one_bit + 1) * block_size;
+>>
+>>
+>> What all this math is for if we stuck with VFIO doing 1 page at the
+>> time? (I think I commented on this)
+> 
+> Sorry, I missed your previous comment. IMHO, as we track the status in
+> bitmap and we want to call the cb() on the shared part within
+> MemoryRegionSection. Here we do the calculation to find the expected
+> sub-range.
 
-I think it's a good idea! Pls give me some time to try applying
-memory_region_add_subregion() to this HPET case. :-)
 
-Thanks,
-Zhao
+You find a largest intersection here and call cb() on it which will call 
+VFIO with 1 page at the time. So you could just call cb() for every page 
+from here which will make the code simpler.
+
+
+>>
+>>> +
+>>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>>> size)) {
+>>> +            break;
+>>> +        }
+>>> +
+>>> +        ret = cb(&tmp, arg);
+>>> +        if (ret) {
+>>> +            error_report("%s: Failed to notify RAM discard listener:
+>>> %s", __func__,
+>>> +                         strerror(-ret));
+>>> +            break;
+>>> +        }
+>>> +
+>>> +        first_one_bit = find_next_bit(mgr->shared_bitmap, mgr-
+>>>> bitmap_size,
+>>> +                                      last_one_bit + 2);
+>>> +    }
+>>> +
+>>> +    return ret;
+>>> +}
+>>> +
+> 
+> [..]
+> 
+>>> +
+>>> +static void
+>>> memory_attribute_rdm_unregister_listener(RamDiscardManager *rdm,
+>>> +
+>>> RamDiscardListener *rdl)
+>>> +{
+>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>>> +    int ret;
+>>> +
+>>> +    g_assert(rdl->section);
+>>> +    g_assert(rdl->section->mr == mgr->mr);
+>>> +
+>>> +    ret = memory_attribute_for_each_populated_section(mgr, rdl-
+>>>> section, rdl,
+>>> +
+>>> memory_attribute_notify_discard_cb);
+>>> +    if (ret) {
+>>> +        error_report("%s: Failed to unregister RAM discard listener:
+>>> %s", __func__,
+>>> +                     strerror(-ret));
+>>> +    }
+>>> +
+>>> +    memory_region_section_free_copy(rdl->section);
+>>> +    rdl->section = NULL;
+>>> +    QLIST_REMOVE(rdl, next);
+>>> +
+>>> +}
+>>> +
+>>> +typedef struct MemoryAttributeReplayData {
+>>> +    void *fn;
+>>
+>> ReplayRamDiscard *fn, not void*.
+> 
+> We could cast the void *fn either to ReplayRamPopulate or
+> ReplayRamDiscard (see below).
+
+
+Hard to read, hard to maintain, and they take same parameters, only the 
+return value is different (int/void) - if this is really important, have 
+2 fn pointers in MemoryAttributeReplayData. It is already hard to follow 
+this train on callbacks.
+
+
+>>> +    void *opaque;
+>>> +} MemoryAttributeReplayData;
+>>> +
+>>> +static int
+>>> memory_attribute_rdm_replay_populated_cb(MemoryRegionSection *section,
+>>> void *arg)
+>>> +{
+>>> +    MemoryAttributeReplayData *data = arg;
+>>> +
+>>> +    return ((ReplayRamPopulate)data->fn)(section, data->opaque);
+>>> +}
+>>> +
+>>> +static int memory_attribute_rdm_replay_populated(const
+>>> RamDiscardManager *rdm,
+>>> +                                                 MemoryRegionSection
+>>> *section,
+>>> +                                                 ReplayRamPopulate
+>>> replay_fn,
+>>> +                                                 void *opaque)
+>>> +{
+>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>>> +    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque =
+>>> opaque };
+>>> +
+>>> +    g_assert(section->mr == mgr->mr);
+>>> +    return memory_attribute_for_each_populated_section(mgr, section,
+>>> &data,
+>>> +
+>>> memory_attribute_rdm_replay_populated_cb);
+>>> +}
+>>> +
+>>> +static int
+>>> memory_attribute_rdm_replay_discarded_cb(MemoryRegionSection *section,
+>>> void *arg)
+>>> +{
+>>> +    MemoryAttributeReplayData *data = arg;
+>>> +
+>>> +    ((ReplayRamDiscard)data->fn)(section, data->opaque);
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static void memory_attribute_rdm_replay_discarded(const
+>>> RamDiscardManager *rdm,
+>>> +                                                  MemoryRegionSection
+>>> *section,
+>>> +                                                  ReplayRamDiscard
+>>> replay_fn,
+>>> +                                                  void *opaque)
+>>> +{
+>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>>> +    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque =
+>>> opaque };
+>>> +
+>>> +    g_assert(section->mr == mgr->mr);
+>>> +    memory_attribute_for_each_discarded_section(mgr, section, &data,
+>>> +
+>>> memory_attribute_rdm_replay_discarded_cb);
+>>> +}
+>>> +
+>>> +int memory_attribute_manager_realize(MemoryAttributeManager *mgr,
+>>> MemoryRegion *mr)
+>>> +{
+>>> +    uint64_t bitmap_size;
+>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>>> +    int ret;
+>>> +
+>>> +    bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
+>>> +
+>>> +    mgr->mr = mr;
+>>> +    mgr->bitmap_size = bitmap_size;
+>>> +    mgr->shared_bitmap = bitmap_new(bitmap_size);
+>>> +
+>>> +    ret = memory_region_set_ram_discard_manager(mgr->mr,
+>>> RAM_DISCARD_MANAGER(mgr));
+>>
+>> Move it 3 lines up and avoid stale data in mgr->mr/bitmap_size/
+>> shared_bitmap and avoid g_free below?
+> 
+> Make sense. I will move it up the same as patch 02 before bitmap_new().
+> 
+>>
+>>> +    if (ret) {
+>>> +        g_free(mgr->shared_bitmap);
+>>> +    }
+>>> +
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr)
+>>> +{
+>>> +    memory_region_set_ram_discard_manager(mgr->mr, NULL);
+>>> +
+>>> +    g_free(mgr->shared_bitmap);
+>>> +}
+>>> +
+>>> +static void memory_attribute_manager_init(Object *obj)
+>>
+>> Not used.
+>>
+>>> +{
+>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(obj);
+>>> +
+>>> +    QLIST_INIT(&mgr->rdl_list);
+>>> +} > +
+>>> +static void memory_attribute_manager_finalize(Object *obj)
+>>
+>> Not used either. Thanks,
+> 
+> I think it is OK to define it as a placeholder? Just some preference.
+
+At very least gcc should warn on these (I am surprised it did not) and 
+nobody likes this. Thanks,
+
+
+>>
+>>> +{
+>>> +}
+>>> +
+>>> +static void memory_attribute_manager_class_init(ObjectClass *oc, void
+>>> *data)
+>>> +{
+>>> +    RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
+>>> +
+>>> +    rdmc->get_min_granularity =
+>>> memory_attribute_rdm_get_min_granularity;
+>>> +    rdmc->register_listener = memory_attribute_rdm_register_listener;
+>>> +    rdmc->unregister_listener =
+>>> memory_attribute_rdm_unregister_listener;
+>>> +    rdmc->is_populated = memory_attribute_rdm_is_populated;
+>>> +    rdmc->replay_populated = memory_attribute_rdm_replay_populated;
+>>> +    rdmc->replay_discarded = memory_attribute_rdm_replay_discarded;
+>>> +}
+>>> diff --git a/system/meson.build b/system/meson.build
+>>> index 4952f4b2c7..ab07ff1442 100644
+>>> --- a/system/meson.build
+>>> +++ b/system/meson.build
+>>> @@ -15,6 +15,7 @@ system_ss.add(files(
+>>>      'dirtylimit.c',
+>>>      'dma-helpers.c',
+>>>      'globals.c',
+>>> +  'memory-attribute-manager.c',
+>>>      'memory_mapping.c',
+>>>      'qdev-monitor.c',
+>>>      'qtest.c',
+>>
+> 
+
+-- 
+Alexey
 
 
