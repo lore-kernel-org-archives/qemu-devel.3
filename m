@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A455AC021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 07:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B005EC021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 07:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkeIT-0002HZ-0I; Wed, 19 Feb 2025 02:15:06 -0500
+	id 1tkeIl-0002Nj-OD; Wed, 19 Feb 2025 02:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeID-00029l-5L
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:14:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeIH-0002C5-M8
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:14:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeI8-0004x1-KP
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:14:47 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tkeIF-0004zH-Ly
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 02:14:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739949282;
+ s=mimecast20190719; t=1739949289;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=H0ly+Ik9R8QxBVmgfFGjfY1mlDOzgNavtHRoKYMQm7Y=;
- b=EAp9XS3izwQQOZfAunjw3ehuDPpcJ3HjIJaeiQH2/sBZRDyFECvMnlx3c0LyD8zvA/gfS5
- hA8cawV25awzlEORzse5NY56JlSS9QADHFcEG9dLWckQStGrJbhl9UlG8+5azG2Fxj2taV
- jwJK2jUSI2bvRKkARWNoNJZwfiXAITo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ae3RfQDslfS0/+8r8eChjkfDFE+d3A19Q0XLW28/4XI=;
+ b=K4v4T7IcWDsuLREUQlbbr+qdzTOURQa4ilsOu9IU8Xm4xOk55GY2vrO+ESfiIyenvxtH1W
+ m1PiX/K/ud9XRK7xWOPjL0D4WQEkiKc0zqguBROFCGUTbT1jyfmuUIhh2u3N2wTdcXBD6L
+ Sc5k4C/LV3IYYSqloKE1w/qVbQHk8VE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-M7A5Lu5jPxeZ2gLUX3aq0w-1; Wed,
- 19 Feb 2025 02:14:38 -0500
-X-MC-Unique: M7A5Lu5jPxeZ2gLUX3aq0w-1
-X-Mimecast-MFC-AGG-ID: M7A5Lu5jPxeZ2gLUX3aq0w_1739949276
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-oV36c0LgPX2PFFWnpDKmHg-1; Wed,
+ 19 Feb 2025 02:14:46 -0500
+X-MC-Unique: oV36c0LgPX2PFFWnpDKmHg-1
+X-Mimecast-MFC-AGG-ID: oV36c0LgPX2PFFWnpDKmHg_1739949284
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5947A180036F; Wed, 19 Feb 2025 07:14:36 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B4CA419039C1; Wed, 19 Feb 2025 07:14:44 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.78])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EAB21955BCB; Wed, 19 Feb 2025 07:14:34 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D87A300019F; Wed, 19 Feb 2025 07:14:44 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id E07521800082; Wed, 19 Feb 2025 08:14:31 +0100 (CET)
+ id 3FF591801A8F; Wed, 19 Feb 2025 08:14:32 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
@@ -60,21 +61,22 @@ Cc: qemu-arm@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  graf@amazon.com, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v4 00/24] hw/uefi: add uefi variable service
-Date: Wed, 19 Feb 2025 08:14:02 +0100
-Message-ID: <20250219071431.50626-1-kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v4 05/24] hw/uefi: add var-service-guid.c
+Date: Wed, 19 Feb 2025 08:14:07 +0100
+Message-ID: <20250219071431.50626-6-kraxel@redhat.com>
+In-Reply-To: <20250219071431.50626-1-kraxel@redhat.com>
+References: <20250219071431.50626-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,131 +94,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds a virtual device to qemu which the uefi firmware can use
-to store variables.  This moves the UEFI variable management from
-privileged guest code (managing vars in pflash) to the host.  Main
-advantage is that the need to have privilege separation in the guest
-goes away.
+Add variables for a bunch of UEFI GUIDs we will need.
 
-On x86 privileged guest code runs in SMM.  It's supported by kvm, but
-not liked much by various stakeholders in cloud space due to the
-complexity SMM emulation brings.
-
-On arm privileged guest code runs in el3 (aka secure world).  This is
-not supported by kvm, which is unlikely to change anytime soon given
-that even el2 support (nested virt) is being worked on for years and is
-not yet in mainline.
-
-The design idea is to reuse the request serialization protocol edk2 uses
-for communication between SMM and non-SMM code, so large chunks of the
-edk2 variable driver stack can be used unmodified.  Only the driver
-which traps into SMM mode must be replaced by a driver which talks to
-qemu instead.
-
-A edk2 test branch can be found here (build with "-D QEMU_PV_VARS=TRUE").
-https://github.com/kraxel/edk2/commits/devel/secure-boot-external-vars
-
-The uefi-vars device re-implements the privileged edk2 protocols
-(i.e. the code running in SMM mode).
-
-v4 changes:
- - drop the isa variant in favor of a x64-specific sysbus variant using
-   mmio to expose the device registers.
- - use etc/hardware-info for device discovery on x64.
- - add pio transfer mode support.
-v3 changes:
- - switch sysbus device variant to use the qemu platform bus.
- - misc minor changes.
-v2 changes:
- - fully implement authenticated variables.
- - various cleanups and fixes.
-
-enjoy & take care,
-  Gerd
-
-Gerd Hoffmann (24):
-  Add support for etc/hardware-info fw_cfg file
-  hw/uefi: add include/hw/uefi/var-service-api.h
-  hw/uefi: add include/hw/uefi/var-service-edk2.h
-  hw/uefi: add include/hw/uefi/var-service.h
-  hw/uefi: add var-service-guid.c
-  hw/uefi: add var-service-utils.c
-  hw/uefi: add var-service-vars.c
-  hw/uefi: add var-service-auth.c
-  hw/uefi: add var-service-policy.c
-  hw/uefi: add var-service-core.c
-  hw/uefi: add var-service-pkcs7.c
-  hw/uefi: add var-service-pkcs7-stub.c
-  hw/uefi: add var-service-siglist.c
-  hw/uefi: add var-service-json.c + qapi for NV vars.
-  hw/uefi: add trace-events
-  hw/uefi: add UEFI_VARS to Kconfig
-  hw/uefi: add to meson
-  hw/uefi: add uefi-vars-sysbus device
-  hw/uefi-vars-sysbus: qemu platform bus support
-  hw/uefi-vars-sysbus: add x64 variant
-  hw/uefi-vars-sysbus: allow for arm virt
-  hw/uefi-vars-sysbus: allow for pc and q35
-  hw/uefi: add MAINTAINERS entry
-  docs: add uefi variable service documentation
-
- include/hw/uefi/hardware-info.h    |  35 ++
- include/hw/uefi/var-service-api.h  |  48 ++
- include/hw/uefi/var-service-edk2.h | 227 +++++++++
- include/hw/uefi/var-service.h      | 191 ++++++++
- hw/arm/virt.c                      |   2 +
- hw/core/sysbus-fdt.c               |  24 +
- hw/i386/pc_piix.c                  |   2 +
- hw/i386/pc_q35.c                   |   2 +
- hw/uefi/hardware-info.c            |  33 ++
- hw/uefi/var-service-auth.c         | 361 ++++++++++++++
- hw/uefi/var-service-core.c         | 321 +++++++++++++
- hw/uefi/var-service-guid.c         |  99 ++++
- hw/uefi/var-service-json.c         | 243 ++++++++++
- hw/uefi/var-service-pkcs7-stub.c   |  16 +
- hw/uefi/var-service-pkcs7.c        | 436 +++++++++++++++++
- hw/uefi/var-service-policy.c       | 370 +++++++++++++++
- hw/uefi/var-service-siglist.c      | 212 +++++++++
- hw/uefi/var-service-sysbus.c       | 124 +++++
- hw/uefi/var-service-utils.c        | 241 ++++++++++
- hw/uefi/var-service-vars.c         | 725 +++++++++++++++++++++++++++++
- MAINTAINERS                        |   6 +
- docs/devel/index-internals.rst     |   1 +
- docs/devel/uefi-vars.rst           |  68 +++
- hw/Kconfig                         |   1 +
- hw/meson.build                     |   1 +
- hw/uefi/Kconfig                    |   3 +
- hw/uefi/LIMITATIONS.md             |   7 +
- hw/uefi/meson.build                |  21 +
- hw/uefi/trace-events               |  17 +
- meson.build                        |   1 +
- qapi/meson.build                   |   1 +
- qapi/qapi-schema.json              |   1 +
- qapi/uefi.json                     |  45 ++
- 33 files changed, 3885 insertions(+)
- create mode 100644 include/hw/uefi/hardware-info.h
- create mode 100644 include/hw/uefi/var-service-api.h
- create mode 100644 include/hw/uefi/var-service-edk2.h
- create mode 100644 include/hw/uefi/var-service.h
- create mode 100644 hw/uefi/hardware-info.c
- create mode 100644 hw/uefi/var-service-auth.c
- create mode 100644 hw/uefi/var-service-core.c
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ hw/uefi/var-service-guid.c | 99 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
  create mode 100644 hw/uefi/var-service-guid.c
- create mode 100644 hw/uefi/var-service-json.c
- create mode 100644 hw/uefi/var-service-pkcs7-stub.c
- create mode 100644 hw/uefi/var-service-pkcs7.c
- create mode 100644 hw/uefi/var-service-policy.c
- create mode 100644 hw/uefi/var-service-siglist.c
- create mode 100644 hw/uefi/var-service-sysbus.c
- create mode 100644 hw/uefi/var-service-utils.c
- create mode 100644 hw/uefi/var-service-vars.c
- create mode 100644 docs/devel/uefi-vars.rst
- create mode 100644 hw/uefi/Kconfig
- create mode 100644 hw/uefi/LIMITATIONS.md
- create mode 100644 hw/uefi/meson.build
- create mode 100644 hw/uefi/trace-events
- create mode 100644 qapi/uefi.json
 
+diff --git a/hw/uefi/var-service-guid.c b/hw/uefi/var-service-guid.c
+new file mode 100644
+index 000000000000..eba3655c8d30
+--- /dev/null
++++ b/hw/uefi/var-service-guid.c
+@@ -0,0 +1,99 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * uefi vars device - GUIDs
++ */
++
++#include "qemu/osdep.h"
++#include "system/dma.h"
++
++#include "hw/uefi/var-service.h"
++
++/* variable namespaces */
++
++const QemuUUID EfiGlobalVariable = {
++    .data = UUID_LE(0x8be4df61, 0x93ca, 0x11d2, 0xaa, 0x0d,
++                    0x00, 0xe0, 0x98, 0x03, 0x2b, 0x8c)
++};
++
++const QemuUUID EfiImageSecurityDatabase = {
++    .data = UUID_LE(0xd719b2cb, 0x3d3a, 0x4596, 0xa3, 0xbc,
++                    0xda, 0xd0, 0x0e, 0x67, 0x65, 0x6f)
++};
++
++const QemuUUID EfiCustomModeEnable = {
++    .data = UUID_LE(0xc076ec0c, 0x7028, 0x4399, 0xa0, 0x72,
++                    0x71, 0xee, 0x5c, 0x44, 0x8b, 0x9f)
++};
++
++const QemuUUID EfiSecureBootEnableDisable = {
++    .data = UUID_LE(0xf0a30bc7, 0xaf08, 0x4556, 0x99, 0xc4,
++                    0x0, 0x10, 0x9, 0xc9, 0x3a, 0x44)
++};
++
++/* signatures */
++
++const QemuUUID EfiCertSha256Guid = {
++    .data = UUID_LE(0xc1c41626, 0x504c, 0x4092, 0xac, 0xa9,
++                    0x41, 0xf9, 0x36, 0x93, 0x43, 0x28)
++};
++
++const QemuUUID EfiCertSha384Guid = {
++    .data = UUID_LE(0xff3e5307, 0x9fd0, 0x48c9, 0x85, 0xf1,
++                    0x8a, 0xd5, 0x6c, 0x70, 0x1e, 0x1)
++};
++
++const QemuUUID EfiCertSha512Guid = {
++    .data = UUID_LE(0x93e0fae, 0xa6c4, 0x4f50, 0x9f, 0x1b,
++                    0xd4, 0x1e, 0x2b, 0x89, 0xc1, 0x9a)
++};
++
++const QemuUUID EfiCertRsa2048Guid = {
++    .data = UUID_LE(0x3c5766e8, 0x269c, 0x4e34, 0xaa, 0x14,
++                    0xed, 0x77, 0x6e, 0x85, 0xb3, 0xb6)
++};
++
++const QemuUUID EfiCertX509Guid = {
++    .data = UUID_LE(0xa5c059a1, 0x94e4, 0x4aa7, 0x87, 0xb5,
++                    0xab, 0x15, 0x5c, 0x2b, 0xf0, 0x72)
++};
++
++const QemuUUID EfiCertTypePkcs7Guid = {
++    .data = UUID_LE(0x4aafd29d, 0x68df, 0x49ee, 0x8a, 0xa9,
++                    0x34, 0x7d, 0x37, 0x56, 0x65, 0xa7)
++};
++
++/*
++ * mm_header.guid values that the guest DXE/BDS phases use for
++ * sending requests to management mode
++ */
++
++const QemuUUID EfiSmmVariableProtocolGuid = {
++    .data = UUID_LE(0xed32d533, 0x99e6, 0x4209, 0x9c, 0xc0,
++                    0x2d, 0x72, 0xcd, 0xd9, 0x98, 0xa7)
++};
++
++const QemuUUID VarCheckPolicyLibMmiHandlerGuid = {
++    .data = UUID_LE(0xda1b0d11, 0xd1a7, 0x46c4, 0x9d, 0xc9,
++                    0xf3, 0x71, 0x48, 0x75, 0xc6, 0xeb)
++};
++
++/*
++ * mm_header.guid values that the guest DXE/BDS phases use for
++ * reporting event groups being signaled to management mode
++ */
++
++const QemuUUID EfiEndOfDxeEventGroupGuid = {
++    .data = UUID_LE(0x02ce967a, 0xdd7e, 0x4FFc, 0x9e, 0xe7,
++                    0x81, 0x0c, 0xF0, 0x47, 0x08, 0x80)
++};
++
++const QemuUUID EfiEventReadyToBootGuid = {
++    .data = UUID_LE(0x7ce88Fb3, 0x4bd7, 0x4679, 0x87, 0xa8,
++                    0xa8, 0xd8, 0xde, 0xe5, 0x0d, 0x2b)
++};
++
++const QemuUUID EfiEventExitBootServicesGuid = {
++    .data = UUID_LE(0x27abF055, 0xb1b8, 0x4c26, 0x80, 0x48,
++                    0x74, 0x8F, 0x37, 0xba, 0xa2, 0xdF)
++};
 -- 
 2.48.1
 
