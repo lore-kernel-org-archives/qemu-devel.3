@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AD0C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5C47C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqnF-0002HQ-AV; Wed, 19 Feb 2025 15:35:41 -0500
+	id 1tkqni-0004nF-Jv; Wed, 19 Feb 2025 15:36:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqnB-0001yj-Vv
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:38 -0500
+ id 1tkqnf-0004dT-U2
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:36:08 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqnA-0004iM-6s
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:37 -0500
+ id 1tkqne-0004ls-Bj
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:36:07 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqn5-00000007VTS-2HAd; Wed, 19 Feb 2025 21:35:31 +0100
+ id 1tkqna-00000007VUS-1e9d; Wed, 19 Feb 2025 21:36:02 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 13/36] migration/multifd: Add an explicit MultiFDSendData
- destructor
-Date: Wed, 19 Feb 2025 21:33:55 +0100
-Message-ID: <3cb34f5df324f78c461eb569cec8059894bfcdc9.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 19/36] vfio/migration: Convert bytes_transferred counter to
+ atomic
+Date: Wed, 19 Feb 2025 21:34:01 +0100
+Message-ID: <dbb9b1047aca873a5ee0a91f352f282fe1004a15.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -68,113 +68,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This way if there are fields there that needs explicit disposal (like, for
-example, some attached buffers) they will be handled appropriately.
+So it can be safety accessed from multiple threads.
 
-Add a related assert to multifd_set_payload_type() in order to make sure
-that this function is only used to fill a previously empty MultiFDSendData
-with some payload, not the other way around.
+This variable type needs to be changed to unsigned long since
+32-bit host platforms lack the necessary addition atomics on 64-bit
+variables.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Using 32-bit counters on 32-bit host platforms should not be a problem
+in practice since they can't realistically address more memory anyway.
+
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd-nocomp.c |  3 +--
- migration/multifd.c        | 31 ++++++++++++++++++++++++++++---
- migration/multifd.h        |  5 +++++
- 3 files changed, 34 insertions(+), 5 deletions(-)
+ hw/vfio/migration.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 1325dba97cea..e46e79d8b272 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -42,8 +42,7 @@ void multifd_ram_save_setup(void)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 03890eaa48a9..5532787be63b 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -55,7 +55,7 @@
+  */
+ #define VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE (1 * MiB)
  
- void multifd_ram_save_cleanup(void)
+-static int64_t bytes_transferred;
++static unsigned long bytes_transferred;
+ 
+ static const char *mig_state_to_str(enum vfio_device_mig_state state)
  {
--    g_free(multifd_ram_send);
--    multifd_ram_send = NULL;
-+    g_clear_pointer(&multifd_ram_send, multifd_send_data_free);
+@@ -391,7 +391,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
+     qemu_put_be64(f, data_size);
+     qemu_put_buffer(f, migration->data_buffer, data_size);
+-    bytes_transferred += data_size;
++    qatomic_add(&bytes_transferred, data_size);
+ 
+     trace_vfio_save_block(migration->vbasedev->name, data_size);
+ 
+@@ -1013,12 +1013,12 @@ static int vfio_block_migration(VFIODevice *vbasedev, Error *err, Error **errp)
+ 
+ int64_t vfio_mig_bytes_transferred(void)
+ {
+-    return bytes_transferred;
++    return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
  }
  
- static void multifd_set_file_bitmap(MultiFDSendParams *p)
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 66ae77fbe4f1..0092547a4f97 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -123,6 +123,32 @@ MultiFDSendData *multifd_send_data_alloc(void)
-     return g_malloc0(size_minus_payload + max_payload_size);
+ void vfio_reset_bytes_transferred(void)
+ {
+-    bytes_transferred = 0;
++    qatomic_set(&bytes_transferred, 0);
  }
  
-+void multifd_send_data_clear(MultiFDSendData *data)
-+{
-+    if (multifd_payload_empty(data)) {
-+        return;
-+    }
-+
-+    switch (data->type) {
-+    default:
-+        /* Nothing to do */
-+        break;
-+    }
-+
-+    data->type = MULTIFD_PAYLOAD_NONE;
-+}
-+
-+void multifd_send_data_free(MultiFDSendData *data)
-+{
-+    if (!data) {
-+        return;
-+    }
-+
-+    multifd_send_data_clear(data);
-+
-+    g_free(data);
-+}
-+
- static bool multifd_use_packets(void)
- {
-     return !migrate_mapped_ram();
-@@ -496,8 +522,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-     qemu_sem_destroy(&p->sem_sync);
-     g_free(p->name);
-     p->name = NULL;
--    g_free(p->data);
--    p->data = NULL;
-+    g_clear_pointer(&p->data, multifd_send_data_free);
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
-@@ -695,7 +720,7 @@ static void *multifd_send_thread(void *opaque)
-                        (uint64_t)p->next_packet_size + p->packet_len);
- 
-             p->next_packet_size = 0;
--            multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
-+            multifd_send_data_clear(p->data);
- 
-             /*
-              * Making sure p->data is published before saying "we're
-diff --git a/migration/multifd.h b/migration/multifd.h
-index c2ebef2d319e..20a4bba58ef4 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -156,6 +156,9 @@ static inline bool multifd_payload_empty(MultiFDSendData *data)
- static inline void multifd_set_payload_type(MultiFDSendData *data,
-                                             MultiFDPayloadType type)
- {
-+    assert(multifd_payload_empty(data));
-+    assert(type != MULTIFD_PAYLOAD_NONE);
-+
-     data->type = type;
- }
- 
-@@ -372,6 +375,8 @@ static inline void multifd_send_prepare_header(MultiFDSendParams *p)
- void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
- bool multifd_send(MultiFDSendData **send_data);
- MultiFDSendData *multifd_send_data_alloc(void);
-+void multifd_send_data_clear(MultiFDSendData *data);
-+void multifd_send_data_free(MultiFDSendData *data);
- 
- static inline uint32_t multifd_ram_page_size(void)
- {
+ /*
 
