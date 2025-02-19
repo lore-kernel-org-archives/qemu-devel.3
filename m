@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BB6C021B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 18:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7909BC021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 18:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkp6Q-0003L4-TG; Wed, 19 Feb 2025 13:47:22 -0500
+	id 1tkp5j-0002yR-20; Wed, 19 Feb 2025 13:46:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3Eye2ZwgKCn4ywjcqvujiqqing.eqosgow-fgxgnpqpipw.qti@flex--wuhaotsh.bounces.google.com>)
- id 1tkp5s-00034W-Oy
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:48 -0500
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ <3Aie2ZwgKCm0hfSLZedSRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--wuhaotsh.bounces.google.com>)
+ id 1tkp5d-0002wX-Fv
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:35 -0500
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3Eye2ZwgKCn4ywjcqvujiqqing.eqosgow-fgxgnpqpipw.qti@flex--wuhaotsh.bounces.google.com>)
- id 1tkp5q-0004nG-TU
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:48 -0500
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-221063a808dso822685ad.1
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 10:46:44 -0800 (PST)
+ <3Aie2ZwgKCm0hfSLZedSRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--wuhaotsh.bounces.google.com>)
+ id 1tkp5a-0004gt-3w
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:32 -0500
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-220ee2e7746so744715ad.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 10:46:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1739990804; x=1740595604; darn=nongnu.org;
+ d=google.com; s=20230601; t=1739990787; x=1740595587; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=ipQdIA04T744C2J6dFE/7rZXfs1YEtRcQyXL2+84upE=;
- b=dPyqvAKwGrvQdrc0IEnvRYuYvFchCC/X9Uqo9yWMCAzrSSmC3rjNyCTtUIrm0IoNC6
- Ji8+nYniwCseSLcggEUS2gVBhI66xcDTKdq4OEglg6hCZX3/aYoZd+0+S2BNljKOfgt1
- 733lL6F9WjQbJGhZcZEOgCKaJ3+bdLAGrAJm3U8gZnFqJ3MT6JpPg4AGgG1QhPtYWTw2
- WJAFkj1wPeqjHWIjaHoP1oR9zVYkzkQD41R9uSmgIqgAcwyl+WXjKx7DadbzCwE1J1FS
- 1UZbbJAZTFGqhr2jFOW772N3aqEJe7SKBp0Tx4ByssmuJ0y1Vq07wP58yb3yeCby+vGD
- H0Lw==
+ bh=Z1Ln4707tX2136OTJ3dVAu/2OMhEvp/vGQL0FoGY3R8=;
+ b=oHEXhPHoil3TdToYN8dD/2FJt3tc86RZXaeLGN10E1Xb/hLNrfPim+jpsWr+PV9Gd2
+ eRjgLAVEL0aguTKnM/TFU/fKtJnnsslQfY6OONGxzM7lVgiZXXgugskKNC1E3SyglsXE
+ 6pFePZM2D/6Cd5/1jAkZGkFqEimFN3OF0Rq5UMvSAHZWWWqtaBcIbj0fdVe2S5D55n/1
+ 6t2jyH9AsaFmPPXRQeoyUVJA9D1ub99LPoC46Kl5GZl/Xmt67tiKXLdj5KIEHs+onTfD
+ AIYcDmwbh/Y0m8QlaXmneauR//aUSX7CgbJrV/1MO5EpTPXd3b2kjK1YC09VyLuXTcNx
+ U5DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739990804; x=1740595604;
+ d=1e100.net; s=20230601; t=1739990787; x=1740595587;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ipQdIA04T744C2J6dFE/7rZXfs1YEtRcQyXL2+84upE=;
- b=Dc+DbUH8zLtvzI0C+1ebp9d7d4h6HScHVaANup0joN3JhKCmT/j5SmmlwaYlVOr1xP
- LDoi+lQr2Lofhef7ubIscePctey5KTzbskGdXyKmzvhuZf4/stQfbl4/G4I9pL+e42Rx
- ft+YfcODBG6oZDbIvszVmIQkb2Qievk002ZRLqz4dDTZNKoIqbbOP/oOij3xqXglRfKQ
- eQWaOBZm1EqgzwQ1FlTUmFgV+7l+wiuST1My4WQ40cEfYOGKZHqqAG3U92drgUhgtQJV
- EW4AXmX2fdn5SHulEJ7jHKMewV75dHEDsTdV3GoHuei++4Rvc+OyOGSOlHJLhXZOhmIr
- djqg==
+ bh=Z1Ln4707tX2136OTJ3dVAu/2OMhEvp/vGQL0FoGY3R8=;
+ b=ZRuqkKBjHfdyUZepQuPz1ljE2uNYP7VSqd0Ayylx48kx6DBSVc3ZhqlfGDpVJasL0h
+ +T73oZcHWaZtEgcCV8W7tbHIqT0uT0n8PpCFfN7ssE4Gs0H4jQTVmTF8/mxX8nAcI2II
+ 3RaS9ttc9WuLosFHO7K95vCzN6bJT2qpopV6oUpg5+ke8YjXST1FDgqpTNXrsIrlmHho
+ 5rIvKA8BmjkyNznQs5etfOK7fEFjsxLoogF7s0uVRe/MfV2R/B+QfbLFwHVLyLsLEnVK
+ 4JcaBagwLyd+gz3Vxj5+W2cNhPZBsGI2m5Tae7WT5io+QUq7q/8n9qp+kPDyMB67jUnR
+ GPZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhan4hGQqqx7GAQLGliFr44iFNQjah8UBN0lrL5YWaou6zDU2EgTblJlwkkhdLExql4+GHfelktV68@nongnu.org
-X-Gm-Message-State: AOJu0YyKaE4jGSnJcY25bANudPNDqYxqrY623skuS0feXveJPU9szTNe
- HLMOvPoKP13+UYU1viRMCn6gVQtdn6rXnGzic2H25an2LFH/W0Vbi7dZlglDVKwBX+pGWmkAr6r
- Y0QYDPpCwrQ==
-X-Google-Smtp-Source: AGHT+IG99PH2ax94yfuBilzKm8HRV5XZiorZUZw9Ps8m+LMoYNchAAQ3xKZ2ErtYebNkzvzhxL1Y3oNgmRlwYQ==
-X-Received: from pjbpl7.prod.google.com ([2002:a17:90b:2687:b0:2f4:4222:ebba])
+ AJvYcCX9m6eDzHypqDEnTA2qnkA/diD7EMNN/kFNjEPd7PLknIcnb+XQftqV+QdY+4T7qb4VzeZyy814Q1yB@nongnu.org
+X-Gm-Message-State: AOJu0YxAkG6/qYM/+oroA3NZEkdZeoIBPqzkNoFTVrv4JmUxqWg0UFCg
+ xb+O2HKqXDdQT/7SdWnWEv3GIoa3kMyI63hpCIiwMizQhBSJ1PtJ5QEO+rsO9cbL31wUuJZhYXh
+ e7AlNn2iSnQ==
+X-Google-Smtp-Source: AGHT+IFw424r3EKmbo8QY57An+82j5xe+Ql3a5Wiz9KSOq4+MOMrDbHdMbS7empyVQhuFht61ogMU6BnnUnrJg==
+X-Received: from plbbe12.prod.google.com ([2002:a17:902:aa0c:b0:220:e56f:4b97])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:e841:b0:21f:860:6d0d with SMTP id
- d9443c01a7336-22103efb488mr324146705ad.5.1739990803946; 
- Wed, 19 Feb 2025 10:46:43 -0800 (PST)
-Date: Wed, 19 Feb 2025 10:46:03 -0800
+ 2002:a17:903:32c5:b0:220:c2a8:6fbc with SMTP id
+ d9443c01a7336-221711a75camr79582505ad.34.1739990786841; 
+ Wed, 19 Feb 2025 10:46:26 -0800 (PST)
+Date: Wed, 19 Feb 2025 10:45:53 -0800
 In-Reply-To: <20250219184609.1839281-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250219184609.1839281-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.601.g30ceb7b040-goog
-Message-ID: <20250219184609.1839281-13-wuhaotsh@google.com>
-Subject: [PATCH v5 12/17] hw/misc: Add nr_regs and cold_reset_values to NPCM
- CLK
+Message-ID: <20250219184609.1839281-3-wuhaotsh@google.com>
+Subject: [PATCH v5 02/17] pc-bios: Add NPCM8XX vBootrom
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -74,9 +73,9 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  chli30@nuvoton.corp-partner.google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3Eye2ZwgKCn4ywjcqvujiqqing.eqosgow-fgxgnpqpipw.qti@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x649.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=3Aie2ZwgKCm0hfSLZedSRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -99,136 +98,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These 2 values are different between NPCM7XX and NPCM8XX
-CLKs. So we add them to the class and assign different values
-to them.
+The bootrom is a minimal bootrom used to load an NPCM8XX image.
+The source code is located in the same repo as the NPCM7XX one:
+github.com/google/vbootrom/tree/master/npcm8xx.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- hw/misc/npcm_clk.c         | 18 ++++++++++++------
- hw/misc/npcm_gcr.c         |  2 ++
- include/hw/misc/npcm_clk.h |  9 ++++++++-
- 3 files changed, 22 insertions(+), 7 deletions(-)
+ MAINTAINERS                 |   1 +
+ pc-bios/README              |   8 ++++----
+ pc-bios/meson.build         |   1 +
+ pc-bios/npcm8xx_bootrom.bin | Bin 0 -> 608 bytes
+ roms/Makefile               |   6 ++++++
+ 5 files changed, 12 insertions(+), 4 deletions(-)
+ create mode 100644 pc-bios/npcm8xx_bootrom.bin
 
-diff --git a/hw/misc/npcm_clk.c b/hw/misc/npcm_clk.c
-index 0ecf0df3bb..78144b14e3 100644
---- a/hw/misc/npcm_clk.c
-+++ b/hw/misc/npcm_clk.c
-@@ -81,7 +81,7 @@ enum NPCM7xxCLKRegisters {
-  * All are loaded on power-up reset. CLKENx and SWRSTR should also be loaded on
-  * core domain reset, but this reset type is not yet supported by QEMU.
-  */
--static const uint32_t cold_reset_values[NPCM7XX_CLK_NR_REGS] = {
-+static const uint32_t npcm7xx_cold_reset_values[NPCM7XX_CLK_NR_REGS] = {
-     [NPCM7XX_CLK_CLKEN1]        = 0xffffffff,
-     [NPCM7XX_CLK_CLKSEL]        = 0x004aaaaa,
-     [NPCM7XX_CLK_CLKDIV1]       = 0x5413f855,
-@@ -728,10 +728,11 @@ static uint64_t npcm_clk_read(void *opaque, hwaddr offset, unsigned size)
- {
-     uint32_t reg = offset / sizeof(uint32_t);
-     NPCMCLKState *s = opaque;
-+    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
-     int64_t now_ns;
-     uint32_t value = 0;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3848d37a38..e145017d53 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -878,6 +878,7 @@ F: include/hw/*/npcm*
+ F: tests/qtest/npcm*
+ F: tests/qtest/adm1266-test.c
+ F: pc-bios/npcm7xx_bootrom.bin
++F: pc-bios/npcm8xx_bootrom.bin
+ F: roms/vbootrom
+ F: docs/system/arm/nuvoton.rst
+ F: tests/functional/test_arm_quanta_gsj.py
+diff --git a/pc-bios/README b/pc-bios/README
+index 7ffb2f43a4..700dcaab52 100644
+--- a/pc-bios/README
++++ b/pc-bios/README
+@@ -70,10 +70,10 @@
+   source code also contains code reused from other projects described here:
+   https://github.com/riscv/opensbi/blob/master/ThirdPartyNotices.md.
  
--    if (reg >= NPCM7XX_CLK_NR_REGS) {
-+    if (reg >= c->nr_regs) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: offset 0x%04" HWADDR_PRIx " out of range\n",
-                       __func__, offset);
-@@ -776,11 +777,12 @@ static void npcm_clk_write(void *opaque, hwaddr offset,
- {
-     uint32_t reg = offset / sizeof(uint32_t);
-     NPCMCLKState *s = opaque;
-+    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
-     uint32_t value = v;
+-- npcm7xx_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for Nuvoton
+-  NPCM7xx BMC devices. It currently implements the bare minimum to load, parse,
+-  initialize and run boot images stored in SPI flash, but may grow more
+-  features over time as needed. The source code is available at:
++- npcm{7xx,8xx}_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for
++  Nuvoton NPCM7xx/8xx BMC devices. It currently implements the bare minimum to
++  load, parse, initialize and run boot images stored in SPI flash, but may grow
++  more features over time as needed. The source code is available at:
+   https://github.com/google/vbootrom
  
-     trace_npcm_clk_write(offset, value);
+ - hppa-firmware.img (32-bit) and hppa-firmware64.img (64-bit) are firmware
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index b68b29cc7d..51e95cc903 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -80,6 +80,7 @@ blobs = [
+   'opensbi-riscv32-generic-fw_dynamic.bin',
+   'opensbi-riscv64-generic-fw_dynamic.bin',
+   'npcm7xx_bootrom.bin',
++  'npcm8xx_bootrom.bin',
+   'vof.bin',
+   'vof-nvram.bin',
+ ]
+diff --git a/pc-bios/npcm8xx_bootrom.bin b/pc-bios/npcm8xx_bootrom.bin
+new file mode 100644
+index 0000000000000000000000000000000000000000..6370d6475635c4d445d2b927311edcd591949c82
+GIT binary patch
+literal 608
+zcmdUrKTE?<6vfX=0{*3B5ET?nwWA^;qEk()n=Xb9-4dxoSBrz#p|QJQL~zokn{Eyc
+z?PBXUkU+aB?k?IbNQftG5ej|*FC2c{bKkr7zLy3jhNxj`gc_y5h&V=Ru)PgZC)Y`f
+zTqA9Am28qL<U6@cMtA>Hlr*^&hT#;re-)dpxT0U42|O+cWOcx=B;{6xXH04vx?cjm
+z+%U{oFx!aPpV3>ZKz0i$XA-yq{f}<H?{MHBq+VwIvR9WmcL(xr1vuIRGELcRC-S+P
+zl3%RlR5(6+1;xg_<~xR#bPItDN1*Hp^{JyNs7o*BMq0Q9q1#>x4;|pb<NWIbQ8wb1
+zTac^<ebj^E^Ig<?U?(PO-w>w;l#@9zGd|z-rs*H@V-o%PEV)D-)8n2%DyH5@w_^Y8
+LH5R3RMV#gjxYTW}
+
+literal 0
+HcmV?d00001
+
+diff --git a/roms/Makefile b/roms/Makefile
+index 31e4b97c98..beff58d9d5 100644
+--- a/roms/Makefile
++++ b/roms/Makefile
+@@ -34,6 +34,7 @@ find-cross-gcc = $(firstword $(wildcard $(patsubst %ld,%gcc,$(call find-cross-ld
+ # finally strip off path + toolname so we get the prefix
+ find-cross-prefix = $(subst gcc,,$(notdir $(call find-cross-gcc,$(1))))
  
--    if (reg >= NPCM7XX_CLK_NR_REGS) {
-+    if (reg >= c->nr_regs) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: offset 0x%04" HWADDR_PRIx " out of range\n",
-                       __func__, offset);
-@@ -870,10 +872,10 @@ static const struct MemoryRegionOps npcm_clk_ops = {
- static void npcm_clk_enter_reset(Object *obj, ResetType type)
- {
-     NPCMCLKState *s = NPCM_CLK(obj);
-+    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
++aarch64_cross_prefix := $(call find-cross-prefix,aarch64)
+ arm_cross_prefix := $(call find-cross-prefix,arm)
+ powerpc64_cross_prefix := $(call find-cross-prefix,powerpc64)
+ powerpc_cross_prefix := $(call find-cross-prefix,powerpc)
+@@ -66,6 +67,7 @@ default help:
+ 	@echo "  u-boot.e500        -- update u-boot.e500"
+ 	@echo "  u-boot.sam460      -- update u-boot.sam460"
+ 	@echo "  npcm7xx_bootrom    -- update vbootrom for npcm7xx"
++	@echo "  npcm8xx_bootrom    -- update vbootrom for npcm8xx"
+ 	@echo "  efi                -- update UEFI (edk2) platform firmware"
+ 	@echo "  opensbi32-generic  -- update OpenSBI for 32-bit generic machine"
+ 	@echo "  opensbi64-generic  -- update OpenSBI for 64-bit generic machine"
+@@ -194,6 +196,10 @@ npcm7xx_bootrom:
+ 	$(MAKE) -C vbootrom CROSS_COMPILE=$(arm_cross_prefix)
+ 	cp vbootrom/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
  
--    QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
--
--    memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
-+    g_assert(sizeof(s->regs) >= c->nr_regs * sizeof(uint32_t));
-+    memcpy(s->regs, c->cold_reset_values, sizeof(s->regs));
-     s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     npcm7xx_clk_update_all_clocks(s);
-     /*
-@@ -1045,11 +1047,14 @@ static void npcm_clk_class_init(ObjectClass *klass, void *data)
- 
- static void npcm7xx_clk_class_init(ObjectClass *klass, void *data)
- {
-+    NPCMCLKClass *c = NPCM_CLK_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END > NPCM_CLK_MAX_NR_REGS);
-     QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END != NPCM7XX_CLK_NR_REGS);
-     dc->desc = "NPCM7xx Clock Control Registers";
-+    c->nr_regs = NPCM7XX_CLK_NR_REGS;
-+    c->cold_reset_values = npcm7xx_cold_reset_values;
- }
- 
- static const TypeInfo npcm7xx_clk_pll_info = {
-@@ -1081,6 +1086,7 @@ static const TypeInfo npcm_clk_info = {
-     .parent             = TYPE_SYS_BUS_DEVICE,
-     .instance_size      = sizeof(NPCMCLKState),
-     .instance_init      = npcm_clk_init,
-+    .class_size         = sizeof(NPCMCLKClass),
-     .class_init         = npcm_clk_class_init,
-     .abstract           = true,
- };
-diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
-index ec16ea620e..4e8ce2cb89 100644
---- a/hw/misc/npcm_gcr.c
-+++ b/hw/misc/npcm_gcr.c
-@@ -215,6 +215,7 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
-         break;
- 
-     case 8:
-+        g_assert(!(reg & 1));
-         value = deposit64(s->regs[reg], 32, 32, s->regs[reg + 1]);
-         break;
- 
-@@ -270,6 +271,7 @@ static void npcm_gcr_write(void *opaque, hwaddr offset,
-         break;
- 
-     case 8:
-+        g_assert(!(reg & 1));
-         s->regs[reg] = value;
-         s->regs[reg + 1] = extract64(v, 32, 32);
-         break;
-diff --git a/include/hw/misc/npcm_clk.h b/include/hw/misc/npcm_clk.h
-index db03b46a52..f47614ac8d 100644
---- a/include/hw/misc/npcm_clk.h
-+++ b/include/hw/misc/npcm_clk.h
-@@ -175,8 +175,15 @@ struct NPCMCLKState {
-     Clock *clkref;
- };
- 
-+typedef struct NPCMCLKClass {
-+    SysBusDeviceClass parent;
++npcm8xx_bootrom:
++	$(MAKE) -C vbootrom CROSS_COMPILE=$(aarch64_cross_prefix)
++	cp vbootrom/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
 +
-+    size_t nr_regs;
-+    const uint32_t *cold_reset_values;
-+} NPCMCLKClass;
-+
- #define TYPE_NPCM_CLK "npcm-clk"
--OBJECT_DECLARE_SIMPLE_TYPE(NPCMCLKState, NPCM_CLK)
-+OBJECT_DECLARE_TYPE(NPCMCLKState, NPCMCLKClass, NPCM_CLK)
- #define TYPE_NPCM7XX_CLK "npcm7xx-clk"
- 
- #endif /* NPCM_CLK_H */
+ hppa-firmware:
+ 	$(MAKE) -C seabios-hppa parisc
+ 	cp seabios-hppa/out/hppa-firmware.img      ../pc-bios/
 -- 
 2.48.1.601.g30ceb7b040-goog
 
