@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE974C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A47C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkhRV-0008D5-VZ; Wed, 19 Feb 2025 05:36:37 -0500
+	id 1tkhTS-0000Pw-Rq; Wed, 19 Feb 2025 05:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tkhRO-0008Co-Q8
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:36:31 -0500
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tkhRL-0002aY-Uw
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:36:30 -0500
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-4be625c5365so897551137.2
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:36:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1739961386; x=1740566186;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4TxyzCvxl07ys2f5dIwWOx4N5ZsttGRWJQNf7pQrob4=;
- b=nUMIWoYU2yL27Y2Fw/SKU2qVmYVSx5ogcDmMssQOtp9oe7kB9jHlgwv8Qv8yXuMCN0
- SUis0eBsWydkLKDrz9xEoTXLab90h4XOAjMbWOwXw7nZVQ+koIrNHq0IIxee0nLVPZgV
- qQ7dSJ4MFq+kutaHMFFYWv7fcEuf4B4KFhqlrgJHFpUAfmkFyHO32gstOufAfbh6MWq3
- 0JfP254gumiZlfuXLNY7kC5A5SH5rMd5TKIm3azEkA9IQ017iYrsPhDytyp4gpfai7B7
- TUbBc2KtM9SwHcyMp631PU/dNysma1jzDu+zFN/L9tKFT3+ptfxVnTAxmzjoIGEuz5eO
- MvwA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tkhTP-0000Pk-0V
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:38:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tkhTN-0002mY-6d
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:38:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739961511;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MrcWK78FTlUhDvIDiXJ7tczaxY13U6NnZhzx4kbsy1A=;
+ b=MdRY4pdZRAXFVxzUiy7D5dLjH7OQ0hFBkBafDoaCyRuX87hay9jWEbzN4UFvV1fqXqwqDR
+ 1KrjWXG3w1aKTLEXki2c+b+Udaxl4KTAjKKM2JyI3LXXvCbw2fPsiDvrlrcTHiB4oFyuuW
+ a385YtI/qQSucN/rgdXvFzmLPR14SZs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-qxYGpaSDMwCifN7YZJ837Q-1; Wed, 19 Feb 2025 05:38:29 -0500
+X-MC-Unique: qxYGpaSDMwCifN7YZJ837Q-1
+X-Mimecast-MFC-AGG-ID: qxYGpaSDMwCifN7YZJ837Q_1739961508
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f2ef5f0dbso2481458f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:38:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739961386; x=1740566186;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4TxyzCvxl07ys2f5dIwWOx4N5ZsttGRWJQNf7pQrob4=;
- b=WIMetq+5+38sjWL4/UHBd3nBHDd4IyQHVz7ZLGiTPMxDghYCcHbghf/jdo9N8EWrYs
- FKH31Qn7eFSrScJQSKvz1o1JONhqfCO/tmPoOb4fh3pNNQGupi5tqZlXkVlCe/0Hwzd+
- xc0dqZ3L687Ab3q+wgPNHWR7RTf8jyYgsKCYaj3pHrN2WfG2d6bd4m6zwGWybwKYC1DB
- fyyKPJHaO1Tx3u1T/DhFDmQsUvfr97vq1lq+XcyRlG88cuSz1nI0K/TRbKqUZJhcP2fo
- ++otNCNqCHiFwJj+PoB6yeClwXh2DBUrF/l38iRRhYIEG7NdS2NDFmboufggdKa7WHvF
- PsnQ==
+ d=1e100.net; s=20230601; t=1739961508; x=1740566308;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MrcWK78FTlUhDvIDiXJ7tczaxY13U6NnZhzx4kbsy1A=;
+ b=uEYY05+0423WBcDBpHg0nanHvBV7mr8wH6vx/xh0q4ryPrIZW7M8+sPvbRzf4iwVdq
+ WPDK4L3PTbtKnpxBwo8wefl8fKYnJtTJWzKfrgsTc5lKQTx2G/K6ZtO9XuOOBYK0YnQ9
+ AsncOuCkMcZWogxIro0/ccIkcK9gaqfY1v6g9CARHLWhEX1//Ekv4M0TDyAsMXykFE8+
+ v+GF47Jzz9g96jqaT6LT+udbfRGgMiVW/BG+B8Vfj2U8ZJiNoDC71YqKv5eFCqKLzuZB
+ vWRT16kOBTAf8JZev72/OIGqEHOa9buQtWwG2dHv+sC7XKdYXANkthtGmFk42SEVP+CV
+ bDgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdZjMqHT3Fx3kTP+Fs/2Qx1BFvKIILlRlm90dL43/JjWSJN6itzKZZvAjpyEgZP/evXI6S+FNjvURn@nongnu.org
-X-Gm-Message-State: AOJu0Yzs8MiArY9HVMnUiVMRJ5aeiomWa2EsES75kKMXXetT68xguqa1
- dqemCRSYG3hE0PzlCkIE/QYL5bF7ezBxvaZKI4U8GB6eqa/zXmtzrQq0JeyhBTBN/cyKfWXGZPU
- otUIV7Mx2IPWSuuQiJ9aXHqJ1YnVzPgPro4oe
-X-Gm-Gg: ASbGnctIGcO2tOz/hAankzq/v/uLEgr2ME/KUWukww+dguodVoa+8UkQ/JfPky3ytsG
- CffBF2rmRHqzVQMRJE0n5K+rVMPsib3o2fANMD2VgQ7b8s+RUREYWKkgnKuq4WnPLXSnNv8yk
-X-Google-Smtp-Source: AGHT+IEIVV2kw6eCViLOxoRWk3jpAGTObcOaV9UPUPxYTy58PkIMJdV+J+VsE1Hpy2sXw0tsnJplaYmHc4k/LsRsfQ0=
-X-Received: by 2002:a05:6102:2b8e:b0:4be:3320:aa08 with SMTP id
- ada2fe7eead31-4be3320aad2mr9197782137.11.1739961386147; Wed, 19 Feb 2025
- 02:36:26 -0800 (PST)
+ AJvYcCWUN8VQq6S+hmlZJ2o9PJTJym+DALkT9Xw19GI4gXQRhvfPfe6X9bgje9CSLQaTIFAzbhkL0jpnhbIa@nongnu.org
+X-Gm-Message-State: AOJu0YzwytPFwJ/r6ZwIOAZ9JKWCL11FSF8LmxbhgHgBXUhYtxSwfkxE
+ Un8NI9BCnoOGwpPReDSgWuHt4SGW7CEtRZERRuOjSBfYTljzFU2Mw9Am5Jct3Ytu5YhX9Pz66EG
+ XeVDeAmod6EDFT/M13q2WOO4DgeOxpbsQEaVPCteYKnDbXTbQ9f6co5Xato8EFUM4OI4dupuWy6
+ WdQqEFU0IlWGL6lkBHvIS2ciWG460=
+X-Gm-Gg: ASbGncuaL+m38yNlltpulPgS+0q3O09xjPfogwmZXFs2qF7wPCnOvB8X+NmwPE8oYIa
+ 6lng4QvrgzOYO/h9dVFJIlsh0PvKR/ts4FmewApJmxlkBwEtYqXKW6G7idAfUNO8C
+X-Received: by 2002:a05:6000:402a:b0:38d:e48b:1766 with SMTP id
+ ffacd0b85a97d-38f33f118c8mr14890863f8f.6.1739961508122; 
+ Wed, 19 Feb 2025 02:38:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEmXqNyO4nYSbe47MgBKSEfyZx4/oIhcCEQcCOJKFvIl19M5e+qqB1knIk050IBtal63qMTkXoeQK0yphTs1IU=
+X-Received: by 2002:a05:6000:402a:b0:38d:e48b:1766 with SMTP id
+ ffacd0b85a97d-38f33f118c8mr14890842f8f.6.1739961507844; Wed, 19 Feb 2025
+ 02:38:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20250212112958.38023-1-philmd@linaro.org>
  <c33817a1-74d4-47b0-93d3-000cfd6200be@redhat.com>
  <CAAibmn2Ohd_-k5LGqo5m1xzLrrs2UYxCT6U_XEKsJYScfCpx6g@mail.gmail.com>
  <CABgObfaq2m42tBUAmskSXm-fR6zKDtApAsR4rYYqg8dnMq+Bog@mail.gmail.com>
-In-Reply-To: <CABgObfaq2m42tBUAmskSXm-fR6zKDtApAsR4rYYqg8dnMq+Bog@mail.gmail.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Wed, 19 Feb 2025 11:36:14 +0100
-X-Gm-Features: AWEUYZkKBQvjoBJudNsUw-psw3OEysc6o3cyFBGBjjKSfdS9xgmjVXPFRCbJlJk
-Message-ID: <CAAibmn3MvZtng=4vAGx6yNfMkM+u_HRbT0CAA6WhdbTtLDE5xQ@mail.gmail.com>
+ <CAAibmn3MvZtng=4vAGx6yNfMkM+u_HRbT0CAA6WhdbTtLDE5xQ@mail.gmail.com>
+In-Reply-To: <CAAibmn3MvZtng=4vAGx6yNfMkM+u_HRbT0CAA6WhdbTtLDE5xQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 19 Feb 2025 11:38:14 +0100
+X-Gm-Features: AWEUYZlT81xW43eFQJ1dhUOiuYOp70PVUEuDuguYdr2vf4M1i54fhPRLZCf86-g
+Message-ID: <CABgObfZzLs+yByD=736PFw8ZtH-OcJkxZiScaTWktdrY1+5e5g@mail.gmail.com>
 Subject: Re: [PATCH] meson: Display summary of Darwin libraries detected
-To: Paolo Bonzini <pbonzini@redhat.com>
+To: Phil Dennis-Jordan <phil@philjordan.eu>
 Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000583b83062e7c5461"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::e31;
- envelope-from=phil@philjordan.eu; helo=mail-vs1-xe31.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,134 +108,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000583b83062e7c5461
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, 19 Feb 2025 at 11:28, Paolo Bonzini <pbonzini@redhat.com> wrote:
-
-> On Tue, Feb 18, 2025 at 3:55=E2=80=AFPM Phil Dennis-Jordan <phil@philjord=
-an.eu>
-> wrote:
-> > It is not cross-architecture. So, the PVG guest drivers with x86-64
-> macOS don't
-> > give useful results with the aarch64 macOS host PVG framework. (I
-> suspect a
-> > mismatch in texture memory layout and perhaps some other data format
-> issues
-> > Apple's GPUs use a "swizzled" memory layout, whereas Intel/AMD/NVIDIA's
-> do not.)
+On Wed, Feb 19, 2025 at 11:36=E2=80=AFAM Phil Dennis-Jordan <phil@philjorda=
+n.eu> wrote:
+>> ... which boards should enable MAC_PVG_MMIO? Is it only VIRT, or somethi=
+ng
+>> else?
 >
-> Thanks, that helps.
->
-> > In summary, hw/display/apple-gfx-mmio.m has a hard dependency on aarch6=
-4
-> *host*
-> > systems, and both apple-gfx device variants only make sense when host
-> arch matches
-> > guest arch. (Unless you're a developer attempting to find a workaround
-> to the
-> > incompatibility.)  I'm very much not a Meson expert, so this was my bes=
-t
-> attempt at
-> > encoding these facts in the build system. (And nobody suggested anythin=
-g
-> better during
-> > review.)
->
-> I'll find a way to do that, thanks. I also would prefer to add
-> --enable/--disable-pvg; I
-> can take care of that, but I just need to know...
+> I doubt anyone will be able to use it productively with virt, but I am re=
+gularly surprised by people's creativity.
 
+Ah okay, so for now it's effectively dead code.
 
->> Either way, the Kconfig file does not need "depends on AARCH64" and it
-> >> should have just
-> >>
-> >>      depends on MAC_PVG
-> >>
-> >> with an "imply" somewhere in hw/arm/Kconfig.
->
-> ... which boards should enable MAC_PVG_MMIO? Is it only VIRT, or somethin=
-g
-> else?
+> The intended target machine is vmapple, which is the only known way
+> to run aarch64 macOS guests. [...]
+> I'll try to rebase that series and re-post it in the next few days
 
+Thanks, I'll keep an eye on that.
 
-I doubt anyone will be able to use it productively with virt, but I am
-regularly surprised by people's creativity.
+Paolo
 
-The intended target machine is vmapple, which is the only known way to run
-aarch64 macOS guests. The PVG patches were part of that series, the PCI
-variant is useful independently of it though; Philippe said at one point
-early Jan/late Dec he was going to merge the rest of the patch series
-containing that machine type, but there were some question marks about the
-software GICv3 dependency and HVF I believe. I'll try to rebase that series
-and re-post it in the next few days - I've been too busy with another
-project to stay on top of chasing that down, but I'd really like to get it
-done for 10.0.
-
-Phil
-
---000000000000583b83062e7c5461
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br><div class=3D"gmail_quote gmail_quote_container"><=
-div dir=3D"ltr" class=3D"gmail_attr">On Wed, 19 Feb 2025 at 11:28, Paolo Bo=
-nzini &lt;<a href=3D"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>&gt=
-; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue,=
- Feb 18, 2025 at 3:55=E2=80=AFPM Phil Dennis-Jordan &lt;<a href=3D"mailto:p=
-hil@philjordan.eu" target=3D"_blank">phil@philjordan.eu</a>&gt; wrote:<br>
-&gt; It is not cross-architecture. So, the PVG guest drivers with x86-64 ma=
-cOS don&#39;t<br>
-&gt; give useful results with the aarch64 macOS host PVG framework. (I susp=
-ect a<br>
-&gt; mismatch in texture memory layout and perhaps some other data format i=
-ssues<br>
-&gt; Apple&#39;s GPUs use a &quot;swizzled&quot; memory layout, whereas Int=
-el/AMD/NVIDIA&#39;s do not.)<br>
-<br>
-Thanks, that helps.<br>
-<br>
-&gt; In summary, hw/display/apple-gfx-mmio.m has a hard dependency on aarch=
-64 *host*<br>
-&gt; systems, and both apple-gfx device variants only make sense when host =
-arch matches<br>
-&gt; guest arch. (Unless you&#39;re a developer attempting to find a workar=
-ound to the<br>
-&gt; incompatibility.)=C2=A0 I&#39;m very much not a Meson expert, so this =
-was my best attempt at<br>
-&gt; encoding these facts in the build system. (And nobody suggested anythi=
-ng better during<br>
-&gt; review.)<br>
-<br>
-I&#39;ll find a way to do that, thanks. I also would prefer to add<br>
---enable/--disable-pvg; I<br>
-can take care of that, but I just need to know...</blockquote><div><br></di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;&gt; Either way, the Kconfig file does not need &quot;depends on AARCH6=
-4&quot; and it<br>
-&gt;&gt; should have just<br>
-&gt;&gt;<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 depends on MAC_PVG<br>
-&gt;&gt;<br>
-&gt;&gt; with an &quot;imply&quot; somewhere in hw/arm/Kconfig.<br>
-<br>
-... which boards should enable MAC_PVG_MMIO? Is it only VIRT, or something<=
-br>
-else?</blockquote><div><br></div><div>I doubt anyone will be able to use it=
- productively with virt, but I am regularly surprised by people&#39;s creat=
-ivity.</div><div><br></div><div>The intended target machine is vmapple, whi=
-ch is the only known way to run aarch64 macOS guests. The PVG patches were =
-part of that series, the PCI variant is useful independently of it though; =
-Philippe said at one point early Jan/late Dec he was going to merge the res=
-t of the patch series containing that machine type, but there were some que=
-stion marks about the software GICv3 dependency and HVF I believe. I&#39;ll=
- try to rebase that series and re-post it in the next few days - I&#39;ve b=
-een too busy with another project to stay on top of chasing that down, but =
-I&#39;d really like to get it done for 10.0.</div><div><br></div><div>Phil<=
-/div><div><br></div></div></div>
-
---000000000000583b83062e7c5461--
 
