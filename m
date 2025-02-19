@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E46C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 12:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAA9C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 12:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkjIh-0003aL-J4; Wed, 19 Feb 2025 07:35:39 -0500
+	id 1tkjO0-0005bd-3p; Wed, 19 Feb 2025 07:41:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
- id 1tkhi4-0002PN-Bp
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:53:44 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
- id 1tkhi0-0004rn-Vi
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:53:44 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-30761be8fa7so66932361fa.2
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:53:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739962418; x=1740567218; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=iJ9stCGeL3YQyXHv6c2zusw2mEv+Og/V0/o1mL/JxVg=;
- b=YhDqyFtKQoLvRiDExQAynNGodxPCsvw9HOzRZf3BaEb5sjDhz4oEyynkUJUr1oWhUL
- fLPfzMRbmQNytOBN84RUo4yhEp+uBj8dubO8B3IGGgktJFj/39Ru6J04LI8n2zslk/46
- frzxIs2eEtclk1fuHDl31OgBmhYBh4CrkTsg1q9sKTKS/HXy/GKSOWq+nuxV2RZ3d1s4
- p4CxTV9DemooKxfF5aR/S3DCcGTf8oNtPr1VFasySF69ZnVKmXlvVw3R3p8wc9ZntVbv
- IQ9mnk7597aBoXGzExJf8vGTf/tsJLneBi0MoO1plIOuaQl/H3u5AtRxYQxHj4qiMX7B
- twHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739962418; x=1740567218;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iJ9stCGeL3YQyXHv6c2zusw2mEv+Og/V0/o1mL/JxVg=;
- b=wOMp10G1l6oeAo2AY8VyprXMGlCNj1A5f4wD/EM29xPwsEsl/DrVsnuHDsmlRX0pK0
- dmMjtE/gy9Uz2PTpzp0IlN8U6FOQocq4l6IytDKSobVvto0LSps72RO/L54d960TDYX7
- F8O5A0WRDjV2YbJGsIKpRN1HUWA17PmljrIXriqC4k4EbdbCFwjeUpWqPnCv8V0a91tp
- 0oU8y6D+CX0NTGqDrDNBkycdiUCexCbQ26vKnb8Kfz+8b09QcJTRcoZznHBxjpjlztsC
- uQP+CJv9AAOLXnPhrS1ypn8hVThs7/LaQh4qOgQBbjpB1f+opWyN5RJX/3T041kuHbkL
- nkkQ==
-X-Gm-Message-State: AOJu0Yx57wy10JX9VrbJax+ZAr9wX6wQEUTdk1U7W0BP72XgIyG97W2r
- ohh4D96KJXfBQnrl5ZIMtpD+p/913RwY97nfePj6VLtARCXo0B9hg6tS+VRobvIQFE89rJTnQ5y
- cPy+OlgC8pWuVFmCv6gLJXgivBeLCN3rf
-X-Gm-Gg: ASbGncvQhxkIowEK1qKGu22DJLz533fRtaNf3U+AgT6JfXXoZ/06vliGXpFHKlsLZPM
- 1oX6c9To1hl+YNyXKDO0RgNUFuGWA+38zXOSz2rYH1SXI8/xig5Iv6o8Xx3GnCksh3m2VG8M=
-X-Google-Smtp-Source: AGHT+IFpAijT5/hhfxunQ1pw1IJzBl+1P3Lp7UZgWG38TE8PPrz8jr02u8u0AiiB21yhr+S/gDNi0E9te0raQRh5UzY=
-X-Received: by 2002:a2e:8050:0:b0:302:2598:dec2 with SMTP id
- 38308e7fff4ca-30a44dc4a86mr9012121fa.14.1739962417535; Wed, 19 Feb 2025
- 02:53:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1tkjNn-0005a5-3G
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 07:40:56 -0500
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1tkjNk-0002Vi-Ik
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 07:40:54 -0500
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 6E3D6429BA
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 12:40:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1739968849;
+ bh=fbhygDnY+8kDa4lZCPRYrAaT9DfBLr8K0Fx6RJw5C6U=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=h1dmDz+w/pd+Yk4AXTBJbkeKqk3+ZrsVJUDCF8/zbfKrtuD86DVPBr0e26rZlwI8A
+ VXmHGkVSX0UZNgQydlTHpf0ftF73ObLz5F/0P2z8Y/Ojww4n5G08YHALFjE6rUfaCx
+ vSJMBJ9wD+Dh9xk5azlD01vmM/cXXwnMsZg/XdOKkcshrPkGm51ERARW9USTSKarSx
+ 0GziiT7+er1synZvowE+nflJYspgRQyJLwzc/X+0urdzt3HX8v8IonPCgoV2cyo+PZ
+ Owq1TVZbw7Rqzkq1K5Kguqx4LQQjX+0Ww1U7cL2O+iFvJKf5aUtFQK4gZwfFCKTrea
+ e+gSi9dfWQcMg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 589727E7EF
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 12:40:49 +0000 (UTC)
 MIME-Version: 1.0
-From: prashant patil <pmgpatil@gmail.com>
-Date: Wed, 19 Feb 2025 16:23:26 +0530
-X-Gm-Features: AWEUYZljgtq6oXFI5x0fFvnjpUt0f5ewCuLs30s6Bs5yyOLnODga6i_IpUFsrVg
-Message-ID: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
-Subject: Query on the dirty bitmap
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 19 Feb 2025 12:34:14 -0000
+From: Dimitry Andric <2072564@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000d1e3ce062e7c918d"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=pmgpatil@gmail.com; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Triaged; importance=Undecided; assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: dimitry.unified-streaming.com michal.fita paelzer
+ sergiodj thir820
+X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
+X-Launchpad-Bug-Modifier: Dimitry Andric (dimitry.unified-streaming.com)
+References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
+Message-Id: <173996845414.1124833.7032507399745575481.malone@juju-98d295-prod-launchpad-2>
+Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
+ (amd64 host)
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="78860d903de6d6d7dd5a0ade63efaca45d3467e2";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 9d59be006d628c45f64c72db3f31aefb6067a21f
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 19 Feb 2025 07:35:38 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -84,54 +88,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d1e3ce062e7c918d
-Content-Type: text/plain; charset="UTF-8"
+Upstream has committed https://gitlab.com/qemu-
+project/qemu/-/commit/4b7b20a3 which fixes the segfaults. A prerequisite
+for the qemu 8.2.2 package in Ubuntu 24.04 is https://gitlab.com/qemu-
+project/qemu/-/commit/c81d1faf, so here is a patch that includes both.
 
-Hello All,
-Hope this email finds you well.
 
-I have been trying with qemu for a while now, and have come across a
-problem specific to dirty bitmaps. I have enabled bitmap on the qcow2 disk
-image using 'qemu-img bitmap' command, exposed the bitmap over a unix
-socket using 'qemu-nbd' command. Now when I try to read the bitmap using
-'qemu-img map' command with 'x-dirty-bitmap=qemu:dirty-bitmap:{bitmap}'
-option, I get one single extent which shows that the entire disk is dirty.
-Note that the disk size is 5 GB, and has only a few MB of data in it, and
-had added very small data after the bitmap was enabled. Bitmap output has
-been pasted below.
+** Patch added: "Fix qemu-aarch64-static segfaults"
+   https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2072564/+attachment/=
+5858748/+files/fix-lp2072564-1.diff
 
-[{ "start": 0, "length": 5368709120, "depth": 0, "present": true, "zero":
-false, "data": true, "compressed": false, "offset": 0}]
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2072564
 
-Can someone please help me understand why the bitmap content shows the
-entire disk as dirty?
+Title:
+  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
 
-Regards
-Prashant
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Triaged
 
---000000000000d1e3ce062e7c918d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Bug description:
+  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
+  Ubuntu 24.04, running on a amd64 host.
 
-<div dir=3D"ltr">Hello All,<div>Hope this email finds you well.</div><div><=
-br></div><div>I have been trying with qemu for a while now, and have come a=
-cross a problem specific to dirty bitmaps. I have enabled bitmap on the qco=
-w2 disk image using &#39;qemu-img bitmap&#39; command, exposed the bitmap o=
-ver a unix socket using &#39;qemu-nbd&#39; command. Now when I try to read =
-the bitmap using &#39;qemu-img map&#39; command with &#39;x-dirty-bitmap=3D=
-qemu:dirty-bitmap:{bitmap}&#39; option, I get one single extent which shows=
- that the entire disk is dirty. Note that the disk size is 5 GB, and has on=
-ly a few MB of data in it, and had added very small data after the bitmap w=
-as enabled. Bitmap output has been pasted below.</div><div><br></div><div>[=
-{ &quot;start&quot;: 0, &quot;length&quot;: 5368709120, &quot;depth&quot;: =
-0, &quot;present&quot;: true, &quot;zero&quot;: false, &quot;data&quot;: tr=
-ue, &quot;compressed&quot;: false, &quot;offset&quot;: 0}]</div><div><br></=
-div><div>Can someone please help me understand why the bitmap content shows=
- the entire disk as dirty?</div><div><br></div><div>Regards</div><div>Prash=
-ant</div></div>
+  When running docker containers with Ubuntu 22.04 in them, emulating
+  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
+  ldconfig.real) segfault. For example:
 
---000000000000d1e3ce062e7c918d--
+  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04=20
+  root@8861ff640a1c:/# /sbin/ldconfig.real
+  Segmentation fault
+
+  If you copy the ldconfig.real binary to the host, and run it directly
+  via qemu-aarch64-static:
+
+  $ gdb --args qemu-aarch64-static ./ldconfig.real=20
+  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+  Copyright (C) 2024 Free Software Foundation, Inc.
+  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
+tml>
+  This is free software: you are free to change and redistribute it.
+  There is NO WARRANTY, to the extent permitted by law.
+  Type "show copying" and "show warranty" for details.
+  This GDB was configured as "x86_64-linux-gnu".
+  Type "show configuration" for configuration details.
+  For bug reporting instructions, please see:
+  <https://www.gnu.org/software/gdb/bugs/>.
+  Find the GDB manual and other documentation resources online at:
+      <http://www.gnu.org/software/gdb/documentation/>.
+
+  For help, type "help".
+  Type "apropos word" to search for commands related to "word"...
+  Reading symbols from qemu-aarch64-static...
+  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
+4189499f62f176bea817bf2/debuginfo...
+  (gdb) r
+  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
+  [Thread debugging using libthread_db enabled]
+  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+  [New Thread 0x7ffff76006c0 (LWP 28378)]
+
+  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
+  0x00007fffe801645b in ?? ()
+  (gdb) disassemble=20
+  No function contains program counter for selected frame.
+
+  It looks like this is a known qemu regression after v8.1.1:
+  https://gitlab.com/qemu-project/qemu/-/issues/1913
+
+  Downgrading the package to qemu-user-
+  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
+
 
