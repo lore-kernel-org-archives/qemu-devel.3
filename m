@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E871C021AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 09:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F7DCC021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 09:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkg0E-0005tq-9z; Wed, 19 Feb 2025 04:04:22 -0500
+	id 1tkg2E-0006iw-4z; Wed, 19 Feb 2025 04:06:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkg0B-0005tI-UQ
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:04:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkg08-00088m-Ik
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:04:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739955855;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ocBR5LGCbzpOEQ6oL9LxsRdCTK7a08kvS7Nr9NK+tMw=;
- b=BXa7UW914UIvvIGtJFFHVTKYt3t8IuP+/V4rdg1jlsTWCDQulRHDIVogzyCCNgGEGmW3XN
- FFIjgoMxbroNgVIzWXtZvvd6/D+O4vQApQO6Rvpb8RzWes3hRfPxI2oVadd9rcaUOlDkf5
- tEkkquuay4JUJUFw2PVdz2e0p12u+Ig=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-svTTE5svOjCTXUU6nuws1Q-1; Wed,
- 19 Feb 2025 04:04:11 -0500
-X-MC-Unique: svTTE5svOjCTXUU6nuws1Q-1
-X-Mimecast-MFC-AGG-ID: svTTE5svOjCTXUU6nuws1Q_1739955850
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6862E180087B; Wed, 19 Feb 2025 09:04:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76D041955BCB; Wed, 19 Feb 2025 09:04:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 73E4921E6A28; Wed, 19 Feb 2025 10:04:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
- Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
- Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
- <jasowang@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH 29/42] qapi: Add "Details:" disambiguation marker
-In-Reply-To: <CAFn=p-a8=+BZfUjiaQpXU7UbH7_oV5WNdumHqbD8kauf3YqKVQ@mail.gmail.com>
- (John Snow's message of "Tue, 18 Feb 2025 17:26:02 -0500")
-References: <20250205231208.1480762-1-jsnow@redhat.com>
- <20250205231208.1480762-30-jsnow@redhat.com>
- <87seocrdk9.fsf@pond.sub.org>
- <CAFn=p-a8=+BZfUjiaQpXU7UbH7_oV5WNdumHqbD8kauf3YqKVQ@mail.gmail.com>
-Date: Wed, 19 Feb 2025 10:04:05 +0100
-Message-ID: <878qq271bu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tkg2B-0006iL-W9
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:06:24 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tkg2A-0008Sn-6q
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:06:23 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-abbc38adeb1so232159766b.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 01:06:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739955979; x=1740560779; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sXd50VFtO0uVAoaFRh+NIMNZHl0INBngOiyrGUkb0Hw=;
+ b=Y9ILJc+St652xqrAyjmPj77w4pWcntp+6LObGSgG2oiWmD5KWQQcCg5lKOtepfh9oe
+ OolqYpKfRT9ydrFEgROI77C+i5cms+ja86YbEaVFzCUcy4nB8EctEzFeZg/SjPc3zUHK
+ SW9LZWl28fGqtp6ww9heTmzVpdLc1+T3I9dCPhNApizjylBK21NoSfJNuZjRHUw5k0/A
+ AJrrzUulDuYZsHt/0YH0rYx+Ur3LP+XakOhDWYqF04m14k0rPJXoeupKsqtyFxcrhU9/
+ 6YvA3cYHiANwR/ZqSXXR7N2uOJXA5RGdXAxBMIAJsrreUOrQBmWxK68NPMG2uPgsOpQw
+ O+cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739955979; x=1740560779;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sXd50VFtO0uVAoaFRh+NIMNZHl0INBngOiyrGUkb0Hw=;
+ b=FegqCvjNEuGNjtW7dgOgAD1K3PhAWHyEOe8PHwCRE9PbgJcs5xQQoVmDcMF2SnezUW
+ xenjaSdYzp6E8256p8Kxcnh2fb9uVpzSZrNxVxkCueL4Eu3XOrOyjc++gNOgS76deKyA
+ 3FsBf41oQksuMJK+5G8AYbD0CQsq5eE7eq17MQK/a2y9OcC6npIqr9dgBVA9XV56w7o4
+ z73+kAMxAcBRSnoxhnhRI1tfp8pY7HBiwl+tA/1ciWdt4dEXXzI6zNAtARyG3TYs7RZq
+ mij46xbvqJ/w3Oauzn7zhogT3JN4xtMoh/80spj7xBq0vqn3thIE74NyO4uOUGnsnJ3Z
+ j6lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRgn2quXif1X3pF8YNZjiIBP9sKFb52CESDOhQULbAncW/OzKqqc66s/4EHHkke10DEvixksd+wxsa@nongnu.org
+X-Gm-Message-State: AOJu0YwQxdZkVAgqGkuYlO3d1XGua3ece6CBt34YVKyE0P+8Paxg1c5o
+ IH2t1ZswHznZGWDv+hj1m3UbITWLd1edPzMihVQZ23OaB0tXYVmm
+X-Gm-Gg: ASbGncuetN/eZ5jiYLjqLPd5vxrZAg2RGSQN9fzkabI2+hZkISCU/aFJ1eDP+/yl1/m
+ Ek16q8tH/X/Hdg7AAM+9yCtqNpSiRIGyvQ2CZbHMz7Jsv6frbrHHlPEq7BQADyP9eaqqIkJL6Sm
+ sGwUKIWZwqBI1zVbvqx4o96QF5PfEEpoOmbvrwpFJEXv7jJqJNDPJyKgLk+myJ0dMgTmhapZ6Ye
+ +O2Kh8/Qlnbgkfwa3DPPr2adDZwM2/ujbezHuIDruNuCD7Qtx+SJACZUVslFtk2A51s4nbi07gK
+ 6lbGH1EcBFh4FhnIfMtzgmY=
+X-Google-Smtp-Source: AGHT+IHHTz3QbHXoc+h1A3QyHVtx2q2ZpaXqZqjR+HDmtSuaGT+UUd07cZS285AXqhHj7wDcXEgHUQ==
+X-Received: by 2002:a17:907:96a1:b0:ab6:fd1d:ef6b with SMTP id
+ a640c23a62f3a-abbccebec04mr286233566b.27.1739955979217; 
+ Wed, 19 Feb 2025 01:06:19 -0800 (PST)
+Received: from think.fritz.box ([2a02:8109:8384:1400:8a23:a57:e776:3169])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abb9faab9f1sm495084166b.49.2025.02.19.01.06.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Feb 2025 01:06:18 -0800 (PST)
+From: Roman Penyaev <r.peniaev@gmail.com>
+To: 
+Cc: Roman Penyaev <r.peniaev@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: [PATCH 1/1] qapi/char.json: minor doc rewording for `hub` device
+Date: Wed, 19 Feb 2025 10:06:03 +0100
+Message-ID: <20250219090607.559887-1-r.peniaev@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,74 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Refine documentation for the hub device, specify the maximum.
 
-> On Mon, Feb 17, 2025 at 6:55=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > This clarifies sections that are mistaken by the parser as "intro"
->> > sections to be "details" sections instead.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  qapi/machine.json      | 2 ++
->> >  qapi/migration.json    | 4 ++++
->> >  qapi/qom.json          | 4 ++++
->> >  qapi/yank.json         | 2 ++
->> >  scripts/qapi/parser.py | 8 ++++++++
->> >  5 files changed, 20 insertions(+)
->>
->> Missing updates for the new syntax
->>
->> * Documentation: docs/devel/qapi-code-gen.rst
->>
->
->> * Positive test case(s): tests/qapi-schema/doc-good.json
->>
->> * Maybe a negative test case for _tag_check() failure
->>
->>
-> Understood; I wasn't entirely sure if this concept would fly, so I saved
-> the polish and you got an RFC quality patch. Forgive me, please! If you
+Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+---
+ qapi/char.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-As I wrote in review of PATCH 28, this is good strategy.
-
-> think this approach is fine, I will certainly do all the things you
-> outlined above.
->
->
->> [...]
->>
->> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> > index c5d2b950a82..5890a13b5ba 100644
->> > --- a/scripts/qapi/parser.py
->> > +++ b/scripts/qapi/parser.py
->> > @@ -544,6 +544,14 @@ def _tag_check(what: str) -> None:
->> >                          raise QAPIParseError(
->> >                              self, 'feature descriptions expected')
->> >                      have_tagged =3D True
->> > +                elif line =3D=3D 'Details:':
->> > +                    _tag_check("Details")
->>
->> This one.
->>
->
-> ACK
->
->
->>
->> > +                    self.accept(False)
->> > +                    line =3D self.get_doc_line()
->> > +                    while line =3D=3D '':
->> > +                        self.accept(False)
->> > +                        line =3D self.get_doc_line()
->> > +                    have_tagged =3D True
->> >                  elif match :=3D self._match_at_name_colon(line):
->> >                      # description
->> >                      if have_tagged:
->>
->>
+diff --git a/qapi/char.json b/qapi/char.json
+index f02b66c06b3e..dde2f9538f81 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -337,7 +337,7 @@
+ #
+ # Configuration info for hub chardevs.
+ #
+-# @chardevs: List of chardev IDs, which should be added to this hub
++# @chardevs: IDs to be added to this hub (maximum 4 devices).
+ #
+ # Since: 10.0
+ ##
+-- 
+2.43.0
 
 
