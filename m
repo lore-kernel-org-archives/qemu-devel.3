@@ -4,97 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA71EC021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49423C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkh6d-0004yV-AB; Wed, 19 Feb 2025 05:15:03 -0500
+	id 1tkhEY-0006AU-Ay; Wed, 19 Feb 2025 05:23:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
- id 1tkh6b-0004yJ-Pd
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:15:01 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
- id 1tkh6a-0007RU-0I
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:15:01 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-38f504f087eso1594821f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:14:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739960098; x=1740564898; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=pBdezJomEBdTTOtXU+AfpHqre+lwyUBQ4DYIvVkVfSA=;
- b=VDmd4A2CMxGbHcyV/2IYEZelmOU11fvJBGS1EadhJU25Q29JiqDGR5VJ9rmGSWLU/K
- aBZlFeuzvA2XtPkRIUH+mthJxaNxax5EGKQUr7RSLdTmYEas33BNPishubqEUKkvKnGf
- dzKcZsKTCsXZzhghJjHPbdLZpNXsp434hHsmQ38TXRCzoG07ME+zfhzRa//3R9p86bPS
- oky4y3IZ871WnTT3PVF/SBJCgAGVXuZbolrJxtgvc7AdAhno+Bs4sVp0ywr71qds/vV3
- h7w84k9lavZp0wZoJQHd8MVPqq5+KzCWOp8Sw58DhjpNWwbjkJv90UvXcecdAivDDtQw
- YAww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739960098; x=1740564898;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pBdezJomEBdTTOtXU+AfpHqre+lwyUBQ4DYIvVkVfSA=;
- b=h3p8hPXi64OGnaZrgc9+4yfVOR5ImevV+E4rfwmw5X8V+NYxbhMc1H1588eyVvqOhl
- awwwkgtB6fCltrruhY8sEtmGz8nzHh8KTkMscQt/VzeU3gpcYFU+YwlcrsG4PsCPKC0E
- uDLq3JUeIFBgbqIBJU8oYyqHeolhe9Ye8yjcxmkRCe9MQjxhUCPE8EuWopf43nvp7I3d
- 3xS05oneFTxHg+Nvjl9bpso/Yz3ezzMfzVhW2DKpS+L5T5bn//ELNRnnHFTKAcNtZ5t3
- cf+PocCZin2jfSTD7FqT0dNw+A8JfdszEvEXT5cx1SWr3cZXd541u4idODWgwha5kt10
- SQmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVv/DJhG5sULM/dK/qJ6UoCh8QgWoqTgNMcePmz6pZayULzGpS582NqX/+OTbu9W8nUjGnf07M2o01H@nongnu.org
-X-Gm-Message-State: AOJu0Yz5qsOtZDn9IyXSvLkAYSzEtmB3aUmAcQd6QE36//KQ/NGJ8cfR
- +Zf7k/Y+Lne7OBUsF+gEXMNW5dQYYb3Z2qWjy1Tzv0UaZ3t1TFmR
-X-Gm-Gg: ASbGncuuuJk0VZb0yg5EcmKj+KVfO1t6RbKYNpzByNAJsIIbheJ5PGylRqUvY69i+rL
- B0GQqvlWMHEEB32tyx3bRaDplstoTDw50uPOQuHut9Ghy/Vaez56eFxJ/9N5SdF5eSoTzWIQfZ1
- jwsvj+XhSbAN1sovEKUYnYji138t6DRG8xJgJTU4cnt+ecsaxeVs1wWKhF2hCvXHbf4W1qfySrn
- 3BPaODjE2J2DDQHDpYZzRh25ujUHi7jTldcXhIcdc1QbslJRy7r8IVqKNlKFgW6MoQvyanwhCQp
- AcKOB8G++UUCgx93MVL8RDTj6TokhRTL72IyUc4XJlxcEw+F2sEC0fTAA0i6EN1sOnQ6GF2C
-X-Google-Smtp-Source: AGHT+IGVpmUfFf4EKFxE5EQ7BRJspLuZlpuC9K+zDXtaBJ110L1kEgPSGteUe0uewA53XqGlKtU4FQ==
-X-Received: by 2002:a05:6000:1a86:b0:38f:2211:e628 with SMTP id
- ffacd0b85a97d-38f5878d730mr2603011f8f.20.1739960097984; 
- Wed, 19 Feb 2025 02:14:57 -0800 (PST)
-Received: from ?IPv6:2001:b07:5d29:f42d:64f1:54a0:5dc5:6dd1?
- ([2001:b07:5d29:f42d:64f1:54a0:5dc5:6dd1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b412esm17125485f8f.1.2025.02.19.02.14.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 02:14:57 -0800 (PST)
-Message-ID: <6571727841685f4276aa7c814776ff1fdd162a0a.camel@gmail.com>
-Subject: Re: [PATCH v7 08/52] i386/tdx: Initialize TDX before creating TD vcpus
-From: Francesco Lavra <francescolavra.fl@gmail.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=
- <berrange@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Marcelo Tosatti
- <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Rick Edgecombe
- <rick.p.edgecombe@intel.com>,  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Date: Wed, 19 Feb 2025 11:14:56 +0100
-In-Reply-To: <20250124132048.3229049-9-xiaoyao.li@intel.com>
-References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
- <20250124132048.3229049-9-xiaoyao.li@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.46.4-2 
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tkhDz-00069A-UH
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:23:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tkhDx-0008Sg-27
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:22:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739960555;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Y5oTyihlv2r1PzHzBpqIwuXf7rdx5G0OLqbsEDeG+Nk=;
+ b=dsVFseAMNLqsppNMmKmpDl5tSk3WOWqxjEv1Abn6Ytsg1SGTYmDX94Np++BvbDq3ItfabB
+ OxII9M90TmGrVF4ATniMyZ0Mj0Evx8/OqMAR1vjARnk/ixHsJVHNCx4xNUr8Gf9pMNH1fC
+ XnXJh7YTrrz/JqpZYY6WKkEpLSoOrhk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-42--WvYheAUP5KVQLkfg1fSTQ-1; Wed,
+ 19 Feb 2025 05:22:26 -0500
+X-MC-Unique: -WvYheAUP5KVQLkfg1fSTQ-1
+X-Mimecast-MFC-AGG-ID: -WvYheAUP5KVQLkfg1fSTQ_1739960545
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA22919783B2; Wed, 19 Feb 2025 10:22:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.135])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 804681955BCB; Wed, 19 Feb 2025 10:22:23 +0000 (UTC)
+Date: Wed, 19 Feb 2025 10:22:19 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Faisal Al-Humaimidi <falhumai96@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Permissively Licensing the CPU Component
+Message-ID: <Z7Ww25VdhY_eDmof@redhat.com>
+References: <CAMx8kb0zN7CPjuFJatoF+5UBwdLaCA_AJGcxUV8cdBoDd1RBag@mail.gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=francescolavra.fl@gmail.com; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAMx8kb0zN7CPjuFJatoF+5UBwdLaCA_AJGcxUV8cdBoDd1RBag@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,32 +81,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gRnJpLCAyMDI1LTAxLTI0IGF0IDA4OjIwIC0wNTAwLCBYaWFveWFvIExpIHdyb3RlOgo+IGRp
-ZmYgLS1naXQgYS9hY2NlbC9rdm0va3ZtLWFsbC5jIGIvYWNjZWwva3ZtL2t2bS1hbGwuYwo+IGlu
-ZGV4IDQ1ODY3ZGJlMDgzOS4uZTM1YTlmYmQ2ODdlIDEwMDY0NAo+IC0tLSBhL2FjY2VsL2t2bS9r
-dm0tYWxsLmMKPiArKysgYi9hY2NlbC9rdm0va3ZtLWFsbC5jCj4gQEAgLTU0MCw4ICs1NDAsMTUg
-QEAgaW50IGt2bV9pbml0X3ZjcHUoQ1BVU3RhdGUgKmNwdSwgRXJyb3IgKiplcnJwKQo+IMKgCj4g
-wqDCoMKgwqAgdHJhY2Vfa3ZtX2luaXRfdmNwdShjcHUtPmNwdV9pbmRleCwga3ZtX2FyY2hfdmNw
-dV9pZChjcHUpKTsKPiDCoAo+ICvCoMKgwqAgLyoKPiArwqDCoMKgwqAgKiB0ZHhfcHJlX2NyZWF0
-ZV92Y3B1KCkgbWF5IGNhbGwgY3B1X3g4Nl9jcHVpZCgpLiBJdCBpbiB0dXJuCj4gbWF5IGNhbGwK
-PiArwqDCoMKgwqAgKiBrdm1fdm1faW9jdGwoKS4gU2V0IGNwdS0+a3ZtX3N0YXRlIGluIGFkdmFu
-Y2UgdG8gYXZvaWQgTlVMTAo+IHBvaW50ZXIKPiArwqDCoMKgwqAgKiBkZXJlZmVyZW5jZS4KPiAr
-wqDCoMKgwqAgKi8KPiArwqDCoMKgIGNwdS0+a3ZtX3N0YXRlID0gczsKClRoaXMgYXNzaWdubWVu
-dCBzaG91bGQgYmUgcmVtb3ZlZCBmcm9tIGt2bV9jcmVhdGVfdmNwdSgpLCBhcyBub3cgaXQncwpy
-ZWR1bmRhbnQgdGhlcmUuCgo+IMKgwqDCoMKgIHJldCA9IGt2bV9hcmNoX3ByZV9jcmVhdGVfdmNw
-dShjcHUsIGVycnApOwo+IMKgwqDCoMKgIGlmIChyZXQgPCAwKSB7Cj4gK8KgwqDCoMKgwqDCoMKg
-IGNwdS0+a3ZtX3N0YXRlID0gTlVMTDsKCk5vIG5lZWQgdG8gcmVzZXQgY3B1LT5rdm1fc3RhdGUg
-dG8gTlVMTCwgdGhlcmUgYWxyZWFkeSBhcmUgb3RoZXIgZXJyb3IKY29uZGl0aW9ucyB1bmRlciB3
-aGljaCBjcHUtPmt2bV9zdGF0ZSByZW1haW5zIGluaXRpYWxpemVkLgoKPiDCoMKgwqDCoMKgwqDC
-oMKgIGdvdG8gZXJyOwo+IMKgwqDCoMKgIH0KPiDCoAo+IEBAIC01NTAsNiArNTU3LDcgQEAgaW50
-IGt2bV9pbml0X3ZjcHUoQ1BVU3RhdGUgKmNwdSwgRXJyb3IgKiplcnJwKQo+IMKgwqDCoMKgwqDC
-oMKgwqAgZXJyb3Jfc2V0Z19lcnJubyhlcnJwLCAtcmV0LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJrdm1faW5pdF92Y3B1OiBrdm1fY3JlYXRl
-X3ZjcHUgZmFpbGVkCj4gKCVsdSkiLAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIGt2bV9hcmNoX3ZjcHVfaWQoY3B1KSk7Cj4gK8KgwqDCoMKgwqDC
-oMKgIGNwdS0+a3ZtX3N0YXRlID0gTlVMTDsKClNhbWUgaGVyZS4K
+On Wed, Feb 19, 2025 at 01:59:08AM -0800, Faisal Al-Humaimidi wrote:
+> Hello QEMU developers,
+> 
+> I understand from this page, https://wiki.qemu.org/License, that TCG is
+> being licensed permissively (BSD license) so it can be integrated as a
+> library in other projects, which is great!
+
+Not so fast. Individual source files may be under the BSD license, but
+those source files are rarely buildable & usable in isolation. They will
+consume APIs in other parts of QEMU which are under the GPL license, and
+thus the combined work will be under the GPL per that wiki License page
+above.
+
+IOW, if you wanted to takes pieces which are BSD license and use them
+exclusively under BSD in a combined work, you would need to re-implement
+any other code it depends on which was not also BSD licensed. This is
+unlikely to be a sensible investment of time IMHO.
+
+>                                             However, I'd like to know if the
+> CPU part of QEMU, no peripherals included, is also permissively licensed
+> (maybe BSD or some other permissive license such as LGPL, ...etc.)?
+
+Again, QEMU as a whole is under the GPL-v2-only, because the process of
+building QEMU into a functional binary pulls together code under many
+licenses with GPL-v2-only being the one that sets the overall terms in
+QEMU's case. 
+
+> The reason I am asking this question is because projects such as the
+> Unicorn Engine would greatly benefit from a permissively licensed CPU
+> component so that the project itself (Unicorn Engine) is also released
+> under a permissive license, which would be great for people wanting to do
+> research with the Unicorn Engine but are tied with proprietary code (e.g.,
+> in proprietary university research projects). I have started a discussion
+> for that matter with the Unicorn Engine developers in their GitHub page,
+> https://github.com/unicorn-engine/unicorn/issues/2114, and it would be
+> great to have a feedback regarding this matter from the official QEMU
+> developers, whether directly on the issue or a reply to this email and I'd
+> relay your response.
+
+Since AFAICT unicorn engine has copied in the entire of the QEMU source
+tree, and many of the BSD bits of QEMU will consume other GPL code, I
+don't see a possibility to change. Individual source files can be under
+a variety of licenses, but the combined work will inevitably be under
+the GPL-v2-only.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
