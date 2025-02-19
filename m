@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A96C021AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Feb 2025 23:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D006C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 00:30:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkWqR-0006MU-Fg; Tue, 18 Feb 2025 18:17:39 -0500
+	id 1tkXxu-0006Ld-Im; Tue, 18 Feb 2025 19:29:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tkWqP-0006M0-Di
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 18:17:37 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tkWqN-0002Yx-E6
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 18:17:37 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-220c2a87378so86113995ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 15:17:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739920653; x=1740525453; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=s3Tf/UjxqJIVXUNkeiXp8VTGMkldDsfBYEqoyM5Aliw=;
- b=Y6LpXj2Alrfo9J9jqG5ISS8NkPnrFyhtndwM6P+r4/V//NqQ9z/bRrOVGgcV7ZiCoE
- HOGNi8Lghud7Z08hRrPsFS8VH1Z2OH567wqehx5Y2ZC8JxKllNb4mScbQPZuFa5DAhhX
- 1/EmDvyJKdeC035suXAsJxx7YVfLMt2aC3b4HrOO+Gd/M3xJ1CSN6uYZ+RXd3FYX/cmA
- krRtDliGOY3nXCIWYILw3grE/QXJa6C4U/2fOMJwQUDreN4siFkMKpxkLyIMQ7+4FhdR
- e04ooLBGrb67l0pZvX6B9W1s6Dbk+yPNDAeo8daJPgAk+vHFVHObNnOTDLfcS+hFubSE
- bL7A==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tkXxr-0006L9-Af
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 19:29:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tkXxo-0001zU-Ut
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 19:29:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739924958;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pLu2KcGp+62rpmUN4cYlrtT6GKITS1Lw2WLVEwDjDlA=;
+ b=bFKyK63b4AEDQ22DGUNk5n+FW9/3WD0u26LIUbLWcievL33HIJfIYwA8bZIW1u0dE/poF+
+ ARLFmrm3kCbVUDSfUnFsJu0YLbNlBMAeUUWkOzpV3/kspd8x6hhOgPRNWBuV03KUJMiJBt
+ mS0fcdDLgkV0gvKXfI5uL3o+HLMitrI=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-648-_HKx8LaiPGCYBktJMrY8Ig-1; Tue, 18 Feb 2025 19:29:16 -0500
+X-MC-Unique: _HKx8LaiPGCYBktJMrY8Ig-1
+X-Mimecast-MFC-AGG-ID: _HKx8LaiPGCYBktJMrY8Ig_1739924956
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2fc0bc05b36so19481057a91.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 16:29:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739920653; x=1740525453;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s3Tf/UjxqJIVXUNkeiXp8VTGMkldDsfBYEqoyM5Aliw=;
- b=c2ebNWaDBvxHrkek/DnfO3pwvclE0o/2MwFo2Vo0NVCWTPfJg/vmhxk3yy7IqXeNA/
- Dn6dpvRPCc3TY7/lHWan26Brb4XS6f76cLq06yEll+D3A8DHOF6dPmXX2jmq9lpjClDA
- Yasb3EQOOHGONT8lR3oo5iwdTzEYv3PY4MM9JFKkBWdVvmSlM2oWXGRQ6wP/e3MRcJuC
- DoC40yoYhBGJEbmnatjEoHI7l4oLLzX2nI5egBtL34NrehmaMSJoE/PLdDE8ry5BueYk
- IB/lP/ey91VZw7TvyXceNc1j1QxtpC/3qSYjZlHG3QD6l76pvnXhMK4gwh6YkWHyfdrf
- K/cQ==
+ d=1e100.net; s=20230601; t=1739924956; x=1740529756;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pLu2KcGp+62rpmUN4cYlrtT6GKITS1Lw2WLVEwDjDlA=;
+ b=bMs3H7AdOXtFkRpMuch91eXPrSmu1lJBVqcl97YMtZTPTlGAxB/thyy/csMjpb7vf9
+ lGphZfrzUByVxOexj7cA3lJ+9VV1InmfqP+GLJzu0GwKtYvoR6jc4+wVVoDlYKpCpjfY
+ 1S+tH15Qfi6R3bAbp//9LaHTrSmQCc2kwsB/Kb9z6Vs7pT8u9a5Yx3gP/Xi+kbf+xVUo
+ WHcAcJEZWTaWuspOPpqBNXH7Sk5AvOwi0WxSZJng68Pp43T+N1Lx/KxBB7BsCutM/qlH
+ MnuGFTNhE1bFP7Y8cbQFq63MTEZTa8E/Gt2STLI1QbWEPXFAwJg7JxGYt7n0BXJugOKL
+ VnUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVk1nDEROJ+KzNM1y2HYu4RY8Kw4s6oav9RTIeg8Oy5ttDuGKAzhmC84k8+FBkS6HNimVRlaD0HtmqF@nongnu.org
-X-Gm-Message-State: AOJu0YxyG17jBH3rWBTAgablW0i5AwKQR4nnCDKgqlee0xgjat5etjyR
- l+l6m7Z9cPpF/lP2uTMOyES8dlkYASpTGI1r/xadhfqSSoxEoSl7Aj6ws1htvjY=
-X-Gm-Gg: ASbGncsjRsvCwGUS3gDIUKGxzTVewzsO8ZDltjK/ZFQkWGzFxY8SVaPKFJL8XCLFQ4L
- yA9pRCE9d2ybezY3Jt3MLp6LRZlSkwySLf/KZcV8Z2jKQNxntsjL6qX/5hXLfWDMHgs3WK0DDGA
- A0opf9tDRW43dF4CxAFpPoTxRiFP+s76Yzi0hxLNSNGj9CM4Z62yNdBrs6trkSmBHwfRYpjd/Nc
- i82esGUO1erC5EtewHckOST6bPECWVuYpnKVWnRk/MlXtJssiw9elNCwBv9VatXR3LJRQoNGUpa
- kF0Ka48IVfGNdR1zphfCxemdFY7Z
-X-Google-Smtp-Source: AGHT+IE2IlKbujFpasBsFYP4rGaI2y3lfRyp/okPEYwfug7dkafJibkEbUDEsNUshAOxgsaoL5UUjw==
-X-Received: by 2002:a05:6a00:124e:b0:732:23ed:9470 with SMTP id
- d2e1a72fcca58-73261901144mr22387013b3a.23.1739920653225; 
- Tue, 18 Feb 2025 15:17:33 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73285416eb6sm3967821b3a.13.2025.02.18.15.17.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Feb 2025 15:17:32 -0800 (PST)
-Message-ID: <845d324d-833a-4d48-a78e-d384002b17af@linaro.org>
-Date: Tue, 18 Feb 2025 15:17:31 -0800
+ AJvYcCXFpSZI9Az0KD1H9ewXcyO5qmO/8Ov4i7oK8mNIE3slfgEfqZxfqkdQ0rzt9HeLMbsBzPkmLGMkxySp@nongnu.org
+X-Gm-Message-State: AOJu0YwhbVqyjY2Wyx71AsEV31xf2DPtnH/0RnFLfb/7HKgpVNvWqhOC
+ GkbeGf+Yf3wByuNhi5n+oOV+jAXjXfXtImh75SQQSEQBA/hD5nNMNk/MEZFCDpO2ErhcuGGTTlV
+ ns3/o60lu7eeZkb1TvmqqcXX2JyAxw6UhKkYzHZGI3MNDLiSVmEGUXxb13ng6U+R2WWklr8PTe2
+ RGIXh+YhxywmgbewR31BZQpohMsPU=
+X-Gm-Gg: ASbGnct+x1uPqZ4rF2cwviO5Q3P6KU/X8BDIHt3+IEKr6QJvy4l+rbNEk8TkYERD5gb
+ eMxdteeGE2nveID/VaT+WBiTYegrDqjxhf968s294Mpn2FqR10XNaF73DuOh3WDI=
+X-Received: by 2002:a17:90a:e7cc:b0:2ee:5bc9:75c3 with SMTP id
+ 98e67ed59e1d1-2fc40c1d6e4mr22755830a91.5.1739924955675; 
+ Tue, 18 Feb 2025 16:29:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFF0GaVunDcQ9BEOyzwFekZCnu6/Uy6Tm741KHh0pzZ9ccnqbqmuASdZRmFIMLCGeyjsQWFNOHdFIHAea/G78=
+X-Received: by 2002:a17:90a:e7cc:b0:2ee:5bc9:75c3 with SMTP id
+ 98e67ed59e1d1-2fc40c1d6e4mr22755792a91.5.1739924955179; Tue, 18 Feb 2025
+ 16:29:15 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
-To: Stefan Weil <sw@weilnetz.de>, Brian Cain <brian.cain@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
- <b3ef0b9f-df09-4444-b0aa-3b2a36f7cd3a@weilnetz.de>
- <4e788add-ee40-4d98-b065-6745e6e2fce5@oss.qualcomm.com>
- <71254e1d-3e17-4082-968f-db7fe6cea590@linaro.org>
- <4e36d996-7446-4bca-8699-063c3c6d91fc@weilnetz.de>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-In-Reply-To: <4e36d996-7446-4bca-8699-063c3c6d91fc@weilnetz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250211161923.1477960-1-kshk@linux.ibm.com>
+ <bbee3d53-ac82-407b-91a5-b7e4c3f464bf@linaro.org>
+ <23d119e5-ea42-4b0b-a491-0fb7b8c4dfb4@linux.ibm.com>
+ <07a8be9a-d99e-4d02-b475-671435c11396@linaro.org>
+ <90adacff-9409-44f2-9ae6-9e01c8dc6e5c@linux.ibm.com>
+ <5e8b3f72-d29b-4b19-a00f-a1bd5125ec7c@linux.ibm.com>
+ <644a3d77-3c95-4ca9-a453-933c74dbd40a@linaro.org>
+In-Reply-To: <644a3d77-3c95-4ca9-a453-933c74dbd40a@linaro.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 19 Feb 2025 08:29:03 +0800
+X-Gm-Features: AWEUYZkQ--veAEIdKQ5nwu7O8O6f06mK4pa9n0q5Xa4tpLDDH4CY45E_3ZhSlM4
+Message-ID: <CACGkMEtT=o=F_AbmeCqqhEQv7sOpFYePoV5mCcwdzvScX4DBZA@mail.gmail.com>
+Subject: Re: [PATCH] vdpa: Allow vDPA to work on big-endian machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Konstantin Shkolnyy <kshk@linux.ibm.com>, mst@redhat.com,
+ sgarzare@redhat.com, mjrosato@linux.ibm.com, qemu-devel@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Hanna Czenczek <hreitz@redhat.com>, 
+ Dragos Tatulea <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,42 +114,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMi8xOC8yNSAxMjo1OSwgU3RlZmFuIFdlaWwgd3JvdGU6DQo+IEFtIDE4LjAyLjI1IHVt
-IDE3OjIyIHNjaHJpZWIgUGllcnJpY2sgQm91dmllcjoNCj4+IE9uIDIvMTcvMjUgMjA6MTEs
-IEJyaWFuIENhaW4gd3JvdGU6DQo+Pj4gSXMgdGhpcyB0b29sY2hhaW4gYXZhaWxhYmxlIHB1
-YmxpY2x5IG9yIGRpZCB5b3UgYnVpbGQgaXQgeW91cnNlbGY/wqAgSXQNCj4+PiB3b3VsZCBi
-ZSBoYW5keSBpZiB0aGVyZSB3ZXJlIGEgbGludXggeDg2XzY0IGhvc3RlZCBjcm9zcy10b29s
-Y2hhaW4gdGhhdA0KPj4+IGNhbiB0YXJnZXQgV2luZG93cy1hYXJjaDY0LsKgIE9yIGxpbnV4
-IGFhcmNoNjQgaG9zdGVkIHdvdWxkIGJlIHByZXR0eQ0KPj4+IGdvb2QsIHRvby4NCj4+Pg0K
-Pj4NCj4+IEF0IHRoZSBtb21lbnQsIHRoZSBvbmx5IG9wZW4gc291cmNlIHRvb2xjaGFpbiBz
-dXBwb3J0aW5nIHdpbmRvd3MtYXJtNjQNCj4+IGlzIGxsdm0tbWluZ3cgKGh0dHBzOi8vZ2l0
-aHViLmNvbS9tc3RvcnNqby9sbHZtLW1pbmd3KS4NCj4+IFRoZXJlIGlzIHNvbWUgcHJvZ3Jl
-c3Mgb24gZ2NjLCBidXQgaXQgaXMgbm90IHlldCBmdWxseSB1cHN0cmVhbS4NCj4+IE1TWVMy
-IHVzZXMgbGx2bS1taW5ndyBmb3Igd2luZG93cy1hcm02NCBlbnZpcm9ubWVudC4NCj4+DQo+
-PiBPbiBteSBzaWRlLCBJIHVzZWQgYSB3aW5kb3dzLWFybTY0IG1hY2hpbmUgd2l0aCBNU1lT
-MiBuYXRpdmUgZW52aXJvbm1lbnQuDQo+Pg0KPj4gSXQgd291bGQgYmUgaGFuZHkgdG8gY3Jv
-c3MgY29tcGlsZSwgYW5kIHRoZSBwcm9ibGVtIGlzIG5vdCByZWFsbHkgUUVNVQ0KPj4gaXRz
-ZWxmLCBidXQgdG8gY3Jvc3MgY29tcGlsZSBhbGwgdGhlIGRlcGVuZGVuY2llcy4NCj4+IEZv
-ciB4ODZfNjQsIHdlIHVzZSBmZWRvcmEsIHdoaWNoIHByb3ZpZGVzIGNvbnZlbmllbnQgcHJl
-Y29tcGlsZWQgbWluZ3cNCj4+IHBhY2thZ2VzIGZvciBkZXBlbmRlbmNpZXMuDQo+PiBJdCdz
-IGRlZmluaXRlbHkgbm90IGltcG9zc2libGUgdG8gZG8gdGhlIHNhbWUgZm9yIHdpbmRvd3Mt
-YXJtNjQsIGJ1dCBpdA0KPj4ganVzdCB0YWtlcyBtdWNoIG1vcmUgZWZmb3J0Lg0KPj4NCj4+
-PiBJcyB0aGVyZSBhbiBNU1lTMiBvciBvdGhlciBkaXN0cmlidXRvciB0aGF0IHByb3ZpZGVz
-IHdpbmRvd3MtYWFyY2g2NA0KPj4+IGJ1aWxkcyBvZiB0aGUgZ2xpYiBhbmQgb3RoZXIgbGli
-cmFyeSBkZXBlbmRlbmNpZXM/DQo+Pj4NCj4+DQo+PiBNU1lTMiBkb2VzLCBidXQgaXQncyBj
-b21wbGljYXRlZCB0byBkb3dubG9hZCBwYWNrYWdlcyBieSBoYW5kIGlmIGl0J3MNCj4+IHlv
-dXIgaWRlYS4gQmV0dGVyIHRvIGNyb3NzIGNvbXBpbGUgaXQuDQo+IA0KPiBJIGNvdWxkIHJ1
-biBhIFFFTVUgY3Jvc3MgY29tcGlsZSBvbiBEZWJpYW4gd2l0aCB0aGUgbGx2bSB0b29sY2hh
-aW4gYW5kDQo+IG1zeXMyIGNsYW5nYXJtNjQgcGFja2FnZXMgaW5zdGFsbGVkIHdpdGggcGFj
-bWFuLiBUaGUgcmVzdWx0aW5nIGluc3RhbGxlcg0KPiBpcyBoZXJlOg0KPiANCg0KSGF2ZSB5
-b3UgaW5zdGFsbGVkIHRoZSBtc3lzMiBjbGFuZ2FybTY0IHBhY2thZ2VzIG9uIGEgd2luZG93
-cyBtYWNoaW5lIA0KZmlyc3QsIGFuZCB0aGVuIGNvcHkgdGhlbSB0byB5b3VyIERlYmlhbiBt
-YWNoaW5lPw0KDQo+IGh0dHBzOi8vcWVtdS53ZWlsbmV0ei5kZS9hYXJjaDY0Lw0KPiANCj4g
-VGhlIG9ubHkgdG9vbHMgd2hpY2ggd2FzIG1pc3NpbmcgYW5kIHdoaWNoIEkgaGFkIHRvIGJ1
-aWxkIGJlZm9yZSBydW5uaW5nDQo+IHRoZSBRRU1VIGJ1aWxkIGlzIGFhcmNoNjQtdzY0LW1p
-bmd3MzItd2luZG1jLg0KPiANCj4gSXQgbG9va3MgbGlrZSB0aGUgTlNJUyBpbnN0YWxsZXIg
-aXMgaTM4NiBjb2RlLCBzbyBJIGRvbid0IGtub3cgd2hldGhlcg0KPiBpdCBjYW4gYmUgdXNl
-ZCBvbiBXaW5kb3dzIGZvciBhYXJjaDY0Lg0KPiANCj4gSSBhbHNvIGhhdmUgbm8gc3VpdGFi
-bGUgV2luZG93cyBob3N0IGZvciB0ZXN0aW5nIHRoZSBiaW5hcmllcywgc28gbm8NCj4gdGVz
-dCB3YXMgZG9uZS4NCj4gDQo+IFN0ZWZhbiBXLg0KDQo=
+On Tue, Feb 18, 2025 at 10:03=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Konstantin,
+>
+> (Cc'ing more developers)
+>
+> On 18/2/25 14:27, Konstantin Shkolnyy wrote:
+> > On 2/12/2025 14:01, Konstantin Shkolnyy wrote:
+> >> On 2/12/2025 12:07, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>> On 12/2/25 18:24, Konstantin Shkolnyy wrote:
+> >>>> On 2/12/2025 08:52, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>>>> On 11/2/25 17:19, Konstantin Shkolnyy wrote:
+> >>>>>> Add .set_vnet_le() function that always returns success, assuming
+> >>>>>> that
+> >>>>>> vDPA h/w always implements LE data format. Otherwise, QEMU
+> >>>>>> disables vDPA and
+> >>>>>> outputs the message:
+> >>>>>> "backend does not support LE vnet headers; falling back on
+> >>>>>> userspace virtio"
+> >>>>>>
+> >>>>>> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> >>>>>> ---
+> >>>>>>   net/vhost-vdpa.c | 6 ++++++
+> >>>>>>   1 file changed, 6 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> >>>>>> index 231b45246c..7219aa2eee 100644
+> >>>>>> --- a/net/vhost-vdpa.c
+> >>>>>> +++ b/net/vhost-vdpa.c
+> >>>>>> @@ -270,6 +270,11 @@ static bool vhost_vdpa_has_ufo(NetClientState
+> >>>>>> *nc)
+> >>>>>>   }
+> >>>>>> +static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool is_le)
+> >>>>>> +{
+> >>>>>> +    return 0;
+> >>>>>> +}
+> >>>>>> +
+> >>>>>>   static bool vhost_vdpa_check_peer_type(NetClientState *nc,
+> >>>>>> ObjectClass *oc,
+> >>>>>>                                          Error **errp)
+> >>>>>>   {
+> >>>>>> @@ -437,6 +442,7 @@ static NetClientInfo net_vhost_vdpa_info =3D {
+> >>>>>>           .cleanup =3D vhost_vdpa_cleanup,
+> >>>>>>           .has_vnet_hdr =3D vhost_vdpa_has_vnet_hdr,
+> >>>>>>           .has_ufo =3D vhost_vdpa_has_ufo,
+> >>>>>> +        .set_vnet_le =3D vhost_vdpa_set_vnet_le,
+> >>>>>
+> >>>>> Dubious mismatch with set_vnet_be handler.
+> >>>>
+> >>>> I'm not sure what you are suggesting...
+> >>>
+> >>> Implement set_vnet_le for parity?
+> >>
+> >> To my (very limited) knowledge, kernel's vhost_vdpa that QEMU talks to
+> >> doesn't have an API to "change h/w endianness". If so,
+> >> vDPA's .set_vnet_le/be(), as well as qemu_set_vnet_le/be() have very
+> >> limited choices. qemu_set_vnet_le/be() behavior with vDPA was to
+> >> simply assume that h/w endianness by default matches host's. This
+> >> assumption is valid for other types of "NetClients" which are
+> >> implemented in s/w. However, I suspect, vDPA h/w might all be going to
+> >> be LE, to match virtio 1.0. Such is the NIC I'm dealing with.
+> >>
+> >> My patch is only fixing a specific use case. Perhaps, for a complete
+> >> fix, qemu_set_vnet_be() also shouldn't unconditionally return success
+> >> on big endian machines, but always call .set_vnet_be() so that vDPA
+> >> could fail it? But then it would start calling .set_vnet_be() on other
+> >> "NetClients" where it didn't before.
+> >>
+> >> That's why I don't want to just add a .set_vnet_be(), before someone
+> >> here even confirms that vDPA h/w is indeed assumed LE, and, hence,
+> >> what the right path is to a complete solution...
+
+Note that modern (VERION_1) virtio/vDPA device assumes LE.
+Transitional devices need to support "native endian" which requires
+the interface like what you suggest here when guest and host endian
+are different.
+
+But we need to confirm with the vDPA vendors to know if their device
+is modern only or transitional.
+
+E.g by looking at mlx5_vdpa drivers, it seems to support big endian:
+
+/* TODO: cross-endian support */
+static inline bool mlx5_vdpa_is_little_endian(struct mlx5_vdpa_dev *mvdev)
+{
+        return virtio_legacy_is_little_endian() ||
+                (mvdev->actual_features & BIT_ULL(VIRTIO_F_VERSION_1));
+}
+
+But it needs to judge the endian according to what userspace tells us
+(as the "TODO"), we probably need to invent new vDPA ioctls for that
+besides the Qemu modifications.
+
+Adding Dragos for more thought here.
+
+Thanks
+
+> >>
+> >> int qemu_set_vnet_be(NetClientState *nc, bool is_be)
+> >> {
+> >> #if HOST_BIG_ENDIAN
+> >>      return 0;
+> >> #else
+> >>      if (!nc || !nc->info->set_vnet_be)
+> >>          return -ENOSYS;
+> >>
+> >>      return nc->info->set_vnet_be(nc, is_be);
+> >> #endif
+> >> }
+> >>
+> >
+> > Does anyone have any answers/suggestions?
+> >
+>
+> Since you mentioned "vDPA h/w always implements LE data format",
+> I'd expect virtio_is_big_endian(vdev) always return FALSE, and
+> thus this to be safe:
+>
+>   static int vhost_vdpa_set_vnet_be(NetClientState *nc, bool is_le)
+>   {
+>       g_assert_not_reached();
+>   }
+>
+> But I don't know much about vDPA, so I won't object to your patch.
+>
+> Regards,
+>
+> Phil.
+>
+
 
