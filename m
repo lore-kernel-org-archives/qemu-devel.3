@@ -4,101 +4,204 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D006C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 00:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381BAC021AD
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 01:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkXxu-0006Ld-Im; Tue, 18 Feb 2025 19:29:26 -0500
+	id 1tkYmO-0006AC-C0; Tue, 18 Feb 2025 20:21:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tkXxr-0006L9-Af
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 19:29:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tkYmH-00069b-T0
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 20:21:29 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tkXxo-0001zU-Ut
- for qemu-devel@nongnu.org; Tue, 18 Feb 2025 19:29:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739924958;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pLu2KcGp+62rpmUN4cYlrtT6GKITS1Lw2WLVEwDjDlA=;
- b=bFKyK63b4AEDQ22DGUNk5n+FW9/3WD0u26LIUbLWcievL33HIJfIYwA8bZIW1u0dE/poF+
- ARLFmrm3kCbVUDSfUnFsJu0YLbNlBMAeUUWkOzpV3/kspd8x6hhOgPRNWBuV03KUJMiJBt
- mS0fcdDLgkV0gvKXfI5uL3o+HLMitrI=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-_HKx8LaiPGCYBktJMrY8Ig-1; Tue, 18 Feb 2025 19:29:16 -0500
-X-MC-Unique: _HKx8LaiPGCYBktJMrY8Ig-1
-X-Mimecast-MFC-AGG-ID: _HKx8LaiPGCYBktJMrY8Ig_1739924956
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2fc0bc05b36so19481057a91.3
- for <qemu-devel@nongnu.org>; Tue, 18 Feb 2025 16:29:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739924956; x=1740529756;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pLu2KcGp+62rpmUN4cYlrtT6GKITS1Lw2WLVEwDjDlA=;
- b=bMs3H7AdOXtFkRpMuch91eXPrSmu1lJBVqcl97YMtZTPTlGAxB/thyy/csMjpb7vf9
- lGphZfrzUByVxOexj7cA3lJ+9VV1InmfqP+GLJzu0GwKtYvoR6jc4+wVVoDlYKpCpjfY
- 1S+tH15Qfi6R3bAbp//9LaHTrSmQCc2kwsB/Kb9z6Vs7pT8u9a5Yx3gP/Xi+kbf+xVUo
- WHcAcJEZWTaWuspOPpqBNXH7Sk5AvOwi0WxSZJng68Pp43T+N1Lx/KxBB7BsCutM/qlH
- MnuGFTNhE1bFP7Y8cbQFq63MTEZTa8E/Gt2STLI1QbWEPXFAwJg7JxGYt7n0BXJugOKL
- VnUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFpSZI9Az0KD1H9ewXcyO5qmO/8Ov4i7oK8mNIE3slfgEfqZxfqkdQ0rzt9HeLMbsBzPkmLGMkxySp@nongnu.org
-X-Gm-Message-State: AOJu0YwhbVqyjY2Wyx71AsEV31xf2DPtnH/0RnFLfb/7HKgpVNvWqhOC
- GkbeGf+Yf3wByuNhi5n+oOV+jAXjXfXtImh75SQQSEQBA/hD5nNMNk/MEZFCDpO2ErhcuGGTTlV
- ns3/o60lu7eeZkb1TvmqqcXX2JyAxw6UhKkYzHZGI3MNDLiSVmEGUXxb13ng6U+R2WWklr8PTe2
- RGIXh+YhxywmgbewR31BZQpohMsPU=
-X-Gm-Gg: ASbGnct+x1uPqZ4rF2cwviO5Q3P6KU/X8BDIHt3+IEKr6QJvy4l+rbNEk8TkYERD5gb
- eMxdteeGE2nveID/VaT+WBiTYegrDqjxhf968s294Mpn2FqR10XNaF73DuOh3WDI=
-X-Received: by 2002:a17:90a:e7cc:b0:2ee:5bc9:75c3 with SMTP id
- 98e67ed59e1d1-2fc40c1d6e4mr22755830a91.5.1739924955675; 
- Tue, 18 Feb 2025 16:29:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFF0GaVunDcQ9BEOyzwFekZCnu6/Uy6Tm741KHh0pzZ9ccnqbqmuASdZRmFIMLCGeyjsQWFNOHdFIHAea/G78=
-X-Received: by 2002:a17:90a:e7cc:b0:2ee:5bc9:75c3 with SMTP id
- 98e67ed59e1d1-2fc40c1d6e4mr22755792a91.5.1739924955179; Tue, 18 Feb 2025
- 16:29:15 -0800 (PST)
-MIME-Version: 1.0
-References: <20250211161923.1477960-1-kshk@linux.ibm.com>
- <bbee3d53-ac82-407b-91a5-b7e4c3f464bf@linaro.org>
- <23d119e5-ea42-4b0b-a491-0fb7b8c4dfb4@linux.ibm.com>
- <07a8be9a-d99e-4d02-b475-671435c11396@linaro.org>
- <90adacff-9409-44f2-9ae6-9e01c8dc6e5c@linux.ibm.com>
- <5e8b3f72-d29b-4b19-a00f-a1bd5125ec7c@linux.ibm.com>
- <644a3d77-3c95-4ca9-a453-933c74dbd40a@linaro.org>
-In-Reply-To: <644a3d77-3c95-4ca9-a453-933c74dbd40a@linaro.org>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 19 Feb 2025 08:29:03 +0800
-X-Gm-Features: AWEUYZkQ--veAEIdKQ5nwu7O8O6f06mK4pa9n0q5Xa4tpLDDH4CY45E_3ZhSlM4
-Message-ID: <CACGkMEtT=o=F_AbmeCqqhEQv7sOpFYePoV5mCcwdzvScX4DBZA@mail.gmail.com>
-Subject: Re: [PATCH] vdpa: Allow vDPA to work on big-endian machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Konstantin Shkolnyy <kshk@linux.ibm.com>, mst@redhat.com,
- sgarzare@redhat.com, mjrosato@linux.ibm.com, qemu-devel@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, 
- Laurent Vivier <lvivier@redhat.com>, Hanna Czenczek <hreitz@redhat.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tkYmD-0007ht-R7
+ for qemu-devel@nongnu.org; Tue, 18 Feb 2025 20:21:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1739928086; x=1771464086;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=OOD8AACbwb0eF7iJ7NiCMXbSO0eRd3HONNwUvR5po7g=;
+ b=JyXIKlGR9Zz/Z9NT9PS7rTHhuAXXi71YgkvrlfpEvJUhB4uO2hMSaFuv
+ 8W5Wzj/0oJOLgQ1GGRrW2GQ/jCSd37Rvqm+U9s8X9P96q85x3ef9zvmuL
+ aF5Ldfwxe1ThPHF7DZ8qExgiMvnFnH6/eOX8hDsNObiY8bhz/ADnZvOYG
+ WmlVxXBplnm22xwO94lfspq9vdEfgcEjxXE27NguwdkDhvJGhHlOeVY4k
+ G5q5GAnA92cFtKWJAOgpqdiYk7/gUVgcO/bGgGoJlsoKX+y9OvY1fLoMd
+ UtDEoaAz9YN63M62Eb6MV/HlMtkU10JRZD7BrMvkDCRKRyGXfqLcyTIyZ Q==;
+X-CSE-ConnectionGUID: SV2zgt2PSfmC7JGgk4PuCA==
+X-CSE-MsgGUID: HnzYLlGwRQS0Xu2y56Sx4A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40665003"
+X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; d="scan'208";a="40665003"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2025 17:21:21 -0800
+X-CSE-ConnectionGUID: RLWBC7q5TQWfYihExiiaEg==
+X-CSE-MsgGUID: bKHJUkwaQQOaf33ijuw7bg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; d="scan'208";a="114304419"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2025 17:21:21 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 18 Feb 2025 17:21:20 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Tue, 18 Feb 2025 17:21:20 -0800
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.175)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Tue, 18 Feb 2025 17:21:19 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZrrN++YSKtz0ponevM8M0ckHmCwyeN6g2eMQvkBWJRqLd4sphBVadEY7FGAnlya24V0hUaqJWKR8Aru+F+DEeZvPyiby2QUKBG6gmSOYm9qMbLvfjL/AqxJlAczBV0El9XvDVLb4DSMTAaH0rxRBW9d1QQPGz6DKZDcIwuUs8Dz13XlCjBlCPOvKimtIu1CfBZOOOA06q7PqimCWhp8bhcHXyu0IsctNklBNhmFooN/SoUUTH+UbvAHdN8EtE3IqbQzes1aZW5ExTHmSeEvxHnubp92mCVFqsfC7uufLz7PN7dAHPc6vSJ5nIz7UcY5YLSz/upwb30k1FbzJCy0D4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1OJB3b8rMi1d+uIhN2FJcJ7RfE1F0c5lvvVPNt9NFMc=;
+ b=BUV819L+bRszoSl991a8tSTSNtA2FUbTBkCgNwAmE93CzlLwSX03xFHLxxnax/kSEudWykEgmhy6yHlXs3kkkhlyoXA0eFJJfRsGn4y/ZvjOJuJhpO57UDtQZlytDMecMvHH2fYvK5JDAuXmvZeCWED+NGZegXFy+M1JK6Uh+4H8KmLMjqZ2Ji/pL8xhhlheG72LOh9No11g1guJj97EuUFtdXbVmaWS8UWs9XLlG4PBkwLNMZkjz9frJJl+XQUyg1SPCQY2FPgEhpTjiv4IRMj+DYi5HQw4/P4c7RpiskRzxOcvLWJHw35iq8sXANjpxxS3IRc9JWAl8VEWAtHGxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ CH3PR11MB8383.namprd11.prod.outlook.com (2603:10b6:610:171::6) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8445.16; Wed, 19 Feb 2025 01:20:50 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%7]) with mapi id 15.20.8445.017; Wed, 19 Feb 2025
+ 01:20:50 +0000
+Message-ID: <c5682028-b84c-4b4c-8c4d-f3b43d412e83@intel.com>
+Date: Wed, 19 Feb 2025 09:20:41 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] memory-attribute-manager: Introduce
+ MemoryAttributeManager to manage RAMBLock with guest_memfd
+To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
+ <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao
+ <xiaoyao.li@intel.com>
+References: <20250217081833.21568-1-chenyi.qiang@intel.com>
+ <20250217081833.21568-4-chenyi.qiang@intel.com>
+ <60c9ddb7-7f3e-4066-a165-c583af2411ea@amd.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <60c9ddb7-7f3e-4066-a165-c583af2411ea@amd.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SG2PR04CA0167.apcprd04.prod.outlook.com (2603:1096:4::29)
+ To DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|CH3PR11MB8383:EE_
+X-MS-Office365-Filtering-Correlation-Id: d481379d-b42f-4469-abcf-08dd5083a53d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Q2I1T1hJTU8vbS9oVGNDT08wK0VObmsrTW5vTUNMWDltejNnN2JlVy9XTFpy?=
+ =?utf-8?B?Y2VrTDl6K0c3ejRWV0w3TTlEMGRIdXlldTE1WGJ6eENkY20xekVtWFlkejY1?=
+ =?utf-8?B?RDMyb3h0RjFBTHc5d3ZPT2lqWDlxR21PY1hsYThLTWxLbHV1VTZDWXhRcVp3?=
+ =?utf-8?B?M2o0Z09nYmJJM1MxYkdsdTErWUZQN1FkZFFhd0h4Zm1hV2FSd1UwclRLK2hU?=
+ =?utf-8?B?TWlWRVZ4dC9xeEpGRnFNZC9UdWN6Rm04Q0xnOUgvYjNZc1BnSVNmK05lTU1t?=
+ =?utf-8?B?QXZQMml4MEJPZlVadmY4ZXF4U2R3eHMzYVFqN0R4bS9La0Jiak81WVArV1Vm?=
+ =?utf-8?B?SEozQmZJMjVBamJ4TXNQNWUrWDY4RCtmZFVZQ3RodXFVbk52ZElSSmxRRVh0?=
+ =?utf-8?B?UkRHdVB6QTEyc3IvMXViMG1uMUFjQXlQYmFkTTdmMzZCK2tPZkI0NlpZdDhu?=
+ =?utf-8?B?M1RXVlc0b3BweVAxajlndG1tYWxNS2xacE1uOTZCOW1ENEprTlhEcWpaZUNn?=
+ =?utf-8?B?RFZuSVlDV251WDJmYlZnUFZRYU1nOExaQnF3Q2JzVFhBTEJ1R1hxdUJ4NnRj?=
+ =?utf-8?B?RFkwamUxWDRKeS9vMld5aFBMRzhEdzZJbDNEdURyMGFlQ0ZucnJlVnhPR2V4?=
+ =?utf-8?B?UE5OdWpjUy84WE1UVFU2dlJGMEdYNWxCWUJVM28yYlh2TUxNYzJNMFFGY2kw?=
+ =?utf-8?B?STQrSGw4aVRtbW9LYnQrc1hXdkJEOTdHZTZkVkJXSVIrMUM3MS9ZQkRBQW1E?=
+ =?utf-8?B?OEc3SFp0QkkyK1VtLy9COFNiOEszbmhEZk5oQWJJc0FmalFoeGJnUGFlbjBB?=
+ =?utf-8?B?V2lYT2pIb0NnL2ZreFI3akZsaVpETnhNVU1vbS82MGkvYWdCTDZLVHJRQlpY?=
+ =?utf-8?B?ZVRFcDg5cTV3V1RsNm5nR2xLM2swVUZQYlp2SGV4Yk9PblloVldoS0dtSUsy?=
+ =?utf-8?B?U1NVRzVsQzc2RExCVDRJTW15RnM2VEhoVjE3R0JEY3hBQVYrMDdIOFN4bm9L?=
+ =?utf-8?B?endEd0oxdThlWldCcGJlT3NKaU5naXZqaHJDZmhTTDJoTGRYcjUvaXkrSGRv?=
+ =?utf-8?B?TXM3T1NvU2hpQjYrK0N1OWJvTGFqOFZMbXkvZ2FlUVNOVkFiVFNlamxBcXhj?=
+ =?utf-8?B?TFBnVDM5ZXA1bWdjZ0hwQlhaYWRQS0I1dVIzV3FyOC80L3N2S1FYU21WTFUr?=
+ =?utf-8?B?dEtRYTlOckJvV1crNTdTR3pnLzFubk9xK3g4UUpUWlR5R3Z2cjJPRHJPZTlT?=
+ =?utf-8?B?QlUxa2NheTdnQmJ3WkNMRzNDTHljYkFKSklaaWpQWDNWV3YrYkIrMDYvRGpy?=
+ =?utf-8?B?T1IyaE9sRzJ6cTFUYnNwR0NsOElwMHpubVZBWmNCR0MwTkhacWdiaG9yTkZV?=
+ =?utf-8?B?VzJFNmtlN3dYMVRJbUZPRTZYYVZmUjBBQW1EdXZhQ1VUN2xBQTJNUy9Ub1Fm?=
+ =?utf-8?B?Ni9aZTJBWk5ycXJKeE1FZEEvUzZZK0FxYzdNN2R6Rjh4bHlMZE9ZS1k5a3JG?=
+ =?utf-8?B?WXJUKzFmTHpkWGR4cm16bTlOaWdZOEZEYlhjTXh5OFYzVEl0ZnpSY3NVdjBx?=
+ =?utf-8?B?QXBicDE1OVNMNStpTnJ6VTdWVStvRUhyeldtMmZyUFV6Wm9FSkQ4b2cwSFhq?=
+ =?utf-8?B?UnVaU0pVNW9zVFozemUxZTV4bkwwZ25DSjladkFRRzZsL2VEM1poS3p5cVJ1?=
+ =?utf-8?B?U1hsV0NEU3pubUkwaERhRUMwYWpVb29kSEF4bytJL2NIOXd0dU9HM0w1cG5K?=
+ =?utf-8?B?OWkzMWU1ZXFxUUMwUXFDMWI4ZlVLa25PSy82RjRSeTQweC9lL1dJMlVlMy9O?=
+ =?utf-8?B?ZGxsZlRLNHlud2w3a1h5akRkcVN6ZUI0NUtEd1l1aUFkTkpDdks0SEUzV0Za?=
+ =?utf-8?Q?VWJB/+4fbbmND?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UHdLbkxHLzhGSU9FZ1NEM1YyYm5NWEZjQ1hUcXZ3emlra29IMlQ0dGtNdjM0?=
+ =?utf-8?B?R1NqNHR2QkNpZHpDcjc5UlVvSTBmU29ZRUtmZDE1UjJ0NFF3L1VXenBtb1hB?=
+ =?utf-8?B?Wms0Q3VQWmhmVGl4dld4VWlkSmtrbkh1cFdLQkErV1AvM1liMytjWjR4bEtR?=
+ =?utf-8?B?dGswMnBrbjU3MzZrZUFubzlWZEkyVkVoUk9PSmRZYlZ3SnU2R0VxSDgwWG5v?=
+ =?utf-8?B?cnpCQ3BtWW5KWFFEY3RmcTU5U2JMV2JYYS95Y095ejI5QkcvU2F3V0pxTFpC?=
+ =?utf-8?B?cEdOOWg5bGVJVGgvY1l1c3JrMzF5czYzMjJYazlITWg1b2puaDQ1R2xIY1RM?=
+ =?utf-8?B?U3FLaklCZkdIZDc0NDlqTmpFZkNmeGRJZTZYcUZwWlFVektOWC9JZWlHWUQ2?=
+ =?utf-8?B?a2tFVW1uUEtLWHlIdzVSZ3NRMFkvZHY0bCt3Yi8vWlhPRXdOcXZ5YVl2bno2?=
+ =?utf-8?B?TGZGK3BGSnJ3RFhmaGE2RVVHeklraEI2VzFxR3QrbDBqai8rMHVXZDJmNnps?=
+ =?utf-8?B?NWdVOWxFblFQUURZTXRKYlRJa0xVeWtURE1ibVJ3N3JUd2hiTFA5dWo3T1Rn?=
+ =?utf-8?B?OGhFT3FBQ3J0K3JlNlpIaGlmdnJ5dU1vbHpSdnAvb20xWndtV2w2SnNwMWFB?=
+ =?utf-8?B?Q1VtMjVVOCtnUnRqT3FUQ1RqRzlyV1RFRkd5ZVgrUXlBSFprUG4rNEZLU2gx?=
+ =?utf-8?B?TjIwNmdZV0lORllBTXpzN1R3bUpMWDFmOXdQL1pTRld0TmlFSG1oVXAzSGIz?=
+ =?utf-8?B?K2hMUXUySlBBbWNhbGlGVTRQVHNSQy81dWxaRGczcy82WDNLVFI3QjdOZ0NW?=
+ =?utf-8?B?SXZTM1VLY3drOGRBSnl1Z0lONi9YWW1HbFFjM0dsSm1WdmZXcGEzQjMrUXd3?=
+ =?utf-8?B?eEhIOXBlSnFoWE5xcmtUZitBYzMrRHgxK1I0VmJ6cXhsWFcyaE5ReVJxSnNr?=
+ =?utf-8?B?Y2RXcTAxNk5UVDhhamFVYi9VeTdBeW9BL2thNDREVFl0Mm8vY1l5NTV4VVdZ?=
+ =?utf-8?B?MHlKMUYxVWcyZHhvc1RsUlZsV2lIdjJtSnZiNmJGK2IxK09FaGNDcm9qQVFh?=
+ =?utf-8?B?VEo5cnZjRDdwK0FHeDlxWTlFMmVDcU1ZbmpJMmxWd3I2SmNkalh3MnAwZU50?=
+ =?utf-8?B?ekt0VFQ3bEEvOXVkSHplbGZ0Ynd2cFNPM3o0eWFVaUc4RkF0OW5PQjd1VlEz?=
+ =?utf-8?B?NnoyQnp3bWxyZU9jQVpIa0hUanA2ZjNoNlNPd3pwSGpFeFhyckREa2dpdmFz?=
+ =?utf-8?B?NkF5YzJUMFRya1EyZmVkMm9GY3VYSWpNWHIzbC8xWGsxWWpuMURPNVE1eHo5?=
+ =?utf-8?B?bHd6MFNEZ21KQ0ZObWtQNmxELzNyczV5YXBaWjkvQ3ZmcUFtVC9ZYmNMenZK?=
+ =?utf-8?B?eldnVUUvL1kzK08rZjlrcThvWlB1VUhVU1plZERxek9qVFh4dlhSU2VOcTV0?=
+ =?utf-8?B?QXFYUVhQTG5ONDNOSElDc2Rjb2RHQjkvektSL2hEcVRCMHNUcmpoWmhxMmxM?=
+ =?utf-8?B?dUJ4NlBMa09ncHRab2labnFEWitreVZNVHQrUHRXdjV2aTdiYnVZMUloeGph?=
+ =?utf-8?B?eUlGMk5ZUVNWWTllRWF4WkJQTDBaTHBkT1NWdFpRRHNTSnVtQ1NjUDBBYVYy?=
+ =?utf-8?B?U21aYS9McXJQTmdOeEtROXpQVFd6NTB5eDNQRXhML0Y4cW9Jd00vMGdFWHF5?=
+ =?utf-8?B?bkdyVENiUm0rUWZDbXVPWEU0SFF0cXhMZE05TXBmeVFkZkhJak1YamxwRDRj?=
+ =?utf-8?B?RExBd05mOGI0SmNGUnZVYUpBYlhjMHpmTUZma2gwbThkenBKcERGcmVoeFZ0?=
+ =?utf-8?B?OUpXSk80VkJ1WjY3aU1EcUZWMjhleGlRTklBK1BTMVVKcGg0ZnVUT3g4SGt0?=
+ =?utf-8?B?ZWkxczVIUW84cTRNbW9rNmFocVI0ZzBzT0xkOGlBSWRHMnMwYldndWFzK3JD?=
+ =?utf-8?B?dnlhaXdYK0kxQ1o5V1M4UDYzai9UN0xFZ0JHR293aDRWcGVpTFBaSVJ5OC9D?=
+ =?utf-8?B?YUs4bk9BcHVQZllMejJnSWxUdXRKbjN3NmlQUmd2aEJkNmU3UDgzdWVWODlm?=
+ =?utf-8?B?eVpTMC8zWFJKbHY5cGI4dlpnR3JCRVEyYndaWm9DVC9NUmRFL0NudHdRZkky?=
+ =?utf-8?B?MUVEME1MbnNiYUwxZldJMHhyOTlUUnlHODNZR3E1OVNicnZrVGNuZUJ5RitZ?=
+ =?utf-8?B?R2c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: d481379d-b42f-4469-abcf-08dd5083a53d
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2025 01:20:50.3208 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yUZxRcg0QcTaMF7xq3lo8R0VE0CcbcmFev9qY+dljvyODgS6pSOJDB8dLi2cs3F2/A9RyUu6Ro6CI1p5ZzXsuA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8383
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.17;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,135 +217,407 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 10:03=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Hi Konstantin,
->
-> (Cc'ing more developers)
->
-> On 18/2/25 14:27, Konstantin Shkolnyy wrote:
-> > On 2/12/2025 14:01, Konstantin Shkolnyy wrote:
-> >> On 2/12/2025 12:07, Philippe Mathieu-Daud=C3=A9 wrote:
-> >>> On 12/2/25 18:24, Konstantin Shkolnyy wrote:
-> >>>> On 2/12/2025 08:52, Philippe Mathieu-Daud=C3=A9 wrote:
-> >>>>> On 11/2/25 17:19, Konstantin Shkolnyy wrote:
-> >>>>>> Add .set_vnet_le() function that always returns success, assuming
-> >>>>>> that
-> >>>>>> vDPA h/w always implements LE data format. Otherwise, QEMU
-> >>>>>> disables vDPA and
-> >>>>>> outputs the message:
-> >>>>>> "backend does not support LE vnet headers; falling back on
-> >>>>>> userspace virtio"
-> >>>>>>
-> >>>>>> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-> >>>>>> ---
-> >>>>>>   net/vhost-vdpa.c | 6 ++++++
-> >>>>>>   1 file changed, 6 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> >>>>>> index 231b45246c..7219aa2eee 100644
-> >>>>>> --- a/net/vhost-vdpa.c
-> >>>>>> +++ b/net/vhost-vdpa.c
-> >>>>>> @@ -270,6 +270,11 @@ static bool vhost_vdpa_has_ufo(NetClientState
-> >>>>>> *nc)
-> >>>>>>   }
-> >>>>>> +static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool is_le)
-> >>>>>> +{
-> >>>>>> +    return 0;
-> >>>>>> +}
-> >>>>>> +
-> >>>>>>   static bool vhost_vdpa_check_peer_type(NetClientState *nc,
-> >>>>>> ObjectClass *oc,
-> >>>>>>                                          Error **errp)
-> >>>>>>   {
-> >>>>>> @@ -437,6 +442,7 @@ static NetClientInfo net_vhost_vdpa_info =3D {
-> >>>>>>           .cleanup =3D vhost_vdpa_cleanup,
-> >>>>>>           .has_vnet_hdr =3D vhost_vdpa_has_vnet_hdr,
-> >>>>>>           .has_ufo =3D vhost_vdpa_has_ufo,
-> >>>>>> +        .set_vnet_le =3D vhost_vdpa_set_vnet_le,
-> >>>>>
-> >>>>> Dubious mismatch with set_vnet_be handler.
-> >>>>
-> >>>> I'm not sure what you are suggesting...
-> >>>
-> >>> Implement set_vnet_le for parity?
-> >>
-> >> To my (very limited) knowledge, kernel's vhost_vdpa that QEMU talks to
-> >> doesn't have an API to "change h/w endianness". If so,
-> >> vDPA's .set_vnet_le/be(), as well as qemu_set_vnet_le/be() have very
-> >> limited choices. qemu_set_vnet_le/be() behavior with vDPA was to
-> >> simply assume that h/w endianness by default matches host's. This
-> >> assumption is valid for other types of "NetClients" which are
-> >> implemented in s/w. However, I suspect, vDPA h/w might all be going to
-> >> be LE, to match virtio 1.0. Such is the NIC I'm dealing with.
-> >>
-> >> My patch is only fixing a specific use case. Perhaps, for a complete
-> >> fix, qemu_set_vnet_be() also shouldn't unconditionally return success
-> >> on big endian machines, but always call .set_vnet_be() so that vDPA
-> >> could fail it? But then it would start calling .set_vnet_be() on other
-> >> "NetClients" where it didn't before.
-> >>
-> >> That's why I don't want to just add a .set_vnet_be(), before someone
-> >> here even confirms that vDPA h/w is indeed assumed LE, and, hence,
-> >> what the right path is to a complete solution...
 
-Note that modern (VERION_1) virtio/vDPA device assumes LE.
-Transitional devices need to support "native endian" which requires
-the interface like what you suggest here when guest and host endian
-are different.
 
-But we need to confirm with the vDPA vendors to know if their device
-is modern only or transitional.
+On 2/18/2025 5:19 PM, Alexey Kardashevskiy wrote:
+> 
+> 
 
-E.g by looking at mlx5_vdpa drivers, it seems to support big endian:
+[..]
 
-/* TODO: cross-endian support */
-static inline bool mlx5_vdpa_is_little_endian(struct mlx5_vdpa_dev *mvdev)
-{
-        return virtio_legacy_is_little_endian() ||
-                (mvdev->actual_features & BIT_ULL(VIRTIO_F_VERSION_1));
-}
+>> diff --git a/include/system/memory-attribute-manager.h b/include/
+>> system/memory-attribute-manager.h
+>> new file mode 100644
+>> index 0000000000..72adc0028e
+>> --- /dev/null
+>> +++ b/include/system/memory-attribute-manager.h
+>> @@ -0,0 +1,42 @@
+>> +/*
+>> + * QEMU memory attribute manager
+>> + *
+>> + * Copyright Intel
+>> + *
+>> + * Author:
+>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or
+>> later.
+>> + * See the COPYING file in the top-level directory
+>> + *
+>> + */
+>> +
+>> +#ifndef SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
+>> +#define SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
+>> +
+>> +#include "system/hostmem.h"
+>> +
+>> +#define TYPE_MEMORY_ATTRIBUTE_MANAGER "memory-attribute-manager"
+>> +
+>> +OBJECT_DECLARE_TYPE(MemoryAttributeManager,
+>> MemoryAttributeManagerClass, MEMORY_ATTRIBUTE_MANAGER)
+>> +
+>> +struct MemoryAttributeManager {
+>> +    Object parent;
+>> +
+>> +    MemoryRegion *mr;
+>> +
+>> +    /* 1-setting of the bit represents the memory is populated
+>> (shared) */
+>> +    int32_t bitmap_size;
+> 
+> unsigned.
+> 
+> Also, do either s/bitmap_size/shared_bitmap_size/ or
+> s/shared_bitmap/bitmap/
 
-But it needs to judge the endian according to what userspace tells us
-(as the "TODO"), we probably need to invent new vDPA ioctls for that
-besides the Qemu modifications.
+Will change it. Thanks.
 
-Adding Dragos for more thought here.
+> 
+> 
+> 
+>> +    unsigned long *shared_bitmap;
+>> +
+>> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
+>> +};
+>> +
+>> +struct MemoryAttributeManagerClass {
+>> +    ObjectClass parent_class;
+>> +};
+>> +
+>> +int memory_attribute_manager_realize(MemoryAttributeManager *mgr,
+>> MemoryRegion *mr);
+>> +void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr);
+>> +
+>> +#endif
+>> diff --git a/system/memory-attribute-manager.c b/system/memory-
+>> attribute-manager.c
+>> new file mode 100644
+>> index 0000000000..ed97e43dd0
+>> --- /dev/null
+>> +++ b/system/memory-attribute-manager.c
+>> @@ -0,0 +1,292 @@
+>> +/*
+>> + * QEMU memory attribute manager
+>> + *
+>> + * Copyright Intel
+>> + *
+>> + * Author:
+>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or
+>> later.
+>> + * See the COPYING file in the top-level directory
+>> + *
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>> +#include "system/memory-attribute-manager.h"
+>> +
+>> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(MemoryAttributeManager,
+>> +                                   memory_attribute_manager,
+>> +                                   MEMORY_ATTRIBUTE_MANAGER,
+>> +                                   OBJECT,
+>> +                                   { TYPE_RAM_DISCARD_MANAGER },
+>> +                                   { })
+>> +
+>> +static int memory_attribute_manager_get_block_size(const
+>> MemoryAttributeManager *mgr)
+>> +{
+>> +    /*
+>> +     * Because page conversion could be manipulated in the size of at
+>> least 4K or 4K aligned,
+>> +     * Use the host page size as the granularity to track the memory
+>> attribute.
+>> +     * TODO: if necessary, switch to get the page_size from RAMBlock.
+>> +     * i.e. mgr->mr->ram_block->page_size.
+> 
+> I'd assume it is rather necessary already.
 
-Thanks
+OK, Will return the page_size of RAMBlock directly.
 
-> >>
-> >> int qemu_set_vnet_be(NetClientState *nc, bool is_be)
-> >> {
-> >> #if HOST_BIG_ENDIAN
-> >>      return 0;
-> >> #else
-> >>      if (!nc || !nc->info->set_vnet_be)
-> >>          return -ENOSYS;
-> >>
-> >>      return nc->info->set_vnet_be(nc, is_be);
-> >> #endif
-> >> }
-> >>
-> >
-> > Does anyone have any answers/suggestions?
-> >
->
-> Since you mentioned "vDPA h/w always implements LE data format",
-> I'd expect virtio_is_big_endian(vdev) always return FALSE, and
-> thus this to be safe:
->
->   static int vhost_vdpa_set_vnet_be(NetClientState *nc, bool is_le)
->   {
->       g_assert_not_reached();
->   }
->
-> But I don't know much about vDPA, so I won't object to your patch.
->
-> Regards,
->
-> Phil.
->
+> 
+>> +     */
+>> +    return qemu_real_host_page_size();
+>> +}
+>> +
+>> +
+>> +static bool memory_attribute_rdm_is_populated(const RamDiscardManager
+>> *rdm,
+>> +                                              const
+>> MemoryRegionSection *section)
+>> +{
+>> +    const MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>> +    uint64_t first_bit = section->offset_within_region / block_size;
+>> +    uint64_t last_bit = first_bit + int128_get64(section->size) /
+>> block_size - 1;
+>> +    unsigned long first_discard_bit;
+>> +
+>> +    first_discard_bit = find_next_zero_bit(mgr->shared_bitmap,
+>> last_bit + 1, first_bit);
+>> +    return first_discard_bit > last_bit;
+>> +}
+>> +
+>> +typedef int (*memory_attribute_section_cb)(MemoryRegionSection *s,
+>> void *arg);
+>> +
+>> +static int memory_attribute_notify_populate_cb(MemoryRegionSection
+>> *section, void *arg)
+>> +{
+>> +    RamDiscardListener *rdl = arg;
+>> +
+>> +    return rdl->notify_populate(rdl, section);
+>> +}
+>> +
+>> +static int memory_attribute_notify_discard_cb(MemoryRegionSection
+>> *section, void *arg)
+>> +{
+>> +    RamDiscardListener *rdl = arg;
+>> +
+>> +    rdl->notify_discard(rdl, section);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int memory_attribute_for_each_populated_section(const
+>> MemoryAttributeManager *mgr,
+>> +                                                      
+>> MemoryRegionSection *section,
+>> +                                                       void *arg,
+>> +                                                      
+>> memory_attribute_section_cb cb)
+>> +{
+>> +    unsigned long first_one_bit, last_one_bit;
+>> +    uint64_t offset, size;
+>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>> +    int ret = 0;
+>> +
+>> +    first_one_bit = section->offset_within_region / block_size;
+>> +    first_one_bit = find_next_bit(mgr->shared_bitmap, mgr-
+>> >bitmap_size, first_one_bit);
+>> +
+>> +    while (first_one_bit < mgr->bitmap_size) {
+>> +        MemoryRegionSection tmp = *section;
+>> +
+>> +        offset = first_one_bit * block_size;
+>> +        last_one_bit = find_next_zero_bit(mgr->shared_bitmap, mgr-
+>> >bitmap_size,
+>> +                                          first_one_bit + 1) - 1;
+>> +        size = (last_one_bit - first_one_bit + 1) * block_size;
+> 
+> 
+> What all this math is for if we stuck with VFIO doing 1 page at the
+> time? (I think I commented on this)
+
+Sorry, I missed your previous comment. IMHO, as we track the status in
+bitmap and we want to call the cb() on the shared part within
+MemoryRegionSection. Here we do the calculation to find the expected
+sub-range.
+
+> 
+>> +
+>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>> size)) {
+>> +            break;
+>> +        }
+>> +
+>> +        ret = cb(&tmp, arg);
+>> +        if (ret) {
+>> +            error_report("%s: Failed to notify RAM discard listener:
+>> %s", __func__,
+>> +                         strerror(-ret));
+>> +            break;
+>> +        }
+>> +
+>> +        first_one_bit = find_next_bit(mgr->shared_bitmap, mgr-
+>> >bitmap_size,
+>> +                                      last_one_bit + 2);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+
+[..]
+
+>> +
+>> +static void
+>> memory_attribute_rdm_unregister_listener(RamDiscardManager *rdm,
+>> +                                                    
+>> RamDiscardListener *rdl)
+>> +{
+>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>> +    int ret;
+>> +
+>> +    g_assert(rdl->section);
+>> +    g_assert(rdl->section->mr == mgr->mr);
+>> +
+>> +    ret = memory_attribute_for_each_populated_section(mgr, rdl-
+>> >section, rdl,
+>> +                                                     
+>> memory_attribute_notify_discard_cb);
+>> +    if (ret) {
+>> +        error_report("%s: Failed to unregister RAM discard listener:
+>> %s", __func__,
+>> +                     strerror(-ret));
+>> +    }
+>> +
+>> +    memory_region_section_free_copy(rdl->section);
+>> +    rdl->section = NULL;
+>> +    QLIST_REMOVE(rdl, next);
+>> +
+>> +}
+>> +
+>> +typedef struct MemoryAttributeReplayData {
+>> +    void *fn;
+> 
+> ReplayRamDiscard *fn, not void*.
+
+We could cast the void *fn either to ReplayRamPopulate or
+ReplayRamDiscard (see below).
+
+> 
+>> +    void *opaque;
+>> +} MemoryAttributeReplayData;
+>> +
+>> +static int
+>> memory_attribute_rdm_replay_populated_cb(MemoryRegionSection *section,
+>> void *arg)
+>> +{
+>> +    MemoryAttributeReplayData *data = arg;
+>> +
+>> +    return ((ReplayRamPopulate)data->fn)(section, data->opaque);
+>> +}
+>> +
+>> +static int memory_attribute_rdm_replay_populated(const
+>> RamDiscardManager *rdm,
+>> +                                                 MemoryRegionSection
+>> *section,
+>> +                                                 ReplayRamPopulate
+>> replay_fn,
+>> +                                                 void *opaque)
+>> +{
+>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>> +    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque =
+>> opaque };
+>> +
+>> +    g_assert(section->mr == mgr->mr);
+>> +    return memory_attribute_for_each_populated_section(mgr, section,
+>> &data,
+>> +                                                      
+>> memory_attribute_rdm_replay_populated_cb);
+>> +}
+>> +
+>> +static int
+>> memory_attribute_rdm_replay_discarded_cb(MemoryRegionSection *section,
+>> void *arg)
+>> +{
+>> +    MemoryAttributeReplayData *data = arg;
+>> +
+>> +    ((ReplayRamDiscard)data->fn)(section, data->opaque);
+>> +    return 0;
+>> +}
+>> +
+>> +static void memory_attribute_rdm_replay_discarded(const
+>> RamDiscardManager *rdm,
+>> +                                                  MemoryRegionSection
+>> *section,
+>> +                                                  ReplayRamDiscard
+>> replay_fn,
+>> +                                                  void *opaque)
+>> +{
+>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
+>> +    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque =
+>> opaque };
+>> +
+>> +    g_assert(section->mr == mgr->mr);
+>> +    memory_attribute_for_each_discarded_section(mgr, section, &data,
+>> +                                               
+>> memory_attribute_rdm_replay_discarded_cb);
+>> +}
+>> +
+>> +int memory_attribute_manager_realize(MemoryAttributeManager *mgr,
+>> MemoryRegion *mr)
+>> +{
+>> +    uint64_t bitmap_size;
+>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>> +    int ret;
+>> +
+>> +    bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
+>> +
+>> +    mgr->mr = mr;
+>> +    mgr->bitmap_size = bitmap_size;
+>> +    mgr->shared_bitmap = bitmap_new(bitmap_size);
+>> +
+>> +    ret = memory_region_set_ram_discard_manager(mgr->mr,
+>> RAM_DISCARD_MANAGER(mgr));
+> 
+> Move it 3 lines up and avoid stale data in mgr->mr/bitmap_size/
+> shared_bitmap and avoid g_free below?
+
+Make sense. I will move it up the same as patch 02 before bitmap_new().
+
+> 
+>> +    if (ret) {
+>> +        g_free(mgr->shared_bitmap);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr)
+>> +{
+>> +    memory_region_set_ram_discard_manager(mgr->mr, NULL);
+>> +
+>> +    g_free(mgr->shared_bitmap);
+>> +}
+>> +
+>> +static void memory_attribute_manager_init(Object *obj)
+> 
+> Not used.
+> 
+>> +{
+>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(obj);
+>> +
+>> +    QLIST_INIT(&mgr->rdl_list);
+>> +} > +
+>> +static void memory_attribute_manager_finalize(Object *obj)
+> 
+> Not used either. Thanks,
+
+I think it is OK to define it as a placeholder? Just some preference.
+
+> 
+>> +{
+>> +}
+>> +
+>> +static void memory_attribute_manager_class_init(ObjectClass *oc, void
+>> *data)
+>> +{
+>> +    RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
+>> +
+>> +    rdmc->get_min_granularity =
+>> memory_attribute_rdm_get_min_granularity;
+>> +    rdmc->register_listener = memory_attribute_rdm_register_listener;
+>> +    rdmc->unregister_listener =
+>> memory_attribute_rdm_unregister_listener;
+>> +    rdmc->is_populated = memory_attribute_rdm_is_populated;
+>> +    rdmc->replay_populated = memory_attribute_rdm_replay_populated;
+>> +    rdmc->replay_discarded = memory_attribute_rdm_replay_discarded;
+>> +}
+>> diff --git a/system/meson.build b/system/meson.build
+>> index 4952f4b2c7..ab07ff1442 100644
+>> --- a/system/meson.build
+>> +++ b/system/meson.build
+>> @@ -15,6 +15,7 @@ system_ss.add(files(
+>>     'dirtylimit.c',
+>>     'dma-helpers.c',
+>>     'globals.c',
+>> +  'memory-attribute-manager.c',
+>>     'memory_mapping.c',
+>>     'qdev-monitor.c',
+>>     'qtest.c',
+> 
 
 
