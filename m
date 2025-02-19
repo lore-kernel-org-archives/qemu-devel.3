@@ -4,69 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDAC1C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA71EC021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkgvl-0002ZO-Hb; Wed, 19 Feb 2025 05:03:49 -0500
+	id 1tkh6d-0004yV-AB; Wed, 19 Feb 2025 05:15:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tkgvj-0002Ym-6n
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:03:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tkgvg-00064z-Ei
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:03:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739959422;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=idliG5uxF6AgCEF+s9s1MFO4Q+TRtQNZHksc0RSvRig=;
- b=EFt3AiJJje4bsi7vGX2VIrcl99BE08YeZuxUpOeugA0w1cXJvVu+hfSyL0xXtMbEl0blGQ
- j9d67WjJ2NmbIG+Qm8Wci2QhcwFsCo2D/l3o+hb2UFcJ7tAl+nR9+nQWp+myRtfA3zTCfW
- UQ2PTwSs6xlcsxRuWIeO5CCoRgSkDZs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-cjl7kcbeNZSoYVqDf3HBng-1; Wed,
- 19 Feb 2025 05:03:39 -0500
-X-MC-Unique: cjl7kcbeNZSoYVqDf3HBng-1
-X-Mimecast-MFC-AGG-ID: cjl7kcbeNZSoYVqDf3HBng_1739959419
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D79F61800264; Wed, 19 Feb 2025 10:03:38 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.135])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9F7B61800941; Wed, 19 Feb 2025 10:03:37 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] linux-user: fix resource leaks in gen-vdso
-Date: Wed, 19 Feb 2025 10:03:36 +0000
-Message-ID: <20250219100336.1696758-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
+ id 1tkh6b-0004yJ-Pd
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:15:01 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <francescolavra.fl@gmail.com>)
+ id 1tkh6a-0007RU-0I
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:15:01 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38f504f087eso1594821f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 02:14:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1739960098; x=1740564898; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=pBdezJomEBdTTOtXU+AfpHqre+lwyUBQ4DYIvVkVfSA=;
+ b=VDmd4A2CMxGbHcyV/2IYEZelmOU11fvJBGS1EadhJU25Q29JiqDGR5VJ9rmGSWLU/K
+ aBZlFeuzvA2XtPkRIUH+mthJxaNxax5EGKQUr7RSLdTmYEas33BNPishubqEUKkvKnGf
+ dzKcZsKTCsXZzhghJjHPbdLZpNXsp434hHsmQ38TXRCzoG07ME+zfhzRa//3R9p86bPS
+ oky4y3IZ871WnTT3PVF/SBJCgAGVXuZbolrJxtgvc7AdAhno+Bs4sVp0ywr71qds/vV3
+ h7w84k9lavZp0wZoJQHd8MVPqq5+KzCWOp8Sw58DhjpNWwbjkJv90UvXcecdAivDDtQw
+ YAww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739960098; x=1740564898;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pBdezJomEBdTTOtXU+AfpHqre+lwyUBQ4DYIvVkVfSA=;
+ b=h3p8hPXi64OGnaZrgc9+4yfVOR5ImevV+E4rfwmw5X8V+NYxbhMc1H1588eyVvqOhl
+ awwwkgtB6fCltrruhY8sEtmGz8nzHh8KTkMscQt/VzeU3gpcYFU+YwlcrsG4PsCPKC0E
+ uDLq3JUeIFBgbqIBJU8oYyqHeolhe9Ye8yjcxmkRCe9MQjxhUCPE8EuWopf43nvp7I3d
+ 3xS05oneFTxHg+Nvjl9bpso/Yz3ezzMfzVhW2DKpS+L5T5bn//ELNRnnHFTKAcNtZ5t3
+ cf+PocCZin2jfSTD7FqT0dNw+A8JfdszEvEXT5cx1SWr3cZXd541u4idODWgwha5kt10
+ SQmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVv/DJhG5sULM/dK/qJ6UoCh8QgWoqTgNMcePmz6pZayULzGpS582NqX/+OTbu9W8nUjGnf07M2o01H@nongnu.org
+X-Gm-Message-State: AOJu0Yz5qsOtZDn9IyXSvLkAYSzEtmB3aUmAcQd6QE36//KQ/NGJ8cfR
+ +Zf7k/Y+Lne7OBUsF+gEXMNW5dQYYb3Z2qWjy1Tzv0UaZ3t1TFmR
+X-Gm-Gg: ASbGncuuuJk0VZb0yg5EcmKj+KVfO1t6RbKYNpzByNAJsIIbheJ5PGylRqUvY69i+rL
+ B0GQqvlWMHEEB32tyx3bRaDplstoTDw50uPOQuHut9Ghy/Vaez56eFxJ/9N5SdF5eSoTzWIQfZ1
+ jwsvj+XhSbAN1sovEKUYnYji138t6DRG8xJgJTU4cnt+ecsaxeVs1wWKhF2hCvXHbf4W1qfySrn
+ 3BPaODjE2J2DDQHDpYZzRh25ujUHi7jTldcXhIcdc1QbslJRy7r8IVqKNlKFgW6MoQvyanwhCQp
+ AcKOB8G++UUCgx93MVL8RDTj6TokhRTL72IyUc4XJlxcEw+F2sEC0fTAA0i6EN1sOnQ6GF2C
+X-Google-Smtp-Source: AGHT+IGVpmUfFf4EKFxE5EQ7BRJspLuZlpuC9K+zDXtaBJ110L1kEgPSGteUe0uewA53XqGlKtU4FQ==
+X-Received: by 2002:a05:6000:1a86:b0:38f:2211:e628 with SMTP id
+ ffacd0b85a97d-38f5878d730mr2603011f8f.20.1739960097984; 
+ Wed, 19 Feb 2025 02:14:57 -0800 (PST)
+Received: from ?IPv6:2001:b07:5d29:f42d:64f1:54a0:5dc5:6dd1?
+ ([2001:b07:5d29:f42d:64f1:54a0:5dc5:6dd1])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258b412esm17125485f8f.1.2025.02.19.02.14.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Feb 2025 02:14:57 -0800 (PST)
+Message-ID: <6571727841685f4276aa7c814776ff1fdd162a0a.camel@gmail.com>
+Subject: Re: [PATCH v7 08/52] i386/tdx: Initialize TDX before creating TD vcpus
+From: Francesco Lavra <francescolavra.fl@gmail.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=
+ <berrange@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Marcelo Tosatti
+ <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Rick Edgecombe
+ <rick.p.edgecombe@intel.com>,  qemu-devel@nongnu.org, kvm@vger.kernel.org
+Date: Wed, 19 Feb 2025 11:14:56 +0100
+In-Reply-To: <20250124132048.3229049-9-xiaoyao.li@intel.com>
+References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+ <20250124132048.3229049-9-xiaoyao.li@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=francescolavra.fl@gmail.com; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,96 +110,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are a number of resource leaks in gen-vdso. In theory they are
-harmless because this is a short lived process, but when building QEMU
-with --extra-cflags="-fsanitize=address" problems ensure. The gen-vdso
-program is run as part of the build, and that aborts due to the
-sanitizer identifying memory leaks, leaving QEMU unbuildable.
-
-FAILED: libqemu-x86_64-linux-user.a.p/vdso.c.inc
-/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso -o libqemu-x86_64-linux-user.a.p/vdso.c.inc ../linux-user/x86_64/vdso.so
-
-=================================================================
-==1696332==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 2968 byte(s) in 1 object(s) allocated from:
-    #0 0x56495873f1f3  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xa11f3) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
-    #1 0x564958780b90  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xe2b90) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
-
-This complaint is about the 'buf' variable, however, the FILE objects
-are also leaked in some error scenarios, so this fix refactors the
-cleanup paths to fix all leaks. For completeness it also reports an
-error if fclose() fails on 'inf'.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- linux-user/gen-vdso.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
-
-diff --git a/linux-user/gen-vdso.c b/linux-user/gen-vdso.c
-index 721f38d5a3..88d94b19eb 100644
---- a/linux-user/gen-vdso.c
-+++ b/linux-user/gen-vdso.c
-@@ -56,13 +56,14 @@ static unsigned rt_sigreturn_addr;
- 
- int main(int argc, char **argv)
- {
--    FILE *inf, *outf;
-+    FILE *inf = NULL, *outf = NULL;
-     long total_len;
-     const char *prefix = "vdso";
-     const char *inf_name;
-     const char *outf_name = NULL;
--    unsigned char *buf;
-+    unsigned char *buf = NULL;
-     bool need_bswap;
-+    int ret = EXIT_FAILURE;
- 
-     while (1) {
-         int opt = getopt(argc, argv, "o:p:r:s:");
-@@ -129,7 +130,6 @@ int main(int argc, char **argv)
-         fprintf(stderr, "%s: incomplete read\n", inf_name);
-         return EXIT_FAILURE;
-     }
--    fclose(inf);
- 
-     /*
-      * Identify which elf flavor we're processing.
-@@ -205,19 +205,24 @@ int main(int argc, char **argv)
-     fprintf(outf, "    .rt_sigreturn_ofs = 0x%x,\n", rt_sigreturn_addr);
-     fprintf(outf, "};\n");
- 
--    /*
--     * Everything should have gone well.
--     */
--    if (fclose(outf)) {
--        goto perror_outf;
--    }
--    return EXIT_SUCCESS;
-+    ret = EXIT_SUCCESS;
-+
-+ cleanup:
-+    free(buf);
-+
-+    if (outf &&
-+        fclose(outf) != 0)
-+        ret = EXIT_FAILURE;
-+    if (inf &&
-+        fclose(inf) != 0)
-+        ret = EXIT_FAILURE;
-+    return ret;
- 
-  perror_inf:
-     perror(inf_name);
--    return EXIT_FAILURE;
-+    goto cleanup;
- 
-  perror_outf:
-     perror(outf_name);
--    return EXIT_FAILURE;
-+    goto cleanup;
- }
--- 
-2.47.1
+T24gRnJpLCAyMDI1LTAxLTI0IGF0IDA4OjIwIC0wNTAwLCBYaWFveWFvIExpIHdyb3RlOgo+IGRp
+ZmYgLS1naXQgYS9hY2NlbC9rdm0va3ZtLWFsbC5jIGIvYWNjZWwva3ZtL2t2bS1hbGwuYwo+IGlu
+ZGV4IDQ1ODY3ZGJlMDgzOS4uZTM1YTlmYmQ2ODdlIDEwMDY0NAo+IC0tLSBhL2FjY2VsL2t2bS9r
+dm0tYWxsLmMKPiArKysgYi9hY2NlbC9rdm0va3ZtLWFsbC5jCj4gQEAgLTU0MCw4ICs1NDAsMTUg
+QEAgaW50IGt2bV9pbml0X3ZjcHUoQ1BVU3RhdGUgKmNwdSwgRXJyb3IgKiplcnJwKQo+IMKgCj4g
+wqDCoMKgwqAgdHJhY2Vfa3ZtX2luaXRfdmNwdShjcHUtPmNwdV9pbmRleCwga3ZtX2FyY2hfdmNw
+dV9pZChjcHUpKTsKPiDCoAo+ICvCoMKgwqAgLyoKPiArwqDCoMKgwqAgKiB0ZHhfcHJlX2NyZWF0
+ZV92Y3B1KCkgbWF5IGNhbGwgY3B1X3g4Nl9jcHVpZCgpLiBJdCBpbiB0dXJuCj4gbWF5IGNhbGwK
+PiArwqDCoMKgwqAgKiBrdm1fdm1faW9jdGwoKS4gU2V0IGNwdS0+a3ZtX3N0YXRlIGluIGFkdmFu
+Y2UgdG8gYXZvaWQgTlVMTAo+IHBvaW50ZXIKPiArwqDCoMKgwqAgKiBkZXJlZmVyZW5jZS4KPiAr
+wqDCoMKgwqAgKi8KPiArwqDCoMKgIGNwdS0+a3ZtX3N0YXRlID0gczsKClRoaXMgYXNzaWdubWVu
+dCBzaG91bGQgYmUgcmVtb3ZlZCBmcm9tIGt2bV9jcmVhdGVfdmNwdSgpLCBhcyBub3cgaXQncwpy
+ZWR1bmRhbnQgdGhlcmUuCgo+IMKgwqDCoMKgIHJldCA9IGt2bV9hcmNoX3ByZV9jcmVhdGVfdmNw
+dShjcHUsIGVycnApOwo+IMKgwqDCoMKgIGlmIChyZXQgPCAwKSB7Cj4gK8KgwqDCoMKgwqDCoMKg
+IGNwdS0+a3ZtX3N0YXRlID0gTlVMTDsKCk5vIG5lZWQgdG8gcmVzZXQgY3B1LT5rdm1fc3RhdGUg
+dG8gTlVMTCwgdGhlcmUgYWxyZWFkeSBhcmUgb3RoZXIgZXJyb3IKY29uZGl0aW9ucyB1bmRlciB3
+aGljaCBjcHUtPmt2bV9zdGF0ZSByZW1haW5zIGluaXRpYWxpemVkLgoKPiDCoMKgwqDCoMKgwqDC
+oMKgIGdvdG8gZXJyOwo+IMKgwqDCoMKgIH0KPiDCoAo+IEBAIC01NTAsNiArNTU3LDcgQEAgaW50
+IGt2bV9pbml0X3ZjcHUoQ1BVU3RhdGUgKmNwdSwgRXJyb3IgKiplcnJwKQo+IMKgwqDCoMKgwqDC
+oMKgwqAgZXJyb3Jfc2V0Z19lcnJubyhlcnJwLCAtcmV0LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJrdm1faW5pdF92Y3B1OiBrdm1fY3JlYXRl
+X3ZjcHUgZmFpbGVkCj4gKCVsdSkiLAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIGt2bV9hcmNoX3ZjcHVfaWQoY3B1KSk7Cj4gK8KgwqDCoMKgwqDC
+oMKgIGNwdS0+a3ZtX3N0YXRlID0gTlVMTDsKClNhbWUgaGVyZS4K
 
 
