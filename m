@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225FFC021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 12:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B428DC021B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 12:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkjUZ-0007lH-FV; Wed, 19 Feb 2025 07:47:55 -0500
+	id 1tkjWI-0000FW-LI; Wed, 19 Feb 2025 07:49:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkjUY-0007l5-GP
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 07:47:54 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkjW7-00009j-AU
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 07:49:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkjUV-0003Qq-P9
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 07:47:54 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkjW4-0003Zv-2r
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 07:49:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739969269;
+ s=mimecast20190719; t=1739969367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0WqS9TRs74tJW4j3q4CjZOJGdE97aNdOw+obSCW/u1I=;
- b=fGyZi6rPKqjCzwMVgcuiEw8TCXv1HDzyjZ4qZ+CQCLP1DbiNGujBdkp9itQW+GYRw1FCzW
- 4sYsPirSA1K51pCNbDSP8pEyLap87WObUdVrTsp9Jn/m+oOsbyCoptUjCvaCu71d77xR4a
- oz3ql4/Gh8aj0B3U5NHBly11RP+G43s=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-CJXoZ01hNquTLRY1KrDguQ-1; Wed, 19 Feb 2025 07:47:48 -0500
-X-MC-Unique: CJXoZ01hNquTLRY1KrDguQ-1
-X-Mimecast-MFC-AGG-ID: CJXoZ01hNquTLRY1KrDguQ_1739969267
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6e66081351aso258814746d6.0
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 04:47:47 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739969267; x=1740574067;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0WqS9TRs74tJW4j3q4CjZOJGdE97aNdOw+obSCW/u1I=;
- b=cKcSQid/waSoJ7XMI/BtDVDf2PrR5oGm+Cm9PV+SubL6TJMfvhhL5sd9NR8+zmAOvv
- G04jfaQ3OIpzerabzt/uS4uBUikZL8SS0OyrnMlJL+8UHqDsVw5K7rAkky9qWeH3ezHn
- 7WtqHh/ukc4javKdeLuRt2t6Ie7pH/pflvXKw5B3ydouOTwgmwLnqIZNjKVe/dhsK4By
- 5HxgNHqHR8veUnfLSxXAjHZe2BA+Wbyi3mYU5UqLJIEm45xW76Pbp61Ng23tk/8l3i6x
- 3tvDBnIbRAwkFsF5lmTZv3VHL7lHyXbYxzm5Qvr0yEByPzrNZBW2IhYlxjiuHhUmLR01
- CL5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCCvFXopD184wfKJtDUrmr/WHMEc3UifsIVZWeCD+wcTXzq6lfXSKUzVd785qSn7/FzpkQISrv/Zm7@nongnu.org
-X-Gm-Message-State: AOJu0YziYPiHMjNuJKyNVIikgejXI2QurqHZbEiZoi9TPug/1aryt6N7
- JduvL00Uw7Yh3DwDhVmTPO/9fNMSeOFCoyn1p7yTtDH0S47T5S7+Cu4nFhjKiOQKamI/TjccXm0
- QaX+4aE3yz9HBbwuKTlT6SW26lGjxRac3W7LWGXfdLb6Y4x7Ibzx+
-X-Gm-Gg: ASbGncv0vkWhFP8UCk1llxHC5ve3dgvUaDLTrul1/9njOO2dTQ/IxMHRITw73icGxu7
- LwGmZYEIGOFARUkIY+zKvyZBjCdkCeqCzl9dxf9CBRf9I/bbqmxihvS7nIMxAYkclPaICmP9Sts
- Niz/6tZORC/Q/NBySyqNouIWZgASnHkHAV0Ra841jVFTt3U5+DIBnmKVWiyWM9jb2PztF+Z5WPy
- dsumAFSIzhM0WJv7gBhTp4qJCt4n7g/QZZVvqzyJZZ2nQYt8c0w+AnQH4I=
-X-Received: by 2002:a05:6214:5085:b0:6e4:4484:f358 with SMTP id
- 6a1803df08f44-6e66cd0b70fmr240852596d6.33.1739969267442; 
- Wed, 19 Feb 2025 04:47:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEnBV5C/HywkxTBKuk53KX8jMUFXJvE2LMWiVus4MApBYF901bnd7VR3rpNE0p7TC/x7B81bQ==
-X-Received: by 2002:a05:6214:5085:b0:6e4:4484:f358 with SMTP id
- 6a1803df08f44-6e66cd0b70fmr240852376d6.33.1739969267090; 
- Wed, 19 Feb 2025 04:47:47 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c096c10bf2sm397180385a.20.2025.02.19.04.47.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 04:47:46 -0800 (PST)
-Date: Wed, 19 Feb 2025 07:47:44 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Li Zhijian via <qemu-devel@nongnu.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 2/2] [NOT-FOR-MERGE] Add qtest for migration over RDMA
-Message-ID: <Z7XS8JmtxivALM92@x1.local>
-References: <20250218074345.638203-1-lizhijian@fujitsu.com>
- <20250218074345.638203-2-lizhijian@fujitsu.com>
- <87zfij7yob.fsf@suse.de> <Z7UMcIQ4QrcXqwK3@x1.local>
- <ea265434-7842-4556-9a99-98ce42b6c1f1@fujitsu.com>
+ bh=aPDI4jiTmSU82e7BWgbphFniq0WIFbEcpiTJr20KXHY=;
+ b=P0CHpwnYvKGozfFZggUR4fKdv9qtkrY2DIX5iFswC91zJcWNsG3eq/p1lUAXnRWnqKdqS5
+ qJ5N78FKEh33i9RSd8zZKBRXkfxM1aq/hGx91iAwDSL9gNXV/VHdtDOtKl+8obNMN/akcd
+ WMRt3teaNhEftAJBWGmq5TZh2DctKjg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-VtDU4v_UMNKPWs1ZXAFKWQ-1; Wed,
+ 19 Feb 2025 07:49:24 -0500
+X-MC-Unique: VtDU4v_UMNKPWs1ZXAFKWQ-1
+X-Mimecast-MFC-AGG-ID: VtDU4v_UMNKPWs1ZXAFKWQ_1739969362
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CEC3C18D95EE; Wed, 19 Feb 2025 12:49:21 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 042551800352; Wed, 19 Feb 2025 12:49:20 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9E14321E6A28; Wed, 19 Feb 2025 13:49:17 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
+ Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
+ Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
+ <jasowang@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 29/42] qapi: Add "Details:" disambiguation marker
+In-Reply-To: <CAFn=p-ahRX5fULGNn4uCh5aqqKcZoocQiXQEO=xkQAKdNEZAHA@mail.gmail.com>
+ (John Snow's message of "Tue, 18 Feb 2025 17:48:09 -0500")
+References: <20250205231208.1480762-1-jsnow@redhat.com>
+ <20250205231208.1480762-30-jsnow@redhat.com>
+ <87h64srcpo.fsf@pond.sub.org>
+ <CAFn=p-ahRX5fULGNn4uCh5aqqKcZoocQiXQEO=xkQAKdNEZAHA@mail.gmail.com>
+Date: Wed, 19 Feb 2025 13:49:17 +0100
+Message-ID: <87v7t62j76.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ea265434-7842-4556-9a99-98ce42b6c1f1@fujitsu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -109,288 +99,437 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 05:33:26AM +0000, Zhijian Li (Fujitsu) wrote:
-> 
-> 
-> On 19/02/2025 06:40, Peter Xu wrote:
-> > On Tue, Feb 18, 2025 at 06:03:48PM -0300, Fabiano Rosas wrote:
-> >> Li Zhijian via <qemu-devel@nongnu.org> writes:
-> >>
-> >>> This qtest requirs there is RXE link in the host.
-> >>>
-> >>> Here is an example to show how to add this RXE link:
-> >>> $ ./new-rdma-link.sh
-> >>> 192.168.22.93
-> >>>
-> >>> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> >>> ---
-> >>> The RDMA migration was broken again...due to lack of sufficient test/qtest.
-> >>>
-> >>> It's urgly to add and execute a script to establish an RDMA link in
-> >>> the C program. If anyone has a better suggestion, please let me know.
-> >>>
-> >>> $ cat ./new-rdma-link.sh
-> >>> get_ipv4_addr() {
-> >>>          ip -4 -o addr show dev "$1" |
-> >>>                  sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p'
-> >>> }
-> >>>
-> >>> has_soft_rdma() {
-> >>>          rdma link | grep -q " netdev $1[[:blank:]]*\$"
-> >>> }
-> >>>
-> >>> start_soft_rdma() {
-> >>>          local type
-> >>>
-> >>>          modprobe rdma_rxe || return $?
-> >>>          type=rxe
-> >>>          (
-> >>>                  cd /sys/class/net &&
-> >>>                          for i in *; do
-> >>>                                  [ -e "$i" ] || continue
-> >>>                                  [ "$i" = "lo" ] && continue
-> >>>                                  [ "$(<"$i/addr_len")" = 6 ] || continue
-> >>>                                  [ "$(<"$i/carrier")" = 1 ] || continue
-> >>>                                  has_soft_rdma "$i" && break
-> >>>                                  rdma link add "${i}_$type" type $type netdev "$i" && break
-> >>>                          done
-> >>>                  has_soft_rdma "$i" && echo $i
-> >>>          )
-> >>>
-> >>> }
-> >>>
-> >>> rxe_link=$(start_soft_rdma)
-> >>> [[ "$rxe_link" ]] && get_ipv4_addr $rxe_link
-> >>>
-> >>> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> >>> ---
-> >>>   tests/qtest/migration/new-rdma-link.sh |  34 ++++++++
-> >>>   tests/qtest/migration/precopy-tests.c  | 103 +++++++++++++++++++++++++
-> >>>   2 files changed, 137 insertions(+)
-> >>>   create mode 100644 tests/qtest/migration/new-rdma-link.sh
-> >>>
-> >>> diff --git a/tests/qtest/migration/new-rdma-link.sh b/tests/qtest/migration/new-rdma-link.sh
-> >>> new file mode 100644
-> >>> index 00000000000..ca20594eaae
-> >>> --- /dev/null
-> >>> +++ b/tests/qtest/migration/new-rdma-link.sh
-> >>> @@ -0,0 +1,34 @@
-> >>> +#!/bin/bash
-> >>> +
-> >>> +# Copied from blktests
-> >>> +get_ipv4_addr() {
-> >>> +	ip -4 -o addr show dev "$1" |
-> >>> +		sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p'
-> >>> +}
-> >>> +
-> >>> +has_soft_rdma() {
-> >>> +	rdma link | grep -q " netdev $1[[:blank:]]*\$"
-> >>> +}
-> >>> +
-> >>> +start_soft_rdma() {
-> >>> +	local type
-> >>> +
-> >>> +	modprobe rdma_rxe || return $?
-> >>> +	type=rxe
-> >>> +	(
-> >>> +		cd /sys/class/net &&
-> >>> +			for i in *; do
-> >>> +				[ -e "$i" ] || continue
-> >>> +				[ "$i" = "lo" ] && continue
-> >>> +				[ "$(<"$i/addr_len")" = 6 ] || continue
-> >>> +				[ "$(<"$i/carrier")" = 1 ] || continue
-> >>> +				has_soft_rdma "$i" && break
-> >>> +				rdma link add "${i}_$type" type $type netdev "$i" && break
-> >>> +			done
-> >>> +		has_soft_rdma "$i" && echo $i
-> >>> +	)
-> >>> +
-> >>> +}
-> >>> +
-> >>> +rxe_link=$(start_soft_rdma)
-> >>> +[[ "$rxe_link" ]] && get_ipv4_addr $rxe_link
-> >>> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> >>> index 162fa695318..d2a1c9c9438 100644
-> >>> --- a/tests/qtest/migration/precopy-tests.c
-> >>> +++ b/tests/qtest/migration/precopy-tests.c
-> >>> @@ -98,6 +98,105 @@ static void test_precopy_unix_dirty_ring(void)
-> >>>       test_precopy_common(&args);
-> >>>   }
-> >>>   
-> >>> +static int new_rdma_link(char *buffer) {
-> >>> +    // Copied from blktests
-> >>> +    const char *script =
-> >>> +        "#!/bin/bash\n"
-> >>> +        "\n"
-> >>> +        "get_ipv4_addr() {\n"
-> >>> +        "    ip -4 -o addr show dev \"$1\" |\n"
-> >>> +        "    sed -n 's/.*[[:blank:]]inet[[:blank:]]*\\([^[:blank:]/]*\\).*/\\1/p'\n"
-> >>> +        "}\n"
-> >>> +        "\n"
-> >>> +        "has_soft_rdma() {\n"
-> >>> +        "    rdma link | grep -q \" netdev $1[[:blank:]]*\\$\"\n"
-> >>> +        "}\n"
-> >>> +        "\n"
-> >>> +        "start_soft_rdma() {\n"
-> >>> +        "    local type\n"
-> >>> +        "\n"
-> >>> +        "    modprobe rdma_rxe || return $?\n"
-> >>> +        "    type=rxe\n"
-> >>> +        "    (\n"
-> >>> +        "        cd /sys/class/net &&\n"
-> >>> +        "        for i in *; do\n"
-> >>> +        "            [ -e \"$i\" ] || continue\n"
-> >>> +        "            [ \"$i\" = \"lo\" ] && continue\n"
-> >>> +        "            [ \"$(<$i/addr_len)\" = 6 ] || continue\n"
-> >>> +        "            [ \"$(<$i/carrier)\" = 1 ] || continue\n"
-> >>> +        "            has_soft_rdma \"$i\" && break\n"
-> >>> +        "            rdma link add \"${i}_$type\" type $type netdev \"$i\" && break\n"
-> >>> +        "        done\n"
-> >>> +        "        has_soft_rdma \"$i\" && echo $i\n"
-> >>> +        "    )\n"
-> >>> +        "}\n"
-> >>> +        "\n"
-> >>> +        "rxe_link=$(start_soft_rdma)\n"
-> >>> +        "[[ \"$rxe_link\" ]] && get_ipv4_addr $rxe_link\n";
-> >>> +
-> >>> +    char script_filename[] = "/tmp/temp_scriptXXXXXX";
-> >>> +    int fd = mkstemp(script_filename);
-> >>> +    if (fd == -1) {
-> >>> +        perror("Failed to create temporary file");
-> >>> +        return 1;
-> >>> +    }
-> >>> +
-> >>> +    FILE *fp = fdopen(fd, "w");
-> >>> +    if (fp == NULL) {
-> >>> +        perror("Failed to open file stream");
-> >>> +        close(fd);
-> >>> +        return 1;
-> >>> +    }
-> >>> +    fprintf(fp, "%s", script);
-> >>> +    fclose(fp);
-> >>> +
-> >>> +    if (chmod(script_filename, 0700) == -1) {
-> >>> +        perror("Failed to set execute permission");
-> >>> +        return 1;
-> >>> +    }
-> >>> +
-> >>> +    FILE *pipe = popen(script_filename, "r");
-> >>> +    if (pipe == NULL) {
-> >>> +        perror("Failed to run script");
-> >>> +        return 1;
-> >>> +    }
-> >>> +
-> >>> +    int idx = 0;
-> >>> +    while (fgets(buffer + idx, 128 - idx, pipe) != NULL) {
-> >>> +        idx += strlen(buffer);
-> >>> +    }
-> >>> +    if (buffer[idx - 1] == '\n')
-> >>> +        buffer[idx - 1] = 0;
-> >>> +
-> >>> +    int status = pclose(pipe);
-> >>> +    if (status == -1) {
-> >>> +        perror("Error reported by pclose()");
-> >>> +    } else if (!WIFEXITED(status)) {
-> >>> +        printf("Script did not terminate normally\n");
-> >>> +    }
-> >>> +
-> >>> +    remove(script_filename);
-> > 
-> > The script can be put separately instead if hard-coded here, right?
-> 
-> 
-> Sure, If so, I wonder whether the migration-test program is able to know where is this script?
-> 
-> 
-> > 
-> >>> +
-> >>> +    return 0;
-> >>> +}
-> >>> +
-> >>> +static void test_precopy_rdma_plain(void)
-> >>> +{
-> >>> +    char buffer[128] = {};
-> >>> +
-> >>> +    if (new_rdma_link(buffer))
-> >>> +        return;
-> >>> +
-> >>> +    g_autofree char *uri = g_strdup_printf("rdma:%s:7777", buffer);
-> >>> +
-> >>> +    MigrateCommon args = {
-> >>> +        .listen_uri = uri,
-> >>> +        .connect_uri = uri,
-> >>> +    };
-> >>> +
-> >>> +    test_precopy_common(&args);
-> >>> +}
-> >>> +
-> >>>   static void test_precopy_tcp_plain(void)
-> >>>   {
-> >>>       MigrateCommon args = {
-> >>> @@ -968,6 +1067,10 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
-> >>>                          test_multifd_tcp_uri_none);
-> >>>       migration_test_add("/migration/multifd/tcp/plain/cancel",
-> >>>                          test_multifd_tcp_cancel);
-> >>> +#ifdef CONFIG_RDMA
-> >>> +    migration_test_add("/migration/precopy/rdma/plain",
-> >>> +                       test_precopy_rdma_plain);
-> >>> +#endif
-> >>>   }
-> >>>   
-> >>>   void migration_test_add_precopy(MigrationTestEnv *env)
-> >>
-> >> Thanks, that's definitely better than nothing. I'll experiment with this
-> >> locally, see if I can at least run it before sending a pull request.
-> > 
-> > With your newly added --full, IIUC we can add whatever we want there.
-> > E.g. we can add --rdma and iff specified, migration-test adds the rdma test.
-> > 
-> > Or.. skip the test when the rdma link isn't available.
-> > 
-> > If we could separate the script into a file, it'll be better.  We could
-> > create scripts/migration dir and put all migration scripts over there,
-> 
-> We have any other existing script? I didn't find it in current QEMU tree.
+John Snow <jsnow@redhat.com> writes:
 
-We have a few that I'm aware of:
+> On Mon, Feb 17, 2025 at 7:13=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > This clarifies sections that are mistaken by the parser as "intro"
+>> > sections to be "details" sections instead.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>>
+>> This is rather terse.
+>>
+>
+> Mea culpa. I can write more at length if we agree on the general approach.
+> For now, you got an RFC as this was the subject of a considerable amount =
+of
+> controversy between us in the past ... so I am doing baby steps.
+>
+> "Commit message needs to be hit with the unterseification beam" added to
+> tasklist. :)
+>
+>
+>>
+>> Why does the boundary between "intro" (previously "body") and "details"
+>> matter?  As far as I understand, it matters for inlining.
+>>
+>
+>> What is inlining?
+>>
+>
+>> The old doc generator emits "The members of T" into the argument
+>> description in the following cases:
+>>
+>> * When a command's arguments are given as a type T, the doc comment has
+>>   no argument descriptions, and the generated argument description
+>>   becomes "The members of T".
+>>
+>> * When an object type has a base type T, "The members of T" is appended
+>>   to the doc comment's (possibly empty) argument descriptions.
+>>
+>> * For union types, "The members of T when TAG is VALUE" is appended to
+>>   the doc comment's argument descriptions for every tag VALUE and
+>>   associated type T.
+>>
+>> We want a description of the members of T right there instead.  To get
+>> it right there, we need to inline from T's documentation.
+>>
+>> What exactly do we need to inline?  Turns out we don't want "intro", we
+>> do want the argument descriptions and other stuff we can ignore here.
+>>
+>> "intro" ends before the argument descriptions, features, or a tagged
+>> section, whatever comes first.  Most of the time, this works fine.  But
+>> there are a few troublesome cases.  Here's one:
+>>
+>>     ##
+>>     # @MemoryBackendShmProperties:
+>>     #
+>>     # Properties for memory-backend-shm objects.
+>>     #
+>>     # This memory backend supports only shared memory, which is the
+>>     # default.
+>>     #
+>>     # Since: 9.1
+>>     ##
+>>     { 'struct': 'MemoryBackendShmProperties',
+>>       'base': 'MemoryBackendProperties',
+>>       'data': { },
+>>       'if': 'CONFIG_POSIX' }
+>>
+>> Everything up to "Since:" is "intro".  Consequently, the old doc
+>> generator emits "The members of MemoryBackendProperties" right there:
+>>
+>>     "MemoryBackendShmProperties" (Object)
+>>     -------------------------------------
+>>
+>>     Properties for memory-backend-shm objects.
+>>
+>>     This memory backend supports only shared memory, which is the defaul=
+t.
+>>
+>>
+>>     Members
+>>     ~~~~~~~
+>>
+>>     The members of "MemoryBackendProperties"
+>>
+>>     Since
+>>     ~~~~~
+>>
+>>     9.1
+>>
+>>
+>>     If
+>>     ~~
+>>
+>>     "CONFIG_POSIX"
+>>
+>> That's also where the new one inlines.  Okay so far.
+>>
+>> This gets in turn inlined into ObjectOptions for branch
+>> memory-backend-shm.  Since we don't inline "intro", we don't inline
+>> "This memory backend supports only shared memory, which is the default."
+>> That's a problem.
+>>
+>
+> Yes, this is all correct so far.
+>
+>
+>>
+>> This patch moves the boundary between "intro" and the remainder up that
+>> paragraph, so we don't lose that line.  It accomplishes that by giving
+>> us syntax to manually mark the end of "intro"
+>>
+>> However, your solution is manual: it gives us the means[*] to mark the
+>> boundary with "Details:" to avoid loss of text.  What if we don't
+>> notice?  Should we tweak the syntax to force us to be explicit?  How
+>> many doc comments would that affect?
+>>
+>
+> I'm leaving that question to you. The calculus I made was that there were
+> fewer SLOC changes to explicitly denote the "Details:" sections only in t=
+he
+> handful of cases where it was (potentially) relevant than to mandate its
+> use unconditionally.
 
-  - analyze-migration.py
-  - vmstate-static-checker.py
-  - userfaultfd-wrlat.py
+How did you determine where it is (potentially) relevant?  Oh, wait ...
 
-> 
-> 
-> > then
-> > in the test it tries to detect rdma link and fetch the ip only
-> 
-> It should work without root permission if we just *detect* and *fetch ip*.
-> 
-> Do you also mean we can split new-rdma-link.sh to 2 separate scripts
-> - add-rdma-link.sh # optionally, execute by user before the test (require root permission)
-> - detect-fetch-rdma.sh # execute from the migration-test
+>                      If you have an idea that is enforceable at runtime a=
+nd
+> has fewer SLOC changes, suggest away!
+>
+> Unseen in this patch is a warning I added to the /inliner/ that identified
+> potentially "ambiguous" delineation spots and issued a warning (error); t=
+he
+> exact code that did this is possibly a little hokey but it was what I used
+> to identify the spots addressed by this patch.
 
-Hmm indeed we still need a script to scan over all the ports..
+... that's how.
 
-If having --rdma is a good idea, maybe we can further make it a parameter
-to --rdma?
+> Point being: it's possible to enforce, but I enforced it in qapidoc.py in
+> the inliner instead of directly in the parser. We could discuss moving the
+> check to the parser if you'd like. The check itself is somewhat "dumb":
+>
+> - If a doc block has only one *paragraph* (knowingly/intentionally not
+> using the term section here) of text, it's assumed to be the intro.
 
-  $ migration-test --rdma $RDMA_IP
+You mean if the "body" has just one paragraph, right?  The "body" is the
+first section, always untagged, possibly empty.  It's contains the text
+between the line naming the definition and the first tagged section.
 
-Or:
+The tagged sections are member / argument descriptions, feature
+descriptions, 'Returns', 'Errors', 'Since', and 'TODO'.
 
-  $ migration-test --rdma-ip $RDMA_IP
+> - If a doc block has any number of tagged sections, all text above (if an=
+y)
+> is assumed to be the "intro" and all text below (if any) is assumed to be
+> "details".
 
-Then maybe migration-test can directly take that IP and run the tests,
-assuming the admin setup the rdma link.  Then we keep that one script.
+Uh, this can't be quite right.
 
-Or I assume it's still ok that the test requires root only for --rdma, then
-invoke the script directly in the test.  If so, we'd better also remove the
-rdma link after test finished, so no side effect of the test (modprobe is
-probably fine).
+Consider:
 
-We can wait and see how far Fabiano went with this, and also his opinion.
+    ##
+    # @query-memory-size-summary:
+    #
+    # Return the amount of initially allocated and present hotpluggable
+    # (if enabled) memory in bytes.
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "query-memory-size-summary" }
+    #     <- { "return": { "base-memory": 4294967296, "plugged-memory": 0 }=
+ }
+    #
+--> # Since: 2.11
+    ##
 
--- 
-Peter Xu
+There is a tagged section.  According to your explanation, the text
+above, i.e. everything between @query-memory-size-summary: and Since: is
+assumed to be "intro".
+
+According to your patch, which adds "Details:" in the middle, we do not
+assume this.  Contradiction.
+
+> It's only in this case that it whines:
+>
+> - A doc block has *multiple paragraphs* of text at the start of the block,
+> but has no other sections and so if there is semantically a "details"
+> section or not is unclear to the parser and inliner.
+
+Let's take a step back.  docs/devel/qapi-code-gen.rst:
+
+    Definition documentation starts with a line naming the definition,
+    followed by an optional overview, a description of each argument (for
+    commands and events), member (for structs and unions), branch (for
+    alternates), or value (for enums), a description of each feature (if
+    any), and finally optional tagged sections.
+
+Bug: should be "finally optional tagged or untagged sections".
+
+Your generator wants all but 'Since' and 'TODO' together, so it can
+render them in a single two-column table.
+
+This description table separates "intro" (above) and "details" (below).
+Fair?
+
+Fine and dandy separation unless the description table is *empty*.
+
+Then the "body" (first section, always untagged) extends to the first
+'Since', 'TODO', or the end of the doc comment.
+
+Heuristic: when this first untagged section is a single paragraph, we
+quietly assume it's "intro".  If it's more than one, we ask the
+programmer to mark the end of "intro" explicitly.
+
+Let's see how this works out in practice.  I stick
+
+        if self.symbol and not (self.args or self.features or self.returns =
+or self.errors):
+            if self.body.text.find('\n\n') =3D=3D -1:
+                print(f"{self.info}: single para")
+            else:
+                print(f"{self.info}: ambiguous")
+
+into QAPIDoc.check().  The outer conditional is true for definition
+documentation (doc.symbol) where the table is empty (not ...).  The
+inner conditional is a crude check for paragraphs.
+
+This reports 47 "single para" and 8 "ambiguous" in the main QAPI schema
+in master.
+
+Your patch hits 5 of 8 ambiguous ones, and throws in a 6th that doesn't
+seem to need it:
+
+    ##
+    # @query-yank:
+    #
+    # Query yank instances.  See @YankInstance for more information.
+    #
+    # Returns: list of @YankInstance
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "query-yank" }
+    #     <- { "return": [
+    #              { "type": "block-node",
+    #                "node-name": "nbd0" }
+    #          ] }
+    #
+    # Since: 6.0
+    ##
+
+It misses in run-state.json:
+
+    ##
+    # @SUSPEND_DISK:
+    #
+    # Emitted when guest enters a hardware suspension state with data
+    # saved on disk, for example, S4 state, which is sometimes called
+    # hibernate state
+    #
+    # .. note:: QEMU shuts down (similar to event @SHUTDOWN) when entering
+    #    this state.
+    #
+    # Since: 1.2
+    #
+    # .. qmp-example::
+    #
+    #     <- { "event": "SUSPEND_DISK",
+    #          "timestamp": { "seconds": 1344456160, "microseconds": 309119=
+ } }
+    ##
+
+and in migration.json:
+
+    ##
+    # @migrate_cancel:
+    #
+    # Cancel the current executing migration process.
+    #
+    # .. note:: This command succeeds even if there is no migration
+    #    process running.
+    #
+    # Since: 0.14
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "migrate_cancel" }
+    #     <- { "return": {} }
+    ##
+
+and in machine.json
+
+    ##
+    # @HV_BALLOON_STATUS_REPORT:
+    #
+    # Emitted when the hv-balloon driver receives a "STATUS" message from
+    # the guest.
+    #
+    # .. note:: This event is rate-limited.
+    #
+    # Since: 8.2
+    #
+    # .. qmp-example::
+    #
+    #     <- { "event": "HV_BALLOON_STATUS_REPORT",
+    #          "data": { "committed": 816640000, "available": 3333054464 },
+    #          "timestamp": { "seconds": 1600295492, "microseconds": 661044=
+ } }
+    ##
+
+> The check as I wrote it is unintelligent in that it does not bother to
+> check if the doc block it is checking is ever one that *could* be inlined;
+> i.e. it will complain about being unable to delineate for commands -- even
+> though it wouldn't really matter in that case. It's a potential improveme=
+nt
+> to the algorithm to ignore cases where that "ambiguity" is not actually
+> important.
+
+The ambiguity affects both doc blocks the inliner inlines from and doc
+blocks the inliner inlines into.
+
+When inlining from, the inliner omits "intro", and therefore needs to
+know where "intro" ends.
+
+When inlining into, the inliner needs to know where to insert the
+inlined material.  When the answer is "right after intro", it needs to
+know where "intro" ends.
+
+Getting the former wrong loses information.  Getting the latter wrong
+may look funny, which is a lot less serious, but still useful to avoid.
+
+> But, it's possible to mechanically enforce and nudge documentation writers
+> to add the delineation marker where the parser is uncertain.
+>
+>> [*] Actually, we have means even before this patch, they're just ugly.
+>> See the TODO comment added in commit 14b48aaab92 (qapi: convert
+>> "Example" sections without titles)
+>
+>
+> That's right. This is merely a formalization of that hack: I add a
+> "section" that is intentionally empty and serves only as a marker to the
+> parser to begin recording a new section.
+
+Yes.
+
+
+Let's take a step back again.
+
+Recall the problem's cause is "empty description table".  Can we enforce
+non-empty?
+
+Here's the table's syntactic structure:
+
+    member / argument descriptions *
+    ( "Features:" line
+       feature descriptions ("features") + ) ?
+    "Returns" section ?
+    "Errors" section ?
+
+This is slightly more strict than what we actually accept now, but
+that's detail.
+
+Consider:
+
+    "Members:" / "Arguments:" line
+    member / argument descriptions *
+    ( "Features:" line
+       feature descriptions ("features") + ) ?
+    "Returns" section ?
+    "Errors" section ?
+
+With this, the table always starts with a "Members" / "Arguments" line,
+and thus cannot be empty.
+
+Drawback: we'd have to add this line to every single definition comment.
+The main QAPI schema has almost 1000.  Tolerable?
+
+We could require it only when there are no member / argument
+descriptions.  55 instances.
+
+We could require it only when there are none, and our "one paragraph"
+heuristic for finding the end of "intro" fails.  8 instances.
+
+You might ask what the difference to your "Details:" proposal is.  There
+are two.
+
+1. The keyword(s).  Matter of taste, best discussed last.
+
+2. As coded, your patch accepts "Details:" almost[*] anywhere.
+   "Members:" / "Arguments" would be accepted only where member / argument
+   descriptions can go, i.e. not after feature descriptions etc.  Consider:
+
+    ##
+    # @Enum:
+    #
+    # @one: The _one_ {and only}, description on the same line
+    #
+    # Features:
+    # @enum-feat: Also _one_ {and only}
+    # @enum-member-feat: a member feature
+    #
+    # Details:
+    #
+    # @two is undocumented
+    ##
+
+   This is accepted, and the "Details:" line gets swallowed.
+
+   I figure tightening the position makes accidents slightly less
+   likely.
+
+Here's another way to force non-empty:
+
+    ( "Members: none" / "Arguments: none" line
+    | member / argument descriptions * )
+    ( "Features:" line
+       feature descriptions ("features") + ) ?
+    "Returns" section ?
+    "Errors" section ?
+
+This is similar to "require it only when there are no member / argument
+descriptions" above, except we also accept it only then.  55 instances.
+
+Syntax ideas better than "Members: none" are welcome.
+
+Thoughts?
+
+
+[*] Not after untagged sections following tagged ones.
 
 
