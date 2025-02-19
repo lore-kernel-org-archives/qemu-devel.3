@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0336C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BC0C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkfPa-0005SX-9b; Wed, 19 Feb 2025 03:26:30 -0500
+	id 1tkfPq-0005W6-SX; Wed, 19 Feb 2025 03:26:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPW-0005S1-UG
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:27 -0500
+ id 1tkfPo-0005VT-5w
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:44 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPS-0004ZM-R7
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:26 -0500
+ id 1tkfPl-0004bS-U0
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739953583; x=1771489583;
+ t=1739953602; x=1771489602;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=H45ctgYIUrvH9KPj2VkTio9PfTeWbUSQHoamcNdQlrs=;
- b=EW/u+OCvHEa390I4IRsI/8aiLLXLJQ78A/uV8be4pgtZW6D569vqpKne
- H+JZUTb4JCgQlH9jHWRTDLAZaqpb6VXeb6W6jecZJSmcnHr5+GM0Pfl/6
- IkJV4XCtuNAY6iT7SIWhqJTTmcR0VaWcYXGfy/kPPxPP/x3AkgvHixShH
- /Qug9kPn3Gl6+fyJ5hMKf7KC+Wz9f5UQcIF+xYdTFDk/nhmJhTovDQEZ0
- HjcDWlgse18iGsXsvvwaSRUbj7b8dXf7ldsP05SWaqyqhmAI1UdQ+MZhS
- ye/+ST1ZdON5ozwkn4jCUCGa5LbvKTd6c7UBtnrLJCFvP1RuJZlnoOasv Q==;
-X-CSE-ConnectionGUID: QVlOIY0KTgiAyX3SF6i9ag==
-X-CSE-MsgGUID: XBIl4ZI3R7W+wE92cTffOA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544076"
-X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544076"
+ bh=fAmvZPigYvBGTxKieocJue8kt2n1eYxTq2NEydSanWg=;
+ b=EDVvb0fN8DmWph4H72G4C0rW6F6nMI0VpuphJBDWMmuBpAJcDOJ1CGtf
+ 9Q/7+NQTT+tG+DKZiAhXkiB7+8vSZY73nc8ck8M7HaORs4LyJarPlUyvi
+ Ukf72rPIZdWd7xDO+LCV3kyBa8clAHibJNwK+qvYU8WzcDU3p3DvAK6wP
+ QWvgJYN5wAWK6woDhplpObK5WKvR6DwhMAnajig196LkE1mMbYV2lcwbh
+ TBUBzCqlQlWBg0oI6VBPuxY4uLl3X22tEFQ07QpiTZ7Hc8TQWDN/vsGpE
+ FrYQRuj+nNpeyUBvomcUw7UXXwQoVLBL89OSDI9ZatL4Nko/auKPpKssI w==;
+X-CSE-ConnectionGUID: EH7fJzaqRMG/Odhe2PkEfA==
+X-CSE-MsgGUID: LaYrINppQJSqHisw4jfQsw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544139"
+X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544139"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:18 -0800
-X-CSE-ConnectionGUID: ryudde52TiSc6eS/a4d2lw==
-X-CSE-MsgGUID: 8NtVIyRkQN+n9KvOZB0gCg==
+ 19 Feb 2025 00:26:41 -0800
+X-CSE-ConnectionGUID: mDGEis9XTrexhxxEbRd71w==
+X-CSE-MsgGUID: /aVnDjqzSRuFAEj7y7MIFg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119850916"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119851075"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:14 -0800
+ 19 Feb 2025 00:26:37 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,9 +54,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH rfcv2 03/20] HostIOMMUDevice: Introduce realize_late callback
-Date: Wed, 19 Feb 2025 16:22:11 +0800
-Message-Id: <20250219082228.3303163-4-zhenzhong.duan@intel.com>
+Subject: [PATCH rfcv2 08/20] iommufd: Implement query of
+ HOST_IOMMU_DEVICE_CAP_ERRATA
+Date: Wed, 19 Feb 2025 16:22:16 +0800
+Message-Id: <20250219082228.3303163-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
 References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
@@ -87,90 +88,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have realize() callback which is called before attachment.
-But there are still some elements e.g., hwpt_id is not ready before
-attachment. So we need a realize_late() callback to further initialize
-them.
+Implement query of HOST_IOMMU_DEVICE_CAP_ERRATA for IOMMUFD
+backed host IOMMU device.
 
-Currently, this callback is only useful for iommufd backend. For legacy
-backend nothing needs to be initialized after attachment.
+Query on this capability is not supported for legacy backend
+because there is no plan to support nesting with leacy backend
+backed host device.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/system/host_iommu_device.h | 17 +++++++++++++++++
- hw/vfio/common.c                   | 17 ++++++++++++++---
- 2 files changed, 31 insertions(+), 3 deletions(-)
+ include/system/host_iommu_device.h | 2 ++
+ backends/iommufd.c                 | 2 ++
+ hw/vfio/iommufd.c                  | 1 +
+ 3 files changed, 5 insertions(+)
 
 diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index 809cced4ba..df782598f2 100644
+index 18f8b5e5cf..250600fc1d 100644
 --- a/include/system/host_iommu_device.h
 +++ b/include/system/host_iommu_device.h
-@@ -66,6 +66,23 @@ struct HostIOMMUDeviceClass {
-      * Returns: true on success, false on failure.
-      */
-     bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
-+    /**
-+     * @realize_late: initialize host IOMMU device instance after attachment,
-+     *                some elements e.g., ioas are ready only after attachment.
-+     *                This callback initialize them.
-+     *
-+     * Optional callback.
-+     *
-+     * @hiod: pointer to a host IOMMU device instance.
-+     *
-+     * @opaque: pointer to agent device of this host IOMMU device,
-+     *          e.g., VFIO base device or VDPA device.
-+     *
-+     * @errp: pass an Error out when realize fails.
-+     *
-+     * Returns: true on success, false on failure.
-+     */
-+    bool (*realize_late)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
-     /**
-      * @get_cap: check if a host IOMMU device capability is supported.
-      *
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index abbdc56b6d..e198b1e5a2 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1550,6 +1550,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-     const VFIOIOMMUClass *ops =
-         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
-     HostIOMMUDevice *hiod = NULL;
-+    HostIOMMUDeviceClass *hiod_ops = NULL;
+@@ -32,6 +32,7 @@ typedef struct HostIOMMUDeviceCaps {
+     uint64_t hw_caps;
+     bool nesting;
+     bool fs1gp;
++    uint32_t errata;
+ } HostIOMMUDeviceCaps;
  
-     if (vbasedev->iommufd) {
-         ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
-@@ -1560,16 +1561,26 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+ #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+@@ -130,6 +131,7 @@ struct HostIOMMUDeviceClass {
+ #define HOST_IOMMU_DEVICE_CAP_AW_BITS           1
+ #define HOST_IOMMU_DEVICE_CAP_NESTING           2
+ #define HOST_IOMMU_DEVICE_CAP_FS1GP             3
++#define HOST_IOMMU_DEVICE_CAP_ERRATA            4
  
-     if (!vbasedev->mdev) {
-         hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
-+        hiod_ops = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
-         vbasedev->hiod = hiod;
-     }
- 
-     if (!ops->attach_device(name, vbasedev, as, errp)) {
--        object_unref(hiod);
--        vbasedev->hiod = NULL;
--        return false;
-+        goto err_attach;
-+    }
-+
-+    if (hiod_ops && hiod_ops->realize_late &&
-+        !hiod_ops->realize_late(hiod, vbasedev, errp)) {
-+        ops->detach_device(vbasedev);
-+        goto err_attach;
-     }
- 
-     return true;
-+
-+err_attach:
-+    object_unref(hiod);
-+    vbasedev->hiod = NULL;
-+    return false;
- }
- 
- void vfio_detach_device(VFIODevice *vbasedev)
+ #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 0a1a40cbba..3c23caef96 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -374,6 +374,8 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+         return caps->nesting;
+     case HOST_IOMMU_DEVICE_CAP_FS1GP:
+         return caps->fs1gp;
++    case HOST_IOMMU_DEVICE_CAP_ERRATA:
++        return caps->errata;
+     default:
+         error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+         return -EINVAL;
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index df6a12d200..58bff030e1 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -848,6 +848,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     case IOMMU_HW_INFO_TYPE_INTEL_VTD:
+         caps->nesting = !!(data.vtd.ecap_reg & VTD_ECAP_NEST);
+         caps->fs1gp = !!(data.vtd.cap_reg & VTD_CAP_FS1GP);
++        caps->errata = data.vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17;
+         break;
+     case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
+     case IOMMU_HW_INFO_TYPE_NONE:
 -- 
 2.34.1
 
