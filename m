@@ -4,75 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E752C021B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDAC1C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 10:04:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkgrU-0001V2-ET; Wed, 19 Feb 2025 04:59:24 -0500
+	id 1tkgvl-0002ZO-Hb; Wed, 19 Feb 2025 05:03:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <falhumai96@gmail.com>)
- id 1tkgrS-0001Ut-S6
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:59:22 -0500
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <falhumai96@gmail.com>)
- id 1tkgrQ-0005XZ-T4
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:59:22 -0500
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-3f3fc8f5ffdso739601b6e.0
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 01:59:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739959159; x=1740563959; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=rofWR/ThaW+o4RvXKUV/RT+URsbB/LzG5Gi/vKNeA7A=;
- b=U3UAjreB4OiNFB8m+tUVKW9YnGGybm0cpIwBLbhxvQkJ8XANzGczAZhHkVJZnoVygc
- k17lJebNHMezIcuHmjag+vODLncnvOanr1Y9cKFx56IeHXJEDaeWFo9hUNgjNgsYoGwS
- IE0pqJXHrUIax76PdL0TfNHRpUd++5fSQIt5Zilazi0mFctdEr+PtXVOb1AYGi1/twjd
- KQe42TbpRGcpLtleeCndunI8wUWj07k8Tr+hcDeWrUMy9iXsi8PHwUS0SlPScLyjgykM
- UMcpfKbM6ctm98QllHEFXeT1PNYvcLfAOVfitj4Nhk0NjRo1WRLX9Es7rU6ffZLVDZ9k
- MyRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739959159; x=1740563959;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rofWR/ThaW+o4RvXKUV/RT+URsbB/LzG5Gi/vKNeA7A=;
- b=a4loe0CqBDjD3DDpz9BovF/tvHaVrTpRBYAEBqHbF6NMMqCD6ldQLAkl1uQjf6cmik
- y7glCilGBTZx669T2nqTCWsCqFTSnGfa2lnOh06aeBvxaXd+HNa6lEXiL29Zd4TD/Cj5
- Apd4YrV6OL3UMVG6TsNwKKDkTtrZZTOjJznrmQ+qekj42VLs/fGRlA2HJMbcqdOmdD/m
- tYIMC3K8Bpj0KmfULkYEvWjtp6ZJBI4kQEuwq1niSRQAV8ThItTX5u0wBMu42ydPUtV5
- IxYIpOFFG+OKG1s9i39XZbJ6CA6iZRm0TsgVR3OY8k23vMSYl+JF/KD63ZsJppTVfZz/
- PQow==
-X-Gm-Message-State: AOJu0YyF6xVIwSyJfpn56A6qAKFCtpoEQzoQVPoWBQ+wmSM+l6TLacze
- 3dckuPKLv2LWioILye2EOXylohdvOaaaAMFdj8+ZI0a775fQivKDwihl9hnhdixLeO2qtTOR0d2
- G0BWMfdt8iv+rWFHZHMZZQ1vjLUTzQqeY
-X-Gm-Gg: ASbGncubUT8lLblM9RSAxBm24HFHeBsRs5vIn2wvgr1ne0EzPN/QaI7uKjaiN2aHfHY
- 7FWizWsyZn7rXuB+2sq77lOu9HlAlCeRDJTPkhLoL4cZpk/ACaUGJS4NVqkrU7rwo5rxQMrqaWt
- ITgMpbgjBlpDk7VA==
-X-Google-Smtp-Source: AGHT+IEjVv3xwpSwSQV7mH/Xe6bwNj2iYdLNmJIpP+N3ABRSuPqdc2qZuzwZ1ZN2R5z7nzilsPWP7RpNSRXCbOIIRsY=
-X-Received: by 2002:a05:6808:2209:b0:3f3:dedb:844e with SMTP id
- 5614622812f47-3f3eb0b95d7mr11827909b6e.18.1739959158533; Wed, 19 Feb 2025
- 01:59:18 -0800 (PST)
-MIME-Version: 1.0
-From: Faisal Al-Humaimidi <falhumai96@gmail.com>
-Date: Wed, 19 Feb 2025 01:59:08 -0800
-X-Gm-Features: AWEUYZlvsZ9lCW4rL0C_fP8Py6hLbu4EaZGUNBbEdAGM-KA6ssmSX9wkLxMSjRM
-Message-ID: <CAMx8kb0zN7CPjuFJatoF+5UBwdLaCA_AJGcxUV8cdBoDd1RBag@mail.gmail.com>
-Subject: Permissively Licensing the CPU Component
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tkgvj-0002Ym-6n
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:03:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tkgvg-00064z-Ei
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 05:03:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739959422;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=idliG5uxF6AgCEF+s9s1MFO4Q+TRtQNZHksc0RSvRig=;
+ b=EFt3AiJJje4bsi7vGX2VIrcl99BE08YeZuxUpOeugA0w1cXJvVu+hfSyL0xXtMbEl0blGQ
+ j9d67WjJ2NmbIG+Qm8Wci2QhcwFsCo2D/l3o+hb2UFcJ7tAl+nR9+nQWp+myRtfA3zTCfW
+ UQ2PTwSs6xlcsxRuWIeO5CCoRgSkDZs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-cjl7kcbeNZSoYVqDf3HBng-1; Wed,
+ 19 Feb 2025 05:03:39 -0500
+X-MC-Unique: cjl7kcbeNZSoYVqDf3HBng-1
+X-Mimecast-MFC-AGG-ID: cjl7kcbeNZSoYVqDf3HBng_1739959419
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D79F61800264; Wed, 19 Feb 2025 10:03:38 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.135])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9F7B61800941; Wed, 19 Feb 2025 10:03:37 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000009176d4062e7bcf1e"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=falhumai96@gmail.com; helo=mail-oi1-x22c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] linux-user: fix resource leaks in gen-vdso
+Date: Wed, 19 Feb 2025 10:03:36 +0000
+Message-ID: <20250219100336.1696758-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,58 +82,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009176d4062e7bcf1e
-Content-Type: text/plain; charset="UTF-8"
+There are a number of resource leaks in gen-vdso. In theory they are
+harmless because this is a short lived process, but when building QEMU
+with --extra-cflags="-fsanitize=address" problems ensure. The gen-vdso
+program is run as part of the build, and that aborts due to the
+sanitizer identifying memory leaks, leaving QEMU unbuildable.
 
-Hello QEMU developers,
+FAILED: libqemu-x86_64-linux-user.a.p/vdso.c.inc
+/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso -o libqemu-x86_64-linux-user.a.p/vdso.c.inc ../linux-user/x86_64/vdso.so
 
-I understand from this page, https://wiki.qemu.org/License, that TCG is
-being licensed permissively (BSD license) so it can be integrated as a
-library in other projects, which is great! However, I'd like to know if the
-CPU part of QEMU, no peripherals included, is also permissively licensed
-(maybe BSD or some other permissive license such as LGPL, ...etc.)?
+=================================================================
+==1696332==ERROR: LeakSanitizer: detected memory leaks
 
-The reason I am asking this question is because projects such as the
-Unicorn Engine would greatly benefit from a permissively licensed CPU
-component so that the project itself (Unicorn Engine) is also released
-under a permissive license, which would be great for people wanting to do
-research with the Unicorn Engine but are tied with proprietary code (e.g.,
-in proprietary university research projects). I have started a discussion
-for that matter with the Unicorn Engine developers in their GitHub page,
-https://github.com/unicorn-engine/unicorn/issues/2114, and it would be
-great to have a feedback regarding this matter from the official QEMU
-developers, whether directly on the issue or a reply to this email and I'd
-relay your response.
+Direct leak of 2968 byte(s) in 1 object(s) allocated from:
+    #0 0x56495873f1f3  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xa11f3) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
+    #1 0x564958780b90  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xe2b90) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
 
+This complaint is about the 'buf' variable, however, the FILE objects
+are also leaked in some error scenarios, so this fix refactors the
+cleanup paths to fix all leaks. For completeness it also reports an
+error if fclose() fails on 'inf'.
 
-Kind regards,
-Faisal Al-Humaimidi
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ linux-user/gen-vdso.c | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
---0000000000009176d4062e7bcf1e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+diff --git a/linux-user/gen-vdso.c b/linux-user/gen-vdso.c
+index 721f38d5a3..88d94b19eb 100644
+--- a/linux-user/gen-vdso.c
++++ b/linux-user/gen-vdso.c
+@@ -56,13 +56,14 @@ static unsigned rt_sigreturn_addr;
+ 
+ int main(int argc, char **argv)
+ {
+-    FILE *inf, *outf;
++    FILE *inf = NULL, *outf = NULL;
+     long total_len;
+     const char *prefix = "vdso";
+     const char *inf_name;
+     const char *outf_name = NULL;
+-    unsigned char *buf;
++    unsigned char *buf = NULL;
+     bool need_bswap;
++    int ret = EXIT_FAILURE;
+ 
+     while (1) {
+         int opt = getopt(argc, argv, "o:p:r:s:");
+@@ -129,7 +130,6 @@ int main(int argc, char **argv)
+         fprintf(stderr, "%s: incomplete read\n", inf_name);
+         return EXIT_FAILURE;
+     }
+-    fclose(inf);
+ 
+     /*
+      * Identify which elf flavor we're processing.
+@@ -205,19 +205,24 @@ int main(int argc, char **argv)
+     fprintf(outf, "    .rt_sigreturn_ofs = 0x%x,\n", rt_sigreturn_addr);
+     fprintf(outf, "};\n");
+ 
+-    /*
+-     * Everything should have gone well.
+-     */
+-    if (fclose(outf)) {
+-        goto perror_outf;
+-    }
+-    return EXIT_SUCCESS;
++    ret = EXIT_SUCCESS;
++
++ cleanup:
++    free(buf);
++
++    if (outf &&
++        fclose(outf) != 0)
++        ret = EXIT_FAILURE;
++    if (inf &&
++        fclose(inf) != 0)
++        ret = EXIT_FAILURE;
++    return ret;
+ 
+  perror_inf:
+     perror(inf_name);
+-    return EXIT_FAILURE;
++    goto cleanup;
+ 
+  perror_outf:
+     perror(outf_name);
+-    return EXIT_FAILURE;
++    goto cleanup;
+ }
+-- 
+2.47.1
 
-<div dir=3D"auto">Hello QEMU developers,<div dir=3D"auto"><br></div><div di=
-r=3D"auto">I understand from this page, <a href=3D"https://wiki.qemu.org/Li=
-cense">https://wiki.qemu.org/License</a>, that TCG is being licensed permis=
-sively (BSD license) so it can be integrated as a library in other projects=
-, which is great! However, I&#39;d like to know if the CPU part of QEMU, no=
- peripherals included, is also permissively licensed (maybe BSD or some oth=
-er permissive license such as LGPL, ...etc.)?</div><div dir=3D"auto"><br></=
-div><div dir=3D"auto">The reason I am asking this question is because proje=
-cts such as the Unicorn Engine would greatly benefit from a permissively li=
-censed CPU component so that the project itself (Unicorn Engine) is also re=
-leased under a permissive license, which would be great for people wanting =
-to do research with the Unicorn Engine but are tied with proprietary code (=
-e.g., in proprietary university research projects). I have started a discus=
-sion for that matter with the Unicorn Engine developers in their GitHub pag=
-e, <a href=3D"https://github.com/unicorn-engine/unicorn/issues/2114">https:=
-//github.com/unicorn-engine/unicorn/issues/2114</a>, and it would be great =
-to have a feedback regarding this matter from the official QEMU developers,=
- whether directly on the issue or a reply to this email and I&#39;d relay y=
-our response.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div>=
-<div dir=3D"auto">Kind regards,</div><div dir=3D"auto">Faisal Al-Humaimidi<=
-/div></div>
-
---0000000000009176d4062e7bcf1e--
 
