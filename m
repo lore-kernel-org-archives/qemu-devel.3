@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6B9C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87513C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqoz-00013K-7q; Wed, 19 Feb 2025 15:37:29 -0500
+	id 1tkqp5-0001aj-86; Wed, 19 Feb 2025 15:37:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqoa-0000R6-0d
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:05 -0500
+ id 1tkqoz-00014x-91
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:29 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqoY-0004ro-6i
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:03 -0500
+ id 1tkqox-0004u9-DM
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:29 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqoK-00000007VVz-2nDe; Wed, 19 Feb 2025 21:36:48 +0100
+ id 1tkqok-00000007VWv-1gOL; Wed, 19 Feb 2025 21:37:14 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 28/36] vfio/migration: Multifd device state transfer
- support - config loading support
-Date: Wed, 19 Feb 2025 21:34:10 +0100
-Message-ID: <47be7bf2f46923e2a9d2b75b1d35c6b2915c20c8.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 33/36] hw/core/machine: Add compat for
+ x-migration-multifd-transfer VFIO property
+Date: Wed, 19 Feb 2025 21:34:15 +0100
+Message-ID: <57d0b587299e27bd022ee2a04660a44868f5be06.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -68,120 +68,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Load device config received via multifd using the existing machinery
-behind vfio_load_device_config_state().
-
-Also, make sure to process the relevant main migration channel flags.
+Add a hw_compat entry for recently added x-migration-multifd-transfer VFIO
+property.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration-multifd.c   | 47 ++++++++++++++++++++++++++++++++++-
- hw/vfio/migration.c           |  8 +++++-
- include/hw/vfio/vfio-common.h |  2 ++
- 3 files changed, 55 insertions(+), 2 deletions(-)
+ hw/core/machine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index b3a88c062769..7200f6f1c2a2 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -15,6 +15,7 @@
- #include "qemu/lockable.h"
- #include "qemu/main-loop.h"
- #include "qemu/thread.h"
-+#include "io/channel-buffer.h"
- #include "migration/qemu-file.h"
- #include "migration-multifd.h"
- #include "trace.h"
-@@ -186,7 +187,51 @@ bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 21c3bde92f08..d0a87f5ccbaa 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -44,6 +44,7 @@ GlobalProperty hw_compat_9_2[] = {
+     { "virtio-mem-pci", "vectors", "0" },
+     { "migration", "multifd-clean-tls-termination", "false" },
+     { "migration", "send-switchover-start", "off"},
++    { "vfio-pci", "x-migration-multifd-transfer", "off" },
+ };
+ const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
  
- static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
- {
--    return -EINVAL;
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-+    VFIOStateBuffer *lb;
-+    g_autoptr(QIOChannelBuffer) bioc = NULL;
-+    QEMUFile *f_out = NULL, *f_in = NULL;
-+    uint64_t mig_header;
-+    int ret;
-+
-+    assert(multifd->load_buf_idx == multifd->load_buf_idx_last);
-+    lb = vfio_state_buffers_at(&multifd->load_bufs, multifd->load_buf_idx);
-+    assert(lb->is_present);
-+
-+    bioc = qio_channel_buffer_new(lb->len);
-+    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-load");
-+
-+    f_out = qemu_file_new_output(QIO_CHANNEL(bioc));
-+    qemu_put_buffer(f_out, (uint8_t *)lb->data, lb->len);
-+
-+    ret = qemu_fflush(f_out);
-+    if (ret) {
-+        g_clear_pointer(&f_out, qemu_fclose);
-+        return ret;
-+    }
-+
-+    qio_channel_io_seek(QIO_CHANNEL(bioc), 0, 0, NULL);
-+    f_in = qemu_file_new_input(QIO_CHANNEL(bioc));
-+
-+    mig_header = qemu_get_be64(f_in);
-+    if (mig_header != VFIO_MIG_FLAG_DEV_CONFIG_STATE) {
-+        g_clear_pointer(&f_out, qemu_fclose);
-+        g_clear_pointer(&f_in, qemu_fclose);
-+        return -EINVAL;
-+    }
-+
-+    bql_lock();
-+    ret = vfio_load_device_config_state(f_in, vbasedev);
-+    bql_unlock();
-+
-+    g_clear_pointer(&f_out, qemu_fclose);
-+    g_clear_pointer(&f_in, qemu_fclose);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    return 0;
- }
- 
- static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 85f54cb22df2..b962309f7c27 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -264,7 +264,7 @@ static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
-     return ret;
- }
- 
--static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
-+int vfio_load_device_config_state(QEMUFile *f, void *opaque)
- {
-     VFIODevice *vbasedev = opaque;
-     uint64_t data;
-@@ -728,6 +728,12 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
-         switch (data) {
-         case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
-         {
-+            if (vfio_multifd_transfer_enabled(vbasedev)) {
-+                error_report("%s: got DEV_CONFIG_STATE but doing multifd transfer",
-+                             vbasedev->name);
-+                return -EINVAL;
-+            }
-+
-             return vfio_load_device_config_state(f, opaque);
-         }
-         case VFIO_MIG_FLAG_DEV_SETUP_STATE:
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index ab110198bd6b..ce2bdea8a2c2 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -298,6 +298,8 @@ void vfio_add_bytes_transferred(unsigned long val);
- bool vfio_device_state_is_running(VFIODevice *vbasedev);
- bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
- 
-+int vfio_load_device_config_state(QEMUFile *f, void *opaque);
-+
- #ifdef CONFIG_LINUX
- int vfio_get_region_info(VFIODevice *vbasedev, int index,
-                          struct vfio_region_info **info);
 
