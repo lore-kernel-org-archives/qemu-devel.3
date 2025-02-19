@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC18C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6B9C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqmd-0000hl-2Z; Wed, 19 Feb 2025 15:35:03 -0500
+	id 1tkqoz-00013K-7q; Wed, 19 Feb 2025 15:37:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmb-0000hE-3P
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:01 -0500
+ id 1tkqoa-0000R6-0d
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:05 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmZ-0004TH-FL
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:00 -0500
+ id 1tkqoY-0004ro-6i
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:03 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmV-00000007VSL-2N1X; Wed, 19 Feb 2025 21:34:55 +0100
+ id 1tkqoK-00000007VVz-2nDe; Wed, 19 Feb 2025 21:36:48 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 06/36] migration: Add qemu_loadvm_load_state_buffer() and
- its handler
-Date: Wed, 19 Feb 2025 21:33:48 +0100
-Message-ID: <584b497e20a19fa97b0af25dace9254bbb5f31e9.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 28/36] vfio/migration: Multifd device state transfer
+ support - config loading support
+Date: Wed, 19 Feb 2025 21:34:10 +0100
+Message-ID: <47be7bf2f46923e2a9d2b75b1d35c6b2915c20c8.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -68,89 +68,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-qemu_loadvm_load_state_buffer() and its load_state_buffer
-SaveVMHandler allow providing device state buffer to explicitly
-specified device via its idstr and instance id.
+Load device config received via multifd using the existing machinery
+behind vfio_load_device_config_state().
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Also, make sure to process the relevant main migration channel flags.
+
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/migration/register.h | 15 +++++++++++++++
- migration/savevm.c           | 23 +++++++++++++++++++++++
- migration/savevm.h           |  3 +++
- 3 files changed, 41 insertions(+)
+ hw/vfio/migration-multifd.c   | 47 ++++++++++++++++++++++++++++++++++-
+ hw/vfio/migration.c           |  8 +++++-
+ include/hw/vfio/vfio-common.h |  2 ++
+ 3 files changed, 55 insertions(+), 2 deletions(-)
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index ff0faf5f68c8..58891aa54b76 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -229,6 +229,21 @@ typedef struct SaveVMHandlers {
-      */
-     int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index b3a88c062769..7200f6f1c2a2 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -15,6 +15,7 @@
+ #include "qemu/lockable.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/thread.h"
++#include "io/channel-buffer.h"
+ #include "migration/qemu-file.h"
+ #include "migration-multifd.h"
+ #include "trace.h"
+@@ -186,7 +187,51 @@ bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
  
-+    /**
-+     * @load_state_buffer (invoked outside the BQL)
-+     *
-+     * Load device state buffer provided to qemu_loadvm_load_state_buffer().
-+     *
-+     * @opaque: data pointer passed to register_savevm_live()
-+     * @buf: the data buffer to load
-+     * @len: the data length in buffer
-+     * @errp: pointer to Error*, to store an error if it happens.
-+     *
-+     * Returns true to indicate success and false for errors.
-+     */
-+    bool (*load_state_buffer)(void *opaque, char *buf, size_t len,
-+                              Error **errp);
+ static int vfio_load_bufs_thread_load_config(VFIODevice *vbasedev)
+ {
+-    return -EINVAL;
++    VFIOMigration *migration = vbasedev->migration;
++    VFIOMultifd *multifd = migration->multifd;
++    VFIOStateBuffer *lb;
++    g_autoptr(QIOChannelBuffer) bioc = NULL;
++    QEMUFile *f_out = NULL, *f_in = NULL;
++    uint64_t mig_header;
++    int ret;
 +
-     /**
-      * @load_setup
-      *
-diff --git a/migration/savevm.c b/migration/savevm.c
-index faebf47ef51f..7c1aa8ad7b9d 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3060,6 +3060,29 @@ int qemu_loadvm_approve_switchover(void)
-     return migrate_send_rp_switchover_ack(mis);
++    assert(multifd->load_buf_idx == multifd->load_buf_idx_last);
++    lb = vfio_state_buffers_at(&multifd->load_bufs, multifd->load_buf_idx);
++    assert(lb->is_present);
++
++    bioc = qio_channel_buffer_new(lb->len);
++    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-load");
++
++    f_out = qemu_file_new_output(QIO_CHANNEL(bioc));
++    qemu_put_buffer(f_out, (uint8_t *)lb->data, lb->len);
++
++    ret = qemu_fflush(f_out);
++    if (ret) {
++        g_clear_pointer(&f_out, qemu_fclose);
++        return ret;
++    }
++
++    qio_channel_io_seek(QIO_CHANNEL(bioc), 0, 0, NULL);
++    f_in = qemu_file_new_input(QIO_CHANNEL(bioc));
++
++    mig_header = qemu_get_be64(f_in);
++    if (mig_header != VFIO_MIG_FLAG_DEV_CONFIG_STATE) {
++        g_clear_pointer(&f_out, qemu_fclose);
++        g_clear_pointer(&f_in, qemu_fclose);
++        return -EINVAL;
++    }
++
++    bql_lock();
++    ret = vfio_load_device_config_state(f_in, vbasedev);
++    bql_unlock();
++
++    g_clear_pointer(&f_out, qemu_fclose);
++    g_clear_pointer(&f_in, qemu_fclose);
++    if (ret < 0) {
++        return ret;
++    }
++
++    return 0;
  }
  
-+bool qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-+                                   char *buf, size_t len, Error **errp)
-+{
-+    SaveStateEntry *se;
-+
-+    se = find_se(idstr, instance_id);
-+    if (!se) {
-+        error_setg(errp,
-+                   "Unknown idstr %s or instance id %u for load state buffer",
-+                   idstr, instance_id);
-+        return false;
-+    }
-+
-+    if (!se->ops || !se->ops->load_state_buffer) {
-+        error_setg(errp,
-+                   "idstr %s / instance %u has no load state buffer operation",
-+                   idstr, instance_id);
-+        return false;
-+    }
-+
-+    return se->ops->load_state_buffer(se->opaque, buf, len, errp);
-+}
-+
- bool save_snapshot(const char *name, bool overwrite, const char *vmstate,
-                   bool has_devices, strList *devices, Error **errp)
- {
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 58f871a7ed9c..cb58434a9437 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -71,4 +71,7 @@ int qemu_loadvm_approve_switchover(void);
- int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-         bool in_postcopy);
+ static VFIOStateBuffer *vfio_load_state_buffer_get(VFIOMultifd *multifd)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 85f54cb22df2..b962309f7c27 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -264,7 +264,7 @@ static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
+     return ret;
+ }
  
-+bool qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-+                                   char *buf, size_t len, Error **errp);
+-static int vfio_load_device_config_state(QEMUFile *f, void *opaque)
++int vfio_load_device_config_state(QEMUFile *f, void *opaque)
+ {
+     VFIODevice *vbasedev = opaque;
+     uint64_t data;
+@@ -728,6 +728,12 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
+         switch (data) {
+         case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
+         {
++            if (vfio_multifd_transfer_enabled(vbasedev)) {
++                error_report("%s: got DEV_CONFIG_STATE but doing multifd transfer",
++                             vbasedev->name);
++                return -EINVAL;
++            }
 +
- #endif
+             return vfio_load_device_config_state(f, opaque);
+         }
+         case VFIO_MIG_FLAG_DEV_SETUP_STATE:
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index ab110198bd6b..ce2bdea8a2c2 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -298,6 +298,8 @@ void vfio_add_bytes_transferred(unsigned long val);
+ bool vfio_device_state_is_running(VFIODevice *vbasedev);
+ bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
+ 
++int vfio_load_device_config_state(QEMUFile *f, void *opaque);
++
+ #ifdef CONFIG_LINUX
+ int vfio_get_region_info(VFIODevice *vbasedev, int index,
+                          struct vfio_region_info **info);
 
