@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB9DCC3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E800AC021AB
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkfPU-0005Ra-0a; Wed, 19 Feb 2025 03:26:24 -0500
+	id 1tkfPz-0005XT-Nu; Wed, 19 Feb 2025 03:26:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPR-0005R0-R9
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:22 -0500
+ id 1tkfPy-0005Wz-Ep
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:54 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPP-0004Za-Ic
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:21 -0500
+ id 1tkfPw-0004bS-DG
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739953580; x=1771489580;
+ t=1739953613; x=1771489613;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BBos9TMEnyoSZ/PC59m1etHG0x5EWREqcsDCxiYnHsk=;
- b=jkayOLn/ILNYCQ+cIG9oLtKnSucCFnmXPBMbRjpLUodt1IIcypdgZxUf
- /tVdZtzh2cXOgQBagj7+XiSm3TkEKy9/gcqEH0SsUHJG1l5eHqvdAjshv
- ffn3a9LFetGTSnR7LHhx4NxCGBpq0iofn8xpByMzyUy8cIBZu0l+SNVaG
- xSyPSovKYGWu8I2JuxzlWecj1LMifUg7nG93pKACtec9H1fH9azmvyDVN
- hCaID0BulwlWJNco/Yy3Mh6S0eo8NtXt+uqA2C5L5bsMejS0WeudSyLuw
- +9IOiS5mOSokyMMuNyBiAGj2/Tpw66o1PdmXDApvKuwJgq7W45vnRlzYL A==;
-X-CSE-ConnectionGUID: QAMNEVJTQD6xP3WyVUofxw==
-X-CSE-MsgGUID: q/mo3sKyQIuyUMN7Xal9kw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544042"
-X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544042"
+ bh=ZSRjZEL5xQevlQwiqc5TcPp+0Tek1XsaolTTkz/enMw=;
+ b=JODBjT+AEcSYZRxtiVnPo9r5j32QBDdTeN0vWtzHdJJSh1DWPY4+gn7k
+ Q1j5Y2XwmnYlgymt80cIkzinO6sCpv8QnOVN13bpWtYq2LCvTwkd59yjx
+ be2hnKCiAFN/v9RbFrwGJr+LfsfnC+mp/lB3CTPPP5bp48FVKXE6TFQ91
+ rkIFJnm7xA+7wf3gaTleQgCkd3LN1rrMCIc23wblzkTEJFn1nigGzwLPJ
+ 8eTl8xK8m94b+GgNJshdi0WrWbsyH0YCuvlMJqBnSTWptD9sR2QNxWI6z
+ tun+68htykVMvSSaToQ7yA/ZkIp/xLSay4EEflThjbOYk+sW1fT4kEcrS A==;
+X-CSE-ConnectionGUID: v7ejwVxdRoOpJTxcUtJnOw==
+X-CSE-MsgGUID: n3CuJ7WrSZK51OoWCzCevQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544166"
+X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544166"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:09 -0800
-X-CSE-ConnectionGUID: uGqC7U+UTVq/HngNGwYrhw==
-X-CSE-MsgGUID: rTyTWlLASpCovG4yNCQEtQ==
+ 19 Feb 2025 00:26:52 -0800
+X-CSE-ConnectionGUID: n1WCmcaPSQq1TYUhTDn36Q==
+X-CSE-MsgGUID: wES+8Q3zTKWRmaBuTJ/rYQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119850808"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119851111"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:05 -0800
+ 19 Feb 2025 00:26:46 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,11 +53,15 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH rfcv2 01/20] backends/iommufd: Add helpers for invalidating
- user-managed HWPT
-Date: Wed, 19 Feb 2025 16:22:09 +0800
-Message-Id: <20250219082228.3303163-2-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH rfcv2 10/20] intel_iommu: Optimize context entry cache
+ utilization
+Date: Wed, 19 Feb 2025 16:22:18 +0800
+Message-Id: <20250219082228.3303163-11-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
 References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
@@ -88,78 +92,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+There are many call sites referencing context entry by calling
+vtd_as_to_context_entry() which will traverse the DMAR table.
+
+In most cases we can use cached context entry in vtd_as->context_cache_entry
+except it's stale. Currently only global and domain context invalidation
+stales it.
+
+So introduce a helper function vtd_as_to_context_entry() to fetch from cache
+before trying with vtd_dev_to_context_entry().
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/system/iommufd.h |  3 +++
- backends/iommufd.c       | 30 ++++++++++++++++++++++++++++++
- backends/trace-events    |  1 +
- 3 files changed, 34 insertions(+)
+ hw/i386/intel_iommu.c | 36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index cbab75bfbf..5d02e9d148 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -61,6 +61,9 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
-                                       uint64_t iova, ram_addr_t size,
-                                       uint64_t page_size, uint64_t *data,
-                                       Error **errp);
-+int iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t hwpt_id,
-+                                     uint32_t data_type, uint32_t entry_len,
-+                                     uint32_t *entry_num, void *data_ptr);
- 
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
- #endif
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index d57da44755..fc32aad5cb 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -311,6 +311,36 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
-     return true;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index df5fb30bc8..7709f55be5 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -1597,6 +1597,22 @@ static int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+     return 0;
  }
  
-+int iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t hwpt_id,
-+                                     uint32_t data_type, uint32_t entry_len,
-+                                     uint32_t *entry_num, void *data_ptr)
++static int vtd_as_to_context_entry(VTDAddressSpace *vtd_as, VTDContextEntry *ce)
 +{
-+    int ret, fd = be->fd;
-+    struct iommu_hwpt_invalidate cache = {
-+        .size = sizeof(cache),
-+        .hwpt_id = hwpt_id,
-+        .data_type = data_type,
-+        .entry_len = entry_len,
-+        .entry_num = *entry_num,
-+        .data_uptr = (uintptr_t)data_ptr,
-+    };
++    IntelIOMMUState *s = vtd_as->iommu_state;
++    uint8_t bus_num = pci_bus_num(vtd_as->bus);
++    uint8_t devfn = vtd_as->devfn;
++    VTDContextCacheEntry *cc_entry = &vtd_as->context_cache_entry;
 +
-+    ret = ioctl(fd, IOMMU_HWPT_INVALIDATE, &cache);
-+
-+    trace_iommufd_backend_invalidate_cache(fd, hwpt_id, data_type, entry_len,
-+                                           *entry_num, cache.entry_num,
-+                                           (uintptr_t)data_ptr, ret);
-+    if (ret) {
-+        *entry_num = cache.entry_num;
-+        error_report("IOMMU_HWPT_INVALIDATE failed: %s", strerror(errno));
-+        ret = -errno;
++    /* Try to fetch context-entry from cache first */
++    if (cc_entry->context_cache_gen == s->context_cache_gen) {
++        *ce = cc_entry->context_entry;
++        return 0;
 +    } else {
-+        g_assert(*entry_num == cache.entry_num);
++        return vtd_dev_to_context_entry(s, bus_num, devfn, ce);
 +    }
-+
-+    return ret;
 +}
 +
- static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+ static int vtd_sync_shadow_page_hook(const IOMMUTLBEvent *event,
+                                      void *private)
  {
-     HostIOMMUDeviceCaps *caps = &hiod->caps;
-diff --git a/backends/trace-events b/backends/trace-events
-index 40811a3162..5a23db6c8a 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -18,3 +18,4 @@ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
- iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
-+iommufd_backend_invalidate_cache(int iommufd, uint32_t hwpt_id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d hwpt_id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+@@ -1649,9 +1665,7 @@ static int vtd_address_space_sync(VTDAddressSpace *vtd_as)
+         return 0;
+     }
+ 
+-    ret = vtd_dev_to_context_entry(vtd_as->iommu_state,
+-                                   pci_bus_num(vtd_as->bus),
+-                                   vtd_as->devfn, &ce);
++    ret = vtd_as_to_context_entry(vtd_as, &ce);
+     if (ret) {
+         if (ret == -VTD_FR_CONTEXT_ENTRY_P) {
+             /*
+@@ -1710,8 +1724,7 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
+     assert(as);
+ 
+     s = as->iommu_state;
+-    if (vtd_dev_to_context_entry(s, pci_bus_num(as->bus), as->devfn,
+-                                 &ce)) {
++    if (vtd_as_to_context_entry(as, &ce)) {
+         /*
+          * Possibly failed to parse the context entry for some reason
+          * (e.g., during init, or any guest configuration errors on
+@@ -2443,8 +2456,7 @@ static void vtd_iotlb_domain_invalidate(IntelIOMMUState *s, uint16_t domain_id)
+     vtd_iommu_unlock(s);
+ 
+     QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
+-        if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
+-                                      vtd_as->devfn, &ce) &&
++        if (!vtd_as_to_context_entry(vtd_as, &ce) &&
+             domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
+             vtd_address_space_sync(vtd_as);
+         }
+@@ -2466,8 +2478,7 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
+     hwaddr size = (1 << am) * VTD_PAGE_SIZE;
+ 
+     QLIST_FOREACH(vtd_as, &(s->vtd_as_with_notifiers), next) {
+-        ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
+-                                       vtd_as->devfn, &ce);
++        ret = vtd_as_to_context_entry(vtd_as, &ce);
+         if (!ret && domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
+             uint32_t rid2pasid = PCI_NO_PASID;
+ 
+@@ -2974,8 +2985,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
+     vtd_iommu_unlock(s);
+ 
+     QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
+-        if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
+-                                      vtd_as->devfn, &ce) &&
++        if (!vtd_as_to_context_entry(vtd_as, &ce) &&
+             domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
+             uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
+ 
+@@ -4154,7 +4164,7 @@ static void vtd_report_ir_illegal_access(VTDAddressSpace *vtd_as,
+     assert(vtd_as->pasid != PCI_NO_PASID);
+ 
+     /* Try out best to fetch FPD, we can't do anything more */
+-    if (vtd_dev_to_context_entry(s, bus_n, vtd_as->devfn, &ce) == 0) {
++    if (vtd_as_to_context_entry(vtd_as, &ce) == 0) {
+         is_fpd_set = ce.lo & VTD_CONTEXT_ENTRY_FPD;
+         if (!is_fpd_set && s->root_scalable) {
+             vtd_ce_get_pasid_fpd(s, &ce, &is_fpd_set, vtd_as->pasid);
+@@ -4491,7 +4501,7 @@ static void vtd_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
+     /* replay is protected by BQL, page walk will re-setup it safely */
+     iova_tree_remove(vtd_as->iova_tree, map);
+ 
+-    if (vtd_dev_to_context_entry(s, bus_n, vtd_as->devfn, &ce) == 0) {
++    if (vtd_as_to_context_entry(vtd_as, &ce) == 0) {
+         trace_vtd_replay_ce_valid(s->root_scalable ? "scalable mode" :
+                                   "legacy mode",
+                                   bus_n, PCI_SLOT(vtd_as->devfn),
 -- 
 2.34.1
 
