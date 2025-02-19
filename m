@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4026C021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E49D1C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqoS-0000Mk-N9; Wed, 19 Feb 2025 15:37:02 -0500
+	id 1tkqpW-0002Li-S1; Wed, 19 Feb 2025 15:38:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqoQ-0000CQ-5K
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:36:54 -0500
+ id 1tkqpG-0002Ao-6V
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:46 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqoO-0004qG-7N
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:36:53 -0500
+ id 1tkqpE-0004vg-4X
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:37:45 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqoA-00000007VVd-1dZx; Wed, 19 Feb 2025 21:36:38 +0100
+ id 1tkqoz-00000007VXR-3Z4V; Wed, 19 Feb 2025 21:37:29 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 26/36] vfio/migration: Multifd device state transfer
- support - received buffers queuing
-Date: Wed, 19 Feb 2025 21:34:08 +0100
-Message-ID: <4de9762ebf7e7857103eb276d1a26a092aee325d.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 36/36] vfio/migration: Update VFIO migration documentation
+Date: Wed, 19 Feb 2025 21:34:18 +0100
+Message-ID: <2031790b755aa95b61470b286fa787b78be08107.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -68,189 +67,125 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-The multifd received data needs to be reassembled since device state
-packets sent via different multifd channels can arrive out-of-order.
-
-Therefore, each VFIO device state packet carries a header indicating its
-position in the stream.
-The raw device state data is saved into a VFIOStateBuffer for later
-in-order loading into the device.
-
-The last such VFIO device state packet should have
-VFIO_DEVICE_STATE_CONFIG_STATE flag set and carry the device config state.
+Update the VFIO documentation at docs/devel/migration describing the
+changes brought by the multifd device state transfer.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration-multifd.c | 103 ++++++++++++++++++++++++++++++++++++
- hw/vfio/migration-multifd.h |   3 ++
- hw/vfio/migration.c         |   1 +
- hw/vfio/trace-events        |   1 +
- 4 files changed, 108 insertions(+)
+ docs/devel/migration/vfio.rst | 80 +++++++++++++++++++++++++++++++----
+ 1 file changed, 71 insertions(+), 9 deletions(-)
 
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index c2defc0efef0..5d5ee1393674 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -42,6 +42,11 @@ typedef struct VFIOStateBuffer {
- } VFIOStateBuffer;
+diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+index c49482eab66d..d9b169d29921 100644
+--- a/docs/devel/migration/vfio.rst
++++ b/docs/devel/migration/vfio.rst
+@@ -16,6 +16,37 @@ helps to reduce the total downtime of the VM. VFIO devices opt-in to pre-copy
+ support by reporting the VFIO_MIGRATION_PRE_COPY flag in the
+ VFIO_DEVICE_FEATURE_MIGRATION ioctl.
  
- typedef struct VFIOMultifd {
-+    VFIOStateBuffers load_bufs;
-+    QemuCond load_bufs_buffer_ready_cond;
-+    QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
-+    uint32_t load_buf_idx;
-+    uint32_t load_buf_idx_last;
- } VFIOMultifd;
++Starting from QEMU version 10.0 there's a possibility to transfer VFIO device
++_STOP_COPY state via multifd channels. This helps reduce downtime - especially
++with multiple VFIO devices or with devices having a large migration state.
++As an additional benefit, setting the VFIO device to _STOP_COPY state and
++saving its config space is also parallelized (run in a separate thread) in
++such migration mode.
++
++The multifd VFIO device state transfer is controlled by
++"x-migration-multifd-transfer" VFIO device property. This property defaults to
++AUTO, which means that VFIO device state transfer via multifd channels is
++attempted in configurations that otherwise support it.
++
++Since the target QEMU needs to load device state buffers in-order it needs to
++queue incoming buffers until they can be loaded into the device.
++This means that a malicious QEMU source could theoretically cause the target
++QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
++
++The "x-migration-max-queued-buffers" property allows capping the maximum count
++of these VFIO device state buffers queued at the destination.
++
++Because a malicious QEMU source causing OOM on the target is not expected to be
++a realistic threat in most of VFIO live migration use cases and the right value
++depends on the particular setup by default this queued buffers limit is
++disabled by setting it to UINT64_MAX.
++
++Some host platforms (like ARM64) require that VFIO device config is loaded only
++after all iterables were loaded.
++Such interlocking is controlled by "x-migration-load-config-after-iter" VFIO
++device property, which in its default setting (AUTO) does so only on platforms
++that actually require it.
++
+ When pre-copy is supported, it's possible to further reduce downtime by
+ enabling "switchover-ack" migration capability.
+ VFIO migration uAPI defines "initial bytes" as part of its pre-copy data stream
+@@ -67,14 +98,39 @@ VFIO implements the device hooks for the iterative approach as follows:
+ * A ``switchover_ack_needed`` function that checks if the VFIO device uses
+   "switchover-ack" migration capability when this capability is enabled.
  
- static void vfio_state_buffer_clear(gpointer data)
-@@ -87,15 +92,113 @@ static VFIOStateBuffer *vfio_state_buffers_at(VFIOStateBuffers *bufs, guint idx)
-     return &g_array_index(bufs->array, VFIOStateBuffer, idx);
- }
+-* A ``save_state`` function to save the device config space if it is present.
+-
+-* A ``save_live_complete_precopy`` function that sets the VFIO device in
+-  _STOP_COPY state and iteratively copies the data for the VFIO device until
+-  the vendor driver indicates that no data remains.
+-
+-* A ``load_state`` function that loads the config section and the data
+-  sections that are generated by the save functions above.
++* A ``switchover_start`` function that in the multifd mode starts a thread that
++  reassembles the multifd received data and loads it in-order into the device.
++  In the non-multifd mode this function is a NOP.
++
++* A ``save_state`` function to save the device config space if it is present
++  in the non-multifd mode.
++  In the multifd mode it just emits either a dummy EOS marker or
++  "all iterables were loaded" flag for configurations that need to defer
++  loading device config space after them.
++
++* A ``save_live_complete_precopy`` function that in the non-multifd mode sets
++  the VFIO device in _STOP_COPY state and iteratively copies the data for the
++  VFIO device until the vendor driver indicates that no data remains.
++  In the multifd mode it just emits a dummy EOS marker.
++
++* A ``save_live_complete_precopy_thread`` function that in the multifd mode
++  provides thread handler performing multifd device state transfer.
++  It sets the VFIO device to _STOP_COPY state, iteratively reads the data
++  from the VFIO device and queues it for multifd transmission until the vendor
++  driver indicates that no data remains.
++  After that, it saves the device config space and queues it for multifd
++  transfer too.
++  In the non-multifd mode this thread is a NOP.
++
++* A ``load_state`` function that loads the data sections that are generated
++  by the main migration channel save functions above.
++  In the non-multifd mode it also loads the config section, while in the
++  multifd mode it handles the optional "all iterables were loaded" flag if
++  it is in use.
++
++* A ``load_state_buffer`` function that loads the device state and the device
++  config that arrived via multifd channels.
++  It's used only in the multifd mode.
  
-+static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
-+                                          VFIODeviceStatePacket *packet,
-+                                          size_t packet_total_size,
-+                                          Error **errp)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-+    VFIOStateBuffer *lb;
-+
-+    vfio_state_buffers_assert_init(&multifd->load_bufs);
-+    if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
-+        vfio_state_buffers_size_set(&multifd->load_bufs, packet->idx + 1);
-+    }
-+
-+    lb = vfio_state_buffers_at(&multifd->load_bufs, packet->idx);
-+    if (lb->is_present) {
-+        error_setg(errp, "state buffer %" PRIu32 " already filled",
-+                   packet->idx);
-+        return false;
-+    }
-+
-+    assert(packet->idx >= multifd->load_buf_idx);
-+
-+    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
-+    lb->len = packet_total_size - sizeof(*packet);
-+    lb->is_present = true;
-+
-+    return true;
-+}
-+
-+bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
-+                            Error **errp)
-+{
-+    VFIODevice *vbasedev = opaque;
-+    VFIOMigration *migration = vbasedev->migration;
-+    VFIOMultifd *multifd = migration->multifd;
-+    VFIODeviceStatePacket *packet = (VFIODeviceStatePacket *)data;
-+
-+    /*
-+     * Holding BQL here would violate the lock order and can cause
-+     * a deadlock once we attempt to lock load_bufs_mutex below.
-+     */
-+    assert(!bql_locked());
-+
-+    if (!vfio_multifd_transfer_enabled(vbasedev)) {
-+        error_setg(errp,
-+                   "got device state packet but not doing multifd transfer");
-+        return false;
-+    }
-+
-+    assert(multifd);
-+
-+    if (data_size < sizeof(*packet)) {
-+        error_setg(errp, "packet too short at %zu (min is %zu)",
-+                   data_size, sizeof(*packet));
-+        return false;
-+    }
-+
-+    if (packet->version != VFIO_DEVICE_STATE_PACKET_VER_CURRENT) {
-+        error_setg(errp, "packet has unknown version %" PRIu32,
-+                   packet->version);
-+        return false;
-+    }
-+
-+    if (packet->idx == UINT32_MAX) {
-+        error_setg(errp, "packet has too high idx");
-+        return false;
-+    }
-+
-+    trace_vfio_load_state_device_buffer_incoming(vbasedev->name, packet->idx);
-+
-+    QEMU_LOCK_GUARD(&multifd->load_bufs_mutex);
-+
-+    /* config state packet should be the last one in the stream */
-+    if (packet->flags & VFIO_DEVICE_STATE_CONFIG_STATE) {
-+        multifd->load_buf_idx_last = packet->idx;
-+    }
-+
-+    if (!vfio_load_state_buffer_insert(vbasedev, packet, data_size, errp)) {
-+        return false;
-+    }
-+
-+    qemu_cond_signal(&multifd->load_bufs_buffer_ready_cond);
-+
-+    return true;
-+}
-+
- VFIOMultifd *vfio_multifd_new(void)
- {
-     VFIOMultifd *multifd = g_new(VFIOMultifd, 1);
- 
-+    vfio_state_buffers_init(&multifd->load_bufs);
-+
-+    qemu_mutex_init(&multifd->load_bufs_mutex);
-+
-+    multifd->load_buf_idx = 0;
-+    multifd->load_buf_idx_last = UINT32_MAX;
-+    qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
-+
-     return multifd;
- }
- 
- void vfio_multifd_free(VFIOMultifd *multifd)
- {
-+    qemu_cond_destroy(&multifd->load_bufs_buffer_ready_cond);
-+    qemu_mutex_destroy(&multifd->load_bufs_mutex);
-+
-     g_free(multifd);
- }
- 
-diff --git a/hw/vfio/migration-multifd.h b/hw/vfio/migration-multifd.h
-index 1eefba3b2eed..d5ab7d6f85f5 100644
---- a/hw/vfio/migration-multifd.h
-+++ b/hw/vfio/migration-multifd.h
-@@ -22,4 +22,7 @@ bool vfio_multifd_transfer_enabled(VFIODevice *vbasedev);
- 
- bool vfio_multifd_transfer_setup(VFIODevice *vbasedev, Error **errp);
- 
-+bool vfio_load_state_buffer(void *opaque, char *data, size_t data_size,
-+                            Error **errp);
-+
- #endif
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 4311de763885..abaf4d08d4a9 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -806,6 +806,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
-     .load_setup = vfio_load_setup,
-     .load_cleanup = vfio_load_cleanup,
-     .load_state = vfio_load_state,
-+    .load_state_buffer = vfio_load_state_buffer,
-     .switchover_ack_needed = vfio_switchover_ack_needed,
- };
- 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 1bebe9877d88..042a3dc54a33 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -153,6 +153,7 @@ vfio_load_device_config_state_start(const char *name) " (%s)"
- vfio_load_device_config_state_end(const char *name) " (%s)"
- vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
- vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
-+vfio_load_state_device_buffer_incoming(const char *name, uint32_t idx) " (%s) idx %"PRIu32
- vfio_migration_realize(const char *name) " (%s)"
- vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
- vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+ * ``cleanup`` functions for both save and load that perform any migration
+   related cleanup.
+@@ -176,8 +232,11 @@ Live migration save path
+                 Then the VFIO device is put in _STOP_COPY state
+                      (FINISH_MIGRATE, _ACTIVE, _STOP_COPY)
+          .save_live_complete_precopy() is called for each active device
+-      For the VFIO device, iterate in .save_live_complete_precopy() until
++              For the VFIO device: in the non-multifd mode iterate in
++                        .save_live_complete_precopy() until
+                                pending data is 0
++	          In the multifd mode this iteration is done in
++	          .save_live_complete_precopy_thread() instead.
+                                       |
+                      (POSTMIGRATE, _COMPLETED, _STOP_COPY)
+             Migraton thread schedules cleanup bottom half and exits
+@@ -194,6 +253,9 @@ Live migration resume path
+                           (RESTORE_VM, _ACTIVE, _STOP)
+                                       |
+      For each device, .load_state() is called for that device section data
++                 transmitted via the main migration channel.
++     For data transmitted via multifd channels .load_state_buffer() is called
++                                   instead.
+                         (RESTORE_VM, _ACTIVE, _RESUMING)
+                                       |
+   At the end, .load_cleanup() is called for each device and vCPUs are started
 
