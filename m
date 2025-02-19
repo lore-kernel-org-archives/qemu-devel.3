@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D39C9C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A27C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:35:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqnB-0001uK-Je; Wed, 19 Feb 2025 15:35:37 -0500
+	id 1tkqnB-0001sR-Ga; Wed, 19 Feb 2025 15:35:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqn6-0001ge-6Y
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:33 -0500
+ id 1tkqmt-0001RQ-NC
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:26 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqn4-0004hq-IZ
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:31 -0500
+ id 1tkqmr-0004gS-SZ
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:19 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqn0-00000007VTI-1fnd; Wed, 19 Feb 2025 21:35:26 +0100
+ id 1tkqmq-00000007VSz-0aAD; Wed, 19 Feb 2025 21:35:16 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,9 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 12/36] migration/multifd: Make multifd_send() thread safe
-Date: Wed, 19 Feb 2025 21:33:54 +0100
-Message-ID: <ac4081e25880fde6b82b0eeb3cdd4d84e99a40b9.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 10/36] migration/multifd: Split packet into header and RAM
+ data
+Date: Wed, 19 Feb 2025 21:33:52 +0100
+Message-ID: <c56bc0b20ced802c1f25a6320447a429aba31b07.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -67,56 +68,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-multifd_send() function is currently not thread safe, make it thread safe
-by holding a lock during its execution.
+Read packet header first so in the future we will be able to
+differentiate between a RAM multifd packet and a device state multifd
+packet.
 
-This way it will be possible to safely call it concurrently from multiple
-threads.
+Since these two are of different size we can't read the packet body until
+we know which packet type it is.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ migration/multifd.c | 55 ++++++++++++++++++++++++++++++++++++---------
+ migration/multifd.h |  5 +++++
+ 2 files changed, 49 insertions(+), 11 deletions(-)
 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 700a385447c7..66ae77fbe4f1 100644
+index 215ad0414a79..3b47e63c2c4a 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -50,6 +50,10 @@ typedef struct {
+@@ -209,10 +209,10 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
  
- struct {
-     MultiFDSendParams *params;
-+
-+    /* multifd_send() body is not thread safe, needs serialization */
-+    QemuMutex multifd_send_mutex;
-+
-     /*
-      * Global number of generated multifd packets.
-      *
-@@ -339,6 +343,8 @@ bool multifd_send(MultiFDSendData **send_data)
-         return false;
+     memset(packet, 0, p->packet_len);
+ 
+-    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+-    packet->version = cpu_to_be32(MULTIFD_VERSION);
++    packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
++    packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+ 
+-    packet->flags = cpu_to_be32(p->flags);
++    packet->hdr.flags = cpu_to_be32(p->flags);
+     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+ 
+     packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
+@@ -228,12 +228,12 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+                             p->flags, p->next_packet_size);
+ }
+ 
+-static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
++static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
++                                             const MultiFDPacketHdr_t *hdr,
++                                             Error **errp)
+ {
+-    const MultiFDPacket_t *packet = p->packet;
+-    uint32_t magic = be32_to_cpu(packet->magic);
+-    uint32_t version = be32_to_cpu(packet->version);
+-    int ret = 0;
++    uint32_t magic = be32_to_cpu(hdr->magic);
++    uint32_t version = be32_to_cpu(hdr->version);
+ 
+     if (magic != MULTIFD_MAGIC) {
+         error_setg(errp, "multifd: received packet magic %x, expected %x",
+@@ -247,7 +247,16 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+         return -1;
      }
  
-+    QEMU_LOCK_GUARD(&multifd_send_state->multifd_send_mutex);
+-    p->flags = be32_to_cpu(packet->flags);
++    p->flags = be32_to_cpu(hdr->flags);
 +
-     /* We wait here, until at least one channel is ready */
-     qemu_sem_wait(&multifd_send_state->channels_ready);
++    return 0;
++}
++
++static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
++{
++    const MultiFDPacket_t *packet = p->packet;
++    int ret = 0;
++
+     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+     p->packet_num = be64_to_cpu(packet->packet_num);
+     p->packets_recved++;
+@@ -1165,14 +1174,18 @@ static void *multifd_recv_thread(void *opaque)
+     }
  
-@@ -507,6 +513,7 @@ static void multifd_send_cleanup_state(void)
-     socket_cleanup_outgoing_migration();
-     qemu_sem_destroy(&multifd_send_state->channels_created);
-     qemu_sem_destroy(&multifd_send_state->channels_ready);
-+    qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
-     g_free(multifd_send_state->params);
-     multifd_send_state->params = NULL;
-     g_free(multifd_send_state);
-@@ -887,6 +894,7 @@ bool multifd_send_setup(void)
-     thread_count = migrate_multifd_channels();
-     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
-     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
-+    qemu_mutex_init(&multifd_send_state->multifd_send_mutex);
-     qemu_sem_init(&multifd_send_state->channels_created, 0);
-     qemu_sem_init(&multifd_send_state->channels_ready, 0);
-     qatomic_set(&multifd_send_state->exiting, 0);
+     while (true) {
++        MultiFDPacketHdr_t hdr;
+         uint32_t flags = 0;
+         bool has_data = false;
++        uint8_t *pkt_buf;
++        size_t pkt_len;
++
+         p->normal_num = 0;
+ 
+         if (use_packets) {
+             struct iovec iov = {
+-                .iov_base = (void *)p->packet,
+-                .iov_len = p->packet_len
++                .iov_base = (void *)&hdr,
++                .iov_len = sizeof(hdr)
+             };
+ 
+             if (multifd_recv_should_exit()) {
+@@ -1191,6 +1204,26 @@ static void *multifd_recv_thread(void *opaque)
+                 break;
+             }
+ 
++            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
++            if (ret) {
++                break;
++            }
++
++            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
++            pkt_len = p->packet_len - sizeof(hdr);
++
++            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
++                                           &local_err);
++            if (!ret) {
++                /* EOF */
++                error_setg(&local_err, "multifd: unexpected EOF after packet header");
++                break;
++            }
++
++            if (ret == -1) {
++                break;
++            }
++
+             qemu_mutex_lock(&p->mutex);
+             ret = multifd_recv_unfill_packet(p, &local_err);
+             if (ret) {
+diff --git a/migration/multifd.h b/migration/multifd.h
+index cf408ff72140..f7156f66c0f6 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -69,6 +69,11 @@ typedef struct {
+     uint32_t magic;
+     uint32_t version;
+     uint32_t flags;
++} __attribute__((packed)) MultiFDPacketHdr_t;
++
++typedef struct {
++    MultiFDPacketHdr_t hdr;
++
+     /* maximum number of allocated pages */
+     uint32_t pages_alloc;
+     /* non zero pages */
 
