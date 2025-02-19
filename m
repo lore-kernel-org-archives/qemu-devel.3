@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E1AC021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 21:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC4E7C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 21:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkrK6-0002Xu-BS; Wed, 19 Feb 2025 16:09:38 -0500
+	id 1tkrJa-0001va-6X; Wed, 19 Feb 2025 16:09:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkrK4-0002Ul-62
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:09:36 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkrJX-0001sY-Ez
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:09:03 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkrK2-0000Af-07
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:09:35 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-439a2780b44so1228625e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 13:09:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkrJV-0008Vj-Nf
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 16:09:03 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4393dc02b78so1202525e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 13:09:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739999372; x=1740604172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739999340; x=1740604140; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XnXac85husRSdcAW6ArahXIi1CSZu6CjUp+G23JJFB0=;
- b=pDCbVahvKOj9yytNBiDMrAtCcJzffY2jZUHwMkL8A0h8mPJFyz/6QQ8TuB554Ah61N
- YOnr65K5xq6nAejL6P1FPan+K2pPBCagRy/l1TPo997KsiAC9MJFkmLHkyu2vpyQ9gJ2
- PV6/cgSZTc6Kio/k/BP4F/lxnF2Bc0MbPjIxDrwEb5RDgfKplqPkQf6tfaWNrI4o5Lbd
- CEI1hlzMLbiYp/3OfMtmLQ2YPPHLk3S7AsiCybsNWmatjMPAM3qPv4Ixzi1+9DM0Pifx
- A5bitkLiJRvM0sk7NXpDJ12QI3PAUfLHbb4K92ZkasEtJcyTPaYAZ3Ajrk1Ipxltarre
- IFuA==
+ bh=4FHsuKvW5lxqHnKhRd7Yijx1j/tjAzvjfWfwUFBfXHI=;
+ b=AI6drNCz+OCGWjvsJ1ELqWheL4gN7Wzs1Bu97iNgZrjU5E5w6o9cqdRwQlhbXQEhA8
+ 5jbS1GY9pqwtmFOPnPc29miT5yTomY3Me3bs9Zg3MulUpe+wtK092iP07eUE3vo9SFsQ
+ tnvNqAjn32miITLYjuoyyzkmM0hJFw4ga3CehxQd6WqcH9oB1KPEfnVffA3VKaGSddBL
+ CmK1c7Gn8xqijJTUsgFvGMc8p0dDwOqdhbT+vqzSB9Bs49eOYIq5ZZUEzgLDHNDNj5gE
+ sajESgQ7tRCU8hqpUlP/nig3RGCIzSoWIEeD9dC1oGSlcPJ06BfvZO0voL5xc2W/aHzy
+ SWuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739999372; x=1740604172;
+ d=1e100.net; s=20230601; t=1739999340; x=1740604140;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XnXac85husRSdcAW6ArahXIi1CSZu6CjUp+G23JJFB0=;
- b=ij06o85rx/iS1o4t/m+u7+XJmD3FcZuNK4PudoXO850aKcUr6DlBDutVNqWPbeV5cU
- UT20uUlA6h9n8DkxgAVqMu4/hAq2kbqQ2tbbxgQF4Fd/TRINw3wGDuofeERg6VA1oRBW
- 0umUlzcN6oxvMfls5gNNVtt6w/xUDv7hD6dOC3zxgy3bRwU1YJi13lB8XS6BkuD2jLFp
- eGUgMV9I2HE3iO0W0QH3goyUga+nR8zi31SI0+5tgiX23UECRG3X5uW1x40CqM9Fn5Ly
- JRZQ+Jt8ajmVtQLrAJjVrVSpqGOI5uNBUYqZZmXSj2fNbD/f18aCkAxInLKzCP45ocaq
- TWIA==
+ bh=4FHsuKvW5lxqHnKhRd7Yijx1j/tjAzvjfWfwUFBfXHI=;
+ b=N/2WC8IRjJEXbdh3lwiRw2I9Si7O+Ih3HLG3tXxdOBySMGw8/YE/6iXNNghXzTEtcS
+ Dw48umHcqImbT+ZKLKpDVki7rUMWXtSUxflIbJdU+XNe7Pw5sYzJigLy0pAUfwChkkZz
+ NLaiRLGKgr8NGRAEtLmrCr2xpb26WcYz7QdM12HvsbGHIskQWhSvBXJPduz7AZV+JoWH
+ +pKnRvRpQBYrwVoCCHPg42NBTxU4Ub/iggG4hE0aEejZbYXiLVYFInFi/DUBi0HGo6i6
+ K5UpUmLvtCZSEhAWinMiNdtEdAsNkemz5kYMJZjKDAreFhhwqaOnU8ybZeDDOpIs3TjQ
+ dMpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnDpJPF3Vs/dzFyaqic95/7dspiAzKvEp5zj2zYVv0SfJBwZG4Mn4rgatg06KpPKYaGBq5e58IFw8z@nongnu.org
-X-Gm-Message-State: AOJu0Yw6HX1bpmyNpGnQX37JNg53sVvrXIuBOeQPHL3zmexRJRpMkUCL
- ktIHE8bt5PiF2RJW5AGeYpYsLpARBs6hAPyx58iPLosv9tQERvUkSbZ01i8Z2q8=
-X-Gm-Gg: ASbGncsHFO+pivqddUC3L7a0ly7dR9tUib4MJEWt/NoVdk/oIUEkwGnHNuYFWBICRm3
- NXi4CtS7GzWw3wvJSX0HTEOV25q3Okj0v1r3BLG9pr04i4TPYhbLyARriiwcoZpN6OyN/jV9zWT
- vHmwXDdLNRlRGpZq1E6bAXHikvyN5oa1enZvzzc9ZNPEaXgSFHsNmIMQfokjelFXddm9/FqsQ+w
- QOY6cTCrNQ0fEqPMoLGjiyPaP6QKcFie2BTRdy8j8wJdAHqCxu1ZtMFW345yGS3Jg3BDfEpCCgU
- +TiUvkYUTt0RAk1qa9jEsd0gq0LkwPzdhbfZhm1RxC1/BT0705JWPmFzKNBWd/uZvw==
-X-Google-Smtp-Source: AGHT+IE4Byg70J4EWT04Rr2EIOcLaDr6jugN8hJq25PFZ4HSMwrAbXNiUeRQpkmbDJFI9DGkfshlOg==
-X-Received: by 2002:a05:600c:3b26:b0:439:31e0:d9a5 with SMTP id
- 5b1f17b1804b1-43999dd1e1cmr44430935e9.22.1739999371753; 
- Wed, 19 Feb 2025 13:09:31 -0800 (PST)
+ AJvYcCXwaHmIBJnTxDa5uSpWeyEpVKfRnT/NFfBcGESmHrn55uDPZ3HRFMx7syQC0otsBQKyLwyUxRavz4ZJ@nongnu.org
+X-Gm-Message-State: AOJu0YyHYqYUhbbRtcfPxykSizBI2shOKrxNEs+iiJaDixRKPMtnI99+
+ 59rVpObIwwXPRd5v7bgHsPb6mzRpc+Jw7O/r5++MBTDTeQDi5a+wr0WrbjwD/82E6DvL8M/Sb0Y
+ ImzQ=
+X-Gm-Gg: ASbGncvh1qoTCQSlVRZje7xuMLXuhS8aTZA6AKji6oDgaFjQl37MVJJmpvy4wuWIGlU
+ brPnwiVXeAu/l7aCJbb+1kXQbvNpEylzOfgXSJLmv0sFGuzXK61Zo8uiJYV8922znZHSDDWQtWm
+ Sgw16OqmebIF06pj4iZIvwdS1b6rUkpjSklbZvw6AsyKY56agJfFGAccKZN/N8hBsNVAu8w6kR7
+ DwcmuqkuDZBNcOGl95gF2hH7gaWBZ3H5mtddqJf/2I7jQtv4uGKTQP7pMnkriQALwew9GZTRK4f
+ F5mpKn2KxwR+u1QIlS1+cVDE3dM0WzuMuDFrgakV/zVdSUZi6gvTviusrw/tnoDw6g==
+X-Google-Smtp-Source: AGHT+IERTR1XiiAxvQUqcL7HgCAWEcqCxi9fc99r9lHG3vrUskwUdQLOHiIzY3gm4LBo+mMusZ7Jww==
+X-Received: by 2002:a05:600c:3b1a:b0:439:9274:81ed with SMTP id
+ 5b1f17b1804b1-439927483e2mr72162935e9.1.1739999340068; 
+ Wed, 19 Feb 2025 13:09:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439a0cc11c6sm13165315e9.16.2025.02.19.13.09.30
+ ffacd0b85a97d-38f259f8730sm19267996f8f.93.2025.02.19.13.08.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 19 Feb 2025 13:09:31 -0800 (PST)
+ Wed, 19 Feb 2025 13:08:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
@@ -77,18 +78,17 @@ Cc: Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
  Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org
-Subject: [PATCH 9/9] hw/char/sh_serial: Return correct number of empty RX FIFO
- elements
-Date: Wed, 19 Feb 2025 22:08:41 +0100
-Message-ID: <20250219210841.94797-10-philmd@linaro.org>
+Subject: [PATCH 3/9] hw/char/pl011: Improve RX flow tracing events
+Date: Wed, 19 Feb 2025 22:08:35 +0100
+Message-ID: <20250219210841.94797-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250219210841.94797-1-philmd@linaro.org>
 References: <20250219210841.94797-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,77 +111,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the IOCanReadHandler sh_serial_can_receive(), if the Serial
-Control Register 'Receive Enable' bit is set (bit 4), then we
-returns a size of (1 << 4) which happens to be equal to 16,
-so effectively SH_RX_FIFO_LENGTH.
+Log FIFO use (availability and depth).
 
-The IOReadHandler, sh_serial_receive1() takes care to receive
-multiple chars, but if the FIFO is partly filled, we only process
-the number of free slots in the FIFO, discarding the other chars!
-
-Fix by returning how many elements the FIFO can queue in the
-IOCanReadHandler, so we don't have to process more than that in
-the IOReadHandler, thus not discarding anything.
-
-Remove the now unnecessary check on 's->rx_cnt < SH_RX_FIFO_LENGTH'
-in IOReadHandler, reducing the block indentation.
-
-Fixes: 63242a007a1 ("SH4: Serial controller improvement")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/sh_serial.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ hw/char/pl011.c      | 10 ++++++----
+ hw/char/trace-events |  7 ++++---
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
-index 247aeb071ac..41c8175a638 100644
---- a/hw/char/sh_serial.c
-+++ b/hw/char/sh_serial.c
-@@ -320,7 +320,7 @@ static uint64_t sh_serial_read(void *opaque, hwaddr offs,
- 
- static int sh_serial_can_receive(SHSerialState *s)
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index bcd516d682d..148a7d0dc60 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -185,7 +185,7 @@ static void pl011_fifo_rx_put(void *opaque, uint32_t value)
+     s->read_fifo[slot] = value;
+     s->read_count++;
+     s->flags &= ~PL011_FLAG_RXFE;
+-    trace_pl011_fifo_rx_put(value, s->read_count);
++    trace_pl011_fifo_rx_put(value, s->read_count, pipe_depth);
+     if (s->read_count == pipe_depth) {
+         trace_pl011_fifo_rx_full();
+         s->flags |= PL011_FLAG_RXFF;
+@@ -248,12 +248,13 @@ static void pl011_write_txdata(PL011State *s, uint8_t data)
+ static uint32_t pl011_read_rxdata(PL011State *s)
  {
--    return s->scr & (1 << 4);
-+    return s->scr & (1 << 4) ? SH_RX_FIFO_LENGTH - s->rx_head : 0;
+     uint32_t c;
++    unsigned fifo_depth = pl011_get_fifo_depth(s);
+ 
+     s->flags &= ~PL011_FLAG_RXFF;
+     c = s->read_fifo[s->read_pos];
+     if (s->read_count > 0) {
+         s->read_count--;
+-        s->read_pos = (s->read_pos + 1) & (pl011_get_fifo_depth(s) - 1);
++        s->read_pos = (s->read_pos + 1) & (fifo_depth - 1);
+     }
+     if (s->read_count == 0) {
+         s->flags |= PL011_FLAG_RXFE;
+@@ -261,7 +262,7 @@ static uint32_t pl011_read_rxdata(PL011State *s)
+     if (s->read_count == s->read_trigger - 1) {
+         s->int_level &= ~INT_RX;
+     }
+-    trace_pl011_read_fifo(s->read_count);
++    trace_pl011_read_fifo(s->read_count, fifo_depth);
+     s->rsr = c >> 8;
+     pl011_update(s);
+     qemu_chr_fe_accept_input(&s->chr);
+@@ -496,12 +497,13 @@ static int pl011_can_receive(void *opaque)
+     if (!(s->cr & CR_RXE)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "PL011 reading data on disabled TX UART\n");
+     }
+-    trace_pl011_can_receive(s->lcr, s->read_count, r);
++    trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
+     return r;
  }
  
- static void sh_serial_receive_break(SHSerialState *s)
-@@ -353,22 +353,20 @@ static void sh_serial_receive1(void *opaque, const uint8_t *buf, int size)
-     if (s->feat & SH_SERIAL_FEAT_SCIF) {
-         int i;
-         for (i = 0; i < size; i++) {
--            if (s->rx_cnt < SH_RX_FIFO_LENGTH) {
--                s->rx_fifo[s->rx_head++] = buf[i];
--                if (s->rx_head == SH_RX_FIFO_LENGTH) {
--                    s->rx_head = 0;
--                }
--                s->rx_cnt++;
--                if (s->rx_cnt >= s->rtrg) {
--                    s->flags |= SH_SERIAL_FLAG_RDF;
--                    if (s->scr & (1 << 6) && s->rxi) {
--                        timer_del(&s->fifo_timeout_timer);
--                        qemu_set_irq(s->rxi, 1);
--                    }
--                } else {
--                    timer_mod(&s->fifo_timeout_timer,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 15 * s->etu);
-+            s->rx_fifo[s->rx_head++] = buf[i];
-+            if (s->rx_head == SH_RX_FIFO_LENGTH) {
-+                s->rx_head = 0;
-+            }
-+            s->rx_cnt++;
-+            if (s->rx_cnt >= s->rtrg) {
-+                s->flags |= SH_SERIAL_FLAG_RDF;
-+                if (s->scr & (1 << 6) && s->rxi) {
-+                    timer_del(&s->fifo_timeout_timer);
-+                    qemu_set_irq(s->rxi, 1);
-                 }
-+            } else {
-+                timer_mod(&s->fifo_timeout_timer,
-+                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 15 * s->etu);
-             }
-         }
-     } else {
+ static void pl011_receive(void *opaque, const uint8_t *buf, int size)
+ {
++    trace_pl011_receive(size);
+     /*
+      * In loopback mode, the RX input signal is internally disconnected
+      * from the entire receiving logics; thus, all inputs are ignored,
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index b2e3d25ae34..05a33036c12 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -60,12 +60,13 @@ imx_serial_put_data(const char *chrname, uint32_t value) "%s: 0x%" PRIx32
+ # pl011.c
+ pl011_irq_state(int level) "irq state %d"
+ pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
+-pl011_read_fifo(int read_count) "FIFO read, read_count now %d"
++pl011_read_fifo(unsigned rx_fifo_used, size_t rx_fifo_depth) "RX FIFO read, used %u/%zu"
+ pl011_write(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
+-pl011_can_receive(uint32_t lcr, int read_count, int r) "LCR 0x%08x read_count %d returning %d"
+-pl011_fifo_rx_put(uint32_t c, int read_count) "new char 0x%02x read_count now %d"
++pl011_can_receive(uint32_t lcr, unsigned rx_fifo_used, size_t rx_fifo_depth, unsigned rx_fifo_available) "LCR 0x%02x, RX FIFO used %u/%zu, can_receive %u chars"
++pl011_fifo_rx_put(uint32_t c, unsigned read_count, size_t rx_fifo_depth) "RX FIFO push char [0x%02x] %d/%zu depth used"
+ pl011_fifo_rx_full(void) "RX FIFO now full, RXFF set"
+ pl011_baudrate_change(unsigned int baudrate, uint64_t clock, uint32_t ibrd, uint32_t fbrd) "new baudrate %u (clk: %" PRIu64 "hz, ibrd: %" PRIu32 ", fbrd: %" PRIu32 ")"
++pl011_receive(int size) "recv %d chars"
+ 
+ # cmsdk-apb-uart.c
+ cmsdk_apb_uart_read(uint64_t offset, uint64_t data, unsigned size) "CMSDK APB UART read: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
 -- 
 2.47.1
 
