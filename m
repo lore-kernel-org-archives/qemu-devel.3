@@ -4,71 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6481CC021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E871C021AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 09:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkfcL-0003Rq-Ma; Wed, 19 Feb 2025 03:39:41 -0500
+	id 1tkg0E-0005tq-9z; Wed, 19 Feb 2025 04:04:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkfcJ-0003RL-1g
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:39:39 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkg0B-0005tI-UQ
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:04:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tkfcG-0005rq-6I
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:39:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739954376; x=1771490376;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=0YMoMndJuWKKyb7v6FgnrYSG+SGFwDrJuHUS/mMRlTg=;
- b=BAreybdeqbFSRMFUlv5d5FfaiXufKuFcPNZiG8/gvjTjN2hb+qjEe51W
- TJYyF/1cngYZYxEL57bC89N3AEOtmXCacTVDhFQa76lMLxwMtORDLxc3U
- caB11AZAltDytIRXfnrwukm7+AnMCTYV9+OTY9Ve19iFSDlXSsNvImrWG
- bNNv6woEwmKc21DybRuSJCT8py3pAtq1j1v/60V/8g7zHO4WB8f6eRPdG
- cBD7Ow1RPCih4a4itz5Trhnv9e91/s6Q5wk/XlMwEM6JXQb164TBxWV2R
- vCg9SLDaMHzjjlMOfguI5nSwmRA10VJ5tNPghVd+uLTRAgQKrmbA1CZFN Q==;
-X-CSE-ConnectionGUID: BiYHYWJKQUqnXL1stFD/+g==
-X-CSE-MsgGUID: zKG8ybklRQOwQNZFLhnpXQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="51299259"
-X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="51299259"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:39:33 -0800
-X-CSE-ConnectionGUID: adEyG1G2RVmLADIDWYWipQ==
-X-CSE-MsgGUID: IfAHvtMlRIm7RQS8p4Cruw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="115552413"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 19 Feb 2025 00:39:32 -0800
-Date: Wed, 19 Feb 2025 16:59:06 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v7 RESEND 0/5] i386: Support SMP Cache Topology
-Message-ID: <Z7WdWiSEiVTyyAhF@intel.com>
-References: <20250110145115.1574345-1-zhao1.liu@intel.com>
- <Z6R+/R66Gs2uNBez@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkg08-00088m-Ik
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 04:04:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1739955855;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ocBR5LGCbzpOEQ6oL9LxsRdCTK7a08kvS7Nr9NK+tMw=;
+ b=BXa7UW914UIvvIGtJFFHVTKYt3t8IuP+/V4rdg1jlsTWCDQulRHDIVogzyCCNgGEGmW3XN
+ FFIjgoMxbroNgVIzWXtZvvd6/D+O4vQApQO6Rvpb8RzWes3hRfPxI2oVadd9rcaUOlDkf5
+ tEkkquuay4JUJUFw2PVdz2e0p12u+Ig=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-svTTE5svOjCTXUU6nuws1Q-1; Wed,
+ 19 Feb 2025 04:04:11 -0500
+X-MC-Unique: svTTE5svOjCTXUU6nuws1Q-1
+X-Mimecast-MFC-AGG-ID: svTTE5svOjCTXUU6nuws1Q_1739955850
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6862E180087B; Wed, 19 Feb 2025 09:04:09 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76D041955BCB; Wed, 19 Feb 2025 09:04:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 73E4921E6A28; Wed, 19 Feb 2025 10:04:05 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
+ Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
+ Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
+ <jasowang@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 29/42] qapi: Add "Details:" disambiguation marker
+In-Reply-To: <CAFn=p-a8=+BZfUjiaQpXU7UbH7_oV5WNdumHqbD8kauf3YqKVQ@mail.gmail.com>
+ (John Snow's message of "Tue, 18 Feb 2025 17:26:02 -0500")
+References: <20250205231208.1480762-1-jsnow@redhat.com>
+ <20250205231208.1480762-30-jsnow@redhat.com>
+ <87seocrdk9.fsf@pond.sub.org>
+ <CAFn=p-a8=+BZfUjiaQpXU7UbH7_oV5WNdumHqbD8kauf3YqKVQ@mail.gmail.com>
+Date: Wed, 19 Feb 2025 10:04:05 +0100
+Message-ID: <878qq271bu.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z6R+/R66Gs2uNBez@intel.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.423,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,34 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+John Snow <jsnow@redhat.com> writes:
 
-A gentle poke. I plan to add cache models for Intel CPUs and extend
-this smp_cache interface after this series. :-)
+> On Mon, Feb 17, 2025 at 6:55=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > This clarifies sections that are mistaken by the parser as "intro"
+>> > sections to be "details" sections instead.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > ---
+>> >  qapi/machine.json      | 2 ++
+>> >  qapi/migration.json    | 4 ++++
+>> >  qapi/qom.json          | 4 ++++
+>> >  qapi/yank.json         | 2 ++
+>> >  scripts/qapi/parser.py | 8 ++++++++
+>> >  5 files changed, 20 insertions(+)
+>>
+>> Missing updates for the new syntax
+>>
+>> * Documentation: docs/devel/qapi-code-gen.rst
+>>
+>
+>> * Positive test case(s): tests/qapi-schema/doc-good.json
+>>
+>> * Maybe a negative test case for _tag_check() failure
+>>
+>>
+> Understood; I wasn't entirely sure if this concept would fly, so I saved
+> the polish and you got an RFC quality patch. Forgive me, please! If you
 
-(The 1st patch of general machine has been picked by Phili.)
+As I wrote in review of PATCH 28, this is good strategy.
 
-Thanks,
-Zhao
+> think this approach is fine, I will certainly do all the things you
+> outlined above.
+>
+>
+>> [...]
+>>
+>> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+>> > index c5d2b950a82..5890a13b5ba 100644
+>> > --- a/scripts/qapi/parser.py
+>> > +++ b/scripts/qapi/parser.py
+>> > @@ -544,6 +544,14 @@ def _tag_check(what: str) -> None:
+>> >                          raise QAPIParseError(
+>> >                              self, 'feature descriptions expected')
+>> >                      have_tagged =3D True
+>> > +                elif line =3D=3D 'Details:':
+>> > +                    _tag_check("Details")
+>>
+>> This one.
+>>
+>
+> ACK
+>
+>
+>>
+>> > +                    self.accept(False)
+>> > +                    line =3D self.get_doc_line()
+>> > +                    while line =3D=3D '':
+>> > +                        self.accept(False)
+>> > +                        line =3D self.get_doc_line()
+>> > +                    have_tagged =3D True
+>> >                  elif match :=3D self._match_at_name_colon(line):
+>> >                      # description
+>> >                      if have_tagged:
+>>
+>>
 
-> > Alireza Sanaee (1):
-> >   i386/cpu: add has_caches flag to check smp_cache configuration
-> > 
-> > Zhao Liu (4):
-> >   hw/core/machine: Reject thread level cache
-> >   i386/cpu: Support module level cache topology
-> >   i386/cpu: Update cache topology with machine's configuration
-> >   i386/pc: Support cache topology in -machine for PC machine
-> > 
-> >  hw/core/machine-smp.c |  9 ++++++
-> >  hw/i386/pc.c          |  4 +++
-> >  include/hw/boards.h   |  3 ++
-> >  qemu-options.hx       | 30 +++++++++++++++++-
-> >  target/i386/cpu.c     | 71 ++++++++++++++++++++++++++++++++++++++++++-
-> >  5 files changed, 115 insertions(+), 2 deletions(-)
-> > 
-> > -- 
-> > 2.34.1
-> > 
-> 
 
