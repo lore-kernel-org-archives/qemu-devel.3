@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A27C021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288F6C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:35:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqnB-0001sR-Ga; Wed, 19 Feb 2025 15:35:37 -0500
+	id 1tkqmj-0000xA-Mx; Wed, 19 Feb 2025 15:35:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmt-0001RQ-NC
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:26 -0500
+ id 1tkqmg-0000pq-Mu
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:06 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmr-0004gS-SZ
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:19 -0500
+ id 1tkqme-0004b8-TZ
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:06 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmq-00000007VSz-0aAD; Wed, 19 Feb 2025 21:35:16 +0100
+ id 1tkqma-00000007VSV-2wOD; Wed, 19 Feb 2025 21:35:00 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 10/36] migration/multifd: Split packet into header and RAM
- data
-Date: Wed, 19 Feb 2025 21:33:52 +0100
-Message-ID: <c56bc0b20ced802c1f25a6320447a429aba31b07.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 07/36] migration: postcopy_ram_listen_thread() should take
+ BQL for some calls
+Date: Wed, 19 Feb 2025 21:33:49 +0100
+Message-ID: <c331cfc5c87a33df856e58c203d3c1d7e39fc1c1.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
@@ -68,137 +68,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Read packet header first so in the future we will be able to
-differentiate between a RAM multifd packet and a device state multifd
-packet.
+All callers to migration_incoming_state_destroy() other than
+postcopy_ram_listen_thread() do this call with BQL held.
 
-Since these two are of different size we can't read the packet body until
-we know which packet type it is.
+Since migration_incoming_state_destroy() ultimately calls "load_cleanup"
+SaveVMHandlers and it will soon call BQL-sensitive code it makes sense
+to always call that function under BQL rather than to have it deal with
+both cases (with BQL and without BQL).
+Add the necessary bql_lock() and bql_unlock() to
+postcopy_ram_listen_thread().
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+qemu_loadvm_state_main() in postcopy_ram_listen_thread() could call
+"load_state" SaveVMHandlers that are expecting BQL to be held.
+
+In principle, the only devices that should be arriving on migration
+channel serviced by postcopy_ram_listen_thread() are those that are
+postcopiable and whose load handlers are safe to be called without BQL
+being held.
+
+But nothing currently prevents the source from sending data for "unsafe"
+devices which would cause trouble there.
+Add a TODO comment there so it's clear that it would be good to improve
+handling of such (erroneous) case in the future.
+
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd.c | 55 ++++++++++++++++++++++++++++++++++++---------
- migration/multifd.h |  5 +++++
- 2 files changed, 49 insertions(+), 11 deletions(-)
+ migration/savevm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 215ad0414a79..3b47e63c2c4a 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -209,10 +209,10 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
- 
-     memset(packet, 0, p->packet_len);
- 
--    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
--    packet->version = cpu_to_be32(MULTIFD_VERSION);
-+    packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
-+    packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
- 
--    packet->flags = cpu_to_be32(p->flags);
-+    packet->hdr.flags = cpu_to_be32(p->flags);
-     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
- 
-     packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
-@@ -228,12 +228,12 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-                             p->flags, p->next_packet_size);
- }
- 
--static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
-+                                             const MultiFDPacketHdr_t *hdr,
-+                                             Error **errp)
- {
--    const MultiFDPacket_t *packet = p->packet;
--    uint32_t magic = be32_to_cpu(packet->magic);
--    uint32_t version = be32_to_cpu(packet->version);
--    int ret = 0;
-+    uint32_t magic = be32_to_cpu(hdr->magic);
-+    uint32_t version = be32_to_cpu(hdr->version);
- 
-     if (magic != MULTIFD_MAGIC) {
-         error_setg(errp, "multifd: received packet magic %x, expected %x",
-@@ -247,7 +247,16 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-         return -1;
-     }
- 
--    p->flags = be32_to_cpu(packet->flags);
-+    p->flags = be32_to_cpu(hdr->flags);
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 7c1aa8ad7b9d..3e86b572cfa8 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1986,6 +1986,8 @@ static void *postcopy_ram_listen_thread(void *opaque)
+      * in qemu_file, and thus we must be blocking now.
+      */
+     qemu_file_set_blocking(f, true);
 +
-+    return 0;
-+}
-+
-+static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+{
-+    const MultiFDPacket_t *packet = p->packet;
-+    int ret = 0;
-+
-     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-     p->packet_num = be64_to_cpu(packet->packet_num);
-     p->packets_recved++;
-@@ -1165,14 +1174,18 @@ static void *multifd_recv_thread(void *opaque)
-     }
++    /* TODO: sanity check that only postcopiable data will be loaded here */
+     load_res = qemu_loadvm_state_main(f, mis);
  
-     while (true) {
-+        MultiFDPacketHdr_t hdr;
-         uint32_t flags = 0;
-         bool has_data = false;
-+        uint8_t *pkt_buf;
-+        size_t pkt_len;
-+
-         p->normal_num = 0;
+     /*
+@@ -2046,7 +2048,9 @@ static void *postcopy_ram_listen_thread(void *opaque)
+      * (If something broke then qemu will have to exit anyway since it's
+      * got a bad migration state).
+      */
++    bql_lock();
+     migration_incoming_state_destroy();
++    bql_unlock();
  
-         if (use_packets) {
-             struct iovec iov = {
--                .iov_base = (void *)p->packet,
--                .iov_len = p->packet_len
-+                .iov_base = (void *)&hdr,
-+                .iov_len = sizeof(hdr)
-             };
- 
-             if (multifd_recv_should_exit()) {
-@@ -1191,6 +1204,26 @@ static void *multifd_recv_thread(void *opaque)
-                 break;
-             }
- 
-+            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
-+            if (ret) {
-+                break;
-+            }
-+
-+            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
-+            pkt_len = p->packet_len - sizeof(hdr);
-+
-+            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
-+                                           &local_err);
-+            if (!ret) {
-+                /* EOF */
-+                error_setg(&local_err, "multifd: unexpected EOF after packet header");
-+                break;
-+            }
-+
-+            if (ret == -1) {
-+                break;
-+            }
-+
-             qemu_mutex_lock(&p->mutex);
-             ret = multifd_recv_unfill_packet(p, &local_err);
-             if (ret) {
-diff --git a/migration/multifd.h b/migration/multifd.h
-index cf408ff72140..f7156f66c0f6 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -69,6 +69,11 @@ typedef struct {
-     uint32_t magic;
-     uint32_t version;
-     uint32_t flags;
-+} __attribute__((packed)) MultiFDPacketHdr_t;
-+
-+typedef struct {
-+    MultiFDPacketHdr_t hdr;
-+
-     /* maximum number of allocated pages */
-     uint32_t pages_alloc;
-     /* non zero pages */
+     rcu_unregister_thread();
+     mis->have_listen_thread = false;
 
