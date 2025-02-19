@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C79C021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 13:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B111C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 13:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkk2A-00086I-MW; Wed, 19 Feb 2025 08:22:38 -0500
+	id 1tkk3b-0000Hu-Rt; Wed, 19 Feb 2025 08:24:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkk22-00085w-7J
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:22:30 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkk3Z-0000HM-Ic
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:24:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tkk1y-0000Os-UX
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:22:29 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tkk3X-0000Z6-AI
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:24:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1739971339;
+ s=mimecast20190719; t=1739971442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mrBq7vVvwUZ0lOt2AajAT57ihoANfpxJ+icSBGDFbeM=;
- b=XMlZXtzYaTwd1bWbSh5b1rQJqRTqprCIDjV4jiGO1A9RWhc/h65ytAnm57YhS2cqydk1QK
- SeVk/+KrCpHDJ+6UU/AJ/aBGv7Xl3icG/zpg6X5Qc69diNzm6dbw1kPzJ6ITCPAhA0PTrE
- R9OR7pKyeurp5Uru6TLYsEG+hDYJk/0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-C9AuU2XeM_OqySQW7sUZVg-1; Wed,
- 19 Feb 2025 08:22:13 -0500
-X-MC-Unique: C9AuU2XeM_OqySQW7sUZVg-1
-X-Mimecast-MFC-AGG-ID: C9AuU2XeM_OqySQW7sUZVg_1739971332
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 40CBE190F9DF; Wed, 19 Feb 2025 13:22:12 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6320419560B9; Wed, 19 Feb 2025 13:22:11 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CB1BA21E6A28; Wed, 19 Feb 2025 14:22:08 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Peter
- Maydell <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,  Fabiano Rosas <farosas@suse.de>,
- Zhao Liu <zhao1.liu@intel.com>,  Lukas Straub <lukasstraub2@web.de>,
- Eduardo Habkost <eduardo@habkost.net>,  Michael Roth
- <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Peter
- Xu <peterx@redhat.com>,  Eric Blake <eblake@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Jason Wang <jasowang@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 00/42] docs: add sphinx-domain rST generator to qapidoc
-In-Reply-To: <CAFn=p-adsVRfMhwEst8iX57OOzNDjLkRHg2SQO7+jLuzfx78fw@mail.gmail.com>
- (John Snow's message of "Tue, 18 Feb 2025 15:01:06 -0500")
-References: <20250205231208.1480762-1-jsnow@redhat.com>
- <87wmds4tpk.fsf@pond.sub.org>
- <CAFn=p-adsVRfMhwEst8iX57OOzNDjLkRHg2SQO7+jLuzfx78fw@mail.gmail.com>
-Date: Wed, 19 Feb 2025 14:22:08 +0100
-Message-ID: <874j0q2hof.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=gMwi4mOlVKrhhA5BBEdM2yWvk3njB0aVNAj7lrSGSpM=;
+ b=XfGZXRiCbPvmq+fHp6HqIxfeuh5dadtsfaGZlUAUJFT0bJsyPFXt1tTVpJ2tuiV6uvDTNV
+ 3dxwotKtIXEbrBkj2MXrup9GOo7obwGW3ltaVE8I/ot7opnbBCu3TWLgKzVIhtVKUwD9GT
+ LllgJKIe1O63+RUDgkgsmEXuFFwXrP8=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-gYLSR9PzO06GCECdteu-Pg-1; Wed, 19 Feb 2025 08:23:58 -0500
+X-MC-Unique: gYLSR9PzO06GCECdteu-Pg-1
+X-Mimecast-MFC-AGG-ID: gYLSR9PzO06GCECdteu-Pg_1739971438
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6e4f08c54e6so58808496d6.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 05:23:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739971438; x=1740576238;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gMwi4mOlVKrhhA5BBEdM2yWvk3njB0aVNAj7lrSGSpM=;
+ b=PeU0MG0EqmgnX1EaKik9QfPHaFnCFh05dppJ1q5eRMdvXTThCKeOonVQvAeGj8/tWN
+ qSyuS+0x5Kx7TCGQLvFNG4//uzvDOkMMYnET1qE63Ybab7ErQlJHSx688U7wZqrPAwZ4
+ zusrrZ/vLMUW/3jNKJbdikAotS+4AILjk8SWFb5oggnVtBsx851B+j/AwCDpQURUFg7j
+ hNGW3cHRyYg4923GWCwyYRngaj8sZQ1R7X2VEmD8svQfjDBSVzhPWgKI0JUGST4ZQUBR
+ sY4wzXYVAuXZj8Ku6mmYapwwFrDJX6qgF5Yd7ujWKp/wb510QSET8ibFS/p/H7GQJiT4
+ M/NA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9+qfcAVZN+BWPcw0Kc7p+LDG1JIiBtClwb8IsuoTfiExCISVg/TCiVmaCPhNBgz+i0Zf41cFybhin@nongnu.org
+X-Gm-Message-State: AOJu0Yzi8qUlDPXCEqaIJQwxlHlHGjxyZdzBouWvbhdYkSq8CaECET1Q
+ GVEw30MOM3VafGz4tihcgXQR6wLS59QhLICuUR3/SXE6zallX4WpaLSAJMReex0G0n3gq/WKZaF
+ 3t9/RMYZyeDQF2jE/ak7pb/1QNE6EsDCvUXLsdqZI3oIuauoY1040
+X-Gm-Gg: ASbGncsQ4/3LEkJEQldKqRfP4S+qnyikFun65aRUAcc75NlcEln9sxcD8QTYOSqLoYA
+ bY15d+JAg1I8FE9nqdcAOqOqVn9JBTmz6lbuVvNq338G18brfJIW8BqdXvGDEquLvkpjOEwL7iC
+ 06cyzvNAUFMsBgVLZqyq9Cdic1rJa1XImJ4hEZ6uKUau2hSRbXvSBQ4gsOyviYOK30WZgjhX0rD
+ 5lGUBkRVrGQRAqIGqdUNS1pNHehkXozF4ZidpNxGoVkEk8j9aSVasvET2A=
+X-Received: by 2002:a05:6214:ace:b0:6d8:9d28:ff07 with SMTP id
+ 6a1803df08f44-6e6975bd7abmr47366096d6.45.1739971437734; 
+ Wed, 19 Feb 2025 05:23:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIsnf+mXP/Ss90ycivqCSnzBEVzswh5HPa6j2tx3HEptLMYC2jCqYMNe+zKBmtzRlFHWTqCg==
+X-Received: by 2002:a05:6214:ace:b0:6d8:9d28:ff07 with SMTP id
+ 6a1803df08f44-6e6975bd7abmr47365846d6.45.1739971437368; 
+ Wed, 19 Feb 2025 05:23:57 -0800 (PST)
+Received: from x1.local ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e65dcf88d6sm74788206d6.122.2025.02.19.05.23.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Feb 2025 05:23:56 -0800 (PST)
+Date: Wed, 19 Feb 2025 08:23:53 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Li Zhijian via <qemu-devel@nongnu.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/2] migration: Prioritize RDMA in ram_save_target_page()
+Message-ID: <Z7XbaXI4-fiVHYE7@x1.local>
+References: <20250218074345.638203-1-lizhijian@fujitsu.com>
+ <8734gb9erz.fsf@suse.de> <Z7UDtxdNSS-Jqm-y@x1.local>
+ <0930f197-ae7f-4920-bac8-838733683883@fujitsu.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+In-Reply-To: <0930f197-ae7f-4920-bac8-838733683883@fujitsu.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -99,273 +108,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On Wed, Feb 19, 2025 at 09:39:38AM +0000, Zhijian Li (Fujitsu) wrote:
+> 
+> 
+> On 19/02/2025 06:03, Peter Xu wrote:
+> > On Tue, Feb 18, 2025 at 05:30:40PM -0300, Fabiano Rosas wrote:
+> >> Li Zhijian via <qemu-devel@nongnu.org> writes:
+> >>
+> >>> Address an error in RDMA-based migration by ensuring RDMA is prioritized
+> >>> when saving pages in `ram_save_target_page()`.
+> >>>
+> >>> Previously, the RDMA protocol's page-saving step was placed after other
+> >>> protocols due to a refactoring in commit bc38dc2f5f3. This led to migration
+> >>> failures characterized by unknown control messages and state loading errors
+> >>> destination:
+> >>> (qemu) qemu-system-x86_64: Unknown control message QEMU FILE
+> >>> qemu-system-x86_64: error while loading state section id 1(ram)
+> >>> qemu-system-x86_64: load of migration failed: Operation not permitted
+> >>> source:
+> >>> (qemu) qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
+> >>> qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
+> >>> qemu-system-x86_64: rdma migration: recv polling control error!
+> >>> qemu-system-x86_64: warning: Early error. Sending error.
+> >>> qemu-system-x86_64: warning: rdma migration: send polling control error
+> >>>
+> >>> RDMA migration implemented its own protocol/method to send pages to
+> >>> destination side, hand over to RDMA first to prevent pages being saved by
+> >>> other protocol.
+> >>>
+> >>> Fixes: bc38dc2f5f3 ("migration: refactor ram_save_target_page functions")
+> >>> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> >>> ---
+> >>>   migration/ram.c | 9 +++++----
+> >>>   1 file changed, 5 insertions(+), 4 deletions(-)
+> >>>
+> >>> diff --git a/migration/ram.c b/migration/ram.c
+> >>> index 6f460fd22d2..635a2fe443a 100644
+> >>> --- a/migration/ram.c
+> >>> +++ b/migration/ram.c
+> >>> @@ -1964,6 +1964,11 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+> >>>       ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+> >>>       int res;
+> >>>   
+> >>> +    /* Hand over to RDMA first */
+> >>> +    if (control_save_page(pss, offset, &res)) {
+> >>> +        return res;
+> >>> +    }
+> >>> +
+> >>
+> >> Can we hoist that migrate_rdma() from inside the function? Since the
+> >> other paths already check first before calling their functions.
+> > 
+> 
+> Yeah, it sounds good to me.
+> 
+> 
+> > If we're talking about hoist and stuff.. and if we want to go slightly
+> > further, I wonder if we could also drop RAM_SAVE_CONTROL_NOT_SUPP.
+> > 
+> >      if (!migrate_rdma() || migration_in_postcopy()) {
+> >          return RAM_SAVE_CONTROL_NOT_SUPP;
+> >      }
+> > 
+> > We should make sure rdma_control_save_page() won't get invoked at all in
+> > either case above..  
+> 
+> > For postcopy, maybe we could fail in the QMP migrate /
+> > migrate_incoming cmd, at migration_channels_and_transport_compatible()
+> 
+> I tried to kill RAM_SAVE_CONTROL_NOT_SUPP, but It seems it doesn't need to touch any postcopy logic
+> "in the QMP migrate / migrate_incoming cmd, at migration_channels_and_transport_compatible()"
+> 
+> Is there something I might have overlooked?
 
-> "The text handler you add looks just like the existing latex handler. Does
-> LaTeX output lack "little headings", too?"
->
-> Yes, almost certainly. Can you let me know which output formats we actual=
-ly
-> "care about"? I'll have to test them all.
+Yes it looks almost good.  What I meant is (please see below):
 
-As far as I can tell, our build system runs sphinx-build -b html and -b
-man.
+> 
+> A whole draft diff would be like below:
+> It includes 3 parts:
+> 
+> migration/rdma: Remove unnecessary RAM_SAVE_CONTROL_NOT_SUPP check in rdma_control_save_page()
+> migration: kill RAM_SAVE_CONTROL_NOT_SUPP
+> migration: open control_save_page() to ram_save_target_page()
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 589b6505eb2..fc6a964fd64 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -1143,32 +1143,6 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
+>       return len;
+>   }
+>   
+> -/*
+> - * @pages: the number of pages written by the control path,
+> - *        < 0 - error
+> - *        > 0 - number of pages written
+> - *
+> - * Return true if the pages has been saved, otherwise false is returned.
+> - */
+> -static bool control_save_page(PageSearchStatus *pss,
+> -                              ram_addr_t offset, int *pages)
+> -{
+> -    int ret;
+> -
+> -    ret = rdma_control_save_page(pss->pss_channel, pss->block->offset, offset,
+> -                                 TARGET_PAGE_SIZE);
+> -    if (ret == RAM_SAVE_CONTROL_NOT_SUPP) {
+> -        return false;
+> -    }
+> -
+> -    if (ret == RAM_SAVE_CONTROL_DELAYED) {
+> -        *pages = 1;
+> -        return true;
+> -    }
+> -    *pages = ret;
+> -    return true;
+> -}
+> -
+>   /*
+>    * directly send the page to the stream
+>    *
+> @@ -1964,6 +1938,16 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+>       ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+>       int res;
+>   
+> +    if (migrate_rdma() && !migration_in_postcopy()) {
 
-I run it with -b text manually all the time to hunt for and review
-changes in output.  I'd prefer to keep it working if practical.
+Here instead of bypassing postcopy, we should fail the migrate cmd early if
+postcopy ever enabled:
 
-For what it's worth, there is a bit of LaTeX configuration in
-docs/conf.py.
+diff --git a/migration/migration.c b/migration/migration.c
+index 862f469ea7..3a82e71437 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -257,6 +257,12 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
+         return false;
+     }
+ 
++    if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE &&
++        migrate_postcopy_ram()) {
++        error_setg(errp, "RDMA migration doesn't support postcopy");
++        return false;
++    }
++
+     return true;
+ }
 
->                                           In the meantime, I upgraded my
-> patch so that the text translator properly handles branches with headings
-> that delineate the different branches so that the text output is fully
-> reasonable. I will need to do the same for any format we care about.
->
-> I've re-pushed as of "about 30 minutes before I wrote this email" --
-> https://gitlab.com/jsnow/qemu/-/commits/sphinx-domain-blergh2
->
-> This branch includes the text generator fixes (which technically belong
-> with the predecessor series we skipped, but I'll refactor that later.)
-> it also includes fixes to the branch inliner, generated return statements,
-> and generated out-of-band feature sections.
+> +        res = rdma_control_save_page(pss->pss_channel, pss->block->offset,
+> +                                     offset, TARGET_PAGE_SIZE);
+> +
+> +        if (res == RAM_SAVE_CONTROL_DELAYED) {
+> +            res = 1;
+> +        }
+> +        return res;
+> +    }
+> +
+>       if (!migrate_multifd()
+>           || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+>           if (save_zero_page(rs, pss, offset)) {
+> @@ -1976,10 +1960,6 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+>           return ram_save_multifd_page(block, offset);
+>       }
+>       }
+>   
+> -    if (control_save_page(pss, offset, &res)) {
+> -        return res;
+> -    }
+> -
+>       return ram_save_page(rs, pss);
+>   }
+>   
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 76fb0349238..c6876347e1e 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -3284,14 +3284,11 @@ err:
+>   int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+>                              ram_addr_t offset, size_t size)
+>   {
+> -    if (!migrate_rdma() || migration_in_postcopy()) {
+> -        return RAM_SAVE_CONTROL_NOT_SUPP;
+> -    }
+> +    assert(migrate_rdma());
+>   
+>       int ret = qemu_rdma_save_page(f, block_offset, offset, size);
+>   
+> -    if (ret != RAM_SAVE_CONTROL_DELAYED &&
+> -        ret != RAM_SAVE_CONTROL_NOT_SUPP) {
+> +    if (ret != RAM_SAVE_CONTROL_DELAYED) {
+>           if (ret < 0) {
+>               qemu_file_set_error(f, ret);
+>           }
+> diff --git a/migration/rdma.h b/migration/rdma.h
+> index f55f28bbed1..bb0296c3726 100644
+> --- a/migration/rdma.h
+> +++ b/migration/rdma.h
+> @@ -33,7 +33,6 @@ void rdma_start_incoming_migration(InetSocketAddress *host_port, Error **errp);
+>   #define RAM_CONTROL_ROUND     1
+>   #define RAM_CONTROL_FINISH    3
+>   
+> -#define RAM_SAVE_CONTROL_NOT_SUPP -1000
+>   #define RAM_SAVE_CONTROL_DELAYED  -2000
+>   
+>   #ifdef CONFIG_RDMA
+> @@ -56,7 +55,9 @@ static inline
+>   int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+>                              ram_addr_t offset, size_t size)
+>   {
+> -    return RAM_SAVE_CONTROL_NOT_SUPP;
+> +    /* never reach */
+> +    assert(0);
+> +    return -1;
+>   }
+>   #endif
+>   #endif
+> 
+> 
+> 
+> 
+> Thanks
+> Zhijian
+> 
+> > 
+> >>
+> >>>       if (!migrate_multifd()
+> >>>           || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+> >>>           if (save_zero_page(rs, pss, offset)) {
+> >>> @@ -1976,10 +1981,6 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+> >>>           return ram_save_multifd_page(block, offset);
+> >>>       }
+> >>>   
+> >>> -    if (control_save_page(pss, offset, &res)) {
+> >>> -        return res;
+> >>> -    }
+> >>> -
+> >>>       return ram_save_page(rs, pss);
+> >>>   }
+> >>
+> > 
 
-I'll fetch it, thanks!
-
-> (Long story short: inserting new sections in certain spots was broken
-> because of cache. Oops. We can discuss more why I wrote that part of the
-> code like I did in review for the patch that introduced that problem. It's
-> the "basic inliner" patch.)
->
-> Below, I'm going to try a new communication approach where I explicitly s=
-ay
-> if I have added something to my tasklist or not so that it's clear to you
-> what I believe is actionable (and what I am agreeing to change) and what I
-> believe needs stronger input from you before I do anything. Apologies if =
-it
-> seems a little robotic, just trying new things O:-)
->
-> On that note: not added to tasklist: do we need the LaTeX handler? Do we
-> need any others? Please confirm O:-)
-
-See above.
-
-> On Fri, Feb 14, 2025 at 7:05=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> I started to eyeball old and new generated output side by side.
->>
->> New table of contents shows one level, old two.  No objection; the
->> navigation thingie on the left is more useful anyway.
->>
->
-> Unintentional, but if you like it, it's fine by me. Nothing added to my
-> tasklist.
-
-Mention in a commit message.
-
->> The new generator elides unreferenced types.  Generally good, but two
->> observations:
->>
->> * QapiErrorClass is unreferenced, but its members are mentioned in
->>   Errors sections.  QapiErrorClass serves as better than nothing error
->>   code documentation, but it's gone in the new doc.  So this is a minor
->>   regression.  We can figure out what to do about it later.
->>
->
-> Right. I debated making the members references to that class, but recalled
-> that you disliked this class and figured you'd not like such a change, so=
- I
-> just left it alone. I do not have cross-references for individual members
-> of objects at all yet anyway, so this is definitely more work regardless.
->
-> We could always create a pragma of some sort (or just hardcode a list) of
-> items that must be documented regardless of if they're referenced or not.
-> Please let me know your preference and I will add a "ticket" on my person=
-al
-> tasklist for this project to handle that at /some point/. Nothing added to
-> my tasklist just yet.
-
-Suggest to add something like "compensate for the loss of QapiErrorClass
-documentation in the QEMU QMP Reference Manual".
-
->> * Section "QMP errors" is empty in the new doc, because its entire
->>   contents is elided.  I guess we should elide the section as well, but
->>   it's fine to leave that for later.
->>
->
-> Adding to tasklist to elide empty modules, but "for later".
-
-ACK
-
->> Old doc shows a definition's since information like any other section.
->> New doc has it in the heading box.  Looks prettier and uses much less
->> space.  Not sure the heading box is the best place, but it'll do for
->> now, we can always move it around later.
->>
->
-> Agree, it's a strict improvement - there may be further improvements, but
-> that is always true anyway. When we tackle "autogenerated since
-> information" we can tackle the since display issues more meticulously. Or
-> maybe we'll need do sooner because of conflicting info in branches or
-> whatever else. I dunno, I'll burn that bridge when I get to it. Nothing
-> added to tasklist.
-
-ACK
-
->> The new doc's headings use "Struct" or "Union" where the old one uses
->> just "Object".  Let's keep "Object", please.
->>
->
-> I was afraid you'd ask for this. OK, I think it's an easy change. Can I
-> keep the index page segmented by object type still, though?
->
-> I do find knowing the *type* of object to be helpful as a developer,
-
-Can you explain why and how struct vs. union matters to you as a
-developer?
-
->                                                                      thou=
-gh
-> I understand that from the point of view of a QMP user, they're all just
-> objects, so your request makes sense.
-
-I'd prefer a single index.
-
-> Replace JSON object type headers with "Object" instead of QAPI data types
-> added to tasklist.
-
-ACK
-
->> In the new doc, some member references are no longer rendered as such,
->> e.g. @on-source-error and @on-target-error in BackupCommon's note.
->> Another small regression.
->>
->
-> Ah, I actually knew this one. I didn't implement special formatting for
-> these yet. I do not have cross-references for individual members, so
-> there's nothing to transform these *into* yet. If you'd like special
-> rendering for them (fixed width, no link?) that's easy to accomplish. I am
-> not yet sure where I will do that conversion.
-
-Suggest the render them the same as before.
-
-Have a look at BackupCommon's "Note" box in the old docs: the member
-names appear to use a fixed-width font.
-
-Peeking at old qapidoc.py...  it seems to rewrite @foo to ``foo``.
-
-> Reminder/Note that in my KVM Forum branch, I did actually replace all
-> @references that pointed to something actually cross-referenceable with an
-> actual sphinx cross-reference, leaving only @member references behind.
->
-> Nothing added to tasklist just yet.
->
->
->>
->> Union branches are busted in the new generator's output.  I know they
->> used to work, so I'm not worried about it.
->>
->
-> Fixed in new push, sorry! An embarrassing mistake that took me aeons to
-> spot.
->
->
->>
->> The new doc shows the return type, the old doc doesn't.  Showing it is
->> definitely an improvement, but we need to adjust the doc text to avoid
->> silliness like "Returns: SnapshotInfo =E2=80=93 SnapshotInfo".
->>
->
-> My KVM Forum branch actually corrected the QAPI documentation to remove
-> pointless returns. I didn't include that with this series yet, it was long
-> enough. This issue will be addressed solely through source documentation
-> edits, of which I believe I already have a comprehensive patch for.
->
-> Added to my tasklist: "Submit source documentation patches to remove
-> pointless return documentation"
-
-ACK
-
-> It was my intent to submit those patches *afterwards*, but we can always =
-do
-> it before if you'd like. Let me know. (I don't know offhand how easy they
-> are to extricate from my KVM Forum branch. I reserve the right to change =
-my
-> mind on being flexible depending on the answer there :p)
-
-No need to decide or extricate right now.  Tasklist is good enough for
-me.
-
->> The new doc shows Arguments / Members, Returns, and Errors in two-column
->> format.  Looks nice.  But for some reason, the two columns don't align
->> horizontally for Errors like they do for the others.  Certainly not a
->> blocker of anything, but we should try to fix it at some point.
->>
->
-> Known issue. The reason is because we do not mandate a source documentati=
-on
-> format for errors - by convention, it is a list. There is (or was?) one
-> occurrence where it wasn't a list and I wrote a patch to change that. I
-> don't recall right now if we merged that or not. The misalignment is a
-> result of nesting a list inside of a list.
-
-Commit b32a6b62a82 (qapi: nail down convention that Errors sections are
-lists)
-
-> If we *mandate* the source format, I gain the ability to "peel off the
-> nesting", which will fix the alignment.
-
-"Mandate" means changing "should be formatted as an rST list" into "must
-be", plus enforcement.  Works for me.
-
-> Added to tasklist: "Address vertical misalignment in Errors formatting"
-
-ACK, low priority.
-
-> Not added: how? need more input from you, please.
->
->
->>
->> The new doc doesn't show non-definition conditionals, as mentioned in
->> the cover letter.  It shows definition conditionals twice.  Once should
->> suffice.
->>
->
-> Known/intentional issue. I couldn't decide where I wanted it, so I put it
-> in both places. If you have a strong opinion right now, please let me know
-> what it is and I'll take care of it, it's easy - but it's code in the
-> predecessor series and nothing to do with qapidoc, so please put it out of
-> mind for now.
->
-> If you don't have strong feelings, or you feel that the answer may depend
-> on how we solve other glaring issues (non-definition conditionals), let's
-> wait a little bit before making a decision.
->
-> Added to tasklist: "Remove the duplication of definition conditionals";
-> left unspecified is how or in what direction :)
-
-ACK
-
-I'll try to make up my mind :)
-
->> There's probably more, but this is it for now.
->>
->>
->
-> Tasklist:
->
->  For the qapi-domain (prequel!) series:
->   - Remove the duplication of definition conditionals
->
-> For this (qapidoc) series:
->   - Display all JSON object types as "Object" and not as their QAPI data
-> type.
->
-> For later:
->   - Elide empty modules
->   - Submit source documentation patches to remove pointless return
-> documentation
->   - Address vertical misalignment in Errors formatting
+-- 
+Peter Xu
 
 
