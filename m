@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6E6C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 18:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EFDC021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 18:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkp6d-0003yQ-Ag; Wed, 19 Feb 2025 13:47:35 -0500
+	id 1tkp6S-0003QO-7z; Wed, 19 Feb 2025 13:47:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3HCe2ZwgKCoc75slz43srzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--wuhaotsh.bounces.google.com>)
- id 1tkp68-00038c-Cs
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:47:10 -0500
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ <3Die2ZwgKCnktreXlqpedlldib.Zljnbjr-absbiklkdkr.lod@flex--wuhaotsh.bounces.google.com>)
+ id 1tkp60-00036i-Ja
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:58 -0500
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3HCe2ZwgKCoc75slz43srzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--wuhaotsh.bounces.google.com>)
- id 1tkp63-0004qO-0d
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:47:03 -0500
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-220bf94cb40so794675ad.0
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 10:46:53 -0800 (PST)
+ <3Die2ZwgKCnktreXlqpedlldib.Zljnbjr-absbiklkdkr.lod@flex--wuhaotsh.bounces.google.com>)
+ id 1tkp5v-0004lL-5E
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 13:46:53 -0500
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2fc1eadf5a8so209835a91.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 10:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1739990813; x=1740595613; darn=nongnu.org;
+ d=google.com; s=20230601; t=1739990799; x=1740595599; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=pqoQYyAvlYbvoO5CKrUwqrjyMLnIsAG6oK22Xi4In1A=;
- b=Dn+b7jKwHYJgnzO5Dba0CKciEZhbRUydFW/K3Yim+0nC+rRlrr1GIQbZ/LTeXszLPT
- LHx+tGhgTWqHsnl9kYqaKROehdDHC2po7tf5BQSAAI7fSnUUqYyfDq4kKE2x0WSbdPcR
- Pgeirawthyw0xdk/2Gw2XblzcNl5QtUD4bNnEfq437xNcYPk/tB38+sAXvjQ2yGjZxGP
- pxHRQCfbjx/GZ2KWOZ9UsWP/+qCxmLa5LhniB1IlFNxzkt4diz2TdVYDJKRLih+E0P4C
- uAlJfgWJO5Gcj7LLSBhXKbSf04UnCn/wSDJT3CKEbow8OJMfiLMIgoW90pCNftu43/I3
- o63A==
+ bh=GqpC+ChE3b3k6NV87QipBm1Iuw1OmkAIH0r3j7SWBcI=;
+ b=TAVjRMTImqNv+wpt2lezr3YwaI+bQQdHQQiiQXdRIMaZy3xarqyd7d7lPvpfCKP8cY
+ y3lO40eTfsrFluuPndZvToDdKXvtjlswwjBv0IIpztPrpTG0qQC3LVa8o5/Nxj+oiiNV
+ mSkRAlSCBA12HxJ3bfLaIUQ+nQD3b4UTecCBLBZa4EPsdtwFgyvPefq5uJ0Hh/39qvJ7
+ fhsROXA/c3voA8qbePAwgKX9XsVR4bq+KukCKU66VyUSvsb8J/Al4Ygc9Olt+V8eihHk
+ 5oXVqWfan2nuzQbdr5ka26yext6ce+JR1CbY+i7gp2yA9l7sC0VpoD505B6tYRQjNbeS
+ APIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739990813; x=1740595613;
+ d=1e100.net; s=20230601; t=1739990799; x=1740595599;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pqoQYyAvlYbvoO5CKrUwqrjyMLnIsAG6oK22Xi4In1A=;
- b=nDM57zeYrUJX7S3pCML2VDaCKLCV7RpMQDeEhhpTIoUzQfZcSrD9yXZuofqaiSEsC2
- E2TZ8Psu+ROOnwZ/xEDFr38HGD9K89GICzeFS9IYSdL0hEESwODl0m3AczaWfNqDVyKo
- 9B+dNi0ECVyan13ISP4lmvgE7hjGgdIJKs/u5/Wzh+WVJPJ0f/8fz9VFcihuS9nVqvDj
- P7QQS9mpmdkFK2+IcFQuKQmLnakLz7uTsBQLHupb/SiPANPFINI9CTTiaPGr4WZ9dxra
- d+WdWPOluVvD2kLdAwI5HxmedB28oyEKu15Y9Q589XPVH0zJrpyvJtwbWyU1YZxBf/kY
- Kd5A==
+ bh=GqpC+ChE3b3k6NV87QipBm1Iuw1OmkAIH0r3j7SWBcI=;
+ b=DWczzY/xSOCvoyb6kbQrb5ukv2LpXgbYnny15c0ND/FUoJg+JuUJJvCkw+p87VpCTl
+ b/sARToESNDbsKy5BRCMVGlR0kXu9elqPcNix7Nb5+kqT4UAtFrG5Xj+s9M09q/YmaZm
+ YgtiK9v58R2YaAk159raz5GH6nSYLTE0mArf9zy4vXJqgeT/XAaonA5BinHkTNiP269L
+ EFo6SpsYGjKRhKFl3lVHSf3pmTLB+i9IXAUHS8QMQ2KRsBJf/uSEBZ6guk1xbgB7nxWZ
+ ewk8HBRTeNqddQkhE9te/MgAMScvNvyRVS9WrFMcQbbVR929ThymAbFCssvkrsSwnEcf
+ tJAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDdEkeKWdqRIkoaHFHEqHplikGseGtHI3Rc9EcsUhbp7bikusIXXgiz47Uk+YThjeNGHTwE95WRWx5@nongnu.org
-X-Gm-Message-State: AOJu0YwQIu1uaAz1LfTqI/tGxTMV82E0o6qG+ck2/SwUZV+Y0CiL2j9F
- K7/4JRauq9wKfj6WoLI8r2QFK10epwn5PGBz0GORNEdnWt82aiebaXDKa/xiJP+ygAtND1vF8+2
- 8vDfvXm/uYw==
-X-Google-Smtp-Source: AGHT+IF9Y0EIB8mXu7WtYeeVCduDwsK3aDp1M1D2MJS65KhlIvYWhQuH/KCp951ietvNOHsAQHNlFK0OlJHhoQ==
-X-Received: from pgbcr11.prod.google.com
- ([2002:a05:6a02:410b:b0:adc:ba1b:f94f])
+ AJvYcCU+iErRVhrURJTeU8O99yBUxiosYW3RqaxaHuWUJbu/mbhyjzsv4eSbw6c3Lr2utVvz3fUwg6rzSsrY@nongnu.org
+X-Gm-Message-State: AOJu0YylA4cGZRX0AgOua63IfbFAhJ3JDUDy8F0fcMznGVP9CGRSdLlq
+ Vpp3twb/nDS0nC1AZBgFU0q6AjU+4qRZRVY5mseQtAcfqjOYrGUt2EfwtwlVYu4CI0Ws3p3FkeM
+ 4SSoeHAtc4g==
+X-Google-Smtp-Source: AGHT+IEpyF3PTi+wj9PwUI884qwRjfUrHZBuFGOdtQP8Cf3nopH6VunU4nHG0U0mseXknP7CtWRQJ5jFKXxtNw==
+X-Received: from pjbsw6.prod.google.com ([2002:a17:90b:2c86:b0:2fa:24c5:36e])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:a108:b0:1ee:8a68:f83e with SMTP id
- adf61e73a8af0-1eed4ed2b12mr8096653637.20.1739990812748; 
- Wed, 19 Feb 2025 10:46:52 -0800 (PST)
-Date: Wed, 19 Feb 2025 10:46:08 -0800
+ 2002:a17:90b:2252:b0:2fa:20f4:d27c with SMTP id
+ 98e67ed59e1d1-2fcb5aba774mr6195508a91.34.1739990798909; 
+ Wed, 19 Feb 2025 10:46:38 -0800 (PST)
+Date: Wed, 19 Feb 2025 10:46:00 -0800
 In-Reply-To: <20250219184609.1839281-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20250219184609.1839281-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.48.1.601.g30ceb7b040-goog
-Message-ID: <20250219184609.1839281-18-wuhaotsh@google.com>
-Subject: [PATCH v5 17/17] docs/system/arm: Add Description for NPCM8XX SoC
+Message-ID: <20250219184609.1839281-10-wuhaotsh@google.com>
+Subject: [PATCH v5 09/17] hw/misc: Support 8-bytes memop in NPCM GCR module
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com, 
@@ -74,16 +73,16 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, wuhaotsh@google.com,
  chli30@nuvoton.corp-partner.google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3HCe2ZwgKCoc75slz43srzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x649.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3Die2ZwgKCnktreXlqpedlldib.Zljnbjr-absbiklkdkr.lod@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,89 +98,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
-Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
+The NPCM8xx GCR device can be accessed with 64-bit memory operations.
+This patch supports that.
 
-This document describes the NPCM8XX SoC and an evaluation board
-(NPCM 845 EVB).
-
-Signed-off-by: Hao Wu <wuhaotsh@google.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
 ---
- docs/system/arm/nuvoton.rst | 27 ++++++++++++++++++++-------
- hw/arm/npcm8xx_boards.c     |  1 +
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ hw/misc/npcm_gcr.c   | 94 +++++++++++++++++++++++++++++++++-----------
+ hw/misc/trace-events |  4 +-
+ 2 files changed, 74 insertions(+), 24 deletions(-)
 
-diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
-index 05059378e5..e4827fb43a 100644
---- a/docs/system/arm/nuvoton.rst
-+++ b/docs/system/arm/nuvoton.rst
-@@ -1,12 +1,13 @@
--Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
--=====================================================================================================
-+Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``, ``npcm845-evb``)
-+======================================================================================================================
+diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
+index 9e4a6aee61..ec16ea620e 100644
+--- a/hw/misc/npcm_gcr.c
++++ b/hw/misc/npcm_gcr.c
+@@ -200,6 +200,7 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+     uint32_t reg = offset / sizeof(uint32_t);
+     NPCMGCRState *s = opaque;
+     NPCMGCRClass *c = NPCM_GCR_GET_CLASS(s);
++    uint64_t value;
  
--The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
-+The `Nuvoton iBMC`_ chips are a family of Arm-based SoCs that are
- designed to be used as Baseboard Management Controllers (BMCs) in various
--servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
--assortment of peripherals targeted for either Enterprise or Data Center /
--Hyperscale applications. The former is a superset of the latter, so NPCM750 has
--all the peripherals of NPCM730 and more.
-+servers. Currently there are two families: NPCM7XX series and
-+NPCM8XX series. NPCM7XX series feature one or two Arm Cortex-A9 CPU cores,
-+while NPCM8XX feature 4 Arm Cortex-A35 CPU cores. Both series contain a
-+different assortment of peripherals targeted for either Enterprise or Data
-+Center / Hyperscale applications.
+     if (reg >= c->nr_regs) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -208,9 +209,21 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+         return 0;
+     }
  
- .. _Nuvoton iBMC: https://www.nuvoton.com/products/cloud-computing/ibmc/
- 
-@@ -27,6 +28,11 @@ There are also two more SoCs, NPCM710 and NPCM705, which are single-core
- variants of NPCM750 and NPCM730, respectively. These are currently not
- supported by QEMU.
- 
-+The NPCM8xx SoC is the successor of the NPCM7xx SoC. It has 4 Cortex-A35 cores.
-+The following machines are based on this chip :
+-    trace_npcm_gcr_read(offset, s->regs[reg]);
++    switch (size) {
++    case 4:
++        value = s->regs[reg];
++        break;
 +
-+- ``npcm845-evb``       Nuvoton NPCM845 Evaluation board
++    case 8:
++        value = deposit64(s->regs[reg], 32, 32, s->regs[reg + 1]);
++        break;
 +
- Supported devices
- -----------------
++    default:
++        g_assert_not_reached();
++    }
  
-@@ -62,6 +68,8 @@ Missing devices
-    * System Wake-up Control (SWC)
-    * Shared memory (SHM)
-    * eSPI slave interface
-+   * Block-transfer interface (8XX only)
-+   * Virtual UART (8XX only)
+-    return s->regs[reg];
++    trace_npcm_gcr_read(offset, value);
++    return value;
+ }
  
-  * Ethernet controller (GMAC)
-  * USB device (USBD)
-@@ -76,6 +84,11 @@ Missing devices
-  * Video capture
-  * Encoding compression engine
-  * Security features
-+ * I3C buses (8XX only)
-+ * Temperature sensor interface (8XX only)
-+ * Virtual UART (8XX only)
-+ * Flash monitor (8XX only)
-+ * JTAG master (8XX only)
+ static void npcm_gcr_write(void *opaque, hwaddr offset,
+@@ -230,29 +243,65 @@ static void npcm_gcr_write(void *opaque, hwaddr offset,
+         return;
+     }
  
- Boot options
- ------------
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-index 19610483f9..3fb8478e72 100644
---- a/hw/arm/npcm8xx_boards.c
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -17,6 +17,7 @@
- #include "qemu/osdep.h"
+-    switch (reg) {
+-    case NPCM7XX_GCR_PDID:
+-    case NPCM7XX_GCR_PWRON:
+-    case NPCM7XX_GCR_INTSR:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: register @ 0x%04" HWADDR_PRIx " is read-only\n",
+-                      __func__, offset);
+-        return;
+-
+-    case NPCM7XX_GCR_RESSR:
+-    case NPCM7XX_GCR_CP2BST:
+-        /* Write 1 to clear */
+-        value = s->regs[reg] & ~value;
++    switch (size) {
++    case 4:
++        switch (reg) {
++        case NPCM7XX_GCR_PDID:
++        case NPCM7XX_GCR_PWRON:
++        case NPCM7XX_GCR_INTSR:
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: register @ 0x%04" HWADDR_PRIx " is read-only\n",
++                          __func__, offset);
++            return;
++
++        case NPCM7XX_GCR_RESSR:
++        case NPCM7XX_GCR_CP2BST:
++            /* Write 1 to clear */
++            value = s->regs[reg] & ~value;
++            break;
++
++        case NPCM7XX_GCR_RLOCKR1:
++        case NPCM7XX_GCR_MDLR:
++            /* Write 1 to set */
++            value |= s->regs[reg];
++            break;
++        };
++        s->regs[reg] = value;
+         break;
  
- #include "chardev/char.h"
-+#include "hw/boards.h"
- #include "hw/arm/npcm8xx.h"
- #include "hw/core/cpu.h"
- #include "hw/loader.h"
+-    case NPCM7XX_GCR_RLOCKR1:
+-    case NPCM7XX_GCR_MDLR:
+-        /* Write 1 to set */
+-        value |= s->regs[reg];
++    case 8:
++        s->regs[reg] = value;
++        s->regs[reg + 1] = extract64(v, 32, 32);
+         break;
+-    };
+ 
+-    s->regs[reg] = value;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static bool npcm_gcr_check_mem_op(void *opaque, hwaddr offset,
++                                  unsigned size, bool is_write,
++                                  MemTxAttrs attrs)
++{
++    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(opaque);
++
++    if (offset >= c->nr_regs * sizeof(uint32_t)) {
++        return false;
++    }
++
++    switch (size) {
++    case 4:
++        return true;
++    case 8:
++        if (offset >= NPCM8XX_GCR_SCRPAD_00 * sizeof(uint32_t) &&
++            offset < (NPCM8XX_GCR_NR_REGS - 1) * sizeof(uint32_t)) {
++            return true;
++        } else {
++            return false;
++        }
++    default:
++        return false;
++    }
+ }
+ 
+ static const struct MemoryRegionOps npcm_gcr_ops = {
+@@ -261,7 +310,8 @@ static const struct MemoryRegionOps npcm_gcr_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid      = {
+         .min_access_size        = 4,
+-        .max_access_size        = 4,
++        .max_access_size        = 8,
++        .accepts                = npcm_gcr_check_mem_op,
+         .unaligned              = false,
+     },
+ };
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 0f7204a237..f25dbd6030 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -135,8 +135,8 @@ npcm7xx_clk_read(uint64_t offset, uint32_t value) " offset: 0x%04" PRIx64 " valu
+ npcm7xx_clk_write(uint64_t offset, uint32_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
+ 
+ # npcm_gcr.c
+-npcm_gcr_read(uint64_t offset, uint32_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
+-npcm_gcr_write(uint64_t offset, uint32_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
++npcm_gcr_read(uint64_t offset, uint64_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx64
++npcm_gcr_write(uint64_t offset, uint64_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx64
+ 
+ # npcm7xx_mft.c
+ npcm7xx_mft_read(const char *name, uint64_t offset, uint16_t value) "%s: offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
 -- 
 2.48.1.601.g30ceb7b040-goog
 
