@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBE6C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 15:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D24C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 15:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tklYo-0004TG-FB; Wed, 19 Feb 2025 10:00:26 -0500
+	id 1tklYl-0004Ro-H2; Wed, 19 Feb 2025 10:00:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tklYf-0004OL-CD
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 10:00:18 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1tklYe-0004Mh-0C
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 10:00:16 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tklYb-000134-S0
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 10:00:16 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5e0573a84fcso5843594a12.2
+ id 1tklYa-00012r-O8
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 10:00:15 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-abb81285d33so777146866b.0
  for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 07:00:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739977211; x=1740582011; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VMpR8AXA7xfQaFhSLKNadFqD4qPYuFkWfolZ2f9L0LI=;
- b=UNywPUUSqCkwVTQIWlDytUjljJ2vIFnA0xe4BTw6cxd+XYVfmUIq6YwxOtzavGDucU
- DlaTwtFUN7/t7yJpvbQP/DCta537ZyyzbRtjpzsaIroxNGoSLOSKd0guQAgZF6BEYzr0
- /xf8gFzbhsi59soST4b42kGFskHuGcRwUCGyzvWCMIQIif413Wh65bBMMcQIDYnjtjGV
- m4tRXaYF4Q/q5UT++uk8QpZ7U6H/3X1Aw64Dc3du3cE0Uu1ktt7Ek39POYVZOrr+NAeF
- vlnMKv89+Obm/DCek1EAIOHFuyNRqP6soJGeVD1WmpB3RQ3U5AFsX+86JvADdWhLFq6H
- alpQ==
+ d=linaro.org; s=google; t=1739977210; x=1740582010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NhPwQWl1F3AYtyAk+KL0Iy7zvZuOpHSL/Vd4WwluoCc=;
+ b=lRcNRSVA/wMllesOLPnltP8GUFbkSD+8EragE3qwzFm0LN/eeD0+1ovuaO/v8rnT+J
+ g/qQrX4FLumvZsgRIxuc9JTg86DZm8DM9Vv6paTLhdJhY9zGHaRItW8nKfhcqKBoXUgQ
+ xuTzTxrZwLIHR3z1hYXVRLzsgr7m2rRwfN6S9p6uZ8LOOiFvhddk5ZUAt9vErX/NtcQs
+ GvXOlXe7PmNmiku26/AbDcpDJePmXuXPH/V5mtmqpIP7gUb+RHlK2gMLbcDJV0OZZ4we
+ 9+W5zboIxxpH3ejZ9dFykYhOkq3J2S3G37f0w0oZPnAQFc+hMcriR8tM4Ki76Zm11mYA
+ 7q2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739977211; x=1740582011;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VMpR8AXA7xfQaFhSLKNadFqD4qPYuFkWfolZ2f9L0LI=;
- b=BJIJ8unKcK4iF33YGejH5HEAwSde/mT8jnVoJ2WwPrkVWp4QeVhVwJg1g7ZudmBYa5
- ogSP2Gd8SM3iyf7nZBwV7I7GU0Pb16JY2U/O6LXJEMZWEqwA6cQaLJTGdXd4pTYHBY8z
- ZGn1Q2ad3+ZEEvj6G9th7why1YuJAfDgdbtSoPFB0RPqzcvs3cTfcklgpzcXyfnHylW/
- axcpjS66UddcqpnHdlM+1haS3KbUjOoBCTSG8LA5PFL40vIMCLQs+HP4Ni6AC4BHaI52
- kCMie5GdhPWl2hV47drAkdqckxZIk+OBFmaRwyqzz9T9j6Q4gewYlhQ0YCJzArt063NT
- siHA==
-X-Gm-Message-State: AOJu0YwhYRLQWRAI3/Ebh6dPmS9b+SDFaAyJNDbR6TcDU4N9imTqB32r
- 8S+HdNHI2jGvuqd9V+RGhhXOX/Af/twMJAMAcNPNpDu1ftREN3/2h2bLqSuWVvg=
-X-Gm-Gg: ASbGncthUYM8aBE33U8yiR/4c1Xw7mgW1edbEFKjF/eLqEM5stzTWG0VwQh496YTlT4
- xsCZ3xioU+QfEH38+mwkexu4advh9YCTuZIGwRrhflrsJJKMA9K6UhWTJdYSkYSMyChkhUP4dMh
- caKh31C5pw0A4JogmlBe9oJtF3J7XqMnOWk8kMBM9JRmQnwz9wrOTWgLjEduH15x30xIhAJwW5j
- 5AuFA/xn1Sa6BLg2CjoYXp/oni8W2t9gXJSwB+S1CmJ8rG2KK5XjMy77Z2p8kJMhVghAS0miCB4
- XQT8z1nqD8I1uc610A==
-X-Google-Smtp-Source: AGHT+IFndkPE54WvwrVqpb6/WEB14JuiqcZTjRNleOGsUkPLJW3q1epdL/G7oLqOOV364qUyPWbVkA==
-X-Received: by 2002:a17:907:7842:b0:ab7:cfe7:116f with SMTP id
- a640c23a62f3a-abb70d96544mr1839915166b.46.1739977211081; 
- Wed, 19 Feb 2025 07:00:11 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abb72b519c5sm904303866b.173.2025.02.19.07.00.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20230601; t=1739977210; x=1740582010;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NhPwQWl1F3AYtyAk+KL0Iy7zvZuOpHSL/Vd4WwluoCc=;
+ b=LY460qjt6prZwe1BpGSl542na3RUVDWwjLR4GwUVfPEDvXcL/7i0Ow8CaiDs/XQ5rZ
+ G56T7LrwbA9bZ+E0/Wm5gMtIqdUrknyJi2AXyaGOAxqJtR7dj+ifM6gdAwdndD8eUi14
+ D//ohAf8bqQ52QNpAI7UXgGXIIhQluMlFvTzkPvzAQn2AW8swN1T2TKsP59xaTg6Pp9l
+ Q9WqquGfhH3+m6OwhkUz7XI9RaulF1ZRUZDWectDEXmhyNSRpSXWPub0wXxnEBnAAahq
+ EsbMlI8anEFm1mIDeB2Lr05D2vEkDqRahjaZwAkYrlUo317O4zrUAM3tkoV5WMhg0/T0
+ 6FUg==
+X-Gm-Message-State: AOJu0Yz9akv4TSuyXGpBNqYe5wEqGBDFJ6hpCx3yEo5b5FGevMNIucgF
+ 5gt2NNX/fKwcHwVk3g8zPhtDn1BOIu5RKkODp5RwxngUrl7UPSpKx1YW5ICJSYg=
+X-Gm-Gg: ASbGncvoOZgZzYqDibdzq4vZkej+lsli77vyAG3D911niUMszPJQm0vU0NIz70pXSPi
+ 4g/WGXHgAZkR144fhIy7/tNvdFVcLcBLfRz/gTWCYyWkqwMWd0xs+F/eW83TD7695sKwZcvZ4el
+ qTiDpq97ZOhZwN8fFFc/hveqxkxgOvf3gklYfl2mCeLo1BdFemUwnDtU9Xm3kV8UjSOxOZ2iMj/
+ hNC5VgUsDxVneGVIDcR3jezpHiiG860wljHuvvCkOQ0Z4KUKT9EG0Thk2/9YhgbonjaiYQbc4P6
+ JSqpEpXtYpXFCgYUQA==
+X-Google-Smtp-Source: AGHT+IEFcoqFJ+xKGZEitK5z+Ivdsl69Wv1jK7KKl+FYZ/lTZaaNDwpG1djWKeJWS7kE58+Uu5T1RA==
+X-Received: by 2002:a17:906:4794:b0:ab7:cccb:ae2b with SMTP id
+ a640c23a62f3a-abb70a7b7f4mr2106860066b.4.1739977210425; 
  Wed, 19 Feb 2025 07:00:10 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abba316dc67sm530082666b.43.2025.02.19.07.00.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Feb 2025 07:00:09 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 61E84619C2;
+ by draig.lan (Postfix) with ESMTP id 1DFFB5F760;
  Wed, 19 Feb 2025 15:00:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
  qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 3/4] tests/functional: ensure we have a GPU device for tests
-Date: Wed, 19 Feb 2025 15:00:08 +0000
-Message-Id: <20250219150009.1662688-4-alex.bennee@linaro.org>
+Subject: [PATCH 0/4] testing/next (aarch64 virt gpu tests)
+Date: Wed, 19 Feb 2025 15:00:05 +0000
+Message-Id: <20250219150009.1662688-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250219150009.1662688-1-alex.bennee@linaro.org>
-References: <20250219150009.1662688-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -103,28 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's possible to build QEMU without support for the GL enabled GPU
-devices and we can catch that earlier with an explicit check.
+Hi,
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/functional/test_aarch64_virt_gpu.py | 3 +++
- 1 file changed, 3 insertions(+)
+As I was looking at the native context patches I realised our existing
+GPU testing is a little sparse. I took the opportunity to split the
+test from the main virt test and then extend it to exercise the 3
+current display modes (virgl, virgl+blobs, vulkan).
 
-diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index 06093c6b60..c9463d7285 100755
---- a/tests/functional/test_aarch64_virt_gpu.py
-+++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -91,6 +91,9 @@ def _run_virt_gpu_test(self, gpu_device,  weston_cmd, weston_pattern):
- 
-     @skipIfMissingCommands('zstd')
-     def test_aarch64_virt_with_vulkan_gpu(self):
-+
-+        self.require_device('virtio-gpu-gl-pci')
-+
-         gpu_device = "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on"
-         weston_cmd = "vkmark -b:duration=1.0"
-         weston_pattern = "vkmark Score"
+I've added some additional validation to ensure we have the devices we
+expect before we start. It doesn't currently address the reported
+clang issues but hopefully it will help narrow down what fails and
+what works.
+
+Once I've built some new buildroot images I'll re-spin with a while
+bunch of additional test binaries available.
+
+Alex.
+
+Alex Bennée (4):
+  tests/functional: move aarch64 GPU test into own file
+  tests/functional: factor out common code in gpu test
+  tests/functional: ensure we have a GPU device for tests
+  tests/functional: expand tests to cover virgl
+
+ tests/functional/meson.build              |   2 +
+ tests/functional/test_aarch64_virt.py     |  71 -------------
+ tests/functional/test_aarch64_virt_gpu.py | 123 ++++++++++++++++++++++
+ 3 files changed, 125 insertions(+), 71 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_virt_gpu.py
+
 -- 
 2.39.5
 
