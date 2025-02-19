@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF4CC021B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 13:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43762C021AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 13:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkkK7-0004e7-Eq; Wed, 19 Feb 2025 08:41:11 -0500
+	id 1tkkM6-0005KG-2A; Wed, 19 Feb 2025 08:43:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkkK5-0004dl-Db
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:41:09 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkkLh-0005Ig-JX
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:42:50 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkkK2-0003x9-Vf
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:41:09 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4397e5d5d99so22416725e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 05:41:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tkkLf-00046I-PK
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 08:42:49 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4398c8c8b2cso31902605e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Feb 2025 05:42:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1739972465; x=1740577265; darn=nongnu.org;
+ d=linaro.org; s=google; t=1739972566; x=1740577366; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zHZeQfwCuwfvf8VjEKurcKIlj5FB9BlW3sG5BywGtj8=;
- b=vjgFFKi1WOyDTw+UbmKO9Ok3/c1xZYRatQJTrNfDv0PuD1qbzhI/an/Q5EDIkZCeF9
- i3uwZYkO7y7U3tBnLnnM9Ci9kMNZ6iHLR7VF16j9ygt0INeEWVSHKg3AzYyr8JQtMPVw
- 5zj2Y55I8Ly2/EoeIEKBWQIrUJOVgIf2OM1XLAocv3lR7Mz5SVh3L++OA9dlM2ADgPSm
- doiUyeSNVqh784u0VbqOr3B1Ohzn5fjVChPp2862Lhn7c+5rdfaxZVIoZfT+hjBhJ+BQ
- C5ZehPOEZ7KQttIngUkvZivKGBhamoHfanEZrZyn8sWE2YvC3X08Ye1FqZOkuCRQEddd
- 6QLw==
+ bh=Yn5JxOvVuxWCvPs91MBi63impH7jVLwkgwEDOqQZBco=;
+ b=jy0ZzDaSftJ8TvWyGVM1Gv7EnoS3BVXc9Q6A1CU6cvVKyIKnk2t3FNOP2g04kQK+Z7
+ QcQ4tN2NIDMUTgpJSNWVn0uLpZVWOXeEWZQIW8JiUNm0Ndxvyw9goyIFW1yEYu8zJpUx
+ v3Ax+nRG/5Ou6RjWnb6uggItCUGvSgwOtFstIQG8OyEFnN7G+FqS+N7EfQ1kuBg3yKk9
+ 4uvMPZUBV9jHsKMuaeRfluQIUUcFElrDlBALk+1A6RNHRNiZFWaqIIeoramIACqEfdQo
+ ljrV7wKE41/CT2/1mFB2T9G/c7heSkIj7wCHvbctfIPf2Uu9CsbZkmJ+YBskmFVAmTk1
+ 4hag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739972465; x=1740577265;
+ d=1e100.net; s=20230601; t=1739972566; x=1740577366;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zHZeQfwCuwfvf8VjEKurcKIlj5FB9BlW3sG5BywGtj8=;
- b=WPg1oK88l/ZXW6m6EasJ/VGfXGvgDiyeBJH3yFkmRfgmRsYRdt0LzE0edn61v4PY6X
- vzEtyzv33rPOtrDirbTYq3+/HAmtpRuoYSDBBDCKxxFf0pkt+MBwI4VeMMKa/ch4O677
- u9v2qn8KhvxxBS+PwKwumID0dtTQvUcCrhNV4J5exNEcLLDWwVekKfaqpEX/mb8dHmrG
- jJnw68uAn/isu93hllS5m/qAmJwGMabMPuPYMpM8ptqUcmfUmek5IZJL4fp+eZ5Gd/ar
- UwoS8bsfVXI612ZX/vvRJMVBk2DJdgig6AHme4i67plT7qoT2weq3bNapix+rnWNkA/x
- B/rA==
-X-Gm-Message-State: AOJu0YwY819D0KmiyIpUUbtTyK/UCtevU1cq/TisSwhKmKcOpF5Afv2F
- 7KkUSEuUuumFhLMOS1adzyhCT8EKAJKnX5tXdZQRzo8FcnSSulIv10+hKHSdJfw=
-X-Gm-Gg: ASbGnctkyyoHH5kdMvC8JT7iyWVwzCM4thFa8VmlxLuOMB8l+h9Kk+FpAg7LVX+ZukR
- Qn9LM5L547Gu6Du25xkoa+CBVNzbclx50toRs9PbNWCx1egX3vQ05C4MdiUYjk1oagile9k553K
- 385uB6tsDfgOG/6XR4PUoJ9WtMfpCDiV5imvJbDqrdb9YAvewXJ9e8yHHthS1wkkVf1NbYLT5q4
- mOZyryEaCT+CPSB6OG2VsbUitbuQE1pTyuviWbzqqH7QSrh22zDS0JaOfTAqEV0zOl8ej8Zccj/
- b5UnJHPkTdBXWSmo+uktVfzf2odBp252a6hLedbH4THBoC3CIki0YPUWJIs=
-X-Google-Smtp-Source: AGHT+IGu5LVirtQZyv5EBKK36R2c8eSKmmIZbR93dYk4omzPEdDn1KRJn9mUNUiQjYRHz9Y5myjFpQ==
-X-Received: by 2002:a05:600c:3ca3:b0:434:eb73:b0c0 with SMTP id
- 5b1f17b1804b1-4396e6d4b6bmr185234105e9.5.1739972464987; 
- Wed, 19 Feb 2025 05:41:04 -0800 (PST)
+ bh=Yn5JxOvVuxWCvPs91MBi63impH7jVLwkgwEDOqQZBco=;
+ b=XpME8qUotApHWT7DWKywFCu3XoIY16eXfieGTVcLMXesbnAsTIV7yxfA3I+HSOMcqh
+ aGjAH4unxdHt/cuLY3jTNG9QVwJlf8SyQVLRW2s8wp4nC4UG+ee7eHUluxXA3psUpnO+
+ c/Kyp+ySExJQraFoKXW5NBjJBDJmIPRbKMaxL86T/ZtYKgERALYfhETes7hiiB+L6Z8o
+ /5wiHcakxc9uK9lP4Bgd2dOSnjBe1e7cAc9n1FtB370AvqC6cljTfOdtbsAV1zVVYF8p
+ fNJ7dKTC//DdTHJVw3CU9jTUvbuImei4eI9ZwUepc5/npWlwQAnqIJofVfMzhJ1Yzm3d
+ lpbg==
+X-Gm-Message-State: AOJu0YzSew/X3T0SZuDJYvTwG9FI8xT0ciDykVDWT4pSIieE8xUp4Mu0
+ L6AcuSqytWVF4th5gNLNkJUN5fdu5C+qMsGoewers3hrMQgcqMzh+6Oaz0DtPjYb04cfIDb0050
+ zHcw=
+X-Gm-Gg: ASbGncubZnVz/H++Y/zBQRH/HnTYOj94/3DcNEJ3ZgljWVxr3GzCGDlViLsyuVUc6FB
+ YkBikp9n3ry4nf9tswZ+C2ubjP+Df2IeRTtkdU51S5jJnzH+1+iP7dvIZ0QSx9RzS+CnQM0HNBo
+ SdsOqOiOMY3hHZtJyA5H/qaHiu+UtR1ef8RxWl+ynSJlTmubdw4LS5Fi3cKGc3jBP9a6oimVEJk
+ NL7RrT+Dib8xbey4goRIR9KMPSi5htEJwW/tA5zRPpuJIgV1Hg2KU+WdRIjJVoLGlr+KukpVfp8
+ Mo+Njaa8JcK/3Cx/yrrEbxv6MX+MsU+BQVN4r1WQgOw0hMHC+TOAU/yOeAk=
+X-Google-Smtp-Source: AGHT+IH7GF4WcIIO21sC8SYTBYxp+DeRDGjHt0znsHo41EKs2B8cze0cqBu+optlI0hNkxMVH11Fqg==
+X-Received: by 2002:a05:600c:474d:b0:439:9eba:93bb with SMTP id
+ 5b1f17b1804b1-4399eba95f4mr19117345e9.18.1739972566177; 
+ Wed, 19 Feb 2025 05:42:46 -0800 (PST)
 Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259f7979sm17647983f8f.83.2025.02.19.05.41.04
+ 5b1f17b1804b1-4395a1aa7d2sm215547745e9.25.2025.02.19.05.42.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Feb 2025 05:41:04 -0800 (PST)
-Message-ID: <b31b7131-7e19-4c51-bf89-a5876e655fa4@linaro.org>
-Date: Wed, 19 Feb 2025 14:41:03 +0100
+ Wed, 19 Feb 2025 05:42:45 -0800 (PST)
+Message-ID: <27970761-5032-4bff-8c15-6125ff341499@linaro.org>
+Date: Wed, 19 Feb 2025 14:42:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: Display summary of Darwin libraries detected
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>
-References: <20250212112958.38023-1-philmd@linaro.org>
- <c33817a1-74d4-47b0-93d3-000cfd6200be@redhat.com>
- <CAAibmn2Ohd_-k5LGqo5m1xzLrrs2UYxCT6U_XEKsJYScfCpx6g@mail.gmail.com>
- <CABgObfaq2m42tBUAmskSXm-fR6zKDtApAsR4rYYqg8dnMq+Bog@mail.gmail.com>
- <CAAibmn3MvZtng=4vAGx6yNfMkM+u_HRbT0CAA6WhdbTtLDE5xQ@mail.gmail.com>
- <CABgObfZzLs+yByD=736PFw8ZtH-OcJkxZiScaTWktdrY1+5e5g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/intc: Have ARM_GIC select ARM_GICV3 when KVM is
+ not available
+To: Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+References: <20241227202435.48055-1-philmd@linaro.org>
+ <20241227202435.48055-3-philmd@linaro.org>
+ <CAAibmn0zhrZjZ+SL7n7eg041a5APx-o4sCAp0YGDiwUk8gpgDA@mail.gmail.com>
+ <CAAibmn1g6+btdRX99ZUvbaBm7hP_AnAGNfDHz4Wgi3fPn=waOw@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfZzLs+yByD=736PFw8ZtH-OcJkxZiScaTWktdrY1+5e5g@mail.gmail.com>
+In-Reply-To: <CAAibmn1g6+btdRX99ZUvbaBm7hP_AnAGNfDHz4Wgi3fPn=waOw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,39 +106,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/2/25 11:38, Paolo Bonzini wrote:
-> On Wed, Feb 19, 2025 at 11:36 AM Phil Dennis-Jordan <phil@philjordan.eu> wrote:
->>> ... which boards should enable MAC_PVG_MMIO? Is it only VIRT, or something
->>> else?
->>
->> I doubt anyone will be able to use it productively with virt, but I am regularly surprised by people's creativity.
+On 7/1/25 17:05, Phil Dennis-Jordan wrote:
 > 
-> Ah okay, so for now it's effectively dead code.
-
-Correct (still tested before merging). I have Phil's vmapple series
-queued but it fails the '--disable-hvf' build config so I had to drop
-it before sending the PR. I kept the PVG device to save Phil from
-respining again and again the same patches, hoping for a quick fix
-to merge the rest, waiting for an update on whether Phil's suggestion
-to fix the GIC dependency was OK or not, but no update so far, see:
-
-https://lore.kernel.org/qemu-devel/CAAibmn0puNwDvHcU8xYi1EJ=dnAEhasoTKCk0kmF4DiQfR7dHQ@mail.gmail.com/
-
-and my proposal:
-
-https://lore.kernel.org/qemu-devel/20241227202435.48055-1-philmd@linaro.org/
-
-And now I see Phil's reply which I missed ...:
-https://lore.kernel.org/qemu-devel/CAAibmn1g6+btdRX99ZUvbaBm7hP_AnAGNfDHz4Wgi3fPn=waOw@mail.gmail.com/
-
 > 
->> The intended target machine is vmapple, which is the only known way
->> to run aarch64 macOS guests. [...]
->> I'll try to rebase that series and re-post it in the next few days
+> On Sat, 28 Dec 2024 at 11:48, Phil Dennis-Jordan <phil@philjordan.eu 
+> <mailto:phil@philjordan.eu>> wrote:
 > 
-> Thanks, I'll keep an eye on that.
 > 
-> Paolo
+> 
+>     On Fri, 27 Dec 2024 at 21:24, Philippe Mathieu-Daudé
+>     <philmd@linaro.org <mailto:philmd@linaro.org>> wrote:
+> 
+>         When the KVM accelerator is selected, the Kconfig ARM_GIC key
+>         selects the KVM GIC implementation (ARM_GIC_KVM).
+>         For other accelerators (TCG, HVF, ...), select the generic
+>         implementation.
+> 
+>         Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org
+>         <mailto:philmd@linaro.org>>
+>         ---
+>           hw/intc/Kconfig | 2 +-
+>           1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+>         diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+>         index 7547528f2c2..762139d8df3 100644
+>         --- a/hw/intc/Kconfig
+>         +++ b/hw/intc/Kconfig
+>         @@ -23,7 +23,7 @@ config APIC
+> 
+>           config ARM_GIC
+>               bool
+>         -    select ARM_GICV3 if TCG
+>         +    select ARM_GICV3 if !KVM
+> 
+> 
+>     Wouldn't this disable the ARM_GICV3 by default when building with --
+>     enable-tcg --enable-kvm? And then there would be no GIC available
+>     when running the built QEMU in TCG mode. (Bear with me, I'm a
+>     relative Meson newbie.)
+> 
+> 
+> 
+> OK, I've managed to answer my own question now by setting up a RPi5 with 
+> aarch64 RPOS and building QEMU on that with --enable-kvm --enable-tcg. 
+> With patch 1/2 applied on current upstream master, I get:
+> 
+> $ build/qemu-system-aarch64 -accel tcg -M virt,gic-version=3 -smp 4 -m 4G
+> /[runs successfully]/
+> 
+> with 2/2 applied as well:
+> 
+> $ build/qemu-system-aarch64 -accel tcg -M virt,gic-version=3 -smp 4 -m 4G
+> qemu-system-aarch64: tcg does not support GICv3 emulation
+> $
+> 
+> In other words, with the proposed change, ARM_GICV3 is indeed deselected 
+> if KVM is selected even if TCG is also selected.
+> 
+> 
+> Possibly very basic question: is there any support for kernel- 
+> irqchip=off on aarch64/KVM?
+> If yes, don't we need ARM_GICV3 in that case anyway, so we should drop 
+> any accel dependency on it in the first place?
+
+Cc'ing Alex & Gustavo who are more familiar with GIC devices.
+
+> If we definitely don't need the software GIC in KVM-only builds, I guess 
+> we're down to listing each accel that needs it individually. Is that:
+> 
+> select ARM_GICV3 if TCG || HVF || NVMM || WHPX || XEN_EMU || XEN
+> 
+> or can we drop any of those? Have I missed anything? What about QTest?
 > 
 
 
