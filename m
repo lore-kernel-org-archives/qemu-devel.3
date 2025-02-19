@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BC0C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA4C4C021AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 08:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkfPq-0005W6-SX; Wed, 19 Feb 2025 03:26:46 -0500
+	id 1tkfPi-0005UU-7V; Wed, 19 Feb 2025 03:26:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPo-0005VT-5w
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:44 -0500
+ id 1tkfPe-0005TY-5K
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:34 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tkfPl-0004bS-U0
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:43 -0500
+ id 1tkfPc-0004Za-43
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 03:26:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1739953602; x=1771489602;
+ t=1739953592; x=1771489592;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=fAmvZPigYvBGTxKieocJue8kt2n1eYxTq2NEydSanWg=;
- b=EDVvb0fN8DmWph4H72G4C0rW6F6nMI0VpuphJBDWMmuBpAJcDOJ1CGtf
- 9Q/7+NQTT+tG+DKZiAhXkiB7+8vSZY73nc8ck8M7HaORs4LyJarPlUyvi
- Ukf72rPIZdWd7xDO+LCV3kyBa8clAHibJNwK+qvYU8WzcDU3p3DvAK6wP
- QWvgJYN5wAWK6woDhplpObK5WKvR6DwhMAnajig196LkE1mMbYV2lcwbh
- TBUBzCqlQlWBg0oI6VBPuxY4uLl3X22tEFQ07QpiTZ7Hc8TQWDN/vsGpE
- FrYQRuj+nNpeyUBvomcUw7UXXwQoVLBL89OSDI9ZatL4Nko/auKPpKssI w==;
-X-CSE-ConnectionGUID: EH7fJzaqRMG/Odhe2PkEfA==
-X-CSE-MsgGUID: LaYrINppQJSqHisw4jfQsw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544139"
-X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544139"
+ bh=yY0Gz0Q42ysq6vk2ZY5+LCBjvrX+hXo/OD6lHeKpxl0=;
+ b=VZJ9YCfes6WCyzx2CIQ9AwzZhTULfIqEod3wzorwVfz05B5kVyDgt3BK
+ /ioJZju35XK3MiJA/+ll7ZB14IL/Ebt9ftF+PV/WuP0JCBswPTsnJI/im
+ 2pnrGBdnHFZuCE96JYZyv4y41caTbrtPuITwFFRu6xND4oUN+uCKRxB3s
+ oDhu99/q8PVrxyhkrLkxQR56eIKkD1O9jUfv6E/S8vEjtfGbos7QEiCs5
+ BJNJVONl5l9kwJTFe7Bpd1qr3Ze2hW7qywxy2xYeVE0u6Ket4qjBvXQKH
+ u7T3Ye1XHrIEgvJVHA1DHZwrvSLPZ/Bu4azA3tcV8738wx3AeTNRRU+Gl g==;
+X-CSE-ConnectionGUID: hOMrjjKoSPKnJqht6Q969w==
+X-CSE-MsgGUID: mLepFD5XS+26L6AZGEq/4Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40544110"
+X-IronPort-AV: E=Sophos;i="6.13,298,1732608000"; d="scan'208";a="40544110"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:41 -0800
-X-CSE-ConnectionGUID: mDGEis9XTrexhxxEbRd71w==
-X-CSE-MsgGUID: /aVnDjqzSRuFAEj7y7MIFg==
+ 19 Feb 2025 00:26:32 -0800
+X-CSE-ConnectionGUID: CwNuqpgnRyms8A2SBZhgyg==
+X-CSE-MsgGUID: eKpwg1SZSeuGEnW4klmXKg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119851075"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119851049"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2025 00:26:37 -0800
+ 19 Feb 2025 00:26:27 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,10 +54,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH rfcv2 08/20] iommufd: Implement query of
- HOST_IOMMU_DEVICE_CAP_ERRATA
-Date: Wed, 19 Feb 2025 16:22:16 +0800
-Message-Id: <20250219082228.3303163-9-zhenzhong.duan@intel.com>
+Subject: [PATCH rfcv2 06/20] host_iommu_device: Define two new capabilities
+ HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP]
+Date: Wed, 19 Feb 2025 16:22:14 +0800
+Message-Id: <20250219082228.3303163-7-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
 References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
@@ -88,65 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement query of HOST_IOMMU_DEVICE_CAP_ERRATA for IOMMUFD
-backed host IOMMU device.
-
-Query on this capability is not supported for legacy backend
-because there is no plan to support nesting with leacy backend
-backed host device.
-
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/system/host_iommu_device.h | 2 ++
- backends/iommufd.c                 | 2 ++
- hw/vfio/iommufd.c                  | 1 +
- 3 files changed, 5 insertions(+)
+ include/system/host_iommu_device.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index 18f8b5e5cf..250600fc1d 100644
+index df782598f2..18f8b5e5cf 100644
 --- a/include/system/host_iommu_device.h
 +++ b/include/system/host_iommu_device.h
-@@ -32,6 +32,7 @@ typedef struct HostIOMMUDeviceCaps {
+@@ -22,10 +22,16 @@
+  *
+  * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
+  *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
++ *
++ * @nesting: nesting page table support.
++ *
++ * @fs1gp: first stage(a.k.a, Stage-1) 1GB huge page support.
+  */
+ typedef struct HostIOMMUDeviceCaps {
+     uint32_t type;
      uint64_t hw_caps;
-     bool nesting;
-     bool fs1gp;
-+    uint32_t errata;
++    bool nesting;
++    bool fs1gp;
  } HostIOMMUDeviceCaps;
  
  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-@@ -130,6 +131,7 @@ struct HostIOMMUDeviceClass {
+@@ -122,6 +128,8 @@ struct HostIOMMUDeviceClass {
+  */
+ #define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE        0
  #define HOST_IOMMU_DEVICE_CAP_AW_BITS           1
- #define HOST_IOMMU_DEVICE_CAP_NESTING           2
- #define HOST_IOMMU_DEVICE_CAP_FS1GP             3
-+#define HOST_IOMMU_DEVICE_CAP_ERRATA            4
++#define HOST_IOMMU_DEVICE_CAP_NESTING           2
++#define HOST_IOMMU_DEVICE_CAP_FS1GP             3
  
  #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
  #endif
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 0a1a40cbba..3c23caef96 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -374,6 +374,8 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
-         return caps->nesting;
-     case HOST_IOMMU_DEVICE_CAP_FS1GP:
-         return caps->fs1gp;
-+    case HOST_IOMMU_DEVICE_CAP_ERRATA:
-+        return caps->errata;
-     default:
-         error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
-         return -EINVAL;
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index df6a12d200..58bff030e1 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -848,6 +848,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-     case IOMMU_HW_INFO_TYPE_INTEL_VTD:
-         caps->nesting = !!(data.vtd.ecap_reg & VTD_ECAP_NEST);
-         caps->fs1gp = !!(data.vtd.cap_reg & VTD_CAP_FS1GP);
-+        caps->errata = data.vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17;
-         break;
-     case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
-     case IOMMU_HW_INFO_TYPE_NONE:
 -- 
 2.34.1
 
