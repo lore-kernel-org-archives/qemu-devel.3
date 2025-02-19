@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF218C021AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A537C021B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Feb 2025 20:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkqmI-0000Yw-Qn; Wed, 19 Feb 2025 15:34:43 -0500
+	id 1tkqn1-0001RR-R2; Wed, 19 Feb 2025 15:35:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmH-0000Y9-0M
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:34:41 -0500
+ id 1tkqmq-0001Es-Us
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:17 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmF-0004NS-E2
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:34:40 -0500
+ id 1tkqmo-0004g8-OC
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 15:35:16 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tkqmB-00000007VRe-03F7; Wed, 19 Feb 2025 21:34:35 +0100
+ id 1tkqmk-00000007VSp-47F7; Wed, 19 Feb 2025 21:35:10 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,14 +33,13 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 02/36] thread-pool: Remove thread_pool_submit() function
-Date: Wed, 19 Feb 2025 21:33:44 +0100
-Message-ID: <1a80a5abad5a77a95a0129a4e02ba1a1644b412c.1739994627.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v5 09/36] migration: Add thread pool of optional load threads
+Date: Wed, 19 Feb 2025 21:33:51 +0100
+Message-ID: <6064c605594064123809ca7c5fd3fa406531d8d5.1739994627.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 References: <cover.1739994627.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
@@ -68,103 +67,251 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This function name conflicts with one used by a future generic thread pool
-function and it was only used by one test anyway.
+Some drivers might want to make use of auxiliary helper threads during VM
+state loading, for example to make sure that their blocking (sync) I/O
+operations don't block the rest of the migration process.
 
-Update the trace event name in thread_pool_submit_aio() accordingly.
+Add a migration core managed thread pool to facilitate this use case.
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+The migration core will wait for these threads to finish before
+(re)starting the VM at destination.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/block/thread-pool.h   | 3 +--
- tests/unit/test-thread-pool.c | 6 +++---
- util/thread-pool.c            | 7 +------
- util/trace-events             | 2 +-
- 4 files changed, 6 insertions(+), 12 deletions(-)
+ include/migration/misc.h |  3 ++
+ include/qemu/typedefs.h  |  2 +
+ migration/migration.c    |  2 +-
+ migration/migration.h    |  5 +++
+ migration/savevm.c       | 89 +++++++++++++++++++++++++++++++++++++++-
+ migration/savevm.h       |  2 +-
+ 6 files changed, 99 insertions(+), 4 deletions(-)
 
-diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
-index 948ff5f30c31..4f6694026123 100644
---- a/include/block/thread-pool.h
-+++ b/include/block/thread-pool.h
-@@ -30,13 +30,12 @@ ThreadPool *thread_pool_new(struct AioContext *ctx);
- void thread_pool_free(ThreadPool *pool);
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index c660be80954a..4c171f4e897e 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -45,9 +45,12 @@ bool migrate_ram_is_ignored(RAMBlock *block);
+ /* migration/block.c */
  
- /*
-- * thread_pool_submit* API: submit I/O requests in the thread's
-+ * thread_pool_submit_{aio,co} API: submit I/O requests in the thread's
-  * current AioContext.
+ AnnounceParameters *migrate_announce_params(void);
++
+ /* migration/savevm.c */
+ 
+ void dump_vmstate_json_to_file(FILE *out_fp);
++void qemu_loadvm_start_load_thread(MigrationLoadThread function,
++                                   void *opaque);
+ 
+ /* migration/migration.c */
+ void migration_object_init(void);
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 3d84efcac47a..fd23ff7771b1 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -131,5 +131,7 @@ typedef struct IRQState *qemu_irq;
+  * Function types
   */
- BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
-                                    BlockCompletionFunc *cb, void *opaque);
- int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
--void thread_pool_submit(ThreadPoolFunc *func, void *arg);
+ typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
++typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
++                                    Error **errp);
  
- void thread_pool_update_params(ThreadPool *pool, struct AioContext *ctx);
+ #endif /* QEMU_TYPEDEFS_H */
+diff --git a/migration/migration.c b/migration/migration.c
+index 9e9db26667f1..40e1c92a6c30 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -406,7 +406,7 @@ void migration_incoming_state_destroy(void)
+      * RAM state cleanup needs to happen after multifd cleanup, because
+      * multifd threads can use some of its states (receivedmap).
+      */
+-    qemu_loadvm_state_cleanup();
++    qemu_loadvm_state_cleanup(mis);
  
-diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
-index 1483e53473db..33407b595d35 100644
---- a/tests/unit/test-thread-pool.c
-+++ b/tests/unit/test-thread-pool.c
-@@ -43,10 +43,10 @@ static void done_cb(void *opaque, int ret)
-     active--;
+     if (mis->to_src_file) {
+         /* Tell source that we are done */
+diff --git a/migration/migration.h b/migration/migration.h
+index 7b4278e2a32b..d53f7cad84d8 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -43,6 +43,7 @@
+ #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
+ 
+ struct PostcopyBlocktimeContext;
++typedef struct ThreadPool ThreadPool;
+ 
+ #define  MIGRATION_RESUME_ACK_VALUE  (1)
+ 
+@@ -187,6 +188,10 @@ struct MigrationIncomingState {
+     Coroutine *colo_incoming_co;
+     QemuSemaphore colo_incoming_sem;
+ 
++    /* Optional load threads pool and its thread exit request flag */
++    ThreadPool *load_threads;
++    bool load_threads_abort;
++
+     /*
+      * PostcopyBlocktimeContext to keep information for postcopy
+      * live migration, to calculate vCPU block time
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 3e86b572cfa8..e412d05657a1 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -54,6 +54,7 @@
+ #include "qemu/job.h"
+ #include "qemu/main-loop.h"
+ #include "block/snapshot.h"
++#include "block/thread-pool.h"
+ #include "qemu/cutils.h"
+ #include "io/channel-buffer.h"
+ #include "io/channel-file.h"
+@@ -131,6 +132,35 @@ static struct mig_cmd_args {
+  * generic extendable format with an exception for two old entities.
+  */
+ 
++/***********************************************************/
++/* Optional load threads pool support */
++
++static void qemu_loadvm_thread_pool_create(MigrationIncomingState *mis)
++{
++    assert(!mis->load_threads);
++    mis->load_threads = thread_pool_new();
++    mis->load_threads_abort = false;
++}
++
++static void qemu_loadvm_thread_pool_destroy(MigrationIncomingState *mis)
++{
++    qatomic_set(&mis->load_threads_abort, true);
++
++    bql_unlock(); /* Load threads might be waiting for BQL */
++    g_clear_pointer(&mis->load_threads, thread_pool_free);
++    bql_lock();
++}
++
++static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
++                                         MigrationIncomingState *mis)
++{
++    bql_unlock(); /* Let load threads do work requiring BQL */
++    thread_pool_wait(mis->load_threads);
++    bql_lock();
++
++    return !migrate_has_error(s);
++}
++
+ /***********************************************************/
+ /* savevm/loadvm support */
+ 
+@@ -2783,16 +2813,62 @@ static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
+     return 0;
  }
  
--static void test_submit(void)
-+static void test_submit_no_complete(void)
+-void qemu_loadvm_state_cleanup(void)
++struct LoadThreadData {
++    MigrationLoadThread function;
++    void *opaque;
++};
++
++static int qemu_loadvm_load_thread(void *thread_opaque)
++{
++    struct LoadThreadData *data = thread_opaque;
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    g_autoptr(Error) local_err = NULL;
++
++    if (!data->function(data->opaque, &mis->load_threads_abort, &local_err)) {
++        MigrationState *s = migrate_get_current();
++
++        assert(local_err);
++
++        /*
++         * In case of multiple load threads failing which thread error
++         * return we end setting is purely arbitrary.
++         */
++        migrate_set_error(s, local_err);
++    }
++
++    return 0;
++}
++
++void qemu_loadvm_start_load_thread(MigrationLoadThread function,
++                                   void *opaque)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    struct LoadThreadData *data;
++
++    /* We only set it from this thread so it's okay to read it directly */
++    assert(!mis->load_threads_abort);
++
++    data = g_new(struct LoadThreadData, 1);
++    data->function = function;
++    data->opaque = opaque;
++
++    thread_pool_submit_immediate(mis->load_threads, qemu_loadvm_load_thread,
++                                 data, g_free);
++}
++
++void qemu_loadvm_state_cleanup(MigrationIncomingState *mis)
  {
-     WorkerTestData data = { .n = 0 };
--    thread_pool_submit(worker_cb, &data);
-+    thread_pool_submit_aio(worker_cb, &data, NULL, NULL);
-     while (data.n == 0) {
-         aio_poll(ctx, true);
+     SaveStateEntry *se;
+ 
+     trace_loadvm_state_cleanup();
++
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+         if (se->ops && se->ops->load_cleanup) {
+             se->ops->load_cleanup(se->opaque);
+         }
      }
-@@ -236,7 +236,7 @@ int main(int argc, char **argv)
-     ctx = qemu_get_current_aio_context();
- 
-     g_test_init(&argc, &argv, NULL);
--    g_test_add_func("/thread-pool/submit", test_submit);
-+    g_test_add_func("/thread-pool/submit-no-complete", test_submit_no_complete);
-     g_test_add_func("/thread-pool/submit-aio", test_submit_aio);
-     g_test_add_func("/thread-pool/submit-co", test_submit_co);
-     g_test_add_func("/thread-pool/submit-many", test_submit_many);
-diff --git a/util/thread-pool.c b/util/thread-pool.c
-index 27eb777e855b..2f751d55b33f 100644
---- a/util/thread-pool.c
-+++ b/util/thread-pool.c
-@@ -256,7 +256,7 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
- 
-     QLIST_INSERT_HEAD(&pool->head, req, all);
- 
--    trace_thread_pool_submit(pool, req, arg);
-+    trace_thread_pool_submit_aio(pool, req, arg);
- 
-     qemu_mutex_lock(&pool->lock);
-     if (pool->idle_threads == 0 && pool->cur_threads < pool->max_threads) {
-@@ -290,11 +290,6 @@ int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg)
-     return tpc.ret;
++
++    qemu_loadvm_thread_pool_destroy(mis);
  }
  
--void thread_pool_submit(ThreadPoolFunc *func, void *arg)
--{
--    thread_pool_submit_aio(func, arg, NULL, NULL);
--}
--
- void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
+ /* Return true if we should continue the migration, or false. */
+@@ -2943,6 +3019,7 @@ out:
+ 
+ int qemu_loadvm_state(QEMUFile *f)
  {
-     qemu_mutex_lock(&pool->lock);
-diff --git a/util/trace-events b/util/trace-events
-index 49a4962e1886..5be12d7fab89 100644
---- a/util/trace-events
-+++ b/util/trace-events
-@@ -14,7 +14,7 @@ aio_co_schedule_bh_cb(void *ctx, void *co) "ctx %p co %p"
- reentrant_aio(void *ctx, const char *name) "ctx %p name %s"
++    MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     Error *local_err = NULL;
+     int ret;
+@@ -2952,6 +3029,8 @@ int qemu_loadvm_state(QEMUFile *f)
+         return -EINVAL;
+     }
  
- # thread-pool.c
--thread_pool_submit(void *pool, void *req, void *opaque) "pool %p req %p opaque %p"
-+thread_pool_submit_aio(void *pool, void *req, void *opaque) "pool %p req %p opaque %p"
- thread_pool_complete(void *pool, void *req, void *opaque, int ret) "pool %p req %p opaque %p ret %d"
- thread_pool_cancel(void *req, void *opaque) "req %p opaque %p"
++    qemu_loadvm_thread_pool_create(mis);
++
+     ret = qemu_loadvm_state_header(f);
+     if (ret) {
+         return ret;
+@@ -2983,12 +3062,18 @@ int qemu_loadvm_state(QEMUFile *f)
  
+     /* When reaching here, it must be precopy */
+     if (ret == 0) {
+-        if (migrate_has_error(migrate_get_current())) {
++        if (migrate_has_error(migrate_get_current()) ||
++            !qemu_loadvm_thread_pool_wait(s, mis)) {
+             ret = -EINVAL;
+         } else {
+             ret = qemu_file_get_error(f);
+         }
+     }
++    /*
++     * Set this flag unconditionally so we'll catch further attempts to
++     * start additional threads via an appropriate assert()
++     */
++    qatomic_set(&mis->load_threads_abort, true);
+ 
+     /*
+      * Try to read in the VMDESC section as well, so that dumping tools that
+diff --git a/migration/savevm.h b/migration/savevm.h
+index cb58434a9437..138c39a7f9f9 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -64,7 +64,7 @@ void qemu_savevm_live_state(QEMUFile *f);
+ int qemu_save_device_state(QEMUFile *f);
+ 
+ int qemu_loadvm_state(QEMUFile *f);
+-void qemu_loadvm_state_cleanup(void);
++void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
+ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis);
+ int qemu_load_device_state(QEMUFile *f);
+ int qemu_loadvm_approve_switchover(void);
 
