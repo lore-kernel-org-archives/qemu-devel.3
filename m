@@ -4,168 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BFA0C021AD
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 05:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2AB2C021AD
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 05:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkyrG-0004xT-3t; Thu, 20 Feb 2025 00:12:22 -0500
+	id 1tkz7M-0006uo-SK; Thu, 20 Feb 2025 00:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tkyrE-0004x7-4h; Thu, 20 Feb 2025 00:12:20 -0500
-Received: from mail-koreacentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::7] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tkz7K-0006ub-RZ
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 00:28:58 -0500
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tkyr8-0002Lm-Nq; Thu, 20 Feb 2025 00:12:19 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EHBBRcaf01f8gjOAK/faV5OCxpFKEik+6R7n3nN36Mu+rsOZTRxU4lpj8Vms0VsaL75GbU4iu1BXKs5+v83eT5hSbnSNwLAfIseM7N+xG8ywIor3fowJ8p7HzSx39oF1ByFO7k42liOewkEXp+U9n70C7kFz7XQrUOWNTrTW8S0ewA1zRv515YOHjp+1zzpAP+lS4iTko+NshkMCmMC3W4PiBdiTiwzlVFY101KXlFeYqZNWu+FV305LrzmpnKowDBYadrNeJnq4sY65qi1McgyJcg0J0AiKDGPrmWWX9QDgqBQeMjwQ/o+Rf/mcBd5IidO4n9lUz9bn3CzI3q0MiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vW5f3HR2ucZeS+UbGkWlJkft6PKYM1lg8+sTSujjSQI=;
- b=Gcto7lSkiKXdHaZZYL+elu04wuboNh5PdihNYDpTKNJ02KyANBqC64xHT1wZIP3qJ4KjdJZNN/qS/RvEsV/G59GWKUc/IfPKFw5y8pXYh6d/xf5+8wCYFI/NOu7Pxl8OmMqn36gmWXXkqblGLdBlkOXzp2etaaIecPL0guqUVMdv6cbUu5OkZt7anpjLLDm3mS0VNarzNoBySDZmHRfOiZtyajynjDVm15ryqmWf401Q4ZgRQagtbR4xSeBgON6xTNkpZX16Ux2KSFsYZAwjd7VlOsAJv6K/A48KFrEDW2xeretRqehJucKHUGPxwVAvIx6re5r6zqtSNSncdJHvng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vW5f3HR2ucZeS+UbGkWlJkft6PKYM1lg8+sTSujjSQI=;
- b=XiARR9PmVwLHLs/qToUC8zPq5SdXtDiNWoyatmEXN1xaqTdvh9UsCOrGXQN2lbcUCbUQ65qKmk9LmlDAG9DhkHu67/cv+cz6MyGmhIYkmTopO/dDIl92TeMoO59GPPWR35FH50x0r1rpCC7smjwl1Z+a0HK84nPkprUKN9Pu2EXuBW4xb2FKP6s07MuDx2SMX0gjyErzGG+9qB0xGxbjj7fbp5uE58sm9grFp8Jk2GfHfGSQmvhsv7REQPcyFYHmXtYw9G+2r3L+Tpm5sT0azt/AGAqjZRCk2IvHFmi9QG36RNfKoF/LasxPOdK/wFxT3hsl9Sq4hCPL4hCHm9l4ZA==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- SI2PR06MB4994.apcprd06.prod.outlook.com (2603:1096:4:1a1::14) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8466.14; Thu, 20 Feb 2025 05:11:53 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.8466.009; Thu, 20 Feb 2025
- 05:11:50 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v3 00/28] Support AST2700 A1
-Thread-Topic: [PATCH v3 00/28] Support AST2700 A1
-Thread-Index: AQHbfchZ2DVXsd5AV0G4GwgEpHk/17NM0p0AgALZSbA=
-Date: Thu, 20 Feb 2025 05:11:50 +0000
-Message-ID: <SI2PR06MB5041D7BFF0F491FFA7CE3159FCC42@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
- <4bbd5a9e-934e-4535-b829-1d4fe070d63d@kaod.org>
-In-Reply-To: <4bbd5a9e-934e-4535-b829-1d4fe070d63d@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SI2PR06MB4994:EE_
-x-ms-office365-filtering-correlation-id: c04b2987-9774-4e1e-2268-08dd516d155c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|13003099007|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?NzgweVlYMEt2V3lzSWNadWtiV2RzWU1jM0lodkdZQ3pHcjRtRUI2V2I1UVI5?=
- =?utf-8?B?SzFLZTIxeU5KU1JJQXVFUkRYWXRzb2ZWM1h5UWxIcGN6eGZHNFZEdVhrWmoy?=
- =?utf-8?B?d2w5ZmxkTW55MkNBY1F4bUhXVnZZNisvTEp4aUphNlVOcEl2OXRQMUFqNzNB?=
- =?utf-8?B?Wk9QemJmMG51QXhUUEFqdThDYjl2Q0JXaU9YdzJVZG1uSXlURUJ5UWRIVjdI?=
- =?utf-8?B?QWVXNFc0ODkzSm9TOUVVcFY0b0I1OHRwcDkyYUs1MWpRYkRXekNaVTVVL0ll?=
- =?utf-8?B?bUQ4bU5sVEhMWnVhcm8xUjZNVitjS3ViVXBndEVpT0V6K29qSm4yZVZLVGo2?=
- =?utf-8?B?WVhiaHhUVVZybVNrY1RTclA4ZW96cGVocHU4RU51cHp3cVB1dWY2MjVBcVVU?=
- =?utf-8?B?eDdMTjdBVzVoNTA1S3dPQkh3aWdWMUdCNkw2N0d3Y3IyUlh6bFZMalFuVkNz?=
- =?utf-8?B?ZEdhZlJzU0hCWGgwS2RRbzJaeVVYUEo1NTJpRTJudmgvcWxCN0JWR1ZmY3dj?=
- =?utf-8?B?Q3JxWGdtRnV2UmZuUUhPTTlmcDVNVFhaa2Erd1doQU10VWRITkN4NTFKcm81?=
- =?utf-8?B?aTEzbmxEME5ZamJ4QUZ2a2duRE1GbjlPZTNscnpKcWYzYWlMdUk5YkF4b0w1?=
- =?utf-8?B?SXdFM2QvT2xYOU9GNWVIajZNbWJJSGl6enJyUWtGamJrZDNydG4vMktpbURY?=
- =?utf-8?B?MjA0WXNCSjM1MUtmVHBEbnNMb1BlTXEyYXdhOFZCc0pwdUlUZ2NpTkdod1Jq?=
- =?utf-8?B?MG5TUWRvKzloeFAzWVlFc3RwQW5RUnZQTkhuQVRLdUFXT2ZkcmlxVTVyajJn?=
- =?utf-8?B?ZEgrZExSTURodDlzK2VmYngzSlZ0dEVKc3ArazJmMlVXclNlUWpUQSt1Yllm?=
- =?utf-8?B?NzRMdndPNkl5VzdJaUM4Y3JuckRYdDc1aUNnbUtGaDVYeEtpN290Zld3TWdW?=
- =?utf-8?B?OHlvQ3JDMHUrRy9EcFYrUGtNU2wzaFZmOEk5OE0wbndSd2tablQ4YTB0K1I0?=
- =?utf-8?B?K21pNGhwN0wybUt5S09VN05FSEVoZGdTOU54UjFHMmkyVUN3dWlDNUdFSUpM?=
- =?utf-8?B?NmlnL1RzYjlFNmhkcVNGa0EyUlREMHlacDhOM1AyTzBSK2tXN0dpbjZ5SnJX?=
- =?utf-8?B?YVpydlFzbDl6VGZyTEJIUHZJd2g4QmRUOHY4WW4yLzR6NktwZkpPaFdSU255?=
- =?utf-8?B?TVZMbWFzUDFYcGVFVkFTWFY5TlloTkdFMytjeHZ4eWF4aUZrQS9vZXFMNk1n?=
- =?utf-8?B?eElwTzRNSlBubGoxcllsKzl6Szd4c2ZCeHlCeWdEaTJ4ZGl1OHF0OXhvampy?=
- =?utf-8?B?b0RDdFJZS1JuQStmN0UrMTlad2RhcU1yalhTVzJpU0Z4czJESDJSL3ZhdWVG?=
- =?utf-8?B?cUtGd2didG9obVdVRHN2MVVZRVFDQlJsV3RtUEdSbU5uNjgzSmdtM2VsQ2x0?=
- =?utf-8?B?Y3kwd1hKQWQ2WnBYdm1wbnhXQ1FsVGovWjdtR3hJVzdLWlYvaUpDZnk0Ymh0?=
- =?utf-8?B?b0tjVmQvVXJlNDVnYnh0cEczQWIyaVZCS2lYaVl3OXpVb1JBZ1VLSjZ0U2hh?=
- =?utf-8?B?UU15azVmUzMrcUJZMUZPVjlNb2JiUXlOR0p2L1lpNGNHOGhvL2VWL1VVam9H?=
- =?utf-8?B?Rm1KNitXVG5xZE9zUEZ0YU5ERWpYZU5meGp5QlJsZDRncHlPb2IycHRzTlFZ?=
- =?utf-8?B?MkswbUtYWk9EUHpObDZnYXNNRnZhbE5sRlE3ZEI0aWY5SHF2bUphZExqcnVu?=
- =?utf-8?B?OTQ0TXhyRmJiRitzRFBPTmZsdUZ2ZEVtV2J0QUNTSFgxSllON3I1YXdCYVVF?=
- =?utf-8?B?SXovWFgrZnV5YXNENkEwNVBvOGlEQmQwK2E4Q2lCSU9OSWZta3lnVkV4bDQ1?=
- =?utf-8?B?ZVVLaGZDcmFFQjR6RWlzeTZkZk1vd3M1dFpjbHYyS0lVd0E9PQ==?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(376014)(1800799024)(366016)(13003099007)(38070700018);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bldSY096VTR6U3NHei9JZ1hpcm5OVWxkbXNpNldjeTFSU2l2OHNubk5zN3hi?=
- =?utf-8?B?ZTlBWGl5VFF5d2daYjdCZ3pOSld3MjBtcG5YWlhyeXZuRFh4VVF0VERGYVZa?=
- =?utf-8?B?eXYzaFVzNFgyUjVwaG0zWjE0RWxPd3k4T1MvdWxuV3hUYWVaejBVM0M4WG5F?=
- =?utf-8?B?UmhQZEpZcUNEaWxLUVRMVmRyNXgvaVk4b2QxOHNMcys2dDR1czdmdmJXYytz?=
- =?utf-8?B?cnFma0x0a2VqWXRaaDRXbG5CTjhxSnR3Q29NRGRNQnhHZkYzZXJvcGd1bjQz?=
- =?utf-8?B?ZFZ0emJBb2FpTEdGVnZJV0NkMGlWb3ZWbUl6SkV5MlFSSWl6Y0JQMXg4Qk1s?=
- =?utf-8?B?VU1sUnZQa1YxRDlEa0hDOUhXSmR6UkdKc2lpRUYvYXVtUlVLMDQvdy9GTXFp?=
- =?utf-8?B?TGJxVlVCYTNBWHFQSGlCVWRmQ3FzS21YNUxDRzRrZVZxR2xDWFM1SmI0MEVH?=
- =?utf-8?B?ZDNsSzZ2Zkh1ZkhnN2JBUi9kcEV5ZkRWb1YzYjZnV3VYWGpDMVI1NlZ4ZzM0?=
- =?utf-8?B?RXVsMDhYbUozWFRzV3EzSDZhb2ZmaXJuZ1hQRCtRNHRhaVpXUzlUWWx4UGpy?=
- =?utf-8?B?YVNDd3lweVBqL2ZEUVAzLzBJdWpjODVJdmFqOFIvUWZDQjN0VUJPd0s2SkRi?=
- =?utf-8?B?SXltQmZhaUliYlRsNVpPWFlyNEpQTGdTRXpBKy9xQ0I0aDRaQ2VnZGo1bzFR?=
- =?utf-8?B?K0pIMC9DOUdGL2NDOHFaczRoZGMwU1ZEemRSbWRSbmt6TUc1QnlGNm5iZUxQ?=
- =?utf-8?B?cCtTN3BZUzEzNldLZTJoTVQvanhXc3ZGZHN3ZUVLWFA3NlAzR2dFSXJZL01N?=
- =?utf-8?B?dG1PcHpVY0FIaDg0cVNLZHNjL2w2NW8rbFlPWXNTbVI0VW1oMDVjTjIwTENH?=
- =?utf-8?B?UUNZaVNHclp2T1Q1SURTMjYyWlFITTJwZTFWV3l5MmZ1Vm9KNVlDeWdzdkxQ?=
- =?utf-8?B?RjRlbUxoV3ZpQ3ExYlBiYjBrZ3RXdnFka3lGUTR1MjZXeG12aFBKY2Z1Tmc5?=
- =?utf-8?B?K0ZpTEJ0M2Z4WWNSOUh4ZGVPUlhMRjU0TDNGbTJFYU81SmxwekNqVG02MmhN?=
- =?utf-8?B?TU5xNHBwd3JoSHY3aGJ5RW5LWjZJdm93Z05iekljc3FxdEVSd3QwZVI3dWsr?=
- =?utf-8?B?d1NxUDFiNVJBdGlsL0VjdGtBYms4eEZRZUM1eWVZSDBwYmU4RFN4MGxVNEJy?=
- =?utf-8?B?RXhNSTBjUThWL3Y0bEtQYW56RGVYb1crVXVZQVdVcTBYSnZzY3djMzgxeFpP?=
- =?utf-8?B?V2tiRWxVaFFQQ2VZOUxGVkF0T3puV1JobWpoQU55d3c2dENVaW1HWFpOT1hC?=
- =?utf-8?B?UnB5MDIzc0FQay9ORU13U2VCTFFCVndDRW9kT2N1ZDVmYXVPR3pzcjRCaG53?=
- =?utf-8?B?OEVQM3lGNDRub3ZQOWpVK2g2R1hJZTdGVk84Nm9EcWNtTlRoVWJ5SlhYQlFp?=
- =?utf-8?B?Z0J2VXFoeHkwQi8zMFB6TmJGblJxOXhFeDhySCsyWXlLTXJzd1dxb0RvdGl4?=
- =?utf-8?B?dkVRQ3lkN05yMk1DNTkxKzJkS0xLRXJKWVpuTkl6dGNEcnBISEsrdGF2Nmgy?=
- =?utf-8?B?TkhJQzdOcm9EQjh1enNkVStKeVVoWld0MWJ1Tk9YdnI1K21mb1plRnkxWlF1?=
- =?utf-8?B?VitldEFLU29IZlhFZ2FubnNiWE14dFFRcVlYR2FhOVY5UWtIUGZLQnVsVEUy?=
- =?utf-8?B?ZUpKYTlwR1lNUVprcGpic2JCRkRzTGx5VzVSb1BVV2k0VnNCS3d3Z3M3b2VU?=
- =?utf-8?B?eGM5WVNJVmJMdnFTN2o5eEJQWVVPSmphU1NQU2YzVENMUldTNnVkb09TcEE1?=
- =?utf-8?B?UWcydWtvaUkrS2RrbnFwaEN3NnVrc3NDZlBCZU5DUU5CUXhoU1BCSnB3MzEr?=
- =?utf-8?B?WjBQZWJWb0kzQ3FRVUVoZ1dyVDZ5bFczVW51YytwRnA5SjdVbDVBbVhxVkRR?=
- =?utf-8?B?VHA0aWFKd0NIZDZ3dlpzRFFpRE9Ga2xqa0IvS3pveVZ3WExneFhrZDJsQWFL?=
- =?utf-8?B?ZU52SnJHNkFxOHlzVCt4endxNUQ1bllaMzV0cW00R3dDVmJKdWs2U204UUtO?=
- =?utf-8?B?alFTcHl3S2Q3WUlpZDd2RTVTWjVldHkxOWdoUThLTGFiMnh6S2MyWDJiWWJW?=
- =?utf-8?Q?KbMqMHqWTdt4hrABl0K7daUEq?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <vinayak.kh@samsung.com>)
+ id 1tkz7I-00049N-3j
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 00:28:58 -0500
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20250220052852epoutp0123930c2305b0bfe3356f1de35915a726~l03WRylds3009630096epoutp01E
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 05:28:52 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20250220052852epoutp0123930c2305b0bfe3356f1de35915a726~l03WRylds3009630096epoutp01E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1740029332;
+ bh=BmlJV03yYaBKKgYhrQ/WDUvXDtMbqXxJ1FIYxQTvZSM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=g2topHd9kvVsYn2HyfuoGI0q9/A1gQ+POhTmzLTi7bND0sLhNJL5VLfpTLP50wKCj
+ hnuN+bOp9VMFAZPWty3mJvKD3rjfBOo8Yu4vp5tF3/HE78gEf7dOR4O4VToEUluuXq
+ eDHkdr5A2ZA/WRxRFL62804rMmEl0Gem61cN8so8=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTP id
+ 20250220052852epcas5p27e5d6464f5622f4f6aeccb2642d2f77b~l03V1A-4I0943209432epcas5p21;
+ Thu, 20 Feb 2025 05:28:52 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.38.183]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4Yz1yT53Bxz4x9QB; Thu, 20 Feb
+ 2025 05:28:49 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+ epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 0B.0C.19956.19DB6B76; Thu, 20 Feb 2025 14:28:49 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250220052738epcas5p24b49106f81b1a621acffe6124eba9e52~l02Ql-I5q2074720747epcas5p26;
+ Thu, 20 Feb 2025 05:27:38 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
+ epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+ 20250220052738epsmtrp20847174883054fc9d23e866bc45c1266~l02QlKhFv3134831348epsmtrp2H;
+ Thu, 20 Feb 2025 05:27:38 +0000 (GMT)
+X-AuditID: b6c32a4b-fd1f170000004df4-68-67b6bd91cccc
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ F0.CA.23488.94DB6B76; Thu, 20 Feb 2025 14:27:38 +0900 (KST)
+Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
+ by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250220052736epsmtip25bfd52223630658332408dce25c46ed0~l02PKH1N21358513585epsmtip2g;
+ Thu, 20 Feb 2025 05:27:36 +0000 (GMT)
+From: Vinayak Holikatti <vinayak.kh@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com, Vinayak Holikatti
+ <vinayak.kh@samsung.com>
+Subject: [PATCH v3 3/3] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations Sanitize and Write Zeros commands cxl r3.2(8.2.10.9.5.3)
+Date: Thu, 20 Feb 2025 10:57:24 +0530
+Message-Id: <20250220052724.1256642-4-vinayak.kh@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250220052724.1256642-1-vinayak.kh@samsung.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c04b2987-9774-4e1e-2268-08dd516d155c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2025 05:11:50.7907 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5LRfaG8RYhkY/w6eiMlu2oLr1z7AeMURy/ncHfmrUXkePzYo4Tj7TTr7l/QZ9YHYmrXqkFw85TebQTULC2c5uZaCnAhEFiYOwa9Q02ND4Fo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB4994
-Received-SPF: pass client-ip=2a01:111:f403:c40f::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDJsWRmVeSWpSXmKPExsWy7bCmpu7EvdvSDTo/KFlMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLBYnTm5nB4rNYXfg8tg56y67x5Nrm5k8
+ +rasYvSYOrve4/MmuQDWqGybjNTElNQihdS85PyUzLx0WyXv4HjneFMzA0NdQ0sLcyWFvMTc
+ VFslF58AXbfMHKCblBTKEnNKgUIBicXFSvp2NkX5pSWpChn5xSW2SqkFKTkFJgV6xYm5xaV5
+ 6Xp5qSVWhgYGRqZAhQnZGc8fT2ApuOpZMXn9Q6YGxlajLkZODgkBE4lLxyaydTFycQgJ7GaU
+ WPdgFguE84lR4vnGRUwQzjdGibV3NjLDtLw4+IkZIrGXUeLr5x1QVQ1MEht77rKBVLEJGEg8
+ aD7ODmKLCEhK/O46DdbNLPCBUWLRU10QW1igF8g+7gBiswioSnx+9Qysl1fAVmLzpquMENvk
+ JfYfPAvWyylgJ7Hv6XR2iBpBiZMzn7BAzJSXaN46G+wiCYGf7BLdX7ezQzS7SGy70sUEYQtL
+ vDq+BSouJfH53V42CLtY4tzFT1DLaiRed62AetNeovVUP5DNAbRAU2L9Ln2IsKzE1FPrmCD2
+ 8kn0/n4CNZ5XYsc8EJsDyFaRWPo2E2bTl2fNjBBhD4kpx8QhQTWRUWL6lfPsExgVZiH5ZhaS
+ b2YhLF7AyLyKUTK1oDg3PbXYtMA4L7UcHsnJ+bmbGMHJVMt7B+OjBx/0DjEycTAeYpTgYFYS
+ 4W2r35IuxJuSWFmVWpQfX1Sak1p8iNEUGNwTmaVEk/OB6TyvJN7QxNLAxMzMzMTS2MxQSZy3
+ eWdLupBAemJJanZqakFqEUwfEwenVAPTvRtTnRw6VuYtEb+8ddPJO1u4OENFcxaKSfEwyb6c
+ dYrX84CG4YylvPFZD1aYFYm4nHS1Ffx1JDzyuNH9WtZa5zN/s8wZ05f1BS5nYQq+udCf94hv
+ dryBdYTmXAPDiTfMK7tzfn9x5JXa2KTAmmG2z1hYfOKb3GXL3Iw889ep3s11D+VozjrlLPX8
+ 4MwLvLdS68+ZPXfZu9D17Mwe2efLTq7YO+FjpKJLWvKdTb9fb0iMu79NcOtyxy+NfMV2F3S8
+ Kl9IHZpgvCH825n3f5fPa2RyfO5ZbN9m65nGmDInZ1FDTsnx7+nNjjN4OJgnfrh71ubjx3t5
+ isbVK+XXJBxdJLTr57w5M11Fzc9cqNijxFKckWioxVxUnAgA5IUt4i8EAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGLMWRmVeSWpSXmKPExsWy7bCSvK7X3m3pBvv3MFlMP6xo8eX0HjaL
+ 1TfXMFrcPLCTyWLhxmVMFudnnWKx+LttL6PF8d4dLBYnTm5nB4rNYXfg8tg56y67x5Nrm5k8
+ +rasYvSYOrve4/MmuQDWKC6blNSczLLUIn27BK6M548nsBRc9ayYvP4hUwNjq1EXIyeHhICJ
+ xIuDn5i7GLk4hAR2M0pce3eOCSIhJXFs5082CFtYYuW/5+wQRf8YJY409IAVsQkYSDxoPs4O
+ YosISEr87joNNolZ4BejxNPd98E6hAW6GSV6r3wGG8UioCrx+dUzMJtXwFZi86arjBAr5CX2
+ HzzLDGJzCthJ7Hs6HWyqEFDNkv7TUPWCEidnPmEBsZmB6pu3zmaewCgwC0lqFpLUAkamVYyS
+ qQXFuem5yYYFhnmp5XrFibnFpXnpesn5uZsYwUGvpbGD8d23Jv1DjEwcjIcYJTiYlUR42+q3
+ pAvxpiRWVqUW5ccXleakFh9ilOZgURLnXWkYkS4kkJ5YkpqdmlqQWgSTZeLglGpgkpmceVOO
+ 6aZN7CWTk6p3bPNL4hK1JK9J9yi7WG7hTlsymVWsvXJP/fs8Yc1z28LWdMwzs7++Ll18ed6a
+ xAKxoAfb5Rm4PvMJvjrfUBTbaJKaterFuVlnZY6f/8J+WThnmbz3xDCXbzfEHBjt9sTLWSRV
+ 33hTzvTO9d1ets2hZqVR217kFN6fseXteb9pvL8FiwXnadxbx3ubw3mB9OqduZMOB2nuq2Hs
+ nvDn/uz5e3aEfz67/sDaq/PnZ9Y77lt381e6zzyeNaUhfBs4lp+79tdysWDE5vMb1F/2fDfZ
+ e21yqEJSvKe8dNJhFWuH3SzsLXUvQ7M+cMc0vigL/nPr5UudCa3nMhdvX7trVse3o0osxRmJ
+ hlrMRcWJAIBurRXpAgAA
+X-CMS-MailID: 20250220052738epcas5p24b49106f81b1a621acffe6124eba9e52
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250220052738epcas5p24b49106f81b1a621acffe6124eba9e52
+References: <20250220052724.1256642-1-vinayak.kh@samsung.com>
+ <CGME20250220052738epcas5p24b49106f81b1a621acffe6124eba9e52@epcas5p2.samsung.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=vinayak.kh@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,126 +140,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjMgMDAvMjhdIFN1cHBvcnQgQVNU
-MjcwMCBBMQ0KPiANCj4gSGVsbG8gSmFtaW4sDQo+IA0KPiANCj4gT24gMi8xMy8yNSAwNDozNSwg
-SmFtaW4gTGluIHdyb3RlOg0KPiA+IHYxOg0KPiA+ICAgMS4gUmVmYWN0b3IgSU5UQyBtb2RlbCB0
-byBzdXBwb3J0IGJvdGggSU5UQzAgYW5kIElOVEMxLg0KPiA+ICAgMi4gU3VwcG9ydCBBU1QyNzAw
-IEExLg0KPiA+ICAgMy4gQ3JlYXRlIGFzdDI3MDBhMC1ldmIgbWFjaGluZS4NCj4gPg0KPiA+IHYy
-Og0KPiA+ICAgIFRvIHN0cmVhbWxpbmUgdGhlIHJldmlldyBwcm9jZXNzLCBzcGxpdCB0aGUgZm9s
-bG93aW5nIHBhdGNoIHNlcmllcyBpbnRvDQo+ID4gICAgdGhyZWUgcGFydHMuDQo+ID4NCj4gaHR0
-cHM6Ly9wYXRjaHdvcmsua2VybmVsLm9yZy9wcm9qZWN0L3FlbXUtZGV2ZWwvY292ZXIvMjAyNTAx
-MjEwNzA0MjQuMjQ2DQo+IDU5NDItMS1qYW1pbl9saW5AYXNwZWVkdGVjaC5jb20vDQo+ID4gICAg
-VGhpcyBwYXRjaCBzZXJpZXMgZm9jdXNlcyBvbiBjbGVhbmluZyB1cCB0aGUgSU5UQyBtb2RlbCB0
-bw0KPiA+ICAgIGZhY2lsaXRhdGUgZnV0dXJlIHN1cHBvcnQgZm9yIHRoZSBJTlRDX0lPIG1vZGVs
-Lg0KPiA+DQo+ID4gdjM6DQo+ID4gICAxLiBVcGRhdGUgYW5kIGFkZCBmdW5jdGlvbmFsIHRlc3Qg
-Zm9yIEFTVDI3MDANCj4gPiAgIDIuIEFkZCBBU1QyNzAwIElOVEMgZGVzaWduIGd1aWRhbmNlIGFu
-ZCBpdHMgYmxvY2sgZGlhZ3JhbS4NCj4gPiAgIDMuIFJldGFpbmluZyB0aGUgSU5UQyBuYW1pbmcg
-YW5kIGludHJvZHVjaW5nIGEgbmV3IElOVENJTyBtb2RlbCB0bw0KPiBzdXBwb3J0IHRoZSBBU1Qy
-NzAwIEExLg0KPiA+ICAgNC4gQ3JlYXRlIGFzdDI3MDBhMS1ldmIgbWFjaGluZSBhbmQgcmVuYW1l
-IGFzdDI3MDBhMC1ldmIgbWFjaGluZQ0KPiA+ICAgNS4gRml4IHNpbGljb24gcmV2aXNpb24gaXNz
-dWUgYW5kIHN1cHBvcnQgQVNUMjcwMCBBMS4NCj4gPg0KPiA+IFdpdGggdGhlIHBhdGNoIGFwcGxp
-ZWQsIFFFTVUgbm93IHN1cHBvcnRzIHR3byBtYWNoaW5lcyBmb3IgcnVubmluZw0KPiBBU1QyNzAw
-IFNvQ3M6DQo+ID4gYXN0MjcwMGEwLWV2YjogRGVzaWduZWQgZm9yIEFTVDI3MDAgQTANCj4gPiBh
-c3QyNzAwYTEtZXZiOiBEZXNpZ25lZCBmb3IgQVNUMjcwMCBBMQ0KPiA+DQo+ID4gVGVzdCBpbmZv
-cm1hdGlvbg0KPiA+IDEuIFFFTVUgdmVyc2lvbjoNCj4gPg0KPiBodHRwczovL2dpdGh1Yi5jb20v
-cWVtdS9xZW11L2NvbW1pdC9mZmFmN2YwMzc2ZjgwNDBjZTkwNjhkNzFhZTlhZTg3Mg0KPiAyNQ0K
-PiA+IDA1YzQyZQ0KPiA+IDIuIEFTUEVFRCBTREsgdjA5LjA1IHByZS1idWlsdCBpbWFnZQ0KPiA+
-ICAgICBodHRwczovL2dpdGh1Yi5jb20vQXNwZWVkVGVjaC1CTUMvb3BlbmJtYy9yZWxlYXNlcy90
-YWcvdjA5LjA1DQo+ID4gICAgIGFzdDI3MDAtZGVmYXVsdC1vYm1jLnRhci5neiAoQVNUMjcwMCBB
-MSkNCj4gPg0KPiBodHRwczovL2dpdGh1Yi5jb20vQXNwZWVkVGVjaC1CTUMvb3BlbmJtYy9yZWxl
-YXNlcy9kb3dubG9hZC92MDkuMDUvYXN0DQo+IDI3MDAtZGVmYXVsdC1vYm1jLnRhci5neg0KPiA+
-ICAgICBhc3QyNzAwLWEwLWRlZmF1bHQtb2JtYy50YXIuZ3ogKEFTVDI3MDAgQTApDQo+ID4NCj4g
-Pg0KPiBodHRwczovL2dpdGh1Yi5jb20vQXNwZWVkVGVjaC1CTUMvb3BlbmJtYy9yZWxlYXNlcy9k
-b3dubG9hZC92MDkuMDUvYXN0DQo+ID4gMjcwMC1hMC1kZWZhdWx0LW9ibWMudGFyLmd6DQo+IA0K
-PiBUaGUgcGFydCBhZGRpbmcgbmV3IGZ1bmN0aW9uYWwgdGVzdHMgbmVlZHMgYSByZXdvcmsuIFNl
-ZSBjb21tZW50Lg0KPiANCj4gPiBLbm93biBJc3N1ZToNCj4gPiBUaGUgSEFDRSBjcnlwdG8gYW5k
-IGhhc2ggZW5naW5lIGlzIGVuYWJsZSBieSBkZWZhdWx0IHNpbmNlIEFTVDI3MDAgQTEuDQo+ID4g
-SG93ZXZlciwgYXNwZWVkX2hhY2UuYyhIQUNFIG1vZGVsKSBjdXJyZW50bHkgZG9lcyBub3Qgc3Vw
-cG9ydCB0aGUNCj4gQ1JZUFRPIGNvbW1hbmQuDQo+ID4gVG8gYm9vdCBBU1QyNzAwIEExLCBJIGhh
-dmUgY3JlYXRlZCBhIFBhdGNoIDIxIHdoaWNoIHRlbXBvcmFyaWx5DQo+ID4gcmVzb2x2ZXMgdGhl
-IGlzc3VlIGJ5IHNlbmRpbmcgYW4gaW50ZXJydXB0IHRvIG5vdGlmeSB0aGUgZmlybXdhcmUgdGhh
-dA0KPiA+IHRoZSBjcnlwdG9ncmFwaGljIGNvbW1hbmQgaGFzIGNvbXBsZXRlZC4gSXQgaXMgYSB0
-ZW1wb3Jhcnkgd29ya2Fyb3VuZA0KPiA+IHRvIHJlc29sdmUgdGhlIGJvb3QgaXNzdWUgaW4gdGhl
-IENyeXB0byBNYW5hZ2VyIFNlbGZUZXN0Lg0KPiA+DQo+ID4gQXMgYSByZXN1bHQsIHlvdSB3aWxs
-IGVuY291bnRlciB0aGUgZm9sbG93aW5nIGtlcm5lbCB3YXJuaW5nIGR1ZSB0bw0KPiA+IHRoZSBD
-cnlwdG8gTWFuYWdlciB0ZXN0IGZhaWx1cmUuIElmIHlvdSBkb24ndCB3YW50IHRvIHNlZSB0aGVz
-ZSBrZXJuZWwNCj4gPiB3YXJuaW5nLCBwbGVhc2UgYWRkIHRoZSBmb2xsb3dpbmcgc2V0dGluZ3Mg
-aW4geW91ciBrZXJuZWwgY29uZmlnLg0KPiA+DQo+ID4gYGBgDQo+ID4gQ09ORklHX0NSWVBUT19N
-QU5BR0VSX0RJU0FCTEVfVEVTVFM9eQ0KPiA+IGBgYA0KPiANCj4gV291bGQgaXQgYmUgcG9zc2li
-bGUgdG8gc2VuZCB0aGUgaGFjZSBjaGFuZ2VzIGluIGl0cyBvd24gc2VyaWVzID8NCj4gDQo+IA0K
-Q3VycmVudGx5LCB0aGUgSEFDRSBIVyBlbmdpbmUgYW5kIGNyeXB0byBzZWxmLXRlc3RzIGFyZSBl
-bmFibGVkIGJ5IGRlZmF1bHQgaW4NClNESyB2MDkuMDUgRlcuIFRvIGJvb3QgUUVNVSBmb3IgQVNU
-MjcwMCBBMSB3aXRoIHRoZSBTREsgdjA5LjA1IHByZS1idWlsdCBpbWFnZSwNCmEgQ1JZUFRPIHdv
-cmthcm91bmQgcGF0Y2ggaXMgcmVxdWlyZWQuDQoNClRoZSBBU1QyNzAwIEExIHBhdGNoIHNlcmll
-cyBpbmNsdWRlcyBmdW5jdGlvbmFsIHRlc3RzLiBUbyBtYWtlIHRoZSBmdW5jdGlvbmFsIHRlc3Rz
-DQpwYXNzIGZvciBBU1QyNzAwIEExLCBJIGhhdmUgaW5jbHVkZWQgdGhlIEhBQ0UgcGF0Y2ggaW4g
-dGhlIHNhbWUgcGF0Y2ggc2VyaWVzLg0KDQpUaGVyZSBhcmUgdHdvIHdheXMgdG8gc3BsaXQgdGhp
-cyBwYXRjaCBzZXJpZXM6DQoNClNvbHV0aW9uIEE6DQoNCjEuIENyZWF0ZSBzZXJpZXMgMSB0byBz
-dXBwb3J0IEFTVDI3MDAgQTEuDQoyLiBDcmVhdGUgc2VyaWVzIDIgdG8gc3VwcG9ydCBIQUNFLg0K
-My4gQ3JlYXRlIHNlcmllcyAzIHRvIHN1cHBvcnQgQVNUMjcwMCBBMSBmdW5jdGlvbmFsIHRlc3Rz
-Lg0KDQpTZXJpZXMgMyBzaG91bGQgZGVwZW5kIG9uIHNlcmllcyAxIGFuZCAyLg0KDQpTb2x1dGlv
-biBCOg0KDQoxLiBQbGFjZSBhIHByZS1idWlsdCBpbWFnZSBjYWxsZWQgImFzdDI3MDAtYTEtcWVt
-dS1kaXNhYmxlLXNlbGYtdGVzdCIgaW4gdGhlIFNESyB2MDkuMDUgR2l0aHViIHJlcG9zaXRvcnku
-DQpodHRwczovL2dpdGh1Yi5jb20vQXNwZWVkVGVjaC1CTUMvb3BlbmJtYy9yZWxlYXNlcy90YWcv
-djA5LjA1DQoyLiBDcmVhdGUgb25lIHBhdGNoIHNlcmllcyB0byBzdXBwb3J0IEFTVDI3MDAgQTEg
-d2l0aCBpdHMgZnVuY3Rpb25hbCB0ZXN0cy4NCjMuIENyZWF0ZSBzZXJpZXMgMiB0byBzdXBwb3J0
-IEhBQ0UuDQoNCkNvdWxkIHlvdSB0ZWxsIG1lIHdoaWNoIHNvbHV0aW9uIHlvdSBwcmVmZXIgb3Ig
-Y291bGQgeW91IHBsZWFzZSBnaXZlIG1lIGFueSBzdWdnZXN0aW9uPw0KDQpUaGFua3MtSmFtaW4N
-Cg0KPiA+DQo+ID4gSmFtaW4gTGluICgyOCk6DQo+ID4gICAgaHcvaW50Yy9hc3BlZWQ6IFN1cHBv
-cnQgc2V0dGluZyBkaWZmZXJlbnQgbWVtb3J5IGFuZCByZWdpc3RlciBzaXplDQo+ID4gICAgaHcv
-aW50Yy9hc3BlZWQ6IEludHJvZHVjZSBoZWxwZXIgZnVuY3Rpb25zIGZvciBlbmFibGUgYW5kIHN0
-YXR1cw0KPiA+ICAgICAgcmVnaXN0ZXJzDQo+ID4gICAgaHcvaW50Yy9hc3BlZWQ6IEFkZCBvYmpl
-Y3QgdHlwZSBuYW1lIHRvIHRyYWNlIGV2ZW50cyBmb3IgYmV0dGVyDQo+ID4gICAgICBkZWJ1Z2dp
-bmcNCj4gPiAgICBody9hcm0vYXNwZWVkOiBSZW5hbWUgSVJRIHRhYmxlIGFuZCBtYWNoaW5lIG5h
-bWUgZm9yIEFTVDI3MDAgQTANCj4gPiAgICBody9hcm0vYXNwZWVkX2FzdDI3eDA6IFNvcnQgdGhl
-IElSUSB0YWJsZSBieSBJUlEgbnVtYmVyDQo+ID4gICAgaHcvaW50Yy9hc3BlZWQ6IFN1cHBvcnQg
-ZGlmZmVyZW50IG1lbW9yeSByZWdpb24gb3BzDQo+ID4gICAgaHcvaW50Yy9hc3BlZWQ6IFJlbmFt
-ZSBudW1faW50cyB0byBudW1faW5waW5zIGZvciBjbGFyaXR5DQo+ID4gICAgaHcvaW50Yy9hc3Bl
-ZWQ6IEFkZCBzdXBwb3J0IGZvciBtdWx0aXBsZSBvdXRwdXQgcGlucyBpbiBJTlRDDQo+ID4gICAg
-aHcvaW50Yy9hc3BlZWQ6IFJlZmFjdG9yIElOVEMgdG8gc3VwcG9ydCBzZXBhcmF0ZSBpbnB1dCBh
-bmQgb3V0cHV0IHBpbg0KPiA+ICAgICAgaW5kaWNlcw0KPiA+ICAgIGh3L2ludGMvYXNwZWVkOiBJ
-bnRyb2R1Y2UgQXNwZWVkSU5UQ0lSUSBzdHJ1Y3R1cmUgdG8gc2F2ZSB0aGUgaXJxDQo+ID4gICAg
-ICBpbmRleCBhbmQgcmVnaXN0ZXIgYWRkcmVzcw0KPiA+ICAgIGh3L2ludGMvYXNwZWVkOiBJbnRy
-b2R1Y2UgSVJRIGhhbmRsZXIgZnVuY3Rpb24gdG8gcmVkdWNlIGNvZGUNCj4gPiAgICAgIGR1cGxp
-Y2F0aW9uDQo+ID4gICAgaHcvaW50Yy9hc3BlZWQ6IEFkZCBTdXBwb3J0IGZvciBNdWx0aS1PdXRw
-dXQgSVJRIEhhbmRsaW5nDQo+ID4gICAgaHcvaW50Yy9hc3BlZWQ6IEFkZCBTdXBwb3J0IGZvciBB
-U1QyNzAwIElOVENJTyBDb250cm9sbGVyDQo+ID4gICAgaHcvbWlzYy9hc3BlZWRfc2N1OiBBZGQg
-U3VwcG9ydCBmb3IgQVNUMjcwMC9BU1QyNzUwIEExIFNpbGljb24NCj4gPiAgICAgIFJldmlzaW9u
-cw0KPiA+ICAgIGh3L21pc2MvYXNwZWVkX3NjdTogRml4IHRoZSByZXZpc2lvbiBJRCBjYW5ub3Qg
-YmUgc2V0IGluIHRoZSBTT0MgbGF5ZXINCj4gPiAgICAgIGZvciBBU1QyNzAwDQo+ID4gICAgaHcv
-YXJtL2FzcGVlZF9hc3QyN3gwLmMgU3VwcG9ydCBBU1QyNzAwIEExIEdJQyBJbnRlcnJ1cHQgTWFw
-cGluZw0KPiA+ICAgIGh3L2FybS9hc3BlZWRfYXN0Mjd4MDogU3VwcG9ydCB0d28gbGV2ZWxzIG9m
-IElOVEMgY29udHJvbGxlcnMgZm9yDQo+ID4gICAgICBBU1QyNzAwIEExDQo+ID4gICAgaHcvYXJt
-L2FzcGVlZDogQWRkIFNvQyBhbmQgTWFjaGluZSBTdXBwb3J0IGZvciBBU1QyNzAwIEExDQo+ID4g
-ICAgaHcvbWlzYy9hc3BlZWRfaGFjZTogRml4IGNvZGluZyBzdHlsZQ0KPiA+ICAgIGh3L21pc2Mv
-YXNwZWVkX2hhY2U6IEFkZCBBU1QyNzAwIHN1cHBvcnQNCj4gPiAgICBody9taXNjL2FzcGVlZF9o
-YWNlOiBGaXggYm9vdCBpc3N1ZSBpbiB0aGUgQ3J5cHRvIE1hbmFnZXIgU2VsZiBUZXN0DQo+ID4g
-ICAgaHcvYXJtL2FzcGVlZF9hc3QyN3gwOiBBZGQgSEFDRSBzdXBwb3J0IGZvciBBU1QyNzAwDQo+
-ID4gICAgdGVzdC9mdW5jdGlvbmFsL2FzcGVlZDogSW50cm9kdWNlIG5ldyBmdW5jdGlvbiB0byBm
-ZXRjaCBhc3NldHMNCj4gPiAgICB0ZXN0cy9mdW5jdGlvbmFsL2FzcGVlZDogSW50cm9kdWNlIHN0
-YXJ0X2FzdDI3MDBfdGVzdCBBUEkgYW5kIHVwZGF0ZQ0KPiA+ICAgICAgaHdtb24gcGF0aA0KPiA+
-ICAgIHRlc3RzL2Z1bmN0aW9uYWwvYXNwZWVkOiBVcGRhdGUgdGVzdCBBU1BFRUQgU0RLIHYwOS4w
-NQ0KPiA+ICAgIHRlc3RzL2Z1bmN0aW9uYWwvYXNwZWVkOiBSZW5hbWVkIHRlc3QgY2FzZSBhbmQg
-bWFjaGluZSBmb3IgQVNUMjcwMA0KPiBBMA0KPiA+ICAgIHRlc3RzL2Z1bmN0aW9uYWwvYXNwZWVk
-OiBBZGQgdGVzdCBjYXNlIGZvciBBU1QyNzAwIEExDQo+ID4gICAgZG9jcy9zcGVjczogYWRkIGFz
-cGVlZC1pbnRjDQo+ID4NCj4gPiAgIGRvY3Mvc3BlY3MvYXNwZWVkLWludGMucnN0ICAgICAgICAg
-ICAgICB8IDEzNiArKysrKysNCj4gPiAgIGRvY3Mvc3BlY3MvaW5kZXgucnN0ICAgICAgICAgICAg
-ICAgICAgICB8ICAgMSArDQo+ID4gICBody9hcm0vYXNwZWVkLmMgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCAgMjEgKy0NCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0Mjd4MC5jICAgICAgICAgICAg
-ICAgICB8IDI5MSArKysrKysrKystLS0NCj4gPiAgIGh3L2ludGMvYXNwZWVkX2ludGMuYyAgICAg
-ICAgICAgICAgICAgICB8IDU5Mw0KPiArKysrKysrKysrKysrKysrKysrLS0tLS0NCj4gPiAgIGh3
-L2ludGMvdHJhY2UtZXZlbnRzICAgICAgICAgICAgICAgICAgICB8ICAyNSArLQ0KPiA+ICAgaHcv
-bWlzYy9hc3BlZWRfaGFjZS5jICAgICAgICAgICAgICAgICAgIHwgIDQ0ICstDQo+ID4gICBody9t
-aXNjL2FzcGVlZF9zY3UuYyAgICAgICAgICAgICAgICAgICAgfCAgIDUgKy0NCj4gPiAgIGluY2x1
-ZGUvaHcvYXJtL2FzcGVlZF9zb2MuaCAgICAgICAgICAgICB8ICAgMyArLQ0KPiA+ICAgaW5jbHVk
-ZS9ody9pbnRjL2FzcGVlZF9pbnRjLmggICAgICAgICAgIHwgIDMyICstDQo+ID4gICBpbmNsdWRl
-L2h3L21pc2MvYXNwZWVkX2hhY2UuaCAgICAgICAgICAgfCAgIDEgKw0KPiA+ICAgaW5jbHVkZS9o
-dy9taXNjL2FzcGVlZF9zY3UuaCAgICAgICAgICAgIHwgICAyICsNCj4gPiAgIHRlc3RzL2Z1bmN0
-aW9uYWwvdGVzdF9hYXJjaDY0X2FzcGVlZC5weSB8ICA0NyArLQ0KPiA+ICAgMTMgZmlsZXMgY2hh
-bmdlZCwgOTYzIGluc2VydGlvbnMoKyksIDIzOCBkZWxldGlvbnMoLSkNCj4gPiAgIGNyZWF0ZSBt
-b2RlIDEwMDY0NCBkb2NzL3NwZWNzL2FzcGVlZC1pbnRjLnJzdA0KPiA+DQo+IA0KPiBQYXRjaCAx
-LTkgYW5kIHRoZSBoYWNlIGNoYW5nZXMgY291bGQgYmUgbWVyZ2VkIHF1aWNrbHkuDQo+IA0KPiAN
-Cj4gSSBuZWVkICBzb21lIGhlbHAgb24gcGF0Y2ggMTAsMTIsMTYsMTcuDQo+IA0KPiBBbmRyZXcs
-DQo+IA0KPiBXb3VsZCB5b3UgaGF2ZSB0aW1lIHBsZWFzZSA/DQo+IA0KPiBUaGFua3MsDQo+IA0K
-PiBDLg0KDQo=
+CXL spec 3.2 section 8.2.10.9.5.3 describes media operations commands.
+CXL devices supports media operations Sanitize and Write zero command.
+
+Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c  | 210 +++++++++++++++++++++++++++++++++++-
+ include/hw/cxl/cxl_device.h |   4 +
+ 2 files changed, 213 insertions(+), 1 deletion(-)
+
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 2428d85fef..7b4e4daeb2 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1731,6 +1731,130 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+     return CXL_MBOX_BG_STARTED;
+ }
+ 
++struct dpa_range_list_entry {
++    uint64_t starting_dpa;
++    uint64_t length;
++} QEMU_PACKED;
++
++struct CXLSanitizeInfo {
++    uint32_t dpa_range_count;
++    uint8_t fill_value;
++    struct dpa_range_list_entry dpa_range_list[];
++} QEMU_PACKED;
++
++static uint64_t get_vmr_size(CXLType3Dev *ct3d, MemoryRegion **vmr)
++{
++    MemoryRegion *mr;
++    if (ct3d->hostvmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostvmem);
++        if (vmr) {
++            *vmr = mr;
++        }
++        return memory_region_size(mr);
++    }
++    return 0;
++}
++
++static uint64_t get_pmr_size(CXLType3Dev *ct3d, MemoryRegion **pmr)
++{
++    MemoryRegion *mr;
++    if (ct3d->hostpmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostpmem);
++        if (pmr) {
++            *pmr = mr;
++        }
++        return memory_region_size(mr);
++    }
++    return 0;
++}
++
++static uint64_t get_dc_size(CXLType3Dev *ct3d, MemoryRegion **dc_mr)
++{
++    MemoryRegion *mr;
++    if (ct3d->dc.host_dc) {
++        mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
++        if (dc_mr) {
++            *dc_mr = mr;
++        }
++        return memory_region_size(mr);
++    }
++    return 0;
++}
++
++static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
++                             size_t length)
++{
++    uint64_t vmr_size, pmr_size, dc_size;
++
++    if ((dpa_addr % CXL_CACHE_LINE_SIZE) ||
++        (length % CXL_CACHE_LINE_SIZE)  ||
++        (length <= 0)) {
++        return -EINVAL;
++    }
++
++    vmr_size = get_vmr_size(ct3d, NULL);
++    pmr_size = get_pmr_size(ct3d, NULL);
++    dc_size = get_dc_size(ct3d, NULL);
++
++    if (dpa_addr + length > vmr_size + pmr_size + dc_size) {
++        return -EINVAL;
++    }
++
++    if (dpa_addr > vmr_size + pmr_size) {
++        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
++            return -ENODEV;
++        }
++    }
++
++    return 0;
++}
++
++static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
++                          uint8_t fill_value)
++{
++
++    uint64_t vmr_size, pmr_size;
++    AddressSpace *as = NULL;
++    MemTxAttrs mem_attrs = {0};
++
++    vmr_size = get_vmr_size(ct3d, NULL);
++    pmr_size = get_pmr_size(ct3d, NULL);
++
++    if (dpa_addr < vmr_size) {
++        as = &ct3d->hostvmem_as;
++    } else if (dpa_addr < vmr_size + pmr_size) {
++        as = &ct3d->hostpmem_as;
++    } else {
++        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
++            return -ENODEV;
++        }
++        as = &ct3d->dc.host_dc_as;
++    }
++
++    return address_space_set(as, dpa_addr, fill_value, length, mem_attrs);
++}
++
++/* Perform the actual device zeroing */
++static void __do_sanitize(CXLType3Dev *ct3d)
++{
++    struct CXLSanitizeInfo  *san_info = ct3d->media_op_sanitize;
++    int dpa_range_count = san_info->dpa_range_count;
++    int rc = 0, i;
++
++    for (i = 0; i < dpa_range_count; i++) {
++        rc = sanitize_range(ct3d, san_info->dpa_range_list[i].starting_dpa,
++                            san_info->dpa_range_list[i].length,
++                            san_info->fill_value);
++        if (rc) {
++            goto exit;
++        }
++    }
++exit:
++    g_free(ct3d->media_op_sanitize);
++    ct3d->media_op_sanitize = NULL;
++    return;
++}
++
+ enum {
+     MEDIA_OP_CLASS_GENERAL  = 0x0,
+         #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
+@@ -1823,6 +1947,70 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+     return CXL_MBOX_SUCCESS;
+ }
+ 
++static CXLRetCode media_operations_sanitize(CXLType3Dev *ct3d,
++                                            uint8_t *payload_in,
++                                            size_t len_in,
++                                            uint8_t *payload_out,
++                                            size_t *len_out,
++                                            uint8_t fill_value,
++                                            CXLCCI *cci)
++{
++    struct media_operations_sanitize {
++        uint8_t media_operation_class;
++        uint8_t media_operation_subclass;
++        uint8_t rsvd[2];
++        uint32_t dpa_range_count;
++        struct {
++            uint64_t starting_dpa;
++            uint64_t length;
++        } dpa_range_list[];
++    } QEMU_PACKED *media_op_in_sanitize_pl = (void *)payload_in;
++    uint32_t dpa_range_count = media_op_in_sanitize_pl->dpa_range_count;
++    uint64_t total_mem = 0;
++    int secs = 0, i;
++
++    if (dpa_range_count == 0) {
++        return CXL_MBOX_SUCCESS;
++    }
++
++    if (len_in < (sizeof(*media_op_in_sanitize_pl) +
++           (dpa_range_count * sizeof(struct dpa_range_list_entry)))) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
++    for (i = 0; i < dpa_range_count; i++) {
++        uint64_t start_dpa =
++            media_op_in_sanitize_pl->dpa_range_list[i].starting_dpa;
++        uint64_t length = media_op_in_sanitize_pl->dpa_range_list[i].length;
++        if (validate_dpa_addr(ct3d, start_dpa, length)) {
++            return CXL_MBOX_INVALID_INPUT;
++        }
++        total_mem += media_op_in_sanitize_pl->dpa_range_list[i].length;
++    }
++    ct3d->media_op_sanitize = g_malloc0(sizeof(struct CXLSanitizeInfo) +
++                                  (dpa_range_count *
++                                  sizeof(struct dpa_range_list_entry)));
++
++    if (ct3d->media_op_sanitize) {
++        ct3d->media_op_sanitize->dpa_range_count = dpa_range_count;
++        ct3d->media_op_sanitize->fill_value = fill_value;
++        memcpy(ct3d->media_op_sanitize->dpa_range_list,
++                  media_op_in_sanitize_pl->dpa_range_list,
++                  (dpa_range_count *
++                  sizeof(struct dpa_range_list_entry)));
++        secs = get_sanitize_duration(total_mem >> 20);
++    }
++
++    /* EBUSY other bg cmds as of now */
++    cci->bg.runtime = secs * 1000UL;
++    *len_out = 0;
++    /*
++     * media op sanitize is targeted so no need to disable media or
++     * clear event logs
++     */
++    return CXL_MBOX_BG_STARTED;
++}
++
+ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
+                                        uint8_t *payload_in,
+                                        size_t len_in,
+@@ -1836,6 +2024,7 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
+         uint8_t rsvd[2];
+         uint32_t dpa_range_count;
+     } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+     uint8_t media_op_cl = 0;
+     uint8_t media_op_subclass = 0;
+ 
+@@ -1853,7 +2042,20 @@ static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
+         }
+ 
+         return media_operations_discovery(payload_in, len_in, payload_out,
+-                                             len_out);
++                                          len_out);
++    case MEDIA_OP_CLASS_SANITIZE:
++        switch (media_op_subclass) {
++        case MEDIA_OP_SAN_SUBC_SANITIZE:
++            return media_operations_sanitize(ct3d, payload_in, len_in,
++                                             payload_out, len_out, 0xF,
++                                             cci);
++        case MEDIA_OP_SAN_SUBC_ZERO:
++            return media_operations_sanitize(ct3d, payload_in, len_in,
++                                             payload_out, len_out, 0,
++                                             cci);
++        default:
++            return CXL_MBOX_UNSUPPORTED;
++        }
+     default:
+         return CXL_MBOX_UNSUPPORTED;
+     }
+@@ -3170,6 +3372,12 @@ static void bg_timercb(void *opaque)
+             cxl_dev_enable_media(&ct3d->cxl_dstate);
+         }
+         break;
++        case 0x4402: /* Media Operations sanitize */
++        {
++            CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++            __do_sanitize(ct3d);
++        }
++        break;
+         case 0x4304: /* scan media */
+         {
+             CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index a64739be25..3c5711249b 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -581,6 +581,8 @@ typedef struct CXLSetFeatureInfo {
+     size_t data_size;
+ } CXLSetFeatureInfo;
+ 
++struct CXLSanitizeInfo;
++
+ struct CXLType3Dev {
+     /* Private */
+     PCIDevice parent_obj;
+@@ -651,6 +653,8 @@ struct CXLType3Dev {
+         uint8_t num_regions; /* 0-8 regions */
+         CXLDCRegion regions[DCD_MAX_NUM_REGION];
+     } dc;
++
++    struct CXLSanitizeInfo *media_op_sanitize;
+ };
+ 
+ #define TYPE_CXL_TYPE3 "cxl-type3"
+-- 
+2.34.1
+
 
