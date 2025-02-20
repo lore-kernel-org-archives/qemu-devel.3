@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1839C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40408C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9JI-000770-Lo; Thu, 20 Feb 2025 11:22:00 -0500
+	id 1tl9JS-0007FW-5K; Thu, 20 Feb 2025 11:22:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JG-00076H-LG
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:58 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tl9JQ-0007F2-VT
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:08 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JE-0008Ee-6U
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:58 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-38f2f783e4dso1015675f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:55 -0800 (PST)
+ id 1tl9JP-0008Ge-2F
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:08 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4398c8c8b2cso11632725e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068514; x=1740673314; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068526; x=1740673326; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3YcYYepdVZAM4ELbnew2IIQe2TLsAeYlAjh/W6oMXKo=;
- b=CyXVwHJl3PwTAnXE5iI72AKvROAjbUPCGqiiUKBpdA4iAsnB0hpqrZoro4bclhGYCF
- kC7OcUb06QnLtpU2BvghrVhYhi6HjFXRN3EtgRcoS16MLS6wRJS+PH6fD1t49knPvP09
- YBanw3N7Kva4wIddujbP3ZIv030fCEC+REgvdK88xPWmUxfkGWVlrgHQ54Feqv34DSt1
- 2zVI8T/CSNqyGNiHW9KQCWlBxgASaQ+hpHmwZmCgFGAdKBUzffb2hT5vOLA7Ev3L8GWN
- uyeMG5zNIHmTcoh0rB3sQI7gzZfLwhH6xN06ipQCfSedn3ixrtnhYHrLqf4jyHSuPp8p
- /xYA==
+ :reply-to; bh=TvzLhy1cCVoLs5UL4NDUaH3PLHgGFRSysvG/yfdXyIw=;
+ b=Q4dUBzSc0jQ0EHfIOMshEK/0qNqo9uGwX/2mFGymMSHeeA8f3IJm3UTZGZFVNAjbOb
+ BwGozjEChQZt1iWQAeP4mXtQSOS9browbSvSP0YYBYOQfQswGu/3Vlm7lFaSAYIb3Y/M
+ BzJsI6XehkQ3Y46zlhCCtvzXLsqDcaBT1vRn0lU1x0puxZrWM5a0fBhNRfyoQNPfPypw
+ DkhIOdIXV4QE88YMWAXN4gAP3R1HvP9V7Pqk1oK+PHsAxef/U6twKjKgw/T8vSyEdSEO
+ ejN0fgzv1/z37IRX0XVoUFqVeKL8Yt3AiDjbDaIVXtwv9b2z8IoxE8gacCmITuuCGX0Z
+ /AlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068514; x=1740673314;
+ d=1e100.net; s=20230601; t=1740068526; x=1740673326;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3YcYYepdVZAM4ELbnew2IIQe2TLsAeYlAjh/W6oMXKo=;
- b=d91Os/dP0dU2KBtOU5LYexUEAZnMahqQAyyuaq/uX5J4ZxtCdQMpFPsIMUzXa449hB
- sPdfT//zxDqpLuck40mMSmXWlaSLS9ZyuvV+TQAHssYpT+zVT01BYgGnuQBhVoNPmIrE
- Dqb67rzQ7b2zp+ZAhSYPyjDeL20QrI5pPE+8nor2612ueFb/sdPLT60j7z+ndrJlA68Y
- rAKbyZpEUHY+XfYqfCAvPmS2uXYhqgPgpzY9zdWjIs3UrYno7R5BuucijerkTwir/XQU
- UPXR2GTZtEJS+0oRyvAUvMHXccg3dIkY5c4MDE+AfdrFdTzXVSOiB71OFODfctzb8LUd
- Ma9w==
-X-Gm-Message-State: AOJu0YzA1oQR1tnb5oqee25ee+zp0JAkaP08she4x6w+fxxxIWioK9cb
- 3Jrm0BltZjtRZmNcg0JVgTV8ZGjXUselmSSHTlPm6z6xO61WgRNjSWICPQXkPZS3Lg2kL+Z7w9o
- 5
-X-Gm-Gg: ASbGncuZCLBFIXkak+xi8NnMUhI9UKlFd2L9ZrUURGJE1+DgLwqRgyG3sieWTGrdhQK
- RZqMDKd1wg/fmXIQEYV/nnozOooJNY0iTkpOd4reurpBym4AqBaHrAm/4W753+2MWYqpj3AaCTX
- 6h6ym8KiE0IOhJVi0oCWWlW/TvGKCOKndVki88vYJ3XKVzfriYhuFi1hj+lysTufvmkba92DPiJ
- DqZk5nOF1ToC4HajoYmnc0ElHZAcpPaUm7vGkImGToEilbJkh7AtezDuhaXv519lY/lJ2kgjUdn
- KBK/V3Fhx93/qvtXgRHyng==
-X-Google-Smtp-Source: AGHT+IEKo+axCqEKC2pyTUx+fbnxOk1wdgV5jjJitH6nUCHx6aa9anrIBLmzZ3xs2bRT8PmU0Is0Jg==
-X-Received: by 2002:a5d:4002:0:b0:38f:31fe:6d4f with SMTP id
- ffacd0b85a97d-38f587ca5dfmr6060572f8f.34.1740068514504; 
- Thu, 20 Feb 2025 08:21:54 -0800 (PST)
+ bh=TvzLhy1cCVoLs5UL4NDUaH3PLHgGFRSysvG/yfdXyIw=;
+ b=NXisXU7XQuHBSu7kBsDe1G0/X2C0xmpfuyuhORYKmbDVwmUHe1xVZvDYaIbLFkme9j
+ P3nq5CeT5UTJvanDp8uQ/cg/49G2CYbD8UxncJ0xjK4J5rpqg8TPQWoYksTIV/4vB0d6
+ MglwinZhnuBXGcxdWfiqyQNHyX9/gYbREyHE01QJmVSXYEIiNTMXegdzFubVaFpjcj1B
+ pGaQvSgJcMItn5Rt0Hf8M8eh0HhsENxSYLTfQdUli+XTMcQSCUsdzn8FgLFGNCSe6ml3
+ QP04DAJtskIDhvgLiYoGxWMxBw/0qLEGD6612jAFWHodOiq9ZwaztAvxCNganqHigB3x
+ DXXA==
+X-Gm-Message-State: AOJu0Yx3E169dAGZahVb1hB3PQeMZ8lHr9hG79BaMTYZ74wavoQ28fOq
+ g6FvSWM4oNTFH2uURlTbYNq8MqEJuKr0A5IJ/kYi8Tdv61GpcVGz6PgQXeoQrhEbfomGh4fgDoo
+ H
+X-Gm-Gg: ASbGncuYdRRweJeQ0mDNIpLsXa/Fm0hUUe5+ei4nvu4SZ8+2EUoOSX3Kxoy8YmLsWPP
+ Gyu5nrIXNZpO3o3+3mhHLbzMEDp+EyyYQ3BzzyWfP1w6PEa/KGa6mv91976T97Q3Qa7u/b/7uG6
+ oEcrJFMJ6YQhmDvAyRKTFoS8lZw0YCzfTfhpJ3cWrXK+UfbbbiJrntJE2NGWsflzK3QPzVnefiE
+ 7KxYb/Lo/+M6gWbYbjJh37P9VUOUPVzTn67rrkSOMcV1GJehdevDL/hO3DH3szD8Seb88ULk878
+ 3a41Dnkk18MqAIOiQK4hHQ==
+X-Google-Smtp-Source: AGHT+IH285lL50bxNt5Yke8UF+3LHtqXTF5C9BkUMJN0Tnhi/7Ta6SqadNND2CJLsGar/489VlHBxA==
+X-Received: by 2002:a5d:525a:0:b0:38f:3245:21fc with SMTP id
+ ffacd0b85a97d-38f33f56512mr17214411f8f.50.1740068525549; 
+ Thu, 20 Feb 2025 08:22:05 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.53
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.22.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:21:53 -0800 (PST)
+ Thu, 20 Feb 2025 08:22:05 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/41] target/arm: Use uint32_t in t32_expandimm_imm()
-Date: Thu, 20 Feb 2025 16:21:05 +0000
-Message-ID: <20250220162123.626941-25-peter.maydell@linaro.org>
+Subject: [PULL 32/41] hw/misc: Store DRAM size in NPCM8XX GCR Module
+Date: Thu, 20 Feb 2025 16:21:13 +0000
+Message-ID: <20250220162123.626941-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,47 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stephen Longfield <slongfield@google.com>
+From: Hao Wu <wuhaotsh@google.com>
 
-In t32_expandimm_imm(), we take an 8 bit value XY and construct a
-32-bit value which might be of the form XY, 00XY00XY, XY00XY00, or
-XYXYXYXY.  We do this with multiplications, and we use an 'int' type.
-For the cases where we're setting the high byte of the 32-bit value
-to XY, this means that we do an integer multiplication that might
-overflow, and rely on the -fwrapv semantics to keep this from being
-undefined behaviour.
+NPCM8XX boot block stores the DRAM size in SCRPAD_B register in GCR
+module. Since we don't simulate a detailed memory controller, we
+need to store this information directly similar to the NPCM7XX's
+INCTR3 register.
 
-It's clearer to use an unsigned type here, because we're really
-doing operations on the value considered as a set of bits. The
-result is the same.
-
-The return value from the function remains 'int', because this
-is a decodetree !function function, and follows the API for those
-functions.
-
-Signed-off-by: Stephen Longfield <slongfield@google.com>
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Message-id: 20250219165534.3387376-1-slongfield@google.com
-[PMM: Rewrote the commit message]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
+Message-id: 20250219184609.1839281-9-wuhaotsh@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/misc/npcm_gcr.h |  1 +
+ hw/misc/npcm_gcr.c         | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 68ac3934153..d8225b77c8c 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3510,7 +3510,7 @@ static int t32_expandimm_rot(DisasContext *s, int x)
- /* Return the unrotated immediate from T32ExpandImm.  */
- static int t32_expandimm_imm(DisasContext *s, int x)
- {
--    int imm = extract32(x, 0, 8);
-+    uint32_t imm = extract32(x, 0, 8);
+diff --git a/include/hw/misc/npcm_gcr.h b/include/hw/misc/npcm_gcr.h
+index 9ac76ca9abb..d81bb9afb26 100644
+--- a/include/hw/misc/npcm_gcr.h
++++ b/include/hw/misc/npcm_gcr.h
+@@ -68,6 +68,7 @@ typedef struct NPCMGCRState {
+     uint32_t reset_pwron;
+     uint32_t reset_mdlr;
+     uint32_t reset_intcr3;
++    uint32_t reset_scrpad_b;
+ } NPCMGCRState;
  
-     switch (extract32(x, 8, 4)) {
-     case 0: /* XY */
+ typedef struct NPCMGCRClass {
+diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
+index ac22fb08cb2..9e4a6aee611 100644
+--- a/hw/misc/npcm_gcr.c
++++ b/hw/misc/npcm_gcr.c
+@@ -280,6 +280,19 @@ static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
+     s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
+ }
+ 
++static void npcm8xx_gcr_enter_reset(Object *obj, ResetType type)
++{
++    NPCMGCRState *s = NPCM_GCR(obj);
++    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(obj);
++
++    memcpy(s->regs, c->cold_reset_values, c->nr_regs * sizeof(uint32_t));
++    /* These 3 registers are at the same location in both 7xx and 8xx. */
++    s->regs[NPCM8XX_GCR_PWRON] = s->reset_pwron;
++    s->regs[NPCM8XX_GCR_MDLR] = s->reset_mdlr;
++    s->regs[NPCM8XX_GCR_INTCR3] = s->reset_intcr3;
++    s->regs[NPCM8XX_GCR_SCRPAD_B] = s->reset_scrpad_b;
++}
++
+ static void npcm_gcr_realize(DeviceState *dev, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -323,6 +336,14 @@ static void npcm_gcr_realize(DeviceState *dev, Error **errp)
+      * https://github.com/Nuvoton-Israel/u-boot/blob/2aef993bd2aafeb5408dbaad0f3ce099ee40c4aa/board/nuvoton/poleg/poleg.c#L244
+      */
+     s->reset_intcr3 |= ctz64(dram_size / NPCM7XX_GCR_MIN_DRAM_SIZE) << 8;
++
++    /*
++     * The boot block starting from 0.0.6 for NPCM8xx SoCs stores the DRAM size
++     * in the SCRPAD2 registers. We need to set this field correctly since
++     * the initialization is skipped as we mentioned above.
++     * https://github.com/Nuvoton-Israel/u-boot/blob/npcm8mnx-v2019.01_tmp/board/nuvoton/arbel/arbel.c#L737
++     */
++    s->reset_scrpad_b = dram_size;
+ }
+ 
+ static void npcm_gcr_init(Object *obj)
+@@ -370,16 +391,19 @@ static void npcm7xx_gcr_class_init(ObjectClass *klass, void *data)
+ 
+     c->nr_regs = NPCM7XX_GCR_NR_REGS;
+     c->cold_reset_values = npcm7xx_cold_reset_values;
++    rc->phases.enter = npcm7xx_gcr_enter_reset;
+ }
+ 
+ static void npcm8xx_gcr_class_init(ObjectClass *klass, void *data)
+ {
+     NPCMGCRClass *c = NPCM_GCR_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     dc->desc = "NPCM8xx System Global Control Registers";
+     c->nr_regs = NPCM8XX_GCR_NR_REGS;
+     c->cold_reset_values = npcm8xx_cold_reset_values;
++    rc->phases.enter = npcm8xx_gcr_enter_reset;
+ }
+ 
+ static const TypeInfo npcm_gcr_info[] = {
 -- 
 2.43.0
 
