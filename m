@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A18CC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4A4C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl44g-0005vU-UX; Thu, 20 Feb 2025 05:46:34 -0500
+	id 1tl45Q-0006NF-0N; Thu, 20 Feb 2025 05:47:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tl44O-0005uY-8M
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:46:25 -0500
-Received: from mout.kundenserver.de ([212.227.17.10])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1tl45M-0006K2-82
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:47:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tl44L-0000CR-Jo
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:46:15 -0500
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue108 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1MK3a4-1u3Hfc3XSQ-00Hkxy; Thu, 20 Feb 2025 11:46:06 +0100
-Message-ID: <f92dc2c0-eca2-4a14-a024-d0287c619b77@vivier.eu>
-Date: Thu, 20 Feb 2025 11:46:06 +0100
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1tl45J-0000Ix-Vd
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:47:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740048432;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I3uT+5j22I133zxTX3VahKsG5GmWqv+UxgUGdlGP8Wc=;
+ b=ZUbPPgcbe6VMpMpnto+fO1gXS/G1LbHRJ0IP3cmjQdN0fn/3HHkYQyHa1X2x7kKCyVpynw
+ eiXP8bfhoo+KAcGa/bAEloUEQRGVzR5ahZRxaebLkixmhJLKeRQGFumiRsZ9GxU1i97/II
+ PjFSaIkY2SIWH0EG3bay0t1AiNLHAqM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-4bKo6qANMXe8lexRBEIj1A-1; Thu, 20 Feb 2025 05:45:39 -0500
+X-MC-Unique: 4bKo6qANMXe8lexRBEIj1A-1
+X-Mimecast-MFC-AGG-ID: 4bKo6qANMXe8lexRBEIj1A_1740048338
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f255d44acso380338f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 02:45:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740048338; x=1740653138;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I3uT+5j22I133zxTX3VahKsG5GmWqv+UxgUGdlGP8Wc=;
+ b=NfyU45dimAkcShuyczxi6l2l8kA3gcIFt6LmNRZTHRbD5S6Z3hUnfe3/1bsMc5kvkO
+ cVJPPQzziuy8Nak0NKdYuD+VIKrnTI8BpPwZo+Cvsm7DRwmjpVe1RBGjE82os4f1Xc7B
+ MtgSF0s7jjVVYFrUVliHlsc8COcMGRU0Bu4m1GkN2puKz1Uk0j6J9PxnHM1CaZA6OqMI
+ NC9IFU7rJmLr+Wn8LXHkVaMS1fU2Fd7JSxArBp76veLSw5qmlWFFSjH5slGVZeEw7wRs
+ re2H/eKxPm03tdhyYqgaa0xMbMsSRH0LZYte7QbRUaruIy31GaWDDGC8H3V8yYipfmkJ
+ VuQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoMalR5pPysBcZ+9/CAEjgfmebe+MiMHxske1joiFgzYTV88kqcB7lWUgl9ohi/C6wvXlWO3OW+yws@nongnu.org
+X-Gm-Message-State: AOJu0Yw0udav+O2TvItUtgzGoNXwfMQ0isPHZO5thpTK52Yd3RPqnIKr
+ 4WIQ2oUdtZSEGBIhA6yAXWffkv5C9V+vRHlgXgOT1BAzuM+gf117LFRimmB7QjEj37mGBuYmgVJ
+ j/uyeHVRSmQzsRQqFah8gTsMeB1qZrx9XEG/E+nThzULFZIqy+3L3
+X-Gm-Gg: ASbGncunI6GDoEQ9lxYMfXILnI/GUHE99DgMEVRydFxg0cjJg9VFQ7j3IJYD1Av4Oyl
+ vYT+bGiWrxV0btzu6Mj+lBEl+ZykuM0HvHGK3bfZLYG+ae6eFhMTRwOL9MUVUsN4FkLHdwVZJR5
+ KPPHZbt5o+vithK541vaA83oRgbH/XL5KYZqjjISsFyb32powhNzCGYg8er+a8e69Jewri1KEw+
+ gnkHUsKJCL1jQOyzOuiJjz7zsoj8yJm+XhauJmyVNeJRY1hN2sWMraV63RlR7QmUttKcHf1aWc4
+ Jupexn0MbljafwQSbxkEy4DOKKb8zO70cN95KZ6tYih133g=
+X-Received: by 2002:adf:fd8d:0:b0:38f:476f:e176 with SMTP id
+ ffacd0b85a97d-38f650fee42mr1466184f8f.31.1740048337978; 
+ Thu, 20 Feb 2025 02:45:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrTJcfF7vs+mr7OJ6to+0O2bheYTha5O+xwOZb9uPdp1B3C4d3bfSHWohQeldI1KFASM3wHg==
+X-Received: by 2002:adf:fd8d:0:b0:38f:476f:e176 with SMTP id
+ ffacd0b85a97d-38f650fee42mr1466158f8f.31.1740048337555; 
+ Thu, 20 Feb 2025 02:45:37 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258cccd3sm20215367f8f.23.2025.02.20.02.45.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 02:45:36 -0800 (PST)
+Message-ID: <44a82e93-003a-4d70-a1f0-4bc3efd045d2@redhat.com>
+Date: Thu, 20 Feb 2025 11:45:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] binfmt: Shuffle things around
-To: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair23@gmail.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- David Abdurachmanov <davidlt@rivosinc.com>
-References: <20250127182924.103510-1-abologna@redhat.com>
- <20250127182924.103510-2-abologna@redhat.com>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- xsFNBFYFJhkBEAC2me7w2+RizYOKZM+vZCx69GTewOwqzHrrHSG07MUAxJ6AY29/+HYf6EY2
- WoeuLWDmXE7A3oJoIsRecD6BXHTb0OYS20lS608anr3B0xn5g0BX7es9Mw+hV/pL+63EOCVm
- SUVTEQwbGQN62guOKnJJJfphbbv82glIC/Ei4Ky8BwZkUuXd7d5NFJKC9/GDrbWdj75cDNQx
- UZ9XXbXEKY9MHX83Uy7JFoiFDMOVHn55HnncflUncO0zDzY7CxFeQFwYRbsCXOUL9yBtqLer
- Ky8/yjBskIlNrp0uQSt9LMoMsdSjYLYhvk1StsNPg74+s4u0Q6z45+l8RAsgLw5OLtTa+ePM
- JyS7OIGNYxAX6eZk1+91a6tnqfyPcMbduxyBaYXn94HUG162BeuyBkbNoIDkB7pCByed1A7q
- q9/FbuTDwgVGVLYthYSfTtN0Y60OgNkWCMtFwKxRaXt1WFA5ceqinN/XkgA+vf2Ch72zBkJL
- RBIhfOPFv5f2Hkkj0MvsUXpOWaOjatiu0fpPo6Hw14UEpywke1zN4NKubApQOlNKZZC4hu6/
- 8pv2t4HRi7s0K88jQYBRPObjrN5+owtI51xMaYzvPitHQ2053LmgsOdN9EKOqZeHAYG2SmRW
- LOxYWKX14YkZI5j/TXfKlTpwSMvXho+efN4kgFvFmP6WT+tPnwARAQABzSJMYXVyZW50IFZp
- dmllciA8bGF1cmVudEB2aXZpZXIuZXU+wsF4BBMBAgAiBQJWBTDeAhsDBgsJCAcDAgYVCAIJ
- CgsEFgIDAQIeAQIXgAAKCRDzDDi9Py++PCEdD/oD8LD5UWxhQrMQCsUgLlXCSM7sxGLkwmmF
- ozqSSljEGRhffxZvO35wMFcdX9Z0QOabVoFTKrT04YmvbjsErh/dP5zeM/4EhUByeOS7s6Yl
- HubMXVQTkak9Wa9Eq6irYC6L41QNzz/oTwNEqL1weV1+XC3TNnht9B76lIaELyrJvRfgsp9M
- rE+PzGPo5h7QHWdL/Cmu8yOtPLa8Y6l/ywEJ040IoiAUfzRoaJs2csMXf0eU6gVBhCJ4bs91
- jtWTXhkzdl4tdV+NOwj3j0ukPy+RjqeL2Ej+bomnPTOW8nAZ32dapmu7Fj7VApuQO/BSIHyO
- NkowMMjB46yohEepJaJZkcgseaus0x960c4ua/SUm/Nm6vioRsxyUmWd2nG0m089pp8LPopq
- WfAk1l4GciiMepp1Cxn7cnn1kmG6fhzedXZ/8FzsKjvx/aVeZwoEmucA42uGJ3Vk9TiVdZes
- lqMITkHqDIpHjC79xzlWkXOsDbA2UY/P18AtgJEZQPXbcrRBtdSifCuXdDfHvI+3exIdTpvj
- BfbgZAar8x+lcsQBugvktlQWPfAXZu4Shobi3/mDYMEDOE92dnNRD2ChNXg2IuvAL4OW40wh
- gXlkHC1ZgToNGoYVvGcZFug1NI+vCeCFchX+L3bXyLMg3rAfWMFPAZLzn42plIDMsBs+x2yP
- +c7BTQRWBSYZARAAvFJBFuX9A6eayxUPFaEczlMbGXugs0mazbOYGlyaWsiyfyc3PStHLFPj
- rSTaeJpPCjBJErwpZUN4BbpkBpaJiMuVO6egrC8Xy8/cnJakHPR2JPEvmj7Gm/L9DphTcE15
- 92rxXLesWzGBbuYxKsj8LEnrrvLyi3kNW6B5LY3Id+ZmU8YTQ2zLuGV5tLiWKKxc6s3eMXNq
- wrJTCzdVd6ThXrmUfAHbcFXOycUyf9vD+s+WKpcZzCXwKgm7x1LKsJx3UhuzT8ier1L363RW
- ZaJBZ9CTPiu8R5NCSn9V+BnrP3wlFbtLqXp6imGhazT9nJF86b5BVKpF8Vl3F0/Y+UZ4gUwL
- d9cmDKBcmQU/JaRUSWvvolNu1IewZZu3rFSVgcpdaj7F/1aC0t5vLdx9KQRyEAKvEOtCmP4m
- 38kU/6r33t3JuTJnkigda4+Sfu5kYGsogeYG6dNyjX5wpK5GJIJikEhdkwcLM+BUOOTi+I9u
- tX03BGSZo7FW/J7S9y0l5a8nooDs2gBRGmUgYKqQJHCDQyYut+hmcr+BGpUn9/pp2FTWijrP
- inb/Pc96YDQLQA1q2AeAFv3Rx3XoBTGl0RCY4KZ02c0kX/dm3eKfMX40XMegzlXCrqtzUk+N
- 8LeipEsnOoAQcEONAWWo1HcgUIgCjhJhBEF0AcELOQzitbJGG5UAEQEAAcLBXwQYAQIACQUC
- VgUmGQIbDAAKCRDzDDi9Py++PCD3D/9VCtydWDdOyMTJvEMRQGbx0GacqpydMEWbE3kUW0ha
- US5jz5gyJZHKR3wuf1En/3z+CEAEfP1M3xNGjZvpaKZXrgWaVWfXtGLoWAVTfE231NMQKGoB
- w2Dzx5ivIqxikXB6AanBSVpRpoaHWb06tPNxDL6SVV9lZpUn03DSR6gZEZvyPheNWkvz7bE6
- FcqszV/PNvwm0C5Ju7NlJA8PBAQjkIorGnvN/vonbVh5GsRbhYPOc/JVwNNr63P76rZL8Gk/
- hb3xtcIEi5CCzab45+URG/lzc6OV2nTj9Lg0SNcRhFZ2ILE3txrmI+aXmAu26+EkxLLfqCVT
- ohb2SffQha5KgGlOSBXustQSGH0yzzZVZb+HZPEvx6d/HjQ+t9sO1bCpEgPdZjyMuuMp9N1H
- ctbwGdQM2Qb5zgXO+8ZSzwC+6rHHIdtcB8PH2j+Nd88dVGYlWFKZ36ELeZxD7iJflsE8E8yg
- OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
- JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
- ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20250127182924.103510-2-abologna@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:JVe0ZHeFQHii7TcK7KthgJ0wF/m/Ybd3SV2h9emh/0pyuB8duDM
- 2tj6jcv9ltvXXWucRmyli6nZyWGLiceZ/9ENRgC4m3XvUARdVQJP9/xoiHQFnVTC3CPWgAu
- 3DCq6fRHCsssCYN3gOihG5YqzH1Fm/tNkfKEuFywDVRMcCehrk9lY3zUNbEaIyCM3nNntqQ
- 2j/Dt93ayIiWVjcHxjVrQ==
-UI-OutboundReport: notjunk:1;M01:P0:9ZoF9LQM4U0=;v/FA9SUvDMeGBbzGrOYksRBUV/D
- oRrjjeAH/wTMqtKo6VePaPLux2N5UVWRfSqyANkxrziDa4pV7yzj3EtqbjTT8KSsYmkbnhGTi
- 3wG4qDtkEG7v6UQ/+Lehb3CKer30rhpfQiGPHUXo8FvLwVcwLnoX6UGPKwSvGZyZ8P6JFy2Ew
- PV/BmstjPX8ueiw6aw2oigZeZcXW9BKfDVM+dgnWWTigUBcOxhzqVodyDX/2OKYQ8Hd4X8UkR
- klqxSa9B5Mrr49YsExZYj8u/dc7ddkHE8mE8tnsPS0Ya3xn9BQj2LGItK766zRpNDPZbAhZqK
- X+Ne+xcxY12JQBKeZ/OxJCBOsoz5uqC4CjS2rfnS7gs4PahvpLv8SwTDgo5/3Ays8M0HaCzX2
- pLwLBr4UNp46tqVbsKvhZJZoPtpdvXPsbp70S0pC60xOnplViEt2JNR0gOgONhyQlS0Z47k49
- 4GF6iyOKqfyo1N/LVZ4no5hRy/XO0O2KELElZk4ZPjDj7l+wUxFrkS0exEC8bDRVm9BE5jmZH
- nQINEB/o9edpuRd6GBMRasDEphUskm91VWuCs82Jmt39Mon/LD2sGe0jZ4mi6e9e0RIGBohT/
- vXKcEI2QjF5wy85Ro9rl+UepJaCM7NjskWBWjhRNH2vMUE1XIxAL2c/p1NdXJ2UGjixl1GW6v
- bootiw3lpKlzSYuKo0vypiUe4GDG29JrWmUbrM4mvGWAFIB6LJSnwEq2/soz83TKo3Sk1uCFr
- dsxuXv17vd+Ku58w3VV/P3/xzjLEwmxmhIoDCXvcUH23fKPAURpRZa1+mHlSnPt8Z2Sm6jfs1
- L3X9yIz6YfyAhZb4uO+r1fI3X88HM16BJ8D0ZgN5Spsdyu450DYsSdg1jrR47ea5DvUyQ0FNn
- HbOUUtypwlZJEQKVbLPQAFQ2rxBhDvGT5MG9r7WEnVCcUoO0ICr/uQW4Dbk4SbLfuB82mBslY
- DXc4hRtQmvzwXP6VeBz4tbJuE1t3GJ2BG3So5EXuXciPvTUoADiZXgQ8xr62Ah/Ci4jOpIqg9
- rm71ETzFqerjYkK/Tdh5gKwJDkKTpegtTyNBCedd+OqFX02Ecy28CO3HEMcqzg6HaVnrWR34K
- eWSUF7b9FxdXrnA/y35ic1BYbwnszGvGbtQeOUPQX1tzqYcskAbXkKTFmfQmwITtKOAJSxM+m
- 1CvwYqg9a3vyubChMTCHtZnv+6FYNKF9OkLKCONWEsK1p2C4DjE53X8g0J5YWauiNUMuQSs+T
- o8/etDpyms/3t95KaT/+6mvIeNTM2IwQvVXdadF4N5tD3C5WSsAIsweyiFRr00hBREgQnhdj8
- /UB167oi84pANOvbRO5X1LhasqkTN6YOEAA5whtDh49y+A9XxmA+VRdPIZYPEDxlbfw
-Received-SPF: pass client-ip=212.227.17.10; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
+ d3hot state
+Content-Language: en-US
+To: eric.auger@redhat.com, Alex Williamson <alex.williamson@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, clg@redhat.com,
+ zhenzhong.duan@intel.com
+References: <20250219175941.135390-1-eric.auger@redhat.com>
+ <20250219115844.062c5513.alex.williamson@redhat.com>
+ <20250219141945.5e74c7f3.alex.williamson@redhat.com>
+ <4b7cfa82-c730-43af-ab47-53f20131104a@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <4b7cfa82-c730-43af-ab47-53f20131104a@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,50 +115,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 27/01/2025 à 19:29, Andrea Bolognani a écrit :
-> This should make no difference from the functional point of
-> view and it's just preparation for upcoming changes.
-> 
-> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
-> ---
->   scripts/qemu-binfmt-conf.sh | 17 ++++++++++-------
->   1 file changed, 10 insertions(+), 7 deletions(-)
-> 
-> diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
-> index 6ef9f118d9..426f075e31 100755
-> --- a/scripts/qemu-binfmt-conf.sh
-> +++ b/scripts/qemu-binfmt-conf.sh
-> @@ -318,20 +318,23 @@ qemu_set_binfmts() {
->           mask=$(eval echo \$${cpu}_mask)
->           family=$(eval echo \$${cpu}_family)
->   
-> +        target="$cpu"
-> +        if [ "$cpu" = "i486" ] ; then
-> +            target="i386"
-> +        fi
-> +
-> +        qemu="$QEMU_PATH/qemu-$target$QEMU_SUFFIX"
-> +
->           if [ "$magic" = "" ] || [ "$mask" = "" ] || [ "$family" = "" ] ; then
->               echo "INTERNAL ERROR: unknown cpu $cpu" 1>&2
->               continue
->           fi
->   
-> -        qemu="$QEMU_PATH/qemu-$cpu"
-> -        if [ "$cpu" = "i486" ] ; then
-> -            qemu="$QEMU_PATH/qemu-i386"
-> +        if [ "$host_family" = "$family" ] ; then
-> +            continue
->           fi
->   
-> -        qemu="$qemu$QEMU_SUFFIX"
-> -        if [ "$host_family" != "$family" ] ; then
-> -            $BINFMT_SET
-> -        fi
-> +        $BINFMT_SET
->       done
->   }
->   
+Hi Alex,
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+On 2/20/25 11:31 AM, Eric Auger wrote:
+> 
+> Hi Alex,
+> 
+> On 2/19/25 10:19 PM, Alex Williamson wrote:
+>> On Wed, 19 Feb 2025 11:58:44 -0700
+>> Alex Williamson <alex.williamson@redhat.com> wrote:
+>>
+>>> On Wed, 19 Feb 2025 18:58:58 +0100
+>>> Eric Auger <eric.auger@redhat.com> wrote:
+>>>
+>>>> Since kernel commit:
+>>>> 2b2c651baf1c ("vfio/pci: Invalidate mmaps and block the access
+>>>> in D3hot power state")
+>>>> any attempt to do an mmap access to a BAR when the device is in d3hot
+>>>> state will generate a fault.
+>>>>
+>>>> On system_powerdown, if the VFIO device is translated by an IOMMU,
+>>>> the device is moved to D3hot state and then the vIOMMU gets disabled
+>>>> by the guest. As a result of this later operation, the address space is
+>>>> swapped from translated to untranslated. When re-enabling the aliased
+>>>> regions, the RAM regions are dma-mapped again and this causes DMA_MAP
+>>>> faults when attempting the operation on BARs.
+>>>>
+>>>> To avoid doing the remap on those BARs, we compute whether the
+>>>> device is in D3hot state and if so, skip the DMA MAP.  
+>>> Thinking on this some more, QEMU PCI code already manages the device
+>>> BARs appearing in the address space based on the memory enable bit in
+>>> the command register.  Should we do the same for PM state?
+>>>
+>>> IOW, the device going into low power state should remove the BARs from
+>>> the AddressSpace and waking the device should re-add them.  The BAR DMA
+>>> mapping should then always be consistent, whereas here nothing would
+>>> remap the BARs when the device is woken.
+>>>
+>>> I imagine we'd need an interface to register the PM capability with the
+>>> core QEMU PCI code, where address space updates are performed relative
+>>> to both memory enable and power status.  There might be a way to
+>>> implement this just for vfio-pci devices by toggling the enable state
+>>> of the BAR mmaps relative to PM state, but doing it at the PCI core
+>>> level seems like it'd provide behavior more true to physical hardware.
+>> I took a stab at this approach here, it doesn't obviously break
+>> anything in my configs, but I haven't yet tried to reproduce this exact
+>> scenario.
+>>
+>> https://gitlab.com/alex.williamson/qemu/-/tree/pci-pm-power-state
+
+it does not totally fix the issue: I now get:
+
+qemu-system-x86_64: warning: vfio_container_dma_map(0x55cc25705680,
+0x380000000000, 0x1000000, 0x7f8762000000) = -14 (Bad address)
+0000:41:00.0: PCI peer-to-peer transactions on BARs are not supported.
+
+
+Eric
+
+> 
+> So if I understand correctly the BAR regions will disappear upon the
+> config cmd write in vfio_sub_page_bar_update_mapping(). Is that correct?
+> I will give it a try on my setup...
+>>
+>> There's another pm_cap on the PCIExpressDevice that needs to be
+>> consolidated as well, once I do some research to figure out why a
+>> non-express capability is tracked only by express devices and what
+>> they're doing with it.  Thanks,
+> I am not sure I get this last point though.
+> 
+> Thanks
+> 
+> Eric
+>>
+>> Alex
+>>
+> 
+
 
