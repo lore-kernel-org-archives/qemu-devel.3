@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E58C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 19:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9C5C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 20:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlCbZ-0005Ut-RD; Thu, 20 Feb 2025 14:53:05 -0500
+	id 1tlCic-0007fh-OY; Thu, 20 Feb 2025 15:00:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tlCbT-0005Tv-Tv; Thu, 20 Feb 2025 14:52:59 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tlCbQ-0007IE-MG; Thu, 20 Feb 2025 14:52:58 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5e0939c6456so2309873a12.3; 
- Thu, 20 Feb 2025 11:52:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740081171; x=1740685971; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EnxlAB7o48lgHBfcg7nTxqKrM20S52gErE0aE/Mjnao=;
- b=mjceW3juN+51Xen/fESVwRgYwvdsm0lCXPyuFJ+q9mfqqV01exayITu4xZjP0Xv0uW
- UtLF/dW1OScr1vIJgfKsclOsapxKrX0wijuSC4jIMt4fPM2nT6tl5rUirIyyqekhUoA1
- Xho9Pca1OXW7CgoKiRJSQ0ZWTcBeFkf+gfQDefqoXoqt05+pbTw0LeP0WvDTiPWtj9eZ
- lxiW+oP5AOqJ2sbnTwKzMhy8CSb5XfG15rhIUT5XeKsFLAPeThD7pzalzratD9jhvCiT
- HGjGk9dZD/hmLsLXWmM/qO5c/j4U6VFS4cna6jxVFnltqCvXxNK5U+84yU0IXuyznpKR
- N/MA==
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tlCiY-0007fC-0p
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 15:00:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tlCiV-0008Ot-Ud
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 15:00:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740081612;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BmKzjaNSRadRsfGvVd28eze2sxG/mnoDMm0RrSy2xVI=;
+ b=ZDpBez535IJnZZAE2nT8XHRhW9BjIG2Y5MxCNW1UrVLvE9G6er4sLg4Q2gHohlmCKG85M5
+ W6K1IgxopHXG+SKN4vvOkLSQSnbFkatfk8GV5NzwCz2bS15KMQtnolS/EA3U77MjLxIPWZ
+ f5BQ4a0ipJPhypZhhnYP6/XPR+Orld0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-79-3kyoHDVdPQ6Z7UwPE-y1yA-1; Thu, 20 Feb 2025 15:00:09 -0500
+X-MC-Unique: 3kyoHDVdPQ6Z7UwPE-y1yA-1
+X-Mimecast-MFC-AGG-ID: 3kyoHDVdPQ6Z7UwPE-y1yA_1740081608
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f2ef5f0dbso578153f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 12:00:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740081171; x=1740685971;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EnxlAB7o48lgHBfcg7nTxqKrM20S52gErE0aE/Mjnao=;
- b=IGJn9BEuTOPSNUSqTvQ9mvhjxDVGXAqDLqZ8y00oTCf7WoOrGa2JdDQLZ2TJTzw+cS
- T5dm0Ku16h07x3auWFhImf3OGNioNzq/PUlY7ms94T1Um3DyDEhjbecziyV0o6bmTMgj
- CjlOCFjIKxS1AS7zRsymMmD8ctfzVOfMmZaCtJZi2yFbA/iBmCDMR6Gha7uM6ghvvD6K
- h4FsxiGhhduCwvkB278yFKMRc8pern8Exj5HmRiaVGf5kY0xCHVt7Wph7wc9Q850JoIG
- jJ0OXgTU4CevRqyco9ockJUYUT5QacGzJfvtovBOlNVXIdQkUmJzoMrEgqUQhqK6BMW8
- /NRw==
+ d=1e100.net; s=20230601; t=1740081608; x=1740686408;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BmKzjaNSRadRsfGvVd28eze2sxG/mnoDMm0RrSy2xVI=;
+ b=RQVj28qTfJEYa2n6Vm9uv70w0PxpxA3wnFCwScB8cciHqt4Ajd1R8gRwVsfjybOSgj
+ rK+2LXbf4Sk6PhzFXXHtsORSxMnby+Et4tjK+Cdx8hKzALfS3RLqAtLSXqGVN7DRirr4
+ q0dqrvzMSAkTwfiirjCJxCfXc2xy4EcXq5A97/lLgH4nl2kEDZhqB7Vni73e9dRS0iFv
+ EE9jZvzVrJ4OKK55tv2ExQ8i7G3XT0/T3SrxZnuU5Xkp2c/jWWAgD0KKHgGIwJJTOi5F
+ Ah4yDvA3fwM2Cby3EM6qteYaIQ4YL+My2Px2FImTQ8vg6IQ45nHjd8nXN6mc1pdHLhRO
+ /8Zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUt6XZjRFAbkJsGN261gtsLacWkne5DxavEocSUlHT10Tn+IJvZ9c+EwVImS86a//qOthS4EboBuA==@nongnu.org
-X-Gm-Message-State: AOJu0YzfXnWpA7IH0GiguF4bC7xhGZG7avTRQp7lPrDFRLaqACEyr3FD
- KCiMf9/am02yPYIsHgs5uRr7/a6zzacc0530Jv6t9q3zhUw7lBdlh32Kbw==
-X-Gm-Gg: ASbGncvOScsqqmCu9gbT2JbFXDSJmycaEsDikFzeXYJYYx2E0rkhjdOY5xSkOvHDSat
- Kz0IdXjuv3IYh7DZ0dnb7T//uPKJQrs9FSaYjmvcpQ0qForxFLHU3nHSCWX143wkR4t9yNP25EY
- Dru7M7GfCcWM4OJe61T7XBDh5FhJ+BUG+u27gNHZHSAjroM5K1TOeOozsMelTVjsCxQPKolmhLW
- WgosfF18p1eu0+jPI5n2W51i/79KSEOThz7bFul4roUggFcNqBltUqaa5eS8ferJbD6sMcrGrGM
- dWHGD5l/XP1W9xdHjQZfkmFcc5BKV5diNGCpQOE6KvGqZ0+UiVi4pRCyB2Q4nzY=
-X-Google-Smtp-Source: AGHT+IGw1eCHTKqgK87C+87UdkNTTJtUKUnZFwa67q9AWxA1LEuHHAYF4NN7j+hl7TGfLZ3gLeMU/Q==
-X-Received: by 2002:a17:907:94c8:b0:aa6:6c46:7ca1 with SMTP id
- a640c23a62f3a-abc0d97e4eemr7246066b.10.1740081170809; 
- Thu, 20 Feb 2025 11:52:50 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-078-054-080-022.78.54.pool.telefonica.de.
- [78.54.80.22]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aba532323cbsm1535240466b.14.2025.02.20.11.52.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 11:52:49 -0800 (PST)
-Date: Thu, 20 Feb 2025 19:11:11 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-CC: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_hw/ppc/e500=3A_Partial_impleme?=
- =?US-ASCII?Q?ntation_of_local_access_window_registers?=
-In-Reply-To: <a4083d0c-acd5-f9da-66da-d796d09a0808@eik.bme.hu>
-References: <20250115211544.307124E602F@zero.eik.bme.hu>
- <22e114ac-2c3f-76f1-2172-9adf0c50ad5f@eik.bme.hu>
- <DE6FAB3B-F994-47B8-95A5-9D1BFD6B621F@gmail.com>
- <06F97BE3-057D-4D9D-AAAF-2B7438358BB8@gmail.com>
- <69e08a66-b146-4d76-080f-7fa6f4a0a13f@eik.bme.hu>
- <32BC6ABA-EE27-437C-81C0-AEEE3E0DFC9A@gmail.com>
- <81cd9319-848c-93f5-156d-b35226f90966@eik.bme.hu>
- <4023E866-442D-408B-9BD7-9036694DD8DF@gmail.com>
- <a4083d0c-acd5-f9da-66da-d796d09a0808@eik.bme.hu>
-Message-ID: <F5E0CFB5-ABE9-448E-B76B-4D08D541A092@gmail.com>
+ AJvYcCXIaWIDQxaJSTOd/PvmHl4bgAQCQkRd+PM/5y9wLozw8Ub8kCHNk3s/JpvCLZXoPRoNwKlQk78EjpcX@nongnu.org
+X-Gm-Message-State: AOJu0Yz0YCPOYyNgM3BrACAzhru8YfqDohmXSzNGY8Q/4fXyO2btiqmW
+ xxNUkSclkdgEyG1VMGdbiT6V9oHVo8tBRcLNQ7fqFsYeONL5uoaMgjyybYBDMc6206cZl+QfdXF
+ jA3egz1fYQDpQKVUwhnDdDgkc0xps+aLzwxWfUrMXXNMRyYP1utUJ
+X-Gm-Gg: ASbGncujYVhjsh1pvvCd43Do8v7waf+aHT4TFlH3W4j0ulEQpshwPJLZ1+J5AheOsW2
+ D/JX15ccohUMtfkw/6cXPbx5xhd9QeagCvHApy/bvy0BcHIa4cY+GEJOtj/N9JswnUtNw4qgdpo
+ YErV/JOJsnSTlywfWDq5eqqR2UnBLAKdFausM9Vjmg65u1KWLX/KbNJcjYzfrhZp5Lyxx1uMwV/
+ /d15rzKqLKog7dfV23oI8eDY3WyEjVJ0HTIRMndMmBjGnF0Bi/lsgFyg8u7hXHDAnEMNivJkzaQ
+ R8ccMjdkgTQW6fuq
+X-Received: by 2002:a5d:6e8a:0:b0:38d:e378:20f7 with SMTP id
+ ffacd0b85a97d-38f6f09749emr383724f8f.41.1740081606926; 
+ Thu, 20 Feb 2025 12:00:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFN25ewCrDeKdO6CyYofac833fmpaFVzpZN+Dcbc8gkUPeJ5sMiH4fXMvaNJip1VHnYf4RyZw==
+X-Received: by 2002:a5d:6e8a:0:b0:38d:e378:20f7 with SMTP id
+ ffacd0b85a97d-38f6f09749emr383696f8f.41.1740081606453; 
+ Thu, 20 Feb 2025 12:00:06 -0800 (PST)
+Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud.
+ [2a10:fc81:a806:d6a9::1]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4399c5f901bsm29518775e9.3.2025.02.20.12.00.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 12:00:06 -0800 (PST)
+Date: Thu, 20 Feb 2025 21:00:04 +0100
+From: Stefano Brivio <sbrivio@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, qemu-devel@nongnu.org, Jason Wang
+ <jasowang@redhat.com>, Thibaut Collet <thibaut.collet@6wind.com>
+Subject: Re: [PATCH] vhost-user: Silence unsupported
+ VHOST_USER_PROTOCOL_F_RARP error
+Message-ID: <20250220210004.1501dd86@elisabeth>
+In-Reply-To: <20250220131932-mutt-send-email-mst@kernel.org>
+References: <20250121100029.1106973-1-lvivier@redhat.com>
+ <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+ <20250122085828-mutt-send-email-mst@kernel.org>
+ <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+ <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
+ <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
+ <20250124170327.448805ad@elisabeth>
+ <20250220102724-mutt-send-email-mst@kernel.org>
+ <20250220175910.25688823@elisabeth>
+ <20250220131932-mutt-send-email-mst@kernel.org>
+Organization: Red Hat
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sbrivio@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,181 +124,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 20 Feb 2025 13:21:33 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
+> On Thu, Feb 20, 2025 at 05:59:10PM +0100, Stefano Brivio wrote:
+> > On Thu, 20 Feb 2025 10:28:20 -0500
+> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> >   
+> > > On Fri, Jan 24, 2025 at 05:03:27PM +0100, Stefano Brivio wrote:  
+> > > > But I don't understand why we're leaving this as it is.    
+> > > 
+> > > So that people notice if there's some backend problem and
+> > > announcements are not going out. should help debug migration
+> > > issues. which we had, so we added this :)  
+> > 
+> > The message mentions that the back-end fails to do something it didn't
+> > and can't even do, that's (one reason) why it's wrong (and confusing)
+> > and this patch is obviously correct.
+> > 
+> > Perhaps the commit title isn't entirely accurate (it should say "when
+> > unsupported", I guess) but it's somewhat expected to sacrifice detail
+> > in the name of brevity, there. A glimpse at the message is enough.
+> > 
+> > Laurent now added a workaround in passt to pretend that we support
+> > VHOST_USER_PROTOCOL_F_RARP by doing nothing in the callback, report
+> > success, and silence the warning:
+> > 
+> >   https://passt.top/passt/commit/?id=dd6a6854c73a09c4091c1776ee7f349d1e1f966c
+> > 
+> > but having to do this kind of stuff is a bit unexpected while
+> > interacting with another opensource project.
+> > 
+> > -- 
+> > Stefano  
+> 
+> 
+> let me explain. historically backends did not support migration.
+> then migration was added. as it was assumed RARP is required,
+> we did not add a feature flag for "supports migration" and
+> instead just assumed that VHOST_USER_PROTOCOL_F_RARP is that.
+> 
+> If you silence the warning you silence it for old backends
+> with no migration support.
 
-Am 13=2E Februar 2025 00:13:24 UTC schrieb BALATON Zoltan <balaton@eik=2Eb=
-me=2Ehu>:
->On Wed, 12 Feb 2025, Bernhard Beschow wrote:
->> Am 7=2E Februar 2025 01:12:38 UTC schrieb BALATON Zoltan <balaton@eik=
-=2Ebme=2Ehu>:
->>> On Thu, 6 Feb 2025, Bernhard Beschow wrote:
->>>> Am 2=2E Februar 2025 01:25:22 UTC schrieb BALATON Zoltan <balaton@eik=
-=2Ebme=2Ehu>:
->>>>=20
->>>> I had to apply <https://github=2Ecom/shentok/qemu/commit/56550cbb2805=
-be2913ad9c12d6d9c6a9a3bf6f2c> to have the SPL load the whole U-Boot proper=
-=2E
->>>=20
->>> Is that an alternative to commenting out page_aligned =3D true?
->>=20
->> Well, it's not needed with the patch applied=2E The patch ensures that =
-all data gets loaded: <https://lore=2Ekernel=2Eorg/qemu-devel/D62F06C8-5247=
--4FBC-82A9-9127352B30A6@gmail=2Ecom/>
->
->I think the block layer has a solution for such long running operations a=
-nd uses coroutines for that but I don't know how that works and I could not=
- find useful documentation on it=2E But I don't understand the problem eith=
-er so if you've solved it and submit a patch that can be merged that's good=
- enough for me=2E
->
->>> There are two U-Boot binaries on the card for some reason (I think may=
-be the first one runs from cache as RAM and sets up the memory controller),=
- then the first one loads some env variables and then the second U-Boot whi=
-ch then loads the bootloader=2E
->>=20
->> Yeah, that's the SPL and U-Boot proper=2E The first one sets up RAM bas=
-ed on DDR3 data, copies U-Boot proper there (currently broken in QEMU, see =
-above), and passes control to it=2E
->
->U-Boot proper runs for me too but it may have a bug in the Tabor specific=
- patch (maybe revealed by missing emulation) that prevents the bootloader t=
-o find a device but I can run until U-Boot and enter commands to it, it onl=
-y stops in the bootloader when that calls back to U-Boot=2E If you extract =
-U-Boot proper from the SD card image, convert it to elf and run it with -bi=
-os you'd get a prompt so it works=2E That's what I do now for experimenting=
- but I'd like it to boot from the SD card the same way as real machine does=
- eventually=2E
->
->> Considering the technical manual it may be possible to compile U-Boot o=
-neself and replace components of the firmware image=2E That way, one could =
-track down why no bootable devices are found, i=2Ee=2E check whether and wh=
-ich bootmenu_x variables are populated=2E That's not on my todo list though=
-=2E
->
->First of all one would need the source for that which should be available=
- because of GPL but it's not, at least I could not find it yet=2E Eventuall=
-y I'll get it and may look at this but I'd also like to run binary known to=
- work on real machine to make sure emulation is correct=2E
->
->>> These existing machines set up values in PPCE500MachineClass in their =
-init methods that the e500=2Ec uses to change its behaviour to match the ma=
-chine so to continue adding another board in the classic way I'd continue l=
-ike that=2E I've added another similar board file like those machines setti=
-ng the values matching P1022=2E For the additional devices in e500=2Ec I've=
- just patched them in for experimenting but these could be optionally creat=
-ed based on new values in the MachineClass, like has_2nd_i2c or similar to =
-not change existing machines=2E
->>=20
->> The challenge is that different variants of the SoC have the same IP co=
-res mapped at different offsets with possibly (haven't checked) IRQs=2E The=
-se need to be considered when generating the DTB=2E To avoid dealing with t=
-his question -- and at the same time explore data-driven machine creation -=
-- I reversed the process and generated the machine from the DTB=2E But this=
- question needs to be answered when implementing a P1022=2E
->
->Yes, your DTB based board code is a nice way to create different machines=
- as the DTB already describes these offsets and irq connections and your co=
-de seems to be quite simple so I think it's a good idea that's worth pursui=
-ng, that could enhance the ppce500 machine and make it more generic=2E It c=
-ould then also drop the separate mpc85xx machine and put all of these under=
- one ppce500 machine with passing the right dtb to create the different mac=
-hines=2E As long as these are similar enough and only differ in the devices=
- they have, this could emulate a lot of these SoCs with the same code=2E
+Thanks for the explanation. I'm struggling to grasp this. So if a
+back-end doesn't support migration, because VHOST_USER_PROTOCOL_F_RARP
+is not present in the features flag, migration is done anyway, but then
+this is printed:
 
-The existing machines can already be created from a DTB, see the pc-bios f=
-older which contains the two respective =2Edts files=2E
+  Vhost user backend fails to broadcast fake RARP
 
->
->>> I would not go into more elaborate solutions if your fdt based machine=
- creation replaces this eventually=2E
->>=20
->> As said before, I'd send an RFC for discussion on how to proceed=2E
->
->As I wrote before I think one issue to solve as a next step would be avoi=
-d needing subclasses with comma in names for all compatible devices=2E I th=
-ink allowing alternative names for the same type in the types hash table co=
-uld be enough but to hide these from users and -device which can't take com=
-ma names, these might need to go in a separate hash table instead=2E This c=
-ould work the same as register_type but would be something like register_co=
-mpatible_name_for_type that adds only a name for an existing type so it doe=
-s not need a subclass and duplicate class or type struct when all we need i=
-s a different name for the existing type=2E I don't know if it's best put i=
-n a new hash table or the same one that holds type names=2E E=2Eg=2E machin=
-e names already have aliases for versioned machines for example=2E This cou=
-ld be similar for devices that could have alias names for compatible proper=
-ty in the DTB=2E Putting these in a separate hash table might be needed if =
-adding them to the same type name would list them in -device help or having=
- names with ',' there would cause a problem but it might even work without =
-that=2E
->
->These are only high level ideas and I don't know how to implement these b=
-ut maybe you can do something with it=2E In any case, I'm looking forward f=
-or your RFC and try to help reviewing it but I don't have free time to cont=
-ribute so I'll continue experimenting with the current code upstream that's=
- good enough for what I do and it's faw away to try to upstream it so by th=
-en your changes could be merged=2E
+with the meaning of:
 
-Thanks for your input, I'll look into it closer after my RFC=2E Right now =
-I'm quite busy driving the i=2EMX 8M Plus machine forward, hence my delayed=
- responses=2E
+  We did migration even if the back-end doesn't support it, whoops
 
->What I may contribute is new device emulation for missing parts=2E I have=
- some dummy sata that does nothing but allows the Linux driver to pass dete=
-cting no devices, a half working DIU I made in the last few days that needs=
- more work but I got some image from U-Boot on it and may look at the DMA c=
-ontroller in the future=2E Let me know if you're interested in these or hav=
-e something for these or other parts I could use instead=2E I've tested you=
-r SPI flash implementation but it wasn't working with U-Boot for me and may=
- look at your USB eventually=2E
+?
 
-Your additions sound promising! And thanks for testing the devices=2E
+Note that the message is printed *after* the migration and the flag is
+*not* checked before.
 
->
->>>> This is implemented on my branch=2E It pokes the L2 cache registers t=
-o configure some (but not all) SRAM to load the SPL to=2E This SPL uses cac=
-he as RAM which I'm emulating with a modified sparse-mem region device=2E
->>>=20
->>> This is new addition from today=2E I still don't get why you need spar=
-se-mem when you also have a separate patch for l2cache regs which could hav=
-e a memory region itself for this but for now I'm OK with adding this regio=
-n from the tabor board code on my branch for experimenting=2E
->>=20
->> The stack location is specific to U-Boot, not the chip=2E It resides in=
- cache (used as RAM) rather than in SRAM=2E Modeling a cache with cache lin=
-es etc=2E was a rabbit hole I didn't want to get into=2E Hence I extended s=
-parse-mem for this stack region to be user-creatable=2E When implementing a=
- Tabor machine this stack region could be hardcoded there=2E
->
->I'm not sure I follow what you say but also not sure if you meant cache w=
-hen writing stack in some places=2E Sure, the whole cache with all its deta=
-ils does not need to be modelled but what I meant is that if you emulate l2=
-cache controller registers you could emulate the one that maps the cache at=
- some address as sram then the BOOT table at the beginning of the SD card s=
-hould write that to map it at the right place so if you also have code to p=
-arse that then no sparse-mem should be needed on the command line=2E Or is =
-that some other register not part of l2cache? But this is something that ca=
-n be sorted later so not a big deal, until then adding s memory region ther=
-e either from board code or from command line will do=2E I think I get now =
-that maybe you mean that command line is better because different boards ha=
-ve this at different location so you need to specify the address and that's=
- easier with -device=2E
+> If you want a new flag "migration with no RARP", be my
+> guest and add it.
 
-The l2cache controller manages 256kB of memory which is configured as cach=
-e by default=2E The Tabor BOOT table configures part of it as RAM which inv=
-olves mapping just that part into the address space=2E The SPL gets copied =
-into  into it and is executed from there=2E At runtime the SPL sets up a st=
-ack=2E This is another memory region disjoint from the SPL's=2E Rather than=
- configuring the new region as RAM, you can think of this region to be mark=
-ed just as cacheable in the MMU=2E Hence, when the SPL uses this region as =
-stack, the data will be captured by the cache rather than ending up in the =
-void=2E In QEMU, the l2cache implementation creates the SPL region and the =
-stack region is modeled by the sparse-mem device in order to avoid implemen=
-ting a cache=2E
+That would actually make more sense than the existing situation I
+think. VHOST_USER_PROTOCOL_F_NO_RARP?
 
-HTH,
-Bernhard
+I didn't understand, yet, what the exact meaning would be, though.
 
->
->Regards,
->BALATON Zoltan
+> Or if you want to add documentation explaining the meaning
+> better and clarifying the message.
+
+I'm still in the phase where I'm trying to understand the role of the
+message :) ...I have to say this is fairly different now from what was
+mentioned on the thread so far.
+
+-- 
+Stefano
+
 
