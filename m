@@ -4,88 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 473EDC021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 23:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0473CC021B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 23:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlFdt-0007Fp-8Q; Thu, 20 Feb 2025 18:07:41 -0500
+	id 1tlFjg-0000Fq-60; Thu, 20 Feb 2025 18:13:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlFdr-0007FO-NF
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 18:07:39 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlFdp-0001Pf-FB
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 18:07:39 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4399ee18a57so9288515e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 15:07:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740092856; x=1740697656; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=r3qv3CKweXgrngDWBpFnI9e7raxkXKf3lCNstXdfurA=;
- b=n16eRCgwQFOirc0FAPPb+dt8T8xBd7tYbEUY9MwUVpsVqUUmIjPZ0rGXnhsSg41w/z
- u+A8g+WyPHGGZM9IwxnWxsB5A7UT2727ulrUxwzPGl4LKf0eDf/RykHUyhh3XyHPMQQe
- SweJEZubMg86mx0nZ5j1SdE30sDcy+4yoXi11IarvU5IrhGDl//JRVyYWVQHcKkcbP6l
- 4CRarvZCZ9jlLjGZ8IqavcmFfXLOkN2CNH7FyB+lc7G5v2SM3hNqSTP4gMLWL7ng9cHA
- LtFZ4nGgO20GM3eYCM/Bw4WGhX9z81xLy/v5eJnekO3AB2Y35e9HfPTcPExTdJsc4EsQ
- E7tg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlFje-0000Fh-Kd
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 18:13:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlFjc-0001uJ-O4
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 18:13:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740093215;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DbHBeGluvHfdJl4pa/Yu3eMwPAhxZL8jYTsEYKTo90Q=;
+ b=MtxQLMQ2Km8HTjvtmUyneI6YN4gPoznV26GX8LXoTnOuO+fwsXM0lSTShKlHSq57Rzc6fK
+ d/C4hHbzWXFKEBlTV/biN0c8l36xuZG5mI++7Fu8HEqqoJnSIqWvcZtMBcsiz7PqrtbokK
+ 0e+6/OV7N9wlX3YHshUeuS4rxDhWmlE=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-353-W50cVARTNXGSKJcoscH7ow-1; Thu, 20 Feb 2025 18:13:31 -0500
+X-MC-Unique: W50cVARTNXGSKJcoscH7ow-1
+X-Mimecast-MFC-AGG-ID: W50cVARTNXGSKJcoscH7ow_1740093211
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5e067bbd3bcso1710773a12.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 15:13:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740092856; x=1740697656;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r3qv3CKweXgrngDWBpFnI9e7raxkXKf3lCNstXdfurA=;
- b=nY9J/DgL/iz0PTe1k/7+MRZyVdApn7Kb6jHroaOyIrErHQlyw9FiIYH3r/DHftd8rV
- NUYKYm9cPXCjKC6i/RigrwdosgLSiJZJC+PYwbbJje2E2w8gV10qevk8FdKRYym1iBBA
- /xrGitPW5rgtxg+sJfeameorncXlA8/07kYbl5BF61X4/CFUsiAYINhxAYq4WdNg7AzV
- 0kQKSMFTW89fgnxHMplRAAfuPZfUepmohRK7OySvpiBUa2iIeWu44n2XD4wW6Koc63CG
- gSG2Xz/1L5Uph9lGi6BnLIXveP5EQBkOFDbT+WunOLCaM63ZrS/Vpq3mmXiB3zcAB7zP
- QtxA==
+ d=1e100.net; s=20230601; t=1740093210; x=1740698010;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DbHBeGluvHfdJl4pa/Yu3eMwPAhxZL8jYTsEYKTo90Q=;
+ b=D7648jwdLYWxVvLMOdR3wSQ0B1ppjndrW+IVBpCdVj4MC3GtIl+tELAYCyDBQDsZja
+ oWTfkpOCpU0NWPM8sWsSxemz8rvuXnVwtH1dpLjcfsZl2G640gnwfpoBxkPjdtfuKh14
+ fLso5K6paB2Ax2S0kjIyDkBxsKBGr8f4cHRQ/B2UcuAaIyB4/OVX1inud5/lo1mNG9MJ
+ RYDyhw5nmxMhuz9nhwlYgePi4AZHUuAVtUQBsfL8o823mG/C1Nj7fZNAAkMnSLe8Ugts
+ FQpUT7sbTIXvPJhWHi/xriLrpbZ2HUkOkjXGFRnomu3rqmqfg0aj0iNtgtT0nDuRS0Pc
+ Fz0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1sPIS20ZqA7leioNyqbHAfdL5fjO796fjr8JpTGj5JWyKqXQe0+aFU8RiqNRDgr6Hsr7LemYZevyb@nongnu.org
-X-Gm-Message-State: AOJu0YzKbk+FVRExBZ+x6nFms5AJpwPCu9cp2NB1qfu+l21xlYU1SJMH
- 9WuQ4fCBPuqvxRB9yfNIrqJJqsnTNizs00LS2V3nxhnG5cb5+2Nbk5pDOZPjUyiGy7eral7mqEp
- uNX0=
-X-Gm-Gg: ASbGncsoll4EWOzaJLx9IwQFWNAyZ+T7tuA+X/AkwtAIjuRmcf5nYy85BluUUObLv48
- 4PqFHi/PPROrZMVjVJ4OSqSlmMLABa/Z5LNibxQ2RsPN6PFZ4uf6KijobnqDymedVw5Ko3sGqTw
- 5l9hS7W7wZK51fn6ON3j0h3IclQTNQ4D4SSdzHQ9tPawiB5V9Sf4RKQoe4dxdrt3dmhLJ0PmXgj
- 52bpcM4SBBrEotMz0IyvLwQZUt/T/EgcFQILbpqHBFx65JpngFaG/aiWITE9yXjkbzHrcxyUff8
- x1mO1Zhd4SLnINBZV+Ud/GSpW9weiC3AA1bZPxII1t1vTPXRkOBE/vw9rdc=
-X-Google-Smtp-Source: AGHT+IH9myU7rAbSMTd4DgxmQviP3R26lQ1xDqBfAvzab/5TmVkz3LXtZHsSIaldCFoPbLIAMAbWWQ==
-X-Received: by 2002:a05:600c:4f02:b0:439:4c1e:d810 with SMTP id
- 5b1f17b1804b1-439ae2ed58amr7335365e9.9.1740092855682; 
- Thu, 20 Feb 2025 15:07:35 -0800 (PST)
-Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b43d4sm21448353f8f.4.2025.02.20.15.07.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 15:07:35 -0800 (PST)
-Message-ID: <8f91a3d1-7259-4783-9743-23ad003734e1@linaro.org>
-Date: Fri, 21 Feb 2025 00:07:33 +0100
+ AJvYcCU1g4eNwG6E5bLT+0YJ3zqspwrU7yhWfpq9qigK20LHqfFXPMQqFUW16rZWcus0gN+gibUPpEUMU8BH@nongnu.org
+X-Gm-Message-State: AOJu0YwDSkf+IZagKb9IJgw4Vp2DQckXcEpMcrvyPnI975fVMIfGS1bx
+ YR0ItKbnFUimvIYLXkeNX9mEkgIYk1w4pOIPlNHjyn1Bynfed9s9rqTqoV51IbNgF7YEYvoGF3s
+ Dy8Wm8v2Ob6dsZG5dUZ/r5w+RgbvMPJ3jYC/BVrgvZO15rpCxsiap
+X-Gm-Gg: ASbGncu2PlHciWa1UwnQL8acx6/v3nzVnK0UBdF6EaVRfPFrP8taGLu+RYbco/VOhRA
+ BOo3orWanKaOpYjb7jB2DOu7VMi5Pf60gK5ke+6yTgDUhveTmS+nz1U19I40SFK8093mHmdq2Q5
+ T5nof30TIOmnwV4ZyPfBG+Pe9ke2P0xS9orYPZRTr9jHaZi1+DlOnn8yaV05g+Q8ZqrX8cM0377
+ q2Sq3zVFuhVXcT53RFu6R3RGtHr6PycPysqFHzlqMA9/q86fYyTk4R0X39SpVgLlHUnvg==
+X-Received: by 2002:a05:6402:101a:b0:5e0:40e9:2383 with SMTP id
+ 4fb4d7f45d1cf-5e0b722a4b5mr506330a12.24.1740093210648; 
+ Thu, 20 Feb 2025 15:13:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHa2YwiZ6dleSw/9fAsKpoVymdpGWrl5qdOakhCf8tzKa8bFdi+U8rzVSaIXG5uDlbc0LwXMA==
+X-Received: by 2002:a05:6402:101a:b0:5e0:40e9:2383 with SMTP id
+ 4fb4d7f45d1cf-5e0b722a4b5mr506321a12.24.1740093210245; 
+ Thu, 20 Feb 2025 15:13:30 -0800 (PST)
+Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dece1b4e3bsm12697400a12.11.2025.02.20.15.13.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 15:13:28 -0800 (PST)
+Date: Thu, 20 Feb 2025 18:13:24 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: oenhan@gmail.com
+Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Huaitong Han <hanht2@chinatelecom.cn>,
+ Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+Subject: Re: [PATCH v2] vhost: Don't set vring call if guest notifier is
+ disabled
+Message-ID: <20250220181246-mutt-send-email-mst@kernel.org>
+References: <20250219015235.130194-1-hanht2@chinatelecom.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 028/162] tcg: Convert sub to TCGOutOpSubtract
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-29-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216231012.2808572-29-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250219015235.130194-1-hanht2@chinatelecom.cn>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,156 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
-
-On 17/2/25 00:07, Richard Henderson wrote:
-> Create a special subclass for sub, because two backends can
-> support "subtract from immediate".  Drop all backend support
-> for an immediate as the second operand, as we transform sub
-> to add during optimize.
+On Wed, Feb 19, 2025 at 09:52:35AM +0800, oenhan@gmail.com wrote:
+> From: Huaitong Han <hanht2@chinatelecom.cn>
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> The vring call fd is set even when the guest does not use MSIX (e.g., virtio
+> PMD). This results in unnecessary CPU overhead for handling virtio interrupts.
+> The previous patch only optimized the condition when query_queue_notifier was
+> enabled and the vector was unset. However, if query_queue_notifier is disabled,
+> the vring call FD should also be unset to avoid this inefficiency.
+> 
+> Fixes: 96a3d98d2c ("vhost: don't set vring call if no vector")
+> 
+> Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+> Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+
+
+Fails make check:
+
+
+https://gitlab.com/mstredhat/qemu/-/jobs/9201935243
+
+how was this tested? Pls include data on testing in the commit log.
+
 > ---
->   tcg/mips/tcg-target-con-set.h    |  1 -
->   tcg/ppc/tcg-target-con-set.h     |  3 +-
->   tcg/riscv/tcg-target-con-set.h   |  1 -
->   tcg/riscv/tcg-target-con-str.h   |  1 -
->   tcg/tcg.c                        | 26 ++++++++++++++--
->   tcg/aarch64/tcg-target.c.inc     | 24 +++++++--------
->   tcg/arm/tcg-target.c.inc         | 29 +++++++++++-------
->   tcg/i386/tcg-target.c.inc        | 23 +++++++-------
->   tcg/loongarch64/tcg-target.c.inc | 32 +++++++++-----------
->   tcg/mips/tcg-target.c.inc        | 31 ++++++++-----------
->   tcg/ppc/tcg-target.c.inc         | 52 +++++++++++---------------------
->   tcg/riscv/tcg-target.c.inc       | 45 +++++++++------------------
->   tcg/s390x/tcg-target.c.inc       | 41 +++++++++++--------------
->   tcg/sparc64/tcg-target.c.inc     | 16 +++++++---
->   tcg/tci/tcg-target.c.inc         | 14 +++++++--
->   15 files changed, 165 insertions(+), 174 deletions(-)
-
-
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index b740609c03..ca91a80efc 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -986,6 +986,14 @@ typedef struct TCGOutOpBinary {
->                       TCGReg a0, TCGReg a1, tcg_target_long a2);
->   } TCGOutOpBinary;
->   
-> +typedef struct TCGOutOpSubtract {
-> +    TCGOutOp base;
-> +    void (*out_rrr)(TCGContext *s, TCGType type,
-> +                    TCGReg a0, TCGReg a1, TCGReg a2);
-> +    void (*out_rir)(TCGContext *s, TCGType type,
-> +                    TCGReg a0, tcg_target_long a1, TCGReg a2);
-> +} TCGOutOpSubtract;
-> +
->   #include "tcg-target.c.inc"
->   
->   #ifndef CONFIG_TCG_INTERPRETER
-> @@ -1012,6 +1020,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
->       OUTOP(INDEX_op_nor, TCGOutOpBinary, outop_nor),
->       OUTOP(INDEX_op_or, TCGOutOpBinary, outop_or),
->       OUTOP(INDEX_op_orc, TCGOutOpBinary, outop_orc),
-> +    OUTOP(INDEX_op_sub_i32, TCGOutOpSubtract, outop_sub),
-> +    OUTOP(INDEX_op_sub_i64, TCGOutOpSubtract, outop_sub),
->       OUTOP(INDEX_op_xor, TCGOutOpBinary, outop_xor),
->   };
->   
-> @@ -2231,7 +2241,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_st8_i32:
->       case INDEX_op_st16_i32:
->       case INDEX_op_st_i32:
-> -    case INDEX_op_sub_i32:
->       case INDEX_op_neg_i32:
->       case INDEX_op_mul_i32:
->       case INDEX_op_shl_i32:
-> @@ -2301,7 +2310,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_st16_i64:
->       case INDEX_op_st32_i64:
->       case INDEX_op_st_i64:
-> -    case INDEX_op_sub_i64:
->       case INDEX_op_neg_i64:
->       case INDEX_op_mul_i64:
->       case INDEX_op_shl_i64:
-> @@ -5442,6 +5450,20 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
->           }
->           break;
->   
-> +    case INDEX_op_sub_i32:
-> +    case INDEX_op_sub_i64:
-> +        {
-> +            const TCGOutOpSubtract *out = &outop_sub;
-> +
-> +            tcg_debug_assert(!const_args[2]);
-> +            if (const_args[1]) {
-> +                out->out_rir(s, type, new_args[0], new_args[1], new_args[2]);
-> +            } else {
-> +                out->out_rrr(s, type, new_args[0], new_args[1], new_args[2]);
-> +            }
-> +        }
-> +        break;
-> +
->       default:
->           if (def->flags & TCG_OPF_VECTOR) {
->               tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
-> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-> index 30cad937b7..dfe67c1261 100644
-> --- a/tcg/aarch64/tcg-target.c.inc
-> +++ b/tcg/aarch64/tcg-target.c.inc
-> @@ -2205,6 +2205,17 @@ static const TCGOutOpBinary outop_orc = {
->       .out_rrr = tgen_orc,
->   };
->   
-> +static void tgen_sub(TCGContext *s, TCGType type,
-> +                     TCGReg a0, TCGReg a1, TCGReg a2)
-> +{
-> +    tcg_out_insn(s, 3502, SUB, type, a0, a1, a2);
-> +}
-> +
-> +static const TCGOutOpSubtract outop_sub = {
-> +    .base.static_constraint = C_O1_I2(r, r, r),
-> +    .out_rrr = tgen_sub,
-> +};
-> +
->   static void tgen_xor(TCGContext *s, TCGType type,
->                        TCGReg a0, TCGReg a1, TCGReg a2)
->   {
-> @@ -2290,15 +2301,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
->           tcg_out_ldst(s, I3312_STRX, a0, a1, a2, 3);
->           break;
->   
-> -    case INDEX_op_sub_i32:
-> -    case INDEX_op_sub_i64:
-> -        if (c2) {
-> -            tgen_addi(s, ext, a0, a1, -a2);
-
-I'm a bit lost with this change here, and following patch #4
-(ADD conversion).
-
-Since tgen_addi() effectively handles both add/sub, why not
-name it tgen_addsubi() like the old tcg_out_addsubi() name?
-
-(Maybe reorder to have that SUB conv patch after ADD conv?)
-
-> -        } else {
-> -            tcg_out_insn(s, 3502, SUB, ext, a0, a1, a2);
-> -        }
-> -        break;
-> -
->       case INDEX_op_neg_i64:
->       case INDEX_op_neg_i32:
->           tcg_out_insn(s, 3502, SUB, ext, a0, TCG_REG_XZR, a1);
-> @@ -3014,10 +3016,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_st_i64:
->           return C_O0_I2(rz, r);
->   
-> -    case INDEX_op_sub_i32:
-> -    case INDEX_op_sub_i64:
-> -        return C_O1_I2(r, r, rA);
-> -
->       case INDEX_op_setcond_i32:
->       case INDEX_op_setcond_i64:
->       case INDEX_op_negsetcond_i32:
+> v2: - add Fixes tag
+>     - cc qemu-stable@nongnu.org
+> 
+>  hw/virtio/vhost.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 6aa72fd434..d17e7cc6fe 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1342,8 +1342,8 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>      }
+>  
+>      if (k->query_guest_notifiers &&
+> -        k->query_guest_notifiers(qbus->parent) &&
+> -        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+> +        (!k->query_guest_notifiers(qbus->parent) ||
+> +            virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR)) {
+>          file.fd = -1;
+>          r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>          if (r) {
+> -- 
+> 2.43.5
 
 
