@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29D68C021B1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC598C021B4
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9J9-000709-V8; Thu, 20 Feb 2025 11:21:51 -0500
+	id 1tl9JY-0007jk-3f; Thu, 20 Feb 2025 11:22:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9J8-0006tf-7s
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:50 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1tl9JW-0007co-DN
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:14 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9J6-0008DB-Kx
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:49 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43937cf2131so8106425e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:48 -0800 (PST)
+ id 1tl9JU-0008HB-5H
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:13 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43998deed24so11079855e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068507; x=1740673307; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068530; x=1740673330; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zk2Wwmj50vab5H1dzXTziBrSoLjKSd8C4jY0u7/h7Jk=;
- b=Y/FH3fcg+ZbQbkL2gUlSsC9tkK62oy7O1hYPUD5O+j7CKXxXOhRD5LmPe0gRJF7I09
- XHbGhwi8Mwz1e40wvv39yQd21EL2e8ySlSmBPR1YZyA+fS2mEsNivleRhIcKl5W3wECi
- vCp7O2yTasTSFZu7/4HdD4akokFbEy+pSeS4z64qu8cqJuOem8EFW2A3nbePbIvfdP4O
- KN24C1D3wWeDPRBll1Oorc4IsOxSSlR/oAg5qd5gFv3vgJRuOkJl8V8Hdwc15X3uLF6B
- uEhOu+6x2jr/jxb+UB+LxuBimHV3dPkO8uBjCR+ntrrUOO+p4cSspIEBXzx0VKKTFYvY
- WWLw==
+ :reply-to; bh=XeyENIoYMBBGcAHARtRQa72CYIFWglA3cPgz+RGqgdc=;
+ b=TJ9MiQ1/xd6IHPl30K+cjDz+UbvWyuyfDSmOzFQZI7F4BIVonNfVAM1rh+DXLsZbpm
+ BSybV5HCKOvyYpRdlCgWScRnByW08JdAmcp3i2L5nJc006vBwcksFOJzNfzV2YFhVOI5
+ mmGwKlfxmzzLF7k5BabxV4YH5I3xKTYLFGyqd/c8Wdj34ai7bmTrkckrX/oayLAjudSF
+ ClCjKHFv8U5usg0AWxwsuK6LinGf6Tn39WIe8e89gRoeniDVXrEx/XLUIsMtJsF3BKCX
+ br2EVtSVLn6SCgujTghtZtmgC9pelBXPvdL4HYPMsQTRqJIAJkiEenQCOvM3Dr4enkbI
+ szBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068507; x=1740673307;
+ d=1e100.net; s=20230601; t=1740068530; x=1740673330;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zk2Wwmj50vab5H1dzXTziBrSoLjKSd8C4jY0u7/h7Jk=;
- b=UVDhyzG6h4Fk9kZSQLLTElawPCOqMFqYcOAQGgZqNzTk9UZFVAl6my4/GrbQzy0J7o
- 9hErLRzbFzjUlx4duABLku/2er/Bs9uiqkadLSfToLB/eUgJ8KIzMFpCWMmGIEa5wF7Q
- 1mdYRQP/4ckTdT3uaiINMLLJDkPDwZhqgghFzWM1kDfKuvXISWeKtrQyleun81HUP20F
- TcCHjQxXKTPmHUp8wE9MCQTHnr4xxSOObY3q6ilwDXog8G1CywZGSZgWcKAHB2ZCfRdY
- UCoUbbarsFP+gOXNzRNYRInYW3exw9eY/e+jlkFzsvJagQxviYlTuhvFutmxFSgXo3cY
- utsg==
-X-Gm-Message-State: AOJu0Yx/iiyZQh0hsPk29lwJhLjkimC24Kj6zohCipsIOSaVsyvcUgp4
- Rs9MbeTo0EANh2ZRNMpQIS1SSm0X/68aOu3d3CACfRk8wtVyKeQ3w1OcAE00F/n7VXWBF1LGAfn
- J
-X-Gm-Gg: ASbGncv7Ow7e42fPjM0da1pe9o9QxlfwCzwNH97ZkclFpFuucBSs1CHk+9OmpUViCw1
- 77VKeg0yF94iHbeZZ5WwHQ74XRbNhW0Cb24Q8ZOOlaM25yoXSwp9YqhiGwLicuiaiXr4uKUL26X
- 9uD787a9R+P+eyC7/lbssUAKIjrVjJkGILfMXe/x1n+z4rwDcc7/yZcb39Ugb0GxORrgXyPHWNY
- Wo3uupWfmTvsAKQ+IarTuHOaB7dihS2ThOxy4I2mrxrTPacbybXtOHXyCGe/UCFaYCrX67CEeIp
- GIMcMQ9RjDiPOzV8QaI2dQ==
-X-Google-Smtp-Source: AGHT+IG+KQerkKSmFYWIzUk7v9AemI0FugGSWJgPmR5TKaBvnNx8C9doghAMmt8Db/Ic8AA9BXVHYg==
-X-Received: by 2002:a05:600c:4510:b0:439:a25b:e7d3 with SMTP id
- 5b1f17b1804b1-439a4ac4534mr31066075e9.14.1740068507203; 
- Thu, 20 Feb 2025 08:21:47 -0800 (PST)
+ bh=XeyENIoYMBBGcAHARtRQa72CYIFWglA3cPgz+RGqgdc=;
+ b=BmYEG+6M1AQ4Furs71lFfXwscjPRFqLK5nZGidIkr87YIUd++0uXjVRpaPgQasJrTs
+ SYSxgMrQgc3sV1a9/OXdzIZ2fOHhsOsc/tanX3CJSZgF8xitDG74x3HBrMgox9druZ59
+ wGeGwB9u2aEbpaG8xMxATjR/T/vJza5br2iA+d9AJ/E/OK3c9WFsHzHVGjE4Kn88AZdU
+ VqhtpFG5GNbfjdXEmvO3nDykILWKzBuWBN/NQ4iMD9Ex+X2nuuALaWf3dd4kwT6GYOxh
+ xt/ELl/I7i1y+0aOYMvitxYHhwO+cXJJbRww8GQsN1i6anHvus/tucPzu7UVhk6wgeMu
+ QKRQ==
+X-Gm-Message-State: AOJu0Yw2n94BsrDIWY4800pym4cJh3i6n0+lL2KnsHnzjNukSvk/FUEk
+ yQD1/FmlBeOYri2Kh1syUJ0AtWHNyc5Q6NT5Sfc4+xeSs9832zcC9hkmDgeIHr13nNPWEjE7FEj
+ /
+X-Gm-Gg: ASbGncvZoAPURnZ51BbY6LbaSJnlG3yG1c/NAqp28lD+B8Y9XP0Ifj0TNky0Vnh8nAn
+ /3VVkByTuaLDO9W4a6a+vjE36OMYw0CsarnX173FU3vMUmQIuOMKBLDYDo4x4YW94StmhcPjNBU
+ Jey64nkecwdJJZ77wNxuj0iiDt1+vF931TuLOBSft1fBM0NhUUt+E1dlucbjPEu963QVwWJJi4h
+ bfhbbS2UcPDvrrQ0ndpJKtZ1hQUBmuVGeLo2zRwZwYgvDn43sZom3tFYLP5ucQPviM5KrJtPYsN
+ xZxUU5Zg+LZEzfaheGB0Rg==
+X-Google-Smtp-Source: AGHT+IHh4bETitIRlO/6cztrhxqQnWNhc6VVzv5hKIZ1o5kTJeyah8t7OtSLe5A5RVbt3DbNWQVgCA==
+X-Received: by 2002:a05:600c:3c9d:b0:439:5a37:815c with SMTP id
+ 5b1f17b1804b1-4396e74257cmr200160425e9.20.1740068529788; 
+ Thu, 20 Feb 2025 08:22:09 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.45
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.22.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:21:45 -0800 (PST)
+ Thu, 20 Feb 2025 08:22:08 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/41] hw/arm/realview: Specify explicitly the GIC has 64
- external IRQs
-Date: Thu, 20 Feb 2025 16:20:58 +0000
-Message-ID: <20250220162123.626941-18-peter.maydell@linaro.org>
+Subject: [PULL 36/41] hw/misc: Add nr_regs and cold_reset_values to NPCM CLK
+Date: Thu, 20 Feb 2025 16:21:17 +0000
+Message-ID: <20250220162123.626941-37-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,60 +98,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Hao Wu <wuhaotsh@google.com>
 
-When not specified, Cortex-A9MP configures its GIC with 64 external
-IRQs (see commit a32134aad89 "arm:make the number of GIC interrupts
-configurable"). Add the GIC_EXT_IRQS definition (with a comment)
-to make that explicit.
+These 2 values are different between NPCM7XX and NPCM8XX
+CLKs. So we add them to the class and assign different values
+to them.
 
-Except explicitly setting a property value to its same implicit
-value, there is no logical change intended.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250212154333.28644-4-philmd@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
+Message-id: 20250219184609.1839281-13-wuhaotsh@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/realview.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/hw/misc/npcm_clk.h |  9 ++++++++-
+ hw/misc/npcm_clk.c         | 18 ++++++++++++------
+ hw/misc/npcm_gcr.c         |  2 ++
+ 3 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index 436eef816ed..008eeaf049a 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -35,6 +35,8 @@
- #define SMP_BOOT_ADDR 0xe0000000
- #define SMP_BOOTREG_ADDR 0x10000030
+diff --git a/include/hw/misc/npcm_clk.h b/include/hw/misc/npcm_clk.h
+index db03b46a52b..f47614ac8da 100644
+--- a/include/hw/misc/npcm_clk.h
++++ b/include/hw/misc/npcm_clk.h
+@@ -175,8 +175,15 @@ struct NPCMCLKState {
+     Clock *clkref;
+ };
  
-+#define GIC_EXT_IRQS 64 /* Realview PBX-A9 development board */
++typedef struct NPCMCLKClass {
++    SysBusDeviceClass parent;
 +
- /* Board init.  */
++    size_t nr_regs;
++    const uint32_t *cold_reset_values;
++} NPCMCLKClass;
++
+ #define TYPE_NPCM_CLK "npcm-clk"
+-OBJECT_DECLARE_SIMPLE_TYPE(NPCMCLKState, NPCM_CLK)
++OBJECT_DECLARE_TYPE(NPCMCLKState, NPCMCLKClass, NPCM_CLK)
+ #define TYPE_NPCM7XX_CLK "npcm7xx-clk"
  
- static struct arm_boot_info realview_binfo = {
-@@ -185,7 +187,12 @@ static void realview_init(MachineState *machine,
-     sysbus_mmio_map(SYS_BUS_DEVICE(sysctl), 0, 0x10000000);
+ #endif /* NPCM_CLK_H */
+diff --git a/hw/misc/npcm_clk.c b/hw/misc/npcm_clk.c
+index 0ecf0df3bbf..78144b14e37 100644
+--- a/hw/misc/npcm_clk.c
++++ b/hw/misc/npcm_clk.c
+@@ -81,7 +81,7 @@ enum NPCM7xxCLKRegisters {
+  * All are loaded on power-up reset. CLKENx and SWRSTR should also be loaded on
+  * core domain reset, but this reset type is not yet supported by QEMU.
+  */
+-static const uint32_t cold_reset_values[NPCM7XX_CLK_NR_REGS] = {
++static const uint32_t npcm7xx_cold_reset_values[NPCM7XX_CLK_NR_REGS] = {
+     [NPCM7XX_CLK_CLKEN1]        = 0xffffffff,
+     [NPCM7XX_CLK_CLKSEL]        = 0x004aaaaa,
+     [NPCM7XX_CLK_CLKDIV1]       = 0x5413f855,
+@@ -728,10 +728,11 @@ static uint64_t npcm_clk_read(void *opaque, hwaddr offset, unsigned size)
+ {
+     uint32_t reg = offset / sizeof(uint32_t);
+     NPCMCLKState *s = opaque;
++    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
+     int64_t now_ns;
+     uint32_t value = 0;
  
-     if (is_mpcore) {
--        dev = qdev_new(is_pb ? TYPE_A9MPCORE_PRIV : "realview_mpcore");
-+        if (is_pb) {
-+            dev = qdev_new(TYPE_A9MPCORE_PRIV);
-+            qdev_prop_set_uint32(dev, "num-irq", GIC_EXT_IRQS + GIC_INTERNAL);
-+        } else {
-+            dev = qdev_new("realview_mpcore");
-+        }
-         qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
-         busdev = SYS_BUS_DEVICE(dev);
-         sysbus_realize_and_unref(busdev, &error_fatal);
-@@ -201,7 +208,7 @@ static void realview_init(MachineState *machine,
-         /* For now just create the nIRQ GIC, and ignore the others.  */
-         dev = sysbus_create_simple(TYPE_REALVIEW_GIC, gic_addr, cpu_irq[0]);
-     }
--    for (n = 0; n < 64; n++) {
-+    for (n = 0; n < GIC_EXT_IRQS; n++) {
-         pic[n] = qdev_get_gpio_in(dev, n);
-     }
+-    if (reg >= NPCM7XX_CLK_NR_REGS) {
++    if (reg >= c->nr_regs) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: offset 0x%04" HWADDR_PRIx " out of range\n",
+                       __func__, offset);
+@@ -776,11 +777,12 @@ static void npcm_clk_write(void *opaque, hwaddr offset,
+ {
+     uint32_t reg = offset / sizeof(uint32_t);
+     NPCMCLKState *s = opaque;
++    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
+     uint32_t value = v;
  
+     trace_npcm_clk_write(offset, value);
+ 
+-    if (reg >= NPCM7XX_CLK_NR_REGS) {
++    if (reg >= c->nr_regs) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: offset 0x%04" HWADDR_PRIx " out of range\n",
+                       __func__, offset);
+@@ -870,10 +872,10 @@ static const struct MemoryRegionOps npcm_clk_ops = {
+ static void npcm_clk_enter_reset(Object *obj, ResetType type)
+ {
+     NPCMCLKState *s = NPCM_CLK(obj);
++    NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
+ 
+-    QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
+-
+-    memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
++    g_assert(sizeof(s->regs) >= c->nr_regs * sizeof(uint32_t));
++    memcpy(s->regs, c->cold_reset_values, sizeof(s->regs));
+     s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+     npcm7xx_clk_update_all_clocks(s);
+     /*
+@@ -1045,11 +1047,14 @@ static void npcm_clk_class_init(ObjectClass *klass, void *data)
+ 
+ static void npcm7xx_clk_class_init(ObjectClass *klass, void *data)
+ {
++    NPCMCLKClass *c = NPCM_CLK_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END > NPCM_CLK_MAX_NR_REGS);
+     QEMU_BUILD_BUG_ON(NPCM7XX_CLK_REGS_END != NPCM7XX_CLK_NR_REGS);
+     dc->desc = "NPCM7xx Clock Control Registers";
++    c->nr_regs = NPCM7XX_CLK_NR_REGS;
++    c->cold_reset_values = npcm7xx_cold_reset_values;
+ }
+ 
+ static const TypeInfo npcm7xx_clk_pll_info = {
+@@ -1081,6 +1086,7 @@ static const TypeInfo npcm_clk_info = {
+     .parent             = TYPE_SYS_BUS_DEVICE,
+     .instance_size      = sizeof(NPCMCLKState),
+     .instance_init      = npcm_clk_init,
++    .class_size         = sizeof(NPCMCLKClass),
+     .class_init         = npcm_clk_class_init,
+     .abstract           = true,
+ };
+diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
+index ec16ea620eb..4e8ce2cb89d 100644
+--- a/hw/misc/npcm_gcr.c
++++ b/hw/misc/npcm_gcr.c
+@@ -215,6 +215,7 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+         break;
+ 
+     case 8:
++        g_assert(!(reg & 1));
+         value = deposit64(s->regs[reg], 32, 32, s->regs[reg + 1]);
+         break;
+ 
+@@ -270,6 +271,7 @@ static void npcm_gcr_write(void *opaque, hwaddr offset,
+         break;
+ 
+     case 8:
++        g_assert(!(reg & 1));
+         s->regs[reg] = value;
+         s->regs[reg + 1] = extract64(v, 32, 32);
+         break;
 -- 
 2.43.0
 
