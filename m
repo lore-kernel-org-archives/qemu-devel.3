@@ -4,97 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531C5C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721B3C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl1vX-0002on-JR; Thu, 20 Feb 2025 03:28:59 -0500
+	id 1tl1x4-0003tL-Cz; Thu, 20 Feb 2025 03:30:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl1vM-0002di-Du
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:28:48 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl1vJ-00012r-NU
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:28:47 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-439a4dec9d5so3498735e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 00:28:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740040124; x=1740644924; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o42TVScMkWBRcW50EFj59vXpjFTmKfRrsrDbs3gtzaI=;
- b=AeVCaEapfk6CPkVISyr1NviwauK2NljaqgGSGo/4EUDSbe5qqlA3IPdcXXN9bq+lN7
- bzwB0M+UxMEoudvWk7ZirnSxL26Nb4fPycbcJIX/9BJFuvPYwykGcKCOPVFG9RSf4yvZ
- xpAi+P0Q8aBvU6OdGkyVATQyHzNP6G6odkmb5/Jgvdi7+SXQ4QVTCIdFYy+I6viTALRY
- tHGpvt6ShRxyqFYxXTjMJehVgWHwhEKQr2SW/sAaLAXfbn1cZL3rJXiXuxEKdpAWetDE
- WtPgX/7TYqLMtPrXRx2zLKsM8COUQr7B5q2T70cIacsX710hXLOAWrncJpKiLbLUUylH
- PWQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740040124; x=1740644924;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o42TVScMkWBRcW50EFj59vXpjFTmKfRrsrDbs3gtzaI=;
- b=LjdqGki9Zd9efaTuHgX4mYB7wLl9bz+rko3mStiVAHW/EF9cRItOBVaZ8Dc1n/9jct
- nCFBCe1mnbsjKfl7/IMvk3p+XqSF80Ntznj3OlUtmI5/qUA6lDagNqcPGuhgYIWnL0M0
- R97mWJnGW9aTnhEj1x8VuBWkzTX6mM7ZVsFLbChvRKSvlGEyiBUF+mAec3r3GWsPfXvD
- 52Vi0/gihg2Xs29F8kKOGHtG83BJWu7T79jGTuVjCilF8B35+GKiEuY0gReNYL1RTF1x
- BXUdBAgRgkQi99qZxaUoIO+xQyiOHPYx+ca1ElG23IGz8US3pJcPuszrD1DE0wHLkV7g
- leUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVP/kKuTTHaEbZNDhPsTVrEcEFGonE609tVYhZVd0FMcktP9bdMgjYcF4u2EIId6j/pYPC7C+njxRv6@nongnu.org
-X-Gm-Message-State: AOJu0YwFy39ecHrZtpMKG1ihfdcwAu2lgNPbeCo5973Jvg+ZhLkxxaPF
- V6EcAx6kTB68FI2+fXdJZST1ew2QBqUU5on3rR+apBIBleZG7SlAJPL9Q4ppnQ8uu3XDJT08Nls
- k5Bw=
-X-Gm-Gg: ASbGncuu2LP47gDfqhn2Qyz9JfpSC88bJx6VqXf0p4i0sWuxYM5sRZ+HLV4iFQH61iG
- jmNf9xy6cQrIgqCZPGC/A+9FVyps6tvGL7ovT3wekKuHWuThpgBOsy3VXRkNiflIk/4PV01TZGU
- ULQg/gM7t6F1BHtU1H5RHCX58IH5pQnHvwy7G0sq/9tXTiDSvFXSG5wy4+KdtY74wXetHQ7rnFU
- X9TUD9kjRApkBWd8TL2sao0GpHDi3XuGpg1FX0t9G0YISs0NaFzkTUvpIPLEOHc0TkluUVZkHSL
- veO2aZp/RC5forFP7PoRO6fbI1JU5Ejvz15mr9Yjxo2ttnki/PA449r5J+g=
-X-Google-Smtp-Source: AGHT+IHPTG0euoZqI2s0iNfGxqPzS5bcoKsS+brkfAysI0y2548v3uJvhG9NAadqPKFq839NR+HfeQ==
-X-Received: by 2002:a05:600c:5246:b0:439:9d75:9e92 with SMTP id
- 5b1f17b1804b1-4399d75b257mr49033445e9.28.1740040122491; 
- Thu, 20 Feb 2025 00:28:42 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ddbe0sm20155678f8f.39.2025.02.20.00.28.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 00:28:42 -0800 (PST)
-Message-ID: <d159a860-21b2-46e8-a74f-cd6be14ea525@linaro.org>
-Date: Thu, 20 Feb 2025 09:28:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] hw/char/bcm2835_aux: Really use RX FIFO depth
-To: Luc Michel <luc.michel@amd.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
- Rayhan Faizel <rayhan.faizel@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <huth@tuxfamily.org>,
- Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>, qemu-arm@nongnu.org
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1tl1x3-0003t4-5a; Thu, 20 Feb 2025 03:30:33 -0500
+Received: from mail-dm3nam02on20602.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::602]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1tl1x0-0001Sl-Fg; Thu, 20 Feb 2025 03:30:32 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SEW7InKDovX2uYzNc8/ssN1EZ73vHaRLy3aDlb8rBLD2WrNqwkL0S6fh9tMPra0FEfJXLLwOs6NvKH0I0vkeETbQ75goTbwxixOr1Jt1cLAXqABiocT0c8HMIJ+gv0h3olVXDTV9nxoaNGTep4z7fBi+gf98UKUOAkqvP2mbbBh2HyWZO+idMlLUMIvodHMFfWxgMkFfSl6DH1blYzhoBQ1OpRDwoPMKabP+oM86OkQX82+A56bssHVDQOD2PvZvywaD9podD3CRH1UGO1iW9ERD4fp/fF9RG9guyFKBPESAWaweyP9rHAkl8Xb6kfll62XEtBc6IezC/IiMJRlBgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TkJVdxt9x9eBCUlPGsnVDOoQgMqGQOKQ7tfmKg/BX8A=;
+ b=NFvQzOuDTNdlPDaPVU6x84n1/eWqmuqdAKU1hgy0ueYZp5nIUt42xkBz+PLfEhIIm87zIZa0pjEyLJV8C/vmc+EcRAF41L5WiFif5TpISoifLOLxeLuwO7Z6ZPLbFo2txhABGLTKUYsCBZOPbipq3McGPdxpN8B6SmuM6+KQgXlMsKlkam+BtKXNHbAeohQ/03+q/uWYnRxM7xDmm6JTjLalGro7jIew+XCYJ1JMYP3Bg0pSbYeWD5pSwIW5RPE3YOBeS2ziaaTT0BS5c+8XewEAvR1IPNyoTVEpb5B1hKJCMWNr7K8LS59EF+pw8mo9sq/LxmupJT1K6SggaH3u7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TkJVdxt9x9eBCUlPGsnVDOoQgMqGQOKQ7tfmKg/BX8A=;
+ b=NGCMkVGDkNLs5awz9R7W7zzYX1EFg4lllKWM6TnY1D3IZgJCcMMLB1NdBG+bKo/aSB/rL8w1TSjrtHKBJwj6quHxIdLzPAcnn2wax9a86gnJ8LDr717a+PURnyRDMZzKHvtyhstEqrVoziti1FsTazCXei+j/SJ7rPdQLr7dyBg=
+Received: from MW4P220CA0015.NAMP220.PROD.OUTLOOK.COM (2603:10b6:303:115::20)
+ by IA1PR12MB8539.namprd12.prod.outlook.com (2603:10b6:208:446::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Thu, 20 Feb
+ 2025 08:30:21 +0000
+Received: from SJ1PEPF000023D3.namprd21.prod.outlook.com
+ (2603:10b6:303:115:cafe::7e) by MW4P220CA0015.outlook.office365.com
+ (2603:10b6:303:115::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.31 via Frontend Transport; Thu,
+ 20 Feb 2025 08:30:20 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ SJ1PEPF000023D3.mail.protection.outlook.com (10.167.244.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8489.2 via Frontend Transport; Thu, 20 Feb 2025 08:30:19 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Feb
+ 2025 02:30:18 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Feb
+ 2025 02:30:18 -0600
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
+ Transport; Thu, 20 Feb 2025 02:30:16 -0600
+Date: Thu, 20 Feb 2025 09:30:15 +0100
+From: Luc Michel <luc.michel@amd.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+CC: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ <qemu-devel@nongnu.org>, Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
+ Rayhan Faizel <rayhan.faizel@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Magnus Damm
+ <magnus.damm@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Thomas Huth
+ <huth@tuxfamily.org>, Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+ <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 9/9] hw/char/sh_serial: Return correct number of empty RX
+ FIFO elements
+Message-ID: <Z7boF2m2KsayLsJw@XFR-LUMICHEL-L2.amd.com>
 References: <20250219210841.94797-1-philmd@linaro.org>
- <20250219210841.94797-6-philmd@linaro.org>
- <Z7bmAqE4z2y_kNse@XFR-LUMICHEL-L2.amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z7bmAqE4z2y_kNse@XFR-LUMICHEL-L2.amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20250219210841.94797-10-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20250219210841.94797-10-philmd@linaro.org>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D3:EE_|IA1PR12MB8539:EE_
+X-MS-Office365-Filtering-Correlation-Id: e0060e53-d772-45b5-fff9-08dd5188cfdc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|82310400026|36860700013|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RmNHR2dsNnFWa3hKWHU0RHMyNUZieEVzbnJNblcrN0hzdXo3MVFBQkNrS0cz?=
+ =?utf-8?B?ak9ucXZOWlQvUGRkSVJjQ2VxNS81cWdJKzgxeDdLajdpZFp3M2JVWjV0MHRM?=
+ =?utf-8?B?YlQrTkE2L1ExVXMyazhuSm1PbzJqUVlZVWt4L3pXd0IwM3dNelhZUFY3ZmZ5?=
+ =?utf-8?B?QUxOazhtakZkV1BvbytUbUR0YVlWdy9zZ2MvSFloMTNNZXZlQkZFcXdCWEdv?=
+ =?utf-8?B?dWsxTkk3b2JkOGdUZml5Tm5kL2QrQVBzRDNUSi9kN21HQzJJQkVOREx4YTRh?=
+ =?utf-8?B?RXcvS3JxUEpJYmRLZFduTlVnS0xSNnRhRWw3cGJRWXJaQUtVQTllbitpM0lF?=
+ =?utf-8?B?RUREamd6bG03NXVRS2IzQWE5bGhkNElQNTB2RjV2SjNYUTVMSWNwZitJa09Z?=
+ =?utf-8?B?SjAwMlFUUXZlVXRuUmJCd0VoTDRnbm8veFFBVW92VzlLekt4VkxvTXJGeVla?=
+ =?utf-8?B?WnVwR1Y4VlFMOHlzem5jbzhqemYwMkJFQVpQSlA0bTFYMlRLVlpESTg3SUMr?=
+ =?utf-8?B?c1p6S0haVHRnb015NHgxZm5mUlRGZGdiY2ovTFloOWJ3V3NuWnM4TXROdlVi?=
+ =?utf-8?B?dVRkVlBsUnl2Sm9VdzBIeVhCb0pDVFY1NnFtMmhLdkF6eEpnTTJZR05teHJ5?=
+ =?utf-8?B?dkJFMDhMQWRUR3ZBcTlLbVJOeDdWYXlKN0JSUDdiYXpGcm9CQVpqTjBqb1lL?=
+ =?utf-8?B?Qy9rMzduZmpURDdlRGZkb1hVVXJnUXhXSWllSm56dCt6UDRNTERocVRkVWxs?=
+ =?utf-8?B?Y0E5MURPQ1B6QVROVWtQYkk2bjJwUWFqYWxrK0FwKzdzdVliK3ZhcEswS3VJ?=
+ =?utf-8?B?Ky80cERUd3NIS0paTWFEaWd5V3dPN21SUklPTm1hbGM2ODVmMEw2TGd2cDN2?=
+ =?utf-8?B?SlhQK3FEU1Z5c1ZjMmtKNm55eDc0YWdwTndnOS9hMTVzdGYyN2lmdUNBSWRj?=
+ =?utf-8?B?a3cxVFk3M3lTWFpkcVhXK1J1WmNLZ0pNa0FuMTRheERNTDdMN2MyZ1BHNU0y?=
+ =?utf-8?B?cWRQY0Y2ZFpOQy9OK3k4SzkyNU8wZmxZY0M1TDVUbGdsSWNYSDk2Zk1NcDY0?=
+ =?utf-8?B?bk02Zm56Q2ZYU0w5bDV5emg2R1BjVm13V3ZFMXRQWmMvQkZaRzBRZm9MR3VC?=
+ =?utf-8?B?TVY5Skx2MnlPNy85VFhQY2VDTTZnekpRMCt6dkNHOUlEbjNqcjM4Ylo4Q1RH?=
+ =?utf-8?B?K3VvanlWTVM4bzd6U01ld1RGRFJJYTNDdUZpYVp6c01PUlNVRnJKYU1OeWJU?=
+ =?utf-8?B?b2NwWHltbmpab0ZtU1VTNm9SZGxPQVNtTyt2cFVuSW0yNXN0VEliMTNRc2Nx?=
+ =?utf-8?B?Q3hUQ1VPL1VWa282bGsyMVdjcDZVcVRBVk0xMkc4eG83WmUzM1pyL29WZVlw?=
+ =?utf-8?B?amM3WEtmdTBYQ2dxeExYMjNWamRWd24zOUJSTDl1NHMrSStGRjlpckgweTJI?=
+ =?utf-8?B?dngrLzR5K05hSDJrNHhCaGsyNDZucGRzdUMyMFJNeGRhc1JZaHBVbmkvZnJ3?=
+ =?utf-8?B?RFFxTm5tcTVJSDF2Z1A4NlBQUVk1YnhjaE4vSzR0eUF6R1JXVGJ6UUEwTzRK?=
+ =?utf-8?B?WDV4by9Mc21kVy9RSHFzcldMakpObmlndEliYXhlaVBRVWRpc0lpcWxGRkdT?=
+ =?utf-8?B?VWdmV25ra2gveVBiYjFoTkhrSVM3VW1zYkRBNGg4dHUwL1hzaWZZRGFVSXBp?=
+ =?utf-8?B?RlVyM1RRSy85R1BOTldBc3lTZ3NjYjF3c05rZ3ZYcTJiRDYvZEhJTGdNcXNO?=
+ =?utf-8?B?UWtXVHNiK0VicUl2aVFaR0VPU0pRNGIwYjNiNW1XbHpiMUhSMXBGYTR2eVVu?=
+ =?utf-8?B?dWNackc0Vmw4cXoxZVJZcnh4dkNVQ29CMFdNVE82NWpaS2tjNTdvVVBxbjhu?=
+ =?utf-8?B?ZVVUOFYwaTNveEJPRGE2MFFjWmdFZGp0dDJuMlExVnMwcW5Od3JLb2lqQ3Zo?=
+ =?utf-8?B?UUdhN0xkQndxWG03dFQ4TzltaW8wRkcrOG1yK3F6ODBqUzRYak1pY2RxUk4y?=
+ =?utf-8?Q?S2OJH0aqjO2CwRaQQFW30ZjrXpeflg=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(82310400026)(36860700013)(1800799024)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 08:30:19.9685 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0060e53-d772-45b5-fff9-08dd5188cfdc
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D3.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8539
+Received-SPF: permerror client-ip=2a01:111:f403:2405::602;
+ envelope-from=Luc.Michel@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,33 +168,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/25 09:21, Luc Michel wrote:
-> On 22:08 Wed 19 Feb     , Philippe Mathieu-Daudé wrote:
->> While we model a 8-elements RX FIFO since the PL011 model was
->> introduced in commit 97398d900ca ("bcm2835_aux: add emulation
->> of BCM2835 AUX block") we only read 1 char at a time!
+On 22:08 Wed 19 Feb     , Philippe Mathieu-Daudé wrote:
+> In the IOCanReadHandler sh_serial_can_receive(), if the Serial
+> Control Register 'Receive Enable' bit is set (bit 4), then we
+> returns a size of (1 << 4) which happens to be equal to 16,
+return
+
+> so effectively SH_RX_FIFO_LENGTH.
 > 
-> I'm not sure I get why in this patch and the subsequent ones you keep
-> mentioning the PL011 model while you modify other UARTs. I guess you
-> mean "the BCM2835 AUX model" here?
-
-Oops too much copy/pasting...
-
+> The IOReadHandler, sh_serial_receive1() takes care to receive
+> multiple chars, but if the FIFO is partly filled, we only process
+> the number of free slots in the FIFO, discarding the other chars!
 > 
-> In any case:
+> Fix by returning how many elements the FIFO can queue in the
+> IOCanReadHandler, so we don't have to process more than that in
+> the IOReadHandler, thus not discarding anything.
 > 
-> Reviewed-by: Luc Michel <luc.michel@amd.com>
-
-Thanks!
-
+> Remove the now unnecessary check on 's->rx_cnt < SH_RX_FIFO_LENGTH'
+> in IOReadHandler, reducing the block indentation.
 > 
->>
->> Have the IOCanReadHandler handler return how many elements are
->> available, and use that in the IOReadHandler handler.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/char/bcm2835_aux.c | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
+> Fixes: 63242a007a1 ("SH4: Serial controller improvement")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+nice one :)
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+
+> ---
+>  hw/char/sh_serial.c | 30 ++++++++++++++----------------
+>  1 file changed, 14 insertions(+), 16 deletions(-)
+> 
+> diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
+> index 247aeb071ac..41c8175a638 100644
+> --- a/hw/char/sh_serial.c
+> +++ b/hw/char/sh_serial.c
+> @@ -320,7 +320,7 @@ static uint64_t sh_serial_read(void *opaque, hwaddr offs,
+> 
+>  static int sh_serial_can_receive(SHSerialState *s)
+>  {
+> -    return s->scr & (1 << 4);
+> +    return s->scr & (1 << 4) ? SH_RX_FIFO_LENGTH - s->rx_head : 0;
+>  }
+> 
+>  static void sh_serial_receive_break(SHSerialState *s)
+> @@ -353,22 +353,20 @@ static void sh_serial_receive1(void *opaque, const uint8_t *buf, int size)
+>      if (s->feat & SH_SERIAL_FEAT_SCIF) {
+>          int i;
+>          for (i = 0; i < size; i++) {
+> -            if (s->rx_cnt < SH_RX_FIFO_LENGTH) {
+> -                s->rx_fifo[s->rx_head++] = buf[i];
+> -                if (s->rx_head == SH_RX_FIFO_LENGTH) {
+> -                    s->rx_head = 0;
+> -                }
+> -                s->rx_cnt++;
+> -                if (s->rx_cnt >= s->rtrg) {
+> -                    s->flags |= SH_SERIAL_FLAG_RDF;
+> -                    if (s->scr & (1 << 6) && s->rxi) {
+> -                        timer_del(&s->fifo_timeout_timer);
+> -                        qemu_set_irq(s->rxi, 1);
+> -                    }
+> -                } else {
+> -                    timer_mod(&s->fifo_timeout_timer,
+> -                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 15 * s->etu);
+> +            s->rx_fifo[s->rx_head++] = buf[i];
+> +            if (s->rx_head == SH_RX_FIFO_LENGTH) {
+> +                s->rx_head = 0;
+> +            }
+> +            s->rx_cnt++;
+> +            if (s->rx_cnt >= s->rtrg) {
+> +                s->flags |= SH_SERIAL_FLAG_RDF;
+> +                if (s->scr & (1 << 6) && s->rxi) {
+> +                    timer_del(&s->fifo_timeout_timer);
+> +                    qemu_set_irq(s->rxi, 1);
+>                  }
+> +            } else {
+> +                timer_mod(&s->fifo_timeout_timer,
+> +                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 15 * s->etu);
+>              }
+>          }
+>      } else {
+> --
+> 2.47.1
+> 
+
+-- 
 
