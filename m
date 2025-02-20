@@ -4,82 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32149C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 13:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9DEBC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 14:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl6u9-0001J6-Mx; Thu, 20 Feb 2025 08:47:53 -0500
+	id 1tl7C1-0004x1-PJ; Thu, 20 Feb 2025 09:06:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl6u5-0001I6-PJ
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:47:49 -0500
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tl7Bz-0004wo-QD
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 09:06:19 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl6u3-0001rd-5q
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:47:49 -0500
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e46ebe19489so787332276.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 05:47:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740059265; x=1740664065; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MRXbKCZYAbAUSTZO6GXGqX5QlIgXZzqmfvbZFu52Bso=;
- b=HHi+j7d3DU25r/yxwl+tZfNWNoozERD+UMuuwOZB7QlLZIYUtLS9DvnyafNYHs1ySs
- 2k32E8GgAUlWtQGbj/kj7IP/R4znp720drM4HoNiy4TgpwDByxO7x4F/FzPhLLpfLly5
- j43zFz1hcWu8nbMdtB3U+++5068j7IIexURtjSlrXHuxPS2RMBd42m06tLg07m+EPHTX
- Uv4/f8ilhznwsUKN28p+6/75C3gnXdKIJEZRMy2wxwx1LYZIro/YO1tP8w1MPUXn6A1f
- Ik/e5s9ZILBdo/MtP6CHuOhhhjYD036yi3NdP2/Pv3Lp8+4L26mjxPCAgV/0iF+UPHH9
- D1DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740059265; x=1740664065;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MRXbKCZYAbAUSTZO6GXGqX5QlIgXZzqmfvbZFu52Bso=;
- b=SL3Pcb1xSCv9EH1HYl3pAN35LhDDyo3xJ6gn48zxwsj0rRmAp3JJabRT/W+QZjNZws
- AIa7/bAotNEYn/VHXQi+qaTVLfvFdEUScM78TfTXYrIcqh5M+yzpHuNK99XvoI8oz99W
- gtZ04zlCFFE+V702mJ48H4RlVkOeQZBod8GGp2nD+PMaJ7tKwpcSJJbK9Rs+WvWe7DDe
- X7njv6JaWZtAaV0x5LHmTk79soCmpCBhyUhHoCQlqtF7zLV/CZ5n5QmkkBZ6hGP+4Zm8
- xbdms3UGkULAE5TiTEfSgUyErOe1NdcSbuf91OxQBmViUzcDcyhe+NntaQU0a7u7zblE
- NQ1A==
-X-Gm-Message-State: AOJu0YyB8Iri8+s1CRGU8qvgm8k0zU1e1j5OAMjTXKF8p4Vin9XJfSLm
- kjqHHLdS+rwa8YMiid5F8wfPT6BPj/W0zQXzz+tOHBXdshQbF1V/1dxhyz++WdtSxKVolUJjiez
- aqSq6Tqx/uMgnGuSMauWTIalgSIxJbauxg+prOg==
-X-Gm-Gg: ASbGncudtnn1rtUiRmzeTh0t/yaUpc0DwKIL7NLBQXkr5kbU7lBzYgCrNbqBejcwqPB
- XzzOKhQPPxj5px1dLxJqM1uHu9HsJ1Ut6B0XNtKY6ODYjl5WHvBKWAsi9gWHVsYWJdGpo5pvT7A
- ==
-X-Google-Smtp-Source: AGHT+IGmYS6MprX09YyQXwXopVtqlVkaGZkPDhPVIEiGapAzZHcTRMUy7RSTVf+/WQ7h7JWRidIyiCwSHu4kjoayFM8=
-X-Received: by 2002:a05:6902:270a:b0:e57:2ff6:945a with SMTP id
- 3f1490d57ef6-e5e09faa9b7mr5744161276.0.1740059265073; Thu, 20 Feb 2025
- 05:47:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tl7Bx-0003xE-Nd
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 09:06:19 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 1FB141F387;
+ Thu, 20 Feb 2025 14:06:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1740060376; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3qklsxRRckRQF3m9P7K5O6DO+g/aEuxmjwTHDBEAp+0=;
+ b=jRuUjGq//ix2GZPRR0j92IxxV0CTIsW52VBxkpEyXtjgl1JdC2WclX8O4c8B0cznfDrHcv
+ 2NGxhMsdmBWFCdu6y0h5tZ71OhEbBZcg4jczJdNCetSlnmuNwxl3NfqHuaoIGlwCwLYaPi
+ FnTQWS/Imgiv10bwAwYia2SigVewvEU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1740060376;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3qklsxRRckRQF3m9P7K5O6DO+g/aEuxmjwTHDBEAp+0=;
+ b=KyNXH01N5RLf6apvwN1/uBeOD3s3u/T/9sg5WyTnMuUvd8BKwe3Z3KlGvUxgBo1sWhewLx
+ p3M3cC5BPCPikrBA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="jRuUjGq/";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KyNXH01N
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1740060376; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3qklsxRRckRQF3m9P7K5O6DO+g/aEuxmjwTHDBEAp+0=;
+ b=jRuUjGq//ix2GZPRR0j92IxxV0CTIsW52VBxkpEyXtjgl1JdC2WclX8O4c8B0cznfDrHcv
+ 2NGxhMsdmBWFCdu6y0h5tZ71OhEbBZcg4jczJdNCetSlnmuNwxl3NfqHuaoIGlwCwLYaPi
+ FnTQWS/Imgiv10bwAwYia2SigVewvEU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1740060376;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3qklsxRRckRQF3m9P7K5O6DO+g/aEuxmjwTHDBEAp+0=;
+ b=KyNXH01N5RLf6apvwN1/uBeOD3s3u/T/9sg5WyTnMuUvd8BKwe3Z3KlGvUxgBo1sWhewLx
+ p3M3cC5BPCPikrBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8BCED13301;
+ Thu, 20 Feb 2025 14:06:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id K0n/Edc2t2e5UAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 20 Feb 2025 14:06:15 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>, Yan Fu
+ <yafu@redhat.com>
+Subject: Re: [PATCH] migration: Fix UAF for incoming migration on
+ MigrationState
+In-Reply-To: <20250220132459.512610-1-peterx@redhat.com>
+References: <20250220132459.512610-1-peterx@redhat.com>
+Date: Thu, 20 Feb 2025 11:06:12 -0300
+Message-ID: <87h64o90dn.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250219150009.1662688-1-alex.bennee@linaro.org>
- <CAFEAcA_TJhgrcfZ-9JY74OvkiGXPuYHJF16=_3Y+=r6+JfXMGA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_TJhgrcfZ-9JY74OvkiGXPuYHJF16=_3Y+=r6+JfXMGA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Feb 2025 13:47:31 +0000
-X-Gm-Features: AWEUYZnI94sD-sjuHR9Xv11WRR5BfWfHATHRosMwlxXVYvTJIDzU3XeJvtJXigk
-Message-ID: <CAFEAcA8MpGGGeYvBKB4kcx9-_F2KTViwKtbbixBF9jNhE3Ok5g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] testing/next (aarch64 virt gpu tests)
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, qemu-arm@nongnu.org, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 1FB141F387
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,105 +128,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Feb 2025 at 11:29, Peter Maydell <peter.maydell@linaro.org> wrot=
-e:
+Peter Xu <peterx@redhat.com> writes:
+
+> On the incoming migration side, QEMU uses a coroutine to load all the VM
+> states.  Inside, it may reference MigrationState on global states like
+> migration capabilities, parameters, error state, shared mutexes and more.
 >
-> On Wed, 19 Feb 2025 at 15:00, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
-> >
-> > Hi,
-> >
-> > As I was looking at the native context patches I realised our existing
-> > GPU testing is a little sparse. I took the opportunity to split the
-> > test from the main virt test and then extend it to exercise the 3
-> > current display modes (virgl, virgl+blobs, vulkan).
-> >
-> > I've added some additional validation to ensure we have the devices we
-> > expect before we start. It doesn't currently address the reported
-> > clang issues but hopefully it will help narrow down what fails and
-> > what works.
+> However there's nothing yet to make sure MigrationState won't get
+> destroyed (e.g. after migration_shutdown()).  Meanwhile there's also no API
+> available to remove the incoming coroutine in migration_shutdown(),
+> avoiding it to access the freed elements.
 >
-> Running on my setup with a clang sanitizer build I get
+> There's a bug report showing this can happen and crash dest QEMU when
+> migration is cancelled on source.
 >
-> ok 1 test_aarch64_virt_gpu.Aarch64VirtGPUMachine.test_aarch64_virt_with_v=
-irgl_blobs_gpu
-> ok 2 test_aarch64_virt_gpu.Aarch64VirtGPUMachine.test_aarch64_virt_with_v=
-irgl_gpu
+> When it happens, the dest main thread is trying to cleanup everything:
 >
-> and then the third test timed out.
+>   #0  qemu_aio_coroutine_enter
+>   #1  aio_dispatch_handler
+>   #2  aio_poll
+>   #3  monitor_cleanup
+>   #4  qemu_cleanup
+>   #5  qemu_default_main
+>
+> Then it found the migration incoming coroutine, schedule it (even after
+> migration_shutdown()), causing crash:
+>
+>   #0  __pthread_kill_implementation
+>   #1  __pthread_kill_internal
+>   #2  __GI_raise
+>   #3  __GI_abort
+>   #4  __assert_fail_base
+>   #5  __assert_fail
+>   #6  qemu_mutex_lock_impl
+>   #7  qemu_lockable_mutex_lock
+>   #8  qemu_lockable_lock
+>   #9  qemu_lockable_auto_lock
+>   #10 migrate_set_error
+>   #11 process_incoming_migration_co
+>   #12 coroutine_trampoline
+>
+> To fix it, take a refcount after an incoming setup is properly done when
+> qmp_migrate_incoming() succeeded the 1st time.  As it's during a QMP
+> handler which needs BQL, it means the main loop is still alive (without
+> going into cleanups, which also needs BQL).
 
-vulkaninfo --summary as requested on irc:
+We should start documenting uses of BQL and dependencies on the main
+loop more thoroughly. Otherwise later when we decide to move stuff into
+threads or QMP people decide to rework how QMP uses coroutines,
+etc. there we'll be many bugs.
 
+I think the BQL is irrelevant here. The concurrent access is prevented
+by qmp_migrate_incoming() not being a coroutine, hence keeping the main
+loop from looping.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-VULKANINFO
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+This case would be "relying on the qmp_migrate_incoming() being
+serialized with the dispatch of the incoming coroutine by the main
+loop".
 
-Vulkan Instance Version: 1.3.275
+>
+> Releasing the refcount now only until the incoming migration coroutine
+> finished or failed.  Hence the refcount is valid for both (1) setup phase
+> of incoming ports, mostly IO watches (e.g. qio_channel_add_watch_full()),
+> and (2) the incoming coroutine itself (process_incoming_migration_co()).
+>
+> Note that we can't unref in migration_incoming_state_destroy(), because
+> both qmp_xen_load_devices_state() and load_snapshot() will use it without
+> an incoming migration.  Those hold BQL so they're not prone to this issue.
+>
+> PS: I suspect nobody uses Xen's command at all, as it didn't register yank,
+> hence AFAIU the command should crash on master when trying to unregister
+> yank in migration_incoming_state_destroy()..  but that's another story.
+>
+> Also note that in some incoming failure cases we may not always unref the
+> MigrationState refcount, which is a trade-off to keep things simple.  We
+> could make it accurate, but it can be an overkill.  Some examples:
+>
+>   - Unlike most of the rest protocols, socket_start_incoming_migration()
+>     may create net listener after incoming port setup sucessfully.
+>     It means we can't unref in migration_channel_process_incoming() as a
+>     generic path because socket protocol might keep using MigrationState.
+>
+>   - For either socket or file, multiple IO watches might be created, it
+>     means logically each IO watch needs to take one refcount for
+>     MigrationState so as to be 100% accurate on ownership of refcount taken.
+>
+> In general, we at least need per-protocol handling to make it accurate,
+> which can be an overkill if we know incoming failed after all.  Add a short
+> comment to explain that when taking the refcount in qmp_migrate_incoming().
+>
+> Bugzilla: https://issues.redhat.com/browse/RHEL-69775
+> Tested-by: Yan Fu <yafu@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/migration.c | 40 ++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 38 insertions(+), 2 deletions(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index c597aa707e..f57d853e9f 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -116,6 +116,27 @@ static void migration_downtime_start(MigrationState *s)
+>      s->downtime_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+>  }
+>  
+> +/*
+> + * This is unfortunate: incoming migration actually needs the outgoing
+> + * migration state (MigrationState) to be there too, e.g. to query
+> + * capabilities, parameters, using locks, setup errors, etc.
+> + *
+> + * NOTE: when calling this, making sure current_migration exists and not
+> + * been freed yet!  Otherwise trying to access the refcount is already
+> + * an use-after-free itself..
+> + *
+> + * TODO: Move shared part of incoming / outgoing out into separate object.
+> + * Then this is not needed.
 
+It will be needed on the new object still, no?
 
-Instance Extensions: count =3D 24
--------------------------------
-VK_EXT_acquire_drm_display             : extension revision 1
-VK_EXT_acquire_xlib_display            : extension revision 1
-VK_EXT_debug_report                    : extension revision 10
-VK_EXT_debug_utils                     : extension revision 2
-VK_EXT_direct_mode_display             : extension revision 1
-VK_EXT_display_surface_counter         : extension revision 1
-VK_EXT_headless_surface                : extension revision 1
-VK_EXT_surface_maintenance1            : extension revision 1
-VK_EXT_swapchain_colorspace            : extension revision 4
-VK_KHR_device_group_creation           : extension revision 1
-VK_KHR_display                         : extension revision 23
-VK_KHR_external_fence_capabilities     : extension revision 1
-VK_KHR_external_memory_capabilities    : extension revision 1
-VK_KHR_external_semaphore_capabilities : extension revision 1
-VK_KHR_get_display_properties2         : extension revision 1
-VK_KHR_get_physical_device_properties2 : extension revision 2
-VK_KHR_get_surface_capabilities2       : extension revision 1
-VK_KHR_portability_enumeration         : extension revision 1
-VK_KHR_surface                         : extension revision 25
-VK_KHR_surface_protected_capabilities  : extension revision 1
-VK_KHR_wayland_surface                 : extension revision 6
-VK_KHR_xcb_surface                     : extension revision 6
-VK_KHR_xlib_surface                    : extension revision 6
-VK_LUNARG_direct_driver_loading        : extension revision 1
+> + */
+> +static void migrate_incoming_ref_outgoing_state(void)
+> +{
+> +    object_ref(migrate_get_current());
+> +}
+> +static void migrate_incoming_unref_outgoing_state(void)
+> +{
+> +    object_unref(migrate_get_current());
+> +}
+> +
+>  static void migration_downtime_end(MigrationState *s)
+>  {
+>      int64_t now = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+> @@ -850,7 +871,7 @@ process_incoming_migration_co(void *opaque)
+>               * postcopy thread.
+>               */
+>              trace_process_incoming_migration_co_postcopy_end_main();
+> -            return;
+> +            goto out;
+>          }
+>          /* Else if something went wrong then just fall out of the normal exit */
+>      }
+> @@ -866,7 +887,8 @@ process_incoming_migration_co(void *opaque)
+>      }
+>  
+>      migration_bh_schedule(process_incoming_migration_bh, mis);
+> -    return;
+> +    goto out;
+> +
+>  fail:
+>      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>                        MIGRATION_STATUS_FAILED);
+> @@ -883,6 +905,9 @@ fail:
+>  
+>          exit(EXIT_FAILURE);
+>      }
+> +out:
+> +    /* Pairs with the refcount taken in qmp_migrate_incoming() */
+> +    migrate_incoming_unref_outgoing_state();
 
-Instance Layers: count =3D 4
---------------------------
-VK_LAYER_INTEL_nullhw       INTEL NULL HW                1.1.73   version 1
-VK_LAYER_MESA_device_select Linux device selection layer 1.3.211  version 1
-VK_LAYER_MESA_overlay       Mesa Overlay layer           1.3.211  version 1
-VK_LAYER_NV_optimus         NVIDIA Optimus layer         1.3.242  version 1
+Nit, the comment is redundant, the function name is already clear
+enough.
 
-Devices:
-=3D=3D=3D=3D=3D=3D=3D=3D
-GPU0:
-        apiVersion         =3D 1.3.242
-        driverVersion      =3D 535.183.1.0
-        vendorID           =3D 0x10de
-        deviceID           =3D 0x1cb3
-        deviceType         =3D PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-        deviceName         =3D Quadro P400
-        driverID           =3D DRIVER_ID_NVIDIA_PROPRIETARY
-        driverName         =3D NVIDIA
-        driverInfo         =3D 535.183.01
-        conformanceVersion =3D 1.3.5.0
-        deviceUUID         =3D 0a44d8af-913b-892f-1603-e76ce29ac9b5
-        driverUUID         =3D 526ab2c8-1f4a-5dd0-9559-81dab18f1e08
-GPU1:
-        apiVersion         =3D 1.3.289
-        driverVersion      =3D 0.0.1
-        vendorID           =3D 0x10005
-        deviceID           =3D 0x0000
-        deviceType         =3D PHYSICAL_DEVICE_TYPE_CPU
-        deviceName         =3D llvmpipe (LLVM 19.1.1, 256 bits)
-        driverID           =3D DRIVER_ID_MESA_LLVMPIPE
-        driverName         =3D llvmpipe
-        driverInfo         =3D Mesa 24.2.8-1ubuntu1~24.04.1 (LLVM 19.1.1)
-        conformanceVersion =3D 1.3.1.1
-        deviceUUID         =3D 6d657361-3234-2e32-2e38-2d3175627500
-        driverUUID         =3D 6c6c766d-7069-7065-5555-494400000000
+>  }
+>  
+>  /**
+> @@ -1888,6 +1913,17 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+>          return;
+>      }
+>  
+> +    /*
+> +     * Making sure MigrationState is available until incoming migration
+> +     * completes.
+> +     *
+> +     * NOTE: QEMU _might_ leak this refcount in some failure paths, but
+> +     * that's OK.  This is the minimum change we need to at least making
+> +     * sure success case is clean on the refcount.  We can try harder to
+> +     * make it accurate for any kind of failures, but it might be an
+> +     * overkill and doesn't bring us much benefit.
+> +     */
 
--- PMM
+Hopefully not any real leak... Let's see what my scripts say about
+it. If it doesn't trigger with migration-test that's fine.
+
+> +    migrate_incoming_ref_outgoing_state();
+>      once = false;
+>  }
 
