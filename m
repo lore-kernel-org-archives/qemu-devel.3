@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92000C021B3
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE80C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9Ip-0006fV-QZ; Thu, 20 Feb 2025 11:21:31 -0500
+	id 1tl9JV-0007Xo-A8; Thu, 20 Feb 2025 11:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9In-0006eo-Ig
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:29 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tl9JS-0007Gw-ID
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:10 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9Il-00089g-EK
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:29 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-439946a49e1so7618725e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:26 -0800 (PST)
+ id 1tl9JQ-0008Gv-P3
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:10 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so11319565e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068485; x=1740673285; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Q/ix9M9Uf7tMBPn78g6Olaq1AkEsI02MI9sVn7yq9CE=;
- b=exQyl630IIBWoVWoa7wo56808cFImikVMETDtU7WyEQxvkbGNED2ygYZ1q12j4xMqF
- 4yZCBIm31iHb3pDsKv127nnPZ43sGRV/1g9xemmgG16fuBIYxGODHLttiEQ0PkeeF+wo
- NL4d3NtwUfJHUGZEd9FOlYh1TchbGLd8XVDzMDHMFCZ07sb/Wopuf2xWdCb/1jQoVz+R
- Ex+5nafYIwDvhx7PEAJhgBpkrK6QNGW+uOlvrlxs3OdfNSYmjfk1OxmxkHMuVuf4U8xn
- kauOlf3tEhc4voYcfTBKte7g4Rx5uGv7x8Yduj9DAe8HxNT44+S/3LUrOPgEHC0MaxSz
- FyMg==
+ d=linaro.org; s=google; t=1740068527; x=1740673327; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=dshLc6Qy+PdOEv7Qd55JPDsQWfVhJcU8v+fR8N/n2Os=;
+ b=l/aytEkbowxQn0SYUqUQhDVdsnWRXofxlyjros7zmqY4olWAxbQ4RDDlZn4HnzS8tZ
+ M6H9awbMFWYXFLtYmUptOtTUK6UYBjTktrlFwh6b1BwplHPVYz/Dom8suEHZdDtVG2zQ
+ dESmz9PpJPfH5YCCB40ebetNLcyfy8BlknSbcqZ7mu+FPTbRBIPSeE/RAw1LGLbngyLE
+ du/RA3buY87Or87Ik0jFdoUxhrcPGqu3Rwb2AfJeDt2tWw166mxWL35BAwYf3bOPPPz2
+ yzd8oQNyLg5aAls8YzSrdhNMvfAEKQYLVsjeY7IElU83eO6rjptiuaGMn1V6nMUws2U3
+ znjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068485; x=1740673285;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q/ix9M9Uf7tMBPn78g6Olaq1AkEsI02MI9sVn7yq9CE=;
- b=YAyBleSIokLRslhkAozmEILrfutI0rELdNvz+3vV4M4Tt4+hCb6wPuPYh9LZWvTLBX
- uUs58Khm3uL4wloF6e2t4qZDolmBXMUXnErCwwj0lFLLnmhW6DoecmMCM63S2AebziBe
- 5xdGrNRp51p7HaKG193btxXXtZSiLXPbMOdBoYfAYMhF4rQqY64q2zaaSm1HCn36Y+Uy
- SNVZyEEN13PQzYi43xkw+KGVeVxtpEjUBy9+CSKoUYTO1LT7j13ICXaEbd+sAcIS5QSN
- WGdxroCYcfWTnMyVlf5w99SJtULoBA3iA3emIgTUgkI9iTSzaPsDhFiMKfKVWp1C+9VW
- xtsg==
-X-Gm-Message-State: AOJu0YynBZTh6HXaecjA+hJRQwIOefpcvLQTga/TTJjcghPjOLJAbu70
- SusG1Bo86YO2V82nESHfvqVYj0pl4GvTUqdNv5RYLrFwUFu93pjcihSAMGxjTOzSPdk8+Vky27J
- j
-X-Gm-Gg: ASbGncvzxq+kAotsOgktVeAai2Lip2cl6Enie2GOklv42eCKODpStJG9UB7oiJwsUj3
- lSdv0XL5xe1vQirYVeKmGMc0gUn/cMFW0/Hu1unfs+p8gnestwKI1r+4qTJG0fHWp7ngC96azqF
- 2/EtIEThr9LCuHZPg/ixJxYjZ+w5gIEm/lskIaM7+SZ4oGr+lDTxG7eNidB6G4XhWbLsKzJ9ALZ
- 8WTeGVi1mO9Hld9ZmKMmqOdU55yzx4yODgUITCn5FRQXvy0iyIbAyZdzPBz2dkFAFYFlcRMWg0t
- eRovRKCW4z8ESDs55MIyBA==
-X-Google-Smtp-Source: AGHT+IEtCpUXpqyhKtN3EyhJxDrEpXvhTsfoi4aIIBUQqvpELfKBpTTowhLF6RfMnrd2fkFVQCp4dw==
-X-Received: by 2002:a05:600c:1c90:b0:439:96b2:e8f with SMTP id
- 5b1f17b1804b1-43999ddb0f4mr74734205e9.28.1740068485396; 
- Thu, 20 Feb 2025 08:21:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740068527; x=1740673327;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dshLc6Qy+PdOEv7Qd55JPDsQWfVhJcU8v+fR8N/n2Os=;
+ b=FSb9XWJG5gAx3sQgEbP0kt4vjKuQme7pWux9PcGYNZNn8Ngeksb1LRDSMZ4aprHc2d
+ rFhK7n4q72u8S7lmmtKzmr24lgjt+Y7Hxth9SgaqdrdaPaDIRevzJlC3Z6Bht4NLBwJP
+ JlDnVi7QleGEd8baptzYJ0+dheok4sgjtZgrmV4T536Po5Myl4MTNUsJiL4RemeIFuhq
+ ot2b7+XqFprYLeo0JjyqSkWZlnHyOfONeQTo4HcrwnI8/HDZZN2o8n6tfbdxoItxGpEH
+ xNC1XA4zvNE/80HioxQ88EGS8q+rhvy2ObXetOGYiPLppJkvhGqhYXslNN2DPEdHf7eD
+ BteQ==
+X-Gm-Message-State: AOJu0Yw2rskuowGPQGQyBJJiXRmarfolWrNLnZ9qk47joEFQ6C6v5gcH
+ yTizDJVXX8Wf47dcuj3eV8y3drAes6xU/sWy+Pb5ZT1lLHIxviDfE3O9wYP21e4oSizUL6KZBAj
+ C
+X-Gm-Gg: ASbGncuAibJnJJHSsXBuycUYwkby74AgGXYT/aCLg+Emk2BSn9ko/Dboew6amU/2E4d
+ BEfPZM2YrsWJugqFnDNL+bWAcARUKGqPbb+c9zpyMXcxnZi3jPxfNlZ4K2SvrDQcn4hnE+fi5Tf
+ FQ6FK5L6QGtCchU0er8OUJp9f9Z6DQP4PlMI/NUVbCYfTNGRkBu/HscukgyhVbFiTEZHkLU6VhY
+ 4vPRvpQV+78HLvuAddh5LkbY9dop6qenLEkrCj4q1RmMg8/Z9Lr2Tpseguc+si4DbX32X3SGpVj
+ ieVCx5to3gBdqtDFQqJmbA==
+X-Google-Smtp-Source: AGHT+IH4I1wrHdWYgwMR3iRKVYlCFIAS/f7/b+ZKKo1vigKXaq4h8+DFyhWiynTUYOgV81a1X6yyxQ==
+X-Received: by 2002:a05:6000:1844:b0:38f:6697:af91 with SMTP id
+ ffacd0b85a97d-38f6697b0f4mr3062866f8f.39.1740068527340; 
+ Thu, 20 Feb 2025 08:22:07 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.24
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.22.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:21:24 -0800 (PST)
+ Thu, 20 Feb 2025 08:22:06 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/41] target-arm queue
-Date: Thu, 20 Feb 2025 16:20:41 +0000
-Message-ID: <20250220162123.626941-1-peter.maydell@linaro.org>
+Subject: [PULL 34/41] hw/misc: Rename npcm7xx_clk to npcm_clk
+Date: Thu, 20 Feb 2025 16:21:15 +0000
+Message-ID: <20250220162123.626941-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
+References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,141 +98,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; this pullreq contains a new board model npcm845-evb, plus some
-more minor cleanups, refactorings and a few bugfixes.
+From: Hao Wu <wuhaotsh@google.com>
 
-thanks
--- PMM
+NPCM7XX and NPCM8XX have a different set of CLK registers. This
+commit changes the name of the clk files to be used by both
+NPCM7XX and NPCM8XX CLK modules.
 
-The following changes since commit 40efe733e10cc00e4fb4f9f5790a28e744e63c62:
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
+Message-id: 20250219184609.1839281-11-wuhaotsh@google.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/arm/npcm7xx.h                      | 2 +-
+ include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} | 6 +++---
+ hw/misc/{npcm7xx_clk.c => npcm_clk.c}         | 2 +-
+ hw/misc/meson.build                           | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+ rename include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} (98%)
+ rename hw/misc/{npcm7xx_clk.c => npcm_clk.c} (99%)
 
-  Merge tag 'pull-tcg-20250215-3' of https://gitlab.com/rth7680/qemu into staging (2025-02-19 08:36:45 +0800)
+diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
+index 2e708471ece..e80fd91f204 100644
+--- a/include/hw/arm/npcm7xx.h
++++ b/include/hw/arm/npcm7xx.h
+@@ -23,7 +23,7 @@
+ #include "hw/gpio/npcm7xx_gpio.h"
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/mem/npcm7xx_mc.h"
+-#include "hw/misc/npcm7xx_clk.h"
++#include "hw/misc/npcm_clk.h"
+ #include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+diff --git a/include/hw/misc/npcm7xx_clk.h b/include/hw/misc/npcm_clk.h
+similarity index 98%
+rename from include/hw/misc/npcm7xx_clk.h
+rename to include/hw/misc/npcm_clk.h
+index 5ed4a4672b3..0aef81e10c8 100644
+--- a/include/hw/misc/npcm7xx_clk.h
++++ b/include/hw/misc/npcm_clk.h
+@@ -13,8 +13,8 @@
+  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+  * for more details.
+  */
+-#ifndef NPCM7XX_CLK_H
+-#define NPCM7XX_CLK_H
++#ifndef NPCM_CLK_H
++#define NPCM_CLK_H
+ 
+ #include "exec/memory.h"
+ #include "hw/clock.h"
+@@ -177,4 +177,4 @@ struct NPCM7xxCLKState {
+ #define TYPE_NPCM7XX_CLK "npcm7xx-clk"
+ OBJECT_DECLARE_SIMPLE_TYPE(NPCM7xxCLKState, NPCM7XX_CLK)
+ 
+-#endif /* NPCM7XX_CLK_H */
++#endif /* NPCM_CLK_H */
+diff --git a/hw/misc/npcm7xx_clk.c b/hw/misc/npcm_clk.c
+similarity index 99%
+rename from hw/misc/npcm7xx_clk.c
+rename to hw/misc/npcm_clk.c
+index 46f907b61c2..2bcb731099e 100644
+--- a/hw/misc/npcm7xx_clk.c
++++ b/hw/misc/npcm_clk.c
+@@ -16,7 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-#include "hw/misc/npcm7xx_clk.h"
++#include "hw/misc/npcm_clk.h"
+ #include "hw/timer/npcm7xx_timer.h"
+ #include "hw/qdev-clock.h"
+ #include "migration/vmstate.h"
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 554eb8df5bc..edd36a334d7 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -69,7 +69,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx_rngc.c',
+ ))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+-  'npcm7xx_clk.c',
++  'npcm_clk.c',
+   'npcm_gcr.c',
+   'npcm7xx_mft.c',
+   'npcm7xx_pwm.c',
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250220
-
-for you to fetch changes up to 1c3169179b8242866316108386800379c4e22974:
-
-  docs/system/arm: Add Description for NPCM8XX SoC (2025-02-20 15:22:22 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * Fix some incorrect syndrome values in various sysreg traps
- * Clean up sysreg trap code to avoid similar future bugs
- * Make boards/SoCs using a9mpcore and a15mpcore objects specify
-   number of GIC interrupts explicitly
- * Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX
- * target/arm: Use uint32_t in t32_expandimm_imm()
- * New board model: NPCM845 Evaluation board "npcm845-evb"
-
-----------------------------------------------------------------
-Bernhard Beschow (1):
-      Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX
-
-Hao Wu (17):
-      roms: Update vbootrom to 1287b6e
-      pc-bios: Add NPCM8XX vBootrom
-      hw/ssi: Make flash size a property in NPCM7XX FIU
-      hw/misc: Rename npcm7xx_gcr to npcm_gcr
-      hw/misc: Move NPCM7XX GCR to NPCM GCR
-      hw/misc: Add nr_regs and cold_reset_values to NPCM GCR
-      hw/misc: Add support for NPCM8XX GCR
-      hw/misc: Store DRAM size in NPCM8XX GCR Module
-      hw/misc: Support 8-bytes memop in NPCM GCR module
-      hw/misc: Rename npcm7xx_clk to npcm_clk
-      hw/misc: Move NPCM7XX CLK to NPCM CLK
-      hw/misc: Add nr_regs and cold_reset_values to NPCM CLK
-      hw/misc: Support NPCM8XX CLK Module Registers
-      hw/net: Add NPCM8XX PCS Module
-      hw/arm: Add NPCM8XX SoC
-      hw/arm: Add NPCM845 Evaluation board
-      docs/system/arm: Add Description for NPCM8XX SoC
-
-Peter Maydell (14):
-      target/arm: Report correct syndrome for UNDEFINED CNTPS_*_EL1 from EL2 and NS EL1
-      target/arm: Report correct syndrome for UNDEFINED AT ops with wrong NSE, NS
-      target/arm: Report correct syndrome for UNDEFINED S1E2 AT ops at EL3
-      target/arm: Report correct syndrome for UNDEFINED LOR sysregs when NS=0
-      target/arm: Make CP_ACCESS_TRAPs to AArch32 EL3 be Monitor traps
-      hw/intc/arm_gicv3_cpuif: Don't downgrade monitor traps for AArch32 EL3
-      target/arm: Honour SDCR.TDCC and SCR.TERR in AArch32 EL3 non-Monitor modes
-      hw/intc/arm_gicv3_cpuif(): Remove redundant tests of is_a64()
-      target/arm: Support CP_ACCESS_TRAP_EL1 as a CPAccessResult
-      target/arm: Use CP_ACCESS_TRAP_EL1 for traps that are always to EL1
-      target/arm: Use TRAP_UNCATEGORIZED for XScale CPAR traps
-      target/arm: Remove CP_ACCESS_TRAP handling
-      target/arm: Rename CP_ACCESS_TRAP_UNCATEGORIZED to CP_ACCESS_UNDEFINED
-      target/arm: Correct errors in WFI/WFE trapping
-
-Philippe Mathieu-Daudé (8):
-      hw/arm/exynos4210: Replace magic 32 by proper 'GIC_INTERNAL' definition
-      hw/arm/exynos4210: Specify explicitly the GIC has 64 external IRQs
-      hw/arm/realview: Specify explicitly the GIC has 64 external IRQs
-      hw/arm/xilinx_zynq: Replace IRQ_OFFSET -> GIC_INTERNAL
-      hw/arm/xilinx_zynq: Specify explicitly the GIC has 64 external IRQs
-      hw/arm/vexpress: Specify explicitly the GIC has 64 external IRQs
-      hw/arm/highbank: Specify explicitly the GIC has 128 external IRQs
-      hw/cpu/arm_mpcore: Remove default values for GIC external IRQs
-
-Stephen Longfield (1):
-      target/arm: Use uint32_t in t32_expandimm_imm()
-
- MAINTAINERS                                   |   1 +
- docs/system/arm/nuvoton.rst                   |  27 +-
- configs/devices/aarch64-softmmu/default.mak   |   1 +
- include/hw/arm/npcm7xx.h                      |   8 +-
- include/hw/arm/npcm8xx.h                      | 127 ++++
- include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} |  47 +-
- include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} |  29 +-
- include/hw/net/npcm_pcs.h                     |  42 ++
- include/hw/ssi/npcm7xx_fiu.h                  |   1 +
- target/arm/cpregs.h                           |  15 +-
- target/arm/cpu.h                              |   6 +
- hw/arm/exynos4210.c                           |  10 +-
- hw/arm/highbank.c                             |   8 +-
- hw/arm/npcm7xx.c                              |   6 +
- hw/arm/npcm8xx.c                              | 805 ++++++++++++++++++++++++++
- hw/arm/npcm8xx_boards.c                       | 254 ++++++++
- hw/arm/realview.c                             |  11 +-
- hw/arm/vexpress.c                             |   7 +-
- hw/arm/xilinx_zynq.c                          |  43 +-
- hw/cpu/a15mpcore.c                            |  18 +-
- hw/cpu/a9mpcore.c                             |  18 +-
- hw/intc/arm_gicv3_cpuif.c                     |  15 +-
- hw/misc/npcm7xx_gcr.c                         | 264 ---------
- hw/misc/{npcm7xx_clk.c => npcm_clk.c}         | 235 ++++++--
- hw/misc/npcm_gcr.c                            | 482 +++++++++++++++
- hw/net/npcm_pcs.c                             | 410 +++++++++++++
- hw/ssi/npcm7xx_fiu.c                          |  16 +-
- target/arm/debug_helper.c                     |   5 +-
- target/arm/helper.c                           |  75 ++-
- target/arm/tcg/op_helper.c                    |  71 ++-
- target/arm/tcg/translate.c                    |   2 +-
- hw/arm/Kconfig                                |  19 +-
- hw/arm/meson.build                            |   1 +
- hw/misc/meson.build                           |   4 +-
- hw/misc/trace-events                          |  12 +-
- hw/net/meson.build                            |   1 +
- hw/net/trace-events                           |   4 +-
- hw/usb/Kconfig                                |   4 +
- hw/usb/meson.build                            |   2 +-
- pc-bios/README                                |   8 +-
- pc-bios/meson.build                           |   1 +
- pc-bios/npcm7xx_bootrom.bin                   | Bin 768 -> 768 bytes
- pc-bios/npcm8xx_bootrom.bin                   | Bin 0 -> 608 bytes
- roms/Makefile                                 |   6 +
- roms/vbootrom                                 |   2 +-
- 45 files changed, 2626 insertions(+), 497 deletions(-)
- create mode 100644 include/hw/arm/npcm8xx.h
- rename include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} (83%)
- rename include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} (76%)
- create mode 100644 include/hw/net/npcm_pcs.h
- create mode 100644 hw/arm/npcm8xx.c
- create mode 100644 hw/arm/npcm8xx_boards.c
- delete mode 100644 hw/misc/npcm7xx_gcr.c
- rename hw/misc/{npcm7xx_clk.c => npcm_clk.c} (82%)
- create mode 100644 hw/misc/npcm_gcr.c
- create mode 100644 hw/net/npcm_pcs.c
- create mode 100644 pc-bios/npcm8xx_bootrom.bin
 
