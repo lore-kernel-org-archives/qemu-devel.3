@@ -4,71 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D86C021B3
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 22:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD1A6C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 22:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlFMn-0000XW-0M; Thu, 20 Feb 2025 17:50:01 -0500
+	id 1tlFRW-0004Lq-Tr; Thu, 20 Feb 2025 17:54:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tlFMb-0000Wv-EG
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:49:50 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlFRV-0004Le-7U
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:54:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tlFMZ-0007hZ-Kp
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:49:48 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlFRT-0008R8-9t
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:54:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740091787;
+ s=mimecast20190719; t=1740092089;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8rC4wyy+TUn0UJi75VQuSiAc2m78mwecQ0N9kXpWDiI=;
- b=L9J/tgTZD74ZuUDZKyekMas7Wh9HHCCi4EN+pI+q7eIfW4J4m3lR84PoJ9ZIjnwcOT4/PZ
- V4FtC8MM8K3TpOqkaipWF700++Sb9je7aOZB91G+XccDeZjPsgnM1TG0hhpNxn2qyeNONp
- PKioBHoXG5THk1oi1E2fEIjcwm1WqD0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-y3jZy9eLMoqSYLjwpY0PvA-1; Thu,
- 20 Feb 2025 17:49:45 -0500
-X-MC-Unique: y3jZy9eLMoqSYLjwpY0PvA-1
-X-Mimecast-MFC-AGG-ID: y3jZy9eLMoqSYLjwpY0PvA_1740091784
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BFE41800876; Thu, 20 Feb 2025 22:49:42 +0000 (UTC)
-Received: from omen.home.shazbot.org (unknown [10.22.88.77])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4624E1955BCB; Thu, 20 Feb 2025 22:49:37 +0000 (UTC)
-From: Alex Williamson <alex.williamson@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, eric.auger.pro@gmail.com,
- eric.auger@redhat.com, clg@redhat.com, zhenzhong.duan@intel.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>,
- Stefan Weil <sw@weilnetz.de>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>
-Subject: [PATCH 2/5] pci: Use PCI PM capability initializer
-Date: Thu, 20 Feb 2025 15:48:55 -0700
-Message-ID: <20250220224918.2520417-3-alex.williamson@redhat.com>
-In-Reply-To: <20250220224918.2520417-1-alex.williamson@redhat.com>
+ bh=+VVvmoiXHtWgSlmaGYq7fYfKAVNKP3/gzOwZDgLMjIY=;
+ b=YTNTnpTteV8UhY+WaWUqHxQTPa/m3e8P8tGUGEKwR5qfCePiGj+bXfM2BSgWnXLuxVseSn
+ zw5r9nBXEY/qywDt7tQQqjxNcaXCncU0VllbmUXVJ8aQoTO6iwHc0E1kY7qfXp25mD1UgJ
+ 4WYVZ/TuZrvdTjjEWOMlamTgTpdo7vU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-6Yhh0XTbPgusgeOJFOlttg-1; Thu, 20 Feb 2025 17:54:46 -0500
+X-MC-Unique: 6Yhh0XTbPgusgeOJFOlttg-1
+X-Mimecast-MFC-AGG-ID: 6Yhh0XTbPgusgeOJFOlttg_1740092085
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-abb93de227dso163213266b.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 14:54:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740092085; x=1740696885;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+VVvmoiXHtWgSlmaGYq7fYfKAVNKP3/gzOwZDgLMjIY=;
+ b=OBtGH0l2VtQF3Ils3agb3NBdFKW0x3kcu5BaeFiId4GYOYxTFZHJcsnnlCAsvoxzR5
+ z7OfRwiv+3Q5wXMJJMsNsAGM8kK7tQWfiziWDS1UsluMHu3ZlQKxiXh9tu6KMWcQZHFL
+ cjI1sZOmDWZCXB789Cv/j58XaFVza75MLP3OaSW6+JPC8KoI/NvfPhEA9dHlSSBC/t3Y
+ mrYLE8xk5S5bKMA2u3moAmUM2hPSk/mGHTgwBG1IG8oE5+yK/QnKAm4pIUZJe8krg4Gi
+ EcH+K/4jqBhDAWktVT1DSr2o2ZyTRdhAYz5SYOIkkDemWyXmL3xllwBT+l0YIIW9fq91
+ zkvA==
+X-Gm-Message-State: AOJu0YxkgrQVhurU5XjJvV0lGlYoxLhuN7PNKjwUjMYyTTYNk1uTQ85A
+ RGobYLiGxrSGOUo+T3Fnz3eHKE74K7gV5lvwF2+Uos/+pTIE9ACIiLuVcybvHC5hrsBBcqpERji
+ A4cjM1Jio6wcllhLFiePAlrramveQVHceEpxu6pVJqOk7BJXfPY1x
+X-Gm-Gg: ASbGnctDJTSwW+n1n3fD8Ba7ctVLkQl1Dj4fpyX9klKydnUHwZWWUG2NlCEi1ur36e0
+ 2wB2s56ix5FU2YLKbWYbvAEUAqdn4lRT4GbanwAeX3dRuz2fbDiumChOCCpklX08aAQsPeKS1G4
+ EVeBD4nX9v8SQzTQZsZ/s8LVjcuav6xA3ymrIml3xJO1L4lzZU9D6V29wi7i/lNX0WDAsWJ+e7h
+ 2QVT0ap8kfdQ6Hv6ERiggmwDcdCUg726+cPh0F7FxcRTw4T1X6Ea3uIeRKyJfUxVf/U2w==
+X-Received: by 2002:a17:907:7ea8:b0:ab6:d575:9540 with SMTP id
+ a640c23a62f3a-abc09d2de9amr100902766b.50.1740092085483; 
+ Thu, 20 Feb 2025 14:54:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGu7EiO8QQ8YPIQuhIjQKc5QdYq2XOoj7VQ1E/J6ry+71sv6FtvSjh9UebJPqE8DaV/jQaJqg==
+X-Received: by 2002:a17:907:7ea8:b0:ab6:d575:9540 with SMTP id
+ a640c23a62f3a-abc09d2de9amr100901466b.50.1740092085118; 
+ Thu, 20 Feb 2025 14:54:45 -0800 (PST)
+Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abb9723a559sm909561066b.96.2025.02.20.14.54.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 14:54:44 -0800 (PST)
+Date: Thu, 20 Feb 2025 17:54:41 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, eric.auger.pro@gmail.com, eric.auger@redhat.com,
+ clg@redhat.com, zhenzhong.duan@intel.com, marcel.apfelbaum@gmail.com
+Subject: Re: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
+Message-ID: <20250220175420-mutt-send-email-mst@kernel.org>
 References: <20250220224918.2520417-1-alex.williamson@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250220224918.2520417-1-alex.williamson@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -93,129 +103,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch callers directly initializing the PCI PM capability with
-pci_add_capability() to use pci_pm_init().
+On Thu, Feb 20, 2025 at 03:48:53PM -0700, Alex Williamson wrote:
+> Eric recently identified an issue[1] where during graceful shutdown
+> of a VM in a vIOMMU configuration, the guest driver places the device
+> into the D3 power state, the vIOMMU is then disabled, triggering an
+> AddressSpace update.  The device BARs are still mapped into the AS,
+> but the vfio host driver refuses to DMA map the MMIO space due to the
+> device power state.
+> 
+> The proposed solution in [1] was to skip mappings based on the
+> device power state.  Here we take a different approach.  The PCI spec
+> defines that devices in D1/2/3 power state should respond only to
+> configuration and message requests and all other requests should be
+> handled as an Unsupported Request.  In other words, the memory and
+> IO BARs are not accessible except when the device is in the D0 power
+> state.
+> 
+> To emulate this behavior, we can factor the device power state into
+> the mapping state of the device BARs.  Therefore the BAR is marked
+> as unmapped if either the respective command register enable bit is
+> clear or the device is not in the D0 power state.
+> 
+> In order to implement this, the PowerState field of the PMCSR
+> register becomes writable, which allows the device to appear in
+> lower power states.  This also therefore implements D3 support
+> (insofar as the BAR behavior) for all devices implementing the PM
+> capability.  The PCI spec requires D3 support.
+> 
+> An aspect that needs attention here is whether this change in the
+> wmask and PMCSR bits becomes a problem for migration, and how we
+> might solve it.  For a guest migrating old->new, the device would
+> always be in the D0 power state, but the register becomes writable.
+> In the opposite direction, is it possible that a device could
+> migrate in a low power state and be stuck there since the bits are
+> read-only in old QEMU?  Do we need an option for this behavior and a
+> machine state bump, or are there alternatives?
+> 
+> Thanks,
+> Alex
+> 
+> [1]https://lore.kernel.org/all/20250219175941.135390-1-eric.auger@redhat.com/
 
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Stefan Weil <sw@weilnetz.de>
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
-Cc: Keith Busch <kbusch@kernel.org>
-Cc: Klaus Jensen <its@irrelevant.dk>
-Cc: Jesper Devantier <foss@defmacro.it>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
----
- hw/net/e1000e.c                 | 3 +--
- hw/net/eepro100.c               | 4 +---
- hw/net/igb.c                    | 3 +--
- hw/nvme/ctrl.c                  | 3 +--
- hw/pci-bridge/pcie_pci_bridge.c | 2 +-
- hw/vfio/pci.c                   | 2 +-
- hw/virtio/virtio-pci.c          | 3 +--
- 7 files changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
-index f637853073e2..b72cbab7e889 100644
---- a/hw/net/e1000e.c
-+++ b/hw/net/e1000e.c
-@@ -372,8 +372,7 @@ static int
- e1000e_add_pm_capability(PCIDevice *pdev, uint8_t offset, uint16_t pmc)
- {
-     Error *local_err = NULL;
--    int ret = pci_add_capability(pdev, PCI_CAP_ID_PM, offset,
--                                 PCI_PM_SIZEOF, &local_err);
-+    int ret = pci_pm_init(pdev, offset, &local_err);
- 
-     if (local_err) {
-         error_report_err(local_err);
-diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
-index 6d853229aec2..29a39865a608 100644
---- a/hw/net/eepro100.c
-+++ b/hw/net/eepro100.c
-@@ -551,9 +551,7 @@ static void e100_pci_reset(EEPRO100State *s, Error **errp)
-     if (info->power_management) {
-         /* Power Management Capabilities */
-         int cfg_offset = 0xdc;
--        int r = pci_add_capability(&s->dev, PCI_CAP_ID_PM,
--                                   cfg_offset, PCI_PM_SIZEOF,
--                                   errp);
-+        int r = pci_pm_init(&s->dev, cfg_offset, errp);
-         if (r < 0) {
-             return;
-         }
-diff --git a/hw/net/igb.c b/hw/net/igb.c
-index 4d93ce629f95..700dbc746d3d 100644
---- a/hw/net/igb.c
-+++ b/hw/net/igb.c
-@@ -356,8 +356,7 @@ static int
- igb_add_pm_capability(PCIDevice *pdev, uint8_t offset, uint16_t pmc)
- {
-     Error *local_err = NULL;
--    int ret = pci_add_capability(pdev, PCI_CAP_ID_PM, offset,
--                                 PCI_PM_SIZEOF, &local_err);
-+    int ret = pci_pm_init(pdev, offset, &local_err);
- 
-     if (local_err) {
-         error_report_err(local_err);
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 68903d1d7067..1faea3d2b85b 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8503,8 +8503,7 @@ static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
-     Error *err = NULL;
-     int ret;
- 
--    ret = pci_add_capability(pci_dev, PCI_CAP_ID_PM, offset,
--                             PCI_PM_SIZEOF, &err);
-+    ret = pci_pm_init(pci_dev, offset, &err);
-     if (err) {
-         error_report_err(err);
-         return ret;
-diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
-index fd4514a595ce..9fa656b43b42 100644
---- a/hw/pci-bridge/pcie_pci_bridge.c
-+++ b/hw/pci-bridge/pcie_pci_bridge.c
-@@ -52,7 +52,7 @@ static void pcie_pci_bridge_realize(PCIDevice *d, Error **errp)
-         goto cap_error;
-     }
- 
--    pos = pci_add_capability(d, PCI_CAP_ID_PM, 0, PCI_PM_SIZEOF, errp);
-+    pos = pci_pm_init(d, 0, errp);
-     if (pos < 0) {
-         goto pm_error;
-     }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 89d900e9cf0c..6903f831e45f 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2216,7 +2216,7 @@ static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
-     case PCI_CAP_ID_PM:
-         vfio_check_pm_reset(vdev, pos);
-         vdev->pm_cap = pos;
--        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
-+        ret = pci_pm_init(pdev, pos, errp) >= 0;
-         break;
-     case PCI_CAP_ID_AF:
-         vfio_check_af_flr(vdev, pos);
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index c773a9130c7e..afe8b5551c5c 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2204,8 +2204,7 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-         pos = pcie_endpoint_cap_init(pci_dev, 0);
-         assert(pos > 0);
- 
--        pos = pci_add_capability(pci_dev, PCI_CAP_ID_PM, 0,
--                                 PCI_PM_SIZEOF, errp);
-+        pos = pci_pm_init(pci_dev, 0, errp);
-         if (pos < 0) {
-             return;
-         }
--- 
-2.48.1
+PCI bits:
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+feel free to merge.
+
+> Alex Williamson (5):
+>   hw/pci: Basic support for PCI power management
+>   pci: Use PCI PM capability initializer
+>   vfio/pci: Delete local pm_cap
+>   pcie, virtio: Remove redundant pm_cap
+>   hw/vfio/pci: Re-order pre-reset
+> 
+>  hw/net/e1000e.c                 |  3 +-
+>  hw/net/eepro100.c               |  4 +-
+>  hw/net/igb.c                    |  3 +-
+>  hw/nvme/ctrl.c                  |  3 +-
+>  hw/pci-bridge/pcie_pci_bridge.c |  3 +-
+>  hw/pci/pci.c                    | 83 ++++++++++++++++++++++++++++++++-
+>  hw/pci/trace-events             |  2 +
+>  hw/vfio/pci.c                   | 29 ++++++------
+>  hw/vfio/pci.h                   |  1 -
+>  hw/virtio/virtio-pci.c          | 11 ++---
+>  include/hw/pci/pci.h            |  3 ++
+>  include/hw/pci/pci_device.h     |  3 ++
+>  include/hw/pci/pcie.h           |  2 -
+>  13 files changed, 112 insertions(+), 38 deletions(-)
+> 
+> -- 
+> 2.48.1
 
 
