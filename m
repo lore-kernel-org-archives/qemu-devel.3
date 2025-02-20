@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4A4C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9906C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl45Q-0006NF-0N; Thu, 20 Feb 2025 05:47:20 -0500
+	id 1tl4Ao-0008Aw-1u; Thu, 20 Feb 2025 05:52:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1tl45M-0006K2-82
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:47:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1tl45J-0000Ix-Vd
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:47:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740048432;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=I3uT+5j22I133zxTX3VahKsG5GmWqv+UxgUGdlGP8Wc=;
- b=ZUbPPgcbe6VMpMpnto+fO1gXS/G1LbHRJ0IP3cmjQdN0fn/3HHkYQyHa1X2x7kKCyVpynw
- eiXP8bfhoo+KAcGa/bAEloUEQRGVzR5ahZRxaebLkixmhJLKeRQGFumiRsZ9GxU1i97/II
- PjFSaIkY2SIWH0EG3bay0t1AiNLHAqM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-4bKo6qANMXe8lexRBEIj1A-1; Thu, 20 Feb 2025 05:45:39 -0500
-X-MC-Unique: 4bKo6qANMXe8lexRBEIj1A-1
-X-Mimecast-MFC-AGG-ID: 4bKo6qANMXe8lexRBEIj1A_1740048338
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f255d44acso380338f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 02:45:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tl4Al-0008AT-Oh
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:52:52 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tl4Aj-00013M-8d
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:52:51 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-6f754678c29so6589107b3.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 02:52:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740048768; x=1740653568; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QwQqs2MUo29YuU8xbj8I9NFNJ0ZGtO71G9EnwFnBys0=;
+ b=pzc2SbRO79RlROtuDp/KU2rtmrS10bK22jYLzBUXGH12r4xOgd3Y8jGHxL5K8FfNmO
+ nObnV1vRoSmPZvNHBmiTazOt8ePWWUsbZ6j6N7rClahMT5EYJeMdmiURsH1RwhlRmtfL
+ brDi0xMEZaOzl08FukpeyP+w66E+G8eCPvfh/IobmuQ15ycBUWCGeIYdGww4gxWJS5I0
+ ny3mjhcrfLgL/dCJjl++kCm5BTDfhB/kmS1oj7B//GP/ZaT0PA54vohyR32f4AE7kdds
+ 3WT4Cjc+60RXub7kuVMephClpipxhFjycpGhXy+dUZzmJ81hU3CEZkjD7msrmgOOghQS
+ Ajag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740048338; x=1740653138;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I3uT+5j22I133zxTX3VahKsG5GmWqv+UxgUGdlGP8Wc=;
- b=NfyU45dimAkcShuyczxi6l2l8kA3gcIFt6LmNRZTHRbD5S6Z3hUnfe3/1bsMc5kvkO
- cVJPPQzziuy8Nak0NKdYuD+VIKrnTI8BpPwZo+Cvsm7DRwmjpVe1RBGjE82os4f1Xc7B
- MtgSF0s7jjVVYFrUVliHlsc8COcMGRU0Bu4m1GkN2puKz1Uk0j6J9PxnHM1CaZA6OqMI
- NC9IFU7rJmLr+Wn8LXHkVaMS1fU2Fd7JSxArBp76veLSw5qmlWFFSjH5slGVZeEw7wRs
- re2H/eKxPm03tdhyYqgaa0xMbMsSRH0LZYte7QbRUaruIy31GaWDDGC8H3V8yYipfmkJ
- VuQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoMalR5pPysBcZ+9/CAEjgfmebe+MiMHxske1joiFgzYTV88kqcB7lWUgl9ohi/C6wvXlWO3OW+yws@nongnu.org
-X-Gm-Message-State: AOJu0Yw0udav+O2TvItUtgzGoNXwfMQ0isPHZO5thpTK52Yd3RPqnIKr
- 4WIQ2oUdtZSEGBIhA6yAXWffkv5C9V+vRHlgXgOT1BAzuM+gf117LFRimmB7QjEj37mGBuYmgVJ
- j/uyeHVRSmQzsRQqFah8gTsMeB1qZrx9XEG/E+nThzULFZIqy+3L3
-X-Gm-Gg: ASbGncunI6GDoEQ9lxYMfXILnI/GUHE99DgMEVRydFxg0cjJg9VFQ7j3IJYD1Av4Oyl
- vYT+bGiWrxV0btzu6Mj+lBEl+ZykuM0HvHGK3bfZLYG+ae6eFhMTRwOL9MUVUsN4FkLHdwVZJR5
- KPPHZbt5o+vithK541vaA83oRgbH/XL5KYZqjjISsFyb32powhNzCGYg8er+a8e69Jewri1KEw+
- gnkHUsKJCL1jQOyzOuiJjz7zsoj8yJm+XhauJmyVNeJRY1hN2sWMraV63RlR7QmUttKcHf1aWc4
- Jupexn0MbljafwQSbxkEy4DOKKb8zO70cN95KZ6tYih133g=
-X-Received: by 2002:adf:fd8d:0:b0:38f:476f:e176 with SMTP id
- ffacd0b85a97d-38f650fee42mr1466184f8f.31.1740048337978; 
- Thu, 20 Feb 2025 02:45:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGrTJcfF7vs+mr7OJ6to+0O2bheYTha5O+xwOZb9uPdp1B3C4d3bfSHWohQeldI1KFASM3wHg==
-X-Received: by 2002:adf:fd8d:0:b0:38f:476f:e176 with SMTP id
- ffacd0b85a97d-38f650fee42mr1466158f8f.31.1740048337555; 
- Thu, 20 Feb 2025 02:45:37 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258cccd3sm20215367f8f.23.2025.02.20.02.45.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 02:45:36 -0800 (PST)
-Message-ID: <44a82e93-003a-4d70-a1f0-4bc3efd045d2@redhat.com>
-Date: Thu, 20 Feb 2025 11:45:35 +0100
+ d=1e100.net; s=20230601; t=1740048768; x=1740653568;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QwQqs2MUo29YuU8xbj8I9NFNJ0ZGtO71G9EnwFnBys0=;
+ b=wtMu8ehKUW7DwNOlAA9lJU+sDfXwVCrpgfFWX+6bZDdgRLtDdGbb67u4kw48D/HM4J
+ 8mdNMzJUqoUpecF6UkzgkYXkd5Va79hO9MbJlRpPg0ZfDmyPfnys0ELL3tLRIOWDH2Fo
+ H4JLVNaF2KnRHLXUhUxHk3/GCrHgEZ/lGlm/QdRZtc37Gts3M6/KYqS3ZNx6nsno+v15
+ u5UB+QV+cYC02Y9tdULk9sFMbRh6AOPOWcOivtqEbEVmMuqLUTPjXOAA/sehD8S+oQjC
+ T/7EqJptpkUiC2EG2xejpx3OLuGStw9PwVYeq++q2hTsqvdVOGbI/C1hcKGvnHUQXG43
+ 8/iQ==
+X-Gm-Message-State: AOJu0YzUEh22I3BbfDAS3JkgQrYW+9AhGjIC6Oj4ePqez6yi5v4Fvpw4
+ qm31WdlP33ZFlhqYehEOHcc6vhxQSFDSgWd5zaR9Do1xtfh//iOsFRbZs9hhiyyY6yEqfW0Co8+
+ GzlloZxWTLZFVqqolB/JmXy/DXanpzPwPJPbt6A==
+X-Gm-Gg: ASbGncuy2Wuvfm/if85M4DVJNERQ1pU8Cz9XTQUKFD+CtZ3yg/w5DEgnbaeXDLwoX/v
+ Y61F90N/rftub1h5Mzqe9xjmN4YNZuaJoj3NWbOpdmTTSCztQeSF/LlnA5L8n5tku+I0e+j13pQ
+ ==
+X-Google-Smtp-Source: AGHT+IHql1vi73rS7Qz0C2FLVELu5Y5bZ+t6mBGqmmhedCFjRoENIdcAsnvEZjtN8uH6V83DC0DOAT3byy6bKum73iY=
+X-Received: by 2002:a05:6902:1141:b0:e5b:3a59:525e with SMTP id
+ 3f1490d57ef6-e5dc904a281mr14688925276.18.1740048767621; Thu, 20 Feb 2025
+ 02:52:47 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
- d3hot state
-Content-Language: en-US
-To: eric.auger@redhat.com, Alex Williamson <alex.williamson@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, clg@redhat.com,
- zhenzhong.duan@intel.com
-References: <20250219175941.135390-1-eric.auger@redhat.com>
- <20250219115844.062c5513.alex.williamson@redhat.com>
- <20250219141945.5e74c7f3.alex.williamson@redhat.com>
- <4b7cfa82-c730-43af-ab47-53f20131104a@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <4b7cfa82-c730-43af-ab47-53f20131104a@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20250208163911.54522-1-philmd@linaro.org>
+ <CAFEAcA8PYv3-JX66THwj-mDM0es6V5gVVWJsHTqkd9wTEVor4A@mail.gmail.com>
+ <CAFEAcA-ioFgThGJ70cyhe7rA0kbnDULsr-BuAqE+3b3TE0BGwg@mail.gmail.com>
+ <CAFEAcA-fZakXqgDV72fE5sFJv7ah=bvoXYpGqXZZzGutxt7r+A@mail.gmail.com>
+In-Reply-To: <CAFEAcA-fZakXqgDV72fE5sFJv7ah=bvoXYpGqXZZzGutxt7r+A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 20 Feb 2025 10:52:36 +0000
+X-Gm-Features: AWEUYZksPweIXkSyJpL0bLRKlOjouUak4xMtIhxez_8kkKi727JLx3uQ8DIQyGA
+Message-ID: <CAFEAcA-UP5VcDokb11KfpmQztRnWFS9pLcMZ5_2pe=BBKEv7Fg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/7] hw/char/pl011: Implement TX (async) FIFO to avoid
+ blocking the main loop
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,81 +100,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On Thu, 20 Feb 2025 at 10:43, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Tue, 18 Feb 2025 at 13:54, Peter Maydell <peter.maydell@linaro.org> wr=
+ote:
+> >
+> > On Mon, 17 Feb 2025 at 14:55, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+> > >
+> > > On Sat, 8 Feb 2025 at 16:39, Philippe Mathieu-Daud=C3=A9 <philmd@lina=
+ro.org> wrote:
+> > > >
+> > > > Hi,
+> > > >
+> > > > This series add support for (async) FIFO on the transmit path
+> > > > of the PL011 UART.
+> > > >
+> > >
+> > > Applied to target-arm.next, thanks (with a couple of minor
+> > > tweaks to two of the patches).
+> >
+> > Unfortunately I seem to get failures in 'make check-functional'
+> > with the last patch of this series applied.
+>
+> I had a look at this this morning because I wondered if it
+> was a mistake in the style fixups I'd applied to the patches
+> on my end, and I found the bug fairly quickly. The problem is
+> that pl011_xmit() doesn't update the TXFE and TXFF FIFO empty/full
+> status flag bits when it removes characters from the FIFO.
+> So the guest kernel spins forever because TXFF is never unset.
+>
+> The following patch fixes this for me (and also makes us not
+> set INT_TX for the case where we couldn't send any bytes to
+> the chardev, which I noticed reading the code rather than
+> because it had any visible bad effects):
 
-On 2/20/25 11:31 AM, Eric Auger wrote:
-> 
-> Hi Alex,
-> 
-> On 2/19/25 10:19 PM, Alex Williamson wrote:
->> On Wed, 19 Feb 2025 11:58:44 -0700
->> Alex Williamson <alex.williamson@redhat.com> wrote:
->>
->>> On Wed, 19 Feb 2025 18:58:58 +0100
->>> Eric Auger <eric.auger@redhat.com> wrote:
->>>
->>>> Since kernel commit:
->>>> 2b2c651baf1c ("vfio/pci: Invalidate mmaps and block the access
->>>> in D3hot power state")
->>>> any attempt to do an mmap access to a BAR when the device is in d3hot
->>>> state will generate a fault.
->>>>
->>>> On system_powerdown, if the VFIO device is translated by an IOMMU,
->>>> the device is moved to D3hot state and then the vIOMMU gets disabled
->>>> by the guest. As a result of this later operation, the address space is
->>>> swapped from translated to untranslated. When re-enabling the aliased
->>>> regions, the RAM regions are dma-mapped again and this causes DMA_MAP
->>>> faults when attempting the operation on BARs.
->>>>
->>>> To avoid doing the remap on those BARs, we compute whether the
->>>> device is in D3hot state and if so, skip the DMA MAP.  
->>> Thinking on this some more, QEMU PCI code already manages the device
->>> BARs appearing in the address space based on the memory enable bit in
->>> the command register.  Should we do the same for PM state?
->>>
->>> IOW, the device going into low power state should remove the BARs from
->>> the AddressSpace and waking the device should re-add them.  The BAR DMA
->>> mapping should then always be consistent, whereas here nothing would
->>> remap the BARs when the device is woken.
->>>
->>> I imagine we'd need an interface to register the PM capability with the
->>> core QEMU PCI code, where address space updates are performed relative
->>> to both memory enable and power status.  There might be a way to
->>> implement this just for vfio-pci devices by toggling the enable state
->>> of the BAR mmaps relative to PM state, but doing it at the PCI core
->>> level seems like it'd provide behavior more true to physical hardware.
->> I took a stab at this approach here, it doesn't obviously break
->> anything in my configs, but I haven't yet tried to reproduce this exact
->> scenario.
->>
->> https://gitlab.com/alex.williamson/qemu/-/tree/pci-pm-power-state
+Hmm, but that's clearly not the only problem -- it fixed the
+"no output at all issue", but now I see a test failure because
+of garbled console output:
 
-it does not totally fix the issue: I now get:
+2025-02-20 10:34:51,562: Booting Linux on physical CPU 0x0
+2025-02-20 10:34:51,563: Linux version 4.18.16-300.fc29.armv7hl
+(mockbuild@buildvm-armv7-06.arm.fedoraproject.org) (gcc version 8.2.1
+20180801 (Red Hat 8.2.1-2) (GCC)) #1 SMP Sun Oct 21 00:56:28 UTC 2018
+2025-02-20 10:34:51,563: CPU: ARMv7 Processor [414fc0f0] revision 0
+(ARMv7), cr=3D10c5387d
+2025-02-20 10:34:51,564: CPU: div instructions available: patching division=
+ code
+2025-02-20 10:34:51,564: CPU: PIPT / VIPT nonaliasing data cache, PIPT
+instruction cache
+2025-02-20 10:34:51,565: OF: fdt: Machine model: linux,dummy-virt
+2025-02-20 10:34:51,565: Memory policy: Data cache writealloc
+2025-02-20 10:34:51,565: efi: Getting EFI parameters from FDT:
+2025-02-20 10:34:51,566: efi: UEFI not found.
+2025-02-20 10:34:51,566: cma: aetrsv6i
+2025-02-20 10:34:51,566: psci: oi ocdteofmT
+2025-02-20 10:34:51,566: ps:Sv1ecdniwe^Mps:Usdvni spsc:rt  gtnot psci:
+SMC Calling Conventiov0
+2025-02-20 10:34:51,567: pec:Eee1pec pvls9 1 2865^MBul1olt bi4^MKerloa
+n:itte nltAA
+2025-02-20 10:34:51,568: Det c stlere 3 rr4 5i 9(dr336bt)Memr 06112aib
+6Keece11K ra0 ,21 sv,Kmrsv,Kim)Virtual kernel memory layout:
+2025-02-20 10:34:51,568: vt :xf0  fa  f00 0f00 30 (0M^M lm  c00
+0800xe0 0000  2M^M mue:x00 0f00  4B
+2025-02-20 10:34:51,568: et x(tvl) (rl 97B
+2025-02-20 10:34:51,569: n 0(trvl-xta) 0  0pv) 3 B
+2025-02-20 10:34:51,570: bs prl-xta) 5 )random: get_random_u32 ca
+___+:ag6 d=3D3MOes,P=3D,os^Mfta:aotg78ni  1asHierhlC pmti.        RCrtcnC
+oN_S2orpi=3D.   TasCebd
+2025-02-20 10:34:51,571: RC jtgeeyor_o_a1 __d^MNRIS1 rr GIC physical
+location is 0x800000^MGIC2 n[mx00-02f,P81]arcte 1tm(
+nna65H(r.cemk0fffffacl:0d20,aish_o:6i  M,routo1n per49419sn^MCocrm
+dexCalibrating delay ose eceiife..oIl2^Mpxdl6i3
+2025-02-20 10:34:51,572: SertFmo ia^MYemgmdl
+2025-02-20 10:34:51,572: SEn: ili.Moutcea b te 2(d:,4t^MMoupnch
+stlers14oe  9oeyo
+2025-02-20 10:34:51,572: CP0Screv:iwein tuia norieI tst lrl
+2025-02-20 10:34:51,573: /cpus/cpu@0 missing clock-frequen or^MCPU
+rd1c  k  i 00^MSetgptiintm rx30 000Hircc Cmento^MEF rc ln  aae^Msm ii
+cdrCs.smp ohu1o, USMPTao1reo cvae(15. gP.CPUA U)tt  Code.devtmpfs:
+initialize^Mmo4aheu pr3vit e0cloejfe s fffm_cs0fffm_d_:924250sfut stbs
+2025-02-20 10:34:51,574: piclo:niidit uye
+2025-02-20 10:34:51,574: DM tre  vi^MNETeDM:rlae2  o tmi oerent aloaios
+2025-02-20 10:34:51,574: audit: initializing netlink subsys (disabled)
+2025-02-20 10:34:51,574: audit: type=3D2000 audit(0.480:1):
+sat=3Dntalzdadt_nbe=3D e=3D^Mcpuidl:usn oenrmnu
+2025-02-20 10:34:51,574: No ATG?
+2025-02-20 10:34:51,575: hw-brapit fud5(1rsrvd rapon n  achon
+eitrs^Mhw-brapit:mxmmwthontsz s8bts^MSerial MAP01 Ap1:ttAA tMIO09000ud
+=3D 0) saP01 e1
+2025-02-20 10:34:51,575: console [ttyAMA0] enabled
+2025-02-20 10:34:51,668: cryptd: max_cpu_qlen set to 1000
+2025-02-20 10:34:51,690: vgaarb: loaded
+2025-02-20 10:34:51,697: SCSI subsystem initialized
+2025-02-20 10:34:51,702: usbcore: registered new interface driver usbfs
+2025-02-20 10:34:51,703: usbcore: registered new interface driver hub
 
-qemu-system-x86_64: warning: vfio_container_dma_map(0x55cc25705680,
-0x380000000000, 0x1000000, 0x7f8762000000) = -14 (Bad address)
-0000:41:00.0: PCI peer-to-peer transactions on BARs are not supported.
+(the log has no garbling after that so it's presumably OK with
+the interrupt-driven real UART driver but the polling one you get
+for earlycon has trouble.)
 
+I also noticed that pl011_write_txdata() doesn't clear TXFE
+when it puts a byte into the fifo -- I'm testing to see if
+fixing that helps.
 
-Eric
-
-> 
-> So if I understand correctly the BAR regions will disappear upon the
-> config cmd write in vfio_sub_page_bar_update_mapping(). Is that correct?
-> I will give it a try on my setup...
->>
->> There's another pm_cap on the PCIExpressDevice that needs to be
->> consolidated as well, once I do some research to figure out why a
->> non-express capability is tracked only by express devices and what
->> they're doing with it.  Thanks,
-> I am not sure I get this last point though.
-> 
-> Thanks
-> 
-> Eric
->>
->> Alex
->>
-> 
-
+-- PMM
 
