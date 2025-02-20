@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA82EC021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78178C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9J4-0006qn-Tb; Thu, 20 Feb 2025 11:21:46 -0500
+	id 1tl9JK-00077p-7L; Thu, 20 Feb 2025 11:22:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9J3-0006lo-Cn
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tl9JI-00076b-1s
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:00 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9J0-0008CI-Hz
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-439950a45daso7357375e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:41 -0800 (PST)
+ id 1tl9JG-0008Ez-6V
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:59 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso7503045e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068501; x=1740673301; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068517; x=1740673317; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QMqXQnyD0HN+nlQadMn1BYLhTf+pS86RpPb9K1JUA7E=;
- b=p/2YuBrTpuTMkHRRUxnJurWaU9KjjJWa/zGpNlTUi5eCSGPtxhDGz2gPr/1KiqTRxt
- 0m0HCI9o42vJWRelXt0NLbSzbehFJtpgFQBYJcKWs6gb9/n9a8S6QsyZq7LLHmwCzV7P
- U92ZdV3cBdIVOV0YORR9A3YnRYK4W7TaTKwh1YwrqVXx8At4JTvdF0PrA8XqWtMgjKP/
- bUNEOqk59LNRk9KdFvnXkAITtFDOOAJ2AdlkGePokBhw8F3c9bsCzFjXvAaJdKP77oe3
- Koc0NtpgJTS9SKQ4v6dXHXQUrM7SrzIX8KFlHQ+llcXGU+Svod+apSoT3S11C8s8AmQV
- syLg==
+ :reply-to; bh=RN4feOr7qTvutqZQVG2BW1YcXuGPMb4XmE2WtQfDC0Q=;
+ b=QrkiL8nINFPvaXig7afB7ifx9fYNOxa1zhXQ9nqyU/dMc7tF4jEkGfO8aesJd1FUCV
+ C/b/lMr1Tmf5n4WY60YLMQyyE/cxOFDDb92pEVPImAWy1NYnkOA9Ifo9GvzaX9KklKOP
+ taeTXwCt/ge3ENSgHFKz891fmo3vXQPbGU/yvLW4oSMDqYX5+mpXQXdRRLIMKc/kKe6x
+ 9hvTQ9EKnJDGthwCQyYSs3orotIZ455iif70BSsiwZlj0EJTP8ubWV5e0umD43NWs7w6
+ W/v77RwiwH/3kY4aK2YoUWdV6iEk5zZPqzL9WjhFea6Lt2Lke2Ouj29+ScZwF4Xh66Ga
+ QPpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068501; x=1740673301;
+ d=1e100.net; s=20230601; t=1740068517; x=1740673317;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QMqXQnyD0HN+nlQadMn1BYLhTf+pS86RpPb9K1JUA7E=;
- b=SB7oGG9lT4VkQUHH2hJXUrlrqFfh7Rz/3cK/PWx0yM1we3VoSA9mDgy/eDTjWkEeOZ
- Tlkj9pSzHKbAxCroNDlIaZICU+hmD5Y+dwl487gtdljKkgWVZrioCdFKd4JZf7z71FOw
- 5jJB39kOoEQERLKfOYCHu8mSAKLMvWBLM04cTkdyw4KaSdkhlgKlc25FQ7Mk+jL0SRKf
- PyZgQw9hQ7yldmOJn1W7Zn2WL+3eJBuR147sJ6qO4nwTG3z2WvXlGy4Wb+Yp/fdfoQrP
- ltD6GPtzwIGh7tDl2iYi0L036+0gId1xrwRwdjVmXj4kgGp8yr+Q9AAA6njHIZy/tN6L
- x3Hw==
-X-Gm-Message-State: AOJu0Ywr3kYhIQAG0QXbik5k8iR39ys9prEADNvbx46Oi+rBmTv/S7bP
- 16tcKJdpmMl5XOK565RflH1T52Mzf7CS2cJwP5jJp13owUYAnM3NcXi6Y8FkXaHBjOcp/z61SKV
- +
-X-Gm-Gg: ASbGnctMV+hireNiIngMBw4DCa+y/Rv6y+Cw/wV3dhIj4PoLc47xoDVrD7amrMgmZlx
- jWhYtMR2RbfrP1XSn6s7bzqjbQAihbXE89pesFiuR05pH5q9LyE28KUEmtJj7tiowtRWP5deuix
- lp8RgdIqj+MKVrPm5iwTf1hCCb4531DhTLhYLKT4bfe+waeivSF1qyziB8DRZh08M2HgilhFda8
- QmsCRZHW8ZqTIjKoUbuwZLFjhntbWevNrPBuehc1VLs/CBdlE9iusZFJeGwSfOrzMxAsPB4OQDY
- 2mXBagPE/kabmnzxRwpsbQ==
-X-Google-Smtp-Source: AGHT+IGps2knD0ITux4p8lvOa5zRXkRJtEzNFvecC6gDRSiU05Dzoy8R0651IqIi6hVtMhMnqnXMeQ==
-X-Received: by 2002:a05:600c:354c:b0:439:9595:c8e8 with SMTP id
- 5b1f17b1804b1-4399595cb04mr125263265e9.0.1740068500868; 
- Thu, 20 Feb 2025 08:21:40 -0800 (PST)
+ bh=RN4feOr7qTvutqZQVG2BW1YcXuGPMb4XmE2WtQfDC0Q=;
+ b=fHwAmAbAgqPU+nUJ4d96KDIznpCFDnJPiC/Cdj0g4cmDifni/XHeJBg2kJkRkWRbK9
+ cIWm4KDjuc8eYtDg64OP6/rw97jL24v0ZTCG7SYaTQoVgNIjf87RGWwDx3I9kR5s7EYM
+ qwCIFVkAEKoz7i1R10mQbFvgwGuFxOg445VKCX42VgBpDPMJt1NvJEoI3l6U5kswGrIk
+ vIjN55GJoS6VP5hpfUahXKe/p4x+SH/uPd8xniymOp3u73jFLoaWj08b2xnNDdb6ZtHW
+ lH34AOjMpcNtmv3RgCuIkSIKnOEzFQ7G2Szh5tVlAtYKArzPcopiKpgAqU63+qK/libm
+ XCxA==
+X-Gm-Message-State: AOJu0YzFtqGwdp4Q6qspegUGc+r1LO/Mo/5mdTIN2aruw0Kt6liosDB+
+ VBADxBCqpgkH0JevQFRVVKY2FgwbicOi38Z+cpgs1xmFHu5zjpuIeRMkB7UaFgxg1nKjo6UvgAg
+ E
+X-Gm-Gg: ASbGncve0kDSl0dKgWeTyCfip8WXpmEvsmdTS8MC/UT69W3o+4w0UJ21rGjmHdhL5yf
+ vpMjpYZZYcDZdcbHmG9sWUC11h+wRLwWUvXmM60mfjSZlWFBmGz3zEsxEIta01kAteXbCSKHtmP
+ 5cZO7hHHFruJQUBLZVtzC60QBiZdLTIsBr8kZJeMrF24PNBMQKw2wofDRRLNqAtki9uZ0cS1HNm
+ 4gHUTjTQXmTIGYyFWsDJY+SUmUuTQUkggcVTqlnbXPxntLz0B2qc8JozYtSgfY624lSoqAcg1dQ
+ 9HMLYp6/l/YnHrHWUNuFWg==
+X-Google-Smtp-Source: AGHT+IGwJbWcKPQr9p7wNn+1wchRr+P28IOXofDyAEFPPMT0A8mw1an7Gtd9q71ZQQcZmdUF7lVufw==
+X-Received: by 2002:a05:600c:354b:b0:439:9e13:2dd0 with SMTP id
+ 5b1f17b1804b1-4399e132f5dmr65697345e9.6.1740068516705; 
+ Thu, 20 Feb 2025 08:21:56 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.40
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:21:40 -0800 (PST)
+ Thu, 20 Feb 2025 08:21:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/41] target/arm: Remove CP_ACCESS_TRAP handling
-Date: Thu, 20 Feb 2025 16:20:53 +0000
-Message-ID: <20250220162123.626941-13-peter.maydell@linaro.org>
+Subject: [PULL 25/41] roms: Update vbootrom to 1287b6e
+Date: Thu, 20 Feb 2025 16:21:06 +0000
+Message-ID: <20250220162123.626941-26-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,84 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no longer any uses of CP_ACCESS_TRAP in access functions,
-because we have converted them all to use either CP_ACCESS_TRAP_EL1
-or CP_ACCESS_TRAP_UNCATEGORIZED, as appropriate. Remove the handling
-of bare CP_ACCESS_TRAP from the access_check_cp_reg() helper, so that
-it now asserts if an access function returns a value requesting a
-trap without a target EL.
+From: Hao Wu <wuhaotsh@google.com>
 
-Rename CP_ACCESS_TRAP to CP_ACCESS_TRAP_BIT, to make it clearer
-that this is an internal-only definition, not something that
-it makes sense to return from an access function. This should
-help to avoid future bugs where we return the wrong syndrome
-value by mistake.
+This newer vbootrom supports NPCM8xx. Similar to the NPCM7XX one
+it supports loading the UBoot from the SPI device and not more.
 
+We updated the npcm7xx bootrom to be compiled from this version.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
+Message-id: 20250219184609.1839281-2-wuhaotsh@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250130182309.717346-13-peter.maydell@linaro.org
 ---
- target/arm/cpregs.h        | 11 ++++++-----
- target/arm/tcg/op_helper.c | 13 ++++++++-----
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 768 bytes
+ roms/vbootrom               |   2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index fbf5798069d..fb3b84baa1e 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -328,12 +328,13 @@ typedef enum CPAccessResult {
-      * Access fails due to a configurable trap or enable which would
-      * result in a categorized exception syndrome giving information about
-      * the failing instruction (ie syndrome category 0x3, 0x4, 0x5, 0x6,
--     * 0xc or 0x18).
-+     * 0xc or 0x18). These traps are always to a specified target EL,
-+     * never to the usual target EL.
-      */
--    CP_ACCESS_TRAP = (1 << 2),
--    CP_ACCESS_TRAP_EL1 = CP_ACCESS_TRAP | 1,
--    CP_ACCESS_TRAP_EL2 = CP_ACCESS_TRAP | 2,
--    CP_ACCESS_TRAP_EL3 = CP_ACCESS_TRAP | 3,
-+    CP_ACCESS_TRAP_BIT = (1 << 2),
-+    CP_ACCESS_TRAP_EL1 = CP_ACCESS_TRAP_BIT | 1,
-+    CP_ACCESS_TRAP_EL2 = CP_ACCESS_TRAP_BIT | 2,
-+    CP_ACCESS_TRAP_EL3 = CP_ACCESS_TRAP_BIT | 3,
- 
-     /*
-      * Access fails and results in an exception syndrome 0x0 ("uncategorized").
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index c69d2ac643f..fcee11e29ad 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -853,21 +853,24 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
- 
-  fail:
-     excp = EXCP_UDEF;
--    switch (res & ~CP_ACCESS_EL_MASK) {
--    case CP_ACCESS_TRAP:
-+    switch (res) {
-+        /* CP_ACCESS_TRAP* traps are always direct to a specified EL */
-+    case CP_ACCESS_TRAP_EL3:
-         /*
-          * If EL3 is AArch32 then there's no syndrome register; the cases
-          * where we would raise a SystemAccessTrap to AArch64 EL3 all become
-          * raising a Monitor trap exception. (Because there's no visible
-          * syndrome it doesn't matter what we pass to raise_exception().)
-          */
--        if ((res & CP_ACCESS_EL_MASK) == 3 && !arm_el_is_aa64(env, 3)) {
-+        if (!arm_el_is_aa64(env, 3)) {
-             excp = EXCP_MON_TRAP;
-         }
-         break;
-+    case CP_ACCESS_TRAP_EL2:
-+    case CP_ACCESS_TRAP_EL1:
-+        break;
-     case CP_ACCESS_TRAP_UNCATEGORIZED:
--        /* Only CP_ACCESS_TRAP traps are direct to a specified EL */
--        assert((res & CP_ACCESS_EL_MASK) == 0);
-+        /* CP_ACCESS_TRAP_UNCATEGORIZED is never direct to a specified EL */
-         if (cpu_isar_feature(aa64_ids, cpu) && isread &&
-             arm_cpreg_in_idspace(ri)) {
-             /*
+diff --git a/pc-bios/npcm7xx_bootrom.bin b/pc-bios/npcm7xx_bootrom.bin
+index 38f89d1b97b0c2e133af2a9fbed0521be132065b..903f126636f9ef5d1100c056656ccfb2b32e5e10 100644
+GIT binary patch
+delta 90
+zcmZo*Yhc^(l+nU*!D9x6DNkDr=09a-2ztoGz`#|*F#jn7L;r()|Np;c0m>C1$z?$0
+Ywog`Ma%Vh0Ig_b-VgU<}A_D>d06Rh+WdHyG
+
+delta 69
+zcmZo*Yhc^(lu^NO!D9x2$xoRb7CdZGnE#ZCA@Cs+0|QqL!~CZV4E+!GPG)41X52Pe
+SmdTy*+~icIZXQJj1ONb5*AzJb
+
+diff --git a/roms/vbootrom b/roms/vbootrom
+index 0c37a43527f..1287b6e42e8 160000
+--- a/roms/vbootrom
++++ b/roms/vbootrom
+@@ -1 +1 @@
+-Subproject commit 0c37a43527f0ee2b9584e7fb2fdc805e902635ac
++Subproject commit 1287b6e42e839ba2ab0f06268c5b53ae60df3537
 -- 
 2.43.0
 
