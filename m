@@ -4,86 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240BDC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B734C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlBgv-0004tW-MI; Thu, 20 Feb 2025 13:54:33 -0500
+	id 1tlBhb-00055K-V9; Thu, 20 Feb 2025 13:55:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlBgt-0004t1-Q7
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:54:31 -0500
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlBgr-00075U-WC
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:54:31 -0500
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e587cca1e47so1278975276.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:54:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740077668; x=1740682468; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Ym7wF1ak4ewqxwNY8UafygPqWacAc2OvtvlP0b04NHE=;
- b=qAytn/gkhPDUzMAWFlbc+a0YdcNL2LDiQXjyY7SPdKA5+nlWgaz3XGIi4j+3o0qDoK
- CbiWKeJ2eH3WORqwsGelrKKzfvxY2VpbaoSWoMJzOGtPAArfa69S+FG/aqgPc+Rs8w27
- OMNpvxwXJV3ong0Ncfyg6/Cy2r5K8xtbNv7bmj/oYUR83/TrWGSYHlaUP6t7jFrcCRhw
- qUukRqx1g12CfGBf84bFd/3GZG0RCxYTBALceEslI2qm8Wx1JjurfEu2jY9nQ5sIcDCD
- BcvY5yiS9oI5VLSY+ZTut0yjfmhKptQxh2p6pao6iCUqzGi9WCJWBSCYDMTZnzkDLeRe
- wQhA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tlBhZ-000556-LI
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:55:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tlBhX-0007JL-Ql
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:55:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740077709;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6OPmW/lcKlxfKDM4Ga6sPG1ct++MTnW7d23NyNSYg7U=;
+ b=WQtQAmY3z9AdVP/KOG0SHjX1YnN5/XEeWCaeNJg3OEsibzu3ptH7ApCsVJosVaIfoJdHYi
+ uS3AmnI2ZWyMZys6xyHozNpx3OR+Z2/ZBycroQdP9DZ3MDan5s5xl/2XQXCwP6No16PJ3J
+ HayaYLGnXTxOVUoeHRp43R4MjRsV8Yo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-xGjT86QiP7SuYys3NklhAw-1; Thu, 20 Feb 2025 13:55:06 -0500
+X-MC-Unique: xGjT86QiP7SuYys3NklhAw-1
+X-Mimecast-MFC-AGG-ID: xGjT86QiP7SuYys3NklhAw_1740077705
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43947979ce8so6138825e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:55:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740077668; x=1740682468;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740077704; x=1740682504;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ym7wF1ak4ewqxwNY8UafygPqWacAc2OvtvlP0b04NHE=;
- b=UhAsKzDoQ80izYwLCIzYcIb4AfIndUPojBWL+7Yoi/cgnRMnXHUBd3FX7JFtAtFKJQ
- rwBXLsoFt9SJ9a4fpCPZCt38aLmgtUiVjWX50R4ky8VndrIeh2vk6ycyMF9SeTDHSkYx
- Rrf/64hdIfCZourWAlZaz6nB26vpdrYqTaoMJwP+yW31QOdewieap7H+kEEmyYMCdLvL
- v/hGkRUyXCVRAZPgGa3WkiQYy3OjeoazNHvWEs28elf0tUiBYTiJMI+PE1epKEW3L6D0
- /0U6X+3VnqCE5rbrTNR3kNhpnuWmo/5sT3Dx0LNCYbEq8AXDUUCK9cKG2M8fG+xzab19
- 6S2A==
-X-Gm-Message-State: AOJu0Yw1KddHxQKVVkN6UXTHfz+34hWJe/W2n9lkopjCPnja7T+m3D/f
- rQnfzDCXCnFcNbjgH6LLhIxjn3DF2af4I/Z0Y5v6LwlnPBbUuhxwOQCIgC+0htMMXjjA0XzTYtl
- ctV4APbDdodeV5gVBx3LCYczkzbFfhA9lkYSnhA==
-X-Gm-Gg: ASbGncsT6o0GNGcMxQIjk8Y4dJzEyKxr8QEWde6Cl8kNr33mvTPQj5nawwMYJX2avk8
- wtk1vrlpwoBO6D4HGgGpBHZkn8uz3F1cB1iwSBPF+lGcqeIKNt3CFxkxcf7g5eT+EpYf9GB8idA
- ==
-X-Google-Smtp-Source: AGHT+IHtMGB8tGqyS7durOTMmTT+d1HFjjMOFKay8qdiJ4M7snDd7N6Auuotv763wh8FjBuLJCTTPcvyl51Nc62ITAc=
-X-Received: by 2002:a05:6902:2086:b0:e5b:109b:2099 with SMTP id
- 3f1490d57ef6-e5e245f7c7amr350796276.23.1740077668640; Thu, 20 Feb 2025
- 10:54:28 -0800 (PST)
+ bh=6OPmW/lcKlxfKDM4Ga6sPG1ct++MTnW7d23NyNSYg7U=;
+ b=UBzYCr3RNfV559AxiWn9XbZDs9R0DJvOJl4R5qHcznXgJvYJ44Irf35wmbhd8N+0kY
+ 3n4NOTIPrY/fDsDq66OFPIwNakeFluVLMuQDAmnmugH4UPDsU6BHT2RzjgvjW4hjeypH
+ s6ktk10LDljZjTqA4wId6Xi2Z1Km1yw1g5+F5ZPc4l2060Tao6W4anXaycatFVDA8NjV
+ fEvbgRMv8IqbHf1GpDKK4DyKtosn+AAgLej6IAq6Vlh0HwXZyaGDyF2iDCzemvKJoWxt
+ 691/Vo/Ua0SEaQVrWzpQaeoAU0BVWN3YkvUt48+VLycwzZkF3AR6kWfrYpS813K5owjp
+ JBQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8go4RaaMHl3Hr57AY7Dwhto1Rv1LVY81NyirEEL8autsEyghSmFTYm5eMY49UiA3E2T1UUOE/GLax@nongnu.org
+X-Gm-Message-State: AOJu0YzBonHi0GnxMMR+E9NcmMHNUD18TinFVNVrLjd+65Em2DPCeKcy
+ ERVkhWC0WabLYhGTlbY1kAMUnGN4PGUj6+LLTewjsm/31FbeVGq4ZTaBOi3dYBMejNnBYV+g1VB
+ bZz+N8bGhpyb+WCVic8d0NeBTfxNFnPeQov9pNowsGXKuTpgT9LiWaeOgCjDw
+X-Gm-Gg: ASbGncvtQUyKbkqGC1HlBt9aS1bCCaqanlw8VV6Q6x/YD8e0hjpGYarVI2i2ET20Y8R
+ AyTJWnai2axhVTDjnz+iiDPVydyh7OaU2cj+sZzxwtDSRQM9EUtiPMrrL2ygiDa74xY1/EXwLfu
+ jSZH8JaKrQwyDDKHl6i+CsIKEilF1VppQDnKQ1fvI3sP5AON/dy0DRBSfuoy8StF5zqxI9fe2eR
+ UqLnaAABjJQFv6iPVTK5g8hPaAOOylUpMdyLR4aA4El+NCFseqB+t2eHRYC80MyO5sZvbH9dSIF
+ 98DNGv+O4lmqciuVpI4Nnz8E4Ezr2oNw9aWI082RgSpP/4BxfyOP
+X-Received: by 2002:a05:6000:1f8e:b0:38f:394f:d83 with SMTP id
+ ffacd0b85a97d-38f6f0ae2acmr337949f8f.48.1740077704356; 
+ Thu, 20 Feb 2025 10:55:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHnlLWFpQheaNC5m+FYhnqZEVtdCHwh5tvun5HQu5hB5Pip2yC31wb6s9/qV/4qDDVv9qCSDw==
+X-Received: by 2002:a05:6000:1f8e:b0:38f:394f:d83 with SMTP id
+ ffacd0b85a97d-38f6f0ae2acmr337935f8f.48.1740077704005; 
+ Thu, 20 Feb 2025 10:55:04 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258b4335sm21742409f8f.15.2025.02.20.10.55.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 10:55:03 -0800 (PST)
+Message-ID: <e114b3ce-f470-444c-8aef-cd89f42da93b@redhat.com>
+Date: Thu, 20 Feb 2025 19:55:01 +0100
 MIME-Version: 1.0
-References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <20250217125055.160887-7-peter.maydell@linaro.org>
- <64deaf4f-b999-41aa-ae44-876a1860a10c@linaro.org>
- <CAFEAcA_upC=ty1PWXOSsHHgk67EoPi6rB2DhK2M5_q2mzUCW=Q@mail.gmail.com>
- <d7a0260d-5cdb-4e87-b12c-32e1dee4df1c@linaro.org>
-In-Reply-To: <d7a0260d-5cdb-4e87-b12c-32e1dee4df1c@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Feb 2025 18:54:16 +0000
-X-Gm-Features: AWEUYZlOAq6rBLTWv8Eljdpxxbs3lHUGajzwQOq7bVKD0v0bJYO5rIjt69K0dyM
-Message-ID: <CAFEAcA_uPWSgwpygQiSBzCLsBV+HH5Pun1E9RGw16Z3SMj4REQ@mail.gmail.com>
-Subject: Re: [PATCH 06/10] fpu: Move m68k_denormal fmt flag into
- floatx80_behaviour
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rfcv2 08/20] iommufd: Implement query of
+ HOST_IOMMU_DEVICE_CAP_ERRATA
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ shameerali.kolothum.thodi@huawei.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <20250219082228.3303163-9-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250219082228.3303163-9-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,78 +117,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Feb 2025 at 18:39, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+
+
+
+On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
+> Implement query of HOST_IOMMU_DEVICE_CAP_ERRATA for IOMMUFD
+> backed host IOMMU device.
 >
-> On 2/20/25 09:12, Peter Maydell wrote:
-> > That suggests that we are correctly implementing the x87
-> > required behaviour in QEMU, and so that the TODO comment
-> > I add in this patch isn't right. But then I'm a bit confused
-> > about what the code is actually doing. Why do we need to look
-> > at fmt->m68k_denormal in the input (canonicalize) code (i.e.
-> > to have different behaviour here for x86 and m68k), if
-> > both x86 and m68k accept these pseudodenormals as input?
-> >
-> > Is the difference that for x86 we accept but canonicalize
-> > into the equivalent normal number immediately on input,
-> > whereas for m68k we accept and leave the pseudodenormal
-> > as a pseudodenormal (well, m68k calls these a kind of
-> > normal number) ?
-> The difference is in interpretation: x86 ignores the explicit integer bit of the
-> pseudo-denormal, m68k considers it part of the input value.  This gives m68k one extra bit
-> of range in their denormal, which allows representation of smaller numbers.
+> Query on this capability is not supported for legacy backend
+> because there is no plan to support nesting with leacy backend
+legacy
+> backed host device.
+>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/system/host_iommu_device.h | 2 ++
+>  backends/iommufd.c                 | 2 ++
+>  hw/vfio/iommufd.c                  | 1 +
+>  3 files changed, 5 insertions(+)
+>
+> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+> index 18f8b5e5cf..250600fc1d 100644
+> --- a/include/system/host_iommu_device.h
+> +++ b/include/system/host_iommu_device.h
+> @@ -32,6 +32,7 @@ typedef struct HostIOMMUDeviceCaps {
+>      uint64_t hw_caps;
+>      bool nesting;
+>      bool fs1gp;
+> +    uint32_t errata;
+to be consistent with the others yu may have introduced this alongside
+with the 2 others?
+This is also not usable by other IOMMUs.
 
-Ah, I see. So I suppose:
+Eric
+>  } HostIOMMUDeviceCaps;
+>  
+>  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> @@ -130,6 +131,7 @@ struct HostIOMMUDeviceClass {
+>  #define HOST_IOMMU_DEVICE_CAP_AW_BITS           1
+>  #define HOST_IOMMU_DEVICE_CAP_NESTING           2
+>  #define HOST_IOMMU_DEVICE_CAP_FS1GP             3
+> +#define HOST_IOMMU_DEVICE_CAP_ERRATA            4
+>  
+>  #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
+>  #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 0a1a40cbba..3c23caef96 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -374,6 +374,8 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>          return caps->nesting;
+>      case HOST_IOMMU_DEVICE_CAP_FS1GP:
+>          return caps->fs1gp;
+> +    case HOST_IOMMU_DEVICE_CAP_ERRATA:
+> +        return caps->errata;
+>      default:
+>          error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+>          return -EINVAL;
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index df6a12d200..58bff030e1 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -848,6 +848,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>      case IOMMU_HW_INFO_TYPE_INTEL_VTD:
+>          caps->nesting = !!(data.vtd.ecap_reg & VTD_ECAP_NEST);
+>          caps->fs1gp = !!(data.vtd.cap_reg & VTD_CAP_FS1GP);
+> +        caps->errata = data.vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17;
+>          break;
+>      case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
+>      case IOMMU_HW_INFO_TYPE_NONE:
 
-(1) we should call the floatx80_status flag
-"floatx80_pseudo_denormal_valid" since it affects both inputs
-and outputs, and document it in the enum like:
-
-+    /*
-+     * If the exponent is 0 and the Integer bit is set, Intel call
-+     * this a "pseudo-denormal"; x86 supports that only on input
-+     * (treating them as denormals by ignoring the Integer bit).
-+     * For m68k, the integer bit is considered validly part of the
-+     * input value when the exponent is 0, and may be 0 or 1,
-+     * giving extra range. They may also be generated as outputs.
-+     * (The m68k manual actually calls these values part of the
-+     * normalized number range, not the denormalized number range.)
-+     *
-+     * By default you get the Intel behaviour where the Integer
-+     * bit is ignored; if this is set then the Integer bit value
-+     * is honoured, m68k-style.
-+     *
-+     * Either way, floatx80_invalid_encoding() will always accept
-+     * pseudo-denormals.
-+     */
-+    floatx80_pseudo_denormal_valid = 16,
-
-
-(2) the comment I add in canonicalize should instead read:
-
-+    /*
-+     * It's target-dependent how to handle the case of exponent 0
-+     * and Integer bit set. Intel calls these "pseudodenormals",
-+     * and treats them as if the integer bit was 0, and never
-+     * produces them on output. This is the default behaviour for QEMU.
-+     * For m68k, the integer bit is considered validly part of the
-+     * input value when the exponent is 0, and may be 0 or 1,
-+     * giving extra range. They may also be generated as outputs.
-+     * (The m68k manual actually calls these values part of the
-+     * normalized number range, not the denormalized number range,
-+     * but that distinction is not important for us, because
-+     * m68k doesn't care about the input_denormal_used status flag.)
-+     * floatx80_pseudo_denormal_valid selects the m68k behaviour,
-+     * which changes both how we canonicalize such a value and
-+     * how we uncanonicalize results.
-+     */
-
-?
-
-
-thanks
--- PMM
 
