@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD1A6C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 22:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 473EDC021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 23:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlFRW-0004Lq-Tr; Thu, 20 Feb 2025 17:54:54 -0500
+	id 1tlFdt-0007Fp-8Q; Thu, 20 Feb 2025 18:07:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlFRV-0004Le-7U
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:54:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlFRT-0008R8-9t
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:54:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740092089;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+VVvmoiXHtWgSlmaGYq7fYfKAVNKP3/gzOwZDgLMjIY=;
- b=YTNTnpTteV8UhY+WaWUqHxQTPa/m3e8P8tGUGEKwR5qfCePiGj+bXfM2BSgWnXLuxVseSn
- zw5r9nBXEY/qywDt7tQQqjxNcaXCncU0VllbmUXVJ8aQoTO6iwHc0E1kY7qfXp25mD1UgJ
- 4WYVZ/TuZrvdTjjEWOMlamTgTpdo7vU=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-6Yhh0XTbPgusgeOJFOlttg-1; Thu, 20 Feb 2025 17:54:46 -0500
-X-MC-Unique: 6Yhh0XTbPgusgeOJFOlttg-1
-X-Mimecast-MFC-AGG-ID: 6Yhh0XTbPgusgeOJFOlttg_1740092085
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-abb93de227dso163213266b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 14:54:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlFdr-0007FO-NF
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 18:07:39 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlFdp-0001Pf-FB
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 18:07:39 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4399ee18a57so9288515e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 15:07:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740092856; x=1740697656; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=r3qv3CKweXgrngDWBpFnI9e7raxkXKf3lCNstXdfurA=;
+ b=n16eRCgwQFOirc0FAPPb+dt8T8xBd7tYbEUY9MwUVpsVqUUmIjPZ0rGXnhsSg41w/z
+ u+A8g+WyPHGGZM9IwxnWxsB5A7UT2727ulrUxwzPGl4LKf0eDf/RykHUyhh3XyHPMQQe
+ SweJEZubMg86mx0nZ5j1SdE30sDcy+4yoXi11IarvU5IrhGDl//JRVyYWVQHcKkcbP6l
+ 4CRarvZCZ9jlLjGZ8IqavcmFfXLOkN2CNH7FyB+lc7G5v2SM3hNqSTP4gMLWL7ng9cHA
+ LtFZ4nGgO20GM3eYCM/Bw4WGhX9z81xLy/v5eJnekO3AB2Y35e9HfPTcPExTdJsc4EsQ
+ E7tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740092085; x=1740696885;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+VVvmoiXHtWgSlmaGYq7fYfKAVNKP3/gzOwZDgLMjIY=;
- b=OBtGH0l2VtQF3Ils3agb3NBdFKW0x3kcu5BaeFiId4GYOYxTFZHJcsnnlCAsvoxzR5
- z7OfRwiv+3Q5wXMJJMsNsAGM8kK7tQWfiziWDS1UsluMHu3ZlQKxiXh9tu6KMWcQZHFL
- cjI1sZOmDWZCXB789Cv/j58XaFVza75MLP3OaSW6+JPC8KoI/NvfPhEA9dHlSSBC/t3Y
- mrYLE8xk5S5bKMA2u3moAmUM2hPSk/mGHTgwBG1IG8oE5+yK/QnKAm4pIUZJe8krg4Gi
- EcH+K/4jqBhDAWktVT1DSr2o2ZyTRdhAYz5SYOIkkDemWyXmL3xllwBT+l0YIIW9fq91
- zkvA==
-X-Gm-Message-State: AOJu0YxkgrQVhurU5XjJvV0lGlYoxLhuN7PNKjwUjMYyTTYNk1uTQ85A
- RGobYLiGxrSGOUo+T3Fnz3eHKE74K7gV5lvwF2+Uos/+pTIE9ACIiLuVcybvHC5hrsBBcqpERji
- A4cjM1Jio6wcllhLFiePAlrramveQVHceEpxu6pVJqOk7BJXfPY1x
-X-Gm-Gg: ASbGnctDJTSwW+n1n3fD8Ba7ctVLkQl1Dj4fpyX9klKydnUHwZWWUG2NlCEi1ur36e0
- 2wB2s56ix5FU2YLKbWYbvAEUAqdn4lRT4GbanwAeX3dRuz2fbDiumChOCCpklX08aAQsPeKS1G4
- EVeBD4nX9v8SQzTQZsZ/s8LVjcuav6xA3ymrIml3xJO1L4lzZU9D6V29wi7i/lNX0WDAsWJ+e7h
- 2QVT0ap8kfdQ6Hv6ERiggmwDcdCUg726+cPh0F7FxcRTw4T1X6Ea3uIeRKyJfUxVf/U2w==
-X-Received: by 2002:a17:907:7ea8:b0:ab6:d575:9540 with SMTP id
- a640c23a62f3a-abc09d2de9amr100902766b.50.1740092085483; 
- Thu, 20 Feb 2025 14:54:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGu7EiO8QQ8YPIQuhIjQKc5QdYq2XOoj7VQ1E/J6ry+71sv6FtvSjh9UebJPqE8DaV/jQaJqg==
-X-Received: by 2002:a17:907:7ea8:b0:ab6:d575:9540 with SMTP id
- a640c23a62f3a-abc09d2de9amr100901466b.50.1740092085118; 
- Thu, 20 Feb 2025 14:54:45 -0800 (PST)
-Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abb9723a559sm909561066b.96.2025.02.20.14.54.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 14:54:44 -0800 (PST)
-Date: Thu, 20 Feb 2025 17:54:41 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, eric.auger.pro@gmail.com, eric.auger@redhat.com,
- clg@redhat.com, zhenzhong.duan@intel.com, marcel.apfelbaum@gmail.com
-Subject: Re: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
-Message-ID: <20250220175420-mutt-send-email-mst@kernel.org>
-References: <20250220224918.2520417-1-alex.williamson@redhat.com>
+ d=1e100.net; s=20230601; t=1740092856; x=1740697656;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r3qv3CKweXgrngDWBpFnI9e7raxkXKf3lCNstXdfurA=;
+ b=nY9J/DgL/iz0PTe1k/7+MRZyVdApn7Kb6jHroaOyIrErHQlyw9FiIYH3r/DHftd8rV
+ NUYKYm9cPXCjKC6i/RigrwdosgLSiJZJC+PYwbbJje2E2w8gV10qevk8FdKRYym1iBBA
+ /xrGitPW5rgtxg+sJfeameorncXlA8/07kYbl5BF61X4/CFUsiAYINhxAYq4WdNg7AzV
+ 0kQKSMFTW89fgnxHMplRAAfuPZfUepmohRK7OySvpiBUa2iIeWu44n2XD4wW6Koc63CG
+ gSG2Xz/1L5Uph9lGi6BnLIXveP5EQBkOFDbT+WunOLCaM63ZrS/Vpq3mmXiB3zcAB7zP
+ QtxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1sPIS20ZqA7leioNyqbHAfdL5fjO796fjr8JpTGj5JWyKqXQe0+aFU8RiqNRDgr6Hsr7LemYZevyb@nongnu.org
+X-Gm-Message-State: AOJu0YzKbk+FVRExBZ+x6nFms5AJpwPCu9cp2NB1qfu+l21xlYU1SJMH
+ 9WuQ4fCBPuqvxRB9yfNIrqJJqsnTNizs00LS2V3nxhnG5cb5+2Nbk5pDOZPjUyiGy7eral7mqEp
+ uNX0=
+X-Gm-Gg: ASbGncsoll4EWOzaJLx9IwQFWNAyZ+T7tuA+X/AkwtAIjuRmcf5nYy85BluUUObLv48
+ 4PqFHi/PPROrZMVjVJ4OSqSlmMLABa/Z5LNibxQ2RsPN6PFZ4uf6KijobnqDymedVw5Ko3sGqTw
+ 5l9hS7W7wZK51fn6ON3j0h3IclQTNQ4D4SSdzHQ9tPawiB5V9Sf4RKQoe4dxdrt3dmhLJ0PmXgj
+ 52bpcM4SBBrEotMz0IyvLwQZUt/T/EgcFQILbpqHBFx65JpngFaG/aiWITE9yXjkbzHrcxyUff8
+ x1mO1Zhd4SLnINBZV+Ud/GSpW9weiC3AA1bZPxII1t1vTPXRkOBE/vw9rdc=
+X-Google-Smtp-Source: AGHT+IH9myU7rAbSMTd4DgxmQviP3R26lQ1xDqBfAvzab/5TmVkz3LXtZHsSIaldCFoPbLIAMAbWWQ==
+X-Received: by 2002:a05:600c:4f02:b0:439:4c1e:d810 with SMTP id
+ 5b1f17b1804b1-439ae2ed58amr7335365e9.9.1740092855682; 
+ Thu, 20 Feb 2025 15:07:35 -0800 (PST)
+Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258b43d4sm21448353f8f.4.2025.02.20.15.07.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 15:07:35 -0800 (PST)
+Message-ID: <8f91a3d1-7259-4783-9743-23ad003734e1@linaro.org>
+Date: Fri, 21 Feb 2025 00:07:33 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250220224918.2520417-1-alex.williamson@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 028/162] tcg: Convert sub to TCGOutOpSubtract
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250216231012.2808572-1-richard.henderson@linaro.org>
+ <20250216231012.2808572-29-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250216231012.2808572-29-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,77 +101,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 20, 2025 at 03:48:53PM -0700, Alex Williamson wrote:
-> Eric recently identified an issue[1] where during graceful shutdown
-> of a VM in a vIOMMU configuration, the guest driver places the device
-> into the D3 power state, the vIOMMU is then disabled, triggering an
-> AddressSpace update.  The device BARs are still mapped into the AS,
-> but the vfio host driver refuses to DMA map the MMIO space due to the
-> device power state.
+Hi Richard,
+
+On 17/2/25 00:07, Richard Henderson wrote:
+> Create a special subclass for sub, because two backends can
+> support "subtract from immediate".  Drop all backend support
+> for an immediate as the second operand, as we transform sub
+> to add during optimize.
 > 
-> The proposed solution in [1] was to skip mappings based on the
-> device power state.  Here we take a different approach.  The PCI spec
-> defines that devices in D1/2/3 power state should respond only to
-> configuration and message requests and all other requests should be
-> handled as an Unsupported Request.  In other words, the memory and
-> IO BARs are not accessible except when the device is in the D0 power
-> state.
-> 
-> To emulate this behavior, we can factor the device power state into
-> the mapping state of the device BARs.  Therefore the BAR is marked
-> as unmapped if either the respective command register enable bit is
-> clear or the device is not in the D0 power state.
-> 
-> In order to implement this, the PowerState field of the PMCSR
-> register becomes writable, which allows the device to appear in
-> lower power states.  This also therefore implements D3 support
-> (insofar as the BAR behavior) for all devices implementing the PM
-> capability.  The PCI spec requires D3 support.
-> 
-> An aspect that needs attention here is whether this change in the
-> wmask and PMCSR bits becomes a problem for migration, and how we
-> might solve it.  For a guest migrating old->new, the device would
-> always be in the D0 power state, but the register becomes writable.
-> In the opposite direction, is it possible that a device could
-> migrate in a low power state and be stuck there since the bits are
-> read-only in old QEMU?  Do we need an option for this behavior and a
-> machine state bump, or are there alternatives?
-> 
-> Thanks,
-> Alex
-> 
-> [1]https://lore.kernel.org/all/20250219175941.135390-1-eric.auger@redhat.com/
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/mips/tcg-target-con-set.h    |  1 -
+>   tcg/ppc/tcg-target-con-set.h     |  3 +-
+>   tcg/riscv/tcg-target-con-set.h   |  1 -
+>   tcg/riscv/tcg-target-con-str.h   |  1 -
+>   tcg/tcg.c                        | 26 ++++++++++++++--
+>   tcg/aarch64/tcg-target.c.inc     | 24 +++++++--------
+>   tcg/arm/tcg-target.c.inc         | 29 +++++++++++-------
+>   tcg/i386/tcg-target.c.inc        | 23 +++++++-------
+>   tcg/loongarch64/tcg-target.c.inc | 32 +++++++++-----------
+>   tcg/mips/tcg-target.c.inc        | 31 ++++++++-----------
+>   tcg/ppc/tcg-target.c.inc         | 52 +++++++++++---------------------
+>   tcg/riscv/tcg-target.c.inc       | 45 +++++++++------------------
+>   tcg/s390x/tcg-target.c.inc       | 41 +++++++++++--------------
+>   tcg/sparc64/tcg-target.c.inc     | 16 +++++++---
+>   tcg/tci/tcg-target.c.inc         | 14 +++++++--
+>   15 files changed, 165 insertions(+), 174 deletions(-)
 
 
-PCI bits:
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index b740609c03..ca91a80efc 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -986,6 +986,14 @@ typedef struct TCGOutOpBinary {
+>                       TCGReg a0, TCGReg a1, tcg_target_long a2);
+>   } TCGOutOpBinary;
+>   
+> +typedef struct TCGOutOpSubtract {
+> +    TCGOutOp base;
+> +    void (*out_rrr)(TCGContext *s, TCGType type,
+> +                    TCGReg a0, TCGReg a1, TCGReg a2);
+> +    void (*out_rir)(TCGContext *s, TCGType type,
+> +                    TCGReg a0, tcg_target_long a1, TCGReg a2);
+> +} TCGOutOpSubtract;
+> +
+>   #include "tcg-target.c.inc"
+>   
+>   #ifndef CONFIG_TCG_INTERPRETER
+> @@ -1012,6 +1020,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+>       OUTOP(INDEX_op_nor, TCGOutOpBinary, outop_nor),
+>       OUTOP(INDEX_op_or, TCGOutOpBinary, outop_or),
+>       OUTOP(INDEX_op_orc, TCGOutOpBinary, outop_orc),
+> +    OUTOP(INDEX_op_sub_i32, TCGOutOpSubtract, outop_sub),
+> +    OUTOP(INDEX_op_sub_i64, TCGOutOpSubtract, outop_sub),
+>       OUTOP(INDEX_op_xor, TCGOutOpBinary, outop_xor),
+>   };
+>   
+> @@ -2231,7 +2241,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>       case INDEX_op_st8_i32:
+>       case INDEX_op_st16_i32:
+>       case INDEX_op_st_i32:
+> -    case INDEX_op_sub_i32:
+>       case INDEX_op_neg_i32:
+>       case INDEX_op_mul_i32:
+>       case INDEX_op_shl_i32:
+> @@ -2301,7 +2310,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>       case INDEX_op_st16_i64:
+>       case INDEX_op_st32_i64:
+>       case INDEX_op_st_i64:
+> -    case INDEX_op_sub_i64:
+>       case INDEX_op_neg_i64:
+>       case INDEX_op_mul_i64:
+>       case INDEX_op_shl_i64:
+> @@ -5442,6 +5450,20 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+>           }
+>           break;
+>   
+> +    case INDEX_op_sub_i32:
+> +    case INDEX_op_sub_i64:
+> +        {
+> +            const TCGOutOpSubtract *out = &outop_sub;
+> +
+> +            tcg_debug_assert(!const_args[2]);
+> +            if (const_args[1]) {
+> +                out->out_rir(s, type, new_args[0], new_args[1], new_args[2]);
+> +            } else {
+> +                out->out_rrr(s, type, new_args[0], new_args[1], new_args[2]);
+> +            }
+> +        }
+> +        break;
+> +
+>       default:
+>           if (def->flags & TCG_OPF_VECTOR) {
+>               tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
+> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+> index 30cad937b7..dfe67c1261 100644
+> --- a/tcg/aarch64/tcg-target.c.inc
+> +++ b/tcg/aarch64/tcg-target.c.inc
+> @@ -2205,6 +2205,17 @@ static const TCGOutOpBinary outop_orc = {
+>       .out_rrr = tgen_orc,
+>   };
+>   
+> +static void tgen_sub(TCGContext *s, TCGType type,
+> +                     TCGReg a0, TCGReg a1, TCGReg a2)
+> +{
+> +    tcg_out_insn(s, 3502, SUB, type, a0, a1, a2);
+> +}
+> +
+> +static const TCGOutOpSubtract outop_sub = {
+> +    .base.static_constraint = C_O1_I2(r, r, r),
+> +    .out_rrr = tgen_sub,
+> +};
+> +
+>   static void tgen_xor(TCGContext *s, TCGType type,
+>                        TCGReg a0, TCGReg a1, TCGReg a2)
+>   {
+> @@ -2290,15 +2301,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
+>           tcg_out_ldst(s, I3312_STRX, a0, a1, a2, 3);
+>           break;
+>   
+> -    case INDEX_op_sub_i32:
+> -    case INDEX_op_sub_i64:
+> -        if (c2) {
+> -            tgen_addi(s, ext, a0, a1, -a2);
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+I'm a bit lost with this change here, and following patch #4
+(ADD conversion).
 
-feel free to merge.
+Since tgen_addi() effectively handles both add/sub, why not
+name it tgen_addsubi() like the old tcg_out_addsubi() name?
 
-> Alex Williamson (5):
->   hw/pci: Basic support for PCI power management
->   pci: Use PCI PM capability initializer
->   vfio/pci: Delete local pm_cap
->   pcie, virtio: Remove redundant pm_cap
->   hw/vfio/pci: Re-order pre-reset
-> 
->  hw/net/e1000e.c                 |  3 +-
->  hw/net/eepro100.c               |  4 +-
->  hw/net/igb.c                    |  3 +-
->  hw/nvme/ctrl.c                  |  3 +-
->  hw/pci-bridge/pcie_pci_bridge.c |  3 +-
->  hw/pci/pci.c                    | 83 ++++++++++++++++++++++++++++++++-
->  hw/pci/trace-events             |  2 +
->  hw/vfio/pci.c                   | 29 ++++++------
->  hw/vfio/pci.h                   |  1 -
->  hw/virtio/virtio-pci.c          | 11 ++---
->  include/hw/pci/pci.h            |  3 ++
->  include/hw/pci/pci_device.h     |  3 ++
->  include/hw/pci/pcie.h           |  2 -
->  13 files changed, 112 insertions(+), 38 deletions(-)
-> 
-> -- 
-> 2.48.1
+(Maybe reorder to have that SUB conv patch after ADD conv?)
+
+> -        } else {
+> -            tcg_out_insn(s, 3502, SUB, ext, a0, a1, a2);
+> -        }
+> -        break;
+> -
+>       case INDEX_op_neg_i64:
+>       case INDEX_op_neg_i32:
+>           tcg_out_insn(s, 3502, SUB, ext, a0, TCG_REG_XZR, a1);
+> @@ -3014,10 +3016,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+>       case INDEX_op_st_i64:
+>           return C_O0_I2(rz, r);
+>   
+> -    case INDEX_op_sub_i32:
+> -    case INDEX_op_sub_i64:
+> -        return C_O1_I2(r, r, rA);
+> -
+>       case INDEX_op_setcond_i32:
+>       case INDEX_op_setcond_i64:
+>       case INDEX_op_negsetcond_i32:
 
 
