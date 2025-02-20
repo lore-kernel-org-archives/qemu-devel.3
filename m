@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B839C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 14:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFFCC021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 14:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl7FL-0005fq-7l; Thu, 20 Feb 2025 09:09:47 -0500
+	id 1tl7LX-00071B-KC; Thu, 20 Feb 2025 09:16:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl7FI-0005fM-Hn
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 09:09:45 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1tl7Ky-0006t7-Ez
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 09:15:37 -0500
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl7FG-0004EL-IV
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 09:09:44 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-6fbaa0582a6so13886377b3.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 06:09:41 -0800 (PST)
+ id 1tl7Kw-0005ER-Dw
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 09:15:36 -0500
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e5dc299deb4so919486276.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 06:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740060581; x=1740665381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740060931; x=1740665731; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UIZshvD68i6YUVum3s1elgKpBgGDILDeQgleIfXIgtk=;
- b=svraJXh9Vr+kJZidYyWnejLkHBSCF4y1qPPEXQKs3vvqhuW1kWCNX+ZXRujfDC54i7
- AQdEZufuFd1Vpe6BJLAKSVLtxiUzlUBCejicoeY+yC7fCx5o9A0bEST5RrCqgR23RXqY
- fgDuDD/GImiYbSK4dtlfUEqdVhzhz5PDs84rFM02G+iQXNhnGF7HLRJpXseYXwDa+Rdn
- Oy1v/iSrvvYwhOo7HqgBRGBD0qktmizfRsUYpUgLhCgxYHipcav19L8CDNY+sQIDi8PZ
- 5LbsFTbyH3l+Hv8MQrxK1XdxTVuBxZBNj1xmXJF5HX6OXZxdD188AFTKSfzwq0I7azVB
- 727A==
+ bh=oLF7hMM87dLQpph4+jiQW+iMxLICwPdupdQt6MqEqvo=;
+ b=qlRzwGliWLBVeLIW0Bz4FPjgh5Tst2dI8D5NzU/U3y/y3dXsNtrBURx0FOy/1wl57a
+ +g0g/Hcbr0Bcc4xkBzF2+eR93W5r7Q6+oQfd4a4rTwDaZZEoi24N6aUPdSaoGiRxxVLB
+ /6zz8KiIIReBr2lziua86wqX+PJP/3Y4yntpX/EFqoMv1WeTDA/9QGD/R6aLaDmi1lC5
+ 6ym7jCPqPFn2W/4inqnL9/cIM4XyiOvAXY8/LaIKDsxlFupPXeEC3zL1WvZzPOixjuKi
+ SybpJoe8eGSWMjGlj5nkvoSKhrvkmoCD8vWgZPRG5IbvZOhJTFLQWyLi/XAuPcDQ9Cfp
+ Of8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740060581; x=1740665381;
+ d=1e100.net; s=20230601; t=1740060931; x=1740665731;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UIZshvD68i6YUVum3s1elgKpBgGDILDeQgleIfXIgtk=;
- b=ozW1ft4pigeG2Bxg8Nudze4smR4aVzpvhmSDY4BPlZsGbEtAqtPxY+Pvh5S31WzxEb
- XkGD4MsPhsqYhUcnro3Sassuqq8ivOO2a+pcbYakXqGkNCNLJ23fV4sY6HYzXe6h4BMK
- 6Y6QPYbVs3PO+9mFiXAfFYElODBT3WnADdnUrjs4SDH0Tw104QWqDjZhdSV/L4X1n+HI
- 2c3FjeK2hfbiB57CQI43gxdfK6DYkOlSfQSfxfuqzNg6KS5+Xa6eegQyO5BL8nLuAzuv
- 63qQChenBQp5D98mO8ThmhQ+AUbV2CPzD4Dsl+dV10NeShrR9iGJlX2fOfKNyNt2sny5
- txrQ==
-X-Gm-Message-State: AOJu0YwsrVpVwxBWwP9UbpZfhacpYNEz07MLKxc1jBOb1vZzvwXS1sPm
- pHrQ6iIOGgtEwt66BLYWoc+qjKoif0lJWRiyLgZLzuj9pOtqNFU4zOaVj5WjtzEn+zjtV8XbU93
- oj5F78ZljZtfWiCeplyAANWZ4kIdMAEby0ZvHVA==
-X-Gm-Gg: ASbGncuLZisICVx8DdPNEC+a7CE0czHOQ8PCH8RlbxBfMDW8K8eof/wwuX3z7xvycYj
- i2RyMqnP8deO4PIRUjVT2IzLq4dcmSxRzUmR6qjbGt0vadzBN2JV43PNpl4djXOwaKkjieAyNLg
+ bh=oLF7hMM87dLQpph4+jiQW+iMxLICwPdupdQt6MqEqvo=;
+ b=RJlKKH0hZXHGYb6lCJoTHZ7uPDJSmD1otvu8ikFntOKcjGA6MYYk87nuoUWwmZG/lc
+ wq1bGoUiVbyeL+CIr8EwQeyvTk6sxFiDrgYy0ev4vyi99K7WW1BQRFZMaz4aK/DDUuFK
+ U4RfGGab+IENHf/Ct7gHFPxDvfbRuVi7CIK4Jw23B44Un07gzRyyYxx0s8yas1+FD+cm
+ jxBmyRxqlcx2V8xWr9lIVUPe1ReYC1Mb2NYBOM4bS5KaOGfvaeNXTeUvRQlz6m46jkq8
+ AQgWU6SggbBQn51Cs3mm+nI4Y7xu6redtyOxc0lVXDLjCXATSQuOCQ82hzcxd9GR7F9u
+ TVRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNWyLETwvPGGNmXM7T+TaoV7bm1KEdyGvkMyWdDIBMlIw/BH9HHFFtnXaDxy32/6NpGLeScpI1Laew@nongnu.org
+X-Gm-Message-State: AOJu0YyzWEiCbtaeYFRKHXlDQ7uBYx5g68abde9h9vkB5OK4oLeP6CkU
+ 4by2Oqoa0P2r6U6Nftib+U3eWFmR6KUc2V8sagv9xPpyTGSV6FHKU40pZU1HV9rLkowRhXFQBeh
+ ZTwRyPjQZ/dYJaX/WM/99Llwx5ZIFjf4qywspUw==
+X-Gm-Gg: ASbGncsqt6PoDdbcflEklZtsvPpHCM3r7TJPcXR0NAYXhE3Yu4MXt5pB1JhgUMMuXgo
+ xZkgif3TQjmxhuPHVjd6R9okduupop3Sj8ga+rDGUkJ1dOz7GqpywoXIxFfv7UoSO12RZ3cL8qg
  ==
-X-Google-Smtp-Source: AGHT+IEO1e2wgbnoOmXyF/PQtyLlc+xvtxB/jzo7c7dKNE9Zd5pGxNhgdeinSORLndBYIpTcgfeH5BuP7F8ZTILHi/E=
-X-Received: by 2002:a05:690c:630f:b0:6fb:a251:2450 with SMTP id
- 00721157ae682-6fbb78f8026mr28349537b3.1.1740060580969; Thu, 20 Feb 2025
- 06:09:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQyI3LQ9PQnuQMcVxcF/3wteayb3xw1KfTu/TztKXNxl6COiEyqZEmkpASzPIa9kf7kbsQRdIGXv1qtfNgGow=
+X-Received: by 2002:a05:6902:108d:b0:e5d:cd08:12f0 with SMTP id
+ 3f1490d57ef6-e5e0a183a4bmr6632570276.44.1740060931138; Thu, 20 Feb 2025
+ 06:15:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20250209103604.29545-1-shentey@gmail.com>
-In-Reply-To: <20250209103604.29545-1-shentey@gmail.com>
+References: <20250219165534.3387376-1-slongfield@google.com>
+In-Reply-To: <20250219165534.3387376-1-slongfield@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Feb 2025 14:09:29 +0000
-X-Gm-Features: AWEUYZlFlf1hUAcZI1NRD35GD7_3yphfZhQCUZ67plEEHBq8rKZ3O7hGlTEnAa8
-Message-ID: <CAFEAcA-PGTAQhmktPmMvAjkL8S7UDhEp2+edwiLJT0f_xe=8ZQ@mail.gmail.com>
-Subject: Re: [PATCH] Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 20 Feb 2025 14:15:17 +0000
+X-Gm-Features: AWEUYZmj86MscSbyuSGCk_WUZypFPJqox-xar27df7kPoz6QkDceCnjZ4spQM9I
+Message-ID: <CAFEAcA-ZCQ9e1=TimLQTU2OKsqs2-BFX9pV+0Va7=d19E+P9=A@mail.gmail.com>
+Subject: Re: [PATCH v2] target/arm: Fix signed integer overflow undefined
+ behavior.
+To: Stephen Longfield <slongfield@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, roqueh@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,20 +94,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 9 Feb 2025 at 10:36, Bernhard Beschow <shentey@gmail.com> wrote:
+On Wed, 19 Feb 2025 at 16:55, Stephen Longfield <slongfield@google.com> wrote:
 >
-> TYPE_CHIPIDEA models an IP block which is also used in TYPE_ZYNQ_MACHINE which
-> itself is not an IMX device. CONFIG_ZYNQ selects CONFIG_USB_EHCI_SYSBUS while
-> TYPE_CHIPIDEA is a separate compilation unit, so only works by accident if
-> CONFIG_IMX is given. Fix that by extracting CONFIG_USB_CHIPIDEA from CONFIG_IMX.
+> The problem is internal to t32_expandimm_imm, the imm intermediate
+> immediate value.
 >
-> Fixes: 616ec12d0fcc "hw/arm/xilinx_zynq: Fix USB port instantiation"
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> cc: qemu-stable
+> It's extracted via: int imm = extract32(x, 0, 8);, so the value will be
+> between 0-255
+>
+> It is then multiplied by one of 1, 0x00010001, 0x01000100, 0x01010101,
+> or 0x80.
+>
+> Values between 128-255 multiplied by 0x01000100 or 0x01010101 will cause
+> the upper bit to get set, which is a signed integer overflow. From
+> Chapter 6.5, paragraph 5 of the C11 spec:
+> https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf this is
+> undefined behavior.
+>
+> Though this is a minor undefined behavior, I'd like to see this fixed,
+> since the error is showing up when I enable clang's sanitizers while
+> looking for other issues.
+>
+> Changes from v1: From peter.maydell@linaro.org's review, only changing
+> the internal representation from int to uint32_t, and leaving the API
+> types the same.
+>
+> Signed-off-by: Stephen Longfield <slongfield@google.com>
+> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+> ---
+>  target/arm/tcg/translate.c | 2 +-
 
+Thanks; I've applied this to target-arm.next, with a rewritten
+commit message:
 
+    target/arm: Use uint32_t in t32_expandimm_imm()
 
-Applied to target-arm.next, thanks.
+    In t32_expandimm_imm(), we take an 8 bit value XY and construct a
+    32-bit value which might be of the form XY, 00XY00XY, XY00XY00, or
+    XYXYXYXY.  We do this with multiplications, and we use an 'int' type.
+    For the cases where we're setting the high byte of the 32-bit value
+    to XY, this means that we do an integer multiplication that might
+    overflow, and rely on the -fwrapv semantics to keep this from being
+    undefined behaviour.
+
+    It's clearer to use an unsigned type here, because we're really
+    doing operations on the value considered as a set of bits. The
+    result is the same.
+
+    The return value from the function remains 'int', because this
+    is a decodetree !function function, and follows the API for those
+    functions.
 
 -- PMM
 
