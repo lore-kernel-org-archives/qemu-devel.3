@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD22C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC3A8C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl2jq-00060r-3q; Thu, 20 Feb 2025 04:20:58 -0500
+	id 1tl2rw-000800-MW; Thu, 20 Feb 2025 04:29:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2jo-000605-V5
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:20:57 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2ru-0007zG-Si
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:29:18 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2jn-0001et-BT
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:20:56 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4399a1eada3so5689795e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:20:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2rt-0003Od-Dx
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:29:18 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2fc33aef343so1461025a91.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:29:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740043253; x=1740648053; darn=nongnu.org;
- h=content-transfer-encoding:subject:cc:to:from:content-language
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9CA9Ulfr2g7JZ5XJNiiD4QhSsGUDB0n2H7fxdmLVzXk=;
- b=qQKqp7Z9L/9pHPfW4UT66D6BCX9tI2LHtKXsHqj0CufZF7elVh9JQQmHttzaXwcbc9
- J0Lh6IpqfhoYg3HgA/VoWEz7woT3A2j4QCIFeznLVTLmgHaxkx20rWozgSXwExjRPaP/
- L15bNIM4XInMQ1T+Z57WtnDELUF5ewVobgsbZvzpiwi4TNM418JpJyzxjLuhDYFZK7Uu
- tzuqS1e+Jl0LM4w4fIVCVNefVtwbi7nPwaPI7BfXhJMhKPWLDufgZlMgFKfMG58LEFBo
- kpgRRCIEDDCCccy9/9vbRE3St+6uQ7aYtFJ32me3zZMLa+XB6n1eLo56nRazbhZdsmRM
- FVww==
+ d=linaro.org; s=google; t=1740043756; x=1740648556; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=f7n0sYwrB8IT7jhirk9RyIiTw/ke91kLSgIHGTYFSYs=;
+ b=V1NNQNCTK6RAuJ0CHJVLVb8oVSoESYTMVsBWFJNu0LGyxsVnXy2GB2ppo2Ale433jt
+ ki8bTReOFywM4UQC6Kd8URDpR3Kxu1vFW/stlua4KmG/Pw2L7KXMR7mMpnfUft1jNFm5
+ kjUefrtJfLMCRh7RVz7o1f05CvabBpiBXpsJ5syT+w/QUO1GMjARMavr9htnviOAhHmg
+ USemh6XeL0Bvb2nytGdLhQSRyKFoq6b1P7t9QFsXf3JOR9suX0fa9VBvWk0UW/a4xVWG
+ YFY+H0t8UqcBTL/T5tPYniBy/je1pPAorivb/tRvo1oyRWC9d0l4Q9LuLT5PErsJztcV
+ kwZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740043253; x=1740648053;
- h=content-transfer-encoding:subject:cc:to:from:content-language
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=9CA9Ulfr2g7JZ5XJNiiD4QhSsGUDB0n2H7fxdmLVzXk=;
- b=uiE3/60zFOgznvdZylrXBNbDm0OmcrWO4BUdhEyJ82AuJfhi3Kghv91bW5FHB2PeEg
- JL4C5n5qPJRjyypoj4oOtR1gFNOKdocsCovjZTD/uzNHx1iYMApr15F5ZEg7lDjXUSET
- x6AZBnZrJBJHUd3K6h9xu+6chorUu5ws8zpMp9h7spwdHjrK8Vxp/pmrqlixcmT/cv+q
- uxIAfaU1B5wz9gCQBw9upqLzB9zGqwc5AKxWoXLuj/hkZF1JvzzozT4Rq4UzJvAEcjVo
- xk5iP7CjNF0XARJ5ebERbqS6ccKYzXQYwU9dZtWLjlv+0iOyA5GZRN1wsKr70MWcsp92
- PkaA==
-X-Gm-Message-State: AOJu0Yzed76n909p7o/aKLVcZ7ZOhY9BnaZ4rMSk/lOTK5TCZMWB7gDa
- CH1S3I78H8VvLgaAF9RORVQ4zHH7ldC6binFUCPwhsyVP5TMR30bHTI+40PcKBVpuVTQqrKTz69
- yNzo=
-X-Gm-Gg: ASbGnctvi5KtcwPaGB0ml6B6O4E2Z0iCwCm6BLd7TPdKZ7zidpMcOCpVKCxg0F+Fmqc
- 3yo217rZq9npIt6y7m5g9njn/6G6nMOQlbnCwdVqJFh8u5wqR4psHoNDhCkYKjdxbZ6PzRWDMwC
- GXofExgMqEIc6HtcPfpj0AyNOkGKqeDCiMHDUTmOzdQRcADIvIFS/usI8bkyT491tPkRiQSkLX+
- aq4MxL37r/R4rjb5Ulpd5n8RQN6H0NHW52C4Isw1Wp6EM3T4m62+FTNlRqM3+vxUdJaCpbv89HA
- +dlsMn1X5DUb2iSrWZt/NYDcrhG1XAeHgjy8BSMiRThv1tg8HBeyhVcS+PM=
-X-Google-Smtp-Source: AGHT+IHqwpj0241tkNqU/Yr+pFumYAUhupo4i+CcyeaKFqbi0brlPNvmpyyuy46xGK8RlSFAfY/enw==
-X-Received: by 2002:a05:600c:4751:b0:439:5541:53cc with SMTP id
- 5b1f17b1804b1-43999ddbbb3mr74227285e9.29.1740043253123; 
- Thu, 20 Feb 2025 01:20:53 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1740043756; x=1740648556;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=f7n0sYwrB8IT7jhirk9RyIiTw/ke91kLSgIHGTYFSYs=;
+ b=i/wM4EhZJuGFvO1aLwnsoUvDtFk7Qxlc7MFlicnf/y0z1hVnYinfFlK40EFuCHAoia
+ HXO+YYT4jERxySOpP04AK48+SZ8BaG+HNpUKNAcFeQ+oQBXgUvRmnGxbwE6K8y0FZCxm
+ JFyJ5rT5EIlX4hC5uq/cu3jWenHmZE1FGtgAGo9zRGNS5GRlFFgsWUSlXmp7wRnXTsLq
+ MifW6DyprdwcfGPS2ABP3sAZlKrpdFiclbO6jW91wTlLvcasy5sUC4prGOBc7SeSYMNK
+ EZ7YmqJ5uo02NRk9WkIAZYK1wBVga40+q2XNFjdR3Cz63lKdfvoJ5owEtKTTkdYm+F2a
+ uZig==
+X-Gm-Message-State: AOJu0YwwfJZdyIyJc2fYRwrJSKv4huNBjsPSRO1KUT09gvVXpdzoqF0O
+ Vuz45ELQJBe7KQKN06jyHMVQWGomGlChuA1Owf6N5qNUYE/B2I09IC+upG56MeCLSIr/wWGsUZP
+ a1Fw=
+X-Gm-Gg: ASbGnctNWzPQmQtUFWsZgZRR9pCm645+zz585MzJ5pyX/I6sLCKaewBNvPnhs9WIwVD
+ CYg8b4FPuHzU8Byw5ey6hVMKXPBfTl5ZdlxwPnrnb8BTl75QAfRJjLawu4Y+ePi7+usK5RjSkJm
+ ms0Y3Ow1GlfTGZ1vGL20Sv6dKWypBKOVklk5+qFk71wNmlyA6g/rWb6MAUZjWwXxqpD1crTIg3C
+ GHS9964hs02TIbtZotW1KFQhaqPPHJLjFhU63fspZ3GDYZv7vD1c081ioTgXwe305zk04CuA0F8
+ dRLfw5ykX/l1OtSkDxJD15xN1dNSaJOVH2RkfWKL1rhZxpK9sXHAPAQqpN0XhWmNgg==
+X-Google-Smtp-Source: AGHT+IG2Q3SYtbCe4wTkUv4WZF8hYqRULU15v/XV9f3q2XdUUXN3lL352G9sZmm2sqDD1X2AbWrY9A==
+X-Received: by 2002:a17:90b:180a:b0:2f6:be57:49d2 with SMTP id
+ 98e67ed59e1d1-2fcb5a36812mr12484165a91.17.1740043755174; 
+ Thu, 20 Feb 2025 01:29:15 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a04ee48sm237613965e9.3.2025.02.20.01.20.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 01:20:52 -0800 (PST)
-Message-ID: <97e66ba5-488f-4246-b4d9-466d29a86dff@linaro.org>
-Date: Thu, 20 Feb 2025 10:20:51 +0100
+ 98e67ed59e1d1-2fbf98f6965sm15329037a91.29.2025.02.20.01.29.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 20 Feb 2025 01:29:14 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Magnus Damm <magnus.damm@gmail.com>, Thomas Huth <huth@tuxfamily.org>,
+ Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+ Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-arm@nongnu.org,
+ Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH v2 0/9] hw/char: Improve RX FIFO depth uses
+Date: Thu, 20 Feb 2025 10:28:53 +0100
+Message-ID: <20250220092903.3726-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Subject: Any plan for command line '-g' option (graphical resolution and
- depth)?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,46 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Since v1:
+- Fixed typos (Luc)
 
-QEMU provides the global '-g' CLI option:
+Some UART devices implement a RX FIFO but their code
+(via IOCanReadHandler) only return a size of 1 element,
+while we can receive more chars.
 
-$ qemu-system-foo --help
+This series takes advantage of the full depth.
 
-   -g WxH[xDEPTH]  Set the initial graphical resolution and depth
+Inspired by pm215 chat comment on yesterday's community
+meeting on the PL011 Rust implementation description by
+Paolo :)
 
-This option is used to pass resolution/depth information to guest
-firmwares in the machines defined in the following files:
+Philippe Mathieu-Daudé (9):
+  hw/char/pl011: Warn when using disabled receiver
+  hw/char/pl011: Simplify a bit pl011_can_receive()
+  hw/char/pl011: Improve RX flow tracing events
+  hw/char/pl011: Really use RX FIFO depth
+  hw/char/bcm2835_aux: Really use RX FIFO depth
+  hw/char/imx_serial: Really use RX FIFO depth
+  hw/char/mcf_uart: Use FIFO_DEPTH definition instead of magic values
+  hw/char/mcf_uart: Really use RX FIFO depth
+  hw/char/sh_serial: Return correct number of empty RX FIFO elements
 
-   hw/ppc/mac_newworld.c
-   hw/ppc/mac_oldworld.c
-   hw/ppc/prep.c
-   hw/ppc/spapr.c
-   hw/sparc/sun4m.c
-   hw/sparc64/sun4u.c
+ hw/char/bcm2835_aux.c |  6 ++++--
+ hw/char/imx_serial.c  |  8 ++++++--
+ hw/char/mcf_uart.c    | 16 +++++++++++-----
+ hw/char/pl011.c       | 30 ++++++++++++++++++++++--------
+ hw/char/sh_serial.c   | 30 ++++++++++++++----------------
+ hw/char/trace-events  |  7 ++++---
+ 6 files changed, 61 insertions(+), 36 deletions(-)
 
-Examples:
+-- 
+2.47.1
 
-- hw/ppc/spapr.c:1102:
-
-   _FDT(fdt_setprop_cell(fdt, c, "qemu,graphic-width", graphic_width));
-
-- hw/sparc64/sun4u.c:716:
-
-   fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_WIDTH, graphic_width);
-
-
-Obviously we have default values, which are different per architecture!
-Clearly these ought to be machine properties.
-
-
-It is also used to set TYPE_NUBUS_MACFB properties in hw/m68k/q800.c.
-Here i suppose we could directly use '-global nubus-macfb.width=value'
-etc. although I'm not sure it is the recommended way.
-
-Should we start deprecating '-g' as a whole?
-
-Regards,
-
-Phil.
 
