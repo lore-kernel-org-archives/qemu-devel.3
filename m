@@ -4,105 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D31FC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 118A5C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl3qp-000296-0s; Thu, 20 Feb 2025 05:32:15 -0500
+	id 1tl3yl-00049z-2M; Thu, 20 Feb 2025 05:40:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tl3qZ-00027Y-4F
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:32:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tl3yX-00047N-4Z
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:40:14 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tl3qK-00069P-QC
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:31:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740047503;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qKt/skCUk5vHOzbp6CP8AXEJLpW+OsLEcujEVE6UPSI=;
- b=ihtZElmVdovIR3Dm6fp0t7+kHeUXuPVj99+Rl6uKF7sQSd5PtW1VmGcNMZ95/Ecd/HDeyA
- ufHhrZPSuLBMPJdmCrRuFYz7p/GglXMoLEKY3QEvpWXlKSrx1TKEWGkNkSatxhWWbWrpoF
- /MlIBeHrnnbxawMQXE6gAjOisnGfb/Y=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-hNyBps4LNPSmP599lyY0RA-1; Thu, 20 Feb 2025 05:31:41 -0500
-X-MC-Unique: hNyBps4LNPSmP599lyY0RA-1
-X-Mimecast-MFC-AGG-ID: hNyBps4LNPSmP599lyY0RA_1740047500
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-438da39bb69so5012605e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 02:31:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740047500; x=1740652300;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qKt/skCUk5vHOzbp6CP8AXEJLpW+OsLEcujEVE6UPSI=;
- b=OzFlxsmgHnGDjk/BIT3Ou229vQk1fgkzY0s5buosOjx0WDqpmzoqfujNyu0XQa1Vb3
- Ne4cKzYf521KY5+dGCT49MYyZ3Nvvz4atPyPLcWPGMz6XH7t3/gr7NLczwvdxgY2DvTC
- ydoMapEsJeaL5+lVs/Qz5iFMNT7iChZTPWUNN5FXRnks4a+P7A8thMqLselAMmpSxScz
- STh8K/RakBU1mFPEfl59uF0s20uBnd8tteRPI/zfocpM1iOUoMZ/y03fa5CYISssL3qJ
- odSxCO3hUaFyS4d+GVIDH1vUALTa3HIObuSLc+T0uazuA8IbTjXYYIQv+3M1C2tgaX/c
- dCvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJaadOULurO1nrDdu6J5MzbGF5XM4jXxdg1eJifzB0aw1mJOA02C2H6nTabMeHEYknzt+HEdiVevTl@nongnu.org
-X-Gm-Message-State: AOJu0Yx73Wr2GsxL48dwDkS44hagUL3QVCtjzTkD98x9RsbS1sCcs4Ak
- vyUgBxSBrMiNszVZ216a/GQbYkG5N/Qc1on3Yugi0Gb2OeO5kMiGn9DRbsgdrM/yE9a+vlmcQPj
- nMFYAu9K9+s3MR/KwJqKYZx4ZOCy3SifemN9fUf8TdUnJxy4dF43R
-X-Gm-Gg: ASbGncsrfjXdM7esrcWsu31OqJTbf7FNKAZGQoAqA9z0uy1Wc/DzRDFocdy65tOoJsh
- JlDiC8/xeRuM6rFM+EndoKbLoUCo3OUXtVm0fW9xLhbxPRE71lIwRNl0aZMpPbB23LeXgTjrJMl
- V3WEsHaMcRFuX0x2mj2B1gcr2JbbO1hIDP/Ki6OXD49I0yXfG/8q7GNgXvm3xSWJ2QQqsg+EPBO
- KsrK6tthwvupKRdd4KxwmJPTjXdzaeI2mhJGOEBckqokzRGNen3+/nu/3iPwSDd9QGfRlDBmawB
- wKXzB+99SSfOfy3soPYfWafG4AjTfvAxrRFTUVReQbdU1DNjKj0w
-X-Received: by 2002:a5d:6e89:0:b0:38f:231a:635e with SMTP id
- ffacd0b85a97d-38f58794638mr6506870f8f.25.1740047500266; 
- Thu, 20 Feb 2025 02:31:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFphOpNDqtsEISIwv5K6fCFdJEOU4/WyJAze3IDVTN0O39jWrSsL8JPOx/UNqUI0JiLW2RFag==
-X-Received: by 2002:a5d:6e89:0:b0:38f:231a:635e with SMTP id
- ffacd0b85a97d-38f58794638mr6506825f8f.25.1740047499615; 
- Thu, 20 Feb 2025 02:31:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259f8273sm19792375f8f.89.2025.02.20.02.31.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 02:31:38 -0800 (PST)
-Message-ID: <4b7cfa82-c730-43af-ab47-53f20131104a@redhat.com>
-Date: Thu, 20 Feb 2025 11:31:36 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tl3yT-0007WI-34
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:40:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740048009; x=1771584009;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=TdzYaPLHZ16bLzvmwwZ5c+AojcvTSJL6pVcmyKLeuvE=;
+ b=MyfKFDuql709ZZuEvVk0S2QZxq9+LRvzXP8qjGyUlnKWWmhgDhYHOpib
+ qTBSyLuzh6++W9U9bqV4CS/2bkadYR7h1eQamqexoXvH8LPR4i+5Xw+kM
+ Y0B0OWL97iPvv2WA4QE7w7wVzhGThwiUGb0nfmKMl0y6zcgXpnb6I3R7b
+ 9yMykQzUiAz88L7fqMZzB3KrZUZCoVbnuw/iA1F5pMAv6/5wLVdb0yppR
+ eM7Sp0Cg0n/SpcDV2xZP69GRr0pKBrzJkE8hr0rEl7elxfyI8CbhpexW6
+ p0ECWc46uEAbOOV3/vERsXwS8gGPawkhs7W+zhv3WCIzMeKsHhhfvdz+x w==;
+X-CSE-ConnectionGUID: RKCsUKGaS+S/Bt4ct2Xxrw==
+X-CSE-MsgGUID: fv2QgriTTl649X66m8K0Iw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11350"; a="41076446"
+X-IronPort-AV: E=Sophos;i="6.13,301,1732608000"; d="scan'208";a="41076446"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Feb 2025 02:40:02 -0800
+X-CSE-ConnectionGUID: 4Io3i1pjTgiuFU3HtpbDOw==
+X-CSE-MsgGUID: Yo7MKmgDTMi9F1FsY5heQg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="114856938"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 20 Feb 2025 02:40:00 -0800
+Date: Thu, 20 Feb 2025 18:59:34 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Babu Moger <babu.moger@amd.com>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ davydov-max@yandex-team.ru
+Subject: Re: [PATCH v5 1/6] target/i386: Update EPYC CPU model for Cache
+ property, RAS, SVM feature bits
+Message-ID: <Z7cLFrIPmrUGuqp4@intel.com>
+References: <cover.1738869208.git.babu.moger@amd.com>
+ <c777bf763a636c8922164a174685b4f03864452f.1738869208.git.babu.moger@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
- d3hot state
-Content-Language: en-US
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, clg@redhat.com,
- zhenzhong.duan@intel.com
-References: <20250219175941.135390-1-eric.auger@redhat.com>
- <20250219115844.062c5513.alex.williamson@redhat.com>
- <20250219141945.5e74c7f3.alex.williamson@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250219141945.5e74c7f3.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c777bf763a636c8922164a174685b4f03864452f.1738869208.git.babu.moger@amd.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,71 +82,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> +static CPUCaches epyc_v5_cache_info = {
+> +    .l1d_cache = &(CPUCacheInfo) {
+> +        .type = DATA_CACHE,
+> +        .level = 1,
+> +        .size = 32 * KiB,
+> +        .line_size = 64,
+> +        .associativity = 8,
+> +        .partitions = 1,
+> +        .sets = 64,
+> +        .lines_per_tag = 1,
+> +        .self_init = 1,
 
-Hi Alex,
+For consistency as the below parts, it's better to code `true` for all
+boolean types.
 
-On 2/19/25 10:19 PM, Alex Williamson wrote:
-> On Wed, 19 Feb 2025 11:58:44 -0700
-> Alex Williamson <alex.williamson@redhat.com> wrote:
->
->> On Wed, 19 Feb 2025 18:58:58 +0100
->> Eric Auger <eric.auger@redhat.com> wrote:
->>
->>> Since kernel commit:
->>> 2b2c651baf1c ("vfio/pci: Invalidate mmaps and block the access
->>> in D3hot power state")
->>> any attempt to do an mmap access to a BAR when the device is in d3hot
->>> state will generate a fault.
->>>
->>> On system_powerdown, if the VFIO device is translated by an IOMMU,
->>> the device is moved to D3hot state and then the vIOMMU gets disabled
->>> by the guest. As a result of this later operation, the address space is
->>> swapped from translated to untranslated. When re-enabling the aliased
->>> regions, the RAM regions are dma-mapped again and this causes DMA_MAP
->>> faults when attempting the operation on BARs.
->>>
->>> To avoid doing the remap on those BARs, we compute whether the
->>> device is in D3hot state and if so, skip the DMA MAP.  
->> Thinking on this some more, QEMU PCI code already manages the device
->> BARs appearing in the address space based on the memory enable bit in
->> the command register.  Should we do the same for PM state?
->>
->> IOW, the device going into low power state should remove the BARs from
->> the AddressSpace and waking the device should re-add them.  The BAR DMA
->> mapping should then always be consistent, whereas here nothing would
->> remap the BARs when the device is woken.
->>
->> I imagine we'd need an interface to register the PM capability with the
->> core QEMU PCI code, where address space updates are performed relative
->> to both memory enable and power status.  There might be a way to
->> implement this just for vfio-pci devices by toggling the enable state
->> of the BAR mmaps relative to PM state, but doing it at the PCI core
->> level seems like it'd provide behavior more true to physical hardware.
-> I took a stab at this approach here, it doesn't obviously break
-> anything in my configs, but I haven't yet tried to reproduce this exact
-> scenario.
->
-> https://gitlab.com/alex.williamson/qemu/-/tree/pci-pm-power-state
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l1i_cache = &(CPUCacheInfo) {
+> +        .type = INSTRUCTION_CACHE,
+> +        .level = 1,
+> +        .size = 64 * KiB,
+> +        .line_size = 64,
+> +        .associativity = 4,
+> +        .partitions = 1,
+> +        .sets = 256,
+> +        .lines_per_tag = 1,
+> +        .self_init = 1,
 
-So if I understand correctly the BAR regions will disappear upon the
-config cmd write in vfio_sub_page_bar_update_mapping(). Is that correct?
-I will give it a try on my setup...
->
-> There's another pm_cap on the PCIExpressDevice that needs to be
-> consolidated as well, once I do some research to figure out why a
-> non-express capability is tracked only by express devices and what
-> they're doing with it.  Thanks,
-I am not sure I get this last point though.
+ditto.
 
-Thanks
+Others are fine for me, so,
 
-Eric
->
-> Alex
->
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+
+And one more thing :-) ...
+
+>  static const CPUCaches epyc_rome_cache_info = {
+>      .l1d_cache = &(CPUCacheInfo) {
+>          .type = DATA_CACHE,
+> @@ -5207,6 +5261,25 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>                  },
+>                  .cache_info = &epyc_v4_cache_info
+>              },
+> +            {
+> +                .version = 5,
+> +                .props = (PropValue[]) {
+> +                    { "overflow-recov", "on" },
+> +                    { "succor", "on" },
+
+When I checks the "overflow-recov" and "succor" enabling, I find these 2
+bits are set unconditionally.
+
+I'm not sure if all AMD platforms support both bits, do you think it's
+necessary to check the host support?
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 6c749d4ee812..03e463076632 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -555,7 +555,10 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+         cpuid_1_edx = kvm_arch_get_supported_cpuid(s, 1, 0, R_EDX);
+         ret |= cpuid_1_edx & CPUID_EXT2_AMD_ALIASES;
+     } else if (function == 0x80000007 && reg == R_EBX) {
+-        ret |= CPUID_8000_0007_EBX_OVERFLOW_RECOV | CPUID_8000_0007_EBX_SUCCOR;
++        uint32_t ebx;
++        host_cpuid(0x80000007, 0, &unused, &ebx, &unused, &unused);
++
++        ret |= ebx & (CPUID_8000_0007_EBX_OVERFLOW_RECOV | CPUID_8000_0007_EBX_SUCCOR);
+     } else if (function == KVM_CPUID_FEATURES && reg == R_EAX) {
+         /* kvm_pv_unhalt is reported by GET_SUPPORTED_CPUID, but it can't
+          * be enabled without the in-kernel irqchip
+
+Thanks,
+Zhao
+
 
 
