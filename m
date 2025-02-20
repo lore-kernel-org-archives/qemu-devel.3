@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DBF5C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDB2C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl8Tg-0007Tc-KW; Thu, 20 Feb 2025 10:28:40 -0500
+	id 1tl8Tv-0007Xp-DL; Thu, 20 Feb 2025 10:28:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tl8Te-0007TS-MG
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:28:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tl8Td-0000Ph-7S
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:28:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740065315;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CqFCCPUcHx8mm9DBUzjaWMyFQizkNkpxtCnxaCmEc/Q=;
- b=BlLH4w9gikcPruokNJfUeViqZ2QkTPrwNyocRienAIW/6qSxElAjTwyHNUi4S/CXBi9IEe
- aSxu7eWPZwRvybHFzNW63Y+WYEmlcn5j0mGzn4VxefpHIc541ZvaAKU7JuOf877PdYY6Vc
- 4lCVQ/FomhR7CoK+Dd7QD6161mOLRs8=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-yDBrPa08PQKibG6VUI__Rg-1; Thu, 20 Feb 2025 10:28:34 -0500
-X-MC-Unique: yDBrPa08PQKibG6VUI__Rg-1
-X-Mimecast-MFC-AGG-ID: yDBrPa08PQKibG6VUI__Rg_1740065313
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ab7f6f6cd96so174235966b.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:28:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl8Tt-0007XN-AP
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:28:53 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl8Tr-0000QK-Gj
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:28:53 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43948021a45so9459385e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:28:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740065329; x=1740670129; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mq3pP2h+STAIFmDI6YkzT3qabhBdgezlJn9Dn3Hn3i4=;
+ b=meisaucIgXUV/AVHWvQtom+KWah04/AQ3/GcNNssT55VYkzF8h6YW+ONFI0D2kXvga
+ ugx3S06TCgpi8J2eN1J/EzT8YlyiOnODgPKx6JUUz5qd1Y3jyd6xjnnXG/77SqgEJ54x
+ MayTLCMhYYq/Yjhj8DqZwgWgEBGFgmK6emOW8Ok1UZE42Uz4FewJwGGHkknTKWsVkEoV
+ 0+yL1IGIIsgqGOdjN7hV7z7Qx9NhwRlbl50hacxojMTHXKL7lHqvCn8cKNz/FVdGe8cl
+ E729VOZ+N8q4Xtodk9xC+bYPbrb22jcI3TS4f/xz5+dpFRHlGWOubPyFN/UDAroQTSyd
+ mjlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740065313; x=1740670113;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CqFCCPUcHx8mm9DBUzjaWMyFQizkNkpxtCnxaCmEc/Q=;
- b=ZknvwffagcBjR6MDRKNxcvvmWQ35mQopNsEc2lmCYSHaIQlX30hOXbxlWpqEACs2mT
- cpCSbH1YpHh7HDCPrNJvRz/Q0dfbsNQNAraGp91+PndNHo3GLHmAthLw8opPLhAJhFsW
- 6OW1vv6cFF1ZdXjhflbTVOMCYD4OX88iQbJqwgVpouabaLh4SjIb9Wth5MM4Q7AWDlMm
- D4jFwqfycoOAY8n3cN7YATVprwlCYx2CfGCIpLqB0YR59sYjD4SZ7XPmkTYqFe+dIiFZ
- uyZ15nyUh7uMtpnR3KgdCdwFjf3WOLbx5ynsERf+LCEmnVnML5KZZGjNf5i85r3IMSvD
- I/2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWuy+l5xhvH2o/9E67ykXp9tcEKh1LIvFWitCsAZwadx2w5c0p1qSsZFIVPINFyck4BHkAGaETYSvlW@nongnu.org
-X-Gm-Message-State: AOJu0Yx4j5bBrnaKF4XaMb+wVzbL73hH/u6O8dKxwRWhKYcsb4mVRb4V
- 9CGgGvUukSM/Dd0Qn7WW9uVaxg67RQzIdQWwRTJnsEx+SBfg9dNjgVSjg91//Lhwp15E1RPbZjg
- f2D1uB9Tg2vJNmvFQpLOhCFZDHhXGXG+mhxcoKbIuGdcJngHnfTmw
-X-Gm-Gg: ASbGnctaCuRkVeverlCkQOSAeH+nY4o74Jityyk8sIRyiw/owUTEXVJLWVvIWifqXef
- lUKX7yNwiN8d8XFFt8eYC+FSPjuXcjOZWQj5gy3wtnAqTIbwZjyqkOOEIcQIK2p4KQ8Yj3pisk5
- c5RTHONsmo4kZHVw48nYXQNMbzhfDK34EfdZGaG/17Fyo0ejgZDouBUXZNqIq2rScrC0vk/MVft
- ZqSERcOrSFVf2keKpeuwlKi+meaIL0+bBW7Hruq/sxjb06G+/SQVyu+W33ckwOE51sgKg==
-X-Received: by 2002:a17:906:1db1:b0:ab7:b84:544d with SMTP id
- a640c23a62f3a-abbf384ae0emr197598766b.22.1740065311432; 
- Thu, 20 Feb 2025 07:28:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGJpsp11wocZRTiCuvmPZc8aQ1kzW8JZbd6CY0O0Zd+1cIAY4hrz4yD8q4nQ7w/MmFPHzkI0A==
-X-Received: by 2002:a17:906:1db1:b0:ab7:b84:544d with SMTP id
- a640c23a62f3a-abbf384ae0emr197597766b.22.1740065311048; 
- Thu, 20 Feb 2025 07:28:31 -0800 (PST)
-Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abb84e8cc53sm994204066b.62.2025.02.20.07.28.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 07:28:30 -0800 (PST)
-Date: Thu, 20 Feb 2025 10:28:20 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefano Brivio <sbrivio@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- Jason Wang <jasowang@redhat.com>, Thibaut Collet <thibaut.collet@6wind.com>
-Subject: Re: [PATCH] vhost-user: Silence unsupported
- VHOST_USER_PROTOCOL_F_RARP error
-Message-ID: <20250220102724-mutt-send-email-mst@kernel.org>
-References: <20250121100029.1106973-1-lvivier@redhat.com>
- <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
- <20250122085828-mutt-send-email-mst@kernel.org>
- <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
- <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
- <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
- <20250124170327.448805ad@elisabeth>
+ d=1e100.net; s=20230601; t=1740065329; x=1740670129;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mq3pP2h+STAIFmDI6YkzT3qabhBdgezlJn9Dn3Hn3i4=;
+ b=r0tAaIL4ZQoyi5n93VibikQYIMAGHet/UXUAfUHe/krLNkUVTe6CZ7UZmWG9pfZJJw
+ HixXDuyl50DZiW3rtMCqBS2A1UCSCVCOq53sVaUmSFlZMJMrcRL7N28iz0Ks4XEwIfky
+ JAyYBeuJCXJiZE3I23RLiFG62xTn3AAwqcZoLCiv3mN7LvAkivHrmKPU4HFYjYkzI3hK
+ fmTpNXrgKJw1RCcVBGpoDlqGG6RkITSPBe+QWh2T354CP1YqKzSxCX+jP85bhn+LhiDn
+ aU16HPJE6s4eNJDypKnsZDAb7vmHYHKxCWweSAnUYvBU3jxU+ygkUu11FLvJgUNeGNU4
+ 1F8w==
+X-Gm-Message-State: AOJu0YxwTqaQneRQMoT4DyamhydlTBhqGIi8JZfM509DzJfJSQn4lPRs
+ B2aAvQtNlOMU0QF1qrLLAOFzjNaLEcsrWg+3cBQKrLSSHxFKzq7v6Z5e0Rcc8qecMsr1ss8S5zt
+ p
+X-Gm-Gg: ASbGncuFBWQBnPFtKD3sGmSIxXdAjhEXNjt00h7AWYeXqYZQOxKiUe9LBMaAE/KDTOQ
+ hqNcv0qcgOAsL65bwW44ujNp0s37aohVei6s7PRZi6V6fu4N9GhtiGU5Xpzgp4vBcNKuMpIaC7Q
+ SA7EM69Iy4Jti5hka3SvtvpFgVI1c2Y2IsGDrpKGalIusD6v+u2viMlTHR/CzoJ3qnPmgYJ+7dY
+ e5tI8Qb591R+tHrXub3MtYTyidXcBgVzqHjrAPNxbFAGArI6t58AxrimnqYqr5yaR6X8Li37oe+
+ xlrYN86q/AjonX+BZ/A9ER/zuR/RmFEaibky1Ppyor5Nx/EPIyGF4CoCvEuQmBW6EKJ/EGpntSG
+ E
+X-Google-Smtp-Source: AGHT+IEfyV9wB9FXUB3/GVXAc3bxCAmAypTuLqiNZLuAulkYZlkDB2A2imzUjKf/BC6EDQUY/LnbUQ==
+X-Received: by 2002:a05:600c:4e8c:b0:439:44eb:2d81 with SMTP id
+ 5b1f17b1804b1-43999da5b2bmr85949405e9.15.1740065329140; 
+ Thu, 20 Feb 2025 07:28:49 -0800 (PST)
+Received: from [192.168.1.33] (lputeaux-658-1-173-28.w92-154.abo.wanadoo.fr.
+ [92.154.108.28]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4395a1aa7c7sm248203895e9.27.2025.02.20.07.28.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 07:28:48 -0800 (PST)
+Message-ID: <40365ce5-74d5-4e9c-9e3e-5372726c0d79@linaro.org>
+Date: Thu, 20 Feb 2025 16:28:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250124170327.448805ad@elisabeth>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] accel/tcg: Clean cpu_memory_rw_debug() up
+To: qemu-devel@nongnu.org
+Cc: Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250217130610.18313-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250217130610.18313-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,13 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 24, 2025 at 05:03:27PM +0100, Stefano Brivio wrote:
-> But I don't understand why we're leaving this as it is.
+On 17/2/25 14:06, Philippe Mathieu-Daudé wrote:
 
+> Philippe Mathieu-Daudé (5):
+>    accel/accel-cpu-target.h: Include missing 'cpu.h' header
+>    accel/tcg: Include missing bswap headers in user-exec.c
+>    accel/tcg: Take mmap lock in the whole cpu_memory_rw_debug() function
+>    accel/tcg: Avoid using lock_user() in cpu_memory_rw_debug()
+>    accel/tcg: Move cpu_memory_rw_debug() user implementation to
+>      user-exec.c
 
-So that people notice if there's some backend problem and
-announcements are not going out. should help debug migration
-issues. which we had, so we added this :)
-
-
+Series queued, thanks.
 
