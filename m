@@ -4,187 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 168D1C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF588C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl1sR-00019X-Hb; Thu, 20 Feb 2025 03:25:47 -0500
+	id 1tl1tj-0001mi-TK; Thu, 20 Feb 2025 03:27:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tl1sP-000191-BE
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:25:45 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1tl1ti-0001mQ-1d; Thu, 20 Feb 2025 03:27:06 -0500
+Received: from mail-dm6nam10on20617.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::617]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tl1sM-0000Sk-T6
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:25:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740039943; x=1771575943;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=2LwhF6Rj2W9j2ju8tpq5ou+6YiKGsp8UJ3C8i1Jswh0=;
- b=Ad1OfVOqRtP45/1i6QhK4z7kovgtlu36mSMq/HmqG5CEM/bhYrfafKId
- gwwC20mEahVHpBCx4/SmAmTp8XKlh7GtBAVofdmPJBEQH8f7mmr02PTb6
- LTHjC+giN/WGM89wutmiHNY2fhJzYgoWiNOvNaLo4vp95KTFTNIao1ZXw
- xGnAg2GF5YLxAgQeZP8Rmm+CGRm/gcet++Qu8YU1gXdjfyd+SA86scSFU
- z14ieGx8W6mEIRiM++NTD+HB/h2PGnIvKkyrJMR9A3HzdTADN3TH5jPnc
- qrK+wTw+xb7lGKdXf+op7gJay38X2vm2fJi1xzRKdG3JZ9dqI0QG05Zqd w==;
-X-CSE-ConnectionGUID: lIyPIsqlTMCNoF9OwtflgA==
-X-CSE-MsgGUID: MA5QIrNFRaq7DhFy2LJL2w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11350"; a="28402465"
-X-IronPort-AV: E=Sophos;i="6.13,301,1732608000"; d="scan'208";a="28402465"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Feb 2025 00:25:35 -0800
-X-CSE-ConnectionGUID: UHjulf0hSQ2XgNsQAT7IXg==
-X-CSE-MsgGUID: qGdEmfoJSKu8VqJOW23VoA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="120196449"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 20 Feb 2025 00:25:33 -0800
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Thu, 20 Feb 2025 00:25:32 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Thu, 20 Feb 2025 00:25:32 -0800
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.46) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Thu, 20 Feb 2025 00:25:31 -0800
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1tl1tg-0000eH-4A; Thu, 20 Feb 2025 03:27:05 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VcWXN5pkifp+yI6qAPemYPYuDRE1o2ycoahSCCcEilWhRIgtd8qZ67Iy0dP+HdKME+Zz2lqIJOwbcIZwDrdZUo6X3eI5uL7ZnDuyowxjuOCM+XacLiFpWm2Pe0ZqXNnGd+NSWqXIDxnIYLBaGtqnHdQtmGjLdJDWLkjDwomvskRoJ9NKdpc669Kl4OfxukerL9q4tpgQhzZzlz4pV+Gkt9ggSNZRMjijoJLmuvUgNOvRmsfqO/hpuPLVmaKeFS9025Jx3lTO/avHm5U2q2R4VMcILcbxm6Su84xVjjuCUoI9aB8riANMFBbAq9Fee2IiaOzWDoYFVJQbCY5eNC3Zlg==
+ b=wM8YvW9C/OuSmn40xrVH/LvXB7u13qYYZZT4XwDzYr2YnB/EUCle54URGrnF9K/69jKoh5dphFPH1dxok4OWLeTIYwPunf9pLghwH2Bdq76T4xbWOMSk+dQr6lNxRef5/zvc8deRArlDRvvpfpUmTsuk4JuasOuhdGQKgLrQfwcddXtxE7y3SuKLyME1YHHVj7c4mDJHTQaQs1jsJzJg+04r0+az27j6LnK+KciNfjWL3I1b4U+7jdMELA11tI5K/lAyje1XHL64Igh2Ww+hEW6MfXtf+tXhSA67rxfPtFoaYFxyaajEgsHGyipTizUJ6KV/B0Q71/fX4rJA/CxrPQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=whTS0IrcYP8apnB79wa84P4oLbcnW5EgGJrUz5LQ0YM=;
- b=fLanwh1yJD4M+3Bk1f48iW0ZRUl0X0kHSs1Fkl2zcEYYVW5alauNVQkekcC8TuxpxN7+LGvJnlfwOl4KLvYkGg7BbLUGo5VZ7D61p/s5uYXgvF9P5x9DgL4Z1EAq6HWuXNF0ODav5TB2j0zR+0EQft5RF0q7WE2ZK+1kljJXji/5MLpacZ5z1c5iGZjUbmMtFWIs2touhd2cMyqTM4E9HHC5dx5wtYUmdm6ZNmibJW+vTi3GPcxFlIc1i4RFjYr23hIFR6jy4yFygXPpzzdklONPB5ZABHfYjIDskON7O5GdFxN4IoI3y9c0Kfn0PwkC3OPBcHODeg3EIh8rUEDpbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DS0PR11MB8686.namprd11.prod.outlook.com (2603:10b6:8:1a9::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Thu, 20 Feb
- 2025 08:25:29 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.8466.013; Thu, 20 Feb 2025
- 08:25:29 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-CC: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "clg@redhat.com" <clg@redhat.com>
-Subject: RE: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
- d3hot state
-Thread-Topic: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
- d3hot state
-Thread-Index: AQHbgvuwzAAYetEsY0mcGqcnVFi6xLNO+qEAgACZYFCAABAhgIAAH0Aw
-Date: Thu, 20 Feb 2025 08:25:29 +0000
-Message-ID: <SJ0PR11MB6744F88F2371D1419ABAAAB092C42@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250219175941.135390-1-eric.auger@redhat.com>
- <20250219115844.062c5513.alex.williamson@redhat.com>
- <SJ0PR11MB674418674B2374371F2AA24692C42@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <20250219220525.08d39475.alex.williamson@redhat.com>
-In-Reply-To: <20250219220525.08d39475.alex.williamson@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB8686:EE_
-x-ms-office365-filtering-correlation-id: 3a45c511-7381-47fd-571e-08dd51882286
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?gU7Xym7cVwQO90lkxaxfHQ+Nm5mQdOVpJgmuaWmxnW/PJ4LGdPzM2AHqBgFL?=
- =?us-ascii?Q?eFG2UKUaMUc85x9vFQ+teah1VhKRLcYtRGWFjl95rr6t4SuTiIaamQ6zQUV1?=
- =?us-ascii?Q?cT1bfxcEH+XxQD3fwUj6fWtYVG1whgveCsana9jNHNN6VgmDPUck3oYHqAjs?=
- =?us-ascii?Q?2vPEzpp3D5+BaHC35OQ9mmEajKlFqkVsGf1Vs2gIS1aE3C2U0RuVOXUOmm/2?=
- =?us-ascii?Q?fWBCpC4GHzJZDlDsQN5SUJbD/7xTEl3URfSaVMq9Qv9PUIiOfipz+p5XOJoS?=
- =?us-ascii?Q?IQMKOuwUD200cMEhdcUh3fHry8ceLGanOfbFhjhgCcdFDKc8itU98S7DORgY?=
- =?us-ascii?Q?tJ74KJ3Dtyt1pvZjTRq/yCEBVvRUO0z4tWs+s4Jk6gjGs0RTslJu/TzRLMEp?=
- =?us-ascii?Q?IegV0ZXtxUZzLyUL1PzaOW4licdVZ41mqd60+HfBCDWDDR43oisTnJUjiS8Y?=
- =?us-ascii?Q?B9e3SNLUz8Yrh18nhnnzpP0n82HIPaI8eR0RiQvOaqQUrOaHzwpNYS18mRHU?=
- =?us-ascii?Q?FNXUdOYC9nSy7PzWsyLghyFeNuxZPu/gZL2Givm6Qe2YA9umCDyBXkzSAtlv?=
- =?us-ascii?Q?TS4gYzCuMe4rXYoCURuZIruZEmpzTEeOmF7lyk/YrZuJVOXeyNYFORrGAYU+?=
- =?us-ascii?Q?clTkNBTknfP4hwtBhNnb1QQ8NoK8eamp9cnnoVUCxzqjZbyUDcToaN8VCnUA?=
- =?us-ascii?Q?GUngyVNp6ms/1fogpliDuBzFGmEpSiqgONS66hESefSN2+WYtY0zN0Evq2q2?=
- =?us-ascii?Q?6r+61lUBnWrq6Is5dnpQ1e+5keNTyvh1pbUngFkqKxm4TjiSErqNv8EhowJ9?=
- =?us-ascii?Q?Kp1BhJuBPGeSJ3HO1cQg/CPYzJuMljOIwPO7JEstsfo+lKdjdq52BnHcC0mF?=
- =?us-ascii?Q?OiuB19LAbgmLLOgHc0nz7qT+aOiu8CfBYtDHXrQQgyEiOKUnsVwoX2QgdSi8?=
- =?us-ascii?Q?moeda8nIg6h480aOidcimV2F1WDoWrX+7RFtNzcHUSV+ds72wOImmE5K4O8D?=
- =?us-ascii?Q?txkVR+CQasUHzkYUqOmPzw7TrIReQZdSWt+E7yL1da8DH6LVkxJyMApTHxIE?=
- =?us-ascii?Q?RF55vavOd+/p+iX5mg2fwsYYT1pQxh/x+B0ZfMWpsD8f+rosNjbRM26kltxq?=
- =?us-ascii?Q?PoLKodp1EFqO3sxpOCLUyQYKoNtULN6HWtc6QO1Ol77xAQBCCrIIB6deUgdf?=
- =?us-ascii?Q?cFJgz1UvdkqTm7SJRTtuN1hzVEnzJv27OU3Wb7NO3boPUmSnqUFnsBTzCPOZ?=
- =?us-ascii?Q?skWdLQmP1Xa67tUCw5oy2wV1+RvPdthI71vzenGnHrXAhJhDdMUsnWp89mMs?=
- =?us-ascii?Q?357IfEvoeBZS2CrEH3rCyjj0kGIVCGcVlc0D0e85vkb2KwG0IkuGELM2waRd?=
- =?us-ascii?Q?DSs5QsVyVGs8uMYbV5ZGKLQ1Uo6kQrTUI9R7ins2uMrsED5cf4xEKfilBs2N?=
- =?us-ascii?Q?tSaGOaPJb786iECySNKNdDYr1NtPVuWC?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?7En+tZ2FN2KAAiQjBZyD+WXzZim5rnkQ26XP6PX4+mMSbLYDvvu0LcnKOxLU?=
- =?us-ascii?Q?hsAGDXtA4VkK4Vtx3nzmReWw5hMTMigSU0kqhUElMgLT9q0FXpiaUhSS4PMH?=
- =?us-ascii?Q?8/fvDw24+0NRU/w8t0kIWscjpwh3AgVKj3QOY4F+nQqRbZbe8IbYOOXaQZSF?=
- =?us-ascii?Q?kiqk6+gfTDbIf8ocujvFWzM10KAjThKLmbca/t5+VfLox0nyBnr0v51c61ab?=
- =?us-ascii?Q?6GlRlbD0/VAAPZzsehgX8/AdoxmfEFfYKpTl+neE/ipEUgmQPOMDZRNiNFhy?=
- =?us-ascii?Q?tniJBnv1Vc/GJ0EzOOHgPnAa/milEE7f+pQoQ2c8DOgQQlBzllnFuFJz/JEF?=
- =?us-ascii?Q?SR1kqLV1hWx3mSNtNvZ1hw033Wy+Guba6aXI/LVnFRjgcdYuvwyBxCPvaBN2?=
- =?us-ascii?Q?HW9KsZbzqnaxAR32aenx667fe7vVvzajG9mMd+rea9hRZidLB44UNLxLuw7o?=
- =?us-ascii?Q?TA4r+3xqM8e3CwZ6Gdh3/s6SGpMQiezOv6h916OvTo3rusgtcphbeEqBnqcP?=
- =?us-ascii?Q?C27f8Ok9+gkai8H1s+NLQfh9kPFS08Cc2o4dH/dtXNoc9XFhH1QgU7LfRh/0?=
- =?us-ascii?Q?PX5ta6Mp/YjmVqr3wJTYUk3s7THae5YCsnTSxOX8uMsv1rpfJL16gMaw6Vpx?=
- =?us-ascii?Q?GMiI1nwqMz3zw3YdoOdNY9Wf0ysQIKz+DhJgBWcNRqZhOcqfqYucmikiuqh0?=
- =?us-ascii?Q?OEQv7w7YW5D5pCBJ8SEgw2Pmw6gKLNtZM/tPIifpKX8WLTYNoBvTiwIKc7bH?=
- =?us-ascii?Q?nkZTrJ+ageZNXADZgHN8ycP+Lb0EdYyemx+AEp+V5p0EPcukvbTlVcPcdzVK?=
- =?us-ascii?Q?bJfOylsBa9dfO48YVZJa9w379WV4cvPD39zAO4Q3AOTdFYHBTqd44B2JdTud?=
- =?us-ascii?Q?FqNGZEhv2gYpyL/EcOpoGSfR/5UuFrTBstHpwv16xrO5WiErLr6s7FijlbVy?=
- =?us-ascii?Q?BejJ+aptTTD/u6MFPEjYpEXyKM6Qg4mx72/PdZ7qXI/DnVbH3x2usUIL22sP?=
- =?us-ascii?Q?kwMLCzBP99Etzmu4PsoBUHjzQex6nGxy4XNvuVYlg3XRLLtAQnjVLr6dQT0R?=
- =?us-ascii?Q?kLBGqhh1ERgPcgWPxL2lTiRQhilRr4XuaSXaJqVT+iGKjJ86iZOVHFmIZLQU?=
- =?us-ascii?Q?hujtrjYfYwa8l01S1StJ8zdtqvBFO98SD/bxRgBHb5fMXfwC54ayuN+wyjpM?=
- =?us-ascii?Q?jM10Nq7Nr9hpWZ2RYxoNGfnPcp49l+Hn1+z9PuE147wkCrvkZ1r65QCHcghl?=
- =?us-ascii?Q?TmtIbyMyHMBH6tWkoJqiZMYGi8kP2F4Fghnoos0qSVP8FikYWBQoiEspn7tW?=
- =?us-ascii?Q?CCtDCbc1b9yeoyy+VD2u/5/ycaWiICdZn34z4+ESCSnF40pgtWFIaBA04DHx?=
- =?us-ascii?Q?7ZW6/VqH6p/tEPNhJOM4fTsgSe4Q+x/96iDkALBgl8JhxqPaxH806orLJ/wm?=
- =?us-ascii?Q?w5W+fm0u0rE1f1OKptp27EEtu++I/b1X3YEl7RUxzRq9tF6pejbku7LTkmtQ?=
- =?us-ascii?Q?a5gXYF2ro7+UQuCp68KOQOb247iaKZH2HO2RgidLvzLC2l7krH3zcbJCWjh8?=
- =?us-ascii?Q?dedzmOdPbLiGp3pzXiqPCilLZxe+6z3LBD+ew+J9?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ bh=ta7V6gqRwreNtqZqvkeavRTeSB8C4bBE+/fRJtFIyVU=;
+ b=SMNzTiwpmeYPJ1Eyzf390muorgUnHoWKNDdO1jY3PhmJ/LZVzFCSkjQl3RfNOaeDMOf3BEGAWayvV+wHild6v/gB/17qVDGR67QK7ejTRlni4KVs//QxER1m2fIdCcHpQJ5463QHZW8PUlpM+apx9Lmi4WYxq+QN6L09/SVRGUTvy2pq69bKC8ianjG+1pjnpnCw0sdWbKT1ltRsbAQy+6yDpjd8WJuf//wWSMZJLblibIjSkA8khyOHuumXbITuVe2aBsjyRRhGQp30PUji6bzw5XDF6HwBUMx6DCWcuRL4wRcJJ3Oq3FRV/f4dVEoWKYeW7PlbZ/o0ojeQZeTY/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ta7V6gqRwreNtqZqvkeavRTeSB8C4bBE+/fRJtFIyVU=;
+ b=n+Eu5M49AioBS+inuO0INsdcBdoT42o+ajM9NA4phCFXQx8pqkhKuE3NayzXmZkCNCbHsnHIrOyylBoagLnCS6RaookeOhuTnz1iiOWXkVDCxt3/eAXpEbQZHkbZb7h1k67e2qu/o3P2u7EU8ciF/oria77+gCdz2CxHnct16Jo=
+Received: from PH3PEPF000040A1.namprd05.prod.outlook.com (2603:10b6:518:1::52)
+ by IA1PR12MB7565.namprd12.prod.outlook.com (2603:10b6:208:42f::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Thu, 20 Feb
+ 2025 08:26:58 +0000
+Received: from CY4PEPF0000EE30.namprd05.prod.outlook.com
+ (2a01:111:f403:f912::2) by PH3PEPF000040A1.outlook.office365.com
+ (2603:1036:903:49::3) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.14 via Frontend Transport; Thu,
+ 20 Feb 2025 08:26:58 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ CY4PEPF0000EE30.mail.protection.outlook.com (10.167.242.36) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 08:26:57 +0000
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Feb
+ 2025 02:26:56 -0600
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
+ Transport; Thu, 20 Feb 2025 02:26:54 -0600
+Date: Thu, 20 Feb 2025 09:26:48 +0100
+From: Luc Michel <luc.michel@amd.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+CC: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ <qemu-devel@nongnu.org>, Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
+ Rayhan Faizel <rayhan.faizel@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Magnus Damm
+ <magnus.damm@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Thomas Huth
+ <huth@tuxfamily.org>, Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+ <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 8/9] hw/char/mcf_uart: Really use RX FIFO depth
+Message-ID: <Z7bnSNJQrY2Lffiu@XFR-LUMICHEL-L2.amd.com>
+References: <20250219210841.94797-1-philmd@linaro.org>
+ <20250219210841.94797-9-philmd@linaro.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3a45c511-7381-47fd-571e-08dd51882286
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2025 08:25:29.2784 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CvN9wjqCFTDmtPI0BkIURZapiy0Wqdq2dGebMmd0yDfV8gUoUTF5l7Ekf+yezJ10pDv4+DnWFzU4bfvnQIXb67MjEbHTW+8WXA2lL/8at/c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8686
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250219210841.94797-9-philmd@linaro.org>
+Received-SPF: None (SATLEXMB03.amd.com: luc.michel@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE30:EE_|IA1PR12MB7565:EE_
+X-MS-Office365-Filtering-Correlation-Id: 846b1741-40af-4e09-af73-08dd51885737
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|7416014|376014|36860700013|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SE9XcngzV0JPOExPMGJQL213bkRJblQ4UFlzeGtHMVhRVG1DRHlTWTM0U2t0?=
+ =?utf-8?B?TmNQR0hKT0FRRnhEZllhRXFDMXF2K1JqcVpRVzZ0MkVCYVBKa21DU0pxMUY3?=
+ =?utf-8?B?MURXR1lYTExGMm9TL3B3N0FyYW5YRGIxQ2dOVmptT25SRXhyZEtBUmszUkQ0?=
+ =?utf-8?B?MHJ3WEQ0WGN6RjdnamhBMEc4OENXcUY1YXA2c2ViVCsyZWQvb2w1VE4vTktM?=
+ =?utf-8?B?NWlQbjB4NFVkdys4bVRDMVRuZHlYazNXOTN3M01YTUtrWjdMZVJCODRUV1Qr?=
+ =?utf-8?B?bUpEdUlpNFpiWXdtMVMyYnRzejdkZ0Z6WkQvRWMvTU1LVUJqbjhUVTV1WGtZ?=
+ =?utf-8?B?UWUzdmVRZE1ReHpGcVRiMDQrMGhUdWZhTGRxQTl2Tnc2QWxPSWxGNnFsTzVF?=
+ =?utf-8?B?M3lkSndQMjZlTml4bE5xLzU2bHNpTE4xbXlqS3lKYkRuOWt2cEt3UWw2T0VX?=
+ =?utf-8?B?enFSWmRPQVQ2cUxPZEJER0NNOUpMZkxaUSs4ZWo4U1U1QUt3RCtLaitPT1h0?=
+ =?utf-8?B?SmplWFUrMmR5Z1pPMjVWUVhrSG1jYmVSK0lnVyt1UXdUazcxSG9tb1NJNmJQ?=
+ =?utf-8?B?TDZqeEM1Z1ZpTVAxaTRtR1VsYjV3TlZuSEdQVHdaMi9kcmM4cXR2eis5N1dm?=
+ =?utf-8?B?NUZrSjcyMkNrL0hqSTNhWS9qdE5iS3ErQ2VkdGQrdnQwQmRiUzJjMlF3Z1Zu?=
+ =?utf-8?B?RVR6SjV2N3hGMDBPUk9jSEh2cEFiSTBCUGUwSjB6T0trcWtTT0J6VDU0NDN5?=
+ =?utf-8?B?d3FCSU9OY05nVmVyOTlVL2YxN1VTdDRCUlZ2clQrQWJ1dytoeW9oSmZUSU95?=
+ =?utf-8?B?Mmd3amcrRjFNS05RVlRja21Zak5CdmdobHhmWEpHSGU2NVV4OHphTEF1aEhq?=
+ =?utf-8?B?RFpKOW9oRnN1b2kzdDBWbkV1YUhCbjlISXRZUVM3Qmh2Q0d6TXloUTR4U0p3?=
+ =?utf-8?B?M2dscjFvTEs4OW5nbWszQnhxU2VVeWEwMWpsMlhJV1pENTkycGxqMDJZU0lG?=
+ =?utf-8?B?ZFJTekNUVmEwRlFqdGZRV0k1em1CMTE5VURWOEwrdy9nWHVpV2ZQMzNhREVx?=
+ =?utf-8?B?S1MwMlVhV0s5MElzeFhNYVR3L0RrZTlUcWNMdzdYK3M1c0U2a0FsNiswMFNj?=
+ =?utf-8?B?blRBdjdtYUJlQWdubnFES2VFaFUyODhWK2JjWWJGeWdkTCt4Z0NoVFY2dy81?=
+ =?utf-8?B?bC9uaE9GQmNENCtMc3ZaVUNiZ1dQV3RNZUNIN3ZMRnBhUTQ0WUppOTRDS0Ez?=
+ =?utf-8?B?Qy9BNUtmWUxYK25aenhVUG9ZcFNPVmF2WlFabUhjSU5GOUgzK1Y1aWNIR25y?=
+ =?utf-8?B?djVRaVV0NmxkMjBTU0JFRkEvUWtMM1hyVHVWeGRVUEpIRGNZYXZwRHZXc0k2?=
+ =?utf-8?B?c0xGSzRBSzRlS1NOZTNEdHpBcHR6VHZRYmVJYzVNRzBubDBJeGlWbkI0Nlly?=
+ =?utf-8?B?TDh5ZkY5dEFMb1hDczByb2dReUhpTHlFdDIwQXVIQTNSWm93R2RVb0lVWmo3?=
+ =?utf-8?B?Q2RQYTBUUFZMekpFa1hFTUNqSnZ0cEt5bnE3RnNjVmdnYmlva3FxcE5vbUV2?=
+ =?utf-8?B?RGwvWDhDcFpFT2d0U2pSZENsZkJxZFZpWGd1aXRQdHNxalRyWjgvYVdUM1Y0?=
+ =?utf-8?B?aTZMTUg0cmtxNkh2M3A4elI4akNsSGszamIzSnhON3BPdzdiV0FiclJvSUxV?=
+ =?utf-8?B?VVpLZDFTbG8yRnRCTTlWM0RkUjR1cXpNVHBmRG9kWS9wRno3MGxvaFplVU83?=
+ =?utf-8?B?UlhySzZxWVRPUEV6bTBBQU1ZMkppOFB1WllzQUlRdmk1WkZlUC9vKy9TK1NU?=
+ =?utf-8?B?S29oRkhsYWwwZTVmQ05XQm5BOUJYUzVIdFNZSUVtWUlDcGdYTkxJbmM0dERv?=
+ =?utf-8?B?RG1MWXpCTlBnZnFvTnBkQXpBZnNBdDdOL09ZRENZVTFBZ3FXd0hLbjhBQ3Nk?=
+ =?utf-8?B?b1dWMThaMll3d0djRWpxaEdwQmpJK2ZZRnkxZmRqa3dIOXBJeElXa2tla0c2?=
+ =?utf-8?Q?JMLYn0LmBjZWAmVrh8o/keQ4mynh1k=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(7416014)(376014)(36860700013)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 08:26:57.5585 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 846b1741-40af-4e09-af73-08dd51885737
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE30.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7565
+Received-SPF: permerror client-ip=2a01:111:f403:2413::617;
+ envelope-from=Luc.Michel@amd.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -200,72 +165,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 22:08 Wed 19 Feb     , Philippe Mathieu-Daudé wrote:
+> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
+> 
+> 
+> While we model a 4-elements RX FIFO since the PL011 model
+> was introduced in commit 20dcee94833 ("MCF5208 emulation"),
+> we only read 1 char at a time!
 
+"the MCF UART model"
 
->-----Original Message-----
->From: Alex Williamson <alex.williamson@redhat.com>
->Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
->d3hot state
->
->On Thu, 20 Feb 2025 04:24:13 +0000
->"Duan, Zhenzhong" <zhenzhong.duan@intel.com> wrote:
->
->> >-----Original Message-----
->> >From: Alex Williamson <alex.williamson@redhat.com>
->> >Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped =
-in
->> >d3hot state
->> >
->> >On Wed, 19 Feb 2025 18:58:58 +0100
->> >Eric Auger <eric.auger@redhat.com> wrote:
->> >
->> >> Since kernel commit:
->> >> 2b2c651baf1c ("vfio/pci: Invalidate mmaps and block the access
->> >> in D3hot power state")
->> >> any attempt to do an mmap access to a BAR when the device is in d3hot
->> >> state will generate a fault.
->> >>
->> >> On system_powerdown, if the VFIO device is translated by an IOMMU,
->> >> the device is moved to D3hot state and then the vIOMMU gets disabled
->> >> by the guest. As a result of this later operation, the address space =
-is
->> >> swapped from translated to untranslated. When re-enabling the aliased
->> >> regions, the RAM regions are dma-mapped again and this causes DMA_MAP
->> >> faults when attempting the operation on BARs.
->> >>
->> >> To avoid doing the remap on those BARs, we compute whether the
->> >> device is in D3hot state and if so, skip the DMA MAP.
->> >
->> >Thinking on this some more, QEMU PCI code already manages the device
->> >BARs appearing in the address space based on the memory enable bit in
->> >the command register.  Should we do the same for PM state?
->> >
->> >IOW, the device going into low power state should remove the BARs from
->> >the AddressSpace and waking the device should re-add them.  The BAR DMA
->> >mapping should then always be consistent, whereas here nothing would
->> >remap the BARs when the device is woken.
->>
->> If BARs should be disabled before D3hot transition, isn't it guest's res=
-ponsibility
->to do that itself?
->> Just like what have been done for FLR which calls pci_dev_save_and_disab=
-le().
->
->Nothing requires the guest to clear memory and IO from the command
->register before entering a low power state, nor are we going to get
->very far arguing that it's the guest's fault for triggering an error in
->the hypervisor.  The PCI spec indicates that memory and IO BARs are only
->accessible when the device is in the D0 power state.  On bare metal
->accessing the BAR for a device in a low power state would generate an
->unsupported request.
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 
-Understood, yes it makes sense to remove BARs from AddressSpace when D3hot.
+> 
+> Have the IOCanReadHandler handler return how many elements are
+> available, and use that in the IOReadHandler handler.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/char/mcf_uart.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/char/mcf_uart.c b/hw/char/mcf_uart.c
+> index 95f269ee9b7..529c26be93a 100644
+> --- a/hw/char/mcf_uart.c
+> +++ b/hw/char/mcf_uart.c
+> @@ -281,14 +281,16 @@ static int mcf_uart_can_receive(void *opaque)
+>  {
+>      mcf_uart_state *s = (mcf_uart_state *)opaque;
+> 
+> -    return s->rx_enabled && (s->sr & MCF_UART_FFULL) == 0;
+> +    return s->rx_enabled ? FIFO_DEPTH - s->fifo_len : 0;
+>  }
+> 
+>  static void mcf_uart_receive(void *opaque, const uint8_t *buf, int size)
+>  {
+>      mcf_uart_state *s = (mcf_uart_state *)opaque;
+> 
+> -    mcf_uart_push_byte(s, buf[0]);
+> +    for (int i = 0; i < size; i++) {
+> +        mcf_uart_push_byte(s, buf[i]);
+> +    }
+>  }
+> 
+>  static const MemoryRegionOps mcf_uart_ops = {
+> --
+> 2.47.1
+> 
 
-> Therefore why should QEMU map BARs of devices in
->low power states into the address space?
-Should not.
-
-Thanks
-Zhenzhong
-
+-- 
 
