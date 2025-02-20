@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646C4C021B0
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825EBC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl1kh-0005BE-DM; Thu, 20 Feb 2025 03:17:47 -0500
+	id 1tl1oP-0007DM-4x; Thu, 20 Feb 2025 03:21:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1tl1kc-00057b-U9; Thu, 20 Feb 2025 03:17:43 -0500
-Received: from mail-sn1nam02on20630.outbound.protection.outlook.com
- ([2a01:111:f403:2406::630]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ id 1tl1oN-0007Cu-If; Thu, 20 Feb 2025 03:21:35 -0500
+Received: from mail-bn8nam11on20629.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::629]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1tl1ka-0007QV-3M; Thu, 20 Feb 2025 03:17:42 -0500
+ id 1tl1oL-0008B9-3l; Thu, 20 Feb 2025 03:21:35 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NnJ23yWEMgNZOaVPRbT5Sjzv98t4Srom1q8tu1jM4KvfbkGYcEb8dRstbMRyNi1w/G2Uy1tyJAFm9EeAQxQUtA4+IC/3e//T5w6NgtLSj5jEOL2oZ+7iLOWZGxohxd7oHXSOYxWRZmR6pQAzQVA0dBlP8t887mfXvVvhaJ4xoUPLQlYAJzw9aMb6KrCt2xiknv0aotZGm/7VFfqJN38LqjqkOuXSrkB4Dr3g6Tum8R0foZY6B6+Qri9nzZ+dMiw80AmaKrEijt8UcUA2q3WTiaFoU5GKVHOzIabCg4JlZdvQ4A9whX2klEqvJI4RFyBziurEQ2XnaQ2RFeozDhTOsg==
+ b=S3GQY7JKH0Befg5az3J+8nZ7gx296A8SI5GL885cNLpgYoJXku5uroGNQd3BINbMCzg994b7wibQyImHYob4xbJefuiScNWXMucRtEOSY2lxsnlr5Arr8XpYouZQLLGJJ2MRr2bAsuEsnkKbswl5sGMwa6osvhpJ4U95O9SeN8BtBvW0e/h/VoTz9TW0Eo5cizwXwcVgo2pP7gTOXq14MNkqIyS2R6i8nFgAKly5bORneCVElTTiVwssKsi/Ngu2+IaDUl8bL1+OCxlCY4vwGXFAZ/tVO73WPnYSJ1svv8sLajdNCOEGLrwC8qS1dilDjxdOExJ2EVgw/XnuWOf8IA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uUBoKSk05DK2fTdE3csISnaoksFe7GaF07MSbdbU9Eo=;
- b=T/tJW1CXPBqcM5lkNpVq56ecZcROTPbICwFSQyjTAWd9H4NBsMV74YhrW43fxn9ufyZhG5OThcXNUDgBTX0ldDdMSS1PMCETbgYZju/vQAgLFL2tH53Gcw7JNzIZejLyqAXV63nn6PrfMWnnoaW3oC6o2VdWxEdJLyWH0Yuyg4o/gU6DQACM2xzPWRgBEdcLhEl6EYqGod1f6yrTcsBjr4rN1jv2eIgN90obyV4xVfSI/uGM2qeX7J6VNVDIfi/Pi4sQWhK4OpcGVghJNTEYIeMdf7HswvqphPIbTADYF8N6lNbn414fkocymuZXBZUUYUFnbPqA4voicDJAoxZ3SQ==
+ bh=wwQuZmY1WhrO+ScNAcw91nkeQJVmwxpl7uySFAJ0FuI=;
+ b=hxQ0KqiX50fL8+1o0gLy/a9A57w16xfvv+sVSmdtvN7GCjWFs5huUBjCYABRKVMnUVJ89Nt1WKkbR2y6X4V9SLjhImK2LVtJB1vmTPm8bYImuXpQ0XsVIl/eKIHvtxoExxVKknOjsGcNO6gWVIWOK8MPwgLDsHdXRPyh2t3luljPyjVntqjNeoZwg5AMnamEnKXsQllECLMrxLPlCsMYjN9jyRcZPk+2eapSi0B/FuoovHo75y3suO9EZc3sU9ZRuOWUowdzNkrrzv3gyUJ1fzOpMyMmYcJzM+tEsacWIg2urGKMYcj9T0ltper/1TtV9Vu22jBq5FA/LuLypV95ow==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uUBoKSk05DK2fTdE3csISnaoksFe7GaF07MSbdbU9Eo=;
- b=TbfV79QJRC60p7YNzoHjIeuy/sN6ffSQl4aFJrLCWmC2afvK7HBsdD7JyTanr5q7aiyEeBN0eevkZerHje1jACJkS/ZTbF/eO0C2r53vFRkmGA14iF1cgtx9Kl0AiGQ84o2lkaOdIqiMETy673aaCZcRXH1qUQ1kpC/X5hwszZ8=
-Received: from BN1PR10CA0016.namprd10.prod.outlook.com (2603:10b6:408:e0::21)
- by CH2PR12MB9457.namprd12.prod.outlook.com (2603:10b6:610:27c::7)
+ bh=wwQuZmY1WhrO+ScNAcw91nkeQJVmwxpl7uySFAJ0FuI=;
+ b=Wxz3wmaNG8g6iJwHjiD9hf8rGTpV8jHiX6ZW646IPasRBz2VTvUTCKxMZQfJGy0k4dgVEJIepBaHq/hifRv6KGXTO7hFGXhrXIF6nz/XuTZkjTbvOsy/V7EbsutFz7dX6XQY9o+O9c6KZnPbXOUbLtCalmMEKOZxqdVC/hSWYcM=
+Received: from MW4PR04CA0054.namprd04.prod.outlook.com (2603:10b6:303:6a::29)
+ by LV2PR12MB5896.namprd12.prod.outlook.com (2603:10b6:408:172::15)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Thu, 20 Feb
- 2025 08:17:33 +0000
-Received: from BL6PEPF0001AB53.namprd02.prod.outlook.com
- (2603:10b6:408:e0:cafe::a9) by BN1PR10CA0016.outlook.office365.com
- (2603:10b6:408:e0::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8445.20 via Frontend Transport; Thu,
- 20 Feb 2025 08:17:33 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Thu, 20 Feb
+ 2025 08:21:27 +0000
+Received: from SJ5PEPF00000209.namprd05.prod.outlook.com
+ (2603:10b6:303:6a:cafe::97) by MW4PR04CA0054.outlook.office365.com
+ (2603:10b6:303:6a::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.14 via Frontend Transport; Thu,
+ 20 Feb 2025 08:21:27 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -52,18 +52,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL6PEPF0001AB53.mail.protection.outlook.com (10.167.241.5) with Microsoft
+ SJ5PEPF00000209.mail.protection.outlook.com (10.167.244.42) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 08:17:33 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
+ 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 08:21:26 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Feb
- 2025 02:17:32 -0600
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ 2025 02:21:26 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Feb
+ 2025 02:21:25 -0600
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
- Transport; Thu, 20 Feb 2025 02:17:30 -0600
-Date: Thu, 20 Feb 2025 09:17:29 +0100
+ Transport; Thu, 20 Feb 2025 02:21:23 -0600
+Date: Thu, 20 Feb 2025 09:21:22 +0100
 From: Luc Michel <luc.michel@amd.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 CC: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
@@ -74,76 +78,74 @@ CC: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Thomas Huth
  <huth@tuxfamily.org>, Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
  <qemu-arm@nongnu.org>
-Subject: Re: [PATCH 4/9] hw/char/pl011: Really use RX FIFO depth
-Message-ID: <Z7blGQR_KDCjn6cG@XFR-LUMICHEL-L2.amd.com>
+Subject: Re: [PATCH 5/9] hw/char/bcm2835_aux: Really use RX FIFO depth
+Message-ID: <Z7bmAqE4z2y_kNse@XFR-LUMICHEL-L2.amd.com>
 References: <20250219210841.94797-1-philmd@linaro.org>
- <20250219210841.94797-5-philmd@linaro.org>
+ <20250219210841.94797-6-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250219210841.94797-5-philmd@linaro.org>
-Received-SPF: None (SATLEXMB04.amd.com: luc.michel@amd.com does not designate
- permitted sender hosts)
+In-Reply-To: <20250219210841.94797-6-philmd@linaro.org>
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB53:EE_|CH2PR12MB9457:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5afd59c6-4889-4d5c-43ec-08dd518706eb
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000209:EE_|LV2PR12MB5896:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97062dae-01af-4e53-008c-08dd5187922e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|376014|1800799024|7416014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RzdVR2R1cVhDZEVrSGtBQmtKTUtTTnFXeGd2bDQ0UDFnUVI3dXA5WCt4a3JG?=
- =?utf-8?B?cmhDSzlESzV3dHBXNWFCRUd1a1hrbk5obFVmRWFSNWRFbXNKTXZ2K2RUZWFY?=
- =?utf-8?B?WjNMQWNjZHkzcXoxbHFjaTlZWmVKQWZLWW9rSFZqQmVtVEFENndHYngwcDc2?=
- =?utf-8?B?d3c4dEVCUkl1UDB4Mktsc3F4cEU0VU95RVVxeFJyWGtROXIzUldjZG0rRWJU?=
- =?utf-8?B?bHQzZDRnclpNUGVyRUE5QjFHbUpMR1NwV0p5d21NS2d6eU9BQWo1WjNaUy8y?=
- =?utf-8?B?Y1c5VGRQUUlqbjFrK0N3ZmpmY1k3YlQ0cUhua1RRQjFERm1CMU1vc3NrUklt?=
- =?utf-8?B?QW9iYktvMmFuVmFKMml3Z05LcTZMWkpRMjhYMERRTlFuWm12UTY2OFM0TGMr?=
- =?utf-8?B?UGFJUjFKeHV6VXlORzR0SVd0M2Z2U25Ua3hNWVBrTDVkN0Zsa0R4YkxQZ0Fy?=
- =?utf-8?B?eXdybXlDU2ZKY2R5ekN5NktvbEpKVTVnMGpSTmwxcFJTYWlDUE85NmY3cE0r?=
- =?utf-8?B?RXlvb2dvdFUvREp0WFU1N1EyRldpRkptQlV6QmM1c0FzSUtPRm56UjVGYUwr?=
- =?utf-8?B?NUdpUHJTbUJpUXpmNnJnQUpZd2NWM1FDRHBqSDJPRlphYlhTQXNXVXlMbGQ5?=
- =?utf-8?B?N3A5NWNhYnYyenFSS1BQUUMxa0kyRytUMDhXRDhqZW1GYUhsVDJCNUFOWDlE?=
- =?utf-8?B?d3BJellVeW9iS213UlBDb3hveWRqSkhEZlhkK0FhelRmc0cyUmRiSkt2U2t2?=
- =?utf-8?B?b3hMdWdnUGQzcDluNUpqOTJRWUNMOXAwVDZpUnQxMk1VQWkvZjQ2WFNsUkVP?=
- =?utf-8?B?U2M0RWplZVkvdmxEUEJDOVNEY1dUdXI5dy9zSTJnRU1yR0xELy9oYnl6ZGhQ?=
- =?utf-8?B?V1Fodi9PZUsrRGxpbTZNN21MT0VTcVFyZHlsN2dvS1ZPWmNmeXA1bHpPTFdS?=
- =?utf-8?B?TTFsajEvYk02L0llUGY5aEVRT3NKbGM1NmtNNnh6RlRITFpnQXVtV09ORnFy?=
- =?utf-8?B?L0ZzRnRENFRuM0ZpU3NXa3gvQ0N3RTRMUEdUYkY2cjVVd084OEE4amFlVWhq?=
- =?utf-8?B?clcweHN3a1Z1dGkvR0NaQlBsZjRhTDIyendRa3hTRVIrUmRRZ2VwZlJhYVNt?=
- =?utf-8?B?akhHdnFLNE5NSmZ3ZzNIcDZuZGZGaTBJZVljNTRpUHhsYUFyN3RZajdwWUFx?=
- =?utf-8?B?eWE1RHpjcFY4UHVndGcxL3VLcFpoNHBTL0taWktCWTBjdW9MWHZUc0d2OHJu?=
- =?utf-8?B?bmNlYVFIVlFIb3huNWwwK25HdklOYTBSZnFtS0RyMW5WS0FKRUJ5UE9UM1Vm?=
- =?utf-8?B?WnJEdFRXYVdETjI5dnNTb0cyb3g3dlN5R2xDeUJ1d21EWnp6a0pRME9RWGEv?=
- =?utf-8?B?MWV3MkZXeVl5WlRDRWZob0VSaU9GU3AwdUczV1pWdndtN0NWMGV4cnphcE9a?=
- =?utf-8?B?NVlsc21iV2s1MFZFMlBSRXlzbmkwcTZGRG1mSDFxeHhPeXY4Rys5VU1RY3dM?=
- =?utf-8?B?aHhuU2dLbXM0bG9OcEs5OGJnaDFpTExsOW5yN3pEaHFmMnd0eEtPYWdSS1p0?=
- =?utf-8?B?QmcyblBiY1pzUTJXMWhWR0tZZHR3dkUvQnpPVGhrUDdyUzNzS1gzODFtWUlO?=
- =?utf-8?B?MUk2QmFnVXJGTFZWcnYxRGd6UmhnQnU3VWQya01DcDhSYkRtRHZRbHUyZEtl?=
- =?utf-8?B?YWRQODdVM09Obms2YlJLME9OV29EV3hVTTBUNTV1TjdnMTZXVm9acmVJUG9s?=
- =?utf-8?B?S2NqaC9qSDh5M2tmeHhlc3N0ZU40UzJFem5XWWM0ZmFxdnp2OUdEbUpZajRi?=
- =?utf-8?B?R1g0ODM3Uk55ZEIrenQrd0RScWhxcVovMjNMSE9zK29HYWhCV2NKeitHM0hL?=
- =?utf-8?B?Vzl0NDBWbFlWQmQyeFp3cUpwQ0FpVXcza0lEaThhblVZeFRaZmZadDVSMmVR?=
- =?utf-8?B?SEhQSnN5YVZtR1ZlWUxKdzBaN0wrRFQ0NnRseUdYcXc2UVFCdXpuWW1YQjlt?=
- =?utf-8?Q?6PHML0LD2tBSZTiNtSPUSnsU6GOuts=3D?=
+ ARA:13230040|1800799024|7416014|36860700013|376014|82310400026|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aGd1ZkU2YmJUcE9YMEZrTHQ2YitrMVBzeUpoMGxsanpvS0VWem1yb25zNzBY?=
+ =?utf-8?B?Z0NMZFM4akkzSDduN1oxanVMcE9iakZaWUZJZVo4TDBzZXc4WDd0d1BrWm9l?=
+ =?utf-8?B?L3Rxb2dnTDFPcTAyMzlZN2E4KzdDcG1hZFNhMDhJOFlOUEtDUHFOZVpOS204?=
+ =?utf-8?B?YXVIUmt1SGs1T1hnUG1ZZFp0QllyNkhsSnpSeVpZakJCa1hXUm5MZllSNnVt?=
+ =?utf-8?B?VnY5eVpsdFBpMmNwM1JRelVoNGVxS0h3SjhYWFlVbWhJMC9Xb0h0Y08rZXpT?=
+ =?utf-8?B?SVNrVjc1RjJLeDA0U2pRN0Y3aUcyRWl3K0dZQzNGQ2srVmIvVDlyNmlzcGVJ?=
+ =?utf-8?B?N1FGRU03OU9oT2ZINE5yNUtoMDR2VFpwUldYekFBRUE0alEvQ0FMVEdma1hF?=
+ =?utf-8?B?cHJiK0lESEhla1NsQ2Y4UUxKYmZqcm9VTWlCRHQ0N0J2bTU1dWRRdTNqRzV5?=
+ =?utf-8?B?WVh3SU1OU3ZBMFl0blM2RzBpSWd1MmUrOUp2MXYwdjIxRStoUW5saHVUbEFt?=
+ =?utf-8?B?Tkw1WDFZT3c2Rmp4OWRxMzZHMHUyUzAxVEk0ekFRalU0L1FNQmplc0YzQWlr?=
+ =?utf-8?B?SkhCbWphVENmbTZmcW1QQkJZcFBrazE2MXZCVERBSllWckJoa3VuajFHcWxk?=
+ =?utf-8?B?SHFrS05GM3F4d1k0bzE2NmN4WnZJL3Njb1QydVZsWlF4ZStYMm10OGcxN0V0?=
+ =?utf-8?B?ZFRZTGhtV1JLV3pzRThRcmpITWpZcU1Qc080STNwNE4rL1hvUUN5REh0QkdT?=
+ =?utf-8?B?YzlFTFAwc0tpZDFiZ01pcTJzM25GT2hod29YTnBHa0U1OVpQVFVrV1hIMWF3?=
+ =?utf-8?B?R00wWS8zUWpKbFo2ejVsWFdKY1d2VTc1eHVSRkRCd2xwVVVGSXJFQ3BGMXBy?=
+ =?utf-8?B?aWVmaDRqWHRkbmtpVmd1UndNYXhkOEt2T1MvNk1QeEJidTU3NmVVajczdXN4?=
+ =?utf-8?B?dVk5MGZ2bllHR0JndFVoR205aHhmR3JDZnNFTllWek9FcXJHZjNYWTdRYUVu?=
+ =?utf-8?B?VlBHb2FlN04waWtKalFKR0dDVlVxajNIS3RBMmR0bkFDWWU1VjI0VDZZTFRJ?=
+ =?utf-8?B?cC80VDdzL293Nkp0RHAxc21oRlkybnJ0ZGdMZjZnd0IrNVFDVWJucHhHUE13?=
+ =?utf-8?B?amRzSGo4RXJBTW1LM0tRTFpWbWFhOTh0YWVwVkViczJ2b0IxV1h3Yi94NnF5?=
+ =?utf-8?B?ZUY3NEkrS2p6VVpzVUNaYzMxc1dxUHlSNEdBN0U1cFkrS3YxTGE3WEtEcHE5?=
+ =?utf-8?B?b2ZHcWRJQXFCR0FSckJZQUg2TUF0Y3NPNG9VWExCNk9oNnViSmVtRHhXMjUv?=
+ =?utf-8?B?dTZlSEs0dFZzYnllcEt6Q2dKVnJHd0JaSEhBcTdzOW8xRzFrQ2lUTEdNUVV6?=
+ =?utf-8?B?V0FDTzNBUnBDZUhETmtNbmxSR0hkRCtYNGUzeE9UaTMvNUJGM1RaZFZZS3ZQ?=
+ =?utf-8?B?NDVVenVPZzNzcFF1M1FsVndmcUxObFRyMk93Z3NzSklZVnlDaUxDWDE0RFFk?=
+ =?utf-8?B?UkI1c3dLZGxsUGU1YU1udVdRSHppTTNGZlp1cUdSbjJGYzJjcWNsdzdkcjY1?=
+ =?utf-8?B?d0xZem5MRko5QXFvalhBelVxRWxaalcvazB1N3ZxZ1lDZ0duSllZaTVWVkpE?=
+ =?utf-8?B?ZHY2VkVMTStoMk9FMWZHbHE3cUNCekczSXhNNCtRUHYyV05xR1ZwS1ZEN0dN?=
+ =?utf-8?B?SnFybWp6V3FhY2NyOVNjb2YxeDFEUXBTRVMyV2d2SGdqN1czazFBdTNVWWh2?=
+ =?utf-8?B?WFZOVnZQSlNzSDFJUURaNkhDV1VvejIvb0hLUWZialZ2RDY4anNFbGV5akdQ?=
+ =?utf-8?B?OXNPSnZEdDMrbXBIcDNnbDJLWXRlUisxYTBrb1lPVHpMNHd0L0lTbE1za0xG?=
+ =?utf-8?B?cnhTVUNJZHJ5dyt1SytxTVlaaHRIT1k2bkcrWUhvd0s1R2dGeVlDQldmUW1G?=
+ =?utf-8?B?dW5mRytDQzlJeW10QVp1N1o1T3puTmNPcWhZT3YrbWI1R09aSzduMDFISXdj?=
+ =?utf-8?Q?aiPZJDf/IxM2CEGq/8VTcDdgO0swiU=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(376014)(1800799024)(7416014); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(1800799024)(7416014)(36860700013)(376014)(82310400026)(7053199007);
+ DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 08:17:33.4682 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5afd59c6-4889-4d5c-43ec-08dd518706eb
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 08:21:26.9839 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97062dae-01af-4e53-008c-08dd5187922e
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB53.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000209.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB9457
-Received-SPF: permerror client-ip=2a01:111:f403:2406::630;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5896
+Received-SPF: permerror client-ip=2a01:111:f403:2414::629;
  envelope-from=Luc.Michel@amd.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -166,108 +168,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22:08 Wed 19 Feb     , Philippe Mathieu-Daudé wrote:
-> While we model a 16-elements RX FIFO since the PL011 model was
-> introduced in commit cdbdb648b7c ("ARM Versatile Platform Baseboard
-> emulation"), we only read 1 char at a time!
+> While we model a 8-elements RX FIFO since the PL011 model was
+> introduced in commit 97398d900ca ("bcm2835_aux: add emulation
+> of BCM2835 AUX block") we only read 1 char at a time!
+
+I'm not sure I get why in this patch and the subsequent ones you keep
+mentioning the PL011 model while you modify other UARTs. I guess you
+mean "the BCM2835 AUX model" here?
+
+In any case:
+
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+
 > 
 > Have the IOCanReadHandler handler return how many elements are
 > available, and use that in the IOReadHandler handler.
 > 
-> Example of FIFO better used by enabling the pl011 tracing events
-> and running the tests/functional/test_aarch64_virt.py tests:
-> 
->   pl011_can_receive LCR 0x70, RX FIFO used 0/16, can_receive 16 chars
->   pl011_receive recv 5 chars
->   pl011_fifo_rx_put RX FIFO push char [0x72] 1/16 depth used
->   pl011_irq_state irq state 1
->   pl011_fifo_rx_put RX FIFO push char [0x6f] 2/16 depth used
->   pl011_fifo_rx_put RX FIFO push char [0x6f] 3/16 depth used
->   pl011_fifo_rx_put RX FIFO push char [0x74] 4/16 depth used
->   pl011_fifo_rx_put RX FIFO push char [0x0d] 5/16 depth used
->   pl011_can_receive LCR 0x70, RX FIFO used 5/16, can_receive 11 chars
->   pl011_can_receive LCR 0x70, RX FIFO used 5/16, can_receive 11 chars
->   pl011_write addr 0x038 value 0x00000050 reg IMSC
->   pl011_irq_state irq state 1
->   pl011_can_receive LCR 0x70, RX FIFO used 5/16, can_receive 11 chars
->   pl011_read addr 0x03c value 0x00000030 reg RIS
->   pl011_write addr 0x044 value 0x00000000 reg ICR
->   pl011_irq_state irq state 1
->   pl011_read addr 0x018 value 0x00000080 reg FR
->   pl011_read_fifo RX FIFO read, used 4/16
->   pl011_irq_state irq state 1
->   pl011_read addr 0x000 value 0x00000072 reg DR
->   pl011_can_receive LCR 0x70, RX FIFO used 4/16, can_receive 12 chars
->   pl011_read addr 0x018 value 0x00000080 reg FR
->   pl011_read_fifo RX FIFO read, used 3/16
->   pl011_irq_state irq state 1
->   pl011_read addr 0x000 value 0x0000006f reg DR
->   pl011_can_receive LCR 0x70, RX FIFO used 3/16, can_receive 13 chars
->   pl011_read addr 0x018 value 0x00000080 reg FR
->   pl011_read_fifo RX FIFO read, used 2/16
->   pl011_irq_state irq state 1
->   pl011_read addr 0x000 value 0x0000006f reg DR
->   pl011_can_receive LCR 0x70, RX FIFO used 2/16, can_receive 14 chars
->   pl011_read addr 0x018 value 0x00000080 reg FR
->   pl011_read_fifo RX FIFO read, used 1/16
->   pl011_irq_state irq state 1
->   pl011_read addr 0x000 value 0x00000074 reg DR
->   pl011_can_receive LCR 0x70, RX FIFO used 1/16, can_receive 15 chars
->   pl011_read addr 0x018 value 0x00000080 reg FR
->   pl011_read_fifo RX FIFO read, used 0/16
->   pl011_irq_state irq state 0
->   pl011_read addr 0x000 value 0x0000000d reg DR
->   pl011_can_receive LCR 0x70, RX FIFO used 0/16, can_receive 16 chars
->   pl011_read addr 0x018 value 0x00000090 reg FR
->   pl011_read addr 0x03c value 0x00000020 reg RIS
->   pl011_write addr 0x038 value 0x00000050 reg IMSC
->   pl011_irq_state irq state 0
->   pl011_can_receive LCR 0x70, RX FIFO used 0/16, can_receive 16 chars
->   pl011_can_receive LCR 0x70, RX FIFO used 0/16, can_receive 16 chars
->   pl011_read addr 0x018 value 0x00000090 reg FR
->   pl011_write addr 0x000 value 0x00000072 reg DR
-> 
-> Inspired-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Reviewed-by: Luc Michel <luc.michel@amd.com>
-
 > ---
->  hw/char/pl011.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  hw/char/bcm2835_aux.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index 148a7d0dc60..57d293d1e3a 100644
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -489,7 +489,6 @@ static int pl011_can_receive(void *opaque)
->      PL011State *s = (PL011State *)opaque;
->      unsigned fifo_depth = pl011_get_fifo_depth(s);
->      unsigned fifo_available = fifo_depth - s->read_count;
-> -    int r = fifo_available ? 1 : 0;
+> diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
+> index 73ad5934067..c6e7eccf7dd 100644
+> --- a/hw/char/bcm2835_aux.c
+> +++ b/hw/char/bcm2835_aux.c
+> @@ -221,7 +221,7 @@ static int bcm2835_aux_can_receive(void *opaque)
+>  {
+>      BCM2835AuxState *s = opaque;
 > 
->      if (!(s->cr & CR_UARTEN)) {
->          qemu_log_mask(LOG_GUEST_ERROR, "PL011 reading data on disabled UART\n");
-> @@ -498,7 +497,8 @@ static int pl011_can_receive(void *opaque)
->          qemu_log_mask(LOG_GUEST_ERROR, "PL011 reading data on disabled TX UART\n");
->      }
->      trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
-> -    return r;
-> +
-> +    return fifo_available;
+> -    return s->read_count < BCM2835_AUX_RX_FIFO_LEN;
+> +    return BCM2835_AUX_RX_FIFO_LEN - s->read_count;
 >  }
 > 
->  static void pl011_receive(void *opaque, const uint8_t *buf, int size)
-> @@ -513,7 +513,9 @@ static void pl011_receive(void *opaque, const uint8_t *buf, int size)
->          return;
->      }
+>  static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
+> @@ -243,7 +243,9 @@ static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
 > 
-> -    pl011_fifo_rx_put(opaque, *buf);
+>  static void bcm2835_aux_receive(void *opaque, const uint8_t *buf, int size)
+>  {
+> -    bcm2835_aux_put_fifo(opaque, *buf);
 > +    for (int i = 0; i < size; i++) {
-> +        pl011_fifo_rx_put(opaque, buf[i]);
+> +        bcm2835_aux_put_fifo(opaque, buf[i]);
 > +    }
 >  }
 > 
->  static void pl011_event(void *opaque, QEMUChrEvent event)
+>  static const MemoryRegionOps bcm2835_aux_ops = {
 > --
 > 2.47.1
 > 
