@@ -4,102 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D85C021B3
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592B2C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlBBG-0001qD-E3; Thu, 20 Feb 2025 13:21:50 -0500
+	id 1tlBKG-0004cc-PZ; Thu, 20 Feb 2025 13:31:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlBBE-0001pm-Ss
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:21:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1tlBK9-0004bx-T9; Thu, 20 Feb 2025 13:31:06 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlBBD-0003Kx-19
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:21:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740075704;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Huxw6bW0x0abpYzIySonk1JTpyCaoQyOHfqDAe7m7BQ=;
- b=PxltCND7tEJtihX1pOUHA//C88GSiRdKxN1AV5wA85ZeVKxTPuXAtSaktsMz6Z4xPon096
- szx80tAauXyIGcvXyvHSuI9Gt+el9lnaJbeEuMYey0l8hCIRaIn7mIYdS8d9wfFjLSDJOi
- bl2zR7cRJW2v8yhWRMaPgN58nY7GWs4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-WhUslyvQOdmT5eMzuRrnXw-1; Thu, 20 Feb 2025 13:21:38 -0500
-X-MC-Unique: WhUslyvQOdmT5eMzuRrnXw-1
-X-Mimecast-MFC-AGG-ID: WhUslyvQOdmT5eMzuRrnXw_1740075697
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ab341e14e27so145357666b.3
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:21:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740075697; x=1740680497;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Huxw6bW0x0abpYzIySonk1JTpyCaoQyOHfqDAe7m7BQ=;
- b=Oo/xAv8Pmh2aXLzCgK5dYUeHhiZmCxVx/Zi22Qt6M/g96qxgNeMTWLJCk3KidnuMdO
- k1znXL+sWW++QOA9YXgFEBUut7JYWWGyYO/uOWxbpB6Uz8ZVpmOggwZKNB/euFiMALpi
- YJe2XxgB7R98+XcaEK20s2n7ujCGYW5kvoo87tIW0hJnCsLkOFP4vrylLLNVfRkWLTNi
- aoidwIKdqLrLcpj200j0R6CYUHhVYC5D7AfAky3l/aL/F9t72zVtLxgF06219/U5/zsw
- 4Km2OGGppDdjIA4/SF8nFwA3lNczI1iumxDDvCGrBQuWWSZ+oPEq7hk0hZssSB/yb29j
- 4O9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8a59g92ysIYvwkwbb0AwcfUXQfrg41NFpG03BJ8fPiYKoIVAX5wq8FKJD+iyVbS4jxZe3uOfn21UB@nongnu.org
-X-Gm-Message-State: AOJu0YyI7PjMFyDkjk7Q4oGpfsdv1PWVALO2yhZFWG611zH5YT7aahiT
- k5Y/UVqn+cfg65g7ycm7LL6RWyXGqTaCj7FJgE3hPAQYpHLOytK3oUUE/R/r9RYOMxblk1sFi6m
- Xek7c4NutntwqFnmDyQTmiiQ6AIAiXMx55ZDyj1WJdiN5R7BwPr4U
-X-Gm-Gg: ASbGnctWIQHiayYkR3HunId1S8pAkxZZWi9AjtpvndI5YXTO10LUcPZ+0zBkpnCZmbr
- xWiIEuFvc9aXwC/AUkvjHKsB2MW/hRq5b18/rGOtCTJNmn98CICeEpElRLj4MVACSTOLOdy4BHI
- 0sBLQXQaaCiuJ7ME/Iq+/14AnegyYuTRwuQW1A2hv0cNu+BgAOfqD7fByzElgfs9gduCOI0OBHE
- +mYfwMtZG6/a59LceeozmfKI67VChb1rsj9NiYsSVppO/g8IL2Wa5HCrID+0lRLun8Qug==
-X-Received: by 2002:a17:907:2d8d:b0:abb:b12b:e103 with SMTP id
- a640c23a62f3a-abc09af269emr38137066b.34.1740075697478; 
- Thu, 20 Feb 2025 10:21:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFoS//rkf3KoexaDNDi5xOpbl9UMqje43p7Jw5f2WollYPlb4TP9uMClFBwPwBvvA7EFEanVA==
-X-Received: by 2002:a17:907:2d8d:b0:abb:b12b:e103 with SMTP id
- a640c23a62f3a-abc09af269emr38134966b.34.1740075697121; 
- Thu, 20 Feb 2025 10:21:37 -0800 (PST)
-Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aba532322e6sm1498349266b.1.2025.02.20.10.21.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 10:21:36 -0800 (PST)
-Date: Thu, 20 Feb 2025 13:21:33 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefano Brivio <sbrivio@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- Jason Wang <jasowang@redhat.com>, Thibaut Collet <thibaut.collet@6wind.com>
-Subject: Re: [PATCH] vhost-user: Silence unsupported
- VHOST_USER_PROTOCOL_F_RARP error
-Message-ID: <20250220131932-mutt-send-email-mst@kernel.org>
-References: <20250121100029.1106973-1-lvivier@redhat.com>
- <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
- <20250122085828-mutt-send-email-mst@kernel.org>
- <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
- <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
- <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
- <20250124170327.448805ad@elisabeth>
- <20250220102724-mutt-send-email-mst@kernel.org>
- <20250220175910.25688823@elisabeth>
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1tlBK7-0004ku-2s; Thu, 20 Feb 2025 13:31:01 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 2CE015C5EE1;
+ Thu, 20 Feb 2025 18:30:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1B8C4CED1;
+ Thu, 20 Feb 2025 18:30:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740076247;
+ bh=/kdP9buAZx0vOLae4NGdTxhcSmc0oF/S0NLyr7tEZVE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=shyMGgVTj/INHQkycl0PhcEGCckj+Y8bOCbd14cb5Zz+UzX8EYSH1NRsl+/NF+yin
+ 5pjCIl0BbjT3kc1fwXjeL73ojXuJtaIvee0L9/swDaqMuNtgH0YdfaOAInahixWgon
+ d+9gye+dMfoq6J81HkSvomi0xLs3XHsofBOja2kCfGwKG3Ah7VW0a3KYJVYHXKAtKZ
+ yJYms079O1v9aeo7uuiRslC3Jio8XDNK17my093pq6reR8HO4PwY4BsqLExJQIcCts
+ 22EK37t1j1yuTFg+tt1aDR1IY1GkA6Wuz1O5e6jlLiSmrd7k950opUV27uhzkHsnjz
+ f+AOkO5yKRV9Q==
+Date: Thu, 20 Feb 2025 18:30:43 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel@nongnu.org, Conor Dooley <conor.dooley@microchip.com>,
+ Bin Meng <bin.meng@windriver.com>, alistair.francis@wdc.com,
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH 0/5] Improve Microchip Polarfire SoC customization
+Message-ID: <20250220-reggae-hardness-907e385516d8@spud>
+References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="4TOzEZfzET3VZRIz"
 Content-Disposition: inline
-In-Reply-To: <20250220175910.25688823@elisabeth>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+In-Reply-To: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=conor@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,51 +71,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 20, 2025 at 05:59:10PM +0100, Stefano Brivio wrote:
-> On Thu, 20 Feb 2025 10:28:20 -0500
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> 
-> > On Fri, Jan 24, 2025 at 05:03:27PM +0100, Stefano Brivio wrote:
-> > > But I don't understand why we're leaving this as it is.  
-> > 
-> > So that people notice if there's some backend problem and
-> > announcements are not going out. should help debug migration
-> > issues. which we had, so we added this :)
-> 
-> The message mentions that the back-end fails to do something it didn't
-> and can't even do, that's (one reason) why it's wrong (and confusing)
-> and this patch is obviously correct.
-> 
-> Perhaps the commit title isn't entirely accurate (it should say "when
-> unsupported", I guess) but it's somewhat expected to sacrifice detail
-> in the name of brevity, there. A glimpse at the message is enough.
-> 
-> Laurent now added a workaround in passt to pretend that we support
-> VHOST_USER_PROTOCOL_F_RARP by doing nothing in the callback, report
-> success, and silence the warning:
-> 
->   https://passt.top/passt/commit/?id=dd6a6854c73a09c4091c1776ee7f349d1e1f966c
-> 
-> but having to do this kind of stuff is a bit unexpected while
-> interacting with another opensource project.
-> 
-> -- 
-> Stefano
 
+--4TOzEZfzET3VZRIz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-let me explain. historically backends did not support migration.
-then migration was added. as it was assumed RARP is required,
-we did not add a feature flag for "supports migration" and
-instead just assumed that VHOST_USER_PROTOCOL_F_RARP is that.
++cc qemu-riscv, Alistar.
 
-If you silence the warning you silence it for old backends
-with no migration support.
-If you want a new flag "migration with no RARP", be my
-guest and add it.
-Or if you want to add documentation explaining the meaning
-better and clarifying the message.
+On Fri, Feb 14, 2025 at 07:24:37AM +0100, Sebastian Huber wrote:
+> Booting the microchip-icicle-kit machine using the latest PolarFire SoC
+> Hart Software Services (HSS) no longer works since Qemu lacks support
+> for several registers (clocks, DRAM controller). Also reading from the
+> SDCard does not work currently.
 
--- 
-MST
+On that note, I think the inaccurate docs about polarfire should be
+removed. There's a wiki page here with dead links, or links to things
+that do not work anymore:
+https://wiki.qemu.org/Documentation/Platforms/RISCV#Microchip_PolarFire_SoC=
+_Icicle_Kit
+I think the whole section should be removed, find it kinda odd that
+there's a polarfire section but not for any other board. Either way,
+it's talking about something that just does not work, the current HSS
+and Yocto don't boot.
 
+There's also a docs page here:
+https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
+that has a copy of the table your patch 4 modifies, that probably should
+be updated to match your changes.
+
+In a similar vein to the wiki, it talks about the HSS and booting a
+yocto wic image. I think those should be deleted since they don't work.
+
+Alistar/Other RISC-V folks, what do you think? Bin wrote the port but
+seems to be AFK and I don't have the capacity to fix any of that stuff
+on top of what I already do in my spare time - do you agree that
+deleting the now inaccurate docs makes sense?
+
+> In order to allow tests runs for real-time kernels such as RTEMS and
+> Zephyr, improve the boot customization. This patch set enables a direct
+> run of kernel executables, for example:
+>=20
+> qemu-system-riscv64 -no-reboot -nographic \
+>   -serial null -serial mon:stdio \
+>   -smp 2 \
+>   -bios none \
+>   -machine microchip-icicle-kit,clint-timebase-frequency=3D10000000 \
+>   -kernel rtos.elf
+
+The series breaks my usage:
+qemu//build/qemu-system-riscv64 -M microchip-icicle-kit \
+        -m 3G -smp 5 \
+        -kernel vmlinux.bin \
+        -dtb riscvpc.dtb \
+        -initrd initramfs.cpio.gz \
+        -display none -serial null \
+        -serial mon:stdio \
+        -D qemu.log -d unimp
+opensbi-riscv64-generic-fw_dynamic.bin: No such file or directory
+qemu-system-riscv64: could not load firmware 'opensbi-riscv64-generic-fw_dy=
+namic.bin'
+make: *** [Makefile:305: qemu-icicle] Error 1
+
+Figure it is likely to be your patch 4? The file does exist, so probably
+some sort of path-to-it issues?
+
+Cheers,
+Conor.
+
+>=20
+> Sebastian Huber (5):
+>   hw/misc: Add MPFS system reset support
+>   hw/riscv: More flexible FDT placement for MPFS
+>   hw/riscv: Make FDT optional for MPFS
+>   hw/riscv: Allow direct start of kernel for MPFS
+>   hw/riscv: Configurable MPFS CLINT timebase freq
+>=20
+>  hw/misc/mchp_pfsoc_sysreg.c        |   7 ++
+>  hw/riscv/microchip_pfsoc.c         | 147 +++++++++++++++++++++--------
+>  include/hw/riscv/microchip_pfsoc.h |   1 +
+>  3 files changed, 115 insertions(+), 40 deletions(-)
+>=20
+> --=20
+> 2.43.0
+>=20
+>=20
+
+--4TOzEZfzET3VZRIz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ7d00wAKCRB4tDGHoIJi
+0rYeAQDn/T624NmD2Hb6Tqh5ByLemQApLlpP/8c6kqNXyVbf/QEA+2XDoO7yn78J
+fwah4EFrkAzooSlLViXFFTdw0U1nJAQ=
+=U9GY
+-----END PGP SIGNATURE-----
+
+--4TOzEZfzET3VZRIz--
 
