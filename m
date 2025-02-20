@@ -4,76 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C560C021AA
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 00:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694B4C021AA
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 01:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkuZP-0007kk-Nc; Wed, 19 Feb 2025 19:37:40 -0500
+	id 1tkvGU-0004j2-Kg; Wed, 19 Feb 2025 20:22:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tkuZI-0007kQ-EZ
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 19:37:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1tkvGT-0004iu-BX
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 20:22:09 -0500
+Received: from esa14.fujitsucc.c3s2.iphmx.com ([68.232.156.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tkuZF-0007CC-7t
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 19:37:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740011842;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S8vmM1mO63WOLrBkG3zgcYwdA/0aO/3p9VWmWdsUPU0=;
- b=M0PGpWlv81DRUi9TqLRwYaWm9qIC8nIx4xacRNfzrSN+PqkwNKMhGCKd2/hTp0yKwPBR4X
- xs42kMIiE44bE6NyrtdLWW6ztsQryuguYefLHy5uD+iLE8zvlhGhdgThrwOY5CM/2BXEev
- btGRGQxUvn9YltnAfGRjZ1gDtpzX1N0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-pDt_fS2jN6WbAJk3c2Vqtg-1; Wed,
- 19 Feb 2025 19:37:20 -0500
-X-MC-Unique: pDt_fS2jN6WbAJk3c2Vqtg-1
-X-Mimecast-MFC-AGG-ID: pDt_fS2jN6WbAJk3c2Vqtg_1740011838
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74AE619783B2; Thu, 20 Feb 2025 00:37:15 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.36])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7250F300019F; Thu, 20 Feb 2025 00:37:12 +0000 (UTC)
-Date: Thu, 20 Feb 2025 08:37:09 +0800
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Vitalii Mordan <mordan@ispras.ru>
-Cc: Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- sdl.qemu@linuxtesting.org, Vadim Mutilin <mutilin@ispras.ru>,
- Alexey Khoroshilov <khoroshilov@ispras.ru>
-Subject: Re: [PATCH] Fix data race with the state Field of ThreadPoolElement
-Message-ID: <20250220003709.GA105402@fedora>
-References: <20250219161223.3340431-1-mordan@ispras.ru>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1tkvGP-0003PV-De
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 20:22:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1740014525; x=1771550525;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=9ahOK+1RBe/cmhujPCfAkRAbiSQ8pzCu12jTtnYIfOY=;
+ b=wQ4DBJ/azeWPwNpl1HRo5/O0DiXAyGCtAxkCwCYVN47QfMGCj7L5FU/+
+ a+nAW1xsPdla3e8iB+ACq1AxS5QOvdlKjqXTKuPUBhYLn9ALRhCZ8wlAc
+ Fv4tY7NyTDuj6R9TqPUU+kkrKbm3SqV11pVjJo5HZa/bwfecnchKNq9Ia
+ vwt72mFiLL/Clu3tCpM2h2RhTVd56VRlmMJcVbhFfU5s+UdQVVOFXeOhi
+ hBQMMVXLL821y9EHT6mRvG9qLm1HjxcyFTsIB8OtKNZDnQp6x/E6oRnN/
+ NuZZQff0Tfp/jl7EIusuT92JDw5AdO9hk0imEPX7MroUsvUw1fpyM9Q5o A==;
+X-CSE-ConnectionGUID: XML59WXqRl6YsCBNxMdT8A==
+X-CSE-MsgGUID: nVky7Dl1Qp2N2b1MWvusSA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11350"; a="146534595"
+X-IronPort-AV: E=Sophos;i="6.13,300,1732546800"; d="scan'208";a="146534595"
+Received: from mail-japanwestazlp17011027.outbound.protection.outlook.com
+ (HELO OS0P286CU010.outbound.protection.outlook.com) ([40.93.130.27])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Feb 2025 10:21:59 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c7Iozba9yhb/7+u3SHv6xkF7cYpuMtDRXqaCjSCucYYpwKf250sgZTZVsFY/AlIvyW2IuTKpmPLYfBLS6oHMZZTJhdpeQvmvMavPy7BrPdTIcBso//i8x2yHJaL78LA+fRLXFL4fdoqgK+FuN+TYZVc4IQJ0gM5tmoMsWMtu82dfvtyPb2oHcCiv5R0pEwNnorwXS2FU+Cf/gbMtsGmzznNpAqRJVR72AGfLu6Rn53AemZhFOYi/OsyYj+XzRMViRCrTZl2el0zK7LcLUNbcdmk4N5OA4P6OyrNVF7BnxpWSyMHY7O9Trah1gBpCs1+frRcK1EAuxkKvFj5CY3KCfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9ahOK+1RBe/cmhujPCfAkRAbiSQ8pzCu12jTtnYIfOY=;
+ b=rsQKP08I2CrJtUTIjJXvRRfnSeP0fHBZT3Hen1wSHZjXhDrtMa8kush/rR+o5yfjt05b8KZ2ySrin4f894RKwoBANFOnjQM+RIYY+isyvR+H0LZ70/dGT2BnfExRWzjhih2Y5qFJ1wV7aD5qAHXHxCXX5mfQ3S6+j8lKQ8QfezUMmAjW9ZYvcM+zFSmx0MMCQ6XhDkrtOVsA9vS7gVlqo+ErpLBIkEez2ZZvl0Wrtx3hqOAfdZMUCEEUeakyMdXEYdgk8aJeh+sdRvWxCI1rnoXVq65pDurN5lKAo6YVSo9+uMVdViuWetJnvDzwEl4QpsUF1qMLkrh6YWoNnDX+gw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
+ by OSZPR01MB8418.jpnprd01.prod.outlook.com (2603:1096:604:16d::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Thu, 20 Feb
+ 2025 01:21:55 +0000
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377%5]) with mapi id 15.20.8445.019; Thu, 20 Feb 2025
+ 01:21:54 +0000
+To: Peter Xu <peterx@redhat.com>
+CC: Fabiano Rosas <farosas@suse.de>, Li Zhijian via <qemu-devel@nongnu.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/2] migration: Prioritize RDMA in ram_save_target_page()
+Thread-Topic: [PATCH 1/2] migration: Prioritize RDMA in ram_save_target_page()
+Thread-Index: AQHbgdim3piD2OfeG0S7XSsfy2LyW7NNhEEAgAAZ9oCAAMJ5gIAAPqiAgADImYA=
+Date: Thu, 20 Feb 2025 01:21:53 +0000
+Message-ID: <067918bf-2a9e-4f82-83f5-21c32b67d40b@fujitsu.com>
+References: <20250218074345.638203-1-lizhijian@fujitsu.com>
+ <8734gb9erz.fsf@suse.de> <Z7UDtxdNSS-Jqm-y@x1.local>
+ <0930f197-ae7f-4920-bac8-838733683883@fujitsu.com>
+ <Z7XbaXI4-fiVHYE7@x1.local>
+In-Reply-To: <Z7XbaXI4-fiVHYE7@x1.local>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|OSZPR01MB8418:EE_
+x-ms-office365-filtering-correlation-id: 95ba87bf-762f-4f52-1a4f-08dd514cf5ca
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|1580799027|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?VHpNeTdwV2tpLzhaV2wySGhHL0hid3BsNnJOSWIrOTBEQURoS3FYbkpaZGky?=
+ =?utf-8?B?Qnc4UTUxU3NORlE0N2RlKzBSckd2RlBSSmpBV2czY0NqQmNKV3V0aWEyWTh4?=
+ =?utf-8?B?MVduUW1aaDBQZXkra1FkSVoxUndCN0M3cDlKZWQwVkNOc1FwKzZFUnN1d1RD?=
+ =?utf-8?B?MHUxRk1nU3Ftb1VhK2drNjVlcXlWYmRkMkpVVURvQUw2cTFjWkZ4dHRNcEhk?=
+ =?utf-8?B?K2d2SU1hbVRkd3Y0Z3ZuN0VaV3RKZVNyend3UXpncHZxVkhrZXNITmpWWS9R?=
+ =?utf-8?B?MnV5ODdmOHNRVlYwK1VvRlVyc2w1NmlmekYrcDdqWUNMdlZTOVd2SEpwY0xn?=
+ =?utf-8?B?UitQdE54U0kvcCtlTW1HK1VQbnJ1RjJrK082RHI4aHVvQlhheFp0SEp1Q294?=
+ =?utf-8?B?dGpZclU4dGFHazFzTThqL1Z5N2kzQzNLVEtpYjNLQ28yK3ZaWG1Fb0JqVmYx?=
+ =?utf-8?B?cGdxVTNSV056WUFSOGRTVWtrc01DckJUcHpIWmNFd3JZNy9qVXdCRHNpSEp6?=
+ =?utf-8?B?eG5lbmRsVjJHS0RqbDRrTVc3d3p2eXJ1aTMvNFFOUlFsajZjbXZ4ZmtyUDFu?=
+ =?utf-8?B?aUhaNkx5YnduRzA2ZG91b3gwWmhoTDdHMXBTREN5NW5IeG1KNU9rYXN6NVdC?=
+ =?utf-8?B?V3QrajJMZUJ1aVpSUzEydEx2T2psSHBweUI0T1kreFVMT0ljUmFPS2ZKZUZT?=
+ =?utf-8?B?b2E2Q2tVMkFmUVRIbEY2TlZUZFlBMGpsL2JXYm1JUll1TUoyQ1pCcUtXamkr?=
+ =?utf-8?B?MXl0UUVOQXdtWFpNdzBQRldMVm1ralNDZjJMSmlFUVFRSXAreUs2dmZiSVg2?=
+ =?utf-8?B?QTFNRXpiTzV1Mi92bVVZa3Y4a1BOcTVVS3YwZjhGazZqZTdzekZidUlTcGtW?=
+ =?utf-8?B?T3cyd1QwKzlPdmZiQ2tsUHFQUGtDMTljeGVoYnh4dEFlTWY5ZSszWmhXajIw?=
+ =?utf-8?B?UjN6K0R2bzZ3cWJHUUZNU21sQlBrSTNqdTRhVHJsQmNLcDY0WHBHN1Q5UW5i?=
+ =?utf-8?B?T2hxd1ppY0ZsRHNLRnBSaDVvRlZBbjRheTRWb1c3NEFsQXUyZFhjRkJEVkZn?=
+ =?utf-8?B?by9OZy9iWEdheVdkT0h1S2h2dDg4Zk9NQXJGR3pvTzdmZ3dTQktQWHBGWGJJ?=
+ =?utf-8?B?SUFuaFhrWlliaHpRUDlCem9oU3REemxPWDNwMmdMRTBLYWloMytOemFBN0hk?=
+ =?utf-8?B?N3NIQ0JWMXo5T0FOcnZOTU5mSkFPcTNSRFBzMkNadHVCczJURzVZMFVKaWF6?=
+ =?utf-8?B?TlFGQTVIaFR3THRVbXkxSW0vM1ZEN0dmemY3NWs5Z2pVZm1UODlhRS82bTBF?=
+ =?utf-8?B?VmRGVitWYmNTNnp2RkExcGNPNGFmTHZoUk1DcXNHNmIvSitCRUVERGpkQ3hN?=
+ =?utf-8?B?WHpnQVY0VGMxQ2RpVUsxSTVuaXROSktXWTJyQmwrNW5vY0RENDA2ODhXRm1T?=
+ =?utf-8?B?YklMa3lIc3BYRWhBZGR4MDVMczlWb3ArR2UrQjRJT0xCem5jZHJkTVBEZmxv?=
+ =?utf-8?B?L25BckpJWnNmQW9MVTFVMU40ODJlQXhjc2dremR3dklwTEw3Wlh3V2FWTFRG?=
+ =?utf-8?B?akJydVorZE5VbDROb1E1b1QwdzZmSzk2SmZpNUdvU2RucG5PS2dFbDh0K1k0?=
+ =?utf-8?B?eXBCRmlCWFhMN0IzdzVZWDYvNUkyVlFSZEVGWGs4dC92UEhpRFNFRVAyeDcx?=
+ =?utf-8?B?TDhTTkRhREplN25wWVZmTXl3YURwUm54b2piWlZna05nY09pYml1Rkw2T1Mv?=
+ =?utf-8?B?WkZkSUtkLzQ3OU1ZeGtia2FnOTNOOFVlYTVqM0FMa1FXQmg4ZkdMSUZQbFY3?=
+ =?utf-8?B?cjZqempHZHo1ZGNqN2xYQTBpWFJlbW1WWGZXaytIVXpLY2lyekZmS3h1MlU5?=
+ =?utf-8?B?b2VPcEx1d2ZPMUM5M0poeWlCME5WakNGQ1FjYVN2NmNtSVpJdDF0T2lPbjlP?=
+ =?utf-8?B?SXVZZDYxNUZXd3FEdjVoL1BwaTdHU001dm1MVEhEaTJUbXhsUnN3ZTFqT2RI?=
+ =?utf-8?B?aFltNmx5WlVBPT0=?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(1580799027)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OG9DYm5RajQ0Wi9COU1NVFdEVS9mQkpJUFRJVWNhVTB6WjJadVVwTHp4bVc3?=
+ =?utf-8?B?UDNuQytDN1VoUzVXZ0FIbUh2WUxENDhqYjkwOS8ySGRQRUFmdyszVldYd3VX?=
+ =?utf-8?B?QlB3VWlpQzUvNDVVNW1OVlRJdkZKWXJxRTYwMTJrV1VOR3ZsTUZhRzlxWUxx?=
+ =?utf-8?B?T3YzQmQ1eGdqYSswNkpaSk1ZNjhESC8yN3lJWWMvdUVaWDkvaGRKeGdNaHZj?=
+ =?utf-8?B?cXJZN0JPQ29TREtubnBEYkdOWGkwblEwcjZCVnFEY29WbGV4bFBZdUtSUUhR?=
+ =?utf-8?B?OTlSeU92NVMxTStFR2E1bE5TUXdhNmppRmhDbGdEMkRNVmRqRmZTRUtXaE9p?=
+ =?utf-8?B?bVpPZ3l1cVlNZjh5R2cvVldPd2hhenRzY3FBSWI4aUU2bGdKWE1WMTFRUnQv?=
+ =?utf-8?B?TWdOWVdKQ2lGUFBiaWVQTnpFZHFVWUN3OWZ1MlBpZ3kzemkxSEFIT1ZxekZz?=
+ =?utf-8?B?YnlwOUZianFHZlljY2RhTU9oaUNRRU94SE42YjFBaTRyRDFQQW53SlVWT2hj?=
+ =?utf-8?B?TW4rZFgwRERZUExsZHVNaGdqU2M2RU9taW13dWorN3Z1cllIdWJXQUw5SXhF?=
+ =?utf-8?B?MnBpMlcyc2hPRk95OXVtNllQRkpCZEU0cnVpR0lISTRPSktHRVZSTmhhUXlY?=
+ =?utf-8?B?UWtGdi85TitUU0V4TjlPZnNZMVR4dkNHUHJqOUVRRWsxRXdkNlQvZEp2amVH?=
+ =?utf-8?B?bWFlK0JkaW1KSGltYjFxTFVmTnltSWtYQkVHUlFFV2VRYnUrWWU2TklYMmo1?=
+ =?utf-8?B?RVdad1BjODZESVZic3NIT2VOM1B2UTZDU1h1cWxIQnhQMDZyM05BY2g5Um9H?=
+ =?utf-8?B?WTdBaW96dG14OU5XOEk1d0tYNVB1QjlzUkd4WFFiSi83ZWZRVnRYKyt3cUFL?=
+ =?utf-8?B?VEQ0U1pwTEs0eTVzcHR4TnlsWnpZallUcnF0QzlTUTNxQlEyMERzTkR5WVpp?=
+ =?utf-8?B?WmJyLzFvYW9sdkpic08zV2dPWmFnUUxwR3YzYm9YcC9ZOTRRb1FaNjlnOGRW?=
+ =?utf-8?B?N0dwbndyWHIrUGRId3hlZ2svL2lWQkxsOG9DcysyTFBhcFhONHkvbWtad3VP?=
+ =?utf-8?B?ZnJvK3lwRGlEdSszcit1VlhSaVJjZ0NCbzhpMGlBcVJTV21nd2dUZWdzakhR?=
+ =?utf-8?B?dGx6d1poTkdzVlh4ckdYZkxncnhoVEhNQmorWWtsdlBaV1RGY2JiZ3FMN2h6?=
+ =?utf-8?B?VnZFbW04cFdZZVJQeVZLcDZrWGJLZFUvWmFGR1JjL0pHN0dBTG5PRmJuQVVs?=
+ =?utf-8?B?S09VckxWbEZRb3ZTdFphZElxNFZ3ampzVm1qTW56MU4xc1dXTjllUUk0Rm8v?=
+ =?utf-8?B?ZVUvSjU0TXMwZXVDNWJJK0EzK2hSS0hsZU9qQW9PWGNCQXpPN1JzOXhhNkZM?=
+ =?utf-8?B?T29EWWhaOG5UUUlHN3MrSk9hZTMyK3NadlBsTTlyWEIvZlBYU3lLVHJpdno3?=
+ =?utf-8?B?RFNCOUxiQ1JkM3JIYmp4NDVmMi9UVGsvS0UrRU1kbmxzcHF5U0xjQlRjTmsv?=
+ =?utf-8?B?L2hpTEt6M2t6RkUzZlBNNlZyWkUweWtXVG9nWGNWd291T292ZFZXVW10YllM?=
+ =?utf-8?B?OFhxQXplbWVlY3hJamhjWk40NmVpQzJMQU5RY2liN2pkaklrMTdoelNoZ3J0?=
+ =?utf-8?B?dmFPOXNCdHhkdTVGeHZKcndobzBFWkIzWHVFdmh1OXpJMm05bVhIU1REU3Ix?=
+ =?utf-8?B?Y1Z2U2hUNFg1V3NqTzBtUGRVRjNxdEdQRUFUMXV4MjBxK0pGdnIwSWpTZVYv?=
+ =?utf-8?B?K1NaWm1RNnQ2em5LeWZVakVBZUUxWlBKeGVPdU12cUJQeWVUUkZpMktxS0E1?=
+ =?utf-8?B?b2JCdlVqTjVmM1VvNkdnME5yM3RNRUJVSzl0OURsR1JCWGJLakJORzNGSW93?=
+ =?utf-8?B?YnFBbDMySlVaeDdJYmJLb2ZOdUFWVFR5QmpGeis4RWNXVE12YWpHTGhEWk0y?=
+ =?utf-8?B?WU5BSjlJdTUzWW00c3pwNXQ1YkZiWVp3Vjg5NEQ5UjVkOGdMbm5KODJiSlJU?=
+ =?utf-8?B?MmxLQld1d3Nhd01QUzhzWlRTdEZVZEllcVJxWnhzR3BXNStOVHIzNXNiczZt?=
+ =?utf-8?B?QU5RRGZMMUhBYzM4WlBhMkxrODE2KzVGR1Z4SVAwa3JuZUlwN3JFSXQ4M0VY?=
+ =?utf-8?B?dVppSjNrQzRYR3ZmVDU3ME1oRGJxdGxKbDB6cVdtbnhEM1d5UjFUU1kyRzBx?=
+ =?utf-8?B?RVE9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <71818FE685101D46B6CF9AA4875E69B9@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="Ca+mx8UAPY3Tie+L"
-Content-Disposition: inline
-In-Reply-To: <20250219161223.3340431-1-mordan@ispras.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Tp85u9C6CFxBzXX4IkKWNp9+kze8cpJBlnR0MBe3Xeu9n6oyv3ut4oNKM0+cCQbQscOQE/oBrEGrOUYw2BSqiJVmkXuQ8fj2QFpIMRPW6Ddqs9993e8/uJDCesBDS1JAoewHHRROLZju+BeYg4+7hch7CXbx+SCiNMK9DChWD/h1FoAn3cTBEpakkH31VYuMrN8B7UTKyY5v0UsSdqGIcqHwFk4SfM51+jxJpDy/HtxTGnqqcWWB3ze+7KjDvk+vPbdyL7qmxiToO6f8uNtK2udDaD7qYYEjyHWXiJ5O20bEfgXIx76J2rOETbGiJ7iap3+fsCFqj8l9QQvtExf9WMKIT8umcCE3NFeOf/12LSBCxUMjUSppnkYr+ufcaP2k/enDAX6VlsdM6LOhVEV7xbH2z0WLxNZdGRGQRmQ6SHlfpDqfwiScDWJVlNh/3LzaEcreuBf0JWR86Q4wHvqvgPoFUlwKINh7ylah6x9uSuWeCu0MJ9AbrCq1U3HSNwT0T7269ZnQMyT/G6EJ4HRBp/cnvZkIOHgUVJt8mwgDu0LkIDch4GxMYeGrb2IgYFtx4/6kVy+fYrgNGeZm4TCmA4AzfyuTNmgybAjGGcVSAbvUZACmyWApd1fk23lrMsPn
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95ba87bf-762f-4f52-1a4f-08dd514cf5ca
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2025 01:21:53.8884 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: BRLa5rBNziUStft/dj96ITLf1AfKVSNQsvXqapwIN6GZgulYSs5AlDThr8uLCK8ypvZwh5f53Uy5CUq2AgNg6g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSZPR01MB8418
+Received-SPF: pass client-ip=68.232.156.101;
+ envelope-from=lizhijian@fujitsu.com; helo=esa14.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,215 +200,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---Ca+mx8UAPY3Tie+L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Feb 19, 2025 at 07:12:23PM +0300, Vitalii Mordan wrote:
-> TSAN reports a potential data race on the state field of
-> ThreadPoolElement. This is fixed by using atomic access to the field.
-
-The tsan output from the bug report:
-
-WARNING: ThreadSanitizer: data race (pid=3D787043)
-  Write of size 4 at 0x7b1c00000660 by thread T5 (mutexes: write M0):
-    #0 worker_thread /home/mordan/qemu/build/../util/thread-pool.c:108:20 (=
-test-thread-pool-smc+0xa65a56)
-    #1 qemu_thread_start /home/mordan/qemu/build/../util/qemu-thread-posix.=
-c:543:9 (test-thread-pool-smc+0xa49040)
-
-  Previous read of size 4 at 0x7b1c00000660 by main thread:
-    #0 thread_pool_completion_bh /home/mordan/qemu/build/../util/thread-poo=
-l.c:183:19 (test-thread-pool-smc+0xa6549d)
-    #1 aio_bh_call /home/mordan/qemu/build/../util/async.c:171:5 (test-thre=
-ad-pool-smc+0xa5e03e)
-    #2 aio_bh_poll /home/mordan/qemu/build/../util/async.c:218:13 (test-thr=
-ead-pool-smc+0xa5e03e)
-    #3 aio_poll /home/mordan/qemu/build/../util/aio-posix.c:722:17 (test-th=
-read-pool-smc+0xa4343a)
-    #4 test_submit_many /home/mordan/qemu/build/../tests/unit/test-thread-p=
-ool-smc.c:133:9 (test-thread-pool-smc+0x50e638)
-    #5 do_test_cancel /home/mordan/qemu/build/../tests/unit/test-thread-poo=
-l-smc.c:150:5 (test-thread-pool-smc+0x50e638)
-    #6 test_cancel_async /home/mordan/qemu/build/../tests/unit/test-thread-=
-pool-smc.c:234:5 (test-thread-pool-smc+0x50e638)
-    #7 main /home/mordan/qemu/build/../tests/unit/test-thread-pool-smc.c:24=
-9:3 (test-thread-pool-smc+0x50e638)
-
-  Location is heap block of size 104 at 0x7b1c00000620 allocated by main th=
-read:
-    #0 malloc out/lib/clangrt-x86_64-unknown-linux-gnu/./out/lib/clangrt-x8=
-6_64-unknown-linux-gnu/./toolchain/llvm-project/compiler-rt/lib/tsan/rtl/ts=
-an_interceptors_posix.cpp:667:5 (test-thread-pool-smc+0x346131)
-    #1 g_malloc <null> (libglib-2.0.so.0+0x5e738) (BuildId: e845b8fd2f39687=
-2c036976626389ffc4f50c9c5)
-    #2 thread_pool_submit_aio /home/mordan/qemu/build/../util/thread-pool.c=
-:251:11 (test-thread-pool-smc+0xa648bd)
-    #3 test_submit_many /home/mordan/qemu/build/../tests/unit/test-thread-p=
-ool-smc.c:128:9 (test-thread-pool-smc+0x50e600)
-    #4 do_test_cancel /home/mordan/qemu/build/../tests/unit/test-thread-poo=
-l-smc.c:150:5 (test-thread-pool-smc+0x50e600)
-    #5 test_cancel_async /home/mordan/qemu/build/../tests/unit/test-thread-=
-pool-smc.c:234:5 (test-thread-pool-smc+0x50e600)
-    #6 main /home/mordan/qemu/build/../tests/unit/test-thread-pool-smc.c:24=
-9:3 (test-thread-pool-smc+0x50e600)
-
-  Mutex M0 (0x7b3c00000100) created at:
-    #0 pthread_mutex_init out/lib/clangrt-x86_64-unknown-linux-gnu/./out/li=
-b/clangrt-x86_64-unknown-linux-gnu/./toolchain/llvm-project/compiler-rt/lib=
-/tsan/rtl/tsan_interceptors_posix.cpp:1316:3 (test-thread-pool-smc+0x34914f)
-    #1 qemu_mutex_init /home/mordan/qemu/build/../util/qemu-thread-posix.c:=
-71:11 (test-thread-pool-smc+0xa47189)
-    #2 thread_pool_init_one /home/mordan/qemu/build/../util/thread-pool.c:3=
-34:5 (test-thread-pool-smc+0xa64f60)
-    #3 thread_pool_new /home/mordan/qemu/build/../util/thread-pool.c:348:5 =
-(test-thread-pool-smc+0xa64f60)
-    #4 aio_get_thread_pool /home/mordan/qemu/build/../util/async.c:441:28 (=
-test-thread-pool-smc+0xa5e6d4)
-    #5 thread_pool_submit_aio /home/mordan/qemu/build/../util/thread-pool.c=
-:246:24 (test-thread-pool-smc+0xa6488d)
-    #6 test_submit_many /home/mordan/qemu/build/../tests/unit/test-thread-p=
-ool-smc.c:128:9 (test-thread-pool-smc+0x50e600)
-    #7 do_test_cancel /home/mordan/qemu/build/../tests/unit/test-thread-poo=
-l-smc.c:150:5 (test-thread-pool-smc+0x50e600)
-    #8 test_cancel_async /home/mordan/qemu/build/../tests/unit/test-thread-=
-pool-smc.c:234:5 (test-thread-pool-smc+0x50e600)
-    #9 main /home/mordan/qemu/build/../tests/unit/test-thread-pool-smc.c:24=
-9:3 (test-thread-pool-smc+0x50e600)
-
-  Thread T5 'worker' (tid=3D787049, running) created by thread T4 at:
-    #0 pthread_create out/lib/clangrt-x86_64-unknown-linux-gnu/./out/lib/cl=
-angrt-x86_64-unknown-linux-gnu/./toolchain/llvm-project/compiler-rt/lib/tsa=
-n/rtl/tsan_interceptors_posix.cpp:1022:3 (test-thread-pool-smc+0x34791d)
-    #1 qemu_thread_create /home/mordan/qemu/build/../util/qemu-thread-posix=
-=2Ec:583:11 (test-thread-pool-smc+0xa48ed0)
-    #2 do_spawn_thread /home/mordan/qemu/build/../util/thread-pool.c:146:5 =
-(test-thread-pool-smc+0xa658de)
-    #3 worker_thread /home/mordan/qemu/build/../util/thread-pool.c:83:5 (te=
-st-thread-pool-smc+0xa658de)
-    #4 qemu_thread_start /home/mordan/qemu/build/../util/qemu-thread-posix.=
-c:543:9 (test-thread-pool-smc+0xa49040)
-
-SUMMARY: ThreadSanitizer: data race /home/mordan/qemu/build/../util/thread-=
-pool.c:108:20 in worker_thread
-
-My interpretation is that tsan is saying there is a data race between
-the load in thread_pool_completion_bh():
-
-  static void thread_pool_completion_bh(void *opaque)
-  {
-      ThreadPool *pool =3D opaque;
-      ThreadPoolElement *elem, *next;
-
-      defer_call_begin(); /* cb() may use defer_call() to coalesce work */
-
-  restart:
-      QLIST_FOREACH_SAFE(elem, &pool->head, all, next) {
-          if (elem->state !=3D THREAD_DONE) {
-	      ^^^^^^^^^^^
-
-and the store in worker_thread():
-
-    req =3D QTAILQ_FIRST(&pool->request_list);
-    QTAILQ_REMOVE(&pool->request_list, req, reqs);
-    req->state =3D THREAD_ACTIVE;
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    qemu_mutex_unlock(&pool->lock);
-
-It doesn't matter whether thread_pool_completion_bh() sees THREAD_QUEUED
-or THREAD_ACTIVE, so this looks like a false positive. There is no
-practical effect either way.
-
-THREAD_QUEUED vs THREAD_ACTIVE matters in thread_pool_cancel(), but that
-is protected by pool->lock.
-
-Paolo: Any thoughts?
-
-Stefan
-
->=20
-> Fixes: d354c7eccf ("aio: add generic thread-pool facility")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2822
-> Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-> ---
->  util/thread-pool.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
->=20
-> diff --git a/util/thread-pool.c b/util/thread-pool.c
-> index 27eb777e85..6c5f4d085b 100644
-> --- a/util/thread-pool.c
-> +++ b/util/thread-pool.c
-> @@ -111,9 +111,8 @@ static void *worker_thread(void *opaque)
->          ret =3D req->func(req->arg);
-> =20
->          req->ret =3D ret;
-> -        /* Write ret before state.  */
-> -        smp_wmb();
-> -        req->state =3D THREAD_DONE;
-> +        /* Atomically update state after setting ret.  */
-> +        qatomic_store_release(&req->state, THREAD_DONE);
-> =20
->          qemu_bh_schedule(pool->completion_bh);
->          qemu_mutex_lock(&pool->lock);
-> @@ -180,7 +179,7 @@ static void thread_pool_completion_bh(void *opaque)
-> =20
->  restart:
->      QLIST_FOREACH_SAFE(elem, &pool->head, all, next) {
-> -        if (elem->state !=3D THREAD_DONE) {
-> +        if (qatomic_load_acquire(&elem->state) !=3D THREAD_DONE) {
->              continue;
->          }
-> =20
-> @@ -223,12 +222,12 @@ static void thread_pool_cancel(BlockAIOCB *acb)
->      trace_thread_pool_cancel(elem, elem->common.opaque);
-> =20
->      QEMU_LOCK_GUARD(&pool->lock);
-> -    if (elem->state =3D=3D THREAD_QUEUED) {
-> +    if (qatomic_load_acquire(&elem->state) =3D=3D THREAD_QUEUED) {
->          QTAILQ_REMOVE(&pool->request_list, elem, reqs);
->          qemu_bh_schedule(pool->completion_bh);
-> =20
-> -        elem->state =3D THREAD_DONE;
->          elem->ret =3D -ECANCELED;
-> +        qatomic_store_release(&elem->state, THREAD_DONE);
->      }
-> =20
->  }
-> @@ -251,8 +250,8 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *fu=
-nc, void *arg,
->      req =3D qemu_aio_get(&thread_pool_aiocb_info, NULL, cb, opaque);
->      req->func =3D func;
->      req->arg =3D arg;
-> -    req->state =3D THREAD_QUEUED;
->      req->pool =3D pool;
-> +    qatomic_store_release(&req->state, THREAD_QUEUED);
-> =20
->      QLIST_INSERT_HEAD(&pool->head, req, all);
-> =20
-> --=20
-> 2.34.1
->=20
-
---Ca+mx8UAPY3Tie+L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAme2eTUACgkQnKSrs4Gr
-c8hcVwf+Pl86nNcx5NwBE8BPIa9MWjFYwMt5cKGNW9qP2c78+lqZFxePX+5vust9
-B3yeNibJTgrdhqjvhIljkHbPNuHaXTC/qtBP2M44FQ+K8C2jCujB2mW6XCF+w9oD
-uG9zkgW7n1RPQIQ0yfP52O5Khbz/Wgs6HHFpw95D158FLUSypFdVH+lmNUeRGmQZ
-rBq6PZAyOH4JgWYC6ypBJDL4QEgZOCZoUfMyY/VYG7aibOrKXw5Vi+RtDJbRhLGN
-JWK+JLjzQsUM8OgshysA9O5Pv7Urgl4j858bRSh6xTNQGCtMgDP3uf5zqK/FapQn
-qgeE/Xmaen224Ee7pPh8/ljGLTaWxw==
-=CedH
------END PGP SIGNATURE-----
-
---Ca+mx8UAPY3Tie+L--
-
+DQoNCk9uIDE5LzAyLzIwMjUgMjE6MjMsIFBldGVyIFh1IHdyb3RlOg0KPj4gSSB0cmllZCB0byBr
+aWxsIFJBTV9TQVZFX0NPTlRST0xfTk9UX1NVUFAsIGJ1dCBJdCBzZWVtcyBpdCBkb2Vzbid0IG5l
+ZWQgdG8gdG91Y2ggYW55IHBvc3Rjb3B5IGxvZ2ljDQo+PiAiaW4gdGhlIFFNUCBtaWdyYXRlIC8g
+bWlncmF0ZV9pbmNvbWluZyBjbWQsIGF0IG1pZ3JhdGlvbl9jaGFubmVsc19hbmRfdHJhbnNwb3J0
+X2NvbXBhdGlibGUoKSINCj4+DQo+PiBJcyB0aGVyZSBzb21ldGhpbmcgSSBtaWdodCBoYXZlIG92
+ZXJsb29rZWQ/DQo+IFllcyBpdCBsb29rcyBhbG1vc3QgZ29vZC4gIFdoYXQgSSBtZWFudCBpcyAo
+cGxlYXNlIHNlZSBiZWxvdyk6DQo+IA0KPj4gQSB3aG9sZSBkcmFmdCBkaWZmIHdvdWxkIGJlIGxp
+a2UgYmVsb3c6DQo+PiBJdCBpbmNsdWRlcyAzIHBhcnRzOg0KPj4NCj4+IG1pZ3JhdGlvbi9yZG1h
+OiBSZW1vdmUgdW5uZWNlc3NhcnkgUkFNX1NBVkVfQ09OVFJPTF9OT1RfU1VQUCBjaGVjayBpbiBy
+ZG1hX2NvbnRyb2xfc2F2ZV9wYWdlKCkNCj4+IG1pZ3JhdGlvbjoga2lsbCBSQU1fU0FWRV9DT05U
+Uk9MX05PVF9TVVBQDQo+PiBtaWdyYXRpb246IG9wZW4gY29udHJvbF9zYXZlX3BhZ2UoKSB0byBy
+YW1fc2F2ZV90YXJnZXRfcGFnZSgpDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL21pZ3JhdGlvbi9yYW0u
+YyBiL21pZ3JhdGlvbi9yYW0uYw0KPj4gaW5kZXggNTg5YjY1MDVlYjIuLmZjNmE5NjRmZDY0IDEw
+MDY0NA0KPj4gLS0tIGEvbWlncmF0aW9uL3JhbS5jDQo+PiArKysgYi9taWdyYXRpb24vcmFtLmMN
+Cj4+IEBAIC0xMTQzLDMyICsxMTQzLDYgQEAgc3RhdGljIGludCBzYXZlX3plcm9fcGFnZShSQU1T
+dGF0ZSAqcnMsIFBhZ2VTZWFyY2hTdGF0dXMgKnBzcywNCj4+ICAgICAgICByZXR1cm4gbGVuOw0K
+Pj4gICAgfQ0KPj4gICAgDQo+PiAtLyoNCj4+IC0gKiBAcGFnZXM6IHRoZSBudW1iZXIgb2YgcGFn
+ZXMgd3JpdHRlbiBieSB0aGUgY29udHJvbCBwYXRoLA0KPj4gLSAqICAgICAgICA8IDAgLSBlcnJv
+cg0KPj4gLSAqICAgICAgICA+IDAgLSBudW1iZXIgb2YgcGFnZXMgd3JpdHRlbg0KPj4gLSAqDQo+
+PiAtICogUmV0dXJuIHRydWUgaWYgdGhlIHBhZ2VzIGhhcyBiZWVuIHNhdmVkLCBvdGhlcndpc2Ug
+ZmFsc2UgaXMgcmV0dXJuZWQuDQo+PiAtICovDQo+PiAtc3RhdGljIGJvb2wgY29udHJvbF9zYXZl
+X3BhZ2UoUGFnZVNlYXJjaFN0YXR1cyAqcHNzLA0KPj4gLSAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHJhbV9hZGRyX3Qgb2Zmc2V0LCBpbnQgKnBhZ2VzKQ0KPj4gLXsNCj4+IC0gICAgaW50
+IHJldDsNCj4+IC0NCj4+IC0gICAgcmV0ID0gcmRtYV9jb250cm9sX3NhdmVfcGFnZShwc3MtPnBz
+c19jaGFubmVsLCBwc3MtPmJsb2NrLT5vZmZzZXQsIG9mZnNldCwNCj4+IC0gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICBUQVJHRVRfUEFHRV9TSVpFKTsNCj4+IC0gICAgaWYgKHJldCA9
+PSBSQU1fU0FWRV9DT05UUk9MX05PVF9TVVBQKSB7DQo+PiAtICAgICAgICByZXR1cm4gZmFsc2U7
+DQo+PiAtICAgIH0NCj4+IC0NCj4+IC0gICAgaWYgKHJldCA9PSBSQU1fU0FWRV9DT05UUk9MX0RF
+TEFZRUQpIHsNCj4+IC0gICAgICAgICpwYWdlcyA9IDE7DQo+PiAtICAgICAgICByZXR1cm4gdHJ1
+ZTsNCj4+IC0gICAgfQ0KPj4gLSAgICAqcGFnZXMgPSByZXQ7DQo+PiAtICAgIHJldHVybiB0cnVl
+Ow0KPj4gLX0NCj4+IC0NCj4+ICAgIC8qDQo+PiAgICAgKiBkaXJlY3RseSBzZW5kIHRoZSBwYWdl
+IHRvIHRoZSBzdHJlYW0NCj4+ICAgICAqDQo+PiBAQCAtMTk2NCw2ICsxOTM4LDE2IEBAIHN0YXRp
+YyBpbnQgcmFtX3NhdmVfdGFyZ2V0X3BhZ2UoUkFNU3RhdGUgKnJzLCBQYWdlU2VhcmNoU3RhdHVz
+ICpwc3MpDQo+PiAgICAgICAgcmFtX2FkZHJfdCBvZmZzZXQgPSAoKHJhbV9hZGRyX3QpcHNzLT5w
+YWdlKSA8PCBUQVJHRVRfUEFHRV9CSVRTOw0KPj4gICAgICAgIGludCByZXM7DQo+PiAgICANCj4+
+ICsgICAgaWYgKG1pZ3JhdGVfcmRtYSgpICYmICFtaWdyYXRpb25faW5fcG9zdGNvcHkoKSkgew0K
+PiBIZXJlIGluc3RlYWQgb2YgYnlwYXNzaW5nIHBvc3Rjb3B5LCB3ZSBzaG91bGQgZmFpbCB0aGUg
+bWlncmF0ZSBjbWQgZWFybHkgaWYNCj4gcG9zdGNvcHkgZXZlciBlbmFibGVkOg0KPiANCj4gZGlm
+ZiAtLWdpdCBhL21pZ3JhdGlvbi9taWdyYXRpb24uYyBiL21pZ3JhdGlvbi9taWdyYXRpb24uYw0K
+PiBpbmRleCA4NjJmNDY5ZWE3Li4zYTgyZTcxNDM3IDEwMDY0NA0KPiAtLS0gYS9taWdyYXRpb24v
+bWlncmF0aW9uLmMNCj4gKysrIGIvbWlncmF0aW9uL21pZ3JhdGlvbi5jDQo+IEBAIC0yNTcsNiAr
+MjU3LDEyIEBAIG1pZ3JhdGlvbl9jaGFubmVsc19hbmRfdHJhbnNwb3J0X2NvbXBhdGlibGUoTWln
+cmF0aW9uQWRkcmVzcyAqYWRkciwNCj4gICAgICAgICAgIHJldHVybiBmYWxzZTsNCj4gICAgICAg
+fQ0KPiAgIA0KPiArICAgIGlmIChhZGRyLT50cmFuc3BvcnQgPT0gTUlHUkFUSU9OX0FERFJFU1Nf
+VFlQRV9GSUxFICYmDQo+ICsgICAgICAgIG1pZ3JhdGVfcG9zdGNvcHlfcmFtKCkpIHsNCg0KSSB0
+aGluayB0aGVyZSBpcyBhIHR5cG8NCnMvTUlHUkFUSU9OX0FERFJFU1NfVFlQRV9GSUxFL01JR1JB
+VElPTl9BRERSRVNTX1RZUEVfUkRNQQ0KDQoNCj4gKyAgICAgICAgZXJyb3Jfc2V0ZyhlcnJwLCAi
+UkRNQSBtaWdyYXRpb24gZG9lc24ndCBzdXBwb3J0IHBvc3Rjb3B5Iik7DQoNCklJVUMsIHlvdXIg
+Y2hhbmdlIG1lYW5zIFJETUEgKyBwb3N0Y29weSBpcyBubyBsb25nZXIgc3VwcG9ydGVkLiBJIGRp
+ZG4ndCByZWFsaXplIHRoaXMgYmVmb3JlLg0KQWRkaXRpb25hbGx5LCB3ZSBtaWdodCBjb25zaWRl
+ciBlbGltaW5hdGluZyBhbGwgcmVtYWluaW5nIGBtaWdyYXRpb25faW5fcG9zdGNvcHkoKWAgY29u
+ZGl0aW9ucyBpbiB0aGUgY3VycmVudCBgcmRtYS5jYCBmaWxlLg0KDQpUaGFua3MNClpoaWppYW4N
+Cg0KPiArICAgICAgICByZXR1cm4gZmFsc2U7DQo+ICsgICAgfQ0KPiArDQo+ICAgICAgIHJldHVy
+biB0cnVlOw0KPiAgIH0=
 
