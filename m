@@ -4,92 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B921BC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 058A0C021B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl2QX-0002UZ-Th; Thu, 20 Feb 2025 04:01:01 -0500
+	id 1tl2aJ-0003re-K9; Thu, 20 Feb 2025 04:11:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2QV-0002U7-Og
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:00:59 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2QS-0006XK-94
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:00:59 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-439950a45daso3612785e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:00:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740042054; x=1740646854; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=io9g9KlB4q3dv4ZF6H156T7pe8SihSVRe9xZ4gmjbk4=;
- b=Om34lGv5wY5qMDzvGONxigZk7TFbR8xjwVSA1QD9jOrCmojiF1w0ixmmpwBnPuOasu
- Dp29NkGEUBRH2OX06hgsKjEBmnxFDIUzw5CRd8Ov/whwZbj7+8ibe7NBXfR2YyAbYdGu
- c07QteKuA2z2CrlDlTDa3ZIBHFi+vFheuljR/h4PYK2J0kcf1yazjSCRpSKgMHJ3De1B
- tovDzWIF8pzoQ7jdIz1BGSRM2XHq3oKttnV0wYdk/kzNhNy9zY+n2YWB51OaJsml3j8t
- 4nn3WMFiAKFm0bBs5mB+G97GRa07PTNwAZeuHnvb2jWQ5uA2znA/RPej+/HjeGx8Bxwu
- Utmw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tl2aH-0003rP-QY
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:11:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tl2aE-0008Mp-F1
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:11:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740042660;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=43XqcaoJq7/VG6POTKwN9EsU9DPe/mSSXvvx9NYEmIg=;
+ b=YsZ0tnQXJqNpIH1F6BZNS3h1YMsUTK8fqqhmV7OPJc1j3DlEv8BNoyW7cS1aI6F+du03TB
+ cOALa3wTJum4KqUPTBlqOdFjzfuuMoOijLXFwkgJ2v9OdTm729V/eauvOc93+juzMdeH2Q
+ ipyVlraH69IoSbdJS0IWeC+KKMyFV5U=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-241-c_LgiPIXOaeLlri3pa6COA-1; Thu, 20 Feb 2025 04:10:55 -0500
+X-MC-Unique: c_LgiPIXOaeLlri3pa6COA-1
+X-Mimecast-MFC-AGG-ID: c_LgiPIXOaeLlri3pa6COA_1740042655
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43945f32e2dso8153005e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:10:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740042054; x=1740646854;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=io9g9KlB4q3dv4ZF6H156T7pe8SihSVRe9xZ4gmjbk4=;
- b=O1kYWkpeFx9se9DNIErUfVw1ydNJZIQ6yKK3pIfT03oONWHI1qPHCpPqSnRxzgGl92
- jIl+OXhUgu0HoaqVzpRxp2Us0NDqoWtHkrQvI0vCkgbc8Q1I4Bv/mO0yWhis2kvZ+GU/
- oIspIGgdqk1K5j2DrgiTnLxdknr2gZRVUbpIiExI/SxkjTs7qWGao13gsI3EVBuImZUJ
- VHxigvsv09Bx3Y15LE5eZNFLQID+KnjPAqs55pjWRKYUA/mcgvh6Mk5WJiqRzPycgXcl
- /dxpnHjev4prSacMPXnY9ii35Hfkrt5oVgqeaG1bNgLXneIardwjgm8amMoAl2IYZ5qF
- +Avw==
+ d=1e100.net; s=20230601; t=1740042654; x=1740647454;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=43XqcaoJq7/VG6POTKwN9EsU9DPe/mSSXvvx9NYEmIg=;
+ b=OLdZRo+GD3KCnAOUkVdzcMUQKW12/mgMzjkIJj0ThoEniwpopv2tZXXKZizVVMgMse
+ Di8tCMdZI+ijxdywlVq8zxvZHv5X+bR+SoE/WDg0nhS/kphVcsUDuWdns3FQpyJjAORp
+ m6Of143Ty8RWqdDb3HatX5DI2cpR4R8R0BHNLV0qKe/zvSC2L/0X2sNmFsvfPop0BVmx
+ Lvu4l3ijuyWZcKaoUPVjuwdDGm1WE/IfVkMWY00AaYkyRh5mzUr/kAjxFwUySqkPvKyo
+ FyeHULVMGxRVtxAOuLm4MK7JR2C8CUa1HAhSfwHvbftk7xiOhNqVS1rcxpJjuLLHLWV7
+ do2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8RUvzfz5crDEItRyY3nzWX8inRl227E7r8yK914fFiKUsn1ppRbea6cYUo5ogeWN9bkn2jws5sNFQ@nongnu.org
-X-Gm-Message-State: AOJu0YxYoGf4EyUpZ+EV1p5s61CqqN6TQIHkyla05qbsTGP8Fk8Z+HS2
- Ni7+a6NoFi732ujWPZWyGoD/6dEHjswuTWYMH4+qOEWtTieXJHWRyYIrlmyywhg=
-X-Gm-Gg: ASbGncveFqhsg3fRFQBghN4Cjp7wepJ/vwoAZ0M98XNmCejfpRzG2rqBU8BF1TnB10o
- 2Xv1txNcgaFZCohyVR4xJ7h7cooD367AJ0S/iRfnjTaSVh26ZFkVyyojF2EXSiYFJmJ6ZYLP6/m
- msVu/SHs7y4ZHKNRXrtw35h8J6k8ZKcF/0ufYWhrHxES0RYopOTWhYSAUrRFQmLaKgHfAYAJHp3
- qMO8muCQdfJzg+HiCIuNjsZM4ficYr5hteKdEC83bLXoX/S5DxmhiT7l+KsogsUXirLdl3RFOFU
- mcYF/w8r8BLjabIUT2axonarg3bUaGZK3hAwEFRYnEyUfo8Ac9CSL76H2QY=
-X-Google-Smtp-Source: AGHT+IFuLRsiIqZzHk1QppGzpKMVaWnaQrN0XFhpN6NIGI7K+gM4uGN3J87mC63Fgv4tvqWU/YI/ZA==
-X-Received: by 2002:a05:600c:548f:b0:439:955d:c4e2 with SMTP id
- 5b1f17b1804b1-439955dc5femr83158785e9.13.1740042053975; 
- Thu, 20 Feb 2025 01:00:53 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a06d1f2sm233664865e9.18.2025.02.20.01.00.52
+ AJvYcCV3OGxqMHIs4p9s69EKmFw3pIHu1bleEzJJUldfYXcrjkRzyEWufr9+JvEaAihGbflTjVk907qRjyEp@nongnu.org
+X-Gm-Message-State: AOJu0YyL21d2cFPUqf65wxVkfgaBd9aB236gylb7s9CxknOYP2XxbWUI
+ VMQ+IqTYNRlvDrM7IKwMSTMGaxbqAl2cxFSY7xcAEVknkzhSIk0v6DYKpMGRC7C0XVJ05xuybuQ
+ /ban/qsTPzyXrcLYqrPA0wXK2XK48oUhiFnkIgIFJgLkLvNZ9MLpq
+X-Gm-Gg: ASbGncvw1OxW3sPoQiL4IALbM6Ie/1uIASavVtrRcX8KXrjRTq2IV/lq1l1of4ZQD/A
+ 5mcmZVGdrvdkTmmtpTNtJfXCxDGmtp4JkK5UIClujAvGyObcsAgn4ntmU/gGPIA2i7vLDR/kEZg
+ Fytq5fGtN1i+DdRs2QOsfAtPF3UvUno7kKw6LRoghZpQif/xh/6gJQBZwoZmAi+31/ggAkSqafY
+ sfR84KEk0QMJzRzJUkQjF4qVUwGyf5sEavQCfUsKUHqxQZ5GZ0Aabmr+bcvpirBwSekz6uFeB5S
+ T5KzBHo8hgQ=
+X-Received: by 2002:a05:600c:19ce:b0:439:a30f:2e67 with SMTP id
+ 5b1f17b1804b1-439a30f30aemr21214735e9.17.1740042654617; 
+ Thu, 20 Feb 2025 01:10:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEzYI+bFOaIlfaAb+5V2P/wI07Q9vYag6AeMA7DsJx+id4IXOS0dGcqEfZVpk2EvbtEdnbyqQ==
+X-Received: by 2002:a05:600c:19ce:b0:439:a30f:2e67 with SMTP id
+ 5b1f17b1804b1-439a30f30aemr21214495e9.17.1740042654264; 
+ Thu, 20 Feb 2025 01:10:54 -0800 (PST)
+Received: from [192.168.10.48] ([176.206.122.109])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-4398c9deb59sm91545445e9.32.2025.02.20.01.10.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 01:00:53 -0800 (PST)
-Message-ID: <7c3c8146-9aff-4d8c-a7d1-7ce517c439b3@linaro.org>
-Date: Thu, 20 Feb 2025 10:00:52 +0100
+ Thu, 20 Feb 2025 01:10:53 -0800 (PST)
+Message-ID: <286270ed-cc59-4fe9-88c2-ad08798ed08a@redhat.com>
+Date: Thu, 20 Feb 2025 10:10:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] fpu: Remove remaining target ifdefs and build only
- once
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>
-References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <d71e392b-d828-42ca-8f9a-0661701653d5@linaro.org>
+Subject: Re: [PATCH] Fix data race with the state Field of ThreadPoolElement
+To: Vitalii Mordan <mordan@ispras.ru>, Thomas Huth <thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org,
+ Vadim Mutilin <mutilin@ispras.ru>, Alexey Khoroshilov <khoroshilov@ispras.ru>
+References: <20250219161223.3340431-1-mordan@ispras.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-In-Reply-To: <d71e392b-d828-42ca-8f9a-0661701653d5@linaro.org>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250219161223.3340431-1-mordan@ispras.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,1435 +151,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/25 09:48, Philippe Mathieu-Daudé wrote:
-> On 17/2/25 13:50, Peter Maydell wrote:
->> The work I needed to do to make various softfloat emulation behaviours
->> runtime-selectable for Arm FEAT_AFP has left the fpu code with very
->> few remaning target ifdefs. So this series turns the last remaning
->> ones into runtime behaviour choices and switches the fpu code into
->> "build once" rather than "build per target". The main driver of this
->> is that we're going to want to do this for the "multiple targets in
->> one binary" work.
+On 2/19/25 17:12, Vitalii Mordan wrote:
+> diff --git a/util/thread-pool.c b/util/thread-pool.c
+> index 27eb777e85..6c5f4d085b 100644
+> --- a/util/thread-pool.c
+> +++ b/util/thread-pool.c
+> @@ -111,9 +111,8 @@ static void *worker_thread(void *opaque)
+>           ret = req->func(req->arg);
+>   
+>           req->ret = ret;
+> -        /* Write ret before state.  */
+> -        smp_wmb();
+> -        req->state = THREAD_DONE;
+> +        /* Atomically update state after setting ret.  */
+> +        qatomic_store_release(&req->state, THREAD_DONE);
 
+This is good.
 
-> and my single binary duplicate symbols list drastically reduced:
-> 
-> -ld: 1759 duplicate symbols
-> +ld: 1427 duplicate symbols
+> @@ -180,7 +179,7 @@ static void thread_pool_completion_bh(void *opaque)
+>   
+>   restart:
+>       QLIST_FOREACH_SAFE(elem, &pool->head, all, next) {
+> -        if (elem->state != THREAD_DONE) {
+> +        if (qatomic_load_acquire(&elem->state) != THREAD_DONE) {
 
-(being so far for a microblaze+xtensa config:)
+This is good, but it needs a comment and it can replace the smp_rmb() below.
 
-CpuModelCompareResult_lookup
-CpuModelExpansionType_lookup
-QAPIEvent_lookup
-accel_cpu_common_realize
-accel_cpu_common_unrealize
-accel_cpu_instance_init
-accel_find
-accel_init_interfaces
-accel_supported_gdbstub_sstep_flags
-address_space_access_valid
-address_space_cache_destroy
-address_space_cache_init
-address_space_cache_invalidate
-address_space_destroy
-address_space_dispatch_compact
-address_space_dispatch_free
-address_space_dispatch_new
-address_space_get_flatview
-address_space_get_iotlb_entry
-address_space_init
-address_space_io
-address_space_ldl
-address_space_ldl_be
-address_space_ldl_be_cached_slow
-address_space_ldl_cached_slow
-address_space_ldl_le
-address_space_ldl_le_cached_slow
-address_space_ldq
-address_space_ldq_be
-address_space_ldq_be_cached_slow
-address_space_ldq_cached_slow
-address_space_ldq_le
-address_space_ldq_le_cached_slow
-address_space_ldub
-address_space_ldub_cached_slow
-address_space_lduw
-address_space_lduw_be
-address_space_lduw_be_cached_slow
-address_space_lduw_cached_slow
-address_space_lduw_le
-address_space_lduw_le_cached_slow
-address_space_map
-address_space_memory
-address_space_read_cached_slow
-address_space_read_full
-address_space_register_map_client
-address_space_remove_listeners
-address_space_rw
-address_space_set
-address_space_stb
-address_space_stb_cached_slow
-address_space_stl
-address_space_stl_be
-address_space_stl_be_cached_slow
-address_space_stl_cached_slow
-address_space_stl_le
-address_space_stl_le_cached_slow
-address_space_stl_notdirty
-address_space_stl_notdirty_cached_slow
-address_space_stq
-address_space_stq_be
-address_space_stq_be_cached_slow
-address_space_stq_cached_slow
-address_space_stq_le
-address_space_stq_le_cached_slow
-address_space_stw
-address_space_stw_be
-address_space_stw_be_cached_slow
-address_space_stw_cached_slow
-address_space_stw_le
-address_space_stw_le_cached_slow
-address_space_translate_for_iotlb
-address_space_unmap
-address_space_unregister_map_client
-address_space_write
-address_space_write_cached_slow
-address_space_write_rom
-arch_type
-colo_flush_ram_cache
-colo_incoming_start_dirty_log
-colo_init_ram_cache
-colo_record_bitmap
-colo_release_ram_cache
-cpu_abort
-cpu_address_space_destroy
-cpu_address_space_init
-cpu_atomic_add_fetchb_mmu
-cpu_atomic_add_fetchl_be_mmu
-cpu_atomic_add_fetchl_le_mmu
-cpu_atomic_add_fetchq_be_mmu
-cpu_atomic_add_fetchq_le_mmu
-cpu_atomic_add_fetchw_be_mmu
-cpu_atomic_add_fetchw_le_mmu
-cpu_atomic_and_fetchb_mmu
-cpu_atomic_and_fetchl_be_mmu
-cpu_atomic_and_fetchl_le_mmu
-cpu_atomic_and_fetchq_be_mmu
-cpu_atomic_and_fetchq_le_mmu
-cpu_atomic_and_fetchw_be_mmu
-cpu_atomic_and_fetchw_le_mmu
-cpu_atomic_cmpxchgb_mmu
-cpu_atomic_cmpxchgl_be_mmu
-cpu_atomic_cmpxchgl_le_mmu
-cpu_atomic_cmpxchgo_be_mmu
-cpu_atomic_cmpxchgo_le_mmu
-cpu_atomic_cmpxchgq_be_mmu
-cpu_atomic_cmpxchgq_le_mmu
-cpu_atomic_cmpxchgw_be_mmu
-cpu_atomic_cmpxchgw_le_mmu
-cpu_atomic_fetch_addb_mmu
-cpu_atomic_fetch_addl_be_mmu
-cpu_atomic_fetch_addl_le_mmu
-cpu_atomic_fetch_addq_be_mmu
-cpu_atomic_fetch_addq_le_mmu
-cpu_atomic_fetch_addw_be_mmu
-cpu_atomic_fetch_addw_le_mmu
-cpu_atomic_fetch_andb_mmu
-cpu_atomic_fetch_andl_be_mmu
-cpu_atomic_fetch_andl_le_mmu
-cpu_atomic_fetch_andq_be_mmu
-cpu_atomic_fetch_andq_le_mmu
-cpu_atomic_fetch_andw_be_mmu
-cpu_atomic_fetch_andw_le_mmu
-cpu_atomic_fetch_orb_mmu
-cpu_atomic_fetch_orl_be_mmu
-cpu_atomic_fetch_orl_le_mmu
-cpu_atomic_fetch_orq_be_mmu
-cpu_atomic_fetch_orq_le_mmu
-cpu_atomic_fetch_orw_be_mmu
-cpu_atomic_fetch_orw_le_mmu
-cpu_atomic_fetch_smaxb_mmu
-cpu_atomic_fetch_smaxl_be_mmu
-cpu_atomic_fetch_smaxl_le_mmu
-cpu_atomic_fetch_smaxq_be_mmu
-cpu_atomic_fetch_smaxq_le_mmu
-cpu_atomic_fetch_smaxw_be_mmu
-cpu_atomic_fetch_smaxw_le_mmu
-cpu_atomic_fetch_sminb_mmu
-cpu_atomic_fetch_sminl_be_mmu
-cpu_atomic_fetch_sminl_le_mmu
-cpu_atomic_fetch_sminq_be_mmu
-cpu_atomic_fetch_sminq_le_mmu
-cpu_atomic_fetch_sminw_be_mmu
-cpu_atomic_fetch_sminw_le_mmu
-cpu_atomic_fetch_umaxb_mmu
-cpu_atomic_fetch_umaxl_be_mmu
-cpu_atomic_fetch_umaxl_le_mmu
-cpu_atomic_fetch_umaxq_be_mmu
-cpu_atomic_fetch_umaxq_le_mmu
-cpu_atomic_fetch_umaxw_be_mmu
-cpu_atomic_fetch_umaxw_le_mmu
-cpu_atomic_fetch_uminb_mmu
-cpu_atomic_fetch_uminl_be_mmu
-cpu_atomic_fetch_uminl_le_mmu
-cpu_atomic_fetch_uminq_be_mmu
-cpu_atomic_fetch_uminq_le_mmu
-cpu_atomic_fetch_uminw_be_mmu
-cpu_atomic_fetch_uminw_le_mmu
-cpu_atomic_fetch_xorb_mmu
-cpu_atomic_fetch_xorl_be_mmu
-cpu_atomic_fetch_xorl_le_mmu
-cpu_atomic_fetch_xorq_be_mmu
-cpu_atomic_fetch_xorq_le_mmu
-cpu_atomic_fetch_xorw_be_mmu
-cpu_atomic_fetch_xorw_le_mmu
-cpu_atomic_or_fetchb_mmu
-cpu_atomic_or_fetchl_be_mmu
-cpu_atomic_or_fetchl_le_mmu
-cpu_atomic_or_fetchq_be_mmu
-cpu_atomic_or_fetchq_le_mmu
-cpu_atomic_or_fetchw_be_mmu
-cpu_atomic_or_fetchw_le_mmu
-cpu_atomic_smax_fetchb_mmu
-cpu_atomic_smax_fetchl_be_mmu
-cpu_atomic_smax_fetchl_le_mmu
-cpu_atomic_smax_fetchq_be_mmu
-cpu_atomic_smax_fetchq_le_mmu
-cpu_atomic_smax_fetchw_be_mmu
-cpu_atomic_smax_fetchw_le_mmu
-cpu_atomic_smin_fetchb_mmu
-cpu_atomic_smin_fetchl_be_mmu
-cpu_atomic_smin_fetchl_le_mmu
-cpu_atomic_smin_fetchq_be_mmu
-cpu_atomic_smin_fetchq_le_mmu
-cpu_atomic_smin_fetchw_be_mmu
-cpu_atomic_smin_fetchw_le_mmu
-cpu_atomic_umax_fetchb_mmu
-cpu_atomic_umax_fetchl_be_mmu
-cpu_atomic_umax_fetchl_le_mmu
-cpu_atomic_umax_fetchq_be_mmu
-cpu_atomic_umax_fetchq_le_mmu
-cpu_atomic_umax_fetchw_be_mmu
-cpu_atomic_umax_fetchw_le_mmu
-cpu_atomic_umin_fetchb_mmu
-cpu_atomic_umin_fetchl_be_mmu
-cpu_atomic_umin_fetchl_le_mmu
-cpu_atomic_umin_fetchq_be_mmu
-cpu_atomic_umin_fetchq_le_mmu
-cpu_atomic_umin_fetchw_be_mmu
-cpu_atomic_umin_fetchw_le_mmu
-cpu_atomic_xchgb_mmu
-cpu_atomic_xchgl_be_mmu
-cpu_atomic_xchgl_le_mmu
-cpu_atomic_xchgq_be_mmu
-cpu_atomic_xchgq_le_mmu
-cpu_atomic_xchgw_be_mmu
-cpu_atomic_xchgw_le_mmu
-cpu_atomic_xor_fetchb_mmu
-cpu_atomic_xor_fetchl_be_mmu
-cpu_atomic_xor_fetchl_le_mmu
-cpu_atomic_xor_fetchq_be_mmu
-cpu_atomic_xor_fetchq_le_mmu
-cpu_atomic_xor_fetchw_be_mmu
-cpu_atomic_xor_fetchw_le_mmu
-cpu_check_watchpoint
-cpu_class_init_props
-cpu_exec
-cpu_exec_init_all
-cpu_exec_initfn
-cpu_exec_realizefn
-cpu_exec_step_atomic
-cpu_exec_unrealizefn
-cpu_flush_icache_range
-cpu_get_address_space
-cpu_inb
-cpu_inl
-cpu_inw
-cpu_io_recompile
-cpu_ld16_mmu
-cpu_ldb_code_mmu
-cpu_ldb_mmu
-cpu_ldl_be_data
-cpu_ldl_be_data_ra
-cpu_ldl_be_mmuidx_ra
-cpu_ldl_code
-cpu_ldl_code_mmu
-cpu_ldl_le_data
-cpu_ldl_le_data_ra
-cpu_ldl_le_mmuidx_ra
-cpu_ldl_mmu
-cpu_ldq_be_data
-cpu_ldq_be_data_ra
-cpu_ldq_be_mmuidx_ra
-cpu_ldq_code
-cpu_ldq_code_mmu
-cpu_ldq_le_data
-cpu_ldq_le_data_ra
-cpu_ldq_le_mmuidx_ra
-cpu_ldq_mmu
-cpu_ldsb_data
-cpu_ldsb_data_ra
-cpu_ldsb_mmuidx_ra
-cpu_ldsw_be_data
-cpu_ldsw_be_data_ra
-cpu_ldsw_be_mmuidx_ra
-cpu_ldsw_le_data
-cpu_ldsw_le_data_ra
-cpu_ldsw_le_mmuidx_ra
-cpu_ldub_code
-cpu_ldub_data
-cpu_ldub_data_ra
-cpu_ldub_mmuidx_ra
-cpu_lduw_be_data
-cpu_lduw_be_data_ra
-cpu_lduw_be_mmuidx_ra
-cpu_lduw_code
-cpu_lduw_le_data
-cpu_lduw_le_data_ra
-cpu_lduw_le_mmuidx_ra
-cpu_ldw_code_mmu
-cpu_ldw_mmu
-cpu_memory_rw_debug
-cpu_model_from_type
-cpu_outb
-cpu_outl
-cpu_outw
-cpu_physical_memory_is_io
-cpu_physical_memory_map
-cpu_physical_memory_rw
-cpu_physical_memory_snapshot_and_clear_dirty
-cpu_physical_memory_snapshot_get_dirty
-cpu_physical_memory_test_and_clear_dirty
-cpu_physical_memory_unmap
-cpu_restore_state
-cpu_restore_state_from_tb
-cpu_single_step
-cpu_st16_mmu
-cpu_stb_data
-cpu_stb_data_ra
-cpu_stb_mmu
-cpu_stb_mmuidx_ra
-cpu_stl_be_data
-cpu_stl_be_data_ra
-cpu_stl_be_mmuidx_ra
-cpu_stl_le_data
-cpu_stl_le_data_ra
-cpu_stl_le_mmuidx_ra
-cpu_stl_mmu
-cpu_stq_be_data
-cpu_stq_be_data_ra
-cpu_stq_be_mmuidx_ra
-cpu_stq_le_data
-cpu_stq_le_data_ra
-cpu_stq_le_mmuidx_ra
-cpu_stq_mmu
-cpu_stw_be_data
-cpu_stw_be_data_ra
-cpu_stw_be_mmuidx_ra
-cpu_stw_le_data
-cpu_stw_le_data_ra
-cpu_stw_le_mmuidx_ra
-cpu_stw_mmu
-cpu_unwind_state_data
-cpu_watchpoint_address_matches
-cpu_watchpoint_insert
-cpu_watchpoint_remove
-cpu_watchpoint_remove_all
-cpu_watchpoint_remove_by_ref
-create_win_dump
-curr_cflags
-current_accel_name
-finalize_target_page_bits
-flatview_add_to_dispatch
-flatview_for_each_range
-flatview_read_continue
-flatview_translate
-flatview_unref
-foreach_not_ignored_block
-gdb_static_features
-get_monitor_def
-get_page_addr_code_hostp
-get_system_io
-get_system_memory
-global_dirty_tracking
-gpa2hva
-graphic_depth
-graphic_height
-graphic_width
-helper_atomic_add_fetchb
-helper_atomic_add_fetchl_be
-helper_atomic_add_fetchl_le
-helper_atomic_add_fetchq_be
-helper_atomic_add_fetchq_le
-helper_atomic_add_fetchw_be
-helper_atomic_add_fetchw_le
-helper_atomic_and_fetchb
-helper_atomic_and_fetchl_be
-helper_atomic_and_fetchl_le
-helper_atomic_and_fetchq_be
-helper_atomic_and_fetchq_le
-helper_atomic_and_fetchw_be
-helper_atomic_and_fetchw_le
-helper_atomic_cmpxchgb
-helper_atomic_cmpxchgl_be
-helper_atomic_cmpxchgl_le
-helper_atomic_cmpxchgo_be
-helper_atomic_cmpxchgo_le
-helper_atomic_cmpxchgq_be
-helper_atomic_cmpxchgq_le
-helper_atomic_cmpxchgw_be
-helper_atomic_cmpxchgw_le
-helper_atomic_fetch_addb
-helper_atomic_fetch_addl_be
-helper_atomic_fetch_addl_le
-helper_atomic_fetch_addq_be
-helper_atomic_fetch_addq_le
-helper_atomic_fetch_addw_be
-helper_atomic_fetch_addw_le
-helper_atomic_fetch_andb
-helper_atomic_fetch_andl_be
-helper_atomic_fetch_andl_le
-helper_atomic_fetch_andq_be
-helper_atomic_fetch_andq_le
-helper_atomic_fetch_andw_be
-helper_atomic_fetch_andw_le
-helper_atomic_fetch_orb
-helper_atomic_fetch_orl_be
-helper_atomic_fetch_orl_le
-helper_atomic_fetch_orq_be
-helper_atomic_fetch_orq_le
-helper_atomic_fetch_orw_be
-helper_atomic_fetch_orw_le
-helper_atomic_fetch_smaxb
-helper_atomic_fetch_smaxl_be
-helper_atomic_fetch_smaxl_le
-helper_atomic_fetch_smaxq_be
-helper_atomic_fetch_smaxq_le
-helper_atomic_fetch_smaxw_be
-helper_atomic_fetch_smaxw_le
-helper_atomic_fetch_sminb
-helper_atomic_fetch_sminl_be
-helper_atomic_fetch_sminl_le
-helper_atomic_fetch_sminq_be
-helper_atomic_fetch_sminq_le
-helper_atomic_fetch_sminw_be
-helper_atomic_fetch_sminw_le
-helper_atomic_fetch_umaxb
-helper_atomic_fetch_umaxl_be
-helper_atomic_fetch_umaxl_le
-helper_atomic_fetch_umaxq_be
-helper_atomic_fetch_umaxq_le
-helper_atomic_fetch_umaxw_be
-helper_atomic_fetch_umaxw_le
-helper_atomic_fetch_uminb
-helper_atomic_fetch_uminl_be
-helper_atomic_fetch_uminl_le
-helper_atomic_fetch_uminq_be
-helper_atomic_fetch_uminq_le
-helper_atomic_fetch_uminw_be
-helper_atomic_fetch_uminw_le
-helper_atomic_fetch_xorb
-helper_atomic_fetch_xorl_be
-helper_atomic_fetch_xorl_le
-helper_atomic_fetch_xorq_be
-helper_atomic_fetch_xorq_le
-helper_atomic_fetch_xorw_be
-helper_atomic_fetch_xorw_le
-helper_atomic_or_fetchb
-helper_atomic_or_fetchl_be
-helper_atomic_or_fetchl_le
-helper_atomic_or_fetchq_be
-helper_atomic_or_fetchq_le
-helper_atomic_or_fetchw_be
-helper_atomic_or_fetchw_le
-helper_atomic_smax_fetchb
-helper_atomic_smax_fetchl_be
-helper_atomic_smax_fetchl_le
-helper_atomic_smax_fetchq_be
-helper_atomic_smax_fetchq_le
-helper_atomic_smax_fetchw_be
-helper_atomic_smax_fetchw_le
-helper_atomic_smin_fetchb
-helper_atomic_smin_fetchl_be
-helper_atomic_smin_fetchl_le
-helper_atomic_smin_fetchq_be
-helper_atomic_smin_fetchq_le
-helper_atomic_smin_fetchw_be
-helper_atomic_smin_fetchw_le
-helper_atomic_umax_fetchb
-helper_atomic_umax_fetchl_be
-helper_atomic_umax_fetchl_le
-helper_atomic_umax_fetchq_be
-helper_atomic_umax_fetchq_le
-helper_atomic_umax_fetchw_be
-helper_atomic_umax_fetchw_le
-helper_atomic_umin_fetchb
-helper_atomic_umin_fetchl_be
-helper_atomic_umin_fetchl_le
-helper_atomic_umin_fetchq_be
-helper_atomic_umin_fetchq_le
-helper_atomic_umin_fetchw_be
-helper_atomic_umin_fetchw_le
-helper_atomic_xchgb
-helper_atomic_xchgl_be
-helper_atomic_xchgl_le
-helper_atomic_xchgq_be
-helper_atomic_xchgq_le
-helper_atomic_xchgw_be
-helper_atomic_xchgw_le
-helper_atomic_xor_fetchb
-helper_atomic_xor_fetchl_be
-helper_atomic_xor_fetchl_le
-helper_atomic_xor_fetchq_be
-helper_atomic_xor_fetchq_le
-helper_atomic_xor_fetchw_be
-helper_atomic_xor_fetchw_le
-helper_clrsb_i32
-helper_clrsb_i64
-helper_clz_i32
-helper_clz_i64
-helper_ctpop_i32
-helper_ctpop_i64
-helper_ctz_i32
-helper_ctz_i64
-helper_div_i32
-helper_div_i64
-helper_divs
-helper_divu
-helper_divu_i32
-helper_divu_i64
-helper_exit_atomic
-helper_fadd
-helper_fcmp_eq
-helper_fcmp_ge
-helper_fcmp_gt
-helper_fcmp_le
-helper_fcmp_lt
-helper_fcmp_ne
-helper_fcmp_un
-helper_fdiv
-helper_fint
-helper_flt
-helper_fmul
-helper_frsub
-helper_fsqrt
-helper_get
-helper_gvec_abs16
-helper_gvec_abs32
-helper_gvec_abs64
-helper_gvec_abs8
-helper_gvec_add16
-helper_gvec_add32
-helper_gvec_add64
-helper_gvec_add8
-helper_gvec_adds16
-helper_gvec_adds32
-helper_gvec_adds64
-helper_gvec_adds8
-helper_gvec_and
-helper_gvec_andc
-helper_gvec_andcs
-helper_gvec_ands
-helper_gvec_bitsel
-helper_gvec_dup16
-helper_gvec_dup32
-helper_gvec_dup64
-helper_gvec_dup8
-helper_gvec_eq16
-helper_gvec_eq32
-helper_gvec_eq64
-helper_gvec_eq8
-helper_gvec_eqs16
-helper_gvec_eqs32
-helper_gvec_eqs64
-helper_gvec_eqs8
-helper_gvec_eqv
-helper_gvec_le16
-helper_gvec_le32
-helper_gvec_le64
-helper_gvec_le8
-helper_gvec_les16
-helper_gvec_les32
-helper_gvec_les64
-helper_gvec_les8
-helper_gvec_leu16
-helper_gvec_leu32
-helper_gvec_leu64
-helper_gvec_leu8
-helper_gvec_leus16
-helper_gvec_leus32
-helper_gvec_leus64
-helper_gvec_leus8
-helper_gvec_lt16
-helper_gvec_lt32
-helper_gvec_lt64
-helper_gvec_lt8
-helper_gvec_lts16
-helper_gvec_lts32
-helper_gvec_lts64
-helper_gvec_lts8
-helper_gvec_ltu16
-helper_gvec_ltu32
-helper_gvec_ltu64
-helper_gvec_ltu8
-helper_gvec_ltus16
-helper_gvec_ltus32
-helper_gvec_ltus64
-helper_gvec_ltus8
-helper_gvec_mov
-helper_gvec_mul16
-helper_gvec_mul32
-helper_gvec_mul64
-helper_gvec_mul8
-helper_gvec_muls16
-helper_gvec_muls32
-helper_gvec_muls64
-helper_gvec_muls8
-helper_gvec_nand
-helper_gvec_ne16
-helper_gvec_ne32
-helper_gvec_ne64
-helper_gvec_ne8
-helper_gvec_neg16
-helper_gvec_neg32
-helper_gvec_neg64
-helper_gvec_neg8
-helper_gvec_nor
-helper_gvec_not
-helper_gvec_or
-helper_gvec_orc
-helper_gvec_ors
-helper_gvec_rotl16i
-helper_gvec_rotl16v
-helper_gvec_rotl32i
-helper_gvec_rotl32v
-helper_gvec_rotl64i
-helper_gvec_rotl64v
-helper_gvec_rotl8i
-helper_gvec_rotl8v
-helper_gvec_rotr16v
-helper_gvec_rotr32v
-helper_gvec_rotr64v
-helper_gvec_rotr8v
-helper_gvec_sar16i
-helper_gvec_sar16v
-helper_gvec_sar32i
-helper_gvec_sar32v
-helper_gvec_sar64i
-helper_gvec_sar64v
-helper_gvec_sar8i
-helper_gvec_sar8v
-helper_gvec_shl16i
-helper_gvec_shl16v
-helper_gvec_shl32i
-helper_gvec_shl32v
-helper_gvec_shl64i
-helper_gvec_shl64v
-helper_gvec_shl8i
-helper_gvec_shl8v
-helper_gvec_shr16i
-helper_gvec_shr16v
-helper_gvec_shr32i
-helper_gvec_shr32v
-helper_gvec_shr64i
-helper_gvec_shr64v
-helper_gvec_shr8i
-helper_gvec_shr8v
-helper_gvec_smax16
-helper_gvec_smax32
-helper_gvec_smax64
-helper_gvec_smax8
-helper_gvec_smin16
-helper_gvec_smin32
-helper_gvec_smin64
-helper_gvec_smin8
-helper_gvec_ssadd16
-helper_gvec_ssadd32
-helper_gvec_ssadd64
-helper_gvec_ssadd8
-helper_gvec_sssub16
-helper_gvec_sssub32
-helper_gvec_sssub64
-helper_gvec_sssub8
-helper_gvec_sub16
-helper_gvec_sub32
-helper_gvec_sub64
-helper_gvec_sub8
-helper_gvec_subs16
-helper_gvec_subs32
-helper_gvec_subs64
-helper_gvec_subs8
-helper_gvec_umax16
-helper_gvec_umax32
-helper_gvec_umax64
-helper_gvec_umax8
-helper_gvec_umin16
-helper_gvec_umin32
-helper_gvec_umin64
-helper_gvec_umin8
-helper_gvec_usadd16
-helper_gvec_usadd32
-helper_gvec_usadd64
-helper_gvec_usadd8
-helper_gvec_ussub16
-helper_gvec_ussub32
-helper_gvec_ussub64
-helper_gvec_ussub8
-helper_gvec_xor
-helper_gvec_xors
-helper_info_atomic_add_fetchb
-helper_info_atomic_add_fetchl_be
-helper_info_atomic_add_fetchl_le
-helper_info_atomic_add_fetchq_be
-helper_info_atomic_add_fetchq_le
-helper_info_atomic_add_fetchw_be
-helper_info_atomic_add_fetchw_le
-helper_info_atomic_and_fetchb
-helper_info_atomic_and_fetchl_be
-helper_info_atomic_and_fetchl_le
-helper_info_atomic_and_fetchq_be
-helper_info_atomic_and_fetchq_le
-helper_info_atomic_and_fetchw_be
-helper_info_atomic_and_fetchw_le
-helper_info_atomic_cmpxchgb
-helper_info_atomic_cmpxchgl_be
-helper_info_atomic_cmpxchgl_le
-helper_info_atomic_cmpxchgo_be
-helper_info_atomic_cmpxchgo_le
-helper_info_atomic_cmpxchgq_be
-helper_info_atomic_cmpxchgq_le
-helper_info_atomic_cmpxchgw_be
-helper_info_atomic_cmpxchgw_le
-helper_info_atomic_fetch_addb
-helper_info_atomic_fetch_addl_be
-helper_info_atomic_fetch_addl_le
-helper_info_atomic_fetch_addq_be
-helper_info_atomic_fetch_addq_le
-helper_info_atomic_fetch_addw_be
-helper_info_atomic_fetch_addw_le
-helper_info_atomic_fetch_andb
-helper_info_atomic_fetch_andl_be
-helper_info_atomic_fetch_andl_le
-helper_info_atomic_fetch_andq_be
-helper_info_atomic_fetch_andq_le
-helper_info_atomic_fetch_andw_be
-helper_info_atomic_fetch_andw_le
-helper_info_atomic_fetch_orb
-helper_info_atomic_fetch_orl_be
-helper_info_atomic_fetch_orl_le
-helper_info_atomic_fetch_orq_be
-helper_info_atomic_fetch_orq_le
-helper_info_atomic_fetch_orw_be
-helper_info_atomic_fetch_orw_le
-helper_info_atomic_fetch_smaxb
-helper_info_atomic_fetch_smaxl_be
-helper_info_atomic_fetch_smaxl_le
-helper_info_atomic_fetch_smaxq_be
-helper_info_atomic_fetch_smaxq_le
-helper_info_atomic_fetch_smaxw_be
-helper_info_atomic_fetch_smaxw_le
-helper_info_atomic_fetch_sminb
-helper_info_atomic_fetch_sminl_be
-helper_info_atomic_fetch_sminl_le
-helper_info_atomic_fetch_sminq_be
-helper_info_atomic_fetch_sminq_le
-helper_info_atomic_fetch_sminw_be
-helper_info_atomic_fetch_sminw_le
-helper_info_atomic_fetch_umaxb
-helper_info_atomic_fetch_umaxl_be
-helper_info_atomic_fetch_umaxl_le
-helper_info_atomic_fetch_umaxq_be
-helper_info_atomic_fetch_umaxq_le
-helper_info_atomic_fetch_umaxw_be
-helper_info_atomic_fetch_umaxw_le
-helper_info_atomic_fetch_uminb
-helper_info_atomic_fetch_uminl_be
-helper_info_atomic_fetch_uminl_le
-helper_info_atomic_fetch_uminq_be
-helper_info_atomic_fetch_uminq_le
-helper_info_atomic_fetch_uminw_be
-helper_info_atomic_fetch_uminw_le
-helper_info_atomic_fetch_xorb
-helper_info_atomic_fetch_xorl_be
-helper_info_atomic_fetch_xorl_le
-helper_info_atomic_fetch_xorq_be
-helper_info_atomic_fetch_xorq_le
-helper_info_atomic_fetch_xorw_be
-helper_info_atomic_fetch_xorw_le
-helper_info_atomic_or_fetchb
-helper_info_atomic_or_fetchl_be
-helper_info_atomic_or_fetchl_le
-helper_info_atomic_or_fetchq_be
-helper_info_atomic_or_fetchq_le
-helper_info_atomic_or_fetchw_be
-helper_info_atomic_or_fetchw_le
-helper_info_atomic_smax_fetchb
-helper_info_atomic_smax_fetchl_be
-helper_info_atomic_smax_fetchl_le
-helper_info_atomic_smax_fetchq_be
-helper_info_atomic_smax_fetchq_le
-helper_info_atomic_smax_fetchw_be
-helper_info_atomic_smax_fetchw_le
-helper_info_atomic_smin_fetchb
-helper_info_atomic_smin_fetchl_be
-helper_info_atomic_smin_fetchl_le
-helper_info_atomic_smin_fetchq_be
-helper_info_atomic_smin_fetchq_le
-helper_info_atomic_smin_fetchw_be
-helper_info_atomic_smin_fetchw_le
-helper_info_atomic_umax_fetchb
-helper_info_atomic_umax_fetchl_be
-helper_info_atomic_umax_fetchl_le
-helper_info_atomic_umax_fetchq_be
-helper_info_atomic_umax_fetchq_le
-helper_info_atomic_umax_fetchw_be
-helper_info_atomic_umax_fetchw_le
-helper_info_atomic_umin_fetchb
-helper_info_atomic_umin_fetchl_be
-helper_info_atomic_umin_fetchl_le
-helper_info_atomic_umin_fetchq_be
-helper_info_atomic_umin_fetchq_le
-helper_info_atomic_umin_fetchw_be
-helper_info_atomic_umin_fetchw_le
-helper_info_atomic_xchgb
-helper_info_atomic_xchgl_be
-helper_info_atomic_xchgl_le
-helper_info_atomic_xchgq_be
-helper_info_atomic_xchgq_le
-helper_info_atomic_xchgw_be
-helper_info_atomic_xchgw_le
-helper_info_atomic_xor_fetchb
-helper_info_atomic_xor_fetchl_be
-helper_info_atomic_xor_fetchl_le
-helper_info_atomic_xor_fetchq_be
-helper_info_atomic_xor_fetchq_le
-helper_info_atomic_xor_fetchw_be
-helper_info_atomic_xor_fetchw_le
-helper_info_clrsb_i32
-helper_info_clrsb_i64
-helper_info_clz_i32
-helper_info_clz_i64
-helper_info_ctpop_i32
-helper_info_ctpop_i64
-helper_info_ctz_i32
-helper_info_ctz_i64
-helper_info_div_i32
-helper_info_div_i64
-helper_info_divs
-helper_info_divu
-helper_info_divu_i32
-helper_info_divu_i64
-helper_info_exit_atomic
-helper_info_fadd
-helper_info_fcmp_eq
-helper_info_fcmp_ge
-helper_info_fcmp_gt
-helper_info_fcmp_le
-helper_info_fcmp_lt
-helper_info_fcmp_ne
-helper_info_fcmp_un
-helper_info_fdiv
-helper_info_fint
-helper_info_flt
-helper_info_fmul
-helper_info_frsub
-helper_info_fsqrt
-helper_info_get
-helper_info_gvec_abs16
-helper_info_gvec_abs32
-helper_info_gvec_abs64
-helper_info_gvec_abs8
-helper_info_gvec_add16
-helper_info_gvec_add32
-helper_info_gvec_add64
-helper_info_gvec_add8
-helper_info_gvec_adds16
-helper_info_gvec_adds32
-helper_info_gvec_adds64
-helper_info_gvec_adds8
-helper_info_gvec_and
-helper_info_gvec_andc
-helper_info_gvec_andcs
-helper_info_gvec_ands
-helper_info_gvec_bitsel
-helper_info_gvec_dup16
-helper_info_gvec_dup32
-helper_info_gvec_dup64
-helper_info_gvec_dup8
-helper_info_gvec_eq16
-helper_info_gvec_eq32
-helper_info_gvec_eq64
-helper_info_gvec_eq8
-helper_info_gvec_eqs16
-helper_info_gvec_eqs32
-helper_info_gvec_eqs64
-helper_info_gvec_eqs8
-helper_info_gvec_eqv
-helper_info_gvec_le16
-helper_info_gvec_le32
-helper_info_gvec_le64
-helper_info_gvec_le8
-helper_info_gvec_les16
-helper_info_gvec_les32
-helper_info_gvec_les64
-helper_info_gvec_les8
-helper_info_gvec_leu16
-helper_info_gvec_leu32
-helper_info_gvec_leu64
-helper_info_gvec_leu8
-helper_info_gvec_leus16
-helper_info_gvec_leus32
-helper_info_gvec_leus64
-helper_info_gvec_leus8
-helper_info_gvec_lt16
-helper_info_gvec_lt32
-helper_info_gvec_lt64
-helper_info_gvec_lt8
-helper_info_gvec_lts16
-helper_info_gvec_lts32
-helper_info_gvec_lts64
-helper_info_gvec_lts8
-helper_info_gvec_ltu16
-helper_info_gvec_ltu32
-helper_info_gvec_ltu64
-helper_info_gvec_ltu8
-helper_info_gvec_ltus16
-helper_info_gvec_ltus32
-helper_info_gvec_ltus64
-helper_info_gvec_ltus8
-helper_info_gvec_mov
-helper_info_gvec_mul16
-helper_info_gvec_mul32
-helper_info_gvec_mul64
-helper_info_gvec_mul8
-helper_info_gvec_muls16
-helper_info_gvec_muls32
-helper_info_gvec_muls64
-helper_info_gvec_muls8
-helper_info_gvec_nand
-helper_info_gvec_ne16
-helper_info_gvec_ne32
-helper_info_gvec_ne64
-helper_info_gvec_ne8
-helper_info_gvec_neg16
-helper_info_gvec_neg32
-helper_info_gvec_neg64
-helper_info_gvec_neg8
-helper_info_gvec_nor
-helper_info_gvec_not
-helper_info_gvec_or
-helper_info_gvec_orc
-helper_info_gvec_ors
-helper_info_gvec_rotl16i
-helper_info_gvec_rotl16v
-helper_info_gvec_rotl32i
-helper_info_gvec_rotl32v
-helper_info_gvec_rotl64i
-helper_info_gvec_rotl64v
-helper_info_gvec_rotl8i
-helper_info_gvec_rotl8v
-helper_info_gvec_rotr16v
-helper_info_gvec_rotr32v
-helper_info_gvec_rotr64v
-helper_info_gvec_rotr8v
-helper_info_gvec_sar16i
-helper_info_gvec_sar16v
-helper_info_gvec_sar32i
-helper_info_gvec_sar32v
-helper_info_gvec_sar64i
-helper_info_gvec_sar64v
-helper_info_gvec_sar8i
-helper_info_gvec_sar8v
-helper_info_gvec_shl16i
-helper_info_gvec_shl16v
-helper_info_gvec_shl32i
-helper_info_gvec_shl32v
-helper_info_gvec_shl64i
-helper_info_gvec_shl64v
-helper_info_gvec_shl8i
-helper_info_gvec_shl8v
-helper_info_gvec_shr16i
-helper_info_gvec_shr16v
-helper_info_gvec_shr32i
-helper_info_gvec_shr32v
-helper_info_gvec_shr64i
-helper_info_gvec_shr64v
-helper_info_gvec_shr8i
-helper_info_gvec_shr8v
-helper_info_gvec_smax16
-helper_info_gvec_smax32
-helper_info_gvec_smax64
-helper_info_gvec_smax8
-helper_info_gvec_smin16
-helper_info_gvec_smin32
-helper_info_gvec_smin64
-helper_info_gvec_smin8
-helper_info_gvec_ssadd16
-helper_info_gvec_ssadd32
-helper_info_gvec_ssadd64
-helper_info_gvec_ssadd8
-helper_info_gvec_sssub16
-helper_info_gvec_sssub32
-helper_info_gvec_sssub64
-helper_info_gvec_sssub8
-helper_info_gvec_sub16
-helper_info_gvec_sub32
-helper_info_gvec_sub64
-helper_info_gvec_sub8
-helper_info_gvec_subs16
-helper_info_gvec_subs32
-helper_info_gvec_subs64
-helper_info_gvec_subs8
-helper_info_gvec_umax16
-helper_info_gvec_umax32
-helper_info_gvec_umax64
-helper_info_gvec_umax8
-helper_info_gvec_umin16
-helper_info_gvec_umin32
-helper_info_gvec_umin64
-helper_info_gvec_umin8
-helper_info_gvec_usadd16
-helper_info_gvec_usadd32
-helper_info_gvec_usadd64
-helper_info_gvec_usadd8
-helper_info_gvec_ussub16
-helper_info_gvec_ussub32
-helper_info_gvec_ussub64
-helper_info_gvec_ussub8
-helper_info_gvec_xor
-helper_info_gvec_xors
-helper_info_ld_i128
-helper_info_lookup_tb_ptr
-helper_info_memset
-helper_info_mmu_read
-helper_info_mmu_write
-helper_info_mulsh_i64
-helper_info_muluh_i64
-helper_info_nonatomic_cmpxchgo
-helper_info_pcmpbf
-helper_info_put
-helper_info_raise_exception
-helper_info_rem_i32
-helper_info_rem_i64
-helper_info_remu_i32
-helper_info_remu_i64
-helper_info_sar_i64
-helper_info_shl_i64
-helper_info_shr_i64
-helper_info_st_i128
-helper_info_stackprot
-helper_ld16_mmu
-helper_ld_i128
-helper_ldq_mmu
-helper_ldsb_mmu
-helper_ldsl_mmu
-helper_ldsw_mmu
-helper_ldub_mmu
-helper_ldul_mmu
-helper_lduw_mmu
-helper_lookup_tb_ptr
-helper_mmu_read
-helper_mmu_write
-helper_mulsh_i64
-helper_muluh_i64
-helper_nonatomic_cmpxchgo
-helper_pcmpbf
-helper_put
-helper_raise_exception
-helper_rem_i32
-helper_rem_i64
-helper_remu_i32
-helper_remu_i64
-helper_sar_i64
-helper_shl_i64
-helper_shr_i64
-helper_st16_mmu
-helper_st_i128
-helper_stackprot
-helper_stb_mmu
-helper_stl_mmu
-helper_stq_mmu
-helper_stw_mmu
-hmp_cmds
-hmp_compare_cmd
-hmp_gpa2hva
-hmp_gva2gpa
-hmp_info_registers
-hmp_memory_dump
-hmp_physical_memory_dump
-icount_handle_deadline
-icount_handle_interrupt
-icount_percpu_budget
-icount_prepare_for_run
-icount_process_data
-iotlb_to_section
-kvm_allowed
-kvm_arm_supports_user_irq
-kvm_async_interrupts_allowed
-kvm_cpu_synchronize_state
-kvm_create_guest_memfd
-kvm_dirty_ring_enabled
-kvm_dirty_ring_size
-kvm_flush_coalesced_mmio_buffer
-kvm_get_free_memslots
-kvm_get_max_memslots
-kvm_gsi_direct_mapping
-kvm_gsi_routing_allowed
-kvm_has_sync_mmu
-kvm_hwpoisoned_mem
-kvm_init_cpu_signals
-kvm_init_irq_routing
-kvm_irqchip_add_change_notifier
-kvm_irqchip_add_irqfd_notifier_gsi
-kvm_irqchip_add_msi_route
-kvm_irqchip_change_notify
-kvm_irqchip_commit_routes
-kvm_irqchip_release_virq
-kvm_irqchip_remove_change_notifier
-kvm_irqchip_remove_irqfd_notifier_gsi
-kvm_irqchip_update_msi_route
-kvm_kernel_irqchip
-kvm_msi_use_devid
-kvm_msi_via_irqfd_allowed
-kvm_on_sigbus
-kvm_on_sigbus_vcpu
-kvm_readonly_mem_allowed
-kvm_resamplefds_allowed
-kvm_state
-list_cpus
-max_advance
-max_delay
-memory_access_size
-memory_get_xlat_addr
-memory_global_after_dirty_log_sync
-memory_global_dirty_log_start
-memory_global_dirty_log_stop
-memory_global_dirty_log_sync
-memory_listener_register
-memory_listener_unregister
-memory_region_access_valid
-memory_region_add_coalescing
-memory_region_add_eventfd
-memory_region_add_subregion
-memory_region_add_subregion_overlap
-memory_region_clear_coalescing
-memory_region_clear_dirty_bitmap
-memory_region_clear_flush_coalesced
-memory_region_del_eventfd
-memory_region_del_subregion
-memory_region_dispatch_read
-memory_region_dispatch_write
-memory_region_find
-memory_region_flush_rom_device
-memory_region_from_host
-memory_region_get_alignment
-memory_region_get_dirty_log_mask
-memory_region_get_fd
-memory_region_get_ram_addr
-memory_region_get_ram_discard_manager
-memory_region_get_ram_ptr
-memory_region_has_guest_memfd
-memory_region_init
-memory_region_init_alias
-memory_region_init_io
-memory_region_init_iommu
-memory_region_init_ram
-memory_region_init_ram_device_ptr
-memory_region_init_ram_flags_nomigrate
-memory_region_init_ram_from_fd
-memory_region_init_ram_from_file
-memory_region_init_ram_guest_memfd
-memory_region_init_ram_nomigrate
-memory_region_init_ram_ptr
-memory_region_init_resizeable_ram
-memory_region_init_rom
-memory_region_init_rom_device
-memory_region_init_rom_device_nomigrate
-memory_region_init_rom_nomigrate
-memory_region_iommu_attrs_to_index
-memory_region_iommu_get_attr
-memory_region_iommu_get_min_page_size
-memory_region_iommu_num_indexes
-memory_region_iommu_replay
-memory_region_is_logging
-memory_region_is_mapped
-memory_region_is_protected
-memory_region_is_ram_device
-memory_region_msync
-memory_region_name
-memory_region_notify_iommu
-memory_region_notify_iommu_one
-memory_region_owner
-memory_region_present
-memory_region_ram_resize
-memory_region_ref
-memory_region_register_iommu_notifier
-memory_region_reset_dirty
-memory_region_rom_device_set_romd
-memory_region_section_free_copy
-memory_region_section_get_iotlb
-memory_region_section_new_copy
-memory_region_set_address
-memory_region_set_alias_offset
-memory_region_set_coalescing
-memory_region_set_dirty
-memory_region_set_enabled
-memory_region_set_flush_coalesced
-memory_region_set_log
-memory_region_set_nonvolatile
-memory_region_set_ram_discard_manager
-memory_region_set_readonly
-memory_region_set_size
-memory_region_set_unmergeable
-memory_region_size
-memory_region_snapshot_and_clear_dirty
-memory_region_snapshot_get_dirty
-memory_region_transaction_begin
-memory_region_transaction_commit
-memory_region_unmap_iommu_notifier_range
-memory_region_unref
-memory_region_unregister_iommu_notifier
-memory_region_writeback
-microblaze_load_kernel
-mig_throttle_counter_reset
-migrate_ram_is_ignored
-migration_bitmap_sync_precopy
-migration_populate_vfio_info
-migration_reset_vfio_bytes_transferred
-mmu_init
-mmu_read
-mmu_translate
-mmu_write
-mon_get_cpu
-mon_get_cpu_env
-monitor_get_cpu_index
-monitor_register_hmp
-monitor_register_hmp_info_hrt
-monitor_set_cpu
-mtree_info
-mtree_print_dispatch
-mttcg_enabled
-mttcg_kick_vcpu_thread
-mttcg_start_vcpu_thread
-one_insn_per_tb
-page_init
-page_table_config_init
-parse_cpu_option
-portio_list_add
-portio_list_del
-portio_list_destroy
-portio_list_init
-portio_list_set_address
-portio_list_set_enabled
-portio_list_set_flush_coalesced
-postcopy_preempt_shutdown_file
-precopy_add_notifier
-precopy_infrastructure_init
-precopy_notify
-precopy_remove_notifier
-prepare_mmio_access
-probe_access
-probe_access_flags
-probe_access_full
-probe_access_full_mmu
-qapi_dummy_qapi_commands_c
-qapi_dummy_qapi_commands_machine_target_c
-qapi_dummy_qapi_commands_misc_target_c
-qapi_dummy_qapi_emit_events_c
-qapi_dummy_qapi_events_c
-qapi_dummy_qapi_events_machine_target_c
-qapi_dummy_qapi_events_misc_target_c
-qapi_dummy_qapi_init_commands_c
-qapi_dummy_qapi_introspect_c
-qapi_dummy_qapi_types_c
-qapi_dummy_qapi_types_machine_target_c
-qapi_dummy_qapi_types_misc_target_c
-qapi_dummy_qapi_visit_c
-qapi_dummy_qapi_visit_machine_target_c
-qapi_dummy_qapi_visit_misc_target_c
-qapi_free_CpuModelInfo
-qapi_free_SGXEPCSection
-qapi_free_SGXEPCSectionList
-qemu_flush_coalesced_mmio_buffer
-qemu_guest_free_page_hint
-qemu_init_arch_modules
-qemu_map_ram_ptr
-qemu_maxrampagesize
-qemu_minrampagesize
-qemu_mutex_lock_ramlist
-qemu_mutex_unlock_ramlist
-qemu_ram_addr_from_host
-qemu_ram_addr_from_host_nofail
-qemu_ram_alloc
-qemu_ram_alloc_from_fd
-qemu_ram_alloc_from_file
-qemu_ram_alloc_from_ptr
-qemu_ram_alloc_resizeable
-qemu_ram_block_by_name
-qemu_ram_block_from_host
-qemu_ram_block_host_offset
-qemu_ram_foreach_block
-qemu_ram_free
-qemu_ram_get_fd
-qemu_ram_get_host_addr
-qemu_ram_get_idstr
-qemu_ram_get_max_length
-qemu_ram_get_offset
-qemu_ram_get_used_length
-qemu_ram_is_migratable
-qemu_ram_is_named_file
-qemu_ram_is_noreserve
-qemu_ram_is_shared
-qemu_ram_is_uf_zeroable
-qemu_ram_msync
-qemu_ram_pagesize
-qemu_ram_pagesize_largest
-qemu_ram_remap
-qemu_ram_resize
-qemu_ram_set_idstr
-qemu_ram_set_migratable
-qemu_ram_set_uf_zeroable
-qemu_ram_unset_idstr
-qemu_ram_unset_migratable
-qemu_semihosting_guestfd_init
-qemu_target_page_bits
-qemu_target_page_bits_min
-qemu_target_page_mask
-qemu_target_page_size
-qemu_target_pages_to_MiB
-qmp_init_marshal
-qmp_query_hv_balloon_status_report
-qmp_schema_qlit
-qmp_xen_set_global_dirty_log
-ram_block_coordinated_discard_require
-ram_block_discard_disable
-ram_block_discard_guest_memfd_range
-ram_block_discard_is_disabled
-ram_block_discard_is_required
-ram_block_discard_range
-ram_block_discard_require
-ram_block_format
-ram_block_uncoordinated_discard_disable
-ram_bytes_remaining
-ram_bytes_total
-ram_dirty_bitmap_reload
-ram_discard_manager_get_min_granularity
-ram_discard_manager_is_populated
-ram_discard_manager_register_listener
-ram_discard_manager_replay_discarded
-ram_discard_manager_replay_populated
-ram_discard_manager_unregister_listener
-ram_discard_range
-ram_get_total_transferred_pages
-ram_handle_zero
-ram_list
-ram_load_postcopy
-ram_mig_init
-ram_pagesize_summary
-ram_postcopy_incoming_init
-ram_postcopy_migrated_memory_release
-ram_postcopy_send_discard_bitmap
-ram_release_page
-ram_save_queue_pages
-ram_transferred_add
-ram_write_tracking_available
-ram_write_tracking_compatible
-ram_write_tracking_start
-ram_write_tracking_stop
-ramblock_is_pmem
-ramblock_page_is_discarded
-ramblock_recv_bitmap_send
-ramblock_recv_bitmap_set
-ramblock_recv_bitmap_set_offset
-ramblock_recv_bitmap_set_range
-ramblock_recv_bitmap_test
-ramblock_recv_bitmap_test_byte_offset
-ramblock_set_file_bmap_atomic
-rr_kick_vcpu_thread
-rr_start_vcpu_thread
-set_preferred_target_page_bits
-target_name
-target_words_bigendian
-tb_check_watchpoint
-tb_ctx
-tb_flush
-tb_gen_code
-tb_htable_init
-tb_invalidate_phys_range
-tb_invalidate_phys_range_fast
-tb_link_page
-tb_lock_page0
-tb_lock_page1
-tb_phys_invalidate
-tb_reset_jump
-tb_set_jmp_target
-tb_unlock_page1
-tb_unlock_pages
-tcg_cflags_has
-tcg_cflags_set
-tcg_cpu_destroy
-tcg_cpu_exec
-tcg_cpu_init_cflags
-tcg_exec_realizefn
-tcg_exec_unrealizefn
-tcg_flush_jmp_cache
-tcg_handle_interrupt
-tcg_iommu_free_notifier_list
-tcg_iommu_init_notifier_list
-tlb_destroy
-tlb_flush
-tlb_flush_all_cpus_synced
-tlb_flush_by_mmuidx
-tlb_flush_by_mmuidx_all_cpus_synced
-tlb_flush_page
-tlb_flush_page_all_cpus_synced
-tlb_flush_page_bits_by_mmuidx
-tlb_flush_page_bits_by_mmuidx_all_cpus_synced
-tlb_flush_page_by_mmuidx
-tlb_flush_page_by_mmuidx_all_cpus_synced
-tlb_flush_range_by_mmuidx
-tlb_flush_range_by_mmuidx_all_cpus_synced
-tlb_init
-tlb_protect_code
-tlb_reset_dirty
-tlb_reset_dirty_range_all
-tlb_set_page
-tlb_set_page_full
-tlb_set_page_with_attrs
-tlb_unprotect_code
-tlb_vaddr_to_host
-trace_event_set_state_dynamic
-trace_event_set_state_dynamic_init
-translator_fake_ld
-translator_io_start
-translator_is_same_page
-translator_ldl
-translator_ldq
-translator_ldub
-translator_lduw
-translator_loop
-translator_st
-translator_st_len
-translator_use_goto_tb
-unassigned_io_ops
-unassigned_mem_ops
-visit_type_CpuModelCompareResult
-visit_type_CpuModelExpansionType
-visit_type_CpuModelInfo
-visit_type_CpuModelInfo_members
-visit_type_SGXEPCSection
-visit_type_SGXEPCSectionList
-visit_type_SGXEPCSection_members
-vmstate_cpu_common
-win_dump_available
-xbzrle_cache_resize
-xbzrle_counters
-xen_allowed
-xen_evtchn_deliver_pirq_msi
-xen_evtchn_remove_pci_device
-xen_evtchn_snoop_msi
-xen_primary_console_create
-xen_primary_console_set_be_port
+>               continue;
+>           }
+>   
+> @@ -223,12 +222,12 @@ static void thread_pool_cancel(BlockAIOCB *acb)
+>       trace_thread_pool_cancel(elem, elem->common.opaque);
+>   
+>       QEMU_LOCK_GUARD(&pool->lock);
+> -    if (elem->state == THREAD_QUEUED) {
+> +    if (qatomic_load_acquire(&elem->state) == THREAD_QUEUED) {
+
+This is not ordering anything so it can be qatomic_read/qatomic_set 
+(technically the one below doesn't even need that, but it's fine).
+
+>           QTAILQ_REMOVE(&pool->request_list, elem, reqs);
+>           qemu_bh_schedule(pool->completion_bh);
+>   
+> -        elem->state = THREAD_DONE;
+>           elem->ret = -ECANCELED;
+> +        qatomic_store_release(&elem->state, THREAD_DONE);
+>       }
+>   
+>   }
+> @@ -251,8 +250,8 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
+>       req = qemu_aio_get(&thread_pool_aiocb_info, NULL, cb, opaque);
+>       req->func = func;
+>       req->arg = arg;
+> -    req->state = THREAD_QUEUED;
+>       req->pool = pool;
+> +    qatomic_store_release(&req->state, THREAD_QUEUED);
+
+This does not need any atomic access, because there is ordering via 
+pool->lock (which protects the request_list).  There's no need to do 
+store-release and load-acquire except to order with another store or 
+load, and in fact adding unnecessary acquire/release is harder to 
+understand.
+
+Paolo
+
+>       QLIST_INSERT_HEAD(&pool->head, req, all);
+>   
 
 
