@@ -4,92 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25EEC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 13:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8104FC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 13:36:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl6gX-0003eW-Eb; Thu, 20 Feb 2025 08:33:49 -0500
+	id 1tl6j8-0006AP-RL; Thu, 20 Feb 2025 08:36:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tl6g3-0003cH-8L
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:33:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tl6fz-00081w-RH
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:33:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740058395;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=lyuyK4hJ50cNIkLA/9MKwa8uRRJk1MpmqfEcfpsnCFU=;
- b=BJmF57t2Ee8mSGwzikvkl2gC+whx3W3H7riTkBS7hZ5d7qiAnMiaq1eQCjBwobZ9q7iMTJ
- 089LZdtcD/0v83qA/AW2FCVihtyyUKJz7ohXdw4bjxDXGMDL3jn2NWXqgU3L+NkatLfSIl
- 3QIgjMqaTzgUjMIGMgoybxHqx8V1pIM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-M22d3_74Nl-Uawgs80c6dg-1; Thu, 20 Feb 2025 08:33:10 -0500
-X-MC-Unique: M22d3_74Nl-Uawgs80c6dg-1
-X-Mimecast-MFC-AGG-ID: M22d3_74Nl-Uawgs80c6dg_1740058389
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43943bd1409so6854705e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 05:33:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740058389; x=1740663189;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lyuyK4hJ50cNIkLA/9MKwa8uRRJk1MpmqfEcfpsnCFU=;
- b=E7sb5kAdmXK3zy+mvFH/aqPNSlEPEZIoUfqDTIWDi1x9Sdf+3XJQg8jO1S9JVAfw8s
- Bx+rJiyJQJQch/L5uKTHp3NUydU0onnXpjprvt3KQRo4TjX0U71tfBnY+uFAxBJ6rNCN
- teMTNThwOTUMOstAfMQKkdT8HTYy3OqN9FoEcVzAKEM85ogGxFGpmG9b1XMlHRi3OYc9
- UzWlOYLm+PbFMY253gUU3z4YGSKGSfd8t9q7gxoSi2AfZb183wWGeolhHJ6YiKSu86n2
- JZFjB/OSZ8Zwabdg6Zp3hVlKa/bO+ZSPZZP1GU4YSkwtYn0NH4ZL9iBNdoRIwZmQKQpT
- T9rg==
-X-Gm-Message-State: AOJu0YxlLdVSn2d/uO4plVbQgH9QY2+Uxdd5bcUPwL1IZYhqmGyktUIf
- bTOia1vaWI57N0lETConW/xBtL5uiwU5olYWeM6UJTKnU3wv48hCSIDNZJxTulc77xqgVpj4bvP
- M7Y0MjF6K300us+iY7CsVPTFZQgpKwhMG2QCt9P9yyEWrwVKKjMo+rM8ywXLFtOSThFy0BJzam8
- 9fF+s49lTXn20O1rqVvAxS096ONimQMwClddJgDLg=
-X-Gm-Gg: ASbGnctS41elD2s0aTq5tr8cUH4eEh2quyENBToxxPZIa2MI7TDN5vf5F/z+oEEmYqw
- Wmb5ef/geZpSOk6A07OLTcSbiwY7HXSM1/Mc1kzMygZloQlOeNnRkJzqDxZLbkPjIPA1wfywGlu
- qw0R0mnBet8ZONOX6BOumj7CscGM6rT5lBYgin1WWeDrTp/esKlLt4XCOgPgi3I58kgiqKqJ1w3
- 6pxyLW5PMjQw0j5Vv/CCuVI1qUTyUMWdVUW9dNctepbtdUWCbZQb+zS1i9oLJCffgeUc/YrNP1z
- oaTLURnuYyY=
-X-Received: by 2002:a05:600c:1c86:b0:439:60bc:71e5 with SMTP id
- 5b1f17b1804b1-43999ddae58mr62157465e9.26.1740058388735; 
- Thu, 20 Feb 2025 05:33:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHLHAXYng+AacH326e9Y03iAZFow/FpP8oxdMgKefIh3rPh4hHUUr1syzC4TqENJgza3muNhg==
-X-Received: by 2002:a05:600c:1c86:b0:439:60bc:71e5 with SMTP id
- 5b1f17b1804b1-43999ddae58mr62157195e9.26.1740058388181; 
- Thu, 20 Feb 2025 05:33:08 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.122.109])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43985c50397sm116057815e9.0.2025.02.20.05.33.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 05:33:07 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH 0/2] pvg: clean up Kconfig
-Date: Thu, 20 Feb 2025 14:33:04 +0100
-Message-ID: <20250220133306.1104382-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tl6j4-0006A6-3p
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:36:26 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tl6j2-00008q-0t
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:36:25 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CE75621182;
+ Thu, 20 Feb 2025 13:36:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1740058582; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dcrNVqXIvx+qrgixaOV7/gy4eNeVuehWVeMOOgCUv1M=;
+ b=BTxA1IBtduxfHei/A7CV4ZHOrV/iu2yBaSTSE4TB8REjiwDa7F6D/GRklu41NLinfy2B+F
+ 5rBfWRPoTQvpRncrUU3UrsPY9pKMQEhIzQ0Gnn38GARxTcFUNRHNzheWk0pg+cPVYD3D72
+ T54lGOl9gX3qxFZwrtCjMwjJ1Y1HyFg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1740058582;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dcrNVqXIvx+qrgixaOV7/gy4eNeVuehWVeMOOgCUv1M=;
+ b=RfAK5r6DRUve1KXJk99Kt7gyWuBD1+4YgVqDHvQFICNg55KirVNtW64d4CQnkE+oTQ/EB5
+ XGTpvWrw+92m34AQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=L9gqZroy;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=zA48Zo1m
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1740058580; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dcrNVqXIvx+qrgixaOV7/gy4eNeVuehWVeMOOgCUv1M=;
+ b=L9gqZroyzEMPs/faWgB3tMAnKACATZ8VfEeOeWiRNsjPm+1IwFz+JsrWwHrStXqnTn+vXn
+ /zAEIzPJj1mz1HLUwpMY4tTN0ZWoXZ/45ZfPzZsWoZwyoiGW6wiO0/ZwwYHO4ZvoTmgO6k
+ aO7PpLW3aCIALoNMhG79dxj5BariaR0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1740058580;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dcrNVqXIvx+qrgixaOV7/gy4eNeVuehWVeMOOgCUv1M=;
+ b=zA48Zo1m4DGY0ZsRcaXu7aQKJD6FBXak5AxCXlxmNIgG+vUp9PTKWtIk7T4aMhtCBNPeRd
+ xO+Ygwqh+UbfdeBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4635313A42;
+ Thu, 20 Feb 2025 13:36:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zP9/AdQvt2fFRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 20 Feb 2025 13:36:20 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, Prasad
+ Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v6 2/4] migration: enable multifd and postcopy together
+In-Reply-To: <CAE8KmOyzkLS3zvb7a32CUVJuvS-VEkZwSAfJUZwQqT-xiZLnJw@mail.gmail.com>
+References: <20250215123119.814345-1-ppandit@redhat.com>
+ <20250215123119.814345-3-ppandit@redhat.com> <87y0y4tf5q.fsf@suse.de>
+ <CAE8KmOxYE=10+xjMjH5ZhbMmRJHgxJKHj2wH-nB-qiBSHEVh1w@mail.gmail.com>
+ <878qq39vu3.fsf@suse.de>
+ <CAE8KmOyy=ybDaRFpFr0DTJWScyjCX+99PKHzLibv6zhtUpw8Ng@mail.gmail.com>
+ <87r03t97ep.fsf@suse.de>
+ <CAE8KmOyzkLS3zvb7a32CUVJuvS-VEkZwSAfJUZwQqT-xiZLnJw@mail.gmail.com>
+Date: Thu, 20 Feb 2025 10:36:17 -0300
+Message-ID: <87jz9k91ri.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: CE75621182
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,27 +132,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not enable Apple ParavirtualizedGraphics on cross-architecture targets,
-where it is not supported by the drivers, and add an option to configure it
-out just like most others external dependencies.
+Prasad Pandit <ppandit@redhat.com> writes:
 
-Only compile-tested on non-Mac for now, but CI is in progress.
+> Hello,
+>
+> On Wed, 19 Feb 2025 at 22:53, Fabiano Rosas <farosas@suse.de> wrote:
+>> I don't see anything stopping postcopy_start() from being called in the
+>> source in relation to multifd recv threads being setup in the
+>> destination. So far it seems possible that the source is opening the
+>> preempt channel while multifd still hasn't seen all threads. There's
+>> also pre-7.2 machines which create the postcopy channel early.
+>
+> * If we can not predict the sequence/timings of when different types
+> of connections are initiated and processed, maybe source and
+> destination QEMUs could work in tandem. ie. before initiating a
+> connection, source QEMU could send an 'initiate' message saying I'm
+> initiating 'X' connection. Only when destination QEMU says 'okay',
+> source QEMU could proceed with actual connection.
+>
+>      QEMU-A  -> Initiate connection type X -> QEMU-B
+>      QEMU-A  <-            okay           <-        <- QEMU-B
+>      QEMU-A ->       connect type X            -> QEMU-B
+>
+>    (thinking out loud)
+>
 
-Paolo
+This is more or less the handshake idea. Or at least it could be
+included in that work.
 
-Paolo Bonzini (2):
-  pvg: do not enable it on cross-architecture targets
-  pvg: add option to configure it out
+I have parked the handshake idea for now because I'm not seeing an
+immediate need for it and there are more pressing issues to be dealt
+with first such as bugs and coordinating the new features (and their
+possible outcomings) that IMO need to be looked at first.
 
- meson.build                   | 16 +++++++++++++---
- Kconfig.host                  |  3 +++
- hw/display/Kconfig            |  4 ----
- hw/display/meson.build        |  9 +++------
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 6 files changed, 24 insertions(+), 13 deletions(-)
+>>>> > * migration_needs_multiple_sockets()
+>>> Then it should return 'True' when both migrate_multifd() and postcopy_preempt() are enabled.
+>> Why?
+>
+> * I was thinking multiple_sockets is multiple types of sockets:
+> multifd & postcopy. But it seems here multiple sockets is any type of
+> multiple sockets.
+>
 
--- 
-2.48.1
+Yes this means main channel + others.
 
+>> I thought you meant the CH_MAIN stuff. So now I don't know what you
+>> mean. You want to do away with multifd?
+>
+> * Yes, CH_DEFAULT -> CH_MAIN was introduced in this series to identify
+> channels and accordingly call relevant functions.
+>
+> * Not to do away with multifd, but more of making it same as the main
+> channel, ex: virsh migrate --threads <N> N = 1...255. All precopy
+> threads/connections behave the same. Differentiation of precopy and
+> postcopy shall still exist, because they operate/work in opposite
+> directions.
+>
+
+I'm not opposed to that idea. When I started working with migration I
+had the impression that was the direction and that we could put every
+workload in a pool of multifd threads. Now, knowing the code better, I'm
+not sure that's feasible. Specially the dependence on a "main" channel
+seems difficult to do away with. It's also somewhat convenient to have a
+maint thread. But we could still attempt to group extra threads, such as
+what we're doing with the new thread pool in the device state series. At
+least thread management could be done entirely in a separate pool, main
+channel and all.
+
+>> Continue with this patch and fix the stuff I mentioned. You can ignore
+>> the first two paragraphs of that reply.
+>>
+>> https://lore.kernel.org/r/87y0y4tf5q.fsf@suse.de
+>>
+>> I still think we need to test that preempt + multifd scenario, but it
+>> should be easy to write a test for that once the series is in more of a
+>> final shape.
+>
+> * Okay.
+>
+>> We can't add magic values, as we've discussed.
+>
+> Okay.
+>
+> Thank you.
+> ---
+>   - Prasad
 
