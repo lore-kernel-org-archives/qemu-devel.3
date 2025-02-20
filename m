@@ -4,99 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ABB1C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 21:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECB8C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 21:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlDrr-0007zs-IE; Thu, 20 Feb 2025 16:13:59 -0500
+	id 1tlEGJ-0003cb-Qs; Thu, 20 Feb 2025 16:39:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlDrq-0007zh-7P
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 16:13:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tlEGG-0003bq-Ii; Thu, 20 Feb 2025 16:39:12 -0500
+Received: from mail-sn1nam02on20629.outbound.protection.outlook.com
+ ([2a01:111:f403:2406::629]
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlDrn-0003qA-QN
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 16:13:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740086034;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xOYuHVpn2qnddkWXhC48IVHt9eBwm7/YaB7gfVfQtRw=;
- b=Ll2ZPcSQAejKhQA/hnwoe38Q1VOtUwtbu5QTS+Akqo0igmJ7F1FhqwTiq+hgK0HlDBqGI3
- SbsaPEH/ajfyo57DsSVn2C6YDNe9N+nRcbX/gRtqxqKCSFsabsnJfhYix/061do7ib9o4v
- rjhgZ0Jecij6Pi3Pztnd+oeDRGi77LU=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-155-O6Ox61lDOk2Q1yqVJONZvg-1; Thu, 20 Feb 2025 16:13:52 -0500
-X-MC-Unique: O6Ox61lDOk2Q1yqVJONZvg-1
-X-Mimecast-MFC-AGG-ID: O6Ox61lDOk2Q1yqVJONZvg_1740086031
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ab39f65dc10so175762566b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 13:13:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740086031; x=1740690831;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xOYuHVpn2qnddkWXhC48IVHt9eBwm7/YaB7gfVfQtRw=;
- b=SLb37Z3mQ1cjHrjD+HyfcidqQpYFt/bq6dVCB6h3X1AkEMbrjefWmPPMevJ3o41TNp
- b0vGKbM/vqGE70ofJz2tLwi89LTVw7craeZqIHvdK9auT4dBIeeVL7FzdH/QID3+7Rc2
- ZfdyUvIE9XOAqBXO9TO/FuhawSdiPs9ityy7ES902KkInIyAgUbRMaKon/c4t1iX2WL+
- P4SvbleMdRr6YZEq9ce45AdeNG5V69q0OldH6jDxkE6cbL1oAltsMsZKF1zMmdfgymx3
- MdkyG8Gx8YFjk1jbbRpDIuNxY4vpGQS+C8ys3nYPv1kIMy7UbFT0QwLKXk4ZI7o8yGuv
- PlRQ==
-X-Gm-Message-State: AOJu0YwrUCduvOq8vhiW9jlIUkZu0zRe9W1yT04bTLIxK70yJNIcGaq8
- qyzfEIHWtSKNZUp71CtkcfrmZHAgEivE2rcUgpQ9hykJYLJWqEfGbPZh9YdrOMwyStS+JgWmQkR
- ReR3iXWoJTu8Rk8C/jJ7zxmjC85Y9WY9RmdCKUqob/tKn3qcG7WjA
-X-Gm-Gg: ASbGncvq5ELo4sUwzzsnJlkJj2ey4oD5cXMhqWCk4Wa2oHjo7yfCFVCXxZ4z69vL6pm
- bERTT7/6RHIOjVJOLO0+fkGE9dVPPCYsbl/65fUeCztMqhtD9ubqBZvmSUUqtbOV4/8QSZi+oru
- IvNWPRB7JWnbfG6V/Ou0/WvfTchNpvT0Ymfn5LK+zHjbkVpQ13nNHg5AOi1Td7Qq2RXSPaKHGtH
- GmXW47EOlJLUyEaufpKQiTXrxB4M9x88P8XVh0gzqY2B/u1revb+nppMcrB9Tmy4sxtUw==
-X-Received: by 2002:a17:907:3f09:b0:ab6:53fb:9683 with SMTP id
- a640c23a62f3a-abc09d37a86mr79879166b.54.1740086031274; 
- Thu, 20 Feb 2025 13:13:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHlM24MeWTTP26WUi4Dr35Cy35KJgCDDRSGTpwX0ZOrQ49l5NcSt4t1DK51+45paukZWcE0iQ==
-X-Received: by 2002:a17:907:3f09:b0:ab6:53fb:9683 with SMTP id
- a640c23a62f3a-abc09d37a86mr79875766b.54.1740086030804; 
- Thu, 20 Feb 2025 13:13:50 -0800 (PST)
-Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aba532802a1sm1523392966b.76.2025.02.20.13.13.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 13:13:50 -0800 (PST)
-Date: Thu, 20 Feb 2025 16:13:46 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "tjeznach@rivosinc.com" <tjeznach@rivosinc.com>,
- "minwoo.im@samsung.com" <minwoo.im@samsung.com>
-Subject: Re: [PATCH v2 00/19] intel_iommu: Add ATS support
-Message-ID: <20250220153757-mutt-send-email-mst@kernel.org>
-References: <20250120174033.308518-1-clement.mathieu--drif@eviden.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tlEGE-0006jL-JZ; Thu, 20 Feb 2025 16:39:12 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YBLyCEM/w1Rf55eVVUPhSYK5vzqcoKCvGU7ZpJIaJlA83s5jqubdO0j8o/QpWCNLTdegmW/v5MHzP9KtZVjfiOblAF/6E1u9b0vpl3oXryhS2LFyomAaY5PodgIfkanpOHkIaAVJPaFN9hvpqkmEb/4o0VMjwMr9oQJB+y7vwUdVEvydAcxorXy4cZgede9GCzYfLL9IgUu2GArPeFJvjw/Z/YH0Qj8EOEmYUGw0X4am4GN+v6N1wM3H3sHq6UiU9ypfPdGAiPmTQfVvIGzDasZtagbkNd4dQh/CM5QmeVXFXWBbqrVHuU8tNTnQJzuVrCUcJAxSpBBYCm8HRWErLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8OkLWlLEZ5OBUGv6BS2YbatOvQgPH/3HBipNwtBANew=;
+ b=wWTu2nlNs+oVuYjjO0bujG5OfHQfygVSYqRRf4mrKbW7KSPHWD3iZ5dlrFJZUINv/Z6LzstTOkvstzlm0/LOHixfRwCA5OyI7W993AeCRMa6JsrOdCWPcTo/yHfzxvh5F1GHfZWoqJ/ZgAlRaxtWIC75keg8Y+WTFEF1SfhnVl5di3XlzPaEC+H/rYb7CvkwuV1i1OokmQhUcLT93qcx7SjIAI+4MRdpQHhTH7g7tV34lgxjYOQ4XXYyiTXz1DrSEf6YPHCrWXWN1eU8/A6WOYImJZWODkrg8Ym66blzKaBc0Ssh00bAc8I0tZlbNz781pjxcx8rKGowKPVL/QTOqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8OkLWlLEZ5OBUGv6BS2YbatOvQgPH/3HBipNwtBANew=;
+ b=ZJZyeGMCWjpSrrZWt2Ps/tGjS7yh6gsWsCLOhehDwxJ/GfHqgsEGT5kjRETekrnxLJMa1sRMjE3ecO6wDte5rSHD9REuoj1ou76KboL3nWCla/bioFfnfOYsR7t5CamSaN75qzFZf8FsAClxML5Qs6MxmvjYigqU+Qb+eNn8RN7krASJvAftDX+B/pjrr8ebp2LXpB0CP4VVbP/DpgBstLaRszrw6OEeQ9977p6s1ooLlqCZ4lx1QjzYgSbnR5iz7Gnb9zEXBjiDVk5Qh1NgpB/Zj6/TENcevQDk+0hOa/LFZWSw/KvWwkK0newAwV+OJ5d0g9jJIF8mwegkzXob/g==
+Received: from MN2PR19CA0047.namprd19.prod.outlook.com (2603:10b6:208:19b::24)
+ by SA0PR12MB7001.namprd12.prod.outlook.com (2603:10b6:806:2c0::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.14; Thu, 20 Feb
+ 2025 21:39:00 +0000
+Received: from BN2PEPF000044AC.namprd04.prod.outlook.com
+ (2603:10b6:208:19b:cafe::19) by MN2PR19CA0047.outlook.office365.com
+ (2603:10b6:208:19b::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.31 via Frontend Transport; Thu,
+ 20 Feb 2025 21:38:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN2PEPF000044AC.mail.protection.outlook.com (10.167.243.107) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 21:38:59 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 20 Feb
+ 2025 13:38:37 -0800
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 20 Feb
+ 2025 13:38:37 -0800
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
+ Transport; Thu, 20 Feb 2025 13:38:36 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <peter.maydell@linaro.org>, <eric.auger@redhat.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: [PATCH] hw/arm/smmuv3: Fill u.f_cd_fetch.addr for SMMU_EVT_F_CD_FETCH
+Date: Thu, 20 Feb 2025 13:38:31 -0800
+Message-ID: <20250220213832.80289-1-nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250120174033.308518-1-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044AC:EE_|SA0PR12MB7001:EE_
+X-MS-Office365-Filtering-Correlation-Id: d860601a-87e5-4914-aa4a-08dd51f6fc69
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?xWoruRy/+aFd0oLTeVb0cC/PquXVF0Eb/amb3alQOoQuDYEpWtmyYGZvsf5c?=
+ =?us-ascii?Q?mW3b3x+vCIlNnF2L06ddgN2BG/stv8kyuvR2CMW+2Z8rNOwe1MiyBHy7UAsk?=
+ =?us-ascii?Q?R3IoNgJUfYq3PQmiJMGtPjttib2bc0lneDBbzERNa5P5SyvDM0ry/JmJXhx6?=
+ =?us-ascii?Q?7HkNNlPcm7vgdABmc02HzgCBpglxgtQEhDybWU2gB9eOfqgLrXUmFM/rOljN?=
+ =?us-ascii?Q?OkaJukfCImqU6dgGgath0CvYRoXtxYRoaNK8cSYqBXXCxxVv/xTK/sDPb0jv?=
+ =?us-ascii?Q?CJO9dss7NvCuRXGwKtzjRTClQ35nTtIOV/Ep50grZqbdfj/nadheI/vNzWD9?=
+ =?us-ascii?Q?SiGIROm+2LSarPHOTX9snB4e+7+10Ar5j0ctFezxTTintfO5JdLuYKlVpRII?=
+ =?us-ascii?Q?IlM2vIivcZHdg1iYoMP9upR5VJsp3iNeJjr4ZNbrDI+eEeGRjTrXnGPp4ouz?=
+ =?us-ascii?Q?E7H4TEReB36nQKzrWuTjRzCrzqVZL5jk0rlXWxuTtgVtKJH7g/qNXpi8wQh6?=
+ =?us-ascii?Q?iiBCCG76lB8c8feya2/xmWKf/PyeZnVGIzdmZa/enxjG12JKysKtc9mKto0P?=
+ =?us-ascii?Q?YmWI1sclGvEZ0HMwLbxiwkBIeQExknYWBJXU+3gp1lr0knA1NnJNvmtVTXBd?=
+ =?us-ascii?Q?VfOGMUB0I2yDvIbWx82pHGtTbQ/VpezE+YZPF0Pd6meGRrnu9VujzhOIx0nY?=
+ =?us-ascii?Q?Mdl22SCFPfp5FKIwl5LC9kGOmF+O353HXbgEoMJSz3/Shwt8gEabF6TII9k7?=
+ =?us-ascii?Q?zSdRBVJpgXq6Xsg0kuCbs84ScUduM1HNmn8kx5srjXfC7SDpdtHFdDryKqF9?=
+ =?us-ascii?Q?kTI/0eAPJt2SB2LLrbI5cU//cfPtU3JQ1rmBSP0nyGpZexowiws6NxpBc2jt?=
+ =?us-ascii?Q?j0OBQWjayLij08zjsS6LHQgD6y+7drNRQiC1D+9QpeheaJMA9nQ6P58bVgSQ?=
+ =?us-ascii?Q?T9XfgrsbzYYo5QXNQM7hhLaSvyNo3pqfCVUbQluwbB7MBrOuTBNuDKaSYYoO?=
+ =?us-ascii?Q?t9DtBLKDqD1/AoZ/eC8KI4yPvtJNHymrS8TYZJs3mQFwRGi0JLK+OhJumqQ/?=
+ =?us-ascii?Q?CW7lRSsAe49WlfVYRzsqzR9Zdwco/rTQ6QI8h02b+JUCvJC2lxAe6eJIVPbL?=
+ =?us-ascii?Q?8eo+KWS5PoXMDYZPZZtQ+8X96xdNqB9L98MJRgBpVPD13T8WcsemduFMMNGy?=
+ =?us-ascii?Q?kFpJV2GpbYLJrywLYOqy1XZlfvEl3gu82HxpMC2iB+iGSuFjJhfr3c/zcWF2?=
+ =?us-ascii?Q?ID6sSB5ld3WE/LVNI3SfuHfO+eScJsLod/ZvUB/S93RBPKw+llS374c09BjP?=
+ =?us-ascii?Q?Nm82CduFijGjJS6xYjtSvOSymqnamh15jEGsol9mqqi8LnZHRVqrMKEnT/Ct?=
+ =?us-ascii?Q?hgbDSZMiB9V90WgS4Sq3V/HBffUs3dSnK30O0+TO6nHMrwpNsZ9fIC8jKKIk?=
+ =?us-ascii?Q?sJ1Nf/38lQqShmjf2Aa9HGPoAU1DF+nSZCpG4wpumJi8JEdrmjgyG0x8Rea3?=
+ =?us-ascii?Q?cBHscIu1jA7Xoro=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 21:38:59.3035 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d860601a-87e5-4914-aa4a-08dd51f6fc69
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044AC.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB7001
+Received-SPF: softfail client-ip=2a01:111:f403:2406::629;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,207 +151,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 20, 2025 at 05:41:32PM +0000, CLEMENT MATHIEU--DRIF wrote:
-> From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> 
-> This patch set belongs to a list of series that add SVM support for VT-d.
-> 
-> Here we focus on implementing ATS support in the IOMMU and adding a
-> PCI-level API to be used by virtual devices.
-> 
-> This work is based on the VT-d specification version 4.1 (March 2023).
-> 
-> Here is a link to our GitHub repository where you can find the following elements:
->     - Qemu with all the patches for SVM
->         - ATS
->         - PRI
->         - Device IOTLB invalidations
->         - Requests with already pre-translated addresses
->     - A demo device
->     - A simple driver for the demo device
->     - A userspace program (for testing and demonstration purposes)
-> 
-> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
+This is more like a cosmetics fix since the f_cd_fetch and f_ste_fetch are
+basically the same field since they are in the exact same union with exact
+same type.
 
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+---
+ hw/arm/smmuv3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Fails build:
-
-https://gitlab.com/mstredhat/qemu/-/jobs/9200372388
-
-In function ‘vtd_iommu_ats_do_translate’,
-    inlined from ‘vtd_iommu_ats_request_translation’ at ../hw/i386/intel_iommu.c:4778:17:
-../hw/i386/intel_iommu.c:4758:12: error: ‘entry.target_as’ may be used uninitialized [-Werror=maybe-uninitialized]
- 4758 |     return entry;
-      |            ^~~~~
-../hw/i386/intel_iommu.c: In function ‘vtd_iommu_ats_request_translation’:
-../hw/i386/intel_iommu.c:4745:19: note: ‘entry’ declared here
- 4745 |     IOMMUTLBEntry entry;
-      |                   ^~~~~
-cc1: all warnings being treated as errors
-
-
-
-
-> ===============
-> 
-> Context and design notes
-> ''''''''''''''''''''''''
-> 
-> The main purpose of this work is to enable vVT-d users to make
-> translation requests to the vIOMMU as described in the PCIe Gen 5.0
-> specification (section 10). Moreover, we aim to implement a
-> PCI/Memory-level framework that could be used by other vIOMMUs
-> to implement the same features.
-> 
-> What is ATS?
-> ''''''''''''
-> 
-> ATS (Address Translation Service) is a PCIe-level protocol that
-> enables PCIe devices to query an IOMMU for virtual to physical
-> address translations in a specific address space (such as a userland
-> process address space). When a device receives translation responses
-> from an IOMMU, it may decide to store them in an internal cache,
-> often known as "ATC" (Address Translation Cache) or "Device IOTLB".
-> To keep page tables and caches consistent, the IOMMU is allowed to 
-> send asynchronous invalidation requests to its client devices.
-> 
-> To avoid introducing an unnecessarily complex API, this series simply
-> exposes 3 functions. The first 2 are a pair of setup functions that
-> are called to install and remove the ATS invalidation callback during
-> the initialization phase of a process. The third one will be
-> used to request translations. The callback setup API introduced in
-> this series calls the IOMMUNotifier API under the hood.
-> 
-> API design
-> ''''''''''
-> 
-> - int pci_register_iommu_tlb_event_notifier(PCIDevice *dev,
->                                             uint32_t pasid,
->                                             IOMMUNotifier *n);
-> 
-> - int pci_unregister_iommu_tlb_event_notifier(PCIDevice *dev, uint32_t pasid,
->                                               IOMMUNotifier *n);
-> 
-> - ssize_t pci_ats_request_translation_pasid(PCIDevice *dev, uint32_t pasid,
->                                             bool priv_req, bool exec_req,
->                                             hwaddr addr, size_t length,
->                                             bool no_write,
->                                             IOMMUTLBEntry *result,
->                                             size_t result_length,
->                                             uint32_t *err_count);
-> 
-> Although device developers may want to implement custom ATC for
-> testing or performance measurement purposes, we provide a generic
-> implementation as a utility module.
-> 
-> Overview
-> ''''''''
-> 
-> Here are the interactions between an ATS-capable PCIe device and the vVT-d:
-> 
->                                                                                           
->                                                                                           
->   ┌───────────┐                 ┌────────────┐                                            
->   │Device     │                 │PCI / Memory│                                            
->   │           │ pci_ats_request_│abstraction │ iommu_ats_                                 
->   │           │ translation_    │            │ request_                                   
->   │┌─────────┐│ pasid           │ AS lookup  │ translation                                
->   ││Logic    ││────────────────>│╶╶╶╶╶╶╶╶╶╶╶>│──────┐                                     
->   │└─────────┘│<────────────────│<╶╶╶╶╶╶╶╶╶╶╶│<──┐  │                                     
->   │┌─────────┐│                 │            │   │  │                                     
->   ││inv func ││<───────┐        │            │   │  │                                     
->   │└─────────┘│        │        │            │   │  │                                     
->   │    │      │        │        │            │   │  │                                     
->   │    ∨      │        │        │            │   │  │                                     
->   │┌─────────┐│        │        │            │   │  │                                     
->   ││ATC      ││        │        │            │   │  │                                     
->   │└─────────┘│        │        │            │   │  │                                     
->   └───────────┘        │        └────────────┘   │  │                                     
->                        │                         │  │                                     
->                        │                         │  │                                     
->                        │                         │  │                                     
->                        │                         │  │                                     
->                        │    ┌────────────────────┼──┼─┐                                   
->                        │    │vVT-d               │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  ∨ │                                   
->                        │    │┌───────────────────────┐│                                   
->                        │    ││Translation logic      ││                                   
->                        │    │└───────────────────────┘│                                   
->                        └────┼────────────┐            │                                   
->                             │            │            │                                   
->                             │┌───────────────────────┐│                                   
->                             ││  Invalidation queue   ││                                   
->                             │└───────────∧───────────┘│                                   
->                             └────────────┼────────────┘                                   
->                                          │                                                
->                                          │                                                
->                                          │                                                
->                              ┌────────────────────────┐                                   
->                              │Kernel driver           │                                   
->                              │                        │                                   
->                              └────────────────────────┘
-> 
-> v2
->     Rebase on master after merge of Zhenzhong's FLTS series
->     Rename the series as it is now based on master.
->     
->     Changes after review by Michael:
->     	- Split long lines in memory.h
->     	- Change patch encoding (no UTF-8)
->     
->     Changes after review by Zhenzhong:
->     	- Rework "Fill the PASID field when creating an IOMMUTLBEntry"
-> 
-> 
-> 
-> Clement Mathieu--Drif (19):
->   memory: Add permissions in IOMMUAccessFlags
->   intel_iommu: Declare supported PASID size
->   memory: Allow to store the PASID in IOMMUTLBEntry
->   intel_iommu: Fill the PASID field when creating an IOMMUTLBEntry
->   pcie: Add helper to declare PASID capability for a pcie device
->   pcie: Helper functions to check if PASID is enabled
->   pcie: Helper function to check if ATS is enabled
->   pci: Cache the bus mastering status in the device
->   pci: Add IOMMU operations to get memory regions with PASID
->   intel_iommu: Implement the get_memory_region_pasid iommu operation
->   memory: Store user data pointer in the IOMMU notifiers
->   pci: Add a pci-level initialization function for iommu notifiers
->   atc: Generic ATC that can be used by PCIe devices that support SVM
->   atc: Add unit tests
->   memory: Add an API for ATS support
->   pci: Add a pci-level API for ATS
->   intel_iommu: Set address mask when a translation fails and adjust W
->     permission
->   intel_iommu: Return page walk level even when the translation fails
->   intel_iommu: Add support for ATS
-> 
->  hw/i386/intel_iommu.c          | 122 ++++++--
->  hw/i386/intel_iommu_internal.h |   2 +
->  hw/pci/pci.c                   | 111 ++++++-
->  hw/pci/pcie.c                  |  42 +++
->  include/exec/memory.h          |  51 +++-
->  include/hw/i386/intel_iommu.h  |   2 +-
->  include/hw/pci/pci.h           |  83 ++++++
->  include/hw/pci/pci_device.h    |   1 +
->  include/hw/pci/pcie.h          |   9 +-
->  include/hw/pci/pcie_regs.h     |   5 +
->  system/memory.c                |  21 ++
->  tests/unit/meson.build         |   1 +
->  tests/unit/test-atc.c          | 527 +++++++++++++++++++++++++++++++++
->  util/atc.c                     | 211 +++++++++++++
->  util/atc.h                     | 117 ++++++++
->  util/meson.build               |   1 +
->  16 files changed, 1275 insertions(+), 31 deletions(-)
->  create mode 100644 tests/unit/test-atc.c
->  create mode 100644 util/atc.c
->  create mode 100644 util/atc.h
-> 
-> -- 
-> 2.47.1
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index c0cf5df0f6..a6ffe124ea 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -377,7 +377,7 @@ static int smmu_get_cd(SMMUv3State *s, STE *ste, SMMUTransCfg *cfg,
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
+         event->type = SMMU_EVT_F_CD_FETCH;
+-        event->u.f_ste_fetch.addr = addr;
++        event->u.f_cd_fetch.addr = addr;
+         return -EINVAL;
+     }
+     for (i = 0; i < ARRAY_SIZE(buf->word); i++) {
+-- 
+2.43.0
 
 
