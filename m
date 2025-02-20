@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882B0C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8927EC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9JH-00076T-1V; Thu, 20 Feb 2025 11:21:59 -0500
+	id 1tl9JM-0007Bf-BZ; Thu, 20 Feb 2025 11:22:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JD-00074f-Gl
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:55 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1tl9JK-000784-CL
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:02 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JB-0008E8-L3
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:55 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-439350f1a0bso7457865e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:53 -0800 (PST)
+ id 1tl9JI-0008Ff-NN
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:02 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4398c8c8b2cso11630775e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068512; x=1740673312; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068519; x=1740673319; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=O/XiTl783bAz5rJgPI//LorE7cXWW1yZR5SkkLi5r0c=;
- b=ZCbGG3WdtrXRkojh2OLV18GgJT01AreRzVJjjS0MGsr2U4Y/2b16zui/P5PjGlxXaA
- 93OXo5os50jgNQ9IIf6Mvm0AYsf385daNftsMXPGX7wp+SmnWmviu1rt+OTsw8/tZb9z
- YaXySzIFe5kPQHB57edLUM9+0W1g4OtvU0s6UpUvE49WtGv5N19IUf2NAIm5ccztZNoM
- 6i8rSzkC3TEYBvbI97QmADA0XWjwPrw9XW+VW394ymguuyHRUrdQ73oSW05P1upVShng
- pJRXYWoScGrtIqf7vhQMoDlQ8AoKvfzS0+bXCPTik0kXjnDsXHhrzYIOnX43npELlQta
- nYVA==
+ :reply-to; bh=en6YocqtrS/0yWND16m0Wy3DxaXuYWGQFBD5//8sF1E=;
+ b=ROC+IosCo5Fs48id/5SFEGYdSANElVs4XCi0Ptob1lfrRJrK23Gvg194c58kE8T3iJ
+ dnMf6ZRkeaXJmqM8GyPM4zZ8RJksxwS26Q+CytWOcXN2/Y6syr4ds34zXR14KuzBmbkV
+ WWUtwzMFWV9zzStmR7D31fzGJSZ8MEwyxq3HasNcvfQchIr9EejW1yJv/CWzXBdjjI9a
+ i+0vJlQDb0UWBvXzwMQ0FizKbsx/q+FoBh/VO92K4X1NKZ2het1ZLorV8i68YnBEOTZX
+ tdZ6msckCJ/15WO1XD+46EVE9hl9IW2OkqYhQ9leLKUBYoQfFsVuiUpit8V9uCSrDNs7
+ sO/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068512; x=1740673312;
+ d=1e100.net; s=20230601; t=1740068519; x=1740673319;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O/XiTl783bAz5rJgPI//LorE7cXWW1yZR5SkkLi5r0c=;
- b=s+uFJafuzNGMDA7LLHNyk8yra6dtVZ4RvjI+SeguzWxIYxv63A28Hk6ro6MAqEsg88
- wuIhAfTLpp2NTWq06JkO0rw+z1qiWf7vfv7Rn6qRtdBrCbrf6A6Ks+FRJh20fxc+ne5I
- lcdBmaWC8+zY2NR1Q1ZAYMYsTmffRh8ragCCt5NYcpRAYRTRarcUTAKKHoynvPTEfBEK
- B9Xq+RKBqtTbmxn60jvZyq47CD2nyKzR6H+PdJxIaIUoYnXHIKM4CEcMhlezobAgJRuJ
- tu79OlzWH6dMj32hcX+4gd7VgqMP3MenREIf1qReygQyOxvRtShtRhIq7x/Li536Lqij
- SnwA==
-X-Gm-Message-State: AOJu0YyUY4fsM/rONnM2K6YxqhSd90eBMocyGwQqeTU/BaeOhTt63XbP
- ANl3BBpjbG+F5JPu54msIlT0kCbu1HD2nNJ8k6sVfG8xVSDSIZ4+CZCbHCxe1j1n1iuH4qXpEJw
- J
-X-Gm-Gg: ASbGncvlHfMj05iYE2zgG9KhLXxYvHzK1EFakxifNKpwQVwZFF1KgDJDj0F3jcUQlVO
- md6fbknDuJKgV4Eupq/w+b0cfJ4mKIx0W4Adjlr97hnFLvF/CIOrrpyvd16lrztUXMHDWHl/jAA
- ICGZLk1aGsnipjdX4upR/wu+yI6/J4Izy4A1Fzd8NGZjKUpVq4mAeG8WSseswpPJqBvLxRwvsB6
- NUKj/F1XPX/C6s5dPHggcBhxdw/Avu/hGfBarWFCkPEcCWL5Vt5usDUGVvmwV3b62reEfDJjQS7
- PBuYnpUsziLhYqYhmmBcSA==
-X-Google-Smtp-Source: AGHT+IEz2s8zviSroup4BivEG5S0WFIPSumbSDYIO34E3MAeZMIvAz+7SsYWevatI9A02Eu4F+xaJQ==
-X-Received: by 2002:a05:600c:5246:b0:439:98fd:a4b6 with SMTP id
- 5b1f17b1804b1-439a30e6a0dmr36494495e9.15.1740068512157; 
- Thu, 20 Feb 2025 08:21:52 -0800 (PST)
+ bh=en6YocqtrS/0yWND16m0Wy3DxaXuYWGQFBD5//8sF1E=;
+ b=Z7/Kfo1+tX4RYp22NkYqzY0zCOQBpXhsfkcmghFlP0tXtP/vGsZbX5WDMpuPGmROpO
+ jkk3dIO1tgWDwzflIIXnv6VbHYGlZgtNRzX10tLslla2V3GFExNSVwO0JgRThPfKtK5w
+ 2t6yZyMcVG7kAbQ662RET5WCa9s2LwpKp2k54/CH5G9DE7TJ0WG+BZebMbWicehbSk4E
+ GhxHJgQ08gXZrMoQh5FOrYpFKIy+piYMBDiLp8UB5JwGIV0I9782ZCvafY6COxVOsyqI
+ 1rn0mxYxjhJwMy2OqkaWO2kB2FMY6Ds68N+XVXVV8nAbbuTGHH571LxH69uYuPbVoLEy
+ 0jkA==
+X-Gm-Message-State: AOJu0YxGTMAmXiprrNuufFgrXBHRIreGgutWkmyfYKgfHvnqd/tqYVQW
+ HZufUxyeoKw9FSuqzxsVH9tDrMWfQAtiN3md7iqUue+t+UdNurqItl/y1MpYYUMRe/X3AAr0ChO
+ p
+X-Gm-Gg: ASbGnctjDY3bKj8F314sCr981cqdRiNiFxfFR+phZC6c1Nd1yz036v0urPY36SJn3tf
+ qwN7dCYrrGP1oUfP5EYY0OJURQ6z9yYSmXSEopkrBsXKp/sUMya8NzilNDTh/rtLfLCRo3IQG30
+ 6sXMPVgo0D0LsH++NDrweSkGUGsEPROqG4eC49UktkeNt25Z8AOfU5QoVr+caJZBhHvtPqeW7Hl
+ aUmz97rH3n75KP2B4D+P3+1luijSM6bbpRYjHbyTkbQl96G6sq3YXaj+ap5pJwTLvRLFFdpl8VN
+ tOZDF0X+CmT7zfL6Bkiq7w==
+X-Google-Smtp-Source: AGHT+IHZpq98AqE5SNm7tYlKu0RpO8n8EyL5zAsgdYQHwVep6XtX/n/oIG51S4XrFT2QCRsPJ2XN9A==
+X-Received: by 2002:a05:600c:154c:b0:439:89d1:30dc with SMTP id
+ 5b1f17b1804b1-43989d1328bmr176267825e9.10.1740068519221; 
+ Thu, 20 Feb 2025 08:21:59 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.51
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:21:51 -0800 (PST)
+ Thu, 20 Feb 2025 08:21:58 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/41] hw/cpu/arm_mpcore: Remove default values for GIC
- external IRQs
-Date: Thu, 20 Feb 2025 16:21:03 +0000
-Message-ID: <20250220162123.626941-23-peter.maydell@linaro.org>
+Subject: [PULL 28/41] hw/misc: Rename npcm7xx_gcr to npcm_gcr
+Date: Thu, 20 Feb 2025 16:21:09 +0000
+Message-ID: <20250220162123.626941-29-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,96 +98,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Hao Wu <wuhaotsh@google.com>
 
-Implicit default values are often hard to figure out, better
-be explicit. Now that all boards explicitly set the number of
-GIC external IRQs, remove the default values (displaying an
-error message if it is out of range).
+NPCM7XX and NPCM8XX have a different set of GCRs and the GCR module
+needs to fit both. This commit changes the name of the GCR module.
+Future commits will add the support for NPCM8XX GCRs.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250212154333.28644-9-philmd@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
+Message-id: 20250219184609.1839281-5-wuhaotsh@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/cpu/a15mpcore.c | 18 ++++++++++++------
- hw/cpu/a9mpcore.c  | 18 ++++++++++++------
- 2 files changed, 24 insertions(+), 12 deletions(-)
+ include/hw/arm/npcm7xx.h                      | 2 +-
+ include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} | 6 +++---
+ hw/misc/{npcm7xx_gcr.c => npcm_gcr.c}         | 2 +-
+ hw/misc/meson.build                           | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+ rename include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} (96%)
+ rename hw/misc/{npcm7xx_gcr.c => npcm_gcr.c} (99%)
 
-diff --git a/hw/cpu/a15mpcore.c b/hw/cpu/a15mpcore.c
-index d24ab0a6ab2..676f65a0af4 100644
---- a/hw/cpu/a15mpcore.c
-+++ b/hw/cpu/a15mpcore.c
-@@ -58,6 +58,11 @@ static void a15mp_priv_realize(DeviceState *dev, Error **errp)
-     bool has_el2 = false;
-     Object *cpuobj;
+diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
+index 4e0d2101885..510170471e0 100644
+--- a/include/hw/arm/npcm7xx.h
++++ b/include/hw/arm/npcm7xx.h
+@@ -24,7 +24,7 @@
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/mem/npcm7xx_mc.h"
+ #include "hw/misc/npcm7xx_clk.h"
+-#include "hw/misc/npcm7xx_gcr.h"
++#include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+ #include "hw/misc/npcm7xx_rng.h"
+diff --git a/include/hw/misc/npcm7xx_gcr.h b/include/hw/misc/npcm_gcr.h
+similarity index 96%
+rename from include/hw/misc/npcm7xx_gcr.h
+rename to include/hw/misc/npcm_gcr.h
+index c0bbdda77e5..9b4998950cc 100644
+--- a/include/hw/misc/npcm7xx_gcr.h
++++ b/include/hw/misc/npcm_gcr.h
+@@ -13,8 +13,8 @@
+  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+  * for more details.
+  */
+-#ifndef NPCM7XX_GCR_H
+-#define NPCM7XX_GCR_H
++#ifndef NPCM_GCR_H
++#define NPCM_GCR_H
  
-+    if (s->num_irq < 32 || s->num_irq > 256) {
-+        error_setg(errp, "Property 'num-irq' must be between 32 and 256");
-+        return;
-+    }
-+
-     gicdev = DEVICE(&s->gic);
-     qdev_prop_set_uint32(gicdev, "num-cpu", s->num_cpu);
-     qdev_prop_set_uint32(gicdev, "num-irq", s->num_irq);
-@@ -146,13 +151,14 @@ static void a15mp_priv_realize(DeviceState *dev, Error **errp)
+ #include "exec/memory.h"
+ #include "hw/sysbus.h"
+@@ -70,4 +70,4 @@ struct NPCM7xxGCRState {
+ #define TYPE_NPCM7XX_GCR "npcm7xx-gcr"
+ OBJECT_DECLARE_SIMPLE_TYPE(NPCM7xxGCRState, NPCM7XX_GCR)
  
- static const Property a15mp_priv_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", A15MPPrivState, num_cpu, 1),
--    /* The Cortex-A15MP may have anything from 0 to 224 external interrupt
--     * IRQ lines (with another 32 internal). We default to 128+32, which
--     * is the number provided by the Cortex-A15MP test chip in the
--     * Versatile Express A15 development board.
--     * Other boards may differ and should set this property appropriately.
-+    /*
-+     * The Cortex-A15MP may have anything from 0 to 224 external interrupt
-+     * lines, plus always 32 internal IRQs. This property sets the total
-+     * of internal + external, so the valid range is from 32 to 256.
-+     * The board model must set this to whatever the configuration
-+     * used for the CPU on that board or SoC is.
-      */
--    DEFINE_PROP_UINT32("num-irq", A15MPPrivState, num_irq, 160),
-+    DEFINE_PROP_UINT32("num-irq", A15MPPrivState, num_irq, 0),
- };
+-#endif /* NPCM7XX_GCR_H */
++#endif /* NPCM_GCR_H */
+diff --git a/hw/misc/npcm7xx_gcr.c b/hw/misc/npcm_gcr.c
+similarity index 99%
+rename from hw/misc/npcm7xx_gcr.c
+rename to hw/misc/npcm_gcr.c
+index 07464a4dc93..826fd41123b 100644
+--- a/hw/misc/npcm7xx_gcr.c
++++ b/hw/misc/npcm_gcr.c
+@@ -16,7 +16,7 @@
  
- static void a15mp_priv_class_init(ObjectClass *klass, void *data)
-diff --git a/hw/cpu/a9mpcore.c b/hw/cpu/a9mpcore.c
-index 25416c5032b..1b9f2bef93c 100644
---- a/hw/cpu/a9mpcore.c
-+++ b/hw/cpu/a9mpcore.c
-@@ -56,6 +56,11 @@ static void a9mp_priv_realize(DeviceState *dev, Error **errp)
-     CPUState *cpu0;
-     Object *cpuobj;
+ #include "qemu/osdep.h"
  
-+    if (s->num_irq < 32 || s->num_irq > 256) {
-+        error_setg(errp, "Property 'num-irq' must be between 32 and 256");
-+        return;
-+    }
-+
-     cpu0 = qemu_get_cpu(0);
-     cpuobj = OBJECT(cpu0);
-     if (strcmp(object_get_typename(cpuobj), ARM_CPU_TYPE_NAME("cortex-a9"))) {
-@@ -160,13 +165,14 @@ static void a9mp_priv_realize(DeviceState *dev, Error **errp)
- 
- static const Property a9mp_priv_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", A9MPPrivState, num_cpu, 1),
--    /* The Cortex-A9MP may have anything from 0 to 224 external interrupt
--     * IRQ lines (with another 32 internal). We default to 64+32, which
--     * is the number provided by the Cortex-A9MP test chip in the
--     * Realview PBX-A9 and Versatile Express A9 development boards.
--     * Other boards may differ and should set this property appropriately.
-+    /*
-+     * The Cortex-A9MP may have anything from 0 to 224 external interrupt
-+     * lines, plus always 32 internal IRQs. This property sets the total
-+     * of internal + external, so the valid range is from 32 to 256.
-+     * The board model must set this to whatever the configuration
-+     * used for the CPU on that board or SoC is.
-      */
--    DEFINE_PROP_UINT32("num-irq", A9MPPrivState, num_irq, 96),
-+    DEFINE_PROP_UINT32("num-irq", A9MPPrivState, num_irq, 0),
- };
- 
- static void a9mp_priv_class_init(ObjectClass *klass, void *data)
+-#include "hw/misc/npcm7xx_gcr.h"
++#include "hw/misc/npcm_gcr.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 55f493521be..554eb8df5bc 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -70,7 +70,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+ ))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+   'npcm7xx_clk.c',
+-  'npcm7xx_gcr.c',
++  'npcm_gcr.c',
+   'npcm7xx_mft.c',
+   'npcm7xx_pwm.c',
+   'npcm7xx_rng.c',
 -- 
 2.43.0
 
