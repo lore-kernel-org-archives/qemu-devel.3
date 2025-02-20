@@ -4,68 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E5C0C021B0
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 01:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04516C021AA
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 01:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkvbN-0000BK-8u; Wed, 19 Feb 2025 20:43:45 -0500
+	id 1tkvbm-0000HH-3E; Wed, 19 Feb 2025 20:44:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tkvbJ-0000Aw-U8
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 20:43:41 -0500
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1tkvbj-0000H6-Mf
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 20:44:07 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tkvbH-0005ct-0I
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 20:43:41 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxqmrDiLZnarh7AA--.17112S3;
- Thu, 20 Feb 2025 09:43:32 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDx_MS_iLZnIFMdAA--.42357S3;
- Thu, 20 Feb 2025 09:43:30 +0800 (CST)
-Subject: Re: [PATCH V3] target/loongarch: fix vcpu reset command word issue
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-References: <20250212015619.56244-1-lixianglai@loongson.cn>
- <983623c4-404f-493f-a441-37dbe9409616@linaro.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <b941e00e-4352-80b7-4e1b-a96ee5daaee6@loongson.cn>
-Date: Thu, 20 Feb 2025 09:42:53 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <gaosong@loongson.cn>) id 1tkvbe-0005dr-EQ
+ for qemu-devel@nongnu.org; Wed, 19 Feb 2025 20:44:06 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxG6zViLZnfLh7AA--.50065S3;
+ Thu, 20 Feb 2025 09:43:49 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMDx_MTTiLZnWlMdAA--.42363S2;
+ Thu, 20 Feb 2025 09:43:48 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org,
+	maobibo@loongson.cn
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
+ wangliupu@loongson.cn
+Subject: [PATCH v2] target/loongarch: fix 'make check-functional failed'
+Date: Thu, 20 Feb 2025 09:22:26 +0800
+Message-Id: <20250220012226.2182174-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-In-Reply-To: <983623c4-404f-493f-a441-37dbe9409616@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDx_MS_iLZnIFMdAA--.42357S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7trWrXw1fCF17Cry5CFyrZrc_yoW8ZFyUpF
- 97AFZxKFy8GrWkJws7X34DZa47ZrW8Gwn7Wa4IqFy8Jr4YqryvgF1jqrsFgFn8Aw4fG3WY
- vr109r1jvF17J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+X-CM-TRANSID: qMiowMDx_MTTiLZnWlMdAA--.42363S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.124,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,59 +65,289 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/2/12 下午3:30, Philippe Mathieu-Daudé wrote:
-> On 12/2/25 02:56, Xianglai Li wrote:
->> When the KVM_REG_LOONGARCH_VCPU_RESET command word
->> is sent to the kernel through the kvm_set_one_reg interface,
->> the parameter source needs to be a legal address,
->> otherwise the kernel will return an error and the command word
->> will fail to be sent.
->>
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> ---
->> Cc: Bibo Mao <Maobibo@loongson.cn>
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Cc: Song Gao <gaosong@loongson.cn>
->> Cc: Xianglai Li <lixianglai@loongson.cn>
->>
->> CHANGE:
->> V3<-V2:
->>   Optimize log output when function calls fail and exit the process
->> directly.
->>
->> V2<-V1:
->>    1.Sets the initial value of the variable and
->>    adds a function return value judgment and prints a log
->>
->>   target/loongarch/kvm/kvm.c | 9 ++++++++-
->>   1 file changed, 8 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index a3f55155b0..27df02fa3a 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -581,9 +581,16 @@ static int kvm_loongarch_get_lbt(CPUState *cs)
->>   void kvm_arch_reset_vcpu(CPUState *cs)
->>   {
->>       CPULoongArchState *env = cpu_env(cs);
->> +    int ret = 0;
->> +    uint64_t unused = 0;
->>       env->mp_state = KVM_MP_STATE_RUNNABLE;
->> -    kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, 0);
->> +    ret = kvm_set_one_reg(cs, KVM_REG_LOONGARCH_VCPU_RESET, &unused);
->> +    if (ret) {
->> +        error_report("Failed to set KVM_REG_LOONGARCH_VCPU_RESET: %s",
->> +                     strerror(errno));
->> +        exit(EXIT_FAILURE);
->> +    }
->>   }
-> 
-> Look good now, thanks!
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Queued in loongarch-next.
+For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+the tlb_ps may be 0,this may case UndefinedBehavior
+Add a check-tlb_ps fuction to check tlb_ps, when use
+csrwr insn to write CSR_PWCL PTEBASE, check the PTBASE, and when
+use csrwr insn to write STLBPS, check the tlb_ps value.
 
-Regards
-Bibo Mao
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+v2:
+check-tlb_ps when write CSR_PWCL and CSR_STLBPS;
+some tlb instructions check CRMD PG model when clear/read/write the tlb.
+
+ target/loongarch/helper.h                     |  2 +
+ target/loongarch/internals.h                  |  2 +
+ target/loongarch/tcg/csr_helper.c             | 62 ++++++++++++++++++-
+ .../tcg/insn_trans/trans_privileged.c.inc     |  2 +
+ target/loongarch/tcg/tlb_helper.c             | 58 +++++++++++++++++
+ 5 files changed, 125 insertions(+), 1 deletion(-)
+
+diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+index 943517b5f2..2968b255bc 100644
+--- a/target/loongarch/helper.h
++++ b/target/loongarch/helper.h
+@@ -100,6 +100,8 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_2(csrwr_crmd, i64, env, tl)
++DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+ DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 7b254c5f49..5d98581e7f 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -43,6 +43,8 @@ enum {
+     TLBRET_PE = 7,
+ };
+ 
++void check_tlb_ps(CPULoongArchState *env);
++
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 6c95be9910..9f87beebb3 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -17,6 +17,60 @@
+ #include "hw/irq.h"
+ #include "cpu-csr.h"
+ 
++
++void check_tlb_ps(CPULoongArchState *env)
++{
++    for (int i=0; i < LOONGARCH_TLB_MAX; i++)
++    {
++        LoongArchTLB*tlb =&env->tlb[i];
++        uint8_t tlb_ps;
++        if(i >= LOONGARCH_STLB) {
++            tlb_ps = FIELD_EX64(tlb->tlb_misc,TLB_MISC,PS);
++            if (tlb_ps < 12) {
++                tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, 12);
++            }
++        } else {
++            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
++            if (tlb_ps < 12) {
++               env->CSR_STLBPS= FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, 12);
++           }
++       }
++    }
++}
++
++target_ulong helper_csrwr_crmd(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t pg,old_pg;
++    int64_t old_v = env->CSR_CRMD;
++
++    pg = FIELD_EX64(val, CSR_CRMD, PG);
++    old_pg = FIELD_EX64(old_v, CSR_CRMD,PG);
++    if (pg&& !old_pg) {
++        check_tlb_ps(env);
++    }
++    env->CSR_CRMD = val;
++    return old_v;
++}
++
++target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t tlb_ps;
++    int64_t old_v = env->CSR_STLBPS;
++
++    /*
++     * The real hardware only supports the min tlb_ps is 12
++     * tlb_ps=0 may cause undefined-behavior.
++     */
++    tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
++    if (tlb_ps  < 12) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Attempted set ps %d\n",tlb_ps);
++        val = FIELD_DP64(val, CSR_STLBPS, PS, 12);
++    }
++    env->CSR_STLBPS = val;
++    return old_v;
++}
++
+ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ {
+     int64_t v;
+@@ -99,7 +153,7 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+ 
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+-    int shift;
++    int shift, ptbase;
+     int64_t old_v = env->CSR_PWCL;
+ 
+     /*
+@@ -107,11 +161,17 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+      * treated as illegal.
+      */
+     shift = FIELD_EX64(val, CSR_PWCL, PTEWIDTH);
++    ptbase = FIELD_EX64(val, CSR_PWCL, PTBASE);
+     if (shift) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attempted set pte width with %d bit\n", 64 << shift);
+         val = FIELD_DP64(val, CSR_PWCL, PTEWIDTH, 0);
+     }
++    if (ptbase < 12) {
++         qemu_log_mask(LOG_GUEST_ERROR,
++                      "Attrmpted set ptbase 2^%d\n", ptbase);
++         val = FIELD_DP64(val, CSR_PWCL, PTBASE, 12);
++    }
+ 
+     env->CSR_PWCL = val;
+     return old_v;
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 3afa23af79..4b5656d6a6 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -74,6 +74,8 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+ 
+ void loongarch_csr_translate_init(void)
+ {
++    SET_CSR_FUNC(CRMD, NULL, gen_helper_csrwr_crmd);
++    SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
+     SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index a323606e5a..ee9ec95f39 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -218,6 +218,12 @@ void helper_tlbsrch(CPULoongArchState *env)
+ {
+     int index, match;
+ 
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+         match = loongarch_tlb_search(env, env->CSR_TLBREHI, &index);
+     } else {
+@@ -239,6 +245,12 @@ void helper_tlbrd(CPULoongArchState *env)
+     int index;
+     uint8_t tlb_ps, tlb_e;
+ 
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+     tlb = &env->tlb[index];
+ 
+@@ -273,6 +285,12 @@ void helper_tlbwr(CPULoongArchState *env)
+ {
+     int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+ 
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     invalidate_tlb(env, index);
+ 
+     if (FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, NE)) {
+@@ -325,6 +343,11 @@ void helper_tlbclr(CPULoongArchState *env)
+     LoongArchTLB *tlb;
+     int i, index;
+     uint16_t csr_asid, tlb_asid, tlb_g;
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
+ 
+     csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+     index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+@@ -358,6 +381,12 @@ void helper_tlbflush(CPULoongArchState *env)
+ {
+     int i, index;
+ 
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+ 
+     if (index < LOONGARCH_STLB) {
+@@ -380,6 +409,12 @@ void helper_tlbflush(CPULoongArchState *env)
+ 
+ void helper_invtlb_all(CPULoongArchState *env)
+ {
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
+                                           TLB_MISC, E, 0);
+@@ -389,6 +424,12 @@ void helper_invtlb_all(CPULoongArchState *env)
+ 
+ void helper_invtlb_all_g(CPULoongArchState *env, uint32_t g)
+ {
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         LoongArchTLB *tlb = &env->tlb[i];
+         uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+@@ -404,6 +445,12 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
+ {
+     uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+ 
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
++
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         LoongArchTLB *tlb = &env->tlb[i];
+         uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+@@ -421,6 +468,12 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+ {
+     uint16_t asid = info & 0x3ff;
+ 
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++       return;
++    }
++
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         LoongArchTLB *tlb = &env->tlb[i];
+         uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+@@ -449,6 +502,11 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+                                   target_ulong info, target_ulong addr)
+ {
+     uint16_t asid = info & 0x3ff;
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    if (!pg) {
++        return;
++    }
+ 
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         LoongArchTLB *tlb = &env->tlb[i];
+-- 
+2.34.1
 
 
