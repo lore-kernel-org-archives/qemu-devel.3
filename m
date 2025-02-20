@@ -4,98 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE7F5C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD22C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl2hu-00056R-1W; Thu, 20 Feb 2025 04:18:58 -0500
+	id 1tl2jq-00060r-3q; Thu, 20 Feb 2025 04:20:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tl2hr-00055w-0d
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:18:55 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2jo-000605-V5
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:20:57 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tl2ho-0001EC-KO
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:18:54 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5deb956aa5eso931227a12.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:18:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2jn-0001et-BT
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:20:56 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4399a1eada3so5689795e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:20:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740043131; x=1740647931; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1740043253; x=1740648053; darn=nongnu.org;
+ h=content-transfer-encoding:subject:cc:to:from:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DplKe3pv8/iBvTnhVF++uaTZ3sY1szl9g/ylIcnvurg=;
- b=kzm7aoydtGaKsNH/VvaJ4xZBdcLXKVzjNjoXkIA2T/TBnUqQfnBvwzPgGghHHRB7+f
- rJaN8y6GrKXYHQEV7t92AmTkX899ryA2XKkarnipy9Cdlv8Iw67W7y4X8ChEb4yI/GdD
- dWa0Qmi/faxt0wcx1CbxRYjqzoHlPWwT81XJwuMeHM04prunmVMU9cJAWN31lbZh6F9G
- nqLb8aksRm6LzoCI/4o3vnEKUVBqZfPzN0cI6UdVvqg13BxBhUUWRAs2Q8zU/apJe/FW
- gphQou1yEwjgZQh6o+giTS5E4vmu7tBt8HM/iOZEGAMFiYYgZ1XoEravcs0PXtf6nDD4
- YfVg==
+ bh=9CA9Ulfr2g7JZ5XJNiiD4QhSsGUDB0n2H7fxdmLVzXk=;
+ b=qQKqp7Z9L/9pHPfW4UT66D6BCX9tI2LHtKXsHqj0CufZF7elVh9JQQmHttzaXwcbc9
+ J0Lh6IpqfhoYg3HgA/VoWEz7woT3A2j4QCIFeznLVTLmgHaxkx20rWozgSXwExjRPaP/
+ L15bNIM4XInMQ1T+Z57WtnDELUF5ewVobgsbZvzpiwi4TNM418JpJyzxjLuhDYFZK7Uu
+ tzuqS1e+Jl0LM4w4fIVCVNefVtwbi7nPwaPI7BfXhJMhKPWLDufgZlMgFKfMG58LEFBo
+ kpgRRCIEDDCCccy9/9vbRE3St+6uQ7aYtFJ32me3zZMLa+XB6n1eLo56nRazbhZdsmRM
+ FVww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740043131; x=1740647931;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DplKe3pv8/iBvTnhVF++uaTZ3sY1szl9g/ylIcnvurg=;
- b=VFTGqhH/vGNoHu/wTzKkO4F38Xs5d+nI50TAC+N8r1RN+t249iw2tPpQMiT9m0SEaz
- pjTW+qbNOX2MxVfk/3VnymlQGaeeLAsV0hOBNwGhngaLg6khgqbe97eLMWQqwSsNsEkQ
- vm4nqWGFzN+/JTBOEiDAKJpjwr7YiBY4q9jK+D347iub2GJJw+9VN50jdMTAGZsfm1iy
- UzUptQwJ3EH63V0nbMBJuuWPH5l2AfeN4/0Md8D86do4AlMmR+wlfRQ9QYGGMUwyfo19
- AHQtUbQ4/x1Q9u+Oa2zCXcPLgTSccI2iJZ0Qrls5+CokGFLRINKtj6oG1ic28YNooOyC
- 5Zkw==
-X-Gm-Message-State: AOJu0YzeCQxZ/I5MO+E2o5OQzh0AifN6S3USzilwQRvh286Gb9b0eHzN
- ZDfgi6c3eHy7j/NC8mTXOhkYzFqu0aSL5KdE5ZE9acwyq7Mz/ir61YYwZcXgJro=
-X-Gm-Gg: ASbGncvz9oIj4rIr2JgD3QBiuai69UcdU9usjEalqInvlEy251aXJHjWpVg/+6Ec5JG
- 6PVWTaLqkBnFeMsoTmxnc47Fr81aHc5rkaGIb86alGT5Dzww/UGMEH5YFzRpvmFO7iexV00s1GG
- qZMCvc1815AzkHnotPxNQlfRmm4Au5rxwIeudY23UI0Ljk6xdbT2Lce5EfvY2PeKDutg6AjpaGc
- 4sX4UWs01Q2nTWB2CZ7lVekMzaRjqPh4dUgNr2BaAGB/y+yCT2LdrWHbYX2yOmxWUzHXOdI2/th
- jfayvmXt/gCugyts6A==
-X-Google-Smtp-Source: AGHT+IGXHrsElue6pnVkxm2HlqoZIQfdcMpbMv8BCjnbwTshXVkHBwqNdh7J15Zg8Vab1x1xjLi+rg==
-X-Received: by 2002:a05:6402:3589:b0:5dc:9589:9f64 with SMTP id
- 4fb4d7f45d1cf-5e03602f759mr46220265a12.13.1740043130530; 
- Thu, 20 Feb 2025 01:18:50 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dece1b4e8dsm11659430a12.14.2025.02.20.01.18.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 01:18:49 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 783715F8AC;
- Thu, 20 Feb 2025 09:18:47 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Stefan
- Weil <sw@weilnetz.de>,  Alexandre Iooss <erdnaxe@crans.org>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Thomas
- Huth
- <thuth@redhat.com>,  Yonggang Luo <luoyonggang@gmail.com>,  Akihiko Odaki
- <akihiko.odaki@daynix.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v2 0/3] tests/functional: Allow running TCG plugins
- tests on macOS
-In-Reply-To: <20250220080215.49165-1-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 20 Feb 2025 09:02:12
- +0100")
-References: <20250220080215.49165-1-philmd@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 20 Feb 2025 09:18:47 +0000
-Message-ID: <87cyfdj7ns.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1740043253; x=1740648053;
+ h=content-transfer-encoding:subject:cc:to:from:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9CA9Ulfr2g7JZ5XJNiiD4QhSsGUDB0n2H7fxdmLVzXk=;
+ b=uiE3/60zFOgznvdZylrXBNbDm0OmcrWO4BUdhEyJ82AuJfhi3Kghv91bW5FHB2PeEg
+ JL4C5n5qPJRjyypoj4oOtR1gFNOKdocsCovjZTD/uzNHx1iYMApr15F5ZEg7lDjXUSET
+ x6AZBnZrJBJHUd3K6h9xu+6chorUu5ws8zpMp9h7spwdHjrK8Vxp/pmrqlixcmT/cv+q
+ uxIAfaU1B5wz9gCQBw9upqLzB9zGqwc5AKxWoXLuj/hkZF1JvzzozT4Rq4UzJvAEcjVo
+ xk5iP7CjNF0XARJ5ebERbqS6ccKYzXQYwU9dZtWLjlv+0iOyA5GZRN1wsKr70MWcsp92
+ PkaA==
+X-Gm-Message-State: AOJu0Yzed76n909p7o/aKLVcZ7ZOhY9BnaZ4rMSk/lOTK5TCZMWB7gDa
+ CH1S3I78H8VvLgaAF9RORVQ4zHH7ldC6binFUCPwhsyVP5TMR30bHTI+40PcKBVpuVTQqrKTz69
+ yNzo=
+X-Gm-Gg: ASbGnctvi5KtcwPaGB0ml6B6O4E2Z0iCwCm6BLd7TPdKZ7zidpMcOCpVKCxg0F+Fmqc
+ 3yo217rZq9npIt6y7m5g9njn/6G6nMOQlbnCwdVqJFh8u5wqR4psHoNDhCkYKjdxbZ6PzRWDMwC
+ GXofExgMqEIc6HtcPfpj0AyNOkGKqeDCiMHDUTmOzdQRcADIvIFS/usI8bkyT491tPkRiQSkLX+
+ aq4MxL37r/R4rjb5Ulpd5n8RQN6H0NHW52C4Isw1Wp6EM3T4m62+FTNlRqM3+vxUdJaCpbv89HA
+ +dlsMn1X5DUb2iSrWZt/NYDcrhG1XAeHgjy8BSMiRThv1tg8HBeyhVcS+PM=
+X-Google-Smtp-Source: AGHT+IHqwpj0241tkNqU/Yr+pFumYAUhupo4i+CcyeaKFqbi0brlPNvmpyyuy46xGK8RlSFAfY/enw==
+X-Received: by 2002:a05:600c:4751:b0:439:5541:53cc with SMTP id
+ 5b1f17b1804b1-43999ddbbb3mr74227285e9.29.1740043253123; 
+ Thu, 20 Feb 2025 01:20:53 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4395a04ee48sm237613965e9.3.2025.02.20.01.20.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 01:20:52 -0800 (PST)
+Message-ID: <97e66ba5-488f-4246-b4d9-466d29a86dff@linaro.org>
+Date: Thu, 20 Feb 2025 10:20:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Subject: Any plan for command line '-g' option (graphical resolution and
+ depth)?
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,36 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Hi,
 
-> Pierrick kindly helped me to resolve this issue which ended
-> being trivial (to him!). Not tested on Windows so far.
->
-> Since v1:
-> - Include Pierrick's meson fix patch (adding Fixes: tag)
-> - Addressed Thomas review comments (config.py, os.path.join)
->
-> Philippe Mathieu-Daud=C3=A9 (2):
->   tests/functional: Introduce the dso_suffix() helper
->   tests/functional: Allow running TCG plugins tests on non-Linux/BSD
->     hosts
->
-> Pierrick Bouvier (1):
->   plugins: add explicit dependency in functional tests
->
->  meson.build                                  |  1 +
->  contrib/plugins/meson.build                  |  2 ++
->  tests/functional/meson.build                 |  2 +-
->  tests/functional/qemu_test/__init__.py       |  2 +-
->  tests/functional/qemu_test/cmd.py            |  1 -
->  tests/functional/qemu_test/config.py         |  6 ++++++
->  tests/functional/test_aarch64_tcg_plugins.py | 11 ++++++++---
->  tests/tcg/plugins/meson.build                |  2 ++
->  8 files changed, 21 insertions(+), 6 deletions(-)
+QEMU provides the global '-g' CLI option:
 
-Queued to testing/next (I fixed the cmd.py whitespace change), thanks.=20
+$ qemu-system-foo --help
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+   -g WxH[xDEPTH]  Set the initial graphical resolution and depth
+
+This option is used to pass resolution/depth information to guest
+firmwares in the machines defined in the following files:
+
+   hw/ppc/mac_newworld.c
+   hw/ppc/mac_oldworld.c
+   hw/ppc/prep.c
+   hw/ppc/spapr.c
+   hw/sparc/sun4m.c
+   hw/sparc64/sun4u.c
+
+Examples:
+
+- hw/ppc/spapr.c:1102:
+
+   _FDT(fdt_setprop_cell(fdt, c, "qemu,graphic-width", graphic_width));
+
+- hw/sparc64/sun4u.c:716:
+
+   fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_WIDTH, graphic_width);
+
+
+Obviously we have default values, which are different per architecture!
+Clearly these ought to be machine properties.
+
+
+It is also used to set TYPE_NUBUS_MACFB properties in hw/m68k/q800.c.
+Here i suppose we could directly use '-global nubus-macfb.width=value'
+etc. although I'm not sure it is the recommended way.
+
+Should we start deprecating '-g' as a whole?
+
+Regards,
+
+Phil.
 
