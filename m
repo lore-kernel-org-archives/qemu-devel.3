@@ -4,89 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D175C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 22:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE42C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 22:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlF2g-0005Y0-Gd; Thu, 20 Feb 2025 17:29:14 -0500
+	id 1tlFMY-0000WH-IB; Thu, 20 Feb 2025 17:49:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlF2b-0005XZ-7G
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:29:11 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlF2Z-0005KN-AA
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:29:08 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-439ac3216dcso5664385e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 14:29:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740090543; x=1740695343; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N/7rqyRjk2jq5+8gYrc7ktRzu/nUFo5bffB0tKFoM7Q=;
- b=nQYL9Eztr6oYgPy0GDJu1F2v1Pwpjh7lIU2QMw/0RGhZjgm6DggwPtp+IW3owP+5oQ
- pEmwsdaYNTj04gZMqanu8eKi+q1j9bWoQCbM696KWJS9ZkXUWFle/6iVnmFQZMTZSvLW
- 7yMZjso0eZuVx9kNSOpTs70b4baRmkQ/ienDc4bpHHbXB5JL6f498NtVOMaFXcW7QkFF
- FMheqVw5o7lUCebsQdbU35UlHBQZx8RcRZfOXbjs9Cw0XHMAQM9NMk9qRDden2OsQ+cu
- MXLlSK1Kp4OTyWY6vjeAAok3J8dW1jOxjIGr25KFpaExczD+T1JhIKWqLMU5dTy3vLU/
- lpLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740090543; x=1740695343;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N/7rqyRjk2jq5+8gYrc7ktRzu/nUFo5bffB0tKFoM7Q=;
- b=JpuyjT5ZKxOOqQTxzyiUFPsEqVuB+itV8UKjpVoB6EoxEeqxG/6EiVMs5N6oIO8M/u
- qdzhaAs8QjXh8LJ1b2nmGm8JUeClpNH2U5ji2VNQ3fVjyybPaKLzc7DErcNjwS2D6fTN
- 0l8qQxhaMPhVq3T3dnBZTHlwc4Jv9rMIZ4KWapKHeuvv8PhdoL9pBNTKxS1e3LCV9TM0
- 3G718DbfurgZfssKTl0cgNbIC1xQESrEnQy+ipXPevl0/eNtiwYc2fQ7i+fT90KQvcpd
- 1o3Z3k9Y6ERzIoLLPDcstB3Cc8rX/tVMirPq0id1ezxSPrHZBLLWn2CQbmtwQcfERAdN
- HTqQ==
-X-Gm-Message-State: AOJu0YyudMNKFXic0+IBH3vAvDoElQGT21rLpgPsXSbL8vAp8BmcAXXN
- OOCaIpWXX9Q2KXahd99nMLsXzoA7Dpz3iEq58iyKa04ZrglwGWiMA+E71KFXXXc=
-X-Gm-Gg: ASbGncslMCP0zVoCS50jAH9DzfQbfeqnkhtPd0pUTOL3JdNNb7qh8bXAzYSNQfTPyhd
- MW6ZxaT3Apl4qdp/csMqNUMx4RdhR0vVclJLNkBg203A4fthm1xAG2n2UJqkcaMT7n7B6yE+AXK
- 7+kwdaI2QU86KOgyy4dwc1OuwJ5ElzjteSKiPRWLIC47WgB91yQYv5SZgU02HItpdkGcEmHcHGb
- ycEzcGKYzx79ImPCLUuFcietw+vSfl+adRSqoG/vX8hJM11e+JveyVxt0slkjjcTufzn3fpguAG
- 6nt5Rzwa/jIOnEhSVILVhvrYB2GopKGjhQl2TePVPR4T7g0DWkn8ySmJZ6I=
-X-Google-Smtp-Source: AGHT+IFHur79MHodt2fHRD4QAVOlAQO0M3XCLOXhCit1yE2o1YrzOczcxvLsJYGvnRYze11ZPBsrRA==
-X-Received: by 2002:a05:600c:3b94:b0:439:8653:20bb with SMTP id
- 5b1f17b1804b1-439aeb2b6afmr4032185e9.14.1740090543491; 
- Thu, 20 Feb 2025 14:29:03 -0800 (PST)
-Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43995391824sm87349315e9.23.2025.02.20.14.29.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 14:29:03 -0800 (PST)
-Message-ID: <ade78f31-5279-4862-acdd-15f083a000e2@linaro.org>
-Date: Thu, 20 Feb 2025 23:29:01 +0100
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tlFMW-0000Vr-H4
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:49:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tlFMU-0007gy-Uq
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 17:49:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740091780;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rMaUBJ8pOH1XgnG3SraC+c6XRu4GO4ioMNCxqR+800M=;
+ b=DM1kHPDmVHGhdoN4JvJEDagCOov+FW8+tckPy3Q2sUEMYcHgi1hN4CF/g9xgimmUHmthu5
+ vYprIy7zU8YSxqA2v+lWTNpiHKQrvwTqAkr53TaQ+oDlw3xBkFxIb5SjMgAyB2RdXux2fy
+ VPLRbxun6OIkvKUs4EqQkihb93XJ3bo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-4U1IKSc9Nw62fPIQ8H8Itg-1; Thu,
+ 20 Feb 2025 17:49:36 -0500
+X-MC-Unique: 4U1IKSc9Nw62fPIQ8H8Itg-1
+X-Mimecast-MFC-AGG-ID: 4U1IKSc9Nw62fPIQ8H8Itg_1740091775
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 849311800874; Thu, 20 Feb 2025 22:49:35 +0000 (UTC)
+Received: from omen.home.shazbot.org (unknown [10.22.88.77])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D30331944CC4; Thu, 20 Feb 2025 22:49:32 +0000 (UTC)
+From: Alex Williamson <alex.williamson@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, eric.auger.pro@gmail.com,
+ eric.auger@redhat.com, clg@redhat.com, zhenzhong.duan@intel.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com
+Subject: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
+Date: Thu, 20 Feb 2025 15:48:53 -0700
+Message-ID: <20250220224918.2520417-1-alex.williamson@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] Improve Microchip Polarfire SoC customization
-To: Conor Dooley <conor@kernel.org>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>
-Cc: qemu-devel@nongnu.org, Conor Dooley <conor.dooley@microchip.com>,
- Bin Meng <bin.meng@windriver.com>, alistair.francis@wdc.com,
- qemu-riscv@nongnu.org
-References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
- <20250220-reggae-hardness-907e385516d8@spud>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250220-reggae-hardness-907e385516d8@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,71 +84,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Conor,
+Eric recently identified an issue[1] where during graceful shutdown
+of a VM in a vIOMMU configuration, the guest driver places the device
+into the D3 power state, the vIOMMU is then disabled, triggering an
+AddressSpace update.  The device BARs are still mapped into the AS,
+but the vfio host driver refuses to DMA map the MMIO space due to the
+device power state.
 
-On 20/2/25 19:30, Conor Dooley wrote:
-> +cc qemu-riscv, Alistar.
-> 
-> On Fri, Feb 14, 2025 at 07:24:37AM +0100, Sebastian Huber wrote:
->> Booting the microchip-icicle-kit machine using the latest PolarFire SoC
->> Hart Software Services (HSS) no longer works since Qemu lacks support
->> for several registers (clocks, DRAM controller). Also reading from the
->> SDCard does not work currently.
-> 
-> On that note, I think the inaccurate docs about polarfire should be
-> removed. There's a wiki page here with dead links, or links to things
-> that do not work anymore:
-> https://wiki.qemu.org/Documentation/Platforms/RISCV#Microchip_PolarFire_SoC_Icicle_Kit
-> I think the whole section should be removed, find it kinda odd that
-> there's a polarfire section but not for any other board. Either way,
-> it's talking about something that just does not work, the current HSS
-> and Yocto don't boot.
-> 
-> There's also a docs page here:
-> https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
-> that has a copy of the table your patch 4 modifies, that probably should
-> be updated to match your changes.
-> 
-> In a similar vein to the wiki, it talks about the HSS and booting a
-> yocto wic image. I think those should be deleted since they don't work.
-> 
-> Alistar/Other RISC-V folks, what do you think? Bin wrote the port but
-> seems to be AFK and I don't have the capacity to fix any of that stuff
-> on top of what I already do in my spare time - do you agree that
-> deleting the now inaccurate docs makes sense?
-> 
->> In order to allow tests runs for real-time kernels such as RTEMS and
->> Zephyr, improve the boot customization. This patch set enables a direct
->> run of kernel executables, for example:
->>
->> qemu-system-riscv64 -no-reboot -nographic \
->>    -serial null -serial mon:stdio \
->>    -smp 2 \
->>    -bios none \
->>    -machine microchip-icicle-kit,clint-timebase-frequency=10000000 \
->>    -kernel rtos.elf
-> 
-> The series breaks my usage:
-> qemu//build/qemu-system-riscv64 -M microchip-icicle-kit \
->          -m 3G -smp 5 \
->          -kernel vmlinux.bin \
->          -dtb riscvpc.dtb \
->          -initrd initramfs.cpio.gz \
->          -display none -serial null \
->          -serial mon:stdio \
->          -D qemu.log -d unimp
-> opensbi-riscv64-generic-fw_dynamic.bin: No such file or directory
-> qemu-system-riscv64: could not load firmware 'opensbi-riscv64-generic-fw_dynamic.bin'
-> make: *** [Makefile:305: qemu-icicle] Error 1
-> 
-> Figure it is likely to be your patch 4? The file does exist, so probably
-> some sort of path-to-it issues?
+The proposed solution in [1] was to skip mappings based on the
+device power state.  Here we take a different approach.  The PCI spec
+defines that devices in D1/2/3 power state should respond only to
+configuration and message requests and all other requests should be
+handled as an Unsupported Request.  In other words, the memory and
+IO BARs are not accessible except when the device is in the D0 power
+state.
 
-Maybe missing the -L option?
+To emulate this behavior, we can factor the device power state into
+the mapping state of the device BARs.  Therefore the BAR is marked
+as unmapped if either the respective command register enable bit is
+clear or the device is not in the D0 power state.
 
-   -L path         set the directory for the BIOS, VGA BIOS and keymaps
+In order to implement this, the PowerState field of the PMCSR
+register becomes writable, which allows the device to appear in
+lower power states.  This also therefore implements D3 support
+(insofar as the BAR behavior) for all devices implementing the PM
+capability.  The PCI spec requires D3 support.
 
-Regards,
+An aspect that needs attention here is whether this change in the
+wmask and PMCSR bits becomes a problem for migration, and how we
+might solve it.  For a guest migrating old->new, the device would
+always be in the D0 power state, but the register becomes writable.
+In the opposite direction, is it possible that a device could
+migrate in a low power state and be stuck there since the bits are
+read-only in old QEMU?  Do we need an option for this behavior and a
+machine state bump, or are there alternatives?
 
-Phil.
+Thanks,
+Alex
+
+[1]https://lore.kernel.org/all/20250219175941.135390-1-eric.auger@redhat.com/
+
+Alex Williamson (5):
+  hw/pci: Basic support for PCI power management
+  pci: Use PCI PM capability initializer
+  vfio/pci: Delete local pm_cap
+  pcie, virtio: Remove redundant pm_cap
+  hw/vfio/pci: Re-order pre-reset
+
+ hw/net/e1000e.c                 |  3 +-
+ hw/net/eepro100.c               |  4 +-
+ hw/net/igb.c                    |  3 +-
+ hw/nvme/ctrl.c                  |  3 +-
+ hw/pci-bridge/pcie_pci_bridge.c |  3 +-
+ hw/pci/pci.c                    | 83 ++++++++++++++++++++++++++++++++-
+ hw/pci/trace-events             |  2 +
+ hw/vfio/pci.c                   | 29 ++++++------
+ hw/vfio/pci.h                   |  1 -
+ hw/virtio/virtio-pci.c          | 11 ++---
+ include/hw/pci/pci.h            |  3 ++
+ include/hw/pci/pci_device.h     |  3 ++
+ include/hw/pci/pcie.h           |  2 -
+ 13 files changed, 112 insertions(+), 38 deletions(-)
+
+-- 
+2.48.1
+
 
