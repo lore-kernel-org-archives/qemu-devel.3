@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40408C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E397AC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9JS-0007FW-5K; Thu, 20 Feb 2025 11:22:10 -0500
+	id 1tl9JD-000748-5q; Thu, 20 Feb 2025 11:21:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JQ-0007F2-VT
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:08 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tl9JB-00070i-0R
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:53 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JP-0008Ge-2F
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:08 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4398c8c8b2cso11632725e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:06 -0800 (PST)
+ id 1tl9J9-0008Do-9g
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:52 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-439a1e8ba83so11053335e9.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068526; x=1740673326; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068510; x=1740673310; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TvzLhy1cCVoLs5UL4NDUaH3PLHgGFRSysvG/yfdXyIw=;
- b=Q4dUBzSc0jQ0EHfIOMshEK/0qNqo9uGwX/2mFGymMSHeeA8f3IJm3UTZGZFVNAjbOb
- BwGozjEChQZt1iWQAeP4mXtQSOS9browbSvSP0YYBYOQfQswGu/3Vlm7lFaSAYIb3Y/M
- BzJsI6XehkQ3Y46zlhCCtvzXLsqDcaBT1vRn0lU1x0puxZrWM5a0fBhNRfyoQNPfPypw
- DkhIOdIXV4QE88YMWAXN4gAP3R1HvP9V7Pqk1oK+PHsAxef/U6twKjKgw/T8vSyEdSEO
- ejN0fgzv1/z37IRX0XVoUFqVeKL8Yt3AiDjbDaIVXtwv9b2z8IoxE8gacCmITuuCGX0Z
- /AlA==
+ :reply-to; bh=2xzlx3968bfdrpUp2Jk8ctNVyMvRf/G0SSZ1PJAAEec=;
+ b=PP0EEca3MtJMh7jJhT8V0T9Wp27rwr8f8gpE4EOAYwCjpejPZC0apXcUxNckm4kdQY
+ jwDPf0Yuv8G5pg9qPY6NKcTXwuZziJoafopSm1WvC2dHl7HgSXF3enIX/xx4BNmYKwiE
+ wNs1ScAgfjfbuCbPcdqq+A7eMjzHZ4YJr8uICJVybxbcRJOyT0yW5DKLY31UDscL2CCv
+ CQT8r+rAgHBsBTGy7qtg8RCIJFWnGoTPiKwXmuRPVBBPpO+FfbtmkTAhcIMHeHgDtwc1
+ 7YR+gkBUbIu2gac/4FUaJMWMbLX1tzvtrQx1T83ey0h3QCUrORdzNIr2fhuNzr34piF5
+ 1FPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068526; x=1740673326;
+ d=1e100.net; s=20230601; t=1740068510; x=1740673310;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TvzLhy1cCVoLs5UL4NDUaH3PLHgGFRSysvG/yfdXyIw=;
- b=NXisXU7XQuHBSu7kBsDe1G0/X2C0xmpfuyuhORYKmbDVwmUHe1xVZvDYaIbLFkme9j
- P3nq5CeT5UTJvanDp8uQ/cg/49G2CYbD8UxncJ0xjK4J5rpqg8TPQWoYksTIV/4vB0d6
- MglwinZhnuBXGcxdWfiqyQNHyX9/gYbREyHE01QJmVSXYEIiNTMXegdzFubVaFpjcj1B
- pGaQvSgJcMItn5Rt0Hf8M8eh0HhsENxSYLTfQdUli+XTMcQSCUsdzn8FgLFGNCSe6ml3
- QP04DAJtskIDhvgLiYoGxWMxBw/0qLEGD6612jAFWHodOiq9ZwaztAvxCNganqHigB3x
- DXXA==
-X-Gm-Message-State: AOJu0Yx3E169dAGZahVb1hB3PQeMZ8lHr9hG79BaMTYZ74wavoQ28fOq
- g6FvSWM4oNTFH2uURlTbYNq8MqEJuKr0A5IJ/kYi8Tdv61GpcVGz6PgQXeoQrhEbfomGh4fgDoo
+ bh=2xzlx3968bfdrpUp2Jk8ctNVyMvRf/G0SSZ1PJAAEec=;
+ b=FOo/+0O+vBt8yU6Xu27lhhK7w79zy5ytPSx5liGVjmPGteRqsA4akkdgVLoFA+pkV2
+ L70VfeCKJHFP/bgHT3QtzRxpEMQwj8LUozyFWeRNHMdalpAICfpq3T7k5+37Tk7IhGkn
+ 5yF4Lz+dxXU661Xqg28tR589bFd8q1yEK81ShlWmEr44BI8h2oa2xNtJy2Hrh5b91umf
+ 7Et5/PTTpt17lPV7w859U6UseB6TZCBRrSI8tKpy6eMvrRHqqkaTHMcU7AaaMTHQXuT3
+ Ov5u/8JETo4whJb++uTDKBsbE5fH6w8+K+5R8KNd0tCKj43r7IkMucxbXat+p6dexEyp
+ IS6Q==
+X-Gm-Message-State: AOJu0Yz3BHYUljT91KfT2TXP8en1h6GTEntHrZjetf1gVAUEIbCqNKbw
+ IPNtmKNEieLV4cDdlYoXqOCYZ16n/XClMqYVGe53vw6ZBYCfJi/SWTVbIazCR3Qd8UQ6TwCkHN/
  H
-X-Gm-Gg: ASbGncuYdRRweJeQ0mDNIpLsXa/Fm0hUUe5+ei4nvu4SZ8+2EUoOSX3Kxoy8YmLsWPP
- Gyu5nrIXNZpO3o3+3mhHLbzMEDp+EyyYQ3BzzyWfP1w6PEa/KGa6mv91976T97Q3Qa7u/b/7uG6
- oEcrJFMJ6YQhmDvAyRKTFoS8lZw0YCzfTfhpJ3cWrXK+UfbbbiJrntJE2NGWsflzK3QPzVnefiE
- 7KxYb/Lo/+M6gWbYbjJh37P9VUOUPVzTn67rrkSOMcV1GJehdevDL/hO3DH3szD8Seb88ULk878
- 3a41Dnkk18MqAIOiQK4hHQ==
-X-Google-Smtp-Source: AGHT+IH285lL50bxNt5Yke8UF+3LHtqXTF5C9BkUMJN0Tnhi/7Ta6SqadNND2CJLsGar/489VlHBxA==
-X-Received: by 2002:a5d:525a:0:b0:38f:3245:21fc with SMTP id
- ffacd0b85a97d-38f33f56512mr17214411f8f.50.1740068525549; 
- Thu, 20 Feb 2025 08:22:05 -0800 (PST)
+X-Gm-Gg: ASbGncuv4B/7nOFD2DULJlaG611NjjutJFhTtP1LPeB5STjvWVMI6yD+pER5oWh94Su
+ o+G91o8PVVs2SSETyZA+dbDWKvGbv31dfUW0DKUdaS10NRPRZn4iaF+u3pIr3c2iwUqFM1k3EZn
+ 2UlooL6xuHMSRuy02N5CAImM1MuDMyfeohY++IVKZWNwgYZ0v7UcsGtLlYjRYObYj2uSCeTFBMi
+ ngb5SUmVrEE/W6d6Gv2En9QhV1oOvah3LxAT3d8oDN60anFeAW+CCTnJdTRy2OnlS37QW4EcSfL
+ Yjj8PS4F7nRMpmpTL5MHQQ==
+X-Google-Smtp-Source: AGHT+IGyl1UzFofGQlFjoPOORT3KqH3oKWOyVEIqVCSjQfeMtvqn0MI7+QrL5MqI6CQiH+zGWnqZFg==
+X-Received: by 2002:a05:600c:1e11:b0:439:86fb:7326 with SMTP id
+ 5b1f17b1804b1-43986fb7498mr141178345e9.22.1740068509560; 
+ Thu, 20 Feb 2025 08:21:49 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.22.04
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:22:05 -0800 (PST)
+ Thu, 20 Feb 2025 08:21:48 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/41] hw/misc: Store DRAM size in NPCM8XX GCR Module
-Date: Thu, 20 Feb 2025 16:21:13 +0000
-Message-ID: <20250220162123.626941-33-peter.maydell@linaro.org>
+Subject: [PULL 19/41] hw/arm/xilinx_zynq: Specify explicitly the GIC has 64
+ external IRQs
+Date: Thu, 20 Feb 2025 16:21:00 +0000
+Message-ID: <20250220162123.626941-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,93 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hao Wu <wuhaotsh@google.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-NPCM8XX boot block stores the DRAM size in SCRPAD_B register in GCR
-module. Since we don't simulate a detailed memory controller, we
-need to store this information directly similar to the NPCM7XX's
-INCTR3 register.
+Looking at the Zynq 7000 SoC Technical Reference Manual (UG585 v1.14)
+on Appendix A: Register Details, the mpcore Interrupt Controller Type
+Register (ICDICTR) has the IT_Lines_Number field read-only with value
+0x2, described as:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Hao Wu <wuhaotsh@google.com>
-Message-id: 20250219184609.1839281-9-wuhaotsh@google.com
+  IT_Lines_Number
+
+          b00010 = the distributor provides 96 interrupts,
+                   64 external interrupt lines.
+
+Add a GIC_EXT_IRQS definition (with a comment) to make the number of
+GIC external IRQs explicit.
+
+Except explicitly setting a property value to its same implicit
+value, there is no logical change intended.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250212154333.28644-6-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/misc/npcm_gcr.h |  1 +
- hw/misc/npcm_gcr.c         | 24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
+ hw/arm/xilinx_zynq.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/misc/npcm_gcr.h b/include/hw/misc/npcm_gcr.h
-index 9ac76ca9abb..d81bb9afb26 100644
---- a/include/hw/misc/npcm_gcr.h
-+++ b/include/hw/misc/npcm_gcr.h
-@@ -68,6 +68,7 @@ typedef struct NPCMGCRState {
-     uint32_t reset_pwron;
-     uint32_t reset_mdlr;
-     uint32_t reset_intcr3;
-+    uint32_t reset_scrpad_b;
- } NPCMGCRState;
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 22c0bb17262..b8916665ed6 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -57,6 +57,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
+ #define MPCORE_PERIPHBASE 0xF8F00000
+ #define ZYNQ_BOARD_MIDR 0x413FC090
  
- typedef struct NPCMGCRClass {
-diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
-index ac22fb08cb2..9e4a6aee611 100644
---- a/hw/misc/npcm_gcr.c
-+++ b/hw/misc/npcm_gcr.c
-@@ -280,6 +280,19 @@ static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
-     s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
- }
- 
-+static void npcm8xx_gcr_enter_reset(Object *obj, ResetType type)
-+{
-+    NPCMGCRState *s = NPCM_GCR(obj);
-+    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(obj);
++#define GIC_EXT_IRQS 64 /* Zynq 7000 SoC */
 +
-+    memcpy(s->regs, c->cold_reset_values, c->nr_regs * sizeof(uint32_t));
-+    /* These 3 registers are at the same location in both 7xx and 8xx. */
-+    s->regs[NPCM8XX_GCR_PWRON] = s->reset_pwron;
-+    s->regs[NPCM8XX_GCR_MDLR] = s->reset_mdlr;
-+    s->regs[NPCM8XX_GCR_INTCR3] = s->reset_intcr3;
-+    s->regs[NPCM8XX_GCR_SCRPAD_B] = s->reset_scrpad_b;
-+}
-+
- static void npcm_gcr_realize(DeviceState *dev, Error **errp)
- {
-     ERRP_GUARD();
-@@ -323,6 +336,14 @@ static void npcm_gcr_realize(DeviceState *dev, Error **errp)
-      * https://github.com/Nuvoton-Israel/u-boot/blob/2aef993bd2aafeb5408dbaad0f3ce099ee40c4aa/board/nuvoton/poleg/poleg.c#L244
-      */
-     s->reset_intcr3 |= ctz64(dram_size / NPCM7XX_GCR_MIN_DRAM_SIZE) << 8;
-+
-+    /*
-+     * The boot block starting from 0.0.6 for NPCM8xx SoCs stores the DRAM size
-+     * in the SCRPAD2 registers. We need to set this field correctly since
-+     * the initialization is skipped as we mentioned above.
-+     * https://github.com/Nuvoton-Israel/u-boot/blob/npcm8mnx-v2019.01_tmp/board/nuvoton/arbel/arbel.c#L737
-+     */
-+    s->reset_scrpad_b = dram_size;
- }
+ static const int dma_irqs[8] = {
+     46, 47, 48, 49, 72, 73, 74, 75
+ };
+@@ -205,7 +207,7 @@ static void zynq_init(MachineState *machine)
+     MemoryRegion *ocm_ram = g_new(MemoryRegion, 1);
+     DeviceState *dev, *slcr;
+     SysBusDevice *busdev;
+-    qemu_irq pic[64];
++    qemu_irq pic[GIC_EXT_IRQS];
+     int n;
+     unsigned int smp_cpus = machine->smp.cpus;
  
- static void npcm_gcr_init(Object *obj)
-@@ -370,16 +391,19 @@ static void npcm7xx_gcr_class_init(ObjectClass *klass, void *data)
+@@ -261,6 +263,7 @@ static void zynq_init(MachineState *machine)
  
-     c->nr_regs = NPCM7XX_GCR_NR_REGS;
-     c->cold_reset_values = npcm7xx_cold_reset_values;
-+    rc->phases.enter = npcm7xx_gcr_enter_reset;
- }
+     dev = qdev_new(TYPE_A9MPCORE_PRIV);
+     qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
++    qdev_prop_set_uint32(dev, "num-irq", GIC_EXT_IRQS + GIC_INTERNAL);
+     busdev = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
+@@ -275,7 +278,7 @@ static void zynq_init(MachineState *machine)
+                            qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+     }
  
- static void npcm8xx_gcr_class_init(ObjectClass *klass, void *data)
- {
-     NPCMGCRClass *c = NPCM_GCR_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
+-    for (n = 0; n < 64; n++) {
++    for (n = 0; n < GIC_EXT_IRQS; n++) {
+         pic[n] = qdev_get_gpio_in(dev, n);
+     }
  
-     dc->desc = "NPCM8xx System Global Control Registers";
-     c->nr_regs = NPCM8XX_GCR_NR_REGS;
-     c->cold_reset_values = npcm8xx_cold_reset_values;
-+    rc->phases.enter = npcm8xx_gcr_enter_reset;
- }
- 
- static const TypeInfo npcm_gcr_info[] = {
+@@ -458,7 +461,7 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+     ObjectProperty *prop;
+-    mc->desc = "Xilinx Zynq Platform Baseboard for Cortex-A9";
++    mc->desc = "Xilinx Zynq 7000 Platform Baseboard for Cortex-A9";
+     mc->init = zynq_init;
+     mc->max_cpus = ZYNQ_MAX_CPUS;
+     mc->ignore_memory_transaction_failures = true;
 -- 
 2.43.0
 
