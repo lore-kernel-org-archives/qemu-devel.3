@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64767C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79087C021B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9Jg-0008C3-BR; Thu, 20 Feb 2025 11:22:24 -0500
+	id 1tl9JR-0007FL-QY; Thu, 20 Feb 2025 11:22:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9Jd-00084Y-Mv
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:21 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tl9JP-0007EM-I6
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:07 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JY-0008Hx-Hn
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:20 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-439350f1a0bso7462185e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:16 -0800 (PST)
+ id 1tl9JN-0008GR-Lw
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:07 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso7503935e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068535; x=1740673335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068524; x=1740673324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dD+2Z65asHuGpqfIVaQkBWugRFu7QutspW4DEkk/CC0=;
- b=Y/R0Ds7TyOp8PrLCc4jLZePDR6Uh4F35yjYonNNcUBPhunC8gsfuBwpRI5C3RMS/af
- R1DaKuUt01mxPrh78YEfaymRY3T5B1zIqh/1GDgSBsuRYsBgzpmQppmbe7hvVvtqzayd
- 81otwPxJtOBT+kROdRzLo8KuQy1o5mLqSLCQzV12559iufsEWQopoDzpOcsIzSBbGazo
- Zb6RMR+/Xq5eK1GDd1NK7BKb/3kk+EnLlojoIHcHmtjBWAAJCu4wLiJyCSeujj3ZpTnn
- JYOjBIY3HZOiqS2R2ldYYTOciEPH72vgggKKDwFW2stKbTl/7NiA4E5VQDbPBUc/+X3F
- kU1g==
+ :reply-to; bh=uz9FF4Jzl/noWeKOTSmfI2QkbK+adDYcHkGdR4eIvWY=;
+ b=xaRKp3tGJkyPazpGfSFHbvmc8XjNN+WM2hvG43gs0DMt0j+VZQzcjxLo+vcmEBV+j3
+ HRq3Ahn6L2W+HpfvO+56pkRHimutfShvxlmRQGx29S3/U46oI/AjxSZMdL/ury3lC4EZ
+ VN+PNNq31ed7G1O5NHH5upHw9T1Vw92qJLZgxbv/WgO0Aj4GacBG81FEy9LPLyh+NCu2
+ QEzChx9oYSpD+5/O+NRKFmKzwgitCrez2wqqgA2t+Huw/Cvu7y9n35Nf7pmS2oEQhmSr
+ 9W9yaveB05y7my8DztRm68zwS7oPjUXh8IK5AfSSku9Im8er8oFA+zfvQ98+fmqJEL02
+ SYfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068535; x=1740673335;
+ d=1e100.net; s=20230601; t=1740068524; x=1740673324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dD+2Z65asHuGpqfIVaQkBWugRFu7QutspW4DEkk/CC0=;
- b=YnMurUfY5hKjAREqQg65vJ6SOcCFpTzqjgp28J3Gsljrv3/uLmWBj8eYV1iVs5iP8v
- 5U0lA0cqGUhOGZl2bse89A9TvlmXoO3V41S0Ac3JkCofUZQDI+NKPn84lXyQCppTZSL2
- h0oEGqMBBGpl16h5G83r8RuBB07J8Bjb3+eBrq4GR+KcrjWev/Ze9BSn/ag2JZHkbtBg
- Gm8WCLpztx2QS0fKGEdfrWgLwQDIMgUDu1WWwqkmtj7zDhB96N1AU4p/Go5KEUvQpGcd
- HitRUieUsn0eRKgOyLpzgJwpegZCU4PsVqf7R57/EzPLdPBUpwFvuVfReUkrq6h+CtL5
- KaRg==
-X-Gm-Message-State: AOJu0YynnFt2neNYjpkxyMtnvSmmCEBgC0K6LHRuMxzQZperbkMVJ6XW
- UVIGHa7CW+dygTHXl3Vpu5RnbWc+ayghKdBWLVGH1Sk9MFGebret4lCQnJ4RC0qYfHNk8Xs5rg4
- p
-X-Gm-Gg: ASbGncsUrtyCKwu6ZEbHbY4nEgvKfPPpiuC2iegV2DUqvFfuSTdtK6W8YgtteTcN29F
- f1sr3yFlQDdDCyIusUZBMHWTAg75iXwlmLbLpRNAOjkrVZxEsNERtVNeDY9dezHb0BS/X1nadSf
- p1Tr6yd75BKUlQvTgEpn3r2EegKUfZ+WrNcSY9iyImdDLJgBbVGqgwXJyo3KeUmx654MDRCAG+r
- EbQKX6eBPBNjzc8dJ6kogOwdA92k7SX9fM7cgZAkcM5ZhF9gHmg3xGTh/ia8ZOkkPynW+TA4NjV
- R4k41KyQykYyWvvF10ya0A==
-X-Google-Smtp-Source: AGHT+IHfCeKj9m0PxmxMX+65lWV3oxwwYKeyRjWPcFccL71kIqEefoF7/jhh/DXYnD+xkmWrT1LcwA==
-X-Received: by 2002:a05:600d:d:b0:439:8439:de7e with SMTP id
- 5b1f17b1804b1-439a30e6bf5mr36510965e9.15.1740068535006; 
- Thu, 20 Feb 2025 08:22:15 -0800 (PST)
+ bh=uz9FF4Jzl/noWeKOTSmfI2QkbK+adDYcHkGdR4eIvWY=;
+ b=CfMuof2ro0OKV7HXR4SzIDDKSfg673PJVlUPi/F/ce3bUa/W/ETxTIkoJ/t031pv2Q
+ RTwuo944DGHOkqwKZkPV5hfA7VIdncuYxN8otGm74+lN2KZmWnoHXnj29YMvFb32yOng
+ 6jdLzu7QWMNc2nIusqG6TsHjMthd098JhIq7iSk3tjWexpKdr2NuKie9irhyB+EceALC
+ 77xdKDta7Nrpa7SSbwpaHTTBBfiROZdmVxND6iWjtb05rOhSl+cGs46VkBEK+L0Ws2iS
+ v8D5aKZcgu6301BNJZGuAr/zvNvjVEThzJQehInqFEkqKa8q+NJXmrqhrVNfPBFujepD
+ Ymew==
+X-Gm-Message-State: AOJu0Yy9e5GkwlCzDfYbnS7jEJtiuNnWkGJYsjYIhPlqpwcgNqdPV5Ro
+ IT2kSeXs5KOZY+9yL2x8cX1oePDVSRGvj3m/i8tAT8+TqRh0MPosyjq5fQUb+mjCN1Knx7T/IFs
+ +
+X-Gm-Gg: ASbGnctEPzbweHAWmerzGITpGiDRsqaP81s6grpHjkNdTBUz7B2EVpA8He5r1gsOOVR
+ q406GMpeuZDDJHamB3tjdZoT272djhLIbQ/ZYNexKlFBZqwpiZSvy02uMOkfrRCldztqM6MJnUY
+ fC9okgNDvgKGvvw3eGN4LGXMBXNcVNyrMC+CIGTy+XSxUbf/vqHzjlS9MrsnP52mvUpGPBSg544
+ 09pDL92PY6cBqQh0ZWv3+Z6KGgjPXSpRYneoKJJ6LfbD4tdARG9bq13v63mDEi4UWCO09XDB2Uu
+ b1EvWGv+67fsrMLDglk2Sg==
+X-Google-Smtp-Source: AGHT+IFMOkSpXJsm4EjjkcRVaK1m/DdZv+ARWnHIDWulNwzUI0fC6BhHjL6T5d4D2h3EHCQIA8BWdA==
+X-Received: by 2002:a05:600c:35c7:b0:439:9b19:9e2d with SMTP id
+ 5b1f17b1804b1-4399b19a109mr78263225e9.16.1740068524057; 
+ Thu, 20 Feb 2025 08:22:04 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.22.13
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.22.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:22:13 -0800 (PST)
+ Thu, 20 Feb 2025 08:22:02 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/41] hw/arm: Add NPCM845 Evaluation board
-Date: Thu, 20 Feb 2025 16:21:21 +0000
-Message-ID: <20250220162123.626941-41-peter.maydell@linaro.org>
+Subject: [PULL 31/41] hw/misc: Add support for NPCM8XX GCR
+Date: Thu, 20 Feb 2025 16:21:12 +0000
+Message-ID: <20250220162123.626941-32-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,319 +102,212 @@ From: Hao Wu <wuhaotsh@google.com>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
-Message-id: 20250219184609.1839281-17-wuhaotsh@google.com
+Message-id: 20250219184609.1839281-8-wuhaotsh@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/npcm8xx.h |  21 ++++
- hw/arm/npcm8xx_boards.c  | 253 +++++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build       |   2 +-
- 3 files changed, 275 insertions(+), 1 deletion(-)
- create mode 100644 hw/arm/npcm8xx_boards.c
+ include/hw/misc/npcm_gcr.h |   6 +-
+ hw/misc/npcm_gcr.c         | 133 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 134 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
-index a32fbb035b5..9812e6fa7ec 100644
---- a/include/hw/arm/npcm8xx.h
-+++ b/include/hw/arm/npcm8xx.h
-@@ -51,6 +51,27 @@
+diff --git a/include/hw/misc/npcm_gcr.h b/include/hw/misc/npcm_gcr.h
+index 9af24e5cdc8..9ac76ca9abb 100644
+--- a/include/hw/misc/npcm_gcr.h
++++ b/include/hw/misc/npcm_gcr.h
+@@ -1,5 +1,5 @@
+ /*
+- * Nuvoton NPCM7xx System Global Control Registers.
++ * Nuvoton NPCM7xx/8xx System Global Control Registers.
+  *
+  * Copyright 2020 Google LLC
+  *
+@@ -54,8 +54,9 @@
+  * Number of registers in our device state structure. Don't change this without
+  * incrementing the version_id in the vmstate.
+  */
+-#define NPCM_GCR_MAX_NR_REGS NPCM7XX_GCR_NR_REGS
++#define NPCM_GCR_MAX_NR_REGS NPCM8XX_GCR_NR_REGS
+ #define NPCM7XX_GCR_NR_REGS (0x148 / sizeof(uint32_t))
++#define NPCM8XX_GCR_NR_REGS (0xf80 / sizeof(uint32_t))
  
- #define NPCM8XX_NR_PWM_MODULES 3
+ typedef struct NPCMGCRState {
+     SysBusDevice parent;
+@@ -78,6 +79,7 @@ typedef struct NPCMGCRClass {
  
-+struct NPCM8xxMachine {
-+    MachineState        parent_obj;
-+
-+    /*
-+     * PWM fan splitter. each splitter connects to one PWM output and
-+     * multiple MFT inputs.
-+     */
-+    SplitIRQ            fan_splitter[NPCM8XX_NR_PWM_MODULES *
-+                                     NPCM7XX_PWM_PER_MODULE];
+ #define TYPE_NPCM_GCR "npcm-gcr"
+ #define TYPE_NPCM7XX_GCR "npcm7xx-gcr"
++#define TYPE_NPCM8XX_GCR "npcm8xx-gcr"
+ OBJECT_DECLARE_TYPE(NPCMGCRState, NPCMGCRClass, NPCM_GCR)
+ 
+ #endif /* NPCM_GCR_H */
+diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
+index d89e8c2c3bf..ac22fb08cb2 100644
+--- a/hw/misc/npcm_gcr.c
++++ b/hw/misc/npcm_gcr.c
+@@ -1,5 +1,5 @@
+ /*
+- * Nuvoton NPCM7xx System Global Control Registers.
++ * Nuvoton NPCM7xx/8xx System Global Control Registers.
+  *
+  * Copyright 2020 Google LLC
+  *
+@@ -83,6 +83,118 @@ static const uint32_t npcm7xx_cold_reset_values[NPCM7XX_GCR_NR_REGS] = {
+     [NPCM7XX_GCR_USB2PHYCTL]    = 0x034730e4,
+ };
+ 
++enum NPCM8xxGCRRegisters {
++    NPCM8XX_GCR_PDID,
++    NPCM8XX_GCR_PWRON,
++    NPCM8XX_GCR_MISCPE          = 0x014 / sizeof(uint32_t),
++    NPCM8XX_GCR_FLOCKR2         = 0x020 / sizeof(uint32_t),
++    NPCM8XX_GCR_FLOCKR3,
++    NPCM8XX_GCR_A35_MODE        = 0x034 / sizeof(uint32_t),
++    NPCM8XX_GCR_SPSWC,
++    NPCM8XX_GCR_INTCR,
++    NPCM8XX_GCR_INTSR,
++    NPCM8XX_GCR_HIFCR           = 0x050 / sizeof(uint32_t),
++    NPCM8XX_GCR_INTCR2          = 0x060 / sizeof(uint32_t),
++    NPCM8XX_GCR_SRCNT           = 0x068 / sizeof(uint32_t),
++    NPCM8XX_GCR_RESSR,
++    NPCM8XX_GCR_RLOCKR1,
++    NPCM8XX_GCR_FLOCKR1,
++    NPCM8XX_GCR_DSCNT,
++    NPCM8XX_GCR_MDLR,
++    NPCM8XX_GCR_SCRPAD_C        = 0x080 / sizeof(uint32_t),
++    NPCM8XX_GCR_SCRPAD_B,
++    NPCM8XX_GCR_DAVCLVLR        = 0x098 / sizeof(uint32_t),
++    NPCM8XX_GCR_INTCR3,
++    NPCM8XX_GCR_PCIRCTL         = 0x0a0 / sizeof(uint32_t),
++    NPCM8XX_GCR_VSINTR,
++    NPCM8XX_GCR_SD2SUR1         = 0x0b4 / sizeof(uint32_t),
++    NPCM8XX_GCR_SD2SUR2,
++    NPCM8XX_GCR_INTCR4          = 0x0c0 / sizeof(uint32_t),
++    NPCM8XX_GCR_CPCTL           = 0x0d0 / sizeof(uint32_t),
++    NPCM8XX_GCR_CP2BST,
++    NPCM8XX_GCR_B2CPNT,
++    NPCM8XX_GCR_CPPCTL,
++    NPCM8XX_GCR_I2CSEGSEL       = 0x0e0 / sizeof(uint32_t),
++    NPCM8XX_GCR_I2CSEGCTL,
++    NPCM8XX_GCR_VSRCR,
++    NPCM8XX_GCR_MLOCKR,
++    NPCM8XX_GCR_SCRPAD          = 0x13c / sizeof(uint32_t),
++    NPCM8XX_GCR_USB1PHYCTL,
++    NPCM8XX_GCR_USB2PHYCTL,
++    NPCM8XX_GCR_USB3PHYCTL,
++    NPCM8XX_GCR_MFSEL1          = 0x260 / sizeof(uint32_t),
++    NPCM8XX_GCR_MFSEL2,
++    NPCM8XX_GCR_MFSEL3,
++    NPCM8XX_GCR_MFSEL4,
++    NPCM8XX_GCR_MFSEL5,
++    NPCM8XX_GCR_MFSEL6,
++    NPCM8XX_GCR_MFSEL7,
++    NPCM8XX_GCR_MFSEL_LK1       = 0x280 / sizeof(uint32_t),
++    NPCM8XX_GCR_MFSEL_LK2,
++    NPCM8XX_GCR_MFSEL_LK3,
++    NPCM8XX_GCR_MFSEL_LK4,
++    NPCM8XX_GCR_MFSEL_LK5,
++    NPCM8XX_GCR_MFSEL_LK6,
++    NPCM8XX_GCR_MFSEL_LK7,
++    NPCM8XX_GCR_MFSEL_SET1      = 0x2a0 / sizeof(uint32_t),
++    NPCM8XX_GCR_MFSEL_SET2,
++    NPCM8XX_GCR_MFSEL_SET3,
++    NPCM8XX_GCR_MFSEL_SET4,
++    NPCM8XX_GCR_MFSEL_SET5,
++    NPCM8XX_GCR_MFSEL_SET6,
++    NPCM8XX_GCR_MFSEL_SET7,
++    NPCM8XX_GCR_MFSEL_CLR1      = 0x2c0 / sizeof(uint32_t),
++    NPCM8XX_GCR_MFSEL_CLR2,
++    NPCM8XX_GCR_MFSEL_CLR3,
++    NPCM8XX_GCR_MFSEL_CLR4,
++    NPCM8XX_GCR_MFSEL_CLR5,
++    NPCM8XX_GCR_MFSEL_CLR6,
++    NPCM8XX_GCR_MFSEL_CLR7,
++    NPCM8XX_GCR_WD0RCRLK        = 0x400 / sizeof(uint32_t),
++    NPCM8XX_GCR_WD1RCRLK,
++    NPCM8XX_GCR_WD2RCRLK,
++    NPCM8XX_GCR_SWRSTC1LK,
++    NPCM8XX_GCR_SWRSTC2LK,
++    NPCM8XX_GCR_SWRSTC3LK,
++    NPCM8XX_GCR_TIPRSTCLK,
++    NPCM8XX_GCR_CORSTCLK,
++    NPCM8XX_GCR_WD0RCRBLK,
++    NPCM8XX_GCR_WD1RCRBLK,
++    NPCM8XX_GCR_WD2RCRBLK,
++    NPCM8XX_GCR_SWRSTC1BLK,
++    NPCM8XX_GCR_SWRSTC2BLK,
++    NPCM8XX_GCR_SWRSTC3BLK,
++    NPCM8XX_GCR_TIPRSTCBLK,
++    NPCM8XX_GCR_CORSTCBLK,
++    /* 64 scratch pad registers start here. 0xe00 ~ 0xefc */
++    NPCM8XX_GCR_SCRPAD_00       = 0xe00 / sizeof(uint32_t),
++    /* 32 semaphore registers start here. 0xf00 ~ 0xf7c */
++    NPCM8XX_GCR_GP_SEMFR_00     = 0xf00 / sizeof(uint32_t),
++    NPCM8XX_GCR_GP_SEMFR_31     = 0xf7c / sizeof(uint32_t),
 +};
 +
-+
-+struct NPCM8xxMachineClass {
-+    MachineClass        parent_class;
-+
-+    const char          *soc_type;
++static const uint32_t npcm8xx_cold_reset_values[NPCM8XX_GCR_NR_REGS] = {
++    [NPCM8XX_GCR_PDID]          = 0x04a35850,   /* Arbel A1 */
++    [NPCM8XX_GCR_MISCPE]        = 0x0000ffff,
++    [NPCM8XX_GCR_A35_MODE]      = 0xfff4ff30,
++    [NPCM8XX_GCR_SPSWC]         = 0x00000003,
++    [NPCM8XX_GCR_INTCR]         = 0x0010035e,
++    [NPCM8XX_GCR_HIFCR]         = 0x0000004e,
++    [NPCM8XX_GCR_SD2SUR1]       = 0xfdc80000,
++    [NPCM8XX_GCR_SD2SUR2]       = 0x5200b130,
++    [NPCM8XX_GCR_INTCR2]        = (1U << 19),   /* DDR initialized */
++    [NPCM8XX_GCR_RESSR]         = 0x80000000,
++    [NPCM8XX_GCR_DAVCLVLR]      = 0x5a00f3cf,
++    [NPCM8XX_GCR_INTCR3]        = 0x5e001002,
++    [NPCM8XX_GCR_VSRCR]         = 0x00004800,
++    [NPCM8XX_GCR_SCRPAD]        = 0x00000008,
++    [NPCM8XX_GCR_USB1PHYCTL]    = 0x034730e4,
++    [NPCM8XX_GCR_USB2PHYCTL]    = 0x034730e4,
++    [NPCM8XX_GCR_USB3PHYCTL]    = 0x034730e4,
++    /* All 32 semaphores should be initialized to 1. */
++    [NPCM8XX_GCR_GP_SEMFR_00...NPCM8XX_GCR_GP_SEMFR_31] = 0x00000001,
 +};
 +
-+#define TYPE_NPCM8XX_MACHINE MACHINE_TYPE_NAME("npcm8xx")
-+OBJECT_DECLARE_TYPE(NPCM8xxMachine, NPCM8xxMachineClass, NPCM8XX_MACHINE)
-+
- struct NPCM8xxState {
-     DeviceState         parent_obj;
+ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+ {
+     uint32_t reg = offset / sizeof(uint32_t);
+@@ -224,8 +336,8 @@ static void npcm_gcr_init(Object *obj)
  
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-new file mode 100644
-index 00000000000..19610483f93
---- /dev/null
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -0,0 +1,253 @@
-+/*
-+ * Machine definitions for boards featuring an NPCM8xx SoC.
-+ *
-+ * Copyright 2021 Google LLC
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "chardev/char.h"
-+#include "hw/arm/npcm8xx.h"
-+#include "hw/core/cpu.h"
-+#include "hw/loader.h"
-+#include "hw/qdev-core.h"
-+#include "hw/qdev-properties.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/datadir.h"
-+#include "qemu/units.h"
-+
-+#define NPCM845_EVB_POWER_ON_STRAPS 0x000017ff
-+
-+static const char npcm8xx_default_bootrom[] = "npcm8xx_bootrom.bin";
-+
-+static void npcm8xx_load_bootrom(MachineState *machine, NPCM8xxState *soc)
+ static const VMStateDescription vmstate_npcm_gcr = {
+     .name = "npcm-gcr",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32_ARRAY(regs, NPCMGCRState, NPCM_GCR_MAX_NR_REGS),
+         VMSTATE_END_OF_LIST(),
+@@ -260,6 +372,16 @@ static void npcm7xx_gcr_class_init(ObjectClass *klass, void *data)
+     c->cold_reset_values = npcm7xx_cold_reset_values;
+ }
+ 
++static void npcm8xx_gcr_class_init(ObjectClass *klass, void *data)
 +{
-+    const char *bios_name = machine->firmware ?: npcm8xx_default_bootrom;
-+    g_autofree char *filename = NULL;
-+    int ret;
++    NPCMGCRClass *c = NPCM_GCR_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+    if (!filename) {
-+        error_report("Could not find ROM image '%s'", bios_name);
-+        if (!machine->kernel_filename) {
-+            /* We can't boot without a bootrom or a kernel image. */
-+            exit(1);
-+        }
-+        return;
-+    }
-+    ret = load_image_mr(filename, machine->ram);
-+    if (ret < 0) {
-+        error_report("Failed to load ROM image '%s'", filename);
-+        exit(1);
-+    }
++    dc->desc = "NPCM8xx System Global Control Registers";
++    c->nr_regs = NPCM8XX_GCR_NR_REGS;
++    c->cold_reset_values = npcm8xx_cold_reset_values;
 +}
 +
-+static void npcm8xx_connect_flash(NPCM7xxFIUState *fiu, int cs_no,
-+                                  const char *flash_type, DriveInfo *dinfo)
-+{
-+    DeviceState *flash;
-+    qemu_irq flash_cs;
-+
-+    flash = qdev_new(flash_type);
-+    if (dinfo) {
-+        qdev_prop_set_drive(flash, "drive", blk_by_legacy_dinfo(dinfo));
-+    }
-+    qdev_realize_and_unref(flash, BUS(fiu->spi), &error_fatal);
-+
-+    flash_cs = qdev_get_gpio_in_named(flash, SSI_GPIO_CS, 0);
-+    qdev_connect_gpio_out_named(DEVICE(fiu), "cs", cs_no, flash_cs);
-+}
-+
-+static void npcm8xx_connect_dram(NPCM8xxState *soc, MemoryRegion *dram)
-+{
-+    memory_region_add_subregion(get_system_memory(), NPCM8XX_DRAM_BA, dram);
-+
-+    object_property_set_link(OBJECT(soc), "dram-mr", OBJECT(dram),
-+                             &error_abort);
-+}
-+
-+static NPCM8xxState *npcm8xx_create_soc(MachineState *machine,
-+                                        uint32_t hw_straps)
-+{
-+    NPCM8xxMachineClass *nmc = NPCM8XX_MACHINE_GET_CLASS(machine);
-+    Object *obj;
-+
-+    obj = object_new_with_props(nmc->soc_type, OBJECT(machine), "soc",
-+                                &error_abort, NULL);
-+    object_property_set_uint(obj, "power-on-straps", hw_straps, &error_abort);
-+
-+    return NPCM8XX(obj);
-+}
-+
-+static I2CBus *npcm8xx_i2c_get_bus(NPCM8xxState *soc, uint32_t num)
-+{
-+    g_assert(num < ARRAY_SIZE(soc->smbus));
-+    return I2C_BUS(qdev_get_child_bus(DEVICE(&soc->smbus[num]), "i2c-bus"));
-+}
-+
-+static void npcm8xx_init_pwm_splitter(NPCM8xxMachine *machine,
-+                                      NPCM8xxState *soc, const int *fan_counts)
-+{
-+    SplitIRQ *splitters = machine->fan_splitter;
-+
-+    /*
-+     * PWM 0~3 belong to module 0 output 0~3.
-+     * PWM 4~7 belong to module 1 output 0~3.
-+     */
-+    for (int i = 0; i < NPCM8XX_NR_PWM_MODULES; ++i) {
-+        for (int j = 0; j < NPCM7XX_PWM_PER_MODULE; ++j) {
-+            int splitter_no = i * NPCM7XX_PWM_PER_MODULE + j;
-+            DeviceState *splitter;
-+
-+            if (fan_counts[splitter_no] < 1) {
-+                continue;
-+            }
-+            object_initialize_child(OBJECT(machine), "fan-splitter[*]",
-+                                    &splitters[splitter_no], TYPE_SPLIT_IRQ);
-+            splitter = DEVICE(&splitters[splitter_no]);
-+            qdev_prop_set_uint16(splitter, "num-lines",
-+                                 fan_counts[splitter_no]);
-+            qdev_realize(splitter, NULL, &error_abort);
-+            qdev_connect_gpio_out_named(DEVICE(&soc->pwm[i]), "duty-gpio-out",
-+                                        j, qdev_get_gpio_in(splitter, 0));
-+        }
-+    }
-+}
-+
-+static void npcm8xx_connect_pwm_fan(NPCM8xxState *soc, SplitIRQ *splitter,
-+                                    int fan_no, int output_no)
-+{
-+    DeviceState *fan;
-+    int fan_input;
-+    qemu_irq fan_duty_gpio;
-+
-+    g_assert(fan_no >= 0 && fan_no <= NPCM7XX_MFT_MAX_FAN_INPUT);
-+    /*
-+     * Fan 0~1 belong to module 0 input 0~1.
-+     * Fan 2~3 belong to module 1 input 0~1.
-+     * ...
-+     * Fan 14~15 belong to module 7 input 0~1.
-+     * Fan 16~17 belong to module 0 input 2~3.
-+     * Fan 18~19 belong to module 1 input 2~3.
-+     */
-+    if (fan_no < 16) {
-+        fan = DEVICE(&soc->mft[fan_no / 2]);
-+        fan_input = fan_no % 2;
-+    } else {
-+        fan = DEVICE(&soc->mft[(fan_no - 16) / 2]);
-+        fan_input = fan_no % 2 + 2;
-+    }
-+
-+    /* Connect the Fan to PWM module */
-+    fan_duty_gpio = qdev_get_gpio_in_named(fan, "duty", fan_input);
-+    qdev_connect_gpio_out(DEVICE(splitter), output_no, fan_duty_gpio);
-+}
-+
-+static void npcm845_evb_i2c_init(NPCM8xxState *soc)
-+{
-+    /* tmp100 temperature sensor on SVB, tmp105 is compatible */
-+    i2c_slave_create_simple(npcm8xx_i2c_get_bus(soc, 6), "tmp105", 0x48);
-+}
-+
-+static void npcm845_evb_fan_init(NPCM8xxMachine *machine, NPCM8xxState *soc)
-+{
-+    SplitIRQ *splitter = machine->fan_splitter;
-+    static const int fan_counts[] = {2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0};
-+
-+    npcm8xx_init_pwm_splitter(machine, soc, fan_counts);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[0], 0x00, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[0], 0x01, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[1], 0x02, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[1], 0x03, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[2], 0x04, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[2], 0x05, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[3], 0x06, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[3], 0x07, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[4], 0x08, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[4], 0x09, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[5], 0x0a, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[5], 0x0b, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[6], 0x0c, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[6], 0x0d, 1);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[7], 0x0e, 0);
-+    npcm8xx_connect_pwm_fan(soc, &splitter[7], 0x0f, 1);
-+}
-+
-+static void npcm845_evb_init(MachineState *machine)
-+{
-+    NPCM8xxState *soc;
-+
-+    soc = npcm8xx_create_soc(machine, NPCM845_EVB_POWER_ON_STRAPS);
-+    npcm8xx_connect_dram(soc, machine->ram);
-+    qdev_realize(DEVICE(soc), NULL, &error_fatal);
-+
-+    npcm8xx_load_bootrom(machine, soc);
-+    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-+    npcm845_evb_i2c_init(soc);
-+    npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
-+    npcm8xx_load_kernel(machine, soc);
-+}
-+
-+static void npcm8xx_set_soc_type(NPCM8xxMachineClass *nmc, const char *type)
-+{
-+    NPCM8xxClass *sc = NPCM8XX_CLASS(object_class_by_name(type));
-+    MachineClass *mc = MACHINE_CLASS(nmc);
-+
-+    nmc->soc_type = type;
-+    mc->default_cpus = mc->min_cpus = mc->max_cpus = sc->num_cpus;
-+}
-+
-+static void npcm8xx_machine_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-a9"),
-+        NULL
-+    };
-+
-+    mc->no_floppy = 1;
-+    mc->no_cdrom = 1;
-+    mc->no_parallel = 1;
-+    mc->default_ram_id = "ram";
-+    mc->valid_cpu_types = valid_cpu_types;
-+}
-+
-+static void npcm845_evb_machine_class_init(ObjectClass *oc, void *data)
-+{
-+    NPCM8xxMachineClass *nmc = NPCM8XX_MACHINE_CLASS(oc);
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    npcm8xx_set_soc_type(nmc, TYPE_NPCM8XX);
-+
-+    mc->desc = "Nuvoton NPCM845 Evaluation Board (Cortex-A35)";
-+    mc->init = npcm845_evb_init;
-+    mc->default_ram_size = 1 * GiB;
-+};
-+
-+static const TypeInfo npcm8xx_machine_types[] = {
+ static const TypeInfo npcm_gcr_info[] = {
+     {
+         .name               = TYPE_NPCM_GCR,
+@@ -275,5 +397,10 @@ static const TypeInfo npcm_gcr_info[] = {
+         .parent             = TYPE_NPCM_GCR,
+         .class_init         = npcm7xx_gcr_class_init,
+     },
 +    {
-+        .name           = TYPE_NPCM8XX_MACHINE,
-+        .parent         = TYPE_MACHINE,
-+        .instance_size  = sizeof(NPCM8xxMachine),
-+        .class_size     = sizeof(NPCM8xxMachineClass),
-+        .class_init     = npcm8xx_machine_class_init,
-+        .abstract       = true,
-+    }, {
-+        .name           = MACHINE_TYPE_NAME("npcm845-evb"),
-+        .parent         = TYPE_NPCM8XX_MACHINE,
-+        .class_init     = npcm845_evb_machine_class_init,
++        .name               = TYPE_NPCM8XX_GCR,
++        .parent             = TYPE_NPCM_GCR,
++        .class_init         = npcm8xx_gcr_class_init,
 +    },
-+};
-+
-+DEFINE_TYPES(npcm8xx_machine_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index d7813c089c5..465c757f976 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -12,7 +12,7 @@ arm_ss.add(when: 'CONFIG_MUSICPAL', if_true: files('musicpal.c'))
- arm_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
- arm_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
- arm_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
--arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c'))
-+arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c', 'npcm8xx_boards.c'))
- arm_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
- arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
- arm_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
+ };
+ DEFINE_TYPES(npcm_gcr_info)
 -- 
 2.43.0
 
