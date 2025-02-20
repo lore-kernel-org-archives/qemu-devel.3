@@ -4,95 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957EAC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D91FC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl8nZ-0007bF-4G; Thu, 20 Feb 2025 10:49:13 -0500
+	id 1tl8sy-0000Bj-Vz; Thu, 20 Feb 2025 10:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tl8nW-0007al-Q0
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:49:10 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tl8sx-0000Ar-Hx
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:54:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tl8nU-00044F-RH
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:49:10 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tl8st-0004m9-E8
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:54:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740066547;
+ s=mimecast20190719; t=1740066881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7efyDFq8ywl3rUi284rb4ybACQMMm9v6CDYnSM9dpQc=;
- b=bs3Aj5ERK+XAHn//+wXovtodht44DxSxL316PWGhs847A0JOZlGhZlU2RvPsLcT9hqlUV6
- qu5aQWgBbNCFb/GAoR9oQjN5ZUM2rOQcEFist1ie85xiv4TeIfrWIY3lQheBgB499KbUBq
- VMLaA5cMMalqQwqMgyORNqltvpL4Yjk=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-__BGG8qVOGm0tFGjQ54FrA-1; Thu, 20 Feb 2025 10:49:02 -0500
-X-MC-Unique: __BGG8qVOGm0tFGjQ54FrA-1
-X-Mimecast-MFC-AGG-ID: __BGG8qVOGm0tFGjQ54FrA_1740066542
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-849e7868f6eso16661939f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:49:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740066542; x=1740671342;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7efyDFq8ywl3rUi284rb4ybACQMMm9v6CDYnSM9dpQc=;
- b=T2est8DVamOyDCsoJIPovtysfrmMravAo1HFz/3l/s9820pIQoe3Sjdg1WC1btMhly
- gjGejbD60l/3od37IwlN9TzY3syguap01G/jTBx0yqY5CsucqDDF4Vn3ePaAm3/uIz8Y
- 9rfd4fxKPRjAx4UuxZW86iIJEvGMa6fU5fKPdpLIie1e7D9UTZnhYgJSsaSsyU50bzxz
- 7gzkTjuW2SN87oYVxO7rzKoiLnL1HPqdmpPUYLGHf0qtyhn/OHzZNH7Ywv5ZvCiHwV1J
- E1Sqvj1k/Gf7ayj97wzSzLwXM12vVJdfBykJSBBW1eXV6kaRTfbGqCWUFKSQFtOO0Y6l
- jtbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdTsqdSLb0GAFKTYiHllOmPo7Qwonj5GsbBrcfoRydXvZ594I9Dm+oHVYoOR4hskfQJtdduCFvY9q+@nongnu.org
-X-Gm-Message-State: AOJu0YyxTcSoN5Ny+TOMeQPQjsgt7UyBIR28pLnj+pd5G4tUX9zeBNAe
- mf4rYNx0iaJawrzis1MS3JA3unFIET6BgKaXoTGJuQlinXCwYwXurSLq4FmznWJ2Dgj5F0iMEaf
- rZtHgrkfuofWhUlOMXq27GclxQM/OEij3Qng2qaDIDV0BCKWz2IIH
-X-Gm-Gg: ASbGncvWXeihVyqt1PVbNHUYEOky5LdwHQXuLg1rw1d6/ACWJwc6/0bdWJScITq1rei
- JcqPJOrHygGlCGn3fjKbkn0War7iGXyU12gmkH+noXcOkHC4Zgn1sGJaa52kIPwqmTabtStcY7r
- R837baGXSGr6HrYe0y97p1LScahNKXYwvG9VR7YN1YsczcbrhStJMXXEEdh5CAkNqkz1/GdlbEv
- MXPUdqqZemMQSbzDMwX2dSoPTfJh05Pnp6+7gvTWHDm0lsRbZTDz4B6x72dOHmRxCzTCOpmBP8H
- btqzcAlf
-X-Received: by 2002:a05:6e02:2181:b0:3d0:13f1:b47c with SMTP id
- e9e14a558f8ab-3d2808e4ca0mr47467915ab.4.1740066541874; 
- Thu, 20 Feb 2025 07:49:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJqAxgkT6s8dGLb7OGfOfi9O3JRnEbos48P1EA8RIfD8UKsCL6O6U2bWGwmGGFsbNdX2d86Q==
-X-Received: by 2002:a05:6e02:2181:b0:3d0:13f1:b47c with SMTP id
- e9e14a558f8ab-3d2808e4ca0mr47467855ab.4.1740066541483; 
- Thu, 20 Feb 2025 07:49:01 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d2ae885b93sm12672815ab.68.2025.02.20.07.48.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 07:49:00 -0800 (PST)
-Date: Thu, 20 Feb 2025 08:48:58 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Eric Auger <eauger@redhat.com>
-Cc: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- clg@redhat.com, zhenzhong.duan@intel.com
-Subject: Re: [RFC 0/2] hw/vfio/pci: Prevent BARs from being dma mapped in
- d3hot state
-Message-ID: <20250220084858.0bd25b3f.alex.williamson@redhat.com>
-In-Reply-To: <20250220080723.2ee71a7b.alex.williamson@redhat.com>
-References: <20250219175941.135390-1-eric.auger@redhat.com>
- <20250219115844.062c5513.alex.williamson@redhat.com>
- <20250219141945.5e74c7f3.alex.williamson@redhat.com>
- <4b7cfa82-c730-43af-ab47-53f20131104a@redhat.com>
- <44a82e93-003a-4d70-a1f0-4bc3efd045d2@redhat.com>
- <20250220080723.2ee71a7b.alex.williamson@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=svMb0hMjsByEN3jNk32qxtNTGWo84eb8AH74fZ+nvGk=;
+ b=bMvWugEh0oQr1Qnd507CUYT6hMQ60Y0ECVrG5JdIcKyynzD2FLJarnRZM9CWIsf6oyU0Z3
+ 1dZloiu96zkO4yLly7yGZzWRM7Ey3AOnIRJamgeArszwQYlpQPTe0e/P85soXGS2q9niyE
+ QbragJ4lhI8mncAWp4Pjnnow8Orwy4I=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-B3pw8yMyMauE5q5vR1YHTQ-1; Thu,
+ 20 Feb 2025 10:54:37 -0500
+X-MC-Unique: B3pw8yMyMauE5q5vR1YHTQ-1
+X-Mimecast-MFC-AGG-ID: B3pw8yMyMauE5q5vR1YHTQ_1740066876
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E85D19783B6; Thu, 20 Feb 2025 15:54:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 853A219412A3; Thu, 20 Feb 2025 15:54:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E9B4A21E6A28; Thu, 20 Feb 2025 16:54:29 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Ard Biesheuvel
+ <ardb@kernel.org>,  Michael Roth <michael.roth@amd.com>,  "Michael S.
+ Tsirkin" <mst@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Daniel
+ P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  graf@amazon.com,  Markus Armbruster
+ <armbru@redhat.com>
+Subject: Re: [PATCH v4 14/24] hw/uefi: add var-service-json.c + qapi for NV
+ vars.
+In-Reply-To: <20250219071431.50626-15-kraxel@redhat.com> (Gerd Hoffmann's
+ message of "Wed, 19 Feb 2025 08:14:16 +0100")
+References: <20250219071431.50626-1-kraxel@redhat.com>
+ <20250219071431.50626-15-kraxel@redhat.com>
+Date: Thu, 20 Feb 2025 16:54:29 +0100
+Message-ID: <87tt8or4qy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -117,91 +96,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Feb 2025 08:07:23 -0700
-Alex Williamson <alex.williamson@redhat.com> wrote:
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
-> On Thu, 20 Feb 2025 11:45:35 +0100
-> Eric Auger <eauger@redhat.com> wrote:
-> 
-> > Hi Alex,
-> > 
-> > On 2/20/25 11:31 AM, Eric Auger wrote:  
-> > > 
-> > > Hi Alex,
-> > > 
-> > > On 2/19/25 10:19 PM, Alex Williamson wrote:    
-> > >> On Wed, 19 Feb 2025 11:58:44 -0700
-> > >> Alex Williamson <alex.williamson@redhat.com> wrote:
-> > >>    
-> > >>> On Wed, 19 Feb 2025 18:58:58 +0100
-> > >>> Eric Auger <eric.auger@redhat.com> wrote:
-> > >>>    
-> > >>>> Since kernel commit:
-> > >>>> 2b2c651baf1c ("vfio/pci: Invalidate mmaps and block the access
-> > >>>> in D3hot power state")
-> > >>>> any attempt to do an mmap access to a BAR when the device is in d3hot
-> > >>>> state will generate a fault.
-> > >>>>
-> > >>>> On system_powerdown, if the VFIO device is translated by an IOMMU,
-> > >>>> the device is moved to D3hot state and then the vIOMMU gets disabled
-> > >>>> by the guest. As a result of this later operation, the address space is
-> > >>>> swapped from translated to untranslated. When re-enabling the aliased
-> > >>>> regions, the RAM regions are dma-mapped again and this causes DMA_MAP
-> > >>>> faults when attempting the operation on BARs.
-> > >>>>
-> > >>>> To avoid doing the remap on those BARs, we compute whether the
-> > >>>> device is in D3hot state and if so, skip the DMA MAP.      
-> > >>> Thinking on this some more, QEMU PCI code already manages the device
-> > >>> BARs appearing in the address space based on the memory enable bit in
-> > >>> the command register.  Should we do the same for PM state?
-> > >>>
-> > >>> IOW, the device going into low power state should remove the BARs from
-> > >>> the AddressSpace and waking the device should re-add them.  The BAR DMA
-> > >>> mapping should then always be consistent, whereas here nothing would
-> > >>> remap the BARs when the device is woken.
-> > >>>
-> > >>> I imagine we'd need an interface to register the PM capability with the
-> > >>> core QEMU PCI code, where address space updates are performed relative
-> > >>> to both memory enable and power status.  There might be a way to
-> > >>> implement this just for vfio-pci devices by toggling the enable state
-> > >>> of the BAR mmaps relative to PM state, but doing it at the PCI core
-> > >>> level seems like it'd provide behavior more true to physical hardware.    
-> > >> I took a stab at this approach here, it doesn't obviously break
-> > >> anything in my configs, but I haven't yet tried to reproduce this exact
-> > >> scenario.
-> > >>
-> > >> https://gitlab.com/alex.williamson/qemu/-/tree/pci-pm-power-state    
-> > 
-> > it does not totally fix the issue: I now get:
-> > 
-> > qemu-system-x86_64: warning: vfio_container_dma_map(0x55cc25705680,
-> > 0x380000000000, 0x1000000, 0x7f8762000000) = -14 (Bad address)
-> > 0000:41:00.0: PCI peer-to-peer transactions on BARs are not supported.  
-> 
-> Hmm, I'll reproduce and debug further.  The intention here is that BARs
-> for the device in D3hot would not be DMA mapped, effectively as if the
-> memory enable bit in the command register were cleared, therefore I'd
-> hoped the listener is not called for this range.
+> Define qapi schema for the uefi variable store state.
+>
+> Use it and the generated visitor helper functions to store persistent
+> (EFI_VARIABLE_NON_VOLATILE) variables in JSON format on disk.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 
-I forgot to mark the PM state field as writable in config space, so we
-were always reading back D0 state.  Adding the following to
-pci_pm_init() resolves it:
+[...]
 
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -445,6 +445,7 @@ int pci_pm_init(PCIDevice *d, uint8_t offset, Error **errp)
- 
-     d->pm_cap = cap;
-     d->cap_present |= QEMU_PCI_CAP_PM;
-+    pci_set_word(d->wmask + cap + PCI_PM_CTRL, PCI_PM_CTRL_STATE_MASK);
- 
-     return cap;
- }
+> diff --git a/qapi/meson.build b/qapi/meson.build
+> index e7bc54e5d047..eadde4db307f 100644
+> --- a/qapi/meson.build
+> +++ b/qapi/meson.build
+> @@ -65,6 +65,7 @@ if have_system
+>      'pci',
+>      'rocker',
+>      'tpm',
+> +    'uefi',
+>    ]
+>  endif
+>  if have_system or have_tools
+> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+> index b1581988e4eb..2877aff73d0c 100644
+> --- a/qapi/qapi-schema.json
+> +++ b/qapi/qapi-schema.json
+> @@ -81,3 +81,4 @@
+>  { 'include': 'vfio.json' }
+>  { 'include': 'cryptodev.json' }
+>  { 'include': 'cxl.json' }
+> +{ 'include': 'uefi.json' }
+> diff --git a/qapi/uefi.json b/qapi/uefi.json
+> new file mode 100644
+> index 000000000000..c268ed11b70c
+> --- /dev/null
+> +++ b/qapi/uefi.json
+> @@ -0,0 +1,45 @@
+> +# -*- Mode: Python -*-
+> +# vim: filetype=python
+> +#
+> +
 
-Changing this might cause a problem with migration, ISTR we validate
-the wmask with the source.  Anyway, I'll post the series and we can
-test further and discuss it there.  Thanks,
+This ends up in section "CXL devices", which is not what you want.  I
+guess you want a suitable heading right here, like
 
-Alex
+   ##
+   # UEFI mumble mumble
+   ##
+
+> +##
+> +# @UefiVariable:
+> +#
+> +# UEFI Variable
+
+Overview text is optional.  Is this one worthwhile?
+
+> +#
+> +# @guid: variable namespace guid
+
+How is guid usually capitalized in UEFI documentation?  GUID maybe?
+
+> +#
+> +# @name: variable name (utf-8)
+
+UTF-8
+
+> +#
+> +# @attr: variable attributes
+
+These are encoded as int.  How?
+
+> +#
+> +# @data: variable content (base64)
+
+I'm not a native speaker...  for what it's worth, "contents" feels
+better to me.
+
+(base64 encoded) and (encoded in base64) are the common phrasings.
+
+> +#
+> +# @time: variable modification time (EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS).
+
+Long line, please break it like
+
+   # @time: variable modification time
+   #     (EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS)
+
+What's the unit and the anchor?  Seconds since the epoch?
+
+What is EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS trying to
+tell the reader?
+
+> +#
+> +# @digest: variable certificate digest (EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS).
+
+Long line, please break it like
+
+   # @digest: variable certificate digest
+   #     (EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS)
+
+What kind of digest is this?
+
+> +#
+> +# Since: 10.0
+> +##
+> +{ 'struct' : 'UefiVariable',
+> +  'data' : { 'guid'  : 'str',
+> +             'name'  : 'str',
+> +             'attr'  : 'int',
+> +             'data'  : 'str',
+> +             '*time' : 'str',
+> +             '*digest' : 'str'}}
+> +
+> +##
+> +# @UefiVarStore:
+> +#
+> +# UEFI Variable Store
+
+Overview is optional.  Is this one worthwhile?
+
+> +#
+> +# @version: 2
+
+What about "currently always 2"?
+
+> +#
+> +# @variables: list of uefi variables
+
+UEFI
+
+> +#
+> +# Since: 10.0
+> +##
+> +{ 'struct' : 'UefiVarStore',
+> +  'data' : { 'version'   : 'int',
+> +             'variables' : [ 'UefiVariable' ] }}
 
 
