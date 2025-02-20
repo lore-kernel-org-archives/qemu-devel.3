@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E6FBC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E04C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl8Yd-0001dd-CU; Thu, 20 Feb 2025 10:33:47 -0500
+	id 1tl8dK-0002lY-Ph; Thu, 20 Feb 2025 10:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tl8Ya-0001dJ-6O
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:33:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tl8YY-0001ph-QP
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:33:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740065621;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yapTsypdN+ODW+VR9R7f52sFqzg14QfMKnnbVSrKGkw=;
- b=Z2+VIUwxK7egwbxKutzpCP/OnZpOZSFkZFQpVZDr3gAgojQ/vxeTZb9yQohRO7kPsEcsdt
- rJMWy2XtCmB4UC5xk2WJDs8A8fimKOeZ8Mj+yH6uOLNyR7voknMQAHALS92MlCNx4boyGd
- XEUFVsKguosWtIHDUIZ6xt3+rtYtlz4=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-KYzUp_SbPd-2Bv1G-URDLw-1; Thu, 20 Feb 2025 10:33:40 -0500
-X-MC-Unique: KYzUp_SbPd-2Bv1G-URDLw-1
-X-Mimecast-MFC-AGG-ID: KYzUp_SbPd-2Bv1G-URDLw_1740065619
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7c0a79e6a7eso180145185a.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:33:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740065619; x=1740670419;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <whendrik@google.com>)
+ id 1tl8dF-0002lE-61
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:38:33 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <whendrik@google.com>)
+ id 1tl8dD-0002kX-6e
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:38:32 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-543e4d1cf43so8266e87.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:38:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1740065908; x=1740670708; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yapTsypdN+ODW+VR9R7f52sFqzg14QfMKnnbVSrKGkw=;
- b=lOjmty9eIy372UHWcPOvnht8iaTahknwDuC3M2RmZW/N+f0vTlCtJ3JSa6+ECNAzDK
- /hOoBV7SVM7xT/SSzOtQAoxvCh6Ff3+kD0P3D+mNBmfIuWP5FTKZtIMWPqUXIgvmYyMY
- 62UxosNHOScQ/8B5Xhq8sUak9yfKJ3ulqY22An+855bB+9Dl4qvEBZRFQGIHLKvBBBaH
- 3IgGDbW4KWcxfu12kcHoGl9x/vzG3fcApwgvN/5Kh44mkc5+tkfSx/wN3LZEY2kN+lfb
- FD02skW9oxg/cRCtycJXepnGHC4J3VA3BDJtuxL56nZZcW/uFTmzxWqpkz6B7DnUYWt6
- uh4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoCT6zT8aR2A5TJhEhd7393cR/qlHin3olkbF8KcEhzbKLNSn9qEoaL8k1h9/7oLmAK8S0tcScNYjO@nongnu.org
-X-Gm-Message-State: AOJu0YxtYwpUMCbfe0vPQiWkaQArkKBbh9xi3+ncD6RBFW6q9LcKdoGi
- F9gfYmgII7NY+/qyQOY3eOh7FJUAaNkHPw21O7S0ivpiXGvz7CTxIyNuwl4dCeemk142H9FHhRh
- ckxn1/p7U/aydqWAr+aG1tw/ySI7ez4yfe/bjWdFXPjMN/ACVIJHs
-X-Gm-Gg: ASbGncvvSpMxwqD8amYJDd+2SyPg1bxlI2hBoegXKsPwdLwqXgRaAUhoVhH6X00b+7Y
- bcZHW6wWxTlCESCBx/Xr82/cSgbAzu5gYjrPfdurV1XQs8sSnO8Q22LykejVRJGKUbJR/0nNbNI
- Z42fTZNVVSuYElCKyyDbCz5ZsqjdZnz7RjE5NWwrISrIU6r5TY3sSLTC/9y7DUvbHfJc94j49vK
- w0CNUIy9P/IdiD0YV+JXt1tL/qDdJd80fPZc3i5WQsSFe+FchluqPuSHtc=
-X-Received: by 2002:a05:620a:2a06:b0:7c0:b08d:2446 with SMTP id
- af79cd13be357-7c0b08d2b2fmr1408316085a.46.1740065619660; 
- Thu, 20 Feb 2025 07:33:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpwa1ATPvk9mmQfg6psOz5K6v57AHZi+ZxCvKNMLCDQLSkzDdPX/DoD8jkoHkVkmWf6i1rdQ==
-X-Received: by 2002:a05:620a:2a06:b0:7c0:b08d:2446 with SMTP id
- af79cd13be357-7c0b08d2b2fmr1408313585a.46.1740065619405; 
- Thu, 20 Feb 2025 07:33:39 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c0b7a62d8bsm204851285a.8.2025.02.20.07.33.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 07:33:38 -0800 (PST)
-Date: Thu, 20 Feb 2025 10:33:36 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Yan Fu <yafu@redhat.com>
-Subject: Re: [PATCH] migration: Fix UAF for incoming migration on
- MigrationState
-Message-ID: <Z7dLUCdhRyby3Tp9@x1.local>
-References: <20250220132459.512610-1-peterx@redhat.com>
- <87h64o90dn.fsf@suse.de>
- <gtxeejfyyr4v7ebwtesl6zn743knf4bp73balfmlhlgxm3a5jw@kqig7553jjen>
+ bh=rPrlxOGx68Kh4ZqBXIF+mL51egvnHlOctDO0LuiCtYo=;
+ b=LS+uQpFS9SZZlwtYFjBKkpI3u+b6AzfyjTJrLcCNLt1k8RWZfxRGMncPZnPRtnNvJS
+ Z+QUf8jFjhP4NpHIACUKvc5bEC7AWHMivQXyD3cbQS9X216f/ObUEPBP7Sw7188I4QKa
+ QUytqDeTOmVnoyChoisQrl/TGQF6t8l5yLeredZZ4bSvT72DWUMDAYdjpwb2HqxZ+Xb2
+ x34FwsPla0rKxU50OxgrKyl/PdQLpn3xhZUOiDnhkAis1UEEtOMnPYOltbkKiJLpZhmL
+ 5gIDTnJeXIJpy6e22VqWxCnwp12YZz9m2gJ1uYpTyx3aTQbpPCsDBn6lvV8M1ylu44pF
+ YCMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740065908; x=1740670708;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rPrlxOGx68Kh4ZqBXIF+mL51egvnHlOctDO0LuiCtYo=;
+ b=Y+8v2zAbddPDVCj/wAuIzVtwSkBNXJ+US/QgYradJNgxWPNQ/2c/gNUBrNPbf4FbUU
+ 0VvFoCZwwXGooEPD2gqD11T4wFBA3KsjPN6BqJXcEIdmUnkEzCveDXD8cI/j7LG8srOl
+ V1pCQQvjeF+9rrEiUDdLZlu6L728oBu0easDDz1nx8F/XiH/5Bd+jDq9Of0fqjJe7nTW
+ Kuc9LMLLqKJ25VgjsKXxhyJHdvAZ2sCUAPkWjsyMk7yF23weQm74mtbeLeFGGhdgFS4N
+ 1eZJ/vzW0v3pvBpfX+9c0yyI8kI1z/th0QJAj8mSOd9PL4xZwP76K5nu+VASrv/7V++q
+ kEtg==
+X-Gm-Message-State: AOJu0YzvPqUDS/iT9BrWu01G+WB4kIXw05TC4aozJtoJferb0l0IZIDn
+ lBulIeK+DzkKezgTEOL75f/XnZPvWoi0tNnoOEa60JQPXnZIK++19fLellKMFqeXHOlOnzkjUI5
+ //zzmnXrIVvSMhh9WxPVTOIIv1J/zYnRuzyYO
+X-Gm-Gg: ASbGncvqcydpk+p0tFBKxhEyYN6jaUyOYRJxYB8e36MUqSimajlUMnJ8kiTgQw7wJs4
+ tUZXoKVdQFlNC+hWQXZc+9ecU268e3aklw+qUHWjb/tY6eSrx4wIAJ4Dm/2VkuOYxWxQhqAbZ6V
+ VgmaerJMmW4Nk+7yewtTGWl3u3MYE=
+X-Google-Smtp-Source: AGHT+IFoXuP+z/ITg1sdenSYkUC1C0oN/7l1RAA4JsIUP0a43AymrziH+XmUt9gbJ/7CJ7PxCRXpwomwey5oRnhDquE=
+X-Received: by 2002:a05:6512:3f25:b0:545:1cbb:74e5 with SMTP id
+ 2adb3069b0e04-5471cc9e11dmr191814e87.3.1740065907492; Thu, 20 Feb 2025
+ 07:38:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <gtxeejfyyr4v7ebwtesl6zn743knf4bp73balfmlhlgxm3a5jw@kqig7553jjen>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+References: <20241213172645.2751696-1-whendrik@google.com>
+ <20250220094956-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20250220094956-mutt-send-email-mst@kernel.org>
+From: =?UTF-8?Q?Hendrik_W=C3=BCthrich?= <whendrik@google.com>
+Date: Thu, 20 Feb 2025 16:38:15 +0100
+X-Gm-Features: AWEUYZmbskDqso1V8KbHEh0Pob2G7Sa01fsyUO4UX8kNQOmZhtBlPWr5JJEyzXI
+Message-ID: <CAEX-0Wtdcv5BPv4S8h8YfN2qLMg2U0b6D-7-eFXut9ZL15xcaQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/8] mulate Intel RDT features needed to mount ResCtrl
+ in Linux
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
+ marcel.apfelbaum@gmail.com, pbonzini@redhat.com, zhao1.liu@intel.com, 
+ xiaoyao.li@intel.com, peternewman@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=whendrik@google.com; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,20 +98,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 20, 2025 at 03:48:17PM +0100, Juraj Marcin wrote:
-> Maybe it could be also useful to add assertions to places where locked
-> BQL is assumed and the assumption is not clear enough. Then, when
-> something changes, it will fail with a clear reason instead of debugging
-> race conditions that might occur.
+On Thu, Feb 20, 2025 at 3:50=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Fri, Dec 13, 2024 at 05:26:37PM +0000, Hendrik Wuethrich wrote:
+> > From: Hendrik W=C3=BCthrich <whendrik@google.com>
+> >
+> > The aim of this patch series is to emulate Intel RDT features in order
+> > to make testing of the linux Resctrl subsystem possible with Qemu.
+> >
+> > A branch with the patches applied can be found at:
+> > https://github.com/Gray-Colors/Intel_RDT_patches_applied/tree/rdt_v5
+> >
+> > The changes made introduce the following features:
+>
+>
+>
+> There was just my minor comment, are you going to post v6?
 
-Right.  We have plenty of those already:
+I found out about some larger issues, mostly in the mapping of RDT
+state to cores, and am rewriting some parts (mostly of the rdt.c file).
+I hope to be able to send something out in the coming week.
 
-$ git grep "assert(bql_locked())" | wc -l
-
-If there's some places that we find that is not clear on BQL dependency but
-relies on that, we can consider adding more if that helps clarifications.
-
--- 
-Peter Xu
-
+>
+> > * Feature enumeration for Intel RDT allocation.
+> > * Feature enumeration for Intel RDT monitoring.
+> > * Intel RDT monitoring system interface.
+> > * Intel RDT allocation system interface.
+> >
+> > By adding these features, a barebones implementation most of the RDT
+> > state and MSRs is introduced, which can be enabled through qemu
+> > command line flags.
+> > The features missing for a faithful recreation of RDT are CDP and
+> > non-linear MBA throttle, as well as the possibility to configure
+> > various values through the command line, as some properties can be
+> > different across different machines. For increased ease of use, the
+> > correct features should be automatically enabled on machines that
+> > support RDT functionality.
+> > The missing features mentioned above will be implemented in the
+> > following order:
+> >
+> > * Expand feature set for RDT allocation to include CDP and non-linear
+> >  MBA throttle
+> > * Allow for command line configuration of some values, such as the L3
+> >  CBM length
+> > * Automatically enable RDT on machines that officially support it.
+> >
+> > Will NOT be implemented
+> > * Tests to simulate interaction with the host by the guest
+> >
+> > Command line examples assuming entire patch series is applied (This
+> > requires a kernel with Resctrl enabled):
+> >
+> > To emulate Intel RDT features:
+> >
+> > Currently, it is necessary to force the RDT options on in qemu, as it i=
+s
+> > not automatically enabled for any machines. An example would be the
+> > following:
+> > -cpu Skylake-Server,+l3-cmt,+rdt-m,+rdt-a,+mba,+l3-cat,+l2-cat
+> > and
+> > -device rdt
+> >
+> > Just enabling RDT in qemu won't really help, though. The following
+> > option allows resctrl in the kernel:
+> > - Kernel options: rdt=3Dmbmlocal,mbmtotal,cmt,mba,l2cat,l3cat
+> >
+> > To use Resctrl in the Qemu, please refer to:
+> > https://docs.kernel.org/arch/x86/resctrl.html
+> >
+> > V4 -> V5
+> > - rebase
+> > - fix feature bit names to all be in hex
+> >
+> > =E2=80=AAHendrik W=C3=BCthrich (8):
+> >   i386: Add Intel RDT device and State to config.
+> >   i386: Add init and realize functionality for RDT device.
+> >   i386: Add RDT functionality
+> >   i386: Add RDT device interface through MSRs
+> >   i386: Add CPUID enumeration for RDT
+> >   i386: Add RDT feature flags.
+> >   i386/cpu: Adjust CPUID level for RDT features
+> >   i386/cpu: Adjust level for RDT on full_cpuid_auto_level
+> >
+> >  hw/i386/Kconfig                      |   4 +
+> >  hw/i386/meson.build                  |   1 +
+> >  hw/i386/rdt.c                        | 286 +++++++++++++++++++++++++++
+> >  include/hw/i386/rdt.h                |  76 +++++++
+> >  target/i386/cpu.c                    | 114 ++++++++++-
+> >  target/i386/cpu.h                    |  24 +++
+> >  target/i386/tcg/sysemu/misc_helper.c |  81 ++++++++
+> >  7 files changed, 584 insertions(+), 2 deletions(-)
+> >  create mode 100644 hw/i386/rdt.c
+> >  create mode 100644 include/hw/i386/rdt.h
+> >
+> > --
+> > 2.47.1.613.gc27f4b7a9f-goog
+>
 
