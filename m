@@ -4,85 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E04C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97DA8C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl8dK-0002lY-Ph; Thu, 20 Feb 2025 10:38:38 -0500
+	id 1tl8en-0003Wu-DF; Thu, 20 Feb 2025 10:40:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whendrik@google.com>)
- id 1tl8dF-0002lE-61
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:38:33 -0500
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <whendrik@google.com>)
- id 1tl8dD-0002kX-6e
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:38:32 -0500
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-543e4d1cf43so8266e87.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:38:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1740065908; x=1740670708; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rPrlxOGx68Kh4ZqBXIF+mL51egvnHlOctDO0LuiCtYo=;
- b=LS+uQpFS9SZZlwtYFjBKkpI3u+b6AzfyjTJrLcCNLt1k8RWZfxRGMncPZnPRtnNvJS
- Z+QUf8jFjhP4NpHIACUKvc5bEC7AWHMivQXyD3cbQS9X216f/ObUEPBP7Sw7188I4QKa
- QUytqDeTOmVnoyChoisQrl/TGQF6t8l5yLeredZZ4bSvT72DWUMDAYdjpwb2HqxZ+Xb2
- x34FwsPla0rKxU50OxgrKyl/PdQLpn3xhZUOiDnhkAis1UEEtOMnPYOltbkKiJLpZhmL
- 5gIDTnJeXIJpy6e22VqWxCnwp12YZz9m2gJ1uYpTyx3aTQbpPCsDBn6lvV8M1ylu44pF
- YCMA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tl8el-0003T8-2t
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:40:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tl8ej-0002wW-7U
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:40:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740066002;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZN/bBhv9RWLgStCo3Ix/B0E/Wdr9j7bLULVSoLuT++8=;
+ b=HIklzVEqL8WBGHldFqEVEEmtS1y29gWOBsKLBq8qNZfi9ICLQpy6a0b039SHIzuXigsshM
+ aZKy/wfqKfRbvTqv7lve0J5t4tpDSm2GYvH0AaaFgMoKyp73xqQXqHxo8t9CmbGCeF24Rp
+ ZdgQ02ICFxeTfOqKOyxiIi1V9vVRKE0=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-401-BYH2c7qJN7uX3P6Yl1MA4w-1; Thu, 20 Feb 2025 10:40:01 -0500
+X-MC-Unique: BYH2c7qJN7uX3P6Yl1MA4w-1
+X-Mimecast-MFC-AGG-ID: BYH2c7qJN7uX3P6Yl1MA4w_1740066000
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5d9fb24f87bso2557404a12.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:40:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740065908; x=1740670708;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rPrlxOGx68Kh4ZqBXIF+mL51egvnHlOctDO0LuiCtYo=;
- b=Y+8v2zAbddPDVCj/wAuIzVtwSkBNXJ+US/QgYradJNgxWPNQ/2c/gNUBrNPbf4FbUU
- 0VvFoCZwwXGooEPD2gqD11T4wFBA3KsjPN6BqJXcEIdmUnkEzCveDXD8cI/j7LG8srOl
- V1pCQQvjeF+9rrEiUDdLZlu6L728oBu0easDDz1nx8F/XiH/5Bd+jDq9Of0fqjJe7nTW
- Kuc9LMLLqKJ25VgjsKXxhyJHdvAZ2sCUAPkWjsyMk7yF23weQm74mtbeLeFGGhdgFS4N
- 1eZJ/vzW0v3pvBpfX+9c0yyI8kI1z/th0QJAj8mSOd9PL4xZwP76K5nu+VASrv/7V++q
- kEtg==
-X-Gm-Message-State: AOJu0YzvPqUDS/iT9BrWu01G+WB4kIXw05TC4aozJtoJferb0l0IZIDn
- lBulIeK+DzkKezgTEOL75f/XnZPvWoi0tNnoOEa60JQPXnZIK++19fLellKMFqeXHOlOnzkjUI5
- //zzmnXrIVvSMhh9WxPVTOIIv1J/zYnRuzyYO
-X-Gm-Gg: ASbGncvqcydpk+p0tFBKxhEyYN6jaUyOYRJxYB8e36MUqSimajlUMnJ8kiTgQw7wJs4
- tUZXoKVdQFlNC+hWQXZc+9ecU268e3aklw+qUHWjb/tY6eSrx4wIAJ4Dm/2VkuOYxWxQhqAbZ6V
- VgmaerJMmW4Nk+7yewtTGWl3u3MYE=
-X-Google-Smtp-Source: AGHT+IFoXuP+z/ITg1sdenSYkUC1C0oN/7l1RAA4JsIUP0a43AymrziH+XmUt9gbJ/7CJ7PxCRXpwomwey5oRnhDquE=
-X-Received: by 2002:a05:6512:3f25:b0:545:1cbb:74e5 with SMTP id
- 2adb3069b0e04-5471cc9e11dmr191814e87.3.1740065907492; Thu, 20 Feb 2025
- 07:38:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740065999; x=1740670799;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZN/bBhv9RWLgStCo3Ix/B0E/Wdr9j7bLULVSoLuT++8=;
+ b=IlaYtJeI7jqelWMPW2IfD5LsQZRKNUZnJC2nt5R+qhvkd6FA1xH8ntaEu6B7MNJD0o
+ DQuwUT9j4OobxoLbnP30AHQdfutD3iDmENagVmyLSdsIUajYl1mGEzTyyM6HdyBBoRpu
+ ih/x9iEZY0PjFyEub1hKJUI+dVtlXsPYxZAzU4witPwvzdtiZpHx40XgJJJsWRi/XKvL
+ 4VYd4DUS6wY4DX2XME2KBytR+LqeaNvM2oAcB7kSjogjq288MjBqEMELYrlIwqJC1imo
+ hV1P5Uau3ncg59KpyACPtAtFDCr755WXcGWKdrHJWSbqWnWsvGUg7K1EdVF9zFLBgZ5C
+ I9aA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGbwQiYF21FyilvCHZZkS5Cx8DPV3G5HDGXCDJc2tphbqEWAZYhe/FfqeF2X5m3ERv9PQS1+9GtXkh@nongnu.org
+X-Gm-Message-State: AOJu0Yxe7AxuOG6Zw8cFcFJX3AnfS3KSFM05QtRbL12CfFiqqABdrpZD
+ I7ql2yK3c29W5msu60IjgwjwVON5w2FwrQSMxfMrqBDX4UIdt/rRVceGqk9peyDK0DBqPxO/3o3
+ KPoTRwQiB1yHdC9phR65i+6iS5Qlnvpv7m5A1IePKvp8FShXry2UP
+X-Gm-Gg: ASbGncsxO0At5ynHd/oQBRk8QSCcpuuET5/e8FUipbYWsYoAwF+/D1vsoLRZ9RWjitz
+ /b8WzPZxJv2jOw1uIbmbPwpb+o/KVbW6byMi3yPloWhTyuEJ7157QOD//rpB8uNRwiSHXD+R58V
+ dElfiZ92Wve3qKKq8aC6XwwxwWY1Xc+Wymo4Y6w5lqmDSpD+N46rtoGeF5Y5PeKC2ckYVQJvBxQ
+ LbghrIhX9Z5zOe6UhKGEUCppRFI7o5g6UIzOqq3K3aUryH0UNXYMGVweC7EVPWaE5ZQAQ==
+X-Received: by 2002:a05:6402:2347:b0:5dc:cfc5:9305 with SMTP id
+ 4fb4d7f45d1cf-5e089cff4bcmr8154854a12.25.1740065997502; 
+ Thu, 20 Feb 2025 07:39:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGQRlsLlk7u00eOU9XQbyVEpbJX39oa2zZQFp24quK7nKrsNg3uVLYeCg/COf7xRIhsTLzK5A==
+X-Received: by 2002:a05:6402:2347:b0:5dc:cfc5:9305 with SMTP id
+ 4fb4d7f45d1cf-5e089cff4bcmr8154721a12.25.1740065995606; 
+ Thu, 20 Feb 2025 07:39:55 -0800 (PST)
+Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dece1b4e99sm12156368a12.16.2025.02.20.07.39.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 07:39:54 -0800 (PST)
+Date: Thu, 20 Feb 2025 10:39:49 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Lei Yang <leiyang@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-devel@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH] qom: Use command line syntax for default values in help
+Message-ID: <20250220103935-mutt-send-email-mst@kernel.org>
+References: <20250207-bool-v1-1-5749d5d6df24@daynix.com>
 MIME-Version: 1.0
-References: <20241213172645.2751696-1-whendrik@google.com>
- <20250220094956-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20250220094956-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?Q?Hendrik_W=C3=BCthrich?= <whendrik@google.com>
-Date: Thu, 20 Feb 2025 16:38:15 +0100
-X-Gm-Features: AWEUYZmbskDqso1V8KbHEh0Pob2G7Sa01fsyUO4UX8kNQOmZhtBlPWr5JJEyzXI
-Message-ID: <CAEX-0Wtdcv5BPv4S8h8YfN2qLMg2U0b6D-7-eFXut9ZL15xcaQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8] mulate Intel RDT features needed to mount ResCtrl
- in Linux
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
- marcel.apfelbaum@gmail.com, pbonzini@redhat.com, zhao1.liu@intel.com, 
- xiaoyao.li@intel.com, peternewman@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=whendrik@google.com; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250207-bool-v1-1-5749d5d6df24@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,101 +120,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 20, 2025 at 3:50=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Fri, Dec 13, 2024 at 05:26:37PM +0000, Hendrik Wuethrich wrote:
-> > From: Hendrik W=C3=BCthrich <whendrik@google.com>
-> >
-> > The aim of this patch series is to emulate Intel RDT features in order
-> > to make testing of the linux Resctrl subsystem possible with Qemu.
-> >
-> > A branch with the patches applied can be found at:
-> > https://github.com/Gray-Colors/Intel_RDT_patches_applied/tree/rdt_v5
-> >
-> > The changes made introduce the following features:
->
->
->
-> There was just my minor comment, are you going to post v6?
+On Fri, Feb 07, 2025 at 02:53:43PM +0900, Akihiko Odaki wrote:
+> object_property_help() uses the conventional command line syntax instead
+> of the JSON syntax. In particular,
+> - Key-value pairs are written in the command line syntax.
+> - bool description passed to the function says on/off instead of
+>   true/false.
+> 
+> However, there is one exception: default values are formatted into JSON.
+> While the command line and JSON syntaxes are consistent in many cases,
+> there are two types where they disagree:
+> 
+> string: The command line syntax omits quotes while JSON requires them.
+> 
+> bool: JSON only accepts true/false for bool but the command line syntax
+>       accepts on/off too, and on/off are also more popular than
+>       true/false. For example, the docs directory has 2045 "on"
+>       occurances while it has only 194 "true" occurances.
+>       on/off are also accepted by OnOffAuto so users do not have to
+>       remember the type is bool or OnOffAuto to use the values.
+> 
+> Omit quotes for strings and use on/off for bools when formatting
+> default values for better consistency.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-I found out about some larger issues, mostly in the mapping of RDT
-state to cores, and am rewriting some parts (mostly of the rdt.c file).
-I hope to be able to send something out in the coming week.
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
->
-> > * Feature enumeration for Intel RDT allocation.
-> > * Feature enumeration for Intel RDT monitoring.
-> > * Intel RDT monitoring system interface.
-> > * Intel RDT allocation system interface.
-> >
-> > By adding these features, a barebones implementation most of the RDT
-> > state and MSRs is introduced, which can be enabled through qemu
-> > command line flags.
-> > The features missing for a faithful recreation of RDT are CDP and
-> > non-linear MBA throttle, as well as the possibility to configure
-> > various values through the command line, as some properties can be
-> > different across different machines. For increased ease of use, the
-> > correct features should be automatically enabled on machines that
-> > support RDT functionality.
-> > The missing features mentioned above will be implemented in the
-> > following order:
-> >
-> > * Expand feature set for RDT allocation to include CDP and non-linear
-> >  MBA throttle
-> > * Allow for command line configuration of some values, such as the L3
-> >  CBM length
-> > * Automatically enable RDT on machines that officially support it.
-> >
-> > Will NOT be implemented
-> > * Tests to simulate interaction with the host by the guest
-> >
-> > Command line examples assuming entire patch series is applied (This
-> > requires a kernel with Resctrl enabled):
-> >
-> > To emulate Intel RDT features:
-> >
-> > Currently, it is necessary to force the RDT options on in qemu, as it i=
-s
-> > not automatically enabled for any machines. An example would be the
-> > following:
-> > -cpu Skylake-Server,+l3-cmt,+rdt-m,+rdt-a,+mba,+l3-cat,+l2-cat
-> > and
-> > -device rdt
-> >
-> > Just enabling RDT in qemu won't really help, though. The following
-> > option allows resctrl in the kernel:
-> > - Kernel options: rdt=3Dmbmlocal,mbmtotal,cmt,mba,l2cat,l3cat
-> >
-> > To use Resctrl in the Qemu, please refer to:
-> > https://docs.kernel.org/arch/x86/resctrl.html
-> >
-> > V4 -> V5
-> > - rebase
-> > - fix feature bit names to all be in hex
-> >
-> > =E2=80=AAHendrik W=C3=BCthrich (8):
-> >   i386: Add Intel RDT device and State to config.
-> >   i386: Add init and realize functionality for RDT device.
-> >   i386: Add RDT functionality
-> >   i386: Add RDT device interface through MSRs
-> >   i386: Add CPUID enumeration for RDT
-> >   i386: Add RDT feature flags.
-> >   i386/cpu: Adjust CPUID level for RDT features
-> >   i386/cpu: Adjust level for RDT on full_cpuid_auto_level
-> >
-> >  hw/i386/Kconfig                      |   4 +
-> >  hw/i386/meson.build                  |   1 +
-> >  hw/i386/rdt.c                        | 286 +++++++++++++++++++++++++++
-> >  include/hw/i386/rdt.h                |  76 +++++++
-> >  target/i386/cpu.c                    | 114 ++++++++++-
-> >  target/i386/cpu.h                    |  24 +++
-> >  target/i386/tcg/sysemu/misc_helper.c |  81 ++++++++
-> >  7 files changed, 584 insertions(+), 2 deletions(-)
-> >  create mode 100644 hw/i386/rdt.c
-> >  create mode 100644 include/hw/i386/rdt.h
-> >
-> > --
-> > 2.47.1.613.gc27f4b7a9f-goog
->
+
+
+
+> ---
+>  qom/object_interfaces.c | 24 +++++++++++++++++++++---
+>  1 file changed, 21 insertions(+), 3 deletions(-)
+> 
+> diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+> index 1a6f29c053e45bf5da5252f6ac1dfa4e85627f9f..f2450f8099c366864b56940e19c6a4bcc0d5e3a9 100644
+> --- a/qom/object_interfaces.c
+> +++ b/qom/object_interfaces.c
+> @@ -4,9 +4,11 @@
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-visit-qom.h"
+>  #include "qapi/qmp/qobject.h"
+> +#include "qapi/qmp/qbool.h"
+>  #include "qapi/qmp/qdict.h"
+>  #include "qapi/qmp/qerror.h"
+>  #include "qapi/qmp/qjson.h"
+> +#include "qapi/qmp/qstring.h"
+>  #include "qapi/qobject-input-visitor.h"
+>  #include "qapi/qobject-output-visitor.h"
+>  #include "qom/object_interfaces.h"
+> @@ -177,9 +179,25 @@ char *object_property_help(const char *name, const char *type,
+>          g_string_append(str, description);
+>      }
+>      if (defval) {
+> -        g_autofree char *def_json = g_string_free(qobject_to_json(defval),
+> -                                                  false);
+> -        g_string_append_printf(str, " (default: %s)", def_json);
+> +        g_autofree char *def_json = NULL;
+> +        const char *def;
+> +
+> +        switch (qobject_type(defval)) {
+> +        case QTYPE_QSTRING:
+> +            def = qstring_get_str(qobject_to(QString, defval));
+> +            break;
+> +
+> +        case QTYPE_QBOOL:
+> +            def = qbool_get_bool(qobject_to(QBool, defval)) ? "on" : "off";
+> +            break;
+> +
+> +        default:
+> +            def_json = g_string_free(qobject_to_json(defval), false);
+> +            def = def_json;
+> +            break;
+> +        }
+> +
+> +        g_string_append_printf(str, " (default: %s)", def);
+>      }
+>  
+>      return g_string_free(str, false);
+> 
+> ---
+> base-commit: 7433709a147706ad7d1956b15669279933d0f82b
+> change-id: 20250207-bool-967267fd0a25
+> 
+> Best regards,
+> -- 
+> Akihiko Odaki <akihiko.odaki@daynix.com>
+
 
