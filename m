@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FBAC021B3
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 11:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87643C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 11:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl4rf-0004Yi-UH; Thu, 20 Feb 2025 06:37:11 -0500
+	id 1tl4rs-0004a4-1s; Thu, 20 Feb 2025 06:37:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tl4re-0004YU-6f
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 06:37:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tl4rj-0004ZV-Rl
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 06:37:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tl4rb-0000px-Ph
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 06:37:09 -0500
+ id 1tl4rh-0000rX-IH
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 06:37:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740051425;
+ s=mimecast20190719; t=1740051432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=5BBqNP7nURydCkT5QDQjUCCwChA8frM+lCdM3VsFkeI=;
- b=TwFktT71otHO1n1YfXdqVQFtyXxd9UlDGIBmAsJU92Fq3zbozuFc4zECArURx2tNHuaYAd
- v5KhzFxyK++9HVm1O6LysZk7smN/wUePeAfiQU0VZBubtzAGzL6ibzNkC01Fgm8EJqBphu
- Ap7OuPUiLYPWoBDCspxgr5NqxrzV8T8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UYVR4Thso7YkttRx5HDs7IzBZPwLwHhmg04Df3xboRY=;
+ b=L1sQmNLAb7fd9qfXzxJ8ELwn4gFYkHHtBLm8VpV46rCNpgiL9dpcuKpoDwcQL2+CEJAR5I
+ fTnzhzUaH3eu2ycXMHS3hSThaCDsM2Qqgagnz7x6mnINi15puNhtwyXM+yIX4UzAmvDrYY
+ RiNmRK2lchaxtNCLZ+HR+Ql26vcaWlo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-yhM1xYZcMQSNHBmHJJGfSA-1; Thu, 20 Feb 2025 06:37:03 -0500
-X-MC-Unique: yhM1xYZcMQSNHBmHJJGfSA-1
-X-Mimecast-MFC-AGG-ID: yhM1xYZcMQSNHBmHJJGfSA_1740051422
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f3eb82fceso373699f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 03:37:03 -0800 (PST)
+ us-mta-278-RMMaQG_kPPaPKs2vLSwKAA-1; Thu, 20 Feb 2025 06:37:11 -0500
+X-MC-Unique: RMMaQG_kPPaPKs2vLSwKAA-1
+X-Mimecast-MFC-AGG-ID: RMMaQG_kPPaPKs2vLSwKAA_1740051430
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38f42f21f54so374142f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 03:37:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740051421; x=1740656221;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5BBqNP7nURydCkT5QDQjUCCwChA8frM+lCdM3VsFkeI=;
- b=V3LRYDd9bphuDONWAmYnszfIt/UTjSuj8bPcMiPUyLs1czD0PYpjKhs67kEYgH1VyD
- CfJRDfeb+nSK2OoBfxTvPUYydT36J3LXGOTHeyqpP6mYjl1IDN3fcEnOA7EqKcORp7DR
- A+YR6fMUnNaGzS48I9dCyhtd4fhaW8I4T6dCy+FRdAWS3atzpokff0LezkU7l028v3ce
- J87IhpmODnBnA9BlReVS8+kuw/yXLFCTLSGbCzH8wh9CiWAeFhQLsF1X0T/78SlQy6qe
- Lk0OdmdHOu11kxsBLay06pPgdTCM2Lru9JkIk6iQz+VybzpPPXU/HfuMf21OwAvaE9y0
- ovxQ==
-X-Gm-Message-State: AOJu0Yyl7BisdoRqgCIQv/PdxXNlL3iwqxc8RiOJ9qHY4nU2hp4dbumW
- DVmeMMTLSoP/V+TLs/m9xtua5/3F5llmIjxaHsw1jZyr1TVDZXzvfVuokGYtFd8XYvsxb4MdcMm
- 3irYHkojSbGzAVh7ps+T2OGYV2sOhlOMdW48NU7yawsy3uCnbz2qj5FeVyY5WfAJ0IqcGq6w2cb
- TsRC6tEiP7+z48LWEKGqeNTB1HaWOZGqVoaVgchWQ=
-X-Gm-Gg: ASbGncsCudPNgUxEI3+o6b+g1CEBQnwAkXjouMBw+dndeQEw64X6Y5R0vcaIwkBYkbp
- bfmFaFN5brUWXCJvNJHzDmp//qYpAaj+4wpA3q6PkiRKpAsgSBGyAAH07YuopjxKiTgXvGrtiEc
- qMg68sg/hakTHaBvRCTFqRGr7slTx5dQZ7qa26w6CDvluioSEji0hpUjK/uZ0J6YxhqmRp1MG0C
- rdlUQIpIR11WqXKPCxnI8zAHHFOxIMDJzLCYHTzQ+hMHjFqSrIvsZ8VLVu4SuUKXaMHnegBvN8/
- kYyob8T/u5g=
-X-Received: by 2002:adf:e888:0:b0:38d:d932:d9a0 with SMTP id
- ffacd0b85a97d-38f33f58dc9mr15099895f8f.50.1740051421061; 
- Thu, 20 Feb 2025 03:37:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHemURzcezSq3bGtCbnoQtPmZco1h3SfYZfdtA/863ujjgqLDPdP/ZsWlC9VwmiNAZdwNl7sA==
-X-Received: by 2002:adf:e888:0:b0:38d:d932:d9a0 with SMTP id
- ffacd0b85a97d-38f33f58dc9mr15099870f8f.50.1740051420604; 
- Thu, 20 Feb 2025 03:37:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740051429; x=1740656229;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UYVR4Thso7YkttRx5HDs7IzBZPwLwHhmg04Df3xboRY=;
+ b=cCOjnbd0aQDGkZQsKJowWo1Nl50YSFEQ9MWXiBKdZJsHzoUekexRdT31JV/4JsI3g9
+ M5NZlEg7whtFD1s28uk8J0WbSPDI9MVNTnn14tmyLUnVoWovkGUJdCEXrV1qO7ZQnpHm
+ UzZdUEGjw/wjZEarr8fvLgy8YR7YS7OPggOw9rYeG8x9JoI0wS09xywoC+a1vn/0jvMl
+ KsoOMzwu4uOsWnOZGYu24wyiIi5ZVaQc1veL9MVZfBJ8TGxzkbqsMcD1D4LoF7IhhRu/
+ bTIFy9GIOYzc0puafbTlNd3oNZFOQ6Enos0SCDHj5iSt7WVs+T6gUU76l26HPAG2UdO1
+ qGyQ==
+X-Gm-Message-State: AOJu0Yyjc+wHOhXP+NnsPoqka69Cm24fy2jCDOAPapchmTRASIC9/GH1
+ gfPPoqnMx4rKRuTpfT8EQ+eEkNllgUvOghJjzzVjKpay6Q3Yfh4L05ua3gw5Pfx4fXvwgLuePyY
+ lb8T9fqw0alEZKZJ8CYJPkfYbKxwm3TceivLHsxD7Mt0JfLsUzi4LKbgL27RIFhPqivIjj6Z7Pr
+ QTmRvPNMYm4pRPIpcRgRCFs+Jd4HEr6DnCFaqj8TA=
+X-Gm-Gg: ASbGncuS7Kehg8bAGxOgdP9g6wjxozXiIbweVV7LZBaLix/TS73YvyEyh1Rttjqex9A
+ lC22ISELU/acWhR//EASfVOScoT4kgdUJaODDFugh3jV+qCZoT5guZkjAeWbcvv4uGPkanyMp5c
+ HE2Tkd0uuRgD6uyqEjYMy7OjlRm053v7osNC3Sr81jaaWuD8GHo7aIVOK+P4RrVrqXflwhl35iW
+ hFY9KJWQWpTFBy+v27DjqeRgTbWgN/8OtEntkuJRIB3yaVl59ABKFOXvIOMAfqQNl4yEoCqrJXZ
+ zn9ul751K4Q=
+X-Received: by 2002:a05:6000:1887:b0:38f:3c01:fb2c with SMTP id
+ ffacd0b85a97d-38f3c01fe81mr19483788f8f.48.1740051428694; 
+ Thu, 20 Feb 2025 03:37:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZIr8eN55QWSoczzSYg8M4rFjdf2crzxSrzpju5mABBV1jbJ6ERwG84KePhIip1dVR4LWl7g==
+X-Received: by 2002:a05:6000:1887:b0:38f:3c01:fb2c with SMTP id
+ ffacd0b85a97d-38f3c01fe81mr19483622f8f.48.1740051426840; 
+ Thu, 20 Feb 2025 03:37:06 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.122.109])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259f7fe6sm20040095f8f.86.2025.02.20.03.36.59
+ ffacd0b85a97d-38f25913f5asm20685554f8f.52.2025.02.20.03.37.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 03:37:00 -0800 (PST)
+ Thu, 20 Feb 2025 03:37:05 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: zhao1.liu@intel.com,
 	kwolf@redhat.com
-Subject: [PATCH v3 0/2] rust: add module to convert between success/-errno and
- io::Result conventions
-Date: Thu, 20 Feb 2025 12:36:57 +0100
-Message-ID: <20250220113659.863332-1-pbonzini@redhat.com>
+Subject: [PATCH v3 2/2] rust: add module to convert between success/-errno and
+ io::Result
+Date: Thu, 20 Feb 2025 12:36:59 +0100
+Message-ID: <20250220113659.863332-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250220113659.863332-1-pbonzini@redhat.com>
+References: <20250220113659.863332-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,59 +110,477 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wrap access to errno, for use in the block layer and character device
-bindings.
+It is a common convention in QEMU to return a positive value in case of
+success, and a negated errno value in case of error.  Unfortunately,
+using errno portably in Rust is a bit complicated; on Unix the errno
+values are supported natively by io::Error, but on Windows they are not;
+so, use the libc crate.
 
-This first version of errno.rs focuses on io::Result.  Kevin
-suggested allowing conversion from io::Error to negative errno.
-For now, I'd rather avoid that to encourage separation between code
-that can propagate errors simply with "?", and code at the Rust/C
-boundary that needs errno::into_neg_errno().  Since Rust code rarely
-passes or returns Error objects that aren't part of a Result, it is
-plausible that the same is true of QEMU.
+This is a set of utility functions that are used by both chardev and
+block layer bindings.
 
-However, if this turns out to be wrong, then it can be changed.
-
-Paolo
-
-Supersedes: <20250212093958.3703269-1-pbonzini@redhat.com>
-
-v2->v3:
-- add libc to subprojects/.gitignore
-- change subject to reflect the focus to be Result rather than Error
-- fix docs
-
-v1->v2:
-- use the libc crate
-- provide separate From<Errno> implementation for io::ErrorKind
-- hide GetErrno trait inside a submodule
-- add into_neg_errno() and corresponding tests
-- add more doctests
-- make Errno field public, so that Errno can have other From<...>
-  implementations (e.g. going from *mut Error to Errno).
-
-Paolo Bonzini (2):
-  rust: subprojects: add libc crate
-  rust: add module to convert between success/-errno and io::Result
-
- docs/devel/rust.rst                           |   1 +
- rust/Cargo.lock                               |   7 +
- rust/qemu-api/Cargo.toml                      |   1 +
- rust/qemu-api/meson.build                     |   4 +
- rust/qemu-api/src/assertions.rs               |  28 ++
- rust/qemu-api/src/errno.rs                    | 343 ++++++++++++++++++
- rust/qemu-api/src/lib.rs                      |   1 +
- rust/qemu-api/src/prelude.rs                  |   2 +
- scripts/archive-source.sh                     |   2 +-
- scripts/make-release                          |   2 +-
- subprojects/.gitignore                        |   1 +
- subprojects/libc-0.2-rs.wrap                  |   7 +
- .../packagefiles/libc-0.2-rs/meson.build      |  37 ++
- 13 files changed, 434 insertions(+), 2 deletions(-)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ docs/devel/rust.rst             |   1 +
+ rust/qemu-api/meson.build       |   4 +
+ rust/qemu-api/src/assertions.rs |  28 +++
+ rust/qemu-api/src/errno.rs      | 343 ++++++++++++++++++++++++++++++++
+ rust/qemu-api/src/lib.rs        |   1 +
+ rust/qemu-api/src/prelude.rs    |   2 +
+ 6 files changed, 379 insertions(+)
  create mode 100644 rust/qemu-api/src/errno.rs
- create mode 100644 subprojects/libc-0.2-rs.wrap
- create mode 100644 subprojects/packagefiles/libc-0.2-rs/meson.build
 
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 90958e5a306..c75dccdbb7c 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -179,6 +179,7 @@ module           status
+ ``callbacks``    complete
+ ``cell``         stable
+ ``c_str``        complete
++``errno``        complete
+ ``irq``          complete
+ ``memory``       stable
+ ``module``       complete
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 2e9c1078b9b..bcf1cf780f3 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -2,6 +2,8 @@ _qemu_api_cfg = run_command(rustc_args,
+   '--config-headers', config_host_h, '--features', files('Cargo.toml'),
+   capture: true, check: true).stdout().strip().splitlines()
+ 
++libc_dep = dependency('libc-0.2-rs')
++
+ # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
+ if rustc.version().version_compare('>=1.77.0')
+   _qemu_api_cfg += ['--cfg', 'has_offset_of']
+@@ -22,6 +24,7 @@ _qemu_api_rs = static_library(
+       'src/cell.rs',
+       'src/chardev.rs',
+       'src/c_str.rs',
++      'src/errno.rs',
+       'src/irq.rs',
+       'src/memory.rs',
+       'src/module.rs',
+@@ -39,6 +42,7 @@ _qemu_api_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _qemu_api_cfg,
++  dependencies: libc_dep,
+ )
+ 
+ rust.test('rust-qemu-api-tests', _qemu_api_rs,
+diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+index fa1a18de6fe..104dec39774 100644
+--- a/rust/qemu-api/src/assertions.rs
++++ b/rust/qemu-api/src/assertions.rs
+@@ -92,3 +92,31 @@ fn types_must_be_equal<T, U>(_: T)
+         };
+     };
+ }
++
++/// Assert that an expression matches a pattern.  This can also be
++/// useful to compare enums that do not implement `Eq`.
++///
++/// # Examples
++///
++/// ```
++/// # use qemu_api::assert_match;
++/// // JoinHandle does not implement `Eq`, therefore the result
++/// // does not either.
++/// let result: Result<std::thread::JoinHandle<()>, u32> = Err(42);
++/// assert_match!(result, Err(42));
++/// ```
++#[macro_export]
++macro_rules! assert_match {
++    ($a:expr, $b:pat) => {
++        assert!(
++            match $a {
++                $b => true,
++                _ => false,
++            },
++            "{} = {:?} does not match {}",
++            stringify!($a),
++            $a,
++            stringify!($b)
++        );
++    };
++}
+diff --git a/rust/qemu-api/src/errno.rs b/rust/qemu-api/src/errno.rs
+new file mode 100644
+index 00000000000..bfd972df951
+--- /dev/null
++++ b/rust/qemu-api/src/errno.rs
+@@ -0,0 +1,343 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++//! Utility functions to convert `errno` to and from
++//! [`io::Error`]/[`io::Result`]
++//!
++//! QEMU C functions often have a "positive success/negative `errno`" calling
++//! convention.  This module provides functions to portably convert an integer
++//! into an [`io::Result`] and back.
++
++use std::{convert::TryFrom, io, io::ErrorKind};
++
++/// An `errno` value that can be converted into an [`io::Error`]
++pub struct Errno(pub u16);
++
++// On Unix, from_raw_os_error takes an errno value and OS errors
++// are printed using strerror.  On Windows however it takes a
++// GetLastError() value; therefore we need to convert errno values
++// into io::Error by hand.  This is the same mapping that the
++// standard library uses to retrieve the kind of OS errors
++// (`std::sys::pal::unix::decode_error_kind`).
++impl From<Errno> for ErrorKind {
++    fn from(value: Errno) -> ErrorKind {
++        let Errno(errno) = value;
++        match i32::from(errno) {
++            libc::EPERM | libc::EACCES => ErrorKind::PermissionDenied,
++            libc::ENOENT => ErrorKind::NotFound,
++            libc::EINTR => ErrorKind::Interrupted,
++            x if x == libc::EAGAIN || x == libc::EWOULDBLOCK => ErrorKind::WouldBlock,
++            libc::ENOMEM => ErrorKind::OutOfMemory,
++            libc::EEXIST => ErrorKind::AlreadyExists,
++            libc::EINVAL => ErrorKind::InvalidInput,
++            libc::EPIPE => ErrorKind::BrokenPipe,
++            libc::EADDRINUSE => ErrorKind::AddrInUse,
++            libc::EADDRNOTAVAIL => ErrorKind::AddrNotAvailable,
++            libc::ECONNABORTED => ErrorKind::ConnectionAborted,
++            libc::ECONNREFUSED => ErrorKind::ConnectionRefused,
++            libc::ECONNRESET => ErrorKind::ConnectionReset,
++            libc::ENOTCONN => ErrorKind::NotConnected,
++            libc::ENOTSUP => ErrorKind::Unsupported,
++            libc::ETIMEDOUT => ErrorKind::TimedOut,
++            _ => ErrorKind::Other,
++        }
++    }
++}
++
++// This is used on Windows for all io::Errors, but also on Unix if the
++// io::Error does not have a raw OS error.  This is the reversed
++// mapping of the above.
++impl From<io::ErrorKind> for Errno {
++    fn from(value: io::ErrorKind) -> Errno {
++        let errno = match value {
++            // can be both EPERM or EACCES :( pick one
++            ErrorKind::PermissionDenied => libc::EPERM,
++            ErrorKind::NotFound => libc::ENOENT,
++            ErrorKind::Interrupted => libc::EINTR,
++            ErrorKind::WouldBlock => libc::EAGAIN,
++            ErrorKind::OutOfMemory => libc::ENOMEM,
++            ErrorKind::AlreadyExists => libc::EEXIST,
++            ErrorKind::InvalidInput => libc::EINVAL,
++            ErrorKind::BrokenPipe => libc::EPIPE,
++            ErrorKind::AddrInUse => libc::EADDRINUSE,
++            ErrorKind::AddrNotAvailable => libc::EADDRNOTAVAIL,
++            ErrorKind::ConnectionAborted => libc::ECONNABORTED,
++            ErrorKind::ConnectionRefused => libc::ECONNREFUSED,
++            ErrorKind::ConnectionReset => libc::ECONNRESET,
++            ErrorKind::NotConnected => libc::ENOTCONN,
++            ErrorKind::Unsupported => libc::ENOTSUP,
++            ErrorKind::TimedOut => libc::ETIMEDOUT,
++            _ => libc::EIO,
++        };
++        Errno(errno as u16)
++    }
++}
++
++impl From<Errno> for io::Error {
++    #[cfg(unix)]
++    fn from(value: Errno) -> io::Error {
++        let Errno(errno) = value;
++        io::Error::from_raw_os_error(errno.into())
++    }
++
++    #[cfg(windows)]
++    fn from(value: Errno) -> io::Error {
++        let error_kind: ErrorKind = value.into();
++        error_kind.into()
++    }
++}
++
++impl From<io::Error> for Errno {
++    fn from(value: io::Error) -> Errno {
++        if cfg!(unix) {
++            if let Some(errno) = value.raw_os_error() {
++                return Errno(u16::try_from(errno).unwrap());
++            }
++        }
++        value.kind().into()
++    }
++}
++
++/// Internal traits; used to enable [`into_io_result`] and [`into_neg_errno`]
++/// for the "right" set of types.
++mod traits {
++    use super::Errno;
++
++    /// A signed type that can be converted into an
++    /// [`io::Result`](std::io::Result)
++    pub trait GetErrno {
++        /// Unsigned variant of `Self`, used as the type for the `Ok` case.
++        type Out;
++
++        /// Return `Ok(self)` if positive, `Err(Errno(-self))` if negative
++        fn into_errno_result(self) -> Result<Self::Out, Errno>;
++    }
++
++    /// A type that can be taken out of an [`io::Result`](std::io::Result) and
++    /// converted into "positive success/negative `errno`" convention.
++    pub trait MergeErrno {
++        /// Signed variant of `Self`, used as the return type of
++        /// [`into_neg_errno`](super::into_neg_errno).
++        type Out: From<u16> + std::ops::Neg<Output = Self::Out>;
++
++        /// Return `self`, asserting that it is in range
++        fn map_ok(self) -> Self::Out;
++    }
++
++    macro_rules! get_errno {
++        ($t:ty, $out:ty) => {
++            impl GetErrno for $t {
++                type Out = $out;
++                fn into_errno_result(self) -> Result<Self::Out, Errno> {
++                    match self {
++                        0.. => Ok(self as $out),
++                        -65535..=-1 => Err(Errno(-self as u16)),
++                        _ => panic!("{self} is not a negative errno"),
++                    }
++                }
++            }
++        };
++    }
++
++    get_errno!(i32, u32);
++    get_errno!(i64, u64);
++    get_errno!(isize, usize);
++
++    macro_rules! merge_errno {
++        ($t:ty, $out:ty) => {
++            impl MergeErrno for $t {
++                type Out = $out;
++                fn map_ok(self) -> Self::Out {
++                    self.try_into().unwrap()
++                }
++            }
++        };
++    }
++
++    merge_errno!(u8, i32);
++    merge_errno!(u16, i32);
++    merge_errno!(u32, i32);
++    merge_errno!(u64, i64);
++
++    impl MergeErrno for () {
++        type Out = i32;
++        fn map_ok(self) -> i32 {
++            0
++        }
++    }
++}
++
++use traits::{GetErrno, MergeErrno};
++
++/// Convert an integer value into a [`io::Result`].
++///
++/// Positive values are turned into an `Ok` result; negative values
++/// are interpreted as negated `errno` and turned into an `Err`.
++///
++/// ```
++/// # use qemu_api::errno::into_io_result;
++/// # use std::io::ErrorKind;
++/// let ok = into_io_result(1i32).unwrap();
++/// assert_eq!(ok, 1u32);
++///
++/// let err = into_io_result(-1i32).unwrap_err(); // -EPERM
++/// assert_eq!(err.kind(), ErrorKind::PermissionDenied);
++/// ```
++///
++/// # Panics
++///
++/// Since the result is an unsigned integer, negative values must
++/// be close to 0; values that are too far away are considered
++/// likely overflows and will panic:
++///
++/// ```should_panic
++/// # use qemu_api::errno::into_io_result;
++/// # #[allow(dead_code)]
++/// let err = into_io_result(-0x1234_5678i32); // panic
++/// ```
++pub fn into_io_result<T: GetErrno>(value: T) -> io::Result<T::Out> {
++    value.into_errno_result().map_err(Into::into)
++}
++
++/// Convert a [`Result`] into an integer value, using negative `errno`
++/// values to report errors.
++///
++/// ```
++/// # use qemu_api::errno::into_neg_errno;
++/// # use std::io::{self, ErrorKind};
++/// let ok: io::Result<()> = Ok(());
++/// assert_eq!(into_neg_errno(ok), 0);
++///
++/// let err: io::Result<()> = Err(ErrorKind::InvalidInput.into());
++/// assert_eq!(into_neg_errno(err), -22); // -EINVAL
++/// ```
++///
++/// Since this module also provides the ability to convert [`io::Error`]
++/// to an `errno` value, [`io::Result`] is the most commonly used type
++/// for the argument of this function:
++///
++/// # Panics
++///
++/// Since the result is a signed integer, integer `Ok` values must remain
++/// positive:
++///
++/// ```should_panic
++/// # use qemu_api::errno::into_neg_errno;
++/// # use std::io;
++/// let err: io::Result<u32> = Ok(0x8899_AABB);
++/// into_neg_errno(err) // panic
++/// # ;
++/// ```
++pub fn into_neg_errno<T: MergeErrno, E: Into<Errno>>(value: Result<T, E>) -> T::Out {
++    match value {
++        Ok(x) => x.map_ok(),
++        Err(err) => -T::Out::from(err.into().0),
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use std::io::ErrorKind;
++
++    use super::*;
++    use crate::assert_match;
++
++    #[test]
++    pub fn test_from_u8() {
++        let ok: io::Result<_> = Ok(42u8);
++        assert_eq!(into_neg_errno(ok), 42);
++
++        let err: io::Result<u8> = Err(io::ErrorKind::PermissionDenied.into());
++        assert_eq!(into_neg_errno(err), -1);
++
++        if cfg!(unix) {
++            let os_err: io::Result<u8> = Err(io::Error::from_raw_os_error(10));
++            assert_eq!(into_neg_errno(os_err), -10);
++        }
++    }
++
++    #[test]
++    pub fn test_from_u16() {
++        let ok: io::Result<_> = Ok(1234u16);
++        assert_eq!(into_neg_errno(ok), 1234);
++
++        let err: io::Result<u16> = Err(io::ErrorKind::PermissionDenied.into());
++        assert_eq!(into_neg_errno(err), -1);
++
++        if cfg!(unix) {
++            let os_err: io::Result<u16> = Err(io::Error::from_raw_os_error(10));
++            assert_eq!(into_neg_errno(os_err), -10);
++        }
++    }
++
++    #[test]
++    pub fn test_i32() {
++        assert_match!(into_io_result(1234i32), Ok(1234));
++
++        let err = into_io_result(-1i32).unwrap_err();
++        #[cfg(unix)]
++        assert_match!(err.raw_os_error(), Some(1));
++        assert_match!(err.kind(), ErrorKind::PermissionDenied);
++    }
++
++    #[test]
++    pub fn test_from_u32() {
++        let ok: io::Result<_> = Ok(1234u32);
++        assert_eq!(into_neg_errno(ok), 1234);
++
++        let err: io::Result<u32> = Err(io::ErrorKind::PermissionDenied.into());
++        assert_eq!(into_neg_errno(err), -1);
++
++        if cfg!(unix) {
++            let os_err: io::Result<u32> = Err(io::Error::from_raw_os_error(10));
++            assert_eq!(into_neg_errno(os_err), -10);
++        }
++    }
++
++    #[test]
++    pub fn test_i64() {
++        assert_match!(into_io_result(1234i64), Ok(1234));
++
++        let err = into_io_result(-22i64).unwrap_err();
++        #[cfg(unix)]
++        assert_match!(err.raw_os_error(), Some(22));
++        assert_match!(err.kind(), ErrorKind::InvalidInput);
++    }
++
++    #[test]
++    pub fn test_from_u64() {
++        let ok: io::Result<_> = Ok(1234u64);
++        assert_eq!(into_neg_errno(ok), 1234);
++
++        let err: io::Result<u64> = Err(io::ErrorKind::InvalidInput.into());
++        assert_eq!(into_neg_errno(err), -22);
++
++        if cfg!(unix) {
++            let os_err: io::Result<u64> = Err(io::Error::from_raw_os_error(6));
++            assert_eq!(into_neg_errno(os_err), -6);
++        }
++    }
++
++    #[test]
++    pub fn test_isize() {
++        assert_match!(into_io_result(1234isize), Ok(1234));
++
++        let err = into_io_result(-4isize).unwrap_err();
++        #[cfg(unix)]
++        assert_match!(err.raw_os_error(), Some(4));
++        assert_match!(err.kind(), ErrorKind::Interrupted);
++    }
++
++    #[test]
++    pub fn test_from_unit() {
++        let ok: io::Result<_> = Ok(());
++        assert_eq!(into_neg_errno(ok), 0);
++
++        let err: io::Result<()> = Err(io::ErrorKind::OutOfMemory.into());
++        assert_eq!(into_neg_errno(err), -12);
++
++        if cfg!(unix) {
++            let os_err: io::Result<()> = Err(io::Error::from_raw_os_error(2));
++            assert_eq!(into_neg_errno(os_err), -2);
++        }
++    }
++}
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index ed1a8f9a2b4..05f38b51d30 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -19,6 +19,7 @@
+ pub mod callbacks;
+ pub mod cell;
+ pub mod chardev;
++pub mod errno;
+ pub mod irq;
+ pub mod memory;
+ pub mod module;
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index fbf0ee23e0b..634acf37a85 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -9,6 +9,8 @@
+ pub use crate::cell::BqlCell;
+ pub use crate::cell::BqlRefCell;
+ 
++pub use crate::errno;
++
+ pub use crate::qdev::DeviceMethods;
+ 
+ pub use crate::qom::InterfaceType;
 -- 
 2.48.1
 
