@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE158C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 12:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59285C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 13:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl5uR-0002xC-TH; Thu, 20 Feb 2025 07:44:08 -0500
+	id 1tl6YI-0001Bp-4o; Thu, 20 Feb 2025 08:25:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ilias.apalodimas@linaro.org>)
- id 1tl5uM-0002wO-8B
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 07:44:03 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ilias.apalodimas@linaro.org>)
- id 1tl5uJ-0001N5-0A
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 07:44:01 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-6ef7c9e9592so7032687b3.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 04:43:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740055437; x=1740660237; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3N+6yuA28M7s6c57t8EizrNFZ6i9s62eFI+syvkNaN4=;
- b=C+HBi1gR0xW8ZUOwrCpbJq7tiExLMTOPPJP8fEcy0ZwInQWrEkThtmFbKNJG4p8L5O
- 5fTaRkVj2CEh/lkXxYUlOy+1g2WoYdX0Ou70hK2eIJ2L6yttv1bxrJ8BjhNDbcvALvhJ
- byeI0bzGd9nT0wluRetNxrKBIp/vSf8XLQnYAgoo/EeqcjJW4n0r0uOGmrKZZYseDo8t
- HtgTTRn2qnebxqxwdawFXBFGhMw6dXhonPv/4RCRNIA9RgEfy0kJzfi8rWmc1d1k7pEo
- TQSCjGKepFgiXcMQUA7CJutfgM6PwnCgyJqexfOPevNBr33iII/xG5ivjX0qi8qjXmiK
- y7gg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tl6YF-0001Bb-6B
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:25:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tl6YC-0006Vn-Fm
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 08:25:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740057906;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xiGuWigvbne/pKzYLnkGasQg/oyWDRI5AxoNQVS1NDI=;
+ b=OEjuX16zNSTGfMZMHEhXks9hUejNz9H8MeGSryNC8GkTPNQkYJld9Esud9ZPQ5maa/kAC1
+ EC0GM5LWRW1LLef151fw2F3H84RFkzd36KgyM8Fl04GoD4rVrJ38cJSitJu/oZBOsw6u5B
+ bFQA6XUPDNlXkqRoG8oRWEmrOZV5kVU=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-670-6uplhF1tPzWy2zyL2o8CAg-1; Thu, 20 Feb 2025 08:25:03 -0500
+X-MC-Unique: 6uplhF1tPzWy2zyL2o8CAg-1
+X-Mimecast-MFC-AGG-ID: 6uplhF1tPzWy2zyL2o8CAg_1740057903
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6e659664db8so32688596d6.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 05:25:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740055437; x=1740660237;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1740057902; x=1740662702;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3N+6yuA28M7s6c57t8EizrNFZ6i9s62eFI+syvkNaN4=;
- b=JrUi+Mf3rLjAoonsfFR3SFYhsRfgk0OThQMMqaumpyJ2dvO8D+IEMfqvTzZ4y12dIg
- zgnu85E85GyPlB4cAH048NZ6BUvYdW9o5eMNCUinPDmkoidCG460uU5Xur2j23ThMtsi
- H/rs80vCRGlxCYppEQXs0D5YMkYQhPQx+CTrth3vtG919efRliaQVPJy/ZA+RcWrbJO1
- Dxss0xkUVDyxykuSvrZINfv9XeKPvhXGg2QunCcS0TV1TEGKNeOTny/lyF9k7NL8+jf1
- UcMJv7JhCpSdH970clRs79NCVXFcLSP5ATGNKPb3Zf0hGPxSqcujA/vOOCgfC9HlSrNl
- fW4A==
-X-Gm-Message-State: AOJu0Yw0yKhnDuySjlY+FguIakFh8gJpV6ukEp6ia1YocAm/lIGa6RQa
- 17dJp29CpBaMl2yz1RkCj6Pd/WW4Kgp4Ja0i224CXLUkGrq0uY7VATWo9gbObHmtsFh/kXrLehu
- JpIM7tNTlLVlmRb4e/JEm0S/J7eOMnztYwdGssw==
-X-Gm-Gg: ASbGncsoGjThn9NsqIZuMpZzgBDXXtbW2G2zsOAwUeIaU5RpdBQHrYvYVKCFktBBmY7
- MvegvZGErW+3mLtJ6M8XnvyE4zzRLxnpdhqvbPzgk+J5uSHT1md+X3BkOSGwHHJVCeoeVHXrQLw
- ==
-X-Google-Smtp-Source: AGHT+IE4yrTh93yA3GfpjNR7vtR86AbATGH9gqH1e2MDgoyFfR02K3EtSQDxNRgIY5Yb2x6ZMhVbfJF7GQeq633968I=
-X-Received: by 2002:a05:690c:7305:b0:6fb:a376:3848 with SMTP id
- 00721157ae682-6fba37640ddmr81976137b3.34.1740055437223; Thu, 20 Feb 2025
- 04:43:57 -0800 (PST)
+ bh=xiGuWigvbne/pKzYLnkGasQg/oyWDRI5AxoNQVS1NDI=;
+ b=a0kihwE9QSG89Zf35pmiHZRGaYxOr2pF1CDjUt5v/rZRbjhgEOCAE04pADoQxAL3+6
+ UDpLGFT5G13za9ajUAo/m/hcUefUvB3DlRgIp7WkiDPR4LHLbqdwW4E/WCPo1/goHU4x
+ 7AVZQqSN+1xWmwPpicSEQjwY4xcZ/ebk9TjAvQEE2kKZcYRogdx8Vuw0JvBbOmtmYbpZ
+ HvUA7PgjqZfrlUGZK1/RsxSc7jnmEpXAWy37CDZcOkhrXNh+bFo2CNhrI1vqfixSUmFt
+ CvcmMGqy95HqEMRs7u1vdwDDlkhlnmOjkJHVBsy7X4FaSaez9NxK5pAZpAbZLDAxD5qt
+ Dayg==
+X-Gm-Message-State: AOJu0Yyuh4dR42Pz9YHWYdCNKPZP1lVudnZYupmDJtiE3HOJ9ueAh1go
+ lNM/xnsY9s58K5xbLeHHgeBh42UBvCwSnJXuTdDX2bhiYbowWP/IEuly4AV5barisbB7dTvald5
+ L2VBKsrao8QLdku1m2WvBHVhFPOOQYJHcC12xHjIar+LU719k6CHd1UkXwFzg+aQE0jWRhoZzWl
+ r4vbDYmdsAXuzzzFpIeftTcvhbcSudZ2RZeQ==
+X-Gm-Gg: ASbGncuHLWGetqgORx5mzEB6kSvBsLnxsqbdumKvCFiyqjEkIsaqq2y0iP3EsVTBRwA
+ Lv88///VxpVSRnAemrdkIg4JbbVLjFAqEjbWqqeKyDdaed1GAnf5lMziL1/pF1pY+JA1LRlKjmJ
+ ZJ/8//g0/LSIHOq6f9gJqw7Jd7mK/L9E8AYovqwHtMxpN0AqCOBbk1OloL4C44jJRhBFT3uEjpT
+ qgFMmOYis/hpr78ZdltfXs8rtHIx3geTWg9GyB1AhHxOtSqvi3dS5rT
+X-Received: by 2002:a05:6214:2421:b0:6d4:c6d:17fe with SMTP id
+ 6a1803df08f44-6e66cce7260mr331482516d6.25.1740057902413; 
+ Thu, 20 Feb 2025 05:25:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHh3gIo4z0KgQnV2P11UkFMXteQBceou7E9uOaO1SBh0b4sYjgsr+OrLQEphXPnAJntWbbiJQ==
+X-Received: by 2002:a05:6214:2421:b0:6d4:c6d:17fe with SMTP id
+ 6a1803df08f44-6e66cce7260mr331482096d6.25.1740057902038; 
+ Thu, 20 Feb 2025 05:25:02 -0800 (PST)
+Received: from x1.com ([2604:7a40:2041:2b00::1000])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e660f65c5csm80106546d6.117.2025.02.20.05.25.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 05:25:01 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Yan Fu <yafu@redhat.com>
+Subject: [PATCH] migration: Fix UAF for incoming migration on MigrationState
+Date: Thu, 20 Feb 2025 08:24:59 -0500
+Message-ID: <20250220132459.512610-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-References: <20250211092324.965440-1-kraxel@redhat.com>
- <CAMj1kXE289FkzV=GZSUARF7TFUyRuxYVX-090ic06Erb_RLGrg@mail.gmail.com>
- <cc41f19c-5778-4376-a1a1-762a92c8584c@amazon.com>
- <CAMj1kXFaoZCnXpAsq+i5nzpCOjcrsN4QA2r6Z=F6UUwcUe_qJA@mail.gmail.com>
-In-Reply-To: <CAMj1kXFaoZCnXpAsq+i5nzpCOjcrsN4QA2r6Z=F6UUwcUe_qJA@mail.gmail.com>
-From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Date: Thu, 20 Feb 2025 14:43:21 +0200
-X-Gm-Features: AWEUYZnTlr-A1I-DiZeEgvoZs27SOWRVjgKDye9_lKOfKPY-Xyn4Y7NDn08Whsg
-Message-ID: <CAC_iWj+eGFOTBUAgStAcN+UMH6fjbivgKAcm-i8qaGap1GPAOQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/23] hw/uefi: add uefi variable service
-To: Ard Biesheuvel <ardb@kernel.org>, Alexander Graf <graf@amazon.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=ilias.apalodimas@linaro.org; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,72 +103,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex, Ard, Gerd,
+On the incoming migration side, QEMU uses a coroutine to load all the VM
+states.  Inside, it may reference MigrationState on global states like
+migration capabilities, parameters, error state, shared mutexes and more.
 
-Thanks for roping me in,
+However there's nothing yet to make sure MigrationState won't get
+destroyed (e.g. after migration_shutdown()).  Meanwhile there's also no API
+available to remove the incoming coroutine in migration_shutdown(),
+avoiding it to access the freed elements.
 
-On Thu, 13 Feb 2025 at 12:13, Ard Biesheuvel <ardb@kernel.org> wrote:
->
-> On Thu, 13 Feb 2025 at 11:11, Alexander Graf <graf@amazon.com> wrote:
-> >
-> >
-> > On 13.02.25 10:41, Ard Biesheuvel wrote:
-> > > On Tue, 11 Feb 2025 at 10:23, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> > >> This patch adds a virtual device to qemu which the uefi firmware can use
-> > >> to store variables.  This moves the UEFI variable management from
-> > >> privileged guest code (managing vars in pflash) to the host.  Main
-> > >> advantage is that the need to have privilege separation in the guest
-> > >> goes away.
-> > >>
-> > >> On x86 privileged guest code runs in SMM.  It's supported by kvm, but
-> > >> not liked much by various stakeholders in cloud space due to the
-> > >> complexity SMM emulation brings.
-> > >>
-> > >> On arm privileged guest code runs in el3 (aka secure world).  This is
-> > >> not supported by kvm, which is unlikely to change anytime soon given
-> > >> that even el2 support (nested virt) is being worked on for years and is
-> > >> not yet in mainline.
-> > >>
-> > > The secure counterpart of this would never execute at EL3 on ARM, but
-> > > at secure EL1 (or potentially at secure EL2 on more recent CPUs). But
-> > > the general point that this is difficult to virtualize stands; I've
-> > > contemplated doing something similar to SMM emulation using non-secure
-> > > EL1 in a separate VM to provide an execution context that could those
-> > > the secure EL1 payload (using standalone MM) but I never found the
-> > > time to work on this.
-> >
-> >
-> > Sounds very similar to what Ilias built a few years ago?
-> >
-> > https://lore.kernel.org/all/20200511085205.GD73895@apalos.home/T/
-> >
-> > Which reminds me: How similar is the protocol in this patch set to the
-> > one implemented in U-Boot? No need to reinvent the wheel over and over
-> > again.
-> >
->
-> Identical afaik
+There's a bug report showing this can happen and crash dest QEMU when
+migration is cancelled on source.
 
-I don't know what I can do to help here but I'll explain what we have
-in case we can figure something out .
-The idea is very close indeed and in fact it works on QEMU with some
-hacks for arm(7/8). [0]. Since QEMU doesn't have an RPMB emulation I
-am providing one in software in U-Boot. That's obviously useless in
-real use usecases, since the memory backend disappears when we leave
-the firmware, but still useful for testing.
+When it happens, the dest main thread is trying to cleanup everything:
 
-I also have a blog explaining the arm specific bits here [1].
+  #0  qemu_aio_coroutine_enter
+  #1  aio_dispatch_handler
+  #2  aio_poll
+  #3  monitor_cleanup
+  #4  qemu_cleanup
+  #5  qemu_default_main
 
-The TL;DR is that we set up everything StMM needs inside OP-TEE and
-execute it in S-EL1. For storage, we have a 'special' StMM driver that
-sends requests to OP-TEE and uses its RPMB support to write sensitive
-data on the device.
+Then it found the migration incoming coroutine, schedule it (even after
+migration_shutdown()), causing crash:
 
-[0] https://git.linaro.org/people/ilias.apalodimas/efi_optee_variables.git/
-[1] https://old.linaro.org/blog/protected-uefi-variables-with-u-boot/
+  #0  __pthread_kill_implementation
+  #1  __pthread_kill_internal
+  #2  __GI_raise
+  #3  __GI_abort
+  #4  __assert_fail_base
+  #5  __assert_fail
+  #6  qemu_mutex_lock_impl
+  #7  qemu_lockable_mutex_lock
+  #8  qemu_lockable_lock
+  #9  qemu_lockable_auto_lock
+  #10 migrate_set_error
+  #11 process_incoming_migration_co
+  #12 coroutine_trampoline
 
-Let me know if you need anything else
+To fix it, take a refcount after an incoming setup is properly done when
+qmp_migrate_incoming() succeeded the 1st time.  As it's during a QMP
+handler which needs BQL, it means the main loop is still alive (without
+going into cleanups, which also needs BQL).
 
-Cheers
-/Ilias
+Releasing the refcount now only until the incoming migration coroutine
+finished or failed.  Hence the refcount is valid for both (1) setup phase
+of incoming ports, mostly IO watches (e.g. qio_channel_add_watch_full()),
+and (2) the incoming coroutine itself (process_incoming_migration_co()).
+
+Note that we can't unref in migration_incoming_state_destroy(), because
+both qmp_xen_load_devices_state() and load_snapshot() will use it without
+an incoming migration.  Those hold BQL so they're not prone to this issue.
+
+PS: I suspect nobody uses Xen's command at all, as it didn't register yank,
+hence AFAIU the command should crash on master when trying to unregister
+yank in migration_incoming_state_destroy()..  but that's another story.
+
+Also note that in some incoming failure cases we may not always unref the
+MigrationState refcount, which is a trade-off to keep things simple.  We
+could make it accurate, but it can be an overkill.  Some examples:
+
+  - Unlike most of the rest protocols, socket_start_incoming_migration()
+    may create net listener after incoming port setup sucessfully.
+    It means we can't unref in migration_channel_process_incoming() as a
+    generic path because socket protocol might keep using MigrationState.
+
+  - For either socket or file, multiple IO watches might be created, it
+    means logically each IO watch needs to take one refcount for
+    MigrationState so as to be 100% accurate on ownership of refcount taken.
+
+In general, we at least need per-protocol handling to make it accurate,
+which can be an overkill if we know incoming failed after all.  Add a short
+comment to explain that when taking the refcount in qmp_migrate_incoming().
+
+Bugzilla: https://issues.redhat.com/browse/RHEL-69775
+Tested-by: Yan Fu <yafu@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/migration.c | 40 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index c597aa707e..f57d853e9f 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -116,6 +116,27 @@ static void migration_downtime_start(MigrationState *s)
+     s->downtime_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+ }
+ 
++/*
++ * This is unfortunate: incoming migration actually needs the outgoing
++ * migration state (MigrationState) to be there too, e.g. to query
++ * capabilities, parameters, using locks, setup errors, etc.
++ *
++ * NOTE: when calling this, making sure current_migration exists and not
++ * been freed yet!  Otherwise trying to access the refcount is already
++ * an use-after-free itself..
++ *
++ * TODO: Move shared part of incoming / outgoing out into separate object.
++ * Then this is not needed.
++ */
++static void migrate_incoming_ref_outgoing_state(void)
++{
++    object_ref(migrate_get_current());
++}
++static void migrate_incoming_unref_outgoing_state(void)
++{
++    object_unref(migrate_get_current());
++}
++
+ static void migration_downtime_end(MigrationState *s)
+ {
+     int64_t now = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+@@ -850,7 +871,7 @@ process_incoming_migration_co(void *opaque)
+              * postcopy thread.
+              */
+             trace_process_incoming_migration_co_postcopy_end_main();
+-            return;
++            goto out;
+         }
+         /* Else if something went wrong then just fall out of the normal exit */
+     }
+@@ -866,7 +887,8 @@ process_incoming_migration_co(void *opaque)
+     }
+ 
+     migration_bh_schedule(process_incoming_migration_bh, mis);
+-    return;
++    goto out;
++
+ fail:
+     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+                       MIGRATION_STATUS_FAILED);
+@@ -883,6 +905,9 @@ fail:
+ 
+         exit(EXIT_FAILURE);
+     }
++out:
++    /* Pairs with the refcount taken in qmp_migrate_incoming() */
++    migrate_incoming_unref_outgoing_state();
+ }
+ 
+ /**
+@@ -1888,6 +1913,17 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+         return;
+     }
+ 
++    /*
++     * Making sure MigrationState is available until incoming migration
++     * completes.
++     *
++     * NOTE: QEMU _might_ leak this refcount in some failure paths, but
++     * that's OK.  This is the minimum change we need to at least making
++     * sure success case is clean on the refcount.  We can try harder to
++     * make it accurate for any kind of failures, but it might be an
++     * overkill and doesn't bring us much benefit.
++     */
++    migrate_incoming_ref_outgoing_state();
+     once = false;
+ }
+ 
+-- 
+2.47.0
+
 
