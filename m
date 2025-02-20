@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78178C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24244C021B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9JK-00077p-7L; Thu, 20 Feb 2025 11:22:02 -0500
+	id 1tl9J6-0006sP-I6; Thu, 20 Feb 2025 11:21:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JI-00076b-1s
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:22:00 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1tl9J5-0006re-FI
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:47 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9JG-0008Ez-6V
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:59 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso7503045e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:57 -0800 (PST)
+ id 1tl9J3-0008Cg-Qq
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:47 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4397e5d5d99so7421675e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068517; x=1740673317; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740068504; x=1740673304; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RN4feOr7qTvutqZQVG2BW1YcXuGPMb4XmE2WtQfDC0Q=;
- b=QrkiL8nINFPvaXig7afB7ifx9fYNOxa1zhXQ9nqyU/dMc7tF4jEkGfO8aesJd1FUCV
- C/b/lMr1Tmf5n4WY60YLMQyyE/cxOFDDb92pEVPImAWy1NYnkOA9Ifo9GvzaX9KklKOP
- taeTXwCt/ge3ENSgHFKz891fmo3vXQPbGU/yvLW4oSMDqYX5+mpXQXdRRLIMKc/kKe6x
- 9hvTQ9EKnJDGthwCQyYSs3orotIZ455iif70BSsiwZlj0EJTP8ubWV5e0umD43NWs7w6
- W/v77RwiwH/3kY4aK2YoUWdV6iEk5zZPqzL9WjhFea6Lt2Lke2Ouj29+ScZwF4Xh66Ga
- QPpw==
+ :reply-to; bh=hBoWtrDVPyHDSzSg/OfocB1lL8MLVaKLbdNJpvgSmCI=;
+ b=TroAq0+MacuGRAkJON4DydToWFddUKqax5+UCOcGqrXV7Z+EgYXpK0ki4zWkGiWIxc
+ YaoQs2WADz5NSDJIBWP7h3KOE5lbWaAP7f5rUB6r5dC4pMtDDSEDMj6bE+2SpM+XnXLd
+ akx1VnMID8gynk1wWnKLvJ1T+MzefeWlf0NCvwu1G1Zv71XVJjDLBji/+ATQutCuEBuO
+ dEJdXLGxDnuGGJ3N85Kf5YpZKyqra1bxM/m7mECWiw7Ne65FDF0kX2SvtiwhBwP1NuUq
+ nL5HHAHBUXLI7gAT9sKUOfOWa7GCno/Fv/Ugj57XgbbHparryMNpdBGmJ1EOYk5c2lDy
+ 10IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068517; x=1740673317;
+ d=1e100.net; s=20230601; t=1740068504; x=1740673304;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RN4feOr7qTvutqZQVG2BW1YcXuGPMb4XmE2WtQfDC0Q=;
- b=fHwAmAbAgqPU+nUJ4d96KDIznpCFDnJPiC/Cdj0g4cmDifni/XHeJBg2kJkRkWRbK9
- cIWm4KDjuc8eYtDg64OP6/rw97jL24v0ZTCG7SYaTQoVgNIjf87RGWwDx3I9kR5s7EYM
- qwCIFVkAEKoz7i1R10mQbFvgwGuFxOg445VKCX42VgBpDPMJt1NvJEoI3l6U5kswGrIk
- vIjN55GJoS6VP5hpfUahXKe/p4x+SH/uPd8xniymOp3u73jFLoaWj08b2xnNDdb6ZtHW
- lH34AOjMpcNtmv3RgCuIkSIKnOEzFQ7G2Szh5tVlAtYKArzPcopiKpgAqU63+qK/libm
- XCxA==
-X-Gm-Message-State: AOJu0YzFtqGwdp4Q6qspegUGc+r1LO/Mo/5mdTIN2aruw0Kt6liosDB+
- VBADxBCqpgkH0JevQFRVVKY2FgwbicOi38Z+cpgs1xmFHu5zjpuIeRMkB7UaFgxg1nKjo6UvgAg
- E
-X-Gm-Gg: ASbGncve0kDSl0dKgWeTyCfip8WXpmEvsmdTS8MC/UT69W3o+4w0UJ21rGjmHdhL5yf
- vpMjpYZZYcDZdcbHmG9sWUC11h+wRLwWUvXmM60mfjSZlWFBmGz3zEsxEIta01kAteXbCSKHtmP
- 5cZO7hHHFruJQUBLZVtzC60QBiZdLTIsBr8kZJeMrF24PNBMQKw2wofDRRLNqAtki9uZ0cS1HNm
- 4gHUTjTQXmTIGYyFWsDJY+SUmUuTQUkggcVTqlnbXPxntLz0B2qc8JozYtSgfY624lSoqAcg1dQ
- 9HMLYp6/l/YnHrHWUNuFWg==
-X-Google-Smtp-Source: AGHT+IGwJbWcKPQr9p7wNn+1wchRr+P28IOXofDyAEFPPMT0A8mw1an7Gtd9q71ZQQcZmdUF7lVufw==
-X-Received: by 2002:a05:600c:354b:b0:439:9e13:2dd0 with SMTP id
- 5b1f17b1804b1-4399e132f5dmr65697345e9.6.1740068516705; 
- Thu, 20 Feb 2025 08:21:56 -0800 (PST)
+ bh=hBoWtrDVPyHDSzSg/OfocB1lL8MLVaKLbdNJpvgSmCI=;
+ b=bzzrv9n/sUo1M8xo1iKPOjuZu593ecmHRQG2yVG/VplWl+cFiVJeuBrhFF4UagU0/v
+ Pau245f1exL6MT7Fboi5rpbmiu4WLOA0VD2GxR+xBQDxN+QyQJ1PDf+Ru4gw1Rt26hqV
+ jbsHy3O3yj5C24/8juRMUUN6YUsUfgo8+yvXc0eMkI7u9yBm/NCcfcKJKWr2FUghYwJG
+ zlWdC5A+eQZisAyJD+fbi2tJnJioYdOxXb6jTbk7yya8o6QujUoVlRjZKCDKc20KT8RV
+ I6x5zxY+zWCqjtU48ti+yGjYohFBxUItmZRHUOxUInTJYzf71Wd3Gam34bClqzq1SjEs
+ kCCA==
+X-Gm-Message-State: AOJu0YzpzqSf0XTU27Mq+v0cylSsP0cgirqPX6wwoMiwf9vklbz0GPjg
+ E4YIgtvKctKIvmoLjBdxRHy6SAjO0g3TtSDi9ERmTip/IId+HfEK1q85E7YqM374jGMy65OOspP
+ u
+X-Gm-Gg: ASbGncu/Q7ZBr2yseWA8k64kYE9EHIeA9vxE7/+Jh1b2E3waQxQw0TwMPvAYNZ8Z1sT
+ sBJLaLm3BoNOJA1vkpASvZIKmJCJz1QkDi1yR7AD13S2W1oB5w5PZWEfSK3Zu+II7L04Ls8L6PH
+ GRb3cIO9fT/C1xeSQV2ihFqFWA8QVI5SGEfbtxq67Le5V4s01w8D0HR+hccYqQjcgo/saHsEhVZ
+ mVRnQlwd3KGR/B06SO7qWDWUt3oxEGmg/xkiYbYFrL0c/0iWLchNfV2/jo+Q3hPAxbg64kJQH3i
+ UH8wjLsdVt+I3norXPlO5A==
+X-Google-Smtp-Source: AGHT+IE90AnGM4oZ+oRC4LfY5zDILW1K7llDQXLD6welc6HfwdFeG0/dkNvk7Bx6eZZw7UsnDWVbfA==
+X-Received: by 2002:a05:600c:154e:b0:439:a88f:8538 with SMTP id
+ 5b1f17b1804b1-439a88f85bcmr27774735e9.5.1740068504165; 
+ Thu, 20 Feb 2025 08:21:44 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.54
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 08:21:55 -0800 (PST)
+ Thu, 20 Feb 2025 08:21:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/41] roms: Update vbootrom to 1287b6e
-Date: Thu, 20 Feb 2025 16:21:06 +0000
-Message-ID: <20250220162123.626941-26-peter.maydell@linaro.org>
+Subject: [PULL 15/41] hw/arm/exynos4210: Replace magic 32 by proper
+ 'GIC_INTERNAL' definition
+Date: Thu, 20 Feb 2025 16:20:56 +0000
+Message-ID: <20250220162123.626941-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
 References: <20250220162123.626941-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,40 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hao Wu <wuhaotsh@google.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This newer vbootrom supports NPCM8xx. Similar to the NPCM7XX one
-it supports loading the UBoot from the SPI device and not more.
+The 32 IRQ lines skipped are the GIC internal ones.
+Use the GIC_INTERNAL definition for clarity.
+No logical change.
 
-We updated the npcm7xx bootrom to be compiled from this version.
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Hao Wu <wuhaotsh@google.com>
-Message-id: 20250219184609.1839281-2-wuhaotsh@google.com
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250212154333.28644-2-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 768 bytes
- roms/vbootrom               |   2 +-
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/exynos4210.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/pc-bios/npcm7xx_bootrom.bin b/pc-bios/npcm7xx_bootrom.bin
-index 38f89d1b97b0c2e133af2a9fbed0521be132065b..903f126636f9ef5d1100c056656ccfb2b32e5e10 100644
-GIT binary patch
-delta 90
-zcmZo*Yhc^(l+nU*!D9x6DNkDr=09a-2ztoGz`#|*F#jn7L;r()|Np;c0m>C1$z?$0
-Ywog`Ma%Vh0Ig_b-VgU<}A_D>d06Rh+WdHyG
-
-delta 69
-zcmZo*Yhc^(lu^NO!D9x2$xoRb7CdZGnE#ZCA@Cs+0|QqL!~CZV4E+!GPG)41X52Pe
-SmdTy*+~icIZXQJj1ONb5*AzJb
-
-diff --git a/roms/vbootrom b/roms/vbootrom
-index 0c37a43527f..1287b6e42e8 160000
---- a/roms/vbootrom
-+++ b/roms/vbootrom
-@@ -1 +1 @@
--Subproject commit 0c37a43527f0ee2b9584e7fb2fdc805e902635ac
-+Subproject commit 1287b6e42e839ba2ab0f06268c5b53ae60df3537
+diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
+index dd0edc81d5c..b6537a2d64a 100644
+--- a/hw/arm/exynos4210.c
++++ b/hw/arm/exynos4210.c
+@@ -394,7 +394,8 @@ static void exynos4210_init_board_irqs(Exynos4210State *s)
+         }
+         if (irq_id) {
+             qdev_connect_gpio_out(splitter, splitin,
+-                                  qdev_get_gpio_in(extgicdev, irq_id - 32));
++                                  qdev_get_gpio_in(extgicdev,
++                                                   irq_id - GIC_INTERNAL));
+         }
+     }
+     for (; n < EXYNOS4210_MAX_INT_COMBINER_IN_IRQ; n++) {
+@@ -421,7 +422,8 @@ static void exynos4210_init_board_irqs(Exynos4210State *s)
+             s->irq_table[n] = qdev_get_gpio_in(splitter, 0);
+             qdev_connect_gpio_out(splitter, 0, qdev_get_gpio_in(intcdev, n));
+             qdev_connect_gpio_out(splitter, 1,
+-                                  qdev_get_gpio_in(extgicdev, irq_id - 32));
++                                  qdev_get_gpio_in(extgicdev,
++                                                   irq_id - GIC_INTERNAL));
+         } else {
+             s->irq_table[n] = qdev_get_gpio_in(intcdev, n);
+         }
 -- 
 2.43.0
 
