@@ -4,107 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFB2C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D85C021B3
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlB36-00063L-Dm; Thu, 20 Feb 2025 13:13:24 -0500
+	id 1tlBBG-0001qD-E3; Thu, 20 Feb 2025 13:21:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tlB31-00062k-7y
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:13:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlBBE-0001pm-Ss
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:21:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tlB2z-000245-Le
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:13:18 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlBBD-0003Kx-19
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:21:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740075196;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1740075704;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WOBMQ/L0iOXhv84/flNPOlpCEMahQnji7y8yFANmkvk=;
- b=W7dAdA8YW+GFFuaYaV1XKwsBegZnZwKJBTACGd+2a4XBGcFF2BbOMNc2JdfPo/0gLLNVol
- XlZiU97qCEmL5/xLXnJya0ok91G+o8/u+S0uwbagn7N52haShAcjtq6fK8aiRJSW5FRHad
- h7Ydra6T009r/uyO3fF/JmEFmw4Psok=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Huxw6bW0x0abpYzIySonk1JTpyCaoQyOHfqDAe7m7BQ=;
+ b=PxltCND7tEJtihX1pOUHA//C88GSiRdKxN1AV5wA85ZeVKxTPuXAtSaktsMz6Z4xPon096
+ szx80tAauXyIGcvXyvHSuI9Gt+el9lnaJbeEuMYey0l8hCIRaIn7mIYdS8d9wfFjLSDJOi
+ bl2zR7cRJW2v8yhWRMaPgN58nY7GWs4=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-VFuSdw8wOcyrF5jr1y9foA-1; Thu, 20 Feb 2025 13:13:14 -0500
-X-MC-Unique: VFuSdw8wOcyrF5jr1y9foA-1
-X-Mimecast-MFC-AGG-ID: VFuSdw8wOcyrF5jr1y9foA_1740075193
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f4cce15c8so649009f8f.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:13:14 -0800 (PST)
+ us-mta-571-WhUslyvQOdmT5eMzuRrnXw-1; Thu, 20 Feb 2025 13:21:38 -0500
+X-MC-Unique: WhUslyvQOdmT5eMzuRrnXw-1
+X-Mimecast-MFC-AGG-ID: WhUslyvQOdmT5eMzuRrnXw_1740075697
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ab341e14e27so145357666b.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:21:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740075193; x=1740679993;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WOBMQ/L0iOXhv84/flNPOlpCEMahQnji7y8yFANmkvk=;
- b=gxiNEBWNn3Hy6ZIoeHD8x9eO6PRHHhyvf2ZQ2uDZujOVxSBYPFavBapqCRomxxL9Py
- uBmAmgV/lojUi6VXqcz/4/iif8Z1UfMS0y1/hWcQ2EYwvss5y830dHahHOcgvIRQyASt
- DH/5PA97z0rinp5+5GZLa69KSXfOvjH28c3LuUnaJmpHzRnzffbV4JArsKvTWxhQVKQW
- lrdM/s9YshKf+x/iiGfxB1kX8n2hzY2bqKwrVPCKEHd2i+wBTXUTxFzXvspyP0Q4+5+U
- LnNoBy22P8/VwtBHeYdx0n5w4e9GJJzH3lvVcB9Kqkp/klL72YZZm+WjUKIswpAipqma
- iTbA==
+ d=1e100.net; s=20230601; t=1740075697; x=1740680497;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Huxw6bW0x0abpYzIySonk1JTpyCaoQyOHfqDAe7m7BQ=;
+ b=Oo/xAv8Pmh2aXLzCgK5dYUeHhiZmCxVx/Zi22Qt6M/g96qxgNeMTWLJCk3KidnuMdO
+ k1znXL+sWW++QOA9YXgFEBUut7JYWWGyYO/uOWxbpB6Uz8ZVpmOggwZKNB/euFiMALpi
+ YJe2XxgB7R98+XcaEK20s2n7ujCGYW5kvoo87tIW0hJnCsLkOFP4vrylLLNVfRkWLTNi
+ aoidwIKdqLrLcpj200j0R6CYUHhVYC5D7AfAky3l/aL/F9t72zVtLxgF06219/U5/zsw
+ 4Km2OGGppDdjIA4/SF8nFwA3lNczI1iumxDDvCGrBQuWWSZ+oPEq7hk0hZssSB/yb29j
+ 4O9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXVZQYT0RWkrHAaiR3CiA917QoIfSxn+tIo4USOv2yoas13f/5/epPZ2IlDwo7s0o/X6crfWTz/+GQE@nongnu.org
-X-Gm-Message-State: AOJu0YwJzrdG1Bwo2J0UGQ87qGbebvgV5FknzRndE+f+Q8QOiU13y2wD
- TrorcxXEocyEtTcRd4T2TVYbcafl/IVWxHej2kTf4gZG0JV/+MtiF5Zu30clviPkKFzWf051eQ9
- KrePxy1fchmbMaZfw/B7nU9O9qx2ks4na7ZRjs2m7hk8A9xbv5pZ6
-X-Gm-Gg: ASbGncvPvfmhIhfplg7nYkjVLSil6Vwz0n5oa4ZrBG1XOPC9T8cDysX2cmB8qf5qbTh
- fFCOxUrZoKL2v4CBjAbq5gM871/lxmP2G0VUXok3IFExaE96JpIj5ByETlZOxjlNcAB+RuGol+M
- sfBgMF2bKEDGFmEv38Dp66MPEDyIMtoWpBccRit1dXy9DcV+ZlWJRmWqz2dib9y5PidfIb7nRw9
- 316XZnhBg3Ub3popBgZ3LI74NUM0ht2mv6xebWeeTggtcNqGQHaizrzhn7VJbhPxe0769zhU5BZ
- 3+kocUVwisSqgwEJYbgjbrWra46akfVMlsxegEA3+Wc5gU06apPP
-X-Received: by 2002:a05:6000:1a45:b0:38d:dd8c:51a1 with SMTP id
- ffacd0b85a97d-38f6e97b000mr255152f8f.27.1740075193210; 
- Thu, 20 Feb 2025 10:13:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE5VRPEUc0jq/44xJOqIS/Fb60hcSHj+bxpA2nxYOjqq7eNda1uCNOj8Y/j6OufMDAAcrIL+g==
-X-Received: by 2002:a05:6000:1a45:b0:38d:dd8c:51a1 with SMTP id
- ffacd0b85a97d-38f6e97b000mr255117f8f.27.1740075192825; 
- Thu, 20 Feb 2025 10:13:12 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a04ee48sm251401425e9.3.2025.02.20.10.13.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Feb 2025 10:13:11 -0800 (PST)
-Message-ID: <65c7bf72-10d2-4183-b548-f0f842083c49@redhat.com>
-Date: Thu, 20 Feb 2025 19:13:08 +0100
+ AJvYcCW8a59g92ysIYvwkwbb0AwcfUXQfrg41NFpG03BJ8fPiYKoIVAX5wq8FKJD+iyVbS4jxZe3uOfn21UB@nongnu.org
+X-Gm-Message-State: AOJu0YyI7PjMFyDkjk7Q4oGpfsdv1PWVALO2yhZFWG611zH5YT7aahiT
+ k5Y/UVqn+cfg65g7ycm7LL6RWyXGqTaCj7FJgE3hPAQYpHLOytK3oUUE/R/r9RYOMxblk1sFi6m
+ Xek7c4NutntwqFnmDyQTmiiQ6AIAiXMx55ZDyj1WJdiN5R7BwPr4U
+X-Gm-Gg: ASbGnctWIQHiayYkR3HunId1S8pAkxZZWi9AjtpvndI5YXTO10LUcPZ+0zBkpnCZmbr
+ xWiIEuFvc9aXwC/AUkvjHKsB2MW/hRq5b18/rGOtCTJNmn98CICeEpElRLj4MVACSTOLOdy4BHI
+ 0sBLQXQaaCiuJ7ME/Iq+/14AnegyYuTRwuQW1A2hv0cNu+BgAOfqD7fByzElgfs9gduCOI0OBHE
+ +mYfwMtZG6/a59LceeozmfKI67VChb1rsj9NiYsSVppO/g8IL2Wa5HCrID+0lRLun8Qug==
+X-Received: by 2002:a17:907:2d8d:b0:abb:b12b:e103 with SMTP id
+ a640c23a62f3a-abc09af269emr38137066b.34.1740075697478; 
+ Thu, 20 Feb 2025 10:21:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFoS//rkf3KoexaDNDi5xOpbl9UMqje43p7Jw5f2WollYPlb4TP9uMClFBwPwBvvA7EFEanVA==
+X-Received: by 2002:a17:907:2d8d:b0:abb:b12b:e103 with SMTP id
+ a640c23a62f3a-abc09af269emr38134966b.34.1740075697121; 
+ Thu, 20 Feb 2025 10:21:37 -0800 (PST)
+Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aba532322e6sm1498349266b.1.2025.02.20.10.21.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 10:21:36 -0800 (PST)
+Date: Thu, 20 Feb 2025 13:21:33 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefano Brivio <sbrivio@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ Jason Wang <jasowang@redhat.com>, Thibaut Collet <thibaut.collet@6wind.com>
+Subject: Re: [PATCH] vhost-user: Silence unsupported
+ VHOST_USER_PROTOCOL_F_RARP error
+Message-ID: <20250220131932-mutt-send-email-mst@kernel.org>
+References: <20250121100029.1106973-1-lvivier@redhat.com>
+ <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+ <20250122085828-mutt-send-email-mst@kernel.org>
+ <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+ <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
+ <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
+ <20250124170327.448805ad@elisabeth>
+ <20250220102724-mutt-send-email-mst@kernel.org>
+ <20250220175910.25688823@elisabeth>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 05/20] vfio/iommufd: Implement [at|de]tach_hwpt
- handlers
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- shameerali.kolothum.thodi@huawei.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <20250219082228.3303163-6-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250219082228.3303163-6-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250220175910.25688823@elisabeth>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,70 +113,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Feb 20, 2025 at 05:59:10PM +0100, Stefano Brivio wrote:
+> On Thu, 20 Feb 2025 10:28:20 -0500
+> "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> 
+> > On Fri, Jan 24, 2025 at 05:03:27PM +0100, Stefano Brivio wrote:
+> > > But I don't understand why we're leaving this as it is.  
+> > 
+> > So that people notice if there's some backend problem and
+> > announcements are not going out. should help debug migration
+> > issues. which we had, so we added this :)
+> 
+> The message mentions that the back-end fails to do something it didn't
+> and can't even do, that's (one reason) why it's wrong (and confusing)
+> and this patch is obviously correct.
+> 
+> Perhaps the commit title isn't entirely accurate (it should say "when
+> unsupported", I guess) but it's somewhat expected to sacrifice detail
+> in the name of brevity, there. A glimpse at the message is enough.
+> 
+> Laurent now added a workaround in passt to pretend that we support
+> VHOST_USER_PROTOCOL_F_RARP by doing nothing in the callback, report
+> success, and silence the warning:
+> 
+>   https://passt.top/passt/commit/?id=dd6a6854c73a09c4091c1776ee7f349d1e1f966c
+> 
+> but having to do this kind of stuff is a bit unexpected while
+> interacting with another opensource project.
+> 
+> -- 
+> Stefano
 
 
+let me explain. historically backends did not support migration.
+then migration was added. as it was assumed RARP is required,
+we did not add a feature flag for "supports migration" and
+instead just assumed that VHOST_USER_PROTOCOL_F_RARP is that.
 
-On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
-> Implement [at|de]tach_hwpt handlers in VFIO subsystem. vIOMMU
-> utilizes them to attach to or detach from hwpt on host side.
->
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/vfio/iommufd.c | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 53639bf88b..175c4fe1f4 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -802,6 +802,24 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
->      vioc->query_dirty_bitmap = iommufd_query_dirty_bitmap;
->  };
->  
-> +static bool
-can't we return an integer instead. This looks more standard to me
+If you silence the warning you silence it for old backends
+with no migration support.
+If you want a new flag "migration with no RARP", be my
+guest and add it.
+Or if you want to add documentation explaining the meaning
+better and clarifying the message.
 
-Eric
-> +host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +                                           uint32_t hwpt_id, Error **errp)
-> +{
-> +    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
-> +
-> +    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
-> +}
-> +
-> +static bool
-> +host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +                                           Error **errp)
-> +{
-> +    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
-> +
-> +    return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
-> +}
-> +
->  static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->                                        Error **errp)
->  {
-> @@ -863,11 +881,15 @@ hiod_iommufd_vfio_get_page_size_mask(HostIOMMUDevice *hiod)
->  static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
->  {
->      HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
-> +    HostIOMMUDeviceIOMMUFDClass *idevc = HOST_IOMMU_DEVICE_IOMMUFD_CLASS(oc);
->  
->      hiodc->realize = hiod_iommufd_vfio_realize;
->      hiodc->realize_late = hiod_iommufd_vfio_realize_late;
->      hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
->      hiodc->get_page_size_mask = hiod_iommufd_vfio_get_page_size_mask;
-> +
-> +    idevc->attach_hwpt = host_iommu_device_iommufd_vfio_attach_hwpt;
-> +    idevc->detach_hwpt = host_iommu_device_iommufd_vfio_detach_hwpt;
->  };
->  
->  static const TypeInfo types[] = {
+-- 
+MST
 
 
