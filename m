@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B65C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF56AC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl3Gs-0002VI-6A; Thu, 20 Feb 2025 04:55:06 -0500
+	id 1tl3Sb-0004tl-4F; Thu, 20 Feb 2025 05:07:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tl3Gp-0002Ui-Qs
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:55:03 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tl3Gm-00082y-Fy
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:55:03 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxTWvo+7ZnciJ8AA--.17382S3;
- Thu, 20 Feb 2025 17:54:48 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAxzMTk+7ZncREeAA--.45738S3;
- Thu, 20 Feb 2025 17:54:47 +0800 (CST)
-Subject: Re: [PATCH v5 0/7] hw/loongarch/virt: Add cpu hotplug support
-From: bibo mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20250211030834.3276732-1-maobibo@loongson.cn>
-Message-ID: <1ef6ae3a-2513-8eb8-b97e-707faf2c7bd4@loongson.cn>
-Date: Thu, 20 Feb 2025 17:54:10 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl3SZ-0004tL-9y
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:07:11 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl3SX-000249-H7
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:07:11 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4397e5d5d99so4146775e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 02:07:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740046028; x=1740650828; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RI1jv+irFIIOd7XokVf+EABviwKqcdwfpuXISrK4264=;
+ b=x3ylRnTvJI90wTUnI8s+P9Xi+Or1rjY8DUrwWJrc90hnEdve9beyC8l4OhdXVa5kTq
+ GwP/g7KJBkzIzhMy+/hcJLQKYVC21Ox/+SCCn4vhQZXO9F0clHILfz3y+3x4bdtJFZfW
+ XGBQ2O+gZfEyogUXO8TWRqx2aaQMvz+SEb35jmP2b/DmZTQOl3k76dQ04wFlRLTS/hgT
+ ITBhiKaYAWJZFqE04jJt+cmG/R+j4FJU4xlbeERrUIxra+VADJqjU39r8o+FLja3PoQX
+ Zc35Hmfh0HDX07NZIPTPECI/1vSX1XlA6QAFemW3rE8dgPM1ctSKdnKNT1pQD4+j8D3i
+ 5Jiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740046028; x=1740650828;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RI1jv+irFIIOd7XokVf+EABviwKqcdwfpuXISrK4264=;
+ b=U5N4kU1E0XOiYJRrEfvn5/pJhS1W8Ak1xLuA5U1/DPyFuKjxiIaxqmRMa5gw5JYG4N
+ YZfDo8EGOwaHfPCzJxPEF74nlp17VoCViCiNBiAmeizjLUl8yzJeKz3WWMWobQ7v3Cw0
+ fTObv+9dtLGgeOo+WynvxLfqIytcRBlz/Kbto3EqAFZLn9u0bJxCh6ZmbzEYuAMB3/Su
+ /x+PKra+zhR5fvtjIeuOcEnY45ts2Yip9fonVFHQLc8bGopxgquSzueYPg31CdL6yFrD
+ isKpY0+qpksC0EfofgD7FCzct1NhRLrSCDkLVP/eS4en5HFaQzGSWB7IJ12LBaXgoYA1
+ INcQ==
+X-Gm-Message-State: AOJu0Yxq4wh1LxtS+hYpOFwpFBo3IWu1YIMuKKsbGcrRK4ZaJ93WHxQy
+ aklUNwyGzFDLp/2eK9MJfSYFPFOgB35mGekeEf4wsOXgTriCl9o6e951RkQWcO4=
+X-Gm-Gg: ASbGncvm9bpDDMRUxjf20gOjb6Bhi3ABv/RtVBb7Mw9dW8It1l3+SIRinkxzkgOgIcL
+ Ao6NaG0AcqLsdZx4SE9mIeWgr6vHQ3Wi8ae1p1tIw1uBfh460t35zT1ISW4k2E7W/uR8qQhYpBU
+ UGhY2rvtIk39U5khNPlSALthFHCMMVdedq3ZIQTBgNcc/rZL6jYq3UwD8kNOY6IQasiAJmAqBY3
+ vsOFum33cTYdK+ZE+nzVPdVxsCmoPcbyM16YeCcvAvDlvRMn5qLSJ9ePQA4+Nn6LC2ZX5pAKoJe
+ RFDTaiOAnV3hbxcUyj9Oaz+ko1TVDgtguGFdMOcQ2692uAN5lGY3VdbRCLM=
+X-Google-Smtp-Source: AGHT+IFipjLuHx6LzH4Zdfi7PtMt5O1Sv49H1bJNbsbwEXldqaFTdJ4xQLMr8fgixvxSiZHC05jFMQ==
+X-Received: by 2002:a5d:584a:0:b0:38f:24f9:8bac with SMTP id
+ ffacd0b85a97d-38f33f46b95mr16831417f8f.23.1740046027663; 
+ Thu, 20 Feb 2025 02:07:07 -0800 (PST)
+Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259f85c2sm20839456f8f.91.2025.02.20.02.07.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 02:07:07 -0800 (PST)
+Message-ID: <9f92521c-419d-498f-813c-083f3728617f@linaro.org>
+Date: Thu, 20 Feb 2025 11:07:06 +0100
 MIME-Version: 1.0
-In-Reply-To: <20250211030834.3276732-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Qemu-devel] [PATCH v2 00/11] chardev: Convert IO handlers to use
+ unsigned type
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20181012002217.2864-1-philmd@redhat.com>
+ <20181012082011.GS16720@redhat.com>
 Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20181012082011.GS16720@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxzMTk+7ZncREeAA--.45738S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXr13KrykCF4xuw48KF17urX_yoW5Ar48pr
- W3ArsxtFyUJrZ7A3ySya4ruFn0gr1kGw42v3WfAry0kw4agr1Fvr10yF98ZFWak340vFW8
- Xw1rKw1UZF1UJagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7XTmDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.124,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,73 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Slightly ping.
-Hope to merge to qemu 10.0 if possible :)
+On 12/10/18 10:20, Daniel P. Berrangé wrote:
+> On Fri, Oct 12, 2018 at 02:22:06AM +0200, Philippe Mathieu-Daudé wrote:
+>> Hi Paolo,
+>>
+>> Here are the changes you suggested in
+>> https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg02294.html
 
-Regards
-Bibo Mao
 
-On 2025/2/11 上午11:08, Bibo Mao wrote:
-> LoongArch cpu hotplug is based on ACPI GED device, it depends on
-> patchset where TYPE_HOTPLUG_HANDLER interface is added in ipi and extioi
-> interrupt controller class for cpu hotplug event notification.
->    https://lore.kernel.org/qemu-devel/0d920309-c7ba-48d8-b46d-04ac1e38efc7@linaro.org/T/#t
+>>    chardev: Simplify IOWatchPoll::fd_can_read as a GSourceFunc
+>>    chardev: Assert backend's chr_can_read() is positive
+>>    chardev: Let chr_sync_read() use unsigned type
+>>    chardev: Let chr_write use unsigned type
+>>    chardev: Let IOReadHandler use unsigned type
+>>    chardev: Let IOCanReadHandler use unsigned type
+>>    chardev: Let qemu_chr_fe_* use unsigned type
+>>    chardev: Let qemu_chr_be_* use unsigned type
+>>    chardev: FDChardev::max_size be unsigned
 > 
-> It can be verified with qemu command:
->    qemu-system-loongarch64 -smp 2,maxcpus=16,sockets=4,cores=4,threads=1
-> and vcpu can be added or remove with hmp command:
->    device_add la464-loongarch-cpu,socket-id=0,core-id=2,thread-id=0,id=cpu-2
->    device_del cpu-2
-> 
-> ---
-> v4 ... v5:
->    1. Use new calculation logic about physical cpu id, the max core-id and
->       thread-id is aligned up with power of 2.
->    2. Remove num-cpu property with ipi and extioi interrupt controller,
->       TYPE_HOTPLUG_HANDLER interface is added with the interrupt
->       controllers for cpu hotplug event notification.
->   
-> v3 ... v4:
->    1. For cold-plug CPUs, move socket-id/core-id/thread-id property
->       setting from preplug function to CPU object creating loop, since
->       there is topo information calculation already in CPU object creating
->       loop.
->    2. Init interrupt pin of CPU object in cpu plug interface for both
->       cold-plug CPUs and hot-plug CPUs.
->    3. Apply the patch based on latest qemu version.
-> 
-> v2 ... v3:
->    1. Use qdev_realize_and_unref() with qdev_realize() and object_unref().
->    2. Set vcpus_count with 1 since vcpu object is created for every thread.
->    3. Remove property hw-id, use internal variable hw_id to differentiate
->       cold-plug cpus and hot-plug cpus.
->    4. Add generic function virt_init_cpu_irq() to init interrupt pin
->       of CPU object, used by both cold-plug and hot-plug CPUs
-> 
-> v1 ... v2:
->    1. Add new property hw-id, property hw-id is set for cold-added CPUs,
->       and property socket-id/core-id/thread-id is set for hot-added CPUs.
->       The two properties can be generated from each other.
->    2. Use general hotplug api such as hotplug_handler_pre_plug etc
->    3. Reorganize the patch order, split the patch set into 4 small
->       patches.
-> ---
-> Bibo Mao (7):
->    hw/loongarch/virt: Add CPU topology support
->    hw/loongarch/virt: Add topo properties on CPU object
->    hw/loongarch/virt: Add basic cpu plug interface framework
->    hw/loongarch/virt: Implement cpu unplug interface
->    hw/loongarch/virt: Implement cpu plug interface
->    hw/loongarch/virt: Update the ACPI table for hotplug cpu
->    hw/loongarch/virt: Enable cpu hotplug feature on virt machine
-> 
->   hw/loongarch/Kconfig           |   1 +
->   hw/loongarch/virt-acpi-build.c |  35 +++-
->   hw/loongarch/virt.c            | 284 ++++++++++++++++++++++++++++++---
->   include/hw/loongarch/virt.h    |   1 +
->   target/loongarch/cpu.c         |  23 +++
->   target/loongarch/cpu.h         |  11 ++
->   6 files changed, 333 insertions(+), 22 deletions(-)
-> 
+> s/unsigned/size_t/ in all these commit messages, as it looked
+> like you meant 'unsigned int' with the current commit msg.
+
+Sure.
+
+Paolo, any blocking comment before I fix the bitrotten places?
 
 
