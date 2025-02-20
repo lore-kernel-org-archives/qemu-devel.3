@@ -4,178 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40E6C021B0
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 03:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25171C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 03:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tkwvC-0003wk-Ek; Wed, 19 Feb 2025 22:08:18 -0500
+	id 1tkx1O-0005ZC-Lw; Wed, 19 Feb 2025 22:14:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tkwvA-0003wE-4d
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 22:08:16 -0500
-Received: from mail-bn8nam11on2063.outbound.protection.outlook.com
- ([40.107.236.63] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tkx1M-0005Yx-8W; Wed, 19 Feb 2025 22:14:40 -0500
+Received: from mail-tyzapc01on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2011::701]
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tkwv6-0007XU-1A
- for qemu-devel@nongnu.org; Wed, 19 Feb 2025 22:08:15 -0500
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tkx1J-0008Tv-9o; Wed, 19 Feb 2025 22:14:40 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XxCSRFmTyhO+t6fiXbwsbQP2p5v2iOW1A0uLsTDMtAbecRKDCpQ8l4DSieemG23yv9DFP+5r6LlYPpDKM9rj1mXWRQv+CT70YnqfpUceYLRMbUQklhGMhRRgOTFAhmHj1Ku+ULYn2eg1L1pZuNlMv8mRy6ggkNzxHDcAZsRwnFYOPkUxl+MwK9DGAvkWBBePCFkdmiBTNI7CJDfkU8S5FdiNw8TSLzdyRZCYgqvbomEnMDgzGHsambmI7ZJHSaav3lbRhRDWT0ElX//v0CGBKLtxXGitVjU8V1yt1guLs+fq0cbZCi9dfDQkBteV94YGwxtJubQNDCaLUg7KJXaPGw==
+ b=nFtVNxErdhPo1AGQ2bY4jZhelntlljoIJzS8tDmhkJ9HXfCOe4c/fCsdAy4ZVJyPN7P2btp3d5UzisVOV7Z53mVXeB57rBFrHhtmOSOJFr163sOOvs9ym1Udfnt4oyz05H1xOBH15PE30CwIS893Nt5+XsGvcvw2aXuCN6IoCEv8D0zx7EXd/nR2FdzQKQ8nyzcNumBC6CZ2dJcVdV2lU2tF1Xon+dpOmICULySdOjglZjxincmI046LgXCAei4AzOvUPBmlQGKMlyF1ykK0ikKhezaXzj9z2JvCZMrJGM/dfyhA1l4eFSdkZUG+5uq2qGSE6ONCWqZKoYF0pottng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RQodD4z6q/4Lk6ff98xUh90lzpoKym8baRhlogKi1s8=;
- b=ZauDuOjS5+khH+ZDHgx+Fzfa0iY9aEBdJS9Doly1DCrsqc0iKUdzFqIs+Er6bzxbth9CHixjy/195TCveNFARXpxMrZoQBMIVU7hqdUDgjOYlyOs7wXoc3eh9XL6K4Q6QIRJvclb3VFYc//ovOGF+238G5YJAV6cVt7psK/cKT81Upt1BBxNGqv1u8BIdcfAvWJ2baKKDbDUqIzQRh6E3n6RATuC95N4HJWjpplyAlwO2vXJBjV2ZFspYQCYMf6l4Bjs5tYr0+DVXPguftxCxEgA+qz/gQWA25pZfRfqaegVRg87c1fp0YoO1JT6va3iH+LWo/Ihk2czQ6XoNA/pZw==
+ bh=GsMoZZ4iS7E04LWk+68LDyaCmA1tThXPUfmOIWenufY=;
+ b=wfPj0mFyDujt7QAmh6jucy0jBLCAkhwyAdm0Hm2KKHHc095Ko+cEhGQH3i/5uwVxy6hnPoAp/A6piJe9qGvej4M7IkOwpIzMFBf6YQoMtERyKw0Ylu8rJKrAgh0J4lnDOXGbEGcKMrD4i5FmpM8Rkf0qNqNlBC4VRh9Dr1TIp4bTmp7ZpfULr9R2hbJbrxmCCcXAyoPgiGZKdABhEJxl0hqH/XklHySBDveFVFoc5RI44Khahk5mhvnPVizLQpkwKJ4tQPjklT2LonZF0gujs6B4hS+p/zmiEpR25zyFw2GC+f/kJHwPzMDb9P8bJGJoRb7lz62oDprea5vF5S9abw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RQodD4z6q/4Lk6ff98xUh90lzpoKym8baRhlogKi1s8=;
- b=MRWILDYur6LvmgE5w3BjF/7UwdT44gVmXe3iMyg45l6rS8fdJRgGEQ09TY5R2hiVzYCYtDsyGTeU7B+sfXorPGtKRtblDvf1jy7tJ9Rv1CFGbem28NWJmGUjecCD4iHmAKRe3A3BGFnmBRVMba3EBxQ4ODi4sC4P2ZsQPCT07lA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by MW6PR12MB7086.namprd12.prod.outlook.com (2603:10b6:303:238::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.18; Thu, 20 Feb
- 2025 03:03:05 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8445.016; Thu, 20 Feb 2025
- 03:03:05 +0000
-Message-ID: <89e791a5-b71b-4b9d-a8b4-e225bfbd1bc2@amd.com>
-Date: Thu, 20 Feb 2025 14:02:56 +1100
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v2 3/6] memory-attribute-manager: Introduce
- MemoryAttributeManager to manage RAMBLock with guest_memfd
-Content-Language: en-US
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-References: <20250217081833.21568-1-chenyi.qiang@intel.com>
- <20250217081833.21568-4-chenyi.qiang@intel.com>
- <60c9ddb7-7f3e-4066-a165-c583af2411ea@amd.com>
- <c5682028-b84c-4b4c-8c4d-f3b43d412e83@intel.com>
- <23e2553b-0390-4215-a19d-0422b55efa38@amd.com>
- <d410d033-dd1c-43fe-85df-1bdaecf250fd@intel.com>
-From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <d410d033-dd1c-43fe-85df-1bdaecf250fd@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MEWP282CA0069.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:1dd::15) To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
+ bh=GsMoZZ4iS7E04LWk+68LDyaCmA1tThXPUfmOIWenufY=;
+ b=HNCrdhdLixULuXegmica0eBYujMDEgsRU/8dKMcSO8LhRjODpS6qC8wQCgwR+G2J2GwAwNFHW0Y6LHpOPKKCnycYNsxdRntmH0Q0rHzjvftAtSX+bOxWgmkBHY8HB0w1JiT5uF0bzNHjpaSHtXhhcrcdhSuIDQlGehcROkVq8HimQ6EC1fQQu8JnqDAG+TPOr5Skd4F/5g5hYRm9bUVi/Q3KhShH5O1hgqnxQbEeL9Nrt1kz6vSq7M+OKzAuZy9WGEI6HpwqQZY5ig4vUrvlnCphaw4pzDTvbLSBnAoTW9lY75mN6JQqXkWI0Id0inca2gPjZSxRHrfJBV/fINQmUw==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ SEZPR06MB5414.apcprd06.prod.outlook.com (2603:1096:101:65::13) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8466.9; Thu, 20 Feb 2025 03:14:21 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.8466.009; Thu, 20 Feb 2025
+ 03:14:20 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+Subject: RE: [PATCH v3 11/28] hw/intc/aspeed: Introduce IRQ handler function
+ to reduce code duplication
+Thread-Topic: [PATCH v3 11/28] hw/intc/aspeed: Introduce IRQ handler function
+ to reduce code duplication
+Thread-Index: AQHbfchgQ3NR4N8xFUWpxf4JmjhMmrNM0D0AgAK+/xA=
+Date: Thu, 20 Feb 2025 03:14:20 +0000
+Message-ID: <SI2PR06MB5041164AE512E11508B722C7FCC42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-12-jamin_lin@aspeedtech.com>
+ <5ec569c6-f7a7-4a0d-b60e-abb727cf1330@kaod.org>
+In-Reply-To: <5ec569c6-f7a7-4a0d-b60e-abb727cf1330@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SEZPR06MB5414:EE_
+x-ms-office365-filtering-correlation-id: 6d9c1fb8-9005-4307-6f3e-08dd515cab25
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?SFh5Y0x2dzdIempRa1NBL2N4S1V5MThzWFdQeHVOK3ozSGovN0szZGdnZlNG?=
+ =?utf-8?B?SFVLc2phWU5xeXAyamZpbEFsSVdONEdLZlNRQ0FROUFXUXZsNFRDbXdEYlo2?=
+ =?utf-8?B?SnViYWtjbExuVjJRMHdBRU1HY1h1Y2xiUDltSEptTkl5UUVxeklTWXJMNCtm?=
+ =?utf-8?B?cjhsQzFnb2RIZWdVNUduVUN3WDM1N3A2SHFGdk9ZTHI4SFRWKzJWakNieEIw?=
+ =?utf-8?B?U0hhZGZmNkhVZTRXeWovMm1vT2RuVncySHNMREYrelNEQW9lelZMcUdUVkc1?=
+ =?utf-8?B?Zi9NdXB5K1dOQ2U5SVhqL0dBZlc4MSttd1pCNUhRTzBNbFBjM2s0Tk9rUzB4?=
+ =?utf-8?B?bFRBMDZNMjVQZWxnQ09oTHJoL0JiUVJnT2c2UnFHeDIxdk1VemI1d2lEcDJW?=
+ =?utf-8?B?QVBwbGtJTE5qRkxINFpiZ01VMGdvc0ZQUTBoR0NPS2R2ejBrVWM1RGV1Y0R2?=
+ =?utf-8?B?Z3lPT1dVMy9LNWYwR1Y4djloUDcxNGhHU1ZYSGtPNk1JUU52NkJGU1QvUk5i?=
+ =?utf-8?B?V3dDb3hwcVU2UWJ1VVlpc1FRS09jL2tTaUpNa1BBKzZPdndlRVREZTFpeE9o?=
+ =?utf-8?B?Zy9BYmw3N2QzaEVJdTFMaURLR083Q1JNWTVhWkxsa21ZdnRqS0R4L2xKeURU?=
+ =?utf-8?B?bC9jT293OFhIOHZ3NGpNQXM0TXBLOXdGdFRMaVNkTlZZb1ZIU3hjbzBicFZD?=
+ =?utf-8?B?Z3JtOVd4cGxIY2RZVysvRlNsNElqRlNlS0NObnQ0UDhVenp2WFBoOVlVdnR4?=
+ =?utf-8?B?VTFiZWJqWjhWTGJHK2dxWGtiT0xPWERMWStablBIK0lZU0hWRWRsYWdwdTQ4?=
+ =?utf-8?B?ZzVaY3NUQmtvdW12VTlveXFlWThYZURtcjZUWUozeU1COWZnemN2bkk2N0hq?=
+ =?utf-8?B?TG5FOXpvS2tKc1IwQldXWFd5ZnlEa2hNcWdMMU1MUTR6cDNDNUhZL21ZaGpN?=
+ =?utf-8?B?WjgwdVR6VWNLVTFIZlVGYVRjZ090UUdyUSszRjIrYWRPeU1CdFQvT0hKcmlx?=
+ =?utf-8?B?b3lzcGM1Ui9CQzUrMXlYbTRHNGNOaU9obFRiM00xbytoNWJRWCtBTWZZMDFx?=
+ =?utf-8?B?SW1JTDZSUk5FRk83bDVSbEZrYjY1bFB2bUlOclJiWnVEcFZubUJDUHM1czV0?=
+ =?utf-8?B?UEJFRkRqUkVpeUxHQ3lHRFZxeElSbnd3eDFoRVBaWVliN2JoNWt4N3pGUkRp?=
+ =?utf-8?B?ZnFlQ2tFZi9BeXNNNVZUWVlYUnd5NTlLQklVSzBZTkJWY3AvRkxmV2FBWHRq?=
+ =?utf-8?B?bm4zTTVSRWJaSFN0NmszYndnWGgxU3dZVU5wMVlQWTVjSEZiUTdCU3JuejFQ?=
+ =?utf-8?B?Y2lnQUYvQmM0Zys0clltZVlpOGJYMzUyVnlkakVEWWhGaW11am1qOGtkY3hs?=
+ =?utf-8?B?cnRkODJNNWtJQTd3dnh0N3pmUHVqb0hMK2d0WEU2NWpnN2MwYk92aUlOQUtW?=
+ =?utf-8?B?K2xxeGd0alIvYWMyeW04dFROejJJYnVFUVRLell6cE5OTld6YlZkUEoyUTd3?=
+ =?utf-8?B?RXFCdDdrY09adXJHZExKdC9PUXFZdWxuT0tkOU5QZDAyRERtTy85ZG5DeU9S?=
+ =?utf-8?B?VS9iRFZlc2lZOHFGSXRLM3pOTXJud3dRZ1Q3bzJnUjlzeTRUQlV1NjhSbFRq?=
+ =?utf-8?B?dFVnMnFYRG9TQmZBSjAzM3JxalFURW5LN3J0bTNrUWg1RWlDNWJkSDBQSnNx?=
+ =?utf-8?B?WTZvK2RNY3hkZU8yaXpuNnB0NXA2K0NpQnN1aFFzaVdtT3NsVndwMzluVS93?=
+ =?utf-8?B?bkc4VlNNeHp6WTN5VFNqbm9tREkwZ09keGxtY0VXWkQ1S09DSHRHbGR1NTd6?=
+ =?utf-8?B?YXAvOGI2cXFlajVwelJlR3BOR0p6Nk5FVFREVXE5dXRJZmFIVTVNYnoxN1Ir?=
+ =?utf-8?B?WjVOM2Q3aUNtd0tHSXFFb2tZY244K2tqNldNRW9UWnkwZjFGajNzWjM3dlk4?=
+ =?utf-8?Q?rkzAdNW881u0HhqXhYt2WYYuxrdEWLzf?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YnJrZlllRjlVMXl3UjYwUS9lcUo3OHBHSkxtd1dwZnBCaXhVaW1taEwrUmty?=
+ =?utf-8?B?dHoxajF0QjR5bkNKRlJhc3dKZ016N3o1M1JVdmtTNGsvaVdnc3NIVXB0aUVH?=
+ =?utf-8?B?eTYxOTRmRjc5QS9PK2s0dXo5a2RRMm5KZzV6MjJBdGx0SjU5SVJJY2xZSWJB?=
+ =?utf-8?B?U3BtT25zMlZPeE1hWVBjSk04eDRGRWZZV0tCQ1pBVTVDZFlzM0dkSnBDZG5P?=
+ =?utf-8?B?aDVpbkh0MDhpdFVmWHVlRDBkREhFNmQ3ZlFKRWhEQkdwZk9yM01PTzNGdS92?=
+ =?utf-8?B?NUxCVmRLWFEwb0svMVhOVGZ3ZlVzamZzQXNjZzRaeHRBa3VRbGZuU0FEUDlm?=
+ =?utf-8?B?L21BWnBsQXl5VFlrcEN1RStLVElEcStEMC9KNWF1VndDakR3MWpqSm1JMUM3?=
+ =?utf-8?B?OHJaQnRwSWhCQklRZXBxZ3ZuYjE2VlNFNVdGUWdIK29TSlc1Nm14QTFKaTQ5?=
+ =?utf-8?B?and6SVBYelRsUEJsRkdzWUVlU1lDMXVKWGt2MDhaZEdld3lLMkhDVDZvM3Ft?=
+ =?utf-8?B?MWJaT0UzRTkyZ0g5S1UyTXR2U2h0QlIvTHpXekRuZmZGY3A5cG9lQWJGWjdF?=
+ =?utf-8?B?enc5cXVERVZzNFdvZmh1bWlhLzd2NGkrWjRBVTQyd0N5THdzdkdWSU92TzA1?=
+ =?utf-8?B?dDJ0azJVUmZndFlCMUdJTm1lZ1hCRmlwcGt3TnNLam5VKzgxdUt0VDhZN0dk?=
+ =?utf-8?B?L2lmYzdaU2VBa3dqRStCdnNWN3FSbTZWWjEzSkRORzVRMUFDb0VFeFlST2pY?=
+ =?utf-8?B?VmtySkoxRWdldmR0dVA2ZDZMVGd4QUtLalkrQlpEcVJrRXZSVXE5Um9Hc0lw?=
+ =?utf-8?B?YW95SCtVa3lyQlJTWTZ5a3VBMUJhZWorQ1pZMVlCZ3lTSmhOdTZBRHhpYXho?=
+ =?utf-8?B?dVE4TE5EYWcwc0tWOG5jd2JRS3dHbVZzdFMycFhQSWx6dTFpU05TelVkQ1Vn?=
+ =?utf-8?B?dHd4YSt0UDJWcERLRGZYMHVRRDcwL0RPaktOY3ltQ3FzOVQ3cU92eUVwSnAw?=
+ =?utf-8?B?bWhhY2NZenJ4VGZDcDJ5MSs0V2hSMGNGVkIzNXUvbnU5S0lwbjZJMkVtTGFh?=
+ =?utf-8?B?Mm1jc3M4VitHVGhzck50c0VEYmtiN2svekxscENWdFhSUFd2Q0p6RHR0eXpH?=
+ =?utf-8?B?M09NMVNyY0xXWFVLazU2K0tCQS9vQVhjNSt2U2dzTFJWUkczM0liOTl4NHNV?=
+ =?utf-8?B?T0FYdkNOc1dOQ29WSnkzRDVqcHFETnozUGNZcU8xNkZYc2tMV0txWC9kaUpl?=
+ =?utf-8?B?cndoT2RmNGxrN0s4VFIvcFROeVY1bGxBbXBFdTFOSjdUKzhDTEgyeW4zKzMy?=
+ =?utf-8?B?ZDdwQTk4ZGhGNjJNNjhLUjVudUtKZnNFZ0FyM2RVdW1WZFdHV2RsRC9pb3BB?=
+ =?utf-8?B?aEN3eG9UckZOdGpZNldjb0lxWFVDc1d2VUNwZjJWSEtVWkVuTGdiUDZSdndl?=
+ =?utf-8?B?OXRHWE9obkZ5USszajhTSUFYZ0w1U3dQNzUxZGdXKzFVN1RXQ04xWjRsckg3?=
+ =?utf-8?B?cmtaclZBd0dTUmN5SmJPNmkrc0R2OXUzOFZlOWJVWVJvZVF3Nk5KUm5CRmNU?=
+ =?utf-8?B?cTNYSGpiMGsxSCtYTzVUeFlQR3krN0xFMTgxUWRhVlVxbVFtRWpoaDNPNm1h?=
+ =?utf-8?B?cnROK0N2R2xNWDlhZHpVWEpzVVhGLzU1dmwxMXFySGpWQks4Wm91bVBEMnhG?=
+ =?utf-8?B?RUxsVVlvYlZwQUV5YU5mRjlZekx5emEweEQ2UE5zUThFNWZMajRDRmJUVjRn?=
+ =?utf-8?B?Z3FoaFNVd0FxanBScWViL1JOaGYvSHZDTnY4SEVxTlhiR0J2V0g2QXpiOGZU?=
+ =?utf-8?B?dFM0SS9Tc1VxaXlPdWZCTmdjSUlKZFE2VWVXazJxSUFTa1pWYjdoZnFURW5z?=
+ =?utf-8?B?L3I5dkE5bGxYU0FrSy9XdWZKWWNjcUM2ZTEwUi9tNnd3YThIQlh3VmdOVHhU?=
+ =?utf-8?B?YWVYT2h1dGMwRkVqYXJyN2FobGJsc21RdlVzKyt2NkZOODNrc25TVU1KV0hp?=
+ =?utf-8?B?OGkyeE5zc3pOWTFjMWRpZ1FrQ3pUTzdXbE9acS9LWTF5Y0lNRDRyZVB0bDdZ?=
+ =?utf-8?B?Y0ZKbGRDQzZyTDZDcmFQdjB4WnZnYm4xWlpjVkJNUEhaUUFqU2NWbjR6aWlk?=
+ =?utf-8?Q?2HE+ffz0NMxp4XsoM/8dcPr56?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|MW6PR12MB7086:EE_
-X-MS-Office365-Filtering-Correlation-Id: 58cb21a4-d7f0-4563-b7d8-08dd515b1884
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|7416014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eW1PTE1pQTREK0R5NDRkd2I2WDJYT0lvQ2dIOVJhUWE5R2ZDWmZodU9rVDhL?=
- =?utf-8?B?dlA5dndTK2JJNWMwa0Izblc2aXRxK1ZPT0o3elJmUkc5VlcyRXV0OGx6MGhI?=
- =?utf-8?B?YXJoaDhMYmxRRklBUkt3WjgvMmJ0TXZPdXNRNXNGa2ZQNDAyWjJnelM2bEQw?=
- =?utf-8?B?M1drRGhmbW1hbjNYZnJ3elJYTXBJRXgxS0M4WEpJUkdCUVUxQ2tPSFhDRjY1?=
- =?utf-8?B?eU1OKzlKdmNIbmFNSWJPdThUOUg3c2MvTHNMcmZHSFlLeWFrMjFjaDQxR2Y0?=
- =?utf-8?B?STBHVWtLdnVlU2VLaWNSV00wdnQrN29Sb043OVZCRkFSVDkwOHhZUm5MUmly?=
- =?utf-8?B?dzRHdElEV3NsUkZZQ1Z3OHNaN2FCUmk2WWhjL2ROZktvaFBoUnI5SDFBaWtF?=
- =?utf-8?B?RnAyNGptTi9BeW5vU0dhZFpYeUtXbFpRR2J0VVZwSVdHQVlZUVYxQ2M3alBJ?=
- =?utf-8?B?bUV1SVNZOFpWemd1OGZBL2xZejYvbUo2aElSY09neEpLeHhqS2owRlM0djFG?=
- =?utf-8?B?blpIT3NwbjQ5R2lRQXVTNXRxK0pEd0Z1UzBCdmk0Zy9XZFh1NHhNY3Qxd0t2?=
- =?utf-8?B?SEl5MTN1WUdBY2sxTW11RzZEMkJ6bmdIWVhzNE5QV2xSMWNSbHlLak5Cblhz?=
- =?utf-8?B?UFE4UFN1TTF2ZnhvMSs1OFQydTgvcS9kSzIreGpWWUJZUlFubC9ZTHF2RmRz?=
- =?utf-8?B?UXd3d0g1WVJjSmlLYXBYeEFma2NvVDVEMkNTNEpKemFPYS94Q2gyRDVYVUxL?=
- =?utf-8?B?bER2YjRXNUpUajk0bXpnOFNnQVVBRUcvSldpK1VIdGpSTWZhQTN0VzVLZmsr?=
- =?utf-8?B?NXloOVAvMWl0OGR1TGRLSHpEOXU4ZEZtSlFkY082RW04VmxycVRpVEVhd0Fz?=
- =?utf-8?B?VGhrNWVwZkZjS25EM2YvYnpuSVoxMU5ldXBJWTAxVFdUYzJITUd3SnNLa09D?=
- =?utf-8?B?TFB3eHlXOWZlM1RlZk1aYkhESXpGU3RrZXlYWmpwcVZqa1VVV1lwcmVrM1Ay?=
- =?utf-8?B?dWZFQWlydjh2dkxKdmJYcHo3NmNPcHVLU3kvblJuRFlLb2laWUtsaFRxcCtH?=
- =?utf-8?B?eG9aMktqZlVlbVdpYTNQMi92ejFIMWxBSlBnQjBQRU50a0Z1aDdwUjczem5P?=
- =?utf-8?B?L1lHQ0dBNTVsZVdLckxGTGJoVEhUQ3hVZ2FkVlZkZWhCME02VjI0NHV2SXhh?=
- =?utf-8?B?QWVzWkhmUGZoZlB4S1ErQ2REL2x0VVZYYUt6Uk9UOXUvcDVCKzhhbkp6bUpP?=
- =?utf-8?B?VWNOL0Z4Q0YrZXFlWTVENDU3TENvUUNCNXllcS9oNGhDWXVEQmxySEZiWW9T?=
- =?utf-8?B?dHRGV3IxQmQ0RktkVmx5Yndsb2FIRUZQWDZ6OGFlQkVqaTlpdWw2d1FjZ1ow?=
- =?utf-8?B?RUpRZU1DeGFGbWZBcUxzS1Zta0Vkd1M3aDI0UzVqTXR1Q3BwSzJSbGJsQUJs?=
- =?utf-8?B?QmlGZE5ERjFURzJHUEtBdFRpM2ZVREU2SWkydlM0SG1TaWNObzZISzQ2N2s0?=
- =?utf-8?B?TVoxNzRjanBWeE0zOGNtNVdoRVN3RS9PNXovWndXd3hRbGczcmU1Skltd0NY?=
- =?utf-8?B?WmVPbENuTElEL25lSVY2NytxV0dHY3ozTDB6OWx2WFpRamluL3M1VFdrTTU2?=
- =?utf-8?B?am8yVk1XTjkvU1hSRmxhZVMvd3FoSWp0aElGVVU0Y1FnV28wc2gyMlVKekZK?=
- =?utf-8?B?ZVQ3N1RCVVJFaDhJODljaUd4dWYyVzNKWFp0Nmdkd0twUHJoSmRLdm8zMWJa?=
- =?utf-8?B?dFpRbE9PMVV4b08rVUZMWFU3UGlFRUk2TVZLOU5sWDdhdVlaSWZPV3M0KzVO?=
- =?utf-8?B?cTBGMDM1WFFGRjdRVDZGcEZ6TGhKRGQzMEZJaDNkR0JrZUpGb0U4WUZkUEMz?=
- =?utf-8?Q?yC1xFHhdMEfU8?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(7416014)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UkhpUDRnM0grZVJWZXpzY01VcThhRHJwbjRWcmNJQXpGUDBLWkU3eTdiV0NC?=
- =?utf-8?B?Y3d4SXQ3L1A0STNwRUNxUGk3SWZvNW1xRTRRRFZCZEFSb3A3NzhFY0xkRW42?=
- =?utf-8?B?eTJ6c2NZdDRCM0ZtaUxWTi9peTk5VDlBN1RKOHZwWWIvMG1OYnNSektUMHZT?=
- =?utf-8?B?MmlBZVJwdVB4NVREMHhHQm9keHlqWVVkMjQ5a21mc3Z0Smo1VjArUzh0ZjIr?=
- =?utf-8?B?MG9EbHRsdUJLOWJybnNzKzEra0Y2SEgwUWsrUXVHeEM4bk9KdDMxQmVUR3FO?=
- =?utf-8?B?NzBGQ0x4bkhTZEVQbWNLQlV3Y3Jpa2swTU9GVXNhUnNNQkhFdUJjYU1CaXVt?=
- =?utf-8?B?YnZvcXVxcko3WGdlWFc1Z1R0b0VFQVFxbmFmbTNkT2dQZWE5ZHZxdGVCRHI1?=
- =?utf-8?B?UkVPQVkyQzJDK2xOU0oxTHh2Ty8xL0s2TTIzRG1sUk9XRjlxbFR3QnVSTnVW?=
- =?utf-8?B?VEpYSWc2dUwyNHFqcVRnVCtyNTFNang4ZjkvK1JqNWJCdnRtQWwyV1haclg1?=
- =?utf-8?B?U2s4alhpZzdPOEpsNjJHRXpoN1Z5UmRzdE1jSndjMHp3TFRieG9LT25hVjBS?=
- =?utf-8?B?T1V5aDA5MlIwakROemE5a0RmNTI0WjM4TVZyaVhHQlpBb0RSbnY1aDdMQmpi?=
- =?utf-8?B?VU1qeDdyZzlkR2hySkpFbndtL3BrUGhYbjNvbENJUlRLaFVSRTYzeFRyb0ls?=
- =?utf-8?B?bjZBNThTaEt6ZHZ2djd4NjVDNFpZYjBqWmg1Wk9VQmphUmlXZWxGWElmbTd0?=
- =?utf-8?B?U0NjOUpvUVpSYXR5QnhKWTFac290cytVNWUxRFQ4OXNuQnVDZzJ0RTJORUxm?=
- =?utf-8?B?dWJjZ0JVQWVzOFJ5Nnp5aDJEekJVOXE2M3QwZUxkbDIrenZVZXpndkFMdSsv?=
- =?utf-8?B?Yi9FZSt6MWZWMzlxS2ZQeVJRVDg2WG8xY0xwR0cxeGxSMGd2RkVXRzZ2MjVH?=
- =?utf-8?B?TVEreVhjcW5RYmttWmhIcHFlY3BFS0tDeDhkVXptd2ZoOFBzOG9XTHNqNWhh?=
- =?utf-8?B?QmZmV1ZyYy9hY2h6VVlNMTJxSGN4K1poUi9lZDhwanF2VjdQR1JveHU2WUhI?=
- =?utf-8?B?QlhyNWlJaDlqNkFNS0lmOUptcmhya1hDUTNmcEJCL3hxaXRKR2dlZVJLdG5j?=
- =?utf-8?B?RjZRY2w3WDNWcDlyY056WW80WkZ5dkxyOFplc2VocWVLZFVEczhWaUxxUEhh?=
- =?utf-8?B?bGlzelFtdWhEUldzTmIrQloxRCs0eUdCR3dzbXROMmJ4SjJWelgvdVJ3dllP?=
- =?utf-8?B?NUUydFVwMVBBcGo1RHlVNEMvYzFMZEhwVTE0c0IvdHFVdkFNUkhPL00zckRl?=
- =?utf-8?B?cXcrRHhBS3lwYzhnSVp5eHA3NXlwWTRCY3dQUTYzVWEyeFhkNU5jeVJBMU5a?=
- =?utf-8?B?TzJ1RG5lckE2bXQ3Rk52aVBRUkVrVmFDT3BpSnQ4QmY4MEJFUTl3bCtFN3Q5?=
- =?utf-8?B?R1gxOGhacEIxLy9nSjM4Z0dtT0xKMFZKZTB1UW1YZG9TdjBtUnRaSWt0YUh0?=
- =?utf-8?B?OERLSTVyOFNkTEYrcTdsakFjbUphaG5VWDMzcGxHaWJwUmZCWTlZVFNXYXlB?=
- =?utf-8?B?U3hlZUUxdnRyMktIZk9UQzl6clVZWTVqSTk3SWlqK3Y5ZmJ4dUJXVEE1WjBF?=
- =?utf-8?B?K3FUd1BOSnUvZzBTVzB6ZE56NzhjRGlrTlcwQU81Y3o4UmRJcFhNOTV4bW80?=
- =?utf-8?B?dzZSUlJqS1FpNERTcFhuNG5hdlJvRUNLc3UrVml5dEVzTWozRTMvWWhsYitE?=
- =?utf-8?B?NFV0MnR6RTAvanUxTW9LQnhYSjYzdUJtRkw3YWhiOEZHTVV4d2duUjZrK20z?=
- =?utf-8?B?aGl2N2xWK0VrNG14NTBjWkRUdnJ4SVc1STg0QUtDbk43Z0xlWlJ5VC9hUDh3?=
- =?utf-8?B?SE5oMFVCaEFlWFBEdDlENngzZlNHUkRxZ3VoT1dtZHA5emd1MENoNXdpU1Ba?=
- =?utf-8?B?TkJwRyt3Uk94VXVRaDVoRUFvRVJCU2REMW9ncURMVE95bnRQTTcrRWFRQXR0?=
- =?utf-8?B?TzFBbXMxVnFhR3BIY2YxL2JHQjdhWXo1a0k3RXY1VmMxZjBmWElQTnM0aUds?=
- =?utf-8?B?dmxoMmhOVHV2ZERwS3lVa1g3eTlvSWJER1gzbTU4Yk1VUDBsaG1lYmd4QW1q?=
- =?utf-8?Q?3T4CFswYqp98N+WPnyMv6IOrW?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 58cb21a4-d7f0-4563-b7d8-08dd515b1884
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
+X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 03:03:05.5103 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vAPk0VTtrv8/vqJPOovyZgvx6o8jm8MHVAqa4CjY+jiiBz0YLc/lRm+RjWD0m6BUih4h71Ro+UwBL/oOVRb59w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB7086
-Received-SPF: permerror client-ip=40.107.236.63;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6d9c1fb8-9005-4307-6f3e-08dd515cab25
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2025 03:14:20.6527 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: gjy0Fhc4oM4myYXzoP5i4dwLWBPPbT+RRRZcTE1hLR/TGIWU9nDVMZ5LtLw8GQmvECmoc0OcoFOoMWRYGQyxGLfq31CaUGLcziQpnAQ9jrw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5414
+Received-SPF: pass client-ip=2a01:111:f403:2011::701;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,481 +185,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 19/2/25 17:33, Chenyi Qiang wrote:
-> 
-> 
-> On 2/19/2025 11:49 AM, Alexey Kardashevskiy wrote:
->>
->>
->> On 19/2/25 12:20, Chenyi Qiang wrote:
->>>
->>>
->>> On 2/18/2025 5:19 PM, Alexey Kardashevskiy wrote:
->>>>
->>>>
->>>
->>> [..]
->>>
->>>>> diff --git a/include/system/memory-attribute-manager.h b/include/
->>>>> system/memory-attribute-manager.h
->>>>> new file mode 100644
->>>>> index 0000000000..72adc0028e
->>>>> --- /dev/null
->>>>> +++ b/include/system/memory-attribute-manager.h
->>>>> @@ -0,0 +1,42 @@
->>>>> +/*
->>>>> + * QEMU memory attribute manager
->>>>> + *
->>>>> + * Copyright Intel
->>>>> + *
->>>>> + * Author:
->>>>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
->>>>> + *
->>>>> + * This work is licensed under the terms of the GNU GPL, version 2 or
->>>>> later.
->>>>> + * See the COPYING file in the top-level directory
->>>>> + *
->>>>> + */
->>>>> +
->>>>> +#ifndef SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
->>>>> +#define SYSTEM_MEMORY_ATTRIBUTE_MANAGER_H
->>>>> +
->>>>> +#include "system/hostmem.h"
->>>>> +
->>>>> +#define TYPE_MEMORY_ATTRIBUTE_MANAGER "memory-attribute-manager"
->>>>> +
->>>>> +OBJECT_DECLARE_TYPE(MemoryAttributeManager,
->>>>> MemoryAttributeManagerClass, MEMORY_ATTRIBUTE_MANAGER)
->>>>> +
->>>>> +struct MemoryAttributeManager {
->>>>> +    Object parent;
->>>>> +
->>>>> +    MemoryRegion *mr;
->>>>> +
->>>>> +    /* 1-setting of the bit represents the memory is populated
->>>>> (shared) */
->>>>> +    int32_t bitmap_size;
->>>>
->>>> unsigned.
->>>>
->>>> Also, do either s/bitmap_size/shared_bitmap_size/ or
->>>> s/shared_bitmap/bitmap/
->>>
->>> Will change it. Thanks.
->>>
->>>>
->>>>
->>>>
->>>>> +    unsigned long *shared_bitmap;
->>>>> +
->>>>> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
->>>>> +};
->>>>> +
->>>>> +struct MemoryAttributeManagerClass {
->>>>> +    ObjectClass parent_class;
->>>>> +};
->>>>> +
->>>>> +int memory_attribute_manager_realize(MemoryAttributeManager *mgr,
->>>>> MemoryRegion *mr);
->>>>> +void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr);
->>>>> +
->>>>> +#endif
->>>>> diff --git a/system/memory-attribute-manager.c b/system/memory-
->>>>> attribute-manager.c
->>>>> new file mode 100644
->>>>> index 0000000000..ed97e43dd0
->>>>> --- /dev/null
->>>>> +++ b/system/memory-attribute-manager.c
->>>>> @@ -0,0 +1,292 @@
->>>>> +/*
->>>>> + * QEMU memory attribute manager
->>>>> + *
->>>>> + * Copyright Intel
->>>>> + *
->>>>> + * Author:
->>>>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
->>>>> + *
->>>>> + * This work is licensed under the terms of the GNU GPL, version 2 or
->>>>> later.
->>>>> + * See the COPYING file in the top-level directory
->>>>> + *
->>>>> + */
->>>>> +
->>>>> +#include "qemu/osdep.h"
->>>>> +#include "qemu/error-report.h"
->>>>> +#include "system/memory-attribute-manager.h"
->>>>> +
->>>>> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(MemoryAttributeManager,
->>>>> +                                   memory_attribute_manager,
->>>>> +                                   MEMORY_ATTRIBUTE_MANAGER,
->>>>> +                                   OBJECT,
->>>>> +                                   { TYPE_RAM_DISCARD_MANAGER },
->>>>> +                                   { })
->>>>> +
->>>>> +static int memory_attribute_manager_get_block_size(const
->>>>> MemoryAttributeManager *mgr)
->>>>> +{
->>>>> +    /*
->>>>> +     * Because page conversion could be manipulated in the size of at
->>>>> least 4K or 4K aligned,
->>>>> +     * Use the host page size as the granularity to track the memory
->>>>> attribute.
->>>>> +     * TODO: if necessary, switch to get the page_size from RAMBlock.
->>>>> +     * i.e. mgr->mr->ram_block->page_size.
->>>>
->>>> I'd assume it is rather necessary already.
->>>
->>> OK, Will return the page_size of RAMBlock directly.
->>>
->>>>
->>>>> +     */
->>>>> +    return qemu_real_host_page_size();
->>>>> +}
->>>>> +
->>>>> +
->>>>> +static bool memory_attribute_rdm_is_populated(const RamDiscardManager
->>>>> *rdm,
->>>>> +                                              const
->>>>> MemoryRegionSection *section)
->>>>> +{
->>>>> +    const MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
->>>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
->>>>> +    uint64_t first_bit = section->offset_within_region / block_size;
->>>>> +    uint64_t last_bit = first_bit + int128_get64(section->size) /
->>>>> block_size - 1;
->>>>> +    unsigned long first_discard_bit;
->>>>> +
->>>>> +    first_discard_bit = find_next_zero_bit(mgr->shared_bitmap,
->>>>> last_bit + 1, first_bit);
->>>>> +    return first_discard_bit > last_bit;
->>>>> +}
->>>>> +
->>>>> +typedef int (*memory_attribute_section_cb)(MemoryRegionSection *s,
->>>>> void *arg);
->>>>> +
->>>>> +static int memory_attribute_notify_populate_cb(MemoryRegionSection
->>>>> *section, void *arg)
->>>>> +{
->>>>> +    RamDiscardListener *rdl = arg;
->>>>> +
->>>>> +    return rdl->notify_populate(rdl, section);
->>>>> +}
->>>>> +
->>>>> +static int memory_attribute_notify_discard_cb(MemoryRegionSection
->>>>> *section, void *arg)
->>>>> +{
->>>>> +    RamDiscardListener *rdl = arg;
->>>>> +
->>>>> +    rdl->notify_discard(rdl, section);
->>>>> +
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>> +static int memory_attribute_for_each_populated_section(const
->>>>> MemoryAttributeManager *mgr,
->>>>> +
->>>>> MemoryRegionSection *section,
->>>>> +                                                       void *arg,
->>>>> +
->>>>> memory_attribute_section_cb cb)
->>>>> +{
->>>>> +    unsigned long first_one_bit, last_one_bit;
-
-
-btw s/first_one_bit/first/  and  s/last_one_bit/last/  as it is quite 
-obvious from the code what these are.
-
-
->>>>> +    uint64_t offset, size;
->>>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
->>>>> +    int ret = 0;
->>>>> +
->>>>> +    first_one_bit = section->offset_within_region / block_size;
->>>>> +    first_one_bit = find_next_bit(mgr->shared_bitmap, mgr-
->>>>>> bitmap_size, first_one_bit);
->>>>> +
->>>>> +    while (first_one_bit < mgr->bitmap_size) {
->>>>> +        MemoryRegionSection tmp = *section;
->>>>> +
->>>>> +        offset = first_one_bit * block_size;
->>>>> +        last_one_bit = find_next_zero_bit(mgr->shared_bitmap, mgr-
->>>>>> bitmap_size,
->>>>> +                                          first_one_bit + 1) - 1;
->>>>> +        size = (last_one_bit - first_one_bit + 1) * block_size;
->>>>
->>>>
->>>> What all this math is for if we stuck with VFIO doing 1 page at the
->>>> time? (I think I commented on this)
->>>
->>> Sorry, I missed your previous comment. IMHO, as we track the status in
->>> bitmap and we want to call the cb() on the shared part within
->>> MemoryRegionSection. Here we do the calculation to find the expected
->>> sub-range.
->>
->>
->> You find a largest intersection here and call cb() on it which will call
->> VFIO with 1 page at the time. So you could just call cb() for every page
->> from here which will make the code simpler.
-> 
-> I prefer to keep calling cb() on a large intersection . I think in
-> future after cut_mapping is supported, we don't need to make VFIO call 1
-> page at a time. VFIO can call on the large range directly.
-
-> In addition, calling cb() for every page seems specific to VFIO usage.
-> It is more generic to call on a large intersection. If more RDM listener
-> added in future(although VFIO is the only user currently), do the split
-> in caller is inefficient.
-
-It is an hardly measurable optimization though. Could be a separate 
-patch. I do not insist, just do not see the point, If others are fine, I 
-am fine too :)
-
-> 
->>
->>
->>>>
->>>>> +
->>>>> +        if (!memory_region_section_intersect_range(&tmp, offset,
->>>>> size)) {
->>>>> +            break;
->>>>> +        }
->>>>> +
->>>>> +        ret = cb(&tmp, arg);
->>>>> +        if (ret) {
->>>>> +            error_report("%s: Failed to notify RAM discard listener:
->>>>> %s", __func__,
->>>>> +                         strerror(-ret));
->>>>> +            break;
->>>>> +        }
->>>>> +
->>>>> +        first_one_bit = find_next_bit(mgr->shared_bitmap, mgr-
->>>>>> bitmap_size,
->>>>> +                                      last_one_bit + 2);
->>>>> +    }
->>>>> +
->>>>> +    return ret;
->>>>> +}
->>>>> +
->>>
->>> [..]
->>>
->>>>> +
->>>>> +static void
->>>>> memory_attribute_rdm_unregister_listener(RamDiscardManager *rdm,
->>>>> +
->>>>> RamDiscardListener *rdl)
->>>>> +{
->>>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
->>>>> +    int ret;
->>>>> +
->>>>> +    g_assert(rdl->section);
->>>>> +    g_assert(rdl->section->mr == mgr->mr);
->>>>> +
->>>>> +    ret = memory_attribute_for_each_populated_section(mgr, rdl-
->>>>>> section, rdl,
->>>>> +
->>>>> memory_attribute_notify_discard_cb);
->>>>> +    if (ret) {
->>>>> +        error_report("%s: Failed to unregister RAM discard listener:
->>>>> %s", __func__,
->>>>> +                     strerror(-ret));
->>>>> +    }
->>>>> +
->>>>> +    memory_region_section_free_copy(rdl->section);
->>>>> +    rdl->section = NULL;
->>>>> +    QLIST_REMOVE(rdl, next);
->>>>> +
->>>>> +}
->>>>> +
->>>>> +typedef struct MemoryAttributeReplayData {
->>>>> +    void *fn;
->>>>
->>>> ReplayRamDiscard *fn, not void*.
->>>
->>> We could cast the void *fn either to ReplayRamPopulate or
->>> ReplayRamDiscard (see below).
->>
->>
->> Hard to read, hard to maintain, and they take same parameters, only the
->> return value is different (int/void) - if this is really important, have
->> 2 fn pointers in MemoryAttributeReplayData. It is already hard to follow
->> this train on callbacks.
-> 
-> Actually, I prefer to make ReplayRamDiscard and ReplayRamPopulate
-> unified. Make ReplayRamDiscard() also return int. Then we only need to
-> define one function like:
-> 
-> typedef int (*ReplayMemoryAttributeChange)(MemoryRegionSection *section,
-> void *opaque);
-
-This should work.
-
-
-> 
-> Maybe David can share his opinions.
->>
->>
->>>>> +    void *opaque;
->>>>> +} MemoryAttributeReplayData;
->>>>> +
->>>>> +static int
->>>>> memory_attribute_rdm_replay_populated_cb(MemoryRegionSection *section,
->>>>> void *arg)
->>>>> +{
->>>>> +    MemoryAttributeReplayData *data = arg;
->>>>> +
->>>>> +    return ((ReplayRamPopulate)data->fn)(section, data->opaque);
->>>>> +}
->>>>> +
->>>>> +static int memory_attribute_rdm_replay_populated(const
->>>>> RamDiscardManager *rdm,
->>>>> +                                                 MemoryRegionSection
->>>>> *section,
->>>>> +                                                 ReplayRamPopulate
->>>>> replay_fn,
->>>>> +                                                 void *opaque)
->>>>> +{
->>>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
->>>>> +    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque =
->>>>> opaque };
->>>>> +
->>>>> +    g_assert(section->mr == mgr->mr);
->>>>> +    return memory_attribute_for_each_populated_section(mgr, section,
->>>>> &data,
->>>>> +
->>>>> memory_attribute_rdm_replay_populated_cb);
->>>>> +}
->>>>> +
->>>>> +static int
->>>>> memory_attribute_rdm_replay_discarded_cb(MemoryRegionSection *section,
->>>>> void *arg)
->>>>> +{
->>>>> +    MemoryAttributeReplayData *data = arg;
->>>>> +
->>>>> +    ((ReplayRamDiscard)data->fn)(section, data->opaque);
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>> +static void memory_attribute_rdm_replay_discarded(const
->>>>> RamDiscardManager *rdm,
->>>>> +                                                  MemoryRegionSection
->>>>> *section,
->>>>> +                                                  ReplayRamDiscard
->>>>> replay_fn,
->>>>> +                                                  void *opaque)
->>>>> +{
->>>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(rdm);
->>>>> +    MemoryAttributeReplayData data = { .fn = replay_fn, .opaque =
->>>>> opaque };
->>>>> +
->>>>> +    g_assert(section->mr == mgr->mr);
->>>>> +    memory_attribute_for_each_discarded_section(mgr, section, &data,
->>>>> +
->>>>> memory_attribute_rdm_replay_discarded_cb);
->>>>> +}
->>>>> +
->>>>> +int memory_attribute_manager_realize(MemoryAttributeManager *mgr,
->>>>> MemoryRegion *mr)
->>>>> +{
->>>>> +    uint64_t bitmap_size;
->>>>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
->>>>> +    int ret;
->>>>> +
->>>>> +    bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
->>>>> +
->>>>> +    mgr->mr = mr;
->>>>> +    mgr->bitmap_size = bitmap_size;
->>>>> +    mgr->shared_bitmap = bitmap_new(bitmap_size);
->>>>> +
->>>>> +    ret = memory_region_set_ram_discard_manager(mgr->mr,
->>>>> RAM_DISCARD_MANAGER(mgr));
->>>>
->>>> Move it 3 lines up and avoid stale data in mgr->mr/bitmap_size/
->>>> shared_bitmap and avoid g_free below?
->>>
->>> Make sense. I will move it up the same as patch 02 before bitmap_new().
->>>
->>>>
->>>>> +    if (ret) {
->>>>> +        g_free(mgr->shared_bitmap);
->>>>> +    }
->>>>> +
->>>>> +    return ret;
->>>>> +}
->>>>> +
->>>>> +void memory_attribute_manager_unrealize(MemoryAttributeManager *mgr)
->>>>> +{
->>>>> +    memory_region_set_ram_discard_manager(mgr->mr, NULL);
->>>>> +
->>>>> +    g_free(mgr->shared_bitmap);
->>>>> +}
->>>>> +
->>>>> +static void memory_attribute_manager_init(Object *obj)
->>>>
->>>> Not used.
->>>>
->>>>> +{
->>>>> +    MemoryAttributeManager *mgr = MEMORY_ATTRIBUTE_MANAGER(obj);
->>>>> +
->>>>> +    QLIST_INIT(&mgr->rdl_list);
->>>>> +} > +
->>>>> +static void memory_attribute_manager_finalize(Object *obj)
->>>>
->>>> Not used either. Thanks,
->>>
->>> I think it is OK to define it as a placeholder? Just some preference.
->>
->> At very least gcc should warn on these (I am surprised it did not) and
->> nobody likes this. Thanks,
-> 
-> I tried a little. They must be defined. The init() and finalize() calls
-> are used in the OBJECT_DEFINE_TYPE_WITH_INTERFACES() macro. I think it
-> is a common template to define in this way.
-
-ah, I missed that. OBJECT_DEFINE_TYPE_WITH_INTERFACES means they have to 
-be defined, never mind that. Thanks,
-
-
->>
->>
->>>>
->>>>> +{
->>>>> +}
->>>>> +
->>>>> +static void memory_attribute_manager_class_init(ObjectClass *oc, void
->>>>> *data)
->>>>> +{
->>>>> +    RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
->>>>> +
->>>>> +    rdmc->get_min_granularity =
->>>>> memory_attribute_rdm_get_min_granularity;
->>>>> +    rdmc->register_listener = memory_attribute_rdm_register_listener;
->>>>> +    rdmc->unregister_listener =
->>>>> memory_attribute_rdm_unregister_listener;
->>>>> +    rdmc->is_populated = memory_attribute_rdm_is_populated;
->>>>> +    rdmc->replay_populated = memory_attribute_rdm_replay_populated;
->>>>> +    rdmc->replay_discarded = memory_attribute_rdm_replay_discarded;
->>>>> +}
->>>>> diff --git a/system/meson.build b/system/meson.build
->>>>> index 4952f4b2c7..ab07ff1442 100644
->>>>> --- a/system/meson.build
->>>>> +++ b/system/meson.build
->>>>> @@ -15,6 +15,7 @@ system_ss.add(files(
->>>>>       'dirtylimit.c',
->>>>>       'dma-helpers.c',
->>>>>       'globals.c',
->>>>> +  'memory-attribute-manager.c',
->>>>>       'memory_mapping.c',
->>>>>       'qdev-monitor.c',
->>>>>       'qtest.c',
->>>>
->>>
->>
-> 
-
--- 
-Alexey
-
+SGkgQ2VkcmljLCANCg0KDQo+IA0KPiBJdCdzIGdvb2QgcHJhY3RpY2UgdG8gYWRkICJObyBmdW5j
+dGlvbmFsIGNoYW5nZSIuDQo+IA0KPiBSZXZpZXdlZC1ieTogQ8OpZHJpYyBMZSBHb2F0ZXIgPGNs
+Z0ByZWRoYXQuY29tPg0KPiANCj4gVGhhbmtzLA0KPiANCj4gQy4NCj4gDQoNClRoYW5rcyBmb3Ig
+eW91ciByZXZpZXcgYW5kIHN1Z2dlc3Rpb24uDQpJIHdpbGwgYWRkICJObyBmdW5jdGlvbmFsIGNo
+YW5nZSIgaW4gY29tbWl0IGxvZy4NCkphbWluDQoNCj4gDQo+ID4gU2lnbmVkLW9mZi1ieTogSmFt
+aW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+ID4gLS0tDQo+ID4gICBody9pbnRj
+L2FzcGVlZF9pbnRjLmMgfCA2MiArKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0t
+LS0tLS0tDQo+ID4gICAxIGZpbGUgY2hhbmdlZCwgMzQgaW5zZXJ0aW9ucygrKSwgMjggZGVsZXRp
+b25zKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvaW50Yy9hc3BlZWRfaW50Yy5jIGIvaHcv
+aW50Yy9hc3BlZWRfaW50Yy5jIGluZGV4DQo+ID4gNTljMTA2OTI5NC4uZmQ0Zjc1ODA1YSAxMDA2
+NDQNCj4gPiAtLS0gYS9ody9pbnRjL2FzcGVlZF9pbnRjLmMNCj4gPiArKysgYi9ody9pbnRjL2Fz
+cGVlZF9pbnRjLmMNCj4gPiBAQCAtOTIsMTEgKzkyLDQwIEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9p
+bnRjX3VwZGF0ZShBc3BlZWRJTlRDU3RhdGUgKnMsDQo+IGludCBpbnBpbl9pZHgsDQo+ID4gICAg
+ICAgcWVtdV9zZXRfaXJxKHMtPm91dHB1dF9waW5zW291dHBpbl9pZHhdLCBsZXZlbCk7DQo+ID4g
+ICB9DQo+ID4NCj4gPiArc3RhdGljIHZvaWQgYXNwZWVkX2ludGNfc2V0X2lycV9oYW5kbGVyKEFz
+cGVlZElOVENTdGF0ZSAqcywNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIGNvbnN0IEFzcGVlZElOVENJUlENCj4gKmludGNfaXJxLA0KPiA+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3Qgc2VsZWN0KSB7DQo+ID4gKyAg
+ICBjb25zdCBjaGFyICpuYW1lID0gb2JqZWN0X2dldF90eXBlbmFtZShPQkpFQ1QocykpOw0KPiA+
+ICsNCj4gPiArICAgIGlmIChzLT5tYXNrW2ludGNfaXJxLT5pbnBpbl9pZHhdIHx8IHMtPnJlZ3Nb
+aW50Y19pcnEtPnN0YXR1c19hZGRyXSkgew0KPiA+ICsgICAgICAgIC8qDQo+ID4gKyAgICAgICAg
+ICogYS4gbWFzayBpcyBub3QgMCBtZWFucyBpbiBJU1IgbW9kZQ0KPiA+ICsgICAgICAgICAqIHNv
+dXJjZXMgaW50ZXJydXB0IHJvdXRpbmUgYXJlIGV4ZWN1dGluZy4NCj4gPiArICAgICAgICAgKiBi
+LiBzdGF0dXMgcmVnaXN0ZXIgdmFsdWUgaXMgbm90IDAgbWVhbnMgcHJldmlvdXMNCj4gPiArICAg
+ICAgICAgKiBzb3VyY2UgaW50ZXJydXB0IGRvZXMgbm90IGJlIGV4ZWN1dGVkLCB5ZXQuDQo+ID4g
+KyAgICAgICAgICoNCj4gPiArICAgICAgICAgKiBzYXZlIHNvdXJjZSBpbnRlcnJ1cHQgdG8gcGVu
+ZGluZyB2YXJpYWJsZS4NCj4gPiArICAgICAgICAgKi8NCj4gPiArICAgICAgICBzLT5wZW5kaW5n
+W2ludGNfaXJxLT5pbnBpbl9pZHhdIHw9IHNlbGVjdDsNCj4gPiArICAgICAgICB0cmFjZV9hc3Bl
+ZWRfaW50Y19wZW5kaW5nX2lycShuYW1lLCBpbnRjX2lycS0+aW5waW5faWR4LA0KPiA+ICsNCj4g
+cy0+cGVuZGluZ1tpbnRjX2lycS0+aW5waW5faWR4XSk7DQo+ID4gKyAgICB9IGVsc2Ugew0KPiA+
+ICsgICAgICAgIC8qDQo+ID4gKyAgICAgICAgICogbm90aWZ5IGZpcm13YXJlIHdoaWNoIHNvdXJj
+ZSBpbnRlcnJ1cHQgYXJlIGNvbWluZw0KPiA+ICsgICAgICAgICAqIGJ5IHNldHRpbmcgc3RhdHVz
+IHJlZ2lzdGVyDQo+ID4gKyAgICAgICAgICovDQo+ID4gKyAgICAgICAgcy0+cmVnc1tpbnRjX2ly
+cS0+c3RhdHVzX2FkZHJdID0gc2VsZWN0Ow0KPiA+ICsgICAgICAgIHRyYWNlX2FzcGVlZF9pbnRj
+X3RyaWdnZXJfaXJxKG5hbWUsIGludGNfaXJxLT5pbnBpbl9pZHgsDQo+ID4gKyAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgaW50Y19pcnEtPm91dHBpbl9pZHgsDQo+ID4gKw0K
+PiBzLT5yZWdzW2ludGNfaXJxLT5zdGF0dXNfYWRkcl0pOw0KPiA+ICsgICAgICAgIGFzcGVlZF9p
+bnRjX3VwZGF0ZShzLCBpbnRjX2lycS0+aW5waW5faWR4LCBpbnRjX2lycS0+b3V0cGluX2lkeCwN
+Cj4gMSk7DQo+ID4gKyAgICB9DQo+ID4gK30NCj4gPiArDQo+ID4gICAvKg0KPiA+IC0gKiBUaGUg
+YWRkcmVzcyBvZiBHSUNJTlQxMjggdG8gR0lDSU5UMTM2IGFyZSBmcm9tIDB4MTAwMCB0byAweDE4
+MDQuDQo+ID4gLSAqIFV0aWxpemUgImFkZHJlc3MgJiAweDBmMDAiIHRvIGdldCB0aGUgaXJxIGFu
+ZCBpcnEgb3V0cHV0IHBpbiBpbmRleA0KPiA+IC0gKiBUaGUgdmFsdWUgb2YgaXJxIHNob3VsZCBi
+ZSAwIHRvIG51bV9pbnBpbnMuDQo+ID4gLSAqIFRoZSBpcnEgMCBpbmRpY2F0ZXMgR0lDSU5UMTI4
+LCBpcnEgMSBpbmRpY2F0ZXMgR0lDSU5UMTI5IGFuZCBzbyBvbi4NCj4gPiArICogR0lDSU5UMTI4
+IHRvIEdJQ0lOVDEzNiBtYXAgMToxIHRvIGlucHV0IGFuZCBvdXRwdXQgSVJRcyAwIHRvIDguDQo+
+ID4gKyAqIFRoZSB2YWx1ZSBvZiBpbnB1dCBJUlEgc2hvdWxkIGJlIGJldHdlZW4gMCBhbmQgdGhl
+IG51bWJlciBvZiBpbnB1dHMuDQo+ID4gICAgKi8NCj4gPiAgIHN0YXRpYyB2b2lkIGFzcGVlZF9p
+bnRjX3NldF9pcnEodm9pZCAqb3BhcXVlLCBpbnQgaXJxLCBpbnQgbGV2ZWwpDQo+ID4gICB7DQo+
+ID4gQEAgLTEzNSwzMCArMTY0LDcgQEAgc3RhdGljIHZvaWQgYXNwZWVkX2ludGNfc2V0X2lycSh2
+b2lkICpvcGFxdWUsIGludA0KPiBpcnEsIGludCBsZXZlbCkNCj4gPiAgICAgICB9DQo+ID4NCj4g
+PiAgICAgICB0cmFjZV9hc3BlZWRfaW50Y19zZWxlY3QobmFtZSwgc2VsZWN0KTsNCj4gPiAtDQo+
+ID4gLSAgICBpZiAocy0+bWFza1tpbnRjX2lycS0+aW5waW5faWR4XSB8fCBzLT5yZWdzW2ludGNf
+aXJxLT5zdGF0dXNfYWRkcl0pIHsNCj4gPiAtICAgICAgICAvKg0KPiA+IC0gICAgICAgICAqIGEu
+IG1hc2sgaXMgbm90IDAgbWVhbnMgaW4gSVNSIG1vZGUNCj4gPiAtICAgICAgICAgKiBzb3VyY2Vz
+IGludGVycnVwdCByb3V0aW5lIGFyZSBleGVjdXRpbmcuDQo+ID4gLSAgICAgICAgICogYi4gc3Rh
+dHVzIHJlZ2lzdGVyIHZhbHVlIGlzIG5vdCAwIG1lYW5zIHByZXZpb3VzDQo+ID4gLSAgICAgICAg
+ICogc291cmNlIGludGVycnVwdCBkb2VzIG5vdCBiZSBleGVjdXRlZCwgeWV0Lg0KPiA+IC0gICAg
+ICAgICAqDQo+ID4gLSAgICAgICAgICogc2F2ZSBzb3VyY2UgaW50ZXJydXB0IHRvIHBlbmRpbmcg
+dmFyaWFibGUuDQo+ID4gLSAgICAgICAgICovDQo+ID4gLSAgICAgICAgcy0+cGVuZGluZ1tpbnRj
+X2lycS0+aW5waW5faWR4XSB8PSBzZWxlY3Q7DQo+ID4gLSAgICAgICAgdHJhY2VfYXNwZWVkX2lu
+dGNfcGVuZGluZ19pcnEobmFtZSwgaW50Y19pcnEtPmlucGluX2lkeCwNCj4gPiAtDQo+IHMtPnBl
+bmRpbmdbaW50Y19pcnEtPmlucGluX2lkeF0pOw0KPiA+IC0gICAgfSBlbHNlIHsNCj4gPiAtICAg
+ICAgICAvKg0KPiA+IC0gICAgICAgICAqIG5vdGlmeSBmaXJtd2FyZSB3aGljaCBzb3VyY2UgaW50
+ZXJydXB0IGFyZSBjb21pbmcNCj4gPiAtICAgICAgICAgKiBieSBzZXR0aW5nIHN0YXR1cyByZWdp
+c3Rlcg0KPiA+IC0gICAgICAgICAqLw0KPiA+IC0gICAgICAgIHMtPnJlZ3NbaW50Y19pcnEtPnN0
+YXR1c19hZGRyXSA9IHNlbGVjdDsNCj4gPiAtICAgICAgICB0cmFjZV9hc3BlZWRfaW50Y190cmln
+Z2VyX2lycShuYW1lLCBpbnRjX2lycS0+aW5waW5faWR4LA0KPiA+IC0gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIGludGNfaXJxLT5vdXRwaW5faWR4LA0KPiA+IC0NCj4gcy0+
+cmVnc1tpbnRjX2lycS0+c3RhdHVzX2FkZHJdKTsNCj4gPiAtICAgICAgICBhc3BlZWRfaW50Y191
+cGRhdGUocywgaW50Y19pcnEtPmlucGluX2lkeCwgaW50Y19pcnEtPm91dHBpbl9pZHgsDQo+IDEp
+Ow0KPiA+IC0gICAgfQ0KPiA+ICsgICAgYXNwZWVkX2ludGNfc2V0X2lycV9oYW5kbGVyKHMsIGlu
+dGNfaXJxLCBzZWxlY3QpOw0KPiA+ICAgfQ0KPiA+DQo+ID4gICBzdGF0aWMgdm9pZCBhc3BlZWRf
+aW50Y19lbmFibGVfaGFuZGxlcihBc3BlZWRJTlRDU3RhdGUgKnMsIGh3YWRkcg0KPiA+IG9mZnNl
+dCwNCg0K
 
