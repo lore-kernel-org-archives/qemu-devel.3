@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89CF0C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E3B7C021B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl2tz-00039u-W6; Thu, 20 Feb 2025 04:31:28 -0500
+	id 1tl2uG-0004Zi-Oc; Thu, 20 Feb 2025 04:31:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2tw-0002wf-71
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:31:25 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2uC-0004AD-0e
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:31:40 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2tu-0003wp-5b
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:31:23 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-21c2f1b610dso18463255ad.0
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:31:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2u9-0003z3-WE
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:31:39 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2fbfa8c73a6so1401182a91.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:31:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740043880; x=1740648680; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740043896; x=1740648696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HC4oun0jFc0+NwBeUFjNGte1nRrGw6nA41LdkLLgvBM=;
- b=t7/b7faVAV5xQOKoKuhorNuNO0UdlONDAgByVN7RU+Jugx+eogG3wF2usQsbD3rvix
- hBm12CVVIOs+GWEXPieDiShpPWEOQwYNigXbjvbDRnzhzpox7p3J4tf/alOFk00kpGDr
- 9jjSMC5hpwhj4EmbQMp1v177DOG5NhYN4cTt5giCnO7uWUTu/6M98vtxN46O2RbKUvup
- SvjFEXHtUX22dZOPzTilypCsSWzCSFZulQYYyPaLMgkZOLLKm6hxK72fViB8w+pPdNjj
- V8f6rZxyuOhYUmfsB4+9aQEta2iY0YM5ps8BsD+/pXmeWn87o7Q7Yq9QSWl4CBwMDliL
- TqjA==
+ bh=wrT6wI7eGWijFG9r07os9uEfYAKBYpxue/APgueq34E=;
+ b=IFCAq/tP5qNAEyYu2CEnloHHyGPFmbJoqGuuq9wzr+cUS+81vbIB+tOF6O+BdiIDzG
+ gLllUN7CPZiuSWK0QqjfpvHrS+aITQL9jSeDvw12DE1aZ+brrObIzrCv7+qBGl5FoD6P
+ nF82aGYLBkIzZf4nNzTHuM/te+iO9nWDwmBM2RSGX/8PrujgRvTzPoU/361+n/klKaHR
+ q7kdA1wntMldeUpCtxWBGXVp8i5H7Qrx6mx6JSIM12M3MKo1Z5xV578h4PS8YaqyW71V
+ gsM5EouFySa25HDEmFmvoulIbzZOd2RhqAcAbaqS6pMdiXKK2s0iKrsGvKsx00uPjDNE
+ opyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740043880; x=1740648680;
+ d=1e100.net; s=20230601; t=1740043896; x=1740648696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HC4oun0jFc0+NwBeUFjNGte1nRrGw6nA41LdkLLgvBM=;
- b=YR1UXL0bjnJBXKzWmliR7+51jqm15thpxuSDAv+sR1wahSw24Jr5qz4Bcr0h6NL+Mj
- FTYX8E3XhSq9XXG0jibz3DesMl5C66hQQOSChmz73o5KdnkCJ5BSsiaduQHEqFA72EXl
- cFG+pNrXhmktzWrwm1il1b9L6qvX5hlQcsHxf4DidbGpiVT/uhg5uhk2ggYpgmsoAbWu
- wgJ9Vcs6AkgasflpKjbZakjqiaQGxZ4lLXxQS5fMjCL4zEE5qP4yyS9WRZtcZZSMbFa2
- NJSgfjpqgJ3ssTe9s2l8AR/9vFLhdOUNGctTRfojVvZbS/wPJqf+QlFzaaZxQ8TAALRY
- LSFg==
-X-Gm-Message-State: AOJu0YzOORfiPESAMZ9FoG5tpPBof9apO4ucuXBBpQq52/5ECjqMVxxp
- BCwyk+sgx/FKphyVjCBzeb2zY9X5q6/U6KqTgg3JuLO23acWcWd6ElFg0as6hiHxJ9wK6h6Lhzo
- YsAU=
-X-Gm-Gg: ASbGncubOXODuVo0zToq12J6yRa0yyjwOttWmAO6HAsB8lszZorq2H1oliP27zFQlx0
- V8YO+9sVM5WqyuTzNxIQF5J/P3oK0Nx0yRpJgiFJfPvd6Q3E/W5A5TY1w/7g8zrV1bla2MP1jd7
- VFFcX6cu7MBm0/Rm/awVms9VK2HTV2/ariJRR/cImZ+lMLK5wl4zOkzn9e2Wzn0K19mMkmLfSxo
- ldLhD+0og9W6SVT8XwMHymKzMuYNlW4AwLgDK30wkJGaV0RVOrrVYaFdoDjgfkJXVnxW2ds8jUf
- fO2ro1xzqqaSWakhFLWFm61Hcqt6jyil5qhJtP4LPFJhW3AxuG+4+hDjWm8MLAQQew==
-X-Google-Smtp-Source: AGHT+IFx+v4FclNABrQD9b4vP9z6wIrsuZioITVmY4/cv4uYCbV2ZK6EAFTucgkbxtN26HJ9CIIBTg==
-X-Received: by 2002:a05:6a00:198c:b0:730:8e97:bd74 with SMTP id
- d2e1a72fcca58-732617756d7mr35402017b3a.2.1740043880114; 
- Thu, 20 Feb 2025 01:31:20 -0800 (PST)
+ bh=wrT6wI7eGWijFG9r07os9uEfYAKBYpxue/APgueq34E=;
+ b=fovPoNN942yUuTNpaaE4C6pWgXJrTW4UYO2tV7lJqIUJMZE6wWSMNN6oO2sE6RApRd
+ Mh19KWJPSqgZKfR8es8DJz861ufCkcvFXVseBQfVhrXS7bxHXs0jCo4sv3ZUbbZG9UBW
+ Em6h1Kduf08OJtWk/F62uXcW42w0L1I97JLzr9Fqx//01h0vT5E7l+pQD9dflEcbHeNA
+ 4/nO9c4SAnscfBodiAPtmi9xor77lBOEYVWASBDroj5WVlddjJ7JYh7ThYrY1GGQJnb8
+ 1FT0Pio1lWwa45gx9dSYeypOjIXynzNRTRlGKSo0YnB0xolcRmTjZvLimFn04W5lpq37
+ H2NQ==
+X-Gm-Message-State: AOJu0YxfWS1TbrmWFLzHG1MzVNdfZsiGjIkbSy0S/9txjqsv0dlkax5l
+ Zsxl3T+OUyHWLGxljnlqhD+IB/Iotlqu/QIqDbuPhx/keXNrUnpiZ9rX/mpLAo5MewhM06/+Mxk
+ ry3E=
+X-Gm-Gg: ASbGncujLw+FnbKNnuoaDz7HpcaYD/KN1oE3298gY+wSJnX8QvFO92wDTYWtqPAoFAq
+ HeiouRZV04tBMH6Kvv0dJ08QmsyEK5POr/PEd93aJaAkrbkRTRcoMMQpBIir1APnYb+xlkLgJQl
+ V+kmvYSaNsFm8L09i/uMpOOZzjaC4a4HEPc5DT2rioDkyQlVkYroCrQkssBjdEJ3Yd6n3gWR2r3
+ HA9GeS60b5qpTkGqKN49kILyojWoWGq55VKIl3O81Vjuz5NBLb2Z30SCbFN5j91hPYpFs61Exj1
+ 7S58M91toYr4DJLQ15eu9gvJfZayUIhzb2BE4mZ9NYL4Y2l6p2vifzLIt5GlnZj5XQ==
+X-Google-Smtp-Source: AGHT+IHzB09fOgQ9JAxm6Hg43hIcwbgKVGg/0WdEobzd0QwenNGTBOK1RXpNvRCYw4fa0qda/VG64w==
+X-Received: by 2002:a17:90b:2f8f:b0:2ef:2d9f:8e58 with SMTP id
+ 98e67ed59e1d1-2fc411508famr28637110a91.34.1740043895854; 
+ Thu, 20 Feb 2025 01:31:35 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-adb57c5ea71sm12264684a12.8.2025.02.20.01.31.13
+ 98e67ed59e1d1-2fcbaaf3f38sm1628375a91.1.2025.02.20.01.31.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Feb 2025 01:31:19 -0800 (PST)
+ Thu, 20 Feb 2025 01:31:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
@@ -74,24 +74,25 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>,
  Yoshinori Sato <ysato@users.sourceforge.jp>
-Subject: [PATCH v2 8/9] hw/char/mcf_uart: Really use RX FIFO depth
-Date: Thu, 20 Feb 2025 10:29:01 +0100
-Message-ID: <20250220092903.3726-9-philmd@linaro.org>
+Subject: [PATCH v2 9/9] hw/char/sh_serial: Return correct number of empty RX
+ FIFO elements
+Date: Thu, 20 Feb 2025 10:29:02 +0100
+Message-ID: <20250220092903.3726-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250220092903.3726-1-philmd@linaro.org>
 References: <20250220092903.3726-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,42 +108,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we model a 4-elements RX FIFO since the MCF UART model
-was introduced in commit 20dcee94833 ("MCF5208 emulation"),
-we only read 1 char at a time!
+In the IOCanReadHandler sh_serial_can_receive(), if the Serial
+Control Register 'Receive Enable' bit is set (bit 4), then we
+return a size of (1 << 4) which happens to be equal to 16, so
+effectively SH_RX_FIFO_LENGTH.
 
-Have the IOCanReadHandler handler return how many elements are
-available, and use that in the IOReadHandler handler.
+The IOReadHandler, sh_serial_receive1() takes care to receive
+multiple chars, but if the FIFO is partly filled, we only process
+the number of free slots in the FIFO, discarding the other chars!
 
+Fix by returning how many elements the FIFO can queue in the
+IOCanReadHandler, so we don't have to process more than that in
+the IOReadHandler, thus not discarding anything.
+
+Remove the now unnecessary check on 's->rx_cnt < SH_RX_FIFO_LENGTH'
+in IOReadHandler, reducing the block indentation.
+
+Fixes: 63242a007a1 ("SH4: Serial controller improvement")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Luc Michel <luc.michel@amd.com>
 ---
- hw/char/mcf_uart.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/char/sh_serial.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/hw/char/mcf_uart.c b/hw/char/mcf_uart.c
-index 95f269ee9b7..529c26be93a 100644
---- a/hw/char/mcf_uart.c
-+++ b/hw/char/mcf_uart.c
-@@ -281,14 +281,16 @@ static int mcf_uart_can_receive(void *opaque)
- {
-     mcf_uart_state *s = (mcf_uart_state *)opaque;
+diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
+index 247aeb071ac..41c8175a638 100644
+--- a/hw/char/sh_serial.c
++++ b/hw/char/sh_serial.c
+@@ -320,7 +320,7 @@ static uint64_t sh_serial_read(void *opaque, hwaddr offs,
  
--    return s->rx_enabled && (s->sr & MCF_UART_FFULL) == 0;
-+    return s->rx_enabled ? FIFO_DEPTH - s->fifo_len : 0;
+ static int sh_serial_can_receive(SHSerialState *s)
+ {
+-    return s->scr & (1 << 4);
++    return s->scr & (1 << 4) ? SH_RX_FIFO_LENGTH - s->rx_head : 0;
  }
  
- static void mcf_uart_receive(void *opaque, const uint8_t *buf, int size)
- {
-     mcf_uart_state *s = (mcf_uart_state *)opaque;
- 
--    mcf_uart_push_byte(s, buf[0]);
-+    for (int i = 0; i < size; i++) {
-+        mcf_uart_push_byte(s, buf[i]);
-+    }
- }
- 
- static const MemoryRegionOps mcf_uart_ops = {
+ static void sh_serial_receive_break(SHSerialState *s)
+@@ -353,22 +353,20 @@ static void sh_serial_receive1(void *opaque, const uint8_t *buf, int size)
+     if (s->feat & SH_SERIAL_FEAT_SCIF) {
+         int i;
+         for (i = 0; i < size; i++) {
+-            if (s->rx_cnt < SH_RX_FIFO_LENGTH) {
+-                s->rx_fifo[s->rx_head++] = buf[i];
+-                if (s->rx_head == SH_RX_FIFO_LENGTH) {
+-                    s->rx_head = 0;
+-                }
+-                s->rx_cnt++;
+-                if (s->rx_cnt >= s->rtrg) {
+-                    s->flags |= SH_SERIAL_FLAG_RDF;
+-                    if (s->scr & (1 << 6) && s->rxi) {
+-                        timer_del(&s->fifo_timeout_timer);
+-                        qemu_set_irq(s->rxi, 1);
+-                    }
+-                } else {
+-                    timer_mod(&s->fifo_timeout_timer,
+-                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 15 * s->etu);
++            s->rx_fifo[s->rx_head++] = buf[i];
++            if (s->rx_head == SH_RX_FIFO_LENGTH) {
++                s->rx_head = 0;
++            }
++            s->rx_cnt++;
++            if (s->rx_cnt >= s->rtrg) {
++                s->flags |= SH_SERIAL_FLAG_RDF;
++                if (s->scr & (1 << 6) && s->rxi) {
++                    timer_del(&s->fifo_timeout_timer);
++                    qemu_set_irq(s->rxi, 1);
+                 }
++            } else {
++                timer_mod(&s->fifo_timeout_timer,
++                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 15 * s->etu);
+             }
+         }
+     } else {
 -- 
 2.47.1
 
