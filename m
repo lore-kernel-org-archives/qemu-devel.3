@@ -4,86 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE723C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81244C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 17:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9nq-0005ep-MI; Thu, 20 Feb 2025 11:53:34 -0500
+	id 1tl9tY-0000TY-Fj; Thu, 20 Feb 2025 11:59:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
- id 1tl9np-0005dv-Bn
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:53:33 -0500
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
- id 1tl9ng-0005ng-L2
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:53:32 -0500
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5461a3a03bdso7659e87.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:53:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1740070400; x=1740675200; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WGueGLJKjxjk0mP/vtDKATK7kGCq/pQ/lzWMFb9XyBo=;
- b=Ns+3uil5p4Kkc4hsWNr6r83ClRZvKMbYAsIbxa1AddMJgapGy0ond/0yPv50Xxf4aI
- SugM5zdsNCqc29GemN3G8jAZnnZJLdqMXf3Dc0vxzN9baIMNy49BQdK+8LmU5GIh5J5K
- t58dlKjcDIvXf51mrGtR1JLWoGhaHCVrv4G+wbFI1qtgSJHRedR1rn1QiVOFF8yiNhck
- oCcU6PHHEyos2YBgcCap9mvmUgWweEEBbpSLuLq5AIn/Wpn40QpHyeqDSqdB6AVZa4h5
- wwTvozoHVzenp2UKz3G5cL7nxY7PRPGKS/sg9X0HFeZHlshq7aDl05en8lvxe99jN+5h
- jG5w==
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tl9tR-0000T5-Pb
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:59:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tl9tO-0006Zg-Je
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:59:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740070755;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=y2pOswoV/jNAQJ99RtMmVoMXOlGFEyfgUrOiQnmVoG8=;
+ b=D+R2tc22DJdCS8Y/VlbFrBTiIOSzQCKFu5iWQMBP5huoPJ1HoAAXC3lVruNqspCwsxx4KM
+ atouriMcvVu1aD5wdKdYT4JRYPGH4WGLqDFU+FXk0oBd3MJ9oQ5fqdWg77QEhXkHa3GUWa
+ 5pEHZmQV537TVChAoV/LO3JPLKIpgjg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-533-ixJeeQMNPomxCdsgvmnNoQ-1; Thu, 20 Feb 2025 11:59:14 -0500
+X-MC-Unique: ixJeeQMNPomxCdsgvmnNoQ-1
+X-Mimecast-MFC-AGG-ID: ixJeeQMNPomxCdsgvmnNoQ_1740070753
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43988b9ecfbso6653275e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:59:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740070400; x=1740675200;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WGueGLJKjxjk0mP/vtDKATK7kGCq/pQ/lzWMFb9XyBo=;
- b=my7d+bBloWMja1W51LECK9XEtN3ymdtbpxaZ3GygfkJUizRMV11QGhMv0kdHqO49HI
- +JhJFC9TE0P/HnJnFwEFF0O7QssHW6XpfMAO9ehwUahc085SgVafuMqJNguYlnujOuWc
- 1J6tTjsbOD+xZWpZppVgEtMa3X4pAe+2+2SO3Z3AwviWbSnmWc+iFHuW2gS39VcG4VZc
- LKu01b5plwArCzUbmT246y6qtceXoi3Ap2P0hSeDQcWW2OpAKF8QLCYEtSBSe4TJrIM2
- gPz7cwftC3mao45BGp6Bi6qdrmEIere0QkVLReU0CQajc61iNynh422gaD5ZC3SIpAvu
- /eYA==
+ d=1e100.net; s=20230601; t=1740070753; x=1740675553;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y2pOswoV/jNAQJ99RtMmVoMXOlGFEyfgUrOiQnmVoG8=;
+ b=T2PHcxQtPFc5sxwOHwbiJfQkYHCUC9zMek6tkzSD0U5ZM15Aul9cwJHPrJEQ9PNRGO
+ z4q/elZ6V4qaEAzE5Z3/5LW61scfATNHYWVxJUKzRket8a9JKb+Rd5LHhF7/6HFIc7rQ
+ QLLtoNjsXVfaB7+LKC4tuhGx/TFNJVuubpkg16VYgIqOuduj7KMVVJsngTNGshldlQKD
+ rjgVU8RVnor9rclmfjT1u5fOMqrQI+ZEz86f3ZOGe1ZDdo0Jbq4US2rZbQju4/+lbZW0
+ sPPjWMeXmobbkEDpnd7VGXldAa4GrDWKN8Hb64e1jyTHRbrKcHLATjTq8sltmIU1oyWA
+ W5JQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsyLR0505GbqIX23RHkAg5siGpgwuZXpcV0MAF5Bc7V8+JeuJ0RWg90IgzXyUlsv2BjXX4NGTtrEhN@nongnu.org
-X-Gm-Message-State: AOJu0YzNXS6JlwCIucpWw15OPVUHqvSAlp6ovBb7N+uvr1UtFeNQVcVd
- +Cux78wGjTFDkKMbWuXq/GauDuRjlBZN0n6kJPAGsvW0tClaURI8xmLozgb670CuU181ogMl84W
- XhNTar5bsODfUXQYCVpckv07PiaAfHtYj78se
-X-Gm-Gg: ASbGnctFqdz7DuT/rwHM6/flykJGzwaIs4ubDhcCmOanq4ibi+e3TpbGShdtCi+2wnF
- c7bMFppRBbbntrM5U7gVjk0xE0lCSxyl7fhcZobCgSJ7UE3+/B3Z2vJRUxB09+tegzG8rMd84wy
- RljveEYtDqMHsPOAmCNe1PNrp2LOo=
-X-Google-Smtp-Source: AGHT+IErQ2WBQLTHOzrN6v2roCS7LnqdlF1CbntXsMyqLxZpCxf+8M1DhYzlSc2/SrpOePio8SOM44icGN4Sn/hYtZ4=
-X-Received: by 2002:a05:6512:1054:b0:545:38d:ffd9 with SMTP id
- 2adb3069b0e04-5471c9ba747mr205794e87.1.1740070400341; Thu, 20 Feb 2025
- 08:53:20 -0800 (PST)
+ AJvYcCV82+NOFDO+rXr+vhsZK4CjIw1a8eAFGwaUgwekcRgeU9cj2C1XCIkdO1VgUVcBgzVxgsn/G50vfLLL@nongnu.org
+X-Gm-Message-State: AOJu0YwD/RzEb/q9hCGD+YwTA3FDheYxozb9gjSl9/8JCN9ka481taXQ
+ uS19QHVvI8IcjEOTDLa+QffmC9iviyjRvsehLCNKEScgo7cly0GMwo8AT3GKJ4f8mJqh1xm/eXv
+ 820aqY8FfXRWxDhSoC+xgYCJmaTJc1vYi7C3d5ZPGRBskab620l5H
+X-Gm-Gg: ASbGncs6+BC3/g7FmvxmCakFHVdtm96EzQ9igSRxoa9FvKaFKse/U1oxQu9XKr4ulUC
+ F8HlSyMNxLCuGIuXFEmXcnDG29uRh3Qpd74IS82sKIg01eabjeauDrXKq/HvAdzz7yzUYn90HkE
+ 6Wa+SgzmUimVyAsrtJZLC48EK9kyxpDAExM0ng+TGUjhqOl8L1s/gTny08ykIUHMUJW13oB7QKs
+ G25X2QRHfWfjuxFEakcfbEIPXtyBYEccyfW1bbRBnEws0SqGuxm/OYaYlzeHG6KPft/MH+EkZlZ
+ 7np/FGs28VDO2kTo
+X-Received: by 2002:a05:600c:4f0b:b0:439:88bb:d024 with SMTP id
+ 5b1f17b1804b1-43999ddadecmr68948035e9.25.1740070752925; 
+ Thu, 20 Feb 2025 08:59:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEyuaToKIhqojTI6gmEqL9UpBvsE916k2+sVLqAiz70N8Kf3A7bXIVCl7DKJaD87Y8xtj9xRw==
+X-Received: by 2002:a05:600c:4f0b:b0:439:88bb:d024 with SMTP id
+ 5b1f17b1804b1-43999ddadecmr68947815e9.25.1740070752583; 
+ Thu, 20 Feb 2025 08:59:12 -0800 (PST)
+Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud.
+ [2a10:fc81:a806:d6a9::1]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4395a04ee48sm249806045e9.3.2025.02.20.08.59.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 08:59:12 -0800 (PST)
+Date: Thu, 20 Feb 2025 17:59:10 +0100
+From: Stefano Brivio <sbrivio@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, qemu-devel@nongnu.org, Jason Wang
+ <jasowang@redhat.com>, Thibaut Collet <thibaut.collet@6wind.com>
+Subject: Re: [PATCH] vhost-user: Silence unsupported
+ VHOST_USER_PROTOCOL_F_RARP error
+Message-ID: <20250220175910.25688823@elisabeth>
+In-Reply-To: <20250220102724-mutt-send-email-mst@kernel.org>
+References: <20250121100029.1106973-1-lvivier@redhat.com>
+ <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+ <20250122085828-mutt-send-email-mst@kernel.org>
+ <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+ <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
+ <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
+ <20250124170327.448805ad@elisabeth>
+ <20250220102724-mutt-send-email-mst@kernel.org>
+Organization: Red Hat
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20250219184609.1839281-1-wuhaotsh@google.com>
- <CAFEAcA_3FOHVo6q_tiOEE7dHZNDw7_0emdCR5=5cEt7fdKVkTQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_3FOHVo6q_tiOEE7dHZNDw7_0emdCR5=5cEt7fdKVkTQ@mail.gmail.com>
-From: Hao Wu <wuhaotsh@google.com>
-Date: Thu, 20 Feb 2025 08:53:08 -0800
-X-Gm-Features: AWEUYZmP1Zv0kYij9jFDGl1PQ-YBD2nsQoseCAyE1URO_xpdh6oEOH_JnloHAyc
-Message-ID: <CAGcCb10OPzQhjMQ0dc06AQt06Y2x2syQURSC26bx=mUsyNir3Q@mail.gmail.com>
-Subject: Re: [PATCH v5 00/17] hw/arm: Add NPCM8XX Support
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com, 
- Avi.Fishman@nuvoton.com, kfting@nuvoton.com, hskinnemoen@google.com, 
- titusr@google.com, chli30@nuvoton.corp-partner.google.com, 
- pbonzini@redhat.com, jasowang@redhat.com, alistair@alistair23.me, 
- philmd@linaro.org
-Content-Type: multipart/alternative; boundary="0000000000001935c2062e95b628"
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=wuhaotsh@google.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sbrivio@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+ PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,59 +122,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001935c2062e95b628
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, 20 Feb 2025 10:28:20 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-Thank you very much!
+> On Fri, Jan 24, 2025 at 05:03:27PM +0100, Stefano Brivio wrote:
+> > But I don't understand why we're leaving this as it is.  
+> 
+> So that people notice if there's some backend problem and
+> announcements are not going out. should help debug migration
+> issues. which we had, so we added this :)
 
-On Thu, Feb 20, 2025 at 8:18=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org>
-wrote:
+The message mentions that the back-end fails to do something it didn't
+and can't even do, that's (one reason) why it's wrong (and confusing)
+and this patch is obviously correct.
 
-> On Wed, 19 Feb 2025 at 18:46, Hao Wu <wuhaotsh@google.com> wrote:
-> >
-> > Changes since v4:
-> >
-> > 1. Bump vmstate versions on NPCM CLK and GCR modules.
-> > 2. Remove "hw/boards.h" include in npcm8xx.h and add it in npcm8xx*.c
-> > 3. Use cpu_to_le32 instead of tswap32 in npcm8xx.c
-> >
->
-> I've applied this to target-arm.next with the fix for the
-> type of flash_size applied.
->
-> thanks
-> -- PMM
->
+Perhaps the commit title isn't entirely accurate (it should say "when
+unsupported", I guess) but it's somewhat expected to sacrifice detail
+in the name of brevity, there. A glimpse at the message is enough.
 
---0000000000001935c2062e95b628
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Laurent now added a workaround in passt to pretend that we support
+VHOST_USER_PROTOCOL_F_RARP by doing nothing in the callback, report
+success, and silence the warning:
 
-<div dir=3D"ltr">Thank you very much!</div><br><div class=3D"gmail_quote gm=
-ail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 20, =
-2025 at 8:18=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@l=
-inaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">On Wed, 19 Feb 2025 at 18:46, Hao Wu &lt=
-;<a href=3D"mailto:wuhaotsh@google.com" target=3D"_blank">wuhaotsh@google.c=
-om</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Changes since v4:<br>
-&gt;<br>
-&gt; 1. Bump vmstate versions on NPCM CLK and GCR modules.<br>
-&gt; 2. Remove &quot;hw/boards.h&quot; include in npcm8xx.h and add it in n=
-pcm8xx*.c<br>
-&gt; 3. Use cpu_to_le32 instead of tswap32 in npcm8xx.c<br>
-&gt;<br>
-<br>
-I&#39;ve applied this to target-arm.next with the fix for the<br>
-type of flash_size applied.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
+  https://passt.top/passt/commit/?id=dd6a6854c73a09c4091c1776ee7f349d1e1f966c
 
---0000000000001935c2062e95b628--
+but having to do this kind of stuff is a bit unexpected while
+interacting with another opensource project.
+
+-- 
+Stefano
+
 
