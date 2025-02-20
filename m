@@ -4,75 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 192B5C021B3
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C277EC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 18:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlBSz-0007aX-2l; Thu, 20 Feb 2025 13:40:09 -0500
+	id 1tlBUp-0000ml-K5; Thu, 20 Feb 2025 13:42:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlBSw-0007aH-4W
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:40:06 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlBSt-0005U9-6e
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:40:05 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6fb7d64908fso11229777b3.3
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:40:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740076801; x=1740681601; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=b5N2OpWYwpnsJULljG+ijrcPzMdnZYDX2tHQ1SWBozo=;
- b=Qrx1/YeKLfoO12e+3UGuSPhNTXRtwp6w27ZyVDnx1JXl2NyV5JAZRVGPnX5WXtf2Uv
- 0r8qFjzfW4eCRQgXO1V+M/TfQXr2wcFNT6lG/siz9jv4vSkZgQrynV2OeVsGjWFu4iIN
- tC2otOukd4VqjWqUP0b+DLcquFtNZWkJhSuey+ezGzD4eCllVVVTumbqIk/I4hBrImEO
- 1QwlVzBuIA892nkrW8Apf3Tuizpruv6emyjQ4Pd7r8WatPLS8P/dFG6mxcZXGzp+LYS8
- qhsX6filyxEaBOGUJgjjLawtSzfVqW4Z3YzuJGIPb3T/FPrqiF56DHZeshDT/pCqMvrA
- bF0Q==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tlBUl-0000hW-63
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:41:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tlBUj-0005ux-4A
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 13:41:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740076915;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JRVZyMauCAlDoOJhifm6qwrFvNvk+jcAKvi8PKPsUeo=;
+ b=FLIq98Wpje4vQ+qZbQulNrEcMs2F/tz646N7M09tdRmAgl3PDwq1zGUjZ0u86YXC+X+Do5
+ XAzDD0N9mSu0RW64vbRErSCvpkrYKpZivVsiXv+xtQI33pWTXV9JSCr09gz2E5yhpL4GWz
+ VOrzvjo2T43AZWpwkse7CEfEOw0M0Do=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-383-skDhWvEzOLyaFokpY26UNA-1; Thu, 20 Feb 2025 13:41:53 -0500
+X-MC-Unique: skDhWvEzOLyaFokpY26UNA-1
+X-Mimecast-MFC-AGG-ID: skDhWvEzOLyaFokpY26UNA_1740076912
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f2f438fb6so1712405f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 10:41:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740076801; x=1740681601;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=b5N2OpWYwpnsJULljG+ijrcPzMdnZYDX2tHQ1SWBozo=;
- b=meSfIF4Ej6IKVVmwr7CqSAodysoHUG6ejAOP4HZqWDZ/Fq6/UMlLYwD6M4QeKqDJfL
- 0RfUtP7KXmZEXVgUdDV77vKTcNi6eUpj3t9fIbi75YIVicLuGSTerVYbJXIhoiNqXpAz
- vyNDuhj0w/ngFwgsIYG5z4vx9UxTNOJNlYNiN1htjRDLxig4by9JWeejdpBW6EyoK7yP
- CmNYmW+sEmNZzS3Rh/pI6XLjVsxsAytFoG8m+WvLeO40lqZwd3wpI4jDSvQ+apLnetsB
- tADt0bF/ocH+lV1FWb9t9RtsPTgj7pQT8ucskv/IkS5F6r3Z3K4R+V0T+Nk5b1tiyrxP
- GUcA==
-X-Gm-Message-State: AOJu0YwLJjZT9qnGC3MMNCv2C8MqXuMrZZE1CVNSFaiy19aW4KfdrD+z
- NIyGFUqiH2gVrdlUvi23VdVwds/qQYr2LUMwMvO+BPFov73lQ0r5MidaMwMHPMij8vI+jISkFSs
- rOr68wIJrTjpblj3OleKwgw6hoC9L+KbZCsCMGnd27pVEmHtD
-X-Gm-Gg: ASbGncveFLwJ7+6T1vuMjZAswts5ZzYx1BFx0UJIXuG/UOZUj1CzFdoHTHXv0DTaux2
- OwbKOU3stRKQJ6udRr6dNq2IBmFehWuw+ftmo6wS5m8cve7XVZdZ8Le3pWXauiMwhri/Ra8n3cQ
- ==
-X-Google-Smtp-Source: AGHT+IGGxds7na9aTePEyar5whlssr/xSz+IezQR1yZ1acuLSr/XMJbl3hENHRsNUelZkv5T3tpfWawY4Hlwth5ZSm8=
-X-Received: by 2002:a05:690c:c92:b0:6f9:41e3:ea4b with SMTP id
- 00721157ae682-6fbcc22c1bemr1048367b3.9.1740076801524; Thu, 20 Feb 2025
- 10:40:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740076912; x=1740681712;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JRVZyMauCAlDoOJhifm6qwrFvNvk+jcAKvi8PKPsUeo=;
+ b=D1pChZKYxPYZQnoEFZ41w14yOZC1kiur/O8Cvv3Z0pA8tQNBSvRgJMjWOetzDqzsuf
+ eOTMHKzrBy/NxZ/XMtjjrkKJ2fARXtNw9yCvBPIrNBqh4NWxbae9ru2qgbDB0dW7Ycyx
+ 1GrPXUwuz0hk9bM62SBDGJGhZ946ZWW0HG7JMZ2RE0ItK9PQgDQIP/eK7cRCQ7D6NzIj
+ REQ0gM2BJOBoLBZGQDEEPZw8mM1t5SkY9z+kgiHMl4vPvnquFsN+VBCQaajFL8ssZvBK
+ TEI7CtKxi59UOX8gXVh7TjFmGTy0Tcs2eKO+WUeDOU0msQfzk/hqHUCACMhaBBxF/DO6
+ y8ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEaA4a5KQ38e7wIfgbmWYE5wfN9K8fZJJLtV/B9U0Ja8h+d0NqCAgLPYFGwKtFC4w4MnBFiHjY29eb@nongnu.org
+X-Gm-Message-State: AOJu0YxM7uVmtiyZv7fwGSBXZA+/iEZM1a1Q8S9eQnlBo9BDGyHHYH2Z
+ cFzCLjYiyK+IgS7E/UMwSY/qQwlI7ESMAqavOYFXTUTMFpvTZjhxmlQQdCZWB3JyewOtdDILJTU
+ o5weK68pUxu7dsU50p6EfMPu0hl/8PXzbEs0a22+eW8TsoOANj5V9
+X-Gm-Gg: ASbGncubkcwhxuyCIagKjVnaJZelDBwxFH7Zz07KGe0CPePNyV/7mxV45ZYHbZFgv83
+ bTNFNJopAZmZ3lsM05ZW1BwVZK6a6v4ey3weCWWe26I71S+abEuFDED5wOfKaduN1HCELKO7dw4
+ 79yVAcB0S5uODh2V32cQFI87ZQpBXi5RJJOV+XMqY8LQPVv1eOAO3L6Ppx+tRmgAUUU064d96R+
+ buMf1VxAN4kz2MomL3Y12giFW8mgktGfQu7HvoWqAoEM1anX6aoUbyGqZYHow5KDzZ3HXsRIqJj
+ Ga95FV8Lel+Wmf41DWiRYcMW3A9LUcSFJ5wBFmzhGvuLPa+ruto+
+X-Received: by 2002:a05:6000:154d:b0:38d:df29:e14f with SMTP id
+ ffacd0b85a97d-38f6f09b237mr318162f8f.43.1740076912204; 
+ Thu, 20 Feb 2025 10:41:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjMq6fwPzP1BLOH145i/zxlwZz4pW1imLehQygNm8OuEBc6a2g9FxaQn6tEcCccThL4jBunA==
+X-Received: by 2002:a05:6000:154d:b0:38d:df29:e14f with SMTP id
+ ffacd0b85a97d-38f6f09b237mr318147f8f.43.1740076911785; 
+ Thu, 20 Feb 2025 10:41:51 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4399600257asm82797115e9.4.2025.02.20.10.41.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Feb 2025 10:41:50 -0800 (PST)
+Message-ID: <4f13004c-a6d9-4f45-938e-3fc8d49183d7@redhat.com>
+Date: Thu, 20 Feb 2025 19:41:48 +0100
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Feb 2025 18:39:50 +0000
-X-Gm-Features: AWEUYZn2gJfx1gshDnrihWl0NtgXGuC6MiU5BtU10DWPNIYFnKr1RP_VtKCgJtg
-Message-ID: <CAFEAcA-u+TMgQV8G8LvQixE95BGhfN5hyYdxcZTnxu5StVBKRw@mail.gmail.com>
-Subject: debugging functional tests that only fail in 'make check-functional'
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rfcv2 06/20] host_iommu_device: Define two new
+ capabilities HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP]
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ shameerali.kolothum.thodi@huawei.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <20250219082228.3303163-7-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250219082228.3303163-7-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,110 +117,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm trying to debug some functional tests that fail for me
-with 'make check-functional' on a debug build. Consistently
-(well, same set of tests in two runs) when I run
-'make -j8 check-functional' these fail:
+Hi Zhenzhong,
 
- 7/44 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_sx1
-                        ERROR           173.31s   exit status 1
-10/44 qemu:func-thorough+func-aarch64-thorough+thorough /
-func-aarch64-aarch64_virt            TIMEOUT         720.04s   killed
-by signal 15 SIGTERM
-11/44 qemu:func-thorough+func-arm-thorough+thorough /
-func-arm-arm_aspeed_ast2600              TIMEOUT         720.07s
-killed by signal 15 SIGTERM
-12/44 qemu:func-thorough+func-aarch64-thorough+thorough /
-func-aarch64-aarch64_sbsaref_alpine  TIMEOUT         720.07s   killed
-by signal 15 SIGTERM
-40/44 qemu:func-thorough+func-arm-thorough+thorough /
-func-arm-arm_aspeed_ast2500              TIMEOUT         480.01s
-killed by signal 15 SIGTERM
 
-The aarch64-virt one is gpu issue, so I know about that one.
-The others pass OK on a clang no-debug sanitizer build.
+On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/system/host_iommu_device.h | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+> index df782598f2..18f8b5e5cf 100644
+> --- a/include/system/host_iommu_device.h
+> +++ b/include/system/host_iommu_device.h
+> @@ -22,10 +22,16 @@
+>   *
+>   * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
+>   *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
+> + *
+> + * @nesting: nesting page table support.
+> + *
+> + * @fs1gp: first stage(a.k.a, Stage-1) 1GB huge page support.
+>   */
+>  typedef struct HostIOMMUDeviceCaps {
+>      uint32_t type;
+>      uint64_t hw_caps;
+> +    bool nesting;
+> +    bool fs1gp;
+this looks quite vtd specific, isn't it? Shouldn't we hide this is a
+vendor specific cap struct?
+>  } HostIOMMUDeviceCaps;
+>  
+>  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> @@ -122,6 +128,8 @@ struct HostIOMMUDeviceClass {
+>   */
+>  #define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE        0
+>  #define HOST_IOMMU_DEVICE_CAP_AW_BITS           1
+> +#define HOST_IOMMU_DEVICE_CAP_NESTING           2
+> +#define HOST_IOMMU_DEVICE_CAP_FS1GP             3
+>  
+>  #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
+>  #endif
 
-If I try to run just the sx1 tests "by hand":
+Maybe you could introduce the associated implementation of
+hiod_iommufd_get_cap in this patch too?
 
-$ (cd build/x86 && PYTHONPATH=../../python:../../tests/functional
-QEMU_TEST_QEMU_BINARY=./qemu-system-arm ./pyvenv/bin/python3
-../../tests/functional/test_arm_sx1.py)
-TAP version 13
-ok 1 test_arm_sx1.SX1Test.test_arm_sx1_flash
-ok 2 test_arm_sx1.SX1Test.test_arm_sx1_initrd
-ok 3 test_arm_sx1.SX1Test.test_arm_sx1_sd
-1..3
+Eric
 
-they pass; but inside the test framework that third sd test
-errors: testlog-thorough.txt says:
-
-===begin===
------------------------------------ stdout -----------------------------------
-TAP version 13
-ok 1 test_arm_sx1.SX1Test.test_arm_sx1_flash
-ok 2 test_arm_sx1.SX1Test.test_arm_sx1_initrd
-not ok 3 test_arm_sx1.SX1Test.test_arm_sx1_sd
-1..3
------------------------------------ stderr -----------------------------------
-Traceback (most recent call last):
-  File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python/qemu/machine/machine.py",
-line 611, in _do_shutdown
-    self._soft_shutdown(timeout)
-  File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python/qemu/machine/machine.py",
-line 596, in _soft_shutdown
-    self._subp.wait(timeout=timeout)
-  File "/usr/lib/python3.12/subprocess.py", line 1264, in wait
-    return self._wait(timeout=timeout)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/subprocess.py", line 2045, in _wait
-    raise TimeoutExpired(self.args, timeout)
-subprocess.TimeoutExpired: Command
-'('/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86/qemu-system-arm',
-'-display', 'none', '-vga', 'none', '-chardev', 'socket,id=mon,fd=5',
-'-mon', 'chardev=mon,mode=control', '-machine', 'sx1', '-chardev',
-'socket,id=console,fd=10', '-serial', 'chardev:console', '-append',
-'kunit.enable=0 root=/dev/mmcblk0 rootwait console=ttyS0,115200
-earlycon=uart8250,mmio32,0xfffb0000,115200n8', '-no-reboot',
-'-snapshot', '-drive',
-'format=raw,if=sd,file=/home/petmay01/.cache/qemu/download/c1db7f43ef92469ebc8605013728c8950e7608439f01d13678994f0ce101c3a8',
-'-kernel', '/home/petmay01/.cache/qemu/download/a0271899a8dc2165f9e0adb2d0a57fc839ae3a469722ffc56c77e108a8887615')'
-timed out after 60 seconds
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional/test_arm_sx1.py",
-line 58, in test_arm_sx1_sd
-    self.vm.wait(timeout=60)
-  File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python/qemu/machine/machine.py",
-line 666, in wait
-    self.shutdown(timeout=timeout)
-  File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python/qemu/machine/machine.py",
-line 648, in shutdown
-    self._do_shutdown(timeout)
-  File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/python/qemu/machine/machine.py",
-line 618, in _do_shutdown
-    raise AbnormalShutdown("Could not perform graceful shutdown") \
-qemu.machine.machine.AbnormalShutdown: Could not perform graceful shutdown
-
-More information on test_arm_sx1.SX1Test.test_arm_sx1_sd could be found here:
- /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86/tests/functional/arm/test_arm_sx1.SX1Test.test_arm_sx1_sd/base.log
- /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86/tests/functional/arm/test_arm_sx1.SX1Test.test_arm_sx1_sd/console.log
-
-(test program exited with status code 1)
-===endit===
-
-which I interpret to mean "we waited the 60 seconds the test says,
-but the test didn't exit within that time".
-
-Any suggestions for how to debug?
-
-(Also the console.log is empty regardless of whether the
-test passes or fails; this doesn't seem right.)
-
-thanks
--- PMM
 
