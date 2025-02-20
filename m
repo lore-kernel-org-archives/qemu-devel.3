@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D13AC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F20C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 09:31:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl2sD-0008GQ-1E; Thu, 20 Feb 2025 04:29:37 -0500
+	id 1tl2tU-0001oH-R7; Thu, 20 Feb 2025 04:30:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2sB-0008G2-0j
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:29:35 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2tR-0001bO-5Y
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:30:53 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2s9-0003Qp-FB
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:29:34 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-221050f3f00so13053655ad.2
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:29:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl2tP-0003qo-7D
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 04:30:52 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2211acda7f6so12885145ad.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 01:30:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740043771; x=1740648571; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740043849; x=1740648649; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YvVgNJ/E5bcHmFtQhvSS1dYamLv2zmBpjT3Espofk2I=;
- b=O6vXiRKOLWTfNJ+gvtzjELWrXHwl8RkzwfAUZrVi50YrP1Nh3xTWYzdnKKCLi1hGyd
- +24imDDGtakOdjlrFy/g6J9KdecZFaGAK4k0m8cI01D7LZbkpHwxM6AEvVlcrQUJXTFC
- H60YQTK+9dnuJ8CtBrE9rqv8r5D6ENOIMABS1TThmmG2T6AN0fU23TB544v+DsRq4j7P
- lT5SWxMMNvDgZOXRyBtecqjrvBqcQr1fWLxAea3dH2PGF2IzTrnUFauSqVFvfyY6D1w7
- SJkiP1kAKFX0OtO+5+Y6L+MoyZmWDYWMegYzV3xpASHLgYIvGhg7+svR3ZHcq3K7eXKS
- 71KA==
+ bh=H2/xpK9DtdqY8a6ieh8rBtI4fW+GPrI9nBJmXLMfGvA=;
+ b=dsCNQMJUk9YRM/bPZpnEkGMnRDtPaLDKPqbcffO6SecXbs1h017VeP5xaIXxeRn91y
+ xtlpFx/5h4Vr+fzUTzmhTUKK2L8ulCV8r7mBdlvialyYpDJKnvA06dIqADFFPSfZK8lR
+ ay91ie1Dx8iapmYysTD/lQeOHstCPTtCtnLKS07HeLMUwWdLgAja+e24HIqj3yDtjoXo
+ n6zPUeEoe1TsspXFVuXpQBfhZRVy/xvDnqBEmD0zh06QlFUgaHt4m05I3tpDbejiLpRo
+ URFvtmn33Hev4Rqq1Mh4Vd0B7Lg2Lxab2PD+hfPmO86RBt7vHu8PeNBhF9NXb0UKCHnb
+ a3gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740043771; x=1740648571;
+ d=1e100.net; s=20230601; t=1740043849; x=1740648649;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YvVgNJ/E5bcHmFtQhvSS1dYamLv2zmBpjT3Espofk2I=;
- b=Bsm90OaBL5AwreAsFFkrHDpd/bnhISulzjjR3bTKzBM4t75xzMXGaqrnMeQ6FwOuM4
- ivALGom3qjv38iQ5WuuKR7c80nh53iwaMun6W8d1V0IyzJEAydvBHHaCg7LJxY3MXdyq
- fPPsxUgnVgD7ofj3zIpRj+L3mhnlXxPOa138sNlWtGLifypX9+t5zdNBdNC4TfmWiYpg
- AL4iQsR05bGD2DJA73UornK50PiiOz8/rZfv5sDhIM4vxYUgrw8cqVbbc0VFztGaUTyL
- aJjZiyA+JBclbJ2eRL0F/BH1v67CIV92wiVUCGUCG2utt8uJlurh0Yq1IY1EUTq7BS98
- Wehw==
-X-Gm-Message-State: AOJu0YyJVZs+xD+Ooni7TXryq+iH9CtST2gHi/jzeqco4EmfygVGTez7
- EPBAkP6IZ0ILznh4lW53QGm0jrL2sPGB7t/n47PS4o+Y7HTO2VKyRF0cwWYHfWsO2ttoRbBCGFH
- d+eY=
-X-Gm-Gg: ASbGncvlWjxONN5YlgWJoL7no3noHtmQT09BAc1bqsMByO5sxk6EicOAt4gM5/BOtgB
- HmjlLJN1gQs+01Z5JhmYD0LVt5zS/jTNsXTpR8UO9qNO8mlTUZD+mp94FLE8lo8h01+NjYOxho1
- xdA5FjB+zurKDa8x3VXWIgv0oZBpEzCfyhgbb77Vm3Ol4f2Ry1NQh1iQ+rVgdcUOhc2xX1jgtz1
- CSP4uhpB0IdgQrQ1AqRuhvyfQS0A2WltjBwmzTeg8Kwe7wgbSHv0OZWJK7kgP+9nUqHOswxKIfj
- ZD3ZQGyYiKdXxjBmWgFpVHOuss0Y8JoD6EKxvpXY+9n7+7w98u945qe7Q7TaLrZPvg==
-X-Google-Smtp-Source: AGHT+IGz1/2rco9w0NsUMI3Bogl20f+NwzvY99BxTc3Zo+a38NqQzxwOJpfAGgW5KrZjoc4ZoRcQEA==
-X-Received: by 2002:aa7:888e:0:b0:730:8d25:4c24 with SMTP id
- d2e1a72fcca58-7326179e908mr31597617b3a.10.1740043771021; 
- Thu, 20 Feb 2025 01:29:31 -0800 (PST)
+ bh=H2/xpK9DtdqY8a6ieh8rBtI4fW+GPrI9nBJmXLMfGvA=;
+ b=h/3YmiEJjfibSwbPAb/bXQXHUeRRxEklXcqE4zDIlun/K3nhVMnhNeC5F0VkhVhG7e
+ upmM1ow4wX8W/imAOxTopBRIGtQ1hcqu3x/Fc9gWiukUP8dbNEQECNhk56H7vWRH+qed
+ en94GI67zQGaYSFAGfViDlEmoVtDinqhbYEA7qlblYWQwt5ZkVJpZBHkiLO1/FpHzqlM
+ DyjCn5wnnjtzXGu64+w36m1oIS9REd1sz9hjt5t7Du5kZscdmpMUll6e7NjMRvqOUQDK
+ ZVFLf+Bsfcp43KYJV7eQ1qiszSYFJyWqyZJ1T49MUjULeIbAn+HtwGjvqy969gz1GFUl
+ R8iQ==
+X-Gm-Message-State: AOJu0Yx7z/BUVaQWyfzIdE+hfZhij0VjcC/e+F28Ywpdm0FMrbs6LQCP
+ HxIvz1wEA4Cx7Ghy/V8g0WVvleS22Dc6gNirkaZx78B5yaXj/hz6tl+B+WbVG1cTrNxS3B6wCqg
+ 1J9Y=
+X-Gm-Gg: ASbGnctdJAra+bGHK7Gey4BNZJ41O8HHAThPK7nZsFJ3NR8BwTGcwqLwOjK3AZz2pfZ
+ I905VJCKHQ7GqxxIJW/quKhFtRtwKrhj9iMDI1jNGN34lYbOHs8BVibRClFpyiaupK/gS8p8ier
+ KROPx1RLd/aBa1nPwdikYAhEHaQWn6E4RJGHYvCfWupvdLDzZl/gN+vUeDTLJcIFzkWbm9sb4S9
+ vo/3T2IDsGaQ35fDbMszd14JcaFKfyb3OS2wnpFJpGA2CwN2B/qmYIYI58hedtptzBNZ5eGb1eB
+ 7aaeWBTGOKT1G6pV6/cz5ycpInVHEHheBf3vb8k3TDDqBZlW9nnLPwSjdPKGQCitTg==
+X-Google-Smtp-Source: AGHT+IHIx4leUuspMjpWzO+3Wj2A3mhErhuiD2Bz9XyO1/h5M4RnaibopAF5vU8f3ZAYNAwt67HZkg==
+X-Received: by 2002:aa7:8889:0:b0:730:979d:e80e with SMTP id
+ d2e1a72fcca58-7329de640dbmr11337339b3a.7.1740043849365; 
+ Thu, 20 Feb 2025 01:30:49 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73264729945sm10067375b3a.179.2025.02.20.01.29.23
+ d2e1a72fcca58-732700c1c31sm8603468b3a.1.2025.02.20.01.30.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Feb 2025 01:29:30 -0800 (PST)
+ Thu, 20 Feb 2025 01:30:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
@@ -73,19 +73,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 1/9] hw/char/pl011: Warn when using disabled receiver
-Date: Thu, 20 Feb 2025 10:28:54 +0100
-Message-ID: <20250220092903.3726-2-philmd@linaro.org>
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH v2 6/9] hw/char/imx_serial: Really use RX FIFO depth
+Date: Thu, 20 Feb 2025 10:28:59 +0100
+Message-ID: <20250220092903.3726-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250220092903.3726-1-philmd@linaro.org>
 References: <20250220092903.3726-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,44 +107,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We shouldn't receive characters when the full UART or its
-receiver is disabled. However we don't want to break the
-possibly incomplete "my first bare metal assembly program"s,
-so we choose to simply display a warning when this occurs.
+While we model a 32-elements RX FIFO since the IMX serial
+model was introduced in commit 988f2442971 ("hw/char/imx_serial:
+Implement receive FIFO and ageing timer") we only read 1 char
+at a time!
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Have the IOCanReadHandler handler return how many elements are
+available, and use that in the IOReadHandler handler.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 ---
- hw/char/pl011.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/char/imx_serial.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index 06ce851044d..12a2d4bc7bd 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -85,6 +85,7 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
- #define CR_OUT1     (1 << 12)
- #define CR_RTS      (1 << 11)
- #define CR_DTR      (1 << 10)
-+#define CR_RXE      (1 << 9)
- #define CR_TXE      (1 << 8)
- #define CR_LBE      (1 << 7)
- #define CR_UARTEN   (1 << 0)
-@@ -487,6 +488,14 @@ static int pl011_can_receive(void *opaque)
-     PL011State *s = (PL011State *)opaque;
-     int r;
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index 38b4865157e..6f14f8403a9 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -386,7 +386,8 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+ static int imx_can_receive(void *opaque)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
+-    return s->ucr2 & UCR2_RXEN && fifo32_num_used(&s->rx_fifo) < FIFO_SIZE;
++
++    return s->ucr2 & UCR2_RXEN ? fifo32_num_free(&s->rx_fifo) : 0;
+ }
  
-+    if (!(s->cr & CR_UARTEN)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "PL011 receiving data on disabled UART\n");
+ static void imx_put_data(void *opaque, uint32_t value)
+@@ -417,7 +418,10 @@ static void imx_receive(void *opaque, const uint8_t *buf, int size)
+     IMXSerialState *s = (IMXSerialState *)opaque;
+ 
+     s->usr2 |= USR2_WAKE;
+-    imx_put_data(opaque, *buf);
++
++    for (int i = 0; i < size; i++) {
++        imx_put_data(opaque, buf[i]);
 +    }
-+    if (!(s->cr & CR_RXE)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "PL011 receiving data on disabled RX UART\n");
-+    }
-     r = s->read_count < pl011_get_fifo_depth(s);
-     trace_pl011_can_receive(s->lcr, s->read_count, r);
-     return r;
+ }
+ 
+ static void imx_event(void *opaque, QEMUChrEvent event)
 -- 
 2.47.1
 
