@@ -4,94 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22DDDC021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54A9C021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 15:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl8tm-0000sb-PK; Thu, 20 Feb 2025 10:55:38 -0500
+	id 1tl8uo-00025t-O9; Thu, 20 Feb 2025 10:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tl8tl-0000rs-Lw
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:55:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tl8tj-00052D-Kq
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:55:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740066934;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tl8un-00025d-Sn
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:56:41 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tl8ul-00055D-83
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 10:56:41 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C0ECD1F387;
+ Thu, 20 Feb 2025 15:56:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1740066995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=66eUIzmR3cxGzRiAlOdF6EvcimdFm8fP6kd0QfUx/xc=;
- b=e+xcWLXd/j7jAjNlUfNUaIF2WFiEFAlTL6FLY5p3AJFaW7Xw9TOKlupCJ8yhDXXROmsTfx
- kuGJ/YA7dGM5QtmykcCV2zlO9J7o4T9LsMgWaJL8R0hMcbnKWbpx54XPI+u7ekOlrIHTv9
- nN8+UZHi3XVVBy/1zM66JinPs1IZ3uo=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-bkkeiVBwOoStCN1HgrNSHg-1; Thu, 20 Feb 2025 10:55:33 -0500
-X-MC-Unique: bkkeiVBwOoStCN1HgrNSHg-1
-X-Mimecast-MFC-AGG-ID: bkkeiVBwOoStCN1HgrNSHg_1740066933
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-471fc73b941so30057961cf.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 07:55:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740066933; x=1740671733;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=66eUIzmR3cxGzRiAlOdF6EvcimdFm8fP6kd0QfUx/xc=;
- b=VQ45xna+Sz7/kCGpkbwSoTwO+JnLvXTlPDD5pijd4ziAvrm53zmDDQq1I1kAQZlPWf
- 95I0EHalXiJA9MAjjnWOJHv5qS8+gIYx3KS6fTtF82+ZXnEpyr3ALOftM+d2CEoHm+EO
- SFfbMxZGTF+6S5R5BY7evfHG1F5OquBPlIcUwa+HyUuyvXdxoHrgYyEnk9KxV4u9MleV
- F0MLDUcwcDHyzsjYQtYsrtKVg6d5b47fk1W9OfrJe1m97U+tY/t4MSonUGnfy3cjGRih
- EaO9nNv8d3k1rHC95v2JbzRl94B4JuZtpBkYxxm1TGdAUfP3KjPR++Q8pp6Kox3U7Dm/
- uWoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRrT8zb2yVKnpeRFMuBvCYl6v/mvRpGUS+I5Bv3xMzL3oqRSwfepvukJHnQONVdZXKv5VVK0VcZHhs@nongnu.org
-X-Gm-Message-State: AOJu0YxLCaUPUgllJ29ArYWI5ORhjmBdt9NJzJpbZvX6g51x917EmB3p
- Ho00ByD/i8ZMsxzfjZX3YI1BGCYj+H4zQ+oqmNkq04STtc8kVSJrnuYrGJxAVIFMCqAp8B3whxx
- 13N1UFAc3PeQdOPUA8Nv4dK9Y2HQnuGz9aZn7GY3MB/qml87wNYz3
-X-Gm-Gg: ASbGncuRSLDQJlc0aaIsHVjhYhLeow0oMsTdxfx9WkjM8XNm/xKiKDLU+2S/IInm6pK
- Hv83LXMADWjowYWbzQ8qbPiRoFmKarGj/L6XohPtWnaIzwPXlTefEnPhEVnl98El6Ata7jXv+mK
- 2DrTE3npCdfS2skFUPrUEuk4s8nW8rAQLn00tkxcfotwj/qGYBGTMA3nZ3VUuWATNTHIXWDd3XV
- uIXuA2tT68J2AQ/TQeg/Bcynyaa+Arsl3itH3Gj7dIN3sXhaASX1K/xhGo=
-X-Received: by 2002:a05:622a:4086:b0:472:2df:6ff1 with SMTP id
- d75a77b69052e-47202df7487mr176804691cf.13.1740066932964; 
- Thu, 20 Feb 2025 07:55:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGPPcbMLfJ4+ikA3CutzS+IsPYHcI5gUeQhc8D7FiSOZOR6WfUJ32bCHVK3cVVOS9iGg+LkMw==
-X-Received: by 2002:a05:622a:4086:b0:472:2df:6ff1 with SMTP id
- d75a77b69052e-47202df7487mr176804161cf.13.1740066932465; 
- Thu, 20 Feb 2025 07:55:32 -0800 (PST)
-Received: from x1.local ([2604:7a40:2041:2b00::1000])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-471eb3fac8dsm50404391cf.47.2025.02.20.07.55.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Feb 2025 07:55:32 -0800 (PST)
-Date: Thu, 20 Feb 2025 10:55:28 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Li Zhijian <lizhijian@fujitsu.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 2/2] [NOT-FOR-MERGE] Add qtest for migration over RDMA
-Message-ID: <Z7dQcBHIV0q6l4S6@x1.local>
-References: <Z7Xmkq0nTmZ8TRXU@x1.local>
- <20250220094038.1382541-1-lizhijian@fujitsu.com>
+ bh=Rt/QP2soUo8lehryJeNw+e8WlCIWnqojq+ZE/t/0ujI=;
+ b=zz/qKzIHVbJYzFUUFv7EhmcAoMe1KN3KD/h+iTgq8oltWIx0+KaOSTSHUXFUmZLVzZEU7s
+ kV7L69yF5DBKJ5BAF+SicFjglty7t/DBIHFDMHkNUxtgUWvMe08JXMUj4FQUHIJlEQZQAI
+ ZCzAzzyD7KSSz2JrNC3tIGuW3BDTHw0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1740066995;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rt/QP2soUo8lehryJeNw+e8WlCIWnqojq+ZE/t/0ujI=;
+ b=EaFGD8zqbsFh2hnEPuZuDlZtmI4syHi5lIVV64p66yPuQZ/BNuv2HukjI00C4Hnb9Gkp6H
+ FTKPrsAMdBBVozAQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="zz/qKzIH";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=EaFGD8zq
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1740066995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rt/QP2soUo8lehryJeNw+e8WlCIWnqojq+ZE/t/0ujI=;
+ b=zz/qKzIHVbJYzFUUFv7EhmcAoMe1KN3KD/h+iTgq8oltWIx0+KaOSTSHUXFUmZLVzZEU7s
+ kV7L69yF5DBKJ5BAF+SicFjglty7t/DBIHFDMHkNUxtgUWvMe08JXMUj4FQUHIJlEQZQAI
+ ZCzAzzyD7KSSz2JrNC3tIGuW3BDTHw0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1740066995;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rt/QP2soUo8lehryJeNw+e8WlCIWnqojq+ZE/t/0ujI=;
+ b=EaFGD8zqbsFh2hnEPuZuDlZtmI4syHi5lIVV64p66yPuQZ/BNuv2HukjI00C4Hnb9Gkp6H
+ FTKPrsAMdBBVozAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 332FF13A42;
+ Thu, 20 Feb 2025 15:56:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id XVg9OLJQt2dSeQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 20 Feb 2025 15:56:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, Yan Fu
+ <yafu@redhat.com>
+Subject: Re: [PATCH] migration: Fix UAF for incoming migration on
+ MigrationState
+In-Reply-To: <Z7dKbGc5eA2QXbPD@x1.local>
+References: <20250220132459.512610-1-peterx@redhat.com>
+ <87h64o90dn.fsf@suse.de> <Z7dKbGc5eA2QXbPD@x1.local>
+Date: Thu, 20 Feb 2025 12:56:32 -0300
+Message-ID: <87cyfc8v9r.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250220094038.1382541-1-lizhijian@fujitsu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: C0ECD1F387
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,234 +124,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 20, 2025 at 05:40:38PM +0800, Li Zhijian wrote:
-> On 19/02/2025 22:11, Peter Xu wrote:
-> >>>>> then
-> >>>>> in the test it tries to detect rdma link and fetch the ip only
-> >>>> It should work without root permission if we just*detect*  and*fetch ip*.
-> >>>>
-> >>>> Do you also mean we can split new-rdma-link.sh to 2 separate scripts
-> >>>> - add-rdma-link.sh # optionally, execute by user before the test (require root permission)
-> >>>> - detect-fetch-rdma.sh # execute from the migration-test
-> >>> Hmm indeed we still need a script to scan over all the ports..
-> >>>
-> >>> If having --rdma is a good idea, maybe we can further make it a parameter
-> >>> to --rdma?
-> >>>
-> >>>    $ migration-test --rdma $RDMA_IP
-> >>>
-> >>> Or:
-> >>>
-> >>>    $ migration-test --rdma-ip $RDMA_IP
-> >> I think --rdma only makes sense if it's going to do something
-> >> special. The optmimal scenario is that it always runs the test when it
-> >> can and sets up/tears down anything it needs.
-> >>
-> >> If it needs root, I'd prefer the test informs about this and does the
-> >> work itself.
-> >>
-> >> It would also be good to have the add + detect separate so we have more
-> >> flexibility, maybe we manage to enable this in CI even.
-> >>
-> >> So:
-> >>
-> >> ./add.sh
-> >> migration-test
-> >> (runs detect.sh + runs rdma test)
-> >> (leaves stuff behind)
-> >>
-> >> migration-test
-> >> (skips rdma test with message that it needs root)
-> >>
-> >> sudo migration-test
-> >> (runs add.sh + detect.sh + runs rdma test)
-> >> (cleans itself up)
-> >>
-> >> Does that make sense to you? I hope it's not too much work.
-> > Looks good here.  We can also keep all the rdma stuff into one file, taking
-> > parameters.
-> > 
-> > ./rdma-helper.sh setup
-> > ./rdma-helper.sh detect-ip
-> 
-> Hi Peter and Fabiano
-> 
-> Many thanks for your kindly idea and suggestion.
-> Please take another look at the changes below.
-> - I don't copy script to the build dir, just execute the script like misc-tests.c
-> - It will automatically create a new RXE if it doesn't exit when running in root
+Peter Xu <peterx@redhat.com> writes:
 
-Thanks!  This is much better.  Comments below.
+> On Thu, Feb 20, 2025 at 11:06:12AM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On the incoming migration side, QEMU uses a coroutine to load all the VM
+>> > states.  Inside, it may reference MigrationState on global states like
+>> > migration capabilities, parameters, error state, shared mutexes and more.
+>> >
+>> > However there's nothing yet to make sure MigrationState won't get
+>> > destroyed (e.g. after migration_shutdown()).  Meanwhile there's also no API
+>> > available to remove the incoming coroutine in migration_shutdown(),
+>> > avoiding it to access the freed elements.
+>> >
+>> > There's a bug report showing this can happen and crash dest QEMU when
+>> > migration is cancelled on source.
+>> >
+>> > When it happens, the dest main thread is trying to cleanup everything:
+>> >
+>> >   #0  qemu_aio_coroutine_enter
+>> >   #1  aio_dispatch_handler
+>> >   #2  aio_poll
+>> >   #3  monitor_cleanup
+>> >   #4  qemu_cleanup
+>> >   #5  qemu_default_main
+>> >
+>> > Then it found the migration incoming coroutine, schedule it (even after
+>> > migration_shutdown()), causing crash:
+>> >
+>> >   #0  __pthread_kill_implementation
+>> >   #1  __pthread_kill_internal
+>> >   #2  __GI_raise
+>> >   #3  __GI_abort
+>> >   #4  __assert_fail_base
+>> >   #5  __assert_fail
+>> >   #6  qemu_mutex_lock_impl
+>> >   #7  qemu_lockable_mutex_lock
+>> >   #8  qemu_lockable_lock
+>> >   #9  qemu_lockable_auto_lock
+>> >   #10 migrate_set_error
+>> >   #11 process_incoming_migration_co
+>> >   #12 coroutine_trampoline
+>> >
+>> > To fix it, take a refcount after an incoming setup is properly done when
+>> > qmp_migrate_incoming() succeeded the 1st time.  As it's during a QMP
+>> > handler which needs BQL, it means the main loop is still alive (without
+>> > going into cleanups, which also needs BQL).
+>> 
+>> We should start documenting uses of BQL and dependencies on the main
+>> loop more thoroughly. Otherwise later when we decide to move stuff into
+>> threads or QMP people decide to rework how QMP uses coroutines,
+>> etc. there we'll be many bugs.
+>
+> Yeh better documentation is always good.  Maybe there're too many things
+> depend on BQL so it's not easy to provide a document.  Normally, afaiu, we
+> document the other way round, where things do not need BQL.
+>
 
-> 
-> [PATCH] migration: Add qtest for migration over RDMA
-> 
-> This qtest requires there is RDMA(RoCE) link in the host.
-> Introduce a scripts/rdma-migration-helper.sh to
-> - setup a new RXE if it's root
-> - detect existing RoCE link
-> to make the qtest work smoothly.
-> 
-> Test will be skip if there is no available RoCE link.
->  # Start of rdma tests
->  # Running /x86_64/migration/precopy/rdma/plain
->  ok 1 /x86_64/migration/precopy/rdma/plain # SKIP There is no available rdma link in the host.
->  Maybe you are not running with the root permission
->  # End of rdma tests
-> 
-> Admin is able to remove the RXE by passing 'cleanup' to this script.
-> 
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> ---
->  scripts/rdma-migration-helper.sh      | 40 +++++++++++++++++++
->  tests/qtest/migration/precopy-tests.c | 57 +++++++++++++++++++++++++++
->  2 files changed, 97 insertions(+)
->  create mode 100755 scripts/rdma-migration-helper.sh
-> 
-> diff --git a/scripts/rdma-migration-helper.sh b/scripts/rdma-migration-helper.sh
-> new file mode 100755
-> index 0000000000..4ef62baf0f
-> --- /dev/null
-> +++ b/scripts/rdma-migration-helper.sh
-> @@ -0,0 +1,40 @@
-> +#!/bin/bash
-> +
-> +# Copied from blktests
-> +get_ipv4_addr() {
-> +    ip -4 -o addr show dev "$1" |
-> +        sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p' |
-> +        tr -d '\n'
-> +}
-> +
-> +has_soft_rdma() {
-> +    rdma link | grep -q " netdev $1[[:blank:]]*\$"
-> +}
-> +
-> +rdma_rxe_setup_detect()
-> +{
-> +    (
-> +        cd /sys/class/net &&
-> +            for i in *; do
-> +                [ -e "$i" ] || continue
-> +                [ "$i" = "lo" ] && continue
-> +                [ "$(<"$i/addr_len")" = 6 ] || continue
-> +                [ "$(<"$i/carrier")" = 1 ] || continue
-> +
-> +                has_soft_rdma "$i" && break
-> +                [ "$operation" = "setup" ] && rdma link add "${i}_rxe" type rxe netdev "$i" && break
-> +            done
-> +        has_soft_rdma "$i" || return
-> +        get_ipv4_addr $i
-> +    )
-> +}
-> +
-> +operation=${1:-setup}
-> +
-> +if [ "$operation" == "setup" ] || [ "$operation" == "detect" ]; then
-> +    rdma_rxe_setup_detect
-> +elif [ "$operation" == "cleanup" ]; then
-> +    modprobe -r rdma_rxe
+Well, for newly added code the developer should know about the data
+structures they're using and what the dependencies are. But yeah,
+there's subtleties and hidden assumptions everywhere.
 
-Would this affects host when there's existing user of rdma_rxe (or fail
-with -EBUSY)?  If there's no major side effect of leftover rdma link, we
-could also drop the "cleanup" for now and start from simple.
+>> 
+>> I think the BQL is irrelevant here. The concurrent access is prevented
+>> by qmp_migrate_incoming() not being a coroutine, hence keeping the main
+>> loop from looping.
+>> 
+>> This case would be "relying on the qmp_migrate_incoming() being
+>> serialized with the dispatch of the incoming coroutine by the main
+>> loop".
+>
+> I checked just now, it's still true indeed now that both of them
+> (qmp_migrate_incoming, and the cleanup code) need to be run in the main
+> thread.  But I'll not be surprised if someone moves (or moved) it out into
+> a separate iothread like what we do with the OOB commands.
+>
 
-> +else
-> +    echo "Usage: $0 [setup | cleanup | detect]"
-> +fi
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index ba273d10b9..8c72eb699b 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -99,6 +99,59 @@ static void test_precopy_unix_dirty_ring(void)
->      test_precopy_common(&args);
->  }
->  
-> +#ifdef CONFIG_RDMA
-> +
-> +#define RDMA_MIGRATION_HELPER "scripts/rdma-migration-helper.sh"
-> +static int new_rdma_link(char *buffer) {
+Yes, that's my point on documentation. "Needs BQL because I said so"
+doesn't help when doing that kind of work. AFAIK we're suck in this
+QMP-needs-BQL mode precisely because we cannot determine clearly what
+the dependencies are. There's been some work years ago to move QMP
+commands into coroutines. Now we have a half-baked situation. Grep for
+QCO_COROUTINE.
 
-Nit: newline before "{".
+> When I was working on OOB stuff, I _think_ all things are ready to create
+> yet another iothread to process cmds need bql, probably just not necessary.
+> Fundamentally, the requirement, AFAIU, is qmp handlers run by default with
+> BQL, and it doesn't need to always be on the main thread.
+>
+> Let's keep the "BQL" term?  I think I'm ok with your version as it states
+> the facts at least as of now, but I still think BQL is the slightly more
+> accurate term.
+>
 
-> +    const char *argument = (geteuid() == 0) ? "setup" : "detect";
-> +    char command[1024];
-> +
-> +    snprintf(command, sizeof(command), "%s %s", RDMA_MIGRATION_HELPER, argument);
-> +
-> +    FILE *pipe = popen(command, "r");
-> +    if (pipe == NULL) {
-> +        perror("Failed to run script");
-> +        return -1;
-> +    }
-> +
-> +    int idx = 0;
-> +    while (fgets(buffer + idx, 128 - idx, pipe) != NULL) {
-> +        idx += strlen(buffer);
-> +    }
-> +
-> +    int status = pclose(pipe);
-> +    if (status == -1) {
-> +        perror("Error reported by pclose()");
-> +        return -1;
-> +    } else if (WIFEXITED(status)) {
-> +        return WEXITSTATUS(status);
-> +    }
-> +
-> +    return -1;
-> +}
-> +
-> +static void test_precopy_rdma_plain(void)
-> +{
-> +    char buffer[128] = {};
-> +
-> +    if (new_rdma_link(buffer)) {
-> +        g_test_skip("There is no available rdma link in the host.\n"
-> +                    "Maybe you are not running with the root permission");
+Fine.
 
-Nit: can be slightly more verbose?
+>> 
+>> >
+>> > Releasing the refcount now only until the incoming migration coroutine
+>> > finished or failed.  Hence the refcount is valid for both (1) setup phase
+>> > of incoming ports, mostly IO watches (e.g. qio_channel_add_watch_full()),
+>> > and (2) the incoming coroutine itself (process_incoming_migration_co()).
+>> >
+>> > Note that we can't unref in migration_incoming_state_destroy(), because
+>> > both qmp_xen_load_devices_state() and load_snapshot() will use it without
+>> > an incoming migration.  Those hold BQL so they're not prone to this issue.
+>> >
+>> > PS: I suspect nobody uses Xen's command at all, as it didn't register yank,
+>> > hence AFAIU the command should crash on master when trying to unregister
+>> > yank in migration_incoming_state_destroy()..  but that's another story.
+>> >
+>> > Also note that in some incoming failure cases we may not always unref the
+>> > MigrationState refcount, which is a trade-off to keep things simple.  We
+>> > could make it accurate, but it can be an overkill.  Some examples:
+>> >
+>> >   - Unlike most of the rest protocols, socket_start_incoming_migration()
+>> >     may create net listener after incoming port setup sucessfully.
+>> >     It means we can't unref in migration_channel_process_incoming() as a
+>> >     generic path because socket protocol might keep using MigrationState.
+>> >
+>> >   - For either socket or file, multiple IO watches might be created, it
+>> >     means logically each IO watch needs to take one refcount for
+>> >     MigrationState so as to be 100% accurate on ownership of refcount taken.
+>> >
+>> > In general, we at least need per-protocol handling to make it accurate,
+>> > which can be an overkill if we know incoming failed after all.  Add a short
+>> > comment to explain that when taking the refcount in qmp_migrate_incoming().
+>> >
+>> > Bugzilla: https://issues.redhat.com/browse/RHEL-69775
+>> > Tested-by: Yan Fu <yafu@redhat.com>
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  migration/migration.c | 40 ++++++++++++++++++++++++++++++++++++++--
+>> >  1 file changed, 38 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/migration/migration.c b/migration/migration.c
+>> > index c597aa707e..f57d853e9f 100644
+>> > --- a/migration/migration.c
+>> > +++ b/migration/migration.c
+>> > @@ -116,6 +116,27 @@ static void migration_downtime_start(MigrationState *s)
+>> >      s->downtime_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+>> >  }
+>> >  
+>> > +/*
+>> > + * This is unfortunate: incoming migration actually needs the outgoing
+>> > + * migration state (MigrationState) to be there too, e.g. to query
+>> > + * capabilities, parameters, using locks, setup errors, etc.
+>> > + *
+>> > + * NOTE: when calling this, making sure current_migration exists and not
+>> > + * been freed yet!  Otherwise trying to access the refcount is already
+>> > + * an use-after-free itself..
+>> > + *
+>> > + * TODO: Move shared part of incoming / outgoing out into separate object.
+>> > + * Then this is not needed.
+>> 
+>> It will be needed on the new object still, no?
+>
+> In that case IIUC we don't need special treatment for incoming side like
+> this, but only when QEMU starts it grabs that common object ref once,
+> either release it at the very end of qemu, or just make it static.
+>
+>> 
+>> > + */
+>> > +static void migrate_incoming_ref_outgoing_state(void)
+>> > +{
+>> > +    object_ref(migrate_get_current());
+>> > +}
+>> > +static void migrate_incoming_unref_outgoing_state(void)
+>> > +{
+>> > +    object_unref(migrate_get_current());
+>> > +}
+>> > +
+>> >  static void migration_downtime_end(MigrationState *s)
+>> >  {
+>> >      int64_t now = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+>> > @@ -850,7 +871,7 @@ process_incoming_migration_co(void *opaque)
+>> >               * postcopy thread.
+>> >               */
+>> >              trace_process_incoming_migration_co_postcopy_end_main();
+>> > -            return;
+>> > +            goto out;
+>> >          }
+>> >          /* Else if something went wrong then just fall out of the normal exit */
+>> >      }
+>> > @@ -866,7 +887,8 @@ process_incoming_migration_co(void *opaque)
+>> >      }
+>> >  
+>> >      migration_bh_schedule(process_incoming_migration_bh, mis);
+>> > -    return;
+>> > +    goto out;
+>> > +
+>> >  fail:
+>> >      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>> >                        MIGRATION_STATUS_FAILED);
+>> > @@ -883,6 +905,9 @@ fail:
+>> >  
+>> >          exit(EXIT_FAILURE);
+>> >      }
+>> > +out:
+>> > +    /* Pairs with the refcount taken in qmp_migrate_incoming() */
+>> > +    migrate_incoming_unref_outgoing_state();
+>> 
+>> Nit, the comment is redundant, the function name is already clear
+>> enough.
+>
+> The function says the "incoming" path "unref"s an "outgoing state", not
+> where it's taken?  But yeah I can drop it, let me know.
+>
 
-           g_test_skip("\nThere is no available rdma link to run RDMA
-                       migration test.  To enable the test:\n"
-                       "(1) Run \'%s setup\' with root and rerun the test\n"
-                       "(2) Run the test with root privilege\n",
-                       RDMA_MIGRATION_HELPER);
+I mean there's a migrate_incoming_ref_outgoing_state() and a
+migrate_incoming_unref_outgoing_state(), it's obvious enough that they
+are paired.
 
+>> 
+>> >  }
+>> >  
+>> >  /**
+>> > @@ -1888,6 +1913,17 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+>> >          return;
+>> >      }
+>> >  
+>> > +    /*
+>> > +     * Making sure MigrationState is available until incoming migration
+>> > +     * completes.
+>> > +     *
+>> > +     * NOTE: QEMU _might_ leak this refcount in some failure paths, but
+>> > +     * that's OK.  This is the minimum change we need to at least making
+>> > +     * sure success case is clean on the refcount.  We can try harder to
+>> > +     * make it accurate for any kind of failures, but it might be an
+>> > +     * overkill and doesn't bring us much benefit.
+>> > +     */
+>> 
+>> Hopefully not any real leak... Let's see what my scripts say about
+>> it. If it doesn't trigger with migration-test that's fine.
+>
+> I remember there could be leaks but only "it fails and dest qemu will quit
+> immediately" kind of leak.  So possible it could trigger with some failure
+> cases, but not sure whether existing cases will trigger those specific
+> paths, most failure paths should still get covered.
+>
 
-> +        return;
-> +    }
-> +
-> +    /* FIXME: query a free port instead of hard code. */
-> +    g_autofree char *uri = g_strdup_printf("rdma:%s:7777", buffer);
-> +
-> +    MigrateCommon args = {
-> +        .listen_uri = uri,
-> +        .connect_uri = uri,
-> +    };
-> +
-> +    test_precopy_common(&args);
-> +}
-> +#endif
-> +
->  static void test_precopy_tcp_plain(void)
->  {
->      MigrateCommon args = {
-> @@ -1124,6 +1177,10 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
->                         test_multifd_tcp_uri_none);
->      migration_test_add("/migration/multifd/tcp/plain/cancel",
->                         test_multifd_tcp_cancel);
-> +#ifdef CONFIG_RDMA
-> +    migration_test_add("/migration/precopy/rdma/plain",
-> +                       test_precopy_rdma_plain);
-> +#endif
->  }
->  
->  void migration_test_add_precopy(MigrationTestEnv *env)
-> -- 
-> 2.41.0
-> 
+If this gets flagged by some automated process somewhere it doesn't
+really matter if it's a reasonable situation because it will get in the
+way of merging a pull request and I'd rather avoid that.
 
--- 
-Peter Xu
+Also Coverity warnings after merge are extremely annoying.
 
+This patch looks ok in my testing at least, so:
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
+queued.
 
