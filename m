@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728E9C021B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECEFC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 16:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl9Fo-0005gj-Ud; Thu, 20 Feb 2025 11:18:24 -0500
+	id 1tl9Ir-0006gr-Us; Thu, 20 Feb 2025 11:21:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9Fn-0005gV-3n
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:18:23 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1tl9Iq-0006fq-0T
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:32 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tl9Fl-0007pG-DH
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:18:22 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-6fb9dae0125so9660787b3.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:18:20 -0800 (PST)
+ id 1tl9Io-0008AE-Do
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 11:21:31 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-439a2780b44so7529835e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 08:21:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740068299; x=1740673099; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/+2+xp2QOTlpmadGFD3s6Z51NSxMIA7ENir8nUuuGUY=;
- b=oNEwLPVATbLbulCAOjYOmFdPuBaqvODUZmZcvOhRLKb74bkeVd+jBvsPsXDv6icHFU
- 8GnuZuHDLYEMhp/t42bjnPpKCOItz2Is603CnRQkQXMiMTfD2SZfmo6MtXn8ZFdUefgp
- AufYqAx9ytLp795VCBi0XDuS/HOJxOy+NA9YPI2kVNy/0UwPpfBaxvM6Ajqq8W11M4HS
- I90QkEd3hDskVA3tSasl59F95pNHlBZ2So+bwqPHS7mePI3neFQvaZBEB/CS4/R3JROr
- 8vKna0gl+6wzBE5dQM7y4JEt6cJGYWScDkj7cTzzYQd45yr3FctXQ38xzWtRaqFfcW+T
- SE6A==
+ d=linaro.org; s=google; t=1740068489; x=1740673289; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=j6+66/H4Jj2ErW/tNOhpsPJs241J28yxPfDTi7fj4YM=;
+ b=mkO7jWMCb6HZbf8F3xtKxu2dziLbPIuK3s7v9dEJ6pqDzoKe7pMLKEUqKCARQQbyUm
+ dip8wRPrLlgJ7nm8iTXiUJ408qdP5mHP5Rij/KMJJ7+TbIlGHl1p+0t1rI6LxUM5BCzC
+ 4yAf3izX0LbflG0twVP+BRA+D0buZLT/5O2o5ekVdcEfQS8z9GFtPDhrCpsCXOUplWl+
+ LZ7ZJYRrbJmc0gV8RhKSFiRceuCHyFTJ57DssnEn7k17QwGYNxHKZbziH8ipmSCkjcuB
+ NQGkLpmqz1wOehibxFFNSa8JmxJrLme9qqHCva0ER1IMu47A/MU/cxjHYh6RCvUAPW6a
+ MXDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740068299; x=1740673099;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/+2+xp2QOTlpmadGFD3s6Z51NSxMIA7ENir8nUuuGUY=;
- b=chZTBnKB5KlNfTXgfme8uNrwv50o5DcxegIleJmFwo4l2UZnZx9bOtYSwk8nvn6o0i
- n/TDEyW+qVDBgvdGjUJlLWid0nrGSVwzTFsnylS5RyUHFIDNzDT8aq+9FBD06pkIZ0xg
- zeoH2WhNW7yGWTEmu9i8fCYO+BgEurzDrShvAHZV1ZmxNLn0HNR1I7RyvsdgTTGG1zPd
- /aZjusFphVRKvLbtop4oOYow621qLRY1EpjAx20XoapETL1eL5He6ZwyWFP6TOxvsGSp
- 5/pH2FSeM1lnUdJ2F+heGgW8Jxpx0bv3SuJh6Fw02eWACO26VEBm6znaWS/E5XyazJdC
- zogQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFTk5PwOXkbGA/DUkxePwI/j5yNC2VAmRZPb+iU0gCBoaJ9N9xTFSdhL/SRzfxAbyCfuPVDl2o6f+9@nongnu.org
-X-Gm-Message-State: AOJu0YzbOWykbQS/o1tLUsQUIBa1V8gUvZDhyl9s7zxvK8jVRpAejFTA
- sfMwN+N0e+MfMp4JTosQMigVus8ZzoVskE9rbCFqdcPP5LHaMtMP2vSc5zTHH5174DeZV7ppf3S
- LoZzF2S1IySN0SMXFQPZEBUp/mTl6gjnglgi3Eg==
-X-Gm-Gg: ASbGncuSzcq3W6MtyglklPiYKKZ9eBnPNy0Hzthdb0+NfqYtnn3bI22I8HhAW0pU4Ks
- hVxHv3gysK7CCU5JLIYEL56KSf5UXmJo9Wh1z00ay0B12o4YLBc+JEeZkoJmvbnJ64CgRTJ5wuQ
- ==
-X-Google-Smtp-Source: AGHT+IG+stU+fxpw0WCLyopFsDnfIDQNbLRe/wf9Z7wWX8LHvl3eIKED16ZYf1E9wHz6i2wcbHF57RuaM3dw/YWqBEI=
-X-Received: by 2002:a05:690c:3393:b0:6f9:b189:3ccb with SMTP id
- 00721157ae682-6fba5696362mr81641037b3.17.1740068299562; Thu, 20 Feb 2025
- 08:18:19 -0800 (PST)
-MIME-Version: 1.0
-References: <20250219184609.1839281-1-wuhaotsh@google.com>
-In-Reply-To: <20250219184609.1839281-1-wuhaotsh@google.com>
+ d=1e100.net; s=20230601; t=1740068489; x=1740673289;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j6+66/H4Jj2ErW/tNOhpsPJs241J28yxPfDTi7fj4YM=;
+ b=Ce66fpOAfeDL+4peL79/SBg2rRlVKkhm7KeqBAk4bPE/PJ4a33TwjWltIJtGOqwDuf
+ i/Szdiluus9FkLNrbbRK1MOJPuRg/RvUyaJrMqhJ9Cn5EFmWMnYc7WxfhS3sym6xAVWA
+ JGYGSY8TlIVmyT6Ycp7D+0tQoFmctjMQ/jUnc2PHHcoyroluvnRu879k5uKA2/KBRebb
+ FwhSwwIJqIREjv4AxBr7e7x4AYCIAOlIlbSGjpMBLyjvU/JPlWnvt296fXbHaLg82BAc
+ 1uLHQVVK2S750QtGJI9gGdVIZZb1SNrW4/Q5sedjAtlzHALpTAoD+nkCVqToCzmtO4DK
+ s0/g==
+X-Gm-Message-State: AOJu0YzPh1aEhm70PQNVP4IvWmsiJvwW3wGroCN6G2vqTKCidWtb832J
+ i77a07eTIQqKrF0Ln0ac0wWiCoSR+HrizQg7xq7UoF272SoV2qAZ20L1/43g0I7w8T8GSZ3cc/e
+ 2
+X-Gm-Gg: ASbGncuWv9VOpRUxDgvLajBXA59RBsXBhvHD+FItcDJbtTL2pmJJMeVJrjmm/8On1Xi
+ m+CNHZp6wEdczCFLm3Icp3OxqvLYMmNIKi01r00BU+Nex5MDZp+vTELrk9dd1hm35kZ8WO7bigQ
+ 0/bWTA8pRzo0x3zPkv9JILWV5zwhXs6c/iDgmXhG4c2Br1HPDjwzlOf6MIbmWltKuJ1KaNH4B9H
+ IxFf8ubfq2Y8j/3NG5LdOgazQxDgN48NGJNibEkPkZ0V0BvS0OiISypRhSfohH+VjnbRjfO61rN
+ wGyu+iJKHaGmQt8oloT2gA==
+X-Google-Smtp-Source: AGHT+IGBb5RnYTADPvYABSw8QxiykrWAveOyZyUmuzOEMpore2pyIwJcm1M//ywlZByWzI2JhRQ5vw==
+X-Received: by 2002:a05:600c:4f84:b0:439:94f8:fc68 with SMTP id
+ 5b1f17b1804b1-43999d16123mr91835715e9.0.1740068488987; 
+ Thu, 20 Feb 2025 08:21:28 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4399d55fc1asm48806415e9.35.2025.02.20.08.21.27
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 08:21:28 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Feb 2025 16:18:08 +0000
-X-Gm-Features: AWEUYZlO8BAo_ZXOdCNXz2xj782SxtnwWNQWB9lLFGme6pjAam2bDPwRU0s77Tg
-Message-ID: <CAFEAcA_3FOHVo6q_tiOEE7dHZNDw7_0emdCR5=5cEt7fdKVkTQ@mail.gmail.com>
-Subject: Re: [PATCH v5 00/17] hw/arm: Add NPCM8XX Support
-To: Hao Wu <wuhaotsh@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com, 
- Avi.Fishman@nuvoton.com, kfting@nuvoton.com, hskinnemoen@google.com, 
- titusr@google.com, chli30@nuvoton.corp-partner.google.com, 
- pbonzini@redhat.com, jasowang@redhat.com, alistair@alistair23.me, 
- philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 03/41] target/arm: Report correct syndrome for UNDEFINED S1E2
+ AT ops at EL3
+Date: Thu, 20 Feb 2025 16:20:44 +0000
+Message-ID: <20250220162123.626941-4-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250220162123.626941-1-peter.maydell@linaro.org>
+References: <20250220162123.626941-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,18 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Feb 2025 at 18:46, Hao Wu <wuhaotsh@google.com> wrote:
->
-> Changes since v4:
->
-> 1. Bump vmstate versions on NPCM CLK and GCR modules.
-> 2. Remove "hw/boards.h" include in npcm8xx.h and add it in npcm8xx*.c
-> 3. Use cpu_to_le32 instead of tswap32 in npcm8xx.c
->
+The pseudocode for AT S1E2R and AT S1E2W says that they should be
+UNDEFINED if executed at EL3 when EL2 is not enabled. We were
+incorrectly using CP_ACCESS_TRAP and reporting the wrong exception
+syndrome as a result. Use CP_ACCESS_TRAP_UNCATEGORIZED.
 
-I've applied this to target-arm.next with the fix for the
-type of flash_size applied.
+Cc: qemu-stable@nongnu.org
+Fixes: 2a47df953202e1 ("target-arm: Wire up AArch64 EL2 and EL3 address translation ops")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250130182309.717346-4-peter.maydell@linaro.org
+---
+ target/arm/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 9ed1a67b767..f4af2d2de54 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3611,7 +3611,7 @@ static CPAccessResult at_s1e2_access(CPUARMState *env, const ARMCPRegInfo *ri,
+ {
+     if (arm_current_el(env) == 3 &&
+         !(env->cp15.scr_el3 & (SCR_NS | SCR_EEL2))) {
+-        return CP_ACCESS_TRAP;
++        return CP_ACCESS_TRAP_UNCATEGORIZED;
+     }
+     return at_e012_access(env, ri, isread);
+ }
+-- 
+2.43.0
+
 
