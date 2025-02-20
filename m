@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83566C021AD
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53A3C021AD
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 08:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl1W0-0005mf-AT; Thu, 20 Feb 2025 03:02:36 -0500
+	id 1tl1Vt-0005lx-RX; Thu, 20 Feb 2025 03:02:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl1Vw-0005mK-Fw
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:02:32 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl1Vs-0005lo-Nf
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:02:29 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl1Vu-00050s-T0
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:02:32 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-38f3913569fso1022223f8f.1
- for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 00:02:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tl1Vq-00050H-Q1
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 03:02:28 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-439a2780b44so3459995e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 00:02:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740038549; x=1740643349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740038544; x=1740643344; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TlxCO3OP4jHOxjhIDriULZskStv3lHgU44Xm50YhQ6s=;
- b=ezRh1XB2EME+0KMfL19cuQSvMmbOfp9JiJsNr08arOYlDDg9p1dfYWaAVauVkPWhSr
- 5dl9073nVCIoDpOJFRz2KBwlf4HC34zcBMBUjoH3KjNEx5PsbHVA2w+TEYqzDIHy1M/M
- K1Ttl3HxusVGn7D5itat+kBMvM4yyww1lunD99l28XGEd5vhcGWc0NHzz2veSNZy/64O
- 5rfuQglW8jyEJdLwYxJShLq2fPQPcPs6/6fEs85b+DZKtLAxt522tMuIqSCI0rG2y7ra
- 4h6CDbBLPdmBC5gZHE23FeKutysftN9q2d12MASSCmeZsfnA8sPt7nvSACI1CxTHJ2qJ
- pQeQ==
+ bh=FS7o0D5fLSCXS8ZwtnjjXhADHES9mreJS2p3qJ4gTp4=;
+ b=S+1oOcltdGGsWtIJIc/OThBGblzDq0yFBqXST9Px6ekGUCkD13i6y01/l0ZoKc2dJY
+ 6B3m1hzH3LEIdjLP0gPLs7T31dWNRB4xpdyOkiq4Yos0Vi7e5cYtDok75nxAb2GS+/iT
+ VXcBQ70z2qir1iHGpHQWwddeSIfwf/FSVRTfLUThDnE8qOfB6cL45fBDo8c/IeGqz8tt
+ ymFvHoTMUpqgkZNf4lHNgaTtDdzmXBZcCJOvrS71nXqBm1IykBGgsJoBzrfJBENVetwg
+ uGGcnzo4Z9hRBwPC53cuLkEmWXambMggvtL36GaqbwmbGq83Y05JesrpXbjqYNzYjfNu
+ /XZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740038549; x=1740643349;
+ d=1e100.net; s=20230601; t=1740038544; x=1740643344;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TlxCO3OP4jHOxjhIDriULZskStv3lHgU44Xm50YhQ6s=;
- b=FofKus7aDI3xpfkGopEy4ldGRj6g3oDqcXWqLo8p1gVJKLwDcWN2hp7pOA82iqxsvu
- 3TETsuTIm0ipsOoXYSCiSuSeFXrAn86woEqx/pohL7Cn5ndNXPZWbX92aDfcxNs6xFD7
- kBMp93BkRee+d6N09IFl3nB56/Fmf3zlgZYeoYPqkr+1dg5/4LygdgSXfwQq2BI2grIw
- N0AMlVXJKmv8C0nmbjwwTFJJ2BzDigbXItV5wnbf0AqTo7+E7bP5Vw5jAuG6Ynlf9VvJ
- 9nkdnGbX5dsUxXtZUFVmLU7wFc0R1Z0P3sCCR+bpb5yZccd2iNomVtO4uRbSlQ3Ukt2G
- f11Q==
-X-Gm-Message-State: AOJu0Yy/+L7lXVOkY5Lhk01r/ZXb2c1k9ESDDAEZKIAtYUsf1ZwiNJ5C
- 1k9qVxeVdoDJIm9MQ9Jhxl1MMK0eyJ0q1vVAI9Iyo2Zeayb0r74q1OQGGIqXHE8Qr2ZQKbcrgou
- vCxc=
-X-Gm-Gg: ASbGncv6J5YrqzUso9Bb6SjDJDQ6+J6agaXTRV+bN1axOd/IqQr+6ctd6AU49v7UWHH
- eWWfM5gTNgdas5Z0djnOUVzI0n4ctGCpaPhRz3jcf53kicPuVvz4BeJjR7eTZv82kep04x+kGTG
- 1yif+w94Nqnfg3q+YPZ5ncXh+EGewDNNdfv/qztxx49jGxLfEgLYsLdzskgc5NUwwTLh6QVyWfD
- RLrw1dBz9rZiWTCKtGtuuU2+uSPxJQra8ZPafASbQ6Tr02nDTHojGkVv1lAgpALV3DhtZ1zNJ6z
- YrJpu+Mj+2omdqJtPL091cCS25X4e/L09atpCKkvRB1X6Cn7blfSG1P15ov56G5zkQ==
-X-Google-Smtp-Source: AGHT+IG+fH2x+g2bhs2juytWEwHo2meZpdDj6qZpaz/kF6HAaaZdHCLfrXn8Ct0HMxOcIWz5Ns9SKQ==
-X-Received: by 2002:a5d:47c3:0:b0:38d:d59c:c9d6 with SMTP id
- ffacd0b85a97d-38f61611400mr1853120f8f.21.1740038548901; 
- Thu, 20 Feb 2025 00:02:28 -0800 (PST)
+ bh=FS7o0D5fLSCXS8ZwtnjjXhADHES9mreJS2p3qJ4gTp4=;
+ b=GcuKFa4udI6HoDpo01glSdZqu9QJ6zsiScTyq4AgTwuh2HmXldDGVaGlmmja41iSya
+ BeMZzUoTCNqiSEO1ecZjSTcI8psnJqHqqlRk3X/FHJAuZG23TZO7mFgc/mwnd4iQoMki
+ 5ugzHKsdC42ogYl3JJc26jVygjkzVHQXy3s9JAa62lHmYbkmPpaK871aEHE8N+pDeakQ
+ zKCUiaOhNxVwoP7Yi9MwWv9CJWlQrZ8cS4ay5JM3Il0dZ3rS24l18XgdLXweP27RxKIk
+ f+s0OV1ZGlTsv0DtduigL9Ypr94q/kc7LTpFd9sDdoFPVTA7qcB+s5hRorCK574joUEt
+ JJDA==
+X-Gm-Message-State: AOJu0Yz5NQbmSsPXYqsQj38rWKD1mU4U5FiKaNcEIRJmWqjk4VfBzvfi
+ P9G9FlNT6JiBpfKfl2antxuAh8yKpFvv+WO4feX/EAAu3pAgWFRDH56ILwF1kanpGPOw11rJUVZ
+ a2Cg=
+X-Gm-Gg: ASbGncuc0JnewKzxdUgUbxk7rpVTlZ+H+OXgNqD+exbTKjuR+VnWvTpsL584/G3Wjw5
+ QaIHuc4heu1hlfTm7bQoFWMpSgqi3Thwlwi8Qve8T3Q4uAsYeSoqlDq2iMjnh7ne39kTY6gwdDD
+ 6+/oA5nAhYCXlw0Dl89r1anA8pXL5COdjtJ8b5fGzqxybpudz85BHg6/+q4FyIeMoZwIv9CrkxN
+ W/LtZhOWjA7+OoX9oNqkxPN2URFWY2rbZZ37Si5miIaOx59Fgd7i9+okgD/U2gjuXBYdH3WCytO
+ 2951n8/hAeq1E4FvcWYWHUc/T2Kd243IJQvgO5JhAJHpy5nBW5JcLzsJDV4b77c33Q==
+X-Google-Smtp-Source: AGHT+IHue+mbCMrY9B4kzdkCP6NYsQ23UhHbSOD2mSDmA0XgRe5GA7szSsowdBXA7HkL/sB72Sk/kQ==
+X-Received: by 2002:a05:600c:3501:b0:439:955d:7ad9 with SMTP id
+ 5b1f17b1804b1-43999da89c7mr70299325e9.14.1740038544102; 
+ Thu, 20 Feb 2025 00:02:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4395a055910sm233020165e9.9.2025.02.20.00.02.27
+ 5b1f17b1804b1-439930a9966sm74391905e9.15.2025.02.20.00.02.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Feb 2025 00:02:28 -0800 (PST)
+ Thu, 20 Feb 2025 00:02:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
@@ -74,17 +74,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
  Thomas Huth <thuth@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 2/3] tests/functional: Introduce the dso_suffix() helper
-Date: Thu, 20 Feb 2025 09:02:14 +0100
-Message-ID: <20250220080215.49165-3-philmd@linaro.org>
+Subject: [PATCH v2 1/3] plugins: add explicit dependency in functional tests
+Date: Thu, 20 Feb 2025 09:02:13 +0100
+Message-ID: <20250220080215.49165-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250220080215.49165-1-philmd@linaro.org>
 References: <20250220080215.49165-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,64 +107,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a helper to get the default shared library
-suffix used on the host.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+./tests/functional/test_aarch64_tcg_plugins.py needs to have plugin
+libinsn built. However, it's not listed as a dependency, so meson can't
+know it needs to be built.
+
+Thus, we keep track of all plugins, and add them as an explicit
+dependency.
+
+Fixes: 4c134d07b9e ("tests: add a new set of tests to exercise plugins")
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/functional/qemu_test/__init__.py | 2 +-
- tests/functional/qemu_test/cmd.py      | 1 -
- tests/functional/qemu_test/config.py   | 6 ++++++
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ meson.build                   | 1 +
+ contrib/plugins/meson.build   | 2 ++
+ tests/functional/meson.build  | 2 +-
+ tests/tcg/plugins/meson.build | 2 ++
+ 4 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 5c972843a6d..45f7befa374 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -7,7 +7,7 @@
+diff --git a/meson.build b/meson.build
+index 0ee79c664d3..4588bfd8642 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3657,6 +3657,7 @@ qtest_module_ss = ss.source_set()
  
- 
- from .asset import Asset
--from .config import BUILD_DIR
-+from .config import BUILD_DIR, dso_suffix
- from .cmd import is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index dc5f422b77d..254e23ef748 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -15,7 +15,6 @@
- import os
- import os.path
- 
--
- def which(tool):
-     """ looks up the full path for @tool, returns None if not found
-         or if @tool does not have executable permissions.
-diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qemu_test/config.py
-index edd75b7fd06..0eab1baa541 100644
---- a/tests/functional/qemu_test/config.py
-+++ b/tests/functional/qemu_test/config.py
-@@ -13,6 +13,7 @@
- 
- import os
- from pathlib import Path
-+import platform
- 
- 
- def _source_dir():
-@@ -34,3 +35,8 @@ def _build_dir():
-     raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
- 
- BUILD_DIR = _build_dir()
+ modules = {}
+ target_modules = {}
++plugin_modules = []
+ hw_arch = {}
+ target_arch = {}
+ target_system_arch = {}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 484b9a808c8..fa8a426c8b5 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -26,3 +26,5 @@ if t.length() > 0
+ else
+   run_target('contrib-plugins', command: find_program('true'))
+ endif
 +
-+def dso_suffix():
-+    '''Return the dynamic libraries suffix for the current platform'''
-+    DSO_SUFFIXES = { 'Linux': 'so', 'Darwin': 'dylib', 'Windows': 'dll' }
-+    return DSO_SUFFIXES[platform.system()]
++plugin_modules += t
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index b516d21cba1..2d41908c0a8 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -362,7 +362,7 @@ foreach speed : ['quick', 'thorough']
+       # 'run_target' logic below & in Makefile.include
+       test('func-' + testname,
+            python,
+-           depends: [test_deps, test_emulator, emulator_modules],
++           depends: [test_deps, test_emulator, emulator_modules, plugin_modules],
+            env: test_env,
+            args: [testpath],
+            protocol: 'tap',
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index 87a17d67bd4..c8cb0626a6d 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -19,3 +19,5 @@ if t.length() > 0
+ else
+   run_target('test-plugins', command: find_program('true'))
+ endif
++
++plugin_modules += t
 -- 
 2.47.1
 
