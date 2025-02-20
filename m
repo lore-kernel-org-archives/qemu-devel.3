@@ -4,72 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6F5C021B1
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 10:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A4EC021B1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Feb 2025 11:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tl4Gb-00016l-Mo; Thu, 20 Feb 2025 05:58:53 -0500
+	id 1tl4HY-0001hb-86; Thu, 20 Feb 2025 05:59:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tl4Ga-00016d-2o
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:58:52 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1tl4HW-0001gy-Dm
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:59:50 -0500
+Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tl4GX-0001jT-63
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:58:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740049129; x=1771585129;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=peXBWKLlJoZ0te86jGaqhSVx6k4fQXBrx/kZt4Y3dFo=;
- b=LFaPhyO3d7SLDyjEN7V3kA6T5WJGmxEXuCxOkf4G5clr2hetICinOHTP
- D/HExG6ziMN/XETPC3lBynBYibn8aJCv8wQWbPQh9XB/o2feOO80EfOiU
- vqAknK7ZL7aTp7V4pAIx0FnnW5EkP/zqsX5dIi0o0b/7wCYG3F6J0UemM
- aSiVAiP+7ze74Mp5HpholGvuYGF3/IniH681mDV8Z0dudNHozs3htTu4X
- oo5TtHtxa1zoZrh1xrHJ2UxGdgfW5VWUzzKb7ZBftrPgYOWjo5sbVNsAu
- tLFkIFvnD8XjP133S8tFFX/dN6XQDohEW3NM9Zak8MfLQ0BOJIqRH0sXT A==;
-X-CSE-ConnectionGUID: CMuedAkKRxmeA1D/tyerbQ==
-X-CSE-MsgGUID: vg+DloBkQu2eh7WaMgzuDw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11350"; a="40959993"
-X-IronPort-AV: E=Sophos;i="6.13,301,1732608000"; d="scan'208";a="40959993"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Feb 2025 02:58:46 -0800
-X-CSE-ConnectionGUID: X65XWnxYRJ6my0mf/THp2Q==
-X-CSE-MsgGUID: XqCrPXq5T1uDp7bf4/7ASQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,301,1732608000"; d="scan'208";a="114737261"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 20 Feb 2025 02:58:45 -0800
-Date: Thu, 20 Feb 2025 19:18:19 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Babu Moger <babu.moger@amd.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- davydov-max@yandex-team.ru
-Subject: Re: [PATCH v5 2/6] target/i386: Update EPYC-Rome CPU model for Cache
- property, RAS, SVM feature bits
-Message-ID: <Z7cPeyLAuNDL0Oc4@intel.com>
-References: <cover.1738869208.git.babu.moger@amd.com>
- <8e40e18b433d2d152433724a15bddcacdecbf154.1738869208.git.babu.moger@amd.com>
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1tl4HU-0001nE-Eb
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 05:59:50 -0500
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id E98971380A25;
+ Thu, 20 Feb 2025 05:59:45 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Thu, 20 Feb 2025 05:59:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm2; t=1740049185; x=1740135585; bh=N+dDY/2AGx
+ dycnIPXWfPFjiWgoo6WSgHy9EejcNRf/Y=; b=SvHSVZN6I0h68MSQ/2Pdl88Wn/
+ YGs1NpNsM+JJbkaJw+F8FYzJ6X2IfsQEWnOdibrC1z7eZaPLPmB6/E4O0Pq/KaSk
+ HmBDc3C2dAdgdPln/KX98nOcf2kD1UNZbSyFmvo1Pjdr0DgDt3cMM+6SodraIi7F
+ /2IvSs6bDV/d0X+gHfs5d0bbG4wz2u9ww4OtWeJ4+bd5B0O2lHLYgQfQCdiWAhXM
+ JyBi+J/r9QLwnGgF9cAPuJ881nypbcJ2z1smwvFLN4/f5SYtHyAwfoPwswNmbWix
+ 8iBn3DxUsETa8RP+oR4/hDv1CbqCDIHsou17siXqtIZklYdbdOBK6e08Vomg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1740049185; x=1740135585; bh=N+dDY/2AGxdycnIPXWfPFjiWgoo6WSgHy9E
+ ejcNRf/Y=; b=bdHjmBjW9uz7pFXxsCGHGt3jSmwgMu9dGMusXP4vUVgbJ1tHihn
+ pKBWadu2wFZH7AVZHKvWcg1n/MIO3BC8AFIP/iUbghu81UZn7+j52+eg9F7ZqQhd
+ y7X6qqTU92b4eY0VJ2QGN0YGe1l8EiFrBbarfcspI2Qxfd61b+o6MH7RjbLheQc9
+ N9tbArz2WdgxkvXaINhkNlEbrahHt1omTP8GgwsGbXpMbx/DOgWnBeGobFDXgTEq
+ cyBDAMddhfxTOOVK0XwEAv/0T0LXPvooUbTgk8g3+/q3WMxybi9iumES4VAEbeSz
+ s/0ph12NAYntPeX17QKmCmaJwUtko5ldeHg==
+X-ME-Sender: <xms:IQu3Z_0xWstBc04sw0X0nOZCn9O6UJpG69dYxwYWhUco1mbswz1awg>
+ <xme:IQu3Z-GygmFttAHgZDRCmPjY8ll8POJJxCj8kDaSMlEaOX6r3m3nAOBXDVN6kjRC5
+ da26PnkPJ8pBfXj-w>
+X-ME-Received: <xmr:IQu3Z_6nKO4nGIH6QqgDjv9tzpNGdNo87mhiN4DfagPaD_3UhKGj9HrLPOOwlGg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiieeliecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+ hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfggtgesghdtreertddttden
+ ucfhrhhomheptehlhihsshgrucftohhsshcuoehhihesrghlhihsshgrrdhisheqnecugg
+ ftrfgrthhtvghrnhepieduffeuieelgfetgfdttddtkeekheekgfehkedufeevteegfeei
+ ffetvdetueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+ homhephhhisegrlhihshhsrgdrihhspdhnsggprhgtphhtthhopedutddpmhhouggvpehs
+ mhhtphhouhhtpdhrtghpthhtohepshhtvghvvghnshgusegthhhrohhmihhumhdrohhrgh
+ dprhgtphhtthhopegrlhgvgidrsggvnhhnvggvsehlihhnrghrohdrohhrghdprhgtphht
+ thhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheprggvsh
+ htvghvvgesrhgvughhrghtrdgtohhmpdhrtghpthhtohepuggrvhhiugesrhgvughhrght
+ rdgtohhmpdhrtghpthhtohepjhgrshhofigrnhhgsehrvgguhhgrthdrtghomhdprhgtph
+ htthhopehmshhtsehrvgguhhgrthdrtghomhdprhgtphhtthhopehsghgrrhiirghrvges
+ rhgvughhrghtrdgtohhmpdhrtghpthhtohepshhlphesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:IQu3Z00nSVU_WDr77iOm6K2nLQvsIoDtpSy8FqEVjSDkjISm7tNlMw>
+ <xmx:IQu3ZyGutEaGqHkwi3mTavJIcpZASlH01axTXzxSZQwG1iMMaXUJ1Q>
+ <xmx:IQu3Z19mshRs_pelRgVAjAIkqiaBeAYAcbw5RaXmw15t9uOYDwDrAQ>
+ <xmx:IQu3Z_mBIEwsiq9w2Gk6g0_lnuf8yNtcPntLGciqYUkDH9f4T2oFPg>
+ <xmx:IQu3Z68KlzTQXRIqGaXDSem03Gs7Zw9qy9fbEWt_tr1TQgtCSlHFngWH>
+Feedback-ID: i12284293:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Feb 2025 05:59:45 -0500 (EST)
+Received: by mbp.qyliss.net (Postfix, from userid 1000)
+ id 82703FC23; Thu, 20 Feb 2025 11:59:44 +0100 (CET)
+From: Alyssa Ross <hi@alyssa.is>
+To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
+Cc: slp@redhat.com, stevensd@chromium.org, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Stefano Garzarella <sgarzare@redhat.com>,
+ stefanha@redhat.com, david@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, Albert Esteve <aesteve@redhat.com>
+Subject: Re: [PATCH v4 1/9] vhost-user: Add VirtIO Shared Memory map request
+In-Reply-To: <20250217164012.246727-2-aesteve@redhat.com>
+References: <20250217164012.246727-1-aesteve@redhat.com>
+ <20250217164012.246727-2-aesteve@redhat.com>
+Date: Thu, 20 Feb 2025 11:59:42 +0100
+Message-ID: <875xl4g9up.fsf@alyssa.is>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8e40e18b433d2d152433724a15bddcacdecbf154.1738869208.git.babu.moger@amd.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.191,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=103.168.172.150; envelope-from=hi@alyssa.is;
+ helo=fout-a7-smtp.messagingengine.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,91 +115,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 06, 2025 at 01:28:35PM -0600, Babu Moger wrote:
-> Date: Thu, 6 Feb 2025 13:28:35 -0600
-> From: Babu Moger <babu.moger@amd.com>
-> Subject: [PATCH v5 2/6] target/i386: Update EPYC-Rome CPU model for Cache
->  property, RAS, SVM feature bits
-> X-Mailer: git-send-email 2.34.1
-> 
-> Found that some of the cache properties are not set correctly for EPYC models.
-> 
-> l1d_cache.no_invd_sharing should not be true.
-> l1i_cache.no_invd_sharing should not be true.
-> 
-> L2.self_init should be true.
-> L2.inclusive should be true.
-> 
-> L3.inclusive should not be true.
-> L3.no_invd_sharing should be true.
-> 
-> Fix these cache properties.
-> 
-> Also add the missing RAS and SVM features bits on AMD EPYC-Rome. The SVM
-> feature bits are used in nested guests.
-> 
-> succor		: Software uncorrectable error containment and recovery capability.
-> overflow-recov	: MCA overflow recovery support.
-> lbrv		: LBR virtualization
-> tsc-scale	: MSR based TSC rate control
-> vmcb-clean	: VMCB clean bits
-> flushbyasid	: Flush by ASID
-> pause-filter	: Pause intercept filter
-> pfthreshold	: PAUSE filter threshold
-> v-vmsave-vmload	: Virtualized VMLOAD and VMSAVE
-> vgif		: Virtualized GIF
-> 
-> Signed-off-by: Babu Moger <babu.moger@amd.com>
-> Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
-> ---
->  target/i386/cpu.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 73 insertions(+)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 94292bfaa2..e2c3c797ed 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -2342,6 +2342,60 @@ static const CPUCaches epyc_rome_v3_cache_info = {
->      },
->  };
->  
-> +static const CPUCaches epyc_rome_v5_cache_info = {
-> +    .l1d_cache = &(CPUCacheInfo) {
-> +        .type = DATA_CACHE,
-> +        .level = 1,
-> +        .size = 32 * KiB,
-> +        .line_size = 64,
-> +        .associativity = 8,
-> +        .partitions = 1,
-> +        .sets = 64,
-> +        .lines_per_tag = 1,
-> +        .self_init = 1,
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-This field could be true,
+Albert Esteve <aesteve@redhat.com> writes:
 
-> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> +    },
-> +    .l1i_cache = &(CPUCacheInfo) {
-> +        .type = INSTRUCTION_CACHE,
-> +        .level = 1,
-> +        .size = 32 * KiB,
-> +        .line_size = 64,
-> +        .associativity = 8,
-> +        .partitions = 1,
-> +        .sets = 64,
-> +        .lines_per_tag = 1,
-> +        .self_init = 1,
+> @@ -192,6 +194,24 @@ typedef struct VhostUserShared {
+>      unsigned char uuid[16];
+>  } VhostUserShared;
+>=20=20
+> +/* For the flags field of VhostUserMMap */
+> +#define VHOST_USER_FLAG_MAP_R (1u << 0)
+> +#define VHOST_USER_FLAG_MAP_W (1u << 1)
+> +
+> +typedef struct {
+> +    /* VIRTIO Shared Memory Region ID */
+> +    uint8_t shmid;
+> +    uint8_t padding[7];
+> +    /* File offset */
+> +    uint64_t fd_offset;
+> +    /* Offset within the VIRTIO Shared Memory Region */
+> +    uint64_t shm_offset;
+> +    /* Size of the mapping */
+> +    uint64_t len;
+> +    /* Flags for the mmap operation, from VHOST_USER_FLAG_* */
 
-ditto,
+Perhaps this should say VHOST_USER_FLAG_MAP_*?
 
-Compared to the previous cache model version, the differences can be
-checked. I feel that in the future, when we introduce a new cache model,
-it's better to avoid omitting items that default to false. This way, the
-cache model can correspond to the output of the cpuid tool, making it
-easier to compare and check.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Overall, LGTM,
+-----BEGIN PGP SIGNATURE-----
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCZ7cLHgAKCRBbRZGEIw/w
+ovsoAQCxIVgK8Xu7gTQHiPNvEdXy2PiRgvXId1iLa0dsTb8vKgEAreWkqJhjCGqs
+Ma1YwlzhsSa0XDJM/Pl71xx/6S3D5QU=
+=eNch
+-----END PGP SIGNATURE-----
+--=-=-=--
 
