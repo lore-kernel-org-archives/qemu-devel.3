@@ -4,98 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7F4C021AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD22C021B5
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS3Q-0004Xz-Ub; Fri, 21 Feb 2025 07:22:52 -0500
+	id 1tlS46-0005TX-Pp; Fri, 21 Feb 2025 07:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3I-0004Pw-E3
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tlS44-0005RK-58; Fri, 21 Feb 2025 07:23:32 -0500
+Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3G-0006zZ-F2
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140561;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2kxcyww6qI/yOi6ipYazJfpY4N/lEp2Wmj/5+d4jfT0=;
- b=VXCxPDY2rD84uDwG9z9r3fkdxNgiMORBaF4KysjDScv2GLsUgs1sHZQz9vtE3H8o1nQzKK
- FHW3W/EeSGTkT8TbhQVjUGSDkUNqmjyDM9+5S1+/GS3HQnoa7HebYYxbQidaKjGhgGAcZi
- ZcrXOROHUsUbwY9e/RBmxz+tAhGIR5w=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-444-P_j2QwBLNd2MmVZXMN59Rw-1; Fri, 21 Feb 2025 07:22:40 -0500
-X-MC-Unique: P_j2QwBLNd2MmVZXMN59Rw-1
-X-Mimecast-MFC-AGG-ID: P_j2QwBLNd2MmVZXMN59Rw_1740140559
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4399a5afcb3so18577605e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:22:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140559; x=1740745359;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2kxcyww6qI/yOi6ipYazJfpY4N/lEp2Wmj/5+d4jfT0=;
- b=rQZ+wA3ZFoklUTF6g51Lff3+j2ixtePsWVH9Pe1Q3wj0+BovV848DRA6Z8CFyB616+
- g9Zm17gDaFic/5k7vURgRu9Ns3c0Mv32ywCUT39YKy+8s+eBhaO0vOxc/Qnm5lVHlSLY
- Z4HXTATgnuwrYGiOxfCRzFh8Ff4gqt1SexwwY9ou/USkx8pVNfUiwC8FHOsGxp3NpT1A
- X5JZ753vvgSCk8jtUev2uNATWynnJooyrozG3gkzpJLyLWWWo+5ucN6dfE5E15WL+foQ
- 3nXtzhFheW22tCwXZkQwDV6v/IgNMGmDZjC1Pnzspe6iCqZMqkBBXL5DOWmMXyx3rOxx
- 9oww==
-X-Gm-Message-State: AOJu0YyDwKr9dUX65lyLKkxc9yKa7IZx8Tg56MBJfL34AvV21QLwIN4U
- D79/8p6CjepG26bAmHD9bsS2qBZQHuSmrVp6JhSxTBKv8biw8jcTm1NkaBLSm+nWOmGg012IXzj
- GATKVFOhFnz7h11QFfgaa6QzH9MJfhNWmCRwFG12/pehpoepaet1V0NTFQIooHRZhNZvG/0GegF
- aBhiGBJA6deA76CBgZX41B933oNlx0xw==
-X-Gm-Gg: ASbGnct2EWq7cg14ywmXv3V14UF8kG7aF8q1DdiopO0yVDU0bf1Nfuls33Ig4TL47A7
- GNgZp9rtznqgS8WaXBXt1CFkhy+3I5bw7p+mKj2e2UR/BHcvWbI9/mcI7Qw7XPvLQdr13HOtF8f
- LehEhPv2d4kl6m+BoKIj1dkAxOgR8nJNOL4DEyDRm/h+lTJtkh5C2aU90H8T6J//6Z6F0TYsp87
- +B96R4J/zgusqFf2FpUliFCcZHck0HgtDFuo763KsopavZwHw9Jzj4S1/ULdp11M+yd7U8W3sQr
- hB6bOA==
-X-Received: by 2002:a05:600c:3107:b0:439:98ca:e39b with SMTP id
- 5b1f17b1804b1-439ae21e4bbmr26685075e9.29.1740140558725; 
- Fri, 21 Feb 2025 04:22:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEN4YcJ9vKJa+eo1RGTH1NKKhEOeELWzpnWtdqCEJZ5+b9iJ2ykD60ZMRSsOBSq1sy22GS2Zg==
-X-Received: by 2002:a05:600c:3107:b0:439:98ca:e39b with SMTP id
- 5b1f17b1804b1-439ae21e4bbmr26684715e9.29.1740140558292; 
- Fri, 21 Feb 2025 04:22:38 -0800 (PST)
-Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b0371db0sm15456915e9.37.2025.02.21.04.22.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:22:37 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:22:35 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PULL 03/41] hw/ppc/spapr_pci: Do not create DT for disabled PCI
- device
-Message-ID: <5731b005246297ab5b91975f52fcd525e08507cd.1740140520.git.mst@redhat.com>
-References: <cover.1740140520.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tlS41-00074z-BY; Fri, 21 Feb 2025 07:23:31 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2C71C6123E;
+ Fri, 21 Feb 2025 12:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0F2C4CED6;
+ Fri, 21 Feb 2025 12:23:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740140605;
+ bh=NG9gwLahumtvPU8lC1XAWDBxn6rUCBFuxCyUdn7T0Tw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=P0qUkaLzDYg8WBIsuC0NUk9BN8lHt8bLN8qIxX7E1+pOKh7ON6ixGqqv370VLvaJ+
+ my8I+HoMjKxJJ0fWia0QPaB75JhxKBcvOcC1uo8ARtSFksjgx8bRgH53GxPesso0DC
+ ilxcc3zEs0tYU50hOaKdMCdM4nwAi2gOtKkizfnPKAPAoQYKh08FamolD11PU+Hjga
+ VgeDV6pQBOfTZqqdFhyrT2w9tX8+4DNudgTtvFtBsYjPBdbd9mNrfwM9xko+8O8buM
+ AGe6KhVp6X5aEace2xqSagRT3db2NAnRAAjveAQ5cKEZiCnHFnsJ4rIpC15+GHWuHF
+ k/C81dQ1lFUhw==
+Date: Fri, 21 Feb 2025 13:23:06 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Philippe =?UTF-8?B?TWF0?=
+ =?UTF-8?B?aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
+ <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, "Markus Armbruster" <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH v3 00/14] Change ghes to use HEST-based offsets and add
+ support for error inject
+Message-ID: <20250221132306.77800dbf@sal.lan>
+In-Reply-To: <20250221102127.000059e6@huawei.com>
+References: <cover.1738345063.git.mchehab+huawei@kernel.org>
+ <20250203110934.000038d8@huawei.com>
+ <20250203162236.7d5872ff@imammedo.users.ipa.redhat.com>
+ <20250221073823.061a1039@foz.lan>
+ <20250221102127.000059e6@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1740140520.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04::f03c:95ff:fe5e:7468;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,64 +85,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Em Fri, 21 Feb 2025 10:21:27 +0000
+Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
 
-Disabled means it is a disabled SR-IOV VF and hidden from the guest.
-Do not create DT when starting the system and also keep the disabled PCI
-device not linked to DRC, which generates DT in case of hotplug.
+> On Fri, 21 Feb 2025 07:38:23 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > Em Mon, 3 Feb 2025 16:22:36 +0100
+> > Igor Mammedov <imammedo@redhat.com> escreveu:
+> >   
+> > > On Mon, 3 Feb 2025 11:09:34 +0000
+> > > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> > >     
+> > > > On Fri, 31 Jan 2025 18:42:41 +0100
+> > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > > >       
+> > > > > Now that the ghes preparation patches were merged, let's add support
+> > > > > for error injection.
+> > > > > 
+> > > > > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
+> > > > > table and hardware_error firmware file, together with its migration code. Migration tested
+> > > > > with both latest QEMU released kernel and upstream, on both directions.
+> > > > > 
+> > > > > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
+> > > > >    to inject ARM Processor Error records.
+> > > > > 
+> > > > > If I'm counting well, this is the 19th submission of my error inject patches.        
+> > > > 
+> > > > Looks good to me. All remaining trivial things are in the category
+> > > > of things to consider only if you are doing another spin.  The code
+> > > > ends up how I'd like it at the end of the series anyway, just
+> > > > a question of the precise path to that state!      
+> > > 
+> > > if you look at series as a whole it's more or less fine (I guess you
+> > > and me got used to it)
+> > > 
+> > > however if you take it patch by patch (as if you've never seen it)
+> > > ordering is messed up (the same would apply to everyone after a while
+> > > when it's forgotten)
+> > > 
+> > > So I'd strongly suggest to restructure the series (especially 2-6/14).
+> > > re sum up my comments wrt ordering:
+> > > 
+> > > 0  add testcase for HEST table with current HEST as expected blob
+> > >    (currently missing), so that we can be sure that we haven't messed
+> > >    existing tables during refactoring.    
+> 
+> To potentially save time I think Igor is asking that before you do anything
+> at all you plug the existing test hole which is that we don't test HEST
+> at all.   Even after this series I think we don't test HEST. 
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Shivaprasad G Bhat<sbhat@linux.ibm.com>
-Tested-by: Shivaprasad G Bhat<sbhat@linux.ibm.com>
-Message-Id: <20250116-reuse-v20-1-7cb370606368@daynix.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/ppc/spapr_pci.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+On a previous review (v2, I guess), Igor requested me to do the DSDT
+test just before and after the patch which is actually changing its
+content (patch 11). The HEST table is inside DSDT firmware, and it is
+already tested.
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 904227d9aa..b94e4ba131 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1283,8 +1283,7 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
-     PciWalkFdt *p = opaque;
-     int err;
- 
--    if (p->err) {
--        /* Something's already broken, don't keep going */
-+    if (p->err || !pdev->enabled) {
-         return;
-     }
- 
-@@ -1572,6 +1571,14 @@ static void spapr_pci_plug(HotplugHandler *plug_handler,
-     SpaprDrc *drc = drc_from_dev(phb, pdev);
-     uint32_t slotnr = PCI_SLOT(pdev->devfn);
- 
-+    /*
-+     * If DR or the PCI device is disabled we don't need to do anything
-+     * in the case of hotplug or coldplug callbacks.
-+     */
-+    if (!pdev->enabled) {
-+        return;
-+    }
-+
-     g_assert(drc);
- 
-     if (IS_PCI_BRIDGE(plugged_dev)) {
-@@ -1647,6 +1654,11 @@ static void spapr_pci_unplug_request(HotplugHandler *plug_handler,
-     SpaprDrc *drc = drc_from_dev(phb, pdev);
- 
-     g_assert(drc);
-+
-+    if (!drc->dev) {
-+        return;
-+    }
-+
-     g_assert(drc->dev == plugged_dev);
- 
-     if (!spapr_drc_unplug_requested(drc)) {
--- 
-MST
+> You add
+> a stub hest and exclusion but then in patch 12 the HEST stub is deleted whereas
+> it should be replaced with the example data for the test.
+
+This was actually a misinterpretation from my side: patch 10 adds the
+etc/hardware_errors table (mistakenly naming it as HEST), but this
+was never tested. For the next submission, I'll drop etc/hardware_errors
+table from patches 10 and 12.
+
+> That indeed doesn't address testing the error data storage which would be
+> a different problem.
+> > 
+> > Not sure if I got this one. The HEST table is part of etc/acpi/tables,
+> > which is already tested, as you pointed at the previous reviews. Doing
+> > changes there is already detected. That's basically why we added patches
+> > 10 and 12:
+> > 
+> > 	[PATCH v3 10/14] tests/acpi: virt: allow acpi table changes for a new table: HEST
+> > 	[PATCH v3 12/14] tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
+> > 
+> > What tests don't have is a check for etc/hardware_errors firmware inside 
+> > tests/data/acpi/aarch64/virt/, but, IMO, we shouldn't add it there.
+> > 
+> > See, hardware_errors table contains only some skeleton space to
+> > store:
+> > 
+> > 	- 1 or more error block address offsets;
+> > 	- 1 or more read ack register;
+> > 	- 1 or more HEST source entries containing CPER blocks.
+> > 
+> > There's nothing there to be actually checked: it is just some
+> > empty spaces with a variable number of fields.
+> > 
+> > With the new code, the actual number of CPER blocks and their
+> > corresponding offsets and read ack registers can be different on 
+> > different architectures. So, for instance, when we add x86 support,
+> > we'll likely start with just one error source entry, while arm will
+> > have two after this changeset.
+> > 
+> > Also, one possibility to address the issues reported by Gavin Shan at
+> > https://lore.kernel.org/qemu-devel/20250214041635.608012-1-gshan@redhat.com/
+> > would be to have one entry per each CPU. So, the size of such firmware
+> > could be dependent on the number of CPUs.
+> > 
+> > So, adding any validation to it would just cause pain and probably
+> > won't detect any problems.  
+> 
+> If we did do this the test would use a fixed number of CPUs so
+> would just verify we didn't break a small number of variants. Useful
+> but to me a follow up to this series not something that needs to
+> be part of it - particularly as Gavin's work may well change that!
+
+I don't think that testing etc/hardware_errors would detect any
+regressions. It will just create a test scenario that will require
+constant changes, as adding any entry to HEST would hit it. 
+
+Besides that, I don't think adding support for it would be a simple
+matter of adding another table. See, after this series, there are two 
+different scenarios for the /etc/hardware_errors:
+
+- one with a single GHESv2 entry, for virt-9.2;
+- another one with two GHESv2 entries for virt-10.0 and above that
+  will dynamically change its size (starting from 2) depending on
+  the features we add, and if we'll have one entry per CPU or not.
+
+Right now, the tests there are only for "virt-latest": there's no
+test directory for "virt-9.2". Adding support for virt-legacy will 
+very likely require lots of changes there at the test infrastructure,
+as it will require some virt migration support. 
+
+> > What could be done instead is to have a different type of tests that
+> > would use the error injection script to check if regressions are 
+> > introduced after QEMU 10.0. Such new kind of test would require
+> > this series to be merged first. It would also require the usage of
+> > an OSPM image with some testing tools on it. This is easier said 
+> > than done, as besides the complexity of having an OSPM test image,
+> > such kind of tests would require extra logic, specially if it would
+> > check regressions for SEA and other notification sources.
+> >   
+> Agreed that a more end to end test is even better, but those are
+> quite a bit more complex so definitely a follow up.
+
+Yes, but it could be simpler than modifying ACPI tests to handle
+migration.
+
+The way I see is that such kind of integration could be done by some
+gitlab workflow that would run an error injection script inside a
+pre-defined image emulating both virt-9.2 and virt-latest and checking
+if the HEST tables were properly generated for both SEA and GED
+sources.
+
+This is probably easier for GED, as the QMP interface already
+detects that the read ack register was changed by the OSPM. For
+SEA, it may require either some additional instrumentation or to
+capture OSPM logs.
+
+Anyway, ether way, a change like that is IMO outside the escope of
+this series, as it will require lots of unrelated changes.
+
+Regards,
+Mauro
 
 
