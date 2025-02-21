@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813E5C021B2
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 00:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B01C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 00:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlGfS-00053B-BZ; Thu, 20 Feb 2025 19:13:23 -0500
+	id 1tlH3i-0000K9-C9; Thu, 20 Feb 2025 19:38:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGfG-00051k-76; Thu, 20 Feb 2025 19:13:10 -0500
-Received: from dedi548.your-server.de ([85.10.215.148])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlH3f-0000JI-IJ
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 19:38:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGfE-0000sg-4x; Thu, 20 Feb 2025 19:13:09 -0500
-Received: from sslproxy08.your-server.de ([78.47.166.52])
- by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGf8-000KOX-0n; Fri, 21 Feb 2025 01:13:02 +0100
-Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
- by sslproxy08.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGf7-000JRD-1T; Fri, 21 Feb 2025 01:13:02 +0100
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id A0FA348005E;
- Fri, 21 Feb 2025 01:13:01 +0100 (CET)
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id ijG22iZnNhgk; Fri, 21 Feb 2025 01:13:01 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 22744480068;
- Fri, 21 Feb 2025 01:13:01 +0100 (CET)
-X-Virus-Scanned: amavis at zimbra.eb.localhost
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id FgRWrhI-TE-R; Fri, 21 Feb 2025 01:13:01 +0100 (CET)
-Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
- by mail.embedded-brains.de (Postfix) with ESMTP id F0AD548005E;
- Fri, 21 Feb 2025 01:13:00 +0100 (CET)
-Date: Fri, 21 Feb 2025 01:13:00 +0100 (CET)
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Conor Dooley <conor@kernel.org>, qemu-devel <qemu-devel@nongnu.org>, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Bin Meng <bin.meng@windriver.com>, 
- alistair francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
-Message-ID: <1920480470.18351.1740096780484.JavaMail.zimbra@embedded-brains.de>
-In-Reply-To: <ade78f31-5279-4862-acdd-15f083a000e2@linaro.org>
-References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
- <20250220-reggae-hardness-907e385516d8@spud>
- <ade78f31-5279-4862-acdd-15f083a000e2@linaro.org>
-Subject: Re: [PATCH 0/5] Improve Microchip Polarfire SoC customization
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlH3c-00044u-TM
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 19:38:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740098298;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DTn1LCk4GJoiCgYp7w6Sb2gUH187SBZedw8U53PVVhA=;
+ b=WhCDbQBZRkCOO/Ycbm4UrWWxtXbffcEwyphyMiMHJ6KLgsNLEWeMrTOuhox+2QreAo3x6S
+ yuuoxIy9WCkuQ2vXTgrJ7mEJ64X5w9i345S78YNSsz//74NstpwzxPI+a92sJaToOksce1
+ YcTAcF2qeCw3ZLAcetiXlPdxFhW6ojA=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-bXXfE9tWMMieoZBU0RjVJQ-1; Thu, 20 Feb 2025 19:38:16 -0500
+X-MC-Unique: bXXfE9tWMMieoZBU0RjVJQ-1
+X-Mimecast-MFC-AGG-ID: bXXfE9tWMMieoZBU0RjVJQ_1740098296
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-abb8e0944bfso159189866b.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 16:38:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740098293; x=1740703093;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DTn1LCk4GJoiCgYp7w6Sb2gUH187SBZedw8U53PVVhA=;
+ b=b/uPHX+5CT9on/QhArrOXFuXYL0QRVyTBTYy/Apcf+nMrbL2UQj5gaUoLHE5caWR6d
+ NLDs+IN9svJJSi/D/9FgEGoAjz+Ja/KLEo2RWpiLhgtQqmtFN4A2xiDDYZmwpEAJN2Vm
+ NsCsUhpFvaacw4QglHcah3lKy7JDuTxC4kA1JC5cN5duDIs29fJRKIXpA8o1vjBQ3qNx
+ 61NvBW5AXZkU6Os36yUsyWb1j9QvoTWLbi/axXzAnMUtTd4Qs6LW+8KWmQEvrlXXamAM
+ HX2hMltM+JDl9hBE96KuB7Y3/98Xd4xYfOmIsR0eyj6yColptq9G/2EmEUzxvVHyg2Uz
+ IIPA==
+X-Gm-Message-State: AOJu0Yw7fPl0eL5I3d2sCmjUjoO6yi1zQprjJJxGnO5OoVolkjO54Pr1
+ 8ZHm1jpG+72mjg7ijvodxu3VE5v3diEbSlHPOcl1RDXvcXx/VXBGNgaoMj6HaL+/PDHFtMYRgsS
+ 9/+vKfT5QhhWgaaFW5qHFDKFFDVYjINhqt+LyhTeyKmvRXEuvb+5b
+X-Gm-Gg: ASbGncsjETFmNlW+oSDdRIoExPiPQFIhpukxbHg9wa/sOr6Ka79zCVhNCUsXhXb9T3D
+ 7DftiQK13Sh63AZ5T5hN/G3ukjGTYUxtEtrxWjuc5ttdn7PtXL2+O5eRU2DY/BYuGpfq1C4K0V3
+ 017tazKIsgk/0Lytk3qIGZv6A3gQieHgMNZvZb1AVEWdv/2LLkr2tOVi7lKa4YlXpruJgwPmjSl
+ /q07QHM/MRrPo/+6jWGTnAM2HmqjTnTZhQPqArbXPlkfZo6in+W/Zb2T21Rr+uG5QI+RA==
+X-Received: by 2002:a17:906:30cf:b0:ab7:d537:91cb with SMTP id
+ a640c23a62f3a-abc099bc179mr113762566b.7.1740098292652; 
+ Thu, 20 Feb 2025 16:38:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrZDtZAjXcbgai/8/Tb5Cbb2TeVjAErX3qnmlsZ4JlEA+OpoIupzba5AXHD+lxut0i61HrZw==
+X-Received: by 2002:a17:906:30cf:b0:ab7:d537:91cb with SMTP id
+ a640c23a62f3a-abc099bc179mr113761466b.7.1740098292217; 
+ Thu, 20 Feb 2025 16:38:12 -0800 (PST)
+Received: from redhat.com ([2.55.163.174]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abb4d3ef3c0sm1200446466b.41.2025.02.20.16.38.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 16:38:11 -0800 (PST)
+Date: Thu, 20 Feb 2025 19:38:07 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ marcel.apfelbaum@gmail.com, jon.grimm@amd.com,
+ santosh.shukla@amd.com, vasant.hegde@amd.com, Wei.Huang2@amd.com,
+ bsd@redhat.com, berrange@redhat.com, joao.m.martins@oracle.com,
+ alejandro.j.jimenez@oracle.com
+Subject: Re: [PATCH v3 1/2] hw/i386/amd_iommu: Isolate AMDVI-PCI from
+ amd-iommu device to allow full control over the PCI device creation
+Message-ID: <20250220193726-mutt-send-email-mst@kernel.org>
+References: <20250212054450.578449-1-suravee.suthikulpanit@amd.com>
+ <20250212054450.578449-2-suravee.suthikulpanit@amd.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [192.168.96.204]
-X-Mailer: Zimbra 10.1.5_GA_4724 (ZimbraWebClient - FF128
- (Linux)/10.1.5_GA_4734)
-Thread-Topic: Improve Microchip Polarfire SoC customization
-Thread-Index: GvfhjsHXoypQemeuaUOQEk72XQRo9Q==
-X-Authenticated-Sender: smtp-embedded@poldi-networks.de
-X-Virus-Scanned: Clear (ClamAV 1.0.7/27555/Thu Feb 20 10:43:53 2025)
-Received-SPF: pass client-ip=85.10.215.148;
- envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250212054450.578449-2-suravee.suthikulpanit@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,93 +110,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
------ Am 20. Feb 2025 um 23:29 schrieb Philippe Mathieu-Daud=C3=A9 philmd@l=
-inaro.org:
+On Wed, Feb 12, 2025 at 05:44:49AM +0000, Suravee Suthikulpanit wrote:
+> Current amd-iommu model internally creates an AMDVI-PCI device. Here is
+> a snippet from info qtree:
+> 
+>   bus: main-system-bus
+>     type System
+>     dev: amd-iommu, id ""
+>       xtsup = false
+>       pci-id = ""
+>       intremap = "on"
+>       device-iotlb = false
+>       pt = true
+>     ...
+>     dev: q35-pcihost, id ""
+>       MCFG = -1 (0xffffffffffffffff)
+>       pci-hole64-size = 34359738368 (32 GiB)
+>       below-4g-mem-size = 134217728 (128 MiB)
+>       above-4g-mem-size = 0 (0 B)
+>       smm-ranges = true
+>       x-pci-hole64-fix = true
+>       x-config-reg-migration-enabled = true
+>       bypass-iommu = false
+>       bus: pcie.0
+>         type PCIE
+>         dev: AMDVI-PCI, id ""
+>           addr = 01.0
+>           romfile = ""
+>           romsize = 4294967295 (0xffffffff)
+>           rombar = -1 (0xffffffffffffffff)
+>           multifunction = false
+>           x-pcie-lnksta-dllla = true
+>           x-pcie-extcap-init = true
+>           failover_pair_id = ""
+>           acpi-index = 0 (0x0)
+>           x-pcie-err-unc-mask = true
+>           x-pcie-ari-nextfn-1 = false
+>           x-max-bounce-buffer-size = 4096 (4 KiB)
+>           x-pcie-ext-tag = true
+>           busnr = 0 (0x0)
+>           class Class 0806, addr 00:01.0, pci id 1022:0000 (sub 1af4:1100)
+> 
+> This prohibits users from specifying the PCI topology for the amd-iommu device,
+> which becomes a problem when trying to support VM migration since it does not
+> guarantee the same enumeration of AMD IOMMU device.
+> 
+> Therfore, decouple the AMDVI-PCI from amd-iommu device and introduce pci-id
+> parameter to link between the two devices.
+> 
+> For example:
+>   -device AMDVI-PCI,id=iommupci0,bus=pcie.0,addr=0x05 \
+>   -device amd-iommu,intremap=on,pt=on,xtsup=on,pci-id=iommupci0 \
+> 
+> For backward-compatibility, internally create the AMDVI-PCI device if not
+> specified on the CLI.
+> 
+> Co-developed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-> Hi Conor,
->=20
-> On 20/2/25 19:30, Conor Dooley wrote:
->> +cc qemu-riscv, Alistar.
->>=20
->> On Fri, Feb 14, 2025 at 07:24:37AM +0100, Sebastian Huber wrote:
->>> Booting the microchip-icicle-kit machine using the latest PolarFire SoC
->>> Hart Software Services (HSS) no longer works since Qemu lacks support
->>> for several registers (clocks, DRAM controller). Also reading from the
->>> SDCard does not work currently.
->>=20
->> On that note, I think the inaccurate docs about polarfire should be
->> removed. There's a wiki page here with dead links, or links to things
->> that do not work anymore:
->> https://wiki.qemu.org/Documentation/Platforms/RISCV#Microchip_PolarFire_=
-SoC_Icicle_Kit
->> I think the whole section should be removed, find it kinda odd that
->> there's a polarfire section but not for any other board. Either way,
->> it's talking about something that just does not work, the current HSS
->> and Yocto don't boot.
->>=20
->> There's also a docs page here:
->> https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
->> that has a copy of the table your patch 4 modifies, that probably should
->> be updated to match your changes.
->>=20
->> In a similar vein to the wiki, it talks about the HSS and booting a
->> yocto wic image. I think those should be deleted since they don't work.
->>=20
->> Alistar/Other RISC-V folks, what do you think? Bin wrote the port but
->> seems to be AFK and I don't have the capacity to fix any of that stuff
->> on top of what I already do in my spare time - do you agree that
->> deleting the now inaccurate docs makes sense?
->>=20
->>> In order to allow tests runs for real-time kernels such as RTEMS and
->>> Zephyr, improve the boot customization. This patch set enables a direct
->>> run of kernel executables, for example:
->>>
->>> qemu-system-riscv64 -no-reboot -nographic \
->>>    -serial null -serial mon:stdio \
->>>    -smp 2 \
->>>    -bios none \
->>>    -machine microchip-icicle-kit,clint-timebase-frequency=3D10000000 \
->>>    -kernel rtos.elf
->>=20
->> The series breaks my usage:
->> qemu//build/qemu-system-riscv64 -M microchip-icicle-kit \
->>          -m 3G -smp 5 \
->>          -kernel vmlinux.bin \
->>          -dtb riscvpc.dtb \
->>          -initrd initramfs.cpio.gz \
->>          -display none -serial null \
->>          -serial mon:stdio \
->>          -D qemu.log -d unimp
->> opensbi-riscv64-generic-fw_dynamic.bin: No such file or directory
->> qemu-system-riscv64: could not load firmware
->> 'opensbi-riscv64-generic-fw_dynamic.bin'
->> make: *** [Makefile:305: qemu-icicle] Error 1
->>=20
->> Figure it is likely to be your patch 4? The file does exist, so probably
->> some sort of path-to-it issues?
->=20
-> Maybe missing the -L option?
->=20
->   -L path         set the directory for the BIOS, VGA BIOS and keymaps
 
-It was an error in patch 4/5. I sent a v2 version of it.
+breaks build:
 
-You have to find the firmware, before you can load it.
+https://gitlab.com/mstredhat/qemu/-/jobs/9202802751
 
---=20
-embedded brains GmbH & Co. KG
-Herr Sebastian HUBER
-Dornierstr. 4
-82178 Puchheim
-Germany
-email: sebastian.huber@embedded-brains.de
-phone: +49-89-18 94 741 - 16
-fax:   +49-89-18 94 741 - 08
+	./hw/i386/amd_iommu.c: In function ‘amdvi_sysbus_realize’:
+../hw/i386/amd_iommu.c:1616:18: error: unused variable ‘dc’ [-Werror=unused-variable]
+ 1616 |     DeviceClass *dc = (DeviceClass *) object_get_class(OBJECT(dev));
+      |                  ^~
+cc1: all warnings being treated as errors
 
-Registergericht: Amtsgericht M=C3=BCnchen
-Registernummer: HRB 157899
-Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
-=C3=B6rfler
-Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
-https://embedded-brains.de/datenschutzerklaerung/
+
+
+> ---
+>  hw/i386/acpi-build.c |  8 +++----
+>  hw/i386/amd_iommu.c  | 53 +++++++++++++++++++++++++++-----------------
+>  hw/i386/amd_iommu.h  |  3 ++-
+>  3 files changed, 39 insertions(+), 25 deletions(-)
+> 
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 53b7306b43..e70eeaf577 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -2333,10 +2333,10 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+>      build_append_int_noprefix(table_data, ivhd_blob->len + 24, 2);
+>      /* DeviceID */
+>      build_append_int_noprefix(table_data,
+> -                              object_property_get_int(OBJECT(&s->pci), "addr",
+> +                              object_property_get_int(OBJECT(s->pci), "addr",
+>                                                        &error_abort), 2);
+>      /* Capability offset */
+> -    build_append_int_noprefix(table_data, s->pci.capab_offset, 2);
+> +    build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+>      /* IOMMU base address */
+>      build_append_int_noprefix(table_data, s->mr_mmio.addr, 8);
+>      /* PCI Segment Group */
+> @@ -2368,10 +2368,10 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+>      build_append_int_noprefix(table_data, ivhd_blob->len + 40, 2);
+>      /* DeviceID */
+>      build_append_int_noprefix(table_data,
+> -                              object_property_get_int(OBJECT(&s->pci), "addr",
+> +                              object_property_get_int(OBJECT(s->pci), "addr",
+>                                                        &error_abort), 2);
+>      /* Capability offset */
+> -    build_append_int_noprefix(table_data, s->pci.capab_offset, 2);
+> +    build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+>      /* IOMMU base address */
+>      build_append_int_noprefix(table_data, s->mr_mmio.addr, 8);
+>      /* PCI Segment Group */
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 6b13ce894b..0f552bafa0 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -167,11 +167,11 @@ static void amdvi_generate_msi_interrupt(AMDVIState *s)
+>  {
+>      MSIMessage msg = {};
+>      MemTxAttrs attrs = {
+> -        .requester_id = pci_requester_id(&s->pci.dev)
+> +        .requester_id = pci_requester_id(&s->pci->dev)
+>      };
+>  
+> -    if (msi_enabled(&s->pci.dev)) {
+> -        msg = msi_get_message(&s->pci.dev, 0);
+> +    if (msi_enabled(&s->pci->dev)) {
+> +        msg = msi_get_message(&s->pci->dev, 0);
+>          address_space_stl_le(&address_space_memory, msg.address, msg.data,
+>                               attrs, NULL);
+>      }
+> @@ -239,7 +239,7 @@ static void amdvi_page_fault(AMDVIState *s, uint16_t devid,
+>      info |= AMDVI_EVENT_IOPF_I | AMDVI_EVENT_IOPF;
+>      amdvi_encode_event(evt, devid, addr, info);
+>      amdvi_log_event(s, evt);
+> -    pci_word_test_and_set_mask(s->pci.dev.config + PCI_STATUS,
+> +    pci_word_test_and_set_mask(s->pci->dev.config + PCI_STATUS,
+>              PCI_STATUS_SIG_TARGET_ABORT);
+>  }
+>  /*
+> @@ -256,7 +256,7 @@ static void amdvi_log_devtab_error(AMDVIState *s, uint16_t devid,
+>  
+>      amdvi_encode_event(evt, devid, devtab, info);
+>      amdvi_log_event(s, evt);
+> -    pci_word_test_and_set_mask(s->pci.dev.config + PCI_STATUS,
+> +    pci_word_test_and_set_mask(s->pci->dev.config + PCI_STATUS,
+>              PCI_STATUS_SIG_TARGET_ABORT);
+>  }
+>  /* log an event trying to access command buffer
+> @@ -269,7 +269,7 @@ static void amdvi_log_command_error(AMDVIState *s, hwaddr addr)
+>  
+>      amdvi_encode_event(evt, 0, addr, info);
+>      amdvi_log_event(s, evt);
+> -    pci_word_test_and_set_mask(s->pci.dev.config + PCI_STATUS,
+> +    pci_word_test_and_set_mask(s->pci->dev.config + PCI_STATUS,
+>              PCI_STATUS_SIG_TARGET_ABORT);
+>  }
+>  /* log an illegal command event
+> @@ -310,7 +310,7 @@ static void amdvi_log_pagetab_error(AMDVIState *s, uint16_t devid,
+>      info |= AMDVI_EVENT_PAGE_TAB_HW_ERROR;
+>      amdvi_encode_event(evt, devid, addr, info);
+>      amdvi_log_event(s, evt);
+> -    pci_word_test_and_set_mask(s->pci.dev.config + PCI_STATUS,
+> +    pci_word_test_and_set_mask(s->pci->dev.config + PCI_STATUS,
+>               PCI_STATUS_SIG_TARGET_ABORT);
+>  }
+>  
+> @@ -1607,26 +1607,45 @@ static void amdvi_sysbus_reset(DeviceState *dev)
+>  {
+>      AMDVIState *s = AMD_IOMMU_DEVICE(dev);
+>  
+> -    msi_reset(&s->pci.dev);
+> +    msi_reset(&s->pci->dev);
+>      amdvi_init(s);
+>  }
+>  
+>  static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+>  {
+> +    DeviceClass *dc = (DeviceClass *) object_get_class(OBJECT(dev));
+>      AMDVIState *s = AMD_IOMMU_DEVICE(dev);
+>      MachineState *ms = MACHINE(qdev_get_machine());
+>      PCMachineState *pcms = PC_MACHINE(ms);
+>      X86MachineState *x86ms = X86_MACHINE(ms);
+>      PCIBus *bus = pcms->pcibus;
+>  
+> -    s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+> -                                     amdvi_uint64_equal, g_free, g_free);
+> +    if (s->pci_id) {
+> +        PCIDevice *pdev = NULL;
+> +        int ret = pci_qdev_find_device(s->pci_id, &pdev);
+>  
+> -    /* This device should take care of IOMMU PCI properties */
+> -    if (!qdev_realize(DEVICE(&s->pci), &bus->qbus, errp)) {
+> -        return;
+> +        if (ret) {
+> +            error_report("Cannot find PCI device '%s'", s->pci_id);
+> +            return;
+> +        }
+> +
+> +        if (!object_dynamic_cast(OBJECT(pdev), TYPE_AMD_IOMMU_PCI)) {
+> +            error_report("Device '%s' must be an AMDVI-PCI device type", s->pci_id);
+> +            return;
+> +        }
+> +
+> +        s->pci = AMD_IOMMU_PCI(pdev);
+> +    } else {
+> +        s->pci = AMD_IOMMU_PCI(object_new(TYPE_AMD_IOMMU_PCI));
+> +        /* This device should take care of IOMMU PCI properties */
+> +        if (!qdev_realize(DEVICE(s->pci), &bus->qbus, errp)) {
+> +            return;
+> +        }
+>      }
+>  
+> +    s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+> +                                     amdvi_uint64_equal, g_free, g_free);
+> +
+>      /* Pseudo address space under root PCI bus. */
+>      x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
+>  
+> @@ -1663,6 +1682,7 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+>  
+>  static const Property amdvi_properties[] = {
+>      DEFINE_PROP_BOOL("xtsup", AMDVIState, xtsup, false),
+> +    DEFINE_PROP_STRING("pci-id", AMDVIState, pci_id),
+>  };
+>  
+>  static const VMStateDescription vmstate_amdvi_sysbus = {
+> @@ -1670,12 +1690,6 @@ static const VMStateDescription vmstate_amdvi_sysbus = {
+>      .unmigratable = 1
+>  };
+>  
+> -static void amdvi_sysbus_instance_init(Object *klass)
+> -{
+> -    AMDVIState *s = AMD_IOMMU_DEVICE(klass);
+> -
+> -    object_initialize(&s->pci, sizeof(s->pci), TYPE_AMD_IOMMU_PCI);
+> -}
+>  
+>  static void amdvi_sysbus_class_init(ObjectClass *klass, void *data)
+>  {
+> @@ -1698,7 +1712,6 @@ static const TypeInfo amdvi_sysbus = {
+>      .name = TYPE_AMD_IOMMU_DEVICE,
+>      .parent = TYPE_X86_IOMMU_DEVICE,
+>      .instance_size = sizeof(AMDVIState),
+> -    .instance_init = amdvi_sysbus_instance_init,
+>      .class_init = amdvi_sysbus_class_init
+>  };
+>  
+> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+> index e0dac4d9a9..ece71ff0b6 100644
+> --- a/hw/i386/amd_iommu.h
+> +++ b/hw/i386/amd_iommu.h
+> @@ -315,7 +315,8 @@ struct AMDVIPCIState {
+>  
+>  struct AMDVIState {
+>      X86IOMMUState iommu;        /* IOMMU bus device             */
+> -    AMDVIPCIState pci;          /* IOMMU PCI device             */
+> +    AMDVIPCIState *pci;         /* IOMMU PCI device             */
+> +    char *pci_id;               /* ID of AMDVI-PCI device, if user created */
+>  
+>      uint32_t version;
+>  
+> -- 
+> 2.34.1
+
 
