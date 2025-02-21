@@ -4,59 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F3CC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 11:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AF9C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 11:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlQpt-0000XA-Fw; Fri, 21 Feb 2025 06:04:49 -0500
+	id 1tlQsF-0001UR-Tk; Fri, 21 Feb 2025 06:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tlQpr-0000Wc-5W; Fri, 21 Feb 2025 06:04:47 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tlQpo-0004Wl-Cw; Fri, 21 Feb 2025 06:04:46 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YznHT31D5z6G83L;
- Fri, 21 Feb 2025 19:01:09 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 02518140382;
- Fri, 21 Feb 2025 19:04:38 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 21 Feb
- 2025 12:04:37 +0100
-Date: Fri, 21 Feb 2025 11:04:35 +0000
-To: Gavin Shan <gshan@redhat.com>
-CC: Igor Mammedov <imammedo@redhat.com>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>, <mst@redhat.com>, <anisinha@redhat.com>,
- <gengdongjiu1@gmail.com>, <peter.maydell@linaro.org>, <pbonzini@redhat.com>,
- <shan.gavin@gmail.com>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: Re: [PATCH 4/4] target/arm: Retry pushing CPER error if necessary
-Message-ID: <20250221110435.00004a3b@huawei.com>
-In-Reply-To: <7caa54df-abe1-4833-bb59-cb83f8241962@redhat.com>
-References: <20250214041635.608012-1-gshan@redhat.com>
- <20250214041635.608012-5-gshan@redhat.com>
- <20250219185518.767a48d9@imammedo.users.ipa.redhat.com>
- <7caa54df-abe1-4833-bb59-cb83f8241962@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tlQsB-0001Tf-NE
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 06:07:11 -0500
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tlQs8-0004vO-4Q
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 06:07:10 -0500
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e549be93d5eso2267080276.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 03:07:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740136026; x=1740740826; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j0iuVL5uRNjEBhv19j5iFrLDzJIsMvGVoVmD/PbvVyM=;
+ b=tnI4i+jqdHQAoSbQUDkmE27Fhp6Kqw/M8QFcxGrmO7DsnkCrbsljVuSGdrTROsLfat
+ KcDtnOWQgy9UDW5cR1bJRmuyRp8f/ZxIDPqhDdrEOiPnAEr+5jiy5jlosFOwaxMffoF7
+ 7QOGQdPpQmI8Y/ENqaT5jZDJ+xDLRadbP/4g6oTCl1SAxWfwWzvV+3GHt00dOoe1kWOx
+ c/ZHt8li4Avfyi/8Wz/rVQjk2LlbYzdtbZ4xe+I+MpE9zJFn0aMK+NU7QMVCoWNj+UFl
+ KuwLmrXnE72fUn+m0dlEHYW7XFzS43mDraWDyrd1cdJG3hn0SQ7Bd9kTEmdxcbMhIkFT
+ muUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740136026; x=1740740826;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j0iuVL5uRNjEBhv19j5iFrLDzJIsMvGVoVmD/PbvVyM=;
+ b=RA/yynStef6JpY78pPnSneW9Y0WlM0XrvTh7A6ZeVdoX9aVNLkHyxUnpgGtJUu3Uoa
+ vNOm8cPzR8bumYyyXsEIApp/H5GF88XKmZ8xsTCcygHxcOX5GT8NeNmiQ/8VrWhqN3XQ
+ aXy/ymjPRpDsq6Xpi8UDq/5DZ+cmZZvYcM41MB8Mlk9ZypbCiIN0+eNMCI1og5FaPvyF
+ hB8zE6VC1F9gnDggqBuDJuu75pZKJhBwj/smnDQi2jNCAAUnp0UxR/DTNfS7DgazIJeB
+ Dh1xCOJkRrVLMFc5qT+FuzieXD7dS4ot9ExZYjxfDWvXavOgECbn7VbvXkvWokhoYuFK
+ kh8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdzdGyRIrVXICzSMz69Mxn0mIilvGkAlFzIZ6NY/fHvXmllPD48i/peVY6rwY7Djuhniy9oz5zs/kd@nongnu.org
+X-Gm-Message-State: AOJu0YwPV8UKUo/0pKIJBg97TKfCBqqQTGq72JRJaR23haRBwpiL5Or/
+ Kx47MJns9hTKfkdDXKTqc0B30qaxMeen2bVHHXSnhD2GMbTAFfmU60wIgsgd2vCLaMxoOJuJuWC
+ NgmZ72Ndgl8SRRV4JPEXRGLVIU7ifBloIT6jMiw==
+X-Gm-Gg: ASbGnct43dh9LnZ8smctl3bIKvAbNg5CZDsiwmIiwiHo/Yb6hsEO0vhdmGaaYk9L6Ul
+ Grk+JWdvWxx9PBmB2z3KiGHJ/ZQ/12h4dVkUDPvs7H86SAIZ4xsB4SZl8YeX/lfktMWL5jx8iOv
+ NHS29T8S1B
+X-Google-Smtp-Source: AGHT+IGkVfCQCiWgAijZabMDhvzMoHvNhaxzdOpdZB/iuv4LRgBX3V4rf+B1zkpNP9suF4jlznuqxVA1kClW2zqHygo=
+X-Received: by 2002:a05:6902:2009:b0:e57:4226:8ae0 with SMTP id
+ 3f1490d57ef6-e5e245ea305mr2019479276.18.1740136026267; Fri, 21 Feb 2025
+ 03:07:06 -0800 (PST)
 MIME-Version: 1.0
+References: <20250204125009.2281315-1-peter.maydell@linaro.org>
+In-Reply-To: <20250204125009.2281315-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 21 Feb 2025 11:06:54 +0000
+X-Gm-Features: AWEUYZnaaduxKBn4Kxvc0587KaFp95ZqpGxb_reG_aFq8vhRnk7oix-28vY84hE
+Message-ID: <CAFEAcA-y7hERhCAE0wyxR=HsCpmq_T3VQVGPW4B4GvwvrMMP0w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] target/arm: Implement SEL2 physical and virtual
+ timers
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,265 +94,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Feb 2025 15:27:36 +1000
-Gavin Shan <gshan@redhat.com> wrote:
+Ping? Patches 1-5 need review here.
 
-> On 2/20/25 3:55 AM, Igor Mammedov wrote:
-> > On Fri, 14 Feb 2025 14:16:35 +1000
-> > Gavin Shan <gshan@redhat.com> wrote:
-> >  =20
-> >> The error -1 is returned if the previously reported CPER error
-> >> hasn't been claimed. The virtual machine is terminated due to
-> >> abort(). It's conflicting to the ideal behaviour that the affected
-> >> vCPU retries pushing the CPER error in this case since the vCPU
-> >> can't proceed its execution.
-> >>
-> >> Move the chunk of code to push CPER error to a separate helper
-> >> report_memory_errors() and retry the request when the return
-> >> value from acpi_ghes_memory_errors() is greater than zero.
-> >>
-> >> Signed-off-by: Gavin Shan <gshan@redhat.com>
-> >> ---
-> >>   target/arm/kvm.c | 31 +++++++++++++++++++++++++------
-> >>   1 file changed, 25 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> >> index 5c0bf99aec..9f063f6053 100644
-> >> --- a/target/arm/kvm.c
-> >> +++ b/target/arm/kvm.c
-> >> @@ -2362,6 +2362,30 @@ int kvm_arch_get_registers(CPUState *cs, Error =
-**errp)
-> >>       return ret;
-> >>   }
-> >>  =20
-> >> +static void report_memory_error(CPUState *c, hwaddr paddr)
-> >> +{
-> >> +    int ret;
-> >> +
-> >> +    while (true) {
-> >> +        /* Retry if the previously report error hasn't been claimed */
-> >> +        ret =3D acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr, =
-true);
-> >> +        if (ret <=3D 0) {
-> >> +            break;
-> >> +        }
-> >> +
-> >> +        bql_unlock();
-> >> +        g_usleep(1000); =20
->=20
-> Igor, thanks for the detailed comments. Sorry for a bit delay of the repl=
-y, I
-> was checking the code to understand it better :)
+thanks
+-- PMM
 
-This is moderately tricky stuff so I'm not 100% sure of some of the things
-I said below, but will be traveling for next few weeks so want to get some
-comments out before that!
-
->=20
-> > even with bql released it's not safe to loop in here.
-> > consider,
-> >    a guest with 2 vcpus
-> >      * vcpu 1 gets SIGBUS due to error
-> >      * vcpu 2 trips over the same error and gets into this loop
-> >      * on guest side vcpu 1 continues to run to handle SEA but
-> >        might need to acquire a lock that vcpu 2 holds
-> >  =20
->=20
-> Agreed.
->=20
-> > GHESv2 error source we support, can report several errors,
-> > currently QEMU supports only 1 'error status block' which
-> > can hold several error records (CPER) (though storage size is limited)
-> >=20
-> > 1:
-> > We can potentially add support for more GHESv2 error sources
-> > with their own Read ACK registers (let's say =3Dmax_cpus)
-> > (that is under assumption that no other error will be
-> > triggered while guest VCPUs handle their own SEA (upto clearing Read AC=
-K))
-
-This one seems straight forward but I'd kind of like to know if real systems
-do this (I'll try and find out about ours).  I don't think there is
-any association available between a cpu and and SEA source, so linux at
-least will just go looking for any that are active on each SEA.
-Locking looks fine but it won't help with performance
-
-> >=20
-> > 2:
-> > Another way could be for QEMU to allocate more error status _blocks_
-> > for the only one error source it has now and try to find
-> > empty status block to inject new error(s).
-
-Let me try to get my head around this one...
-
-Each GHESv2 entry points, indirectly, to a single error status block at a t=
-ime
-(only one address to read that from)  Curious quirk is the length for that
-error status block is fixed as that's just a value in GHESv2 not an indirec=
-tion
-via a register - however I think you can just make it 'big'.
-So what I think you are proposing here is that on read_ack write (which we =
-would
-need to monitor for, the value of the error status address register is upda=
-ted
-to point to next one of a queue of error blocks.
-
-That can work.  I'm not sure it actually gets us anything over just queuing=
- in
-qemu and writing the same error status block.  Those status blocks can cont=
-ain
-multiple Generic Error Data entries, but unless we have a load of them gath=
-ered
-up at time of first notifying the guest, I'm not sure that helps us.
-
-One thing that I'm nervous about is that I can't actually find spec language
-that says that the OS 'must' reread the error status address register on
-each event. That isn't mentioned in the GHESv2 flow description which just =
-says:
-"
-These are the steps the OS must take once detecting an error from a particu=
-lar GHESv2 error source:
-=E2=80=A2 OSPM detects error (via interrupt/exception or polling the block =
-status)
-=E2=80=A2 OSPM copies the error status block
-=E2=80=A2 OSPM clears the block status field of the error status block
-=E2=80=A2 OSPM acknowledges the error via Read Ack register. For example:
-=E2=80=93 OSPM reads the Read Ack register =E2=80=93> X
-=E2=80=93 OSPM writes =E2=80=93> (( X & ReadAckPreserve) | ReadAckWrite)
-"
-
-The linux code is confusing me, but I think it wonderfully changes
-the fixmap on every access as it needs to do an ioremap type operation
-in NMI conditions.
-
-> >   * it can be saturated with high rate of errors (so what do we do in c=
-ase it happens?)
-
-Make it big :)  But sure big just makes the condition unlikely rather than =
-solving it.
-
-> >   * subject to race between clearing/setting Read ACK
-> >      (maybe it can dealt with that on side by keeping internal read_ack=
- counter)
-
-I don't think there are any races as long as we update the register only on=
- clear which
-should I think happen before the next SEA can happen? My understanding, whi=
-ch may
-be wrong, is the OS must just take a copy of the error status block and set=
- the
-read_ack all in the exception handler.
-
-> >=20
-> > 3:
-> > And alternatively, queue incoming errors until read ack is cleared
-> > and then inject pending errors in one go.
-> > (problem with that is that at the moment QEMU doesn't monitor
-> > read ack register memory so it won't notice guest clearing that)
-
-We'd need to monitor it definitely.  Injecting all we have queued up
-in one go here seems like a reasonable optimization over doing them
-one at a time.
-
-> >=20
-> >=20
-> > Given spec has provision for multiple error status blocks/error data en=
-tries
-> > it seems that #2 is an expected way to deal with the problem.
-> >  =20
->=20
-> I would say #1 is the ideal model because the read_ack_register is the bo=
-ttleneck
-> and it should be scaled up to max_cpus. In that way, the bottleneck can b=
-e avoided
-> from the bottom. Another benefit with #1 is the error can be delivered im=
-mediately
-> to the vCPU where the error was raised. This matches with the syntax of S=
-EA to me.
-
-I don't think it helps for the bottleneck in linux at least.  A whole bunch=
- of locks
-are taken on each SEA because of the novel use of the fixmap.  There is onl=
-y one
-VA ever used to access the error status blocks we just change what PA it po=
-ints to
-under a spin lock. Maybe that can be improved on if we can persuade people =
-that error
-handling performance is a thing to care about!
-
->=20
-> #2 still has the risk to saturate the multiple error status blocks if the=
-re are
-> high rate of errors as you said. Besides, the vCPU where read_ack_registe=
-r is acknoledged
-> can be different from the vCPU where the error is raised, violating the s=
-yntax of
-> SEA.
->=20
-> #3's drawback is to violate the syntax of SEA, similar to #2.
->=20
-> However, #2/#3 wouldn't be that complicated to #1. I didn't expect big su=
-rgery to
-> GHES module, but it seems there isn't perfect solution without a big surg=
-ery.
-> I would vote for #1 to resolve the issue from the ground. What do you thi=
-nk, Igor?
-> I'm also hoping Jonathan and Mauro can provide their preference.
-
-Ideally I'd like whatever we choose to look like what a bare metal machine
-does - mostly because we are less likely to hit untested OS paths.
-
->=20
-> > PS:
-> > I'd prefer Mauro's series being merged 1st (once it's resplit),
-> > for it refactors a bunch of original code and hopefully makes
-> > code easier to follow/extend.
-> >  =20
->=20
-> Sure. I won't start the coding until the solution is confirmed. All the f=
-ollowup
-> work will base on Mauro's series.
->=20
-> >> +        bql_lock();
-> >> +    }
-> >> +
-> >> +    if (ret =3D=3D 0) {
-> >> +        kvm_inject_arm_sea(c);
-> >> +    } else {
-> >> +        error_report("Error %d to report memory error", ret);
-> >> +        abort();
-> >> +    }
-> >> +}
-> >> +
-> >>   void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
-> >>   {
-> >>       ram_addr_t ram_addr;
-> >> @@ -2387,12 +2411,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int c=
-ode, void *addr)
-> >>                */
-> >>               if (code =3D=3D BUS_MCEERR_AR) {
-> >>                   kvm_cpu_synchronize_state(c);
-> >> -                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, pa=
-ddr, false)) {
-> >> -                    kvm_inject_arm_sea(c);
-> >> -                } else {
-> >> -                    error_report("failed to record the error");
-> >> -                    abort();
-> >> -                }
-> >> +                report_memory_error(c, paddr);
-> >>               }
-> >>               return;
-> >>           } =20
-> >  =20
->=20
-> Thanks,
-> Gavin
->=20
->=20
-
+On Tue, 4 Feb 2025 at 12:50, Peter Maydell <peter.maydell@linaro.org> wrote=
+:
+>
+> This patchset is a respin of Alex's patches, with some extra fixes
+> for bugs I discovered along the way in our existing code (and
+> a bit of refactoring to make the fixes straightforward). It is:
+>
+> Based-on: 20250130182309.717346-1-peter.maydell@linaro.org
+> ("target/arm: Clean up some corner cases of sysreg traps")
+>
+> because it wants to use the renamed CP_ACCESS_* constants that
+> that patchset introduced.
+>
+> The bugfixes are not super exciting as they mostly are oddball
+> corner cases, but I've cc'd them to stable anyway. The actual
+> implementation of the missing SEL2 timers also should go to stable.
+>
+> Alex Benn=C3=A9e (4):
+>   target/arm: Implement SEL2 physical and virtual timers
+>   target/arm: document the architectural names of our GTIMERs
+>   hw/arm: enable secure EL2 timers for virt machine
+>   hw/arm: enable secure EL2 timers for sbsa machine
+>
+> Peter Maydell (5):
+>   target/arm: Apply correct timer offset when calculating deadlines
+>   target/arm: Don't apply CNTVOFF_EL2 for EL2_VIRT timer
+>   target/arm: Make CNTPS_* UNDEF from Secure EL1 when Secure EL2 is
+>     enabled
+>   target/arm: Always apply CNTVOFF_EL2 for CNTV_TVAL_EL02 accesses
+>   target/arm: Refactor handling of timer offset for direct register
+>     accesses
+>
+>  include/hw/arm/bsa.h       |   2 +
+>  target/arm/cpu.h           |   2 +
+>  target/arm/gtimer.h        |  14 +-
+>  target/arm/internals.h     |   5 +-
+>  hw/arm/sbsa-ref.c          |   2 +
+>  hw/arm/virt.c              |   2 +
+>  target/arm/cpu.c           |   4 +
+>  target/arm/helper.c        | 324 ++++++++++++++++++++++++++++++-------
+>  target/arm/tcg/op_helper.c |   8 +-
+>  9 files changed, 296 insertions(+), 67 deletions(-)
+>
 
