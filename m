@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DC8C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 078F6C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS7H-0006Ps-6H; Fri, 21 Feb 2025 07:26:52 -0500
+	id 1tlS5N-0001qA-Bp; Fri, 21 Feb 2025 07:24:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tlS72-0006CZ-Ed
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:37 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tlS6z-0007YM-Oy
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:35 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-220ecbdb4c2so53971265ad.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:26:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740140791; x=1740745591; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YlUi+5h+dTXEv6y1UjiRTHdMrFHrUViOPWH/ccJ3Rq4=;
- b=SlJmIfaNOEFyWiv+w9voDsKCAA45VLhm+WfGNv4HvDGu6LreyJPPQCkAHRKzMg9+pz
- HbPkfwyYlG9bFtuLOqnsWYZFc5ZsdpvK7AXBGhuvSSSVOYDFcYCYiWLwxdeWBjD1BGiB
- lne/ZoW+Ld//c2w4sGFSW/Fml0Qfwwnojl6Syl3tJlyGeg6Yv53drAbTNJgPJVKh6u7t
- 8t8+4Y7XTvIozIymYnTWEGktY5tFUFuomsRelpTBOgLjEJaJycP9QICkRptBlBlMiey6
- OpxnRDts1qGktxgo6FM3fcJI8cromWlP0NsMdGxestONwQaPhFWg2jlYcIjSSAPdIYIT
- ynUg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5K-0001ZV-7Q
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5F-0007El-Ee
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740140684;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4axH5wnLBbWmf0mZZ4eXxBRYfBLFNqsbFSXKtM6Ca1c=;
+ b=YlvpTvdMAA9MYzvYwmW8GvXOHNR4mSwwg9Qz/XmmAHOhd2BiM/MXwPl33L1qK2+c6KiJY/
+ vLnZFujYeeC4TzEioo6UrGjktPngwUHatqi2BiT1clhD7Dac+EGMBlANdG6L8/uYBpQvbZ
+ NYWTh1Rb3PeR8vUgm5/NRHmTDQlulHA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-215-KD7lBZHgMmmDDH1L0mXhFQ-1; Fri, 21 Feb 2025 07:24:43 -0500
+X-MC-Unique: KD7lBZHgMmmDDH1L0mXhFQ-1
+X-Mimecast-MFC-AGG-ID: KD7lBZHgMmmDDH1L0mXhFQ_1740140682
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f4c0c1738so1762004f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140791; x=1740745591;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YlUi+5h+dTXEv6y1UjiRTHdMrFHrUViOPWH/ccJ3Rq4=;
- b=cKXPaIF8vyxRuU0rHyEDM81X0zYtXiJwggheRg679EPHx8dExUhkIUFwaGrBgrnLQY
- F0kX6b2s5kP0yuQAjCMBG/GeA/G8nRSJj27I0eb6VeBsLaRNZWpnxmwEpRDQvG1Bviw4
- wMeKIXLVTeCQFph8YicJqFrYxvGgHaJQ9zIjX21L0KbQOYHaUHhgltJduQtGiHmqJGpi
- Hw540GwD6x4J9x6d1XGuR9FrYz/v7KAtue1V0MgTZngF14IG3xcMZpoYc67qcfHFg8Zh
- Lm+l/BLEE9eXbuiMKO9hi7OEkyf5skT4SZWJ1GhsJciF7y5u3YHcsQq3QpF2lIpl5nx9
- 1GTg==
-X-Gm-Message-State: AOJu0Yy0MABpnZnTJXQnsrWrOud/ZZ4SOV5eVQ5g3D0oyEn8Pd5wwn1s
- AAY5y2Giey26xfgl3mWYh3o3+s0FwLRdHFoB6aRb0oBObpl+1iqylxRik2vzchmOxpk85jWFzUY
- H
-X-Gm-Gg: ASbGncsBU6krbGKxDBeWoPnfo7uABdjymWMVrmlVHDDEFiImAnShNjnLTUKYPy+4zf9
- f5CpMkJYoMuX/IQ/kIWTSjHVfqCijZXjTwGy5RTm+vQiz2xb5CZn0UZz293rjnWDo5aLj+AYBjZ
- eC1NR0qtVnhjAMoAz5f8XECNqns1KTPtlXJGT3CG4qN2Z1aiJ/sPY4V07MbuwwWq3ATatuRtKR3
- wO96bNRR0yC3nGTwDeMdfH3tmWmsmCyHtdAzPNi4qZNeViHEB2rUYnKGnydBJNlhMMV11SUXwiC
- KblSBvi2EC6o937YwLcGifImLp4BPpomuGM/YYz7hFHkUrgyjtUCuA==
-X-Google-Smtp-Source: AGHT+IFs+lcVpRK96QUKNEET6MbFYyxW+cnk2RRwLTjgmka03HhHmE+oqXYsBQoOzNPeF5bu43uJ9g==
-X-Received: by 2002:a17:903:228d:b0:21f:1bd:efd4 with SMTP id
- d9443c01a7336-221a0ed7e4cmr43304115ad.19.1740140790922; 
- Fri, 21 Feb 2025 04:26:30 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([187.11.154.120])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d545e39bsm137349855ad.124.2025.02.21.04.26.28
+ d=1e100.net; s=20230601; t=1740140682; x=1740745482;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4axH5wnLBbWmf0mZZ4eXxBRYfBLFNqsbFSXKtM6Ca1c=;
+ b=uHSeeLz8c3eH7RO1YwXJb4kwtsI8bRNLCA1yoXPalCf8gih/yNEAFNyq6memIrw6HB
+ uROpIO+vn18mHZmTlmH/kbqi4pQWcsMV3QJksu/7S7JM0tjc22Wqlv63+rQYi2rQofN7
+ KCgCm3GJ5o5j3lCuC9uCKqzoeD0UqM+vWCwpw51BpJUDNj+edx9IVRjDa/7lMhbSFPGk
+ IAfaH3hkjC5dNcym3J6F/F+sGFKEkaD+Lu/sA94ivXExQK7t1ldd4L+GAAL7oLWidDGh
+ KTErGwwLUk2/YkVWDBbyFZMpcTVbIxIhvYw3vY8LxUuZa2lAE0t+JOy0R4KIQHxDtDBG
+ 0E2A==
+X-Gm-Message-State: AOJu0YynasEF/j0hDK4eoCrqsHg6p9u/S+O5naIZM6VmXCw+Pdk/o8BH
+ +/OXZYoiPdGRziviJkUBIU455lnurw/xaNbiSt8fISeE+4Cv1Ab8TYyu+rNs74NK0iuUlM/YWkV
+ DLhhDdONxvPBrkkWp+2ArmSnDaSDe6I4jt9xGFoBVGXeU9uRmmi9+97yDTPDpnYjKxvHIL+s6RX
+ dBLkK3s/kaD1qZO0Z+82bKl9JiBWBTrA==
+X-Gm-Gg: ASbGncvcSh3b/Es5t8fgqmzVjPLXkm4LBnlgs4F6B2KePXd59ESSwXrOk8DV8jR3Thc
+ rr7DFjhDfFFSDF3wInxnYewTeZ6uBCjaCnDsAyE4ZCjhkXYy7kMKu9cLBiJH66J0wq8N3nwlQfS
+ bAdGLmDFZVIljXY1PcwKOv2B9+pamiqAyufpO5mVLpeCxRoK3mzCwbWWmUeiIWYiM66dRl901gA
+ 3iwsJDop3axRKh1ZxkhQD8ZEJFkLMlsdFnHYt2+EwQgINBcs00/9lCifmH16vliKIdEm1Ro05Gc
+ 2vANxQ==
+X-Received: by 2002:a05:6000:1fa5:b0:38f:2ddd:a1bb with SMTP id
+ ffacd0b85a97d-38f6e7572a4mr2601437f8f.8.1740140681914; 
+ Fri, 21 Feb 2025 04:24:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFgb2QoSwEnpVJ6E6eXVMY4HLbaa7xmHAySLJUcGX1p5ru24YWlfiZSBl/WBKtwdlr3HT49Jw==
+X-Received: by 2002:a05:6000:1fa5:b0:38f:2ddd:a1bb with SMTP id
+ ffacd0b85a97d-38f6e7572a4mr2601407f8f.8.1740140681398; 
+ Fri, 21 Feb 2025 04:24:41 -0800 (PST)
+Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259f7b68sm22889517f8f.85.2025.02.21.04.24.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:26:30 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ Fri, 21 Feb 2025 04:24:40 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:38 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 0/3] target/riscv/kvm: reset time changes
-Date: Fri, 21 Feb 2025 09:26:20 -0300
-Message-ID: <20250221122623.495188-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.48.1
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowang@redhat.com>, Peter Xu <peterx@redhat.com>
+Subject: [PULL 37/41] hw/virtio/virtio-iommu: Migrate to 3-phase reset
+Message-ID: <d261b84d354a41a38336af813f92f636d3fb3f78.1740140520.git.mst@redhat.com>
+References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1740140520.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,31 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Eric Auger <eric.auger@redhat.com>
 
-In this version the following changes were made, based on feedback from
-Drew in v1:
+Currently the iommu may be reset before the devices
+it protects. For example this happens with virtio-net.
 
-- patch 2: reworked. Instead of using a different existing 'env' field
-  to get/put the 'sie' CSR, we're adding a new helper that contains all
-  reset vals for the KVM CSRs we support
-- patch 3: reworked. Add two KVM CSRs from the KVM UAPI that we're not
-  using.
+Let's use 3-phase reset mechanism and reset the IOMMU on
+exit phase after all DMA capable devices have been
+reset during the 'enter' or 'hold' phase.
 
-Link to v1: https://lore.kernel.org/qemu-riscv/20250220161313.127376-1-dbarboza@ventanamicro.com/ 
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-Patches based on alistair/riscv-to-apply.next. 
+Message-Id: <20250218182737.76722-2-eric.auger@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/virtio/virtio-iommu.c | 14 ++++++++++----
+ hw/virtio/trace-events   |  2 +-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-Daniel Henrique Barboza (3):
-  target/riscv/cpu: ignore TCG init for KVM CPUs in reset_hold
-  target/riscv/kvm: add kvm_riscv_reset_regs_csr()
-  target/riscv/kvm: add missing KVM CSRs
-
- target/riscv/cpu.c         |  9 +++++----
- target/riscv/kvm/kvm-cpu.c | 32 +++++++++++++++++++++-----------
- 2 files changed, 26 insertions(+), 15 deletions(-)
-
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index f41104a952..b6e7e01ef7 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1504,11 +1504,11 @@ static void virtio_iommu_device_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
+ }
+ 
+-static void virtio_iommu_device_reset(VirtIODevice *vdev)
++static void virtio_iommu_device_reset_exit(Object *obj, ResetType type)
+ {
+-    VirtIOIOMMU *s = VIRTIO_IOMMU(vdev);
++    VirtIOIOMMU *s = VIRTIO_IOMMU(obj);
+ 
+-    trace_virtio_iommu_device_reset();
++    trace_virtio_iommu_device_reset_exit();
+ 
+     if (s->domains) {
+         g_tree_destroy(s->domains);
+@@ -1668,6 +1668,7 @@ static void virtio_iommu_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     device_class_set_props(dc, virtio_iommu_properties);
+     dc->vmsd = &vmstate_virtio_iommu;
+@@ -1675,7 +1676,12 @@ static void virtio_iommu_class_init(ObjectClass *klass, void *data)
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+     vdc->realize = virtio_iommu_device_realize;
+     vdc->unrealize = virtio_iommu_device_unrealize;
+-    vdc->reset = virtio_iommu_device_reset;
++
++    /*
++     * Use 'exit' reset phase to make sure all DMA requests
++     * have been quiesced during 'enter' or 'hold' phase
++     */
++    rc->phases.exit = virtio_iommu_device_reset_exit;
+     vdc->get_config = virtio_iommu_get_config;
+     vdc->set_config = virtio_iommu_set_config;
+     vdc->get_features = virtio_iommu_get_features;
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 04e36ae047..76f0d458b2 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -108,7 +108,7 @@ virtio_pci_notify_write(uint64_t addr, uint64_t val, unsigned int size) "0x%" PR
+ virtio_pci_notify_write_pio(uint64_t addr, uint64_t val, unsigned int size) "0x%" PRIx64" = 0x%" PRIx64 " (%d)"
+ 
+ # hw/virtio/virtio-iommu.c
+-virtio_iommu_device_reset(void) "reset!"
++virtio_iommu_device_reset_exit(void) "reset!"
+ virtio_iommu_system_reset(void) "system reset!"
+ virtio_iommu_get_features(uint64_t features) "device supports features=0x%"PRIx64
+ virtio_iommu_device_status(uint8_t status) "driver status = %d"
 -- 
-2.48.1
+MST
 
 
