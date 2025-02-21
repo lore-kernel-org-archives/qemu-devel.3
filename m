@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613FCC021B6
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 19:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD73C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 19:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlYPV-0006Ht-KB; Fri, 21 Feb 2025 14:10:05 -0500
+	id 1tlYPY-0006LW-Vy; Fri, 21 Feb 2025 14:10:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlYPT-0006GQ-Mh
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:10:03 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tlYPX-0006Jw-HH
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:10:07 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlYPR-00044l-KO
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:10:03 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-439a1e8ba83so23969945e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 11:10:01 -0800 (PST)
+ id 1tlYPU-00046D-Gd
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:10:07 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4398ec2abc2so21555505e9.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 11:10:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740164999; x=1740769799; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=9+rzFkAvq1fT8VWgYWTbYKbxozjg166B260cDEJsA2M=;
- b=vlyDM0fX++eZN7A76pAEBnCVdTWLarrZHG6RnVAGtnRZ2nFqlSlZlclS4CMRbEi8ww
- yx4QOH1rKDxEAOI5dz8F6ht8nWSb8YTomBun2YWg+uqsLDABHw4OReOsWAu0jWDUKAZ3
- 1Yxir2d73mYd085+lkgCTlJWJyVPvM5wgI6NfXFUpLFvIpb9UxQkrJ92RjREwOGU2R6l
- lX2U3DnlcDMQzO2Wsn20a41DQ0Lxm6WrVlQ9ViuNDqlIjTJp09YD9IANyxtu9CqbhdDW
- eu1jzZMsc5t41fFdtOABRYnFR1rhYKWsVvmq3KzneixKMyCDBtSJ+qOT1srhXovsGeTg
- j8YA==
+ d=linaro.org; s=google; t=1740165002; x=1740769802; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=psLz427g16MJMWGLUupBo7uTcJrzhpucl+zyFztvGko=;
+ b=evOd6rypVOoh/RUOIn9UrTHnoAzmIIPft/1d2PLkgQ2jc4RtCHyOog87Q7q2JxKO6u
+ fbdfrlc/fnyT1p34vjPWRNPw8qIB5RDHjcuV5czzCmKRBKnedniRf6G4iUX1rMWIki3O
+ zQ/IrDc9rLj+Cyqq6h74wZ+l58kU72BNXAzZ3mj7ETQoWnA44EKMlw+QY9PX1+CnyjS4
+ N8gjvc+o9PLWM7GQmvSnd3vN3XUNUuF37APco18neSFrCxvZKwl55rrWZX2ULNfmXPuO
+ UYZnp7/7EkSogDZPrrsYvtGug20/JybisKHgFMdVFY2Dm2wDqF1ESDWdDcXUpkAKVu+D
+ Qh0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740164999; x=1740769799;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9+rzFkAvq1fT8VWgYWTbYKbxozjg166B260cDEJsA2M=;
- b=m5iKisJkLm8qb6G8Ph1r3A9ACbHH8sdD8ol3mZQTmhN9dpzGrHPwENTdizO4mcILQD
- Il7G271P5wCLkKEzDdVB6gojRU1B3JiMYpQdETa9XBh9tTotRPYC49LLme7ovdNcpixU
- yx0pmuOJlkPIPXTsKj4ozEUwhagKje/P3lk9w4/ouL+tFFSuksCNooMJj/EU331U3e5f
- srtQ/n2KH4QWGsSZEL5J+DQNLdoX/+LkJm15MgmV+h3LvR6LFgx64DFieI6DDUWw+nOn
- TWCHXESIgu0A+mfJ4J302mDCiqQKSL0DMmq5LkTDYBg3hXuBBH1Nx7BZgxY8alK0V08g
- RqFg==
+ d=1e100.net; s=20230601; t=1740165002; x=1740769802;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=psLz427g16MJMWGLUupBo7uTcJrzhpucl+zyFztvGko=;
+ b=T33bl3CgNz8aoUNDYE9MfxqD932iC2RlcnDK6QtovdQvbbSdcJya6kMbS28Tc9KWXa
+ 5Th7kGmpV0GTa9hWNGDhtMn7Zf8pegNlQiGoEpjqTy0vt5mysunCwtG0VZVhHq870wU9
+ VHhpCOQJ7kH3gEpl4fjyYnF8Nd24k/4Dt8v7oBbwMnO7WnT9S7oBBXrwLVw5lSd2AWcF
+ +qQVMP7oRn3UDEpBKSQNeZDy9LZ9GmXE6iJw6BuZQ4HQLKrC7/PEqx54BwaWJp7oW+CM
+ oi3aU8PvxPw/03TWAqhuqm/hYq0lKkj9Rs0H3lUyDeJxbiJYrGsJg9NhXA5BRvRbTzW/
+ 0mYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7hpVAjj9kBbqmIDu5iq+H8tQtrvgMQoQu/uEeAADcxF+QnJanu7PQEmSmUwazTzGm2+IMXknDg4nc@nongnu.org
-X-Gm-Message-State: AOJu0YwB5BdoSdiMwg/ywsVae+4qitwLwwaEpqyL7msCwYOVIBZSno3Z
- xeQE0qd/EtVDOr9p6ZSbsI0pISOsgXtLZTJ/XAv56kROY/tEWoxRIiexSBEDNEw=
-X-Gm-Gg: ASbGnctb9ApeFc5Mg6f/iJo8rOFobxhUApudBjds+cPXy1ru6GQa+Nmoxf2SrmJ+yoH
- V+yLN3xa8JZtFl4TE899hsLYKquatlUZVcepy3UBgBx1Ork0YV/HGk1tGvZNZ87KLq4tlkwEbV5
- vPT4bLiC4zVnJWl7nHE3k/XPus8UxP+v9xeyq14Tg8594ReyQvOJbn5yO/zneb7FFPoPDiCYXTP
- Z89TUwlfJGKKODtVlFe5dNuwVvzv/1naUEo7z8lVjPtsNVEFZ2cnIJ2IzjSaDyRnJUDvdHXTSEI
- Fc9HSrxO370nL1ZQM00mxyNZprPK6SPQ
-X-Google-Smtp-Source: AGHT+IHEo3lQxi+8bnPYA3+ZyWZiA2sLXSCRLKEsA2TU9WhNuY5JbOtHhFQORDSqf6MeCAb73mNaSg==
-X-Received: by 2002:a05:600c:450d:b0:439:9a43:dd62 with SMTP id
- 5b1f17b1804b1-439aebb2d6fmr28356035e9.24.1740164999153; 
- Fri, 21 Feb 2025 11:09:59 -0800 (PST)
+ AJvYcCUT/dQS9fB8IKYzKwfwO6IIcSv/EuGTfJV+Mb0V6dqgAMtD1HJPrGLgcL1zFYDBmnjB4KtzIpVGEsHU@nongnu.org
+X-Gm-Message-State: AOJu0YwEP6r/KiUNXKsDC1VEu7+N5pMqLCR/LxOq1BMx4X12rzI9TQ3X
+ OEB/jmICbm7IgaQu3sMppH3AbGpLOw5l8VZoGbgS/aTagI2AuPmymjKkMtMrcuD+hQqnNih28xm
+ k
+X-Gm-Gg: ASbGncszBmrNNpPpErJ37VF0V19Ms7BC72AWg1CIqOgQkrnmIB+3bU0kQf6OQtQcDfx
+ i4V6KSm+PnfqM8mEyuVKeE5k8ftra2pLuFAy+rRmA5Pw+iNqE9t8G+jt3rGHnkjbDgjna/JTLOH
+ MYvbRnqMmyN1CVb/hXGQWUMS7qHf+c0dbTtGrKZCHBFBAAj1oqmqUrecVzR/l5WF7BN5G5Lnvvh
+ aLXZbJiWZfjgC52V93Nb4YTPzIRVinjWCisYozgRl2R8zYBg4J8QjF9ZvrfFtvfnj6orSQkzuuC
+ mLb9bBAPHak4mEHiAkEr2eEQGmYXVpE1
+X-Google-Smtp-Source: AGHT+IGY1EdmwGAjjKX6WfWeG5dj+cOiMlpb4S3vjx9XbHYYOaOSAWHaDJaCO0FmhBYM0EUSkAZPbQ==
+X-Received: by 2002:a05:6000:1867:b0:38f:4fa6:68df with SMTP id
+ ffacd0b85a97d-38f6f0d1fa2mr4328488f8f.51.1740165001845; 
+ Fri, 21 Feb 2025 11:10:01 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ddbe0sm24392478f8f.39.2025.02.21.11.09.58
+ ffacd0b85a97d-38f258ddbe0sm24392478f8f.39.2025.02.21.11.10.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 11:09:58 -0800 (PST)
+ Fri, 21 Feb 2025 11:10:00 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 0/4] target/arm: Move vfp_helper.c TCG code into tcg/ subdir
-Date: Fri, 21 Feb 2025 19:09:52 +0000
-Message-ID: <20250221190957.811948-1-peter.maydell@linaro.org>
+Subject: [PATCH 2/4] target/arm: Move FPSCR get/set helpers to tcg/vfp_helper.c
+Date: Fri, 21 Feb 2025 19:09:54 +0000
+Message-ID: <20250221190957.811948-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250221190957.811948-1-peter.maydell@linaro.org>
+References: <20250221190957.811948-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,46 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target/arm/vfp_helper.c is almost entirely TCG-specific code,
-guarded by #ifdef CONFIG_TCG. The only parts that aren't
-TCG-specific are the handling of the FPSCR/FPSR/FPCR registers.
-(I noticed this while I was working on the FEAT_AFP code, and
-it felt a bit awkward but I left it as-is at the time.)
+Currently the helper_vfp_get_fpscr() and helper_vfp_set_fpscr()
+functions do the actual work of updating the FPSCR, and we have
+wrappers vfp_get_fpscr() and vfp_set_fpscr() which we use for calls
+from other QEMU C code.
 
-This series moves all the TCG code into tcg/vfp_helper.c.
-Once only the FPSCR etc code is left, we rename the old
-file to vfp_fpscr.c.
+Flip these around so that it is vfp_get_fpscr() and vfp_set_fpscr()
+which do the actual work, and helper_vfp_get_fpscr() and
+helper_vfp_set_fpscr() which are the wrappers; this allows us to move
+them to tcg/vfp_helper.c.
 
-Series structure:
- * move the easy stuff as copy-n-paste to create new file
- * move the FPSCR get/set helpers
- * move the softfloat-specific parts of FPSR/FPCR handling
- * rename
+Since this is the last HELPER() we had in arm/vfp_helper.c, we can
+drop the include of helper-proto.h.
 
-This was just a quick last-thing-Friday tidyup, so I'm not
-strongly attached to it if people don't think it's worth the
-churn. I do think at least the first patch or some variant
-on it is worth doing, though.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/vfp_helper.c | 10 ++++++++++
+ target/arm/vfp_helper.c     | 15 ++-------------
+ 2 files changed, 12 insertions(+), 13 deletions(-)
 
-thanks
--- PMM
-
-Peter Maydell (4):
-  target/arm: Move TCG-only VFP code into tcg/ subdir
-  target/arm: Move FPSCR get/set helpers to tcg/vfp_helper.c
-  target/arm: Move softfloat specific FPCR/FPSR handling to tcg/
-  target/arm: Rename vfp_helper.c to vfp_fpscr.c
-
- target/arm/internals.h            |   9 ++
- target/arm/tcg-stubs.c            |  22 ++++
- target/arm/{ => tcg}/vfp_helper.c | 189 +++---------------------------
- target/arm/vfp_fpscr.c            | 155 ++++++++++++++++++++++++
- target/arm/meson.build            |   2 +-
- target/arm/tcg/meson.build        |   1 +
- 6 files changed, 205 insertions(+), 173 deletions(-)
- rename target/arm/{ => tcg}/vfp_helper.c (90%)
- create mode 100644 target/arm/vfp_fpscr.c
-
+diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+index aa580ff64c7..cd6e0d0edab 100644
+--- a/target/arm/tcg/vfp_helper.c
++++ b/target/arm/tcg/vfp_helper.c
+@@ -1128,3 +1128,13 @@ void HELPER(check_hcr_el2_trap)(CPUARMState *env, uint32_t rt, uint32_t reg)
+ 
+     raise_exception(env, EXCP_HYP_TRAP, syndrome, 2);
+ }
++
++uint32_t HELPER(vfp_get_fpscr)(CPUARMState *env)
++{
++    return vfp_get_fpscr(env);
++}
++
++void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
++{
++    vfp_set_fpscr(env, val);
++}
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 0e849d8d4dc..0919acb7b89 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -19,7 +19,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "exec/helper-proto.h"
+ #include "internals.h"
+ #include "cpu-features.h"
+ #include "fpu/softfloat.h"
+@@ -298,17 +297,12 @@ uint32_t vfp_get_fpsr(CPUARMState *env)
+     return fpsr;
+ }
+ 
+-uint32_t HELPER(vfp_get_fpscr)(CPUARMState *env)
++uint32_t vfp_get_fpscr(CPUARMState *env)
+ {
+     return (vfp_get_fpcr(env) & FPSCR_FPCR_MASK) |
+         (vfp_get_fpsr(env) & FPSCR_FPSR_MASK);
+ }
+ 
+-uint32_t vfp_get_fpscr(CPUARMState *env)
+-{
+-    return HELPER(vfp_get_fpscr)(env);
+-}
+-
+ void vfp_set_fpsr(CPUARMState *env, uint32_t val)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+@@ -402,13 +396,8 @@ void vfp_set_fpcr(CPUARMState *env, uint32_t val)
+     vfp_set_fpcr_masked(env, val, MAKE_64BIT_MASK(0, 32));
+ }
+ 
+-void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
++void vfp_set_fpscr(CPUARMState *env, uint32_t val)
+ {
+     vfp_set_fpcr_masked(env, val, FPSCR_FPCR_MASK);
+     vfp_set_fpsr(env, val & FPSCR_FPSR_MASK);
+ }
+-
+-void vfp_set_fpscr(CPUARMState *env, uint32_t val)
+-{
+-    HELPER(vfp_set_fpscr)(env, val);
+-}
 -- 
 2.43.0
 
