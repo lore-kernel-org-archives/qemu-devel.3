@@ -4,63 +4,197 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B06C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 07:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D44C021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 07:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlNat-0004hS-F7; Fri, 21 Feb 2025 02:37:08 -0500
+	id 1tlNrn-0000i5-RS; Fri, 21 Feb 2025 02:54:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.chichkov@yadro.com>)
- id 1tlNaq-0004gY-3E
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 02:37:04 -0500
-Received: from mta-03.yadro.com ([89.207.88.253])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1tlNri-0000hj-D2
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 02:54:30 -0500
+Received: from smarthost4.eviden.com ([80.78.11.85])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.chichkov@yadro.com>)
- id 1tlNam-000230-4B
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 02:37:03 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 55933E0002
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
- t=1740123413; bh=+hAaey3c0vfYnrIEX+xaF6kSjeIEmCU+qHqKYmepm2M=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=IuvApOzEscktr3WY7cXbJZksIR0atlxWGfYX9sIGFSwHYj/tYX5CmusrTiXhYAJPG
- 68K6CtEA9L0pqRP4GtqJdeSqzGCXNb/m2sffxlh4tdaaVJNhfzcZ6fGK+5Qcuyin71
- iN6zu9CwkmktqNEH+TqZ5FpCXqaaUH4T2jv4aPTOIaA5zG2t6T+J9ncEjYjHh/qxtg
- d3Iuzb75HsS57mDF58OJzvAuTBulIEQLza+6o8TU3CugzNh/+D4/0783scfwa0B41g
- mbuaIHrRnbstJ6KTFNG4xWiU99UcudYHa/v/0MAht+py4ki4KInh/hsCF6OzYVCCty
- QxvwLddOhcpeA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
- t=1740123413; bh=+hAaey3c0vfYnrIEX+xaF6kSjeIEmCU+qHqKYmepm2M=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=qOD2jdMf8BdcuVH/69CJacTxvFO8Ae+A3L2ggKezOQESdr8qmxG3Wh+OvPmjoQGy4
- u2sAIk38NdbullU4gtnhCM3LhvAxhi/CcYpyFo+mK6kZX1dyyse+MzVriRDW+cdbSu
- ggQ/n4jYtd9RPkSmxICsEKNqpvh62Z+szxY86qHA+ubCK715eQggFC4svq6beyqCWO
- CzKlUqMz3H7rvKNTdF/u/MrlmQEBsMROUHc7J1RNVb+WcurIM/I6mTS/vBjgpC0Yer
- UHQnRMhL2+mI2JrsWfqCoEisdm20lMgNSsOQnX5mjMbmjgnjR1oxtQuY6GvYzN5ci2
- Xb4QEFnDWZOIg==
-From: Ilya Chichkov <i.chichkov@yadro.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>
-CC: <qemu-devel@nongnu.org>, Ilya Chichkov <i.chichkov@yadro.com>
-Subject: [PATCH] hw/rtc: Add RTC PCF8563 module
-Date: Fri, 21 Feb 2025 10:34:44 +0300
-Message-ID: <20250221073444.15257-1-i.chichkov@yadro.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1tlNrd-0004G3-S3
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 02:54:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1740124466; x=1771660466;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=iQ3Elli9BcJDjilhPfFATz1JkzKgoUP58DZkJbeJnpY=;
+ b=BGN00399WMg/G/cpZUr2hwltF+5FZumevHlm1LFlaSdKH5CV48XXT1/h
+ FLl2iZcX/4J7Q5n0RBZXGX109jqJYRmpgtqgi2WX9+AtcYnltzC7lWc5N
+ 54J/bzHG+1uq7G0cn9rk4tbnKsM+qKTDEYxBZNy7VOfnUeMPOdnQyJr4G
+ 23KhehLdsz1mrAp8K7mq2PxGjqvB9lX8tfnkTPLW0I9IbJ/MG18iitw7a
+ eKCoxOr2X4GJEwbPB2N5HRL7ze0gSz5fK8B+7rgAeaJXNoQO1NpGAXzgn
+ Z899dp5ahFKD+CqI9DUq1t2ICHYJhMb1I62m7g/54kFq0O2OSd2G2SRtr A==;
+X-CSE-ConnectionGUID: fGhOW+vST8OClqKyEjrPEw==
+X-CSE-MsgGUID: 2xh3YIyMRrS4dttFCNEdOA==
+X-IronPort-AV: E=Sophos;i="6.13,304,1732575600"; d="scan'208";a="32835327"
+X-MGA-submission: =?us-ascii?q?MDGqItN8kBeMMjcC3Wghw+CvQ54D9MoTYtsCW7?=
+ =?us-ascii?q?xPyyxulZ301qXoPiWmFY6gmCnbb05E4o3zq5dbBUuP977D88pYkOOaQv?=
+ =?us-ascii?q?8lysq+VVL5Ly+Pp+cBYCV1F5XLCpztOJdcdnZFBTd/mic9ldp3JHiwn7?=
+ =?us-ascii?q?x27X4OVEBtbHx/H9bdP7CY3w=3D=3D?=
+Received: from mail-db8eur05lp2108.outbound.protection.outlook.com (HELO
+ EUR05-DB8-obe.outbound.protection.outlook.com) ([104.47.17.108])
+ by smarthost4.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 21 Feb 2025 08:54:08 +0100
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=V0gY424t8DEOFcRR7kOotXFlR4YEseY9Sa9Y32PueIHmTMq/ySxLxYX/JxxDEQcc1TvFJ9CWlTbyg3jnuVSlshLX0tt3Pa7bYnTvwNQ7JfVHfzfSG1GkO3ORGQupzNUuw8bGeKRTNJM2OOR5akL4JuBr48YqElU9dqJGn5hI+R+gIgs3fetKRPDnJr8Szs1fjEwURKJi58if/5878B+r93Xaa6w76Eats3+8Qx+MDqdMBWRuNd7g5xsyWaChPlTgBqbCXRcnKeJ7cQKjVastFTjDU8ym3ZClcs4S7nkE8CIxbFCjvVmXe6wctwd2g/bS+oTb5KhtSJNOyosZ0Xu6Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iQ3Elli9BcJDjilhPfFATz1JkzKgoUP58DZkJbeJnpY=;
+ b=pWOFUZZajkHxeCo39TfX0/gY+AbSyr/JooA7GoZjC+sT/jXiRWvrTrnSIzvoX2Ks7J3ua9rzrgsw4bEEpJMV4zno7fRwAL2wzf39E+Z/QoxIzBYOilP8M5KKQ0JuPDQEReGdj/4O+cEUuZYZfBGwGx/iejRqlEBbPA7wB64kUDgcyd74nD/kKmcZnLA24x0CpbB/lMaHVGRe6AZK7tcyLO6gJbbt7PN+uCRZ23BHuIg2DDZTRkfN1qxCg5hpn5S15gLyyxGxrB8QkEsiHDjRJkfVEOZRQH23guuFmPjeaDWpM4s1/qC7GWeBHk03kTqKs+n/NhLUdViq5UwCRRfeBw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iQ3Elli9BcJDjilhPfFATz1JkzKgoUP58DZkJbeJnpY=;
+ b=P0NmWWc1OTfKSG+HUthI5ItFKG2uuNkSkJTL0ITZLVGV7GsnpS1ef83jOc5ZABxPyVGYT5i9A59fTvJdoN1dyYd3TIBb5SPXdHQabwikAZHwwIIZlT48JVCl7L9NzJfcQvn9yvO2M4Im4g7kaTbU65oLAJ4EMBszdIZeM8GHP5RV2X8A/ip0hjkcQ5s8maOdnMT35cDGBXVXwrOoOIjoC2Q0UyWPuSua+mou6tv4/YYfyOiUb+iTdY8TpWsz8QD/uxbLDX6lFdLUv1M8akd3rYZidyqcLY7qpVcIPtGfJuQWLKfMPNqOYSq89bIfF8BDALClULP3/XbLQ12THotRxg==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by PAWPR07MB9559.eurprd07.prod.outlook.com (2603:10a6:102:364::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.13; Fri, 21 Feb
+ 2025 07:54:04 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
+ 07:54:04 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, 
+ "kevin.tian@intel.com" <kevin.tian@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "tjeznach@rivosinc.com" <tjeznach@rivosinc.com>, "minwoo.im@samsung.com"
+ <minwoo.im@samsung.com>
+Subject: Re: [PATCH v2 00/19] intel_iommu: Add ATS support
+Thread-Topic: [PATCH v2 00/19] intel_iommu: Add ATS support
+Thread-Index: AQHba2KLpfFmtaa6cE+9AckG9GvxYbNQ4eIAgACyyQA=
+Date: Fri, 21 Feb 2025 07:54:04 +0000
+Message-ID: <c5db1bd4-89ef-4138-96e5-f7229c21b109@eviden.com>
+References: <20250120174033.308518-1-clement.mathieu--drif@eviden.com>
+ <20250220153757-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20250220153757-mutt-send-email-mst@kernel.org>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PAWPR07MB9559:EE_
+x-ms-office365-filtering-correlation-id: bda99522-e445-47a1-7236-08dd524ce97b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?bDIzdEVMU3p0NFl5MjB6RlRBVXNXYUJMT3Z5MFpVTyswZWlEcGdla3JqdzJO?=
+ =?utf-8?B?ajE2Zmh2RXRudHpNVndpT1hWemZHekhLcWt2QjFjdXNMN3RmVlY4RkdNeFFK?=
+ =?utf-8?B?T0dXYXhkNGdUbmlhMnNQc0svaUhBalFJTG1NK0ZUdGljNHp3K1I2L1B2cUpk?=
+ =?utf-8?B?ZWRKYkZiN2VCRjg5VjdWOUFUTWFKTVlQUzAwanFHajEvU0FaaTZKbWYyeFhK?=
+ =?utf-8?B?SkZidUxpTGdnQmx2OGhKb1V1MzhRakhDc3g5WkVZQlpPUWlkV1lRZXFJa1I1?=
+ =?utf-8?B?NFFzVm5lSG9wWEpNUFg3a3lkeENkZ0k5d2tSR1M3NVVkT2pSU2E5MlNNbHlI?=
+ =?utf-8?B?N0R6ejVJaWlvck4xekJhdnd2TWtZS1c1SnllL2hTL0hYT1RDRkoybTFXZUJH?=
+ =?utf-8?B?ajN2Tk1iaElHREdUWVNRd1FORHhkNmVlZTlheE0rUTdFRkZSYm41cjRHNVJo?=
+ =?utf-8?B?VlNQNW43KzNIcWpmeTg5bVowRllZOC9wUnJhOWlNR1MrNit5dWZ2Z0dDY2hj?=
+ =?utf-8?B?bThTMDFvNjdDUDY0amtGN0ZzQ2RvOUxsd21CNDVva1hKUlR0KzRzaXJzRDFi?=
+ =?utf-8?B?YnlzZFFtV01oTyswK2Y1YlZwVzVYeFpaSmVzOGxmVC9QdmVkcDN4OGthdVZu?=
+ =?utf-8?B?VzA5R2h2ZDJrdVpJUWZKSWdiYlNRNlFWdHZ4MTIxQ3FVYVRNVDBRakpaRUlM?=
+ =?utf-8?B?Y09MVVpLTkhNMkp6a2VZM21JazZwUmF3eDlHWDRvU21xZjIvN3BaMVpDYXhV?=
+ =?utf-8?B?VzRvUTZuaGZiOXVHVnp6TXdZanRJUVJld1YzRjlXOVFkakpUTG5PdmFQeVpy?=
+ =?utf-8?B?cUZmbHFObmNDZ1lBMXhyWlVBSHpaUVN5Zm43Y0k1Z2h0UWtmWFV6VjVnWDZC?=
+ =?utf-8?B?VlVNWjZTUEdNdm15S0MvemlkM1FuVklDRGd3TDlmSzQ0T3FvSVhrWWJEZXg5?=
+ =?utf-8?B?SmtOV1JQckpqdEFCZlk3QkU2VGJwV0dVdkRZb0tZM1pXVm9VMFBqbkF2ekF6?=
+ =?utf-8?B?NXNEblowYWFLV21ObjU5M3JOOUQ1UTU1b0pOaGxLOGlFTlVUWDErazI3ZU15?=
+ =?utf-8?B?amxuc1RFcGhBK1lEQXI3YW1JeWFDNmhzcGxVc2VKSy9STkNHN0JZdk1maUpZ?=
+ =?utf-8?B?RkIzbEJrY3pMU3hlUG83dHJ1MHJ6SUlBY2dNM3kySjM0UnRrUkpXWmhxbzgw?=
+ =?utf-8?B?eTBYdVo0dUlhSlgydnc2VnlxMDBvd1VQNW0rVmUrNVZyL091RG9RVE92WkJJ?=
+ =?utf-8?B?cGFXRUczMFJkTkl4V09OSkN0OXh2SGlyT01IY1BQcEZUaUtoL3BaOEJnQmRW?=
+ =?utf-8?B?SFU0M1V2NVFtdS9VL1pZeHFoTjN1MGZ3ZzhyVm9ZbzRZMmpFN3VscDRPcVVn?=
+ =?utf-8?B?MWs0cklrcVlhb3VkWlJVTVRwZjJtWDRoUjI4NHhXZ3Bxcmg1ZnJ3L1pFNHo0?=
+ =?utf-8?B?N01jM0R1Y0k5V3RtdlZDTFNCaGViM1pRVUJiSmprMVhYRkVLTHNaQWdPMU9D?=
+ =?utf-8?B?bVFDTlBXN0d3MEh4cnhkYUdKSk9LQTR0NENXaERxdDFLL015TXd3TXBJTTE2?=
+ =?utf-8?B?MTI5YnNKMkRlYjJMVHRYL1k2UmdGMFhrVHRiQTg5OTRvYXBER0NEU0lHUEJG?=
+ =?utf-8?B?MHZwQ1ZOOVVQZTJnNk5kS2NLUUhwU0FLUktlNkVxQkZpeGlpdGtXdHdOaVRD?=
+ =?utf-8?B?aTVKdkpPaElaKzNrWHc0dXpXREp0RW0vYStMUWFRUUw1VjRMWm1CUjFIbDFj?=
+ =?utf-8?B?L3JQRzJFeFo5cTUzN2R3WVd3bTZMSGtBMktUcXlEakhPRnE0a1BFdzZDU3E3?=
+ =?utf-8?B?ZXpvK2wyNlpxYVdVckozdklPQ2dvcURvS0JVTDZRRWs2RCtEUThvR2hEWU1D?=
+ =?utf-8?B?ekxuZi9rQXFnL2FidFRBY21XN1ZzMkJkcDlESHNOV2lWbzQ0SkVZd2xoanpD?=
+ =?utf-8?Q?yEHcBtwqcyElpZEG4dF49RzE+UyO9Ixa?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bWZXN2owT1lxNFQrQS8zVHlSNVI5RzBFZjlXZXIyaXRsdk14ajVPNUZLVFVr?=
+ =?utf-8?B?M2pSbXhtY2hPSzA2WVVZaGZqQmh6Y1BXbWEzZ0VkWEtYTnVoVWt4WVh3N05Q?=
+ =?utf-8?B?ZHJBR2FRdFJTdXVQZTMzMndoK1p3em4yeWVqWnhSeUtZZURMV1dDeXZici9H?=
+ =?utf-8?B?TjdwdWJtWFo4Yi8zOUJibmpYZ2pRRmN4eHZQQWM5emhBbjlhQmdlQkRvZTYr?=
+ =?utf-8?B?S09Rc2RXbkRrY3ozMlZnK0h2aU52Y1V3bkJNOWJ2dXVtOTUrWXRaNzdTdUIy?=
+ =?utf-8?B?VUlxN3hzN3BXWURmL2JCOHp0NnlCR0dScmN1WFphOTlGbkpMNDkvcUJ1SFV4?=
+ =?utf-8?B?QWE5czVVMDc2WWRzOEM0TGF0eWo1TXhZSnNqRFBvZ0FKaHI0VDNiZWdZWmQv?=
+ =?utf-8?B?M3FabUxiTHV2WXlPV1hISjVKUmJnRWcrYU1pOWwwdEg0YXhGaDltM2RFMkVp?=
+ =?utf-8?B?eWdyUy9hTTdTRk5kWHkxeWkzZXh6R0RpSHlRRDZMMEFjZWtEV2ZLNENreVBQ?=
+ =?utf-8?B?WDRheHhPWjVhSnVtaDdVbHFEVW5uTWVlazArOGQ0RUI0aE9Hc29zMTFlT2dl?=
+ =?utf-8?B?TlMwYUpJS2RXV1lUZFVlSEJlYktnN3YxQWJkSWxxbXJjYkhiQ0lSMFhoVDRs?=
+ =?utf-8?B?Tm5VbmF4RjhwOENHQUNCRUNJbGtpR1dzbmNhOHlvQlRCbWhyUE5EZkZtY3VZ?=
+ =?utf-8?B?RkVRNHZxNk50am05WSs2UDNSQWdYVEhBQ25pbzM2TVhDQ2FOR0svbUdITlRj?=
+ =?utf-8?B?Z0VadWdUVXpJeXo0Q2dPSUpzMWtSN0FFOUwzdjY3Nm1EaWdqaGs4YzJBSUhT?=
+ =?utf-8?B?bUZqTlozL0M0UGVKKzNIcXF1U2NLZkNHNk9Ic3A2M2poOGROOHArMjNMTmV4?=
+ =?utf-8?B?aGc1SmoyYnBYdW1ubHd4NzFwVGc0MXlvWXMvK2hyUEM3YmUvM3E4aGUvTkVt?=
+ =?utf-8?B?OUNPckZodFdjYmEySFg5MzYrN2FLTkw4N2VYNWRVYTBBOWdlMVNTUWg4a0F6?=
+ =?utf-8?B?WUJJTWEvVmFiS1NOYlRpTnB4dnhWckpaU1ZhUTlCamEzZDBOMWlUaG9NdzAv?=
+ =?utf-8?B?Ly9sZGk3VVRIZ1Fxb2kxampyZmF1NnRTY2N5bTBYbzdUZjNtMHQveTZnWGho?=
+ =?utf-8?B?ZnQ2VTZxVnpBSVd4TjNUTC9pY1NWRmxYSzRISzFWODBCQ3JzcTNlanpRaGY0?=
+ =?utf-8?B?NnUrUHZZdE5aeEcyK0hMY0w2UnhjUjI3czJzKzJiM3B3UW9ldVp5bXpDWXM5?=
+ =?utf-8?B?VjJPRTRMdit6Zk1JamdKa1RUeXFHTGU2QzZzUEZiN0dFZlFhZGdJVStYdUsy?=
+ =?utf-8?B?eFZwNFNXc0RPeU8zUlJhYzR2aHdVNmV1MFA4RWhJTFp3Q2huNDB1QkxCL3hX?=
+ =?utf-8?B?UkE5ZEx1TEF2S0UzM1NXU0kvQlNnRUtGVnNHVWFmSlBveHgrSGVoYTFMWWd0?=
+ =?utf-8?B?Skdua3R1Z0pvM3NaV0ttOEJlK1IyZE5XMTJ1d01TaGJEVDFLUVRjQXhKNy8x?=
+ =?utf-8?B?cDFoZElnMzdodlA0eTlid1M2MytmaTh5WkFwSjYyV29iVmpqd25lbWYwMjJB?=
+ =?utf-8?B?SUVqNk1xS3pqaEt5VzV5d0hUeFhWamVCWkpGM2l5ek5ra2NqaVJWbU9QMnFM?=
+ =?utf-8?B?emJzbnV6b0RmZlY0WDJBL0Y5alJYY2x4NWFXVmpqU2RRTXRMbkJWZVhFeXNV?=
+ =?utf-8?B?NzB0aDltSDA2L0plUlpnbkZtVEwyRUJxcVNkTVp4aTZCR1ZLSUlGUHVMRTA5?=
+ =?utf-8?B?RUxFdlB3S2hVc2xLdXprTi9HbDlzdUJmS1VhdEpVWGtKSFNmWXZFdDFHdC9i?=
+ =?utf-8?B?aE8rS240SVQydUZxM09Oc216blpzVzVvVVRHSnNucEFjUHpuSklzdHcybGhi?=
+ =?utf-8?B?RWxQc01SUU1odGE0ZDRQeHpVQTBaWXIxVnd6bHMxMGErYTJhUXMxWlhQWGtZ?=
+ =?utf-8?B?TEdDNXRJbFJwTnRpQisySVd5TU5xM3VvZDRydG1WeTZodStwaisrZTAyNkRh?=
+ =?utf-8?B?d3dtTlVDZXAzaU00RkRhSG1KUFNhQnlpcFVaRGJKbEFwNjFoOWdxTE5nazlE?=
+ =?utf-8?B?dm54SzVqVUVPQUVJTlZBc0xvejY4ZnFVV1Q1N2RyWGkwY05yb0tiOTFZQkJO?=
+ =?utf-8?B?STVUQjhaWm9EVEJlUEhlVUpGYUZzU0VNR0owY25vZzd4SVZrMkFMUExYcFlI?=
+ =?utf-8?Q?ye26tXyc1oCKkjZMsF/Ju24=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B7118C0F0AFFC740A41DA7ECADCC427A@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: pass client-ip=89.207.88.253; envelope-from=i.chichkov@yadro.com;
- helo=mta-03.yadro.com
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bda99522-e445-47a1-7236-08dd524ce97b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 07:54:04.4415 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: OmIG9/Zhv48mPeXGkhNufyrOpTuls9694RZ+fNMbATf46c1TaWgZ9g8FBs7Gx378m5XDnHub4MYsHLg1iFrQzsccxE7fm5ySxeiEuyz2jOn2894UYSd+1QJfuD52k/yY
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR07MB9559
+Received-SPF: pass client-ip=80.78.11.85;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,707 +210,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add PCF8563 a real-time clock with calendar and I2C interface.
-This commit adds support for interfacing with it and implements
-functionality of setting timer, alarm, reading and writing time.
-
-Datasheet: https://www.micros.com.pl/mediaserver/UZPCF8563ts5_0001.pdf
-
-Signed-off-by: Ilya Chichkov <i.chichkov@yadro.com>
----
- hw/rtc/Kconfig       |   5 +
- hw/rtc/meson.build   |   1 +
- hw/rtc/pcf8563_rtc.c | 638 +++++++++++++++++++++++++++++++++++++++++++
- hw/rtc/trace-events  |  11 +
- 4 files changed, 655 insertions(+)
- create mode 100644 hw/rtc/pcf8563_rtc.c
-
-diff --git a/hw/rtc/Kconfig b/hw/rtc/Kconfig
-index d0d8dda084..fd7bd393bd 100644
---- a/hw/rtc/Kconfig
-+++ b/hw/rtc/Kconfig
-@@ -30,3 +30,8 @@ config GOLDFISH_RTC
- 
- config LS7A_RTC
-     bool
-+
-+config PCF8563_RTC
-+    bool
-+    depends on I2C
-+    default y if I2C_DEVICES
-diff --git a/hw/rtc/meson.build b/hw/rtc/meson.build
-index 3ea2affe0b..959541a96d 100644
---- a/hw/rtc/meson.build
-+++ b/hw/rtc/meson.build
-@@ -14,3 +14,4 @@ system_ss.add(when: 'CONFIG_GOLDFISH_RTC', if_true: files('goldfish_rtc.c'))
- system_ss.add(when: 'CONFIG_LS7A_RTC', if_true: files('ls7a_rtc.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-rtc.c'))
- system_ss.add(when: 'CONFIG_MC146818RTC', if_true: files('mc146818rtc.c'))
-+system_ss.add(when: 'CONFIG_PCF8563_RTC', if_true: files('pcf8563_rtc.c'))
-diff --git a/hw/rtc/pcf8563_rtc.c b/hw/rtc/pcf8563_rtc.c
-new file mode 100644
-index 0000000000..63d5f95c42
---- /dev/null
-+++ b/hw/rtc/pcf8563_rtc.c
-@@ -0,0 +1,638 @@
-+/*
-+ * Real-time clock/caread_indexdar PCF8563 with I2C interface.
-+ *
-+ * Copyright (c) 2024 Ilya Chichkov <i.chichkov@yadro.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program. If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/sysbus.h"
-+#include "hw/register.h"
-+#include "hw/registerfields.h"
-+#include "hw/irq.h"
-+#include "qemu/bitops.h"
-+#include "hw/qdev-properties.h"
-+#include "qemu/timer.h"
-+#include "qapi/error.h"
-+#include "hw/i2c/i2c.h"
-+#include "qemu/bcd.h"
-+#include "qemu/module.h"
-+#include "qom/object.h"
-+#include "sysemu/rtc.h"
-+#include "migration/vmstate.h"
-+#include "qapi/visitor.h"
-+#include "qemu/log.h"
-+
-+#include "trace.h"
-+
-+#define TYPE_PCF8563 "pcf8563"
-+
-+#define PCF8563(obj) \
-+    OBJECT_CHECK(Pcf8563State, (obj), TYPE_PCF8563)
-+
-+#define  PCF8563_CS1            0x00
-+#define  PCF8563_CS2            0x01
-+#define  PCF8563_VLS            0x02
-+#define  PCF8563_MINUTES        0x03
-+#define  PCF8563_HOURS          0x04
-+#define  PCF8563_DAYS           0x05
-+#define  PCF8563_WEEKDAYS       0x06
-+#define  PCF8563_CENTURY_MONTHS 0x07
-+#define  PCF8563_YEARS          0x08
-+#define  PCF8563_MINUTE_A       0x09
-+#define  PCF8563_HOUR_A         0x0A
-+#define  PCF8563_DAY_A          0x0B
-+#define  PCF8563_WEEKDAY_A      0x0C
-+#define  PCF8563_CLKOUT_CTL     0x0D
-+#define  PCF8563_TIMER_CTL      0x0E
-+#define  PCF8563_TIMER          0x0F
-+
-+REG8(PCF8563_CS1, 0x00)
-+    FIELD(PCF8563_CS1, RSVD0,  0,  3)
-+    FIELD(PCF8563_CS1, TESTC,  3,  1)
-+    FIELD(PCF8563_CS1, RSVD1,  4,  1)
-+    FIELD(PCF8563_CS1, STOP,   5,  1)
-+    FIELD(PCF8563_CS1, RSVD2,  6,  1)
-+    FIELD(PCF8563_CS1, TEST1,  7,  1)
-+
-+REG8(PCF8563_CS2, 0x01)
-+    FIELD(PCF8563_CS2, TIE,   0,  1)
-+    FIELD(PCF8563_CS2, AIE,   1,  1)
-+    FIELD(PCF8563_CS2, TF,    2,  1)
-+    FIELD(PCF8563_CS2, AF,    3,  1)
-+    FIELD(PCF8563_CS2, TI_TP, 4,  1)
-+    FIELD(PCF8563_CS2, RSVD,  5,  3)
-+
-+REG8(PCF8563_VLS, 0x02)
-+    FIELD(PCF8563_VLS, SECONDS,  0,  7)
-+    FIELD(PCF8563_VLS, VL,       7,  1)
-+
-+REG8(PCF8563_MINUTES, 0x03)
-+    FIELD(PCF8563_MINUTES, MINUTES, 0,  7)
-+    FIELD(PCF8563_MINUTES, RSVD,    7,  1)
-+
-+REG8(PCF8563_HOURS, 0x04)
-+    FIELD(PCF8563_HOURS, HOURS, 0,  6)
-+    FIELD(PCF8563_HOURS, RSVD,  6,  2)
-+
-+REG8(PCF8563_DAYS, 0x05)
-+    FIELD(PCF8563_DAYS, DAYS, 0,  6)
-+    FIELD(PCF8563_DAYS, RSVD, 6,  2)
-+
-+REG8(PCF8563_WEEKDAYS, 0x06)
-+    FIELD(PCF8563_WEEKDAYS, WEEKDAYS, 0,  3)
-+    FIELD(PCF8563_WEEKDAYS, RSVD,     3,  5)
-+
-+REG8(PCF8563_CENTURY_MONTHS, 0x07)
-+    FIELD(PCF8563_CENTURY_MONTHS, MONTHS,  0,  5)
-+    FIELD(PCF8563_CENTURY_MONTHS, RSVD,    5,  2)
-+    FIELD(PCF8563_CENTURY_MONTHS, CENTURY, 7,  1)
-+
-+REG8(PCF8563_YEARS, 0x08)
-+    FIELD(PCF8563_YEARS, YEARS, 0,  8)
-+
-+REG8(PCF8563_MINUTE_A, 0x09)
-+    FIELD(PCF8563_MINUTE_A, MINUTE_A, 0,  7)
-+    FIELD(PCF8563_MINUTE_A, AE_M,     7,  1)
-+
-+REG8(PCF8563_HOUR_A, 0x0A)
-+    FIELD(PCF8563_HOUR_A, HOUR_A, 0,  7)
-+    FIELD(PCF8563_HOUR_A, AE_H,   7,  1)
-+
-+REG8(PCF8563_DAY_A, 0x0B)
-+    FIELD(PCF8563_DAY_A, DAY_A,  0,  7)
-+    FIELD(PCF8563_DAY_A, AE_D,   7,  1)
-+
-+REG8(PCF8563_WEEKDAY_A, 0x0C)
-+    FIELD(PCF8563_WEEKDAY_A, WEEKDAY_A, 0,  3)
-+    FIELD(PCF8563_WEEKDAY_A, RSVD,      3,  4)
-+    FIELD(PCF8563_WEEKDAY_A, AE_W,      7,  1)
-+
-+REG8(PCF8563_CLKOUT_CTL, 0x0D)
-+    FIELD(PCF8563_CLKOUT_CTL, FD,   0,  2)
-+    FIELD(PCF8563_CLKOUT_CTL, RSVD, 2,  5)
-+    FIELD(PCF8563_CLKOUT_CTL, FE,   7,  1)
-+
-+REG8(PCF8563_TIMER_CTL, 0x0E)
-+    FIELD(PCF8563_TIMER_CTL, TD,   0,  2)
-+    FIELD(PCF8563_TIMER_CTL, RSVD, 2,  5)
-+    FIELD(PCF8563_TIMER_CTL, TE,   7,  1)
-+
-+REG8(PCF8563_TIMER, 0x0F)
-+    FIELD(PCF8563_TIMER, TIMER, 0,  8)
-+
-+typedef struct Pcf8563State {
-+    /*< private >*/
-+    I2CSlave i2c;
-+
-+    qemu_irq irq;
-+
-+    uint8_t read_index;
-+    uint8_t write_index;
-+    uint8_t reg_addr;
-+
-+    /* Control and status */
-+    uint8_t cs1;
-+    uint8_t cs2;
-+    /* Counters */
-+    uint8_t vls;
-+    uint8_t minutes;
-+    uint8_t hours;
-+    uint8_t days;
-+    uint8_t weekdays;
-+    uint8_t centure_months;
-+    uint8_t years;
-+    /* Alarm registers */
-+    uint8_t minute_a;
-+    uint8_t hour_a;
-+    uint8_t day_a;
-+    uint8_t weekday_a;
-+    /* Timer control */
-+    uint8_t clkout_ctl;
-+    uint8_t timer_ctl;
-+    uint8_t timer_cnt;
-+
-+    QEMUTimer *alarm_timer;
-+    struct tm tm_alarm;
-+    bool alarm_irq;
-+    QEMUTimer *timer;
-+    time_t time_offset;
-+    time_t stop_time;
-+    QEMUTimer *irq_gen_timer;
-+} Pcf8563State;
-+
-+static uint16_t get_src_freq(Pcf8563State *s, bool *multiply)
-+{
-+    *multiply = false;
-+    /* Select source clock frequency (Hz) */
-+    switch (FIELD_EX8(s->timer_ctl, PCF8563_TIMER_CTL, TD)) {
-+    case 0:
-+        return 4096;
-+    case 1:
-+        return 64;
-+    case 2:
-+        return 1;
-+    case 3:
-+        *multiply = true;
-+        return 60;
-+    default:
-+        return 0;
-+    }
-+}
-+
-+static uint16_t get_irq_pulse_freq(Pcf8563State *s)
-+{
-+    if (s->timer_cnt > 1) {
-+        switch (FIELD_EX8(s->timer_ctl, PCF8563_TIMER_CTL, TD)) {
-+        case 0:
-+            return 8192;
-+        case 1:
-+            return 128;
-+        case 2:
-+        case 3:
-+            return 64;
-+        default:
-+            return 0;
-+        }
-+    } else {
-+        if (FIELD_EX8(s->timer_ctl, PCF8563_TIMER_CTL, TD) == 0) {
-+            return 4096;
-+        }
-+        return 64;
-+    }
-+
-+}
-+
-+static void pcf8563_update_irq(Pcf8563State *s)
-+{
-+    if (!FIELD_EX8(s->cs2, PCF8563_CS2, TF) &&
-+        !FIELD_EX8(s->cs2, PCF8563_CS2, AF)) {
-+        return;
-+    }
-+
-+    /* Timer interrupt */
-+    if (FIELD_EX8(s->cs2, PCF8563_CS2, TIE)) {
-+        if (FIELD_EX8(s->cs2, PCF8563_CS2, TI_TP)) {
-+            qemu_irq_pulse(s->irq);
-+
-+            /* Start IRQ pulse generator */
-+            uint64_t delay = s->timer_cnt *
-+                            NANOSECONDS_PER_SECOND *
-+                            get_irq_pulse_freq(s);
-+            timer_mod(s->irq_gen_timer,
-+                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay);
-+        } else {
-+            qemu_irq_raise(s->irq);
-+        }
-+    }
-+
-+    /* Alarm interrupt */
-+    if (FIELD_EX8(s->cs2, PCF8563_CS2, AIE)) {
-+        qemu_irq_raise(s->irq);
-+    }
-+}
-+
-+static void alarm_timer_cb(void *opaque)
-+{
-+    Pcf8563State *s = PCF8563(opaque);
-+
-+    s->cs2 = FIELD_DP8(s->cs2, PCF8563_CS2, AF, 1);
-+    pcf8563_update_irq(s);
-+}
-+
-+static void timer_cb(void *opaque)
-+{
-+    Pcf8563State *s = PCF8563(opaque);
-+
-+    s->cs2 = FIELD_DP8(s->cs2, PCF8563_CS2, TF, 1);
-+    pcf8563_update_irq(s);
-+}
-+
-+static void irq_gen_timer_cb(void *opaque)
-+{
-+    Pcf8563State *s = PCF8563(opaque);
-+
-+    pcf8563_update_irq(s);
-+}
-+
-+static void set_alarm(Pcf8563State *s)
-+{
-+    /* Update alarm */
-+    int64_t diff_sec;
-+    if (s->alarm_timer != NULL) {
-+        timer_del(s->alarm_timer);
-+        diff_sec = qemu_timedate_diff(&s->tm_alarm);
-+        if (diff_sec > 0) {
-+            timer_mod_ns(s->alarm_timer, diff_sec * NANOSECONDS_PER_SECOND);
-+        }
-+
-+        trace_pcf8563_rtc_set_alarm();
-+    }
-+}
-+
-+static inline void get_time(Pcf8563State *s, struct tm *tm)
-+{
-+    qemu_get_timedate(tm, s->time_offset);
-+
-+    trace_pcf8563_rtc_get_time();
-+}
-+
-+static void set_time(Pcf8563State *s, struct tm *tm)
-+{
-+    s->time_offset = qemu_timedate_diff(tm);
-+    set_alarm(s);
-+
-+    trace_pcf8563_rtc_set_time();
-+}
-+
-+static void pcf8563_reset(I2CSlave *i2c)
-+{
-+    Pcf8563State *s = PCF8563(i2c);
-+
-+    s->read_index = 0;
-+    s->write_index = 0;
-+    s->reg_addr = 0;
-+
-+    s->cs1 = 0x8;
-+    s->cs2 = 0x0;
-+    s->vls = 0x80;
-+    s->minutes = 0x0;
-+    s->hours = 0x0;
-+    s->days = 0x0;
-+    s->weekdays = 0x0;
-+    s->centure_months = 0x0;
-+    s->years = 0x0;
-+    s->minute_a = 0x80;
-+    s->hour_a = 0x80;
-+    s->day_a = 0x80;
-+    s->weekday_a = 0x80;
-+    s->clkout_ctl = 0x80;
-+    s->timer_ctl = 0x3;
-+    s->timer_cnt = 0x0;
-+
-+    s->reg_addr = 0;
-+    s->time_offset = 0;
-+
-+    s->alarm_irq = false;
-+
-+    qemu_get_timedate(&s->tm_alarm, 0);
-+}
-+
-+static void pcf8563_read(Pcf8563State *s, uint8_t *result)
-+{
-+    struct tm tm;
-+
-+    switch (s->reg_addr) {
-+    case PCF8563_CS1:
-+        *result = s->cs1;
-+        break;
-+    case PCF8563_CS2:
-+        *result = s->cs2;
-+        break;
-+    case PCF8563_VLS:
-+        get_time(s, &tm);
-+        *result = (s->vls & 0x80) | to_bcd(tm.tm_sec);
-+        break;
-+    case PCF8563_MINUTES:
-+        get_time(s, &tm);
-+        *result = to_bcd(tm.tm_min);
-+        break;
-+    case PCF8563_HOURS:
-+        get_time(s, &tm);
-+        *result = to_bcd(tm.tm_hour);
-+        break;
-+    case PCF8563_DAYS:
-+        get_time(s, &tm);
-+        *result = to_bcd(tm.tm_mday);
-+        break;
-+    case PCF8563_WEEKDAYS:
-+        get_time(s, &tm);
-+        *result = to_bcd(tm.tm_wday);
-+        break;
-+    case PCF8563_CENTURY_MONTHS:
-+        get_time(s, &tm);
-+        *result = to_bcd(tm.tm_mon + 1);
-+        break;
-+    case PCF8563_YEARS:
-+        get_time(s, &tm);
-+        *result = to_bcd((tm.tm_year + 1900) % 100);
-+        break;
-+    case PCF8563_MINUTE_A:
-+        *result = s->minute_a;
-+        break;
-+    case PCF8563_HOUR_A:
-+        *result = s->hour_a;
-+        break;
-+    case PCF8563_DAY_A:
-+        *result = s->day_a;
-+        break;
-+    case PCF8563_WEEKDAY_A:
-+        *result = s->weekday_a;
-+        break;
-+    case PCF8563_CLKOUT_CTL:
-+        *result = s->clkout_ctl;
-+        break;
-+    case PCF8563_TIMER_CTL:
-+        *result = s->timer_ctl;
-+        break;
-+    case PCF8563_TIMER:
-+        *result = s->timer_cnt;
-+        break;
-+    }
-+}
-+
-+static void pcf8563_write(Pcf8563State *s, uint8_t val)
-+{
-+    struct tm tm;
-+    int tmp;
-+
-+    switch (s->reg_addr) {
-+    case PCF8563_CS1:
-+        s->cs1 = val & 0xa8;
-+        break;
-+    case PCF8563_CS2:
-+        s->cs2 = val & 0x1f;
-+        break;
-+    case PCF8563_VLS:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_VLS, SECONDS));
-+        if (tmp >= 0 && tmp <= 59) {
-+            get_time(s, &tm);
-+            tm.tm_sec = tmp;
-+            set_time(s, &tm);
-+        }
-+
-+        bool vl = FIELD_EX8(val, PCF8563_VLS, VL);
-+
-+        if (vl ^ (s->vls & 0x80)) {
-+            if (vl) {
-+                s->stop_time = time(NULL);
-+            } else {
-+                s->time_offset += s->stop_time - time(NULL);
-+                s->stop_time = 0;
-+            }
-+        }
-+
-+        s->vls = vl << 8;
-+        break;
-+    case PCF8563_MINUTES:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_MINUTES, MINUTES));
-+        if (tmp >= 0 && tmp <= 59) {
-+            s->minutes = val;
-+            get_time(s, &tm);
-+            tm.tm_min = tmp;
-+            set_time(s, &tm);
-+        }
-+        break;
-+    case PCF8563_HOURS:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_HOURS, HOURS));
-+        if (tmp >= 0 && tmp <= 23) {
-+            s->hours = val;
-+            get_time(s, &tm);
-+            tm.tm_hour = tmp;
-+            set_time(s, &tm);
-+        }
-+        break;
-+    case PCF8563_DAYS:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_DAYS, DAYS));
-+        if (tmp >= 1 && tmp <= 31) {
-+            s->hours = val;
-+            get_time(s, &tm);
-+            tm.tm_hour = tmp;
-+            set_time(s, &tm);
-+        }
-+        break;
-+    case PCF8563_WEEKDAYS:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_WEEKDAYS, WEEKDAYS));
-+        if (tmp >= 0 && tmp <= 6) {
-+            s->weekdays = val;
-+            get_time(s, &tm);
-+            tm.tm_wday = tmp;
-+            set_time(s, &tm);
-+        }
-+        break;
-+    case PCF8563_CENTURY_MONTHS:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_CENTURY_MONTHS, MONTHS));
-+        if (tmp >= 0 && tmp <= 6) {
-+            s->weekdays = val;
-+            get_time(s, &tm);
-+            tm.tm_wday = tmp;
-+            set_time(s, &tm);
-+        }
-+        break;
-+    case PCF8563_YEARS:
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_YEARS, YEARS));
-+        if (tmp >= 0 && tmp <= 99) {
-+            s->years = val;
-+            get_time(s, &tm);
-+            tm.tm_year = tmp;
-+            set_time(s, &tm);
-+        }
-+        break;
-+    case PCF8563_MINUTE_A:
-+        s->minute_a = val;
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_MINUTE_A, MINUTE_A));
-+        if (tmp >= 0 && tmp <= 59) {
-+            s->tm_alarm.tm_min = tmp;
-+            set_alarm(s);
-+        }
-+        break;
-+    case PCF8563_HOUR_A:
-+        s->hour_a = val & 0xbf;
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_HOUR_A, HOUR_A));
-+        if (tmp >= 0 && tmp <= 23) {
-+            s->tm_alarm.tm_hour = tmp;
-+            set_alarm(s);
-+        }
-+        break;
-+    case PCF8563_DAY_A:
-+        s->day_a = val & 0xbf;
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_DAY_A, DAY_A));
-+        if (tmp >= 1 && tmp <= 31) {
-+            s->tm_alarm.tm_mday = tmp;
-+            set_alarm(s);
-+        }
-+        break;
-+    case PCF8563_WEEKDAY_A:
-+        s->weekday_a = val & 0x87;
-+        tmp = from_bcd(FIELD_EX8(val, PCF8563_WEEKDAY_A, WEEKDAY_A));
-+        if (tmp >= 0 && tmp <= 6) {
-+            s->tm_alarm.tm_wday = tmp;
-+            set_alarm(s);
-+        }
-+        break;
-+    case PCF8563_CLKOUT_CTL:
-+        s->clkout_ctl = val & 0x83;
-+        break;
-+    case PCF8563_TIMER_CTL:
-+        s->timer_ctl = val & 0x83;
-+        break;
-+    case PCF8563_TIMER:
-+        s->timer_cnt = val;
-+        if (FIELD_EX32(s->timer_ctl, PCF8563_TIMER_CTL, TE)) {
-+            bool multiply = false;
-+            uint16_t src_freq = get_src_freq(s, &multiply);
-+            uint64_t delay = 0;
-+
-+            /* Calculate timer's delay in ns based on value and set it up */
-+            if (multiply) {
-+                delay = val * NANOSECONDS_PER_SECOND * src_freq;
-+            } else {
-+                delay = val * NANOSECONDS_PER_SECOND / src_freq;
-+            }
-+            timer_mod(s->timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay);
-+        }
-+        break;
-+    }
-+}
-+
-+static uint8_t pcf8563_rx(I2CSlave *i2c)
-+{
-+    Pcf8563State *s = PCF8563(i2c);
-+    uint8_t result = 0xff;
-+
-+    pcf8563_read(s, &result);
-+    /* Auto-increment register address */
-+    s->reg_addr++;
-+
-+    trace_pcf8563_rtc_read(s->read_index, result);
-+    return result;
-+}
-+
-+static int pcf8563_tx(I2CSlave *i2c, uint8_t data)
-+{
-+    Pcf8563State *s = PCF8563(i2c);
-+
-+    if (s->write_index == 0) {
-+        /* Receive register address */
-+        s->reg_addr = data;
-+        s->write_index++;
-+        trace_pcf8563_rtc_write_addr(data);
-+    } else {
-+        /* Receive data to write */
-+        pcf8563_write(s, data);
-+        s->write_index++;
-+        s->reg_addr++;
-+        trace_pcf8563_rtc_write_data(data);
-+    }
-+    return 0;
-+}
-+
-+static int pcf8563_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    trace_pcf8563_rtc_event(event);
-+    Pcf8563State *s = PCF8563(i2c);
-+
-+    switch (event) {
-+    case I2C_FINISH:
-+        s->read_index = 0;
-+        s->write_index = 0;
-+    default:
-+        break;
-+    }
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_pcf8563 = {
-+    .name = "PCF8563",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+};
-+
-+static void pcf8563_realize(DeviceState *dev, Error **errp)
-+{
-+    I2CSlave *i2c = I2C_SLAVE(dev);
-+    Pcf8563State *s = PCF8563(i2c);
-+
-+    s->alarm_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, &alarm_timer_cb, s);
-+    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, &timer_cb, s);
-+    s->irq_gen_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, &irq_gen_timer_cb, s);
-+
-+    pcf8563_reset(i2c);
-+}
-+
-+static void pcf8563_init(Object *obj)
-+{
-+    Pcf8563State *s = PCF8563(obj);
-+
-+    qdev_init_gpio_out(DEVICE(s), &s->irq, 1);
-+}
-+
-+static void pcf8563_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-+
-+    k->event = pcf8563_event;
-+    k->recv = pcf8563_rx;
-+    k->send = pcf8563_tx;
-+    dc->realize = pcf8563_realize;
-+    dc->vmsd = &vmstate_pcf8563;
-+
-+    trace_pcf8563_rtc_init();
-+}
-+
-+static const TypeInfo pcf8563_device_info = {
-+    .name          = TYPE_PCF8563,
-+    .parent        = TYPE_I2C_SLAVE,
-+    .instance_size = sizeof(Pcf8563State),
-+    .instance_init = pcf8563_init,
-+    .class_init    = pcf8563_class_init,
-+};
-+
-+static void pcf8563_register_types(void)
-+{
-+    type_register_static(&pcf8563_device_info);
-+}
-+
-+type_init(pcf8563_register_types)
-diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
-index ebb311a5b0..446017f512 100644
---- a/hw/rtc/trace-events
-+++ b/hw/rtc/trace-events
-@@ -31,3 +31,14 @@ m48txx_nvram_mem_write(uint32_t addr, uint32_t value) "mem write addr:0x%04x val
- # goldfish_rtc.c
- goldfish_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
- goldfish_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
-+
-+# pcf8563_rtc.c
-+pcf8563_rtc_write_data(uint8_t data) "data: 0x%x"
-+pcf8563_rtc_write_addr(uint8_t addr) "register address: 0x%x"
-+pcf8563_rtc_read(uint8_t addr, uint8_t data) "addr: 0x%x, data: 0x%x"
-+pcf8563_rtc_event(uint8_t event) "Event: 0x%x"
-+pcf8563_rtc_init(void)
-+pcf8563_rtc_reset(void)
-+pcf8563_rtc_set_time(void)
-+pcf8563_rtc_get_time(void)
-+pcf8563_rtc_set_alarm(void)
--- 
-2.34.1
-
+DQoNCg0KT24gMjAvMDIvMjAyNSAyMjoxMywgTWljaGFlbCBTLiBUc2lya2luIHdyb3RlOg0KPiBD
+YXV0aW9uOiBFeHRlcm5hbCBlbWFpbC4gRG8gbm90IG9wZW4gYXR0YWNobWVudHMgb3IgY2xpY2sg
+bGlua3MsIHVubGVzcyB0aGlzIGVtYWlsIGNvbWVzIGZyb20gYSBrbm93biBzZW5kZXIgYW5kIHlv
+dSBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+DQo+DQo+IE9uIE1vbiwgSmFuIDIwLCAyMDI1
+IGF0IDA1OjQxOjMyUE0gKzAwMDAsIENMRU1FTlQgTUFUSElFVS0tRFJJRiB3cm90ZToNCj4+IEZy
+b206IENsZW1lbnQgTWF0aGlldS0tRHJpZiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRlbi5j
+b20+DQo+Pg0KPj4gVGhpcyBwYXRjaCBzZXQgYmVsb25ncyB0byBhIGxpc3Qgb2Ygc2VyaWVzIHRo
+YXQgYWRkIFNWTSBzdXBwb3J0IGZvciBWVC1kLg0KPj4NCj4+IEhlcmUgd2UgZm9jdXMgb24gaW1w
+bGVtZW50aW5nIEFUUyBzdXBwb3J0IGluIHRoZSBJT01NVSBhbmQgYWRkaW5nIGENCj4+IFBDSS1s
+ZXZlbCBBUEkgdG8gYmUgdXNlZCBieSB2aXJ0dWFsIGRldmljZXMuDQo+Pg0KPj4gVGhpcyB3b3Jr
+IGlzIGJhc2VkIG9uIHRoZSBWVC1kIHNwZWNpZmljYXRpb24gdmVyc2lvbiA0LjEgKE1hcmNoIDIw
+MjMpLg0KPj4NCj4+IEhlcmUgaXMgYSBsaW5rIHRvIG91ciBHaXRIdWIgcmVwb3NpdG9yeSB3aGVy
+ZSB5b3UgY2FuIGZpbmQgdGhlIGZvbGxvd2luZyBlbGVtZW50czoNCj4+ICAgICAgLSBRZW11IHdp
+dGggYWxsIHRoZSBwYXRjaGVzIGZvciBTVk0NCj4+ICAgICAgICAgIC0gQVRTDQo+PiAgICAgICAg
+ICAtIFBSSQ0KPj4gICAgICAgICAgLSBEZXZpY2UgSU9UTEIgaW52YWxpZGF0aW9ucw0KPj4gICAg
+ICAgICAgLSBSZXF1ZXN0cyB3aXRoIGFscmVhZHkgcHJlLXRyYW5zbGF0ZWQgYWRkcmVzc2VzDQo+
+PiAgICAgIC0gQSBkZW1vIGRldmljZQ0KPj4gICAgICAtIEEgc2ltcGxlIGRyaXZlciBmb3IgdGhl
+IGRlbW8gZGV2aWNlDQo+PiAgICAgIC0gQSB1c2Vyc3BhY2UgcHJvZ3JhbSAoZm9yIHRlc3Rpbmcg
+YW5kIGRlbW9uc3RyYXRpb24gcHVycG9zZXMpDQo+Pg0KPj4gaHR0cHM6Ly9naXRodWIuY29tL0J1
+bGxTZXF1YW5hL1FlbXUtaW4tZ3Vlc3QtU1ZNLWRlbW8NCj4NCj4gRmFpbHMgYnVpbGQ6DQo+DQo+
+IGh0dHBzOi8vZ2l0bGFiLmNvbS9tc3RyZWRoYXQvcWVtdS8tL2pvYnMvOTIwMDM3MjM4OA0KPg0K
+PiBJbiBmdW5jdGlvbiDigJh2dGRfaW9tbXVfYXRzX2RvX3RyYW5zbGF0ZeKAmSwNCj4gICAgICBp
+bmxpbmVkIGZyb20g4oCYdnRkX2lvbW11X2F0c19yZXF1ZXN0X3RyYW5zbGF0aW9u4oCZIGF0IC4u
+L2h3L2kzODYvaW50ZWxfaW9tbXUuYzo0Nzc4OjE3Og0KPiAuLi9ody9pMzg2L2ludGVsX2lvbW11
+LmM6NDc1ODoxMjogZXJyb3I6IOKAmGVudHJ5LnRhcmdldF9hc+KAmSBtYXkgYmUgdXNlZCB1bmlu
+aXRpYWxpemVkIFstV2Vycm9yPW1heWJlLXVuaW5pdGlhbGl6ZWRdDQo+ICAgNDc1OCB8ICAgICBy
+ZXR1cm4gZW50cnk7DQo+ICAgICAgICB8ICAgICAgICAgICAgXn5+fn4NCj4gLi4vaHcvaTM4Ni9p
+bnRlbF9pb21tdS5jOiBJbiBmdW5jdGlvbiDigJh2dGRfaW9tbXVfYXRzX3JlcXVlc3RfdHJhbnNs
+YXRpb27igJk6DQo+IC4uL2h3L2kzODYvaW50ZWxfaW9tbXUuYzo0NzQ1OjE5OiBub3RlOiDigJhl
+bnRyeeKAmSBkZWNsYXJlZCBoZXJlDQo+ICAgNDc0NSB8ICAgICBJT01NVVRMQkVudHJ5IGVudHJ5
+Ow0KPiAgICAgICAgfCAgICAgICAgICAgICAgICAgICBefn5+fg0KPiBjYzE6IGFsbCB3YXJuaW5n
+cyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycw0KPg0KDQpVaCwgbG9va3MgbGlrZSB0aGUgZXJyb3Ig
+aXMgb25seSBwcmVzZW50IGluIG5vbi1kZWJ1ZyBtb2RlLg0KSSdsbCBzZW5kIGEgdjMNCg0KVGhh
+bmtzIE1pY2hhZWwNCg0KPg0KPg0KPj4gPT09PT09PT09PT09PT09DQo+Pg0KPj4gQ29udGV4dCBh
+bmQgZGVzaWduIG5vdGVzDQo+PiAnJycnJycnJycnJycnJycnJycnJycnJycNCj4+DQo+PiBUaGUg
+bWFpbiBwdXJwb3NlIG9mIHRoaXMgd29yayBpcyB0byBlbmFibGUgdlZULWQgdXNlcnMgdG8gbWFr
+ZQ0KPj4gdHJhbnNsYXRpb24gcmVxdWVzdHMgdG8gdGhlIHZJT01NVSBhcyBkZXNjcmliZWQgaW4g
+dGhlIFBDSWUgR2VuIDUuMA0KPj4gc3BlY2lmaWNhdGlvbiAoc2VjdGlvbiAxMCkuIE1vcmVvdmVy
+LCB3ZSBhaW0gdG8gaW1wbGVtZW50IGENCj4+IFBDSS9NZW1vcnktbGV2ZWwgZnJhbWV3b3JrIHRo
+YXQgY291bGQgYmUgdXNlZCBieSBvdGhlciB2SU9NTVVzDQo+PiB0byBpbXBsZW1lbnQgdGhlIHNh
+bWUgZmVhdHVyZXMuDQo+Pg0KPj4gV2hhdCBpcyBBVFM/DQo+PiAnJycnJycnJycnJycNCj4+DQo+
+PiBBVFMgKEFkZHJlc3MgVHJhbnNsYXRpb24gU2VydmljZSkgaXMgYSBQQ0llLWxldmVsIHByb3Rv
+Y29sIHRoYXQNCj4+IGVuYWJsZXMgUENJZSBkZXZpY2VzIHRvIHF1ZXJ5IGFuIElPTU1VIGZvciB2
+aXJ0dWFsIHRvIHBoeXNpY2FsDQo+PiBhZGRyZXNzIHRyYW5zbGF0aW9ucyBpbiBhIHNwZWNpZmlj
+IGFkZHJlc3Mgc3BhY2UgKHN1Y2ggYXMgYSB1c2VybGFuZA0KPj4gcHJvY2VzcyBhZGRyZXNzIHNw
+YWNlKS4gV2hlbiBhIGRldmljZSByZWNlaXZlcyB0cmFuc2xhdGlvbiByZXNwb25zZXMNCj4+IGZy
+b20gYW4gSU9NTVUsIGl0IG1heSBkZWNpZGUgdG8gc3RvcmUgdGhlbSBpbiBhbiBpbnRlcm5hbCBj
+YWNoZSwNCj4+IG9mdGVuIGtub3duIGFzICJBVEMiIChBZGRyZXNzIFRyYW5zbGF0aW9uIENhY2hl
+KSBvciAiRGV2aWNlIElPVExCIi4NCj4+IFRvIGtlZXAgcGFnZSB0YWJsZXMgYW5kIGNhY2hlcyBj
+b25zaXN0ZW50LCB0aGUgSU9NTVUgaXMgYWxsb3dlZCB0bw0KPj4gc2VuZCBhc3luY2hyb25vdXMg
+aW52YWxpZGF0aW9uIHJlcXVlc3RzIHRvIGl0cyBjbGllbnQgZGV2aWNlcy4NCj4+DQo+PiBUbyBh
+dm9pZCBpbnRyb2R1Y2luZyBhbiB1bm5lY2Vzc2FyaWx5IGNvbXBsZXggQVBJLCB0aGlzIHNlcmll
+cyBzaW1wbHkNCj4+IGV4cG9zZXMgMyBmdW5jdGlvbnMuIFRoZSBmaXJzdCAyIGFyZSBhIHBhaXIg
+b2Ygc2V0dXAgZnVuY3Rpb25zIHRoYXQNCj4+IGFyZSBjYWxsZWQgdG8gaW5zdGFsbCBhbmQgcmVt
+b3ZlIHRoZSBBVFMgaW52YWxpZGF0aW9uIGNhbGxiYWNrIGR1cmluZw0KPj4gdGhlIGluaXRpYWxp
+emF0aW9uIHBoYXNlIG9mIGEgcHJvY2Vzcy4gVGhlIHRoaXJkIG9uZSB3aWxsIGJlDQo+PiB1c2Vk
+IHRvIHJlcXVlc3QgdHJhbnNsYXRpb25zLiBUaGUgY2FsbGJhY2sgc2V0dXAgQVBJIGludHJvZHVj
+ZWQgaW4NCj4+IHRoaXMgc2VyaWVzIGNhbGxzIHRoZSBJT01NVU5vdGlmaWVyIEFQSSB1bmRlciB0
+aGUgaG9vZC4NCj4+DQo+PiBBUEkgZGVzaWduDQo+PiAnJycnJycnJycnDQo+Pg0KPj4gLSBpbnQg
+cGNpX3JlZ2lzdGVyX2lvbW11X3RsYl9ldmVudF9ub3RpZmllcihQQ0lEZXZpY2UgKmRldiwNCj4+
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHBh
+c2lkLA0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgSU9N
+TVVOb3RpZmllciAqbik7DQo+Pg0KPj4gLSBpbnQgcGNpX3VucmVnaXN0ZXJfaW9tbXVfdGxiX2V2
+ZW50X25vdGlmaWVyKFBDSURldmljZSAqZGV2LCB1aW50MzJfdCBwYXNpZCwNCj4+ICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgSU9NTVVOb3RpZmllciAqbik7
+DQo+Pg0KPj4gLSBzc2l6ZV90IHBjaV9hdHNfcmVxdWVzdF90cmFuc2xhdGlvbl9wYXNpZChQQ0lE
+ZXZpY2UgKmRldiwgdWludDMyX3QgcGFzaWQsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICBib29sIHByaXZfcmVxLCBib29sIGV4ZWNfcmVxLA0KPj4gICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaHdhZGRyIGFkZHIsIHNp
+emVfdCBsZW5ndGgsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBib29sIG5vX3dyaXRlLA0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgSU9NTVVUTEJFbnRyeSAqcmVzdWx0LA0KPj4gICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZV90IHJlc3VsdF9sZW5ndGgsDQo+PiAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50MzJfdCAqZXJyX2Nv
+dW50KTsNCj4+DQo+PiBBbHRob3VnaCBkZXZpY2UgZGV2ZWxvcGVycyBtYXkgd2FudCB0byBpbXBs
+ZW1lbnQgY3VzdG9tIEFUQyBmb3INCj4+IHRlc3Rpbmcgb3IgcGVyZm9ybWFuY2UgbWVhc3VyZW1l
+bnQgcHVycG9zZXMsIHdlIHByb3ZpZGUgYSBnZW5lcmljDQo+PiBpbXBsZW1lbnRhdGlvbiBhcyBh
+IHV0aWxpdHkgbW9kdWxlLg0KPj4NCj4+IE92ZXJ2aWV3DQo+PiAnJycnJycnJw0KPj4NCj4+IEhl
+cmUgYXJlIHRoZSBpbnRlcmFjdGlvbnMgYmV0d2VlbiBhbiBBVFMtY2FwYWJsZSBQQ0llIGRldmlj
+ZSBhbmQgdGhlIHZWVC1kOg0KPj4NCj4+DQo+Pg0KPj4gICAg4pSM4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSQICAgICAgICAgICAgICAgICDilIzilIDilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilIDilIDilJANCj4+ICAgIOKUgkRldmljZSAgICAg4pSCICAgICAgICAgICAg
+ICAgICDilIJQQ0kgLyBNZW1vcnnilIINCj4+ICAgIOKUgiAgICAgICAgICAg4pSCIHBjaV9hdHNf
+cmVxdWVzdF/ilIJhYnN0cmFjdGlvbiDilIIgaW9tbXVfYXRzXw0KPj4gICAg4pSCICAgICAgICAg
+ICDilIIgdHJhbnNsYXRpb25fICAgIOKUgiAgICAgICAgICAgIOKUgiByZXF1ZXN0Xw0KPj4gICAg
+4pSC4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQ4pSCIHBhc2lkICAgICAgICAgICDi
+lIIgQVMgbG9va3VwICDilIIgdHJhbnNsYXRpb24NCj4+ICAgIOKUguKUgkxvZ2ljICAgIOKUguKU
+guKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgD7ilILilbbi
+lbbilbbilbbilbbilbbilbbilbbilbbilbbilbY+4pSC4pSA4pSA4pSA4pSA4pSA4pSA4pSQDQo+
+PiAgICDilILilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilJjilII84pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSCPOKVtuKVtuKVtuKVtuKVtuKV
+tuKVtuKVtuKVtuKVtuKVtuKUgjzilIDilIDilJAgIOKUgg0KPj4gICAg4pSC4pSM4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSQ4pSCICAgICAgICAgICAgICAgICDilIIgICAgICAgICAgICDi
+lIIgICDilIIgIOKUgg0KPj4gICAg4pSC4pSCaW52IGZ1bmMg4pSC4pSCPOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUkCAgICAgICAg4pSCICAgICAgICAgICAg4pSCICAg4pSCICDilIINCj4+ICAgIOKU
+guKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmOKUgiAgICAgICAg4pSCICAgICAgICDi
+lIIgICAgICAgICAgICDilIIgICDilIIgIOKUgg0KPj4gICAg4pSCICAgIOKUgiAgICAgIOKUgiAg
+ICAgICAg4pSCICAgICAgICDilIIgICAgICAgICAgICDilIIgICDilIIgIOKUgg0KPj4gICAg4pSC
+ICAgIOKIqCAgICAgIOKUgiAgICAgICAg4pSCICAgICAgICDilIIgICAgICAgICAgICDilIIgICDi
+lIIgIOKUgg0KPj4gICAg4pSC4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQ4pSCICAg
+ICAgICDilIIgICAgICAgIOKUgiAgICAgICAgICAgIOKUgiAgIOKUgiAg4pSCDQo+PiAgICDilILi
+lIJBVEMgICAgICDilILilIIgICAgICAgIOKUgiAgICAgICAg4pSCICAgICAgICAgICAg4pSCICAg
+4pSCICDilIINCj4+ICAgIOKUguKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmOKUgiAg
+ICAgICAg4pSCICAgICAgICDilIIgICAgICAgICAgICDilIIgICDilIIgIOKUgg0KPj4gICAg4pSU
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYICAgICAgICDilIIgICAgICAgIOKU
+lOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmCAgIOKUgiAg4pSCDQo+PiAg
+ICAgICAgICAgICAgICAgICAgICAgICDilIIgICAgICAgICAgICAgICAgICAgICAgICAg4pSCICDi
+lIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiAgICAgICAgICAgICAgICAgICAgICAg
+ICDilIIgIOKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAg4pSCICAgICAgICAgICAgICAg
+ICAgICAgICAgIOKUgiAg4pSCDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICDilIIgICAgICAg
+ICAgICAgICAgICAgICAgICAg4pSCICDilIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgIOKU
+giAgICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilLzilIDilIDilLzilIDilJANCj4+ICAgICAgICAgICAgICAgICAgICAgICAg
+IOKUgiAgICDilIJ2VlQtZCAgICAgICAgICAgICAgIOKUgiAg4pSCIOKUgg0KPj4gICAgICAgICAg
+ICAgICAgICAgICAgICAg4pSCICAgIOKUgiAgICAgICAgICAgICAgICAgICAg4pSCICDilIIg4pSC
+DQo+PiAgICAgICAgICAgICAgICAgICAgICAgICDilIIgICAg4pSCICAgICAgICAgICAgICAgICAg
+ICDilIIgIOKUgiDilIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiAgICDilIIgICAg
+ICAgICAgICAgICAgICAgIOKUgiAg4pSCIOKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAg
+4pSCICAgIOKUgiAgICAgICAgICAgICAgICAgICAg4pSCICDilIIg4pSCDQo+PiAgICAgICAgICAg
+ICAgICAgICAgICAgICDilIIgICAg4pSCICAgICAgICAgICAgICAgICAgICDilIIgIOKIqCDilIIN
+Cj4+ICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiAgICDilILilIzilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJDi
+lIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiAgICDilILilIJUcmFuc2xhdGlvbiBs
+b2dpYyAgICAgIOKUguKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAg4pSCICAgIOKUguKU
+lOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUmOKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAg4pSU4pSA4pSA
+4pSA4pSA4pS84pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICAgICAgICAg
+ICAg4pSCDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiAgICAgICAgICAgIOKU
+giAgICAgICAgICAgIOKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilILilIzi
+lIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilJDilIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSC4pSC
+ICBJbnZhbGlkYXRpb24gcXVldWUgICDilILilIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAg4pSC4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4oin4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSY4pSCDQo+PiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIOKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUvOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmA0KPj4gICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAg4pSCDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICDilIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIOKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSM4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSQDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIJLZXJuZWwgZHJp
+dmVyICAgICAgICAgICDilIINCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiAg
+ICAgICAgICAgICAgICAgICAgICAgIOKUgg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYDQo+Pg0KPj4gdjINCj4+ICAgICAgUmViYXNlIG9uIG1h
+c3RlciBhZnRlciBtZXJnZSBvZiBaaGVuemhvbmcncyBGTFRTIHNlcmllcw0KPj4gICAgICBSZW5h
+bWUgdGhlIHNlcmllcyBhcyBpdCBpcyBub3cgYmFzZWQgb24gbWFzdGVyLg0KPj4NCj4+ICAgICAg
+Q2hhbmdlcyBhZnRlciByZXZpZXcgYnkgTWljaGFlbDoNCj4+ICAgICAgICAtIFNwbGl0IGxvbmcg
+bGluZXMgaW4gbWVtb3J5LmgNCj4+ICAgICAgICAtIENoYW5nZSBwYXRjaCBlbmNvZGluZyAobm8g
+VVRGLTgpDQo+Pg0KPj4gICAgICBDaGFuZ2VzIGFmdGVyIHJldmlldyBieSBaaGVuemhvbmc6DQo+
+PiAgICAgICAgLSBSZXdvcmsgIkZpbGwgdGhlIFBBU0lEIGZpZWxkIHdoZW4gY3JlYXRpbmcgYW4g
+SU9NTVVUTEJFbnRyeSINCj4+DQo+Pg0KPj4NCj4+IENsZW1lbnQgTWF0aGlldS0tRHJpZiAoMTkp
+Og0KPj4gICAgbWVtb3J5OiBBZGQgcGVybWlzc2lvbnMgaW4gSU9NTVVBY2Nlc3NGbGFncw0KPj4g
+ICAgaW50ZWxfaW9tbXU6IERlY2xhcmUgc3VwcG9ydGVkIFBBU0lEIHNpemUNCj4+ICAgIG1lbW9y
+eTogQWxsb3cgdG8gc3RvcmUgdGhlIFBBU0lEIGluIElPTU1VVExCRW50cnkNCj4+ICAgIGludGVs
+X2lvbW11OiBGaWxsIHRoZSBQQVNJRCBmaWVsZCB3aGVuIGNyZWF0aW5nIGFuIElPTU1VVExCRW50
+cnkNCj4+ICAgIHBjaWU6IEFkZCBoZWxwZXIgdG8gZGVjbGFyZSBQQVNJRCBjYXBhYmlsaXR5IGZv
+ciBhIHBjaWUgZGV2aWNlDQo+PiAgICBwY2llOiBIZWxwZXIgZnVuY3Rpb25zIHRvIGNoZWNrIGlm
+IFBBU0lEIGlzIGVuYWJsZWQNCj4+ICAgIHBjaWU6IEhlbHBlciBmdW5jdGlvbiB0byBjaGVjayBp
+ZiBBVFMgaXMgZW5hYmxlZA0KPj4gICAgcGNpOiBDYWNoZSB0aGUgYnVzIG1hc3RlcmluZyBzdGF0
+dXMgaW4gdGhlIGRldmljZQ0KPj4gICAgcGNpOiBBZGQgSU9NTVUgb3BlcmF0aW9ucyB0byBnZXQg
+bWVtb3J5IHJlZ2lvbnMgd2l0aCBQQVNJRA0KPj4gICAgaW50ZWxfaW9tbXU6IEltcGxlbWVudCB0
+aGUgZ2V0X21lbW9yeV9yZWdpb25fcGFzaWQgaW9tbXUgb3BlcmF0aW9uDQo+PiAgICBtZW1vcnk6
+IFN0b3JlIHVzZXIgZGF0YSBwb2ludGVyIGluIHRoZSBJT01NVSBub3RpZmllcnMNCj4+ICAgIHBj
+aTogQWRkIGEgcGNpLWxldmVsIGluaXRpYWxpemF0aW9uIGZ1bmN0aW9uIGZvciBpb21tdSBub3Rp
+ZmllcnMNCj4+ICAgIGF0YzogR2VuZXJpYyBBVEMgdGhhdCBjYW4gYmUgdXNlZCBieSBQQ0llIGRl
+dmljZXMgdGhhdCBzdXBwb3J0IFNWTQ0KPj4gICAgYXRjOiBBZGQgdW5pdCB0ZXN0cw0KPj4gICAg
+bWVtb3J5OiBBZGQgYW4gQVBJIGZvciBBVFMgc3VwcG9ydA0KPj4gICAgcGNpOiBBZGQgYSBwY2kt
+bGV2ZWwgQVBJIGZvciBBVFMNCj4+ICAgIGludGVsX2lvbW11OiBTZXQgYWRkcmVzcyBtYXNrIHdo
+ZW4gYSB0cmFuc2xhdGlvbiBmYWlscyBhbmQgYWRqdXN0IFcNCj4+ICAgICAgcGVybWlzc2lvbg0K
+Pj4gICAgaW50ZWxfaW9tbXU6IFJldHVybiBwYWdlIHdhbGsgbGV2ZWwgZXZlbiB3aGVuIHRoZSB0
+cmFuc2xhdGlvbiBmYWlscw0KPj4gICAgaW50ZWxfaW9tbXU6IEFkZCBzdXBwb3J0IGZvciBBVFMN
+Cj4+DQo+PiAgIGh3L2kzODYvaW50ZWxfaW9tbXUuYyAgICAgICAgICB8IDEyMiArKysrKystLQ0K
+Pj4gICBody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggfCAgIDIgKw0KPj4gICBody9wY2kv
+cGNpLmMgICAgICAgICAgICAgICAgICAgfCAxMTEgKysrKysrLQ0KPj4gICBody9wY2kvcGNpZS5j
+ICAgICAgICAgICAgICAgICAgfCAgNDIgKysrDQo+PiAgIGluY2x1ZGUvZXhlYy9tZW1vcnkuaCAg
+ICAgICAgICB8ICA1MSArKystDQo+PiAgIGluY2x1ZGUvaHcvaTM4Ni9pbnRlbF9pb21tdS5oICB8
+ICAgMiArLQ0KPj4gICBpbmNsdWRlL2h3L3BjaS9wY2kuaCAgICAgICAgICAgfCAgODMgKysrKysr
+DQo+PiAgIGluY2x1ZGUvaHcvcGNpL3BjaV9kZXZpY2UuaCAgICB8ICAgMSArDQo+PiAgIGluY2x1
+ZGUvaHcvcGNpL3BjaWUuaCAgICAgICAgICB8ICAgOSArLQ0KPj4gICBpbmNsdWRlL2h3L3BjaS9w
+Y2llX3JlZ3MuaCAgICAgfCAgIDUgKw0KPj4gICBzeXN0ZW0vbWVtb3J5LmMgICAgICAgICAgICAg
+ICAgfCAgMjEgKysNCj4+ICAgdGVzdHMvdW5pdC9tZXNvbi5idWlsZCAgICAgICAgIHwgICAxICsN
+Cj4+ICAgdGVzdHMvdW5pdC90ZXN0LWF0Yy5jICAgICAgICAgIHwgNTI3ICsrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKw0KPj4gICB1dGlsL2F0Yy5jICAgICAgICAgICAgICAgICAgICAg
+fCAyMTEgKysrKysrKysrKysrKw0KPj4gICB1dGlsL2F0Yy5oICAgICAgICAgICAgICAgICAgICAg
+fCAxMTcgKysrKysrKysNCj4+ICAgdXRpbC9tZXNvbi5idWlsZCAgICAgICAgICAgICAgIHwgICAx
+ICsNCj4+ICAgMTYgZmlsZXMgY2hhbmdlZCwgMTI3NSBpbnNlcnRpb25zKCspLCAzMSBkZWxldGlv
+bnMoLSkNCj4+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzL3VuaXQvdGVzdC1hdGMuYw0KPj4g
+ICBjcmVhdGUgbW9kZSAxMDA2NDQgdXRpbC9hdGMuYw0KPj4gICBjcmVhdGUgbW9kZSAxMDA2NDQg
+dXRpbC9hdGMuaA0KPj4NCj4+IC0tDQo+PiAyLjQ3LjENCg==
 
