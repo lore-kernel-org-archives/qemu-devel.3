@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D989C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8999BC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5J-0001Q8-K2; Fri, 21 Feb 2025 07:24:49 -0500
+	id 1tlS5Y-000387-OI; Fri, 21 Feb 2025 07:25:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS51-0008QZ-FF
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:31 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5S-0002Ws-Kd
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4z-0007D6-NS
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:31 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5Q-0007Fx-5T
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140669;
+ s=mimecast20190719; t=1740140695;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0LpIbNsQ+dt+JvKUY8+SWh8i4my2OzTIZC5O+PsCrUY=;
- b=YkZr5iUV9enX8mZmF2c7nDdYgxLiT1Y6/Q02TG2eZeObrI2fdUF1WnebWny+Oh98wY6dTC
- zQbmSk81wt8QQZBLh7HPw2RCplaBbk0Mso4iLSTnR82Suu5tbWQ8Vofjvf7jyHj+2r0h5G
- faUvdS0QiILyxFVoh/LmbVVocB2GjEc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7AoCeBbkagUX8Kyv4XqGNujI5QUp6oIuMdoxn2XTqVk=;
+ b=ecqmbU6RdVHtJQGMKB//SKxDrfkBceXR2+v/64BkWBs874m6YA6oAxF16WnZORvWEo2/SM
+ ECy3EDPsGsUAK49dvIeH2ib0KZZS6pQE6O3jBMXRamkBup6GvYid5O8pTe5JEPRVZN6MRc
+ 5sNLhbcHjwjq2xG0xrpMf2zB9XeqmUg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-UKnG_SJcMJiToIkYm2WLew-1; Fri, 21 Feb 2025 07:24:27 -0500
-X-MC-Unique: UKnG_SJcMJiToIkYm2WLew-1
-X-Mimecast-MFC-AGG-ID: UKnG_SJcMJiToIkYm2WLew_1740140667
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4393b6763a3so9536315e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:27 -0800 (PST)
+ us-mta-654-YnydFCNOOQSY8tgy7HAz9w-1; Fri, 21 Feb 2025 07:24:54 -0500
+X-MC-Unique: YnydFCNOOQSY8tgy7HAz9w-1
+X-Mimecast-MFC-AGG-ID: YnydFCNOOQSY8tgy7HAz9w_1740140693
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4399a5afc72so10251115e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140666; x=1740745466;
+ d=1e100.net; s=20230601; t=1740140692; x=1740745492;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0LpIbNsQ+dt+JvKUY8+SWh8i4my2OzTIZC5O+PsCrUY=;
- b=CRTWvbk5rWhACCEukoXKmQNZVWGLsg9/CATpVQg7AxANw1LWVBfdHrv184MunAHf2r
- yUhsb27QDKtnsE4vhlPyfjl9/ETErcoveB5ZLKmX/+guyGhGXN+aP90cs3DFG/YuqY79
- iQ1e+Tjt7XGilKhCKDHlX8xb+ZfCj5sZ3FoE/1Cuk05jaTP+CJ0HB9QXNdS1t9B7ys/L
- DEulAet6nv0a1hAAn7p+OdroTZsknEyk8k8TsanU8lXDU7ise85Yf/jvadLAf9yHm7xh
- AvgGAeWsLaUYBKCobfs0WEbz28eyvd9GNpwvq8yGejPJ5Z5M7E9gf/kpBLUBn8IGYrjC
- YfRg==
-X-Gm-Message-State: AOJu0Yw3JWcd0Ces0xhIXTUIk+UvKRncJtLImqiMoC8cYKId4vKqRMVW
- DzOP0iQatlYHR6X4m/f8K3htZNSKqefJwJKSV71c9q757mRqdQuB+wl5rwNFFj5HsPjpMbta0ib
- B/e8CeKm4PLU7K+IpNmE+yzA9ZjD7Jj10EwjyvuD7CCpIz+f8kUdan2XI7IfRqsHuYEl090In/k
- Qxj6iGvA15kRQIuc8TMVnN3DN3uO8WMg==
-X-Gm-Gg: ASbGnctZzuveSBugLT/Go2asQ2M7Hnf0A55S5uVVyFhyXrpXBp1z014q5GkkNXhtc+F
- K9jODfgP/bogcMJFJZ5GYo9iAW1PXndaGT/Fnd9iIhMrLWRbrOShLZQyOH/Ls5AhCfvH+Sb/Dxk
- zCjwmYEyxKhCqhUEd297UsVBykzb4/6Q3uNJINaOgdo3EsKHJQ259ySTX3fqB6bWsabi7bM/MJE
- Vs0Dxocb6SkbHYIM5V6w5G+UL6o93rY65A2Qa1cf9Psi+fcfCb7iwHU6ZGMhe2/VdkFmNmf+7V9
- Is/Wow==
-X-Received: by 2002:a05:600c:3c90:b0:439:a202:86dd with SMTP id
- 5b1f17b1804b1-439b155b048mr15027135e9.26.1740140666226; 
- Fri, 21 Feb 2025 04:24:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH3DqUfrNt+5E8efvA4ge4PEvPvxxIj1UbxOtGVHHSmIjAJzSbsPusm/w+FqHQbYdxCuImAzw==
-X-Received: by 2002:a05:600c:3c90:b0:439:a202:86dd with SMTP id
- 5b1f17b1804b1-439b155b048mr15026825e9.26.1740140665730; 
- Fri, 21 Feb 2025 04:24:25 -0800 (PST)
+ bh=7AoCeBbkagUX8Kyv4XqGNujI5QUp6oIuMdoxn2XTqVk=;
+ b=GncP+wwrg4myeNus4i/D3VsOuZEsxn1HhuOcNP5c2iCbY0g6y6i7j8i6shrxAVcZRV
+ 0Ka7IZ9Dl7zTYmSe8EH9Xz95PqLzCY9xa89VL7SAOri2Jo4PvBB7M7rqzANUfIJvRM/l
+ cj/eoXV9mIT7tVc9Gh+bmROenElERpe8bjO4Djs6s1F7j8wrvP+AGaGqWYTreh7TgTzP
+ xZdsk9qGwVIwJODQRjBZLBzHy3H1YhM940q/pMOAmCLfCu+KoZFpMotRoljW5vDmhZIt
+ TrXuTi2WtCeSjVAu8vu9HzFUXAsk6nvlBzuFfYXK+dgS2S0EQ3rbqBtOCBl/eC2l4YDS
+ ISfg==
+X-Gm-Message-State: AOJu0YwQ3zdSm7N+VjntN2xc7H8A2dVIoc+2PaIgivWRYB8eC3ndunNN
+ nYeyRBU4jdA3W7nqRaAMSakJoky40c5XW8DTTbEqoLAiRnEFRravdjyyYhw/VnWnG3g3jCbz65S
+ 7RB7RwsSlyIDPFQXEZLqbs7FPfz3mCRI670vr17dxtQdaR/D3HmsOaDuuBbIMzL9ELL0XQsl3/0
+ st+cX99O8ULuo3WeQXQLYZsqpkaOh6Hg==
+X-Gm-Gg: ASbGnctZ0OsKBpkDJY2lSHFp6Bw3JmsH8FtLJruWIbB1ud4LNCaoKmGCPDIsKBw1iyn
+ p2ankuLciYJQddJYcAbaqhmao/QqOtvx5CBIYaeod0UZ4DlW63bVpLTXK/uzgQUi1XHAFVnzPRU
+ Hb9Y77VyP+mQ7aObmojyK3JUchXKWS2FM7N9xXp5SIb9YmNwLtRC5FN0KZ2KVk9SQ03RCShVPxi
+ KsNpgy0Msjrig+WLkFMbvd7egRwGwh1xixey0Xt5s/Ffe8DV4H+WWOwpke7RWYqBjsGFFo7Cbh4
+ j8nFhA==
+X-Received: by 2002:a05:600c:3548:b0:439:a138:1d with SMTP id
+ 5b1f17b1804b1-439aebc2408mr18512765e9.22.1740140692570; 
+ Fri, 21 Feb 2025 04:24:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEC1S3BVBIVp6Aq5M9p4iY9jtpnipohLmI5OfqtcZ9IuH+TJxJwTRR89FVJi6u+C4uJxcbysQ==
+X-Received: by 2002:a05:600c:3548:b0:439:a138:1d with SMTP id
+ 5b1f17b1804b1-439aebc2408mr18512445e9.22.1740140692044; 
+ Fri, 21 Feb 2025 04:24:52 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399bea8577sm64824915e9.0.2025.02.21.04.24.23
+ 5b1f17b1804b1-439b02d8859sm15613625e9.16.2025.02.21.04.24.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:25 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:22 -0500
+ Fri, 21 Feb 2025 04:24:51 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:48 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Konstantin Shkolnyy <kshk@linux.ibm.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Lei Yang <leiyang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 33/41] vdpa: Fix endian bugs in shadow virtqueue
-Message-ID: <50e9754149066dc91f58405d3378b589098cb408.1740140520.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Peter Xu <peterx@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: [PULL 40/41] hw/vfio/common: Add a trace point in vfio_reset_handler
+Message-ID: <d410e709526d1cd4aa9085c6e254a622594a02a5.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -111,90 +112,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-VDPA didn't work on a big-endian machine due to missing/incorrect
-CPU<->LE data format conversions.
+To ease the debug of reset sequence, let's add a trace point
+in vfio_reset_handler()
 
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Message-Id: <20250212164923.1971538-1-kshk@linux.ibm.com>
-Fixes: 10857ec0ad ("vhost: Add VhostShadowVirtqueue")
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Message-Id: <20250218182737.76722-5-eric.auger@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ hw/vfio/common.c     | 1 +
+ hw/vfio/trace-events | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 30ba565f03..2481d49345 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -182,10 +182,10 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
-         descs[i].len = cpu_to_le32(iovec[n].iov_len);
- 
-         last = i;
--        i = cpu_to_le16(svq->desc_next[i]);
-+        i = svq->desc_next[i];
-     }
- 
--    svq->free_head = le16_to_cpu(svq->desc_next[last]);
-+    svq->free_head = svq->desc_next[last];
-     return true;
- }
- 
-@@ -247,10 +247,12 @@ static void vhost_svq_kick(VhostShadowVirtqueue *svq)
-     smp_mb();
- 
-     if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
--        uint16_t avail_event = *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]);
-+        uint16_t avail_event = le16_to_cpu(
-+                *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]));
-         needs_kick = vring_need_event(avail_event, svq->shadow_avail_idx, svq->shadow_avail_idx - 1);
-     } else {
--        needs_kick = !(svq->vring.used->flags & VRING_USED_F_NO_NOTIFY);
-+        needs_kick =
-+                !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_NO_NOTIFY));
-     }
- 
-     if (!needs_kick) {
-@@ -386,7 +388,7 @@ static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
-         return true;
-     }
- 
--    svq->shadow_used_idx = cpu_to_le16(*(volatile uint16_t *)used_idx);
-+    svq->shadow_used_idx = le16_to_cpu(*(volatile uint16_t *)used_idx);
- 
-     return svq->last_used_idx != svq->shadow_used_idx;
- }
-@@ -404,7 +406,7 @@ static bool vhost_svq_enable_notification(VhostShadowVirtqueue *svq)
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index f7499a9b74..173fb3a997 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1386,6 +1386,7 @@ void vfio_reset_handler(void *opaque)
  {
-     if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
-         uint16_t *used_event = (uint16_t *)&svq->vring.avail->ring[svq->vring.num];
--        *used_event = svq->shadow_used_idx;
-+        *used_event = cpu_to_le16(svq->shadow_used_idx);
-     } else {
-         svq->vring.avail->flags &= ~cpu_to_le16(VRING_AVAIL_F_NO_INTERRUPT);
-     }
-@@ -429,7 +431,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-                                              uint16_t num, uint16_t i)
- {
-     for (uint16_t j = 0; j < (num - 1); ++j) {
--        i = le16_to_cpu(svq->desc_next[i]);
-+        i = svq->desc_next[i];
-     }
+     VFIODevice *vbasedev;
  
-     return i;
-@@ -704,7 +706,7 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
-     svq->desc_state = g_new0(SVQDescState, svq->vring.num);
-     svq->desc_next = g_new0(uint16_t, svq->vring.num);
-     for (unsigned i = 0; i < svq->vring.num - 1; i++) {
--        svq->desc_next[i] = cpu_to_le16(i + 1);
-+        svq->desc_next[i] = i + 1;
-     }
- }
++    trace_vfio_reset_handler();
+     QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
+         if (vbasedev->dev->realized) {
+             vbasedev->ops->vfio_compute_needs_reset(vbasedev);
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index cab1cf1de0..c5385e1a4f 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -120,6 +120,7 @@ vfio_get_dev_region(const char *name, int index, uint32_t type, uint32_t subtype
+ vfio_legacy_dma_unmap_overflow_workaround(void) ""
+ vfio_get_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t bitmap_size, uint64_t start, uint64_t dirty_pages) "iova=0x%"PRIx64" size= 0x%"PRIx64" bitmap_size=0x%"PRIx64" start=0x%"PRIx64" dirty_pages=%"PRIu64
+ vfio_iommu_map_dirty_notify(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
++vfio_reset_handler(void) ""
  
+ # platform.c
+ vfio_platform_realize(char *name, char *compat) "vfio device %s, compat = %s"
 -- 
 MST
 
