@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375F7C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C451BC021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlWRi-0007IO-Ro; Fri, 21 Feb 2025 12:04:15 -0500
+	id 1tlWS2-0000A4-0N; Fri, 21 Feb 2025 12:04:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tlWRd-0006xM-V8
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:10 -0500
+ id 1tlWRy-0008My-QT
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tlWRb-0001S4-U6
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:09 -0500
+ id 1tlWRw-0001YS-Vh
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740157447;
+ s=mimecast20190719; t=1740157468;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gNzmdewlktR1o4K/cScPLtSavMlzl0xOpm3FGIzKcy0=;
- b=Y7SABWXXW63K+9e2dCAg1OGOhUl7Kd/HivTifnZRQhPP8KJdoTR+IoZ6K7CM4J+q+ODzPd
- e5bwuRlDrlxJ4Hm588G01tsUpljzMjJN/xg4Xz6zpxvet+ttEpGT0n2BWbDZxNhJDI1/h3
- 6DQ/C55OFbakHVhvOHpfKa1DSnVuhfk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hGeedFex4hwcA+4WKc4T7rcitnlGc1D0mCRSihvSmdw=;
+ b=UN4FwTxyQAfMZt/YZQPiWuznipXqMrgdJRTBYOKqzRsOxl+BideIXVrZLp9MGhFCOBAKqw
+ mdjAfKzzjkMJGLXa5Fk1WePbBNXICVS/kJsCLdjQt+MfZxRuMVele4UVQOYOojclCZMjvu
+ kW7AlEgKY4Xxq3jb1lw5BQNDYW0Q4CY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-5VMpccZcNIOP1359bFSllg-1; Fri, 21 Feb 2025 12:04:05 -0500
-X-MC-Unique: 5VMpccZcNIOP1359bFSllg-1
-X-Mimecast-MFC-AGG-ID: 5VMpccZcNIOP1359bFSllg_1740157444
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f36f03312so1130563f8f.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 09:04:05 -0800 (PST)
+ us-mta-329-l6xVWyGvPgyPd7DDnFshQQ-1; Fri, 21 Feb 2025 12:04:26 -0500
+X-MC-Unique: l6xVWyGvPgyPd7DDnFshQQ-1
+X-Mimecast-MFC-AGG-ID: l6xVWyGvPgyPd7DDnFshQQ_1740157465
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ab397fff5a3so266944066b.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 09:04:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740157443; x=1740762243;
+ d=1e100.net; s=20230601; t=1740157465; x=1740762265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gNzmdewlktR1o4K/cScPLtSavMlzl0xOpm3FGIzKcy0=;
- b=B30FVP+ATqku6LI89/L9BV56zV+NE/EauEeV/VmiXT5kQTQxZIwrVPOuWAV1Pm8x31
- fxqd5rZFaUnEIOQEGpGX2vK77YwANQ/s2rf8gSvk2rU0nASHcPXX1yFtxhmgq45afZLZ
- wTDZu4CL7Qo0U3/CvitwpOaz8aU39k8vWphVi4Pe7BTXc/+1qVLyKgoiXnWGQ0Jrm6+8
- WlTE1lUDuQ/u5LjTE19EjMW9MsGFRsbuWBD66TO34MT2VBhenVek5cn6FvAUMsVvjxSk
- 57fP5madiztVxxlljbxR7xPBQAEYdREknNdF0gYYxQxSuTXIohd++8DoCg+yvaR61zyS
- 6Swg==
-X-Gm-Message-State: AOJu0YwQB/HAN+tfdAGuhTeaXtafsNMpBMvJwJHf1w9YcwfjFuqdDz9e
- RPyza9rZFTs4rI1fh0JIr6mqclbgbu9q4w+hhcznzDfpGudB6uwducTikDFbfPzzHoa6787kFmg
- m8fhRwb4oxaMzfp7/TETlZtFE7a+jvFqNOirS+7/P6pMxnhXwtiG19Iq8gwkk/J5/nXc9ewMMF4
- A/AZkoB3DzUNZEzsvQAR/HGfhymeTxW2vL4ijWIUg=
-X-Gm-Gg: ASbGncvd76IoHwIagCpvFR05UttnVFSLtlICWMOT5lPBwUc+rY8Y/EtDfU13EW7D3Yz
- fhBc4E+JGOVA3CqkdWb8zVFihZiLyd1UN7G7/28kRXZjAV8H3+OkACzNa3mlxmltxD7+kL6kSWs
- 5nsVcElxVUIHk+p4dLB8Np/0EPs/Zj0xJahbiUY1dd77EgqcuxSjoUYhwbA3wggzptf5YTSbHNm
- wLUKAyac9PNr+cc4V6C2N9ZcpnmYRKIxYupkE0AtRzc9UrLXLmaQLdxGSyMZfS7XpTfAA+STpFT
- lVZxYojr6MtJB5gCYcQ=
-X-Received: by 2002:a05:6000:144a:b0:38d:e092:3ced with SMTP id
- ffacd0b85a97d-38f6e7579e0mr2240550f8f.7.1740157441411; 
- Fri, 21 Feb 2025 09:04:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHFIfNlkw2aTy/ScMYSgifoXhFGn8mMiTLNr3x9N+9gX7sv64GeERh/Ti9Kx0/Z/bQw7ou7CQ==
-X-Received: by 2002:a05:6000:144a:b0:38d:e092:3ced with SMTP id
- ffacd0b85a97d-38f6e7579e0mr2240433f8f.7.1740157439353; 
- Fri, 21 Feb 2025 09:03:59 -0800 (PST)
+ bh=hGeedFex4hwcA+4WKc4T7rcitnlGc1D0mCRSihvSmdw=;
+ b=lKNidc+bu2yv22KpCu0IVz/DvfFGSWm2pYfH692qsSXj0+lkLr4n0tzH7+MwzKsMQQ
+ eUaT9ZiRXre4pDvbbug57rPBJrNqfEsULlmURqJzIHaHF/pjc2tC5vAU+mI013Ngau/r
+ Twg1bsjX4ShT7NrBQNqGjmJpQLr3/RYHl1uzBLiKRfVQhLWsE9gTYGjsFHJgoKHVNflj
+ gDuJidpbdxFN39+Dy/bXoG2vhIsEW8cibeOhtlCGG0by5vxW00RrcZT0JnRzkarY57Hm
+ rWvU3pVt15CRfTYvlnzeqQ8uu/2kqCmKvbp3kp5IiC38KqiBTnLrcHk+t4mIF6RO87EJ
+ GiVQ==
+X-Gm-Message-State: AOJu0Yxu+Ph+grPDGO8DU2LWBviM54CTqfgx2X9NJlUC2mQqpKYHdT1S
+ YiQr+UQYavxqMvegB7ALwMsZYVmE/UHFbGJlQ0yohrZk47JyKZZP+0aJ9KoUJS5Rxr2BclUm+qB
+ hLLkm/im2xSmW6828ppe2tFTWhrXxGIwaLQiAIuB2yPWoA8/aj+bSLRi2gJZ4l1sczM6ZxDBI1R
+ 2y+0p2qVh2AzbH6tEyytE4chuxkidNMyRV4mw/01I=
+X-Gm-Gg: ASbGncujMUDZ6hQC9PJ0fgREwP/HmCQS5WP/R4Z22LYkna/5UGHHnzfoFew3nH63dPr
+ HDRRWUY/t3lcX0QJCB24gdfZOhbU2Ij4Iu0vuz/NwBKg52thPcrZ4BNUKeGgm6OUgq2gclDSaU/
+ 5oLuFLp1blxFBfdbteaRkHE8WaGP1sIRzlJwmtIercx371xW5a4TpHAQGE5Rmze/8lQHP/FSx0Q
+ tlgcqNRtpr1s9Y8s1KkbGTQcDkARwtC+hPDF6zejnfZ6Aqp/gWyd6ZEGDuqSvkF4600ha2VbTKU
+ NyxW3hjadxMmn83X+So=
+X-Received: by 2002:a17:907:1686:b0:abb:dbc2:bfb6 with SMTP id
+ a640c23a62f3a-abbedd4df55mr796077266b.10.1740157464644; 
+ Fri, 21 Feb 2025 09:04:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEECFPHS+8PObVyoFvxy1YQzPxv9V7w9Vt4je3ICUJK7nFtqsY2CGp21/qsO3xZ0JJk5hx44Q==
+X-Received: by 2002:a17:907:1686:b0:abb:dbc2:bfb6 with SMTP id
+ a640c23a62f3a-abbedd4df55mr796070266b.10.1740157464045; 
+ Fri, 21 Feb 2025 09:04:24 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.61.185])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259f8273sm23366483f8f.89.2025.02.21.09.03.58
+ a640c23a62f3a-aba910e8b11sm1394251366b.21.2025.02.21.09.04.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 09:03:58 -0800 (PST)
+ Fri, 21 Feb 2025 09:04:22 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org
-Subject: [PATCH 07/15] rust: qemu_api_macros: add Wrapper derive macro
-Date: Fri, 21 Feb 2025 18:03:34 +0100
-Message-ID: <20250221170342.63591-8-pbonzini@redhat.com>
+Subject: [PATCH 15/15] rust: bindings: remove more unnecessary Send/Sync impls
+Date: Fri, 21 Feb 2025 18:03:42 +0100
+Message-ID: <20250221170342.63591-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250221170342.63591-1-pbonzini@redhat.com>
 References: <20250221170342.63591-1-pbonzini@redhat.com>
@@ -108,216 +108,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a derive macro that makes it easy to peel off all the layers of
-specialness (UnsafeCell, MaybeUninit, etc.) and just get a pointer
-to the wrapped type; and likewise add them back starting from a
-*mut.
+Send and Sync are now implemented on the opaque wrappers.  Remove them
+from the bindings module, unless the structs are pure data containers
+and/or have no C functions defined on them.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst             |  8 ++--
- rust/qemu-api-macros/src/lib.rs | 82 ++++++++++++++++++++++++++++++++-
- rust/qemu-api/meson.build       |  7 +--
- rust/qemu-api/src/cell.rs       | 31 +++++++++++++
- 4 files changed, 119 insertions(+), 9 deletions(-)
+ rust/qemu-api/src/bindings.rs | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 9a621648e72..db2b427ebd2 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -314,11 +314,13 @@ a raw pointer, for use in calls to C functions.  It can be used for
- example as follows::
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index c3f36108bd5..3c1d297581e 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -25,15 +25,11 @@
  
-     #[repr(transparent)]
--    #[derive(Debug)]
-+    #[derive(Debug, qemu_api_macros::Wrapper)]
-     pub struct Object(Opaque<bindings::Object>);
+ // SAFETY: these are implemented in C; the bindings need to assert that the
+ // BQL is taken, either directly or via `BqlCell` and `BqlRefCell`.
+-unsafe impl Send for BusState {}
+-unsafe impl Sync for BusState {}
+-
++// When bindings for character devices are introduced, this can be
++// moved to the Opaque<> wrapper in src/chardev.rs.
+ unsafe impl Send for CharBackend {}
+ unsafe impl Sync for CharBackend {}
  
--The bindings will then manually check for the big QEMU lock with
--assertions, which allows the wrapper to be declared thread-safe::
-+where the special ``derive`` macro provides useful methods such as
-+``from_raw``, ``as_ptr`` and ``as_mut_ptr``.  The bindings will then
-+manually check for the big QEMU lock with assertions, which allows
-+the wrapper to be declared thread-safe::
- 
-     unsafe impl Send for Object {}
-     unsafe impl Sync for Object {}
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index 7ec218202f4..781e5271562 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -6,7 +6,7 @@
- use quote::quote;
- use syn::{
-     parse_macro_input, parse_quote, punctuated::Punctuated, spanned::Spanned, token::Comma, Data,
--    DeriveInput, Field, Fields, Ident, Meta, Path, Token, Type, Variant, Visibility,
-+    DeriveInput, Field, Fields, FieldsUnnamed, Ident, Meta, Path, Token, Type, Variant, Visibility,
- };
- 
- mod utils;
-@@ -33,6 +33,35 @@ fn get_fields<'a>(
-     }
- }
- 
-+fn get_unnamed_field<'a>(input: &'a DeriveInput, msg: &str) -> Result<&'a Field, MacroError> {
-+    if let Data::Struct(s) = &input.data {
-+        let unnamed = match &s.fields {
-+            Fields::Unnamed(FieldsUnnamed {
-+                unnamed: ref fields,
-+                ..
-+            }) => fields,
-+            _ => {
-+                return Err(MacroError::Message(
-+                    format!("Tuple struct required for {}", msg),
-+                    s.fields.span(),
-+                ))
-+            }
-+        };
-+        if unnamed.len() != 1 {
-+            return Err(MacroError::Message(
-+                format!("A single field is required for {}", msg),
-+                s.fields.span(),
-+            ));
-+        }
-+        Ok(&unnamed[0])
-+    } else {
-+        Err(MacroError::Message(
-+            format!("Struct required for {}", msg),
-+            input.ident.span(),
-+        ))
-+    }
-+}
-+
- fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), MacroError> {
-     let expected = parse_quote! { #[repr(C)] };
- 
-@@ -46,6 +75,19 @@ fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), MacroError> {
-     }
- }
- 
-+fn is_transparent_repr(input: &DeriveInput, msg: &str) -> Result<(), MacroError> {
-+    let expected = parse_quote! { #[repr(transparent)] };
-+
-+    if input.attrs.iter().any(|attr| attr == &expected) {
-+        Ok(())
-+    } else {
-+        Err(MacroError::Message(
-+            format!("#[repr(transparent)] required for {}", msg),
-+            input.ident.span(),
-+        ))
-+    }
-+}
-+
- fn derive_object_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
-     is_c_repr(&input, "#[derive(Object)]")?;
- 
-@@ -72,6 +114,44 @@ pub fn derive_object(input: TokenStream) -> TokenStream {
-     TokenStream::from(expanded)
- }
- 
-+fn derive_opaque_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
-+    is_transparent_repr(&input, "#[derive(Wrapper)]")?;
-+
-+    let name = &input.ident;
-+    let field = &get_unnamed_field(&input, "#[derive(Wrapper)]")?;
-+    let typ = &field.ty;
-+
-+    // TODO: how to add "::qemu_api"?  For now, this is only used in the
-+    // qemu_api crate so it's not a problem.
-+    Ok(quote! {
-+        unsafe impl crate::cell::Wrapper for #name {
-+            type Wrapped = <#typ as crate::cell::Wrapper>::Wrapped;
-+        }
-+        impl #name {
-+            pub unsafe fn from_raw<'a>(ptr: *mut <Self as crate::cell::Wrapper>::Wrapped) -> &'a Self {
-+                let ptr = ::std::ptr::NonNull::new(ptr).unwrap().cast::<Self>();
-+                unsafe { ptr.as_ref() }
-+            }
-+
-+            pub const fn as_mut_ptr(&self) -> *mut <Self as crate::cell::Wrapper>::Wrapped {
-+                self.0.as_mut_ptr()
-+            }
-+
-+            pub const fn as_ptr(&self) -> *const <Self as crate::cell::Wrapper>::Wrapped {
-+                self.0.as_ptr()
-+            }
-+        }
-+    })
-+}
-+
-+#[proc_macro_derive(Wrapper)]
-+pub fn derive_opaque(input: TokenStream) -> TokenStream {
-+    let input = parse_macro_input!(input as DeriveInput);
-+    let expanded = derive_opaque_or_error(input).unwrap_or_else(Into::into);
-+
-+    TokenStream::from(expanded)
-+}
-+
- #[rustfmt::skip::macros(quote)]
- fn derive_offsets_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
-     is_c_repr(&input, "#[derive(offsets)]")?;
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index bcf1cf780f3..6e52c4bad74 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -42,16 +42,13 @@ _qemu_api_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _qemu_api_cfg,
--  dependencies: libc_dep,
-+  dependencies: [libc_dep, qemu_api_macros],
- )
- 
- rust.test('rust-qemu-api-tests', _qemu_api_rs,
-           suite: ['unit', 'rust'])
- 
--qemu_api = declare_dependency(
--  link_with: _qemu_api_rs,
--  dependencies: qemu_api_macros,
--)
-+qemu_api = declare_dependency(link_with: _qemu_api_rs)
- 
- # Rust executables do not support objects, so add an intermediate step.
- rust_qemu_api_objs = static_library(
-diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
-index 84b9eb07467..c39b9616969 100644
---- a/rust/qemu-api/src/cell.rs
-+++ b/rust/qemu-api/src/cell.rs
-@@ -1017,3 +1017,34 @@ pub fn new() -> Self {
-         Self::default()
-     }
- }
-+
-+/// Annotates [`Self`] as a transparent wrapper for another type.
-+///
-+/// Usually defined via the [`qemu_api_macros::Wrapper`] derive macro.
-+///
-+/// # Examples
-+///
-+/// ```
-+/// # use std::mem::ManuallyDrop;
-+/// # use qemu_api::cell::Wrapper;
-+/// #[repr(transparent)]
-+/// pub struct Example {
-+///     inner: ManuallyDrop<String>,
-+/// }
-+///
-+/// unsafe impl Wrapper for Example {
-+///     type Wrapped = String;
-+/// }
-+/// ```
-+///
-+/// # Safety
-+///
-+/// `Self` must be a `#[repr(transparent)]` wrapper for the `Wrapped` type,
-+/// whether directly or indirectly.
-+pub unsafe trait Wrapper {
-+    type Wrapped;
-+}
-+
-+unsafe impl<T> Wrapper for Opaque<T> {
-+    type Wrapped = T;
-+}
+-unsafe impl Send for ObjectClass {}
+-unsafe impl Sync for ObjectClass {}
+-
+ // SAFETY: this is a pure data struct
+ unsafe impl Send for CoalescedMemoryRange {}
+ unsafe impl Sync for CoalescedMemoryRange {}
 -- 
 2.48.1
 
