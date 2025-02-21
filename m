@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 193FDC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25022C021B4
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlMd3-0001RB-Rs; Fri, 21 Feb 2025 01:35:17 -0500
+	id 1tlMd6-0001Tk-B4; Fri, 21 Feb 2025 01:35:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tlMd0-0001P6-PI
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:35:14 -0500
-Received: from esa12.hc1455-7.c3s2.iphmx.com ([139.138.37.100])
+ id 1tlMd3-0001R8-9h
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:35:17 -0500
+Received: from esa5.hc1455-7.c3s2.iphmx.com ([68.232.139.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tlMcx-0003jz-Ja
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:35:14 -0500
+ id 1tlMd1-0003k0-9e
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:35:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1740119711; x=1771655711;
+ t=1740119715; x=1771655715;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=f+W7xHv1eRI0J7FNacCobhI1uc+xjuUjaE8S1N4URnY=;
- b=PoqTxgBP6ysEU7pPYN2TDQnMjT8Wr7H9/ElScgZhYHwGfjSH2IPDNIRM
- W9A12nusTdcNAxSHtbj1A94NgAwjJjA2yRRPpNqDqms2lLDpjH14TxuUw
- dhNRGe5BWYD7KwhNLJciR5DoXiQUkTWaUdDPJlGGg/TllZlKwqFHNEuyj
- 2fSxpdGDFQnUSUBSnf3aTB6dNVAwrHfu0uKtLAZ5fJCrkSljStvOeAGHe
- wi70MFzANJaxTgYsu7rntNZ7bfrSH1N7+Scz5L7PXeJtjIkYumpbzgDlB
- sXTMoL02jcfQ8igtoEl70CXlc49J3RrRsfQm29ZmLDIP9YSdFDygfbPXe Q==;
-X-CSE-ConnectionGUID: BaqAVsWIQ8+0yHxUv/m5KQ==
-X-CSE-MsgGUID: zXdIBZYPRWO4U38i63W4eA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11351"; a="169689014"
-X-IronPort-AV: E=Sophos;i="6.13,303,1732546800"; d="scan'208";a="169689014"
-Received: from unknown (HELO yto-r3.gw.nic.fujitsu.com) ([218.44.52.219])
- by esa12.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2025 15:35:07 +0900
-Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
- [192.168.83.65])
- by yto-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id E9705E8529
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 15:35:04 +0900 (JST)
+ bh=EeqxOxnfJGp1OeklxYaU7QutfMay++/S+GaNNIxlkvY=;
+ b=oVdB4Cd7/b0xRyAp3/fbwncNf5aS3a4O6l24C6b4X7quOBnr/9q6MwvT
+ Ml59Gt0LcMSyeIDYoln/Nq/aHaq1yR+wnyBwG9dO93xqJ8hAdCJw4odmf
+ yc1aHc40U6C1foQBhuQMBGZtS6XPXwpXT7wUbSafC/x1eficEprLUIqVJ
+ 90379Jw3licM+0JizNZHvbSqdTWEfrvHUoUkMTqmNGxHmM7KcB2MbrAgm
+ O4sa292abSOifKBg7EuSgbCHuIuaTh8h00B9wBOa6nsuPJ/k1DxHCh2Hm
+ VGc9P0T6vDwUTx9UB24AEwtcxyqJSpPHv7/zc0eHmSvVo3kY5wq60Z4Bm A==;
+X-CSE-ConnectionGUID: nOdJyc5MQlSkUphRsTGdIg==
+X-CSE-MsgGUID: 0YLmBaTuSCCHrfzFOtNqMA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11351"; a="189940651"
+X-IronPort-AV: E=Sophos;i="6.13,303,1732546800"; d="scan'208";a="189940651"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa5.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2025 15:35:09 +0900
+Received: from oym-m3.gw.nic.fujitsu.com (oym-nat-oym-m3.gw.nic.fujitsu.com
+ [192.168.87.60])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 008DC7C24E
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 15:35:07 +0900 (JST)
 Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id A968DD5B26
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 15:35:04 +0900 (JST)
+ by oym-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id BC204D9A7E
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 15:35:06 +0900 (JST)
 Received: from iaas-rdma.. (unknown [10.167.135.44])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 0B0C81A000B;
- Fri, 21 Feb 2025 14:35:04 +0800 (CST)
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 20C321A000B;
+ Fri, 21 Feb 2025 14:35:06 +0800 (CST)
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH v2 2/8] migration/rdma: Remove redundant
- RAM_SAVE_CONTROL_NOT_SUPP check
-Date: Fri, 21 Feb 2025 14:36:06 +0800
-Message-ID: <20250221063612.695909-3-lizhijian@fujitsu.com>
+Subject: [PATCH v2 6/8] migraion: disable RDMA + postcopy-ram
+Date: Fri, 21 Feb 2025 14:36:10 +0800
+Message-ID: <20250221063612.695909-7-lizhijian@fujitsu.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20250221063612.695909-1-lizhijian@fujitsu.com>
 References: <20250221063612.695909-1-lizhijian@fujitsu.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.138.37.100;
- envelope-from=lizhijian@fujitsu.com; helo=esa12.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=68.232.139.130;
+ envelope-from=lizhijian@fujitsu.com; helo=esa5.hc1455-7.c3s2.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -89,28 +88,30 @@ From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_rdma_save_page() no longer returns RAM_SAVE_CONTROL_NOT_SUPP
-since commit a4832d299dd ("migration/rdma: Check sooner if we are in postcopy for save_page()")
+It's believed that RDMA + postcopy-ram has been broken for a while.
+Rather than spending time re-enabling it, let's simply disable it as a
+trade-off.
 
 Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
- migration/rdma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ migration/migration.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 76fb0349238..af8e6234a9f 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -3290,8 +3290,7 @@ int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
- 
-     int ret = qemu_rdma_save_page(f, block_offset, offset, size);
- 
--    if (ret != RAM_SAVE_CONTROL_DELAYED &&
--        ret != RAM_SAVE_CONTROL_NOT_SUPP) {
-+    if (ret != RAM_SAVE_CONTROL_DELAYED) {
-         if (ret < 0) {
-             qemu_file_set_error(f, ret);
+diff --git a/migration/migration.c b/migration/migration.c
+index 2eacae25e0e..d414a4b1379 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -251,6 +251,10 @@ migration_capabilities_and_transport_compatible(MigrationAddress *addr,
+             error_setg(errp, "RDMA and multifd can't be used together");
+             return false;
          }
++        if (migrate_postcopy_ram()) {
++            error_setg(errp, "RDMA and postcopy-ram can't be used together");
++            return false;
++        }
+     }
+ 
+     return true;
 -- 
 2.44.0
 
