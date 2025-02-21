@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B65C021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2DDC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5A-0000lG-DS; Fri, 21 Feb 2025 07:24:40 -0500
+	id 1tlS3N-0004Qi-9k; Fri, 21 Feb 2025 07:22:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS53-0000Md-Ro
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3G-0004Pg-3W
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS51-0007DV-SP
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:33 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3E-0006zB-8C
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140671;
+ s=mimecast20190719; t=1740140558;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2JcyUMGxDlcrXYgVkAaUWu6KNUElDakyOBWHSKnyH28=;
- b=fMY/cdsLIJPUISzWySV4VJhgQxGC02hb6ZsHHP2MjeM+OHdBN9/rYur6LVA8i5xztxzlvC
- wsCOvptVZ4Vw/rvGt1JPDAYaZReXy+SStYQQBE6k/mRhLXH3FzA+/NBdhZX3Tp1OloKiGY
- hcRO5fdGMRIXXV6WZv6OFt8cmAiTrFY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hoj9zHkQc68Myno7gmXyzMQyAEjnKBSFykdtmN9gSKo=;
+ b=bhZCsDbXKJ2ZjOLk7KJidBIN+KlLOACNA4mPd2x+jZFfD7oHNi85CcwDNkMApnFasSFhY7
+ HdnSTaRnMPjLb8Uf39zB2D9mH0SnM5ZBi3HFFi3KmbP1SlwxK1bSQevK/DGUJcMr9tdP7L
+ abGqPdOn2nVjO0cn9SYsMNJKBJ6/jgI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-6n3ak-6NPi-Kb_q0-Bmg-g-1; Fri, 21 Feb 2025 07:23:21 -0500
-X-MC-Unique: 6n3ak-6NPi-Kb_q0-Bmg-g-1
-X-Mimecast-MFC-AGG-ID: 6n3ak-6NPi-Kb_q0-Bmg-g_1740140600
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4399c5ba9e4so10937375e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:20 -0800 (PST)
+ us-mta-658-Bl5B60hUMK-I2o09nWKg5Q-1; Fri, 21 Feb 2025 07:22:37 -0500
+X-MC-Unique: Bl5B60hUMK-I2o09nWKg5Q-1
+X-Mimecast-MFC-AGG-ID: Bl5B60hUMK-I2o09nWKg5Q_1740140556
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f628ff78eso1073025f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:22:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140599; x=1740745399;
+ d=1e100.net; s=20230601; t=1740140555; x=1740745355;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2JcyUMGxDlcrXYgVkAaUWu6KNUElDakyOBWHSKnyH28=;
- b=XJddo16RdiBhjsOIEZ9HSiPAl9z8jMINYqTQW4v7pq4pHGy6mazzgsFl8kCHBaQc4t
- pnqq2BvHrjBdBj0UxzAJbLBgLzIecKm/WxTap5HtQWdjRZCvkmWghQl6FcGn2bK0qsfw
- b02E3QpUYzOohRtLa7Ewzs6qs5xFttcBTb+KMqFBoS98lZgD5O95demYUBd5hSLlZ0Mb
- Kc1/5UkK97xIzi5PXYrwqdZfOG0vhTo8XwyfbvuV0qzgGEy4BBJ7HyePELCC2O3XYf13
- 3tnUV/rQHOEWBkiOuQRHxOc3t7zgKnpETSeZYu+pWKug5jHTa/yWkKcE0KBJ6NOZWn2v
- RCnA==
-X-Gm-Message-State: AOJu0YwPvXuZXysUpWnMbA9ywXxAQmDTZlSc/aiLyngp5obB4unUGaOD
- pS3WsqSk5nOsGqpVcqhjB+j+Ov5Fj4BKsiWrbvfQ7NAKhSFcF8TuNGoSnjOykwelGvvVYNEN2UD
- t0LOSguTFBQMdLbqgMG8Wegv3wMiUJimA3h+m0PRtFTINHezd7Nhd6Bqm8Ke4YmsH8T2rnkPrzo
- vK30yy8H7HDs5Ngry9yqxPucoOeIxw0g==
-X-Gm-Gg: ASbGncshQZhnauSGeirIADUtRxxNeBiTXm+PI6/Hl/oGtUNPkuvSkyRtgVN38aQ+nAa
- cszs29RB3XgrK3qiuGzkSUckUxWpNpYa6AfRwrYIqICATBhJzo5G/mKSUWMX5iPetxpeOmQOlBb
- iactsKBGD6+D9LY2Yg+ZjDgxK16qCi6oWpmWcofTFSzqcDXOYpXlX3jusVKG0Hi8TENPfiWVvxa
- Lpbv+xQvPxcMv6IhAmJOistIyyu5LYP98fLaS/91z8ars5R7hnZdMDONbVzKqExsUY0WwEbkJ80
- kdbzGQ==
-X-Received: by 2002:a05:600c:3d8c:b0:439:9496:17e9 with SMTP id
- 5b1f17b1804b1-439ae36d34bmr20372555e9.8.1740140599256; 
- Fri, 21 Feb 2025 04:23:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHu7XyLONuH1jkZt2HcsELssL6ffpIsFOwb9hXXYNdK1mOm+9HV1v6Q23UZmGZ4iQWGYha/LQ==
-X-Received: by 2002:a05:600c:3d8c:b0:439:9496:17e9 with SMTP id
- 5b1f17b1804b1-439ae36d34bmr20372365e9.8.1740140598919; 
- Fri, 21 Feb 2025 04:23:18 -0800 (PST)
+ bh=hoj9zHkQc68Myno7gmXyzMQyAEjnKBSFykdtmN9gSKo=;
+ b=BaTyJdA37j0aCMHpZMnFzhQU0saGadyXERRzIinWN4ZvHP735D4ekOgzXqKlO3/JwD
+ xgxbW2c7o0QtkEI9+Wu7BYifM+TMj7tbCBCbYrKTATpiwBGGRgkZ5iChARnxUY8JGA05
+ YVdEpjXw2X9OQI3IiM+aUs3QywzOMyJwo7JCY8hbvHM1Is80oTtxVmVadK8MgDMhCli+
+ mkGkcRV6IJw2V5DpcW6sbkUkRFl5CNCMJz5ycCU8Yx170SwyaUwnJaP9bP4Vq8WT45HK
+ CWtqFVg3ejSJFJuKtvfAEjEbNh6iR2HgS1DM0S0aiCwKxcNE/CZpQODB1pO3E8ABGNpZ
+ XJgQ==
+X-Gm-Message-State: AOJu0Yz+NfjpGVxGQylLEQ+/p+Q15H5Re0yatMj1iO7D0/RdUjv7otxH
+ OO7R0+3EmCzJj4cPjbr0rhbhNdwqToyRk98IOwNtl/SEQ25cJtoyRpor7IRtPV8KP5l8YRy2to9
+ EwId9tRqqiDXYVNAl6DSshoZmAS+BAs94570ZEhax3qJ20N2rH0DD0y/bD9mHj8VJH9fTlgeNbX
+ VyilJ7LRRusnF3wGnaLyCImBcF8E5bBw==
+X-Gm-Gg: ASbGnctK86j5zQuaihmzrlkbeaoc+nbE3tDoN24/G83ZSLxfwq9LjXlGWAah+MVvhzz
+ Pw1AWj8tacJDA8IKNWEpgRs5o/qo36bMAv5jIvFEeLyOjI3jd1mOF6cfDVZW6SsiaFDzI+pWrRO
+ V9Ni07pIBYurb1PHnHX1Jj4j+kV/mhhjrP0km/87wxddK1ayiSXHiCZ3QNgpQ5Q9J1JK8VkBZan
+ VRT+hMjzewtUDErm7EwcUKuduoXnN4a/tVKB21qo9V7a2W8FvgfjheXCXhRJ/AJzmZYZ8SV9Zsn
+ xHk2Ew==
+X-Received: by 2002:a5d:5f94:0:b0:38f:2b52:f059 with SMTP id
+ ffacd0b85a97d-38f61633567mr6317272f8f.27.1740140555456; 
+ Fri, 21 Feb 2025 04:22:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHC/lDqWS3/xYESMbj44WDsA1JtY2jXIJrcRr3bwF/vaBwluQWd2DmmHE+TCJQ3iIedZgijhA==
+X-Received: by 2002:a5d:5f94:0:b0:38f:2b52:f059 with SMTP id
+ ffacd0b85a97d-38f61633567mr6317242f8f.27.1740140555036; 
+ Fri, 21 Feb 2025 04:22:35 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b0371db0sm15474995e9.37.2025.02.21.04.23.17
+ 5b1f17b1804b1-439b02ce65dsm15949635e9.1.2025.02.21.04.22.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:23:18 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:23:16 -0500
+ Fri, 21 Feb 2025 04:22:34 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:22:31 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 13/41] pcie_sriov: Register VFs after migration
-Message-ID: <f9efcd47110de43dd841ada5bd1a40ec169eabca.1740140520.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 02/41] hw/net: Fix NULL dereference with software RSS
+Message-ID: <bc82af6b0dcb0933e72640851fdd2594f822b23e.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -83,14 +82,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,75 +109,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-pcie_sriov doesn't have code to restore its state after migration, but
-igb, which uses pcie_sriov, naively claimed its migration capability.
+When an eBPF program cannot be attached, virtio_net_load_ebpf() returns
+false, and virtio_net_device_realize() enters the code path to handle
+errors because of this, but it causes NULL dereference because no error
+is generated.
 
-Add code to register VFs after migration and fix igb migration.
+Change virtio_net_load_ebpf() to return false only when a fatal error
+occurred.
 
-Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
+Fixes: b5900dff14e5 ("hw/net: report errors from failing to use eBPF RSS FDs")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250116-reuse-v20-11-7cb370606368@daynix.com>
+Message-Id: <20250116-software-v1-1-9e5161b534d8@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/pci/pcie_sriov.h | 2 ++
- hw/pci/pci.c                | 7 +++++++
- hw/pci/pcie_sriov.c         | 7 +++++++
- 3 files changed, 16 insertions(+)
+ hw/net/virtio-net.c | 45 ++++++++++++++++++---------------------------
+ 1 file changed, 18 insertions(+), 27 deletions(-)
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 5148c5b77d..c5d2d318d3 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -57,6 +57,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-                              uint32_t val, int len);
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 85e14b788c..d64941bf8e 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1352,18 +1352,25 @@ exit:
  
-+void pcie_sriov_pf_post_load(PCIDevice *dev);
+ static bool virtio_net_load_ebpf(VirtIONet *n, Error **errp)
+ {
+-    bool ret = false;
+-
+-    if (virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
+-        trace_virtio_net_rss_load(n, n->nr_ebpf_rss_fds, n->ebpf_rss_fds);
+-        if (n->ebpf_rss_fds) {
+-            ret = virtio_net_load_ebpf_fds(n, errp);
+-        } else {
+-            ret = ebpf_rss_load(&n->ebpf_rss, errp);
+-        }
++    if (!virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
++        return true;
+     }
+ 
+-    return ret;
++    trace_virtio_net_rss_load(n, n->nr_ebpf_rss_fds, n->ebpf_rss_fds);
 +
- /* Reset SR/IOV */
- void pcie_sriov_pf_reset(PCIDevice *dev);
- 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 3e29b30d55..69a1b8c298 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -803,10 +803,17 @@ static bool migrate_is_not_pcie(void *opaque, int version_id)
-     return !pci_is_express((PCIDevice *)opaque);
++    /*
++     * If user explicitly gave QEMU RSS FDs to use, then
++     * failing to use them must be considered a fatal
++     * error. If no RSS FDs were provided, QEMU is trying
++     * eBPF on a "best effort" basis only, so report a
++     * warning and allow fallback to software RSS.
++     */
++    if (n->ebpf_rss_fds) {
++        return virtio_net_load_ebpf_fds(n, errp);
++    }
++
++    ebpf_rss_load(&n->ebpf_rss, &error_warn);
++    return true;
  }
  
-+static int pci_post_load(void *opaque, int version_id)
-+{
-+    pcie_sriov_pf_post_load(opaque);
-+    return 0;
-+}
-+
- const VMStateDescription vmstate_pci_device = {
-     .name = "PCIDevice",
-     .version_id = 2,
-     .minimum_version_id = 1,
-+    .post_load = pci_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT32_POSITIVE_LE(version_id, PCIDevice),
-         VMSTATE_BUFFER_UNSAFE_INFO_TEST(config, PCIDevice,
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 69609c112e..1eb4358256 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -248,6 +248,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+ static void virtio_net_unload_ebpf(VirtIONet *n)
+@@ -3913,23 +3920,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     net_rx_pkt_init(&n->rx_pkt);
+ 
+     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
+-        Error *err = NULL;
+-        if (!virtio_net_load_ebpf(n, &err)) {
+-            /*
+-             * If user explicitly gave QEMU RSS FDs to use, then
+-             * failing to use them must be considered a fatal
+-             * error. If no RSS FDs were provided, QEMU is trying
+-             * eBPF on a "best effort" basis only, so report a
+-             * warning and allow fallback to software RSS.
+-             */
+-            if (n->ebpf_rss_fds) {
+-                error_propagate(errp, err);
+-            } else {
+-                warn_report("unable to load eBPF RSS: %s",
+-                            error_get_pretty(err));
+-                error_free(err);
+-            }
+-        }
++        virtio_net_load_ebpf(n, errp);
      }
  }
  
-+void pcie_sriov_pf_post_load(PCIDevice *dev)
-+{
-+    if (dev->exp.sriov_cap) {
-+        register_vfs(dev);
-+    }
-+}
-+
- 
- /* Reset SR/IOV */
- void pcie_sriov_pf_reset(PCIDevice *dev)
 -- 
 MST
 
