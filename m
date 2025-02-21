@@ -4,87 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE17C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85EA5C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlMjo-0000Ey-2y; Fri, 21 Feb 2025 01:42:16 -0500
+	id 1tlMwd-0001yG-EZ; Fri, 21 Feb 2025 01:55:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tlMjm-0000ES-R0
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:42:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tlMwa-0001wy-GO; Fri, 21 Feb 2025 01:55:28 -0500
+Received: from mail-tyzapc01on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2011::701]
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tlMjk-0004bA-C6
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:42:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740120128;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z5xrOKTk/iOIzT5yHTkP6mDWeIJ2wo1OMbmZiYJPfGs=;
- b=QS3SFmfI/uHAy1DGwbwQSKCFkN5Iu/3kdE2PZcI/dTjugTK7IH2uJcZbfCA1A6IXR81vD3
- BcvlHPa8N2p+LAMA4EjNC/Ew4S87erpJmfqM7GrIcYD5r18smC4lOCgyVwY3GF1TC6Ylnv
- UF0Sp0MIPLu0cXTBrpkkkm8FNfXQqU4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-R5_ihLPBPzykIQ-bOLWlEQ-1; Fri,
- 21 Feb 2025 01:42:05 -0500
-X-MC-Unique: R5_ihLPBPzykIQ-bOLWlEQ-1
-X-Mimecast-MFC-AGG-ID: R5_ihLPBPzykIQ-bOLWlEQ_1740120123
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C35A19373DC; Fri, 21 Feb 2025 06:42:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 987951955BCB; Fri, 21 Feb 2025 06:42:00 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EF96D21E6A28; Fri, 21 Feb 2025 07:41:57 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
- Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
- Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
- <jasowang@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH 00/42] docs: add sphinx-domain rST generator to qapidoc
-In-Reply-To: <CAFn=p-aXKtaiq8LAgTCDRNHU78yv8mBfsbuCkP8Smp=TWDn6jw@mail.gmail.com>
- (John Snow's message of "Thu, 20 Feb 2025 15:32:10 -0500")
-References: <20250205231208.1480762-1-jsnow@redhat.com>
- <87wmds4tpk.fsf@pond.sub.org>
- <CAFn=p-adsVRfMhwEst8iX57OOzNDjLkRHg2SQO7+jLuzfx78fw@mail.gmail.com>
- <874j0q2hof.fsf@pond.sub.org>
- <CAFn=p-aXKtaiq8LAgTCDRNHU78yv8mBfsbuCkP8Smp=TWDn6jw@mail.gmail.com>
-Date: Fri, 21 Feb 2025 07:41:57 +0100
-Message-ID: <87o6yvn6iy.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tlMwV-0005wI-Oq; Fri, 21 Feb 2025 01:55:25 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EoR2w1hRE101736QQP44yvwdBmkA5wIUcZYAExzl82eN603VMdfGddM6UE5m1hcz5W105JXiuFruf0vU2ry5Kuj6om83U8HHCo8ZfhVXN8ZB/CLdpySWTegBpO2Xg7X6hBeDPlVup5TStt1upegiIwcPyTjiHDCvUc9ARvckmkDUoLgGKBPor6a+m/3HOOWuqyImEm0vjUdt17gH740e0/CJl8L9X7di99+3dUqFb1E6i/ulBguF2avlNQhYAGo4MlFmVhoWQIGClgMdUtcIOpB4jk7C5hLv7S/YMxb4blC0MuXP/Y20UvATSQKr9y9s1uNK7sl5JYYSCZFR3qM6Mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LHaCeDo7iC/KO7lr+bsuYPV536Rrcyq+QkZjkC1KJO8=;
+ b=Sgz0WPzc0QojANRwN5z7Tktj+PgRaltN2fVfRpeF/yoxn7MzKKqteW9DqjfbtgrJNd98Z11ENQEPRRLCz5ONW4BKGOQgtOtynZ1BjShDUgU3ZquLjFr4G9EU3Lh8QMdGWoMt+SFurxeH7t3yoYlSpGK0v4TQXc2oRU6N2/6trQYEMSEz5QY34QOiklinQrC0jv/ik4uEFpcfB6dUoTeStRNrgnpzBqv561CB6on5YDXmC0zEUMa3ELMu08HgUqNFUudU4/7qO7g8jXpkkJ1eofv/S/LRkd+RyIlWnpHQfRP8B4aBOhBcxTBtmSYR1vh8lRQdNvLHqCU952eqHVXPrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LHaCeDo7iC/KO7lr+bsuYPV536Rrcyq+QkZjkC1KJO8=;
+ b=LU2tlDz+9ZB4J+L3Yv1ZrkBwTNuEfzmj5gBBN0osVGtKQze3Ho3BeFCy4ddQ5XuYVlYUvX0XRQtSlSvB0VtghoiXbK+eUeIhUXmNe/E1OlisCDmIbu3NaNUwh3LuS75LazPO5IFrWlcM8qM52IpiySYwLu7oSPPjSyvsovTDWIjmifwnyrpILTVkzrLgiMO/egWQe6WiVM9TFnFlAqfkm/uGT1Lm+5GR7NZ3+UXFQdbqbytYbfD/fwXGjKzRsbmWR225UX6P6XHxYwhhFVgNAaWTQF3aPgmVzPZkBllq4mkmmgn8yCDdGtPq3pQSBa1Q2/OnWIrc2ywyDeqU3E0Qdg==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ TYZPR06MB7143.apcprd06.prod.outlook.com (2603:1096:405:ae::14) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8466.14; Fri, 21 Feb 2025 06:55:02 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.8466.016; Fri, 21 Feb 2025
+ 06:55:02 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+Subject: RE: [PATCH v3 21/28] hw/misc/aspeed_hace: Fix boot issue in the
+ Crypto Manager Self Test
+Thread-Topic: [PATCH v3 21/28] hw/misc/aspeed_hace: Fix boot issue in the
+ Crypto Manager Self Test
+Thread-Index: AQHbfchky6ROwLofhkuIiNhSbOQHZrNMoGUAgASp1uCAABTIwA==
+Date: Fri, 21 Feb 2025 06:55:01 +0000
+Message-ID: <SI2PR06MB504179BD1EEDEBFF9A68BEC4FCC72@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-22-jamin_lin@aspeedtech.com>
+ <51b4d012-db0c-42b1-ae0e-2b28751bc2a4@kaod.org>
+ <SI2PR06MB5041F4186411EE60CB26CC44FCC72@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <SI2PR06MB5041F4186411EE60CB26CC44FCC72@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|TYZPR06MB7143:EE_
+x-ms-office365-filtering-correlation-id: a1c227cc-4e82-48d4-7275-08dd5244aa0a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?TEhFRW1Tdi9vV2RiZnR2MVR4RnhzWGRVUmZWWHltUmliUDhUZmhsNTVUN1k2?=
+ =?utf-8?B?T0pTOW9tRVNwMGdGTmFNZ25QRnhIV2t5TEEweVl4aGRtd3MwbWd3MWVsSW1T?=
+ =?utf-8?B?U0t1SVdjUEJ5c3g3UGlSVUdLTmJhcFF4RmF2ZlZuUFpVdGxISEJIR09RRk9T?=
+ =?utf-8?B?c2IrVlJod29DYnd0YXR6R0NwYUFXait2c2Z2ODlhZzBndHppQlZTZENGWExV?=
+ =?utf-8?B?MXloSU5uZnh5QWt0bjQyNGZORWYrRS9LcUpnN0tseFB0cWVWYXFjYXd5djF2?=
+ =?utf-8?B?dGNadFpIWWRSYmNYVHZEdjAwNVViWlRhc1h1VTV2aWU4QkRIZGVLWWxMNldP?=
+ =?utf-8?B?VVBXVmIwVnA2Qmc2ZUVBUHhjM1U0OEVQelEvVjVnbHRvbEpTUnRBcWRQb1RQ?=
+ =?utf-8?B?dWtoZk5IbUVHZjJzM0JzNDIvYVdFRzRVbnlTK0ZDV2NLVVpiUWZicVlmc3M2?=
+ =?utf-8?B?MXE3bHRlYmVIRVRiUUFvOUlYZ1VtNVdNU2RvWW5sRkhsYnhOK3JtL2FlQWhG?=
+ =?utf-8?B?dyt3Q0wvVU1VWWFxeXN2Vyt1YlZlVzhBWXIxSHhOa2dzQzlhYWp3cGwwQ2JI?=
+ =?utf-8?B?SXBqZ21qMjNDaDFpbmdnL0JDbHE4aDd4by9tcDV2NE8wR0M5N3dud3EvcDdt?=
+ =?utf-8?B?dmhFdUorNXh1SllaaXdaZUZKMHJ0MEJ2TTJkdUxPM1RWT2owNFlsckMvMzUz?=
+ =?utf-8?B?YTI3UFRwanNvMTgzamZ6NWI3Qm42SjVMR01Xb3ZrTXM4M1dkQk1tWi9PMG5x?=
+ =?utf-8?B?TTlkOHBsdGdBYmRLc2IwWHIxSmVacGhwQWhIeEFDaTJkeVA1SXNRc0h0VTJK?=
+ =?utf-8?B?SG85SklIREl0ODFjY0dMNHVGeGtpSmNNYmNWYlhscFc3S05kOU1jV0JzN3lC?=
+ =?utf-8?B?cHBjb2QrWlNvWEJqbDRDWVhaWklibTh6TXRJTjBaSzhHSHJySk1iaUZHSXQ1?=
+ =?utf-8?B?VEhLZ0tMMmNGOTUwSktOY2pyUmx2eVY4RnlzU0JtZURyUmhvQVIrU3JhTWg0?=
+ =?utf-8?B?eXd4Y2FOYlFKa3MyNElGbjh0dWR1eUx3b3ZuMWQwWk5MelIyNHlHL0dNRmVO?=
+ =?utf-8?B?S3BGZUpacEQ5T1VLZ3BRSFhVdWVhUGk5SjlFZkl2cWxQMGxDRU1BeFhFMjJD?=
+ =?utf-8?B?S0haYWVlOTdxTmVidk5Hd3E1Z1YzQ1VGeUhhUHh6Sk10ck44YjNseDBIYUJ0?=
+ =?utf-8?B?eFU2TjVHaGxZai9uRG9OQzB5MmhsanJ1Q0hNclB0ZEYyNmtlZmpUa25ORkta?=
+ =?utf-8?B?ZGZzSVVqNXRHKzJtb2hwNTI4WE94cjVhdDBTdkRTc1UvRnc4UHA2Z0tvc1Qw?=
+ =?utf-8?B?S0dkYjhqYnI1eU5tc2wwb1NuZEo5a0xIMVowczVIT1Yza09rK1F6QTBLL3Yz?=
+ =?utf-8?B?TlN1akJSLzNpS0Yvd1d4RE5ya1lkSXUvcDlEOEhPcXgyZlRHSXdlbFpxWG5k?=
+ =?utf-8?B?VkpJWi9CV2QvcE11aU53bnZsZG4zSDYwWWoraDdEcS9aczNDVmNiTzJQVDla?=
+ =?utf-8?B?WWRDRlBkYjFpVS9TazV3UlJHb2w4MDYwSGdKeUZ2MVY3cjh4dTVyRzJqd1NP?=
+ =?utf-8?B?ZGpuaEswRGt1VCs5ZnNZRUQ1UDNLSjRrOUhXWkdQUzl0RGdyY0YrQzUvdXdY?=
+ =?utf-8?B?dUxqSW9tT2RYL2h2ODloUllzMTRGYnB2RUZkWHgyL2tGVWswTDRDb01CZklP?=
+ =?utf-8?B?QlN3Z1Bvano1VXhkS3kwMC9xWmZKYURMUEZEOEVTaGtaTE4zanlSY01QTmZT?=
+ =?utf-8?B?NTVyWjRJcXBzeVZSUkIxK3NwcU5scVBGN3ZQOEJlUVR2b2owSUpxK1VLenpy?=
+ =?utf-8?B?RGpDNmNYRzR1RzhDSWwwb1N2SGpXWitiRkVrRkFIdGdGdXVxaWw0RytIMVRv?=
+ =?utf-8?B?eWpER21McUo4K2NJSkEzcnRBL0w5OUVUZ01VRGljZ1pTYmRJMUxFTEFjVlVo?=
+ =?utf-8?Q?O8+pJpitfGK0jKQQQ2ukzfrQ3RlZgWVW?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bk9EWWVLdEhoaTZmSFk5NkkyeFUxYUdGUnBvUk81VmpjQTJzcXJSZDkwellL?=
+ =?utf-8?B?RG9rWVo1MitoSDREMWg2eUdnN1N0RmI1VjhZNEFEK3c2T2RVb2J4dUxyTDJ4?=
+ =?utf-8?B?ckNpeWsvYWxRQzRDM0hmZTNPTWswa0liZlZqTHBSNUkyNzZaQkJ1d1JQS3l3?=
+ =?utf-8?B?QWJUNHdsQmtjTUszaitKamhvSERCOUdMVWNrT0lTcFc2MEhDUDVyb0ZxWVpx?=
+ =?utf-8?B?Z2J2THRJRTgwWTdJOFNOSi9UUUhWOERaaVc3cWt4ODJadlYrbUg1SGI3T1ZI?=
+ =?utf-8?B?NlpHbFl4Nm9FRE5PRkpNS1RxblRkZjJ6M1krK0pzYmwwU0s1cWpSMGhVNUZW?=
+ =?utf-8?B?alA5T1pudkV3S0IxZmN0MEVHZkxzbHptV3dmV0ZmVFAvVzBjZmdWTHd1UEsr?=
+ =?utf-8?B?dnorR21Jc2pQZ2VJYy84a0ViZlh0bnZvczliT0NoaGFISEdoUDloZlhUbFFX?=
+ =?utf-8?B?V0xXSWRDbENpMk01Tll1SmhJZTY2L3RzRzBGRFgzNGZxcDBNZ0FCS0lxMU1P?=
+ =?utf-8?B?MTBoVmR6eFY4Y3g2RjIrYUU2NlhHSGxVd2xxYWQzaFprUWk0dlZBdGNVTVMr?=
+ =?utf-8?B?UDM4SHNEdFZVZ3dxWnVQMSsrUjJxSkJ1M21yeVZ5UktaY3ZtRXJzSC9wU1dQ?=
+ =?utf-8?B?ZmlrZUdHS1VGcDdpeEtac0M3bGlDWjUwU2tOc2ZvU25ldnNvZEdOMGl3SzRx?=
+ =?utf-8?B?WitURkNuNlY2WnFrZDBMZUhJVDZzNGhXV3JJRE5SdnlVTDczZXlJMDlzVlhm?=
+ =?utf-8?B?L2hRamlYdDFvelVsRjlCaEhzUGxVRFJOMkd5STZuQXM4TUR4VS9CaGtPWGRS?=
+ =?utf-8?B?bGFpNjRNTlk3SFRTY3RaSDF1RUJreDBFK3FzdWhiaGs5T2JDOVBPWVlqNWxI?=
+ =?utf-8?B?aTZmc1M4dm9KNWtOQWRVRUw5UDJ3NFFhZ1Jrb0Vjc0xTQzJwTm55UlZMa0ZY?=
+ =?utf-8?B?Q2txQ0wyWVVBUFE1QXZYd09Yb0VRYmpxRk1Vamdob3lZQmx6NWpiTlhzUjhq?=
+ =?utf-8?B?VUl1ZlNCYzM1enNhZjBTNnpYS1ZZcHFkTkM3NTB4cU53MFE2RGpIbTFZMmZ1?=
+ =?utf-8?B?dFVrbW9JSy9xcmI4STdnZDVrSTYxQ3paZGhVWXRFVERzTUIxM2pDNk9mR1cx?=
+ =?utf-8?B?VE5saXJUUktiT0NGY1NoU0diQ3E0TDRQM1NwOU0zVEJxZGsrK1V2MmhLWDUz?=
+ =?utf-8?B?QjMwNysxdmYvbHlRQTVjYU5oelJvQXlndzdWbC9zMGFpeCtjSklubGpsN0Y5?=
+ =?utf-8?B?YmlLdERpbGMvdVl1VWRHMG9jVzFoZmdPaTIxeFFvMldybUtsR1NVY1hEcVg4?=
+ =?utf-8?B?MWJDSDdueVJyY1MzdDJsZmlzUWlKYlJrNk5RNms0bTM5Tk53RFRLSmk2ajc0?=
+ =?utf-8?B?TjdTKy8vZ3o2cW5aS0Y1TjUraHJqWEkvQkhYL0o5MUJYVXQ2bDNBRVBJdDg5?=
+ =?utf-8?B?eHl6aFYyNHdMM2laU0ZDd2NYL0hJbkdUcVVTY1NEQ2V2TW9OVkJDa0FMa3Yy?=
+ =?utf-8?B?M082RVFhbEpUWGpRR1V0dGZvUER3UktJNzlINnFJSTNGMldWVzMwUENzVGsv?=
+ =?utf-8?B?aVo4bU9UbTBYY3Nrd3NTOFBEUGQwSVdGSUtLdVA2VC9ZVmFIWEZTaG1wWDlk?=
+ =?utf-8?B?K2J1M2xjMjZQcW1lUGV5eFZFS1ZzY2M0NkdXNklENGMvdi9SeEhQZnB2eFpv?=
+ =?utf-8?B?OUhoNHdXTE01eVJ1QkUyL2ZUUUkzMmk1eldIVk5Rc2lURnptajZ2QXpVaTMw?=
+ =?utf-8?B?YVc3NXNZWmxLOHlvc0w0YU5lcXNLOGRvcEVXTFJyb1ZFWmhQMnlFREdPOTll?=
+ =?utf-8?B?RERVOGlqU2p3KzAzeFdXSTAzeVc4SGtCYXRMR2UrSzNEV1kzdXoyV1F4czVU?=
+ =?utf-8?B?QzZJTW5Pdm5nZUNlRkNGYXdIdlV2MERxMGx5aDVmeWJQcXVENUtUWWdQaTlF?=
+ =?utf-8?B?Z2JsOWVCUXE0blh1R1BIZHR1ajdHc0UwOXFFVTZxZDhESEtEVTdKeDdiQi9W?=
+ =?utf-8?B?eXhjcjR4RTRLWlhzTjlKYnJrUVllaHZ6TU4vVXg4RyttNndoMzNGdjFVbWxX?=
+ =?utf-8?B?SUlBNnVKalN4Zlh0RFhXT0xIMkZ2dDJLY2xQV1BZRnJ4UWRZZGRYSFpCVFE2?=
+ =?utf-8?Q?wchMTOLrDJF2cBqooY6/bFqDP?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a1c227cc-4e82-48d4-7275-08dd5244aa0a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 06:55:01.9905 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sTXbvcXMfOls2htiF6cH+y4sHcjpdZiE9Q3sZwXleDLEvWs8VpTqvyKqckmT3pxqCmkrQjezi3fI4V6leiOwdaCWZK2jT0cvQM54ZLxwWv4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB7143
+Received-SPF: pass client-ip=2a01:111:f403:2011::701;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,246 +186,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> On Wed, Feb 19, 2025 at 8:22=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > "The text handler you add looks just like the existing latex handler. =
-Does
->> > LaTeX output lack "little headings", too?"
->> >
->> > Yes, almost certainly. Can you let me know which output formats we act=
-ually
->> > "care about"? I'll have to test them all.
->>
->> As far as I can tell, our build system runs sphinx-build -b html and -b
->> man.
->>
->> I run it with -b text manually all the time to hunt for and review
->> changes in output.  I'd prefer to keep it working if practical.
->>
->> For what it's worth, there is a bit of LaTeX configuration in
->> docs/conf.py.
->>
->> >                                           In the meantime, I upgraded =
-my
->> > patch so that the text translator properly handles branches with headi=
-ngs
->> > that delineate the different branches so that the text output is fully
->> > reasonable. I will need to do the same for any format we care about.
->> >
->> > I've re-pushed as of "about 30 minutes before I wrote this email" --
->> > https://gitlab.com/jsnow/qemu/-/commits/sphinx-domain-blergh2
->> >
->> > This branch includes the text generator fixes (which technically belong
->> > with the predecessor series we skipped, but I'll refactor that later.)
->> > it also includes fixes to the branch inliner, generated return stateme=
-nts,
->> > and generated out-of-band feature sections.
->>
->> I'll fetch it, thanks!
->>
->> > (Long story short: inserting new sections in certain spots was broken
->> > because of cache. Oops. We can discuss more why I wrote that part of t=
-he
->> > code like I did in review for the patch that introduced that problem. =
-It's
->> > the "basic inliner" patch.)
->> >
->> > Below, I'm going to try a new communication approach where I explicitl=
-y say
->> > if I have added something to my tasklist or not so that it's clear to =
-you
->> > what I believe is actionable (and what I am agreeing to change) and wh=
-at I
->> > believe needs stronger input from you before I do anything. Apologies =
-if it
->> > seems a little robotic, just trying new things O:-)
->> >
->> > On that note: not added to tasklist: do we need the LaTeX handler? Do =
-we
->> > need any others? Please confirm O:-)
->>
->> See above.
->>
->
-> I've got html and text working, text wasn't hard. I will give it a good
-> college try on the LaTeX and man formats. Might be easy. The issue here is
-> the custom node I introduced for the collapsible details sections which h=
-as
-> no default handler in the generators. I'll have to learn more about that
-> part of the API, I haven't interfaced with it much yet.
-
-Understand.
-
-Have you considered cutting the series in half before the inliner?
-First part emits "The members of ..." like the old doc generator.
-Second part replaces that with inlined material.
-
-We could totally release with just the first half!  Inlining is great,
-but even without it, your work looks so much better and is so much more
-usable.
-
->> > On Fri, Feb 14, 2025 at 7:05=E2=80=AFAM Markus Armbruster <armbru@redh=
-at.com> wrote:
->> >
->> >> I started to eyeball old and new generated output side by side.
->> >>
->> >> New table of contents shows one level, old two.  No objection; the
->> >> navigation thingie on the left is more useful anyway.
->> >>
->> >
->> > Unintentional, but if you like it, it's fine by me. Nothing added to my
->> > tasklist.
->>
->> Mention in a commit message.
->>
->
-> Sure. I... just need to figure out which commit to mention it in. Added to
-> my list, anyway.
->
->
->>
->> >> The new generator elides unreferenced types.  Generally good, but two
->> >> observations:
->> >>
->> >> * QapiErrorClass is unreferenced, but its members are mentioned in
->> >>   Errors sections.  QapiErrorClass serves as better than nothing error
->> >>   code documentation, but it's gone in the new doc.  So this is a min=
-or
->> >>   regression.  We can figure out what to do about it later.
->> >>
->> >
->> > Right. I debated making the members references to that class, but reca=
-lled
->> > that you disliked this class and figured you'd not like such a change,=
- so I
->> > just left it alone. I do not have cross-references for individual memb=
-ers
->> > of objects at all yet anyway, so this is definitely more work regardle=
-ss.
->> >
->> > We could always create a pragma of some sort (or just hardcode a list)=
- of
->> > items that must be documented regardless of if they're referenced or n=
-ot.
->> > Please let me know your preference and I will add a "ticket" on my per=
-sonal
->> > tasklist for this project to handle that at /some point/. Nothing adde=
-d to
->> > my tasklist just yet.
->>
->> Suggest to add something like "compensate for the loss of QapiErrorClass
->> documentation in the QEMU QMP Reference Manual".
->>
->
-> Got it. Possibly a "for later" task but not much later. It can always come
-> after this first series, but before we "turn on" the new generator, if th=
-at
-> makes sense. Just so we reach a quiescent point and flush the staggeringly
-> large queue.
-
-I think we could even do it after "turn on".  Yes, it's a small
-regression, but I believe the improvements are big enough to outweigh
-small regressions like this one.
-
-> I guess what I mean is: "Let's make sure what I've got here so far is good
-> first, and then I'll start adding stuff."
-
-[...]
-
->> >> The new doc's headings use "Struct" or "Union" where the old one uses
->> >> just "Object".  Let's keep "Object", please.
->> >>
->> >
->> > I was afraid you'd ask for this. OK, I think it's an easy change. Can I
->> > keep the index page segmented by object type still, though?
->> >
->> > I do find knowing the *type* of object to be helpful as a developer,
->>
->> Can you explain why and how struct vs. union matters to you as a
->> developer?
->>
->
-> I suppose it's just internal details that I like to know, but tend to find
-> the HTML reference easier to work with than grepping through the qapi
-> files. I'm gonna change it for you anyway because I agree it's not
-> consistent with the philosophy of "end user QMP reference". Just feels li=
-ke
-> a tiny shame somehow.
->
->
->>
->> > though
->> > I understand that from the point of view of a QMP user, they're all ju=
-st
->> > objects, so your request makes sense.
->>
->> I'd prefer a single index.
->>
->
-> So ... structs, unions, alternates all condensed down to "Object", is that
-> right? We get to keep command/enum/event separate, I assume.
-
-No, only structs and unions are "Object", alternates are "Alternate".
-
-For me, the separation between struct and union is an unfortunate
-remnant of somewhat winding development history.
-
-A union is has common members, one of them is the tag, and for each tag
-value, it may have variant members.
-
-A struct is a degenerate union: no variants.
-
-This is as old as the hills: Pascal records are just like this.
-
-QMP introspection doesn't show structs and unions, just objects, which
-may or may not have variants.
-
-The schema language syntax, however, is still rooted (stuck?) in a past
-when unions could not have common members other than the tag.
-
-[...]
-
->> >> The new doc doesn't show non-definition conditionals, as mentioned in
->> >> the cover letter.  It shows definition conditionals twice.  Once shou=
-ld
->> >> suffice.
->> >>
->> >
->> > Known/intentional issue. I couldn't decide where I wanted it, so I put=
- it
->> > in both places. If you have a strong opinion right now, please let me =
-know
->> > what it is and I'll take care of it, it's easy - but it's code in the
->> > predecessor series and nothing to do with qapidoc, so please put it ou=
-t of
->> > mind for now.
->> >
->> > If you don't have strong feelings, or you feel that the answer may dep=
-end
->> > on how we solve other glaring issues (non-definition conditionals), le=
-t's
->> > wait a little bit before making a decision.
->> >
->> > Added to tasklist: "Remove the duplication of definition conditionals";
->> > left unspecified is how or in what direction :)
->>
->> ACK
->>
->> I'll try to make up my mind :)
->>
->
-> I should also point out, this is an issue in the domain and not the
-> generator; the generated rst document doesn't have this duplication. So
-> it's kind of a no-op while we look and consider this specific series, but
-> it's still on my list when we go to look at the predecessor series.
-
-Understood.
-
-[...]
-
+SGkgQ2VkcmljLCANCg0KPiANCj4gSGkgQ2VkcmljLA0KPiANCj4gPiBTdWJqZWN0OiBSZTogW1BB
+VENIIHYzIDIxLzI4XSBody9taXNjL2FzcGVlZF9oYWNlOiBGaXggYm9vdCBpc3N1ZSBpbg0KPiA+
+IHRoZSBDcnlwdG8gTWFuYWdlciBTZWxmIFRlc3QNCj4gPg0KPiA+IE9uIDIvMTMvMjUgMDQ6MzUs
+IEphbWluIExpbiB3cm90ZToNCj4gPiA+IEN1cnJlbnRseSwgaXQgZG9lcyBub3Qgc3VwcG9ydCB0
+aGUgQ1JZUFQgY29tbWFuZC4gSW5zdGVhZCwgaXQgb25seQ0KPiA+ID4gc2VuZHMgYW4gaW50ZXJy
+dXB0IHRvIG5vdGlmeSB0aGUgZmlybXdhcmUgdGhhdCB0aGUgY3J5cHQgY29tbWFuZCBoYXMNCj4g
+PiBjb21wbGV0ZWQuDQo+ID4gPiBJdCBpcyBhIHRlbXBvcmFyeSB3b3JrYXJvdW5kIHRvIHJlc29s
+dmUgdGhlIGJvb3QgaXNzdWUgaW4gdGhlIENyeXB0bw0KPiA+ID4gTWFuYWdlciBTZWxmIFRlc3Qu
+DQo+ID4gPg0KPiA+ID4gU2lnbmVkLW9mZi1ieTogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVk
+dGVjaC5jb20+DQo+ID4NCj4gPiBQbGVhc2UgYWRkIGFuIEFzcGVlZEhBQ0VDbGFzcyBjbGFzcyBh
+dHRyaWJ1dGUgKGJvb2wpIHRvIGhhbmRsZSB0aGlzDQo+ID4gd29ya2Fyb3VuZCBhbmQgYSBjb21t
+ZW50IGluIHRoZSBjb2RlIG1lbnRpb25pbmcgdGhlIGlzc3VlLg0KPiA+DQo+IFRoYW5rcyBmb3Ig
+cmV2aWV3IGFuZCBzdWdnZXN0aW9uLg0KPiBJIHdpbGwgYWRkIHRoZSB1c2VfY3J5cHRfd29ya2Fy
+b3VuZCBhdHRyaWJ1dGUgdG8gdGhlIEFzcGVlZEhBQ0VDbGFzcyBhbmQNCj4gaW50cm9kdWNlIHRo
+ZSB1c2UtY3J5cHQtd29ya2Fyb3VuZCBwcm9wZXJ0eS4NCj4gRG8geW91IGhhdmUgYW55IGNvbmNl
+cm5zLCBvciBkbyB5b3UgaGF2ZSBhIHByZWZlcnJlZCBuYW1pbmcgY29udmVudGlvbj8NCg0KDQpV
+cGRhdGUgbXkgY29tbWVudHMuDQpJIGRvIG5vdCBuZWVkIHRvIGNyZWF0ZSBhIHByb3BlcnR5LiBJ
+IGNhbiBzZXQgdXNlX2NyeXB0X3dvcmthcm91bmQgdG8gdHJ1ZSBpbiBhc3BlZWRfYXN0MjcwMF9o
+YWNlX2NsYXNzX2luaXQNClRoYW5rcy1KYW1pbg0KDQo+IFRoYW5rcy1KYW1pbg0KPiANCj4gPg0K
+PiA+IFRoYW5rcywNCj4gPg0KPiA+IEMuDQo+ID4NCj4gPg0KPiA+DQo+ID4gPiAtLS0NCj4gPiA+
+ICAgaHcvbWlzYy9hc3BlZWRfaGFjZS5jIHwgMTIgKysrKysrKysrKysrDQo+ID4gPiAgIDEgZmls
+ZSBjaGFuZ2VkLCAxMiBpbnNlcnRpb25zKCspDQo+ID4gPg0KPiA+ID4gZGlmZiAtLWdpdCBhL2h3
+L21pc2MvYXNwZWVkX2hhY2UuYyBiL2h3L21pc2MvYXNwZWVkX2hhY2UuYyBpbmRleA0KPiA+ID4g
+ODY0MjJjYjNiZS4uNGQwOTk5ZTdlOSAxMDA2NDQNCj4gPiA+IC0tLSBhL2h3L21pc2MvYXNwZWVk
+X2hhY2UuYw0KPiA+ID4gKysrIGIvaHcvbWlzYy9hc3BlZWRfaGFjZS5jDQo+ID4gPiBAQCAtNTks
+NiArNTksNyBAQA0KPiA+ID4gICAvKiBPdGhlciBjbWQgYml0cyAqLw0KPiA+ID4gICAjZGVmaW5l
+ICBIQVNIX0lSUV9FTiAgICAgICAgICAgICAgICAgICAgQklUKDkpDQo+ID4gPiAgICNkZWZpbmUg
+IEhBU0hfU0dfRU4gICAgICAgICAgICAgICAgICAgICBCSVQoMTgpDQo+ID4gPiArI2RlZmluZSAg
+Q1JZUFRfSVJRX0VOICAgICAgICAgICAgICAgICAgIEJJVCgxMikNCj4gPiA+ICAgLyogU2NhdHRl
+ci1nYXRoZXIgZGF0YSBsaXN0ICovDQo+ID4gPiAgICNkZWZpbmUgU0dfTElTVF9MRU5fU0laRSAg
+ICAgICAgICAgICAgICA0DQo+ID4gPiAgICNkZWZpbmUgU0dfTElTVF9MRU5fTUFTSyAgICAgICAg
+ICAgICAgICAweDBGRkZGRkZGDQo+ID4gPiBAQCAtMzQzLDYgKzM0NCwxMyBAQCBzdGF0aWMgdm9p
+ZCBhc3BlZWRfaGFjZV93cml0ZSh2b2lkICpvcGFxdWUsDQo+ID4gaHdhZGRyIGFkZHIsIHVpbnQ2
+NF90IGRhdGEsDQo+ID4gPiAgICAgICAgICAgICAgICAgICBxZW11X2lycV9sb3dlcihzLT5pcnEp
+Ow0KPiA+ID4gICAgICAgICAgICAgICB9DQo+ID4gPiAgICAgICAgICAgfQ0KPiA+ID4gKyAgICAg
+ICAgaWYgKGRhdGEgJiBDUllQVF9JUlEpIHsNCj4gPiA+ICsgICAgICAgICAgICBkYXRhICY9IH5D
+UllQVF9JUlE7DQo+ID4gPiArDQo+ID4gPiArICAgICAgICAgICAgaWYgKHMtPnJlZ3NbYWRkcl0g
+JiBDUllQVF9JUlEpIHsNCj4gPiA+ICsgICAgICAgICAgICAgICAgcWVtdV9pcnFfbG93ZXIocy0+
+aXJxKTsNCj4gPiA+ICsgICAgICAgICAgICB9DQo+ID4gPiArICAgICAgICB9DQo+ID4gPiAgICAg
+ICAgICAgYnJlYWs7DQo+ID4gPiAgICAgICBjYXNlIFJfSEFTSF9TUkM6DQo+ID4gPiAgICAgICAg
+ICAgZGF0YSAmPSBhaGMtPnNyY19tYXNrOw0KPiA+ID4gQEAgLTM4OCw2ICszOTYsMTAgQEAgc3Rh
+dGljIHZvaWQgYXNwZWVkX2hhY2Vfd3JpdGUodm9pZCAqb3BhcXVlLA0KPiA+IGh3YWRkciBhZGRy
+LCB1aW50NjRfdCBkYXRhLA0KPiA+ID4gICAgICAgY2FzZSBSX0NSWVBUX0NNRDoNCj4gPiA+ICAg
+ICAgICAgICBxZW11X2xvZ19tYXNrKExPR19VTklNUCwgIiVzOiBDcnlwdCBjb21tYW5kcyBub3QN
+Cj4gPiBpbXBsZW1lbnRlZFxuIiwNCj4gPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICBfX2Z1
+bmNfXyk7DQo+ID4gPiArICAgICAgICBzLT5yZWdzW1JfU1RBVFVTXSB8PSBDUllQVF9JUlE7DQo+
+ID4gPiArICAgICAgICBpZiAoZGF0YSAmIENSWVBUX0lSUV9FTikgew0KPiA+ID4gKyAgICAgICAg
+ICAgIHFlbXVfaXJxX3JhaXNlKHMtPmlycSk7DQo+ID4gPiArICAgICAgICB9DQo+ID4gPiAgICAg
+ICAgICAgYnJlYWs7DQo+ID4gPiAgICAgICBkZWZhdWx0Og0KPiA+ID4gICAgICAgICAgIGJyZWFr
+Ow0KDQo=
 
