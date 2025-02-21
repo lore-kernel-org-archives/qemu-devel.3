@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9466EC021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6604DC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlXA8-0000vr-R5; Fri, 21 Feb 2025 12:50:09 -0500
+	id 1tlXAf-0001IC-AF; Fri, 21 Feb 2025 12:50:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXA5-0000sM-BU; Fri, 21 Feb 2025 12:50:05 -0500
+ id 1tlXAY-0001D4-Sk; Fri, 21 Feb 2025 12:50:35 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXA3-0001ci-Cq; Fri, 21 Feb 2025 12:50:05 -0500
+ id 1tlXAW-0001pa-AN; Fri, 21 Feb 2025 12:50:34 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 46365EFB6A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 53175EFB6E;
  Fri, 21 Feb 2025 20:49:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EF74A1BB586;
- Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0BE181BB58A;
+ Fri, 21 Feb 2025 20:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DE83B53F87; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ id E8C3853F8F; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.2 07/14] vfio/iommufd: Fix SIGSEV in iommufd_cdev_attach()
-Date: Fri, 21 Feb 2025 20:49:37 +0300
-Message-Id: <20250221174949.836197-7-mjt@tls.msk.ru>
+Subject: [Stable-9.2.2 11/14] elfload: Fix alignment when unmapping excess
+ reservation
+Date: Fri, 21 Feb 2025 20:49:41 +0300
+Message-Id: <20250221174949.836197-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 References: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,46 +63,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-When iommufd_cdev_ram_block_discard_disable() fails for whatever reason,
-errp should be set or else SIGSEV is triggered in vfio_realize() when
-error_prepend() is called.
+When complying with the alignment requested in the ELF and unmapping
+the excess reservation, having align_end not aligned to the guest page
+causes the unmap to be rejected by the alignment check at
+target_munmap and later brk adjustments hit an EEXIST.
 
-By this chance, use the same error message for both legacy and iommufd
-backend.
+Fix by aligning the start of region to be unmapped.
 
-Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20250116102307.260849-1-zhenzhong.duan@intel.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 7b3d5b84cbd742356a1afc6b0fa489d0663f235d)
+Fixes: c81d1fafa6 ("linux-user: Honor elf alignment when placing images")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1913
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+[rth: Align load_end as well.]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250213143558.10504-1-farosas@suse.de>
+(cherry picked from commit 4b7b20a3b72c5000ea71bef505c16e6e628268b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index e7bece4ea1..a60c899dc6 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -515,8 +515,8 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-         } else {
-             ret = iommufd_cdev_ram_block_discard_disable(true);
-             if (ret) {
--                error_setg(errp,
--                              "Cannot set discarding of RAM broken (%d)", ret);
-+                error_setg_errno(errp, -ret,
-+                                 "Cannot set discarding of RAM broken");
-                 goto err_discard_disable;
-             }
-             goto found_container;
-@@ -544,6 +544,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 471a384b22..aa3607f3ac 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3349,8 +3349,8 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
  
-     ret = iommufd_cdev_ram_block_discard_disable(true);
-     if (ret) {
-+        error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
-         goto err_discard_disable;
-     }
+     if (align_size != reserve_size) {
+         abi_ulong align_addr = ROUND_UP(load_addr, align);
+-        abi_ulong align_end = align_addr + reserve_size;
+-        abi_ulong load_end = load_addr + align_size;
++        abi_ulong align_end = TARGET_PAGE_ALIGN(align_addr + reserve_size);
++        abi_ulong load_end = TARGET_PAGE_ALIGN(load_addr + align_size);
  
+         if (align_addr != load_addr) {
+             target_munmap(load_addr, align_addr - load_addr);
 -- 
 2.39.5
 
