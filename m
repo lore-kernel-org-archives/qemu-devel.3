@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED062C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 19:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613FCC021B6
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 19:10:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlYO1-0005bp-0p; Fri, 21 Feb 2025 14:08:33 -0500
+	id 1tlYPV-0006Ht-KB; Fri, 21 Feb 2025 14:10:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tlYNz-0005bc-8g
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:08:31 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tlYNx-0003yV-KC
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:08:31 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LIMkN1032068;
- Fri, 21 Feb 2025 19:08:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=hIOK3cSCCNw3u3O49ckJ4jLTqzgyGcJ+6tGCIl4X/
- BI=; b=R4k0VPTjOJz7jx9BU8+r5BDeRiAqpvsz4OrLcG7EqqCrPDpoCOXQyw+RN
- xvTnZAoCENWsMyMrfuEZu2hS9wLI7PG4frWMeFet88C8YNBccemnlzv99RzPQ5ev
- AyqFECBsV7h6qCVyu1T9mN9TqXXj3RbHTTrYyRn27NHYedn45tOgo9zXeGvaA57H
- 64a9p63CyX/ymaGUydR7IhwmQ4Su1jb5kz19W3H//XAKTfZZVT+UK89R1zzOtYw+
- UodYY2Ns3WQ96QTvFSVEynxzzQuWC/qmwSzVG/B9FRA0s4kE8C3YuOqjcq2RyfGe
- JrJC3NShRV57K1hjS976xrr3L6JRA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xgb0ckb0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Feb 2025 19:08:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51LIgwoH009646;
- Fri, 21 Feb 2025 19:08:26 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44w03yhq1d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Feb 2025 19:08:26 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51LJ8PsK25100846
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 21 Feb 2025 19:08:25 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7759B5804E;
- Fri, 21 Feb 2025 19:08:25 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED7645803F;
- Fri, 21 Feb 2025 19:08:24 +0000 (GMT)
-Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.243.178])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 21 Feb 2025 19:08:24 +0000 (GMT)
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-To: jasowang@redhat.com, mst@redhat.com
-Cc: eperezma@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
- qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH v2] vdpa: Allow vDPA to work on big-endian machine
-Date: Fri, 21 Feb 2025 13:07:33 -0600
-Message-Id: <20250221190733.490308-1-kshk@linux.ibm.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tlYPT-0006GQ-Mh
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:10:03 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tlYPR-00044l-KO
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:10:03 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-439a1e8ba83so23969945e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 11:10:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740164999; x=1740769799; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9+rzFkAvq1fT8VWgYWTbYKbxozjg166B260cDEJsA2M=;
+ b=vlyDM0fX++eZN7A76pAEBnCVdTWLarrZHG6RnVAGtnRZ2nFqlSlZlclS4CMRbEi8ww
+ yx4QOH1rKDxEAOI5dz8F6ht8nWSb8YTomBun2YWg+uqsLDABHw4OReOsWAu0jWDUKAZ3
+ 1Yxir2d73mYd085+lkgCTlJWJyVPvM5wgI6NfXFUpLFvIpb9UxQkrJ92RjREwOGU2R6l
+ lX2U3DnlcDMQzO2Wsn20a41DQ0Lxm6WrVlQ9ViuNDqlIjTJp09YD9IANyxtu9CqbhdDW
+ eu1jzZMsc5t41fFdtOABRYnFR1rhYKWsVvmq3KzneixKMyCDBtSJ+qOT1srhXovsGeTg
+ j8YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740164999; x=1740769799;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9+rzFkAvq1fT8VWgYWTbYKbxozjg166B260cDEJsA2M=;
+ b=m5iKisJkLm8qb6G8Ph1r3A9ACbHH8sdD8ol3mZQTmhN9dpzGrHPwENTdizO4mcILQD
+ Il7G271P5wCLkKEzDdVB6gojRU1B3JiMYpQdETa9XBh9tTotRPYC49LLme7ovdNcpixU
+ yx0pmuOJlkPIPXTsKj4ozEUwhagKje/P3lk9w4/ouL+tFFSuksCNooMJj/EU331U3e5f
+ srtQ/n2KH4QWGsSZEL5J+DQNLdoX/+LkJm15MgmV+h3LvR6LFgx64DFieI6DDUWw+nOn
+ TWCHXESIgu0A+mfJ4J302mDCiqQKSL0DMmq5LkTDYBg3hXuBBH1Nx7BZgxY8alK0V08g
+ RqFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7hpVAjj9kBbqmIDu5iq+H8tQtrvgMQoQu/uEeAADcxF+QnJanu7PQEmSmUwazTzGm2+IMXknDg4nc@nongnu.org
+X-Gm-Message-State: AOJu0YwB5BdoSdiMwg/ywsVae+4qitwLwwaEpqyL7msCwYOVIBZSno3Z
+ xeQE0qd/EtVDOr9p6ZSbsI0pISOsgXtLZTJ/XAv56kROY/tEWoxRIiexSBEDNEw=
+X-Gm-Gg: ASbGnctb9ApeFc5Mg6f/iJo8rOFobxhUApudBjds+cPXy1ru6GQa+Nmoxf2SrmJ+yoH
+ V+yLN3xa8JZtFl4TE899hsLYKquatlUZVcepy3UBgBx1Ork0YV/HGk1tGvZNZ87KLq4tlkwEbV5
+ vPT4bLiC4zVnJWl7nHE3k/XPus8UxP+v9xeyq14Tg8594ReyQvOJbn5yO/zneb7FFPoPDiCYXTP
+ Z89TUwlfJGKKODtVlFe5dNuwVvzv/1naUEo7z8lVjPtsNVEFZ2cnIJ2IzjSaDyRnJUDvdHXTSEI
+ Fc9HSrxO370nL1ZQM00mxyNZprPK6SPQ
+X-Google-Smtp-Source: AGHT+IHEo3lQxi+8bnPYA3+ZyWZiA2sLXSCRLKEsA2TU9WhNuY5JbOtHhFQORDSqf6MeCAb73mNaSg==
+X-Received: by 2002:a05:600c:450d:b0:439:9a43:dd62 with SMTP id
+ 5b1f17b1804b1-439aebb2d6fmr28356035e9.24.1740164999153; 
+ Fri, 21 Feb 2025 11:09:59 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f258ddbe0sm24392478f8f.39.2025.02.21.11.09.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Feb 2025 11:09:58 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 0/4] target/arm: Move vfp_helper.c TCG code into tcg/ subdir
+Date: Fri, 21 Feb 2025 19:09:52 +0000
+Message-ID: <20250221190957.811948-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: nbWz9C0ar1_m_5-LRq8PDF6Ul1MELYAz
-X-Proofpoint-ORIG-GUID: nbWz9C0ar1_m_5-LRq8PDF6Ul1MELYAz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_07,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=886
- malwarescore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0 mlxscore=0
- bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210131
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,50 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add .set_vnet_le() function that always returns success, assuming that
-vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
-outputs the message:
-"backend does not support LE vnet headers; falling back on userspace virtio"
+target/arm/vfp_helper.c is almost entirely TCG-specific code,
+guarded by #ifdef CONFIG_TCG. The only parts that aren't
+TCG-specific are the handling of the FPSCR/FPSR/FPCR registers.
+(I noticed this while I was working on the FEAT_AFP code, and
+it felt a bit awkward but I left it as-is at the time.)
 
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
----
-Changes in V2: Add code comment.
+This series moves all the TCG code into tcg/vfp_helper.c.
+Once only the FPSCR etc code is left, we rename the old
+file to vfp_fpscr.c.
 
- net/vhost-vdpa.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Series structure:
+ * move the easy stuff as copy-n-paste to create new file
+ * move the FPSCR get/set helpers
+ * move the softfloat-specific parts of FPSR/FPCR handling
+ * rename
 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 231b45246c..6e7cec4d45 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -270,6 +270,18 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
- 
- }
- 
-+/*
-+ * FIXME: vhost_vdpa doesn't have an API to "set h/w endianness". But it's
-+ * reasonable to assume that h/w is LE by default, because LE is what
-+ * virtio 1.0 and later ask for. So, this function just says "yes, the h/w is
-+ * LE". Otherwise, on a BE machine, higher-level code would mistakely think
-+ * the h/w is BE and can't support VDPA for a virtio 1.0 client.
-+ */
-+static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool enable)
-+{
-+    return 0;
-+}
-+
- static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
-                                        Error **errp)
- {
-@@ -437,6 +449,7 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .cleanup = vhost_vdpa_cleanup,
-         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
-         .has_ufo = vhost_vdpa_has_ufo,
-+        .set_vnet_le = vhost_vdpa_set_vnet_le,
-         .check_peer_type = vhost_vdpa_check_peer_type,
-         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
- };
+This was just a quick last-thing-Friday tidyup, so I'm not
+strongly attached to it if people don't think it's worth the
+churn. I do think at least the first patch or some variant
+on it is worth doing, though.
+
+thanks
+-- PMM
+
+Peter Maydell (4):
+  target/arm: Move TCG-only VFP code into tcg/ subdir
+  target/arm: Move FPSCR get/set helpers to tcg/vfp_helper.c
+  target/arm: Move softfloat specific FPCR/FPSR handling to tcg/
+  target/arm: Rename vfp_helper.c to vfp_fpscr.c
+
+ target/arm/internals.h            |   9 ++
+ target/arm/tcg-stubs.c            |  22 ++++
+ target/arm/{ => tcg}/vfp_helper.c | 189 +++---------------------------
+ target/arm/vfp_fpscr.c            | 155 ++++++++++++++++++++++++
+ target/arm/meson.build            |   2 +-
+ target/arm/tcg/meson.build        |   1 +
+ 6 files changed, 205 insertions(+), 173 deletions(-)
+ rename target/arm/{ => tcg}/vfp_helper.c (90%)
+ create mode 100644 target/arm/vfp_fpscr.c
+
 -- 
-2.34.1
+2.43.0
 
 
