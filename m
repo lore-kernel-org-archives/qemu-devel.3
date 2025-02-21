@@ -4,69 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10971C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 03:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A0CC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 03:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlJrX-0004Wt-QK; Thu, 20 Feb 2025 22:38:03 -0500
+	id 1tlJta-0005O7-Gy; Thu, 20 Feb 2025 22:40:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tlJrS-0004Vw-6N; Thu, 20 Feb 2025 22:38:01 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1tlJrN-0007nB-RZ; Thu, 20 Feb 2025 22:37:56 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxzOIG9bdnDQZ9AA--.19219S3;
- Fri, 21 Feb 2025 11:37:43 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxu8QD9bdn+5UfAA--.50842S3;
- Fri, 21 Feb 2025 11:37:41 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch/gdbstub: Fix gdbstub incorrectly
- handling register R32
-From: bibo mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, Wanglei <wanglei@loongson.cn>,
- qemu-stable@nongnu.org
-References: <20250218032027.4137453-1-maobibo@loongson.cn>
-Message-ID: <dbc7759f-8207-2035-73d6-2d0a6410f513@loongson.cn>
-Date: Fri, 21 Feb 2025 11:37:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tlJtY-0005Ne-Nz
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 22:40:08 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tlJtX-0008I8-0P
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 22:40:08 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51L20aZ4001444;
+ Fri, 21 Feb 2025 03:40:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=f71Fws
+ 8zkeNuP8k5DxmZyKhAwvzMMcLHC/XBMWLD9SI=; b=j+eydptXgKMROK51+olYYf
+ wtZba6cXu82+KGk7HihQZoDorucbL90MPyQWUm149x8ggsgbVirUBpFWUQmLWQxu
+ pgQQtESHIw5mVOteUNjo88pIAkFqaqreFfHh/YYdPlygZhyF6jBVFhcZ49qarrQj
+ 1bHZBu0iczQSci7QpUKhJPTp/oh9RwIGLUId4VY9eDrfjxkUd70Nw4ERDNeMZMvV
+ 08wTstpxdlEC1pE3t8+j2hUUBaYP9bVI47KsUtb7NFdebL2oVU8uU1ws2H+4/Se6
+ nSTxGnlpMIzH1aVSsuEw81VEqk1X2jytUbHFA2l7hwkqlPXuzuHIoy52czrthsKw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xgb08ac4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 03:40:03 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51L1U5Vk027113;
+ Fri, 21 Feb 2025 03:40:03 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44w025dr8v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 03:40:03 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51L3e2aC30540386
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Feb 2025 03:40:02 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 853A558059;
+ Fri, 21 Feb 2025 03:40:02 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 310BA5805C;
+ Fri, 21 Feb 2025 03:40:02 +0000 (GMT)
+Received: from [9.61.242.113] (unknown [9.61.242.113])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 21 Feb 2025 03:40:02 +0000 (GMT)
+Message-ID: <c47e1834-c6b2-49e6-8e22-f1e1ebf02522@linux.ibm.com>
+Date: Thu, 20 Feb 2025 21:40:01 -0600
 MIME-Version: 1.0
-In-Reply-To: <20250218032027.4137453-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vdpa: Allow vDPA to work on big-endian machine
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: eperezma@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
+ qemu-devel@nongnu.org
+References: <20250211161923.1477960-1-kshk@linux.ibm.com>
+ <20250220105323-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxu8QD9bdn+5UfAA--.50842S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Kw45XFWUJr4UKF4kury7CFX_yoW8WFW5p3
- 4xCw1DKw45trZrtan3Xa98X3WDXr1fGwsIvan7J34rCrnxX3WrWF4kK3sFgFs5J39rtF1F
- qr1Fv34Uuay2yrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.31,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <20250220105323-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: HShCxkvKOA0i2LgE5_pthQDyBwdqTF3c
+X-Proofpoint-ORIG-GUID: HShCxkvKOA0i2LgE5_pthQDyBwdqTF3c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-20_09,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0 mlxscore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502210023
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,63 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued in loongarch-next with title and changelog changed as follows:
+On 2/20/2025 09:57, Michael S. Tsirkin wrote:
+> On Tue, Feb 11, 2025 at 10:19:23AM -0600, Konstantin Shkolnyy wrote:
+>> Add .set_vnet_le() function that always returns success, assuming that
+>> vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
+>> outputs the message:
+>> "backend does not support LE vnet headers; falling back on userspace virtio"
+>>
+>> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> 
+> Thanks for the patch! Yet something to improve:
+> 
+> 
+>> ---
+>>   net/vhost-vdpa.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+>> index 231b45246c..7219aa2eee 100644
+>> --- a/net/vhost-vdpa.c
+>> +++ b/net/vhost-vdpa.c
+>> @@ -270,6 +270,11 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+>>   
+>>   }
+>>   
+>> +static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool is_le)
+>> +{
+>> +    return 0;
+> 
+> How about checking is_le is true then?
 
-target/loongarch/gdbstub: Fix gdbstub incorrectly handling some registers
-   Write operation with R32 (orig_a0) and R34 (CSR_BADV) is discarded on
+As I understand, the control comes here from 
+virtio_net_set_vnet_endian(...., bool enable). That "enable" is copied 
+into the "is_le" here. Thus, it doesn't look like "is_le = false" means 
+BE. Rather, it looks like it means "default endianness of the 
+NetClient". If so, the function should probably just return 0 in both cases.
 
-Regards
-Bibo Mao
+I think, that is also why we have .set_vnet_le() and .set_vnet_be() 
+instead of just one function.
 
-On 2025/2/18 上午11:20, Bibo Mao wrote:
-> Write operation with R32 (orig_a0) and R32 (CSR_BADV) is discarded on
-> gdbstub implementation for LoongArch system. And return value should
-> be register size rather than 0, since it is used to calculate offset of
-> next register such as R33 (PC) in function handle_write_all_regs().
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ca61e75071c6 ("target/loongarch: Add gdb support.")
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/gdbstub.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
-> index dafa4feb75..471eda28c7 100644
-> --- a/target/loongarch/gdbstub.c
-> +++ b/target/loongarch/gdbstub.c
-> @@ -63,23 +63,24 @@ int loongarch_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->   {
->       CPULoongArchState *env = cpu_env(cs);
->       target_ulong tmp;
-> -    int read_length;
->       int length = 0;
->   
-> +    if (n < 0 || n > 34) {
-> +        return 0;
-> +    }
-> +
->       if (is_la64(env)) {
->           tmp = ldq_le_p(mem_buf);
-> -        read_length = 8;
-> +        length = 8;
->       } else {
->           tmp = ldl_le_p(mem_buf);
-> -        read_length = 4;
-> +        length = 4;
->       }
->   
->       if (0 <= n && n < 32) {
->           env->gpr[n] = tmp;
-> -        length = read_length;
->       } else if (n == 33) {
->           set_pc(env, tmp);
-> -        length = read_length;
->       }
->       return length;
->   }
-> 
-> base-commit: db7aa99ef894e88fc5eedf02ca2579b8c344b2ec
-> 
+If the above is correct, maybe I should rename "is_le" into "enable"? (I 
+simply copied the name from another function...)
+
+> And add a code comment with an explanation, please.
+
+Sure.
 
 
