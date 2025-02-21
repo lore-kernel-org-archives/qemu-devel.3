@@ -4,62 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630B8C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A87C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlU8A-0000C4-CV; Fri, 21 Feb 2025 09:35:54 -0500
+	id 1tlUDI-000283-1v; Fri, 21 Feb 2025 09:41:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tlU86-0000AK-8N; Fri, 21 Feb 2025 09:35:51 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tlU82-0003fq-HF; Fri, 21 Feb 2025 09:35:49 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 5EB055C6569;
- Fri, 21 Feb 2025 14:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A060DC4AF0D;
- Fri, 21 Feb 2025 14:35:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740148535;
- bh=i9MVKKTfK37ScBDgPKvVwPNcVwzzFw/Yj2KPjgEtak0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Pf1NswBrszPv2+HNrGeljQlRTqz8U5aNMSvlC6S23QUdkdNL95X8i/70NNG1M0QJb
- 7jCNP6MdPIFkebmY7/hff4wKBWazXKjNOh2l56cDwX61oW542Rya5j6EuUi6RMHvL4
- cqu2+nlxfhcfcdRtaBcRqiToc/Kl7yW8jx2I6+p7SgRq39IjmlKuC46TZWb5qA6Tbc
- iPrWaD4gz6rY5RMdboOfxfrpIv2lx4Jn2q+Ot6OSMAzQYfqLsc+cJL6wzFhukf1kzF
- 9/eankGPEpDO1YVcD2EgV2a1Qh3DEUSIEEM5U1ewPl/FEYuDPAO9maUFAXt7QYzuN0
- v4BMGZsikS1dg==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1tlU7m-00000002jEJ-3jQr; Fri, 21 Feb 2025 15:35:30 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 12/14] tests/acpi: virt: add a HEST table to aarch64 virt
- and update DSDT
-Date: Fri, 21 Feb 2025 15:35:21 +0100
-Message-ID: <c408dcb6993540514b01fae6434a73440030efdf.1740148260.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1740148260.git.mchehab+huawei@kernel.org>
-References: <cover.1740148260.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlUDG-00027V-0t
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 09:41:10 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlUDD-0006Na-SC
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 09:41:09 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4394036c0efso14056755e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 06:41:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740148865; x=1740753665; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ytf/9Z3XeJMD7xaiGw0J9GGs9IYtrINu7waX4wKwDr8=;
+ b=unG7V2ECIqnS0xaKjG88Ggos4jxQTw+x/lM2rez9v1CQUVl0jEbXfg4ksII+ZIEPIx
+ S4WBuX0jK8aY52GRQALOnYGRVZA8cjGDsUGCpT6PSdq9QCjwvTAY4IygX04iKzRpX91c
+ CSsyW8R/+3baOtZi3v4PJfd1OpcjW72kDdg5ShfDkk6MtWsmtExu64Nh4aVLGeb9m0AM
+ qe2GNfoLjukUAbITPhxHzkF7GNrdxJkWIe3btMT3/D0uzZ46pc+A5h5hJ3OcfOPHAVam
+ 8ARFZwKVIgAUK3rTddg0gKXO9JlBpl8luiWT5iFHDOkvM6VreH4H9ZuMxhgguuAMN/Is
+ R6Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740148865; x=1740753665;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ytf/9Z3XeJMD7xaiGw0J9GGs9IYtrINu7waX4wKwDr8=;
+ b=wNziT+0i0xPHSrXCBG/msmLaXsNap4qI5faL02uCqsPQczYedMQZfoGQiWIVAgfdgT
+ YtaerwMPOABPTAlp9aTqO4TNGDPQHMmfuVtqNjKS5CmX8FeArzurjKc1buYKOtY4o0Hx
+ P5XiNU7cXHcNM+NdYWi3Df9Zk8my6lfzdhL7wRoSsVn21YBt4SgUtwtGhszJQfJupTX+
+ gwWB5lAYYt11p92JhIV/8QEH4l2r3iQr4exLGWuU2QwRH1NWdV+DMC0PD1l8uvweMg1E
+ C/jhuxGI1qrRxtewFaHx8xV1RUq+X98zxusqRK1uNk7J3o9hUODVGibol+mSN7bM+eZU
+ jd8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyxkxv9nMgMJyJsRg8lUj3Be0v3q13dL9xc54cx6cyF0IXKYeF4sbK7dQr3BGa4CDJNaQTPxxY7+dP@nongnu.org
+X-Gm-Message-State: AOJu0YyynIx6JzIkNbv4lFd8oanTb10HZV7zhQoOdd7ien9pYZq2hMiJ
+ Y2C1+5O0RQgNsVp5DzVpvJ6cmd+KFcXEVqDrC5vlt5K5Ae1SyqEl+KjNHGHJ+DL3UerqEpPD1+H
+ gQis=
+X-Gm-Gg: ASbGncsf4eKM8FO4jfcUL7jPIlA9pRCxTMzBtew2TJfN+SdQiDTuGWqif+1fkJ2ZliI
+ LKGRPHxBkS3MmUchHPbAI4c7SIlvpbl8KocWBaqHC6j4UGDVLPn6T8L8gnJBsujWfI3BURKcPWB
+ 55odbgRCBFPZk1WEwZ1jRs8aWAFbaDxNDsei3im9MikNVAEZV3JU9sbYzHcd/WFE3lLq3IYTfri
+ WcLLOA0f9M+ISuLV7ysXG+4ynD1sgRrMWblvIwae+0RqGFS3sv7KW9dTPA8CsjVj4y47WKiGMpO
+ oYHagPa4BmfI1A1FYYiYdDZp2ofpM6YNRMKqM6tdJ/RF3dG6JHRMcfzWTcdGHb+tidbmBw==
+X-Google-Smtp-Source: AGHT+IEcd97yOQp1o9rmjpCPju1nBxMAWmT+F0y/T9pzuBF8Ixnw9mbBBrbg19IMpvZLty0qA7sJjg==
+X-Received: by 2002:a05:600c:a384:b0:439:8a8c:d3ca with SMTP id
+ 5b1f17b1804b1-439ae21d2a0mr29584495e9.29.1740148865243; 
+ Fri, 21 Feb 2025 06:41:05 -0800 (PST)
+Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b02e489esm19280735e9.21.2025.02.21.06.41.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Feb 2025 06:41:04 -0800 (PST)
+Message-ID: <93307c7c-c29f-4061-94ae-461bf196ff41@linaro.org>
+Date: Fri, 21 Feb 2025 15:41:03 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/10] fpu: Remove remaining target ifdefs and build only
+ once
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20250217125055.160887-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250217125055.160887-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,119 +105,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---- a/DSDT.dsl        2025-01-28 09:38:15.155347858 +0100
-+++ b/DSDT.dsl        2025-01-28 09:39:01.684836954 +0100
-@@ -9,9 +9,9 @@
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x00001516 (5398)
-+ *     Length           0x00001542 (5442)
-  *     Revision         0x02
-- *     Checksum         0x0F
-+ *     Checksum         0xE9
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-@@ -1931,6 +1931,11 @@
-                 {
-                     Notify (PWRB, 0x80) // Status Change
-                 }
-+
-+                If (((Local0 & 0x10) == 0x10))
-+                {
-+                    Notify (GEDD, 0x80) // Status Change
-+                }
-             }
-         }
+On 17/2/25 13:50, Peter Maydell wrote:
 
-@@ -1939,6 +1944,12 @@
-             Name (_HID, "PNP0C0C" /* Power Button Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-+
-+        Device (GEDD)
-+        {
-+            Name (_HID, "PNP0C33" /* Error Device */)  // _HID: Hardware ID
-+            Name (_UID, Zero)  // _UID: Unique ID
-+        }
-     }
- }
+> (1) floatx80 behaviours
+> 
+> Two QEMU targets implement floatx80: x86 and m68k. (PPC also has one
+> use in the xsrqpxp round-to-80-bit-precision operation, and the
+> Linux-user NWFPE emulation nominally supports it, but these are
+> minor.) x86 and m68k disagree about some of the corner cases of
+> floatx80 where the value has the explicit Integer bit wrongly set.  At
+> the moment the fpu code defaults to "floatx80 behaves like x86", with
+> TARGET_M68K ifdefs to get the other option.
+> 
+> The first six patches in this series remove those ifdefs, replacing
+> them with a floatx80_behaviour field in float_status which can have
+> various flags set to select the individual behaviours. The default is
+> "like x86", which allows us to set these only for m68k and not worry
+> about the minor "technically makes some use of floatx80" cases.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+> Peter Maydell (10):
+>    fpu: Make targets specify floatx80 default Inf at runtime
+>    target/m68k: Avoid using floatx80_infinity global const
+>    target/i386: Avoid using floatx80_infinity global const
+
+Bothering again, we can add the floatx80_default_inf() refactor as the
+first patch:
+
+-- >8 --
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index 09a40b43106..afae3906024 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -963,0 +964 @@ extern const floatx80 floatx80_infinity;
++floatx80 floatx80_default_inf(bool zSign, float_status *status);
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index f4fed9bfda9..f56ae886c53 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -5147,3 +5147 @@ floatx80 roundAndPackFloatx80(FloatX80RoundPrec 
+roundingPrecision, bool zSign,
+-            return packFloatx80(zSign,
+-                                floatx80_infinity_high,
+-                                floatx80_infinity_low);
++            return floatx80_default_inf(zSign, status);
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index f112c6c6737..741af09f908 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -1835 +1835 @@ void helper_fxtract(CPUX86State *env)
+-        ST1 = floatx80_infinity;
++        ST1 = floatx80_default_inf(0, &env->fp_status);
+@@ -2361,3 +2361,2 @@ void helper_fscale(CPUX86State *env)
+-                ST0 = (floatx80_is_neg(ST0) ?
+-                       floatx80_chs(floatx80_infinity) :
+-                       floatx80_infinity);
++                ST0 = floatx80_default_inf(floatx80_is_neg(ST0),
++                                           &env->fp_status);
+diff --git a/target/m68k/softfloat.c b/target/m68k/softfloat.c
+index 02dcc03d15d..d1f150e641f 100644
+--- a/target/m68k/softfloat.c
++++ b/target/m68k/softfloat.c
+@@ -145,2 +145 @@ floatx80 floatx80_scale(floatx80 a, floatx80 b, 
+float_status *status)
+-        return packFloatx80(aSign, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(aSign, status);
+@@ -248 +247 @@ floatx80 floatx80_lognp1(floatx80 a, float_status *status)
+-        return packFloatx80(0, floatx80_infinity.high, 
+floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+@@ -258,2 +257 @@ floatx80 floatx80_lognp1(floatx80 a, float_status *status)
+-            return packFloatx80(aSign, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(aSign, status);
+@@ -445,2 +443 @@ floatx80 floatx80_logn(floatx80 a, float_status *status)
+-            return packFloatx80(0, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(0, status);
+@@ -455,2 +452 @@ floatx80 floatx80_logn(floatx80 a, float_status *status)
+-            return packFloatx80(1, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(1, status);
+@@ -613,2 +609 @@ floatx80 floatx80_log10(floatx80 a, float_status *status)
+-            return packFloatx80(0, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(0, status);
+@@ -620,2 +615 @@ floatx80 floatx80_log10(floatx80 a, float_status *status)
+-        return packFloatx80(1, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(1, status);
+@@ -671,2 +665 @@ floatx80 floatx80_log2(floatx80 a, float_status *status)
+-            return packFloatx80(0, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(0, status);
+@@ -679,2 +672 @@ floatx80 floatx80_log2(floatx80 a, float_status *status)
+-            return packFloatx80(1, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(1, status);
+@@ -743,2 +735 @@ floatx80 floatx80_etox(floatx80 a, float_status *status)
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+@@ -927,2 +918 @@ floatx80 floatx80_twotox(floatx80 a, float_status *status)
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+@@ -1078,2 +1068 @@ floatx80 floatx80_tentox(floatx80 a, float_status 
+*status)
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+@@ -2263,2 +2252 @@ floatx80 floatx80_atanh(floatx80 a, float_status 
+*status)
+-            return packFloatx80(aSign, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(aSign, status);
+@@ -2323,2 +2311 @@ floatx80 floatx80_etoxm1(floatx80 a, float_status 
+*status)
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+@@ -2690,2 +2677 @@ floatx80 floatx80_sinh(floatx80 a, float_status *status)
+-        return packFloatx80(aSign, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(aSign, status);
+@@ -2777,2 +2763 @@ floatx80 floatx80_cosh(floatx80 a, float_status *status)
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index cbbbab52ba3..403f7a9d69d 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -239,0 +240,5 @@ const floatx80 floatx80_infinity
++floatx80 floatx80_default_inf(bool zSign, float_status *status)
++{
++    return packFloatx80(zSign, floatx80_infinity_high, 
+floatx80_infinity_low);
++}
++
 ---
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
- tests/qtest/bios-tables-test-allowed-diff.h   |   1 -
- 6 files changed, 1 deletion(-)
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
-index 36d3e5d5a5e47359b6dcb3706f98b4f225677591..a182bd9d7182dccdf63c650d048c58f18505d001 100644
-GIT binary patch
-delta 109
-zcmX@3@k4{lCD<jTLWF^ViDe>}G*h$dM)euOOwJsW4+;nC=*7E+g>V+Q2D|zsED)Gn
-zoxsJ!z{S)S5FX^j)c_F?VBivHb9Z%dnXE4&D;?b=31V}^dw9C=2KWUSI2#)?aKwjt
-Hx-b9$X;vI^
+The single non-obvious thing to mention is the x86 floatx80_chs()
+removal.
 
-delta 64
-zcmeyNaYlp7CD<jzM}&caNqQoeG*i3NM)euOOit{R4+;lM%f`Egg>V+Q2D|zsED)Gn
-UoxsJ!z{S)S5FX?-*+E1W06%jPR{#J2
+This effectively absorb patch #3 (x86).
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-index e6154d0355f84fdcc51387b4db8f9ee63acae4e9..af1f2b0eb0b77a80c5bd74f201d24f71e486627f 100644
-GIT binary patch
-delta 110
-zcmZ3ac}|ndCD<k8oCpI0)4_>c(oCIR8`a+lGdXii78eO-)SH|wBICY5U~+W=mjDBo
-yK%2X(iwjpnbdzL2c#soEyoaX?Z-8HbfwO@#14n$Qrwc=LlO#wDl9aJAR0;r(tsHj%
+Then patch #2 (m68k) becomes:
 
-delta 66
-zcmX@7xk!`CCD<iokq83=(~XH-(oDVX8`a+lGdZzO78eO-l%1R{A|oB$BpDDM<irv0
-W;pxH~;1^)vY~akm5g+R5!T<noi4jWx
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
-index 33f011d6b635035a04c0b39ce9b4e219f7ae74b7..10436ec87c4859fb84b3ecb7bba5788f38112e59 100644
-GIT binary patch
-delta 88
-zcmbPheA1Z9CD<k8q$C3algUIbX{MH08`WnBGdXcjJ}4Z_<jXo)OvH<SfxzVI1TFyv
-qE`c_8R~MJfaU%At($P(lAPz^oho=i~fM0-tv#~J)M|`NK3j+W#;TF9B
-
-delta 44
-zcmX?UJlB}ZCD<iot|S8klg&gfX{L_p8`WnBGdXfiJ}4Z_<ij#qOvGz*p@=Oj039?8
-AE&u=k
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
-index c0fdc6e9c1396cc2259dc4bc665ba023adcf4c9b..0524b3cbe00bfe552de824dd1090bd00a208c527 100644
-GIT binary patch
-delta 110
-zcmexwz1oJ$CD<iITaJN&sbC_PG*jDyjq2XAOwJsWOJsu?^(LQ?m2qDnFu6K`OMrn(
-ypv~RY#f7UOx=Au1JjjV7-ow*{H^48zz}di=fg?WD(}f|rNfM+6Ny^w5Dg^+WYaFrw
-
-delta 66
-zcmZ2&^WU1wCD<k8zbpd-Q^!OuX{N5b8`ZsKnVi@sm&gV)%1%BZD<d7<BpDDM<irv0
-W;pxH~;1^)vY~akm5g+R5!T<oNArgiF
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
-index 029d03eecc4efddc001e5377e85ac8e831294362..8c0423fe62d6950f9098983d86bfee256d7d003a 100644
-GIT binary patch
-delta 86
-zcmbQHbx4cLCD<jzNtA(s>E%Q&X{O%5jp|7vOwJsWyG4Q-^(NmJk>Ot;Fu6K`OMrn(
-opv~RY#bxqO5n1WzCP@&RBi_T)g*U)2z`)tqn1Lfc)YF9l01l28<p2Nx
-
-delta 42
-ycmX@4HBF1lCD<iIOq79viGL!OG*hGhM)f2SCMWjE-6Fw^vXk$N$V}!Dl?DLb(h64q
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 1a4c2277bd5a..dfb8523c8bf4 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT",
--- 
-2.48.1
-
+-- >8 --
+diff --git a/include/fpu/softfloat-helpers.h 
+b/include/fpu/softfloat-helpers.h
+index 8983c2748ec..90862f5cd22 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -77,0 +78,6 @@ static inline void 
+set_floatx80_rounding_precision(FloatX80RoundPrec val,
++static inline void set_floatx80_behaviour(FloatX80Behaviour b,
++                                          float_status *status)
++{
++    status->floatx80_behaviour = b;
++}
++
+@@ -153,0 +160,6 @@ get_floatx80_rounding_precision(const float_status 
+*status)
++static inline FloatX80Behaviour
++get_floatx80_behaviour(const float_status *status)
++{
++    return status->floatx80_behaviour;
++}
++
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 53d5eb85210..dd22ecdbe60 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -322,0 +323,12 @@ typedef enum __attribute__((__packed__)) {
++/*
++ * floatx80 is primarily used by x86 and m68k, and there are
++ * differences in the handling, largely related to the explicit
++ * Integer bit which floatx80 has and the other float formats do not.
++ * These flag values allow specification of the target's requirements
++ * and can be ORed together to set floatx80_behaviour.
++ */
++typedef enum __attribute__((__packed__)) {
++    /* In the default Infinity value, is the Integer bit 0 ? */
++    floatx80_default_inf_int_bit_is_zero = 1,
++} FloatX80Behaviour;
++
+@@ -333,0 +346 @@ typedef struct float_status {
++    FloatX80Behaviour floatx80_behaviour;
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index f56ae886c53..b12ad2b42a9 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -1863 +1863,2 @@ static floatx80 
+floatx80_round_pack_canonical(FloatParts128 *p,
+-        frac = floatx80_infinity_low;
++        frac = s->floatx80_behaviour & 
+floatx80_default_inf_int_bit_is_zero ?
++               0 : (1ULL << 63);
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 41dfdf58045..df66e8ba22a 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -109,0 +110,6 @@ static void m68k_cpu_reset_hold(Object *obj, 
+ResetType type)
++    /*
++     * m68k-specific floatx80 behaviour:
++     *  * default Infinity values have a zero Integer bit
++     */
++    set_floatx80_behaviour(floatx80_default_inf_int_bit_is_zero,
++                           &env->fp_status);
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 403f7a9d69d..77a43f46597 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -242 +242,6 @@ floatx80 floatx80_default_inf(bool zSign, float_status 
+*status)
+-    return packFloatx80(zSign, floatx80_infinity_high, 
+floatx80_infinity_low);
++    /*
++     * Whether the Integer bit is set in the default Infinity is
++     * target dependent.
++     */
++    bool z = status->floatx80_behaviour & 
+floatx80_default_inf_int_bit_is_zero;
++    return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
+---
 
