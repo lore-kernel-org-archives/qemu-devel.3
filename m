@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C36CC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640C9C021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS3E-0004PK-RZ; Fri, 21 Feb 2025 07:22:40 -0500
+	id 1tlS3Q-0004Y5-Vq; Fri, 21 Feb 2025 07:22:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS39-0004Ou-Ms
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3O-0004V3-Hn
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS37-0006yi-Lp
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:35 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3M-00070Y-UZ
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140552;
+ s=mimecast20190719; t=1740140568;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=OX+0VDZt+7Si5uzy6Q/j53hodSniUvH8WhlfBlxLdJM=;
- b=QvFbbTQGHe5WOoImYCSplgypeGW8+ZBwfQll5GFWwsQU4pBxMdLWyp8p74mkSPJuM88OdU
- XP2WJAa+7HOG0pFA3VaXkex4Gic8f3wmxjOYaP97OOYxODRkG4DzigjWV0DjYJbskoofOT
- Msp7tZ8u8RXtilMhAuXjUq3HeH45d10=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=7MQix8FGUYJVo/KUMfZ0aNvVpXePxV+3xwtbN+SCMWk=;
+ b=druYtbjCd6dpn4MzN5V6ALL23t789u46dl+xUwmsap7zsPyMgTRtLjW2dM9Ryn1qgfo4bB
+ m5aQmI+g4qvfC9ylWXjgnWCdSjDvKb/36u0gT26FSYuj17ND4C8HG+bEMrHYLPD1/SeTF+
+ A6VgzdYCO2FZKhlRq9Mk23HmUwBRVUg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-RlU6xmV8MtOuXoBRuEWEoA-1; Fri, 21 Feb 2025 07:22:30 -0500
-X-MC-Unique: RlU6xmV8MtOuXoBRuEWEoA-1
-X-Mimecast-MFC-AGG-ID: RlU6xmV8MtOuXoBRuEWEoA_1740140549
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43945f32e2dso18588225e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:22:29 -0800 (PST)
+ us-mta-677-FLsUqF-YOh2O203JQdHCbA-1; Fri, 21 Feb 2025 07:22:46 -0500
+X-MC-Unique: FLsUqF-YOh2O203JQdHCbA-1
+X-Mimecast-MFC-AGG-ID: FLsUqF-YOh2O203JQdHCbA_1740140566
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38f2f78aee1so940948f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:22:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140548; x=1740745348;
- h=content-transfer-encoding:content-disposition:mime-version
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OX+0VDZt+7Si5uzy6Q/j53hodSniUvH8WhlfBlxLdJM=;
- b=TiXnUQp2JjUImZft/uKuKbBJVI67UwJUFnPy9K0YiuVXBNpa4wQrAk0Mm2sZ9ffubC
- qeZ8ZP/HmPvCQJtVWey/bT36acSZePUUmZ3Nh0wrueKXgk5nh91SRG+S9qlAV30PIJuL
- DgXvvZuCVxJHrR88vKA8OQ+g1ujoNBcwWplWn3ZUK2A9D4mokU5N5iVu3zz4t1Gab5pb
- Dmd5GfEnyd533AL5GAabPwIsiwx5ETqo0Oc+nAwK23AUaOYcFGvn2rJV2nscvcLd5Ppl
- mfOok20Z+xudoJRjLxBNFS2NKSPThcNAVy9MMLsIAz+wIeRcEiKHFCXs2If5m4ggrVz0
- fBBg==
-X-Gm-Message-State: AOJu0YxWrnXI0jKkBGZUeGvBO6fFdpB8Vuv4UksM5GAXVfbOLwfRMROk
- edrii69HCKjOhdqmYAseqZieQwbsrx5L8az19RxNkOyPkoWTY4oGyJQeQj57/TB1D+ROarcDx71
- rS/+277ijRcPSdPz+yWLr2JY0oHARZYPW8LHzlkhHXohtU+ugyR83rfKMvYS0FZeAsjLXZgL8v1
- PRYMMh7DY7Nn7ouvD1NXcX6mvP0yV+ww==
-X-Gm-Gg: ASbGncsZB/RCXGfshnJ1oUTQCbdv+jNEq3yno6A4qIH4LTwmXoXcJwrZ+UMmJyJTWkq
- OTYeVDL0fOOzCdnrc/asQMR43DUvZrNsXLOShb8gRWMzTlNEQN0woojhzqZdhYVloYOScgzWa1E
- cnIsGsPoVcIs6mOy9cPRCDRr0vjhuFAfOu6EAtr+VfohMoI3Cgifx9pmfz3j0FrwTkRJDov8aW/
- nxtJLK4p8szz0hruFZ/9WYHakQdqiBwrW5tzg2xU57+LvY8/3kxg2VWYEd5hSaBIoNHckO4Tjqe
- PigopQ==
-X-Received: by 2002:a05:600c:46c9:b0:439:93d2:72b4 with SMTP id
- 5b1f17b1804b1-439ae1f159fmr34197775e9.16.1740140548192; 
- Fri, 21 Feb 2025 04:22:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHlDOYXEsGHcE63Lf93Zi72b9FERKuBdC7b5FGGUemVa0khe17dlUdiueMXzfAt9iyLGFWynw==
-X-Received: by 2002:a05:600c:46c9:b0:439:93d2:72b4 with SMTP id
- 5b1f17b1804b1-439ae1f159fmr34197225e9.16.1740140547567; 
- Fri, 21 Feb 2025 04:22:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740140565; x=1740745365;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7MQix8FGUYJVo/KUMfZ0aNvVpXePxV+3xwtbN+SCMWk=;
+ b=Aa4ojany2VYTMi5XsVPEt4BNa5pcu42Z+8lnZpv/phl5yonmfMkmT6QVZvLcuH28s7
+ GCW2tlJ0g2+EhYu2Cq2pX26MeIwARSX9svygx3XVCEQINyaIoM6eSmUp/wTZHJZi8AID
+ dEPUQgu4cALpYPIbpfPpKG3MNhfdS3tM4Jot3swhxssxkmSKQ5A5plhd/bwXisxAwcYT
+ +U2DRAitIKcrRmIqM41FXMDHG42AD9nUXKFrfF91kVgEoqzEQYVqT/PfFv88OwDVg/WL
+ rm32sQJ91AjYBU+Ky7jfnKMzv+9g+f+7xcNOLC9fznkyrFxwcIkv1oXLzbqm++KKm1JV
+ F7zQ==
+X-Gm-Message-State: AOJu0YzZV7vUm/L50OHffgfvmNWfUEHEcL8JYMccl4lYYOkySjfgi3DB
+ Au+AUIv92LtVl3NFTjBhKMC1OiCWO5IVb2OL3MdvgQ9hDEDAFYehxhaDCWYT9AA0X3STckrFfRm
+ hS9NPDNxFRBov6gd9+a7GGMa6ViCXdOD+XOk57MstSY2KcYrVd3BPQkCKTNw/a1JzQDvrVlRcqs
+ 0zNtxwSg7JkgJApgKHaQB4iAriA1G96Q==
+X-Gm-Gg: ASbGncte/6iFha3WZSlew4hgEAUxJ4oPcoiMo5V4EFsBRRYBZs7Jh/Sm773hcnXXdX4
+ KussXvZvMFMfA9L8oh1OYitpH/rD3IWAE9RgdtPWK0f26f2wPje2cWyHLUOUwl7NIZG6C8llQUU
+ hzsYwbPvZT5HUf2yEyuyLe7R+tpOOFbmUhb5lhtzSQrYV1MJig9wg4pQryBMWOaufq0sc1TW/MV
+ 0A8JClbH9WsfXhmHJjxrkUlR9SfdA/bRbrlzETzI91RjqSkHHih7MGnV2+NxoBVBDjH9RGkbg8T
+ 3xvVyg==
+X-Received: by 2002:a05:6000:4601:b0:38d:e363:494b with SMTP id
+ ffacd0b85a97d-38f614b6e05mr5807387f8f.8.1740140565496; 
+ Fri, 21 Feb 2025 04:22:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrAnCXaIYDuswyI624BgoJT7WSDuQgIwmDuFOSOQPkmR5Qq/oSSfJJ031qH7RaRMR3m2YJNw==
+X-Received: by 2002:a05:6000:4601:b0:38d:e363:494b with SMTP id
+ ffacd0b85a97d-38f614b6e05mr5807357f8f.8.1740140565134; 
+ Fri, 21 Feb 2025 04:22:45 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258f5fabsm22968492f8f.45.2025.02.21.04.22.26
+ ffacd0b85a97d-38f259f7987sm22856411f8f.87.2025.02.21.04.22.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:22:26 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:22:23 -0500
+ Fri, 21 Feb 2025 04:22:44 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:22:41 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/41] virtio,pc,pci: features, fixes, cleanups
-Message-ID: <cover.1740140520.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
+Subject: [PULL 05/41] s390x/pci: Avoid creating zpci for VFs
+Message-ID: <b77a2778d9bbefc6119331ce3083d85d69d7a0c1.1740140520.git.mst@redhat.com>
+References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,157 +114,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4d5d933bbc7cc52f6cc6b9021f91fa06266222d5:
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-  Merge tag 'pull-xenfv-20250116' of git://git.infradead.org/users/dwmw2/qemu into staging (2025-01-16 09:03:43 -0500)
+VFs are automatically created by PF, and creating zpci for them will
+result in unexpected usage of fids. Currently QEMU does not support
+multifunction for s390x so we don't need zpci for VFs anyway.
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-
-for you to fetch changes up to dd6d545e8f2d9a0e8a8c287ec16469f03ef5c198:
-
-  docs/devel/reset: Document reset expectations for DMA and IOMMU (2025-02-21 07:21:25 -0500)
-
-----------------------------------------------------------------
-virtio,pc,pci: features, fixes, cleanups
-
-Features:
-
-SR-IOV emulation for pci
-virtio-mem-pci support for s390
-interleave support for cxl
-big endian support for vdpa svq
-new QAPI events for vhost-user
-
-Also vIOMMU reset order fixups are in.
-Fixes, cleanups all over the place.
-
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20250116-reuse-v20-3-7cb370606368@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/s390x/s390-pci-bus.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-Akihiko Odaki (12):
-      hw/net: Fix NULL dereference with software RSS
-      hw/ppc/spapr_pci: Do not create DT for disabled PCI device
-      hw/ppc/spapr_pci: Do not reject VFs created after a PF
-      s390x/pci: Avoid creating zpci for VFs
-      s390x/pci: Allow plugging SR-IOV devices
-      s390x/pci: Check for multifunction after device realization
-      pcie_sriov: Do not manually unrealize
-      pcie_sriov: Ensure VF addr does not overflow
-      pcie_sriov: Reuse SR-IOV VF device instances
-      pcie_sriov: Release VFs failed to realize
-      pcie_sriov: Remove num_vfs from PCIESriovPF
-      pcie_sriov: Register VFs after migration
-
-Alexander Graf (1):
-      hw/virtio/virtio-nsm: Respond with correct length
-
-Daniel P. Berrangé (1):
-      hw/virtio: reset virtio balloon stats on machine reset
-
-Eric Auger (5):
-      hw/virtio/virtio-iommu: Migrate to 3-phase reset
-      hw/i386/intel-iommu: Migrate to 3-phase reset
-      hw/arm/smmuv3: Move reset to exit phase
-      hw/vfio/common: Add a trace point in vfio_reset_handler
-      docs/devel/reset: Document reset expectations for DMA and IOMMU
-
-Jonah Palmer (3):
-      vhost-iova-tree: Implement an IOVA-only tree
-      vhost-iova-tree, svq: Implement GPA->IOVA & partial IOVA->HVA trees
-      vhost-iova-tree: Update documentation
-
-Konstantin Shkolnyy (1):
-      vdpa: Fix endian bugs in shadow virtqueue
-
-Laurent Vivier (1):
-      net: vhost-user: add QAPI events to report connection state
-
-Li Zhijian (4):
-      hw/cxl: Introduce CXL_T3_MSIX_VECTOR enumeration
-      hw/mem/cxl_type3: Add paired msix_uninit_exclusive_bar() call
-      hw/mem/cxl_type3: Fix special_ops memory leak on msix_init_exclusive_bar() failure
-      hw/mem/cxl_type3: Ensure errp is set on realization failure
-
-Matias Ezequiel Vara Larsen (1):
-      vhost-user-snd: correct the calculation of config_size
-
-Nicholas Piggin (3):
-      qtest/libqos/pci: Do not write to PBA memory
-      hw/pci/msix: Warn on PBA writes
-      hw/pci: Assert a bar is not registered multiple times
-
-Sairaj Kodilkar (2):
-      amd_iommu: Use correct DTE field for interrupt passthrough
-      amd_iommu: Use correct bitmask to set capability BAR
-
-Stefano Garzarella (2):
-      cryptodev/vhost: allocate CryptoDevBackendVhost using g_mem0()
-      MAINTAINERS: add more files to `vhost`
-
-Thomas Huth (4):
-      docs/about: Change notes on x86 machine type deprecation into a general one
-      hw/i386/pc: Fix crash that occurs when introspecting TYPE_PC_MACHINE machines
-      hw/i386/microvm: Fix crash that occurs when introspecting the microvm machine
-      tests/qtest/vhost-user-test: Use modern virtio for vhost-user tests
-
-Yao Xingtao (1):
-      mem/cxl_type3: support 3, 6, 12 and 16 interleave ways
-
- docs/pcie_sriov.txt                     |   8 +-
- qapi/net.json                           |  40 ++++++++
- hw/i386/amd_iommu.h                     |   2 +-
- hw/virtio/vhost-iova-tree.h             |   8 +-
- hw/virtio/vhost-shadow-virtqueue.h      |   5 +-
- include/hw/cxl/cxl_device.h             |   4 +-
- include/hw/pci/pcie_sriov.h             |   9 +-
- include/hw/virtio/virtio-balloon.h      |   4 +
- include/qemu/iova-tree.h                |  22 +++++
- backends/cryptodev-vhost.c              |   2 +-
- hw/arm/smmu-common.c                    |   9 +-
- hw/arm/smmuv3.c                         |  14 ++-
- hw/cxl/cxl-component-utils.c            |   9 +-
- hw/cxl/cxl-device-utils.c               |  12 +--
- hw/cxl/switch-mailbox-cci.c             |   4 +-
- hw/i386/amd_iommu.c                     |  10 +-
- hw/i386/intel_iommu.c                   |  12 ++-
- hw/i386/microvm.c                       |  66 ++++++-------
- hw/i386/pc.c                            |   6 +-
- hw/mem/cxl_type3.c                      |  45 ++++++---
- hw/net/igb.c                            |  10 +-
- hw/net/virtio-net.c                     |  45 ++++-----
- hw/nvme/ctrl.c                          |  22 +++--
- hw/pci/msix.c                           |   9 ++
- hw/pci/pci.c                            |  22 ++++-
- hw/pci/pcie_sriov.c                     | 159 +++++++++++++++++--------------
- hw/ppc/spapr_pci.c                      |  20 +++-
- hw/s390x/s390-pci-bus.c                 |  42 +++++++--
- hw/vfio/common.c                        |   1 +
- hw/virtio/vhost-iova-tree.c             | 115 +++++++++++++++++++----
- hw/virtio/vhost-shadow-virtqueue.c      |  73 ++++++++++-----
- hw/virtio/vhost-user-snd.c              |  18 +++-
- hw/virtio/vhost-vdpa.c                  |  40 +++++---
- hw/virtio/virtio-balloon.c              |  30 +++++-
- hw/virtio/virtio-iommu.c                |  14 ++-
- hw/virtio/virtio-nsm.c                  |   2 +-
- net/vhost-user.c                        |   3 +
- net/vhost-vdpa.c                        |  12 ++-
- tests/qtest/libqos/pci.c                |   2 -
- tests/qtest/vhost-user-test.c           |   3 +-
- util/iova-tree.c                        |  46 +++++++++
- MAINTAINERS                             |  11 ++-
- docs/about/deprecated.rst               |   7 --
- docs/about/removed-features.rst         |  11 +--
- docs/devel/reset.rst                    |   5 +
- hw/arm/trace-events                     |   1 +
- hw/i386/trace-events                    |   1 +
- hw/pci/trace-events                     |   2 +-
- hw/vfio/trace-events                    |   1 +
- hw/virtio/trace-events                  |   2 +-
- tests/functional/meson.build            |   2 +
- tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++++++++++
- 52 files changed, 882 insertions(+), 301 deletions(-)
- create mode 100755 tests/functional/test_virtio_balloon.py
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index eead269cc2..8c5eb69f7d 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1080,6 +1080,16 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ 
+         pbdev = s390_pci_find_dev_by_target(s, dev->id);
+         if (!pbdev) {
++            /*
++             * VFs are automatically created by PF, and creating zpci for them
++             * will result in unexpected usage of fids. Currently QEMU does not
++             * support multifunction for s390x so we don't need zpci for VFs
++             * anyway.
++             */
++            if (pci_is_vf(pdev)) {
++                return;
++            }
++
+             pbdev = s390_pci_device_new(s, dev->id, errp);
+             if (!pbdev) {
+                 return;
+@@ -1167,7 +1177,10 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         int32_t devfn;
+ 
+         pbdev = s390_pci_find_dev_by_pci(s, PCI_DEVICE(dev));
+-        g_assert(pbdev);
++        if (!pbdev) {
++            g_assert(pci_is_vf(pci_dev));
++            return;
++        }
+ 
+         s390_pci_generate_plug_event(HP_EVENT_STANDBY_TO_RESERVED,
+                                      pbdev->fh, pbdev->fid);
+@@ -1206,7 +1219,11 @@ static void s390_pcihost_unplug_request(HotplugHandler *hotplug_dev,
+          * we've checked the PCI device already (to prevent endless recursion).
+          */
+         pbdev = s390_pci_find_dev_by_pci(s, PCI_DEVICE(dev));
+-        g_assert(pbdev);
++        if (!pbdev) {
++            g_assert(pci_is_vf(PCI_DEVICE(dev)));
++            return;
++        }
++
+         pbdev->pci_unplug_request_processed = true;
+         qdev_unplug(DEVICE(pbdev), errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
+-- 
+MST
 
 
