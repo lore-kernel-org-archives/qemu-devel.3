@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0066C021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 435E4C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlTR4-0002yy-64; Fri, 21 Feb 2025 08:51:22 -0500
+	id 1tlTTX-0004mZ-Fe; Fri, 21 Feb 2025 08:53:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlTR0-0002wB-2t
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:51:18 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlTQy-0007FZ-G7
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:51:17 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-439ac3216dcso9934335e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 05:51:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740145875; x=1740750675; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ohPEaQmyGxdUjOAa3dXKalnzr8Ctl4h9bCCV5owieS0=;
- b=jhyYnZxa5hv785oMgUtF1WtIvpXRmjmAQ6lRNyH3VSJEiJzgkKuZGSjCJLeG8e0Xjq
- hUZVMBLkmJpOLAs/10YCOeZ5wALnGvzSBzyTnEvygIut3Gx8GCA8YSG4pmeTxWZkEqbt
- SgByopl5TzL8SlD2fcpkLOK2+ibiW9Zsh9GTTKxGZjBSu+znB049FUDzLN6Q2/6DqMe2
- 6gIHqZp+Vw22E5dwt1qUXFKjhyOh/+xdoYxPmXaqXjYsq3d9wQwR97fGhabOb5qlupDd
- VQztJiQyJPQ4FdjS5gV2j/nRqmaa94n/c/1ajg9PM2/dV9gpkPRlosnd75gkisxPyki9
- Nvfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740145875; x=1740750675;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ohPEaQmyGxdUjOAa3dXKalnzr8Ctl4h9bCCV5owieS0=;
- b=ZEE9GFa4OGlpK6ZFytpQfwaLuvxALjO8Wass9gyOh3uremM3arz/itDgC/5zkyYP8V
- y/yaLNaTajdl0xXeZcHaTXASYez4VYoDKHoBvCcwoNVhdsHv6Ca4cU1pBX3FukO3qPnB
- z9kUU9FaYIooaPUVJxN0vFEv4lQ+FzxDIuwirCUwNyVRgjie/dAa2mNlVnF9ySXcTm+n
- cnWo+INeez6TAy26rWvArBZU+2e0sSQJrR++ddBY/7EfdFb8ItU2hHwXKpz1DLNcvZW1
- evQFcd5SOw+JomXQltRodOtw7ZII6KabfqG+xhk02/eyEDNNq8vUSixrKqwqUNn3P99H
- V5CQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXk/sr6Kz6cQFshkTnNpCiN4EFMG7Pd9T/xGLD0K24WX0fvgRlR7Jjcfr122azfsXK45VS0pm4vqkDL@nongnu.org
-X-Gm-Message-State: AOJu0Ywo7WYzGndlrTzLG+L9b/b9G4evqjSkQE76AjqdfsceDof4EORE
- +VrmXHJwmSmmOWRPSq6WQugnkNN7QQ+pAvILjR+TCb6+Zy4j75t/ikJw+ESR6mc=
-X-Gm-Gg: ASbGnctvYamQZJj8CI7uv7rWETPj2zSwSBas6hpgANw4o6jecxnAdUX06dEGZEXRzJj
- 3fYdJFV7yTXjZAj2jUairJ/40Us5fjqLSQWpgEO0hCl10WZKYUlzifxCvr/WJqydXykPhP9ryS0
- 4HvR7DsJtE6dFeyh8XGde8DO6xgCa2NhB4FCrR6umhvRD0ZDsI4v5VD8e4gzTELWgktRpryw1fU
- TxnxyvN1RIHQEkP+5Ac47luMBauhWqPqnaWLcipTNt2Uua4rjDT7pCqMC6oBH9Es3hifg5PaLb9
- lF1XwGBorzSuJu8TlYB7pHia0wezd23CmkMC/lqgY5D1HXeVAu7B8FqJDIQP2INBoK5Gnw==
-X-Google-Smtp-Source: AGHT+IH+A+R57Bx3MBQ9JXpstExHEV9EypCuZM0MJQyEDRmMns3DEwU5q/9K0a/6RMS3eWx1xHDkwQ==
-X-Received: by 2002:a05:600c:4ece:b0:439:9274:8203 with SMTP id
- 5b1f17b1804b1-439aeae0543mr25219415e9.6.1740145874749; 
- Fri, 21 Feb 2025 05:51:14 -0800 (PST)
-Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b030be6fsm18037815e9.31.2025.02.21.05.51.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 05:51:14 -0800 (PST)
-Message-ID: <ee050bea-96aa-4054-84d2-ee4041d10271@linaro.org>
-Date: Fri, 21 Feb 2025 14:51:13 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=ENLZ=VM=kaod.org=clg@ozlabs.org>)
+ id 1tlTTT-0004lm-Kx; Fri, 21 Feb 2025 08:53:51 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ENLZ=VM=kaod.org=clg@ozlabs.org>)
+ id 1tlTTR-00080U-IK; Fri, 21 Feb 2025 08:53:51 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Yzs6Y1SvSz4wyl;
+ Sat, 22 Feb 2025 00:53:41 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Yzs6T5Y7Wz4wxh;
+ Sat, 22 Feb 2025 00:53:36 +1100 (AEDT)
+Message-ID: <68c95702-8ccb-43b7-bb1f-afc37c8d727d@kaod.org>
+Date: Fri, 21 Feb 2025 14:53:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] target/m68k: Avoid using floatx80_infinity global
- const
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <20250217125055.160887-3-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250217125055.160887-3-peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 21/28] hw/misc/aspeed_hace: Fix boot issue in the
+ Crypto Manager Self Test
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-22-jamin_lin@aspeedtech.com>
+ <51b4d012-db0c-42b1-ae0e-2b28751bc2a4@kaod.org>
+ <SI2PR06MB5041F4186411EE60CB26CC44FCC72@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI2PR06MB5041F4186411EE60CB26CC44FCC72@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=ENLZ=VM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,22 +114,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/2/25 13:50, Peter Maydell wrote:
-> The global const floatx80_infinity is (unlike all the other
-> float*_infinity values) target-specific, because whether the explicit
-> Integer bit is set or not varies between m68k and i386.  We want to
-> be able to compile softfloat once for multiple targets, so we can't
-> continue to use a single global whose value needs to be different
-> between targets.
+On 2/21/25 06:43, Jamin Lin wrote:
+> Hi Cedric,
 > 
-> Replace the direct uses of floatx80_infinity in target/m68k with
-> calls to the new floatx80_default_inf() function.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/m68k/softfloat.c | 47 ++++++++++++++---------------------------
->   1 file changed, 16 insertions(+), 31 deletions(-)
+>> Subject: Re: [PATCH v3 21/28] hw/misc/aspeed_hace: Fix boot issue in the
+>> Crypto Manager Self Test
+>>
+>> On 2/13/25 04:35, Jamin Lin wrote:
+>>> Currently, it does not support the CRYPT command. Instead, it only
+>>> sends an interrupt to notify the firmware that the crypt command has
+>> completed.
+>>> It is a temporary workaround to resolve the boot issue in the Crypto
+>>> Manager Self Test.
+>>>
+>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>
+>> Please add an AspeedHACEClass class attribute (bool) to handle this
+>> workaround and a comment in the code mentioning the issue.
+>>
+> Thanks for review and suggestion.
+> I will add the use_crypt_workaround attribute to the AspeedHACEClass and introduce the use-crypt-workaround property.
+> Do you have any concerns, or do you have a preferred naming convention?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+May be 'raise_crypt_interrupt_workaround' to reflect what is being done ?
+
+Thanks,
+
+C.
+
+
+
+> Thanks-Jamin
+> 
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>
+>>> ---
+>>>    hw/misc/aspeed_hace.c | 12 ++++++++++++
+>>>    1 file changed, 12 insertions(+)
+>>>
+>>> diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c index
+>>> 86422cb3be..4d0999e7e9 100644
+>>> --- a/hw/misc/aspeed_hace.c
+>>> +++ b/hw/misc/aspeed_hace.c
+>>> @@ -59,6 +59,7 @@
+>>>    /* Other cmd bits */
+>>>    #define  HASH_IRQ_EN                    BIT(9)
+>>>    #define  HASH_SG_EN                     BIT(18)
+>>> +#define  CRYPT_IRQ_EN                   BIT(12)
+>>>    /* Scatter-gather data list */
+>>>    #define SG_LIST_LEN_SIZE                4
+>>>    #define SG_LIST_LEN_MASK                0x0FFFFFFF
+>>> @@ -343,6 +344,13 @@ static void aspeed_hace_write(void *opaque,
+>> hwaddr addr, uint64_t data,
+>>>                    qemu_irq_lower(s->irq);
+>>>                }
+>>>            }
+>>> +        if (data & CRYPT_IRQ) {
+>>> +            data &= ~CRYPT_IRQ;
+>>> +
+>>> +            if (s->regs[addr] & CRYPT_IRQ) {
+>>> +                qemu_irq_lower(s->irq);
+>>> +            }
+>>> +        }
+>>>            break;
+>>>        case R_HASH_SRC:
+>>>            data &= ahc->src_mask;
+>>> @@ -388,6 +396,10 @@ static void aspeed_hace_write(void *opaque,
+>> hwaddr addr, uint64_t data,
+>>>        case R_CRYPT_CMD:
+>>>            qemu_log_mask(LOG_UNIMP, "%s: Crypt commands not
+>> implemented\n",
+>>>                           __func__);
+>>> +        s->regs[R_STATUS] |= CRYPT_IRQ;
+>>> +        if (data & CRYPT_IRQ_EN) {
+>>> +            qemu_irq_raise(s->irq);
+>>> +        }
+>>>            break;
+>>>        default:
+>>>            break;
+> 
 
 
