@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6489FC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8720AC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlO4S-0004VL-Gh; Fri, 21 Feb 2025 03:07:40 -0500
+	id 1tlO4e-0004bg-4u; Fri, 21 Feb 2025 03:07:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tlO4Q-0004Sf-8H
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:38 -0500
-Received: from smarthost4.eviden.com ([80.78.11.85])
+ id 1tlO4a-0004a7-JX
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:48 -0500
+Received: from smarthost1.eviden.com ([80.78.11.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tlO4O-0005im-Go
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:38 -0500
+ id 1tlO4X-0005ko-O1
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1740125256; x=1771661256;
+ t=1740125266; x=1771661266;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=ZMxFNyn4oXeMGzshPyBmqXxSzbY8yZSu5H9uG1CqPCs=;
- b=fIvdF6ECJmFVn4PWxheAbzCYuz7/sw4iL9+CjEKHOkN+iYY8vZeG1U1J
- wftXyIDSx5M50VuWf8eoCUKAl9pRhouhbjNsffIrGN8xH2tcCVM8BhMLL
- QX4SfzQQiAocDLjFLsJHEYcZ8RrtRhOO6PbWUhikj7xJxG9jQtXHo0th2
- Sdnsu7sFDjXU1Pxi5jj1DrN00JinUUw+II6X9jG0K84xbxv2/MYeL+D1v
- Arzx+ygSsH3O8jxxqO2UYK7jUNylhlBv/aWyb9dOOKq10VROwadQsD2Gk
- d1ZPfF6BIWVfXxCNLRNOZQhPGI+5kpm5ylWoYajjdsvty6dpr6funx4Fp A==;
-X-CSE-ConnectionGUID: 3LtoQZzoQT6ToRmd/HL5Yw==
-X-CSE-MsgGUID: d+MCsQJPSdq0W6LgHjDkoQ==
-X-IronPort-AV: E=Sophos;i="6.13,304,1732575600"; d="scan'208";a="32836640"
-X-MGA-submission: =?us-ascii?q?MDGn29/tOF6aBCGooyBxZBeQuD0Z3fgieZmr0D?=
- =?us-ascii?q?Hy0IIi9LuoryWX8wU9srOvR7ozM8lA8ZpWOtwnwq7lO8XuVfYqwMZ7cP?=
- =?us-ascii?q?j3cGrjGW8pMmMqBk6cbQCuLBQuG/xn3c9PsrUBeCanhuEHS9UPC3XDFj?=
- =?us-ascii?q?1Wx+Mpr+JxWwmL+4hio/swHQ=3D=3D?=
-Received: from mail-db8eur05lp2107.outbound.protection.outlook.com (HELO
- EUR05-DB8-obe.outbound.protection.outlook.com) ([104.47.17.107])
- by smarthost4.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 21 Feb 2025 09:07:34 +0100
+ bh=oA3KYmbSWy/K+XMLDvDgQtpvoImsgYm3m1tPp4EH2n0=;
+ b=QZHvsRpUfW1ZNbCSIRY5tL8xWQu7tOrQQHNv6DIg8VYofmjlo17kQ88V
+ YeNGSoNfLPhPZ7OIpWASPr9Ia+VpNBpylPZtvCeDEuoV4IIgR/n+4kHQj
+ 86pP6hVZhLyZ08d+PkjQne0DsV6CEh+y1a2e09JUx7DGsyq4jr/r1Ww0Z
+ g49BFpCVoHZ8VuTH+TKy7UeUq8F4PctgXvvt4q17arMnrGQJb4mo+KVUS
+ FHBUQENN/qioRv4kGfTLg941LO21NRJsRQY9jAnNlH/AMIGPRtcNnmKTK
+ KsyAOUMbKd0ELkKmAJv3oVi48hb47ijyK3sWv1C8jeKpdEUG95WtT995V Q==;
+X-CSE-ConnectionGUID: 55hloPUSTQClcBjDWfJ82g==
+X-CSE-MsgGUID: ZIT6NtYhScadPcP9j11jzA==
+X-IronPort-AV: E=Sophos;i="6.13,304,1732575600"; d="scan'208";a="31394139"
+X-MGA-submission: =?us-ascii?q?MDFW4O0aDTiL9gxNcaIHmRyeclc9yMOUbYDmii?=
+ =?us-ascii?q?sDvvNH39AiPYSgU7yF9euH5lAJAa1FAAHKplK2coB626ygvSkQyArnyR?=
+ =?us-ascii?q?uhSMb128ym2n3rOkrXLOKE70Wz2iIYrqZn0QfY/wCyh46P11r97Borc9?=
+ =?us-ascii?q?Hd3UWKwjzDMVF1DZ2JSOn38Q=3D=3D?=
+Received: from mail-vi1eur05lp2170.outbound.protection.outlook.com (HELO
+ EUR05-VI1-obe.outbound.protection.outlook.com) ([104.47.17.170])
+ by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 21 Feb 2025 09:07:44 +0100
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UC658r0biGLVw+aJmd7NBqjJs31Q+KH4IQrs4E19DakYn/NrKJEn5x7xwgWgnw+y+Gv78tguPFal9ikQ4sJQUVUStbH/UNgyAM78NrPK63W0sGN1plOjHWv8VA99qTnrnQJW2QQWaRO7bsjY7FwzMCcNESedWJFCjdYMBd+jy3pmMboZTvfAxbo+f85Oy0G4Nu5Gb9K61TCV5VhOepwQ/HRNIEGVQnIKSdoj45gi6VUFw4MVI3X29IwX//cI5I70TDkhhYOFG9oJiTcImr0aYaCbHG7veo3QQsUcUlhoEebUawzpAcNh2NzAiH07dJQQjrZdjGvW/y4HnYa1OXmVKA==
+ b=SJhbVb8//KwnVB6Ktp6IAthOetYTNW1aYIZWnaWogqVZ6g9cyx9QW0gQF0LvO6LCtSpcSG4qOtbku6lbqKsX4hieZNL6tD1Phd1N9KGn8tTcgYjQH++qbbKtWujC/Y48P3VoHp7s4M7QKRhZHGzZ9Hs9mLCBlrs/BrMdAIpIIUv1ILwnOQ6zZRkGfUqTA/zSaAP69imLuqZRPGCi+vA8nlRFfPtE9YJWySKimMhwoklbH42Ux6i8fwDzvU3PBUyc8KmJC3L2vso1Tx8r5hHMGxCMF+W+gaESmH5FPNcyHnRTn0Ky27npyDPynaodiuR4S1ulroxTfRdR1s37S1Jq9A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hoZrbtGYuHsZPQVh6qQr/BjRYamm9IIebfREKOYlZWw=;
- b=WPuNSfnDd+5AaTBhT8T6zPUEvGadY4f5Bw5GZBRKtP2E3M2v8xEJk+/Zwq9XYIhGbPaywbnRyMd0s5SMkaPUMu1TEVSc13MuqzF+IryHQ8KpDTW30sYYlohFBDY0EH7Dz0hzTn4unhQj2DFUe16TJ2l1Dk6fs7KrATbqLZP3Iy7HTf3Rj7WL3MFEna8yLkb7z4r21G6QUQ/6b2sSFdlkENJtKxBdrFLehR8XjyEhgWJGBVBrXNF7pqiLF7g+j9XyDO2lCJrfggnJkX9N1WAyxlPStOD9JHjOl066WUA1Ech2KG0NIM+RUHpig/0LjXQPz1l4EED0Pwr9FfVHp7wDrQ==
+ bh=/agh/ytGu+2jrSulAJnbz0Adp579Lwlc/FfbJbH4Qww=;
+ b=fGCUwNoyJthXpD4y1MafWKcz1vCA/9Ru/tjsk8Uz2X6ltGLHEuAUAOv7e4Fa8qS0K6lbWA55YfXRFLfqszpVurnFBG2mIN5XZ/egmyu6JhqMQXcoOFP0RLdDq4+MEyKTtS92B1xc5/It3PiTkJeYevym6YZ6NMfXSH54kRQ9BLRdu68M/CNqkHk2oxGlmphzlLVoEvrbeFHEnY3Rn8NzgjyTSbATaouQaZZcnnLCQWPK1OEn8BO52Pebw7F7j4U9RBWItUx+YF83p+FmAeOFtUvY/0hR4ZDlzZGyz12huDHCsYC8fsbK8tz0lt44H/3V/wGVhs9N8J8oRpm6gwPpbA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
  dkim=pass header.d=eviden.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hoZrbtGYuHsZPQVh6qQr/BjRYamm9IIebfREKOYlZWw=;
- b=KRdd1Ve2V47IMxawlj9R+8A0lEyRAQLooZGvCuFicv2sx3NtiCwKqo/w9j+BNMPupBEVHMNbDijN1XKNspLR9MMdjLEAcp2Ra6k3kybZnjo3qvcc9Msr4eIqzJkRoC+08UgobayTyPsCn90oGBgw4PeFP+7sLdnjtUWNsKtDK4WcokclXhrx0xsrCRZeq3GC8NZDiopCPjY0RAxoSof1pgEIJV5LvXHiGfN0pm+44knjuwedL2AwCng3weytPzj+vGz46m7Bzx/jRnqP8DlTzN4ephBLKEwLkaFh6JV7osYJqaysFjpzUWQBxnWFL/wO3YMRkqmy1zfh4kA5YL3OYw==
+ bh=/agh/ytGu+2jrSulAJnbz0Adp579Lwlc/FfbJbH4Qww=;
+ b=mwPLx1R1q7etjoYeUgckrqSsI9Ow+9qYVkhl7aX39zSB+n/vz12Nye07mnwyo6n4QS+3N4bPGW0dhiBNCptYKCcfdc2jpVKlT/keBoEIViVH+TzvbRPagfZdNH85dN4/m+sS+Qc2Mait8asEHvHKkfESeCfcNXUTewOygfmgyxc1NltvcSy7dTPcP1gymkG0MRKX00JqkGg8YApCIUQK7/mUK8g4OcpZUpo6v+mDRzdDEJOvsn3DBxjLTdkXZrOtEv5x0sGqvm9p+rW5LGFwfzkey6bZx4t+wPs8beT6nC3COeryLqk8JG57H7oTPfjDRo10C3CTp09xZFy7j9rprA==
 Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by PR3PR07MB8162.eurprd07.prod.outlook.com (2603:10a6:102:175::13)
+ by DB8PR07MB6459.eurprd07.prod.outlook.com (2603:10a6:10:142::24)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 21 Feb
- 2025 08:07:33 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.16; Fri, 21 Feb
+ 2025 08:07:41 +0000
 Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
  ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
  ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
- 08:07:33 +0000
+ 08:07:41 +0000
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
@@ -76,13 +76,11 @@ CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
  "mst@redhat.com" <mst@redhat.com>, "tjeznach@rivosinc.com"
  <tjeznach@rivosinc.com>, "minwoo.im@samsung.com" <minwoo.im@samsung.com>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Subject: [PATCH v3 04/19] intel_iommu: Fill the PASID field when creating an
- IOMMUTLBEntry
-Thread-Topic: [PATCH v3 04/19] intel_iommu: Fill the PASID field when creating
- an IOMMUTLBEntry
-Thread-Index: AQHbhDeo2oCEPdpJvU+FmhuYREVi+A==
-Date: Fri, 21 Feb 2025 08:07:33 +0000
-Message-ID: <20250221080331.186285-5-clement.mathieu--drif@eviden.com>
+Subject: [PATCH v3 14/19] atc: Add unit tests
+Thread-Topic: [PATCH v3 14/19] atc: Add unit tests
+Thread-Index: AQHbhDet8wAXEtvxo0evRDLt6giiLg==
+Date: Fri, 21 Feb 2025 08:07:40 +0000
+Message-ID: <20250221080331.186285-15-clement.mathieu--drif@eviden.com>
 References: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
 In-Reply-To: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
 Accept-Language: en-GB, fr-FR, en-US
@@ -92,87 +90,86 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=eviden.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PR3PR07MB8162:EE_
-x-ms-office365-filtering-correlation-id: 29c6638d-f168-496a-cf22-08dd524ecb7e
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|DB8PR07MB6459:EE_
+x-ms-office365-filtering-correlation-id: 59c5efbe-d102-40d6-1233-08dd524ed08b
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?YdZ7qN7yveVMAhxVf2x7F4R5ACCIlmgabJXlx21jZokbjKAi4lT8OFgpCC?=
- =?iso-8859-1?Q?GDqKsMyZXYcuYWDkh9b2SFVmjpopXU7slIYSwKab62CLrVQjeA9rQ1PKEo?=
- =?iso-8859-1?Q?5QpzjmtVSyyuhMx+MaE0Lc3m3eJx9HWfmPMPe5U+AiZJXK8ShS31KU9/kg?=
- =?iso-8859-1?Q?MfZtfBzIHhp1xf6jGaY5agJCPx7fWxYV44FQyzku3KAjMG6N2M+N5ct5Xh?=
- =?iso-8859-1?Q?1pvsc5DpdXYVu+Ey3vNdzPGBZ4UFdMpg3JvzlKsF+wH7sauEl4RNGboIQd?=
- =?iso-8859-1?Q?Fn5AWCUrAdTJQPpXXCMRbcnv9ifIfuI6aepgmm1QkD6TZmUBPDfLuCmSO6?=
- =?iso-8859-1?Q?JO8LSjzucG+b9vmSEQAXxMNsauvGuJyp0RtQDTzvX2XmksUNmkcGHgh14x?=
- =?iso-8859-1?Q?UqzXdXTiG2Ipf6K6jNRx5/Bhs2YHyt+t1JSFdtxWxLM1bX6fNxaHMNJOA0?=
- =?iso-8859-1?Q?vtNgioLIDSEVYXsJvfiP68usl4b8uQz64xjK9U9xVgahqE6Pp1f6RRe/in?=
- =?iso-8859-1?Q?M8CripQeGOCTNnm2Ih6RxAaRwLG1Ji4A2lqatrij9EyAaPIKRN2vJrLa4g?=
- =?iso-8859-1?Q?Yzq8QiGedd1dk5dzizhlxvAqmgDCUE079muITaPEBp5HcEQBiiWDaj/8fj?=
- =?iso-8859-1?Q?3adMPph34WG2t4SwOGIKCib2gDW4pbGUEeAAwxRVmGzwhBQ+le4TWfHhyz?=
- =?iso-8859-1?Q?PDT6Tk+46ztVlg40LvPXZQ+xanGrMU3/NJhzIAAdh0jJkFgd5PGnaetZaE?=
- =?iso-8859-1?Q?W4P7XMm37TffTRfDaCA46XUMFd3qN9noDXYPqPzKWc4EXDc9LGluTEgZSe?=
- =?iso-8859-1?Q?lE3y3QEb76j/8/+B0HqhyDPjVecp8/ra3ep0jG+ayUH76vZe9jK1DutgSO?=
- =?iso-8859-1?Q?LQGKLCDh0WXKSxsQc8/5l/Ql5nG62Wl/FF5P+Uchb+7LzOwTC6jThsJWsT?=
- =?iso-8859-1?Q?ZpdWuJfNAsy88z4juSSWFbzTa50cdy7Il/5xquPbAV5SsSHyuk4QUXyeUl?=
- =?iso-8859-1?Q?tEjtkEWC3hN7sNY93wAX3ns8iDRtuMEVBRR7HcBLOtKrgRpEREdAhpKpAz?=
- =?iso-8859-1?Q?GX2lWWF8pyvNliN7zcgBT8rIYxVDDR5tpA1h6o/exotMyEFSMLlVkDbaF/?=
- =?iso-8859-1?Q?Dd31A43kjKdZqSVooLS8L4HjS1EF09TKfvVXsnQtewgKQ32ebsBFBiZ8Qd?=
- =?iso-8859-1?Q?1iRCmLecHgWVUZpDHIJfFbMkXscL7jDV+f9tvYdGYuHwb42V13FvrYsr/j?=
- =?iso-8859-1?Q?9roecJXAPYP7RGBB8PI+jY+lMZvMu7JmPOdK3LcqHlCW2Y+pOsx3/nc33W?=
- =?iso-8859-1?Q?2bEHGe1SfgcuscwViDaHvfCdT+XiHE/rXG6JUZ7ujWB4kxgMSZZH772U6V?=
- =?iso-8859-1?Q?2xwr69OLk6ZHi5Ik2eF5Zhowjco9+Wu2WdILX3sLQBrTGdI0Oy4pTanYzi?=
- =?iso-8859-1?Q?unMPCBzv25Ux2WiC3A3FyGsN9yC2rCMooXpdsrblWanrEOkGTLdPwGFptZ?=
- =?iso-8859-1?Q?Rm22ggJQaCRFhY11F/7FJX?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?gfq5nWvLWhLOdEt9IIqpsUS7g/1MCybXdTDnZo9Rys05A571xRkWkCtaXq?=
+ =?iso-8859-1?Q?RfOO/fRX5er65P0qBFxxyg/yiJUk+qQmjzqLIkLtO/HXDFoB+7E1kGQVoK?=
+ =?iso-8859-1?Q?h2UO1bCEjb6sBuN+n37OBWm5tlSt+g+vWFeWRcZI1KeT3Rlk0qcym+ZoxQ?=
+ =?iso-8859-1?Q?JphZX9RLpAQoYNdmzyhNskmFf+Bsg4QP051XNLWIzSyBdej/gFdGt2jMOv?=
+ =?iso-8859-1?Q?Wi6vLHPd/uNFoBVR0Ms9pWS5wan3Anes6eaCFAcZwsjDzg7eLhV2+GFi8s?=
+ =?iso-8859-1?Q?S9Yd/L08g/69bX4uaWQVkPeAf1ee7QKPHCnn39Ep8OgpQ32W+MbzoBqL/r?=
+ =?iso-8859-1?Q?bH3G4GlVNmGv+f8qTEOFOhLesdTWPyTVrBQysN5cIBHeWBUu5Xj4zAlkh6?=
+ =?iso-8859-1?Q?khhthJimnR7XiQEfPNwKhoalH30rzZ866KIqeu/4NtrOsy4c9jRDFJxUFO?=
+ =?iso-8859-1?Q?2hZ2YLafmemZqXX1MHQOcHtBfilas5Of6bT1EW6X9qxO8dl2V+AxNMeEfN?=
+ =?iso-8859-1?Q?jwdbMBHXHPthe3qQieKffhhs0PY5tncaeAF9hbykWTfzqtknitNJbT/aeZ?=
+ =?iso-8859-1?Q?M5roil2T3g3uB9DUb/lPeuK3f9Dy8GCagUZOUQ1viOn8fIW5Ur0v4+BSMV?=
+ =?iso-8859-1?Q?lTMCgW7Dxr3d4nPJ/av0S0ZWbjJ7xRYNJsDU7F18E8ZxeOx/MqGLxj/pdc?=
+ =?iso-8859-1?Q?pN4ejonSWk67+ImNTHIPKNwsXrM3de+1x0TKb3D35BtD/NzvsP+dQNRgw6?=
+ =?iso-8859-1?Q?FW3RbDfG4GTaoIdQakL66UxavpSsqI4W3UtPVbieNhoJy+zV0YC8mtfMtD?=
+ =?iso-8859-1?Q?M27IuGfaM8iOG49qfzP0pNusqSg506lNII+fdg0gTahCgsBeP5UnZc6qIj?=
+ =?iso-8859-1?Q?rdIXc/EVH/xX5IPYpAN2RSAX+0aHY8wF2TWn29ALaTdqZrxWO0wE0avtHq?=
+ =?iso-8859-1?Q?FkMNxS8AyJHlBjHheDo8f2VO4yYcQGb24abZibgJ1kuAvG4mZhJDAMhnLi?=
+ =?iso-8859-1?Q?SdrK5UgiI6icnmBOAgUDHa2PGNshd7drIo2emxHxGnjer0MuNSLyD8VKnj?=
+ =?iso-8859-1?Q?4pgMHGLCt2WlYob0PqOIkHlRUxR8jtny/IqTa/n7FhGkuvOxeuBhe6EaMI?=
+ =?iso-8859-1?Q?PVisb60Ndxq7E4XXA90in85yOloMVxIAvDkcZxfjg+QvcVSnw7mT6WBTzD?=
+ =?iso-8859-1?Q?T2AnhAANG9VSm1W7pNs32QRx1EOu+mXnxvghcAbPLR/q6CeQ5TmSYgUpiV?=
+ =?iso-8859-1?Q?8xG+ERgrzjQGZkxcP7LGpNoq9ztvBEM0iW06j670wV1Gxrnz3JJovOXlzN?=
+ =?iso-8859-1?Q?9Lc7RhmD2QwL/du7nwsnhx6q70diYKQSIzEoX3Lx4NFKhgEGUpQQGD7XtA?=
+ =?iso-8859-1?Q?8rnxsk15oL6j57pGrnAufZR0pHuVp8kO+4tQ0XNrNShEIFeJGxmWVkFy2O?=
+ =?iso-8859-1?Q?STK+7rXzCi3O5towq8Q/xuclkyK80MzLD/to+g=3D=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
  SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?hj2eMN7OJOuppLfewyEwPabAm52qTa6CY6S1nHEIXtemr0LLvNJv11on5A?=
- =?iso-8859-1?Q?6kn+gVVSxFiYNkLjn0+8dka8CtZn2dmPZEkGv6KY3VndJoa8vuo6r516kS?=
- =?iso-8859-1?Q?jqV0zpfpmNtrSMJHgY7wUr/yyZcScwCX70Y++CxbjoVaoa+w3L526UDM0M?=
- =?iso-8859-1?Q?yYtZa7kZtsKId9+e4kDOgp81gvOcO2QH/P0eE8/LCpydd0YQrK8/vu7HfI?=
- =?iso-8859-1?Q?XjOWVkhePi2SsZ2stnYbiE/i+ZsGbSxng8zNKZnIvX+LzVkp6WfDqzQWaF?=
- =?iso-8859-1?Q?VJH0+qZU52xjXM/Llt/7L2/VVne64f8tpNcZNbum0yRxdA0q/Gl4d7qoLQ?=
- =?iso-8859-1?Q?TAQB+BoMwNMEQJKL9beM/TT9Erdw4jepHQwsOCfpYlxpAKZSQulWPW93hl?=
- =?iso-8859-1?Q?mrRn72Q7fFmvNwoFT66Swmcr8n9nCLslcrii6iZZSIk3lIDmyYjfHdC2FF?=
- =?iso-8859-1?Q?QvkUrHMiiu+rwPoIkV7IT7dilEAXVh3oDAAyIfD2JejDemTnokMGC+/+tu?=
- =?iso-8859-1?Q?6Lk/bKhjF4cDIa51RI/+OZiAMSfLO+ZZU3RfgXS2hcuncVUpEA4x7WgJds?=
- =?iso-8859-1?Q?4jbGQKExwF6Sd+N/JCfJQK1F4wxt5rd86o7mB0O/dXg3dVhSZMaDurHI3u?=
- =?iso-8859-1?Q?XqIBUHVu/36QYrLmp5mG0NBzBNRH02WRzF903ghNBKIDyxX30rHqkVxU2k?=
- =?iso-8859-1?Q?MHsjau1j7TdjMn1WQvfh02B32WCxTcXT3SCny1ZCN3q8yeDg4lE1guUuAa?=
- =?iso-8859-1?Q?NLyaQPwRTo5hvU3f+0zdagb2gowne4UIlRSRFAVzAKzCIrsfEQo+EIFLJQ?=
- =?iso-8859-1?Q?ekVY00Yp2O9LPCmTnIaAJVTp6uR3GN5z377Fy9RUqr/ejrqJBg7PoTTEmf?=
- =?iso-8859-1?Q?gfAxkTScggiFFe/0EX2vafQS1SWAuTA6bNgOyxRcoUv+dLMYb+nvyAXzez?=
- =?iso-8859-1?Q?RjEtn9fb0CDk5ipD/fGAhHo4UKVgYRGGxCvI97RP0Ms0m238wv/MUlUHe8?=
- =?iso-8859-1?Q?ov4jendUgnOS0zRHBIuPcU2MtRMK8U5eUwIJQA9Be8qagV7pCJk1C0v20S?=
- =?iso-8859-1?Q?19V8Q9ehmvkOh8muBWPrcfGjIh+SHmbbzCpKvYK52eEd4r2z/6DJKRIrd/?=
- =?iso-8859-1?Q?CQl5xQadk1pPIAzhns5Nz6lLztHEXI17ZaRuVxS9Lv0f8TfGFkAaHYSbAU?=
- =?iso-8859-1?Q?3s99fJgkeLfYRyUkY6vhGzVpEoiZ/80xNIT9b9Mn+3vQfQUYeiDrDwntLN?=
- =?iso-8859-1?Q?yPNQphBVJKNCVEYWfpUIlaT4gyV5+Oi1R5kYjAA+CEjRvPXWZqpSvM+EDV?=
- =?iso-8859-1?Q?TqzTJdPwEPDAXRKB2IaVEenqfedPxDT2JvmTPFgdHgn7eThEwZAZ2mSAKc?=
- =?iso-8859-1?Q?mTZllzFo/i5wOtBAwhZ286+fBnlkOPVVJP1qhovRb1xSmNmOpIObJlJm4W?=
- =?iso-8859-1?Q?J1qfiR2Crfk+yuHorCrJhtoPMHV0Ic6KBi/znPYATHgcfSngqSiNrX8+IG?=
- =?iso-8859-1?Q?5umQjazYwldd29Mf85LEa1u5Zgq79R9VNBVTtMgl+CLqQrx+VKHr21IAqV?=
- =?iso-8859-1?Q?UU6U46yhfOErkuynd7fe0kbNJI+bbrj+E9Ouht8QTnhX1tSYjVZe2X19QQ?=
- =?iso-8859-1?Q?J6MppAr1HZQK9dYZuYJ5c0k+tiTJ7jXUeHfSrlqCOu6cdB+xNmeh0n9Uk7?=
- =?iso-8859-1?Q?dXHv+9ZKpIoeu6F8QE4=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?6jy66aruHy4BjGl/5UzIX/hst9ZdNkTx+8bAcuzEDoVOJ8MAKPW1R6EJoj?=
+ =?iso-8859-1?Q?6mOHUa8e/zTPpER6awgHaS8oKxjZBuV4NNozx/HvkIZxJHSuo2zcjuvMfm?=
+ =?iso-8859-1?Q?IfJigZ1aTqajUabYHaouKq2qsSNUEd3sQuWrbsAQaHhxcOc5rnNB+G4FVL?=
+ =?iso-8859-1?Q?NaZX4Kfvc2Ei9lm/saFbiv8h9JC8ip7hMWfA704mpGPcvJTNVWWguX+E+P?=
+ =?iso-8859-1?Q?8YLYJ7nRjdgZ1ySErs0k+wm6RmCztiRsWbVC7TE/Qf9/1JQHTG8x4d/D2M?=
+ =?iso-8859-1?Q?kX+Q1lcmCliKXLTAZq2QSZxewXJ+rhe0dUhNBXgf/mg7KSIlolNRVRFmSf?=
+ =?iso-8859-1?Q?0mDctGCUyjH85vSxnScD/j5CU4Sq+pDYkl/2Uf37Gt0Yw5+ZNL0PKyYA19?=
+ =?iso-8859-1?Q?4wyDJENQ0pQtMQQKFytpZ4GDgkCVzj9bIU7CpExTIcGwZq5UtaScFFGh6M?=
+ =?iso-8859-1?Q?VF/NFehXQtafz88kQ8czPtwMLyIk4xktuShGCfXU6QD0wV3Koib4Y/DFAq?=
+ =?iso-8859-1?Q?/sNSq51kKa6v/15hdKaOg2/RT5ryqcw7wkB3Ob7M5ItaT2T50wS5OyJiKj?=
+ =?iso-8859-1?Q?R7cai3/xODERpP+XyYPYRKTQdUl5OKJ3IGyo1KtJOlN6byUu6+8VHhSBmV?=
+ =?iso-8859-1?Q?WRCUjZfiHV2NqjVG0G3t6cmUnxNcVs5GEcS7Nfj9Je7zwuoEryLT1mf6s+?=
+ =?iso-8859-1?Q?uUgGXWKiQ2wFEgHRJpyyOllNs43an27uzcXkcj34jSGgRrlzO1m3Tge6lz?=
+ =?iso-8859-1?Q?Up8T/zqkPXYGRy5Uh9zD4AYJNJnrOga7+G+wHqtTLpYqDtiSXftO2gFjYx?=
+ =?iso-8859-1?Q?/wfyNAAQbipbWdfpetNSt0nhIdK931lRIEG3Uf/eOYLghX1jhy1cdE68En?=
+ =?iso-8859-1?Q?qw0Jsa2t09ogdqn112QID3eWGoVJs2qH8cuYRTLm0Mt0R3xt2N2UB7WRdy?=
+ =?iso-8859-1?Q?6Lmy/yQ5gVel9OAGQZWD+cIWRgCzgnQflBOMxoEVeimGkGpfFP54NbJVxs?=
+ =?iso-8859-1?Q?mMSX6A33rJD7JfpLn9HK03KQnB2vl5K1ymVUaiUxi9SKuhQVcXs3E9uEZS?=
+ =?iso-8859-1?Q?6DZur9RopnwlzlFbv0vWdTGOyCeQyNlIkVmmymx9ugiIXAT175YGdv/KQz?=
+ =?iso-8859-1?Q?AS5jibriDs+HcL8LavaFgYaQDSwu4R9qLJag1W0IT0aBECITy2wsOFRFAz?=
+ =?iso-8859-1?Q?H4y067uNnWWUbqKYrjd5oGf2sNBrA+6vUJu2+2gOewofOr6IHiBfJH8yTJ?=
+ =?iso-8859-1?Q?xe+0JY61xRRk6Vdm9TLrsv6XJsX6yBpiN+FZzPPlxJIaRLSreluBwV2UrV?=
+ =?iso-8859-1?Q?/b/L9Cuu2XAqFV+2F1irJBdKKR10jZdeCXbPfj62azqw8Dce+DgIBvXajr?=
+ =?iso-8859-1?Q?6iUlNnRXh0yLVomqDZ627sMX/GHCrHtrDUJNQfn8rb6hpE+0uoxZ82N36j?=
+ =?iso-8859-1?Q?g8fbX4LYYCLHQBkoMtUyQt3y+H8nrrjQVoQTMbDaOcEO430YFuTYgZ/DV2?=
+ =?iso-8859-1?Q?ys34QDg1naoNh7XWUsa6cGE0k7FrOUdtIlWoOt9itfbiJAjgUqpb1d0WHx?=
+ =?iso-8859-1?Q?uHrcmryyEwHZ81tdliQFSDzaMRi4dkm12Cq271WAYiGLRz4qaS0sQoXDay?=
+ =?iso-8859-1?Q?swc5WcjG+hqTQOEEUDTliSt+yH/L9PXJ2WT9u4bVWaCJmaMZJoTtnLSSd9?=
+ =?iso-8859-1?Q?0DfOYP1rFScozyOheLY=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: eviden.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 29c6638d-f168-496a-cf22-08dd524ecb7e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 08:07:33.1131 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 59c5efbe-d102-40d6-1233-08dd524ed08b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 08:07:40.7266 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dKt3QEIaX7kZGn3seez/KavFXwn65a3gXMStPBtcqpDXz5Vrsa4CxFIaQFDJqtDF9VSw5lC4er8cTDZ+8SDsHIhmuAixeQrMiNMmlywUcVWsIwrSi0gIJJihsmjn5kDC
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR07MB8162
-Received-SPF: pass client-ip=80.78.11.85;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
+X-MS-Exchange-CrossTenant-userprincipalname: 0gYI4TXqDTIR/BeKHssnE5Fm58s6BVJqxg0W5gkJ9ysO5UxkCRocXA7n6ANp23XHogY7WHS36fhPl6CamkOYFpojWPMLf5+XtpZUmJZQHuWl7+0uI63/tJeZbpPb8I3h
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR07MB6459
+Received-SPF: pass client-ip=80.78.11.82;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost1.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -197,45 +194,568 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-PASID value must be used by devices as a key (or part of a key)
-when populating their ATC with the IOTLB entries returned by the IOMMU.
-
 Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 ---
- hw/i386/intel_iommu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/unit/meson.build |   1 +
+ tests/unit/test-atc.c  | 527 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 528 insertions(+)
+ create mode 100644 tests/unit/test-atc.c
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 1b4aaffedc..a360119fbe 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2511,6 +2511,7 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOM=
-MUState *s,
-                         .translated_addr =3D 0,
-                         .addr_mask =3D size - 1,
-                         .perm =3D IOMMU_NONE,
-+                        .pasid =3D vtd_as->pasid,
-                     },
-                 };
-                 memory_region_notify_iommu(&vtd_as->iommu, 0, event);
-@@ -3098,6 +3099,7 @@ static void do_invalidate_device_tlb(VTDAddressSpace =
-*vtd_dev_as,
-     event.entry.iova =3D addr;
-     event.entry.perm =3D IOMMU_NONE;
-     event.entry.translated_addr =3D 0;
-+    event.entry.pasid =3D vtd_dev_as->pasid;
-     memory_region_notify_iommu(&vtd_dev_as->iommu, 0, event);
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index d5248ae51d..810197d5e1 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -48,6 +48,7 @@ tests =3D {
+   'test-qapi-util': [],
+   'test-interval-tree': [],
+   'test-fifo': [],
++  'test-atc': [],
  }
 =20
-@@ -3680,6 +3682,7 @@ static IOMMUTLBEntry vtd_iommu_translate(IOMMUMemoryR=
-egion *iommu, hwaddr addr,
-     IOMMUTLBEntry iotlb =3D {
-         /* We'll fill in the rest later. */
-         .target_as =3D &address_space_memory,
-+        .pasid =3D vtd_as->pasid,
-     };
-     bool success;
-=20
+ if have_system or have_tools
+diff --git a/tests/unit/test-atc.c b/tests/unit/test-atc.c
+new file mode 100644
+index 0000000000..0d1c1b7ca7
+--- /dev/null
++++ b/tests/unit/test-atc.c
+@@ -0,0 +1,527 @@
++/*
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "util/atc.h"
++
++static inline bool tlb_entry_equal(IOMMUTLBEntry *e1, IOMMUTLBEntry *e2)
++{
++    if (!e1 || !e2) {
++        return !e1 && !e2;
++    }
++    return e1->iova =3D=3D e2->iova &&
++            e1->addr_mask =3D=3D e2->addr_mask &&
++            e1->pasid =3D=3D e2->pasid &&
++            e1->perm =3D=3D e2->perm &&
++            e1->target_as =3D=3D e2->target_as &&
++            e1->translated_addr =3D=3D e2->translated_addr;
++}
++
++static void assert_lookup_equals(ATC *atc, IOMMUTLBEntry *target,
++                                 uint32_t pasid, hwaddr iova)
++{
++    IOMMUTLBEntry *result;
++    result =3D atc_lookup(atc, pasid, iova);
++    g_assert(tlb_entry_equal(result, target));
++}
++
++static void check_creation(uint64_t page_size, uint8_t address_width,
++                           uint8_t levels, uint8_t level_offset,
++                           bool should_work) {
++    ATC *atc =3D atc_new(page_size, address_width);
++    if (atc) {
++        g_assert(atc->levels =3D=3D levels);
++        g_assert(atc->level_offset =3D=3D level_offset);
++
++        atc_destroy(atc);
++        g_assert(should_work);
++    } else {
++        g_assert(!should_work);
++    }
++}
++
++static void test_creation_parameters(void)
++{
++    check_creation(8, 39, 3, 9, false);
++    check_creation(4095, 39, 3, 9, false);
++    check_creation(4097, 39, 3, 9, false);
++    check_creation(8192, 48, 0, 0, false);
++
++    check_creation(4096, 38, 0, 0, false);
++    check_creation(4096, 39, 3, 9, true);
++    check_creation(4096, 40, 0, 0, false);
++    check_creation(4096, 47, 0, 0, false);
++    check_creation(4096, 48, 4, 9, true);
++    check_creation(4096, 49, 0, 0, false);
++    check_creation(4096, 56, 0, 0, false);
++    check_creation(4096, 57, 5, 9, true);
++    check_creation(4096, 58, 0, 0, false);
++
++    check_creation(16384, 35, 0, 0, false);
++    check_creation(16384, 36, 2, 11, true);
++    check_creation(16384, 37, 0, 0, false);
++    check_creation(16384, 46, 0, 0, false);
++    check_creation(16384, 47, 3, 11, true);
++    check_creation(16384, 48, 0, 0, false);
++    check_creation(16384, 57, 0, 0, false);
++    check_creation(16384, 58, 4, 11, true);
++    check_creation(16384, 59, 0, 0, false);
++}
++
++static void test_single_entry(void)
++{
++    IOMMUTLBEntry entry =3D {
++        .iova =3D 0x123456789000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 5,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xdeadbeefULL,
++    };
++
++    ATC *atc =3D atc_new(4096, 48);
++    g_assert(atc);
++
++    assert_lookup_equals(atc, NULL, entry.pasid,
++                         entry.iova + (entry.addr_mask / 2));
++
++    atc_create_address_space_cache(atc, entry.pasid);
++    g_assert(atc_update(atc, &entry) =3D=3D 0);
++
++    assert_lookup_equals(atc, NULL, entry.pasid + 1,
++                         entry.iova + (entry.addr_mask / 2));
++    assert_lookup_equals(atc, &entry, entry.pasid,
++                         entry.iova + (entry.addr_mask / 2));
++
++    atc_destroy(atc);
++}
++
++static void test_single_entry_2(void)
++{
++    static uint64_t page_size =3D 4096;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0xabcdef200000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eedULL,
++    };
++
++    ATC *atc =3D atc_new(page_size , 48);
++    atc_create_address_space_cache(atc, e1.pasid);
++    atc_update(atc, &e1);
++
++    assert_lookup_equals(atc, NULL, e1.pasid, 0xabcdef201000ULL);
++
++    atc_destroy(atc);
++}
++
++static void test_page_boundaries(void)
++{
++    static const uint32_t pasid =3D 5;
++    static const hwaddr page_size =3D 4096;
++
++    /* 2 consecutive entries */
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0x123456789000ULL,
++        .addr_mask =3D page_size - 1,
++        .pasid =3D pasid,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xdeadbeefULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D e1.iova + page_size,
++        .addr_mask =3D page_size - 1,
++        .pasid =3D pasid,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x900df00dULL,
++    };
++
++    ATC *atc =3D atc_new(page_size, 48);
++
++    atc_create_address_space_cache(atc, e1.pasid);
++    /* creating the address space twice should not be a problem */
++    atc_create_address_space_cache(atc, e1.pasid);
++
++    atc_update(atc, &e1);
++    atc_update(atc, &e2);
++
++    assert_lookup_equals(atc, NULL, e1.pasid, e1.iova - 1);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova + e1.addr_mask);
++    g_assert((e1.iova + e1.addr_mask + 1) =3D=3D e2.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova + e2.addr_mask);
++    assert_lookup_equals(atc, NULL, e2.pasid, e2.iova + e2.addr_mask + 1);
++
++    assert_lookup_equals(atc, NULL, e1.pasid + 10, e1.iova);
++    assert_lookup_equals(atc, NULL, e2.pasid + 10, e2.iova);
++    atc_destroy(atc);
++}
++
++static void test_huge_page(void)
++{
++    static const uint32_t pasid =3D 5;
++    static const hwaddr page_size =3D 4096;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0x123456600000ULL,
++        .addr_mask =3D 0x1fffffULL,
++        .pasid =3D pasid,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xdeadbeefULL,
++    };
++    hwaddr addr;
++
++    ATC *atc =3D atc_new(page_size, 48);
++
++    atc_create_address_space_cache(atc, e1.pasid);
++    atc_update(atc, &e1);
++
++    for (addr =3D e1.iova; addr <=3D e1.iova + e1.addr_mask; addr +=3D pag=
+e_size) {
++        assert_lookup_equals(atc, &e1, e1.pasid, addr);
++    }
++    /* addr is now out of the huge page */
++    assert_lookup_equals(atc, NULL, e1.pasid, addr);
++    atc_destroy(atc);
++}
++
++static void test_pasid(void)
++{
++    hwaddr addr =3D 0xaaaaaaaaa000ULL;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D addr,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 8,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xdeadbeefULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D addr,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 2,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xb001ULL,
++    };
++    uint16_t i;
++
++    ATC *atc =3D atc_new(4096, 48);
++
++    atc_create_address_space_cache(atc, e1.pasid);
++    atc_create_address_space_cache(atc, e2.pasid);
++    atc_update(atc, &e1);
++    atc_update(atc, &e2);
++
++    for (i =3D 0; i <=3D MAX(e1.pasid, e2.pasid) + 1; ++i) {
++        if (i =3D=3D e1.pasid || i =3D=3D e2.pasid) {
++            continue;
++        }
++        assert_lookup_equals(atc, NULL, i, addr);
++    }
++    assert_lookup_equals(atc, &e1, e1.pasid, addr);
++    assert_lookup_equals(atc, &e1, e1.pasid, addr);
++    atc_destroy(atc);
++}
++
++static void test_large_address(void)
++{
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0xaaaaaaaaa000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 8,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eeeeeedULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D 0x1f00baaaaabf000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D e1.pasid,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xdeadbeefULL,
++    };
++
++    ATC *atc =3D atc_new(4096, 57);
++
++    atc_create_address_space_cache(atc, e1.pasid);
++    atc_update(atc, &e1);
++    atc_update(atc, &e2);
++
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++    atc_destroy(atc);
++}
++
++static void test_bigger_page(void)
++{
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0xaabbccdde000ULL,
++        .addr_mask =3D 0x1fffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eeeeeedULL,
++    };
++    hwaddr i;
++
++    ATC *atc =3D atc_new(8192, 43);
++
++    atc_create_address_space_cache(atc, e1.pasid);
++    atc_update(atc, &e1);
++
++    i =3D e1.iova & (~e1.addr_mask);
++    assert_lookup_equals(atc, NULL, e1.pasid, i - 1);
++    while (i <=3D e1.iova + e1.addr_mask) {
++        assert_lookup_equals(atc, &e1, e1.pasid, i);
++        ++i;
++    }
++    assert_lookup_equals(atc, NULL, e1.pasid, i);
++    atc_destroy(atc);
++}
++
++static void test_unknown_pasid(void)
++{
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0xaabbccfff000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eeeeeedULL,
++    };
++
++    ATC *atc =3D atc_new(4096, 48);
++    g_assert(atc_update(atc, &e1) !=3D 0);
++    assert_lookup_equals(atc, NULL, e1.pasid, e1.iova);
++    atc_destroy(atc);
++}
++
++static void test_invalidation(void)
++{
++    static uint64_t page_size =3D 4096;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0xaabbccddf000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eeeeeedULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D 0xffe00000ULL,
++        .addr_mask =3D 0x1fffffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xb000001ULL,
++    };
++    IOMMUTLBEntry e3;
++
++    ATC *atc =3D atc_new(page_size , 48);
++    atc_create_address_space_cache(atc, e1.pasid);
++
++    atc_update(atc, &e1);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    atc_invalidate(atc, &e1);
++    assert_lookup_equals(atc, NULL, e1.pasid, e1.iova);
++
++    atc_update(atc, &e1);
++    atc_update(atc, &e2);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++    atc_invalidate(atc, &e2);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, NULL, e2.pasid, e2.iova);
++
++    /* invalidate a huge page by invalidating a small region */
++    for (hwaddr addr =3D e2.iova; addr <=3D (e2.iova + e2.addr_mask);
++         addr +=3D page_size) {
++        atc_update(atc, &e2);
++        assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++        e3 =3D (IOMMUTLBEntry){
++            .iova =3D addr,
++            .addr_mask =3D page_size - 1,
++            .pasid =3D e2.pasid,
++            .perm =3D IOMMU_RW,
++            .translated_addr =3D 0,
++        };
++        atc_invalidate(atc, &e3);
++        assert_lookup_equals(atc, NULL, e2.pasid, e2.iova);
++    }
++    atc_destroy(atc);
++}
++
++static void test_delete_address_space_cache(void)
++{
++    static uint64_t page_size =3D 4096;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0xaabbccddf000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eeeeeedULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D e1.iova,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 2,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eeeeeedULL,
++    };
++
++    ATC *atc =3D atc_new(page_size , 48);
++    atc_create_address_space_cache(atc, e1.pasid);
++
++    atc_update(atc, &e1);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    atc_invalidate(atc, &e2); /* unkown pasid : is a nop*/
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++
++    atc_create_address_space_cache(atc, e2.pasid);
++    atc_update(atc, &e2);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++    atc_invalidate(atc, &e1);
++    /* e1 has been removed but e2 is still there */
++    assert_lookup_equals(atc, NULL, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++
++    atc_update(atc, &e1);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++
++    atc_delete_address_space_cache(atc, e2.pasid);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, NULL, e2.pasid, e2.iova);
++    atc_destroy(atc);
++}
++
++static void test_invalidate_entire_address_space(void)
++{
++    static uint64_t page_size =3D 4096;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0x1000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eedULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D 0xfffffffff000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xbeefULL,
++    };
++    IOMMUTLBEntry e3 =3D {
++        .iova =3D 0,
++        .addr_mask =3D 0xffffffffffffffffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0,
++    };
++
++    ATC *atc =3D atc_new(page_size , 48);
++    atc_create_address_space_cache(atc, e1.pasid);
++
++    atc_update(atc, &e1);
++    atc_update(atc, &e2);
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++    atc_invalidate(atc, &e3);
++    /* e1 has been removed but e2 is still there */
++    assert_lookup_equals(atc, NULL, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, NULL, e2.pasid, e2.iova);
++
++    atc_destroy(atc);
++}
++
++static void test_reset(void)
++{
++    static uint64_t page_size =3D 4096;
++    IOMMUTLBEntry e1 =3D {
++        .iova =3D 0x1000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 1,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0x5eedULL,
++    };
++    IOMMUTLBEntry e2 =3D {
++        .iova =3D 0xfffffffff000ULL,
++        .addr_mask =3D 0xfffULL,
++        .pasid =3D 2,
++        .perm =3D IOMMU_RW,
++        .translated_addr =3D 0xbeefULL,
++    };
++
++    ATC *atc =3D atc_new(page_size , 48);
++    atc_create_address_space_cache(atc, e1.pasid);
++    atc_create_address_space_cache(atc, e2.pasid);
++    atc_update(atc, &e1);
++    atc_update(atc, &e2);
++
++    assert_lookup_equals(atc, &e1, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, &e2, e2.pasid, e2.iova);
++
++    atc_reset(atc);
++
++    assert_lookup_equals(atc, NULL, e1.pasid, e1.iova);
++    assert_lookup_equals(atc, NULL, e2.pasid, e2.iova);
++    atc_destroy(atc);
++}
++
++static void test_get_max_number_of_pages(void)
++{
++    static uint64_t page_size =3D 4096;
++    hwaddr base =3D 0xc0fee000; /* aligned */
++    ATC *atc =3D atc_new(page_size , 48);
++    g_assert(atc_get_max_number_of_pages(atc, base, page_size / 2) =3D=3D =
+1);
++    g_assert(atc_get_max_number_of_pages(atc, base, page_size) =3D=3D 1);
++    g_assert(atc_get_max_number_of_pages(atc, base, page_size + 1) =3D=3D =
+2);
++
++    g_assert(atc_get_max_number_of_pages(atc, base + 10, 1) =3D=3D 1);
++    g_assert(atc_get_max_number_of_pages(atc, base + 10, page_size - 10) =
+=3D=3D 1);
++    g_assert(atc_get_max_number_of_pages(atc, base + 10,
++                                         page_size - 10 + 1) =3D=3D 2);
++    g_assert(atc_get_max_number_of_pages(atc, base + 10,
++                                         page_size - 10 + 2) =3D=3D 2);
++
++    g_assert(atc_get_max_number_of_pages(atc, base + page_size - 1, 1) =3D=
+=3D 1);
++    g_assert(atc_get_max_number_of_pages(atc, base + page_size - 1, 2) =3D=
+=3D 2);
++    g_assert(atc_get_max_number_of_pages(atc, base + page_size - 1, 3) =3D=
+=3D 2);
++
++    g_assert(atc_get_max_number_of_pages(atc, base + 10, page_size * 20) =
+=3D=3D 21);
++    g_assert(atc_get_max_number_of_pages(atc, base + 10,
++                                         (page_size * 20) + (page_size - 1=
+0))
++                                          =3D=3D 21);
++    g_assert(atc_get_max_number_of_pages(atc, base + 10,
++                                         (page_size * 20) +
++                                         (page_size - 10 + 1)) =3D=3D 22);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    g_test_add_func("/atc/test_creation_parameters", test_creation_paramet=
+ers);
++    g_test_add_func("/atc/test_single_entry", test_single_entry);
++    g_test_add_func("/atc/test_single_entry_2", test_single_entry_2);
++    g_test_add_func("/atc/test_page_boundaries", test_page_boundaries);
++    g_test_add_func("/atc/test_huge_page", test_huge_page);
++    g_test_add_func("/atc/test_pasid", test_pasid);
++    g_test_add_func("/atc/test_large_address", test_large_address);
++    g_test_add_func("/atc/test_bigger_page", test_bigger_page);
++    g_test_add_func("/atc/test_unknown_pasid", test_unknown_pasid);
++    g_test_add_func("/atc/test_invalidation", test_invalidation);
++    g_test_add_func("/atc/test_delete_address_space_cache",
++                    test_delete_address_space_cache);
++    g_test_add_func("/atc/test_invalidate_entire_address_space",
++                    test_invalidate_entire_address_space);
++    g_test_add_func("/atc/test_reset", test_reset);
++    g_test_add_func("/atc/test_get_max_number_of_pages",
++                    test_get_max_number_of_pages);
++    return g_test_run();
++}
 --=20
 2.48.1
 
