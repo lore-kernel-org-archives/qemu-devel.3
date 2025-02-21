@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 289D1C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB44C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlSp8-0007F5-Ug; Fri, 21 Feb 2025 08:12:10 -0500
+	id 1tlSrK-00008C-EX; Fri, 21 Feb 2025 08:14:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlSp6-0007EU-OR
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:12:08 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlSrH-00007H-K5
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:14:23 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlSp4-0005MD-TR
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:12:08 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38f2f783e4dso1761726f8f.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 05:12:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlSrF-0005SE-7P
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:14:22 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4399d14334aso18376845e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 05:14:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740143525; x=1740748325; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740143659; x=1740748459; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DjJ3WRWsUIvpInaS1jW9lGpQyT1bUvWawECrMpVX5vs=;
- b=pjWAhA71+u+0YzauFol9mgYXDfcQvD84S4II8AKrwSTUGiRhUVd1ryocRmdVWXaIaJ
- gHBWJhMweEeMkTcDUKpTeTuK1LkbMUcOOC0Oa7Wg1b9dG31t+gKs55NByNuXneFUIgHd
- TpFHMKnKMpSfQzSAXIrGP6kfFo29DHjY3NpmXg9FgevDWJBxYzwfd3C30RPcBcLSCa/p
- SOalLp8yrlD9xLUKjGYqAotR/su7xfKbLcjTTCxenL9UbYFW2j42if9xCp81feUBA2MA
- n98FyInUYqlMXve6dmpmSfxEZmi1wkqfrAsVwpJmzPMtxC7IV945qA8cy0+ek1zj96sW
- +6pA==
+ bh=MwHjk9Sbu7J28Td7nAJZPKBSKMyF0LuqJ/6K2xgFiAY=;
+ b=IOjuyEzzmiQFHY1PbsurImYityF80dMnI7HxCWSqZTDvcDEUGwslXnG2OmjkTjOayw
+ gmrHrpJ2G9YYc/838mHxljC791zXrA1SIJMhFvWKvBgshVNC82DAQiK0egDO8AhHWspB
+ PBXO0YTfkWF+DMrWn1ba2CGOxnx5ZCpVstGbmCSyWRp7pTuabpS3Im3edL6JEy1i1vYc
+ 9nuODy2YHY1I1cMFn7WbBwGHZeSLI3sa6o++CoKVqNlIbjPMCzdbBtAwq0oQw8lZtk9N
+ zFCPGEY++aft8tIjX1ghlh0DPqDuaRU60NVh6XGJBpVMefP7bHsKGKvziTUzHz0Kny+g
+ FfLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740143525; x=1740748325;
+ d=1e100.net; s=20230601; t=1740143659; x=1740748459;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DjJ3WRWsUIvpInaS1jW9lGpQyT1bUvWawECrMpVX5vs=;
- b=rjpD/e3u+NBPtgc71zDuFY+PRVdjEYTrBmY1UeEjKpmAhBmO0hoZ446FjOEeSnrozv
- 4SGDESanGzImEzdnPyIqlABjyjYtbSRdJANO8RgJSeMNRBDp05bV7fSaiVF9/niIOZdj
- eVcisvZG5lWtsFcdGWHTTW5gojyZgwBiFyXVEsWtXyS8j40Kpeag8ZFgnCzwgzOukdKt
- JkFu3FQ9zpg6WmKN8GpdH3NNl6fbJVNOLU2Cx0JtER8gimElHJ+2WoKlU2Eh2rFG0XjR
- f2SEBn16IV5mT1cdeZaMYiGk+5np8K6qLrx3MjPTcTIeCdDVdzsaBmdZSGF0odAgGbao
- xFZg==
+ bh=MwHjk9Sbu7J28Td7nAJZPKBSKMyF0LuqJ/6K2xgFiAY=;
+ b=S5P0G0MguoONruNMd6KoVJ2/Omn33PyOLZf6r4/td8Pyk4DpX09PLvdKTpw8IUTdUH
+ JsGJV4ji9v7PvV4aCxhqQPKbfwV58eYKi63m8W9Dqx87fEW6i/vq6PFv7G5L26GvqzZw
+ 7fRK3V2WkiFcDsMK8pVKtrKT6Hp1j28KkxzEYpRuSUCTLfbKa/lmXaH8PSC40w5OAdAu
+ VMJ2JpXr12YHihliOEYE95hjp4BYN2x1ICqsFJ75ih62TdxScywAbwfA0wiE3GAy9QlN
+ MlnhrWLWXVujckYTeUEK2Pe90OHhUZkU6ZDJ2I5To2IHj8YB93t2Mc3wuuceKRT7rb9G
+ u8Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVj/qRanqrQ8Ydogoa9tzjKS6/HaZDUJv0LzoVvjfGruurjEVMipOxX2UdHnrg1dQ7i7pr9Bl5b2/GJ@nongnu.org
-X-Gm-Message-State: AOJu0YzJOB+Gq4qAb80vfBYIZbGFbp6MdgZgAA2hyj33cbBOF6XZ1OB9
- BUf3X8IalBI2rTmSFuWU7KtndZZvb8j4cBz+2RX7akk91h5veYHSIgLxOA/WsJM=
-X-Gm-Gg: ASbGnctjtt3IqqAXKRGgqOlH+0osFLFuZa48FZkhyf2O64xQHyAwszRkuIb0KfB0clu
- CK9uxeJlBJylWSrncVopPr/69SgvolWTuXBpn54DNyrAR9xrv5RdiBiYphy7T6LlPurbQcxvAGr
- 4hxKJVhM/xWNETFANUo/Nlz8EKKeXHpQ4a9Fr/t3AaPkYl393FovhU+9KixO6BxHGu1wb1yJrUy
- iFWGxvPkgJIcSh2xPRrmz2uEeNo+LwZ10m90Vifjf+gjmMQ+tWyl8VMaSwhaWRtJXGqDa/2QOsb
- On4bfOptRDs84e9c3scxOYe8D3eFxSREJhWi9Kn22UFc6mALt2LZISBIqk/KMK36GzQ8Lg==
-X-Google-Smtp-Source: AGHT+IGWtO8Vc5SdbP71QrsVvsyLAwJc2/wELZPHaNpeUDsQstu2MdJ5mYnb3enDmSvWOorFaokfKQ==
-X-Received: by 2002:a5d:59a9:0:b0:38f:4f07:fad6 with SMTP id
- ffacd0b85a97d-38f6e7561e3mr2321728f8f.5.1740143524756; 
- Fri, 21 Feb 2025 05:12:04 -0800 (PST)
+ AJvYcCVoKMHbW+It6xXeGPQfiUAdtB1rnMDQ+AzocFJ6VQ2K+tQuTejxKWrkq3Ga77OQQOcuLdiYzQiVS2aK@nongnu.org
+X-Gm-Message-State: AOJu0YxgfJVILX/mbnXUAx/YOp3djPpyRozIO+zpXw5GxlpSQMWvjmAz
+ fxlezS7P0o++Y+G9yJjEIBfCRmyA2EhgeR/QnZA/+EK6RW44TCTyfBniqsctzkU=
+X-Gm-Gg: ASbGncs3phAUuMAUmWJwHxNlPILvzgykgIBs+J74UVRaVxj2DNGTJpEAMlziPEPdGwG
+ a1yQf0G0mChNUxsRGrSfVfC+ukzSgkF8R5/6WNxI2EdjJmsq4FYE1QQTAKoVVZ0cLlR3/ja74p2
+ lfzB4Jv97bTcfPogaARXnvTx1lKGiRFLOqZCSK1Z/o6WnI6KPyIBxiFnbHr0de+YJs5zHoblVkB
+ UtkX2EdrBqLynnw+MS3FPFoOIfFh9+uQMTADDECt0iNboQO+YyiOA7CWtGsZHxaJaDd5i9U425p
+ L1zdlvyiBatHWfVDaVntxU5pD1FgfPsxOVafcmgADloPyL3AXch6h9Hye0PP8qlbdtRc4g==
+X-Google-Smtp-Source: AGHT+IESeCMoZYyfTVJ7mAZeV9omg7ykJZoKxTNowWaYaWds3e5DFOSLbnttRqHtDAzvIElX0C11rA==
+X-Received: by 2002:a05:600c:3b08:b0:439:5da7:8e0 with SMTP id
+ 5b1f17b1804b1-439ae1f30dbmr33251005e9.16.1740143659442; 
+ Fri, 21 Feb 2025 05:14:19 -0800 (PST)
 Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d65bcsm23529734f8f.65.2025.02.21.05.12.03
+ ffacd0b85a97d-38f258b41b5sm23689847f8f.14.2025.02.21.05.14.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 05:12:04 -0800 (PST)
-Message-ID: <999fbc69-aa91-4b7f-b0ab-2270b89d0f5a@linaro.org>
-Date: Fri, 21 Feb 2025 14:12:03 +0100
+ Fri, 21 Feb 2025 05:14:18 -0800 (PST)
+Message-ID: <3c87db9f-230e-4bec-96a0-e8b41bf2333d@linaro.org>
+Date: Fri, 21 Feb 2025 14:14:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] fpu: Make targets specify whether floatx80 Inf can
- have Int bit clear
+Subject: Re: [PATCH 05/10] fpu: Make floatx80 invalid encoding settable at
+ runtime
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <20250217125055.160887-5-peter.maydell@linaro.org>
+ <20250217125055.160887-6-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250217125055.160887-5-peter.maydell@linaro.org>
+In-Reply-To: <20250217125055.160887-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,101 +106,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/2/25 13:50, Peter Maydell wrote:
-> In Intel terminology, a floatx80 Infinity with the explicit integer
-> bit clear is a "pseudo-infinity"; for x86 these are not valid
-> infinity values.  m68k is looser and does not care whether the
-> Integer bit is set or clear in an infinity.
+> Because floatx80 has an explicit integer bit, this permits some
+> odd encodings where the integer bit is not set correctly for the
+> floating point value type. In In Intel terminology the
+>   categories are:
+>    exp == 0, int = 0, mantissa == 0 : zeroes
+>    exp == 0, int = 0, mantissa != 0 : denormals
+>    exp == 0, int = 1 : pseudo-denormals
+>    0 < exp < 0x7fff, int = 0 : unnormals
+>    0 < exp < 0x7fff, int = 1 : normals
+>    exp == 0x7fff, int = 0, mantissa == 0 : pseudo-infinities
+>    exp == 0x7fff, int = 1, mantissa == 0 : infinities
+>    exp == 0x7fff, int = 0, mantissa != 0 : pseudo-NaNs
+>    exp == 0x7fff, int = 1, mantissa == 0 : NaNs
 > 
-> Move this setting to runtime rather than using an ifdef in
-> floatx80_is_infinity().  (This requires us to pass in the
-> float_status to that function now.)
+> The usual IEEE cases of zero, denormal, normal, inf and NaN are always valid.
+> x87 permits as input also pseudo-denormals.
+> m68k permits all those and also pseudo-infinities, pseudo-NaNs and unnormals.
 > 
-> Since this was the last use of the floatx80_infinity global constant,
-> we remove it and its definition here.
+> Currently we have an ifdef in floatx80_invalid_encoding() to select
+> the x86 vs m68k behaviour.  Add new floatx80_behaviour flags to
+> select whether pseudo-NaN and unnormal are valid, and use these
+> (plus the existing pseudo_inf_valid flag) to decide whether these
+> encodings are invalid at runtime.
+> 
+> We leave pseudo-denormals as always-valid, since both x86 and m68k
+> accept them.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 > ---
->   include/fpu/softfloat-types.h  |  5 +++++
->   include/fpu/softfloat.h        | 20 ++++++++++++--------
->   target/i386/tcg/fpu_helper.c   | 20 +++++++++++---------
->   target/m68k/cpu.c              |  4 +++-
->   target/m68k/fpu_helper.c       |  2 +-
->   fpu/softfloat-specialize.c.inc | 10 ----------
->   6 files changed, 32 insertions(+), 29 deletions(-)
+>   include/fpu/softfloat-types.h | 14 +++++++
+>   include/fpu/softfloat.h       | 70 ++++++++++++++++++-----------------
+>   fpu/softfloat.c               |  2 +-
+>   target/i386/tcg/fpu_helper.c  | 24 ++++++------
+>   target/m68k/cpu.c             | 28 +++++++++++++-
+>   5 files changed, 92 insertions(+), 46 deletions(-)
 
-Passing float_status argument to floatx80_is_infinity in a preliminary
-patch, this becomes simpler (to my taste...):
+Again, passing float_status argument to floatx80_invalid_encoding
+in a preliminary patch:
 
-    4 files changed, 19 insertions(+), 18 deletions(-)
-
--- >8 --
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index dd22ecdbe60..e1732beba4f 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -332,0 +333,5 @@ typedef enum __attribute__((__packed__)) {
-+    /*
-+     * Are Pseudo-infinities (Inf with the Integer bit zero) valid?
-+     * If so, floatx80_is_infinity() will return true for them.
-+     */
-+    floatx80_pseudo_inf_valid = 2,
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 1fa759779ea..1c8f3cbb78d 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -963 +962,0 @@ float128 floatx80_to_float128(floatx80, float_status 
-*status);
--extern const floatx80 floatx80_infinity;
-@@ -1001,6 +1000,11 @@ static inline bool floatx80_is_infinity(floatx80 
-a, float_status *status)
--#if defined(TARGET_M68K)
--    return (a.high & 0x7fff) == floatx80_infinity.high && !(a.low << 1);
--#else
--    return (a.high & 0x7fff) == floatx80_infinity.high &&
--                       a.low == floatx80_infinity.low;
--#endif
-+    /*
-+     * It's target-specific whether the Integer bit is permitted
-+     * to be 0 in a valid Infinity value. (x86 says no, m68k says yes).
-+     */
-+    bool intbit = a.low >> 63;
-+
-+    if (!intbit &&
-+        !(status->floatx80_behaviour & floatx80_pseudo_inf_valid)) {
-+        return false;
-+    }
-+    return (a.high & 0x7fff) == 0x7fff && !(a.low << 1);
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index df66e8ba22a..56b23de21fe 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -112,0 +113 @@ static void m68k_cpu_reset_hold(Object *obj, ResetType 
-type)
-+     *  * input Infinities may have the Integer bit either 0 or 1
-@@ -114 +115,2 @@ static void m68k_cpu_reset_hold(Object *obj, ResetType 
-type)
--    set_floatx80_behaviour(floatx80_default_inf_int_bit_is_zero,
-+    set_floatx80_behaviour(floatx80_default_inf_int_bit_is_zero |
-+                           floatx80_pseudo_inf_valid,
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 73789e97d77..8327f727861 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -240,10 +239,0 @@ floatx80 floatx80_default_inf(bool zSign, 
-float_status *status)
--#define floatx80_infinity_high 0x7FFF
--#if defined(TARGET_M68K)
--#define floatx80_infinity_low  UINT64_C(0x0000000000000000)
--#else
--#define floatx80_infinity_low  UINT64_C(0x8000000000000000)
--#endif
--
--const floatx80 floatx80_infinity
--    = make_floatx80_init(floatx80_infinity_high, floatx80_infinity_low);
--
----
-
+     3 files changed, 77 insertions(+), 33 deletions(-)
 
