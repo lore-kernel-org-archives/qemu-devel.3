@@ -4,110 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF4BC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 10:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C13C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 10:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlQ19-0003fp-H5; Fri, 21 Feb 2025 05:12:26 -0500
+	id 1tlQA9-0006ly-8x; Fri, 21 Feb 2025 05:21:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tlQ0u-0003dC-U2
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:12:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tlQA4-0006hf-PP; Fri, 21 Feb 2025 05:21:38 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tlQ0s-0005i9-Ij
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:12:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740132723;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JKUGaH1/YlPITyKa31PBCWqIN54Qu5lMgKGyY02DRCM=;
- b=Qj6JZt1K2dM/n5X0yvwr6+LZsHo9ACHn8elz8Zn0zPSpfkIlF4f3akvoz6g/RRCzQ/vP8H
- +FVLb66ziWbpg8PtT52FzHIkedC6jB3pSIwbnGvGDx68obfr2Yx3ZlLdar0DNYnDj91jiy
- QESdx0GchQ0siSmLqOXSjlkFmL3kbEM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-TTtOLaVJM_S4eOqhNLUgIg-1; Fri, 21 Feb 2025 05:12:01 -0500
-X-MC-Unique: TTtOLaVJM_S4eOqhNLUgIg-1
-X-Mimecast-MFC-AGG-ID: TTtOLaVJM_S4eOqhNLUgIg_1740132720
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43998ec3733so9634645e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 02:12:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740132720; x=1740737520;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JKUGaH1/YlPITyKa31PBCWqIN54Qu5lMgKGyY02DRCM=;
- b=KyPAA9nGmy1gPDQBvSdLapzoORnUtXoK2Sd9NScz4hlUBszHaXPiOPozO1xNgepqTa
- b4A626V5rq8Orl4wL0XwS+ClaBs4wlWDNKxdVI6EPtXfVlPgaLK8ZcC+147k3hmdvTVm
- 9XSMgEjsLGWexq62V2QQ0gowfEbIwzjyFmUFpkL18+zWFLYEd9cz0d8ZZDhuNUG0MC3O
- MmMuC4e3emlEmL50wI3UR1ohRePaBpvWtamjCfICasKpDxRriDyljVwTV5SFY3v/Fjaf
- PLHFr9NGU22s/M+enlJ5zgFjp+vHOVkt/ZDyVvkoT/WiMLVf5oFDzZH3jlGqotNosIZk
- CwwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSngZf66anf3mfBmsay2ZbvJnVKfinw6Ueh/GA/gDT2AnnZ6Y5QAUyANrLmWouFcWP2Z+K0bMIOAJE@nongnu.org
-X-Gm-Message-State: AOJu0YwNBGlqqGRKDvDWez5F6KdVv3Cbay4yVNNZyKUk8w1pfphex3In
- wfyNDXfwPDb5LuB48bKBJkgSLD/ensbLV6tluh4h6goxMu6akz1lCrtHJDyPJt6caF78mAVH2AO
- YBHUFrVkROUvD/D8o2eUDz1oG5G7IWghTvm6sND58j+7knDgOihQC
-X-Gm-Gg: ASbGncur1wLfBNvwgN5+bBWGY3yYOyvXuNWYsHj7ijXFCs+t8536XsIy+MoOaRKugfu
- jI3Yl3X8XQ3mfSz2rs6B7PLWip1MGthbDKZch8MIdTa4OQnN/mQSAWQFJCrrQPU1yKhETvbhu14
- h9O28SzeMdxSztkuOOkJoQ9HWC24A8xjhIGClk9sdIqSEwFcHFzpYFKrQDMCrGNMPBlcCGVFGZ3
- WGCemhaPPz/Zr+VY76JzXKv2RlJtY/+XhTEpZrObcISJDcQuGAPsW6H89q2VxnKBZotZiVIxzkm
- 1rrKPsuzabf+TrQj4cotVSxgl2s7ZHjMbklN8MEf87tV6p7uud5/jz+V+7b265U=
-X-Received: by 2002:a05:6000:1543:b0:38d:b610:190b with SMTP id
- ffacd0b85a97d-38f6f0bec4emr2174772f8f.46.1740132720405; 
- Fri, 21 Feb 2025 02:12:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGHtK7Xy1fzyOMVc48JBOK/Ga9P+pTISirn+UnM1C8LGDi94Gy+bgP8+JvcaRV6fFauZttq9Q==
-X-Received: by 2002:a05:6000:1543:b0:38d:b610:190b with SMTP id
- ffacd0b85a97d-38f6f0bec4emr2174758f8f.46.1740132719996; 
- Fri, 21 Feb 2025 02:11:59 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4399bea8577sm62359265e9.0.2025.02.21.02.11.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 02:11:59 -0800 (PST)
-Message-ID: <950f4531-7614-4327-856f-45a2a2f9cd21@redhat.com>
-Date: Fri, 21 Feb 2025 11:11:57 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tlQA2-0006jn-4R; Fri, 21 Feb 2025 05:21:36 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YzmMm39xkz67QqC;
+ Fri, 21 Feb 2025 18:19:48 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7629D140257;
+ Fri, 21 Feb 2025 18:21:29 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 21 Feb
+ 2025 11:21:28 +0100
+Date: Fri, 21 Feb 2025 10:21:27 +0000
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>, Cleber Rosa
+ <crosa@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, John Snow
+ <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, "Markus
+ Armbruster" <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH v3 00/14] Change ghes to use HEST-based offsets and add
+ support for error inject
+Message-ID: <20250221102127.000059e6@huawei.com>
+In-Reply-To: <20250221073823.061a1039@foz.lan>
+References: <cover.1738345063.git.mchehab+huawei@kernel.org>
+ <20250203110934.000038d8@huawei.com>
+ <20250203162236.7d5872ff@imammedo.users.ipa.redhat.com>
+ <20250221073823.061a1039@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 09/20] intel_iommu: Rename
- vtd_ce_get_rid2pasid_entry to vtd_ce_get_pasid_entry
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- shameerali.kolothum.thodi@huawei.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <20250219082228.3303163-10-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250219082228.3303163-10-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,100 +78,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On Fri, 21 Feb 2025 07:38:23 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
+> Em Mon, 3 Feb 2025 16:22:36 +0100
+> Igor Mammedov <imammedo@redhat.com> escreveu:
+> 
+> > On Mon, 3 Feb 2025 11:09:34 +0000
+> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> >   
+> > > On Fri, 31 Jan 2025 18:42:41 +0100
+> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > >     
+> > > > Now that the ghes preparation patches were merged, let's add support
+> > > > for error injection.
+> > > > 
+> > > > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
+> > > > table and hardware_error firmware file, together with its migration code. Migration tested
+> > > > with both latest QEMU released kernel and upstream, on both directions.
+> > > > 
+> > > > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
+> > > >    to inject ARM Processor Error records.
+> > > > 
+> > > > If I'm counting well, this is the 19th submission of my error inject patches.      
+> > > 
+> > > Looks good to me. All remaining trivial things are in the category
+> > > of things to consider only if you are doing another spin.  The code
+> > > ends up how I'd like it at the end of the series anyway, just
+> > > a question of the precise path to that state!    
+> > 
+> > if you look at series as a whole it's more or less fine (I guess you
+> > and me got used to it)
+> > 
+> > however if you take it patch by patch (as if you've never seen it)
+> > ordering is messed up (the same would apply to everyone after a while
+> > when it's forgotten)
+> > 
+> > So I'd strongly suggest to restructure the series (especially 2-6/14).
+> > re sum up my comments wrt ordering:
+> > 
+> > 0  add testcase for HEST table with current HEST as expected blob
+> >    (currently missing), so that we can be sure that we haven't messed
+> >    existing tables during refactoring.  
 
-On 2/19/25 9:22 AM, Zhenzhong Duan wrote:
-> In early days vtd_ce_get_rid2pasid_entry() is used to get pasid entry of
-is/was
-> rid2pasid, then extend to any pasid. So a new name vtd_ce_get_pasid_entry
-then it was extended to get any pasid entry?
-> is better to match its functions.
-to match what it actually does?
+To potentially save time I think Igor is asking that before you do anything
+at all you plug the existing test hole which is that we don't test HEST
+at all.   Even after this series I think we don't test HEST.  You add
+a stub hest and exclusion but then in patch 12 the HEST stub is deleted whereas
+it should be replaced with the example data for the test.
 
-I do not know the vtd spec very well so I searched for rid2pasid and I
-did not find any reference. I think I understand what is the pasid entry
-from the pasid table though so the renaming does make sense to me.
+That indeed doesn't address testing the error data storage which would be
+a different problem.
+> 
+> Not sure if I got this one. The HEST table is part of etc/acpi/tables,
+> which is already tested, as you pointed at the previous reviews. Doing
+> changes there is already detected. That's basically why we added patches
+> 10 and 12:
+> 
+> 	[PATCH v3 10/14] tests/acpi: virt: allow acpi table changes for a new table: HEST
+> 	[PATCH v3 12/14] tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
+> 
+> What tests don't have is a check for etc/hardware_errors firmware inside 
+> tests/data/acpi/aarch64/virt/, but, IMO, we shouldn't add it there.
+> 
+> See, hardware_errors table contains only some skeleton space to
+> store:
+> 
+> 	- 1 or more error block address offsets;
+> 	- 1 or more read ack register;
+> 	- 1 or more HEST source entries containing CPER blocks.
+> 
+> There's nothing there to be actually checked: it is just some
+> empty spaces with a variable number of fields.
+> 
+> With the new code, the actual number of CPER blocks and their
+> corresponding offsets and read ack registers can be different on 
+> different architectures. So, for instance, when we add x86 support,
+> we'll likely start with just one error source entry, while arm will
+> have two after this changeset.
+> 
+> Also, one possibility to address the issues reported by Gavin Shan at
+> https://lore.kernel.org/qemu-devel/20250214041635.608012-1-gshan@redhat.com/
+> would be to have one entry per each CPU. So, the size of such firmware
+> could be dependent on the number of CPUs.
+> 
+> So, adding any validation to it would just cause pain and probably
+> won't detect any problems.
 
-Eric
->
-> No functional change intended.
->
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/i386/intel_iommu.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 7fde0603bf..df5fb30bc8 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -944,7 +944,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
->      return 0;
->  }
->  
-> -static int vtd_ce_get_rid2pasid_entry(IntelIOMMUState *s,
-> +static int vtd_ce_get_pasid_entry(IntelIOMMUState *s,
->                                        VTDContextEntry *ce,
->                                        VTDPASIDEntry *pe,
->                                        uint32_t pasid)
-> @@ -1025,7 +1025,7 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState *s,
->      VTDPASIDEntry pe;
->  
->      if (s->root_scalable) {
-> -        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-> +        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
->          if (s->flts) {
->              return VTD_PE_GET_FL_LEVEL(&pe);
->          } else {
-> @@ -1048,7 +1048,7 @@ static uint32_t vtd_get_iova_agaw(IntelIOMMUState *s,
->      VTDPASIDEntry pe;
->  
->      if (s->root_scalable) {
-> -        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-> +        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
->          return 30 + ((pe.val[0] >> 2) & VTD_SM_PASID_ENTRY_AW) * 9;
->      }
->  
-> @@ -1116,7 +1116,7 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
->      VTDPASIDEntry pe;
->  
->      if (s->root_scalable) {
-> -        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-> +        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
->          if (s->flts) {
->              return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
->          } else {
-> @@ -1522,7 +1522,7 @@ static int vtd_ce_rid2pasid_check(IntelIOMMUState *s,
->       * has valid rid2pasid setting, which includes valid
->       * rid2pasid field and corresponding pasid entry setting
->       */
-> -    return vtd_ce_get_rid2pasid_entry(s, ce, &pe, PCI_NO_PASID);
-> +    return vtd_ce_get_pasid_entry(s, ce, &pe, PCI_NO_PASID);
->  }
->  
->  /* Map a device to its corresponding domain (context-entry) */
-> @@ -1611,7 +1611,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
->      VTDPASIDEntry pe;
->  
->      if (s->root_scalable) {
-> -        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-> +        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
->          return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
->      }
->  
-> @@ -1687,7 +1687,7 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
->      int ret;
->  
->      if (s->root_scalable) {
-> -        ret = vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-> +        ret = vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
->          if (ret) {
->              /*
->               * This error is guest triggerable. We should assumt PT
+If we did do this the test would use a fixed number of CPUs so
+would just verify we didn't break a small number of variants. Useful
+but to me a follow up to this series not something that needs to
+be part of it - particularly as Gavin's work may well change that!
+
+> 
+> What could be done instead is to have a different type of tests that
+> would use the error injection script to check if regressions are 
+> introduced after QEMU 10.0. Such new kind of test would require
+> this series to be merged first. It would also require the usage of
+> an OSPM image with some testing tools on it. This is easier said 
+> than done, as besides the complexity of having an OSPM test image,
+> such kind of tests would require extra logic, specially if it would
+> check regressions for SEA and other notification sources.
+> 
+Agreed that a more end to end test is even better, but those are
+quite a bit more complex so definitely a follow up.
+
+J
+> Thanks,
+> Mauro
+> 
 
 
