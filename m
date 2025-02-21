@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C520BC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17AB6C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS4y-00086W-Ai; Fri, 21 Feb 2025 07:24:28 -0500
+	id 1tlS5C-0000vW-Rp; Fri, 21 Feb 2025 07:24:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4w-0007x6-MF
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:26 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS55-0000YG-KO
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4t-0007C3-93
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS53-0007Dr-SI
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140662;
+ s=mimecast20190719; t=1740140673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u27NKlvtYL4RNuhqQv/c+tDTZMnad0qlqsDe9OD9/Lo=;
- b=VxZcGYT37CZAgHl0dcjh6ClMgtDQvOq+i8ZOBhXMDsoFrOgDcEbvmQznRUvEp2yJyzHzDJ
- XgMekagWX8sN2p2yvqMPzLDFVqUx2iDOtTjcweo+tUm07zalRSrL0Cp7oj7E89Bgg6kikp
- N3ITkfKEO8zF8kK5nmXNGZ9USEzVUe8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EAxtLkE7W+XUghJ5VIYoz6FDtNlGyyTqDgvbSHIaIzI=;
+ b=iJaV0ctVFdMOGKrqRVZJqZZ9T6YKyktx25/cuRBN2fM7ZQBe9eSJyYMSCNbbeq1c1ZEgNA
+ kE8im+tpvMcmGfGWa7FtTruL/He57IoedRd3ok1jMlktmcI4afLSZm6lRJ6UfvKglY9EyA
+ PgNUDiGWx4c67yr8XEPQnEIUdiGYS30=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-sPKOyW18PGq8cIGO07cErQ-1; Fri, 21 Feb 2025 07:24:21 -0500
-X-MC-Unique: sPKOyW18PGq8cIGO07cErQ-1
-X-Mimecast-MFC-AGG-ID: sPKOyW18PGq8cIGO07cErQ_1740140660
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4393e8738b3so14979895e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:20 -0800 (PST)
+ us-mta-142-7Jdp2p50OAKdEnAO2KLyww-1; Fri, 21 Feb 2025 07:24:32 -0500
+X-MC-Unique: 7Jdp2p50OAKdEnAO2KLyww-1
+X-Mimecast-MFC-AGG-ID: 7Jdp2p50OAKdEnAO2KLyww_1740140671
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f628ff78eso1073988f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140659; x=1740745459;
+ d=1e100.net; s=20230601; t=1740140670; x=1740745470;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u27NKlvtYL4RNuhqQv/c+tDTZMnad0qlqsDe9OD9/Lo=;
- b=JheR72ecmfoE7+2vCaYV83Ap8Vu1QRc7EouQ0y9VPShobXwabi+TxfZ9NZCvERa6qj
- ENPiu30robJvJ4Zxb4xaTuKtsnTbtLVXbgRviZd3JniY3BA2K/qe7DRLWgs6rwparZzR
- bj/Gwb5kRyCmA+fjuEk487P/EqSZg5ORUpAKn9AgZDrljaLN+FY2hn3whSgTx7OyqRcN
- GLHXnPMdioPbzMytDti661JzIVIuKzW9qJPm9sS1ztS6EUKbxT/MXnaoAIM7Q35sRVRj
- EJFGp36yaBrNe8jt6Xw+7idbJxLCcVBgIxdpqhz/NThAeAwD0/35W9dLiimdbXh03FuW
- fIFA==
-X-Gm-Message-State: AOJu0YzpOU5JSo0FQHnTJfovrWdgsGvQ+dToidpsFc0SHQ24J9KF3dEk
- QG+xb9fyhh/h7Iw/D1c4Zt3xcvH0m4oCJcYxApHxOs1fJG9w7WAjcQVbDtJQyMOl+yYNazqVz6j
- ykHTQCwp28ql6BG+RECJCGuM2zFvo9K+Ja+BlYSCKWclXYAqBnI/tGupMkLZ96NDZuw5XLSuYHz
- dW8AlnTkgHSiQm2V8N8Mm3pzMKKp9lag==
-X-Gm-Gg: ASbGnctMQZB0ZiAvSCKZ8d3ldpLaw9eua4A+F8acOfyBu3SqSRRYTFJUowHyZ2KCRfM
- v7/5DQsJ+UvM9JC9WSIoE2ADqoRRpc2L5yHBo/mfEStXRWwh04j5iOEUwLUpAZ25c00qLCMNAsI
- KURRB3SetSvEHSvTuXYEMlcpKAzZQH+BGmSUOziHx65tiKLEj4D7E3nxcOnQLEKPgU1UADHJWP1
- 8M/zVLBDZHBkzHCm0xkfFDtRYdXmshZLB9ZaWAld1KRmyLw2e0LqAIZUw+fTRPVl0abLlDQ0Uaz
- 1tUpcw==
-X-Received: by 2002:a05:600c:5101:b0:439:65f0:c9ce with SMTP id
- 5b1f17b1804b1-439ae220a84mr21414935e9.25.1740140659478; 
- Fri, 21 Feb 2025 04:24:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGkanAFun3kgOrIGed7mKCligMYCtqpxaZuvTDrHUsPKhnQURrgk8syYfc4clZ/xQe1ug+xSg==
-X-Received: by 2002:a05:600c:5101:b0:439:65f0:c9ce with SMTP id
- 5b1f17b1804b1-439ae220a84mr21414675e9.25.1740140659021; 
- Fri, 21 Feb 2025 04:24:19 -0800 (PST)
+ bh=EAxtLkE7W+XUghJ5VIYoz6FDtNlGyyTqDgvbSHIaIzI=;
+ b=P441zPucIYbRWZb97lq9HZnYdW1AtFsRFvu/2Na3Ggz+VHWHLKbi98TRhtgPbOazWY
+ 3eqizv5kjl0XS1QVqLDyPcll1QIcrfJ7ITiEnFIB80YOf+UHFkOJPUTINZE/LyZphuf2
+ wPsRdzOWktuAZD4NidX28ctAduFXoYzVBC2g3zNjN0BYxA9GEPaCKY4r816/SkmoNWG/
+ O+343F582MZaXLdAJ62v9HGsfcSInu7IM0DFNU9TKR99TrazlmhOO4d/+PtY+uxb2zZv
+ 4ekcWfwvKq2k4A9y5quOB0AnfS7gU4BTMKPrjlbeedZa8PHNlymO5xklLD4xsXTvjLEP
+ Kjww==
+X-Gm-Message-State: AOJu0YxDafJKURf/3xGWpTFHkYEtJ/gcGYmKzqNdpu1fUQqPYBenYTww
+ 3+JCk+ythjviWveyFbSYQ7h3jDRVsK69w8441gtPvWXnjAg50pBplxqY4DFJd26nv9XHOvh1aJj
+ f5hK15sgEa4sJ8QkUIG6WsUdWMhFdrVJ2nquUiHDJDPvg96KCzm0p4DaENtrXIc0/aOPcV/A6ct
+ lQcZ/YpNnAArGvPfHy5j5QjWUQOM8Qdg==
+X-Gm-Gg: ASbGncv9WE6PAwPDR+RQhETIpj41gQfWRLN5H7QWjkELPxUIZYOiJKrepIAuI5yy2+M
+ KdaRXqCzsjhdTZzlzFxIRl8g0Ya2QU0twrTU+Fr+kseXGROE9hjlPiaMvNA4VqkIME2zFlSyQeM
+ ySqBBoPsvbitlrdEZHPIRb2O/QIJm2WuDYaq+2oGBj+yOPtVrqqXTF253yXnInC2qY5ymALEiWB
+ R0676A0ieYmTaxYSXv130d1LOXNJINI9tsMPX/uUP5XRG7an5LFiT7Qswmj8EywUYVG6Gf0x4Ax
+ Eq7xAg==
+X-Received: by 2002:a05:6000:1f84:b0:38b:d807:f3be with SMTP id
+ ffacd0b85a97d-38f6f3c50bbmr2137651f8f.3.1740140670404; 
+ Fri, 21 Feb 2025 04:24:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHozMNEJXCK2el7msXK/RalCAw14qKq6Aw2YgNN1y/9vaE7HcjvC0xf0w6Rf4dvcuifEp+uUQ==
+X-Received: by 2002:a05:6000:1f84:b0:38b:d807:f3be with SMTP id
+ ffacd0b85a97d-38f6f3c50bbmr2137625f8f.3.1740140669998; 
+ Fri, 21 Feb 2025 04:24:29 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce735sm15866465e9.3.2025.02.21.04.24.17
+ ffacd0b85a97d-38f258cccdesm23255646f8f.26.2025.02.21.04.24.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:18 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:16 -0500
+ Fri, 21 Feb 2025 04:24:29 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:25 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
- myluo24@m.fudan.edu.cn, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>
-Subject: [PULL 31/41] cryptodev/vhost: allocate CryptoDevBackendVhost using
- g_mem0()
-Message-ID: <83cb18ac4500f3a14067b19408705068647cb0c5.1740140520.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <graf@amazon.com>,
+ Vikrant Garg <vikrant1garg@gmail.com>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 34/41] hw/virtio/virtio-nsm: Respond with correct length
+Message-ID: <131fe64e63c88ec52c45a5946a478c0edeb31b78.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -96,7 +95,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,43 +111,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Alexander Graf <graf@amazon.com>
 
-The function `vhost_dev_init()` expects the `struct vhost_dev`
-(passed as a parameter) to be fully initialized. This is important
-because some parts of the code check whether `vhost_dev->config_ops`
-is NULL to determine if it has been set (e.g. later via
-`vhost_dev_set_config_notifier`).
+When we return a response packet from NSM, we need to indicate its
+length according to the content of the response. Prior to this patch, we
+returned the length of the source buffer, which may confuse guest code
+that relies on the response size.
 
-To ensure this initialization, it’s better to allocate the entire
-`CryptoDevBackendVhost` structure (which includes `vhost_dev`) using
-`g_mem0()`, following the same approach used for other vhost devices,
-such as in `vhost_net_init()`.
+Fix it by returning the response payload size instead.
 
-Fixes: 042cea274c ("cryptodev: add vhost-user as a new cryptodev backend")
-Cc: qemu-stable@nongnu.org
-Reported-by: myluo24@m.fudan.edu.cn
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20250211135523.101203-1-sgarzare@redhat.com>
+Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
+Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Message-Id: <20250213114541.67515-1-graf@amazon.com>
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Fixes: bb154e3e0cc715 (&quot;device/virtio-nsm: Support for Nitro Secure Module device&quot;)<br>
+Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Vikrant Garg <vikrant1garg@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- backends/cryptodev-vhost.c | 2 +-
+ hw/virtio/virtio-nsm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-index 8718c97326..943680a23a 100644
---- a/backends/cryptodev-vhost.c
-+++ b/backends/cryptodev-vhost.c
-@@ -53,7 +53,7 @@ cryptodev_vhost_init(
-     CryptoDevBackendVhost *crypto;
-     Error *local_err = NULL;
+diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
+index 098e1aeac6..b22aa74e34 100644
+--- a/hw/virtio/virtio-nsm.c
++++ b/hw/virtio/virtio-nsm.c
+@@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
+     g_free(req.iov_base);
+     g_free(res.iov_base);
+     virtqueue_push(vq, out_elem, 0);
+-    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
++    virtqueue_push(vq, in_elem, sz);
+     virtio_notify(vdev, vq);
+     return;
  
--    crypto = g_new(CryptoDevBackendVhost, 1);
-+    crypto = g_new0(CryptoDevBackendVhost, 1);
-     crypto->dev.max_queues = 1;
-     crypto->dev.nvqs = 1;
-     crypto->dev.vqs = crypto->vqs;
 -- 
 MST
 
