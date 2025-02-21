@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17AB6C021AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA38C021B3
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5C-0000vW-Rp; Fri, 21 Feb 2025 07:24:43 -0500
+	id 1tlS5T-0002XN-HM; Fri, 21 Feb 2025 07:24:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS55-0000YG-KO
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5O-000220-P3
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS53-0007Dr-SI
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:35 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5M-0007Fd-QM
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140673;
+ s=mimecast20190719; t=1740140692;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EAxtLkE7W+XUghJ5VIYoz6FDtNlGyyTqDgvbSHIaIzI=;
- b=iJaV0ctVFdMOGKrqRVZJqZZ9T6YKyktx25/cuRBN2fM7ZQBe9eSJyYMSCNbbeq1c1ZEgNA
- kE8im+tpvMcmGfGWa7FtTruL/He57IoedRd3ok1jMlktmcI4afLSZm6lRJ6UfvKglY9EyA
- PgNUDiGWx4c67yr8XEPQnEIUdiGYS30=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EBrAYudfN30eTDxsGlpkwQ5zRuzxrz1/bLUV220VFQI=;
+ b=F2edohw3lZ3OM4n8gSLnfn1Dy8xsGniYwRIuLCUj+/H3dbqmdoxceCszA3P4jn1/AHk3zS
+ kWShQea96gyHwO7hHgpX0n3A8S/CcsshLdcuLTH+PI3pMrkjm+oRMAtr2pyQUuLAS73NDv
+ ZYZUcFkpg/K59C7B4N9Mm2/kgEEIkPE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-7Jdp2p50OAKdEnAO2KLyww-1; Fri, 21 Feb 2025 07:24:32 -0500
-X-MC-Unique: 7Jdp2p50OAKdEnAO2KLyww-1
-X-Mimecast-MFC-AGG-ID: 7Jdp2p50OAKdEnAO2KLyww_1740140671
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f628ff78eso1073988f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:31 -0800 (PST)
+ us-mta-9-DCDNizhyMLeCEixwv6WLRg-1; Fri, 21 Feb 2025 07:24:50 -0500
+X-MC-Unique: DCDNizhyMLeCEixwv6WLRg-1
+X-Mimecast-MFC-AGG-ID: DCDNizhyMLeCEixwv6WLRg_1740140690
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f36fcf4b3so1229556f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140670; x=1740745470;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EAxtLkE7W+XUghJ5VIYoz6FDtNlGyyTqDgvbSHIaIzI=;
- b=P441zPucIYbRWZb97lq9HZnYdW1AtFsRFvu/2Na3Ggz+VHWHLKbi98TRhtgPbOazWY
- 3eqizv5kjl0XS1QVqLDyPcll1QIcrfJ7ITiEnFIB80YOf+UHFkOJPUTINZE/LyZphuf2
- wPsRdzOWktuAZD4NidX28ctAduFXoYzVBC2g3zNjN0BYxA9GEPaCKY4r816/SkmoNWG/
- O+343F582MZaXLdAJ62v9HGsfcSInu7IM0DFNU9TKR99TrazlmhOO4d/+PtY+uxb2zZv
- 4ekcWfwvKq2k4A9y5quOB0AnfS7gU4BTMKPrjlbeedZa8PHNlymO5xklLD4xsXTvjLEP
- Kjww==
-X-Gm-Message-State: AOJu0YxDafJKURf/3xGWpTFHkYEtJ/gcGYmKzqNdpu1fUQqPYBenYTww
- 3+JCk+ythjviWveyFbSYQ7h3jDRVsK69w8441gtPvWXnjAg50pBplxqY4DFJd26nv9XHOvh1aJj
- f5hK15sgEa4sJ8QkUIG6WsUdWMhFdrVJ2nquUiHDJDPvg96KCzm0p4DaENtrXIc0/aOPcV/A6ct
- lQcZ/YpNnAArGvPfHy5j5QjWUQOM8Qdg==
-X-Gm-Gg: ASbGncv9WE6PAwPDR+RQhETIpj41gQfWRLN5H7QWjkELPxUIZYOiJKrepIAuI5yy2+M
- KdaRXqCzsjhdTZzlzFxIRl8g0Ya2QU0twrTU+Fr+kseXGROE9hjlPiaMvNA4VqkIME2zFlSyQeM
- ySqBBoPsvbitlrdEZHPIRb2O/QIJm2WuDYaq+2oGBj+yOPtVrqqXTF253yXnInC2qY5ymALEiWB
- R0676A0ieYmTaxYSXv130d1LOXNJINI9tsMPX/uUP5XRG7an5LFiT7Qswmj8EywUYVG6Gf0x4Ax
- Eq7xAg==
-X-Received: by 2002:a05:6000:1f84:b0:38b:d807:f3be with SMTP id
- ffacd0b85a97d-38f6f3c50bbmr2137651f8f.3.1740140670404; 
- Fri, 21 Feb 2025 04:24:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHozMNEJXCK2el7msXK/RalCAw14qKq6Aw2YgNN1y/9vaE7HcjvC0xf0w6Rf4dvcuifEp+uUQ==
-X-Received: by 2002:a05:6000:1f84:b0:38b:d807:f3be with SMTP id
- ffacd0b85a97d-38f6f3c50bbmr2137625f8f.3.1740140669998; 
- Fri, 21 Feb 2025 04:24:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740140689; x=1740745489;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EBrAYudfN30eTDxsGlpkwQ5zRuzxrz1/bLUV220VFQI=;
+ b=aT6WeTSA6b7ApHcSYFa8IGctDOMhrbxL1SuxvnNWcqIXbdz6Vbwe1p2nWgtAKABWqQ
+ Mmi+Q/M+eEOl2YyOPo585PjBRPXSrxOozZBkiGs5iETHC3cWyMT/vKqKmcmWo7U9OyQt
+ ASrrV4/GJLhL/CBLYzJQuACQkJPMzzmR7Ixu3ii6dyiv1qHBemgctaRasxQF7mYhE18j
+ eodH52B1RuhKGPqVFqvNNz79wisMLbksKmBkUL2C0Qiu12vUU7dkb+9sa3Wt06ECFV0K
+ 96RU+T2vUALtxXecuccVKUwpJgxUnW2XDCy+CO4ybD2ZWDYEsl+c+tnCrhjnDAGH2hLm
+ thew==
+X-Gm-Message-State: AOJu0Yx69hy5yO94ieAuIDVq6Pi1JZKiN+t0M6NYpjujbXdCNy9/y0jg
+ JPuQFVLZDrgdPacQ9dS4BsYzn1uKZRPZdOcxLyktQUU3+M3860Zrp+v60sHPVMlOTVsmf1tcJ4s
+ CUU9gNE5DeRQLmCMSd2wzkyKu7Uyyil/tK0G3fdQ1Wu8R3CMvOhzMcub/7ZX+nofVjLDr2FITSA
+ sJe1XujrmhjrG8ZGZUt8phJjvNqIu2aQ==
+X-Gm-Gg: ASbGncuzTs3/FD9ZiuPSH1kpy8Hc57jDs7bG1w6BRAMCsRsJwDvYD5Ny/8NXTXaBd/+
+ IJa0HyWCSafYNqd/ZTNgfeZsOTCNKK1g7XIwNxdoayA+sIW7ICjF4lLt05cuzFh3spKGz+/kcSF
+ mXwONr/CIqO+5RLOW39rdsxbuJcRKlki+8Lm1OgXxneDXrczumRoIj5LKKsz0Yw4/4SbG6lA0V0
+ Q/3jklS7seNtRUfNK2xqIfrm+WnqKSCuY9AUe1Ci+INCfPuQBLYeli56Pr2T5Sr5eDmmsjTVf1V
+ uRLtrw==
+X-Received: by 2002:a05:6000:178d:b0:38f:4263:9d62 with SMTP id
+ ffacd0b85a97d-38f6e9791acmr2815549f8f.27.1740140689147; 
+ Fri, 21 Feb 2025 04:24:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFp32AULRbmy01GSTfnKC2IjEC3TBFgsu2vbO9S8ZHJwsJenQ6kGgbMF8w2rfBY0Cmk08V9sg==
+X-Received: by 2002:a05:6000:178d:b0:38f:4263:9d62 with SMTP id
+ ffacd0b85a97d-38f6e9791acmr2815517f8f.27.1740140688648; 
+ Fri, 21 Feb 2025 04:24:48 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258cccdesm23255646f8f.26.2025.02.21.04.24.27
+ ffacd0b85a97d-38f259d65dfsm23693257f8f.64.2025.02.21.04.24.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:29 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:25 -0500
+ Fri, 21 Feb 2025 04:24:48 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:45 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <graf@amazon.com>,
- Vikrant Garg <vikrant1garg@gmail.com>,
- Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 34/41] hw/virtio/virtio-nsm: Respond with correct length
-Message-ID: <131fe64e63c88ec52c45a5946a478c0edeb31b78.1740140520.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Peter Xu <peterx@redhat.com>, qemu-arm@nongnu.org
+Subject: [PULL 39/41] hw/arm/smmuv3: Move reset to exit phase
+Message-ID: <e39e3f8b8dea856f141e9945167d2b18021ef445.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,44 +109,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-When we return a response packet from NSM, we need to indicate its
-length according to the content of the response. Prior to this patch, we
-returned the length of the source buffer, which may confuse guest code
-that relies on the response size.
+Currently the iommu may be reset before the devices
+it protects. For example this happens with virtio-scsi-pci.
+when system_reset is issued from qmp monitor: spurious
+"virtio: zero sized buffers are not allowed" warnings can
+be observed. This happens because outstanding DMA requests
+are still happening while the SMMU gets reset.
 
-Fix it by returning the response payload size instead.
+This can also happen with VFIO devices. In that case
+spurious DMA translation faults can be observed on host.
 
-Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
-Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Message-Id: <20250213114541.67515-1-graf@amazon.com>
-Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Fixes: bb154e3e0cc715 (&quot;device/virtio-nsm: Support for Nitro Secure Module device&quot;)<br>
-Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Vikrant Garg <vikrant1garg@gmail.com>
+Make sure the SMMU is reset in the 'exit' phase after
+all DMA capable devices have been reset during the 'enter'
+or 'hold' phase.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+
+Message-Id: <20250218182737.76722-4-eric.auger@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-nsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/smmu-common.c |  9 +++++++--
+ hw/arm/smmuv3.c      | 14 ++++++++++----
+ hw/arm/trace-events  |  1 +
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
-index 098e1aeac6..b22aa74e34 100644
---- a/hw/virtio/virtio-nsm.c
-+++ b/hw/virtio/virtio-nsm.c
-@@ -1596,7 +1596,7 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
-     g_free(req.iov_base);
-     g_free(res.iov_base);
-     virtqueue_push(vq, out_elem, 0);
--    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
-+    virtqueue_push(vq, in_elem, sz);
-     virtio_notify(vdev, vq);
-     return;
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index dd74c2e558..8c1b407b82 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -924,7 +924,12 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+     }
+ }
  
+-static void smmu_base_reset_hold(Object *obj, ResetType type)
++/*
++ * Make sure the IOMMU is reset in 'exit' phase after
++ * all outstanding DMA requests have been quiesced during
++ * the 'enter' or 'hold' reset phases
++ */
++static void smmu_base_reset_exit(Object *obj, ResetType type)
+ {
+     SMMUState *s = ARM_SMMU(obj);
+ 
+@@ -949,7 +954,7 @@ static void smmu_base_class_init(ObjectClass *klass, void *data)
+     device_class_set_props(dc, smmu_dev_properties);
+     device_class_set_parent_realize(dc, smmu_base_realize,
+                                     &sbc->parent_realize);
+-    rc->phases.hold = smmu_base_reset_hold;
++    rc->phases.exit = smmu_base_reset_exit;
+ }
+ 
+ static const TypeInfo smmu_base_info = {
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index c0cf5df0f6..b49a59b64c 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1870,13 +1870,19 @@ static void smmu_init_irq(SMMUv3State *s, SysBusDevice *dev)
+     }
+ }
+ 
+-static void smmu_reset_hold(Object *obj, ResetType type)
++/*
++ * Make sure the IOMMU is reset in 'exit' phase after
++ * all outstanding DMA requests have been quiesced during
++ * the 'enter' or 'hold' reset phases
++ */
++static void smmu_reset_exit(Object *obj, ResetType type)
+ {
+     SMMUv3State *s = ARM_SMMUV3(obj);
+     SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+ 
+-    if (c->parent_phases.hold) {
+-        c->parent_phases.hold(obj, type);
++    trace_smmu_reset_exit();
++    if (c->parent_phases.exit) {
++        c->parent_phases.exit(obj, type);
+     }
+ 
+     smmuv3_init_regs(s);
+@@ -1999,7 +2005,7 @@ static void smmuv3_class_init(ObjectClass *klass, void *data)
+     SMMUv3Class *c = ARM_SMMUV3_CLASS(klass);
+ 
+     dc->vmsd = &vmstate_smmuv3;
+-    resettable_class_set_parent_phases(rc, NULL, smmu_reset_hold, NULL,
++    resettable_class_set_parent_phases(rc, NULL, NULL, smmu_reset_exit,
+                                        &c->parent_phases);
+     device_class_set_parent_realize(dc, smmu_realize,
+                                     &c->parent_realize);
+diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+index c64ad344bd..7790db780e 100644
+--- a/hw/arm/trace-events
++++ b/hw/arm/trace-events
+@@ -56,6 +56,7 @@ smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
+ smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
+ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
+ smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
++smmu_reset_exit(void) ""
+ 
+ # strongarm.c
+ strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
 -- 
 MST
 
