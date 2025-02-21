@@ -4,93 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96274C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 16:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C2FC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 16:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlVz8-0000fl-9Z; Fri, 21 Feb 2025 11:34:42 -0500
+	id 1tlW1H-0001VZ-R6; Fri, 21 Feb 2025 11:36:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlVz5-0000f1-TP
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 11:34:39 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlVz3-0004bZ-Ed
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 11:34:39 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38f3486062eso1922985f8f.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 08:34:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740155675; x=1740760475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8nqmVlUR9MQn3TMjSmABJ403iQfkwgBrhsgkmfFCqmQ=;
- b=W8DzMY/6F+WH+YdO9iff6fZXLrxcSCPIWB7AB5eHvlDqXE6+fRijA0Tqw33gO2/wEA
- clC1RlV+XEYd4kb3pmC9f4uUOxbPaRYVySCKXzKzWwlBHCF0QE1fWLTZP6l1Q7wo7key
- NUsMPX/LjsJMUpKC7nF5B1QJ05Obvc0A8wOGM/cUfv9uDy7UDGTQ9myjQvIAI8wRCeV7
- j4CcnopeLE1YNYfEa9JDgBIx3Pt7rHKWJNAl/nQdtySD3I3HVeUZf9YShRsoZozbNYMq
- 5HcX+07C2DPEcuPsuazXiA2Z29M+Svo5U6sPN8ak7jnZxncQaVFM8QpvfXTt6h/Ro0+m
- Ypzw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tlW1B-0001Uo-KR
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 11:36:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tlW19-00051B-Up
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 11:36:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740155806;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qL0B3uZT0g/2N7uPh7SdWbdwD2IKSkpoX3fBDs8pKFo=;
+ b=h9FC2RS0UoOTnDYF72rRxO16irghuw7yyazHkmKWFB9X9dC8n+7wpHYwNLqO3Qc8XNsQt5
+ NiXUVsJY9GM5/fbvCKQUuq32O4ZPEW13KQUA/FmfIa/gDR5tk5Scii2e4h+VEE3xMG4YQo
+ cV9h4yMTYZ+5FJEd0gnHeTWnZCRIBho=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-691-2WhdhfpoPROxXQm62T1xVA-1; Fri, 21 Feb 2025 11:36:44 -0500
+X-MC-Unique: 2WhdhfpoPROxXQm62T1xVA-1
+X-Mimecast-MFC-AGG-ID: 2WhdhfpoPROxXQm62T1xVA_1740155803
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38f44be93a8so1203581f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 08:36:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740155675; x=1740760475;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8nqmVlUR9MQn3TMjSmABJ403iQfkwgBrhsgkmfFCqmQ=;
- b=PgY0TRlFOHiptGIFT8ZXWSmoVLdftn6C71kNPjn9h0tm38GSCBD2l6hib0d+yci3UW
- FPSmcBCGayEL+E72iQank6nkbKPE513iXFv2WOTCqL5AEyNvqr9yCl70Gjw6m17hULoA
- nWwY/IVBCNKHAN8lW7fS7YXZwSsybt8TUOn4qyPXhoCRzcW3oWJFFLAJHxLIyP6a1ya6
- vJJJy2DkuxQYAs3lCrRz3J/mb7gKfhGid6SxRYShILpoQ1zfEjk4xQLdai0KtVVIGnOq
- xM0b596MedLXLsWF8qutlwiMle3Tnl+l4YpYnmLyahSQbNp0UqXBIalKQRhVJJuaVSGV
- H+FQ==
+ d=1e100.net; s=20230601; t=1740155802; x=1740760602;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qL0B3uZT0g/2N7uPh7SdWbdwD2IKSkpoX3fBDs8pKFo=;
+ b=N9D2GWOnWC5SHew1U2r3XbO7AImg3KIke7xIvVjqluXy0lqTHYwOgN0bqbFOu0abPx
+ VIS1Q7Xgk4j95RuK+m26gPqpbYQ/NWkq2DrjEWnb4TJQ+Dndo9hLxslyv9q9ynjUUPF9
+ LnQvMJEjUXbrH70mxsF8DAC2RKMaqG5QkPevZX/ILNPoxC4N6+ro8OeROz0SpYi1zu1R
+ 5r4RiX0p0n5njI2PQkChuWAbLvdsfZ9Znbzibv8JlQowKSndVYx9kS7LuWBN8LrEvZZe
+ MKMVriUlCLB8ZfR7o8gOcSHqGABHzEpUCj+GyjROputGF9sqfXEECtMRnQ6DANJKzMwi
+ xXjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSuG0q2VWPXOPTogQQ46xki8xWAQT0POkFRJoRx7Q5ED9YDlX/n1LpYtwx17NGP6N8qXLcw8vi2sTt@nongnu.org
-X-Gm-Message-State: AOJu0Ywa+vp7vc/72ggph+HnJGH9QC56YLo8zOijSPaW+ofw5Vlvs7nE
- jM1C/BIJekjzdGBrjKYcYufwDlFWzi1qTDd3rC+Lsq+T8cHI2vW/QO18cC5s3ttcpr+nw/se4BS
- zwKA=
-X-Gm-Gg: ASbGncvpgjaY76jduOrZ5qP55d5ECBp1H4fjPJut4WpVx9tZl6H1I01dSyUozF4yq7+
- 49Xf7E/mnHBMbsLYW140r6MyL39Yk3JsnfuvZVjaCyHtyoA7G6XgtIwW+CVEeOYDx8gPN2JgPTm
- o5hgaZh4CeMPR9uQ8nzEypF+yWH/8jttbJ7R9TByIqzQjk0phlRdwC1mXLRY4kSzOk2NHWqrGho
- 8u+F01sRKoFU44pc6bAAV5kOJ9QflLGwuSlVE94jKkLUOQ4zTD66Had389lGvhsk77WePi2mcbW
- yPTn6YkzvXOTMglc2Yj1MfNitZUXKc+RJhI9+i38yCoA+b44fvvmQVxTidRGekYYORL87A==
-X-Google-Smtp-Source: AGHT+IEd2/rnOw6Shc5v36pSaGNCKLUWZ6yUALds3ED5Y70j8mWmqQcfIQWBgUIuit9iyAnCoZyFFg==
-X-Received: by 2002:a5d:5011:0:b0:38f:44eb:40e with SMTP id
- ffacd0b85a97d-38f6f04fcfbmr2402416f8f.30.1740155675251; 
- Fri, 21 Feb 2025 08:34:35 -0800 (PST)
-Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f25914d73sm24206283f8f.54.2025.02.21.08.34.34
+ AJvYcCWEVT/amJ8xpFYIJdahMinnxjcfi0EV4yBO2LnEYoq9oqcG88sV0+LC6BbKccmitBYt8RnGxT/CznAJ@nongnu.org
+X-Gm-Message-State: AOJu0Yx0vg52o5ccxNzcWYyZm/cKch0HoqdNahEKRiyInV9xvBL8Unlr
+ 8XLTbk+PFsMB6v58WPcf797e26ysQzmaLXC9i/w0RM1nKjAVulrtYbnzqcsDpwYgarw3uO2Te3t
+ CNOMrLrT9td2kdrK0LRw722Mgx3aWBXMoLmDqlo5gWeKjU56oTGy8HgTFnnknZ7w=
+X-Gm-Gg: ASbGnctk+K2+jIm/8lWUHwmal+j6o92RJzvTfVFdZO4y+S9lp1+VaIrawj5GXTnsx4s
+ 7FbZbz5YJ8Gk21y1VzkXUaN/63KO51VJp7No/mk+bE5kcC1BSRQQ3d+eAfaz6v5mWw+LrpaWDwf
+ EeAGUhCEqDS+qqv9MTvGS2s0exU0PlBmM3YK1gqrq8+WI03+S6dQdeWCxUnsE2pVI26BbqKB9ps
+ 3Zt317RBR5RpyUe3FcBWKwlFCwtrOePHTouyNkDnwL04a+mIJs/CeVy/yDmSDRTE06E1JpPyTnA
+ P7dVRvFAt51l4bmAyXA=
+X-Received: by 2002:a05:6000:18a9:b0:38f:63e3:de35 with SMTP id
+ ffacd0b85a97d-38f6e975cb3mr4345372f8f.25.1740155802487; 
+ Fri, 21 Feb 2025 08:36:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLnl7zNC2dTHcFgcC1wtSRJt5Z7A4Q5onmHPaxgqwQVve2GwZfEKS+JZHvG4cnsuDG0lwEMg==
+X-Received: by 2002:a05:6000:18a9:b0:38f:63e3:de35 with SMTP id
+ ffacd0b85a97d-38f6e975cb3mr4345340f8f.25.1740155802049; 
+ Fri, 21 Feb 2025 08:36:42 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.61.185])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38f258b44a7sm24191688f8f.12.2025.02.21.08.36.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 08:34:34 -0800 (PST)
-Message-ID: <e3719c95-a086-4aa6-a587-8daf3a350e09@linaro.org>
-Date: Fri, 21 Feb 2025 17:34:33 +0100
+ Fri, 21 Feb 2025 08:36:41 -0800 (PST)
+Message-ID: <1cf2edfd-5cce-4b15-bc28-4dcde96767b5@redhat.com>
+Date: Fri, 21 Feb 2025 17:36:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/display: add blocklist for known bad drivers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250221160101.2318357-1-alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH v1 00/19] Factor out HVF's instruction emulator
+To: Wei Liu <liuwe@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
+ phil@philjordan.eu, jinankjain@linux.microsoft.com, liuwe@microsoft.com,
+ muislam@microsoft.com, ziqiaozhou@microsoft.com, mukeshrathor@microsoft.com,
+ magnuskulke@microsoft.com, prapal@microsoft.com, jpiotrowski@microsoft.com,
+ deviv@microsoft.com
+References: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250221160101.2318357-1-alex.bennee@linaro.org>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,324 +151,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/2/25 17:01, Alex Bennée wrote:
-> While running the new GPU tests it was noted that the proprietary
-> nVidia driver barfed when run under the sanitiser:
-> 
->    2025-02-20 11:13:08,226: [11:13:07.782] Output 'headless' attempts
->    EOTF mode SDR and colorimetry mode default.
->    2025-02-20 11:13:08,227: [11:13:07.784] Output 'headless' using color
->    profile: stock sRGB color profile
-> 
->    and that's the last thing it outputs.
-> 
->    The sanitizer reports that when the framework sends the SIGTERM
->    because of the timeout we get a write to a NULL pointer (but
->    interesting not this time in an atexit callback):
-> 
->    UndefinedBehaviorSanitizer:DEADLYSIGNAL
->    ==471863==ERROR: UndefinedBehaviorSanitizer: SEGV on unknown address
->    0x000000000000 (pc 0x7a18ceaafe80 bp 0x000000000000 sp 0x7ffe8e3ff6d0
->    T471863)
->    ==471863==The signal is caused by a WRITE memory access.
->    ==471863==Hint: address points to the zero page.
->        #0 0x7a18ceaafe80
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16afe80)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #1 0x7a18ce9e72c0
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15e72c0)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #2 0x7a18ce9f11bb
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15f11bb)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #3 0x7a18ce6dc9d1
->    (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x12dc9d1)
->    (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
->        #4 0x7a18e7d15326 in vrend_renderer_create_fence
->    /usr/src/virglrenderer-1.0.0-1ubuntu2/obj-x86_64-linux-gnu/../src/vrend_renderer.c:10883:26
->        #5 0x55bfb6621871 in virtio_gpu_virgl_process_cmd
-> 
-> The #dri-devel channel confirmed:
-> 
->    <digetx> stsquad: nv driver is known to not work with venus, don't use
->        it for testing
-> 
-> So lets implement a blocklist to stop users starting a known bad
-> setup.
-> 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   meson.build                               |   4 +
->   include/qemu/host-gpu.h                   |  23 +++++
->   hw/display/virtio-gpu.c                   |   4 +
->   stubs/host-gpu.c                          |  17 ++++
->   util/host-gpu.c                           | 102 ++++++++++++++++++++++
->   stubs/meson.build                         |   4 +
->   tests/functional/test_aarch64_virt_gpu.py |   2 +
->   util/meson.build                          |   2 +
->   8 files changed, 158 insertions(+)
->   create mode 100644 include/qemu/host-gpu.h
->   create mode 100644 stubs/host-gpu.c
->   create mode 100644 util/host-gpu.c
-> 
-> diff --git a/meson.build b/meson.build
-> index 4588bfd864..8f4a431445 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1373,12 +1373,16 @@ if not get_option('qatzip').auto() or have_system
->   endif
->   
->   virgl = not_found
-> +vulkan = not_found
->   
->   have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
->   if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
->     virgl = dependency('virglrenderer',
->                        method: 'pkg-config',
->                        required: get_option('virglrenderer'))
-> +  vulkan = dependency('vulkan',
-> +                      method: 'pkg-config',
-> +                      required: get_option('virglrenderer'))
->   endif
->   rutabaga = not_found
->   if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
-> diff --git a/include/qemu/host-gpu.h b/include/qemu/host-gpu.h
-> new file mode 100644
-> index 0000000000..45053c2f77
-> --- /dev/null
-> +++ b/include/qemu/host-gpu.h
-> @@ -0,0 +1,23 @@
-> +/*
-> + * Utility functions to probe host GPU
-> + *
-> + * Copyright (c) 2025 Linaro Ltd
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef HOST_GPU_H
-> +#define HOST_GPU_H
-> +
-> +#include "qapi/error.h"
-> +
-> +/**
-> + * validate_vulkan_backend() - verify working backend
-> + *
-> + * errp: error pointer
-> + *
-> + * If the system vulkan implementation is known to not work return
-> + * false otherwise true.
-> + */
-> +bool validate_vulkan_backend(Error **errp);
-> +
-> +#endif /* HOST_GPU_H */
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 11a7a85750..816eedf838 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -32,6 +32,7 @@
->   #include "qemu/module.h"
->   #include "qapi/error.h"
->   #include "qemu/error-report.h"
-> +#include "qemu/host-gpu.h"
->   
->   #define VIRTIO_GPU_VM_VERSION 1
->   
-> @@ -1498,6 +1499,9 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
->               error_setg(errp, "venus requires enabled blob and hostmem options");
->               return;
->           }
+On 2/21/25 09:36, Wei Liu wrote:
+> This patch series attempts to make the instruction emulator in HVF a common
+> component for the i386 target. It removes HVF specific code by either using a
+> set of hooks or moving it to better locations. The new incoming MSHV
+> accelerator will implement the hooks, and where necessary, enhance the emulator
+> and / or add new hooks.
 
-Why don't we check VIRTIO_GPU_FLAG_VENUS_ENABLED in 
-virtio_gpu_gl_device_realize()?
+Good!
 
-> +        if (!validate_vulkan_backend(errp)) {
-> +            return;
-> +        }
->       #else
->           error_setg(errp, "old virglrenderer, venus unsupported");
->           return;
-> diff --git a/stubs/host-gpu.c b/stubs/host-gpu.c
-> new file mode 100644
-> index 0000000000..7bf76ee4f6
-> --- /dev/null
-> +++ b/stubs/host-gpu.c
-> @@ -0,0 +1,17 @@
-> +/*
-> + * Stub of utility functions to probe host GPU
-> + *
-> + * Copyright (c) 2025 Linaro Ltd
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/host-gpu.h"
-> +
-> +bool validate_vulkan_backend(Error **errp)
-> +{
-> +    error_setg(errp, "No vulkan library present");
-> +    return false;
+> This patch series is in RFC state. The patches have been lightly tested by
+> running a Linux VM on an Intel-based Mac.  We hope to get some feedback on the
+> overall approach, and let the community bikeshed a bit about names and
+> location.
 
-Do we really fail virtio_gpu_device_realize() in this case?
+For the bikeshedding my only suggestion is to replace mmio_buf with 
+emu_mmio_buf, and replace x86-insn-emul, with just "emulate" or 
+something like that.  That is, no need to repeat x86 inside the 
+target/i386 directory, especially since the filenames also start with x86.
 
-> +}
-> diff --git a/util/host-gpu.c b/util/host-gpu.c
-> new file mode 100644
-> index 0000000000..5e7bf2557c
-> --- /dev/null
-> +++ b/util/host-gpu.c
-> @@ -0,0 +1,102 @@
-> +/*
-> + * Utility functions to probe host GPU
-> + *
-> + * Copyright (c) 2025 Linaro Ltd
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/host-gpu.h"
-> +
-> +#include <vulkan/vulkan.h>
-> +
+> First two patches fix issues in the existing code. They can be applied
+> regardless of the discussion around the overall approach.
 
-static
+These four can also be applied:
 
-> +const char *extensions[] = {
-> +    /* needed to query the driver details */
-> +    "VK_KHR_get_physical_device_properties2",
-> +};
-> +
-> +/*
-> + * Info for known broken drivers. Sadly driver version info tends to
-> + * be in the driverInfo text field which is free form so tricky to
-> + * parse.
-> + */
-> +struct VkDriverBlockList {
-> +    VkDriverId id;
-> +    const char *reason;
-> +};
-> +
+  target/i386/hvf: use x86_segment in x86_decode.c
+  target/i386/hvf: move and rename {load, store}_regs
+  target/i386/hvf: move and rename simulate_{rdmsr, wrmsr}
+  target/i386/hvf: drop some dead code
 
-static const
+> The checkpatch script complains about a few things. Some are from the original
+> code I didn't touch. For the code I changed or moved, it complains that some
+> lines are long (>80). Seeing that the rule was not followed strictly in the old
+> code base, I held off fixing that class of issues. The other thing it complains
+> is there is no entry for the new directory in MAINTAINERS. We can fix these
+> issues if they are deemed important.
 
-> +struct VkDriverBlockList vulkan_blocklist[] = {
-> +    /* at least 535.183.01 is reported to SEGV in libnvidia-eglcore.so */
-> +    { VK_DRIVER_ID_NVIDIA_PROPRIETARY, "proprietary nVidia driver is broken" },
-> +};
-> +
-> +static bool is_driver_blocked(VkPhysicalDevice dev, Error **errp)
-> +{
-> +    VkPhysicalDeviceDriverProperties driverProperties = {
-> +        .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES,
-> +        .pNext = NULL
-> +    };
-> +    VkPhysicalDeviceProperties2 deviceProperties2 = {
-> +        .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
-> +        .pNext = &driverProperties
-> +    };
-> +    VkPhysicalDeviceProperties *deviceProperties = &deviceProperties2.properties;
-> +
-> +    vkGetPhysicalDeviceProperties2(dev, &deviceProperties2);
-> +
-> +    for (int i = 0; i < ARRAY_SIZE(vulkan_blocklist); i++) {
-> +        if (driverProperties.driverID == vulkan_blocklist[i].id) {
-> +            error_setg(errp, "Blocked GPU %s because %s",
-> +                       deviceProperties->deviceName,
-> +                       vulkan_blocklist[i].reason);
-> +            return true;
-> +        }
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +bool validate_vulkan_backend(Error **errp)
-> +{
+Yes, no problem.  The new directory thing is just a warning but I think 
+you could add a new entry with both MSHV and HVF people on it.
 
-static const
+> Please let us know what you think. The alternative is to duplicate the
+> instruction emulator code in the mshv accelerator. That looks to be a worse
+> option.
+Yes, definitely.
 
-> +    VkInstanceCreateInfo instance_info = {
-> +        VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-> +        NULL, /* pNext extension */
-> +        0,    /* VkInstanceCreateFlags */
-> +        NULL, /* Application Info */
-> +        0, NULL, /* no Enabled Layers */
-> +        ARRAY_SIZE(extensions), extensions, /* Extensions */
-> +    };
-> +
-> +    VkInstance inst;
-> +    VkResult res;
-> +
-> +    res = vkCreateInstance(&instance_info, NULL, &inst);
-> +
-> +    if ( res == VK_SUCCESS ) {
-> +        uint32_t count;
-
-g_autofree
-
-> +        VkPhysicalDevice *devices;
-> +
-> +        /* Do the enumeration two-step */
-> +        vkEnumeratePhysicalDevices(inst, &count, NULL);
-> +        devices = g_new0(VkPhysicalDevice, count);
-> +        vkEnumeratePhysicalDevices(inst, &count, devices);
-> +
-> +        for (int i = 0; i  < count; i++) {
-> +            if (is_driver_blocked(devices[i], errp)) {
-> +                return false;
-> +            }
-> +        }
-> +    } else {
-> +        error_setg(errp, "Could not initialise a Vulkan instance");
-> +        return false;
-> +    }
-> +
-> +    /*
-> +     * It would be nice to g_autofree the instance, but returning
-> +     * false will abort start-up anyway.
-> +     */
-> +    vkDestroyInstance(inst, NULL);
-> +    return true;
-> +}
-> diff --git a/stubs/meson.build b/stubs/meson.build
-> index b0fee37e05..c18501aa6d 100644
-> --- a/stubs/meson.build
-> +++ b/stubs/meson.build
-> @@ -89,3 +89,7 @@ if have_system or have_user
->     stub_ss.add(files('hotplug-stubs.c'))
->     stub_ss.add(files('sysbus.c'))
->   endif
-> +
-> +if not vulkan.found()
-> +  stubs_ss.add(files('host-gpu.c'))
-> +endif
-> diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-> index 7a8471d1ca..9a0e694049 100755
-> --- a/tests/functional/test_aarch64_virt_gpu.py
-> +++ b/tests/functional/test_aarch64_virt_gpu.py
-> @@ -79,6 +79,8 @@ def _run_virt_gpu_test(self, gpu_device,  weston_cmd, weston_pattern):
->                   self.skipTest("Can't access host DRM render node")
->               elif "'type' does not accept value 'egl-headless'" in excp.output:
->                   self.skipTest("egl-headless support is not available")
-> +            elif "Blocked GPU" in excp.output:
-> +                self.skipTest("GPU is in block list")
->               else:
->                   self.log.info(f"unhandled launch failure: {excp.output}")
->                   raise excp
-> diff --git a/util/meson.build b/util/meson.build
-> index 780b5977a8..7c6cc36e07 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -132,3 +132,5 @@ elif cpu in ['ppc', 'ppc64']
->   elif cpu in ['riscv32', 'riscv64']
->     util_ss.add(files('cpuinfo-riscv.c'))
->   endif
-> +
-> +util_ss.add(when: vulkan, if_true: files('host-gpu.c'))
+Paolo
 
 
