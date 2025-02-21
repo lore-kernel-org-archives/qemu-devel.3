@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB3FC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C520BC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5P-00028U-HE; Fri, 21 Feb 2025 07:24:55 -0500
+	id 1tlS4y-00086W-Ai; Fri, 21 Feb 2025 07:24:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5F-0001F2-4W
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:47 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4w-0007x6-MF
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5C-0007EU-Bj
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:44 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4t-0007C3-93
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140681;
+ s=mimecast20190719; t=1740140662;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y+Y5g8wbgtarePqnIrjsvz5QinXPsEQErGBVpb/bDhs=;
- b=DaBHADIoPOLrGSjn5LmbojwpDnaw6sGtjRb6iH1edK0war9917uoImgYphiQFtwMBFg2U5
- /7IY1WDKt0uzm1aa8p1oQVoNLw98joieGP3EoUVm75V5AnbcTK0oC5itVcChlBQhPFw4rz
- mQwnj85FvOsM7m+gdfRqe3sz4Gy9GJg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u27NKlvtYL4RNuhqQv/c+tDTZMnad0qlqsDe9OD9/Lo=;
+ b=VxZcGYT37CZAgHl0dcjh6ClMgtDQvOq+i8ZOBhXMDsoFrOgDcEbvmQznRUvEp2yJyzHzDJ
+ XgMekagWX8sN2p2yvqMPzLDFVqUx2iDOtTjcweo+tUm07zalRSrL0Cp7oj7E89Bgg6kikp
+ N3ITkfKEO8zF8kK5nmXNGZ9USEzVUe8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-I-tzmKEfOlK_MT18FABBQQ-1; Fri, 21 Feb 2025 07:24:40 -0500
-X-MC-Unique: I-tzmKEfOlK_MT18FABBQQ-1
-X-Mimecast-MFC-AGG-ID: I-tzmKEfOlK_MT18FABBQQ_1740140679
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4399d2a1331so10852675e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:40 -0800 (PST)
+ us-mta-484-sPKOyW18PGq8cIGO07cErQ-1; Fri, 21 Feb 2025 07:24:21 -0500
+X-MC-Unique: sPKOyW18PGq8cIGO07cErQ-1
+X-Mimecast-MFC-AGG-ID: sPKOyW18PGq8cIGO07cErQ_1740140660
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4393e8738b3so14979895e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140679; x=1740745479;
+ d=1e100.net; s=20230601; t=1740140659; x=1740745459;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y+Y5g8wbgtarePqnIrjsvz5QinXPsEQErGBVpb/bDhs=;
- b=Q8IWcMzrk1OXKcXQSB67SFNdstZlFvjGYf7xjrB2jiJHlVaZ7Y90g/Ghocdo36x4Vd
- 74ZQvB9hNZYs9MJKp4HIbvK/rd8dSbHnqkE0O5lxeFAXIEzd+mY2us9jwqsFyfa31dVw
- LAfcYEyRIyKZKW0PMg9dlChvjhkswCQJdmcrxbORPcs7aRLbMtSbrzsAzStWbC5yY1K2
- 0osVsSyGmMbica1XxHszol71t3clfJPnSoAu6gJxuMC4tRnCeqL4QSyLU1B5vwNssk31
- LnNFlKmUlvtninzmJ/MIobORMLs5OmZ6T/8vjJDIU9BjgEK0ptDv2E0vWThDaNTtAO3n
- CWcg==
-X-Gm-Message-State: AOJu0Yy3YUK6zZOF/VO1Rp7uQi4Lq7bNUUY9kLlYJAyxHWLOU0Nk2K0p
- JlwHFAmQRy8S23hnT3JGQFqlD0Vm9yshn4GXe3pfu3XxWiwbtpDi82MZK9PUuUYn6tAgzNvCk9K
- xCo7qYfcS/CEYo6xQu9juy1Rw1BmbjMxPWhuWltsXTab7XGaa8D0RlEpOUM0OuvBF4Wh0BYnRKo
- dUWreYaXGjtw3Esp/hBPHWhR4Z2df2Eg==
-X-Gm-Gg: ASbGnctmpgl/C9ZFvbFwx4djGFVY+hMibFfvridBJ42qshT77FOhjQ7YsEju7TaB5bB
- PPO7fqDzUOZ2brp9nbWW5j3+WSfe9gm6eFLbUTQEg/V+MXnB/H6OeZ51lPtiUC3JOI05AZNZVAC
- zUbET6rP6MQ3JithQA1kyDZ4mdG2qoZTe8Ew84hl+k68D+XE7B1OQp5MYFiUGgg2GQeYwGN8Mvc
- PA3lFFlYn1OUqbckbkzaeEn2TfOToXPV/tUc/hfWCr5NVkc3OtVpHo2y1FFNwUoInYDFcFPkHgC
- t0jcKA==
-X-Received: by 2002:a05:600c:6b66:b0:439:96a4:d2a8 with SMTP id
- 5b1f17b1804b1-439a2fb2c41mr56334785e9.5.1740140678858; 
- Fri, 21 Feb 2025 04:24:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGBIYq7g/aIhnFqWv6GdVkr3BQpXbN/J9tjIC8IdZtcPFONd6G8oGq4LP5nOL6C9aWpvPQl+A==
-X-Received: by 2002:a05:600c:6b66:b0:439:96a4:d2a8 with SMTP id
- 5b1f17b1804b1-439a2fb2c41mr56334425e9.5.1740140678405; 
- Fri, 21 Feb 2025 04:24:38 -0800 (PST)
+ bh=u27NKlvtYL4RNuhqQv/c+tDTZMnad0qlqsDe9OD9/Lo=;
+ b=JheR72ecmfoE7+2vCaYV83Ap8Vu1QRc7EouQ0y9VPShobXwabi+TxfZ9NZCvERa6qj
+ ENPiu30robJvJ4Zxb4xaTuKtsnTbtLVXbgRviZd3JniY3BA2K/qe7DRLWgs6rwparZzR
+ bj/Gwb5kRyCmA+fjuEk487P/EqSZg5ORUpAKn9AgZDrljaLN+FY2hn3whSgTx7OyqRcN
+ GLHXnPMdioPbzMytDti661JzIVIuKzW9qJPm9sS1ztS6EUKbxT/MXnaoAIM7Q35sRVRj
+ EJFGp36yaBrNe8jt6Xw+7idbJxLCcVBgIxdpqhz/NThAeAwD0/35W9dLiimdbXh03FuW
+ fIFA==
+X-Gm-Message-State: AOJu0YzpOU5JSo0FQHnTJfovrWdgsGvQ+dToidpsFc0SHQ24J9KF3dEk
+ QG+xb9fyhh/h7Iw/D1c4Zt3xcvH0m4oCJcYxApHxOs1fJG9w7WAjcQVbDtJQyMOl+yYNazqVz6j
+ ykHTQCwp28ql6BG+RECJCGuM2zFvo9K+Ja+BlYSCKWclXYAqBnI/tGupMkLZ96NDZuw5XLSuYHz
+ dW8AlnTkgHSiQm2V8N8Mm3pzMKKp9lag==
+X-Gm-Gg: ASbGnctMQZB0ZiAvSCKZ8d3ldpLaw9eua4A+F8acOfyBu3SqSRRYTFJUowHyZ2KCRfM
+ v7/5DQsJ+UvM9JC9WSIoE2ADqoRRpc2L5yHBo/mfEStXRWwh04j5iOEUwLUpAZ25c00qLCMNAsI
+ KURRB3SetSvEHSvTuXYEMlcpKAzZQH+BGmSUOziHx65tiKLEj4D7E3nxcOnQLEKPgU1UADHJWP1
+ 8M/zVLBDZHBkzHCm0xkfFDtRYdXmshZLB9ZaWAld1KRmyLw2e0LqAIZUw+fTRPVl0abLlDQ0Uaz
+ 1tUpcw==
+X-Received: by 2002:a05:600c:5101:b0:439:65f0:c9ce with SMTP id
+ 5b1f17b1804b1-439ae220a84mr21414935e9.25.1740140659478; 
+ Fri, 21 Feb 2025 04:24:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGkanAFun3kgOrIGed7mKCligMYCtqpxaZuvTDrHUsPKhnQURrgk8syYfc4clZ/xQe1ug+xSg==
+X-Received: by 2002:a05:600c:5101:b0:439:65f0:c9ce with SMTP id
+ 5b1f17b1804b1-439ae220a84mr21414675e9.25.1740140659021; 
+ Fri, 21 Feb 2025 04:24:19 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b6f8b1fesm1528215e9.32.2025.02.21.04.24.36
+ 5b1f17b1804b1-439b02ce735sm15866465e9.3.2025.02.21.04.24.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:37 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:35 -0500
+ Fri, 21 Feb 2025 04:24:18 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:16 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
- Dorinda Bassey <dbassey@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 36/41] vhost-user-snd: correct the calculation of config_size
-Message-ID: <e87b6efb11be9f5ff213461f5ecdbae47d9402b9.1740140520.git.mst@redhat.com>
+ myluo24@m.fudan.edu.cn, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>
+Subject: [PULL 31/41] cryptodev/vhost: allocate CryptoDevBackendVhost using
+ g_mem0()
+Message-ID: <83cb18ac4500f3a14067b19408705068647cb0c5.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -114,86 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Use virtio_get_config_size() rather than sizeof(struct
-virtio_snd_config) for the config_size in the vhost-user-snd frontend.
-The frontend shall rely on device features for the size of the device
-configuration space. The presence of `controls` in the config space
-depends on VIRTIO_SND_F_CTLS according to the specification (v1.3):
-`
-5.14.4 Device Configuration Layout
-...
+The function `vhost_dev_init()` expects the `struct vhost_dev`
+(passed as a parameter) to be fully initialized. This is important
+because some parts of the code check whether `vhost_dev->config_ops`
+is NULL to determine if it has been set (e.g. later via
+`vhost_dev_set_config_notifier`).
 
-controls
-(driver-read-only) indicates a total number of all available control
-elements if VIRTIO_SND_F_CTLS has been negotiated.
-`
-This fixes an issue introduced by commit ab0c7fb2 ("linux-headers:
-update to current kvm/next") in which the optional field `controls` is
-added to the virtio_snd_config structure. This breaks vhost-user-device
-backends that do not implement the `controls` field.
+To ensure this initialization, it’s better to allocate the entire
+`CryptoDevBackendVhost` structure (which includes `vhost_dev`) using
+`g_mem0()`, following the same approach used for other vhost devices,
+such as in `vhost_net_init()`.
 
-Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-Message-Id: <20250217131255.829892-1-mvaralar@redhat.com>
+Fixes: 042cea274c ("cryptodev: add vhost-user as a new cryptodev backend")
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Dorinda Bassey <dbassey@redhat.com>
+Reported-by: myluo24@m.fudan.edu.cn
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250211135523.101203-1-sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/vhost-user-snd.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ backends/cryptodev-vhost.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-index 8610370af8..b414c75c06 100644
---- a/hw/virtio/vhost-user-snd.c
-+++ b/hw/virtio/vhost-user-snd.c
-@@ -16,6 +16,18 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_snd.h"
+diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
+index 8718c97326..943680a23a 100644
+--- a/backends/cryptodev-vhost.c
++++ b/backends/cryptodev-vhost.c
+@@ -53,7 +53,7 @@ cryptodev_vhost_init(
+     CryptoDevBackendVhost *crypto;
+     Error *local_err = NULL;
  
-+static const VirtIOFeature feature_sizes[] = {
-+    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
-+    .end = endof(struct virtio_snd_config, controls)},
-+    {}
-+};
-+
-+static const VirtIOConfigSizeParams cfg_size_params = {
-+    .min_size = endof(struct virtio_snd_config, chmaps),
-+    .max_size = sizeof(struct virtio_snd_config),
-+    .feature_sizes = feature_sizes
-+};
-+
- static const VMStateDescription vu_snd_vmstate = {
-     .name = "vhost-user-snd",
-     .unmigratable = 1,
-@@ -23,16 +35,20 @@ static const VMStateDescription vu_snd_vmstate = {
- 
- static const Property vsnd_properties[] = {
-     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-+    DEFINE_PROP_BIT64("controls", VHostUserBase,
-+                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
- };
- 
- static void vu_snd_base_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-     VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
-+    VirtIODevice *vdev = &vub->parent_obj;
- 
-     vub->virtio_id = VIRTIO_ID_SOUND;
-     vub->num_vqs = 4;
--    vub->config_size = sizeof(struct virtio_snd_config);
-+    vub->config_size = virtio_get_config_size(&cfg_size_params,
-+                                              vdev->host_features);
-     vub->vq_size = 64;
- 
-     vubs->parent_realize(dev, errp);
+-    crypto = g_new(CryptoDevBackendVhost, 1);
++    crypto = g_new0(CryptoDevBackendVhost, 1);
+     crypto->dev.max_queues = 1;
+     crypto->dev.nvqs = 1;
+     crypto->dev.vqs = crypto->vqs;
 -- 
 MST
 
