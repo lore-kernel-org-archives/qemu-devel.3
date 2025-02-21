@@ -4,101 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DBE6C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E55C021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 16:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlVN4-0006ED-5l; Fri, 21 Feb 2025 10:55:23 -0500
+	id 1tlVSy-00084k-F7; Fri, 21 Feb 2025 11:01:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1tlVN2-0006D2-0G; Fri, 21 Feb 2025 10:55:20 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1tlVMz-0004dt-9W; Fri, 21 Feb 2025 10:55:19 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LFTB9W008731;
- Fri, 21 Feb 2025 15:55:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=JdKdHfspwVppOCB2NOZ36JEx2X2B/ycvta/nAQUvm
- qw=; b=fj+pFBV01bABMwPWf80RcBBVQt2m3+0WH3nTOPB5F9PCdT7OuQa73LRhY
- EBCeBIbl+kn9/H5mAIoOFoqpf2Ai2KtIX1wezNll2dVL/v4ChE85k1sD1lGFar2m
- 06+A8N6S6jmKxyIXwHXMG3BJddXG5qnN61sLsX7/9Qqhp5PMcdbLCHjEqCI10XJM
- STrGDMlfzkYfdStT5ajgecWEpesLfZL4Jmyk2FSk6DLNFt/akvhueGbkhwTYKsi3
- yKBhOzqhBwEvuOGh5kAppwEdWktcrHzC3PKcVJEOywe92CVweySy+fcaovFas5hz
- ZacyzmcgBCxFjEhRum2TEy2JHle/A==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xm752q29-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Feb 2025 15:55:14 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51LFq00Y023444;
- Fri, 21 Feb 2025 15:55:14 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xm752q26-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Feb 2025 15:55:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51LCTLhV002297;
- Fri, 21 Feb 2025 15:55:13 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 44w03xgscx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Feb 2025 15:55:13 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51LFtA0W59965938
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 21 Feb 2025 15:55:10 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E4A2220043;
- Fri, 21 Feb 2025 15:55:09 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8F40020040;
- Fri, 21 Feb 2025 15:55:06 +0000 (GMT)
-Received: from vaibhav?linux.ibm.com (unknown [9.39.30.226])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
- Fri, 21 Feb 2025 15:55:06 +0000 (GMT)
-Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
- Fri, 21 Feb 2025 21:25:04 +0530
-From: Vaibhav Jain <vaibhav@linux.ibm.com>
-To: qemu-devel@nongnu.org, kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
-Cc: Vaibhav Jain <vaibhav@linux.ibm.com>, npiggin@gmail.com,
- harshpb@linux.ibm.com, shivaprasadbhat@gmail.com
-Subject: [PATCH v4] spapr: nested: Add support for reporting Hostwide state
- counter
-Date: Fri, 21 Feb 2025 21:24:48 +0530
-Message-ID: <20250221155449.530645-1-vaibhav@linux.ibm.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tlVSr-00084E-RJ
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 11:01:21 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tlVSp-0005Jw-If
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 11:01:21 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5dee07e51aaso4277701a12.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 08:01:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740153677; x=1740758477; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xw1vF6AihJVoV0FmpHkYX7ZZTVv19ZySa0bAvebARUg=;
+ b=cskcN4kB51tgHXGh2kAor6ixZkwPVn6T2WAN7XmbqSnajoBJlbc7z/boSY6DXHGdJD
+ w05ApdzBfzpMvp+kCHUyJM+yHuqrkjIBxIvV0zr/3GkOrqGwxc/ORpvkBV3w8mE2KT3y
+ xIu3UrC07crnmKfUcHDzQ8Rcny8wJL96XCYqSaPzu/qJ7J+qeiyWX8ab+Iw/TMOwH4PV
+ ZcAsL7Mx42vU6ACCM0+/QLKltnQ5IOOrc61GjbwdDnP6cCxD+6dcZAQ/3TydmmxBEkBE
+ R24RBdJU5TMdMRpfc8gDiZ+yzuXK2Kqb8Usj2KLXABIJewl1uZ7nOVEzb9nujbZmNCrV
+ hkMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740153677; x=1740758477;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xw1vF6AihJVoV0FmpHkYX7ZZTVv19ZySa0bAvebARUg=;
+ b=qbwb8lrngF3Toxi+CnG2OZrQsQi3wMewMKGnIYHCtpOs26A0Ats79FzGoynU4q0qjK
+ Xi5pIGjn211snviA9aIB9UmFRvvDtSSWR0VUUoLhwo2LIBanpn7WCt7hEbm9KbDEcQDp
+ zYHf49pDV9hKz1/+vt424/2chdbF1in9GE3Hjw4+NdD/bcyDaXzXV4IEKS/lGCtdz5DQ
+ ZuUSD32+gvkuC69QHhI2ZT2L2eCROZJ1oTsgB0Rp0j0RGUcBaa9u6sMh8TN428QJs3Kd
+ m5jNPq1UShvZJV3xw973YjqmYLHrrUgUMIyz5Cx18+yABg804iJwL+lZAuc3zX7CVIfk
+ CgaA==
+X-Gm-Message-State: AOJu0YwHglcMCpPCpvzqnCePrqaCr8KMnd5yE+87MKM1QwteC/vfXu3O
+ EVCWeXK4CuvUStGnQI/JPHQoZpdxmhSlqzYa/cWsA6O01ZiEiVlD9jQvQv35K8Q=
+X-Gm-Gg: ASbGncsIL9FmGXTu0qoW3lCoXDiCxmbzPuwKzfQNkdKb1gIlLeJDf7TKJLB7lPzvhp8
+ rGuQk5hRl+L3/a7ZnmC6jNN1/R9J3YQp3maa9yYFctoGjXNNrmDx7iRtoQdasR9QqA6bxPIBAtc
+ xa158k2LwakAeepilv8hOD1B8OPHbTuauSHmeJ0LUP/khd/j8VTynSKdscWTMbdN3ALlnUm5FXN
+ 4MPX2IN5Ajb4S0Hz1TodI8WDLmGXxmvbWYDP6Pbtdfe0O55MihJSBWm4kfb6YAOyxepTKSyczil
+ L0yH9VMRZTCj2cqmZeher7d+ea8R
+X-Google-Smtp-Source: AGHT+IHx98+H9nn8ri5dkOmfp79xmTQmFqKesMbkEXOQ6i9x1L7qkSI9Lorz+z8S87a+J/wN77oY9w==
+X-Received: by 2002:a05:6402:4606:b0:5dc:cf9b:b033 with SMTP id
+ 4fb4d7f45d1cf-5e0b70bc283mr3016960a12.5.1740153673203; 
+ Fri, 21 Feb 2025 08:01:13 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5dece1b4e8dsm13773040a12.14.2025.02.21.08.01.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Feb 2025 08:01:12 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CEA395F8C8;
+ Fri, 21 Feb 2025 16:01:10 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] hw/display: add blocklist for known bad drivers
+Date: Fri, 21 Feb 2025 16:01:01 +0000
+Message-Id: <20250221160101.2318357-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: O54dQVIv6KPnfOGkKAe9yzi6T30jsHek
-X-Proofpoint-GUID: sEf0JACG3vueALExon64U56zaRq_mV98
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 mlxscore=0 adultscore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210111
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,441 +104,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for reporting Hostwide state counters for nested KVM pseries
-guests running with 'cap-nested-papr' on Qemu-TCG acting as
-L0-hypervisor. The Hostwide state counters are statistics about state that
-L0-hypervisor maintains for the L2-guests and represent the state of all
-L2-guests, not just a specific one.
+While running the new GPU tests it was noted that the proprietary
+nVidia driver barfed when run under the sanitiser:
 
-These stats counters are exposed to L1-Hypervisor by the L0-Hypervisor via a
-new bit-flag named 'getHostWideState' for the H_GUEST_GET_STATE hcall which
-is documented at [1]. Once this flag is set the hcall should populate the
-Guest-State-Elements in the requested GSB with the stat counter
-values. Currently following five counters are supported:
+  2025-02-20 11:13:08,226: [11:13:07.782] Output 'headless' attempts
+  EOTF mode SDR and colorimetry mode default.
+  2025-02-20 11:13:08,227: [11:13:07.784] Output 'headless' using color
+  profile: stock sRGB color profile
 
-* l0_guest_heap_size_inuse
-* l0_guest_heap_size_max
-* l0_guest_pagetable_size_inuse
-* l0_guest_pagetable_size_max
-* l0_guest_pagetable_reclaimed
+  and that's the last thing it outputs.
 
-At the moment '0' is being reported for all these counters as these
-counters doesn't align with how L0-Qemu manages Guest memory.
+  The sanitizer reports that when the framework sends the SIGTERM
+  because of the timeout we get a write to a NULL pointer (but
+  interesting not this time in an atexit callback):
 
-The patch implements support for these counters by adding new members to
-the 'struct SpaprMachineStateNested'. These new members are then plugged
-into the existing 'guest_state_element_types[]' with the help of a new
-macro 'GSBE_NESTED_MACHINE_DW' together with a new helper
-'get_machine_ptr()'. guest_state_request_check() is updated to ensure
-correctness of the requested GSB and finally h_guest_getset_state() is
-updated to handle the newly introduced flag
-'GUEST_STATE_REQUEST_HOST_WIDE'.
+  UndefinedBehaviorSanitizer:DEADLYSIGNAL
+  ==471863==ERROR: UndefinedBehaviorSanitizer: SEGV on unknown address
+  0x000000000000 (pc 0x7a18ceaafe80 bp 0x000000000000 sp 0x7ffe8e3ff6d0
+  T471863)
+  ==471863==The signal is caused by a WRITE memory access.
+  ==471863==Hint: address points to the zero page.
+      #0 0x7a18ceaafe80
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16afe80)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #1 0x7a18ce9e72c0
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15e72c0)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #2 0x7a18ce9f11bb
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15f11bb)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #3 0x7a18ce6dc9d1
+  (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x12dc9d1)
+  (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+      #4 0x7a18e7d15326 in vrend_renderer_create_fence
+  /usr/src/virglrenderer-1.0.0-1ubuntu2/obj-x86_64-linux-gnu/../src/vrend_renderer.c:10883:26
+      #5 0x55bfb6621871 in virtio_gpu_virgl_process_cmd
 
-This patch is tested with the proposed linux-kernel implementation to
-expose these stat-counter as perf-events at [2].
+The #dri-devel channel confirmed:
 
-[1]
-https://lore.kernel.org/all/20241222140247.174998-2-vaibhav@linux.ibm.com
+  <digetx> stsquad: nv driver is known to not work with venus, don't use
+      it for testing
 
-[2]
-https://lore.kernel.org/all/20241222140247.174998-1-vaibhav@linux.ibm.com
+So lets implement a blocklist to stop users starting a known bad
+setup.
 
-Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
-Changelog:
+ meson.build                               |   4 +
+ include/qemu/host-gpu.h                   |  23 +++++
+ hw/display/virtio-gpu.c                   |   4 +
+ stubs/host-gpu.c                          |  17 ++++
+ util/host-gpu.c                           | 102 ++++++++++++++++++++++
+ stubs/meson.build                         |   4 +
+ tests/functional/test_aarch64_virt_gpu.py |   2 +
+ util/meson.build                          |   2 +
+ 8 files changed, 158 insertions(+)
+ create mode 100644 include/qemu/host-gpu.h
+ create mode 100644 stubs/host-gpu.c
+ create mode 100644 util/host-gpu.c
 
-v3->v4:
-* Updated/Fixed patch description [ Nic ]
-* Renamed the newly introduced struct members and defines [ Nic ]
-* Updated 'struct guest_state_element_type.location' callback to also
-accept 'struct SpaprMachineState *' [ Nic ]
-* Updated code in 'spapr_nested.c' to pass around 'struct
-SpaprMachineState *' which eventually needs to be sent to the 'struct
-guest_state_element_type.location' callback.
-
-v2->v3:
-* Fixed minor nits suggested [Harsh]
-* s/GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE/GUEST_STATE_REQUEST_HOST_WIDE/
-in guest_state_request_check() [Harsh]
-* MInor change in the order of comparision in h_guest_getset_state()
-[Harsh]
-* Added reviewed-by of Harsh
-
-v1->v2:
-* Introduced new flags to correctly compare hcall flags
-  for H_GUEST_{GET,SET}_STATE [Harsh]
-* Fixed ordering of new GSB elements in spapr_nested.h [Harsh]
-* s/GSBE_MACHINE_NESTED_DW/GSBE_NESTED_MACHINE_DW/
-* Minor tweaks to patch description
-* Updated recipients list
----
- hw/ppc/spapr_nested.c         | 119 ++++++++++++++++++++++++----------
- include/hw/ppc/spapr_nested.h |  67 +++++++++++++++++--
- 2 files changed, 147 insertions(+), 39 deletions(-)
-
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index 7def8eb73b..4b1dee5eac 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -64,10 +64,9 @@ static
- SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
-                                                      target_ulong guestid)
- {
--    SpaprMachineStateNestedGuest *guest;
--
--    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
--    return guest;
-+    return spapr->nested.guests ?
-+        g_hash_table_lookup(spapr->nested.guests,
-+                            GINT_TO_POINTER(guestid)) : NULL;
- }
+diff --git a/meson.build b/meson.build
+index 4588bfd864..8f4a431445 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1373,12 +1373,16 @@ if not get_option('qatzip').auto() or have_system
+ endif
  
- bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
-@@ -593,26 +592,37 @@ static bool spapr_nested_vcpu_check(SpaprMachineStateNestedGuest *guest,
-     return false;
- }
+ virgl = not_found
++vulkan = not_found
  
--static void *get_vcpu_state_ptr(SpaprMachineStateNestedGuest *guest,
--                              target_ulong vcpuid)
-+static void *get_vcpu_state_ptr(SpaprMachineState *spapr,
-+                                SpaprMachineStateNestedGuest *guest,
-+                                target_ulong vcpuid)
- {
-     assert(spapr_nested_vcpu_check(guest, vcpuid, false));
-     return &guest->vcpus[vcpuid].state;
- }
+ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+ if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
+   virgl = dependency('virglrenderer',
+                      method: 'pkg-config',
+                      required: get_option('virglrenderer'))
++  vulkan = dependency('vulkan',
++                      method: 'pkg-config',
++                      required: get_option('virglrenderer'))
+ endif
+ rutabaga = not_found
+ if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
+diff --git a/include/qemu/host-gpu.h b/include/qemu/host-gpu.h
+new file mode 100644
+index 0000000000..45053c2f77
+--- /dev/null
++++ b/include/qemu/host-gpu.h
+@@ -0,0 +1,23 @@
++/*
++ * Utility functions to probe host GPU
++ *
++ * Copyright (c) 2025 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef HOST_GPU_H
++#define HOST_GPU_H
++
++#include "qapi/error.h"
++
++/**
++ * validate_vulkan_backend() - verify working backend
++ *
++ * errp: error pointer
++ *
++ * If the system vulkan implementation is known to not work return
++ * false otherwise true.
++ */
++bool validate_vulkan_backend(Error **errp);
++
++#endif /* HOST_GPU_H */
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 11a7a85750..816eedf838 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -32,6 +32,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "qemu/host-gpu.h"
  
--static void *get_vcpu_ptr(SpaprMachineStateNestedGuest *guest,
--                                   target_ulong vcpuid)
-+static void *get_vcpu_ptr(SpaprMachineState *spapr,
-+                          SpaprMachineStateNestedGuest *guest,
-+                          target_ulong vcpuid)
- {
-     assert(spapr_nested_vcpu_check(guest, vcpuid, false));
-     return &guest->vcpus[vcpuid];
- }
+ #define VIRTIO_GPU_VM_VERSION 1
  
--static void *get_guest_ptr(SpaprMachineStateNestedGuest *guest,
-+static void *get_guest_ptr(SpaprMachineState *spapr,
-+                           SpaprMachineStateNestedGuest *guest,
-                            target_ulong vcpuid)
- {
-     return guest; /* for GSBE_NESTED */
- }
- 
-+static void *get_machine_ptr(SpaprMachineState *spapr,
-+                             SpaprMachineStateNestedGuest *guest,
-+                             target_ulong vcpuid)
+@@ -1498,6 +1499,9 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+             error_setg(errp, "venus requires enabled blob and hostmem options");
+             return;
+         }
++        if (!validate_vulkan_backend(errp)) {
++            return;
++        }
+     #else
+         error_setg(errp, "old virglrenderer, venus unsupported");
+         return;
+diff --git a/stubs/host-gpu.c b/stubs/host-gpu.c
+new file mode 100644
+index 0000000000..7bf76ee4f6
+--- /dev/null
++++ b/stubs/host-gpu.c
+@@ -0,0 +1,17 @@
++/*
++ * Stub of utility functions to probe host GPU
++ *
++ * Copyright (c) 2025 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/host-gpu.h"
++
++bool validate_vulkan_backend(Error **errp)
 +{
-+    /* ignore guest and vcpuid for this */
-+    return &spapr->nested;
++    error_setg(errp, "No vulkan library present");
++    return false;
 +}
+diff --git a/util/host-gpu.c b/util/host-gpu.c
+new file mode 100644
+index 0000000000..5e7bf2557c
+--- /dev/null
++++ b/util/host-gpu.c
+@@ -0,0 +1,102 @@
++/*
++ * Utility functions to probe host GPU
++ *
++ * Copyright (c) 2025 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- /*
-  * set=1 means the L1 is trying to set some state
-  * set=0 means the L1 is trying to get some state
-@@ -1012,7 +1022,15 @@ struct guest_state_element_type guest_state_element_types[] = {
-     GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUFFER, 0x10, runbufout,   copy_state_runbuf),
-     GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUF_MIN_SZ, 0x8, runbufout, out_buf_min_size),
-     GSBE_NESTED_VCPU(GSB_VCPU_HDEC_EXPIRY_TB, 0x8, hdecr_expiry_tb,
--                     copy_state_hdecr)
-+                     copy_state_hdecr),
-+    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_HEAP_INUSE, l0_guest_heap_inuse),
-+    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_HEAP_MAX, l0_guest_heap_max),
-+    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_PGTABLE_SIZE_INUSE,
-+                           l0_guest_pgtable_size_inuse),
-+    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_PGTABLE_SIZE_MAX,
-+                           l0_guest_pgtable_size_max),
-+    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_PGTABLE_RECLAIMED,
-+                           l0_guest_pgtable_reclaimed),
- };
- 
- void spapr_nested_gsb_init(void)
-@@ -1030,8 +1048,13 @@ void spapr_nested_gsb_init(void)
-         else if (type->id >= GSB_VCPU_IN_BUFFER)
-             /* 0x0c00 - 0xf000 Thread + RW */
-             type->flags = 0;
-+        else if (type->id >= GSB_L0_GUEST_HEAP_INUSE)
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/host-gpu.h"
 +
-+            /*0x0800 - 0x0804 Hostwide Counters + RO */
-+            type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE |
-+                          GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY;
-         else if (type->id >= GSB_VCPU_LPVR)
--            /* 0x0003 - 0x0bff Guest + RW */
-+            /* 0x0003 - 0x07ff Guest + RW */
-             type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE;
-         else if (type->id >= GSB_HV_VCPU_STATE_SIZE)
-             /* 0x0001 - 0x0002 Guest + RO */
-@@ -1138,18 +1161,26 @@ static bool guest_state_request_check(struct guest_state_request *gsr)
-             return false;
-         }
- 
--        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
-+        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE) {
-+            /* Hostwide elements cant be clubbed with other types */
-+            if (!(gsr->flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a host wide "
-+                              "Element ID:%04x.\n", id);
-+                return false;
-+            }
-+        } else  if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
-             /* guest wide element type */
-             if (!(gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE)) {
--                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a guest wide "
-+                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a guest wide "
-                               "Element ID:%04x.\n", id);
-                 return false;
-             }
-         } else {
-             /* thread wide element type */
--            if (gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE) {
--                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a thread wide "
--                              "Element ID:%04x.\n", id);
-+            if (gsr->flags & (GUEST_STATE_REQUEST_GUEST_WIDE |
-+                              GUEST_STATE_REQUEST_HOST_WIDE)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a thread wide"
-+                            " Element ID:%04x.\n", id);
-                 return false;
-             }
-         }
-@@ -1418,7 +1449,8 @@ static target_ulong h_guest_create_vcpu(PowerPCCPU *cpu,
-     return H_SUCCESS;
- }
- 
--static target_ulong getset_state(SpaprMachineStateNestedGuest *guest,
-+static target_ulong getset_state(SpaprMachineState *spapr,
-+                                 SpaprMachineStateNestedGuest *guest,
-                                  uint64_t vcpuid,
-                                  struct guest_state_request *gsr)
- {
-@@ -1451,7 +1483,7 @@ static target_ulong getset_state(SpaprMachineStateNestedGuest *guest,
- 
-         /* Get pointer to guest data to get/set */
-         if (type->location && type->copy) {
--            ptr = type->location(guest, vcpuid);
-+            ptr = type->location(spapr, guest, vcpuid);
-             assert(ptr);
-             if (!~(type->mask) && is_gsr_invalid(gsr, element, type)) {
-                 return H_INVALID_ELEMENT_VALUE;
-@@ -1468,6 +1500,7 @@ next_element:
- }
- 
- static target_ulong map_and_getset_state(PowerPCCPU *cpu,
-+                                         SpaprMachineState *spapr,
-                                          SpaprMachineStateNestedGuest *guest,
-                                          uint64_t vcpuid,
-                                          struct guest_state_request *gsr)
-@@ -1491,7 +1524,7 @@ static target_ulong map_and_getset_state(PowerPCCPU *cpu,
-         goto out1;
-     }
- 
--    rc = getset_state(guest, vcpuid, gsr);
-+    rc = getset_state(spapr, guest, vcpuid, gsr);
- 
- out1:
-     address_space_unmap(CPU(cpu)->as, gsr->gsb, len, is_write, len);
-@@ -1509,27 +1542,46 @@ static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
-     target_ulong buf = args[3];
-     target_ulong buflen = args[4];
-     struct guest_state_request gsr;
--    SpaprMachineStateNestedGuest *guest;
-+    SpaprMachineStateNestedGuest *guest = NULL;
- 
--    guest = spapr_get_nested_guest(spapr, lpid);
--    if (!guest) {
--        return H_P2;
--    }
-     gsr.buf = buf;
-     assert(buflen <= GSB_MAX_BUF_SIZE);
-     gsr.len = buflen;
-     gsr.flags = 0;
--    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
++#include <vulkan/vulkan.h>
 +
-+    /* Works for both get/set state */
-+    if ((flags & H_GUEST_GET_STATE_FLAGS_GUEST_WIDE) ||
-+        (flags & H_GUEST_SET_STATE_FLAGS_GUEST_WIDE)) {
-         gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
-     }
--    if (flags & ~H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
--        return H_PARAMETER; /* flag not supported yet */
--    }
- 
-     if (set) {
-+        if (flags & ~H_GUEST_SET_STATE_FLAGS_MASK) {
-+            return H_PARAMETER;
-+        }
-         gsr.flags |= GUEST_STATE_REQUEST_SET;
-+    } else {
-+        /*
-+         * No reserved fields to be set in flags nor both
-+         * GUEST/HOST wide bits
-+         */
-+        if ((flags & ~H_GUEST_GET_STATE_FLAGS_MASK) ||
-+            (flags == H_GUEST_GET_STATE_FLAGS_MASK)) {
-+            return H_PARAMETER;
-+        }
++const char *extensions[] = {
++    /* needed to query the driver details */
++    "VK_KHR_get_physical_device_properties2",
++};
 +
-+        if (flags & H_GUEST_GET_STATE_FLAGS_HOST_WIDE) {
-+            gsr.flags |= GUEST_STATE_REQUEST_HOST_WIDE;
++/*
++ * Info for known broken drivers. Sadly driver version info tends to
++ * be in the driverInfo text field which is free form so tricky to
++ * parse.
++ */
++struct VkDriverBlockList {
++    VkDriverId id;
++    const char *reason;
++};
++
++struct VkDriverBlockList vulkan_blocklist[] = {
++    /* at least 535.183.01 is reported to SEGV in libnvidia-eglcore.so */
++    { VK_DRIVER_ID_NVIDIA_PROPRIETARY, "proprietary nVidia driver is broken" },
++};
++
++static bool is_driver_blocked(VkPhysicalDevice dev, Error **errp)
++{
++    VkPhysicalDeviceDriverProperties driverProperties = {
++        .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES,
++        .pNext = NULL
++    };
++    VkPhysicalDeviceProperties2 deviceProperties2 = {
++        .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
++        .pNext = &driverProperties
++    };
++    VkPhysicalDeviceProperties *deviceProperties = &deviceProperties2.properties;
++
++    vkGetPhysicalDeviceProperties2(dev, &deviceProperties2);
++
++    for (int i = 0; i < ARRAY_SIZE(vulkan_blocklist); i++) {
++        if (driverProperties.driverID == vulkan_blocklist[i].id) {
++            error_setg(errp, "Blocked GPU %s because %s",
++                       deviceProperties->deviceName,
++                       vulkan_blocklist[i].reason);
++            return true;
 +        }
 +    }
 +
-+    if (!(gsr.flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
-+        guest = spapr_get_nested_guest(spapr, lpid);
-+        if (!guest) {
-+            return H_P2;
-+        }
-     }
--    return map_and_getset_state(cpu, guest, vcpuid, &gsr);
-+    return map_and_getset_state(cpu, spapr, guest, vcpuid, &gsr);
- }
- 
- static target_ulong h_guest_set_state(PowerPCCPU *cpu,
-@@ -1640,7 +1692,8 @@ static int get_exit_ids(uint64_t srr0, uint16_t ids[16])
-     return nr;
- }
- 
--static void exit_process_output_buffer(PowerPCCPU *cpu,
-+static void exit_process_output_buffer(SpaprMachineState *spapr,
-+                                       PowerPCCPU *cpu,
-                                        SpaprMachineStateNestedGuest *guest,
-                                        target_ulong vcpuid,
-                                        target_ulong *r3)
-@@ -1678,7 +1731,7 @@ static void exit_process_output_buffer(PowerPCCPU *cpu,
-     gsr.gsb = gsb;
-     gsr.len = VCPU_OUT_BUF_MIN_SZ;
-     gsr.flags = 0; /* get + never guest wide */
--    getset_state(guest, vcpuid, &gsr);
-+    getset_state(spapr, guest, vcpuid, &gsr);
- 
-     address_space_unmap(CPU(cpu)->as, gsb, len, true, len);
-     return;
-@@ -1704,7 +1757,7 @@ void spapr_exit_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu, int excp)
- 
-     exit_nested_store_l2(cpu, excp, vcpu);
-     /* do the output buffer for run_vcpu*/
--    exit_process_output_buffer(cpu, guest, vcpuid, &r3_return);
-+    exit_process_output_buffer(spapr, cpu, guest, vcpuid, &r3_return);
- 
-     assert(env->spr[SPR_LPIDR] != 0);
-     nested_load_state(cpu, spapr_cpu->nested_host_state);
-@@ -1819,7 +1872,7 @@ static target_ulong h_guest_run_vcpu(PowerPCCPU *cpu,
-     gsr.buf = vcpu->runbufin.addr;
-     gsr.len = vcpu->runbufin.size;
-     gsr.flags = GUEST_STATE_REQUEST_SET; /* Thread wide + writing */
--    rc = map_and_getset_state(cpu, guest, vcpuid, &gsr);
-+    rc = map_and_getset_state(cpu, spapr,  guest, vcpuid, &gsr);
-     if (rc == H_SUCCESS) {
-         nested_papr_run_vcpu(cpu, lpid, vcpu);
-     } else {
-diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-index e420220484..f7be0d5a95 100644
---- a/include/hw/ppc/spapr_nested.h
-+++ b/include/hw/ppc/spapr_nested.h
-@@ -11,7 +11,13 @@
- #define GSB_TB_OFFSET           0x0004 /* Timebase Offset */
- #define GSB_PART_SCOPED_PAGETBL 0x0005 /* Partition Scoped Page Table */
- #define GSB_PROCESS_TBL         0x0006 /* Process Table */
--                    /* RESERVED 0x0007 - 0x0BFF */
-+                    /* RESERVED 0x0007 - 0x07FF */
-+#define GSB_L0_GUEST_HEAP_INUSE 0x0800 /* Guest Management Heap Size */
-+#define GSB_L0_GUEST_HEAP_MAX   0x0801 /* Guest Management Heap Max Size */
-+#define GSB_L0_GUEST_PGTABLE_SIZE_INUSE  0x0802 /* Guest Pagetable Size */
-+#define GSB_L0_GUEST_PGTABLE_SIZE_MAX    0x0803 /* Guest Pagetable Max Size */
-+#define GSB_L0_GUEST_PGTABLE_RECLAIMED   0x0804 /* Pagetable Reclaim in bytes */
-+                    /* RESERVED 0x0805 - 0xBFF */
- #define GSB_VCPU_IN_BUFFER      0x0C00 /* Run VCPU Input Buffer */
- #define GSB_VCPU_OUT_BUFFER     0x0C01 /* Run VCPU Out Buffer */
- #define GSB_VCPU_VPA            0x0C02 /* HRA to Guest VCPU VPA */
-@@ -196,6 +202,38 @@ typedef struct SpaprMachineStateNested {
- #define NESTED_API_PAPR    2
-     bool capabilities_set;
-     uint32_t pvr_base;
-+
-+    /**
-+     * l0_guest_heap_inuse: The currently used bytes in the Hypervisor's Guest
-+     * Management Space associated with the Host Partition.
-+     **/
-+    uint64_t l0_guest_heap_inuse;
-+
-+    /**
-+     * host_heap_max: The maximum bytes available in the Hypervisor's Guest
-+     * Management Space associated with the Host Partition.
-+     **/
-+    uint64_t l0_guest_heap_max;
-+
-+    /**
-+     * host_pagetable: The currently used bytes in the Hypervisor's Guest
-+     * Page Table Management Space associated with the Host Partition.
-+     **/
-+    uint64_t l0_guest_pgtable_size_inuse;
-+
-+    /**
-+     * host_pagetable_max: The maximum bytes available in the Hypervisor's Guest
-+     * Page Table Management Space associated with the Host Partition.
-+     **/
-+    uint64_t l0_guest_pgtable_size_max;
-+
-+    /**
-+     * host_pagetable_reclaim: The amount of space in bytes that has been
-+     * reclaimed due to overcommit in the  Hypervisor's Guest Page Table
-+     * Management Space associated with the Host Partition.
-+     **/
-+    uint64_t l0_guest_pgtable_reclaimed;
-+
-     GHashTable *guests;
- } SpaprMachineStateNested;
- 
-@@ -229,9 +267,15 @@ typedef struct SpaprMachineStateNestedGuest {
- #define HVMASK_HDEXCR                 0x00000000FFFFFFFF
- #define HVMASK_TB_OFFSET              0x000000FFFFFFFFFF
- #define GSB_MAX_BUF_SIZE              (1024 * 1024)
--#define H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE 0x8000000000000000
--#define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
--#define GUEST_STATE_REQUEST_SET              0x2
-+#define H_GUEST_GET_STATE_FLAGS_MASK   0xC000000000000000ULL
-+#define H_GUEST_SET_STATE_FLAGS_MASK   0x8000000000000000ULL
-+#define H_GUEST_SET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
-+#define H_GUEST_GET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
-+#define H_GUEST_GET_STATE_FLAGS_HOST_WIDE  0x4000000000000000ULL
-+
-+#define GUEST_STATE_REQUEST_GUEST_WIDE     0x1
-+#define GUEST_STATE_REQUEST_HOST_WIDE      0x2
-+#define GUEST_STATE_REQUEST_SET            0x4
- 
- /*
-  * As per ISA v3.1B, following bits are reserved:
-@@ -251,6 +295,15 @@ typedef struct SpaprMachineStateNestedGuest {
-     .copy = (c)                                    \
- }
- 
-+#define GSBE_NESTED_MACHINE_DW(i, f)  {                             \
-+        .id = (i),                                                  \
-+        .size = 8,                                                  \
-+        .location = get_machine_ptr,                                \
-+        .offset = offsetof(struct SpaprMachineStateNested, f),     \
-+        .copy = copy_state_8to8,                                    \
-+        .mask = HVMASK_DEFAULT                                      \
++    return false;
 +}
 +
- #define GSBE_NESTED(i, sz, f, c) {                             \
-     .id = (i),                                                 \
-     .size = (sz),                                              \
-@@ -509,9 +562,11 @@ struct guest_state_element_type {
-     uint16_t id;
-     int size;
- #define GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE 0x1
--#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY  0x2
-+#define GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE 0x2
-+#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY 0x4
-    uint16_t flags;
--    void *(*location)(SpaprMachineStateNestedGuest *, target_ulong);
-+   void *(*location)(struct SpaprMachineState *, SpaprMachineStateNestedGuest *,
-+                     target_ulong);
-     size_t offset;
-     void (*copy)(void *, void *, bool);
-     uint64_t mask;
++bool validate_vulkan_backend(Error **errp)
++{
++    VkInstanceCreateInfo instance_info = {
++        VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
++        NULL, /* pNext extension */
++        0,    /* VkInstanceCreateFlags */
++        NULL, /* Application Info */
++        0, NULL, /* no Enabled Layers */
++        ARRAY_SIZE(extensions), extensions, /* Extensions */
++    };
++
++    VkInstance inst;
++    VkResult res;
++
++    res = vkCreateInstance(&instance_info, NULL, &inst);
++
++    if ( res == VK_SUCCESS ) {
++        uint32_t count;
++        VkPhysicalDevice *devices;
++
++        /* Do the enumeration two-step */
++        vkEnumeratePhysicalDevices(inst, &count, NULL);
++        devices = g_new0(VkPhysicalDevice, count);
++        vkEnumeratePhysicalDevices(inst, &count, devices);
++
++        for (int i = 0; i  < count; i++) {
++            if (is_driver_blocked(devices[i], errp)) {
++                return false;
++            }
++        }
++    } else {
++        error_setg(errp, "Could not initialise a Vulkan instance");
++        return false;
++    }
++
++    /*
++     * It would be nice to g_autofree the instance, but returning
++     * false will abort start-up anyway.
++     */
++    vkDestroyInstance(inst, NULL);
++    return true;
++}
+diff --git a/stubs/meson.build b/stubs/meson.build
+index b0fee37e05..c18501aa6d 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -89,3 +89,7 @@ if have_system or have_user
+   stub_ss.add(files('hotplug-stubs.c'))
+   stub_ss.add(files('sysbus.c'))
+ endif
++
++if not vulkan.found()
++  stubs_ss.add(files('host-gpu.c'))
++endif
+diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
+index 7a8471d1ca..9a0e694049 100755
+--- a/tests/functional/test_aarch64_virt_gpu.py
++++ b/tests/functional/test_aarch64_virt_gpu.py
+@@ -79,6 +79,8 @@ def _run_virt_gpu_test(self, gpu_device,  weston_cmd, weston_pattern):
+                 self.skipTest("Can't access host DRM render node")
+             elif "'type' does not accept value 'egl-headless'" in excp.output:
+                 self.skipTest("egl-headless support is not available")
++            elif "Blocked GPU" in excp.output:
++                self.skipTest("GPU is in block list")
+             else:
+                 self.log.info(f"unhandled launch failure: {excp.output}")
+                 raise excp
+diff --git a/util/meson.build b/util/meson.build
+index 780b5977a8..7c6cc36e07 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -132,3 +132,5 @@ elif cpu in ['ppc', 'ppc64']
+ elif cpu in ['riscv32', 'riscv64']
+   util_ss.add(files('cpuinfo-riscv.c'))
+ endif
++
++util_ss.add(when: vulkan, if_true: files('host-gpu.c'))
 -- 
-2.48.1
+2.39.5
 
 
