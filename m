@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB44C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DCFC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlSrK-00008C-EX; Fri, 21 Feb 2025 08:14:26 -0500
+	id 1tlT17-0002VG-Bg; Fri, 21 Feb 2025 08:24:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlSrH-00007H-K5
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:14:23 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tlT15-0002V7-Qu
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:24:31 -0500
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlSrF-0005SE-7P
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:14:22 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4399d14334aso18376845e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 05:14:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tlT14-0007gd-3W
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 08:24:31 -0500
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-6f768e9be1aso30420097b3.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 05:24:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740143659; x=1740748459; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MwHjk9Sbu7J28Td7nAJZPKBSKMyF0LuqJ/6K2xgFiAY=;
- b=IOjuyEzzmiQFHY1PbsurImYityF80dMnI7HxCWSqZTDvcDEUGwslXnG2OmjkTjOayw
- gmrHrpJ2G9YYc/838mHxljC791zXrA1SIJMhFvWKvBgshVNC82DAQiK0egDO8AhHWspB
- PBXO0YTfkWF+DMrWn1ba2CGOxnx5ZCpVstGbmCSyWRp7pTuabpS3Im3edL6JEy1i1vYc
- 9nuODy2YHY1I1cMFn7WbBwGHZeSLI3sa6o++CoKVqNlIbjPMCzdbBtAwq0oQw8lZtk9N
- zFCPGEY++aft8tIjX1ghlh0DPqDuaRU60NVh6XGJBpVMefP7bHsKGKvziTUzHz0Kny+g
- FfLA==
+ d=linaro.org; s=google; t=1740144268; x=1740749068; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uu6Lp4kiIoyqmJmuFijocKRYlLPlS2tnHKEGFnEON4c=;
+ b=ySMGYod1TGkZyMHPPLOLSHTP0PU+WZ0SbgRcKznl+wXxRuQkftuaB0teoetH1J+F1c
+ +6deow5Fq3sUbrwq9kr23ertJo+LIPuvEDpxq3ljoC5vxeNglRMWGosBQikWUQgF0AC2
+ 75RZlo1xfJcYUZFj7ougz9VfV1fch1cn++8VjlV/c3GMr7ICzWcv5SVQD248jMZdkv+e
+ LpARfJ6vObwwxROMSJ3flnQ0X+59x2MOKIMti9RZsglIqSYJOmlxSYffqHtA5hjWGVQW
+ 05MhJhTAMlbBniQzhGA1bD9wYLpMP8+TzTtcxJuGQGpwD/pQLVEPulVTUIM3CanK+4ul
+ VW+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740143659; x=1740748459;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MwHjk9Sbu7J28Td7nAJZPKBSKMyF0LuqJ/6K2xgFiAY=;
- b=S5P0G0MguoONruNMd6KoVJ2/Omn33PyOLZf6r4/td8Pyk4DpX09PLvdKTpw8IUTdUH
- JsGJV4ji9v7PvV4aCxhqQPKbfwV58eYKi63m8W9Dqx87fEW6i/vq6PFv7G5L26GvqzZw
- 7fRK3V2WkiFcDsMK8pVKtrKT6Hp1j28KkxzEYpRuSUCTLfbKa/lmXaH8PSC40w5OAdAu
- VMJ2JpXr12YHihliOEYE95hjp4BYN2x1ICqsFJ75ih62TdxScywAbwfA0wiE3GAy9QlN
- MlnhrWLWXVujckYTeUEK2Pe90OHhUZkU6ZDJ2I5To2IHj8YB93t2Mc3wuuceKRT7rb9G
- u8Pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoKMHbW+It6xXeGPQfiUAdtB1rnMDQ+AzocFJ6VQ2K+tQuTejxKWrkq3Ga77OQQOcuLdiYzQiVS2aK@nongnu.org
-X-Gm-Message-State: AOJu0YxgfJVILX/mbnXUAx/YOp3djPpyRozIO+zpXw5GxlpSQMWvjmAz
- fxlezS7P0o++Y+G9yJjEIBfCRmyA2EhgeR/QnZA/+EK6RW44TCTyfBniqsctzkU=
-X-Gm-Gg: ASbGncs3phAUuMAUmWJwHxNlPILvzgykgIBs+J74UVRaVxj2DNGTJpEAMlziPEPdGwG
- a1yQf0G0mChNUxsRGrSfVfC+ukzSgkF8R5/6WNxI2EdjJmsq4FYE1QQTAKoVVZ0cLlR3/ja74p2
- lfzB4Jv97bTcfPogaARXnvTx1lKGiRFLOqZCSK1Z/o6WnI6KPyIBxiFnbHr0de+YJs5zHoblVkB
- UtkX2EdrBqLynnw+MS3FPFoOIfFh9+uQMTADDECt0iNboQO+YyiOA7CWtGsZHxaJaDd5i9U425p
- L1zdlvyiBatHWfVDaVntxU5pD1FgfPsxOVafcmgADloPyL3AXch6h9Hye0PP8qlbdtRc4g==
-X-Google-Smtp-Source: AGHT+IESeCMoZYyfTVJ7mAZeV9omg7ykJZoKxTNowWaYaWds3e5DFOSLbnttRqHtDAzvIElX0C11rA==
-X-Received: by 2002:a05:600c:3b08:b0:439:5da7:8e0 with SMTP id
- 5b1f17b1804b1-439ae1f30dbmr33251005e9.16.1740143659442; 
- Fri, 21 Feb 2025 05:14:19 -0800 (PST)
-Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b41b5sm23689847f8f.14.2025.02.21.05.14.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 05:14:18 -0800 (PST)
-Message-ID: <3c87db9f-230e-4bec-96a0-e8b41bf2333d@linaro.org>
-Date: Fri, 21 Feb 2025 14:14:18 +0100
+ d=1e100.net; s=20230601; t=1740144268; x=1740749068;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uu6Lp4kiIoyqmJmuFijocKRYlLPlS2tnHKEGFnEON4c=;
+ b=iDgJAwzgc7owwajPH5Vvq1TEVk5ojg/+d7N8UMaCFtYxd1EO9IswHAJo4Bqb+utQQn
+ OdRLSnWwe0gsfoTGiP+n/Pd2sq4brHTBrXE09jeMVj12dzYNFHdSGAlmlf4iB7/HZ2E2
+ pSBr65vIeUXkRiUU3VLmLLzqfyGB8bNIrk1O8bMjiN8P2n4tBprA3Op/Zu8pmXIrZCuG
+ f6HuT0ZG2Ah63UGUtzyzt9xlV3yWG1jiimmFMbi6rz4ZlSL3XP2KxL+ke4nsFqEgNEQb
+ g9ruuxKqPi8r0LbLKF40/Z4dkuwt14gjtBPmwoXaHgAoLST2ohDZuMhjnSWMWHtyxZm5
+ yJOA==
+X-Gm-Message-State: AOJu0YzoCe7w65ooy4pqqA2mx4YosL0rivqe+hmcbX3NGpqtZwjoiBL4
+ gddzzPTHhTO3lk4Q60UcdjeaBKfw4g1V1FwDFKb9pRv/zjw+3NTBPVR9IUiMr4RMHzGuYne4CNj
+ qoywqrrpJaKu6zAS0s1jBcMj8c5gowyJzuzq8Fg==
+X-Gm-Gg: ASbGnctR0aJ7svbTJTt+b2C9ZBNU3jgk4aJ7SBolkk/EIgxFWvp8u61JaFx2TBxraP0
+ m+tDUfs11aHoV+EdZC+is5EtmZ+gF0YyPMjNHOAUdCgPIy1a6L9zeHuQmnba76DBisPMMRvnMvs
+ lJy2BdTBCd
+X-Google-Smtp-Source: AGHT+IHMYPuDlYUxocSoUw91chXzlH/5vKyOkgVovai4vZOUGaz3S3q6Jwzs4Q9PmNcjf6PdPoQ5as+Ovl62mhGdpHg=
+X-Received: by 2002:a05:6902:706:b0:e58:55be:b0ae with SMTP id
+ 3f1490d57ef6-e5e191bb850mr6261353276.14.1740144268555; Fri, 21 Feb 2025
+ 05:24:28 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] fpu: Make floatx80 invalid encoding settable at
- runtime
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <20250217125055.160887-6-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250217125055.160887-6-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <CAFEAcA-u+TMgQV8G8LvQixE95BGhfN5hyYdxcZTnxu5StVBKRw@mail.gmail.com>
+ <014caf20-41d1-437b-bd0a-6ef263a709d1@redhat.com>
+ <9e010d8e-314e-432e-83e4-81be91d43538@redhat.com>
+In-Reply-To: <9e010d8e-314e-432e-83e4-81be91d43538@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 21 Feb 2025 13:24:17 +0000
+X-Gm-Features: AWEUYZlGfx3GDc7nggC2EAoTr2GDr2VHRb9iQIz2q74eRVssHajeSR9jDz2I2Qc
+Message-ID: <CAFEAcA8dtX1iGpoAUTF+Jd2a_qpPrKt4Qqkp+rPAdz8S_6O04A@mail.gmail.com>
+Subject: Re: debugging functional tests that only fail in 'make
+ check-functional'
+To: Thomas Huth <thuth@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,48 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/2/25 13:50, Peter Maydell wrote:
-> Because floatx80 has an explicit integer bit, this permits some
-> odd encodings where the integer bit is not set correctly for the
-> floating point value type. In In Intel terminology the
->   categories are:
->    exp == 0, int = 0, mantissa == 0 : zeroes
->    exp == 0, int = 0, mantissa != 0 : denormals
->    exp == 0, int = 1 : pseudo-denormals
->    0 < exp < 0x7fff, int = 0 : unnormals
->    0 < exp < 0x7fff, int = 1 : normals
->    exp == 0x7fff, int = 0, mantissa == 0 : pseudo-infinities
->    exp == 0x7fff, int = 1, mantissa == 0 : infinities
->    exp == 0x7fff, int = 0, mantissa != 0 : pseudo-NaNs
->    exp == 0x7fff, int = 1, mantissa == 0 : NaNs
-> 
-> The usual IEEE cases of zero, denormal, normal, inf and NaN are always valid.
-> x87 permits as input also pseudo-denormals.
-> m68k permits all those and also pseudo-infinities, pseudo-NaNs and unnormals.
-> 
-> Currently we have an ifdef in floatx80_invalid_encoding() to select
-> the x86 vs m68k behaviour.  Add new floatx80_behaviour flags to
-> select whether pseudo-NaN and unnormal are valid, and use these
-> (plus the existing pseudo_inf_valid flag) to decide whether these
-> encodings are invalid at runtime.
-> 
-> We leave pseudo-denormals as always-valid, since both x86 and m68k
-> accept them.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On Fri, 21 Feb 2025 at 13:08, Thomas Huth <thuth@redhat.com> wrote:
+>
+> On 21/02/2025 13.54, Thomas Huth wrote:
+> > diff --git a/tests/functional/test_arm_sx1.py b/tests/functional/
+> > test_arm_sx1.py
+> > --- a/tests/functional/test_arm_sx1.py
+> > +++ b/tests/functional/test_arm_sx1.py
+> > @@ -43,7 +43,8 @@ def test_arm_sx1_initrd(self):
+> >           self.vm.add_args('-append', f'kunit.enable=0 rdinit=/sbin/init
+> > {self.CONSOLE_ARGS}')
+> >           self.vm.add_args('-no-reboot')
+> >           self.launch_kernel(zimage_path,
+> > -                           initrd=initrd_path)
+> > +                           initrd=initrd_path,
+> > +                           wait_for='Boot successful')
+> >           self.vm.wait(timeout=60)
+>
+> Actually, thinking about this twice, this might even be a valid fix for your
+> problem. Without waiting for a a string that signals a successful boot, the
+> test was just firing up the guest kernel and then waiting for 60 seconds for
+> the guest kernel to boot up and shut down again. If the boot is delayed for
+> some reasons, these 60 seconds might still not be enough. So if we wait for
+> a successful boot first before starting with the timeout, the 60 seconds
+> afterwards should be enough for a successful shut down, I guess?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Doesn't that just shuffle the timeouts around? If it
+takes ages for the "boot" part then it will hit the timeout in
+the meson.build file.
 
-> ---
->   include/fpu/softfloat-types.h | 14 +++++++
->   include/fpu/softfloat.h       | 70 ++++++++++++++++++-----------------
->   fpu/softfloat.c               |  2 +-
->   target/i386/tcg/fpu_helper.c  | 24 ++++++------
->   target/m68k/cpu.c             | 28 +++++++++++++-
->   5 files changed, 92 insertions(+), 46 deletions(-)
+I'm trying with just bumping all the per-test timeouts
+in the sx1 test to 120s.
 
-Again, passing float_status argument to floatx80_invalid_encoding
-in a preliminary patch:
-
-     3 files changed, 77 insertions(+), 33 deletions(-)
+-- PMM
 
