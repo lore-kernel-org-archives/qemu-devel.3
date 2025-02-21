@@ -4,89 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C4AC021B6
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88ACBC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlTrp-0002Pq-15; Fri, 21 Feb 2025 09:19:01 -0500
+	id 1tlTyJ-0006IS-2G; Fri, 21 Feb 2025 09:25:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tlTrk-0002M5-Kn
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 09:18:56 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tlTrh-00073z-Jr
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 09:18:56 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-220f4dd756eso42413675ad.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 06:18:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740147531; x=1740752331; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vRPV5pMQqeuIeYHTl+TnsXZt99QM6n1GWtO9C1Zj3A8=;
- b=MLVGd1NDKsfdvAwXFDGkRikLPg7xfgh9MgRW2MUJgmJWIU44pFTXLhLrtpHxh+mWOL
- Mtv3t2WqmPQ0ecB4gpBpTmzCY8WHRMXSzv9n9gSR9FDtDUpE8KsJikK8cB+OsETpQ0WD
- yibgjF8UwEyh9sCKWLc7Ym1WDmKSlF6x9GnLlEK9iICLleVezKQB3aKgT7+w41tIA8yI
- fRLYhzSTm/sJXBhw9PSscF44eD3vSST+g6x8n3uC8jIWJsQzr91vxHt83n01TJUuQU6/
- p576a8YXm7oOqlXTtMKmXO4s6KTUdGrzBC8juBHBaygIfKKcTyC5ifUnlgeawjbbB7sp
- cPww==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tlTy7-0006Hu-Lo
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 09:25:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tlTy6-0000I1-3W
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 09:25:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740147928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=vcaHqrRRq6tcYLUiQcJufhAfxjn15bqIY3uspjlXzIc=;
+ b=c5xWJkoslM8Cz3/6e1EjLf1NTP7sKVeauuBZQ7hwjLbeQSeSi289ZSVuFGFb0DRu6Bgo6A
+ uaPBPV2HcvRKrcJGkqh95XPBuLe0vbvIJBGvpgwqzwaYC1yHOKuD0n5BwFsG2HopYkimH0
+ 1AM9JxE6IzpiQ3fN9laaNxbpdh8Yxzs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-83-exmCFxotOgmWhsIoyPJAMw-1; Fri, 21 Feb 2025 09:25:25 -0500
+X-MC-Unique: exmCFxotOgmWhsIoyPJAMw-1
+X-Mimecast-MFC-AGG-ID: exmCFxotOgmWhsIoyPJAMw_1740147925
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-439a0e28cfaso11678485e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 06:25:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740147531; x=1740752331;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vRPV5pMQqeuIeYHTl+TnsXZt99QM6n1GWtO9C1Zj3A8=;
- b=dFrCY0iBqJJ11PeNO6zrC6m5radNdlkxEqrebM/QjOJRGtwnLfCQT/cg21au5u23P5
- aENxuyMnmwzZCv4xrEZmR2vl1J/DKy3Dtx06X8oIWxrLtePngabZFi+xiLct8At/xhZo
- gjNp5wtW1M4sEdWs7JQ1e6a9RZwmbCpcs35Ly/zulmC7H3TOJBJPJqjVtW4Qy9btZg9/
- wSRJazlR8JsD4HfyOnba5vgXMk0UOOeNM6ckmnRqZilyFF7zMCc6A0/jqoCLq+jqKoiJ
- gdrmpjF+FdQWpYITS5l3A0QetfY/nUGsUFQDioe7n6YevKQGUPb/f9Y8qxkGD8885lZp
- F0CA==
-X-Gm-Message-State: AOJu0YwqAPx6C/+Rivx4FPJGT+faW8sYlb0Bcg5k4p5NSfo+EEvG6lH4
- wz7oEmDCUkIX7/TCJk311C+pNjMkHL4KTrl3v7q6KxJ3AvDbxE+6DNAXTcliZc7CpNmDJMxANQV
- m
-X-Gm-Gg: ASbGncs7BqLt7r3Zfc0VUFq7wBJOilcyc4JK7MsibXdxstnVR0howVzg1SjF75Ih2z+
- kMUazshP7JJd2cvte6/GmpZctukrTTqDnhqhhakOKS5oLOeHeXOX/tK48DW9DEYA3UPc11Tffsy
- a6Uzbfys4oHa1vXVBR3pzc71nEZyEL4yxse7HFXKayjvzDH21gV1+Rxx+6LXTD46uSCK0iEXyh2
- WzsKnUvjhT1iWcx15XsqHLFjKW6i19BVX9K37qMdfWpA4BDQ/ZdU/vv+yp9bNcqwgDnqDHkmzKU
- er0cTscgB5sERAIL8deFUQ4o5ugguq+s8sb1hL+flNLFoeiqCg48rw==
-X-Google-Smtp-Source: AGHT+IG1gJbZSLGT8kbGcLEdEUZfvd4h5LxJewnrUzdqufxPWGt1QSLacG/vEj7frKnEEZkMBxgkAw==
-X-Received: by 2002:a05:6a21:9218:b0:1ee:cb08:d0a8 with SMTP id
- adf61e73a8af0-1eef3cb91d7mr6582896637.21.1740147531584; 
- Fri, 21 Feb 2025 06:18:51 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([187.11.154.120])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-734300da098sm1150290b3a.129.2025.02.21.06.18.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 06:18:50 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 3/3] target/riscv/kvm: add extensions after 6.14-rc3 update
-Date: Fri, 21 Feb 2025 11:18:34 -0300
-Message-ID: <20250221141834.626722-4-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250221141834.626722-1-dbarboza@ventanamicro.com>
-References: <20250221141834.626722-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1740147925; x=1740752725;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vcaHqrRRq6tcYLUiQcJufhAfxjn15bqIY3uspjlXzIc=;
+ b=HYbr3qWC3ymq8JbN/rVqmPF2+8gtpDMn1gxJK/cKqAfYVKRVSIauKraMCTKYf+KXjh
+ FeEh+cidwJCPbDYVgeXVQeTkUTxBmabi0K3nDqZzjeZ94qM20khzQ6oYuvB7xeizBc63
+ 6kPug6Dh1WGZh/2edJPZEr2WryV8vqZ9KAX3Os6uWxn+hkyyPSZQsR8TagsEYfmTQwGQ
+ pNbJReGEWGs70i8MbwN3M5HypmmLaxPxmBGpA2DM3OuWaQd9adg9y4wpsg/8cJujciSW
+ 7fvnF3nOQSc98vr6QOkDrDkY0VAdR1zhGKIelmttPlK/sMWrBtV26f5KfEzgHApFrVhj
+ yWIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWek8WoV2d5on2AyEUXYyMPaclJ8WCfzV3QgdnzT581cYA0glCIgSzuQFZBzdSkaypwf3tXkYYjTfKS@nongnu.org
+X-Gm-Message-State: AOJu0YwKrs2jCacJI5Z3DrUC4IpjI5HekYVYXepnvDZIV63YwAYP6Ob4
+ lyBUD0ECDglT4/VN6A7dcaztguc8pkSi+i5ZNLZVJC2Im75FqLwSO5SD7K+5q0SnBBmv8ryK9Zx
+ /27+z4a37ze8lsAf/HC6s8bG/+6SBgSmv7fMPbZ3hXuhpyXNUKO5M
+X-Gm-Gg: ASbGncsyBkrSvTHdB1E7t3pqOaxKx1DKX7DBcE4COIdjVbuUaF5YU5XfF56plA3bYcm
+ NGl8otykC/GLx++mincdjPMQP52Y1iFijM17e4up8rEQNYKnXBR2lFhEEnvcb1IBe8znlnVxQWZ
+ egTQbmCRqYGHr7DqjJ3ffju8+Sw7rdGFVTqItYQ6gKKaR3aXudN7XDvueLO1ifT0Z0p7nXXxw7X
+ tWU9ny/icYLSUnHhFuV8hAUJUcBsNuElFWBV3cNAiPWOJH572147M8SHEZsTOo4kpnFEHpjl5Mr
+ D4Z+0M6ToU966PohpAVJMVLHtWGL9TbsVai0ljqgZzIvkDE=
+X-Received: by 2002:a05:600c:1c1b:b0:439:942c:c1cd with SMTP id
+ 5b1f17b1804b1-439ae1f1991mr29895675e9.15.1740147924747; 
+ Fri, 21 Feb 2025 06:25:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGaKV9ADd7KA8gM4vs7ZHkhvAMEsnIexdQoOXC1Jl8v0MWv3X9P+k1tZsDPc4ciH+oTtKdXIA==
+X-Received: by 2002:a05:600c:1c1b:b0:439:942c:c1cd with SMTP id
+ 5b1f17b1804b1-439ae1f1991mr29895455e9.15.1740147924344; 
+ Fri, 21 Feb 2025 06:25:24 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-157.web.vodafone.de.
+ [109.42.51.157]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b030bd9csm18788735e9.28.2025.02.21.06.25.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Feb 2025 06:25:23 -0800 (PST)
+Message-ID: <12ff6477-7cd5-4ada-b7a8-97a3add814c3@redhat.com>
+Date: Fri, 21 Feb 2025 15:25:21 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Bump some arm test timeouts
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250221140640.786341-1-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Cc: Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250221140640.786341-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,43 +155,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose ziccrse, zabha and svvptc.
+On 21/02/2025 15.06, Peter Maydell wrote:
+> On my local machine, for a debug build, sbsaref_alpine takes
+> nearly 900s:
+> 
+> $ (cd build/x86 && ./pyvenv/bin/meson test --setup thorough --suite func-thorough func-aarch64-aarch64_sbsaref_alpine
+> )
+> 
+> 1/1 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-aarch64_sbsaref_alpine
+>                        OK 896.90s
+> 
+> arm_aspeed_rainier can also run close to its current timeout:
+>   6/44 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_aspeed_rainier
+>                        OK 215.75s
+> 
+> and arm_aspeed_ast2500 and arm_aspeed_ast2600 can go over:
+> 13/44 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_aspeed_ast2600
+>                        OK 792.94s
+> 
+> 27/44 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_aspeed_ast2500
+>                   TIMEOUT 480.01s
+> 
+> The sx1 test fails not on the overall meson timeout but on the
+> 60 second timeout in some of the subtests.
+> 
+> Bump all these timeouts up a bit.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> This at least gets 'make -j4 check-functional' to passing for me
+> for an arm/aarch64 debug build, apart from the gpu test hang which
+> we're discussing in a different thread. Whole thing takes 25 mins...
+> ---
+>   tests/functional/meson.build     | 8 ++++----
+>   tests/functional/test_arm_sx1.py | 6 +++---
+>   2 files changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index b516d21cba1..effa31701cf 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -15,16 +15,16 @@ test_timeouts = {
+>     'aarch64_raspi4' : 480,
+>     'aarch64_rme_virt' : 1200,
+>     'aarch64_rme_sbsaref' : 1200,
+> -  'aarch64_sbsaref_alpine' : 720,
+> +  'aarch64_sbsaref_alpine' : 1200,
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
----
- target/riscv/kvm/kvm-cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+I wonder whether we should disable that test with @skipSlowTest() by 
+default, since it's really very slow...?
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 23ce779359..471fd554b3 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -274,6 +274,7 @@ static void kvm_riscv_update_cpu_misa_ext(RISCVCPU *cpu, CPUState *cs)
- static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("zicbom", ext_zicbom, KVM_RISCV_ISA_EXT_ZICBOM),
-     KVM_EXT_CFG("zicboz", ext_zicboz, KVM_RISCV_ISA_EXT_ZICBOZ),
-+    KVM_EXT_CFG("ziccrse", ext_ziccrse, KVM_RISCV_ISA_EXT_ZICCRSE),
-     KVM_EXT_CFG("zicntr", ext_zicntr, KVM_RISCV_ISA_EXT_ZICNTR),
-     KVM_EXT_CFG("zicond", ext_zicond, KVM_RISCV_ISA_EXT_ZICOND),
-     KVM_EXT_CFG("zicsr", ext_zicsr, KVM_RISCV_ISA_EXT_ZICSR),
-@@ -283,6 +284,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-     KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
-     KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
-+    KVM_EXT_CFG("zabha", ext_zabha, KVM_RISCV_ISA_EXT_ZABHA),
-     KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
-     KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
-     KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
-@@ -325,6 +327,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("svinval", ext_svinval, KVM_RISCV_ISA_EXT_SVINVAL),
-     KVM_EXT_CFG("svnapot", ext_svnapot, KVM_RISCV_ISA_EXT_SVNAPOT),
-     KVM_EXT_CFG("svpbmt", ext_svpbmt, KVM_RISCV_ISA_EXT_SVPBMT),
-+    KVM_EXT_CFG("svvptc", ext_svvptc, KVM_RISCV_ISA_EXT_SVVPTC),
- };
- 
- static void *kvmconfig_get_cfg_addr(RISCVCPU *cpu, KVMCPUConfig *kvmcfg)
--- 
-2.48.1
+Anyway, for this patch here:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
