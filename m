@@ -4,67 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D01EAC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 13:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8C8C021B6
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlTYf-0006k3-Ch; Fri, 21 Feb 2025 08:59:14 -0500
+	id 1tlTbC-0008CO-7L; Fri, 21 Feb 2025 09:01:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
- id 1tlTYY-0006jo-CX; Fri, 21 Feb 2025 08:59:06 -0500
-Received: from m.syntacore.com ([178.249.69.228])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
- id 1tlTYW-00013O-NS; Fri, 21 Feb 2025 08:59:06 -0500
-Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
- by m.syntacore.com (Proxmox) with ESMTP id E97ADB41C42;
- Fri, 21 Feb 2025 16:59:01 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:from:from:message-id:mime-version:reply-to:subject:subject
- :to:to; s=m; bh=4F4yut7amosbTMiXVBxXO8HTIfqIXZeWipAoczI8bec=; b=
- fv0yj5r3/oNI87sIQ1PiJd2N3kGiX8/OoPf69e/qM4wEo09FOfShmDGgV7VJ8qDl
- xPL57pWfpu9se1d9hNpWH2dN39Z2iRHzxZufpMQYD3JJ5W5p9rFC8JQVW20Dlo7W
- AWHP66yKgl7lsS7MiQFcRKPyRMVF99A+PX8Di03Gu4hmflMQIiemnhmqEe1kus8M
- ETIZ68v5gtdleRk/vp9p4G86obYp4RkQgbTwvBkpFTXDkgCCFOn+YQSm22IKvhk8
- OiWkbX5VIe2354msdlqJge2/sYnbfYEYoiapcTCx49iz14yabCojcB8i1IUQQgNj
- NWdiZc36zLNz+66uJ/YAyA==
-Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
- [10.76.202.20])
- by m.syntacore.com (Proxmox) with ESMTPS id D3189B41BEB;
- Fri, 21 Feb 2025 16:59:01 +0300 (MSK)
-Received: from visaev-hp.corp.yadro.com (10.178.157.106) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 21 Feb 2025 16:58:27 +0300
-From: Vladimir Isaev <vladimir.isaev@syntacore.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
- <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
- <zhiwei_liu@linux.alibaba.com>,
- Vladimir Isaev <vladimir.isaev@syntacore.com>
-Subject: [PATCH v2] target/riscv: fix C extension disabling on misa write
-Date: Fri, 21 Feb 2025 16:57:27 +0300
-Message-ID: <20250221135735.85151-1-vladimir.isaev@syntacore.com>
-X-Mailer: git-send-email 2.47.2
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.178.157.106]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=vladimir.isaev@syntacore.com; helo=m.syntacore.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <liuwe@linux.microsoft.com>)
+ id 1tlOWc-0006PS-6d
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:36:47 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <liuwe@linux.microsoft.com>) id 1tlOWY-000146-1N
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:36:45 -0500
+Received: by linux.microsoft.com (Postfix, from userid 1031)
+ id 6EBE8204E5B7; Fri, 21 Feb 2025 00:36:29 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6EBE8204E5B7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1740126989;
+ bh=ZpWdyoBCewATMN+6HT2JXYdvnRBsMjNr75QDsjaaAek=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=LfRfauY2O7YHFopDVXXdYCm0foQAGm54q3Hl2lo2W35NWv8/G2dLc2UDtDnSBnpZp
+ WMlT+m+AKuFRiOc9/FI72eJqNfmu7qW+XPTDNpw8GequxsWJZf6gtYAmUA1CPTTq+c
+ SifUGxeRz1K66CQIBv66tuIA0grKHVq5XO60WpNE=
+From: Wei Liu <liuwe@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
+ phil@philjordan.eu, jinankjain@linux.microsoft.com, liuwe@microsoft.com,
+ muislam@microsoft.com, ziqiaozhou@microsoft.com,
+ mukeshrathor@microsoft.com, magnuskulke@microsoft.com,
+ prapal@microsoft.com, jpiotrowski@microsoft.com, deviv@microsoft.com,
+ Wei Liu <liuwe@linux.microsoft.com>
+Subject: [RFC PATCH v1 04/19] target/i386/hvf: introduce x86_emul_ops
+Date: Fri, 21 Feb 2025 00:36:12 -0800
+Message-Id: <1740126987-8483-5-git-send-email-liuwe@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
+References: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=liuwe@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 21 Feb 2025 09:00:48 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,49 +68,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to spec:
-Writing misa may increase IALIGN, e.g., by disabling the "C" extension. If an instruction that would
-write misa increases IALIGN, and the subsequent instruction’s address is not IALIGN-bit aligned, the
-write to misa is suppressed, leaving misa unchanged.
+This will be used to remove HVF specific code from the instruction emulator.
 
-So we should suppress write to misa without "C" if it is enabled
-and the subsequent instruction is not aligned to 4.
+For now we only introduce two hooks for x86_decode.c. More hooks will be added
+when the code is refactored.
 
-Fixes: f18637cd611c ("RISC-V: Add misa runtime write support")
-Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+The emulator initialization function now takes in a pointer to the ops structure.
+
+Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
 ---
-v2:
-- use env->pc instead of GETPC() since GETPC() is a host pc;
-- use !QEMU_IS_ALIGNED(env->pc, 4) instead of GETPC() & 3;
+ target/i386/hvf/hvf.c     | 20 +++++++++++++++++++-
+ target/i386/hvf/x86_emu.c |  5 ++++-
+ target/i386/hvf/x86_emu.h | 10 +++++++++-
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
----
- target/riscv/csr.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index afb7544f0780..8aa77c53a0db 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2067,11 +2067,13 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
-     val &= env->misa_ext_mask;
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 1ecb6993ba..e1e7cc3b7d 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -228,6 +228,24 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+     return hv_vm_create(HV_VM_DEFAULT);
+ }
  
-     /*
--     * Suppress 'C' if next instruction is not aligned
--     * TODO: this should check next_pc
-+     * Disabling 'C' increases IALIGN to 32. If subsequent instruction's address
-+     * is not 32-bit aligned, write to misa is suppressed.
-+     *
-+     * All csr-related instructions are 4-byte, so we can check current pc alignment.
-      */
--    if ((val & RVC) && (GETPC() & ~3) != 0) {
--        val &= ~RVC;
-+    if (!(val & RVC) && (env->misa_ext & RVC) && !QEMU_IS_ALIGNED(env->pc, 4)) {
-+        return RISCV_EXCP_NONE;
-     }
++static void hvf_read_segment_descriptor(CPUState *s, struct x86_segment_descriptor *desc,
++                                        X86Seg seg)
++{
++    struct vmx_segment vmx_segment;
++    vmx_read_segment_descriptor(s, &vmx_segment, seg);
++    vmx_segment_to_x86_descriptor(s, &vmx_segment, desc);
++}
++
++static void hvf_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
++{
++    vmx_read_mem(cpu, data, gva, bytes);
++}
++
++static const struct x86_emul_ops hvf_x86_emul_ops = {
++    .read_mem = hvf_read_mem,
++    .read_segment_descriptor = hvf_read_segment_descriptor,
++};
++
+ int hvf_arch_init_vcpu(CPUState *cpu)
+ {
+     X86CPU *x86cpu = X86_CPU(cpu);
+@@ -236,7 +254,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     int r;
+     uint64_t reqCap;
  
-     /* Disable RVG if any of its dependencies are disabled */
+-    init_emu();
++    init_emu(&hvf_x86_emul_ops);
+     init_decoder();
+ 
+     if (hvf_state->hvf_caps == NULL) {
+diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
+index 2c7da10c1d..96447ea2c0 100644
+--- a/target/i386/hvf/x86_emu.c
++++ b/target/i386/hvf/x86_emu.c
+@@ -1444,6 +1444,8 @@ static struct cmd_handler {
+ 
+ static struct cmd_handler _cmd_handler[X86_DECODE_CMD_LAST];
+ 
++const struct x86_emul_ops *emul_ops;
++
+ static void init_cmd_handler(void)
+ {
+     int i;
+@@ -1516,7 +1518,8 @@ bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
+     return true;
+ }
+ 
+-void init_emu(void)
++void init_emu(const struct x86_emul_ops *o)
+ {
++    emul_ops = o;
+     init_cmd_handler();
+ }
+diff --git a/target/i386/hvf/x86_emu.h b/target/i386/hvf/x86_emu.h
+index 8bd97608c4..8f4f8f1eca 100644
+--- a/target/i386/hvf/x86_emu.h
++++ b/target/i386/hvf/x86_emu.h
+@@ -23,7 +23,15 @@
+ #include "x86_decode.h"
+ #include "cpu.h"
+ 
+-void init_emu(void);
++struct x86_emul_ops {
++    void (*read_mem)(CPUState *cpu, void *data, target_ulong addr, int bytes);
++    void (*read_segment_descriptor)(CPUState *cpu, struct x86_segment_descriptor *desc,
++                                    enum X86Seg seg);
++};
++
++extern const struct x86_emul_ops *emul_ops;
++
++void init_emu(const struct x86_emul_ops *ops);
+ bool exec_instruction(CPUX86State *env, struct x86_decode *ins);
+ 
+ void load_regs(CPUState *cpu);
 -- 
-2.47.2
-
+2.39.5 (Apple Git-154)
 
 
