@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F53C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E4BEC021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlUp6-0000kl-Ev; Fri, 21 Feb 2025 10:20:16 -0500
+	id 1tlUvo-0003Qo-Po; Fri, 21 Feb 2025 10:27:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlUp3-0000iX-Pn
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:20:13 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1tlUvn-0003Qe-U1
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:27:11 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlUp1-0004rG-Ku
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:20:13 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e53c9035003so1794911276.2
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:20:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1tlUvm-0006QW-1t
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:27:11 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5ded69e6134so3729327a12.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:27:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740151209; x=1740756009; darn=nongnu.org;
+ d=adacore.com; s=google; t=1740151626; x=1740756426; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XSDAHvEbkT5xksXiEVIMCA8IVl9lUdWp1T6qXeFjpRk=;
- b=aTyF8VN/pN8qEfsAXr+kfHVqNHvIxJUjCfZFMZH25tYdi2P1DV74JMoprjdDpq1mLP
- nbMvcM2oJ4BsOGYQp0gPh+efeRqr34ho4rcptNxZZK+tZedxaDeHtQTggHdb5FaP1fEt
- X1j66PMvJm7Q2cXErfhG0c6L6hI5qm4GEyZsNXFQKJKJ4ZwgJdygpLHV6jPpYeTsAg3u
- /HSzlPOaVtWZN21a/A2FMIyXNo3SxTxbAo8YuRc1MQVEPtxaOKNm6oioVb4K00ykBXK9
- giLSvh/KtIZz8GdgPHw7QGrT+LzpyWGpvymGxjBkdHMiKsVEFkC3DqB5hGoFTIYGVQIK
- tLIQ==
+ bh=TCfzdZFAis7iwYHQxA39AZr4EzGKFzC029C6zErowuI=;
+ b=ZrWP70HwNiZ0n8qVzCcN0dGJtu+PxGCXhPwDU22Nkf7mhZbm9RoAGOxC3J0MuI4h55
+ j95z94GfTXjOoixcJqiggqXY/26TateXagw0234WIvNV77jegdjNqR2qZ53t6wY80wbe
+ xfV9e1HGd9pTDT1rjb1Enkl3NjJzqGhZSIN0p1fYioUNh1USqOjpnf6ina/0KNQ5zTBM
+ 0u03BJCcbe8l+ncRWy6Q5bgkfQeukVMw41QJA3H+INGslX9zyScudHL+iTZJMClYEPLq
+ vF2zaCMHUacl6FwBk8ArvtFBtw7otylikuhgYsE6XxVY3kybW6zCoCcapsO6RRkjKYDS
+ eYSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740151209; x=1740756009;
+ d=1e100.net; s=20230601; t=1740151626; x=1740756426;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XSDAHvEbkT5xksXiEVIMCA8IVl9lUdWp1T6qXeFjpRk=;
- b=sgnm2MTm01m05B2kWr4OEcuP1usN12Aa+DzF3Oyv+pE8LgI1cg2ySgMss0ci1SW/hC
- 8AeZNWzXwdbk5EyY7+dYl2JxLVw2BzU9AoAL1yxSZ2raWEw4Hl3gnbnW0AQViAIls1js
- L649c13mwpmCDHJNdpu+lcFRFaPR7bGs0VkxT5aSGEJIgxq/Mf3NSYArbxMirMDNVSk2
- bmFGsfEM4ViCvajceWmTUzlGS7gisTzYqUqvMJro2RolXD4z0BFZsiGvgRg1IwqY8jjZ
- 3c+pzjdh0QCucuCKlq4LJG/u9SeTkwEA9t76hEWTtU31+wcIn2HI9CXy1N5PIrYbeY7F
- 0xLw==
-X-Gm-Message-State: AOJu0YyrkXfqjTtLAYMczIua0cMPnD3uvVlb3qJByEGeRGRfdXObWIcu
- utjLjrBCDCydK9GifMIz6F3bVlI6ZiFIWVB+2hoPsKklrnEKzQFYT6WyX2Q0hotcRd2hsevvwGI
- 5pC8rgF3R0EhHRSdf0oL/YLNN0UWwV4iqbN5h0A==
-X-Gm-Gg: ASbGncvVxbkBOBh6rklfEs73vwY7fQHC7WIg97TfxYe8WZ9GDZhN3kHW/DqVVPZW5nZ
- NNNOkvV52GUJxyL2JYuZaFLlxooYGlcAy+hE+cgkm93Z3GTidTQJxdp8Z/1O4avI+nD3AvjcQ/c
- 0qx3EdF5mP
-X-Google-Smtp-Source: AGHT+IHW1IWaWzuXpvpIgVzFwIYltGnSg21EgRGDrBiO+PR+h46T+GVpSDPUFsKRHRx4Ubu5kRY3OmkKV74q0yVRsCQ=
-X-Received: by 2002:a05:6902:1009:b0:e58:493c:e9c0 with SMTP id
- 3f1490d57ef6-e5e246016f6mr2870004276.22.1740151209614; Fri, 21 Feb 2025
- 07:20:09 -0800 (PST)
+ bh=TCfzdZFAis7iwYHQxA39AZr4EzGKFzC029C6zErowuI=;
+ b=CV4qzfa0Wx1s5U1WdlcTKoXNXABbXOr7i1PwxP8ZPydHwKQZLugr/VFNVieKpWsIuq
+ xki+oUsD1MnO4u/g/GyA+IlZk40rCpEbNmZI9zLKClEHzIFaVKMO6kX5RhssY/ZVrSCC
+ qum/TeHZUqwaTPRjlf0wteOsPzJKDlO5DMLOdWpKBklEbcVp3G9y6p5TYCy7kJIoMdWq
+ JtdOg/GtAn+O56vrt23vRT+QAE5LhKjGyX0PDd0CMfXGLkIQUCKYj03lylgTZwG6FFFi
+ KWaUsm3bD0AFh0QWfdMvnnPPeFEg9cmHc+3NHC64DbIUYO9XBsjrqTMhmZdDnvQbt52S
+ XOVg==
+X-Gm-Message-State: AOJu0YzG7Zi10Z11sn6aMvHnLx22yaSgJOm8lPR8TdX5OuKKiUgsFt17
+ hsqJgcIqYu/+ugfzpAXKFg9+Uy+uCqMwnDzLeDLMNu4oM3D3IznlIBVqCcIOSJ0h2dPeDBZW7Fx
+ xoTUv+55fy4EzQQjXtU0JZdQsjPYlowcgQGss
+X-Gm-Gg: ASbGncsfcmVw1/XZJlzL1OT6SdyyW997A625npxNCKJGbWrZdWOubdMU41mAweXiybR
+ Q6cDFhJDsmOKcAhbljjMTnPO62fv9t0VlXryngKRtcUM4/bKC3A2IEi3kVzfDS0By0UyEiQT9Z9
+ vUv6dHcNVPLHAcrbf0v3Wj85Li1DcXJnk19Vnfv0b91w==
+X-Google-Smtp-Source: AGHT+IEkIgp3gZCtjd9hFotKbtIFqRelIdsQ5wWnYuCw9/2IYiOmNWgLTvmRn7X5TB1fDU+UJA7NqrImBlYH6yF98ck=
+X-Received: by 2002:a17:907:6095:b0:ab7:be66:792f with SMTP id
+ a640c23a62f3a-abc09e563b5mr341669866b.49.1740151626302; Fri, 21 Feb 2025
+ 07:27:06 -0800 (PST)
 MIME-Version: 1.0
-References: <20250217125055.160887-1-peter.maydell@linaro.org>
- <93307c7c-c29f-4061-94ae-461bf196ff41@linaro.org>
-In-Reply-To: <93307c7c-c29f-4061-94ae-461bf196ff41@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Feb 2025 15:19:58 +0000
-X-Gm-Features: AWEUYZlIL0X-Z4r2h3R20CvlZNI_aKi1J5g88vpQJVzJfRPCMW9Z45biQ4rCaHQ
-Message-ID: <CAFEAcA9A018e6FuVuY8YcWw+jHAxLZ5qVQ25P7ym4nE6qWeQAg@mail.gmail.com>
-Subject: Re: [PATCH 00/10] fpu: Remove remaining target ifdefs and build only
- once
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Laurent Vivier <laurent@vivier.eu>
+References: <20241031035319.731906-1-alistair.francis@wdc.com>
+ <20241031035319.731906-16-alistair.francis@wdc.com>
+ <CAJ307EhFCpK8aO7r7PHF7H=k=f9tstPe=aVKrMWv1y7m3_HSNw@mail.gmail.com>
+In-Reply-To: <CAJ307EhFCpK8aO7r7PHF7H=k=f9tstPe=aVKrMWv1y7m3_HSNw@mail.gmail.com>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Fri, 21 Feb 2025 16:26:55 +0100
+X-Gm-Features: AWEUYZmbmd2J65bTnfw9dR83HJikDvuyLc6sgpM1oF2F5fEWHlTdV8OQacnGybk
+Message-ID: <CAJ307EhOKFyK3ULJ2NEj+zYcSbVQ1RxGcVj40_HFBbwt0UJL9g@mail.gmail.com>
+Subject: Re: [PULL 15/50] hw/char: sifive_uart: Print uart characters async
+To: Alistair Francis <alistair23@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=chigot@adacore.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Feb 2025 at 14:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Fri, Feb 14, 2025 at 1:52=E2=80=AFPM Cl=C3=A9ment Chigot <chigot@adacore=
+.com> wrote:
 >
-> On 17/2/25 13:50, Peter Maydell wrote:
+> Hi Alistair,
 >
-> > (1) floatx80 behaviours
-> >
-> > Two QEMU targets implement floatx80: x86 and m68k. (PPC also has one
-> > use in the xsrqpxp round-to-80-bit-precision operation, and the
-> > Linux-user NWFPE emulation nominally supports it, but these are
-> > minor.) x86 and m68k disagree about some of the corner cases of
-> > floatx80 where the value has the explicit Integer bit wrongly set.  At
-> > the moment the fpu code defaults to "floatx80 behaves like x86", with
-> > TARGET_M68K ifdefs to get the other option.
-> >
-> > The first six patches in this series remove those ifdefs, replacing
-> > them with a floatx80_behaviour field in float_status which can have
-> > various flags set to select the individual behaviours. The default is
-> > "like x86", which allows us to set these only for m68k and not worry
-> > about the minor "technically makes some use of floatx80" cases.
->
->
-> > Peter Maydell (10):
-> >    fpu: Make targets specify floatx80 default Inf at runtime
-> >    target/m68k: Avoid using floatx80_infinity global const
-> >    target/i386: Avoid using floatx80_infinity global const
->
-> Bothering again, we can add the floatx80_default_inf() refactor as the
-> first patch:
+> I've an issue following this patch. When the system is reset (e.g
+> using HTIF syscalls), the fifo might not be empty and thus some
+> characters are lost.
+> I discovered it on a Windows host. But by extending
+> "TX_INTERRUPT_TRIGGER_DELAY_NS" to a huge value, I'm able to reproduce
+> on Linux as well.
 
-I really think at this point this is just doing extra
-work shuffling code changes between patches for no real benefit.
-The patches aren't super huge and they've already been
-reviewed. I'm OK with splitting out the "add the status
-argument" part as you suggested previously, as that
-makes the patches more reasonably split between "just
-mechanical" and "interesting change" which is not a big
-split to do and could be helpful for potential bisection
-later, but churning the patchset beyond that doesn't
-seem worthwhile to me.
+The root cause of my issue was unrelated to these early shutdowns. On
+Windows, the character device behind `-serial mon:stdio`
+(char-win-stdio) doesn't provide an `add_watch` method. Therefore,
+`qemu_chr_fe_add_watch` calls always result in an error, flushing the
+fifo. I saw in @Philippe Mathieu-Daud=C3=A9 patch about pl011 that
+`G_SOURCE_CONTINUE` is returned instead of calling it and it does
+work. @Alistair Francis  do you remember if there was a reason for
+calling `add_watch` ?
 
--- PMM
+> I've tried to flush within an unrealized function but it didn't work.
+> Any suggestions ?
+
+FTR, I still have found a solution here using
+qemu_register_shutdown_notifier. Though I'm wondering if this is
+useful: the cases where a shutdown occurs between two "fifo_update"
+seems really narrow, but they could happen.
+ @Philippe Mathieu-Daud=C3=A9 AFAICT, the new pl011 and other char devices
+implementing write fifo have the same issue. Thus, pinging you here to
+get your advice.
+
+Thanks,
+Cl=C3=A9ment
+
+> >  static void sifive_uart_reset_enter(Object *obj, ResetType type)
+> >  {
+> > ...
+> > +    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
+>
+> I'm also wondering if that part could not lead to memory leak.
+> `fifo8_destroy` is never called and AFAIK, there are ways to reset a
+> device dynamically (e.g snapshot, though not sure if it's supported
+> here).
+>
+> Thanks, Cl=C3=A9ment
 
