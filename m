@@ -4,48 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCAF6C021B2
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 03:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DFCC021B2
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 03:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlJYa-0001Xq-Fn; Thu, 20 Feb 2025 22:18:29 -0500
+	id 1tlJbP-0002IV-0J; Thu, 20 Feb 2025 22:21:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jansef.jian@hj-micro.com>)
- id 1tlJYX-0001XN-NH; Thu, 20 Feb 2025 22:18:25 -0500
-Received: from mail-m3279.qiye.163.com ([220.197.32.79])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tlJbM-0002II-1U
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 22:21:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jansef.jian@hj-micro.com>)
- id 1tlJYV-0005Mi-IM; Thu, 20 Feb 2025 22:18:25 -0500
-Received: from localhost.localdomain (unknown [219.146.33.230])
- by smtp.qiye.163.com (Hmail) with ESMTP id bbbd308a;
- Fri, 21 Feb 2025 11:18:13 +0800 (GMT+08:00)
-From: JianChunfu <jansef.jian@hj-micro.com>
-To: eric.auger@redhat.com,
-	peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- JianChunfu <jansef.jian@hj-micro.com>
-Subject: [PATCH v2] hw/arm/smmu: Add invalidating function of config data
-Date: Fri, 21 Feb 2025 11:17:41 +0800
-Message-ID: <20250221031741.69946-1-jansef.jian@hj-micro.com>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tlJbJ-0005jh-GB
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 22:21:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740108074;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zdaBW7JapAxNz4MDJX9rFAsTtsG9gzV/VtvAiXL6qhs=;
+ b=b1kH2o6WIH/rXt1YD0XCXSCmFzk6bAqrv85NEFScu2H6RbTIXkAAJ3lgVfiJ2IfmO53Ty6
+ afop3A1GTQf1JnVL5v/Z7o0M78X6nGxBBK05pwsuX5r+farXPE4im9e+JESPkdwH2P0LcB
+ nqKmze9faqnN40HzlZjhYXM0M1cFEHY=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-592-R8pCLglYPlu2PtqmUbOzFw-1; Thu, 20 Feb 2025 22:21:11 -0500
+X-MC-Unique: R8pCLglYPlu2PtqmUbOzFw-1
+X-Mimecast-MFC-AGG-ID: R8pCLglYPlu2PtqmUbOzFw_1740108070
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-220ff7d7b67so34814105ad.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 19:21:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740108070; x=1740712870;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zdaBW7JapAxNz4MDJX9rFAsTtsG9gzV/VtvAiXL6qhs=;
+ b=MOqc9mqgkAlZxSOX5/4zwI7aLi4yTkNyY4WA05maa3onYf1WL/6zJw8WefiVfOCjNo
+ uzPwI6v1QxLRV6odaZW8ur3dkgDkSnsp6E0CQ4oB7D+f8E3/tBKzW5XW1UfVexKDPglE
+ 0/x658PAC1hIZRob8ZxVGit0/JFrutTpRoeqm+O3+g8GYTBHJaCi7ivYr8JXtF+F1ysu
+ Ar1hDZvcRLOOjWwc0AGiEO+naSACGCxvrSNLvJketuwB01QVOeleHw+ovoJtmBCOE+Hk
+ /rb5Aa9TdfXP+mNCojTwAc6mw7jBqz1dq5m4m0PqCX4KP+NSHI7uqCqoIHJzP/S0mnKA
+ 9ufQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLc7DbDtNPh14qGN+8BulTR3VP6MQwsxhn/EThk0JLS3jjSErsZlmLwJQc3ssbstFNhaelAN2EEck1@nongnu.org
+X-Gm-Message-State: AOJu0YyG2j96z7QAihiSrNztM+UqAuI1+FdA9rPN1ApGT7KOKK9C4Gfo
+ MFa/Whc8kRHscvdW4muA/dWaMuyVNk8bjcdNDzIVzF7kBHIerjm5g+vsdS/Gk52aAru7e1lgfKC
+ uXcxRpPcJdN2nylMvruEuhAnXS14XqfOx3A4///9iCa7ULbHGjGU/
+X-Gm-Gg: ASbGncvoDC2ypNeEWpG3q2HP8U5VqyNTQC+J0Mjv9F3EdVvxe5MEEqtjgby7aqmb0kw
+ EvFI0QlBqnf8AEGXshymljhvVVM1ovymwR/Tbd9397YkRoKM9160wQXb5X0QoMw57tL1Pudfnie
+ 99lntCRQ9TbvEgb2C4Jqd9AcANtiZdq8Gw0/RyRN8B3RJHjXHSigMHXJabQdeg5s3RzstGzO3Sx
+ mEBb59Fu9nf/fM+2jSqDDXDctzmBky5TB4QzzpbzVcb+0WMKw+fUUyDOH+k7EQJPyvgPGRdReYO
+ HPlGX8yEC6fyeLPYdL4XxEq7vJe4Wg==
+X-Received: by 2002:a17:903:2f43:b0:215:89a0:416f with SMTP id
+ d9443c01a7336-2219ffc2dcbmr22236655ad.30.1740108070317; 
+ Thu, 20 Feb 2025 19:21:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF64fAdzhGhjXwZnLqyRIG6yss5I/fro+y/EOohGg2FIeFsncXgeVVEbVkA87uLVkcpivF7WQ==
+X-Received: by 2002:a17:903:2f43:b0:215:89a0:416f with SMTP id
+ d9443c01a7336-2219ffc2dcbmr22236365ad.30.1740108069924; 
+ Thu, 20 Feb 2025 19:21:09 -0800 (PST)
+Received: from localhost.localdomain ([203.163.237.246])
+ by smtp.googlemail.com with ESMTPSA id
+ 98e67ed59e1d1-2fceb02d990sm229311a91.1.2025.02.20.19.21.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Feb 2025 19:21:09 -0800 (PST)
+From: Ani Sinha <anisinha@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] hw/i386: introduce x86_firmware_reconfigure api
+Date: Fri, 21 Feb 2025 08:50:51 +0530
+Message-ID: <20250221032051.35033-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDGEtPVkJIGRlJTUpLQx1JQ1YVFAkWGhdVEwETFh
- oSFyQUDg9ZV1kYEgtZQVlJSkJVSk9NVUhIVUlIS1lXWRYaDxIVHRRZQVlLVUtVS1VLWQY+
-X-HM-Tid: 0a9526834cb109d2kunmbbbd308a
-X-HM-MType: 1
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Pwg6Pxw6STITHSELMC1DEhod
- VkpPChFVSlVKTE9LSktMQ0JOSkJCVTMWGhIXVREaFQgeHVUREhoVOxMRVhYSGAkUVRgUFkVZV1kS
- C1lBWUlKQlVKT01VSEhVSUhLWVdZCAFZQU5IT0k3Bg++
-Received-SPF: pass client-ip=220.197.32.79;
- envelope-from=jansef.jian@hj-micro.com; helo=mail-m3279.qiye.163.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -63,140 +113,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Uniform the removal judgement of g_hash_table_foreach_remove(), previous
-name seems to perform the actual action while it just returns a Boolean.
+Normally, there is no need to perform firmware reconfiguration once the
+virtal machine has started. Hence, currently ovmf firmware parsing happens only
+once. However, if the firmware changes betweeen boots then reconfiguration needs
+to happen again. Firmware can change if for example the guest brings its own
+firmware bundle and installs it with the help of the hypervisor[1]. Therefore,
+this change introduces a new api with which firmware configuration steps can
+be forced again.
+This is mostly refactoring work. No functional changes. CI pipeline does not
+break with this change.
 
-Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
----
-v2: - move smmuv3_invalidate_ste() to smmu_hash_remove_by_sid_range()
-    - add function smmu_configs_inv_sid_range()
-v1: - Rename smmuv3_invalidate_ste to smmuv3_hash_remove_by_sid_range
----
- hw/arm/smmu-common.c         | 21 +++++++++++++++++++++
- hw/arm/smmu-internal.h       |  5 -----
- hw/arm/smmuv3.c              | 17 +----------------
- hw/arm/trace-events          |  1 +
- include/hw/arm/smmu-common.h |  6 ++++++
- 5 files changed, 29 insertions(+), 21 deletions(-)
+1) https://pretalx.com/kvm-forum-2024/talk/HJSKRQ/
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 3f8272875..69544392a 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -225,6 +225,27 @@ static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
-            ((entry->iova & ~info->mask) == info->iova);
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ hw/i386/pc_sysfw.c            | 25 +++++++++++++++++--------
+ hw/i386/pc_sysfw_ovmf-stubs.c |  3 ++-
+ hw/i386/pc_sysfw_ovmf.c       |  5 +++--
+ include/hw/i386/pc.h          |  3 ++-
+ include/hw/i386/x86.h         |  1 +
+ 5 files changed, 25 insertions(+), 12 deletions(-)
+
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 1eeb58ab37..0b9913d7b9 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -258,16 +258,9 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     pc_system_flash_cleanup_unused(pcms);
  }
  
-+static gboolean
-+smmu_hash_remove_by_sid_range(gpointer key, gpointer value, gpointer user_data)
-+{
-+    SMMUDevice *sdev = (SMMUDevice *)key;
-+    uint32_t sid = smmu_get_sid(sdev);
-+    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
-+
-+    if (sid < sid_range->start || sid > sid_range->end) {
-+        return false;
-+    }
-+    trace_smmuv3_config_cache_inv(sid);
-+    return true;
-+}
-+
-+void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range)
-+{
-+    trace_smmu_configs_inv_sid_range(sid_range.start, sid_range.end);
-+    g_hash_table_foreach_remove(s->configs, smmu_hash_remove_by_sid_range,
-+                                &sid_range);
-+}
-+
- void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-                          uint8_t tg, uint64_t num_pages, uint8_t ttl)
+-void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
++static void x86_firmware_configure_sev(hwaddr gpa, void *ptr, int size)
  {
-diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
-index 843bebb18..d143d296f 100644
---- a/hw/arm/smmu-internal.h
-+++ b/hw/arm/smmu-internal.h
-@@ -141,9 +141,4 @@ typedef struct SMMUIOTLBPageInvInfo {
-     uint64_t mask;
- } SMMUIOTLBPageInvInfo;
- 
--typedef struct SMMUSIDRange {
--    uint32_t start;
--    uint32_t end;
--} SMMUSIDRange;
+     int ret;
 -
- #endif
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 4c49b5a88..9da3b6df0 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1277,20 +1277,6 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
+-    /*
+-     * OVMF places a GUIDed structures in the flash, so
+-     * search for them
+-     */
+-    pc_system_parse_ovmf_flash(ptr, size);
+-
+     if (sev_enabled()) {
+ 
+         /* Copy the SEV metadata table (if it exists) */
+@@ -282,3 +275,19 @@ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+         sev_encrypt_flash(gpa, ptr, size, &error_fatal);
      }
  }
- 
--static gboolean
--smmuv3_invalidate_ste(gpointer key, gpointer value, gpointer user_data)
--{
--    SMMUDevice *sdev = (SMMUDevice *)key;
--    uint32_t sid = smmu_get_sid(sdev);
--    SMMUSIDRange *sid_range = (SMMUSIDRange *)user_data;
--
--    if (sid < sid_range->start || sid > sid_range->end) {
--        return false;
--    }
--    trace_smmuv3_config_cache_inv(sid);
--    return true;
--}
--
- static int smmuv3_cmdq_consume(SMMUv3State *s)
- {
-     SMMUState *bs = ARM_SMMU(s);
-@@ -1373,8 +1359,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-             sid_range.end = sid_range.start + mask;
- 
-             trace_smmuv3_cmdq_cfgi_ste_range(sid_range.start, sid_range.end);
--            g_hash_table_foreach_remove(bs->configs, smmuv3_invalidate_ste,
--                                        &sid_range);
-+            smmu_configs_inv_sid_range(bs, sid_range);
-             break;
-         }
-         case SMMU_CMD_CFGI_CD:
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index c64ad344b..95f523361 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -15,6 +15,7 @@ smmu_iotlb_inv_asid_vmid(int asid, int vmid) "IOTLB invalidate asid=%d vmid=%d"
- smmu_iotlb_inv_vmid(int vmid) "IOTLB invalidate vmid=%d"
- smmu_iotlb_inv_vmid_s1(int vmid) "IOTLB invalidate vmid=%d"
- smmu_iotlb_inv_iova(int asid, uint64_t addr) "IOTLB invalidate asid=%d addr=0x%"PRIx64
-+smmu_configs_inv_sid_range(uint32_t start, uint32_t end) "Config cache INV SID range from 0x%x to 0x%x"
- smmu_inv_notifiers_mr(const char *name) "iommu mr=%s"
- smmu_iotlb_lookup_hit(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache HIT asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
- smmu_iotlb_lookup_miss(int asid, int vmid, uint64_t addr, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache MISS asid=%d vmid=%d addr=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index e5ad55bba..e5e2d0929 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -142,6 +142,11 @@ typedef struct SMMUIOTLBKey {
-     uint8_t level;
- } SMMUIOTLBKey;
- 
-+typedef struct SMMUSIDRange {
-+    uint32_t start;
-+    uint32_t end;
-+} SMMUSIDRange;
 +
- struct SMMUState {
-     /* <private> */
-     SysBusDevice  dev;
-@@ -219,6 +224,7 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-                          uint8_t tg, uint64_t num_pages, uint8_t ttl);
- void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-                         uint64_t num_pages, uint8_t ttl);
-+void smmu_configs_inv_sid_range(SMMUState *s, SMMUSIDRange sid_range);
- /* Unmap the range of all the notifiers registered to any IOMMU mr */
- void smmu_inv_notifiers_all(SMMUState *s);
++void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
++{
++    /*
++     * OVMF places a GUIDed structures in the flash, so
++     * search for them
++     */
++    pc_system_parse_ovmf_flash(ptr, size, false);
++    x86_firmware_configure_sev(gpa, ptr, size);
++}
++
++void x86_firmware_reconfigure(hwaddr gpa, void *ptr, int size)
++{
++    pc_system_parse_ovmf_flash(ptr, size, true);
++    x86_firmware_configure_sev(gpa, ptr, size);
++}
+diff --git a/hw/i386/pc_sysfw_ovmf-stubs.c b/hw/i386/pc_sysfw_ovmf-stubs.c
+index aabe78b271..a8c0c265d7 100644
+--- a/hw/i386/pc_sysfw_ovmf-stubs.c
++++ b/hw/i386/pc_sysfw_ovmf-stubs.c
+@@ -20,7 +20,8 @@ bool pc_system_ovmf_table_find(const char *entry, uint8_t **data, int *data_len)
+     g_assert_not_reached();
+ }
  
+-void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
++void pc_system_parse_ovmf_flash(uint8_t *flash_ptr,
++                                size_t flash_size, bool force)
+ {
+     g_assert_not_reached();
+ }
+diff --git a/hw/i386/pc_sysfw_ovmf.c b/hw/i386/pc_sysfw_ovmf.c
+index 07a4c267fa..7d54622771 100644
+--- a/hw/i386/pc_sysfw_ovmf.c
++++ b/hw/i386/pc_sysfw_ovmf.c
+@@ -36,14 +36,15 @@ static bool ovmf_flash_parsed;
+ static uint8_t *ovmf_table;
+ static int ovmf_table_len;
+ 
+-void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
++void pc_system_parse_ovmf_flash(uint8_t *flash_ptr,
++                                size_t flash_size, bool force)
+ {
+     uint8_t *ptr;
+     QemuUUID guid;
+     int tot_len;
+ 
+     /* should only be called once */
+-    if (ovmf_flash_parsed) {
++    if (ovmf_flash_parsed && !force) {
+         return;
+     }
+ 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 103b54301f..769f1361ce 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -210,7 +210,8 @@ void pc_system_flash_cleanup_unused(PCMachineState *pcms);
+ void pc_system_firmware_init(PCMachineState *pcms, MemoryRegion *rom_memory);
+ bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
+                                int *data_len);
+-void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
++void pc_system_parse_ovmf_flash(uint8_t *flash_ptr,
++                                size_t flash_size, bool force);
+ 
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index d43cb3908e..18c0d6851a 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -155,5 +155,6 @@ DeviceState *ioapic_init_secondary(GSIState *gsi_state);
+ 
+ /* pc_sysfw.c */
+ void x86_firmware_configure(hwaddr gpa, void *ptr, int size);
++void x86_firmware_reconfigure(hwaddr gpa, void *ptr, int size);
+ 
+ #endif
 -- 
-2.47.1
+2.42.0
 
 
