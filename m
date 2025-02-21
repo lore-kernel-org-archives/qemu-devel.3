@@ -4,75 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33EBEC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A8FC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlUbe-0002PC-US; Fri, 21 Feb 2025 10:06:23 -0500
+	id 1tlUh3-0004NQ-Qq; Fri, 21 Feb 2025 10:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tlUbX-0002KJ-8v; Fri, 21 Feb 2025 10:06:17 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tlUbU-0002ME-81; Fri, 21 Feb 2025 10:06:14 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 73ECB5C642D;
- Fri, 21 Feb 2025 15:05:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D99FC4CED6;
- Fri, 21 Feb 2025 15:06:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740150367;
- bh=z949hO3MwOXAyFCNa2KF23enIns2zrbW6wuKQGwpDGA=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=dOFYx0pgtFeJmTDUukXY6GQOXqGl42lq6X+gMyonqBl7FP/gI2aE7zyqxwN4APq6h
- efrKTQV+HKkN3efyqi6hxldj2F7rjr0EkRw7oaZK6JzvA/JiV4P7Bj8byzy1fGfCdD
- ed5jCTOWU8OUlPSHlcha20IJR2ag4JxtU3kLWzFAVnirVJlhycVVgJncDfEqFPqbtY
- iXPYRp1lkIxi84zpv3yiQDORVzRqo6J0dg1idG7DlkAVYRTJtqEjlizqIFo/k/snA6
- kqmihHXgKf7btUIGuChUjsAz0/f1X9yG59Jwb/IFb5qNUVtAYahtOmI9FB5lRXTS3C
- o/q4eQhxcYLvg==
-Date: Fri, 21 Feb 2025 16:05:59 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Philippe =?UTF-8?B?TWF0?=
- =?UTF-8?B?aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
- <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, "Markus Armbruster" <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
- <zhao1.liu@intel.com>, <kvm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, Gavin Shan <gshan@redhat.com>
-Subject: Re: [PATCH v3 00/14] Change ghes to use HEST-based offsets and add
- support for error inject
-Message-ID: <20250221160530.020f6cec@foz.lan>
-In-Reply-To: <20250221132306.77800dbf@sal.lan>
-References: <cover.1738345063.git.mchehab+huawei@kernel.org>
- <20250203110934.000038d8@huawei.com>
- <20250203162236.7d5872ff@imammedo.users.ipa.redhat.com>
- <20250221073823.061a1039@foz.lan>
- <20250221102127.000059e6@huawei.com>
- <20250221132306.77800dbf@sal.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tlUh1-0004N5-Ps
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:11:56 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tlUgz-0003Rr-VI
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:11:55 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so21882585e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:11:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1740150712; x=1740755512; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=yciegiRd+LvbEwQ5vXC+IuEx9Zab5j6SC3x5a/DKyr8=;
+ b=SUig5Tx0knjCkixrzPaKPlDiTcfCt5shrqAI7oXb3EG8lWOMaNjh5zGR1+Q+JX/TY1
+ BV+31KmD5euR5MleoYLt1ynvK+wCuJpzP9Hg9OPITH07FIFvPyVJ8j4pa0gRcvq3M/7h
+ /iETv+NXQMTMlkoZ+HENVtBD6IFxcYNkpzTdoRtbIzU+A0mgHSpYP9qDKXL0yhnkP/Dc
+ 5iHUIp7+E3SIMJbfqHSpr2NJiAZwrCKw7RPXp7Tm7bMNK1HlmSskwfE3Lmpms6u8RVR6
+ 7tUbiI/5z0d4ftBeuEJEn0YZ6JFWzUrIW9LF/nB/tjO2eqjntWhBG74aaOhU79NK9dMp
+ +w3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740150712; x=1740755512;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yciegiRd+LvbEwQ5vXC+IuEx9Zab5j6SC3x5a/DKyr8=;
+ b=DHdI2w5QIQyVjuI983pdQDHZJCc/g+NQcgJE4GnyB1TPCOsvFITWcqxLFcqbzNqA2a
+ 03di7aslO8H50q/mOMPiTVi7SFIwXZjBXoAJjayaqRKeSJyEQq0NZ/wVPakRxXLdOxdt
+ dSAiENo9pVnNJsP8f5hOifW8SsBJL1oBJms9ZpHawgq9+qs+v84WkEo/PinV/zAOEz5b
+ RX3yIVH5+3aoeb+MRytcX1Bh04qNUECXzEu2dzP4wfhzegx8nOFGWaxWoRNoU37PfbSQ
+ OIljTd10zYviKq04nk1b5ryq7kLzo5qQcS6g90fywuTKmgYEwWlxxfZiJ6p1TPpCmhzE
+ zURw==
+X-Gm-Message-State: AOJu0YyINDvK8zBN2HjCJ6FG/4WCogBtNjigwPZvxUiq3W8pFvD5EWv5
+ NQQXv8qGSldsnbg3BulCDT/qAAHhTud72gVIE8bzQ5ENZL9mqPUKtuO88EoJiA4=
+X-Gm-Gg: ASbGncs21H+SbMhmSz0h8y8A+RTRswQsKpiDLRkMaNmbk5NaJEmpXShJF5AV1P2T4p3
+ 1gSEbGygyay87wwezYLzRqWVzrG9gzd0UFi9lLJIhCo7uCA7vvvfHUtVeifz3X2BfcrCXPApDvK
+ L9eUAAFS57BiFxLfmWt26PZL9/ec0QQme3uOP2VJ9ZGrr4yoA+j2cmRAqs1KvdBWIqY3WnG5gFE
+ 9//C2kBrMbw1eDlUA8ccVVYa1s7PSAyzxTifiZiiDEIsjdr7H0Keo2vMBgbPUuKdwZB3ELiFiYS
+ VB2TvOcqhKaagA==
+X-Google-Smtp-Source: AGHT+IGFMc7EncM2bla39QtrC0GfMHh0z9w4a3HUhL5HqrENYI4DwJfPM7ygIE1goaiKhtdkWF4AUA==
+X-Received: by 2002:a05:600c:5489:b0:439:86fb:7326 with SMTP id
+ 5b1f17b1804b1-439aebb5558mr23136145e9.22.1740150711748; 
+ Fri, 21 Feb 2025 07:11:51 -0800 (PST)
+Received: from localhost ([2a02:8308:a00c:e200::766e])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b030be5esm19965505e9.30.2025.02.21.07.11.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Feb 2025 07:11:51 -0800 (PST)
+Date: Fri, 21 Feb 2025 16:11:50 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH v2 2/3] target/riscv/cpu.c: create flag for ziccrse
+Message-ID: <20250221-679a2e65bfea6314820981df@orel>
+References: <20250221141834.626722-1-dbarboza@ventanamicro.com>
+ <20250221141834.626722-3-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250221141834.626722-3-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,226 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Fri, 21 Feb 2025 13:23:06 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
-
-> Em Fri, 21 Feb 2025 10:21:27 +0000
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
+On Fri, Feb 21, 2025 at 11:18:33AM -0300, Daniel Henrique Barboza wrote:
+> At this moment ziccrse is a TCG always enabled named feature for
+> priv_ver > 1.11 that has no exclusive flag. In the next patch we'll make
+> the KVM driver update ziccrse as well, turning it on/off depending on
+> host settings, but for that we'll need an ext_ziccrse flag in the CPU
+> state.
 > 
-> > On Fri, 21 Feb 2025 07:38:23 +0100
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > Em Mon, 3 Feb 2025 16:22:36 +0100
-> > > Igor Mammedov <imammedo@redhat.com> escreveu:
-> > >     
-> > > > On Mon, 3 Feb 2025 11:09:34 +0000
-> > > > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-> > > >       
-> > > > > On Fri, 31 Jan 2025 18:42:41 +0100
-> > > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > > > >         
-> > > > > > Now that the ghes preparation patches were merged, let's add support
-> > > > > > for error injection.
-> > > > > > 
-> > > > > > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
-> > > > > > table and hardware_error firmware file, together with its migration code. Migration tested
-> > > > > > with both latest QEMU released kernel and upstream, on both directions.
-> > > > > > 
-> > > > > > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
-> > > > > >    to inject ARM Processor Error records.
-> > > > > > 
-> > > > > > If I'm counting well, this is the 19th submission of my error inject patches.          
-> > > > > 
-> > > > > Looks good to me. All remaining trivial things are in the category
-> > > > > of things to consider only if you are doing another spin.  The code
-> > > > > ends up how I'd like it at the end of the series anyway, just
-> > > > > a question of the precise path to that state!        
-> > > > 
-> > > > if you look at series as a whole it's more or less fine (I guess you
-> > > > and me got used to it)
-> > > > 
-> > > > however if you take it patch by patch (as if you've never seen it)
-> > > > ordering is messed up (the same would apply to everyone after a while
-> > > > when it's forgotten)
-> > > > 
-> > > > So I'd strongly suggest to restructure the series (especially 2-6/14).
-> > > > re sum up my comments wrt ordering:
-> > > > 
-> > > > 0  add testcase for HEST table with current HEST as expected blob
-> > > >    (currently missing), so that we can be sure that we haven't messed
-> > > >    existing tables during refactoring.      
-> > 
-> > To potentially save time I think Igor is asking that before you do anything
-> > at all you plug the existing test hole which is that we don't test HEST
-> > at all.   Even after this series I think we don't test HEST.   
+> Create an exclusive flag for it like we do with other named features.
+> As with any named features we already have, it won't be exposed to
+> users. TCG will keep the same restiction for it (always enabled if
+> has_priv_1_11 is true) and KVM will be free to turn it on/off as
+> required.
+
+Reading this as "KVM can choose" makes it sound wrong, since KVM can't
+choose. However, KVM will turn it on/off depending on whether this
+extension is/isn't present. So reading it as "TCG always has it on, but
+KVM will turn it off when the extension isn't available", makes more
+sense.
+
 > 
-> On a previous review (v2, I guess), Igor requested me to do the DSDT
-> test just before and after the patch which is actually changing its
-> content (patch 11). The HEST table is inside DSDT firmware, and it is
-> already tested.
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu.c         | 3 ++-
+>  target/riscv/cpu_cfg.h     | 3 +++
+>  target/riscv/tcg/tcg-cpu.c | 2 ++
+>  3 files changed, 7 insertions(+), 1 deletion(-)
 > 
-> > You add
-> > a stub hest and exclusion but then in patch 12 the HEST stub is deleted whereas
-> > it should be replaced with the example data for the test.  
-> 
-> This was actually a misinterpretation from my side: patch 10 adds the
-> etc/hardware_errors table (mistakenly naming it as HEST), but this
-> was never tested. For the next submission, I'll drop etc/hardware_errors
-> table from patches 10 and 12.
-> 
-> > That indeed doesn't address testing the error data storage which would be
-> > a different problem.  
-> > > 
-> > > Not sure if I got this one. The HEST table is part of etc/acpi/tables,
-> > > which is already tested, as you pointed at the previous reviews. Doing
-> > > changes there is already detected. That's basically why we added patches
-> > > 10 and 12:
-> > > 
-> > > 	[PATCH v3 10/14] tests/acpi: virt: allow acpi table changes for a new table: HEST
-> > > 	[PATCH v3 12/14] tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
-> > > 
-> > > What tests don't have is a check for etc/hardware_errors firmware inside 
-> > > tests/data/acpi/aarch64/virt/, but, IMO, we shouldn't add it there.
-> > > 
-> > > See, hardware_errors table contains only some skeleton space to
-> > > store:
-> > > 
-> > > 	- 1 or more error block address offsets;
-> > > 	- 1 or more read ack register;
-> > > 	- 1 or more HEST source entries containing CPER blocks.
-> > > 
-> > > There's nothing there to be actually checked: it is just some
-> > > empty spaces with a variable number of fields.
-> > > 
-> > > With the new code, the actual number of CPER blocks and their
-> > > corresponding offsets and read ack registers can be different on 
-> > > different architectures. So, for instance, when we add x86 support,
-> > > we'll likely start with just one error source entry, while arm will
-> > > have two after this changeset.
-> > > 
-> > > Also, one possibility to address the issues reported by Gavin Shan at
-> > > https://lore.kernel.org/qemu-devel/20250214041635.608012-1-gshan@redhat.com/
-> > > would be to have one entry per each CPU. So, the size of such firmware
-> > > could be dependent on the number of CPUs.
-> > > 
-> > > So, adding any validation to it would just cause pain and probably
-> > > won't detect any problems.    
-> > 
-> > If we did do this the test would use a fixed number of CPUs so
-> > would just verify we didn't break a small number of variants. Useful
-> > but to me a follow up to this series not something that needs to
-> > be part of it - particularly as Gavin's work may well change that!  
-> 
-> I don't think that testing etc/hardware_errors would detect any
-> regressions. It will just create a test scenario that will require
-> constant changes, as adding any entry to HEST would hit it. 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 522d6584e4..fc4632ce36 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -105,7 +105,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_1_11),
+>      ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
+>      ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
+> -    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
+> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
+>      ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
+>      ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
+>      ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
+> @@ -1749,6 +1749,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>      MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
+>      MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
+> +    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
+>  
+>      { },
+>  };
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index 3f3c1118c0..8a843482cc 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -166,6 +166,9 @@ struct RISCVCPUConfig {
+>      bool has_priv_1_12;
+>      bool has_priv_1_11;
+>  
+> +    /* Always enabled for TCG if has_priv_1_11 */
+> +    bool ext_ziccrse;
+> +
+>      /* Vendor-specific custom extensions */
+>      bool ext_xtheadba;
+>      bool ext_xtheadbb;
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index ea8d77d06a..c93612b1da 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -360,6 +360,8 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
+>  
+>      cpu->cfg.ext_sha = riscv_has_ext(&cpu->env, RVH) &&
+>                         cpu->cfg.ext_ssstateen;
+> +
+> +    cpu->cfg.ext_ziccrse = cpu->cfg.has_priv_1_11;
+>  }
+>  
+>  static void riscv_cpu_validate_g(RISCVCPU *cpu)
+> -- 
+> 2.48.1
+>
 
-Btw, there is just one patch on this series touching 
-etc/hardware_errors:
+Other than my hangup on the commit message,
 
-	https://lore.kernel.org/qemu-devel/647f9c974e606924b6b881a83e047d1d4dff47d5.1740148260.git.mchehab+huawei@kernel.org/T/#u
-
-The table change is due to this simple hunk:
-
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 4f174795ed60..7b6e90d69298 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -896,6 +896,7 @@ static void acpi_align_size(GArray *blob, unsigned align)
- 
- static const AcpiNotificationSourceId hest_ghes_notify[] = {
-     { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-+    { ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_GPIO },
- };
-
-
-Before such patch, /etc/hardware_errors has:
-
-	- 1 error block offset;
-	- 1 ack register;
-	- 1 GHESv2 entry for SEA
-
-After the change:
-
-- for virt-9.2: nothing changes, as hw/arm/virt-acpi-build.c will
-  use the backward-compatible table with a single entry to be
-  added to HEST:
-
-	static const AcpiNotificationSourceId hest_ghes_notify_9_2[] = {
-	    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-	};
-
-- for virt-latest/virt-10.0, it will use the new table to create two
-  sources:
-
-	static const AcpiNotificationSourceId hest_ghes_notify[] = {
-	    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-	    { ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_GPIO },
-	};
-
-  which will actually mean that /etc/hardware_errors will now have:
-
-	- 2 error block offsets (one for SEA, one for GED);
-	- 2 ack registers (one for SEA, one for GED);
-	- 1 GHESv2 entry for SEA notifier;
-	- 1 GHESv2 entry for GED GPIO notifier.
-
-With the discussions with Gavin, for virt-10.0 and above, we may end changing 
-the new table (hest_ghes_notify) to have one SEA entry per CPU, plus the GPIO 
-one, and add an extra logic at the error injection logic to select the SEA
-entry based on the CPU ID and/or based on having an already acked
-SEA notifier.
- 
-> 
-> Besides that, I don't think adding support for it would be a simple
-> matter of adding another table. See, after this series, there are two 
-> different scenarios for the /etc/hardware_errors:
-> 
-> - one with a single GHESv2 entry, for virt-9.2;
-> - another one with two GHESv2 entries for virt-10.0 and above that
->   will dynamically change its size (starting from 2) depending on
->   the features we add, and if we'll have one entry per CPU or not.
-> 
-> Right now, the tests there are only for "virt-latest": there's no
-> test directory for "virt-9.2". Adding support for virt-legacy will 
-> very likely require lots of changes there at the test infrastructure,
-> as it will require some virt migration support. 
-> 
-> > > What could be done instead is to have a different type of tests that
-> > > would use the error injection script to check if regressions are 
-> > > introduced after QEMU 10.0. Such new kind of test would require
-> > > this series to be merged first. It would also require the usage of
-> > > an OSPM image with some testing tools on it. This is easier said 
-> > > than done, as besides the complexity of having an OSPM test image,
-> > > such kind of tests would require extra logic, specially if it would
-> > > check regressions for SEA and other notification sources.
-> > >     
-> > Agreed that a more end to end test is even better, but those are
-> > quite a bit more complex so definitely a follow up.  
-> 
-> Yes, but it could be simpler than modifying ACPI tests to handle
-> migration.
-> 
-> The way I see is that such kind of integration could be done by some
-> gitlab workflow that would run an error injection script inside a
-> pre-defined image emulating both virt-9.2 and virt-latest and checking
-> if the HEST tables were properly generated for both SEA and GED
-> sources.
-> 
-> This is probably easier for GED, as the QMP interface already
-> detects that the read ack register was changed by the OSPM. For
-> SEA, it may require either some additional instrumentation or to
-> capture OSPM logs.
-> 
-> Anyway, ether way, a change like that is IMO outside the escope of
-> this series, as it will require lots of unrelated changes.
-> 
-> Regards,
-> Mauro
-> 
-
-
-
-Thanks,
-Mauro
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
