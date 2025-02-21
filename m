@@ -4,78 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D245C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 05:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692A0C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlLwC-0001Tk-99; Fri, 21 Feb 2025 00:51:00 -0500
+	id 1tlM7P-0003uj-1y; Fri, 21 Feb 2025 01:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tlLwA-0001TE-NN
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 00:50:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tlM7O-0003uU-0a; Fri, 21 Feb 2025 01:02:34 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tlLw9-0007E9-4Q
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 00:50:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740117056;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8n/y5M5Rgs8X2823jv5/GcyScpEIxbJkh3xrgFvCPg4=;
- b=EI/NJwlRLVv9HZGQ58hskOL7fmTroMlC5c89ye9LSt5/GhZBV944K3EpUqBJwMx6RapOXX
- J14DgzBqwTWnsBIaPYRLORlcIchaNeGhMO8xAppYj3ZFOxDwvKGVuGoalmAEorqE7Y9nCc
- RggOEso3L1WZk4sV5kXvotUhAsbHk5w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-EWo52nA4M82yhiOuVwMK6w-1; Fri,
- 21 Feb 2025 00:50:50 -0500
-X-MC-Unique: EWo52nA4M82yhiOuVwMK6w-1
-X-Mimecast-MFC-AGG-ID: EWo52nA4M82yhiOuVwMK6w_1740117049
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E61D19373D8; Fri, 21 Feb 2025 05:50:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BBFD5300019F; Fri, 21 Feb 2025 05:50:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 29BEA21E6A28; Fri, 21 Feb 2025 06:50:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Igor Mammedov <imammedo@redhat.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  Jonathan Cameron <Jonathan.Cameron@huawei.com>,  Shiju
- Jose <shiju.jose@huawei.com>,  qemu-arm@nongnu.org,
- qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  John Snow
- <jsnow@redhat.com>,  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 14/14] scripts/ghes_inject: add a script to generate
- GHES error inject
-In-Reply-To: <20250221055728.03289b6c@foz.lan> (Mauro Carvalho Chehab's
- message of "Fri, 21 Feb 2025 05:57:28 +0100")
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tlM7K-0008VW-JN; Fri, 21 Feb 2025 01:02:33 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 04EF45C591A;
+ Fri, 21 Feb 2025 06:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB70C4CEE2;
+ Fri, 21 Feb 2025 06:02:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740117746;
+ bh=ZuJRxKQJmNRmvEj2+idQ2Nspe3fIJitS8x63hFXCTOo=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=PKm/wg2Nl0nJCSD9dhbsIv/Qv99zhl4dhOHx1o1NZDN9HlCepzsVTqpjSaWY/dt31
+ /v/9TaGgpad39OygRel0Q2XixAF0Zdp8/FwyPUtrPLZDGF0rC4/0K0Fy6UpVRoRxbZ
+ xurFnsvc9G9mUA/2baw1C+pVLsG8+HUOWg/izdBnaeqP31SRRnmPLoIkQ+yQRhIhu+
+ I6HKHkI7sv1HjfSn2h11Xa1u6TJYT6kuE0YbMF316czrdORdJ/0iUnJ3A6DVYEkYQe
+ RLpiuNLhqMm/mHjb36o4j7lIWkRKpFEPjCcYaSoMv+PtAf1CfbDil4Y8VbpimnFcOS
+ rOPXOIBeMeUwg==
+Date: Fri, 21 Feb 2025 07:02:21 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 03/14] acpi/ghes: Use HEST table offsets when
+ preparing GHES records
+Message-ID: <20250221070221.329bdfb0@foz.lan>
+In-Reply-To: <20250203153423.3e4de17c@imammedo.users.ipa.redhat.com>
 References: <cover.1738345063.git.mchehab+huawei@kernel.org>
- <80858743b6fd67db3f48ac8cb466bbcde5b11132.1738345063.git.mchehab+huawei@kernel.org>
- <87bjvg6c22.fsf@pond.sub.org> <20250221055728.03289b6c@foz.lan>
-Date: Fri, 21 Feb 2025 06:50:44 +0100
-Message-ID: <87o6yvongr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <9610ff88cf6fdc59cbfc8871d653fd890391be1e.1738345063.git.mchehab+huawei@kernel.org>
+ <20250203153423.3e4de17c@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -75
+X-Spam_score: -7.6
+X-Spam_bar: -------
+X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,21 +77,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+Em Mon, 3 Feb 2025 15:34:23 +0100
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-> Em Wed, 05 Feb 2025 09:16:53 +0100
-> Markus Armbruster <armbru@redhat.com> escreveu:
+> On Fri, 31 Jan 2025 18:42:44 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > There are two pointers that are needed during error injection:
+> > 
+> > 1. The start address of the CPER block to be stored;
+> > 2. The address of the ack.
+> > 
+> > It is preferable to calculate them from the HEST table.  This allows
+> > checking the source ID, the size of the table and the type of the
+> > HEST error block structures.
+> > 
+> > Yet, keep the old code, as this is needed for migration purposes.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  hw/acpi/ghes.c         | 132 ++++++++++++++++++++++++++++++++++++-----
+> >  include/hw/acpi/ghes.h |   1 +
+> >  2 files changed, 119 insertions(+), 14 deletions(-)
+> > 
+> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > index 27478f2d5674..8f284fd191a6 100644
+> > --- a/hw/acpi/ghes.c
+> > +++ b/hw/acpi/ghes.c
+> > @@ -41,6 +41,12 @@
+> >  /* Address offset in Generic Address Structure(GAS) */
+> >  #define GAS_ADDR_OFFSET 4
+> >  
+> > +/*
+> > + * ACPI spec 1.0b
+> > + * 5.2.3 System Description Table Header
+> > + */
+> > +#define ACPI_DESC_HEADER_OFFSET     36
+> > +
+> >  /*
+> >   * The total size of Generic Error Data Entry
+> >   * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
+> > @@ -61,6 +67,25 @@
+> >   */
+> >  #define ACPI_GHES_GESB_SIZE                 20
+> >  
+> > +/*
+> > + * Offsets with regards to the start of the HEST table stored at
+> > + * ags->hest_addr_le,  
+> 
+> If I read this literary, then offsets above are not what
+> declared later in this patch.
+> I'd really drop this comment altogether as it's confusing,
+> and rather get variables/macro naming right
+> 
+> > according with the memory layout map at
+> > + * docs/specs/acpi_hest_ghes.rst.
+> > + */  
+> 
+> what we need is update to above doc, describing new and old ways.
+> a separate patch.
 
-[...]
+I can't see anything that should be changed at
+docs/specs/acpi_hest_ghes.rst, as this series doesn't change the
+firmware layout: we're still using two firmware tables:
 
->> Sorry if this has been answered already...  why not GPL-2.0-or-later?
->> 
->> More of the same below.
->
-> No particular reason. It is just that GPL-2.0 is my preferred license.
->
-> I'll change the license of the three scripts to be GPL-2.0-or-later.
+- etc/acpi/tables, with HEST on it;
+- etc/hardware_errors, with:
+	- error block addresses;
+	- read_ack registers;
+	- CPER records.
 
-Thank you!
+The only changes that this series introduce are related to how
+the error generation logic navigates between HEST and hw_errors
+firmware. This is not described at acpi_hest_ghes.rst, and both
+ways follow ACPI specs to the letter.
 
+The only difference is that the code which populates the CPER
+record and the error/read offsets doesn't require to know how
+the HEST table generation placed offsets, as it will basically
+reproduce what OSPM firmware does when handling	HEST events.
+
+Thanks,
+Mauro
 
