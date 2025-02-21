@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4867EC021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478FBC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlWRz-0008S9-R1; Fri, 21 Feb 2025 12:04:32 -0500
+	id 1tlWRm-0007ay-4v; Fri, 21 Feb 2025 12:04:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tlWRw-0008Ck-NA
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tlWRe-0006yy-W7
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tlWRu-0001Xe-64
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:28 -0500
+ id 1tlWRc-0001SA-3q
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 12:04:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740157465;
+ s=mimecast20190719; t=1740157447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gITORNAi3idPJ7f7HHnX56O6J1H0hwCpHvwebA0yrfA=;
- b=TWqImNhRgjI0EEqsovcpEuJtdP9sxKfHpFb8AP3k24iU5kYbNqg1pRXzXMD4JG/bh7ZvNB
- r1RflNVCGAnjcKcs4/iJzATKVcBc9KKhAlZbzpYevDYFoFTGj8NEvAmvOiVUWMGoQYfJhj
- ARsiqOJ2ADx6wJrnsHR2558P+87/qro=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5KajmiXkvjrUlRNrAa7EleOjJePFNbnltU4TduUDEJc=;
+ b=ASitGiMwpc3yKzvZMiJT1ESqf1DMpvblYvsYwJwOQO2CJV80YA8UqM6pyNw6LodXyXQOct
+ jD1C8edppgGPyCqk8amUDewuZUPDzALFSPrPV+epLfwbAAySSj3cNg0cQnaJcCJpMDB5bz
+ Wxavfs94EhjKU8kn5egl3j6ayZXzKDQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-YyB2QBF7OkGk8KTeyiTe_w-1; Fri, 21 Feb 2025 12:04:24 -0500
-X-MC-Unique: YyB2QBF7OkGk8KTeyiTe_w-1
-X-Mimecast-MFC-AGG-ID: YyB2QBF7OkGk8KTeyiTe_w_1740157463
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab7f6f6cd96so64125966b.2
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 09:04:24 -0800 (PST)
+ us-mta-595-PR21IyH8OtOYt0mb-iSWdg-1; Fri, 21 Feb 2025 12:04:03 -0500
+X-MC-Unique: PR21IyH8OtOYt0mb-iSWdg-1
+X-Mimecast-MFC-AGG-ID: PR21IyH8OtOYt0mb-iSWdg_1740157442
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38f2f438fb6so2734315f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 09:04:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740157462; x=1740762262;
+ d=1e100.net; s=20230601; t=1740157441; x=1740762241;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gITORNAi3idPJ7f7HHnX56O6J1H0hwCpHvwebA0yrfA=;
- b=kXmUnNO0+VK9GtRo9xmxRfX64XOC4YS55cr+HM+WlskNjM4/CLKNno72ZU8J5Qh3Z2
- UGQWbR9d51J+m8wQYU3m6iWWspbCLR573uiwtX5fhU5HwcrGPByAbesP1JJ5rrFEqFk2
- XAhGnuio6uTTVXA64+jBcj1+Tb2CpmyqvFk09AWYEAJK2X/zZAkIKT9bwOHvoNyLYk8I
- wbOeEdkZ+3O/4Em45LOSyl46cjtKNhdnujyX6kik+Lx/s2AcpKgSgR5FIftBDTVpDnd3
- XujwhyW2IcemG3LLQoihTMSIGI2XynpzWw1i6ezLZ3HD+/bTiK3burakwKLGfX745VXM
- cIiA==
-X-Gm-Message-State: AOJu0Yy6/DfL8pNMkgLVAScB/hZTpkAiMeFXR4lD1kEJzfcjuPsw3Lz/
- 5QLe90fs6f6vp2FcQe7GbVz0oFuyXXywyucYEAy2cgxXu+Lni/SljQnB4xcLEcLv8Qz9hYKNpBG
- MbOfwubET/rTPZGsZXQWLAXTIZPOu6A4rZnOY3aQCETgWTTyH7VTddgC+2Od0XKktwwFP6rEo4b
- G0sZasSKT/DvWpyByXJKxosE5HHTPHMrWju2A+sZs=
-X-Gm-Gg: ASbGnct1JTupu8y7k4jnRksSBar+W93t8REbxunlj15+eDt1igJ9ivJs+GEtTZPjC40
- F+r6xD3AGVGuINpc81aykNT7Dtf8oJfAE6r3Hs3XsJo/eZtHVBSgiJ5HBmlgx1YMLjwPeUdeGWf
- Sf6fNXCxbEsGfDrkdJapcDkC7WyYAAHIomYQFd2KRYqJby7LFZYkauAyTCsABB7SraK4DKdRCe0
- U6MUuMQDoo44Uijan4AVus4NEp8mDmGVsaczUid6JoU57Pa15MxsURGNOGMcHHoZSmiz0ZWCn+V
- J7LDBcl+wd1zKNjNWG8=
-X-Received: by 2002:a17:907:d204:b0:ab9:63bd:91be with SMTP id
- a640c23a62f3a-abc099b3911mr472630166b.3.1740157462312; 
- Fri, 21 Feb 2025 09:04:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHh3OiPvtScaPUKA6oR2syBGUS8aeCMOzQAoTZ6jAjPhsuT4a36zKEOsBZELst31y+ZScBTgg==
-X-Received: by 2002:a17:907:d204:b0:ab9:63bd:91be with SMTP id
- a640c23a62f3a-abc099b3911mr472617766b.3.1740157461568; 
- Fri, 21 Feb 2025 09:04:21 -0800 (PST)
+ bh=5KajmiXkvjrUlRNrAa7EleOjJePFNbnltU4TduUDEJc=;
+ b=Jf1jkG8TJIbWAozsqW3ZB4VFtruQujbsNmukbQyCPg2Hhv8CCpAQzk/b6+Zm2fnBtn
+ CqO+KZaMlN+2OgBWa3S8aQX+CfLUGnAxLZYp1IQZwTwwSPjARNGuxmTVFSBrg9YKbT1v
+ YxJ8scaiOr/YgjbS4DFvbBqQrU4S5p+ECcgfrAMcym/Y9v86y7qFiOpahJqaQ//qTND9
+ ziT0STpskczVzVK/tWXafNWyvI7ml1RIH47EPYcrVuDyJxW+vJRw4/XZc49eKBlzKrbT
+ L0uACcj7hceCdTWFDN1y6mdFaAB8P9dNRznk29o+0VolK0QlnZjkiJI35jQcUW9Rar4R
+ 2JEg==
+X-Gm-Message-State: AOJu0YzZpc31/NL+c/Y2jOj3gf/fDh1zQRsnKcPc9jF/CoO8QmN8N2HI
+ acC0HyyVjEMHRqpFQaAJUerMoeA+fe9R1nIa/X6aE6fmhTEMGZ3EKQbLCLhd5n4tiAsudpi+8P4
+ WjQW1vthLQnIaZMhDP7SQVFmkmCm2VmrxzsLpJX6b9RamHwfVGh9Bxy7+K67tjzrm2AMWQhoS34
+ gf/I5Hcz4BbVosqXfwhGAKTN4HeNBte5J1xvGFgGQ=
+X-Gm-Gg: ASbGncsmdkTHzJptPsmgt5Ph6Nikc9qHFsxVgnNBdLxWVxilWO8bqJR2QEVJsah84rj
+ YbSPxucBvXvmPCOckI49W4xUYNx5fES6IaW0+2RiN0wcsl+7Hma+jOOLnaM4F5BhktCyTRIKt03
+ N3k9Yul3dkQNnWD7ylBOf7E/4PPi4+NsRmWqtBdIORZFCojm1QyyCVP1Hd/5GAcD9uP/3G6Zp6Z
+ LqCxB1jQSLlZ0nr5lnWwdRhmbPFJvAVpTn50CE4Rb3itNIuUuYp7QHHU7w5Buumg4msdmTfwVFx
+ z6cffV4diKWwr58vmQs=
+X-Received: by 2002:a5d:59ad:0:b0:38f:30c7:eae4 with SMTP id
+ ffacd0b85a97d-38f6f0c289emr3369804f8f.52.1740157441240; 
+ Fri, 21 Feb 2025 09:04:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE1Rqw5HLoCQNAcp/eBta75SgW0yjnziketJS8tDJpcLwitcrgIL/4Kh4z5OBz53O2IsmHRWw==
+X-Received: by 2002:a5d:59ad:0:b0:38f:30c7:eae4 with SMTP id
+ ffacd0b85a97d-38f6f0c289emr3369718f8f.52.1740157440502; 
+ Fri, 21 Feb 2025 09:04:00 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.61.185])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abbda707e3dsm535043666b.106.2025.02.21.09.04.17
+ 5b1f17b1804b1-439b02f252dsm22580065e9.22.2025.02.21.09.03.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 09:04:17 -0800 (PST)
+ Fri, 21 Feb 2025 09:04:00 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org
-Subject: [PATCH 14/15] rust: chardev: wrap Chardev with Opaque<>
-Date: Fri, 21 Feb 2025 18:03:41 +0100
-Message-ID: <20250221170342.63591-15-pbonzini@redhat.com>
+Subject: [PATCH 08/15] rust: timer: wrap QEMUTimer with Opaque<>
+Date: Fri, 21 Feb 2025 18:03:35 +0100
+Message-ID: <20250221170342.63591-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250221170342.63591-1-pbonzini@redhat.com>
 References: <20250221170342.63591-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -110,57 +110,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/bindings.rs | 3 ---
- rust/qemu-api/src/chardev.rs  | 8 ++++++--
- rust/qemu-api/src/qdev.rs     | 1 +
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ meson.build                |  7 -------
+ rust/qemu-api/src/timer.rs | 24 +++++++++++++++++-------
+ 2 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-index 26cc8de0cf2..c3f36108bd5 100644
---- a/rust/qemu-api/src/bindings.rs
-+++ b/rust/qemu-api/src/bindings.rs
-@@ -31,9 +31,6 @@ unsafe impl Sync for BusState {}
- unsafe impl Send for CharBackend {}
- unsafe impl Sync for CharBackend {}
+diff --git a/meson.build b/meson.build
+index 8ed10b6624e..16c76c493f3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4087,13 +4087,6 @@ if have_rust
+   foreach enum : c_bitfields
+     bindgen_args += ['--bitfield-enum', enum]
+   endforeach
+-  c_nocopy = [
+-    'QEMUTimer',
+-  ]
+-  # Used to customize Drop trait
+-  foreach struct : c_nocopy
+-    bindgen_args += ['--no-copy', struct]
+-  endforeach
  
--unsafe impl Send for Chardev {}
--unsafe impl Sync for Chardev {}
--
- unsafe impl Send for ObjectClass {}
- unsafe impl Sync for ObjectClass {}
+   # TODO: Remove this comment when the clang/libclang mismatch issue is solved.
+   #
+diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
+index a593538917a..0305a0385ad 100644
+--- a/rust/qemu-api/src/timer.rs
++++ b/rust/qemu-api/src/timer.rs
+@@ -7,10 +7,23 @@
+ use crate::{
+     bindings::{self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType},
+     callbacks::FnCall,
++    cell::Opaque,
+ };
  
-diff --git a/rust/qemu-api/src/chardev.rs b/rust/qemu-api/src/chardev.rs
-index 74cfb634e5f..a35b9217e90 100644
---- a/rust/qemu-api/src/chardev.rs
-+++ b/rust/qemu-api/src/chardev.rs
-@@ -6,9 +6,13 @@
- 
- use std::ffi::CStr;
- 
--use crate::{bindings, prelude::*};
-+use crate::{bindings, cell::Opaque, prelude::*};
+-pub type Timer = bindings::QEMUTimer;
+-pub type TimerListGroup = bindings::QEMUTimerListGroup;
++/// A safe wrapper around [`bindings::QEMUTimer`].
++#[repr(transparent)]
++#[derive(Debug, Default, qemu_api_macros::Wrapper)]
++pub struct Timer(Opaque<bindings::QEMUTimer>);
 +
-+/// A safe wrapper around [`bindings::Chardev`].
++unsafe impl Send for Timer {}
++unsafe impl Sync for Timer {}
++
 +#[repr(transparent)]
 +#[derive(qemu_api_macros::Wrapper)]
-+pub struct Chardev(Opaque<bindings::Chardev>);
++pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
++
++unsafe impl Send for TimerListGroup {}
++unsafe impl Sync for TimerListGroup {}
  
--pub type Chardev = bindings::Chardev;
- pub type ChardevClass = bindings::ChardevClass;
+ impl Timer {
+     pub const MS: u32 = bindings::SCALE_MS;
+@@ -21,10 +34,6 @@ pub fn new() -> Self {
+         Default::default()
+     }
  
- unsafe impl ObjectType for Chardev {
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index ed5dce08216..1ff6c1ca7c2 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -334,6 +334,7 @@ fn init_clock_out(&self, name: &str) -> Owned<Clock> {
-     fn prop_set_chr(&self, propname: &str, chr: &Owned<Chardev>) {
-         assert!(bql_locked());
-         let c_propname = CString::new(propname).unwrap();
-+        let chr: &Chardev = chr;
+-    const fn as_mut_ptr(&self) -> *mut Self {
+-        self as *const Timer as *mut _
+-    }
+-
+     pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+         &'timer mut self,
+         timer_list_group: Option<&TimerListGroup>,
+@@ -51,7 +60,7 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+         // SAFETY: the opaque outlives the timer
          unsafe {
-             bindings::qdev_prop_set_chr(
-                 self.upcast().as_mut_ptr(),
+             timer_init_full(
+-                self,
++                self.as_mut_ptr(),
+                 if let Some(g) = timer_list_group {
+                     g as *const TimerListGroup as *mut _
+                 } else {
+@@ -75,6 +84,7 @@ pub fn delete(&self) {
+     }
+ }
+ 
++// FIXME: use something like PinnedDrop from the pinned_init crate
+ impl Drop for Timer {
+     fn drop(&mut self) {
+         self.delete()
 -- 
 2.48.1
 
