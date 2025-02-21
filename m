@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5367C021B6
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 10:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85E6C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 10:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlQVS-00038R-53; Fri, 21 Feb 2025 05:43:42 -0500
+	id 1tlQWB-0003WQ-Lw; Fri, 21 Feb 2025 05:44:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlQVQ-00038C-OP
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:43:40 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlQW4-0003R3-Cl
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:44:21 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlQVO-0001sW-R0
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:43:40 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38f22fe889aso1607012f8f.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 02:43:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tlQW2-0001uC-UW
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:44:20 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38f403edb4eso1093602f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 02:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740134617; x=1740739417; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740134657; x=1740739457; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=01pMw8ez7/NXsPmWGiRyXPFrKsVXvjvuJt653hiR9oQ=;
- b=JvutcCqnKoqQsHSOgGwaM5oKVEVJ+SUAJuofYX1AeDuWobWjNyM9snqFwRGnrtgTmC
- +YSDAU4CH1I6J6CW6/2OU+rTXcqhkN+lNpHWWUSQdvLPdmNBSRs95dlllLSo9mYkJfVv
- XHXV/7Y3Xkpc+4mVcztywfgyOrgfUyNaG3K33v1e8WGhYwCF8KKWByBRLFzMbPhfdkGB
- AGdzdv3Ah30vYReNeAEzKUTK7ose33GkY8jZCdrGhjcIP8s4FUbE8UJomg+T0lnYTu4D
- C5SWYwdm/2E2YIXoUNFzyM7PyTBN4nojSmrasfeC8/lzfAVXvoARVCU24y4buJ/ZpO3W
- u7Pg==
+ bh=0hwfsBzZh98QBTrbGtKBh6llchcX7pniNmKm5d/EfCI=;
+ b=OKa+CY8fUH2oQzO6rj8NBvZLTx0zysrx3D4d4pLolYW9bUxM4zZaS/8rq+8ZXESKZC
+ K0qS2Cqpgz+CPX+6CAcl+dxTVPNRxq3sQIWTyrJgZEFPBIKudYhIHuyc83Anq/JKq8lE
+ 2skxqMXZfe0OJ+tq8zNGwXu2IExN1/8miF9FvyC4YwzdNPJbQ+Alb5Fnmh0Y36Hvm5/d
+ zCmVD0fa11+FjpZ5Z+u/PRpiNYHvB4Nfio0AwmErRvJbhh3xFo67/CMqGckcvWHGEAt2
+ 4NNwV/o5JiI2gNrdfAC3XU500+OzqpbXOoMwnQlXVNWfmYxUH8k+k9vNUlFn6faffS7x
+ hBzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740134617; x=1740739417;
+ d=1e100.net; s=20230601; t=1740134657; x=1740739457;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=01pMw8ez7/NXsPmWGiRyXPFrKsVXvjvuJt653hiR9oQ=;
- b=QsjmKMoZv3HaZbgJCCpdVH7MH0Y1eAgb1OeBU9PHTnU4ubJruMxHxIUFUp/yZffa+R
- f7q8l2odqhmi3e0HduGzBmO4mwOAD/nusfxzreIoZzfqywxYVMvMHf/Kn2EuilTvV53D
- Tdy/Mx+fMm12GL7cv37uMxYX7S/n9PciV+zOgPezpaNJsiI6pnF/GSmxr87iEPm80VOt
- qi/psI0u3FBOCSPyGiVYzxJz3ctfufis9ksGsGrs4vzVduhUsBY+2Fsx1UMBBRZFNWfB
- uTiQJH8KrJGreHySDTlkXup67r2zwWuV5TVkVi+P/FanHFVzFbCFKQfD8EpR/lKXM0eN
- ngtA==
-X-Gm-Message-State: AOJu0YyXVFhEgFqT92NGpf8OBB/15jQU6jWbXTzP/J/Lr8H7H5mnW+Ah
- 4OGzonFr4nsWkJSnApjJ4UfwSz9rN202YZwBn0yxOaDVMZmndh62decSSoA92nc=
-X-Gm-Gg: ASbGncsqKuEbrEwn0uYsL4wD+uFvV33k6dXPot7g5St2hpQTCGiJQIS9DYQyHat06ec
- yCQG3kKakXDeLZAJmWNIKnCXApIli3T4EdhySRnScOS07pKfbzJQ2gDi6n7in31TPjZBt0cawdo
- zoe4EK7mqNwlrxaueS85GeqWlMjpDd3XIJl42wpdpSvZKVYLuDE2B2sM4pswodFdpv5Td7aUGmL
- l+1nuNQA/O3Uct/DMkxWOC2OSzVvyW062ZOcepa8k5nVaIk3Ek7IjVpXKdQ5ChmOG3FDOGhiC7Q
- fIJC/stCGP1XTeEF5QGAXEWzK/3BVpIjcghsDw2sZtzTjpGWo1Zddf/M7wOmS8ivIvuZMQ==
-X-Google-Smtp-Source: AGHT+IFn0y3NVMbcJvhMVNlzV0An/H4xPk66AK0UwdP3vVZmBgkHe4ZVLlhmFmZ04PRpJER0PEvI7A==
-X-Received: by 2002:a5d:6daa:0:b0:38f:3791:c1df with SMTP id
- ffacd0b85a97d-38f6e95bd45mr2546165f8f.15.1740134616932; 
- Fri, 21 Feb 2025 02:43:36 -0800 (PST)
+ bh=0hwfsBzZh98QBTrbGtKBh6llchcX7pniNmKm5d/EfCI=;
+ b=Udd6CfCKf26bt/slH7sDTFLgfpFfcAOcz5j4yTLgHJ5ZsyVfQr57fbcFTnYNs98wpm
+ QNkn63OuAgL2IvP/5cV+xwUiYfZyfhAiBgOoxLqXgOGcZCkNFuKtCsJP6mj8+jdRAWYJ
+ xXAkwSJDQpSp+ZH1VPLVOANw1V5ytp3+PT3c6xxLyFiZ996hAoE5uNQOnx/qZtTIEMYL
+ eok3oDet4nGS1whW67EIMqOXCs6KtyUit3HHOfCgPcdCpU84CZ8f5jFmPDBaKQv5UqUf
+ 6H+2SKLi4ipEqnKCIjTrCeIbh+Bxl4yfaGYx/SI7iAq+RgrJ9ekmrR7cWjOq0Yp84Iql
+ PlNQ==
+X-Gm-Message-State: AOJu0Yw9fiftn8XR5NhMFaTw9qB4ux9Ja3dSaKpjcmHTqvOGHZoX4Kst
+ R42mLHLupPAKGg+BpPn89KRyAEveoV/nAhRSNZn1R7nY3lz5TMmiO0U1zYFqotY=
+X-Gm-Gg: ASbGncvo9A3rk79+KfAiUJYsPmBhCPhHhnY+mymE9TVJCzccRAtdsUiGt93DdPdS4bR
+ sSJfu/pgZjVy7KE3bq2J6atS2hunuiPMtR5U2dN2EY2cHwytKi2pLX4UL0++k0ZlEk3QIqquQbs
+ datL7mmufGeDqir6DdFpFVCW2qs0MSWGKDb29D2iS/dGEwQQOa/b9DGgkbys5zfxrFSjMkTHD9+
+ FNAXOLoja+pvS5GDQVHuJcdbSuatJBtsbwAeIDgyDiEpcKVRErCZZLvaNQY/b7BRqefb0ZXAhXM
+ fZPSUlPcZNs2+GmkC61bgdCp8WnP3okOf3Tc3MQQ/NyV1ePVy0+oaEZVTVnRUkQAOfygvQ==
+X-Google-Smtp-Source: AGHT+IHw26zQV1ocpccpexbz/PlkpXzJHYNG/DxrREnl/pDC6lqCEt3k5kbXM46LNtNQbQGOyRAwpA==
+X-Received: by 2002:a05:6000:154a:b0:38f:27d3:1b3b with SMTP id
+ ffacd0b85a97d-38f6e756316mr2174134f8f.11.1740134657178; 
+ Fri, 21 Feb 2025 02:44:17 -0800 (PST)
 Received: from [192.168.69.157] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258f5fabsm22765614f8f.45.2025.02.21.02.43.36
+ ffacd0b85a97d-38f259d58f3sm22964171f8f.73.2025.02.21.02.44.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 02:43:36 -0800 (PST)
-Message-ID: <925aedb5-6cb5-47eb-980f-d72841f6fa86@linaro.org>
-Date: Fri, 21 Feb 2025 11:43:35 +0100
+ Fri, 21 Feb 2025 02:44:16 -0800 (PST)
+Message-ID: <fc644b42-c6ad-47a5-9940-bb6842a06771@linaro.org>
+Date: Fri, 21 Feb 2025 11:44:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/rtc: Add RTC PCF8563 module
-To: Ilya Chichkov <i.chichkov@yadro.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250221073444.15257-1-i.chichkov@yadro.com>
+Subject: Re: [PATCH 1/4] acpi/ghes: Make ghes_record_cper_errors() static
+To: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com
+References: <20250214041635.608012-1-gshan@redhat.com>
+ <20250214041635.608012-2-gshan@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250221073444.15257-1-i.chichkov@yadro.com>
+In-Reply-To: <20250214041635.608012-2-gshan@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,91 +101,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ilya,
-
-On 21/2/25 08:34, Ilya Chichkov wrote:
-> Add PCF8563 a real-time clock with calendar and I2C interface.
-> This commit adds support for interfacing with it and implements
-> functionality of setting timer, alarm, reading and writing time.
+On 14/2/25 05:16, Gavin Shan wrote:
+> acpi_ghes_memory_errors() is the only caller, no need to expose
+> the function. Besides, the last 'return' in this function isn't
+> necessary and remove it.
 > 
-> Datasheet: https://www.micros.com.pl/mediaserver/UZPCF8563ts5_0001.pdf
+> No functional changes intended.
 > 
-> Signed-off-by: Ilya Chichkov <i.chichkov@yadro.com>
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
 > ---
->   hw/rtc/Kconfig       |   5 +
->   hw/rtc/meson.build   |   1 +
->   hw/rtc/pcf8563_rtc.c | 638 +++++++++++++++++++++++++++++++++++++++++++
->   hw/rtc/trace-events  |  11 +
->   4 files changed, 655 insertions(+)
->   create mode 100644 hw/rtc/pcf8563_rtc.c
+>   hw/acpi/ghes.c         | 6 ++----
+>   include/hw/acpi/ghes.h | 2 --
+>   2 files changed, 2 insertions(+), 6 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> +static void pcf8563_realize(DeviceState *dev, Error **errp)
-> +{
-> +    I2CSlave *i2c = I2C_SLAVE(dev);
-> +    Pcf8563State *s = PCF8563(i2c);
-> +
-> +    s->alarm_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, &alarm_timer_cb, s);
-> +    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, &timer_cb, s);
-> +    s->irq_gen_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, &irq_gen_timer_cb, s);
-> +
-> +    pcf8563_reset(i2c);
-
-Calling pcf8563_reset() here, the device will only be reset once
-(cold reset), not when a guest VM resets (hot reset).
-
-See below to register a reset handler called when guest resets.
-
-> +}
-
-
-> +static void pcf8563_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-
-        ResettableClass *rc = RESETTABLE_CLASS(klass);
-
-> +
-> +    k->event = pcf8563_event;
-> +    k->recv = pcf8563_rx;
-> +    k->send = pcf8563_tx;
-> +    dc->realize = pcf8563_realize;
-> +    dc->vmsd = &vmstate_pcf8563;
-
-        rc->phases.hold = pcf8563_reset_hold;
-
-> +
-> +    trace_pcf8563_rtc_init();
-
-This trace event is wrong, this isn't the device init but the
-registration of its model.
-
-> +}
-
-Your device is missing testing coverage. Our QTest framework seems
-well adapted for it.
-
-You can use some examples as template:
-
-$ git grep -l i2c tests/qtest/*.c
-tests/qtest/adm1266-test.c
-tests/qtest/adm1272-test.c
-tests/qtest/bcm2835-i2c-test.c
-tests/qtest/ds1338-test.c
-tests/qtest/emc141x-test.c
-tests/qtest/isl_pmbus_vr-test.c
-tests/qtest/lsm303dlhc-mag-test.c
-tests/qtest/max34451-test.c
-tests/qtest/microbit-test.c
-tests/qtest/npcm7xx_smbus-test.c
-tests/qtest/pca9552-test.c
-tests/qtest/pnv-host-i2c-test.c
-tests/qtest/qtest_aspeed.c
-tests/qtest/tmp105-test.c
-tests/qtest/tpm-tis-i2c-test.c
-
-Regards,
-
-Phil.
 
