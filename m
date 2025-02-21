@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F737C021AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5DDC021B5
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS4c-00077d-Vm; Fri, 21 Feb 2025 07:24:07 -0500
+	id 1tlS4X-0006tu-DU; Fri, 21 Feb 2025 07:24:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4Z-00072Z-LM
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:03 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4V-0006lU-GQ
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4X-00078m-OB
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:03 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4T-000783-QP
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140641;
+ s=mimecast20190719; t=1740140637;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=htXrZRjJWy6jAGF8iFopXWg4nq3jbP1OW/HmNp/8W4o=;
- b=hZuCYZH6nCCNaIg3TRmGiJiuM34kNZUe6BUXK4z8ufcLRRuMOZOme9X/OeO9w7ywvvseJK
- mMbiKUJrlauJsj4X14c0ckgOXi2EfU1oO/ttigafnSZSCft9yt6M89xrORxpn03h5o/KbD
- BY9/1yO/n+gDOB3ULD62raRuFli6Oww=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cvBWmFUXdZkhnxIEnnyEww3jMhD10rJHEduWob1P8ko=;
+ b=FeCZlR4ZTVhbT3x/wsXY4BB8NHwuqTn/HtX34BX2E3LtFNBxdzZU0lpmYKz0hugs6btrds
+ GLfvZCwidl3d8p+a91g8DbxrWQ08sO6VaJgVYHDqOLDCyArTMO07g8hujcMpWTNiBu1n/z
+ VXxH3DKrNi9n4aGYhKrQYELwlk//TOg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-300-fEUT-AKfO3O5EDtbCDQ_Ng-1; Fri, 21 Feb 2025 07:23:59 -0500
-X-MC-Unique: fEUT-AKfO3O5EDtbCDQ_Ng-1
-X-Mimecast-MFC-AGG-ID: fEUT-AKfO3O5EDtbCDQ_Ng_1740140638
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38f2c0aa6d6so1468820f8f.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:58 -0800 (PST)
+ us-mta-226-ZvWvn7_aOqmdbfvw94YhIA-1; Fri, 21 Feb 2025 07:23:54 -0500
+X-MC-Unique: ZvWvn7_aOqmdbfvw94YhIA-1
+X-Mimecast-MFC-AGG-ID: ZvWvn7_aOqmdbfvw94YhIA_1740140633
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4394b8bd4e1so10341555e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140637; x=1740745437;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=htXrZRjJWy6jAGF8iFopXWg4nq3jbP1OW/HmNp/8W4o=;
- b=JC/BwKszLyT03LEw6G4ZtRSERsJ3mCLKVnSkZvKud4vZQS47PMgBYrurpEx5Dd/mto
- bP/tIpD8LBKdZFOJte44374vSmmU6FV0G5IYaUF9NluytqIIVpSb5uSM5wjETaBtx12N
- uk9MWJ68IJKobQGEUeymnVRiPHq5sNk9C/3V9Kh92hRRpILPCD3Iq10Ao+XTUXWiDUII
- somNWKKh30opd20vBA5IiyJpEryOuh7dT6e9dvG94u3Y9GiU41Brqitt5K/MDTFJuby0
- Mdzm6bPmNFiM321FPRpCkH9UhkbRwP8u6eQLAV2YzRU9CxT7iPU0yceVrXEdL343G+Y3
- qDZA==
-X-Gm-Message-State: AOJu0YxWhDk2mVqkNcvvc1zWo1/iX2BYK8StxQ4aCSLw3hKH7h0MF/Ko
- Lz0AEsHUAohJSRknGLW0FsAj4tfequa28fRapGch2Kq1gsDMXWM35n9UZXzNYGcRKLqKIaTeLUJ
- jXC6KV2gV34/fEYkJGPqdBmuPJ3BcbQvrU2A2pNi6gV/TGJrJ/2nzhx2hM7YCbt1isynb7G+wFD
- UB/DvRsYiAFzzayeeeHRHDc8ilVVP8sg==
-X-Gm-Gg: ASbGncvfM4y9RZvx/15FE42bD/7klPSoEbA09Tg8HkD7pJZqep8vRTzM8bgpzIKJ722
- h/W89lNxvje+L8g9+X8BDnO/sfc21e5N22lXxy73weHdaa3lzjTRZ7NY34lwCTAuxL6l2UQ5PN/
- o6/LnAOHwl7VF0SLhofLSAvaJUpkRRLj/cm2OIQBFxHgQuWJ3sGeJwYdYF8qbVNPGtYpQqajPQU
- yqA9iI+zz+ozVA/P3H3IFeMGLe3OqB6lKi0CCSQN+kndJJAvOsaFugeSgY9+s0cxp5q07i4oToc
- 3zPHBw==
-X-Received: by 2002:a05:6000:18a9:b0:38d:e3fd:1a1c with SMTP id
- ffacd0b85a97d-38f6f515202mr2711229f8f.23.1740140637437; 
- Fri, 21 Feb 2025 04:23:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEk3MwthKuYt50N4X+gNJoPR6Bsnka87p4Sfpx0EuJrucprl8bLCQE5TlFazLFd1IIkjbKcrA==
-X-Received: by 2002:a05:6000:18a9:b0:38d:e3fd:1a1c with SMTP id
- ffacd0b85a97d-38f6f515202mr2711197f8f.23.1740140636971; 
- Fri, 21 Feb 2025 04:23:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740140633; x=1740745433;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cvBWmFUXdZkhnxIEnnyEww3jMhD10rJHEduWob1P8ko=;
+ b=udLBdeQk5dERLfZC3JQWfJRNIanG3t4eXaAAO+KZk57Cby2k+Wo93U2DjvCW4r6gtj
+ 5WyNVQ/wTEWyjCcSW5DLeR+jHVyPpjuNl9dj2Z+rLqEzY8GUN642nEMSi1vpYqmL2KGC
+ CAR0VuPVHTvCIvOJwM8PwkBO6mFjCxho87pNt/ilM36S0b3kS/KJG/rE9kr8OAmpS1DZ
+ Z+Tx5ZydYJVctYyphDfeQtsMKrAWbCgu51PQ6BNIMZyY6hHrC1pNHkQGXRJsGtqATOAM
+ b2w3XnPW8p3F+DHUtMxEKqoOEBJqvtBoSwAg0EDFzuoX16yF4ucQtYvQsfWMz3PPK3DN
+ Blug==
+X-Gm-Message-State: AOJu0Ywmd2BeOeo/816nLErp4lm9YviuB6FlPttGAlZJmnfwWsgcntA9
+ We3ChJuAEmh/HJPwlY0RwBuseuP1/070BzOlkym4CVSNxafRBg+vvReJuP6xVitTT+4VqovguRn
+ 9xHysDsRK0Vx9rsUmGTOWdjiczegGrzc4/gSPsLpM2vJErcPfNng2YDmtJ7YZepEBrCMiybEdnZ
+ tmj8VivLQtj1BEaHVPyYclCguhjZ8acA==
+X-Gm-Gg: ASbGnctxYsT4DeURFeGTpYDLWiGwYXQHgGw71/3yjZPjgK0C6o85lZAaRDSfC+zGiYg
+ KTXgv3rB8KtZeVD3q7qM5iOC9zlGZ1CMRmdx0lPBHIsi3RPPP57nqcrw6OPUeJulyXPK+HXpBQP
+ maDRSH1xxWAcweMF4nRm2nVhx2cNKlbtAZTstz3pfgB/PYdFSdZnwUkxQPwcBE8/SwSJOpDlaSS
+ jlSTLEuyrpYpk+cYEhMr5Zx6HDBAbPUS9sYVgvIWmwNWRjbRAwKxvf+dTkNR9WAi1eo+qyI+GHc
+ A4AeSg==
+X-Received: by 2002:a05:600c:350a:b0:439:8e3e:b0d6 with SMTP id
+ 5b1f17b1804b1-439aeb2ab04mr21261405e9.13.1740140632831; 
+ Fri, 21 Feb 2025 04:23:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXgxX+Us+Oq4NHZZ7PokBtBmgoOeq85WQiUNg/YON7wMRdu/OuvN5CwHTRnEPaU/P996S3+A==
+X-Received: by 2002:a05:600c:350a:b0:439:8e3e:b0d6 with SMTP id
+ 5b1f17b1804b1-439aeb2ab04mr21261225e9.13.1740140632493; 
+ Fri, 21 Feb 2025 04:23:52 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f25a0fe5esm23510599f8f.99.2025.02.21.04.23.54
+ 5b1f17b1804b1-439b02f24acsm15849555e9.21.2025.02.21.04.23.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:23:56 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:23:52 -0500
+ Fri, 21 Feb 2025 04:23:52 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:23:49 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 24/41] mem/cxl_type3: support 3, 6, 12 and 16 interleave ways
-Message-ID: <9ac2c42f43a536f53b3d4cad8a601ccb8640cbd8.1740140520.git.mst@redhat.com>
+ Li Zhijian <lizhijian@fujitsu.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 23/41] hw/mem/cxl_type3: Ensure errp is set on realization
+ failure
+Message-ID: <d3c92cf6dcab028d05f306d4d50511aa805d2385.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -108,78 +113,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-Since the kernel does not check the interleave capability, a
-3-way, 6-way, 12-way or 16-way region can be create normally.
+Simply pass the errp to its callee which will set errp if needed, to
+enhance error reporting for CXL Type 3 device initialization by setting
+the errp when realization functions fail.
 
-Applications can access the memory of 16-way region normally because
-qemu can convert hpa to dpa correctly for the power of 2 interleave
-ways, after kernel implementing the check, this kind of region will
-not be created any more.
+Previously, failing to set `errp` could result in errors being overlooked,
+causing the system to mistakenly treat failure scenarios as successful and
+potentially leading to redundant cleanup operations in ct3_exit().
 
-For non power of 2 interleave ways, applications could not access the
-memory normally and may occur some unexpected behaviors, such as
-segmentation fault.
-
-So implements this feature is needed.
-
-Link: https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fujitsu.com/
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20250203161908.145406-6-Jonathan.Cameron@huawei.com>
+Message-Id: <20250203161908.145406-5-Jonathan.Cameron@huawei.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-component-utils.c |  9 +++++++--
- hw/mem/cxl_type3.c           | 15 +++++++++++----
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ hw/mem/cxl_type3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index cd116c0401..473895948b 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -243,8 +243,13 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, INTERLEAVE_4K, 1);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-                      POISON_ON_ERR_CAP, 0);
--    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 0);
--    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 0);
-+    if (type == CXL2_TYPE3_DEVICE) {
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 1);
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 1);
-+    } else {
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 0);
-+        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 0);
-+    }
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, UIO, 0);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-                      UIO_DECODER_COUNT, 0);
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index d8b45f9bd1..6fffa21ead 100644
+index ff6861889b..d8b45f9bd1 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -1100,10 +1100,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-             continue;
-         }
+@@ -891,7 +891,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+                      &ct3d->cxl_dstate.device_registers);
  
--        *dpa = dpa_base +
--            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
--             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
--              >> iw));
-+        if (iw < 8) {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
-+                  >> iw));
-+        } else {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offset)
-+                   >> (ig + iw)) / 3) << (ig + 8)));
-+        }
+     /* MSI(-X) Initialization */
+-    rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, NULL);
++    rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, errp);
+     if (rc) {
+         goto err_free_special_ops;
+     }
+@@ -912,7 +912,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
  
-         return true;
+     pcie_cap_deverr_init(pci_dev);
+     /* Leave a bit of room for expansion */
+-    rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, NULL);
++    rc = pcie_aer_init(pci_dev, PCI_ERR_VER, 0x200, PCI_ERR_SIZEOF, errp);
+     if (rc) {
+         goto err_release_cdat;
      }
 -- 
 MST
