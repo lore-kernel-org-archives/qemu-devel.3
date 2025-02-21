@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF0FC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A55AC021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlTbN-00008P-FP; Fri, 21 Feb 2025 09:02:01 -0500
+	id 1tlTbL-0008Sb-AE; Fri, 21 Feb 2025 09:01:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liuwe@linux.microsoft.com>)
- id 1tlOWf-0006Pv-CK
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:36:49 -0500
+ id 1tlOX4-0006Xo-Qx
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:37:15 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <liuwe@linux.microsoft.com>) id 1tlOWc-00014w-VE
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:36:49 -0500
+ (envelope-from <liuwe@linux.microsoft.com>) id 1tlOX1-00018Z-9o
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:37:13 -0500
 Received: by linux.microsoft.com (Postfix, from userid 1031)
- id 54EE3204E5B5; Fri, 21 Feb 2025 00:36:29 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 54EE3204E5B5
+ id 3DF282054593; Fri, 21 Feb 2025 00:36:29 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3DF282054593
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1740126989;
- bh=pUwZ/dSr5gGrdQZ84seWR6a6C8sHhqS7bmH4ZAYmDHU=;
+ s=default; t=1740126990;
+ bh=/Q2sCDBVnhdLE0bPHid8ZnDApsB2tBkaKG720JHrJmU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=BqqD964wwMtTwbsqgUH7HpiUp6NzgWd+UawlSLcbTMHy5jW1GRKkHH6+yXZK+SGx4
- F9uhe0AUKOkQmMaOJNDaDngmtN+DoUGcpGLysE6136RkLFd4Ngu/iJBkB2BwPXL6nV
- czUtWPWjUySH1bSWW7kHOW/+53hZC7cKTth1ZDx8=
+ b=bhLOm8MQdw/+qvNTlGB9D0Wp+N85uWzdR+4vkMVB28DN8NbJEw+o6zF022RfYSS48
+ iW9nyMr+tdkgwyH/kMJN8hrLDnqepr9dUXq5i8bwiiQxJ21xiOzc/24aQ3fZWVccty
+ t2kxpE7h928g+hb8jOwsEm0x4DjE82mbIUaeTaBw=
 From: Wei Liu <liuwe@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
@@ -37,10 +37,10 @@ Cc: wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
  mukeshrathor@microsoft.com, magnuskulke@microsoft.com,
  prapal@microsoft.com, jpiotrowski@microsoft.com, deviv@microsoft.com,
  Wei Liu <liuwe@linux.microsoft.com>
-Subject: [RFC PATCH v1 02/19] target/i386/hvf: fix the declaration of
- hvf_handle_io
-Date: Fri, 21 Feb 2025 00:36:10 -0800
-Message-Id: <1740126987-8483-3-git-send-email-liuwe@linux.microsoft.com>
+Subject: [RFC PATCH v1 19/19] target/i386: move x86 instruction emulator out
+ of hvf
+Date: Fri, 21 Feb 2025 00:36:27 -0800
+Message-Id: <1740126987-8483-20-git-send-email-liuwe@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
 References: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
@@ -54,7 +54,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 21 Feb 2025 09:00:51 -0500
+X-Mailman-Approved-At: Fri, 21 Feb 2025 09:01:15 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,81 +69,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a conflicting declaration for hvf_handle_io in x86_emu.c.  The type of
-the first argument is wrong.  There has never been a problem because the first
-argument is not used in hvf_handle_io.
-
-That being said, the code shouldn't contain such an error. Use the proper
-declaration from hvf-i386.h.
-
-Take the chance to change the first argument's type to be CPUState.
+Move x86_decode, x86_emu, x86_flags and some headers to the new location.
+Fix up all the inclusion sites in hvf.
 
 Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
 ---
- target/i386/hvf/hvf-i386.h | 2 +-
- target/i386/hvf/hvf.c      | 6 +++---
- target/i386/hvf/x86_emu.c  | 4 +---
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ target/i386/hvf/hvf.c                           | 8 ++++----
+ target/i386/hvf/meson.build                     | 3 ---
+ target/i386/hvf/vmx.h                           | 2 +-
+ target/i386/hvf/x86.c                           | 4 ++--
+ target/i386/hvf/x86_cpuid.c                     | 2 +-
+ target/i386/hvf/x86_descr.h                     | 2 +-
+ target/i386/hvf/x86_mmu.c                       | 2 +-
+ target/i386/hvf/x86_task.c                      | 6 +++---
+ target/i386/hvf/x86hvf.c                        | 2 +-
+ target/i386/x86-insn-emul/meson.build           | 5 +++++
+ target/i386/{hvf => x86-insn-emul}/x86.h        | 0
+ target/i386/{hvf => x86-insn-emul}/x86_decode.c | 0
+ target/i386/{hvf => x86-insn-emul}/x86_decode.h | 0
+ target/i386/{hvf => x86-insn-emul}/x86_emu.c    | 0
+ target/i386/{hvf => x86-insn-emul}/x86_emu.h    | 0
+ target/i386/{hvf => x86-insn-emul}/x86_flags.c  | 0
+ target/i386/{hvf => x86-insn-emul}/x86_flags.h  | 0
+ 17 files changed, 19 insertions(+), 17 deletions(-)
+ rename target/i386/{hvf => x86-insn-emul}/x86.h (100%)
+ rename target/i386/{hvf => x86-insn-emul}/x86_decode.c (100%)
+ rename target/i386/{hvf => x86-insn-emul}/x86_decode.h (100%)
+ rename target/i386/{hvf => x86-insn-emul}/x86_emu.c (100%)
+ rename target/i386/{hvf => x86-insn-emul}/x86_emu.h (100%)
+ rename target/i386/{hvf => x86-insn-emul}/x86_flags.c (100%)
+ rename target/i386/{hvf => x86-insn-emul}/x86_flags.h (100%)
 
-diff --git a/target/i386/hvf/hvf-i386.h b/target/i386/hvf/hvf-i386.h
-index e99c02cd4b..046b681d13 100644
---- a/target/i386/hvf/hvf-i386.h
-+++ b/target/i386/hvf/hvf-i386.h
-@@ -18,7 +18,7 @@
- 
- uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
- 
--void hvf_handle_io(CPUArchState *, uint16_t, void *, int, int, int);
-+void hvf_handle_io(CPUState *, uint16_t, void *, int, int, int);
- 
- /* Host specific functions */
- int hvf_inject_interrupt(CPUArchState *env, int vector);
 diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 353549fa77..1ecb6993ba 100644
+index 57a8029cfa..aeef3dbde6 100644
 --- a/target/i386/hvf/hvf.c
 +++ b/target/i386/hvf/hvf.c
-@@ -103,7 +103,7 @@ static void update_apic_tpr(CPUState *cpu)
- 
- #define VECTORING_INFO_VECTOR_MASK     0xff
- 
--void hvf_handle_io(CPUArchState *env, uint16_t port, void *buffer,
-+void hvf_handle_io(CPUState *env, uint16_t port, void *buffer,
-                   int direction, int size, int count)
- {
-     int i;
-@@ -536,7 +536,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-             if (!string && in) {
-                 uint64_t val = 0;
-                 load_regs(cpu);
--                hvf_handle_io(env, port, &val, 0, size, 1);
-+                hvf_handle_io(env_cpu(env), port, &val, 0, size, 1);
-                 if (size == 1) {
-                     AL(env) = val;
-                 } else if (size == 2) {
-@@ -551,7 +551,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-                 break;
-             } else if (!string && !in) {
-                 RAX(env) = rreg(cpu->accel->fd, HV_X86_RAX);
--                hvf_handle_io(env, port, &RAX(env), 1, size, 1);
-+                hvf_handle_io(env_cpu(env), port, &RAX(env), 1, size, 1);
-                 macvm_set_rip(cpu, rip + ins_len);
-                 break;
-             }
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index 69c61c9c07..2c7da10c1d 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -44,9 +44,7 @@
- #include "x86_flags.h"
+@@ -59,12 +59,12 @@
+ #include "hvf-i386.h"
  #include "vmcs.h"
  #include "vmx.h"
--
--void hvf_handle_io(CPUState *cs, uint16_t port, void *data,
--                   int direction, int size, uint32_t count);
-+#include "hvf-i386.h"
+-#include "x86.h"
++#include "x86-insn-emul/x86.h"
+ #include "x86_descr.h"
+-#include "x86_flags.h"
++#include "x86-insn-emul/x86_flags.h"
+ #include "x86_mmu.h"
+-#include "x86_decode.h"
+-#include "x86_emu.h"
++#include "x86-insn-emul/x86_decode.h"
++#include "x86-insn-emul/x86_emu.h"
+ #include "x86_task.h"
+ #include "x86hvf.h"
  
- #define EXEC_2OP_FLAGS_CMD(env, decode, cmd, FLAGS_FUNC, save_res) \
- {                                                       \
+diff --git a/target/i386/hvf/meson.build b/target/i386/hvf/meson.build
+index 05c3c8cf18..519d190f0e 100644
+--- a/target/i386/hvf/meson.build
++++ b/target/i386/hvf/meson.build
+@@ -2,10 +2,7 @@ i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
+   'hvf.c',
+   'x86.c',
+   'x86_cpuid.c',
+-  'x86_decode.c',
+   'x86_descr.c',
+-  'x86_emu.c',
+-  'x86_flags.c',
+   'x86_mmu.c',
+   'x86_task.c',
+   'x86hvf.c',
+diff --git a/target/i386/hvf/vmx.h b/target/i386/hvf/vmx.h
+index 80ce26279b..d012781d46 100644
+--- a/target/i386/hvf/vmx.h
++++ b/target/i386/hvf/vmx.h
+@@ -29,7 +29,7 @@
+ #include <Hypervisor/hv_vmx.h>
+ #include "vmcs.h"
+ #include "cpu.h"
+-#include "x86.h"
++#include "x86-insn-emul/x86.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+ 
+diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
+index a0ede13886..3b9d0716fe 100644
+--- a/target/i386/hvf/x86.c
++++ b/target/i386/hvf/x86.c
+@@ -19,8 +19,8 @@
+ #include "qemu/osdep.h"
+ 
+ #include "cpu.h"
+-#include "x86_decode.h"
+-#include "x86_emu.h"
++#include "x86-insn-emul/x86_decode.h"
++#include "x86-insn-emul/x86_emu.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+ #include "x86_mmu.h"
+diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
+index ae836f65cc..1b7a3579c8 100644
+--- a/target/i386/hvf/x86_cpuid.c
++++ b/target/i386/hvf/x86_cpuid.c
+@@ -24,7 +24,7 @@
+ #include "qemu/cpuid.h"
+ #include "host/cpuinfo.h"
+ #include "cpu.h"
+-#include "x86.h"
++#include "x86-insn-emul/x86.h"
+ #include "vmx.h"
+ #include "system/hvf.h"
+ #include "hvf-i386.h"
+diff --git a/target/i386/hvf/x86_descr.h b/target/i386/hvf/x86_descr.h
+index ce5de98349..2b403b36ce 100644
+--- a/target/i386/hvf/x86_descr.h
++++ b/target/i386/hvf/x86_descr.h
+@@ -19,7 +19,7 @@
+ #ifndef HVF_X86_DESCR_H
+ #define HVF_X86_DESCR_H
+ 
+-#include "x86.h"
++#include "x86-insn-emul/x86.h"
+ 
+ typedef struct vmx_segment {
+     uint16_t sel;
+diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
+index 579d0c3a4c..648ff6f7f2 100644
+--- a/target/i386/hvf/x86_mmu.c
++++ b/target/i386/hvf/x86_mmu.c
+@@ -19,7 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "panic.h"
+ #include "cpu.h"
+-#include "x86.h"
++#include "x86-insn-emul/x86.h"
+ #include "x86_mmu.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
+index 161217991f..88b1c0a8bf 100644
+--- a/target/i386/hvf/x86_task.c
++++ b/target/i386/hvf/x86_task.c
+@@ -14,11 +14,11 @@
+ #include "hvf-i386.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+-#include "x86.h"
++#include "x86-insn-emul/x86.h"
+ #include "x86_descr.h"
+ #include "x86_mmu.h"
+-#include "x86_decode.h"
+-#include "x86_emu.h"
++#include "x86-insn-emul/x86_decode.h"
++#include "x86-insn-emul/x86_emu.h"
+ #include "x86_task.h"
+ #include "x86hvf.h"
+ 
+diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+index 531a340b37..2c0d779bca 100644
+--- a/target/i386/hvf/x86hvf.c
++++ b/target/i386/hvf/x86hvf.c
+@@ -24,7 +24,7 @@
+ #include "vmcs.h"
+ #include "cpu.h"
+ #include "x86_descr.h"
+-#include "x86_decode.h"
++#include "x86-insn-emul/x86_decode.h"
+ #include "system/hw_accel.h"
+ 
+ #include "hw/i386/apic_internal.h"
+diff --git a/target/i386/x86-insn-emul/meson.build b/target/i386/x86-insn-emul/meson.build
+index e69de29bb2..4edd4f462f 100644
+--- a/target/i386/x86-insn-emul/meson.build
++++ b/target/i386/x86-insn-emul/meson.build
+@@ -0,0 +1,5 @@
++i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
++  'x86_decode.c',
++  'x86_emu.c',
++  'x86_flags.c',
++))
+diff --git a/target/i386/hvf/x86.h b/target/i386/x86-insn-emul/x86.h
+similarity index 100%
+rename from target/i386/hvf/x86.h
+rename to target/i386/x86-insn-emul/x86.h
+diff --git a/target/i386/hvf/x86_decode.c b/target/i386/x86-insn-emul/x86_decode.c
+similarity index 100%
+rename from target/i386/hvf/x86_decode.c
+rename to target/i386/x86-insn-emul/x86_decode.c
+diff --git a/target/i386/hvf/x86_decode.h b/target/i386/x86-insn-emul/x86_decode.h
+similarity index 100%
+rename from target/i386/hvf/x86_decode.h
+rename to target/i386/x86-insn-emul/x86_decode.h
+diff --git a/target/i386/hvf/x86_emu.c b/target/i386/x86-insn-emul/x86_emu.c
+similarity index 100%
+rename from target/i386/hvf/x86_emu.c
+rename to target/i386/x86-insn-emul/x86_emu.c
+diff --git a/target/i386/hvf/x86_emu.h b/target/i386/x86-insn-emul/x86_emu.h
+similarity index 100%
+rename from target/i386/hvf/x86_emu.h
+rename to target/i386/x86-insn-emul/x86_emu.h
+diff --git a/target/i386/hvf/x86_flags.c b/target/i386/x86-insn-emul/x86_flags.c
+similarity index 100%
+rename from target/i386/hvf/x86_flags.c
+rename to target/i386/x86-insn-emul/x86_flags.c
+diff --git a/target/i386/hvf/x86_flags.h b/target/i386/x86-insn-emul/x86_flags.h
+similarity index 100%
+rename from target/i386/hvf/x86_flags.h
+rename to target/i386/x86-insn-emul/x86_flags.h
 -- 
 2.39.5 (Apple Git-154)
 
