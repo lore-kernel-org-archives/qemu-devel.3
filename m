@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4EAC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB3FC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS4z-0008Ae-B5; Fri, 21 Feb 2025 07:24:30 -0500
+	id 1tlS5P-00028U-HE; Fri, 21 Feb 2025 07:24:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4k-0007PL-GA
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:17 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5F-0001F2-4W
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4h-0007Ac-1a
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:12 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5C-0007EU-Bj
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140650;
+ s=mimecast20190719; t=1740140681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dxfWHzt9iN+96ZxAmV4fASWczS4ot0QMavailc7mYDI=;
- b=DJgxk7Bohn9m7qvVVDwvRSuS1ZwSQRGDaiXcB5uQPGvdYRTZFWkkm8mf1bW12N9aN1LHcF
- 3h7W0y6M49zBcJ0mm8oHLn90dxhxjdz+NXgxqbi4qsADzkVbXXaWU/GYhX40icGabwswym
- ixc/Xs2E9+VxFZ6fF0ohWB85cIsZ0mk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y+Y5g8wbgtarePqnIrjsvz5QinXPsEQErGBVpb/bDhs=;
+ b=DaBHADIoPOLrGSjn5LmbojwpDnaw6sGtjRb6iH1edK0war9917uoImgYphiQFtwMBFg2U5
+ /7IY1WDKt0uzm1aa8p1oQVoNLw98joieGP3EoUVm75V5AnbcTK0oC5itVcChlBQhPFw4rz
+ mQwnj85FvOsM7m+gdfRqe3sz4Gy9GJg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-MJjZAXcVNqK-qcN41WAz9w-1; Fri, 21 Feb 2025 07:24:08 -0500
-X-MC-Unique: MJjZAXcVNqK-qcN41WAz9w-1
-X-Mimecast-MFC-AGG-ID: MJjZAXcVNqK-qcN41WAz9w_1740140647
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso18741485e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:08 -0800 (PST)
+ us-mta-138-I-tzmKEfOlK_MT18FABBQQ-1; Fri, 21 Feb 2025 07:24:40 -0500
+X-MC-Unique: I-tzmKEfOlK_MT18FABBQQ-1
+X-Mimecast-MFC-AGG-ID: I-tzmKEfOlK_MT18FABBQQ_1740140679
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4399d2a1331so10852675e9.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140647; x=1740745447;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dxfWHzt9iN+96ZxAmV4fASWczS4ot0QMavailc7mYDI=;
- b=cltvu6UTGQflsOQh0bVhMCq9UOv5BIUTidmUoZjv3WyEd3Cgh3sJpBnje9vdOTB1lT
- GywPCn72XlO032takYvzrFyeN7os7EQpTou+LhrY2QNUUORL8yw9ImtFnLjtk1S+yJr6
- WQapSE4+0rzessnAkVune4ESoqu+TLA5ntrZFo/wE7PO5+tC1W+4oRtXj3aN/FGJJMI/
- i2ezG50ObICwksc24/NBnjgiOa9hYC6SSIyh1E3l6/tAbXn4/BX8qYhp1e9S/KRRNtzq
- MWhCYcr1oUD01BtJJe0f78KH/RIL704p9Lw5dQlNksJy6Dg1qaKD7J/6CN84aiCdxIHT
- wdJA==
-X-Gm-Message-State: AOJu0YwEFnxQ6uxa5MXuKBZH0d0No8gfJvCQVhXU9OG4I6mSxNjWxzae
- 8ggGaM4/7iUT6FXwX6DHG19Gko6HKYlbmn+1Gy0qGd3GDC9IUU+NEwrY9P4MBTE8dLfa3r0gC8X
- 0zxtcTLC8sWYLe6r5a9LeELj9WOd5KaaHjxfw09Kf4SMFxyFSFST8ntaFJZh+6kb/qbZcTTl+0o
- eZWc++aOyJX1OPtJmfWoKGTle5iRRrdw==
-X-Gm-Gg: ASbGncsLxeiywvQNETO9jbEFlgJuSRXaRuZSfKQPcV2CQBqkRzwPWwyutBRGIKDl/UT
- LLa538taNATk58T00cqpg1NGw0MCnf6Ul6SnKMVjHDYBzsMVtQp6+wl1aoIsFkg5QZaby1w1LM6
- YMlgcJSQ0rjs+ivZ80+M3RZFWLjv5dI3uXJFJwM+/gmi/rYjcYjm7V29+DEhcmA/KQFLrol+hBu
- Yk3KO33mM4J7MVxgZXXGTLTu+jWKHfxCm9urQRJz1JDwoe+1xX+IBFxTAdbB/FqKv9B4xgCUdhj
- bxbKoQ==
-X-Received: by 2002:a05:600c:45ca:b0:439:9a40:aa0b with SMTP id
- 5b1f17b1804b1-439ae21e36emr23933785e9.25.1740140646900; 
- Fri, 21 Feb 2025 04:24:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE++L12GzMimgissjFPBxz51sTR1njhnN+DcWPxHFC8BjJANAvKPaefWVIjCiSosjXHz8lRHg==
-X-Received: by 2002:a05:600c:45ca:b0:439:9a40:aa0b with SMTP id
- 5b1f17b1804b1-439ae21e36emr23933245e9.25.1740140646422; 
- Fri, 21 Feb 2025 04:24:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740140679; x=1740745479;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y+Y5g8wbgtarePqnIrjsvz5QinXPsEQErGBVpb/bDhs=;
+ b=Q8IWcMzrk1OXKcXQSB67SFNdstZlFvjGYf7xjrB2jiJHlVaZ7Y90g/Ghocdo36x4Vd
+ 74ZQvB9hNZYs9MJKp4HIbvK/rd8dSbHnqkE0O5lxeFAXIEzd+mY2us9jwqsFyfa31dVw
+ LAfcYEyRIyKZKW0PMg9dlChvjhkswCQJdmcrxbORPcs7aRLbMtSbrzsAzStWbC5yY1K2
+ 0osVsSyGmMbica1XxHszol71t3clfJPnSoAu6gJxuMC4tRnCeqL4QSyLU1B5vwNssk31
+ LnNFlKmUlvtninzmJ/MIobORMLs5OmZ6T/8vjJDIU9BjgEK0ptDv2E0vWThDaNTtAO3n
+ CWcg==
+X-Gm-Message-State: AOJu0Yy3YUK6zZOF/VO1Rp7uQi4Lq7bNUUY9kLlYJAyxHWLOU0Nk2K0p
+ JlwHFAmQRy8S23hnT3JGQFqlD0Vm9yshn4GXe3pfu3XxWiwbtpDi82MZK9PUuUYn6tAgzNvCk9K
+ xCo7qYfcS/CEYo6xQu9juy1Rw1BmbjMxPWhuWltsXTab7XGaa8D0RlEpOUM0OuvBF4Wh0BYnRKo
+ dUWreYaXGjtw3Esp/hBPHWhR4Z2df2Eg==
+X-Gm-Gg: ASbGnctmpgl/C9ZFvbFwx4djGFVY+hMibFfvridBJ42qshT77FOhjQ7YsEju7TaB5bB
+ PPO7fqDzUOZ2brp9nbWW5j3+WSfe9gm6eFLbUTQEg/V+MXnB/H6OeZ51lPtiUC3JOI05AZNZVAC
+ zUbET6rP6MQ3JithQA1kyDZ4mdG2qoZTe8Ew84hl+k68D+XE7B1OQp5MYFiUGgg2GQeYwGN8Mvc
+ PA3lFFlYn1OUqbckbkzaeEn2TfOToXPV/tUc/hfWCr5NVkc3OtVpHo2y1FFNwUoInYDFcFPkHgC
+ t0jcKA==
+X-Received: by 2002:a05:600c:6b66:b0:439:96a4:d2a8 with SMTP id
+ 5b1f17b1804b1-439a2fb2c41mr56334785e9.5.1740140678858; 
+ Fri, 21 Feb 2025 04:24:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGBIYq7g/aIhnFqWv6GdVkr3BQpXbN/J9tjIC8IdZtcPFONd6G8oGq4LP5nOL6C9aWpvPQl+A==
+X-Received: by 2002:a05:600c:6b66:b0:439:96a4:d2a8 with SMTP id
+ 5b1f17b1804b1-439a2fb2c41mr56334425e9.5.1740140678405; 
+ Fri, 21 Feb 2025 04:24:38 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce735sm15860915e9.3.2025.02.21.04.24.04
+ 5b1f17b1804b1-439b6f8b1fesm1528215e9.32.2025.02.21.04.24.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:05 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:03 -0500
+ Fri, 21 Feb 2025 04:24:37 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:35 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 27/41] amd_iommu: Use correct bitmask to set capability BAR
-Message-ID: <3684717b7407cc395dc9bf522e193dbc85293dee.1740140520.git.mst@redhat.com>
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ Dorinda Bassey <dbassey@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 36/41] vhost-user-snd: correct the calculation of config_size
+Message-ID: <e87b6efb11be9f5ff213461f5ecdbae47d9402b9.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -95,7 +98,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,52 +114,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
 
-AMD IOMMU provides the base address of control registers through
-IVRS table and PCI capability. Since this base address is of 64 bit,
-use 32 bits mask (instead of 16 bits) to set BAR low and high.
+Use virtio_get_config_size() rather than sizeof(struct
+virtio_snd_config) for the config_size in the vhost-user-snd frontend.
+The frontend shall rely on device features for the size of the device
+configuration space. The presence of `controls` in the config space
+depends on VIRTIO_SND_F_CTLS according to the specification (v1.3):
+`
+5.14.4 Device Configuration Layout
+...
 
-Fixes: d29a09ca68 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250207045354.27329-3-sarunkod@amd.com>
+controls
+(driver-read-only) indicates a total number of all available control
+elements if VIRTIO_SND_F_CTLS has been negotiated.
+`
+This fixes an issue introduced by commit ab0c7fb2 ("linux-headers:
+update to current kvm/next") in which the optional field `controls` is
+added to the virtio_snd_config structure. This breaks vhost-user-device
+backends that do not implement the `controls` field.
+
+Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+Message-Id: <20250217131255.829892-1-mvaralar@redhat.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Dorinda Bassey <dbassey@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.h | 2 +-
- hw/i386/amd_iommu.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/virtio/vhost-user-snd.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index e0dac4d9a9..28125130c6 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -187,7 +187,7 @@
-         AMDVI_CAPAB_FLAG_HTTUNNEL |  AMDVI_CAPAB_EFR_SUP)
+diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
+index 8610370af8..b414c75c06 100644
+--- a/hw/virtio/vhost-user-snd.c
++++ b/hw/virtio/vhost-user-snd.c
+@@ -16,6 +16,18 @@
+ #include "standard-headers/linux/virtio_ids.h"
+ #include "standard-headers/linux/virtio_snd.h"
  
- /* AMDVI default address */
--#define AMDVI_BASE_ADDR 0xfed80000
-+#define AMDVI_BASE_ADDR 0xfed80000ULL
++static const VirtIOFeature feature_sizes[] = {
++    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
++    .end = endof(struct virtio_snd_config, controls)},
++    {}
++};
++
++static const VirtIOConfigSizeParams cfg_size_params = {
++    .min_size = endof(struct virtio_snd_config, chmaps),
++    .max_size = sizeof(struct virtio_snd_config),
++    .feature_sizes = feature_sizes
++};
++
+ static const VMStateDescription vu_snd_vmstate = {
+     .name = "vhost-user-snd",
+     .unmigratable = 1,
+@@ -23,16 +35,20 @@ static const VMStateDescription vu_snd_vmstate = {
  
- /* page management constants */
- #define AMDVI_PAGE_SHIFT 12
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 98f1209a38..044fe43256 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1593,9 +1593,9 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
-     /* reset AMDVI specific capabilities, all r/o */
-     pci_set_long(pdev->config + s->capab_offset, AMDVI_CAPAB_FEATURES);
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_LOW,
--                 AMDVI_BASE_ADDR & ~(0xffff0000));
-+                 AMDVI_BASE_ADDR & MAKE_64BIT_MASK(14, 18));
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_HIGH,
--                (AMDVI_BASE_ADDR & ~(0xffff)) >> 16);
-+                AMDVI_BASE_ADDR >> 32);
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_RANGE,
-                  0xff000000);
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
+ static const Property vsnd_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
++    DEFINE_PROP_BIT64("controls", VHostUserBase,
++                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
+ };
+ 
+ static void vu_snd_base_realize(DeviceState *dev, Error **errp)
+ {
+     VHostUserBase *vub = VHOST_USER_BASE(dev);
+     VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
++    VirtIODevice *vdev = &vub->parent_obj;
+ 
+     vub->virtio_id = VIRTIO_ID_SOUND;
+     vub->num_vqs = 4;
+-    vub->config_size = sizeof(struct virtio_snd_config);
++    vub->config_size = virtio_get_config_size(&cfg_size_params,
++                                              vdev->host_features);
+     vub->vq_size = 64;
+ 
+     vubs->parent_realize(dev, errp);
 -- 
 MST
 
