@@ -4,165 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF1EC021B2
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 00:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F804C021B2
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 01:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlHDy-0004Wa-FX; Thu, 20 Feb 2025 19:49:02 -0500
+	id 1tlHhB-0001kJ-Vw; Thu, 20 Feb 2025 20:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tlHDu-0004WI-0z
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 19:48:58 -0500
-Received: from mail-dm6nam12on20623.outbound.protection.outlook.com
- ([2a01:111:f403:2417::623]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tlHhA-0001kB-P8
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 20:19:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tlHDs-00052h-8l
- for qemu-devel@nongnu.org; Thu, 20 Feb 2025 19:48:57 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BXVAvutbuUz22BTWf5dgKrNKBk9aLN7uNKoVFtd3ApR8teMAo58BP7pov8NVYZgmIPIgLA8MgNFQkpeHRjqU+MIpdQIjAWST4VuYIrnflRfr/u570vYPNC8hYarSNY2v40sjyWQi4TV7zXH1tyJahsg0+avBOext0itOApGxKKeDnTyfAXBB+PcuSenyEj5MByQCE8WO/M7y6sLwG8PdFagI6Zq+r/jpp0GZOKYjy0M06MAJPBOx1qVle9M5nFzMJ2377p9fK19JU765aVCI9w/DQvHSu28fgrAZyNtx2qMevVgJPZKZro0ItWF5tWO2xtepxvlV0eOnUjoG0bJkww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cra4AL3++r7JVv7n8iDHZihHtatT3qlI+kGWuOvI+fc=;
- b=bqCiZOZ11S8O0XUTYUwT3AA9SB6YuzCfnGKPryGTPmNZ0YrM6JSzVhiVpRDIPOnGIC1zgDSpVHCiHoPGT/E71GHJC0kPXbGfSp9hcwH6ZhRxU6SmUqv+JXTkrhW+x0aOWdrJEeguDFDoCnTHLN4k4PuIAYgMJAnqn2niwgvtE8uAnriT0MszUUh/CJN3cWv2CCIB0cH+hDLk3lebA52ODSeh4qGjVEjna8+iuyL/jIcUxD6n7iyAlrGGG23Z0aQiMIK1QL9Rr3gtMyqQtZo3NbRinAzGCWDYHi2HvJvct+MIEJK2OlbVJGg730EW7MEyY2IaQHLG6EgE3FQcZqPCNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cra4AL3++r7JVv7n8iDHZihHtatT3qlI+kGWuOvI+fc=;
- b=06M6Kfpu8CjENX3FrCkivBQX5XmY5du7Q64/ikXCoymJfd/dAGmbUNkKQOctG6dKiNdZNvtNR/stSpvVmrFFgRiDGSEAoy9x9xo2ivWJctH0YB83+y3DyKO0NLrsjBVPHJCky7G4IfIfEs7ISDkchvESVtjbwvrfDItIfyUsdoI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by PH7PR12MB6612.namprd12.prod.outlook.com (2603:10b6:510:210::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.16; Fri, 21 Feb
- 2025 00:48:50 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b0ef:2936:fec1:3a87%4]) with mapi id 15.20.8466.015; Fri, 21 Feb 2025
- 00:48:50 +0000
-Message-ID: <8466a8bd-540f-4f4e-9cdf-6cf233e48363@amd.com>
-Date: Thu, 20 Feb 2025 18:48:47 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/6] target/i386: Add support for EPYC-Turin model
-To: Zhao Liu <zhao1.liu@intel.com>, Babu Moger <babu.moger@amd.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- davydov-max@yandex-team.ru
-References: <cover.1738869208.git.babu.moger@amd.com>
- <3d918a6327885d867f89aa2ae4b4a19f0d5fb074.1738869208.git.babu.moger@amd.com>
- <Z7ccCtbPPuRRdGUN@intel.com>
-Content-Language: en-US
-From: "Moger, Babu" <bmoger@amd.com>
-In-Reply-To: <Z7ccCtbPPuRRdGUN@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA9PR10CA0028.namprd10.prod.outlook.com
- (2603:10b6:806:a7::33) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tlHh8-0000Ay-Hi
+ for qemu-devel@nongnu.org; Thu, 20 Feb 2025 20:19:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740100747;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j4GP7Y4uTGPrBnJFz/eAOqJDSKLtplb/msigwmD5KgU=;
+ b=P0A5Yuw4Or9bnAwAae1AwzCGznC9ml+SgtTvTPq38ij5h8ou8X4L5BSCj2wdulmMW0Bfl1
+ tbL8vY/xQEV0EECdtEU4q2IfbNxtHlDM+B8fztXZIEV2laKcpLJ6y69DrnFnO/SCLM7XK9
+ Ve0YZNLT9HYgqljP36pDqR/SN/a1dIc=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-518-QvAqXN3MP_GZlAifihZYmA-1; Thu, 20 Feb 2025 20:19:04 -0500
+X-MC-Unique: QvAqXN3MP_GZlAifihZYmA-1
+X-Mimecast-MFC-AGG-ID: QvAqXN3MP_GZlAifihZYmA_1740100744
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2fc4dc34291so3180886a91.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Feb 2025 17:19:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740100744; x=1740705544;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j4GP7Y4uTGPrBnJFz/eAOqJDSKLtplb/msigwmD5KgU=;
+ b=lAqGGppdsXxeGmWKY0ENSSrhj2E5aC4NtkT4ajtn1rhf6Y0lJgy6x4nYzPFwdi5CzI
+ c5gy+JqDRP+Wt3QqSlpvM1fSN2/RjwspQq8KJRm+PWsVYI45yBOAdXKTRfyw4++D4nYi
+ NnSA8kSvHXR/JEW+1GWxsQCzqjRYEyUuyJJx45linQib1g2Ekv9mPdKW4CdKUxHS27dV
+ 2yA3qpaoBdQ7mrcapCQmt5EaXzvDCKIgznVEFcuipCQHC5TkzR1pa1EsCBwXHtRSwM+r
+ IMlKxSkVAb0yOQ+1ScSku6ZYDtlMwrgVe3gc5uDCGK+lxfe79ohVNCI+V1RKA9MhGggD
+ zZnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNFL0Tu/YRAVzKn7GQu/REb994ZhDytH63Tl8V42H+X/L0NnbR/LVTe/AFki2H3UqIyMdnVl3Ht3qm@nongnu.org
+X-Gm-Message-State: AOJu0YxGfjIRV/f1BHMK+YQwFZ10VshkQzFub7TK6VavdneJU43qcqlR
+ eivDdTGGA/uj2X6BtbEMT5sbelONr1RDR11tLy/ydZ0nztgOOzHgOug9Ab7wSmoFrpShMq3hiC0
+ k8lzsuGjtYGEeNJriixjGLRM7STqSFj+obw0jUO4onJOBwB1Onvu8mhKWMvL5tdgpJKfhlKWeDG
+ FM8qKo6/3btI+UfqfW+aJ/ossAqqo=
+X-Gm-Gg: ASbGncsQtykummZCVAxoHjY55gPsl+f9H3kF2P0FdQg4TV93Og1TvihnCBDgvBi/wxX
+ HgeaEii9ihbmWS5pID0T7o8vxQ2eDtkeccIk+hMyqWeTLO1/ukd8JDEBgVEfesMY=
+X-Received: by 2002:a17:90b:2d46:b0:2fc:3264:3667 with SMTP id
+ 98e67ed59e1d1-2fce76a2761mr1968664a91.1.1740100743800; 
+ Thu, 20 Feb 2025 17:19:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFPaohQptPKsiYDJ4jaDWNPRyLxCwzZg8PDBJbKpif0Fe2oz62YsGfAglSdLbQrnKmdEDY7mRIkvhd5vmmB5fw=
+X-Received: by 2002:a17:90b:2d46:b0:2fc:3264:3667 with SMTP id
+ 98e67ed59e1d1-2fce76a2761mr1968625a91.1.1740100743352; Thu, 20 Feb 2025
+ 17:19:03 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|PH7PR12MB6612:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4e72dd6e-e292-4768-e0e0-08dd521181ab
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Q050bjA2REdxWHFRQ1ZobmdraFU4UURMdXlnejU4UmtPeCtOWTVlSVltSlZw?=
- =?utf-8?B?d1A2d0xISmNYUk9XUGhUbHlWTStEdjJDcUZnRjBydmxKSUpYR1laL1ZFYlBG?=
- =?utf-8?B?K1QzcW5DSC9nZ3NhVUR3a1ZDZTRPbDR0SFM4L3V2R2xvUURoeTlaOG1IMHVn?=
- =?utf-8?B?OEpON3UvRTVOT0hNZWkyTWkxZWhTaWVMSVp4NW5ZWUFORm9Vd2FXN0hrVi9P?=
- =?utf-8?B?SkNhWnJDZWc4V0hjckdjOWVVYkRrZDVmcFhNSk1mNnhyQXBYU1pJclVyZWZp?=
- =?utf-8?B?YjgxN2JJSDRPbTQ1eWt5aTdGSGJ1QllwcnFjSnhSeFNTTzdud0tzTnQrd2ov?=
- =?utf-8?B?Smg2RW9JL2trdVRheVQ2MEtGd3RMUmdOLzNNRlU2aFhPK1RRYjQ1YUEyNkR6?=
- =?utf-8?B?YXdXbS9yK3JEYWRyQjNhTDBQTzFZL3pQb0p3WFB1K2E0Rlhoamd2S0VlNTV1?=
- =?utf-8?B?ZHpuT0tIUGhNNW1EZC9LeHBBL1R4aFk2aGFOUlJmeThIa2VvL1p5T2JOOGZD?=
- =?utf-8?B?cjhwMzhUd2x6T2g0aGFuelJ5aGpPOURxZVFwNnZQQ3ptY05IYTdxUHRrZUJy?=
- =?utf-8?B?U2ExYUhlaWxyV2tYQXRpQTUyQ2NKOHBndkk1UDhtVlJMTkJWWHllV1F4MjhD?=
- =?utf-8?B?VFpnL2FBOUVFSlNJRU5MaWwyVFVhRlhEN0ZXMDZGZnFncExuNUdoOWJhaTdN?=
- =?utf-8?B?VDRBeU92VjkrbGk2NmZXdDVSaDVuakE2M2U2MGZlRktQcTFSY2hLRUh4a1lq?=
- =?utf-8?B?MHQ3ZDVvSGtKK0hMOFFUY1Nvd3JseGQyK1lCQThrUkFZcjFVTyswTjI1SWNH?=
- =?utf-8?B?UE1ZZmphY2JyZHdORG1yRy9vdSsrQzQ4aFJ1bjJIOEh0RTlqbnF1R05oZUpp?=
- =?utf-8?B?NnhoUlVwOTVZOGMzdkJYTXN0OFlZSmo5YWRGNGEwSUdJTEtIWE1VSkpRdkc2?=
- =?utf-8?B?cXpLR3pEV1VRNWlQdG9NMysxSmpLUnpaaHBtT004b1BBK29CcHdmMGdBSzVt?=
- =?utf-8?B?Z3hoQlNRZG10ZUhETnhTNXVqRER0S3RvdW04NGwrQm1UUlE3My9LR0txak9i?=
- =?utf-8?B?L2UzblpIelpUZjE3VGZVTUpVRUhBbEdtWkpScDBMd25SMlljM3pidEVwRWRE?=
- =?utf-8?B?S1lqRFhmUjN0YW5TRktTc1drd1FCK2ZkU3JhcFFqSi82dVZFdUtsOStldmZY?=
- =?utf-8?B?NDYxcmQ3dUZ3dDVrb2picHdhM3hJb3hvbHgwSE95dTZtL3E1dGFHZTIrY25Z?=
- =?utf-8?B?N3dhVzNETUN3d0tKeHFKZnVDbUtiQlRMTFdCeCt3dDUrZXpXYU42VG5DdXE4?=
- =?utf-8?B?L3hCYnk1MDNOS1FzWmpCMGJBSXV4ZzJvM2lrUTZLc0dQcWQrLzducitHTDE0?=
- =?utf-8?B?cFhBR1BMWUR2UGdQMDR1em45dWs4Q3ZTZFhUbG5hTDMycmRtT1VMYVUxejJZ?=
- =?utf-8?B?YWwvRHJDVlBBNGhXU0lsL0FzaVNjMElsdE80YlZoZEhJV2lkT1FsZVg3UWd3?=
- =?utf-8?B?NElSQWxoaWR1VDIxanVTb0hpY2lZQWdvK1h6bnkwSi8yeEwydXc3NTQ3Y3Ra?=
- =?utf-8?B?bVlnNVBTVk1vYWJQZ2hCMHhYSmNqeVNhNXBVWDIxZkV0ZWVVdGxRdmNUYWpn?=
- =?utf-8?B?eE9mZ1VSYURnejc5WEhVenZ4K1pvT1YrTFpRZU45VVJkV1ZheE9pcWZuMmNa?=
- =?utf-8?B?ZWs4RDJxRGJ1ZnZ4TDhaeURhVGdPNjhicDlNR2g3cWt5NlFCdGMvK0czZ2s2?=
- =?utf-8?B?L3p3ekJaczZpZWxjZklPMTlWaGdxSmlsemxIcElNQ1NBc08wR1F0djU2NEZU?=
- =?utf-8?B?bnFldnpqemJiQzB0b2wzRy9zckQ2eXdpNkdyd0cwVVlkeko0YzJFck1aVFlG?=
- =?utf-8?Q?SPAr2/EpGj9ja?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OGx1RGx0Tk1rZ3NqdXBROEFobER0QisyM200VVpiNFFjeWRhOC8xN1BGTitx?=
- =?utf-8?B?aWpJaVlDbzdZS3AvOUFKVDJsMlJZMk9UeDhFNHIvelRHcEIvUzA4bFA0SlBq?=
- =?utf-8?B?K0VhWWtkRkRhNUFWdExnOGdqcVNXbDROZVg2UTJtT3dlKzNWS1pPM0owQ0h0?=
- =?utf-8?B?Wnc5Wjl3TlVhUG55Wk5kYmhMTWVLbkl0ZDVteTBtOHFNMmZQNzdrc3dTQi9G?=
- =?utf-8?B?QStOVWNkZWRSdWhUYkR4eHI4U3pReUx3bkwxMmhyMSsrL0RXRWFvejk1cE1r?=
- =?utf-8?B?WTV0cjF0ZGh0ZG5PUVhqOXZhNm0rL2IreGFKSkU5T2FFUGliMDJBY3FDelpK?=
- =?utf-8?B?a0VGYSt5WkU3dmNxdFl3eXJMOWpwME5XUk9rR0NOWHBncERWWjZGQjYyNFJz?=
- =?utf-8?B?WXVpOFRLNmVRYTN5STZDVi9iSGFGMkowc2JhZUg1ZXFGcVdjM0Q3WURLZmpw?=
- =?utf-8?B?NUlqeFNsZ1BOSUVaTDdxM3pMSDJSeVc0ekNIazVFejRIUXJNNzRrQ25UMFRD?=
- =?utf-8?B?TGUwZzZxOXBUYSszTHpuWXE5ZkdScW9DNDJiQU9RaElscW5IeW9YcXZUV1gy?=
- =?utf-8?B?WnB5Y2diaWlmSU5tUW1uT09WSUpoaVlGNDZZZGZBcExXTXZaMjJMWEc5UlVi?=
- =?utf-8?B?MCt4VjZwZExoa3ZveHVleFJKRWVJa1gxN2dZb0ZvK1RUWTdiT2hhd0ZkMWU2?=
- =?utf-8?B?YzUyeVBEVGJkam5qdDErRHZzcXNxc3N1YkliSTlUSkFHamVSd0JEcTByTkQz?=
- =?utf-8?B?L3M0MmFieElkMjBmMnZ2Q2pTRGxreVRORjJ2cElyY2lJSE1hNlpTTFdzV05M?=
- =?utf-8?B?TjJzYjZnREtWT1BIME1GbTlDdUlsZTFlYnFWbG00RFl6NiticUFHcy9OQjhQ?=
- =?utf-8?B?WFF0eStUTzR3dUJISnY2Q2tTcVViVExySDdrUGowbmM1dzZuWVR0dWlvL0w5?=
- =?utf-8?B?dXIzZEdRQjR6T0I1dmt5Mkd4UE15bnAwalRzVmVmRFFobUdvU1Nha09scUJP?=
- =?utf-8?B?RTRvL3pIT0R4QzZlS1lud1hxcS9rTXpBTm9LTXJrbW1LblBBOVhnMklrdUh5?=
- =?utf-8?B?a0w1emtQT3lDR2NDV2RrRzRBTUVHVFdTQXhkSHV1a3dDazRJOWdlQzE2Vm5I?=
- =?utf-8?B?Zkh4dkFWVytHeE1LdmdyMmk0L1FnbzJrOVAzckV2b1Q1dS9pSHp2RnpzYUhB?=
- =?utf-8?B?eTFNR2huWkRsTkZUOXlkMnZwOWFKOGRvLzM2eG1Yei9qbVcreml4MTBnYllE?=
- =?utf-8?B?ajBRQTA4SUdZOGRNWGhHdW5sN3lZZXNLNkUxZnRKNGg2UWdlM245Z0hBUnZH?=
- =?utf-8?B?VWN3VkpXOWpJeTRNWE1VNjVUYjd3SDR2VHdscCtpYUhsSEk1NHNGa255UDF4?=
- =?utf-8?B?WWR6MFRXcHI3Tzd1SC9YRHU1Nm1oaDBBU2JBQ3pjYW9tR2xIUWlLK3k0czlz?=
- =?utf-8?B?Z2hnenJtcUFtWVliYXg0SS9XWGhuSkZMVzVzM0s5bUpFdzR4ZXk1U3lsZHpL?=
- =?utf-8?B?cTRudzZ2MmZCWGZROTZhMUppejZyQTNyUFNEMWhEWS9NM3hCSUxCOCtqVmVC?=
- =?utf-8?B?V1hDendnYWZKdDNaYkpIb3o5ZFRxN0pnbW5PSGMxdCtCYWxkaDVieFlVZmZG?=
- =?utf-8?B?R2tuVEZtRjR3TitnYVI1UTB3aWpWSlhXbnZxRkhpTUk1Z1hHQWRVclBSb3Jv?=
- =?utf-8?B?bkNnWjBTQnhqZHJ2WU56MG9QWEhTUDFGQ3dwQmgrN2dQcW9CZ0U4bFBsS1hX?=
- =?utf-8?B?cVVmblp1SWVhcis4REhWRnVFTTJacjZvQU90MEJDdnpLeVFDLzhWdUh5Vy9M?=
- =?utf-8?B?QlRnRm1uZDB3R2lvV2ZhL3Q0amVBaXArclA4ak1wSTJpRzhxa2pwR3BSc213?=
- =?utf-8?B?S0pHRVNOSXlNQTZCMDBDRDlWV3FLV2Erakh2ZG1tZG1lK1BLa2g0SE9GanNJ?=
- =?utf-8?B?c2ZWV1ZsV2QxaG8vakZjOGNSekJWbFUwaC9wK0JWM3hLTHlDSUhvL3ZSUG1P?=
- =?utf-8?B?NEEyb1RiOURQbkkzK1NiSUpjL2k5bHU3TGgvcUdMVENuckJxeVNyWnlzcXJn?=
- =?utf-8?B?Y3VIUXFFdVp4VGc0aGZvdTlNeFAxVFVIai9LMlNQbEozSkdQVEw5ZkUybWli?=
- =?utf-8?Q?AsECMIPZJ4yvi0HgKFJQPtHdb?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4e72dd6e-e292-4768-e0e0-08dd521181ab
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2025 00:48:50.1748 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vH9hzbd44dQgYk9Wb39n8aam5ao0UcSW2NBPi59/XnA78jJ7zZ/0Vs2GIdQ6km2r
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6612
-Received-SPF: permerror client-ip=2a01:111:f403:2417::623;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+References: <3mcx7u456pawkgz4dgf6tvk7izczuy55guipqacqkl66jhtltq@fofd5u3el4nj>
+ <20250122085828-mutt-send-email-mst@kernel.org>
+ <bfc3rstsxuapkjlea4lia3bn44rt7hhsf6kagtkltfssqynx6z@4dodvso73pel>
+ <044af96f-791b-471f-ae90-c17597445fd3@redhat.com>
+ <kt2sdfv3wg3raylqfmphrdbc2isex2q3jtmgw7oems5xysex4f@lnp3ulutpt6f>
+ <20250124170327.448805ad@elisabeth>
+ <20250220102724-mutt-send-email-mst@kernel.org>
+ <20250220175910.25688823@elisabeth>
+ <20250220131932-mutt-send-email-mst@kernel.org>
+ <20250220210004.1501dd86@elisabeth>
+ <20250220154353-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20250220154353-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 21 Feb 2025 09:18:52 +0800
+X-Gm-Features: AWEUYZkTCZNm3Oaqwy21BExVmq52BF4WtMJuEU8IhwKFW1srp5Ac_JBOxFwfuZU
+Message-ID: <CACGkMEu8W+cvXMtSgr-AitpGweciPv=HXTbxZ8ApvHjinbHseg@mail.gmail.com>
+Subject: Re: [PATCH] vhost-user: Silence unsupported VHOST_USER_PROTOCOL_F_RARP
+ error
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Brivio <sbrivio@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, 
+ Thibaut Collet <thibaut.collet@6wind.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,59 +117,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+On Fri, Feb 21, 2025 at 4:46=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Thu, Feb 20, 2025 at 09:00:04PM +0100, Stefano Brivio wrote:
+> > On Thu, 20 Feb 2025 13:21:33 -0500
+> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> >
+> > > On Thu, Feb 20, 2025 at 05:59:10PM +0100, Stefano Brivio wrote:
+> > > > On Thu, 20 Feb 2025 10:28:20 -0500
+> > > > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> > > >
+> > > > > On Fri, Jan 24, 2025 at 05:03:27PM +0100, Stefano Brivio wrote:
+> > > > > > But I don't understand why we're leaving this as it is.
+> > > > >
+> > > > > So that people notice if there's some backend problem and
+> > > > > announcements are not going out. should help debug migration
+> > > > > issues. which we had, so we added this :)
+> > > >
+> > > > The message mentions that the back-end fails to do something it did=
+n't
+> > > > and can't even do, that's (one reason) why it's wrong (and confusin=
+g)
+> > > > and this patch is obviously correct.
+> > > >
+> > > > Perhaps the commit title isn't entirely accurate (it should say "wh=
+en
+> > > > unsupported", I guess) but it's somewhat expected to sacrifice deta=
+il
+> > > > in the name of brevity, there. A glimpse at the message is enough.
+> > > >
+> > > > Laurent now added a workaround in passt to pretend that we support
+> > > > VHOST_USER_PROTOCOL_F_RARP by doing nothing in the callback, report
+> > > > success, and silence the warning:
+> > > >
+> > > >   https://passt.top/passt/commit/?id=3Ddd6a6854c73a09c4091c1776ee7f=
+349d1e1f966c
+> > > >
+> > > > but having to do this kind of stuff is a bit unexpected while
+> > > > interacting with another opensource project.
+> > > >
+> > > > --
+> > > > Stefano
+> > >
+> > >
+> > > let me explain. historically backends did not support migration.
+> > > then migration was added. as it was assumed RARP is required,
+> > > we did not add a feature flag for "supports migration" and
+> > > instead just assumed that VHOST_USER_PROTOCOL_F_RARP is that.
+> > >
+> > > If you silence the warning you silence it for old backends
+> > > with no migration support.
+> >
+> > Thanks for the explanation. I'm struggling to grasp this. So if a
+> > back-end doesn't support migration, because VHOST_USER_PROTOCOL_F_RARP
+> > is not present in the features flag, migration is done anyway, but then
+> > this is printed:
+> >
+> >   Vhost user backend fails to broadcast fake RARP
+> >
+> > with the meaning of:
+> >
+> >   We did migration even if the back-end doesn't support it, whoops
+> >
+> > ?
+> >
+> > Note that the message is printed *after* the migration and the flag is
+> > *not* checked before.
+> >
+> > > If you want a new flag "migration with no RARP", be my
+> > > guest and add it.
+> >
+> > That would actually make more sense than the existing situation I
+> > think. VHOST_USER_PROTOCOL_F_NO_RARP?
+> >
+> > I didn't understand, yet, what the exact meaning would be, though.
+> >
+> > > Or if you want to add documentation explaining the meaning
+> > > better and clarifying the message.
+> >
+> > I'm still in the phase where I'm trying to understand the role of the
+> > message :) ...I have to say this is fairly different now from what was
+> > mentioned on the thread so far.
+>
+> I'm going by memory. We made it a warning on the assumption that hey,
+> maybe someone has a way to migrate without a RARP, let them work.
 
-On 2/20/2025 6:11 AM, Zhao Liu wrote:
->> +static const CPUCaches epyc_turin_cache_info = {
->> +    .l1d_cache = &(CPUCacheInfo) {
->> +        .type = DATA_CACHE,
->> +        .level = 1,
->> +        .size = 48 * KiB,
->> +        .line_size = 64,
->> +        .associativity = 12,
->> +        .partitions = 1,
->> +        .sets = 64,
->> +        .lines_per_tag = 1,
->> +        .self_init = 1,
-> 
-> true.
+Migration still works, it might just increase the time spent on
+recovering the networking topology by switching if the guest doesn't
+send anything.
 
-Sure.
+Or I've heard from the upper layer team that the control/management
+plane may be in charge of the network recovery after migration so RARP
+is not a must.
 
-> 
->> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
->> +    },
->> +    .l1i_cache = &(CPUCacheInfo) {
->> +        .type = INSTRUCTION_CACHE,
->> +        .level = 1,
->> +        .size = 32 * KiB,
->> +        .line_size = 64,
->> +        .associativity = 8,
->> +        .partitions = 1,
->> +        .sets = 64,
->> +        .lines_per_tag = 1,
->> +        .self_init = 1,
-> 
-> true.
+> Exactly what happened, we just did not think it through completely :)
 
-Sure.
+Thanks
 
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-thanks
-
-> 
-> (And it would be better to add a Turin entry in docs/system/cpu-models-x86.rst.inc
-> later :-).)
-
-Yes. Will add a new patch to update docs/system/cpu-models-x86.rst.inc.
-
-> 
-> Thanks,
-> Zhao
-> 
-> 
-> 
+>
+>
+> --
+> MST
+>
 
 
