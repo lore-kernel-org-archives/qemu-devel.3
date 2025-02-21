@@ -4,148 +4,180 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB98FC021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AF5C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlO68-0000KF-7Q; Fri, 21 Feb 2025 03:09:24 -0500
+	id 1tlO4g-0004cw-5o; Fri, 21 Feb 2025 03:07:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlO65-0008So-P4
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:09:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1tlO4e-0004cH-U0
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:53 -0500
+Received: from smarthost1.eviden.com ([80.78.11.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlO63-0005rC-2o
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:09:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740125356;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=44AsZ+U8ubfJDcHaFXeefTQmjxtqvBwugZR6R15diFM=;
- b=hqKHEfYztdbiy6otf/UgzxkxZlApXpbqTGy2bWQohAw5btBxNTKia4PWWdDMzVxxiazaiz
- JGp1tDu9uDZPq6tkQPU/mjfqRahYvUh0wnJtb8B1vBowN41lJnXaWltB7WXl3O/9mnJ0RM
- e42s+G+mkiHTQ28IrRPx7UpJNMO3TM0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-3jvjxQvpOdmcmWxiJHI-aw-1; Fri, 21 Feb 2025 03:09:15 -0500
-X-MC-Unique: 3jvjxQvpOdmcmWxiJHI-aw-1
-X-Mimecast-MFC-AGG-ID: 3jvjxQvpOdmcmWxiJHI-aw_1740125354
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4399304b329so9906415e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 00:09:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740125354; x=1740730154;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=44AsZ+U8ubfJDcHaFXeefTQmjxtqvBwugZR6R15diFM=;
- b=pv5VTINxQ4qoWQtJzn5HvO3BwPiWl7hcdFxDPZuLMoBhNpkAti4wJ+Cb4BNj89gpqa
- Rg8iKRdJJBb7nZklDJmfn73BEaZBCY/5lv4c0Koo8mFHnBCutoiAwTjfib3EsZ3MJB5v
- Nbp3x3jpm//SibpsgbPB7DC/+V0cKwPIHcfjqmzXZA4kJcdU9cWp1WsTpSuuO/9cHDRq
- Pm5d3/IBNh965KVgeJlFqo5w0TQ8AXVCjSyQcxPpMAUp7uqQ7bvRkdKYjvUp84GgjG9M
- ulpUQWyzfPGhQ9QmKtn6aTnLDP+TordImvddPzN0+WmCxEgRriwyzWX7wfhlbXXc+uOu
- 1IXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQ4YWOUKEQ7imofoBcG1jBCrLpe9ERZktWjHWyGpTTa4eDV8tcnt+BLkaARGERD1Gkk+XK24DS235i@nongnu.org
-X-Gm-Message-State: AOJu0Yyu5KzVTZXbxlRduicDMD5cjpeSS9dTOqM58DXW4alOWvBXV+NK
- F+zIs2oyC9zP+DdWiUuNCoZ66RE1eJJ2pvMaEtPLJL5PXAxy3Ntm1lanAOM36K9+0FJBXXhA2qa
- SiniN9+sudOpqL+4aOSoTetQ2/JDVu3nlxAut/5690LGsqFrPQu9D
-X-Gm-Gg: ASbGnctDRWlxsNF5ekRN2YAPQ3KBDvF17YiCwwCbf49xMxukyIyBNMlv4gMdFcj44w+
- Gktp6eNitswpF/HbvRARdAhU/skz8YO3C1OOVpBm1fTr1gqnlII8r/Kh9/qC13Tgbfb/tNOXTzo
- QNq0uKJXh1ZlthOa5/AghdjDMJYO+vgUdetA80I8m8tsJA2R2GlvFE+6IAbHWGv08zZeYcQW2p6
- 7IeFB3BJ+AtFe1JPoP08vN5d0J75wYLlpyKleaD1R3klz5ua7YWSs6im7YPzpC9gmKPFqVnicMX
- xU+872H4Ol0TUeloY3CDw8WKoGXQpgvaCmm0WCto+lUcLg==
-X-Received: by 2002:adf:f5c6:0:b0:38f:278f:58e4 with SMTP id
- ffacd0b85a97d-38f6e95fe16mr1153147f8f.12.1740125353905; 
- Fri, 21 Feb 2025 00:09:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGkID8SXsxg1AvvAcQe27uk+jrUSZEZ5q1Npi1LZHoRu/DZTgceAbzOTu2FrpJ+Bfo5rTqN2g==
-X-Received: by 2002:adf:f5c6:0:b0:38f:278f:58e4 with SMTP id
- ffacd0b85a97d-38f6e95fe16mr1153127f8f.12.1740125353444; 
- Fri, 21 Feb 2025 00:09:13 -0800 (PST)
-Received: from [192.168.3.141] (p4ff23890.dip0.t-ipconnect.de. [79.242.56.144])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d9be9sm23027196f8f.79.2025.02.21.00.09.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 00:09:12 -0800 (PST)
-Message-ID: <ce2306f9-19a4-4979-80e6-29b1e8a92318@redhat.com>
-Date: Fri, 21 Feb 2025 09:09:11 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/2] system/memory: Allow creating IOMMU mappings from RAM
- discard populate notifiers
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>, philmd@linaro.org,
- peterx@redhat.com, pbonzini@redhat.com, peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20250220161320.518450-2-jean-philippe@linaro.org>
- <20250220161320.518450-3-jean-philippe@linaro.org>
- <0d761daf-174d-487f-80fe-09b04902006f@redhat.com>
- <75d90f78-151f-4169-84f5-cc3c13180518@intel.com>
-From: David Hildenbrand <david@redhat.com>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1tlO4d-0005ko-1P
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1740125271; x=1771661271;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=KHmNcLQuspPA0tQxBlqqLb1prhzBBBLWPp+69jOVVMM=;
+ b=c5lqeDybkziVXB/I3UmCmZvTIuFZTLq9G3rmmaccRYZbNcbodwH3IJUq
+ +l03qijnq8k0WZneq81eJia8yqspTkEsUfuhgoaP/wJXGH0/zbc8VW65r
+ Dg0sOmk/cLqlZpBvgNEBj2nt6isowzfcyTFdEnLAxf4c/G//8HxY/2jD8
+ /Y9DraOzrWAbyW0Hf0besEX86FSgVGuVCcD5M6Q6YzSRRD/qYQDKI4T7A
+ 9tf9FTcFrQRdrYoB2/VzWEruqXs+dGJd6C8u2qHRiE0ITDics/Vun1cRC
+ bSNPjxTiWa+CIi5gokInWeFqfZUbZ0uiNXdA3jN1x/9zZKDX3H2ah6cwl g==;
+X-CSE-ConnectionGUID: qso0zA+OQKuyZuqL2ktcdQ==
+X-CSE-MsgGUID: RCREXZtIRWK8DlF5G6za+Q==
+X-IronPort-AV: E=Sophos;i="6.13,304,1732575600"; d="scan'208";a="31394149"
+X-MGA-submission: =?us-ascii?q?MDHA47w/AYhVxtld6njpZh5njzKU0rDEjVX4aQ?=
+ =?us-ascii?q?/HHoeKPxqK7t4TdKvcvu8ekLWWzoiUHk8+CIpbRFW1qkr5sq9bqT1z5f?=
+ =?us-ascii?q?fa+AExpJHpEGcJmtzO099RuLfXt6wCi+vFueirYxhEzCkRukSoAOYuY+?=
+ =?us-ascii?q?aG+FrmXY+cyKsL42QaMo98ww=3D=3D?=
+Received: from mail-vi1eur05lp2170.outbound.protection.outlook.com (HELO
+ EUR05-VI1-obe.outbound.protection.outlook.com) ([104.47.17.170])
+ by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 21 Feb 2025 09:07:49 +0100
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LOA+y09ZwSa3sKm6wrdUdCVrengJCAkzKqDfw/IF5w0beIzyJpsCjKvLDD7wNPyCqGNykP7L1qQjjff1Fj9EjSRSuiY+KK7vvm4oxKSmez1YPbsnIhDfKmmpx5M9D7MAo0pAXKXRgxzgaCSc4SN2aT2fJykkdX0ezX02ZvjH7e/1kcpoEu1QFIoWFereuO5f+Jmj99yqYtMxY+ltabw+8U++RU89IhxXfKZCH/UyZzjwiCoNBT2Iiz8t0bBUtZYU8TUifLmZNgL82OGKtvTI27WDDuq9Qskl/fZlTtsBoxpHvNYeXs/+BpTbG7w5XBDhHli9b7o9zuGYIIO3uyenCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=v+ubVhNTRgk5dT7AxWnjpgCltzcIrfiIgdWhE8OQaus=;
+ b=a26NSut1d52WuWtNqIfRyioNu6Utx5APAMOa9UbHfiSpI+G2tMBHIVEtVhsxsSmAo7vWfFxOZnIQMMiAm0eHZBGFPJLFXKemmSpHVxmq16Sj4T8OLlvxl7HTSmC10YqPg9qgpBX4a1jvJb7F9G5D6unbkOap6e3lClR1uHSG3pfHA3cX0km2LEdQzm1SPG05Cp70ILD0wjUuW4M0tfktebzEkdu8UfRksFGTAoOkpAWLHXf5SoddrNgKdWkVh31JhV82ektz6l4V961HVxOjxAA1+V5iJibRfe0kW2x22v75VFNnlZASVgPxQbgy5g+B1cJuTKiIvrP+TafS76Fy8w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v+ubVhNTRgk5dT7AxWnjpgCltzcIrfiIgdWhE8OQaus=;
+ b=ILOWf/3khkEhoqATVU1meWgJhdJLSYwyslbvAV8XnEdJlveMoU6kU/PsUQiAmLrYi3nSwDQ69S4SMZBx+49aF2FIh0SmB2PGWuRAjGY3BgRuDzkd+lU7UoDvuOefiAkFsAbtX5esoy3Bx/REDGsVIlDwuC8QGNwOmZbGqjKiMH2TSC5+vHZ29FN9VZv5zwStuKJshu/y2f0bicuH27VYobDEAVp/nnxhE0lH2NBUGyo+9FTsNlcU0YF9QyBQkZlZnSYwCe+XY+VqDmehQSvAxlT38b8TqIydRngwjZBR1eBPWtxCb8CsNZ/I8RYZlJ4hC/1oTIeJs8QDPQSkWL54bw==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by DB8PR07MB6459.eurprd07.prod.outlook.com (2603:10a6:10:142::24)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.16; Fri, 21 Feb
+ 2025 08:07:44 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
+ 08:07:44 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "tjeznach@rivosinc.com"
+ <tjeznach@rivosinc.com>, "minwoo.im@samsung.com" <minwoo.im@samsung.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Subject: [PATCH v3 19/19] intel_iommu: Add support for ATS
+Thread-Topic: [PATCH v3 19/19] intel_iommu: Add support for ATS
+Thread-Index: AQHbhDev8G8UVR0uVECvb25nxR+40Q==
+Date: Fri, 21 Feb 2025 08:07:44 +0000
+Message-ID: <20250221080331.186285-20-clement.mathieu--drif@eviden.com>
+References: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
+Accept-Language: en-GB, fr-FR, en-US
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <75d90f78-151f-4169-84f5-cc3c13180518@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|DB8PR07MB6459:EE_
+x-ms-office365-filtering-correlation-id: 69ffb061-887b-403e-2d97-08dd524ed23d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?elngJkPjZgvKvFe+AlC7oFqW0DeE9TGEujveCHzPylBB6iOl9syVDymcQX?=
+ =?iso-8859-1?Q?C1vOp2lxLNsvy54Npv6Ns8TAR+WN+Ry+DS4vNLWvi1gpv59H48m3bEobvY?=
+ =?iso-8859-1?Q?YuLYWSldDdgfA85GwlMZmlxl7TAASTlyHC5634yZmk8oYKnIgKCVke1u/F?=
+ =?iso-8859-1?Q?g+VJLGQTBSLY47OfUqyg/FcUo4xZ6aXeQ1RyJIPUl5iBaXAxn1MRDd0iR6?=
+ =?iso-8859-1?Q?L1lfzN0vAlNoEHXrDDSDXtT9HZ+6H0nx9hucE8kXP0Og9dPAr1WfLi15gL?=
+ =?iso-8859-1?Q?kMX3Y+YgjqJu6WIAqUMTpN4osI6xYkZZbro/nQFcwI07ZtJepeLNNwXR0u?=
+ =?iso-8859-1?Q?2kYK2Lid5Q0QCZ8MRz3htiP9zb4fUBzSiwUCHdby+FhwySnMuG++Qu0ibi?=
+ =?iso-8859-1?Q?Yfs+AxvIyqxhYPyaz+BvgfJKnvlCbZhibA/+7f4C5W0jtThEfu29ixmPen?=
+ =?iso-8859-1?Q?ePYAyW+nPkQB/K92I9xZhtEJ7hzH91tbWRYTWgW2DbQ2h/Ous6yGRkyctV?=
+ =?iso-8859-1?Q?jkKCdxie1qCvOwsntCC70Mfe8M47v7NHUdVpRkiOnCYV7NGZNL3qp1mRAv?=
+ =?iso-8859-1?Q?QDD2m/Gk2rYeI0hgs//QRNTYNXHmdmd3PhLAmb2lTQAOk+Fhz1FZwD5uAp?=
+ =?iso-8859-1?Q?w2laP0982SUSaJ694ekO8dux6nehym1rOvPMmqeOw50Y6DQcliOceXQHqS?=
+ =?iso-8859-1?Q?YELrSzz6onPUNUZ0NjMzWPJ8gzWY7u7TFhwN60ZiBg8x6iFXqzCm3NRm3O?=
+ =?iso-8859-1?Q?BpzIUiXG2eMrGSW2upJ2iTWTKus6K6vFf1cc/u9yM1+qDIHNAmxGF+88fM?=
+ =?iso-8859-1?Q?BWuLIV26zYr5HGA73rGYstYGjloCaYm874heRDqJ5cJQ1dl/JHcE7o+T4f?=
+ =?iso-8859-1?Q?b38xDC15LDDyXtGOIYZSPDwTRiGmG22k+V7vjSpLraNosy3wlP1GraKt48?=
+ =?iso-8859-1?Q?YRo49jgPSSQTT2pbH0SEgMmLcZm7HnVP94AnW71Tf/euJo1pu2DZ58rAnf?=
+ =?iso-8859-1?Q?G4La2kB81Eew334zL1o9sgZXZZnjHsq2sy6ABTUC02hUEbsQjZ/ety84Fz?=
+ =?iso-8859-1?Q?okG9qP/GdEDbI1RWbQMLd2N8jPn2miTNFRso5Aaeqo7AU9fgWuE+Y+2bqu?=
+ =?iso-8859-1?Q?alBtEG5FxVuE/ZOh1WYXzZpPHA/ZX3+rXg0uUsTFi18/necBnS3IZHcnx3?=
+ =?iso-8859-1?Q?X5UIJHVkJksYNniNx1Ec0e875oQ4COrAjO1dnc0h2y6cACvT+LtrpZuHcw?=
+ =?iso-8859-1?Q?uB4GbadsEiUSw4YiRPr2Y9j/EtXHsWnl4JNY0nTjB/wabU5NwIcIRHOZ89?=
+ =?iso-8859-1?Q?3Lzqa02fhqQSr0Mi/IfjKFuEVJEketlg3+t/QR64l7QFYeyhGwyuk0l01x?=
+ =?iso-8859-1?Q?PrjvcMp0Las/TKQuRdQ7Eb0t+4KmngPWCny08KxNrCpXcnEUojB2tEu1zL?=
+ =?iso-8859-1?Q?sIoml/i62AY3+z7FrHCc/LyW/F2HToB/9RkD8KF3lWC7GN+7kiHqj1S+EC?=
+ =?iso-8859-1?Q?qs6dumsczXdsO/XQ6r1M0v?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?JUUmdRD+gv/nJKWQxU5iP74p+CPZI1P1XweYmdvof8rAori2E3u0m/1aBi?=
+ =?iso-8859-1?Q?KEYzg6JG3Grr09H5UT5yCLaGlWlAlexUXUgTrI4U3yKDxD4NwsQNPMubCG?=
+ =?iso-8859-1?Q?4lZqmYy5tP9mChTr38v1GmY2TJqefjjgkAOu1v3UOUSv2Mtm87b57b5ibc?=
+ =?iso-8859-1?Q?lzDrjxAZ/q6cw+RO6aPUEKGcOcUkO3RULW149/QaHeyd/vA1Cum7E6Igy7?=
+ =?iso-8859-1?Q?gzvfjeG6Oj8BKPLjleHx4PIMkY289W/FBQh4rL3KIMEtpcygTcbFjEVOG5?=
+ =?iso-8859-1?Q?Al7Dgac4dsu8Vt5PezxDUisTBondC03CWlmvVaDCoueIeSE3TN3Ue9QZav?=
+ =?iso-8859-1?Q?9p+RkjJDKQowgmA7wqyJ5m/qGAY+JIPedZK7iT2wsW6vavkVJYNr5QUJ7f?=
+ =?iso-8859-1?Q?TcoxzjcoXab2XdBr4J/N1vMSb/QLQvx4uSH/yvkExl164pPVtO/z0IWo5Y?=
+ =?iso-8859-1?Q?ZNoBKIFtxyEKkzESKdYXQ8IenDVZyDedehVvUQoYvEFOj65KpyLF3h7Uhs?=
+ =?iso-8859-1?Q?SFMO1UWo9gX68NsGu7SB2DJgBqBnyLhIg3imDlraBvyQlDqA8VpDA7Sro5?=
+ =?iso-8859-1?Q?rOc9IJ+/nKEWiOLgVRniQl5ViPlOOMtGbZRPIHeu7jpRxHcHz2RkBsDpXw?=
+ =?iso-8859-1?Q?ciBa9Y/QdNT01L9nZFyvcjfH1AhprWGEJKgpPo8Rn0Cb9zRJasEuhRiTH+?=
+ =?iso-8859-1?Q?/Dksi3+73fCvHjH07soZno+Rnko8BlM4t68J7opuDI5pnhOqxRMbT1UhRo?=
+ =?iso-8859-1?Q?eE2kNyXtPp4xAN4hUiaHL4NDim/+jtm1B5pIWnn7GptvFZWyoMZD+3fzvj?=
+ =?iso-8859-1?Q?fchVWcriAOVX74fv1Y0qNO5VOfEggro1kGMe0YG02U+LnYkzmJ7XVYct0/?=
+ =?iso-8859-1?Q?55A2Gvvxtk2DWhGqtvNn2LOEykQ3HmHyDhkgh8VR65Th+GSXgibMe0L23D?=
+ =?iso-8859-1?Q?D/DVisVuoakk+O4Z0Al11luIyx3tuEwxdlZ9ocMj8Mi/3M/IU8acn/KIl1?=
+ =?iso-8859-1?Q?aSHU9bEfwF8WadehHrCH2WOvQrkLEbrtAM+J7C7ht4NTb4zP8ik7hUtEzL?=
+ =?iso-8859-1?Q?QNhuYSPUARnWt49tVU3Kd2C+tPNJXwEtXEesajho+1/Uv8LxSYeEWY+GcP?=
+ =?iso-8859-1?Q?n+5W7dnPWiB16BwoA29tbBgMFDDIeFEqIgvTuDVFGKhSPGIBieciyBWFts?=
+ =?iso-8859-1?Q?5ZYXiacklmSW7pXNfCSHu9t7dJ6T3LznoN5lDhTAxAAIfHpax6/5qjaEw4?=
+ =?iso-8859-1?Q?r/3AVdeXibuyDcrBC0gPRSiUzM4ncHaJj0MtA0lkHVHu627rIMz5e8u/aM?=
+ =?iso-8859-1?Q?0jc48dPfMHtgQPKKleJGsQ/c/TWd7KzqE5xI7/TIT+ZOw4cHfc9kFkXDa7?=
+ =?iso-8859-1?Q?IJ1gDWFzXZJjiomd9v03Juer3zy4HZ9Uh49g+YtVlRGVMZnDzxJjwzW/l7?=
+ =?iso-8859-1?Q?/DKmcVYtkvT/NmSi6mx8IkS2LBa0Y6p7NOolcC+KSoG3vZyWYcc/m5wfx3?=
+ =?iso-8859-1?Q?8pGXpJGTGsPF5Hrc6bZuUMHwk5IbGi4MoW+ApURF2G02tpuZaNjmaYc8hL?=
+ =?iso-8859-1?Q?9AuSN9ZiwM1a9x/4g7NFQGUvMB5fErhMFgrnHTqSZaVs2r5RAATVVXMxyQ?=
+ =?iso-8859-1?Q?b05msOhkfksE5DG4YKWRpD6tU7hK+DTnotMMkK43eTDh+GiysFeza1QH04?=
+ =?iso-8859-1?Q?xdRdsAtMhQn/UUr8/Qs=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69ffb061-887b-403e-2d97-08dd524ed23d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 08:07:44.4584 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: C2OHS2zPcC1p+pGLICnYJHMIFbdSAyY3ToQIjvFuVvX5QvoaSsybXtp7wGxWcDmWKSBZLshM+rp0hQe7Uz7wRWvnpwc4vHR4CWOL2oQ/Qy2tsSLHJf5vs+7fhkY5xhpN
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR07MB6459
+Received-SPF: pass client-ip=80.78.11.82;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost1.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,139 +193,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.02.25 03:25, Chenyi Qiang wrote:
-> 
-> 
-> On 2/21/2025 3:39 AM, David Hildenbrand wrote:
->> On 20.02.25 17:13, Jean-Philippe Brucker wrote:
->>> For Arm CCA we'd like the guest_memfd discard notifier to call the IOMMU
->>> notifiers and create e.g. VFIO mappings. The default VFIO discard
->>> notifier isn't sufficient for CCA because the DMA addresses need a
->>> translation (even without vIOMMU).
->>>
->>> At the moment:
->>> * guest_memfd_state_change() calls the populate() notifier
->>> * the populate notifier() calls IOMMU notifiers
->>> * the IOMMU notifier handler calls memory_get_xlat_addr() to get a VA
->>> * it calls ram_discard_manager_is_populated() which fails.
->>>
->>> guest_memfd_state_change() only changes the section's state after
->>> calling the populate() notifier. We can't easily invert the order of
->>> operation because it uses the old state bitmap to know which pages need
->>> the populate() notifier.
->>
->> I assume we talk about this code: [1]
->>
->> [1] https://lkml.kernel.org/r/20250217081833.21568-1-chenyi.qiang@intel.com
->>
->>
->> +static int memory_attribute_state_change(MemoryAttributeManager *mgr,
->> uint64_t offset,
->> +                                         uint64_t size, bool
->> shared_to_private)
->> +{
->> +    int block_size = memory_attribute_manager_get_block_size(mgr);
->> +    int ret = 0;
->> +
->> +    if (!memory_attribute_is_valid_range(mgr, offset, size)) {
->> +        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
->> +                     __func__, offset, size);
->> +        return -1;
->> +    }
->> +
->> +    if ((shared_to_private && memory_attribute_is_range_discarded(mgr,
->> offset, size)) ||
->> +        (!shared_to_private && memory_attribute_is_range_populated(mgr,
->> offset, size))) {
->> +        return 0;
->> +    }
->> +
->> +    if (shared_to_private) {
->> +        memory_attribute_notify_discard(mgr, offset, size);
->> +    } else {
->> +        ret = memory_attribute_notify_populate(mgr, offset, size);
->> +    }
->> +
->> +    if (!ret) {
->> +        unsigned long first_bit = offset / block_size;
->> +        unsigned long nbits = size / block_size;
->> +
->> +        g_assert((first_bit + nbits) <= mgr->bitmap_size);
->> +
->> +        if (shared_to_private) {
->> +            bitmap_clear(mgr->shared_bitmap, first_bit, nbits);
->> +        } else {
->> +            bitmap_set(mgr->shared_bitmap, first_bit, nbits);
->> +        }
->> +
->> +        return 0;
->> +    }
->> +
->> +    return ret;
->> +}
->>
->> Then, in memory_attribute_notify_populate(), we walk the bitmap again.
->>
->> Why?
->>
->> We just checked that it's all in the expected state, no?
->>
->>
->> virtio-mem doesn't handle it that way, so I'm curious why we would have
->> to do it here?
-> 
-> I was concerned about the case where the guest issues a request that
-> only partial of the range is in the desired state.
-> I think the main problem is the policy for the guest conversion request.
-> My current handling is:
-> 
-> 1. When a conversion request is made for a range already in the desired
->    state, the helper simply returns success.
+From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-Yes.
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+---
+ hw/i386/intel_iommu.c          | 74 ++++++++++++++++++++++++++++++++--
+ hw/i386/intel_iommu_internal.h |  1 +
+ 2 files changed, 72 insertions(+), 3 deletions(-)
 
-> 2. For requests involving a range partially in the desired state, only
->    the necessary segments are converted, ensuring the entire range
->    complies with the request efficiently.
-
-
-Ah, now I get:
-
-+    if ((shared_to_private && memory_attribute_is_range_discarded(mgr,
-offset, size)) ||
-+        (!shared_to_private && memory_attribute_is_range_populated(mgr,
-offset, size))) {
-+        return 0;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 9daf8025cc..2b1c733d86 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4159,12 +4159,10 @@ static void vtd_report_ir_illegal_access(VTDAddress=
+Space *vtd_as,
+     bool is_fpd_set =3D false;
+     VTDContextEntry ce;
+=20
+-    assert(vtd_as->pasid !=3D PCI_NO_PASID);
+-
+     /* Try out best to fetch FPD, we can't do anything more */
+     if (vtd_dev_to_context_entry(s, bus_n, vtd_as->devfn, &ce) =3D=3D 0) {
+         is_fpd_set =3D ce.lo & VTD_CONTEXT_ENTRY_FPD;
+-        if (!is_fpd_set && s->root_scalable) {
++        if (!is_fpd_set && s->root_scalable && vtd_as->pasid !=3D PCI_NO_P=
+ASID) {
+             vtd_ce_get_pasid_fpd(s, &ce, &is_fpd_set, vtd_as->pasid);
+         }
+     }
+@@ -4738,6 +4736,74 @@ static IOMMUMemoryRegion *vtd_get_memory_region_pasi=
+d(PCIBus *bus,
+     return &vtd_as->iommu;
+ }
+=20
++static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
++                                                hwaddr addr,
++                                                IOMMUAccessFlags flags,
++                                                int iommu_idx)
++{
++    IOMMUTLBEntry entry;
++    VTDAddressSpace *vtd_as =3D container_of(iommu, VTDAddressSpace, iommu=
+);
++
++    if (vtd_is_interrupt_addr(addr)) {
++        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
++        entry.target_as =3D &address_space_memory;
++        entry.iova =3D 0;
++        entry.translated_addr =3D 0;
++        entry.addr_mask =3D ~VTD_PAGE_MASK_4K;
++        entry.perm =3D IOMMU_NONE;
++        entry.pasid =3D PCI_NO_PASID;
++    } else {
++        entry =3D vtd_iommu_translate(iommu, addr, flags, iommu_idx);
 +    }
 +
-
-We're not failing if it might already partially be in the other state.
-
-> 3. In scenarios where a conversion request is declined by other systems,
->    such as a failure from VFIO during notify_populate(), the helper will
->    roll back the request, maintaining consistency.
-> 
-> And the policy of virtio-mem is to refuse the state change if not all
-> blocks are in the opposite state.
-
-Yes.
-
-> 
-> Actually, this part is still a uncertain to me.
-> 
-
-IIUC, the problem does not exist if we only convert a single page at a time.
-
-Is there a known use case where such partial conversions could happen?
-
-> BTW, per the status/bitmap track, the virtio-mem also changes the bitmap
-> after the plug/unplug notifier. This is the same, correct?
-Right. But because we reject these partial requests, we don't have to 
-traverse the bitmap and could just adjust the bitmap operations.
-
--- 
-Cheers,
-
-David / dhildenb
-
++    return entry;
++}
++
++static ssize_t vtd_iommu_ats_request_translation(IOMMUMemoryRegion *iommu,
++                                                 bool priv_req, bool exec_=
+req,
++                                                 hwaddr addr, size_t lengt=
+h,
++                                                 bool no_write,
++                                                 IOMMUTLBEntry *result,
++                                                 size_t result_length,
++                                                 uint32_t *err_count)
++{
++    IOMMUAccessFlags flags =3D IOMMU_ACCESS_FLAG_FULL(true, !no_write, exe=
+c_req,
++                                                    priv_req, false, false=
+);
++    ssize_t res_index =3D 0;
++    hwaddr target_address =3D addr + length;
++    IOMMUTLBEntry entry;
++
++    *err_count =3D 0;
++
++    while ((addr < target_address) && (res_index < result_length)) {
++        entry =3D vtd_iommu_ats_do_translate(iommu, addr, flags, 0);
++        if (!IOMMU_TLB_ENTRY_TRANSLATION_ERROR(&entry)) { /* Translation d=
+one */
++            /*
++             * 4.1.2 : Global Mapping (G) : Remapping hardware provides a =
+value
++             * of 0 in this field
++             */
++            entry.perm &=3D ~IOMMU_GLOBAL;
++        } else {
++            *err_count +=3D 1;
++        }
++        result[res_index] =3D entry;
++        res_index +=3D 1;
++        addr =3D (addr & (~entry.addr_mask)) + (entry.addr_mask + 1);
++    }
++
++    /* Buffer too small */
++    if (addr < target_address) {
++        return -ENOMEM;
++    }
++
++    return res_index;
++}
++
++static uint64_t vtd_get_min_page_size(IOMMUMemoryRegion *iommu)
++{
++    return VTD_PAGE_SIZE;
++}
++
+ static PCIIOMMUOps vtd_iommu_ops =3D {
+     .get_address_space =3D vtd_host_dma_iommu,
+     .get_memory_region_pasid =3D vtd_get_memory_region_pasid,
+@@ -4913,6 +4979,8 @@ static void vtd_iommu_memory_region_class_init(Object=
+Class *klass,
+     imrc->translate =3D vtd_iommu_translate;
+     imrc->notify_flag_changed =3D vtd_iommu_notify_flag_changed;
+     imrc->replay =3D vtd_iommu_replay;
++    imrc->iommu_ats_request_translation =3D vtd_iommu_ats_request_translat=
+ion;
++    imrc->get_min_page_size =3D vtd_get_min_page_size;
+ }
+=20
+ static const TypeInfo vtd_iommu_memory_region_info =3D {
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.=
+h
+index 238f1f443f..7e2071cd4d 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -192,6 +192,7 @@
+ #define VTD_ECAP_SC                 (1ULL << 7)
+ #define VTD_ECAP_MHMV               (15ULL << 20)
+ #define VTD_ECAP_SRS                (1ULL << 31)
++#define VTD_ECAP_NWFS               (1ULL << 33)
+ #define VTD_ECAP_PSS                (19ULL << 35)
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+--=20
+2.48.1
 
