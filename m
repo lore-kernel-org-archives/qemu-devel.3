@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E8AC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:31:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B40C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5H-0001Bt-RM; Fri, 21 Feb 2025 07:24:48 -0500
+	id 1tlS8b-00072F-Lk; Fri, 21 Feb 2025 07:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5A-0000ou-MP
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS58-0007ED-UJ
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140678;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qUA67lnlZ1kgDiClFh7mIAizVWuXk4KUx2uXWAEi+j8=;
- b=gfkt10voKh1mUR+42iI5bR0vW8/4pzXdd81+nzRbFO9eAF3/o5xRRAsinetD/YipH+N2fN
- 22yL6CGLxcPe5nMq14HOEuEI0zGDurq0nOC6GqrCgmXKjUb2wH4EAxtzH0lA38grIJPKI+
- UnC/sNKV37lxhjdBIOOPiGIH55dt370=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-yb7I_n_fPLK_PvltGKh_Yw-1; Fri, 21 Feb 2025 07:24:36 -0500
-X-MC-Unique: yb7I_n_fPLK_PvltGKh_Yw-1
-X-Mimecast-MFC-AGG-ID: yb7I_n_fPLK_PvltGKh_Yw_1740140676
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4399a5afc72so10250195e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140675; x=1740745475;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tlS74-0006Dr-Ap
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:41 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tlS71-0007Yk-Ug
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:37 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-220c8eb195aso43137535ad.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:26:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1740140794; x=1740745594; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qUA67lnlZ1kgDiClFh7mIAizVWuXk4KUx2uXWAEi+j8=;
- b=GROT38UovHmNCJYFHBWvcI5XLBnnZelpxyg3Li+cazqzz0w/Dht9xN5uIEX29ZV+zA
- Sr/7fEPhhm2dghdvtn8Q1SuaBufdDxP4X9C86oMAkXmZu4ORv8VaCPJLVNiumJ7Bh8FR
- nsLcscFj8DApiz30nRIdET3LAjnfXva+KGlEUNkuSTKH5fz9l88gFg7fqkOUqH+HhC4w
- shB/iy2qGnS5aSzY2+sb658XtpaFRT1Q9vTY25i4CaE51JpDfNY+l2HMqyXnRivDYj7J
- pmHu5V7j8as2NyKM9jW7ZsuNYLe6LUxeCo9NHzWD+/d7a5RzLOjK3vFJbCjm4EE1HkYz
- cc4w==
-X-Gm-Message-State: AOJu0Yx/L4FeMJx6CRDe4optSPjP+2j5ZiYqUEBj0+gfxHyUNPXEg3jw
- JrIwyjUtbZHc2lZTOlShWmI+zIOY6XnrjjRGx0JJqzxDpZk5+6uyLOu36qFnd1uxb9dJwa/EIX2
- WwOoYT/Mlsc6RMR7hgOGOdEOMSNcFqUBodegxThIfdwAuVYiPrTaGVGwrKdZLhK0CrkC9i7En4V
- fG5Esf0eOClqODw5NnGScsnMJFEBUrtw==
-X-Gm-Gg: ASbGnctH2zKzz1fqhU1HxqTRAgEyKwjkvFgd9Lh8BdyTnrAgrkOKLnMS5Gmb7UyfSXP
- ScHcNPecwTdTsYzlU66EXUTfcLO4Y2XugRdOLEZfy1ljwWLpyknlYlcVo4TXIaxD4nH1uxm7S3m
- ijdqUjTT66MlHvwLcp9YWF6ndAAhXlosVTaXN4VkSefod0Q+m5OetkU9CyV3ZboijNSz4iew4WZ
- X5d6RmCZ6u8igK+TZxJK4cNVB/eQ7Jp48nj+BZ8gboZz0abkIl1+dC59CrfHoC7O5ien2Xv0eU7
- uJmRTQ==
-X-Received: by 2002:a05:600c:500e:b0:439:8e46:ee73 with SMTP id
- 5b1f17b1804b1-439aeb2b5d6mr21742975e9.15.1740140675316; 
- Fri, 21 Feb 2025 04:24:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFaeWRFRYfK0x7iyzRUjEsi1+KVod4N7DA9MqcsiQt7qtKUTUTdG4OFv4H8GnVPFQ1EiCCwVQ==
-X-Received: by 2002:a05:600c:500e:b0:439:8e46:ee73 with SMTP id
- 5b1f17b1804b1-439aeb2b5d6mr21742685e9.15.1740140674931; 
- Fri, 21 Feb 2025 04:24:34 -0800 (PST)
-Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258b4118sm23865508f8f.18.2025.02.21.04.24.33
+ bh=CWBUtSS67oYR3l74Eped0x0Nc8HfHcVrd0NioQ2Xqss=;
+ b=RPIb+UZsckyWQQoKfXk4tg6xbgAjDg0mkZWRmsK9ARd1X9BO65pFn41hSlGC4m6WQM
+ qqoVdfRZulhefPGvMSM+B4s+8ld+SxNFMUJ4fbFSsFEG3DBg1aKaKx6zex195D8/PcNK
+ dH+p8f4d7KBSQY3J/lLj/gARuR91Z6V4tfT5SqEyzAELEwMfi9MixhoKq6x8kS0VyWJC
+ OrqTjvVat7I8Qn3oL4pIpg5F/N9cSy57Tjl6nnwBBkhHxyN37exLtfaneQMHR+8OEL8Y
+ AzepSx2KoQvPbFSPU0kljidjJKec+AC6HmsnUYKniQMP1InXZLu9U6QHjspCrcMWdVja
+ KPSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740140794; x=1740745594;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CWBUtSS67oYR3l74Eped0x0Nc8HfHcVrd0NioQ2Xqss=;
+ b=eOrw6c6z8ibv7ArCmfW6lku31O3Za/wbr0OJoe9wPdMS8T28c+TKdOCv0IAfehrgKR
+ nS+Xq0WtC7UqZaYPbidBAD0G7dBKyvH7BSO9DAlK6BQT340c9kUbko8fls8z1tTKjTHK
+ ipdyuRpTszecjegwb71bWwHQ/REWD1cn27KQ6e5Lbdq7ufovF7mvrSjHJ3Oglq12JJSB
+ Q8cK93doIdY5w68IO/O+4DDX9rmSTPvQSznkHHgseOXPCdqycMosNeooX0cRW+wJi0mQ
+ RRauaCKt3rsuZ/02Amp1DpQ60vCgQZO/qaIvpobri7jrqpqZzUx2tGA8P0nFR+GWWAPm
+ aXpA==
+X-Gm-Message-State: AOJu0YzxM7q01sMUz819i1do0NoxF00AVdDP/+CmjCz1GA0PPqgjCw2a
+ GDYjai41f7zoT80CLhvH6uvF0B+XmIRP6AnA7GSCkMXVzqAy0tLOoAF1PUX2IBxazfYZjUi9NhQ
+ c
+X-Gm-Gg: ASbGncvvySVJZQ8FXDR84RTRpj6zGdLLWEcZvExA07Qv0KsobTTDBmzWTmIE5yyiYy5
+ x98oN/5tuzot9vrUCPxejQGRWkSnaXiyNzkERmZ2ex6oJBrYYBnVn0AwwZFPH8bPVT+nzCyVO7U
+ 0Pi5sv17p6l/m7Ivx5houRmPpkSCS3GgdVBm5upheVBxmLJx305V8njfRBpfsacyAmLs0Eb692t
+ WPzAk7rbuwQSQeewpI0dyo8h1Yq/2FYuJC0OlNphzoHwP2pdSYDdVHQ85kTJdExfL3jjEr1MwQJ
+ REfFTjhPDuSvDpwSz2ECAiYtBmSlW2FhCs/CQILYuUQajWTs2i5A9g==
+X-Google-Smtp-Source: AGHT+IHiYj/wM+pKpfvYQyLlZlxFQa12aHhGIepWYrUEIkw6t3B0qkFHpiO/R+EzBgMwK8flkLXolQ==
+X-Received: by 2002:a17:903:2381:b0:220:d272:534d with SMTP id
+ d9443c01a7336-2219ff57817mr53796555ad.22.1740140794054; 
+ Fri, 21 Feb 2025 04:26:34 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com ([187.11.154.120])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220d545e39bsm137349855ad.124.2025.02.21.04.26.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:34 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:30 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ Fri, 21 Feb 2025 04:26:33 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Stefano Brivio <sbrivio@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 35/41] net: vhost-user: add QAPI events to report connection
- state
-Message-ID: <02fd9f8aeeb184276b283ae2f404bc3acf1e7b7a.1740140520.git.mst@redhat.com>
-References: <cover.1740140520.git.mst@redhat.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 1/3] target/riscv/cpu: ignore TCG init for KVM CPUs in
+ reset_hold
+Date: Fri, 21 Feb 2025 09:26:21 -0300
+Message-ID: <20250221122623.495188-2-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250221122623.495188-1-dbarboza@ventanamicro.com>
+References: <20250221122623.495188-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1740140520.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,122 +103,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+riscv_cpu_reset_hold() does a lot of TCG-related initializations that
+aren't relevant for KVM, but nevertheless are impacting the reset state
+of KVM vcpus.
 
-The netdev reports NETDEV_VHOST_USER_CONNECTED event when
-the chardev is connected, and NETDEV_VHOST_USER_DISCONNECTED
-when it is disconnected.
+When running a KVM guest, kvm_riscv_reset_vcpu() is called at the end of
+reset_hold(). At that point env->mstatus is initialized to a non-zero
+value, and it will be use to write 'sstatus' in the vcpu
+(kvm_arch_put_registers() then kvm_riscv_put_regs_csr()).
 
-The NETDEV_VHOST_USER_CONNECTED event includes the chardev id.
+Do an early exit in riscv_cpu_reset_hold() if we're running KVM. All the
+KVM reset procedure will be centered in kvm_riscv_reset_vcpu().
 
-This allows a system manager like libvirt to detect when the server
-fails.
+While we're at it, remove the kvm_enabled() check in
+kvm_riscv_reset_vcpu() since it's already being gated in
+riscv_cpu_reset_hold().
 
-For instance with passt:
-
-{ 'execute': 'qmp_capabilities' }
-{ "return": { } }
-
-[killing passt here]
-
-{ "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
-  "event": "NETDEV_VHOST_USER_DISCONNECTED",
-  "data": { "netdev-id": "netdev0" } }
-
-[automatic reconnection with reconnect-ms]
-
-{ "timestamp": { "seconds": 1739538638, "microseconds": 354181 },
-  "event": "NETDEV_VHOST_USER_CONNECTED",
-  "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
-
-Tested-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Message-Id: <20250217092550.1172055-1-lvivier@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 ---
- qapi/net.json    | 40 ++++++++++++++++++++++++++++++++++++++++
- net/vhost-user.c |  3 +++
- 2 files changed, 43 insertions(+)
+ target/riscv/cpu.c         | 9 +++++----
+ target/riscv/kvm/kvm-cpu.c | 3 ---
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/qapi/net.json b/qapi/net.json
-index 2739a2f423..310cc4fd19 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1031,3 +1031,43 @@
- ##
- { 'event': 'NETDEV_STREAM_DISCONNECTED',
-   'data': { 'netdev-id': 'str' } }
-+
-+##
-+# @NETDEV_VHOST_USER_CONNECTED:
-+#
-+# Emitted when the vhost-user chardev is connected
-+#
-+# @netdev-id: QEMU netdev id that is connected
-+#
-+# @chardev-id: The character device id used by the QEMU netdev
-+#
-+# Since: 10.0
-+#
-+# .. qmp-example::
-+#
-+#     <- { "timestamp": {"seconds": 1739538638, "microseconds": 354181 },
-+#          "event": "NETDEV_VHOST_USER_CONNECTED",
-+#          "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
-+#
-+##
-+{ 'event': 'NETDEV_VHOST_USER_CONNECTED',
-+  'data': { 'netdev-id': 'str', 'chardev-id': 'str' } }
-+
-+##
-+# @NETDEV_VHOST_USER_DISCONNECTED:
-+#
-+# Emitted when the vhost-user chardev is disconnected
-+#
-+# @netdev-id: QEMU netdev id that is disconnected
-+#
-+# Since: 10.0
-+#
-+# .. qmp-example::
-+#
-+#     <- { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
-+#          "event": "NETDEV_VHOST_USER_DISCONNECTED",
-+#          "data": { "netdev-id": "netdev0" } }
-+#
-+##
-+{ 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
-+  'data': { 'netdev-id': 'str' } }
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 12555518e8..0b235e50c6 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -16,6 +16,7 @@
- #include "chardev/char-fe.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-net.h"
-+#include "qapi/qapi-events-net.h"
- #include "qemu/config-file.h"
- #include "qemu/error-report.h"
- #include "qemu/option.h"
-@@ -271,6 +272,7 @@ static void chr_closed_bh(void *opaque)
-     if (err) {
-         error_report_err(err);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 522d6584e4..8e6e629ec4 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1050,6 +1050,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+         mcc->parent_phases.hold(obj, type);
      }
-+    qapi_event_send_netdev_vhost_user_disconnected(name);
+ #ifndef CONFIG_USER_ONLY
++    if (kvm_enabled()) {
++        kvm_riscv_reset_vcpu(cpu);
++        return;
++    }
++
+     env->misa_mxl = mcc->misa_mxl_max;
+     env->priv = PRV_M;
+     env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+@@ -1146,10 +1151,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+         env->rnmip = 0;
+         env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+     }
+-
+-    if (kvm_enabled()) {
+-        kvm_riscv_reset_vcpu(cpu);
+-    }
+ #endif
  }
  
- static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
-@@ -300,6 +302,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
-                                          net_vhost_user_watch, s);
-         qmp_set_link(name, true, &err);
-         s->started = true;
-+        qapi_event_send_netdev_vhost_user_connected(name, chr->label);
-         break;
-     case CHR_EVENT_CLOSED:
-         /* a close event may happen during a read/write, but vhost
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 23ce779359..484b6afe7c 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1603,9 +1603,6 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
+     CPURISCVState *env = &cpu->env;
+     int i;
+ 
+-    if (!kvm_enabled()) {
+-        return;
+-    }
+     for (i = 0; i < 32; i++) {
+         env->gpr[i] = 0;
+     }
 -- 
-MST
+2.48.1
 
 
