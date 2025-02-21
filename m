@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46263C021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E07C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlXAM-000101-Lf; Fri, 21 Feb 2025 12:50:25 -0500
+	id 1tlXAj-0001L4-Og; Fri, 21 Feb 2025 12:50:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXAA-0000wt-7o; Fri, 21 Feb 2025 12:50:10 -0500
+ id 1tlXAe-0001I1-4m; Fri, 21 Feb 2025 12:50:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXA8-0001os-2B; Fri, 21 Feb 2025 12:50:09 -0500
+ id 1tlXAb-0001tC-Qo; Fri, 21 Feb 2025 12:50:39 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4875FEFB6B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5FBBDEFB71;
  Fri, 21 Feb 2025 20:49:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3BB31BB587;
- Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 186FE1BB58D;
+ Fri, 21 Feb 2025 20:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E119D53F89; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ id F065E53F95; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.2 08/14] ui/sdl2: reenable the SDL2 Windows keyboard hook
- procedure
-Date: Fri, 21 Feb 2025 20:49:38 +0300
-Message-Id: <20250221174949.836197-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [Stable-9.2.2 14/14] net/slirp: libslirp 4.9.0 compatibility
+Date: Fri, 21 Feb 2025 20:49:44 +0300
+Message-Id: <20250221174949.836197-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 References: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,124 +62,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+Update the code in net/slirp.c to be compatible with
+libslirp 4.9.0, which deprecated slirp_pollfds_fill()
+and started using slirp_os_socket type for sockets
+(which is a 64-bit integer on win64) for all callbacks
+starting with version 6 of the interface.
 
-Windows only:
-
-The libSDL2 Windows message loop needs the libSDL2 Windows low
-level keyboard hook procedure to grab the left and right Windows
-keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
-
-Since SDL2 2.30.4 the SDL2 keyboard hook procedure also filters
-out the special left Control key event for every Alt Gr key event
-on keyboards with an international layout. This means the QEMU low
-level keyboard hook procedure is no longer needed. Remove the QEMU
-Windows keyboard hook procedure.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Link: https://lore.kernel.org/r/20241231115950.6732-1-vr_qemu@t-online.de
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4dafba778aa3e5f5fd3b2c6333afd7650dcf54e2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix in ui/sdl2.c (includes))
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Message-ID: <20250130123253.864681-1-mjt@tls.msk.ru>
+[thuth: Added some spaces to make checkpatch.pl happy]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit f141caa270af536b4d5b7c8540820f1bdd245d71)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/meson.build b/ui/meson.build
-index 28c7381dd1..35fb04cadf 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -120,10 +120,6 @@ if gtk.found()
- endif
- 
- if sdl.found()
--  if host_os == 'windows'
--    system_ss.add(files('win32-kbd-hook.c'))
--  endif
--
-   sdl_ss = ss.source_set()
-   sdl_ss.add(sdl, sdl_image, pixman, glib, files(
-     'sdl2-2d.c',
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index bd4f5a9da1..3d70eaebfa 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -32,7 +32,6 @@
- #include "sysemu/runstate.h"
- #include "sysemu/runstate-action.h"
- #include "sysemu/sysemu.h"
--#include "ui/win32-kbd-hook.h"
- #include "qemu/log.h"
- 
- static int sdl2_num_outputs;
-@@ -262,7 +261,6 @@ static void sdl_grab_start(struct sdl2_console *scon)
-     }
-     SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
-     gui_grab = 1;
--    win32_kbd_set_grab(true);
-     sdl_update_caption(scon);
+diff --git a/net/slirp.c b/net/slirp.c
+index eb9a456ed4..102bec7b57 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -247,7 +247,14 @@ static void net_slirp_timer_mod(void *timer, int64_t expire_timer,
+     timer_mod(&t->timer, expire_timer);
  }
  
-@@ -270,7 +268,6 @@ static void sdl_grab_end(struct sdl2_console *scon)
+-static void net_slirp_register_poll_fd(int fd, void *opaque)
++#if !SLIRP_CHECK_VERSION(4, 9, 0)
++# define slirp_os_socket int
++# define slirp_pollfds_fill_socket slirp_pollfds_fill
++# define register_poll_socket register_poll_fd
++# define unregister_poll_socket unregister_poll_fd
++#endif
++
++static void net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
  {
-     SDL_SetWindowGrab(scon->real_window, SDL_FALSE);
-     gui_grab = 0;
--    win32_kbd_set_grab(false);
-     sdl_show_cursor(scon);
-     sdl_update_caption(scon);
- }
-@@ -371,19 +368,6 @@ static int get_mod_state(void)
-     }
+ #ifdef WIN32
+     AioContext *ctxt = qemu_get_aio_context();
+@@ -260,7 +267,7 @@ static void net_slirp_register_poll_fd(int fd, void *opaque)
+ #endif
  }
  
--static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
--{
--#ifdef CONFIG_WIN32
--    SDL_SysWMinfo info;
--
--    SDL_VERSION(&info.version);
--    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
--        return info.info.win.window;
--    }
--#endif
--    return NULL;
--}
--
- static void handle_keydown(SDL_Event *ev)
+-static void net_slirp_unregister_poll_fd(int fd, void *opaque)
++static void net_slirp_unregister_poll_sock(slirp_os_socket fd, void *opaque)
  {
-     int win;
-@@ -608,10 +592,6 @@ static void handle_windowevent(SDL_Event *ev)
-         sdl2_redraw(scon);
-         break;
-     case SDL_WINDOWEVENT_FOCUS_GAINED:
--        win32_kbd_set_grab(gui_grab);
--        if (qemu_console_is_graphic(scon->dcl.con)) {
--            win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
--        }
-         /* fall through */
-     case SDL_WINDOWEVENT_ENTER:
-         if (!gui_grab && (qemu_input_is_absolute(scon->dcl.con) || absolute_enabled)) {
-@@ -627,9 +607,6 @@ static void handle_windowevent(SDL_Event *ev)
-         scon->ignore_hotkeys = get_mod_state();
-         break;
-     case SDL_WINDOWEVENT_FOCUS_LOST:
--        if (qemu_console_is_graphic(scon->dcl.con)) {
--            win32_kbd_set_window(NULL);
--        }
-         if (gui_grab && !gui_fullscreen) {
-             sdl_grab_end(scon);
-         }
-@@ -869,10 +846,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available since SDL 2.0.8 */
-     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+ #ifdef WIN32
+     if (WSAEventSelect(fd, NULL, 0) != 0) {
+@@ -286,8 +293,8 @@ static const SlirpCb slirp_cb = {
  #endif
--#ifndef CONFIG_WIN32
--    /* QEMU uses its own low level keyboard hook procedure on Windows */
-     SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
--#endif
- #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
+     .timer_free = net_slirp_timer_free,
+     .timer_mod = net_slirp_timer_mod,
+-    .register_poll_fd = net_slirp_register_poll_fd,
+-    .unregister_poll_fd = net_slirp_unregister_poll_fd,
++    .register_poll_socket = net_slirp_register_poll_sock,
++    .unregister_poll_socket = net_slirp_unregister_poll_sock,
+     .notify = net_slirp_notify,
+ };
+ 
+@@ -314,7 +321,7 @@ static int slirp_poll_to_gio(int events)
+     return ret;
+ }
+ 
+-static int net_slirp_add_poll(int fd, int events, void *opaque)
++static int net_slirp_add_poll(slirp_os_socket fd, int events, void *opaque)
+ {
+     GArray *pollfds = opaque;
+     GPollFD pfd = {
+@@ -363,8 +370,8 @@ static void net_slirp_poll_notify(Notifier *notifier, void *data)
+ 
+     switch (poll->state) {
+     case MAIN_LOOP_POLL_FILL:
+-        slirp_pollfds_fill(s->slirp, &poll->timeout,
+-                           net_slirp_add_poll, poll->pollfds);
++        slirp_pollfds_fill_socket(s->slirp, &poll->timeout,
++                                  net_slirp_add_poll, poll->pollfds);
+         break;
+     case MAIN_LOOP_POLL_OK:
+     case MAIN_LOOP_POLL_ERR:
+@@ -629,7 +636,9 @@ static int net_slirp_init(NetClientState *peer, const char *model,
+ 
+     s = DO_UPCAST(SlirpState, nc, nc);
+ 
+-    cfg.version = SLIRP_CHECK_VERSION(4,7,0) ? 4 : 1;
++    cfg.version =
++         SLIRP_CHECK_VERSION(4, 9, 0) ? 6 :
++         SLIRP_CHECK_VERSION(4, 7, 0) ? 4 : 1;
+     cfg.restricted = restricted;
+     cfg.in_enabled = ipv4;
+     cfg.vnetwork = net;
 -- 
 2.39.5
 
