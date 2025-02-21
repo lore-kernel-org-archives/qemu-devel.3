@@ -4,101 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDD0C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 10:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F3CC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 11:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlQik-0006XS-0e; Fri, 21 Feb 2025 05:57:26 -0500
+	id 1tlQpt-0000XA-Fw; Fri, 21 Feb 2025 06:04:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlQii-0006XD-HH
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:57:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tlQpr-0000Wc-5W; Fri, 21 Feb 2025 06:04:47 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlQig-0003c0-Az
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 05:57:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740135440;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=douF3ObJnNM82Zek65syU6wIVUS/vRBSfP5K72wyy/Y=;
- b=FjrOpZuRO8ht5q0c4xTPlZvsT72MOmMb+L6lqX1z8Ll2LNsbhWJ+Wpf+dsgWm0hDpcPAAN
- gRlrI2csf+F+K0ERQJmxH0+AQ9fVxtIO1Ha4ukooSHEfE1xOJM7+8WJV9k3ymCQmIdCP/a
- oLNke/Wf5DQ9IyHjUcT9u2sETo3iJKk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-x-2PNbESP7G-TnCqAigMMw-1; Fri, 21 Feb 2025 05:57:18 -0500
-X-MC-Unique: x-2PNbESP7G-TnCqAigMMw-1
-X-Mimecast-MFC-AGG-ID: x-2PNbESP7G-TnCqAigMMw_1740135437
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-438e180821aso9917635e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 02:57:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740135436; x=1740740236;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=douF3ObJnNM82Zek65syU6wIVUS/vRBSfP5K72wyy/Y=;
- b=qeMcRdsyIEQ3gWz8YQnTXxaUvEHVVvSxg9a78fyRokmAAjJNS/ztxOE+8D+5vg38cZ
- XEBRuB5MDDOBjnjk12YyiHmQ/cktIq27ljTADERpZaYsCBC3l+c7wXGs3tT31StSwspc
- r7mgMglIMWOnGCvisY6uNgUCUS0doE2ZQoGHNlJ2pcaCltLW2kMRy0LFqEjus7qHkgtR
- DDBPJWI6L1a5s7eiCV0yySa8y41zzaEJPUszxwFBZUAeabRmoM3N1moYgb5+9sS+9l7Z
- B24bOyIC4fnNoBaCF5ceCZ5e2v2bHZAEPHL01nolhc+Iurt4McGHIL8dIJRS2NRSgbIx
- bbzg==
-X-Gm-Message-State: AOJu0YwAyWE075U9OO1nYDGOSsuW5xZTjLZArbpRS/Q6j93bcUDzUDXB
- O1fpk9OegPG/m1f8DNLEGVGdP8zLRwWV8xUoTDeNaZmC93zwEBBJneaIZG/CnZKhm1q6iTx6vla
- iCMP24GKOgHNXQv8MEfoU3hM3tPGhPOuiFEUuMdwui/PCM1pzshrY
-X-Gm-Gg: ASbGnctGeBjycmCOvBrkB0f3Ry3iiuvzHgo++Arvko7Wh2zb12k1IW/mUpnBzx7Xlyg
- +L4M/3zGkrG/Thp7grJ9PzoJvz6fnzBoQPSQLVzOnCAN5MKyy6cQuycaNICHy4OaDiqinN9qEaF
- 6wvth7pXYtJMCTV+t6axYfVGlp5kYoqgslzkcQc7tfH5QNP3YnodAR2jFDMLz0+1SQHueYBuM2e
- 3G6T3fykm6E9RomX/XOLZqxWGH3pF/nmlZ3H0n9s9/VOlHE1blJprNkFcMlYTTt+yD3b4Of2xVg
- Uxwh+H04
-X-Received: by 2002:a05:600c:1ca1:b0:439:a4d9:34a3 with SMTP id
- 5b1f17b1804b1-439ae1e6619mr21849275e9.12.1740135436204; 
- Fri, 21 Feb 2025 02:57:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHu/mSgmWMC4mgiuoCzWUizawe8ewm3JbhgaRipd0eS6ie7XJW9ksmDMsOS73JgKlkCkVFhug==
-X-Received: by 2002:a05:600c:1ca1:b0:439:a4d9:34a3 with SMTP id
- 5b1f17b1804b1-439ae1e6619mr21848905e9.12.1740135435637; 
- Fri, 21 Feb 2025 02:57:15 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1f7:f008:ef3e:6af4:9a76:513])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d8e62sm23155358f8f.71.2025.02.21.02.57.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 02:57:14 -0800 (PST)
-Date: Fri, 21 Feb 2025 05:57:11 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "tjeznach@rivosinc.com" <tjeznach@rivosinc.com>,
- "minwoo.im@samsung.com" <minwoo.im@samsung.com>
-Subject: Re: [PATCH v3 00/19] intel_iommu: Add ATS support
-Message-ID: <20250221055659-mutt-send-email-mst@kernel.org>
-References: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tlQpo-0004Wl-Cw; Fri, 21 Feb 2025 06:04:46 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YznHT31D5z6G83L;
+ Fri, 21 Feb 2025 19:01:09 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 02518140382;
+ Fri, 21 Feb 2025 19:04:38 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 21 Feb
+ 2025 12:04:37 +0100
+Date: Fri, 21 Feb 2025 11:04:35 +0000
+To: Gavin Shan <gshan@redhat.com>
+CC: Igor Mammedov <imammedo@redhat.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <gengdongjiu1@gmail.com>, <peter.maydell@linaro.org>, <pbonzini@redhat.com>,
+ <shan.gavin@gmail.com>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: Re: [PATCH 4/4] target/arm: Retry pushing CPER error if necessary
+Message-ID: <20250221110435.00004a3b@huawei.com>
+In-Reply-To: <7caa54df-abe1-4833-bb59-cb83f8241962@redhat.com>
+References: <20250214041635.608012-1-gshan@redhat.com>
+ <20250214041635.608012-5-gshan@redhat.com>
+ <20250219185518.767a48d9@imammedo.users.ipa.redhat.com>
+ <7caa54df-abe1-4833-bb59-cb83f8241962@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,200 +69,265 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 08:07:25AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> 
-> This patch set belongs to a list of series that add SVM support for VT-d.
-> 
-> Here we focus on implementing ATS support in the IOMMU and adding a
-> PCI-level API to be used by virtual devices.
-> 
-> This work is based on the VT-d specification version 4.1 (March 2023).
-> 
-> Here is a link to our GitHub repository where you can find the following elements:
->     - Qemu with all the patches for SVM
->         - ATS
->         - PRI
->         - Device IOTLB invalidations
->         - Requests with already pre-translated addresses
->     - A demo device
->     - A simple driver for the demo device
->     - A userspace program (for testing and demonstration purposes)
-> 
-> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
+On Fri, 21 Feb 2025 15:27:36 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
+> On 2/20/25 3:55 AM, Igor Mammedov wrote:
+> > On Fri, 14 Feb 2025 14:16:35 +1000
+> > Gavin Shan <gshan@redhat.com> wrote:
+> >  =20
+> >> The error -1 is returned if the previously reported CPER error
+> >> hasn't been claimed. The virtual machine is terminated due to
+> >> abort(). It's conflicting to the ideal behaviour that the affected
+> >> vCPU retries pushing the CPER error in this case since the vCPU
+> >> can't proceed its execution.
+> >>
+> >> Move the chunk of code to push CPER error to a separate helper
+> >> report_memory_errors() and retry the request when the return
+> >> value from acpi_ghes_memory_errors() is greater than zero.
+> >>
+> >> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> >> ---
+> >>   target/arm/kvm.c | 31 +++++++++++++++++++++++++------
+> >>   1 file changed, 25 insertions(+), 6 deletions(-)
+> >>
+> >> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> >> index 5c0bf99aec..9f063f6053 100644
+> >> --- a/target/arm/kvm.c
+> >> +++ b/target/arm/kvm.c
+> >> @@ -2362,6 +2362,30 @@ int kvm_arch_get_registers(CPUState *cs, Error =
+**errp)
+> >>       return ret;
+> >>   }
+> >>  =20
+> >> +static void report_memory_error(CPUState *c, hwaddr paddr)
+> >> +{
+> >> +    int ret;
+> >> +
+> >> +    while (true) {
+> >> +        /* Retry if the previously report error hasn't been claimed */
+> >> +        ret =3D acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr, =
+true);
+> >> +        if (ret <=3D 0) {
+> >> +            break;
+> >> +        }
+> >> +
+> >> +        bql_unlock();
+> >> +        g_usleep(1000); =20
+>=20
+> Igor, thanks for the detailed comments. Sorry for a bit delay of the repl=
+y, I
+> was checking the code to understand it better :)
 
-more build failures:
-https://gitlab.com/mstredhat/qemu/-/jobs/9206060668
+This is moderately tricky stuff so I'm not 100% sure of some of the things
+I said below, but will be traveling for next few weeks so want to get some
+comments out before that!
 
+>=20
+> > even with bql released it's not safe to loop in here.
+> > consider,
+> >    a guest with 2 vcpus
+> >      * vcpu 1 gets SIGBUS due to error
+> >      * vcpu 2 trips over the same error and gets into this loop
+> >      * on guest side vcpu 1 continues to run to handle SEA but
+> >        might need to acquire a lock that vcpu 2 holds
+> >  =20
+>=20
+> Agreed.
+>=20
+> > GHESv2 error source we support, can report several errors,
+> > currently QEMU supports only 1 'error status block' which
+> > can hold several error records (CPER) (though storage size is limited)
+> >=20
+> > 1:
+> > We can potentially add support for more GHESv2 error sources
+> > with their own Read ACK registers (let's say =3Dmax_cpus)
+> > (that is under assumption that no other error will be
+> > triggered while guest VCPUs handle their own SEA (upto clearing Read AC=
+K))
 
-> ===============
-> 
-> Context and design notes
-> ''''''''''''''''''''''''
-> 
-> The main purpose of this work is to enable vVT-d users to make
-> translation requests to the vIOMMU as described in the PCIe Gen 5.0
-> specification (section 10). Moreover, we aim to implement a
-> PCI/Memory-level framework that could be used by other vIOMMUs
-> to implement the same features.
-> 
-> What is ATS?
-> ''''''''''''
-> 
-> ATS (Address Translation Service) is a PCIe-level protocol that
-> enables PCIe devices to query an IOMMU for virtual to physical
-> address translations in a specific address space (such as a userland
-> process address space). When a device receives translation responses
-> from an IOMMU, it may decide to store them in an internal cache,
-> often known as "ATC" (Address Translation Cache) or "Device IOTLB".
-> To keep page tables and caches consistent, the IOMMU is allowed to 
-> send asynchronous invalidation requests to its client devices.
-> 
-> To avoid introducing an unnecessarily complex API, this series simply
-> exposes 3 functions. The first 2 are a pair of setup functions that
-> are called to install and remove the ATS invalidation callback during
-> the initialization phase of a process. The third one will be
-> used to request translations. The callback setup API introduced in
-> this series calls the IOMMUNotifier API under the hood.
-> 
-> API design
-> ''''''''''
-> 
-> - int pci_register_iommu_tlb_event_notifier(PCIDevice *dev,
->                                             uint32_t pasid,
->                                             IOMMUNotifier *n);
-> 
-> - int pci_unregister_iommu_tlb_event_notifier(PCIDevice *dev, uint32_t pasid,
->                                               IOMMUNotifier *n);
-> 
-> - ssize_t pci_ats_request_translation_pasid(PCIDevice *dev, uint32_t pasid,
->                                             bool priv_req, bool exec_req,
->                                             hwaddr addr, size_t length,
->                                             bool no_write,
->                                             IOMMUTLBEntry *result,
->                                             size_t result_length,
->                                             uint32_t *err_count);
-> 
-> Although device developers may want to implement custom ATC for
-> testing or performance measurement purposes, we provide a generic
-> implementation as a utility module.
-> 
-> Overview
-> ''''''''
-> 
-> Here are the interactions between an ATS-capable PCIe device and the vVT-d:
-> 
->                                                                                           
->                                                                                           
->   ┌───────────┐                 ┌────────────┐                                            
->   │Device     │                 │PCI / Memory│                                            
->   │           │ pci_ats_request_│abstraction │ iommu_ats_                                 
->   │           │ translation_    │            │ request_                                   
->   │┌─────────┐│ pasid           │ AS lookup  │ translation                                
->   ││Logic    ││────────────────>│╶╶╶╶╶╶╶╶╶╶╶>│──────┐                                     
->   │└─────────┘│<────────────────│<╶╶╶╶╶╶╶╶╶╶╶│<──┐  │                                     
->   │┌─────────┐│                 │            │   │  │                                     
->   ││inv func ││<───────┐        │            │   │  │                                     
->   │└─────────┘│        │        │            │   │  │                                     
->   │    │      │        │        │            │   │  │                                     
->   │    ∨      │        │        │            │   │  │                                     
->   │┌─────────┐│        │        │            │   │  │                                     
->   ││ATC      ││        │        │            │   │  │                                     
->   │└─────────┘│        │        │            │   │  │                                     
->   └───────────┘        │        └────────────┘   │  │                                     
->                        │                         │  │                                     
->                        │                         │  │                                     
->                        │                         │  │                                     
->                        │                         │  │                                     
->                        │    ┌────────────────────┼──┼─┐                                   
->                        │    │vVT-d               │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  │ │                                   
->                        │    │                    │  ∨ │                                   
->                        │    │┌───────────────────────┐│                                   
->                        │    ││Translation logic      ││                                   
->                        │    │└───────────────────────┘│                                   
->                        └────┼────────────┐            │                                   
->                             │            │            │                                   
->                             │┌───────────────────────┐│                                   
->                             ││  Invalidation queue   ││                                   
->                             │└───────────∧───────────┘│                                   
->                             └────────────┼────────────┘                                   
->                                          │                                                
->                                          │                                                
->                                          │                                                
->                              ┌────────────────────────┐                                   
->                              │Kernel driver           │                                   
->                              │                        │                                   
->                              └────────────────────────┘
-> 
-> v3
->     - Rebase onto master
->     - Fix compilation issue in non-debug mode (Michael)
-> 
-> v2
->     - Rebase on master after merge of Zhenzhong's FLTS series
->     - Rename the series as it is now based on master.
->     
->     - Changes after review by Michael:
->     	- Split long lines in memory.h
->     	- Change patch encoding (no UTF-8)
->     
->     - Changes after review by Zhenzhong:
->     	- Rework "Fill the PASID field when creating an IOMMUTLBEntry"
-> 
-> 
-> 
-> Clement Mathieu--Drif (19):
->   memory: Add permissions in IOMMUAccessFlags
->   intel_iommu: Declare supported PASID size
->   memory: Allow to store the PASID in IOMMUTLBEntry
->   intel_iommu: Fill the PASID field when creating an IOMMUTLBEntry
->   pcie: Add helper to declare PASID capability for a pcie device
->   pcie: Helper functions to check if PASID is enabled
->   pcie: Helper function to check if ATS is enabled
->   pci: Cache the bus mastering status in the device
->   pci: Add IOMMU operations to get memory regions with PASID
->   intel_iommu: Implement the get_memory_region_pasid iommu operation
->   memory: Store user data pointer in the IOMMU notifiers
->   pci: Add a pci-level initialization function for iommu notifiers
->   atc: Generic ATC that can be used by PCIe devices that support SVM
->   atc: Add unit tests
->   memory: Add an API for ATS support
->   pci: Add a pci-level API for ATS
->   intel_iommu: Set address mask when a translation fails and adjust W
->     permission
->   intel_iommu: Return page walk level even when the translation fails
->   intel_iommu: Add support for ATS
-> 
->  hw/i386/intel_iommu.c          | 125 ++++++--
->  hw/i386/intel_iommu_internal.h |   2 +
->  hw/pci/pci.c                   | 111 ++++++-
->  hw/pci/pcie.c                  |  42 +++
->  include/exec/memory.h          |  51 +++-
->  include/hw/i386/intel_iommu.h  |   2 +-
->  include/hw/pci/pci.h           |  83 ++++++
->  include/hw/pci/pci_device.h    |   1 +
->  include/hw/pci/pcie.h          |   9 +-
->  include/hw/pci/pcie_regs.h     |   5 +
->  system/memory.c                |  21 ++
->  tests/unit/meson.build         |   1 +
->  tests/unit/test-atc.c          | 527 +++++++++++++++++++++++++++++++++
->  util/atc.c                     | 211 +++++++++++++
->  util/atc.h                     | 117 ++++++++
->  util/meson.build               |   1 +
->  16 files changed, 1278 insertions(+), 31 deletions(-)
->  create mode 100644 tests/unit/test-atc.c
->  create mode 100644 util/atc.c
->  create mode 100644 util/atc.h
-> 
-> -- 
-> 2.48.1
+This one seems straight forward but I'd kind of like to know if real systems
+do this (I'll try and find out about ours).  I don't think there is
+any association available between a cpu and and SEA source, so linux at
+least will just go looking for any that are active on each SEA.
+Locking looks fine but it won't help with performance
+
+> >=20
+> > 2:
+> > Another way could be for QEMU to allocate more error status _blocks_
+> > for the only one error source it has now and try to find
+> > empty status block to inject new error(s).
+
+Let me try to get my head around this one...
+
+Each GHESv2 entry points, indirectly, to a single error status block at a t=
+ime
+(only one address to read that from)  Curious quirk is the length for that
+error status block is fixed as that's just a value in GHESv2 not an indirec=
+tion
+via a register - however I think you can just make it 'big'.
+So what I think you are proposing here is that on read_ack write (which we =
+would
+need to monitor for, the value of the error status address register is upda=
+ted
+to point to next one of a queue of error blocks.
+
+That can work.  I'm not sure it actually gets us anything over just queuing=
+ in
+qemu and writing the same error status block.  Those status blocks can cont=
+ain
+multiple Generic Error Data entries, but unless we have a load of them gath=
+ered
+up at time of first notifying the guest, I'm not sure that helps us.
+
+One thing that I'm nervous about is that I can't actually find spec language
+that says that the OS 'must' reread the error status address register on
+each event. That isn't mentioned in the GHESv2 flow description which just =
+says:
+"
+These are the steps the OS must take once detecting an error from a particu=
+lar GHESv2 error source:
+=E2=80=A2 OSPM detects error (via interrupt/exception or polling the block =
+status)
+=E2=80=A2 OSPM copies the error status block
+=E2=80=A2 OSPM clears the block status field of the error status block
+=E2=80=A2 OSPM acknowledges the error via Read Ack register. For example:
+=E2=80=93 OSPM reads the Read Ack register =E2=80=93> X
+=E2=80=93 OSPM writes =E2=80=93> (( X & ReadAckPreserve) | ReadAckWrite)
+"
+
+The linux code is confusing me, but I think it wonderfully changes
+the fixmap on every access as it needs to do an ioremap type operation
+in NMI conditions.
+
+> >   * it can be saturated with high rate of errors (so what do we do in c=
+ase it happens?)
+
+Make it big :)  But sure big just makes the condition unlikely rather than =
+solving it.
+
+> >   * subject to race between clearing/setting Read ACK
+> >      (maybe it can dealt with that on side by keeping internal read_ack=
+ counter)
+
+I don't think there are any races as long as we update the register only on=
+ clear which
+should I think happen before the next SEA can happen? My understanding, whi=
+ch may
+be wrong, is the OS must just take a copy of the error status block and set=
+ the
+read_ack all in the exception handler.
+
+> >=20
+> > 3:
+> > And alternatively, queue incoming errors until read ack is cleared
+> > and then inject pending errors in one go.
+> > (problem with that is that at the moment QEMU doesn't monitor
+> > read ack register memory so it won't notice guest clearing that)
+
+We'd need to monitor it definitely.  Injecting all we have queued up
+in one go here seems like a reasonable optimization over doing them
+one at a time.
+
+> >=20
+> >=20
+> > Given spec has provision for multiple error status blocks/error data en=
+tries
+> > it seems that #2 is an expected way to deal with the problem.
+> >  =20
+>=20
+> I would say #1 is the ideal model because the read_ack_register is the bo=
+ttleneck
+> and it should be scaled up to max_cpus. In that way, the bottleneck can b=
+e avoided
+> from the bottom. Another benefit with #1 is the error can be delivered im=
+mediately
+> to the vCPU where the error was raised. This matches with the syntax of S=
+EA to me.
+
+I don't think it helps for the bottleneck in linux at least.  A whole bunch=
+ of locks
+are taken on each SEA because of the novel use of the fixmap.  There is onl=
+y one
+VA ever used to access the error status blocks we just change what PA it po=
+ints to
+under a spin lock. Maybe that can be improved on if we can persuade people =
+that error
+handling performance is a thing to care about!
+
+>=20
+> #2 still has the risk to saturate the multiple error status blocks if the=
+re are
+> high rate of errors as you said. Besides, the vCPU where read_ack_registe=
+r is acknoledged
+> can be different from the vCPU where the error is raised, violating the s=
+yntax of
+> SEA.
+>=20
+> #3's drawback is to violate the syntax of SEA, similar to #2.
+>=20
+> However, #2/#3 wouldn't be that complicated to #1. I didn't expect big su=
+rgery to
+> GHES module, but it seems there isn't perfect solution without a big surg=
+ery.
+> I would vote for #1 to resolve the issue from the ground. What do you thi=
+nk, Igor?
+> I'm also hoping Jonathan and Mauro can provide their preference.
+
+Ideally I'd like whatever we choose to look like what a bare metal machine
+does - mostly because we are less likely to hit untested OS paths.
+
+>=20
+> > PS:
+> > I'd prefer Mauro's series being merged 1st (once it's resplit),
+> > for it refactors a bunch of original code and hopefully makes
+> > code easier to follow/extend.
+> >  =20
+>=20
+> Sure. I won't start the coding until the solution is confirmed. All the f=
+ollowup
+> work will base on Mauro's series.
+>=20
+> >> +        bql_lock();
+> >> +    }
+> >> +
+> >> +    if (ret =3D=3D 0) {
+> >> +        kvm_inject_arm_sea(c);
+> >> +    } else {
+> >> +        error_report("Error %d to report memory error", ret);
+> >> +        abort();
+> >> +    }
+> >> +}
+> >> +
+> >>   void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+> >>   {
+> >>       ram_addr_t ram_addr;
+> >> @@ -2387,12 +2411,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int c=
+ode, void *addr)
+> >>                */
+> >>               if (code =3D=3D BUS_MCEERR_AR) {
+> >>                   kvm_cpu_synchronize_state(c);
+> >> -                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, pa=
+ddr, false)) {
+> >> -                    kvm_inject_arm_sea(c);
+> >> -                } else {
+> >> -                    error_report("failed to record the error");
+> >> -                    abort();
+> >> -                }
+> >> +                report_memory_error(c, paddr);
+> >>               }
+> >>               return;
+> >>           } =20
+> >  =20
+>=20
+> Thanks,
+> Gavin
+>=20
+>=20
 
 
