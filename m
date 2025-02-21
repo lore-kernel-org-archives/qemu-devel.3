@@ -4,205 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A1CC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE17C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 06:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlMhG-0007Aq-W4; Fri, 21 Feb 2025 01:39:39 -0500
+	id 1tlMjo-0000Ey-2y; Fri, 21 Feb 2025 01:42:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tlMhC-00077c-W6
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:39:35 -0500
-Received: from smarthost2.eviden.com ([80.78.11.83])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tlMjm-0000ES-R0
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:42:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tlMhA-000421-67
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:39:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1740119972; x=1771655972;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=VcOiNKMRsvqj05lLmJk5LQvqJuZ2hDa/VahqTYMaKQ0=;
- b=oo09X2fKlMOow5nbyG89GcmjTDvLFOSCxr7kBzmJjXH9jlCS8GiB5QFn
- ZPFs6v3Yxm/qhNSRGsSR7ShPzPJwRJhEPx/ZN032hHYehSwxDz23TxPRW
- ZUjKBzXdaAT0b0rLMliuufhGJoRFgDCxmNv3/kGBWOdq3seRh6RknOsLT
- Pfr6wNzJzzv4vcFCu1IuIs68uZ9e2t40f5Kiw7M4z8aafR0MZXj/ucr4s
- 9dQ7V8+AjnLvsjQtzIKB0KkcYKaR6+udkVp6Z0LBK7WYvad3zeGmpuMWd
- +uzLbAAJUMlQ+qhyqjxzI/hFbl/S+Ai7uyCmdLm9LzBSwYqd57F7J31R+ A==;
-X-CSE-ConnectionGUID: JL+o/IBATXWXRFbE5FhVDA==
-X-CSE-MsgGUID: t6Ne+6dFSXKYjBX5RXxagw==
-X-IronPort-AV: E=Sophos;i="6.13,303,1732575600"; d="scan'208";a="31375369"
-X-MGA-submission: =?us-ascii?q?MDFNxOsu7bn6CKxuupU4cHUxgyubhymcFTpFc3?=
- =?us-ascii?q?0OwKmDfESBkHsYs6Tbl+2NPryIjlM3iAyArn4TwbxiSkPqNvXjGvkXBq?=
- =?us-ascii?q?t1om325cRXoSyqiXo19hgrYpnZmbU1eiZrdORqYt10WREqt4S4HUqFIF?=
- =?us-ascii?q?kYP/BAeK1l4JUOb6P/jXuOBQ=3D=3D?=
-Received: from mail-vi1eur02lp2045.outbound.protection.outlook.com (HELO
- EUR02-VI1-obe.outbound.protection.outlook.com) ([104.47.11.45])
- by smarthost2.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 21 Feb 2025 07:39:26 +0100
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F7XCmpIE5ppmG2khoYzL9Woo7EBw7D4rk3QLegM9VT1sESqUyVRZQVNEwBB72YE0Pg0HYP/AaFT2qD6gxLGoItrRr5KgGgphSDLpp90K0uezBsfoe7SJ1YUIxj9OO8iumT6nItehyQmFdzbC3nrns/J/G7fmyA9N2EajWixntHNb+0Dpuotw9lCYkrzwbIOpFRs2Ait9eJvMzk8BzHnDiWWie8riuUdvNVzzyGfpioghl0BYKGlcwxt1iZjHv6DQFnG+jeLjiZoki2pmHSdKaCKo5R1IF0dV0RQbcOhHsyDgPCBeEN6QBomh5OU2xk88ZEqVSn4LS7cdbXG1+d/w0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VcOiNKMRsvqj05lLmJk5LQvqJuZ2hDa/VahqTYMaKQ0=;
- b=JaDhfjw1o7jETrfwMQDHdEOepQBcDd7SAD1jx1tRJiEDovw251Mah0wveRh3B8fBWwyX4n9aZ05D+QFqQKUnV6V73EvjcB+y/G+cfsm/KFAJpR/J5CL6ZxbLRVJm55x8aZKcALkyCPC2GlDNPVm7fVU/F5GZcrh56XJLFcoS09tLnm38LQs+UGyZFw74Hg8pFOBsH0UYeCgS1w6jOmJM0W5lP7/qioXjm46e+f2t8u9IUWxxxVQDnW331yWdnGXr8DtkE9znZpxJUyUM6q41zAVL4Zhobfpsd1N0fwhVgcTUtuhWsubYEcasSUQ5LO8braH5k5dTBcc/2w12uFn/3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VcOiNKMRsvqj05lLmJk5LQvqJuZ2hDa/VahqTYMaKQ0=;
- b=NuQDMGnPu2O0Gy8EqE6i+HeQcNEatR9+Lq52WhFI1uaiUHoNiBMPhlvyoGSeVn1MJ2gGwZPH7dRAzMnOr3Y6gwW7r4eapXyZK9GnDBVFLBSpT8FCszMG2GlWVevQHYLL6CeLN7HFqG59xXKfn2fOV4J3KrFtPe/5LES8bIA5tzbFE2d3ts9d/wdiTM1fu52tNJfEeGkonnd8HdEbFC5jy3XMH0ce2LzwDYhh11h6PwNCnvA73ZmDYLdCe2Ub9HNg7BVcbq1oS/dna9WQCjZZzEJWAPa/iMhCeFS9IEaIUEcVX/oWukUmsq96cbjcV4pMeiW4LTZh45irgfLkHYj2NA==
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by VI1PR07MB6368.eurprd07.prod.outlook.com (2603:10a6:800:141::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.17; Fri, 21 Feb
- 2025 06:39:24 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
- 06:39:24 +0000
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "chao.p.peng@intel.com"
- <chao.p.peng@intel.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH rfcv2 09/20] intel_iommu: Rename
- vtd_ce_get_rid2pasid_entry to vtd_ce_get_pasid_entry
-Thread-Topic: [PATCH rfcv2 09/20] intel_iommu: Rename
- vtd_ce_get_rid2pasid_entry to vtd_ce_get_pasid_entry
-Thread-Index: AQHbgqgFToJBlNc+NEWSd1gF0oByIrNRUUQA
-Date: Fri, 21 Feb 2025 06:39:24 +0000
-Message-ID: <a60c6222-a74e-4e80-91c1-055d1f35d699@eviden.com>
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <20250219082228.3303163-10-zhenzhong.duan@intel.com>
-In-Reply-To: <20250219082228.3303163-10-zhenzhong.duan@intel.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|VI1PR07MB6368:EE_
-x-ms-office365-filtering-correlation-id: 01a3b865-56e7-4bff-7999-08dd52427b1a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|1800799024|376014|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?OU54SmJIYzg1dm4yOFNlcFhuMTJ3b2hzZnFHdG9uNmZvMW8xalhBM0pxSEdn?=
- =?utf-8?B?MmpVQ3FFTE9BdzBsUHN4aDI0THhvTGpuRStiYkIrUDd3bEMzS2FIaDZEYmVr?=
- =?utf-8?B?ek0vY21VWFptM3JJam40dEZ1SDkydy9pZFkzUlZNam4zN0MybHFvR2hjdHZa?=
- =?utf-8?B?RTRMVE9WSS91djdPaklVaGtwQ2kzNGtFSU56NUdXVzRFVzlkSkhMQ0ZWdWJM?=
- =?utf-8?B?M053TFJTbC9UZzFSOTAvR0FPVGdhUkZHWm9GaFdDcG9Tdlg5R1dRK3JnbUg4?=
- =?utf-8?B?L2J6Q1BCSzN6dVN4cEJ4OUVvZ2hOb1dybTVjZmo5Sms2SURKYlg4OXJXZHJ6?=
- =?utf-8?B?RGhlWFkxdlRmcEVOeHBlY21RNTlCbnphVERqbXVlbmZkeXMrWHpxOVJxRS9I?=
- =?utf-8?B?NEpiS09PNlIvOUxkc2NRcWcxLy8xRklzemJQN2xZWis5MzZiYitxL1VRcC91?=
- =?utf-8?B?aHBGM1ZCUitvZTNyejlUcVpJM3g5U1JUSE1ybSttdytPZmxQcndkejRZMm1w?=
- =?utf-8?B?Vm15ZklWTUFnNDdpTzFMajhST1hyRjNSUWluUks4bitxNEVKYVl5UVVjcmky?=
- =?utf-8?B?eFNleG10cDBkWXVoRW1kUkhrYUdXUVdyd3ZDMXBsb3A4ZmVsQUNweWFWNll5?=
- =?utf-8?B?d2FxT3Nrb2xPZjdsTk9UNGJ4RnFCeEZ6T3lmeWtWaS9SNTlKeWZkbmJlYVVT?=
- =?utf-8?B?UnRBNE1ES3VPZnNmZEJkNjdtanpZSlJrTUh2cTNpMWg5ZUk1eldNU3UrQWhs?=
- =?utf-8?B?T0RZVklEdW00am1tcFUwRkFIMTNvYzR6emY3ZXRGQlB2U28yNW5Gc1pmN0VK?=
- =?utf-8?B?VUlHUlZuTWJJb1RXb1lVM1dwcDR6c2ZzaEhIMHBlNjNZbXpuMXFBZWZBREw0?=
- =?utf-8?B?cVd4dFBMdEJoU2F0SldpQng1dm5xWjdMbzVTZitKeXVpQkNDWDM2aWt6b3ZY?=
- =?utf-8?B?VDJBMnpxUW0yUjZ5T1ZTRTNreFREdVhVak9STDJxaTBNVnR3VEhGcFl5TUpx?=
- =?utf-8?B?ZExDcGV5eFloaHc0Q0VLZVI3U2RRYWNaMk9EVDZMOVdoVlNxOENteHBmL1Zi?=
- =?utf-8?B?bGJWZzhxZ1FtWXZDUndvSWdta1RSZ1Z2TDRKV3JQZ3gwamFMR1RVb3lyMnlY?=
- =?utf-8?B?MHgrekd4VFY2emZSZHZYTUIxOHBFSVJPMllNbVdFNjlzRkZSaWtjcjRKNi9o?=
- =?utf-8?B?R1NBbTdSb1k1UzdrNnNycm5xM2NXb2FncUVUV25hb2tjME9kMzN4cmhNOG9Z?=
- =?utf-8?B?OHdUK1BpOHJoVXlLSzVSR200Vkg2SUg3eGpHQzZ5WnVYRlFyTGYvbm9uRFZB?=
- =?utf-8?B?TnhZN2svNWc4TThsU1ZFS25lU2NQUGtEN1pDRDNCWnN2eG10SGFNVU82RzlZ?=
- =?utf-8?B?RlFwVTJJUlcvbWwyZ0cxYk10USs0eEJJV25CS2NDTmZqRlQ4d0I5d0FBZ1ht?=
- =?utf-8?B?dEdibjczMUNhaEJxdEZaT1p4dFNyYlE0czdGeStSVGFIREVWODdoeWoxTXl4?=
- =?utf-8?B?WWx1ckRtaGpRWEphRFVzL05DSGZVSTJpdDFiQmZ4Z0dwWkZJRGUxTXdsN3Ra?=
- =?utf-8?B?QzRCelZTdVFsN1ljbkxGUVZCVjBFUVdZQm9MQnd6WnNLYnZPc0Z5emFXVG5S?=
- =?utf-8?B?YUN6VXg1QW5lQW40NUNsYkFiTHovdVhyZzBBYm5NSXhMYVd5Ylovc3MvK0Uz?=
- =?utf-8?B?L2xXYzBlZVdLK1l2REF1VkRRZUhYM3VmVnVhZmJXV0xaS2V3a2RFcnJKb1JQ?=
- =?utf-8?B?Zjk0S1ZQb1NkeUFEelZMeW52WVFlQmFNVEV2RndrVFFidDVFYU9nZ0FtVEl5?=
- =?utf-8?B?eXRvTklZd2J2d1BmcWhVZjFWc0ZyWW1EUnlvV0xZTGxhQjlYZXpuM3o4Z01U?=
- =?utf-8?B?YnRnZUFpa3RYVWdpN29vQmx1N3pCdGV3aWs2YkhMUlFsblpScjUxOVU3dzFL?=
- =?utf-8?Q?DAqh2v8ubroPegeqqzUc3Atv++LZTV5+?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(1800799024)(376014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UW5mMkpRcGxyQlpqcnd6YThUOWljTnVXM0NYU3FQQXN3RlNFdmwxVURtNjYr?=
- =?utf-8?B?TWZuMmt3b0xnL0NUc3k4SHJ6REwybXNDa1REUkhud3RHRjAyakNMWUQydlRV?=
- =?utf-8?B?VDgvZ2dEdTZ5N3BMTFV4SFc1TXRhOG9URlBqSXpMNGdURUFsU0w4WThvVFRr?=
- =?utf-8?B?QUlRYzJrTUVBVlF1bGx1RG9QOE5wUHMzdjJONlhsa1RMUVRrb0hSTjVXVE8v?=
- =?utf-8?B?dzB6OG5rUGJlbUxnMkd3QkNjUWNiYTdWNGRuODhuWG4rRi84M2FNbUFsbDN5?=
- =?utf-8?B?aE00Nzc4cUFrc0lwNTZ2NDlyNE1vaHJVcXovL1E0WXFFM0RVbk1FTC9VQWlz?=
- =?utf-8?B?K3ZmZEVGdS9MNU9FRlRIejYrMzUzUXJqalBCcnZDcDhVakdXNE0xaFJoTEhl?=
- =?utf-8?B?SzUrdm1peEZCWEFVUTlhbzJqVUcyakhtT2N1enR3OHFFRDNoa3pwT2Q1VGJT?=
- =?utf-8?B?M1phRGpEblB1T1VLV1BGbmFQbGxQYVdYQUc5RmZwbVNDblNlK2FmdUF5NkdV?=
- =?utf-8?B?UFZyV0pTN3UwU1hDWEtGWHVGaHRRZ0ZPSFNEL2U4SzNyaVlxSEVDTW9aQUZO?=
- =?utf-8?B?dEkzWFhxQ002Yk1iTFlUcURlMHBZR0dSQWVVR2svQ0V3bHY2d28rNDVlb0J2?=
- =?utf-8?B?Si8ybTVaMXRNdUNQblFDejFGd1kvd01uSU9aU0NNSHQzeWlmU3k1RDVJM1NC?=
- =?utf-8?B?SlNzZUJRWjIwL1lZZTRuUk5SWG1TRTBzN3dEQTlOUzFNS1pnbEFPYUYrNkpH?=
- =?utf-8?B?ejcwN3FQV1U5bEU0NDBBSVhndnkwTmcxSk9pYmpsZnJ3VERrRjJRVGFiMVdM?=
- =?utf-8?B?R3FQZ1R3dkNIZTg0cVJlK2hSSUFxNzF0Y1lUUU1FU2g0eFhJUDdmQ2s5QUNj?=
- =?utf-8?B?WnRrekhMaXNqUmFiKzJOdW4yUUNEaENoaURUMGxjQ1hFT1VkeVZyYWpMWVZ2?=
- =?utf-8?B?QmhkSW1nRFNzeTNkQ1R4ZWc3ZmlvMDJ4ZmlsaVEvRFBTNnVjbVRSYVdUVUtq?=
- =?utf-8?B?cWtEbnZHNzR4YmlYVVh3M0pJNGFoRUpJelVhUVhRd0U4ZXhka2tFQ1ZlNDgr?=
- =?utf-8?B?aUJGVnJXSmRPQnpSYktJYURMQ0hVUGhLUG5xeUpkZ21FeGxSVFZ6RVZCWVpN?=
- =?utf-8?B?YjYwZHBVa3RDSDFNbkM1UlIvWTJRS05IcTlnQ1dEQUVEV295dDVzYWhkbkZI?=
- =?utf-8?B?OEFhc21KUTZCWlltNXo3Z1krY3oyOENLVkowR1l3TThVYlYrUlYyZTltQU9G?=
- =?utf-8?B?Q0NwNkdrdWNOeW84eTRCdVdIekJBRzd5K1RNWk1NVEJ0aHgzUkt1VnhOWS9t?=
- =?utf-8?B?WlBlTXprWE45aUdZbHppamU2cXZDSENNdVlKOS9rVWxydVJSMWVSVVZTbEJU?=
- =?utf-8?B?SkhPN3BWSjRlY1lmbkU4WGdLQkd3TlRSVit5Qzk4R2RCVVlIc2NrYVIzVzAy?=
- =?utf-8?B?RzRxa2Zqa2YxcTdhZXZkNHd5SEMvRTVtamt5eDdtTUlsVEFWbnQvdzk4YUlN?=
- =?utf-8?B?T256WHdrTy9ZVE1lcHE2S0IxSm9XcWp6UlgvbFkvb3MvVHVSM0RmcU5YK2ZV?=
- =?utf-8?B?RnVET2J3RTBFZVZvbGlkbFZRSDYxY1JkMnJPcGR0SFlpVEh1SXhvd1kvdGRT?=
- =?utf-8?B?N1E2VUcvdG1yRlp6NDZWSis3a202NDBtOHM2UkQzTTd5NTNoNGFqK2JkckhF?=
- =?utf-8?B?NklWeVBBUmR1T2gzN2J2dnNXbkQzWHNDLzB3aFBDWVlXNjVjczhHNWRlNTlV?=
- =?utf-8?B?ZHhjNDFCbmN6WjhrY1g4QzFGMnRwNGRxWk5aVTZ6bDNQb1kzV2kyVnlvWkxh?=
- =?utf-8?B?ZU0yVVppS05Palg1T09mOUp3aUlOcnRpOHlZejNyZjI2ZHRtcG1Nc04zLzBt?=
- =?utf-8?B?SWFQcVJqRWY1a01TVWdwMG5JR2NBMjJyVXpVVkM3Rk9hNHZXVTV4TE9kMFpj?=
- =?utf-8?B?bXVwQkpqSHNJd3p6cGErV3BWbWRoRm82REYxdFR3cURWUmhYQ0o1ZjR1Zlk0?=
- =?utf-8?B?UTdxTndOL1JuR1YrdE0zVThhWEJ0VDh4Sko1WWZIVTN0VEV3NkFGcUwvNDVa?=
- =?utf-8?B?N3JzWFZpVVQwM3JwTkpXWldFWGtFT2lTMW1YbjcySjAwZk5kWUdyZi9rMUF0?=
- =?utf-8?B?dVJBOWpLZmxyU2JXVXFzSkJHWnR4b0NrQktadnB2VHFvRitLYk0zSDZIV253?=
- =?utf-8?Q?TluHAUXeQu44jY4Zkt2FfAA=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <0FFDCD1D76BAB5458B9AF58882F17061@eurprd07.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tlMjk-0004bA-C6
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 01:42:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740120128;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z5xrOKTk/iOIzT5yHTkP6mDWeIJ2wo1OMbmZiYJPfGs=;
+ b=QS3SFmfI/uHAy1DGwbwQSKCFkN5Iu/3kdE2PZcI/dTjugTK7IH2uJcZbfCA1A6IXR81vD3
+ BcvlHPa8N2p+LAMA4EjNC/Ew4S87erpJmfqM7GrIcYD5r18smC4lOCgyVwY3GF1TC6Ylnv
+ UF0Sp0MIPLu0cXTBrpkkkm8FNfXQqU4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-R5_ihLPBPzykIQ-bOLWlEQ-1; Fri,
+ 21 Feb 2025 01:42:05 -0500
+X-MC-Unique: R5_ihLPBPzykIQ-bOLWlEQ-1
+X-Mimecast-MFC-AGG-ID: R5_ihLPBPzykIQ-bOLWlEQ_1740120123
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C35A19373DC; Fri, 21 Feb 2025 06:42:02 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 987951955BCB; Fri, 21 Feb 2025 06:42:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EF96D21E6A28; Fri, 21 Feb 2025 07:41:57 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Zhao Liu <zhao1.liu@intel.com>,  Lukas
+ Straub <lukasstraub2@web.de>,  Eduardo Habkost <eduardo@habkost.net>,
+ Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Jason Wang
+ <jasowang@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 00/42] docs: add sphinx-domain rST generator to qapidoc
+In-Reply-To: <CAFn=p-aXKtaiq8LAgTCDRNHU78yv8mBfsbuCkP8Smp=TWDn6jw@mail.gmail.com>
+ (John Snow's message of "Thu, 20 Feb 2025 15:32:10 -0500")
+References: <20250205231208.1480762-1-jsnow@redhat.com>
+ <87wmds4tpk.fsf@pond.sub.org>
+ <CAFn=p-adsVRfMhwEst8iX57OOzNDjLkRHg2SQO7+jLuzfx78fw@mail.gmail.com>
+ <874j0q2hof.fsf@pond.sub.org>
+ <CAFn=p-aXKtaiq8LAgTCDRNHU78yv8mBfsbuCkP8Smp=TWDn6jw@mail.gmail.com>
+Date: Fri, 21 Feb 2025 07:41:57 +0100
+Message-ID: <87o6yvn6iy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 01a3b865-56e7-4bff-7999-08dd52427b1a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 06:39:24.2865 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 1TEZT+7k5yM5SKyH8vh0F5Ic/bVXCBYQMpneO0AlO5hE81Pk8O0E+vTXk2WIzw+LEvI+1Cak9AE7QYLk67dd7fcpgKyCOz7zPbwwZ+q8K/5nUraFoFb91l7SeziBR0KV
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR07MB6368
-Received-SPF: pass client-ip=80.78.11.83;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.eviden.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,66 +100,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UmV2aWV3ZWQtYnk6IENsw6ltZW50IE1hdGhpZXUtLURyaWY8Y2xlbWVudC5tYXRoaWV1LS1kcmlm
-QGV2aWRlbi5jb20+DQoNCk9uIDE5LzAyLzIwMjUgMDk6MjIsIFpoZW56aG9uZyBEdWFuIHdyb3Rl
-Og0KPiBDYXV0aW9uOiBFeHRlcm5hbCBlbWFpbC4gRG8gbm90IG9wZW4gYXR0YWNobWVudHMgb3Ig
-Y2xpY2sgbGlua3MsIHVubGVzcyB0aGlzIGVtYWlsIGNvbWVzIGZyb20gYSBrbm93biBzZW5kZXIg
-YW5kIHlvdSBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+IA0KPiANCj4gSW4gZWFybHkgZGF5
-cyB2dGRfY2VfZ2V0X3JpZDJwYXNpZF9lbnRyeSgpIGlzIHVzZWQgdG8gZ2V0IHBhc2lkIGVudHJ5
-IG9mDQo+IHJpZDJwYXNpZCwgdGhlbiBleHRlbmQgdG8gYW55IHBhc2lkLiBTbyBhIG5ldyBuYW1l
-IHZ0ZF9jZV9nZXRfcGFzaWRfZW50cnkNCj4gaXMgYmV0dGVyIHRvIG1hdGNoIGl0cyBmdW5jdGlv
-bnMuDQo+IA0KPiBObyBmdW5jdGlvbmFsIGNoYW5nZSBpbnRlbmRlZC4NCj4gDQo+IFNpZ25lZC1v
-ZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQo+IC0tLQ0K
-PiAgIGh3L2kzODYvaW50ZWxfaW9tbXUuYyB8IDE0ICsrKysrKystLS0tLS0tDQo+ICAgMSBmaWxl
-IGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1n
-aXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4gaW5k
-ZXggN2ZkZTA2MDNiZi4uZGY1ZmIzMGJjOCAxMDA2NDQNCj4gLS0tIGEvaHcvaTM4Ni9pbnRlbF9p
-b21tdS5jDQo+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0KPiBAQCAtOTQ0LDcgKzk0NCw3
-IEBAIHN0YXRpYyBpbnQgdnRkX2dldF9wZV9mcm9tX3Bhc2lkX3RhYmxlKEludGVsSU9NTVVTdGF0
-ZSAqcywNCj4gICAgICAgcmV0dXJuIDA7DQo+ICAgfQ0KPiANCj4gLXN0YXRpYyBpbnQgdnRkX2Nl
-X2dldF9yaWQycGFzaWRfZW50cnkoSW50ZWxJT01NVVN0YXRlICpzLA0KPiArc3RhdGljIGludCB2
-dGRfY2VfZ2V0X3Bhc2lkX2VudHJ5KEludGVsSU9NTVVTdGF0ZSAqcywNCj4gICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURENvbnRleHRFbnRyeSAqY2UsDQo+ICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBWVERQQVNJREVudHJ5ICpwZSwNCj4g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHBhc2lkKQ0K
-PiBAQCAtMTAyNSw3ICsxMDI1LDcgQEAgc3RhdGljIHVpbnQzMl90IHZ0ZF9nZXRfaW92YV9sZXZl
-bChJbnRlbElPTU1VU3RhdGUgKnMsDQo+ICAgICAgIFZURFBBU0lERW50cnkgcGU7DQo+IA0KPiAg
-ICAgICBpZiAocy0+cm9vdF9zY2FsYWJsZSkgew0KPiAtICAgICAgICB2dGRfY2VfZ2V0X3JpZDJw
-YXNpZF9lbnRyeShzLCBjZSwgJnBlLCBwYXNpZCk7DQo+ICsgICAgICAgIHZ0ZF9jZV9nZXRfcGFz
-aWRfZW50cnkocywgY2UsICZwZSwgcGFzaWQpOw0KPiAgICAgICAgICAgaWYgKHMtPmZsdHMpIHsN
-Cj4gICAgICAgICAgICAgICByZXR1cm4gVlREX1BFX0dFVF9GTF9MRVZFTCgmcGUpOw0KPiAgICAg
-ICAgICAgfSBlbHNlIHsNCj4gQEAgLTEwNDgsNyArMTA0OCw3IEBAIHN0YXRpYyB1aW50MzJfdCB2
-dGRfZ2V0X2lvdmFfYWdhdyhJbnRlbElPTU1VU3RhdGUgKnMsDQo+ICAgICAgIFZURFBBU0lERW50
-cnkgcGU7DQo+IA0KPiAgICAgICBpZiAocy0+cm9vdF9zY2FsYWJsZSkgew0KPiAtICAgICAgICB2
-dGRfY2VfZ2V0X3JpZDJwYXNpZF9lbnRyeShzLCBjZSwgJnBlLCBwYXNpZCk7DQo+ICsgICAgICAg
-IHZ0ZF9jZV9nZXRfcGFzaWRfZW50cnkocywgY2UsICZwZSwgcGFzaWQpOw0KPiAgICAgICAgICAg
-cmV0dXJuIDMwICsgKChwZS52YWxbMF0gPj4gMikgJiBWVERfU01fUEFTSURfRU5UUllfQVcpICog
-OTsNCj4gICAgICAgfQ0KPiANCj4gQEAgLTExMTYsNyArMTExNiw3IEBAIHN0YXRpYyBkbWFfYWRk
-cl90IHZ0ZF9nZXRfaW92YV9wZ3RibF9iYXNlKEludGVsSU9NTVVTdGF0ZSAqcywNCj4gICAgICAg
-VlREUEFTSURFbnRyeSBwZTsNCj4gDQo+ICAgICAgIGlmIChzLT5yb290X3NjYWxhYmxlKSB7DQo+
-IC0gICAgICAgIHZ0ZF9jZV9nZXRfcmlkMnBhc2lkX2VudHJ5KHMsIGNlLCAmcGUsIHBhc2lkKTsN
-Cj4gKyAgICAgICAgdnRkX2NlX2dldF9wYXNpZF9lbnRyeShzLCBjZSwgJnBlLCBwYXNpZCk7DQo+
-ICAgICAgICAgICBpZiAocy0+Zmx0cykgew0KPiAgICAgICAgICAgICAgIHJldHVybiBwZS52YWxb
-Ml0gJiBWVERfU01fUEFTSURfRU5UUllfRkxQVFBUUjsNCj4gICAgICAgICAgIH0gZWxzZSB7DQo+
-IEBAIC0xNTIyLDcgKzE1MjIsNyBAQCBzdGF0aWMgaW50IHZ0ZF9jZV9yaWQycGFzaWRfY2hlY2so
-SW50ZWxJT01NVVN0YXRlICpzLA0KPiAgICAgICAgKiBoYXMgdmFsaWQgcmlkMnBhc2lkIHNldHRp
-bmcsIHdoaWNoIGluY2x1ZGVzIHZhbGlkDQo+ICAgICAgICAqIHJpZDJwYXNpZCBmaWVsZCBhbmQg
-Y29ycmVzcG9uZGluZyBwYXNpZCBlbnRyeSBzZXR0aW5nDQo+ICAgICAgICAqLw0KPiAtICAgIHJl
-dHVybiB2dGRfY2VfZ2V0X3JpZDJwYXNpZF9lbnRyeShzLCBjZSwgJnBlLCBQQ0lfTk9fUEFTSUQp
-Ow0KPiArICAgIHJldHVybiB2dGRfY2VfZ2V0X3Bhc2lkX2VudHJ5KHMsIGNlLCAmcGUsIFBDSV9O
-T19QQVNJRCk7DQo+ICAgfQ0KPiANCj4gICAvKiBNYXAgYSBkZXZpY2UgdG8gaXRzIGNvcnJlc3Bv
-bmRpbmcgZG9tYWluIChjb250ZXh0LWVudHJ5KSAqLw0KPiBAQCAtMTYxMSw3ICsxNjExLDcgQEAg
-c3RhdGljIHVpbnQxNl90IHZ0ZF9nZXRfZG9tYWluX2lkKEludGVsSU9NTVVTdGF0ZSAqcywNCj4g
-ICAgICAgVlREUEFTSURFbnRyeSBwZTsNCj4gDQo+ICAgICAgIGlmIChzLT5yb290X3NjYWxhYmxl
-KSB7DQo+IC0gICAgICAgIHZ0ZF9jZV9nZXRfcmlkMnBhc2lkX2VudHJ5KHMsIGNlLCAmcGUsIHBh
-c2lkKTsNCj4gKyAgICAgICAgdnRkX2NlX2dldF9wYXNpZF9lbnRyeShzLCBjZSwgJnBlLCBwYXNp
-ZCk7DQo+ICAgICAgICAgICByZXR1cm4gVlREX1NNX1BBU0lEX0VOVFJZX0RJRChwZS52YWxbMV0p
-Ow0KPiAgICAgICB9DQo+IA0KPiBAQCAtMTY4Nyw3ICsxNjg3LDcgQEAgc3RhdGljIGJvb2wgdnRk
-X2Rldl9wdF9lbmFibGVkKEludGVsSU9NTVVTdGF0ZSAqcywgVlREQ29udGV4dEVudHJ5ICpjZSwN
-Cj4gICAgICAgaW50IHJldDsNCj4gDQo+ICAgICAgIGlmIChzLT5yb290X3NjYWxhYmxlKSB7DQo+
-IC0gICAgICAgIHJldCA9IHZ0ZF9jZV9nZXRfcmlkMnBhc2lkX2VudHJ5KHMsIGNlLCAmcGUsIHBh
-c2lkKTsNCj4gKyAgICAgICAgcmV0ID0gdnRkX2NlX2dldF9wYXNpZF9lbnRyeShzLCBjZSwgJnBl
-LCBwYXNpZCk7DQo+ICAgICAgICAgICBpZiAocmV0KSB7DQo+ICAgICAgICAgICAgICAgLyoNCj4g
-ICAgICAgICAgICAgICAgKiBUaGlzIGVycm9yIGlzIGd1ZXN0IHRyaWdnZXJhYmxlLiBXZSBzaG91
-bGQgYXNzdW10IFBUDQo+IC0tDQo+IDIuMzQuMQ0KPiANCg==
+John Snow <jsnow@redhat.com> writes:
+
+> On Wed, Feb 19, 2025 at 8:22=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > "The text handler you add looks just like the existing latex handler. =
+Does
+>> > LaTeX output lack "little headings", too?"
+>> >
+>> > Yes, almost certainly. Can you let me know which output formats we act=
+ually
+>> > "care about"? I'll have to test them all.
+>>
+>> As far as I can tell, our build system runs sphinx-build -b html and -b
+>> man.
+>>
+>> I run it with -b text manually all the time to hunt for and review
+>> changes in output.  I'd prefer to keep it working if practical.
+>>
+>> For what it's worth, there is a bit of LaTeX configuration in
+>> docs/conf.py.
+>>
+>> >                                           In the meantime, I upgraded =
+my
+>> > patch so that the text translator properly handles branches with headi=
+ngs
+>> > that delineate the different branches so that the text output is fully
+>> > reasonable. I will need to do the same for any format we care about.
+>> >
+>> > I've re-pushed as of "about 30 minutes before I wrote this email" --
+>> > https://gitlab.com/jsnow/qemu/-/commits/sphinx-domain-blergh2
+>> >
+>> > This branch includes the text generator fixes (which technically belong
+>> > with the predecessor series we skipped, but I'll refactor that later.)
+>> > it also includes fixes to the branch inliner, generated return stateme=
+nts,
+>> > and generated out-of-band feature sections.
+>>
+>> I'll fetch it, thanks!
+>>
+>> > (Long story short: inserting new sections in certain spots was broken
+>> > because of cache. Oops. We can discuss more why I wrote that part of t=
+he
+>> > code like I did in review for the patch that introduced that problem. =
+It's
+>> > the "basic inliner" patch.)
+>> >
+>> > Below, I'm going to try a new communication approach where I explicitl=
+y say
+>> > if I have added something to my tasklist or not so that it's clear to =
+you
+>> > what I believe is actionable (and what I am agreeing to change) and wh=
+at I
+>> > believe needs stronger input from you before I do anything. Apologies =
+if it
+>> > seems a little robotic, just trying new things O:-)
+>> >
+>> > On that note: not added to tasklist: do we need the LaTeX handler? Do =
+we
+>> > need any others? Please confirm O:-)
+>>
+>> See above.
+>>
+>
+> I've got html and text working, text wasn't hard. I will give it a good
+> college try on the LaTeX and man formats. Might be easy. The issue here is
+> the custom node I introduced for the collapsible details sections which h=
+as
+> no default handler in the generators. I'll have to learn more about that
+> part of the API, I haven't interfaced with it much yet.
+
+Understand.
+
+Have you considered cutting the series in half before the inliner?
+First part emits "The members of ..." like the old doc generator.
+Second part replaces that with inlined material.
+
+We could totally release with just the first half!  Inlining is great,
+but even without it, your work looks so much better and is so much more
+usable.
+
+>> > On Fri, Feb 14, 2025 at 7:05=E2=80=AFAM Markus Armbruster <armbru@redh=
+at.com> wrote:
+>> >
+>> >> I started to eyeball old and new generated output side by side.
+>> >>
+>> >> New table of contents shows one level, old two.  No objection; the
+>> >> navigation thingie on the left is more useful anyway.
+>> >>
+>> >
+>> > Unintentional, but if you like it, it's fine by me. Nothing added to my
+>> > tasklist.
+>>
+>> Mention in a commit message.
+>>
+>
+> Sure. I... just need to figure out which commit to mention it in. Added to
+> my list, anyway.
+>
+>
+>>
+>> >> The new generator elides unreferenced types.  Generally good, but two
+>> >> observations:
+>> >>
+>> >> * QapiErrorClass is unreferenced, but its members are mentioned in
+>> >>   Errors sections.  QapiErrorClass serves as better than nothing error
+>> >>   code documentation, but it's gone in the new doc.  So this is a min=
+or
+>> >>   regression.  We can figure out what to do about it later.
+>> >>
+>> >
+>> > Right. I debated making the members references to that class, but reca=
+lled
+>> > that you disliked this class and figured you'd not like such a change,=
+ so I
+>> > just left it alone. I do not have cross-references for individual memb=
+ers
+>> > of objects at all yet anyway, so this is definitely more work regardle=
+ss.
+>> >
+>> > We could always create a pragma of some sort (or just hardcode a list)=
+ of
+>> > items that must be documented regardless of if they're referenced or n=
+ot.
+>> > Please let me know your preference and I will add a "ticket" on my per=
+sonal
+>> > tasklist for this project to handle that at /some point/. Nothing adde=
+d to
+>> > my tasklist just yet.
+>>
+>> Suggest to add something like "compensate for the loss of QapiErrorClass
+>> documentation in the QEMU QMP Reference Manual".
+>>
+>
+> Got it. Possibly a "for later" task but not much later. It can always come
+> after this first series, but before we "turn on" the new generator, if th=
+at
+> makes sense. Just so we reach a quiescent point and flush the staggeringly
+> large queue.
+
+I think we could even do it after "turn on".  Yes, it's a small
+regression, but I believe the improvements are big enough to outweigh
+small regressions like this one.
+
+> I guess what I mean is: "Let's make sure what I've got here so far is good
+> first, and then I'll start adding stuff."
+
+[...]
+
+>> >> The new doc's headings use "Struct" or "Union" where the old one uses
+>> >> just "Object".  Let's keep "Object", please.
+>> >>
+>> >
+>> > I was afraid you'd ask for this. OK, I think it's an easy change. Can I
+>> > keep the index page segmented by object type still, though?
+>> >
+>> > I do find knowing the *type* of object to be helpful as a developer,
+>>
+>> Can you explain why and how struct vs. union matters to you as a
+>> developer?
+>>
+>
+> I suppose it's just internal details that I like to know, but tend to find
+> the HTML reference easier to work with than grepping through the qapi
+> files. I'm gonna change it for you anyway because I agree it's not
+> consistent with the philosophy of "end user QMP reference". Just feels li=
+ke
+> a tiny shame somehow.
+>
+>
+>>
+>> > though
+>> > I understand that from the point of view of a QMP user, they're all ju=
+st
+>> > objects, so your request makes sense.
+>>
+>> I'd prefer a single index.
+>>
+>
+> So ... structs, unions, alternates all condensed down to "Object", is that
+> right? We get to keep command/enum/event separate, I assume.
+
+No, only structs and unions are "Object", alternates are "Alternate".
+
+For me, the separation between struct and union is an unfortunate
+remnant of somewhat winding development history.
+
+A union is has common members, one of them is the tag, and for each tag
+value, it may have variant members.
+
+A struct is a degenerate union: no variants.
+
+This is as old as the hills: Pascal records are just like this.
+
+QMP introspection doesn't show structs and unions, just objects, which
+may or may not have variants.
+
+The schema language syntax, however, is still rooted (stuck?) in a past
+when unions could not have common members other than the tag.
+
+[...]
+
+>> >> The new doc doesn't show non-definition conditionals, as mentioned in
+>> >> the cover letter.  It shows definition conditionals twice.  Once shou=
+ld
+>> >> suffice.
+>> >>
+>> >
+>> > Known/intentional issue. I couldn't decide where I wanted it, so I put=
+ it
+>> > in both places. If you have a strong opinion right now, please let me =
+know
+>> > what it is and I'll take care of it, it's easy - but it's code in the
+>> > predecessor series and nothing to do with qapidoc, so please put it ou=
+t of
+>> > mind for now.
+>> >
+>> > If you don't have strong feelings, or you feel that the answer may dep=
+end
+>> > on how we solve other glaring issues (non-definition conditionals), le=
+t's
+>> > wait a little bit before making a decision.
+>> >
+>> > Added to tasklist: "Remove the duplication of definition conditionals";
+>> > left unspecified is how or in what direction :)
+>>
+>> ACK
+>>
+>> I'll try to make up my mind :)
+>>
+>
+> I should also point out, this is an issue in the domain and not the
+> generator; the generated rst document doesn't have this duplication. So
+> it's kind of a no-op while we look and consider this specific series, but
+> it's still on my list when we go to look at the predecessor series.
+
+Understood.
+
+[...]
+
 
