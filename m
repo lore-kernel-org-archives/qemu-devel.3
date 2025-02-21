@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB658C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFC0C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS4U-0006ay-6R; Fri, 21 Feb 2025 07:23:58 -0500
+	id 1tlS8i-00086a-PF; Fri, 21 Feb 2025 07:28:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4R-0006RO-52
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4P-00077W-9C
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140632;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c79lvmIC7XDPg0zQTrgvrz5zU+cAN9dA2+2j0QFPSdk=;
- b=Flxpt4746WcjCc253L/Df3CT0ZV8OYmtNVm0auDyUfaN0i8B+ZTwNGTeD4s58pbDHFepld
- sVdQ+lqRV4CcPVl8/PC+wgBRMyEjq5lXrr50btJCV99NZjCZmySL0v4Xmc/A1nzww+WdZq
- HdROjyBIEzsn6IU7bOnyUNhN5SR6y8I=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-119-jA0_JEeyOIqs4NYyvnzHGw-1; Fri, 21 Feb 2025 07:23:51 -0500
-X-MC-Unique: jA0_JEeyOIqs4NYyvnzHGw-1
-X-Mimecast-MFC-AGG-ID: jA0_JEeyOIqs4NYyvnzHGw_1740140630
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f3bac2944so926905f8f.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tlS78-0006GM-53
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:43 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tlS75-0007ZF-TU
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:41 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-220f4dd756eso39399295ad.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:26:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1740140797; x=1740745597; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RcXDBri0g1fUiIwIh0GNJUeIssgoJJnkBzPq36LziBM=;
+ b=fnhiyTEYh4WO5hP+oYnYevI6e+EM58N24CMJzarTJ0m952B0qbBEAbZtwnCWF5RI60
+ HFS8i98fa9haPzQpld7NLuo7R/Gl6K22CxwaIeiNvMQuf1Chk0JiSpCSz7ZLA5YUmqtJ
+ f61LOAeP6IgVqsb87lSzA5LHe0cC0/oJiZNQnQfdxeHv8f2oOr0U+28a8mP/rQvyXM2V
+ zTsxZcuulWU2y6z0NeAV7X7UdtNLIHN7LcaXx1X1UldhEqmdSstgwVnFhiqOzRv5qV7E
+ /UismeJl7IfjeoGG/5Hpxb4dRLpikpozMdrVls7efO5pTsfVgqSmeAWVN/7Ye/WWtguT
+ i99g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140629; x=1740745429;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c79lvmIC7XDPg0zQTrgvrz5zU+cAN9dA2+2j0QFPSdk=;
- b=CfZISjmOHpKlfbXXYfN7/QU0u+YOa9dZ0c6ahqckC+iKqhEU1l7fIwNSoiaCMXQdm0
- 5sp6ogx50HjuD5HeKd6O5NKBb0C4uHD72Rw/mFEBcez0NhgSQCYahoOSej6WhcPHINUu
- zPAm+lm3XIkQ/1MBXWVMBwKM1hvhn3+nJs5WzSf60QlB/xRyQM7WMO6BjO1Ye6+ZTGdQ
- oG1ax/n+bjl8cji49BsCW8lpmBpg9qhTZDOIqxQbVELbLXfJjgJxSQSlbVJaGTqsB5Cs
- 4IAmybenlgqQ33eP7xTnM60vD/pgFyPeu3e/yLm1X2xYwGUNGMzljGSheLtcPbIERifd
- 3YVA==
-X-Gm-Message-State: AOJu0Yx85q+Gm0RwVcyrSi32uF1KZ0GqukBtVTC1d252ZFDOuQw+NZqk
- F/2DrM9dP3rN7LyebadZpKcjUXiel29hMbhtckq5MzDUjGsgtLPSjnRU7su2UvqgIMrIZSiglqw
- ROde0E8BsCdmcaLcbhO/frMETpCRd+uXZ12I20ksOTaR4elBTTJX1rRl0V1xInYGN9mOqbEqUVB
- F2T8b0bEjXiEafDEA8jOJSixqtYcxzvQ==
-X-Gm-Gg: ASbGncs/SKDdf5ijFWvYV8V5Asufju5hOg9DP9eP0WU8SJfGol7jmDfUFohOPP01tbn
- uXzuToxlEamrbGoBNKJUYF4mKG0arsYeqDKACIkv29B+jL7OK/e4/B8wVKKNEcAs7Y5H6fCI3/N
- b53DWhbrI9/Ft5ojk3S2kt38giiSmRQq0Ub2aC+MRwDhgC9wy594LS6CELhN3XUkV/ilYkHGxLJ
- 1gYz/k9FCCD8WCLXrDFF9yCQH8ENmM8MdexnaJrWN74HPdnr8Rr06sayrU90yJa5nolL6OQm26s
- YhAnBg==
-X-Received: by 2002:a5d:5f52:0:b0:38d:d387:166 with SMTP id
- ffacd0b85a97d-38f6f0b17e2mr2388945f8f.34.1740140629686; 
- Fri, 21 Feb 2025 04:23:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IETYIuEHMaRoMdATYfo+tF0vwvnWwY+dv7D1Lu6nfQZJBD2wIWuRw/G0FlD/TkmWe8mw1DbCA==
-X-Received: by 2002:a5d:5f52:0:b0:38d:d387:166 with SMTP id
- ffacd0b85a97d-38f6f0b17e2mr2388922f8f.34.1740140629274; 
- Fri, 21 Feb 2025 04:23:49 -0800 (PST)
-Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259d5ee2sm22963814f8f.80.2025.02.21.04.23.47
+ d=1e100.net; s=20230601; t=1740140797; x=1740745597;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RcXDBri0g1fUiIwIh0GNJUeIssgoJJnkBzPq36LziBM=;
+ b=abhghINJpKRFgy3oDT5e0+uLIvsTjXNzOMiBjNt9yExVas0SoAC9g8eSTO0XKr8Ut+
+ 7TYC3zbhWEPDyXS2uVfr3I/yLJUVxwoyRtS53Q/qtsUHdttaH1LypYDzciKzL2Lz0aBT
+ Y7ThlE78BmzFRahWs1dQZW+f/4DI6r/Wve/FbYZQAiYPZA/ELVILcREpSdLKyQC8ub47
+ UDNOv0c3b+T4UFpn3ldSnCM8Ims0occBAXnPAZBhWZOLLFC5sjrMuQ1vQBYKqZfrl6jI
+ t8b9UyDyRxmgzHlAka3lTem3ULsjn2Ud8ySlFwkaWogMQR5yU6TP9nUTPd7ifaj3o+Ns
+ ebJQ==
+X-Gm-Message-State: AOJu0YzC+5FCCzGD8T1SA3d5tv+h2+RtYZK+/+i042HzUiN1JOKmWRTN
+ zruj+/e8cQLbHQkXVg5ByPZH/4ZtpJ+g9KTnxkO3k5wZiOt1uke1QVqhKo6LP9VVUXpG3ey2v7H
+ 6
+X-Gm-Gg: ASbGncsajtaKTo2jcgHSWk8t/Hbr0rMsY5POcDE8DqwIKUp2trypSiAKa/ZRGZSvoLf
+ E+FJKjLI7ghtvXPKuL+8LuBLAinNcmF9MokqhZSWx3pXFUrRQ6YxAnT2H2uYQoU0lVTh2LUCpJH
+ pB0ZME0HpX9PlRIep/MtpQCScx40s19KShaXDHf9uk7uuGLn+O3IvzANtAv5IrdeAH7ooWMQ/nO
+ DBqPQ83fEFMQ1rT3ek9k1dYKXn2N96wATMvFCZilZTmtXzUwIbARHARzfK8QKkqczmUIQ5FG+1F
+ tFgPXJHkBXIulHmwt8EiGi6nXIjXisGiRwBbTpRtC99wzlKXYnZHZg==
+X-Google-Smtp-Source: AGHT+IFV3tYjCFqEm2Jkp3XNzl1+zGp+f3P76lLYF/zVrUOLK3V8yvV1pSnoYT1DgmfgE5yXlZwhFA==
+X-Received: by 2002:a17:902:e5d0:b0:21f:5cd8:c67 with SMTP id
+ d9443c01a7336-2219ff5f44amr43503845ad.31.1740140797052; 
+ Fri, 21 Feb 2025 04:26:37 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com ([187.11.154.120])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-220d545e39bsm137349855ad.124.2025.02.21.04.26.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:23:48 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:23:46 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ Fri, 21 Feb 2025 04:26:36 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Li Zhijian <lizhijian@fujitsu.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 22/41] hw/mem/cxl_type3: Fix special_ops memory leak on
- msix_init_exclusive_bar() failure
-Message-ID: <06953e7e5ea5e8fa0b7b704bdb66ab1e62f1f378.1740140520.git.mst@redhat.com>
-References: <cover.1740140520.git.mst@redhat.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 2/3] target/riscv/kvm: add kvm_riscv_reset_regs_csr()
+Date: Fri, 21 Feb 2025 09:26:22 -0300
+Message-ID: <20250221122623.495188-3-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250221122623.495188-1-dbarboza@ventanamicro.com>
+References: <20250221122623.495188-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1740140520.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,61 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+We're setting reset vals for KVM csrs during kvm_riscv_reset_vcpu(), but
+in no particular order and missing some of them (like env->mstatus).
 
-Address a memory leak issue by ensuring `regs->special_ops` is freed when
-`msix_init_exclusive_bar()` encounters an error during CXL Type3 device
-initialization.
+Create a helper to do that, unclogging reset_vcpu(), and initialize
+env->mstatus as well. Keep the regs in the same order they appear in
+struct kvm_riscv_csr from the KVM UAPI, similar to what
+kvm_riscv_(get|put)_regs_csr are doing. This will make a bit easier to
+add new KVM CSRs and to verify which values we're writing back to KVM
+during vcpu reset.
 
-Additionally, this patch renames err_address_space_free to err_msix_uninit
-for better clarity and logical flow
-
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20250203161908.145406-4-Jonathan.Cameron@huawei.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- hw/mem/cxl_type3.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/riscv/kvm/kvm-cpu.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 4775aab0d6..ff6861889b 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -893,7 +893,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     /* MSI(-X) Initialization */
-     rc = msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4, NULL);
-     if (rc) {
--        goto err_address_space_free;
-+        goto err_free_special_ops;
-     }
-     for (i = 0; i < CXL_T3_MSIX_VECTOR_NR; i++) {
-         msix_vector_use(pci_dev, i);
-@@ -907,7 +907,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
-     cxl_cstate->cdat.private = ct3d;
-     if (!cxl_doe_cdat_init(cxl_cstate, errp)) {
--        goto err_free_special_ops;
-+        goto err_msix_uninit;
-     }
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 484b6afe7c..f14fcc58bb 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -605,6 +605,19 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+     return ret;
+ }
  
-     pcie_cap_deverr_init(pci_dev);
-@@ -943,10 +943,10 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
++static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
++{
++    env->mstatus = 0;
++    env->mie = 0;
++    env->stvec = 0;
++    env->sscratch = 0;
++    env->sepc = 0;
++    env->scause = 0;
++    env->stval = 0;
++    env->mip = 0;
++    env->satp = 0;
++}
++
+ static int kvm_riscv_get_regs_csr(CPUState *cs)
+ {
+     CPURISCVState *env = &RISCV_CPU(cs)->env;
+@@ -1609,14 +1622,8 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
+     env->pc = cpu->env.kernel_addr;
+     env->gpr[10] = kvm_arch_vcpu_id(CPU(cpu)); /* a0 */
+     env->gpr[11] = cpu->env.fdt_addr;          /* a1 */
+-    env->satp = 0;
+-    env->mie = 0;
+-    env->stvec = 0;
+-    env->sscratch = 0;
+-    env->sepc = 0;
+-    env->scause = 0;
+-    env->stval = 0;
+-    env->mip = 0;
++
++    kvm_riscv_reset_regs_csr(env);
+ }
  
- err_release_cdat:
-     cxl_doe_cdat_release(cxl_cstate);
--err_free_special_ops:
-+err_msix_uninit:
-     msix_uninit_exclusive_bar(pci_dev);
-+err_free_special_ops:
-     g_free(regs->special_ops);
--err_address_space_free:
-     if (ct3d->dc.host_dc) {
-         cxl_destroy_dc_regions(ct3d);
-         address_space_destroy(&ct3d->dc.host_dc_as);
+ void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
 -- 
-MST
+2.48.1
 
 
