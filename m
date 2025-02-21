@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3FCC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4EAC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS44-0005RF-Aj; Fri, 21 Feb 2025 07:23:32 -0500
+	id 1tlS4z-0008Ae-B5; Fri, 21 Feb 2025 07:24:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS41-0005MZ-Q8
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:29 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4k-0007PL-GA
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS40-000751-6J
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:29 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4h-0007Ac-1a
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140607;
+ s=mimecast20190719; t=1740140650;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vVk3p3HEep2LyPnlOovtQs5KCaYeb3tyVgIY2zzDrbw=;
- b=JbQkl58x0gOei1g+BTXdnn8T2sIuDY5FnTqx+E/VjIq1Hn3iBWR31isyZ9XYMDWl1DC+wb
- +33llT3Tf33bEN4YTqO3hGatdvBwt64yfgCiMM1YvKZEH3FKNExjkBgNNxUuIvahT8fonE
- 34uWcZt+jwLeAj9VmcxQ1Fz19CsPtC8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dxfWHzt9iN+96ZxAmV4fASWczS4ot0QMavailc7mYDI=;
+ b=DJgxk7Bohn9m7qvVVDwvRSuS1ZwSQRGDaiXcB5uQPGvdYRTZFWkkm8mf1bW12N9aN1LHcF
+ 3h7W0y6M49zBcJ0mm8oHLn90dxhxjdz+NXgxqbi4qsADzkVbXXaWU/GYhX40icGabwswym
+ ixc/Xs2E9+VxFZ6fF0ohWB85cIsZ0mk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-nGSEFI0FMl6MNVwitmIo1Q-1; Fri, 21 Feb 2025 07:23:26 -0500
-X-MC-Unique: nGSEFI0FMl6MNVwitmIo1Q-1
-X-Mimecast-MFC-AGG-ID: nGSEFI0FMl6MNVwitmIo1Q_1740140605
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43995bff469so22355325e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:25 -0800 (PST)
+ us-mta-610-MJjZAXcVNqK-qcN41WAz9w-1; Fri, 21 Feb 2025 07:24:08 -0500
+X-MC-Unique: MJjZAXcVNqK-qcN41WAz9w-1
+X-Mimecast-MFC-AGG-ID: MJjZAXcVNqK-qcN41WAz9w_1740140647
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43947a0919aso18741485e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140604; x=1740745404;
+ d=1e100.net; s=20230601; t=1740140647; x=1740745447;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vVk3p3HEep2LyPnlOovtQs5KCaYeb3tyVgIY2zzDrbw=;
- b=RUWlVl3lLstytF9M78RMIfPkcMaJlVWJALBEWlgqgGxfEqUs7HEMy9t0HNUgY/Eybi
- 0POUPcnI9L5+Yp+Ply3KNsTBD6zV72180BZmwZCdZqvgw03syB2GiiK60+a99Lkqqq7v
- tGXnDJQ/PdNY7+i44r8sw0kebRWclQKmf2XTPsfPiHh/Xwul6bGyKFD/Pxgj5S9Own3V
- eoMIw0+I9vgenBYe5FACFOBw3VRYpec5cxiXq0tHuXyXJdMQVrwuMo3qkhIwY085o5ia
- LJ2EkuJi7zA8GN+txisv0p6NUd3YAxqqFgKvrs+n/Ni1UaaWpvXs9j2tuQw4uj5hP0ax
- GCvg==
-X-Gm-Message-State: AOJu0Yy8Iuzcda0DjWDqf/kEXMuR9+TpVs8TCyiCO85cDY0ewnhVJz7c
- xyREPKD+ejNYxi3NK4t5YE96b56wlsjCI7TZpz57mCl9nCN5I5Fq0gwzl2xu6NmtWwtvLykvcE4
- UDxgKhdAq0cPiGUw33AZAGHn+9oSLoxuDJt7mxRyp6GDfmTrbnXARjqIT9zZs+TmcyT+k7Avlyg
- I6uADt9kYe4z1OhFzezYFXYpZjy2Lcjw==
-X-Gm-Gg: ASbGncuAE2R6fOt6YXM9XzmbRqeL23+nOEcdAZswyAOoEjX5P1RnQjtaIUUBtrqlW3E
- LaVkhica9OFEjPaFTxz5IR+ep9thTwIPYjvqFbPqtakAGVx/rFvw36P4PVxDvggdUup71IIVUl6
- 9Pxr4EoToaXS8mDMv7SKNH//cLlhIt2ThdbcCPpK6dK5XRqCGM5USxQgA0fbTo3vxjonr+gXUFM
- GO0j+GVTUCGiIchkgkT/LVGcZc0F1EfXAJW9juo6xYFtqzpqdfJLwZpWGZk3iScPiWOcV+hL1+d
- JE66kQ==
-X-Received: by 2002:a05:600c:358c:b0:439:84ba:5760 with SMTP id
- 5b1f17b1804b1-439aeae1c8bmr23195015e9.5.1740140604437; 
- Fri, 21 Feb 2025 04:23:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7dZXy/S/F+QfB+XB0iaRszV02y5v1dVz9dhh8IXaoCTwnbIMIBkhRjQXTIxb1MVLGBGUMtA==
-X-Received: by 2002:a05:600c:358c:b0:439:84ba:5760 with SMTP id
- 5b1f17b1804b1-439aeae1c8bmr23194645e9.5.1740140603941; 
- Fri, 21 Feb 2025 04:23:23 -0800 (PST)
+ bh=dxfWHzt9iN+96ZxAmV4fASWczS4ot0QMavailc7mYDI=;
+ b=cltvu6UTGQflsOQh0bVhMCq9UOv5BIUTidmUoZjv3WyEd3Cgh3sJpBnje9vdOTB1lT
+ GywPCn72XlO032takYvzrFyeN7os7EQpTou+LhrY2QNUUORL8yw9ImtFnLjtk1S+yJr6
+ WQapSE4+0rzessnAkVune4ESoqu+TLA5ntrZFo/wE7PO5+tC1W+4oRtXj3aN/FGJJMI/
+ i2ezG50ObICwksc24/NBnjgiOa9hYC6SSIyh1E3l6/tAbXn4/BX8qYhp1e9S/KRRNtzq
+ MWhCYcr1oUD01BtJJe0f78KH/RIL704p9Lw5dQlNksJy6Dg1qaKD7J/6CN84aiCdxIHT
+ wdJA==
+X-Gm-Message-State: AOJu0YwEFnxQ6uxa5MXuKBZH0d0No8gfJvCQVhXU9OG4I6mSxNjWxzae
+ 8ggGaM4/7iUT6FXwX6DHG19Gko6HKYlbmn+1Gy0qGd3GDC9IUU+NEwrY9P4MBTE8dLfa3r0gC8X
+ 0zxtcTLC8sWYLe6r5a9LeELj9WOd5KaaHjxfw09Kf4SMFxyFSFST8ntaFJZh+6kb/qbZcTTl+0o
+ eZWc++aOyJX1OPtJmfWoKGTle5iRRrdw==
+X-Gm-Gg: ASbGncsLxeiywvQNETO9jbEFlgJuSRXaRuZSfKQPcV2CQBqkRzwPWwyutBRGIKDl/UT
+ LLa538taNATk58T00cqpg1NGw0MCnf6Ul6SnKMVjHDYBzsMVtQp6+wl1aoIsFkg5QZaby1w1LM6
+ YMlgcJSQ0rjs+ivZ80+M3RZFWLjv5dI3uXJFJwM+/gmi/rYjcYjm7V29+DEhcmA/KQFLrol+hBu
+ Yk3KO33mM4J7MVxgZXXGTLTu+jWKHfxCm9urQRJz1JDwoe+1xX+IBFxTAdbB/FqKv9B4xgCUdhj
+ bxbKoQ==
+X-Received: by 2002:a05:600c:45ca:b0:439:9a40:aa0b with SMTP id
+ 5b1f17b1804b1-439ae21e36emr23933785e9.25.1740140646900; 
+ Fri, 21 Feb 2025 04:24:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE++L12GzMimgissjFPBxz51sTR1njhnN+DcWPxHFC8BjJANAvKPaefWVIjCiSosjXHz8lRHg==
+X-Received: by 2002:a05:600c:45ca:b0:439:9a40:aa0b with SMTP id
+ 5b1f17b1804b1-439ae21e36emr23933245e9.25.1740140646422; 
+ Fri, 21 Feb 2025 04:24:06 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce435sm16117715e9.3.2025.02.21.04.23.20
+ 5b1f17b1804b1-439b02ce735sm15860915e9.3.2025.02.21.04.24.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:23:22 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:23:19 -0500
+ Fri, 21 Feb 2025 04:24:05 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:03 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 14/41] qtest/libqos/pci: Do not write to PBA memory
-Message-ID: <9e837c961a883392f8c4707a8d3d2e6c6aa793b6.1740140520.git.mst@redhat.com>
+ Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 27/41] amd_iommu: Use correct bitmask to set capability BAR
+Message-ID: <3684717b7407cc395dc9bf522e193dbc85293dee.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -109,34 +111,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-The PCI Local Bus Specification says the result of writes to MSI-X
-PBA memory is undefined. QEMU implements them as no-ops, so remove
-the pointless write from qpci_msix_pending().
+AMD IOMMU provides the base address of control registers through
+IVRS table and PCI capability. Since this base address is of 64 bit,
+use 32 bits mask (instead of 16 bits) to set BAR low and high.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-Id: <20250117172244.406206-2-npiggin@gmail.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Fixes: d29a09ca68 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250207045354.27329-3-sarunkod@amd.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/libqos/pci.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/i386/amd_iommu.h | 2 +-
+ hw/i386/amd_iommu.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index b23d72346b..a59197b992 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -328,8 +328,6 @@ bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry)
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index e0dac4d9a9..28125130c6 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -187,7 +187,7 @@
+         AMDVI_CAPAB_FLAG_HTTUNNEL |  AMDVI_CAPAB_EFR_SUP)
  
-     g_assert(dev->msix_enabled);
-     pba_entry = qpci_io_readl(dev, dev->msix_pba_bar, dev->msix_pba_off + off);
--    qpci_io_writel(dev, dev->msix_pba_bar, dev->msix_pba_off + off,
--                   pba_entry & ~(1 << bit_n));
-     return (pba_entry & (1 << bit_n)) != 0;
- }
+ /* AMDVI default address */
+-#define AMDVI_BASE_ADDR 0xfed80000
++#define AMDVI_BASE_ADDR 0xfed80000ULL
  
+ /* page management constants */
+ #define AMDVI_PAGE_SHIFT 12
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 98f1209a38..044fe43256 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1593,9 +1593,9 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
+     /* reset AMDVI specific capabilities, all r/o */
+     pci_set_long(pdev->config + s->capab_offset, AMDVI_CAPAB_FEATURES);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_LOW,
+-                 AMDVI_BASE_ADDR & ~(0xffff0000));
++                 AMDVI_BASE_ADDR & MAKE_64BIT_MASK(14, 18));
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_HIGH,
+-                (AMDVI_BASE_ADDR & ~(0xffff)) >> 16);
++                AMDVI_BASE_ADDR >> 32);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_RANGE,
+                  0xff000000);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
 -- 
 MST
 
