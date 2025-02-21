@@ -4,133 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 888A8C021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA671C021B6
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlVA8-0000tS-H6; Fri, 21 Feb 2025 10:42:00 -0500
+	id 1tlVLH-0004g2-VS; Fri, 21 Feb 2025 10:53:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tlVA4-0000pU-9A
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:41:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tlV9y-0002PX-On
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:41:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740152507;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=D8gcfSW++PlYBcLfNdKaTqKSoUwp2J2p+vdlSr+cwe8=;
- b=APTeqZr+kMuMDYyZKq4APQX6xBBYDY+X683YtF+oPNfWIy24bJD5fkM2ViA9s0XTF1kjZ+
- 5P7VIGFgx36RxLLjFu97ID8ppC8N6lJJ/yqzBCFY2+h/F0M9fzmK0qMLZYEyM4/O7ogLoF
- ViLkL+ZqwM8RH1RV7jJqn3bna++yoSQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-UQF2TdCfPV6Ha9SeggUOfA-1; Fri, 21 Feb 2025 10:41:44 -0500
-X-MC-Unique: UQF2TdCfPV6Ha9SeggUOfA-1
-X-Mimecast-MFC-AGG-ID: UQF2TdCfPV6Ha9SeggUOfA_1740152504
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f4e6e004fso1604550f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:41:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
+ id 1tlVLD-0004eZ-Kh
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:53:27 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
+ id 1tlVLB-0004F3-VZ
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:53:27 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4393dc02b78so15878065e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:53:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=embecosm.com; s=google; t=1740153203; x=1740758003; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=B3PN5npkU2fZGy+04m+tjR9ps6/ogxxXtP2BCPt3H5c=;
+ b=cFzQRRi4N+eVrQ7W2LmelQh5uJmtjYhArB/vc1EIoCAyowIa2FMQ3WcHlMyTgQPrrN
+ 9xSAgdJojeJfyJIO6TdYIOXK9L3PCZRsNMAE2k1EX1sz1CxorNPzU8Pl9ui8ubjv9JAF
+ 5mtxs0WLyO2ycnbgVQ6G5FnIxwiRxx9CL/Fj1uBvXq+GwvT03QzD1NfQ7+16XnBIrStP
+ v+6BaezCzXeUTD0eeSpJHZxUODQwKjVwNRjnsob2DV3dBBf+Of4+jTWz6Q0chb2cNjZz
+ HVE5YYN6aTpO2PvEyAZUrpGOvvZki8YlFv1HzlJXefx01DrcxbaTFKRrL8WthSkOVpbB
+ 76DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740152503; x=1740757303;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D8gcfSW++PlYBcLfNdKaTqKSoUwp2J2p+vdlSr+cwe8=;
- b=FaXwJ6/yQbvrWbVr4xnXnkgoFriAm71aJTx6t6kzmhcZ92/8MXyNvGzpEtfRRFAkwx
- sd4oC1qdSu60R57RudTE2O2UpdgsEK5wnaDTH0tj/MAZI3NF7MpQhmFqqhZg0X/vVqmC
- VwzZuJB5kJplXUYoJ2ZjgZhZDDZMPU296PRwD0k9NCEMh9BSXMtHfRHcAjelXVPR4pw4
- oq8ptprIyL6FKXLfldNqUWprnIE2WCUbe5BpeztvHT807DjB+81wiWeXTX+Sp7QWdiqQ
- JZb/ODv0piGso44R/K/juBCeL/3/TKx78g3AUKZdAp33s3jqQfjINhiKiNPJeznrQZk7
- O6VQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkBqBai+Q1CTPNUw2uAKm3QjvkEkwXEK0jz2NHz0qxgPQjdM0808AbFVca675pXnMZaAkYkfCSBWVr@nongnu.org
-X-Gm-Message-State: AOJu0YzZuBO+fRg8SSw0bDAyAMbUJ7llv6lYZvtJI1TfuNzCZWGqvLF5
- Kkj4FgE/Mjs/qTkDhShhDM8Cr60JXQKuKh6Qak2S+hxPKth3bmp3i61ZSIPI19UnMOaGm5Hx41J
- BKT5ttdYBWzJSzHnNMcYFMuGDfz9cod2VMkzfpO+okYeD1wBHO/Zxfgt8klZ4vN8=
-X-Gm-Gg: ASbGncuwJCSdfEckEU3Z9PvJC8yq4yTqNYjRLN/7jc5ED2XPfORNmMsWFm+B9BFSjAx
- IKA1LyjQNoJj7iKCLI+UWGXQF6uO1r+LsYphSqzl47/30LclkMOwOkqkSFqkRHcJdKQhcpLEp1o
- Q1mLLDeBOmmN6mK8V/U8++mpwo3OZYLsiqu6weqoj7VKrKqI8qtE7H2+620IF1kZqG5eNLxrsbm
- nZ3IyQ5co/BQCPGx7fJRwifGXpJqcBiAVYBeWlbol0KNp2ldqVYJ4/S5fYxe/jS8BUKZqO8/gNz
- 8pBPe4JYqx26gdY4EpU=
-X-Received: by 2002:a05:6000:1889:b0:38d:c627:f634 with SMTP id
- ffacd0b85a97d-38f6f0bf363mr3412155f8f.50.1740152503260; 
- Fri, 21 Feb 2025 07:41:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlKbjqBZq9U2vth3lPOrdwr4vsBQVusiXUAMNqXM0U0bOXCeJ7pCAILzs3fZEsSh9jViGuUA==
-X-Received: by 2002:a05:6000:1889:b0:38d:c627:f634 with SMTP id
- ffacd0b85a97d-38f6f0bf363mr3412133f8f.50.1740152502908; 
- Fri, 21 Feb 2025 07:41:42 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.61.185])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38f259f8217sm24029281f8f.90.2025.02.21.07.41.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 07:41:42 -0800 (PST)
-Message-ID: <21c3c655-3676-4bd3-9088-8f266d5dfd3a@redhat.com>
-Date: Fri, 21 Feb 2025 16:41:41 +0100
+ d=1e100.net; s=20230601; t=1740153203; x=1740758003;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B3PN5npkU2fZGy+04m+tjR9ps6/ogxxXtP2BCPt3H5c=;
+ b=O74/iWwgqSheQ1wM4TwmFh0QyOr06b4K2Xg1qW7X7zcQjAeeK3kvlQ09nytx8r1bEh
+ tUq3EmlgixBW3ZObh1OpWB0aeGcJ9zB6th1oZXgoTDsQ0lVdc12xvNIbfMSy+u7/fB2Y
+ B4XNhJJRTEQKdujcX8WVDKcSXZ8Dr0W6LcN5BbYrE918SnHkBk3UyH53kntik2E3I8sn
+ pNpdTkwZ95gVCX/OTslcuj3Y+/hSEGy+ZYuiZ9IzqxdhD5RJaZkXB1jxxwS9KO4xFUbk
+ lIexgh3dJBVtYIXLq1iBGVdQ4eWP68Xsd+i+/TSodicjIPnbMa2Bb0xvLyy8JbWWjEPS
+ Apfg==
+X-Gm-Message-State: AOJu0YxA6M/Ah+KCw5V7B7mLeFmAQdlZreuZ2WTg5G3UPjCFlrWaQVjF
+ KHCiyldXUZ7Vp1vdwqLEdDWGK45HL6qZ+oXGqGI2gn4v10mWwBxko7OB9aT+QJh0Ue6qc3W8xNE
+ Kk1S/aA==
+X-Gm-Gg: ASbGncsDgoi1N37fev+vjtg4llvRoYslZzeweSXJkLNB9nIHH/XzujJ8gELvYYfiGIL
+ o7IPSNfrwdWdosaUmhgnqkWZf/6+dOIPNE50VBT0fK2K9GKuxJYt7R9YnuKj4Z89N/pfnFNuFl3
+ NjfGkrDPwUP2JCWWg0VgK/uVmFPsoQodoZtD0fIZzxPve8WShnYayvWSLObWOQZ58Fki1IS2Gfh
+ vjVlnf8MTuKj6GvjVXBd/05TVy/kUzK2bCW8vtBBcBamVeWNqRTWEN600yM1O2KRvpN4OVnEFpD
+ FOZvmG+7QDnJXAt8cuIFUs1ye6u3vtc5+rH58MCID2KP
+X-Google-Smtp-Source: AGHT+IEerJHl3bzS+gDiBw/erKq8HFLu3r9xjjDGSyr0cSX9FLyOFLWakAGwyFfwwkNstulFt3W8rQ==
+X-Received: by 2002:a5d:64af:0:b0:38f:452f:9f89 with SMTP id
+ ffacd0b85a97d-38f6f0ae2c4mr3715212f8f.50.1740153203292; 
+ Fri, 21 Feb 2025 07:53:23 -0800 (PST)
+Received: from paolo-laptop-amd.. ([2a0e:cb01:d3:f100:1f03:a9f0:23a0:9bda])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f25a0fa1esm23510035f8f.100.2025.02.21.07.53.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Feb 2025 07:53:22 -0800 (PST)
+From: Paolo Savini <paolo.savini@embecosm.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Paolo Savini <paolo.savini@embecosm.com>,
+ Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>,
+ Jeremy Bennett <jeremy.bennett@embecosm.com>,
+ Craig Blackmore <craig.blackmore@embecosm.com>
+Subject: [PATCH 0/1 v2] [RISC-V/RVV] optimize the memory probing for vector
+ fault-only-first loads.
+Date: Fri, 21 Feb 2025 15:53:19 +0000
+Message-ID: <20250221155320.59159-1-paolo.savini@embecosm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 122/162] tcg: Add tcg_gen_addcio_{i32,i64,tl}
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-123-richard.henderson@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250216231012.2808572-123-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=paolo.savini@embecosm.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,107 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ok, this one definitely caught my eye. :)
+This version of the patch addresses the comments from the following review:
 
-On 2/17/25 00:09, Richard Henderson wrote:
-> +        tcg_gen_add_i32(t0, a, b);
-> +        tcg_gen_setcond_i32(TCG_COND_LTU, t1, t0, a);
+https://lore.kernel.org/all/2df9ae98-afb8-4647-be80-12540a1c4612@ventanamicro.com/
 
-Compare against b instead?  If there's an immediate (which could even be
-zero) it is there.
+Previous version:
 
-> +        tcg_gen_add_i32(r, t0, ci);
-> +        tcg_gen_setcond_i32(TCG_COND_LTU, t0, r, t0);
-> +        tcg_gen_or_i32(co, t0, t1);
+- v1: https://lore.kernel.org/all/20250129144435.82451-1-paolo.savini@embecosm.com/
 
-setcond + or can become a movcond:
+The new version:
 
-         /* co = t1 | (r < t0) */
-         tcg_gen_movcond_i32(TCG_COND_LTU, co, r, t0, tcg_constant_i32(1), t1);
+- fixes the "braod" typo in the comment.
+- removes the "probe_size" variable in favour of "elems" that is already used
+  for the same purpose.
+- removes the duplication of the code calculating the page split and adds a
+  separate "addr_i" variable for probing the memory without polluting "addr"
+  used to perform the actual load.
+- multiplies "elems" by "msize" when calling for the memory probing function so
+  that we pass the number of bytes rather then the number of vector elements as
+  that is what the probe function expects.
 
-> +            TCGv_i64 t0 = tcg_temp_ebb_new_i64();
-> +            TCGv_i64 t1 = tcg_temp_ebb_new_i64();
-> +
-> +            tcg_gen_add_i64(t0, a, b);
-> +            tcg_gen_setcond_i64(TCG_COND_LTU, t1, t0, a);
-> +            tcg_gen_add_i64(r, t0, ci);
-> +            tcg_gen_setcond_i64(TCG_COND_LTU, t0, r, t0);
-> +            tcg_gen_or_i64(co, t0, t1);
+We also change the heading from RFC to PATCH.
 
-The same two observations as above apply here, of course.
+I also take the opportunity to thanks Daniel Barboza for the review.
 
-> +            tcg_temp_free_i64(t0);
-> +            tcg_temp_free_i64(t1);
-> +        }
-> +    } else {
-> +        if (tcg_op_supported(INDEX_op_addci, TCG_TYPE_I32, 0)) {
-> +            TCGv_i32 discard = tcg_temp_ebb_new_i32();
-> +            TCGv_i32 zero = tcg_constant_i32(0);
-> +            TCGv_i32 mone = tcg_constant_i32(-1);
-> +
-> +            tcg_gen_op3_i32(INDEX_op_addco, discard, TCGV_LOW(ci), mone);
-> +            tcg_gen_op3_i32(INDEX_op_addcio, discard, TCGV_HIGH(ci), mone);
+Cc: Richard Handerson <richard.henderson@linaro.org>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>
+Cc: Weiwei Li <liwei1518@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Helene Chelin <helene.chelin@embecosm.com>
+Cc: Nathan Egge <negge@google.com>
+Cc: Max Chou <max.chou@sifive.com>
+Cc: Jeremy Bennett <jeremy.bennett@embecosm.com>
+Cc: Craig Blackmore <craig.blackmore@embecosm.com>
 
-This addcio is unnecessary/incorrect.  I think you assume that TCGV_HIGH(ci) = 0,
-since that's what you set it below, and then this you can remove it.
+Paolo Savini (1):
+  target/riscv: optimize the memory probing for vector fault-only-first
+    loads.
 
-But if you really wanted to do it, it should go...
+ target/riscv/vector_helper.c | 91 ++++++++++++++++++++++--------------
+ 1 file changed, 56 insertions(+), 35 deletions(-)
 
-> +            tcg_gen_op3_i32(INDEX_op_addcio, TCGV_LOW(r),
-> +                            TCGV_LOW(a), TCGV_LOW(b));
-
-... here, after the low word is all set, to "OR" the input high-carry into the
-output low-carry.  But again, I think it's not necessary.
-
-> +            tcg_gen_op3_i32(INDEX_op_addcio, TCGV_HIGH(r),
-> +                            TCGV_HIGH(a), TCGV_HIGH(b));
-> +            tcg_gen_op3_i32(INDEX_op_addci, TCGV_LOW(co), zero, zero);
-> +            tcg_temp_free_i32(discard);
-> +        } else {
-> +            TCGv_i32 t0 = tcg_temp_ebb_new_i32();
-> +            TCGv_i32 c0 = tcg_temp_ebb_new_i32();
-> +            TCGv_i32 c1 = tcg_temp_ebb_new_i32();
-> +
-> +            tcg_gen_or_i32(c1, TCGV_LOW(ci), TCGV_HIGH(ci));
-> +            tcg_gen_setcondi_i32(TCG_COND_NE, c1, c1, 0);
-
-Likewise, this shouldn't be needed and you can just add TCGV_LOW(ci)
-below.
-
-> +            tcg_gen_add_i32(t0, TCGV_LOW(a), TCGV_LOW(b));
-> +            tcg_gen_setcond_i32(TCG_COND_LTU, c0, t0, TCGV_LOW(a));
-
-Here you can also change a to b.
-
-> +            tcg_gen_add_i32(TCGV_LOW(r), t0, c1);
-> +            tcg_gen_setcond_i32(TCG_COND_LTU, c1, TCGV_LOW(r), c1);
-> +            tcg_gen_or_i32(c1, c1, c0);
-
-             /* c1 = c0 | (r < ci) */
-             tcg_gen_movcond_i32(TCG_COND_LTU, c1, TCGV_LOW(r), TCGV_LOW(ci), tcg_constant_i32(1), c0);
-
-> +            tcg_gen_add_i32(t0, TCGV_HIGH(a), TCGV_HIGH(b));
-> +            tcg_gen_setcond_i32(TCG_COND_LTU, c0, t0, TCGV_HIGH(a));
-
-Change a to b.
-
-> +            tcg_gen_add_i32(TCGV_HIGH(r), t0, c1);
-> +            tcg_gen_setcond_i32(TCG_COND_LTU, c1, TCGV_HIGH(r), c1);
-> +            tcg_gen_or_i32(TCGV_LOW(co), c0, c1);
-
-+            /* c1 = c0 | (r < c1) */
-+            tcg_gen_movcond_i32(TCG_COND_LTU, c1, TCGV_HIGH(r), c1, tcg_constant_i32(1), c0);
-
-> +            tcg_temp_free_i32(t0);
-> +            tcg_temp_free_i32(c0);
-> +            tcg_temp_free_i32(c1);
-> +        }
-> +        tcg_gen_movi_i32(TCGV_HIGH(co), 0);
-> +    }
-> +}
-> +
->   void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
->                         TCGv_i64 ah, TCGv_i64 bl, TCGv_i64 bh)
->   {
-
+-- 
+2.34.1
 
