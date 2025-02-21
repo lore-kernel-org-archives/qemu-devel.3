@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98DEC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051B2C021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS3o-0004n3-Bw; Fri, 21 Feb 2025 07:23:16 -0500
+	id 1tlS3I-0004Pu-BU; Fri, 21 Feb 2025 07:22:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3f-0004cO-K5
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:08 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3C-0004PD-UL
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3e-00072Z-0i
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:07 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3B-0006yt-89
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140584;
+ s=mimecast20190719; t=1740140554;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3ztxZYHC/wgNt/4DA2+N5Hjvx7lOPTBhePRhwRi2JF0=;
- b=IG20LH4VcfZT+MMehrnkFmcNUwaJ9WS8RDq36ioQLHIlEB3rPHHtAsO3fM0RAp7RDKHOrd
- ID4cJDS75HDhEnvVQBrhwsgWCgG9lSHrxlT3UwJLPe0A1AxqT9v6aYjrUKJwdErS53igFC
- tz7tdCnCncOTH8bYk0yIINCuHyV5Y/A=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aOcHI/6ihrxObB+6D978/KQRlCQdnjX6vRn12oDIrAY=;
+ b=PJlSV4gHVvRzP59pUiPVR8/8RSV+XZFFWyJGAIi1KZBFL6lxYF61H21aYhlzQLiaI64cTh
+ t2C4tOUz3NPTB2EV0n21M81Sy/3xV/n55wRieEp2JHLb//xBDf6j57EayNH/TciQSmQTo8
+ tRLRA4/bnVM/0CdwgFAfwgOGuflhVHA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-dh5asD9iNnWS0b41WCtdSA-1; Fri, 21 Feb 2025 07:23:03 -0500
-X-MC-Unique: dh5asD9iNnWS0b41WCtdSA-1
-X-Mimecast-MFC-AGG-ID: dh5asD9iNnWS0b41WCtdSA_1740140582
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4399a5afc72so10241825e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:02 -0800 (PST)
+ us-mta-635-qhjWwqXeO020XroAKl4-PQ-1; Fri, 21 Feb 2025 07:22:32 -0500
+X-MC-Unique: qhjWwqXeO020XroAKl4-PQ-1
+X-Mimecast-MFC-AGG-ID: qhjWwqXeO020XroAKl4-PQ_1740140551
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f255d44acso931277f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:22:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140581; x=1740745381;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3ztxZYHC/wgNt/4DA2+N5Hjvx7lOPTBhePRhwRi2JF0=;
- b=Kzsu/TqBidv8KsNuKxUZ8839O8vVp+gutpcd7E+DdAh+yVoscz9Sywz8Yu7hlhnjRv
- dKJ7XZh3IpKSSPXAKtDFVvm/hoL9d6wiGYCvEcNeCTkjNjRa37z2FB0QbyPccZiw+nVH
- gRM/Y05fOC34gaYIHvfRqQnArZHXVmFK5lMNyNWwdv8WiOncWaFoJ54Naq8Xvln7rkHl
- ly2WbNVAUpRSeshFgd0RiKjx2XGrUD/Hkp3FBr89QQ0C8rqiQ9uAbvkPbr3waZu4i5az
- Bcs+b+tp4N8so4GBrT2K60dlIrMFegW4F+UKLKzdHcBYlbrwFrhJo7FxBpITdn+b9n+r
- tymw==
-X-Gm-Message-State: AOJu0Yz/EOwHIM4ChvdQb1mglNTLhpv0rwmd0t2ReR2Mqg9h2ygDHNe9
- NejHORqd3bsFN8UHap1lNe2p5WIkR30df01P6M0tHV3RzdJctnTVNH5saE0b8mOik0wSF4kqUwi
- 89hDp8ErRXaCyBYoINCI//ACmWHz9vKCw0IaJ+LKyvWUhHe2R1ZShjkdmAygXlpqe1VSt/CfYPT
- SdWQD2l+D64mBThjR0fEj8STGSWqBGKA==
-X-Gm-Gg: ASbGncvk6HemloYvmd+xF83ly3LuIiRZpmBcC4Kjv+fSfpu1znoYXeMD9MKOHD4C+bE
- 5EEpf1gto0jL1b8yMgU4A3d/MZBxX4Sz5q6iuEGG23m8wp3hzAs7dVxqF+jvq6ot1V/9H0nCYif
- 7N6P3aU8Kk5OVPVYxByXcnlyLIVE6tEcW8zP0R9k76n2OcP4F5CTLJjsnFU7JpDFkadsEZy7aZf
- EKxzXRrQhmO6rQ9G0hQcmU0wosjIQbbfWuDgLq30a7LvL32yFDcw6fqssNs5jxVqgl1xgxKoTvO
- +zzoUQ==
-X-Received: by 2002:a05:600c:19ce:b0:439:94ef:3766 with SMTP id
- 5b1f17b1804b1-439aebc3138mr20844155e9.19.1740140581474; 
- Fri, 21 Feb 2025 04:23:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGeT4HQFf67yVdc8AorOK+9fKjah8vcnrXEqsk8/ReKKkZjjU5gx/L3XBezBIzeHa5WUxGlVg==
-X-Received: by 2002:a05:600c:19ce:b0:439:94ef:3766 with SMTP id
- 5b1f17b1804b1-439aebc3138mr20843865e9.19.1740140581064; 
- Fri, 21 Feb 2025 04:23:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740140551; x=1740745351;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aOcHI/6ihrxObB+6D978/KQRlCQdnjX6vRn12oDIrAY=;
+ b=wz9YneiDeLFZ3wvxITB6F5nhAlTbrAqFYlomWTaVpDC2Jvh+Ourlaa7m/yYzVlFMzl
+ Acu3xVOSpqZ+CHcItBabg5tUAcZL7RH8P5kzyUpoq/OteuZnkvlUyqxocJSKNl1GfsRE
+ OUSkHZI1bFFixH5XNS1yRyG5S+JGRGF58VumzD1z7BjrgQp32WVGBz7BYmDWhSvMifRV
+ j8R6Djrg8znTO7Q9dV2RE9/AmEhP1YvUgYrFbypZ0eNkXM3y0WC3+RttoltszCKyr+Ti
+ cxe2C+NQj2I3CfhIeUbb4qV1JB4zLp26/0fTC3PY7Bzv3TnKL4TnGK6ItEZA8gESmXkc
+ hJhg==
+X-Gm-Message-State: AOJu0YxU9DdHzOG6AjcFwTnF2haMbA1r42baVRFcBpugLsXrbKguHA5g
+ BF+TQ7Lq/gYswzd8EOWichQ3dW5DPsX2of8umacYVb9G87gaxahmAdrVCcFud3HQOS4AWpZgXuO
+ AFr2o1S4Ns/mGljOh2oDJpuh1hgBns6IX1j/DEjHcQHLCX6FtUCh0eKh5Ix1lIskUXYDSQdS/W5
+ 9wvqA++Wm8IW2xsAqZo/uYUalCslEBfQ==
+X-Gm-Gg: ASbGnctcGx82wMQByzeeP1dZoM6jRwsZNZHdOQY0U8ShwVl4YnqcsWFLTFt/FCEYVPd
+ oILpBXMWOTxFS8akVMs4+LouKkQwZqOvgo6mkUg3jFE4zzolegwzKP4j21gAY8oE+dooaAd9O1B
+ /BVZDvRRSTRlGq2MvU1H0um1OgohPhJNj64N36akLm+88cktukdF+ZVzugMgOvRFUypU+PiZT0r
+ 7sqzM9DI7bs8a4ptbU8M3WIu8kG09Vg5uGHHr7oKQQLTh28egR/rVBUhqTT/WJddl/pyZh1+IuN
+ JFPSLA==
+X-Received: by 2002:a05:6000:4025:b0:38b:d7c3:3768 with SMTP id
+ ffacd0b85a97d-38f6e946edbmr2026434f8f.12.1740140551153; 
+ Fri, 21 Feb 2025 04:22:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IErmAESHos3VULoU2lru6dRQ25ywZWT3YY+u+cL68nfcp0ji68vis2RnXs9dmxkipZJXCg5cQ==
+X-Received: by 2002:a05:6000:4025:b0:38b:d7c3:3768 with SMTP id
+ ffacd0b85a97d-38f6e946edbmr2026414f8f.12.1740140550708; 
+ Fri, 21 Feb 2025 04:22:30 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b030bd09sm15790615e9.29.2025.02.21.04.22.59
+ 5b1f17b1804b1-439b0371c67sm15582315e9.34.2025.02.21.04.22.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:23:00 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:22:58 -0500
+ Fri, 21 Feb 2025 04:22:30 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:22:27 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 08/41] pcie_sriov: Do not manually unrealize
-Message-ID: <e8b827ce7c4bf9a334c46282779f234d1a011cd1.1740140520.git.mst@redhat.com>
+ Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ devel@lists.libvirt.org
+Subject: [PULL 01/41] docs/about: Change notes on x86 machine type
+ deprecation into a general one
+Message-ID: <6f9a1a01433738811c9795dcf29f299c60835558.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -111,35 +109,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Thomas Huth <thuth@redhat.com>
 
-A device gets automatically unrealized when being unparented.
+We now have a general note about versioned machine types getting
+deprecated and removed at the beginning of the deprecated.rst file,
+so we should also have a general note about this in removed-features.rst
+(which will also apply to versioned non-x86 machine types) instead of
+listing individual old machine types in the document.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250116-reuse-v20-6-7cb370606368@daynix.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250116064644.65670-1-thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/pci/pcie_sriov.c | 4 ----
- 1 file changed, 4 deletions(-)
+ docs/about/deprecated.rst       |  7 -------
+ docs/about/removed-features.rst | 11 +++++------
+ 2 files changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index e9b23221d7..499becd527 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -204,11 +204,7 @@ static void unregister_vfs(PCIDevice *dev)
-     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
-                                PCI_FUNC(dev->devfn), num_vfs);
-     for (i = 0; i < num_vfs; i++) {
--        Error *err = NULL;
-         PCIDevice *vf = dev->exp.sriov_pf.vf[i];
--        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
--            error_reportf_err(err, "Failed to unplug: ");
--        }
-         object_unparent(OBJECT(vf));
-         object_unref(OBJECT(vf));
-     }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 4a3c302962..7b42d6eecc 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -236,13 +236,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+ better reflects the way this property affects all random data within
+ the device tree blob, not just the ``kaslr-seed`` node.
+ 
+-``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-These old machine types are quite neglected nowadays and thus might have
+-various pitfalls with regards to live migration. Use a newer machine type
+-instead.
+-
+ PPC 405 ``ref405ep`` machine (since 9.1)
+ ''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index c6616ce05e..156c0c253c 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -972,6 +972,11 @@ from Linux in 2021, and is not supported anymore by QEMU either.
+ System emulator machines
+ ------------------------
+ 
++Note: Versioned machine types that have been introduced in a QEMU version
++that has initially been released more than 6 years before are considered
++obsolete and will be removed without further notice in this document.
++Please use newer machine types instead.
++
+ ``s390-virtio`` (removed in 2.6)
+ ''''''''''''''''''''''''''''''''
+ 
+@@ -1006,12 +1011,6 @@ mips ``fulong2e`` machine alias (removed in 6.0)
+ 
+ This machine has been renamed ``fuloong2e``.
+ 
+-``pc-0.10`` up to ``pc-i440fx-2.3`` (removed in 4.0 up to 9.0)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-These machine types were very old and likely could not be used for live
+-migration from old QEMU versions anymore. Use a newer machine type instead.
+-
+ Raspberry Pi ``raspi2`` and ``raspi3`` machines (removed in 6.2)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
 -- 
 MST
 
