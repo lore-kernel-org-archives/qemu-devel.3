@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5339BC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BEC4C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlOee-0000wS-6A; Fri, 21 Feb 2025 03:45:04 -0500
+	id 1tlOfX-0001N0-BV; Fri, 21 Feb 2025 03:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tlOec-0000vo-Jg
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:45:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tlOea-00025U-IE
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:45:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740127498;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=x6VSM8+JsUf9E9TySSg0sT3aFSEpclvLbYuJNE8s92Q=;
- b=BAOtgmXeal9aTpnteaBtc0WDYZjzuFAS4Q7LQ+a4sFgBro02BLvJMdsF41YjNITBIybQ8P
- 3uS4d/MVPW/2rrcKJYwyRyO5UUTyjNK84XjbXah3aOsNg6Ji6gnFdRHn1ETjKE4JIOLLMu
- tdvj1IvCzzVjVEqrRv1tIZTHrxc3jOE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-vAI-8WxZMWSIlf9oLF8Naw-1; Fri, 21 Feb 2025 03:44:55 -0500
-X-MC-Unique: vAI-8WxZMWSIlf9oLF8Naw-1
-X-Mimecast-MFC-AGG-ID: vAI-8WxZMWSIlf9oLF8Naw_1740127494
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4398ed35b10so9137075e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 00:44:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tlOfH-00015I-Ht
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:45:44 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tlOfD-0002Kl-6A
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:45:43 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-439a2780b44so11377405e9.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 00:45:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1740127537; x=1740732337; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HW4cB7zY+a/g+kKXEB06zgRHhOYLfuD5pJeV64/vSDw=;
+ b=irpmHSLaAhWD0DCeWePYDSLBHSbiEEnHnx9qV7JxEEx4IX2k9WHmlYzxjJwugFjdKT
+ 9Xi+5Iq2360rT0aD58WTDWLjMldvLEfr10NzFMKEK0RjYkQWAGdSuTPM//+qYLDXdQKd
+ owWhjqJZfQoXPbKZHcUVRk0x1SCTEkEtjeS5+/JDq+2WhwTDt6mPEhRBZ6iQ6CKxs0ET
+ VsJ81wyMaGOAObU7RlzQBa7TuONj9eeWliNXx58X+5FjgF+XTeCQbScRvyNGU8T793Sd
+ x1TrH3IDc0xo3NdWUIriKag27jCYYOf9QepUNk7+sSDQj+CYDN1g5pgoV734Spbt0Fo1
+ 2Dow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740127494; x=1740732294;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x6VSM8+JsUf9E9TySSg0sT3aFSEpclvLbYuJNE8s92Q=;
- b=QogTDnJodhayg8mvv05dFjEt6hCfDmSYfS7w3SPBQFDiw15uIEq2xhMgTlRhcpqK6G
- easHQD90x5zPKF/4gotXXC00qYZAKN1kTtbsKYzSzTeGEjoopr/a47je9HxFg/Lb0jnm
- uXqH99ux2vBnf9Cp/EjVNHcQoB4b2OHFGL/V7qmPTmEEHp2/LFNqYkkA/ehe2bFQt90f
- 961kRnS/9yl6gKk2fzepOj749jSSColDRjnGYOG/IJ/TYPVyJtSCdAY/+IIvazqH2yxF
- nZtD+sa6h2qQpCv6Cyi7Q6RPggBSBiDlYPkr7nCgNU3b0et9tuMub4zU+aLhaGbbITLN
- NPNA==
-X-Gm-Message-State: AOJu0YyYNklRHmdFOBXnOH0VFO2iJoDdsSb7AGd0MUUbM8hJ6znX9lWS
- tODa7Lf7Fy7mkdwea9InvwjudsHM/3sxKQ6hYlqjq0xDYsc3kmZQoUoOo/iWEWvN1RzPHIvzxmA
- 18GEADzDsu/2SFItD56WvMXCUcufzsEfKyrHN7f5SHSp9cbrFUu4P3+ujfwl5j/gzhb1vQH1wn6
- C2sKHBRaXnr41pskBfhyLx5/VMTOo=
-X-Gm-Gg: ASbGncsdJ2KAcy63jaz9nc1bTIqFf9DoXCTgHuZF9FsQ0SbSEogttFshFCBPtBbYpjU
- ndCq2gDh1iV+hXVbZYLRR7m4NJ4vQwB9Li8VoKYEzscMX91mfkQdIQcy27qjwgpksBrDGPbHYs1
- Q=
-X-Received: by 2002:a05:600c:4e50:b0:439:8653:20bb with SMTP id
- 5b1f17b1804b1-439b2b06189mr7445945e9.14.1740127494184; 
- Fri, 21 Feb 2025 00:44:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbNqxumVBDN6WkiVH8vErUgnMjKnHoKgU7gmdjnm3AJ5IR99oM5CpzJzsO4yrvLnHiIoy7OZEylmkmiz+8qco=
-X-Received: by 2002:a05:600c:4e50:b0:439:8653:20bb with SMTP id
- 5b1f17b1804b1-439b2b06189mr7445805e9.14.1740127493836; Fri, 21 Feb 2025
- 00:44:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740127537; x=1740732337;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HW4cB7zY+a/g+kKXEB06zgRHhOYLfuD5pJeV64/vSDw=;
+ b=OpQ6opra/hRvyKj0XbjUAhT8raxcKwYcrPo1pyAZNanCpvIst+GHwbJFsW1hnXRBRG
+ SZ2c8Jx0diRvr+FP0lufT5iGjSjumKfIHo3tEy1ge34drYoTu+K+1TYpP6M+w059QjZd
+ fe62Ur3NDD0cy4rv8igqUeUnyftuYSKvghs/30mlG8bve1OYjHMRE/iQ2kVsqlS3q/Ng
+ SPYyOVRtaqXQE4t+nt6dCYTSC7NjpEtk6wTTJgMV9KJFO0YeTmTw4pSlPO0BQkzNnDux
+ /Cvxn5yB1F9Q0vuxKS6GUV9VF8aWQ4U2OsTEl9mq3IJFdodtaBz8On/A8c2GEWCEQxXE
+ E3sg==
+X-Gm-Message-State: AOJu0YxxUiva1Ky2hzeaxv5dKvkooab/2xW3HJgscBjytn018uo/0pW3
+ a9eYiuS0MJiX12unl/NvcyLFj5F3rO+wQwjdxTs/nugDMTH+TdA7gG2ULsGqycU=
+X-Gm-Gg: ASbGncsct0C2wO03WCQOgHpAoNF4McjyCTDcjMUuuaAwinLP6HMUJLBPIutYMMRV70q
+ lU/W3pQrGlISVrYJ5NHq27xqylEex96JIp1zW2TZZdbanAhNaG9O57JAEeTlG42bB3pu6UwOQfP
+ DSqUNulaIDsIBWo/BIsp82+F9mxBlcQKwz8JbjaYJR2TizQikpaAdMfPF9Dz7eduD0tZkQL0JfY
+ cd0cE22kiOw8iTFMiofnt8fbFVswrzWWBGMs4bXhqBIYSqqq+VdcVNrOCdr/avHksTfF9v/WNoW
+ FVev424d1G/jKg==
+X-Google-Smtp-Source: AGHT+IHxppOqllza0Vk46hLx6ehT443j0OfTzsOjcpUwENTCA/MbdXM6mP/AcK37oGeagbS/jYHuog==
+X-Received: by 2002:a05:600c:19cc:b0:439:5766:7232 with SMTP id
+ 5b1f17b1804b1-439ae212996mr16144455e9.21.1740127537122; 
+ Fri, 21 Feb 2025 00:45:37 -0800 (PST)
+Received: from localhost ([2a02:8308:a00c:e200::766e])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b030be5esm10376675e9.30.2025.02.21.00.45.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Feb 2025 00:45:36 -0800 (PST)
+Date: Fri, 21 Feb 2025 09:45:35 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH 3/3] target/riscv/kvm: reset all available KVM CSRs in
+ kvm_reset()
+Message-ID: <20250221-1fab8b0e1e23a31880880f11@orel>
+References: <20250220161313.127376-1-dbarboza@ventanamicro.com>
+ <20250220161313.127376-4-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20250215123119.814345-1-ppandit@redhat.com>
- <20250215123119.814345-3-ppandit@redhat.com>
- <87y0y4tf5q.fsf@suse.de>
- <CAE8KmOxYE=10+xjMjH5ZhbMmRJHgxJKHj2wH-nB-qiBSHEVh1w@mail.gmail.com>
- <878qq39vu3.fsf@suse.de>
- <CAE8KmOyy=ybDaRFpFr0DTJWScyjCX+99PKHzLibv6zhtUpw8Ng@mail.gmail.com>
- <87r03t97ep.fsf@suse.de>
- <CAE8KmOyzkLS3zvb7a32CUVJuvS-VEkZwSAfJUZwQqT-xiZLnJw@mail.gmail.com>
- <87jz9k91ri.fsf@suse.de>
-In-Reply-To: <87jz9k91ri.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Fri, 21 Feb 2025 14:14:36 +0530
-X-Gm-Features: AWEUYZkh-h85wn0nzU4v9tJ1WnW51ikORb4u0aOZrqIIcIXx4rR2D6cunSFf8ck
-Message-ID: <CAE8KmOwrZMRV26vu8aUaR0nF_wDM1jMh5kC3RkCa1Eui_68nOQ@mail.gmail.com>
-Subject: Re: [PATCH v6 2/4] migration: enable multifd and postcopy together
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250220161313.127376-4-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,92 +101,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Fabiano,
+On Thu, Feb 20, 2025 at 01:13:13PM -0300, Daniel Henrique Barboza wrote:
+> Explictly reset env->mstatus and env->sie.
 
-On Thu, 20 Feb 2025 at 19:06, Fabiano Rosas <farosas@suse.de> wrote:
-> This is more or less the handshake idea. Or at least it could be
-> included in that work.
+mie was already getting set to zero, so that should have just been renamed
+in the last patch, but I still think we should drop the last patch.
+
+> Add a comment about env->mip
+> being read/written into KVM 'sip' CSR.
+> 
+> We're also not read/writing 'scounteren' which is available in the KVM
+> UAPI. Add it in kvm_reset() and get/put_regs_csr().
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index fea03f3657..ee7a9295b4 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -618,6 +618,7 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
+>      KVM_RISCV_GET_CSR(cs, env, stval, env->stval);
+>      KVM_RISCV_GET_CSR(cs, env, sip, env->mip);
+>      KVM_RISCV_GET_CSR(cs, env, satp, env->satp);
+> +    KVM_RISCV_GET_CSR(cs, env, scounteren, env->scounteren);
+
+senvcfg is also missing.
+
+>  
+>      return 0;
+>  }
+> @@ -635,6 +636,7 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
+>      KVM_RISCV_SET_CSR(cs, env, stval, env->stval);
+>      KVM_RISCV_SET_CSR(cs, env, sip, env->mip);
+>      KVM_RISCV_SET_CSR(cs, env, satp, env->satp);
+> +    KVM_RISCV_SET_CSR(cs, env, scounteren, env->scounteren);
+>  
+>      return 0;
+>  }
+> @@ -1609,6 +1611,10 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
+>      env->pc = cpu->env.kernel_addr;
+>      env->gpr[10] = kvm_arch_vcpu_id(CPU(cpu)); /* a0 */
+>      env->gpr[11] = cpu->env.fdt_addr;          /* a1 */
+> +
+> +    /* sstatus is read/written into mstatus */
+
+How about just a single comment above this function stating that we
+reset all registers that we will s/r with csr get/put. Interested
+parties can go look at get or put to see the mappings.
+
+> +    env->mstatus = 0;
+> +    env->sie = 0;
+>      env->satp = 0;
+>      env->mie = 0;
+>      env->stvec = 0;
+> @@ -1616,7 +1622,9 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
+>      env->sepc = 0;
+>      env->scause = 0;
+>      env->stval = 0;
+> +    /* sip is read/written into mip */
+>      env->mip = 0;
+> +    env->scounteren = 0;
+>  }
+>  
+>  void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
+> -- 
+> 2.48.1
+> 
 >
-> I have parked the handshake idea for now because I'm not seeing an
-> immediate need for it and there are more pressing issues to be dealt
-> with first such as bugs and coordinating the new features (and their
-> possible outcomings) that IMO need to be looked at first.
 
-* I see, okay.
-
-> I'm not opposed to that idea. When I started working with migration I
-> had the impression that was the direction and that we could put every
-> workload in a pool of multifd threads. Now, knowing the code better, I'm
-> not sure that's feasible. Specially the dependence on a "main" channel
-> seems difficult to do away with. It's also somewhat convenient to have a
-> maint thread. But we could still attempt to group extra threads, such as
-> what we're doing with the new thread pool in the device state series. At
-> least thread management could be done entirely in a separate pool, main
-> channel and all.
->
-
-* True. To extend the two QEMUs working in tandem OR the handshake
-idea further with the 'main' channel, let's say a user invokes
-command:
-
-$ virsh migrate --threads 4 --postcopy --postcopy-after-precopy ...
-
-0) Channel = TCP socket connection between two machines.
-
-1) The 'main' channel is the dedicated _control_ channel; And other
-channels are dedicated _data_ channels. So with '--threads 4' option,
-QEMU creates a total of 5 (main + 4) channels.
-
-        QEMU-A  -> 'main' channel    -> QEMU-B
-        QEMU-A ->  'data' channel-1 -> QEMU-B
-        QEMU-A ->  'data' channel-2 -> QEMU-B
-        QEMU-A ->  'data' channel-3 -> QEMU-B
-        QEMU-A ->  'data' channel-4 -> QEMU-B
-
-    * Each channel is used by a thread of its own.
-
-2) All channels are created _before_ the migration starts and stay
-till the end of the migration. No asynchronous channels popping up
-during migration, like a 'postcopy' channel now.
-
-3) In the beginning source says 'Let's Precopy' to the destination on
-the 'main' channel
-
-         QEMU-A  -> main: Let's precopy  -> QEMU-B
-         QEMU-A  <- main: Okay              <- QEMU-B
-
-    And migration data flows from QEMU-A  -> to -> QEMU-B  on the
-'data' channels.
-
-        QEMU-A ->  'data' -> -> -> QEMU-B
-        QEMU-A ->  'data' -> -> -> QEMU-B
-        QEMU-A ->  'data' -> -> -> QEMU-B
-        QEMU-A ->  'data' -> -> -> QEMU-B
-
-4) When it's time to switch to Postcopy,  source says 'Let's Postcopy'
-to the destination on the 'main' channel
-
-        QEMU-A  -> main: Let's postcopy  -> QEMU-B
-        QEMU-A  <- main: Okay                <- QEMU-B
-
-    And migration page requests/data use the same 'data' channels.
-
-        QEMU-A <- <- 'request/data'  -> -> QEMU-B
-        QEMU-A <- <- 'request/data'  -> -> QEMU-B
-        QEMU-A <- <- 'request/data'  -> -> QEMU-B
-        QEMU-A <- <- 'request/data'  -> -> QEMU-B
-
-5) This way:
-     - 'main' channel could be used to co-ordinate actions of two QEMUs.
-     - All data channels may be used during Postcopy too, instead of
-one channel now.
-     - There may not be race conditions while creating channels.
-     - No differentiation of precopy/multifd/postcopy/preempt etc. channels.
-
-(thinking out loud if that sounds workable)
-
-Thank you.
----
-  - Prasad
-
+Thanks,
+drew
 
