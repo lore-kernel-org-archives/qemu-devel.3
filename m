@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAD9C021B7
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42E9C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlXA1-0000pA-PG; Fri, 21 Feb 2025 12:50:01 -0500
+	id 1tlXAC-0000yE-7a; Fri, 21 Feb 2025 12:50:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXA0-0000oc-Ln; Fri, 21 Feb 2025 12:50:00 -0500
+ id 1tlXA8-0000vw-JO; Fri, 21 Feb 2025 12:50:08 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlX9z-0001bS-2f; Fri, 21 Feb 2025 12:50:00 -0500
+ id 1tlXA6-0001oy-T4; Fri, 21 Feb 2025 12:50:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 361AEEFB67;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4B237EFB6C;
  Fri, 21 Feb 2025 20:49:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E2FD01BB583;
- Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 039FC1BB588;
+ Fri, 21 Feb 2025 20:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D6C7553F81; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ id E3C0D53F8B; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Khem Raj <raj.khem@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.2 04/14] linux-user: Do not define struct sched_attr if
- libc headers do
-Date: Fri, 21 Feb 2025 20:49:34 +0300
-Message-Id: <20250221174949.836197-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.2 09/14] make-release: don't rely on $CWD when excluding
+ subproject directories
+Date: Fri, 21 Feb 2025 20:49:39 +0300
+Message-Id: <20250221174949.836197-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 References: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
@@ -62,48 +62,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Khem Raj <raj.khem@gmail.com>
+From: Michael Roth <michael.roth@amd.com>
 
-glibc 2.41+ has added [1] definitions for sched_setattr and
-sched_getattr functions and struct sched_attr.  Therefore, it needs
-to be checked for here as well before defining sched_attr, to avoid
-a compilation failure.
+The current logic scans qemu.git/subprojects/ from *.wrap files to
+determine whether or not to include the associated directories in the
+release tarballs. However, the script assumes that it is being run from
+the top-level of the source directory, which may not always be the case.
+In particular, when generating releases via, e.g.:
 
-Define sched_attr conditionally only when SCHED_ATTR_SIZE_VER0 is
-not defined.
+  make qemu-9.2.1.tar.xz
 
-[1] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=21571ca0d70302909cf72707b2a7736cf12190a0;hp=298bc488fdc047da37482f4003023cb9adef78f8
+the $CWD will either be an arbitrary external build directory, or
+qemu.git/build, and the exclusions will not be processed as expected.
+Fix this by using the $src parameter passed to the script as the root
+directory for the various subproject/ paths referenced by this logic.
 
-Signed-off-by: Khem Raj <raj.khem@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2799
+Also, the error case at the beginning of the subproject_dir() will not
+result in the error message being printed, and will instead produce an
+error message about "error" not being a valid command. Fix this by using
+basic shell commands.
+
+Fixes: be27b5149c86 ("make-release: only leave tarball of wrap-file subprojects")
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 27a8d899c7a100fd5aa040a8b993bb257687c393)
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit b79b05d1a06a013447ea93b81c07612766b735f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1ce4c79784..a407d4a023 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -358,7 +358,8 @@ _syscall3(int, sys_sched_getaffinity, pid_t, pid, unsigned int, len,
- #define __NR_sys_sched_setaffinity __NR_sched_setaffinity
- _syscall3(int, sys_sched_setaffinity, pid_t, pid, unsigned int, len,
-           unsigned long *, user_mask_ptr);
--/* sched_attr is not defined in glibc */
-+/* sched_attr is not defined in glibc < 2.41 */
-+#ifndef SCHED_ATTR_SIZE_VER0
- struct sched_attr {
-     uint32_t size;
-     uint32_t sched_policy;
-@@ -371,6 +372,7 @@ struct sched_attr {
-     uint32_t sched_util_min;
-     uint32_t sched_util_max;
- };
-+#endif
- #define __NR_sys_sched_getattr __NR_sched_getattr
- _syscall4(int, sys_sched_getattr, pid_t, pid, struct sched_attr *, attr,
-           unsigned int, size, unsigned int, flags);
+diff --git a/scripts/make-release b/scripts/make-release
+index 2885e87210..1b89b3423a 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -11,8 +11,9 @@
+ # See the COPYING file in the top-level directory.
+ 
+ function subproject_dir() {
+-    if test ! -f "subprojects/$1.wrap"; then
+-      error "scripts/archive-source.sh should only process wrap subprojects"
++    if test ! -f "$src/subprojects/$1.wrap"; then
++      echo "scripts/archive-source.sh should only process wrap subprojects"
++      exit 1
+     fi
+ 
+     # Print the directory key of the wrap file, defaulting to the
+@@ -26,7 +27,7 @@ function subproject_dir() {
+       -e    's///p' \
+       -e    'q' \
+       -e '}' \
+-      "subprojects/$1.wrap")
++      "$src/subprojects/$1.wrap")
+ 
+     echo "${dir:-$1}"
+ }
+@@ -76,7 +77,7 @@ popd
+ exclude=(--exclude=.git)
+ # include the tarballs in subprojects/packagecache but not their expansion
+ for sp in $SUBPROJECTS; do
+-    if grep -xqF "[wrap-file]" subprojects/$sp.wrap; then
++    if grep -xqF "[wrap-file]" $src/subprojects/$sp.wrap; then
+       exclude+=(--exclude=subprojects/"$(subproject_dir $sp)")
+     fi
+ done
 -- 
 2.39.5
 
