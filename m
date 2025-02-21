@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3816C021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110A5C021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:30:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5P-00028l-IZ; Fri, 21 Feb 2025 07:24:55 -0500
+	id 1tlS56-0000Uc-46; Fri, 21 Feb 2025 07:24:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5L-0001b2-1p
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4y-0008A9-Ca
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5J-0007F5-7h
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:50 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4w-0007CO-FZ
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:24:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140688;
+ s=mimecast20190719; t=1740140665;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z4ygtfE//+SZN2f+zX5YmIK1yZQyKJU0PdMA77xslew=;
- b=GeaufGUJsZmDCwmKTa6NSiLIPtNPUCUbSVl8IIC3UZYTER2OjOpq1bNXdX2xE3AgIbJ6Dh
- fcfqx8Ew+4jVod4qlHcZ2WgusC1Uog9cizOzNBVDozdAl88qgsjkxCIMd/E64313l6s4wp
- 4OolDQW5h4LIsJdw18OFHr1gJ1pm0Uw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Fb35RulI/+ttP697lcY0Hr/k4kUhvbmNTuRv5jMyS8s=;
+ b=YVjggYvQByLww2fxQkfqwS22Sf0TjUyFwKglzf3nXAvbG50zeBglnJX/sfr79pWRxUsX0g
+ 7i1ym/PLCQxItL2v162fzrqLmrmPImK1u/XpQEvjLgOA7K3bKCYf8xyrJ3PnRTevb0F8ef
+ os/hzgN72ygO6nbCoz6PKJsLOrxUAUw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-QEHEHu19N_a5fOLWoiijHw-1; Fri, 21 Feb 2025 07:24:47 -0500
-X-MC-Unique: QEHEHu19N_a5fOLWoiijHw-1
-X-Mimecast-MFC-AGG-ID: QEHEHu19N_a5fOLWoiijHw_1740140686
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38f4e3e9c5bso941201f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:47 -0800 (PST)
+ us-mta-433-7ml3dXdWPbipH3ka4AJY0w-1; Fri, 21 Feb 2025 07:24:24 -0500
+X-MC-Unique: 7ml3dXdWPbipH3ka4AJY0w-1
+X-Mimecast-MFC-AGG-ID: 7ml3dXdWPbipH3ka4AJY0w_1740140663
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43998ec3733so10586265e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140686; x=1740745486;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z4ygtfE//+SZN2f+zX5YmIK1yZQyKJU0PdMA77xslew=;
- b=cbx+Qhp27ruGqlQnafU3Mdt+6hczPkbFmSzrdoMfd1Zk6ZHCK0fw7BV10S2OhaBnB8
- jm7t86tGbk81s2MylKIkaovb7Z+1e6kYlnrcC5ROfvKWqwr5ImbJ/1yTZjF5nGnZ4LDy
- 2TUVIG2K3akIwbvadqXjzFAuOkKOB7E8fJR2eKQrWrf7SgpX5S+2nb9cdr7XvGyKwuGG
- DCob6wMnBViZiRBEqAmxZcX1HxKjyOpy9LedmSCLEX/zdzPqOXqwMf+WK15Pa/VS7P/9
- B2v5rPPV7iFweI1n044yQkaG9ez7AWl0NwWIMDvWbKycTEz3WBrE1i+UvVs2TC1EWw4e
- zMog==
-X-Gm-Message-State: AOJu0Yw4KsQMEuLD4Ulwq7HoYhl9EorbWJmL0yRM6OG4/WVpgFn0Axs2
- yWHk0/tnpeHKQ/V5F9DP68iYAAus/CHnxSyMm/WjygvdY00p/o/5h/EjRa/yqU7NqDH0cnM4dio
- TCSlHl7phmlreGmVeTOFG45/ALMIV1afbRbpYd/OxMOQTl6Ht6dBPvXEdX0JCnm7qy2ECey+wk0
- nEntECpT+BdOHjh1QD8m5vXjZaoEF+zw==
-X-Gm-Gg: ASbGncvJ3BSbo/p5RNEzWngKnbGxGk/mzlkvcsl2UeQFZffeLXam7cMbgZpoOLm0zvb
- 0XTMo54LoK/AdHDnRUjjrDC5VnUkRCVtC3ipC38F22MSGMEXy4kRVWzLj6A68MqDfukgDYAfIr5
- f+5szt1zBv0f66lObFOBUeZ9JhQe4JZZE1Kl5sOB/SrLxHXoaCgYuGu5Y7hsziua0wn67BR8qXi
- Wi5h1FJNM5u44Uoq7eoJLBjqX3q58bWWUt3utnvdv5rAGYQQ8Dk3FnRu5Muzh2cMFl5xPjI61ro
- UfZHnw==
-X-Received: by 2002:a5d:5848:0:b0:38f:2990:c074 with SMTP id
- ffacd0b85a97d-38f6e95e697mr3088099f8f.16.1740140685843; 
- Fri, 21 Feb 2025 04:24:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFEAdCWQAFIFZ/v616ucdhekMHqtcZK/hSR9FKGYG/dGXHtJrunXzIBiWwyHzBiOLfsZ2Mf0g==
-X-Received: by 2002:a5d:5848:0:b0:38f:2990:c074 with SMTP id
- ffacd0b85a97d-38f6e95e697mr3088064f8f.16.1740140685378; 
- Fri, 21 Feb 2025 04:24:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740140662; x=1740745462;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fb35RulI/+ttP697lcY0Hr/k4kUhvbmNTuRv5jMyS8s=;
+ b=i9/hKzv8v4hT0DvRG+b757jf5rOLmalH0O1oI7EhETVsxzsSjcvxqJaWN6DSNUVV2w
+ uexAbXBmo5SzPJI+MqER6cNXGa103I1nblbfdI94Xn3VX6a5wdHS9IVXFalkOgR/IUeJ
+ yp2gtaXtcY+YcaKF5mvdHio5PgvdNb0gGQ1+Hhs63GJlqW9G6GnXC71c2cfErr2a6Lc4
+ LQZSZ+Op1ZsYiZXM90qaYTWr6a+1YHFGUQbPPosZI6g581E+Pmz+mxGx2dZI/GnGdDOY
+ zkyO7oylJvpiiGjPPC8fCjPfaSTt4Wjo9Ha2O6eCOZ0tS2P3rTivB/25zMM9AEemi1+C
+ K7iQ==
+X-Gm-Message-State: AOJu0YxybnZZk9FEZW+1VUTLHxVCCVYgQriLhL0AMIc7mw1sT5718U2R
+ 9bdYXKC7OPXCaV+ICsw1Jit2TKrF1JKLXdKJdHlCklgWbEMf+mt4EsXi3N6lZUvq7Jaobhksjjg
+ +K5UutUchno+UZtOKTbCYJZkPeIU7ns3Ud28mgxsFjsGx73hk+nQPnwZJmo7TGWIKXmN/q96tnf
+ 8G83nw6bHxCaagEwlio4W9P3ouVrCYkw==
+X-Gm-Gg: ASbGncuz6kE2PVBvJYUQUy2yiOEEAheNz6kfeG6o4s8yjgc6roAJadv04Ak2q9S1mhB
+ RfdcRkM8cfi2dQY/stIZlwWeat+RGXPbgQz6V2A7nFMbrGGb/qhwzuOS0QTVywSnMkvCDPeAksR
+ xIaA2HPznS3+j/DyDP+vY0OGUNV6ScgeiqGXUQ/TfanKZ6ghF+lpQbM7AZn8RyWN6XCyeALnBAd
+ YLy50/Y7d3C1N79fzDf1FhVckK/55xx3jePrcryGEY1YXQ7qL+uq0n+QCeKHYPgmdxDrFWJBN8U
+ 9zYyhw==
+X-Received: by 2002:a05:600c:4ecc:b0:439:84d3:f7ee with SMTP id
+ 5b1f17b1804b1-439ae2189bemr19969465e9.24.1740140662672; 
+ Fri, 21 Feb 2025 04:24:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH6C38cxMb9hzBe8yIVY1QmJ5KuG0NeV8RdsIxgctExImapK4BqB1nnxj/lrUWzL3/D0wEekQ==
+X-Received: by 2002:a05:600c:4ecc:b0:439:84d3:f7ee with SMTP id
+ 5b1f17b1804b1-439ae2189bemr19969225e9.24.1740140662269; 
+ Fri, 21 Feb 2025 04:24:22 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f259fe1efsm23442781f8f.97.2025.02.21.04.24.43
+ 5b1f17b1804b1-439b02e4245sm15665135e9.18.2025.02.21.04.24.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:44 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:41 -0500
+ Fri, 21 Feb 2025 04:24:21 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:24:19 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Peter Xu <peterx@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 38/41] hw/i386/intel-iommu: Migrate to 3-phase reset
-Message-ID: <2aaf48bcf27d8b3da5b30af6c1ced464d3df30f7.1740140520.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 32/41] MAINTAINERS: add more files to `vhost`
+Message-ID: <590de17b829d2ccd8067f19c71a53e31bec7bf00.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,76 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Currently the IOMMU may be reset before the devices
-it protects. For example this happens with virtio devices
-but also with VFIO devices. In this latter case this
-produces spurious translation faults on host.
+While sending a patch for backends/cryptodev-vhost.c I noticed that
+Michael wasn`t in CC so I took a look at the files listed under `vhost`
+and tried to fix it increasing the coverage by adding new files.
 
-Let's use 3-phase reset mechanism and reset the IOMMU on
-exit phase after all DMA capable devices have been reset
-on 'enter' or 'hold' phase.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-Message-Id: <20250218182737.76722-3-eric.auger@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250211144259.117910-1-sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu.c | 12 +++++++++---
- hw/i386/trace-events  |  1 +
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ MAINTAINERS | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index f366c223d0..a5cf2d0e81 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4697,10 +4697,11 @@ static void vtd_init(IntelIOMMUState *s)
- /* Should not reset address_spaces when reset because devices will still use
-  * the address space they got at first (won't ask the bus again).
-  */
--static void vtd_reset(DeviceState *dev)
-+static void vtd_reset_exit(Object *obj, ResetType type)
- {
--    IntelIOMMUState *s = INTEL_IOMMU_DEVICE(dev);
-+    IntelIOMMUState *s = INTEL_IOMMU_DEVICE(obj);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 013a57d5bf..2d07d72933 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2212,12 +2212,16 @@ M: Michael S. Tsirkin <mst@redhat.com>
+ R: Stefano Garzarella <sgarzare@redhat.com>
+ S: Supported
+ F: hw/*/*vhost*
+-F: docs/interop/vhost-user.json
+-F: docs/interop/vhost-user.rst
++F: docs/interop/vhost-user*
++F: docs/system/devices/vhost-user*
+ F: contrib/vhost-user-*/
+-F: backends/vhost-user.c
++F: backends/*vhost*
+ F: include/system/vhost-user-backend.h
++F: include/hw/virtio/vhost*
++F: include/*/vhost*
+ F: subprojects/libvhost-user/
++F: block/export/vhost-user*
++F: util/vhost-user-server.c
  
-+    trace_vtd_reset_exit();
-     vtd_init(s);
-     vtd_address_space_refresh_all(s);
- }
-@@ -4864,8 +4865,13 @@ static void vtd_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     X86IOMMUClass *x86_class = X86_IOMMU_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
--    device_class_set_legacy_reset(dc, vtd_reset);
-+    /*
-+     * Use 'exit' reset phase to make sure all DMA requests
-+     * have been quiesced during 'enter' or 'hold' phase
-+     */
-+    rc->phases.exit = vtd_reset_exit;
-     dc->vmsd = &vtd_vmstate;
-     device_class_set_props(dc, vtd_properties);
-     dc->hotpluggable = false;
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index 53c02d7ac8..ac9e1a10aa 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -68,6 +68,7 @@ vtd_frr_new(int index, uint64_t hi, uint64_t lo) "index %d high 0x%"PRIx64" low
- vtd_warn_invalid_qi_tail(uint16_t tail) "tail 0x%"PRIx16
- vtd_warn_ir_vector(uint16_t sid, int index, int vec, int target) "sid 0x%"PRIx16" index %d vec %d (should be: %d)"
- vtd_warn_ir_trigger(uint16_t sid, int index, int trig, int target) "sid 0x%"PRIx16" index %d trigger %d (should be: %d)"
-+vtd_reset_exit(void) ""
- 
- # amd_iommu.c
- amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
+ vhost-shadow-virtqueue
+ R: Eugenio Pérez <eperezma@redhat.com>
 -- 
 MST
 
