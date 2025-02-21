@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6604DC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89322C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 17:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlXAf-0001IC-AF; Fri, 21 Feb 2025 12:50:41 -0500
+	id 1tlXAQ-00011c-9U; Fri, 21 Feb 2025 12:50:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXAY-0001D4-Sk; Fri, 21 Feb 2025 12:50:35 -0500
+ id 1tlXAC-0000yO-4t; Fri, 21 Feb 2025 12:50:12 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tlXAW-0001pa-AN; Fri, 21 Feb 2025 12:50:34 -0500
+ id 1tlXAA-0001pL-5V; Fri, 21 Feb 2025 12:50:11 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 53175EFB6E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F00DEFB6D;
  Fri, 21 Feb 2025 20:49:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0BE181BB58A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 07CD81BB589;
  Fri, 21 Feb 2025 20:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E8C3853F8F; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
+ id E65A153F8D; Fri, 21 Feb 2025 20:49:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.2 11/14] elfload: Fix alignment when unmapping excess
- reservation
-Date: Fri, 21 Feb 2025 20:49:41 +0300
-Message-Id: <20250221174949.836197-11-mjt@tls.msk.ru>
+Subject: [Stable-9.2.2 10/14] hw/net/smc91c111: Ignore attempt to pop from
+ empty RX fifo
+Date: Fri, 21 Feb 2025 20:49:40 +0300
+Message-Id: <20250221174949.836197-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 References: <qemu-stable-9.2.2-20250221204240@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,39 +64,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When complying with the alignment requested in the ELF and unmapping
-the excess reservation, having align_end not aligned to the guest page
-causes the unmap to be rejected by the alignment check at
-target_munmap and later brk adjustments hit an EEXIST.
+The SMC91C111 includes an MMU Command register which permits
+the guest to remove entries from the RX FIFO. The datasheet
+does not specify what happens if the guest tries to do this
+when the FIFO is already empty; there are no status registers
+containing error bits which might be applicable.
 
-Fix by aligning the start of region to be unmapped.
+Currently we don't guard at all against pop of an empty
+RX FIFO, with the result that we allow the guest to drive
+the rx_fifo_len index to negative values, which will cause
+smc91c111_receive() to write to the rx_fifo[] array out of
+bounds when we receive the next packet.
 
-Fixes: c81d1fafa6 ("linux-user: Honor elf alignment when placing images")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1913
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-[rth: Align load_end as well.]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250213143558.10504-1-farosas@suse.de>
-(cherry picked from commit 4b7b20a3b72c5000ea71bef505c16e6e628268b6)
+Instead ignore attempts to pop an empty RX FIFO.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 80337b66a8e7 ("NIC emulation for qemu arm-softmmu")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2780
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250207151157.3151776-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 937df81af6757638a7f1908747560dd342947213)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 471a384b22..aa3607f3ac 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3349,8 +3349,8 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 180ba5c791..2a652885c9 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -182,6 +182,15 @@ static void smc91c111_pop_rx_fifo(smc91c111_state *s)
+ {
+     int i;
  
-     if (align_size != reserve_size) {
-         abi_ulong align_addr = ROUND_UP(load_addr, align);
--        abi_ulong align_end = align_addr + reserve_size;
--        abi_ulong load_end = load_addr + align_size;
-+        abi_ulong align_end = TARGET_PAGE_ALIGN(align_addr + reserve_size);
-+        abi_ulong load_end = TARGET_PAGE_ALIGN(load_addr + align_size);
- 
-         if (align_addr != load_addr) {
-             target_munmap(load_addr, align_addr - load_addr);
++    if (s->rx_fifo_len == 0) {
++        /*
++         * The datasheet doesn't document what the behaviour is if the
++         * guest tries to pop an empty RX FIFO, and there's no obvious
++         * error status register to report it. Just ignore the attempt.
++         */
++        return;
++    }
++
+     s->rx_fifo_len--;
+     if (s->rx_fifo_len) {
+         for (i = 0; i < s->rx_fifo_len; i++)
 -- 
 2.39.5
 
