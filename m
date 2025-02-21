@@ -4,145 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 187FDC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 14:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33EBEC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlUQG-0006HU-5H; Fri, 21 Feb 2025 09:54:37 -0500
+	id 1tlUbe-0002PC-US; Fri, 21 Feb 2025 10:06:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mochs@nvidia.com>)
- id 1tlUQ9-0006Go-H9; Fri, 21 Feb 2025 09:54:30 -0500
-Received: from mail-mw2nam12on20613.outbound.protection.outlook.com
- ([2a01:111:f403:200a::613]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tlUbX-0002KJ-8v; Fri, 21 Feb 2025 10:06:17 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mochs@nvidia.com>)
- id 1tlUQ7-0000Q8-5e; Fri, 21 Feb 2025 09:54:29 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=stZPKeTwpVbqo7BTeWYvv3JPWyjsEaYVUvrVjCZIsWDsHAicMsSb1Pa/pykAxm21qTiSU8YV+h9vbLSqKih8D1+kFAaW8a+LTrom3dmz5czuEXD0ED2E6yCyuoEJnKHGTtkUdtuhdrFCwuPAoBsuJJS18uBMXLvswK34LP1lSIEASX5W4Jriy7lFKIwnKI5QfGppPU8TPS7fs4NUWw2zmTo3mrMfRP8pe9CSjP260dv3T0EvxKxnqTQ2/5boiMZEI7HzRn9In7MFk60N/tNnoJ43NWn1VHIYJA3WbMflybpIMOzC0mJFnAmdxi38mum2H9ymXmUVXMh/hAxFm218zw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AeW5Gqc0GPYv8Ra7K6+N2ooIi8EMM72j+DzJ1MBdDGo=;
- b=XDyrtj2Z3Nzn7ysWCv8yXnq45E+Vj95WQfiEKfZeCm7L3BwqvJNnulMU7hcQbP6bsdw8tykXG0Z1rEE5OUj0I+3KRnyYT2zwbST8AVXB2ai7168DSk9rrFGUZe4n2eHl4oVV6BGI0le8sUUE8INJaBYJ+t/If1WzMDR9zABprVP1t5KumWMSBVRtFNKo0yQG7REenTxY6QxOht/KzEZn0PNGj2UCjQPWM0O4GQfhv7PtTeWatTcKsz2MCSiGnvd2n7HU6T/5QgKtkzYtjEcth8/NLWYvZS93W4FhzTtHg2nFjXfMTmO83WhT5lVbtTUMqwu23cyHJv8FdSTEEmM54w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AeW5Gqc0GPYv8Ra7K6+N2ooIi8EMM72j+DzJ1MBdDGo=;
- b=T6IYIeFPfIJaEkocKZl9KuWj4KDP09OoVcsmEET6kwZldezAxTh8mvkJWzfGLTSQiiZ6IkOa3lg4ptY+z3azdr5sjrVfxckxWsoFJSVbAyBKiRbPirtMTuAElM+nNegFC5iRDWiu7WnSjQ3SCOKvZDRKj1fdEKL16XyWGzNDz5Z0I3hSnBvuqREhh0VuQ0grq3HtHttJUKCvINNI/tVXwWoRa4yfsRWaVGLAXDKzkRVk+YcswVzKMQWY/u0hzNKkbFcF5Y/0DRdebG1MmyF1irOAO6Q2EUkFLYq64BhUMJjgZqVsTzc46kHL7FvcPpS5I5sT1uzqiwQxA3o17bP73g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from MW6PR12MB8897.namprd12.prod.outlook.com (2603:10b6:303:24a::19)
- by MN0PR12MB6341.namprd12.prod.outlook.com (2603:10b6:208:3c2::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 21 Feb
- 2025 14:54:20 +0000
-Received: from MW6PR12MB8897.namprd12.prod.outlook.com
- ([fe80::7c55:5a45:be80:e971]) by MW6PR12MB8897.namprd12.prod.outlook.com
- ([fe80::7c55:5a45:be80:e971%4]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
- 14:54:20 +0000
-From: "Matthew R. Ochs" <mochs@nvidia.com>
-To: qemu-devel@nongnu.org, nicolinc@nvidia.com, nathanc@nvidia.com,
- peter.maydell@linaro.org
-Cc: eric.auger@redhat.com, qemu-arm@nongnu.org,
- shameerali.kolothum.thodi@huawei.com, ddutile@redhat.com,
- ankita@nvidia.com, philmd@linaro.org, gshan@redhat.com
-Subject: [PATCH v6] hw/arm/virt: Support larger highmem MMIO regions
-Date: Fri, 21 Feb 2025 06:54:19 -0800
-Message-ID: <20250221145419.1281890-1-mochs@nvidia.com>
-X-Mailer: git-send-email 2.46.0
-X-NVConfidentiality: public
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0123.namprd03.prod.outlook.com
- (2603:10b6:a03:33c::8) To MW6PR12MB8897.namprd12.prod.outlook.com
- (2603:10b6:303:24a::19)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tlUbU-0002ME-81; Fri, 21 Feb 2025 10:06:14 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 73ECB5C642D;
+ Fri, 21 Feb 2025 15:05:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D99FC4CED6;
+ Fri, 21 Feb 2025 15:06:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1740150367;
+ bh=z949hO3MwOXAyFCNa2KF23enIns2zrbW6wuKQGwpDGA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=dOFYx0pgtFeJmTDUukXY6GQOXqGl42lq6X+gMyonqBl7FP/gI2aE7zyqxwN4APq6h
+ efrKTQV+HKkN3efyqi6hxldj2F7rjr0EkRw7oaZK6JzvA/JiV4P7Bj8byzy1fGfCdD
+ ed5jCTOWU8OUlPSHlcha20IJR2ag4JxtU3kLWzFAVnirVJlhycVVgJncDfEqFPqbtY
+ iXPYRp1lkIxi84zpv3yiQDORVzRqo6J0dg1idG7DlkAVYRTJtqEjlizqIFo/k/snA6
+ kqmihHXgKf7btUIGuChUjsAz0/f1X9yG59Jwb/IFb5qNUVtAYahtOmI9FB5lRXTS3C
+ o/q4eQhxcYLvg==
+Date: Fri, 21 Feb 2025 16:05:59 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Philippe =?UTF-8?B?TWF0?=
+ =?UTF-8?B?aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Eric Blake
+ <eblake@redhat.com>, John Snow <jsnow@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, "Markus Armbruster" <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH v3 00/14] Change ghes to use HEST-based offsets and add
+ support for error inject
+Message-ID: <20250221160530.020f6cec@foz.lan>
+In-Reply-To: <20250221132306.77800dbf@sal.lan>
+References: <cover.1738345063.git.mchehab+huawei@kernel.org>
+ <20250203110934.000038d8@huawei.com>
+ <20250203162236.7d5872ff@imammedo.users.ipa.redhat.com>
+ <20250221073823.061a1039@foz.lan>
+ <20250221102127.000059e6@huawei.com>
+ <20250221132306.77800dbf@sal.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW6PR12MB8897:EE_|MN0PR12MB6341:EE_
-X-MS-Office365-Filtering-Correlation-Id: c05b0c6d-3b0a-4bfe-3f1e-08dd52879f4e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Z/khCg3gb5LoL8tdCYPueeO/TY6kzR/cflROjDeTDDq8J7N1AKWaCeKD7pBW?=
- =?us-ascii?Q?bCC4K9dkii3WrJE+QNUdweX/I/DFuujiMZmf3pNrqbmXSLLSuaUq0EHz0fcQ?=
- =?us-ascii?Q?8M25uQVuDh0OGrIU9OmSlb0TKftiREUY1SmhBc9XBLTx3yMrjVZQKy09j3hZ?=
- =?us-ascii?Q?25ZiFxcEhQ9iDuE875TxUwtu+58aQI06bG4Y+hm5mj7Pqr730Satft0Bs2Qb?=
- =?us-ascii?Q?t5PhcZrmCdVBloKlTHGnRS26pFHFNSafk2ixlOoVaWwjlLt3eSurrWy0NABe?=
- =?us-ascii?Q?d9oz8aZDlpZEXbwhIFLb2iv3v7fZspuCw4KfUbDsG+xf1kdEIvo0x0ACf1mR?=
- =?us-ascii?Q?bI4kGsBrINmxAT/IEblMaJwc7kQHS8lfmCWxiyxfLrRIwo/MYuETjSV8mWY5?=
- =?us-ascii?Q?wxmxAbK1i0paayUp+4tADItcJ110eK9LQ/sb/1cixtBbpzA80apX0jrDoN0Q?=
- =?us-ascii?Q?WJLb6oZ0O8VPJoBgHoPOcmIYIJ8PUeDCGT1OHccQJuG9KnSTbRzAAKS0+z7Y?=
- =?us-ascii?Q?H9C6WxcoURZ/xFsUIM3ML+95h39/s6tXtxmL/NS1AW4VOWuyVvSUVtvJBD87?=
- =?us-ascii?Q?LzAtT9TYCU33A5XfHd09FjhCtvQZAX2Y2zYl4gnfpoqz+hP54+kg0U/SID1s?=
- =?us-ascii?Q?1rURS4QWRYMXrisJkqoAOab135qgiqA5+YS4nHkWwxrLobBohq9VTbgC2RY6?=
- =?us-ascii?Q?E2x519hiDvkPuevm3sTBLmiAklAUxQZYFyxQ2MO3qqX+QCPwm2G6hJqfOX0w?=
- =?us-ascii?Q?9HLq1SwVN9eseDaMe2r3jVXomkWGpJtCEKVsqS5vz/Wob9zucjfwKNDe1xdw?=
- =?us-ascii?Q?v9uHxyRVzEaRjcAbU8K87hAGUewt6rntKEkaVmk9N2Ov9jQ3qBi3YCSFTtHQ?=
- =?us-ascii?Q?dh9nH9mCC7N0TL40Z/r+vyYDeA8tRqnDFRIQwapF8oyQU/Ms2uZU3jaCrMp7?=
- =?us-ascii?Q?0FtpjasXpZ4w0XCSlY4Juf3fd11maevRVaboL2plYSMdDOtm9fl/Dhizy6b1?=
- =?us-ascii?Q?vjhQJ0WLqARghZim4OQKndApIOOlYSBYzwlxjS2SQvvakq3UR0hidtcZdED6?=
- =?us-ascii?Q?plfTl9vyltISHVvW3+ADdFNKDIaO6WGwqvoC7bsqa+30FTUQEoW5v9cPKqax?=
- =?us-ascii?Q?Ms2jI/BuL0fQX2p+xStBaWa9ZzP944gyCYc6R6BB1TZwV5vTbcK7/DUKdY7Q?=
- =?us-ascii?Q?ccS0oQ4S7KE/seX9AlG5aSa7B6wV1m3MEL0YSJyjeQFkH9D90mXKw9cFRNDP?=
- =?us-ascii?Q?AMNaL4doY8MU6QFYSDinm2stmPWpm8Gu/1GZE5BdQhXkgfI09+sbw77j/PlY?=
- =?us-ascii?Q?Si25eIkK8PHgivUtpa8yw7W/e20VVNK7RZ1pmUoOLfjIYxaSuS8Te3L1tmqx?=
- =?us-ascii?Q?R2sQiSaZoURQhlxkSyXeSE8/6ABt?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW6PR12MB8897.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?B/sFn0qM/hP4bc/6VA9Vu83mRYfVd+l2YGBH4VuqBZxc6YNowPzi3J0r/+N+?=
- =?us-ascii?Q?SzqBEpbFUIOfKEld1ntOfB0A3Cjz9/AVwhwPUxoW2qGkfNIJEMBbGz7Z16qk?=
- =?us-ascii?Q?oELQgySvdPTJd6EbhifkhHA3d7dSQZGTO5QqroDqT150Vlla61ZaV2nOTz+F?=
- =?us-ascii?Q?abwxokD5oppuktXC7eHt5cHfZ1Vb17GyS0xCJkwGlex6URJ16uFA1w72cTdf?=
- =?us-ascii?Q?DgQ1hQwGE5BUIHHvO9NELpIgNkx0A/V5XMMSUdTnyjUTBwrBLz8Rn25mgcr0?=
- =?us-ascii?Q?cZyn2qYcQcUc6F3E9UuLzzM0DJjAGJOk2sUQP3eTOO0WBoqDqy1uFWi5FN7l?=
- =?us-ascii?Q?jdtMLPXduD9AM/ZMGf8uTrkij6v0wi7sh+yk9tIOojdMgEauuWkQOnm9SM8F?=
- =?us-ascii?Q?BhkCg2Nt7O+sy+2b+HHTTNAPoko75RNa5ctwK7wNl0yX1uR/Xs9mpTl9X1SL?=
- =?us-ascii?Q?naLQT+nc0JdJ/ZePoTeeSN3paE7mLR7bARfp51xVBFkz25fwqi6vJXm2xNHI?=
- =?us-ascii?Q?o8wp182r10pnqHY1ZGkSVLrxTRKFTfcXjttNYNOdThu2sFZRd6F9tG+8XRoY?=
- =?us-ascii?Q?+k8eaZ1cSYodGyLoExJPaKWZkBz7lsCRiNMrRcr7DRGxgis2qsZhtGMpVInv?=
- =?us-ascii?Q?cUw6CLfz6VYIRVo7aUI7jLwRUas/IqeWcrBPEkhZ3zcrPdZ447BZFNnIR/IK?=
- =?us-ascii?Q?xSKNiYE+9nWvDs5xSCJNErLhrwJ9/iU9a2RtBMwMBM8MmuO0oyRI/EVRaXev?=
- =?us-ascii?Q?PmhHHq40CDdfj6vaGSjM3B4Y02ZPZOvyi7209Oae6pAoAkdBoMvg2Pm7xQnd?=
- =?us-ascii?Q?7bvZbSWbHIut9zu5xqndskS0zubX5UF8fH+BHB2ldTHHL13/iXguNxCeTzBi?=
- =?us-ascii?Q?onHVMAMkW16eKG9wSStZSZV41tgzSSTwTxWeIKlTy5so1PvWoYqsuCKyPzQJ?=
- =?us-ascii?Q?hMn/oexaalgTqTT6/9sfTNqyVbE5vM5Pzsu9ecEXGR5oNSMzE99TULtz/upR?=
- =?us-ascii?Q?YHoy2qzt7B/GLtOukIiw8PiELFUquArs8nMM6jgomvCBnWIlMiUwKjiTwyM9?=
- =?us-ascii?Q?piGw53LxloABFxTQMhfYC/G/btfFxQ5F6OntGCWDiIW24Eu5VFUW+S1gD81D?=
- =?us-ascii?Q?/RdIKa/jxIACCq08Y3DgMoI0jTRoT1ups0xM5ab+EncHlN6LoyQdZNyiomhb?=
- =?us-ascii?Q?BXBasac9oEG78+qJx4Do2sHjx4bMsJCzxgL4Jytt8vs9cWdp3lEoKnvGkk8W?=
- =?us-ascii?Q?j8XaFOMAAyNr3XWBkqhI3i6tspWG1KfCNaqFVjPF+kTY29v2akV4V5ZR2TTg?=
- =?us-ascii?Q?h8I2/dDz7qOZV4uCaAggvJnO86J2RGPs8jKgcuVaNQlNFcsmTJCXqa7IeQRf?=
- =?us-ascii?Q?4ZQ/fL3Y7EZjLE5lk2qhZxB/ywnEMAbjvwJ8R8dudkjrzlbMKR1sB/UXHSUI?=
- =?us-ascii?Q?QF+32kwINQBT4X5N0LcRadVoPf0hnM4xDTaRiyygJOpJOfPYhjf+WgUm0Rjc?=
- =?us-ascii?Q?DoE/OhYetzemjEQKoOVEEUqSKnVIAD6jspaz+BUmoe0OZ55QWQkkKJ7A/ab0?=
- =?us-ascii?Q?YdU/yzh4U8PVbbY7FuReon+n3o1EICGjgMlGbWt+?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c05b0c6d-3b0a-4bfe-3f1e-08dd52879f4e
-X-MS-Exchange-CrossTenant-AuthSource: MW6PR12MB8897.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2025 14:54:20.4696 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: c45yxaIzRym+7jGcB5JHo6sZcB0MgSgCfFmO+d91HDDbpUKO1shZ0DSSfGNiP8J32O7jT70G43vhgKv36uZobA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6341
-Received-SPF: softfail client-ip=2a01:111:f403:200a::613;
- envelope-from=mochs@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -74
+X-Spam_score: -7.5
+X-Spam_bar: -------
+X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,153 +88,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MMIO region size required to support virtualized environments with
-large PCI BAR regions can exceed the hardcoded limit configured in QEMU.
-For example, a VM with multiple NVIDIA Grace-Hopper GPUs passed through
-requires more MMIO memory than the amount provided by VIRT_HIGH_PCIE_MMIO
-(currently 512GB). Instead of updating VIRT_HIGH_PCIE_MMIO, introduce a
-new parameter, highmem-mmio-size, that specifies the MMIO size required
-to support the VM configuration.
+Em Fri, 21 Feb 2025 13:23:06 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
 
-Example usage with 1TB MMIO region size:
-	-machine virt,gic-version=3,highmem-mmio-size=1T
+> Em Fri, 21 Feb 2025 10:21:27 +0000
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
+> 
+> > On Fri, 21 Feb 2025 07:38:23 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> > > Em Mon, 3 Feb 2025 16:22:36 +0100
+> > > Igor Mammedov <imammedo@redhat.com> escreveu:
+> > >     
+> > > > On Mon, 3 Feb 2025 11:09:34 +0000
+> > > > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> > > >       
+> > > > > On Fri, 31 Jan 2025 18:42:41 +0100
+> > > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > > > >         
+> > > > > > Now that the ghes preparation patches were merged, let's add support
+> > > > > > for error injection.
+> > > > > > 
+> > > > > > On this series, the first 6 patches chang to the math used to calculate offsets at HEST
+> > > > > > table and hardware_error firmware file, together with its migration code. Migration tested
+> > > > > > with both latest QEMU released kernel and upstream, on both directions.
+> > > > > > 
+> > > > > > The next patches add a new QAPI to allow injecting GHESv2 errors, and a script using such QAPI
+> > > > > >    to inject ARM Processor Error records.
+> > > > > > 
+> > > > > > If I'm counting well, this is the 19th submission of my error inject patches.          
+> > > > > 
+> > > > > Looks good to me. All remaining trivial things are in the category
+> > > > > of things to consider only if you are doing another spin.  The code
+> > > > > ends up how I'd like it at the end of the series anyway, just
+> > > > > a question of the precise path to that state!        
+> > > > 
+> > > > if you look at series as a whole it's more or less fine (I guess you
+> > > > and me got used to it)
+> > > > 
+> > > > however if you take it patch by patch (as if you've never seen it)
+> > > > ordering is messed up (the same would apply to everyone after a while
+> > > > when it's forgotten)
+> > > > 
+> > > > So I'd strongly suggest to restructure the series (especially 2-6/14).
+> > > > re sum up my comments wrt ordering:
+> > > > 
+> > > > 0  add testcase for HEST table with current HEST as expected blob
+> > > >    (currently missing), so that we can be sure that we haven't messed
+> > > >    existing tables during refactoring.      
+> > 
+> > To potentially save time I think Igor is asking that before you do anything
+> > at all you plug the existing test hole which is that we don't test HEST
+> > at all.   Even after this series I think we don't test HEST.   
+> 
+> On a previous review (v2, I guess), Igor requested me to do the DSDT
+> test just before and after the patch which is actually changing its
+> content (patch 11). The HEST table is inside DSDT firmware, and it is
+> already tested.
+> 
+> > You add
+> > a stub hest and exclusion but then in patch 12 the HEST stub is deleted whereas
+> > it should be replaced with the example data for the test.  
+> 
+> This was actually a misinterpretation from my side: patch 10 adds the
+> etc/hardware_errors table (mistakenly naming it as HEST), but this
+> was never tested. For the next submission, I'll drop etc/hardware_errors
+> table from patches 10 and 12.
+> 
+> > That indeed doesn't address testing the error data storage which would be
+> > a different problem.  
+> > > 
+> > > Not sure if I got this one. The HEST table is part of etc/acpi/tables,
+> > > which is already tested, as you pointed at the previous reviews. Doing
+> > > changes there is already detected. That's basically why we added patches
+> > > 10 and 12:
+> > > 
+> > > 	[PATCH v3 10/14] tests/acpi: virt: allow acpi table changes for a new table: HEST
+> > > 	[PATCH v3 12/14] tests/acpi: virt: add a HEST table to aarch64 virt and update DSDT
+> > > 
+> > > What tests don't have is a check for etc/hardware_errors firmware inside 
+> > > tests/data/acpi/aarch64/virt/, but, IMO, we shouldn't add it there.
+> > > 
+> > > See, hardware_errors table contains only some skeleton space to
+> > > store:
+> > > 
+> > > 	- 1 or more error block address offsets;
+> > > 	- 1 or more read ack register;
+> > > 	- 1 or more HEST source entries containing CPER blocks.
+> > > 
+> > > There's nothing there to be actually checked: it is just some
+> > > empty spaces with a variable number of fields.
+> > > 
+> > > With the new code, the actual number of CPER blocks and their
+> > > corresponding offsets and read ack registers can be different on 
+> > > different architectures. So, for instance, when we add x86 support,
+> > > we'll likely start with just one error source entry, while arm will
+> > > have two after this changeset.
+> > > 
+> > > Also, one possibility to address the issues reported by Gavin Shan at
+> > > https://lore.kernel.org/qemu-devel/20250214041635.608012-1-gshan@redhat.com/
+> > > would be to have one entry per each CPU. So, the size of such firmware
+> > > could be dependent on the number of CPUs.
+> > > 
+> > > So, adding any validation to it would just cause pain and probably
+> > > won't detect any problems.    
+> > 
+> > If we did do this the test would use a fixed number of CPUs so
+> > would just verify we didn't break a small number of variants. Useful
+> > but to me a follow up to this series not something that needs to
+> > be part of it - particularly as Gavin's work may well change that!  
+> 
+> I don't think that testing etc/hardware_errors would detect any
+> regressions. It will just create a test scenario that will require
+> constant changes, as adding any entry to HEST would hit it. 
 
-Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
----
-v6: - Fixed minor coding style nit
-v5: - Removed hyphens from power of 2
-    - Consistently use property name in all error messages
-    - Use #defines for default high PCIE MMIO size
-    - Use size_to_str() when printing size values
-    - Add comment clarifying that highmem-mmio-size will
-      update the corresponding value in extended_memmap
-v4: - Added default size to highmem-mmio-size description
-v3: - Updated highmem-mmio-size description
-v2: - Add unit suffix to example in commit message
-    - Use existing "high memory region" terminology
-    - Resolve minor braces nit
+Btw, there is just one patch on this series touching 
+etc/hardware_errors:
 
- docs/system/arm/virt.rst |  4 ++++
- hw/arm/virt.c            | 52 +++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 55 insertions(+), 1 deletion(-)
+	https://lore.kernel.org/qemu-devel/647f9c974e606924b6b881a83e047d1d4dff47d5.1740148260.git.mchehab+huawei@kernel.org/T/#u
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index 0c9c2ce0351c..adf446c0a295 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -144,6 +144,10 @@ highmem-mmio
-   Set ``on``/``off`` to enable/disable the high memory region for PCI MMIO.
-   The default is ``on``.
+The table change is due to this simple hunk:
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 4f174795ed60..7b6e90d69298 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -896,6 +896,7 @@ static void acpi_align_size(GArray *blob, unsigned align)
  
-+highmem-mmio-size
-+  Set the high memory region size for PCI MMIO. Must be a power of 2 and
-+  greater than or equal to the default size (512G).
-+
- gic-version
-   Specify the version of the Generic Interrupt Controller (GIC) to provide.
-   Valid values are:
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4a5a9666e916..ee69081ef421 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -53,6 +53,7 @@
- #include "hw/loader.h"
- #include "qapi/error.h"
- #include "qemu/bitops.h"
-+#include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "hw/pci-host/gpex.h"
-@@ -192,6 +193,10 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_MEM] =                { GiB, LEGACY_RAMLIMIT_BYTES },
+ static const AcpiNotificationSourceId hest_ghes_notify[] = {
+     { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
++    { ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_GPIO },
  };
- 
-+/* Update the docs for highmem-mmio-size when changing this default */
-+#define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
-+#define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
-+
- /*
-  * Highmem IO Regions: This memory map is floating, located after the RAM.
-  * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
-@@ -207,13 +212,16 @@ static const MemMapEntry base_memmap[] = {
-  * PA space for one specific region is always reserved, even if the region
-  * has been disabled or doesn't fit into the PA space. However, the PA space
-  * for the region won't be reserved in these circumstances with compact layout.
-+ *
-+ * Note that the highmem-mmio-size property will update the high PCIE MMIO size
-+ * field in this array.
-  */
- static MemMapEntry extended_memmap[] = {
-     /* Additional 64 MB redist region (can contain up to 512 redistributors) */
-     [VIRT_HIGH_GIC_REDIST2] =   { 0x0, 64 * MiB },
-     [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
-     /* Second PCIe window */
--    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, 512 * GiB },
-+    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
- };
- 
- static const int a15irqmap[] = {
-@@ -2550,6 +2558,40 @@ static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
-     vms->highmem_mmio = value;
- }
- 
-+static void virt_get_highmem_mmio_size(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    uint64_t size = extended_memmap[VIRT_HIGH_PCIE_MMIO].size;
-+
-+    visit_type_size(v, name, &size, errp);
-+}
-+
-+static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    uint64_t size;
-+
-+    if (!visit_type_size(v, name, &size, errp)) {
-+        return;
-+    }
-+
-+    if (!is_power_of_2(size)) {
-+        error_setg(errp, "highmem-mmio-size is not a power of 2");
-+        return;
-+    }
-+
-+    if (size < DEFAULT_HIGH_PCIE_MMIO_SIZE) {
-+        char *sz = size_to_str(DEFAULT_HIGH_PCIE_MMIO_SIZE);
-+        error_setg(errp, "highmem-mmio-size cannot be set to a lower value "
-+                         "than the default (%s)", sz);
-+        g_free(sz);
-+        return;
-+    }
-+
-+    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
-+}
- 
- static bool virt_get_its(Object *obj, Error **errp)
- {
-@@ -3207,6 +3249,14 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-                                           "Set on/off to enable/disable high "
-                                           "memory region for PCI MMIO");
- 
-+    object_class_property_add(oc, "highmem-mmio-size", "size",
-+                                   virt_get_highmem_mmio_size,
-+                                   virt_set_highmem_mmio_size,
-+                                   NULL, NULL);
-+    object_class_property_set_description(oc, "highmem-mmio-size",
-+                                          "Set the high memory region size "
-+                                          "for PCI MMIO");
-+
-     object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
-                                   virt_set_gic_version);
-     object_class_property_set_description(oc, "gic-version",
--- 
-2.46.0
 
+
+Before such patch, /etc/hardware_errors has:
+
+	- 1 error block offset;
+	- 1 ack register;
+	- 1 GHESv2 entry for SEA
+
+After the change:
+
+- for virt-9.2: nothing changes, as hw/arm/virt-acpi-build.c will
+  use the backward-compatible table with a single entry to be
+  added to HEST:
+
+	static const AcpiNotificationSourceId hest_ghes_notify_9_2[] = {
+	    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
+	};
+
+- for virt-latest/virt-10.0, it will use the new table to create two
+  sources:
+
+	static const AcpiNotificationSourceId hest_ghes_notify[] = {
+	    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
+	    { ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_GPIO },
+	};
+
+  which will actually mean that /etc/hardware_errors will now have:
+
+	- 2 error block offsets (one for SEA, one for GED);
+	- 2 ack registers (one for SEA, one for GED);
+	- 1 GHESv2 entry for SEA notifier;
+	- 1 GHESv2 entry for GED GPIO notifier.
+
+With the discussions with Gavin, for virt-10.0 and above, we may end changing 
+the new table (hest_ghes_notify) to have one SEA entry per CPU, plus the GPIO 
+one, and add an extra logic at the error injection logic to select the SEA
+entry based on the CPU ID and/or based on having an already acked
+SEA notifier.
+ 
+> 
+> Besides that, I don't think adding support for it would be a simple
+> matter of adding another table. See, after this series, there are two 
+> different scenarios for the /etc/hardware_errors:
+> 
+> - one with a single GHESv2 entry, for virt-9.2;
+> - another one with two GHESv2 entries for virt-10.0 and above that
+>   will dynamically change its size (starting from 2) depending on
+>   the features we add, and if we'll have one entry per CPU or not.
+> 
+> Right now, the tests there are only for "virt-latest": there's no
+> test directory for "virt-9.2". Adding support for virt-legacy will 
+> very likely require lots of changes there at the test infrastructure,
+> as it will require some virt migration support. 
+> 
+> > > What could be done instead is to have a different type of tests that
+> > > would use the error injection script to check if regressions are 
+> > > introduced after QEMU 10.0. Such new kind of test would require
+> > > this series to be merged first. It would also require the usage of
+> > > an OSPM image with some testing tools on it. This is easier said 
+> > > than done, as besides the complexity of having an OSPM test image,
+> > > such kind of tests would require extra logic, specially if it would
+> > > check regressions for SEA and other notification sources.
+> > >     
+> > Agreed that a more end to end test is even better, but those are
+> > quite a bit more complex so definitely a follow up.  
+> 
+> Yes, but it could be simpler than modifying ACPI tests to handle
+> migration.
+> 
+> The way I see is that such kind of integration could be done by some
+> gitlab workflow that would run an error injection script inside a
+> pre-defined image emulating both virt-9.2 and virt-latest and checking
+> if the HEST tables were properly generated for both SEA and GED
+> sources.
+> 
+> This is probably easier for GED, as the QMP interface already
+> detects that the read ack register was changed by the OSPM. For
+> SEA, it may require either some additional instrumentation or to
+> capture OSPM logs.
+> 
+> Anyway, ether way, a change like that is IMO outside the escope of
+> this series, as it will require lots of unrelated changes.
+> 
+> Regards,
+> Mauro
+> 
+
+
+
+Thanks,
+Mauro
 
