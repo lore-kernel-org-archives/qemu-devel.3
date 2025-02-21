@@ -4,70 +4,180 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E4ECC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19222C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlNwv-0002DF-Ln; Fri, 21 Feb 2025 02:59:53 -0500
+	id 1tlO4P-0004SB-G3; Fri, 21 Feb 2025 03:07:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
- id 1tlNwu-0002Cu-19; Fri, 21 Feb 2025 02:59:52 -0500
-Received: from m.syntacore.com ([178.249.69.228])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1tlO4O-0004Rx-5b
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:36 -0500
+Received: from smarthost4.eviden.com ([80.78.11.85])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
- id 1tlNws-0004qI-3y; Fri, 21 Feb 2025 02:59:51 -0500
-Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
- by m.syntacore.com (Proxmox) with ESMTP id 8029DB41C1A;
- Fri, 21 Feb 2025 10:59:45 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:from:from:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=m; bh=/CgyW+by9AtBGWY7IZ4XLgq
- saTkzvDeiCeVqfC19aY4=; b=Q1Xrd7wNix3Y5l3P6yxyvfnZi0NIGA8zfMSjdnM
- QcyE1/cFTBMNATwv8L6LSlLjpyz0saSM0n31Ps2sgSseNSyBafIQQ/Db0LDLwO1/
- IlrJ9U74qMt+8jyZPC/r4qxkVLq8F7GaKFYQbQv9AZWdWoeJDunPyU816XsftJ9V
- Lq43IZAXBGuwlwYhcqJJabscUJB2GS2TyW+Xkais4Mid+QLe4/X73aNl4DgWF5eN
- xwEyVOGQn6Dr053Q9vu9C6XmuHpXRp7wMdh83OiApOpV8lQIa5DJKWf/aFwY09Ft
- kRC2WHCLSxgUuJgG5YLzWd/QFcUxxNCxVn9tjHDcqX0eRoQ==
-Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
- [10.76.202.20])
- by m.syntacore.com (Proxmox) with ESMTPS id 5E680B41B9D;
- Fri, 21 Feb 2025 10:59:45 +0300 (MSK)
-Received: from [10.178.157.106] (10.178.157.106) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 21 Feb 2025 10:59:12 +0300
-Message-ID: <8e495335-7f21-47a5-925d-09ecf4b3a08b@syntacore.com>
-Date: Fri, 21 Feb 2025 10:58:28 +0300
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1tlO4M-0005im-Bk
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1740125254; x=1771661254;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=tQ4ZD/jVqFaAa80Rd9aB0joY7YkHKhzqxvXOWS3zxO8=;
+ b=lwTOUVWmce6jJR+o18bPNKlNs77ek6dj2+KnxEyn9WBsPv9weGW+Na+h
+ yPFtw/JMZybHdThwgOa+WYVKIuwhYoS649tyqpeLxLuUQCFMk+HFD7oDL
+ thU9jhTTDg18vJCj9ZZjoMvPJUeW/Lzzo3w6uNm0XfJ4+CLWP8kLsGaGG
+ GwXQli74EInopSx57nSuR3K6t+krgAaP48amdARof3FfiGXprvjT81TWD
+ HdfTiplyeKbY2tR8wMTo1o8hbgnsYdQI7KJvTA/Bun7Pe1O2KPWyt8Rjl
+ l0JMJnbMEvc/ZS8N2DtrPmZtfl21oToeI+VP4X6GambQ+2izflWYac3Wg w==;
+X-CSE-ConnectionGUID: RMmJhISlSR2vrPv0C9vx5w==
+X-CSE-MsgGUID: tpaTDNRlQweHwdUckI3GZg==
+X-IronPort-AV: E=Sophos;i="6.13,304,1732575600"; d="scan'208";a="32836633"
+X-MGA-submission: =?us-ascii?q?MDG3gb+MQlXwotH0jsL3z3D2KHls9SeTAATDBI?=
+ =?us-ascii?q?+XSUWdVXKEERj0TB+5uC4fEbJYZvXRfM+4xdTX0MR6qb7DHfvUDdfUjc?=
+ =?us-ascii?q?07H6Tsl4pCR4mPW30+z2O4gMnHs4tibGz6LSy++sfT957kfRF+WfNz7J?=
+ =?us-ascii?q?SU9QaCR79s16xglzOc8yaZHg=3D=3D?=
+Received: from mail-db8eur05lp2106.outbound.protection.outlook.com (HELO
+ EUR05-DB8-obe.outbound.protection.outlook.com) ([104.47.17.106])
+ by smarthost4.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 21 Feb 2025 09:07:31 +0100
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ouphA0KQVrKEEDTPuWHiKmGYSK+Hh88CoHpz+x7eTObpQXUZXmWQLJEO4zl/mYdq3nvElMbiwBagkeR4Nzm4QZh+kz9v7USIInJOcwHIr9Gnj0ZMMRBUaVw0pfm8w42OwpvQE1nE8sf0nBBCF7Px7v+7utPI+DEWYm7bhq/Ai6Pcop2wiqPl3UlFTTTkmyORgZ2UgXlucbJoQWpBVKgKAxz4RtFhlEVgw7/w2UeMXNQtQrvLIpIyY+9C+x9I55wh4jaE2yxyYFrVCMQ4g5hUt4Rh7tww6iuVi2uMwzrp0/mHprqw5UpwYAmIOn968N8gKaE1BnaNzw/Il0UQkTUDIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Y7CTr+Rb2R1zqg2bmxcnsAs7xBENi9tcDM1WAW1bfKA=;
+ b=tVEjeAHuZ9LkoM60QHs+dX8ysYcEkPGnIcVUdt47dOdOVz6sJHcEOI+2prw9zoMtoyWssETUtKpjCcigX7hDAvAY2zocWYpvJ8K+qHX1HrbTqHYCL0DD8QUvWln4SqjQDp13ZoPbZg5c1i0PsSRZstEqQOfGNO5p6HCEdtyPcF0MjLXhPFcbsiTamt5P5gWYid/NYvpS0dGrMxK8rSWxhHoby1PLJ8lkeyVU9jOpYl+y0LsDysGE16fIbUHury9A/O9XuVNbTaJg2muBzAjj/gjVLqsP/8rBNcFngbPDJ0cEO418KdRGY0uIugyqgUJ+gHxprWtd2jduv/y0/y6jiQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Y7CTr+Rb2R1zqg2bmxcnsAs7xBENi9tcDM1WAW1bfKA=;
+ b=FPOB1tN9hCVWtcWNLuLPV5tRXEQQK+MdcwmX1tTbfqEXwVBYnXoZIo2sDKAUCfrfFx24Ti26r6Bs1U5jLQLehzWvEECoGb6UyVnPxT0U4DSv+DJps8eK+PaHiWSESGqCeUoG/29+NpdXc61/1Kt1l98tnBLPHM62/igAFb9CVhuIZ1nfhn+d1aKNBqSPea1o/N/t5xQ6XhGvukeQmQ2Yp/WZK5Hbdu5mavj86q6QgK91bdHlW1a6XS6bIuwARRknrjp0pcfzvUvfax42qB4HrW1gB8QnrSQpQ6AYx/iiVtobo+SEXXJCqwlF6+T6qgkWVw8zVnbZy45kK0OWRcGrJg==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by PR3PR07MB8162.eurprd07.prod.outlook.com (2603:10a6:102:175::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 21 Feb
+ 2025 08:07:30 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
+ 08:07:30 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "tjeznach@rivosinc.com"
+ <tjeznach@rivosinc.com>, "minwoo.im@samsung.com" <minwoo.im@samsung.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Subject: [PATCH v3 01/19] memory: Add permissions in IOMMUAccessFlags
+Thread-Topic: [PATCH v3 01/19] memory: Add permissions in IOMMUAccessFlags
+Thread-Index: AQHbhDeng2anJ60rSkqnEuIWTEDQ7A==
+Date: Fri, 21 Feb 2025 08:07:30 +0000
+Message-ID: <20250221080331.186285-2-clement.mathieu--drif@eviden.com>
+References: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PR3PR07MB8162:EE_
+x-ms-office365-filtering-correlation-id: 9590c01c-cf27-4ece-4a73-08dd524eca0d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?EJ2hNfGQ+UOuABOzDz9q3Zc6ZW760/Xuk0ciU6qmtVIeqHZ+Dvd8SMmYYn?=
+ =?iso-8859-1?Q?M789vR5m25FFf++sTAfB9UeQy46mVh5SwoelmhidgmCZCRJsex1P+5ZGvZ?=
+ =?iso-8859-1?Q?jlIy3N0W6iV1fst9+Nw7zBmCkbDO5z//i6NVE/Zqss7hwXtWzjixpYBsIw?=
+ =?iso-8859-1?Q?wD7Qx6hk0YRGJask7aGqH+TIx5Y2s5Z82HqUf4RCVr8tGVRG5OtDE6bA81?=
+ =?iso-8859-1?Q?WJpIwYKqHUtzFj7B4w1mcSn1e3g0t9i3pVskEUopEhaCEDcQiLC1BCVfPf?=
+ =?iso-8859-1?Q?6cDqP9K2g2Dr2G0HoVT2TxtsXWZ/IW0yMSJdhkEgNelBaquYgzB3MB4NCr?=
+ =?iso-8859-1?Q?MotLMZNxptp8THOX+haSVFhDpy2nYcDlzz3q49OnP7eAhLWDberAVyGJ6o?=
+ =?iso-8859-1?Q?BXXz9zjK0JqJ4AizEeWDNbOlz546zXjzuzeeJEh4RL3zI15y2SaMA3LFLH?=
+ =?iso-8859-1?Q?ALkSZLR+6fkbeahKX4jwXgGjrQWmTXglDSmzNSQI/45ej6N3rmx/W5eWwG?=
+ =?iso-8859-1?Q?/kWijR5YXK6l+cSQpZ8K6uBi2QBlTmeFX1vHhargesEj1zapf4Q0WnRPWp?=
+ =?iso-8859-1?Q?iqiGwoVxwTfVMp4GOxPiN6CbcU9PC05BUn+kWoUUx2oeDXYaZOJbsv9pBH?=
+ =?iso-8859-1?Q?DiFOTuaakDIYujh5wb12MR1HMzzRh3v0kuA3rNgdiA2d8zsWto9z2zrECS?=
+ =?iso-8859-1?Q?SLzpHxk7/SqC+hLQ65Pu5K3/mFRB8rP/wU/m0JbBmWePRVaayoNl5DLQh4?=
+ =?iso-8859-1?Q?LcTpC1zN57UhP0Je+r4GAlEdK3Vh2NWt9YMMKOTydzIDX1kQtdp1NSiZkj?=
+ =?iso-8859-1?Q?LQmprMd0E8b7vsF1nQLurhs3k/ZDmQcUqpcXn89cVi2u0uyKjyjoULHip6?=
+ =?iso-8859-1?Q?0cp7XZEDx46zyznyeA8OOnotOci4a3tsZ+oDE54+3ntSVttznuMz8C8cGP?=
+ =?iso-8859-1?Q?gk0xWxbmVRKLj7OUijawo2IC3KJc7dGm49HnPCsL9z2yXVwCs8D54qoFhs?=
+ =?iso-8859-1?Q?7DED9veUiv288g+JWsQeR2+3HqC/pn3NkkFmbAtQmkKdfKiZyIlwJgREwb?=
+ =?iso-8859-1?Q?6iRUTpC3vmSpIKJMPlczPgdpoHS4RswUafNOtPqvxMMqDDyvoiPuo2Lrgo?=
+ =?iso-8859-1?Q?u7Fy9jngAbDdQ9GDxc8dW4GlFFuCwqUAaUD/UDcU3onLRWQX6ZRfUbCf4R?=
+ =?iso-8859-1?Q?viyE7mD/h5U/nsdwH2sDomRPjj+0cuH3IZ1SwTcfRo2d07+f2CNb6A5wwu?=
+ =?iso-8859-1?Q?dZkyQaRqSQTmJF6GBmZR22EnxaquwvkXH3Uo6GssjPD40HQxCkTnkCtjwV?=
+ =?iso-8859-1?Q?EEIuM0IQtKVOPogzv2dBLuA9IqT23ppxz5Q1iJM3Pz/RmD3ziXA275I1mb?=
+ =?iso-8859-1?Q?EsWU/xKjSNQsf8u/I173W3FWQgoRhBcjWher2YSeR2m3AmPQACcbR99lvj?=
+ =?iso-8859-1?Q?8VzTSLScHsyJv2xvjzScw7g3OIJhvv+q6XxqgwcRl9q7qOTNVSQV9JWO2Y?=
+ =?iso-8859-1?Q?OQTeraoUxeHTnZUhbE+PoE?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?r3kymrEcMkxkXIk/QxNLgYaKw3bifiG7y4T9tNmHNaM8rcoj2h0/43JwnW?=
+ =?iso-8859-1?Q?mw0RQ1KkzZtmn2tlIQC3BL+jFNkH6WlHEhOCRSqzo5aLO/qN6757vVNXQF?=
+ =?iso-8859-1?Q?Kk1tU094bNGQt7p1sk1CvcJ6CnGKO+wlv42DQtYr3qaMmVJwQDeTKpB23k?=
+ =?iso-8859-1?Q?1UjdO8e4fQb6S6yudPy+JRZjpEOZI8UhdK/wgjOqDymqAFfyJ0yC/uZFos?=
+ =?iso-8859-1?Q?mrwSNX40tMQdzRHC8RUC7ctbx+xMRwu2mvtmCVsnGziAErJPTiEcxJSzdh?=
+ =?iso-8859-1?Q?LOgEokdGOW5kDHwdCogn4DBYJTbCJ1zzAm4cUmpcPRWu4RS/p6WpishnX9?=
+ =?iso-8859-1?Q?RsjVqtoGahzr7l9JX0YCpHCqS+7gBgwnbkNAKNlzM0Lrp+YRZaccEWvpDU?=
+ =?iso-8859-1?Q?zNr17gCmYCjnPdTuaqEFcJQRn4WCmSCgHUlTMmJAjAyG+NllPPhxAWaZSJ?=
+ =?iso-8859-1?Q?nlb5IpeAUyR+1CZTPWqUiJc30eECQenzRcwBFuRHXPmiZfDuF9vkCBVfm6?=
+ =?iso-8859-1?Q?N6gRcFfLoxlTdCPD5/q76HsloYqTkIF8fPW9iz77sSPRPbnuO00dtkN5hQ?=
+ =?iso-8859-1?Q?wpNe/DMsBC7q0qoV8F+bVKDM0cKyIuAE1LfurOSZedllHxvdXp7nhFxV47?=
+ =?iso-8859-1?Q?4KRFJ22g/Y611LM1F1eMPi2mCvRW53+H5fy0JbzAz8twSkXHWyu6F0ek0i?=
+ =?iso-8859-1?Q?9Ozl5p63Ls1zS8rbSG6qa3VpR/3AVFLwFrJW1Xf7VlJMoJu4E+XznKFM/1?=
+ =?iso-8859-1?Q?h7jYPcQdgYf7nvMcls4B2eRxGd1HIcrfrfKUpqF/26egc4twpvHvg4cMHy?=
+ =?iso-8859-1?Q?gljZjiOqznixGFch70GjVwp/thNGkTckBtdvZDzcQoGhcktr99+nB2v46d?=
+ =?iso-8859-1?Q?lSK0GdVwP51Ma179pXpA0FibzSoFeaqnya+aHLklkIZ6ZG1G/thGzCBNU5?=
+ =?iso-8859-1?Q?v0R8mmcz0U+x/vVRbF5XKqGxomTOccwgaqPoK/WwrXWOX2sWFAXXQw0fRd?=
+ =?iso-8859-1?Q?OqC5zJluNL5Ray+9fGJG/pznADMUY7cCZE919acrk4S/e4tSIW+WuyRgnC?=
+ =?iso-8859-1?Q?rZtC0jjkZRCzeupmeMW+C1JH0vtWwgKm13U5e6NZCUhgedfYeiRRwXPT/r?=
+ =?iso-8859-1?Q?VmIBbVAgJcBQgBPXa654946EhWX+AD/XXNPvgDe2m2qJ7IY/+dUlFgQ6VU?=
+ =?iso-8859-1?Q?ld/35YyEZXaXzcYYKlDG6nht2jsqRsfe5zuvBHxoQ2V4XbMhc1Lja9zpZO?=
+ =?iso-8859-1?Q?rGO0+AdSCfq6qLGK31pmqQCa+iR/GoH9Q5RF3l5zhTcpOabfvt1Phi/aaS?=
+ =?iso-8859-1?Q?GXIzBMA+YS9cO60yCEo6+eS38fCyNKCgUREfvSbg137WMfUnjRS22M5OiG?=
+ =?iso-8859-1?Q?TL8O3pbk4F6N/YFWq30+/5eXYL0tppx/z2WkHYYTRIbZq1Y9dsC2oqqMe3?=
+ =?iso-8859-1?Q?+oitRJ1wqo9aFjzRLvxHU1LDBah+Je+7+TQ7Dk9xiRKx+FjUj76RMgFoDV?=
+ =?iso-8859-1?Q?1xlTFn745/s0RkwnsVGPBRt8c+xRPbIqRANqgombT8UGXDs2EKBY58vmwR?=
+ =?iso-8859-1?Q?LYKS47F95e3M84SABJkHf4vluk5b4PRETmSc7U3Ci7DTzcQmJpuKza33tf?=
+ =?iso-8859-1?Q?REl29ItKSDQOOl9hSU0rlj6LtqM7tgbKnnik1sgttqVTewI3cwQ3UjplpV?=
+ =?iso-8859-1?Q?F9Dzq+h/tjLOt9blSdU=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: fix C extension disabling on misa write
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
- <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
- <mjc@sifive.com>
-References: <20250220163120.77328-1-vladimir.isaev@syntacore.com>
- <3ffe3ecf-4bd8-447e-a984-442c71a94f89@ventanamicro.com>
-Content-Language: en-US, ru-RU
-From: Vladimir Isaev <vladimir.isaev@syntacore.com>
-In-Reply-To: <3ffe3ecf-4bd8-447e-a984-442c71a94f89@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.178.157.106]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=vladimir.isaev@syntacore.com; helo=m.syntacore.com
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9590c01c-cf27-4ece-4a73-08dd524eca0d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 08:07:30.6985 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CKyqHA63sbAGWAZN6rBW8ykvmP3JGabtDh2V08dwY/i0rBOepzgMNAL5NQhOL3djgfSZ7f70I9NpbNJAIxFxka6O90EP/I/8qNw0wgzzrmP6IqgLRPyRMBCCWbCrmB7l
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR07MB8162
+Received-SPF: pass client-ip=80.78.11.85;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,74 +193,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
+This will be necessary for devices implementing ATS.
+We also define a new macro IOMMU_ACCESS_FLAG_FULL in addition to
+IOMMU_ACCESS_FLAG to support more access flags.
+IOMMU_ACCESS_FLAG is kept for convenience and backward compatibility.
 
-20.02.2025 20:59, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 2/20/25 1:31 PM, Vladimir Isaev wrote:
->> According to spec:
->> Writing misa may increase IALIGN, e.g., by disabling the "C" extension. If an instruction that would
->> write misa increases IALIGN, and the subsequent instruction’s address is not IALIGN-bit aligned, the
->> write to misa is suppressed, leaving misa unchanged.
->>
->> So we should suppress disabling "C" if it is already enabled and
->> next instruction is not aligned to 4.
->>
->> Fixes: f18637cd611c ("RISC-V: Add misa runtime write support")
->> Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
->> ---
->>   target/riscv/csr.c | 7 ++++---
->>   1 file changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->> index afb7544f0780..32f9b7b16f6f 100644
->> --- a/target/riscv/csr.c
->> +++ b/target/riscv/csr.c
->> @@ -2067,11 +2067,12 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
->>       val &= env->misa_ext_mask;
->>         /*
->> -     * Suppress 'C' if next instruction is not aligned
->> +     * Disabling 'C' increases IALIGN to 32. If subsequent instruction's address
->> +     * is not 32-bit aligned, write to misa is suppressed.
->>        * TODO: this should check next_pc
->>        */
->> -    if ((val & RVC) && (GETPC() & ~3) != 0) {
->> -        val &= ~RVC;
-> 
-> Not related to your changes but it would be nice if we made more use of
-> QEMU_IS_ALIGNED() instead of doing these bitwise ops to check alignment.
-> E.g. to check if pc is aligned to 4: QEMU_IS_ALIGNED(GETPC(), 4).
+Here are the flags added (defined by the PCIe 5 specification) :
+    - Execute Requested
+    - Privileged Mode Requested
+    - Global
+    - Untranslated Only
 
-will fix, thank you!
+IOMMU_ACCESS_FLAG sets the additional flags to 0
 
-> 
-> 
->> +    if (!(val & RVC) && (env->misa_ext & RVC) && (GETPC() & 0x3)) {
->> +        return RISCV_EXCP_NONE;
->>       }
-> 
-> This will abort the write altogether, skipping valid changes to other bits. What
-> we want is a "val &= ~RVC" if the proper conditions for clearing RVC are met.
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+---
+ include/exec/memory.h | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-Not sure since specification says:
-
-> If an instruction that would write misa increases IALIGN, and the subsequent instruction’s
-> address is not IALIGN-bit aligned, the write to misa is suppressed, leaving misa unchanged.
-
-In my understanding here we should skip all changes to misa, not just C.
-
-Thank you,
-Vladimir Isaev
-
-> 
-> Thanks,
-> 
-> Daniel
-> 
->>         /* Disable RVG if any of its dependencies are disabled */
-> 
-> 
-
-
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 78c4e0aec8..29f5d31eef 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -110,15 +110,34 @@ struct MemoryRegionSection {
+=20
+ typedef struct IOMMUTLBEntry IOMMUTLBEntry;
+=20
+-/* See address_space_translate: bit 0 is read, bit 1 is write.  */
++/*
++ * See address_space_translate:
++ *      - bit 0 : read
++ *      - bit 1 : write
++ *      - bit 2 : exec
++ *      - bit 3 : priv
++ *      - bit 4 : global
++ *      - bit 5 : untranslated only
++ */
+ typedef enum {
+     IOMMU_NONE =3D 0,
+     IOMMU_RO   =3D 1,
+     IOMMU_WO   =3D 2,
+     IOMMU_RW   =3D 3,
++    IOMMU_EXEC =3D 4,
++    IOMMU_PRIV =3D 8,
++    IOMMU_GLOBAL =3D 16,
++    IOMMU_UNTRANSLATED_ONLY =3D 32,
+ } IOMMUAccessFlags;
+=20
+-#define IOMMU_ACCESS_FLAG(r, w) (((r) ? IOMMU_RO : 0) | ((w) ? IOMMU_WO : =
+0))
++#define IOMMU_ACCESS_FLAG(r, w)     (((r) ? IOMMU_RO : 0) | \
++                                    ((w) ? IOMMU_WO : 0))
++#define IOMMU_ACCESS_FLAG_FULL(r, w, x, p, g, uo) \
++                                    (IOMMU_ACCESS_FLAG(r, w) | \
++                                    ((x) ? IOMMU_EXEC : 0) | \
++                                    ((p) ? IOMMU_PRIV : 0) | \
++                                    ((g) ? IOMMU_GLOBAL : 0) | \
++                                    ((uo) ? IOMMU_UNTRANSLATED_ONLY : 0))
+=20
+ struct IOMMUTLBEntry {
+     AddressSpace    *target_as;
+--=20
+2.48.1
 
