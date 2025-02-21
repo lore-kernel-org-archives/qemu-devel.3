@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10114C021B5
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DBE6C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlVLI-0004gD-Gy; Fri, 21 Feb 2025 10:53:32 -0500
+	id 1tlVN4-0006ED-5l; Fri, 21 Feb 2025 10:55:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1tlVLE-0004f1-Nm
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:53:28 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1tlVLC-0004FK-77
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:53:28 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38f325ddbc2so1601110f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:53:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1740153205; x=1740758005; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VWZPE0CJ4XoKWyVumQRHQmTFwkDW08j4VNm/xt4Y6eo=;
- b=Ls+5B9QKEEmitbeMUH1e+PdMoyNmeY9sPPUI7vKBkLKi8m4dyHHKjBggY57z+t7Nou
- p27T8gg11HyfbGB9d/GYtUYXLnPS6nCaG7fFHl4pveyaJ8U17nNpk4d09Um8UoeL7wnT
- avI+SNjnC/92amhQMAUsW3ulMris4h5hQyDBq8lJHI5PzH06QQeyxeRmVxOqahTLKwzo
- 0KjoJJ97YegsuXzRr3AEzGF1lMFbLCTLqYPxCVckUAX60i8NR0oRWO3WsHke6PHmjyMA
- TNsIx0Vf/KbyIQo7Wx18ziJec+vAsT/UXPmg1+KEhWBmgdsAY0sEHjoyevidqcYkgfuU
- jz5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740153205; x=1740758005;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VWZPE0CJ4XoKWyVumQRHQmTFwkDW08j4VNm/xt4Y6eo=;
- b=gvoxfRIy+9Mho9gTVyrSVXXib0nAGL7SlAqrPeXauKLrrBOt4OcGB1LUPxsSX9NLc7
- M468/s4+ChyqSI2y0oArIb1dpma2qFeYmDz+SVRrR+/SMhyARS2BdipXuRN7JDt1Rwyn
- zMAvP1RD7DbJBRzu9rjnHasjoUS2pZm/NjDKDrx4vp3+2np+MQhK70dolCqs5Ln/HXX1
- Sx3Bo/OVe+hgzqFU34zdgUzQPafuLxvYYV2EnHO5jwGtZixAb22eWSF2JVL8waM3V03G
- Gea38ZFWpekp8gujfjNFvaHtnAeDZvq1P3kw/Xm7Jai9nuNXtc3i6fG3b6tjLa9nHwOD
- 5nlw==
-X-Gm-Message-State: AOJu0YyujJU9v7xgtS25oKzBgNVSnOZhimAfaOYMQ3Cfsdgv03udFSL+
- /O+Y/H6ymNlDobkN3friVz6US9bekNApKncN8hcvkShClXVTRxWHm3jirP1RU5Xh4ZzoL1w0rWO
- Ur+YHcQ==
-X-Gm-Gg: ASbGncugY4cYL5MadV11HTBhMKlC7aEWunBneAROqp++q1RQ+XvAbygc7djCSnI3TrT
- VXuLkupFltb9DDre9uiJoycngG2yZSML1/61YevGnm5q8kx2x71llR+mNqj01tjWnYAZyTOnRQd
- M0fevmqTvi0NJAxM98zuwflm2dJ52ITsxhw+S+z1rhqW3jiz7uBUbDBBvT1N/sNrsbXxUVRSTpc
- U5NZ/UJAzGNVfmz6c5qbu3kxrD2w8CDMU+3ZQbjvsh5P8NWPMoAbB1DxB5tY0VQ/JRA8I5LlftW
- PxvS0oJUgS7ePJQZNnJ9cQ6caZmmjtGh564EjoyNnocs
-X-Google-Smtp-Source: AGHT+IFC2gokp/ZX300Zs3ofEKFZTcxlW797ZK4oeltyUDnCXTxtMwJJ/rSj3vHyngcRvsULtyYhgQ==
-X-Received: by 2002:a5d:64c4:0:b0:38f:6697:af91 with SMTP id
- ffacd0b85a97d-38f70825fe0mr3147442f8f.39.1740153204743; 
- Fri, 21 Feb 2025 07:53:24 -0800 (PST)
-Received: from paolo-laptop-amd.. ([2a0e:cb01:d3:f100:1f03:a9f0:23a0:9bda])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f25a0fa1esm23510035f8f.100.2025.02.21.07.53.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 07:53:24 -0800 (PST)
-From: Paolo Savini <paolo.savini@embecosm.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Paolo Savini <paolo.savini@embecosm.com>,
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>,
- Jeremy Bennett <jeremy.bennett@embecosm.com>,
- Craig Blackmore <craig.blackmore@embecosm.com>
-Subject: [PATCH 1/1 V2] [RISC-V/RVV] optimize the memory probing for vector
- fault-only-first loads.
-Date: Fri, 21 Feb 2025 15:53:20 +0000
-Message-ID: <20250221155320.59159-2-paolo.savini@embecosm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250221155320.59159-1-paolo.savini@embecosm.com>
-References: <20250221155320.59159-1-paolo.savini@embecosm.com>
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1tlVN2-0006D2-0G; Fri, 21 Feb 2025 10:55:20 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1tlVMz-0004dt-9W; Fri, 21 Feb 2025 10:55:19 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LFTB9W008731;
+ Fri, 21 Feb 2025 15:55:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=JdKdHfspwVppOCB2NOZ36JEx2X2B/ycvta/nAQUvm
+ qw=; b=fj+pFBV01bABMwPWf80RcBBVQt2m3+0WH3nTOPB5F9PCdT7OuQa73LRhY
+ EBCeBIbl+kn9/H5mAIoOFoqpf2Ai2KtIX1wezNll2dVL/v4ChE85k1sD1lGFar2m
+ 06+A8N6S6jmKxyIXwHXMG3BJddXG5qnN61sLsX7/9Qqhp5PMcdbLCHjEqCI10XJM
+ STrGDMlfzkYfdStT5ajgecWEpesLfZL4Jmyk2FSk6DLNFt/akvhueGbkhwTYKsi3
+ yKBhOzqhBwEvuOGh5kAppwEdWktcrHzC3PKcVJEOywe92CVweySy+fcaovFas5hz
+ ZacyzmcgBCxFjEhRum2TEy2JHle/A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xm752q29-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 15:55:14 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51LFq00Y023444;
+ Fri, 21 Feb 2025 15:55:14 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xm752q26-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 15:55:14 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51LCTLhV002297;
+ Fri, 21 Feb 2025 15:55:13 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 44w03xgscx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 15:55:13 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51LFtA0W59965938
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Feb 2025 15:55:10 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E4A2220043;
+ Fri, 21 Feb 2025 15:55:09 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F40020040;
+ Fri, 21 Feb 2025 15:55:06 +0000 (GMT)
+Received: from vaibhav?linux.ibm.com (unknown [9.39.30.226])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Fri, 21 Feb 2025 15:55:06 +0000 (GMT)
+Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
+ Fri, 21 Feb 2025 21:25:04 +0530
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
+To: qemu-devel@nongnu.org, kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
+Cc: Vaibhav Jain <vaibhav@linux.ibm.com>, npiggin@gmail.com,
+ harshpb@linux.ibm.com, shivaprasadbhat@gmail.com
+Subject: [PATCH v4] spapr: nested: Add support for reporting Hostwide state
+ counter
+Date: Fri, 21 Feb 2025 21:24:48 +0530
+Message-ID: <20250221155449.530645-1-vaibhav@linux.ibm.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=paolo.savini@embecosm.com; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: O54dQVIv6KPnfOGkKAe9yzi6T30jsHek
+X-Proofpoint-GUID: sEf0JACG3vueALExon64U56zaRq_mV98
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 mlxscore=0 adultscore=0
+ impostorscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502210111
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,152 +114,441 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fault-only-first loads in the RISC-V vector extension need to update
-the vl with the element index that causes an exception.
-In order to ensure this the emulation of this instruction used to probe the
-memory covered by the load operation with a loop that iterated over each element
-so that when a flag was raised it was possible to set the vl to the
-corresponding element index.
-This loop was executed every time whether an exception happened or not.
+Add support for reporting Hostwide state counters for nested KVM pseries
+guests running with 'cap-nested-papr' on Qemu-TCG acting as
+L0-hypervisor. The Hostwide state counters are statistics about state that
+L0-hypervisor maintains for the L2-guests and represent the state of all
+L2-guests, not just a specific one.
 
-This commit removes the per element memory probing from the main execution path
-and adds a broad memory probing first. If this probing raises any flag that is
-not a watchpoint flag (that per standard is allowed by this instruction) we
-proceed with the per element probing to find the index of the element causing
-the exception and set vl to such index.
+These stats counters are exposed to L1-Hypervisor by the L0-Hypervisor via a
+new bit-flag named 'getHostWideState' for the H_GUEST_GET_STATE hcall which
+is documented at [1]. Once this flag is set the hcall should populate the
+Guest-State-Elements in the requested GSB with the stat counter
+values. Currently following five counters are supported:
 
-Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+* l0_guest_heap_size_inuse
+* l0_guest_heap_size_max
+* l0_guest_pagetable_size_inuse
+* l0_guest_pagetable_size_max
+* l0_guest_pagetable_reclaimed
+
+At the moment '0' is being reported for all these counters as these
+counters doesn't align with how L0-Qemu manages Guest memory.
+
+The patch implements support for these counters by adding new members to
+the 'struct SpaprMachineStateNested'. These new members are then plugged
+into the existing 'guest_state_element_types[]' with the help of a new
+macro 'GSBE_NESTED_MACHINE_DW' together with a new helper
+'get_machine_ptr()'. guest_state_request_check() is updated to ensure
+correctness of the requested GSB and finally h_guest_getset_state() is
+updated to handle the newly introduced flag
+'GUEST_STATE_REQUEST_HOST_WIDE'.
+
+This patch is tested with the proposed linux-kernel implementation to
+expose these stat-counter as perf-events at [2].
+
+[1]
+https://lore.kernel.org/all/20241222140247.174998-2-vaibhav@linux.ibm.com
+
+[2]
+https://lore.kernel.org/all/20241222140247.174998-1-vaibhav@linux.ibm.com
+
+Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
 ---
- target/riscv/vector_helper.c | 103 ++++++++++++++++++++---------------
- 1 file changed, 58 insertions(+), 45 deletions(-)
+Changelog:
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 5386e3b97c..772cff8fbe 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -633,47 +633,69 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-     uint32_t esz = 1 << log2_esz;
-     uint32_t msize = nf * esz;
-     uint32_t vma = vext_vma(desc);
--    target_ulong addr, offset, remain, page_split, elems;
-+    target_ulong addr, addr_probe, addr_i, offset, remain, page_split, elems;
-     int mmu_index = riscv_env_mmu_index(env, false);
-+    int flags;
-+    void *host;
+v3->v4:
+* Updated/Fixed patch description [ Nic ]
+* Renamed the newly introduced struct members and defines [ Nic ]
+* Updated 'struct guest_state_element_type.location' callback to also
+accept 'struct SpaprMachineState *' [ Nic ]
+* Updated code in 'spapr_nested.c' to pass around 'struct
+SpaprMachineState *' which eventually needs to be sent to the 'struct
+guest_state_element_type.location' callback.
+
+v2->v3:
+* Fixed minor nits suggested [Harsh]
+* s/GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE/GUEST_STATE_REQUEST_HOST_WIDE/
+in guest_state_request_check() [Harsh]
+* MInor change in the order of comparision in h_guest_getset_state()
+[Harsh]
+* Added reviewed-by of Harsh
+
+v1->v2:
+* Introduced new flags to correctly compare hcall flags
+  for H_GUEST_{GET,SET}_STATE [Harsh]
+* Fixed ordering of new GSB elements in spapr_nested.h [Harsh]
+* s/GSBE_MACHINE_NESTED_DW/GSBE_NESTED_MACHINE_DW/
+* Minor tweaks to patch description
+* Updated recipients list
+---
+ hw/ppc/spapr_nested.c         | 119 ++++++++++++++++++++++++----------
+ include/hw/ppc/spapr_nested.h |  67 +++++++++++++++++--
+ 2 files changed, 147 insertions(+), 39 deletions(-)
+
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index 7def8eb73b..4b1dee5eac 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -64,10 +64,9 @@ static
+ SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
+                                                      target_ulong guestid)
+ {
+-    SpaprMachineStateNestedGuest *guest;
+-
+-    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
+-    return guest;
++    return spapr->nested.guests ?
++        g_hash_table_lookup(spapr->nested.guests,
++                            GINT_TO_POINTER(guestid)) : NULL;
+ }
  
-     VSTART_CHECK_EARLY_EXIT(env);
+ bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
+@@ -593,26 +592,37 @@ static bool spapr_nested_vcpu_check(SpaprMachineStateNestedGuest *guest,
+     return false;
+ }
  
--    /* probe every access */
--    for (i = env->vstart; i < env->vl; i++) {
--        if (!vm && !vext_elem_mask(v0, i)) {
--            continue;
--        }
--        addr = adjust_addr(env, base + i * (nf << log2_esz));
--        if (i == 0) {
--            /* Allow fault on first element. */
--            probe_pages(env, addr, nf << log2_esz, ra, MMU_DATA_LOAD);
--        } else {
--            remain = nf << log2_esz;
--            while (remain > 0) {
--                void *host;
--                int flags;
--
--                offset = -(addr | TARGET_PAGE_MASK);
--
--                /* Probe nonfault on subsequent elements. */
--                flags = probe_access_flags(env, addr, offset, MMU_DATA_LOAD,
--                                           mmu_index, true, &host, 0);
--
--                /*
--                 * Stop if invalid (unmapped) or mmio (transaction may fail).
--                 * Do not stop if watchpoint, as the spec says that
--                 * first-fault should continue to access the same
--                 * elements regardless of any watchpoint.
--                 */
--                if (flags & ~TLB_WATCHPOINT) {
--                    vl = i;
--                    goto ProbeSuccess;
--                }
--                if (remain <= offset) {
--                    break;
-+    addr = base + ((env->vstart * nf) << log2_esz);
-+    page_split = -(addr | TARGET_PAGE_MASK);
-+    /* Get number of elements */
-+    elems = page_split / msize;
-+    if (unlikely(env->vstart + elems >= env->vl)) {
-+        elems = env->vl - env->vstart;
-+    }
+-static void *get_vcpu_state_ptr(SpaprMachineStateNestedGuest *guest,
+-                              target_ulong vcpuid)
++static void *get_vcpu_state_ptr(SpaprMachineState *spapr,
++                                SpaprMachineStateNestedGuest *guest,
++                                target_ulong vcpuid)
+ {
+     assert(spapr_nested_vcpu_check(guest, vcpuid, false));
+     return &guest->vcpus[vcpuid].state;
+ }
+ 
+-static void *get_vcpu_ptr(SpaprMachineStateNestedGuest *guest,
+-                                   target_ulong vcpuid)
++static void *get_vcpu_ptr(SpaprMachineState *spapr,
++                          SpaprMachineStateNestedGuest *guest,
++                          target_ulong vcpuid)
+ {
+     assert(spapr_nested_vcpu_check(guest, vcpuid, false));
+     return &guest->vcpus[vcpuid];
+ }
+ 
+-static void *get_guest_ptr(SpaprMachineStateNestedGuest *guest,
++static void *get_guest_ptr(SpaprMachineState *spapr,
++                           SpaprMachineStateNestedGuest *guest,
+                            target_ulong vcpuid)
+ {
+     return guest; /* for GSBE_NESTED */
+ }
+ 
++static void *get_machine_ptr(SpaprMachineState *spapr,
++                             SpaprMachineStateNestedGuest *guest,
++                             target_ulong vcpuid)
++{
++    /* ignore guest and vcpuid for this */
++    return &spapr->nested;
++}
 +
-+    /* Check page permission/pmp/watchpoint/etc. */
-+    flags = probe_access_flags(env, adjust_addr(env, addr), elems * msize,
-+                               MMU_DATA_LOAD, mmu_index, true, &host, ra);
+ /*
+  * set=1 means the L1 is trying to set some state
+  * set=0 means the L1 is trying to get some state
+@@ -1012,7 +1022,15 @@ struct guest_state_element_type guest_state_element_types[] = {
+     GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUFFER, 0x10, runbufout,   copy_state_runbuf),
+     GSBE_NESTED_VCPU(GSB_VCPU_OUT_BUF_MIN_SZ, 0x8, runbufout, out_buf_min_size),
+     GSBE_NESTED_VCPU(GSB_VCPU_HDEC_EXPIRY_TB, 0x8, hdecr_expiry_tb,
+-                     copy_state_hdecr)
++                     copy_state_hdecr),
++    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_HEAP_INUSE, l0_guest_heap_inuse),
++    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_HEAP_MAX, l0_guest_heap_max),
++    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_PGTABLE_SIZE_INUSE,
++                           l0_guest_pgtable_size_inuse),
++    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_PGTABLE_SIZE_MAX,
++                           l0_guest_pgtable_size_max),
++    GSBE_NESTED_MACHINE_DW(GSB_L0_GUEST_PGTABLE_RECLAIMED,
++                           l0_guest_pgtable_reclaimed),
+ };
+ 
+ void spapr_nested_gsb_init(void)
+@@ -1030,8 +1048,13 @@ void spapr_nested_gsb_init(void)
+         else if (type->id >= GSB_VCPU_IN_BUFFER)
+             /* 0x0c00 - 0xf000 Thread + RW */
+             type->flags = 0;
++        else if (type->id >= GSB_L0_GUEST_HEAP_INUSE)
 +
-+    /* If we are crossing a page check also the second page. */
-+    if (env->vl > elems) {
-+        addr_probe = addr + (elems << log2_esz);
-+        flags |= probe_access_flags(env, adjust_addr(env, addr_probe),
-+                                    elems * msize, MMU_DATA_LOAD, mmu_index,
-+                                    true, &host, ra);
-+    }
-+
-+    if (flags & ~TLB_WATCHPOINT) {
-+        /* probe every access */
-+        for (i = env->vstart; i < env->vl; i++) {
-+            if (!vm && !vext_elem_mask(v0, i)) {
-+                continue;
++            /*0x0800 - 0x0804 Hostwide Counters + RO */
++            type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE |
++                          GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY;
+         else if (type->id >= GSB_VCPU_LPVR)
+-            /* 0x0003 - 0x0bff Guest + RW */
++            /* 0x0003 - 0x07ff Guest + RW */
+             type->flags = GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE;
+         else if (type->id >= GSB_HV_VCPU_STATE_SIZE)
+             /* 0x0001 - 0x0002 Guest + RO */
+@@ -1138,18 +1161,26 @@ static bool guest_state_request_check(struct guest_state_request *gsr)
+             return false;
+         }
+ 
+-        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
++        if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE) {
++            /* Hostwide elements cant be clubbed with other types */
++            if (!(gsr->flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a host wide "
++                              "Element ID:%04x.\n", id);
++                return false;
 +            }
-+            addr_i = adjust_addr(env, base + i * (nf << log2_esz));
-+            if (i == 0) {
-+                /* Allow fault on first element. */
-+                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LOAD);
-+            } else {
-+                remain = nf << log2_esz;
-+                while (remain > 0) {
-+                    offset = -(addr_i | TARGET_PAGE_MASK);
-+
-+                    /* Probe nonfault on subsequent elements. */
-+                    flags = probe_access_flags(env, addr_i, offset,
-+                                               MMU_DATA_LOAD, mmu_index, true,
-+                                               &host, 0);
-+
-+                    /*
-+                     * Stop if invalid (unmapped) or mmio (transaction may
-+                     * fail). Do not stop if watchpoint, as the spec says that
-+                     * first-fault should continue to access the same
-+                     * elements regardless of any watchpoint.
-+                     */
-+                    if (flags & ~TLB_WATCHPOINT) {
-+                        vl = i;
-+                        goto ProbeSuccess;
-+                    }
-+                    if (remain <= offset) {
-+                        break;
-+                    }
-+                    remain -= offset;
-+                    addr_i = adjust_addr(env, addr_i + offset);
-                 }
--                remain -= offset;
--                addr = adjust_addr(env, addr + offset);
++        } else  if (type->flags & GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE) {
+             /* guest wide element type */
+             if (!(gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE)) {
+-                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a guest wide "
++                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a guest wide "
+                               "Element ID:%04x.\n", id);
+                 return false;
+             }
+         } else {
+             /* thread wide element type */
+-            if (gsr->flags & GUEST_STATE_REQUEST_GUEST_WIDE) {
+-                qemu_log_mask(LOG_GUEST_ERROR, "trying to set a thread wide "
+-                              "Element ID:%04x.\n", id);
++            if (gsr->flags & (GUEST_STATE_REQUEST_GUEST_WIDE |
++                              GUEST_STATE_REQUEST_HOST_WIDE)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "trying to get/set a thread wide"
++                            " Element ID:%04x.\n", id);
+                 return false;
              }
          }
-     }
-@@ -685,15 +707,6 @@ ProbeSuccess:
+@@ -1418,7 +1449,8 @@ static target_ulong h_guest_create_vcpu(PowerPCCPU *cpu,
+     return H_SUCCESS;
+ }
  
-     if (env->vstart < env->vl) {
-         if (vm) {
--            /* Calculate the page range of first page */
--            addr = base + ((env->vstart * nf) << log2_esz);
--            page_split = -(addr | TARGET_PAGE_MASK);
--            /* Get number of elements */
--            elems = page_split / msize;
--            if (unlikely(env->vstart + elems >= env->vl)) {
--                elems = env->vl - env->vstart;
--            }
--
-             /* Load/store elements in the first page */
-             if (likely(elems)) {
-                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
+-static target_ulong getset_state(SpaprMachineStateNestedGuest *guest,
++static target_ulong getset_state(SpaprMachineState *spapr,
++                                 SpaprMachineStateNestedGuest *guest,
+                                  uint64_t vcpuid,
+                                  struct guest_state_request *gsr)
+ {
+@@ -1451,7 +1483,7 @@ static target_ulong getset_state(SpaprMachineStateNestedGuest *guest,
+ 
+         /* Get pointer to guest data to get/set */
+         if (type->location && type->copy) {
+-            ptr = type->location(guest, vcpuid);
++            ptr = type->location(spapr, guest, vcpuid);
+             assert(ptr);
+             if (!~(type->mask) && is_gsr_invalid(gsr, element, type)) {
+                 return H_INVALID_ELEMENT_VALUE;
+@@ -1468,6 +1500,7 @@ next_element:
+ }
+ 
+ static target_ulong map_and_getset_state(PowerPCCPU *cpu,
++                                         SpaprMachineState *spapr,
+                                          SpaprMachineStateNestedGuest *guest,
+                                          uint64_t vcpuid,
+                                          struct guest_state_request *gsr)
+@@ -1491,7 +1524,7 @@ static target_ulong map_and_getset_state(PowerPCCPU *cpu,
+         goto out1;
+     }
+ 
+-    rc = getset_state(guest, vcpuid, gsr);
++    rc = getset_state(spapr, guest, vcpuid, gsr);
+ 
+ out1:
+     address_space_unmap(CPU(cpu)->as, gsr->gsb, len, is_write, len);
+@@ -1509,27 +1542,46 @@ static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
+     target_ulong buf = args[3];
+     target_ulong buflen = args[4];
+     struct guest_state_request gsr;
+-    SpaprMachineStateNestedGuest *guest;
++    SpaprMachineStateNestedGuest *guest = NULL;
+ 
+-    guest = spapr_get_nested_guest(spapr, lpid);
+-    if (!guest) {
+-        return H_P2;
+-    }
+     gsr.buf = buf;
+     assert(buflen <= GSB_MAX_BUF_SIZE);
+     gsr.len = buflen;
+     gsr.flags = 0;
+-    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
++
++    /* Works for both get/set state */
++    if ((flags & H_GUEST_GET_STATE_FLAGS_GUEST_WIDE) ||
++        (flags & H_GUEST_SET_STATE_FLAGS_GUEST_WIDE)) {
+         gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
+     }
+-    if (flags & ~H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
+-        return H_PARAMETER; /* flag not supported yet */
+-    }
+ 
+     if (set) {
++        if (flags & ~H_GUEST_SET_STATE_FLAGS_MASK) {
++            return H_PARAMETER;
++        }
+         gsr.flags |= GUEST_STATE_REQUEST_SET;
++    } else {
++        /*
++         * No reserved fields to be set in flags nor both
++         * GUEST/HOST wide bits
++         */
++        if ((flags & ~H_GUEST_GET_STATE_FLAGS_MASK) ||
++            (flags == H_GUEST_GET_STATE_FLAGS_MASK)) {
++            return H_PARAMETER;
++        }
++
++        if (flags & H_GUEST_GET_STATE_FLAGS_HOST_WIDE) {
++            gsr.flags |= GUEST_STATE_REQUEST_HOST_WIDE;
++        }
++    }
++
++    if (!(gsr.flags & GUEST_STATE_REQUEST_HOST_WIDE)) {
++        guest = spapr_get_nested_guest(spapr, lpid);
++        if (!guest) {
++            return H_P2;
++        }
+     }
+-    return map_and_getset_state(cpu, guest, vcpuid, &gsr);
++    return map_and_getset_state(cpu, spapr, guest, vcpuid, &gsr);
+ }
+ 
+ static target_ulong h_guest_set_state(PowerPCCPU *cpu,
+@@ -1640,7 +1692,8 @@ static int get_exit_ids(uint64_t srr0, uint16_t ids[16])
+     return nr;
+ }
+ 
+-static void exit_process_output_buffer(PowerPCCPU *cpu,
++static void exit_process_output_buffer(SpaprMachineState *spapr,
++                                       PowerPCCPU *cpu,
+                                        SpaprMachineStateNestedGuest *guest,
+                                        target_ulong vcpuid,
+                                        target_ulong *r3)
+@@ -1678,7 +1731,7 @@ static void exit_process_output_buffer(PowerPCCPU *cpu,
+     gsr.gsb = gsb;
+     gsr.len = VCPU_OUT_BUF_MIN_SZ;
+     gsr.flags = 0; /* get + never guest wide */
+-    getset_state(guest, vcpuid, &gsr);
++    getset_state(spapr, guest, vcpuid, &gsr);
+ 
+     address_space_unmap(CPU(cpu)->as, gsb, len, true, len);
+     return;
+@@ -1704,7 +1757,7 @@ void spapr_exit_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu, int excp)
+ 
+     exit_nested_store_l2(cpu, excp, vcpu);
+     /* do the output buffer for run_vcpu*/
+-    exit_process_output_buffer(cpu, guest, vcpuid, &r3_return);
++    exit_process_output_buffer(spapr, cpu, guest, vcpuid, &r3_return);
+ 
+     assert(env->spr[SPR_LPIDR] != 0);
+     nested_load_state(cpu, spapr_cpu->nested_host_state);
+@@ -1819,7 +1872,7 @@ static target_ulong h_guest_run_vcpu(PowerPCCPU *cpu,
+     gsr.buf = vcpu->runbufin.addr;
+     gsr.len = vcpu->runbufin.size;
+     gsr.flags = GUEST_STATE_REQUEST_SET; /* Thread wide + writing */
+-    rc = map_and_getset_state(cpu, guest, vcpuid, &gsr);
++    rc = map_and_getset_state(cpu, spapr,  guest, vcpuid, &gsr);
+     if (rc == H_SUCCESS) {
+         nested_papr_run_vcpu(cpu, lpid, vcpu);
+     } else {
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index e420220484..f7be0d5a95 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -11,7 +11,13 @@
+ #define GSB_TB_OFFSET           0x0004 /* Timebase Offset */
+ #define GSB_PART_SCOPED_PAGETBL 0x0005 /* Partition Scoped Page Table */
+ #define GSB_PROCESS_TBL         0x0006 /* Process Table */
+-                    /* RESERVED 0x0007 - 0x0BFF */
++                    /* RESERVED 0x0007 - 0x07FF */
++#define GSB_L0_GUEST_HEAP_INUSE 0x0800 /* Guest Management Heap Size */
++#define GSB_L0_GUEST_HEAP_MAX   0x0801 /* Guest Management Heap Max Size */
++#define GSB_L0_GUEST_PGTABLE_SIZE_INUSE  0x0802 /* Guest Pagetable Size */
++#define GSB_L0_GUEST_PGTABLE_SIZE_MAX    0x0803 /* Guest Pagetable Max Size */
++#define GSB_L0_GUEST_PGTABLE_RECLAIMED   0x0804 /* Pagetable Reclaim in bytes */
++                    /* RESERVED 0x0805 - 0xBFF */
+ #define GSB_VCPU_IN_BUFFER      0x0C00 /* Run VCPU Input Buffer */
+ #define GSB_VCPU_OUT_BUFFER     0x0C01 /* Run VCPU Out Buffer */
+ #define GSB_VCPU_VPA            0x0C02 /* HRA to Guest VCPU VPA */
+@@ -196,6 +202,38 @@ typedef struct SpaprMachineStateNested {
+ #define NESTED_API_PAPR    2
+     bool capabilities_set;
+     uint32_t pvr_base;
++
++    /**
++     * l0_guest_heap_inuse: The currently used bytes in the Hypervisor's Guest
++     * Management Space associated with the Host Partition.
++     **/
++    uint64_t l0_guest_heap_inuse;
++
++    /**
++     * host_heap_max: The maximum bytes available in the Hypervisor's Guest
++     * Management Space associated with the Host Partition.
++     **/
++    uint64_t l0_guest_heap_max;
++
++    /**
++     * host_pagetable: The currently used bytes in the Hypervisor's Guest
++     * Page Table Management Space associated with the Host Partition.
++     **/
++    uint64_t l0_guest_pgtable_size_inuse;
++
++    /**
++     * host_pagetable_max: The maximum bytes available in the Hypervisor's Guest
++     * Page Table Management Space associated with the Host Partition.
++     **/
++    uint64_t l0_guest_pgtable_size_max;
++
++    /**
++     * host_pagetable_reclaim: The amount of space in bytes that has been
++     * reclaimed due to overcommit in the  Hypervisor's Guest Page Table
++     * Management Space associated with the Host Partition.
++     **/
++    uint64_t l0_guest_pgtable_reclaimed;
++
+     GHashTable *guests;
+ } SpaprMachineStateNested;
+ 
+@@ -229,9 +267,15 @@ typedef struct SpaprMachineStateNestedGuest {
+ #define HVMASK_HDEXCR                 0x00000000FFFFFFFF
+ #define HVMASK_TB_OFFSET              0x000000FFFFFFFFFF
+ #define GSB_MAX_BUF_SIZE              (1024 * 1024)
+-#define H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE 0x8000000000000000
+-#define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
+-#define GUEST_STATE_REQUEST_SET              0x2
++#define H_GUEST_GET_STATE_FLAGS_MASK   0xC000000000000000ULL
++#define H_GUEST_SET_STATE_FLAGS_MASK   0x8000000000000000ULL
++#define H_GUEST_SET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
++#define H_GUEST_GET_STATE_FLAGS_GUEST_WIDE 0x8000000000000000ULL
++#define H_GUEST_GET_STATE_FLAGS_HOST_WIDE  0x4000000000000000ULL
++
++#define GUEST_STATE_REQUEST_GUEST_WIDE     0x1
++#define GUEST_STATE_REQUEST_HOST_WIDE      0x2
++#define GUEST_STATE_REQUEST_SET            0x4
+ 
+ /*
+  * As per ISA v3.1B, following bits are reserved:
+@@ -251,6 +295,15 @@ typedef struct SpaprMachineStateNestedGuest {
+     .copy = (c)                                    \
+ }
+ 
++#define GSBE_NESTED_MACHINE_DW(i, f)  {                             \
++        .id = (i),                                                  \
++        .size = 8,                                                  \
++        .location = get_machine_ptr,                                \
++        .offset = offsetof(struct SpaprMachineStateNested, f),     \
++        .copy = copy_state_8to8,                                    \
++        .mask = HVMASK_DEFAULT                                      \
++}
++
+ #define GSBE_NESTED(i, sz, f, c) {                             \
+     .id = (i),                                                 \
+     .size = (sz),                                              \
+@@ -509,9 +562,11 @@ struct guest_state_element_type {
+     uint16_t id;
+     int size;
+ #define GUEST_STATE_ELEMENT_TYPE_FLAG_GUEST_WIDE 0x1
+-#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY  0x2
++#define GUEST_STATE_ELEMENT_TYPE_FLAG_HOST_WIDE 0x2
++#define GUEST_STATE_ELEMENT_TYPE_FLAG_READ_ONLY 0x4
+    uint16_t flags;
+-    void *(*location)(SpaprMachineStateNestedGuest *, target_ulong);
++   void *(*location)(struct SpaprMachineState *, SpaprMachineStateNestedGuest *,
++                     target_ulong);
+     size_t offset;
+     void (*copy)(void *, void *, bool);
+     uint64_t mask;
 -- 
-2.34.1
+2.48.1
 
 
