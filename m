@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC5AC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF92C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS5Z-0003Ag-HM; Fri, 21 Feb 2025 07:25:05 -0500
+	id 1tlS4P-0006Is-8P; Fri, 21 Feb 2025 07:23:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5V-0002vz-Km
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:25:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4J-0005ud-R2
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5T-0007GH-RJ
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:25:01 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4G-00076a-2J
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140699;
+ s=mimecast20190719; t=1740140623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=I0OkFCZq8v0ezATiJzoCyWDoQl7Sr4+CP54xKEjqIMM=;
- b=Ar84hrt6rRC0c7/4PeGtgtXSOXsHZXB0wx8tz6wcVVUBQcQGQ4d0POfBxiirqJMvWtqZAq
- NCEPHkVbNc9n8ZaJSQH1XyZFrIECk8JxYEiSf1obEqMSZyjfKYS7k4sl/VD4+XkpJ3mHYi
- YJNjn+5tm6Hkqx07s91xXm/PNKGHhZo=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BmV9gn8eSSrkunnR1tfz+dt6M43eXodM12I1RMZXJ08=;
+ b=VeCcMGUdiZJfh4pWADDbE+huoe15BxkQs3CGzhd8mE6f+AOVl8DoNKmASHwlbAS2LVtsnk
+ VNft9rCCXEkFQ5szPAH19mZP9HAwmfAnUb/wk/cCb7Bnva28cTNCPdIDPHg/rL1am28WJ0
+ 9JknAgFDPq5jLJiH3PUhmWNYFul30Bk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-600-RKQWpiuiP4eTqM_CqD4sLA-1; Fri, 21 Feb 2025 07:24:57 -0500
-X-MC-Unique: RKQWpiuiP4eTqM_CqD4sLA-1
-X-Mimecast-MFC-AGG-ID: RKQWpiuiP4eTqM_CqD4sLA_1740140697
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43943bd1409so14811695e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:24:57 -0800 (PST)
+ us-mta-389-NkHcyx8dPXep6i9G9M482A-1; Fri, 21 Feb 2025 07:23:42 -0500
+X-MC-Unique: NkHcyx8dPXep6i9G9M482A-1
+X-Mimecast-MFC-AGG-ID: NkHcyx8dPXep6i9G9M482A_1740140621
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43995bff469so22357015e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140696; x=1740745496;
+ d=1e100.net; s=20230601; t=1740140621; x=1740745421;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I0OkFCZq8v0ezATiJzoCyWDoQl7Sr4+CP54xKEjqIMM=;
- b=nE/oDWe/KWKW8kT3OIDw1U0Br8YEzV74+uE9N7/M8nZT0wiBBrJkTVDFc9TIjo8pP7
- rbVV5TU/M4NlrlZrVkc5GHKryPi9n2KT9bh74MHCMKrEh5WqBIO1gfOr77ZzY1FUTfly
- 8KROW0rmrY9vYxztXPFRbO1l0r7GCJ+rJ5rk3U/9YARA+wHwILEf+bC2SIYy12h+ZtHt
- mwxVUxdil/lqO/hI4mDfyPP0qCfJnCLemz8P31UCtq6lG0z84HeIjiu7v2o8pTzkpOhk
- Qirjvq3CQGh6BpY7LSkkfz0GsASXNjBfaNIiwy3a3hxDMt2dnrNoQ4Gri5QS0qK29+QK
- 2ZUQ==
-X-Gm-Message-State: AOJu0YwKZ/jbutESI4O95hJ5kdxGLl7QotQ4Xht20v1HSLQWI3ga1+v6
- C5WJ6aUHyF4eINgzVNGVloeH51iT9rKAaPoNyWJnbndoOlTvNjZmxHR/Jeuy64nbCgEV8Iuql4Z
- tyUCy7KjQsNzxm98ZyUH2CtaMMbSb/T0j+s+swdBsuyqyRWGwAM3lyA+5Jh6P0QWhVlY+jxnfI1
- oZEywH2LsbHIsegq106kAfZ2Hv3spdPA==
-X-Gm-Gg: ASbGnctBLh0WpD0+6EaijCd92cgXWtE9OC39qS43w58vkOqyvlixkoPRjE31Q9LQMvM
- 7rsdiM24cFkUAv9BgGvCxK1Q7EC3aHuC2/DTu73QyoHYQtPvtdnmorgWj3V5Bt36CgR6E/EmQay
- XR2IWf8eX1PhGD4eipglTGSNoLXFIFEEj1fqld5HafYZX/Yv5DiNDG1eMaodAN/otwrZ/+eTUs1
- Bi1WvRt9Gyei09S74Pk3s49R6aWgjaPoLOH5eIgkKttUwsYfV+I/KqBjNtDZy4ll0wbNsupC9aK
- wsSanA==
-X-Received: by 2002:a05:6000:1865:b0:38f:32ac:7e53 with SMTP id
- ffacd0b85a97d-38f6f0b189dmr2926310f8f.39.1740140695946; 
- Fri, 21 Feb 2025 04:24:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1VdlP3nDv9m/QVmbN66yECgtSWRc76CHq+MPgAz5kk0JJkt5SGKyisEDedvAy6RtJeKfIHQ==
-X-Received: by 2002:a05:6000:1865:b0:38f:32ac:7e53 with SMTP id
- ffacd0b85a97d-38f6f0b189dmr2926280f8f.39.1740140695503; 
- Fri, 21 Feb 2025 04:24:55 -0800 (PST)
+ bh=BmV9gn8eSSrkunnR1tfz+dt6M43eXodM12I1RMZXJ08=;
+ b=ZU3UTSEydbN36/oLZJ/GiweaEjTEX5W+ADw08BpNm3meLwMicgwY2gcLWebE9cBf8D
+ XVgGL0d1hjW9zW6DNYj3drvHHRzcm8WV0sJetu3o4SFHBNHqg8YiUq0nFirCozCNnqxz
+ WZzSVZlMRvVRViz4tGoyKJ2QsAV1jPkqd6tjJQ6Jt6SPHtywSy6vbS95yOxST/H9F0vu
+ lNJFgtjAMHI9d78cZXzhXJye8DLzhri4MbmUqNoNjEHTqA6c5/KU05/kkrEG/jYzCenP
+ Mi8AKSGqSdgBm66uxLG1wfS4+mILkwWN2qbJzI/jfbaNBlTXCiiV0kAHIJqwTvye54ef
+ yfUg==
+X-Gm-Message-State: AOJu0YxJwbmVT7I5VTOBc1ySnrX/UEXaLWm5xUZC1XQMCrHA6WZpQdnQ
+ Zj0HEmenYO3f+0nBR3Es6PTXnDxXXnccxOuXUYcGIEiTkDAsVLfDnw1NJzjsGHCT333rWAYC+zI
+ b4ZkveBHMSvOGoIjxi3lFQzn1Dg1Uwxnlm1towcDGxgGemt2hsFjUXemKpRhSWs1oT2ZpzV0ID7
+ srVRMuEj/HsFJ6sj6+S9OSLsftRiXcPw==
+X-Gm-Gg: ASbGncuFddbd0lhspw5QSvafZ2cGBVfQXRUQc7zV5b/lXuYrGtNFuQhip6q/+o/KvLm
+ 6BjYutxsYkq+X7/Qzej/p3hopxZq2JVPI51ETrQCYGzkqLpEDejDTtJFpMASFZd5CiHiI+0nIgk
+ HNAtsAm1FZLpJYEecJim08o8fpvDZGzhKWlK05Cf1nsGgiMtsI6PP/j/Crt1Fj0Fb3/1PvVLyTB
+ WUtbUUz+neS1u7N0jo3PnHfMjSfMxN+JKCzeYYhq84rFRgfjwcdCJW1oUsVxRo8jBAqayB8ektG
+ 6zZwqw==
+X-Received: by 2002:a05:600c:3149:b0:439:969e:d80f with SMTP id
+ 5b1f17b1804b1-439aebe6b9bmr22320015e9.31.1740140620794; 
+ Fri, 21 Feb 2025 04:23:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECyBszWZ+AKTWGIva+rALczMJpq1e0vnMnV+nYXnKg6amFBca/x+CsyF1OZcMfkdhkG1aLKg==
+X-Received: by 2002:a05:600c:3149:b0:439:969e:d80f with SMTP id
+ 5b1f17b1804b1-439aebe6b9bmr22319755e9.31.1740140620405; 
+ Fri, 21 Feb 2025 04:23:40 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38f258ccd51sm23265433f8f.29.2025.02.21.04.24.53
+ 5b1f17b1804b1-439b02d624bsm15703225e9.15.2025.02.21.04.23.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:24:55 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:24:52 -0500
+ Fri, 21 Feb 2025 04:23:39 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:23:37 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Luc Michel <luc.michel@amd.com>
-Subject: [PULL 41/41] docs/devel/reset: Document reset expectations for DMA
- and IOMMU
-Message-ID: <dd6d545e8f2d9a0e8a8c287ec16469f03ef5c198.1740140520.git.mst@redhat.com>
+ Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 19/41] tests/qtest/vhost-user-test: Use modern virtio for
+ vhost-user tests
+Message-ID: <14998e50c3638b07946ebe5972a327cc26e9f03c.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -87,14 +85,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,39 +110,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-To avoid any translation faults, the IOMMUs are expected to be
-reset after the devices they protect. Document that we expect
-DMA requests to be stopped during the 'enter' or 'hold' phase
-while IOMMUs should be reset during the 'exit' phase.
+All other vhost-user tests here use modern virtio, too, so let's
+adjust the vhost-user-net test accordingly.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Message-Id: <20250218182737.76722-6-eric.auger@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250203124346.169607-1-thuth@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- docs/devel/reset.rst | 5 +++++
- 1 file changed, 5 insertions(+)
+ tests/qtest/vhost-user-test.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
-index adefd59ef9..0b8b2fa5f4 100644
---- a/docs/devel/reset.rst
-+++ b/docs/devel/reset.rst
-@@ -143,6 +143,11 @@ The *exit* phase is executed only when the last reset operation ends. Therefore
- the object does not need to care how many of reset controllers it has and how
- many of them have started a reset.
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 76d142a158..bd977ef28d 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -1043,7 +1043,8 @@ static void test_multiqueue(void *obj, void *arg, QGuestAllocator *alloc)
  
-+DMA capable devices are expected to cancel all outstanding DMA operations
-+during either 'enter' or 'hold' phases. IOMMUs are expected to reset during
-+the 'exit' phase and this sequencing makes sure no outstanding DMA request
-+will fault.
-+
+ static uint64_t vu_net_get_features(TestServer *s)
+ {
+-    uint64_t features = 0x1ULL << VHOST_F_LOG_ALL |
++    uint64_t features = 0x1ULL << VIRTIO_F_VERSION_1 |
++        0x1ULL << VHOST_F_LOG_ALL |
+         0x1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
  
- Handling reset in a resettable object
- -------------------------------------
+     if (s->queues > 1) {
 -- 
 MST
 
