@@ -4,84 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AF9C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 11:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1E8C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 11:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlQsF-0001UR-Tk; Fri, 21 Feb 2025 06:07:15 -0500
+	id 1tlR9B-0005qW-A7; Fri, 21 Feb 2025 06:24:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlQsB-0001Tf-NE
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 06:07:11 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tlQs8-0004vO-4Q
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 06:07:10 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e549be93d5eso2267080276.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 03:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740136026; x=1740740826; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j0iuVL5uRNjEBhv19j5iFrLDzJIsMvGVoVmD/PbvVyM=;
- b=tnI4i+jqdHQAoSbQUDkmE27Fhp6Kqw/M8QFcxGrmO7DsnkCrbsljVuSGdrTROsLfat
- KcDtnOWQgy9UDW5cR1bJRmuyRp8f/ZxIDPqhDdrEOiPnAEr+5jiy5jlosFOwaxMffoF7
- 7QOGQdPpQmI8Y/ENqaT5jZDJ+xDLRadbP/4g6oTCl1SAxWfwWzvV+3GHt00dOoe1kWOx
- c/ZHt8li4Avfyi/8Wz/rVQjk2LlbYzdtbZ4xe+I+MpE9zJFn0aMK+NU7QMVCoWNj+UFl
- KuwLmrXnE72fUn+m0dlEHYW7XFzS43mDraWDyrd1cdJG3hn0SQ7Bd9kTEmdxcbMhIkFT
- muUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740136026; x=1740740826;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=j0iuVL5uRNjEBhv19j5iFrLDzJIsMvGVoVmD/PbvVyM=;
- b=RA/yynStef6JpY78pPnSneW9Y0WlM0XrvTh7A6ZeVdoX9aVNLkHyxUnpgGtJUu3Uoa
- vNOm8cPzR8bumYyyXsEIApp/H5GF88XKmZ8xsTCcygHxcOX5GT8NeNmiQ/8VrWhqN3XQ
- aXy/ymjPRpDsq6Xpi8UDq/5DZ+cmZZvYcM41MB8Mlk9ZypbCiIN0+eNMCI1og5FaPvyF
- hB8zE6VC1F9gnDggqBuDJuu75pZKJhBwj/smnDQi2jNCAAUnp0UxR/DTNfS7DgazIJeB
- Dh1xCOJkRrVLMFc5qT+FuzieXD7dS4ot9ExZYjxfDWvXavOgECbn7VbvXkvWokhoYuFK
- kh8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdzdGyRIrVXICzSMz69Mxn0mIilvGkAlFzIZ6NY/fHvXmllPD48i/peVY6rwY7Djuhniy9oz5zs/kd@nongnu.org
-X-Gm-Message-State: AOJu0YwPV8UKUo/0pKIJBg97TKfCBqqQTGq72JRJaR23haRBwpiL5Or/
- Kx47MJns9hTKfkdDXKTqc0B30qaxMeen2bVHHXSnhD2GMbTAFfmU60wIgsgd2vCLaMxoOJuJuWC
- NgmZ72Ndgl8SRRV4JPEXRGLVIU7ifBloIT6jMiw==
-X-Gm-Gg: ASbGnct43dh9LnZ8smctl3bIKvAbNg5CZDsiwmIiwiHo/Yb6hsEO0vhdmGaaYk9L6Ul
- Grk+JWdvWxx9PBmB2z3KiGHJ/ZQ/12h4dVkUDPvs7H86SAIZ4xsB4SZl8YeX/lfktMWL5jx8iOv
- NHS29T8S1B
-X-Google-Smtp-Source: AGHT+IGkVfCQCiWgAijZabMDhvzMoHvNhaxzdOpdZB/iuv4LRgBX3V4rf+B1zkpNP9suF4jlznuqxVA1kClW2zqHygo=
-X-Received: by 2002:a05:6902:2009:b0:e57:4226:8ae0 with SMTP id
- 3f1490d57ef6-e5e245ea305mr2019479276.18.1740136026267; Fri, 21 Feb 2025
- 03:07:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tlR99-0005qM-EB
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 06:24:43 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tlR94-0007Gk-5S
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 06:24:43 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YznmW6Pmmz6HJbP;
+ Fri, 21 Feb 2025 19:22:51 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0C91F140B30;
+ Fri, 21 Feb 2025 19:24:33 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 21 Feb
+ 2025 12:24:32 +0100
+Date: Fri, 21 Feb 2025 11:24:31 +0000
+To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+CC: <fan.ni@samsung.com>, <qemu-devel@nongnu.org>, <mst@redhat.com>
+Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
+Message-ID: <20250221112431.000006de@huawei.com>
+In-Reply-To: <7bcd2928.1690.195266a8caf.Coremail.wangyuquan1236@phytium.com.cn>
+References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
+ <20250220161213.000049a9@huawei.com>
+ <7bcd2928.1690.195266a8caf.Coremail.wangyuquan1236@phytium.com.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250204125009.2281315-1-peter.maydell@linaro.org>
-In-Reply-To: <20250204125009.2281315-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Feb 2025 11:06:54 +0000
-X-Gm-Features: AWEUYZnaaduxKBn4Kxvc0587KaFp95ZqpGxb_reG_aFq8vhRnk7oix-28vY84hE
-Message-ID: <CAFEAcA-y7hERhCAE0wyxR=HsCpmq_T3VQVGPW4B4GvwvrMMP0w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] target/arm: Implement SEL2 physical and virtual
- timers
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,55 +67,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping? Patches 1-5 need review here.
+On Fri, 21 Feb 2025 10:51:11 +0800
+Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
 
-thanks
--- PMM
+> >=20
+> > Looks good.  I've queued it up on my gitlab staging tree, but
+> > Michael if you want to pick this one directly that's fine as well.
+> >=20
+> > I should be pushing out my gitlab tree shortly (bit of networking
+> > fun to deal with).
+> >  =20
+> Hi, Jonathan
+>=20
+> About qemu side, I have another question: Could the qemu provide simulated
+> RCH-RCD topology now?
+No.  So far no one has worked on that that I'm aware of.
 
-On Tue, 4 Feb 2025 at 12:50, Peter Maydell <peter.maydell@linaro.org> wrote=
-:
->
-> This patchset is a respin of Alex's patches, with some extra fixes
-> for bugs I discovered along the way in our existing code (and
-> a bit of refactoring to make the fixes straightforward). It is:
->
-> Based-on: 20250130182309.717346-1-peter.maydell@linaro.org
-> ("target/arm: Clean up some corner cases of sysreg traps")
->
-> because it wants to use the renamed CP_ACCESS_* constants that
-> that patchset introduced.
->
-> The bugfixes are not super exciting as they mostly are oddball
-> corner cases, but I've cc'd them to stable anyway. The actual
-> implementation of the missing SEL2 timers also should go to stable.
->
-> Alex Benn=C3=A9e (4):
->   target/arm: Implement SEL2 physical and virtual timers
->   target/arm: document the architectural names of our GTIMERs
->   hw/arm: enable secure EL2 timers for virt machine
->   hw/arm: enable secure EL2 timers for sbsa machine
->
-> Peter Maydell (5):
->   target/arm: Apply correct timer offset when calculating deadlines
->   target/arm: Don't apply CNTVOFF_EL2 for EL2_VIRT timer
->   target/arm: Make CNTPS_* UNDEF from Secure EL1 when Secure EL2 is
->     enabled
->   target/arm: Always apply CNTVOFF_EL2 for CNTV_TVAL_EL02 accesses
->   target/arm: Refactor handling of timer offset for direct register
->     accesses
->
->  include/hw/arm/bsa.h       |   2 +
->  target/arm/cpu.h           |   2 +
->  target/arm/gtimer.h        |  14 +-
->  target/arm/internals.h     |   5 +-
->  hw/arm/sbsa-ref.c          |   2 +
->  hw/arm/virt.c              |   2 +
->  target/arm/cpu.c           |   4 +
->  target/arm/helper.c        | 324 ++++++++++++++++++++++++++++++-------
->  target/arm/tcg/op_helper.c |   8 +-
->  9 files changed, 296 insertions(+), 67 deletions(-)
->
+Jonathan
+
+>=20
+> Yuquan
+>=20
+>=20
+> =E4=BF=A1=E6=81=AF=E5=AE=89=E5=85=A8=E5=A3=B0=E6=98=8E=EF=BC=9A=E6=9C=AC=
+=E9=82=AE=E4=BB=B6=E5=8C=85=E5=90=AB=E4=BF=A1=E6=81=AF=E5=BD=92=E5=8F=91=E4=
+=BB=B6=E4=BA=BA=E6=89=80=E5=9C=A8=E7=BB=84=E7=BB=87=E6=89=80=E6=9C=89,=E5=
+=8F=91=E4=BB=B6=E4=BA=BA=E6=89=80=E5=9C=A8=E7=BB=84=E7=BB=87=E5=AF=B9=E8=AF=
+=A5=E9=82=AE=E4=BB=B6=E6=8B=A5=E6=9C=89=E6=89=80=E6=9C=89=E6=9D=83=E5=88=A9=
+=E3=80=82=E8=AF=B7=E6=8E=A5=E6=94=B6=E8=80=85=E6=B3=A8=E6=84=8F=E4=BF=9D=E5=
+=AF=86,=E6=9C=AA=E7=BB=8F=E5=8F=91=E4=BB=B6=E4=BA=BA=E4=B9=A6=E9=9D=A2=E8=
+=AE=B8=E5=8F=AF,=E4=B8=8D=E5=BE=97=E5=90=91=E4=BB=BB=E4=BD=95=E7=AC=AC=E4=
+=B8=89=E6=96=B9=E7=BB=84=E7=BB=87=E5=92=8C=E4=B8=AA=E4=BA=BA=E9=80=8F=E9=9C=
+=B2=E6=9C=AC=E9=82=AE=E4=BB=B6=E6=89=80=E5=90=AB=E4=BF=A1=E6=81=AF=E3=80=82
+> Information Security Notice: The information contained in this mail is so=
+lely property of the sender's organization.This mail communication is confi=
+dential.Recipients named above are obligated to maintain secrecy and are no=
+t permitted to disclose the contents of this communication to others.
 
