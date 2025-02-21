@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36BBEC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33E1C021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlONq-0003hC-BW; Fri, 21 Feb 2025 03:27:42 -0500
+	id 1tlOTc-0005Q3-Pw; Fri, 21 Feb 2025 03:33:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlONk-0003ge-SZ
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:27:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlOTb-0005Ou-4O
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:33:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlONj-0008LR-7T
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:27:36 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlOTZ-0000h6-43
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:33:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740126453;
+ s=mimecast20190719; t=1740126814;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SRWdYgAXyJyt3FGRAZDYtHDuQXhYodufiq1Xxhy7cbk=;
- b=fgSm78OCNrYO54rxeKh+7S9vCJ9CKJXC+gZ7cFGn3jZ5RnZ1HKL0sUzXOhTFz5nD2MeXJ9
- M89e/X8Og7IYb5zbGkX8oImyh+e9cCrIaHzTI4maXfcqCfnYbDosV9Cbc6irakHMg51DHC
- 4FDY+I5qn5BTrj96wbVK3xHzwpEyfXU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9Te+aMBxasm5PZIW2zOsbikcB9R57N6QT8Yyll1cZZo=;
+ b=Tk1riiUZmrbMYgSXLgxUYrrFvAXUzr1mS9rhEerpzH9MKXtDaTnMqmsb4xuvtFSJ3FCZTt
+ JOVNGd3/ich4DB/XTigGk46HKolIbY2Ob+LVQm7uiIJmtaqdkrYGttluZB5Nq1bgxKe8+F
+ BfB767kVzE5KhYfrOBRBiXGPZ4bCknw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-290-r54EPOEcPf-pldOnNqsCNg-1; Fri, 21 Feb 2025 03:26:26 -0500
-X-MC-Unique: r54EPOEcPf-pldOnNqsCNg-1
-X-Mimecast-MFC-AGG-ID: r54EPOEcPf-pldOnNqsCNg_1740126385
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43947979ce8so8496045e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 00:26:26 -0800 (PST)
+ us-mta-558-1gI3DTClMiCFcsF0XJxaLg-1; Fri, 21 Feb 2025 03:33:32 -0500
+X-MC-Unique: 1gI3DTClMiCFcsF0XJxaLg-1
+X-Mimecast-MFC-AGG-ID: 1gI3DTClMiCFcsF0XJxaLg_1740126812
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38f2c0aa6d6so1360332f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 00:33:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740126385; x=1740731185;
+ d=1e100.net; s=20230601; t=1740126812; x=1740731612;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
+ :content-language:references:cc:to:from:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=SRWdYgAXyJyt3FGRAZDYtHDuQXhYodufiq1Xxhy7cbk=;
- b=JRqGHGWV/2X3jFhrMa6DpbmID5hix0KJ+xSSQSTF0sL5pE0FFfPOaVVaqaHiR6/Lzs
- gLyWAVfkv/D/S9QENfB1aMJKpMsolEEMRk6pL4/4K4Wj5kCv54YsGzPuxhuusQXW/cgo
- k7OtWe6mvAzlJ6gzLdslGnjWGRDQSXAH/NtrQMqJiKnOQ3Iam+MdklhXNPQosjwY1cDi
- sy3Ci+pCVJnBJE2rxC8SOwp/4qU3Pw5QY0GAWNYThp/k99KRBspyqpSQVOIglBdJFGyW
- s1rOSP+N4jqIkGtSMqXgfJ1Ds1Y7L9Yi0xb3KUNb70aLedXSmXnHTs7wDTU045I4yT53
- kWyw==
-X-Gm-Message-State: AOJu0Yz8x/6kTwh61kpamoG/i8IQoiVXo178njLMXQ2oiWiuDGYir3n4
- ZKxiySfQDMBTqB/Jnx/L3BBOijpDCDPxhXxbwxO/2uBwrWCp7iVg8rmTXBaVoxdq4/P9AtCYNnj
- 6VgnxGNh0vG3wmY9uevjYG3cTXHy6c+y/ckSK/W7uaCpAc3tnRFzJ
-X-Gm-Gg: ASbGncvGrqp7irM5RRH7BaNXidVUeiRmLc3wmHd/Sv4jZxE2bwfNR0VsqVUNc8xWAOw
- /3n/HH09sBX5K38O0BiwgM05zpZtJaKsFNxEC5qkoLgu3BYRMIo72ELOi1sA/phKTobWH0hoM8r
- DnoHWYTbFK5AFxMZBjCL1BQgUWoQ7SyUl4RV8y4CTvLeZsZyh+AuTdOMJcQsNdkwc1Kn74y2WR5
- IAnWdqNWYbrFKr+tL8ahvrjaoZRQqKRvFYw3LKMS76vPsw6SzOJjUPezW1DXioKFTJUNTGHrxT+
- 7+d9/X7pXaUOJYs69lRTDqz5oeVo2l2gEzRDhyZR9UW6nf2TebgCdE3tbLMc7zmFfO6NrdWiMi+
- U6neNJstQjF0Rp2jhwhS2vuu4I2UjveeZ7fRtdIUxaLI=
-X-Received: by 2002:a05:600c:3b08:b0:439:90f5:3942 with SMTP id
- 5b1f17b1804b1-439ae221b60mr14525495e9.25.1740126385097; 
- Fri, 21 Feb 2025 00:26:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH9//j6Nzi+TTK8G5Fsd9fLATdHqo2vvuTpKpfUUYn9j/DXGkKqnAn7pRHmpkB8S0bHeFXcBA==
-X-Received: by 2002:a05:600c:3b08:b0:439:90f5:3942 with SMTP id
- 5b1f17b1804b1-439ae221b60mr14525255e9.25.1740126384744; 
- Fri, 21 Feb 2025 00:26:24 -0800 (PST)
-Received: from ?IPV6:2003:cb:c714:1700:305a:4df7:c043:7a59?
- (p200300cbc7141700305a4df7c0437a59.dip0.t-ipconnect.de.
- [2003:cb:c714:1700:305a:4df7:c043:7a59])
+ bh=9Te+aMBxasm5PZIW2zOsbikcB9R57N6QT8Yyll1cZZo=;
+ b=RbnpugJtVIBIIlh/vcTLsldRE+1DUf3LM3P2QNFxdEMfrQAu3Hp/jJkUj8U9s9PX+k
+ xLAnHiEtXshaHfsuWk89TLEHgu40U2zaC3gk7Y/iqhC51lzfT/eo/CwJIw2fFeqclb8l
+ /MW4PjGhpu7qVOWzE3rA7Tc7CKcx1ZYLuEOkIoKXwN+iGofdTl7oAF1pnWyU9v8GcKQy
+ ZvUI4JP/mjNb+yTIXLSx5pZwTml2WLpLFdsRs8aLBXG8nfRx1A8y/XTy2X28za6zdjwh
+ aDXK9/lr5uIjgs1TpYOjv4EuZGHe2cFAzgf8AJxG3p4fCTtN1D0xWofPBPRk6zPfY7be
+ qioQ==
+X-Gm-Message-State: AOJu0Yyo1zyhnYlAGZbninvaRd2jUD+b/bmESj2dRm9V7fLK44LYqSQJ
+ scJpqep9WKiYYiYLEfBvzY33VzhoF7AoVOvvB8KZbbXHMuaS9tcu9EwYXkZbvyjK8TmG2f6Tb0i
+ T2TdHoNejibegRnpZma8G9XqFvkGDmaf+6+kww+9M0bgkoQ6A5PVM
+X-Gm-Gg: ASbGncty1NtMjlOP0G7Ngyuu/WGBJ4ktM7E2k2L/56XeLhqXAgJhLXdnzadfsiA8Zat
+ 7NsPv/IOrDgXekUzXouv4a5iDa8Qoz5Df1XRcQ910YKMk0/bY5AjWsRmtaDn/ayMRZJ/VQR4kS3
+ FWune/RewZQP0KzLCj/GIlfNMAisRs6USBS29Pos2Rj4+78gt4zPBVc4EhzzR7dPFRS9Fq4Gz2r
+ qVt+4jpeYAw5hcb0d/8CmIERVYtQuCyRJIN1oUGLmmxwiBcZ8LdcPgHm7r8UdiZNSjSPRF9aIol
+ c14K3ZVCDzuyXgfSVa24e3bSZbeBZG+bB8ke+ay5wp01lg==
+X-Received: by 2002:a05:6000:4712:b0:38f:32d5:3a92 with SMTP id
+ ffacd0b85a97d-38f614b827bmr5349835f8f.12.1740126811711; 
+ Fri, 21 Feb 2025 00:33:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGsIMEofIMDWICvWhAaZ4PinqR5BVQvZb8eGXIX9englQ3pG6ic4Dqgzzm84zTCQNabbYGQdw==
+X-Received: by 2002:a05:6000:4712:b0:38f:32d5:3a92 with SMTP id
+ ffacd0b85a97d-38f614b827bmr5349816f8f.12.1740126811294; 
+ Fri, 21 Feb 2025 00:33:31 -0800 (PST)
+Received: from [192.168.3.141] (p4ff23890.dip0.t-ipconnect.de. [79.242.56.144])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b0367577sm9902655e9.25.2025.02.21.00.26.22
+ ffacd0b85a97d-38f25915785sm23406851f8f.58.2025.02.21.00.33.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Feb 2025 00:26:23 -0800 (PST)
-Message-ID: <e42e5f91-a9ab-4686-a638-ac334c629a6c@redhat.com>
-Date: Fri, 21 Feb 2025 09:26:21 +0100
+ Fri, 21 Feb 2025 00:33:30 -0800 (PST)
+Message-ID: <b6f71132-f40e-45a2-9b9a-6913e3f86474@redhat.com>
+Date: Fri, 21 Feb 2025 09:33:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 0/2] s390x: support virtio-mem-pci
+From: David Hildenbrand <david@redhat.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -90,7 +88,7 @@ Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  Michal Privoznik <mprivozn@redhat.com>, Mario Casquero <mcasquer@redhat.com>
 References: <20250128185705.1609038-1-david@redhat.com>
  <20250220182351-mutt-send-email-mst@kernel.org>
-From: David Hildenbrand <david@redhat.com>
+ <e42e5f91-a9ab-4686-a638-ac334c629a6c@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -137,19 +135,19 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250220182351-mutt-send-email-mst@kernel.org>
+In-Reply-To: <e42e5f91-a9ab-4686-a638-ac334c629a6c@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,46 +163,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.02.25 00:24, Michael S. Tsirkin wrote:
-> On Tue, Jan 28, 2025 at 07:57:03PM +0100, David Hildenbrand wrote:
->> This is based-on [1], which adds MSI-X support to virtio-balloon-pci,
->> but can be applied independently.
+On 21.02.25 09:26, David Hildenbrand wrote:
+> On 21.02.25 00:24, Michael S. Tsirkin wrote:
+>> On Tue, Jan 28, 2025 at 07:57:03PM +0100, David Hildenbrand wrote:
+>>> This is based-on [1], which adds MSI-X support to virtio-balloon-pci,
+>>> but can be applied independently.
+>>>
+>>> Turns out it is fairly easy to get virtio-mem-pci running on s390x. We
+>>> only have to add MSI-X support to virtio-mem-pci, and wire-up the
+>>> (un)plugging in the machine.
+>>>
+>>> Tried some simple stuff (hotplug/hotunplug/resize/reboot), and all seems
+>>> to be working as expected.
+>>>
+>>> The kernel in the VM needs both, CONFIG_VIRTIO_PCI and CONFIG_VIRTIO_MEM
+>>> for it to work.
+>>>
+>>> [1] https://lkml.kernel.org/r/20250115161425.246348-1-arbab@linux.ibm.com
 >>
->> Turns out it is fairly easy to get virtio-mem-pci running on s390x. We
->> only have to add MSI-X support to virtio-mem-pci, and wire-up the
->> (un)plugging in the machine.
 >>
->> Tried some simple stuff (hotplug/hotunplug/resize/reboot), and all seems
->> to be working as expected.
+>> Fails CI:
 >>
->> The kernel in the VM needs both, CONFIG_VIRTIO_PCI and CONFIG_VIRTIO_MEM
->> for it to work.
->>
->> [1] https://lkml.kernel.org/r/20250115161425.246348-1-arbab@linux.ibm.com
+>> https://gitlab.com/mstredhat/qemu/-/jobs/9202574981
+> 
+> Hm, I thought the CI was happy when Thomas sent it upstream.
+> 
+> CRITICAL: log: qemu-system-i386: -device virtio-mem-pci: can't apply
+> global virtio-mem-pci.vectors=0: Property 'virtio-mem-pci.vectors' not found
+> 
+> And the same for the virtio-balloon devices with a similar change.
+> 
+> Trying to run one offending cmdline on current upstream:
+> 
+> ./qemu-system-i386 -display none -vga none -S -machine
+> pc-q35-8.0,accel=tcg -device virtio-mem-pci
+> qemu-system-i386: -device virtio-mem-pci: the configuration is not
+> prepared for memory devices (e.g., for memory hotplug), consider
+> specifying the maxmem option
 > 
 > 
-> Fails CI:
-> 
-> https://gitlab.com/mstredhat/qemu/-/jobs/9202574981
+> So I am not sure what is happening here? Is some commit in the pipeline
+> breaking this?
 
-Hm, I thought the CI was happy when Thomas sent it upstream.
+Note that these two patches, and the virtio-balloon-pci MSI-X
+one are already upstream, Thomas included them in his s390 MR. I see 
+that you have them included on your branch:
 
-CRITICAL: log: qemu-system-i386: -device virtio-mem-pci: can't apply 
-global virtio-mem-pci.vectors=0: Property 'virtio-mem-pci.vectors' not found
+https://gitlab.com/mstredhat/qemu/-/commits/v03b-20-02-2025?ref_type=heads
 
-And the same for the virtio-balloon devices with a similar change.
+The following commit in that tree is messed up:
 
-Trying to run one offending cmdline on current upstream:
+* virtio-mem-pci: Allow setting nvectors, so we can use MSI-X
 
-./qemu-system-i386 -display none -vga none -S -machine 
-pc-q35-8.0,accel=tcg -device virtio-mem-pci
-qemu-system-i386: -device virtio-mem-pci: the configuration is not 
-prepared for memory devices (e.g., for memory hotplug), consider 
-specifying the maxmem option
-
-
-So I am not sure what is happening here? Is some commit in the pipeline 
-breaking this?
+Likely, you can just drop these two patches from your tree; they are 
+alreayd upstream.
 
 -- 
 Cheers,
