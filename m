@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE5BC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6DEC021AA
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS8i-00085I-Kf; Fri, 21 Feb 2025 07:28:20 -0500
+	id 1tlS5d-0003Ty-Bl; Fri, 21 Feb 2025 07:25:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tlS79-0006Ie-Lp
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:45 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tlS77-0007Zq-SF
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:26:43 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-220d601886fso30230895ad.1
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:26:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740140800; x=1740745600; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/5vHs7s8IDk62c++QK817lUpigrwYrALES9gEU4BPmI=;
- b=W4nVNOIkHyagGY4vO3jFEv7HgwA8bP3epfEEW3M2A2pTGa+q3jOIkerAQcL8MJLZwz
- 4cTGoQfTXgzHCCaF5ChrDWHwsy37xxQUg7s02Ub7B44bZ5gK9oW1iZQwONnZCr9zmyQT
- mIC/Sh3OkFgfqUqUTapzPDTzT8laJD0vhwK1CmKKFb+oT/Ha//nj2PnWxqvmuAvbfYoa
- VG1ZNS9pUzXhf7jReD792n3j2ymC65yBy7U8f5eBvZBtiVVoEDOyXceYoa5/KB3WeUSA
- IvLw0+FY8X+FbQwfUaEPhY4M0iKa3K7Gjpxf9ved5TvfVR8g28QnmBmyJbKqZMtmG0RT
- HQQw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5Z-0003Gd-7F
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:25:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS5X-0007Gh-5Y
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:25:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740140702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=21MZvzcuowvqSXzQXl2K9YuO6KQY2fQmr4euw2anaeY=;
+ b=PGfHx/39Br2NMlMKIG+sgtoVldWf7YSZRqdo9R8cv97PzesBmx8kVXv3ZS0oA/o1UTdBVP
+ hNOnlbLVbSKm/YW8YU66+lPoqn93fnwXitiwq+T36NsWHM9sgoxxVkTQ+ycf3fO1cr+A5L
+ 59SGnpFlpo0+t6FJaMNbHgu1QEo6y/c=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-352-PytxyZotMneRmvC2W6923Q-1; Fri, 21 Feb 2025 07:23:48 -0500
+X-MC-Unique: PytxyZotMneRmvC2W6923Q-1
+X-Mimecast-MFC-AGG-ID: PytxyZotMneRmvC2W6923Q_1740140627
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38f32ac838cso1775796f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140800; x=1740745600;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/5vHs7s8IDk62c++QK817lUpigrwYrALES9gEU4BPmI=;
- b=XDQ5KxyjW3pjiqI7uKio2V3MY+sNbCizgB9zRc3y/pdmB+QDS4HF19fss/7gsNTyhQ
- SjlanZAIs1KKjXsvTlFhU/4lv7JpNdZkxkQfe73GaFGSyZVaoMBrtMRihzIBdf9vsLO9
- dfU7yaw2qvTwNLwKSJ58g/dqZgHpXVafMlxHSPwC8Hsu/dEwz9zRS5LERAZs6VZGmaF8
- Dn3Z2peMlU5PzxFCBnVmDcGx/Mlkb29S9sBdNHKdIucntIVsQoqVREQSktNp6bIgmVHb
- 9BlRRvLuBee6VWbTYezBQTNdfIbbZqCTQkiJ8K0kpP7pYs4K23JCTHwUZhGlUXqizcnC
- ihow==
-X-Gm-Message-State: AOJu0YySzs8WirRK7oStw/IPDDQFpgGK5eqy2j6cmncf/cr6ZD4VMrpy
- CVlqZKl1fOD6q8u4hyNPzhtgsNnhJuNCxjKTbVdFYZPNavQy8vNlGh89cdT5W2BojhTO7yItwEm
- f
-X-Gm-Gg: ASbGncujmfC3rQeNtkXU19Mwo1w7Umd6tCS7Wo9kWG7qgUf6FEKWmOw7Zl/XP7Ft2gx
- Kr89C55wSYZAM/6PlP4dTgH2e1R5E+Htj97RADz2jU5Yjzfs+es+WjTvVq65TjZrhxecNKj7Hh0
- Lg8JW0YaIi7gb7sLbbwwAEAhlp42UmFlcMM3GCr02oYRha4Puxm3/iyDvoYoMqDlyayhRXZISQZ
- zX2M11RdznRFmAMUSDIJJQxSinsZu75kIgcqOYDTpl9fkyitUhdEb3p4k9dfCvPYzg09i4gs+1x
- E1wY9uCTLrwLp8OPx3fOGdF8wPtIY5tgL9gkiAtFJWV//mYpeD+JuA==
-X-Google-Smtp-Source: AGHT+IGxdhq7J04pllruTn2puOm3WoDedsVx72P6r2m/M4y8uZL7gZH9hOUBc0fjulX1ysaHo2OXmA==
-X-Received: by 2002:a17:902:db05:b0:21f:768:cced with SMTP id
- d9443c01a7336-2219ff30cfemr34573715ad.8.1740140800154; 
- Fri, 21 Feb 2025 04:26:40 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([187.11.154.120])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d545e39bsm137349855ad.124.2025.02.21.04.26.37
+ d=1e100.net; s=20230601; t=1740140626; x=1740745426;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=21MZvzcuowvqSXzQXl2K9YuO6KQY2fQmr4euw2anaeY=;
+ b=EXf0dmXGq5d1RWBtPk3TqbCTJVTIsaJMZ0c5Fn7Cj0nAXtHFQ1EgjCfPF9qe2HDVOF
+ PivIf8l9tF7fphsSz7KREnyNpAyTPa018m9jT8rjiOODGp1G/KKhzqr8D1iqoOmbO6RK
+ QpTUI3x1qh8NpuVAsEwAYUEsyXkYjJOsHOqn1gSag0P5t5remXLDKm2s2BqW4CqMGJEM
+ xfcVU8+fBFxpHevGLBlpVjbAMy6tmJzmA4O4HCtsULc+AD6GhHQ0Yewzp0K6IdGaOKks
+ VkTkCzm49O+g/XpdghAuoaUKESEhKWIGeuiayIVaS5l/2N6bEyNlGr48/YQE6xa5zqbQ
+ 8K7Q==
+X-Gm-Message-State: AOJu0YyYHqF9p/ZL8Y51Qhc12ntdowyapWDq/ztlVihfbp/sYM/KP4CV
+ Gj7cpDiRBvBmXNnAhDA3L+PcNdqq16TQSuOKqerRbbe5gHEJQx/WxJ2uQou+okACFi2ZMaIIgLm
+ nM+8m4kb6O+FSOdNZGzUnLHMWY9ucyil0zcp0PbEJvSvfZY4XTSErUPEmc7aTvxKCMPHj8Vv6h1
+ BCNJsymrWMEQQ9ghLQgaa58VHFwGgXqw==
+X-Gm-Gg: ASbGnct5OdTECNF64/1sJcw1VwZhHmQgDPJFIVSZngcNTJ0cDYKucYaff0GuRNrKIF1
+ +MzhQTIyjL3vPAi3BGrhXZpLf9lx6G6gesk+GgqOGQRDPccYzq2VkBeKtMWTIKZmjm+oq1JUNzN
+ NcLqjVbhUH4JhkbvdL60aIVrc63E3R+pKEH6Q/WjeoNptAlWnyQxewUVzkzkfbq/YLbujMhk6MW
+ dL1hDRR3Mk/iOkwkkpBE4PGsBUkwirBcx+tbd0mWhFXAx+NJpNt1bJREHsM5uCW85rSA8jCY8Rm
+ cZClwQ==
+X-Received: by 2002:a05:6000:1f8f:b0:38d:d223:f8e6 with SMTP id
+ ffacd0b85a97d-38f6e4c20damr2693644f8f.0.1740140626489; 
+ Fri, 21 Feb 2025 04:23:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH2KGV9KW75NIzNkWG0SW6peFEkOFc/jU+KcSZPzdoAVv5xo2diToCCT3MD2+GZhM03uTHZcw==
+X-Received: by 2002:a05:6000:1f8f:b0:38d:d223:f8e6 with SMTP id
+ ffacd0b85a97d-38f6e4c20damr2693617f8f.0.1740140626064; 
+ Fri, 21 Feb 2025 04:23:46 -0800 (PST)
+Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f25915785sm23929271f8f.58.2025.02.21.04.23.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:26:39 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ Fri, 21 Feb 2025 04:23:45 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:23:43 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 3/3] target/riscv/kvm: add missing KVM CSRs
-Date: Fri, 21 Feb 2025 09:26:23 -0300
-Message-ID: <20250221122623.495188-4-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250221122623.495188-1-dbarboza@ventanamicro.com>
-References: <20250221122623.495188-1-dbarboza@ventanamicro.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Li Zhijian <lizhijian@fujitsu.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 21/41] hw/mem/cxl_type3: Add paired
+ msix_uninit_exclusive_bar() call
+Message-ID: <0401c4328f4d18be540fd432c2bbacce4531d14f.1740140520.git.mst@redhat.com>
+References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1740140520.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're missing scounteren and senvcfg CSRs, both already present in the
-KVM UAPI.
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+msix_uninit_exclusive_bar() should be paired with msix_init_exclusive_bar()
+
+Ensure proper resource cleanup by adding the missing
+`msix_uninit_exclusive_bar()` call for the Type3 CXL device.
+
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20250203161908.145406-3-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/mem/cxl_type3.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index f14fcc58bb..017ca82226 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -616,6 +616,8 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-     env->stval = 0;
-     env->mip = 0;
-     env->satp = 0;
-+    env->scounteren = 0;
-+    env->senvcfg = 0;
- }
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index ebc0ec536e..4775aab0d6 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -944,6 +944,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+ err_release_cdat:
+     cxl_doe_cdat_release(cxl_cstate);
+ err_free_special_ops:
++    msix_uninit_exclusive_bar(pci_dev);
+     g_free(regs->special_ops);
+ err_address_space_free:
+     if (ct3d->dc.host_dc) {
+@@ -967,6 +968,7 @@ static void ct3_exit(PCIDevice *pci_dev)
  
- static int kvm_riscv_get_regs_csr(CPUState *cs)
-@@ -631,6 +633,8 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
-     KVM_RISCV_GET_CSR(cs, env, stval, env->stval);
-     KVM_RISCV_GET_CSR(cs, env, sip, env->mip);
-     KVM_RISCV_GET_CSR(cs, env, satp, env->satp);
-+    KVM_RISCV_GET_CSR(cs, env, scounteren, env->scounteren);
-+    KVM_RISCV_GET_CSR(cs, env, senvcfg, env->senvcfg);
- 
-     return 0;
- }
-@@ -648,6 +652,8 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
-     KVM_RISCV_SET_CSR(cs, env, stval, env->stval);
-     KVM_RISCV_SET_CSR(cs, env, sip, env->mip);
-     KVM_RISCV_SET_CSR(cs, env, satp, env->satp);
-+    KVM_RISCV_SET_CSR(cs, env, scounteren, env->scounteren);
-+    KVM_RISCV_SET_CSR(cs, env, senvcfg, env->senvcfg);
- 
-     return 0;
- }
+     pcie_aer_exit(pci_dev);
+     cxl_doe_cdat_release(cxl_cstate);
++    msix_uninit_exclusive_bar(pci_dev);
+     g_free(regs->special_ops);
+     if (ct3d->dc.host_dc) {
+         cxl_destroy_dc_regions(ct3d);
 -- 
-2.48.1
+MST
 
 
