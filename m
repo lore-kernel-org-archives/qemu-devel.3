@@ -4,87 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A8FC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC104C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 15:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlUh3-0004NQ-Qq; Fri, 21 Feb 2025 10:11:57 -0500
+	id 1tlUlK-0005uf-Lx; Fri, 21 Feb 2025 10:16:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tlUh1-0004N5-Ps
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:11:56 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tlUgz-0003Rr-VI
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 10:11:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so21882585e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 07:11:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740150712; x=1740755512; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=yciegiRd+LvbEwQ5vXC+IuEx9Zab5j6SC3x5a/DKyr8=;
- b=SUig5Tx0knjCkixrzPaKPlDiTcfCt5shrqAI7oXb3EG8lWOMaNjh5zGR1+Q+JX/TY1
- BV+31KmD5euR5MleoYLt1ynvK+wCuJpzP9Hg9OPITH07FIFvPyVJ8j4pa0gRcvq3M/7h
- /iETv+NXQMTMlkoZ+HENVtBD6IFxcYNkpzTdoRtbIzU+A0mgHSpYP9qDKXL0yhnkP/Dc
- 5iHUIp7+E3SIMJbfqHSpr2NJiAZwrCKw7RPXp7Tm7bMNK1HlmSskwfE3Lmpms6u8RVR6
- 7tUbiI/5z0d4ftBeuEJEn0YZ6JFWzUrIW9LF/nB/tjO2eqjntWhBG74aaOhU79NK9dMp
- +w3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740150712; x=1740755512;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yciegiRd+LvbEwQ5vXC+IuEx9Zab5j6SC3x5a/DKyr8=;
- b=DHdI2w5QIQyVjuI983pdQDHZJCc/g+NQcgJE4GnyB1TPCOsvFITWcqxLFcqbzNqA2a
- 03di7aslO8H50q/mOMPiTVi7SFIwXZjBXoAJjayaqRKeSJyEQq0NZ/wVPakRxXLdOxdt
- dSAiENo9pVnNJsP8f5hOifW8SsBJL1oBJms9ZpHawgq9+qs+v84WkEo/PinV/zAOEz5b
- RX3yIVH5+3aoeb+MRytcX1Bh04qNUECXzEu2dzP4wfhzegx8nOFGWaxWoRNoU37PfbSQ
- OIljTd10zYviKq04nk1b5ryq7kLzo5qQcS6g90fywuTKmgYEwWlxxfZiJ6p1TPpCmhzE
- zURw==
-X-Gm-Message-State: AOJu0YyINDvK8zBN2HjCJ6FG/4WCogBtNjigwPZvxUiq3W8pFvD5EWv5
- NQQXv8qGSldsnbg3BulCDT/qAAHhTud72gVIE8bzQ5ENZL9mqPUKtuO88EoJiA4=
-X-Gm-Gg: ASbGncs21H+SbMhmSz0h8y8A+RTRswQsKpiDLRkMaNmbk5NaJEmpXShJF5AV1P2T4p3
- 1gSEbGygyay87wwezYLzRqWVzrG9gzd0UFi9lLJIhCo7uCA7vvvfHUtVeifz3X2BfcrCXPApDvK
- L9eUAAFS57BiFxLfmWt26PZL9/ec0QQme3uOP2VJ9ZGrr4yoA+j2cmRAqs1KvdBWIqY3WnG5gFE
- 9//C2kBrMbw1eDlUA8ccVVYa1s7PSAyzxTifiZiiDEIsjdr7H0Keo2vMBgbPUuKdwZB3ELiFiYS
- VB2TvOcqhKaagA==
-X-Google-Smtp-Source: AGHT+IGFMc7EncM2bla39QtrC0GfMHh0z9w4a3HUhL5HqrENYI4DwJfPM7ygIE1goaiKhtdkWF4AUA==
-X-Received: by 2002:a05:600c:5489:b0:439:86fb:7326 with SMTP id
- 5b1f17b1804b1-439aebb5558mr23136145e9.22.1740150711748; 
- Fri, 21 Feb 2025 07:11:51 -0800 (PST)
-Received: from localhost ([2a02:8308:a00c:e200::766e])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b030be5esm19965505e9.30.2025.02.21.07.11.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 07:11:51 -0800 (PST)
-Date: Fri, 21 Feb 2025 16:11:50 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH v2 2/3] target/riscv/cpu.c: create flag for ziccrse
-Message-ID: <20250221-679a2e65bfea6314820981df@orel>
-References: <20250221141834.626722-1-dbarboza@ventanamicro.com>
- <20250221141834.626722-3-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <SRS0=ENLZ=VM=kaod.org=clg@ozlabs.org>)
+ id 1tlUl7-0005rt-ET; Fri, 21 Feb 2025 10:16:10 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ENLZ=VM=kaod.org=clg@ozlabs.org>)
+ id 1tlUl4-00045l-SQ; Fri, 21 Feb 2025 10:16:09 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YztxX4RyQz4wy6;
+ Sat, 22 Feb 2025 02:16:00 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YztxS6kT0z4wbR;
+ Sat, 22 Feb 2025 02:15:54 +1100 (AEDT)
+Message-ID: <642b1b3d-c73d-450b-b45e-21bc7bb51d31@kaod.org>
+Date: Fri, 21 Feb 2025 16:15:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250221141834.626722-3-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/28] hw/intc/aspeed: Support setting different memory
+ and register size
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250213033531.3367697-1-jamin_lin@aspeedtech.com>
+ <20250213033531.3367697-2-jamin_lin@aspeedtech.com>
+ <d770b173-c9e8-46b0-9c36-4f3fd3005d92@kaod.org>
+ <SI2PR06MB5041068E28CC4DD8CFA24854FCC42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI2PR06MB5041068E28CC4DD8CFA24854FCC42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=ENLZ=VM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,86 +115,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 11:18:33AM -0300, Daniel Henrique Barboza wrote:
-> At this moment ziccrse is a TCG always enabled named feature for
-> priv_ver > 1.11 that has no exclusive flag. In the next patch we'll make
-> the KVM driver update ziccrse as well, turning it on/off depending on
-> host settings, but for that we'll need an ext_ziccrse flag in the CPU
-> state.
+On 2/20/25 06:45, Jamin Lin wrote:
+> Hi Cedric,
 > 
-> Create an exclusive flag for it like we do with other named features.
-> As with any named features we already have, it won't be exposed to
-> users. TCG will keep the same restiction for it (always enabled if
-> has_priv_1_11 is true) and KVM will be free to turn it on/off as
-> required.
+>> Subject: Re: [PATCH v3 01/28] hw/intc/aspeed: Support setting different
+>> memory and register size
+>>
+>> Hello Jamin,
+>>
+>> On 2/13/25 04:35, Jamin Lin wrote:
+>>> According to the AST2700 datasheet, the INTC(CPU DIE) controller has
+>>> 16KB
+>>> (0x4000) of register space, and the INTCIO (I/O DIE) controller has
+>>> 1KB (0x400) of register space.
+>>>
+>>> Introduced a new class attribute "mem_size" to set different memory
+>>> sizes for the INTC models in AST2700.
+>>>
+>>> Introduced a new class attribute "reg_size" to set different register
+>>> sizes for the INTC models in AST2700.
+>>
+>> Shouldn't that be multiple patches ?
+>>
+> 
+> I will add one patch for reg_size and another for mem_size.
+> 
+>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>> ---
+>>>    hw/intc/aspeed_intc.c         | 17 +++++++++++++----
+>>>    include/hw/intc/aspeed_intc.h |  4 ++++
+>>>    2 files changed, 17 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c index
+>>> 126b711b94..316885a27a 100644
+>>> --- a/hw/intc/aspeed_intc.c
+>>> +++ b/hw/intc/aspeed_intc.c
+>>> @@ -117,10 +117,11 @@ static void aspeed_intc_set_irq(void *opaque, int
+>> irq, int level)
+>>>    static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned
+>> int size)
+>>>    {
+>>>        AspeedINTCState *s = ASPEED_INTC(opaque);
+>>> +    AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+>>>        uint32_t addr = offset >> 2;
+>>>        uint32_t value = 0;
+>>>
+>>> -    if (addr >= ASPEED_INTC_NR_REGS) {
+>>
+>> Side note, ASPEED_INTC_NR_REGS is defined as
+>>
+>>     #define ASPEED_INTC_NR_REGS (0x2000 >> 2)
+>>
+>> and the register array as:
+>>
+>>     uint32_t regs[ASPEED_INTC_NR_REGS];
+>>
+>> The number of regs looks pretty big for me. Are the registers covering the
+>> whole MMIO aperture ?
+>>
+> According to the datasheet, the entire register address space size of INTC (CPU DIE) is 16KB
+> (0x12100000-0x12103FFF). Therefore, I set the memory size to 0x4000.
+> Currently, we need to use the "GICINT192-201 raw status and clear" register INTC1B04.
+> Thus, an array size of 0x2000 is sufficient.
 
-Reading this as "KVM can choose" makes it sound wrong, since KVM can't
-choose. However, KVM will turn it on/off depending on whether this
-extension is/isn't present. So reading it as "TCG always has it on, but
-KVM will turn it off when the extension isn't available", makes more
-sense.
+yes but we are only using these regs :
+
+REG32(GICINT128_EN,         0x1000)
+REG32(GICINT128_STATUS,     0x1004)
+REG32(GICINT129_EN,         0x1100)
+REG32(GICINT129_STATUS,     0x1104)
+REG32(GICINT130_EN,         0x1200)
+REG32(GICINT130_STATUS,     0x1204)
+REG32(GICINT131_EN,         0x1300)
+REG32(GICINT131_STATUS,     0x1304)
+REG32(GICINT132_EN,         0x1400)
+REG32(GICINT132_STATUS,     0x1404)
+REG32(GICINT133_EN,         0x1500)
+REG32(GICINT133_STATUS,     0x1504)
+REG32(GICINT134_EN,         0x1600)
+REG32(GICINT134_STATUS,     0x1604)
+REG32(GICINT135_EN,         0x1700)
+REG32(GICINT135_STATUS,     0x1704)
+REG32(GICINT136_EN,         0x1800)
+REG32(GICINT136_STATUS,     0x1804)
+REG32(GICINT192_201_EN,         0x1B00)
+REG32(GICINT192_201_STATUS,     0x1B04)
+
+so the first 0x1000 are unused.
+
 
 > 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu.c         | 3 ++-
->  target/riscv/cpu_cfg.h     | 3 +++
->  target/riscv/tcg/tcg-cpu.c | 2 ++
->  3 files changed, 7 insertions(+), 1 deletion(-)
+> However, we are going to increase the size to 0x3000 to support the co-processors SSP and TSP
+> In the another patch series.
+> We also need to include the following register definitions:
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 522d6584e4..fc4632ce36 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -105,7 +105,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->      ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_1_11),
->      ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
->      ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
-> -    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
-> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
->      ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
->      ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
->      ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
-> @@ -1749,6 +1749,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
->      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
->      MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
->      MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
-> +    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
->  
->      { },
->  };
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 3f3c1118c0..8a843482cc 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -166,6 +166,9 @@ struct RISCVCPUConfig {
->      bool has_priv_1_12;
->      bool has_priv_1_11;
->  
-> +    /* Always enabled for TCG if has_priv_1_11 */
-> +    bool ext_ziccrse;
-> +
->      /* Vendor-specific custom extensions */
->      bool ext_xtheadba;
->      bool ext_xtheadbb;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index ea8d77d06a..c93612b1da 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -360,6 +360,8 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
->  
->      cpu->cfg.ext_sha = riscv_has_ext(&cpu->env, RVH) &&
->                         cpu->cfg.ext_ssstateen;
-> +
-> +    cpu->cfg.ext_ziccrse = cpu->cfg.has_priv_1_11;
->  }
->  
->  static void riscv_cpu_validate_g(RISCVCPU *cpu)
-> -- 
-> 2.48.1
->
+> /* SSP INTC Registers */
+> REG32(SSPINT128_EN,             0x2000)
+> REG32(SSPINT128_STATUS,         0x2004)
+> REG32(SSPINT129_EN,             0x2100)
+> REG32(SSPINT129_STATUS,         0x2104)
+> REG32(SSPINT130_EN,             0x2200)
+> REG32(SSPINT130_STATUS,         0x2204)
+> REG32(SSPINT131_EN,             0x2300)
+> REG32(SSPINT131_STATUS,         0x2304)
+> REG32(SSPINT132_EN,             0x2400)
+> REG32(SSPINT132_STATUS,         0x2404)
+> REG32(SSPINT133_EN,             0x2500)
+> REG32(SSPINT133_STATUS,         0x2504)
+> REG32(SSPINT134_EN,             0x2600)
+> REG32(SSPINT134_STATUS,         0x2604)
+> REG32(SSPINT135_EN,             0x2700)
+> REG32(SSPINT135_STATUS,         0x2704)
+> REG32(SSPINT136_EN,             0x2800)
+> REG32(SSPINT136_STATUS,         0x2804)
+> REG32(SSPINT137_EN,             0x2900)
+> REG32(SSPINT137_STATUS,         0x2904)
+> REG32(SSPINT138_EN,             0x2A00)
+> REG32(SSPINT138_STATUS,         0x2A04)
+> REG32(SSPINT160_169_EN,         0x2B00)
+> REG32(SSPINT160_169_STATUS,     0x2B04)
+> 
+>>
+>>> +    if (offset >= aic->reg_size) {
+>>
+>> This is dead code since the MMIO aperture has the same size. You could
+>> remove the check.
+> 
+> Will remove.
+>>
+>>>            qemu_log_mask(LOG_GUEST_ERROR,
+>>>                          "%s: Out-of-bounds read at offset 0x%"
+>> HWADDR_PRIx "\n",
+>>>                          __func__, offset); @@ -143,7 +144,7 @@
+>> static
+>>> void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>>>        uint32_t change;
+>>>        uint32_t irq;
+>>>
+>>> -    if (addr >= ASPEED_INTC_NR_REGS) {
+>>> +    if (offset >= aic->reg_size) {
+>>>            qemu_log_mask(LOG_GUEST_ERROR,
+>>>                          "%s: Out-of-bounds write at offset 0x%"
+>> HWADDR_PRIx "\n",
+>>>                          __func__, offset); @@ -302,10 +303,16 @@
+>>> static void aspeed_intc_realize(DeviceState *dev, Error **errp)
+>>>        AspeedINTCClass *aic = ASPEED_INTC_GET_CLASS(s);
+>>>        int i;
+>>>
+>>> +    memory_region_init(&s->iomem_container, OBJECT(s),
+>>> +            TYPE_ASPEED_INTC ".container", aic->mem_size);
+>>> +
+>>> +    sysbus_init_mmio(sbd, &s->iomem_container);
+>>
+>> Why introduce a container ? Do you plan to have multiple sub-regions ?
+>>
+> I created a container to save the entire register address space of INTC and its sub-region to place the
+> actual used register address space.
+> 0000000012100000-0000000012103fff (prio 0, i/o): aspeed.intc.container
+>        0000000012100000-0000000012101fff (prio 0, i/o): aspeed.intc.regs
+> 0000000014c18000-0000000014c183ff (prio 0, i/o): aspeed.intc.container
+>        0000000014c18000-0000000014c183d7 (prio 0, i/o): aspeed.intc.regs
+> 
+> If I misunderstood this design, I will change it to have two memory regions for INTC and INTCIO, respectively.
+> If need, I will change to the following memory regions.  --> it removes containers.
+>        0000000012100000-0000000012101fff (prio 0, i/o): aspeed.intc.regs
+>        0000000014c18000-0000000014c183d7 (prio 0, i/o): aspeed.intc.regs
 
-Other than my hangup on the commit message,
+I don't think the region container is useful in that case since there is
+only a single region per model.
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+However, we could "optimize" a bit the MMIO apertures to avoid mapping
+huge unused gaps and only map the useful set of registers :
+
+   INTC Registers      [ 0x1000 - 0x1B04 ]
+   SSP INTC Registers  [ 0x2000 - 0x2B04 ]
+   INTCIO Registers    [ 0x0100 - 0x0154 ]
+
+Each set would be associated with a subregion which would be mapped at
+the right offset in the region container.
+
+This is just a suggestion.
+
+
+Thanks,
+
+C.
+
+
+
+> Do you expect the above memory regions for INTC?
+> 
+> Thanks for your review and suggestion.
+> Jamin
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>
+>>> +
+>>>        memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops,
+>> s,
+>>> -                          TYPE_ASPEED_INTC ".regs",
+>> ASPEED_INTC_NR_REGS << 2);
+>>> +                          TYPE_ASPEED_INTC ".regs", aic->reg_size);
+>>> +
+>>> +    memory_region_add_subregion(&s->iomem_container, 0x0,
+>> &s->iomem);
+>>>
+>>> -    sysbus_init_mmio(sbd, &s->iomem);
+>>>        qdev_init_gpio_in(dev, aspeed_intc_set_irq, aic->num_ints);
+>>>
+>>>        for (i = 0; i < aic->num_ints; i++) { @@ -344,6 +351,8 @@ static
+>>> void aspeed_2700_intc_class_init(ObjectClass *klass, void *data)
+>>>        dc->desc = "ASPEED 2700 INTC Controller";
+>>>        aic->num_lines = 32;
+>>>        aic->num_ints = 9;
+>>> +    aic->mem_size = 0x4000;
+>>> +    aic->reg_size = 0x2000;
+>>>    }
+>>>
+>>>    static const TypeInfo aspeed_2700_intc_info = { diff --git
+>>> a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h index
+>>> 18cb43476c..ecaeb15aea 100644
+>>> --- a/include/hw/intc/aspeed_intc.h
+>>> +++ b/include/hw/intc/aspeed_intc.h
+>>> @@ -25,6 +25,8 @@ struct AspeedINTCState {
+>>>
+>>>        /*< public >*/
+>>>        MemoryRegion iomem;
+>>> +    MemoryRegion iomem_container;
+>>> +
+>>>        uint32_t regs[ASPEED_INTC_NR_REGS];
+>>>        OrIRQState orgates[ASPEED_INTC_NR_INTS];
+>>>        qemu_irq output_pins[ASPEED_INTC_NR_INTS]; @@ -39,6 +41,8 @@
+>>> struct AspeedINTCClass {
+>>>
+>>>        uint32_t num_lines;
+>>>        uint32_t num_ints;
+>>> +    uint64_t mem_size;
+>>> +    uint64_t reg_size;
+>>>    };
+>>>
+>>>    #endif /* ASPEED_INTC_H */
+> 
+
 
