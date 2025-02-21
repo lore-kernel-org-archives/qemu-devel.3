@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EAFC021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F10EC021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 12:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlS4M-00063q-MO; Fri, 21 Feb 2025 07:23:50 -0500
+	id 1tlS3O-0004Un-L2; Fri, 21 Feb 2025 07:22:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4G-0005kn-1V
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3M-0004QQ-Hw
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS4C-00076H-VH
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:23:43 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tlS3K-0006zw-BN
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 07:22:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740140619;
+ s=mimecast20190719; t=1740140564;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2aojgtrZ6esJVqQc5qz1w/JX0CqBotUbbq3GahOTG6Q=;
- b=SkouCYVG3H3YWsXtxXRxkKZIhT5lCtgD4IeWYmscEJPopp5scBlu3/lfrNSYEoqBaS1ugk
- xlo54DGPCs2PzR+3UgfAQlET6aW/Gx4q7nuXVZ9Re+pca7whSJ7otpczicZddIeEB6QByJ
- Q9Q3aujo/Z0AlS0Dmj0RlYjZ/BjFzK0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0bNjdF5JuUjHCo2SOdNSUp94YzkHH1wWG4NRbjF7uhw=;
+ b=H9LMrr/JY4vNmuJB4PfzmbDNwIOsm18uRiduTagVAH0bb0YYroPRsTGAkHLnAXcIJ63TT8
+ C5IQrt++0vs49JyixOktfPK8E+/rgMU4u8nFKa7qOFI41xoHy/XkHILWbTJ1kWWubWprEc
+ ubp+8pkRCU2Olou3vYm6F6fonTah5S4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-258-ouY0Gy2cM9-ox3TMoLT5_Q-1; Fri, 21 Feb 2025 07:23:37 -0500
-X-MC-Unique: ouY0Gy2cM9-ox3TMoLT5_Q-1
-X-Mimecast-MFC-AGG-ID: ouY0Gy2cM9-ox3TMoLT5_Q_1740140615
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4399a5afc72so10245365e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:23:36 -0800 (PST)
+ us-mta-637-kc2rI-o0M7WvCS0-w1JoyA-1; Fri, 21 Feb 2025 07:22:43 -0500
+X-MC-Unique: kc2rI-o0M7WvCS0-w1JoyA-1
+X-Mimecast-MFC-AGG-ID: kc2rI-o0M7WvCS0-w1JoyA_1740140562
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38f628ff78eso1073118f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 04:22:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740140615; x=1740745415;
+ d=1e100.net; s=20230601; t=1740140562; x=1740745362;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2aojgtrZ6esJVqQc5qz1w/JX0CqBotUbbq3GahOTG6Q=;
- b=X2s4xShe60NytFAP/QfSHxANyvym18lvVvEQLZAqH7fmB+aRvyHvArL927oCmYDl7b
- stHnrIeX8OJMsV0zzDf8MtT9X9SIyaPxnQYI4ey9FBnSbGH4CG7h0NzNTS8i0VmxKcHI
- qy6piyWcEF5DeLxUH89KnX1xKniHnulE42rp1P4VXKt2HDo/4nYPIOehJVsyajQwEvdr
- DSw9UqsOQp91DJ4Mbvg28nwf1pWtanJenEKKiatB7CcEciA0ShNcLG16yD52BMUTn1Tf
- gi4FCS7BMWt/Bh04PJl2xJtMmtWutATXV1yx+VQZ2R5I1oH4hLMH+uXYb9np33k00MnN
- MCkA==
-X-Gm-Message-State: AOJu0YxZVXLu0PdeOqftd9aRrDi5e9sfNJ/9zZRGZCFBjmKrz3T85mbx
- FgCsdr53ZFNZCVATCLeh7mQbyQ+tHP4t+4Qf4ffiuo5QzWfVMS+nl4+bXEgri1nTWkfSFczfyAB
- vPQ7y6hY1M2rwjwABzSrKD6NolxorzEalTywDFX6R1YkCs8spdgHH91cKareellAs9knCWhQQKw
- jmCSdmdTbyCnRiuUJYTIoxKPsi6vZJ6Q==
-X-Gm-Gg: ASbGnctWstMWm7N98pK0IbmCAw04WnJbqDP1sNe6lZxsHWInfQOm2pqFwpp6ymiaROJ
- UhtASi+XRsk1v1RePUreswuTpHNtDlVuUdsgfE8AmBuPtVmRC2QbKlosybsTI6mQec0JGBKDIcT
- /8DQzSa4EmvbMyy1NF4IosvFsWxnYEjdGLCx9CVTt9Ee96W8I/v36b6zW82xbdeXPWqG5jjGgFx
- FjP0/zqoO1tl95s3fEa6a6BGev+qO4gDaQemAE3bNXwKT9lezIZyNVrXpeOF8CUHarV2/UiXMFg
- 31H4ng==
-X-Received: by 2002:a05:600c:4ece:b0:439:9274:8203 with SMTP id
- 5b1f17b1804b1-439aeae0543mr22381885e9.6.1740140614679; 
- Fri, 21 Feb 2025 04:23:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGfuQquOBWW5A7tkUGJ2yxc0B2Zlc5AbnX9fc0iisrFfMRf341iMJ09qib/W/y0hD1nrJrhMQ==
-X-Received: by 2002:a05:600c:4ece:b0:439:9274:8203 with SMTP id
- 5b1f17b1804b1-439aeae0543mr22381575e9.6.1740140614165; 
- Fri, 21 Feb 2025 04:23:34 -0800 (PST)
+ bh=0bNjdF5JuUjHCo2SOdNSUp94YzkHH1wWG4NRbjF7uhw=;
+ b=AK2Tkx+MFT9xZolQbj5PkRBRUUouwIHTadAYaDGqB7PImHlOrWH52URVlR//MNuZ+2
+ LKay9mr6qbLx+W6u+WoSxgGudKXam5h4uRE648kPiUn9b0oqqXW5AVJ30y5F39prqbb2
+ +ECzCHSq7lN2zsBbSL0PbXMFLiSa/SVuNqs8TmwzmL8O2VnilZT0VtcsONDwEnJoJGHD
+ 8AAVYQFDL96JN0xyCBSGMQKyM4DGqN7inR1SqvZr/jHfK4dQpX1wnNM1lsFSL65rECLp
+ /a+LDtcMDBmRH/5Noe6HqV2+lnUeg3o5aqoKQRCGOt+I/DFn0U7Iy2Tttf/OYOKrr025
+ i5Xg==
+X-Gm-Message-State: AOJu0YzFBLu7pIfeZVGZA1mhCR54sy0UuWNdDL3EwLR7XxeunIZnuAh7
+ k4jNeUe/nr86MNMfMlHeliDV8cya3FrIHhhHUrl7KGnG+ggcmyUcFFD++ys5L19aRzrjPyi1Dxm
+ 5OgfaETmvg+ER5e09Vdb+zXuqpRsObg4nPxmfzfpyTFrg9S9NQ+U7Y7V2+KAP+HRZhctF1LIGkm
+ 34/KkILJBhGbXCROSgU98Ow17oQQNkIg==
+X-Gm-Gg: ASbGncvKxDzG2kCctOJQPbSg6FmVKJbqgdTyOxSNWJgEMWCKwMebG6pevyJ3oPGI9sK
+ Vs3ebyxNQYfzRQlHRx6XCa7Y/hzb6/zNp/WrQ+kuvnHrgdRRBDk+CBIx6aM7wHwx9WOTzPaTjjo
+ /q0QCs5Y/nCI9lfTkk19FXnvLdQYJfu4j+ViZygVuIbpsYS4XX0OG5zVdkxyCfMreCy4sMvshgJ
+ TEMGn8ZCuVuK67PE1aPYYOiKPcG+50X94fJ9KGSWkNo8MGWCDTkD+MnSHYE8DkLLUsLdZbObH66
+ 2s2dpw==
+X-Received: by 2002:a05:6000:1a87:b0:38f:3ec3:4801 with SMTP id
+ ffacd0b85a97d-38f616323bamr6689937f8f.25.1740140561789; 
+ Fri, 21 Feb 2025 04:22:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHP8Lu5T3G6KwX0s36LKuCZMOXl5Nr+A2vHjtWT0conKupsh+PZkNU9WdkcSKo3XX8Mqj+bOw==
+X-Received: by 2002:a05:6000:1a87:b0:38f:3ec3:4801 with SMTP id
+ ffacd0b85a97d-38f616323bamr6689914f8f.25.1740140561459; 
+ Fri, 21 Feb 2025 04:22:41 -0800 (PST)
 Received: from redhat.com ([31.187.78.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce41dsm16307815e9.1.2025.02.21.04.23.32
+ 5b1f17b1804b1-439b02ce404sm15950885e9.7.2025.02.21.04.22.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Feb 2025 04:23:33 -0800 (PST)
-Date: Fri, 21 Feb 2025 07:23:31 -0500
+ Fri, 21 Feb 2025 04:22:40 -0800 (PST)
+Date: Fri, 21 Feb 2025 07:22:38 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 17/41] hw/i386/pc: Fix crash that occurs when introspecting
- TYPE_PC_MACHINE machines
-Message-ID: <de538288e4dac21332cc94ba9727ed8ec8fe5ea1.1740140520.git.mst@redhat.com>
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Subject: [PULL 04/41] hw/ppc/spapr_pci: Do not reject VFs created after a PF
+Message-ID: <3bc31441ba31c94f12b7b96b1960abb4c1f21ee8.1740140520.git.mst@redhat.com>
 References: <cover.1740140520.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -87,14 +86,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1740140520.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.424,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,69 +111,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-QEMU currently crashes when you try to inspect the machines based on
-TYPE_PC_MACHINE for their properties:
+A PF may automatically create VFs and the PF may be function 0.
 
- $ echo '{ "execute": "qmp_capabilities" }
-         { "execute": "qom-list-properties","arguments":
-                      { "typename": "pc-q35-10.0-machine"}}' \
-   | ./qemu-system-x86_64 -M pc -qmp stdio
- {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9},
-  "package": "v9.2.0-1070-g87e115c122-dirty"}, "capabilities": ["oob"]}}
- {"return": {}}
- Segmentation fault (core dumped)
-
-This happens because TYPE_PC_MACHINE machines add a machine_init-
-done_notifier in their instance_init function - but instance_init
-of machines are not only called for machines that are realized,
-but also for machines that are introspected, so in this case the
-listener is added for a q35 machine that is never realized. But
-since there is already a running pc machine, the listener function
-is triggered immediately, causing a crash since it was not for the
-right machine it was meant for.
-
-Such listener functions must never be installed from an instance_init
-function. Let's do it from pc_basic_device_init() instead - this
-function is called from the MachineClass->init() function instead,
-i.e. guaranteed to be only called once in the lifetime of a QEMU
-process.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2779
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250117192106.471029-1-thuth@redhat.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Message-Id: <20250116-reuse-v20-2-7cb370606368@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/pc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/ppc/spapr_pci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index b46975c8a4..85b8a76455 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1241,6 +1241,9 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-     /* Super I/O */
-     pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
-                     pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
-+
-+    pcms->machine_done.notify = pc_machine_done;
-+    qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
- 
- void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-@@ -1714,9 +1717,6 @@ static void pc_machine_initfn(Object *obj)
-     if (pcmc->pci_enabled) {
-         cxl_machine_init(obj, &pcms->cxl_devices_state);
-     }
--
--    pcms->machine_done.notify = pc_machine_done;
--    qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
- 
- static void pc_machine_reset(MachineState *machine, ResetType type)
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index b94e4ba131..e0a9d50edc 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -1549,7 +1549,9 @@ static void spapr_pci_pre_plug(HotplugHandler *plug_handler,
+      * hotplug, we do not allow functions to be hotplugged to a
+      * slot that already has function 0 present
+      */
+-    if (plugged_dev->hotplugged && bus->devices[PCI_DEVFN(slotnr, 0)] &&
++    if (plugged_dev->hotplugged &&
++        !pci_is_vf(pdev) &&
++        bus->devices[PCI_DEVFN(slotnr, 0)] &&
+         PCI_FUNC(pdev->devfn) != 0) {
+         error_setg(errp, "PCI: slot %d function 0 already occupied by %s,"
+                    " additional functions can no longer be exposed to guest.",
 -- 
 MST
 
