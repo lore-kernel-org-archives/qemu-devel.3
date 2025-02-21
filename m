@@ -4,181 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6220C021AA
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB98FC021B5
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 08:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlO4Z-0004ZT-EQ; Fri, 21 Feb 2025 03:07:47 -0500
+	id 1tlO68-0000KF-7Q; Fri, 21 Feb 2025 03:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tlO4U-0004Ww-3o
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:42 -0500
-Received: from smarthost1.eviden.com ([80.78.11.82])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlO65-0008So-P4
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:09:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1tlO4S-0005j1-74
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:07:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1740125260; x=1771661260;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=4q+FNgT9HVsk5swidj6jJeI6FoYQL+sITZhOOFRxzsg=;
- b=mx1ZRS586zUMbJqHZZ/iP2z/CpcVhKZRF1Nw9z5/KbqP+JD0kgl0GX5s
- FD4MQyPasCH/9rbl5STJ83SLpCX48ejrH2K14sQiNHHlTYSoBeO3ek9aI
- XMSzx4j2fxFrBVBqoN7GZ2W+JGD/XCaAsRNh8w4XYF16/SYER9toWC5qC
- Qw2wwPoHF5a2vfJVSGOGFRx80rdWtU1H4n9ai/Qjb1QTxZag6g/UMl4oM
- 02grqmXn9lcPEb93th1TWFOjx55QLywtXlp/17Pf+YQaJrSy9tZ1cCkac
- 3GcDxmUE86QUv3OJV+tHkv5T+ys5YSflcsCnF1vjjMyFvZiDnzAA/j0JQ Q==;
-X-CSE-ConnectionGUID: YLsvwXuZRmq83KijIZl2Ug==
-X-CSE-MsgGUID: Hjw5MI5bT4GRZGLQ9inNjw==
-X-IronPort-AV: E=Sophos;i="6.13,304,1732575600"; d="scan'208";a="31394134"
-X-MGA-submission: =?us-ascii?q?MDEbh+Jbs1DblYRiT1T26lelfA5oOsJSLTpXCL?=
- =?us-ascii?q?TgpSkxQL7FV/AKy3dlfmzMR1LdtHQNh2/hWkzUeoqsslFgyAv+hGlpD6?=
- =?us-ascii?q?pCm4xj+bNxU4+c0ZHvVwxnYsdpAAOPEOPcrp3D3wbNsvNx0o7j6W8R+W?=
- =?us-ascii?q?Qaj9hqSOqtTwx4PRRImZ0z0A=3D=3D?=
-Received: from mail-db8eur05lp2111.outbound.protection.outlook.com (HELO
- EUR05-DB8-obe.outbound.protection.outlook.com) ([104.47.17.111])
- by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 21 Feb 2025 09:07:39 +0100
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XxRH4jIoK2v3R/Iz5KNywhx3P1NF42TF+X82CphmJ+lJpTlw+3ewen8DHxVulGwQUMVCoy2LQl40rqgR8a4WoP350n34wpqzDglZ6pao3RC7jhvsnfIbVA4f18WSQ/0igK4qgLjoSJB3A8IrCJYJ+J8/sSOdlq7nA6NQEC0zkDvG15cbrqGiAtZ2UUGXUMBNVFlTMr/2zozm3MDAR0+qsT4/8osc/SC7J3qqao6i09ThF/lRrsBncDpfqkD3jJ9ROgLRgdeLArOOzRGYHFHBYV6nsWDvb4H7mr6F/L0DgVJ9PjNaGqnnZWnWhohgIm2dn7/pahbQOs5icCTy5v0AZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MEmwoWOY7veZvqndImfbubbycqeBF+qn+7KqkGGtMWw=;
- b=bLh10glC8Z4+/FwAPaa5ZlDUZhMFUpR4Ofh06jR9Y++IZuJPjY7bs6N3a9962xM1elz7Wl6dA0ScPzRikDTtjZbdiUVpl+4AiimUUFmwtJbOlODS8/p0SjPoOrup3kODJOC0KLt9Qqvs1fKiW6n1Bw02fz7pJEaGeHtaFkHLZvAD0gEP9LJWjlN7NOL8jXUy8gvad68IuLOshOjK09f02OSmG9n1qPsK/La+2K7EL7rzLbnoC8fEgJt+XM820V0zYLtc49i1NBTIwuhTwIaxoFthn7ui7R/ncp9cEY82nDOTRcyFVXwygYaCs3q3JQbh73L7yn6Q0zfHApxGlIXGog==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MEmwoWOY7veZvqndImfbubbycqeBF+qn+7KqkGGtMWw=;
- b=YMFSVcXAGAv5CjEtLO/flfWEOGfWxJkojL4Epk+jW2QL8t+Jzd8+W/mT1Rxjm9YZj3pSwcO2FaLIDKRfkE5V/qppE0Hw1yvEyNhFfTwPiDNYs2Nd4jMFm43ZIjOxWB/2V/bnGYH/CvAn4osAY9pz54zEkec2vs72UxpK9fGDMGWBFPjV0rkFz+C8AyWgadXsgpPmsb5LXdUn0c6Ctqxa7CHmbcf+gTxQWfB4j/BOD14CxtmZkxeSkrZAlxxq1rNcKRAyOP+ZFIpUTzFh1tYSZuJfEyCXdlFn7RsuwUkXg0u6tbJsFS4nrg6Tce47B+aj5YobjRkIetT4cUN8AgWMUA==
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by PR3PR07MB8162.eurprd07.prod.outlook.com (2603:10a6:102:175::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 21 Feb
- 2025 08:07:37 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d%7]) with mapi id 15.20.8445.017; Fri, 21 Feb 2025
- 08:07:36 +0000
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "tjeznach@rivosinc.com"
- <tjeznach@rivosinc.com>, "minwoo.im@samsung.com" <minwoo.im@samsung.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Subject: [PATCH v3 08/19] pci: Cache the bus mastering status in the device
-Thread-Topic: [PATCH v3 08/19] pci: Cache the bus mastering status in the
- device
-Thread-Index: AQHbhDeryfK2GuqB9kmdnlUzetIV/A==
-Date: Fri, 21 Feb 2025 08:07:36 +0000
-Message-ID: <20250221080331.186285-9-clement.mathieu--drif@eviden.com>
-References: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
-In-Reply-To: <20250221080331.186285-1-clement.mathieu--drif@eviden.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PR3PR07MB8162:EE_
-x-ms-office365-filtering-correlation-id: d4ce08e2-ebb6-4e8a-90da-08dd524ecd7f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?bCdK67h27PZpBMcLGTP82WKhFjvrgku4fWh61P5k3OyZZOFMjqcjpZISaR?=
- =?iso-8859-1?Q?75wByER6Zgg12i3AtQJUYdxGNAi/Rba2a38dpnBdtcy7/RECdLO4HlFrf1?=
- =?iso-8859-1?Q?Iw1JIJLUhdMbITvz6++ur8blc5vWXfJ/G9p8KfQuPBe99x7o5ZykV4J0P+?=
- =?iso-8859-1?Q?1KCSo+lLotddmUUuhaaDqXQLCrzKPUEMMdCd1GFnnoU8Ki3V8YJF+/DE6U?=
- =?iso-8859-1?Q?Lb4iwDKyPPApIf4ysIlbD1GSfQuQsyHFZ+a9nFMFNHanJI7KIyBLRHaDDF?=
- =?iso-8859-1?Q?B9Jy+T4ypHxI7L+kvIi/cWPcPXfHAyM0CTyj8Nw3FLpYDoJ9do7nUFlY4M?=
- =?iso-8859-1?Q?7fWUWLkLFcsLlAtZc6ljrFaR20PljhaHFcKGmHuNx9coXZwNDN5u9Em8zC?=
- =?iso-8859-1?Q?ALYK5cgpah1bKvimCJEF7ffwv4eqMCzoZPTwfAJcvNRQ+xWaJdfBQBEtxy?=
- =?iso-8859-1?Q?yTiNg4W3tWZK7AEGOmbiSTrryoWz98FtdHriNnQkxfHzUsKwVKZA5v/f/q?=
- =?iso-8859-1?Q?PK20DJPn9SZq0yxrQjmhEdY3xihnyaRym4Mww9xoy8ayY8svbHwLQ4wuFo?=
- =?iso-8859-1?Q?jv4Psr9gzbwbdrxzwjLbJmMGK97MxwyaG5hxO5SnKvLYFgj/ypcmEMh00R?=
- =?iso-8859-1?Q?Y3N86dfOuKHMyKJTRNLcOZz205jEXwmW0IbYDx01z7N/14Pzi8AkDSTqEb?=
- =?iso-8859-1?Q?/Kba2FpceIf4naKq4mNROQ591AqmzIzAFK7aKMxS0hT/Jb11glJuawefEE?=
- =?iso-8859-1?Q?BfIanWAQRl9+3xVdEJFIV6CDW7f4VJZT0WVd4RXuzpWi0C5zle3/mS/dOb?=
- =?iso-8859-1?Q?r3eQ/dfqS+Z3KCxsH4z2rZeH0Io8EC8W+EwmLnjYu6ptPH23/i3bsjT8z7?=
- =?iso-8859-1?Q?t7qp5LBNh/vnSozjZzgGTVKmcSD9+VSFEWktTXYHrlEqYoVR9ZKagcqZwJ?=
- =?iso-8859-1?Q?Q12TkHLdenBw1lRLGTzMydBYqbtMvM/xKgcllgya7+Mja9n0sAIbA+uGCk?=
- =?iso-8859-1?Q?/LyiY/ehkfQFFDKNueHJ96ZTvrmBBgYBZ9hpOuIpF8eV1p3CSHMZTSvRUi?=
- =?iso-8859-1?Q?v71BS1u3jzuhLOPDQftLec85rKrH8tujmVabSHmwsXQgpSOs1Sq0y6iS31?=
- =?iso-8859-1?Q?eRJpxxcJFzcYQHuzXOf6gcn8y7jxZSXy44rNO1BCOFyMR/MA2Hl1vgdkOK?=
- =?iso-8859-1?Q?9jc24USYdGPAAfHJG0tXOHWhl+pLqNhSdYVP2Uh8o+46LZJzLui7MXk83T?=
- =?iso-8859-1?Q?i2GlBqWcH2GTJZliIgcfktjBd68w5C3KZUKmqYo6FN9IhscbMLm7g7TeJe?=
- =?iso-8859-1?Q?WOUdUjmN+/oF/q5c+mlYRPHzf9TTZgeZaeov+RWisUpjbxiOq22LQttXsv?=
- =?iso-8859-1?Q?+IyK5r2pRGxg+0Rg+FWr9Vwaw2PesZwFPEi9zVcOuYDzwESjNXzPzLErDW?=
- =?iso-8859-1?Q?2dIQHygdhskTqCdGs705XiMQRqpm9672oeJnsC716pJARi1f8GlJgsPeHx?=
- =?iso-8859-1?Q?sTFoCxZUmlaNszjoJbII8n?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?hPnis01xy6wuuWtsRqU2pR/6XH2oK3OmuooQc3Dq1qYmbuyoSrOz+V9vmg?=
- =?iso-8859-1?Q?LoHDjrwrW6Z83Q/mPgDxzMRbm2ZPKzIr/fExsSzXGZ7oNMM2E1nERL1dnZ?=
- =?iso-8859-1?Q?JMFxIHGnyS0DW71Nohz44OBTRsBFLmpkFYAeanbqtqrS+iY53EymoEBnZL?=
- =?iso-8859-1?Q?K0ZVUeDQRUYnH+t3TANo22yLzS8QPtqFEMEVf0TPXzcOYG7U2NNySP5ycY?=
- =?iso-8859-1?Q?sv7+5ivDHTtz5f2W3jtG6S/AQW9NOdZ69i1jEZ8Dccr+ZCOXC1P/qVxDeO?=
- =?iso-8859-1?Q?sv1idV2iuV5EIMs5goFK6YYKbZXAMYxxtirpGrwXLk6MSai3e6CL4cOSyG?=
- =?iso-8859-1?Q?aQzE+f1bCjIJpTKVa7qS2RiMeD4Hhu7jSaU3j6HMZTYg5g8MRDpOIEdQ7K?=
- =?iso-8859-1?Q?C8p+bxxByeMkfneB3o3PgtHPfwxR9XGiZAADtQLMk9G8/1RTroTlmDla50?=
- =?iso-8859-1?Q?aOAQp0/uMdNvvKodKVrMIb9ZINdsBJLGQuf0JfOah7Uc1zxfsJnZiZHCAo?=
- =?iso-8859-1?Q?/PqRqj9sJqC64Gbtm+9WITUF73KcN5iiKnGE/PqxEpnXyu8LVmpVubETsl?=
- =?iso-8859-1?Q?3hYRdaQPiDKp9KAeNUslaE1h5bj7HtZeQRJwADUUoGBl8ASvVyNIA0t+Ul?=
- =?iso-8859-1?Q?3cP/7lJKb2zfyCGb9AEhISb/BrNxHfTgVjalEou7tRwgz8oM98m+zRCiL1?=
- =?iso-8859-1?Q?OYSPdCe57ClmO6WtCTkyrlfbqc40HrMQOSloUYefw12n4VNRfDGu0YL1ea?=
- =?iso-8859-1?Q?L0LIHzZCCv2z3pIftyEn9mvlATrI/FOqscoLHPwMx2bCoq278mLI0Xe+9M?=
- =?iso-8859-1?Q?Cfnl65ipzc6RWMcMnWK92wBN8e4NGouNGxfWa2t65z/E7fyfmT6XKxNn4i?=
- =?iso-8859-1?Q?Xo8tjATHAtexPeHFxY0Z1NTCZ/CSUOJvMsGRFmWxORsmg35ln4SyDW2Dvl?=
- =?iso-8859-1?Q?JQ2amR8+4pwN5G7NEB/xG9QSgMJnaOZLHLMfi1VSxf3g2OruuKjcCoUprB?=
- =?iso-8859-1?Q?si5SFsCOcmigwydwgJtHQ9MmnRfizHwtJCtFpiI6Mr+pZdjvlesJMx6W0z?=
- =?iso-8859-1?Q?/6KI+yJyXbKOv9nZ32Tz7ODl+uZYbgN7wYAdKThax37FUB+fucyHHj/itp?=
- =?iso-8859-1?Q?oeRvnUt3x6d4erENEBQ9s/bcSbfWxbVa9/vsHGJ/yGB1uw+jwgG9Ch61hw?=
- =?iso-8859-1?Q?xI5Af/wzIAY1whBCBzFigkm9tVOeB6BjuVpDveVPt00cXSEYCigRMA5WL/?=
- =?iso-8859-1?Q?nqzr7AVIMiS8+H0byfNZqxFEP1E53p9AxSlSExpPUY7X1Q5JVyLxyoLQv5?=
- =?iso-8859-1?Q?a0+YOKMMDMz2EHiQiSDeVDLp7Cy/8hR0RZGdiyvzALkp039x3TZvXCuzWn?=
- =?iso-8859-1?Q?jZBcLNBvUBHJnZhCq0HOFecQmtHRP516d4byLxlVw2SH4C0j9jdW6XcgVl?=
- =?iso-8859-1?Q?JdyGcj6oLc2t6eMXpv3RIngU6gsP5Km84CdEJbQFNS6ksEdJ/fGyFWRMy2?=
- =?iso-8859-1?Q?hjvIapaIsztOnMFx4BOcayBg0QYnJuOc1JcLt46kyKsyu+a16Eaq4Kt0sQ?=
- =?iso-8859-1?Q?QuhcwcLlKXFig5wxo550az2rJFix7QSIv4m3rj+rBhKUTbsWM2+wrAoQdE?=
- =?iso-8859-1?Q?ppyZNXPSw0/0Ur2pW1R6ghFbiV7bn/f7Ra88cL3+G6ZpLFFUege0IKkgsK?=
- =?iso-8859-1?Q?VJVv5/84kpvQEQufVZ0=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tlO63-0005rC-2o
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 03:09:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740125356;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=44AsZ+U8ubfJDcHaFXeefTQmjxtqvBwugZR6R15diFM=;
+ b=hqKHEfYztdbiy6otf/UgzxkxZlApXpbqTGy2bWQohAw5btBxNTKia4PWWdDMzVxxiazaiz
+ JGp1tDu9uDZPq6tkQPU/mjfqRahYvUh0wnJtb8B1vBowN41lJnXaWltB7WXl3O/9mnJ0RM
+ e42s+G+mkiHTQ28IrRPx7UpJNMO3TM0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-17-3jvjxQvpOdmcmWxiJHI-aw-1; Fri, 21 Feb 2025 03:09:15 -0500
+X-MC-Unique: 3jvjxQvpOdmcmWxiJHI-aw-1
+X-Mimecast-MFC-AGG-ID: 3jvjxQvpOdmcmWxiJHI-aw_1740125354
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4399304b329so9906415e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Feb 2025 00:09:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740125354; x=1740730154;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=44AsZ+U8ubfJDcHaFXeefTQmjxtqvBwugZR6R15diFM=;
+ b=pv5VTINxQ4qoWQtJzn5HvO3BwPiWl7hcdFxDPZuLMoBhNpkAti4wJ+Cb4BNj89gpqa
+ Rg8iKRdJJBb7nZklDJmfn73BEaZBCY/5lv4c0Koo8mFHnBCutoiAwTjfib3EsZ3MJB5v
+ Nbp3x3jpm//SibpsgbPB7DC/+V0cKwPIHcfjqmzXZA4kJcdU9cWp1WsTpSuuO/9cHDRq
+ Pm5d3/IBNh965KVgeJlFqo5w0TQ8AXVCjSyQcxPpMAUp7uqQ7bvRkdKYjvUp84GgjG9M
+ ulpUQWyzfPGhQ9QmKtn6aTnLDP+TordImvddPzN0+WmCxEgRriwyzWX7wfhlbXXc+uOu
+ 1IXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQ4YWOUKEQ7imofoBcG1jBCrLpe9ERZktWjHWyGpTTa4eDV8tcnt+BLkaARGERD1Gkk+XK24DS235i@nongnu.org
+X-Gm-Message-State: AOJu0Yyu5KzVTZXbxlRduicDMD5cjpeSS9dTOqM58DXW4alOWvBXV+NK
+ F+zIs2oyC9zP+DdWiUuNCoZ66RE1eJJ2pvMaEtPLJL5PXAxy3Ntm1lanAOM36K9+0FJBXXhA2qa
+ SiniN9+sudOpqL+4aOSoTetQ2/JDVu3nlxAut/5690LGsqFrPQu9D
+X-Gm-Gg: ASbGnctDRWlxsNF5ekRN2YAPQ3KBDvF17YiCwwCbf49xMxukyIyBNMlv4gMdFcj44w+
+ Gktp6eNitswpF/HbvRARdAhU/skz8YO3C1OOVpBm1fTr1gqnlII8r/Kh9/qC13Tgbfb/tNOXTzo
+ QNq0uKJXh1ZlthOa5/AghdjDMJYO+vgUdetA80I8m8tsJA2R2GlvFE+6IAbHWGv08zZeYcQW2p6
+ 7IeFB3BJ+AtFe1JPoP08vN5d0J75wYLlpyKleaD1R3klz5ua7YWSs6im7YPzpC9gmKPFqVnicMX
+ xU+872H4Ol0TUeloY3CDw8WKoGXQpgvaCmm0WCto+lUcLg==
+X-Received: by 2002:adf:f5c6:0:b0:38f:278f:58e4 with SMTP id
+ ffacd0b85a97d-38f6e95fe16mr1153147f8f.12.1740125353905; 
+ Fri, 21 Feb 2025 00:09:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGkID8SXsxg1AvvAcQe27uk+jrUSZEZ5q1Npi1LZHoRu/DZTgceAbzOTu2FrpJ+Bfo5rTqN2g==
+X-Received: by 2002:adf:f5c6:0:b0:38f:278f:58e4 with SMTP id
+ ffacd0b85a97d-38f6e95fe16mr1153127f8f.12.1740125353444; 
+ Fri, 21 Feb 2025 00:09:13 -0800 (PST)
+Received: from [192.168.3.141] (p4ff23890.dip0.t-ipconnect.de. [79.242.56.144])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38f259d9be9sm23027196f8f.79.2025.02.21.00.09.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Feb 2025 00:09:12 -0800 (PST)
+Message-ID: <ce2306f9-19a4-4979-80e6-29b1e8a92318@redhat.com>
+Date: Fri, 21 Feb 2025 09:09:11 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4ce08e2-ebb6-4e8a-90da-08dd524ecd7f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 08:07:36.4768 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: lh5VYBDJ308vhF8eyADQZgGuOfYN82FNrmbHOZogN4PtwfHVRYtchQNP/PZ4YoRvtv9vSJjpayocRD1ZGZrUwvSeDY4MEVty8BQuFv0qdUmB7undgASO3F7rW8I/QnUz
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR07MB8162
-Received-SPF: pass client-ip=80.78.11.82;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost1.eviden.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 1/2] system/memory: Allow creating IOMMU mappings from RAM
+ discard populate notifiers
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>, philmd@linaro.org,
+ peterx@redhat.com, pbonzini@redhat.com, peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20250220161320.518450-2-jean-philippe@linaro.org>
+ <20250220161320.518450-3-jean-philippe@linaro.org>
+ <0d761daf-174d-487f-80fe-09b04902006f@redhat.com>
+ <75d90f78-151f-4169-84f5-cc3c13180518@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <75d90f78-151f-4169-84f5-cc3c13180518@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.457,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,97 +161,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+On 21.02.25 03:25, Chenyi Qiang wrote:
+> 
+> 
+> On 2/21/2025 3:39 AM, David Hildenbrand wrote:
+>> On 20.02.25 17:13, Jean-Philippe Brucker wrote:
+>>> For Arm CCA we'd like the guest_memfd discard notifier to call the IOMMU
+>>> notifiers and create e.g. VFIO mappings. The default VFIO discard
+>>> notifier isn't sufficient for CCA because the DMA addresses need a
+>>> translation (even without vIOMMU).
+>>>
+>>> At the moment:
+>>> * guest_memfd_state_change() calls the populate() notifier
+>>> * the populate notifier() calls IOMMU notifiers
+>>> * the IOMMU notifier handler calls memory_get_xlat_addr() to get a VA
+>>> * it calls ram_discard_manager_is_populated() which fails.
+>>>
+>>> guest_memfd_state_change() only changes the section's state after
+>>> calling the populate() notifier. We can't easily invert the order of
+>>> operation because it uses the old state bitmap to know which pages need
+>>> the populate() notifier.
+>>
+>> I assume we talk about this code: [1]
+>>
+>> [1] https://lkml.kernel.org/r/20250217081833.21568-1-chenyi.qiang@intel.com
+>>
+>>
+>> +static int memory_attribute_state_change(MemoryAttributeManager *mgr,
+>> uint64_t offset,
+>> +                                         uint64_t size, bool
+>> shared_to_private)
+>> +{
+>> +    int block_size = memory_attribute_manager_get_block_size(mgr);
+>> +    int ret = 0;
+>> +
+>> +    if (!memory_attribute_is_valid_range(mgr, offset, size)) {
+>> +        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
+>> +                     __func__, offset, size);
+>> +        return -1;
+>> +    }
+>> +
+>> +    if ((shared_to_private && memory_attribute_is_range_discarded(mgr,
+>> offset, size)) ||
+>> +        (!shared_to_private && memory_attribute_is_range_populated(mgr,
+>> offset, size))) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    if (shared_to_private) {
+>> +        memory_attribute_notify_discard(mgr, offset, size);
+>> +    } else {
+>> +        ret = memory_attribute_notify_populate(mgr, offset, size);
+>> +    }
+>> +
+>> +    if (!ret) {
+>> +        unsigned long first_bit = offset / block_size;
+>> +        unsigned long nbits = size / block_size;
+>> +
+>> +        g_assert((first_bit + nbits) <= mgr->bitmap_size);
+>> +
+>> +        if (shared_to_private) {
+>> +            bitmap_clear(mgr->shared_bitmap, first_bit, nbits);
+>> +        } else {
+>> +            bitmap_set(mgr->shared_bitmap, first_bit, nbits);
+>> +        }
+>> +
+>> +        return 0;
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>>
+>> Then, in memory_attribute_notify_populate(), we walk the bitmap again.
+>>
+>> Why?
+>>
+>> We just checked that it's all in the expected state, no?
+>>
+>>
+>> virtio-mem doesn't handle it that way, so I'm curious why we would have
+>> to do it here?
+> 
+> I was concerned about the case where the guest issues a request that
+> only partial of the range is in the desired state.
+> I think the main problem is the policy for the guest conversion request.
+> My current handling is:
+> 
+> 1. When a conversion request is made for a range already in the desired
+>    state, the helper simply returns success.
 
-The cached is_master value is necessary to know if a device is
-allowed to issue ATS requests or not.
-This behavior is implemented in an upcoming patch.
+Yes.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
----
- hw/pci/pci.c                | 25 +++++++++++++++----------
- include/hw/pci/pci_device.h |  1 +
- 2 files changed, 16 insertions(+), 10 deletions(-)
+> 2. For requests involving a range partially in the desired state, only
+>    the necessary segments are converted, ensuring the entire range
+>    complies with the request efficiently.
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 2afa423925..164bb22e05 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -134,6 +134,12 @@ static GSequence *pci_acpi_index_list(void)
-     return used_acpi_index_list;
- }
-=20
-+static void pci_set_master(PCIDevice *d, bool enable)
-+{
-+    memory_region_set_enabled(&d->bus_master_enable_region, enable);
-+    d->is_master =3D enable; /* cache the status */
-+}
+
+Ah, now I get:
+
++    if ((shared_to_private && memory_attribute_is_range_discarded(mgr,
+offset, size)) ||
++        (!shared_to_private && memory_attribute_is_range_populated(mgr,
+offset, size))) {
++        return 0;
++    }
 +
- static void pci_init_bus_master(PCIDevice *pci_dev)
- {
-     AddressSpace *dma_as =3D pci_device_iommu_address_space(pci_dev);
-@@ -141,7 +147,7 @@ static void pci_init_bus_master(PCIDevice *pci_dev)
-     memory_region_init_alias(&pci_dev->bus_master_enable_region,
-                              OBJECT(pci_dev), "bus master",
-                              dma_as->root, 0, memory_region_size(dma_as->r=
-oot));
--    memory_region_set_enabled(&pci_dev->bus_master_enable_region, false);
-+    pci_set_master(pci_dev, false);
-     memory_region_add_subregion(&pci_dev->bus_master_container_region, 0,
-                                 &pci_dev->bus_master_enable_region);
- }
-@@ -727,9 +733,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv,=
- size_t size,
-         pci_bridge_update_mappings(PCI_BRIDGE(s));
-     }
-=20
--    memory_region_set_enabled(&s->bus_master_enable_region,
--                              pci_get_word(s->config + PCI_COMMAND)
--                              & PCI_COMMAND_MASTER);
-+    pci_set_master(s, pci_get_word(s->config + PCI_COMMAND)
-+                      & PCI_COMMAND_MASTER);
-=20
-     g_free(config);
-     return 0;
-@@ -1684,9 +1689,10 @@ void pci_default_write_config(PCIDevice *d, uint32_t=
- addr, uint32_t val_in, int
-=20
-     if (ranges_overlap(addr, l, PCI_COMMAND, 2)) {
-         pci_update_irq_disabled(d, was_irq_disabled);
--        memory_region_set_enabled(&d->bus_master_enable_region,
--                                  (pci_get_word(d->config + PCI_COMMAND)
--                                   & PCI_COMMAND_MASTER) && d->enabled);
-+        pci_set_master(d,
-+                       (pci_get_word(d->config + PCI_COMMAND) &
-+                        PCI_COMMAND_MASTER) &&
-+                           d->enabled);
-     }
-=20
-     msi_write_config(d, addr, val_in, l);
-@@ -2974,9 +2980,8 @@ void pci_set_enabled(PCIDevice *d, bool state)
-=20
-     d->enabled =3D state;
-     pci_update_mappings(d);
--    memory_region_set_enabled(&d->bus_master_enable_region,
--                              (pci_get_word(d->config + PCI_COMMAND)
--                               & PCI_COMMAND_MASTER) && d->enabled);
-+    pci_set_master(d, (pci_get_word(d->config + PCI_COMMAND)
-+                      & PCI_COMMAND_MASTER) && d->enabled);
-     if (!d->enabled) {
-         pci_device_reset(d);
-     }
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index add208edfa..40606baa5d 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -88,6 +88,7 @@ struct PCIDevice {
-     char name[64];
-     PCIIORegion io_regions[PCI_NUM_REGIONS];
-     AddressSpace bus_master_as;
-+    bool is_master;
-     MemoryRegion bus_master_container_region;
-     MemoryRegion bus_master_enable_region;
-=20
---=20
-2.48.1
+
+We're not failing if it might already partially be in the other state.
+
+> 3. In scenarios where a conversion request is declined by other systems,
+>    such as a failure from VFIO during notify_populate(), the helper will
+>    roll back the request, maintaining consistency.
+> 
+> And the policy of virtio-mem is to refuse the state change if not all
+> blocks are in the opposite state.
+
+Yes.
+
+> 
+> Actually, this part is still a uncertain to me.
+> 
+
+IIUC, the problem does not exist if we only convert a single page at a time.
+
+Is there a known use case where such partial conversions could happen?
+
+> BTW, per the status/bitmap track, the virtio-mem also changes the bitmap
+> after the plug/unplug notifier. This is the same, correct?
+Right. But because we reject these partial requests, we don't have to 
+traverse the bitmap and could just adjust the bitmap operations.
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
