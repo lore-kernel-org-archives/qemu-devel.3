@@ -4,56 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6401C021B2
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 00:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813E5C021B2
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 00:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlGe2-0004Tm-Qq; Thu, 20 Feb 2025 19:11:54 -0500
+	id 1tlGfS-00053B-BZ; Thu, 20 Feb 2025 19:13:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGe1-0004TY-4S; Thu, 20 Feb 2025 19:11:53 -0500
+ id 1tlGfG-00051k-76; Thu, 20 Feb 2025 19:13:10 -0500
 Received: from dedi548.your-server.de ([85.10.215.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGdz-0000kx-4g; Thu, 20 Feb 2025 19:11:52 -0500
+ id 1tlGfE-0000sg-4x; Thu, 20 Feb 2025 19:13:09 -0500
 Received: from sslproxy08.your-server.de ([78.47.166.52])
  by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGdq-000KKw-2E; Fri, 21 Feb 2025 01:11:43 +0100
+ id 1tlGf8-000KOX-0n; Fri, 21 Feb 2025 01:13:02 +0100
 Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
  by sslproxy08.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tlGdp-000BWg-2u; Fri, 21 Feb 2025 01:11:42 +0100
+ id 1tlGf7-000JRD-1T; Fri, 21 Feb 2025 01:13:02 +0100
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id ED03548005E;
- Fri, 21 Feb 2025 01:11:41 +0100 (CET)
+ by mail.embedded-brains.de (Postfix) with ESMTP id A0FA348005E;
+ Fri, 21 Feb 2025 01:13:01 +0100 (CET)
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id 5WHUbkpFnn6x; Fri, 21 Feb 2025 01:11:41 +0100 (CET)
+ with ESMTP id ijG22iZnNhgk; Fri, 21 Feb 2025 01:13:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 6F0C0480068;
- Fri, 21 Feb 2025 01:11:41 +0100 (CET)
+ by mail.embedded-brains.de (Postfix) with ESMTP id 22744480068;
+ Fri, 21 Feb 2025 01:13:01 +0100 (CET)
 X-Virus-Scanned: amavis at zimbra.eb.localhost
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id qaLxtltAzdjN; Fri, 21 Feb 2025 01:11:41 +0100 (CET)
-Received: from zimbra.eb.localhost (unknown [10.10.171.10])
- by mail.embedded-brains.de (Postfix) with ESMTPSA id 58FA448005E;
- Fri, 21 Feb 2025 01:11:40 +0100 (CET)
+ with ESMTP id FgRWrhI-TE-R; Fri, 21 Feb 2025 01:13:01 +0100 (CET)
+Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
+ by mail.embedded-brains.de (Postfix) with ESMTP id F0AD548005E;
+ Fri, 21 Feb 2025 01:13:00 +0100 (CET)
+Date: Fri, 21 Feb 2025 01:13:00 +0100 (CET)
 From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org,
-	Conor Dooley <conor@kernel.org>
-Subject: [PATCH v2] hw/riscv: Allow direct start of kernel for MPFS
-Date: Fri, 21 Feb 2025 01:11:33 +0100
-Message-ID: <20250221001133.9222-1-sebastian.huber@embedded-brains.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250214062443.9936-5-sebastian.huber@embedded-brains.de>
-References: <20250214062443.9936-5-sebastian.huber@embedded-brains.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Conor Dooley <conor@kernel.org>, qemu-devel <qemu-devel@nongnu.org>, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Bin Meng <bin.meng@windriver.com>, 
+ alistair francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
+Message-ID: <1920480470.18351.1740096780484.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <ade78f31-5279-4862-acdd-15f083a000e2@linaro.org>
+References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
+ <20250220-reggae-hardness-907e385516d8@spud>
+ <ade78f31-5279-4862-acdd-15f083a000e2@linaro.org>
+Subject: Re: [PATCH 0/5] Improve Microchip Polarfire SoC customization
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.168.96.204]
+X-Mailer: Zimbra 10.1.5_GA_4724 (ZimbraWebClient - FF128
+ (Linux)/10.1.5_GA_4734)
+Thread-Topic: Improve Microchip Polarfire SoC customization
+Thread-Index: GvfhjsHXoypQemeuaUOQEk72XQRo9Q==
 X-Authenticated-Sender: smtp-embedded@poldi-networks.de
 X-Virus-Scanned: Clear (ClamAV 1.0.7/27555/Thu Feb 20 10:43:53 2025)
 Received-SPF: pass client-ip=85.10.215.148;
@@ -79,115 +88,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Further customize the -bios and -kernel options behaviour for the
-microchip-icicle-kit machine.  If "-bios none -kernel filename" is
-specified, then do not load a firmware and instead only load and start
-the kernel image.
+----- Am 20. Feb 2025 um 23:29 schrieb Philippe Mathieu-Daud=C3=A9 philmd@l=
+inaro.org:
 
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
----
+> Hi Conor,
+>=20
+> On 20/2/25 19:30, Conor Dooley wrote:
+>> +cc qemu-riscv, Alistar.
+>>=20
+>> On Fri, Feb 14, 2025 at 07:24:37AM +0100, Sebastian Huber wrote:
+>>> Booting the microchip-icicle-kit machine using the latest PolarFire SoC
+>>> Hart Software Services (HSS) no longer works since Qemu lacks support
+>>> for several registers (clocks, DRAM controller). Also reading from the
+>>> SDCard does not work currently.
+>>=20
+>> On that note, I think the inaccurate docs about polarfire should be
+>> removed. There's a wiki page here with dead links, or links to things
+>> that do not work anymore:
+>> https://wiki.qemu.org/Documentation/Platforms/RISCV#Microchip_PolarFire_=
+SoC_Icicle_Kit
+>> I think the whole section should be removed, find it kinda odd that
+>> there's a polarfire section but not for any other board. Either way,
+>> it's talking about something that just does not work, the current HSS
+>> and Yocto don't boot.
+>>=20
+>> There's also a docs page here:
+>> https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
+>> that has a copy of the table your patch 4 modifies, that probably should
+>> be updated to match your changes.
+>>=20
+>> In a similar vein to the wiki, it talks about the HSS and booting a
+>> yocto wic image. I think those should be deleted since they don't work.
+>>=20
+>> Alistar/Other RISC-V folks, what do you think? Bin wrote the port but
+>> seems to be AFK and I don't have the capacity to fix any of that stuff
+>> on top of what I already do in my spare time - do you agree that
+>> deleting the now inaccurate docs makes sense?
+>>=20
+>>> In order to allow tests runs for real-time kernels such as RTEMS and
+>>> Zephyr, improve the boot customization. This patch set enables a direct
+>>> run of kernel executables, for example:
+>>>
+>>> qemu-system-riscv64 -no-reboot -nographic \
+>>>    -serial null -serial mon:stdio \
+>>>    -smp 2 \
+>>>    -bios none \
+>>>    -machine microchip-icicle-kit,clint-timebase-frequency=3D10000000 \
+>>>    -kernel rtos.elf
+>>=20
+>> The series breaks my usage:
+>> qemu//build/qemu-system-riscv64 -M microchip-icicle-kit \
+>>          -m 3G -smp 5 \
+>>          -kernel vmlinux.bin \
+>>          -dtb riscvpc.dtb \
+>>          -initrd initramfs.cpio.gz \
+>>          -display none -serial null \
+>>          -serial mon:stdio \
+>>          -D qemu.log -d unimp
+>> opensbi-riscv64-generic-fw_dynamic.bin: No such file or directory
+>> qemu-system-riscv64: could not load firmware
+>> 'opensbi-riscv64-generic-fw_dynamic.bin'
+>> make: *** [Makefile:305: qemu-icicle] Error 1
+>>=20
+>> Figure it is likely to be your patch 4? The file does exist, so probably
+>> some sort of path-to-it issues?
+>=20
+> Maybe missing the -L option?
+>=20
+>   -L path         set the directory for the BIOS, VGA BIOS and keymaps
 
-v2: Use riscv_find_firmware() to locate the firmware shipped with Qemu.
+It was an error in patch 4/5. I sent a v2 version of it.
 
- hw/riscv/microchip_pfsoc.c | 57 ++++++++++++++++++++++++++------------
- 1 file changed, 40 insertions(+), 17 deletions(-)
+You have to find the firmware, before you can load it.
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 4d3c5c8e20..b5ac057a1d 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -578,29 +578,45 @@ static void microchip_icicle_kit_machine_init(Machi=
-neState *machine)
-     }
-=20
-     /*
--     * We follow the following table to select which payload we execute.
-+     * We follow the following table to select which firmware we use.
-      *
--     *  -bios |    -kernel | payload
--     * -------+------------+--------
--     *      N |          N | HSS
--     *      Y | don't care | HSS
--     *      N |          Y | kernel
--     *
--     * This ensures backwards compatibility with how we used to expose -=
-bios
--     * to users but allows them to run through direct kernel booting as =
-well.
-+     * -bios         | -kernel    | firmware
-+     * --------------+------------+--------
-+     * none          |          N | error
-+     * none          |          Y | kernel
-+     * NULL, default |          N | BIOS_FILENAME
-+     * NULL, default |          Y | RISCV64_BIOS_BIN
-+     * other         | don't care | other
-      */
-+    if (machine->firmware && !strcmp(machine->firmware, "none")) {
-+        if (!machine->kernel_filename) {
-+            error_report("for -bios none, a kernel is required");
-+            exit(1);
-+        }
-=20
--    if (machine->kernel_filename) {
--        firmware_name =3D RISCV64_BIOS_BIN;
--        firmware_load_addr =3D memmap[MICROCHIP_PFSOC_DRAM_LO].base;
-+        firmware_name =3D NULL;
-+        firmware_load_addr =3D RESET_VECTOR;
-+    } else if (!machine->firmware || !strcmp(machine->firmware, "default=
-")) {
-+        if (machine->kernel_filename) {
-+            firmware_name =3D RISCV64_BIOS_BIN;
-+            firmware_load_addr =3D memmap[MICROCHIP_PFSOC_DRAM_LO].base;
-+        } else {
-+            firmware_name =3D BIOS_FILENAME;
-+            firmware_load_addr =3D RESET_VECTOR;
-+        }
-     } else {
--        firmware_name =3D BIOS_FILENAME;
-+        firmware_name =3D machine->firmware;
-         firmware_load_addr =3D RESET_VECTOR;
-     }
-=20
--    /* Load the firmware */
--    firmware_end_addr =3D riscv_find_and_load_firmware(machine, firmware=
-_name,
--                                                     &firmware_load_addr=
-, NULL);
-+    /* Load the firmware if necessary */
-+    if (firmware_name) {
-+        const char *filename =3D riscv_find_firmware(firmware_name, NULL=
-);
-+        firmware_end_addr =3D riscv_load_firmware(filename, &firmware_lo=
-ad_addr,
-+                                                NULL);
-+    } else {
-+        firmware_end_addr =3D firmware_load_addr;
-+    }
-=20
-     riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
-     if (machine->kernel_filename) {
-@@ -635,8 +651,15 @@ static void microchip_icicle_kit_machine_init(Machin=
-eState *machine)
-             fdt_load_addr =3D 0;
-         }
-=20
-+        hwaddr start_addr;
-+        if (firmware_name) {
-+            start_addr =3D firmware_load_addr;
-+        } else {
-+            start_addr =3D kernel_entry;
-+        }
-+
-         /* Load the reset vector */
--        riscv_setup_rom_reset_vec(machine, &s->soc.u_cpus, firmware_load=
-_addr,
-+        riscv_setup_rom_reset_vec(machine, &s->soc.u_cpus, start_addr,
-                                   memmap[MICROCHIP_PFSOC_ENVM_DATA].base=
-,
-                                   memmap[MICROCHIP_PFSOC_ENVM_DATA].size=
-,
-                                   kernel_entry, fdt_load_addr);
 --=20
-2.43.0
+embedded brains GmbH & Co. KG
+Herr Sebastian HUBER
+Dornierstr. 4
+82178 Puchheim
+Germany
+email: sebastian.huber@embedded-brains.de
+phone: +49-89-18 94 741 - 16
+fax:   +49-89-18 94 741 - 08
 
+Registergericht: Amtsgericht M=C3=BCnchen
+Registernummer: HRB 157899
+Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
+=C3=B6rfler
+Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
+https://embedded-brains.de/datenschutzerklaerung/
 
