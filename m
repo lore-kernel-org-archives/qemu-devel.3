@@ -4,58 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4497BC021B3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 19:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED062C021B3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Feb 2025 19:09:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlYL9-0003f9-U4; Fri, 21 Feb 2025 14:05:36 -0500
+	id 1tlYO1-0005bp-0p; Fri, 21 Feb 2025 14:08:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liuwe@linux.microsoft.com>)
- id 1tlYL7-0003ef-OZ
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:05:33 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <liuwe@linux.microsoft.com>) id 1tlYL5-0003jY-2V
- for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:05:33 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1031)
- id 825A1204E5BD; Fri, 21 Feb 2025 11:05:29 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 825A1204E5BD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1740164729;
- bh=IRBAU6rBWb+L5/tWaqNWBPBQYAg+ndBWcqtv3DOLKZ4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=jKWR1Y/3fUN+M5KaOpeg5yzkg61kSYIA0hwo1P1/qCBNLE5T/FQFmI6R5DCvmXOCo
- n47itZzqNTENX7QRogz53sCaPOl0oiLQ4j2qc14NMLRPkzkXkx3ETUAh8u6DPBQTwf
- XcTcS9QBkPNtuZeKGwYt956Pv9JyOBzIxcfD9LHM=
-Date: Fri, 21 Feb 2025 11:05:29 -0800
-From: Wei Liu <liuwe@linux.microsoft.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Wei Liu <liuwe@linux.microsoft.com>, qemu-devel@nongnu.org,
- wei.liu@kernel.org, dirty@apple.com, rbolshakov@ddn.com,
- phil@philjordan.eu, jinankjain@linux.microsoft.com,
- liuwe@microsoft.com, muislam@microsoft.com,
- ziqiaozhou@microsoft.com, mukeshrathor@microsoft.com,
- magnuskulke@microsoft.com, prapal@microsoft.com,
- jpiotrowski@microsoft.com, deviv@microsoft.com
-Subject: Re: [RFC PATCH v1 00/19] Factor out HVF's instruction emulator
-Message-ID: <20250221190529.GA595@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <1740126987-8483-1-git-send-email-liuwe@linux.microsoft.com>
- <CAFEAcA9pEajzzPidCJG3iZraH3FneKv=LGpidn+3cDhM_=XjfQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tlYNz-0005bc-8g
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:08:31 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tlYNx-0003yV-KC
+ for qemu-devel@nongnu.org; Fri, 21 Feb 2025 14:08:31 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LIMkN1032068;
+ Fri, 21 Feb 2025 19:08:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=hIOK3cSCCNw3u3O49ckJ4jLTqzgyGcJ+6tGCIl4X/
+ BI=; b=R4k0VPTjOJz7jx9BU8+r5BDeRiAqpvsz4OrLcG7EqqCrPDpoCOXQyw+RN
+ xvTnZAoCENWsMyMrfuEZu2hS9wLI7PG4frWMeFet88C8YNBccemnlzv99RzPQ5ev
+ AyqFECBsV7h6qCVyu1T9mN9TqXXj3RbHTTrYyRn27NHYedn45tOgo9zXeGvaA57H
+ 64a9p63CyX/ymaGUydR7IhwmQ4Su1jb5kz19W3H//XAKTfZZVT+UK89R1zzOtYw+
+ UodYY2Ns3WQ96QTvFSVEynxzzQuWC/qmwSzVG/B9FRA0s4kE8C3YuOqjcq2RyfGe
+ JrJC3NShRV57K1hjS976xrr3L6JRA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44xgb0ckb0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 19:08:27 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51LIgwoH009646;
+ Fri, 21 Feb 2025 19:08:26 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 44w03yhq1d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Feb 2025 19:08:26 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51LJ8PsK25100846
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Feb 2025 19:08:25 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7759B5804E;
+ Fri, 21 Feb 2025 19:08:25 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED7645803F;
+ Fri, 21 Feb 2025 19:08:24 +0000 (GMT)
+Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.243.178])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 21 Feb 2025 19:08:24 +0000 (GMT)
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+To: jasowang@redhat.com, mst@redhat.com
+Cc: eperezma@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
+ qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
+Subject: [PATCH v2] vdpa: Allow vDPA to work on big-endian machine
+Date: Fri, 21 Feb 2025 13:07:33 -0600
+Message-Id: <20250221190733.490308-1-kshk@linux.ibm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9pEajzzPidCJG3iZraH3FneKv=LGpidn+3cDhM_=XjfQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=liuwe@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: nbWz9C0ar1_m_5-LRq8PDF6Ul1MELYAz
+X-Proofpoint-ORIG-GUID: nbWz9C0ar1_m_5-LRq8PDF6Ul1MELYAz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-21_07,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=886
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0 mlxscore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502210131
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,51 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 04:53:26PM +0000, Peter Maydell wrote:
-> On Fri, 21 Feb 2025 at 14:02, Wei Liu <liuwe@linux.microsoft.com> wrote:
-> >
-> > Hi,
-> >
-> > Microsoft's Linux Systems Group developed a Linux driver for the Microsoft
-> > Hypervisor (MSHV for short). The driver is being upstreamed. The first
-> > supported VMM is Cloud Hypervisor. QEMU will be the second supported
-> > VMM.
-> >
-> > The plan is to write an mshv accelerator in QEMU. The accelerator is still in
-> > the works.
-> >
-> > MSHV doesn't emulate instructions. VMMs are supposed to bring their own
-> > instruction emulator. The path we've chosen is to reuse what's already in QEMU.
-> > The instruction emulator in HVF looks good for what we need.
-> >
-> > This patch series attempts to make the instruction emulator in HVF a common
-> > component for the i386 target. It removes HVF specific code by either using a
-> > set of hooks or moving it to better locations. The new incoming MSHV
-> > accelerator will implement the hooks, and where necessary, enhance the emulator
-> > and / or add new hooks.
-> 
-> If you want to make the hvf decoder more widely used you might want
-> to look at this old patch to it that was never applied (issues in
-> code review not addressed by the submitter):
-> 
-> https://lore.kernel.org/qemu-devel/CAFEAcA8yaBOD3KXc-DY94oqzC5wkCENPkePgVCybqR=9NmdQFQ@mail.gmail.com/
-> 
-> which is trying to fix a problem where an overlong string of
-> prefix bytes causes the decoder to misbehave.
-> 
+Add .set_vnet_le() function that always returns success, assuming that
+vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
+outputs the message:
+"backend does not support LE vnet headers; falling back on userspace virtio"
 
-Thanks for the information.
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+---
+Changes in V2: Add code comment.
 
-> (PS: if in the future you should ever find yourself wanting to do an
-> equivalent "decode loads/stores the hypervisor doesn't handle"
-> for Arm, use decodetree, not a hand-rolled decoder...)
-> 
+ net/vhost-vdpa.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Noted. Yep, we have plans to add ARM64 support in the future.
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 231b45246c..6e7cec4d45 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -270,6 +270,18 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+ 
+ }
+ 
++/*
++ * FIXME: vhost_vdpa doesn't have an API to "set h/w endianness". But it's
++ * reasonable to assume that h/w is LE by default, because LE is what
++ * virtio 1.0 and later ask for. So, this function just says "yes, the h/w is
++ * LE". Otherwise, on a BE machine, higher-level code would mistakely think
++ * the h/w is BE and can't support VDPA for a virtio 1.0 client.
++ */
++static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool enable)
++{
++    return 0;
++}
++
+ static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
+                                        Error **errp)
+ {
+@@ -437,6 +449,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .cleanup = vhost_vdpa_cleanup,
+         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+         .has_ufo = vhost_vdpa_has_ufo,
++        .set_vnet_le = vhost_vdpa_set_vnet_le,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+ };
+-- 
+2.34.1
 
-Thanks,
-Wei.
-
-> thanks
-> -- PMM
 
