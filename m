@@ -4,132 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF96CC021B5
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Feb 2025 15:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9997C021B2
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Feb 2025 16:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tlrHk-0004a3-Ch; Sat, 22 Feb 2025 10:19:25 -0500
+	id 1tlsoT-0006UB-PK; Sat, 22 Feb 2025 11:57:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saanjhsengupta@outlook.com>)
- id 1tlplA-0000LR-LO
- for qemu-devel@nongnu.org; Sat, 22 Feb 2025 08:41:36 -0500
-Received: from mail-koreacentralazolkn19012060.outbound.protection.outlook.com
- ([52.103.74.60] helo=SEVP216CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saanjhsengupta@outlook.com>)
- id 1tlpl8-0005th-Te
- for qemu-devel@nongnu.org; Sat, 22 Feb 2025 08:41:36 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J/I+mzxxHlybIyqXdBlfZYaLX8ZDlDes1F1ajk/ZaBs46aJdqiZBS/3sAbdGsNUucL+oqZQ/ZVhx8kp8JoT23hTKuGQSK9t6EblMxRHfNF0m0TA/UZTGZW24upqw7E4H/Ypya5IL5+CNnyQf1Jrf5PdMI9vsti8H0cU56Mlf4yvCvrawtVPymt640ILqTR4pXIYHc7WxUShZxJVwfZH090vcaMJgGcs39lHUiwAA8dab3/Shabm9e+RnNXLnjNQPo2VqArKvov2buTHRcoVWL1kuXXX4BAvRnY9EZLZoxZ4ZGRb3MYmMJcEji+Skqfb8BK+sfo9Vsg0hbtAZbSJMFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X6S7kinX4k7ewhbJMbpv1tRDYqD57rmGqMDSX3beIlM=;
- b=QOM/fKeIxN/4cQ9uVkW16lhboiQ2cPlrdMNAuBJco0uCry/VggbPCKaMuoEVc90kSLqmybho3jJOZiv6vrHPahZTsUMdtjyHrWNUwjfZtZIv0TBQePcTl/9xCscuyFRxlnpWJcBLl5ywjaAs9B1H3zMw8lWvkgGBteeUibmRnQmA4j9ChKitfNYsd+HHjE04LhMH+g07b+KDA15yvJtpZGiRoRzZB1zhCoEf+b030hnE1Sfp/9hZWBcaEtkfPdVDr3YLI9j7fgM3PFUDxVZXZ1SFUTESYmHmkSO8gWpZAljGy4LxsKMvL4pztrwmDQDh5ju/z8lpzyoItmQ/ligZbQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X6S7kinX4k7ewhbJMbpv1tRDYqD57rmGqMDSX3beIlM=;
- b=AaNmEhFcp4IoaY95rjszPw3hixJY5U6DflnHdSB6+Vh+IvvGlCkuUVwLmX+CbPqjQKm5aMHwWlmpDKvI2luxL5DROrSrEBYuuUMKykmaXglYJGS3tjiZRtb1sW2c7cysNVtZL/sAzYAGsZ5M42iMG5ASn15+l+Y6LnnnnjaVaEnNkYbO/x/dXl0u5QnlgFoGkbk1J6kxaO2kR5ayCkJtWSY5tVRJYq54kFzprd2Mcq2ee9o8LAtcf6CfvBTpjlWdH/YiGdU9NLjadjTRQF39GIdwPkqtVohRhtpVA66oN9W04i7M6NLSs4zfYB6aEogSh0OSIYe3pJqi88tVRBph2A==
-Received: from PS2P216MB1388.KORP216.PROD.OUTLOOK.COM (2603:1096:301:99::6) by
- PU4P216MB1519.KORP216.PROD.OUTLOOK.COM (2603:1096:301:ce::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8466.18; Sat, 22 Feb 2025 13:36:27 +0000
-Received: from PS2P216MB1388.KORP216.PROD.OUTLOOK.COM
- ([fe80::cf60:86f0:7ddd:c026]) by PS2P216MB1388.KORP216.PROD.OUTLOOK.COM
- ([fe80::cf60:86f0:7ddd:c026%2]) with mapi id 15.20.8466.015; Sat, 22 Feb 2025
- 13:36:27 +0000
-From: Saanjh Sengupta <saanjhsengupta@outlook.com>
-To: "amir.gonnen@neuroblade.ai" <amir.gonnen@neuroblade.ai>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Building QEMU as a Shared Library
-Thread-Topic: Building QEMU as a Shared Library
-Thread-Index: AQHbhS5hC6j1H6b7H06DOFGvD/EU6w==
-Date: Sat, 22 Feb 2025 13:36:27 +0000
-Message-ID: <PS2P216MB1388380FEF72AF5916FD9B59CCC62@PS2P216MB1388.KORP216.PROD.OUTLOOK.COM>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-reactions: allow
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PS2P216MB1388:EE_|PU4P216MB1519:EE_
-x-ms-office365-filtering-correlation-id: 26f4cbc4-6fc5-4a01-71a2-08dd5345e855
-x-microsoft-antispam: BCL:0;
- ARA:14566002|461199028|15080799006|7092599003|8060799006|8062599003|19110799003|14030799003|102099032|3412199025|440099028;
-x-microsoft-antispam-message-info: =?us-ascii?Q?6c2VYFNiTyH8NGlaxK4dIGmeFWZ+Oibu8Qg5ExDx8ISrhNit86g+IDQxmb+J?=
- =?us-ascii?Q?FjcghLacCXUQoiWHL63CAfHYIhX9JDVZdSMljuc0KPBQts9ImGVy7Cyia3cT?=
- =?us-ascii?Q?bUII1FiikD1m/DGkeXcgbHSiufcXmmySo/2e/0FMSiYn0o9IbiVFuEEhPek6?=
- =?us-ascii?Q?/Bp3teO4H3cx9UgACxmFgBp98jhuOn4TLVOGq66K3aZIQMdoVBIhnSmBBn+J?=
- =?us-ascii?Q?MRieZEfewrZwlUaJJXb6UNPrnd559E3q3l5pEBlQe25HeRlmI9WLW+Ipe8U7?=
- =?us-ascii?Q?GxZoKoHCax5FyL9H4VNe167WQZXwwO2NNRDT74QP+CMZaK0Uufb5XEgVEMWo?=
- =?us-ascii?Q?6YaxzXvGq/rcdvXOifXM/o6PEszy1OAHFi+//ndpMwPzgC7Funzm8TW4a1SR?=
- =?us-ascii?Q?YCZ3lybAOokZBII85zkO3r3Lp4VYWOqSt8zzzd7ZGqOVWjzYUTGGjcyIqArs?=
- =?us-ascii?Q?K3wCQk0GlMTe7rsjFaKBHinESPbFPOAG91/ynAkGJ+ojUYj3V1JyFfM4tIJq?=
- =?us-ascii?Q?TNFRvLJBOF93E3ejxKUioKSwysUFHn2a6eCv31skh+lwbVr+LCQBNJqHpFs7?=
- =?us-ascii?Q?RYEeFnfZSP8LSANlDly1TXoSAI2clIcFGDaHmEiCux/TOJZ1xqmCcd/fR9MM?=
- =?us-ascii?Q?pYJCZAoXHHCMLQcG6mXVW3nbY3fuu9ofLidRZcMSoHRyKtMaoyr1j1NvnnkJ?=
- =?us-ascii?Q?jtFZXrJjxqDvtqw151k0avb6TxIjPgnKj6TTXvn0glm8Pscw5MRobCUhaFCB?=
- =?us-ascii?Q?V0Ry/sidMC0sByMd3tge9vxjGhnagC8N+p63IS0ZWIdIvyiNaJzJnNymcS9E?=
- =?us-ascii?Q?ClN0jmD6u0jlc33zNqU0cdHYRtP+FcU7Sj5gYLgaExSX4Ng2sPjU7L7dysTa?=
- =?us-ascii?Q?t7jd59YDH5EDr5HSL+28NzyauSR3n7E7YrTiMG4KfTjOUbZn+mnj8K5Q9U8N?=
- =?us-ascii?Q?DFvWldKyaIJqNJjNyLJlsfTTi7usWgyvOuE3a6qXlKkd14f8qo1POroGwdye?=
- =?us-ascii?Q?W+5Mug6tCOuu5z5KHPDavLEDpSXv7NJ6qk527cRWoOsapEY2eaK81jmM2VJL?=
- =?us-ascii?Q?/X8tK0ld25KUxvejDkODM0+2ceGvJwkhvGbLumDubRz4nUckpsU=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Sobs9e+OY/NQhLocazgF+heXZ5W7FKtqnZglDdF8Mka8O7r3qu5sZYHAoCP/?=
- =?us-ascii?Q?OenhZ8PbT/n3v0CG7z4XU+GO/RH2eOC4SoJipOElYm5D6oUOx/0KdUXGr2la?=
- =?us-ascii?Q?1O7Ysc4Ut3DEsq7R+1OFTWhoiTZrdzIbfRSqRdGynQoZG6gYCEMtc88KoZLN?=
- =?us-ascii?Q?IFoyY+69tka/gamCZwLtWaUurUC6o4+gafgDswijvIaZczAcVYWG1H35OCy7?=
- =?us-ascii?Q?GLV7lbckzA/zt7J97nXoRERL6AtA3Zrcy8XrOr3s7m2xmCmjDC0YapgVYn/w?=
- =?us-ascii?Q?15WeQCl/GsXqsRduUgf84hZ3B8MV8m7rKbHLvZfhDKND7tg13CG1K6CEgw9t?=
- =?us-ascii?Q?wWKUN7iqAw4bxAxulwFgKGvIeDXRXiAwM9phdXWf3lL/p/MYMxUQ5nP3HZ6y?=
- =?us-ascii?Q?jyNDIglHnMXMq0Vau2aSawcgSOkEbF+I9cm7cZUsiOtV/P/gCYnGfVEonXru?=
- =?us-ascii?Q?UsyvnU9ZVQeH5XUPEH4va2Vt48fhWETyxyRVsaNnbCicdrEOF++6L4FgdH6M?=
- =?us-ascii?Q?fbXdJUYF9N4ISXuu8YvCwbdOHTKQSxEqsyqaKE4yB2mSdJWOIqVwG7ofMJ/6?=
- =?us-ascii?Q?x87JUOI8NjOqOfBg/VQ35i/s88Q8tGfrWiuz0tIlmGAghbcE7A7r04ZP6jpJ?=
- =?us-ascii?Q?y7Zdb431X2J6xi4k88e84RoqgGs6qnugVzqV7nAgDtCy4I4mASPp5r20kZVI?=
- =?us-ascii?Q?Ko/r5ndzUkdw/5mCP/4OOk/wcUpw0OXD6QC4G/nIH19ksEvd1LHKP2As9i6k?=
- =?us-ascii?Q?5N7xH32vuIsmnFl2F7r9EGU7k3lEjUhGFWC546+NtSHgDQ2TQRilIxvBbNyx?=
- =?us-ascii?Q?sonLzM1Ab7l9PGekGinXlF3azLzGa3p9lQL7kghfmrYAZr7n5Xkvk4T8QNJ+?=
- =?us-ascii?Q?aVHA66LYE067EDXvHjeLbj6BL60/p40+MkdrbKb6f6uNn12JHd7ufO1LHdW6?=
- =?us-ascii?Q?ZW8e2ohghwUFhJhC8fQhgmKohIEeXYDawYO/Sc1t3YJ1YLUjiMnKDhtU7xGQ?=
- =?us-ascii?Q?ZPbfhD4r5UW9x+Srq1CKy6cm+/LK6ILca3z2wXIVjYXma1o8nCQPNuCgayZX?=
- =?us-ascii?Q?qJ9USTLMSK7886JEuanwrqrEl55utKj95MyMPjOGkKr+ojsHZNHJveVcrZsE?=
- =?us-ascii?Q?xQVeVgEZ8alW+tfxORHzUOsoKNlfYBLxLt+LXdD75ECG6NHm+4u6seFo2s1S?=
- =?us-ascii?Q?2m0bY0b1T8wyGfV7eQ2i3xhfm8m8SA5duyeQPHsdAklXMszmYzL/OJK9FYO9?=
- =?us-ascii?Q?0tn+s3UAS98kGkLaB//rSyHfcM5g3NAjPTWK+B/TsQ=3D=3D?=
-Content-Type: multipart/alternative;
- boundary="_000_PS2P216MB1388380FEF72AF5916FD9B59CCC62PS2P216MB1388KORP_"
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tlsoS-0006Tx-9t
+ for qemu-devel@nongnu.org; Sat, 22 Feb 2025 11:57:12 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tlsoQ-0002yE-LN
+ for qemu-devel@nongnu.org; Sat, 22 Feb 2025 11:57:12 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2fc3027c7aeso6330089a91.0
+ for <qemu-devel@nongnu.org>; Sat, 22 Feb 2025 08:57:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740243429; x=1740848229; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eHtQQXmljBhTPvbKqtMClom4XSeLVSB6/iyVcajcjPM=;
+ b=rfzwj9UpZ/l3uyvdPswHex9qln6pX6U880Jm2j0cwJ+i4eUi6XoCnVuivKoJxmp6Dp
+ ELP5Ktc0On7oQ+A4qA78od30HtIT+GSxtc7kSY7lU/6+rqc/NCM+I5bQW33CKyiNu8FO
+ BlFtBsT1v6CktnGkEvw03PbUdClHXSugh/OuUp59f9O/dmkLUH8AYVDIaaMLzKN1zggD
+ 4hSq0YmiKuRoQBhNS90k+E9D5R2sUjlb6tNPXI/oCcUo+wkL+ynyJCdCNl1wyXrYaiSy
+ 0ltmleJYMVOUguFgAsbqRu7UIzb0s5QoIokvWSUvOu+4FnEosq6JCPwNLOf/d9u9iDmc
+ couA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740243429; x=1740848229;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eHtQQXmljBhTPvbKqtMClom4XSeLVSB6/iyVcajcjPM=;
+ b=iyQ/VWhxsKKxMJnmSsJSjUFen+DyLo7cgK1h74iJd+Ud5iUjPywPsoaxJ5FtxOyjUW
+ EAFY/tshm0rud6AnJdOIpc0symS6/deRmdGm1RmBPBh8FqV4tK4gBK5OECcZ3+XZOH3u
+ RgCmjS3TbPmo1sLJ4fRytt61/pDx3TmnwhRy2Oj8X3D0b2ZCY3Xjuiyk2/pIEX9jqiyr
+ CuykKbU6qLJg1qW21G7SqDbndSxp14IX/ebn6ngHEvaTHFAnp/tEi0bbtvOXBegMIt9u
+ MJb34FNdT/+ruDtoHK7wa2HrdZBClurLaPBOh5DPJ9y2rZ+bM3KEY+vUzYviXHTZ7gFt
+ 7iuw==
+X-Gm-Message-State: AOJu0Yzknv3tCEeQ7g5qMpHVbEevE8aycwJ35nrFqyqBHVnlArIHCMYN
+ Hz/BAfXlXbK9go+ts+LQk1JCiVgsV16Yasx19cLwX/tUzndqaBHZb9U7Oggt1aeBDc4uNKIghU/
+ r
+X-Gm-Gg: ASbGncvlugaG2amwoPQq6hu1DftBCaRPvUNpQdH4BhhK6CCmmohtjCsonF2OgjUfWYG
+ /MegbPmvtCJDRUCAPBeRRdwNvPVpMItxW3SGaK7ZrTbcTf0oLuAlk7ckdcOUXA1oXn0VUPx1Her
+ A5biuohbCp5FMRXbxUVdastOe1BBG8wDZOwRLsJHUmgmwo2/CxzldyfHid4rzyzVKfvYxSLixfu
+ eGdGbs+vdV3g8HhkuSnrTXiKTfiFq6YWQoQWTMTfvQfyWRFWyweoSC+HPNbdUCf6/Un6N/r0yFX
+ n55PcM/z4F9Mt25famYMSYGyzODh+SxRoyr0tx0lEI1DciS0zWdgu6f4Mohj86vDo0YDKTHvo7v
+ m4Fq55bg=
+X-Google-Smtp-Source: AGHT+IF1ciZLZslJkAIdi00fT6FBEkcgtUj5la3TXXua4AkOBWlLt6zVCoPDs1pyA6OM7et2fmDUSQ==
+X-Received: by 2002:a05:6a21:394c:b0:1ee:c8e7:2032 with SMTP id
+ adf61e73a8af0-1eef52f8796mr11014707637.19.1740243428622; 
+ Sat, 22 Feb 2025 08:57:08 -0800 (PST)
+Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
+ [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73269ab8d5dsm13253874b3a.151.2025.02.22.08.57.07
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 22 Feb 2025 08:57:08 -0800 (PST)
+Message-ID: <b629f86e-6406-4732-bc2e-de4862939a6d@linaro.org>
+Date: Sat, 22 Feb 2025 08:57:05 -0800
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PS2P216MB1388.KORP216.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 26f4cbc4-6fc5-4a01-71a2-08dd5345e855
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Feb 2025 13:36:27.1873 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU4P216MB1519
-Received-SPF: pass client-ip=52.103.74.60;
- envelope-from=saanjhsengupta@outlook.com;
- helo=SEVP216CU002.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] target/arm: Move vfp_helper.c TCG code into tcg/
+ subdir
+To: qemu-devel@nongnu.org
+References: <20250221190957.811948-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250221190957.811948-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 22 Feb 2025 10:19:12 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,59 +103,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_PS2P216MB1388380FEF72AF5916FD9B59CCC62PS2P216MB1388KORP_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+On 2/21/25 11:09, Peter Maydell wrote:
+> Peter Maydell (4):
+>    target/arm: Move TCG-only VFP code into tcg/ subdir
+>    target/arm: Move FPSCR get/set helpers to tcg/vfp_helper.c
+>    target/arm: Move softfloat specific FPCR/FPSR handling to tcg/
+>    target/arm: Rename vfp_helper.c to vfp_fpscr.c
 
-Hi,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I referred to your mailing chains on suggesting QEMU to be built as a share=
-d library.
-
-Change meson.build to build QEMU as a shared library (with PIC enabled for =
-static libraries)
-
-Could you please suggest what exactly has to be enabled in the meson.build?
-
-I am confused on that front.
-
-Regards
-Saanjh Sengupta
-
---_000_PS2P216MB1388380FEF72AF5916FD9B59CCC62PS2P216MB1388KORP_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-</head>
-<body>
-<div dir=3D"auto">Hi,</div>
-<div dir=3D"auto"><br>
-</div>
-<div dir=3D"auto">I referred to your mailing chains on suggesting QEMU to b=
-e built as a shared library.&nbsp;</div>
-<div dir=3D"auto"><br>
-</div>
-<div dir=3D"auto"><b>Change meson.build to build QEMU as a shared library (=
-with PIC enabled for static libraries)</b></div>
-<div id=3D"ms-outlook-mobile-signature" dir=3D"auto">
-<div dir=3D"auto"><b><br>
-</b></div>
-<div dir=3D"auto">Could you please suggest what exactly has to be enabled i=
-n the meson.build?&nbsp;</div>
-<div dir=3D"auto"><br>
-</div>
-<div dir=3D"auto">I am confused on that front.&nbsp;</div>
-<div dir=3D"auto"><br>
-</div>
-<div dir=3D"auto">Regards</div>
-<div dir=3D"auto">Saanjh Sengupta&nbsp;</div>
-</div>
-</body>
-</html>
-
---_000_PS2P216MB1388380FEF72AF5916FD9B59CCC62PS2P216MB1388KORP_--
+r~
 
