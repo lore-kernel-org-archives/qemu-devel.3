@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F0DC021B5
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Feb 2025 17:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05F5C021B2
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Feb 2025 17:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tltVW-00070r-Ek; Sat, 22 Feb 2025 12:41:42 -0500
+	id 1tltaU-0007vt-Ow; Sat, 22 Feb 2025 12:46:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tltVU-00070T-Pd
- for qemu-devel@nongnu.org; Sat, 22 Feb 2025 12:41:40 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tltaO-0007vc-NN
+ for qemu-devel@nongnu.org; Sat, 22 Feb 2025 12:46:44 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tltVT-00073W-2U
- for qemu-devel@nongnu.org; Sat, 22 Feb 2025 12:41:40 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-221206dbd7eso64314585ad.2
- for <qemu-devel@nongnu.org>; Sat, 22 Feb 2025 09:41:38 -0800 (PST)
+ id 1tltaM-0007XF-DE
+ for qemu-devel@nongnu.org; Sat, 22 Feb 2025 12:46:44 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2fc0d44a876so5109752a91.3
+ for <qemu-devel@nongnu.org>; Sat, 22 Feb 2025 09:46:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740246097; x=1740850897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740246400; x=1740851200; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8JaaWtVVTIjxu1WcqHzAx/qf/HpDnRf1/YMn9xB3ihA=;
- b=Sp35oiyucBGXDpOuj4EoyUeJwj5t9+cIj8ljE9nHwEdV5tE9o67+IFih0px4csjZtO
- fbfwLhF4AhvZPCIKsVJ/EY78qUzmZsPY6apHurqbIE9n6/o/cIxiJZ7gUlSQhyzHeX0Y
- JlVAeaBuF0POTi3lO1FIhi5Gj56TCIVN7YWfCkLzC/EsqKHrJyW4pIZpgANFddxaH8pH
- wqxxBOvdxAsx0MO0qwm21ohZXAzd3oG5xZXoOMNVJb+Uj56Hd87qGdYQKfx3L4qgPfha
- CwS0xjTDfyXoUvss8VgX4iQnLDVwqRLlxit6TaZW0SmxxR51/7DSwP43XlgDvPXVEM/c
- 9mGg==
+ bh=RBBZ4e7u/DsoOakVsg3LsdNon5nbfMGCxT4whwAHCMQ=;
+ b=c8SNbi6lqEZ0ft7NG385htlUKfbY+BuutnS6hgMrcjQzBvnXPeO/fIMoQ9lAI5ee73
+ tT4nsDT+O6ZbW7sLT+b860VzwEiVWZk7VAe98NvR+PKsUM/pks244EIXtZEvnGfNpawG
+ UV/V8GRUgg2ncgJ1AdZ+XY1XxpAGB2w9y8EGCI/e18R8yX2GAv7Os2RDnfwaGot/bZWp
+ tw0KYu0Z6CIxdNnxx7clSVRDYig/mfXdqEL1nDKlai87GYA4lsWTD8X+aetRD20aAERX
+ u+w+51SUUh7TtqO5qm9vDeKdOrUqAPGlZ0ZMXxT5tCa2jImbEglrE5HPyDK4Pg82GsYJ
+ M6JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740246097; x=1740850897;
+ d=1e100.net; s=20230601; t=1740246400; x=1740851200;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8JaaWtVVTIjxu1WcqHzAx/qf/HpDnRf1/YMn9xB3ihA=;
- b=G4MMl+FSTe86Dfqs0avwcM1I3I89U28ryD0ioJu131Ewk3LLHRxc0YPbHurPr2iP/O
- CskePEvOVV+JHpLEz36wpNxox7I9Uw6KwHyDpzYSzd+F+RV9TlMUdLW4oWxlj8sj9oIC
- QuIHkvJTme1g8SwBygC8TFnWZQGl1NXKdQMWXfU6sUbgplQXo1AkFP+cbw/Y+ISYeKZq
- c5ruAxUwfGcAjTt1aLsX5qXFJil2z3+x8Iz0hdtMyN0eH1ttEkARCc5rp9MDFvjcPJdu
- c5u7E8k9ErdK6H/E0thlbEqNFKC7Kbnj+EuAPTxPYN74gWMJcjNbdK7Ven+yPHXRWJSe
- r3jQ==
+ bh=RBBZ4e7u/DsoOakVsg3LsdNon5nbfMGCxT4whwAHCMQ=;
+ b=DOZeuw/N3iIHLf1JsLh0CDJ9heqm6srMLRyhnVcd1+i5E3jRMWZDFYFv4tteqkl4v9
+ Xw4C9DbSpcsdbMzQRuvu4V7unr5KBaT5OvK4dm+l8k+cPRouviJmloP0Olz8T9YCikNC
+ ZZhnBeFw2vYQPgX5yYZbQYPuUG540wGvaum9OaJEa4x57pySx2YsfZDVSl+DU5Jv2kYx
+ E11Y4CbFxB/biN1962DlsEor5sOAzmq3OxgKhmScB64DrFSnXkwWXxK6WQy63v0mOd4m
+ yEj3vI+blVnwTDQYg3UmMMrkrEe5KuNwb1cqxa5RlJ7x2VQyXOMaeKLtrXfeiSM/qgtH
+ 6qaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7CAWmStU709BXiuzldNUmsM9Wx+nw1pbFLJ5rt791hLV7IhWnhtwx/uQyutqMchff6vRYM1asvdfb@nongnu.org
-X-Gm-Message-State: AOJu0Yzpq3ybTLer1aHEK/A1JRSIpGs0VRxPgy7kP+bpKMqLsGHOXpFR
- kBImCfvqf9t7KNpsd3Yv5AUgyXbST9RTajbsUqkjLE7zDLRKOCIOF0I0sebQGQE=
-X-Gm-Gg: ASbGncvv9NdPIq3/FQFjt0QyuW9IxRu3r5FMZw8OMJKYTdo9/QDNbkxtoVJOkMaYsDr
- ixEjyfBTgpwPuYXce4LBROXF1pm0Z2VypNjUUMsEciFcywQd8PD1HzZHxMvnps35LLF8apgV5Fz
- 0CUjAVp2Ie28D7U4hydnQigU6MNn0kCRtn/YGTvmjCA3eg+wMwNNKzk1+NcLzmSvBLWSPmlYii1
- wLQUCGUJitUqZQokQfLGGgzKOg4H8qLQKBVb2qMSomkigArI2IpFaDolFacngpC1nLUeC3jBhtG
- o9icOsXDdT6sUp2OaoySGSYqsscxJ3L7WxDxmi2eeUcTHbJWzrBL8Hwr6hkHN0rbtoiMKNtW0ZD
- 1/nIG2+s=
-X-Google-Smtp-Source: AGHT+IGvjy+++inSKmxLC8Xp+2qhq34D1/pfJjVRhCjYFN51MV0gMtgWeXA/wZF08wCHX9JU1+O/eg==
-X-Received: by 2002:a05:6a21:4613:b0:1ee:c695:e2c2 with SMTP id
- adf61e73a8af0-1eef3c7abbbmr12583928637.12.1740246097074; 
- Sat, 22 Feb 2025 09:41:37 -0800 (PST)
+ AJvYcCUrB8z6MJlifh/Gzmmh51WPrKPk/DliwUGfAShRdDkCGMSVFeGSROM/TJZkiRRpwUoFVn8+hrBKISGf@nongnu.org
+X-Gm-Message-State: AOJu0Yx+BDKfhc49FD9VnrjscGn+UEA0wv9EKFp7EazdxbxDEAHAg3pl
+ HYtL0ByQnPBdu1qeTtcenIGcRnVDrdIrAwlCq1tTYUECh/uZNCo1mVUxUirTj7M=
+X-Gm-Gg: ASbGncuaUeA+rOgq4aJDJGCtTMK3uxu/9zZhSGq5ouWymAbETaWK3rA2ka7TUlA57Gu
+ JrjnDTZNSGP2RBbyWKPM8Af+oOTocRm4V2X3XExZ99/dQe0xe2OglbwhGqgM3akT1SaUG0usGEP
+ QwPHknS589uemFpxhsyOdn89BkaooTsKq18fQHsM+neiGPQE86SmaIg+bTF0BjYy8EevMR8zP3V
+ 8UJa2pZ/IM4/M9x0OaMA4on7YwKOMgsONgN0T7JeYD032Y3dHI/kWyap7fy5lK+iVEZ5wZz25Rn
+ BVLke0d2Kc9MtnmKb7DIXCb5Az5Bio01yelteUEqkV6lOaABRCtBeFMBMJAOUp8DbWugNuM1YKq
+ pIHZdiJU=
+X-Google-Smtp-Source: AGHT+IErRI3Xnuc+oYfSLFViMCoRvrAm5oznJai103QPRd8OTF8iJ8ksFVo4qlP1OhiNaHrkVjFLWg==
+X-Received: by 2002:a17:90b:1651:b0:2ee:a583:e616 with SMTP id
+ 98e67ed59e1d1-2fce78abb73mr13664546a91.9.1740246400536; 
+ Sat, 22 Feb 2025 09:46:40 -0800 (PST)
 Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-adb586186c9sm16161602a12.35.2025.02.22.09.41.36
+ d9443c01a7336-220d556fc57sm152964075ad.194.2025.02.22.09.46.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 22 Feb 2025 09:41:36 -0800 (PST)
-Message-ID: <7035dcac-380b-49c6-a091-29afcdb631c2@linaro.org>
-Date: Sat, 22 Feb 2025 09:41:34 -0800
+ Sat, 22 Feb 2025 09:46:40 -0800 (PST)
+Message-ID: <9efc1d4b-10a6-4137-beec-03011a353fc6@linaro.org>
+Date: Sat, 22 Feb 2025 09:46:37 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 002/162] tcg: Remove INDEX_op_ext{8,16,32}*
+Subject: Re: [PATCH v3 028/162] tcg: Convert sub to TCGOutOpSubtract
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-3-richard.henderson@linaro.org>
- <db558486-1eef-40e1-8b03-d89ee0c46fff@linaro.org>
+ <20250216231012.2808572-29-richard.henderson@linaro.org>
+ <8f91a3d1-7259-4783-9743-23ad003734e1@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <db558486-1eef-40e1-8b03-d89ee0c46fff@linaro.org>
+In-Reply-To: <8f91a3d1-7259-4783-9743-23ad003734e1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,74 +105,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/20/25 14:17, Philippe Mathieu-Daudé wrote:
->> @@ -1794,23 +1715,19 @@ void tcg_gen_andi_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2)
->>       case -1:
->>           tcg_gen_mov_i64(ret, arg1);
->>           return;
->> -    case 0xff:
->> -        /* Don't recurse with tcg_gen_ext8u_i64.  */
->> -        if (TCG_TARGET_HAS_ext8u_i64) {
->> -            tcg_gen_op2_i64(INDEX_op_ext8u_i64, ret, arg1);
->> -            return;
->> -        }
->> -        break;
->> -    case 0xffff:
->> -        if (TCG_TARGET_HAS_ext16u_i64) {
->> -            tcg_gen_op2_i64(INDEX_op_ext16u_i64, ret, arg1);
->> -            return;
->> -        }
->> -        break;
->> -    case 0xffffffffu:
->> -        if (TCG_TARGET_HAS_ext32u_i64) {
->> -            tcg_gen_op2_i64(INDEX_op_ext32u_i64, ret, arg1);
->> -            return;
->> +    default:
->> +        /*
->> +         * Canonicalize on extract, if valid.  This aids x86 with its
->> +         * 2 operand MOVZBL and 2 operand AND, selecting the TCGOpcode
->> +         * which does not require matching operands.  Other backends can
->> +         * trivially expand the extract to AND during code generation.
->> +         */
+On 2/20/25 15:07, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
-> Could also use s/0/ofs/ like for 32-bit.
-
-Pardon?  Are you confusing the tcg_gen_andi_{i32,i64} changes
-with the tcg_gen_{s}extract_{i32,i64} changes?
-
-This andi_i64 hunk exactly matches the andi_i32 hunk.
-
->> @@ -2720,54 +2592,20 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
+> On 17/2/25 00:07, Richard Henderson wrote:
+>> Create a special subclass for sub, because two backends can
+>> support "subtract from immediate".  Drop all backend support
+>> for an immediate as the second operand, as we transform sub
+>> to add during optimize.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/mips/tcg-target-con-set.h    |  1 -
+>>   tcg/ppc/tcg-target-con-set.h     |  3 +-
+>>   tcg/riscv/tcg-target-con-set.h   |  1 -
+>>   tcg/riscv/tcg-target-con-str.h   |  1 -
+>>   tcg/tcg.c                        | 26 ++++++++++++++--
+>>   tcg/aarch64/tcg-target.c.inc     | 24 +++++++--------
+>>   tcg/arm/tcg-target.c.inc         | 29 +++++++++++-------
+>>   tcg/i386/tcg-target.c.inc        | 23 +++++++-------
+>>   tcg/loongarch64/tcg-target.c.inc | 32 +++++++++-----------
+>>   tcg/mips/tcg-target.c.inc        | 31 ++++++++-----------
+>>   tcg/ppc/tcg-target.c.inc         | 52 +++++++++++---------------------
+>>   tcg/riscv/tcg-target.c.inc       | 45 +++++++++------------------
+>>   tcg/s390x/tcg-target.c.inc       | 41 +++++++++++--------------
+>>   tcg/sparc64/tcg-target.c.inc     | 16 +++++++---
+>>   tcg/tci/tcg-target.c.inc         | 14 +++++++--
+>>   15 files changed, 165 insertions(+), 174 deletions(-)
 > 
-> I note deposit_z_i32/i64 are not documented.
-
-Indeed, it's probably worth removing, and just use tcg_gen_deposit_{i32,i64} with a 
-constant zero argument.  There aren't very many uses in the tree at all.
-
-
->> @@ -2804,39 +2638,34 @@ void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
->>               tcg_gen_movi_i32(TCGV_HIGH(ret), 0);
->>               return;
->>           }
->> -        /* The field is split across two words.  One double-word
->> -           shift is better than two double-word shifts.  */
->> -        goto do_shift_and;
+> 
+>> diff --git a/tcg/tcg.c b/tcg/tcg.c
+>> index b740609c03..ca91a80efc 100644
+>> --- a/tcg/tcg.c
+>> +++ b/tcg/tcg.c
+>> @@ -986,6 +986,14 @@ typedef struct TCGOutOpBinary {
+>>                       TCGReg a0, TCGReg a1, tcg_target_long a2);
+>>   } TCGOutOpBinary;
+>> +typedef struct TCGOutOpSubtract {
+>> +    TCGOutOp base;
+>> +    void (*out_rrr)(TCGContext *s, TCGType type,
+>> +                    TCGReg a0, TCGReg a1, TCGReg a2);
+>> +    void (*out_rir)(TCGContext *s, TCGType type,
+>> +                    TCGReg a0, tcg_target_long a1, TCGReg a2);
+>> +} TCGOutOpSubtract;
 >> +
->> +        /* The field is split across two words. */
->> +        tcg_gen_extract2_i32(TCGV_LOW(ret), TCGV_LOW(arg),
->> +                             TCGV_HIGH(arg), ofs);
->> +        if (len <= 32) {
->> +            tcg_gen_extract_i32(TCGV_LOW(ret), TCGV_LOW(ret), 0, len);
->> +            tcg_gen_movi_i32(TCGV_HIGH(ret), 0);
->> +        } else {
->> +            tcg_gen_extract_i32(TCGV_HIGH(ret), TCGV_HIGH(arg),
->> +                                ofs, len - 32);
+>>   #include "tcg-target.c.inc"
+>>   #ifndef CONFIG_TCG_INTERPRETER
+>> @@ -1012,6 +1020,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+>>       OUTOP(INDEX_op_nor, TCGOutOpBinary, outop_nor),
+>>       OUTOP(INDEX_op_or, TCGOutOpBinary, outop_or),
+>>       OUTOP(INDEX_op_orc, TCGOutOpBinary, outop_orc),
+>> +    OUTOP(INDEX_op_sub_i32, TCGOutOpSubtract, outop_sub),
+>> +    OUTOP(INDEX_op_sub_i64, TCGOutOpSubtract, outop_sub),
+>>       OUTOP(INDEX_op_xor, TCGOutOpBinary, outop_xor),
+>>   };
+>> @@ -2231,7 +2241,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>>       case INDEX_op_st8_i32:
+>>       case INDEX_op_st16_i32:
+>>       case INDEX_op_st_i32:
+>> -    case INDEX_op_sub_i32:
+>>       case INDEX_op_neg_i32:
+>>       case INDEX_op_mul_i32:
+>>       case INDEX_op_shl_i32:
+>> @@ -2301,7 +2310,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+>>       case INDEX_op_st16_i64:
+>>       case INDEX_op_st32_i64:
+>>       case INDEX_op_st_i64:
+>> -    case INDEX_op_sub_i64:
+>>       case INDEX_op_neg_i64:
+>>       case INDEX_op_mul_i64:
+>>       case INDEX_op_shl_i64:
+>> @@ -5442,6 +5450,20 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+>>           }
+>>           break;
+>> +    case INDEX_op_sub_i32:
+>> +    case INDEX_op_sub_i64:
+>> +        {
+>> +            const TCGOutOpSubtract *out = &outop_sub;
+>> +
+>> +            tcg_debug_assert(!const_args[2]);
+>> +            if (const_args[1]) {
+>> +                out->out_rir(s, type, new_args[0], new_args[1], new_args[2]);
+>> +            } else {
+>> +                out->out_rrr(s, type, new_args[0], new_args[1], new_args[2]);
+>> +            }
 >> +        }
->> +        return;
+>> +        break;
+>> +
+>>       default:
+>>           if (def->flags & TCG_OPF_VECTOR) {
+>>               tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
+>> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+>> index 30cad937b7..dfe67c1261 100644
+>> --- a/tcg/aarch64/tcg-target.c.inc
+>> +++ b/tcg/aarch64/tcg-target.c.inc
+>> @@ -2205,6 +2205,17 @@ static const TCGOutOpBinary outop_orc = {
+>>       .out_rrr = tgen_orc,
+>>   };
+>> +static void tgen_sub(TCGContext *s, TCGType type,
+>> +                     TCGReg a0, TCGReg a1, TCGReg a2)
+>> +{
+>> +    tcg_out_insn(s, 3502, SUB, type, a0, a1, a2);
+>> +}
+>> +
+>> +static const TCGOutOpSubtract outop_sub = {
+>> +    .base.static_constraint = C_O1_I2(r, r, r),
+>> +    .out_rrr = tgen_sub,
+>> +};
+>> +
+>>   static void tgen_xor(TCGContext *s, TCGType type,
+>>                        TCGReg a0, TCGReg a1, TCGReg a2)
+>>   {
+>> @@ -2290,15 +2301,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
+>>           tcg_out_ldst(s, I3312_STRX, a0, a1, a2, 3);
+>>           break;
+>> -    case INDEX_op_sub_i32:
+>> -    case INDEX_op_sub_i64:
+>> -        if (c2) {
+>> -            tgen_addi(s, ext, a0, a1, -a2);
 > 
-> This change would look better in a preliminary patch.
+> I'm a bit lost with this change here, and following patch #4
+> (ADD conversion).
+> 
+> Since tgen_addi() effectively handles both add/sub, why not
+> name it tgen_addsubi() like the old tcg_out_addsubi() name?
 
-Done.
+Since 1551004eeb4 (tcg: Canonicalize subi to addi during opcode generation), we should 
+never see "sub x, y, constant".  That's what I was trying to say up in the patch 
+description with "Drop all backend support for an immediate as the second operand".
 
 
 r~
