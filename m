@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 013F4C021B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 18:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB46C021B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 18:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmGL2-0001c9-8C; Sun, 23 Feb 2025 13:04:24 -0500
+	id 1tmGLj-0002Ld-Or; Sun, 23 Feb 2025 13:05:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmGKu-0001X2-V1
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 13:04:17 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tmGLf-0002IO-LR
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 13:05:05 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmGKt-0002VK-Lj
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 13:04:16 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-221206dbd7eso72192145ad.2
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 10:04:15 -0800 (PST)
+ id 1tmGLc-0002Z9-A2
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 13:05:01 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-22101839807so77861395ad.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 10:04:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740333854; x=1740938654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740333899; x=1740938699; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vW3cLhyvFEFJS/qsxX3OaNtiSJRojmTiOw6rT07dETk=;
- b=vACO4cZsTxCq/RqHxai5b0v0eApPfzsP2wQj8mHRGeLaln1wvu0KXuCSCerlIV+qCX
- 1StTYcEol3a8oFsn/n/pMyZ5l7dqIvTLvYmc9+cKYdZpGa9Dednc8QCyuzio8DoRkRAT
- AZs8+AJn9i8KxquHOLP9vCMYbBsjrwWBK+lYzMd0gwYDIIJHJQ0NrcAfLL6J9QqbAWwz
- +/rplneCFkTWhexJGq7ATkTxyOwHBPvBCd/QYPYUk2ee7p/pTPVWLriLGRKAIe6rGzF8
- bsQtOMTEg9mMFIE6Rgcui1RPiUzWaOOaGIscMCELw/sdChKEETq1qNTv6B+rhAYKTPN5
- q+OA==
+ bh=6o9ppRmpF5TRP9xIHNmFEPVUDScJcIX4BgT+x2tZm9A=;
+ b=Uy7zLEZvibm2hojNn5ZEukGk9/yl5eGBKV0RLm21Vi2NGUyPKSvG62jNunNeBa66ey
+ DGW77ZDS8U+VqgA3fHnXqmfafORAz+Wf6L7P1DWcdiU5IFaIzUMgilEcI3oXEM84XyXQ
+ w76u3mezoxIpdJhAR7SHrXnla7fc7Do5R4NPVOQ+iBHka6+ZemWeXCXG5USvj8HO0+SM
+ V4fXfFFmcT5hvID66wQRBrdAViYavkG+Fj0h1/16/x+W2U2yzNHqfmlduWVLBEcxGT0l
+ JjIwWEjeYNFfgS6A09M5llPpio3/ggWzEjA3nfwCjSRXoEe/WgdLD3O9vxUo1F88ZDRZ
+ wYHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740333854; x=1740938654;
+ d=1e100.net; s=20230601; t=1740333899; x=1740938699;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vW3cLhyvFEFJS/qsxX3OaNtiSJRojmTiOw6rT07dETk=;
- b=E53X08IbURzvUX4z9ZgJTTVY1zZHdzC672Ztya0yNx8JRA3zl/Ku51XNY0r/T06DGa
- DFAAfvsg9PZXRDkXkcgh55O7VF10O/+fjBhrhyR+5eWGxbccpogQ28uSZG7gz5jSLjWD
- XNvEkVatP4nIDjsCZdnOCwGloix/BfwX1crMSqAeu5sPnV4if5YNwNRdAaIhsvNP8Vrs
- 74PosSqYp3//y/QVqMG7hErxQ7Nyb2wVP1ZnnfO+a3bduzuuNqWSGO5U9KLKC7XyDg4M
- v4MoZAC2NrfZCnAe0DMFOoM2sZLyVPKK2LANOaIUoWuQecH9qMqSMi+s064TA8TWJaO2
- 9WBA==
-X-Gm-Message-State: AOJu0YzTSaTrT3tZjfbRZJTHsmgOcw2KYd719gpmjos2aw2zl/Z/Fk65
- BIL0bmN1TVJeZUNSdpW75LxT6k8Uc5M+HxKO5pfvB26zUn4wSG3yCG9iDzWApU3ddpPeBIwgEGQ
- v
-X-Gm-Gg: ASbGncv1GvZ0WRrJMZUa2q9+dJw794RUohil2mPq9/ESRpcRpN48C0uV76xQ0ZJY8/A
- SkayOnQUjRuTY3Gu7T5QnVyp6Vbshu1tjaRKOI8u+U6CHFPa3pp7PjCgYOwYV/ASXabsaqsK4gM
- Gw2bPpNbWHLovOWEk4PNqU1lmkY18fUl6zkk7XRGg1g6x7ITNlDTOvSEmPhTl+jnt8fv2qZaCb8
- kU7L20WJkT3zxNR/ELr7qtGnyq+LTECyCoEU+Mvf9YEacxaoq+l07r3LEzd4g5EhLqpt+VhMmDl
- FgVID8z1rgKttlmO5T21n04tl+6nqBqbiH7ZbiJfjKC2NxqN1pXddxwzV0/A7zeha2s/TQkzG2G
- m8wwy+jA=
-X-Google-Smtp-Source: AGHT+IG9oeDjeCxs3ddRpHaOqkCr4RskW7jShjp48jsJ0X8WIKKpn+WQasqv1O536u99jS7naznlRQ==
-X-Received: by 2002:a17:903:986:b0:220:ef79:aca9 with SMTP id
- d9443c01a7336-2219ffdfa35mr158392405ad.53.1740333854436; 
- Sun, 23 Feb 2025 10:04:14 -0800 (PST)
+ bh=6o9ppRmpF5TRP9xIHNmFEPVUDScJcIX4BgT+x2tZm9A=;
+ b=HtJWsq3n9zX8aJJzgmR6extc5yBatt07v8Qz2dzN9R99dkyAwuPu6UdPp3QK1bEtVD
+ F70a9zXxLB5zxmITmX6cImgJXBDImdo4BfYjAnRoryY4KAU9R6RTUfw+aqXQYxxPlppd
+ orfX8FCRdybblE6ESYXrUgu0HUBKaJxQh/Gfb6PJ4pwcs9ip4HCKVa2HxzNzj3h3PzNP
+ LXv4e9+Q9jVyoLEjWnJ98BPwDkxnmfLu5DNsvAPnl2bWY2NAfaRYE+nRtjyDIDc44+us
+ DdjbeSnQawS4KQ7MxKx7kzKRaXbXU7B35/hAjY6QjKCVUoQmzWrfUKZewovWBhTvZ3Nt
+ gy4g==
+X-Gm-Message-State: AOJu0Yy6dwk4xBEvC5ictnlNK/pvRfsovtUOPvDSA8Amb4fj2Hm2UzvV
+ ZRUcPZmjYBewkGTPQuZHf69OneK1v8k5j8fMaoaF6Wz8Z01abwAPVLY6zbqOdiKj+qfGgOZolFU
+ I
+X-Gm-Gg: ASbGnctDv8HTOv86AeyA34SkGAlBb4/pRLWB36jFu6HaTy8znUAZmzkzHf+DvZUU3m/
+ gzLKGbVQ5HJ8VQFPpaOAdJ02ORJa5IQrkMSo83wyErMgNSk1EEZfkwh+HUBxQG2crIkFPv6uDyK
+ 4s89MkIsrXv+YY07f+5jVMoxuuRHNWyhXREP1bu23kWit0Ieo6mGlJu8etrMzmj0MjhEedBOfO3
+ ytBtIKVlJZOhFsFlZlLo8g01dk6WK0J+a9eyKLVhJEE3WmVlqAiWmKP5hkTQUrzZMoA6nwUus4l
+ FKZIKiuoj1zuI1z8+b1jRx9FgTNtbA11P7WJLI9Ty4D9STxYVYa9ZC8vYarc1YL49/7vCy4ip+0
+ IzywDFXA=
+X-Google-Smtp-Source: AGHT+IFczpm93ZgfkOSf83zZQVW7nQPSmBWg8D1qmYiFvnrRcqMnK4ZFdECZgoP3GiQhZca35ft2iA==
+X-Received: by 2002:a05:6a00:84a:b0:732:623d:beee with SMTP id
+ d2e1a72fcca58-73426c8434cmr15323693b3a.2.1740333898804; 
+ Sun, 23 Feb 2025 10:04:58 -0800 (PST)
 Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2fceb12dc27sm4996158a91.45.2025.02.23.10.04.13
+ d2e1a72fcca58-732425467d1sm19670781b3a.12.2025.02.23.10.04.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Feb 2025 10:04:14 -0800 (PST)
-Message-ID: <50cb77e6-80c2-4375-bfb4-c085cbcb310d@linaro.org>
-Date: Sun, 23 Feb 2025 10:04:12 -0800
+ Sun, 23 Feb 2025 10:04:58 -0800 (PST)
+Message-ID: <82bc2cfc-a11f-4ed3-9812-f9c9a338fe77@linaro.org>
+Date: Sun, 23 Feb 2025 10:04:56 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] hw/char/mcf_uart: Use FIFO_DEPTH definition
- instead of magic values
+Subject: Re: [PATCH v2 8/9] hw/char/mcf_uart: Really use RX FIFO depth
 To: qemu-devel@nongnu.org
 References: <20250220092903.3726-1-philmd@linaro.org>
- <20250220092903.3726-8-philmd@linaro.org>
+ <20250220092903.3726-9-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250220092903.3726-8-philmd@linaro.org>
+In-Reply-To: <20250220092903.3726-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,16 +104,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/20/25 01:29, Philippe Mathieu-Daudé wrote:
-> Defines FIFO_DEPTH and use it, fixing coding style.
+> While we model a 4-elements RX FIFO since the MCF UART model
+> was introduced in commit 20dcee94833 ("MCF5208 emulation"),
+> we only read 1 char at a time!
+> 
+> Have the IOCanReadHandler handler return how many elements are
+> available, and use that in the IOReadHandler handler.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Luc Michel <luc.michel@amd.com>
 > ---
->   hw/char/mcf_uart.c | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
+>   hw/char/mcf_uart.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
