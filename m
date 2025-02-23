@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE87C021B3
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 14:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8221C021B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 15:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmDNI-0007qm-HN; Sun, 23 Feb 2025 09:54:32 -0500
+	id 1tmDtL-0001J5-Id; Sun, 23 Feb 2025 10:27:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tmDNA-0007p4-Gj
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:25 -0500
+ (Exim 4.90_1) (envelope-from <jksoftdeveloper@gmail.com>)
+ id 1tmDHZ-0005fr-Sf
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:48:38 -0500
 Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tmDN8-0007eR-BF
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:23 -0500
+ (Exim 4.90_1) (envelope-from <jksoftdeveloper@gmail.com>)
+ id 1tmDHY-000771-7k
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:48:37 -0500
 Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5deb1266031so6607518a12.2
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:54:21 -0800 (PST)
+ 4fb4d7f45d1cf-5e0505275b7so5761481a12.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:48:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740322461; x=1740927261; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qlkiO7qYj5+41IEd2vHxj8OZTpyw2odXgSQfKCBV+pM=;
- b=fFPe9G28NzXhSrAWNPrlnc12+pZskXRzinLRmjhXWkVmzeGQbnHJqMND/ZcyZMxsZL
- rBaWjUs81WjFXbdp8iZ3a6qG/yOjCaU5si1s4+kp8HgqfWOMJ0psESBG3mM7TySChA1Y
- K5AC5AFJJHZ891QIBQLvrQ5Ml3xKOMAGnypHFYNJjwcmze7QDsiZL2Mqahi11bfTmISr
- dWJSdQ2yZD3SJJKPZpteP+ERQviOF3d8ExJy7yAKh6F0RRipa8dQt5J3iEbDuaDR3W5t
- 4yD9OxVA3m4+67a74JDwwfz10zgcWmSyv1M4ahTz2Exnl4Z6a0fiJmGlKKDGE4qwZ7Nt
- vyIQ==
+ d=gmail.com; s=20230601; t=1740322114; x=1740926914; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=7wwhNC53TLt5k9Xg5aKnIYGSdc2F+Vokb8tVJFJ+I3s=;
+ b=ngB3eiSYOG6iQm12KwcdN4PjZ0LHri1AgjVFlTh9ej9+d3mzzj/KddCpUKgcbEDaqh
+ y00ZpgDVMYhowzKZZVEnc1w3ImEwqrvUqTtfzRJ4w0RhpF4Eizpl4ZYEM3OoqriTIY+e
+ 5XugtZMdfettXXY5/64IGKmHsTBFZ8Hjz6CAiWKNBHIJvZNsuXfSBYJBRA7k9lEMySXA
+ KKMnV8yFkGIQ/fxnC7mv2wGbWJW6ZHgMSviZUna0qFHX0Ox1y9jI9Ryed9/IszZJHleG
+ ATI/4fecXF33g1LHMxo6INQU9apyqC+nivogluQDPg3EwRp4738aHlqdc0aBtf+vO5m7
+ X0SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740322461; x=1740927261;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qlkiO7qYj5+41IEd2vHxj8OZTpyw2odXgSQfKCBV+pM=;
- b=NaXR+7q/RftcfQ0Mq1qkym37BWe7sqXMGWhpfBOMGIAc8B+149cvlr/tstNdHSv/Ye
- c/Vej0GsuB4n4BEMqjAb66CkLt1IHKhKFhjvX6KnsGeYnx5OdV4nv6MoDsRYGl60biOF
- JEKkjpo3qNhvvfYXqMuHOYiHimXNrfSWHq4uNbtQAadFTxSrA5NCMLA8iXMJnA/6ioqK
- PPV0W9cM0/5p2Tvhwhlbv3p0HdKSTpBehpRauh3jBNVRUS5Nl6BOyYe4ScsLFHl3kCne
- CNDg66sa8rY5TumOZQ5ngz8Jki4aHMDRHbtKToatpLZczBHJD/lJeRxBR7hHNqQ4mwrl
- Z7Eg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxs/T9pM8s+HFfGo7362GKifbqMfE3D7B18nmr7iB7ZAnzdcNx+m458oE1IrFc6xfOOYpmJPex0TGk@nongnu.org
-X-Gm-Message-State: AOJu0YzbD8t4rHQu6bMiaqJhqC5OdYWP0u7f9pc+mJEO/NGnmYRthWx9
- 29aNbgwAYwNfYhgiIf0B2N4x0mTYjmrDNrQBVZ2AdxZw0Ug2nh5osNn1gw==
-X-Gm-Gg: ASbGncslPawDE7dGftFwLXWROngLdpfx47MJ3SDpsAZ+BWXJYxaZ0G9r9I3CSyatIhj
- X3pJakUABiqTkXueaJntfVbd1OnDFTqNGFfWF6xiRNGXir10SGwnnZrHKdATZv9J1euA29qHGIy
- Lvy4MN/89P+wJpehPUh/VR0zxRLiISGm/BLBy0XjNB2qFAaGBlK8ihCd5+N6hod/FLkcaj/FEYB
- SaEq5Uq1otSQM8cubiNfUIVDWc//ftrwfvJWZdpvXrhQqCLh81iD9ms3pOL5B/B9ci2CrcoMkHy
- R1vMoS4gYnsnNaYv7XlIC8a7XM1sIPyJvzw=
-X-Google-Smtp-Source: AGHT+IGwlpGLJMymcQmKnHxvt+6dfornRgVDkEolcde+LA78oGI9KApPhqSzHOEfIdqH8yBzd6SKdA==
-X-Received: by 2002:a05:6402:3583:b0:5dc:cf9b:b048 with SMTP id
- 4fb4d7f45d1cf-5e0b70cb80bmr8898270a12.1.1740322460423; 
- Sun, 23 Feb 2025 06:54:20 -0800 (PST)
-Received: from think.fritz.box ([2a02:8109:8384:1400:1283:abda:b08f:72e4])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e0a0310f66sm6431580a12.81.2025.02.23.06.54.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Feb 2025 06:54:19 -0800 (PST)
-From: Roman Penyaev <r.peniaev@gmail.com>
-To: 
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 5/5] ui/console-vc: implement DCH (delete) and ICH (insert)
- commands
-Date: Sun, 23 Feb 2025 15:54:02 +0100
-Message-ID: <20250223145407.259924-6-r.peniaev@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250223145407.259924-1-r.peniaev@gmail.com>
-References: <20250223145407.259924-1-r.peniaev@gmail.com>
+ d=1e100.net; s=20230601; t=1740322114; x=1740926914;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7wwhNC53TLt5k9Xg5aKnIYGSdc2F+Vokb8tVJFJ+I3s=;
+ b=B50tBH8V8Kt2tSMU+n1bx2VfcxPQgBZsYMSbWCrLvVUuVYRUZV1RqlwSgi2dLpdNNm
+ /ggQbG4ROBdaHH59fYUlYuxta07VOu9SoLLulO3r6fZLXWlGBzFn2cuJ1Hx40zds2eUM
+ MxMg2OLSuubE+Ohjd2G5luuVcnLPX5QNH//S5f8Tn7ZaxRo59CdfiJS9D3CcF08gDheW
+ eJt0cnBvvEFfTjPbSaPV7vJTf8NrKdpJcoZViwyDa/qxfEAzElLTV1+EeQBxUFWAXQ2C
+ TSFTDanejJ+H+ctVv6Jos/mqNcAt1AgiauXr++2pQEiIygKHgxhv7RmNs+QvChVjcIlS
+ l2eg==
+X-Gm-Message-State: AOJu0YxzMy6rGDd9kU2Y6z/j1GmKcWfB/uOD4pEQFCHXqllCateqAq3b
+ tImnYrco+KcMWjzlx1kTY1hMHDl+LVjgDzKJ6YTV4Aj+y7aPY4iUACvCj+O4XimmG8CXdPsBgf8
+ e9Shmn75Mzqom9TAHwO4vlXPHxaXckg==
+X-Gm-Gg: ASbGncuN0xnPy+a6bs7i36DSSqvsYN7eYqAa6m9+MQNRZOwkF/2eqQxBmX1MtsdUU5e
+ nMIqPp/dOWZ2LYCrNjS1WI2a30++Gt4EmqHspU8q8K8h91+6QncEiZ89HA6Uhl+Lui32Qiqy+vd
+ VOqVzY82qxmiWmPmLcj2R1EOC1T6mRNBpQtdTd++kC
+X-Google-Smtp-Source: AGHT+IFy86ZWIBUi1gHpCmyGFMvWjUZz3/yW/zy/66d5tYA1lc0GR9GiUfIx+K3Il7OYsTZdE8Qp+px07dzuTKucQ/g=
+X-Received: by 2002:a05:6402:2102:b0:5e0:82a0:50dc with SMTP id
+ 4fb4d7f45d1cf-5e0b72500dcmr9508249a12.28.1740322113731; Sun, 23 Feb 2025
+ 06:48:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Jayakrishnan A <jksoftdeveloper@gmail.com>
+Date: Sun, 23 Feb 2025 20:18:22 +0530
+X-Gm-Features: AWEUYZmKLQp6JZcKmkokKsE3imXwCeBrckJD3bLEBETDQ8g22c3z02cgw6yfDpc
+Message-ID: <CAEHwtECacvmv98uAvXisx57qEN1hMbLjHNWUkm8mOt56wtWGaQ@mail.gmail.com>
+Subject: Seeking help on implementing sync over ivshmem shared memory
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000006248c1062ed051bf"
 Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52a.google.com
+ envelope-from=jksoftdeveloper@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 23 Feb 2025 10:27:37 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,185 +88,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements DCH (delete character) and ICH (insert
-character) commands.
+--0000000000006248c1062ed051bf
+Content-Type: text/plain; charset="UTF-8"
 
-DCH - Delete Character:
-   "As characters are deleted, the remaining characters between the
-    cursor and right margin move to the left. Character attributes move
-    with the characters. The terminal adds blank spaces with no visual
-    character attributes at the right margin. DCH has no effect outside
-    the scrolling margins" [1].
+Hi Team ,
 
-ICH - Insert Character:
-   "The ICH sequence inserts Pn blank characters with the normal
-    character attribute. The cursor remains at the beginning of the
-    blank characters. Text between the cursor and right margin moves to
-    the right. Characters scrolled past the right margin are lost. ICH
-    has no effect outside the scrolling margins" [2].
+Seeking help on implementing sync over ivshmem shared memory , As part of
+internal project we could able to achieve shared ivshmem with doorbell
+mechanism ,But in order to achieve shared memory synchronisation we are
+trying to add atomic operation  over this shared memory area variables ,
+Just wanted to analyse whether this atomic variable between VMs shared
+memory will work as expected , If not is there any suggested way ahead to
+implement synchronisation over ivshmem shared memory for threads running in
+multiple VMs.
 
-Without these commands console is barely usable.
+Thanks and Regards ,
+Jayakrishnan A
 
-[1] https://vt100.net/docs/vt510-rm/DCH.html
-[1] https://vt100.net/docs/vt510-rm/ICH.html
+--0000000000006248c1062ed051bf
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
----
- ui/console-vc.c | 108 +++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 102 insertions(+), 6 deletions(-)
+Hi Team ,<div dir=3D"auto"><br></div><div dir=3D"auto"><div dir=3D"auto">Se=
+eking help on implementing sync over ivshmem shared memory , As part of int=
+ernal project we could able to achieve shared ivshmem with doorbell mechani=
+sm ,But in order to achieve shared memory synchronisation we are trying to =
+add atomic operation =C2=A0over this shared memory area variables , Just wa=
+nted to analyse whether this atomic variable between VMs shared memory will=
+ work as expected , If not is there any suggested way ahead to implement sy=
+nchronisation over ivshmem shared memory for threads running in multiple VM=
+s.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks and Regards ,=
+=C2=A0</div><div dir=3D"auto">Jayakrishnan A</div><br></div>
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 522adc2806c8..bc667897d1bc 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -598,21 +598,29 @@ static void vc_clear_xy(VCChardev *vc, int x, int y)
-     vc_update_xy(vc, x, y);
- }
- 
--static void vc_put_one(VCChardev *vc, int ch)
-+static void vc_insert_xy(VCChardev *vc, int ch, int x, int y)
- {
-     QemuTextConsole *s = vc->console;
-     TextCell *c;
-     int y1;
-+
-+    y1 = (s->y_base + y) % s->total_height;
-+    c = &s->cells[y1 * s->width + x];
-+    c->ch = ch;
-+    c->t_attrib = vc->t_attrib;
-+    vc_update_xy(vc, x, y);
-+}
-+
-+static void vc_put_one(VCChardev *vc, int ch)
-+{
-+    QemuTextConsole *s = vc->console;
-+
-     if (s->x >= s->width) {
-         /* line wrap */
-         s->x = 0;
-         vc_put_lf(vc);
-     }
--    y1 = (s->y_base + s->y) % s->total_height;
--    c = &s->cells[y1 * s->width + s->x];
--    c->ch = ch;
--    c->t_attrib = vc->t_attrib;
--    vc_update_xy(vc, s->x, s->y);
-+    vc_insert_xy(vc, ch, s->x, s->y);
-     s->x++;
- }
- 
-@@ -645,6 +653,88 @@ static void vc_set_cursor(VCChardev *vc, int x, int y)
-     s->y = y;
- }
- 
-+/**
-+ * vc_csi_P() - (DCH) deletes one or more characters from the cursor
-+ * position to the right. As characters are deleted, the remaining
-+ * characters between the cursor and right margin move to the
-+ * left. Character attributes move with the characters.
-+ */
-+static void vc_csi_P(struct VCChardev *vc, unsigned int nr)
-+{
-+    QemuTextConsole *s = vc->console;
-+    TextCell *c1, *c2;
-+    unsigned int x1, x2, y;
-+    unsigned int end, len;
-+
-+    if (!nr) {
-+        nr = 1;
-+    }
-+    if (nr > s->width - s->x) {
-+        nr = s->width - s->x;
-+        if (!nr) {
-+            return;
-+        }
-+    }
-+
-+    x1 = s->x;
-+    x2 = s->x + nr;
-+    len = s->width - x2;
-+    if (len) {
-+        y = (s->y_base + s->y) % s->total_height;
-+        c1 = &s->cells[y * s->width + x1];
-+        c2 = &s->cells[y * s->width + x2];
-+        memmove(c1, c2, len * sizeof(*c1));
-+        for (end = x1 + len; x1 < end; x1++) {
-+            vc_update_xy(vc, x1, s->y);
-+        }
-+    }
-+    /* Clear the rest */
-+    for (; x1 < s->width; x1++) {
-+        vc_clear_xy(vc, x1, s->y);
-+    }
-+}
-+
-+/**
-+ * vc_csi_at() - (ICH) inserts `nr` blank characters with the normal
-+ * character attribute. The cursor remains at the beginning of the
-+ * blank characters. Text between the cursor and right margin moves to
-+ * the right. Characters scrolled past the right margin are lost.
-+ */
-+static void vc_csi_at(struct VCChardev *vc, unsigned int nr)
-+{
-+    QemuTextConsole *s = vc->console;
-+    TextCell *c1, *c2;
-+    unsigned int x1, x2, y;
-+    unsigned int end, len;
-+
-+    if (!nr) {
-+        nr = 1;
-+    }
-+    if (nr > s->width - s->x) {
-+        nr = s->width - s->x;
-+        if (!nr) {
-+            return;
-+        }
-+    }
-+
-+    x1 = s->x + nr;
-+    x2 = s->x;
-+    len = s->width - x1;
-+    if (len) {
-+        y = (s->y_base + s->y) % s->total_height;
-+        c1 = &s->cells[y * s->width + x1];
-+        c2 = &s->cells[y * s->width + x2];
-+        memmove(c1, c2, len * sizeof(*c1));
-+        for (end = x1 + len; x1 < end; x1++) {
-+            vc_update_xy(vc, x1, s->y);
-+        }
-+    }
-+    /* Insert spaces */
-+    for (x1 = s->x; x1 < s->x + nr; x1++) {
-+        vc_insert_xy(vc, ' ', x1, s->y);
-+    }
-+}
-+
- /**
-  * vc_save_cursor() - saves cursor position and character attributes.
-  */
-@@ -847,6 +937,9 @@ static void vc_putchar(VCChardev *vc, int ch)
-                     break;
-                 }
-                 break;
-+            case 'P':
-+                vc_csi_P(vc, vc->esc_params[0]);
-+                break;
-             case 'm':
-                 vc_handle_escape(vc);
-                 break;
-@@ -870,6 +963,9 @@ static void vc_putchar(VCChardev *vc, int ch)
-             case 'u':
-                 vc_restore_cursor(vc);
-                 break;
-+            case '@':
-+                vc_csi_at(vc, vc->esc_params[0]);
-+                break;
-             default:
-                 trace_console_putchar_unhandled(ch);
-                 break;
--- 
-2.43.0
-
+--0000000000006248c1062ed051bf--
 
