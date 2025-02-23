@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1077C021B2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0956CC021B8
 	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 14:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmDNF-0007pr-VT; Sun, 23 Feb 2025 09:54:30 -0500
+	id 1tmDN9-0007oz-8W; Sun, 23 Feb 2025 09:54:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tmDN6-0007oM-Nm
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:21 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1tmDN6-0007oE-Be
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:20 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tmDN4-0007df-G6
+ id 1tmDN4-0007db-Fg
  for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:20 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5dedae49c63so6555801a12.0
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:54:17 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5e04f87584dso5194046a12.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:54:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740322456; x=1740927256; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EISobMCtsGJwgBBoRUyUGsapTk7Zv2HzSGY51pLZdkY=;
- b=YQHuYNA8qqmBubBupxF56G7cxiPO2JipK3HTAY8TJ4lANUFetuCF+EEBu1+f54J+rn
- lyNefSXJ9kkOI9Sd/Ev8u9p7/2i6nE2otoSa/lzHCrh3bATdaPckmjhCOR1gkAg/a+Tw
- gbJLFubWVLCXRO+5qlv1u7rJOCu9fb5pzj1d5x0GWgMghfQZBllYFPSDyqroYyREhqQw
- Lm+lz6q/jHZtyrReKJ/gDFtWPQnDewcT1lF/+Fww892Tg3w/mO5p/lgwPvwt1mMsOZcY
- 8k9gLJYlrLgObfE02vT6lsMhDYZ1n9+N88F+1CqK7FYhhmgp+fmPaJIAwzHV8lpXzR7U
- bgYw==
+ d=gmail.com; s=20230601; t=1740322455; x=1740927255; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DGvHnZ3WEbefMGw1c4k0Qs3t64lR1aiH3ElukCs1rMs=;
+ b=Xj6cn/wrwkQDBHzlBxfKG8k+bklBvJBTDhpYEfYRAXYjTi5rj9C4tffgVMTSW874G0
+ vxW3hJPZMJBR/HqpVF7YoxVVmVyAWtOkmJ/rbFqyxD6JZFLDMBt04yHDMEANMK9CqW5v
+ qWHcXsdS+cm0+6FTCP4scl+ZEu+6NPvMkqbfw8xIXYs+keH9RrLMoVDsUeGKbkt14HVC
+ PEin3VkhSotwZo/19RVgEQpCsXXEl64Mx+w82DoAorwzL9hEkT+ap9bGqEEiSlAihs3O
+ dfKgWiV142SD9aED9i5tV1AZBvyS33KQYZxiy6lgaetJGyA++XfUCMC1vujgZ8xNozNY
+ wfig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740322456; x=1740927256;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EISobMCtsGJwgBBoRUyUGsapTk7Zv2HzSGY51pLZdkY=;
- b=ELoSitRWpww77kiQCCwuSUqE+cBwz3PGriZPw8G6dZyOEbkECmwaydZndnMPaUuE/G
- Dw8nNeEAJzGJUpzsqGC0KEMYQKdBAwqSXs2H7Gdaukv5RcU982f9uP1O7JBry6732YSD
- mxhMRGCJZ/uj7ZLVBMqP+pG3FE1TCoA7QgIxK6BnkJKxQ/DXyArXZHCab8Q5rmSoBJZ2
- /+W6rWfbnEiN5foXb70qmuTepmOhpUfgaWBwYRugLAOS2XVnPSgUj/RKKfz9oY8VBTif
- 6hDDJHU7O+oMKexXg6VJ+k5EOUNKOAT8hA3ZV95kPWVJIQ8HSWUekP7qw2TNmj9Z6Bbb
- VXQA==
+ d=1e100.net; s=20230601; t=1740322455; x=1740927255;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DGvHnZ3WEbefMGw1c4k0Qs3t64lR1aiH3ElukCs1rMs=;
+ b=JsxhG0sRvqD8GMXFEcTcfTCDoxaWg0BkuWZ0NjhgXQ0gu0FYYqZksY0ZC8OgYeJH6S
+ 0ninYTvDNnV/S0NkY29UCproaMn842GQYy8hRdmiAGkmUgwDv6YQfTZtAy0T1pIfIGug
+ at34hKXXvad5pAATyfogTOGYBZ9lFUoI27vgWegC9fQRMYybZUCXaDmvhm8yHBUGZcsn
+ sOGfUFS20MRXhee6FT87ZkFpH33WftYZRsD4cZqyuN5vL56ddi5RVBtr/PDLNRG/V7p0
+ vMuFpR4yfGpl1JM8yCsY/V+jS/HgT5UgjC23Sc0vrd6kmvf4nwYGUzNSYu0bGBM+slDF
+ cbCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVULb2w0M/sNVcKpB7Hjy/WFHkM8yjEI1RZ4ldN+Kaoy3QQkAwiIv1TeTnAEW69LycQ6/VAABXKGs/2@nongnu.org
-X-Gm-Message-State: AOJu0YwbEm6+mh/i7M2cNy5Uc3zO1V63vWJ3xUHuJqLpaoy/83QiSyaD
- c904jAJI5lDRbFG1rdXmwBWeoQM07s4ofYfWwFR0DxPRVF2hUpKn
-X-Gm-Gg: ASbGncuJzbPtMu9iNQy5hd1iNjeOEImQqHvpwqcmhZCaknD4InzC0rAt0y1um+1UhvB
- 24VyBO5TcgvGBdi2BBnjZvw8ZJFFM0cgJGxcbUHHoaGLbjPSMZLbQaJ5aPR4CHOHHoBFOO2KKTW
- MvDGEQa5/Nq1drhvDfKMCoMY2S5L1Oca+laYqwC7zO2HvmLJBKA/8l8lqhYKYOVyaxq/XW7wZ4Q
- Z0dgE10XeQtmSvR1tZQnUWmSCMq0toNsjECe2Fzb0l2ZgAybRpkHZI5sZ3YveUB5ZuIsgHCMS/Q
- kZqhesz9Xbeuu1jf0ikMRXTsPkC840gSg4M=
-X-Google-Smtp-Source: AGHT+IGcMob6w5BxKrpNJHfXRL/y4UXtRZkCdAQJlM3VLLHNm1cPdzRPc9Ea0ADL+56bguabH3wo4g==
-X-Received: by 2002:a05:6402:430f:b0:5e0:4710:5f47 with SMTP id
- 4fb4d7f45d1cf-5e0b7243e16mr9487930a12.23.1740322455481; 
- Sun, 23 Feb 2025 06:54:15 -0800 (PST)
+ AJvYcCUi12iibYqs3Sbo0SuKu/mhejbrcZQB+Z0gCLmmJhz2iMhNsDpsgjaNQER5rszVVs4BV2G/964PnwSY@nongnu.org
+X-Gm-Message-State: AOJu0YyI8ffDhugSJ+/72D6KzWI27j7+vB3wqNe3CH023Daeq3QqWgWq
+ XehmaIjq3CK+wukkc8xZyiEzWVcSN8fIXvOHx2zjlua64ZtopGRM
+X-Gm-Gg: ASbGncuc6qyp2rx19Lnyphr6kJMuVCeNhY0OQqHBHLFDfzej/f4Jq/Ftrlt9PhQhuO3
+ 1ZzkBBkt4XY0oENXo9BEa8q0DbJtZGDzPphe3ailohtYV/jXNF3QjV8cY8EfYuqnUBCm58ASesG
+ CHljQfOV7uQJIr6WWGlT0peabkjobRs7dRh3pCs6TSVxY5NuWR56ovlTgAZ/r8gMeDjzU8DzNHh
+ z5DogxDl1Bwxo0Rb20+o7qoHBC6vYYzYA1fhZkdmkA82TeKDko9HMmbi8ZWrn9lleedJ+KcayWz
+ eoECyntJYRhTJ4It9RnChEePxe9tB3x2s5w=
+X-Google-Smtp-Source: AGHT+IGCnSDAyImxqaW3G6UJ5kujaSx540WZPoi9UoMBrd1f+hlI8WHTllY+g5oALRpyp7hAY2+HPQ==
+X-Received: by 2002:a05:6402:5251:b0:5dc:584e:853d with SMTP id
+ 4fb4d7f45d1cf-5e0b72265e7mr10295342a12.25.1740322454716; 
+ Sun, 23 Feb 2025 06:54:14 -0800 (PST)
 Received: from think.fritz.box ([2a02:8109:8384:1400:1283:abda:b08f:72e4])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e0a0310f66sm6431580a12.81.2025.02.23.06.54.14
+ 4fb4d7f45d1cf-5e0a0310f66sm6431580a12.81.2025.02.23.06.54.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Feb 2025 06:54:15 -0800 (PST)
+ Sun, 23 Feb 2025 06:54:14 -0800 (PST)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 1/5] ui/console-vc: introduce parsing of the 'ESC ( <ch>'
- sequence
-Date: Sun, 23 Feb 2025 15:53:58 +0100
-Message-ID: <20250223145407.259924-2-r.peniaev@gmail.com>
+Subject: [PATCH 0/5] ui/console-vc: various fixes and improvements
+Date: Sun, 23 Feb 2025 15:53:57 +0100
+Message-ID: <20250223145407.259924-1-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250223145407.259924-1-r.peniaev@gmail.com>
-References: <20250223145407.259924-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,74 +101,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change introduces parsing of the 'ESC ( <ch>' sequence, which is
-supposed to change character set [1]. In the QEMU case, the
-introduced parsing logic does not actually change the character set, but
-simply parses the sequence and does not let output of a tool to be
-corrupted with leftovers: `top` sends 'ESC ( B', so if character
-sequence is not parsed correctly, chracter 'B' appears in the output:
+This patch series brings several fixes and improvements to the QEMU
+virtual console (VC), making it more usable and aligning it better
+with VT100 spec. The updates include support for inserting and
+deleting characters, better cursor handling and correct position
+reporting. Without these changes, the console is hardly usable.
 
-  Btop - 11:08:42 up 5 min,  1 user,  load average: 0BB
-  Tasks:B 158 Btotal,B  1 Brunning,B 157 Bsleeping,B   0 BsBB
-  %Cpu(s):B  0.0 Bus,B  0.0 Bsy,B  0.0 Bni,B 99.8 Bid,B  0.2 BB
-  MiB Mem :B   7955.6 Btotal,B   7778.6 Bfree,B     79.6 BB
-  MiB Swap:B      0.0 Btotal,B      0.0 Bfree,B      0.0 BB
+1. Support for DCH (delete) and ICH (insert) commands
 
-      PID USER      PR  NI    VIRT    RES    SHR S B
-  B    735 root      20   0    9328   3540   3152 R B
-  B      1 root      20   0   20084  10904   8404 S B
-  B      2 root      20   0       0      0      0 S B
+  * Properly handles character deletion and insertion as per VT100
+    specs.
 
-[1] https://vt100.net/docs/vt100-ug/chapter3.html#SCS
+2. Add support for cursor save/restore (ESC 7 and ESC 8)
+
+  * Implements legacy DEC sequences for compatibility.
+  * Ensures cursor attributes are also saved and restored.
+
+3. Fix cursor position reporting
+
+  * Reports cursor position relative to the screen instead of the
+    scroll buffer.
+  * Fixes issues with tools that rely on accurate cursor placement.
+
+4. Ensure DSR (Device Status Report) responses go to applications
+
+  * Stops terminal from rendering responses to the screen but instead
+    send reports back to applications.
+
+5. Handle `ESC ( <ch>` character set sequences
+
+  * Makes `top` output look clean by handling the character set
+    commands.
+
+These changes improve the virtual console's compatibility with
+terminal-based apps. Without them, the console is quite frustrating to
+use.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Daniel P. Berrange <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org
----
- ui/console-vc.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index fe20579832a5..90ff0ffda8c5 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -42,6 +42,8 @@ enum TTYState {
-     TTY_STATE_NORM,
-     TTY_STATE_ESC,
-     TTY_STATE_CSI,
-+    TTY_STATE_G0,
-+    TTY_STATE_G1,
- };
- 
- typedef struct QemuTextConsole {
-@@ -694,6 +696,10 @@ static void vc_putchar(VCChardev *vc, int ch)
-                 vc->esc_params[i] = 0;
-             vc->nb_esc_params = 0;
-             vc->state = TTY_STATE_CSI;
-+        } else if (ch == '(') {
-+            vc->state = TTY_STATE_G0;
-+        } else if (ch == ')') {
-+            vc->state = TTY_STATE_G1;
-         } else {
-             vc->state = TTY_STATE_NORM;
-         }
-@@ -844,6 +850,16 @@ static void vc_putchar(VCChardev *vc, int ch)
-             }
-             break;
-         }
-+        break;
-+    case TTY_STATE_G0: /* set character sets */
-+    case TTY_STATE_G1: /* set character sets */
-+        switch (ch) {
-+        case 'B':
-+            /* Latin-1 map */
-+            break;
-+        }
-+        vc->state = TTY_STATE_NORM;
-+        break;
-     }
- }
- 
+Roman Penyaev (5):
+  ui/console-vc: introduce parsing of the 'ESC ( <ch>' sequence
+  ui/console-vc: report to the application instead of screen rendering
+  ui/console-vc: report cursor position in the screen not in the scroll
+    buffer
+  ui/console-vc: add support for cursor DECSC and DECRC commands
+  ui/console-vc: implement DCH (delete) and ICH (insert) commands
+
+ ui/console-vc.c | 174 +++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 156 insertions(+), 18 deletions(-)
+
 -- 
 2.43.0
 
