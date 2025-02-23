@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B920C021B3
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 11:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31483C021B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 11:49:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmASG-0008QP-2c; Sun, 23 Feb 2025 06:47:28 -0500
+	id 1tmAST-00008U-Iv; Sun, 23 Feb 2025 06:47:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tmASD-0008Pj-Kc; Sun, 23 Feb 2025 06:47:25 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1tmASR-00006t-Pm; Sun, 23 Feb 2025 06:47:39 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tmASB-0005vT-Nx; Sun, 23 Feb 2025 06:47:25 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-ab744d5e567so606938866b.1; 
- Sun, 23 Feb 2025 03:47:23 -0800 (PST)
+ id 1tmASP-0005xQ-Th; Sun, 23 Feb 2025 06:47:39 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-abb7a6ee2deso543629666b.0; 
+ Sun, 23 Feb 2025 03:47:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740311241; x=1740916041; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740311255; x=1740916055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uWfrQhvz/dbConbW1e2cYEwd7c6kqdBGuDJ0FPSuEbo=;
- b=jSib/9rlrO+yUViatlvCt0Y+dGMKaA3evumBiamf/6HS1DXMAicn7qbhNE+9YY0j+8
- 7rM05E8q4E9qDoLm1te/e02zO6o0YqiymKD5qaUWYuRdA01haplnreBvRSbvit+aOAd2
- 6Lv+8xFhjTje+xjmWgDzac0uMYpqyZ7+9JpoX360zJ8rI0H3c5KGZ6shFako1gGd0jk4
- igMkbLtaNtCthRQg8YeOmXsLC/kigM06j7aaXWdxY+e9YJsF3eoRxiL6+ProsvPV4GDY
- IE7m+v7UA2cd2x/JDOcrWglR7WQsXN83dEVXvo0cn0WWhlseNYPD5GkTvIAUBxUBDOcv
- USXw==
+ bh=B0cpSSAv1AUYF0uxmfB8np+vhpcvonT8w0NjJQwSMQo=;
+ b=SVbmhpxipoYrWq05H8Z+qNDzAWpeILD7Ur0I6v5rYqlmJRxhmSRYhHp85vFmw6hvVZ
+ HFW8gnJg80sABQX3ABNq4EpEuKn5CYX1ZAzz9L8xODvwJ10kPqAurf3JS+Jsl+vVn3uP
+ gbSJgetGjDW4CBOTAb/Ihz8iwm+rOyG7zo0L48cqEnArRoYqYgylEAOafmyKTQdU+4Ar
+ vmOdhBwn6Hs1uvL1SJ6umcltW3kCN/8c1BSsYbA4WZxP74JZepgX/BNWI0cIMMbtW2nu
+ ssJikoGmF3MTmEb+aU2RFk/ZGCM145UY/c+/SNAOU7WyPVuC/xdcqRcqPvgin2tvqphv
+ si/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740311241; x=1740916041;
+ d=1e100.net; s=20230601; t=1740311255; x=1740916055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uWfrQhvz/dbConbW1e2cYEwd7c6kqdBGuDJ0FPSuEbo=;
- b=sm2gCqtJ3XDF+YyTimGvXzzpszCoTMg99GuieU2lzDQtT+MENFM4qDnS91FHZIZCG/
- CwcvwjIGJXaviy15TSIi1SSFiKUBy8VN2A3XkxDpjsEQpfzlTarc17nKW/fgKEYNko4W
- qbbf74w/8fzve/7aKa7nWo/xKv/9oZfHvTAPSt1ca/pHgdSOHhlbqltOKp24NCnFSwcD
- m2nMzngWIYsY8m3qM32flMxR4xstRA+RfUd4FOUe3CkgQb6Guag4QEGelwpaF6ZGoezY
- ZU2GMwV+3yEfougNUd6QURxS9pbFnXXmAYqwdPS5SJ+0HHJ4YK/IFWk3RKhSV7mu6zqG
- zCJQ==
+ bh=B0cpSSAv1AUYF0uxmfB8np+vhpcvonT8w0NjJQwSMQo=;
+ b=RYfRcpmHmwagsop2MmBU4JMAQR/jjSRCD6KqYv0QFywq/H72MafTPn0DhxYxgQ++Dd
+ d3JBd4o7rKYJimdTB2BZ5VF/HyGD6fhbdEtMvOPsN9cezFmrclfUan90vFaqXHbIEJRM
+ Ydxj+w0Qm0I+tp47GpKsTcqbfpEuUjMS16zfohAUwv7CMLs1V2dRTtLRQAh3R4wIU/BJ
+ 8vn3MDFHrfCngG9oM18/LWR8PStD/bDTUUTuq/Nf7qKQn22N3Pd14kY2NUdQh9WIAb/i
+ OxZM2Tom8KJ/EofvnZLoTyZIIy2k3b/HxCcGlAtKu5pGORKMMv2Ez5pCLn2vS/voVacj
+ nNJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBUcz00TZ1tZh9f9DN4sK3Ht344d8vIpHmfh+i3koOMxqSiufO55TACHDa/Uq4CKliR35GteRhcA==@nongnu.org
-X-Gm-Message-State: AOJu0Ywyu/UCGRixJzh6LmFClwVCtG29qu/Er38ocZhmSRt8Q2iC99RA
- alOH+BdQkvevG2Li4g+j2t3ZbjTg/CZvrzsaIcSkj6mvadmRTvtiflFF3g==
-X-Gm-Gg: ASbGncteGDrQLEDKTTE1/bDG1SWbYzo7iFyhZps+ER544I7+mFxutdlK8nAp8GQbSsV
- DbB7uZ2FP3RlgcMb++qxQ5AzDLFfPT8HyG6quaVwJesULlbaCY+e6Sex0GW9qsi7G0lLpMFzrpJ
- W1+FfhO9b0FmxiDK+WNW2rMlOp0gq/L2XoITZadk1Gd1v6XaTeQ3diQDTTUek0iFHIoUTaxpACO
- 8M825ed7eZ8815OJqEbXnA+i//Qdj82hPC9C0rb2T8G8es5ARqP5zv/YBYSwfFIUPzNjn9rmYBY
- sOxZMlizIFZNCLmDCnwS7rPXH+Ji20nVx/Y8yzBRo0V/mPzdRH1j85e5vtUjms8PhQcqAxllFSS
- w7DWpSOg6Daw6
-X-Google-Smtp-Source: AGHT+IFlbpOrROEdqJPURx30e+IPdb5EIdcwBkWKH6+nUgHdf+W5q1SGEFxvkA7PKeUTw7blfVJypA==
-X-Received: by 2002:a17:906:308c:b0:ab3:9aba:ce7d with SMTP id
- a640c23a62f3a-abc0ae1ab4cmr755188166b.1.1740311240904; 
- Sun, 23 Feb 2025 03:47:20 -0800 (PST)
+ AJvYcCXoHA49haVHXdW9AzXnYP1PNEMkRIMDTm0eaStwmkX56Ns6VenXhyLzYNOrkdIQXEv/qPdjY16aPg==@nongnu.org
+X-Gm-Message-State: AOJu0YwVjwBcEFp7qc5xQQEpXFOxKXqZ9RlbHDsqsGoTb5bIud1IureL
+ 2AkD5L5g2KrBcFxD1e0UKYHBNjezMC8Yn+G293eApRPEbKJTJpE113crCg==
+X-Gm-Gg: ASbGncui0XVm0ve+a7KHqyGmY1qK8PhZkUdLPnk9hV0tMEk35nXLDqvSGZZ8moQIK08
+ ZHwoxDis4FiwSBlr0HJHPxJrvh7MUDAYuSkS6tz6P1CE9YWh2Ekgdw30IePfwAG3aoboEWq60oj
+ e0RvwR1duFbFRz7vpbCXPvdIU/cD2jsGt0W44QrtPBbvd/VgNTN3pDEsWBwfsyMzuID6SseDsZ3
+ 62cfHUf16DlhlMKG7oWpRCgx4EJBo/cG9JEO5RT6AQvElrhVw7I8G7S0qxdFnvo/PIltz4I79H5
+ bGtDnixuclPcnh0llX/nUi0lRfp2bU4uy3yc67m0DiRtXzbgm+AdZh63ZP6St0CG1IjR/MPHXfD
+ +bntjMWOusMze
+X-Google-Smtp-Source: AGHT+IFh6vVgL6CCOJ3C/ET0u+qvqtUebEjjUFPi7WYngK6urkRMjg6wb4ThSWwIrbOi6LrL+0FDVA==
+X-Received: by 2002:a17:907:c22:b0:ab7:b6cb:b633 with SMTP id
+ a640c23a62f3a-abc09b2b7e2mr938737866b.34.1740311255447; 
+ Sun, 23 Feb 2025 03:47:35 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-011-167-038.77.11.pool.telefonica.de. [77.11.167.38])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-abba4b9ee98sm1240515466b.167.2025.02.23.03.47.19
+ a640c23a62f3a-abba4b9ee98sm1240515466b.167.2025.02.23.03.47.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Feb 2025 03:47:20 -0800 (PST)
+ Sun, 23 Feb 2025 03:47:34 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -77,17 +77,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 02/18] hw/pci-host/designware: Prevent device attachment on
- internal PCIe root bus
-Date: Sun, 23 Feb 2025 12:46:52 +0100
-Message-ID: <20250223114708.1780-3-shentey@gmail.com>
+Subject: [PATCH v2 10/18] hw/arm/fsl-imx8mp: Add I2C controllers
+Date: Sun, 23 Feb 2025 12:47:00 +0100
+Message-ID: <20250223114708.1780-11-shentey@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250223114708.1780-1-shentey@gmail.com>
 References: <20250223114708.1780-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,90 +109,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On the real device, the PCIe root bus is only connected to a PCIe bridge and
-does not allow for direct attachment of devices. Doing so in QEMU results in no
-PCI devices being detected by Linux. Instead, PCI devices should plug into the
-secondary PCIe bus spawned by the internal PCIe bridge.
-
-Unfortunately, QEMU defaults to plugging devices into the PCIe root bus. To work
-around this, every PCI device created on the command line needs an extra
-`bus=dw-pcie` option which is error prone. Fix that by marking the PCIe root bus
-as full which makes QEMU decend into the child PCIe bus.
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/pci-host/designware.h |  7 +++++++
- hw/pci-host/designware.c         | 18 +++++++++++++++++-
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ docs/system/arm/imx8mp-evk.rst |  1 +
+ include/hw/arm/fsl-imx8mp.h    | 11 +++++++++++
+ hw/arm/fsl-imx8mp.c            | 29 +++++++++++++++++++++++++++++
+ hw/arm/Kconfig                 |  2 ++
+ 4 files changed, 43 insertions(+)
 
-diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
-index bf8b278978..a35a3bd06c 100644
---- a/include/hw/pci-host/designware.h
-+++ b/include/hw/pci-host/designware.h
-@@ -25,12 +25,19 @@
- #include "hw/pci/pci_bridge.h"
- #include "qom/object.h"
+diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+index 37d3630d09..ef0d997250 100644
+--- a/docs/system/arm/imx8mp-evk.rst
++++ b/docs/system/arm/imx8mp-evk.rst
+@@ -15,6 +15,7 @@ The ``imx8mp-evk`` machine implements the following devices:
+  * 3 USDHC Storage Controllers
+  * 1 Designware PCI Express Controller
+  * 5 GPIO Controllers
++ * 6 I2C Controllers
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
  
-+#define TYPE_DESIGNWARE_PCIE_ROOT_BUS "designware-pcie-root-BUS"
-+OBJECT_DECLARE_SIMPLE_TYPE(DesignwarePCIERootBus, DESIGNWARE_PCIE_ROOT_BUS)
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 18ea52d083..2590056627 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -12,6 +12,7 @@
+ #include "cpu.h"
+ #include "hw/char/imx_serial.h"
+ #include "hw/gpio/imx_gpio.h"
++#include "hw/i2c/imx_i2c.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+@@ -31,6 +32,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
+ enum FslImx8mpConfiguration {
+     FSL_IMX8MP_NUM_CPUS         = 4,
+     FSL_IMX8MP_NUM_GPIOS        = 5,
++    FSL_IMX8MP_NUM_I2CS         = 6,
+     FSL_IMX8MP_NUM_IRQS         = 160,
+     FSL_IMX8MP_NUM_UARTS        = 4,
+     FSL_IMX8MP_NUM_USDHCS       = 3,
+@@ -45,6 +47,7 @@ struct FslImx8mpState {
+     IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
+     IMX7SNVSState      snvs;
++    IMXI2CState        i2c[FSL_IMX8MP_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
+     SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
+     DesignwarePCIEHost pcie;
+@@ -205,6 +208,11 @@ enum FslImx8mpIrqs {
+     FSL_IMX8MP_UART5_IRQ    = 30,
+     FSL_IMX8MP_UART6_IRQ    = 16,
+ 
++    FSL_IMX8MP_I2C1_IRQ     = 35,
++    FSL_IMX8MP_I2C2_IRQ     = 36,
++    FSL_IMX8MP_I2C3_IRQ     = 37,
++    FSL_IMX8MP_I2C4_IRQ     = 38,
 +
- #define TYPE_DESIGNWARE_PCIE_HOST "designware-pcie-host"
- OBJECT_DECLARE_SIMPLE_TYPE(DesignwarePCIEHost, DESIGNWARE_PCIE_HOST)
+     FSL_IMX8MP_GPIO1_LOW_IRQ  = 64,
+     FSL_IMX8MP_GPIO1_HIGH_IRQ = 65,
+     FSL_IMX8MP_GPIO2_LOW_IRQ  = 66,
+@@ -216,6 +224,9 @@ enum FslImx8mpIrqs {
+     FSL_IMX8MP_GPIO5_LOW_IRQ  = 72,
+     FSL_IMX8MP_GPIO5_HIGH_IRQ = 73,
  
- #define TYPE_DESIGNWARE_PCIE_ROOT "designware-pcie-root"
- OBJECT_DECLARE_SIMPLE_TYPE(DesignwarePCIERoot, DESIGNWARE_PCIE_ROOT)
- 
-+struct DesignwarePCIERootBus {
-+    PCIBus parent;
-+};
++    FSL_IMX8MP_I2C5_IRQ     = 76,
++    FSL_IMX8MP_I2C6_IRQ     = 77,
 +
- typedef struct DesignwarePCIEViewport {
-     DesignwarePCIERoot *root;
+     FSL_IMX8MP_PCI_INTA_IRQ = 126,
+     FSL_IMX8MP_PCI_INTB_IRQ = 125,
+     FSL_IMX8MP_PCI_INTC_IRQ = 124,
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 456fa47dc7..3da81e28ca 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -208,6 +208,11 @@ static void fsl_imx8mp_init(Object *obj)
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+     }
  
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index 3e8c36e6a7..c07740bfaa 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -55,6 +55,17 @@
- #define DESIGNWARE_PCIE_ATU_DEVFN(x)               (((x) >> 16) & 0xff)
- #define DESIGNWARE_PCIE_ATU_UPPER_TARGET           0x91C
- 
-+static void designware_pcie_root_bus_class_init(ObjectClass *klass, void *data)
-+{
-+    BusClass *k = BUS_CLASS(klass);
++    for (i = 0; i < FSL_IMX8MP_NUM_I2CS; i++) {
++        g_autofree char *name = g_strdup_printf("i2c%d", i + 1);
++        object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
++    }
 +
-+    /*
-+     * Designware has only a single root complex. Enforce the limit on the
-+     * parent bus
-+     */
-+    k->max_dev = 1;
-+}
+     for (i = 0; i < FSL_IMX8MP_NUM_GPIOS; i++) {
+         g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
+         object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
+@@ -360,6 +365,29 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+     }
+ 
++    /* I2Cs */
++    for (i = 0; i < FSL_IMX8MP_NUM_I2CS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } i2c_table[FSL_IMX8MP_NUM_I2CS] = {
++            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C1].addr, FSL_IMX8MP_I2C1_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C2].addr, FSL_IMX8MP_I2C2_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C3].addr, FSL_IMX8MP_I2C3_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C4].addr, FSL_IMX8MP_I2C4_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C5].addr, FSL_IMX8MP_I2C5_IRQ },
++            { fsl_imx8mp_memmap[FSL_IMX8MP_I2C6].addr, FSL_IMX8MP_I2C6_IRQ },
++        };
 +
- static DesignwarePCIEHost *
- designware_pcie_root_to_host(DesignwarePCIERoot *root)
- {
-@@ -699,7 +710,7 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
-                                      &s->pci.memory,
-                                      &s->pci.io,
-                                      0, 4,
--                                     TYPE_PCIE_BUS);
-+                                     TYPE_DESIGNWARE_PCIE_ROOT_BUS);
-     pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
++                           qdev_get_gpio_in(gicdev, i2c_table[i].irq));
++    }
++
+     /* GPIOs */
+     for (i = 0; i < FSL_IMX8MP_NUM_GPIOS; i++) {
+         static const struct {
+@@ -470,6 +498,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_GIC_DIST:
+         case FSL_IMX8MP_GIC_REDIST:
+         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
++        case FSL_IMX8MP_I2C1 ... FSL_IMX8MP_I2C6:
+         case FSL_IMX8MP_PCIE1:
+         case FSL_IMX8MP_PCIE_PHY1:
+         case FSL_IMX8MP_RAM:
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index be5a2c02b7..28ae409c85 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -595,11 +595,13 @@ config FSL_IMX7
  
-     memory_region_init(&s->pci.address_space_root,
-@@ -754,6 +765,11 @@ static void designware_pcie_host_init(Object *obj)
- 
- static const TypeInfo designware_pcie_types[] = {
-     {
-+        .name           = TYPE_DESIGNWARE_PCIE_ROOT_BUS,
-+        .parent         = TYPE_PCIE_BUS,
-+        .instance_size  = sizeof(DesignwarePCIERootBus),
-+        .class_init     = designware_pcie_root_bus_class_init,
-+    }, {
-         .name           = TYPE_DESIGNWARE_PCIE_HOST,
-         .parent         = TYPE_PCI_HOST_BRIDGE,
-         .instance_size  = sizeof(DesignwarePCIEHost),
+ config FSL_IMX8MP
+     bool
++    imply I2C_DEVICES
+     imply PCI_DEVICES
+     select ARM_GIC
+     select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_CCM
+     select IMX
++    select IMX_I2C
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
+     select SDHCI
 -- 
 2.48.1
 
