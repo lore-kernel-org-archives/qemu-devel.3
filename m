@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C003C021B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 12:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3614C021B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 14:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmAuY-0008QM-NJ; Sun, 23 Feb 2025 07:16:42 -0500
+	id 1tmDNC-0007p6-6i; Sun, 23 Feb 2025 09:54:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tmAuX-0008Pb-Dy; Sun, 23 Feb 2025 07:16:41 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tmDN8-0007op-4G
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:22 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tmAuV-0000V5-Es; Sun, 23 Feb 2025 07:16:41 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5ded6c31344so4997677a12.1; 
- Sun, 23 Feb 2025 04:16:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tmDN5-0007dp-Ub
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:21 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5e0505275b7so5765757a12.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:54:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740312997; x=1740917797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1740322458; x=1740927258; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NyLMdX0mKTgfNlYNdKlrfBlC4EEs5GQx4Z7IGlqyMHo=;
- b=dE4IMsG5VSYrT01VFWRx7NzNtyFRx/jw93xNNzP2Ibl9Gp6ryMDnK6E+I99n6ZooeP
- TLbntMv46bKvumxQvklX1/GPGmryw7NqOjFQ8vWZWrC1cwVcmUXw0JeCRdUzWUDADl4Q
- WiM5NZ1yTGmszios5p7lp0skg3NdV5WtkPx3U7UYD8wf1R9V49jG1M68w2mEiQg1Auf5
- 7uMQzn6bGWZ/o3TXMJx0Z7JJ0s7ak150ioz+JUzip+keNVyWAyVKRqBxI+4B+3295opt
- OM3W5XBvWs84eP/ww68DAt6uh9zmvOxOWUzTXDj7qh+C6rHbY7PWctDlcQS0OAYVVjkh
- EpSg==
+ bh=ARVfbAZthN6G0J8zifHQamYji2miOgYkQ6/AWMTqiyg=;
+ b=br6+1qnOBzCVBaDpx7Y765uyYKQusDdKeM7HcdqUclRHN0tcyUvWNnAkor68TpYhFf
+ qz2pev25/wBFVugJBG7Be2CWgrhN+bgtCh/IDjaZkKeIHWcqOiWZkffedM8IakYvaRL7
+ dgFxyVsra3UvJ31mtbsd3XUu64fKmgj6BJ1bLaAJDybOXdpD7wJj7TWcFMnNJGAc3rcQ
+ 74fs6jFLPQ0M3LNwx8aHXT7WUnMdjqSjhvJ5lhphC7lUMB2W6vK2c0fvAVfxJ5+OqLV9
+ cTEKAiAFsrSuuN+Aloz5+8xa+w2GSnTF0r3HxD8MGkcPpR591++tvpn2z76lo9T9C7qA
+ tDaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740312997; x=1740917797;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1740322458; x=1740927258;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NyLMdX0mKTgfNlYNdKlrfBlC4EEs5GQx4Z7IGlqyMHo=;
- b=FlOwWw+PRo90ESTd040Gpw3VU/hoP80OcXZb+aWYUg7I5Nnx8J02NSaGuBpl+Ow4jg
- DzvC6ZXWtlhRowFGhV/420iqjxgGITUrZ1PJEQ0OhCrYf8NdbEhmIeMa/wji8CLVNmHe
- sWfavOiBJXgnhFk1saPqA2kPkrNlCEa5z1Tc09i1LkOoLJ0zZI1UbPA90SFiENMHoe1+
- LwweP19ZolEZUGA0W4BsEu1cFcmsDYpqh/+AageqCgT4LSNbyZQV4ggZv189HC7GH71B
- ++PcprT14zVr5Y6NcWNzsw4wPQWFQjcpwElQVAnaiptkl4FjrzJsIQtSmG7Ztylts7Ep
- newA==
+ bh=ARVfbAZthN6G0J8zifHQamYji2miOgYkQ6/AWMTqiyg=;
+ b=NJx5svq/rRQznWi7UOjCeVS8dNT06cJTRRbwSebqIN36i3RXdhG92cRX+W2TY9ubcS
+ LEmCbkbNnx8PVQpkgMWuRGkly5vWCI/ox/wFhiRucEM5vZpIQyhPMjwsflshoFBsMrYa
+ I9PkHDghPvH3BBbmN24p3u/neqY3DZPJoQq0YrkjlCdIdBnxNzqdmnZXSqqsr7TfmckN
+ j9/nf+/iGD2uYorRdi7g8kByLCGW6jhiFWG6Z/c6hlCoa8Ri6Q/N6CR32HkH/o7VTRx1
+ iJQBiywg3v7wsvLqBSgKPcSUf4vrelJTimH18wM4ahXLJfgl49U+zOU7fmivifYMplDr
+ iwrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUcEsxveTIlH+R1iF9Kye6QIm0ki7mlro9L95NPLVR8azkf+tbMBbp33anNwKQEAaDUqQscyu7fyw==@nongnu.org
-X-Gm-Message-State: AOJu0Yy3aKoTsQ9297KlgwALmlTout+0g4ASFArTuYROKN2Gcol9yCL6
- 1kUZm//VzLFuf47L88ko9LZPSDQIKRzfEQCXT6bFj/Wzp5fV8q3N
-X-Gm-Gg: ASbGnct1QnHWblwxLIkOpUzkiiMWNtIW4bHmY1IPiQRifjF+H7PWcvv1pg70IMPY2Rc
- Fb/JOdZUAEvG0rCcGy7Lwyzb7cCjHfBW6++55kN3vabVDrQx8MQHtjbYqDhDbg7KkMhG9Tq6PUi
- N2M+yShH4D2Pp5tX0NarGZ44Hpdk87LAN6buKVNIb1nB8b66zvo47Z6yci/JaFIlMxss6EmRy63
- +BNMPTh2SP8cEeTor9rRmL4PSDECCgP8tvtUVm1/XF4zZ5UG1WDFqNypTwAgaW+bV7etIzObZGF
- XhG8Tnb5JLp2fmi3zSj/CTWp2Lklh787DsFLeVFJP8VZRWJh0+IAJDsxxRZVxAQ5HyXC607VhaY
- =
-X-Google-Smtp-Source: AGHT+IGAYlQdk/J8jxr7d33I50dJAzrrk6Edzp6ZGTA+ENq6UHF2eapBk/39lz6KS3m8vU2WeFCXJQ==
-X-Received: by 2002:a05:6402:4304:b0:5e0:922e:527a with SMTP id
- 4fb4d7f45d1cf-5e0b6fe5685mr25031115a12.0.1740312997262; 
- Sun, 23 Feb 2025 04:16:37 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-077-011-167-038.77.11.pool.telefonica.de.
- [77.11.167.38]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5dece1b4f65sm16552033a12.1.2025.02.23.04.16.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Feb 2025 04:16:36 -0800 (PST)
-Date: Sun, 23 Feb 2025 11:40:46 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 04/18] hw/arm: Add i.MX 8M Plus EVK board
-In-Reply-To: <CAFEAcA8qgEDAnfaQDmpUjy77KZBiqwdKSmyLE-ZwEAhMNLWn4Q@mail.gmail.com>
-References: <20250204092112.26957-1-shentey@gmail.com>
- <20250204092112.26957-5-shentey@gmail.com>
- <CAFEAcA8qgEDAnfaQDmpUjy77KZBiqwdKSmyLE-ZwEAhMNLWn4Q@mail.gmail.com>
-Message-ID: <80063C2F-B373-4AB3-A23A-0A5FC0E91CBB@gmail.com>
+ AJvYcCWcPkvoZlCXuEAKNHG+VUghUhV/l6Q4xelo2/53ycQCrqob2CkEI21fFYDUUeCu/vQVrgpKPnpmsQFk@nongnu.org
+X-Gm-Message-State: AOJu0YwHmt9Zk+Mq/KLDEiKBqPMwFT+WDI5EH4ZykDzyjyupKWuyDeKr
+ Emw5yIHMg/LyJSZRgV4+uaVfpA0KEEPZznGJxwjJXoi54mgk8Oy1
+X-Gm-Gg: ASbGncvvNKS3fJtW5JBhcQOkSUzg8nPI/ricUmBlsaD3X41foy9gmKRWALUphzQ6OLn
+ al6Zdk2O/ZcYo8gvmmmFyFUvwgKJwES1sDoUccKSJQFCmcPlBZ4YeDk+Gevat7d6YsofRKTwuWZ
+ 60pM0wL1C58HvgcoTO/PJ+048nbkLdxRwJk+LPvOAChMxb9DLeEp2w70QW5vOxwoWi9B1FxrVtm
+ LleY1jjIRul4nirrkS+2R2XFDzTkkVTfsEUYaakPoffzmsNAdiGBFZNfEmcEUNh4KIYntTlqaCz
+ 7+wdn9OoJ9b9e9QPFFqWukf46egrHo7E8uA=
+X-Google-Smtp-Source: AGHT+IG3/1eo4iZ5JvQuxJiYR09fv9TtWpx2o5hxwcEmV4biPf1OO52DN6N4r8Pe3lS3zrA0CuLkZA==
+X-Received: by 2002:a05:6402:430c:b0:5da:d76:7b2e with SMTP id
+ 4fb4d7f45d1cf-5e0b6fec4b4mr9947178a12.0.1740322457749; 
+ Sun, 23 Feb 2025 06:54:17 -0800 (PST)
+Received: from think.fritz.box ([2a02:8109:8384:1400:1283:abda:b08f:72e4])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5e0a0310f66sm6431580a12.81.2025.02.23.06.54.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 23 Feb 2025 06:54:17 -0800 (PST)
+From: Roman Penyaev <r.peniaev@gmail.com>
+To: 
+Cc: Roman Penyaev <r.peniaev@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH 3/5] ui/console-vc: report cursor position in the screen not
+ in the scroll buffer
+Date: Sun, 23 Feb 2025 15:54:00 +0100
+Message-ID: <20250223145407.259924-4-r.peniaev@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250223145407.259924-1-r.peniaev@gmail.com>
+References: <20250223145407.259924-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,184 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The format of the CSI cursor position report is `ESC[row;columnR`,
+where `row` is a row of a cursor in the screen, not in the scrollback
+buffer. What's the difference? Let's say the terminal screen has 24
+lines, no matter how long the scrollback buffer may be, the last line
+is the 24th.
 
+For example the following command can be executed in xterm on the last
+screen line:
 
-Am 10=2E Februar 2025 17:30:01 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->On Tue, 4 Feb 2025 at 09:21, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> As a first step, implement the bare minimum: CPUs, RAM, interrupt contr=
-oller,
->> serial=2E All other devices of the A53 memory map are represented as
->> TYPE_UNIMPLEMENTED_DEVICE, i=2Ee=2E the whole memory map is provided=2E=
- This allows
->> for running Linux without it crashing due to invalid memory accesses=2E
->>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->
->
->
->> --- /dev/null
->> +++ b/docs/system/arm/imx8mp-evk=2Erst
->> @@ -0,0 +1,56 @@
->> +NXP i=2EMX 8M Plus Evaluation Kit (``imx8mp-evk``)
->> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> +
->> +The QEMU i=2EMX 8M Plus EVK board emulation is intended to emulate a p=
-lain i=2EMX 8M
->> +Plus system on chip (SoC)=2E All peripherals the real board has such a=
-s flash and
->> +I2C devices are intended to be added via configuration, e=2Eg=2E comma=
-nd line=2E
->
->Why do this? If they're on the real hardware board, we should
->be creating them by default in the machine model in QEMU=2E
->Command line options are for devices that are optional and
->pluggable by the user on the hardware=2E
+   $ echo -en '\e[6n'; IFS='[;' read -sdR _ row col; echo $row:$col
+   24:1
 
-I'll rephrase the board description to be similar to the mcimx7d-sabre mac=
-hine=2E In fact, I've modeled this machine like it=2E
+It shows the cursor position on the current screen and not relative
+to the backscroll buffer.
 
-Best regards,
-Bernhard
+Before this change the row number was always increasing for the QEMU
+VC and represents the cursor position relative to the backscroll
+buffer.
 
->
->> +Supported devices
->> +-----------------
->> +
->> +The ``imx8mp-evk`` machine implements the following devices:
->> +
->> + * Up to 4 Cortex-A53 Cores
->
->"cores"
->
->> + * Generic Interrupt Controller (GICv3)
->> + * 4 UARTs
->> +
->> +Boot options
->> +------------
->> +
->> +The ``imx8mp-evk`` machine can start using the standard -kernel functi=
-onality
->> +for loading a Linux kernel=2E
->> +
->> +Direct Linux Kernel Boot
->> +''''''''''''''''''''''''
->> +
->> +Probably the easiest way to get started with a whole Linux system on t=
-he machine
->> +is to generate an image with Buildroot=2E Version 2024=2E11=2E1 is tes=
-ted at the time
->> +of writing and involves two steps=2E First run the following commands =
-in the
->> +toplevel directory of the Buildroot source tree:
->> +
->> +=2E=2E code-block:: bash
->> +
->> +  $ echo "BR2_TARGET_ROOTFS_CPIO=3Dy" >> configs/freescale_imx8mpevk_d=
-efconfig
->> +  $ make freescale_imx8mpevk_defconfig
->> +  $ make
->> +
->> +Once finished successfully there is an ``output/image`` subfolder=2E N=
-avigate into
->> +it patch the device tree needs to be patched with the following comman=
-ds which
->> +will remove the ``cpu-idle-states`` properties from CPU nodes:
->
->This sentence seems to be confused in the middle -- cut-and-paste
->error ?
->
->> +
->> +=2E=2E code-block:: bash
->> +
->> +  $ dtc imx8mp-evk=2Edtb | sed '/cpu-idle-states/d' > imx8mp-evk-patch=
-ed=2Edts
->> +  $ dtc imx8mp-evk-patched=2Edts -o imx8mp-evk-patched=2Edtb
->> +
->> +Now that everything is prepared the newly built image can be run in th=
-e QEMU
->> +``imx8mp-evk`` machine:
->
->> +#define NAME_SIZE 20
->> +
->> +static void fsl_imx8mp_init(Object *obj)
->> +{
->> +    MachineState *ms =3D MACHINE(qdev_get_machine());
->> +    FslImx8mpState *s =3D FSL_IMX8MP(obj);
->> +    char name[NAME_SIZE];
->
->Better than fixed sized char arrays for object names
->is to use
->   g_autofree char *name =3D g_strdup_printf("cpu%d", i);
->inside the block of each for() loop etc=2E
->
->> +    int i;
->> +
->> +    for (i =3D 0; i < MIN(ms->smp=2Ecpus, FSL_IMX8MP_NUM_CPUS); i++) {
->> +        snprintf(name, NAME_SIZE, "cpu%d", i);
->> +        object_initialize_child(obj, name, &s->cpu[i],
->> +                                ARM_CPU_TYPE_NAME("cortex-a53"));
->> +    }
->> +
->> +    object_initialize_child(obj, "gic", &s->gic, TYPE_ARM_GICV3);
->> +
->> +    for (i =3D 0; i < FSL_IMX8MP_NUM_UARTS; i++) {
->> +        snprintf(name, NAME_SIZE, "uart%d", i + 1);
->> +        object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIA=
-L);
->> +    }
->> +}
->> +
->> +static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
->> +{
->> +    MachineState *ms =3D MACHINE(qdev_get_machine());
->> +    FslImx8mpState *s =3D FSL_IMX8MP(dev);
->> +    DeviceState *gicdev =3D DEVICE(&s->gic);
->> +    int i;
->> +
->> +    if (ms->smp=2Ecpus > FSL_IMX8MP_NUM_CPUS) {
->> +        error_setg(errp, "%s: Only %d CPUs are supported (%d requested=
-)",
->> +                   TYPE_FSL_IMX8MP, FSL_IMX8MP_NUM_CPUS, ms->smp=2Ecpu=
-s);
->> +        return;
->> +    }
->> +
->> +    /* CPUs */
->> +    for (i =3D 0; i < ms->smp=2Ecpus; i++) {
->> +        /* On uniprocessor, the CBAR is set to 0 */
->> +        if (ms->smp=2Ecpus > 1) {
->> +            object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
->> +                                    fsl_imx8mp_memmap[FSL_IMX8MP_GIC_D=
-IST]=2Eaddr,
->> +                                    &error_abort);
->> +        }
->> +
->> +        /*
->> +         * Magic value from Linux output: "arch_timer: cp15 timer(s) r=
-unning at
->> +         * 8=2E00MHz (phys)"=2E
->> +         */
->> +        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
->> +                                &error_abort);
->
->This is the CNTFRQ value in Hz=2E The datasheet actually tells you
->this, so we don't need to call it a magic number (section 4=2E11=2E4=2E1=
-=2E6=2E4
->of the i=2EMX 8M Plus Applications Processor Reference Manual says the
->base frequency of the system counter is 8MHz)=2E
->
->(Incidentally the memory mapped system counter is a stock Arm
->IP block and I have about 60% of a model of it, I just haven't
->needed to upstream it yet because in practice no guest software
->really tries to mess with it=2E If we turn out to need it for
->this SoC that would be a reason for me to clean it up and
->send it out=2E But I suspect we don't need it in practice=2E)
->
->thanks
->-- PMM
+Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+---
+ ui/console-vc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index d512f57e10a9..87f57f1c52c6 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -827,8 +827,7 @@ static void vc_putchar(VCChardev *vc, int ch)
+                 case 6:
+                     /* report cursor position */
+                     response = g_strdup_printf("\033[%d;%dR",
+-                           (s->y_base + s->y) % s->total_height + 1,
+-                            s->x + 1);
++                                               s->y + 1, s->x + 1);
+                     vc_respond_str(vc, response);
+                     break;
+                 }
+-- 
+2.43.0
+
 
