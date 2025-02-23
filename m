@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0956CC021B8
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 14:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BDFC021B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Feb 2025 14:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmDN9-0007oz-8W; Sun, 23 Feb 2025 09:54:24 -0500
+	id 1tmDNJ-0007r1-24; Sun, 23 Feb 2025 09:54:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tmDN6-0007oE-Be
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:20 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1tmDNA-0007p3-Go
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:25 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tmDN4-0007db-Fg
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:20 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5e04f87584dso5194046a12.3
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:54:16 -0800 (PST)
+ id 1tmDN7-0007e3-5L
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 09:54:23 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5dec817f453so5934209a12.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 06:54:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740322455; x=1740927255; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DGvHnZ3WEbefMGw1c4k0Qs3t64lR1aiH3ElukCs1rMs=;
- b=Xj6cn/wrwkQDBHzlBxfKG8k+bklBvJBTDhpYEfYRAXYjTi5rj9C4tffgVMTSW874G0
- vxW3hJPZMJBR/HqpVF7YoxVVmVyAWtOkmJ/rbFqyxD6JZFLDMBt04yHDMEANMK9CqW5v
- qWHcXsdS+cm0+6FTCP4scl+ZEu+6NPvMkqbfw8xIXYs+keH9RrLMoVDsUeGKbkt14HVC
- PEin3VkhSotwZo/19RVgEQpCsXXEl64Mx+w82DoAorwzL9hEkT+ap9bGqEEiSlAihs3O
- dfKgWiV142SD9aED9i5tV1AZBvyS33KQYZxiy6lgaetJGyA++XfUCMC1vujgZ8xNozNY
- wfig==
+ d=gmail.com; s=20230601; t=1740322459; x=1740927259; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zN68A3m1xFZRBA4Wy0sLe9nvVRbka+7jawUW1pKYdX0=;
+ b=MLZhqjw5ou7fc4Uh67QEIytHbBaBBjm82EaSm/R7xFMaEFNtD/hMlO0MSscYkVEE/5
+ 07+ICkMRGBoa25fhR9WLOwAwyVb+fUW41RFFZTtJdIfy0A1loxk1pSPKLhfq/1/wNccW
+ GQnxx6FTHI4bO6A8XVw2VdIr6wI4fxpnLodU5QYNMD1mw7NtH1F+xlTtvoW0yxBm1YFY
+ 79MjlSyulZgLUGPz5wkx+fg5yp2YoOYLu+uIKdqhyeHYrZnnCVSH52qGA/YOn52ZAS/5
+ C2BazySfx1yZEcuTMuQQOlIaCGdVQUSd7Ud5RzvFjAPwq3/k1e/MwrBbKcKPoBQl7hM2
+ aq8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740322455; x=1740927255;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DGvHnZ3WEbefMGw1c4k0Qs3t64lR1aiH3ElukCs1rMs=;
- b=JsxhG0sRvqD8GMXFEcTcfTCDoxaWg0BkuWZ0NjhgXQ0gu0FYYqZksY0ZC8OgYeJH6S
- 0ninYTvDNnV/S0NkY29UCproaMn842GQYy8hRdmiAGkmUgwDv6YQfTZtAy0T1pIfIGug
- at34hKXXvad5pAATyfogTOGYBZ9lFUoI27vgWegC9fQRMYybZUCXaDmvhm8yHBUGZcsn
- sOGfUFS20MRXhee6FT87ZkFpH33WftYZRsD4cZqyuN5vL56ddi5RVBtr/PDLNRG/V7p0
- vMuFpR4yfGpl1JM8yCsY/V+jS/HgT5UgjC23Sc0vrd6kmvf4nwYGUzNSYu0bGBM+slDF
- cbCA==
+ d=1e100.net; s=20230601; t=1740322459; x=1740927259;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zN68A3m1xFZRBA4Wy0sLe9nvVRbka+7jawUW1pKYdX0=;
+ b=R8f9lFpAhRQKA4NeR3DARMdApw2Yj+Ti6EgUgMW0Tq+Qs3HJY9IGXICreBpaGVxz36
+ cFdhyoeCCIF/ReQbEOwm/ZzyuiXIlFv+37w2RgjIVanZp45vRiVSqLhuaacMBdJjFddk
+ bvUMoWQ+WsbPniTcOw7bImp8woex8w2ZZL/PVu865OHw7w2HXOGmuyhlbXZ9EkPF5ZS0
+ XnTMeQV3nWojRuhLnIB+OPwObdFIykmqTjBriDrN3f8IUDnXmQXsgixJBjLfvuIcdFUO
+ b2X8gOOmzUAT83giSB83kjP6GUtbI5XnkVZVkg7MRJuixBKDhNKNDpitzS3AAba1B2VB
+ 12Qg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUi12iibYqs3Sbo0SuKu/mhejbrcZQB+Z0gCLmmJhz2iMhNsDpsgjaNQER5rszVVs4BV2G/964PnwSY@nongnu.org
-X-Gm-Message-State: AOJu0YyI8ffDhugSJ+/72D6KzWI27j7+vB3wqNe3CH023Daeq3QqWgWq
- XehmaIjq3CK+wukkc8xZyiEzWVcSN8fIXvOHx2zjlua64ZtopGRM
-X-Gm-Gg: ASbGncuc6qyp2rx19Lnyphr6kJMuVCeNhY0OQqHBHLFDfzej/f4Jq/Ftrlt9PhQhuO3
- 1ZzkBBkt4XY0oENXo9BEa8q0DbJtZGDzPphe3ailohtYV/jXNF3QjV8cY8EfYuqnUBCm58ASesG
- CHljQfOV7uQJIr6WWGlT0peabkjobRs7dRh3pCs6TSVxY5NuWR56ovlTgAZ/r8gMeDjzU8DzNHh
- z5DogxDl1Bwxo0Rb20+o7qoHBC6vYYzYA1fhZkdmkA82TeKDko9HMmbi8ZWrn9lleedJ+KcayWz
- eoECyntJYRhTJ4It9RnChEePxe9tB3x2s5w=
-X-Google-Smtp-Source: AGHT+IGCnSDAyImxqaW3G6UJ5kujaSx540WZPoi9UoMBrd1f+hlI8WHTllY+g5oALRpyp7hAY2+HPQ==
-X-Received: by 2002:a05:6402:5251:b0:5dc:584e:853d with SMTP id
- 4fb4d7f45d1cf-5e0b72265e7mr10295342a12.25.1740322454716; 
- Sun, 23 Feb 2025 06:54:14 -0800 (PST)
+ AJvYcCVOnYgf0cIupF42xJnD9iv4fxUD6KS0OL+JmeemYZduMvOQYCATzqK26xG/Hzgh2CIvgfVYXaft3eH1@nongnu.org
+X-Gm-Message-State: AOJu0Yy4+OixXCD82DoZBuZ2BDg8GTgqs/3xRLz4Z257T12hfbpWISrP
+ yr2xjY3aOX5IFyPqnaKrCl9ZmOqpOC0og6RaXBemYJxTRn9SSBLzaV+B3A==
+X-Gm-Gg: ASbGncvw0jgz3p+jn2e6yYwvy8Q6pqWOV1o/DMM15sp5Igd3YFsFcMLHit6+FOshZnJ
+ qHRzJJGQtFQXjjNBotzPCduIpCSnNZSjIepCllsc1zztbF+s+gLa5sFLG4c5a2zlBMMcCRJueZm
+ YKnfmh2ebzL5AD9D8VTmVOT75hlHtGT+7I4PElcnmR7LqUs7tGpKwiJuJHSGmQ3J0AUThWhugin
+ NUqw4PU78VSTeEmAnFDJvkwl1/+AHHqhqvKAtT1bdC6CWzkP2FTomrqlZO483KelUn9rn/gY3w6
+ Lb6vIYSwv9g8ptjD/8c4HsfNiRyWSx+RoeM=
+X-Google-Smtp-Source: AGHT+IEhb3P5TISi4jM0t2IF26KxuQA8/p+hDBNHm+mOujRQg3Cvb0SFOO+wwuXJ4WvQ7csUffnCFw==
+X-Received: by 2002:a05:6402:3488:b0:5e0:51a9:d425 with SMTP id
+ 4fb4d7f45d1cf-5e0b724ecfcmr9455896a12.29.1740322459390; 
+ Sun, 23 Feb 2025 06:54:19 -0800 (PST)
 Received: from think.fritz.box ([2a02:8109:8384:1400:1283:abda:b08f:72e4])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e0a0310f66sm6431580a12.81.2025.02.23.06.54.13
+ 4fb4d7f45d1cf-5e0a0310f66sm6431580a12.81.2025.02.23.06.54.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Feb 2025 06:54:14 -0800 (PST)
+ Sun, 23 Feb 2025 06:54:18 -0800 (PST)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, "Daniel P . Berrange" <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 0/5] ui/console-vc: various fixes and improvements
-Date: Sun, 23 Feb 2025 15:53:57 +0100
-Message-ID: <20250223145407.259924-1-r.peniaev@gmail.com>
+Subject: [PATCH 4/5] ui/console-vc: add support for cursor DECSC and DECRC
+ commands
+Date: Sun, 23 Feb 2025 15:54:01 +0100
+Message-ID: <20250223145407.259924-5-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250223145407.259924-1-r.peniaev@gmail.com>
+References: <20250223145407.259924-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,59 +104,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series brings several fixes and improvements to the QEMU
-virtual console (VC), making it more usable and aligning it better
-with VT100 spec. The updates include support for inserting and
-deleting characters, better cursor handling and correct position
-reporting. Without these changes, the console is hardly usable.
+There are aliases for save and restore cursor commands:
 
-1. Support for DCH (delete) and ICH (insert) commands
+* save cursor
+    `ESC 7`     (DEC Save Cursor [1], older VT100)
+    `ESC [ s`   (CSI Save Cursor, standard ANSI)
 
-  * Properly handles character deletion and insertion as per VT100
-    specs.
+* load cursor
+    `ESC 8`     (DEC Restore Cursor [2], older VT100)
+    `ESC [ u`   (CSI Restore Cursor, standard ANSI)
 
-2. Add support for cursor save/restore (ESC 7 and ESC 8)
+This change introduces older DEC sequencies for compatibility with
+some scripts (for example [3]) and tools.
 
-  * Implements legacy DEC sequences for compatibility.
-  * Ensures cursor attributes are also saved and restored.
+This change also adds saving and restoring of character attributes,
+which is according to the VT spec [1][2]
 
-3. Fix cursor position reporting
-
-  * Reports cursor position relative to the screen instead of the
-    scroll buffer.
-  * Fixes issues with tools that rely on accurate cursor placement.
-
-4. Ensure DSR (Device Status Report) responses go to applications
-
-  * Stops terminal from rendering responses to the screen but instead
-    send reports back to applications.
-
-5. Handle `ESC ( <ch>` character set sequences
-
-  * Makes `top` output look clean by handling the character set
-    commands.
-
-These changes improve the virtual console's compatibility with
-terminal-based apps. Without them, the console is quite frustrating to
-use.
+[1] https://vt100.net/docs/vt510-rm/DECSC.html
+[2] https://vt100.net/docs/vt510-rm/DECRC.html
+[3] https://wiki.archlinux.org/title/Working_with_the_serial_console#Resizing_a_terminal
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Daniel P. Berrange <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org
+---
+ ui/console-vc.c | 40 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 6 deletions(-)
 
-Roman Penyaev (5):
-  ui/console-vc: introduce parsing of the 'ESC ( <ch>' sequence
-  ui/console-vc: report to the application instead of screen rendering
-  ui/console-vc: report cursor position in the screen not in the scroll
-    buffer
-  ui/console-vc: add support for cursor DECSC and DECRC commands
-  ui/console-vc: implement DCH (delete) and ICH (insert) commands
-
- ui/console-vc.c | 174 +++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 156 insertions(+), 18 deletions(-)
-
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 87f57f1c52c6..522adc2806c8 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -90,6 +90,7 @@ struct VCChardev {
+     int esc_params[MAX_ESC_PARAMS];
+     int nb_esc_params;
+     TextAttributes t_attrib; /* currently active text attributes */
++    TextAttributes t_attrib_saved;
+     int x_saved, y_saved;
+ };
+ typedef struct VCChardev VCChardev;
+@@ -644,6 +645,31 @@ static void vc_set_cursor(VCChardev *vc, int x, int y)
+     s->y = y;
+ }
+ 
++/**
++ * vc_save_cursor() - saves cursor position and character attributes.
++ */
++static void vc_save_cursor(VCChardev *vc)
++{
++    QemuTextConsole *s = vc->console;
++
++    vc->x_saved = s->x;
++    vc->y_saved = s->y;
++    vc->t_attrib_saved = vc->t_attrib;
++}
++
++/**
++ * vc_restore_cursor() - restores cursor position and character
++ * attributes from saved state.
++ */
++static void vc_restore_cursor(VCChardev *vc)
++{
++    QemuTextConsole *s = vc->console;
++
++    s->x = vc->x_saved;
++    s->y = vc->y_saved;
++    vc->t_attrib = vc->t_attrib_saved;
++}
++
+ static void vc_putchar(VCChardev *vc, int ch)
+ {
+     QemuTextConsole *s = vc->console;
+@@ -699,6 +725,12 @@ static void vc_putchar(VCChardev *vc, int ch)
+             vc->state = TTY_STATE_G0;
+         } else if (ch == ')') {
+             vc->state = TTY_STATE_G1;
++        } else if (ch == '7') {
++            vc_save_cursor(vc);
++            vc->state = TTY_STATE_NORM;
++        } else if (ch == '8') {
++            vc_restore_cursor(vc);
++            vc->state = TTY_STATE_NORM;
+         } else {
+             vc->state = TTY_STATE_NORM;
+         }
+@@ -833,14 +865,10 @@ static void vc_putchar(VCChardev *vc, int ch)
+                 }
+                 break;
+             case 's':
+-                /* save cursor position */
+-                vc->x_saved = s->x;
+-                vc->y_saved = s->y;
++                vc_save_cursor(vc);
+                 break;
+             case 'u':
+-                /* restore cursor position */
+-                s->x = vc->x_saved;
+-                s->y = vc->y_saved;
++                vc_restore_cursor(vc);
+                 break;
+             default:
+                 trace_console_putchar_unhandled(ch);
 -- 
 2.43.0
 
