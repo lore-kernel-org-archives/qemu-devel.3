@@ -4,52 +4,180 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B0EC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 10:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B39C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 10:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmVG4-0003tD-SO; Mon, 24 Feb 2025 05:00:17 -0500
+	id 1tmVJ0-0005Xx-V2; Mon, 24 Feb 2025 05:03:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1tmVFy-0003rM-Mb
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:00:11 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1tmVFr-0003JO-Ht
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:00:10 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxrOIZQ7xnVbCAAA--.50548S3;
- Mon, 24 Feb 2025 17:59:53 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMCx7MQXQ7xnZxomAA--.9069S2;
- Mon, 24 Feb 2025 17:59:52 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org,
-	maobibo@loongson.cn
-Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
- wangliupu@loongson.cn
-Subject: [PATCH v3] target/loongarch: fix 'make check-functional failed'
-Date: Mon, 24 Feb 2025 17:38:27 +0800
-Message-Id: <20250224093828.3337991-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1tmVIz-0005X8-5b
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:03:17 -0500
+Received: from mail-bn7nam10on2051.outbound.protection.outlook.com
+ ([40.107.92.51] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1tmVIw-00046k-0V
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:03:16 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Jw5P9GkJHZ0/h1F/aFj6zkELyUApfidDn+YP0ktg5BsRl9QlaLkMxbHzvdSDSKhD4ZwB40SJeIVoieO2ccIKGXGKnfdCkTifChY+hT8c2FtwnCH/0TZU1Zy7hS18JO2/cnK9tVAtodr2glH8BI/eCgpxWy4tCO7kHs3J+4u+bAWTetPwakGQ/xGky2ScXsZPFbxxtqfc/++ClYkMKvXKsHu3LyXOwaPx8VIiaHirekl0+2zJLJb8nGAkrnWr+SHggkRaiVD+zre1XUxWUwUS0HE882WIr2QWmb/8Ff8fi+blxGC8bERpcCWgrpq2aOJuCSEl/lxb/JmBDqAHXENnUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UwAXadfIdE8XTjN3Bcp3nX/OZSfAPWa0U5tDv/bbkHo=;
+ b=vlMivHq9X49Gsqk7coJNOyqVUXe0axlOe3cz3ZMkg4wpWgYjIH+A6S6pWX1qbxOeLz2O8qgmM/yLGEkBXc0E/jViRJrMWIiZpc9OIZ1+MblEYWMpjblO+r314WTcHo7SXh9NOJNR5G35zhTm99tPKwGw0+FD9XsRcGjLfMigosq1YMjK9/satbhFaXMxItsKXZkJpadY/Y25XgUPXBXlJ/Tt0xDY1JZxwcAef89MhrXPlrRIaCz98Z8EP2LT/nuKvUYvafinU+D1kBBVNbhT6IlgdJL5bTMExwgaEdf/XCBixnT4lKXpQfSmiUSldMPKGLss7+Uv0xE4wJzFPZ1Ysg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UwAXadfIdE8XTjN3Bcp3nX/OZSfAPWa0U5tDv/bbkHo=;
+ b=OjpVGeye87hMBYbETCiREGXWyYClXObOwKYSWQ3xSb61CnwhUHnYqwBOYjcfIR92dGKvT/7OXQnpD3ZqI56+arVmKIoY0U4D98bYc+EOJ4lPqfeRCoDmxjo2r836Gzi+ENSrEMRSpmWeaeX5RS4/uGHp+urAHET/avZkgThkJCA=
+Received: from BL1PR12MB5849.namprd12.prod.outlook.com (2603:10b6:208:384::18)
+ by MN0PR12MB6342.namprd12.prod.outlook.com (2603:10b6:208:3c1::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.20; Mon, 24 Feb
+ 2025 09:57:58 +0000
+Received: from BL1PR12MB5849.namprd12.prod.outlook.com
+ ([fe80::b77f:9333:3a5a:d285]) by BL1PR12MB5849.namprd12.prod.outlook.com
+ ([fe80::b77f:9333:3a5a:d285%6]) with mapi id 15.20.8466.016; Mon, 24 Feb 2025
+ 09:57:58 +0000
+From: "Chen, Jiqian" <Jiqian.Chen@amd.com>
+To: Anthony PERARD <anthony@xenproject.org>
+CC: "Hildebrand, Stewart" <Stewart.Hildebrand@amd.com>, Stefano Stabellini
+ <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>, "Edgar E . Iglesias"
+ <edgar.iglesias@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "xen-devel@lists.xenproject.org"
+ <xen-devel@lists.xenproject.org>, "Huang, Ray" <Ray.Huang@amd.com>, "Chen,
+ Jiqian" <Jiqian.Chen@amd.com>
+Subject: Re: [QEMU PATCH v10] xen/passthrough: use gsi to map pirq when dom0
+ is PVH
+Thread-Topic: [QEMU PATCH v10] xen/passthrough: use gsi to map pirq when dom0
+ is PVH
+Thread-Index: AQHbMBN9zgKXu6QHp0mudGAMtCr+w7K9RysAgCKFMICAAyspgIB0b8GA
+Date: Mon, 24 Feb 2025 09:57:58 +0000
+Message-ID: <BL1PR12MB58491271C360CE4345A915AFE7C02@BL1PR12MB5849.namprd12.prod.outlook.com>
+References: <20241106061418.3655304-1-Jiqian.Chen@amd.com>
+ <Zztlvl0m-Oi2XGXq@l14>
+ <BL1PR12MB58491C9D1CCC1880C442AF73E73D2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <Z1sDXYATWad0Rbyf@l14>
+In-Reply-To: <Z1sDXYATWad0Rbyf@l14>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-imapappendstamp: BL1PR12MB5849.namprd12.prod.outlook.com
+ (15.20.8466.015)
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL1PR12MB5849:EE_|MN0PR12MB6342:EE_
+x-ms-office365-filtering-correlation-id: cc5cf4f4-f05f-427e-365c-08dd54b9b7d4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?eFlsRG53N1FPdzVpM1BvRFpyN2JHa3NVdnVnR25lUXRXQ1VOVzExcDNHclRU?=
+ =?utf-8?B?MCs0aUovM3MxRUhnL0FFdE52L0trT2hKbkhGTE00Q2E0VlgrRC91V3Q1RW5N?=
+ =?utf-8?B?OW9vTkVDeWptMXJ5TEdyWWVNc2kwWHNhQ1pTNmlZMTdDbmp5MU5aU1Q4a0t1?=
+ =?utf-8?B?YTl1RmRFM3pzRlZoK0taK2NRdWxsM1I2eGd6d1c4b24vdkN2Smt3THlkT1ln?=
+ =?utf-8?B?UFNHQThGRU45UE5sUTU0RzQ0LzVrdTZFbXNya0h3TWxob3RYdUUrc2dHNjVE?=
+ =?utf-8?B?NCsxWFArekNueG8yNG9UaEhabmp5YlZSMVhGUUplUlJJTVJvZVlkYm1uQnRU?=
+ =?utf-8?B?a3NibVdIbkNqeitqdnljWjc1Z3VId2EwSHArTGpXTHBBVFM5YUhlbTAxZGZ6?=
+ =?utf-8?B?SW9UUHEyTk5RQ1dsN0NLMWFTYSt6Q0F4K0ZuTXZZUG9hbXZFK2FGaW41Rlho?=
+ =?utf-8?B?ZDdpTG00czRxc2U5UVUxN2VtTjlMM1NHSklQSUQ5bWpyV1V6MUZTYVd1b3Qz?=
+ =?utf-8?B?TVVnbEd3Nmxpem0wekZNbHdwdlpDZ3dsUUxDVVQvUmRYVE5rVzZMWXlGMzlo?=
+ =?utf-8?B?K0JrQ0xRN0huUEVCalpLVk54L1NuVFpaZStMT1NGMkVob0l1Y3VtZHhoVHFR?=
+ =?utf-8?B?Q0ttT0dlcEcwNkdsODgrU09HTUlhL1ZDK3hJTEMrek1xdThHZ0pVTXp5c1di?=
+ =?utf-8?B?c2lNayttUGRldUFWbENOTG9HaVZtbHE3QU4rSENQenRQUEl1OUJWWHpiN0tU?=
+ =?utf-8?B?SGx4RnVPa2lDMStJbU9jR2MveXc3eWlRY1cvV2JTNHpHb0YxZDhSZENTQkFU?=
+ =?utf-8?B?dEdqTGF3dkJpcC8rSEVFQi9xNjRhbUs3RVEvMzgvZWsxdXhUaFFubWFOZGNa?=
+ =?utf-8?B?Wjg2TXl6ZFJUbSthdnpuRWFmRlJrNGlxeXlNWGt4NFFETk1uNEtBdlM5bkhL?=
+ =?utf-8?B?WGUyVWwzdmRsN0V1YmNvMXM5Mk1ia1lNWmZmMkVTK3dvN2diYUI2M2FNYlpE?=
+ =?utf-8?B?YStiNlBSL2xDTmNZY05vZ0l0TVNqdkZKR1BCOTZmQWhGeFg1czhxTkN3Vzlw?=
+ =?utf-8?B?cTRoSUROTDBMQ1RQb2xFN1ZBM1J6L2RKRStidnEzOGZNblNPZ296Kys0RDFl?=
+ =?utf-8?B?a0dNQ1ZuN2Y1TUlLRHl4dnZvRmNjVkRDQlIyZC9vZXpUaEZDb3lheVNLTThH?=
+ =?utf-8?B?Y3hwNXRtRHU5V1QwWG53NlA0SFA1Y1dyWmtmUTBXa2M1NXZWclppak5MNVQ5?=
+ =?utf-8?B?azRTL0hyYUIxQzZuMFdrMGFWVDNyU3FMemthSFF2OXRKVG1wdWNBalFrVlJ4?=
+ =?utf-8?B?UUxLWEUrZEhoeFdLWnlQWUlwejQ1a3pyVEZvOTVTZ2t0dkdQWEw5U3licHRK?=
+ =?utf-8?B?ejkyUlR6cXpCK2swVUJNMmNSbUtRT0pIYWlKVFZRRVBwNjBCenNkMHBRelZw?=
+ =?utf-8?B?cllZbVQ4aThZdnZtdGJOaTB0YTBrVVZYN1I5YjBDVVRuSGtSa1dXcEdHTDFW?=
+ =?utf-8?B?WlcwVDZxZnFzUjlka29GZTV0RHZPaXV2azlGOXIxMmNnNEtzWUxrZzZhSkdi?=
+ =?utf-8?B?UVBzTkUzZVJSQnF5QnR6SGJFeE1Jb1RTTEhYUjJOTlRvdEp6aVJqb2NRdWt4?=
+ =?utf-8?B?RXA4bExDRSt5SS9nbHlqODhPWFRvM1hiTnZkM2JvNVc4dWlBMGlYcnBycWRG?=
+ =?utf-8?B?YnpYenY0QjZRdVphMmJlbGlScnhOVndTT1ZxSCt0ejdDSmxhTi9nT1owNGlv?=
+ =?utf-8?B?alNZaXFZNW1Cem01M0R6ekNvZHFZcDZzdHdnL2VhK2MvNUk5OGxndExJekdI?=
+ =?utf-8?B?S2tPdmM4VXFEYjFIdTlFMko5cGR4bUM5eXdBUStJNFFaVVpGTU56TElaL2pU?=
+ =?utf-8?B?SVFGN2t5YjNNbUZYQzMvUUY0eDE4M3d3QWpkWVc3ZTVGZU5WaFgwd201SG9l?=
+ =?utf-8?Q?kmVsycN1HyMjUUuzFviFCDaOEeEpo32C?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5849.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OGMzLzRaUml5WG9zVVllQTJQZzNZb3ZpZUMveEM3bWo0TXBTYkRFRlAvbGFq?=
+ =?utf-8?B?d3RqelA0d2Q0bmsxNFNTQnNGaVVyQ2hIL2NWOTBDUUJ6YTFpQ3FwOStybUcv?=
+ =?utf-8?B?N09STXhxNDlGR1ZHMkxCcmpJQWU0UlZsL2h4YVkvbHJ1ZVpIR01JaW0rS0VU?=
+ =?utf-8?B?dE5MZG5VS01SUTFlK21jQjhKM3Y5THNmbU9DM1plbkpSdFYyN1ZaM1NTVVAz?=
+ =?utf-8?B?NU5uNDJqbGpjZnlrR2dSUmYxWTlmWTNYUDBWeFlMdmZncWowdTN4S0RHSWVi?=
+ =?utf-8?B?dFBCdVl4bmEyY24yVFBMSmZYYmIwUHZlQ2ltUXlGUnJwMWtjY2pwaWlXMzNw?=
+ =?utf-8?B?cGt6N2lRS0Y1bDFSMGR4VVI5MjRjKzlGU3QwaUNxSEhsVHJwNy9lZTc4cUZw?=
+ =?utf-8?B?TXNjRk80WFpqZXFhYXMrOG9RS3k5UDhvbjFkTnhJZkdqUWI2TlEyNzk4Z1ov?=
+ =?utf-8?B?TVhKQWdOa1VVRzE1eGVMNW4vY3dBY3ZGeFVKaTJkVXYrTlZjd3pZcGp2R0hY?=
+ =?utf-8?B?bTJobi9ZbGwxWnBTa3l3UXp6S0dmRWliQTdpVE5PVkYvNjUvRzU2aVVUcURC?=
+ =?utf-8?B?bEFEbnpRTEVKVndjQVByZ2lxeFJYdllPS2dHUlNoRXNtTDZtekJjdnZoZmhF?=
+ =?utf-8?B?VDJmeXFpeTJkZ0ZPNFdFN3lsemkyR2M0LzZneFVzM1pvUHpwbi9UZ0lpdkRH?=
+ =?utf-8?B?YkZYNTJSMjRzWk1QeENGTHRNS0pJWUR1a2dWYlBJckIzUm5hYkVZQ3ZTVlln?=
+ =?utf-8?B?U01xWGk2ZmNaZnpKQTJOL1p0dnVwZU02dmNZcnFnNWNleFFCUWlmSlYyNXhP?=
+ =?utf-8?B?UFZGN1R0Ujk1czhTQXhrbVpRd0JlOVFhMzNXcUxDNmh0UW1tVzdCL1BrVlhu?=
+ =?utf-8?B?Qk10c0x6QjVydEhtQVNMd3NQM1dzRGJVUXFxMitPWFg1RktYMGtjMFdCYUN2?=
+ =?utf-8?B?S2w5T1ZWcDRVLzdQZDNmWlF6WXZkSEp4YjlSc1ZzcUgzZXk0YUdXMWJsSFR4?=
+ =?utf-8?B?NFpCV1krY2JBYkVGQUlDQ0F2cXJrMzJwSW5SY0h4ZGV0bE5pYnV3MUNGdUZS?=
+ =?utf-8?B?SUZ1cXhxTWxNdDQxblRvOTZLdk82L0ZpVHFnUi8wb29XQ1lkVUtSdlhkTCtR?=
+ =?utf-8?B?bGU0dTFucmtnK05seDZPTWt6R3FHZGRBQW9RUHBoeUN2WGhucFhqUkp6Mi9Q?=
+ =?utf-8?B?RldDdUdWd3lDZFpHSVR2TVNBQjdDMXEvZGVvKzJ4T1ZVcitIV0lyTG1uTEFG?=
+ =?utf-8?B?UlVPUkdiL2lYSlA3bWtiQkxOeUZXSlZPSHQxSkdhS3VidnpSKzFWNXA1Wng4?=
+ =?utf-8?B?UFVycERnQjQza3Q2NVJ6L1FiMW1rMnZWNkdmZG4zNzAwbC8xeEZ0UFhLS1Bu?=
+ =?utf-8?B?bFNONi9hRy9SSVVZcWo0aDhjWXRTVGMrMHhVZ3owMHdqcDUxcnhqam5SOGJY?=
+ =?utf-8?B?Y1RKWVhiZ3FhTWM2Q0NOb2dtTDlDSjRUWm1rOFFqSU9jR3pUWGJRanFSSzVE?=
+ =?utf-8?B?NU1jWDVuUHRudjZvK2VjYlRFRWR4VDhYYzdJaFlGS3B4MkhHa1RsR1RaVWxX?=
+ =?utf-8?B?ZFZvY0IxbHM4dndCQTlLVWZWZUtRcU1JZmsydmtiTzN5NDNJZlRhZnJKUEt3?=
+ =?utf-8?B?Wm1zZHJTWW1QaDhLRWEzSmNsMW02cnJFSS9VUVVyMi9udGtwSHRINUczN2RV?=
+ =?utf-8?B?L254b0JGTzM1ZE9YWjh1UmRhWUtpYlBqdkdjbkhOek5iRzhkYnhwT2V3TFc3?=
+ =?utf-8?B?aURuZzI2VmF2SklMSys3ODNLbEIxeHcxR09sbjZiMFhVZmpSWG9ZK3JaMFUv?=
+ =?utf-8?B?bFFwTkx0Z0JoUHZVcUZidHpjUCtSa3hQUmIzRkJqVm43QnhGTkdFRTR6ZG96?=
+ =?utf-8?B?SEhQbjNxa3pPcHdnVFVDMnZ1V1ROR0ZvelhjQytnYUdaaCs0WTIrVFRoM0VO?=
+ =?utf-8?B?UjdVck43U1laSlhwdXJ5NmdTVXZxNUdHd2JlVFhlaFFpRlM3ZjJJbjJ5QkRU?=
+ =?utf-8?B?YkRxcHhxbHpleUtSajV2a3c1d1dWdzBrcENtNCtVb2QzN0pFUXFWT08ybUhO?=
+ =?utf-8?B?N0dmS0xwMnJYS1FyVDFrd1ZHZ1dVang5cTNpMlN6azZKeWQyOHVFUFNZdFdk?=
+ =?utf-8?Q?8vnc=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <DEC7BCB09AB6394AAD7DF3A5047E49B9@amdcloud.onmicrosoft.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx7MQXQ7xnZxomAA--.9069S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc5cf4f4-f05f-427e-365c-08dd54b9b7d4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Feb 2025 09:57:58.5766 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 3xiKzhxlEAecgwe7YZBYt44pMs036vFNsyejVf36PKJuHIWGkgxT/Hz2kNarYOTyuUBnvNLU/3oxpOP1yOVO4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6342
+Received-SPF: permerror client-ip=40.107.92.51;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,159 +193,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For LoongArch th min tlb_ps is 12(4KB), for TLB code,
-the tlb_ps may be 0,this may case UndefinedBehavior
-Add a check-tlb_ps fuction to check tlb_ps, when use
-csrwr insn to write CSR_PWCL PTEBASE, check the PTBASE, and when
-use csrwr insn to write STLBPS, check the tlb_ps value.
-
-Signed-off-by: Song Gao <gaosong@loongson.cn>     
----
-v3:
-remove some tlb instruction chek MMU on PG model, because on DA model
-also can use tlb instructions.
-v2:
-check-tlb_ps when write CSR_PWCL and CSR_STLBPS;
-some tlb instructions check CRMD PG model when clear/read/write the tlb.
-
- target/loongarch/helper.h                     |  2 +
- target/loongarch/internals.h                  |  2 +
- target/loongarch/tcg/csr_helper.c             | 62 ++++++++++++++++++-
- .../tcg/insn_trans/trans_privileged.c.inc     |  2 +
- 4 files changed, 67 insertions(+), 1 deletion(-)
-
-diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
-index 943517b5f2..2968b255bc 100644
---- a/target/loongarch/helper.h
-+++ b/target/loongarch/helper.h
-@@ -100,6 +100,8 @@ DEF_HELPER_1(rdtime_d, i64, env)
- DEF_HELPER_1(csrrd_pgd, i64, env)
- DEF_HELPER_1(csrrd_cpuid, i64, env)
- DEF_HELPER_1(csrrd_tval, i64, env)
-+DEF_HELPER_2(csrwr_crmd, i64, env, tl)
-+DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
- DEF_HELPER_2(csrwr_estat, i64, env, tl)
- DEF_HELPER_2(csrwr_asid, i64, env, tl)
- DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 7b254c5f49..5d98581e7f 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -43,6 +43,8 @@ enum {
-     TLBRET_PE = 7,
- };
- 
-+void check_tlb_ps(CPULoongArchState *env);
-+
- extern const VMStateDescription vmstate_loongarch_cpu;
- 
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 6c95be9910..9f87beebb3 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -17,6 +17,60 @@
- #include "hw/irq.h"
- #include "cpu-csr.h"
- 
-+
-+void check_tlb_ps(CPULoongArchState *env)
-+{
-+    for (int i=0; i < LOONGARCH_TLB_MAX; i++)
-+    {
-+        LoongArchTLB*tlb =&env->tlb[i];
-+        uint8_t tlb_ps;
-+        if(i >= LOONGARCH_STLB) {
-+            tlb_ps = FIELD_EX64(tlb->tlb_misc,TLB_MISC,PS);
-+            if (tlb_ps < 12) {
-+                tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, 12);
-+            }
-+        } else {
-+            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-+            if (tlb_ps < 12) {
-+               env->CSR_STLBPS= FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, 12);
-+           }
-+       }
-+    }
-+}
-+
-+target_ulong helper_csrwr_crmd(CPULoongArchState *env, target_ulong val)
-+{
-+    uint8_t pg,old_pg;
-+    int64_t old_v = env->CSR_CRMD;
-+
-+    pg = FIELD_EX64(val, CSR_CRMD, PG);
-+    old_pg = FIELD_EX64(old_v, CSR_CRMD,PG);
-+    if (pg&& !old_pg) {
-+        check_tlb_ps(env);
-+    }
-+    env->CSR_CRMD = val;
-+    return old_v;
-+}
-+
-+target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
-+{
-+    uint8_t tlb_ps;
-+    int64_t old_v = env->CSR_STLBPS;
-+
-+    /*
-+     * The real hardware only supports the min tlb_ps is 12
-+     * tlb_ps=0 may cause undefined-behavior.
-+     */
-+    tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
-+    if (tlb_ps  < 12) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Attempted set ps %d\n",tlb_ps);
-+        val = FIELD_DP64(val, CSR_STLBPS, PS, 12);
-+    }
-+    env->CSR_STLBPS = val;
-+    return old_v;
-+}
-+
- target_ulong helper_csrrd_pgd(CPULoongArchState *env)
- {
-     int64_t v;
-@@ -99,7 +153,7 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
- 
- target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
- {
--    int shift;
-+    int shift, ptbase;
-     int64_t old_v = env->CSR_PWCL;
- 
-     /*
-@@ -107,11 +161,17 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
-      * treated as illegal.
-      */
-     shift = FIELD_EX64(val, CSR_PWCL, PTEWIDTH);
-+    ptbase = FIELD_EX64(val, CSR_PWCL, PTBASE);
-     if (shift) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "Attempted set pte width with %d bit\n", 64 << shift);
-         val = FIELD_DP64(val, CSR_PWCL, PTEWIDTH, 0);
-     }
-+    if (ptbase < 12) {
-+         qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Attrmpted set ptbase 2^%d\n", ptbase);
-+         val = FIELD_DP64(val, CSR_PWCL, PTBASE, 12);
-+    }
- 
-     env->CSR_PWCL = val;
-     return old_v;
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 3afa23af79..4b5656d6a6 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -74,6 +74,8 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
- 
- void loongarch_csr_translate_init(void)
- {
-+    SET_CSR_FUNC(CRMD, NULL, gen_helper_csrwr_crmd);
-+    SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
-     SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
-     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
-     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
--- 
-2.34.1
-
+SGkgQW50aG9ueSwNCg0KT24gMjAyNC8xMi8xMiAyMzozOCwgQW50aG9ueSBQRVJBUkQgd3JvdGU6
+DQo+IE9uIFR1ZSwgRGVjIDEwLCAyMDI0IGF0IDA3OjE3OjMwQU0gKzAwMDAsIENoZW4sIEppcWlh
+biB3cm90ZToNCj4+IE9uIDIwMjQvMTEvMTkgMDA6MDUsIEFudGhvbnkgUEVSQVJEIHdyb3RlOg0K
+Pj4+IE9uIFdlZCwgTm92IDA2LCAyMDI0IGF0IDAyOjE0OjE4UE0gKzA4MDAsIEppcWlhbiBDaGVu
+IHdyb3RlOg0KPj4+PiBJbiBQVkggZG9tMCwgd2hlbiBwYXNzdGhyb3VnaCBhIGRldmljZSB0byBk
+b21VLCBRRU1VIGNvZGUNCj4+Pj4geGVuX3B0X3JlYWxpemUtPnhjX3BoeXNkZXZfbWFwX3BpcnEg
+d2FudHMgdG8gdXNlIGdzaSwgYnV0IGluIGN1cnJlbnQgY29kZXMNCj4+Pj4gdGhlIGdzaSBudW1i
+ZXIgaXMgZ290IGZyb20gZmlsZSAvc3lzL2J1cy9wY2kvZGV2aWNlcy88c2JkZj4vaXJxLCB0aGF0
+IGlzDQo+Pj4+IHdyb25nLCBiZWNhdXNlIGlycSBpcyBub3QgZXF1YWwgd2l0aCBnc2ksIHRoZXkg
+YXJlIGluIGRpZmZlcmVudCBzcGFjZXMsIHNvDQo+Pj4+IHBpcnEgbWFwcGluZyBmYWlscy4NCj4+
+Pj4NCj4+Pj4gVG8gc29sdmUgYWJvdmUgcHJvYmxlbSwgdXNlIG5ldyBpbnRlcmZhY2Ugb2YgWGVu
+LCB4Y19wY2lkZXZfZ2V0X2dzaSB0byBnZXQNCj4+Pj4gZ3NpIGFuZCB1c2UgeGNfcGh5c2Rldl9t
+YXBfcGlycV9nc2kgdG8gbWFwIHBpcnEgd2hlbiBkb20wIGlzIFBWSC4NCj4+Pj4NCj4+Pj4gU2ln
+bmVkLW9mZi1ieTogSmlxaWFuIENoZW4gPEppcWlhbi5DaGVuQGFtZC5jb20+DQo+Pj4+IFNpZ25l
+ZC1vZmYtYnk6IEh1YW5nIFJ1aSA8cmF5Lmh1YW5nQGFtZC5jb20+DQo+Pj4+IFNpZ25lZC1vZmYt
+Ynk6IEppcWlhbiBDaGVuIDxKaXFpYW4uQ2hlbkBhbWQuY29tPg0KPj4+DQo+Pj4gQWNrZWQtYnk6
+IEFudGhvbnkgUEVSQVJEIDxhbnRob255QHhlbnByb2plY3Qub3JnPg0KPj4+DQo+Pj4gQnV0LCB0
+aGlzIGZvbGxvd2luZyBjaGFuZ2UgcHJvYmFibHkgbmVlZHMgYW4gYWNrIGZyb20gUENJIG1haW50
+YW5lcnMsDQo+Pj4gQ0NlZC4NCj4+IEFzIFBDSSBtYWludGFpbmVycyBkaWRuJ3QgcmVzcG9uc2Ug
+Zm9yIHdlZWtzLA0KPj4gY2FuIEkganVzdCBtb3ZlIHRoZSBkZWZpbml0aW9uIG9mIHRoZSBtYWNy
+byBiYWNrIHRvIHhlbl9wdC5jIGZpbGUgPw0KPiANCj4gTm8sIHRoYXQncyBmaW5lLiBJIHNob3Vs
+ZCBiZSBhYmxlIHRvIHNlbmQgYSBwdWxsLXJlcXVlc3Qgd2l0aCB0aGlzDQo+IGNoYW5nZSB3aXRo
+b3V0IHRvbyBtdWNoIHRyb3VibGUuDQpObyBtZWFuaW5nIHRvIHVyZ2UgeW91Lg0KTWF5IEkga25v
+dyB0aGUgc3RhdHVzIG9mIHlvdXIgcHVsbC1yZXF1ZXN0Pw0KDQo+IA0KPiBDaGVlcnMsDQo+IA0K
+Pj4+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9wY2kvcGNpLmggYi9pbmNsdWRlL2h3L3BjaS9w
+Y2kuaA0KPj4+PiBpbmRleCBlYjI2Y2FjODEwOTguLjA3ODA1YWE4YTVmMyAxMDA2NDQNCj4+Pj4g
+LS0tIGEvaW5jbHVkZS9ody9wY2kvcGNpLmgNCj4+Pj4gKysrIGIvaW5jbHVkZS9ody9wY2kvcGNp
+LmgNCj4+Pj4gQEAgLTIzLDYgKzIzLDEwIEBAIGV4dGVybiBib29sIHBjaV9hdmFpbGFibGU7DQo+
+Pj4+ICAjZGVmaW5lIFBDSV9TTE9UX01BWCAgICAgICAgICAgIDMyDQo+Pj4+ICAjZGVmaW5lIFBD
+SV9GVU5DX01BWCAgICAgICAgICAgIDgNCj4+Pj4gIA0KPj4+PiArI2RlZmluZSBQQ0lfU0JERihz
+ZWcsIGJ1cywgZGV2LCBmdW5jKSBcDQo+Pj4+ICsgICAgICAgICAgICAoKCgodWludDMyX3QpKHNl
+ZykpIDw8IDE2KSB8IFwNCj4+Pj4gKyAgICAgICAgICAgIChQQ0lfQlVJTERfQkRGKGJ1cywgUENJ
+X0RFVkZOKGRldiwgZnVuYykpKSkNCj4+Pj4gKw0KPj4+PiAgLyogQ2xhc3MsIFZlbmRvciBhbmQg
+RGV2aWNlIElEcyBmcm9tIExpbnV4J3MgcGNpX2lkcy5oICovDQo+Pj4+ICAjaW5jbHVkZSAiaHcv
+cGNpL3BjaV9pZHMuaCINCj4gDQoNCi0tIA0KQmVzdCByZWdhcmRzLA0KSmlxaWFuIENoZW4uDQo=
 
