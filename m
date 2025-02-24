@@ -4,142 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC798C021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1246C021B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmTbo-0005J4-Og; Mon, 24 Feb 2025 03:14:36 -0500
+	id 1tmTfl-0006CK-6f; Mon, 24 Feb 2025 03:18:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTbk-0005If-Ck
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:14:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
+ id 1tmTfk-0006C4-0Z; Mon, 24 Feb 2025 03:18:40 -0500
+Received: from m.syntacore.com ([178.249.69.228])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTbh-0008TS-FW
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:14:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740384865;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qGnIMJKo43PwUnleOPInupxbYcJ04DsMtEO48K4W+iw=;
- b=EwdzUmhsVqySJoYCpyTIP8FFFSybJJxBpKTXOoKcYmedLbC90EjZbCR7FX+755O7k5zJbv
- aZjscmvffn8Zy6YRVKIgAgN4BxZ5eHtNmA3HKse09c05IzvEVJKoDmdYp0XkkCyjonpNJm
- PCYUDptICnkGnPsJcdiT06tmWL9FKuw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532--MVpDpmqMRGXChHpdQKSrg-1; Mon, 24 Feb 2025 03:14:23 -0500
-X-MC-Unique: -MVpDpmqMRGXChHpdQKSrg-1
-X-Mimecast-MFC-AGG-ID: -MVpDpmqMRGXChHpdQKSrg_1740384862
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4393e873962so20548785e9.3
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 00:14:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740384862; x=1740989662;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qGnIMJKo43PwUnleOPInupxbYcJ04DsMtEO48K4W+iw=;
- b=Mke5Lo/eJb+zACNUelvrzTaBAdSYsF7adtck7gxyV4ZD5tdkD9mEeSwbnAfTHff1f+
- a193QiMF/FMcOfQqdmOpxRWFnwwblr7LWrN5Ic0lpmvoQb8t/nXSnJJgn9By7/0bcFu1
- 42MFpTI/zQ5x94W+redwavg/pwXgWX7isss44u/ZXtAShQXqtXpnj/sCK9SJ4bv6pvha
- ASHS9Y2/ZU0/SRpVoOQMqp7rrP5Q2Mlar+ewU5dAg4ojvqEM065bClfJMGnpW3QR6pDP
- JEvAaDnAlJXFa1f/5y6g8KyJtAJgm4Dko+J9vJuztxFYlonABx9A+u3k4+vxPPnTAu5g
- m42A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXs8BiBx8+oGSaglpqAyB27qV7YQqoI9R5Erm/9VPMz8/iLeWIC9Nqson1oJmw9qLw1kj25WbtevWk@nongnu.org
-X-Gm-Message-State: AOJu0YzAg2D0C9ZpbHzaA5aQrzCoSoXq5ZpGqTmdf4tDTqW3GAeNSy7A
- rfm9uWcg4tzHUrmP+k4BsmIiLq867DMEB/ZmtlHr4gciKhfuPncOHicjp3720YKnesJClXIT69l
- 3Sc5n+hu9kGgzj4vFbn3FiUF5BM8yz80vD5SIAXAezs4qhsNx5AYo
-X-Gm-Gg: ASbGnctVwn35/QChXC3epb/qFAZecrcmGkdJCTIxQ6thPvc88ndwdoIbffT193ipUvF
- UBbcdeIbjEOh19macz34RngI0NCIrc6k7c0FkNvML3FjtlQRpzZWM0pxDeL34JUK0aPp9dJT8Ty
- wUMK/5frhu9QIJo4V9Meioi0lVSVHSbNAJKR9JiQ/2zZHXhxr8LA7XV4WvLaWlN84L7N6NeHB22
- yeoS+KXVbrS4pPJkXWTEPzgplI9w5faBuyyX044tFPhI2Zn+JVkWJ6nSNmhuB2oZCeVSKL2v1z6
- 24qnCI7rnuUPVfatKwT/4zWyLs25gR+kfeFNeW7LpHF0KtcgiO2D0g==
-X-Received: by 2002:a05:600c:190c:b0:439:8185:4ad3 with SMTP id
- 5b1f17b1804b1-439ae220dfdmr88549275e9.27.1740384862067; 
- Mon, 24 Feb 2025 00:14:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3Oulb4sxhCKNRZvgOR2I4s4F0kmk8MtNMOKI1N9eHBVs6Dou1JmJcgO3T1eF5YhOBJIbhww==
-X-Received: by 2002:a05:600c:190c:b0:439:8185:4ad3 with SMTP id
- 5b1f17b1804b1-439ae220dfdmr88548985e9.27.1740384861670; 
- Mon, 24 Feb 2025 00:14:21 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b0371b7bsm98465205e9.33.2025.02.24.00.14.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Feb 2025 00:14:21 -0800 (PST)
-Message-ID: <905d2fc4-c537-4c05-a759-6434af2b4406@redhat.com>
-Date: Mon, 24 Feb 2025 09:14:19 +0100
+ (Exim 4.90_1) (envelope-from <vladimir.isaev@syntacore.com>)
+ id 1tmTfh-0000Yy-WF; Mon, 24 Feb 2025 03:18:39 -0500
+Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
+ by m.syntacore.com (Proxmox) with ESMTP id AADB2B41C5E;
+ Mon, 24 Feb 2025 11:18:27 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:from:from:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=m; bh=z46XlG8zvGLNYH+5OsxYqAf
+ JIYFAf67OMcTZsDIyTj0=; b=aJ5aT3hIlKHVpzN3ISz89zjQ9jy6BcyhCmDDizE
+ 6cPojpN4boXUDEEPpPwwUDOADpK/9rkcSnS7zc647/CHFBJoW39w74aW/qQDxvG+
+ HVk4sAkQMG00VqFhOyZnJK+jrS36g7GNyD49fLjL8EeDllTwI/8N38RxgCsSGtc9
+ 7PHSyFSS2yIjqhrkLl/LCRHIXjUmX2lMjjbNpvN1Sx4ZnXOX6SyIg9fcjtmzuPjD
+ JH8NK0RhZ1usRJL2F+dyZVmCIdRvS3WrTEuNbxnQMNkIUtgtyyTGOwHoy+qJub/8
+ EM5kPGEmlbsdzAV0cHLCZm6n27Xvs3Hv6tmD0mTvzFasMgw==
+Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
+ [10.76.202.20])
+ by m.syntacore.com (Proxmox) with ESMTPS id 9596BB41BCF;
+ Mon, 24 Feb 2025 11:18:27 +0300 (MSK)
+Received: from [10.199.68.145] (10.199.68.145) by
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 24 Feb 2025 11:17:36 +0300
+Message-ID: <5831a3f2-6cf7-43f9-a2c7-f08f04e01f25@syntacore.com>
+Date: Mon, 24 Feb 2025 11:16:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
-To: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
-Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com,
- zhenzhong.duan@intel.com, mst@redhat.com, marcel.apfelbaum@gmail.com
-References: <20250220224918.2520417-1-alex.williamson@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250220224918.2520417-1-alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Subject: Re: [PATCH v2] target/riscv: fix C extension disabling on misa write
+To: Alistair Francis <alistair23@gmail.com>
+CC: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>,
+ <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>, <liwei1518@gmail.com>,
+ <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>, Richard
+ Henderson <richard.henderson@linaro.org>
+References: <20250221135735.85151-1-vladimir.isaev@syntacore.com>
+ <CAKmqyKMbdWpNeb6xz5T-xfFh_BHkzZY_JCBH5etNLF7PK1HFTw@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Vladimir Isaev <vladimir.isaev@syntacore.com>
+In-Reply-To: <CAKmqyKMbdWpNeb6xz5T-xfFh_BHkzZY_JCBH5etNLF7PK1HFTw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.68.145]
+X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
+Received-SPF: pass client-ip=178.249.69.228;
+ envelope-from=vladimir.isaev@syntacore.com; helo=m.syntacore.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_MXG_EMAIL_FRAG=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,22 +84,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> An aspect that needs attention here is whether this change in the
-> wmask and PMCSR bits becomes a problem for migration, and how we
-> might solve it.  For a guest migrating old->new, the device would
-> always be in the D0 power state, but the register becomes writable.
-> In the opposite direction, is it possible that a device could
-> migrate in a low power state and be stuck there since the bits are
-> read-only in old QEMU?  Do we need an option for this behavior and a
-> machine state bump, or are there alternatives?
-
-Should we introduce a migration blocker when a PCI device is in low
-power state  ?
 
 
-Thanks,
+24.02.2025 06:53, Alistair Francis wrote:
+> On Sat, Feb 22, 2025 at 12:00 AM Vladimir Isaev
+> <vladimir.isaev@syntacore.com> wrote:
+>>
+>> According to spec:
+>> Writing misa may increase IALIGN, e.g., by disabling the "C" extension. If an instruction that would
+>> write misa increases IALIGN, and the subsequent instruction’s address is not IALIGN-bit aligned, the
+>> write to misa is suppressed, leaving misa unchanged.
+>>
+>> So we should suppress write to misa without "C" if it is enabled
+>> and the subsequent instruction is not aligned to 4.
+>>
+>> Fixes: f18637cd611c ("RISC-V: Add misa runtime write support")
+>> Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+>> ---
+>> v2:
+>> - use env->pc instead of GETPC() since GETPC() is a host pc;
+>> - use !QEMU_IS_ALIGNED(env->pc, 4) instead of GETPC() & 3;
+>>
+>> ---
+>>  target/riscv/csr.c | 10 ++++++----
+>>  1 file changed, 6 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+>> index afb7544f0780..8aa77c53a0db 100644
+>> --- a/target/riscv/csr.c
+>> +++ b/target/riscv/csr.c
+>> @@ -2067,11 +2067,13 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
+>>      val &= env->misa_ext_mask;
+>>
+>>      /*
+>> -     * Suppress 'C' if next instruction is not aligned
+>> -     * TODO: this should check next_pc
+>> +     * Disabling 'C' increases IALIGN to 32. If subsequent instruction's address
+>> +     * is not 32-bit aligned, write to misa is suppressed.
+>> +     *
+>> +     * All csr-related instructions are 4-byte, so we can check current pc alignment.
+>>       */
+>> -    if ((val & RVC) && (GETPC() & ~3) != 0) {
+>> -        val &= ~RVC;
+>> +    if (!(val & RVC) && (env->misa_ext & RVC) && !QEMU_IS_ALIGNED(env->pc, 4)) {
+> 
 
-C.
+Hi Alistar,
+
+> env->pc has a stale PC unfortunately
+> 
+> See https://patchew.org/QEMU/20250220163120.77328-1-vladimir.isaev@syntacore.com/#97bea0ff-f93a-45a5-b8ec-2bb91e37f143@linaro.org
+> for details on how to fix this
+> 
+
+Thank you for pointing this (I somehow missed that mail:(), but is my understanding correct that env->pc contains
+current instruction PC? and if we know that all csrw/csrs instructions are 4-byte wide we can use current
+instruction pc?
+
+or env->pc may contain even previous pc?
+
+> Alistair
+> 
+>> +        return RISCV_EXCP_NONE;
+>>      }
+>>
+>>      /* Disable RVG if any of its dependencies are disabled */
+>> --
+>> 2.47.2
+>>
+>>
+>>
+> 
 
 
 
