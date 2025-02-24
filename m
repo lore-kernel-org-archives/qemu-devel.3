@@ -4,62 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D891BC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 21:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ABACC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 21:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmfzw-00015g-IM; Mon, 24 Feb 2025 16:28:20 -0500
+	id 1tmgCQ-0003iG-OI; Mon, 24 Feb 2025 16:41:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1tmfzr-00014m-Uy; Mon, 24 Feb 2025 16:28:16 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tmgCO-0003hN-Gx
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 16:41:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1tmfzp-0007Yt-NE; Mon, 24 Feb 2025 16:28:15 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 47ABD5C587E;
- Mon, 24 Feb 2025 21:27:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7254BC4CED6;
- Mon, 24 Feb 2025 21:28:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1740432486;
- bh=+D+WFyVjBDCk8mvjOJUHIvKZrTaATWd2TnTdmtWsn+Y=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=CAlkiDJn/A3ahFkCB3IUYmx4cSr9U5HR/kgN6R5QqsdyFVwhZGmDUVHkFs/oKx2I9
- zFGwZXtyd5504D1i6RJ1wEDy/XMRIelEcuNttrsAGnr5bHA8w4O6Xwhhqvy1lmyS3b
- 9TFJC4qrcAzgdLQ2BoX7c34e6Ik+ZpgCkL6k80FBde4rZrbCeSDTVbTcnOETsZNvJg
- Bivg/zRclS5pMxvv7DJJZWIqeUVo2J6KLUYKNeeUddtTgcijZ7SgO/WhZ/wNRUsARw
- IMeZWm2AD/y1fTvwzvGKRIrrI6V6CCDo8ZuuqBN/K/v5sXwwvmeW8yOlc+/XQUnd5s
- 334PxPcX4DxLA==
-Date: Mon, 24 Feb 2025 21:28:03 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Sebastian Huber <sebastian.huber@embedded-brains.de>,
- qemu-devel@nongnu.org, Conor Dooley <conor.dooley@microchip.com>,
- Bin Meng <bin.meng@windriver.com>, alistair.francis@wdc.com,
- qemu-riscv@nongnu.org
-Subject: Re: [PATCH 0/5] Improve Microchip Polarfire SoC customization
-Message-ID: <20250224-ignition-afternoon-9d4996362813@spud>
-References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
- <20250220-reggae-hardness-907e385516d8@spud>
- <CAKmqyKNex8vQuT3ArR3gePfGfeLCZbW0DxzD9dz8oNAODE8sbw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tmgCN-0000yc-2H
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 16:41:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740433268;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MttmAEZLPlFAqt/EnQfSctKGSt2erueS3Qn/JgXIEGg=;
+ b=ALz1fliVTsdTFympwxOmvwsrZ3PU4I5A7m6VieJGBjF2t1Qg/swAfbe12RTnEo+S4F3dXR
+ GhMNSnoIA1cTKi/CvNnGxrN0nrFRaPD6Ny1kfof7SjcrZXAcdxkWOYVFy4wu3YTW3wUvOi
+ 1FnRBrhLFGQ4fXtOflGha/ytQQkR8MI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-0ygKkn-bNTOnbVZNO3kUyg-1; Mon,
+ 24 Feb 2025 16:41:06 -0500
+X-MC-Unique: 0ygKkn-bNTOnbVZNO3kUyg-1
+X-Mimecast-MFC-AGG-ID: 0ygKkn-bNTOnbVZNO3kUyg_1740433265
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A068E19560B9; Mon, 24 Feb 2025 21:41:04 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.58])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E49D6180094B; Mon, 24 Feb 2025 21:41:00 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>,
+	qemu-block@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] iotests: Limit qsd-migrate to working formats
+Date: Mon, 24 Feb 2025 22:40:58 +0100
+Message-ID: <20250224214058.205889-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="oCUJ5cCTfKbjgqOZ"
-Content-Disposition: inline
-In-Reply-To: <CAKmqyKNex8vQuT3ArR3gePfGfeLCZbW0DxzD9dz8oNAODE8sbw@mail.gmail.com>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=conor@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,67 +80,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+qsd-migrate is currently only working for raw, qcow2 and qed.
+Other formats are failing, e.g. because they don't support migration.
+Thus let's limit this test to the three usable formats now.
 
---oCUJ5cCTfKbjgqOZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qemu-iotests/tests/qsd-migrate | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Mon, Feb 24, 2025 at 03:14:00PM +1000, Alistair Francis wrote:
-> On Fri, Feb 21, 2025 at 4:31=E2=80=AFAM Conor Dooley <conor@kernel.org> w=
-rote:
-> >
-> > +cc qemu-riscv, Alistar.
-> >
-> > On Fri, Feb 14, 2025 at 07:24:37AM +0100, Sebastian Huber wrote:
-> > > Booting the microchip-icicle-kit machine using the latest PolarFire S=
-oC
-> > > Hart Software Services (HSS) no longer works since Qemu lacks support
-> > > for several registers (clocks, DRAM controller). Also reading from the
-> > > SDCard does not work currently.
-> >
-> > On that note, I think the inaccurate docs about polarfire should be
-> > removed. There's a wiki page here with dead links, or links to things
-> > that do not work anymore:
-> > https://wiki.qemu.org/Documentation/Platforms/RISCV#Microchip_PolarFire=
-_SoC_Icicle_Kit
-> > I think the whole section should be removed, find it kinda odd that
-> > there's a polarfire section but not for any other board. Either way,
-> > it's talking about something that just does not work, the current HSS
-> > and Yocto don't boot.
->=20
-> The wiki is independent of the QEMU code base, so you can modify it. I
-> agree that we should remove outdated/wrong information as it's very
-> confusing to users.
+diff --git a/tests/qemu-iotests/tests/qsd-migrate b/tests/qemu-iotests/tests/qsd-migrate
+index de17562cb06..a4c6592420c 100755
+--- a/tests/qemu-iotests/tests/qsd-migrate
++++ b/tests/qemu-iotests/tests/qsd-migrate
+@@ -22,7 +22,7 @@ import iotests
+ 
+ from iotests import filter_qemu_io, filter_qtest
+ 
+-iotests.script_initialize(supported_fmts=['generic'],
++iotests.script_initialize(supported_fmts=['qcow2', 'qed', 'raw'],
+                           supported_protocols=['file'],
+                           supported_platforms=['linux'])
+ 
+-- 
+2.48.1
 
-I don't have an account to make the modification, any clue who has one
-and can hook me up with one?
-
-> > There's also a docs page here:
-> > https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
->=20
-> That is generated from the QEMU codebase
-> `docs/system/riscv/microchip-icicle-kit.rst` and should be updated,
-> ideally with this patch set
-
-Ye, I think so too.
-
-> > that has a copy of the table your patch 4 modifies, that probably should
-> > be updated to match your changes.
-> >
-> > In a similar vein to the wiki, it talks about the HSS and booting a
-> > yocto wic image. I think those should be deleted since they don't work.
-
---oCUJ5cCTfKbjgqOZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ7zkYwAKCRB4tDGHoIJi
-0jG6AP416IdNUIKPfSRwoJIbECDq6tO7Neh/MIDAM3nym8ItZwEAtHdu8QhPRhpp
-qt/Gn1tnaT7bUssLu77fRN+Lq1WCSwE=
-=6Mbk
------END PGP SIGNATURE-----
-
---oCUJ5cCTfKbjgqOZ--
 
