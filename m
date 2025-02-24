@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7724EC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 15:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7777C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 15:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tma5A-0000uA-8l; Mon, 24 Feb 2025 10:09:20 -0500
+	id 1tma9R-0002Q4-8L; Mon, 24 Feb 2025 10:13:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tma59-0000ty-En
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:09:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tma9N-0002PQ-4E
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:13:41 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tma58-000388-1A
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:09:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740409756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AnaJftMFclCrSxC5aUGg1BtFa2lSpRNBENTROrZlrPQ=;
- b=E2UJwUTe/MlKwnUYDuSNdwXZpi4+seo8Yj1AKTcDr+JgZQ7qDyr6ZmXbj1cAd3eW25TiGp
- FPBL4dXwPWRzb0MJnlbQ5FSWniAcj6TJQxPsADi3TdNooBZT4w2t2GEhLDCu/T28QP2Ze9
- 6uLdw/9K2gezBuJOvN9PaXFb3pSfhrE=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-6F8mEdKCMou9ktLq-5uv0A-1; Mon, 24 Feb 2025 10:09:13 -0500
-X-MC-Unique: 6F8mEdKCMou9ktLq-5uv0A-1
-X-Mimecast-MFC-AGG-ID: 6F8mEdKCMou9ktLq-5uv0A_1740409753
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-3ce7aa85930so3780075ab.2
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 07:09:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740409753; x=1741014553;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AnaJftMFclCrSxC5aUGg1BtFa2lSpRNBENTROrZlrPQ=;
- b=q2LoTzuvMrZenIAUwap/0sBwj9df4KNVjl1MIs9T6ULBTwx4EaAe0d21TGPlDrU7GG
- GcNnhjOc6W47374n5PwP+ElME3vYzz+rIyvNxg9zs8PEIbj5sf8L6OVlSLROQYteLNcg
- 29v1Wm+IaM0LsWgIk+x4SRCB2b7tgQviy8K8ayBUWys3YiB2AiPsQIQirkwbh2bcnZTH
- WJk6cdcSVeoux7VkGGtLzuMqf3/TgQP57AsKN4PLn+VZzCYJL6NpgHadhBS3Pcik7wvZ
- PKYYO6gJv1ASdNQV/PsgrCRM3dGmRCR/2ciBxYSeSV1CKZ0DMMHx3vBTeJOmVNbnnRx/
- C8RA==
-X-Gm-Message-State: AOJu0YwCiJGAcaMoH/e8zm2R/s7+0fRQ/g42a4V9mmUtSqH5j/Ilc2Pu
- BbnTTOyI9+ia16iup+MsDwR0NohUThATq4JKknKg9clvA1svqZi55CytAnQxYN3aEvDS819SE0D
- vjBKLiYoy1LBgnZwJJhrleYY7HTNbqmdiCTdNy+wHT2FiUn/5eRfl
-X-Gm-Gg: ASbGnct6CusnoQFnI0sj2FhlMAlzAZa40xgYfNQQiXs5//bid+v2gksuHOcqU7ouDgQ
- YGOgndFTtlniCiue69fqrMyfurc5cy7H20aOiLhpVZMlnEniFtOsYuB7FpYI/2AWXYZcQwueBJX
- gjNMOzRpeMogHAiF8BjBSa6mtY65AvcsMnKRXmAryHwoE35mRV4B5rk9J+6YFGbOBa6uXfBJZNU
- eflc1uvEfmNQyzoQPfdakjQTc5KYWKppKRsqNdY1KEyyP4N38wn1l0gv3wDz2Y4vY9bYG1zn7/Z
- 9GNU3HjOLnQqjjuwojs=
-X-Received: by 2002:a05:6e02:1646:b0:3d0:4ae2:17b6 with SMTP id
- e9e14a558f8ab-3d2cad72c9fmr35205445ab.0.1740409753104; 
- Mon, 24 Feb 2025 07:09:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFBHYYLl8fl9qeOVd9G2tLtpzjtBoicEtCsO52ZKmI/sBVmD/sHYTr3x/FH1gWDnvU2qQ7u7w==
-X-Received: by 2002:a05:6e02:1646:b0:3d0:4ae2:17b6 with SMTP id
- e9e14a558f8ab-3d2cad72c9fmr35205365ab.0.1740409752802; 
- Mon, 24 Feb 2025 07:09:12 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d18f9d5c01sm51596725ab.33.2025.02.24.07.09.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 07:09:11 -0800 (PST)
-Date: Mon, 24 Feb 2025 08:09:07 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, eric.auger.pro@gmail.com, eric.auger@redhat.com,
- zhenzhong.duan@intel.com, mst@redhat.com, marcel.apfelbaum@gmail.com
-Subject: Re: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
-Message-ID: <20250224080907.3647dac8.alex.williamson@redhat.com>
-In-Reply-To: <905d2fc4-c537-4c05-a759-6434af2b4406@redhat.com>
-References: <20250220224918.2520417-1-alex.williamson@redhat.com>
- <905d2fc4-c537-4c05-a759-6434af2b4406@redhat.com>
-Organization: Red Hat
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tma9L-0003uz-BR
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:13:40 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OBMaVM015094;
+ Mon, 24 Feb 2025 15:13:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2023-11-20; bh=KCIke3eg
+ wg85D5GLuLciOHAOb4jfr51/0xzzd6GZA54=; b=hsyXPZpMZgfotp2bByuBjdhX
+ n1FEHrtCZWjTJrGsTZfhP9XiacXqL+s7Z3ung4tMT45rYpXbwLmtVhCvc7ZHNOTd
+ eNGPmYa3FI5b1RBOarG6IiizxP+mUTOeQ2eTga/saDrOGzA6llwRY+LH+Fd06drU
+ 1eWJSxLgcpmbtpovawCHYc9JbeuIGoWa2aSPhvGd0w3Cj27klSfAxiP+vwdatw6b
+ GYPPAkaSJSA0//N5colebi7BQJdkl5Wt1IY/bQEofTjdm/QLnanx8/bJnoYwvHK4
+ iPEdkhvdqXKrdbpvnCFHeRmoUhq68o1qJ20ZK2mkF6ISZbkPU63/m77+KFNvqA==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44y66sarm0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Feb 2025 15:13:33 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 51OEWWo4002716; Mon, 24 Feb 2025 15:13:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44y5181ehb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Feb 2025 15:13:32 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51OFDSjo005674;
+ Mon, 24 Feb 2025 15:13:28 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 44y5181dsj-1; Mon, 24 Feb 2025 15:13:28 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V3] migration: ram block cpr blockers
+Date: Mon, 24 Feb 2025 07:12:59 -0800
+Message-Id: <1740409979-243462-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-24_06,2025-02-24_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ malwarescore=0
+ mlxscore=0 adultscore=0 bulkscore=0 phishscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2502100000 definitions=main-2502240109
+X-Proofpoint-GUID: MHl29_2L8ZiE8Lzqwa3V0D5ukatTs-0A
+X-Proofpoint-ORIG-GUID: MHl29_2L8ZiE8Lzqwa3V0D5ukatTs-0A
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,32 +98,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Feb 2025 09:14:19 +0100
-C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+Unlike cpr-reboot mode, cpr-transfer mode cannot save volatile ram blocks
+in the migration stream file and recreate them later, because the physical
+memory for the blocks is pinned and registered for vfio.  Add a blocker
+for volatile ram blocks.
 
-> > An aspect that needs attention here is whether this change in the
-> > wmask and PMCSR bits becomes a problem for migration, and how we
-> > might solve it.  For a guest migrating old->new, the device would
-> > always be in the D0 power state, but the register becomes writable.
-> > In the opposite direction, is it possible that a device could
-> > migrate in a low power state and be stuck there since the bits are
-> > read-only in old QEMU?  Do we need an option for this behavior and a
-> > machine state bump, or are there alternatives? =20
->=20
-> Should we introduce a migration blocker when a PCI device is in low
-> power state  ?
+Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd may be
+sufficient for CPR, but it has not been tested yet.
 
-Blocking relative to the power state of a device seems relatively
-non-intuitive for a user to debug.  Logically there's also an
-opportunity that any device could support migration while in D3 if it
-indicates a soft reset is performed on D3->D0 transition, regardless of
-underlying VMM support for the device to migrate.  So that doesn't
-really feel like the right approach to me.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+---
+ include/exec/memory.h   |  3 +++
+ include/exec/ramblock.h |  1 +
+ migration/savevm.c      |  2 ++
+ system/physmem.c        | 68 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 74 insertions(+)
 
-FWIW, the emulated igb device will enter D3 when idle and bound to
-vfio-pci in the guest, so we should be able to test migration in
-various states with purely emulated devices.  Thanks,
-
-Alex
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 9f73b59..ea5d33a 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3184,6 +3184,9 @@ bool ram_block_discard_is_disabled(void);
+  */
+ bool ram_block_discard_is_required(void);
+ 
++void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
++void ram_block_del_cpr_blocker(RAMBlock *rb);
++
+ #endif
+ 
+ #endif
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 0babd10..64484cd 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -39,6 +39,7 @@ struct RAMBlock {
+     /* RCU-enabled, writes protected by the ramlist lock */
+     QLIST_ENTRY(RAMBlock) next;
+     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
++    Error *cpr_blocker;
+     int fd;
+     uint64_t fd_offset;
+     int guest_memfd;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index bc375db..85a3559 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3315,12 +3315,14 @@ void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
+     qemu_ram_set_idstr(mr->ram_block,
+                        memory_region_name(mr), dev);
+     qemu_ram_set_migratable(mr->ram_block);
++    ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
+ }
+ 
+ void vmstate_unregister_ram(MemoryRegion *mr, DeviceState *dev)
+ {
+     qemu_ram_unset_idstr(mr->ram_block);
+     qemu_ram_unset_migratable(mr->ram_block);
++    ram_block_del_cpr_blocker(mr->ram_block);
+ }
+ 
+ void vmstate_register_ram_global(MemoryRegion *mr)
+diff --git a/system/physmem.c b/system/physmem.c
+index 67c9db9..5a67f67 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -70,7 +70,10 @@
+ 
+ #include "qemu/pmem.h"
+ 
++#include "qapi/qapi-types-migration.h"
++#include "migration/blocker.h"
+ #include "migration/cpr.h"
++#include "migration/options.h"
+ #include "migration/vmstate.h"
+ 
+ #include "qemu/range.h"
+@@ -1899,6 +1902,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             qemu_mutex_unlock_ramlist();
+             goto out_free;
+         }
++
++        error_setg(&new_block->cpr_blocker,
++                   "Memory region %s uses guest_memfd, "
++                   "which is not supported with CPR.",
++                   memory_region_name(new_block->mr));
++        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
++                                  MIG_MODE_CPR_TRANSFER,
++                                  -1);
+     }
+ 
+     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+@@ -4059,3 +4070,60 @@ bool ram_block_discard_is_required(void)
+     return qatomic_read(&ram_block_discard_required_cnt) ||
+            qatomic_read(&ram_block_coordinated_discard_required_cnt);
+ }
++
++/*
++ * Return true if ram is compatible with CPR.  Do not exclude rom,
++ * because the rom file could change in new QEMU.
++ */
++static bool ram_is_cpr_compatible(RAMBlock *rb)
++{
++    MemoryRegion *mr = rb->mr;
++
++    if (!mr || !memory_region_is_ram(mr)) {
++        return true;
++    }
++
++    /* Ram device is remapped in new QEMU */
++    if (memory_region_is_ram_device(mr)) {
++        return true;
++    }
++
++    /* Named files are remapped in new QEMU, same contents if shared (no COW) */
++    if (qemu_ram_is_shared(rb) && qemu_ram_is_named_file(rb)) {
++        return true;
++    }
++
++    /* A file descriptor is remapped in new QEMU */
++    if (rb->fd >= 0) {
++        return true;
++    }
++
++    return false;
++}
++
++/*
++ * Add a blocker for each volatile ram block.  This function should only be
++ * called after we know that the block is migratable.  Non-migratable blocks
++ * are either re-created in new QEMU, or are handled specially, or are covered
++ * by a device-level CPR blocker.
++ */
++void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
++{
++    assert(qemu_ram_is_migratable(rb));
++
++    if (ram_is_cpr_compatible(rb)) {
++        return;
++    }
++
++    error_setg(&rb->cpr_blocker,
++               "Memory region %s is not compatible with CPR. share=on is "
++               "required for memory-backend objects, and aux-ram-share=on is "
++               "required.", memory_region_name(rb->mr));
++    migrate_add_blocker_modes(&rb->cpr_blocker, errp, MIG_MODE_CPR_TRANSFER,
++                              -1);
++}
++
++void ram_block_del_cpr_blocker(RAMBlock *rb)
++{
++    migrate_del_blocker(&rb->cpr_blocker);
++}
+-- 
+1.8.3.1
 
 
