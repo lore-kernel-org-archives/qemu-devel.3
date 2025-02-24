@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03CDC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 19:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62BC5C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 20:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmebL-0003Gk-C0; Mon, 24 Feb 2025 14:58:51 -0500
+	id 1tmedf-00057S-21; Mon, 24 Feb 2025 15:01:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmebJ-0003GU-N5
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:58:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmedV-00056v-GH
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 15:01:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmebI-0007J4-DI
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:58:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmedS-0007vi-Be
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 15:01:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740427127;
+ s=mimecast20190719; t=1740427261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kVHBOkdjbGw4JfzVFa7jYYMlBB4TDR1UmIxPDPlGFfY=;
- b=fL+9ESLSQZ+Ncvunx5Yn6w1jZsHCy5Q3TmtHo1WY+T5KJs2/yoLXCwfdUWhA4rTXdpy8oV
- c/UiR/P9GNSOstjUUBTj1nNqMRhSLaHLbVr06p9evqGJ5RiAAdYdErevFYZu10HPAjQbmt
- wi+m4ZAUxF0F0NbVnNc7KiS87v2r7q0=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0fTghTPibK8gqHgVWc/vsWL5vej+q87gKhoY3eS6hOc=;
+ b=Q54VSxfWFHyC+lSD0SIZBVl05vELr6lyW6T9M59PmMHhSHW+gmYVLof3TqV5kzcAI89Xfj
+ sU/MlK5V0o6o2wIxA9SDJeh/mC3rkXOH7cUZMbBi4Oa5ukuFtG2RGY/7CRM3sfnfF4woSq
+ 9EsxGtPbSzTasRNvk1SdggbdEo9RJY8=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-184-7oTiIKBVNJaZsWI7KDLaJw-1; Mon, 24 Feb 2025 14:58:45 -0500
-X-MC-Unique: 7oTiIKBVNJaZsWI7KDLaJw-1
-X-Mimecast-MFC-AGG-ID: 7oTiIKBVNJaZsWI7KDLaJw_1740427124
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c09f91e480so851873585a.2
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 11:58:45 -0800 (PST)
+ us-mta-460-4K01G8-OMPeMloguSFO47Q-1; Mon, 24 Feb 2025 15:01:00 -0500
+X-MC-Unique: 4K01G8-OMPeMloguSFO47Q-1
+X-Mimecast-MFC-AGG-ID: 4K01G8-OMPeMloguSFO47Q_1740427260
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-471f4381c1eso107028751cf.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 12:01:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740427124; x=1741031924;
+ d=1e100.net; s=20230601; t=1740427260; x=1741032060;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kVHBOkdjbGw4JfzVFa7jYYMlBB4TDR1UmIxPDPlGFfY=;
- b=Kz0KandNtfR16TOPibsgu8TnX9YcpKqwKhcaR6MNRrgX4uVwW1m3GWgjjQw3gC6c3C
- 5eCeemUPGoiACjiPIH/C255Y3+Jrruflwe67eT5QYDYjfNVaTLYcsHuB3+M4etLhXYYh
- e+/C3HVfvTc1J4bzuyCUHdHM2puAGKaBO88KJikZwIG6pb3k5irvxB+gi8C5OtsSex0x
- DgqJewwyaBCH8sii3ah8oh38+jHB2rbvz+2aN6NRQXeI8Vu3fN2cPBTGUYUeoSoPMUZb
- SQFaRLYBN5+Sg68voIQ8vErXrdPDdGs5D9oueiRd/mBW+ZK6rZi4yz4HC35tTkSWMTVD
- E7Hw==
-X-Gm-Message-State: AOJu0YwqirKjGGOUODMsmFqNJJcRPhWuGL5Xtw0bj8WDLSpJgsh87qUE
- FyObJtdpt8TRM6jlaY1WTi1YrJ9ykEroRc0M6qaR2wBaC57uYU+dhEKDV6tfSmeAQR83GcVsCJq
- 3DdZbIC93hAm4Oq3x9SYLcXnV95jkiPkLAd7pnPx5xDJy0wrm8S69/S+DIGTz
-X-Gm-Gg: ASbGnctPjMo6ymrHNAwBPLRKfdBw5PBIBafIhXm7KRFO7aJsErGDWyZBY5Sek0MX4ht
- +GTICZTqioYa6hOMrxTYlRsiZyIZpk2jE/tvleuLNpGQ4FyX0HvwH+g786bi76mXZZJmjgRYmNE
- LGYXJ/w3i+nX+PtZi5uX6uATVvqGBpM73mhcuA8YwD6qg6YKPJIIdWtys1M61MnikLTLVDR4VQG
- f796FmdEGDK1s/30RKdgsHBSxZHM64GpnPhVSl+hbIxgqjhVxLAOHs80n+TNXfyHPorLg==
-X-Received: by 2002:a05:620a:3916:b0:7c0:bc63:7b76 with SMTP id
- af79cd13be357-7c0cf9504bamr2662551785a.36.1740427124435; 
- Mon, 24 Feb 2025 11:58:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGt8u5oo2a9OEeJzrAAtiG+eqOvTJzK+bmUDBkHkgAP+eW+DeQ0xY8x1gKvynH0rfKQiFEPMw==
-X-Received: by 2002:a05:620a:3916:b0:7c0:bc63:7b76 with SMTP id
- af79cd13be357-7c0cf9504bamr2662549085a.36.1740427124173; 
- Mon, 24 Feb 2025 11:58:44 -0800 (PST)
+ bh=0fTghTPibK8gqHgVWc/vsWL5vej+q87gKhoY3eS6hOc=;
+ b=e3UQ9MCB25PJIMh75/GN5WS8P3NEXOCpjsHa5CLEzZSAyFE8lKQ5BBHGMem+NAaAoi
+ h/Pxcizb/oNchbuKwei7HZicOF79hFP5u+6BtNvQ5rYpUHJRtLZok9KJQexldD4HksgZ
+ RbDnsv1qczsRkAI009jB3EeOt4963OJro9EHS4Nh+2kGtrRYv9fzQ/2J2R4Cvgbsp6+x
+ Eq8SzfG3SYRINDnJ7glnKS2zZPzArk1WMiR5bgqAyKN8MmWXFee42/J6P7qpvHi0U9KT
+ l92WDfo715k0oko+EPZ3IBzljak0JLnhHdoC6+1MNmYG5OwgMHnlrpWe75mMh0t5oQyk
+ ah0Q==
+X-Gm-Message-State: AOJu0Yw3sf4fDYHR5ad3Bgs799mHG2/6lych9OZrxbXrhgEjH0tPYZm0
+ VSSjoS2a7Ust0Br5MslDf7iUQqFVIjmmDZMcvsoNvepQk7mYrexKsBeNkrRBTRzmHNVFFL9FF19
+ kqIFxzy1buotHPgvV+7oWQA+9jax5YJ58hCDJ9jXkU8HFS1xYpfA7
+X-Gm-Gg: ASbGncsnH7/5zMgg++CGLRpuIm2NS1SpfCnePdgB7aUT9zSiBKust/C0k5hnZV6mXcD
+ OykIBCIOMvUUIDfu4LVZwWtj2yJDliaj1Cpfer+TN/md0uiXypS5caBo5YUf1m1f0/cMWfGegfN
+ adaEDB8C9ZZFQFj2N8JQDRHdrIlTDsW2LZfxeGkgNdnIiXI5Kmt1gVWNhbmhKjzPh25oESRFsNm
+ 5Eli6OLQvf/pWsbJw5L6fQNdvJFYfN8ENOQkxN/WkAVpayIo/ShPdF0s35oLfyJTs+zBQ==
+X-Received: by 2002:a05:622a:113:b0:472:58b:4642 with SMTP id
+ d75a77b69052e-47222947628mr197144111cf.47.1740427259683; 
+ Mon, 24 Feb 2025 12:00:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjoLAxr4jr1cqHfNJgXYUwH5YLeDcYcO+Hx17L65a7KzXpd6S2ZoNlz9TjiLjsPajMjPqvkA==
+X-Received: by 2002:a05:622a:113:b0:472:58b:4642 with SMTP id
+ d75a77b69052e-47222947628mr197143461cf.47.1740427259228; 
+ Mon, 24 Feb 2025 12:00:59 -0800 (PST)
 Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c23c2992ffsm13986785a.7.2025.02.24.11.58.42
+ d75a77b69052e-47377e0715csm396441cf.6.2025.02.24.12.00.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 11:58:43 -0800 (PST)
-Date: Mon, 24 Feb 2025 14:58:40 -0500
+ Mon, 24 Feb 2025 12:00:58 -0800 (PST)
+Date: Mon, 24 Feb 2025 15:00:56 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Li Zhijian <lizhijian@fujitsu.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 6/8] migraion: disable RDMA + postcopy-ram
-Message-ID: <Z7zPcODXives2Ct8@x1.local>
+Subject: Re: [PATCH v2 7/8] migration/rdma: Remove redundant
+ migration_in_postcopy checks
+Message-ID: <Z7zP-HRmX-Oe89Yf@x1.local>
 References: <20250221063612.695909-1-lizhijian@fujitsu.com>
- <20250221063612.695909-7-lizhijian@fujitsu.com>
+ <20250221063612.695909-8-lizhijian@fujitsu.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250221063612.695909-7-lizhijian@fujitsu.com>
+In-Reply-To: <20250221063612.695909-8-lizhijian@fujitsu.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -105,14 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 02:36:10PM +0800, Li Zhijian wrote:
-> It's believed that RDMA + postcopy-ram has been broken for a while.
-> Rather than spending time re-enabling it, let's simply disable it as a
-> trade-off.
+On Fri, Feb 21, 2025 at 02:36:11PM +0800, Li Zhijian wrote:
+> Since we have disabled RDMA + postcopy, it's safe to remove
+> the migration_in_postcopy()  that follows the migration_rdma().
 > 
 > Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> ---
+>  migration/ram.c  | 2 +-
+>  migration/rdma.c | 5 +++--
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index e07651aee8d..c363034c882 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -1939,7 +1939,7 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+>      int res;
+>  
+>      /* Hand over to RDMA first */
+> -    if (migrate_rdma() && !migration_in_postcopy()) {
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+This line was just added in previous patch.
+
+Would it be better move 5/6 above, then somehow squash 2/3/4/7 so that it
+doesn't need to add something and got removed again?  I feel like the four
+patches can be squashed into 1 or 2 instead when reorder them.
+
+> +    if (migrate_rdma()) {
+>          res = rdma_control_save_page(pss->pss_channel, pss->block->offset,
+>                                       offset, TARGET_PAGE_SIZE);
+>  
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index c6876347e1e..0349dd4a8b8 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -3826,7 +3826,7 @@ int rdma_block_notification_handle(QEMUFile *f, const char *name)
+>  
+>  int rdma_registration_start(QEMUFile *f, uint64_t flags)
+>  {
+> -    if (!migrate_rdma() || migration_in_postcopy()) {
+> +    if (!migrate_rdma()) {
+>          return 0;
+>      }
+>  
+> @@ -3858,7 +3858,8 @@ int rdma_registration_stop(QEMUFile *f, uint64_t flags)
+>      RDMAControlHeader head = { .len = 0, .repeat = 1 };
+>      int ret;
+>  
+> -    if (!migrate_rdma() || migration_in_postcopy()) {
+> +    /* Hand over to RDMA first */
+> +    if (!migrate_rdma()) {
+>          return 0;
+>      }
+>  
+> -- 
+> 2.44.0
+> 
 
 -- 
 Peter Xu
