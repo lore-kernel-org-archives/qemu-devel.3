@@ -4,67 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B296C021BB
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 14:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445EAC021BB
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 14:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmZa5-0005Xg-VO; Mon, 24 Feb 2025 09:37:13 -0500
+	id 1tmZk7-0000vF-5d; Mon, 24 Feb 2025 09:47:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tmZa3-0005XJ-Dp; Mon, 24 Feb 2025 09:37:11 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tmZa1-0006Km-Ag; Mon, 24 Feb 2025 09:37:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740407829; x=1771943829;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=un8HXcxNZE3oFALFsJNKuLE61w4QGf33WYRzArq2yu0=;
- b=brytg2KFx4awoV+xcFbn4J6i1V4MwL8LmQtLsC94HwWzjJ2MSjNtfizl
- b3YIRHICVrRGynv86pSk6FKGtYi0lgDyC/3/xooHdcLv3m2ntaEVSAmuN
- jRsfwFP7emzxyR9bSp3LfSowGZTfDXviTZjG/zgJTSrclncNjw12oYe4E
- tBAwAW2csVALIInP1zMF7ajcV2AihbIDmyZLGJIyHAXREGA0GFoJXW2Vb
- W/uctfZEqAqWbF49mBsaNYyCjAMrqD2/WdnzxZm+E3fPzFpKjkI8808yp
- FHdw+yHxIjKbninewdYt2BWGJVw3V9dgaskuCDH+tQ8XswgsCTlULqGGa A==;
-X-CSE-ConnectionGUID: IyS6v4zxRKyyRQdjGl0JIQ==
-X-CSE-MsgGUID: E15o6cj2TT2CLpLE6+DQMA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11355"; a="58710962"
-X-IronPort-AV: E=Sophos;i="6.13,309,1732608000"; d="scan'208";a="58710962"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Feb 2025 06:37:06 -0800
-X-CSE-ConnectionGUID: jgHqyOPZQE6IHwmrZ3ZTpg==
-X-CSE-MsgGUID: Cxa1PgNlToGKRclv3D1gyw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,309,1732608000"; d="scan'208";a="116056262"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 24 Feb 2025 06:37:04 -0800
-Date: Mon, 24 Feb 2025 22:56:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 03/15] rust: qom: add ObjectImpl::CLASS_INIT
-Message-ID: <Z7yIqbXZ+D5qufkn@intel.com>
-References: <20250221170342.63591-1-pbonzini@redhat.com>
- <20250221170342.63591-4-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmZjy-0000tk-Ou
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 09:47:26 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmZjw-0007rx-Ja
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 09:47:25 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-6fb7c373416so35443107b3.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 06:47:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740408443; x=1741013243; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vaCwfjXRWYgdOrjWq1KNN6uPPUv1FI8JvSotyLevqRE=;
+ b=j/4tCP72cJbAH9cmR06lV4KqlqKAJ8RMEE2Didcf+uKsGfho3HHwgYKlu99TBUH9SU
+ NW5uJ1Kotk0Gb3k4VefpSKVE5xBZkYI73p75noOxIAx3DCjiX56ucC3dWX56jQejgrRa
+ 7KihorBCvEG1MGCdBnprgmvQkxGXkN61qFcB/mZFuV0pEIp/8q/rMXhjCUllO1LuU2ru
+ HLrbPcHom60GhkEfozkuOP5TuGCA0tWSsupmZ+zbTlEjDilBB+QAhrLAJ5yHi18/1awg
+ 7ytB0/5vCwHpmNWxDYDccQlU1xqPARysJvsOpjxUW0/kX0UE9xIYB8k/snrlrusJ0gou
+ +Wtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740408443; x=1741013243;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vaCwfjXRWYgdOrjWq1KNN6uPPUv1FI8JvSotyLevqRE=;
+ b=NPIZ/ZAM5kZNZvLgsEUAgU1eW5Nwfzi02kXrEM9KmX2FfXLp7k1qq7EVJYnIQU4vf9
+ 7nHZju8AaeLT0dQHmkLMOofUyRZHqfRp7dcMSDzjUdTW6HUBEosRIoyFTbs0UliVUPuZ
+ bT2WfzxPU7y1EUNxmUTD7A++khE9zzDmrYFmRcUALCXaaRBnW/n5VbpUY3+JW/GoDv0T
+ VuJW2uwC3dvJxW00z/rPnrfaLMKr4uMYex9mzxU35s4bN0aDc+yRMljxprvV3MnOtN8i
+ w0hA8+JdNpjNDCk87Pni+mvum8iE0JAhg7UeUeIVjeJfE12vCTUXFBFTABiTaILbd/Gu
+ DG9A==
+X-Gm-Message-State: AOJu0Yyv2dQWPH3ngAJ7yck6WjBc68LbjiskO0HggDAQXLs0ROGKf3pI
+ VbiCsotyYwt3UUfIos91sDJCD/UwbskM2WK47AYXrNgX9VQxvGEZ5UzvXUOddt/6lzj5EKbVkRg
+ CIWlf2oZTczSROzFx0SmVR0bk63XwGS8e2xr3ICvIJ/0pqkTw
+X-Gm-Gg: ASbGncv4Zgz65uIZY1kFUYkuCMxBWQT8e1OLJhwt5acgnyc64w/2TPc36+Rsba9h/5B
+ m5l9dRahS0Q60vUvsqvXkhw3idOIxWUGmjpXjWysHnC/8W/nNJW+GOLaiAOfTOHO4D3e5pUCiQ6
+ LjGx2VXnFA
+X-Google-Smtp-Source: AGHT+IGzSHk9xL20r2oqjhJlFqcdcRRKED1Ek86tuu2y0eGVqnlZ63xn98qSFmeIRfG7c+KvM4X3RFLUo2BwLuvCgW0=
+X-Received: by 2002:a05:690c:480a:b0:6ef:820c:a752 with SMTP id
+ 00721157ae682-6fbcc25ed88mr109705067b3.20.1740408442800; Mon, 24 Feb 2025
+ 06:47:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250221170342.63591-4-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250213142613.151308-1-peter.maydell@linaro.org>
+In-Reply-To: <20250213142613.151308-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Feb 2025 14:47:11 +0000
+X-Gm-Features: AWEUYZnl__72jn9Ay47kgQZmZBSQHY4Juh_O0iQcTCWpV_uB8NGMHqVhJNCTHhU
+Message-ID: <CAFEAcA86t=uc_XZd0s1yOFsop68XN2HK7c5MUJNfn7kcDoMsxQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] target/i386: Emulate ftz and denormal flag bits
+ correctly
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,34 +94,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 06:03:30PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 21 Feb 2025 18:03:30 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 03/15] rust: qom: add ObjectImpl::CLASS_INIT
-> X-Mailer: git-send-email 2.48.1
-> 
-> As shown in the PL011 device, the orphan rules required a manual
-> implementation of ClassInitImpl for anything not in the qemu_api crate;
-> this gets in the way of moving system emulation-specific code (including
-> DeviceClass, which as a blanket ClassInitImpl<DeviceClass> implementation)
-> into its own crate.
-> 
-> Make ClassInitImpl optional, at the cost of having to specify the CLASS_INIT
-> member by hand in every implementation of ObjectImpl.  The next commits will
-> get rid of it, replacing all the "impl<T> ClassInitImpl<Class> for T" blocks
-> with a generic class_init<T> method on Class.
-> 
-> Right now the definition is always the same, but do not provide a default
-> as that will not be true once ClassInitImpl goes away.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/src/device.rs |  3 +++
->  rust/hw/timer/hpet/src/hpet.rs   |  3 ++-
->  rust/qemu-api/src/qom.rs         | 14 +++++++++++---
->  rust/qemu-api/tests/tests.rs     |  3 +++
->  4 files changed, 19 insertions(+), 4 deletions(-)> 
+Ping? Would an i386 maintainer like to pick these up?
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+thanks
+-- PMM
 
+On Thu, 13 Feb 2025 at 14:26, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This is a set of four patches to target/i386 which use the core
+> fpu functionality we just landed for Arm FEAT_AFP to correct
+> the emulation of some corner cases of x86 floating point:
+>  * when we are flushing denormal outputs to zero, this should
+>    be done after rounding, not before
+>  * the MXCSR.DE and FPUS.DE bits indicate when a denormal input
+>    was not flushed and was used in an fp operation; we previously
+>    weren't implementing these semantics
+>
+> All four patches have been reviewed by RTH. Testing is a bit
+> light (make check-tcg and make check-functional), because AFAIK
+> there is no freely available comprehensive FP testsuite for x86,
+> and risu doesn't support x86 currently so I can't do the same kind
+> of random-instruction-testing I could for Arm.
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (4):
+>   target/i386: Detect flush-to-zero after rounding
+>   target/i386: Use correct type for get_float_exception_flags() values
+>   target/i386: Wire up MXCSR.DE and FPUS.DE correctly
+>   tests/tcg/x86_64/fma: add test for exact-denormal output
+>
+>  target/i386/ops_sse.h        |  16 +++---
+>  target/i386/tcg/fpu_helper.c | 101 +++++++++++++++++------------------
+>  tests/tcg/x86_64/fma.c       |  17 ++++--
+>  3 files changed, 68 insertions(+), 66 deletions(-)
+>
+> --
+> 2.43.0
 
