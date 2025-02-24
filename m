@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451D2C021BB
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A31C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmc3F-00077y-BF; Mon, 24 Feb 2025 12:15:29 -0500
+	id 1tmc2f-0006tF-9o; Mon, 24 Feb 2025 12:14:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2t-00070e-PH
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:09 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tmc2d-0006ss-Qg
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:51 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2r-0005gz-KX
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:07 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-220d398bea9so74156315ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:15:05 -0800 (PST)
+ id 1tmc2b-0005XE-PD
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:51 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-220bff984a0so99008425ad.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:14:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740417304; x=1741022104; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x1wokWjEQnWGkNFvw6UwauoupCQ0IGRtX5SJLE3+d9Q=;
- b=XjMuJw9pmj4DGjR1L7uPs6Vp2j4JfRXmZE92hlOgH5gridIN1LxD0gPIP8BkUcxXQT
- Jc9ozhWn4ypOjwZzTMsj08wFfP04rO1bWxjtKIT9M7kRm3B6u369rQ0blZe26E8VucBY
- XkrXSAPUqjRFH2f5xJVRUhC/FkpjTR3R+aCEgxpO+xlmTRcAE2hUmIRZweYGq/SI+t84
- n2l9cPhhl+s7MRrxsmIB0IBJwn+nmULsgwN2lCg8yNy/C8XT/MZlgq9oHqh9RVR9709J
- vljAoMAfmurKtBGLnLNO0Thl8wG+jqvz/UuzbWq72OUhn4Ihk0+sCBjfmo4h81wS+w7z
- 7RlQ==
+ d=linaro.org; s=google; t=1740417288; x=1741022088; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dx37ot/VelrdYJ0OavN6CSRIKXW1vB1HPsDSEvZ03mk=;
+ b=NacsUI6Z1/xkb2i5y25dSJ3vxgku4Zk9VhQU7jHdBhp2U3PeCnbvMro36nSSls5280
+ QELvatbqrQTjHVcR3Dbd5P6igMHmYSQt5PeRZ6sL/5TEK7v9Sj7wSrbxgPf0E2i4Qp0C
+ Ptv5G3d00zy7E5VUtzzzy7XxizV+9WwiiZkWeyWSuS0uA+pUvhs5kDkMBDmtmrby62pM
+ KGSuWmxR0dmFRx7jyo3gouejapR3tVbAi+6OaqJoHgokA0Cs2yEsQYZtPoCiQASAaM28
+ oYiHeKskqXpgf0hnew9nVZ9oLr0nZrhI4bJS7bK4ZsRgtFTwiK5gBLzeXBlCyaziFulL
+ X5Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740417304; x=1741022104;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x1wokWjEQnWGkNFvw6UwauoupCQ0IGRtX5SJLE3+d9Q=;
- b=G1IVCojsCzj3xyr83tWoX/AZdse+yebrEsZGu55KZR815cATYl/iRSPQvHL5R9AeYJ
- twM5L01tAqz/Xfe9HeS9g0+19kz/YznIkiNzpqUQDxOO6J9yevjQzzZhd4bfmt0Bo9fF
- mgo7fZ2o5DPch3krr13XFlmnA74FyUS5NOqN50QlFyalSNTJIUJQ8V+NsCInowfaWKxn
- q3KjvqQDTSrCyhFoXDmhLDaSvKJM+fS8KIMVvCKlN6nApcHNkdC4lvNrz7malhpqo3/W
- Qj7KVA/Sn1NtoQc28HlY6zZ+7by+GNZ+huHFnGJxbvB2mon2DrmnzLDyG+ibvWHqAfgD
- /YkA==
-X-Gm-Message-State: AOJu0YzlJi8flxrS6xiKFbx4Gs/f492buK0eLH2gldK/nLDlJjGSeMzm
- slQCdX+VHgKZfZy8hHN+IREHkMd3RSSWqaiVgAFn7GdSiYBOAZQe7v70NEdQPyC3FGr7q70T05p
- W
-X-Gm-Gg: ASbGnct6kpv67UHIQKiUG96wzDtnZ+tmLNxYI6LLI2VjCMX67IxRJL0W2lk5xoQsX1p
- mnvg9m8ZmxuAgNXYiFoZM8jMfwCIIs3dFC4JOpjki3xASOZj5AscQVoL4UsuVXsnYiGDdyKuEv2
- i2gL8DMvvdz58MVlkuWbgODQydsTNvkzaPx7tD3zTU8/uDVY7y5K7v72kA7iZpYPr3uIZtxJYXE
- 4rYdwDccPEgSvMLaq8ivBOsSRodZ2NadF8QYVHHkIzI7L0Thphk5yFd0f09aVWUirvMQuVkVzls
- iVTiL7iy3AZuTEx9HMltmlI5dE8tHPxpMt8=
-X-Google-Smtp-Source: AGHT+IEbkMX/LdioLvXT2jUIwCO5ZVGohbE4xkZ1GuZrkjQVSKkCyV8MffUbHBIA/Me891eRoMZANA==
-X-Received: by 2002:a05:6a00:2441:b0:732:a24:734b with SMTP id
- d2e1a72fcca58-73426d7271emr21724552b3a.15.1740417304070; 
- Mon, 24 Feb 2025 09:15:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740417288; x=1741022088;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dx37ot/VelrdYJ0OavN6CSRIKXW1vB1HPsDSEvZ03mk=;
+ b=o2ZnZ0KEwcxi+uc0GHxKeUyjMLQmhxsVVi4Pk4fMyjMxtE+YKiIjBXE0lNpJqSNosz
+ MsnUdnO/Rgm719CQBKA3VJQ///SLTl3Hr7g+j/c+8CfhDxAM9A6QOk4p5wwDI5swymB8
+ lyDmvGes/boejamFXiTjdPIjXkUNyCjJDyDH2mwAzhv7gPgktmRb7aEsLjVLS1+LgClJ
+ +lClUFWAExzqT9jc0+j1FQbcEGjsSpjAsvdkW1/c+Yp1xFpMIFaPEjKpan0Gj8axj+pI
+ fkIc9ulXn68LKYMBFAghFQ1NQF3zvjcwDy3rSCDb4CXOHmfc7F8qgV8wVhiWrIxl8QbX
+ LwGA==
+X-Gm-Message-State: AOJu0YxpLko4J64DB32sXVxXzLDVeAq/n14/2pjjDnOHtKLIXSLCxi5e
+ gRYj92i/ukNtAtNOtIcqonTTojM0VOHniEFJATxMtzrIcUqho8+BdGYL2MtrYt2+SsJRjv2LZ7y
+ e
+X-Gm-Gg: ASbGncuw9lUlVQu4ATBxRrRHRBB4N6PX2HRRXA1DE5YkF1ld0AOChB3jg/6zS99vSXO
+ tiSn5TTTxE3OHF+gY78gDDedUnwHDhFxb3zpwsxePWnD4SKFHETtDHoYT8BhoqEYE/JKKd4OvyH
+ bDuSSD2jvblHYsIB7Zaovp8WFvQsS1zs8ErG0rg+LJ5s9tHEfwMKXtVO1DN9D2xPv+u25adqMBk
+ P2wXwRLTuHKAMO9juZnjNEvHFjl1uKz+Cbu3GAUHBzhiHm4jDdzeBCgDyiF8jKm2GXiSQQGc16j
+ fzMSS+3LVuA1g4Y/AW+/yEz7f3byB/4/yBQ=
+X-Google-Smtp-Source: AGHT+IFW3SDO+PAQw7ED9m3jEmNiZmGHt3rc2RKJe7ZKSZ7m+4XC1ri6/u+CYkR8yCHg0LmoheP5Pw==
+X-Received: by 2002:a62:e40a:0:b0:732:5954:a815 with SMTP id
+ d2e1a72fcca58-73426d8d80emr17445254b3a.22.1740417287983; 
+ Mon, 24 Feb 2025 09:14:47 -0800 (PST)
 Received: from stoup.. ([2607:fb90:c9e2:d7e3:c85c:d4f0:c8b8:8fa7])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.15.03
+ d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.14.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 09:15:03 -0800 (PST)
+ Mon, 24 Feb 2025 09:14:47 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 13/24] target/m68k: Remove env argument to gen_lea_mode
-Date: Mon, 24 Feb 2025 09:14:33 -0800
-Message-ID: <20250224171444.440135-14-richard.henderson@linaro.org>
+Cc: laurent@vivier.eu
+Subject: [PATCH v4 00/24] target/m68k: fpu improvements
+Date: Mon, 24 Feb 2025 09:14:20 -0800
+Message-ID: <20250224171444.440135-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250224171444.440135-1-richard.henderson@linaro.org>
-References: <20250224171444.440135-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,109 +97,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the env pointer in DisasContext.
+v3: https://lore.kernel.org/qemu-devel/20240909172823.649837-1-richard.henderson@linaro.org/
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/m68k/translate.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+Changes for v4:
+  - Rebase from September.  :-/
+  - Reorg update_fpsr(); do not expose as a separate helper.
+    Fixes raising of exceptions from FCMP (e.g. invalid).
+  - Fix a few comment typos.
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 0aa0721778..73189d1da4 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -694,8 +694,7 @@ static int addr_inc_size(DisasContext *s, int reg0, int opsize)
- /*
-  * Generate code for an "effective address".
-  */
--static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
--                         int mode, int reg0, int opsize)
-+static TCGv gen_lea_mode(DisasContext *s, int mode, int reg0, int opsize)
- {
-     TCGv reg, addr, tmp;
-     uint16_t ext;
-@@ -733,7 +732,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
-     case 5: /* Indirect displacement.  */
-         reg = get_areg(s, reg0);
-         addr = tcg_temp_new();
--        ext = read_im16(env, s);
-+        ext = read_im16(s->env, s);
-         tcg_gen_addi_i32(addr, reg, (int16_t)ext);
-         return addr;
-     case 6: /* Indirect index + displacement.  */
-@@ -742,14 +741,14 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
-     case 7: /* Other */
-         switch (reg0) {
-         case 0: /* Absolute short.  */
--            offset = (int16_t)read_im16(env, s);
-+            offset = (int16_t)read_im16(s->env, s);
-             break;
-         case 1: /* Absolute long.  */
--            offset = read_im32(env, s);
-+            offset = read_im32(s->env, s);
-             break;
-         case 2: /* pc displacement  */
-             offset = s->pc;
--            offset += (int16_t)read_im16(env, s);
-+            offset += (int16_t)read_im16(s->env, s);
-             break;
-         case 3: /* pc index+displacement.  */
-             return gen_lea_indexed(s, NULL_QREG);
-@@ -769,7 +768,7 @@ static TCGv gen_lea(CPUM68KState *env, DisasContext *s, uint16_t insn,
- {
-     int mode = extract32(insn, 3, 3);
-     int reg0 = REG(insn, 0);
--    return gen_lea_mode(env, s, mode, reg0, opsize);
-+    return gen_lea_mode(s, mode, reg0, opsize);
- }
- 
- /*
-@@ -827,7 +826,7 @@ static TCGv gen_load_mode(CPUM68KState *env, DisasContext *s,
-     case 4: /* Indirect predecrememnt.  */
-     case 5: /* Indirect displacement.  */
-     case 6: /* Indirect index + displacement.  */
--        addr = gen_lea_mode(env, s, mode, reg0, opsize);
-+        addr = gen_lea_mode(s, mode, reg0, opsize);
-         if (IS_NULL_QREG(addr)) {
-             ret = addr;
-             addr = NULL;
-@@ -870,7 +869,7 @@ static bool gen_store_mode(CPUM68KState *env, DisasContext *s,
-     case 6: /* Indirect index + displacement.  */
-     case 7: /* Other */
-         if (!addr) {
--            addr = gen_lea_mode(env, s, mode, reg0, opsize);
-+            addr = gen_lea_mode(s, mode, reg0, opsize);
-             if (IS_NULL_QREG(addr)) {
-                 return false;
-             }
-@@ -1110,7 +1109,7 @@ static int gen_ea_mode_fp(CPUM68KState *env, DisasContext *s, int mode,
-     case 4: /* Indirect predecrememnt.  */
-     case 5: /* Indirect displacement.  */
-     case 6: /* Indirect index + displacement.  */
--        addr = gen_lea_mode(env, s, mode, reg0, opsize);
-+        addr = gen_lea_mode(s, mode, reg0, opsize);
-         if (IS_NULL_QREG(addr)) {
-             return -1;
-         }
-@@ -1931,7 +1930,7 @@ DISAS_INSN(movem)
-         break;
- 
-     default:
--        tmp = gen_lea_mode(env, s, mode, reg0, opsize);
-+        tmp = gen_lea_mode(s, mode, reg0, opsize);
-         if (IS_NULL_QREG(tmp)) {
-             goto do_addr_fault;
-         }
-@@ -2673,7 +2672,7 @@ DISAS_INSN(tas)
-     } else {
-         TCGv src1, addr;
- 
--        addr = gen_lea_mode(env, s, mode, reg0, OS_BYTE);
-+        addr = gen_lea_mode(s, mode, reg0, OS_BYTE);
-         if (IS_NULL_QREG(addr)) {
-             gen_addr_fault(s);
-             return;
+
+r~
+
+
+Richard Henderson (24):
+  target/m68k: Add FPSR exception bit defines
+  target/m68k: Restore fp rounding mode on vm load
+  target/m68k: Keep FPSR up-to-date
+  target/m68k: Update FPSR.EXC
+  target/m68k: Update FPSR for FMOVECR
+  target/m68k: Introduce M68K_FEATURE_FPU_PACKED_DECIMAL
+  target/m68k: Merge gen_ea into SRC_EA and DEST_EA
+  target/m68k: Use g_assert_not_reached in gen_lea_mode and gen_ea_mode
+  target/m68k: Use OS_UNSIZED in LEA, PEA, JMP
+  target/m68k: Move pre-dec/post-inc to gen_lea_mode
+  target/m68k: Split gen_ea_mode for load/store
+  target/m68k: Remove env argument to gen_lea_indexed
+  target/m68k: Remove env argument to gen_lea_mode
+  target/m68k: Remove env argument to gen_load_mode
+  target/m68k: Remove env argument to gen_store_mode
+  target/m68k: Remove env argument to gen_ea_mode_fp
+  target/m68k: Split gen_ea_mode_fp for load/store
+  target/m68k: Move gen_addr_fault into gen_{load,store}_mode_fp
+  target/m68k: Merge gen_load_fp, gen_load_mode_fp
+  target/m68k: Merge gen_store_fp, gen_store_mode_fp
+  target/m68k: Implement packed decimal real loads and stores
+  tests/tcg/m68k: Add packed decimal tests
+  target/m68k: Make vmstate variables static
+  target/m68k: Implement FPIAR
+
+ target/m68k/cpu.h                |   27 +-
+ target/m68k/helper.h             |    5 +-
+ target/m68k/cpu.c                |   38 +-
+ target/m68k/fpu_helper.c         |  330 +-
+ target/m68k/gen-floatx80-pow10.c |   33 +
+ target/m68k/helper.c             |   18 +-
+ target/m68k/translate.c          |  789 +++--
+ tests/tcg/m68k/packeddecimal-1.c |   41 +
+ tests/tcg/m68k/packeddecimal-2.c |   46 +
+ target/m68k/floatx80-pow10.c.inc | 4935 ++++++++++++++++++++++++++++++
+ tests/tcg/m68k/Makefile.target   |    4 +-
+ 11 files changed, 5746 insertions(+), 520 deletions(-)
+ create mode 100644 target/m68k/gen-floatx80-pow10.c
+ create mode 100644 tests/tcg/m68k/packeddecimal-1.c
+ create mode 100644 tests/tcg/m68k/packeddecimal-2.c
+ create mode 100644 target/m68k/floatx80-pow10.c.inc
+
 -- 
 2.43.0
 
