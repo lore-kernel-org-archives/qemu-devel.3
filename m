@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1071CC021B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 01:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1F5C021B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 01:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmNKw-0001EE-R2; Sun, 23 Feb 2025 20:32:46 -0500
+	id 1tmNPS-0002Xz-Ph; Sun, 23 Feb 2025 20:37:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmNKk-0001DB-5t; Sun, 23 Feb 2025 20:32:34 -0500
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ id 1tmNPM-0002Vn-NA
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 20:37:21 -0500
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmNKg-0001Gq-F4; Sun, 23 Feb 2025 20:32:32 -0500
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-4be5033a2cbso1675494137.1; 
- Sun, 23 Feb 2025 17:32:19 -0800 (PST)
+ id 1tmNPL-0001mg-6t
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 20:37:20 -0500
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-868da0af0fcso1263341241.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 17:37:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740360738; x=1740965538; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740361036; x=1740965836; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WkXNZnP4aqKo+z7UK+t378iD+iFjoz2b7Q6gX2Rkfkg=;
- b=aEU9pTfM66cwu/wNmMXiTpHymlqlMnM9Yucasi7OOinRaawUVGXuReXrf921JYq3ya
- Vco1RqT1oq6HlBQsnjgXjPxHgWKaINl32gH+DUI9XisS/O+hZIAnfJJpskEWfWFApeDt
- PXGLghIERn5ncE1X8N89XwdW/fPIVfyIKmuHyVZa6t+qj8WOJHKCrTV0oyRlzPbUGfLS
- UHEOWBonXSWM6DCwjlW/i5UGzxm+CjROqoyeJenxK+thjM4cIN/dkmbV/yENVlOYAOoS
- VcOB606UgQmPn/cbWN8JSlpV7sF4Wv0PHBoeUXYvNns+VpASmfxqlr3Ib65T0FeBi+tV
- m86g==
+ bh=gUYh9KhRtNaUZSOgKke09npKNyubjr0X823c7h/KvYA=;
+ b=HQbpk6pk7ru+25RvxOIfB37eIcnnCIa/LG2HfKTJwFLwqTik/HtoZVUTGKmxGeyKYh
+ 8CftyqesScxHxoKA1u/l+v4VBF+Pr0cpG31HQ0nLXMhbPjp9TOTY/ecgh5DDnJ9+6SW+
+ HCzVRcVyQofJalaHXoGJQdTDPM/iZ8NsQZQwJmxjvdcUe4Ic7M5MdG9EySoSXC1In/wh
+ J+uUaUUi656F9x3KLaLbQBn8A6+7byHLiQNnK7bYE9DQ/kIBaPPVSw2iAAqIRN7Tjs3V
+ m6NTzpICvZFVTgsRlCTd9ZmjwRPms6olbl0e6puHgX5VuImVg3vMQ+wnuUCRr7AuiIW+
+ a62Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740360739; x=1740965539;
+ d=1e100.net; s=20230601; t=1740361036; x=1740965836;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WkXNZnP4aqKo+z7UK+t378iD+iFjoz2b7Q6gX2Rkfkg=;
- b=P90wBiG3J0tKK2qiIcc+qPbtg1lfI+hruyJBCV3xfPPArwCuDV4NCcmL+bVkrCESWY
- HZ8ORYB6l/XBI5ItTW7ysJFALjtcLJ1r2geD5ljGFRes6YcktDySLwb9deUQroJWG4W8
- ZPi6ltZZX8FpNfmsGH+HYnh2+mBqj4zcKcaVQ5VCS5DcdxHR1oVe4K5a0CTPkcsewuGx
- gxffc4cdkmkYEOcKp9/oQUj79Y8C4uJO0VHn8CBaqzS3tDKxJaJ0kg1nrFt6MAYv14+g
- PixZj+xqNNg6xmcqQrp742kfkQOCueqnwlf/3WaJuMDVvQXS2PustMz9MrYdk3fdGWAq
- K/Dg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWV/QdE3kVA7/XcdsqgCn6L/VpkKnh0nsN/bk72u0fscB9gzdbZnhSZzzb/MKCTebhMep8TFKiHcQdt@nongnu.org
-X-Gm-Message-State: AOJu0YyRnvju/Ceu1FcsILsFvL6X2tjpllLbATaP0eGl0EvQD7yCek/H
- 2YRw31TvdrZIU+I/WBhREx7WahOS2x4kf7XJhkybcFlM8O3TQueJeACIXkgOa5ZoSuR9ItmnuC4
- jG6B8qxfK3i/HZWy7DFdXFlIFflI=
-X-Gm-Gg: ASbGncttba0nixM/kAxmbDSwqcZVRsJStXIQTNMNVnTxYDPWPlS7GloLHzgpO5huLO/
- jiesdSGwBNvqTGWEWufQUrEelvtRmDkrxU03sstbRWQSJizeo1hwqHMaRd2Z1Kz5Sle3AmdADCQ
- GSUZY5q5hqUtJYgvaIsndNyDTa0o/RlTuIGdmm
-X-Google-Smtp-Source: AGHT+IH9pOOrMMo/+QwJ2prDnKVaBHSA/ctZsaIlk/WyhMfwn3/Z87zoAde/E/1PfqX/ehS5DGo5d/zr/qiLjK0yzRA=
-X-Received: by 2002:a05:6102:c04:b0:4bd:3519:44be with SMTP id
- ada2fe7eead31-4bfc0105e4dmr5679396137.15.1740360738656; Sun, 23 Feb 2025
- 17:32:18 -0800 (PST)
+ bh=gUYh9KhRtNaUZSOgKke09npKNyubjr0X823c7h/KvYA=;
+ b=ZXJyaaSrXzWyv1SjwmKIKq4y6mPSCk6JYW0/NHFcbGSQI5CiP3MfqiztOJIZyAy9b5
+ 1ksYzU0J+lARByWq4kQF0PlHWPGA9lqYI53IG9TLZ4hEpvUcgQUZ6sLqIbCxhMmEQXEU
+ 35SlsRQ1ayTvJLwJyDIun19Cu4ZgaQGr5nmkDNGFggl98CDqSI6wfUwdJD+t1/kSgUyX
+ MQbYgw4UwfMzmHAMFGcpl7HnIW02Srpxt0G6nxgb5x2+B/5S3OkAjR3wOe/gd7YIXQvw
+ aUtkI2YFuwxzRWFstf0VZI56BeoNWFZmlcaOpHnPqmG7aEVsf4qBOH8gv/ZsPjhCDraD
+ ZSJA==
+X-Gm-Message-State: AOJu0YxVwt32tgjToj5VwJpR3oPcgLHUsgIu2OZ/ybrMwkl/3i+nXhCZ
+ 5BkfedfhmKB/oEHMt1aPmrZxnmD2kt3tsSzFlJ7yXYJMpsHGZAICihkaP8FedL6w0A1FFSzRm2P
+ 2XyLi0zR6QKkrrje9W56Mc7GvtWc=
+X-Gm-Gg: ASbGncucxCWhab4NIcTK4egF80bZWBnuiN8S38cKvgv2xCbSOExtElo0oiMtHqUbWKI
+ ANxoM+xIT7PMbPALVUoMpGKFv+olluJLYyPtPz32RPaUSdH4JYzCTCpU5bP3tWKG3yuFpShP2Br
+ NskwPgL57ObvhGeBpGBdUAyXWPkxTTvunqNinO
+X-Google-Smtp-Source: AGHT+IFMGLMPhk3gUPW9Jk6C+iMPUFeizF/VgWaXHr3nqedg8cG6QEhvf7jRRcucsub/HQP3wMQ6NVd8bsD9iVP1Rh0=
+X-Received: by 2002:a05:6102:2ac1:b0:4bb:f1f0:1b34 with SMTP id
+ ada2fe7eead31-4bfc003d79amr6286278137.2.1740361036266; Sun, 23 Feb 2025
+ 17:37:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20250221141834.626722-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250221141834.626722-1-dbarboza@ventanamicro.com>
+References: <20250127182924.103510-1-abologna@redhat.com>
+ <20250127182924.103510-2-abologna@redhat.com>
+In-Reply-To: <20250127182924.103510-2-abologna@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 11:31:52 +1000
-X-Gm-Features: AWEUYZmQSWtVjIyNwkL83zu88wnSEZfVJ5o80JZhEfLg4G4rw_B641y_JgtaWuc
-Message-ID: <CAKmqyKPaCJq87mAdOscatcWq=8zKAdy35TY8+WLDMoV=1_=eaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] target/riscv/kvm: update to Linux 6.14-rc3
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
+Date: Mon, 24 Feb 2025 11:36:50 +1000
+X-Gm-Features: AWEUYZm4MJ7GAd6id8VHkocnsxg_iYLeBuT1RvhfW5BRey0HX1BuK2t4sSWcKRE
+Message-ID: <CAKmqyKP9XC9evZP+6RHgV9Nq_pfc+B10mXOH_mjsdirJ+AFGxQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] binfmt: Shuffle things around
+To: Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ David Abdurachmanov <davidlt@rivosinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,60 +97,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 22, 2025 at 12:19=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Tue, Jan 28, 2025 at 4:29=E2=80=AFAM Andrea Bolognani <abologna@redhat.c=
+om> wrote:
 >
-> Hi,
+> This should make no difference from the functional point of
+> view and it's just preparation for upcoming changes.
 >
-> In this version all changes were made in patch 2. In the first posting I
-> forgot to update how riscv,isa was going to be calculated when
-> ext_ziccrse is set by KVM.
->
-> A change was made in isa_edata_arr[] to use ext_ziccrse, instead of
-> 'has_priv_1_11', and TCG code were changed to set ext_ziccrse
-> accordingly.
->
-> No other changes made. Patches based on alistair/riscv-to-apply.next.
->
-> Changes from v1:
-> - patch 2:
->   - use 'ext_ziccrse' instead of 'has_priv_1_11' in isa_edata_arr[]
-> - v1 link: https://lore.kernel.org/qemu-riscv/20250218163854.425607-1-dba=
-rboza@ventanamicro.com/
->
-> Daniel Henrique Barboza (3):
->   linux-headers: Update to Linux v6.14-rc3
->   target/riscv/cpu.c: create flag for ziccrse
->   target/riscv/kvm: add extensions after 6.14-rc3 update
+> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  scripts/qemu-binfmt-conf.sh | 17 ++++++++++-------
+>  1 file changed, 10 insertions(+), 7 deletions(-)
 >
->  include/standard-headers/linux/ethtool.h      |  4 +
->  include/standard-headers/linux/fuse.h         | 76 ++++++++++++++++++-
->  .../linux/input-event-codes.h                 |  1 +
->  include/standard-headers/linux/pci_regs.h     | 16 ++--
->  include/standard-headers/linux/virtio_pci.h   | 14 ++++
->  linux-headers/asm-arm64/kvm.h                 |  3 -
->  linux-headers/asm-loongarch/kvm_para.h        |  1 +
->  linux-headers/asm-riscv/kvm.h                 |  7 +-
->  linux-headers/asm-x86/kvm.h                   |  1 +
->  linux-headers/linux/iommufd.h                 | 35 ++++++---
->  linux-headers/linux/kvm.h                     |  8 +-
->  linux-headers/linux/stddef.h                  | 13 +++-
->  linux-headers/linux/vduse.h                   |  2 +-
->  target/riscv/cpu.c                            |  3 +-
->  target/riscv/cpu_cfg.h                        |  3 +
->  target/riscv/kvm/kvm-cpu.c                    |  3 +
->  target/riscv/tcg/tcg-cpu.c                    |  2 +
->  17 files changed, 156 insertions(+), 36 deletions(-)
+> diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
+> index 6ef9f118d9..426f075e31 100755
+> --- a/scripts/qemu-binfmt-conf.sh
+> +++ b/scripts/qemu-binfmt-conf.sh
+> @@ -318,20 +318,23 @@ qemu_set_binfmts() {
+>          mask=3D$(eval echo \$${cpu}_mask)
+>          family=3D$(eval echo \$${cpu}_family)
+>
+> +        target=3D"$cpu"
+> +        if [ "$cpu" =3D "i486" ] ; then
+> +            target=3D"i386"
+> +        fi
+> +
+> +        qemu=3D"$QEMU_PATH/qemu-$target$QEMU_SUFFIX"
+> +
+>          if [ "$magic" =3D "" ] || [ "$mask" =3D "" ] || [ "$family" =3D =
+"" ] ; then
+>              echo "INTERNAL ERROR: unknown cpu $cpu" 1>&2
+>              continue
+>          fi
+>
+> -        qemu=3D"$QEMU_PATH/qemu-$cpu"
+> -        if [ "$cpu" =3D "i486" ] ; then
+> -            qemu=3D"$QEMU_PATH/qemu-i386"
+> +        if [ "$host_family" =3D "$family" ] ; then
+> +            continue
+>          fi
+>
+> -        qemu=3D"$qemu$QEMU_SUFFIX"
+> -        if [ "$host_family" !=3D "$family" ] ; then
+> -            $BINFMT_SET
+> -        fi
+> +        $BINFMT_SET
+>      done
+>  }
 >
 > --
 > 2.48.1
->
 >
 
