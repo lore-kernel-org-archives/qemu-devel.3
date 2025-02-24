@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B766C021B8
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA4EC021B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmTll-0000G1-2Y; Mon, 24 Feb 2025 03:24:53 -0500
+	id 1tmTlm-0000Gb-1p; Mon, 24 Feb 2025 03:24:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tmTlW-00005W-8Q
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:24:41 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tmTlh-0000BT-DW
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:24:50 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tmTlR-00019Y-9Y
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:24:35 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22104c4de96so67765765ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 00:24:32 -0800 (PST)
+ id 1tmTlf-0001Bb-EN
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:24:49 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22128b7d587so76086585ad.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 00:24:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1740385471; x=1740990271; darn=nongnu.org;
+ d=sifive.com; s=google; t=1740385485; x=1740990285; darn=nongnu.org;
  h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AqEFQR6NtqYF016dWrhbdwKDvTxMgBYRr2uJaanV30U=;
- b=gWq9A+ify6ClIR+tq8nSwPQHghtwaY9ls2lsirVyosmNtw1W7bigd0bsIvdrOMtuCq
- q4HNE1G4OA07EuT1wJqkwgqqMh/JWhF2gnXig29cVQ8OqqUjEL+t64L/V3iLi7b42NXd
- jDp2edwGNzzRZ6H0M7VneTqS4fcUOpGaH6zJV2vdpyK8pPEH6hrcNwfOK0kLaFY8M76u
- nKd/BaS9+AHddRUfxArHgasDlyiVZb0I2E3flk0Mt0LjLmYoy/TudQIbMWh9S2gb/Ogk
- MHHUFG+ObnaRhrLKUJzjxayajJyaY/yXqbs0bnsgMt9M1XO/2ySdB12o/LvICfV7DlzE
- O32Q==
+ bh=onlUINOp8JpvgGqdS5sWDC3DlUou1fW9JzejUaBAofM=;
+ b=dvQ3QL6IZhvcLQL0ghsJrDsZ5O+e5odpfNnYrWEJaJ2AgLho7nQufB/CZJGDq6drh5
+ CM/JRbwe6JLpc2o/2zNbjG8DlsY6AclI8XLBwry4Z5C33OIt5HEhmOLyYD9qa7QltdFK
+ nRQ7dSPeMw+Q8swiOM7PG9WAW236U7dT9ca0OOiOnBhvQdAGELJKGp1FdpWXOZVdMPq9
+ o2GLNpizgplldvqv4Gsq9SkYXTnB9Xrwgg1/1ECXHaPeWiYKphN8s2WFoS7QbcTSl2Md
+ nY+udvmQCEmyBU3A52Bt1i2f/YENpQo/aaQqNU36Y5T3gbeQXnKGEpqVfux/aMqHFLrf
+ 2ERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740385471; x=1740990271;
+ d=1e100.net; s=20230601; t=1740385485; x=1740990285;
  h=references:in-reply-to:message-id:date:subject:cc:to:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AqEFQR6NtqYF016dWrhbdwKDvTxMgBYRr2uJaanV30U=;
- b=gumdV4tz++uEhXx5ergQCbTK60rUp21bw00g7RYn02Ll+0X2SkMmkvPAvb441R2H9K
- 9PHi4I13VPEi/pzOclW+TRL1U6daUsQYXxseDYNW4VyOFCn4Yb7o/I4OljR202G4WOTV
- MutNT6eCNaDa3xk3sor/iqwUrk9Hj4hhpcM+g3Raqs4JzWlYP7lTedNaXFku3zzBWLVk
- 3KDkawHzkvMlYuzYe58Ecpz/xaIYENNMcMWjgSh8qZMIygQOtg2QFMjxNgliPIa6syUJ
- CVIDvcyAWRjcbl4adlxQQuVZaKrPjEtF6N6xMDjf5D7T3EM9SbbVODGMORFOYaM8S0Rj
- 2DMQ==
-X-Gm-Message-State: AOJu0YzRe/JMeFZjoLGtCNW3Kii/YuhknVqm8NkgLNGTxsR15PdT42dy
- Oa7rIpfJrH37JdLYeU6/KcAQXczTNsshp9PVbNa3/uiDsBrnzO7gAKmRNT5o9xZEEODDEM5pMc6
- eTbI55TRjEJ3liZTFsY23RycJUZD4VdUgYnrv9UyA5YCbVfTFxVqaZoZ/Qsaj3w6oJVwF4jpHS5
- /CFfVjPr4K17DHCRdhLdMJpqvmERbmvTrh9AXA7A31Zg==
-X-Gm-Gg: ASbGncu6eR9fDldKQIyM1pPmkaGyFshegMaPvVrhsNYh+t+LfzIdV3tKVzzcQyiZU+P
- sb6AUGkE6WPShxR1dSy8vhF4Qzc5ML/Bpfkj6pNA56vGDZiQuCtgEuMaf916kffb23yYFCyDJl8
- W1rHFyfH0/AXOWNVSgwMnIEk4MHb4caJ2ITejlHNXrT4rEdcmghjehtRt/aE0jolNtx3AYA5JN6
- x8ZDQ4ds0h8iLdBgY12Ygw7J9hrXXtDwJigSfMvX1r7ERjSgpxH2NBRPIOeOHfk3OR3EIzhN5+o
- EhaEe7EHvQz5ViNuNVmZ32w80LB/9ukTc0vjGgIdUzy3KPRlf67fJpa9
-X-Google-Smtp-Source: AGHT+IF5QqudS/guWJAwcTCu7MubeLiRik2qZEgTLndydkU2C2LlObe5fgmUapkZfrPinHV8GkaCVw==
-X-Received: by 2002:a05:6a21:501:b0:1f0:ea87:b40e with SMTP id
- adf61e73a8af0-1f0ea87b40fmr4464540637.41.1740385471311; 
- Mon, 24 Feb 2025 00:24:31 -0800 (PST)
+ bh=onlUINOp8JpvgGqdS5sWDC3DlUou1fW9JzejUaBAofM=;
+ b=SyRXxKmAltfCLRIiVG+qeiodqj911IutxJELfjM0RtzQuoEiGlK6SfChveE+l3/nvV
+ ZJN1m9k//wpzFEyVL7xrrlVX+kqJtsyWi/XQA5jVoHBzw8VcZODEkdWy6MMxyd8tpQmh
+ q5QLVd1SLj1JNsZ8HJJX5lbQ/vOQbCHXszUyE+jF30355g1Zeqr0E2In1ACp1QWsGQIE
+ FX+1XmruzZHcejRcBeHapOprF3gV3dq/U3NsWwg03oibgH30GPbzP1xM99H2O65fvPgd
+ Hsg9PjSk2cCLoz1OuZHFSbLWhQhW6MWwSaW4LJVbmxZKpoFqvdEAkEop37WBadF6WnRa
+ ZqYw==
+X-Gm-Message-State: AOJu0YyUqDXLpTxj0bwEYP5lqpgK2SC1E29eoMOOblCaWrAMclNmMyiJ
+ TEIIVynlxwE5AwFHSWnBMzNTbagutJENZf9RELkVsxAcDLarcJVmImz1OkAf1/UR7gMmngLeE8g
+ QOMccP8m1FeLZn6fZXKwtZRA5Wp9Vy80zMaXMcSZBpNP1rjBJpBBJVZMvYN/FzPjhfk6O4kyiUG
+ /VzWQGyMXxEfRIMTCtFF9Qx9SxZkZ0pklRVOe/E4sjYw==
+X-Gm-Gg: ASbGncvPnJmc/6P0qxTqEU7TlhS+fH08Oa/ga75YNqqcBtgA9NB40tzJiwQnUfjR6C6
+ rEP7D19Ng+i3kZdKBiMeUZZVqE4dY83EgB4zRu8vlNyVAkZsOt74g0xJoXWOjToEbZrPTn2A9SZ
+ dhwrcoX/QSUTFnTo2EQ5LEv8B/H2nf+kQnf/SvAOyqDUlGCA9R1kF5MMRqwlhWb5jL6VzOEfi1w
+ vRqGKmMempDMVHa1UcLRlHXd/BFdCF53vLRHYwUBWglJSoWbxbe5o2Z1rgWDHLMQsZF4C7SpMZr
+ u5O1LY3wKlUpEFhQeHjyS0OEq+2SyJjAMKteeYP3wOUX9Rc7asS/P5AS
+X-Google-Smtp-Source: AGHT+IFUB2NTRW56OIeSFM0J0s3sbM8xJzq+zvg3CSR8DFYSdfiwAVuzghlx2r0rdoYs+QjJxMyF6Q==
+X-Received: by 2002:a05:6a00:9283:b0:732:56cb:2f83 with SMTP id
+ d2e1a72fcca58-73426d72adbmr19698817b3a.15.1740385484860; 
+ Mon, 24 Feb 2025 00:24:44 -0800 (PST)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7325c88d74esm17714914b3a.149.2025.02.24.00.24.28
+ d2e1a72fcca58-7325c88d74esm17714914b3a.149.2025.02.24.00.24.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 00:24:30 -0800 (PST)
+ Mon, 24 Feb 2025 00:24:44 -0800 (PST)
 From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -72,17 +72,15 @@ Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
  Alistair Francis <alistair.francis@wdc.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/8] target/riscv/kvm: rewrite get/set for KVM_REG_RISCV_CSR
-Date: Mon, 24 Feb 2025 16:24:08 +0800
-Message-Id: <20250224082417.31382-2-yongxuan.wang@sifive.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v2 4/8] target/riscv: add helper to get CSR name
+Date: Mon, 24 Feb 2025 16:24:11 +0800
+Message-Id: <20250224082417.31382-5-yongxuan.wang@sifive.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20250224082417.31382-1-yongxuan.wang@sifive.com>
 References: <20250224082417.31382-1-yongxuan.wang@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,126 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As KVM_REG_RISCV_CSR includes several subtypes of CSR, rewrite the
-related macros and functions to prepare for other subtypes.
+Add a helper function to get CSR name from CSR number.
 
 Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 70 +++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 27 deletions(-)
+ target/riscv/cpu.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 471fd554b369..ff1211d2fe39 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -111,9 +111,8 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CORE, \
-                            KVM_REG_RISCV_CORE_REG(name))
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 616c3bdc1c24..df10ff63474b 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -920,8 +920,14 @@ extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
+ void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
+ void riscv_set_csr_ops(int csrno, riscv_csr_operations *ops);
  
--#define RISCV_CSR_REG(env, name) \
--    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CSR, \
--                           KVM_REG_RISCV_CSR_REG(name))
-+#define RISCV_CSR_REG(env, idx) \
-+    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CSR, idx)
+-void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
++static inline const char *riscv_get_csr_name(int csr_no)
++{
++    g_assert(csr_no > 0 && csr_no < CSR_TABLE_SIZE);
  
- #define RISCV_CONFIG_REG(env, name) \
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
-@@ -130,17 +129,20 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
-                            KVM_REG_RISCV_VECTOR_CSR_REG(name))
- 
--#define KVM_RISCV_GET_CSR(cs, env, csr, reg) \
-+#define RISCV_GENERAL_CSR_REG(name) \
-+    (KVM_REG_RISCV_CSR_GENERAL | KVM_REG_RISCV_CSR_REG(name))
-+
-+#define KVM_RISCV_GET_CSR(cs, env, idx, reg) \
-     do { \
--        int _ret = kvm_get_one_reg(cs, RISCV_CSR_REG(env, csr), &reg); \
-+        int _ret = kvm_get_one_reg(cs, RISCV_CSR_REG(env, idx), &reg); \
-         if (_ret) { \
-             return _ret; \
-         } \
-     } while (0)
- 
--#define KVM_RISCV_SET_CSR(cs, env, csr, reg) \
-+#define KVM_RISCV_SET_CSR(cs, env, idx, reg) \
-     do { \
--        int _ret = kvm_set_one_reg(cs, RISCV_CSR_REG(env, csr), &reg); \
-+        int _ret = kvm_set_one_reg(cs, RISCV_CSR_REG(env, idx), &reg); \
-         if (_ret) { \
-             return _ret; \
-         } \
-@@ -608,36 +610,50 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
-     return ret;
- }
- 
--static int kvm_riscv_get_regs_csr(CPUState *cs)
-+static int kvm_riscv_get_regs_general_csr(CPUState *cs)
- {
-     CPURISCVState *env = &RISCV_CPU(cs)->env;
- 
--    KVM_RISCV_GET_CSR(cs, env, sstatus, env->mstatus);
--    KVM_RISCV_GET_CSR(cs, env, sie, env->mie);
--    KVM_RISCV_GET_CSR(cs, env, stvec, env->stvec);
--    KVM_RISCV_GET_CSR(cs, env, sscratch, env->sscratch);
--    KVM_RISCV_GET_CSR(cs, env, sepc, env->sepc);
--    KVM_RISCV_GET_CSR(cs, env, scause, env->scause);
--    KVM_RISCV_GET_CSR(cs, env, stval, env->stval);
--    KVM_RISCV_GET_CSR(cs, env, sip, env->mip);
--    KVM_RISCV_GET_CSR(cs, env, satp, env->satp);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sstatus), env->mstatus);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sie), env->mie);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stvec), env->stvec);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sscratch), env->sscratch);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sepc), env->sepc);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(scause), env->scause);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stval), env->stval);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sip), env->mip);
-+    KVM_RISCV_GET_CSR(cs, env, RISCV_GENERAL_CSR_REG(satp), env->satp);
- 
-     return 0;
- }
- 
--static int kvm_riscv_put_regs_csr(CPUState *cs)
-+static int kvm_riscv_put_regs_general_csr(CPUState *cs)
- {
-     CPURISCVState *env = &RISCV_CPU(cs)->env;
- 
--    KVM_RISCV_SET_CSR(cs, env, sstatus, env->mstatus);
--    KVM_RISCV_SET_CSR(cs, env, sie, env->mie);
--    KVM_RISCV_SET_CSR(cs, env, stvec, env->stvec);
--    KVM_RISCV_SET_CSR(cs, env, sscratch, env->sscratch);
--    KVM_RISCV_SET_CSR(cs, env, sepc, env->sepc);
--    KVM_RISCV_SET_CSR(cs, env, scause, env->scause);
--    KVM_RISCV_SET_CSR(cs, env, stval, env->stval);
--    KVM_RISCV_SET_CSR(cs, env, sip, env->mip);
--    KVM_RISCV_SET_CSR(cs, env, satp, env->satp);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sstatus), env->mstatus);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sie), env->mie);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stvec), env->stvec);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sscratch), env->sscratch);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sepc), env->sepc);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(scause), env->scause);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(stval), env->stval);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(sip), env->mip);
-+    KVM_RISCV_SET_CSR(cs, env, RISCV_GENERAL_CSR_REG(satp), env->satp);
-+
-+    return 0;
++    return csr_ops[csr_no].name;
 +}
 +
-+static int kvm_riscv_get_regs_csr(CPUState *cs)
-+{
-+    kvm_riscv_get_regs_general_csr(cs);
-+
-+    return 0;
-+}
-+
-+static int kvm_riscv_put_regs_csr(CPUState *cs)
-+{
-+    kvm_riscv_put_regs_general_csr(cs);
++void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+ target_ulong riscv_new_csr_seed(target_ulong new_value,
+                                 target_ulong write_mask);
  
-     return 0;
- }
 -- 
 2.17.1
 
