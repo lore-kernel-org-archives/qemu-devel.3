@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C5AC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F9CC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmc3H-00079L-Nt; Mon, 24 Feb 2025 12:15:31 -0500
+	id 1tmc3D-00076g-0j; Mon, 24 Feb 2025 12:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc34-000755-Fe
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:18 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tmc2q-0006wV-0S
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:04 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2z-0005mV-0H
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:15 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-220d398bea9so74158225ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:15:09 -0800 (PST)
+ id 1tmc2o-0005Zh-2P
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:03 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-221057b6ac4so89507705ad.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:15:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740417308; x=1741022108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740417300; x=1741022100; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mzQvzV3GwNPTMMqwNQwmxD5F34q8V2N0DYRW/VglmXk=;
- b=EJ/5LaYztoXmDuU5FyJWPpyeSBGZRCIRAiDlvELyciewlCZZOZAI+PbFTJxgY7lvq0
- LCSQ2zpnEMUEol/aAwJadWqKMZXUBYPGxZjbhCMoxmRWbfukgFSMY6KIdPm9+zQS6nPb
- b+mRjB0q5eTeb0NDInMaiPUaT17KM3iP4zlOG6LCOt/3U3kA9EvxvYH3DJk6mYoWs9ke
- 9q8Gskbpq4kdr7YNo1pwx71aA2wZCQ3Fcwc5Ai1jnK0LQxB3G1VDbhu4xTUSHeu8BSnO
- Gl4LnWsyAUwiERqAk7gxgzgvC9YT9X6bUNLPYR5jdNIl2J2ZsHYg8Yc9lhcAmcNm2/Fi
- GYvA==
+ bh=0TfQANeGhBzfOc8Bs0tbxIBYA/LtaZzgi1bfrB1DlmU=;
+ b=rTnFSdJamGElFp1ZU4oaKlclgm/xXS1fp9Bw51qeQ2+23bBuQZVjvikAfZoSP2bG90
+ OSTuU5Ye80742u//4Pw4cq+BXwE6/nLytkuhwbdsoepIwmtS/nxEZR7GZYumFdF7xUHn
+ m4kxbF/QKfN6v0ecTzVWVT0h9ncqDYlFJq0QDYOAAFcPYCvlEihVPAS8lm9iSHAEBgWm
+ 6XI0itYDUD55jPIV/XlUudfETCA7vJ+YyGpPacVR1S73Ob2WbDtT0MqwhER05XeAEsRN
+ 4aAyQ5KYgE4tfp5fRErxV3nE1ZZriRD1C8RW5SjjJuqyfxYnVhaHdBzurmr3DmY7eTaS
+ ns6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740417308; x=1741022108;
+ d=1e100.net; s=20230601; t=1740417300; x=1741022100;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mzQvzV3GwNPTMMqwNQwmxD5F34q8V2N0DYRW/VglmXk=;
- b=fPy+kONwu3mdYMdZaRN0w0vpheIok+Nzrut+V1zBp2/c/zMpDtyzp5LESyw+tY11E2
- Mk3nuApmtTR77Jtbtiqs4nxwSAzSBQkaYWoDKDWtTZXS74GPXOpZU8k2ZjjvZnJ4e6Qm
- 4hTrBCuBZ2o3/QNjY3gofK2L2wmPSC0Qisxx/Y46SBiZ6uGTI5+gEhfBx1c/XtN3uBTI
- gKnraCO496ZqeRH79cSnYMHANt8e3rEkKCl6EVZQdjLmX8i8UrDkTh+0TU+rXLbAwdwz
- zyZEbjCXAceCDLOPVTtd/LbPhLXcEdxuIbqPFY7sBgXD6PFXtcwQWlfGaAd+Oi0f4FzS
- w1XQ==
-X-Gm-Message-State: AOJu0YweWpnrKmZUPMBmefx+bOhD/s7CEkZfJ5YsvKyyPeT0+arAJbox
- AEeqz3yhrdREPBQlu/MChOntM4J0865DiNVYx1Pn/9in6uaoA7DRCbxM9+My/Tps3hrUlfwUHSW
- 6
-X-Gm-Gg: ASbGncvzkLOErCkGkMvA/fi+B6L1nxPe+ZxKL3BK5eSfZDTv18qwtChejJJyZxQhGUq
- SYFlSfXyDMneagsQWAnJ+q6sgKbKGUpa/42CHSSfn3g0wjjpU82m1m89aRyoYXXKNnFNCD7x3RQ
- njR0NoPF9PJsYOWi5VPxcGPZlRO4vECVU4N/e5omXW8r/TuniPIP1h1jHAdkH8CRMPs9ujYtwOX
- trYrsEHeDU5Tbs31u9caW+ZYnRj60qY5l8sbBZRhuhLlRLhOyZy8thBariZhaNSCQXcHDDWrEP3
- RaR559cEnI8lSpdatCfXlgJthgjkC6djBSk=
-X-Google-Smtp-Source: AGHT+IHpZ2kYIC8tFrGlV3XSXmFI4lDUgrm1zisWgY6vW3XSEPqnOKevtlYKI/sUOKsetYjBPoeV0g==
-X-Received: by 2002:a17:902:f60a:b0:21f:752f:f2b1 with SMTP id
- d9443c01a7336-221a1102975mr199982895ad.30.1740417308322; 
- Mon, 24 Feb 2025 09:15:08 -0800 (PST)
+ bh=0TfQANeGhBzfOc8Bs0tbxIBYA/LtaZzgi1bfrB1DlmU=;
+ b=m+Xa9jCERlMNTbOXG17rr+E9SHvkAvrcBKqm0zb9rCycprvECtxzDojQFgKM4177B+
+ YsB3E7rmUpTt/FPp3YBmV3J3Uk2tGZ8ZYe6rQ0H6bSIAjHqe8TFbrrXCp3g28tieU2wU
+ xkoz2X31eTn/53OQmKPqr/5lHoEux7rFp9p8tFLAu9rFdHu3ReMgJYDbGh1vbtDZCWxW
+ R2ArJCnVi4dVe92f1Vm1aXyt8RLRRdrukYMHg2n0I6OOKS1xhIo2FoXVsu9tCFgCcOlZ
+ bNS8bTB0Gu1YqfPmSXGFnaq3r5cDqZATS/7z8aLv4bVQuxnAzHSoA+Ie/ecrxdXE/pdB
+ tELA==
+X-Gm-Message-State: AOJu0Yzs3La6mXxzAcKRmAI+8dGSVCU1zZoBpw9q0mSeIcx24wOKl+qA
+ R4mOzFhc/w/VtFPd+tjOXQLratEmiwN3In1brJTXec5YGEhmxs8w5P3i8XvhOUzcL1pAaNGohxM
+ R
+X-Gm-Gg: ASbGncts1Az8fTDBhnDCHTeds3icDHaIZiCLbYJHMc2EuyAdbKq7vg7LEp/cwtithI7
+ WBSalzcfUiEC1Vxm7V++4rprl+RVTXdqNYH7l4JUoVBVtUEEkhDB3Ma6eAASLTzEvOBdZ+ZNgMM
+ vRLzG/ECE+KsXGlMtjkWHjDpdgo42Li4kKaPx/7JmrUP1daPet1SugfJ2dp0w023VzC/T3dZ5Dm
+ Li2CZibIlVoYETl3nQvheClodqk8PLO0agpumKbU6Y+9KBupoY3RztjQ36HCg5d+PzvbREsc8s/
+ q9Fhna704dhG7IjdtI4Qww2J8dILFN9Gdf0=
+X-Google-Smtp-Source: AGHT+IEg9XrXPmva+vJ8B7KslpF9yB+sBeZFVYu7dwQ10X630hpFPDndkR2dsj7+133HCeGKztzRyQ==
+X-Received: by 2002:a05:6a21:513:b0:1ee:d53c:e888 with SMTP id
+ adf61e73a8af0-1eef52c65e9mr24015554637.2.1740417299163; 
+ Mon, 24 Feb 2025 09:14:59 -0800 (PST)
 Received: from stoup.. ([2607:fb90:c9e2:d7e3:c85c:d4f0:c8b8:8fa7])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.15.07
+ d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.14.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 09:15:08 -0800 (PST)
+ Mon, 24 Feb 2025 09:14:58 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 16/24] target/m68k: Remove env argument to gen_ea_mode_fp
-Date: Mon, 24 Feb 2025 09:14:36 -0800
-Message-ID: <20250224171444.440135-17-richard.henderson@linaro.org>
+Cc: laurent@vivier.eu
+Subject: [PATCH v4 09/24] target/m68k: Use OS_UNSIZED in LEA, PEA, JMP
+Date: Mon, 24 Feb 2025 09:14:29 -0800
+Message-ID: <20250224171444.440135-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250224171444.440135-1-richard.henderson@linaro.org>
 References: <20250224171444.440135-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,80 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the env pointer in DisasContext.
+For LEA and PEA, while the manual says "size = (long)", it also says
+that the pre-decrement and post-increment addressing modes are illegal.
+For JMP, the manual says "unsized".  OS_UNSIZED is the way to signal
+gen_lea_mode to reject those addressing modes.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ target/m68k/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index df1bfe6786..368188ce28 100644
+index 4f70b77621..23449e4d22 100644
 --- a/target/m68k/translate.c
 +++ b/target/m68k/translate.c
-@@ -1012,9 +1012,8 @@ static void gen_ldst_fp(DisasContext *s, int opsize, TCGv addr,
-     }
- }
+@@ -2561,7 +2561,7 @@ DISAS_INSN(lea)
+     TCGv tmp;
  
--static int gen_ea_mode_fp(CPUM68KState *env, DisasContext *s, int mode,
--                          int reg0, int opsize, TCGv_ptr fp, ea_what what,
--                          int index)
-+static int gen_ea_mode_fp(DisasContext *s, int mode, int reg0, int opsize,
-+                          TCGv_ptr fp, ea_what what, int index)
+     reg = AREG(insn, 9);
+-    tmp = gen_lea(env, s, insn, OS_LONG);
++    tmp = gen_lea(env, s, insn, OS_UNSIZED);
+     if (IS_NULL_QREG(tmp)) {
+         gen_addr_fault(s);
+         return;
+@@ -2658,7 +2658,7 @@ DISAS_INSN(pea)
  {
-     TCGv reg, addr, tmp;
-     TCGv_i64 t64;
-@@ -1059,23 +1058,23 @@ static int gen_ea_mode_fp(CPUM68KState *env, DisasContext *s, int mode,
-         if (reg0 == 4 && what != EA_STORE) {
-             switch (opsize) {
-             case OS_BYTE:
--                tmp = tcg_constant_i32((int8_t)read_im8(env, s));
-+                tmp = tcg_constant_i32((int8_t)read_im8(s->env, s));
-                 gen_helper_exts32(tcg_env, fp, tmp);
-                 break;
-             case OS_WORD:
--                tmp = tcg_constant_i32((int16_t)read_im16(env, s));
-+                tmp = tcg_constant_i32((int16_t)read_im16(s->env, s));
-                 gen_helper_exts32(tcg_env, fp, tmp);
-                 break;
-             case OS_LONG:
--                tmp = tcg_constant_i32(read_im32(env, s));
-+                tmp = tcg_constant_i32(read_im32(s->env, s));
-                 gen_helper_exts32(tcg_env, fp, tmp);
-                 break;
-             case OS_SINGLE:
--                tmp = tcg_constant_i32(read_im32(env, s));
-+                tmp = tcg_constant_i32(read_im32(s->env, s));
-                 gen_helper_extf32(tcg_env, fp, tmp);
-                 break;
-             case OS_DOUBLE:
--                t64 = tcg_constant_i64(read_im64(env, s));
-+                t64 = tcg_constant_i64(read_im64(s->env, s));
-                 gen_helper_extf64(tcg_env, fp, t64);
-                 break;
-             case OS_EXTENDED:
-@@ -1083,9 +1082,9 @@ static int gen_ea_mode_fp(CPUM68KState *env, DisasContext *s, int mode,
-                     gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-                     break;
-                 }
--                tmp = tcg_constant_i32(read_im32(env, s) >> 16);
-+                tmp = tcg_constant_i32(read_im32(s->env, s) >> 16);
-                 tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
--                t64 = tcg_constant_i64(read_im64(env, s));
-+                t64 = tcg_constant_i64(read_im64(s->env, s));
-                 tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
-                 break;
-             case OS_PACKED:
-@@ -1122,7 +1121,7 @@ static int gen_ea_fp(CPUM68KState *env, DisasContext *s, uint16_t insn,
- {
-     int mode = extract32(insn, 3, 3);
-     int reg0 = REG(insn, 0);
--    return gen_ea_mode_fp(env, s, mode, reg0, opsize, fp, what, index);
-+    return gen_ea_mode_fp(s, mode, reg0, opsize, fp, what, index);
- }
+     TCGv tmp;
  
- typedef struct {
+-    tmp = gen_lea(env, s, insn, OS_LONG);
++    tmp = gen_lea(env, s, insn, OS_UNSIZED);
+     if (IS_NULL_QREG(tmp)) {
+         gen_addr_fault(s);
+         return;
+@@ -2909,7 +2909,7 @@ DISAS_INSN(jump)
+      * Load the target address first to ensure correct exception
+      * behavior.
+      */
+-    tmp = gen_lea(env, s, insn, OS_LONG);
++    tmp = gen_lea(env, s, insn, OS_UNSIZED);
+     if (IS_NULL_QREG(tmp)) {
+         gen_addr_fault(s);
+         return;
 -- 
 2.43.0
 
