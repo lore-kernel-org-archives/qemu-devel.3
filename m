@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7777C021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 15:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D28C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 15:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tma9R-0002Q4-8L; Mon, 24 Feb 2025 10:13:45 -0500
+	id 1tmaAB-0002hs-34; Mon, 24 Feb 2025 10:14:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tma9N-0002PQ-4E
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:13:41 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tmaA8-0002hL-Gl
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:14:28 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tma9L-0003uz-BR
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:13:40 -0500
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OBMaVM015094;
- Mon, 24 Feb 2025 15:13:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2023-11-20; bh=KCIke3eg
- wg85D5GLuLciOHAOb4jfr51/0xzzd6GZA54=; b=hsyXPZpMZgfotp2bByuBjdhX
- n1FEHrtCZWjTJrGsTZfhP9XiacXqL+s7Z3ung4tMT45rYpXbwLmtVhCvc7ZHNOTd
- eNGPmYa3FI5b1RBOarG6IiizxP+mUTOeQ2eTga/saDrOGzA6llwRY+LH+Fd06drU
- 1eWJSxLgcpmbtpovawCHYc9JbeuIGoWa2aSPhvGd0w3Cj27klSfAxiP+vwdatw6b
- GYPPAkaSJSA0//N5colebi7BQJdkl5Wt1IY/bQEofTjdm/QLnanx8/bJnoYwvHK4
- iPEdkhvdqXKrdbpvnCFHeRmoUhq68o1qJ20ZK2mkF6ISZbkPU63/m77+KFNvqA==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44y66sarm0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Feb 2025 15:13:33 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 51OEWWo4002716; Mon, 24 Feb 2025 15:13:32 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 44y5181ehb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Feb 2025 15:13:32 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51OFDSjo005674;
- Mon, 24 Feb 2025 15:13:28 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 44y5181dsj-1; Mon, 24 Feb 2025 15:13:28 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3] migration: ram block cpr blockers
-Date: Mon, 24 Feb 2025 07:12:59 -0800
-Message-Id: <1740409979-243462-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-24_06,2025-02-24_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0
- mlxscore=0 adultscore=0 bulkscore=0 phishscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2502100000 definitions=main-2502240109
-X-Proofpoint-GUID: MHl29_2L8ZiE8Lzqwa3V0D5ukatTs-0A
-X-Proofpoint-ORIG-GUID: MHl29_2L8ZiE8Lzqwa3V0D5ukatTs-0A
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tmaA6-00040s-7O
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 10:14:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740410066; x=1771946066;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=nqnXOdhhbSf3FSsBLv+n0ff4BYjRtr/PsBIjLrIkf30=;
+ b=PcpjREZrP3YBbu4hi5hnDqoPUD3oVtP8I5U2ZVXzr0hZBJDVa3KeuIT/
+ EbY2zrm2S/sVAobIxVDjufq0Tq8U+hTr1fQww3I7q0mIZnnihNt7Hzg5K
+ 2SdtM/FOkUB8ZMorLFRo9dXfypCzK/cqgQV0T5PjrFwhidxFlqtffaplc
+ n3M46y45+8ZWqn8BIsSVswTzoJ9zM+aqnQVBRLn51A/ZMD1cfIu3pT3Pi
+ ANCpXmmdrBLbLZGKs0TiYpdrezvlaF1HfrcMqHWdQ4bMHvr7i/O0wCnIa
+ a+dNjiftIIheNIRXhM/ubDqVajmrp2S71yaUVZlg3dAAlsrbE/UL4Vxdi w==;
+X-CSE-ConnectionGUID: oc/k+DlkToC6vv2ufLGqVQ==
+X-CSE-MsgGUID: kvqEcJCoR5qghd5q2HGG8Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11355"; a="45075988"
+X-IronPort-AV: E=Sophos;i="6.13,309,1732608000"; d="scan'208";a="45075988"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Feb 2025 07:14:23 -0800
+X-CSE-ConnectionGUID: U9UcDV1EToK7wB6Cedv8lQ==
+X-CSE-MsgGUID: S1j/Q2SIQNKO7mM0xMFxtg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,309,1732608000"; d="scan'208";a="116106267"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 24 Feb 2025 07:14:22 -0800
+Date: Mon, 24 Feb 2025 23:33:58 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH RESEND] i386: Only configure HPET firmware info when HPET
+ is enabled
+Message-ID: <Z7yRZhwCPkPrrtnu@intel.com>
+References: <20250121140121.84550-1-zhao1.liu@intel.com>
+ <20250220101525-mutt-send-email-mst@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250220101525-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,161 +90,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike cpr-reboot mode, cpr-transfer mode cannot save volatile ram blocks
-in the migration stream file and recreate them later, because the physical
-memory for the blocks is pinned and registered for vfio.  Add a blocker
-for volatile ram blocks.
+Hi Michael,
 
-Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd may be
-sufficient for CPR, but it has not been tested yet.
+Thanks for looking at here!
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
----
- include/exec/memory.h   |  3 +++
- include/exec/ramblock.h |  1 +
- migration/savevm.c      |  2 ++
- system/physmem.c        | 68 +++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 74 insertions(+)
+On Thu, Feb 20, 2025 at 10:16:56AM -0500, Michael S. Tsirkin wrote:
+> Date: Thu, 20 Feb 2025 10:16:56 -0500
+> From: "Michael S. Tsirkin" <mst@redhat.com>
+> Subject: Re: [PATCH RESEND] i386: Only configure HPET firmware info when
+>  HPET is enabled
+> 
+> On Tue, Jan 21, 2025 at 10:01:21PM +0800, Zhao Liu wrote:
+> > At present, the hpet_cfg is written unconditionally since 40ac17cd56eb
+> > ("pass info about hpets to seabios.]"), because it concerns ACPI HPET is
+> > created unconditionally.
+> > 
+> > But that fact has changed since 51124bbfd2ea ("i386: acpi: Don't build
+> > HPET ACPI entry if HPET is disabled") and ACPI checks if HPET device
+> > exists in (hw/i386/acpi-build.c).
+> > 
+> > Therefore, configure HPET firmware information if and only if HPET is
+> > enabled.
+> >
+> 
+> and what is the gain from this change? just a cleanup?
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 9f73b59..ea5d33a 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -3184,6 +3184,9 @@ bool ram_block_discard_is_disabled(void);
-  */
- bool ram_block_discard_is_required(void);
- 
-+void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
-+void ram_block_del_cpr_blocker(RAMBlock *rb);
-+
- #endif
- 
- #endif
-diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-index 0babd10..64484cd 100644
---- a/include/exec/ramblock.h
-+++ b/include/exec/ramblock.h
-@@ -39,6 +39,7 @@ struct RAMBlock {
-     /* RCU-enabled, writes protected by the ramlist lock */
-     QLIST_ENTRY(RAMBlock) next;
-     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
-+    Error *cpr_blocker;
-     int fd;
-     uint64_t fd_offset;
-     int guest_memfd;
-diff --git a/migration/savevm.c b/migration/savevm.c
-index bc375db..85a3559 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3315,12 +3315,14 @@ void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
-     qemu_ram_set_idstr(mr->ram_block,
-                        memory_region_name(mr), dev);
-     qemu_ram_set_migratable(mr->ram_block);
-+    ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
- }
- 
- void vmstate_unregister_ram(MemoryRegion *mr, DeviceState *dev)
- {
-     qemu_ram_unset_idstr(mr->ram_block);
-     qemu_ram_unset_migratable(mr->ram_block);
-+    ram_block_del_cpr_blocker(mr->ram_block);
- }
- 
- void vmstate_register_ram_global(MemoryRegion *mr)
-diff --git a/system/physmem.c b/system/physmem.c
-index 67c9db9..5a67f67 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -70,7 +70,10 @@
- 
- #include "qemu/pmem.h"
- 
-+#include "qapi/qapi-types-migration.h"
-+#include "migration/blocker.h"
- #include "migration/cpr.h"
-+#include "migration/options.h"
- #include "migration/vmstate.h"
- 
- #include "qemu/range.h"
-@@ -1899,6 +1902,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-         }
-+
-+        error_setg(&new_block->cpr_blocker,
-+                   "Memory region %s uses guest_memfd, "
-+                   "which is not supported with CPR.",
-+                   memory_region_name(new_block->mr));
-+        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
-+                                  MIG_MODE_CPR_TRANSFER,
-+                                  -1);
-     }
- 
-     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-@@ -4059,3 +4070,60 @@ bool ram_block_discard_is_required(void)
-     return qatomic_read(&ram_block_discard_required_cnt) ||
-            qatomic_read(&ram_block_coordinated_discard_required_cnt);
- }
-+
-+/*
-+ * Return true if ram is compatible with CPR.  Do not exclude rom,
-+ * because the rom file could change in new QEMU.
-+ */
-+static bool ram_is_cpr_compatible(RAMBlock *rb)
-+{
-+    MemoryRegion *mr = rb->mr;
-+
-+    if (!mr || !memory_region_is_ram(mr)) {
-+        return true;
-+    }
-+
-+    /* Ram device is remapped in new QEMU */
-+    if (memory_region_is_ram_device(mr)) {
-+        return true;
-+    }
-+
-+    /* Named files are remapped in new QEMU, same contents if shared (no COW) */
-+    if (qemu_ram_is_shared(rb) && qemu_ram_is_named_file(rb)) {
-+        return true;
-+    }
-+
-+    /* A file descriptor is remapped in new QEMU */
-+    if (rb->fd >= 0) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+/*
-+ * Add a blocker for each volatile ram block.  This function should only be
-+ * called after we know that the block is migratable.  Non-migratable blocks
-+ * are either re-created in new QEMU, or are handled specially, or are covered
-+ * by a device-level CPR blocker.
-+ */
-+void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
-+{
-+    assert(qemu_ram_is_migratable(rb));
-+
-+    if (ram_is_cpr_compatible(rb)) {
-+        return;
-+    }
-+
-+    error_setg(&rb->cpr_blocker,
-+               "Memory region %s is not compatible with CPR. share=on is "
-+               "required for memory-backend objects, and aux-ram-share=on is "
-+               "required.", memory_region_name(rb->mr));
-+    migrate_add_blocker_modes(&rb->cpr_blocker, errp, MIG_MODE_CPR_TRANSFER,
-+                              -1);
-+}
-+
-+void ram_block_del_cpr_blocker(RAMBlock *rb)
-+{
-+    migrate_del_blocker(&rb->cpr_blocker);
-+}
--- 
-1.8.3.1
+This patch was trying to decouple hpet_cfw with i386 codes, which can
+resolve the compilation issue when both the Rust and C versions of HPET
+are both disabled.
+
+But this patch is not needed since Paolo has figured out a simpler way
+[*].
+
+And thank you anyway!
+
+[*]: https://lore.kernel.org/qemu-devel/CABgObfb6PhiKO9=iWne9AoXQ+Ek7FddoW8D0VcWvw3Qa3TW-9w@mail.gmail.com/
+
+Regards,
+Zhao
 
 
