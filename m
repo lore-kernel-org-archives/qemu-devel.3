@@ -4,109 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2102BC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 18:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83CF7C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 18:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmdMa-0001te-Gx; Mon, 24 Feb 2025 13:39:32 -0500
+	id 1tmdNc-0002u4-5f; Mon, 24 Feb 2025 13:40:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tmdKR-00085G-Cj
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:37:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tmdKO-0005i7-Is
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:37:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740422230;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bus5ZjkZ0Q1fqVEcvqpc0Gzr+5y9nonsf/lTcfPLqzc=;
- b=Ci67Vd+/v4zzt7noNobLqDFEF7ViLkI9T8NJlCBHmW6qSR1uHCc5g5aNrkFjdxzlMpCBT4
- VWlceryusl0RA+C1gwb02g9cdVqD32m2uYSHRwiqwKJXv7oTohRNrDp1w22CK4K2r0ClxU
- nPqi5d4PHMJfjASKZwM7PbUUsGTl8M4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-RJLrU0oAPviI4MQCHJrP4g-1; Mon, 24 Feb 2025 13:37:08 -0500
-X-MC-Unique: RJLrU0oAPviI4MQCHJrP4g-1
-X-Mimecast-MFC-AGG-ID: RJLrU0oAPviI4MQCHJrP4g_1740422227
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43aafafe6b7so3850105e9.1
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 10:37:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tmdDD-0005fY-On
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:29:54 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tmdD7-0003KB-T3
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:29:51 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-2212a930001so16496855ad.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 10:29:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740421783; x=1741026583; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tAilGogcJ69e+gk+U7AAsM5atW/gLI/r88D/oQ3BuBI=;
+ b=fZ6oaba5g1JFxoXG3LedXfjOn0wvUmM4kxKYniwnJ1Xibw0jAnmb5w6I/Stiy9M3ZK
+ +tTOguMBdn5cEvB/KGZNh3Yp8L6ruG3tAHe0rg9wnTBDfbSTk/3oQMfYu1j5Vqb0BwPo
+ vMnKK4+pjAfZIDdVQ8uQJsb+8FdmTMvhWyMUU7h1lo9HwFUYlhJFrD8TGapauOmhTRrb
+ Ueg+efzw12eZg25iKokHuQdT6nxDJ/fQ6YXcxUgZ5sKrwZ0BwbBGxyds95YnNzSoq4dI
+ 7oQ405LMVAKRfXHSAyhgY8xozZ1p3pG+fUBsEgSpqw1fSD4cC14XcAbckWMG41uLF//o
+ rVyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740422227; x=1741027027;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Bus5ZjkZ0Q1fqVEcvqpc0Gzr+5y9nonsf/lTcfPLqzc=;
- b=PMiP2n35R/MU7+JpJbZ++HVdicQ86tsxj4/Duza9n+MQdEVgjyroPWZ0hgqKE8SaMd
- 0XM/9T46Kh70tzg2gmJq3O3NgBekphwuuCu7O8sV5Njl8o7mgmGZ4Vk9gi9U077PAWDt
- 5l21H6RCUgGx6UroltCpKY4kJSgfJnCgx+HGhtFxxMJX6ZrrhncN+iaCIIralF6cQMtb
- ZmGNMawH3RNbyjIoBlP5fCH3Ow95gN4nKEb6IPt9mhuyQr1Tm/PXq415Ve/0uJjuO+Le
- SIg33xU/rvzM+1R0RbSU0YWRrNtKP4wdcxDfQqQP0N0nynhC7SV2v+lMzv6FuhWSuDUn
- A7Wg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhB0IsSk793Tu7jLqtDzJcq2s9DAyNLelFBuZZRt5HQWD/Ukb/sI27VAjfFjGXKQ1oFvcpTGXgARGJ@nongnu.org
-X-Gm-Message-State: AOJu0YzT3E6w4VC3SZxfYfBtOfLRi5HHDyRKDB8BlCbN0YXD9APdQ5kx
- +a1ClJqsVQxHsTN9aVsHIBY3210Hf53S3Ia7I4x2XIq2pf40bXa5r4IrGahPOoSfmv7Hc0ixmw0
- Xztsj7wwLxI0kYREbbeE8Xs+yOJTY8+trbuHXe6ihEprYhPynu6ss
-X-Gm-Gg: ASbGncuB+upAK0FUb3zY4NJdIm6OTo6FvmtYSkLeKYhu/DeCJyF7cWMAS7A8wAC23Eu
- 55vKo79cdmWeJ6vGH+e1/o2ZYy4xv0P03462gI+OtenJQvheWqcHJ5oXavKLYP2JT9UFrrKk4O6
- l9Zb7aEOuMU5qcG72l/j95KZykdTw+rdBJAssMbpdebSumTgpr2XOuNC8yilOGslS5/w4sjBRW6
- 86jMNOtzWHL54nw//N0vRiih67gcOpPXKAMKTCJP0zHi6uHJ06McBEQ1DnKRxYPXeYLNl4Am7QV
- cA6gfPzVeQPh4uveJtbGwi7v56oC5Po7nb0EiXqksZQjy6h9jbaGQxqn63OlXVw=
-X-Received: by 2002:a5d:6daa:0:b0:38a:87cc:fb42 with SMTP id
- ffacd0b85a97d-38f6e95d5famr12386782f8f.21.1740422227477; 
- Mon, 24 Feb 2025 10:37:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEpujlNRfU4TY3mhPF0XkK8PyGOsh/x2KKK/1KevjqqJl/cT2P5ENG6Y+G+/FUHG4XiByvSxg==
-X-Received: by 2002:a5d:6daa:0:b0:38a:87cc:fb42 with SMTP id
- ffacd0b85a97d-38f6e95d5famr12386754f8f.21.1740422227114; 
- Mon, 24 Feb 2025 10:37:07 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ d=1e100.net; s=20230601; t=1740421783; x=1741026583;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tAilGogcJ69e+gk+U7AAsM5atW/gLI/r88D/oQ3BuBI=;
+ b=tqtnFybGW/+DQjGfdJa3Vpqp/ZLhXe+mWCjtgj50aD9rDh6r5nzR0S6i/7xRJfyysO
+ 3LcCNsqrWhfH44M+5nq04kk7L0OtxjJ17sMstgO1GWc0UFNtHhgXvEiVsUBMOciCXX6f
+ kqn2oH0ar+ZpHHiJax1fGT2knqpAC62DO+eTjaINBZZ3KOZQ/sKwpESr/obiNGHNbqO2
+ 8Q84B7K6kr0EkXcCqJLuZ/VpNnvUR1gEltlIQfHzrffW52IxIrC3ziQLg3rkG6JOjH2y
+ XO3/5293mqe5b7zi7pLmAZkakOpPG6/nfOZcxymLYr9i4OoKsp4y0cUL+s3Izhcy7ZQX
+ 6/+w==
+X-Gm-Message-State: AOJu0Yy25COX4auzgLG6QOiP1RIlUaYc9EeyhFRT844Cov0tED+jXyzq
+ O7uXqfKf6tuWV5O7GMIfejVsNxfAJIZnwlN/klCnFsk2CvYXHZY=
+X-Gm-Gg: ASbGnctd+Lg4mGxC0Lx372QISOGHHWIK7t4dTm3ngjnzU1n1Ov2pi1+MgA6cG8mHU9C
+ hRWUsNZGkDMosJDRFnd96Tzv2yYpM8tPEp9+NYe2YfLcRGYz4qZSPZ3z0QnFiOoYZU5vELVBveY
+ c6n8eNNKRW0Xu/J+bA0ShmEuM1Y+R+OdvUE1kVvDuYYUyP/tHTHwRi97BWYmPQczN/sq0YejZU5
+ YL+OfNRCwj5CqM395x/BxQJig0hE7yl1jBoq9BBrN168HOe6gwCE6vKySnYAiftmNyP671QxJN7
+ GAFndkIkypdsie5tiuYaTx3YfP9SmOU8T13Hhdo=
+X-Google-Smtp-Source: AGHT+IFucJTC84KK9NKpkudn0o/c9TawXufCk6sNAkF8gG9bqlnC2mJVWoUPiyOG+OGWKET/zhEgHA==
+X-Received: by 2002:a17:903:2f92:b0:220:e896:54e1 with SMTP id
+ d9443c01a7336-221a10de4fdmr206300115ad.26.1740421783122; 
+ Mon, 24 Feb 2025 10:29:43 -0800 (PST)
+Received: from localhost.localdomain ([116.227.8.253])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02e486csm113012195e9.18.2025.02.24.10.37.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Feb 2025 10:37:06 -0800 (PST)
-Message-ID: <5604e46b-da22-46df-9d6e-2a163df62881@redhat.com>
-Date: Mon, 24 Feb 2025 19:37:03 +0100
+ d9443c01a7336-220d545cf6bsm183662615ad.123.2025.02.24.10.29.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Feb 2025 10:29:42 -0800 (PST)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH 02/10] vfio/igd: Do not include GTT stolen size in
+ etc/igd-bdsm-size
+Date: Tue, 25 Feb 2025 02:29:19 +0800
+Message-ID: <20250224182927.31519-3-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250224182927.31519-1-tomitamoeko@gmail.com>
+References: <20250224182927.31519-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] pci: Use PCI PM capability initializer
-Content-Language: en-US
-To: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
-Cc: eric.auger.pro@gmail.com, clg@redhat.com, zhenzhong.duan@intel.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>,
- Stefan Weil <sw@weilnetz.de>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>
-References: <20250220224918.2520417-1-alex.williamson@redhat.com>
- <20250220224918.2520417-3-alex.williamson@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250220224918.2520417-3-alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,142 +98,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Though GTT Stolen Memory (GSM) is right below Data Stolen Memory (DSM)
+in host address space, direct access to GSM is prohibited, and it is
+not mapped to guest address space. Both host and guest accesses GSM
+indirectly through the second half of MMIO BAR0 (GTTMMADR).
 
-Hi Alex,
+Guest firmware only need to reserve a memory region for DSM and program
+the BDSM register with the base address of that region, that's actually
+what both SeaBIOS[1] and OVMF does now.
 
-On 2/20/25 11:48 PM, Alex Williamson wrote:
-> Switch callers directly initializing the PCI PM capability with
-> pci_add_capability() to use pci_pm_init().
->
-> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
-> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Cc: Jason Wang <jasowang@redhat.com>
-> Cc: Stefan Weil <sw@weilnetz.de>
-> Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
-> Cc: Keith Busch <kbusch@kernel.org>
-> Cc: Klaus Jensen <its@irrelevant.dk>
-> Cc: Jesper Devantier <foss@defmacro.it>
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-> ---
->  hw/net/e1000e.c                 | 3 +--
->  hw/net/eepro100.c               | 4 +---
->  hw/net/igb.c                    | 3 +--
->  hw/nvme/ctrl.c                  | 3 +--
->  hw/pci-bridge/pcie_pci_bridge.c | 2 +-
->  hw/vfio/pci.c                   | 2 +-
->  hw/virtio/virtio-pci.c          | 3 +--
->  7 files changed, 7 insertions(+), 13 deletions(-)
->
-> diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
-> index f637853073e2..b72cbab7e889 100644
-> --- a/hw/net/e1000e.c
-> +++ b/hw/net/e1000e.c
-> @@ -372,8 +372,7 @@ static int
->  e1000e_add_pm_capability(PCIDevice *pdev, uint8_t offset, uint16_t pmc)
->  {
->      Error *local_err = NULL;
-> -    int ret = pci_add_capability(pdev, PCI_CAP_ID_PM, offset,
-> -                                 PCI_PM_SIZEOF, &local_err);
-> +    int ret = pci_pm_init(pdev, offset, &local_err);
->  
->      if (local_err) {
->          error_report_err(local_err);
-> diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
-> index 6d853229aec2..29a39865a608 100644
-> --- a/hw/net/eepro100.c
-> +++ b/hw/net/eepro100.c
-> @@ -551,9 +551,7 @@ static void e100_pci_reset(EEPRO100State *s, Error **errp)
->      if (info->power_management) {
->          /* Power Management Capabilities */
->          int cfg_offset = 0xdc;
-> -        int r = pci_add_capability(&s->dev, PCI_CAP_ID_PM,
-> -                                   cfg_offset, PCI_PM_SIZEOF,
-> -                                   errp);
-> +        int r = pci_pm_init(&s->dev, cfg_offset, errp);
->          if (r < 0) {
->              return;
->          }
-> diff --git a/hw/net/igb.c b/hw/net/igb.c
-> index 4d93ce629f95..700dbc746d3d 100644
-> --- a/hw/net/igb.c
-> +++ b/hw/net/igb.c
-> @@ -356,8 +356,7 @@ static int
->  igb_add_pm_capability(PCIDevice *pdev, uint8_t offset, uint16_t pmc)
->  {
->      Error *local_err = NULL;
-> -    int ret = pci_add_capability(pdev, PCI_CAP_ID_PM, offset,
-> -                                 PCI_PM_SIZEOF, &local_err);
-> +    int ret = pci_pm_init(pdev, offset, &local_err);
->  
->      if (local_err) {
->          error_report_err(local_err);
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 68903d1d7067..1faea3d2b85b 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -8503,8 +8503,7 @@ static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
->      Error *err = NULL;
->      int ret;
->  
-> -    ret = pci_add_capability(pci_dev, PCI_CAP_ID_PM, offset,
-> -                             PCI_PM_SIZEOF, &err);
-> +    ret = pci_pm_init(pci_dev, offset, &err);
->      if (err) {
->          error_report_err(err);
->          return ret;
-nit: below there is a redundant
-    pci_set_word(pci_dev->wmask + offset + PCI_PM_CTRL,
-                 PCI_PM_CTRL_STATE_MASK);
+[1] https://gitlab.com/qemu-project/seabios/-/blob/1.12-stable/src/fw/pciinit.c#L319-332
 
-Thanks
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 28 +++-------------------------
+ 1 file changed, 3 insertions(+), 25 deletions(-)
 
-Eric
-> diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
-> index fd4514a595ce..9fa656b43b42 100644
-> --- a/hw/pci-bridge/pcie_pci_bridge.c
-> +++ b/hw/pci-bridge/pcie_pci_bridge.c
-> @@ -52,7 +52,7 @@ static void pcie_pci_bridge_realize(PCIDevice *d, Error **errp)
->          goto cap_error;
->      }
->  
-> -    pos = pci_add_capability(d, PCI_CAP_ID_PM, 0, PCI_PM_SIZEOF, errp);
-> +    pos = pci_pm_init(d, 0, errp);
->      if (pos < 0) {
->          goto pm_error;
->      }
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 89d900e9cf0c..6903f831e45f 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2216,7 +2216,7 @@ static bool vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->      case PCI_CAP_ID_PM:
->          vfio_check_pm_reset(vdev, pos);
->          vdev->pm_cap = pos;
-> -        ret = pci_add_capability(pdev, cap_id, pos, size, errp) >= 0;
-> +        ret = pci_pm_init(pdev, pos, errp) >= 0;
->          break;
->      case PCI_CAP_ID_AF:
->          vfio_check_af_flr(vdev, pos);
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index c773a9130c7e..afe8b5551c5c 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -2204,8 +2204,7 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
->          pos = pcie_endpoint_cap_init(pci_dev, 0);
->          assert(pos > 0);
->  
-> -        pos = pci_add_capability(pci_dev, PCI_CAP_ID_PM, 0,
-> -                                 PCI_PM_SIZEOF, errp);
-> +        pos = pci_pm_init(pci_dev, 0, errp);
->          if (pos < 0) {
->              return;
->          }
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index ca3a32f4f2..dda4c7bb5d 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -112,28 +112,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
+ 
+ #define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
+ #define IGD_GMCH_GEN6_GMS_MASK      0x1f
+-#define IGD_GMCH_GEN6_GGMS_SHIFT    8
+-#define IGD_GMCH_GEN6_GGMS_MASK     0x3
+ #define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
+ #define IGD_GMCH_GEN8_GMS_MASK      0xff
+-#define IGD_GMCH_GEN8_GGMS_SHIFT    6
+-#define IGD_GMCH_GEN8_GGMS_MASK     0x3
+-
+-static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+-{
+-    uint64_t ggms;
+-
+-    if (gen < 8) {
+-        ggms = (gmch >> IGD_GMCH_GEN6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
+-    } else {
+-        ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
+-        if (ggms != 0) {
+-            ggms = 1ULL << ggms;
+-        }
+-    }
+-
+-    return ggms * MiB;
+-}
+ 
+ static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
+ {
+@@ -367,7 +347,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     g_autofree struct vfio_region_info *lpc = NULL;
+     PCIDevice *lpc_bridge;
+     int ret, gen;
+-    uint64_t ggms_size, gms_size;
++    uint64_t gms_size;
+     uint64_t *bdsm_size;
+     uint32_t gmch;
+     Error *err = NULL;
+@@ -527,7 +507,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         }
+     }
+ 
+-    ggms_size = igd_gtt_memory_size(gen, gmch);
+     gms_size = igd_stolen_memory_size(gen, gmch);
+ 
+     /*
+@@ -539,7 +518,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+      * config offset 0x5C.
+      */
+     bdsm_size = g_malloc(sizeof(*bdsm_size));
+-    *bdsm_size = cpu_to_le64(ggms_size + gms_size);
++    *bdsm_size = cpu_to_le64(gms_size);
+     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
+                     bdsm_size, sizeof(*bdsm_size));
+ 
+@@ -559,6 +538,5 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
+     }
+ 
+-    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
+-                                    (ggms_size + gms_size) / MiB);
++    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
+ }
+-- 
+2.47.2
 
 
