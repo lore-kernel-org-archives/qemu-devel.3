@@ -4,88 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4CAC021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 07:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC798C021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmTKl-0001PP-Sr; Mon, 24 Feb 2025 02:56:59 -0500
+	id 1tmTbo-0005J4-Og; Mon, 24 Feb 2025 03:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tmTKk-0001P0-VI
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 02:56:58 -0500
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1tmTKh-0006d0-7P
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 02:56:57 -0500
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-471ede4b8e5so20911201cf.2
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 23:56:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1740383813; x=1740988613; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0H44uaZel0YwtgrX8Da3ncQx8kVGrBB827ev2xiSjVU=;
- b=TnLj7NkVc0jBUP8pyB1S1ws6D159/j7aD1zKglHPSP4az9UIpuh2XzQBxcGmnWrQsS
- ai/2xkOAychwuzZmYTzU08WzoFO1kQVpUBfAgM+FKeoPx1fxgBztiavdoWOJ0u2u5ECG
- ZulEVF2XJEAqGPe/08E0ZakVvE5MxxxBXmGO4Y6vqaeGNduHOjsRpVyK/4XGrM7nl6q0
- OwbDRxjrn6YbOyY/h5Lou30QEMlae3Nc178cc1qINvAMAJFSJ8bp8O9TDcDKJOWIlq6M
- 5pej0HEFAousWe8qoKrYWgVNtUvbdGSpRam9j4uBrMJvKWf/2qWdNt1nBfiVcH8tmEvQ
- 3VSQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTbk-0005If-Ck
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:14:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTbh-0008TS-FW
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:14:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740384865;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qGnIMJKo43PwUnleOPInupxbYcJ04DsMtEO48K4W+iw=;
+ b=EwdzUmhsVqySJoYCpyTIP8FFFSybJJxBpKTXOoKcYmedLbC90EjZbCR7FX+755O7k5zJbv
+ aZjscmvffn8Zy6YRVKIgAgN4BxZ5eHtNmA3HKse09c05IzvEVJKoDmdYp0XkkCyjonpNJm
+ PCYUDptICnkGnPsJcdiT06tmWL9FKuw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-532--MVpDpmqMRGXChHpdQKSrg-1; Mon, 24 Feb 2025 03:14:23 -0500
+X-MC-Unique: -MVpDpmqMRGXChHpdQKSrg-1
+X-Mimecast-MFC-AGG-ID: -MVpDpmqMRGXChHpdQKSrg_1740384862
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4393e873962so20548785e9.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 00:14:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740383813; x=1740988613;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0H44uaZel0YwtgrX8Da3ncQx8kVGrBB827ev2xiSjVU=;
- b=TApG5GRgRJY8/0NU0tHQ4lRULaYOhLOvvUxKtCJYGBrYmm9PFJe9tsyuM5QA8RhqE0
- Vd/vCg3D03psKn4WkB6Qaw/7ac8eTyAckiiK2zygD9Xd1h8naSBHNxPpcZnMugvF/RYL
- wO+inxF8njuB20HwJ+4SkvpmiD89KgaM22qB294hJ7oXrPX6mpOfU3Rf6UQAiiagqPzI
- pKOK/nna4kxF5+jQOiNsg8quPTjJ9iEnnGPhRiwgap3nyaFiyx7xBPvGrkxmU/RVzA5o
- dgNqVFT6J6GD80BmMLyVq9y6YbUZ80iWqFUFJDC2/inS1sbR/7PcosCIhQw8l85PcSvp
- qXNg==
-X-Gm-Message-State: AOJu0Yx4NJbjYf9BiyVnqAtNOEx7RqWdNMViFpdr/MnKw6klY+0h2X4e
- iYshHR84w4gbJhG8zkaAWu9xzW/Q19Htm1OBVISMtJOdkYULollyizgMXv/MXaOF+9v2SleAwA2
- vtW6QlKgsm9yFfOO4YBnH0E7+kLQ8vShKtUN62Q==
-X-Gm-Gg: ASbGncsJIwmt7IDTYTh4cDnsKowmwkhpmJSp40mbEHg7FjG9uCCFk5j44CCDRhFfsq+
- GbnxB1lKYMo1sGOWd9FaVfTmr96X3herCoAh4qqMm66Z6E2WhPNF53BMJ/rsf7cgNjHa89niqCB
- A93fq7LPZLoQ==
-X-Google-Smtp-Source: AGHT+IFvXLRqrrLahMh+nA+e87vJUGwcaiLd2HH6Qu5wGlqbc4j/SOx0YSKJfuFdH+AE/j78+oywJpfHRd8ZRLs1Y1Q=
-X-Received: by 2002:a05:622a:1447:b0:471:9b3f:2464 with SMTP id
- d75a77b69052e-472228dc9fcmr166270121cf.31.1740383812963; Sun, 23 Feb 2025
- 23:56:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740384862; x=1740989662;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qGnIMJKo43PwUnleOPInupxbYcJ04DsMtEO48K4W+iw=;
+ b=Mke5Lo/eJb+zACNUelvrzTaBAdSYsF7adtck7gxyV4ZD5tdkD9mEeSwbnAfTHff1f+
+ a193QiMF/FMcOfQqdmOpxRWFnwwblr7LWrN5Ic0lpmvoQb8t/nXSnJJgn9By7/0bcFu1
+ 42MFpTI/zQ5x94W+redwavg/pwXgWX7isss44u/ZXtAShQXqtXpnj/sCK9SJ4bv6pvha
+ ASHS9Y2/ZU0/SRpVoOQMqp7rrP5Q2Mlar+ewU5dAg4ojvqEM065bClfJMGnpW3QR6pDP
+ JEvAaDnAlJXFa1f/5y6g8KyJtAJgm4Dko+J9vJuztxFYlonABx9A+u3k4+vxPPnTAu5g
+ m42A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXs8BiBx8+oGSaglpqAyB27qV7YQqoI9R5Erm/9VPMz8/iLeWIC9Nqson1oJmw9qLw1kj25WbtevWk@nongnu.org
+X-Gm-Message-State: AOJu0YzAg2D0C9ZpbHzaA5aQrzCoSoXq5ZpGqTmdf4tDTqW3GAeNSy7A
+ rfm9uWcg4tzHUrmP+k4BsmIiLq867DMEB/ZmtlHr4gciKhfuPncOHicjp3720YKnesJClXIT69l
+ 3Sc5n+hu9kGgzj4vFbn3FiUF5BM8yz80vD5SIAXAezs4qhsNx5AYo
+X-Gm-Gg: ASbGnctVwn35/QChXC3epb/qFAZecrcmGkdJCTIxQ6thPvc88ndwdoIbffT193ipUvF
+ UBbcdeIbjEOh19macz34RngI0NCIrc6k7c0FkNvML3FjtlQRpzZWM0pxDeL34JUK0aPp9dJT8Ty
+ wUMK/5frhu9QIJo4V9Meioi0lVSVHSbNAJKR9JiQ/2zZHXhxr8LA7XV4WvLaWlN84L7N6NeHB22
+ yeoS+KXVbrS4pPJkXWTEPzgplI9w5faBuyyX044tFPhI2Zn+JVkWJ6nSNmhuB2oZCeVSKL2v1z6
+ 24qnCI7rnuUPVfatKwT/4zWyLs25gR+kfeFNeW7LpHF0KtcgiO2D0g==
+X-Received: by 2002:a05:600c:190c:b0:439:8185:4ad3 with SMTP id
+ 5b1f17b1804b1-439ae220dfdmr88549275e9.27.1740384862067; 
+ Mon, 24 Feb 2025 00:14:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3Oulb4sxhCKNRZvgOR2I4s4F0kmk8MtNMOKI1N9eHBVs6Dou1JmJcgO3T1eF5YhOBJIbhww==
+X-Received: by 2002:a05:600c:190c:b0:439:8185:4ad3 with SMTP id
+ 5b1f17b1804b1-439ae220dfdmr88548985e9.27.1740384861670; 
+ Mon, 24 Feb 2025 00:14:21 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-439b0371b7bsm98465205e9.33.2025.02.24.00.14.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Feb 2025 00:14:21 -0800 (PST)
+Message-ID: <905d2fc4-c537-4c05-a759-6434af2b4406@redhat.com>
+Date: Mon, 24 Feb 2025 09:14:19 +0100
 MIME-Version: 1.0
-References: <20250217081730.9000-1-yongxuan.wang@sifive.com>
- <20250217081730.9000-5-yongxuan.wang@sifive.com>
- <20250217-d6ff55e1f04b68643ae8295e@orel>
-In-Reply-To: <20250217-d6ff55e1f04b68643ae8295e@orel>
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Date: Mon, 24 Feb 2025 15:56:42 +0800
-X-Gm-Features: AWEUYZl7vWFacCvZDaCFyIiguvyNwOSFkPxEFvEgGamnSxOdcKOkq3qZqtfXwrk
-Message-ID: <CAMWQL2ihmaRfkqDtr9Z6eeh=fCMZb1TqSk_h0AoeYxU1g21_sQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] target/riscv: add helper to get CSR name
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-qt1-x82e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
+To: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
+Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com,
+ zhenzhong.duan@intel.com, mst@redhat.com, marcel.apfelbaum@gmail.com
+References: <20250220224918.2520417-1-alex.williamson@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250220224918.2520417-1-alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,53 +155,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Andrew,
+> An aspect that needs attention here is whether this change in the
+> wmask and PMCSR bits becomes a problem for migration, and how we
+> might solve it.  For a guest migrating old->new, the device would
+> always be in the D0 power state, but the register becomes writable.
+> In the opposite direction, is it possible that a device could
+> migrate in a low power state and be stuck there since the bits are
+> read-only in old QEMU?  Do we need an option for this behavior and a
+> machine state bump, or are there alternatives?
 
-On Mon, Feb 17, 2025 at 10:01=E2=80=AFPM Andrew Jones <ajones@ventanamicro.=
-com> wrote:
->
-> On Mon, Feb 17, 2025 at 04:17:24PM +0800, Yong-Xuan Wang wrote:
-> > Add a helper function to get CSR name from CSR number.
-> >
-> > Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> > ---
-> >  target/riscv/cpu.h | 6 +++++-
-> >  1 file changed, 5 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 616c3bdc1c24..133d1852ee1e 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -920,8 +920,12 @@ extern const bool valid_vm_1_10_32[], valid_vm_1_1=
-0_64[];
-> >  void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
-> >  void riscv_set_csr_ops(int csrno, riscv_csr_operations *ops);
-> >
-> > -void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
-> > +static inline const char *riscv_get_csr_name(int csr_no)
-> > +{
-> > +    return csr_ops[csr_no & (CSR_TABLE_SIZE - 1)].name;
->
-> Shouldn't we assert csr_no is correct rather than silently
-> truncate it?
+Should we introduce a migration blocker when a PCI device is in low
+power state  ?
 
-ok. I would add some assertions in this function.
 
-Regards,
-Yong-Xuan
+Thanks,
 
->
-> Thanks,
-> drew
->
-> > +}
-> >
-> > +void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
-> >  target_ulong riscv_new_csr_seed(target_ulong new_value,
-> >                                  target_ulong write_mask);
-> >
-> > --
-> > 2.17.1
-> >
-> >
+C.
+
+
 
