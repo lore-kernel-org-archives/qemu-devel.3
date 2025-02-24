@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DCAC021BC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C929EC021BE
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmc2o-0006vV-4G; Mon, 24 Feb 2025 12:15:02 -0500
+	id 1tmc3C-00076O-QU; Mon, 24 Feb 2025 12:15:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2j-0006uH-JX
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:58 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tmc2s-0006zS-GX
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:07 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2i-0005YP-0b
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:57 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2210d92292eso140926325ad.1
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:14:55 -0800 (PST)
+ id 1tmc2q-0005aK-I4
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:06 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-221050f3f00so105831135ad.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740417294; x=1741022094; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740417303; x=1741022103; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tntGWMBMvPlJGVingDVk2a4SNqW2ToCOYJjDKTb72Po=;
- b=HQdK6DLi6kKwZ5xuf8ht/3Thb5zDWKunyrHX3kwtpHsYqx/ed3pVg0v9AVorEyiHix
- xlu32CAtoGpPOB9eK6BKdEeMc04yw7xNuI5JGIIRXzv14UdBmhQiN9yq4ES3z39/pxUq
- gVn72KO75qObqekpcwLLDkMO86nc7YfCFbUbbGK4wO6MT5y5yU5yHTmamuKIAgV5F4yO
- yWYjeEEXQViri9i27fs8C+mnIGpoVpRB7bN0Nu+ERlZDxTgsgzPlgckc9Ea9aeV5ICvS
- KlT50IN901iVzuPQbezUaUftANRjIilm5Pkh3tiNmJ78awuevkSeaOFr+SNB3eewC3jI
- xq7w==
+ bh=tg2zteOZpC9Wey89dCxgtFEoBQa8KJNvVhInvL38LKQ=;
+ b=JCcb3gMIuosH2lgPGpolNZjWFUEu/kV6sc6sM5+6noqLb54in4SD+YEqvD2HYlzaHh
+ 2DAh4UOcJYn15JD0PBRZYWqlLCxf9o6GGVgS7IrC7rVcJuyHTB4p9HuTUWzDYRg8rgab
+ Dok4zGs7PE+VLrZY7r12zyBrSSKZADAA7DmF3VWBp/iy+e6K0/7EKZLK0+TRkfuSsMmA
+ Ir7LKdtvybEj19OWvBlFJwp7pGKaI7Zr20NwFmD9TD/fjJshtG8VuNUs1iru8Qq4APLO
+ a3LJErQbmHMGLKDUow88aNfjPm98HZnQKNdpshORD7oArBLWC5lWkfEAbFe5eHjvNVgk
+ Uh8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740417294; x=1741022094;
+ d=1e100.net; s=20230601; t=1740417303; x=1741022103;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tntGWMBMvPlJGVingDVk2a4SNqW2ToCOYJjDKTb72Po=;
- b=md0/wyj8QsLpmKd6WgunOeFif4KiWtkLsMD1B5ldMBW7X2nXlo1qtufQqXQrx5aXju
- Cm7F+3xeLS6m22qgpd6VYYcuOZ2KkAuU4YxKykmrCHgwuxgtb3Pj4I5305wL5+Db38gH
- JDJ7WVTEFHQ34cWoxfEE8whoe5oFWQj6lEraU2ys37YViXZYvViwHkaaPqEI69pMDEWV
- qu8uNcjs5XafcLAFgtw6+RO85vWSg3Xd/Z/XUbsYM+NyXetRNThlXY3JJlK9oMrOJOz+
- EeCMEDEnauS5IEy6Q81/uCtKw2i3ALwuXeO4w8FC8/pc1GekXiVf2uHyDUqunv1ophN/
- 5VXA==
-X-Gm-Message-State: AOJu0Yzh05V82sSjQ5GvkpSoV8UecDbjBZypQf1FX3Qgv4TuJbSFfmNt
- tm3XCrxmggWcaHmpzzl91Obg2HfNLW7Iav96ZIb3Wg13axDs00QPthT3vQDjG5Oe/XIvvkv1DC+
- R
-X-Gm-Gg: ASbGncsBXnfLNg5I086uHWoLYk02b/CnD1iaUBfUKXbTjyeThNiOWBq2F5urmNVXsJE
- Fj9ThOYUmrSkrX0IDGiwnNwMmAGk6znPl290drQphh6850DHFTLTjB2kpv44ZFHOnF5QeAeHtPL
- x7d8AxO2+HKTPhW4Mdj+RBk2KSLwF/lvlFgxjFZ9h2CAFyb3xWFRxynLCA1JVH8sBJrmZ0TIS8u
- qRum88PJmesbhPpna9Muhn/bL5khdAhtvi0c9+Co7sw1vCGVXDwQ9LS6Ij9akDRoyeiKbd0wsYg
- P0XMDHwmnh8Pj8UUpBnGUfI7KIKWSwQ5mTY=
-X-Google-Smtp-Source: AGHT+IHKpQF4yoS3Hw8BjjuZp21dKg/aUOQjX9HZdCBFS2JxdQrO3aZpKFLRpD9neg7g/vmQr2DSKg==
-X-Received: by 2002:a05:6a21:78a4:b0:1ee:7e68:6987 with SMTP id
- adf61e73a8af0-1eef3c9ae6emr26187774637.14.1740417293197; 
- Mon, 24 Feb 2025 09:14:53 -0800 (PST)
+ bh=tg2zteOZpC9Wey89dCxgtFEoBQa8KJNvVhInvL38LKQ=;
+ b=CPs4e4J+K9W6dEVwRqELe8H8OCtdy7fGvcbSmOO9EAu7VX4B0M94BchXalk9YUzlFB
+ YfXcGtu41y+CMSFLo0Deoii7fZojYWsVjvSaF2U5/t2Scu+ADX5ycWB01cUaF0m+i3XS
+ XyMFV6J5XzNeJ6AsBKt5AiL7RBumBUi5BzEbMQOo+jF8BC/0bZkdo28Ya48rjyrFX6c8
+ WQRAQRKsh4J2HVx2gQ5W23+jSwcmlOzctaBIAUjbdBLvGYClMPMkahPCagZdTFT5fK0N
+ CodIzl/3GquCCOekM9hjUAHB8MG2sMUldoSb6/gzd+murn0nlQtNev5KGwaeXP4gUEwQ
+ Fcmw==
+X-Gm-Message-State: AOJu0YySmSnrEx3KjSiEDlq2ERk2TifIB7LiVtkp6fXgnFU8z5woJyNC
+ O0e3ma0uM/lbvisiXt6QMDn/s6BfgvxqulXCbP7md9eR1MLSJGlm8a+FKVArQ6944x46mfHgy0d
+ 9
+X-Gm-Gg: ASbGncvLNWBzEFBfSTpBqiZISZBVXJpk6Al2jWIVuUl5lm+6LMfzPeV5QgmqTkKNZoe
+ +UeUSyoQw98XznwCdKVcE3BFhPx4ZwwDTsiaifSeSLuCmV8xpGqrAGv6MwgyCnV/CbfZrh3pCT6
+ merziV533gVxofsiRq63IovEnBO81MZhmpe37zjwlXuxOVjmWnNHyxQlB1OEQMiANWnF/TQ/X0y
+ 5lziIL08ujhiNF9Vos89Rw+nJKDFYrNukUda5jPNy0dJHPhB2qmiUyT4vW5DOBKxnoSrm6wjKyS
+ 7333MNhkrte1bLbjSO3nypijIomUP6MKtmI=
+X-Google-Smtp-Source: AGHT+IHy1asuAui/AE0XVlhWzSPfTjDeUMSPkZUxgfCzglqeOk1IatF45jtQXVEM1zqcr1KMHzuyvQ==
+X-Received: by 2002:aa7:888e:0:b0:732:5a8f:f51b with SMTP id
+ d2e1a72fcca58-734790c6cc2mr14666b3a.8.1740417302829; 
+ Mon, 24 Feb 2025 09:15:02 -0800 (PST)
 Received: from stoup.. ([2607:fb90:c9e2:d7e3:c85c:d4f0:c8b8:8fa7])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.14.52
+ d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.15.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 09:14:52 -0800 (PST)
+ Mon, 24 Feb 2025 09:15:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu
-Subject: [PATCH v4 04/24] target/m68k: Update FPSR.EXC
-Date: Mon, 24 Feb 2025 09:14:24 -0800
-Message-ID: <20250224171444.440135-5-richard.henderson@linaro.org>
+Cc: laurent@vivier.eu,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4 12/24] target/m68k: Remove env argument to gen_lea_indexed
+Date: Mon, 24 Feb 2025 09:14:32 -0800
+Message-ID: <20250224171444.440135-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250224171444.440135-1-richard.henderson@linaro.org>
 References: <20250224171444.440135-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +101,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far we've only been updating the AEXC byte.
-Update the EXC byte as well.
+Use the env pointer in DisasContext.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/fpu_helper.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ target/m68k/translate.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
-index d5551bee41..206ceeba16 100644
---- a/target/m68k/fpu_helper.c
-+++ b/target/m68k/fpu_helper.c
-@@ -169,26 +169,28 @@ static void update_fpsr(CPUM68KState *env, int cc)
-     uint32_t fpsr = env->fpsr;
-     int flags = get_float_exception_flags(&env->fp_status);
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index d6f848c48d..0aa0721778 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -392,7 +392,7 @@ static TCGv gen_addr_index(DisasContext *s, uint16_t ext, TCGv tmp)
+  * Handle a base + index + displacement effective address.
+  * A NULL_QREG base means pc-relative.
+  */
+-static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
++static TCGv gen_lea_indexed(DisasContext *s, TCGv base)
+ {
+     uint32_t offset;
+     uint16_t ext;
+@@ -401,7 +401,7 @@ static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
+     uint32_t bd, od;
  
--    fpsr &= ~FPSR_CC_MASK;
-+    fpsr &= ~(FPSR_CC_MASK | FPSR_EXC_MASK);
-     fpsr |= cc;
+     offset = s->pc;
+-    ext = read_im16(env, s);
++    ext = read_im16(s->env, s);
  
-     if (flags) {
-         set_float_exception_flags(0, &env->fp_status);
- 
--        if (flags & float_flag_invalid) {
--            fpsr |= FPSR_AEXP_IOP;
-+        if (flags & float_flag_invalid_snan) {
-+            fpsr |= FPSR_EXC_SNAN | FPSR_AEXP_IOP;
-+        } else if (flags & float_flag_invalid) {
-+            fpsr |= FPSR_EXC_OPERR | FPSR_AEXP_IOP;
-         }
-         if (flags & float_flag_overflow) {
--            fpsr |= FPSR_AEXP_OVFL;
-+            fpsr |= FPSR_EXC_OVFL | FPSR_AEXP_OVFL;
-         }
-         if (flags & (float_flag_underflow | float_flag_output_denormal_flushed)) {
--            fpsr |= FPSR_AEXP_UNFL;
-+            fpsr |= FPSR_EXC_UNFL | FPSR_AEXP_UNFL;
-         }
-         if (flags & float_flag_divbyzero) {
--            fpsr |= FPSR_AEXP_DZ;
-+            fpsr |= FPSR_EXC_DZ | FPSR_AEXP_DZ;
-         }
-         if (flags & float_flag_inexact) {
--            fpsr |= FPSR_AEXC_INEX;
-+            fpsr |= FPSR_EXC_INEX2 | FPSR_AEXC_INEX;
-         }
-     }
-     env->fpsr = fpsr;
+     if ((ext & 0x800) == 0 && !m68k_feature(s->env, M68K_FEATURE_WORD_INDEX))
+         return NULL_QREG;
+@@ -419,9 +419,9 @@ static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
+         if ((ext & 0x30) > 0x10) {
+             /* base displacement */
+             if ((ext & 0x30) == 0x20) {
+-                bd = (int16_t)read_im16(env, s);
++                bd = (int16_t)read_im16(s->env, s);
+             } else {
+-                bd = read_im32(env, s);
++                bd = read_im32(s->env, s);
+             }
+         } else {
+             bd = 0;
+@@ -467,9 +467,9 @@ static TCGv gen_lea_indexed(CPUM68KState *env, DisasContext *s, TCGv base)
+             if ((ext & 3) > 1) {
+                 /* outer displacement */
+                 if ((ext & 3) == 2) {
+-                    od = (int16_t)read_im16(env, s);
++                    od = (int16_t)read_im16(s->env, s);
+                 } else {
+-                    od = read_im32(env, s);
++                    od = read_im32(s->env, s);
+                 }
+             } else {
+                 od = 0;
+@@ -738,7 +738,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+         return addr;
+     case 6: /* Indirect index + displacement.  */
+         reg = get_areg(s, reg0);
+-        return gen_lea_indexed(env, s, reg);
++        return gen_lea_indexed(s, reg);
+     case 7: /* Other */
+         switch (reg0) {
+         case 0: /* Absolute short.  */
+@@ -752,7 +752,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+             offset += (int16_t)read_im16(env, s);
+             break;
+         case 3: /* pc index+displacement.  */
+-            return gen_lea_indexed(env, s, NULL_QREG);
++            return gen_lea_indexed(s, NULL_QREG);
+         case 4: /* Immediate.  */
+         default:
+             return NULL_QREG;
 -- 
 2.43.0
 
