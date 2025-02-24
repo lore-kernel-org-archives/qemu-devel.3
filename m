@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E895C021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 06:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71814C021B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 07:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmRwY-00040Y-6J; Mon, 24 Feb 2025 01:27:54 -0500
+	id 1tmSjI-0004Yr-E8; Mon, 24 Feb 2025 02:18:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmRwW-0003zx-JS
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 01:27:52 -0500
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1tmSjD-0004XT-VY
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 02:18:12 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmRwU-0005mD-L2
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 01:27:52 -0500
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-4be4de0c038so1222897137.0
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 22:27:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1tmSjB-00027y-TE
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 02:18:11 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-472087177a5so54601101cf.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 23:18:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740378469; x=1740983269; darn=nongnu.org;
+ d=sifive.com; s=google; t=1740381488; x=1740986288; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3l2HZUlZEvlISDsBbCYUwKhkbNz6xAdu6yZS+vveod4=;
- b=g+4/GnD2lS8l4SikXbq/wD/Hr2S+PtzUXxg2/gEnpKJhpSBKjADHm+gux+rOmUwvVg
- y69NzE59NQSL/202Lv8oLO+MpMK69aBpesm5NkOh7DGOQBIuLdL7JIQwl4xSqgObrrTq
- lOh0MaWJwzD7PfkhCuj2R2GZj71KDKGgCXGP54emILE/t6iBk15LKQCcwi0qXbOfTIHg
- pVTYtdqlvI5t8OtM5u4kpyyPAbsQSWJpNvkh+GfV3D2o7qq066rrOsjMa9e8vhGqtuu6
- lShmmcheQZszR+evjm+X5Fa/X3pOmoEPvQQnGd5fmoNJQcGuemfkthpqN+QcU1cEm/5F
- NUUQ==
+ bh=+InCRXc+1IOh7POCVfRD3O7joLY9IeZahyz9Seq3/Yc=;
+ b=lwoasXETD2DoNUnIi3MMhteBqtvct78sZKn68395H5/MPbwTL0zGo1uHsQxis8AKIo
+ W9tHza3t/m4bahzVOGgragjmaDDN8aKCmNR+a+5+PZ0qa+GIyQbl89eTdd76r6dXOqrz
+ uUNxfruW19/h9lyIdXBePmbsCg1W9W8XwUKR1hw1X+tpyKd9nmr8/rNohmMiX9d6DB80
+ ZvVuAPrKXbTthmTwCAESPwf9ml2FB+wAmkJOse68uzZco9okrHU2iAIw2HRPei07p+/N
+ KR0Rb79k9mu0W+TKHIkCVjwXDxVRmscBch8MgRp70I5tnteKL7zAyAdPWZQqsrc1+ysB
+ rIvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740378469; x=1740983269;
+ d=1e100.net; s=20230601; t=1740381488; x=1740986288;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3l2HZUlZEvlISDsBbCYUwKhkbNz6xAdu6yZS+vveod4=;
- b=g7A78Qw9ecuLumffbIwA0UTwBeK/CUEzR2zWzM5ZVNRwvRmz6/a6O5x+g9NPFd0ptt
- AaHxvlOpH24/LLUt6KyCz3NwLMB56JRNJVL2kJjQPMtHA7MmJKa471qwxXRojRit4fJa
- OIE8jX6DmQ9KjfspE1vMLdYaDcYAnsjplZaWrunbZLwoFEG+RRod2awe0+YDK3cw/Zv+
- AmgrO3/6BoukIoTyKp+4RJf1A+mElJgkdmwuAtI+G5ysXkxDpFUggEyF9ZmN6aVGlO1s
- HAx64my14CrEuUg85AgCKfZihZ8A30ggJ4o4TSmxO5yicSB3ScIgayF6m3Mp+EcwMNf5
- MOHg==
-X-Gm-Message-State: AOJu0Yw5CzzlwpPC6zB0DdFpEcDLUyiZg5zvfqkcQ+hMQEG/edB92tFv
- uhekBQH+7dtVF/kDfciOTIm3cTdzoGUWnJ1awmH5rMfBFpGubZ9rXumcSRYeoeomqFJsfr/vrKU
- DRil0KCdBg9+yzllzXMi2LemWv7E=
-X-Gm-Gg: ASbGncuuUgUtvS1K+YlTgIEmVCqQoqb7p7YcQM/YsQ9kdGIIcb1vozc5M3oT9nR4226
- FEOKaK/5JZb7asG42qUX8S1mp2JvohJ7EcdO/gm2X9xwxr6WDF7I7wW8FlCx4vt/BkJ+OBqeDsG
- nrrcItS4Xy2qjQFxQ/sv/I/WeUNKW4n/feMZg5
-X-Google-Smtp-Source: AGHT+IHxsEoqGKsLMpD0/qOWTvf8EoIrvc9iUsqF/NeIZUVSFJYx7vZbhoqNL/Qux7sAgQI8diEZLKyd6qW+x0LdA9I=
-X-Received: by 2002:a05:6102:5087:b0:4b2:48ba:9943 with SMTP id
- ada2fe7eead31-4bfc2952989mr5680009137.24.1740378469215; Sun, 23 Feb 2025
- 22:27:49 -0800 (PST)
+ bh=+InCRXc+1IOh7POCVfRD3O7joLY9IeZahyz9Seq3/Yc=;
+ b=ldgPdnAb9XyuGY1v4PGLQG98pPsmFyJXlmmszVlBxtnjnz1iowu7Cc9v9rZS38kF+5
+ 1HPedPFEfmXONJaJOmOAXCRJIdTKZhlulhjL1BTSVvCgBiWIrft6o9TuV+w6rwJFmAW4
+ d08X3qeRzmf5u6NtzjyFJSFemuqGUL54CH9VscC94e1YxBXiNbGHUYrV5SIsyfCISZtj
+ ajp6yDbI8pb64GHJ0rZq3bXMOw660v3josztpAwAITRVdbY5SbEdE3lxB6yKs2fu3YYQ
+ NRgDt7WQZHEFzPQU4Bvhbanf4KV8gk8w19dGi/Z5/8XE8gdnaTvBDgjz53yzAJCvv01U
+ 1svg==
+X-Gm-Message-State: AOJu0Yyc2Pq7xHWFskC4q6FZJJy51MjEAyy2NZ1cKHGj8OjLSC1MUKXT
+ LUgElBmfx8da+Fug/O3H1MMObK0/ghXXxC6RrDMbAtPEl+EKNLtyQa/1P4Va/JkBY/nC2o0oQ7P
+ KuI1KuA9AlD4j7RiWemz0jEFQBnZOHkVcczpfHg==
+X-Gm-Gg: ASbGnctDEIRjpVKQ1oG7XUIthjzYCkWGfo5tfcwShiKiLV+ROwiZg8ENs+Pnf1u0Z1K
+ vG6/aOGouurhGLvXOUUXniInczPU3QkfJNW5K9sb62/6OQ9qKq4KogysDDdrO9eX7QcSoG0fUqY
+ 6zzBu0XrddIw==
+X-Google-Smtp-Source: AGHT+IHQ1Owu0CoZuyOSpo8LlUmOa37QtQTYznv2Tn2M1UXCJazBOz7X2eH6NYiz9xI0AP2m/P64CQvahhgvKGpeo+4=
+X-Received: by 2002:ac8:59c1:0:b0:472:6aa:d6be with SMTP id
+ d75a77b69052e-472228cfc49mr122287381cf.17.1740381488359; Sun, 23 Feb 2025
+ 23:18:08 -0800 (PST)
 MIME-Version: 1.0
-References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
- <20250214062443.9936-4-sebastian.huber@embedded-brains.de>
- <CAKmqyKNZfBcqT08v-wYmApYuQgM7in__Q3b_vwEgZp+sXr8ckA@mail.gmail.com>
- <1989799473.175.1740375822271.JavaMail.zimbra@embedded-brains.de>
-In-Reply-To: <1989799473.175.1740375822271.JavaMail.zimbra@embedded-brains.de>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 16:27:23 +1000
-X-Gm-Features: AWEUYZkZFFou-ayQSiW8SZ6MaGar_PZc4iFVSsCbtiRqflJG5EwzmWY-UXZbHkA
-Message-ID: <CAKmqyKNCYcjZsiSB44a_JfLJ4L70QL+ofoP0UqOS0p=tk1e_Vw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] hw/riscv: Make FDT optional for MPFS
-To: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Conor Dooley <conor.dooley@microchip.com>, 
- Bin Meng <bin.meng@windriver.com>
+References: <20250217081730.9000-1-yongxuan.wang@sifive.com>
+ <Z7Ss5F3t4R2GbIcu@gezellig>
+In-Reply-To: <Z7Ss5F3t4R2GbIcu@gezellig>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Date: Mon, 24 Feb 2025 15:17:59 +0800
+X-Gm-Features: AWEUYZndvaF1Z7BcsEcn4kW96qUzqlGu7l-WxEf1ixOnfUao7yVFJqUTucbeNqI
+Message-ID: <CAMWQL2gDNMD4UeUr6ti2AFUKdhLpbKeYXHUbUALufsLOW8huAQ@mail.gmail.com>
+Subject: Re: [PATCH 0/8] riscv: AIA: kernel-irqchip=off support
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,60 +95,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 24, 2025 at 3:43=E2=80=AFPM Sebastian Huber
-<sebastian.huber@embedded-brains.de> wrote:
+Hi Kashyap,
+
+On Tue, Feb 18, 2025 at 11:53=E2=80=AFPM Kashyap Chamarthy <kchamart@redhat=
+.com> wrote:
 >
-> ----- Am 24. Feb 2025 um 6:22 schrieb Alistair Francis alistair23@gmail.c=
-om:
->
-> > On Fri, Feb 14, 2025 at 4:27=E2=80=AFPM Sebastian Huber
-> > <sebastian.huber@embedded-brains.de> wrote:
-> >>
-> >> Real-time kernels such as RTEMS or Zephyr may use a static device tree
-> >> built into the kernel image.  Do not require to use the -dtb option if
-> >> -kernel is used for the microchip-icicle-kit machine.
+> On Mon, Feb 17, 2025 at 04:17:20PM +0800, Yong-Xuan Wang wrote:
+> > This series introduces the user-space AIA MSI emulation when using KVM
+> > acceleration.
 > >
-> > That's a fair point, but it might also confuse people who expect QEMU
-> > to generate a DTB if they don't specify one.
-> >
-> > This at least needs a documentation update, but a warning log might
-> > also be warranted if no `-dtb` is supplied
+> > After this series, RISC-V QEMU virt machine with KVM acceleration has
+> > 3 parameters to control the type of irqchip and its emulation method:
+> > - Machine prop "aia" controls the type of irqchip
+> >   - none: use PLIC and emulated in user-space
+> >   - aplic: use AIA wired and emulated in user-space
+> >   - aplic-imsic: use AIA MSI, emulation mode is determined by
+> >     "kernel-irqchip" and "riscv-imsic"
+> > - Accel prop "kernel-irqchip", effective with AIA MSI
+> >   - on: in-kernel APLIC and in-kernel IMSIC
+> >   - off: user-space APLIC and user-space IMSIC
+> >   - split: user-space APLIC and in-kernel IMSIC
+> > - Accel prop "kernel-irqchip", effective with in-kernel IMSIC
+> >   - emul: use MRIF as in-kernel IMSIC
+> >   - hw: use hardware guest IMSIC file as in-kernel IMSIC
+> >   - auto: use the hardware guest IMSICs whenever available otherwise
+> >     fallback to MRIF
 >
-> I will add a documentation update to:
+> Hi; as someone new to the RISC-V ecosystem, most of these acronyms feel
+> impenetrable :-)  I see they're all RISC-V interrupt-handling related
+> terms.  I hope you don't mind my spelling them out here:
 >
-> docs/system/riscv/microchip-icicle-kit.rst
+>   - AIA   : Advanced Interrupt Architecture
+>   - MSI   : Message Signaled Interrupts
+>   - PLIC  : Platform-Level Interrupt Controller
+>   - APLIC : Advanced Platform Level Interrupt Controller
+>   - IMSIC : Incoming Message Signaled Interrupt Controller
+>   - MRIF  : Message Routed Interrupt Facility
 >
-> Should I change this patch to require "-dtb none" to select no DTB at all=
-?
-
-I don't think so, generally not specifying something means that it
-won't be loaded (-bios is just odd for historical reasons).
-
-Maybe just a log warning like "The QEMU Icicle machine does not
-generate a device tree, so no device tree is being provided to the
-guest".
-
-It'll be a bit annoying for people who don't want to run Linux (like
-your case), but all other Linux class RISC-V boards provide a DTB, so
-it's a little confusing
-
-Alistair
-
+> [...]
 >
 > --
-> embedded brains GmbH & Co. KG
-> Herr Sebastian HUBER
-> Dornierstr. 4
-> 82178 Puchheim
-> Germany
-> email: sebastian.huber@embedded-brains.de
-> phone: +49-89-18 94 741 - 16
-> fax:   +49-89-18 94 741 - 08
+> /kashyap
 >
-> Registergericht: Amtsgericht M=C3=BCnchen
-> Registernummer: HRB 157899
-> Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas=
- D=C3=B6rfler
-> Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
-> https://embedded-brains.de/datenschutzerklaerung/
+
+Sure. I would add them into the next version. Thank you!
+
+Regards,
+Yong-Xuan
 
