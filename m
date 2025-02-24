@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF07C021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 18:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233BEC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 18:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmdGu-0001gs-8Z; Mon, 24 Feb 2025 13:33:40 -0500
+	id 1tmdHM-0002x1-Td; Mon, 24 Feb 2025 13:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tmdDL-0005lL-W3
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:30:01 -0500
-Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
+ id 1tmdDC-0005f6-6o
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:29:50 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tmdDE-0003N5-Vx
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:29:59 -0500
-Received: by mail-pl1-x642.google.com with SMTP id
- d9443c01a7336-220c8f38febso101231905ad.2
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 10:29:50 -0800 (PST)
+ id 1tmdD5-0003Iv-Kq
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 13:29:49 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-2210d92292eso143254995ad.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 10:29:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740421789; x=1741026589; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+Xs0oZUmiKgigK0ttBSqwyz2fzSA+xd8KRytqyUvu9g=;
- b=DOBR0VVQZMJZ0yshDgf0X/u4uLQyICx50l5UKbDIx2DIxzuk5E0LXf/pDx87b746Po
- 5Lo7p5VxJdV5Kqp2oa/pJKAz6mouXwfS1wY7Px7XOzzWOjY4OoIRlJuCrLK/RywuCHmy
- dDnvG+kjOsElubI+ZGJaAP8Bboau8TrrJsNIQNlFJAw9x7IFxj0Jlev2Gn9w1UCfKl3C
- eyt1MQsKB1NX5veKyRV0ZXDxztv7P/AEdwYMJoyD/S50AlrrrRSpzJiNXQBd7FwPh4kX
- cq2wATF9KOwBrERnl6rPa5JlCkqXl3agUqYBpamdzpgtdtPOyg2jJxSCRgBHQoXNnv+Y
- meZQ==
+ d=gmail.com; s=20230601; t=1740421779; x=1741026579; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=b7ZpKNKV2lhTLpMg6c3MCxEe2mJkFJIwCBfBpYs8QpY=;
+ b=HIJeKEc17HP3rILBHcbyU1QlHAEJah/5BsjX5tO9sCz45rhsQEh3ZVIv0j3vWYfdfL
+ O1hpYdeInes/ZhpYtk5h/1gEQ58zWSZGDX+m1jH35Ct//2xNQCiKjDgrugVov7SNaYdp
+ rC6S+1LqxtBjT9FaKpAhZg38nRLluVvcXWCdaYa5RqzinEIF18RBfJjvV71+1YyDhSZG
+ q8SBnddr0gYcNrcOg+mHNKpkg1DGIl7ESTpaakvITv6mmpVEVeXQDxsdCePCURD/GrYV
+ q0qS4zDVeXG8TVtnCwN/cOxKTM51OvhZRgC7lV1xyfTGDU7vXFZzW7Kpyn3FkzbIHD2q
+ lfmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740421789; x=1741026589;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+Xs0oZUmiKgigK0ttBSqwyz2fzSA+xd8KRytqyUvu9g=;
- b=vj41GPOR+tfZe0jXOwMTwvdcClHI0MjMS7M/jlZamZZSw5FLibn97g9U0WfJITOS0R
- VG2oLTxrtRSWz+8xOBAlK989NJuqUHtcY7m8S6MKMm4klzjNmDK09X2DWmsWBK3Jw6G0
- yQY5ykVttz+fR6U02PRIyc1eb50e0AT7cAWxJrS5EPVnZEBikndEkDBUuT8UCXKH0LKP
- x3NJil49ft6XuAQ3LkS8d5b5PF58iDWX6ZzjsaHDvaJWDbe9RWOKS8nMnKNdaX4scqAl
- NPbd7KwtUOgBqMS6XfXWn0Yx7rWfs5XnCzuI1nkyHjvddO5DE+0GmMsPSpjQnsh+kTZP
- DC+A==
-X-Gm-Message-State: AOJu0Yxnjda6KXuxey0SNYVC3AlnsSsJPts/xafkdlMcQh4N2yE7G0vn
- FUcYN9LlQ6cZF4czCL1awWLCa5ihHh6VGyE60bhFQZqJO/O2wGo=
-X-Gm-Gg: ASbGncv1O/NPSHvPMFiHTlJb7wCNik4KEgvy50c2dHogqlALsZDW2THx9WN1YnCpw3e
- LhEbsHuXGD7aNWxVVBmGCCGPLM48NW4X/Ft3OSyS3PmpUV5qrOfso7EtgoeMiZw48IOocNSTHXj
- pujwGsiX82FfY4QCcukQXWQKA7wZSHHMOmNNvn7bRJYHM6bLONqd1fY9KErFzq0ds2xFj5NZsrQ
- 0XH8QjK6a+ugcBe0tTAHyXk8tvBL8hE9gx4BLhgTjLlt9BXWGfksQgQ/sOB2VtPSIuq79hjMsA0
- CTgRlBArS7y3fseUWSJrm0V73qjsROO0Khi2g5w=
-X-Google-Smtp-Source: AGHT+IFkQgbH3w0XNQSLSs0IZW30wkVNYiXZJc1thKc1gtNS9q8KDQbESAPj8nsUriDgOXBqHnXKjw==
-X-Received: by 2002:a17:903:41c8:b0:215:ac55:fd72 with SMTP id
- d9443c01a7336-221a001576cmr214460635ad.37.1740421789005; 
- Mon, 24 Feb 2025 10:29:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740421779; x=1741026579;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b7ZpKNKV2lhTLpMg6c3MCxEe2mJkFJIwCBfBpYs8QpY=;
+ b=q+Jw64hwuFJTQGW96Ul3nmcwy8tjaMrCmDXSjKcQdjbfLTnSi+8M7tTO2K9xkIMDhd
+ C65Pwgw/vu1urcRAOaAzjtWYV8/y/GLIy2XkSGJfAZfNI56tCQdS6y7CsACdCt1zIVeY
+ +sCk6S8oyqyMkUR3oKFGbkQXlL7oB7kABE3kse1WDcndrLwjAVxU3FMX4+ec9ZDb3lwi
+ kCLAHwxxKwclSmBnnn0v3op32Ti05sav0/Xq4bnizpXmdgkFPh1wegONWQR24Y6VZJLt
+ GkHJ2Ud1G3k/w2v7/LmLVahZMDqwGdhRmFXYRXpFHKOy9pcv1V6bxunbcfTUB/qSK5yZ
+ Vfrg==
+X-Gm-Message-State: AOJu0YwH4NMj0lHar3IWnrfu0YZ2ljlEJ6mk5+kO2E3qpORtHdykv4Nv
+ bDUrOjnbvZsinrO7VDjhbqhhJuOA+Qdr4iSKD9xpupBP63rP8j4=
+X-Gm-Gg: ASbGncvo8tv6WdKmT1yKhL76aOxlsCwXBKDS/VtIys5cHeIfZXkGSJfni2qCzZWJodl
+ 7dC0DKHL0gvVhbRWlDNT+wOU5GwJuibfYWrUDfkBTNAzx5AwB3s1flWBw3fsGEiq8fijzreTenx
+ B7PjyyLumOyZTbBEpmCDNU6flRGbKPAo2UZEmDCJJIOuW5btqhh6lGcRBmyYshWe3hyge3r5lai
+ CaEQ9WJvvYhOytpsWhGBDrHjfzEIIcKAp4GYxAGvCa0LxuYjGupEn74tsN1z/zpvvOyyLIss7hG
+ Ab/bD/erZkk4tFCf2aKtJMuxUtn4OnFTEGlXg9g=
+X-Google-Smtp-Source: AGHT+IFP2RTDZHRpdj0fwVyUP2FuFd0Cx82WQyta0jzUFvXWt/+ibSuIhkiUs3SLmRY68s2dJ47hVw==
+X-Received: by 2002:a17:903:2a8d:b0:21f:6584:2085 with SMTP id
+ d9443c01a7336-2219ffc4928mr256406105ad.42.1740421779263; 
+ Mon, 24 Feb 2025 10:29:39 -0800 (PST)
 Received: from localhost.localdomain ([116.227.8.253])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d545cf6bsm183662615ad.123.2025.02.24.10.29.47
+ d9443c01a7336-220d545cf6bsm183662615ad.123.2025.02.24.10.29.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 10:29:48 -0800 (PST)
+ Mon, 24 Feb 2025 10:29:38 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 05/10] vfio/pci: Make vfio_populate_vga static
-Date: Tue, 25 Feb 2025 02:29:22 +0800
-Message-ID: <20250224182927.31519-6-tomitamoeko@gmail.com>
+Subject: [PATCH 00/10] vfio/igd: Remove legacy mode
+Date: Tue, 25 Feb 2025 02:29:17 +0800
+Message-ID: <20250224182927.31519-1-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250224182927.31519-1-tomitamoeko@gmail.com>
-References: <20250224182927.31519-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x642.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio_populate_vga is no longer called in igd.c. Make it static.
+This patchset removes some legacy checks and converts the legacy mode
+implicitly enabled by BDF 00:02.0 into x-igd-* options, including:
+* Removing PCI ROM BAR and VGA IO/MMIO range check before applying quirk
+* Using unified x-igd-opregion option for OpRegion access.
+* Introducing new x-igd-lpc option for the LPC bridge / Host bridge ID
+  quirk. Currently this is only supported on i440fx.
+* Extending quirk support when IGD is not assigned to BDF 00:02.0
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
- hw/vfio/pci.c | 2 +-
- hw/vfio/pci.h | 2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
+The first 2 patches of this patchset was taken from a previous one,
+details can be found at:
+https://lore.kernel.org/all/20250124191245.12464-1-tomitamoeko@gmail.com/
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 89d900e9cf..1c45e3987e 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2662,7 +2662,7 @@ static VFIODeviceOps vfio_pci_ops = {
-     .vfio_load_config = vfio_pci_load_config,
- };
- 
--bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-+static bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     g_autofree struct vfio_region_info *reg_info = NULL;
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 43c166680a..75505af6a3 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -226,8 +226,6 @@ bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
- int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
-                                     struct vfio_pci_hot_reset_info **info_p);
- 
--bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp);
--
- bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-                                 struct vfio_region_info *info,
-                                 Error **errp);
+This patchest was mainly tested on Alder Lake UHD770, with Debian 12
+(kernel 6.1), Windows 11 (driver 32.0.101.6458) and Intel GOP driver
+17.0.1081.
+
+If the design is good to go, I will update the documentation also.
+
+A open question is whether the old legacy mode behavior should be kept
+or not. Checking if all the condition of legacy mode were met and
+toggling correspoding options is more complicated then I expected :(
+Any ideas would be appreciated.
+
+
+Tomita Moeko (10):
+  vfio/igd: Remove GTT write quirk in IO BAR 4
+  vfio/igd: Do not include GTT stolen size in etc/igd-bdsm-size
+  vfio/igd: Remove rombar check for legacy mode
+  vfio/igd: Remove implicit VGA access enabled by legacy mode
+  vfio/pci: Make vfio_populate_vga static
+  vfio/igd: Consolidate OpRegion initialization into a single function
+  vfio/igd: Move LPC bridge initialization to a separate function
+  vfio/pci: Add placeholder for device-specific config space quirks
+  vfio/igd: Refactor vfio_probe_igd_bar4_quirk into pci config quirk
+  vfio/igd: Replace legacy mode with options
+
+ hw/vfio/igd.c        | 476 ++++++++++++++-----------------------------
+ hw/vfio/pci-quirks.c |  51 +----
+ hw/vfio/pci.c        |  33 +--
+ hw/vfio/pci.h        |  12 +-
+ 4 files changed, 166 insertions(+), 406 deletions(-)
+
 -- 
 2.47.2
 
