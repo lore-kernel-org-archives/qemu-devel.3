@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E747AC021B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 09:57:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA7BC021A6
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 10:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmVCO-0002w3-DN; Mon, 24 Feb 2025 04:56:28 -0500
+	id 1tmVFW-0003hM-T3; Mon, 24 Feb 2025 04:59:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tmVCK-0002rq-AW
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 04:56:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tmVCG-0002rw-UH
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 04:56:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740390978;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AmByXzVLyP4IVzZbueHy8sE7+bNhpyKrtGajqaGB6/c=;
- b=ZiLNRk6eb+JtQrhlwlEkZsFaDrNeMryYsU1WUoL5quVaYbGcTEMTvq9pHzxUrWDaeDXoka
- 1Nr2TxwE3ON2BxYgLoCUW/BW9a/DE1kqtUIFEXTdtYLEM966KV93jfsmeb3/P5YzKc2Woo
- 2CAw/36MULm7EUwZJIl+abrwJnHxExE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-Ip8oV_aPP8Kl0pQU-vB37w-1; Mon,
- 24 Feb 2025 04:56:13 -0500
-X-MC-Unique: Ip8oV_aPP8Kl0pQU-vB37w-1
-X-Mimecast-MFC-AGG-ID: Ip8oV_aPP8Kl0pQU-vB37w_1740390971
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 207141800879; Mon, 24 Feb 2025 09:56:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.119])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC10D19560A3; Mon, 24 Feb 2025 09:56:06 +0000 (UTC)
-Date: Mon, 24 Feb 2025 09:56:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Stefan Weil <sw@weilnetz.de>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Yonggang Luo <luoyonggang@gmail.com>
-Subject: Re: [PATCH 2/2] tests/functional: Allow running TCG plugins tests on
- non-Linux/BSD hosts
-Message-ID: <Z7xCM50MLESBdLs5@redhat.com>
-References: <20250219192340.92240-1-philmd@linaro.org>
- <20250219192340.92240-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmVFV-0003hA-6B
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 04:59:41 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmVFN-0003G3-KH
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 04:59:39 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-6fb7d64908fso35203687b3.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 01:59:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740391170; x=1740995970; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=m3KglIjf6ji1bqOAeWAwF/JZZNcLvsq10cRCA75mzVk=;
+ b=uLIooGi7gbStv9NF2wE2Lt1EYZ7RJbiUC+UPdNpsO+lx76u9tBkHtgAUk6qiqGlloN
+ QaPXiby+fzNRx/AepVzEjzC4ayhMMtTK6m94JNX3dAUBhLh9W73e5EiIoTnmO0hJFIiY
+ WEuHezPXjQRAP1bmO9JbGmm760maMQ0G5kXS16RbsE01ukhQboUlfDtXfpfMhXs3pEOL
+ YbxOT0QvgbT9mHSxlcfdcvkGMR3mf+jWbFK+Nk5lM380E5z3DicKT6yow/JmgDEY2guv
+ TiAVngMX7BeEg1Dpx7shmnm4orijTSIhPGoWHxS0c/KJQ94oAeQi8nhKSZ7FY8JccmR7
+ NlgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740391170; x=1740995970;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m3KglIjf6ji1bqOAeWAwF/JZZNcLvsq10cRCA75mzVk=;
+ b=o5kWUtHBXYKX+7OAwVkRb2gUEEbwb6F/pFZioilw4CgCXvWqsGjvHrCJuohwLAVshz
+ C0AuVZNCabSfpWVXmVhJtsCSSs8aZASRiuVb+neIZOx1NIZGSidN9Tl4Mmr5Gww+K7Rp
+ JbXBs+kQ3yjHENAw1eOAl5/JIQqOVPsQCSJkms8uPDaZc4cs2sE78xRlysYzVuf/9VHN
+ 5cNnW3XTmvrOl/oCoFTkPSGiEVJCzVU71gvVj4oXhOhWzMQ2KvIHNy4bPiy5jKoxcQoq
+ wKZaza4fvkvF7HuyKliOIqBi4oU47nojNf5scfP8cSgminpfGzoSeyVaPRvTPkiN3HL8
+ 8agQ==
+X-Gm-Message-State: AOJu0YyIMYWpIbILuxwpqrO9RZfYGnR+JvW9KODufVdPaKdQxNY1B1Kq
+ ZW94ViX8BQs05iXYRUI8wVrNvuEQW1FrQ799br7tAI6GzeG1Ul3btyOLNTJWGziZ1blqAjtA8Rx
+ q8U2ixGqpQWv4jAyCfn5gjvh37W/lXeA2a7q5Ww==
+X-Gm-Gg: ASbGncsD/g9ZsaXHdvaGPIyGhU2We1kvmokMqJaDaaoZ6ICgo8CA4rubsKHSOsmxuOU
+ CaKUnj2CSthyZ5syJW0rE2bYam42S069jWjJ8kZxtCwFH5kCOmgH8hUMOJjJw86nd0atUlars93
+ bGKWMnKXZB
+X-Google-Smtp-Source: AGHT+IGEMB6D+o0cve05P8d+NfPG7k59awKr5Pd3Gx5SsXMgueMOD3P1ut3nv40cQENY9PMNrX4qoixQeYUlVAdUkDo=
+X-Received: by 2002:a05:690c:8f:b0:6fb:4648:3425 with SMTP id
+ 00721157ae682-6fbcc2346ecmr105900067b3.16.1740391170219; Mon, 24 Feb 2025
+ 01:59:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250219192340.92240-3-philmd@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20250220161313.127376-1-dbarboza@ventanamicro.com>
+ <20250220161313.127376-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250220161313.127376-2-dbarboza@ventanamicro.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Feb 2025 09:59:19 +0000
+X-Gm-Features: AWEUYZlmWOg2HUqpWcSmaYSeZOOkYTsiwHUa8UCdt5WGgYLiHlnNtscgSp6yLbA
+Message-ID: <CAFEAcA8u8C2HTRjOBReSQ7oN7L248034VrfTHYgHCxBPy0gwDg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] target/riscv/cpu: ignore TCG init for KVM CPUs in
+ reset_hold
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,79 +92,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 19, 2025 at 08:23:40PM +0100, Philippe Mathieu-Daudé wrote:
-> Not all platforms use the '.so' suffix for shared libraries,
-> which is how plugins are built. Use the recently introduced
-> dso_suffix() helper to get the proper host suffix.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2804
-> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Thu, 20 Feb 2025 at 16:14, Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> riscv_cpu_reset_hold() does a lot of TCG-related initializations that
+> aren't relevant for KVM, but nevertheless are impacting the reset state
+> of KVM vcpus.
+>
+> When running a KVM guest, kvm_riscv_reset_vcpu() is called at the end of
+> reset_hold(). At that point env->mstatus is initialized to a non-zero
+> value, and it will be use to write 'sstatus' in the vcpu
+> (kvm_arch_put_registers() then kvm_riscv_put_regs_csr()).
+>
+> Do an early exit in riscv_cpu_reset_hold() if we're running KVM. All the
+> KVM reset procedure will be centered in kvm_riscv_reset_vcpu().
+>
+> While we're at it, remove the kvm_enabled() check in
+> kvm_riscv_reset_vcpu() since it's already being gated in
+> riscv_cpu_reset_hold().
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  tests/functional/test_aarch64_tcg_plugins.py | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
-> index 7e8beacc833..306e46c7972 100755
-> --- a/tests/functional/test_aarch64_tcg_plugins.py
-> +++ b/tests/functional/test_aarch64_tcg_plugins.py
-> @@ -16,7 +16,7 @@
->  import re
->  
->  from qemu.machine.machine import VMLaunchFailure
-> -from qemu_test import LinuxKernelTest, Asset
-> +from qemu_test import LinuxKernelTest, Asset, dso_suffix
->  
->  
->  class PluginKernelBase(LinuxKernelTest):
-> @@ -62,6 +62,10 @@ class PluginKernelNormal(PluginKernelBase):
->          ('https://storage.tuxboot.com/20230331/arm64/Image'),
->          'ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7')
->  
-> +    def plugin_file(self, plugin_name):
-> +        suffix = dso_suffix()
-> +        return f'tests/tcg/plugins/{plugin_name}.{suffix}'
+>  target/riscv/cpu.c         | 9 +++++----
+>  target/riscv/kvm/kvm-cpu.c | 3 ---
+>  2 files changed, 5 insertions(+), 7 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 522d6584e4..8e6e629ec4 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1050,6 +1050,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>          mcc->parent_phases.hold(obj, type);
+>      }
+>  #ifndef CONFIG_USER_ONLY
+> +    if (kvm_enabled()) {
+> +        kvm_riscv_reset_vcpu(cpu);
+> +        return;
+> +    }
 > +
+>      env->misa_mxl = mcc->misa_mxl_max;
+>      env->priv = PRV_M;
+>      env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+> @@ -1146,10 +1151,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>          env->rnmip = 0;
+>          env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+>      }
+> -
+> -    if (kvm_enabled()) {
+> -        kvm_riscv_reset_vcpu(cpu);
+> -    }
+>  #endif
+>  }
 
-IMHO this should be on the QemuBaseTest class with all the other similar
-path file helpers, since in the long run plugins are liable to be used
-for more than just this one test program.
+This looks super odd, from an "I don't know anything about
+riscv specifics" position. Generally the idea is:
+ * reset in QEMU should reset the CPU state
+ * what a reset CPU looks like doesn't differ between
+   accelerators
+ * when we start the KVM CPU, we copy the state from QEMU
+   to the kernel, and then the kernel's idea of the reset state
+   matches
 
->      def test_aarch64_virt_insn(self):
->          self.set_machine('virt')
->          self.cpu='cortex-a53'
-> @@ -74,7 +78,7 @@ def test_aarch64_virt_insn(self):
->                                                   suffix=".log")
->  
->          self.run_vm(kernel_path, kernel_command_line,
-> -                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
-> +                    self.plugin_file('libinsn'), plugin_log.name,
->                      console_pattern)
->  
->          with plugin_log as lf, \
-> @@ -100,7 +104,7 @@ def test_aarch64_virt_insn_icount(self):
->                                                   suffix=".log")
->  
->          self.run_vm(kernel_path, kernel_command_line,
-> -                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
-> +                    self.plugin_file('libinsn'), plugin_log.name,
->                      console_pattern,
->                      args=('-icount', 'shift=1'))
->  
-> -- 
-> 2.47.1
-> 
+This patch looks like it's entirely skipping basically
+all of the QEMU CPU state reset code specifically for KVM.
+So now you'll have two different pieces of code controlling
+reset for different accelerators, and the resulting CPU
+state won't be consistent between them...
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
