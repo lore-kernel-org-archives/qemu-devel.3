@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 951C2C021B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF86C021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmOmT-0004dz-Jf; Sun, 23 Feb 2025 22:05:17 -0500
+	id 1tmOnp-0005IH-0F; Sun, 23 Feb 2025 22:06:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmOmQ-0004dE-PC; Sun, 23 Feb 2025 22:05:14 -0500
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ id 1tmOnk-0005AK-19; Sun, 23 Feb 2025 22:06:37 -0500
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmOmO-00024u-R2; Sun, 23 Feb 2025 22:05:14 -0500
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-4be75b2bbceso1360042137.1; 
- Sun, 23 Feb 2025 19:05:11 -0800 (PST)
+ id 1tmOnh-00028E-H3; Sun, 23 Feb 2025 22:06:35 -0500
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-8671441a730so1184598241.0; 
+ Sun, 23 Feb 2025 19:06:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740366311; x=1740971111; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740366392; x=1740971192; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PT+vyUjKEXI4nWchaFCzvC3t5+xFsAqweXULi30klzg=;
- b=QyXmzW/zqx719Kv6aDpI/pM7UsDpl8b4iiRefbEBHt0i5Xdt/Io40zHVhS60fGYERp
- ypV8TmH640l6StR/sw78LD8WwTLZJ97z6ZDXRCOZJv/NRSTQI7eWL7nJ3HFwqVrN3WuC
- zmcy7hzKlfcevZuVLHEf5NnEol5eOlTaXxg94c0WGy22zWuseosZbbRybleL7bpxwdvt
- IfiJf0NfCJwuPeNMgNnoUdkM9rJaY36olNoYuOi2v/TYDN6dDePqC2uOJj36KJjigMpL
- 7rl08lj4ogo75nP3oTTIWgddJoBl2i4KINxgvaBGus/o057KXWLypytK93V/VwaHyeag
- MP0Q==
+ bh=Eg1y1Ua4cHPagwA8dQMgP3JWwBZLhcu2IExz+F4RTFk=;
+ b=GZWW0sOjWeknPqnbQC7AB4g6Rntk5r9u4YOF2CwjQgGCbAdXZ8nF1AeTqq5kh19XYH
+ fxm4Ofr7/zlNfyY1kCdj1VE9qWYPJ1QPpLyxvp+DAbxtjy3GjYhucGBklOhs5QamNQ+f
+ A2qqboyT0wBFVrCd5CHIF/uqYlmGsAnvjxWxlL9uq1L4F5MALQIrpG4T19KptoDkccWR
+ OTH8yuOB39QMRvAa3t3VKwufaxPTc4Zi32M/zbiaWfMsfRRn0DuVXbD+GvY5EEB2VXea
+ 6jEM6nioeSX1yxbJTD87U9AiWetbsy/JijTSwigrKRaKTml560QsaOzreNnSrS7cJ1gj
+ cQfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740366311; x=1740971111;
+ d=1e100.net; s=20230601; t=1740366392; x=1740971192;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PT+vyUjKEXI4nWchaFCzvC3t5+xFsAqweXULi30klzg=;
- b=M1Ek+JBXJU7U0pnwBUfODJKxB9DDG6PGcZ7Agz26TUK4TJ0WBOz703BpK0DGLO64Py
- n6z3BT2zEPrfg0LDqUfXDIm4XKnwZZ0ijR1i5BIlXnYmfFQ2dZKkmG+T7BML90MwvME5
- CgJz3ZxpESVXx5phMSR1kiF1FNvSCC8Rr6/se39X3Rs15ZUly17G5jmIERh/+bp3r97f
- 6MHLVJfBk5bunFa2N+X6GluwQQT82+KjfkIffcLQP+nwUDg3L9/er9wzbYsLectVQQDC
- /vG87NdFCsuTDLDzYOpU/LNomZZcSOMYDRIFe8yG7ZH3oHuy8OL9NceM+6QTfMyGSeNI
- xAmw==
+ bh=Eg1y1Ua4cHPagwA8dQMgP3JWwBZLhcu2IExz+F4RTFk=;
+ b=p/sBwk6Nf2QVN+mrK3BneVvLRgBK0aUKHnEbbsIR0YgctKO6qymszgH3cgTxRfQ9sq
+ cQxKFIav0JwXA4nIDPKT0E02cjfTei3TEITRJ/I7xKSMpMHWEi5wpxCv+av5p9pgIFcm
+ BrjTsT6fOgxE9r5NQ703gzvtBRtcRVnClU2lwupVWlQqYCqLrkoQtO/1GsyqoaPPKVfS
+ PR/1uAMom2upFjlzsFNTKTRZNSxnkAYOBekh2t4Sf0/Xv6xgdoTk6XsU1tkfrdFbTD5h
+ fAJvAenrIbw08/Eb8ZW9Mo+fXV/gTchz5n3FXrWlCuYwB4sGUL3Rvf1Qt8CLlpvHww4K
+ 4kFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWG42TvREGb6ufJ9LFQW1fFst9Yzuxh+/BmmvfIhTdmYI6tQBD7KzWGzoDIUnj+f9mXbwKwOZ3yy5R1@nongnu.org
-X-Gm-Message-State: AOJu0YxRf+/Eg+UMDe9Q/60jyEMai7VoJgSWxOZ2XObw8SsiIHXm5PpP
- XKF0bZzZP1pqOkcPWWYvfrv1KIc5XGIcZ9K98tsefE3p5ssvodE+K86P+v59aQQ4AmTr65bVJdC
- WyPzQjyn3eLdUW2filha0Z0Fa3Vw=
-X-Gm-Gg: ASbGncvvqIMpzoa40UqCEAyySaVcLBWEnU3sV5MNcAVQptVCfcW4cQOBvUG5OGELU2+
- 2uoTNyvEJcHw419T3JAJL/pPzTs2v9d+RQxEABIC7RWAHa6FcXLlIs60sc4Y5CslLeZJeOeRJiN
- 8/J0pXLMDrYn6dFdRN9Gpd6PPmEc1N1h6LwCZi
-X-Google-Smtp-Source: AGHT+IH779+7QmUS1YusByDZlVPqcYRpC+JRoDH44w9qmbsc2tG1XylqC646kW+2DNt5wEu5zXq2lddvsKLrgaUCxys=
-X-Received: by 2002:a05:6102:e13:b0:4bb:c527:aacd with SMTP id
- ada2fe7eead31-4bfc29545f4mr5022692137.23.1740366311013; Sun, 23 Feb 2025
- 19:05:11 -0800 (PST)
+ AJvYcCU6Kl/Nbwy9TZoeBIFK/I+IZuvofZb5mAFLm7EjfaRCe5tknMS8dFJTOfZylXqEMcEciIA7t1QWBane@nongnu.org
+X-Gm-Message-State: AOJu0Yz7kQ8LSjJCzEqiZJB8XwBcr3xMMCjE7wMxvxTdxo5v5CHL8/mA
+ kugshg7k9eaZ/a2+mJcgzbVpc/EeP9E81S8R5jC+Z+tQ3XbjKHERcyKFBXDw9/T6bgSal78p+th
+ SixlFBI2JvbpN7x3FVtJN53Mi6DK2nBnb
+X-Gm-Gg: ASbGncv7GdKvuPdA9yzqM86VN4HTny9TTmUQ99NX/jo213M2YhKVtYg44EmwDz1O+8d
+ 8KiTssAHC/TfQvp5E5uDuPoUAGqNjtFst3hliQ6JGa9gOS9PJgmzUzgKPSvtOFO+857isf25gEP
+ MGlZJklxcrPEX0s/iCt26DcKZ6ZE2mktGZY4RG
+X-Google-Smtp-Source: AGHT+IGlEwoyPX4SdIbntkVPOO5681TxD0In/jxMEG9rGAMtv4medY9FsSDmd65qXAFLG83B+q7sOEptqDH/ob1qP3I=
+X-Received: by 2002:a05:6102:3a0e:b0:4bb:edc9:f95f with SMTP id
+ ada2fe7eead31-4bfc00c8062mr4701684137.14.1740366391978; Sun, 23 Feb 2025
+ 19:06:31 -0800 (PST)
 MIME-Version: 1.0
 References: <20241205133003.184581-1-dbarboza@ventanamicro.com>
- <20241205133003.184581-7-dbarboza@ventanamicro.com>
-In-Reply-To: <20241205133003.184581-7-dbarboza@ventanamicro.com>
+ <20241205133003.184581-8-dbarboza@ventanamicro.com>
+In-Reply-To: <20241205133003.184581-8-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 13:04:45 +1000
-X-Gm-Features: AWEUYZmC9ofoyeGFb-GRx1OnEnbKJZx010-r_T9abGV6UTiz4B5OHFOtg2zu9bA
-Message-ID: <CAKmqyKPCOSYxGCtVmoAZhA1fQyimdSDb=cMJiu3TiWQbcAZnDg@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 06/11] hw/riscv/riscv-iommu: add IOCOUNTINH mmio
- writes
+Date: Mon, 24 Feb 2025 13:06:05 +1000
+X-Gm-Features: AWEUYZnccbpHbiSeXWSyg21XrVbYh4Dbd_xhiitgvQnYIQzFIWv_Pvj0SzLoyAQ
+Message-ID: <CAKmqyKO+CkEcCj9j3CGLGw9EbekM2Ebkky3CoC21q14OgDGutA@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 07/11] hw/riscv/riscv-iommu: add IOHPMCYCLES mmio
+ write
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, Tomasz Jeznach <tjeznach@rivosinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,192 +98,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 5, 2024 at 11:35=E2=80=AFPM Daniel Henrique Barboza
+On Thu, Dec 5, 2024 at 11:34=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
 > From: Tomasz Jeznach <tjeznach@rivosinc.com>
 >
-> RISCV_IOMMU_REG_IOCOUNTINH is done by riscv_iommu_process_iocntinh_cy(),
-> which is called during riscv_iommu_mmio_write() callback via a new
-> riscv_iommu_pricess_hpm_writes() helper.
+> RISCV_IOMMU_REG_IOHPMCYCLES writes are done by
+> riscv_iommu_process_hpmcycle_write(), called by the mmio write callback
+> via riscv_iommu_process_hpm_writes().
 >
 > Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu-hpm.c | 60 ++++++++++++++++++++++++++++++++++++++
+>  hw/riscv/riscv-iommu-hpm.c | 19 +++++++++++++++++++
 >  hw/riscv/riscv-iommu-hpm.h |  1 +
->  hw/riscv/riscv-iommu.c     | 38 ++++++++++++++++++++++++
->  3 files changed, 99 insertions(+)
+>  hw/riscv/riscv-iommu.c     |  2 +-
+>  3 files changed, 21 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
-> index 325088333e..70814b942d 100644
+> index 70814b942d..1cea6b1df1 100644
 > --- a/hw/riscv/riscv-iommu-hpm.c
 > +++ b/hw/riscv/riscv-iommu-hpm.c
-> @@ -202,3 +202,63 @@ void riscv_iommu_hpm_timer_cb(void *priv)
->          riscv_iommu_notify(s, RISCV_IOMMU_INTR_PM);
+> @@ -262,3 +262,22 @@ void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState=
+ *s, bool prev_cy_inh)
+>          timer_del(s->hpm_timer);
 >      }
 >  }
 > +
-> +static void hpm_setup_timer(RISCVIOMMUState *s, uint64_t value)
+> +void riscv_iommu_process_hpmcycle_write(RISCVIOMMUState *s)
 > +{
-> +    const uint32_t inhibit =3D riscv_iommu_reg_get32(
-> +        s, RISCV_IOMMU_REG_IOCOUNTINH);
-> +    uint64_t overflow_at, overflow_ns;
-> +
-> +    if (get_field(inhibit, RISCV_IOMMU_IOCOUNTINH_CY)) {
-> +        return;
-> +    }
+> +    const uint64_t val =3D riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_IOHP=
+MCYCLES);
+> +    const uint32_t ovf =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_IOCO=
+UNTOVF);
 > +
 > +    /*
-> +     * We are using INT64_MAX here instead to UINT64_MAX because cycle c=
-ounter
-> +     * has 63-bit precision and INT64_MAX is the maximum it can store.
+> +     * Clear OF bit in IOCNTOVF if it's being cleared in IOHPMCYCLES reg=
+ister.
 > +     */
-> +    if (value) {
-> +        overflow_ns =3D INT64_MAX - value + 1;
-> +    } else {
-> +        overflow_ns =3D INT64_MAX;
+> +    if (get_field(ovf, RISCV_IOMMU_IOCOUNTOVF_CY) &&
+> +        !get_field(val, RISCV_IOMMU_IOHPMCYCLES_OVF)) {
+> +        riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IOCOUNTOVF, 0,
+> +            RISCV_IOMMU_IOCOUNTOVF_CY);
 > +    }
 > +
-> +    overflow_at =3D (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + ov=
-erflow_ns;
-> +
-> +    if (overflow_at > INT64_MAX) {
-> +        s->irq_overflow_left =3D overflow_at - INT64_MAX;
-> +        overflow_at =3D INT64_MAX;
-> +    }
-> +
-> +    timer_mod_anticipate_ns(s->hpm_timer, overflow_at);
-> +}
-> +
-> +/* Updates the internal cycle counter state when iocntinh:CY is changed.=
- */
-> +void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_in=
-h)
-> +{
-> +    const uint32_t inhibit =3D riscv_iommu_reg_get32(
-> +        s, RISCV_IOMMU_REG_IOCOUNTINH);
-> +
-> +    /* We only need to process CY bit toggle. */
-> +    if (!(inhibit ^ prev_cy_inh)) {
-> +        return;
-> +    }
-> +
-> +    if (!(inhibit & RISCV_IOMMU_IOCOUNTINH_CY)) {
-> +        /*
-> +         * Cycle counter is enabled. Just start the timer again and upda=
-te
-> +         * the clock snapshot value to point to the current time to make
-> +         * sure iohpmcycles read is correct.
-> +         */
-> +        s->hpmcycle_prev =3D get_cycles();
-> +        hpm_setup_timer(s, s->hpmcycle_val);
-> +    } else {
-> +        /*
-> +         * Cycle counter is disabled. Stop the timer and update the cycl=
-e
-> +         * counter to record the current value which is last programmed
-> +         * value + the cycles passed so far.
-> +         */
-> +        s->hpmcycle_val =3D s->hpmcycle_val + (get_cycles() - s->hpmcycl=
-e_prev);
-> +        timer_del(s->hpm_timer);
-> +    }
+> +    s->hpmcycle_val =3D val & ~RISCV_IOMMU_IOHPMCYCLES_OVF;
+> +    s->hpmcycle_prev =3D get_cycles();
+> +    hpm_setup_timer(s, s->hpmcycle_val);
 > +}
 > diff --git a/hw/riscv/riscv-iommu-hpm.h b/hw/riscv/riscv-iommu-hpm.h
-> index cd896d3b7c..ee888650fb 100644
+> index ee888650fb..0cd550975d 100644
 > --- a/hw/riscv/riscv-iommu-hpm.h
 > +++ b/hw/riscv/riscv-iommu-hpm.h
-> @@ -26,5 +26,6 @@ uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s);
->  void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCVIOMMUContext *ctx=
-,
+> @@ -27,5 +27,6 @@ void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCV=
+IOMMUContext *ctx,
 >                                unsigned event_id);
 >  void riscv_iommu_hpm_timer_cb(void *priv);
-> +void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_in=
+>  void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_in=
 h);
+> +void riscv_iommu_process_hpmcycle_write(RISCVIOMMUState *s);
 >
 >  #endif
 > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 2ec388ff3d..56ec2d6d42 100644
+> index 56ec2d6d42..3bdd88df4a 100644
 > --- a/hw/riscv/riscv-iommu.c
 > +++ b/hw/riscv/riscv-iommu.c
-> @@ -1923,6 +1923,27 @@ static void riscv_iommu_update_ipsr(RISCVIOMMUStat=
-e *s, uint64_t data)
->      riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, ipsr_set, ipsr_clr);
->  }
+> @@ -1934,7 +1934,7 @@ static void riscv_iommu_process_hpm_writes(RISCVIOM=
+MUState *s,
 >
-> +static void riscv_iommu_process_hpm_writes(RISCVIOMMUState *s,
-> +                                           uint32_t regb,
-> +                                           bool prev_cy_inh)
-> +{
-> +    switch (regb) {
-> +    case RISCV_IOMMU_REG_IOCOUNTINH:
-> +        riscv_iommu_process_iocntinh_cy(s, prev_cy_inh);
-> +        break;
-> +
-> +    case RISCV_IOMMU_REG_IOHPMCYCLES:
-> +    case RISCV_IOMMU_REG_IOHPMCYCLES + 4:
-> +        /* not yet implemented */
-> +        break;
-> +
-> +    case RISCV_IOMMU_REG_IOHPMEVT_BASE ...
-> +        RISCV_IOMMU_REG_IOHPMEVT(RISCV_IOMMU_IOCOUNT_NUM) + 4:
-> +        /* not yet implemented */
-> +        break;
-> +    }
-> +}
-> +
->  /*
->   * Write the resulting value of 'data' for the reg specified
->   * by 'reg_addr', after considering read-only/read-write/write-clear
-> @@ -1950,6 +1971,7 @@ static MemTxResult riscv_iommu_mmio_write(void *opa=
-que, hwaddr addr,
->      uint32_t regb =3D addr & ~3;
->      uint32_t busy =3D 0;
->      uint64_t val =3D 0;
-> +    bool cy_inh =3D false;
->
->      if ((addr & (size - 1)) !=3D 0) {
->          /* Unsupported MMIO alignment or access size */
-> @@ -2017,6 +2039,16 @@ static MemTxResult riscv_iommu_mmio_write(void *op=
-aque, hwaddr addr,
->          busy =3D RISCV_IOMMU_TR_REQ_CTL_GO_BUSY;
+>      case RISCV_IOMMU_REG_IOHPMCYCLES:
+>      case RISCV_IOMMU_REG_IOHPMCYCLES + 4:
+> -        /* not yet implemented */
+> +        riscv_iommu_process_hpmcycle_write(s);
 >          break;
 >
-> +    case RISCV_IOMMU_REG_IOCOUNTINH:
-> +        if (addr !=3D RISCV_IOMMU_REG_IOCOUNTINH) {
-> +            break;
-> +        }
-> +        /* Store previous value of CY bit. */
-> +        cy_inh =3D !!(riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_IOCOUNTIN=
-H) &
-> +            RISCV_IOMMU_IOCOUNTINH_CY);
-> +        break;
-> +
-> +
->      default:
->          break;
->      }
-> @@ -2035,6 +2067,12 @@ static MemTxResult riscv_iommu_mmio_write(void *op=
-aque, hwaddr addr,
->          stl_le_p(&s->regs_rw[regb], rw | busy);
->      }
->
-> +    /* Process HPM writes and update any internal state if needed. */
-> +    if (regb >=3D RISCV_IOMMU_REG_IOCOUNTOVF &&
-> +        regb <=3D (RISCV_IOMMU_REG_IOHPMEVT(RISCV_IOMMU_IOCOUNT_NUM) + 4=
-)) {
-> +        riscv_iommu_process_hpm_writes(s, regb, cy_inh);
-> +    }
-> +
->      if (process_fn) {
->          process_fn(s);
->      }
+>      case RISCV_IOMMU_REG_IOHPMEVT_BASE ...
 > --
 > 2.47.1
 >
