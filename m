@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B08ECC021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB75AC021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmPEw-0000JV-UW; Sun, 23 Feb 2025 22:34:42 -0500
+	id 1tmPIJ-0001PW-7i; Sun, 23 Feb 2025 22:38:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPEu-0000GA-6X; Sun, 23 Feb 2025 22:34:40 -0500
-Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPEs-00058S-Nu; Sun, 23 Feb 2025 22:34:39 -0500
-Received: by mail-vs1-xe29.google.com with SMTP id
- ada2fe7eead31-4bfb4853a5dso1016734137.2; 
- Sun, 23 Feb 2025 19:34:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740368077; x=1740972877; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oAdSQYhB5xvRIYyAlbietjKpk+ucgBqiwVL9hoD54yA=;
- b=hNnF9lctXoIyQhNvvM+OQyRhX8EmQ7ui5cGvGhU853CEFwyMXr/UJOqZyGJEiB/o/A
- 7qelDsFkuRBuD4wUUFeq5ThaU08S5tJ0/i+9Ahd3v2p1AbAFUkaBeF8r5MrTOBEAKkpA
- LrusGe/q1VHEZIlBPcXxhUhehBFy6Hgt0goUJK5nF7My0+id3NM3XxMHaAJm1Uh9bqB9
- epdQFbLKpSOYlmdMmic+6g2rw74n6ys4+QYiiZGwYYLRPUm9Axn1lAMklnrk2OHj0yrV
- mPXldPtXRIFoV/Az3243jX2ThF9+GJ1ncxtRvqkO+Bqz979pmkKmL4Mr9aR4n0i2InJR
- qJMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740368077; x=1740972877;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oAdSQYhB5xvRIYyAlbietjKpk+ucgBqiwVL9hoD54yA=;
- b=j5xiHXHK8mAnyunsYH+fJ5DRUBte9kaDssKRblwPftiTHklgTKXUsktWSige9hcvy3
- vg//kcPf/YylwsXkKBYbdFo7l/QZnMUaB67BDXqyqwnA384PWIYK4501ESgXE+7HwBvU
- /b6QvB7fMkzm1Sp+MCM9F/ceZ/6iw+qiDtMAyqCGCZp6d6NtMYs+3MtS15NemNozt4Oo
- RaCyO2XXhNnWkBnIABwN2gfaPMge80tjM/lo4aCsdK8HSqmxSCPxQyLdFw4Hag/yn31r
- DloPcOnNecLxeMqkiQoAQv8SdlwsLWxbwO2tFmHQD0eA0jDPR1Vzs83TeNtzvcMdIHrR
- bwMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV89p6hhBy9YarPDJSMHzMZEUL/e1Ym2xq9fIlup/H64nfjCc2mmAVR/8LUEiD2x7OujFT6N1Wxnlz+@nongnu.org
-X-Gm-Message-State: AOJu0Yx71w97p+lTiz4tbmyDh22Z9L77tcfcEVUUHnoA+pfWpxTIvX3Q
- lCIQz4BZ74gjuJZXnMsZ+a7ffN3eVmbkhg4jZGz5Fb/IDU2zkIU3CF6+gyJLyfzaK9HsbXaCv6g
- iKx13dOPSS7Iaq8A36u5Yt2fn1UA=
-X-Gm-Gg: ASbGnctYcDeTnmJL6b8C+IOmslfWOeIW+7drCPNlw8LoG9XljODjaovBy3co2bgFe1A
- BaWOVXdiDEvayKAo8R6dZ6dpjhXGtoHeo2PuWgCqZ/uhY0/9oxKF/MbFTptWb9FnvIFv9x+/cwj
- qMG7hhESi9T960zXXZA8OD7yGr5qE9Jp7GZjEQ
-X-Google-Smtp-Source: AGHT+IHnwxOJZ27TbNllczfgpIyJX6O1oeHvZmSX7qtNsZo2prOkX2b2TJqP6qjmunjzJ4ztNpv7WsudJoyjgrmcR2E=
-X-Received: by 2002:a05:6102:32d3:b0:4bb:d7f0:6e7d with SMTP id
- ada2fe7eead31-4bfc01c63c8mr4548794137.25.1740368077191; Sun, 23 Feb 2025
- 19:34:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPID-0001ON-1Z
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPIB-0005RF-I2
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740368282;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GyiRxmydcU0/fOZaO5aRgfQNpoUwmviAK70kDpUDoAk=;
+ b=TFr6BePDGhlSlUWYZRh4h55O755vxrTxH6JA7N5Fdm7nZO1hcSwJv2wtZ6Wt9qJjk8Nkvo
+ miNNHpAwHwTN2dRVNqwjR9KER6YQf2Hymk9n3pW7xbt0BmqCFmTIJYwFdeDPXr8B8L+uFr
+ yNKAHnqf+LB02SqcEdYGjVn80WcGs00=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-gJy1PLhaOy66Ws0jH0HOPQ-1; Sun,
+ 23 Feb 2025 22:37:58 -0500
+X-MC-Unique: gJy1PLhaOy66Ws0jH0HOPQ-1
+X-Mimecast-MFC-AGG-ID: gJy1PLhaOy66Ws0jH0HOPQ_1740368277
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 728B218004A7; Mon, 24 Feb 2025 03:37:57 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.88])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A164B19560A3; Mon, 24 Feb 2025 03:37:55 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 05/10] qapi/parser: adjust info location for doc body section
+Date: Sun, 23 Feb 2025 22:37:36 -0500
+Message-ID: <20250224033741.222749-6-jsnow@redhat.com>
+In-Reply-To: <20250224033741.222749-1-jsnow@redhat.com>
+References: <20250224033741.222749-1-jsnow@redhat.com>
 MIME-Version: 1.0
-References: <20241205133003.184581-1-dbarboza@ventanamicro.com>
- <20241205133003.184581-12-dbarboza@ventanamicro.com>
-In-Reply-To: <20241205133003.184581-12-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 13:34:11 +1000
-X-Gm-Features: AWEUYZnbKpSXoOwqXUQzE0xA84TXVAkj4YstMBu78zJqf-DrayCWFJCl5GmCcCw
-Message-ID: <CAKmqyKOasf_R4jTiupDLgNu6+M6uKWnQ+h2R=8FmN_nd1X=SRw@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 11/11] docs/specs/riscv-iommu.rst: add HPM
- support info
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +88,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 5, 2024 at 11:33=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Instead of using the info object for the doc block as a whole (which
+always points to the very first line of the block), update the info
+pointer for each call to ensure_untagged_section when the existing
+section is otherwise empty. This way, Sphinx error information will
+match precisely to where the text actually starts.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+For example, this patch will move the info pointer for the "Hello!"
+untagged section ...
 
-Alistair
+> ##       <-- from here ...
+> # Hello! <-- ... to here.
+> ##
 
-> ---
->  docs/specs/riscv-iommu.rst | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
-> index b1538c9ead..000c7e1f57 100644
-> --- a/docs/specs/riscv-iommu.rst
-> +++ b/docs/specs/riscv-iommu.rst
-> @@ -82,6 +82,8 @@ Several options are available to control the capabiliti=
-es of the device, namely:
->  - "off" (Out-of-reset translation mode: 'on' for DMA disabled, 'off' for=
- 'BARE' (passthrough))
->  - "s-stage": enable s-stage support
->  - "g-stage": enable g-stage support
-> +- "hpm-counters": number of hardware performance counters available. Max=
-imum value is 31.
-> +  Default value is 31. Use 0 (zero) to disable HPM support
->
->  riscv-iommu-sys device
->  ----------------------
-> --
-> 2.47.1
->
->
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ scripts/qapi/parser.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index adc85b5b394..36cb64a677a 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -687,7 +687,11 @@ def end(self) -> None:
+     def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+         if self.all_sections and not self.all_sections[-1].tag:
+             # extend current section
+-            self.all_sections[-1].text += '\n'
++            section = self.all_sections[-1]
++            if not section.text:
++                # Section is empty so far; update info to start *here*.
++                section.info = info
++            section.text += '\n'
+             return
+         # start new section
+         section = self.Section(info)
+-- 
+2.48.1
+
 
