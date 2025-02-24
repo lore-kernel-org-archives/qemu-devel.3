@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C479C021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 12:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9707CC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 13:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmXqk-0002Df-Vm; Mon, 24 Feb 2025 07:46:19 -0500
+	id 1tmY7U-0005yj-6f; Mon, 24 Feb 2025 08:03:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tmXqT-0002Bf-S8
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 07:46:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tmXqR-0000j8-1G
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 07:46:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740401157;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UVuOR+7dcPC483cJjOViAiNUpzrY8j43Ih409hOZoq4=;
- b=hDswhvHwsRDz7DHvO7oJQ7HJM/o19BgYABXkSmxk4Xf+2ne2w/euVQ83owMgWvrOoYLJfM
- lVPLvahz9Bcu7aOa9q1oh8Nedrauu9ESpKgDrT9en5WnKOtMnbUb3H5s+K8hGGmoK4cuTz
- gIs9vcYTA+9lYHIiFBo5yzExslxwSR8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-471-gmQMAZpAOWiIJDlG102pZw-1; Mon,
- 24 Feb 2025 07:45:51 -0500
-X-MC-Unique: gmQMAZpAOWiIJDlG102pZw-1
-X-Mimecast-MFC-AGG-ID: gmQMAZpAOWiIJDlG102pZw_1740401150
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 992E41800983; Mon, 24 Feb 2025 12:45:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 502791800877; Mon, 24 Feb 2025 12:45:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A64E421E675F; Mon, 24 Feb 2025 13:45:46 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Thomas
- Huth <thuth@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 04/10] docs/qapidoc: support header-less freeform sections
-In-Reply-To: <20250224033741.222749-5-jsnow@redhat.com> (John Snow's message
- of "Sun, 23 Feb 2025 22:37:35 -0500")
-References: <20250224033741.222749-1-jsnow@redhat.com>
- <20250224033741.222749-5-jsnow@redhat.com>
-Date: Mon, 24 Feb 2025 13:45:46 +0100
-Message-ID: <87frk3fr45.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmY7T-0005yX-6m
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 08:03:35 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmY7R-0002mZ-IL
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 08:03:34 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-6f7031ea11cso37444837b3.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 05:03:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740402212; x=1741007012; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/+ZdrpsFK/HAtm3Dc2KtifAwV0SVPDIBmAlaYqs4aDQ=;
+ b=tTMbO+KtS05RYMn/Bc6wZPEFkvk7Gle+NvlfHmpZT0yKPcZcDYivMINu226hMpKw2K
+ mletR1D5XgMN5RxWkOjVy57zKXxyqgQoKKsrKz/0KOUzFKmqIftz4ITrdnpZxbWpx4vH
+ F+H3WkJXjNHzllItz7Kf6r7O/KKiULFOJDK7zlA5unhqNYDQ+qTiCqtjnRc89LRr0Oeu
+ d2K2cA/b3YuBARq32Z8lcC7+dJEg5hOxRe+uSYS30eeMNLvsCB66okgmmCILYxaVH7H8
+ AN11y4ix4vF5R5cQPjzsXylZ0mjKfoVVbORH2VCek0IHdb3eHoHYwtn5grLSq9+N+WQu
+ G++Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740402212; x=1741007012;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/+ZdrpsFK/HAtm3Dc2KtifAwV0SVPDIBmAlaYqs4aDQ=;
+ b=NtmxrgkOKY+KP3UgDwjWoRgQ6vtDH2dRaCTxx514pswGWspbwZqxSWAuLj0EOHD7v6
+ 4xbqInBqZrj3Xa06jzBPLCa87rfUGNlBp/C5jSZaPRp2H8Nmt0/SUrrghnMTlBJ4AIEC
+ 4NhVcX6mZaoz7kol7bUAwamftTOp51YDsEMZIqRF1AWgrhe6HYAJYIw8iTZH7wwjI2Rn
+ LyoVdqhWl3LVC9F53VjFj89+mD9ZtdQCs5ckvgt7jZSjPX12X7KYzx5Br2Cg8dJHinC+
+ mnQVjFpqGYVkmKx8kjUVgFUfyVwktp/LLW9UfHTcVssahFqlIMZjTaQ74afhJFX/QO7V
+ FW+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvMF+F3kmWp2glltd+yIbhK/zAukbYhyUgcyT28yRBvUCmx2ztp5R/QmiptoHJMYrfX8KsuD3LZpj3@nongnu.org
+X-Gm-Message-State: AOJu0YzxQDWl480ZHwVYEHjZ807KYsZQCn7oqlqXLM38IEhNFjeQd/oi
+ LkbZ0mLQBQlzm7DwL7XO3dqsRpEXAphyJ7gk9Ds/mJkUg5PA8wGpesR6qsTxut8y1kcqGalqo1Y
+ v0zlE0NwGg2UGCGqKz6g6Jij/Xfx3PmH0W0prIg==
+X-Gm-Gg: ASbGncsz47YeCrr91lO8wkYW9leLsOBnnBkqgAWROSZcvI9iiJYoHRY7P1LvfRsjhyr
+ aQJMuNuZwA9w1peP5A2gELXMY+xJEoq8A28QUg3o7w7FGAXlCJCrwo9zJD6Zj5+ltsn2pwqLHVd
+ Y+/HHjGu09
+X-Google-Smtp-Source: AGHT+IGCHI/SyZsDvRO4hKuN/QBDiLl7lzSsI6rpMxQ8/KKtpKN5mmb5if6yZAHUKyhz5uhNZcMMx0smCZ+eCYd9Z3M=
+X-Received: by 2002:a05:690c:6412:b0:6f9:b12b:8943 with SMTP id
+ 00721157ae682-6fbcc261b67mr122343087b3.19.1740402211085; Mon, 24 Feb 2025
+ 05:03:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20250220213832.80289-1-nicolinc@nvidia.com>
+In-Reply-To: <20250220213832.80289-1-nicolinc@nvidia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Feb 2025 13:03:19 +0000
+X-Gm-Features: AWEUYZm8lPJ2jrzALpypVuBJOIzZpsxNgfbF3HRsP2ZDKDW9lTsWKSJVT2Gl8zA
+Message-ID: <CAFEAcA_qXpVkwps6ocR7CceYBvxWqv40QDwhRAfFECPQGwFbQw@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/smmuv3: Fill u.f_cd_fetch.addr for
+ SMMU_EVT_F_CD_FETCH
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,43 +94,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On Thu, 20 Feb 2025 at 21:39, Nicolin Chen <nicolinc@nvidia.com> wrote:
+>
+> This is more like a cosmetics fix since the f_cd_fetch and f_ste_fetch are
+> basically the same field since they are in the exact same union with exact
+> same type.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 
-> The code as written crashes when a free-form documentation block doesn't
-> start with a heading or subheading, for example:
->
-> | ##
-> | # Just text, no heading.
-> | ##
->
-> The code will attempt to use the `node` variable uninitialized. To fix,
-> create a generic block to insert the doc text into.
->
-> (This patch also removes a lingering pylint warning in the QAPIDoc
-> implementation that prevents getting a clean baseline to use for
-> forthcoming additions.)
->
-> Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freeform QMP sections)
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  docs/sphinx/qapidoc.py | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> index 5f96b46270b..5a4d7388b29 100644
-> --- a/docs/sphinx/qapidoc.py
-> +++ b/docs/sphinx/qapidoc.py
-> @@ -421,6 +421,8 @@ def freeform(self, doc):
->              node = self._start_new_heading(heading, len(leader))
->              if text == '':
->                  return
-> +        else:
-> +            node = nodes.container()
->  
->          self._parse_text_into_node(text, node)
->          self._cur_doc = None
 
-Let's add a suitable free-form block to tests/qapi-schema/doc-good.json
-to catch regressions.  Not worth a respin by itself.
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
