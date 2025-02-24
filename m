@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A648AC021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B93C021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmPnw-0007WY-Bf; Sun, 23 Feb 2025 23:10:52 -0500
+	id 1tmQEf-0003Ax-SL; Sun, 23 Feb 2025 23:38:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPnu-0007Vt-AX
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:10:50 -0500
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ id 1tmQEb-0003AZ-1s
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:38:25 -0500
+Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPns-0000QL-Ky
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:10:50 -0500
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4be7f114996so2956013137.2
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 20:10:47 -0800 (PST)
+ id 1tmQEY-0003QF-FT
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:38:23 -0500
+Received: by mail-vs1-xe2d.google.com with SMTP id
+ ada2fe7eead31-4bfb4853c29so946769137.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 20:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740370246; x=1740975046; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740371901; x=1740976701; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=auvf4KVMx3qO117Ha6bPtSOZHjTaTYtORQk5sx9rNo8=;
- b=DxBwSVMrA6tynrMRamIPagROIc8oiHjkAyWM5FB4cnV2CT4KsB1MBC9PL5Yu9sMchJ
- +GVfmNC0D0lUQ8xDvAfNXCChSutl5nTYri2Y5ONTgfL7lIwJpP1wZB4jXrQHTtRU9RtT
- wUGd9db4YTZ+haDhxlJqhwcKV092BlcMcYlrEJZSWnPQvSdQbF/JCGsLb5wWvYuExsCC
- rnREpT5L36KLU+glSnER8NozanBU0urGedgbgJM5K5QgXLWc/iObycmvltPTor6XXVRr
- PzQGmi1nlLFqrFokIiUIu4ZZkXl4AUsMuwq+etocUACNSu2c/ISKrOF1kfKcTSiuGUjm
- SfIQ==
+ bh=1BISsHNwx0FXRb1gqRGhGSwYTwFPT4yMOK3SVWnfZ9I=;
+ b=bL+3hJr3VjanvXu9hSKlApVXsbb2McijML8nc+aGumNSXqFeraQBzzg27HhBk4rcpY
+ WbsklPIwwKnEfzf8g8Ld1YwvEEUtew9mfByVvACNY7dEjmaueWZJAGpBJ4p4i38JpiEs
+ MHsVEi3iQeF6SR6+ZpNr8gwNPk2+fwVPtcdK92YEnSHePCWu8DiKYxBnK3pt+zYlhguY
+ r865+ZHgxAXmNjIPZ1R473Hu8WPGn22U+Caa9TTWTh8JuZ7ES82iSYVDQtDYI6B8q84H
+ hOilYMZUcP6KgSMelQkwCROhxqxLYsczOtk5akEkrfp5hQX7ornnatGCxPngXOl+wuEC
+ 2uKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740370246; x=1740975046;
+ d=1e100.net; s=20230601; t=1740371901; x=1740976701;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=auvf4KVMx3qO117Ha6bPtSOZHjTaTYtORQk5sx9rNo8=;
- b=n8ko60K/Dv3vmuMqnEndayLqTuu8XzX3X6CgAD93hr6lxz3mY1T0PYDafHSvvzIWYH
- VWZ63BwZhs8z3JwluCkiGs3BClFRQHKSYptEeW+Js0euygv6UrcadglRQdATNMbLGu2w
- Y45pOiSzZ7+0mLB2JRnGZFYGRb4ZJYZKrCAgU4paHT4wgsnRwPABMCGyXlNMAuqZRX39
- JwCn+YRSaDdWUhxHhpgEGoWDfwJ8i3yCowA7hKli6PKiypLoEbegMxGQj79d+0KZiUx7
- q2zB9HBhoB35Qi0eExcN7P677KAVmTb//R2hFlmoKRjCN4vpC1JyQ0tUwXlOJrfg9e/6
- Xz6w==
-X-Gm-Message-State: AOJu0YwA22yBhJiFs2ijuTCw9PTNhMguI4TUzPwyDAWOn0Vx9iy5lS8Y
- yFKb8dnpS0eMdV66oQNXKNtG6DU4GEJOAaWuXOEUtsJsmxfMhlNp3wlY5kxEb1hzsgavtKYQQsm
- Lkm6E6eH3oDmMbeM09K7Y1+tpErw=
-X-Gm-Gg: ASbGncs97a8+HPzxIr+mGhHJQ9f/hjZdMraXjno2HfD3+9EVSYoRX9ZJSbBsdc5bKja
- PqS/HHHSyObxjxEqEI4troZAETZ0RsJp9kEYSKRxOR3sczABuSsI0MxXAr0groABNyf6ljty286
- AmmFaoMVlaQaN67Rb4zFcIGAlPW3eGtG1AAtXH
-X-Google-Smtp-Source: AGHT+IFfXDv/nbREyo6QAC+2yFRSeltnH84lcuwLyVQniPKTw11bcZ9CA+72w5d0MGs9TClJCTovzuXbPrZ1rAucLTU=
-X-Received: by 2002:a05:6102:50ab:b0:4bb:d394:46d7 with SMTP id
- ada2fe7eead31-4bfc0021756mr5089987137.6.1740370246082; Sun, 23 Feb 2025
- 20:10:46 -0800 (PST)
+ bh=1BISsHNwx0FXRb1gqRGhGSwYTwFPT4yMOK3SVWnfZ9I=;
+ b=b9M+DrQRdHdmfpWHgRdjenrAk3sETLM6MfmdSkKz149TbIjZNPp02Q0xOYznPZxDn+
+ 5yYZJ5/sYVvRnbzmNEVRHJa5rhpXbLB6H7XiYIMauotSZwzjo7ZH4F2sxLadabxcL7Vq
+ hS6K7cNayyWN2HV8egSCUO386a8iNERxiusoXxDuNQUVri0eXz0eE0DnmKlJerEpLDre
+ z1msOS9fSFy4nrhXo2uWb1ACRdYaigQV1lcO4rYW/zc9bj8AX7iUUZfYx1s/fL6fWXD7
+ uTE4mgJjVw+Ol0uAx+TxlrVZRY4YP3PDDRoIQAOck34CtalgBJBv7n4skxG7/CkpMVLD
+ wPuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0mDH9x9Y5dUWRgLGeuodj6p8G0CniXDWnBZdXxqn2pUp9mog1w5bjiQD0jPaQX9DIqIWRHKCu+1Lh@nongnu.org
+X-Gm-Message-State: AOJu0YyJR9XRZ6FdJ2Fw4LinKtOULNO444hTzw/IwOmt0IXqrLhEcQ6B
+ UPQS3NwdAnpTnHOSw93klb2GTjjjFNfDrvxwsPVjPToE0P829p3Qf0iUo7aTPd+h5Pjw+hFGEBG
+ iQqAvc0KigiBDIcUZQ7jW1lBrLaw=
+X-Gm-Gg: ASbGncvT+xla1Oud5GD9vfoIvEO3NXIekdT1xjFpy4nnxs+zn+IhEGnLGgRhL9ygNEY
+ XaA9S2Tb0JTh+UnoP5cStwv++/0Mr9xgd/mfI/lhIoImgtVXTl3tOKyq+URJiXc/Rl4M9hAdV1S
+ RJb63LLVdehxDTZuNWzO8R+gCdBYEq5yCv+xwc
+X-Google-Smtp-Source: AGHT+IFQDAvYlC22XaGHLa2SzLEBXzoMeb4/ostlfl1IFIGwKgASr/AbAStcNZWbFByPb4U+8doonPoJRL6lSKZDtMk=
+X-Received: by 2002:a05:6102:4b18:b0:4bb:c0a7:39b8 with SMTP id
+ ada2fe7eead31-4bfc022708fmr6093522137.17.1740371900832; Sun, 23 Feb 2025
+ 20:38:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20250202-riscv-sa-restorer-v1-1-6f4bf814a1dd@t-8ch.de>
-In-Reply-To: <20250202-riscv-sa-restorer-v1-1-6f4bf814a1dd@t-8ch.de>
+References: <20241031035319.731906-1-alistair.francis@wdc.com>
+ <20241031035319.731906-16-alistair.francis@wdc.com>
+ <CAJ307EhFCpK8aO7r7PHF7H=k=f9tstPe=aVKrMWv1y7m3_HSNw@mail.gmail.com>
+ <CAJ307EhOKFyK3ULJ2NEj+zYcSbVQ1RxGcVj40_HFBbwt0UJL9g@mail.gmail.com>
+In-Reply-To: <CAJ307EhOKFyK3ULJ2NEj+zYcSbVQ1RxGcVj40_HFBbwt0UJL9g@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 14:10:19 +1000
-X-Gm-Features: AWEUYZkNfY_NEx1ehGVcCPjSDLg71hRHrRGBEGboqjrjypNR4TKkzbK1QBt5sVk
-Message-ID: <CAKmqyKMeK8uAdkL+DNWODMnSiBMUQh_jkwe5ryn=q1pqZmnHMA@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/riscv: Disable unsupported SA_RESTORER
-To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
+Date: Mon, 24 Feb 2025 14:37:54 +1000
+X-Gm-Features: AWEUYZnzlAAkr6ZX2Cf-p4MKFtDQPHMyhcSpiQJbDndqr6ByXScm8UfOBwKv-Ow
+Message-ID: <CAKmqyKNa4=r2eqRL1OsndU0kVFY23Kq6GaZfm5dqF4mavRkyaQ@mail.gmail.com>
+Subject: Re: [PULL 15/50] hw/char: sifive_uart: Print uart characters async
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,47 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 3, 2025 at 8:58=E2=80=AFAM Thomas Wei=C3=9Fschuh <thomas@t-8ch.=
-de> wrote:
+On Sat, Feb 22, 2025 at 1:27=E2=80=AFAM Cl=C3=A9ment Chigot <chigot@adacore=
+.com> wrote:
 >
-> Linux on riscv does not support SA_RESTORER.
-> Currently QEMU thinks there is a field 'sa_restorer' in the middle of
-> 'struct sigaction' which does not actually exist.
-> This leads to corrupted data and out-of-bounds accesses.
+> On Fri, Feb 14, 2025 at 1:52=E2=80=AFPM Cl=C3=A9ment Chigot <chigot@adaco=
+re.com> wrote:
+> >
+> > Hi Alistair,
+> >
+> > I've an issue following this patch. When the system is reset (e.g
+> > using HTIF syscalls), the fifo might not be empty and thus some
+> > characters are lost.
+> > I discovered it on a Windows host. But by extending
+> > "TX_INTERRUPT_TRIGGER_DELAY_NS" to a huge value, I'm able to reproduce
+> > on Linux as well.
 >
-> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
+> The root cause of my issue was unrelated to these early shutdowns. On
+> Windows, the character device behind `-serial mon:stdio`
+> (char-win-stdio) doesn't provide an `add_watch` method. Therefore,
+> `qemu_chr_fe_add_watch` calls always result in an error, flushing the
+> fifo. I saw in @Philippe Mathieu-Daud=C3=A9 patch about pl011 that
+> `G_SOURCE_CONTINUE` is returned instead of calling it and it does
+> work. @Alistair Francis  do you remember if there was a reason for
+> calling `add_watch` ?
 
-Thanks!
+qemu_chr_fe_add_watch() is used in a range of UART devices, I am not
+really sure of a different way to write the data out.
 
-Applied to riscv-to-apply.next
+I don't see `G_SOURCE_CONTINUE` in pl011.c either
+
+>
+> > I've tried to flush within an unrealized function but it didn't work.
+> > Any suggestions ?
+>
+> FTR, I still have found a solution here using
+> qemu_register_shutdown_notifier. Though I'm wondering if this is
+> useful: the cases where a shutdown occurs between two "fifo_update"
+> seems really narrow, but they could happen.
+
+What does the actual hardware do? I don't think it has a shutdown
+notifier. I think this is up to the guest to flush the UART.
+
+>  @Philippe Mathieu-Daud=C3=A9 AFAICT, the new pl011 and other char device=
+s
+> implementing write fifo have the same issue. Thus, pinging you here to
+> get your advice.
+>
+> Thanks,
+> Cl=C3=A9ment
+>
+> > >  static void sifive_uart_reset_enter(Object *obj, ResetType type)
+> > >  {
+> > > ...
+> > > +    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
+> >
+> > I'm also wondering if that part could not lead to memory leak.
+> > `fifo8_destroy` is never called and AFAIK, there are ways to reset a
+> > device dynamically (e.g snapshot, though not sure if it's supported
+> > here).
+
+Good catch, I can send a patch to fix this
 
 Alistair
 
-> ---
->  linux-user/riscv/target_signal.h | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/linux-user/riscv/target_signal.h b/linux-user/riscv/target_s=
-ignal.h
-> index 6c0470f0bc82c6330ce50cb662f2039cf1fab288..258945770b674c0b6b66a9465=
-9d9c93fbabffdfb 100644
-> --- a/linux-user/riscv/target_signal.h
-> +++ b/linux-user/riscv/target_signal.h
-> @@ -4,5 +4,6 @@
->  #include "../generic/signal.h"
->
->  #define TARGET_ARCH_HAS_SIGTRAMP_PAGE 1
-> +#undef TARGET_SA_RESTORER
->
->  #endif /* RISCV_TARGET_SIGNAL_H */
->
-> ---
-> base-commit: 6fccaa2fba391815308a746d68f7fa197bc93586
-> change-id: 20250202-riscv-sa-restorer-edd3dfa7790f
->
-> Best regards,
-> --
-> Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
->
->
+> >
+> > Thanks, Cl=C3=A9ment
 
