@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682FDC021BC
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 19:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF51C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 19:15:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmdpW-0005oV-8C; Mon, 24 Feb 2025 14:09:26 -0500
+	id 1tmdtM-0001E2-6n; Mon, 24 Feb 2025 14:13:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tmdox-0005fI-V8
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:08:56 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tmdos-0004oQ-70
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:08:51 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-220f4dd756eso99445885ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 11:08:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740424124; x=1741028924; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JYchZo+9Zfqk3JonMm8w+m2V870HZdVGqg6ShWsJhJU=;
- b=d652Pa7U9P4EkpheSontKOiGIwpUjAZ4Ug4UiDSwS//8q/4WpnB+sfTnder+xL4zmc
- Um3iWAWVv6dFzggYWI5HYaro7Sf6SrxCMiceEZ28Vcr7KEHhxOgSzyuS7kKiG1UiCR/Q
- Nrgph7lMXmy/qgcVZoVTBLBizmDeC7Lberp+h0YHHve+3Agk0w1bcpeP3wkSBCYbS5Ea
- 0+WQGBeWnKQOYyUt57BSWY0AHwJgNu0/BW+s2w0CBVnlwf09flMoA65lbPN22H6AxvPh
- KbwQK4jIYtEe/WcMGTl5B83cMdXY7PnK2ZQk1LGmTkSV/3j1A07QHRAZMid66L4zwE33
- nZPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740424124; x=1741028924;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JYchZo+9Zfqk3JonMm8w+m2V870HZdVGqg6ShWsJhJU=;
- b=qvcHhi5K9MJkl7IOEgLGDGpWAAGmUQpj4v3ETKOFqpeS6NXz2re/WtU0KiZxIMiYaJ
- Fi4MUngbddokqWjZcw0dM2FTNWbBlfGHeps+3md455KW9VoodpXIk08/0Cs85iD3PWLG
- i0mmSb9EPw7tbmiyDMuyr8F0zcL4AcLkjiZCcpMg/GwkwRGcotGPli6QM+SalIWRxWq4
- 8qUhitYbCmW+eVUMSam+ZeR2+wjWh1OrMrtGf+NiRcpFNQu+mV5z/7+37d/j89E1JkOB
- iFUai97celc/EzJkeeRzZkvJrYoFAzpJQ9mbJttQ4fP1cyJyMaQ0jk9ZXqJalWr9mKLc
- tpsQ==
-X-Gm-Message-State: AOJu0Yxdb+QdtDuVAZCiivNVie9J8Dc6XQtkWbQ2P/qmFUbaigDNEW/j
- /qpbsnAUNvoBKAIjwa5sHIurn/egi1d5FBze2Jpy6O62BvboDnWuHjG4snjmQvA0w+Ijb3zb4cN
- 4
-X-Gm-Gg: ASbGnctor+rALcO9G4XZXwT6zWISpAaaC3iL6dkTdVJIeMNtSck97VZjDXCSe7nvc3w
- YbfCONLN+SdeVmahnVp2kJZ3Ui1BkmU7mBq/Z9KcceyIP0ANAeh1AXYfGdoFXjIG9efCNsj+Rk3
- T1+zLd5PzXiQ7z812gUKmbuod/QBrWWWLqDKNHAaGVLOVxF7r6Z5JG6WnXVHHeenktPIqRiEY+N
- kgVl2QoyDLRJuQo7G4OgSQcZkjeoc78Cglnpcfvp3bI3LosZ4ndSUBPr5vTwQoathKYh9OCu8PH
- YAKoqgS4sD7Ttg6cQ7OZEl5sooarlQ==
-X-Google-Smtp-Source: AGHT+IEVlIMoanCBBkichfHkavrPwyrHunPZy4KaMU1TNXh4zsvbzOg8KXxPSzA0d+FvQzOyML5GBg==
-X-Received: by 2002:a17:903:19ec:b0:21f:658b:8ed5 with SMTP id
- d9443c01a7336-22307b4556emr5265175ad.6.1740424124169; 
- Mon, 24 Feb 2025 11:08:44 -0800 (PST)
-Received: from grind.. ([2804:7f0:bcc0:6edb:f473:a9df:d551:443b])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d545df28sm183583155ad.153.2025.02.24.11.08.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 11:08:43 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tmdsD-0000bx-KV
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:12:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tmdsB-0005vd-HB
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:12:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740424326;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+cpCX4il9fjErP7OOakJXWhN6hcU0kmAb/KDCG4CX78=;
+ b=Oqr1aDVpHUyJ9seMlH+2qU0XVnuUZwMdODEvH8WN+dGhr9OxXXs3BvToWAVD8mYsbtjboC
+ VvBA1VpMEqxiQnp2RyBMFsvl3b6K72I1Gn5tV20f1gubseygOidKBWrY23+xGmdUa5/4lD
+ DniFHhqoKLS2AuuUBwvjkxhGl5XaHd4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-EGcLyeL4O16-XhSG0xeobA-1; Mon,
+ 24 Feb 2025 14:12:04 -0500
+X-MC-Unique: EGcLyeL4O16-XhSG0xeobA-1
+X-Mimecast-MFC-AGG-ID: EGcLyeL4O16-XhSG0xeobA_1740424324
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC3121800373; Mon, 24 Feb 2025 19:12:03 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.119])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 255BB1800352; Mon, 24 Feb 2025 19:12:00 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 04/11] hw/riscv/riscv-iommu: add riscv_iommu_hpm_incr_ctr()
-Date: Mon, 24 Feb 2025 16:08:19 -0300
-Message-ID: <20250224190826.1858473-5-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250224190826.1858473-1-dbarboza@ventanamicro.com>
-References: <20250224190826.1858473-1-dbarboza@ventanamicro.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [RFC 2/2] python: integrate linter tests natively with meson
+Date: Mon, 24 Feb 2025 19:11:52 +0000
+Message-ID: <20250224191152.2123003-3-berrange@redhat.com>
+In-Reply-To: <20250224191152.2123003-1-berrange@redhat.com>
+References: <20250224191152.2123003-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,340 +89,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+This creates meson test targets for the python linters which has a
+number of benefits:
 
-This function will increment a specific counter, generating an interrupt
-when an overflow occurs.
+ * They can be invoked in the same manner as all other tests
+   using meson or ninja, or the top level Makefile wrappers
+ * They avoid the extra indirection of running via avocado
+ * They get run by default when doing 'make check'
 
-Some extra changes in riscv-iommu.c  were required to add this new
-helper in riscv-iommu-hpm.c:
+There is one general 'python' suite defined, and then a 'pythonVER'
+suite for each tox environment listed in python/setup.cfg.
 
-- RISCVIOMMUContext was moved to riscv-iommu.h, making it visible in
-  riscv-iommu-hpm.c;
+All python linters across all version get triggered by 'make check'.
 
-- riscv_iommu_notify() is now public.
+To run just the python linters without other tests
 
-No behavior change is made since HPM support is not being advertised
-yet.
+  $ make check-python
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+To run just the python linters for Python 3.12
+
+  $ make check-python312
+
+Static lints can be enabled per source directory in meson.build by
+adding
+
+ pythontests += {
+    'dir': meson.current_source_dir(),
+    'pylint': true,
+    'mypy': true,
+    'flake8': true,
+    'isort': true,
+ }
+
+If any given lint is omitted in the config, it defaults to disabled.
+
+When the '--disable-downloads' option is given to 'configure', running
+of the python tests is disabled since tox would otherwise attempt to
+download files to populate the per-version envs.
+
+TBD: if you have meson < 1.7, then 'build_by_default: false' does
+not work correctly, so the tox envs get created by 'make', rather
+than delayed until 'make check'. We could bump min meson to fix this
+or accept that older versions have sub-optimal behaviour
+
+TBD: setup.cfg defines 6 python venvs 3.8 -> 3.13 currently, which
+gives alot of duplication in what we run with 'make check' by default.
+This adds about 1 minute of wallclock time to a non-parallel build on
+my (high end) laptop, or 15 seconds to a parallel build. This is a
+combination of populating the tox envs, and pylint being generally
+slow. IIRC there's a way to split tests in 'quick' vs 'thorough' so
+'make check' runs 'quick' only by default, but I've not investigated
+this yet.
+
+TBD: purge python/Makefile and python/tests/*.sh wrappers. It is
+desirable to have only one way of running tests that everyone agrees
+on, so that we have consistency of results. Assuming the native meson
+integration is good enough, this should make the Makefile obsolete,
+as well as the .sh wrappers.
+
+TBD: I added isort & mypy for the 'scripts/qapi' code as a demo, but
+flake8 & pylint don't pass so are disabled.
+
+TBD: I've not figured out a nice way to integrate qemu-iotests without
+the linters.py indirection which is painful to consume. Perhaps solvable
+by just giving all the iotests real file extensions (.sh & .py) so the
+linters can auto-detect python files. Would then need to have an exclude
+list in qemu-iotests/meson.build to skip non-compliant files initially.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/riscv/riscv-iommu-hpm.c | 114 +++++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu-hpm.h |   2 +
- hw/riscv/riscv-iommu.c     |  43 +++++++++-----
- hw/riscv/riscv-iommu.h     |  18 ++++++
- 4 files changed, 162 insertions(+), 15 deletions(-)
+ meson.build                |  1 +
+ python/meson.build         | 43 ++++++++++++++++++++++++++++++++++++++
+ python/scripts/__init__.py |  0
+ scripts/meson.build        |  9 ++++++++
+ tests/meson.build          |  1 +
+ tests/python/meson.build   | 17 +++++++++++++++
+ 6 files changed, 71 insertions(+)
+ create mode 100644 python/meson.build
+ create mode 100644 python/scripts/__init__.py
+ create mode 100644 tests/python/meson.build
 
-diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
-index 5833ab8956..8eca5ee17e 100644
---- a/hw/riscv/riscv-iommu-hpm.c
-+++ b/hw/riscv/riscv-iommu-hpm.c
-@@ -52,3 +52,117 @@ uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s)
-     return (ctr_val + get_cycles() - ctr_prev) |
-         (cycle & RISCV_IOMMU_IOHPMCYCLES_OVF);
- }
+diff --git a/meson.build b/meson.build
+index 0ee79c664d..f1cbfda149 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4440,6 +4440,7 @@ if stap.found()
+   endforeach
+ endif
+ 
++subdir('python')
+ subdir('scripts')
+ subdir('tools')
+ subdir('pc-bios')
+diff --git a/python/meson.build b/python/meson.build
+new file mode 100644
+index 0000000000..73360b6d43
+--- /dev/null
++++ b/python/meson.build
+@@ -0,0 +1,43 @@
 +
-+static void hpm_incr_ctr(RISCVIOMMUState *s, uint32_t ctr_idx)
-+{
-+    const uint32_t off = ctr_idx << 3;
-+    uint64_t cntr_val;
++tox = find_program('tox', required: false)
++toxcfg = ['-c', meson.current_source_dir(),
++          '--workdir', meson.current_source_dir(),
++          '--root', meson.current_source_dir()]
++pythonlints = ['pylint', 'mypy', 'flake8', 'isort']
 +
-+    cntr_val = ldq_le_p(&s->regs_rw[RISCV_IOMMU_REG_IOHPMCTR_BASE + off]);
-+    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_IOHPMCTR_BASE + off], cntr_val + 1);
++pythontests = [
++    {
++        'dir': meson.current_source_dir() / 'qemu',
++        'pylint': true,
++        'mypy': true,
++        'flake8': true,
++        'isort': true,
++    },
++    {
++        'dir': meson.current_source_dir() / 'scripts',
++        'pylint': true,
++        'mypy': true,
++        'flake8': true,
++        'isort': true,
++    },
++]
 +
-+    /* Handle the overflow scenario. */
-+    if (cntr_val == UINT64_MAX) {
-+        /*
-+         * Generate interrupt only if OF bit is clear. +1 to offset the cycle
-+         * register OF bit.
-+         */
-+        const uint32_t ovf =
-+            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IOCOUNTOVF,
-+                                  BIT(ctr_idx + 1), 0);
-+        if (!get_field(ovf, BIT(ctr_idx + 1))) {
-+            riscv_iommu_reg_mod64(s,
-+                                  RISCV_IOMMU_REG_IOHPMEVT_BASE + off,
-+                                  RISCV_IOMMU_IOHPMEVT_OF,
-+                                  0);
-+            riscv_iommu_notify(s, RISCV_IOMMU_INTR_PM);
-+        }
-+    }
++pyenvs = []
++if tox.found() and get_option('wrap_mode') != 'nodownload'
++    rc = run_command([tox, 'list'] + toxcfg,
++                     capture: true,
++                     check: true)
++
++    foreach envline: rc.stdout().strip().split('\n')
++        if envline.startswith('py')
++            pyenv = envline.split(' ')[0]
++            message('Adding python environment: ' + pyenv)
++
++            mkenv = custom_target('tox-env-' + pyenv,
++                                  command: [tox, 'run', '-e', pyenv, '--notest'] + toxcfg,
++                                  output: pyenv,
++                                  build_by_default: false)
++            pyenvs += { 'name': pyenv, 'version': pyenv.substring(2), 'target': mkenv }
++        endif
++    endforeach
++endif
+diff --git a/python/scripts/__init__.py b/python/scripts/__init__.py
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/scripts/meson.build b/scripts/meson.build
+index 532277f5a2..6a1fd9e5a9 100644
+--- a/scripts/meson.build
++++ b/scripts/meson.build
+@@ -3,3 +3,12 @@ if stap.found()
+ endif
+ 
+ test('xml-preprocess', files('xml-preprocess-test.py'), suite: ['unit'])
++
++
++pythontests += {
++    'dir': meson.current_source_dir() / 'qapi',
++    'pylint': false,
++    'mypy': true,
++    'flake8': false,
++    'isort': true,
 +}
+diff --git a/tests/meson.build b/tests/meson.build
+index c59619220f..89eed7d259 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -88,3 +88,4 @@ subdir('qapi-schema')
+ subdir('qtest')
+ subdir('migration-stress')
+ subdir('functional')
++subdir('python')
+diff --git a/tests/python/meson.build b/tests/python/meson.build
+new file mode 100644
+index 0000000000..28be424d85
+--- /dev/null
++++ b/tests/python/meson.build
+@@ -0,0 +1,17 @@
 +
-+void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-+                              unsigned event_id)
-+{
-+    const uint32_t inhibit = riscv_iommu_reg_get32(
-+        s, RISCV_IOMMU_REG_IOCOUNTINH);
-+    uint32_t did_gscid;
-+    uint32_t pid_pscid;
-+    uint32_t ctr_idx;
-+    gpointer value;
-+    uint32_t ctrs;
-+    uint64_t evt;
++foreach pyenv: pyenvs
++    foreach scenario: pythontests
++        suites = ['python', 'python' + pyenv['version']]
 +
-+    if (!(s->cap & RISCV_IOMMU_CAP_HPM)) {
-+        return;
-+    }
-+
-+    value = g_hash_table_lookup(s->hpm_event_ctr_map,
-+                                GUINT_TO_POINTER(event_id));
-+    if (value == NULL) {
-+        return;
-+    }
-+
-+    for (ctrs = GPOINTER_TO_UINT(value); ctrs != 0; ctrs &= ctrs - 1) {
-+        ctr_idx = ctz32(ctrs);
-+        if (get_field(inhibit, BIT(ctr_idx + 1))) {
-+            continue;
-+        }
-+
-+        evt = riscv_iommu_reg_get64(s,
-+            RISCV_IOMMU_REG_IOHPMEVT_BASE + (ctr_idx << 3));
-+
-+        /*
-+         * It's quite possible that event ID has been changed in counter
-+         * but hashtable hasn't been updated yet. We don't want to increment
-+         * counter for the old event ID.
-+         */
-+        if (event_id != get_field(evt, RISCV_IOMMU_IOHPMEVT_EVENT_ID)) {
-+            continue;
-+        }
-+
-+        if (get_field(evt, RISCV_IOMMU_IOHPMEVT_IDT)) {
-+            did_gscid = get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID);
-+            pid_pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
-+        } else {
-+            did_gscid = ctx->devid;
-+            pid_pscid = ctx->process_id;
-+        }
-+
-+        if (get_field(evt, RISCV_IOMMU_IOHPMEVT_PV_PSCV)) {
-+            /*
-+             * If the transaction does not have a valid process_id, counter
-+             * increments if device_id matches DID_GSCID. If the transaction
-+             * has a valid process_id, counter increments if device_id
-+             * matches DID_GSCID and process_id matches PID_PSCID. See
-+             * IOMMU Specification, Chapter 5.23. Performance-monitoring
-+             * event selector.
-+             */
-+            if (ctx->process_id &&
-+                get_field(evt, RISCV_IOMMU_IOHPMEVT_PID_PSCID) != pid_pscid) {
-+                continue;
-+            }
-+        }
-+
-+        if (get_field(evt, RISCV_IOMMU_IOHPMEVT_DV_GSCV)) {
-+            uint32_t mask = ~0;
-+
-+            if (get_field(evt, RISCV_IOMMU_IOHPMEVT_DMASK)) {
-+                /*
-+                 * 1001 1011   mask = GSCID
-+                 * 0000 0111   mask = mask ^ (mask + 1)
-+                 * 1111 1000   mask = ~mask;
-+                 */
-+                mask = get_field(evt, RISCV_IOMMU_IOHPMEVT_DID_GSCID);
-+                mask = mask ^ (mask + 1);
-+                mask = ~mask;
-+            }
-+
-+            if ((get_field(evt, RISCV_IOMMU_IOHPMEVT_DID_GSCID) & mask) !=
-+                (did_gscid & mask)) {
-+                continue;
-+            }
-+        }
-+
-+        hpm_incr_ctr(s, ctr_idx);
-+    }
-+}
-diff --git a/hw/riscv/riscv-iommu-hpm.h b/hw/riscv/riscv-iommu-hpm.h
-index 231c110ff2..411d869dce 100644
---- a/hw/riscv/riscv-iommu-hpm.h
-+++ b/hw/riscv/riscv-iommu-hpm.h
-@@ -23,5 +23,7 @@
- #include "hw/riscv/riscv-iommu.h"
- 
- uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s);
-+void riscv_iommu_hpm_incr_ctr(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-+                              unsigned event_id);
- 
- #endif
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 0fbd50bb52..0b15acf4e6 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -39,7 +39,6 @@
- #define PPN_PHYS(ppn)                 ((ppn) << TARGET_PAGE_BITS)
- #define PPN_DOWN(phy)                 ((phy) >> TARGET_PAGE_BITS)
- 
--typedef struct RISCVIOMMUContext RISCVIOMMUContext;
- typedef struct RISCVIOMMUEntry RISCVIOMMUEntry;
- 
- /* Device assigned I/O address space */
-@@ -52,19 +51,6 @@ struct RISCVIOMMUSpace {
-     QLIST_ENTRY(RISCVIOMMUSpace) list;
- };
- 
--/* Device translation context state. */
--struct RISCVIOMMUContext {
--    uint64_t devid:24;          /* Requester Id, AKA device_id */
--    uint64_t process_id:20;     /* Process ID. PASID for PCIe */
--    uint64_t tc;                /* Translation Control */
--    uint64_t ta;                /* Translation Attributes */
--    uint64_t satp;              /* S-Stage address translation and protection */
--    uint64_t gatp;              /* G-Stage address translation and protection */
--    uint64_t msi_addr_mask;     /* MSI filtering - address mask */
--    uint64_t msi_addr_pattern;  /* MSI filtering - address pattern */
--    uint64_t msiptp;            /* MSI redirection page table pointer */
--};
--
- typedef enum RISCVIOMMUTransTag {
-     RISCV_IOMMU_TRANS_TAG_BY,  /* Bypass */
-     RISCV_IOMMU_TRANS_TAG_SS,  /* Single Stage */
-@@ -101,7 +87,7 @@ static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
-     }
- }
- 
--static void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
-+void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
- {
-     uint32_t ipsr, icvec, vector;
- 
-@@ -423,6 +409,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             }
-         }
- 
-+
-+        if (pass == S_STAGE) {
-+            riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_S_VS_WALKS);
-+        } else {
-+            riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_G_WALKS);
-+        }
-+
-         /* Read page table entry */
-         if (sc[pass].ptesize == 4) {
-             uint32_t pte32 = 0;
-@@ -941,6 +934,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
- 
-     /* Device directory tree walk */
-     for (; depth-- > 0; ) {
-+        riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_DD_WALK);
-         /*
-          * Select device id index bits based on device directory tree level
-          * and device context format.
-@@ -968,6 +962,8 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-         addr = PPN_PHYS(get_field(de, RISCV_IOMMU_DDTE_PPN));
-     }
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_DD_WALK);
-+
-     /* index into device context entry page */
-     addr |= (ctx->devid * dc_len) & ~TARGET_PAGE_MASK;
- 
-@@ -1033,6 +1029,8 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-     }
- 
-     for (depth = mode - RISCV_IOMMU_DC_FSC_PDTP_MODE_PD8; depth-- > 0; ) {
-+        riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_PD_WALK);
-+
-         /*
-          * Select process id index bits based on process directory tree
-          * level. See IOMMU Specification, 2.2. Process-Directory-Table.
-@@ -1050,6 +1048,8 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-         addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
-     }
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_PD_WALK);
-+
-     /* Leaf entry in PDT */
-     addr |= (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
-     if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
-@@ -1419,6 +1419,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     GHashTable *iot_cache;
-     int fault;
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
-+
-     iot_cache = g_hash_table_ref(s->iot_cache);
-     /*
-      * TC[32] is reserved for custom extensions, used here to temporarily
-@@ -1429,6 +1431,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
- 
-     /* Check for ATS request. */
-     if (iotlb->perm == IOMMU_NONE) {
-+        riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_ATS_RQ);
-         /* Check if ATS is disabled. */
-         if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS)) {
-             enable_pri = false;
-@@ -1447,6 +1450,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         goto done;
-     }
- 
-+    riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_TLB_MISS);
-+
-     /* Translate using device directory / page table information. */
-     fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
- 
-@@ -2375,6 +2380,10 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_ops, s,
-             "riscv-iommu-trap", ~0ULL);
-     address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
-+
-+    if (s->cap & RISCV_IOMMU_CAP_HPM) {
-+        s->hpm_event_ctr_map = g_hash_table_new(g_direct_hash, g_direct_equal);
-+    }
- }
- 
- static void riscv_iommu_unrealize(DeviceState *dev)
-@@ -2383,6 +2392,10 @@ static void riscv_iommu_unrealize(DeviceState *dev)
- 
-     g_hash_table_unref(s->iot_cache);
-     g_hash_table_unref(s->ctx_cache);
-+
-+    if (s->cap & RISCV_IOMMU_CAP_HPM) {
-+        g_hash_table_unref(s->hpm_event_ctr_map);
-+    }
- }
- 
- void riscv_iommu_reset(RISCVIOMMUState *s)
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 59db3fd02a..4384f39515 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -85,12 +85,30 @@ struct RISCVIOMMUState {
-     /* HPM cycle counter */
-     uint64_t hpmcycle_val;      /* Current value of cycle register */
-     uint64_t hpmcycle_prev;     /* Saved value of QEMU_CLOCK_VIRTUAL clock */
-+
-+    /* HPM event counters */
-+    GHashTable *hpm_event_ctr_map; /* Mapping of events to counters */
- };
- 
- void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
-          Error **errp);
- void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
- void riscv_iommu_reset(RISCVIOMMUState *s);
-+void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
-+
-+typedef struct RISCVIOMMUContext RISCVIOMMUContext;
-+/* Device translation context state. */
-+struct RISCVIOMMUContext {
-+    uint64_t devid:24;          /* Requester Id, AKA device_id */
-+    uint64_t process_id:20;     /* Process ID. PASID for PCIe */
-+    uint64_t tc;                /* Translation Control */
-+    uint64_t ta;                /* Translation Attributes */
-+    uint64_t satp;              /* S-Stage address translation and protection */
-+    uint64_t gatp;              /* G-Stage address translation and protection */
-+    uint64_t msi_addr_mask;     /* MSI filtering - address mask */
-+    uint64_t msi_addr_pattern;  /* MSI filtering - address pattern */
-+    uint64_t msiptp;            /* MSI redirection page table pointer */
-+};
- 
- /* private helpers */
- 
++        foreach lint: pythonlints
++            if scenario.get(lint, false)
++                name = lint + scenario['dir'].replace(meson.project_source_root(), '').replace('/', '-')
++                toxargs = toxcfg + ['exec', '-e', pyenv['name'],
++                                    '--',
++                                    'python3', '-m', lint,
++                                    scenario['dir']]
++                test(name, tox, args: toxargs, suite: suites, depends: pyenv['target'])
++            endif
++        endforeach
++    endforeach
++endforeach
 -- 
-2.48.1
+2.47.1
 
 
