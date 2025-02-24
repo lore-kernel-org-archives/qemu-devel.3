@@ -4,89 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B93C021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59FBCC021B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmQEf-0003Ax-SL; Sun, 23 Feb 2025 23:38:29 -0500
+	id 1tmQLo-0004DE-Er; Sun, 23 Feb 2025 23:45:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmQEb-0003AZ-1s
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:38:25 -0500
-Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmQEY-0003QF-FT
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:38:23 -0500
-Received: by mail-vs1-xe2d.google.com with SMTP id
- ada2fe7eead31-4bfb4853c29so946769137.0
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 20:38:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740371901; x=1740976701; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1BISsHNwx0FXRb1gqRGhGSwYTwFPT4yMOK3SVWnfZ9I=;
- b=bL+3hJr3VjanvXu9hSKlApVXsbb2McijML8nc+aGumNSXqFeraQBzzg27HhBk4rcpY
- WbsklPIwwKnEfzf8g8Ld1YwvEEUtew9mfByVvACNY7dEjmaueWZJAGpBJ4p4i38JpiEs
- MHsVEi3iQeF6SR6+ZpNr8gwNPk2+fwVPtcdK92YEnSHePCWu8DiKYxBnK3pt+zYlhguY
- r865+ZHgxAXmNjIPZ1R473Hu8WPGn22U+Caa9TTWTh8JuZ7ES82iSYVDQtDYI6B8q84H
- hOilYMZUcP6KgSMelQkwCROhxqxLYsczOtk5akEkrfp5hQX7ornnatGCxPngXOl+wuEC
- 2uKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740371901; x=1740976701;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1BISsHNwx0FXRb1gqRGhGSwYTwFPT4yMOK3SVWnfZ9I=;
- b=b9M+DrQRdHdmfpWHgRdjenrAk3sETLM6MfmdSkKz149TbIjZNPp02Q0xOYznPZxDn+
- 5yYZJ5/sYVvRnbzmNEVRHJa5rhpXbLB6H7XiYIMauotSZwzjo7ZH4F2sxLadabxcL7Vq
- hS6K7cNayyWN2HV8egSCUO386a8iNERxiusoXxDuNQUVri0eXz0eE0DnmKlJerEpLDre
- z1msOS9fSFy4nrhXo2uWb1ACRdYaigQV1lcO4rYW/zc9bj8AX7iUUZfYx1s/fL6fWXD7
- uTE4mgJjVw+Ol0uAx+TxlrVZRY4YP3PDDRoIQAOck34CtalgBJBv7n4skxG7/CkpMVLD
- wPuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0mDH9x9Y5dUWRgLGeuodj6p8G0CniXDWnBZdXxqn2pUp9mog1w5bjiQD0jPaQX9DIqIWRHKCu+1Lh@nongnu.org
-X-Gm-Message-State: AOJu0YyJR9XRZ6FdJ2Fw4LinKtOULNO444hTzw/IwOmt0IXqrLhEcQ6B
- UPQS3NwdAnpTnHOSw93klb2GTjjjFNfDrvxwsPVjPToE0P829p3Qf0iUo7aTPd+h5Pjw+hFGEBG
- iQqAvc0KigiBDIcUZQ7jW1lBrLaw=
-X-Gm-Gg: ASbGncvT+xla1Oud5GD9vfoIvEO3NXIekdT1xjFpy4nnxs+zn+IhEGnLGgRhL9ygNEY
- XaA9S2Tb0JTh+UnoP5cStwv++/0Mr9xgd/mfI/lhIoImgtVXTl3tOKyq+URJiXc/Rl4M9hAdV1S
- RJb63LLVdehxDTZuNWzO8R+gCdBYEq5yCv+xwc
-X-Google-Smtp-Source: AGHT+IFQDAvYlC22XaGHLa2SzLEBXzoMeb4/ostlfl1IFIGwKgASr/AbAStcNZWbFByPb4U+8doonPoJRL6lSKZDtMk=
-X-Received: by 2002:a05:6102:4b18:b0:4bb:c0a7:39b8 with SMTP id
- ada2fe7eead31-4bfc022708fmr6093522137.17.1740371900832; Sun, 23 Feb 2025
- 20:38:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhouquan@iscas.ac.cn>)
+ id 1tmQLe-0004Cq-Vt; Sun, 23 Feb 2025 23:45:43 -0500
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <zhouquan@iscas.ac.cn>)
+ id 1tmQLb-00045f-Gz; Sun, 23 Feb 2025 23:45:42 -0500
+Received: from zq-Legion-Y7000.smartont.net (unknown [180.110.114.221])
+ by APP-01 (Coremail) with SMTP id qwCowAAHDtJl+btn_XfvDw--.45145S2;
+ Mon, 24 Feb 2025 12:45:26 +0800 (CST)
+From: zhouquan@iscas.ac.cn
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com, dbarboza@ventanamicro.com, zhouquan@iscas.ac.cn
+Subject: [PATCH] target/riscv/kvm: Add some exts support
+Date: Mon, 24 Feb 2025 12:39:39 +0800
+Message-Id: <303616ccad2b5309768157b50d93b3e89fecc9cb.1740371468.git.zhouquan@iscas.ac.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20241031035319.731906-1-alistair.francis@wdc.com>
- <20241031035319.731906-16-alistair.francis@wdc.com>
- <CAJ307EhFCpK8aO7r7PHF7H=k=f9tstPe=aVKrMWv1y7m3_HSNw@mail.gmail.com>
- <CAJ307EhOKFyK3ULJ2NEj+zYcSbVQ1RxGcVj40_HFBbwt0UJL9g@mail.gmail.com>
-In-Reply-To: <CAJ307EhOKFyK3ULJ2NEj+zYcSbVQ1RxGcVj40_HFBbwt0UJL9g@mail.gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 14:37:54 +1000
-X-Gm-Features: AWEUYZnzlAAkr6ZX2Cf-p4MKFtDQPHMyhcSpiQJbDndqr6ByXScm8UfOBwKv-Ow
-Message-ID: <CAKmqyKNa4=r2eqRL1OsndU0kVFY23Kq6GaZfm5dqF4mavRkyaQ@mail.gmail.com>
-Subject: Re: [PULL 15/50] hw/char: sifive_uart: Print uart characters async
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowAAHDtJl+btn_XfvDw--.45145S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7AFWxWr18ZFWDGFyDJFy3CFg_yoW8XFyfpr
+ sxKa13CrWkt34rZw4xtrs5Gr1UJrWFkw4kWwsF93WrX3y7CryIvFnFv3W3C3WDG3W0gryY
+ vFs5ur48Cws8taUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUBj14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+ 6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
+ 1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+ 6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWxJVW8Jr1lOx8S6xCaFVCjc4AY6r
+ 1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02
+ 628vn2kIc2xKxwAKzVCY07xG64k0F24lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUW6wtUUUUU=
+X-Originating-IP: [180.110.114.221]
+X-CM-SenderInfo: 52kr31xxdqqxpvfd2hldfou0/1tbiBgsDBme77aMgJwAAsd
+Received-SPF: pass client-ip=159.226.251.21; envelope-from=zhouquan@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,69 +74,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 22, 2025 at 1:27=E2=80=AFAM Cl=C3=A9ment Chigot <chigot@adacore=
-.com> wrote:
->
-> On Fri, Feb 14, 2025 at 1:52=E2=80=AFPM Cl=C3=A9ment Chigot <chigot@adaco=
-re.com> wrote:
-> >
-> > Hi Alistair,
-> >
-> > I've an issue following this patch. When the system is reset (e.g
-> > using HTIF syscalls), the fifo might not be empty and thus some
-> > characters are lost.
-> > I discovered it on a Windows host. But by extending
-> > "TX_INTERRUPT_TRIGGER_DELAY_NS" to a huge value, I'm able to reproduce
-> > on Linux as well.
->
-> The root cause of my issue was unrelated to these early shutdowns. On
-> Windows, the character device behind `-serial mon:stdio`
-> (char-win-stdio) doesn't provide an `add_watch` method. Therefore,
-> `qemu_chr_fe_add_watch` calls always result in an error, flushing the
-> fifo. I saw in @Philippe Mathieu-Daud=C3=A9 patch about pl011 that
-> `G_SOURCE_CONTINUE` is returned instead of calling it and it does
-> work. @Alistair Francis  do you remember if there was a reason for
-> calling `add_watch` ?
+From: Quan Zhou <zhouquan@iscas.ac.cn>
 
-qemu_chr_fe_add_watch() is used in a range of UART devices, I am not
-really sure of a different way to write the data out.
+When the Sscofpmf/Svade/Svadu/Smnpm/Ssnpm exts is available
+expose it to the guest so that guest can use it.
 
-I don't see `G_SOURCE_CONTINUE` in pl011.c either
+Signed-off-by: Quan Zhou <zhouquan@iscas.ac.cn>
+---
+ target/riscv/kvm/kvm-cpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
->
-> > I've tried to flush within an unrealized function but it didn't work.
-> > Any suggestions ?
->
-> FTR, I still have found a solution here using
-> qemu_register_shutdown_notifier. Though I'm wondering if this is
-> useful: the cases where a shutdown occurs between two "fifo_update"
-> seems really narrow, but they could happen.
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 23ce779359..06a9f30841 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -319,9 +319,14 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
+     KVM_EXT_CFG("zvksed", ext_zvksed, KVM_RISCV_ISA_EXT_ZVKSED),
+     KVM_EXT_CFG("zvksh", ext_zvksh, KVM_RISCV_ISA_EXT_ZVKSH),
+     KVM_EXT_CFG("zvkt", ext_zvkt, KVM_RISCV_ISA_EXT_ZVKT),
++    KVM_EXT_CFG("smnpm", ext_smnpm, KVM_RISCV_ISA_EXT_SMNPM),
+     KVM_EXT_CFG("smstateen", ext_smstateen, KVM_RISCV_ISA_EXT_SMSTATEEN),
+     KVM_EXT_CFG("ssaia", ext_ssaia, KVM_RISCV_ISA_EXT_SSAIA),
++    KVM_EXT_CFG("sscofpmf", ext_sscofpmf, KVM_RISCV_ISA_EXT_SSCOFPMF),
++    KVM_EXT_CFG("ssnpm", ext_ssnpm, KVM_RISCV_ISA_EXT_SSNPM),
+     KVM_EXT_CFG("sstc", ext_sstc, KVM_RISCV_ISA_EXT_SSTC),
++    KVM_EXT_CFG("svade", ext_svade, KVM_RISCV_ISA_EXT_SVADE),
++    KVM_EXT_CFG("svadu", ext_svadu, KVM_RISCV_ISA_EXT_SVADU),
+     KVM_EXT_CFG("svinval", ext_svinval, KVM_RISCV_ISA_EXT_SVINVAL),
+     KVM_EXT_CFG("svnapot", ext_svnapot, KVM_RISCV_ISA_EXT_SVNAPOT),
+     KVM_EXT_CFG("svpbmt", ext_svpbmt, KVM_RISCV_ISA_EXT_SVPBMT),
+-- 
+2.34.1
 
-What does the actual hardware do? I don't think it has a shutdown
-notifier. I think this is up to the guest to flush the UART.
-
->  @Philippe Mathieu-Daud=C3=A9 AFAICT, the new pl011 and other char device=
-s
-> implementing write fifo have the same issue. Thus, pinging you here to
-> get your advice.
->
-> Thanks,
-> Cl=C3=A9ment
->
-> > >  static void sifive_uart_reset_enter(Object *obj, ResetType type)
-> > >  {
-> > > ...
-> > > +    fifo8_create(&s->tx_fifo, SIFIVE_UART_TX_FIFO_SIZE);
-> >
-> > I'm also wondering if that part could not lead to memory leak.
-> > `fifo8_destroy` is never called and AFAIK, there are ways to reset a
-> > device dynamically (e.g snapshot, though not sure if it's supported
-> > here).
-
-Good catch, I can send a patch to fix this
-
-Alistair
-
-> >
-> > Thanks, Cl=C3=A9ment
 
