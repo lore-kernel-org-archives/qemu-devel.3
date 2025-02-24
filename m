@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B75C021BC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD11C021A4
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmc2o-0006vq-Nx; Mon, 24 Feb 2025 12:15:02 -0500
+	id 1tmc2h-0006tk-1W; Mon, 24 Feb 2025 12:14:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2k-0006un-LZ
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:00 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tmc2f-0006tL-9z
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:53 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmc2j-0005Yf-0P
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:58 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-21c2f1b610dso137339395ad.0
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:14:56 -0800 (PST)
+ id 1tmc2d-0005XP-K1
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:14:53 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-220d132f16dso72140425ad.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740417295; x=1741022095; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740417289; x=1741022089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VHAdfN98EalcKVEjBSSimTDU4XR40iCNkU/fGqXPJUE=;
- b=gx02idx/AhbzlDb15bM76d/oEe7za3aSWJr2sa1Z8WLPwrKdeB4qHTDSfyzsDqeLAz
- CiWEuoMzNfnqxWRoHi++63td6OK3D3PwptnxvVedwHlb5okMWKxyQg7nRcG0AKMs9G5Y
- 3cIJAt6pFnP7gWgSP7fjjymOtsYcXk+0UsPlgnf/F2cczCeTOs7I7/8eXY4l30F7HbaX
- sDGF0wgjLrCfxWVSv8alPlW/zTPOTU79da7IDM3YA3R7djRDVTlxFYhsvSCgQ/+safNQ
- QgQDOjvbSJsgWFeEKt2mSbGUGVWZ30pTYb8BvLtV/vWiSCJ7/7i+fmS5TZoqN0KKBEHt
- q5Jg==
+ bh=WOLV2f1+5SpreY+ykl9+JCvQNpcdVrqJeVor++6cQm4=;
+ b=S1+9r0wKDVVc8kKR9XAFd9vd9fVZ3rkzOE5FfxR/r/lUVPwfKm6DGc89mjyS5X0t49
+ VdWzJsqcdZz1eJ7pbKKK08wbbVqcp0Fol12Z8aqJ3VtePSx5Lus85fNti6YA0bhOIckg
+ rfk2prglc3Fuo/RDAuj0NmEiPShaJQCcSfFnsySo4eslgfqiwOruOXvP+4OR2JdkiEeG
+ sskunUiwhtsD3GyEryd5bR8PxzQG0RjCagZe/e50XDkuvM8a4bPaQ5uoCrHQJq/p0wHT
+ 2wv1tBC+wScsi8dw8tTe23/jhPDbTbwYueBedMjSG9lRsHLkav+h/gwEmq3ln9Db3Ocr
+ 255Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740417295; x=1741022095;
+ d=1e100.net; s=20230601; t=1740417289; x=1741022089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VHAdfN98EalcKVEjBSSimTDU4XR40iCNkU/fGqXPJUE=;
- b=o2y3sPZt/LFDGDEqt3UFbuTa2e6MvpMJlysl9QQlOCiSVBiig6yVo6cWUi9TyNPMFm
- tYOPeNuHNIXWZqunsvCWijIHYE+1VVHEuBt+Y2JS04844aIJ2mV1hylPoKnHZZqLDNvY
- 0C6eC3Hwjs6PLCcqe59zE6pYUGJppEKnkUB/aRy6LoHnyu4KStlqzkzoMOnFLX3rKAEf
- iTcwEE4UXvUN8dAzlL7Jx7bw0LESr8YNXeCnF0AhSq7LxygKdHRLGhc1xXpLp4H69Lqp
- y4Bvbi/i7A89tI17SfScADq1fC4qvRpvhm5saSbRqman4MIzjueY4jh27cvM0X0Yb6Mo
- 5XrA==
-X-Gm-Message-State: AOJu0YznUM0qHpZ0ywoAyQ/DBgD8BLFKdUAQ4X71rWUKgFs18tp66OBQ
- qEt+7emvZR4VlP2UO6uw+ZrZ44gIwwJCGQQmbq8Hyeow/fEWSbTlQCzCM3/rF89Hn7uzMFVZPxK
- h
-X-Gm-Gg: ASbGncsyJ41rLt4ZKmN4LxQyejZHb1EreeMF5mp9FdvZf27TI7gNAGUPXaNsbMBOIq0
- aruMtpUcjDhlxZAEoLS1d/db7hk8MQvb4SzpaxeEK/aCDyt23xuQl407T5gBFm+5d/2wkb6i7W1
- ZwLHHGWXRpKG/a628DfP6wlb8kvNWrjBSeKTsciYyliAwNmUYH/q1D63oZUckB5HRa4kv9ZGMB+
- gIpI1qWgJ+PNMZN4vW3HrC4bt/Ot00QFwR3nQG7WADswP6rkG9gHA9EaruZJhFupqBihHhlYsYZ
- YXub7tKF6CPYKLlL7wA6OXAcS1zpefFz8+U=
-X-Google-Smtp-Source: AGHT+IELsmtC+rJkJ72K5G3gfhhT2nwyYKEt86zSSmOF6gUhHsxejMrhdScF6c1rTyaq5emHBZoz+Q==
-X-Received: by 2002:a17:903:32c3:b0:220:c178:b2e with SMTP id
- d9443c01a7336-22307b4bbc2mr34805ad.17.1740417295560; 
- Mon, 24 Feb 2025 09:14:55 -0800 (PST)
+ bh=WOLV2f1+5SpreY+ykl9+JCvQNpcdVrqJeVor++6cQm4=;
+ b=GAaanz2UILLyXBv8lO29J4/wsPRdaGYBQ38HFpbr8EZvd9CWiKaRsWOrRASdFJIQ9g
+ 7H5JD+/NkbV7boPd2qRNm1nUTUhSRR49TW6AT+ZaCGJud0woulc9sPAu0V2QOuDa6Ngu
+ qeGuNLy5qLZIuhm2zylz/H5EXRy/Id8bwQxpOSRwvVBVPxBd4C9iP+3wCLtyw+UykM53
+ g55BLC1RlMzEaZxw7CI8YXVUZzQbn1gto2daIjYPoIeqmxVqRhoYyd3GpVV5WQ2I/DZ4
+ q9gfiwIgX35NBSotLZgZLDd53xm0mvNQVSuE8bVlLzktOxVt7UZMtubLK+k+SBn/5dIS
+ Tuzg==
+X-Gm-Message-State: AOJu0Yw4qMy6/ID/eeCRw17AJQ1j+M9Uj+Euds5pxMB5WAI8CF6D+Kcc
+ 52LANZTG5tY/4aIHDoT9JjAvUWOwisBF/1bh3oTSRs/OSL15mSsy8Z+l04d3Wdv8SurnBpdbkiX
+ O
+X-Gm-Gg: ASbGncsen1O/FERUT86Q/y7n8xbNMBuVVcQNTHSwWJTTuXRuA7yBbJKKzJhry10epZH
+ eESwwO+7zzoOsKr0lnjTpidp83i4Ye8kjiT/lZzM/4Ay16z93JbC/oNAI5V/UMMK55VJoLhVSNY
+ vq4vR72zduahmOXUoDa0CjUCUkjw2M7tiIJNcyWTLoieqV69ZX07tKRP4YOlY2FJCqcUMj0voRT
+ D12K6FkuyeS5XR+jBx/dlgcKcAxXSSLGm85ojwT8KGL61KzbK2d3gq+KXGCpl/bB8JyDck16p9S
+ 2LLnSYoOju6r3EX/ELJJOGPb7kW37ZBAPmY=
+X-Google-Smtp-Source: AGHT+IFsB+EAIhH2SziVeYdwL7WDfZynZwFZ2Xed/HWZyxoufl3wMu/RhVBM1+kKiJflkAZtVaT8ag==
+X-Received: by 2002:a05:6a00:4649:b0:730:9567:c3d4 with SMTP id
+ d2e1a72fcca58-73426c8d910mr25620186b3a.3.1740417289384; 
+ Mon, 24 Feb 2025 09:14:49 -0800 (PST)
 Received: from stoup.. ([2607:fb90:c9e2:d7e3:c85c:d4f0:c8b8:8fa7])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.14.54
+ d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.14.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 09:14:55 -0800 (PST)
+ Mon, 24 Feb 2025 09:14:48 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 06/24] target/m68k: Introduce
- M68K_FEATURE_FPU_PACKED_DECIMAL
-Date: Mon, 24 Feb 2025 09:14:26 -0800
-Message-ID: <20250224171444.440135-7-richard.henderson@linaro.org>
+Cc: laurent@vivier.eu
+Subject: [PATCH v4 01/24] target/m68k: Add FPSR exception bit defines
+Date: Mon, 24 Feb 2025 09:14:21 -0800
+Message-ID: <20250224171444.440135-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250224171444.440135-1-richard.henderson@linaro.org>
 References: <20250224171444.440135-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,46 +99,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set for 68020 and 68030, but does nothing so far.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/cpu.h | 2 ++
- target/m68k/cpu.c | 2 ++
- 2 files changed, 4 insertions(+)
+ target/m68k/cpu.h        | 21 +++++++++++++++++++++
+ target/m68k/fpu_helper.c | 22 +++++++++++-----------
+ 2 files changed, 32 insertions(+), 11 deletions(-)
 
 diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index 7b90e1e58f..b394d8bbb9 100644
+index ddb0f29f4a..e26d416bf4 100644
 --- a/target/m68k/cpu.h
 +++ b/target/m68k/cpu.h
-@@ -574,6 +574,8 @@ enum m68k_features {
-     M68K_FEATURE_MOVEFROMSR_PRIV,
-     /* Exception frame with format+vector (from 68010) */
-     M68K_FEATURE_EXCEPTION_FORMAT_VEC,
-+    /* FPU supports packed decimal real format */
-+    M68K_FEATURE_FPU_PACKED_DECIMAL,
- };
+@@ -442,6 +442,27 @@ typedef enum {
+ #define FPSR_QT_MASK  0x00ff0000
+ #define FPSR_QT_SHIFT 16
  
- static inline bool m68k_feature(CPUM68KState *env, int feature)
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index 5dbad8bb43..7936b1a7e7 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -202,6 +202,7 @@ static void m68020_cpu_initfn(Object *obj)
-     m68k_set_feature(env, M68K_FEATURE_MSP);
-     m68k_set_feature(env, M68K_FEATURE_UNALIGNED_DATA);
-     m68k_set_feature(env, M68K_FEATURE_TRAPCC);
-+    m68k_set_feature(env, M68K_FEATURE_FPU_PACKED_DECIMAL);
++/* Exception Status Byte */
++
++#define FPSR_EXC_MASK     0xff00
++#define FPSR_EXC_INEX1    0x0100
++#define FPSR_EXC_INEX2    0x0200
++#define FPSR_EXC_DZ       0x0400
++#define FPSR_EXC_UNFL     0x0800
++#define FPSR_EXC_OVFL     0x1000
++#define FPSR_EXC_OPERR    0x2000
++#define FPSR_EXC_SNAN     0x4000
++#define FPSR_EXC_BSUN     0x8000
++
++/* Accrued Exception Byte */
++
++#define FPSR_AEXC_MASK    0xf8
++#define FPSR_AEXC_INEX    0x08
++#define FPSR_AEXP_DZ      0x10
++#define FPSR_AEXP_UNFL    0x20
++#define FPSR_AEXP_OVFL    0x40
++#define FPSR_AEXP_IOP     0x80
++
+ /* Floating-Point Control Register */
+ /* Rounding mode */
+ #define FPCR_RND_MASK   0x0030
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index 339b73ad7d..a6d93ff325 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -170,19 +170,19 @@ static int cpu_m68k_exceptbits_from_host(int host_bits)
+     int target_bits = 0;
+ 
+     if (host_bits & float_flag_invalid) {
+-        target_bits |= 0x80;
++        target_bits |= FPSR_AEXP_IOP;
+     }
+     if (host_bits & float_flag_overflow) {
+-        target_bits |= 0x40;
++        target_bits |= FPSR_AEXP_OVFL;
+     }
+     if (host_bits & (float_flag_underflow | float_flag_output_denormal_flushed)) {
+-        target_bits |= 0x20;
++        target_bits |= FPSR_AEXP_UNFL;
+     }
+     if (host_bits & float_flag_divbyzero) {
+-        target_bits |= 0x10;
++        target_bits |= FPSR_AEXP_DZ;
+     }
+     if (host_bits & float_flag_inexact) {
+-        target_bits |= 0x08;
++        target_bits |= FPSR_AEXC_INEX;
+     }
+     return target_bits;
  }
+@@ -192,19 +192,19 @@ static int cpu_m68k_exceptbits_to_host(int target_bits)
+ {
+     int host_bits = 0;
  
- /*
-@@ -244,6 +245,7 @@ static void m68040_cpu_initfn(Object *obj)
- 
-     m68030_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68030);
-+    m68k_unset_feature(env, M68K_FEATURE_FPU_PACKED_DECIMAL);
-     m68k_set_feature(env, M68K_FEATURE_M68040);
+-    if (target_bits & 0x80) {
++    if (target_bits & FPSR_AEXP_IOP) {
+         host_bits |= float_flag_invalid;
+     }
+-    if (target_bits & 0x40) {
++    if (target_bits & FPSR_AEXP_OVFL) {
+         host_bits |= float_flag_overflow;
+     }
+-    if (target_bits & 0x20) {
++    if (target_bits & FPSR_AEXP_UNFL) {
+         host_bits |= float_flag_underflow;
+     }
+-    if (target_bits & 0x10) {
++    if (target_bits & FPSR_AEXP_DZ) {
+         host_bits |= float_flag_divbyzero;
+     }
+-    if (target_bits & 0x08) {
++    if (target_bits & FPSR_AEXC_INEX) {
+         host_bits |= float_flag_inexact;
+     }
+     return host_bits;
+@@ -214,7 +214,7 @@ uint32_t cpu_m68k_get_fpsr(CPUM68KState *env)
+ {
+     int host_flags = get_float_exception_flags(&env->fp_status);
+     int target_flags = cpu_m68k_exceptbits_from_host(host_flags);
+-    int except = (env->fpsr & ~(0xf8)) | target_flags;
++    int except = (env->fpsr & ~FPSR_AEXC_MASK) | target_flags;
+     return except;
  }
  
 -- 
