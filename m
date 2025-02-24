@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DBEC021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3060DC021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmPIN-0001Po-Ft; Sun, 23 Feb 2025 22:38:19 -0500
+	id 1tmPIG-0001Op-KN; Sun, 23 Feb 2025 22:38:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPID-0001OM-0m
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:06 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPIA-0001Nt-S2
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPIA-0005RA-GO
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:04 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPI8-0005Qu-8A
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740368281;
+ s=mimecast20190719; t=1740368279;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vCf2xUI79U0RccCQtLTmvtWHcS6bUxwvEuD4GXikfUU=;
- b=GRoyl0I0y0S9VvesNCMjVaC1c2iiiHcQArMxmGcEjRi5w6Ko4gZHeQxBxDnsDdaapF4Tcn
- cYTjjfZxZNVun7t6e3euxLbHvtWQ+EPBudk0PHKyzf8Y+oq+gNez9AYoDezr6nHpY7WV0v
- h1OUnMirNp/PMUbnyLxb2ixPXpqib0o=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bTItdUrDg7Cd84ey97EQdcR9LPBq5Jivo28daai7VVk=;
+ b=Wh7qdzcHj7WCr+m4YrYETK2CtKt0ezVCb7N6Zsu8ywt7UHZ5HpbhYhohpkSvHV8N/IC+J5
+ iZnAbHsK8mV0ZhKxDBicaKe4UMQakXAkCK0mlf4KAUoyu4XBZqzpC9o40hKUtW6zyZJxRs
+ XtheNh2+dB1RjpISf5CpgV2MJHDEbiw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-z6PjGYb_Oma5TrXlFgQXfg-1; Sun,
- 23 Feb 2025 22:37:56 -0500
-X-MC-Unique: z6PjGYb_Oma5TrXlFgQXfg-1
-X-Mimecast-MFC-AGG-ID: z6PjGYb_Oma5TrXlFgQXfg_1740368275
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-k71PZCNSNfOgJi9BcGR15Q-1; Sun,
+ 23 Feb 2025 22:37:54 -0500
+X-MC-Unique: k71PZCNSNfOgJi9BcGR15Q-1
+X-Mimecast-MFC-AGG-ID: k71PZCNSNfOgJi9BcGR15Q_1740368273
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FE5B1800872; Mon, 24 Feb 2025 03:37:55 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43244196E078; Mon, 24 Feb 2025 03:37:53 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.88])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 845C219560A3; Mon, 24 Feb 2025 03:37:53 +0000 (UTC)
+ id 0E8671956048; Mon, 24 Feb 2025 03:37:49 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Thomas Huth <thuth@redhat.com>,
@@ -55,9 +55,9 @@ Cc: Michael Roth <michael.roth@amd.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 04/10] docs/qapidoc: support header-less freeform sections
-Date: Sun, 23 Feb 2025 22:37:35 -0500
-Message-ID: <20250224033741.222749-5-jsnow@redhat.com>
+Subject: [PATCH 03/10] qapi: delete un-needed python static analysis configs
+Date: Sun, 23 Feb 2025 22:37:34 -0500
+Message-ID: <20250224033741.222749-4-jsnow@redhat.com>
 In-Reply-To: <20250224033741.222749-1-jsnow@redhat.com>
 References: <20250224033741.222749-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -88,39 +88,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code as written crashes when a free-form documentation block doesn't
-start with a heading or subheading, for example:
+The pylint config is being left in place because the settings differ
+enough from the python/ directory settings that we need a chit-chat on
+how to merge them O:-)
 
-| ##
-| # Just text, no heading.
-| ##
+Everything else can go.
 
-The code will attempt to use the `node` variable uninitialized. To fix,
-create a generic block to insert the doc text into.
-
-(This patch also removes a lingering pylint warning in the QAPIDoc
-implementation that prevents getting a clean baseline to use for
-forthcoming additions.)
-
-Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freeform QMP sections)
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/qapi/.flake8    | 3 ---
+ scripts/qapi/.isort.cfg | 7 -------
+ scripts/qapi/mypy.ini   | 4 ----
+ 3 files changed, 14 deletions(-)
+ delete mode 100644 scripts/qapi/.flake8
+ delete mode 100644 scripts/qapi/.isort.cfg
+ delete mode 100644 scripts/qapi/mypy.ini
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5f96b46270b..5a4d7388b29 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -421,6 +421,8 @@ def freeform(self, doc):
-             node = self._start_new_heading(heading, len(leader))
-             if text == '':
-                 return
-+        else:
-+            node = nodes.container()
- 
-         self._parse_text_into_node(text, node)
-         self._cur_doc = None
+diff --git a/scripts/qapi/.flake8 b/scripts/qapi/.flake8
+deleted file mode 100644
+index a873ff67309..00000000000
+--- a/scripts/qapi/.flake8
++++ /dev/null
+@@ -1,3 +0,0 @@
+-[flake8]
+-# Prefer pylint's bare-except checks to flake8's
+-extend-ignore = E722
+diff --git a/scripts/qapi/.isort.cfg b/scripts/qapi/.isort.cfg
+deleted file mode 100644
+index 643caa1fbd6..00000000000
+--- a/scripts/qapi/.isort.cfg
++++ /dev/null
+@@ -1,7 +0,0 @@
+-[settings]
+-force_grid_wrap=4
+-force_sort_within_sections=True
+-include_trailing_comma=True
+-line_length=72
+-lines_after_imports=2
+-multi_line_output=3
+diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
+deleted file mode 100644
+index 8109470a031..00000000000
+--- a/scripts/qapi/mypy.ini
++++ /dev/null
+@@ -1,4 +0,0 @@
+-[mypy]
+-strict = True
+-disallow_untyped_calls = False
+-python_version = 3.8
 -- 
 2.48.1
 
