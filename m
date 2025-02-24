@@ -4,105 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E76C021BC
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88720C021BB
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmbvo-0003il-Aw; Mon, 24 Feb 2025 12:07:48 -0500
+	id 1tmc3J-0007D9-Qa; Mon, 24 Feb 2025 12:15:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1tmbvl-0003hm-Bw
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:07:45 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1tmbvf-0004FW-GF
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:07:44 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OF75lZ012138;
- Mon, 24 Feb 2025 17:07:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=VRng8L
- Nia1WdBVIIygYt0uMjvbJ1JbdrZ5DkXp4GzAU=; b=lLg4QCfQC+Q0rZEOp7rUdw
- lLN+qcvUERkHbD1bwm0LiZV83MZFT6vqYvHaCUbcti7W65B+tvwgNUSfZzdcdN+9
- DcYxOSY9JrsyQ7M707dqSng9coh/Ze3qxqcdRUUdZWam8a7vVFU05nl2WY4aEs0w
- sxDg2faBdrc1Uo+dye7bQqQlEBf01Zra745uzYyXNKM5ujQmdrnxp9I+S3b952wf
- Buvz83R6s9u/ilK8y/Rko5BBRjHBsFEQ0NqU/FyBCDo3VKR/sbo+HexolY/Pav3H
- fZ45fXL8x9NOslCiFqOyl+l4gtbxY2dNXlK99BCYaLaaqT24LXoz1mFv6vR4dbEg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 450jk836xg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Feb 2025 17:07:35 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51OGlVdA006251;
- Mon, 24 Feb 2025 17:07:34 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 450jk836x9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Feb 2025 17:07:34 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51OGMOL5026961;
- Mon, 24 Feb 2025 17:07:33 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44ytdk846b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Feb 2025 17:07:33 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51OH7XSB28050044
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Feb 2025 17:07:33 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 135D35805F;
- Mon, 24 Feb 2025 17:07:33 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC9A258043;
- Mon, 24 Feb 2025 17:07:31 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.172.201]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Feb 2025 17:07:31 +0000 (GMT)
-Message-ID: <b8b54a18d9975633bd536341e419290c48a02794.camel@linux.ibm.com>
-Subject: Re: [PATCH v4] vfio: Add property documentation
-From: Eric Farman <farman@linux.ibm.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, tomitamoeko@gmail.com,
- corvin.koehne@gmail.com, Kirti Wankhede <kwankhede@nvidia.com>, Joao
- Martins	 <joao.m.martins@oracle.com>, Tony Krowiak
- <akrowiak@linux.ibm.com>, Eric Auger	 <eric.auger@redhat.com>
-Date: Mon, 24 Feb 2025 12:07:31 -0500
-In-Reply-To: <20250217173455.449983-1-clg@redhat.com>
-References: <20250217173455.449983-1-clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tmc39-000768-Sq
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:24 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tmc38-0005oc-20
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:15:23 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-221057b6ac4so89516075ad.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 09:15:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740417320; x=1741022120; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F68LQn6DxIAyz6GCkjhNecCIBRtM27bQXM5weTx5xew=;
+ b=L5MWeGxyxywPWkrjUY73QGP78mEt1pvrXNw3ONO/FzZd1jYWZrUFuntk5NbkVL+U5d
+ u7YkF+FZMCWulfoHCMDC/CpNVpl2hvO5qmy7FexutqJCbSHXBtuQcckmqR/RViD1MQZy
+ tj7KQL9RS03xSn8uXSufgoxQBi3ftAuRLCDosjn69/j5LIWrEW093Eg5QBM7eYXPpKFB
+ uCSPL1EpwBckVfvZEVSUoSzUSK8wsAfPekqIYpcTiVRqyCnABxay7m1ng9u10mnTpqAb
+ qOoCC7p7wBEFto3VIKDzoNbu6CAsTJGXDnCdJEBKOU2OzhiS7du3Sz/MSChvxz13hDjK
+ iMvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740417320; x=1741022120;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F68LQn6DxIAyz6GCkjhNecCIBRtM27bQXM5weTx5xew=;
+ b=FOr2AvB6Q74BbCUObLIskRA8e/LZ6SZTPmM45RPSa2drecyDz3eFQvPcQdqllOWyZe
+ 6g9rVypwgMSjpTLggR/ZZquYmdDBJlH+LqPBS8s4AsTY5JQlhL0IXjW9fwkw02N3/OOG
+ zOgTleDenPSmiTPY2KBm8foBMxTq++MDX37K7OLrdCxOW3QgnEsLhPoQsTC772iG94C1
+ DwNQFRWRM0ulQSkpTTO4J/JZ7aLONyg4+D23uhsWas0S98lgRoqzSJD3Vt5Wd8jlAbgZ
+ SQzRixPN433ZAzKNbZUDhq4DFgtOzIwwSdKswrCc4SZaGUYvEWbpnZBBSJq0CKZGQGfX
+ JVUw==
+X-Gm-Message-State: AOJu0Yzir/3qFIWmbDufmM2PAqeDzt7Y48LQ5+2j/aXSiuISiReli5V2
+ lwaM130Kl/ns9k/avc3MxS2dntdYmIHYEwFM5n4p1nVlnjCkucKhXv4MnhvHtwe+Y74kwLwIDsq
+ /
+X-Gm-Gg: ASbGncs988GZcZqzQ/Y/pVWHDyRJsadjhBo05VBhJsMYG6fuZoUOkz8OHg79Y0wjH44
+ k7Anr73hwGIeJHV71JlPRIMaC0HRA6oNna7kf6/dAeKmyCgXbB0SMlF6UCq7A30u61FgFRvMAZi
+ WR5JZ9qz4k/ze4QMu31zgJblZTXBrcWP3d7z0O+mYwM0atF8atnjBjWQO5WqvzSNfjepsS4HPA9
+ 5Itb8EfcG0h/q7KQbX3XOybG15zlPcoqOPCGiXXWr61FZbby/khUS7fMGjm0CyopOZU+/h1rPK2
+ JFUxife1Led7/H/U2naqbn90v/TGcz/MYfU=
+X-Google-Smtp-Source: AGHT+IFihcbnFkxIEpUxNZoV4BKypejc4q+VGPbnfBAjXKlZ+KgETCl35hgfZoGDP4rDmxFszHoAvA==
+X-Received: by 2002:aa7:88cb:0:b0:730:9801:d3e2 with SMTP id
+ d2e1a72fcca58-73426ca536dmr28267292b3a.8.1740417320364; 
+ Mon, 24 Feb 2025 09:15:20 -0800 (PST)
+Received: from stoup.. ([2607:fb90:c9e2:d7e3:c85c:d4f0:c8b8:8fa7])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-732425466besm20580780b3a.9.2025.02.24.09.15.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Feb 2025 09:15:20 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: laurent@vivier.eu,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4 23/24] target/m68k: Make vmstate variables static
+Date: Mon, 24 Feb 2025 09:14:43 -0800
+Message-ID: <20250224171444.440135-24-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250224171444.440135-1-richard.henderson@linaro.org>
+References: <20250224171444.440135-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: tAgdFAHvHygJJS0QXDSgPiypIHLaXUol
-X-Proofpoint-GUID: bi5ndSpmnBpoH1yUgobG4Y3egjXs2W61
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-24_08,2025-02-24_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- malwarescore=0 spamscore=0 clxscore=1011 mlxlogscore=999 mlxscore=0
- bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502240116
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,47 +101,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2025-02-17 at 18:34 +0100, C=C3=A9dric Le Goater wrote:
-> Investigate the git history to uncover when and why the VFIO
-> properties were introduced and update the models. This is mostly
-> targeting vfio-pci device, since vfio-platform, vfio-ap and vfio-ccw
-> devices are simpler.
->=20
-> Sort the properties based on the QEMU version in which they were
-> introduced.
->=20
-> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
-> Cc: Eric Farman <farman@linux.ibm.com>
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> ---
->=20
->  Should we introduce documentation for properties like the kernel has
->  in Documentation/ABI/*/sysfs-* ?
->=20
->  Changes in v4:
->=20
->  - Latest improvements from Alex=20
->=20
->  Changes in v3:
->=20
->  - Re-organized the vfio-pci properties based on the QEMU version in
->    which they were introduced
->  - Added property labels
->  - Improved description as suggested by Alex, Tomita and Corvin
->=20
->  Changes in v2:
->=20
->  - Fixed version numbers
->  - Fixed #ifdef in vfio/ccw.c
->  - Addressed vfio-pci-nohotplug
->  - Organize the vfio-pci properties in topics
->=20
->  hw/vfio/ap.c       |   9 ++++
->  hw/vfio/ccw.c      |  15 ++++++
->  hw/vfio/pci.c      | 125 +++++++++++++++++++++++++++++++++++++++++++++
->  hw/vfio/platform.c |  24 +++++++++
->  4 files changed, 173 insertions(+)
+These need not be exported beyond cpu.c.
+Fix a typo in vmstate_fpu.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com> # vfio-ccw
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/m68k/cpu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 7936b1a7e7..21ebc198cd 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -420,7 +420,7 @@ static int fpu_post_load(void *opaque, int version)
+     return 0;
+ }
+ 
+-const VMStateDescription vmmstate_fpu = {
++static const VMStateDescription vmstate_fpu = {
+     .name = "cpu/fpu",
+     .version_id = 1,
+     .minimum_version_id = 1,
+@@ -442,7 +442,7 @@ static bool cf_spregs_needed(void *opaque)
+     return m68k_feature(&s->env, M68K_FEATURE_CF_ISA_A);
+ }
+ 
+-const VMStateDescription vmstate_cf_spregs = {
++static const VMStateDescription vmstate_cf_spregs = {
+     .name = "cpu/cf_spregs",
+     .version_id = 1,
+     .minimum_version_id = 1,
+@@ -464,7 +464,7 @@ static bool cpu_68040_mmu_needed(void *opaque)
+     return m68k_feature(&s->env, M68K_FEATURE_M68040);
+ }
+ 
+-const VMStateDescription vmstate_68040_mmu = {
++static const VMStateDescription vmstate_68040_mmu = {
+     .name = "cpu/68040_mmu",
+     .version_id = 1,
+     .minimum_version_id = 1,
+@@ -489,7 +489,7 @@ static bool cpu_68040_spregs_needed(void *opaque)
+     return m68k_feature(&s->env, M68K_FEATURE_M68040);
+ }
+ 
+-const VMStateDescription vmstate_68040_spregs = {
++static const VMStateDescription vmstate_68040_spregs = {
+     .name = "cpu/68040_spregs",
+     .version_id = 1,
+     .minimum_version_id = 1,
+@@ -525,7 +525,7 @@ static const VMStateDescription vmstate_m68k_cpu = {
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
+-        &vmmstate_fpu,
++        &vmstate_fpu,
+         &vmstate_cf_spregs,
+         &vmstate_68040_mmu,
+         &vmstate_68040_spregs,
+-- 
+2.43.0
+
 
