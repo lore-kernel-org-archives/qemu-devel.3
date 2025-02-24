@@ -4,81 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9707CC021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 13:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAEAC021A6
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 13:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmY7U-0005yj-6f; Mon, 24 Feb 2025 08:03:36 -0500
+	id 1tmYGx-0007sW-4V; Mon, 24 Feb 2025 08:13:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmY7T-0005yX-6m
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 08:03:35 -0500
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmY7R-0002mZ-IL
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 08:03:34 -0500
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-6f7031ea11cso37444837b3.2
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 05:03:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740402212; x=1741007012; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/+ZdrpsFK/HAtm3Dc2KtifAwV0SVPDIBmAlaYqs4aDQ=;
- b=tTMbO+KtS05RYMn/Bc6wZPEFkvk7Gle+NvlfHmpZT0yKPcZcDYivMINu226hMpKw2K
- mletR1D5XgMN5RxWkOjVy57zKXxyqgQoKKsrKz/0KOUzFKmqIftz4ITrdnpZxbWpx4vH
- F+H3WkJXjNHzllItz7Kf6r7O/KKiULFOJDK7zlA5unhqNYDQ+qTiCqtjnRc89LRr0Oeu
- d2K2cA/b3YuBARq32Z8lcC7+dJEg5hOxRe+uSYS30eeMNLvsCB66okgmmCILYxaVH7H8
- AN11y4ix4vF5R5cQPjzsXylZ0mjKfoVVbORH2VCek0IHdb3eHoHYwtn5grLSq9+N+WQu
- G++Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740402212; x=1741007012;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/+ZdrpsFK/HAtm3Dc2KtifAwV0SVPDIBmAlaYqs4aDQ=;
- b=NtmxrgkOKY+KP3UgDwjWoRgQ6vtDH2dRaCTxx514pswGWspbwZqxSWAuLj0EOHD7v6
- 4xbqInBqZrj3Xa06jzBPLCa87rfUGNlBp/C5jSZaPRp2H8Nmt0/SUrrghnMTlBJ4AIEC
- 4NhVcX6mZaoz7kol7bUAwamftTOp51YDsEMZIqRF1AWgrhe6HYAJYIw8iTZH7wwjI2Rn
- LyoVdqhWl3LVC9F53VjFj89+mD9ZtdQCs5ckvgt7jZSjPX12X7KYzx5Br2Cg8dJHinC+
- mnQVjFpqGYVkmKx8kjUVgFUfyVwktp/LLW9UfHTcVssahFqlIMZjTaQ74afhJFX/QO7V
- FW+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvMF+F3kmWp2glltd+yIbhK/zAukbYhyUgcyT28yRBvUCmx2ztp5R/QmiptoHJMYrfX8KsuD3LZpj3@nongnu.org
-X-Gm-Message-State: AOJu0YzxQDWl480ZHwVYEHjZ807KYsZQCn7oqlqXLM38IEhNFjeQd/oi
- LkbZ0mLQBQlzm7DwL7XO3dqsRpEXAphyJ7gk9Ds/mJkUg5PA8wGpesR6qsTxut8y1kcqGalqo1Y
- v0zlE0NwGg2UGCGqKz6g6Jij/Xfx3PmH0W0prIg==
-X-Gm-Gg: ASbGncsz47YeCrr91lO8wkYW9leLsOBnnBkqgAWROSZcvI9iiJYoHRY7P1LvfRsjhyr
- aQJMuNuZwA9w1peP5A2gELXMY+xJEoq8A28QUg3o7w7FGAXlCJCrwo9zJD6Zj5+ltsn2pwqLHVd
- Y+/HHjGu09
-X-Google-Smtp-Source: AGHT+IGCHI/SyZsDvRO4hKuN/QBDiLl7lzSsI6rpMxQ8/KKtpKN5mmb5if6yZAHUKyhz5uhNZcMMx0smCZ+eCYd9Z3M=
-X-Received: by 2002:a05:690c:6412:b0:6f9:b12b:8943 with SMTP id
- 00721157ae682-6fbcc261b67mr122343087b3.19.1740402211085; Mon, 24 Feb 2025
- 05:03:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tmYGv-0007s1-ME
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 08:13:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tmYGu-00044c-3E
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 08:13:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740402795;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/tsIeLMF4fzW7ay8dgEC9ffQipAGeVFxpSEZUSQzcVo=;
+ b=hTRfM+Au9oMltTUHqUt7MW4O2mRuVKQ5ooabZ0vDtb5mRdSd7SbIKYI7iyg1R2fJgQd9Bt
+ FgTvFIuNHIS3jMk089f9Bs1kmZ4v8k4ASDmzGfnm9h+zBMTlQw/0WzvK3bamh9LH6MLwgR
+ tJOSrUk9fDOVYxO2TT+0rRbj8LQSEqs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-NoJazeGZOUeUKmHXGqc1jw-1; Mon,
+ 24 Feb 2025 08:13:11 -0500
+X-MC-Unique: NoJazeGZOUeUKmHXGqc1jw-1
+X-Mimecast-MFC-AGG-ID: NoJazeGZOUeUKmHXGqc1jw_1740402790
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A42F19783B8; Mon, 24 Feb 2025 13:13:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.3])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 64D2F1800368; Mon, 24 Feb 2025 13:13:05 +0000 (UTC)
+Date: Mon, 24 Feb 2025 14:13:02 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, stefanha@redhat.com,
+ pkrempa@redhat.com, peterx@redhat.com, farosas@suse.de,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 15/16] iotests: Add qsd-migrate case
+Message-ID: <Z7xwXk_pNjOWXuAF@redhat.com>
+References: <20250204211407.381505-1-kwolf@redhat.com>
+ <20250204211407.381505-16-kwolf@redhat.com>
+ <b74180f8-f892-450e-9327-87a47bd0a8ab@redhat.com>
 MIME-Version: 1.0
-References: <20250220213832.80289-1-nicolinc@nvidia.com>
-In-Reply-To: <20250220213832.80289-1-nicolinc@nvidia.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Feb 2025 13:03:19 +0000
-X-Gm-Features: AWEUYZm8lPJ2jrzALpypVuBJOIzZpsxNgfbF3HRsP2ZDKDW9lTsWKSJVT2Gl8zA
-Message-ID: <CAFEAcA_qXpVkwps6ocR7CceYBvxWqv40QDwhRAfFECPQGwFbQw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/smmuv3: Fill u.f_cd_fetch.addr for
- SMMU_EVT_F_CD_FETCH
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b74180f8-f892-450e-9327-87a47bd0a8ab@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,17 +85,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Feb 2025 at 21:39, Nicolin Chen <nicolinc@nvidia.com> wrote:
->
-> This is more like a cosmetics fix since the f_cd_fetch and f_ste_fetch are
-> basically the same field since they are in the exact same union with exact
-> same type.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Am 24.02.2025 um 11:23 hat Thomas Huth geschrieben:
+> On 04/02/2025 22.14, Kevin Wolf wrote:
+> > Test that it's possible to migrate a VM that uses an image on shared
+> > storage through qemu-storage-daemon.
+> > 
+> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > Acked-by: Fabiano Rosas <farosas@suse.de>
+> > Reviewed-by: Eric Blake <eblake@redhat.com>
+> > ---
+> >   tests/qemu-iotests/tests/qsd-migrate     | 140 +++++++++++++++++++++++
+> >   tests/qemu-iotests/tests/qsd-migrate.out |  59 ++++++++++
+> >   2 files changed, 199 insertions(+)
+> >   create mode 100755 tests/qemu-iotests/tests/qsd-migrate
+> >   create mode 100644 tests/qemu-iotests/tests/qsd-migrate.out
+> 
+>  Hi Kevin,
+> 
+> this test is failing for me in vmdk mode (discovered with "make check
+> SPEED=thorough"):
+> 
+> $ ./check -vmdk qsd-migrate
+> [...]
+> qsd-migrate   fail       [11:20:25] [11:20:25]   0.5s                 output
+> mismatch (see /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/vmdk-file-qsd-migrate/qsd-migrate.out.bad)
+> --- /home/thuth/devel/qemu/tests/qemu-iotests/tests/qsd-migrate.out
+> +++ /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/vmdk-file-qsd-migrate/qsd-migrate.out.bad
+> @@ -51,6 +51,7 @@
+>  --- vm_dst log ---
+>  read 4096/4096 bytes at offset 0
+>  4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+> +Pattern verification failed at offset 0, 4096 bytes
+>  read 4096/4096 bytes at offset 0
+>  4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+>  wrote 4096/4096 bytes at offset 0
+> Failures: qsd-migrate
+> Failed 1 of 1 iotests
+> 
+> Is that working for you?
 
+No, and it can't work currently. vmdk and some other formats don't
+support migration. If the image were attached directly to QEMU, the
+migration block would take effect and make the migration fail.
 
+So we should probably just change supported_fmts in the test case from
+'generic' to a list of actually supported image formats. Without
+checking, I'm not sure what can be enabled, but at least raw, qcow2 and
+qed work.
 
-Applied to target-arm.next, thanks.
+The other option would be implementing .bdrv_co_invalidate_cache for the
+currently unsupported image formats so that they actually can support
+migration.
 
--- PMM
+Kevin
+
 
