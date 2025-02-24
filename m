@@ -4,82 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA7BC021A6
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 10:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B0EC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 10:00:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmVFW-0003hM-T3; Mon, 24 Feb 2025 04:59:42 -0500
+	id 1tmVG4-0003tD-SO; Mon, 24 Feb 2025 05:00:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmVFV-0003hA-6B
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 04:59:41 -0500
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmVFN-0003G3-KH
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 04:59:39 -0500
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-6fb7d64908fso35203687b3.3
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 01:59:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740391170; x=1740995970; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=m3KglIjf6ji1bqOAeWAwF/JZZNcLvsq10cRCA75mzVk=;
- b=uLIooGi7gbStv9NF2wE2Lt1EYZ7RJbiUC+UPdNpsO+lx76u9tBkHtgAUk6qiqGlloN
- QaPXiby+fzNRx/AepVzEjzC4ayhMMtTK6m94JNX3dAUBhLh9W73e5EiIoTnmO0hJFIiY
- WEuHezPXjQRAP1bmO9JbGmm760maMQ0G5kXS16RbsE01ukhQboUlfDtXfpfMhXs3pEOL
- YbxOT0QvgbT9mHSxlcfdcvkGMR3mf+jWbFK+Nk5lM380E5z3DicKT6yow/JmgDEY2guv
- TiAVngMX7BeEg1Dpx7shmnm4orijTSIhPGoWHxS0c/KJQ94oAeQi8nhKSZ7FY8JccmR7
- NlgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740391170; x=1740995970;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=m3KglIjf6ji1bqOAeWAwF/JZZNcLvsq10cRCA75mzVk=;
- b=o5kWUtHBXYKX+7OAwVkRb2gUEEbwb6F/pFZioilw4CgCXvWqsGjvHrCJuohwLAVshz
- C0AuVZNCabSfpWVXmVhJtsCSSs8aZASRiuVb+neIZOx1NIZGSidN9Tl4Mmr5Gww+K7Rp
- JbXBs+kQ3yjHENAw1eOAl5/JIQqOVPsQCSJkms8uPDaZc4cs2sE78xRlysYzVuf/9VHN
- 5cNnW3XTmvrOl/oCoFTkPSGiEVJCzVU71gvVj4oXhOhWzMQ2KvIHNy4bPiy5jKoxcQoq
- wKZaza4fvkvF7HuyKliOIqBi4oU47nojNf5scfP8cSgminpfGzoSeyVaPRvTPkiN3HL8
- 8agQ==
-X-Gm-Message-State: AOJu0YyIMYWpIbILuxwpqrO9RZfYGnR+JvW9KODufVdPaKdQxNY1B1Kq
- ZW94ViX8BQs05iXYRUI8wVrNvuEQW1FrQ799br7tAI6GzeG1Ul3btyOLNTJWGziZ1blqAjtA8Rx
- q8U2ixGqpQWv4jAyCfn5gjvh37W/lXeA2a7q5Ww==
-X-Gm-Gg: ASbGncsD/g9ZsaXHdvaGPIyGhU2We1kvmokMqJaDaaoZ6ICgo8CA4rubsKHSOsmxuOU
- CaKUnj2CSthyZ5syJW0rE2bYam42S069jWjJ8kZxtCwFH5kCOmgH8hUMOJjJw86nd0atUlars93
- bGKWMnKXZB
-X-Google-Smtp-Source: AGHT+IGEMB6D+o0cve05P8d+NfPG7k59awKr5Pd3Gx5SsXMgueMOD3P1ut3nv40cQENY9PMNrX4qoixQeYUlVAdUkDo=
-X-Received: by 2002:a05:690c:8f:b0:6fb:4648:3425 with SMTP id
- 00721157ae682-6fbcc2346ecmr105900067b3.16.1740391170219; Mon, 24 Feb 2025
- 01:59:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1tmVFy-0003rM-Mb
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:00:11 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1tmVFr-0003JO-Ht
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:00:10 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxrOIZQ7xnVbCAAA--.50548S3;
+ Mon, 24 Feb 2025 17:59:53 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMCx7MQXQ7xnZxomAA--.9069S2;
+ Mon, 24 Feb 2025 17:59:52 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org,
+	maobibo@loongson.cn
+Cc: richard.henderson@linaro.org, yangxiaojuan@loongson.cn,
+ wangliupu@loongson.cn
+Subject: [PATCH v3] target/loongarch: fix 'make check-functional failed'
+Date: Mon, 24 Feb 2025 17:38:27 +0800
+Message-Id: <20250224093828.3337991-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-References: <20250220161313.127376-1-dbarboza@ventanamicro.com>
- <20250220161313.127376-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20250220161313.127376-2-dbarboza@ventanamicro.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Feb 2025 09:59:19 +0000
-X-Gm-Features: AWEUYZlmWOg2HUqpWcSmaYSeZOOkYTsiwHUa8UCdt5WGgYLiHlnNtscgSp6yLbA
-Message-ID: <CAFEAcA8u8C2HTRjOBReSQ7oN7L248034VrfTHYgHCxBPy0gwDg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/riscv/cpu: ignore TCG init for KVM CPUs in
- reset_hold
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCx7MQXQ7xnZxomAA--.9069S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,73 +65,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Feb 2025 at 16:14, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> riscv_cpu_reset_hold() does a lot of TCG-related initializations that
-> aren't relevant for KVM, but nevertheless are impacting the reset state
-> of KVM vcpus.
->
-> When running a KVM guest, kvm_riscv_reset_vcpu() is called at the end of
-> reset_hold(). At that point env->mstatus is initialized to a non-zero
-> value, and it will be use to write 'sstatus' in the vcpu
-> (kvm_arch_put_registers() then kvm_riscv_put_regs_csr()).
->
-> Do an early exit in riscv_cpu_reset_hold() if we're running KVM. All the
-> KVM reset procedure will be centered in kvm_riscv_reset_vcpu().
->
-> While we're at it, remove the kvm_enabled() check in
-> kvm_riscv_reset_vcpu() since it's already being gated in
-> riscv_cpu_reset_hold().
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu.c         | 9 +++++----
->  target/riscv/kvm/kvm-cpu.c | 3 ---
->  2 files changed, 5 insertions(+), 7 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 522d6584e4..8e6e629ec4 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1050,6 +1050,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->          mcc->parent_phases.hold(obj, type);
->      }
->  #ifndef CONFIG_USER_ONLY
-> +    if (kvm_enabled()) {
-> +        kvm_riscv_reset_vcpu(cpu);
-> +        return;
-> +    }
-> +
->      env->misa_mxl = mcc->misa_mxl_max;
->      env->priv = PRV_M;
->      env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
-> @@ -1146,10 +1151,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->          env->rnmip = 0;
->          env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
->      }
-> -
-> -    if (kvm_enabled()) {
-> -        kvm_riscv_reset_vcpu(cpu);
-> -    }
->  #endif
->  }
+For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+the tlb_ps may be 0,this may case UndefinedBehavior
+Add a check-tlb_ps fuction to check tlb_ps, when use
+csrwr insn to write CSR_PWCL PTEBASE, check the PTBASE, and when
+use csrwr insn to write STLBPS, check the tlb_ps value.
 
-This looks super odd, from an "I don't know anything about
-riscv specifics" position. Generally the idea is:
- * reset in QEMU should reset the CPU state
- * what a reset CPU looks like doesn't differ between
-   accelerators
- * when we start the KVM CPU, we copy the state from QEMU
-   to the kernel, and then the kernel's idea of the reset state
-   matches
+Signed-off-by: Song Gao <gaosong@loongson.cn>     
+---
+v3:
+remove some tlb instruction chek MMU on PG model, because on DA model
+also can use tlb instructions.
+v2:
+check-tlb_ps when write CSR_PWCL and CSR_STLBPS;
+some tlb instructions check CRMD PG model when clear/read/write the tlb.
 
-This patch looks like it's entirely skipping basically
-all of the QEMU CPU state reset code specifically for KVM.
-So now you'll have two different pieces of code controlling
-reset for different accelerators, and the resulting CPU
-state won't be consistent between them...
+ target/loongarch/helper.h                     |  2 +
+ target/loongarch/internals.h                  |  2 +
+ target/loongarch/tcg/csr_helper.c             | 62 ++++++++++++++++++-
+ .../tcg/insn_trans/trans_privileged.c.inc     |  2 +
+ 4 files changed, 67 insertions(+), 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+index 943517b5f2..2968b255bc 100644
+--- a/target/loongarch/helper.h
++++ b/target/loongarch/helper.h
+@@ -100,6 +100,8 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_2(csrwr_crmd, i64, env, tl)
++DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+ DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 7b254c5f49..5d98581e7f 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -43,6 +43,8 @@ enum {
+     TLBRET_PE = 7,
+ };
+ 
++void check_tlb_ps(CPULoongArchState *env);
++
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 6c95be9910..9f87beebb3 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -17,6 +17,60 @@
+ #include "hw/irq.h"
+ #include "cpu-csr.h"
+ 
++
++void check_tlb_ps(CPULoongArchState *env)
++{
++    for (int i=0; i < LOONGARCH_TLB_MAX; i++)
++    {
++        LoongArchTLB*tlb =&env->tlb[i];
++        uint8_t tlb_ps;
++        if(i >= LOONGARCH_STLB) {
++            tlb_ps = FIELD_EX64(tlb->tlb_misc,TLB_MISC,PS);
++            if (tlb_ps < 12) {
++                tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, 12);
++            }
++        } else {
++            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
++            if (tlb_ps < 12) {
++               env->CSR_STLBPS= FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, 12);
++           }
++       }
++    }
++}
++
++target_ulong helper_csrwr_crmd(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t pg,old_pg;
++    int64_t old_v = env->CSR_CRMD;
++
++    pg = FIELD_EX64(val, CSR_CRMD, PG);
++    old_pg = FIELD_EX64(old_v, CSR_CRMD,PG);
++    if (pg&& !old_pg) {
++        check_tlb_ps(env);
++    }
++    env->CSR_CRMD = val;
++    return old_v;
++}
++
++target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t tlb_ps;
++    int64_t old_v = env->CSR_STLBPS;
++
++    /*
++     * The real hardware only supports the min tlb_ps is 12
++     * tlb_ps=0 may cause undefined-behavior.
++     */
++    tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
++    if (tlb_ps  < 12) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Attempted set ps %d\n",tlb_ps);
++        val = FIELD_DP64(val, CSR_STLBPS, PS, 12);
++    }
++    env->CSR_STLBPS = val;
++    return old_v;
++}
++
+ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ {
+     int64_t v;
+@@ -99,7 +153,7 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+ 
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+-    int shift;
++    int shift, ptbase;
+     int64_t old_v = env->CSR_PWCL;
+ 
+     /*
+@@ -107,11 +161,17 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+      * treated as illegal.
+      */
+     shift = FIELD_EX64(val, CSR_PWCL, PTEWIDTH);
++    ptbase = FIELD_EX64(val, CSR_PWCL, PTBASE);
+     if (shift) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attempted set pte width with %d bit\n", 64 << shift);
+         val = FIELD_DP64(val, CSR_PWCL, PTEWIDTH, 0);
+     }
++    if (ptbase < 12) {
++         qemu_log_mask(LOG_GUEST_ERROR,
++                      "Attrmpted set ptbase 2^%d\n", ptbase);
++         val = FIELD_DP64(val, CSR_PWCL, PTBASE, 12);
++    }
+ 
+     env->CSR_PWCL = val;
+     return old_v;
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 3afa23af79..4b5656d6a6 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -74,6 +74,8 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+ 
+ void loongarch_csr_translate_init(void)
+ {
++    SET_CSR_FUNC(CRMD, NULL, gen_helper_csrwr_crmd);
++    SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
+     SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+-- 
+2.34.1
+
 
