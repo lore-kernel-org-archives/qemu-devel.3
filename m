@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05FD8C021B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 02:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DED2C021B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 02:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmNol-0008FP-AO; Sun, 23 Feb 2025 21:03:35 -0500
+	id 1tmNuD-0000y6-6Z; Sun, 23 Feb 2025 21:09:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmNoi-0008Es-9f; Sun, 23 Feb 2025 21:03:32 -0500
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ id 1tmNu8-0000xR-Ui; Sun, 23 Feb 2025 21:09:10 -0500
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmNog-0004eL-GI; Sun, 23 Feb 2025 21:03:31 -0500
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-4be75b2bbceso1351469137.1; 
- Sun, 23 Feb 2025 18:03:29 -0800 (PST)
+ id 1tmNu3-0005M5-K5; Sun, 23 Feb 2025 21:09:08 -0500
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4be5ec1262eso756081137.2; 
+ Sun, 23 Feb 2025 18:09:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740362608; x=1740967408; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740362941; x=1740967741; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s9B7HdyfMMODK/ppKlAemD1ZYgNOMbTMYWozAlWNKQM=;
- b=M9PJJZskjeOKVPE9G4mYWAFl8ZvwddJn6F7vG6xacEDRM6wA9pklNVIEpgZee3ByBb
- y6ZINYUD1qkKAYafTPiCO5mEwQAdqtUXbDxXqcZ0R+mvdKn0l5qNOpdc7cuTD34t/0u5
- H4C1kOWGleQdpvrQiZcF4RgzKR8YZBGoCceocewwxXNsr6h6jhhGuFy8jEi5vU29j0/s
- RGlzLcPmnq/yhdt12hW67AtbqRXL29AntjgHYJuyY1Y5r/pUDdkMWu46/Mdq5Yn4fBoA
- ltb22rcnBiQGCSrK4uyoGk+EUtPVGe37IrHFdaa+RSchjlmMDsFObjPtZ6TujToVnauD
- wKHw==
+ bh=5rSEnxkrHO89v+YUHJsPBAyGrs++Z6R4095rIv7xZ5w=;
+ b=SbHJuffv2MV2t2Qd7Av0qDvOy2XCt8Nd3So0peT29SdQbU3zxlMLGo4gOeGqpxUQCG
+ wn2w9Wb9JMOMe5t53RF1gD6IKKwDSuCaqoTgM1Hh/uCDV4ukKFvaIp0wOzZTDkFzcev9
+ 1Zj4LBw3ejKJdY6La9vfIrbfmLfbSFdGQtMtjbGEVD5FXgmEvtIwRqAVbz3i/ad9S0Rj
+ k5OR2JBC3s12MJVp0jpm6tbY6lRat5JcJi6rTTKsCChpyBklYNJ8t9pE0xBeDkawPxUr
+ ArtPQfRt3zLvDmIC9lZcDobAtNCek23BpvPEPF76lU6HeLMeULFkvNi3NRTh9IAQDYVa
+ ok8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740362608; x=1740967408;
+ d=1e100.net; s=20230601; t=1740362941; x=1740967741;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s9B7HdyfMMODK/ppKlAemD1ZYgNOMbTMYWozAlWNKQM=;
- b=Q6XRjjfSIUP0Si3+37tfXU/atmwG8RnNr6mw/bMj9JmiQ7wi0gbkA8rffJIditcQn4
- 8/iVX4gec3KveTwShAXSp6qlKdmujVJ3lNj9maI4q6y1bHt+/fWDq8rb8MB4tC9UVJor
- Us1B5GVZjtBG2N+irJY9CFVXOynqePMKaLZsnH1pu4B5h4GBdYU48CDgICqtHY2DhKKr
- v1Na0e/HX+CwJkaFHzvuQfiNfdP+6PssY07Y7gr98S+hBZiUj1BBgnmqvu6uo78k3UR4
- bdonG01YugIHbRZ8aXhsimKpwSXkCqEUnR0CDP4ddDzo+sVXlLUZB+OATIplhBuYUTar
- KrHA==
+ bh=5rSEnxkrHO89v+YUHJsPBAyGrs++Z6R4095rIv7xZ5w=;
+ b=e1iER+XBFzGPtkI462cyL56MeMaFvtXEoJzgm8cxdycOjlJP54D2HSjmB4E2CpBmDu
+ LvDDiwWh/BcsOE6IYQP9JMw6AqZVd7lZjGUpHNKYE2IJ7QH9TwgpPOpJ9iBy6uKupuvA
+ YIPbkN82sLWQxV5p3LX3oWMPNF3R2dVRdIpyALTKlbF4qzalZdcq1Hn5fKz5bnDz1tei
+ LsffRX3AdWb6qtuKtkh20OG75OBW4qQOh4dfGZAL3lxzjwemuRy2Xg6seJoRyAw7ULHm
+ KVNx/IaMJ2IaSOQXhjUmmRBJQIiq3l71avP+0OK2cBdW2lKG0MQM5K2471+9Ouqw4GFm
+ c0Ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXX8pozVFAeb6iJDc/ZTvPt2IM6jFP7EYLJQwRUzgHr3rVgROC/U+wQ7ACZ9R/XrWLQz7Q0+QA4SVxX@nongnu.org
-X-Gm-Message-State: AOJu0YwqB4zJv9whhkJfZQkoQZf9siSx8uW6wpCkWEtLFvPlLuMbeJq0
- Ka3xZDI5gH7XzV9QhlqRo2Vc8h5UNqF2qy2mVTGm69RBVs9UjrQdP+MWkJPlw0uymSsqXga3O44
- l0Nv94lvJSepL/LnUIjekvSHxfQA=
-X-Gm-Gg: ASbGncs8aNsXkTdEfx1ftHZDDGSKoZRaikeZDas821dbCVPxFexk/DYuyBtb8gb7sRJ
- CXymQDDP4CRxhyVl7rMZsiHKHczZJih4E47yaHwhMD/FgzZgY7b7OhLcnzRttkXumgo6fFQWATS
- WHePwJlpQPPo2nRyaGwUP8bu0JmSAcTfBS1gKK
-X-Google-Smtp-Source: AGHT+IEYw1YANjLoxNqnP7Z1mRT7XX5MWnkuJ0uAAmIUoMdoztZiSMwpJ0ohphM0VaQNxLXmLLkE8REtJwnAzcAQDkY=
-X-Received: by 2002:a05:6102:2d0c:b0:4b2:ae3a:35d6 with SMTP id
- ada2fe7eead31-4bfc2901b25mr5944268137.19.1740362608521; Sun, 23 Feb 2025
- 18:03:28 -0800 (PST)
+ AJvYcCU3AtUIz7sm6aIKiJtcwQ48NYELZ3ESemUSpXQrhB8oE6SevMQqieyFOFlqyzHg9t8ZDr6NTByKmD7z@nongnu.org
+X-Gm-Message-State: AOJu0YxYEeeB42Jdy3IVrpr1elg0mR4a1XlVJc5HVMaYYAZ2DyadhT3R
+ x5VFQ/pDfAU475ILsIiGzsrlyBIOSfhzW06dm5r71IWCun5Q9MVPrCpnDZxorIslFCPjeiwlwtG
+ 9gQGa6sUzRxiTb4fzTufZeKOxmLM=
+X-Gm-Gg: ASbGncvRSmTrQbF0atkxw6A0qRw9LdbGoeJSq0/uF8RcS4bfdyZg/lJUdDwpQIHjjn+
+ zhFADYpXYe9f4Hx7b0rofOLGaPcqzHIRwUrAY72XG/ZNYmHvo+E6dRKcVdhmHCkGdOAi2YPjlwG
+ aOlv/lpTBDHj4GdRsnqnDtaPiqhnOaRwWGOFbN
+X-Google-Smtp-Source: AGHT+IFWO3bzzQNnCfUIr6Qgd3CWalquoLy/G8iofvNNjDR8EfAyw0q0wYhSCCLR35B3KfdyAixSmqyFqM8oxjnqGVY=
+X-Received: by 2002:a05:6102:1489:b0:4bb:b843:95e6 with SMTP id
+ ada2fe7eead31-4bfc001ec22mr6476865137.7.1740362941474; Sun, 23 Feb 2025
+ 18:09:01 -0800 (PST)
 MIME-Version: 1.0
-References: <20250220161313.127376-1-dbarboza@ventanamicro.com>
- <20250220161313.127376-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20250220161313.127376-2-dbarboza@ventanamicro.com>
+References: <20241205133003.184581-1-dbarboza@ventanamicro.com>
+ <20241205133003.184581-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20241205133003.184581-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 12:03:02 +1000
-X-Gm-Features: AWEUYZlRIu-Lm41A0t7kdQQBIQzAODrxWxYSpt9tE88MSZ674zdX7H7T2IEQzrY
-Message-ID: <CAKmqyKMcF0zOkvYe5g8Eg52+jusJLi+d+3NWEM-Kut5fqZ7Rzw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/riscv/cpu: ignore TCG init for KVM CPUs in
- reset_hold
+Date: Mon, 24 Feb 2025 12:08:35 +1000
+X-Gm-Features: AWEUYZmdDkYGeq6CxlI5k46webNef5EnYV6zH-vgvDfq-wdn8YGjp00khpSLYWo
+Message-ID: <CAKmqyKNvHYegwWas+GpTjWQcu2bZRr54Nm+bsSwG-MdXmN8GNQ@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 01/11] hw/riscv/riscv-iommu.h: add missing headers
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,24 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 2:14=E2=80=AFAM Daniel Henrique Barboza
+On Thu, Dec 5, 2024 at 11:32=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> riscv_cpu_reset_hold() does a lot of TCG-related initializations that
-> aren't relevant for KVM, but nevertheless are impacting the reset state
-> of KVM vcpus.
+> This header is incomplete, i.e. it is using definitions that are being
+> supplied by the .c files that are including it.
 >
-> When running a KVM guest, kvm_riscv_reset_vcpu() is called at the end of
-> reset_hold(). At that point env->mstatus is initialized to a non-zero
-> value, and it will be use to write 'sstatus' in the vcpu
-> (kvm_arch_put_registers() then kvm_riscv_put_regs_csr()).
+> Adding this header into a fresh .c file will result in errors:
 >
-> Do an early exit in riscv_cpu_reset_hold() if we're running KVM. All the
-> KVM reset procedure will be centered in kvm_riscv_reset_vcpu().
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:30:17: error: field =E2=
+=80=98parent_obj=E2=80=99 has incomplete type
+>    30 |     DeviceState parent_obj;
+>       |                 ^~~~~~~~~~
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:50:5: error: unknown type=
+ name =E2=80=98dma_addr_t=E2=80=99; did you mean =E2=80=98in_addr_t=E2=80=
+=99?
+>    50 |     dma_addr_t cq_addr;   /* Command queue base physical address =
+*/
+>       |     ^~~~~~~~~~
+>       |     in_addr_t
+> (...)
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:62:5: error: unknown type=
+ name =E2=80=98QemuThread=E2=80=99; did you mean =E2=80=98GThread=E2=80=99?
+>    62 |     QemuThread core_proc; /* Background processing thread */
+>       |     ^~~~~~~~~~
+>       |     GThread
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:63:5: error: unknown type=
+ name =E2=80=98QemuCond=E2=80=99
+>    63 |     QemuCond core_cond;   /* Background processing wake up signal=
+ */
+>       |     ^~~~~~~~
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:71:18: error: field =E2=
+=80=98trap_as=E2=80=99 has incomplete type
+>    71 |     AddressSpace trap_as;
+>       |                  ^~~~~~~
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:72:18: error: field =E2=
+=80=98trap_mr=E2=80=99 has incomplete type
+>    72 |     MemoryRegion trap_mr;
+>       |                  ^~~~~~~
+> /home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:80:18: error: field =E2=
+=80=98regs_mr=E2=80=99 has incomplete type
+>    80 |     MemoryRegion regs_mr;
+>       |                  ^~~~~~~
 >
-> While we're at it, remove the kvm_enabled() check in
-> kvm_riscv_reset_vcpu() since it's already being gated in
-> riscv_cpu_reset_hold().
+> Fix it by adding the missing headers for these definitions.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -124,56 +149,24 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c         | 9 +++++----
->  target/riscv/kvm/kvm-cpu.c | 3 ---
->  2 files changed, 5 insertions(+), 7 deletions(-)
+>  hw/riscv/riscv-iommu.h | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 522d6584e4..8e6e629ec4 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1050,6 +1050,11 @@ static void riscv_cpu_reset_hold(Object *obj, Rese=
-tType type)
->          mcc->parent_phases.hold(obj, type);
->      }
->  #ifndef CONFIG_USER_ONLY
-> +    if (kvm_enabled()) {
-> +        kvm_riscv_reset_vcpu(cpu);
-> +        return;
-> +    }
-> +
->      env->misa_mxl =3D mcc->misa_mxl_max;
->      env->priv =3D PRV_M;
->      env->mstatus &=3D ~(MSTATUS_MIE | MSTATUS_MPRV);
-> @@ -1146,10 +1151,6 @@ static void riscv_cpu_reset_hold(Object *obj, Rese=
-tType type)
->          env->rnmip =3D 0;
->          env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, false)=
-;
->      }
-> -
-> -    if (kvm_enabled()) {
-> -        kvm_riscv_reset_vcpu(cpu);
-> -    }
->  #endif
->  }
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index 9424989df4..2de0cdfc56 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -20,6 +20,8 @@
+>  #define HW_RISCV_IOMMU_STATE_H
 >
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 23ce779359..484b6afe7c 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1603,9 +1603,6 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
->      CPURISCVState *env =3D &cpu->env;
->      int i;
+>  #include "qom/object.h"
+> +#include "hw/qdev-properties.h"
+> +#include "sysemu/dma.h"
+>  #include "hw/riscv/iommu.h"
+>  #include "hw/riscv/riscv-iommu-bits.h"
 >
-> -    if (!kvm_enabled()) {
-> -        return;
-> -    }
->      for (i =3D 0; i < 32; i++) {
->          env->gpr[i] =3D 0;
->      }
 > --
-> 2.48.1
+> 2.47.1
 >
 >
 
