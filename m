@@ -4,137 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36921C021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 10:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68045C021A6
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 11:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmW9Y-0001lS-O9; Mon, 24 Feb 2025 05:57:36 -0500
+	id 1tmWG9-0003UZ-DF; Mon, 24 Feb 2025 06:04:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tmW9W-0001lG-Up
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:57:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tmW9U-0005Vy-MG
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 05:57:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740394650;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yt0rAU+VRxsfGDQpK3/ewN3EZgFtWLbvooT8/UPYhRQ=;
- b=gsdHYOEGlBeIP5/udDqkS2gn3SWJndo/lvlwmeXQA7WbWw2B8tEGMXS1tFDjzxZN+Qg/bd
- 3KwXy4RMgJLv6x7NCbQ5X9LbeBKr5xkNk7Cn80SJZaO2UfLUN4QL9nL9py4GxVnPj1BrQq
- iY3XQuD6DRVHhqwHyzxuwz+DWRX4PO0=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-zuAUPKvCObGYxwJ5BBgvKw-1; Mon, 24 Feb 2025 05:57:28 -0500
-X-MC-Unique: zuAUPKvCObGYxwJ5BBgvKw-1
-X-Mimecast-MFC-AGG-ID: zuAUPKvCObGYxwJ5BBgvKw_1740394648
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-abb9b2831b7so497201566b.1
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 02:57:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tmWG2-0003U9-6T; Mon, 24 Feb 2025 06:04:19 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tmWG0-00072E-G5; Mon, 24 Feb 2025 06:04:17 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5e0452f859cso6609077a12.2; 
+ Mon, 24 Feb 2025 03:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740395052; x=1740999852; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P3gq1Sc9H5Ms95u4WWh16tH/o7ku03Ter1r8qA1KKf4=;
+ b=STyW8UildNPcVZD8FN+zBlt4ZUSg7Bi3zkGtDooR08JmdFP6TlpNVk25HhYQe6Q86x
+ 8Ic8YAkzNqEhJgta3LWzm4hMpJnVtCQnj5ka/o961lFloIqEe7h1eGVmEWMLlIiK6qz2
+ 6jSYuligDU5nw/52wTaRon7Sh3wZyAczwHdC5l4mEz/NWxoEdv7/PchSt3m5jJSXy+pW
+ BY3JGFf7AvHHNRCAdIdc3mcS7cmfp2NZVCdpt9DJGzTS5DsVpNvJP3Gb0SEIkkktUZck
+ z0oWNpyPRF8FzVVzXkqDkVAN5qlhN1SRbSuauIdigfXD0v/At8wAqTc//xODeTQndAs/
+ 2ktA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740394648; x=1740999448;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yt0rAU+VRxsfGDQpK3/ewN3EZgFtWLbvooT8/UPYhRQ=;
- b=Ezp2i8Pqljh+NppG7ePGSb+QGVulonzbX7nbqieGFFWE6UpcdWpKkvHU8zEaPRZMpI
- 7lHMLIhWECRKtNL1n3aebp+LlyRFUYbqRcX/GR/JMUfj/SyJSj/kSfcq+kKVC9ADNqOs
- 2dwIjit+bJTRH4KkC946rsJtR77fX1x1LrEzV/68MGon8poH+0Tcp5yYyIGy81Th9Vjq
- WqwVd4mMeOmxGapkNqqo3uukVTZCwqiPcZq23NOtijV6Sm7lelDo+PvGK3KYAZ9cl/CV
- Z+uLtDXG93VUGbBbBLrHCiCgHjEUFEkvoO4wWNF5k/5JYsFSeaRKNEgvxsrbHE2EuBqW
- wlFA==
+ d=1e100.net; s=20230601; t=1740395052; x=1740999852;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P3gq1Sc9H5Ms95u4WWh16tH/o7ku03Ter1r8qA1KKf4=;
+ b=tw0RR88hWCKKzhaaZfMx7Zs3e8SflT+jSNuAYTWXDUFw4roig+8ilKwlVsqmiKjTSb
+ /qLTYTzjkMXImK9KJ8xaAL66xWP1ojzab28uZdR1+pQraAXRlGtUx58AuzvKbiAIa5e/
+ QIdV86AE/QmKSGhXtPBHT7Bf7fy1RyZC36MeWm9VgehTONwRe6X1e+QyznhmgsLR1291
+ cbPFYlHtdwkbM1aX7qC5SLB0lfuWUciCWap6cy5Q2YS8oLkPQT7x0epcwIpLJ2RFeEeZ
+ gFT4e4psRjoe+T8O6jjLbUdhhAyAU8i5AZ199MiiD1Qmw+U4MwKV6SjGPKsUatxCc5IJ
+ dHgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/P+MbigO8dY33DbjztY7agl0nF91QfZscQcqaw25vjDH+MtaCDgVVm1Y9pUYWzjXJXe3QpsopQEfa@nongnu.org
-X-Gm-Message-State: AOJu0Yy00OeayF1Dp6PloX9ZbAZgztKkwIUdHyw2ZFyZNkDRdIugHUZU
- h3iZUZYqZVgaxbvRB+taeJj4sw6U5OBBKk1UMpGVNjBJ88mcHM3/QyabW5luAb/fCcij5eDF/qL
- 8JkxKntECueaTfTyNui+AHDak6voOf+0XanGwisP9IBROvCqleue6
-X-Gm-Gg: ASbGnctwBQFu7+DWJGZTjuDWHLyOkzhZWlvYWu5NzXRTQBIqC/84N+ZKpUwJBB1qeD6
- KN0FGvP1pI0fnA1ys8rs6d4IPC6ttuc1PuFcjclz0XGb9/DMiJgX/QUh5aXHasKgIcV/aJP1LQZ
- a9QJKTOdAQduyjjOkfoif94kkuCVi7hF4RcCnYIpCE839GwDYeuTJxAPHRTaf25V65hBuCK2X9G
- sdN9i92tBTgNc0MHmhgM4VkJGBMQ7Jy1MrMi4ukuh1ItsPFvpiL3hcL32FF0KcRiKRPdlHQXIYd
- ypdTPVzrvs5cNol6fY+c
-X-Received: by 2002:a05:6402:2683:b0:5d9:a5b:d84c with SMTP id
- 4fb4d7f45d1cf-5e0b62df50dmr13018471a12.3.1740394647511; 
- Mon, 24 Feb 2025 02:57:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE/TBcZGLt76QwOKNoea3D4Hl/MM8AFnIJS236Dbl5cTtsrQAbtjSIcsQ0JQDHORP4TgbPewQ==
-X-Received: by 2002:a05:6402:2683:b0:5d9:a5b:d84c with SMTP id
- 4fb4d7f45d1cf-5e0b62df50dmr13018446a12.3.1740394647086; 
- Mon, 24 Feb 2025 02:57:27 -0800 (PST)
-Received: from [192.168.10.48] ([151.62.111.182])
- by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ded69e7c33sm17230937a12.61.2025.02.24.02.57.25
+ AJvYcCVHgAGi70XCgRULuDilycBOpUvqpA1+p1R9AyMTYFJfTVQZljUm8NCAebgkyccOF7xJYa8UIzOYug==@nongnu.org
+X-Gm-Message-State: AOJu0YzvpWWScGNHXrrcTipz0d9QKzfMPTcL4Sm+8aJ78xuQPjARo1bN
+ zS0encqX8Ykj994Z51FQCsIT7O5fBRGFry30E6pCPKTWTnEsErI0ZjV8FQ==
+X-Gm-Gg: ASbGnctmkL1MkYkSMF9GMUwJXW1SpqgKfpWlwH5tjU4HpkqA7fbbXcuJupqFtMN4/uG
+ QDdpFEzLZ4pAklFm3D5rf97sqbWFXQ7BBFVo3UUUPFSnTiSwaenw0wecjavRHz5ybLAylqwV2Bw
+ IXdcw50EQgihSQX0bPnTeCQd0li9Bm68syAhebBWfRIcfXBg0P99L2JgVHR9ovHE1WzgDG+nbmn
+ D2UJFjE/IAz3nvPMls8U33gRG6vGsNspLhpZQPdTpB2CHtiC2xQUz6kI5FfbbCjh+lDE6urzwvJ
+ 6tu0LGRxxDwX3NEvQFFvpQ/mYHQN336AyUBRtBcoc4/scvup+ia4g9oPGzUBJo2Nf3yY4+dQ
+X-Google-Smtp-Source: AGHT+IGBqHFtFUDRN/LntORiN4opnGqygXBjVh7tMBshQu6ejUrmysMTXNDU2NxJ35ZxDhbPtkpTvw==
+X-Received: by 2002:a05:6402:3554:b0:5dc:5a34:1296 with SMTP id
+ 4fb4d7f45d1cf-5e0b70ef77dmr12639263a12.16.1740395051628; 
+ Mon, 24 Feb 2025 03:04:11 -0800 (PST)
+Received: from [127.0.0.1] (business-90-187-110-129.pool2.vodafone-ip.de.
+ [90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5e09072247esm8696740a12.51.2025.02.24.03.04.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Feb 2025 02:57:26 -0800 (PST)
-Message-ID: <5ea3a240-1805-40f8-9c5d-af12794ea34c@redhat.com>
-Date: Mon, 24 Feb 2025 11:57:24 +0100
+ Mon, 24 Feb 2025 03:04:11 -0800 (PST)
+Date: Mon, 24 Feb 2025 11:04:09 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+CC: =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
+ Magnus Damm <magnus.damm@gmail.com>, Thomas Huth <huth@tuxfamily.org>,
+ Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+ Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-arm@nongnu.org,
+ Evgeny Iakovlev <eiakovlev@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: Re: [PATCH v2 6/9] hw/char/imx_serial: Really use RX FIFO depth
+In-Reply-To: <20250220092903.3726-7-philmd@linaro.org>
+References: <20250220092903.3726-1-philmd@linaro.org>
+ <20250220092903.3726-7-philmd@linaro.org>
+Message-ID: <82869227-447B-4B71-BBD4-6C4E1038D69E@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] build: Replace meson introspection argument with a
- builddir
-To: Joel Granados <joel.granados@kernel.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <20250204-jag-fix_meson-v1-1-ecb6bdb1db51@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250204-jag-fix_meson-v1-1-ecb6bdb1db51@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,60 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/25 21:10, Joel Granados wrote:
-> Replace the meson introspect argument with the build directory instead
-> of the meson.build file. The introspect command accepts an optional
-> build directory not a file.
-> 
-> Signed-off-by: Joel Granados <joel.granados@kernel.org>
-> ---
-> For some reason this causes an error when I "remote" compile qemu.
-> In any case, the introspect only accepts directories, so having it point
-> the to the meson.build file is a mistake.
 
-Unfortunately, the help for "meson introspect" doesn't tell the whole 
-story...  Instead, https://mesonbuild.com/IDE-integration.html under 
-"Build options" says:
 
-    Since Meson 0.50.0 it is also possible to get the default
-    buildoptions without a build directory by providing the root
-    meson.build instead of a build directory to meson introspect
-    --buildoptions.
+Am 20=2E Februar 2025 09:28:59 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
+philmd@linaro=2Eorg>:
+>While we model a 32-elements RX FIFO since the IMX serial
+>model was introduced in commit 988f2442971 ("hw/char/imx_serial:
+>Implement receive FIFO and ageing timer") we only read 1 char
+>at a time!
+>
+>Have the IOCanReadHandler handler return how many elements are
+>available, and use that in the IOReadHandler handler=2E
+>
+>Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>Reviewed-by: Luc Michel <luc=2Emichel@amd=2Ecom>
 
-    Running --buildoptions without a build directory produces the same
-    output as running it with a freshly configured build directory.
+Tested-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
-The idea here is to make it possible to update the meson-buildoptions.sh 
-script even in case the build directory if somehow hosed.  So I'd rather 
-avoid this patch if possible.
-
-What's the error that you have and do you have a reproducer?
-
-Paolo
-
-> Comments are greatly appreciated
-> ---
->   Makefile | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index b65b0bd41a..da88d9bb31 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -129,7 +129,7 @@ Makefile.mtest: build.ninja scripts/mtest2make.py
->   .PHONY: update-buildoptions
->   all update-buildoptions: $(SRC_PATH)/scripts/meson-buildoptions.sh
->   $(SRC_PATH)/scripts/meson-buildoptions.sh: $(SRC_PATH)/meson_options.txt
-> -	$(MESON) introspect --buildoptions $(SRC_PATH)/meson.build | $(PYTHON) \
-> +	$(MESON) introspect --buildoptions $(BUILD_DIR) | $(PYTHON) \
->   	  scripts/meson-buildoptions.py > $@.tmp && mv $@.tmp $@
->   endif
->   
-> 
-> ---
-> base-commit: d922088eb4ba6bc31a99f17b32cf75e59dd306cd
-> change-id: 20250204-jag-fix_meson-43db4d290315
-> 
-> Best regards,
-
+>---
+> hw/char/imx_serial=2Ec | 8 ++++++--
+> 1 file changed, 6 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/char/imx_serial=2Ec b/hw/char/imx_serial=2Ec
+>index 38b4865157e=2E=2E6f14f8403a9 100644
+>--- a/hw/char/imx_serial=2Ec
+>+++ b/hw/char/imx_serial=2Ec
+>@@ -386,7 +386,8 @@ static void imx_serial_write(void *opaque, hwaddr off=
+set,
+> static int imx_can_receive(void *opaque)
+> {
+>     IMXSerialState *s =3D (IMXSerialState *)opaque;
+>-    return s->ucr2 & UCR2_RXEN && fifo32_num_used(&s->rx_fifo) < FIFO_SI=
+ZE;
+>+
+>+    return s->ucr2 & UCR2_RXEN ? fifo32_num_free(&s->rx_fifo) : 0;
+> }
+>=20
+> static void imx_put_data(void *opaque, uint32_t value)
+>@@ -417,7 +418,10 @@ static void imx_receive(void *opaque, const uint8_t =
+*buf, int size)
+>     IMXSerialState *s =3D (IMXSerialState *)opaque;
+>=20
+>     s->usr2 |=3D USR2_WAKE;
+>-    imx_put_data(opaque, *buf);
+>+
+>+    for (int i =3D 0; i < size; i++) {
+>+        imx_put_data(opaque, buf[i]);
+>+    }
+> }
+>=20
+> static void imx_event(void *opaque, QEMUChrEvent event)
 
