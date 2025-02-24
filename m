@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC79C021A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 19:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58FCCC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 19:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmeYk-00021q-1I; Mon, 24 Feb 2025 14:56:10 -0500
+	id 1tmeb4-00038s-JM; Mon, 24 Feb 2025 14:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmeYh-00021f-P6
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:56:07 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmeb3-00037I-K0
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:58:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmeYe-0006jM-Vo
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:56:07 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tmeb2-0007DG-3y
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:58:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740426962;
+ s=mimecast20190719; t=1740427111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=QACTOXTWi0pEEqgA1eFjniN0X1Ka1TMKejL1+gIoito=;
- b=O5GCHtIKqDZcd1UgBKQKMbHh3LLjlj42MDGm/p4YtIDaA4Cmic8BgOZ6jrvtaT2j3Q9DT8
- Q5961G/t6W0SN5iODQ7faPDl87awxJqWRYDZYnB0ZBi9xWnXjGhhKGme/oCN3dMcAcZoK4
- 7ae+FDk3/vXjPWeuLZx/UZ5K2l5BziU=
+ bh=7X7t66MBcngOHJGQ4soKTk2Q+VBEN1o/1ZXgBQcPYFg=;
+ b=EH0BWxzKR2pgI9KhWD6BNejMFb2Vl9vh6H7ho0RT3SixWyDjMc1p1nm001fVaZtD2BWAuS
+ uwEUjaab8sYhkR25HY5Cig0Yt9DqEAaw7/xBqBkkGImiNjtPsEsJHVnoRlp6Q0bYjfgWfX
+ NbZBMX/mGr2m6wV+5RZBGoAzY6TLrBQ=
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
  [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-93UvYG6mOLGYhBucc5tXYg-1; Mon, 24 Feb 2025 14:55:58 -0500
-X-MC-Unique: 93UvYG6mOLGYhBucc5tXYg-1
-X-Mimecast-MFC-AGG-ID: 93UvYG6mOLGYhBucc5tXYg_1740426958
+ us-mta-647-7T2rw6CRMRORmKqNdlI-eQ-1; Mon, 24 Feb 2025 14:58:29 -0500
+X-MC-Unique: 7T2rw6CRMRORmKqNdlI-eQ-1
+X-Mimecast-MFC-AGG-ID: 7T2rw6CRMRORmKqNdlI-eQ_1740427109
 Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-47222600a5bso39946631cf.2
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 11:55:58 -0800 (PST)
+ d75a77b69052e-4721e6dd15eso115358301cf.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 11:58:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740426958; x=1741031758;
+ d=1e100.net; s=20230601; t=1740427109; x=1741031909;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QACTOXTWi0pEEqgA1eFjniN0X1Ka1TMKejL1+gIoito=;
- b=vonzGOvVkZNfWGXdLT8h32S6VtYvKEOHgLcyC2nee9yPPuO3vpKh/ygIhPpKGEj0rU
- L0v5iz5+WLbY1e41ms8u1UEfPyAv84Trpmu7ixE66q45fQhyJDl3/PQNRy+iNiWffz5L
- hUHoU1/sxwUY4b8Bh9B76MvjZvRFLq/AcrMkAqEJ8uC7YCqX6vdYg+vZ6pZMPtUDFeJj
- zPkd+vb4qJQdU/akpbTN/w1sRi0HINNzarV/4ujLZaiGP8hrdqR+XNuwHogqAdynoqHC
- Jql7fHP8ArC+Y+0/9YW/RFim/fwfbP2TTeN4WRvPLX7Rpi8gS+6/9YzxdyhU6VGZiNgG
- xxNQ==
-X-Gm-Message-State: AOJu0YyovThjxEIB9JqWYCW783UuwI2Lb2PPemRFXDBRAuDuVahSBIeQ
- RMvsfWx4x1S486Z87XGNR9DcQsV0YjHdMbk5H2KbqaLUEETOT7xulKnk5tGP51I4Hit3kmppS9G
- KSqZ5IJOYxmDqY70yv64hUO9gnTlYNjfEjjlFe9pQxMp96eQ57akq
-X-Gm-Gg: ASbGncvmOvItZnf1cUJNbCxbV2EBaUNMYN19YtDBhuCPiO2d/t8fBo/uKrmLS8H1i8I
- h88pZQ+gg5UsMc3Ejs9Urk2OsWAHeBv+iYbU0gNZGKoS87fVAYwQwbaC1C/lvBe5l01HMtLXXV8
- s4Z/s3ExrqNerSbEV22xPD6/6RA9l84OnWWkKOyhuY4akIKwCxMplAPGkND3hgjbK65Nftoi3m0
- djSZ0NA3IWRRxutQCaPnu4f+C3JNTuri3+0+vqCBDtSf+3Qbohb/JaR/IZFYcNU3DCs4w==
-X-Received: by 2002:a05:622a:1a88:b0:471:9721:db91 with SMTP id
- d75a77b69052e-4722295d9dcmr156996981cf.51.1740426957856; 
- Mon, 24 Feb 2025 11:55:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHJGPhEXeBRzAArAxhLlRlTS68QXUsXql8hol+zcMeEKp/C4aN+53Z+n2PTAWRB/Vw5VIGlwA==
-X-Received: by 2002:a05:622a:1a88:b0:471:9721:db91 with SMTP id
- d75a77b69052e-4722295d9dcmr156996741cf.51.1740426957502; 
- Mon, 24 Feb 2025 11:55:57 -0800 (PST)
+ bh=7X7t66MBcngOHJGQ4soKTk2Q+VBEN1o/1ZXgBQcPYFg=;
+ b=q7IDe8kMJY8BD8uK+fm+WL8vwXrL6uZtEPacy0ATQbmXCyualNSvg1iju/zRPuYoyv
+ ArVaUbhJb8r4l7oDbCeFY4fBidFaolroEDdlLTl+ki9s3J9stCCrlasRqDlrsXHMTo7t
+ CE84LGe23z93r+5m1HWgqjIAIBFzyYhrJ4QGFIon3QzeGcTMPa6u8xibkcg1zRfLYPso
+ Vz89ZILaBvLSowV67qEJDibbPtKLVN1gEhnWfC/PB0FD+KySw6A0HGlhGKa66JMplEu/
+ xwDnu3iHKsp2Gl7BIc1hMWFF+janGCg6Wi3FQ9OOoH0if+TMnuYgf54dyZLcbTaphgvf
+ EJTw==
+X-Gm-Message-State: AOJu0YwI3pjDe1q1m+XkyXH+zFgPHJ9f0ElVJWtZVPezO3A0jKssWw+R
+ N+V1MiA9iAWskiULphMXR1mnm+jj7Yev/I87blZOBToymyBi8U2p82j2HbllfKlvw5miP3YhJhb
+ d6hklWfQGQJ6kggKGhNc/J4NC9mdhQKyBB2HGC7MIDLGfESnV2Nyw
+X-Gm-Gg: ASbGncsH/D80nNQGPpelpJW8fvpzskRjoUFHdEhXQm+5+ESzWHXMwzlvmLWa3xj+vtM
+ yGb/isx4A8kVVbmm73l1joB2U6sOQYnWu4hiRyLFCKWnopZuF2v6cvSb3eb/tyzMoaF32F3ys/W
+ Gr6wu1RRJQY6XdqdpLog6pWoxEoLAPiWc34SFhlZCtiVlRavVrTE9M/oGdEtkap9l2mWD9pdAic
+ qETpFiIpM7IkXANvi9uzLYI5gVvr/hrlwMizBLKCqRJcOD1QSEsKmSLuTk2Qhxblv9Vsw==
+X-Received: by 2002:a05:622a:649:b0:472:957:dfa8 with SMTP id
+ d75a77b69052e-4737721a893mr9821911cf.18.1740427109061; 
+ Mon, 24 Feb 2025 11:58:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHsfOmSrdpeuvRjlz0cgTqYBXHoZRl43uHsn62Ere63eA7HJ4IzsVENUk40MQRGLcoXTLV88Q==
+X-Received: by 2002:a05:622a:649:b0:472:957:dfa8 with SMTP id
+ d75a77b69052e-4737721a893mr9821631cf.18.1740427108716; 
+ Mon, 24 Feb 2025 11:58:28 -0800 (PST)
 Received: from x1.local ([2604:7a40:2041:2b00::1000])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-47377e071e1sm351011cf.7.2025.02.24.11.55.56
+ d75a77b69052e-47378072dc9sm229871cf.63.2025.02.24.11.58.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 11:55:57 -0800 (PST)
-Date: Mon, 24 Feb 2025 14:55:53 -0500
+ Mon, 24 Feb 2025 11:58:28 -0800 (PST)
+Date: Mon, 24 Feb 2025 14:58:25 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Li Zhijian <lizhijian@fujitsu.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 1/8] migration: Prioritize RDMA in
- ram_save_target_page()
-Message-ID: <Z7zOydkedkVuwqDj@x1.local>
+Subject: Re: [PATCH v2 5/8] migration: Add
+ migration_capabilities_and_transport_compatible() helper
+Message-ID: <Z7zPYfWp2fLRB63W@x1.local>
 References: <20250221063612.695909-1-lizhijian@fujitsu.com>
- <20250221063612.695909-2-lizhijian@fujitsu.com>
+ <20250221063612.695909-6-lizhijian@fujitsu.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250221063612.695909-2-lizhijian@fujitsu.com>
+In-Reply-To: <20250221063612.695909-6-lizhijian@fujitsu.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -106,30 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 02:36:05PM +0800, Li Zhijian wrote:
-> Address an error in RDMA-based migration by ensuring RDMA is prioritized
-> when saving pages in `ram_save_target_page()`.
+On Fri, Feb 21, 2025 at 02:36:09PM +0800, Li Zhijian wrote:
+> Similar to migration_channels_and_transport_compatible(), introduce a
+> new helper migration_capabilities_and_transport_compatible() to check if
+> the capabilites is compatible with the transport.
 > 
-> Previously, the RDMA protocol's page-saving step was placed after other
-> protocols due to a refactoring in commit bc38dc2f5f3. This led to migration
-> failures characterized by unknown control messages and state loading errors
-> destination:
-> (qemu) qemu-system-x86_64: Unknown control message QEMU FILE
-> qemu-system-x86_64: error while loading state section id 1(ram)
-> qemu-system-x86_64: load of migration failed: Operation not permitted
-> source:
-> (qemu) qemu-system-x86_64: RDMA is in an error state waiting migration to abort!
-> qemu-system-x86_64: failed to save SaveStateEntry with id(name): 1(ram): -1
-> qemu-system-x86_64: rdma migration: recv polling control error!
-> qemu-system-x86_64: warning: Early error. Sending error.
-> qemu-system-x86_64: warning: rdma migration: send polling control error
+> Currently, only move the capabilities vs RDMA transport to this
+> function.
 > 
-> RDMA migration implemented its own protocol/method to send pages to
-> destination side, hand over to RDMA first to prevent pages being saved by
-> other protocol.
-> 
-> Fixes: bc38dc2f5f3 ("migration: refactor ram_save_target_page functions")
 > Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+
+Yeah this is even better, thanks.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
