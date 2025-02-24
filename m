@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96678C021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63548C021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 08:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmTiZ-00077C-Tm; Mon, 24 Feb 2025 03:21:35 -0500
+	id 1tmTkh-00080s-FQ; Mon, 24 Feb 2025 03:23:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTiW-00076v-Bo
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:21:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTkg-00080U-E9
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:23:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTiT-0000ve-MD
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:21:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tmTke-00017K-RR
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 03:23:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740385287;
+ s=mimecast20190719; t=1740385423;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PuMA/hT3qsBQKcqee9ZSWczKhyJ790uukn/WlIpfkNo=;
- b=FIRUlScMB1fiGmlDnpPXvP3MPWVDmVTjU6q4bVbLxsqlj5b/cX4243H5cOTGcl6Sio1dZY
- daDDPOPbp2MOyMWMxc8mHJ64VyBjodgTN0SueET95VWGJVTXCDB4xQiYokbBQBE0x5ueYT
- Lshq4ddjbUoGDYUB31KRo+lty4MF/zQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aXLsKS/Zs7htJnqHezHQ5TiRqMF0gZD5zjUy/P3hakU=;
+ b=DmdoiXSEvJ+FFHn4pYlQ2FHQ3JcDyy43rwl6QH7mi4x5jc9bM2MTV5v/LFzU3ytF3LY8m3
+ VbcPUnXu5Ur7IHbHvwj+6hVyIGtNl8IRD0IFKwf32vZ15Eu9L6hNMvWGfhuG/ePxRWL8ZV
+ x6mCL+yAX6W2HxSBx/wtFcCC2crPwn4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-lkjW6UBAPQ6H6NpwNID3QA-1; Mon, 24 Feb 2025 03:21:25 -0500
-X-MC-Unique: lkjW6UBAPQ6H6NpwNID3QA-1
-X-Mimecast-MFC-AGG-ID: lkjW6UBAPQ6H6NpwNID3QA_1740385284
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso31730555e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 00:21:25 -0800 (PST)
+ us-mta-464-HBk-CeY8NdqK7ncAASScTA-1; Mon, 24 Feb 2025 03:23:38 -0500
+X-MC-Unique: HBk-CeY8NdqK7ncAASScTA-1
+X-Mimecast-MFC-AGG-ID: HBk-CeY8NdqK7ncAASScTA_1740385418
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4394b8bd4e1so21154105e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 00:23:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740385284; x=1740990084;
+ d=1e100.net; s=20230601; t=1740385417; x=1740990217;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PuMA/hT3qsBQKcqee9ZSWczKhyJ790uukn/WlIpfkNo=;
- b=DX13zPcpdr8le7hCB7uWScJhQ5VUxzt+rR/mvVwYAlG8FWFXupoZxzSmoYk9f5Ihau
- Pc85R8siWM5pvJwx7YIT4F+I6oJ82wswkn4qKz52sEl8e8j6CklnuOEnXiWkEFbZVvp4
- ml1h8+8nmlT9YiWBRgAyFKP+95lwMBh/6rHUhV81PAkEjlU0mr/fxv1+b3nhPNXp2LjU
- H9Z0X3fqtJg6naIbbbhdDW5J4a5jZL2BUQq9mEYn8QtSF9yab7eavMH6vvEgLNaVU93s
- 0cq04fbuET541YWNtvaUYPu0oSBW362bIR9bytJ5m1BWUmYfo3wcRuY7gRrDfKL79fWg
- uJSA==
-X-Gm-Message-State: AOJu0YxN6ivHZkWwiZqpOKxrDG6Hcc4JKp1AfklsOLwZGoE1CTgOoHjB
- 3naIkcbBF0DIdRshP5zd6MAZxXQ/h54TKYtI3znR+/FR7NIocB0DnS5vdlV2R5VT3uvnznX5Qgd
- rSCyTvu3phE57PoLP8WKIM8fsXwtsG9151WKBGRQsyge3hMWx5Gky
-X-Gm-Gg: ASbGncucouw5J8dBvhK5dS6PmDtKhf16zWbA425OOrJlbqmiu+VEnkX/Hh9HznYGBba
- fWYFMU5yy0o8WZbbZ0dPU1kKeuP90/qNrCYRrZ/16+GYYJDbQJgLfz+xjNC99PAe1ov8UOtJQBb
- Iw+6hQhNLXnXbiYYny0Gxaf66LcRmWcg1NfDjl2u8Z+d5XsSYu+yLmSQHlMLCjZZSadrxYaBlgs
- IShSWEQTltAntlVf146q3oGBiU1aN8vUXfqQDhq95hMXVurK7KUAYmfJHjow7RUQ72rBFHAD4Tn
- JUG46NBOnHY1m+IFG5H8TYOJksY8nKZV4QuvcxkS09vrGaSffv5Guw==
-X-Received: by 2002:a05:600c:1c25:b0:439:86fb:7325 with SMTP id
- 5b1f17b1804b1-439ae223e66mr114635835e9.31.1740385284305; 
- Mon, 24 Feb 2025 00:21:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFKtDed2upfG2zPNtj8QfX29FTBH3CsUwy3O0Y+Pd3lU7J1g0w6ptrHXkrWeJ/XcXjcGs/hfw==
-X-Received: by 2002:a05:600c:1c25:b0:439:86fb:7325 with SMTP id
- 5b1f17b1804b1-439ae223e66mr114635475e9.31.1740385283917; 
- Mon, 24 Feb 2025 00:21:23 -0800 (PST)
+ bh=aXLsKS/Zs7htJnqHezHQ5TiRqMF0gZD5zjUy/P3hakU=;
+ b=eXqI01oI3ffU4mdq6lZLXSyluU35KMongqk6raT6aiTz6giUQ4rrvD+rLCrv+U06Wd
+ wgoeH6jY9HIy4dIOfEk2jcaT/7URAjoiibGblKqqkD2A6UiQR4UlbTtFCucXPzRaO7BI
+ /VcTDFxHAaWu+/3q5eGkQEJeXQsWAyoQm1gFC8cS0BDc/0l6EqDohxuelwWfy8EapzhJ
+ erWQBisPHKMu1lGSixiCCrWIZxgcDRZFuTP5nZKoJwAd1uXWUW6nyeNpEb+c/sXCddhh
+ HdHPqXPfavBsmidVIpmzzUTo2tPfkI2HMMnujZVOt+DyPZKkXRM5OG0qgWZrd4nqQmOF
+ Uemw==
+X-Gm-Message-State: AOJu0YyWdt4qZim48rUKPD+eTf4hgTe4YUmH1QCY9jLBuPhS/G/sGg6d
+ /pVFzbE60cII5DuqQ9HvE2SqlS8t1d6tSRHYU3/+8TQGQmCRt4TCmz4sEBjfpGk0oBETo6DHggk
+ cdYlHJsuEMdhYL8N0aQR/cofpM6DB4Xsed5OIPg59LOKV1Nvwf0siP+SpKFFuhv/NxpZp9c7P9w
+ 8AH5o8vdFkrTYiGoXNIKvjBXoWYnwSfw==
+X-Gm-Gg: ASbGncvL9p90xiwQ7af7X42elzVP833YrAmojncmUwzX+5UG9+8j1mQKzz0EJiTxRvY
+ xJv5Mx/7e3ozCVqnBqHFexKIrG4hH4EwslLM1pU4ES/8sqvHqcMgVcJJ2ObHbDErgFFr7Ud6pUD
+ o4n7VlBxnU4nT4Q4Xa0kzb10FrIc7ibiBdkCD4hXO20SJL7/6mOny8bNA7ob3n30Eai2/fNIUeM
+ 8jmJG2Skg+md2skqLf7DcNGH8QymafayTkNqhrdTP6kgJAZCVPO6TIr4+rorALlcphsS/mlaX3V
+ UGUrtvlo6QFFW3/Vh0oTcd2mcwIwQzW0a+wizgkzMoBg0MyK+D6l/A==
+X-Received: by 2002:a05:600c:5487:b0:439:9946:af72 with SMTP id
+ 5b1f17b1804b1-439aeae026amr92877865e9.3.1740385417306; 
+ Mon, 24 Feb 2025 00:23:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEJR4ZZ7z0xrQtV0V0REAZUQD0SyoCj2EoqO4eTBqgTaIedHqezwqy3uw7ArzgGG3lU0G8TGg==
+X-Received: by 2002:a05:600c:5487:b0:439:9946:af72 with SMTP id
+ 5b1f17b1804b1-439aeae026amr92877625e9.3.1740385416924; 
+ Mon, 24 Feb 2025 00:23:36 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce336sm99923455e9.2.2025.02.24.00.21.23
+ 5b1f17b1804b1-439b02ce735sm98540265e9.3.2025.02.24.00.23.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Feb 2025 00:21:23 -0800 (PST)
-Message-ID: <44421da6-fcec-477c-bacd-2464cd4bfaf5@redhat.com>
-Date: Mon, 24 Feb 2025 09:21:22 +0100
+ Mon, 24 Feb 2025 00:23:36 -0800 (PST)
+Message-ID: <a9dbea52-0f90-4d5d-b8eb-6262a791ffea@redhat.com>
+Date: Mon, 24 Feb 2025 09:23:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] PCI: Implement basic PCI PM capability backing
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, eric.auger.pro@gmail.com, eric.auger@redhat.com,
- zhenzhong.duan@intel.com, marcel.apfelbaum@gmail.com
-References: <20250220224918.2520417-1-alex.williamson@redhat.com>
- <20250220175420-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH] vfio/ccw: Replace warn_once_pfch() with warn_report_once()
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250214161936.1720039-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,17 +127,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250220175420-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20250214161936.1720039-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,61 +155,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/20/25 23:54, Michael S. Tsirkin wrote:
-> On Thu, Feb 20, 2025 at 03:48:53PM -0700, Alex Williamson wrote:
->> Eric recently identified an issue[1] where during graceful shutdown
->> of a VM in a vIOMMU configuration, the guest driver places the device
->> into the D3 power state, the vIOMMU is then disabled, triggering an
->> AddressSpace update.  The device BARs are still mapped into the AS,
->> but the vfio host driver refuses to DMA map the MMIO space due to the
->> device power state.
->>
->> The proposed solution in [1] was to skip mappings based on the
->> device power state.  Here we take a different approach.  The PCI spec
->> defines that devices in D1/2/3 power state should respond only to
->> configuration and message requests and all other requests should be
->> handled as an Unsupported Request.  In other words, the memory and
->> IO BARs are not accessible except when the device is in the D0 power
->> state.
->>
->> To emulate this behavior, we can factor the device power state into
->> the mapping state of the device BARs.  Therefore the BAR is marked
->> as unmapped if either the respective command register enable bit is
->> clear or the device is not in the D0 power state.
->>
->> In order to implement this, the PowerState field of the PMCSR
->> register becomes writable, which allows the device to appear in
->> lower power states.  This also therefore implements D3 support
->> (insofar as the BAR behavior) for all devices implementing the PM
->> capability.  The PCI spec requires D3 support.
->>
->> An aspect that needs attention here is whether this change in the
->> wmask and PMCSR bits becomes a problem for migration, and how we
->> might solve it.  For a guest migrating old->new, the device would
->> always be in the D0 power state, but the register becomes writable.
->> In the opposite direction, is it possible that a device could
->> migrate in a low power state and be stuck there since the bits are
->> read-only in old QEMU?  Do we need an option for this behavior and a
->> machine state bump, or are there alternatives?
->>
->> Thanks,
->> Alex
->>
->> [1]https://lore.kernel.org/all/20250219175941.135390-1-eric.auger@redhat.com/
+On 2/14/25 17:19, Cédric Le Goater wrote:
+> Use the common helper warn_report_once() instead of implementing its
+> own.
 > 
-> 
-> PCI bits:
-> 
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> 
-> feel free to merge.
+> Cc: Eric Farman <farman@linux.ibm.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/ccw.c | 12 ++----------
+>   1 file changed, 2 insertions(+), 10 deletions(-)
+>
+
+I can update the trailers before sending a PR. For now, since it is
+simple enough :
 
 Applied to vfio-next.
 
 Thanks,
 
 C.
-
 
 
 
