@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E22CEC021BE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E76C021BC
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 17:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmbw9-0003rZ-4A; Mon, 24 Feb 2025 12:08:09 -0500
+	id 1tmbvo-0003il-Aw; Mon, 24 Feb 2025 12:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1tmbw4-0003qL-Ei
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:08:04 -0500
+ id 1tmbvl-0003hm-Bw
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:07:45 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1tmbw0-0004Jb-D8
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:08:01 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OEMAEZ025070;
- Mon, 24 Feb 2025 17:07:59 GMT
+ id 1tmbvf-0004FW-GF
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 12:07:44 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OF75lZ012138;
+ Mon, 24 Feb 2025 17:07:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=f7zR3D
- 7/VuKgHB2BVwIOzC2Zs2JePbvTTiUPhahkZqQ=; b=DKbiUY1hQAMNfW1XTk46k9
- IFIp1WbNxgupx/NQUv78YRJb4Z882JmWQi2dnUe/jfDvdVksqWGd4NQRQEZFORP9
- umdkWBuEbQdVeo9FsCJvq2SeJM81p8RrG54rlRDPakFzOzQTZabD+qU48Mz8U2xj
- ewZno3A3Ilm4Op8XY80ktV9WtorbghDgBVIuPp8XktgRlDGIG0AmLwzTpBAROlcq
- UZ3RKozxwyozG1H4P0Qq1npRM0J8P8PQK9TV+MNJVGSfcTn7feNWPKr+GIkIuodI
- G0b6QGfRuA4L3jhfYJHrbR1J6h9sbZGoxLBAfcEcd1eVfqX63cSDiYSMQXMAsiGQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VRng8L
+ Nia1WdBVIIygYt0uMjvbJ1JbdrZ5DkXp4GzAU=; b=lLg4QCfQC+Q0rZEOp7rUdw
+ lLN+qcvUERkHbD1bwm0LiZV83MZFT6vqYvHaCUbcti7W65B+tvwgNUSfZzdcdN+9
+ DcYxOSY9JrsyQ7M707dqSng9coh/Ze3qxqcdRUUdZWam8a7vVFU05nl2WY4aEs0w
+ sxDg2faBdrc1Uo+dye7bQqQlEBf01Zra745uzYyXNKM5ujQmdrnxp9I+S3b952wf
+ Buvz83R6s9u/ilK8y/Rko5BBRjHBsFEQ0NqU/FyBCDo3VKR/sbo+HexolY/Pav3H
+ fZ45fXL8x9NOslCiFqOyl+l4gtbxY2dNXlK99BCYaLaaqT24LXoz1mFv6vR4dbEg
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 450eu9uxhm-1
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 450jk836xg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Feb 2025 17:07:59 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51OF1LT8012470;
- Mon, 24 Feb 2025 17:07:58 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 44yrwsgga7-1
+ Mon, 24 Feb 2025 17:07:35 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 51OGlVdA006251;
+ Mon, 24 Feb 2025 17:07:34 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 450jk836x9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Feb 2025 17:07:58 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 51OH7vnl59244860
+ Mon, 24 Feb 2025 17:07:34 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 51OGMOL5026961;
+ Mon, 24 Feb 2025 17:07:33 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 44ytdk846b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Feb 2025 17:07:33 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 51OH7XSB28050044
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Feb 2025 17:07:57 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2DF9F58057;
- Mon, 24 Feb 2025 17:07:57 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C84AF58058;
- Mon, 24 Feb 2025 17:07:56 +0000 (GMT)
+ Mon, 24 Feb 2025 17:07:33 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 135D35805F;
+ Mon, 24 Feb 2025 17:07:33 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC9A258043;
+ Mon, 24 Feb 2025 17:07:31 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.172.201]) by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Feb 2025 17:07:56 +0000 (GMT)
-Message-ID: <e8f51190d833d6a283b4602bd20b42483983d9b1.camel@linux.ibm.com>
-Subject: Re: [PATCH] vfio/ccw: Replace warn_once_pfch() with warn_report_once()
+ [9.61.172.201]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Feb 2025 17:07:31 +0000 (GMT)
+Message-ID: <b8b54a18d9975633bd536341e419290c48a02794.camel@linux.ibm.com>
+Subject: Re: [PATCH v4] vfio: Add property documentation
 From: Eric Farman <farman@linux.ibm.com>
 To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>
-Date: Mon, 24 Feb 2025 12:07:56 -0500
-In-Reply-To: <20250214161936.1720039-1-clg@redhat.com>
-References: <20250214161936.1720039-1-clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, tomitamoeko@gmail.com,
+ corvin.koehne@gmail.com, Kirti Wankhede <kwankhede@nvidia.com>, Joao
+ Martins	 <joao.m.martins@oracle.com>, Tony Krowiak
+ <akrowiak@linux.ibm.com>, Eric Auger	 <eric.auger@redhat.com>
+Date: Mon, 24 Feb 2025 12:07:31 -0500
+In-Reply-To: <20250217173455.449983-1-clg@redhat.com>
+References: <20250217173455.449983-1-clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 9HLj_HSX_O3Cb4Dt_yd4c_EjU9Y3u8_N
-X-Proofpoint-ORIG-GUID: 9HLj_HSX_O3Cb4Dt_yd4c_EjU9Y3u8_N
+X-Proofpoint-ORIG-GUID: tAgdFAHvHygJJS0QXDSgPiypIHLaXUol
+X-Proofpoint-GUID: bi5ndSpmnBpoH1yUgobG4Y3egjXs2W61
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-24_08,2025-02-24_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 spamscore=0
- malwarescore=0 impostorscore=0 lowpriorityscore=0 mlxlogscore=579
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ lowpriorityscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 clxscore=1011 mlxlogscore=999 mlxscore=0
+ bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502100000 definitions=main-2502240116
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -110,15 +119,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-02-14 at 17:19 +0100, C=C3=A9dric Le Goater wrote:
-> Use the common helper warn_report_once() instead of implementing its
-> own.
+On Mon, 2025-02-17 at 18:34 +0100, C=C3=A9dric Le Goater wrote:
+> Investigate the git history to uncover when and why the VFIO
+> properties were introduced and update the models. This is mostly
+> targeting vfio-pci device, since vfio-platform, vfio-ap and vfio-ccw
+> devices are simpler.
 >=20
+> Sort the properties based on the QEMU version in which they were
+> introduced.
+>=20
+> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
 > Cc: Eric Farman <farman@linux.ibm.com>
+> Cc: Eric Auger <eric.auger@redhat.com>
 > Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 > ---
->  hw/vfio/ccw.c | 12 ++----------
->  1 file changed, 2 insertions(+), 10 deletions(-)
+>=20
+>  Should we introduce documentation for properties like the kernel has
+>  in Documentation/ABI/*/sysfs-* ?
+>=20
+>  Changes in v4:
+>=20
+>  - Latest improvements from Alex=20
+>=20
+>  Changes in v3:
+>=20
+>  - Re-organized the vfio-pci properties based on the QEMU version in
+>    which they were introduced
+>  - Added property labels
+>  - Improved description as suggested by Alex, Tomita and Corvin
+>=20
+>  Changes in v2:
+>=20
+>  - Fixed version numbers
+>  - Fixed #ifdef in vfio/ccw.c
+>  - Addressed vfio-pci-nohotplug
+>  - Organize the vfio-pci properties in topics
+>=20
+>  hw/vfio/ap.c       |   9 ++++
+>  hw/vfio/ccw.c      |  15 ++++++
+>  hw/vfio/pci.c      | 125 +++++++++++++++++++++++++++++++++++++++++++++
+>  hw/vfio/platform.c |  24 +++++++++
+>  4 files changed, 173 insertions(+)
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com> # vfio-ccw
 
