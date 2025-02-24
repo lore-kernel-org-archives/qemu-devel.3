@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7918C021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E512C021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 05:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmQQW-0005A0-B0; Sun, 23 Feb 2025 23:50:44 -0500
+	id 1tmQyN-0000hi-NB; Mon, 24 Feb 2025 00:25:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tmQQS-00059e-Ku
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:50:41 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1tmQQQ-0004S8-4B
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:50:40 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1740372627; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=LnuUiLYuX2A6t6pcqaqOGijciNx/Egi7Aa4msYxk8dw0mg5dZhoFKZhs2W+cFZMY4A3j8VOGo/Ubs0pOSul8ZZ+zUgDFJUtnrjBryYvncnXjDt8DoTbSM7btW+PAK3PDPL6KDsVpdSw7iZphf2XrNZo2wbrDFhxTkRqmjFCEXeo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1740372627;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=o7Dnn7pA1ekE7jybvzLMCywUC0IrLOl07KsU5y3rGnw=; 
- b=VSoNE1e+KfeEfsLdoOxR/vx0MTCyFQCbqZilT8Jto2nraEQfs8XoQ85wEzrjSImSQEI/HpJJShPbsIynOcNBQr5Ui3JXJHJ7KhmBXC88KpOEuyIBCFbFh4v9xqtmqYfSBSsBxgJ0S9qpLlkDXt2m3zqZlCp8MTfMrHCyh+LY+sM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1740372627; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=o7Dnn7pA1ekE7jybvzLMCywUC0IrLOl07KsU5y3rGnw=;
- b=GW51DYeqaLWD1CWwfDPvKKFZ74lNL002ez0fLwSmhr8g2F0YCzYqMHuPFTHC8dCO
- 3YegRlUaPkd3SzGy3uBZb7CaqOUHx6eYZkX0j9CQ9ommUXjwPc72YGhXyN4b6BZI1ew
- RdGw95P0LL9nvU8jOEGUdmLLVeeK9/MrD4wI3PYs=
-Received: by mx.zohomail.com with SMTPS id 1740372625845196.12598924053236;
- Sun, 23 Feb 2025 20:50:25 -0800 (PST)
-Message-ID: <f0a9a074-66d4-47d1-8ea2-58bbffa18f6d@collabora.com>
-Date: Mon, 24 Feb 2025 07:50:22 +0300
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tmQnX-0007pt-MV; Mon, 24 Feb 2025 00:14:31 -0500
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tmQnV-0006d8-R5; Mon, 24 Feb 2025 00:14:31 -0500
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-4bdb423b971so1177892137.2; 
+ Sun, 23 Feb 2025 21:14:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1740374067; x=1740978867; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A69i7VvcTTO+7ehkke80wkSGQ6qqqtZdm98NN1wdjdY=;
+ b=LwbybJ3y5jynPrmT9LBxsr+3hJP9ni1/fbDG1kOjl0KHuJz2SQBgirZNneBirRsh0a
+ 638vy4Gk0pHbP1uetHvXTaBmVwrK6l43yMe+4GTPpTxdwfYWzHYVt9k7kFPzW6+6hLMb
+ Nfz1UyNcGXEERHGepBaU72+Sqq787HnC1sDHgeaWbDFWR1g22ShCDfv6y+l1fJbu5I7s
+ mxUO6mAB6mgb09N30xQojSRs+6PyEonBjq0eld6BN+3mVSNdCVZghssvB0qQ6bajcleO
+ vhs3mDD2cHKTcvhbO2hbUrdOTHezybq22JbkvazGCnFkZkYgo4fU5/G/lXV6ZExEA925
+ zO/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740374067; x=1740978867;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A69i7VvcTTO+7ehkke80wkSGQ6qqqtZdm98NN1wdjdY=;
+ b=hTqkZy3LODP0PIeZNQO37kkbSIuQdOLj3jKNd5zYenPJmvZzu/7hRZbRqBZbw3UXbo
+ J6zBLcYe05ciXLFq7EQn0txPTpEz1vR2wo7fE8paPglYVIj0j1IDafAeUBXic0yZVGup
+ B9r53y4EQsVUzDi65AM6+F+WjcHU6nLhjxEJwk5uevWdchaZs1u3jA22rSnXIgGY+rRt
+ hdVI8U+bp94JMNAafPa4/JR8J7DmQip55BRVxFZZOP9delpq5mq1zWle6o0Wuzvn00gI
+ Ve9jT07xfzLmP+4ViSsYlBs4NYDAVa9iwL0XjR8yHXD/0HXdsDuH9UZ9mXf2eKBiHmq/
+ neRA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIrAAy1a5d3jbHS54KRUi2i0EEOtdSfS4nMe1FqSaxegdgS9PN4BLV8sipvbV0joHoo7sRs65lzHwsFA==@nongnu.org,
+ AJvYcCXICAsdxiH17DiOBwhB8wxhy33wZxmvw2IDR7GTRo2x11xRWCYq+wSlyYIjiMWI+xl78Rm2cmv6h8pZ@nongnu.org
+X-Gm-Message-State: AOJu0YwOS8orATKAHM214uE9NJG26yYQTgakMfvSKXG4NTXRyhwAdrbL
+ sovhuLC33Os26NoofeBn6dtgHFGod232MCcpMKR4xI1dLRLv8g7eaY6BxHDVzrKpjIdISOhzDtn
+ gt1Mx8Bs8aE3Xa2UXmanwo66IlJ8=
+X-Gm-Gg: ASbGncu57P+i7pXALV/nhGDnbHPBiNXavWwBTNP5vo05/SHXinmT5pxfLkUYP2yEAug
+ 6d/SY6TMqVJMqT9+CR8+MLUK+RcL4LZToPusmEuGnA27EIC8Vno6wT6BcG+Qh/3p6yCYSQ0jhyG
+ xg9kaV3B3CdXfd2yvkDCUgdi40UbJz2Sdr0Sre
+X-Google-Smtp-Source: AGHT+IGuDxEonNmw1hmJjnYWIOdU7195mw84JLHY1eV7Ju+URBWlkre3kfojBy5Adq7ualji6nnkIvEiTYkguqt8Nkw=
+X-Received: by 2002:a05:6102:4b18:b0:4bb:c0a7:39b8 with SMTP id
+ ada2fe7eead31-4bfc022708fmr6116037137.17.1740374067140; Sun, 23 Feb 2025
+ 21:14:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/display: add blocklist for known bad drivers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250221160101.2318357-1-alex.bennee@linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20250221160101.2318357-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250214062443.9936-1-sebastian.huber@embedded-brains.de>
+ <20250220-reggae-hardness-907e385516d8@spud>
+In-Reply-To: <20250220-reggae-hardness-907e385516d8@spud>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 24 Feb 2025 15:14:00 +1000
+X-Gm-Features: AWEUYZlAb2LXUi9ehUHDn8C9xhjRaogHo7sWUQILq5TJI_nY77i8tsgSmjC4WHU
+Message-ID: <CAKmqyKNex8vQuT3ArR3gePfGfeLCZbW0DxzD9dz8oNAODE8sbw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Improve Microchip Polarfire SoC customization
+To: Conor Dooley <conor@kernel.org>
+Cc: Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org,
+ Conor Dooley <conor.dooley@microchip.com>, Bin Meng <bin.meng@windriver.com>, 
+ alistair.francis@wdc.com, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,20 +98,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/21/25 19:01, Alex Bennée wrote:
-...
-> diff --git a/stubs/host-gpu.c b/stubs/host-gpu.c
-> new file mode 100644
-> index 0000000000..7bf76ee4f6
-> --- /dev/null
-> +++ b/stubs/host-gpu.c
+On Fri, Feb 21, 2025 at 4:31=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
+te:
+>
+> +cc qemu-riscv, Alistar.
+>
+> On Fri, Feb 14, 2025 at 07:24:37AM +0100, Sebastian Huber wrote:
+> > Booting the microchip-icicle-kit machine using the latest PolarFire SoC
+> > Hart Software Services (HSS) no longer works since Qemu lacks support
+> > for several registers (clocks, DRAM controller). Also reading from the
+> > SDCard does not work currently.
+>
+> On that note, I think the inaccurate docs about polarfire should be
+> removed. There's a wiki page here with dead links, or links to things
+> that do not work anymore:
+> https://wiki.qemu.org/Documentation/Platforms/RISCV#Microchip_PolarFire_S=
+oC_Icicle_Kit
+> I think the whole section should be removed, find it kinda odd that
+> there's a polarfire section but not for any other board. Either way,
+> it's talking about something that just does not work, the current HSS
+> and Yocto don't boot.
 
-Looks okay
+The wiki is independent of the QEMU code base, so you can modify it. I
+agree that we should remove outdated/wrong information as it's very
+confusing to users.
 
-Nit: host-gpu is a too generic name, IMO. Name should reflect Vulkan
-dedication, like host-vk-gpu.c for example.
+>
+> There's also a docs page here:
+> https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
 
--- 
-Best regards,
-Dmitry
+That is generated from the QEMU codebase
+`docs/system/riscv/microchip-icicle-kit.rst` and should be updated,
+ideally with this patch set
+
+> that has a copy of the table your patch 4 modifies, that probably should
+> be updated to match your changes.
+>
+> In a similar vein to the wiki, it talks about the HSS and booting a
+> yocto wic image. I think those should be deleted since they don't work.
+
+Agreed
+
+Alistair
+
+>
+> Alistar/Other RISC-V folks, what do you think? Bin wrote the port but
+> seems to be AFK and I don't have the capacity to fix any of that stuff
+> on top of what I already do in my spare time - do you agree that
+> deleting the now inaccurate docs makes sense?
+>
+> > In order to allow tests runs for real-time kernels such as RTEMS and
+> > Zephyr, improve the boot customization. This patch set enables a direct
+> > run of kernel executables, for example:
+> >
+> > qemu-system-riscv64 -no-reboot -nographic \
+> >   -serial null -serial mon:stdio \
+> >   -smp 2 \
+> >   -bios none \
+> >   -machine microchip-icicle-kit,clint-timebase-frequency=3D10000000 \
+> >   -kernel rtos.elf
+>
+> The series breaks my usage:
+> qemu//build/qemu-system-riscv64 -M microchip-icicle-kit \
+>         -m 3G -smp 5 \
+>         -kernel vmlinux.bin \
+>         -dtb riscvpc.dtb \
+>         -initrd initramfs.cpio.gz \
+>         -display none -serial null \
+>         -serial mon:stdio \
+>         -D qemu.log -d unimp
+> opensbi-riscv64-generic-fw_dynamic.bin: No such file or directory
+> qemu-system-riscv64: could not load firmware 'opensbi-riscv64-generic-fw_=
+dynamic.bin'
+> make: *** [Makefile:305: qemu-icicle] Error 1
+>
+> Figure it is likely to be your patch 4? The file does exist, so probably
+> some sort of path-to-it issues?
+>
+> Cheers,
+> Conor.
+>
+> >
+> > Sebastian Huber (5):
+> >   hw/misc: Add MPFS system reset support
+> >   hw/riscv: More flexible FDT placement for MPFS
+> >   hw/riscv: Make FDT optional for MPFS
+> >   hw/riscv: Allow direct start of kernel for MPFS
+> >   hw/riscv: Configurable MPFS CLINT timebase freq
+> >
+> >  hw/misc/mchp_pfsoc_sysreg.c        |   7 ++
+> >  hw/riscv/microchip_pfsoc.c         | 147 +++++++++++++++++++++--------
+> >  include/hw/riscv/microchip_pfsoc.h |   1 +
+> >  3 files changed, 115 insertions(+), 40 deletions(-)
+> >
+> > --
+> > 2.43.0
+> >
+> >
 
