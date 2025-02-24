@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89411C021B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E478C021B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmPDi-0007cJ-Tp; Sun, 23 Feb 2025 22:33:26 -0500
+	id 1tmPE8-0007sX-IJ; Sun, 23 Feb 2025 22:33:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPDf-0007ba-NR; Sun, 23 Feb 2025 22:33:25 -0500
-Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ id 1tmPE7-0007qK-Ca; Sun, 23 Feb 2025 22:33:51 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPDe-00054d-6M; Sun, 23 Feb 2025 22:33:23 -0500
-Received: by mail-ua1-x92f.google.com with SMTP id
- a1e0cc1a2514c-86712bc0508so1109247241.2; 
- Sun, 23 Feb 2025 19:33:21 -0800 (PST)
+ id 1tmPE5-00056R-Q1; Sun, 23 Feb 2025 22:33:51 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-868e8ce3f73so1095872241.3; 
+ Sun, 23 Feb 2025 19:33:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740368000; x=1740972800; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740368028; x=1740972828; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aqdCZ5MaAlSF9nTQC1MacO3rNySE2hJnHZbCENXnbhA=;
- b=bf3e29pvIKkByBUOKTRaMCxQuf5/J6j8AM4LtyiXn4d2omgGgtR5prkDB9iamsVPns
- 9OUgr3TgjHIpAegkiSdNU1Oqr4m2bt4cKwKDQVG2OMD3GvfwlwPSfwGfr4HY6OYodYpF
- 2PJdY4dNQLRRmEl31dIOqpdxyQ5OEYuq4bGHl2kEBKh+73Ur+25xw42ENMSf9ERXvYmZ
- dFwc4WY1B/nysoWq/GUBsrKlw2M528Hj10r17Y4ZwvvwOzSoD2rbF6MeDLTuoBmtnPOa
- iOnpKpLB8Mh5Ex9IX5Y/xGisocuUIzpRntsYwgKPeJs1xg49pm6tuIfEI0QaXAV96+xv
- 9Vrw==
+ bh=Q5X857c406PjEoUmuuZPiFDUO0HRHEIsdMuU6YoGIyQ=;
+ b=QAf8xJcvtfO8HqL7W8wD178nLM96ng8CTR0JVNahfhHnzHq/lHEG/g02uUqPmQSD5s
+ /2c4TQT+677AmAT2qauIpuk/ZrCekD1zazO0jAbu5QJBBxUTkOekvXP6RLOL7Oxmqjsl
+ fo+z+pcEUqU+8LL8OYxDGVYiBmkPQ29c5Jd5fHJeatfQcTV7t8QUMmJCMLPGvN0AbKKR
+ d/zA3qaBklpb0l3xbZg/OIiZ8bxeSZ6fGZHQ/CRGpD7YvHbwU/EqT/y7okhaYPv9GQjw
+ fha45P9oW9y9v/CwSX/21Vc8OtEf4ZIt8X2+dvPk778yq2CwIdLJukX5zY/Sfgi+5YN6
+ Ls5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740368000; x=1740972800;
+ d=1e100.net; s=20230601; t=1740368028; x=1740972828;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aqdCZ5MaAlSF9nTQC1MacO3rNySE2hJnHZbCENXnbhA=;
- b=iVBEWDaVNrN4PTVvzPMlAnEjX7aGmXmBDIJkkXkTO8UILRjBHZlBhZw+yWeqJjMku5
- YLUhk9uHchi69cCq3ynoVXB7RU5CalF5dEuXP08E3NRCmy13OZMjhjbpO07OV8U1QZWA
- /xLlSKxKQJgFi+/TEUzaccwercU33iCjpHUxxH/+FVoABKBF3jC2u0rrFcYTCHHel8WJ
- UfRWkHT7kpOc+brmgYfDkdFQmlUN0zzoYx1mIj+yxxe0NTp5iBu1TYNfUOdQy8dPT6cG
- sIzHt8B1ex/gJ+T7H66OOyQfdCfPLkHuodg5aoGKUJ+MvzaFqOC6mmRl38PSYLuo9yBo
- IZjQ==
+ bh=Q5X857c406PjEoUmuuZPiFDUO0HRHEIsdMuU6YoGIyQ=;
+ b=shso2UGhfc7kki9Z99VWcOt43OZ9srLo2Vx5G7zdGUG/OoPzyVzSDKvMY8lvXOvvi3
+ AsszndVQAufl8DUeqwGvp4lWrlR4jG5QHoDfSYWx89FHt5AP/OxWoxiEzjHGLBNfwAoq
+ BhciEuBZqNFdkJYWX0E7lu8FIvsG3oBWbql1L0RapxONinnyzfL/+27Pj9DEUtV0sTu7
+ ZYBVv7qLuKCAqxEpee0Wb54i9f5AprwxKhvGPm3sE8Kc7fmzqkHMdJiYZuM0vc0Rtcdb
+ 3B/agfIXsVBruBPowZrK4F9+MTioE9k6xle8z7hfSCZvwRHF4C8MeroArJz0DpRjQQtw
+ Pdxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2V2S80wotdeAASvMC6tzZcrOyqH5+hbcwUsfTJujMGl//TSfk5Lsqu1uPqwOLMnEYct3E8vDPuOmq@nongnu.org
-X-Gm-Message-State: AOJu0YxumHqgbvn+jUWd0dENqJUWCNbWI4homW06h03dqqlClNsYhIiM
- fDqIYjW//27U4mccYsGPfCfei15HKhVTUHgUjndC0eyV7Y8kjnzKtPRfd+Efo5qkFqAoN+GZ8Jp
- L2pEVZUltClH99u7hHW7G7PSz60k=
-X-Gm-Gg: ASbGnct6GsubC8UEFwWNo1II7D19RYnR5Eu/WmAAIGG+FW4NDx9s5GP4cgLvEPX2XxE
- fD34JkC0cmJDUrOpquq3t7XzUD+v13x4xJoeh7QCxlIk5L+yye3sLKc8a7XgwHUA1VWX5+D3FAQ
- cYYKYbXDk/GdEKHRGa9vSJxBckfgIEKmr+J/Ll
-X-Google-Smtp-Source: AGHT+IEIlzLY1jPpx41Sz6a+tGKmX93ZAh/HuO2Wb1ePt2xiv4nevjHSBtt47jyRZ/bDmruuUHuNZkb0JCJ6DQ+jazk=
-X-Received: by 2002:a05:6102:32d3:b0:4bb:d7f0:6e7d with SMTP id
- ada2fe7eead31-4bfc01c63c8mr4548142137.25.1740367999738; Sun, 23 Feb 2025
- 19:33:19 -0800 (PST)
+ AJvYcCV0lUk9OB8U7rCUj9a6aSf4owsxUyrAgp03WFUyrmWhdlt/LILed/jE14HdQUuY0jeUcHwHbUHjSczF@nongnu.org
+X-Gm-Message-State: AOJu0YwcVESnqkHJV0VFEqu2qEMZ6TGs0oMhoNmyGCrS6rI/rmhGYeKB
+ tu/wjPjn1Qcq8HDNup/bZDK5ENgeAzrWrB+ftmB6F9tk3lBVXWxL95vOpStAVu/XggawNtDaM+p
+ HUeQJjNzt4M5Fnaokr4I0Xl4g7X8=
+X-Gm-Gg: ASbGncs2VJKMACoaMC1z9uDKtLpCc+FPisMdnsLRO5CvRndJwX7wJq5QBlkbvnxNv16
+ 7knESi08k5mZPQEQKQJiDDhm9ZzPXFCrAQkhnum6uYpf1/icFuReL83r9ZY4q98p0AySsy6QzNy
+ U38pDH0Hb9Oy9/gGNDPbQLPlGQEO9C4iMe46bq
+X-Google-Smtp-Source: AGHT+IGiIKRK042rf+DgzcUv4/PmhKdA0Vqvrvf+f6EROVW2S5uiT5scnho9W9JGt4R1rCjfHR40oEqLh07s1Z0Q9Nc=
+X-Received: by 2002:a05:6122:3903:b0:520:3465:7302 with SMTP id
+ 71dfb90a1353d-521ee2a27c3mr5701441e0c.5.1740368028417; Sun, 23 Feb 2025
+ 19:33:48 -0800 (PST)
 MIME-Version: 1.0
 References: <20241205133003.184581-1-dbarboza@ventanamicro.com>
- <20241205133003.184581-10-dbarboza@ventanamicro.com>
-In-Reply-To: <20241205133003.184581-10-dbarboza@ventanamicro.com>
+ <20241205133003.184581-11-dbarboza@ventanamicro.com>
+In-Reply-To: <20241205133003.184581-11-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 13:32:53 +1000
-X-Gm-Features: AWEUYZmuXyTXpgXSz9y2RZnFTX5yuDE0PfYQkBjoAS7EOmTk6Su_xrgWx34t0fA
-Message-ID: <CAKmqyKO7OL5N7HHLFPPP1OQMMvF6KjP3ftPUNnoqi7ndWgXroQ@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 09/11] hw/riscv/riscv-iommu.c: add
- RISCV_IOMMU_CAP_HPM cap
+Date: Mon, 24 Feb 2025 13:33:22 +1000
+X-Gm-Features: AWEUYZkAN8sHGbWusL5tozgLhsZHWbe9h_pBsyRtdyuyweg77AYp1yzIzn_EQRM
+Message-ID: <CAKmqyKMfvz1SgtKE4YY8JGmN1JdCW2zQJj8eQtFD0Gdr9Cm6nw@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 10/11] hw/riscv: add IOMMU HPM trace events
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, Tomasz Jeznach <tjeznach@rivosinc.com>
+ palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,16 +100,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Dec 5, 2024 at 11:34=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+> Add a handful of trace events to allow for an easier time debugging the
+> HPM feature.
 >
-> Now that we have every piece in place we can advertise CAP_HTM to
-> software, allowing any HPM aware driver to make use of the counters.
->
-> HPM is enabled/disabled via the 'hpm-counters' attribute. Default value
-> is 31, max value is also 31. Setting it to zero will disable HPM
-> support.
->
-> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
@@ -118,52 +110,90 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+>  hw/riscv/riscv-iommu-hpm.c | 10 ++++++++++
+>  hw/riscv/trace-events      |  5 +++++
+>  2 files changed, 15 insertions(+)
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 83cd529844..7df40900b0 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2256,6 +2256,15 @@ static void riscv_iommu_realize(DeviceState *dev, =
-Error **errp)
->                    RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
+> diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
+> index 5518c287a5..c5034bff79 100644
+> --- a/hw/riscv/riscv-iommu-hpm.c
+> +++ b/hw/riscv/riscv-iommu-hpm.c
+> @@ -39,6 +39,8 @@ uint64_t riscv_iommu_hpmcycle_read(RISCVIOMMUState *s)
+>      const uint64_t ctr_prev =3D s->hpmcycle_prev;
+>      const uint64_t ctr_val =3D s->hpmcycle_val;
+>
+> +    trace_riscv_iommu_hpm_read(cycle, inhibit, ctr_prev, ctr_val);
+> +
+>      if (get_field(inhibit, RISCV_IOMMU_IOCOUNTINH_CY)) {
+>          /*
+>           * Counter should not increment if inhibit bit is set. We can't =
+really
+> @@ -61,6 +63,8 @@ static void hpm_incr_ctr(RISCVIOMMUState *s, uint32_t c=
+tr_idx)
+>      cntr_val =3D ldq_le_p(&s->regs_rw[RISCV_IOMMU_REG_IOHPMCTR_BASE + of=
+f]);
+>      stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_IOHPMCTR_BASE + off], cntr_val =
++ 1);
+>
+> +    trace_riscv_iommu_hpm_incr_ctr(cntr_val);
+> +
+>      /* Handle the overflow scenario. */
+>      if (cntr_val =3D=3D UINT64_MAX) {
+>          /*
+> @@ -244,6 +248,8 @@ void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState =
+*s, bool prev_cy_inh)
+>          return;
 >      }
 >
-> +    if (s->hpm_cntrs > 0) {
-> +        /* Clip number of HPM counters to maximum supported (31). */
-> +        if (s->hpm_cntrs > RISCV_IOMMU_IOCOUNT_NUM) {
-> +            s->hpm_cntrs =3D RISCV_IOMMU_IOCOUNT_NUM;
-> +        }
-> +        /* Enable hardware performance monitor interface */
-> +        s->cap |=3D RISCV_IOMMU_CAP_HPM;
-> +    }
+> +    trace_riscv_iommu_hpm_iocntinh_cy(prev_cy_inh);
 > +
->      /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrou=
-gh) */
->      s->ddtp =3D set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
->                          RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MOD=
-E_BARE);
-> @@ -2303,6 +2312,18 @@ static void riscv_iommu_realize(DeviceState *dev, =
-Error **errp)
->              RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
+>      if (!(inhibit & RISCV_IOMMU_IOCOUNTINH_CY)) {
+>          /*
+>           * Cycle counter is enabled. Just start the timer again and upda=
+te
+> @@ -268,6 +274,8 @@ void riscv_iommu_process_hpmcycle_write(RISCVIOMMUSta=
+te *s)
+>      const uint64_t val =3D riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_IOHP=
+MCYCLES);
+>      const uint32_t ovf =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_IOCO=
+UNTOVF);
+>
+> +    trace_riscv_iommu_hpm_cycle_write(ovf, val);
+> +
+>      /*
+>       * Clear OF bit in IOCNTOVF if it's being cleared in IOHPMCYCLES reg=
+ister.
+>       */
+> @@ -352,6 +360,8 @@ void riscv_iommu_process_hpmevt_write(RISCVIOMMUState=
+ *s, uint32_t evt_reg)
+>          return;
 >      }
 >
-> +    /* If HPM registers are enabled. */
-> +    if (s->cap & RISCV_IOMMU_CAP_HPM) {
-> +        /* +1 for cycle counter bit. */
-> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_IOCOUNTINH],
-> +                 ~((2 << s->hpm_cntrs) - 1));
-> +        stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_IOHPMCYCLES], 0);
-> +        memset(&s->regs_ro[RISCV_IOMMU_REG_IOHPMCTR_BASE],
-> +               0x00, s->hpm_cntrs * 8);
-> +        memset(&s->regs_ro[RISCV_IOMMU_REG_IOHPMEVT_BASE],
-> +               0x00, s->hpm_cntrs * 8);
-> +    }
+> +    trace_riscv_iommu_hpm_evt_write(ctr_idx, ovf, val);
 > +
->      /* Memory region for downstream access, if specified. */
->      if (s->target_mr) {
->          s->target_as =3D g_new0(AddressSpace, 1);
+>      /* Clear OF bit in IOCNTOVF if it's being cleared in IOHPMEVT regist=
+er. */
+>      if (get_field(ovf, BIT(ctr_idx + 1)) &&
+>          !get_field(val, RISCV_IOMMU_IOHPMEVT_OF)) {
+> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+> index aaa2c0eb94..846f5f19c7 100644
+> --- a/hw/riscv/trace-events
+> +++ b/hw/riscv/trace-events
+> @@ -19,3 +19,8 @@ riscv_iommu_sys_irq_sent(uint32_t vector) "IRQ sent to =
+vector %u"
+>  riscv_iommu_sys_msi_sent(uint32_t vector, uint64_t msi_addr, uint32_t ms=
+i_data, uint32_t result) "MSI sent to vector %u msi_addr 0x%lx msi_data 0x%=
+x result %u"
+>  riscv_iommu_sys_reset_hold(int reset_type) "reset type %d"
+>  riscv_iommu_pci_reset_hold(int reset_type) "reset type %d"
+> +riscv_iommu_hpm_read(uint64_t cycle, uint32_t inhibit, uint64_t ctr_prev=
+, uint64_t ctr_val) "cycle 0x%lx inhibit 0x%x ctr_prev 0x%lx ctr_val 0x%lx"
+> +riscv_iommu_hpm_incr_ctr(uint64_t cntr_val) "cntr_val 0x%lx"
+> +riscv_iommu_hpm_iocntinh_cy(bool prev_cy_inh) "prev_cy_inh %d"
+> +riscv_iommu_hpm_cycle_write(uint32_t ovf, uint64_t val) "ovf 0x%x val 0x=
+%lx"
+> +riscv_iommu_hpm_evt_write(uint32_t ctr_idx, uint32_t ovf, uint64_t val) =
+"ctr_idx 0x%x ovf 0x%x val 0x%lx"
 > --
 > 2.47.1
 >
