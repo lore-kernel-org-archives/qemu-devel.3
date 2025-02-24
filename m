@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2FCAC021B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A648AC021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 04:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmPkQ-0005JL-0Q; Sun, 23 Feb 2025 23:07:15 -0500
+	id 1tmPnw-0007WY-Bf; Sun, 23 Feb 2025 23:10:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPkM-0005Iz-7q
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:07:10 -0500
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ id 1tmPnu-0007Vt-AX
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:10:50 -0500
+Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tmPkK-0008LU-LI
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:07:09 -0500
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-4be55c93be1so793780137.0
- for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 20:07:08 -0800 (PST)
+ id 1tmPns-0000QL-Ky
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 23:10:50 -0500
+Received: by mail-vs1-xe2c.google.com with SMTP id
+ ada2fe7eead31-4be7f114996so2956013137.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Feb 2025 20:10:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740370027; x=1740974827; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740370246; x=1740975046; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9nZVENxUSm4i5rjCa09MLdiVG5ZNPpYXlxpeT7y3A4U=;
- b=ci6XGyf1MJxANIULpIWf1wygJIlRX2de5nDSN3/hP74spdfinn7dhhhYPCKQJNXlhr
- rwL5oOxxdQdDwNJi6S3X94XYro4Awrh4T24HH3LScIDA4dK7o7FSrqhmQnATln0rfVec
- exchXzX1YFpX6y8rXUkGT/Vtk6SKIi6LN+ECB19AmQIMr/rxmbR/VlRHMzY8vxlXUN0G
- 9e2r9vWpfyydlmoQCMUdNtQCozrMBIzwO1v86FYiPvqETVZtyBlMfGQO9OAuQxeN4bin
- 1cOadZEdC6PAge77B4MZYIy3tUPXn6iM1AgqfDK+YTQCy2MZarbJ5geiLrbMmOD5aBjZ
- dh8g==
+ bh=auvf4KVMx3qO117Ha6bPtSOZHjTaTYtORQk5sx9rNo8=;
+ b=DxBwSVMrA6tynrMRamIPagROIc8oiHjkAyWM5FB4cnV2CT4KsB1MBC9PL5Yu9sMchJ
+ +GVfmNC0D0lUQ8xDvAfNXCChSutl5nTYri2Y5ONTgfL7lIwJpP1wZB4jXrQHTtRU9RtT
+ wUGd9db4YTZ+haDhxlJqhwcKV092BlcMcYlrEJZSWnPQvSdQbF/JCGsLb5wWvYuExsCC
+ rnREpT5L36KLU+glSnER8NozanBU0urGedgbgJM5K5QgXLWc/iObycmvltPTor6XXVRr
+ PzQGmi1nlLFqrFokIiUIu4ZZkXl4AUsMuwq+etocUACNSu2c/ISKrOF1kfKcTSiuGUjm
+ SfIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740370027; x=1740974827;
+ d=1e100.net; s=20230601; t=1740370246; x=1740975046;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9nZVENxUSm4i5rjCa09MLdiVG5ZNPpYXlxpeT7y3A4U=;
- b=gKN1F84k13WFRNnow1a4+hcWv6RdJUSPYlmtSXHD+eyFfopS2Hs64ewy0e1+rTJgX0
- W7HQQY/y+aamWUKXj1qQ2S8Bu5LwL9fsHnwQ0fYhQZQmti/L1SsQNNN5O/eUyHY4TrhC
- spGwcnpSuC/MZS0bnoht60oCy7i+wvUZ1dMVe/qwrs6TbgekjJjOAC7vUTjTCr/9JnEN
- T6++oLEeAkG9VZhhLviZB0EzvL//CGU8KZYRGZh8IIWz22ZqVrzfmd7RYSbqNBhmH11w
- vEH0m3YybzIRX9VIKQPzSxa5QCaaok9UvjqXZ5EC1uWhuFpsLNaX4AvCKDPZqSt/prHS
- BrMw==
-X-Gm-Message-State: AOJu0YxfQIx6VlEIdurT15tIqRSipVod7P+c2yhH3lblVMCZ4uCulE08
- 978tpiaymf06fpKSFeZZ0YQZVX1ZhuWMPplfWtzrqaw1Ivcm2ZRqAL3zf/20vvXn2meIfAmbx+m
- C6kGJmQThmC6/1kL6nrdhRXXYuCs=
-X-Gm-Gg: ASbGnctvdYRfetmwBMxk7sVwtD8KOnlC0nJq2j9+pMb/R4EiIr2YwiVMaQMcZzhPa1U
- XuYYCaRahlOHxnlxNhWeWhR3IwHSDSyw/G703ACg6ixKB0S+5ArCTthxKoVGggNP4QhmxBPULfh
- aLSEWkkz3sNMKfOod+sQnIFWx8EIyJYzZwfVl5
-X-Google-Smtp-Source: AGHT+IFkbEl1dxEgcVCBV/vTt6uEN3nGXKz8ONmp/te1z6cuafnOOtePxyHzFDtvE9SLW3gFsn3/AOE6mmEDdiAS2dM=
-X-Received: by 2002:a05:6102:3e04:b0:4bb:baa0:371d with SMTP id
- ada2fe7eead31-4bfc022c858mr7147042137.24.1740370027258; Sun, 23 Feb 2025
- 20:07:07 -0800 (PST)
+ bh=auvf4KVMx3qO117Ha6bPtSOZHjTaTYtORQk5sx9rNo8=;
+ b=n8ko60K/Dv3vmuMqnEndayLqTuu8XzX3X6CgAD93hr6lxz3mY1T0PYDafHSvvzIWYH
+ VWZ63BwZhs8z3JwluCkiGs3BClFRQHKSYptEeW+Js0euygv6UrcadglRQdATNMbLGu2w
+ Y45pOiSzZ7+0mLB2JRnGZFYGRb4ZJYZKrCAgU4paHT4wgsnRwPABMCGyXlNMAuqZRX39
+ JwCn+YRSaDdWUhxHhpgEGoWDfwJ8i3yCowA7hKli6PKiypLoEbegMxGQj79d+0KZiUx7
+ q2zB9HBhoB35Qi0eExcN7P677KAVmTb//R2hFlmoKRjCN4vpC1JyQ0tUwXlOJrfg9e/6
+ Xz6w==
+X-Gm-Message-State: AOJu0YwA22yBhJiFs2ijuTCw9PTNhMguI4TUzPwyDAWOn0Vx9iy5lS8Y
+ yFKb8dnpS0eMdV66oQNXKNtG6DU4GEJOAaWuXOEUtsJsmxfMhlNp3wlY5kxEb1hzsgavtKYQQsm
+ Lkm6E6eH3oDmMbeM09K7Y1+tpErw=
+X-Gm-Gg: ASbGncs97a8+HPzxIr+mGhHJQ9f/hjZdMraXjno2HfD3+9EVSYoRX9ZJSbBsdc5bKja
+ PqS/HHHSyObxjxEqEI4troZAETZ0RsJp9kEYSKRxOR3sczABuSsI0MxXAr0groABNyf6ljty286
+ AmmFaoMVlaQaN67Rb4zFcIGAlPW3eGtG1AAtXH
+X-Google-Smtp-Source: AGHT+IFfXDv/nbREyo6QAC+2yFRSeltnH84lcuwLyVQniPKTw11bcZ9CA+72w5d0MGs9TClJCTovzuXbPrZ1rAucLTU=
+X-Received: by 2002:a05:6102:50ab:b0:4bb:d394:46d7 with SMTP id
+ ada2fe7eead31-4bfc0021756mr5089987137.6.1740370246082; Sun, 23 Feb 2025
+ 20:10:46 -0800 (PST)
 MIME-Version: 1.0
-References: <tencent_308D5C2C7DFE0CDC38AD1906113460287F05@qq.com>
-In-Reply-To: <tencent_308D5C2C7DFE0CDC38AD1906113460287F05@qq.com>
+References: <20250202-riscv-sa-restorer-v1-1-6f4bf814a1dd@t-8ch.de>
+In-Reply-To: <20250202-riscv-sa-restorer-v1-1-6f4bf814a1dd@t-8ch.de>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Feb 2025 14:06:40 +1000
-X-Gm-Features: AWEUYZmILDWuvDYQyxsmvx8cb3umx0SbROZNXtIXfddc86COYflyKNRkIWYj69Q
-Message-ID: <CAKmqyKPoXWewA7f+b_QOCvaSdpkR+gCchikkytMUcTTuwnVR3A@mail.gmail.com>
-Subject: Re: Perf in QEMU
-To: =?UTF-8?B?6JOd6Imy55qE5qKm5oOz?= <1058183524@qq.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
+Date: Mon, 24 Feb 2025 14:10:19 +1000
+X-Gm-Features: AWEUYZkNfY_NEx1ehGVcCPjSDLg71hRHrRGBEGboqjrjypNR4TKkzbK1QBt5sVk
+Message-ID: <CAKmqyKMeK8uAdkL+DNWODMnSiBMUQh_jkwe5ryn=q1pqZmnHMA@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/riscv: Disable unsupported SA_RESTORER
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,40 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 18, 2025 at 11:56=E2=80=AFPM =E8=93=9D=E8=89=B2=E7=9A=84=E6=A2=
-=A6=E6=83=B3 <1058183524@qq.com> wrote:
+On Mon, Feb 3, 2025 at 8:58=E2=80=AFAM Thomas Wei=C3=9Fschuh <thomas@t-8ch.=
+de> wrote:
 >
-> Hello!
+> Linux on riscv does not support SA_RESTORER.
+> Currently QEMU thinks there is a field 'sa_restorer' in the middle of
+> 'struct sigaction' which does not actually exist.
+> This leads to corrupted data and out-of-bounds accesses.
 >
->     I am a graduate student currently studying in school. Recently, I use=
-d QEMU 9.0.2 to create virtual machines with ARM, x86, and RISC-V architect=
-ures for experiments. During the process, I found that the =E2=80=98perf st=
-at=E2=80=99 command does not support the collection of certain metrics, suc=
-h as: instructions, cache-misses, cache-references, etc. I am unsure whethe=
-r this issue is due to my operations or if QEMU itself does not support the=
-se metrics.
+> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
 
-There are a range of different pieces that need to be in place to
-support perf. From architecture support to kernel support. You will
-need to investigate each architecture to see what is supported in QEMU
-and the guest software that you are running. I would expect
-instruction counts to work on the major architectures though. But that
-will be up to you to dig into to see what is supported.
+Thanks!
 
-QEMU itself doesn't model caches and the instruction count (if
-supported for the architecture in QEMU) is not going to be exact. You
-can use a TCG plugin to model a cache [1] though if that's something
-you need.
-
-1: https://www.qemu.org/2021/08/19/tcg-cache-modelling-plugin/
+Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+>  linux-user/riscv/target_signal.h | 1 +
+>  1 file changed, 1 insertion(+)
 >
->     Therefore, I would like to ask you whether QEMU virtual machines supp=
-ort the collection of the above metrics.
+> diff --git a/linux-user/riscv/target_signal.h b/linux-user/riscv/target_s=
+ignal.h
+> index 6c0470f0bc82c6330ce50cb662f2039cf1fab288..258945770b674c0b6b66a9465=
+9d9c93fbabffdfb 100644
+> --- a/linux-user/riscv/target_signal.h
+> +++ b/linux-user/riscv/target_signal.h
+> @@ -4,5 +4,6 @@
+>  #include "../generic/signal.h"
 >
->     I apologize for bothering you, and I hope you will be able to reply a=
-t your convenience. Thank you very much!
+>  #define TARGET_ARCH_HAS_SIGTRAMP_PAGE 1
+> +#undef TARGET_SA_RESTORER
+>
+>  #endif /* RISCV_TARGET_SIGNAL_H */
+>
+> ---
+> base-commit: 6fccaa2fba391815308a746d68f7fa197bc93586
+> change-id: 20250202-riscv-sa-restorer-edd3dfa7790f
+>
+> Best regards,
+> --
+> Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
+>
 >
 
