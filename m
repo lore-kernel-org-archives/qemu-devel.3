@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E03DC021A6
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 11:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A4DC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 11:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmWef-0006Jj-5b; Mon, 24 Feb 2025 06:29:45 -0500
+	id 1tmWr7-0000i1-KQ; Mon, 24 Feb 2025 06:42:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tmWeY-0006IC-FJ
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 06:29:39 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tmWr6-0000hm-ER
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 06:42:36 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tmWeW-0003mg-0r
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 06:29:37 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-220e6028214so88970395ad.0
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 03:29:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tmWr4-0006eK-FW
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 06:42:36 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5e04064af07so6268219a12.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 03:42:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1740396573; x=1741001373; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gO1FC/XjfqWm8fMqy2gYHJk1MuQi7qrZwpmSAc2t9/g=;
- b=PhkCbTT0hrj6UaKa62Qs2vFdbmhU8UNBsg+M648AL+VSVrThvKuvDf+R+j2fkaZ8BB
- Zbv4EsCL4nIq267WRmPUV3lR3VZVnhCNEP2XW0cR/zBD0q3i1/IptoadJ9cCWfU2j+05
- 8KrUrbtYLtllDEt2inNFdvQ6FCCloq2jSwvfhQlqTG20TjvKkCUpOCgmj07RX/0zsrpA
- noRMhp2nzV/JhNjfAQBR6XNCPMnUSUQxw4hIF9C+jRl13dUhInsMHcUReYKl6QFiKvQH
- lnwcIalt/EjWMeJWgK9NBHzOwXML1ExSnNJShS3uuhUi2Qy+TNpNLTPD7eXDFDYyx5bn
- FJPw==
+ d=linaro.org; s=google; t=1740397352; x=1741002152; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2Xi3pkRBFCTosNuAKZH42pnlN0B5kg+sQvAEiQvZnDs=;
+ b=y/AZSPNwJHvLjxgyfJs2LK1AelWkattGTBrAmgWM3yin+L8g4HNxhS9q8MF9t76vRo
+ YIMVjp7vnrOsm4X3k4GducifRV2BcMrFwh0HT1dD2K58L3TujYZPT8it8uID+8CKLbm4
+ +7q9Z/GZpmV57xrVsvSuY8drYkesWakSxziokFPX4A0Go//j3ENlxNJ6vMgVKjBs7M8r
+ luPahu/8Aa7AdBBtAfdSHv8jT5jgh4XH6wTWMGs81peMkjY33mIkcG6f+uVjmmY71SHL
+ 2WxBY+dF5RWW5vF+w/jN2KAN0AFgdgn0ElqSWRjagwPL9mUOn2n0LQQXSXPqWRyhOgSX
+ OSvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740396573; x=1741001373;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gO1FC/XjfqWm8fMqy2gYHJk1MuQi7qrZwpmSAc2t9/g=;
- b=OqrAgta04pOdpCJLYCnZaImxGZmFeIO7LBL4LFhlW1gUnlUq7Oh8MnyB/fzDs8R0wr
- B4i2D4tT2tOQl+z4OCZT1Rzk+KjV3+Vvvpp4oVPU/mxVObH4B9k9bJe3Zp5JFQskGkRG
- rNVGPPQewiGecyvNpCea9uMRHJj9xfkbrMpm5GmXjZ2re7QXg77fbGwvq3YTtd1YlDhI
- 5qRkbdNykMVpTzlYCm5RM8QTXDgVaGlnxtUKCsCXMq1CmlIsvmOHCBQfzeO6GDelTFLI
- 4z6TPoaW3vb2DiMiU4bi5dwTuI8jiadQIuVqFDjFNAt+Prux4ZhaaBqC+ymU/YDcn6DH
- dUOQ==
-X-Gm-Message-State: AOJu0Yz0gOpnSLqiBrrBXiiFo6ssyywWb+AQFMHUNm2Mp00ehYmSG34E
- onRYs7kpJjLfFkt6VtlCK69A1nBnO957Nf0AFoM+mBbZFs9BfOU6xztBSBVdjyM=
-X-Gm-Gg: ASbGncvDI32aGR+K/uWwA9gtOJAOsJjSgsloCyx/fA+eSPylvmscqPF2QXfePEmjsC7
- jTS4LnvZ+2VLWxCBcQr3MwSPMG8e87iiyq2E1hjCyJKUBLaptTcMWBT6P58/VfG4zYp84PpWNby
- LaQpqzqmza47YVh4AI4eZMfBHTnzEqAuZUfLHAe6rUxMn/1M3dO1esq8MYGjkMsdHHNFrN1mzqi
- 58GSs9Vw5duX2osRBvCcJsRpx2Kp4SHBVWlFmEunexbrJatski2rqo3tHi/ccXaMNCzjeAcMCYz
- d++L5/n/YWzSCaBT2c45rVYaTR+Dmsne6XyGAGvmbA==
-X-Google-Smtp-Source: AGHT+IFV7gjwinjTt/igpNwGZZUDVDDlgXNQP3O3hjsYoNC/vx08O2Ds/fZcifvy1bkC7aFdzoBCcA==
-X-Received: by 2002:aa7:8889:0:b0:730:98ef:30b5 with SMTP id
- d2e1a72fcca58-73426c8d4d0mr18740784b3a.5.1740396571616; 
- Mon, 24 Feb 2025 03:29:31 -0800 (PST)
-Received: from [192.168.68.110] ([177.170.227.219])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7327eb20b98sm14631049b3a.147.2025.02.24.03.29.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Feb 2025 03:29:31 -0800 (PST)
-Message-ID: <b04d1e5a-36f6-4c54-8bc7-134c79f0addb@ventanamicro.com>
-Date: Mon, 24 Feb 2025 08:29:27 -0300
+ d=1e100.net; s=20230601; t=1740397352; x=1741002152;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2Xi3pkRBFCTosNuAKZH42pnlN0B5kg+sQvAEiQvZnDs=;
+ b=vZcMZ/tFaP+YLNTZs6Bdxh67ddBSas43cdpMArUlqwGAQr09k6vGgBrMPWgLK8AAur
+ DMXwKGWsQJPk4EvLGz1K9+26kDcolt9Ynw1FuMjGv2J02tLSpsVrRHPsrlgZssPKsNkE
+ 6Q4TN6Ol9Az3rCqOS6Vn7NcAkg9G5KHM5wlERU1p0U8eN0daclQdeqEdiq/s8bdomtkf
+ n6QsBklyVI8hSbxnWGlEslpYSPBIH4Lw2+7Z/4v8NLKdFknXiW41/MSkwx7PEOsOnp0v
+ 9MCPodzV/otZ7Ft8ibtXATewfLdOeX5niA31KYEdfSLmmRICEYgVAyMakrXBLvz4VAN1
+ VbXQ==
+X-Gm-Message-State: AOJu0Yygz/9yeSO71NgQrS4wguNLF07tRgyTw7ht32QqQab6A6Z9XPD9
+ gXn9MJIt9zOnHx5xb7ncOdAfsMLZqV8o1dw1TppjQ9+MAMb1HcwUm8jartbypKi/atqrx0fMI+8
+ lqbs=
+X-Gm-Gg: ASbGncsrTdfSvydjY6dAdJ1uIujwT58y8/ErmDCAV6Emp3YpQxZ3MfUD2/JxkK2TxP3
+ bza6C8NsdBpdw8SMIJ1OUvxghAD75fcLh8lKgcDMDk7Ix63cRAa0ZvBeR7Z7cMNGGnRNmtIKkBP
+ 2ID6kOyAMvbPr2C/LR8CGC6niT92yIZJghMcnj2EJYEYG0CI083AJDPdNXBH0FdG2Tc8lvYwEIV
+ E4Hl6kFG9vcM7QNw1aZ57m/R5S8GtCYMFEqoFvcx3+S4MRa4t6/9B4NlUbtBpvAw/WS8sWZAR4X
+ W8aJdgEF15q0Pu/T/Vkaf0jWQXbD
+X-Google-Smtp-Source: AGHT+IHcUbXJcbJLku6VvAhcrti8b6QMdZkRZ1KyFBodR/Kiy/Tvzm7xkCjcXoWTjCA9ziM6UissqQ==
+X-Received: by 2002:a17:907:7284:b0:abb:6e07:3714 with SMTP id
+ a640c23a62f3a-abc099d60e2mr1468126966b.10.1740397352383; 
+ Mon, 24 Feb 2025 03:42:32 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-abaa663210asm1937816266b.117.2025.02.24.03.42.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Feb 2025 03:42:31 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 966CC5F77B;
+ Mon, 24 Feb 2025 11:42:30 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-A?=
+ =?utf-8?Q?ndr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [RFC PATCH] hw/display: add blocklist for known bad drivers
+In-Reply-To: <Z7xTDYS7SzYyNvGo@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 24 Feb 2025 11:07:57 +0000")
+References: <20250221160101.2318357-1-alex.bennee@linaro.org>
+ <Z7xFQ4bHwBEo8aQw@redhat.com> <87eczn8vcj.fsf@draig.linaro.org>
+ <Z7xTDYS7SzYyNvGo@redhat.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Mon, 24 Feb 2025 11:42:30 +0000
+Message-ID: <875xkz8t7d.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/riscv/cpu: ignore TCG init for KVM CPUs in
- reset_hold
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com
-References: <20250220161313.127376-1-dbarboza@ventanamicro.com>
- <20250220161313.127376-2-dbarboza@ventanamicro.com>
- <CAFEAcA8u8C2HTRjOBReSQ7oN7L248034VrfTHYgHCxBPy0gwDg@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAFEAcA8u8C2HTRjOBReSQ7oN7L248034VrfTHYgHCxBPy0gwDg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,124 +111,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
+> On Mon, Feb 24, 2025 at 10:56:12AM +0000, Alex Benn=C3=A9e wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Fri, Feb 21, 2025 at 04:01:01PM +0000, Alex Benn=C3=A9e wrote:
+>> >> While running the new GPU tests it was noted that the proprietary
+>> >> nVidia driver barfed when run under the sanitiser:
+>> >>=20
+>> >>   2025-02-20 11:13:08,226: [11:13:07.782] Output 'headless' attempts
+>> >>   EOTF mode SDR and colorimetry mode default.
+>> >>   2025-02-20 11:13:08,227: [11:13:07.784] Output 'headless' using col=
+or
+>> >>   profile: stock sRGB color profile
+>> >>=20
+>> >>   and that's the last thing it outputs.
+>> >>=20
+>> >>   The sanitizer reports that when the framework sends the SIGTERM
+>> >>   because of the timeout we get a write to a NULL pointer (but
+>> >>   interesting not this time in an atexit callback):
+>> >>=20
+>> >>   UndefinedBehaviorSanitizer:DEADLYSIGNAL
+>> >>   =3D=3D471863=3D=3DERROR: UndefinedBehaviorSanitizer: SEGV on unknow=
+n address
+>> >>   0x000000000000 (pc 0x7a18ceaafe80 bp 0x000000000000 sp 0x7ffe8e3ff6=
+d0
+>> >>   T471863)
+>> >>   =3D=3D471863=3D=3DThe signal is caused by a WRITE memory access.
+>> >>   =3D=3D471863=3D=3DHint: address points to the zero page.
+>> >>       #0 0x7a18ceaafe80
+>> >>   (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x16afe80)
+>> >>   (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>> >>       #1 0x7a18ce9e72c0
+>> >>   (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15e72c0)
+>> >>   (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>> >>       #2 0x7a18ce9f11bb
+>> >>   (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x15f11bb)
+>> >>   (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>> >>       #3 0x7a18ce6dc9d1
+>> >>   (/lib/x86_64-linux-gnu/libnvidia-eglcore.so.535.183.01+0x12dc9d1)
+>> >>   (BuildId: 24b0d0b90369112e3de888a93eb8d7e00304a6db)
+>> >>       #4 0x7a18e7d15326 in vrend_renderer_create_fence
+>> >>   /usr/src/virglrenderer-1.0.0-1ubuntu2/obj-x86_64-linux-gnu/../src/v=
+rend_renderer.c:10883:26
+>> >>       #5 0x55bfb6621871 in virtio_gpu_virgl_process_cmd
+>> >>=20
+>> >> The #dri-devel channel confirmed:
+>> >>=20
+>> >>   <digetx> stsquad: nv driver is known to not work with venus, don't =
+use
+>> >>       it for testing
+>> >>=20
+>> >> So lets implement a blocklist to stop users starting a known bad
+>> >> setup.
+>> >
+>> > I don't much like the conceptual idea of blocking usage of QEMU itself
+>> > based on current point-in-time bugs in the host OS driver stack, becau=
+se
+>> > it is making an assertion that all future versions of the driver will
+>> > also be broken and that's not generally valid.
+>> >
+>> > If the user chose to use a dodgy graphics driver, they can deal with
+>> > the consequences of their choice.
+>> >
+>> > Skipping only the functional test, without any qemu-system code changes
+>> > though is more palettable as that's not a hard block on usage.
+>>=20
+>> Well how do you do one without the other? I don't want to always skip the
+>> vulkan testing because some developer setups have broken drivers. Unless
+>> you are suggesting something like:
+>>=20
+>>   -device virtio-vga-gl,hostmem=3D4G,blob=3Don,venus=3Don,ignore-nvidia=
+=3Don
+>>=20
+>> or something like that?
+>
+> I was thinking that test_aarch64_virt_gpu.py would dynamically check
+> the kernel driver and use that in its @skip annotation.
 
-On 2/24/25 6:59 AM, Peter Maydell wrote:
-> On Thu, 20 Feb 2025 at 16:14, Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
->>
->> riscv_cpu_reset_hold() does a lot of TCG-related initializations that
->> aren't relevant for KVM, but nevertheless are impacting the reset state
->> of KVM vcpus.
->>
->> When running a KVM guest, kvm_riscv_reset_vcpu() is called at the end of
->> reset_hold(). At that point env->mstatus is initialized to a non-zero
->> value, and it will be use to write 'sstatus' in the vcpu
->> (kvm_arch_put_registers() then kvm_riscv_put_regs_csr()).
->>
->> Do an early exit in riscv_cpu_reset_hold() if we're running KVM. All the
->> KVM reset procedure will be centered in kvm_riscv_reset_vcpu().
->>
->> While we're at it, remove the kvm_enabled() check in
->> kvm_riscv_reset_vcpu() since it's already being gated in
->> riscv_cpu_reset_hold().
->>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/cpu.c         | 9 +++++----
->>   target/riscv/kvm/kvm-cpu.c | 3 ---
->>   2 files changed, 5 insertions(+), 7 deletions(-)
->>
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index 522d6584e4..8e6e629ec4 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -1050,6 +1050,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->>           mcc->parent_phases.hold(obj, type);
->>       }
->>   #ifndef CONFIG_USER_ONLY
->> +    if (kvm_enabled()) {
->> +        kvm_riscv_reset_vcpu(cpu);
->> +        return;
->> +    }
->> +
->>       env->misa_mxl = mcc->misa_mxl_max;
->>       env->priv = PRV_M;
->>       env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
->> @@ -1146,10 +1151,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->>           env->rnmip = 0;
->>           env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
->>       }
->> -
->> -    if (kvm_enabled()) {
->> -        kvm_riscv_reset_vcpu(cpu);
->> -    }
->>   #endif
->>   }
-> 
-> This looks super odd, from an "I don't know anything about
-> riscv specifics" position. Generally the idea is:
->   * reset in QEMU should reset the CPU state
->   * what a reset CPU looks like doesn't differ between
->     accelerators
->   * when we start the KVM CPU, we copy the state from QEMU
->     to the kernel, and then the kernel's idea of the reset state
->     matches
-> 
-> This patch looks like it's entirely skipping basically
-> all of the QEMU CPU state reset code specifically for KVM.
+If we can make the vulkan-info tool a dependency we could certainly do
+that - otherwise the host-gpu code would need to be built as a command
+line helper.
 
-Not sure I understood what you said here.
+>
+>
+> With regards,
+> Daniel
 
-Without this patch, riscv_cpu_reset_hold() is doing initializations that are TCG
-based, both for user mode and system mode, and in the end is calling the kvm
-specific reset function if we're running KVM. This patch is simply skipping
-all the TCG related reset procedures if we're running KVM. So the patch isn't
-skipping the KVM specific QEMU CPU reset code, it is skipping the TCG specific
-reset code if we're running KVM.
-
-Granted, after applying patches 2 and 3 we could discard this patch because
-now we're resetting all that KVM needs in kvm_reset_vcpu(), but why go
-through the reset steps for TCG if we're going to overwrite them later during
-kvm_reset_vcpu()?
-
-
-> So now you'll have two different pieces of code controlling
-> reset for different accelerators, and the resulting CPU
-> state won't be consistent between them...
-
-That is already the case even without this patch, doesn't it? If we have to call
-a specific kvm reset function during cpu reset_hold then we're already in a point
-where the reset procedure is differing between accelerators. I won't say that
-this is a good design but I don't see it as a problem.
-
-For instance, going to a code you're probably more familiar with, target/arm/cpu.c,
-arm_cpu_reset_hold(), is doing something similar to what riscv_cpu_reset_hold() is
-doing without this patch: a lot of TCG setups are made, then kvm_arm_reset_vcpu() is
-called in the end if kvm_enabled(). kvm_arm_reset_vcpu() then overwrites at least some
-of the TCG specific setup that was done before:
-
-     /* Re-init VCPU so that all registers are set to
-      * their respective reset values.
-      */
-     ret = kvm_arm_vcpu_init(cpu);
-
-kvm_arm_vcpu_init() is doing a KVM_ARM_VCPU_INIT ioctl that will populate the CPU object
-with the kernel specific feature bitmask and so on. Note that this is not copying the TCG
-setup into the kernel, it is in fact doing the opposite.
-
-Note that my intention here isn't to make a case that the ARM KVM cpu doesn't need anything
-that is being done in arm_cpu_reset_hold(). My point here is that KVM and TCG CPUs will have
-different reset setups for some archs. For RISC-V I can say that KVM CPU does not rely on
-anything that the TCG reset code is doing, hence why I sent this patch to make it official.
-
-
-Thanks,
-
-Daniel
-
-> 
-> thanks
-> -- PMM
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
