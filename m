@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E74EC021B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC227C021B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 03:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmPI6-0001Mj-12; Sun, 23 Feb 2025 22:37:58 -0500
+	id 1tmPIo-0001hw-D9; Sun, 23 Feb 2025 22:38:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPI4-0001MO-8E
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:37:56 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPIN-0001Q2-9G
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPI2-0005QL-2m
- for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:37:55 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tmPIK-0005Rr-P6
+ for qemu-devel@nongnu.org; Sun, 23 Feb 2025 22:38:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740368272;
+ s=mimecast20190719; t=1740368290;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/QaQvvkANl4CxJcoZXAetNsesoYPFAQysyASef0azrE=;
- b=KoE69lpQcV7MsyYHrXA7pv2pwSUJVfYYTjqZdVhoYGsRR1uVIw7BuDhphg2nfLI9FspwNg
- r5q30yVM4Ud4Ebe/zS37dbxV100scPam8V3luzlZz3x8ziYc1A10jcCMkIwLQxpdh2U65Q
- FeNZer8E+wepfmxc+LM8p7CilA37xRU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7G6YVAL0iU98F5nK+nS2ppNms52d37aU3+2UhKmOzzI=;
+ b=Hr7j5UAD2LEZ2+hZwT1CbgiM8B++8ryR6OZylZpjhSWvzKfx5s8upSI9xK3T0RJ6BR858r
+ /1z8L5qCu/LSc4ACSUATWgwXwfTIOqVNq3Sm6VTNH5cLaWOn7zv2yI5Dmqpt2SrgedPh/u
+ 7ikMML/XutMygYECDkCwB3z39+ZHiJU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-178-lfUsNUkQN_qsYEyFBMsC5A-1; Sun,
- 23 Feb 2025 22:37:45 -0500
-X-MC-Unique: lfUsNUkQN_qsYEyFBMsC5A-1
-X-Mimecast-MFC-AGG-ID: lfUsNUkQN_qsYEyFBMsC5A_1740368264
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-CjF-6A1pMSGGNL7KsbCRFw-1; Sun,
+ 23 Feb 2025 22:38:06 -0500
+X-MC-Unique: CjF-6A1pMSGGNL7KsbCRFw-1
+X-Mimecast-MFC-AGG-ID: CjF-6A1pMSGGNL7KsbCRFw_1740368285
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7688A196E078; Mon, 24 Feb 2025 03:37:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C66CB18004A7; Mon, 24 Feb 2025 03:38:05 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.88])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8407119560A3; Mon, 24 Feb 2025 03:37:42 +0000 (UTC)
+ id 0192E19560A3; Mon, 24 Feb 2025 03:38:03 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Thomas Huth <thuth@redhat.com>,
@@ -54,12 +55,13 @@ Cc: Michael Roth <michael.roth@amd.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 00/10] qapi: misc testing and doc patches
-Date: Sun, 23 Feb 2025 22:37:31 -0500
-Message-ID: <20250224033741.222749-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 09/10] qapi/source: allow multi-line QAPISourceInfo advancing
+Date: Sun, 23 Feb 2025 22:37:40 -0500
+Message-ID: <20250224033741.222749-10-jsnow@redhat.com>
+In-Reply-To: <20250224033741.222749-1-jsnow@redhat.com>
+References: <20250224033741.222749-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -86,60 +88,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GitLab: https://gitlab.com/jsnow/qemu/-/pipelines/1684045409=0D
-=0D
-This is a series of random qapi and documentation patches;=0D
-=0D
-Patches 1-3: Formalize QAPI python testing (finally ...)=0D
-Patches 4-10: Miscellaneous patches and fixes related to the=0D
-documentation overhaul project; but were standalone enough that they=0D
-could be excised from a fairly lengthy series ...=0D
-=0D
-Markus: I think everything here is suitable for merging, even though=0D
-some of it might lack a little context. The more I pull out of that big=0D
-series, the easier that series will be to review :)=0D
-=0D
-Please stage as much as you feel comfortable doing, you can skip any=0D
-individual patch at your discretion.=0D
-=0D
-John Snow (10):=0D
-  qapi: update pylintrc config=0D
-  python: add qapi static analysis tests=0D
-  qapi: delete un-needed python static analysis configs=0D
-  docs/qapidoc: support header-less freeform sections=0D
-  qapi/parser: adjust info location for doc body section=0D
-  docs/qapidoc: remove example section support=0D
-  qapi: expand tags to all doc sections=0D
-  qapi/schema: add __repr__ to QAPIDoc.Section=0D
-  qapi/source: allow multi-line QAPISourceInfo advancing=0D
-  docs: disambiguate cross-references=0D
-=0D
- docs/devel/codebase.rst        |   6 +-=0D
- docs/glossary.rst              |  10 +--=0D
- docs/sphinx/qapidoc.py         |  18 ++---=0D
- python/tests/qapi-flake8.sh    |   2 +=0D
- python/tests/qapi-isort.sh     |   2 +=0D
- python/tests/qapi-mypy.sh      |   2 +=0D
- python/tests/qapi-pylint.sh    |   4 ++=0D
- scripts/qapi/.flake8           |   3 -=0D
- scripts/qapi/.isort.cfg        |   7 --=0D
- scripts/qapi/mypy.ini          |   4 --=0D
- scripts/qapi/parser.py         | 124 +++++++++++++++++++++++++--------=0D
- scripts/qapi/pylintrc          |   1 +=0D
- scripts/qapi/source.py         |   4 +-=0D
- tests/qapi-schema/doc-good.out |  10 +--=0D
- tests/qapi-schema/test-qapi.py |   2 +-=0D
- 15 files changed, 128 insertions(+), 71 deletions(-)=0D
- create mode 100755 python/tests/qapi-flake8.sh=0D
- create mode 100755 python/tests/qapi-isort.sh=0D
- create mode 100755 python/tests/qapi-mypy.sh=0D
- create mode 100755 python/tests/qapi-pylint.sh=0D
- delete mode 100644 scripts/qapi/.flake8=0D
- delete mode 100644 scripts/qapi/.isort.cfg=0D
- delete mode 100644 scripts/qapi/mypy.ini=0D
-=0D
--- =0D
-2.48.1=0D
-=0D
+This is for the sake of the new rST generator (the "transmogrifier") so
+we can advance multiple lines on occasion while keeping the
+generated<-->source mappings accurate.
+
+next_line now simply takes an optional n parameter which chooses the
+number of lines to advance.
+
+This is used mainly when converting section syntax in free-form
+documentation to more traditional rST section header syntax, which
+does not always line up 1:1 for line counts.
+
+For example:
+
+```
+ ##
+ # = Section     <-- Info is pointing here, "L1"
+ #
+ # Lorem Ipsum
+ ##
+```
+
+would be transformed to rST by the transmogrifier as:
+
+```
+=======        <-- L1
+Section        <-- L1
+=======        <-- L1
+               <-- L2
+Lorem Ipsum    <-- L3
+```
+
+With each line having its own source information credited to different
+source lines; sometimes one line to many.
+
+After consuming the single "Section" line from the source, we want to
+advance the source pointer to the next non-empty line which requires
+jumping by more than one line.
+
+```
+ ##
+ # = Section     <-- Info is pointing here, "L1"
+ #
+ # Lorem Ipsum   <-- We want to jump to here, +2.
+ ##
+```
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/source.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
+index 7b379fdc925..ffdc3f482ac 100644
+--- a/scripts/qapi/source.py
++++ b/scripts/qapi/source.py
+@@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
+         self.defn_meta = meta
+         self.defn_name = name
+ 
+-    def next_line(self: T) -> T:
++    def next_line(self: T, n: int = 1) -> T:
+         info = copy.copy(self)
+-        info.line += 1
++        info.line += n
+         return info
+ 
+     def loc(self) -> str:
+-- 
+2.48.1
 
 
