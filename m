@@ -4,77 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FADC021B8
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 23:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0537C021BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 23:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmhXb-0005tK-Fe; Mon, 24 Feb 2025 18:07:11 -0500
+	id 1tmhXS-0005rQ-CF; Mon, 24 Feb 2025 18:07:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tmhXZ-0005st-Jh
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 18:07:09 -0500
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tmhXR-0005rF-Oh
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 18:07:01 -0500
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tmhXX-0007XL-RS
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 18:07:09 -0500
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-3d2f5a93a32so3989395ab.0
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 15:07:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tmhXN-0007RN-OL
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 18:07:01 -0500
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-854a68f5aeeso100642739f.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 15:06:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1740438423; x=1741043223; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aSH50K2JoZy3b57Ten2+Yq1o4INV7m/qW+7NuVpQc3U=;
- b=T5z1q7rYRDf9Ri3yyVrKGM3ENsCVIE3yBy++VrmqOHXpG+1LzSYnPbc5RDrlXZnn2h
- vKx1DrFYjp6kYOcBE31gIq2DoUvmg0X3fZLe6kxgU5ZmTCGQ6VR6GAexNlKsQm8lZ7Vh
- nAXAmaNC/1CVDck/DaGdW+RJDuXvCZKKeexWI=
+ d=chromium.org; s=google; t=1740438414; x=1741043214; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GMB3uau5/+kFWkDlCkMEF5ozqQcxUKZP6WJbrcIzrkY=;
+ b=QrECNEvjQJAdPSWju/zVBimgk9gkLD55oRwr+oYutCqFLxSQYmVlC7UbdmpjrA9Buu
+ +UgBYpi9Tid62Csir76FF8Rv8CtAi3YwDmZU23eIxOPapfQosofjrVERlIGCZdHE9WEL
+ a+8PoJ1DRhE9H665zzXiqQ1uaCqBGlcegEkiw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740438423; x=1741043223;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aSH50K2JoZy3b57Ten2+Yq1o4INV7m/qW+7NuVpQc3U=;
- b=v5tAg0ut1LbtuUmfQJXghY5VuSHsp9vjJLun1LvPUtX95ZoafJHHOrRVpgdCS3BvUr
- gHDdatXUWgY4cMhN3xK0qoDxqJ2Hg5leka7323YJVyMMD6rP07VMKsEYE6C3LtQVZuaY
- 7e4bskRJ+vyH8B9CksTx/9lwzGelzVI7yhZZqTQ/TlGp1p/ZOg1A3gZrA7pKW0K1b1uk
- tNaJvrNV6QL8PeLLhxXOOzneirxVqny43mDKmqDfJi80iOHIpubG7UwV4b9NWCgOQPWF
- CIMO3my4YUPJ/MUrBgWg3l9xuP1T1Ni7Nt5UD5djcH62pXEZKC2x+iwjdXKBBEGf/Kua
- UjMg==
+ d=1e100.net; s=20230601; t=1740438414; x=1741043214;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GMB3uau5/+kFWkDlCkMEF5ozqQcxUKZP6WJbrcIzrkY=;
+ b=oHTpwKabEXyblEyHl9joC1BLLjVjJKJ//uVovErOVdJ16sSkp/NUVlD3DvttJBX00F
+ geJMg1XNRnPc48Kl7K74cRWBxZCU5373e9EpcF4JqXIcTbl/QM0kxiUAXq1LpCNFxtnh
+ BMQbsGXPJRCWBX0Zm+qnf7jGb0IBLHlG67Qjjv7wFZwBBsnZvTSw7VQljXKc+cq7XwJR
+ /LCJ/8pHkghdltxZ+HvlM5yXEVO2wD5JfZSP6X34hAOSnI3AXNIctJ8ImTN10oCACA4w
+ 98uON9Zx25CEyrnKvz/XnTDmikwHozIfhDjJW29iNGbIDhb/OmlMK53yAQeNMVzXIf3/
+ uikQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYIo2urRsYL1J2fv9dJTl0Q1WYZeODiLl7nZ6Zp9iRRgHZNTiMHUacHqJQRC8hoBBWoA1GLm1+Sbo5@nongnu.org
-X-Gm-Message-State: AOJu0YwGdIKFgVV0iK1OR81Oi5adkCOr8YByy8BYAqJ//tPmebTvdBe+
- KdfSFgw7Dd7QiWCiMrpjUy7elX1qeyOqPsMP3mGFv0RcV+toLHZmziPT3mzOOg==
-X-Gm-Gg: ASbGncs/l4fv0qoqmauAXzEi7Xyo3YEgtrC1CdhBPGskmlAv9xjw41gO6OuItZbRvTy
- cjqGRwrIz3Wx6c4Bb4hdgLdcKTuiwUHCJlQGQ/28Gk1zJNZItv1H2LYLKbOtVFpJrdbXimblSFr
- LM4E8Yx8uiwLR2QAc/oDC+5JwZ479VbHORi7/74mB6rXqcYW11DRiD0UaHqAy4XVn8ZTX1/dInZ
- 6QMcOMCtTx0maUNEFs3CyHwLSH5RQD5IT7X5IqF9lgsTjdgMT7iUtFGIy6ENg6JOOd8tjm0Qh2m
- OJlGnzJ/lJWDiHPWvSyfWA++cg/PkV1GBFWNSRMwiF7BV58v1b7a5JgzuiPiilY=
-X-Google-Smtp-Source: AGHT+IFNct6lnzD/RZAZBeipW8gHFWGG2XuMfCVmS66pkePHPioDGJmUrm5ZiV/XCBnOKBRB9w0pMA==
-X-Received: by 2002:a05:6e02:16cb:b0:3d0:137a:8ca2 with SMTP id
- e9e14a558f8ab-3d2caf0dbeamr173540975ab.22.1740438423559; 
- Mon, 24 Feb 2025 15:07:03 -0800 (PST)
+ AJvYcCUuxDHtnwF61YE0jL3cwSECOM3UfS2LNAb9Q8IFPLDuzbXwVSBya5/hmuhE5iHVHmcALZWldiMzTtFr@nongnu.org
+X-Gm-Message-State: AOJu0YyFeP/5CPBQabQpf+znXyOMH/ocgU9jtCnQUMx2axjzPk74aOHX
+ Y71sdz15FisxGcLxdLXrkY9cCDH/XWgi/uO1oGSK9cDOWe24EqUOXU1rnb10yA==
+X-Gm-Gg: ASbGnctROr7sCDSNrYJfxg8P8SQ+mcxnW/ei+xxMmxHV9kisdCrIrme7E/3i4ZSqXME
+ SOqrDlSmA+2pnKEOELg0Cp1A4j5EwQRvYwkL+sltS/YMfOTbusUJ+wAcA0AFwx+OBqQyq9HCxRA
+ 8VTQsRP2RNlso9eqzwsjapzwlp/xvgLK377lh+sfc+hh4EICaJy/rLt9+ITfdBoXqtAdiFM3M44
+ vjTbmBo80u9sdhG3P5tXvKT5dxIafajLLGRN1jzWsSzeScYv8/kDbNQn/vW+uAmhz/aY10Nrxjx
+ o4qGelDggPokabx6YMebyX1Yhc+2K9YuUJw47X66uZkxdMFVI9Zyz9o4RsApgAM=
+X-Google-Smtp-Source: AGHT+IHpIGWrcnsJO9BFl2zjEsvRK33x7uK8RWiQfnWWiLJVQ1svDrMeNCNCgwnMrUaZmCHSOehEXQ==
+X-Received: by 2002:a05:6e02:1689:b0:3cf:f8de:7662 with SMTP id
+ e9e14a558f8ab-3d3048a66dcmr15021965ab.18.1740438414107; 
+ Mon, 24 Feb 2025 15:06:54 -0800 (PST)
 Received: from chromium.org (c-73-203-119-151.hsd1.co.comcast.net.
  [73.203.119.151]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f04752e026sm113941173.107.2025.02.24.15.07.01
+ 8926c6da1cb9f-4f04752e026sm113941173.107.2025.02.24.15.06.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Feb 2025 15:07:02 -0800 (PST)
+ Mon, 24 Feb 2025 15:06:52 -0800 (PST)
 From: Simon Glass <sjg@chromium.org>
 To: U-Boot Mailing List <u-boot@lists.denx.de>
 Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
+ Andrew Goodbody <andrew.goodbody@linaro.org>,
  Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Angelo Dureghello <angelo@kernel-space.org>,
+ Guillaume La Roque <glaroque@baylibre.com>,
+ Heinrich Schuchardt <xypron.glpk@gmx.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Julien Masson <jmasson@baylibre.com>, Julius Lehmann <lehmanju@devpi.de>,
+ Love Kumar <love.kumar@amd.com>,
+ Marek Vasut <marek.vasut+renesas@mailbox.org>,
+ Martyn Welch <martyn.welch@collabora.com>,
+ Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+ Maximilian Brune <maximilian.brune@9elements.com>,
+ Moritz Fischer <moritzf@google.com>, Nam Cao <namcao@linutronix.de>,
+ Patrick Rudolph <patrick.rudolph@9elements.com>,
+ Philip Oberfichtner <pro@denx.de>,
+ Quentin Schulz <quentin.schulz@cherry.de>,
+ Richard Weinberger <richard@nod.at>, Stephen Warren <swarren@nvidia.com>,
+ Stephen Warren <swarren@wwwdotorg.org>,
+ Sughosh Ganu <sughosh.ganu@linaro.org>,
+ =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
  Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 04/44] x86: qemu: Avoid accessing BSS too early
-Date: Mon, 24 Feb 2025 16:05:53 -0700
-Message-ID: <20250224230640.2665206-5-sjg@chromium.org>
+Subject: [PATCH v3 00/44] x86: Improve operation under QEMU
+Date: Mon, 24 Feb 2025 16:05:49 -0700
+Message-ID: <20250224230640.2665206-1-sjg@chromium.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250224230640.2665206-1-sjg@chromium.org>
-References: <20250224230640.2665206-1-sjg@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=sjg@chromium.org; helo=mail-il1-x133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=sjg@chromium.org; helo=mail-io1-xd33.google.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -97,77 +113,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BSS is placed in DRAM which is actually available early with QEMU. But
-it is cleared by the init sequence, so values stored there are lost.
+U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
+is not perfect.
 
-Move the system-type flag into a function, instead.
+With both builds, executing the VESA ROM causes an intermittent hang, at
+least on some AMD CPUs.
 
-Signed-off-by: Simon Glass <sjg@chromium.org>
----
+With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit)
+is done in a way that works on real hardware but not with QEMU. This
+means that performance is 4-5x slower than it could be, at least on my
+CPU.
 
-(no changes since v1)
+We can work around the first problem by using Bochs, which is anyway a
+better choice than VESA for QEMU. The second can be addressed by using
+the same descriptor across the jump to long mode.
 
- arch/x86/cpu/qemu/qemu.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
 
-diff --git a/arch/x86/cpu/qemu/qemu.c b/arch/x86/cpu/qemu/qemu.c
-index 563f63e2bc8..e846ccd44aa 100644
---- a/arch/x86/cpu/qemu/qemu.c
-+++ b/arch/x86/cpu/qemu/qemu.c
-@@ -15,14 +15,21 @@
- #include <asm/arch/qemu.h>
- #include <asm/u-boot-x86.h>
- 
--static bool i440fx;
--
- #if CONFIG_IS_ENABLED(QFW_PIO)
- U_BOOT_DRVINFO(x86_qfw_pio) = {
- 	.name = "qfw_pio",
- };
- #endif
- 
-+static bool is_i440fx(void)
-+{
-+	u16 device;
-+
-+	pci_read_config16(PCI_BDF(0, 0, 0), PCI_DEVICE_ID, &device);
-+
-+	return device == PCI_DEVICE_ID_INTEL_82441;
-+}
-+
- static void enable_pm_piix(void)
- {
- 	u8 en;
-@@ -50,16 +57,17 @@ static void enable_pm_ich9(void)
- 
- void qemu_chipset_init(void)
- {
--	u16 device, xbcs;
-+	bool i440fx;
-+	u16 xbcs;
- 	int pam, i;
- 
-+	i440fx = is_i440fx();
-+
- 	/*
- 	 * i440FX and Q35 chipset have different PAM register offset, but with
- 	 * the same bitfield layout. Here we determine the offset based on its
- 	 * PCI device ID.
- 	 */
--	pci_read_config16(PCI_BDF(0, 0, 0), PCI_DEVICE_ID, &device);
--	i440fx = (device == PCI_DEVICE_ID_INTEL_82441);
- 	pam = i440fx ? I440FX_PAM : Q35_PAM;
- 
- 	/*
-@@ -123,7 +131,7 @@ int mp_determine_pci_dstirq(int bus, int dev, int func, int pirq)
- {
- 	u8 irq;
- 
--	if (i440fx) {
-+	if (is_i440fx()) {
- 		/*
- 		 * Not like most x86 platforms, the PIRQ[A-D] on PIIX3 are not
- 		 * connected to I/O APIC INTPIN#16-19. Instead they are routed
+In v3 some e820 patches are included to make booting reliable and avoid
+ACPI tables being dropped. Also, several MTTR problems are addressed, to
+support memory sizes above 4GB reliably.
+
+Changes in v3:
+- Always return true from flag_is_changeable_p() on amd64
+- Add new patch with functions to convert between mtrr size and mask
+- Add new patch to update mtrr command to support 64-bit values
+- Add new patch to update cpuid_eax et al to work on amd64
+- Add new patch to correct msr operation on amd64
+- Add new patch to allow adding non-aligned size for MTRR
+- Support memory sizes above 3GB properly
+- Add new patch to correct sizing of created disks
+- Add new patch with a function to dump the e820 table
+- Add new patch with an API for e820
+- Add new patch to use the new e820 API
+- Add new patch to support BLOBLIST_TABLES properly in QEMU
+- Add new patch to support a 64-bit ramdisk address
+- Add new patch to mark struct acpi_rsdp as packed
+- Add new patch to consider non-bootable partitions
+- Add new patch to handle running out of labels
+- Add new patch to support IO UARTs for earlycon and console
+- Add new patch to correct mapping in FADT
+- Add new patch to add a checksum to the DMAR table
+- Add new patch to correct memory leaks in the ACPI test
+- Add new patch to support checking checksums with ACPI command
+- Significantly expanded to correct e820 and other issues
+
+Changes in v2:
+- Redo commit message
+- Add new patch to rename the _D dirty flag
+- Add new patch to support CPU functions in long mode
+- Add new patch to set an MTRR for the RAM in QEMU
+- Add new patch with a helper to send characters
+- Add new patch to allow tests to be filtered by role
+- Add more patches to support booting with kvm
+- Add new patch with a test for booting Ubuntu 24.04
+
+Simon Glass (44):
+  x86: Expand x86_64 early memory
+  x86: qemu: Switch to bochs display
+  x86: qemu: Enable dhrystone
+  x86: qemu: Avoid accessing BSS too early
+  x86: Drop mpspec from the SPL build
+  x86: Add some log categories
+  x86: Drop use of CONFIG_REALMODE_DEBUG
+  x86: Avoid clearing the VESA display
+  x86: Add 64-bit entries to the GDT
+  x86: Use defines for the cache flags
+  x86: spl: Drop duplicate CPU init
+  x86: Drop the message about features missing in 64-bit
+  x86: Include stdbool.h in interrupt header
+  x86: Tidy up the GDT size in start/16.S
+  x86: Disable paging before changing to long mode
+  x86: Use the same GDT when jumping to long mode
+  x86: Use a simple jump into long mode
+  x86: Rename the _D dirty flag
+  x86: Support CPU functions in long mode
+  x86: Add functions to convert between mtrr size and mask
+  x86: Update mtrr command to support 64-bit values
+  x86: Update cpuid_eax et al to work on amd64
+  x86: Correct msr operation on amd64
+  x86: Allow adding non-aligned size for MTRR
+  x86: emulation: Set an MTRR for the RAM
+  x86: qemu: Support environment and cat command
+  test/py: Correct sizing of created disks
+  test/py: Add a helper to send characters
+  test/py: Allow tests to be filtered by role
+  x86: e820: Add a function to dump the e820 table
+  x86: Add a new API for e820
+  x86: qemu: Use the new e820 API
+  x86: emulation: Support BLOBLIST_TABLES properly
+  x86: Support a 64-bit ramdisk address
+  acpi: Mark struct acpi_rsdp as packed
+  boot: Consider non-bootable partitions
+  boot: Handle running out of labels
+  boot: Support IO UARTs for earlycon and console
+  sandbox: acpi: Correct mapping in FADT
+  acpi: Add a checksum to the DMAR table
+  test: acpi: Correct memory leaks
+  acpi: Support checking checksums
+  RFC: test/py: Deal with timeouts
+  test: Add a test for booting Ubuntu 24.04
+
+ .gitlab-ci.yml                   |   5 ++
+ arch/x86/cpu/cpu.c               |  24 +++++++
+ arch/x86/cpu/i386/call64.S       |  35 ++++------
+ arch/x86/cpu/i386/cpu.c          |  41 ++++-------
+ arch/x86/cpu/mtrr.c              | 115 ++++++++++++++++++++++++-------
+ arch/x86/cpu/qemu/dram.c         |  18 +++++
+ arch/x86/cpu/qemu/e820.c         |  62 +++++++----------
+ arch/x86/cpu/qemu/qemu.c         |  20 ++++--
+ arch/x86/cpu/start.S             |   4 +-
+ arch/x86/cpu/start16.S           |   3 +-
+ arch/x86/cpu/x86_64/cpu.c        |   5 --
+ arch/x86/include/asm/bootparam.h |  15 +++-
+ arch/x86/include/asm/cpu.h       |  91 ++++++++++--------------
+ arch/x86/include/asm/e820.h      |  95 ++++++++++++++++++++++++-
+ arch/x86/include/asm/interrupt.h |   1 +
+ arch/x86/include/asm/msr.h       |   9 ++-
+ arch/x86/include/asm/mtrr.h      |  16 +++++
+ arch/x86/include/asm/processor.h |   5 +-
+ arch/x86/lib/Makefile            |   2 +
+ arch/x86/lib/bios.c              |  27 +++++---
+ arch/x86/lib/bios_interrupts.c   |   8 +--
+ arch/x86/lib/e820.c              |  70 +++++++++++++++++++
+ arch/x86/lib/i8259.c             |   2 +
+ arch/x86/lib/spl.c               |   4 +-
+ arch/x86/lib/tables.c            |   9 ++-
+ arch/x86/lib/zimage.c            |  34 +++------
+ boot/bootdev-uclass.c            |   7 +-
+ boot/bootflow.c                  |   7 +-
+ cmd/acpi.c                       |  59 ++++++++++------
+ cmd/x86/mtrr.c                   |  11 ++-
+ configs/qemu-x86_64_defconfig    |  18 ++---
+ configs/qemu-x86_defconfig       |  12 ++--
+ doc/develop/bootstd/overview.rst |   5 +-
+ doc/usage/cmd/acpi.rst           |  20 +++++-
+ drivers/misc/qfw_acpi.c          |  32 +++++++--
+ include/acpi/acpi_table.h        |   2 +-
+ include/bootflow.h               |   2 +
+ include/bootstd.h                |   3 +
+ lib/acpi/acpi_table.c            |   5 +-
+ test/boot/bootdev.c              |   1 +
+ test/boot/bootflow.c             |   5 +-
+ test/dm/acpi.c                   |  59 ++++++++++++++++
+ test/py/conftest.py              |  22 ++++++
+ test/py/console_base.py          |  33 +++++----
+ test/py/pytest.ini               |   1 +
+ test/py/tests/test_distro.py     |  53 ++++++++++++++
+ test/py/tests/test_sleep.py      |   1 +
+ test/py/tests/test_ut.py         |  17 ++++-
+ 48 files changed, 796 insertions(+), 299 deletions(-)
+ create mode 100644 test/py/tests/test_distro.py
+
 -- 
 2.43.0
 
