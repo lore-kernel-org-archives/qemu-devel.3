@@ -4,73 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66653C021BB
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 18:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422F0C021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 19:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmdPX-0004Ul-3b; Mon, 24 Feb 2025 13:42:35 -0500
+	id 1tmdjo-0003BF-IT; Mon, 24 Feb 2025 14:03:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osy86dev@gmail.com>)
- id 1tmdOd-000427-RS; Mon, 24 Feb 2025 13:41:43 -0500
-Received: from mail-pl1-f173.google.com ([209.85.214.173])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <osy86dev@gmail.com>)
- id 1tmdOa-0006r7-BE; Mon, 24 Feb 2025 13:41:39 -0500
-Received: by mail-pl1-f173.google.com with SMTP id
- d9443c01a7336-220ec47991aso65172155ad.1; 
- Mon, 24 Feb 2025 10:41:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tmdjm-0003Au-4S
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:03:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tmdjj-00037U-Bu
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 14:03:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740423804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2N+OXapaV/iIw7aA4hfb4LeXnJWlMoZHF/LETRx9QtE=;
+ b=La1kgwAn2BquTqq1W8UmgX+XhMZm42+h0s9P5tERgv/EnMz7D5lxhr0NCI0QbG9aRkzr5D
+ 2/2kzhn6CMK06Dn4A2rQRmr1XKTCXpcxu/mFGAehiy3vqgUvzGY2yrtpXCj12ApoYNF2tB
+ dkqM/HoN4HMxjymTaYspkHdZYWU0kkk=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-643-UPQGWfFmNkOuv36Ti8xoGQ-1; Mon, 24 Feb 2025 14:03:20 -0500
+X-MC-Unique: UPQGWfFmNkOuv36Ti8xoGQ-1
+X-Mimecast-MFC-AGG-ID: UPQGWfFmNkOuv36Ti8xoGQ_1740423800
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-855959904c5so44720839f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 11:03:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740422492; x=1741027292;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eFNfM0c+Ibx/QrlYzcwNJybRS6DgFvk8R8vglhbxGbc=;
- b=Zn0kkg40AdShrv4H1/AOS8IqZeqyiXi/94pxrOvx2vviHrtAYyTlrh8AfrYo3PGwfm
- HNHJHavL3ainm+4G1e4Y+eWWfajybk1V2zQPKelqLc8AMxSEMmZyOm8cBiUxmyq40w76
- +cX7pxUiUpzau8ctpVBbQyjrVne48U/q6EKc1ntQ1qm9unfBFQOvCMiRWonA4pTDkZ8n
- zJht07WB9KNrqzFgXYomxDLeyCiXtkuzxjRpGVbyPnlBWe/wTOnXukVFpSkkDtQ0/uJU
- jhixH1a/PmBSpUoCl0lekruTFDwC7cx1O0zUka8HSpA1+q5mlTXb9BtiZLX75C+tTAy7
- S0Cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWZUYziSGSBqZUaWU+YIK8Lqdt5WZGjTRlaq8GHyD4C2OSnZ0/ke1s/IH33/n02bO6IF2YGms9DA==@nongnu.org
-X-Gm-Message-State: AOJu0YxrITs+8iRIaz8oSmoVvkm2XUjoH7OSpdjWr3QbPbpwkn7OYq+N
- e0rgF6Oa646UkYtO7V3MOrcXTnEWKAn+Hs1jjxpbw6ZD8wwBgxYpbCIrpenX
-X-Gm-Gg: ASbGncs254PBq/L16QYPk9SpAmc5hcx9svC73m4V7jFacbu3jk7CHU1z9CPucO4EGvl
- Z7r8g6Ng0IZIlL0wDWLS2+m5DhRUcEHsf+xGJennk7tCmvRYPe8wOgFWqh4YtJ2CFtGu/+jjS3e
- AOzYK9a70mxJM/e8zyqkEdpltsKiQgnJKTWZyFHgQH3EFgAJOFeijwIdXMLIjPHEMlKTS+/CbQx
- EqNVeQ1ByznRS3UMQObKXReqa2V7R9WOuS5tj2GLSQ/cunxurUn+d2Jz529tLmwvmaYnzOpMaHu
- R2nM5TqwI52oDAiK5vRjZT7La5B+GV5OymwFbDa/mHjacuhmRXqc1R/s
-X-Google-Smtp-Source: AGHT+IFbgY5KX4yUXiAbRzOWSDArd8gLr9FkaGMzqmKEBQFTdNPX+OsgDy1/UmE8G+FfI0UMxiAegQ==
-X-Received: by 2002:a05:6a21:150d:b0:1ee:7fa1:9156 with SMTP id
- adf61e73a8af0-1eef3c48fe5mr25000165637.3.1740422492479; 
- Mon, 24 Feb 2025 10:41:32 -0800 (PST)
-Received: from localhost.localdomain ([2607:fb90:37a2:e54:b846:cde3:ca66:b2d7])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-adb5a52aee0sm19214227a12.47.2025.02.24.10.41.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Feb 2025 10:41:32 -0800 (PST)
-From: Joelle van Dyne <j@getutm.app>
-To: qemu-devel@nongnu.org
-Cc: Joelle van Dyne <j@getutm.app>, Alexander Graf <agraf@csgraf.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH v2] hvf: arm: sign extend when SSE=1
-Date: Mon, 24 Feb 2025 10:41:23 -0800
-Message-ID: <20250224184123.50780-1-j@getutm.app>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1740423800; x=1741028600;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2N+OXapaV/iIw7aA4hfb4LeXnJWlMoZHF/LETRx9QtE=;
+ b=W/qyXxlpo29WjXVMbbznQDbPJCVlqrvb+QutgJDGuFIJdILIlV7iIEt2fxZw6lfdYj
+ QK19NjRIWWa6sfcRWn27E87CtlU/pFqBkPyv0mSqW1y5qT3U+AY34ExAuO1ivE/mIM+9
+ w597lcyWS2vr6KmaNBPk4gKrjnh/p9QlSH4mahytv9jq7i3eStX316Kbk8U3iv6LHMxO
+ y9lFsTLbhAbTfgMFVvExkHUcRfBJelaI9js48Ke03EwPBXZB27l9eSvy58G2idSUZGMD
+ p+kN5S2YvqmzlX/g+4xaY1SO329mJOpadPhPSHmcwRjAgEaDJVFdG91y4flKW9yf+VRk
+ y+XQ==
+X-Gm-Message-State: AOJu0Yyt/k51zqdwlg6ELBt0eEnntfgTSz9dkbBj7gXjVoiu1joaWTC/
+ slgOV0NZ7yXAqEcnnFbxcKdMVHf/NZ68fuCGnp3aY+we+9yvU5+nziYiWpKcfb6cpqiZL5TR4Q/
+ QN607QOdd+99yJnZffS//hmiF9zuuC21TWFI/alPpLfaqFvKj3VoK
+X-Gm-Gg: ASbGncuH35rfMV0cz7UZI1m8g0PGPLEx6ad1PmQj6rQdbJVA3Z3RJE5/8m04PhIItWm
+ +qyQeeJ80fWMI3tB2hNyg0VSp/EldwzYD7C+J9J+m4dJa3z1w95roVeEszcEuLkpkXeFEpUNf6h
+ 3haKq2mKosH+/2ofujq7sLBbB2zDAJqUjxZdqeCDJGsHb/8pGxg+U2XjwTqzvkDGUPA4WBVa+/w
+ rQnWfkUaapxgOsbzW9o/X46Q8i7X2EsDqYRd0ldlXACNeKLHlZu5aFBLiq5hryVFTcl0ShNiMAn
+ ImZ2y/RyETE8Ezp7ukA=
+X-Received: by 2002:a05:6e02:1986:b0:3d1:8bf1:46f9 with SMTP id
+ e9e14a558f8ab-3d2caf2e202mr36585025ab.7.1740423800029; 
+ Mon, 24 Feb 2025 11:03:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEAGy4yFA84YbWJO8ilulY5ONcL6hpAHmuViTzMh6aWR03q5krdwQBiX0FeXYKm0wnxHZC7cQ==
+X-Received: by 2002:a05:6e02:1986:b0:3d1:8bf1:46f9 with SMTP id
+ e9e14a558f8ab-3d2caf2e202mr36584825ab.7.1740423799685; 
+ Mon, 24 Feb 2025 11:03:19 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4f0474985a9sm25481173.68.2025.02.24.11.03.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Feb 2025 11:03:18 -0800 (PST)
+Date: Mon, 24 Feb 2025 12:03:16 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: qemu-devel@nongnu.org, eric.auger.pro@gmail.com, clg@redhat.com,
+ zhenzhong.duan@intel.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Akihiko Odaki
+ <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>, Stefan Weil
+ <sw@weilnetz.de>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, Keith
+ Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper
+ Devantier <foss@defmacro.it>
+Subject: Re: [PATCH 2/5] pci: Use PCI PM capability initializer
+Message-ID: <20250224120316.36415fee.alex.williamson@redhat.com>
+In-Reply-To: <5604e46b-da22-46df-9d6e-2a163df62881@redhat.com>
+References: <20250220224918.2520417-1-alex.williamson@redhat.com>
+ <20250220224918.2520417-3-alex.williamson@redhat.com>
+ <5604e46b-da22-46df-9d6e-2a163df62881@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.214.173; envelope-from=osy86dev@gmail.com;
- helo=mail-pl1-f173.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,37 +116,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the ARM manual, when SSE=1 the data item must be sign
-extended.
+On Mon, 24 Feb 2025 19:37:03 +0100
+Eric Auger <eric.auger@redhat.com> wrote:
 
-Signed-off-by: Joelle van Dyne <j@getutm.app>
----
- target/arm/hvf/hvf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+> Hi Alex,
+>=20
+> On 2/20/25 11:48 PM, Alex Williamson wrote:
+> > Switch callers directly initializing the PCI PM capability with
+> > pci_add_capability() to use pci_pm_init().
+> >
+> > Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> > Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > Cc: Jason Wang <jasowang@redhat.com>
+> > Cc: Stefan Weil <sw@weilnetz.de>
+> > Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+> > Cc: Keith Busch <kbusch@kernel.org>
+> > Cc: Klaus Jensen <its@irrelevant.dk>
+> > Cc: Jesper Devantier <foss@defmacro.it>
+> > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> > Cc: C=C3=A9dric Le Goater <clg@redhat.com>
+> > Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+> > ---
+> >  hw/net/e1000e.c                 | 3 +--
+> >  hw/net/eepro100.c               | 4 +---
+> >  hw/net/igb.c                    | 3 +--
+> >  hw/nvme/ctrl.c                  | 3 +--
+> >  hw/pci-bridge/pcie_pci_bridge.c | 2 +-
+> >  hw/vfio/pci.c                   | 2 +-
+> >  hw/virtio/virtio-pci.c          | 3 +--
+> >  7 files changed, 7 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
+> > index f637853073e2..b72cbab7e889 100644
+> > --- a/hw/net/e1000e.c
+> > +++ b/hw/net/e1000e.c
+> > @@ -372,8 +372,7 @@ static int
+> >  e1000e_add_pm_capability(PCIDevice *pdev, uint8_t offset, uint16_t pmc)
+> >  {
+> >      Error *local_err =3D NULL;
+> > -    int ret =3D pci_add_capability(pdev, PCI_CAP_ID_PM, offset,
+> > -                                 PCI_PM_SIZEOF, &local_err);
+> > +    int ret =3D pci_pm_init(pdev, offset, &local_err);
+> > =20
+> >      if (local_err) {
+> >          error_report_err(local_err);
+> > diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
+> > index 6d853229aec2..29a39865a608 100644
+> > --- a/hw/net/eepro100.c
+> > +++ b/hw/net/eepro100.c
+> > @@ -551,9 +551,7 @@ static void e100_pci_reset(EEPRO100State *s, Error =
+**errp)
+> >      if (info->power_management) {
+> >          /* Power Management Capabilities */
+> >          int cfg_offset =3D 0xdc;
+> > -        int r =3D pci_add_capability(&s->dev, PCI_CAP_ID_PM,
+> > -                                   cfg_offset, PCI_PM_SIZEOF,
+> > -                                   errp);
+> > +        int r =3D pci_pm_init(&s->dev, cfg_offset, errp);
+> >          if (r < 0) {
+> >              return;
+> >          }
+> > diff --git a/hw/net/igb.c b/hw/net/igb.c
+> > index 4d93ce629f95..700dbc746d3d 100644
+> > --- a/hw/net/igb.c
+> > +++ b/hw/net/igb.c
+> > @@ -356,8 +356,7 @@ static int
+> >  igb_add_pm_capability(PCIDevice *pdev, uint8_t offset, uint16_t pmc)
+> >  {
+> >      Error *local_err =3D NULL;
+> > -    int ret =3D pci_add_capability(pdev, PCI_CAP_ID_PM, offset,
+> > -                                 PCI_PM_SIZEOF, &local_err);
+> > +    int ret =3D pci_pm_init(pdev, offset, &local_err);
+> > =20
+> >      if (local_err) {
+> >          error_report_err(local_err);
+> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> > index 68903d1d7067..1faea3d2b85b 100644
+> > --- a/hw/nvme/ctrl.c
+> > +++ b/hw/nvme/ctrl.c
+> > @@ -8503,8 +8503,7 @@ static int nvme_add_pm_capability(PCIDevice *pci_=
+dev, uint8_t offset)
+> >      Error *err =3D NULL;
+> >      int ret;
+> > =20
+> > -    ret =3D pci_add_capability(pci_dev, PCI_CAP_ID_PM, offset,
+> > -                             PCI_PM_SIZEOF, &err);
+> > +    ret =3D pci_pm_init(pci_dev, offset, &err);
+> >      if (err) {
+> >          error_report_err(err);
+> >          return ret; =20
+> nit: below there is a redundant
+> =C2=A0=C2=A0=C2=A0 pci_set_word(pci_dev->wmask + offset + PCI_PM_CTRL,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 PCI_PM_CTRL_STATE_MASK);
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 0afd96018e..43cf250eef 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1971,6 +1971,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-         bool isv = syndrome & ARM_EL_ISV;
-         bool iswrite = (syndrome >> 6) & 1;
-         bool s1ptw = (syndrome >> 7) & 1;
-+        bool sse = (syndrome >> 21) & 1;
-         uint32_t sas = (syndrome >> 22) & 3;
-         uint32_t len = 1 << sas;
-         uint32_t srt = (syndrome >> 16) & 0x1f;
-@@ -1998,6 +1999,9 @@ int hvf_vcpu_exec(CPUState *cpu)
-             address_space_read(&address_space_memory,
-                                hvf_exit->exception.physical_address,
-                                MEMTXATTRS_UNSPECIFIED, &val, len);
-+            if (sse && len != sizeof(uint64_t)) {
-+                val = sextract64(val, 0, len * 8);
-+            }
-             hvf_set_reg(cpu, srt, val);
-         }
- 
--- 
-2.41.0
+Indeed there is, thanks for spotting that!  I'll fix it in the next
+spin.  Thanks,
+
+Alex
 
 
