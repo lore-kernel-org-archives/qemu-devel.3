@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445EAC021BB
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 14:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532BEC021A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Feb 2025 14:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmZk7-0000vF-5d; Mon, 24 Feb 2025 09:47:35 -0500
+	id 1tmZnG-0002eY-P9; Mon, 24 Feb 2025 09:50:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmZjy-0000tk-Ou
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 09:47:26 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1tmZn5-0002ct-WD
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 09:50:40 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmZjw-0007rx-Ja
- for qemu-devel@nongnu.org; Mon, 24 Feb 2025 09:47:25 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-6fb7c373416so35443107b3.0
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 06:47:23 -0800 (PST)
+ id 1tmZn4-00004x-6F
+ for qemu-devel@nongnu.org; Mon, 24 Feb 2025 09:50:39 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-6f74b78df93so41516847b3.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 06:50:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740408443; x=1741013243; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740408636; x=1741013436; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vaCwfjXRWYgdOrjWq1KNN6uPPUv1FI8JvSotyLevqRE=;
- b=j/4tCP72cJbAH9cmR06lV4KqlqKAJ8RMEE2Didcf+uKsGfho3HHwgYKlu99TBUH9SU
- NW5uJ1Kotk0Gb3k4VefpSKVE5xBZkYI73p75noOxIAx3DCjiX56ucC3dWX56jQejgrRa
- 7KihorBCvEG1MGCdBnprgmvQkxGXkN61qFcB/mZFuV0pEIp/8q/rMXhjCUllO1LuU2ru
- HLrbPcHom60GhkEfozkuOP5TuGCA0tWSsupmZ+zbTlEjDilBB+QAhrLAJ5yHi18/1awg
- 7ytB0/5vCwHpmNWxDYDccQlU1xqPARysJvsOpjxUW0/kX0UE9xIYB8k/snrlrusJ0gou
- +Wtg==
+ bh=uu5oNS2JKnrgWHXrn/qW+ymrVqvPr5X4vAD602abwkA=;
+ b=pcRKLp4WumSMnM6ZwMOMXaNF0x+v1Iv2WIferquNiViVJPe98pN2Q/C+nz86sKyr3k
+ GCdCNaps6cflHbyRwdhv+6IK5uSCCaqd5REQyALGp5nLh4o8k41hBg4FzFw+xmsN2JPr
+ b1gXYSe6uBGaoagx4Hk+jxX5ubSaceMewLX/Cad7dZGxs8qDOSEHGR32Bd+u3ttWi+Et
+ 9wiPDKSgx+eXDyzMRpW/ZARFOw0zksWnO5rrYz35HDNIiorik9eQyDhCnPEwf6RGqKCR
+ f/ZOorm74j4+KbLUjIxCmThYjEsdHLcfDhAYsowmG/s+9XhtLVeoYoLlOUo/39tnhtcw
+ GSnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740408443; x=1741013243;
+ d=1e100.net; s=20230601; t=1740408636; x=1741013436;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vaCwfjXRWYgdOrjWq1KNN6uPPUv1FI8JvSotyLevqRE=;
- b=NPIZ/ZAM5kZNZvLgsEUAgU1eW5Nwfzi02kXrEM9KmX2FfXLp7k1qq7EVJYnIQU4vf9
- 7nHZju8AaeLT0dQHmkLMOofUyRZHqfRp7dcMSDzjUdTW6HUBEosRIoyFTbs0UliVUPuZ
- bT2WfzxPU7y1EUNxmUTD7A++khE9zzDmrYFmRcUALCXaaRBnW/n5VbpUY3+JW/GoDv0T
- VuJW2uwC3dvJxW00z/rPnrfaLMKr4uMYex9mzxU35s4bN0aDc+yRMljxprvV3MnOtN8i
- w0hA8+JdNpjNDCk87Pni+mvum8iE0JAhg7UeUeIVjeJfE12vCTUXFBFTABiTaILbd/Gu
- DG9A==
-X-Gm-Message-State: AOJu0Yyv2dQWPH3ngAJ7yck6WjBc68LbjiskO0HggDAQXLs0ROGKf3pI
- VbiCsotyYwt3UUfIos91sDJCD/UwbskM2WK47AYXrNgX9VQxvGEZ5UzvXUOddt/6lzj5EKbVkRg
- CIWlf2oZTczSROzFx0SmVR0bk63XwGS8e2xr3ICvIJ/0pqkTw
-X-Gm-Gg: ASbGncv4Zgz65uIZY1kFUYkuCMxBWQT8e1OLJhwt5acgnyc64w/2TPc36+Rsba9h/5B
- m5l9dRahS0Q60vUvsqvXkhw3idOIxWUGmjpXjWysHnC/8W/nNJW+GOLaiAOfTOHO4D3e5pUCiQ6
- LjGx2VXnFA
-X-Google-Smtp-Source: AGHT+IGzSHk9xL20r2oqjhJlFqcdcRRKED1Ek86tuu2y0eGVqnlZ63xn98qSFmeIRfG7c+KvM4X3RFLUo2BwLuvCgW0=
-X-Received: by 2002:a05:690c:480a:b0:6ef:820c:a752 with SMTP id
- 00721157ae682-6fbcc25ed88mr109705067b3.20.1740408442800; Mon, 24 Feb 2025
- 06:47:22 -0800 (PST)
+ bh=uu5oNS2JKnrgWHXrn/qW+ymrVqvPr5X4vAD602abwkA=;
+ b=fKh5IRtVxXf8np7sENZZFhaBGD7zht8Hy+EQlcKKyBABMavb5RzzEFJCjlVuTIBnvd
+ SLLHNIUNaxYVMEK/7+Wqbu4D7apxQ64hqy6mxrx/RWzIsZiUfGo0uiVqWySjg40CUllS
+ X8ybiugOgi+5xELMqi0TWggy94GF/oqPfh2uS0BhEesLDm8N1bdEqqBXhy7ue3ASJV6b
+ RnqsTqLGxpPNwN8yh5GuyeB8IPenX/qPm2EQENkvTpLvR5QOqBFmlRYd9bVPriXYuLhB
+ Pc7wF7tZd+fallokl4FtmkPg5dkHVZFawyDhMEk/GDnhtVA3mZEUN4ENFBFiZa9iIgtc
+ sqIw==
+X-Gm-Message-State: AOJu0YyZnUi4l4qUSY4tnkVITPmC8o7l2KRjGeoBws66qCg4aAPaLlUc
+ OjaYAsbTKqfkFKvvzFxHf+tMYxusX5PaZ/2ElJDr9lUNLNPWT/DrkyPw5xXr8phY9eWck5ygaMD
+ xga0UQAAglsToENr+8TOTtzCOkzG1HXEXQ4wFvyQmj6d/N34Z
+X-Gm-Gg: ASbGncsxCHp224Mnzrxwdv2WBBqSVJQ53dVlCPcSAq/uEoALC8BSwxpC1bJJKZoXsj8
+ 3Z2Vjwcixh64NpfHRGoD5XT+DtKAYPxzsN3bqx8LZLxblhJf8AHbx4LPSlUS8nvtxS4uaBmW8D2
+ ERN0buXdOK
+X-Google-Smtp-Source: AGHT+IHTUQDDCPipf3/W1vOhZ0dXSZee/LQrbwCNMlSg3jZdyXHuxV9Oh9v5wnowL6k4QPiyuEYs7eoBLCcUzXNKnk8=
+X-Received: by 2002:a05:690c:586:b0:6ee:66d2:e738 with SMTP id
+ 00721157ae682-6fbcc1f0fbemr117779047b3.2.1740408636638; Mon, 24 Feb 2025
+ 06:50:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20250213142613.151308-1-peter.maydell@linaro.org>
-In-Reply-To: <20250213142613.151308-1-peter.maydell@linaro.org>
+References: <20250206151214.2947842-1-peter.maydell@linaro.org>
+In-Reply-To: <20250206151214.2947842-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Feb 2025 14:47:11 +0000
-X-Gm-Features: AWEUYZnl__72jn9Ay47kgQZmZBSQHY4Juh_O0iQcTCWpV_uB8NGMHqVhJNCTHhU
-Message-ID: <CAFEAcA86t=uc_XZd0s1yOFsop68XN2HK7c5MUJNfn7kcDoMsxQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4] target/i386: Emulate ftz and denormal flag bits
- correctly
+Date: Mon, 24 Feb 2025 14:50:25 +0000
+X-Gm-Features: AWEUYZl1grBQnWxaEfp2Y5fhnFgUURqk_wYRnHTS_gPhrSm-QmN-zPpZ7zOKIPU
+Message-ID: <CAFEAcA-=C5Ymir4O+gzkmzDabGr_uokS6PbfU_dZYtb8hvb2=g@mail.gmail.com>
+Subject: Re: [PATCH 0/6] hw: Centralize handling, improve error messages for
+ -machine dumpdtb
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Jia Liu <proljc@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,42 +97,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping? Would an i386 maintainer like to pick these up?
+On Thu, 6 Feb 2025 at 15:12, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> We originally implemented '-machine dumpdtb' in a fairly ad-hoc way:
+> every machine using FDT is supposed to call qemu_fdt_dumpdtb() once
+> it has finished creating and modifying the DTB; if the user passed in
+> the machine option then qemu_fdt_dumpdtb() will write the FDT to a
+> file and then exit QEMU.
+>
+> Somewhat later we implemented the QMP and HMP dumpdtb commands; for
+> these to work we had to make all the FDT-using machines set
+> MachineState::fdt to point to the FDT blob.
+>
+> This means we can clean up the handling of the -machine option, so we
+> can implement it in one place in machine.c.  The benefit of this is:
+>  * boards only need to do one thing, not two
+>  * we can have better error messages for the "user asked us to
+>    dump the DTB but this board doesn't have one" case
+
+> Peter Maydell (6):
+>   monitor/hmp-cmds.c: Clean up hmp_dumpdtb printf
+>   hw/openrisc: Support monitor dumpdtb command
+>   hw/mips/boston: Check for error return from boston_fdt_filter()
+>   hw/mips/boston: Support dumpdtb monitor commands
+>   hw: Centralize handling of -machine dumpdtb option
+>   hw/core/machine.c: Make -machine dumpdtb=file.dtb with no DTB an error
+
+Since these have all been reviewed, I'm going to take them
+via target-arm.next, unless anybody wants to propose taking
+them via a different route.
 
 thanks
 -- PMM
-
-On Thu, 13 Feb 2025 at 14:26, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> This is a set of four patches to target/i386 which use the core
-> fpu functionality we just landed for Arm FEAT_AFP to correct
-> the emulation of some corner cases of x86 floating point:
->  * when we are flushing denormal outputs to zero, this should
->    be done after rounding, not before
->  * the MXCSR.DE and FPUS.DE bits indicate when a denormal input
->    was not flushed and was used in an fp operation; we previously
->    weren't implementing these semantics
->
-> All four patches have been reviewed by RTH. Testing is a bit
-> light (make check-tcg and make check-functional), because AFAIK
-> there is no freely available comprehensive FP testsuite for x86,
-> and risu doesn't support x86 currently so I can't do the same kind
-> of random-instruction-testing I could for Arm.
->
-> thanks
-> -- PMM
->
-> Peter Maydell (4):
->   target/i386: Detect flush-to-zero after rounding
->   target/i386: Use correct type for get_float_exception_flags() values
->   target/i386: Wire up MXCSR.DE and FPUS.DE correctly
->   tests/tcg/x86_64/fma: add test for exact-denormal output
->
->  target/i386/ops_sse.h        |  16 +++---
->  target/i386/tcg/fpu_helper.c | 101 +++++++++++++++++------------------
->  tests/tcg/x86_64/fma.c       |  17 ++++--
->  3 files changed, 68 insertions(+), 66 deletions(-)
->
-> --
-> 2.43.0
 
