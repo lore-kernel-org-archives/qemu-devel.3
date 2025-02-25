@@ -4,183 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B73DCC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DE2C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzHn-0006yo-BR; Tue, 25 Feb 2025 13:04:03 -0500
+	id 1tmzHn-0006zF-9l; Tue, 25 Feb 2025 13:04:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1tmzHH-0006qC-AN
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:03:37 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1tmzHD-0001hk-VY
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:03:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740506608; x=1772042608;
- h=from:to:cc:subject:date:message-id:
- content-transfer-encoding:mime-version;
- bh=QA5zgludLWdMDb1QtTM+ZLe0M4okfFmqHj0ZpSgIAaw=;
- b=jJ8WgAhJM+NZFbQZYDRMNAaZjwzYsYXcrLT9Iy9VdHCRYn6WiHHq/K+o
- 4Ij/rvrZY2ucxIaTCxHVx1zZ61vSbkgxdwCXBwDH6adSE6BH/QDd7tWD6
- mj6he5fR0WrRikzfitC3O0JAzCo2z/5TVTKWjqGgFo8CSLsV5rEJLZR5j
- clGOo0Pea7F4Iu+qBOA0c/cr4qJdcF037VM8Do/v7U27Mg5VxJDeIUQSa
- U5TWe/bgIUmlutuJn669+VQDNOZjimUedJT21PDQ8So9ViwrVIpus9+5s
- 9XmU5XszZ7/kAk+UDXNTeaCgsT3O0H2nbGEhJ7koUVghEXdhBVeaMQ5Ew A==;
-X-CSE-ConnectionGUID: aNBpdE9VTaKcaivEmu16vg==
-X-CSE-MsgGUID: a7rKLONcTnKeVkOTZxTE/w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="41531683"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="41531683"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2025 10:03:22 -0800
-X-CSE-ConnectionGUID: JfqZyUZJTLmOLg4bMV4hTg==
-X-CSE-MsgGUID: mobA9UgLTeSUVcp4dHsrcQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="153637621"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2025 10:03:22 -0800
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Tue, 25 Feb 2025 10:03:21 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Tue, 25 Feb 2025 10:03:21 -0800
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Tue, 25 Feb 2025 10:03:20 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ssu/xwDZecGTxvwYBQjY1rKdp1Iz5ttIttHgsBBWR+Pxv9jLdjFlBc3hPH9MMF0Maq3NUoYXCUrIcUjE0QvzezFM2pqzjKvQK+lA/L/bIScM7f4/diPLeCpxGp2/dfF7L/iECdSJnjnDGQPTPngT2FQiXB6p1wxdKjif5gE+sqLTQUbP/leOtpoLjjKj1KoZu3ajgVyAiPL+j0m9vAf7+SsQ4GFxImKB+ytZzuVZTtn2CHoj/lU8zat3+uw0R2c5z/pY6aWgOjKVt7PIlgGTouSfzyP7l+hYDw8xVEPQy3Lh0wn8OOkzaRSVnp5GAHleAZArxjQo3oyW1SaZTy8nQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fwBbszmp+QPtfUZNqer5LbcfDxAHoQ2uhc5Ysm4rS34=;
- b=bIsH94vsIGxfFxrbdsEtijGFZoy5DoRYDJDEP0jh70Jf8UOz93L4C67OopwEqOZV6AHGi/l1IfQElpMMwk5IzvbdezbPmwWmj/0aryITrPGJ1/jQ692du7pT+6cO3JDrKyvL9SRq2Ag1l97Bm+9VvSKtg64i7HB5vorrDPZ5YEaeu7+wIXDjqVxtqA51gkJUyzzPB0OwOzWRYkQ2qcaz9EPiXvcAGKpj4QmUXKMYuQKJZfYecEskyBrvWHJXRhrw7Sk8Rh98zCkVjqLvYkdapgGY1YwsydOYvoCRf7GD3p0Im3HKSWBMg4raQ1PtH+hLLfr22durQCPtE/NuZTQYjg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from PH8PR11MB6879.namprd11.prod.outlook.com (2603:10b6:510:229::22)
- by MW4PR11MB5870.namprd11.prod.outlook.com (2603:10b6:303:187::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.19; Tue, 25 Feb
- 2025 18:03:18 +0000
-Received: from PH8PR11MB6879.namprd11.prod.outlook.com
- ([fe80::bd3d:59f2:9d29:346]) by PH8PR11MB6879.namprd11.prod.outlook.com
- ([fe80::bd3d:59f2:9d29:346%4]) with mapi id 15.20.8466.016; Tue, 25 Feb 2025
- 18:03:18 +0000
-From: "Kim, Dongwon" <dongwon.kim@intel.com>
-To: hikalium <hikalium@hikalium.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Some regression due to "ui/gtk: Fix mouse/motion event scaling issue
- with GTK display backend"
-Thread-Topic: Some regression due to "ui/gtk: Fix mouse/motion event scaling
- issue with GTK display backend"
-Thread-Index: AduHr3IQUyMyDh5wS+uW6ITUR0kANA==
-Date: Tue, 25 Feb 2025 18:03:18 +0000
-Message-ID: <PH8PR11MB6879500CDBB703E22EC3D6F0FAC32@PH8PR11MB6879.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH8PR11MB6879:EE_|MW4PR11MB5870:EE_
-x-ms-office365-filtering-correlation-id: 6ceb7668-97d9-4d5e-03c6-08dd55c6aed7
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?TOqbFECBUEiyXw+9rfOFaefWjTLaioxm+UWejPYWbBmVOitPN0wrT8h6Am?=
- =?iso-8859-1?Q?hfd10+GnyAhh2lHdlDMglf1zYX4K4LhjkVJfK1T7cd0mP/gZEDLtkBm6Ns?=
- =?iso-8859-1?Q?7ZEDd82cw3h90SAA5G3vcFqdLaZ2xnDubGVGPABJO14c/dsgE0LsBU9D0I?=
- =?iso-8859-1?Q?iDKzbrJ1YAHy0ur73A//WBSk78VhgOK93Q0RG23cLERpCsI2lFhsMF73vw?=
- =?iso-8859-1?Q?Ua2+2jYhYMgTn3PnUUzCryhjHOM9Y4vmJbJ3q1mmR5WtZd6ylCbVtlrS+z?=
- =?iso-8859-1?Q?i7u9wolEyNngTJ1mSkD9GfmRHYWR+FwmH8dhcWEygcMJRZluYuW5TOE3vo?=
- =?iso-8859-1?Q?9bx8EOCGANpaC00prziXhrpQyT4yXjgtlojp5fIAdwJIaHfFTfAdJsJqI6?=
- =?iso-8859-1?Q?HIk66KKGln59uknmBOFov9WkLKd5OJEIPpdyAKv5sGJv0Mv41+cV9PY+gt?=
- =?iso-8859-1?Q?eLJAAnro0xnOiC5Jq5yR20nPZ0lijRZpKqpdQj5ksqN3ZdP3PwPfqMlp+x?=
- =?iso-8859-1?Q?rFW1ql9bBBKJt4yFZCAklPQzXU22ACUx8j0Edvd5fS79SPKF2MYlGW1x6S?=
- =?iso-8859-1?Q?X1vl/s+7PhuhYIY+3r4993k8y2kdw6CURQLOK4e8jTN8u+jASmQ3AHkqEe?=
- =?iso-8859-1?Q?E8uo+W8Y/pjRagh5WfVfH1ZAM/MXJf2yPhwe9cDwqMpoMWmt3VeOp9ACWZ?=
- =?iso-8859-1?Q?/v2WZjyxI0bK/5zCY65VeHKZVfxN0UTcjBNfwmH0MUqWK6owUdkLYJnrel?=
- =?iso-8859-1?Q?bBDQAaKXmEwwmhqOO8JKxes54+ZQ4HZKUW3G8dmTMRDJqhLIu0RRNSlDaA?=
- =?iso-8859-1?Q?M369sVT4K6CxVbe/AYdJdVNFo2pjgso5Le2ky97aeqo5PiIgaQjcgmKs9u?=
- =?iso-8859-1?Q?3QeqphkRP6OIUfXxmVz5slTPQy9QHHM8D51EHIm8daqWL4K6O4+GIgxlzY?=
- =?iso-8859-1?Q?aGCf93oEbh6TsTzHGV+cBo3Vu1z0bUPUVDhF+LFvByMLUeJruhiY1CuApI?=
- =?iso-8859-1?Q?6pYn5Xr6MLsoGshf8Y6rzwuhLIuYANQ0hsqK6Z2vnqSbJp+7Vd6hRBEKdx?=
- =?iso-8859-1?Q?/M2kkTh60anV8wo9uN/MQxRdrFXKKBzVt5vJr8dfey/JXVYuhbORIlc7Sz?=
- =?iso-8859-1?Q?Q5Y1pYTlgu7FTHG4dOfoQ+RCsrOx0+5P3cgqT5DtSLdWN4mRd+32jYUjI5?=
- =?iso-8859-1?Q?+nu08OOwy2k31NbRYHbhsDmus2m7YWi9C3HHIaTQalJ9OtyZzpURUYeWkI?=
- =?iso-8859-1?Q?PavW3a64hv+FG6QFLyYw06+Y4d1AtGURXzs9qipXwv//cipU7YNWsqebkw?=
- =?iso-8859-1?Q?SQxA3v5hWqadXEi74gs4CR/7+bWRkwFVpU8ueDAbNlBUF7Rfok8ZQpG4pM?=
- =?iso-8859-1?Q?gSE6ov/6yhDHnuXhics8ZlCwFIahxYms9FywpKuT0HLcN7tMRdBTzMuvVD?=
- =?iso-8859-1?Q?2fgaSgDtA23C1IYS8tKuOpiHa+8K4bdn0XxWi/4o+Ewjs/PPnB77ZE3Kni?=
- =?iso-8859-1?Q?6S5ZlME6Ude2jTZ00+ZUUk?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH8PR11MB6879.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?yZ+KMDJfG8n9h2SWkGgoV8z08R7R4PjNrvtS8xROtj57e2X0hzVj2b+tWx?=
- =?iso-8859-1?Q?kHjnNnLnzV7QLiVJi4OVVwc4zXnSqsnGDuTurmfqc3tnBdZid/NKxqTaF0?=
- =?iso-8859-1?Q?mVE9+nx5JsErVLYkLiPP1YCCu14kfnxRjn1TVWM7jpeVgyNdXlqkuHREtR?=
- =?iso-8859-1?Q?T2QGxxldv7JTkXseG5lQeZ20WGve0hETmVgfRY5aqkU2mEa3Uv69Rg20O0?=
- =?iso-8859-1?Q?juIYxXSwg4ysCXHs1n+iePIeTFQ1T10/Oz2MNMeHZSI7pbRJHOWqmCtGlX?=
- =?iso-8859-1?Q?08xl6lkHzYrl/AdHhozb2xqCCZSA/ZgjkjG50DnplWrcFK0o0nLQACxgkD?=
- =?iso-8859-1?Q?z6jbQLaV10E8MVexqCu8h+FYkU/sh27siNX/B+sypMzuCa8+CvAn98sih6?=
- =?iso-8859-1?Q?EEzZY8xJTIQxmr1Z9YVJhT5nYTh3dzBmVwZhzRUdu+XlZn28zNLNJqiuFh?=
- =?iso-8859-1?Q?W4qrzgD25BJYihg5pKcBpmC3sHTUzc/UknlVwntC0GeSOu4/rqcPW+9vy8?=
- =?iso-8859-1?Q?IH2Jx3p1diSj+0XVaVvAZ2tJrxdqwwUCrg66Rct3FbLnnRRGJ02cYhRGRE?=
- =?iso-8859-1?Q?yPWbbQ/SSNBeNGPOM33YGBfs4JdwMw/rtb1NTyvBSFGfFtGOTrbc3ok+H4?=
- =?iso-8859-1?Q?3SO7g2hxgKTzCW247YH4vcaFsPlAhw8WCzafDgHhq8xtOKuyYq/52lmijw?=
- =?iso-8859-1?Q?uitRcn6LFQo8Pa5vd+iGFeMdzDybmSFZDceob+WHa1MWQEuJPY0zFccPYl?=
- =?iso-8859-1?Q?w6F6g4859v6EYXYq7bL15MWqikOMBdBVXRb+rHb1n35z7eojtsH6bJNrh6?=
- =?iso-8859-1?Q?5EtmG7RFN4T/wRBi3DEp5oZeMP78wNlDolJNwVOGPR2WRbAxE1B5aeeaIY?=
- =?iso-8859-1?Q?XsB9fM6UHkEM7CszuacbRiRS3Fi9n5WXnD5d0hpl9/W5YefyjBFYJpCtm5?=
- =?iso-8859-1?Q?cRh4v1dVasV38yqiVCog9Ci2Kk92N/NN/N2pBtKz8Eydlc1mtZSPgdUVfl?=
- =?iso-8859-1?Q?i6JE6pxQPbSqok9BnS8uff4x9d+xHvERoZ6oU+PUHloCpKlTL6eW6C94cs?=
- =?iso-8859-1?Q?H9b/eWP15g7yAoqrpPNcZrJb9Jgh/XbBpIoHKWgZinSlIlaOKPSeFZTlq8?=
- =?iso-8859-1?Q?Be+PO9AlslSCxdcE2CytZoXPeSkNxmWaV+7wccH9Cf2dzLgunBIYVkMSbp?=
- =?iso-8859-1?Q?jYO2InBV++J7rArTtkoD1dXxhSsXvPk37OjL+ay6r+UGC1o0muknfEyDr9?=
- =?iso-8859-1?Q?53Cc5UVgDXWNn0Swt6Pra1VgZpvidQbmfA3NnIdd393nqRMtEIklOJ6XQe?=
- =?iso-8859-1?Q?h/gJStsVE+y/790LwltFXWuENA5lkLj8VdDcZrVDxrlrcbNAwDQqUZi3SH?=
- =?iso-8859-1?Q?jX+nnB9uE4XmapKvQ3s3Yu0fAbCuIJpE0J2Ty28MkHGFi5x9nbkfCmAGSA?=
- =?iso-8859-1?Q?PxDE3qpcAGCZ2OYIVhJNGJLp3vlEx608S4t7GXjoaVa2/pLlv1Dwx9EorW?=
- =?iso-8859-1?Q?D5kSByRiESKGa6zSJWS7S3hLQHsF2gGIyAyHkUrhYHZgi1YCgUzHYABoIG?=
- =?iso-8859-1?Q?PeYPJ+rjOrgQLaM00tzhr6FXz1DP3aUpFytst5d/C/OquA//4tFMi3x5CW?=
- =?iso-8859-1?Q?jQsLbT9rvrxv2sWITjQI4UL6T0n3Obe+Jp?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tmzHC-0006oU-OB
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:03:36 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tmzH8-0001hK-Bs
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:03:24 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-220ca204d04so99235825ad.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:03:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1740506600; x=1741111400; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Kz/ULFmmFW1L+imp4J+QHBTCN/NNETrnCiCuaeCd76E=;
+ b=EedmPsjIpgkKvkPV74vbFRTTMxnrDXApkQghPsDv8M95gs2zVAIoCcl4n7q+qiYDzk
+ J6o8rItrwD2lDPf8tMG+R/O4pVN6I1dgracykEDnkKdXNh5g/RKaVa79X83zqHvSJlff
+ 4x+7l7VikPyeWoEA6voTfqJZxDh65zwbrPWBjOVhGjEqiW/1neIVglsi+BbuQGrDszu+
+ bDQnbX/m9ABdnH+sJykLxYdlzilMp04qPY4k/vFyCyXsPwHD8tzT/Qds367inA9nUfz4
+ YECrD3YlwkqhcbRcF9JktqZIdop3llfoybxm2wv3UjhZI9zl3D9ZNUrUSCuZkxcTHFht
+ ktsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740506600; x=1741111400;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Kz/ULFmmFW1L+imp4J+QHBTCN/NNETrnCiCuaeCd76E=;
+ b=d7MKj5D9SekW9w9OzYEFa/VlnUv/B0xO6Rz1ZB/Y+w7SLKvXNLvFtONhBixXIK0JsQ
+ sozYh29HjuLF86wc+g83mVbR2zBpssN6+PMZGwiBJEyd4KzJJi3fRswpa4HA+94pmGWw
+ +SvZbvOH9f1lhfa4kzvSxXeeaG0+NnUTLqZ2D1iOlYqe8i9Ty/vJqsPWWJn7/cqyIuNf
+ L2ULBiTzR4vg7lkgh3CixKPyHfXEEYj79Iqm/ipzpNhxOE7qmyW8gO/iDvb6VRx4s09V
+ tdw3EzEv8Xq3CJzz0Oh6j/m5u215RmlLMdqtPy1yZ45M9Dhz6Q015V2qmYMHt1v/DMlg
+ 25bQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWn+v96RcK/1LdgLWKnE50o0B+l+bnWJYYGXV0/fyBrIr6CyQpVQ4vSp76Ab/nHIoF8tD5S/pt62MWg@nongnu.org
+X-Gm-Message-State: AOJu0YxNVOuJsQ5FafR6VjOZrB+qbR2blvGZTWzsYXgdBWU8yOqX+Y3A
+ LZD9puLTPsXaj05e5BHSgN3JAYo+SzFtJNp+mO3EtHQ4SdnLTIdv8PM0Gq6AjThote74dOqy91L
+ 8
+X-Gm-Gg: ASbGncsPjRQLXPMn5u1NElRi3gMNCuj0puYsvWuSNJfWLe4s9Rkahpz7AmM2drwpPk1
+ ol6MlA6euzzXaYtSqZCLT0hUXR7CEN/tPLUQrhtDWAF9e5Fg0ODbxGsF7B4HLdgUgIEs2KXvpev
+ 617Ajs3cG19VrxhQtM1pIvsCeudH7r9lKrNnd+n/IZwvuswiQiuyDbw8VHbalB27BZGoNp8nzf9
+ Hoe3SSTwNtrM3C2gHmefZ7jDP/HTzGMfRtxGAR7/VUIPvAghySdcszz4lSuYIZ1W++Evh2vKSNH
+ kUObzobGp0T0ZYqfR9cfo5z2wzn8qVhhGaiW4debEQ==
+X-Google-Smtp-Source: AGHT+IE8BhuRoA3I+joQAkSkZY2yH6cmNXEaAfyry/rV5DjUPMSR8Z1NyoE/MSn7XUUauJV5kK8B9Q==
+X-Received: by 2002:a17:90b:4d0d:b0:2f2:a664:df19 with SMTP id
+ 98e67ed59e1d1-2fe7e2e0719mr535365a91.7.1740506599810; 
+ Tue, 25 Feb 2025 10:03:19 -0800 (PST)
+Received: from [192.168.68.110] ([177.170.227.219])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2230a094470sm17299285ad.111.2025.02.25.10.03.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Feb 2025 10:03:19 -0800 (PST)
+Message-ID: <a4054c16-05e1-4d51-a94e-ae5b82113086@ventanamicro.com>
+Date: Tue, 25 Feb 2025 15:03:14 -0300
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6879.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6ceb7668-97d9-4d5e-03c6-08dd55c6aed7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Feb 2025 18:03:18.1630 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mrKpJn58+o4JOJJXnIu8qS6mwbSW5z9VeEMEuEFNUNcROpTqcT4bV1HK+xEgjsojMiRHYDh5y6YIfdXSPxvKSg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB5870
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] [RISC-V/RVV] Expand the probe_pages helper function
+ to handle probe flags.
+To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>, Jeremy Bennett
+ <jeremy.bennett@embecosm.com>, Craig Blackmore <craig.blackmore@embecosm.com>
+References: <20250221162036.61521-1-paolo.savini@embecosm.com>
+ <20250221162036.61521-2-paolo.savini@embecosm.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250221162036.61521-2-paolo.savini@embecosm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -196,20 +112,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi hikalium,
 
-This commit actually breaks one of our use cases with Ubuntu host when the =
-display scaling factor is
-set to 200%. It seems like gtk_widget_get_scale_factor is only way to get t=
-hat DPI scaling factor
-and without this, mouse movement on the guest wouldn't be able to go across=
- certain boundary
-as the coordinate will be halved (in case DPI scaling factor is 200%).
 
-commit 37e91415018db3656b46cdea8f9e4d47b3ff130d
-Author: hikalium <hikalium@hikalium.com>
-Date:   Sun May 12 20:14:35 2024 +0900
+On 2/21/25 1:20 PM, Paolo Savini wrote:
+> This commit expands the probe_pages helper function in
+> target/riscv/vector_helper.c to handle also the cases in which we need access to
+> the flags raised while probing the memory and the host address.
+> This is done in order to provide a unified interface to probe_access and
+> probe_access_flags.
+> The new version of probe_pages can now act as a regular call to probe_access as
+> before and as a call to probe_access_flags. In the latter case the user need to
+> pass pointers to flags and host address and a boolean value for nonfault.
+> The flags and host address will be set and made available as for a direct call
+> to probe_access_flags.
+> 
+> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+> ---
 
-    ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/vector_helper.c | 57 +++++++++++++++++++++++-------------
+>   1 file changed, 37 insertions(+), 20 deletions(-)
+> 
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 772cff8fbe..c0f1b7994e 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -114,25 +114,42 @@ static inline uint32_t vext_max_elems(uint32_t desc, uint32_t log2_esz)
+>    * It will trigger an exception if there is no mapping in TLB
+>    * and page table walk can't fill the TLB entry. Then the guest
+>    * software can return here after process the exception or never return.
+> + *
+> + * This function can also be used when direct access to probe_access_flags is
+> + * needed in order to access the flags. If a pointer to a flags operand is
+> + * provided the function will call probe_access_flags instead, use nonfault
+> + * and update host and flags.
+>    */
+> -static void probe_pages(CPURISCVState *env, target_ulong addr,
+> -                        target_ulong len, uintptr_t ra,
+> -                        MMUAccessType access_type)
+> +static void probe_pages(CPURISCVState *env, target_ulong addr, target_ulong len,
+> +                        uintptr_t ra, MMUAccessType access_type, int mmu_index,
+> +                        void **host, int *flags, bool nonfault)
+>   {
+>       target_ulong pagelen = -(addr | TARGET_PAGE_MASK);
+>       target_ulong curlen = MIN(pagelen, len);
+> -    int mmu_index = riscv_env_mmu_index(env, false);
+>   
+> -    probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> -                 mmu_index, ra);
+> +    if (flags != NULL) {
+> +        *flags = probe_access_flags(env, adjust_addr(env, addr), curlen,
+> +                                    access_type, mmu_index, nonfault, host, ra);
+> +    } else {
+> +        probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> +                     mmu_index, ra);
+> +    }
+> +
+>       if (len > curlen) {
+>           addr += curlen;
+>           curlen = len - curlen;
+> -        probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> -                     mmu_index, ra);
+> +        if (flags != NULL) {
+> +            *flags = probe_access_flags(env, adjust_addr(env, addr), curlen,
+> +                                        access_type, mmu_index, nonfault,
+> +                                        host, ra);
+> +        } else {
+> +            probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> +                         mmu_index, ra);
+> +        }
+>       }
+>   }
+>   
+> +
+>   static inline void vext_set_elem_mask(void *v0, int index,
+>                                         uint8_t value)
+>   {
+> @@ -332,8 +349,8 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+>       MMUAccessType access_type = is_load ? MMU_DATA_LOAD : MMU_DATA_STORE;
+>   
+>       /* Check page permission/pmp/watchpoint/etc. */
+> -    flags = probe_access_flags(env, adjust_addr(env, addr), size, access_type,
+> -                               mmu_index, true, &host, ra);
+> +    probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
+> +                true);
+>   
+>       if (flags == 0) {
+>           if (nf == 1) {
+> @@ -635,7 +652,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+>       uint32_t vma = vext_vma(desc);
+>       target_ulong addr, addr_probe, addr_i, offset, remain, page_split, elems;
+>       int mmu_index = riscv_env_mmu_index(env, false);
+> -    int flags;
+> +    int flags, probe_flags;
+>       void *host;
+>   
+>       VSTART_CHECK_EARLY_EXIT(env);
+> @@ -649,15 +666,15 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+>       }
+>   
+>       /* Check page permission/pmp/watchpoint/etc. */
+> -    flags = probe_access_flags(env, adjust_addr(env, addr), elems * msize,
+> -                               MMU_DATA_LOAD, mmu_index, true, &host, ra);
+> +    probe_pages(env, addr, elems * msize, ra, MMU_DATA_LOAD, mmu_index, &host,
+> +                &flags, true);
+>   
+>       /* If we are crossing a page check also the second page. */
+>       if (env->vl > elems) {
+>           addr_probe = addr + (elems << log2_esz);
+> -        flags |= probe_access_flags(env, adjust_addr(env, addr_probe),
+> -                                    elems * msize, MMU_DATA_LOAD, mmu_index,
+> -                                    true, &host, ra);
+> +        probe_pages(env, addr_probe, elems * msize, ra, MMU_DATA_LOAD,
+> +                    mmu_index, &host, &probe_flags, true);
+> +        flags |= probe_flags;
+>       }
+>   
+>       if (flags & ~TLB_WATCHPOINT) {
+> @@ -669,16 +686,16 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+>               addr_i = adjust_addr(env, base + i * (nf << log2_esz));
+>               if (i == 0) {
+>                   /* Allow fault on first element. */
+> -                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LOAD);
+> +                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LOAD,
+> +                            mmu_index, &host, NULL, false);
+>               } else {
+>                   remain = nf << log2_esz;
+>                   while (remain > 0) {
+>                       offset = -(addr_i | TARGET_PAGE_MASK);
+>   
+>                       /* Probe nonfault on subsequent elements. */
+> -                    flags = probe_access_flags(env, addr_i, offset,
+> -                                               MMU_DATA_LOAD, mmu_index, true,
+> -                                               &host, 0);
+> +                    probe_pages(env, addr_i, offset, 0, MMU_DATA_LOAD,
+> +                                mmu_index, &host, &flags, true);
+>   
+>                       /*
+>                        * Stop if invalid (unmapped) or mmio (transaction may
 
 
