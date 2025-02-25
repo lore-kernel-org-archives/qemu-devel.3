@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A94CC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 20:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D34C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 20:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn1aQ-0001nj-SN; Tue, 25 Feb 2025 15:31:28 -0500
+	id 1tn1eX-0003O7-OL; Tue, 25 Feb 2025 15:35:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1aO-0001nG-JW
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:31:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1eV-0003N5-Nw
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:35:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1aM-0001KA-HH
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:31:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1eT-0001lk-RS
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:35:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740515481;
+ s=mimecast20190719; t=1740515737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PNWoHXjRjWt3cHg8VqZRfmUuxjgqlDm0SNmDBAv6VxY=;
- b=Vsx0gZzHjsJ/24pE/1uSlcpp7NLPKMPdHrdCRsMgGnMd3BmiZr6wjGqNq8e0jdO41H/LKX
- 69WKmu3uzE1yhH//YH3PGgdMwnupP8ya9C6baXJc+7iFSI7xTenhUhnYL7PVMje1aBDWl9
- C2ERixKzjeWdcV+QPEz7pzjRdQXRmtM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PFBv8BK/pFKeqZQ8O2GBiiq2v8eyvJum0gmQG6gMpOo=;
+ b=Uv6iFvzzg+5dKF3bkJGtH0CaJg75dOpjeBe7zvfKjUdxkxxhDeE0XAL9ZcOxFnzOD/DEJU
+ +EJ63LIV5jg8UWnWqMgKDDRn3duDSkyq4QTTxHccKBpdMd6AvkdPxlsBfC5TMSJczH1jq6
+ 4+Fzo1h31j5fOxctTv7afJiFL6CShjQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-TPbwLiuuNjO_2u6K2jbLdg-1; Tue, 25 Feb 2025 15:31:18 -0500
-X-MC-Unique: TPbwLiuuNjO_2u6K2jbLdg-1
-X-Mimecast-MFC-AGG-ID: TPbwLiuuNjO_2u6K2jbLdg_1740515477
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38f2726c0faso6305158f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 12:31:18 -0800 (PST)
+ us-mta-619-ByWb366lOn6tjO3tjc88PA-1; Tue, 25 Feb 2025 15:35:35 -0500
+X-MC-Unique: ByWb366lOn6tjO3tjc88PA-1
+X-Mimecast-MFC-AGG-ID: ByWb366lOn6tjO3tjc88PA_1740515734
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4399a5afc72so30803245e9.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 12:35:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740515477; x=1741120277;
+ d=1e100.net; s=20230601; t=1740515734; x=1741120534;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PNWoHXjRjWt3cHg8VqZRfmUuxjgqlDm0SNmDBAv6VxY=;
- b=IqbQ+BXyZoALYcOA8N+7EQUsNBqhYcNvICGcHDRzDOrcKd3/7ahuPi4ZEFpf8b4SDt
- 10wejFRUq6rORUEAihG7TeKTnWr7CvlHgpK9oZeNtxbY4vxSEi71Rk7aDpxe+kmanH7n
- U5EQVrIFfRw3a8TqY5XBFJ7VPge0KVJp6HFM2cq+2xzU5ayWJ//S6UUmi6RNkpxWSCuG
- JI4nvho9HJea5scx6fS7ARCU0zGieHqjsps0UQLu8eGxh0z+5eSvCfgTgsw1y+FEnRHU
- q205uORCJwc/O0eCT8IeAfmegVuJM2tXhTQZvJLFaGr3aCxxjZ8pZwvHoh18mfidmnYT
- zyfw==
+ bh=PFBv8BK/pFKeqZQ8O2GBiiq2v8eyvJum0gmQG6gMpOo=;
+ b=XRH6TCM7lDSVeO7UHZmK5SWh7l8eceSIjKtnPQV5hGtiR3AbbnCwu78+tBrNWF9Qp+
+ u68Ihzxen+oMDCB9nceZhirXEG43YR3u++ZPIOSxEnFm0b8EfNoAJyqDJYtRkntSf3gN
+ VbbwI1inuW0d7rV/qBUO7cShE2y+voCLKXLlIYt1HX/31eF9hAcWPcubfW4GpBw+528a
+ PhED9BnDD1dFDv321UB2J8SQHHhvUhTeqR869z8+c8dx0aECVBEXAoGHYh3MxOWF4Pkb
+ /i/jmI2kACAKFpFTcnRemJd2hNCVRFw5tGRkzsVOOVugB9L1HDAZJ52LrbRxX9Rr1KXg
+ G8kA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8+CDdJeWH0iDe/ov59XYSJMI0QgFVEMGmiqxSylJvmTs2uHiVamY4CoutqB0EFDEcxrVBLLFdCTTt@nongnu.org
-X-Gm-Message-State: AOJu0YzhS7qAl7esIRuyFz+j3B4KUSt99HXVO4G6yhHxw/hOcnH8V7vY
- ChNf/m3lrbnw1WSQ6hRUPW0BVhGd1bmDxrpvBCLSACVUpvHTicFueXHE1atW5tKndCmSzn0DIIL
- FayOqopaP0LLu5qQ7xbG3KvxUX7AH4nu3S2YN35SpPM/UJ3Zse+UR
-X-Gm-Gg: ASbGnctG/v1iHrWHzpZb/orly955pyDWOh6uwcH9UNx0wXZsD8ABkT9tCwpbYZyegiy
- gZXM5mmMSWMQZk5XYfXlfTBFrb4n3YidQINzJDCy7QXozSAf10dy7F665AVPnvHXs4aV9EW4jqH
- M2JJcRv3YE42ErH0xGahqlvC/QfvcnwH9mty93v8sWibeUOLOen08ggY0tJAx3vbcdDriHWj6z7
- NqOT5awku1gdNj93wkfaWQJC6Ctr9BJ54/cdRLLAAB0lpx0M2aAJ5wjkOephW1Wlt3mEj6rGZw8
- Amc4kFIV2Hk2Z90Ty1Ls8MezYIDrxUxEJjucJG00kIVyMrw=
-X-Received: by 2002:a05:6000:1549:b0:38d:df29:e14f with SMTP id
- ffacd0b85a97d-390cc631b46mr5122092f8f.43.1740515477068; 
- Tue, 25 Feb 2025 12:31:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE0dFnmZu9aclT5r1nRl0XDKIO/v9GAJ2zjbY+4uKYcwyOLJa86RjufdbCc5WGMwFQvPpUcRw==
-X-Received: by 2002:a05:6000:1549:b0:38d:df29:e14f with SMTP id
- ffacd0b85a97d-390cc631b46mr5122076f8f.43.1740515476751; 
- Tue, 25 Feb 2025 12:31:16 -0800 (PST)
+ AJvYcCUKBN98aqBBsoouVFqoE7EpAzrULSiVnn40sMTpAlRz5H8MvVKbf/g3RKZQRx5xTsB/1nPuhnY/YZ0R@nongnu.org
+X-Gm-Message-State: AOJu0YwWxou340Nt4AN6cwXj4IuFhNTnJCZS6IVo0ukLpy1MQ+kcasY2
+ TFzC4AFR5xlIjU3aUYKsQEBSG0l4tFyaONovHXtZCCNudQr3aIdAmMwHKDJBLKLccJermIXOsSV
+ JmJ0jpRfknB4PuCQzwjOaDtBClOKgSeUulmRng8ODYSVlbV2N4EyAocPbO3Il
+X-Gm-Gg: ASbGnct7oNwkC4aKOTpstssxWMabyAPjBMsdNrJb6Gkh5xlVZWY6Napgcgh7e+Uk2Td
+ 6Hv9jFQHxDpGHCDk28ROOGFkEE1KFsBgh1GSap9f3uH6cj5pz4wgz7Rnw4AYhRUHwI0fBWJEoLz
+ ji9malxHhRBZCUSWVSf6FmPLDwqj7ge+tZ/n6oAQPYt0BZ6Aqc8efRg6rSmNs2cYw/XUkDId2GE
+ fLczsWXwq/+MQFjICbJRopMBhTqTRBMhEH2ztNUKtAmR+XyDfu8VMwZsdvINgLSUEbNBXWgAtjq
+ lNOJ+ERaAVU97c9G6+QPk+GUkxv+UAEcETYp1GknS5P0Ryk=
+X-Received: by 2002:a05:600c:35cb:b0:439:8dbc:1d0e with SMTP id
+ 5b1f17b1804b1-43ab6e7b4f3mr25597915e9.10.1740515734026; 
+ Tue, 25 Feb 2025 12:35:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFKRjFYoUrGEyCezD+FL9H55qXeITmtBv1EvtPR4w8gbDbHrb0GAlihiAocUgw7XJU4Q1un/A==
+X-Received: by 2002:a05:600c:35cb:b0:439:8dbc:1d0e with SMTP id
+ 5b1f17b1804b1-43ab6e7b4f3mr25597745e9.10.1740515733553; 
+ Tue, 25 Feb 2025 12:35:33 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
  [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd8fbcabsm3358078f8f.86.2025.02.25.12.31.14
+ 5b1f17b1804b1-43ab1546df4sm37844265e9.17.2025.02.25.12.35.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 12:31:15 -0800 (PST)
-Message-ID: <9f3daa57-6ba4-483b-be6f-b19bde52cb12@redhat.com>
-Date: Tue, 25 Feb 2025 21:31:13 +0100
+ Tue, 25 Feb 2025 12:35:32 -0800 (PST)
+Message-ID: <84a51a63-50f7-4592-ba75-5e3234571987@redhat.com>
+Date: Tue, 25 Feb 2025 21:35:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iotests: Stop NBD server in test 162 before starting the
- next one
-From: Thomas Huth <thuth@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+Subject: Re: Problem with iotest 233
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Qemu-block <qemu-block@nongnu.org>,
+ QEMU Developers <qemu-devel@nongnu.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250225070650.387638-1-thuth@redhat.com>
+References: <5a31e4fb-3e0f-4455-9941-18b00287b276@redhat.com>
+ <Z72XfP8gI9-SB4B9@redhat.com>
+ <f500b606-b999-426c-8d72-50a9ba9e84ac@redhat.com>
+ <574cdf2e-6b8c-4ff3-9a2b-a7d00c92a788@redhat.com>
+ <Z74En98KD0v11X8w@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -127,9 +131,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250225070650.387638-1-thuth@redhat.com>
+In-Reply-To: <Z74En98KD0v11X8w@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -155,40 +159,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/02/2025 08.06, Thomas Huth wrote:
-> Test 162 recently started failing for me for no obvious reasons (I
-> did not spot any suspicious commits in this area), but looking in
-> the 162.out.bad log file, there was a suspicious message at the end:
+On 25/02/2025 18.57, Daniel P. Berrangé wrote:
+> On Tue, Feb 25, 2025 at 06:52:43PM +0100, Thomas Huth wrote:
+>> On 25/02/2025 18.44, Thomas Huth wrote:
+>>> On 25/02/2025 11.12, Kevin Wolf wrote:
+>>>> Am 25.02.2025 um 08:20 hat Thomas Huth geschrieben:
+>>>>>
+>>>>>    Hi!
+>>>>>
+>>>>> I'm facing a weird hang in iotest 233 on my Fedora 41 laptop. When running
+>>>>>
+>>>>>    ./check -raw 233
+>>>>>
+>>>>> the test simply hangs. Looking at the log, the last message is "== check
+>>>>> plain client to TLS server fails ==". I added some debug messages, and it
+>>>>> seems like the previous NBD server is not correctly terminated here.
+>>>>> The test works fine again if I apply this patch:
+>>>>>
+>>>>> diff --git a/tests/qemu-iotests/common.nbd b/tests/qemu-iotests/common.nbd
+>>>>> --- a/tests/qemu-iotests/common.nbd
+>>>>> +++ b/tests/qemu-iotests/common.nbd
+>>>>> @@ -35,7 +35,7 @@ nbd_server_stop()
+>>>>>            read NBD_PID < "$nbd_pid_file"
+>>>>>            rm -f "$nbd_pid_file"
+>>>>>            if [ -n "$NBD_PID" ]; then
+>>>>> -            kill "$NBD_PID"
+>>>>> +            kill -9 "$NBD_PID"
+>>>>>            fi
+>>>>>        fi
+>>>>>        rm -f "$nbd_unix_socket" "$nbd_stderr_fifo"
+>>>>>
+>>>>> ... but that does not look like the right solution to me. What could prevent
+>>>>> the qemu-nbd from correctly shutting down when it receives a normal SIGTERM
+>>>>> signal?
+>>>>
+>>>> Not sure. In theory, qemu_system_killed() should set state = TERMINATE
+>>>> and make main_loop_wait() return through the notification, which should
+>>>> then make it shut down. Maybe you can attach gdb and check what 'state'
+>>>> is when it hangs and if it's still in the main loop?
+>>>
+>>> I attached a gdb and ran "bt", and it looks like it is hanging in an
+>>> exit() handler:
+>>>
+>>> (gdb) bt
+>>> #0  0x00007f127f8fff1d in syscall () from /lib64/libc.so.6
+>>> #1  0x00007f127fd32e1d in g_cond_wait () from /lib64/libglib-2.0.so.0
+>>> #2  0x00005583df3048b2 in flush_trace_file (wait=true) at
+>>> ../../devel/qemu/ trace/simple.c:140
+>>> #3  st_flush_trace_buffer () at ../../devel/qemu/trace/simple.c:383
+>>> #4  0x00007f127f8296c1 in __run_exit_handlers () from /lib64/libc.so.6
+>>> #5  0x00007f127f82978e in exit () from /lib64/libc.so.6
+>>> #6  0x00005583df1ae9e1 in main (argc=<optimized out>, argv=<optimized
+>>> out>) at ../../devel/qemu/qemu-nbd.c:1242
+>>
+>> Ah, now that I wrote that: I recently ran "configure" with
+>> --enable-trace-backends=simple ... when I remove that from "config.status"
+>> again, then the test works fine again 8-)
+>>
+>> Still, I think it should not hang with the simple trace backend here, should it?
 > 
->   qemu-nbd: Cannot lock pid file: Resource temporarily unavailable
+> IIUC this is waiting on trace_empty_cond.
 > 
-> And indeed, the test starts the NBD server two times, without stopping
-> the first server before running the second one, so the second one can
-> indeed fail to lock the PID file. Thus let's make sure to stop the
-> first server before the test continues with the second one. With this
-> change, the test works fine for me again.
+> This condition should be signalled from wait_for_trace_records_available
+> which is in turn called from writeout_thread.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/qemu-iotests/162 | 1 +
->   1 file changed, 1 insertion(+)
+> This thread is started from st_init, which is called from trace_init_backends
+> which should be called from qemu-nbd. I would expect this thread to still
+> be running when exit() handlers are run.
 > 
-> diff --git a/tests/qemu-iotests/162 b/tests/qemu-iotests/162
-> index 94dae60d304..956c2c5f339 100755
-> --- a/tests/qemu-iotests/162
-> +++ b/tests/qemu-iotests/162
-> @@ -65,6 +65,7 @@ done
->   
->   $QEMU_IMG info "json:{'driver': 'nbd', 'host': 'localhost', 'port': $port}" \
->       | grep '^image' | sed -e "s/$port/PORT/"
-> +_stop_nbd_server
->   
->   # This is a test for NBD's bdrv_refresh_filename() implementation: It expects
->   # either host or path to be set, but it must not assume that they are set to
+> Does GDB show any other threads running at the time of this hang ?
 
-By the way, this problem also seems to be caused by running configure with 
---enable-trace-backends=simple ... but I think stopping the previous server 
-before running the next one is still a good idea.
+There is indeed a second thread running:
+
+(gdb) thread apply all bt
+
+Thread 2 (Thread 0x7f657096b6c0 (LWP 1117884) "qemu-nbd"):
+#0  0x00007f6573419f1d in syscall () from /lib64/libc.so.6
+#1  0x0000562bbad9b783 in qemu_futex_wait (f=0x562bbaed25d8 
+<rcu_call_ready_event>, val=4294967295) at 
+../../devel/qemu/include/qemu/futex.h:29
+#2  0x0000562bbad9b9af in qemu_event_wait (ev=0x562bbaed25d8 
+<rcu_call_ready_event>) at ../../devel/qemu/util/qemu-thread-posix.c:465
+#3  0x0000562bbada86a6 in call_rcu_thread (opaque=0x0) at 
+../../devel/qemu/util/rcu.c:278
+#4  0x0000562bbad9bba3 in qemu_thread_start (args=0x562bf958a5c0) at 
+../../devel/qemu/util/qemu-thread-posix.c:542
+#5  0x00007f6573398168 in start_thread () from /lib64/libc.so.6
+#6  0x00007f657341c14c in __clone3 () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x7f65711c1240 (LWP 1117883) "qemu-nbd"):
+#0  0x00007f6573419f1d in syscall () from /lib64/libc.so.6
+#1  0x00007f6573932e1d in g_cond_wait () from /lib64/libglib-2.0.so.0
+#2  0x0000562bbadc8d4f in flush_trace_file (wait=true) at 
+../../devel/qemu/trace/simple.c:140
+#3  0x0000562bbadc96fa in st_flush_trace_buffer () at 
+../../devel/qemu/trace/simple.c:383
+#4  0x00007f65733436c1 in __run_exit_handlers () from /lib64/libc.so.6
+#5  0x00007f657334378e in exit () from /lib64/libc.so.6
+#6  0x0000562bbad2952e in main (argc=12, argv=0x7ffc6939ee58) at 
+../../devel/qemu/qemu-nbd.c:1242
 
   Thomas
 
