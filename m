@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D7CC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 340C3C021BB
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzxo-0002VN-Lq; Tue, 25 Feb 2025 13:47:31 -0500
+	id 1tmzxU-0002K8-Oj; Tue, 25 Feb 2025 13:47:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmzx1-0002Bx-Kw
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:47 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tmzww-0002B0-MC
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:35 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmzww-0000HW-El
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:38 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43994ef3872so36925905e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:46:33 -0800 (PST)
+ id 1tmzwt-0000Gr-P2
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:33 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-38f286b5281so3027024f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:46:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740509192; x=1741113992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740509190; x=1741113990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jbTRpF5vcyxr/D6s1C7IEHtKwvLNoxEVjp74TTMjyRA=;
- b=KSuLm6NC0auNjEkAYnkCF7hs5IrLZo9PFbObcN3tn+89PKLR9Qx0rcrhwYmsiUXqTO
- 4iNuKs3c9F/bOvEqrzVmeCT+cvedAEk/0mC0n1SSK6yiWZWqhKm4wm6Pgf+HUBhRbgoM
- EmgmRlUUaMtaPetosxpZhIzdSGZ6g8ShWzIjDAIFNDEkt5ZR29SSfIKf2TZXbN8S2iTu
- Gk4FxzmxyUWhCoMrRPiIcPAPCeXaQ1J3ZKDOB6r0UIkDaE6vPFbghuN2Xj023BNYVOsM
- 0JGDpC0V5RLejwyVXIArEtjmzASYJsCvQNkrmVXTAlsuwFXDv3dQkVEA2LT8Ru6plAaS
- ScKA==
+ bh=ARpHgUZMwp8raT8BG/xC2iQyd8jk567fSMLDtTYJSPM=;
+ b=FOiselbwCHwxQO00iT1MyiVB4lOgO1sL+c3oGg6Hm+hhHY1Lpb3EXEM2oup4VXz3ql
+ 62xsYVbx9MPlJ1BfMCmlRLRRcgk/QMfXv4eLxrPZdl4iVGtfZ/VLD7K4oLcvC6RR54Gt
+ z7XwRR8MDr2lGy+CKAHGG0s4tVKTyvkCItXbfesoVOQ+jB1z1O+1QhcehQ+5su9ZGn4X
+ ns5YSrtuw1hSIVyTZAL6bHM+Bw7wzfd1ijCAEYyrKGu2CG7vZ3y8niF78qOZC3pxIoUX
+ +ChXCCbvQkIM9gT5r36Iej3FAZEWc/RdqUZBNQO2Ijvv3svfZzLL/nxh5c3XvFiPSPm6
+ vw4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740509192; x=1741113992;
+ d=1e100.net; s=20230601; t=1740509190; x=1741113990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jbTRpF5vcyxr/D6s1C7IEHtKwvLNoxEVjp74TTMjyRA=;
- b=VOmeD9EBhyfdVqDzA8vcXZOdPfeUhBGki9UNGEQJmR8/m9/6YzyVjnsxub+KlCgs3P
- sjE9T1eOFlbEKF95rXy8BXZui6t/Rf4yRPEKvlYK6nyotGEXl6CjBI1sTNdgbw3aU1ic
- w7jADBrnEYwj99d81xD5odd8e/ZCCD5K0FrfNWm9/BJw3K9/zIIyU29Jl4eh5m6FVaTY
- Y2bjsmVo8d1EQqapfyKGHtHJJgCQpXiXv9T3A47f5l7jQ+YBghXWGgu1BbnoHQgMd4Ki
- IfuVV9MkNhzmMGZ5TlxZ+uQW5bq+17m0TmE+utbHXe6fhZr27H2jZNoU9FW7xXsBBQb7
- +ARQ==
-X-Gm-Message-State: AOJu0YwMtvz913ZyMXELJKBcKIiY7haqUyiaKuN48LuNi9CfdPWtpgiL
- J07OB+2H/EaLAMzg2lSQZ1MgwFr6RQZsWJcu9jLVN0zp3ltrf/RWfWgAhaz6R2E=
-X-Gm-Gg: ASbGncsctcIED2t5xGLadIPm9kNEVQrah4LQvVyT69qVkQ8Mvpbo9nvvIFzGR57iAAK
- /KwW8sjFSH9S6oJEE6pSP2CROGpBa6+O9t2Zduebdt2IMFaRWppUeD93V8epUhJiJITNQmNbrYW
- t0gDYkYyItAsuhPfKUOzRfUHUPBhFYos7tPYBgTtDK6QkX1/v/2YImMEBxpgLQHeLvwy2eWSngf
- K7ivSe35YDIJaxxyafVGpuzaBKNVxelfF6kRnY3DIZgcfILAQK0HhPQhmgqXXtUnSP9KEbBN/sL
- XVV+yg5ClYS6qQVyWTVmAXgNO5kj
-X-Google-Smtp-Source: AGHT+IEq+ldn02LlB8ALfv/2PVb8RbqIIo0TN5XbPlxoSQ+pECInXYnm9NeoahrWW6BwXX+G3WOhCQ==
-X-Received: by 2002:a5d:64e4:0:b0:38d:a879:4778 with SMTP id
- ffacd0b85a97d-390cc60aeb6mr4538882f8f.33.1740509192240; 
- Tue, 25 Feb 2025 10:46:32 -0800 (PST)
+ bh=ARpHgUZMwp8raT8BG/xC2iQyd8jk567fSMLDtTYJSPM=;
+ b=GpfPtK1SOHRRc8/wFuasu/9NFBJFwmTfohPPGPHFbTWJktwf8eiRlw3pdbgqRKq+Wr
+ rzLfjtyXapZkLN1RAfFjNBxNWck7hkAKFtCWlpWnip9MfHQie6AX1AQItz4FUcEPUW9J
+ toOpiqlL6ato5dNIQZzFBn/afd0T+qqnqo85Bq72BzWnuOJNUiwoKpwpu0e9t0b9t6y9
+ YV9FUPSwOiQJI4jZY9dioenNftX6vxrXBPZpSChB8hqauowKbk6Ti/tCmbBRW92fmH1d
+ C72Qi0o5Zd9RoXutYprW7fsZs+ZGzhqJzSdDlnsNetGE/7hGr17hhF89RVonh655gfGu
+ v7SQ==
+X-Gm-Message-State: AOJu0YzPOS3znv0GBGemVxGGga9lTPBb8qgrfCFomwgRMuMKr2B3M9sG
+ 6S31mE6o5ns8lfsFhsQpT2v9N2kHdgqK4DX/K6hvMd+5JNX7qpXuL06UgAhVULo=
+X-Gm-Gg: ASbGnctktQXDTMLqjuPUuK4+CFX9hGWRnECEyDg+brci1HWIzCpNdAerQgNuwEkdq6N
+ b4bGd1W6Fy7tdmEvdyq2013RkpeFBMHpex2AwLxK6ilKiGxskWy8B92d+SyFXcQITwE5ggkh1WY
+ TIX+s5QfVdOQcpRkyyFPsFjprT1k0KcZb3xHP5BuXxWcpwXk46DZj7AgpUykS60mwFe0It5A/z5
+ wDIXxPEKOt7ytirz0Bc/g6uSw9uuR0OqwNqsNJI76CZcwzad9MYdmVO1PHYywc58IPDIIttHG75
+ OSwcDjqI92Jn9tbl34X50VVhxvfm
+X-Google-Smtp-Source: AGHT+IG7LBX5isWh9+nF7DsNMmQlPdiw5XO1qegu9qkEXqvicwVGPGvgkUJxM1uj5zVf61SE11dkxw==
+X-Received: by 2002:a5d:5f53:0:b0:38f:23f4:2d7a with SMTP id
+ ffacd0b85a97d-38f70827f18mr15613618f8f.40.1740509189848; 
+ Tue, 25 Feb 2025 10:46:29 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab155eb77sm37328515e9.32.2025.02.25.10.46.29
+ ffacd0b85a97d-390cd8e70c8sm3151125f8f.76.2025.02.25.10.46.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 25 Feb 2025 10:46:29 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B2C1F5F9D7;
+ by draig.lan (Postfix) with ESMTP id 844E95F9D0;
  Tue, 25 Feb 2025 18:46:28 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,17 +74,17 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 3/4] cputlb: introduce tlb_flush_other_cpu for reset use
-Date: Tue, 25 Feb 2025 18:46:27 +0000
-Message-Id: <20250225184628.3590671-4-alex.bennee@linaro.org>
+Subject: [PATCH 1/4] target/ppc: drop ppc_tlb_invalidate_all from cpu_reset
+Date: Tue, 25 Feb 2025 18:46:25 +0000
+Message-Id: <20250225184628.3590671-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250225184628.3590671-1-alex.bennee@linaro.org>
 References: <20250225184628.3590671-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,120 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The commit 30933c4fb4 (tcg/cputlb: remove other-cpu capability from
-TLB flushing) introduced a regression that only shows up when
---enable-debug-tcg is used. The main use case of tlb_flush outside of
-the current_cpu context is for handling reset and CPU creation. Rather
-than revert the commit introduce a new helper and tweak the
-documentation to make it clear where it should be used.
+The vCPU parent already triggers a tb_flush so this is un-needed:
+
+  #0  tlb_flush_other_cpu (cpu=0x555556df8630) at ../../accel/tcg/cputlb.c:419
+  #1  0x0000555555ee38c9 in tcg_cpu_reset_hold (cpu=0x555556df8630) at ../../accel/tcg/tcg-accel-ops.c:88
+  #2  0x0000555555bc29e5 in cpu_exec_reset_hold (cpu=0x555556df8630) at ../../system/cpus.c:208
+  #3  0x00005555558932c3 in cpu_common_reset_hold (obj=0x555556df8630, type=RESET_TYPE_COLD) at ../../hw/core/cpu-common.c:139
+  #4  0x0000555555d480b1 in ppc_cpu_reset_hold (obj=0x555556df8630, type=RESET_TYPE_COLD) at ../../target/ppc/cpu_init.c:7200
+  #5  0x0000555555ef28f0 in resettable_phase_hold (obj=0x555556df8630, opaque=0x0, type=RESET_TYPE_COLD) at ../../hw/core/resettable.c:162
+  #6  0x0000555555ef24f4 in resettable_assert_reset (obj=0x555556df8630, type=RESET_TYPE_COLD) at ../../hw/core/resettable.c:58
+  #7  0x0000555555ef244c in resettable_reset (obj=0x555556df8630, type=RESET_TYPE_COLD) at ../../hw/core/resettable.c:45
+  #8  0x0000555555eef525 in device_cold_reset (dev=0x555556df8630) at ../../hw/core/qdev.c:239
+  #9  0x00005555558931ab in cpu_reset (cpu=0x555556df8630) at ../../hw/core/cpu-common.c:114
+  #10 0x0000555555d1ec6b in ppce500_cpu_reset (opaque=0x555556df8630) at ../../hw/ppc/e500.c:785
+  #11 0x000055555595c410 in legacy_reset_hold (obj=0x555556e6bbc0, type=RESET_TYPE_COLD) at ../../hw/core/reset.c:76
+  #12 0x0000555555ef28f0 in resettable_phase_hold (obj=0x555556e6bbc0, opaque=0x0, type=RESET_TYPE_COLD) at ../../hw/core/resettable.c:162
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - appraently reset can come from both cpu context and outside
-  - add cpu_common_post_load fixes
----
- include/exec/exec-all.h   | 20 ++++++++++++++++----
- accel/tcg/cputlb.c        | 11 +++++++++++
- accel/tcg/tcg-accel-ops.c |  2 +-
- cpu-target.c              |  2 +-
- target/i386/machine.c     |  2 +-
- 5 files changed, 30 insertions(+), 7 deletions(-)
+ target/ppc/cpu_init.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index d9045c9ac4..cf030001ca 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -64,12 +64,24 @@ void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr);
-  * tlb_flush:
-  * @cpu: CPU whose TLB should be flushed
-  *
-- * Flush the entire TLB for the specified CPU. Most CPU architectures
-- * allow the implementation to drop entries from the TLB at any time
-- * so this is generally safe. If more selective flushing is required
-- * use one of the other functions for efficiency.
-+ * Flush the entire TLB for the specified current CPU.
-+ *
-+ * Most CPU architectures allow the implementation to drop entries
-+ * from the TLB at any time so this is generally safe. If more
-+ * selective flushing is required use one of the other functions for
-+ * efficiency.
-  */
- void tlb_flush(CPUState *cpu);
-+/**
-+ * tlb_flush_other_cpu:
-+ * @cpu: CPU whose TLB should be flushed
-+ *
-+ * Flush the entire TLB for a specified CPU. For cross vCPU flushes
-+ * you shuld be using a more selective function. This is really only
-+ * used for flushing CPUs being reset from outside their current
-+ * context.
-+ */
-+void tlb_flush_other_cpu(CPUState *cpu);
- /**
-  * tlb_flush_all_cpus_synced:
-  * @cpu: src CPU of the flush
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index ad158050a1..fc16a576f0 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -417,6 +417,17 @@ void tlb_flush(CPUState *cpu)
-     tlb_flush_by_mmuidx(cpu, ALL_MMUIDX_BITS);
- }
- 
-+void tlb_flush_other_cpu(CPUState *cpu)
-+{
-+    if (qemu_cpu_is_self(cpu)) {
-+        tlb_flush(cpu);
-+    } else {
-+        async_run_on_cpu(cpu,
-+                         tlb_flush_by_mmuidx_async_work,
-+                         RUN_ON_CPU_HOST_INT(ALL_MMUIDX_BITS));
-+    }
-+}
-+
- void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *src_cpu, uint16_t idxmap)
- {
-     const run_on_cpu_func fn = tlb_flush_by_mmuidx_async_work;
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 6e3f1fa92b..e85d317d34 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -85,7 +85,7 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
- {
-     tcg_flush_jmp_cache(cpu);
- 
--    tlb_flush(cpu);
-+    tlb_flush_other_cpu(cpu);
- }
- 
- /* mask must never be zero, except for A20 change call */
-diff --git a/cpu-target.c b/cpu-target.c
-index 667688332c..8eb1633c02 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -56,7 +56,7 @@ static int cpu_common_post_load(void *opaque, int version_id)
-     /* 0x01 was CPU_INTERRUPT_EXIT. This line can be removed when the
-        version_id is increased. */
-     cpu->interrupt_request &= ~0x01;
--    tlb_flush(cpu);
-+    tlb_flush_other_cpu(cpu);
- 
-     /* loadvm has just updated the content of RAM, bypassing the
-      * usual mechanisms that ensure we flush TBs for writes to
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index d9d4f25d1a..e66f46758a 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -401,7 +401,7 @@ static int cpu_post_load(void *opaque, int version_id)
-         env->dr[7] = dr7 & ~(DR7_GLOBAL_BP_MASK | DR7_LOCAL_BP_MASK);
-         cpu_x86_update_dr7(env, dr7);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 062a6e85fb..f987b75c4f 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7242,9 +7242,6 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
+     if (tcg_enabled()) {
+         cpu_breakpoint_remove_all(cs, BP_CPU);
+         cpu_watchpoint_remove_all(cs, BP_CPU);
+-        if (env->mmu_model != POWERPC_MMU_REAL) {
+-            ppc_tlb_invalidate_all(env);
+-        }
+         pmu_mmcr01a_updated(env);
      }
--    tlb_flush(cs);
-+    tlb_flush_other_cpu(cs);
-     return 0;
- }
  
 -- 
 2.39.5
