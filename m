@@ -4,104 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F9CC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A34C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmrdz-0000MR-7q; Tue, 25 Feb 2025 04:54:27 -0500
+	id 1tmrfe-0001DK-1r; Tue, 25 Feb 2025 04:56:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tmrdx-0000M9-NT
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:54:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tmrfb-0001D5-Cy
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:56:08 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tmrds-0006uG-LS
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:54:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740477258;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1CnndPjAaiAZFF4YhSUuLBS1QitPd0p4DCMjO7h/WNw=;
- b=fOXo+QKgXI/5qtIVv1k432U5Wvk8ZG5+MUpl1+DqUc9irpkn8xFXTs2ZXElvQjubrXe2Vr
- W7+ZXEmGf4X3olwrDKK+zjrkeeKmGJY1melGlHxntaj8hU+PfBxUkb66rcOTrXYMfDPbP9
- 2Okzxef+vJPUuyMISZXhcgzEUFhuQOM=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-zdV0137rO2CxS7yafOiMew-1; Tue, 25 Feb 2025 04:54:15 -0500
-X-MC-Unique: zdV0137rO2CxS7yafOiMew-1
-X-Mimecast-MFC-AGG-ID: zdV0137rO2CxS7yafOiMew_1740477254
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-abbaa560224so520391166b.3
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 01:54:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740477254; x=1741082054;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1CnndPjAaiAZFF4YhSUuLBS1QitPd0p4DCMjO7h/WNw=;
- b=mP3yVvHUkFk6GxiP6VHdq+NRh/mCALPtVXQrE516vS9M8hy+myuUBSxzkFYhrcIQdj
- C/Gh3LeubF9KTgBMFQ1n9u7SG9hOaK3lIUiiiCfuIq22QRWaWpVXTHmny3ujtHzd05b5
- uhvD96KSBYc7yoFSt+Ob2dV/mSyE+WFLQQI/DCkVl6tiHMkZfiNN6who9oq6Up7rzGOO
- YMaVUJe+TV6oP3jXDOl8D2tJ1X4N7PWIk6Q2xix4REDz/c5gDL+4x5EcWXVaji32+bOJ
- S+XpU3WlkYnJ03i6SeEYVPmGdDIKx6xW/EFz85yF314gBlLWNVyunn4/2gKSCItWK8P9
- gsfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNiA6Lui5nAV/rSMCtGzOz9jmJAk7AD3PFZ2rP/0hzvjcJA932d1G2gW2PgVIVHl+UhKrkc/foJi3m@nongnu.org
-X-Gm-Message-State: AOJu0Yxvh8fBWgygTDqhxiooqJh8BUX2E3k1wV4OWcgn89U0/YfS8B1l
- IQns7PGwJUfe4I0bz0RiO/pzZr1Len4dbd1o/Il+KgY8nEVVFBgLkNGgLF7ksDgexnNpb7DPNrc
- +n4W6TRIjaBZ6kPYyGpq4KGQ21hnZLi80LL8BcngcO93/2r+LLS/5YoEqp4WcE0k+AY8OGFlX50
- yaDBh44C4qMcQ5hLyvUQPs+Sb04KI=
-X-Gm-Gg: ASbGncvftw/hQhEsGaPoWeLIMC+Zhxmy3OsgeiAGdxgWAHcBeWGGP10gqdGhKA1OppK
- CABQe/8x2W76uqRgyS9joGsgF0DS0XAX+1IKEQlynMzt2K8c+3gjcXRd+7ngx6vLtFy2g66ihNw
- ==
-X-Received: by 2002:a17:906:31cf:b0:ab6:ef33:402 with SMTP id
- a640c23a62f3a-abc0d9e4ef5mr1510870466b.18.1740477253827; 
- Tue, 25 Feb 2025 01:54:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHK2s6X/Y4+S7Ee3G8Mt9fE3xPjyjQYRVpGJsxK5EUMdjOeTeyeCmqazyNyM5XTxW2Wtw6/o5Y/8zYEQ+diPyA=
-X-Received: by 2002:a17:906:31cf:b0:ab6:ef33:402 with SMTP id
- a640c23a62f3a-abc0d9e4ef5mr1510868266b.18.1740477253409; Tue, 25 Feb 2025
- 01:54:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tmrfY-00079h-TH
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:56:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1740477365; x=1772013365;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=jDDPZgTYh2ucTSEU02Q+0XVKfJmHM7vvajnT3JsASxY=;
+ b=I9SQN1EYHJG4TEBOwiNhmTL2PdCMUy9kyEzyG0MbJh9WizBXFNfGrUbA
+ tGt27GjsF5W0xnZ0vNh5M0tlh8RQ3dCPl90QmzCHwV+RM0Wvzz0Mh0DV0
+ qeIDNvbYPV8kBxaNzHcBOfNNylx/WVQPBbR01n6TuTgkOKQEIr3noiRB/
+ 406U0h0DjXQ0Z1emEaE2xp758YrlN22UPKw2UfJu4dk5S0/mLVp6hk6Bd
+ Fa1TBbfLBIektrTBwErCdpyZdB9LUbXW7boZQoM9qrpumDNQ75R9CMkKC
+ jxsASdvYFsycK2PvhBIBWrtwJaJD0j4mNE0r5bxntzsYrwJdN5DGxNdQl w==;
+X-CSE-ConnectionGUID: xsRqd+EXScmE5Z6DENoyBQ==
+X-CSE-MsgGUID: 7FNc/0UYR1Sz8dx9/4oVDw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11355"; a="66644666"
+X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208";a="66644666"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2025 01:56:02 -0800
+X-CSE-ConnectionGUID: Jel9C8EYQySLBbMWybqPdA==
+X-CSE-MsgGUID: m/EPt7kvRJSqgnGXSuIsWg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208";a="121283339"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2025 01:55:56 -0800
+Message-ID: <77e3769b-7f79-42d0-8eaa-18e916800fa0@intel.com>
+Date: Tue, 25 Feb 2025 17:55:52 +0800
 MIME-Version: 1.0
-References: <20250214153443.159889-1-anisinha@redhat.com>
- <xhprkjs2yj5yli65opi7md7gfylqxgdkiwap76stcxcx7jdpub@fauqiqm5giyi>
- <CAK3XEhMs=Do_3FA+Tyb9u4u+9XELvJUk3-SKAeuxciM-bsvDhQ@mail.gmail.com>
- <6t76cizlvnhufhg7j6v5dpyjj3k6ba4urd3r7563d3g3e6wnsf@7aenaqnc5d5a>
-In-Reply-To: <6t76cizlvnhufhg7j6v5dpyjj3k6ba4urd3r7563d3g3e6wnsf@7aenaqnc5d5a>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Tue, 25 Feb 2025 15:24:01 +0530
-X-Gm-Features: AWEUYZnj8QXurhycJhvOZJWCZmvJFpRdDKHGRED4Gct2WeukVltb7nmEYMn9smI
-Message-ID: <CAK3XEhM40mD1_ucpB1-oWEMLucFLVyt6OpoQ+F2PShiUEgsnOA@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Gerd Hoffman <kraxel@redhat.com>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 08/52] i386/tdx: Initialize TDX before creating TD vcpus
+To: Francesco Lavra <francescolavra.fl@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
+ <20250124132048.3229049-9-xiaoyao.li@intel.com>
+ <6571727841685f4276aa7c814776ff1fdd162a0a.camel@gmail.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <6571727841685f4276aa7c814776ff1fdd162a0a.camel@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,67 +95,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 25, 2025 at 2:09=E2=80=AFPM Gerd Hoffman <kraxel@redhat.com> wr=
-ote:
->
-> On Tue, Feb 25, 2025 at 10:51:08AM +0530, Ani Sinha wrote:
-> > On Mon, Feb 24, 2025 at 9:17=E2=80=AFPM Gerd Hoffman <kraxel@redhat.com=
-> wrote:
-> > >
-> > > Works nicely for me.  Test case:
-> > >   https://kraxel.gitlab.io/uefi-tools-rs/seabios.efi
-> >
-> > yeah if I can't get my unit test working we can make this an
-> > integration test. or best case scenario, we can have both.
->
-> Do you have a branch with your unit test somewhere?
->
-> > > Also this adds five fw_cfg files.  Given that the number of fw_cfg fi=
-les
-> > > we can have is limited I'm not convinced this is the best idea to mov=
-e
-> > > forward.
-> >
-> > Right, For implementation, I suggest we combine FILE_VMFWUPDATE_OBLOB
-> > and FILE_VMFWUPDATE_FWBLOB together and also make
-> > FILE_VMFWUPDATE_CONTROL part of the same structure. These are all
-> > writable by the guest so makes sense to have one fwcfg for it. We can
-> > have another read-only fwcfg for FILE_VMFWUPDATE_BIOS_SIZE and
-> > FILE_VMFWUPDATE_CAP.
->
-> I'd prefer to put everything into one file.  Maybe except the opaque
-> blob page.  A struct along the lines of:
->
-> struct vmfwupdate {
->     u64 capabilities;   // 'cap' file
->     u64 firmware_size;  // 'bios-size' file
->     u64 control;        // disable bit etc.
->     u64 update_paddr;   // 'fw-blob' file, paddr field
->     u64 update_size;    // 'fw-blob' file, size field
-> }
->
-> On the host side you'll need two copies of the struct then: one where
-> the guest can read from and write to, and one shadow struct where the
-> actual values are stored.  The write callback goes sanity-check the
-> guest-written data, takes everything which passes into the shadow
-> struct, finally goes copy back the shadow struct to the guest struct
-> so the guest can see what the host has accepted.
->
-> Part of the verification process can be that you already copy the
-> firmware to a host buffer.
+On 2/19/2025 6:14 PM, Francesco Lavra wrote:
+> On Fri, 2025-01-24 at 08:20 -0500, Xiaoyao Li wrote:
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index 45867dbe0839..e35a9fbd687e 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -540,8 +540,15 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+>>   
+>>       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+>>   
+>> +    /*
+>> +     * tdx_pre_create_vcpu() may call cpu_x86_cpuid(). It in turn
+>> may call
+>> +     * kvm_vm_ioctl(). Set cpu->kvm_state in advance to avoid NULL
+>> pointer
+>> +     * dereference.
+>> +     */
+>> +    cpu->kvm_state = s;
+> 
+> This assignment should be removed from kvm_create_vcpu(), as now it's
+> redundant there.
 
-I think we decided early on that we would not want to do that - that
-is consume extra memory on the host side for boot components.
-right alex?
+I'll just drop the change in this patch since there is no dependency in 
+cpu_x86_cpuid() in current upstream QEMU.
 
-Best using dma_* functions, these return
-> errors in case something went wrong (say the paddr passed is not backed
-> by guest ram).  Which gives you the chance to propagate those errors
-> back to the guest before it'll actually try to launch the updated
-> firmware via reset.
->
-> take care,
->   Gerd
->
+>>       ret = kvm_arch_pre_create_vcpu(cpu, errp);
+>>       if (ret < 0) {
+>> +        cpu->kvm_state = NULL;
+> 
+> No need to reset cpu->kvm_state to NULL, there already are other error
+> conditions under which cpu->kvm_state remains initialized.
+> 
+>>           goto err;
+>>       }
+>>   
+>> @@ -550,6 +557,7 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+>>           error_setg_errno(errp, -ret,
+>>                            "kvm_init_vcpu: kvm_create_vcpu failed
+>> (%lu)",
+>>                            kvm_arch_vcpu_id(cpu));
+>> +        cpu->kvm_state = NULL;
+> 
+> Same here.
 
 
