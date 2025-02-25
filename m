@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBACBC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41081C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzLX-0005GW-S8; Tue, 25 Feb 2025 13:07:56 -0500
+	id 1tmzLX-0005Gb-SI; Tue, 25 Feb 2025 13:07:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJS-0008VZ-Si
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:50 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1tmzJh-0000Gc-0T
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:01 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJG-0002FN-US
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:37 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38f2b7ce319so4932523f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:33 -0800 (PST)
+ id 1tmzJb-0002Ky-H2
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:58 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4399deda38cso36758515e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506732; x=1741111532; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506751; x=1741111551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0JcBFgIX1k9qKb/9fOhS3EkBYk5j5U8LD6sAYLyZV2c=;
- b=nSNbhi5m0PdcxAAc5epohlPStF8Dpfk6TRtknGnBYDjfH6lodaqGwpklIc1oB8vCPM
- c9B+noPegFuGl3aQYcfD5Q8/PufQ4+mEjR31pBLxnpM3MxKsYQYjnbDXzAm9VHyAD/2o
- GJh9Sh0mF+R25FeKg/nYZa9Q0QuJT3lrHgbU1637PqDRbUp3AY/KOa3IaajsIkzlxYUk
- KWwLOQAUm4btWDKAnzD3hxrFrkBC2vfKW1j6tTV4ykH1lNNL7jICZuKn/EMQ+1qUFyq5
- VYRWM2R5MtuIxINRNjryG28VmqkbNinkMc0Mm5H7+hWVkXCmQlPsqPEC9KGEfI1f9hpT
- 98kQ==
+ :reply-to; bh=i3LaSe6B2Ol1+6mqM3jCwCvLSHRa2sV49bRJeNYJwAY=;
+ b=cq3b5co3O/oSFqIbASHbpfkRDXl/Zm0/yAwMudZYKYnkBzvDHPYTu9oxCnuHAiAmhs
+ paQZIjgNHBlXmoUpVGMgvcge8EDifoa32558r0sdOqAj9zOKce/GmbkTmFimxbDggV1o
+ 85rBEQrFYDXPC5XlCXz69vpx4FVoSTOc1y+xpVoNK3YvQaVL0iYuKoNvrRvnXup9Sxyc
+ GY+VyhmuzLXGlQK+eZIqjl3xX5jUifG6zvOq7OnG6IvLikDmD1tHT80tDyXFAm8lHTb3
+ 39TLr/f6pRa+QgbIwIrmOJFVI0rnCFJWimuE6li08x7LkGPeAcxqBpFqyQivjgDFhEW3
+ B7IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506732; x=1741111532;
+ d=1e100.net; s=20230601; t=1740506751; x=1741111551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0JcBFgIX1k9qKb/9fOhS3EkBYk5j5U8LD6sAYLyZV2c=;
- b=AW6mYN+thd4p2dCbr+ibfR7IUE0gnuudcTqpoyyB2gMSZh5F/EZ3k64UQToBeSEber
- fTlSz/9LqB0QkhF4TC5nI1HoTX0avMJiVdmcnEGnc3BpQcrgInrQDcrly8Op75Ou9Guu
- H8X93C2mtZq+kJsj8RiOv3DS3c59bmrxHnSNjNCT1htYVgBaWCewkpwjBoO+MOzgPe+o
- L3lFtpgE5S8fWj6a89kBbX8339m24E7OxKM78fD3ryK4BrGI/6/Wdkss7i01qwRiQIDd
- QfpfOwR0KeVZb8Zb1Y3qEfmWOmP8cvj+q1O34htaFcPzNrCfszvoM1tgKCQWsFWuTNIt
- RdGg==
-X-Gm-Message-State: AOJu0Yw+U8Lq3eMHiTlCiT6j5lsEzTga9ayIdMjMGNpOZYCKrrVlAWub
- 0eQC7uTl4Y+h2ghDUvlqId2w/iaw6llIc2sctdfFfZCr4QI5Ne5ClkSw3MN9Zqu8l5pQmjyTs+C
- E
-X-Gm-Gg: ASbGnctO4TEbPvOFgJHs3H2UUTIFT5VPsj/Rw8qHoQ77Yl25jMQByqsswzdnirlfMOc
- 9PHZOfEAt9PHrHCWU1xrQJ+YZkuSM8lChMdhKNIgvqDgJTNY7+uk6jLaoF3iAreeIB/JdQenE0h
- HWp0Aiq8NqmbS7BCE6XKMIcyKJFXlQcGOPEkL0beF76vsY0qqRyRi4pcntZcc8GsgJOCcqbuajQ
- QJ2tZTTRaNO/jVMnDq9NAjZ3LXN5UJb3HOKrqTFMnEUF2KYJCtI6t37NIxXy23ROEnO/zDt90rs
- DcjFBUnxiV4R7TH6oLuNtEIano8/9+FM
-X-Google-Smtp-Source: AGHT+IEu4eiVwgrdvNv7kdekRb+3SCqpIAxBUfSSzj63vvO6IRBlFc4VHWrQkO8l7Lg46HwHQcEBog==
-X-Received: by 2002:a5d:4090:0:b0:38d:ba09:86b5 with SMTP id
- ffacd0b85a97d-390d4fa3559mr173579f8f.52.1740506732472; 
- Tue, 25 Feb 2025 10:05:32 -0800 (PST)
+ bh=i3LaSe6B2Ol1+6mqM3jCwCvLSHRa2sV49bRJeNYJwAY=;
+ b=JNgWBf2njnqH0bR7i/WSZ74mnMKbyrEQahZF5ppMUMqIgMBkMcZXw3G2gD1RCgYNME
+ W8BDeSF6FB09WTOoRGbY6UUb5PKk5twdj0NLhIrjk1ePm+ZgeoiuOlwc7AJqArThuErV
+ 1C61JyiO23+Zc4A7LZMjKqpa9VX5J4qH+fWqpo4Ia2z7G3rbjoz59vlnJO7p07Hm2PK/
+ xpZ8zjwj85Av4MCc/HLKJfe2JOBeuPvigKcgm9JfdVgu2UNhwXrz6zEz2jedR6FdeY5E
+ exovBQSdCXHZ8hdlzfinlF78G3/zq/5B8TAx5OVLyw/csmgn8gsnei/wgE0mcSgUrQeN
+ cfyg==
+X-Gm-Message-State: AOJu0YzC4HFvM/Yg71aLVsv24Pd67ygDQPjypLQ/O6Cz9f6d+qKefyN7
+ lQ6kyK14WFKqOauv9ZLUDe69sBkK+q/vpk+ui/Oybc8HUgGlRmyiIK0eXCojDK0dnRDs7vHNICE
+ F
+X-Gm-Gg: ASbGncvAG55KyK07uh0/r7Ljo6XVVmTWmPOg+bGuBhYocmEa15x7DEmyxP+HQ/55YlM
+ e7qKs8SrhahLQeLlp9zd1BSSzo1fb7ou8w/12pYD3sJfzAK7WR8xyu84uRDogRewvlm5KnZ3bhz
+ VNedPKh1YHI1LvZx9gkJQye9B6STBZX/eRutm5coo6W5CXzu6kaNo3K3Lhjl4ze6jCn5doLlvll
+ ND5JjI7ag/QDG6GqSzAzNg3aoHqellGOEWVBIUKxq6B+xMB+h4V1/Pg0CuwlSVN5PLDRRVZ/crQ
+ q56pA6J9zjCdePISdaYcM3Z4UvPOSyxA
+X-Google-Smtp-Source: AGHT+IEC4L8jlV28AqjnbzDf24I4wyuxSdwFZ8/iqnCsqoYtZEV6HrtA+RaUOHc55AIH5Xwpj341gQ==
+X-Received: by 2002:a05:600c:5012:b0:439:98b0:f8ce with SMTP id
+ 5b1f17b1804b1-43ab60f0c1bmr25818195e9.7.1740506750722; 
+ Tue, 25 Feb 2025 10:05:50 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.31
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:31 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:50 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/43] fpu: Always decide no_signaling_nans() at runtime
-Date: Tue, 25 Feb 2025 18:04:43 +0000
-Message-ID: <20250225180510.1318207-18-peter.maydell@linaro.org>
+Subject: [PULL 33/43] hw/arm/fsl-imx8mp: Add SNVS
+Date: Tue, 25 Feb 2025 18:04:59 +0000
+Message-ID: <20250225180510.1318207-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,40 +98,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have a compile-time shortcut where we
-return false from no_signaling_nans() on everything except
-Xtensa, because we know that's the only target that
-might ever set status->no_signaling_nans.
+From: Bernhard Beschow <shentey@gmail.com>
 
-Remove the ifdef, so we always look at the status flag;
-this has no behavioural change, but will be necessary
-if we want to build softfloat once for all targets.
+SNVS contains an RTC which allows Linux to deal correctly with time. This is
+particularly useful when handling persistent storage which will be done in the
+next patch.
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20250223114708.1780-7-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250224111524.1101196-10-peter.maydell@linaro.org
-Message-id: 20250217125055.160887-8-peter.maydell@linaro.org
 ---
- fpu/softfloat-specialize.c.inc | 4 ----
- 1 file changed, 4 deletions(-)
+ docs/system/arm/imx8mp-evk.rst |  1 +
+ include/hw/arm/fsl-imx8mp.h    |  2 ++
+ hw/arm/fsl-imx8mp.c            | 10 ++++++++++
+ 3 files changed, 13 insertions(+)
 
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 8327f727861..a2c6afad5da 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -85,11 +85,7 @@ this code that are retained.
-  */
- static inline bool no_signaling_nans(float_status *status)
- {
--#if defined(TARGET_XTENSA)
-     return status->no_signaling_nans;
--#else
--    return false;
--#endif
- }
+diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+index f0df346113f..22541c54424 100644
+--- a/docs/system/arm/imx8mp-evk.rst
++++ b/docs/system/arm/imx8mp-evk.rst
+@@ -12,6 +12,7 @@ The ``imx8mp-evk`` machine implements the following devices:
+  * Up to 4 Cortex-A53 cores
+  * Generic Interrupt Controller (GICv3)
+  * 4 UARTs
++ * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
  
- /* Define how the architecture discriminates signaling NaNs.
+ Boot options
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index ce5188e7f23..26e24e99a15 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -12,6 +12,7 @@
+ #include "cpu.h"
+ #include "hw/char/imx_serial.h"
+ #include "hw/intc/arm_gicv3_common.h"
++#include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+ #include "hw/misc/imx8mp_ccm.h"
+ #include "qom/object.h"
+@@ -36,6 +37,7 @@ struct FslImx8mpState {
+     GICv3State         gic;
+     IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
++    IMX7SNVSState      snvs;
+     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
+ };
+ 
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index bc15b25ca16..18c9c54ddc6 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -201,6 +201,8 @@ static void fsl_imx8mp_init(Object *obj)
+ 
+     object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALOG);
+ 
++    object_initialize_child(obj, "snvs", &s->snvs, TYPE_IMX7_SNVS);
++
+     for (i = 0; i < FSL_IMX8MP_NUM_UARTS; i++) {
+         g_autofree char *name = g_strdup_printf("uart%d", i + 1);
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+@@ -344,6 +346,13 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+     }
+ 
++    /* SNVS */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
++                    fsl_imx8mp_memmap[FSL_IMX8MP_SNVS_HP].addr);
++
+     /* Unimplemented devices */
+     for (i = 0; i < ARRAY_SIZE(fsl_imx8mp_memmap); i++) {
+         switch (i) {
+@@ -352,6 +361,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_GIC_DIST:
+         case FSL_IMX8MP_GIC_REDIST:
+         case FSL_IMX8MP_RAM:
++        case FSL_IMX8MP_SNVS_HP:
+         case FSL_IMX8MP_UART1 ... FSL_IMX8MP_UART4:
+             /* device implemented and treated above */
+             break;
 -- 
 2.43.0
 
