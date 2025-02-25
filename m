@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC3CC021BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 23:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1078BC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 23:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn3tS-0004rd-5N; Tue, 25 Feb 2025 17:59:14 -0500
+	id 1tn3uX-0005Y8-M0; Tue, 25 Feb 2025 18:00:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tn3tP-0004qS-TM; Tue, 25 Feb 2025 17:59:11 -0500
+ id 1tn3uW-0005XT-1o; Tue, 25 Feb 2025 18:00:20 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tn3tN-0001TH-Vt; Tue, 25 Feb 2025 17:59:11 -0500
+ id 1tn3uU-0001iz-HC; Tue, 25 Feb 2025 18:00:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=CIQZtTxZ9dSzJ63DwaSEAqQOseP0TJPTyoSVi6I177I=; b=U77c1/V4eDJ2H/ZCTQvlfEpOpE
- hhFHiWNsqar0LB+9g7fWRSgKSl0tKQSf3MT4cB9a+/7iXJsB5Vc9vuCuJAj0Dstpgh27h/Mt00Mw9
- FF0dSJ4vSZTH6RFuCHK/VnbTUTKIoKznfJLMPk1qYFlb45ng1LYjH9MaUMwxNQALxDrlo9W0qFpwL
- 2yUj1qvNXp6ZhC2FXIZ2u/gbzZl7ZPAWqJRdLnv8dzj+oug9mQGM87o4ID8DkahmiT2uDmba2cSK6
- 1u2oGYlBU63tReNiWyK/8yIyRc0ergiazfAUWXvYo5eqW41unPWCqan8WCqQdzyweMBV19OPghHmh
- 4uUBrHtsPPDY3EzCnD6kqFBswSKdkjiL7l/aotzjuQjT9KQBs54jQxn8xHeZZP7VzgZFlFBzBv+OD
- F7uc+6+ifOwZtOCnBQRzAtr0TGveZuYAhLWeBFcZ92COIxAgT03hx5wrekE3dc7GHZfXdlDhDJiUs
- KxprxABzSU9h364mTGbXfyoHZt+kVRwa4BXbJ8HPoySWwQG+liYsscPQmUL9TcoXkdZ/tXJGEUQzz
- Zt+VlsPNqYz1KyjyxpWrq+7Af4LScUQFKJ1IIq03z6i55suwYcemsDvE86xxEEbb0xHe5LLSaCCSc
- mIXRH9B7PGwLtDm+CuMygJqMwZSbQRsHxNOdLqWm4=;
+ bh=OWpLD21RQDUGppEC1QJ4WufmJfCVg/TYzxSV6bseKN0=; b=h7WTeIwXpHQmUNIgaLd/ioq0iI
+ Sn11coao7EpMW5ItyH2nxbehcmqmS7wXy+aGLN3MvmFxW9j3OPRI9SCh6NtPLlJZ746Sssoh1mS/u
+ bsTr7hR5VYI/sPQUNJhd5zRD/xJnSgoST0UPy4JZlHa7iSB7psqN6KpDT5JbnRAeew4WIFvSL7OrT
+ VyO6CmrI4Z1onkvy20ouZ0GRlDYXXNwXzmmB07mGzi8z01WQTfYecEXni/dazwQL9b/CgvBsmCjI0
+ HM4eDAeC2ncA0/icQOZeUo4R22FBoeWzfe7ouK1hDJPeXG0LWnr5mKAWdrMl3cyxqaKs8as+WXCqt
+ vdfEXDU/7NI8ng99geaAb0f2daJ7the8pc7SaxXcY89wrjqp9ssNcx4Yxz18E4qAUOYKMN78le7j6
+ HM9vmbE029IzPl4nZbELMUR6+Ud4fP3U2dKrCB53PhGVSxz8hSugHz2WsoA2FMij5J1rD3MdXF5t2
+ nPRqyxEMvw/PcmQh7rsCAvnrScZ9ls7HModHjZh5mDXAzWMcNfDN8VBLUQLtl5NCx4t2wMSBhGHxe
+ 4lpHC7jn5Qz7DEmiGCUZHiPwiswz5RuGRehwNbgjmie3M5t7aFyjBKm9MEWRbZVzsbLHnduD8Dlsu
+ MR9iDu+UMgaQU2FQ7tDdYSSyVr4KO124BjXZmypV0=;
 Received: from [2a02:8012:2f01:0:bfa1:1a8d:fd43:3eec]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tn3sK-00068j-UE; Tue, 25 Feb 2025 22:58:09 +0000
-Message-ID: <0b12354f-2e47-4520-ae28-e08c3990d6cb@ilande.co.uk>
-Date: Tue, 25 Feb 2025 22:58:57 +0000
+ id 1tn3tW-00069C-Nn; Tue, 25 Feb 2025 22:59:22 +0000
+Message-ID: <46dc11e7-ae37-45d2-9032-7afbf6e6a7f6@ilande.co.uk>
+Date: Tue, 25 Feb 2025 23:00:11 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, qemu-trivial@nongnu.org
-Cc: Jd Lyons <lyons_dj@yahoo.com>
-References: <20250222122850.9D8B84E603D@zero.eik.bme.hu>
+ qemu-ppc@nongnu.org
+Cc: philmd@linaro.org
+References: <20250224141026.3B36C4E6010@zero.eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -71,12 +71,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20250222122850.9D8B84E603D@zero.eik.bme.hu>
+In-Reply-To: <20250224141026.3B36C4E6010@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:bfa1:1a8d:fd43:3eec
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/misc/macio: Improve trace logs
+Subject: Re: [PATCH v2] hw/misc/macio/gpio.c: Add constants for register bits
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -102,45 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/02/2025 12:28, BALATON Zoltan wrote:
+On 24/02/2025 14:10, BALATON Zoltan wrote:
 
-> Add macio_gpio_read trace event and use that in macio_gpio_read()
-> instead of macio_gpio_write. Also change log message to match
-> macio_timer_{read,write}.
+> Add named constants for register bit values that should make it easier
+> to understand what these mean.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/misc/macio/gpio.c       | 2 +-
->   hw/misc/macio/trace-events | 3 ++-
->   2 files changed, 3 insertions(+), 2 deletions(-)
+>   hw/misc/macio/gpio.c | 19 ++++++++++++-------
+>   1 file changed, 12 insertions(+), 7 deletions(-)
 > 
 > diff --git a/hw/misc/macio/gpio.c b/hw/misc/macio/gpio.c
-> index 7cad62819a..4364afc84a 100644
+> index 4364afc84a..e87bfca1f5 100644
 > --- a/hw/misc/macio/gpio.c
 > +++ b/hw/misc/macio/gpio.c
-> @@ -135,7 +135,7 @@ static uint64_t macio_gpio_read(void *opaque, hwaddr addr, unsigned size)
->           }
+> @@ -34,6 +34,11 @@
+>   #include "qemu/module.h"
+>   #include "trace.h"
+>   
+> +enum MacioGPIORegisterBits {
+> +    OUT_DATA   = 1,
+> +    IN_DATA    = 2,
+> +    OUT_ENABLE = 4,
+> +};
+>   
+>   void macio_set_gpio(MacIOGPIOState *s, uint32_t gpio, bool state)
+>   {
+> @@ -41,14 +46,14 @@ void macio_set_gpio(MacIOGPIOState *s, uint32_t gpio, bool state)
+>   
+>       trace_macio_set_gpio(gpio, state);
+>   
+> -    if (s->gpio_regs[gpio] & 4) {
+> +    if (s->gpio_regs[gpio] & OUT_ENABLE) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "GPIO: Setting GPIO %d while it's an output\n", gpio);
 >       }
 >   
-> -    trace_macio_gpio_write(addr, val);
-> +    trace_macio_gpio_read(addr, val);
->       return val;
->   }
+> -    new_reg = s->gpio_regs[gpio] & ~2;
+> +    new_reg = s->gpio_regs[gpio] & ~IN_DATA;
+>       if (state) {
+> -        new_reg |= 2;
+> +        new_reg |= IN_DATA;
+>       }
 >   
-> diff --git a/hw/misc/macio/trace-events b/hw/misc/macio/trace-events
-> index ad4b9d1c08..055a407aeb 100644
-> --- a/hw/misc/macio/trace-events
-> +++ b/hw/misc/macio/trace-events
-> @@ -18,7 +18,8 @@ macio_timer_read(uint64_t addr, unsigned len, uint32_t val) "read addr 0x%"PRIx6
->   macio_set_gpio(int gpio, bool state) "setting GPIO %d to %d"
->   macio_gpio_irq_assert(int gpio) "asserting GPIO %d"
->   macio_gpio_irq_deassert(int gpio) "deasserting GPIO %d"
-> -macio_gpio_write(uint64_t addr, uint64_t val) "addr: 0x%"PRIx64" value: 0x%"PRIx64
-> +macio_gpio_write(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
-> +macio_gpio_read(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
+>       if (new_reg == s->gpio_regs[gpio]) {
+> @@ -107,12 +112,12 @@ static void macio_gpio_write(void *opaque, hwaddr addr, uint64_t value,
 >   
->   # pmu.c
->   pmu_adb_poll(int olen) "ADB autopoll, olen=%d"
+>       addr -= 8;
+>       if (addr < 36) {
+> -        value &= ~2;
+> +        value &= ~IN_DATA;
+>   
+> -        if (value & 4) {
+> -            ibit = (value & 1) << 1;
+> +        if (value & OUT_ENABLE) {
+> +            ibit = (value & OUT_DATA) << 1;
+>           } else {
+> -            ibit = s->gpio_regs[addr] & 2;
+> +            ibit = s->gpio_regs[addr] & IN_DATA;
+>           }
+>   
+>           s->gpio_regs[addr] = value | ibit;
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
