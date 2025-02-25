@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A420C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99AFC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzKh-0001bX-Kk; Tue, 25 Feb 2025 13:07:04 -0500
+	id 1tmzKf-0001Ni-Ev; Tue, 25 Feb 2025 13:07:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ7-0008KC-0k
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:32 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tmzJX-00005N-3J
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:52 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ3-0002CU-HH
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:24 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4399a1eada3so51884815e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:20 -0800 (PST)
+ id 1tmzJT-0002Hr-0K
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:50 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-439950a45daso37500485e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506719; x=1741111519; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506741; x=1741111541; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9zEHrLPYFeMG4fULt50R96qgu5RM9N21N5VDqzltXms=;
- b=IiDZ3xGTq471MEaBY3VfhvjA4g1aFEV4aOSjBEXaed0Wxxm+f465jadXRf/GFTi7vy
- L9wRwGW/tWsnogIja2qcGz6Y/zYEKxnzgvlNxYn+1wqcqRxXLcHXxUVH4x9SnJTPncxv
- SQLfNvn0ubW3mWsjPLtqKBXXpK0wCKMyKGiQyW47lhwyUD19HUGC7jd2S6fjhQ9qnFs6
- SvXswoAjGycgPYEp8qYvSKv0jqOLOydYqSgpcVbMf+csVNqaUZyXssAih5ziUG2KG/An
- t237H4Oc0/YaYA9W3ZuDZ3oXicRiI/8H8h/8QlvO8L7zKYXXLk25bSdUY0JW++0TCRcO
- kOSg==
+ :reply-to; bh=6oWV1pSNijlLP/iH4WWfrlnyyIqKScPafOaD025E8r4=;
+ b=rK4SjgchHq+CffjMW3f+clAp3dQVI/gCECqqZtM2JMqazRGjE04ChN7UIsobSq9GkW
+ hVUgIlHLisa0IXomT+COf5JltMnECKRk+yTaDm3PKLmWMbeDk/QcHu914EaljXv+26Fz
+ WNxZPxRSuS1kXcIxo24ytqJxPKQe3KR7AtaQKzcn5zfbUiIKiAb61VWMkFGyQoPmOSKl
+ KInnpKwkaxRhPx/CGnLGzl2hpcty/zykAGjtwRpXHAGnJ9gwWp7GxWyQI7znz+A0pOq0
+ bcZ1f/EkCf68lzKQO+mX43bDmsWbeyPi24blfaAYfD6EwXUtDLHKvfJLv2sBURXaHXBV
+ P2pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506719; x=1741111519;
+ d=1e100.net; s=20230601; t=1740506741; x=1741111541;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9zEHrLPYFeMG4fULt50R96qgu5RM9N21N5VDqzltXms=;
- b=nRrVGM5RUaq+5NZCyS+meDkMfcURI91xX2aiCQUtpfACA+QJdMzerfb4lIR7KGqdty
- 9lb/Pc5uyKssefCYmYCpwbkkN9r2NKxkea93i7SVDDh6XDBJuQI6loW49kGcvecukHhE
- RWtXKQ5+Ol65ooh/Y5yLhifnLPTLAoDyjgQzaWTZXoDOSR5XYT6cGOnJUtC8M9x84N0V
- Ziot7G+eVB+mAPKR9I4dOT7Kw4tReoj4gjbny4YDe8Hk/hWSJbYDI3Ell575KEj3osFR
- bUgKNmu9Uk5c2zGCLhiYDQnAZ2CGxhIn70e44tpXL9wB5q8PW4AevmsJvWpeKS7itb0C
- QV3g==
-X-Gm-Message-State: AOJu0Yx630QamGM/VaqBFq0knxQTQnY4qSa6PD1D2sNCk7e/983nBwWH
- TBjTkcl3dCMv0uLB6yG+Uiy3hsgjQCs7wkClADajikbQQnr7ZHnBAjM03EQ/UYBMprSX1MXFNAH
- h
-X-Gm-Gg: ASbGnculNlo6ODbeTjZpLaaPKLKxsbjSi6+F5mDLJcj1ZgmhD1f+rNFr9Tl0sV6XqXF
- cKSQsyimYyDfPVR00jRDaRFSHVA1OO2IkNHOEmEUbHkyGnfi1YpGxOzLoP/Ixd+SXeDYsgGtAEu
- K3uWE482u6PwzGcXN4mWLHThUkWRA66MpKdU5etS1OUrGwx+zfdaCYofdT6HiV2dx0YnCPojBCm
- MfrB130xz25YBQ+DGIr8RQ004zvpSYycM+bqnb0kekVAFgNFc8Se+9iK3bIjGRhu9uSybYXg8IQ
- MGpDG1xAtmyTrrCfNL55cuybgUMnENMy
-X-Google-Smtp-Source: AGHT+IHae6GBfgySJ9gDDFLlpFl01Xl3vOTKLVvRy8ch/PFQUlfzYrfkLZ3hBjL95p7Buwnid4xkLg==
-X-Received: by 2002:a05:600c:1c1e:b0:438:a240:c63 with SMTP id
- 5b1f17b1804b1-43ab8fd05d4mr5165795e9.2.1740506719495; 
- Tue, 25 Feb 2025 10:05:19 -0800 (PST)
+ bh=6oWV1pSNijlLP/iH4WWfrlnyyIqKScPafOaD025E8r4=;
+ b=N02kXwp4qnAYYwcbv72RkfdO8YPPubWrL/7Z/Nzy21rLef/IInFwMdVuJvMUIwpkyf
+ ize7wlkgc5Iepryh0HscQhy1GipRONoL6c5kSUdeV4PG975DQwLGjP/o8KpUFuhdRO8K
+ i7yI7Sn5W1526dAjpsuEkkz745TDDblAjglzZOvY0fQXmStsuWHZhYSs4ydCvDjqLufa
+ KNQEt8OEe4aKYqFkz3fTEb8fcyypatG8eT4pbOjjdA/vBhwgcpxZZ2CwADhWjaek8KZl
+ 8gnLnlhqGmFH000d0BGOdPQXQPW2YghPpVbcpiOoW6sHsj0tGHelWllXaqtcYixgRZaU
+ 4CRw==
+X-Gm-Message-State: AOJu0Ywnt/+gpjfkh6V5OkYH1bi/+C+ZtomVvnIcsFYa/gc12EFBqPXh
+ xG/+DpTfNcnLPC+M9LQNvce/6hUJl8DQNLDgJUHU4ZcqdFDBaqgE99jdE6je0sXbRN/DqRsNDnz
+ q
+X-Gm-Gg: ASbGncteZUilM1bARnGwrC0fh+0Ns5nGDiF7gp+PYLdFlfGL73s7uDEjBzUdabIVeoK
+ d6XyLGRwp+HnI1tNc5cVhhTibuJ2+fWdl6a5+eJLSw73Wl6Z6QtrQ/45x3jYA9DjTn1RVGFBhZz
+ e3rAymyGSFBba6Cc8/whXe3FTS+1TPu1QGIPLzzgW7pLAtLNG7t810s3HZlsMNT7x/1D2cupC30
+ 7TMp+P+H7X32H/Xwuhyjh2n3dUjE/ab4PQFYvcs3vkUgrmes8ToGV/mB1ipqFaeMfIcFy2WrfaM
+ 7aSfznlWtUkhB/YX4DtBvUGqw+j2NBum
+X-Google-Smtp-Source: AGHT+IGsWnu+ehyXm4TrZm4hmUWGjJGg5TFDpqCimhFBRg8MhxaCkXSBb34Qd2v4UoDlee+YAmi5Gw==
+X-Received: by 2002:a05:600c:4588:b0:439:88bb:d020 with SMTP id
+ 5b1f17b1804b1-43ab0f2dcb1mr33484395e9.8.1740506741218; 
+ Tue, 25 Feb 2025 10:05:41 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.18
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:18 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/43] hw/mips/boston: Check for error return from
- boston_fdt_filter()
-Date: Tue, 25 Feb 2025 18:04:31 +0000
-Message-ID: <20250225180510.1318207-6-peter.maydell@linaro.org>
+Subject: [PULL 24/43] target/arm: Rename vfp_helper.c to vfp_fpscr.c
+Date: Tue, 25 Feb 2025 18:04:50 +0000
+Message-ID: <20250225180510.1318207-25-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +98,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function boston_fdt_filter() can return NULL on errors (in which
-case it will print an error message).  When we call this from the
-non-FIT-image codepath, we aren't checking the return value, so we
-will plough on with a NULL pointer, and segfault in fdt_totalsize().
-Check for errors here.
+The vfp_helper.c in the target/arm directory now only has
+code for handling FPSCR/FPCR/FPSR in it, and no helper
+functions. Rename it to vfp_fpscr.c; this helps keep it
+distinct from tcg/vfp_helper.c.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250206151214.2947842-4-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250221190957.811948-5-peter.maydell@linaro.org
 ---
- hw/mips/boston.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/arm/{vfp_helper.c => vfp_fpscr.c} | 2 +-
+ target/arm/meson.build                   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ rename target/arm/{vfp_helper.c => vfp_fpscr.c} (98%)
 
-diff --git a/hw/mips/boston.c b/hw/mips/boston.c
-index 4690b254dda..de6ce1f163d 100644
---- a/hw/mips/boston.c
-+++ b/hw/mips/boston.c
-@@ -810,6 +810,10 @@ static void boston_mach_init(MachineState *machine)
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_fpscr.c
+similarity index 98%
+rename from target/arm/vfp_helper.c
+rename to target/arm/vfp_fpscr.c
+index cc0f055ef0d..92ea60ebbf2 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_fpscr.c
+@@ -1,5 +1,5 @@
+ /*
+- * ARM VFP floating-point operations
++ * ARM VFP floating-point: handling of FPSCR/FPCR/FPSR
+  *
+  *  Copyright (c) 2003 Fabrice Bellard
+  *
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 2e10464dbb6..3065081d241 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -4,7 +4,7 @@ arm_ss.add(files(
+   'debug_helper.c',
+   'gdbstub.c',
+   'helper.c',
+-  'vfp_helper.c',
++  'vfp_fpscr.c',
+ ))
+ arm_ss.add(zlib)
  
-             dtb_load_data = boston_fdt_filter(s, dtb_file_data,
-                                               NULL, &dtb_vaddr);
-+            if (!dtb_load_data) {
-+                /* boston_fdt_filter() already printed the error for us */
-+                exit(1);
-+            }
- 
-             /* Calculate real fdt size after filter */
-             dt_size = fdt_totalsize(dtb_load_data);
 -- 
 2.43.0
 
