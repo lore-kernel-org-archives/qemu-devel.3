@@ -4,87 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3F7C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 13:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318A0C021BB
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmvJu-0004RN-Bq; Tue, 25 Feb 2025 08:49:58 -0500
+	id 1tmvjO-0007wT-PJ; Tue, 25 Feb 2025 09:16:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmvJo-0004R0-T1
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 08:49:53 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmvJj-0003Nr-JN
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 08:49:50 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-6fcdf0980a6so27283017b3.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 05:49:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740491386; x=1741096186; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jNd7r7LIozbeBPZN2JJC/ZHmac4FW1Rw2VceOm+nyZY=;
- b=ZIQYBWbs2IZ/uPe55Gl4QP5ew5N8VH964XdRJEShqbuw9DOfTIZzvs+RYkofSZmJ+i
- tiKHUSsCcYHif+e8f/5q+unEMfdl3aGYu7VTQT38ZezUxSYXMEI++GSuEFC4VA4ps1cF
- KqJ9FhLRZvpj80DsebJfsiKQfNxRaPvy26Fj3vlnNTr3lmKN+Ik76ry85qEfimJrVdE5
- i9hruxVgZwYWHf1xrxNgnQ5e+JkqIhaPtrC2YwhHdiQAOrHAzIIS9Em1m/5g9gYgdwsV
- FWrLUw7DIMai54SzRD4p0esqX2DV4pUs2GBw9JC4YwQYL4fs1bV36lfw/AKUa/9nVKbd
- Ykjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740491386; x=1741096186;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jNd7r7LIozbeBPZN2JJC/ZHmac4FW1Rw2VceOm+nyZY=;
- b=SRI/oLpo1FcBZX8m0NlreRBO+g8HoIAUHVxQzWrScF2cmD0BPa/zI4hHHyk7xu60aI
- vrt/rVxVCYD/Bne98eRmZd3spcumdPGDOwm/6c3248rgWdDMIPMdZh7dFDqLK0ccV/CK
- 11UkPjIjOzL771AitvDVYu72ktKC65AQ9CJEZ+v3YgwwK8Fy4EkMzN2sDu+nDkff8FAT
- mLdl8uvWcvLNn68S8NDtcjmFdRoaTXb84+hGY+ESFtxpRvdIFGC4i+EBmuGmOq+GFWTI
- F4nh0tFYS9lkYph5f43Bx5tdUdFFRkHXECqvbye/SAX9tMN71bhTU0/269wevITjV4lN
- d0XA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxnnPdtbRWfKb+G8GSHC4nO9/l/+JnM3uhhwZEYuKKtUrVck+fqOehfW027QqNLBrWviVxSRWyq+aM@nongnu.org
-X-Gm-Message-State: AOJu0YyLkpv+3EtavOnBEAxDlhbMejikwGNg5ECxtwmlMzKvx3f9XntC
- JVzoud9SqVt34yoqE8ZwHkeOWRlpKdAtQO+TGicLUTG95x11IFWLGgHbE6cWRgv0JBBh7h1KqCF
- AFfX77LT2SVmlL1tSKWlVcbgSlITbtNDOpa9SVA==
-X-Gm-Gg: ASbGncsK8evKD4QWAQPVKgwCuJoJHr4U1cjECuGGJsXn/SqnpS6EkRbqNtVEAxZZ8ZY
- 8ykmjxX3xysGaR0QON0adoaBv5c7gJEjptUWai3VwbGska4NupLAtjR8W6bNFrz6KQs/qn36ZeE
- obwmi8UqNl
-X-Google-Smtp-Source: AGHT+IH7BVR4/b9eGOKn2qDDwMNZLkxvarMwNnQKmUjUjDAm4YyFVRw5m4LU/RszrCLySGpnehXrdZuS5IACjQoiykI=
-X-Received: by 2002:a05:690c:6f8f:b0:6fb:949f:117 with SMTP id
- 00721157ae682-6fbcc23a67cmr139014987b3.12.1740491386053; Tue, 25 Feb 2025
- 05:49:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cy_liu@aspeedtech.com>)
+ id 1tmpX0-0006d7-4I; Tue, 25 Feb 2025 02:39:06 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cy_liu@aspeedtech.com>)
+ id 1tmpWy-0008HP-Jc; Tue, 25 Feb 2025 02:39:05 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 25 Feb
+ 2025 15:33:43 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 25 Feb 2025 15:33:43 +0800
+To: <cyliu0926@gmail.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Subject: [PATCH v4 4/4] hw/misc/aspeed_hace: Fix boot issue in the Crypto
+ Manager Self Test
+Date: Tue, 25 Feb 2025 15:33:41 +0800
+Message-ID: <20250225073342.2960966-5-cy_liu@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250225073342.2960966-1-cy_liu@aspeedtech.com>
+References: <20250225073342.2960966-1-cy_liu@aspeedtech.com>
 MIME-Version: 1.0
-References: <20250219184609.1839281-1-wuhaotsh@google.com>
- <20250219184609.1839281-7-wuhaotsh@google.com>
-In-Reply-To: <20250219184609.1839281-7-wuhaotsh@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 25 Feb 2025 13:49:34 +0000
-X-Gm-Features: AWEUYZn4xpvywFMJ5yLFnI7bhWeRlqomFp54fvHSlV3BjBlArIhXCY8Qe0FK8j8
-Message-ID: <CAFEAcA-KggoS6oUO9h0iGCy6ZDGTLecqBE_1ujsQ2cVcrEqUzQ@mail.gmail.com>
-Subject: Re: [PATCH v5 06/17] hw/misc: Add nr_regs and cold_reset_values to
- NPCM GCR
-To: Hao Wu <wuhaotsh@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com, 
- Avi.Fishman@nuvoton.com, kfting@nuvoton.com, hskinnemoen@google.com, 
- titusr@google.com, chli30@nuvoton.corp-partner.google.com, 
- pbonzini@redhat.com, jasowang@redhat.com, alistair@alistair23.me, 
- philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72; envelope-from=cy_liu@aspeedtech.com;
+ helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 25 Feb 2025 09:16:07 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,59 +62,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  cy_liu <cy_liu@aspeedtech.com>
+From:  cy_liu via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Feb 2025 at 18:46, Hao Wu <wuhaotsh@google.com> wrote:
->
-> These 2 values are different between NPCM7XX and NPCM8XX
-> GCRs. So we add them to the class and assign different values
-> to them.
->
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Hao Wu <wuhaotsh@google.com>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
+Currently, it does not support the CRYPT command. Instead, it only sends an
+interrupt to notify the firmware that the crypt command has completed.
+It is a temporary workaround to resolve the boot issue in the Crypto Manager
+Self Test.
 
-> @@ -156,10 +157,12 @@ static const struct MemoryRegionOps npcm_gcr_ops = {
->  static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
->  {
->      NPCMGCRState *s = NPCM_GCR(obj);
-> +    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(obj);
->
-> -    QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
-> -
-> -    memcpy(s->regs, cold_reset_values, sizeof(s->regs));
-> +    g_assert(sizeof(s->regs) >= sizeof(c->cold_reset_values));
-> +    g_assert(sizeof(s->regs) >= c->nr_regs * sizeof(uint32_t));
-> +    memcpy(s->regs, c->cold_reset_values, c->nr_regs * sizeof(uint32_t));
+Introduce a new "use_crypt_workaround" class attribute and set it to true in
+the AST2700 HACE model to enable this workaround by default for AST2700.
 
-I looked again at this code after seeing the fix to the
-similar code in npcm_clk that Pierrick just sent, and this
-one looks broken in a different way:
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ include/hw/misc/aspeed_hace.h |  1 +
+ hw/misc/aspeed_hace.c         | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-c->cold_reset_values is a pointer, not an array, so
-  g_assert(sizeof(s->regs) >= sizeof(c->cold_reset_values))
-is asserting that the s->regs[] array is bigger than the size
-of a pointer (8 bytes), which probably isn't what you meant.
+diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
+index d13fd3da07..5d4aa19cfe 100644
+--- a/include/hw/misc/aspeed_hace.h
++++ b/include/hw/misc/aspeed_hace.h
+@@ -50,6 +50,7 @@ struct AspeedHACEClass {
+     uint32_t dest_mask;
+     uint32_t key_mask;
+     uint32_t hash_mask;
++    bool raise_crypt_interrupt_workaround;
+ };
+ 
+ #endif /* ASPEED_HACE_H */
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 86422cb3be..32a5dbded3 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -59,6 +59,7 @@
+ /* Other cmd bits */
+ #define  HASH_IRQ_EN                    BIT(9)
+ #define  HASH_SG_EN                     BIT(18)
++#define  CRYPT_IRQ_EN                   BIT(12)
+ /* Scatter-gather data list */
+ #define SG_LIST_LEN_SIZE                4
+ #define SG_LIST_LEN_MASK                0x0FFFFFFF
+@@ -343,6 +344,15 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+                 qemu_irq_lower(s->irq);
+             }
+         }
++        if (ahc->raise_crypt_interrupt_workaround) {
++            if (data & CRYPT_IRQ) {
++                data &= ~CRYPT_IRQ;
++
++                if (s->regs[addr] & CRYPT_IRQ) {
++                    qemu_irq_lower(s->irq);
++                }
++            }
++        }
+         break;
+     case R_HASH_SRC:
+         data &= ahc->src_mask;
+@@ -388,6 +398,12 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+     case R_CRYPT_CMD:
+         qemu_log_mask(LOG_UNIMP, "%s: Crypt commands not implemented\n",
+                        __func__);
++        if (ahc->raise_crypt_interrupt_workaround) {
++            s->regs[R_STATUS] |= CRYPT_IRQ;
++            if (data & CRYPT_IRQ_EN) {
++                qemu_irq_raise(s->irq);
++            }
++        }
+         break;
+     default:
+         break;
+@@ -563,6 +579,13 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, void *data)
+     ahc->dest_mask = 0x7FFFFFF8;
+     ahc->key_mask = 0x7FFFFFF8;
+     ahc->hash_mask = 0x00147FFF;
++
++    /*
++     * Currently, it does not support the CRYPT command. Instead, it only
++     * sends an interrupt to notify the firmware that the crypt command
++     * has completed. It is a temporary workaround.
++     */
++    ahc->raise_crypt_interrupt_workaround = true;
+ }
+ 
+ static const TypeInfo aspeed_ast2700_hace_info = {
+-- 
+2.34.1
 
-Other than that, this is now the same as the fixed npcm_clk code,
-except that we could do the same as that does and use a local
-variable for sizeof_regs:
-
-    size_t sizeof_regs = c->nr_regs * sizeof(uint32_t);
-    g_assert(sizeof(s->regs) >= sizeof_regs);
-    memcpy(s->regs, c->cold_reset_values, sizeof_regs);
-
-But also, in this device (unlike npcm_clk) we have separate
-reset method functions for npcm7xx and npcm8xx. So we don't
-really need the s->cold_reset_values pointer at all, because
-we could make npcm7xx_gcr_enter_reset() directly copy from
-npcm7xx_cold_reset_values[] and similarly fro the npcm8xx function.
-
-I think we should at least delete the assert() that isn't
-doing what it looks like it's doing; I'll leave it to you
-whether you want to also do one of the other two suggestions.
-
-thanks
--- PMM
 
