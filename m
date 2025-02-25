@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BCD2C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB3CC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzK9-0000Ry-7a; Tue, 25 Feb 2025 13:06:29 -0500
+	id 1tmzKF-0000mI-Vt; Tue, 25 Feb 2025 13:06:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ3-0008HQ-Qy
+ id 1tmzJ3-0008HP-Ql
  for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:23 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJ1-0002Bs-BL
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:21 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-38f3486062eso4995888f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:17 -0800 (PST)
+ id 1tmzJ1-0002C7-C5
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:20 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43aac0390e8so15397385e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506716; x=1741111516; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506717; x=1741111517; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aeWgldfF5Idz9YHODjOgtv9UXfco158ep0/S/kAtgfw=;
- b=f1BaSFD9phLyBA3u7pCiyid4WB18mnmNG98WdEOW4JgSUqmanLtbgp4O75Zle1H+yP
- mhDSkm1wyemeR6+43aJjYEu2t157Hp4gQ1lIHDOlnJOnL/FTh9viy9Icob/H+FLcW0Lr
- fiPyxUWx9PKQUN0HGpE3APxZVGYBgd5OefQGAKFI8sgxZsYJhWX3J/UegYSHg92lB7Sb
- SQRnfPqJysvfgDMbgYUIuaSYtzW20djyRPbOeKLuK68KZi4qekodDz7Aud+D518y1o+S
- WJxdElN5LEJQkZrMqMmZj/J6GU65kWCvlYY7UVeutmJQzdXDLqM29ngS5NShBKLd5Fzh
- YiCA==
+ :reply-to; bh=u9s5E9vJL83glFBvhdpeE2aqzCOgd5BN92rYhBP9wLw=;
+ b=jj+E+mW5duA8Nm3WJZZBPDZW2Z2VNUORVekIbxL5zoJqD2w+p254JOz4KVU1C3qEhp
+ uN1jcVttE4upY8U5PAj7JoVK+d+rnzRi9fZRAhYZA9osN9PkokFCgY/jy3y+ih+vlmcH
+ jUKcIGSWGDhbZ5Z2TFQAjpiv3hkr/qcjxcJiD8b586eGuFqFwgtCK0rq6ynHKrPO2QU2
+ F9bleYDOX6ihk6tl/AEY0LJ7I3b7hOmA6uXnIyD/mmRXxDoyvpBZ72y56aHKruh8+JiW
+ /rl4M1NFve9mRHYtklF0QbtLsD7FqmwGwvfwhw2JAK0g1fcs86CEgIAPHnx0nnY085jP
+ JCQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506716; x=1741111516;
+ d=1e100.net; s=20230601; t=1740506717; x=1741111517;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aeWgldfF5Idz9YHODjOgtv9UXfco158ep0/S/kAtgfw=;
- b=LUOH0wJeNHl6GJ4iCy5dS5eNSDJIK5trYDLGdGWSscUf9j0Uvf0CEqjQfE7rr5/BYM
- JWu+kBXsWAVitbepMGi82sV87vC2ugt/nM8UN8TC80VkU8V0IMCJj8CjI235c4VE4pvx
- 7h+iea4HiqsOn+cdClaqwsxTJpLxySVYv3qte4Cp8pgl/QX+rXFyKupSWWCTHx1rC0JP
- 9R+Ro7l6E/EblcVRG2Dfv4Xjd3hYCTomdpyzwSSJUWvpgbpfkWZ124+ALpb+n4muz72d
- 95pCjlWxwHE2CoxWL3E2t6rNHOKKTt6Op6EeJGhSYr9qI5U8XNn9tYKEcE5MmPYNqudt
- DMfg==
-X-Gm-Message-State: AOJu0YyHLLhIRIg1chezqexZwpGttDS+5v47qcpBDzhcS03xqXSmqg3+
- jnssRiKJkcq20QT8xHoargGmCTSb+jAA7ilZrGpbzeI/U+PAmjwOETIXA7r1pVfm39ExkA2srgU
- b
-X-Gm-Gg: ASbGncs0T5EsenO72esxUaEeBpXjWMG8ilpg+7zrVUmuwTr7UWgEAQR11sWRZ9zM6wd
- 1ZUNr0s9W1IJ70o2LfFTmx3U9yQiqWwFxRu8jpaM8FVIC+KH2yUbHQiSkj7ftYcxWxf2CPhtnA7
- sAU/cnn5e0ObYgGSWVnVlKIA/oAGHuRRLVi6eXfT9n6W3gHyjZJi3uP/huR0JI7lKTwyFWU/mfC
- vooUGgezTtmnsG8xdhbnYhKNahlkjLuINaD/kCWcEmiG3M/7j+UM8HU8W2q1iKMvT9quM6Pp5gN
- 6UZ16nCddk0mJnApPrbwQnKuXmKCtBw7
-X-Google-Smtp-Source: AGHT+IG+1iA2JFkatPF2RuTwN2OmxSfCT0p8XkcyXv6hMB7x/BHFVSX+aan7GhFpQXKze3A6zopu4g==
-X-Received: by 2002:a5d:5986:0:b0:38f:470c:932e with SMTP id
- ffacd0b85a97d-390d4f43d31mr271149f8f.29.1740506716116; 
- Tue, 25 Feb 2025 10:05:16 -0800 (PST)
+ bh=u9s5E9vJL83glFBvhdpeE2aqzCOgd5BN92rYhBP9wLw=;
+ b=rpELJ2Aa2GC20mjCklnx51kWQKXS6o2houyq/OtuXMuURCc6ZNY8eYkYDMBdIwTIqm
+ 4cD1fhoZCFvWnw4XTix/kA+Lf8Q18U0XBjnfSDN39Gkb9DCJWJzDHXiKEHqRQF5l8/+N
+ hwrGMAVVWXV24oEGI/LepWpwmHA2+/WcgT7dWyQY/IdRtBH2UobmxmX1BljioYBh6H8g
+ uxCwF7n+mYWiz6xL0f9+doM2c6cuiTz2wDad1j40bf6rNQlZvEcDq6N0X9IuvY1upJFo
+ p4GWe3L0Enawikl+cS7MyLnXJDtZs/rb96zzslp5hZDr9NBNsDsUV6oW13+90N9q2hW0
+ iCJw==
+X-Gm-Message-State: AOJu0YzjMHyHE1ZcJWDMPPVfjoGeDOugnZV+oarMHZJXqpihFZ80Am5W
+ fq0F9Hr0Xv8ZvAQHk2es60C1dHHgyF3W644NS8Uoz8A+K7FksuDdPsSgG/pAC2LKz8kZPA4IoGU
+ J
+X-Gm-Gg: ASbGncsOSys5HJk1lk5h8Go9x3+mmYC5RBosXJ4fgOQwyOxQwQ7nktq3FONOFO2WgPt
+ XINCZSo0wS18YtG4CL8XMoVpybWd2O52OTuvAlQkM9nw5MsLuDIGNj+5gi//swhukrs16fV2/3H
+ dTKD6y/wrowohjJ7Mgd3DRYF+rj9GTlRx/4fMXfP+j/y476xFeDc0nYJvok8kQcnnhS0K1K+iVS
+ 91PwL7lDC6M4Oxiflzj1nBbXgRWLfkjgCUQCqwjOJkybjJBnghoKYCudnypoLoI0s9+AbN/990f
+ dRJVJa2vm8NIgJjB2+dkLGqS6lu2f77v
+X-Google-Smtp-Source: AGHT+IFv651/pReZgfsPrxrTA4JaZemUtu0Fu1aTOdENqus9mO+F8lZYXBX139yfYhrvcbzeh3GLsA==
+X-Received: by 2002:a05:600c:458e:b0:439:91dd:cfa3 with SMTP id
+ 5b1f17b1804b1-439ae221d72mr147818635e9.29.1740506717137; 
+ Tue, 25 Feb 2025 10:05:17 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.14
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:14 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:16 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/43] hw/arm/virt: Support larger highmem MMIO regions
-Date: Tue, 25 Feb 2025 18:04:28 +0000
-Message-ID: <20250225180510.1318207-3-peter.maydell@linaro.org>
+Subject: [PULL 03/43] monitor/hmp-cmds.c: Clean up hmp_dumpdtb printf
+Date: Tue, 25 Feb 2025 18:04:29 +0000
+Message-ID: <20250225180510.1318207-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,144 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Matthew R. Ochs" <mochs@nvidia.com>
+In hmp_dumpdtb(), we print a message when the command succeeds.  This
+message is missing the trailing \n, so the HMP command prompt is
+printed immediately after it.  We also weren't capitalizing 'DTB', or
+quoting the filename in the message.  Fix these nits.
 
-The MMIO region size required to support virtualized environments with
-large PCI BAR regions can exceed the hardcoded limit configured in QEMU.
-For example, a VM with multiple NVIDIA Grace-Hopper GPUs passed through
-requires more MMIO memory than the amount provided by VIRT_HIGH_PCIE_MMIO
-(currently 512GB). Instead of updating VIRT_HIGH_PCIE_MMIO, introduce a
-new parameter, highmem-mmio-size, that specifies the MMIO size required
-to support the VM configuration.
-
-Example usage with 1TB MMIO region size:
-	-machine virt,gic-version=3,highmem-mmio-size=1T
-
-Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Message-id: 20250221145419.1281890-1-mochs@nvidia.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250206151214.2947842-2-peter.maydell@linaro.org
 ---
- docs/system/arm/virt.rst |  4 ++++
- hw/arm/virt.c            | 52 +++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 55 insertions(+), 1 deletion(-)
+ monitor/hmp-cmds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index 0c9c2ce0351..adf446c0a29 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -144,6 +144,10 @@ highmem-mmio
-   Set ``on``/``off`` to enable/disable the high memory region for PCI MMIO.
-   The default is ``on``.
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 3825ff40a9b..7ded3378cfc 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -431,6 +431,6 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
+         return;
+     }
  
-+highmem-mmio-size
-+  Set the high memory region size for PCI MMIO. Must be a power of 2 and
-+  greater than or equal to the default size (512G).
-+
- gic-version
-   Specify the version of the Generic Interrupt Controller (GIC) to provide.
-   Valid values are:
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4a5a9666e91..ee69081ef42 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -53,6 +53,7 @@
- #include "hw/loader.h"
- #include "qapi/error.h"
- #include "qemu/bitops.h"
-+#include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "hw/pci-host/gpex.h"
-@@ -192,6 +193,10 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_MEM] =                { GiB, LEGACY_RAMLIMIT_BYTES },
- };
- 
-+/* Update the docs for highmem-mmio-size when changing this default */
-+#define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
-+#define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
-+
- /*
-  * Highmem IO Regions: This memory map is floating, located after the RAM.
-  * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
-@@ -207,13 +212,16 @@ static const MemMapEntry base_memmap[] = {
-  * PA space for one specific region is always reserved, even if the region
-  * has been disabled or doesn't fit into the PA space. However, the PA space
-  * for the region won't be reserved in these circumstances with compact layout.
-+ *
-+ * Note that the highmem-mmio-size property will update the high PCIE MMIO size
-+ * field in this array.
-  */
- static MemMapEntry extended_memmap[] = {
-     /* Additional 64 MB redist region (can contain up to 512 redistributors) */
-     [VIRT_HIGH_GIC_REDIST2] =   { 0x0, 64 * MiB },
-     [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
-     /* Second PCIe window */
--    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, 512 * GiB },
-+    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
- };
- 
- static const int a15irqmap[] = {
-@@ -2550,6 +2558,40 @@ static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
-     vms->highmem_mmio = value;
+-    monitor_printf(mon, "dtb dumped to %s", filename);
++    monitor_printf(mon, "DTB dumped to '%s'\n", filename);
  }
- 
-+static void virt_get_highmem_mmio_size(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    uint64_t size = extended_memmap[VIRT_HIGH_PCIE_MMIO].size;
-+
-+    visit_type_size(v, name, &size, errp);
-+}
-+
-+static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    uint64_t size;
-+
-+    if (!visit_type_size(v, name, &size, errp)) {
-+        return;
-+    }
-+
-+    if (!is_power_of_2(size)) {
-+        error_setg(errp, "highmem-mmio-size is not a power of 2");
-+        return;
-+    }
-+
-+    if (size < DEFAULT_HIGH_PCIE_MMIO_SIZE) {
-+        char *sz = size_to_str(DEFAULT_HIGH_PCIE_MMIO_SIZE);
-+        error_setg(errp, "highmem-mmio-size cannot be set to a lower value "
-+                         "than the default (%s)", sz);
-+        g_free(sz);
-+        return;
-+    }
-+
-+    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
-+}
- 
- static bool virt_get_its(Object *obj, Error **errp)
- {
-@@ -3207,6 +3249,14 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-                                           "Set on/off to enable/disable high "
-                                           "memory region for PCI MMIO");
- 
-+    object_class_property_add(oc, "highmem-mmio-size", "size",
-+                                   virt_get_highmem_mmio_size,
-+                                   virt_set_highmem_mmio_size,
-+                                   NULL, NULL);
-+    object_class_property_set_description(oc, "highmem-mmio-size",
-+                                          "Set the high memory region size "
-+                                          "for PCI MMIO");
-+
-     object_class_property_add_str(oc, "gic-version", virt_get_gic_version,
-                                   virt_set_gic_version);
-     object_class_property_set_description(oc, "gic-version",
+ #endif
 -- 
 2.43.0
 
