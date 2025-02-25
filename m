@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F19C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F9FC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzMQ-0000Qk-4Y; Tue, 25 Feb 2025 13:08:50 -0500
+	id 1tmzL5-0002f2-9f; Tue, 25 Feb 2025 13:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJw-0000RY-MH
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:20 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1tmzJ9-0008Kv-18
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:32 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJq-0002OF-AH
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:15 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4397e5d5d99so37566815e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:06:00 -0800 (PST)
+ id 1tmzJ6-0002D5-Mp
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:26 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-438a3216fc2so56629455e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506759; x=1741111559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506723; x=1741111523; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CdhYELjdhtIlRJlP+fLG5Avb1MqK3kT9d5wcbVshIzU=;
- b=xKygLTuQk6IlzgdrU1TsNeprq0ssn07EL3VEEybcmJ5YkXsA8jEkNKpib5sNHI19Xk
- 9INucgxy6h2IpJUBDtSWdx+hbckE4CMIIQApBHs6E1oxs/wyLA0C4dJY5a3ZxchcbatM
- LdNlF5z4aOBM+o+hdCQuY/Mhe9yqR0U/OoHaNPafEL1IchlM9UIHs8ehbsl0O5Ha3AMe
- SlHFLrJi5nNGDuz22G4/QC3vYUHfGRxvgJD54yhwVyt7f2LijBiUbGkVzGoBXk8EOfdB
- 6K7K+4UY+lPVdGJMQTu2c7wcoZZB6/xxYD8Zv7cw/q1YHyObf38c+Tb88DSmpGL+jEhX
- We7g==
+ :reply-to; bh=Y7p+aWd+dHKRzUy0HtF4GkLYr0x7T5CRvNgfUzf7AaQ=;
+ b=l3O10drq4c6vAYSdeyeW02B6whuW0ofhOgONBnHTewQZDfkNZ6KsBU/vJEGil2tw2e
+ J2tFqSauqMtRbfYJ2xVjPpfQU6Y3mnId9f5j0yVi3hmxUJbwAtCoCnbe5VqC6j0O0bMj
+ GS7graAVdid6Nmd/miiS1U4XTqbc/YqnjNADci9wNSyJervM2zqyz2U0ESzE+mZErjNc
+ yji1/lhUT0J2L3rFwRRGIQRficjC31pA4NFBI36WYYJig+NJr65sg80U26jTu+kUiZ70
+ GSzAlad27f0feglEJV7uBmlwntrFKYfptjd1wn0G7EdbGkFRVf+Ozmg656lNGXnMcnEj
+ meKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506759; x=1741111559;
+ d=1e100.net; s=20230601; t=1740506723; x=1741111523;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CdhYELjdhtIlRJlP+fLG5Avb1MqK3kT9d5wcbVshIzU=;
- b=f1GnOFphJI4yIzxcR32vkMzvNrRiWM0bkpvHWm1fTmaN+lhV1roJvP71XaFcGdFWc2
- Ckp0Tq4lv8lL7Rnp3hVLEYkpTI5C0Anv/9PQcfBCiyVswIu4NUmarxmujYNfd6ypsyTr
- aitkIor6CAT6b8+7gb0Tt//CY6w9OsvoifCDpvtjUYZ53IoyxOB08krpSsOMKfAONOSu
- BzK6Too7mxhMjsWSkfPhdvjgA9cVQJy/dp+VWNaCaDDNfivzePA0h3wJBPgifo0Brj91
- 6f9gBBPRVyWmSQqzDN93C4zbuLnruxtOl2x855+gWTqwkfNk0AfW5FrVDSJ/2z48spDI
- 5nzQ==
-X-Gm-Message-State: AOJu0YwY5tBhUoouCZDs7YOyet+YPnFOpZfI4yIvZeQCHI4B6S844jO8
- Bc3QAJipOh4cTT0DAFDMXO3cJ4Z7Klco1fbfEvOdDS+vRjg/fB4AgkjWfmS+WX8XfBWR443riFY
- e
-X-Gm-Gg: ASbGncuDDTIyYUmpd4bh/uWpFwlbdKnp2R7P9Uh2GRJfo8pkReNVfAUWXBe7QPqJGTx
- DZ9XpV29qgEiUCcxgSY8sQodQEBmj/zzMbFYSLdru2rAyqJN8NAmNLXi5w3TkQGGAirrcyYvALq
- dU7ROrZd3GUxM3oteCEeZ+CpgXPbf4Hv2B25A7RYTfiS8Y14ZZTL/KPx7AYfdWAkiUfgiqbP5Hw
- fU1DLFV5Y/VWY/h6+x4GFmW4r+JEzYwfAFbL7kjpZgUTv4ACjqGEbDRTIFclzyuWA7di+ZGGIZ9
- wdAozs9UmYfPsNed6Vq9GiMzmhDNEnmh
-X-Google-Smtp-Source: AGHT+IHBbLNGTLydnlsTpelMjBb32RJHM2crppdbSLJBe7sATt2gfy9bbfXRRGwpg1MOcJSnR3CGGw==
-X-Received: by 2002:a5d:6da5:0:b0:38f:2a53:1d78 with SMTP id
- ffacd0b85a97d-390cc5f6a73mr3940093f8f.10.1740506759072; 
- Tue, 25 Feb 2025 10:05:59 -0800 (PST)
+ bh=Y7p+aWd+dHKRzUy0HtF4GkLYr0x7T5CRvNgfUzf7AaQ=;
+ b=j6sB5w0ZIHBiMyz56XQZFLJMHaRJVkHmigPqoQ/T9fbvzRf6MnmxbIQdgO44cJ2En3
+ iY9aL+aiMTB+eZg+dIEnBPqvQw0ldiO3jDlAY/inCWu9azdxe3qyu/5+JdhbtCN0zxnU
+ ZedLO6RzolnqGLfklr357dj+E544/dMIqJkamHZw41dutOJiLkEUR8BA3QcaqqDtG6KU
+ vybjXtgFoXBSgJ5AoOBMW9JXzifoTx3zZ7vvTkb1DtZq34BBDbio/mr01iWFwNZqVCFW
+ sgIQc7w945d4rWdBkfBayaPyDbhTWGPdG3S3qIfsoliqOmRFY3locaxQGYpUKMr+U9Bz
+ IN5w==
+X-Gm-Message-State: AOJu0YzBOg6X2TmoluShs2xXqMi7r4QI+xcTTrkEiSXAM2c9evnJnfCC
+ AmD0DM5lcReKEEYDjwrDbcr5tuiH6VAJXD4sS6UBbS7cR2qJyVUqppGSDin9q61vRRPIRfDhlmL
+ M
+X-Gm-Gg: ASbGncvxxkQNrcTaCUfXGtUk9HWYzfKmMopfNrVyeCRtHzcWX2Lxd1EMpK3SiTdcK9W
+ HN2kBdMTQMQw1YebLobKybVrdQ2tJz/DCkWLYUClpLgDSyAt53zRmj52vZs7tgCSrsm55FRKrIW
+ weBXvRLIW+ibNaPUwdO2B6JW6Xo8sNIJagl/6qp7YDUcGSErsQhMCM4/ddeXKZ3SUADnGVyPnA0
+ MbYrFo0i3fnxQUx/Pw6DY6GlWwcxk3ykyulDJwLZ50eSTwFYUFPBXbscC+kBASP6BhSnd0ni3i/
+ 30zGS+8o2cbwUQQFtrsQQnzNCVSW0i4+
+X-Google-Smtp-Source: AGHT+IEghznzR2tOF+1GCIfYeqvIT6wOAC4OLGX0HM6rVpPVMZyNxOUioaJnzGpaI9lXEsonZaDRBA==
+X-Received: by 2002:a05:600c:3ca1:b0:439:9595:c8e7 with SMTP id
+ 5b1f17b1804b1-439aea9d78bmr169642625e9.0.1740506722610; 
+ Tue, 25 Feb 2025 10:05:22 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.57
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:57 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:21 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 41/43] hw/arm/fsl-imx8mp: Add Ethernet controller
-Date: Tue, 25 Feb 2025 18:05:07 +0000
-Message-ID: <20250225180510.1318207-42-peter.maydell@linaro.org>
+Subject: [PULL 08/43] hw/core/machine.c: Make -machine dumpdtb=file.dtb with
+ no DTB an error
+Date: Tue, 25 Feb 2025 18:04:34 +0000
+Message-ID: <20250225180510.1318207-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,158 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+Currently if the user requests via -machine dumpdtb=file.dtb that we
+dump the DTB, but the machine doesn't have a DTB, we silently ignore
+the option.  This is confusing to users, and is a legacy of the old
+board-specific implementation of the option, where if the execution
+codepath didn't go via a call to qemu_fdt_dumpdtb() we would never
+handle the option.
 
-The i.MX 8M Plus SoC actually has two ethernet controllers, the usual ENET one
-and a Designware one. There is no device model for the latter, so only add the
-ENET one.
+Now we handle the option in one place in machine.c, we can provide
+the user with a useful message if they asked us to dump a DTB when
+none exists.  qmp_dumpdtb() already produces this error; remove the
+logic in handle_machine_dumpdtb() that was there specifically to
+avoid hitting it.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20250223114708.1780-15-shentey@gmail.com
+While we're here, beef up the error message a bit with a hint, and
+make it consistent about "an FDT" rather than "a FDT".  (In the
+qmp_dumpdtb() case this needs an ERRP_GUARD to make
+error_append_hint() work when the caller passes error_fatal.)
+
+Note that the three places where we might report "doesn't have an
+FDT" are hit in different situations:
+
+(1) in handle_machine_dumpdtb(), if CONFIG_FDT is not set: this is
+because the QEMU binary was built without libfdt at all. The
+build system will not let you build with a machine type that
+needs an FDT but no libfdt, so here we know both that the machine
+doesn't use FDT and that QEMU doesn't have the support:
+
+(2) in the device_tree-stub.c qmp_dumpdtb(): this is used when
+we had libfdt at build time but the target architecture didn't
+enable any machines which did "select DEVICE_TREE", so here we
+know that the machine doesn't use FDT.
+
+(3) in qmp_dumpdtb(), if current_machine->fdt is NULL all we know
+is that this machine never set it. That might be because it doesn't
+use FDT, or it might be because the user didn't pass an FDT
+on the command line and the machine doesn't autogenerate an FDT.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2733
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250206151214.2947842-7-peter.maydell@linaro.org
 ---
- docs/system/arm/imx8mp-evk.rst |  1 +
- include/hw/arm/fsl-imx8mp.h    |  8 ++++++++
- hw/arm/fsl-imx8mp.c            | 24 ++++++++++++++++++++++++
- hw/arm/imx8mp-evk.c            |  1 +
- hw/arm/Kconfig                 |  1 +
- 5 files changed, 35 insertions(+)
+ hw/core/machine.c         | 6 ++----
+ system/device_tree-stub.c | 5 ++++-
+ system/device_tree.c      | 7 ++++++-
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index 4b195c917f6..917c1d51769 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -14,6 +14,7 @@ The ``imx8mp-evk`` machine implements the following devices:
-  * 4 UARTs
-  * 3 USDHC Storage Controllers
-  * 1 Designware PCI Express Controller
-+ * 1 Ethernet Controller
-  * 5 GPIO Controllers
-  * 6 I2C Controllers
-  * 3 SPI Controllers
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 975887751bc..e292c31a3d0 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -17,6 +17,7 @@
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/net/imx_fec.h"
- #include "hw/or-irq.h"
- #include "hw/pci-host/designware.h"
- #include "hw/pci-host/fsl_imx8m_phy.h"
-@@ -58,11 +59,15 @@ struct FslImx8mpState {
-     IMXSPIState        spi[FSL_IMX8MP_NUM_ECSPIS];
-     IMXI2CState        i2c[FSL_IMX8MP_NUM_I2CS];
-     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
-+    IMXFECState        enet;
-     SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
-     IMX2WdtState       wdt[FSL_IMX8MP_NUM_WDTS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
-     OrIRQState         gpt5_gpt6_irq;
-+
-+    uint32_t           phy_num;
-+    bool               phy_connected;
- };
- 
- enum FslImx8mpMemoryRegions {
-@@ -253,6 +258,9 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_WDOG2_IRQ    = 79,
-     FSL_IMX8MP_WDOG3_IRQ    = 10,
- 
-+    FSL_IMX8MP_ENET1_MAC_IRQ    = 118,
-+    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
-+
-     FSL_IMX8MP_PCI_INTA_IRQ = 126,
-     FSL_IMX8MP_PCI_INTB_IRQ = 125,
-     FSL_IMX8MP_PCI_INTC_IRQ = 124,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 185c32ee587..2dd3c97a02e 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -240,6 +240,8 @@ static void fsl_imx8mp_init(Object *obj)
-         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-     }
- 
-+    object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
-+
-     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
-                             TYPE_FSL_IMX8M_PCIE_PHY);
-@@ -542,6 +544,21 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, spi_table[i].irq));
-     }
- 
-+    /* ENET1 */
-+    object_property_set_uint(OBJECT(&s->enet), "phy-num", s->phy_num,
-+                             &error_abort);
-+    object_property_set_uint(OBJECT(&s->enet), "tx-ring-num", 3, &error_abort);
-+    qemu_configure_nic_device(DEVICE(&s->enet), true, NULL);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->enet), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
-+                    fsl_imx8mp_memmap[FSL_IMX8MP_ENET1].addr);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_IRQ));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
-+                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
-+
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 61c22f723a0..b68b8b94a3c 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1702,15 +1702,13 @@ static void handle_machine_dumpdtb(MachineState *ms)
+     if (!ms->dumpdtb) {
          return;
-@@ -604,6 +621,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_GIC_REDIST:
-         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
-         case FSL_IMX8MP_ECSPI1 ... FSL_IMX8MP_ECSPI3:
-+        case FSL_IMX8MP_ENET1:
-         case FSL_IMX8MP_I2C1 ... FSL_IMX8MP_I2C6:
-         case FSL_IMX8MP_PCIE1:
-         case FSL_IMX8MP_PCIE_PHY1:
-@@ -624,10 +642,16 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
      }
+-    if (!ms->fdt) {
+-        /* Silently ignore dumpdtb option if there is nothing to dump */
+-        return;
+-    }
+ #ifdef CONFIG_FDT
+     qmp_dumpdtb(ms->dumpdtb, &error_fatal);
+     exit(0);
+ #else
+     error_report("This machine doesn't have an FDT");
++    error_printf("(this machine type definitely doesn't use FDT, and "
++                 "this QEMU doesn't have FDT support compiled in)\n");
+     exit(1);
+ #endif
  }
- 
-+static const Property fsl_imx8mp_properties[] = {
-+    DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mpState, phy_num, 0),
-+    DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mpState, phy_connected, true),
-+};
-+
- static void fsl_imx8mp_class_init(ObjectClass *oc, void *data)
+diff --git a/system/device_tree-stub.c b/system/device_tree-stub.c
+index bddda6fa37a..428330b0fec 100644
+--- a/system/device_tree-stub.c
++++ b/system/device_tree-stub.c
+@@ -5,6 +5,9 @@
+ #ifdef CONFIG_FDT
+ void qmp_dumpdtb(const char *filename, Error **errp)
  {
-     DeviceClass *dc = DEVICE_CLASS(oc);
+-    error_setg(errp, "This machine doesn't have a FDT");
++    ERRP_GUARD();
++
++    error_setg(errp, "This machine doesn't have an FDT");
++    error_append_hint(errp, "(this machine type definitely doesn't use FDT)\n");
+ }
+ #endif
+diff --git a/system/device_tree.c b/system/device_tree.c
+index d605ed2a217..aa3fe9516f3 100644
+--- a/system/device_tree.c
++++ b/system/device_tree.c
+@@ -635,11 +635,16 @@ out:
  
-+    device_class_set_props(dc, fsl_imx8mp_properties);
-     dc->realize = fsl_imx8mp_realize;
+ void qmp_dumpdtb(const char *filename, Error **errp)
+ {
++    ERRP_GUARD();
++
+     g_autoptr(GError) err = NULL;
+     uint32_t size;
  
-     dc->desc = "i.MX 8M Plus SoC";
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 27d9e9e8eed..e1a7892fd7c 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -36,6 +36,7 @@ static void imx8mp_evk_init(MachineState *machine)
+     if (!current_machine->fdt) {
+-        error_setg(errp, "This machine doesn't have a FDT");
++        error_setg(errp, "This machine doesn't have an FDT");
++        error_append_hint(errp,
++                          "(Perhaps it doesn't support FDT at all, or perhaps "
++                          "you need to provide an FDT with the -fdt option?)\n");
+         return;
+     }
  
-     s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
-     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-+    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
-     qdev_realize(DEVICE(s), NULL, &error_fatal);
- 
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 4e83895b915..4d642db9705 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -601,6 +601,7 @@ config FSL_IMX8MP
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select IMX
-+    select IMX_FEC
-     select IMX_I2C
-     select OR_IRQ
-     select PCI_EXPRESS_DESIGNWARE
 -- 
 2.43.0
 
