@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F18C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2917C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmrTd-00062i-Ih; Tue, 25 Feb 2025 04:43:45 -0500
+	id 1tmrVF-0006oW-Ey; Tue, 25 Feb 2025 04:45:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tmrTZ-000625-T4
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:43:42 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tmrVE-0006oN-ES
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:45:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tmrTX-0005a8-25
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:43:41 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tmrVA-0005wu-M1
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:45:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740476618;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1740476719;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N5IuXbVC/fE2fpy28ItJZlJGmOxKbKIqaMashXqUdLM=;
- b=SuNd7HXwb9uB4tKxBtvEOpytK98icETlugv17YdDBCxICRf3wuKmIZOxJmZ4xNchKsm7cC
- I/OzdL0aXavlFSNnLJ8BusMh5MTM7wLlzy6+mk9O174j/goMw4+2qYwaoLKJgtdI0eH7sN
- z0YAbspNuMMuvD5SVxP51aAbvfyu7vw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=o+2EwlrpqQxflyAK7lsRdE9l7fLP3tZB8Ko9GRO6/BI=;
+ b=QYkuO8toLZcImL6MmjuG45+737/NoHh2PNjcCCbJAvc6ZnuI52T1UkKwBKnamklez7zYEY
+ 6KW/LpfyRcszF3gQT7YHA3YAPXQUmoaz8TKbL/Pk4y9DajJvOuFkSRA+z98w8R39Ej9Nce
+ vqA4AHwFeEcTpnmT/Junmd8ivy8djh0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199-GE3fEY75PTKv3E_ZnmPXdA-1; Tue, 25 Feb 2025 04:43:34 -0500
-X-MC-Unique: GE3fEY75PTKv3E_ZnmPXdA-1
-X-Mimecast-MFC-AGG-ID: GE3fEY75PTKv3E_ZnmPXdA_1740476613
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4399c5ba9e4so29690845e9.3
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 01:43:34 -0800 (PST)
+ us-mta-15-5NCQf6CBPcCrRKJHoUcClw-1; Tue, 25 Feb 2025 04:45:13 -0500
+X-MC-Unique: 5NCQf6CBPcCrRKJHoUcClw-1
+X-Mimecast-MFC-AGG-ID: 5NCQf6CBPcCrRKJHoUcClw_1740476712
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f2c0aa6d6so2815924f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 01:45:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740476610; x=1741081410;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N5IuXbVC/fE2fpy28ItJZlJGmOxKbKIqaMashXqUdLM=;
- b=DYouGG9fK4JQBrNzplD4O25OKpYfsKTJ+9qbW0+gtVopBhRadHapzRddfMO5x+aaaj
- R+hbQrmGWBh0y9xTBTuVQHFLrhoZ+Aaos4Fbg2iCwVYK//tNxc/1Y2kdvRvR7JOKA/RM
- L83PQ2/N0Wl9fRcm/vChQ1DMd6pYAGjDYGjygWG2qcXHzYkUJfu6VjwyKD/o7/7N+aJD
- 2G+l47PkGbCGd9vFcAU0T/LaISqdAedoWRouMMAiCjGSHASvfFB4JGyjt9XprnNBs1Hd
- Aownh/nf11Hgi8Q6qvK508KuIk9ixXMbckPDdwSOl+0zb/P8Kch342WMPYyw0771psdh
- ySrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUukDllqWwmAiu/oiLiplD6RjFPman8/UsrXG3Pp2xIpOcu3nTMZge0XWhzai5MEGIwmXNnG5DztMK2@nongnu.org
-X-Gm-Message-State: AOJu0YyWTsRwSTrAwq+gZY4wb8DdKoM9wzJZLHYNcb3z8eUzsvxmrBmG
- ZXDOTzvX8p89eCtj5uyBSEA771Vr1QmjWqWsj4jP7zp3CEWIQoYlsIT0htVDcDDw/+wr2PSCLxt
- 0XZq6SQv0bggbp51iOf/NTRVm+QAnnjnzmKoctgo13PzvDdAkdPRoneIIAo0N
-X-Gm-Gg: ASbGncvcMGqVbC3EXOhmHWfdBvxLoEtFNswjpZjoKCMH9mGEfJMCx592EPYGyv7mPzY
- ot2INVeiK6wT/y5kcy7JcP03Cv+1k6GTHd1Bdh7fx01HhsyJsenc8Xf6Y7kEbDzdA9Obuhjrt5d
- 4tjoAu5p0+9KJxpdSI0gTEJ120PcfvNMYwIf2wIfu5GI+dbf4qIL/g2ttXTX89xWw/imi8GGkCY
- 7qc5hSL1MUUIJAfAADBAnQViPhspg+zWsNUsEXT20VpqiUXBYGvflQXxjg+ntE2+LfwAeJ4g+nF
- f+TYfz/Y1Xt571x/St7pfJTOAOtgPPPXVGFDnihhXHZTogPQ7t6YrAmoqBMIqo0=
-X-Received: by 2002:a05:600c:3c87:b0:439:930a:58aa with SMTP id
- 5b1f17b1804b1-43ab0ecc2f2mr24089245e9.0.1740476610521; 
- Tue, 25 Feb 2025 01:43:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH7SWWZtXumX0waBhzuzJJUOBFPNpCyr81evlpTXBUdvLowN5fEohw657IpPbZDbBNIzb4b3A==
-X-Received: by 2002:a05:600c:3c87:b0:439:930a:58aa with SMTP id
- 5b1f17b1804b1-43ab0ecc2f2mr24088975e9.0.1740476610069; 
- Tue, 25 Feb 2025 01:43:30 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce615sm134946725e9.5.2025.02.25.01.43.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 01:43:29 -0800 (PST)
-Date: Tue, 25 Feb 2025 10:43:27 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 03/14] acpi/ghes: Use HEST table offsets when
- preparing GHES records
-Message-ID: <20250225104327.0a2d1cb4@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250221070221.329bdfb0@foz.lan>
-References: <cover.1738345063.git.mchehab+huawei@kernel.org>
- <9610ff88cf6fdc59cbfc8871d653fd890391be1e.1738345063.git.mchehab+huawei@kernel.org>
- <20250203153423.3e4de17c@imammedo.users.ipa.redhat.com>
- <20250221070221.329bdfb0@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1740476712; x=1741081512;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=o+2EwlrpqQxflyAK7lsRdE9l7fLP3tZB8Ko9GRO6/BI=;
+ b=VRTHpyfEzRIO1QksWpMjoDOxh7dICmMisGKzWPk6SiGgxTwUaRVBht1nMRuPfskft2
+ aMqbtYQ1B2Gb6uV/tcBctss/Q2XkZW9SBXFJ1SRzVsyUJ7qoL3CnDHqieWDSe2rBZdrp
+ Ern1MsVLn+hujhvlVNxyM0/m4gokjdGkhBRz5hM8frWhwSO8IReE4Okq87bObdOT0yJ+
+ zIe9m2TlVr2pWeG+hlIKfWz+WJvx5f7SMqQ5++7YUzDrX9HWMQfTv/8URA4v/2PmGr6n
+ 3FyKQgxoWaavBYZKxYf6Y1Qg/enNc9/H1u9uHJgESMK3W9DoYkrRmdnAsmByJh88mebR
+ /pEw==
+X-Gm-Message-State: AOJu0Yy5VDzF9TBf+WayGlVF8Zi+0+Z/OvIEGkFwV9rx2vZEx7zcN8an
+ EPYoXe8Gzjc45zMfB5n6kOpCjbE4ESZfcITCsWp+GlqEpnnU5RPRi2O8Lz3JhZzJDaF0RxwbOtr
+ rvyi+KJlVlmYCht4SNdknwfzBiRzMjyEG1AHSHBkFzhptl1stOSsG
+X-Gm-Gg: ASbGncvICdXRd38Mdc97uz8aBwsvAPOzLIFIM7svUM6GWhlwdV8NhjPxyK7hIGHcf0a
+ zYkjmFHpXLiQ67KU2xb2sebMK5/2KpOLYlV4NYVqkVCVCsbsxXsTfRiN+XWnh+7KA5dAX+Far7n
+ ugpBaKr0xfKawRK4GWRb9laPVL50PiAp818Ee3fnTRPjOcSkmQcVVCcqouTUKHU2EPunhNsUTna
+ 8uf/6PsFYXLI736E8qKA5b17N5Ha3eUwFON3XIk4q/ju561LsZvCcmNCn1afTXtSWDU0YU96OZp
+ c2anOuv6rbPZmmB04pdkIFqLzZyrAAQWAxv1zXTu2NJNHnWnnI2xjIQjpvvzd0k=
+X-Received: by 2002:a05:6000:1a87:b0:38f:3ec3:4801 with SMTP id
+ ffacd0b85a97d-38f616323bamr18607228f8f.25.1740476712411; 
+ Tue, 25 Feb 2025 01:45:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGkfuHioVx9u0vRtUg9bgqEFuz0sokdrsc3Bt8z5k8x5/Wk7PAoqYQ8YATO2rLnzaBL+2f6/Q==
+X-Received: by 2002:a05:6000:1a87:b0:38f:3ec3:4801 with SMTP id
+ ffacd0b85a97d-38f616323bamr18607195f8f.25.1740476712036; 
+ Tue, 25 Feb 2025 01:45:12 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390cd8fc864sm1684533f8f.91.2025.02.25.01.45.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Feb 2025 01:45:11 -0800 (PST)
+Message-ID: <e929b9b1-9f74-49e6-9ae7-cc50d79bde93@redhat.com>
+Date: Tue, 25 Feb 2025 10:45:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] hw/pci: Basic support for PCI power management
+Content-Language: en-US
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, eric.auger.pro@gmail.com, clg@redhat.com,
+ zhenzhong.duan@intel.com, mst@redhat.com, marcel.apfelbaum@gmail.com
+References: <20250220224918.2520417-1-alex.williamson@redhat.com>
+ <20250220224918.2520417-2-alex.williamson@redhat.com>
+ <ac58cbe2-6161-46ed-a65d-c3fba90c1344@redhat.com>
+ <20250224222458.183a061c.alex.williamson@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250224222458.183a061c.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -102,7 +100,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,102 +113,267 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Feb 2025 07:02:21 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> Em Mon, 3 Feb 2025 15:34:23 +0100
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > On Fri, 31 Jan 2025 18:42:44 +0100
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > There are two pointers that are needed during error injection:
-> > > 
-> > > 1. The start address of the CPER block to be stored;
-> > > 2. The address of the ack.
-> > > 
-> > > It is preferable to calculate them from the HEST table.  This allows
-> > > checking the source ID, the size of the table and the type of the
-> > > HEST error block structures.
-> > > 
-> > > Yet, keep the old code, as this is needed for migration purposes.
-> > > 
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > ---
-> > >  hw/acpi/ghes.c         | 132 ++++++++++++++++++++++++++++++++++++-----
-> > >  include/hw/acpi/ghes.h |   1 +
-> > >  2 files changed, 119 insertions(+), 14 deletions(-)
-> > > 
-> > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > > index 27478f2d5674..8f284fd191a6 100644
-> > > --- a/hw/acpi/ghes.c
-> > > +++ b/hw/acpi/ghes.c
-> > > @@ -41,6 +41,12 @@
-> > >  /* Address offset in Generic Address Structure(GAS) */
-> > >  #define GAS_ADDR_OFFSET 4
-> > >  
-> > > +/*
-> > > + * ACPI spec 1.0b
-> > > + * 5.2.3 System Description Table Header
-> > > + */
-> > > +#define ACPI_DESC_HEADER_OFFSET     36
-> > > +
-> > >  /*
-> > >   * The total size of Generic Error Data Entry
-> > >   * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
-> > > @@ -61,6 +67,25 @@
-> > >   */
-> > >  #define ACPI_GHES_GESB_SIZE                 20
-> > >  
-> > > +/*
-> > > + * Offsets with regards to the start of the HEST table stored at
-> > > + * ags->hest_addr_le,    
-> > 
-> > If I read this literary, then offsets above are not what
-> > declared later in this patch.
-> > I'd really drop this comment altogether as it's confusing,
-> > and rather get variables/macro naming right
-> >   
-> > > according with the memory layout map at
-> > > + * docs/specs/acpi_hest_ghes.rst.
-> > > + */    
-> > 
-> > what we need is update to above doc, describing new and old ways.
-> > a separate patch.  
-> 
-> I can't see anything that should be changed at
-> docs/specs/acpi_hest_ghes.rst, as this series doesn't change the
-> firmware layout: we're still using two firmware tables:
-> 
-> - etc/acpi/tables, with HEST on it;
-> - etc/hardware_errors, with:
-> 	- error block addresses;
-> 	- read_ack registers;
-> 	- CPER records.
-> 
-> The only changes that this series introduce are related to how
-> the error generation logic navigates between HEST and hw_errors
-> firmware. This is not described at acpi_hest_ghes.rst, and both
-> ways follow ACPI specs to the letter.
-> 
-> The only difference is that the code which populates the CPER
-> record and the error/read offsets doesn't require to know how
-> the HEST table generation placed offsets, as it will basically
-> reproduce what OSPM firmware does when handling	HEST events.
-
-section 8 describes old way to get to address to record old CPER,
-so it needs to amended to also describe a new approach and say
-which way is used for which version.
-
-possibly section 11 might need some messaging as well.
+Hi Alex,
 
 
-> 
-> Thanks,
-> Mauro
-> 
+On 2/25/25 6:24 AM, Alex Williamson wrote:
+> On Mon, 24 Feb 2025 20:03:56 +0100
+> Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> Hi Alex,
+>>
+>> On 2/20/25 11:48 PM, Alex Williamson wrote:
+>>> The memory and IO BARs for devices are only accessible in the D0
+>>> power state.  In other power states the PCI spec defines that the
+>>> device should respond to TLPs and messages with an Unsupported
+>>> Request response.  The closest we can come to emulating this
+>>> behavior is to consider the BARs as unmapped, removing them from
+>>> the address space.
+>>>
+>>> Introduce an interface to register the PM capability such that
+>>> the device power state is considered relative to the BAR mapping
+>>> state.  
+>> "the device power state is considered relative to the BAR mapping
+>> state."
+>> I rather understood that you want the BAR mapping state to depend on the power state but maybe I misunderstand the langage here.
+> Yes, for the BAR to be mapped, both the memory enable state of the
+> command register and the device power state are relevant, they are both
+> considered.
+thanks. That sounds clearer to me.
+>
+>>> Cc: Michael S. Tsirkin <mst@redhat.com>
+>>> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+>>> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+>>> ---
+>>>  hw/pci/pci.c                | 83 ++++++++++++++++++++++++++++++++++++-
+>>>  hw/pci/trace-events         |  2 +
+>>>  include/hw/pci/pci.h        |  3 ++
+>>>  include/hw/pci/pci_device.h |  3 ++
+>>>  4 files changed, 89 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>>> index 2afa423925c5..4f2554dd63ac 100644
+>>> --- a/hw/pci/pci.c
+>>> +++ b/hw/pci/pci.c
+>>> @@ -435,6 +435,74 @@ static void pci_msi_trigger(PCIDevice *dev, MSIMessage msg)
+>>>                           attrs, NULL);
+>>>  }
+>>>  
+>>> +int pci_pm_init(PCIDevice *d, uint8_t offset, Error **errp)
+>>> +{
+>>> +    int cap = pci_add_capability(d, PCI_CAP_ID_PM, offset, PCI_PM_SIZEOF, errp);
+>>> +
+>>> +    if (cap < 0) {
+>>> +        return cap;
+>>> +    }
+>>> +
+>>> +    d->pm_cap = cap;
+>>> +    d->cap_present |= QEMU_PCI_CAP_PM;
+>>> +    pci_set_word(d->wmask + cap + PCI_PM_CTRL, PCI_PM_CTRL_STATE_MASK);
+>>> +
+>>> +    return cap;
+>>> +}
+>>> +
+>>> +static uint8_t pci_pm_state(PCIDevice *d)
+>>> +{
+>>> +    uint16_t pmcsr;
+>>> +
+>>> +    if (!(d->cap_present & QEMU_PCI_CAP_PM)) {
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    pmcsr = pci_get_word(d->config + d->pm_cap + PCI_PM_CTRL);
+>>> +
+>>> +    return pmcsr & PCI_PM_CTRL_STATE_MASK;
+>>> +}
+>>> +
+>>> +static uint8_t pci_pm_update(PCIDevice *d, uint32_t addr, int l, uint8_t old)  
+>> the old/new terminology sounds weird to me. generally when one updates
+>> we pass the new value.
+> The new state lives in config space, the old state is recorded before
+> config space is updated.  Otherwise we interfere with or duplicate the
+> update of config space, which seems error prone and unnecessarily
+> complicated.  pci_update_irq_disable() uses the same strategy.
+ok
+>
+>>> +{
+>>> +    uint16_t pmc;
+>>> +    uint8_t new;
+>>> +
+>>> +    if (!(d->cap_present & QEMU_PCI_CAP_PM) ||
+>>> +        !range_covers_byte(addr, l, d->pm_cap + PCI_PM_CTRL)) {
+>>> +        return old;
+>>> +    }
+>>> +
+>>> +    new = pci_pm_state(d);  
+>> and new sounds to be the current state.
+> The state after the guest config write is first applied, yes.
+>
+>> pci_pm_update() does a kind of validation of the current value? 
+> Yes.  The PCI spec indicates that invalid transitions are ignored by
+> the device.  That's currently all this does, but if a device wanted a
+> callback to effect some behavior at state change, this would be a
+> logical place to do that.
+ok
+>
+>>> +    if (new == old) {
+>>> +        return old;
+>>> +    }
+>>> +
+>>> +    pmc = pci_get_word(d->config + d->pm_cap + PCI_PM_PMC);
+>>> +
+>>> +    /*
+>>> +     * Transitions to D1 & D2 are only allowed if supported.  Devices may
+>>> +     * only transition to higher D-states or to D0.  The write is dropped
+>>> +     * for rejected transitions by restoring the old state.
+>>> +     */
+>>> +    if ((!(pmc & PCI_PM_CAP_D1) && new == 1) ||
+>>> +        (!(pmc & PCI_PM_CAP_D2) && new == 2) ||
+>>> +        (old && new && new < old)) {
+>>> +        pci_word_test_and_clear_mask(d->config + d->pm_cap + PCI_PM_CTRL,
+>>> +                                     PCI_PM_CTRL_STATE_MASK);
+>>> +        pci_word_test_and_set_mask(d->config + d->pm_cap + PCI_PM_CTRL,
+>>> +                                   old);
+>>> +        trace_pci_pm_bad_transition(d->name, pci_dev_bus_num(d),
+>>> +                                    PCI_SLOT(d->devfn), PCI_FUNC(d->devfn),
+>>> +                                    old, new);  
+>> the trace does not output that the old state is kept. This may be helpful.
+> I was trying to keep the trace log brief.  The trace indicates it's a
+> "bad" transition versus the trace below indicates a successful
+> transition.  AIUI, most trace logs require some degree of familiarity
+> with the call path to fully comprehend and it seemed unnecessary to
+> print the old value twice to explicitly show it was restored.
+> Suggestions welcome.
+ok
+>
+>>> +        return old;
+>>> +    }
+>>> +
+>>> +    trace_pci_pm_transition(d->name, pci_dev_bus_num(d), PCI_SLOT(d->devfn),
+>>> +                            PCI_FUNC(d->devfn), old, new);
+>>> +    return new;
+>>> +}
+>>> +
+>>>  static void pci_reset_regions(PCIDevice *dev)
+>>>  {
+>>>      int r;
+>>> @@ -474,6 +542,11 @@ static void pci_do_device_reset(PCIDevice *dev)
+>>>                                pci_get_word(dev->wmask + PCI_INTERRUPT_LINE) |
+>>>                                pci_get_word(dev->w1cmask + PCI_INTERRUPT_LINE));
+>>>      dev->config[PCI_CACHE_LINE_SIZE] = 0x0;
+>>> +    /* Default PM state is D0 */
+>>> +    if (dev->cap_present & QEMU_PCI_CAP_PM) {
+>>> +        pci_word_test_and_clear_mask(dev->config + dev->pm_cap + PCI_PM_CTRL,
+>>> +                                     PCI_PM_CTRL_STATE_MASK);
+>>> +    }
+>>>      pci_reset_regions(dev);
+>>>      pci_update_mappings(dev);
+>>>  
+>>> @@ -1598,7 +1671,7 @@ static void pci_update_mappings(PCIDevice *d)
+>>>              continue;
+>>>  
+>>>          new_addr = pci_bar_address(d, i, r->type, r->size);
+>>> -        if (!d->enabled) {
+>>> +        if (!d->enabled || pci_pm_state(d)) {
+>>>              new_addr = PCI_BAR_UNMAPPED;
+>>>          }
+>>>  
+>>> @@ -1664,6 +1737,7 @@ uint32_t pci_default_read_config(PCIDevice *d,
+>>>  
+>>>  void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int l)
+>>>  {
+>>> +    uint8_t new_pm_state, old_pm_state = pci_pm_state(d);
+>>>      int i, was_irq_disabled = pci_irq_disabled(d);
+>>>      uint32_t val = val_in;
+>>>  
+>>> @@ -1676,11 +1750,16 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
+>>>          d->config[addr + i] = (d->config[addr + i] & ~wmask) | (val & wmask);
+>>>          d->config[addr + i] &= ~(val & w1cmask); /* W1C: Write 1 to Clear */
+>>>      }
+>>> +  
+>> IIUC the config is first updated and then we check the validity and
+>> potentially restore the older value.
+>> Couldn't we check the validity before updating d->config?
+> We could, but why?  It's easier to deal with the before and after
+> values rather than mangle the incoming write value, imo.  I also don't
+> think the intermediate value is visible to the guest anyway.  Fixing
+> the value "in flight" would need to take into account the wmask,
+> duplicating or preempting the code just above.  Thanks,
+OK, up to you. That pattern looked a bit unusual to me + update with
+'old' param. But I have not seen any functional issue
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+
+
+>
+> Alex
+>
+>>> +    new_pm_state = pci_pm_update(d, addr, l, old_pm_state);
+>>> +
+>>>      if (ranges_overlap(addr, l, PCI_BASE_ADDRESS_0, 24) ||
+>>>          ranges_overlap(addr, l, PCI_ROM_ADDRESS, 4) ||
+>>>          ranges_overlap(addr, l, PCI_ROM_ADDRESS1, 4) ||
+>>> -        range_covers_byte(addr, l, PCI_COMMAND))
+>>> +        range_covers_byte(addr, l, PCI_COMMAND) ||
+>>> +        !!new_pm_state != !!old_pm_state) {
+>>>          pci_update_mappings(d);  
+>> Eric
+>>> +    }
+>>>  
+>>>      if (ranges_overlap(addr, l, PCI_COMMAND, 2)) {
+>>>          pci_update_irq_disabled(d, was_irq_disabled);
+>>> diff --git a/hw/pci/trace-events b/hw/pci/trace-events
+>>> index 19643aa8c6b0..811354f29031 100644
+>>> --- a/hw/pci/trace-events
+>>> +++ b/hw/pci/trace-events
+>>> @@ -1,6 +1,8 @@
+>>>  # See docs/devel/tracing.rst for syntax documentation.
+>>>  
+>>>  # pci.c
+>>> +pci_pm_bad_transition(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, uint8_t old, uint8_t new) "%s %02x:%02x.%x bad PM transition D%d->D%d"
+>>> +pci_pm_transition(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, uint8_t old, uint8_t new) "%s %02x:%02x.%x PM transition D%d->D%d"
+>>>  pci_update_mappings_del(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, int bar, uint64_t addr, uint64_t size) "%s %02x:%02x.%x %d,0x%"PRIx64"+0x%"PRIx64
+>>>  pci_update_mappings_add(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, int bar, uint64_t addr, uint64_t size) "%s %02x:%02x.%x %d,0x%"PRIx64"+0x%"PRIx64
+>>>  pci_route_irq(int dev_irq, const char *dev_path, int parent_irq, const char *parent_path) "IRQ %d @%s -> IRQ %d @%s"
+>>> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+>>> index 4002bbeebde0..c220cc844962 100644
+>>> --- a/include/hw/pci/pci.h
+>>> +++ b/include/hw/pci/pci.h
+>>> @@ -216,6 +216,8 @@ enum {
+>>>      QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
+>>>  #define QEMU_PCIE_EXT_TAG_BITNR 13
+>>>      QEMU_PCIE_EXT_TAG = (1 << QEMU_PCIE_EXT_TAG_BITNR),
+>>> +#define QEMU_PCI_CAP_PM_BITNR 14
+>>> +    QEMU_PCI_CAP_PM = (1 << QEMU_PCI_CAP_PM_BITNR),
+>>>  };
+>>>  
+>>>  typedef struct PCIINTxRoute {
+>>> @@ -676,5 +678,6 @@ static inline void pci_irq_deassert(PCIDevice *pci_dev)
+>>>  MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+>>>  void pci_set_enabled(PCIDevice *pci_dev, bool state);
+>>>  void pci_set_power(PCIDevice *pci_dev, bool state);
+>>> +int pci_pm_init(PCIDevice *pci_dev, uint8_t offset, Error **errp);
+>>>  
+>>>  #endif
+>>> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+>>> index add208edfabd..345b12eaac1a 100644
+>>> --- a/include/hw/pci/pci_device.h
+>>> +++ b/include/hw/pci/pci_device.h
+>>> @@ -105,6 +105,9 @@ struct PCIDevice {
+>>>      /* Capability bits */
+>>>      uint32_t cap_present;
+>>>  
+>>> +    /* Offset of PM capability in config space */
+>>> +    uint8_t pm_cap;
+>>> +
+>>>      /* Offset of MSI-X capability in config space */
+>>>      uint8_t msix_cap;
+>>>    
 
 
