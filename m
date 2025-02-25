@@ -4,147 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C6DBC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 21:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 894EDC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 21:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn22l-0002Iw-JG; Tue, 25 Feb 2025 16:00:44 -0500
+	id 1tn286-0003wo-Ql; Tue, 25 Feb 2025 16:06:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn22i-0002IP-GB
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 16:00:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tn284-0003w8-KB
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 16:06:12 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn22f-0004ox-Lo
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 16:00:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740517236;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+rHHhDmhfXBr6buJiQDAJDP6cg+X9pEAX1JZtQE14Uo=;
- b=isqwDxtC2BpLK+j5UnuwMbSQtgbHYx9D7oQ52eStsTDqYcdVw1kLrdVtH91QPhFfwlXfH9
- 1IHIvMy1FZ1X4nE3XEN/cAu6H/AzeeOK4rZ/4qrg1NaqrqLvvNScUcV6wlr01+o2sRzJ0/
- o9QYGXOF5hS7CoP9Y7qECI3GHfvCHJU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-pWic03IZMMCW4hhyQsciNw-1; Tue, 25 Feb 2025 16:00:32 -0500
-X-MC-Unique: pWic03IZMMCW4hhyQsciNw-1
-X-Mimecast-MFC-AGG-ID: pWic03IZMMCW4hhyQsciNw_1740517230
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4393ed818ccso44166945e9.3
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 13:00:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740517230; x=1741122030;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+rHHhDmhfXBr6buJiQDAJDP6cg+X9pEAX1JZtQE14Uo=;
- b=ggoveZGT1pfGMBAsy0B3GzTlSOryAFbplR8i10bthebZCDZGdI9KRSPj84lWe0aSPQ
- JwTRkqxgcq4+Xq+YZydP8+pzYK8yla1Cm1DEAzeJo7AhmNYSoKD82l2A8YA3qLWBe0tP
- SqZD/VYtNZHGvJeD8QlZTT4QYme8zMM0qliAScl5akoVtOVlOpkPjYoETZqOm+J0ZBQ5
- 0n4VNXTmrXPZaGl4/9hYYxg7ANqvxhJEdil3BKMpBzDHGii02XKofRG2PGhk9rmMbT+1
- mVf/3fu04y7cW91FyDDErKMajBRloREtN2q3Z6vQ+THauQPKVVbfYC3N89Q6C4XRN73q
- G8Yg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcSpzRDMqVdWuz+7qv25T8vX8vvgK0qR9HQpWUOLOY4eXSa+eWUx8UNcPgZraO1Lo4b6C4Yc/fWPNl@nongnu.org
-X-Gm-Message-State: AOJu0YxA3mjjwLDIlgGkjKeQppeWtonMDNrNk7THQLCQv42DFrYY32rf
- KkJ6G/A9CNiViZ+iLYVPH7RFPL3mHP8qwHw1WOKWllcaS8V4g0C/bHeuZr7WVMoSQFxFYYCGoWK
- k3icB+uL4DKhbtGGw2KXJFsJGnSUUgGqNl9V66MjbWmc4q0tKggL1
-X-Gm-Gg: ASbGncundw6qVaNBWga312+gdJjl4Jz1suIZK+uI2wG8582Wc4sVrYge5xCTfk10KPb
- v4Q3jiTw4nBpvpdyS1l2lxvwzzxI6c93gE9pXz0YheEG71o0A1fdGScWYphuL+lz/VF6GGTk87m
- PIFiWn1puBcxa5yTEOFeZV4QP4LtARQohGxqPMC12BKJx6f5KxMPJn/NkRyLqGziXm8DKa+HsFp
- eZBtprdJusSYdYMvULTu/wIQEqT9+GSa0emQeL2Xyv/yjOhY1U/JSTG8TBbA6nWRYn5p9l8mQ4C
- eLM8ocyXwz9IMNBCu1b53OiQfstb7nau7EugkZSpjJusAqY=
-X-Received: by 2002:a5d:4090:0:b0:38d:ba09:86b5 with SMTP id
- ffacd0b85a97d-390d4fa3559mr474639f8f.52.1740517229751; 
- Tue, 25 Feb 2025 13:00:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFIDjW+Mx17uITR+hPcY/5r5jGEW0d0hOA59GsswsVSHf9wDwaxG/a2jeKK9DxDckiRrIcX4A==
-X-Received: by 2002:a5d:4090:0:b0:38d:ba09:86b5 with SMTP id
- ffacd0b85a97d-390d4fa3559mr474621f8f.52.1740517229324; 
- Tue, 25 Feb 2025 13:00:29 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
- [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd883521sm3496842f8f.56.2025.02.25.13.00.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 13:00:28 -0800 (PST)
-Message-ID: <7a81b491-d982-4a5b-b250-f7b772f64eb4@redhat.com>
-Date: Tue, 25 Feb 2025 22:00:26 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Problem with iotest 233
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, Qemu-block <qemu-block@nongnu.org>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <5a31e4fb-3e0f-4455-9941-18b00287b276@redhat.com>
- <Z72XfP8gI9-SB4B9@redhat.com>
- <f500b606-b999-426c-8d72-50a9ba9e84ac@redhat.com>
- <574cdf2e-6b8c-4ff3-9a2b-a7d00c92a788@redhat.com>
- <Z74En98KD0v11X8w@redhat.com>
- <84a51a63-50f7-4592-ba75-5e3234571987@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <84a51a63-50f7-4592-ba75-5e3234571987@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tn280-0005DT-2J
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 16:06:12 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51PIXeUb007885;
+ Tue, 25 Feb 2025 21:06:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2023-11-20; bh=a6dbZwfY
+ B5m9xHSsJzgk0Ss1P7iIA2o9uR/X5lMQK2s=; b=cwGdJSfP3s0EbT777aGIHfWP
+ 2dKrR8JsUo0sWyG/Ub+YZtJbN3N+sXtMjrYTg+NPsduthCRf9yjD3vNIOjK4US1l
+ KTdzrJ/O4psiQ5guh1xoSz5VwHJwsepEuXkJq8eXvBrlXC6IiH1MpO/h9PS+/Ncd
+ oDMJdHNHuWMnZ4/UhZM2rRl6d8sApQFbgY1KQVrrGLT4SDBE7H1n9X1IVmOBnBCW
+ dGvtKL/kqsbKU2FsA3UO5Uv9mWmzfhUiXzELOZBLUI5P8Qs2gBepErYZ/zobGMb8
+ Q17RfhKps+Jq+h/3HPZkbb6QzX8YUgTm3icRRw9IYZfNqxBhIKUdlsYbEOz/HQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44y50bpa1e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Feb 2025 21:06:05 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 51PKGiUl012522; Tue, 25 Feb 2025 21:06:04 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 44y51b2p16-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Feb 2025 21:06:04 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51PL64Ot019500;
+ Tue, 25 Feb 2025 21:06:04 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 44y51b2p0n-1; Tue, 25 Feb 2025 21:06:04 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4] migration: ram block cpr blockers
+Date: Tue, 25 Feb 2025 13:06:03 -0800
+Message-Id: <1740517563-245516-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-25_07,2025-02-25_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
+ definitions=main-2502250126
+X-Proofpoint-ORIG-GUID: SjPIWOQF_8DktFRrL69FelCNBtq5dyJR
+X-Proofpoint-GUID: SjPIWOQF_8DktFRrL69FelCNBtq5dyJR
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,104 +98,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/02/2025 21.35, Thomas Huth wrote:
-> On 25/02/2025 18.57, Daniel P. Berrangé wrote:
->> On Tue, Feb 25, 2025 at 06:52:43PM +0100, Thomas Huth wrote:
->>> On 25/02/2025 18.44, Thomas Huth wrote:
->>>> On 25/02/2025 11.12, Kevin Wolf wrote:
->>>>> Am 25.02.2025 um 08:20 hat Thomas Huth geschrieben:
->>>>>>
->>>>>>    Hi!
->>>>>>
->>>>>> I'm facing a weird hang in iotest 233 on my Fedora 41 laptop. When 
->>>>>> running
->>>>>>
->>>>>>    ./check -raw 233
->>>>>>
->>>>>> the test simply hangs. Looking at the log, the last message is "== check
->>>>>> plain client to TLS server fails ==". I added some debug messages, and it
->>>>>> seems like the previous NBD server is not correctly terminated here.
->>>>>> The test works fine again if I apply this patch:
->>>>>>
->>>>>> diff --git a/tests/qemu-iotests/common.nbd b/tests/qemu-iotests/ 
->>>>>> common.nbd
->>>>>> --- a/tests/qemu-iotests/common.nbd
->>>>>> +++ b/tests/qemu-iotests/common.nbd
->>>>>> @@ -35,7 +35,7 @@ nbd_server_stop()
->>>>>>            read NBD_PID < "$nbd_pid_file"
->>>>>>            rm -f "$nbd_pid_file"
->>>>>>            if [ -n "$NBD_PID" ]; then
->>>>>> -            kill "$NBD_PID"
->>>>>> +            kill -9 "$NBD_PID"
->>>>>>            fi
->>>>>>        fi
->>>>>>        rm -f "$nbd_unix_socket" "$nbd_stderr_fifo"
->>>>>>
->>>>>> ... but that does not look like the right solution to me. What could 
->>>>>> prevent
->>>>>> the qemu-nbd from correctly shutting down when it receives a normal 
->>>>>> SIGTERM
->>>>>> signal?
->>>>>
->>>>> Not sure. In theory, qemu_system_killed() should set state = TERMINATE
->>>>> and make main_loop_wait() return through the notification, which should
->>>>> then make it shut down. Maybe you can attach gdb and check what 'state'
->>>>> is when it hangs and if it's still in the main loop?
->>>>
->>>> I attached a gdb and ran "bt", and it looks like it is hanging in an
->>>> exit() handler:
->>>>
->>>> (gdb) bt
->>>> #0  0x00007f127f8fff1d in syscall () from /lib64/libc.so.6
->>>> #1  0x00007f127fd32e1d in g_cond_wait () from /lib64/libglib-2.0.so.0
->>>> #2  0x00005583df3048b2 in flush_trace_file (wait=true) at
->>>> ../../devel/qemu/ trace/simple.c:140
->>>> #3  st_flush_trace_buffer () at ../../devel/qemu/trace/simple.c:383
->>>> #4  0x00007f127f8296c1 in __run_exit_handlers () from /lib64/libc.so.6
->>>> #5  0x00007f127f82978e in exit () from /lib64/libc.so.6
->>>> #6  0x00005583df1ae9e1 in main (argc=<optimized out>, argv=<optimized
->>>> out>) at ../../devel/qemu/qemu-nbd.c:1242
->>>
->>> Ah, now that I wrote that: I recently ran "configure" with
->>> --enable-trace-backends=simple ... when I remove that from "config.status"
->>> again, then the test works fine again 8-)
->>>
->>> Still, I think it should not hang with the simple trace backend here, 
->>> should it?
->>
->> IIUC this is waiting on trace_empty_cond.
->>
->> This condition should be signalled from wait_for_trace_records_available
->> which is in turn called from writeout_thread.
->>
->> This thread is started from st_init, which is called from trace_init_backends
->> which should be called from qemu-nbd. I would expect this thread to still
->> be running when exit() handlers are run.
->>
->> Does GDB show any other threads running at the time of this hang ?
-> 
-> There is indeed a second thread running:
-> 
-> (gdb) thread apply all bt
-> 
-> Thread 2 (Thread 0x7f657096b6c0 (LWP 1117884) "qemu-nbd"):
-> #0  0x00007f6573419f1d in syscall () from /lib64/libc.so.6
-> #1  0x0000562bbad9b783 in qemu_futex_wait (f=0x562bbaed25d8 
-> <rcu_call_ready_event>, val=4294967295) at ../../devel/qemu/include/qemu/ 
-> futex.h:29
-> #2  0x0000562bbad9b9af in qemu_event_wait (ev=0x562bbaed25d8 
-> <rcu_call_ready_event>) at ../../devel/qemu/util/qemu-thread-posix.c:465
-> #3  0x0000562bbada86a6 in call_rcu_thread (opaque=0x0) at ../../devel/qemu/ 
-> util/rcu.c:278
-> #4  0x0000562bbad9bba3 in qemu_thread_start (args=0x562bf958a5c0) at ../../ 
-> devel/qemu/util/qemu-thread-posix.c:542
-> #5  0x00007f6573398168 in start_thread () from /lib64/libc.so.6
-> #6  0x00007f657341c14c in __clone3 () from /lib64/libc.so.6
+Unlike cpr-reboot mode, cpr-transfer mode cannot save volatile ram blocks
+in the migration stream file and recreate them later, because the physical
+memory for the blocks is pinned and registered for vfio.  Add a blocker
+for volatile ram blocks.
 
-Though, that does not look like the thread from the simpletrace, but the the 
-QEMU RCU thread instead ... so no clue where that writer thread might have 
-gone...
+Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd may be
+sufficient for CPR, but it has not been tested yet.
 
-  Thomas
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+---
+ include/exec/memory.h   |  3 +++
+ include/exec/ramblock.h |  1 +
+ migration/savevm.c      |  2 ++
+ system/physmem.c        | 68 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 74 insertions(+)
+
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 9f73b59..ea5d33a 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3184,6 +3184,9 @@ bool ram_block_discard_is_disabled(void);
+  */
+ bool ram_block_discard_is_required(void);
+ 
++void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
++void ram_block_del_cpr_blocker(RAMBlock *rb);
++
+ #endif
+ 
+ #endif
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 0babd10..64484cd 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -39,6 +39,7 @@ struct RAMBlock {
+     /* RCU-enabled, writes protected by the ramlist lock */
+     QLIST_ENTRY(RAMBlock) next;
+     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
++    Error *cpr_blocker;
+     int fd;
+     uint64_t fd_offset;
+     int guest_memfd;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index bc375db..85a3559 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3315,12 +3315,14 @@ void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
+     qemu_ram_set_idstr(mr->ram_block,
+                        memory_region_name(mr), dev);
+     qemu_ram_set_migratable(mr->ram_block);
++    ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
+ }
+ 
+ void vmstate_unregister_ram(MemoryRegion *mr, DeviceState *dev)
+ {
+     qemu_ram_unset_idstr(mr->ram_block);
+     qemu_ram_unset_migratable(mr->ram_block);
++    ram_block_del_cpr_blocker(mr->ram_block);
+ }
+ 
+ void vmstate_register_ram_global(MemoryRegion *mr)
+diff --git a/system/physmem.c b/system/physmem.c
+index 67c9db9..4ffa977 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -70,7 +70,10 @@
+ 
+ #include "qemu/pmem.h"
+ 
++#include "qapi/qapi-types-migration.h"
++#include "migration/blocker.h"
+ #include "migration/cpr.h"
++#include "migration/options.h"
+ #include "migration/vmstate.h"
+ 
+ #include "qemu/range.h"
+@@ -1899,6 +1902,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             qemu_mutex_unlock_ramlist();
+             goto out_free;
+         }
++
++        error_setg(&new_block->cpr_blocker,
++                   "Memory region %s uses guest_memfd, "
++                   "which is not supported with CPR.",
++                   memory_region_name(new_block->mr));
++        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
++                                  MIG_MODE_CPR_TRANSFER,
++                                  -1);
+     }
+ 
+     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+@@ -4059,3 +4070,60 @@ bool ram_block_discard_is_required(void)
+     return qatomic_read(&ram_block_discard_required_cnt) ||
+            qatomic_read(&ram_block_coordinated_discard_required_cnt);
+ }
++
++/*
++ * Return true if ram is compatible with CPR.  Do not exclude rom,
++ * because the rom file could change in new QEMU.
++ */
++static bool ram_is_cpr_compatible(RAMBlock *rb)
++{
++    MemoryRegion *mr = rb->mr;
++
++    if (!mr || !memory_region_is_ram(mr)) {
++        return true;
++    }
++
++    /* Ram device is remapped in new QEMU */
++    if (memory_region_is_ram_device(mr)) {
++        return true;
++    }
++
++    /* Named files are remapped in new QEMU, same contents if shared (no COW) */
++    if (qemu_ram_is_shared(rb) && qemu_ram_is_named_file(rb)) {
++        return true;
++    }
++
++    /* A file descriptor is remapped in new QEMU */
++    if (rb->fd >= 0 && qemu_ram_is_shared(rb)) {
++        return true;
++    }
++
++    return false;
++}
++
++/*
++ * Add a blocker for each volatile ram block.  This function should only be
++ * called after we know that the block is migratable.  Non-migratable blocks
++ * are either re-created in new QEMU, or are handled specially, or are covered
++ * by a device-level CPR blocker.
++ */
++void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
++{
++    assert(qemu_ram_is_migratable(rb));
++
++    if (ram_is_cpr_compatible(rb)) {
++        return;
++    }
++
++    error_setg(&rb->cpr_blocker,
++               "Memory region %s is not compatible with CPR. share=on is "
++               "required for memory-backend objects, and aux-ram-share=on is "
++               "required.", memory_region_name(rb->mr));
++    migrate_add_blocker_modes(&rb->cpr_blocker, errp, MIG_MODE_CPR_TRANSFER,
++                              -1);
++}
++
++void ram_block_del_cpr_blocker(RAMBlock *rb)
++{
++    migrate_del_blocker(&rb->cpr_blocker);
++}
+-- 
+1.8.3.1
 
 
