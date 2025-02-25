@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5B0C021BB
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5313AC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzMD-0007e7-MR; Tue, 25 Feb 2025 13:08:37 -0500
+	id 1tmzL3-0002QY-KH; Tue, 25 Feb 2025 13:07:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJt-0000PL-0g
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:17 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1tmzJE-0008Mu-ED
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:34 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJp-0002Od-9P
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:12 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43994ef3872so36688395e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:06:01 -0800 (PST)
+ id 1tmzJ9-0002DT-FR
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:30 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4399deda4bfso41030165e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506760; x=1741111560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506724; x=1741111524; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Vcx3zWAGrB6dLUXeCe9lss17zJ9Cf+qgt0qcq5k+Nkw=;
- b=zg9Fcs1E8P4Wzq2/9zGetsgOWda0RwQGNLUFv5rhOiHWpJkdZOZFlisWRJcG8vBNOy
- khqnt0Wuh4y9PAfALbOEgo+YKz5obzTpz0V8VOU5qNKo7lilU5fsnFAa718ym61ihXOG
- cHKj9a73kbPh9KeCo9sqJhgeSYX5Msl6cvIF31NbCSTF+dOiveCD9h6nIOzwwiX+L74o
- cI0czUm5+rP05eepID/bVkAd3Y7Uksgq+T6F53onsoWzeCG8Co74+mFjinQgk2GcpIUC
- pL6ZvJeDEoug7BVQnj4xjkJm2UzD0+kCFmFzLOv3zhPHHv8hA4DrhMxzBJpRcwP84wMw
- Fj0Q==
+ :reply-to; bh=sF2iTBSB9udDdHFGKwWu1r3tpgd/tit84mrcKjGT1yo=;
+ b=Q5arw1QayYFb07WeXkME2mgz3VVh6/eeq4BIbDFimANtlnwjtaboVTzEqaITTyd/lm
+ F1BuGb680GYImiykK5VxMKN46t9FkFBgLSFRtQX1oNw/qHwQBHkbFzWFaSEPQPf1dYQJ
+ Yny0sofdWZy3lQ8ynOda5rStuSB1gbFd5sbyA3PEe2aI4ctmaAXGpX4KU4uCqN9PGEXg
+ vpPpNI+4akGZTdtPP8+Ps5lAsJjxNmlHbT2ltIqSHhjMUiUK49+Dea4Y0bMd+LRoGryz
+ TaXLOmgMlakqZjC9jyzoglihpL0ZeQ4hDuo1/Ohw2D1q62t9NFGhhCkGIrvaSIAWoJ0j
+ lMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506760; x=1741111560;
+ d=1e100.net; s=20230601; t=1740506724; x=1741111524;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Vcx3zWAGrB6dLUXeCe9lss17zJ9Cf+qgt0qcq5k+Nkw=;
- b=sfwj2DEAkt2XtCEHDOFWTss5AyLOnq+I7JtjZJlZpoy8Gyg3SuejU3k480qQiOINYq
- AbbIvq4YchDoAO7ukGFlh+yoR8LQGKeG8AdiKO8gZN4A6LNkKCGKaPPlb7/iM444Akv8
- Dbima+8Cnct++XPh5TRcgyP2X2cEGDuAa083S9b0Z3P8/WTOfVIhmmKYR4BYTEFIdaCt
- pd/9xCFBivNgqWiS269nYAraHSb6qmk/WkcrsvmaO7kFby756lbj9+/dGb9unVPYR2/e
- qWfPhJEPtEgdMa/XxUnHBQtGWg33yeDzMTpcEugogQxuNDFky6I5SUG7qL0qHA4Cp7SP
- jHng==
-X-Gm-Message-State: AOJu0YyMRcsDRVX2Y6wr9aDUZWWb0DdSXSXC1VYY/KPBpl+OKl492laU
- 3OhbIfTzgW1rOmtNqa3xxzA8Y3uuYcY/wkoEnRMyg7exg0sSVzT/6zk+ITAiWahiBmE/zywOM9v
- e
-X-Gm-Gg: ASbGncsk1Gh6OgKzOyoL/m9/6pko4ZtSVCmA5gKvdj3mq2ApBwVBPu9hUzEiVqSDJwU
- um+8PaiSMOAXB7Vtt+jNKQ8jyUNgbsnkSwXSs6eWZr9J3F6PTgyJ7a4xkuit6GYF/PdCx/b7+si
- JtUbqtECrnnW9NWAFelCjfLNXhXQNr8T9ywt4LZkX9hdQUzsTxuawTvn+ybHdJF1AMwP85fnrKl
- dWefwMjMDmqcsWqJG/jOU6aUfwfr1vmfu9+1M/QYN+VDXyRfjQZNTiC+dsZmDie+ZtzeaGw4xZy
- ScE+GVWjiHDuxkdT2aJlQNNzVkRAo6kW
-X-Google-Smtp-Source: AGHT+IGHTazHDI9FG3bXwgJZ/wbf8/vEjmHPovXracxfa9ZNEFC4xF9EwrCVBx2TJCJDAFhrhua7ZQ==
-X-Received: by 2002:a05:600c:4753:b0:439:9a28:9e8d with SMTP id
- 5b1f17b1804b1-43ab0f313a0mr40006925e9.12.1740506760130; 
- Tue, 25 Feb 2025 10:06:00 -0800 (PST)
+ bh=sF2iTBSB9udDdHFGKwWu1r3tpgd/tit84mrcKjGT1yo=;
+ b=KUVUvPlLomceJLf90h8jkCRrxILE6dOp3xY/tv7I7PiVp6MNlMJeD7EWplj7hRA0OX
+ lwK4gNLbEJJTnu8jDSl9YjHgF1eocmO4Oz3QvETyxcCeSww3JV3a30KOgDY6yslE+P9b
+ S+8rrylFFMbfdqs9XZVvBkbjnx4+tm2+htizfqSE2i5et4FitYsjfL5wIeF5fPkmnFRN
+ N/U9KG4V/34uSeOXcx1mi2pzxFn0DVGrD5kBB49zXEQPqEI8QOrs4Wft/8lQq9hnHrxi
+ STaaRPr7yMxoG+oeD+64eh6UMKXOFBCp2ZTp/gteZ8B5z0+iJUPyBoLwhrH1X0KPY4OF
+ zeMg==
+X-Gm-Message-State: AOJu0Yy4862ApdwnxvP8wt0B+sIBVh0jCr3adLOpK1P5GHeqlMXt1iQT
+ GJpZ+m1Ki2DasqcpQjbKErzxypNGlsCGhUsm7Z8OtHpaYdPIYABZ5JUSIUNgb9v9EYwiEKsYCvI
+ J
+X-Gm-Gg: ASbGncu05mSZge59nUzDKr4kaRCKXLm5rJG6hAW/zH7rr6jrPy75QWgJRMl6tsNTgK+
+ ZmVBe9rXixCyBQE8aGls1Z31ZOxnV6XPSuQJsu3JpycIUD5ueytzZPevrVepJ7rm9Ox1qojOAJo
+ D81Ca91rZvjTpHntKSVQfLs1PkMoOL42U6HSAJ6QXtMS+jykaQSCtw2kOGQiVMw5yW5y66iYu+i
+ c+NIApTkNhZ42DiOOH7feBVPoDdYeyNpS3YND4FIPVSdCJYPVXZb4936YwPRRkMZDw9Kh+gosIW
+ hxloJkAqLIEDpFIQbURHkjVCna7h5GFD
+X-Google-Smtp-Source: AGHT+IFzEygZ4UUVoljzEFTjTxSn7GITlI+vFiPuduDuES8vtjLkCg9VLNwWqMY+XN7+slNH0HdSRw==
+X-Received: by 2002:a05:600c:1e23:b0:439:987c:2309 with SMTP id
+ 5b1f17b1804b1-439ae221d7dmr149077815e9.27.1740506724508; 
+ Tue, 25 Feb 2025 10:05:24 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.59
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:59 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:23 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 42/43] hw/arm/fsl-imx8mp: Add USB support
-Date: Tue, 25 Feb 2025 18:05:08 +0000
-Message-ID: <20250225180510.1318207-43-peter.maydell@linaro.org>
+Subject: [PULL 10/43] target/m68k: Avoid using floatx80_infinity global const
+Date: Tue, 25 Feb 2025 18:04:36 +0000
+Message-ID: <20250225180510.1318207-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,167 +99,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+The global const floatx80_infinity is (unlike all the other
+float*_infinity values) target-specific, because whether the explicit
+Integer bit is set or not varies between m68k and i386.  We want to
+be able to compile softfloat once for multiple targets, so we can't
+continue to use a single global whose value needs to be different
+between targets.
 
-Split the USB MMIO regions to better keep track of the implemented vs.
-unimplemented regions.
+Replace the direct uses of floatx80_infinity in target/m68k with
+calls to the new floatx80_default_inf() function.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20250223114708.1780-16-shentey@gmail.com
-[PMM: drop "static const" from usb_table for GCC 7.5]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250224111524.1101196-3-peter.maydell@linaro.org
+Message-id: 20250217125055.160887-3-peter.maydell@linaro.org
 ---
- docs/system/arm/imx8mp-evk.rst |  1 +
- include/hw/arm/fsl-imx8mp.h    | 12 +++++++++++
- hw/arm/fsl-imx8mp.c            | 37 ++++++++++++++++++++++++++++++++--
- hw/arm/Kconfig                 |  1 +
- 4 files changed, 49 insertions(+), 2 deletions(-)
+ target/m68k/softfloat.c | 47 ++++++++++++++---------------------------
+ 1 file changed, 16 insertions(+), 31 deletions(-)
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index 917c1d51769..00527b0cbed 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -15,6 +15,7 @@ The ``imx8mp-evk`` machine implements the following devices:
-  * 3 USDHC Storage Controllers
-  * 1 Designware PCI Express Controller
-  * 1 Ethernet Controller
-+ * 2 Designware USB 3 Controllers
-  * 5 GPIO Controllers
-  * 6 I2C Controllers
-  * 3 SPI Controllers
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index e292c31a3d0..5247e972b88 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -24,6 +24,7 @@
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
- #include "hw/timer/imx_gpt.h"
-+#include "hw/usb/hcd-dwc3.h"
- #include "hw/watchdog/wdt_imx2.h"
- #include "qom/object.h"
- #include "qemu/units.h"
-@@ -42,6 +43,7 @@ enum FslImx8mpConfiguration {
-     FSL_IMX8MP_NUM_I2CS         = 6,
-     FSL_IMX8MP_NUM_IRQS         = 160,
-     FSL_IMX8MP_NUM_UARTS        = 4,
-+    FSL_IMX8MP_NUM_USBS         = 2,
-     FSL_IMX8MP_NUM_USDHCS       = 3,
-     FSL_IMX8MP_NUM_WDTS         = 3,
- };
-@@ -62,6 +64,7 @@ struct FslImx8mpState {
-     IMXFECState        enet;
-     SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
-     IMX2WdtState       wdt[FSL_IMX8MP_NUM_WDTS];
-+    USBDWC3            usb[FSL_IMX8MP_NUM_USBS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
-     OrIRQState         gpt5_gpt6_irq;
-@@ -199,6 +202,12 @@ enum FslImx8mpMemoryRegions {
-     FSL_IMX8MP_UART4,
-     FSL_IMX8MP_USB1,
-     FSL_IMX8MP_USB2,
-+    FSL_IMX8MP_USB1_DEV,
-+    FSL_IMX8MP_USB2_DEV,
-+    FSL_IMX8MP_USB1_OTG,
-+    FSL_IMX8MP_USB2_OTG,
-+    FSL_IMX8MP_USB1_GLUE,
-+    FSL_IMX8MP_USB2_GLUE,
-     FSL_IMX8MP_USDHC1,
-     FSL_IMX8MP_USDHC2,
-     FSL_IMX8MP_USDHC3,
-@@ -234,6 +243,9 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_I2C3_IRQ     = 37,
-     FSL_IMX8MP_I2C4_IRQ     = 38,
- 
-+    FSL_IMX8MP_USB1_IRQ     = 40,
-+    FSL_IMX8MP_USB2_IRQ     = 41,
-+
-     FSL_IMX8MP_GPT1_IRQ      = 55,
-     FSL_IMX8MP_GPT2_IRQ      = 54,
-     FSL_IMX8MP_GPT3_IRQ      = 53,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 2dd3c97a02e..0880f0c7244 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -40,8 +40,14 @@ static const struct {
-     [FSL_IMX8MP_VPU_VC8000E_ENCODER] = { 0x38320000, 2 * MiB, "vpu_vc8000e_encoder" },
-     [FSL_IMX8MP_VPU_G2_DECODER] = { 0x38310000, 2 * MiB, "vpu_g2_decoder" },
-     [FSL_IMX8MP_VPU_G1_DECODER] = { 0x38300000, 2 * MiB, "vpu_g1_decoder" },
--    [FSL_IMX8MP_USB2] = { 0x38200000, 1 * MiB, "usb2" },
--    [FSL_IMX8MP_USB1] = { 0x38100000, 1 * MiB, "usb1" },
-+    [FSL_IMX8MP_USB2_GLUE] = { 0x382f0000, 0x100, "usb2_glue" },
-+    [FSL_IMX8MP_USB2_OTG] = { 0x3820cc00, 0x100, "usb2_otg" },
-+    [FSL_IMX8MP_USB2_DEV] = { 0x3820c700, 0x500, "usb2_dev" },
-+    [FSL_IMX8MP_USB2] = { 0x38200000, 0xc700, "usb2" },
-+    [FSL_IMX8MP_USB1_GLUE] = { 0x381f0000, 0x100, "usb1_glue" },
-+    [FSL_IMX8MP_USB1_OTG] = { 0x3810cc00, 0x100, "usb1_otg" },
-+    [FSL_IMX8MP_USB1_DEV] = { 0x3810c700, 0x500, "usb1_dev" },
-+    [FSL_IMX8MP_USB1] = { 0x38100000, 0xc700, "usb1" },
-     [FSL_IMX8MP_GPU2D] = { 0x38008000, 32 * KiB, "gpu2d" },
-     [FSL_IMX8MP_GPU3D] = { 0x38000000, 32 * KiB, "gpu3d" },
-     [FSL_IMX8MP_QSPI1_RX_BUFFER] = { 0x34000000, 32 * MiB, "qspi1_rx_buffer" },
-@@ -230,6 +236,11 @@ static void fsl_imx8mp_init(Object *obj)
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+diff --git a/target/m68k/softfloat.c b/target/m68k/softfloat.c
+index 02dcc03d15d..d1f150e641f 100644
+--- a/target/m68k/softfloat.c
++++ b/target/m68k/softfloat.c
+@@ -142,8 +142,7 @@ floatx80 floatx80_scale(floatx80 a, floatx80 b, float_status *status)
+         if ((uint64_t) (aSig << 1)) {
+             return propagateFloatx80NaN(a, b, status);
+         }
+-        return packFloatx80(aSign, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(aSign, status);
+     }
+     if (aExp == 0) {
+         if (aSig == 0) {
+@@ -245,7 +244,7 @@ floatx80 floatx80_lognp1(floatx80 a, float_status *status)
+             float_raise(float_flag_invalid, status);
+             return floatx80_default_nan(status);
+         }
+-        return packFloatx80(0, floatx80_infinity.high, floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
      }
  
-+    for (i = 0; i < FSL_IMX8MP_NUM_USBS; i++) {
-+        g_autofree char *name = g_strdup_printf("usb%d", i);
-+        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
-+    }
-+
-     for (i = 0; i < FSL_IMX8MP_NUM_ECSPIS; i++) {
-         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
-         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-@@ -524,6 +535,27 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
+     if (aExp == 0 && aSig == 0) {
+@@ -255,8 +254,7 @@ floatx80 floatx80_lognp1(floatx80 a, float_status *status)
+     if (aSign && aExp >= one_exp) {
+         if (aExp == one_exp && aSig == one_sig) {
+             float_raise(float_flag_divbyzero, status);
+-            return packFloatx80(aSign, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(aSign, status);
+         }
+         float_raise(float_flag_invalid, status);
+         return floatx80_default_nan(status);
+@@ -442,8 +440,7 @@ floatx80 floatx80_logn(floatx80 a, float_status *status)
+             propagateFloatx80NaNOneArg(a, status);
+         }
+         if (aSign == 0) {
+-            return packFloatx80(0, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(0, status);
+         }
      }
  
-+    /* USBs */
-+    for (i = 0; i < FSL_IMX8MP_NUM_USBS; i++) {
-+        struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } usb_table[FSL_IMX8MP_NUM_USBS] = {
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USB1].addr, FSL_IMX8MP_USB1_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USB2].addr, FSL_IMX8MP_USB2_IRQ },
-+        };
-+
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
-+            return;
-+        }
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
-+                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
-+    }
-+
-     /* ECSPIs */
-     for (i = 0; i < FSL_IMX8MP_NUM_ECSPIS; i++) {
-         struct {
-@@ -628,6 +660,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_RAM:
-         case FSL_IMX8MP_SNVS_HP:
-         case FSL_IMX8MP_UART1 ... FSL_IMX8MP_UART4:
-+        case FSL_IMX8MP_USB1 ... FSL_IMX8MP_USB2:
-         case FSL_IMX8MP_USDHC1 ... FSL_IMX8MP_USDHC3:
-         case FSL_IMX8MP_WDOG1 ... FSL_IMX8MP_WDOG3:
-             /* device implemented and treated above */
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 4d642db9705..faa00d1db3b 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -608,6 +608,7 @@ config FSL_IMX8MP
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-     select SDHCI
-     select UNIMP
-+    select USB_DWC3
-     select WDT_IMX2
+@@ -452,8 +449,7 @@ floatx80 floatx80_logn(floatx80 a, float_status *status)
+     if (aExp == 0) {
+         if (aSig == 0) { /* zero */
+             float_raise(float_flag_divbyzero, status);
+-            return packFloatx80(1, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(1, status);
+         }
+         if ((aSig & one_sig) == 0) { /* denormal */
+             normalizeFloatx80Subnormal(aSig, &aExp, &aSig);
+@@ -610,15 +606,13 @@ floatx80 floatx80_log10(floatx80 a, float_status *status)
+             propagateFloatx80NaNOneArg(a, status);
+         }
+         if (aSign == 0) {
+-            return packFloatx80(0, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(0, status);
+         }
+     }
  
- config FSL_IMX8MP_EVK
+     if (aExp == 0 && aSig == 0) {
+         float_raise(float_flag_divbyzero, status);
+-        return packFloatx80(1, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(1, status);
+     }
+ 
+     if (aSign) {
+@@ -668,16 +662,14 @@ floatx80 floatx80_log2(floatx80 a, float_status *status)
+             propagateFloatx80NaNOneArg(a, status);
+         }
+         if (aSign == 0) {
+-            return packFloatx80(0, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(0, status);
+         }
+     }
+ 
+     if (aExp == 0) {
+         if (aSig == 0) {
+             float_raise(float_flag_divbyzero, status);
+-            return packFloatx80(1, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(1, status);
+         }
+         normalizeFloatx80Subnormal(aSig, &aExp, &aSig);
+     }
+@@ -740,8 +732,7 @@ floatx80 floatx80_etox(floatx80 a, float_status *status)
+         if (aSign) {
+             return packFloatx80(0, 0, 0);
+         }
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+     }
+ 
+     if (aExp == 0 && aSig == 0) {
+@@ -924,8 +915,7 @@ floatx80 floatx80_twotox(floatx80 a, float_status *status)
+         if (aSign) {
+             return packFloatx80(0, 0, 0);
+         }
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+     }
+ 
+     if (aExp == 0 && aSig == 0) {
+@@ -1075,8 +1065,7 @@ floatx80 floatx80_tentox(floatx80 a, float_status *status)
+         if (aSign) {
+             return packFloatx80(0, 0, 0);
+         }
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+     }
+ 
+     if (aExp == 0 && aSig == 0) {
+@@ -2260,8 +2249,7 @@ floatx80 floatx80_atanh(floatx80 a, float_status *status)
+     if (compact >= 0x3FFF8000) { /* |X| >= 1 */
+         if (aExp == one_exp && aSig == one_sig) { /* |X| == 1 */
+             float_raise(float_flag_divbyzero, status);
+-            return packFloatx80(aSign, floatx80_infinity.high,
+-                                floatx80_infinity.low);
++            return floatx80_default_inf(aSign, status);
+         } else { /* |X| > 1 */
+             float_raise(float_flag_invalid, status);
+             return floatx80_default_nan(status);
+@@ -2320,8 +2308,7 @@ floatx80 floatx80_etoxm1(floatx80 a, float_status *status)
+         if (aSign) {
+             return packFloatx80(aSign, one_exp, one_sig);
+         }
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+     }
+ 
+     if (aExp == 0 && aSig == 0) {
+@@ -2687,8 +2674,7 @@ floatx80 floatx80_sinh(floatx80 a, float_status *status)
+         if ((uint64_t) (aSig << 1)) {
+             return propagateFloatx80NaNOneArg(a, status);
+         }
+-        return packFloatx80(aSign, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(aSign, status);
+     }
+ 
+     if (aExp == 0 && aSig == 0) {
+@@ -2774,8 +2760,7 @@ floatx80 floatx80_cosh(floatx80 a, float_status *status)
+         if ((uint64_t) (aSig << 1)) {
+             return propagateFloatx80NaNOneArg(a, status);
+         }
+-        return packFloatx80(0, floatx80_infinity.high,
+-                            floatx80_infinity.low);
++        return floatx80_default_inf(0, status);
+     }
+ 
+     if (aExp == 0 && aSig == 0) {
 -- 
 2.43.0
 
