@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D9FC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F45C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmqoY-0002jL-4l; Tue, 25 Feb 2025 04:01:18 -0500
+	id 1tmquj-0004cF-9o; Tue, 25 Feb 2025 04:07:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tmqoO-0002dc-L7; Tue, 25 Feb 2025 04:01:08 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tmquh-0004bd-Gw
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:07:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tmqoN-00015y-1K; Tue, 25 Feb 2025 04:01:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1740474067; x=1772010067;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Vs53/Ogs4sl4BzHTFsAstvRumeLpCP62A1dWxTMeAoM=;
- b=CgAv5zOGZPErWl170X9YqujjVwS83behVAk/nw7Z/1x/mYsDjK+KOfVz
- 7anoNQo0sbxAhfGofav64F79Noxu/VfH8M1r4aYKooUxeBCJPXZI8Ussj
- p8xAVaHjQZ+kbAqBzGkkQVrFQF7kaWCyFgjbcpYOpUZKft50/+SnrBqxg
- HBdhzIQbgpQHsObN58pIYeD/cAJoPG0DqTexfL0Fit74E7b81Wx2Tv0Hm
- WaVrBW8c4UEO7kBNNRwxRQEcAtE+8Y2BjT+Zr4zzmz8jmsED8QnCECAp+
- gzuKA3CwCHc0ycmInKDYjaMDf5dfaD8aaWA8dq/wRtXfJ5S6Y5XTnGZ8X Q==;
-X-CSE-ConnectionGUID: X93ANaWFTYKQuqmhtgbftA==
-X-CSE-MsgGUID: VVn0qZsQQu6oVEYm60qGjw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11355"; a="41184212"
-X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208";a="41184212"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2025 01:01:05 -0800
-X-CSE-ConnectionGUID: r3oCgVZcTqWKnrsLLqNiVQ==
-X-CSE-MsgGUID: kK2Tvc8ORAqEeDTfMyaLnw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,313,1732608000"; d="scan'208";a="116346467"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 25 Feb 2025 01:01:03 -0800
-Date: Tue, 25 Feb 2025 17:20:40 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 15/15] rust: bindings: remove more unnecessary Send/Sync
- impls
-Message-ID: <Z72LaFpqKGataGpn@intel.com>
-References: <20250221170342.63591-1-pbonzini@redhat.com>
- <20250221170342.63591-16-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tmquf-0001jA-E4
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 04:07:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740474455;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=I4FfhDXpMl0MdeuIKxaa92vCGojrGku0nUmG+DK9EpU=;
+ b=XXYWZI9N9QU8qdNkYN3WtiLJSskGghljVXGi3jLRGCJ75wiuBy0Q7BzZkq5o4wlgea1MUn
+ Wl8AowHiexfuBr+U6iQ+GxPnOH1ot/ww1btMdp40PcyPLgB4Q16G6hBIDvur88q3uTZYR7
+ ILpQHi6nQW32AwNvP4sGcBXZQ3q84LM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-226--KS1Sq9SNYWe1OVKqrFujA-1; Tue,
+ 25 Feb 2025 04:07:31 -0500
+X-MC-Unique: -KS1Sq9SNYWe1OVKqrFujA-1
+X-Mimecast-MFC-AGG-ID: -KS1Sq9SNYWe1OVKqrFujA_1740474450
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 937B71801A10; Tue, 25 Feb 2025 09:07:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.59])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC65E1955BD4; Tue, 25 Feb 2025 09:07:27 +0000 (UTC)
+Date: Tue, 25 Feb 2025 09:07:24 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manish Mishra <manish.mishra@nutanix.com>
+Cc: qemu-devel@nongnu.org, leobras@redhat.com, peterx@redhat.com
+Subject: Re: [PATCH] QIOChannelSocket: Flush zerocopy socket error queue on
+ ENOBUF failure for sendmsg
+Message-ID: <Z72ITCJlkz9711bU@redhat.com>
+References: <20250221094448.206845-1-manish.mishra@nutanix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250221170342.63591-16-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+In-Reply-To: <20250221094448.206845-1-manish.mishra@nutanix.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,25 +82,182 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 21, 2025 at 06:03:42PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 21 Feb 2025 18:03:42 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 15/15] rust: bindings: remove more unnecessary Send/Sync
->  impls
-> X-Mailer: git-send-email 2.48.1
+On Fri, Feb 21, 2025 at 04:44:48AM -0500, Manish Mishra wrote:
+> We allocate extra metadata SKBs in case of zerocopy send. This metadata memory
+> is accounted for in the OPTMEM limit. If there is any error with sending
+> zerocopy data or if zerocopy was skipped, these metadata SKBs are queued in the
+> socket error queue. This error queue is freed when userspace reads it.
 > 
-> Send and Sync are now implemented on the opaque wrappers.  Remove them
-> from the bindings module, unless the structs are pure data containers
-> and/or have no C functions defined on them.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api/src/bindings.rs | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
+> Usually, if there are continuous failures, we merge the metadata into a single
+> SKB and free another one. However, if there is any out-of-order processing or
+> an intermittent zerocopy failures, this error chain can grow significantly,
+> exhausting the OPTMEM limit. As a result, all new sendmsg requests fail to
+> allocate any new SKB, leading to an ENOBUF error.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+IIUC, you are effectively saying that the migration code is calling
+qio_channel_write() too many times, before it calls qio_channel_flush(.)
+
+Can you clarify what yu mean by the "OPTMEM limit" here ? I'm wondering
+if this is potentially triggered by suboptimal tuning of the deployment
+environment or we need to document tuning better. 
+
+> To workaround this, if we encounter an ENOBUF error with a zerocopy sendmsg,
+> we flush the error queue and retry once more.
+> 
+> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
+> ---
+>  include/io/channel-socket.h |  1 +
+>  io/channel-socket.c         | 52 ++++++++++++++++++++++++++++++++-----
+>  2 files changed, 46 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
+> index ab15577d38..6cfc66eb5b 100644
+> --- a/include/io/channel-socket.h
+> +++ b/include/io/channel-socket.h
+> @@ -49,6 +49,7 @@ struct QIOChannelSocket {
+>      socklen_t remoteAddrLen;
+>      ssize_t zero_copy_queued;
+>      ssize_t zero_copy_sent;
+> +    bool new_zero_copy_sent_success;
+>  };
+>  
+>  
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 608bcf066e..c7f576290f 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -37,6 +37,11 @@
+>  
+>  #define SOCKET_MAX_FDS 16
+>  
+> +#ifdef QEMU_MSG_ZEROCOPY
+> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+> +                                             Error **errp);
+> +#endif
+> +
+>  SocketAddress *
+>  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
+>                                       Error **errp)
+> @@ -65,6 +70,7 @@ qio_channel_socket_new(void)
+>      sioc->fd = -1;
+>      sioc->zero_copy_queued = 0;
+>      sioc->zero_copy_sent = 0;
+> +    sioc->new_zero_copy_sent_success = FALSE;
+>  
+>      ioc = QIO_CHANNEL(sioc);
+>      qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+> @@ -566,6 +572,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>      size_t fdsize = sizeof(int) * nfds;
+>      struct cmsghdr *cmsg;
+>      int sflags = 0;
+> +    bool zero_copy_flush_pending = TRUE;
+>  
+>      memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
+>  
+> @@ -612,9 +619,21 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>              goto retry;
+>          case ENOBUFS:
+>              if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
+> -                error_setg_errno(errp, errno,
+> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
+> -                return -1;
+> +                if (zero_copy_flush_pending) {
+> +                    ret = qio_channel_socket_flush_internal(ioc, errp);
+
+Calling this is problematic, because qio_channel_socket_flush is
+designed to block execution until all buffers are flushed. When
+ioc is in non-blocking mode, this breaks the required semantics
+of qio_channel_socket_writev which must return EAGAIN and not
+block.
+
+IOW, if we need to be able to flush at this point, we must be
+able to do a partial flush, rather than blocking on a full
+flush
+
+> +                    if (ret < 0) {
+> +                        error_setg_errno(errp, errno,
+> +                                         "Zerocopy flush failed");
+> +                        return -1;
+> +                    }
+> +                    zero_copy_flush_pending = FALSE;
+> +                    goto retry;
+> +                } else {
+> +                    error_setg_errno(errp, errno,
+> +                                     "Process can't lock enough memory for "
+> +                                     "using MSG_ZEROCOPY");
+> +                    return -1;
+> +                }
+>              }
+>              break;
+>          }
+> @@ -725,8 +744,8 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>  
+>  
+>  #ifdef QEMU_MSG_ZEROCOPY
+> -static int qio_channel_socket_flush(QIOChannel *ioc,
+> -                                    Error **errp)
+> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+> +                                             Error **errp)
+>  {
+>      QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+>      struct msghdr msg = {};
+> @@ -791,15 +810,34 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>          /* No errors, count successfully finished sendmsg()*/
+>          sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
+>  
+> -        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
+> +        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
+>          if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
+> -            ret = 0;
+> +            sioc->new_zero_copy_sent_success = TRUE;
+>          }
+>      }
+>  
+>      return ret;
+>  }
+>  
+> +static int qio_channel_socket_flush(QIOChannel *ioc,
+> +                                    Error **errp)
+> +{
+> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+> +    int ret;
+> +
+> +    ret = qio_channel_socket_flush_internal(ioc, errp);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    if (sioc->new_zero_copy_sent_success) {
+> +        sioc->new_zero_copy_sent_success = FALSE;
+> +        ret = 0;
+> +    }
+> +
+> +    return ret;
+> +}
+
+I don't see the point in these changes adding new_zero_copy_sent_success.
+
+IIUC, you seem to be trying to make it so that qio_channel_socket_flush
+will return 0, if  qio_channel_socket_writev had called
+qio_channel_socket_flush_internal behind the scenes.
+That should already be working though, as the first thing we do in flush
+is to check if anything was pending and, if not, then return zero:
+
+    if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
+        return 0;
+    }
+    ....do the real flush logic....
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
