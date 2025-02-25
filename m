@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281A5C021BC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 12:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37956C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 12:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmtcY-0003lZ-9Y; Tue, 25 Feb 2025 07:01:06 -0500
+	id 1tmtcZ-0003lf-Pf; Tue, 25 Feb 2025 07:01:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tmtcN-0003iv-IH
+ id 1tmtcN-0003j7-L9
  for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:00:55 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tmtcI-0006Vl-FA
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:00:53 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tmtcI-0006Vj-Ir
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:00:54 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxrnLrsL1nIRaCAA--.26669S3;
- Tue, 25 Feb 2025 20:00:43 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxaeHusL1nMxaCAA--.48205S3;
+ Tue, 25 Feb 2025 20:00:46 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxLsfpsL1n2uMnAA--.19507S2;
- Tue, 25 Feb 2025 20:00:41 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxLsfpsL1n2uMnAA--.19507S8;
+ Tue, 25 Feb 2025 20:00:46 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org,
 	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 00/11] loongarch-to-apply queue
-Date: Tue, 25 Feb 2025 20:00:30 +0800
-Message-Id: <20250225120041.1652869-1-maobibo@loongson.cn>
+Subject: [PULL 06/11] target/loongarch: Add vCPU property for paravirt ipi
+ feature
+Date: Tue, 25 Feb 2025 20:00:36 +0800
+Message-Id: <20250225120041.1652869-7-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250225120041.1652869-1-maobibo@loongson.cn>
+References: <20250225120041.1652869-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxLsfpsL1n2uMnAA--.19507S2
+X-CM-TRANSID: qMiowMBxLsfpsL1n2uMnAA--.19507S8
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,44 +66,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124:
+Property kvm-pv-ipi is added to paravirt ipi feature, it is specially
+for kvm mode.
 
-  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2025-02-22 05:06:39 +0800)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.h                |  1 +
+ target/loongarch/kvm/kvm.c            | 18 ++++++++++++++++++
+ target/loongarch/loongarch-qmp-cmds.c |  2 +-
+ 3 files changed, 20 insertions(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bibo-mao/qemu.git tags/pull-loongarch-20250225
-
-for you to fetch changes up to db369c11c90b35f3a6ab59ad78564aea5b30c3da:
-
-  target/loongarch: Enable virtual extioi feature (2025-02-25 16:05:31 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20250225 queue
-
-----------------------------------------------------------------
-Bibo Mao (10):
-      target/loongarch/gdbstub: Fix gdbstub incorrectly handling some registers
-      target/loongarch: Correct maximum physical address in KVM mode
-      target/loongarch: Add post init function for kvm mode
-      target/loongarch: Move kvm specified vCPU property to kvm directory
-      target/loongarch: Add vCPU property for paravirt ipi feature
-      target/loongarch: Add paravirt ipi feature detection
-      target/loongarch: Enable paravirt ipi feature
-      target/loongarch: Add vCPU property for kvm steal time feature
-      target/loongarch: Add kvm steal time feature detection
-      target/loongarch: Enable virtual extioi feature
-
-Xianglai Li (1):
-      target/loongarch: fix vcpu reset command word issue
-
- hw/loongarch/virt.c                   |   8 --
- include/hw/loongarch/virt.h           |   9 ++
- target/loongarch/cpu.c                |  52 ++--------
- target/loongarch/cpu.h                |  13 +++
- target/loongarch/gdbstub.c            |  11 +-
- target/loongarch/kvm/kvm.c            | 186 +++++++++++++++++++++++++++++++++-
- target/loongarch/loongarch-qmp-cmds.c |   2 +-
- 7 files changed, 224 insertions(+), 57 deletions(-)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 74dffcb552..447192bfe0 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -406,6 +406,7 @@ struct ArchCPU {
+     OnOffAuto pmu;
+     OnOffAuto lsx;
+     OnOffAuto lasx;
++    OnOffAuto kvm_pv_ipi;
+ 
+     /* 'compatible' string for this CPU for Linux device trees */
+     const char *dtb_compatible;
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index b02824356a..83a6887fe8 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -1040,6 +1040,18 @@ static void loongarch_set_pmu(Object *obj, bool value, Error **errp)
+     cpu->pmu = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+ }
+ 
++static bool kvm_pv_ipi_get(Object *obj, Error **errp)
++{
++    return LOONGARCH_CPU(obj)->kvm_pv_ipi != ON_OFF_AUTO_OFF;
++}
++
++static void kvm_pv_ipi_set(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    cpu->kvm_pv_ipi = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++}
++
+ void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
+ {
+     cpu->lbt = ON_OFF_AUTO_AUTO;
+@@ -1053,6 +1065,12 @@ void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
+                              loongarch_set_pmu);
+     object_property_set_description(OBJECT(cpu), "pmu",
+                                "Set off to disable performance monitor unit.");
++
++    cpu->kvm_pv_ipi = ON_OFF_AUTO_AUTO;
++    object_property_add_bool(OBJECT(cpu), "kvm-pv-ipi", kvm_pv_ipi_get,
++                             kvm_pv_ipi_set);
++    object_property_set_description(OBJECT(cpu), "kvm-pv-ipi",
++                                    "Set off to disable KVM paravirt IPI.");
+ }
+ 
+ int kvm_arch_destroy_vcpu(CPUState *cs)
+diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
+index 3fde5a5a20..4f94a39833 100644
+--- a/target/loongarch/loongarch-qmp-cmds.c
++++ b/target/loongarch/loongarch-qmp-cmds.c
+@@ -40,7 +40,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ }
+ 
+ static const char *cpu_model_advertised_features[] = {
+-    "lsx", "lasx", "lbt", "pmu", NULL
++    "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", NULL
+ };
+ 
+ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+-- 
+2.43.5
 
 
