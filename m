@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA16C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 19:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EA8C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 19:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn0UG-00078c-Tr; Tue, 25 Feb 2025 14:21:00 -0500
+	id 1tn0Ul-0007H0-2y; Tue, 25 Feb 2025 14:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tn0U3-00076i-SL
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 14:20:51 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tn0Ui-0007GS-LQ
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 14:21:28 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tn0Tz-0006Nn-L9
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 14:20:46 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2fc3db58932so8902607a91.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 11:20:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tn0Ue-0006RX-FR
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 14:21:28 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22185cddbffso2178165ad.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 11:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740511242; x=1741116042; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lGSiMi83Z50ymoFTZhm1/VAAdztxDQEf5HIit9pBlkM=;
- b=OE1MmcIlFdarn7t/hPQBOTzLQWLxUYYZQhmTGh3lJPRyfVzVChuvOC4I14+yqyVWU1
- CLKc+uIQrYfOmXSc0qwqNuvVPjzsVTbl3ag5q4HipSuYniHiOznLqx5iIsDY90aYKgjX
- 2GXIBV+r/W2EZweThtio8mGbqvepkC6AfMYx/HQ38G9Wl5l+VqmA0X7fq8FABWjACK/U
- +9wYZ5rgt+CKusT9FkD9TGS8T9e8U2os5g4dMc1S3QsnMOS11X24AF4UYuvCh87780mN
- AWl8uDJteZJZpGPbiJJNp5xsPpyS8A2iVljsy8QmszZk3S23PEdDmJXSkUw3JWrpwLK2
- 0hcA==
+ d=linaro.org; s=google; t=1740511282; x=1741116082; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eckVBLLJxOYQBpO5EZPfo/bhWZyBeQE/3SQkjuNLR0E=;
+ b=vcOzuosyMxmz/TgkX9gjuhKayPnJi+fc3iS8Ax4u8+4jpNFjlxY0PN21hsES1p9rZy
+ IrC9ViSy4CcoLIEp/QXaXhk/wIEahRdfQeaC8kpZig08F7nOyYTk96OD2kwqW9PLsXga
+ EjHJnADlAamhWff5xBwtz3Png3+TWcoaUEReBuG533MNIaaBQatjo1l6q1RyUvF4yZTL
+ f27JfNjbXVJCNXEAeIn/yLcnavBm8EchErDFVKZCeZfYWshYcMOkXmUgfG/GdBlZ9EQ1
+ b3N2qDmVLM3o7U3ZdAQrFXXblvV45bn5cE4GT4dUjkKYXWAJGNnGZvktKBsSrmN8QFP1
+ RbgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740511242; x=1741116042;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1740511282; x=1741116082;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lGSiMi83Z50ymoFTZhm1/VAAdztxDQEf5HIit9pBlkM=;
- b=FWrBkK8+YQwdq3sRHTWAx1a95BgIZ0haK18ELhYubmj6D7K21p+lAMdfJyV8+CQcft
- RYrq7Dr74o3QahNTiBgKHEkuHRQ1B1tEnlD84Kel+BY38wFCPq4ZwPuQqqlzyMDZvLvU
- D0oMwK+EJ7HgIY6dCa1mupcRqn3aq7LAo1Bz04SsmMvcoWV2RX9fqQ+lr+iWA/BW4Egt
- hurzn/jHUhrl8mhNz8iNuOJp2wM5juwNeLVXIGG4xZM9WY6Wk0I4242+QzEPqxn9J+cn
- k55wRxoY9R4UO/5S6JeJJqHBrArp4ntLCOv7lqQXNdvDowdtE5m0v4tRPsvcSJ9TD4UD
- aVCA==
+ bh=eckVBLLJxOYQBpO5EZPfo/bhWZyBeQE/3SQkjuNLR0E=;
+ b=HbTi91WUXUN/yTeEl/lZ/nbOQ84lJn9O6vVkB4B9fmiJKV3mpWIGvWJtcfpZFYMHW3
+ DFCjjEwZMrDgBHBeeAfj2uWrQ7lXzTZxc9AMqhOlC8wD9zh61oTAKgSCQ3HPJu5Q73uW
+ V9vqE6sLaA+9qTVBhSJ+gqKWQyPPgHgM4eRhhqJ+aBdcJRpVQw6Vz3hpgvSoljDUOYlE
+ 6YlhuqxkgLBn3zorVHQAKJ/0yByrWWCMFqxbr+Iz97lnUMWbBq+s6fIthRA518cR0RJN
+ O4Gvj9raZ2cmEEDMwg2Si71TWC9QbdPzVsFttN+YPM9nnzof5JizRNy+fJnkmK6HvVrt
+ SdJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmmGozsksBVaGvMWhv5H3vYXRo9/UyWZluFdVMa3+ymv+al2IaUyojqIPWI9S4wfBwfSfwNpZoI5No@nongnu.org
-X-Gm-Message-State: AOJu0Yz7i9Dx/WdUMD34fjExxp8YbOhpteSbr619dimrsJBKzLL5Cz5M
- R4I7YfIqorNTM38U2353OIopxX5z+KVnQ5EMWJkfFJt/e//Na2A+i0Uy3dkuTig=
-X-Gm-Gg: ASbGncvI3bQtmCDi0iC7ypkZIr1tLOw8rMoEMbaB/qU0qYizRW6SWCbMPp2TyupN3PA
- rIrweynLomeFUMXm48J4/26qQGUgHxSdyGhH+W6NUVwSB6pWFf6ZAayXnVX20+u6R1Zec6ucLwR
- JhhB7nRoiQ4RNENN/cwPZNBUwmHNmMKcC3GDrQ/oM9j+6ZH3iCdT2nYO9sKfiwyN+R0wNsLGBUB
- FQ892xiJydYZDRv6CRP1fRYqKojbpgRnMrqSGDICw4nI4Wxv3zwkzYftHPGB/p5kdJnR0uZvLJd
- rQPnKWTejNhJLEXvi5LmI1VLDA8EQ/mB0wZ4g0/lL3OYoZDAn/s9PR4lwSQPZRXkpDVaMae299A
- OSDHv84M=
-X-Google-Smtp-Source: AGHT+IFEnrW1Bdxz6DhUiUe4clxMc2xPaynFZc+Z0fA7XAMoDrfgqCfBTKkVrbDvfXuTLVugZXGlZw==
-X-Received: by 2002:a05:6a21:b97:b0:1e1:b60c:5bcf with SMTP id
- adf61e73a8af0-1eef3d5a9c9mr38491688637.32.1740511241849; 
- Tue, 25 Feb 2025 11:20:41 -0800 (PST)
-Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-aeda7e84cbdsm1478774a12.24.2025.02.25.11.20.41
+ AJvYcCUuOaNSm6kri1YJ1CCVlpVrh76tO72saHye959/FLO6ZhAeYRJgujqj0A/uTrfR3xkMdaxiGIGpysVG@nongnu.org
+X-Gm-Message-State: AOJu0YzKDl32Ab3LiHsEZXyiQZNiE5+bPc2yigdYc7MMKbiHNLHpHlDC
+ tN45zSdrv3mOzPxRC72v51Yn0kQwf5kdL/b+/ahA73pn8L+ec3vjzvaDs6GeGUk=
+X-Gm-Gg: ASbGncv9TMYlSfa3gaDiMaeVLrGecOELNCp3CvHIPl0RWKNEOxv1AK3RNAcEng7KiYk
+ 1GQ0c3q9KrYeQOFNuiQs2LzZWKxKMaKKvs+1xsItgGCTD1sep8AZGzYnaMteDBg7jtR6U1saKfT
+ HNOL43U0zbLSIIhVvUark9qoh6d7zXZiZ4pKAotesyIP3QK463VVfAz+q9lkn+RCZzfhglNwg68
+ W0qeTzM6tUiGyUiqxd2j0agvqhpGu7dIEOKBHluMVVk40mZ8G/Jxk/iDISYArZYaJFcqCyOgNY9
+ 3xiPoO79OqC1fWjT8zM5oNRqcjXX/Ax8RjpCcus=
+X-Google-Smtp-Source: AGHT+IEhS3qF+14z0mDsnZ+Jsy1GbgxYVl+Q+BFSy+uTiwlmXjp+ZkbsLUA3gLQ8rYsY+YtGaCNGSg==
+X-Received: by 2002:a05:6a20:2d14:b0:1e1:a449:ff71 with SMTP id
+ adf61e73a8af0-1eef3c5d155mr32476336637.1.1740511280633; 
+ Tue, 25 Feb 2025 11:21:20 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-aedaa6429a4sm1479327a12.52.2025.02.25.11.21.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 11:20:41 -0800 (PST)
-Message-ID: <61cbdd92-e5c1-443b-87f7-dba148b95b15@linaro.org>
-Date: Tue, 25 Feb 2025 11:20:39 -0800
+ Tue, 25 Feb 2025 11:21:20 -0800 (PST)
+Message-ID: <1555e5f6-080f-4e2d-a5ba-e35cad22bd61@linaro.org>
+Date: Tue, 25 Feb 2025 11:21:19 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 004/162] tcg: Convert add to TCGOutOpBinary
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-5-richard.henderson@linaro.org>
- <21f85e1d-938e-40e8-b33d-95f8cb4a13a7@linaro.org>
+Subject: Re: [PATCH 00/10] plugins: reduce total number of build objects
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <21f85e1d-938e-40e8-b33d-95f8cb4a13a7@linaro.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250225110844.3296991-1-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250225110844.3296991-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,79 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/25 10:17, Philippe Mathieu-Daudé wrote:
->> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
->> index a0f050ff9c..08106b6e4c 100644
->> --- a/tcg/loongarch64/tcg-target.c.inc
->> +++ b/tcg/loongarch64/tcg-target.c.inc
-> 
-> 
->> +static const TCGOutOpBinary outop_add = {
->> +    .base.static_constraint = C_O1_I2(r, r, rJ),
-> 
-> So now 32-bit uses 'T' constraint (TCG_CT_CONST_S32) and we get the
-> signed32 cast, OK.
-
-Yes, TCG_CT_CONST_S32 will match all constants for TCG_TYPE_I32, so there is no change in 
-functionality.
-
->> +static const TCGOutOpBinary outop_add = {
->> +    .base.static_constraint = C_O1_I2(r, r, rT),
-> 
-> Similarly, 32-bit uses 'T' constraint (TCG_CT_CONST_S32) and we get the
-> signed32 cast, OK.
-
-Yes.
-
->> @@ -2989,8 +3000,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->>                   tcg_out32(s, SUBFIC | TAI(a0, a2, a1));
->>               }
->>           } else if (const_args[2]) {
->> -            a2 = -a2;
->> -            goto do_addi_32;
->> +            tgen_addi(s, type, a0, a1, (int32_t)-a2);
-> 
-> So do we really need the (int32_t) cast here?
-
-Interesting question.
-
-(0) Truncate -INT32_MIN to remain a 32-bit quantity.
-
-(1) We are *supposed* to have eliminated this case already, converting
-     all subtract of constant to add of negative constant.  That said,
-     patch 9 fixes one more case of this.  (There were rebase conflicts
-     moving patch 9 earlier, so I took the lazy way and left it where it is.)
-
-(2) The cast goes away when we convert INDEX_op_sub_* and forcefully
-     disallow subtract of constant.
-
-Because of (1), we *probably* don't need the cast now, but until (2) it's difficult to 
-prove.  On balance I think it's better to have it until we are sure we don't need it.
-
->> +static const TCGOutOpBinary outop_add = {
->> +    .base.static_constraint = C_O1_I2(r, r, rJ),
-> 
-> Don't we need
-> 
->         .base.static_constraint = C_O1_I2(r, rz, rJ),
-> 
-> since commit 1bbcae5adaa ("tcg/sparc64: Use 'z' constraint")?
-
-Constants should never appear in the first source operand.
-The optimize pass will always swap commutative operands.
-
-This patch asserts that this has been done:
-
-> +    case INDEX_op_add_i32:
-> +    case INDEX_op_add_i64:
-> +        {
-> +            const TCGOutOpBinary *out =
-> +                container_of(all_outop[op->opc], TCGOutOpBinary, base);
-> +
-> +            tcg_debug_assert(!const_args[1]);
-
-Therefore, simplify the constraints so that they're not attempting to handle nonsense.
-
-
-r~
+SGkgQWxleCwNCg0KT24gMi8yNS8yNSAwMzowOCwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBB
+cyB3ZSBtb3ZlIHRvd2FyZHMgYSBtb3JlIG1vZHVsYXIgYnVpbGQgdGhpcyBzZXJpZXMgY29u
+dmVydHMgYm90aA0KPiBsb2FkZXIgYW5kIGFwaSB0byBidWlsZCBvbmNlIG9iamVjdHMuIEZv
+ciBib3RoIG9iamVjdHMgdGhlIG9ubHkgcmVhbA0KPiBkaWZmZXJlbmNlIGlzIGJldHdlZW4g
+dXNlciBtb2RlIGFuZCBzeXN0ZW0gZW11bGF0aW9uIHNvIHRob3NlIGJpdHMNCj4gaGF2ZSBi
+ZWVuIGhpdmVkIG9mZiBpbnRvIHRob3NlIHNvdXJjZSBzZXRzLg0KPiANCj4gVGhlIHJlbWFp
+bmluZyBjb3JlIHBsdWdpbiBpcyBtb3JlIGludGltYXRlbHkgYWxpZ25lZCB3aXRoIHRoZSBU
+Q0cNCj4gYmFja2VuZCBzbyByZXF1aXJlcyBkZWZpbml0aW9ucyBsaWtlIFRDR19UQVJHRVRf
+TE9ORy4gSG9wZWZ1bGx5IHRoaXMNCj4gY2FuIGJlZW4gY2xlYW5lZCB1cCBvbmNlIFJpY2hh
+cmRzIFRDRyByYXRpb25hbGlzYXRpb24gY29kZSBpcyBhZGRlZC4NCj4gDQo+IFBsZWFzZSBy
+ZXZpZXcuDQo+IA0KPiBBbGV4Lg0KPiANCj4gQWxleCBCZW5uw6llICgxMCk6DQo+ICAgIHBs
+dWdpbnMvYXBpOiB1c2UgdGNnX2N0eCB0byBnZXQgVEFSR0VUX1BBR0VfTUFTSw0KPiAgICBw
+bHVnaW5zL2xvYWRlcjogcG9wdWxhdGUgdGFyZ2V0X25hbWUgd2l0aCB0YXJnZXRfbmFtZSgp
+DQo+ICAgIGluY2x1ZGUvcWVtdTogcGx1Z2luLW1lbW9yeS5oIGRvZXNuJ3QgbmVlZCBjcHUt
+ZGVmcy5oDQo+ICAgIHBsdWdpbnMvYXBpOiBjbGVhbi11cCB0aGUgaW5jbHVkZXMNCj4gICAg
+cGx1Z2lucy9wbHVnaW4uaDogaW5jbHVkZSBxdWV1ZS5oDQo+ICAgIHBsdWdpbnMvbG9hZGVy
+OiBjb21waWxlIGxvYWRlciBvbmx5IG9uY2UNCj4gICAgcGx1Z2lucy9hcGk6IHNwbGl0IG91
+dCBiaW5hcnkgcGF0aC9zdGFydC9lbmQvZW50cnkgY29kZQ0KPiAgICBwbHVnaW5zL2FwaTog
+c3BsaXQgb3V0IHRoZSB2YWRkci9od2FkZHIgaGVscGVycw0KPiAgICBwbHVnaW5zL2FwaTog
+c3BsaXQgb3V0IHRpbWUgY29udHJvbCBoZWxwZXJzDQo+ICAgIHBsdWdpbnMvYXBpOiBidWls
+ZCBvbmx5IG9uY2UNCj4gDQoNCmZvciBhbGwgdGhlIHNlcmllczoNClJldmlld2VkLWJ5OiBQ
+aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQoNCkFkZGl0
+aW9ubmFsbHksIEkgd291bGQgc3VnZ2VzdCB0byBnbyBmdXJ0aGVyIGFuZCBtZXJnZSBmdW5j
+dGlvbnMgZm9yIA0Kc3lzdGVtIGFuZCB1c2VyIG1vZGUsIGJ5IGNoZWNraW5nIGF0IHJ1bnRp
+bWUgd2hhdCBpcyB0aGUgbW9kZSwgYnkgDQppbnRyb2R1Y2luZyBhIGhlbHBlciBmdW5jdGlv
+biBmb3IgdGhhdC4gVGhpcyB3YXksIGFsbCBmaWxlcyBjYW4gYmUgDQpyZWFsbHkgbGlua2Vk
+IHRvZ2V0aGVyLCB3aXRob3V0IGhhdmluZyB0byBzZWxlY3QgYSBkaWZmZXJlbnQgc2V0IG9m
+IA0Kc291cmNlcyBkZXBlbmRpbmcgb24gd2hpY2ggYmluYXJ5IGlzIGJ1aWx0Lg0KDQpSZWdh
+cmRzLA0KUGllcnJpY2sNCg0KPiAgIGluY2x1ZGUvcWVtdS9wbHVnaW4tbWVtb3J5LmggfCAg
+IDEgLQ0KPiAgIHBsdWdpbnMvcGx1Z2luLmggICAgICAgICAgICAgfCAgIDcgKysNCj4gICBs
+aW51eC11c2VyL3BsdWdpbi1hcGkuYyAgICAgIHwgIDQzICsrKysrKysrKw0KPiAgIHBsdWdp
+bnMvYXBpLXN5c3RlbS5jICAgICAgICAgfCAxMzEgKysrKysrKysrKysrKysrKysrKysrKysr
+KysrDQo+ICAgcGx1Z2lucy9hcGktdXNlci5jICAgICAgICAgICB8ICA1NyArKysrKysrKysr
+KysNCj4gICBwbHVnaW5zL2FwaS5jICAgICAgICAgICAgICAgIHwgMTcwICstLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+ICAgcGx1Z2lucy9sb2FkZXIuYyAgICAgICAg
+ICAgICB8ICAxNSArLS0tDQo+ICAgcGx1Z2lucy9zeXN0ZW0uYyAgICAgICAgICAgICB8ICAy
+NCArKysrKw0KPiAgIHBsdWdpbnMvdXNlci5jICAgICAgICAgICAgICAgfCAgMTkgKysrKw0K
+PiAgIGxpbnV4LXVzZXIvbWVzb24uYnVpbGQgICAgICAgfCAgIDEgKw0KPiAgIHBsdWdpbnMv
+bWVzb24uYnVpbGQgICAgICAgICAgfCAgIDggKy0NCj4gICAxMSBmaWxlcyBjaGFuZ2VkLCAy
+OTIgaW5zZXJ0aW9ucygrKSwgMTg0IGRlbGV0aW9ucygtKQ0KPiAgIGNyZWF0ZSBtb2RlIDEw
+MDY0NCBsaW51eC11c2VyL3BsdWdpbi1hcGkuYw0KPiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBw
+bHVnaW5zL2FwaS1zeXN0ZW0uYw0KPiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBwbHVnaW5zL2Fw
+aS11c2VyLmMNCj4gICBjcmVhdGUgbW9kZSAxMDA2NDQgcGx1Z2lucy9zeXN0ZW0uYw0KPiAg
+IGNyZWF0ZSBtb2RlIDEwMDY0NCBwbHVnaW5zL3VzZXIuYw0KPiANCg0K
 
