@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F634C021B6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 11:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33884C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 11:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmtPu-00086n-5z; Tue, 25 Feb 2025 06:48:02 -0500
+	id 1tmtS0-0000zE-A5; Tue, 25 Feb 2025 06:50:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmtPp-00086G-VQ
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:47:57 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tmtRw-0000xk-T9
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:50:09 -0500
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmtPo-0004kN-6m
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:47:57 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-439ac3216dcso31831555e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 03:47:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tmtRu-00054f-2f
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 06:50:08 -0500
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-46c8474d8daso47799121cf.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 03:50:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740484074; x=1741088874; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1740484204; x=1741089004; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1bjKbzVPk00o7e175/6bojvBROsWTOe6SU6NC3irojo=;
- b=OzTfdTh0fux7H5GQlcQrLXCNk9fMm0YEwUJhCwHUMS6bEhhAdLi4nrAC71l/il8mhQ
- W2Oc9t5Jft1u2g2aWtmpxgIwZZxnNIv28oqyXxuUWnGFvnEs/rnyGYYJflW5kIG913Vq
- ua+FE2stlqr0PqKvqENO8mGt5v2Pff/kTz1TX2Bzb8okY0DCCX37LC4Oai3OrzjxLcfJ
- 69MJrfMuq3t7G2GbJ2wQeg2asCLtNTW1lsbEiRznQ92wOIgO3v8aBoYc1YM4UUAJHjaR
- W8FdnwgpfQzSsdycqo0GtVfqvcKaM/mTAMbvTt7kBzO6uCL/BGRzhJofe2GUjxdi3q5A
- MqHA==
+ bh=wPAXJ6BAhluC/wqz77rNwGPnRNX0egyINsJEGGnGHbQ=;
+ b=mb6aCBJ3IjLzSaX+p/8UkjlcVfk7VC0RhiCHyf28IuSKV4ic5Df8LOP3A5Mx3XcpOI
+ uUGVi7v/03oeILT5OpFbgnEydh6c0CDRhgCcFFsbsYxTk/mzWtosxNRXsycwCPZCv2/b
+ Wvfjb6Y/mCdqp1mjckinzRdcj7ONyh3cifHlUrz1rOsaG/1vD3hmxkgbys7AYrCpdj5M
+ r/cjyPVcI9JCTFkmIaUVZASsNk3RzNRQXhfPrLVysII0cNbHOAN+G5xW6W2LDkKWTVgV
+ ZL7QI8QJf5NA/Z8CeMfw/EvQwSodImv+cdyFXc2vXd0ocD8bwSLBz18cgbZjV7G/3lfZ
+ yDwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740484074; x=1741088874;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1bjKbzVPk00o7e175/6bojvBROsWTOe6SU6NC3irojo=;
- b=IbrK8YzWBuFafBT20sE1tt+zkTkZ40AfT8YCTirQQSTTYsxYYctAFWo2uRDeO2kSHn
- tV0yNQQU3tDoFNZSbVkq/USINRtPugFZqVwVCuNv0x6/84R5SSfzL/6fFHKPn2FrWNlF
- cDZNrDZWaE/M0nYbu0f9lUyzUXh8Nw2vYxO96HmnLjSNfh+vtmbiv4q6JDzNHAvaeDku
- H8iIIi8M32bn8rj50EmK9YfnZgBEePVIVxnk3auWipQKNuKGqGesPdtN+yrdoFS/7i0H
- +v+kMnfo9D/CJhbfaJ8AfKF3dSOU6Ie5Tvc+ckbrlTdw+1GHEFQfT9rOPWlCb9UBf6YW
- +GUw==
-X-Gm-Message-State: AOJu0Yy7a64rZmQSkDxt4akdSG+CzUXMDar/Ehj96FzarVbNSohbxFZo
- i9RD8wTQJ6tARfTktUVxHXT0gGQAmg3ktlb9bwAuN9VBXwKINjlUtOUuvEX1G9U=
-X-Gm-Gg: ASbGnctOuXimLA6QJe6iKNaFqQh73ZAlYBYTfxVKLKtcs74an3J/D3CGbpNBm1iJ3ll
- kRz1JabGMrSihTjJdmshBZI/gCZnMQj2Z7oEDwa3wR5ODp7E9gESr7LAnGkE1lIOzGcsmsH2kDn
- rW5zMuV6YLoF5Q5SiJRaC5jPZAoLQDFGZDkIW3dEjB/yxgCWaPYwsinQNJXea8sqnXsPZmNOgGI
- Z/LJtSddgZYEtC2cz4y+HAKMnZSr+qwJnZX2+XX4wnBA01nFFHMT6L4j60kRJZON7EGoAiM/A+N
- uN9HaEBYkieFQtpgUHg8NtDPHPVu
-X-Google-Smtp-Source: AGHT+IHRyfxC2S9NLq8Uj61308xng36zAPuLlzanZr+TJusnvfhtu0g1lq2W+mhVD0rXAiRUFpsPXg==
-X-Received: by 2002:a05:6000:1842:b0:38d:c2d7:b5a1 with SMTP id
- ffacd0b85a97d-38f7078b9f2mr14312015f8f.19.1740484074320; 
- Tue, 25 Feb 2025 03:47:54 -0800 (PST)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab1533104sm23561545e9.5.2025.02.25.03.47.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 03:47:53 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 056625F7DC;
- Tue, 25 Feb 2025 11:47:53 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Dau?=
- =?utf-8?Q?d=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 04/10] tcg:tlb: use tcg_debug_assert() in
- assert_cpu_is_self()
-In-Reply-To: <20250207162048.1890669-5-imammedo@redhat.com> (Igor Mammedov's
- message of "Fri, 7 Feb 2025 17:20:42 +0100")
-References: <20250207162048.1890669-1-imammedo@redhat.com>
- <20250207162048.1890669-5-imammedo@redhat.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 25 Feb 2025 11:47:52 +0000
-Message-ID: <87y0xu5jpz.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1740484204; x=1741089004;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wPAXJ6BAhluC/wqz77rNwGPnRNX0egyINsJEGGnGHbQ=;
+ b=lBWOGXJTaJ0FN8Jgs40PjHDJTmByH7iEJJrdd+ypjwprmhbxfCGfkHbCAZPm5yaeae
+ QrShp9ohbfqdF5eJxMwSHcId5njeQ2WAq434PDPI6mzr0Xf0McqnnyGq2xjeulUHPsbK
+ e6fnBSiauOdkAFArDCULJc09LNGCl2xJX3vB4UzJnStBRivbw+wkFZlGBroHdtBzUa0/
+ y7c4giwtNnlQhA5gNqyQxtyJq2WtA+N/1voL9vbcZs6V25Ch4gTm3ei7C5K7f0Dn/EWW
+ feMphUR9l5Jp1IbTwjOEb0DXfMimwQ18ILMtiIOJUpH8xJB0WpRfAjQLOyN/j7dcI1Z1
+ cfRA==
+X-Gm-Message-State: AOJu0YyzACAADPYQIgHyMGl+k/GcEJN+cn8iLd4MS5odM8xBKPu6E9oS
+ AdNQ+wY5rCCvFh3Lv7Tgll3Jz7GyN1RuhsxDm9U5M/nM7jSWDo9jfB3XIIhPhwxN7impT8+U7Lb
+ 0QLT2hrRorpllLX1zcffVDQ0FfEY=
+X-Gm-Gg: ASbGncvpxlfl4sL5sASi93CPF1PwKaA6D9WfPzUPNzWnulVux21P9CRerYdWC5hiUvy
+ sO0LjWxZ8rKudpghbpstCf4BSVXGMKw/7ZYwOqvKDsuZ6eo6EFFQoOrFxSiVEV3nVbltXD1EIH3
+ Uv8RR8CYBtXdKkr5qMTUbL0uUB4EkL3i+ywRAjsOMh
+X-Google-Smtp-Source: AGHT+IFzem9bhfv1dXJXe67Yc/KYSjPYoJ3jdn3DvF+VH6ijvOsXUJgI8r1BMXqVEyFfkEta33791MMwt0rVmW6S7ME=
+X-Received: by 2002:a05:622a:34c:b0:472:801:3e71 with SMTP id
+ d75a77b69052e-47224716cdbmr256781321cf.1.1740484204365; Tue, 25 Feb 2025
+ 03:50:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250225104526.2924175-1-haoqian.he@smartx.com>
+In-Reply-To: <20250225104526.2924175-1-haoqian.he@smartx.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 25 Feb 2025 15:49:52 +0400
+X-Gm-Features: AWEUYZl0nfl3EeTfxCbj6x1biaL3Z9n5jOQN66m08gSRBnNBUKYG8PXDRbGo2M0
+Message-ID: <CAJ+F1CLTXwgbJzxNiK7ZyrK_-ToD2ibwU8WR27y3w4Mj5O+eVw@mail.gmail.com>
+Subject: Re: [PATCH] chardev: use remoteAddr if the chardev is client
+To: Haoqian He <haoqian.he@smartx.com>
+Cc: qemu-devel@nongnu.org, fengli@smartx.com, yuhua@smartx.com, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Igor Mammedov <imammedo@redhat.com> writes:
+Hi
 
-> that will enable assert_cpu_is_self when QEMU is configured with
->    --enable-debug
-> without need for manual patching DEBUG_TLB_GATE define.
+On Tue, Feb 25, 2025 at 2:47=E2=80=AFPM Haoqian He <haoqian.he@smartx.com> =
+wrote:
 >
-> Need to manually path DEBUG_TLB_GATE define to enable assert,
-> let regression caused by [1] creep in unnoticed.
+> If the chardev is client, the socket file path in localAddr may be NULL.
+> This is because the socket path comes from getsockname(), according
+> to man page, getsockname() returns the current address bound by the
+> socket sockfd. If the chardev is client, it's socket is unbound sockfd.
 >
-> 1) 30933c4fb4f3d ("tcg/cputlb: remove other-cpu capability from TLB flush=
-ing")
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> Suggested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Therefore, when computing the client chardev socket file path, using
+> remoteAddr is more appropriate.
+>
+> Signed-off-by: Haoqian He <haoqian.he@smartx.com>
+> ---
+>  chardev/char-socket.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+> index 91496ceda9..2f842f9f88 100644
+> --- a/chardev/char-socket.c
+> +++ b/chardev/char-socket.c
+> @@ -571,9 +571,13 @@ static char *qemu_chr_compute_filename(SocketChardev=
+ *s)
+>
+>      switch (ss->ss_family) {
+>      case AF_UNIX:
+> -        return g_strdup_printf("unix:%s%s",
+> -                               ((struct sockaddr_un *)(ss))->sun_path,
+> -                               s->is_listen ? ",server=3Don" : "");
+> +        if (s->is_listen) {
+> +            return g_strdup_printf("unix:%s,server=3Don",
+> +                                   ((struct sockaddr_un *)(ss))->sun_pat=
+h);
+> +        } else {
+> +            return g_strdup_printf("unix:%s",
+> +                                   ((struct sockaddr_un *)(ps))->sun_pat=
+h);
+> +        }
+>      case AF_INET6:
+>          left  =3D "[";
+>          right =3D "]";
+> --
+> 2.48.1
+>
+>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+This patch doesn't change anything, and I don't understand the problem
+you are trying to fix.
+
+Can you provide more details or a test scenario?
+
+thanks
 
 --=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Marc-Andr=C3=A9 Lureau
 
