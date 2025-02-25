@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B71C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8036EC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzy3-0002dB-TK; Tue, 25 Feb 2025 13:47:44 -0500
+	id 1tmzxo-0002VM-M6; Tue, 25 Feb 2025 13:47:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmzx8-0002FV-2V
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:58 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tmzx1-0002Bt-I1
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:43 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tmzx4-0000J1-Gg
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:44 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-220f4dd756eso127140415ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:46:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tmzwv-0000HG-I6
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:36 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-390cf7458f5so945998f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:46:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740509199; x=1741113999; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LhbEIpIBB5sMAWBXwLQJwqkqzuEasaA8LzuKqvtK1O0=;
- b=eIcHvdKBvSyFzCcYTDdbeKIpZuTe8s+oWI3aoHKj4hZS4p+XptR2E3qIYP5BF3N4rB
- LcZbMchG58NF5BuZcJxYn3LQ+pHjN3QmdfGee+HowBpZZWOuRBOe3IRI3Q3d9qDx0MPZ
- LiAVqYgEbKkulJHZLrSzQtr4O/zNKT9n7t2Oj7o8QSOqrn7azk86zVrL/GjZoch1pKEx
- 8F7TzLGT75NzNiwfIUHQqEgY9J49gfeeQv+ygHO0oAHRs5w6khLIG8/iPdf2Hl9B1n1K
- 9hmOlHxbAs4hKkDXQOib1lPA4ZZ+shzp6xZ7vAoHYljbBW5cKBHJLuRTgWuJyWGkLIfz
- w0LA==
+ d=linaro.org; s=google; t=1740509191; x=1741113991; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZSVra8nBfTZ84QaRLv+FUaCWxVEY3WH1UDqPpiF+8yM=;
+ b=Txt8npCXbTlJhDYWeTJ0p5Bm8PUlsxol5ekRGeBFzl5RSsqfG4c7fCjrHFf34lcvfp
+ /8XtXQ+M3Bh9aFC7YZg7783zFmkmxqLyeI1yvrRGh4ULB/l6EviK4GMQ0Em7b8Uu3u04
+ imqrsFtsaBhmaOr7YBaU0fb1TDuMmd2WcHzWshKCLOTw+jt3Pi0h8y293t88RoRbwx2v
+ FvVuqZ3fFMF/swlH4h8MIGOytjYH9gm2fviFITLLeTDrFf+aHUoSIiQehInoLmcYD+pu
+ IgbJXqANduyWGXCSIyZxdqBXK+P9Ob+URm21xQfbcTqX4dcTkwEs/bNdHjE8E1eVthZV
+ XqHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740509199; x=1741113999;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LhbEIpIBB5sMAWBXwLQJwqkqzuEasaA8LzuKqvtK1O0=;
- b=LwMjeAoo3GsjFgHTSUONe8uhBOUtjRMAkVvA2n9mgbgbrIdqfd76VWqney4ux1vp04
- 8q3jRsluAdvy24Qd7nKvNBeCJRlGrnVmNmCKoZUDsAN0VX6EUpPj0bYNy/RBvfq8vBWA
- UdcXEr0t0F3gVodv744T/+UileAv9l7Q0xdjDaSjJvScGIzvgtkrxMX9deedC+hwlSYK
- HZ2tiGWK8Dx3Bx844QvsZ38rVtkg6KKm0dnuEpM/WunfeFqyRgkcc6KPplLwEouCi2Ed
- hH+YqV3FaWOpwr8Vns857KBAIg9dIFpEwruRW8cw2KGLhFN1sZz7VOJPJomo1KSSzFR5
- QRgg==
-X-Gm-Message-State: AOJu0YxASiEt3hVeEzGzgr8ga/h1x254V//z40ZLX8ea92wp7Vm54HV6
- 0Nv06tXlpDW+4LyToE2wClqoXSTCO7tuvsr6fcni/ZuPXWcbbTC9SqPMNKPuBMDSP4EDJZkr5eK
- G
-X-Gm-Gg: ASbGncv1alyPVFbxGQ8id3XD8H+MsdShWloHKhVVoc1BoX0Tx4iuErRtCRAo96US5ov
- RlinuuybnZi2NGw3vxlSvIzWhcYC+owj0lpw89nWff+WC2TqHHKBcgQP6vTnfu5C/R5JX7RqOor
- 6lQrDMmMNTtODbBOeKkeIzfT2gf+HucIeded9+Y+KZRYgOKA+lwISUTG/ETb+s0v8/DtdavBJCt
- kvD/jrozpZxvkkqIasiD8THzcLqp90PDsyH+Xhxfztvbg2wn5WnHucsDHxhzV+x4EB9LuQ4xZ2Z
- c0Y6B964ZlHxYo3/2q/orZjIZHaPzHOO94d+UDiOQLUMAXtLpVB7tERINLHUu09Df8c71g2pbGJ
- AvP7aAR0=
-X-Google-Smtp-Source: AGHT+IFxKsSpT3EaOzhSuYF1r5zmgfX+8g5Z99+cn4Svq4MZtZWK1h0hIq2WstZfkAnOg0hgxUqUCA==
-X-Received: by 2002:a17:902:e84e:b0:216:5294:619b with SMTP id
- d9443c01a7336-22307e78b9fmr58482915ad.47.1740509198941; 
- Tue, 25 Feb 2025 10:46:38 -0800 (PST)
-Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2230a000964sm17886235ad.48.2025.02.25.10.46.38
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 10:46:38 -0800 (PST)
-Message-ID: <12c9bc4b-f3e6-4cef-b7af-cae23ea27b0d@linaro.org>
-Date: Tue, 25 Feb 2025 10:46:36 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/10] plugins/api: build only once
+ d=1e100.net; s=20230601; t=1740509191; x=1741113991;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZSVra8nBfTZ84QaRLv+FUaCWxVEY3WH1UDqPpiF+8yM=;
+ b=td3lgdqQk+RzLbaYMrA3rnvzAfo/7aYfl0etntQH+tpyVzsK1BtlE3JaaMVmV/zQ5O
+ Nd7kl5trlR01EOwM8MzRkQK0UOn4cwvqr2k8YFRkCicsJUHklYlaQK78n4cMY0T6bTmy
+ C3dfaebgJ+EtqZow8M+97PwSutGhZ2dfS+khUSqv/An71tvnNVZTWEZ11KpjFyuq9+E3
+ ZwhK8Xule3/4DEKsHZrNdTIdYoYOI48EAkQ/leEoi193BVpTlN+GpRJL3H5obNN1kKm3
+ IDHiXD8jcDPKTVyF32PxgwncRGpSWwTrP2fNVkYaDR29X9KmaV9Yv/gch+NddjyBvRq2
+ X4eQ==
+X-Gm-Message-State: AOJu0YxX3wU/G8gNZvnd79UrtVJ4MsM2JuRptfInRBE3HlIQxBeLVrQl
+ keP8/PrEfnjX2PjhrCQ4fgE1HyqiEQFYAr4nM99Jr691uhaXxzl6UdVAxvC1RXA=
+X-Gm-Gg: ASbGncu8aPvX3uehSlwD/tTE9gTJ0qruzIXZqPx7bZh9BvqMwomWryOaoyBGRukP8FR
+ jB0hFUwmOZ5sNxiXcAZb1S3puvvjZzBSrW8LGTZ5/unMs2iCekVefphKFJkKhLCNbc4n9U6yk58
+ e3hlyquF/5Ks687uL619rhiokExieumUgF9Hu2g/RpUH15iGV1ek1BCfptBvuzDYSeGX5qH43rg
+ eOkGaLVCw66EH307D2MujhHobJiKWXsJLGVnsfq4gnZ5hT0EyAZW5+e0FvqVJE2I4LIEn5exsB3
+ 8C/Lh2Uj8T9ZPa1xZA8pi18GtwAP
+X-Google-Smtp-Source: AGHT+IFibIKuCXd0/zjGl376aEjluvPdXTC01vBJiJAv/QjlYySpH64ia9+neba1rTnRAXgYmn1iQQ==
+X-Received: by 2002:a5d:5847:0:b0:38d:d299:7097 with SMTP id
+ ffacd0b85a97d-390cc5f5858mr3915637f8f.5.1740509191428; 
+ Tue, 25 Feb 2025 10:46:31 -0800 (PST)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-390cd88300bsm3243560f8f.54.2025.02.25.10.46.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Feb 2025 10:46:29 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6D5B55F7DC;
+ Tue, 25 Feb 2025 18:46:28 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20250225110844.3296991-1-alex.bennee@linaro.org>
- <20250225110844.3296991-11-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250225110844.3296991-11-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 0/4] cputlb: add tlb_flush_other_cpu
+Date: Tue, 25 Feb 2025 18:46:24 +0000
+Message-Id: <20250225184628.3590671-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,17 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/25 03:08, Alex Bennée wrote:
-> Now all the softmmu/user-mode stuff has been split out we can build
-> this compilation unit only once.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> ---
->   plugins/api.c       | 11 -----------
->   plugins/meson.build |  3 +--
->   2 files changed, 1 insertion(+), 13 deletions(-)
+This is based on one of the fixes from Igor's series:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+  20250207162048.1890669-1-imammedo@redhat.com
 
-r~
+Rather than reverting the patch I cleaned up a couple of cases where
+we either didn't need to do a flush or we could trivially defer to
+when the CPU started running. For the other cases I introduced
+tlb_flush_other_cpu() for users like reset and post migration. Any
+other users wanting to do a cross-vcpu blat everything function like
+tlb_flush() are almost certainly wanting to use a different more
+targeted helper which still supports queuing async work.
+
+Alex.
+
+Alex Bennée (3):
+  target/ppc: drop ppc_tlb_invalidate_all from cpu_reset
+  target/hppa: defer hppa_ptlbe until CPU starts running
+  cputlb: introduce tlb_flush_other_cpu for reset use
+
+Igor Mammedov (1):
+  tcg:tlb: use tcg_debug_assert() in assert_cpu_is_self()
+
+ include/exec/exec-all.h   | 20 ++++++++++++++++----
+ accel/tcg/cputlb.c        | 18 +++++++++++++-----
+ accel/tcg/tcg-accel-ops.c |  2 +-
+ cpu-target.c              |  2 +-
+ target/hppa/cpu.c         | 10 +++++++++-
+ target/i386/machine.c     |  2 +-
+ target/ppc/cpu_init.c     |  3 ---
+ 7 files changed, 41 insertions(+), 16 deletions(-)
+
+-- 
+2.39.5
+
 
