@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2BEC021B8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5FCAC021B2
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 19:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn0fX-0002wU-Sd; Tue, 25 Feb 2025 14:32:42 -0500
+	id 1tn0fv-00031z-0Q; Tue, 25 Feb 2025 14:33:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tn0fO-0002v8-C7; Tue, 25 Feb 2025 14:32:34 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1tn0fO-0002v7-AY; Tue, 25 Feb 2025 14:32:34 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tn0fM-0007un-GK; Tue, 25 Feb 2025 14:32:29 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5dec996069aso9727651a12.2; 
- Tue, 25 Feb 2025 11:32:27 -0800 (PST)
+ id 1tn0fL-0007uL-JM; Tue, 25 Feb 2025 14:32:29 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5debbced002so257095a12.1; 
+ Tue, 25 Feb 2025 11:32:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740511946; x=1741116746; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1740511945; x=1741116745; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JvE73Rg5rWKbwPbQYMIOUPC3ryk2kn7Ur9BRIhAoTLE=;
- b=PUGjtKEW++kskJ0q2+dZ7lW5VRJBxAg8Z4WD+qp9YGcqIGUjNjqzldTA9CPqJKPWN9
- STSjNfXYIvyUjHpPToUleALEfV5+MUBDpxiTcdVhza/fIyDoZk4MEe4ALCD6DpO1ykiv
- sjJgNMQkSLIJLfT1JShBkbvB6Ng1ayit539iDVXlXzSOG6vF9VN+2rjrZ6ETgsvQ9F3B
- 6mgzvjEq8jm1YvI4YFB1Kh1J7fN5j1aPmbhq8Eg2LJmqJkmml+DlhaJN/l+5AIUFX6tR
- 9qjOyR6inrs5pAR4/M4ksNJRdV0UTRKYAs/PaqwRpJJus+5B4hzjg2sHsmozHXKGgiU3
- EUPQ==
+ bh=sR6GciG0hUFjtAqEnQdV01KN1dYZppetZ+rCB8dzr2g=;
+ b=gapiBc/KByD1XUuphbX80LNMlWSXmH/oyP0ssumkqyY3bL05rqiTUFcRIVoTBkGCO3
+ JgRmt21V9BudjrxYHWN8u8tCA0bLPjiAHWIN5hfC2OgY+4QvuNhsIUdY309EAN3YqmR8
+ ya98JA++RI0tWEt1hW7BoZUd2VYDLSaJj5eHNo0nTAUrW8uQex2b+UY/YSN+cFjNjTwJ
+ QQH8zo97NEe9Gr2rHeTWSu/nYLuvPDG8Qsa/s8ft1gPNNrlDqEQ5W3dopjsSkMNkLGNQ
+ pSp2VTpVMt9LXs7PyBC6lt9rYQ2PIivRwWKyzPIKf8mGrfh5kUhGM90TAjCCwssbRB03
+ 0MXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740511946; x=1741116746;
+ d=1e100.net; s=20230601; t=1740511945; x=1741116745;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JvE73Rg5rWKbwPbQYMIOUPC3ryk2kn7Ur9BRIhAoTLE=;
- b=ZphiLipMnlzsbNTQAy8utR4i3WAwwsqvBB7wa2xeDHcV+1JqeDhxsQnYT4sgH9xTQv
- WiZy9bw3A/w+5x+N/96GEc0EdRGr87NQJ51pHiqsAUS1Vzc8JfwoCLRwSLgCBm5yg7bc
- uyR/1c0VKT9PKZ5begOKF9BZ7bbQA+08XBtCmX7HhkWXc3+Bx92eCp5dmlmVZnSaBofd
- DCvYBxlJJ2TAcnS+48NTEXIxhTwxtoMjXzy9Y0iaFj9isqiI08136/WcVDGpJBwj/C62
- WNhgjmEXYTY0/yL4y9NJfO2tnSwX/pTWnvNxKheF5z/S1WP6HJzV3adqgx6VOqOY/9Js
- j3fQ==
+ bh=sR6GciG0hUFjtAqEnQdV01KN1dYZppetZ+rCB8dzr2g=;
+ b=NgeV2a6jSmnT4Ume0OD9zixrI7mDhzpRI3s7p8FLF4VyQcspOczksftfPk1MFwiyTy
+ ukoiXzxgkW7L8u8uJkUZ9byA6WAV0HyWltTZtcTT+ZDQyzUl0hUGZBUSz3jbwoZMPJ5o
+ MExnmWwxWFAP7R/zHuASzYgqdPkRkXE+py0fpbp8A5VdurBksR1sXCUs+6Mp9S5p643b
+ F9V9QDokPIf6sYg4fSRMZfnvzDQPmJ/ppm++ftWm38CVdngqrq28V8Q/jiTJPv0pEHYm
+ KQtX1R6U9uruNJMPDzmddLMSP2DTwsvYDoJAgr2jCE0LZmW2Kmq49idfNbiH0GAlHdh8
+ 7KAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWH7zaVbr7acnMZdILS21kAdTkZgZoQVzQzn+hLz7WEmHK0QeMaL02iX/1ttfj7j5nxlbEAgFZ2wA==@nongnu.org
-X-Gm-Message-State: AOJu0YxXt/a5dhff4erdwm5oqMhk1g/DIizETt3QAKrq2VSX60F5emew
- gSI1fiHtlJnRk5E6frUzsntYRlgeZXsFVWl3MawVeLzFq5VQ5qok
-X-Gm-Gg: ASbGncsdaJun3lLf62T0bc3PUxQzcLZxOzcPyaUIY5pBb61rpwelN71DfN3Qwa/KLyF
- gTGfglZ2raWpBB0NVHX7XOFML3xozdokPmxD9AFRRIaCuTQyw6W8LYVyrp63CyHIJcW8xrjNYWx
- W52g0I7Jbhp9IRQ+fesjAsp7VLuWvaGKNaYzH6vs0Q80nWGol3ADNf+aScFfdG4ZnxpK7uPjEOW
- U80MtcKPBKdqT2Nn1GNX7OfJDD0mdF9yQr7DbpLqx21ar2FXTuEneAANehoJbZHeXzI+WKHbkv2
- RGXRg9X0D3UWnxgF/Y918nBDg+Y6P9hK7wqrhoLgALc12sKVlXmYxoVurcZ04jes+8GJLkJgagh
- 3wI0=
-X-Google-Smtp-Source: AGHT+IHhdLyhyIJ3UvEDFqj4yeLl5Mczn2TKFbR3Syf/cqx1TJ9klpzDFc2htfFObLMvQ5J2BLh22A==
-X-Received: by 2002:a05:6402:34cc:b0:5dc:cfc5:9305 with SMTP id
- 4fb4d7f45d1cf-5e4a0dfc8b9mr885142a12.25.1740511946057; 
- Tue, 25 Feb 2025 11:32:26 -0800 (PST)
+ AJvYcCU79Xf9RMcMd6dira44xn010DlncSsQmAl5p/WGYtjf0Fkgh0ptKhlr3sR/NRSsyB6pcIQ4vhXm+A==@nongnu.org
+X-Gm-Message-State: AOJu0Yw0DqEhqPRb2s2efBiW95Fubh8XCsEErDcU6nNB0iSbySutnE+b
+ 98g/aIClfcHvqEIwo7dL9eW3OXSXxizRzkEtrqoxZfTPCzApEzXz
+X-Gm-Gg: ASbGncsfBrwqSmpYB2GqkCFYj+btSpQIAkmK48TIASCObk7x1j7wK5/HUpPNOr6hNMA
+ fSncPW6tH39PiPC0YmEnRCowNtBfLvKiQvRKxYrKA7cRjm5bdcJ2qlz7n8AaNBpBdjojSaDi3+l
+ YD96hp1u4xbmiOoWKbqyEt+qtEkR0UOaWwk9hknLiEM2OTqopqabI70MgmFsr9w0JcTMWPpKTY2
+ p7WoUo7YT4IT7AaIu5iIMbu1dr7vD2FcEUZcwpLd6WAO4CrWmKjHVIUUvvPlexdiW64ylTc9b/z
+ 58K2V+mk/C96CmqJk2H0NS/DYRg7zeQzSVqMFQBo32BpvnOjGL1VG7zDBoSHZIuE/z+yy0wASFY
+ /xe0=
+X-Google-Smtp-Source: AGHT+IHymZ2ZWXwm6t43QilU/nD5vly40BoeUpG79Skm2hsyKZGN/9hF76hPeUEiMpncywJwu2Q91g==
+X-Received: by 2002:a50:cd05:0:b0:5e4:95fc:d748 with SMTP id
+ 4fb4d7f45d1cf-5e495fcfa13mr2039829a12.5.1740511944450; 
+ Tue, 25 Feb 2025 11:32:24 -0800 (PST)
 Received: from [127.0.0.1] (dynamic-077-188-213-172.77.188.pool.telefonica.de.
  [77.188.213.172]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e45b80b87asm1629151a12.39.2025.02.25.11.32.24
+ 4fb4d7f45d1cf-5e460ff861esm1666545a12.49.2025.02.25.11.32.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 11:32:25 -0800 (PST)
-Date: Tue, 25 Feb 2025 18:48:50 +0000
+ Tue, 25 Feb 2025 11:32:24 -0800 (PST)
+Date: Tue, 25 Feb 2025 19:00:44 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -75,18 +75,17 @@ CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 16/18] hw/arm/fsl-imx8mp: Add boot ROM
-In-Reply-To: <CAFEAcA8L6CFvuTC+UqG7r5R27Yohc9vSVtPBHttBKKj-s-L0oA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Add i.MX 8M Plus EVK machine
+In-Reply-To: <CAFEAcA-2KXeCVKrx0VQ1axA+nbTKV2fpy--Mti1Q+yFL5XC5KA@mail.gmail.com>
 References: <20250223114708.1780-1-shentey@gmail.com>
- <20250223114708.1780-17-shentey@gmail.com>
- <CAFEAcA8L6CFvuTC+UqG7r5R27Yohc9vSVtPBHttBKKj-s-L0oA@mail.gmail.com>
-Message-ID: <6DBA3ED8-1ED6-4657-992E-3B12FFF8332B@gmail.com>
+ <CAFEAcA-2KXeCVKrx0VQ1axA+nbTKV2fpy--Mti1Q+yFL5XC5KA@mail.gmail.com>
+Message-ID: <B0823784-69FB-4008-BC71-62F66184C8B9@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,47 +110,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 25=2E Februar 2025 14:29:15 UTC schrieb Peter Maydell <peter=2Emaydell@=
+Am 25=2E Februar 2025 14:43:32 UTC schrieb Peter Maydell <peter=2Emaydell@=
 linaro=2Eorg>:
 >On Sun, 23 Feb 2025 at 11:47, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
 e:
 >>
->> On a real device, the boot ROM contains the very first instructions the=
- CPU
->> executes=2E Also, U-Boot calls into the ROM to determine the boot devic=
-e=2E While
->> we're not actually implementing this here, let's create the infrastruct=
-ure and
->> add a dummy ROM with all zeros=2E This allows for implementing a ROM la=
-ter without
->> touching the source code and even allows for users to provide their own=
- ROMs=2E
+>> This series adds a new aarch64 machine to QEMU: i=2EMX 8M Plus EVK [1]=
+=2E It allows
+>> for running Linux distributions such as Buildroot
+>> (freescale_imx8mpevk_defconfig) and Arch Linux [2] via direct kernel bo=
+ot=2E
+>> U-Boot does not work yet=2E I plan to use this machine in CI and I also=
+ want to
+>> make it available to a bigger audience, so I propose to add it to QEMU=
+=2E My goal
+>> would be to have it added for 10=2E0=2E For this, a Changelog entry cou=
+ld be added
+>> under https://wiki=2Eqemu=2Eorg/ChangeLog/10=2E0 such as:
+>>   * New board model "imx8mp-evk": i=2EMX 8M Plus Evaluation Kit
 >>
->> The imx8mp-boot=2Erom was created with
->> `dd if=3D/dev/zero of=3Dimx8mp-boot=2Erom bs=3D1 count=3D258048`=2E
+>> The series is structured as follows: The first three patches fix some i=
+ssues in
+>> device models reused by the new machine=2E Patches 4-17 add the machine=
+ step by
+>> step which includes documentation=2E The last patch adds an I=C2=B2C RT=
+C which I'd like
+>> to use along with the new machine=2E
 >>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> I've based some code on existing one (see "Based on" in file headers) a=
+nd I'm
+>> unsure how to handle the licensing and attribution correctly -- advice =
+welcome=2E
 >
->Hi; I've thought about this a bit, and I think we should just
->postpone having code to load a rom blob until we have an
->actual rom blob that's not all zeroes=2E This makes this
->board the same as e=2Eg=2E imx7 which also doesn't try to load
->a ROM blob=2E You can create a memory region for the ROM,
->like imx7; just don't load anything into it, and that's
->exactly the same as if there was an all-zeroes file that
->got loaded=2E
->
->This doesn't prevent users from experimenting with providing
->their own ROM code, because they can do that with the
->generic loader (passing it either an ELF file set up to
->load to the ROM area or else a binary blob plus the
->start address of 0)=2E
->
->That way we aren't carrying code we aren't using and an
->awkward binary blob in git; we can add those when we need
->them=2E
+>Hi; I've applied most of this series to target-arm=2Enext:
+>patches 1 to 15 and 17=2E
 
-Yes, makes sense=2E
+Thanks a lot, Peter!
+
+>I've left a comment about what
+>I think we should do about patch 16 (the bootrom)=2E
+>Patch 18 (the RTC i2c device) I don't have any objection to,
+>I just didn't have time to review it now and didn't want to delay
+>getting the new board model in until I did find that time=2E
+>Since the board code doesn't instantiate the i2c device,
+>the RTC is kind of a separate thing from the board series
+>anyway=2E
+
+Yes, it's fairly separate=2E I'm looking forward to any comments=2E
 
 Best regards,
 Bernhard
