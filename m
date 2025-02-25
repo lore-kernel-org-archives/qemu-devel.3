@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318A0C021BB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFFEC021BF
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmvjO-0007wT-PJ; Tue, 25 Feb 2025 09:16:18 -0500
+	id 1tmvjQ-0008BL-Kj; Tue, 25 Feb 2025 09:16:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cy_liu@aspeedtech.com>)
- id 1tmpX0-0006d7-4I; Tue, 25 Feb 2025 02:39:06 -0500
+ id 1tmpWu-0006bu-3B; Tue, 25 Feb 2025 02:39:00 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cy_liu@aspeedtech.com>)
- id 1tmpWy-0008HP-Jc; Tue, 25 Feb 2025 02:39:05 -0500
+ id 1tmpWs-0008HP-HN; Tue, 25 Feb 2025 02:38:59 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 25 Feb
- 2025 15:33:43 +0800
+ 2025 15:33:42 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 25 Feb 2025 15:33:43 +0800
+ Transport; Tue, 25 Feb 2025 15:33:42 +0800
 To: <cyliu0926@gmail.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
  <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: [PATCH v4 4/4] hw/misc/aspeed_hace: Fix boot issue in the Crypto
- Manager Self Test
-Date: Tue, 25 Feb 2025 15:33:41 +0800
-Message-ID: <20250225073342.2960966-5-cy_liu@aspeedtech.com>
+Subject: [PATCH v4 2/4] hw/misc/aspeed_hace: Add AST2700 support
+Date: Tue, 25 Feb 2025 15:33:39 +0800
+Message-ID: <20250225073342.2960966-3-cy_liu@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225073342.2960966-1-cy_liu@aspeedtech.com>
 References: <20250225073342.2960966-1-cy_liu@aspeedtech.com>
@@ -69,87 +68,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Currently, it does not support the CRYPT command. Instead, it only sends an
-interrupt to notify the firmware that the crypt command has completed.
-It is a temporary workaround to resolve the boot issue in the Crypto Manager
-Self Test.
-
-Introduce a new "use_crypt_workaround" class attribute and set it to true in
-the AST2700 HACE model to enable this workaround by default for AST2700.
+Introduce a new ast2700 class to support AST2700.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 ---
  include/hw/misc/aspeed_hace.h |  1 +
- hw/misc/aspeed_hace.c         | 23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ hw/misc/aspeed_hace.c         | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
 diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
-index d13fd3da07..5d4aa19cfe 100644
+index 4af9919195..d13fd3da07 100644
 --- a/include/hw/misc/aspeed_hace.h
 +++ b/include/hw/misc/aspeed_hace.h
-@@ -50,6 +50,7 @@ struct AspeedHACEClass {
-     uint32_t dest_mask;
-     uint32_t key_mask;
-     uint32_t hash_mask;
-+    bool raise_crypt_interrupt_workaround;
- };
+@@ -18,6 +18,7 @@
+ #define TYPE_ASPEED_AST2500_HACE TYPE_ASPEED_HACE "-ast2500"
+ #define TYPE_ASPEED_AST2600_HACE TYPE_ASPEED_HACE "-ast2600"
+ #define TYPE_ASPEED_AST1030_HACE TYPE_ASPEED_HACE "-ast1030"
++#define TYPE_ASPEED_AST2700_HACE TYPE_ASPEED_HACE "-ast2700"
  
- #endif /* ASPEED_HACE_H */
+ OBJECT_DECLARE_TYPE(AspeedHACEState, AspeedHACEClass, ASPEED_HACE)
+ 
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 86422cb3be..32a5dbded3 100644
+index 18b85081c7..86422cb3be 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -59,6 +59,7 @@
- /* Other cmd bits */
- #define  HASH_IRQ_EN                    BIT(9)
- #define  HASH_SG_EN                     BIT(18)
-+#define  CRYPT_IRQ_EN                   BIT(12)
- /* Scatter-gather data list */
- #define SG_LIST_LEN_SIZE                4
- #define SG_LIST_LEN_MASK                0x0FFFFFFF
-@@ -343,6 +344,15 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-                 qemu_irq_lower(s->irq);
-             }
-         }
-+        if (ahc->raise_crypt_interrupt_workaround) {
-+            if (data & CRYPT_IRQ) {
-+                data &= ~CRYPT_IRQ;
+@@ -552,12 +552,32 @@ static const TypeInfo aspeed_ast1030_hace_info = {
+     .class_init = aspeed_ast1030_hace_class_init,
+ };
+ 
++static void aspeed_ast2700_hace_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedHACEClass *ahc = ASPEED_HACE_CLASS(klass);
 +
-+                if (s->regs[addr] & CRYPT_IRQ) {
-+                    qemu_irq_lower(s->irq);
-+                }
-+            }
-+        }
-         break;
-     case R_HASH_SRC:
-         data &= ahc->src_mask;
-@@ -388,6 +398,12 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-     case R_CRYPT_CMD:
-         qemu_log_mask(LOG_UNIMP, "%s: Crypt commands not implemented\n",
-                        __func__);
-+        if (ahc->raise_crypt_interrupt_workaround) {
-+            s->regs[R_STATUS] |= CRYPT_IRQ;
-+            if (data & CRYPT_IRQ_EN) {
-+                qemu_irq_raise(s->irq);
-+            }
-+        }
-         break;
-     default:
-         break;
-@@ -563,6 +579,13 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, void *data)
-     ahc->dest_mask = 0x7FFFFFF8;
-     ahc->key_mask = 0x7FFFFFF8;
-     ahc->hash_mask = 0x00147FFF;
++    dc->desc = "AST2700 Hash and Crypto Engine";
 +
-+    /*
-+     * Currently, it does not support the CRYPT command. Instead, it only
-+     * sends an interrupt to notify the firmware that the crypt command
-+     * has completed. It is a temporary workaround.
-+     */
-+    ahc->raise_crypt_interrupt_workaround = true;
++    ahc->src_mask = 0x7FFFFFFF;
++    ahc->dest_mask = 0x7FFFFFF8;
++    ahc->key_mask = 0x7FFFFFF8;
++    ahc->hash_mask = 0x00147FFF;
++}
++
++static const TypeInfo aspeed_ast2700_hace_info = {
++    .name = TYPE_ASPEED_AST2700_HACE,
++    .parent = TYPE_ASPEED_HACE,
++    .class_init = aspeed_ast2700_hace_class_init,
++};
++
+ static void aspeed_hace_register_types(void)
+ {
+     type_register_static(&aspeed_ast2400_hace_info);
+     type_register_static(&aspeed_ast2500_hace_info);
+     type_register_static(&aspeed_ast2600_hace_info);
+     type_register_static(&aspeed_ast1030_hace_info);
++    type_register_static(&aspeed_ast2700_hace_info);
+     type_register_static(&aspeed_hace_info);
  }
  
- static const TypeInfo aspeed_ast2700_hace_info = {
 -- 
 2.34.1
 
