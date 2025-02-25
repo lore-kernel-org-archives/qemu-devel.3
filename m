@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7F3C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 07:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7012C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 07:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmpoG-000144-7D; Tue, 25 Feb 2025 02:56:56 -0500
+	id 1tmpnv-00010j-1l; Tue, 25 Feb 2025 02:56:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tmpo6-00012I-Gj; Tue, 25 Feb 2025 02:56:48 -0500
+ id 1tmpns-0000zu-2O; Tue, 25 Feb 2025 02:56:32 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tmpo4-0001io-T9; Tue, 25 Feb 2025 02:56:46 -0500
+ id 1tmpno-0001io-W0; Tue, 25 Feb 2025 02:56:31 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 25 Feb
@@ -31,15 +31,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 2/4] hw/misc/aspeed_hace: Add AST2700 support
-Date: Tue, 25 Feb 2025 15:56:19 +0800
-Message-ID: <20250225075622.305515-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 0/4] Support HACE to AST2700 (resend)
+Date: Tue, 25 Feb 2025 15:56:17 +0800
+Message-ID: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
-References: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -65,64 +63,23 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new ast2700 class to support AST2700.
+This patch series is from https://patchwork.kernel.org/project/qemu-devel/cover/20250213033531.3367697-1-jamin_lin@aspeedtech.com/. 
+To expedite the review process, I have separated the HACE patches portion from
+the https://patchwork.kernel.org/project/qemu-devel/cover/20250213033531.3367697-1-jamin_lin@aspeedtech.com/ patch series into this new patch series.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
----
- include/hw/misc/aspeed_hace.h |  1 +
- hw/misc/aspeed_hace.c         | 20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+)
+v4: Support HACE to AST2700
 
-diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
-index 4af9919195..d13fd3da07 100644
---- a/include/hw/misc/aspeed_hace.h
-+++ b/include/hw/misc/aspeed_hace.h
-@@ -18,6 +18,7 @@
- #define TYPE_ASPEED_AST2500_HACE TYPE_ASPEED_HACE "-ast2500"
- #define TYPE_ASPEED_AST2600_HACE TYPE_ASPEED_HACE "-ast2600"
- #define TYPE_ASPEED_AST1030_HACE TYPE_ASPEED_HACE "-ast1030"
-+#define TYPE_ASPEED_AST2700_HACE TYPE_ASPEED_HACE "-ast2700"
- 
- OBJECT_DECLARE_TYPE(AspeedHACEState, AspeedHACEClass, ASPEED_HACE)
- 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 18b85081c7..86422cb3be 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -552,12 +552,32 @@ static const TypeInfo aspeed_ast1030_hace_info = {
-     .class_init = aspeed_ast1030_hace_class_init,
- };
- 
-+static void aspeed_ast2700_hace_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedHACEClass *ahc = ASPEED_HACE_CLASS(klass);
-+
-+    dc->desc = "AST2700 Hash and Crypto Engine";
-+
-+    ahc->src_mask = 0x7FFFFFFF;
-+    ahc->dest_mask = 0x7FFFFFF8;
-+    ahc->key_mask = 0x7FFFFFF8;
-+    ahc->hash_mask = 0x00147FFF;
-+}
-+
-+static const TypeInfo aspeed_ast2700_hace_info = {
-+    .name = TYPE_ASPEED_AST2700_HACE,
-+    .parent = TYPE_ASPEED_HACE,
-+    .class_init = aspeed_ast2700_hace_class_init,
-+};
-+
- static void aspeed_hace_register_types(void)
- {
-     type_register_static(&aspeed_ast2400_hace_info);
-     type_register_static(&aspeed_ast2500_hace_info);
-     type_register_static(&aspeed_ast2600_hace_info);
-     type_register_static(&aspeed_ast1030_hace_info);
-+    type_register_static(&aspeed_ast2700_hace_info);
-     type_register_static(&aspeed_hace_info);
- }
- 
+Jamin Lin (4):
+  hw/misc/aspeed_hace: Fix coding style
+  hw/misc/aspeed_hace: Add AST2700 support
+  hw/arm/aspeed_ast27x0: Add HACE support for AST2700
+  hw/misc/aspeed_hace: Fix boot issue in the Crypto Manager Self Test
+
+ include/hw/misc/aspeed_hace.h |  2 ++
+ hw/arm/aspeed_ast27x0.c       | 15 ++++++++++
+ hw/misc/aspeed_hace.c         | 55 ++++++++++++++++++++++++++++++++---
+ 3 files changed, 68 insertions(+), 4 deletions(-)
+
 -- 
 2.34.1
 
