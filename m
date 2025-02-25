@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C8B9C021BB
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 20:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74817C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 20:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn1LR-0003hK-5K; Tue, 25 Feb 2025 15:15:57 -0500
+	id 1tn1Na-0004wc-UJ; Tue, 25 Feb 2025 15:18:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1LQ-0003h1-7P
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:15:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1NY-0004w0-Lb
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:18:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1LM-0006HW-LJ
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:15:55 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tn1NW-0006p3-Sl
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:18:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1740514548;
+ s=mimecast20190719; t=1740514686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Q+y5l7nYPpVVn7dMTIPddwfeKoTWjtOlxwdYx/xJMxg=;
- b=DW/nfLrllMquuPdQ7LWf1E2APvBgQKDgkYUomPOSKAK9hS65mind4QTrUQ9rprz0QGy9Sh
- gs1gWhXzawLJOLq2R4we7vrruXA7+ZV/omOYBdp9ojxHSgqAhFrZu2+ya9MskX8JCdtEY4
- R1Wu4jaKoOa0653354Lnp2KuTB0rPko=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OinJVIUgxTpln0CJ8IN/ntRUCumf/6Jc8gocNXQpi80=;
+ b=IKiEHUNzq76ppBQkCRupm2ZKaG6Xcjxc995vu01I84MgLnauvo9Im16RKvYaoOahqVIGGk
+ d1lA5zL7HwcO57uxyVsPkA6cVroRvP/McVfemvRFyphb36mw9B+TWN0E6onPC0xTLnRxES
+ vq0zZzOqwNq12Y5GCPgVt9RyonST4kc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-7huJSTW7Pueu3KxB_IEwug-1; Tue, 25 Feb 2025 15:15:38 -0500
-X-MC-Unique: 7huJSTW7Pueu3KxB_IEwug-1
-X-Mimecast-MFC-AGG-ID: 7huJSTW7Pueu3KxB_IEwug_1740514537
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-438da39bb69so44063095e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 12:15:38 -0800 (PST)
+ us-mta-336-PZHm3114MkamZ8x4YkFRkg-1; Tue, 25 Feb 2025 15:18:03 -0500
+X-MC-Unique: PZHm3114MkamZ8x4YkFRkg-1
+X-Mimecast-MFC-AGG-ID: PZHm3114MkamZ8x4YkFRkg_1740514682
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38f2ef5f0dbso2235537f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 12:18:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740514537; x=1741119337;
+ d=1e100.net; s=20230601; t=1740514682; x=1741119482;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Q+y5l7nYPpVVn7dMTIPddwfeKoTWjtOlxwdYx/xJMxg=;
- b=HvCTe8QTcNsbBEnurNLmFiX8MX+sVvoINAsqh8ap7s507QnDShbyEwydr2ohl4HLrb
- RMIajOFcrB5iO7Gf2XtLmYmZCXF+ZMZpgV1IQRcfepdmrQIoGezuQBR79l92iu9lpAwH
- IXgd2qYPpfwgb53LwH7aKhNz7aaS3++5KwlVrpvPPTWqUvae/8YmpPOJI5/XlBDSWWsA
- rDaKLE1LVohUDc51Jm3U1Ml4794EGtlEoUq6xDr10NN4hUQJrAnrs8V5qXeG3S8pAQfJ
- t8IjGyo6VlN91QH8DQ6l+SFDgRUyXBsgnS1Iuo3D+zmu6hnW3mJxNKv/joOVHdg3qWP+
- o56g==
+ bh=OinJVIUgxTpln0CJ8IN/ntRUCumf/6Jc8gocNXQpi80=;
+ b=jfMFoinPNA/LQRDZu7/l8DujATjXNXR4J2ud8c3sIK4fdej2rYQ8GiBH1aHhPs+rkF
+ vsUnOXb+uTq1gYBadHD4nWiD6MfNWRuIKeNNttCry3QmqoAod33cCJ/QvNbDI1v9u+Ek
+ 60xB3CZe+2qkg2bOBGkDNcxmK2jSmsr7aaLi/AFQhiPSBkCU/X1svAUtA+BPKFYxKOeL
+ 38fcgDBvNsrC105qip5Uycr35RNY9ERFrJOrrwoGmsB8faGqMweCglgg5EyKKX1bMfeE
+ dimZplTimX6tIxTjRJFrokFvCw8mEWEZwuPoYilI0cyAVl5sqcZ+07k7IIHmzbd1YRgf
+ 3Asw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJRaqZoAjPAm5l05HYAaaJ+OwJ/bWIFuoGZTV0hsEBGZlFmxuU+IZVKCY0KSx95BGIo3cDW1emGKxs@nongnu.org
-X-Gm-Message-State: AOJu0Yyml4wyZ5z+Avqsbb8SrihwSsjlEcEn1iBsRE/F6wgN4iOjk54B
- P6wMpZjfHk2jjT/sbR4JFm5/j3iQl93eiXiHH5qr4IoL5+8RWQvevMgxIDoRIGigvd14DinlMP6
- KO1K5RD/ZNkoJs9TqkRWSqNNLse8SrUUtyBLgtUfYX5BIU23LlyX6
-X-Gm-Gg: ASbGncv4q13HonHYDoo+TfAu4feyZl26quRuO/zkaWU5aujnU1yCBiVcCZpLKH410aN
- fNxUEjyS0Yt/PlkdUSieb+nhpddckbmjwis97A1E/WSHc77esn1VyPz24xzkG4Jcc8EX2CPKuHH
- mnSFPrNKtC04VL89yEnPnb2hnQ7vyFfQhkGJ4foyzUdslLGMPoNplsT2mqPYk9kMzxSimGMUaKT
- ns14hnb/baVXsBuJt6HFz/wWjaOhIHEjPX6tCfLvmLdEKWiv+ktPScItxigq4dF+b3wT85E9mXN
- f7XFb5ieFtaSUhRlK3pAeZycgd5O5Q/EOU1dX9p0ZSrpkMA=
-X-Received: by 2002:a05:600c:4e8b:b0:439:9206:86d6 with SMTP id
- 5b1f17b1804b1-43ab8fd7344mr7684965e9.7.1740514536959; 
- Tue, 25 Feb 2025 12:15:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEhIOII4BzhXAbj5iX8ORLix1uTb3CHebbSsuf3v9pNXmkWdpqCgKdbUme1qeA+e9eN2/2ZjQ==
-X-Received: by 2002:a05:600c:4e8b:b0:439:9206:86d6 with SMTP id
- 5b1f17b1804b1-43ab8fd7344mr7684875e9.7.1740514536607; 
- Tue, 25 Feb 2025 12:15:36 -0800 (PST)
+ AJvYcCW++udvInnOl+Wzd8hkxsyyKCPbRYdpCYABAkv+nmURmmF9ZrraVskWlOOKtjGXOsJzqIU6QJTmF2r+@nongnu.org
+X-Gm-Message-State: AOJu0YzKOssH2r2eyWNLAigk0bMjaT4kGNLqj/Oz3WGDUTM0cFhTKosD
+ AV/8d6PJiemGbUdPu32s+3ikftIRVuEVrxntwqff5sFoaITImATRZDf12UDISCTViHIA5pqkXYK
+ /OtXHE1COwtqOWnK0G8WFSYZUN0ay1eVVbmnhydQtTImbIZsmY9dv
+X-Gm-Gg: ASbGncvIWJ5qI1z7stMzjWTUTh+ac9qjARseXVjc2Ww78weuzJFBIYgnQD+SCbp3HdU
+ GfeF48slKkzo9R9TsIbctf0hadiig8TW1Ddyp/4CEjPNddyhMssnf97SkkEwdhN26X8vnog3VOV
+ qtfvoz9ukX3bIJUbIJjuYHqjOLfV7SfPB1XWfFvPmGYvnRphhdt+/AlyF6+h7PIVstJTNDTWhfx
+ Ol+6BJOeAGb1wEpOAGA1i/eXeayHFr2J+y8+XXMaxij73yox2c1rk+0Z9Gy5+Zbk3PLdH2WnI/7
+ SN5kOR4XAo/BnDV4I6/2+a6TLphS91U/uHo7/WRj6ugqv2E=
+X-Received: by 2002:a5d:5587:0:b0:385:e1eb:a7af with SMTP id
+ ffacd0b85a97d-390cc638c91mr3318738f8f.48.1740514681661; 
+ Tue, 25 Feb 2025 12:18:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFeLbIq/SQDYMbILQNAXjPW9uyH6LWjD2PzUgmaAoQQK9SLG7cls9ukROOcLDaeGJLzVKVZtQ==
+X-Received: by 2002:a5d:5587:0:b0:385:e1eb:a7af with SMTP id
+ ffacd0b85a97d-390cc638c91mr3318721f8f.48.1740514681322; 
+ Tue, 25 Feb 2025 12:18:01 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-49-245.web.vodafone.de.
  [109.42.49.245]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-439b02ce587sm150905515e9.6.2025.02.25.12.15.34
+ ffacd0b85a97d-390cd88300bsm3449946f8f.54.2025.02.25.12.17.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 12:15:35 -0800 (PST)
-Message-ID: <e5e290e2-63ae-47f9-9a85-5ba5f609a37d@redhat.com>
-Date: Tue, 25 Feb 2025 21:15:33 +0100
+ Tue, 25 Feb 2025 12:18:00 -0800 (PST)
+Message-ID: <99ae1715-687d-4d29-88bf-fd7bad15b497@redhat.com>
+Date: Tue, 25 Feb 2025 21:17:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] docs/about/deprecated: auto-generate a note for
+Subject: Re: [PATCH 3/4] docs/about/removed-features: auto-generate a note for
  versioned machine types
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
@@ -87,7 +87,7 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 References: <20250225200423.2350471-1-berrange@redhat.com>
- <20250225200423.2350471-3-berrange@redhat.com>
+ <20250225200423.2350471-4-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250225200423.2350471-3-berrange@redhat.com>
+In-Reply-To: <20250225200423.2350471-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -161,68 +161,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/02/2025 21.04, Daniel P. Berrangé wrote:
-> We deprecate versioned machine types on a fixed schedule. This allows us
-> to auto-generate a paragraph in the deprecated.rst document that always
-> has accurate version info.
+> We remove versioned machine types on a fixed schedule. This allows us
+> to auto-generate a paragraph in the removed-features.rst document that
+> always has accurate version info.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   docs/about/deprecated.rst |  7 +++++++
->   docs/conf.py              | 33 ++++++++++++++++++++++++++++++++-
->   2 files changed, 39 insertions(+), 1 deletion(-)
+>   docs/about/removed-features.rst | 10 ++++++----
+>   docs/conf.py                    |  2 ++
+>   2 files changed, 8 insertions(+), 4 deletions(-)
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index abadf8de27..da2b1b48ca 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -269,6 +269,13 @@ Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index 156c0c253c..c120d9ff4f 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -972,10 +972,12 @@ from Linux in 2021, and is not supported anymore by QEMU either.
 >   System emulator machines
 >   ------------------------
 >   
+> -Note: Versioned machine types that have been introduced in a QEMU version
+> -that has initially been released more than 6 years before are considered
+> -obsolete and will be removed without further notice in this document.
+> -Please use newer machine types instead.
 > +Versioned machine types (aarch64, arm, i386, m68k, ppc, ppc64, s390x, x86_64)
 > +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 > +
 > +In accordance with our versioned machine type deprecation policy, all machine
-> +types with version |VER_MACHINE_DEPRECATION_VERSION|, or older, have been
-> +deprecated.
-> +
->   Arm ``virt`` machine ``dtb-kaslr-seed`` property (since 7.1)
->   ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +types with version |VER_MACHINE_DELETION_VERSION|, or older, have been
+> +removed.
 >   
+>   ``s390-virtio`` (removed in 2.6)
+>   ''''''''''''''''''''''''''''''''
 > diff --git a/docs/conf.py b/docs/conf.py
-> index 31bb9a3789..421ece1024 100644
+> index 421ece1024..8b567787ce 100644
 > --- a/docs/conf.py
 > +++ b/docs/conf.py
-> @@ -110,6 +110,27 @@
->       else:
->           version = release = "unknown version"
+> @@ -130,6 +130,7 @@
+>           minor += 1
 >   
-> +bits = version.split(".")
-> +
-> +major = int(bits[0])
-> +minor = int(bits[1])
-> +micro = int(bits[2])
-> +
-> +# Check for a dev snapshot, so we can adjust to next
-> +# predicted release version.
-> +#
-> +# This assumes we do 3 releases per year, so must bump
-> +# major if minor == 2
-> +if micro >= 50:
-> +    micro = 0
-> +    if minor == 2:
-> +        major += 1
-> +        minor = 0
-> +    else:
-> +        minor += 1
-> +
-> +ver_machine_deprecation_version = "%d.%d.%d" % (major - 3, minor, micro)
+>   ver_machine_deprecation_version = "%d.%d.%d" % (major - 3, minor, micro)
+> +ver_machine_deletion_version = "%d.%d.%d" % (major - 6, minor, micro)
 
-While the prediction should work fine for major and minor numbers, I think 
-this will look weird for the micro numbers in stable releases. E.g. if we 
-release 10.1.9 one day, the ver_machine_deprecation_version will be set to 
-7.1.9 - which never existed. I think it would be better to always use micro 
-= 0 here instead.
+As in the previous patch, I think micro=0 would be better here.
 
   Thomas
 
