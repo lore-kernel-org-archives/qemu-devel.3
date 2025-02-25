@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3D6C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B086C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzqk-0008Kj-CL; Tue, 25 Feb 2025 13:40:10 -0500
+	id 1tmzrr-0000Dk-LL; Tue, 25 Feb 2025 13:41:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmzqh-0008JC-Ev
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:40:07 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tmzrC-0008Ow-RB
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:40:48 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tmzqf-0007mU-7o
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:40:06 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38f378498b0so4964230f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:40:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tmzrB-00081O-8m
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:40:38 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-220d39a5627so92806055ad.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:40:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740508803; x=1741113603; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740508836; x=1741113636; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SK+pZ6MprBxs9+fbAymxbUvDpeR0HW77rc1PIpkryUo=;
- b=wFJIZkw1Xi1rOQHxWZeVnb/RGAWJUPyW3AhvyBECXZuuZ+mdc3C7gN7IiEWm+Bdts4
- tY1426mcYMCyw8orFhovFVk6u0oiT5nPGoZBprD7eaq46FUySWD8QHVkfhsplUZ054nz
- 4BPLjhgmPHkf4rTHnlQGI2yw0d8INJHvf3EPTbjiCJyFaufx4XWFqKpCC9nsjz99aeg8
- 69Kyegp+sMlNpMkl9195lRXSUEqN3Slsm3TPXwgB8i6k3AZ3zwsvGkxyxvPqMOOJnCi6
- iGgUN0UjO3zD0L26+DoLFZhmU2AwYQ0RDCZuxjlfG8BO+tp/4j3kh/EWJ1KtZd10FiH/
- Spuw==
+ bh=iecd+Lf9+Xb6NF73imYU5tlVpOwTHcPVUlgvAg2DI6M=;
+ b=L7XoMpw6It2Hge3i8xAy/71N8ZXWCXBKFfclukQDUXFcxeBggAsyOBl/nzFHrYAeZf
+ aBWS+R8vfU6Qv7z2hZNjOr2fnuaYw5KM3Bw3MgNOsZlFaA+ePoJp30JA6UL2Vloe9MxL
+ fGtz686EWd0z3gywTcAdxYBZCczRE5GApP7OIyKo1rBB6Jr1/FbX4YSRvG8HW4OtX9a2
+ 5tT076XW3+NvDNwW11GLNhXFBeIjkDHN9P5UepSGj+DL5sO8VMLsFYSddH6a36UHlfay
+ SByJ1a/TBQUM2jXLuwmcxPHlMI8n+X7Ct1Al/s43Yl7rrBwxHmu7V19xM5Jj3xeDABl3
+ uD0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740508803; x=1741113603;
+ d=1e100.net; s=20230601; t=1740508836; x=1741113636;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SK+pZ6MprBxs9+fbAymxbUvDpeR0HW77rc1PIpkryUo=;
- b=ihnXRimd/7JDlKd/iWEHzzt48QAb6N//LsKev1EbfSWcxuzbRx7ufJp9FTd/PYEgq5
- IPzBjg7yfeJJ1R51nGkOueuTQfTks5bxdLJePEQkW9lklh+4dRY3lWFVRHG0Vdruo/3P
- 2lwWakNONUle0reOJSbIWeM/EdbnUoJ26wgbRZFXx4KzqvMqZjRxtxpQwCUK36d8SdJQ
- WrZb7LrcvesBIK08bTkpKwmY77oezalgDyTrEUI+zFxNATuV4NbliGigc0BNYwZ75qjk
- +RGR7gHpJDPEmrqU+MQdInvHVSxFgQp/NnqAcJSFRzYaaT9lSz8/g062aAX47/e+0C1B
- q7ZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJmEbeMWpN45UGwyB1lemjuMWBL9zB4nb4habkuaX/EFydoK11ODz3Wy9myq+dRW5M/si3VPako85O@nongnu.org
-X-Gm-Message-State: AOJu0Yz/Ggt3w3yz5KJxTEhAVzSOaLYTOYHJdl36V1y7z0ZAcWw2a5To
- c0SeGn/Z4y18IxpNPPCIF0LC8Ca/MCG5PlxDwtvHmuAej2EAlMelkIrTX5cn/pM=
-X-Gm-Gg: ASbGncti4POzbQfMt7LxZI26M1ZWd/W5A/Nqb6Pehj29dhvtPwKqQ9u8shO+dGWuYXN
- pMobnGCaeVE97FChp9Ha9Kc3h05FQBQWVtPjYaMPMdbQ+7xygfSDRwWM8vM5RAe7o795nFgB25e
- UYiIyZ/gXCpcFCJi2kVq59yfiF2RgEPOOsxibpyHpVKpQE33xpUWGymIvcKy3vCPPZ2FXSQvpTw
- HzvAH7BeHtNw8P/jIcnVFe8mSlil9XD7rFonesq9ZrHL2lTMaFOvO0KPi1+Kq5YccV1z0ANihUx
- Hw9jY2ROJOsXQAfD5PfY2RYfPz+KBg9FGhHs+FzaXVDfWBGQXcb/pq3rA+oXDFD6Ofmiig==
-X-Google-Smtp-Source: AGHT+IFWivxc2poYdICPxSKl3qXJBSjJKvRiW75Gr9CEqGXB9ftx/Ubg0onAvgkc4cq7SEIZu920qw==
-X-Received: by 2002:adf:ffd1:0:b0:38f:394f:d8c with SMTP id
- ffacd0b85a97d-390d4f4d319mr260261f8f.33.1740508802938; 
- Tue, 25 Feb 2025 10:40:02 -0800 (PST)
-Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab14caa5esm38358195e9.0.2025.02.25.10.40.01
+ bh=iecd+Lf9+Xb6NF73imYU5tlVpOwTHcPVUlgvAg2DI6M=;
+ b=imGOyD6dNg5xma0jta7iWBiroUJ3Hy91WpqqNwS0wJ4llht+NdPrm7ndFzc3D4vRKG
+ p8BgnsIfQXSaKO+Ms0+injweH9HFZJE1f0rokxgNSZyfYQePzjRzHIjWumiEpwUkHtK3
+ FVw+GIk3CoPOyzXat+ZxpRhoWzAHF5pjxVFryfcEV5Frkuo3pyzepCGyOCV6yHu5w5fp
+ Ns2Rx8C5w8mzm3RNVgQsWPaJNVIna+EozUimdAwyar18MYQMiMsxVlgjqhDEgH/QmmYM
+ AhPzbNSSquG2x+cOX/tfeY1x00iayLSD7uey88VWCiEEGmWaxzagvoFbL+MgMtj6n8Oa
+ fENA==
+X-Gm-Message-State: AOJu0YyvCIt7EYU1Gn0w+oj3zJfB7h6Hwdfgj3lkiFT+91QgWU4vWKEx
+ R12OUuZDFNIi2zTeFvJGq5eUC/gV8LeE9s4xaDyMdQ8R+11Nd56SoliVPFAb7W1K9wYBNgT8Oq8
+ B
+X-Gm-Gg: ASbGncsQItXBZkCtwVXAspfpJ5DehcpPtDdE5+e9PH3Oj9N535P4l+L7jjHhSLh8uaq
+ 2TXNFtklz+qotk2Ni10DKZlSnHwsrfIXqZul9bWtxR36BsQPv3FzNjlfWF53UcmKgW246jomGe3
+ HnPPQFXBcxpcAulMZyYT8mkKnkE5bq1/Zs5J1PKrsWPvlMoqlVjb/e9hjk94fbyrKr36R+TudYp
+ coOTo78JsUk15HXLvoUgIhEQMGmNBUfOoNla0GcaocvLL7h2xqRpUE15mky/xAhiWiL3qRWDc/i
+ OxhCpYcusMCJLZWWv5B+aawJQDEcDlD5y8eR1zHt47DRk7tEkDVuOfiGbiFMFmfMU15dCqkrk4B
+ 4OCQH5Z4=
+X-Google-Smtp-Source: AGHT+IGmvHKVvqBWfUmbXh5HdIxYHLTw5ryqaPUfffUYNyE3rCjRYghQn7b0vQFQB8GSpx2r2WubSA==
+X-Received: by 2002:a17:902:d48d:b0:21f:136a:a374 with SMTP id
+ d9443c01a7336-221a0025a63mr316235285ad.43.1740508835695; 
+ Tue, 25 Feb 2025 10:40:35 -0800 (PST)
+Received: from [10.254.143.227] (syn-156-019-246-023.biz.spectrum.com.
+ [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2230a092f4fsm17584815ad.112.2025.02.25.10.40.35
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 10:40:01 -0800 (PST)
-Message-ID: <e344bd3a-fd3a-4314-9fe7-97ac0b252a89@linaro.org>
-Date: Tue, 25 Feb 2025 19:40:01 +0100
+ Tue, 25 Feb 2025 10:40:35 -0800 (PST)
+Message-ID: <dad41a1c-b48f-403a-9deb-6e8ea0a82e71@linaro.org>
+Date: Tue, 25 Feb 2025 10:40:33 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 006/162] tcg: Convert and to TCGOutOpBinary
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-7-richard.henderson@linaro.org>
+Subject: Re: [PATCH 08/10] plugins/api: split out the vaddr/hwaddr helpers
+To: qemu-devel@nongnu.org
+References: <20250225110844.3296991-1-alex.bennee@linaro.org>
+ <20250225110844.3296991-9-alex.bennee@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250216231012.2808572-7-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250225110844.3296991-9-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,103 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/2/25 00:07, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 2/25/25 03:08, Alex Bennée wrote:
+> These only work for system-mode and are NOPs for user-mode.
+> 
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
->   tcg/tcg.c                        |  4 +++
->   tcg/aarch64/tcg-target.c.inc     | 31 ++++++++++--------
->   tcg/arm/tcg-target.c.inc         | 41 +++++++++++++++++-------
->   tcg/i386/tcg-target.c.inc        | 27 ++++++++++++----
->   tcg/loongarch64/tcg-target.c.inc | 29 ++++++++++-------
->   tcg/mips/tcg-target.c.inc        | 55 +++++++++++++++++++-------------
->   tcg/ppc/tcg-target.c.inc         | 40 ++++++++++++-----------
->   tcg/riscv/tcg-target.c.inc       | 29 ++++++++++-------
->   tcg/s390x/tcg-target.c.inc       | 48 +++++++++++++++-------------
->   tcg/sparc64/tcg-target.c.inc     | 23 ++++++++++---
->   tcg/tci/tcg-target.c.inc         | 14 ++++++--
->   11 files changed, 216 insertions(+), 125 deletions(-)
+>   plugins/api-system.c | 58 ++++++++++++++++++++++++++++++++++++
+>   plugins/api-user.c   | 40 +++++++++++++++++++++++++
+>   plugins/api.c        | 70 --------------------------------------------
+>   plugins/meson.build  |  2 +-
+>   4 files changed, 99 insertions(+), 71 deletions(-)
+>   create mode 100644 plugins/api-user.c
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-> index 1115d1e38d..01010dfdc0 100644
-> --- a/tcg/i386/tcg-target.c.inc
-> +++ b/tcg/i386/tcg-target.c.inc
-
-
-> +static void tgen_andi(TCGContext *s, TCGType type,
-> +                      TCGReg a0, TCGReg a1, tcg_target_long a2)
-> +{
-> +    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
-> +    tgen_arithi(s, ARITH_AND + rexw, a0, a2, 0);
-
-We could s/0/false/ in preparation of tgen_arithi() taking a boolean
-for the CF bit.
-
-> +}
-> +
-> +static const TCGOutOpBinary outop_and = {
-> +    .base.static_constraint = C_O1_I2(r, 0, reZ),
-> +    .out_rrr = tgen_and,
-> +    .out_rri = tgen_andi,
-> +};
-
-
-> diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-> index f5441d2033..d60bdaba25 100644
-> --- a/tcg/s390x/tcg-target.c.inc
-> +++ b/tcg/s390x/tcg-target.c.inc
-> @@ -2196,6 +2196,31 @@ static const TCGOutOpBinary outop_add = {
->       .out_rri = tgen_addi,
->   };
->   
-> +static void tgen_and(TCGContext *s, TCGType type,
-> +                     TCGReg a0, TCGReg a1, TCGReg a2)
-> +{
-> +    if (type != TCG_TYPE_I32) {
-> +        tcg_out_insn(s, RRFa, NGRK, a0, a1, a2);
-> +    } else if (a0 == a1) {
-> +        tcg_out_insn(s, RR, NR, a0, a2);
-> +    } else {
-> +        tcg_out_insn(s, RRFa, NRK, a0, a1, a2);
-> +    }
-> +}
-> +
-> +static void tgen_andi_3(TCGContext *s, TCGType type,
-> +                        TCGReg a0, TCGReg a1, tcg_target_long a2)
-> +{
-> +    tcg_out_mov(s, type, a0, a1);
-> +    tgen_andi(s, type, a0, a2);
-> +}
-> +
-> +static const TCGOutOpBinary outop_and = {
-> +    .base.static_constraint = C_O1_I2(r, r, rNKR),
-
-So INDEX_op_and_i32 gets more constraints (ri -> rNKR):
-
-CONST('K', TCG_CT_CONST_P32)
-CONST('N', TCG_CT_CONST_INV)
-CONST('R', TCG_CT_CONST_INVRISBG)
-
-IIUC this doesn't affect anything, as these constraints are only
-useful for 64-bit ops, right?
-
-> +    .out_rrr = tgen_and,
-> +    .out_rri = tgen_andi_3,
-> +};
-
-
-> diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-> index f43d95b025..b3fbe127c0 100644
-> --- a/tcg/sparc64/tcg-target.c.inc
-> +++ b/tcg/sparc64/tcg-target.c.inc
-
-
-> +static const TCGOutOpBinary outop_and = {
-> +    .base.static_constraint = C_O1_I2(r, r, rJ),
-
-Again, missing 'z', so C_O1_I2(r, rz, rJ)?
-
-> +    .out_rrr = tgen_and,
-> +    .out_rri = tgen_andi,
-> +};
+r~
 
