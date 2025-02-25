@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EDCC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAC6C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzLP-0004cP-QA; Tue, 25 Feb 2025 13:07:48 -0500
+	id 1tmzL0-0001xk-BZ; Tue, 25 Feb 2025 13:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJp-0000Lf-B1
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:16 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1tmzJA-0008L0-Pf
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:32 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJk-0002LA-66
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:07 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-38f26a82d1dso3078564f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:53 -0800 (PST)
+ id 1tmzJ6-0002D6-V9
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:28 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-438a3216fc2so56629465e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506752; x=1741111552; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506723; x=1741111523; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NAT95TVvrYX1s1kqx9WcG2o5ihOYgWa1KrXkA2LsnDU=;
- b=PTkxr0eWjZfqcDJDENTshIVFLWCRXENz8cZWIK7hBURAyCAnNuZk8vVtzkzLU2dzWz
- pc9/txtdQ620yQMPmmykxSd/OYSGmcA1n9RyH8Qs3hbQBsBcXRo5ZB7yfZd9WH2xu6xs
- MKeY1eR1/WrzTT528xjjIcFtxSXc/9qSfKI4vl9LXgbNmGdD0azMBkOFzdXD271qhrKm
- vwdvQOv7lSUwxmOekTi2YhklM2znepQ7MuhHI/ViPf1wkSLSBBS4YQ8czmoPFpcrKasI
- k32wgR+zdnYc030j4wO4uq4XZT+csvIOeABFXjrQ3Su+abipuTf8WXFrR7y4BdfK0Y3N
- NJ3g==
+ :reply-to; bh=aW0zCtC8OIsiWYUh98kNB1SPvnD+Hi97ZoX3/5CmiFs=;
+ b=lkmpWJr3SwEHf2TXCR3ULrJXjy+Ipms1n34L9gnKoXBrksBbvDj+uGuZraEn9JlSW1
+ vLpQILWK+UDEC99s6c+8cTJGy5BxZlJ3aQPGobnLCwM+5cvOeenmGTG7jYcMYhmIuCIX
+ PHThQuQTxnZueeG640/B53i/kH/PnwGe88M47nLfOKVmrEupdE5CDVsaQdItdvLBsPLQ
+ cEe8z4DQIHbjJmrhxYDg4Rk/IOjsNFKMHO9GmxXpLozAwCAOJW2vbYTo1k/Cy30Ri6wh
+ EZhY5KsrYY/9MQ/bHcQdBL8U8NEei0ZUx5OtToxvVv8VQLStivdCu3L7E2H7PkvXQdom
+ Jozw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506752; x=1741111552;
+ d=1e100.net; s=20230601; t=1740506723; x=1741111523;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NAT95TVvrYX1s1kqx9WcG2o5ihOYgWa1KrXkA2LsnDU=;
- b=kx7QPiDWOriPOOlcEKSW+0v1EKd0ldj1rLDsB8yoqdX3YOnZwqx/zgeOKaD3/GoMF+
- WE9su8ISa/XR6oRwcXj3rtBFUW2lwWm2JZaktNsQ4wTjqp/yexCT/xXx3uPsZ2VXj6yt
- AjnfMa+SooIsTgBrtJsqeBcx0UunIFGV4CwrdYsMF1KTlUl+6Q4KNLEazp0HY++/rjhG
- Ej6QFLkQXb85zXoqO/56U1MOLlRjGLzaiZRrw/UKanh+EJe0DocBJip9ybhLtv4IUtp6
- /J4RkOnbhiAtzhiyXs1tEkqjcaCoLx3YdLxXKrgC20iV6ltc5D5jSigCBT4fTNdTLuLD
- JRqQ==
-X-Gm-Message-State: AOJu0YwFJkgFs7W81aTQty82bgbLdBOy9404fcbCn2bOPgWxV1CBCa5G
- 1FZX7JYSS0nCEOBzTnqIgLgjHcsKQ/YPaXCGyMJ9O29mhuJs4ypWslXipe17rNo6pPcXVLs1Zi+
- d
-X-Gm-Gg: ASbGncsRiAMFJZuRFa7N8cfLy8rRPNF/YWsQXtidtcH+8+wVXUI4E5ttvMLmqWLgCbN
- AoFGgaKKvNI0Ss/b9OdjXzPGHD4US2HykVz7FkGlJNNMGLiThgO2tz904OX2XfDFNUJS8HO3PyJ
- cK+wzzQU47TuUplk0jTZzq3eglqhsi4x+SGJJntC6kjbI7ggQkPV3jMoLEnGyyw/uHql9KyW+oM
- Hf1jCPtFIwr7NbUeiRAd3rtaPztjtjWZj58q/z3rS234g+blWOWEnUJYDTXyFFstJArq/0Lq4E4
- 59GHjQWIAOrlZE9L4OovUplfMwd9Gq2S
-X-Google-Smtp-Source: AGHT+IEC4V6zIw5K2OVX2fFG1aZl767gaZwMKrKKLJHmc5/4o67evNzpDBR3ORJTr4Q4L3XJvp8o7w==
-X-Received: by 2002:a5d:4b51:0:b0:38f:2bd2:45d0 with SMTP id
- ffacd0b85a97d-390cc638d9emr2949177f8f.51.1740506751769; 
- Tue, 25 Feb 2025 10:05:51 -0800 (PST)
+ bh=aW0zCtC8OIsiWYUh98kNB1SPvnD+Hi97ZoX3/5CmiFs=;
+ b=Yg3yazWT/oTjYjemFo0K68l/wRwyoZxfVV1/mXum8Cqz89U41RO/BH4kvFsmxrEH32
+ F30yByRnfPKnCJkRYP/x0XeLEBlU3pSjMd9q0IVkZMqnxV/1dMxXSQiNUtMvYO3O7H1u
+ TwHG229DPGUwKSUWEjfHOiPMojNT1PtX/rzsFImN3RyMnwqUPDcapjBd1aQX/z/t9Xqi
+ Ww0fUx/b9PycXBPhhTEujkpypgU8Porx7HZQrWn9ruVyo4tZ4MsO1440p3TDNe8ctqh1
+ 2wZxRFcNizCLcNenSTbeynyTmre1wUeh9A7Y7HCwoTpRwwtpt5l1drIPboAk2vbEBTNa
+ aiKQ==
+X-Gm-Message-State: AOJu0Yzk5F7EzzFd82gjgd7nU27XBbGApybZYA4A5SLgJPcGTs7nEYcx
+ +i7KyM+kVXCT4cmblHuoQKLCJ6dhUaDtAwNyjapHEUUBrezCyp27XrUVQy2fcoDKw0EFLYbgLS3
+ 3
+X-Gm-Gg: ASbGnctz6SwtAxNG/Y7TPPE4IszNZaQr7xf8cm3Bp04El4do0gklvtiIF+YV9Z2A2SX
+ ldYaoGjZq0s6mZWMfE6ebNksxjD7jSJP1EGqaJLNU5cbSGikE7s/UG7mgcewBEPBzRsUy/KjAVD
+ k79TzPgtxxiCiwh9G8fq+gqYbA4Gb6avM5VFTQH9DyY4BUCzd9ol7Km/QVeBYsp+/G1CmfM6Lx+
+ 00wPwfd5ee6RyE56yabw87nGfxUzovWV/Iny59u5wMFJH/ZOE1yqxIJW+nWXoUjvZ8YzydaupC9
+ cM8egdbTAC5Y6A8qTzCikHcSq+D6cQUL
+X-Google-Smtp-Source: AGHT+IGWoKiglTcinLu0taRMZbW+PXards+Dc/Z5XxOg9JpzsUW8V5PxTGyyjeUDuqkqE6p6VvbXow==
+X-Received: by 2002:a05:6000:18a2:b0:38f:50bd:ad11 with SMTP id
+ ffacd0b85a97d-38f707840afmr14380506f8f.5.1740506721547; 
+ Tue, 25 Feb 2025 10:05:21 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.50
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:51 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/43] hw/arm/fsl-imx8mp: Add USDHC storage controllers
-Date: Tue, 25 Feb 2025 18:05:00 +0000
-Message-ID: <20250225180510.1318207-35-peter.maydell@linaro.org>
+Subject: [PULL 07/43] hw: Centralize handling of -machine dumpdtb option
+Date: Tue, 25 Feb 2025 18:04:33 +0000
+Message-ID: <20250225180510.1318207-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,213 +98,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+Currently we handle the 'dumpdtb' machine sub-option ad-hoc in every
+board model that has an FDT.  It's up to the board code to make sure
+it calls qemu_fdt_dumpdtb() in the right place.
 
-The USDHC emulation allows for running real-world images such as those generated
-by Buildroot. Convert the board documentation accordingly instead of running a
-Linux kernel with ephemeral storage.
+This means we're inconsistent and often just ignore the user's
+command line argument:
+ * if the board doesn't have an FDT at all
+ * if the board supports FDT, but there happens not to be one
+   present (usually because of a missing -fdt option)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20250223114708.1780-8-shentey@gmail.com
-[PMM: drop 'static const' from usdhc_table[] for GCC 7.5]
+This isn't very helpful because it gives the user no clue why their
+option was ignored.
+
+However, in order to support the QMP/HMP dumpdtb commands we require
+now that every FDT machine stores a pointer to the FDT in
+MachineState::fdt.  This means we can handle -machine dumpdtb
+centrally by calling the qmp_dumpdtb() function, unifying its
+handling with the QMP/HMP commands.  All the board code calls to
+qemu_fdt_dumpdtb() can then be removed.
+
+For this commit we retain the existing behaviour that if there
+is no FDT we silently ignore the -machine dumpdtb option.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- docs/system/arm/imx8mp-evk.rst | 18 ++++++++++++------
- include/hw/arm/fsl-imx8mp.h    |  7 +++++++
- hw/arm/fsl-imx8mp.c            | 28 ++++++++++++++++++++++++++++
- hw/arm/imx8mp-evk.c            | 18 ++++++++++++++++++
- hw/arm/Kconfig                 |  1 +
- 5 files changed, 66 insertions(+), 6 deletions(-)
+ include/system/device_tree.h  |  2 --
+ hw/arm/boot.c                 |  2 --
+ hw/core/machine.c             | 25 +++++++++++++++++++++++++
+ hw/loongarch/virt-fdt-build.c |  1 -
+ hw/mips/boston.c              |  1 -
+ hw/openrisc/boot.c            |  1 -
+ hw/ppc/e500.c                 |  1 -
+ hw/ppc/pegasos2.c             |  1 -
+ hw/ppc/pnv.c                  |  1 -
+ hw/ppc/spapr.c                |  1 -
+ hw/riscv/boot.c               |  2 --
+ system/device_tree.c          | 15 ---------------
+ 12 files changed, 25 insertions(+), 28 deletions(-)
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index 22541c54424..879c822356f 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -12,6 +12,7 @@ The ``imx8mp-evk`` machine implements the following devices:
-  * Up to 4 Cortex-A53 cores
-  * Generic Interrupt Controller (GICv3)
-  * 4 UARTs
-+ * 3 USDHC Storage Controllers
-  * Secure Non-Volatile Storage (SNVS) including an RTC
-  * Clock Tree
+diff --git a/include/system/device_tree.h b/include/system/device_tree.h
+index eb601522f88..49d8482ed4e 100644
+--- a/include/system/device_tree.h
++++ b/include/system/device_tree.h
+@@ -133,8 +133,6 @@ int qemu_fdt_add_path(void *fdt, const char *path);
+                          sizeof(qdt_tmp));                                    \
+     } while (0)
  
-@@ -26,18 +27,23 @@ Direct Linux Kernel Boot
- 
- Probably the easiest way to get started with a whole Linux system on the machine
- is to generate an image with Buildroot. Version 2024.11.1 is tested at the time
--of writing and involves two steps. First run the following commands in the
-+of writing and involves three steps. First run the following commands in the
- toplevel directory of the Buildroot source tree:
- 
- .. code-block:: bash
- 
--  $ echo "BR2_TARGET_ROOTFS_CPIO=y" >> configs/freescale_imx8mpevk_defconfig
-   $ make freescale_imx8mpevk_defconfig
-   $ make
- 
- Once finished successfully there is an ``output/image`` subfolder. Navigate into
--it and patch the device tree with the following commands which will remove the
--``cpu-idle-states`` properties from CPU nodes:
-+it and resize the SD card image to a power of two:
-+
-+.. code-block:: bash
-+
-+  $ qemu-img resize sdcard.img 256M
-+
-+Finally, the device tree needs to be patched with the following commands which
-+will remove the ``cpu-idle-states`` properties from CPU nodes:
- 
- .. code-block:: bash
- 
-@@ -52,5 +58,5 @@ Now that everything is prepared the machine can be started as follows:
-       -display none -serial null -serial stdio \
-       -kernel Image \
-       -dtb imx8mp-evk-patched.dtb \
--      -initrd rootfs.cpio \
--      -append "root=/dev/ram"
-+      -append "root=/dev/mmcblk2p2" \
-+      -drive file=sdcard.img,if=sd,bus=2,format=raw,id=mmcblk2
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 26e24e99a15..349d55ca88d 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -15,6 +15,7 @@
- #include "hw/misc/imx7_snvs.h"
- #include "hw/misc/imx8mp_analog.h"
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/sd/sdhci.h"
- #include "qom/object.h"
- #include "qemu/units.h"
- 
-@@ -28,6 +29,7 @@ enum FslImx8mpConfiguration {
-     FSL_IMX8MP_NUM_CPUS         = 4,
-     FSL_IMX8MP_NUM_IRQS         = 160,
-     FSL_IMX8MP_NUM_UARTS        = 4,
-+    FSL_IMX8MP_NUM_USDHCS       = 3,
- };
- 
- struct FslImx8mpState {
-@@ -39,6 +41,7 @@ struct FslImx8mpState {
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-     IMXSerialState     uart[FSL_IMX8MP_NUM_UARTS];
-+    SDHCIState         usdhc[FSL_IMX8MP_NUM_USDHCS];
- };
- 
- enum FslImx8mpMemoryRegions {
-@@ -184,6 +187,10 @@ enum FslImx8mpMemoryRegions {
- };
- 
- enum FslImx8mpIrqs {
-+    FSL_IMX8MP_USDHC1_IRQ   = 22,
-+    FSL_IMX8MP_USDHC2_IRQ   = 23,
-+    FSL_IMX8MP_USDHC3_IRQ   = 24,
-+
-     FSL_IMX8MP_UART1_IRQ    = 26,
-     FSL_IMX8MP_UART2_IRQ    = 27,
-     FSL_IMX8MP_UART3_IRQ    = 28,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 18c9c54ddc6..da9eaeb6ff0 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -207,6 +207,11 @@ static void fsl_imx8mp_init(Object *obj)
-         g_autofree char *name = g_strdup_printf("uart%d", i + 1);
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-     }
-+
-+    for (i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
-+        g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
-+        object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-+    }
- }
- 
- static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-@@ -346,6 +351,28 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+-void qemu_fdt_dumpdtb(void *fdt, int size);
+-
+ /**
+  * qemu_fdt_setprop_sized_cells_from_array:
+  * @fdt: device tree blob
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 42c18355e85..e296b62fa12 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -661,8 +661,6 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         binfo->modify_dtb(binfo, fdt);
      }
  
-+    /* USDHCs */
-+    for (i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
-+        struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } usdhc_table[FSL_IMX8MP_NUM_USDHCS] = {
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC1].addr, FSL_IMX8MP_USDHC1_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC2].addr, FSL_IMX8MP_USDHC2_IRQ },
-+            { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC3].addr, FSL_IMX8MP_USDHC3_IRQ },
-+        };
-+
-+        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
-+                                 SDHCI_VENDOR_IMX, &error_abort);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0, usdhc_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-+                           qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
-+    }
-+
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-         return;
-@@ -363,6 +390,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_RAM:
-         case FSL_IMX8MP_SNVS_HP:
-         case FSL_IMX8MP_UART1 ... FSL_IMX8MP_UART4:
-+        case FSL_IMX8MP_USDHC1 ... FSL_IMX8MP_USDHC3:
-             /* device implemented and treated above */
-             break;
- 
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 2756d4c21c8..27d9e9e8eed 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -11,6 +11,7 @@
- #include "hw/arm/boot.h"
- #include "hw/arm/fsl-imx8mp.h"
- #include "hw/boards.h"
-+#include "hw/qdev-properties.h"
- #include "system/qtest.h"
+-    qemu_fdt_dumpdtb(fdt, size);
+-
+     /* Put the DTB into the memory map as a ROM image: this will ensure
+      * the DTB is copied again upon reset, even if addr points into RAM.
+      */
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 02cff735b3f..61c22f723a0 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -19,6 +19,7 @@
  #include "qemu/error-report.h"
  #include "qapi/error.h"
-@@ -40,6 +41,23 @@ static void imx8mp_evk_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-                                 machine->ram);
+ #include "qapi/qapi-visit-machine.h"
++#include "qapi/qapi-commands-machine.h"
+ #include "qemu/madvise.h"
+ #include "qom/object_interfaces.h"
+ #include "system/cpus.h"
+@@ -1696,6 +1697,24 @@ void qemu_remove_machine_init_done_notifier(Notifier *notify)
+     notifier_remove(notify);
+ }
  
-+    for (int i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
-+        BusState *bus;
-+        DeviceState *carddev;
-+        BlockBackend *blk;
-+        DriveInfo *di = drive_get(IF_SD, i, 0);
-+
-+        if (!di) {
-+            continue;
-+        }
-+
-+        blk = blk_by_legacy_dinfo(di);
-+        bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
-+        carddev = qdev_new(TYPE_SD_CARD);
-+        qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
-+        qdev_realize_and_unref(carddev, bus, &error_fatal);
++static void handle_machine_dumpdtb(MachineState *ms)
++{
++    if (!ms->dumpdtb) {
++        return;
 +    }
++    if (!ms->fdt) {
++        /* Silently ignore dumpdtb option if there is nothing to dump */
++        return;
++    }
++#ifdef CONFIG_FDT
++    qmp_dumpdtb(ms->dumpdtb, &error_fatal);
++    exit(0);
++#else
++    error_report("This machine doesn't have an FDT");
++    exit(1);
++#endif
++}
 +
-     if (!qtest_enabled()) {
-         arm_load_kernel(&s->cpu[0], machine, &boot_info);
-     }
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f77c451ba39..d2dda3213db 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -599,6 +599,7 @@ config FSL_IMX8MP
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select IMX
-+    select SDHCI
-     select UNIMP
+ void qdev_machine_creation_done(void)
+ {
+     cpu_synchronize_all_post_init();
+@@ -1712,6 +1731,12 @@ void qdev_machine_creation_done(void)
+     phase_advance(PHASE_MACHINE_READY);
+     qdev_assert_realized_properly();
  
- config FSL_IMX8MP_EVK
++    /*
++     * If the user used -machine dumpdtb=file.dtb to request that we
++     * dump the DTB to a file,  do it now, and exit.
++     */
++    handle_machine_dumpdtb(current_machine);
++
+     /* TODO: once all bus devices are qdevified, this should be done
+      * when bus is created by qdev.c */
+     /*
+diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+index dbc269afba4..728ce466996 100644
+--- a/hw/loongarch/virt-fdt-build.c
++++ b/hw/loongarch/virt-fdt-build.c
+@@ -527,7 +527,6 @@ void virt_fdt_setup(LoongArchVirtMachineState *lvms)
+      * Put the FDT into the memory map as a ROM image: this will ensure
+      * the FDT is copied again upon reset, even if addr points into RAM.
+      */
+-    qemu_fdt_dumpdtb(machine->fdt, lvms->fdt_size);
+     rom_add_blob_fixed_as("fdt", machine->fdt, lvms->fdt_size, FDT_BASE,
+                           &address_space_memory);
+     qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index 79410dabe7f..149a263bd5a 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -395,7 +395,6 @@ static void *boston_fdt_filter(void *opaque, const void *fdt_orig,
+                         1, ram_high_sz);
+ 
+     fdt = g_realloc(fdt, fdt_totalsize(fdt));
+-    qemu_fdt_dumpdtb(fdt, fdt_sz);
+ 
+     s->fdt_base = *load_addr;
+ 
+diff --git a/hw/openrisc/boot.c b/hw/openrisc/boot.c
+index 72e2756af05..0a5881be314 100644
+--- a/hw/openrisc/boot.c
++++ b/hw/openrisc/boot.c
+@@ -109,7 +109,6 @@ uint32_t openrisc_load_fdt(MachineState *ms, void *fdt,
+     /* Should only fail if we've built a corrupted tree */
+     g_assert(ret == 0);
+     /* copy in the device tree */
+-    qemu_fdt_dumpdtb(fdt, fdtsize);
+ 
+     /* Save FDT for dumpdtb monitor command */
+     ms->fdt = fdt;
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 26933e0457e..fe8b9f79621 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -658,7 +658,6 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+ 
+ done:
+     if (!dry_run) {
+-        qemu_fdt_dumpdtb(fdt, fdt_size);
+         cpu_physical_memory_write(addr, fdt, fdt_size);
+ 
+         /* Set machine->fdt for 'dumpdtb' QMP/HMP command */
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index b057672e829..246d6d633b5 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -417,7 +417,6 @@ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
+     d[1] = cpu_to_be64(pm->kernel_size - (pm->kernel_entry - pm->kernel_addr));
+     qemu_fdt_setprop(fdt, "/chosen", "qemu,boot-kernel", d, sizeof(d));
+ 
+-    qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+     g_free(pm->fdt_blob);
+     pm->fdt_blob = fdt;
+ 
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 11fd477b71b..87607508c76 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -744,7 +744,6 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         _FDT((fdt_pack(fdt)));
+     }
+ 
+-    qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+ 
+     /* Update machine->fdt with latest fdt */
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index f3a4b4235d4..c15340a58d8 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1760,7 +1760,6 @@ static void spapr_machine_reset(MachineState *machine, ResetType type)
+                                   0, fdt_addr, 0);
+         cpu_physical_memory_write(fdt_addr, fdt, fdt_totalsize(fdt));
+     }
+-    qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+ 
+     g_free(spapr->fdt_blob);
+     spapr->fdt_size = fdt_totalsize(fdt);
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index c309441b7d8..765b9e2b1ab 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -374,8 +374,6 @@ void riscv_load_fdt(hwaddr fdt_addr, void *fdt)
+     uint32_t fdtsize = fdt_totalsize(fdt);
+ 
+     /* copy in the device tree */
+-    qemu_fdt_dumpdtb(fdt, fdtsize);
+-
+     rom_add_blob_fixed_as("fdt", fdt, fdtsize, fdt_addr,
+                           &address_space_memory);
+     qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
+diff --git a/system/device_tree.c b/system/device_tree.c
+index 4bc2d61b934..d605ed2a217 100644
+--- a/system/device_tree.c
++++ b/system/device_tree.c
+@@ -594,21 +594,6 @@ int qemu_fdt_add_path(void *fdt, const char *path)
+     return retval;
+ }
+ 
+-void qemu_fdt_dumpdtb(void *fdt, int size)
+-{
+-    const char *dumpdtb = current_machine->dumpdtb;
+-
+-    if (dumpdtb) {
+-        /* Dump the dtb to a file and quit */
+-        if (g_file_set_contents(dumpdtb, fdt, size, NULL)) {
+-            info_report("dtb dumped to %s. Exiting.", dumpdtb);
+-            exit(0);
+-        }
+-        error_report("%s: Failed dumping dtb to %s", __func__, dumpdtb);
+-        exit(1);
+-    }
+-}
+-
+ int qemu_fdt_setprop_sized_cells_from_array(void *fdt,
+                                             const char *node_path,
+                                             const char *property,
 -- 
 2.43.0
 
