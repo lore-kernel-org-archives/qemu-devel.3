@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07830C021B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB9BC021B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzLd-0005gS-7B; Tue, 25 Feb 2025 13:08:03 -0500
+	id 1tmzL0-0001xa-3C; Tue, 25 Feb 2025 13:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJZ-000071-47
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:56 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1tmzJj-0000JV-TU
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:12 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tmzJT-0002If-8S
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:05:52 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-38f29a1a93bso4759707f8f.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:45 -0800 (PST)
+ id 1tmzJe-0002M1-5Q
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:06:01 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4399ee18a57so404655e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740506744; x=1741111544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740506754; x=1741111554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1po+NKvKzs7P6OuK7YQBa3sSSQDGisQWVgPTwSnGbDk=;
- b=tNRoZMxcCkus+tFfc3b7c7Q5Xpp2o8VOaovbuYoNnDs937kuOA1keTtMnik6uVhwZu
- PaW/7kRjKLdVOVyVY5cqRVf8SDtIRdtV6vCSe/cg4he85RXtVGteRmXgXev0gJ7qO4gx
- PIijtsKnTnGFLyZltgzKv0AHDLyQqau7/7TbcJYSgEGzG6w5fIS7Xt82gmBhJ5mH6M2J
- 46ruu68MliRZp64J/EOfqP7bVQYFueQuTN5AkyQ8leOIU3NV6A8oOHsgVXBMfavVeig5
- G4YEKl4e4Jc2ToaxYYLZQLkws9I4cWmMhzD4WEWbYGs3LHQDE6gSjqKbN9SeQTFOJgbX
- n7BQ==
+ :reply-to; bh=763FsgHv/y0ddB1Yc59uQpK+OQvhicTdLrmuE07GXxA=;
+ b=IpQxsAyxQR4vVB/qGFjAheW2UO6bxQHoYCaIB3NDrF0fze0X+5Qnqxh4OubzNFZMGz
+ oJdZuG1ptKy6djViLzn8t3xulIexqEYV8K2KzQuh7TUG9ZyG4DDypjeojAg4xvKJVN6c
+ iQDIvg4GIkAAYloKsMpiIEA1bCEgF5jAeuIboWaJSD13vzDm5Fh6JpXoaZqUXoU8Qse0
+ bQ2AP31wQSsibxwANhufy1nC+TDBTp6f9q9p9RQ+K1jq5w009oLVSIKAPG8LdNq4ASRt
+ vQr3t1DU1Ci1SyLTv20nUufsIHZZJlGCZAHVlc9tYk9//5VCteJpsK8G/K3J7z4t2jK2
+ WmUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740506744; x=1741111544;
+ d=1e100.net; s=20230601; t=1740506754; x=1741111554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1po+NKvKzs7P6OuK7YQBa3sSSQDGisQWVgPTwSnGbDk=;
- b=ilvhW09hMFec64NraJzU5zz8n+h+on93GstQI2fn2CNZoyTCDnv1xelYDmsX7mLCWF
- EOW5oFGKK8zU/xrwIUbkCY85QttIVBWbzAuGgYLTot4BbXg1o4px2Uem1U7/5zWFdVtA
- gobKNaVy+UyjbkF4T3o3DSp5/7g5nHVvyyFmd3PXxD8nXzp4UzJzxnL6UM/X9WyDT1VS
- VGv3+GxC1IbzHt8MkO6VRP5QNaZnuK2YdeqDWOdm0QAMAVjuJqWly14PQzDmPZCNGxeT
- z/dEjLXbzM3oTZs14lNVAHccvNjyGynaHMS0Ys6+gECQMxvIK0xj1r0uTsyTGSugHk2r
- jfjA==
-X-Gm-Message-State: AOJu0YyfICJ+t+/lTKCInlqNjCd2Gf62sx2rLVreuDz7qqR+tvIUB7jC
- MfLylSojTdGO1x9j5lcxhw/pnEZrEM00QMmEumR4CBSgIQEblRusyVi9hE0S+w7dnrWSA8cJy5W
- W
-X-Gm-Gg: ASbGnctc8WU7suh9nUzSvjpTPewcgbwcNGOddQwrl/AaPs4wyNhy8ALBLwfVtOuMiNn
- Ai2s9iziWD9A/C9t5Hf4PpEReYIe+nCr6jIr59feAkL9jKcNzL1XEEi/Z4Uz2tYcWtzQSVgzmqj
- ig4NyS211k86ukw7aKJ+4nmUP1UvqKaagio6HlX+4Rx2m3K3Es8eS0cw09FrAUniA9lExZszD64
- uA6XnSRefp+cn7hUGXJSAR9ODCL4THD+90ZjOoMOf/JOTMR5+Q044LTbWPcCWD9hwKu9nJ0K1W2
- SyDSB4HaRpmw8a3u2fY+XPtejBmKVAK1
-X-Google-Smtp-Source: AGHT+IGo/x+PjjwZRIJIsQF81rvJ2UR1Lmt65sW4WUzgP/zjUJSLhHYlJL+pDn8Weu7P/ucaq6j8xQ==
-X-Received: by 2002:a5d:64ef:0:b0:38d:da11:df19 with SMTP id
- ffacd0b85a97d-390d4f8b635mr197221f8f.41.1740506744101; 
- Tue, 25 Feb 2025 10:05:44 -0800 (PST)
+ bh=763FsgHv/y0ddB1Yc59uQpK+OQvhicTdLrmuE07GXxA=;
+ b=eqeKE/67LpGc8Jg/lWr2vi8H7k6X7Nt23qvwkeoJGjJaKBJICfHbRkb7MowaJYJXc8
+ rqRR4IiYgoGTdm5/4voe5WYDOrgkdAMHMAmxFTj4StFhMhV7DyRJSOaZ3haQj/TNvS8R
+ 4BVCC+d823iYI8MA6c9IU5A/SNdNnGa4kqJ1Iav3t4JBY/Bl+CCQFg7fyNnyaxSAxB//
+ fpzEQl0Dcd8tsQZ4vUBNsPWKtrQ0HqS4cP1/+AfCW/19cXDs9XP4rw019bvcI0ZTooT+
+ XQ1d3xyDb8cbfCGIri2UB2rrIDaf26o+gtckLVWbvjlNCFTagnEiwlViEoFSGaJr28Vi
+ Ckng==
+X-Gm-Message-State: AOJu0YyYkA0withlEfPyGahYP+DTR/ENLRMXgEVccx+AjEY9gC20Tq21
+ Z5JyivdwpTNv5cP9VyqhP+fXkX1vknUmRmNv9quu/QayeMczlj//UP58HJcg2XFbBK4qie+j4WP
+ F
+X-Gm-Gg: ASbGncv5PEgUuosW/9hSnWg/JYSRyl0pqt43CyBXqwxI+4QsCA7j7zI0rs8UU6uosAv
+ lGiRe0pIDScCYzgSJQ4UxVnvj+A52UccGPdki5ST9c+IgiwfGD7qSWLrgReZZz/4gC/48EuUrla
+ mZoxD6TaCtww2Vxhg56y4P8mtqGWefrsjHwq6WhqrNfiqdmIua3gB8XBh7xdBGFmnSQeNgc6XGq
+ JnPXIAUr576j25UkTk/i9iXC25bXNSPbxnieJ3dqH1SWRf4QLCJb4qMKUCToDW1bsXbr+oaAsR4
+ D/+6SRe0DnXpUF3lhldEeN6/qIZ7FiTA
+X-Google-Smtp-Source: AGHT+IF/6mD7WqOkxdbgXdNdsMhsrxjE3PbOw4MEPHedHz3ZnAbDADX1k4Che+BLj20G/VMxj5YRIg==
+X-Received: by 2002:a05:600c:1c85:b0:439:968b:6669 with SMTP id
+ 5b1f17b1804b1-439ae2d254bmr150573555e9.1.1740506753766; 
+ Tue, 25 Feb 2025 10:05:53 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.43
+ 5b1f17b1804b1-43ab156a136sm35147875e9.35.2025.02.25.10.05.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:05:43 -0800 (PST)
+ Tue, 25 Feb 2025 10:05:53 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/43] hw/misc/npcm_clk: fix buffer-overflow
-Date: Tue, 25 Feb 2025 18:04:53 +0000
-Message-ID: <20250225180510.1318207-28-peter.maydell@linaro.org>
+Subject: [PULL 36/43] hw/arm/fsl-imx8mp: Add GPIO controllers
+Date: Tue, 25 Feb 2025 18:05:02 +0000
+Message-ID: <20250225180510.1318207-37-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250225180510.1318207-1-peter.maydell@linaro.org>
 References: <20250225180510.1318207-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,93 +98,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Regression introduced by cf76c4
-(hw/misc: Add nr_regs and cold_reset_values to NPCM CLK)
-
-cold_reset_values has a different size, depending on device used
-(NPCM7xx vs NPCM8xx). However, s->regs has a fixed size, which matches
-NPCM8xx. Thus, when initializing a NPCM7xx, we go past cold_reset_values
-ending.
-
-Report by asan:
-==2066==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55d68a3e97f0 at pc 0x7fcaf2b2d14b bp 0x7ffff0cc3890 sp 0x7ffff0cc3040
-READ of size 196 at 0x55d68a3e97f0 thread T0
-    #0 0x7fcaf2b2d14a in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827
-    #1 0x55d688447e0d in memcpy /usr/include/x86_64-linux-gnu/bits/string_fortified.h:29
-    #2 0x55d688447e0d in npcm_clk_enter_reset ../hw/misc/npcm_clk.c:968
-    #3 0x55d6899b7213 in resettable_phase_enter ../hw/core/resettable.c:136
-    #4 0x55d6899a1ef7 in bus_reset_child_foreach ../hw/core/bus.c:97
-    #5 0x55d6899b717d in resettable_child_foreach ../hw/core/resettable.c:92
-    #6 0x55d6899b717d in resettable_phase_enter ../hw/core/resettable.c:129
-    #7 0x55d6899b4ead in resettable_container_child_foreach ../hw/core/resetcontainer.c:54
-    #8 0x55d6899b717d in resettable_child_foreach ../hw/core/resettable.c:92
-    #9 0x55d6899b717d in resettable_phase_enter ../hw/core/resettable.c:129
-    #10 0x55d6899b7bfa in resettable_assert_reset ../hw/core/resettable.c:55
-    #11 0x55d6899b8666 in resettable_reset ../hw/core/resettable.c:45
-    #12 0x55d688d15cd2 in qemu_system_reset ../system/runstate.c:527
-    #13 0x55d687fc5edd in qdev_machine_creation_done ../hw/core/machine.c:1738
-    #14 0x55d688d209bd in qemu_machine_creation_done ../system/vl.c:2779
-    #15 0x55d688d209bd in qmp_x_exit_preconfig ../system/vl.c:2807
-    #16 0x55d688d281fb in qemu_init ../system/vl.c:3838
-    #17 0x55d687ceab12 in main ../system/main.c:68
-    #18 0x7fcaef006249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)
-    #19 0x7fcaef006304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)
-    #20 0x55d687cf0010 in _start (/home/runner/work/qemu-ci/qemu-ci/build/qemu-system-arm+0x371c010)
-
-0x55d68a3e97f0 is located 0 bytes to the right of global variable 'npcm7xx_cold_reset_values' defined in '../hw/misc/npcm_clk.c:134:23' (0x55d68a3e9780) of size 112
-
-Impacted tests:
-Summary of Failures:
-
-check:
-  2/747 qemu:qtest+qtest-aarch64 / qtest-aarch64/qom-test                         ERROR             9.28s   killed by signal 6 SIGABRT
-  4/747 qemu:qtest+qtest-arm / qtest-arm/qom-test                                 ERROR             7.82s   killed by signal 6 SIGABRT
- 32/747 qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspect-test           ERROR            10.91s   killed by signal 6 SIGABRT
- 35/747 qemu:qtest+qtest-arm / qtest-arm/device-introspect-test                   ERROR            11.33s   killed by signal 6 SIGABRT
-114/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_pwm-test                         ERROR             0.98s   killed by signal 6 SIGABRT
-115/747 qemu:qtest+qtest-aarch64 / qtest-aarch64/test-hmp                         ERROR             2.95s   killed by signal 6 SIGABRT
-117/747 qemu:qtest+qtest-arm / qtest-arm/test-hmp                                 ERROR             2.54s   killed by signal 6 SIGABRT
-151/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_watchdog_timer-test              ERROR             0.96s   killed by signal 6 SIGABRT
-247/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_adc-test                         ERROR             0.96s   killed by signal 6 SIGABRT
-248/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_gpio-test                        ERROR             1.05s   killed by signal 6 SIGABRT
-249/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_rng-test                         ERROR             0.97s   killed by signal 6 SIGABRT
-250/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_sdhci-test                       ERROR             0.97s   killed by signal 6 SIGABRT
-251/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_smbus-test                       ERROR             0.89s   killed by signal 6 SIGABRT
-252/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_timer-test                       ERROR             1.09s   killed by signal 6 SIGABRT
-253/747 qemu:qtest+qtest-arm / qtest-arm/npcm_gmac-test                           ERROR             1.12s   killed by signal 6 SIGABRT
-255/747 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_emc-test                         ERROR             1.05s   killed by signal 6 SIGABRT
-
-check-functional:
- 22/203 qemu:func-thorough+func-arm-thorough+thorough / func-arm-arm_quanta_gsj                      ERROR             0.79s   exit status 1
- 38/203 qemu:func-quick+func-aarch64 / func-aarch64-migration                                        ERROR             1.97s   exit status 1
- 45/203 qemu:func-quick+func-arm / func-arm-migration                                                ERROR             1.90s   exit status 1
-
-Fixes: cf76c4e174e1 ("hw/misc: Add nr_regs and cold_reset_values to NPCM CLK")
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Hao Wu <wuhaotsh@google.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20250223114708.1780-10-shentey@gmail.com
+[PMM: drop static const from gpio_table for GCC 7.5]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/npcm_clk.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ docs/system/arm/imx8mp-evk.rst |  1 +
+ include/hw/arm/fsl-imx8mp.h    | 14 +++++++++
+ hw/arm/fsl-imx8mp.c            | 55 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+)
 
-diff --git a/hw/misc/npcm_clk.c b/hw/misc/npcm_clk.c
-index d1f29759d59..0e85974cf96 100644
---- a/hw/misc/npcm_clk.c
-+++ b/hw/misc/npcm_clk.c
-@@ -964,8 +964,9 @@ static void npcm_clk_enter_reset(Object *obj, ResetType type)
-     NPCMCLKState *s = NPCM_CLK(obj);
-     NPCMCLKClass *c = NPCM_CLK_GET_CLASS(s);
+diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+index 18a8fdd2785..37d3630d09c 100644
+--- a/docs/system/arm/imx8mp-evk.rst
++++ b/docs/system/arm/imx8mp-evk.rst
+@@ -14,6 +14,7 @@ The ``imx8mp-evk`` machine implements the following devices:
+  * 4 UARTs
+  * 3 USDHC Storage Controllers
+  * 1 Designware PCI Express Controller
++ * 5 GPIO Controllers
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
  
--    g_assert(sizeof(s->regs) >= c->nr_regs * sizeof(uint32_t));
--    memcpy(s->regs, c->cold_reset_values, sizeof(s->regs));
-+    size_t sizeof_regs = c->nr_regs * sizeof(uint32_t);
-+    g_assert(sizeof(s->regs) >= sizeof_regs);
-+    memcpy(s->regs, c->cold_reset_values, sizeof_regs);
-     s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     npcm7xx_clk_update_all_clocks(s);
-     /*
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 4c70c887a89..18ea52d0839 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -11,6 +11,7 @@
+ 
+ #include "cpu.h"
+ #include "hw/char/imx_serial.h"
++#include "hw/gpio/imx_gpio.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+@@ -29,6 +30,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
+ 
+ enum FslImx8mpConfiguration {
+     FSL_IMX8MP_NUM_CPUS         = 4,
++    FSL_IMX8MP_NUM_GPIOS        = 5,
+     FSL_IMX8MP_NUM_IRQS         = 160,
+     FSL_IMX8MP_NUM_UARTS        = 4,
+     FSL_IMX8MP_NUM_USDHCS       = 3,
+@@ -39,6 +41,7 @@ struct FslImx8mpState {
+ 
+     ARMCPU             cpu[FSL_IMX8MP_NUM_CPUS];
+     GICv3State         gic;
++    IMXGPIOState       gpio[FSL_IMX8MP_NUM_GPIOS];
+     IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
+     IMX7SNVSState      snvs;
+@@ -202,6 +205,17 @@ enum FslImx8mpIrqs {
+     FSL_IMX8MP_UART5_IRQ    = 30,
+     FSL_IMX8MP_UART6_IRQ    = 16,
+ 
++    FSL_IMX8MP_GPIO1_LOW_IRQ  = 64,
++    FSL_IMX8MP_GPIO1_HIGH_IRQ = 65,
++    FSL_IMX8MP_GPIO2_LOW_IRQ  = 66,
++    FSL_IMX8MP_GPIO2_HIGH_IRQ = 67,
++    FSL_IMX8MP_GPIO3_LOW_IRQ  = 68,
++    FSL_IMX8MP_GPIO3_HIGH_IRQ = 69,
++    FSL_IMX8MP_GPIO4_LOW_IRQ  = 70,
++    FSL_IMX8MP_GPIO4_HIGH_IRQ = 71,
++    FSL_IMX8MP_GPIO5_LOW_IRQ  = 72,
++    FSL_IMX8MP_GPIO5_HIGH_IRQ = 73,
++
+     FSL_IMX8MP_PCI_INTA_IRQ = 126,
+     FSL_IMX8MP_PCI_INTB_IRQ = 125,
+     FSL_IMX8MP_PCI_INTC_IRQ = 124,
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 1ee681ac1d7..541e4ab5b63 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -208,6 +208,11 @@ static void fsl_imx8mp_init(Object *obj)
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MP_NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
++        object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
++    }
++
+     for (i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
+         g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+@@ -355,6 +360,55 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+     }
+ 
++    /* GPIOs */
++    for (i = 0; i < FSL_IMX8MP_NUM_GPIOS; i++) {
++        struct {
++            hwaddr addr;
++            unsigned int irq_low;
++            unsigned int irq_high;
++        } gpio_table[FSL_IMX8MP_NUM_GPIOS] = {
++            {
++                fsl_imx8mp_memmap[FSL_IMX8MP_GPIO1].addr,
++                FSL_IMX8MP_GPIO1_LOW_IRQ,
++                FSL_IMX8MP_GPIO1_HIGH_IRQ
++            },
++            {
++                fsl_imx8mp_memmap[FSL_IMX8MP_GPIO2].addr,
++                FSL_IMX8MP_GPIO2_LOW_IRQ,
++                FSL_IMX8MP_GPIO2_HIGH_IRQ
++            },
++            {
++                fsl_imx8mp_memmap[FSL_IMX8MP_GPIO3].addr,
++                FSL_IMX8MP_GPIO3_LOW_IRQ,
++                FSL_IMX8MP_GPIO3_HIGH_IRQ
++            },
++            {
++                fsl_imx8mp_memmap[FSL_IMX8MP_GPIO4].addr,
++                FSL_IMX8MP_GPIO4_LOW_IRQ,
++                FSL_IMX8MP_GPIO4_HIGH_IRQ
++            },
++            {
++                fsl_imx8mp_memmap[FSL_IMX8MP_GPIO5].addr,
++                FSL_IMX8MP_GPIO5_LOW_IRQ,
++                FSL_IMX8MP_GPIO5_HIGH_IRQ
++            },
++        };
++
++        object_property_set_bool(OBJECT(&s->gpio[i]), "has-edge-sel", true,
++                                 &error_abort);
++        object_property_set_bool(OBJECT(&s->gpio[i]), "has-upper-pin-irq",
++                                 true, &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
++                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_low));
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 1,
++                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_high));
++    }
++
+     /* USDHCs */
+     for (i = 0; i < FSL_IMX8MP_NUM_USDHCS; i++) {
+         struct {
+@@ -415,6 +469,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_CCM:
+         case FSL_IMX8MP_GIC_DIST:
+         case FSL_IMX8MP_GIC_REDIST:
++        case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
+         case FSL_IMX8MP_PCIE1:
+         case FSL_IMX8MP_PCIE_PHY1:
+         case FSL_IMX8MP_RAM:
 -- 
 2.43.0
 
