@@ -4,50 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A7CC021B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 07:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58781C021BC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 08:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmpoI-00015P-OP; Tue, 25 Feb 2025 02:56:58 -0500
+	id 1tmpsP-0004fJ-Ut; Tue, 25 Feb 2025 03:01:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tmpoA-00012o-Pf; Tue, 25 Feb 2025 02:56:52 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tmpsL-0004ex-De
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 03:01:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tmpo9-0001jo-07; Tue, 25 Feb 2025 02:56:50 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 25 Feb
- 2025 15:56:23 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 25 Feb 2025 15:56:23 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v4 3/4] hw/arm/aspeed_ast27x0: Add HACE support for AST2700
-Date: Tue, 25 Feb 2025 15:56:20 +0800
-Message-ID: <20250225075622.305515-4-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
-References: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tmpsI-0002Fh-SQ
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 03:01:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740470464;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UTXiVhrh/zWPR+9n6ige5IUJSGcgDB/Uh9ILPTZoKyk=;
+ b=VaA3Fn4Vh/q+uYGnfPwA7NtgY8jiKt9D1P91WVYxEVWQn9GkB73V89dI0W0PUDk/J9UZrE
+ Q3inU+smD4M4q90PQC1HGQ0BomdCIjQ/5v4kI4i0zXVN6WGoJacW406D7zbWcRsj7xMcK2
+ Y4IHY//t8+/4gdXHzyOXp1sBXBAprXo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-iX_8tUhqNb62otJWkzRK6A-1; Tue,
+ 25 Feb 2025 03:00:59 -0500
+X-MC-Unique: iX_8tUhqNb62otJWkzRK6A-1
+X-Mimecast-MFC-AGG-ID: iX_8tUhqNb62otJWkzRK6A_1740470457
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC476180087E; Tue, 25 Feb 2025 08:00:56 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.219])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E25C519560AB; Tue, 25 Feb 2025 08:00:55 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 7269E1800091; Tue, 25 Feb 2025 09:00:53 +0100 (CET)
+Date: Tue, 25 Feb 2025 09:00:53 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/i386: introduce x86_firmware_reconfigure api
+Message-ID: <swzs7ekgm3blkn66tjzogllljjeminrheopf5z7skjss3s7zj3@o5uszou56i2r>
+References: <20250221032051.35033-1-anisinha@redhat.com>
+ <wdwnpkhgisjqzztersvs3vov4piwqaaxf7gqfm2v2tibbaeakd@rfe24yyhrflr>
+ <CAK3XEhOHOKM-XqozhY4Vod8R7-kWhdi1EmnTT38RorG8DRYTdQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+In-Reply-To: <CAK3XEhOHOKM-XqozhY4Vod8R7-kWhdi1EmnTT38RorG8DRYTdQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,62 +90,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HACE controller between AST2600 and AST2700 are almost identical.
-The HACE controller registers base address starts at 0x1207_0000 and
-its alarm interrupt is connected to GICINT4.
+On Tue, Feb 25, 2025 at 09:10:40AM +0530, Ani Sinha wrote:
+> On Mon, Feb 24, 2025 at 9:01 PM Gerd Hoffmann <kraxel@redhat.com> wrote:
+> >
+> >   Hi,
+> >
+> > >      /* should only be called once */
+> > > -    if (ovmf_flash_parsed) {
+> > > +    if (ovmf_flash_parsed && !force) {
+> >
+> > I think it makes more sense to clear ovmf_flash_parsed when replacing
+> > the firmware (instead of adding the force override).
+> 
+> I thought about that but wondered if that is an internal
+> variable/implementation specific detail which should not be exposed
+> outside.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
----
- hw/arm/aspeed_ast27x0.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+You don't have to expose the variable directly, you can also provide a
+helper function to clear it.  Best with a name which documents the
+purpose.
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 2d0c99f159..a48f47b74e 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -67,6 +67,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_RTC]       =  0x12C0F000,
-     [ASPEED_DEV_SDHCI]     =  0x14080000,
-     [ASPEED_DEV_TIMER1]    =  0x12C10000,
-+    [ASPEED_DEV_HACE]      =  0x12070000,
- };
- 
- #define AST2700_MAX_IRQ 256
-@@ -401,6 +402,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
- 
-     snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
-     object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
-+
-+    snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
-+    object_initialize_child(obj, "hace", &s->hace, typename);
- }
- 
- /*
-@@ -733,6 +737,17 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->timerctrl), i, irq);
-     }
- 
-+    /* HACE */
-+    object_property_set_link(OBJECT(&s->hace), "dram", OBJECT(s->dram_mr),
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+                    sc->memmap[ASPEED_DEV_HACE]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-+                       aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-+
-     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
-     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
-     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
--- 
-2.34.1
+take care,
+  Gerd
 
 
