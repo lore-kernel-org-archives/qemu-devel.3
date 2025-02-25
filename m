@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DFBC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84ACAC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 09:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmrHK-00019g-FK; Tue, 25 Feb 2025 04:31:03 -0500
+	id 1tmrIi-0001bq-BI; Tue, 25 Feb 2025 04:32:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tmrHF-00019N-B9; Tue, 25 Feb 2025 04:30:57 -0500
+ id 1tmrId-0001Z9-MG; Tue, 25 Feb 2025 04:32:25 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tmrHB-0004Ys-04; Tue, 25 Feb 2025 04:30:54 -0500
+ id 1tmrIZ-0004eM-2Q; Tue, 25 Feb 2025 04:32:22 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A533CF1CC7;
- Tue, 25 Feb 2025 12:30:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D01DDF1CCC;
+ Tue, 25 Feb 2025 12:31:51 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 172B61BE5D7;
- Tue, 25 Feb 2025 12:30:47 +0300 (MSK)
-Message-ID: <f2a0b9d6-490a-41ca-91ec-1b3b7dcf9eac@tls.msk.ru>
-Date: Tue, 25 Feb 2025 12:30:47 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 475CB1BE5DA;
+ Tue, 25 Feb 2025 12:32:17 +0300 (MSK)
+Message-ID: <c88a4e24-888d-4593-8842-ce49f26e5046@tls.msk.ru>
+Date: Tue, 25 Feb 2025 12:32:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vdpa: Fix endian bugs in shadow virtqueue
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, eperezma@redhat.com
-Cc: mst@redhat.com, sgarzare@redhat.com, mjrosato@linux.ibm.com,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20250212164923.1971538-1-kshk@linux.ibm.com>
+Subject: Re: [PATCH] hw/virtio/virtio-nsm: Respond with correct length
+To: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ Vikrant Garg <vikrant1garg@gmail.com>, qemu-stable@nongnu.org
+References: <20250213114541.67515-1-graf@amazon.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -78,7 +78,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250212164923.1971538-1-kshk@linux.ibm.com>
+In-Reply-To: <20250213114541.67515-1-graf@amazon.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -104,13 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.02.2025 19:49, Konstantin Shkolnyy wrote:
-> VDPA didn't work on a big-endian machine due to missing/incorrect
-> CPU<->LE data format conversions.
+13.02.2025 14:45, Alexander Graf wrote:
+> When we return a response packet from NSM, we need to indicate its
+> length according to the content of the response. Prior to this patch, we
+> returned the length of the source buffer, which may confuse guest code
+> that relies on the response size.
 > 
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> Fix it by returning the response payload size instead.
+> 
+> Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
+> Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+> Signed-off-by: Alexander Graf <graf@amazon.com>
 
-This looks like a qemu-stable material.
+This looks like qemu-stable material (9.2.x).
 Please let me know if it is not.
 
 Thanks,
