@@ -4,52 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56EC5C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F275CC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 14:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmvjO-0007xE-Px; Tue, 25 Feb 2025 09:16:18 -0500
+	id 1tmvnH-0005u0-Ua; Tue, 25 Feb 2025 09:20:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cy_liu@aspeedtech.com>)
- id 1tmpWw-0006cE-M4; Tue, 25 Feb 2025 02:39:02 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cy_liu@aspeedtech.com>)
- id 1tmpWv-0008HP-2t; Tue, 25 Feb 2025 02:39:02 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 25 Feb
- 2025 15:33:42 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 25 Feb 2025 15:33:42 +0800
-To: <cyliu0926@gmail.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: [PATCH v4 3/4] hw/arm/aspeed_ast27x0: Add HACE support for AST2700
-Date: Tue, 25 Feb 2025 15:33:40 +0800
-Message-ID: <20250225073342.2960966-4-cy_liu@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250225073342.2960966-1-cy_liu@aspeedtech.com>
-References: <20250225073342.2960966-1-cy_liu@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmvmz-0005pB-Mu
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:20:15 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tmvmm-00076v-1p
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 09:19:57 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-6fb73240988so36960177b3.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 06:19:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1740493180; x=1741097980; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y/5EpwWbz1TsNvc/h4VPdcsoE/3Ja0cJXiJhf1wslL0=;
+ b=JLQ0mVc+m+fpVuBk6KX56txEV3KPefYpaY8lhfepufaTEDixODnTQSib1EOQOQogzg
+ AGpSTXGijSobV5oNv33f5k0wZu6h7rRjekVe71Rh+zYDZwgpnVGjFVtg/jdXin7FRA/j
+ iLCzoHGVCvPD5EwOLEy5vAtnNw8EgXjgtSCxz21949PMrRzBv4yyB8+0ITHHW/vNbmX2
+ +jeRKoJt6VzthK4zeTb2nBg5ZtfXlB3YP2Iq7j7A04dBPK1GpmaJlCvYDHVdx72bHwsR
+ zkAM/sRCOF1zP4phn2yYVN6kWJL+/DTsGGn4YBpRFoQE4MR3RK4gIR9cUkRC5e0csR+z
+ fJ7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1740493180; x=1741097980;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y/5EpwWbz1TsNvc/h4VPdcsoE/3Ja0cJXiJhf1wslL0=;
+ b=jOfoNLHufQURbgTWxvcjZAWcqMyPLZms+/yUf2gcr8jhjSDftypeKjlWjt4706N32O
+ jJ6avRvKDJnfjQW01HpViCBNIr5Ujh9xC/+mTN4ChuAiHfwOKO/zNakQ+DoTrTd6qRMd
+ r/UR91VykIRyhH2/pieZwoa5CuWD419TmAoyMQScjbg/+6VddDJsBybSdbuIjADGEUMz
+ DlCMOUSnHyxGOarku+ctOzfn4nfH94EssPeSc7ojznZoW0FRm61971mxAFZQekqGmGql
+ ifj5d/pEI/ndxcTuGgxhlc4yYtLcRX39nQWArQ1zjajfGHRCXFhI14DMeFCcI3lEY5SM
+ Jv1Q==
+X-Gm-Message-State: AOJu0Yx59ffmd8+L+z/unIK8Bxoc5+gDkecmhgESCvpp4BtkhAisVbIz
+ YIpW3gT7uOBV1tfBXsWTXLM5Ol6njR7xJnrxMuVUxTsw3/n8teGlVejq/G2gQHBTZf7fe4AWEmI
+ OUpTfMup6Vh9+mtQ2//gqlB6tgkpcr2+55dxMjA==
+X-Gm-Gg: ASbGncs37+SVAa6qKesGfVOMK1O2YtTOvHWvjtN85OOMapbHfmH408VACRUxpqw9YEs
+ XlIhMPtJKAwFwb7/SznLkKdH2SEBaLO1QKwyD2NQnsCtraZn0t2sJ3ZnryNtYH7kDPvP1pvXmri
+ GgqOPkLEN7
+X-Google-Smtp-Source: AGHT+IEnuhA3euBFugdkJxI2MlLSR6MnBGzJc/PcbnmnkzqiqGbWEOsuuA+YDoGLtcOxy2I0HWAfiOnozdlY5eKb1/I=
+X-Received: by 2002:a05:690c:67ca:b0:6fb:47d8:79ba with SMTP id
+ 00721157ae682-6fbcc23b1b4mr151642087b3.16.1740493179972; Tue, 25 Feb 2025
+ 06:19:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72; envelope-from=cy_liu@aspeedtech.com;
- helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250223114708.1780-1-shentey@gmail.com>
+ <20250223114708.1780-5-shentey@gmail.com>
+In-Reply-To: <20250223114708.1780-5-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 25 Feb 2025 14:19:28 +0000
+X-Gm-Features: AWEUYZkiA8ylBJMOBdzMDx0ZNe4uoEr-BaRu_jet4eEXXg69S3CM_V--L4J8aog
+Message-ID: <CAFEAcA_96RMUx68NTG=c0vwevD9LcCp0u7SKNnMx48yEePxYzQ@mail.gmail.com>
+Subject: Re: [PATCH v2 04/18] hw/arm: Add i.MX 8M Plus EVK board
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 25 Feb 2025 09:16:07 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,64 +95,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  cy_liu <cy_liu@aspeedtech.com>
-From:  cy_liu via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On Sun, 23 Feb 2025 at 11:47, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> As a first step, implement the bare minimum: CPUs, RAM, interrupt controller,
+> serial. All other devices of the A53 memory map are represented as
+> TYPE_UNIMPLEMENTED_DEVICE, i.e. the whole memory map is provided. This allows
+> for running Linux without it crashing due to invalid memory accesses.
+>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-The HACE controller between AST2600 and AST2700 are almost identical.
-The HACE controller registers base address starts at 0x1207_0000 and
-its alarm interrupt is connected to GICINT4.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
----
- hw/arm/aspeed_ast27x0.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 2d0c99f159..a48f47b74e 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -67,6 +67,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_RTC]       =  0x12C0F000,
-     [ASPEED_DEV_SDHCI]     =  0x14080000,
-     [ASPEED_DEV_TIMER1]    =  0x12C10000,
-+    [ASPEED_DEV_HACE]      =  0x12070000,
- };
- 
- #define AST2700_MAX_IRQ 256
-@@ -401,6 +402,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
- 
-     snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
-     object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
-+
-+    snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
-+    object_initialize_child(obj, "hace", &s->hace, typename);
- }
- 
- /*
-@@ -733,6 +737,17 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->timerctrl), i, irq);
-     }
- 
-+    /* HACE */
-+    object_property_set_link(OBJECT(&s->hace), "dram", OBJECT(s->dram_mr),
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->hace), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->hace), 0,
-+                    sc->memmap[ASPEED_DEV_HACE]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-+                       aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
-+
-     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
-     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
-     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
--- 
-2.34.1
-
+thanks
+-- PMM
 
