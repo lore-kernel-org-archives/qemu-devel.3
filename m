@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7903C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 12:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 632A7C021BB
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 12:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmteQ-0006W8-J9; Tue, 25 Feb 2025 07:03:04 -0500
+	id 1tmteu-0006yG-Ar; Tue, 25 Feb 2025 07:03:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tmtdw-0006Cn-8m; Tue, 25 Feb 2025 07:02:37 -0500
+ id 1tmte0-0006Ex-Bo
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:02:42 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1tmtdt-0006f1-NV; Tue, 25 Feb 2025 07:02:31 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tmtdt-0006f3-My
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 07:02:35 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxieDtsL1nKxaCAA--.48273S3;
- Tue, 25 Feb 2025 20:00:45 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxquDvsL1nPRaCAA--.49856S3;
+ Tue, 25 Feb 2025 20:00:47 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxLsfpsL1n2uMnAA--.19507S4;
- Tue, 25 Feb 2025 20:00:45 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxLsfpsL1n2uMnAA--.19507S12;
+ Tue, 25 Feb 2025 20:00:47 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
- qemu-stable@nongnu.org
-Subject: [PULL 02/11] target/loongarch/gdbstub: Fix gdbstub incorrectly
- handling some registers
-Date: Tue, 25 Feb 2025 20:00:32 +0800
-Message-Id: <20250225120041.1652869-3-maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org,
+	Song Gao <gaosong@loongson.cn>
+Subject: [PULL 10/11] target/loongarch: Add kvm steal time feature detection
+Date: Tue, 25 Feb 2025 20:00:40 +0800
+Message-Id: <20250225120041.1652869-11-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250225120041.1652869-1-maobibo@loongson.cn>
 References: <20250225120041.1652869-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxLsfpsL1n2uMnAA--.19507S4
+X-CM-TRANSID: qMiowMBxLsfpsL1n2uMnAA--.19507S12
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,53 +65,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Write operation with R32 (orig_a0) and R34 (CSR_BADV) is discarded on
-gdbstub implementation for LoongArch system. And return value should
-be register size rather than 0, since it is used to calculate offset of
-next register such as R33 (PC) in function handle_write_all_regs().
+Paravirt steal time feature is OnOffAuto type, feature detection is added
+to check whether it is supported on KVM host.
 
-Cc: qemu-stable@nongnu.org
-Fixes: ca61e75071c6 ("target/loongarch: Add gdb support.")
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/gdbstub.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ target/loongarch/cpu.h     |  1 +
+ target/loongarch/kvm/kvm.c | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
-index dafa4feb75..471eda28c7 100644
---- a/target/loongarch/gdbstub.c
-+++ b/target/loongarch/gdbstub.c
-@@ -63,23 +63,24 @@ int loongarch_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
-     CPULoongArchState *env = cpu_env(cs);
-     target_ulong tmp;
--    int read_length;
-     int length = 0;
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 3e8a91748d..83183a33ab 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -288,6 +288,7 @@ enum loongarch_features {
+     LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
+     LOONGARCH_FEATURE_PMU,
+     LOONGARCH_FEATURE_PV_IPI,
++    LOONGARCH_FEATURE_STEALTIME,
+ };
  
-+    if (n < 0 || n > 34) {
-+        return 0;
+ typedef struct  LoongArchBT {
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index def7451224..59a5f84161 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -924,6 +924,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+         return (ret == 0);
+ 
++    case LOONGARCH_FEATURE_STEALTIME:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_PV_STEALTIME;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        return (ret == 0);
++
+     default:
+         return false;
+     }
+@@ -1042,6 +1048,20 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
+         env->pv_features |= BIT(KVM_FEATURE_IPI);
+     }
+ 
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_STEALTIME);
++    if (cpu->kvm_steal_time == ON_OFF_AUTO_ON) {
++        if (!kvm_supported) {
++            error_setg(errp, "'kvm stealtime' feature not supported by KVM host");
++            return -ENOTSUP;
++        }
++    } else if (cpu->kvm_steal_time != ON_OFF_AUTO_AUTO) {
++        kvm_supported = false;
 +    }
 +
-     if (is_la64(env)) {
-         tmp = ldq_le_p(mem_buf);
--        read_length = 8;
-+        length = 8;
-     } else {
-         tmp = ldl_le_p(mem_buf);
--        read_length = 4;
-+        length = 4;
-     }
- 
-     if (0 <= n && n < 32) {
-         env->gpr[n] = tmp;
--        length = read_length;
-     } else if (n == 33) {
-         set_pc(env, tmp);
--        length = read_length;
-     }
-     return length;
++    if (kvm_supported) {
++        env->pv_features |= BIT(KVM_FEATURE_STEAL_TIME);
++    }
++
+     return 0;
  }
+ 
 -- 
 2.43.5
 
