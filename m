@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0881BC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 20:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5583C021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 20:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tn1VI-00080V-7x; Tue, 25 Feb 2025 15:26:08 -0500
+	id 1tn1Vm-00086R-3u; Tue, 25 Feb 2025 15:26:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tn1V5-0007yw-UK
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:25:56 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tn1Vk-00086D-HU
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:26:36 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tn1V3-0000Ft-Ri
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:25:55 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-38f1e8efe84so2325116f8f.1
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 12:25:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tn1Vi-0000LM-Px
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 15:26:36 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-38f1e8efef5so3599660f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 12:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740515151; x=1741119951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1740515193; x=1741119993; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=n9CYHYl75+VIRsckPlWCWbKZzGNesjaPb7o/u4SqZW8=;
- b=XdybHxxOsLaSyDs+XBwsqg1oPER2mz6ZD4JdXe+7RMVJz2h7xaFXbrafF9U+Ol5tZi
- seslK4NAMq0QqBOjPaOKUd82VjDYryu+QF9fcjwtknaZAAomOEtp2M+NaVd1d6wO0seO
- 1J+C8NQuhDk3Uqi1Sb1ZL4Fef1/uw7NewHaRzz7R9VPwHkqjHASsx8nOA9bHn9AiKPjV
- YitFBDCbSoKqTM4f25SKN1T5hNJx4uP3HIPNPtDQMNshtBS21e5WK8pmhkWiHOMnyBLe
- /5ved1bt++hgORp4hgy1SNUitH12wE8+Voi9OJ525srUEAvpMdvPnowe0hu0iLQMbftX
- eKNw==
+ bh=mFi83MMa7EkgkmiK0Pck0s/B+XSuyl1xeFHmXSYw6wg=;
+ b=v1ULxuMf3kqSBkPRo+MZJmFc2DEvVyozBD11y2kkUqZGvSujxBz4ClAf6qxKpaly4/
+ faQMElkUmq/PyGGs5jI8j47Zf5WKVf1vd1HgxG1BbduTVGmzYaZWhcHU8d8xhIfaYAoT
+ kzS/2qm5bDIcnBPDNEDX8slkHifWEi0L0y9pCyC9x5ayBqFZiJgdmzHnEi8mjEbjpnk8
+ Rk8qUqETlr9+93G67TnFy8IiNVEfrkfS4UmpOg6ENsKRNwts72ImgEhOUXOiDylRK3h1
+ C80tarwhZufV7kwdw4Vt8PGhHc7WlfwagYSfXl45eQ4+FRDge6wikUWLfWbQ0RasRL7m
+ 3Y1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740515151; x=1741119951;
+ d=1e100.net; s=20230601; t=1740515193; x=1741119993;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n9CYHYl75+VIRsckPlWCWbKZzGNesjaPb7o/u4SqZW8=;
- b=sDP3wDUdL/91RIA30e+0+mBuzLA0UACsa73LKKIvORxuiilbhjuuMocXU54PcOQA6u
- SrIdYmtyRSpN++8WEmoxZEpZLgBZKaiIP+ZDSjs8xj/nLXuoeAOgfyJto7Bl8P4DGb/e
- 90N8LfwXxj3jSLRMGRYlReX365TCpoAGNowGQVsyk4VZMIqh2g0Ir0ZyauPagcpCrLJr
- bp9OFpcOTKf3JAeheOQ3+uH9l/dvwHdx4yjJbazE/fko9wjTaaxuJ6kgCGBdRQpAdt8/
- G/mddNZk7NqAh9vBmg6TSFgDnPGqJNtMMhrCpDbHxQej9bDa+6Ss09yonrSHsL3rKxI3
- mKmw==
+ bh=mFi83MMa7EkgkmiK0Pck0s/B+XSuyl1xeFHmXSYw6wg=;
+ b=EScN2RdHqr0Janmxz2L91QpNdWkYDOFXyjlCDENON0Hn8T73v+CelZxABNu62Bhv9t
+ O/pdPJMc8zW7GwRpz73zx+HzPWS9FFEbO6cC8F4NXYtiLQePEvmRTV0nAGqtUZP1W/xx
+ L65qjw2fPm/j7yQPO50WV6jOjpP+1TMPNSODJvwnJPWGszjls13xCay9TOZz59AHEeXu
+ MYWZDWmagvs5moaa0ZoQblQUfRd8G+rs2f/XctIQYAzNT427eQclimUIoR00gzTGEZ5i
+ voEDybOdtpwFIN6ApLTMWKVYxg0b1JZX5pQqJiLeW+8wciuxvEtqgRvrGdzQaBf2CGOQ
+ s7EQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYEddzq+k9KSsoHw3WpvnGb5UM7m69yJ5p1CWxuD8nhkfC9VIt7+Ol5zJMLjiWM0HlJBWd+BITb872@nongnu.org
-X-Gm-Message-State: AOJu0YzLVroJYTLxvXmmzAablGOcdKEicAfgJEVih/Cf+XZcfvxKhzMy
- tV0FLOSIH1DP4YGtdz2NcPbW7nKNxmciovkBQoe/f96RoiYq7NvbSEEmxr7vSFU=
-X-Gm-Gg: ASbGncs3H5Hv3uQr2ybY/gDoMc/F7+jt2OyVG8w+A2NJLAYuiC1Ocbfgm2+IbuWc3le
- D6aRJpGl5lN2S4vaI0qo9P/kYNdglH3CVoutyDUE1EDEw0muSFKr819x5h/jD3jy8B2DzCSJW7B
- DPVv5qQShsW8T9BGrVCrmdSzm9NQFY9lFBPWLsfComHWLcTqlK0xYRCI6SbL8YVridn1sARTnX4
- jTpiEhslWcH+zKGj8lhdHPvouor/euOqRpQ+cfgI6VVFpJ1zdet6GVtNUWNOEzvtHoo0dHyz9mG
- qG9c4KMcxu7DyAYgSjs4rN/LUz/5HJXY3E0t+0/pa+RPEXuE4p+hxWW3N5qtCPFU11V8Bg==
-X-Google-Smtp-Source: AGHT+IFdIWvrQvfjr+eai0HDRqLXp280JkRKfi4SxdzUdKuUiI0eczbu5QSLAyDA9dtPhDMCrpGvNA==
-X-Received: by 2002:a5d:6d0a:0:b0:38d:dd70:d70d with SMTP id
- ffacd0b85a97d-38f6e947399mr17529413f8f.18.1740515151492; 
- Tue, 25 Feb 2025 12:25:51 -0800 (PST)
+ AJvYcCVXLicsxxvqcC4sgXletZI6Cvjj+ov4rPdFsbSGsl3csz/NJcGqC+V1m8kuL6UDXRZOoNDnop/60CI3@nongnu.org
+X-Gm-Message-State: AOJu0Yy37YRl1ZxmoERutYPuq1n+g4J23k/L4jFEeLmpZ5yp2/tH3LTs
+ 7XS9KPQ9oYSqHf3sedQzaqn53XKg3FQzLpEy1Io7aqJW7XwX8+c62Qa3WYMeQBo=
+X-Gm-Gg: ASbGnct0MUgzUgzc5ybaRJuesjzaqy0PwZdfyjD96F10Kuor7TBVIZtdZgdTrOuaHgY
+ susXtOg9eXbOO53VVHwlzTBzDKX/2hv2Viw3ykx4O/nuoZCuUhmlhxGD+stY+qwWfu+p/ISIPhY
+ nxg6X4XAx84gafDX5rpf5hUyOCZuol6C7I/GjZa0TfH+Gl4Kc4DIbY2QVqDfJ+lK8ELzgf0fJ5H
+ BFdHdKoC5kipOA93VjS0nItd6RwY0bPBsRSsxTOjSDRmQgkYot9g1pJWdMcemJCys/kmvRucqI9
+ p1Bt08Q6p50VG8XA/WUl1RxefnuCxIYFq7oUNw1KkRi/+ZkzUGQyyM7KF2/ODZwXihndlA==
+X-Google-Smtp-Source: AGHT+IGlnOT8Rov/rtMZ1zLJfM5NspcD2qCJVKx62oiTH5+GHkjZ2c3ZZDVZ64o/ywT8l0M6HKO5Dg==
+X-Received: by 2002:a05:6000:1cc6:b0:38a:8ed1:c5c7 with SMTP id
+ ffacd0b85a97d-390cc638914mr3198461f8f.46.1740515193270; 
+ Tue, 25 Feb 2025 12:26:33 -0800 (PST)
 Received: from [192.168.69.196] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd86ce49sm3437850f8f.36.2025.02.25.12.25.49
+ ffacd0b85a97d-390cd8e7268sm3352369f8f.70.2025.02.25.12.26.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Feb 2025 12:25:50 -0800 (PST)
-Message-ID: <e47d7746-435f-4950-ae3b-ad816782f8d7@linaro.org>
-Date: Tue, 25 Feb 2025 21:25:49 +0100
+ Tue, 25 Feb 2025 12:26:32 -0800 (PST)
+Message-ID: <1571620f-e5e9-45a5-977a-f7bab8a24c2d@linaro.org>
+Date: Tue, 25 Feb 2025 21:26:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 004/162] tcg: Convert add to TCGOutOpBinary
+Subject: Re: [PATCH v3 006/162] tcg: Convert and to TCGOutOpBinary
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250216231012.2808572-1-richard.henderson@linaro.org>
- <20250216231012.2808572-5-richard.henderson@linaro.org>
- <21f85e1d-938e-40e8-b33d-95f8cb4a13a7@linaro.org>
- <61cbdd92-e5c1-443b-87f7-dba148b95b15@linaro.org>
+ <20250216231012.2808572-7-richard.henderson@linaro.org>
+ <e344bd3a-fd3a-4314-9fe7-97ac0b252a89@linaro.org>
+ <ea4ed0b0-b6f0-4167-ad56-c3b8e675c22e@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <61cbdd92-e5c1-443b-87f7-dba148b95b15@linaro.org>
+In-Reply-To: <ea4ed0b0-b6f0-4167-ad56-c3b8e675c22e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,96 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/2/25 20:20, Richard Henderson wrote:
-> On 2/25/25 10:17, Philippe Mathieu-Daudé wrote:
->>> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg- 
->>> target.c.inc
->>> index a0f050ff9c..08106b6e4c 100644
->>> --- a/tcg/loongarch64/tcg-target.c.inc
->>> +++ b/tcg/loongarch64/tcg-target.c.inc
+On 25/2/25 20:25, Richard Henderson wrote:
+> On 2/25/25 10:40, Philippe Mathieu-Daudé wrote:
+>>> diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+>>> index 1115d1e38d..01010dfdc0 100644
+>>> --- a/tcg/i386/tcg-target.c.inc
+>>> +++ b/tcg/i386/tcg-target.c.inc
 >>
 >>
->>> +static const TCGOutOpBinary outop_add = {
+>>> +static void tgen_andi(TCGContext *s, TCGType type,
+>>> +                      TCGReg a0, TCGReg a1, tcg_target_long a2)
+>>> +{
+>>> +    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
+>>> +    tgen_arithi(s, ARITH_AND + rexw, a0, a2, 0);
+>>
+>> We could s/0/false/ in preparation of tgen_arithi() taking a boolean
+>> for the CF bit.
+> 
+> Ok.
+> 
+> 
+>>> +++ b/tcg/s390x/tcg-target.c.inc
+>>> @@ -2196,6 +2196,31 @@ static const TCGOutOpBinary outop_add = {
+>>>       .out_rri = tgen_addi,
+>>>   };
+>>> +static void tgen_and(TCGContext *s, TCGType type,
+>>> +                     TCGReg a0, TCGReg a1, TCGReg a2)
+>>> +{
+>>> +    if (type != TCG_TYPE_I32) {
+>>> +        tcg_out_insn(s, RRFa, NGRK, a0, a1, a2);
+>>> +    } else if (a0 == a1) {
+>>> +        tcg_out_insn(s, RR, NR, a0, a2);
+>>> +    } else {
+>>> +        tcg_out_insn(s, RRFa, NRK, a0, a1, a2);
+>>> +    }
+>>> +}
+>>> +
+>>> +static void tgen_andi_3(TCGContext *s, TCGType type,
+>>> +                        TCGReg a0, TCGReg a1, tcg_target_long a2)
+>>> +{
+>>> +    tcg_out_mov(s, type, a0, a1);
+>>> +    tgen_andi(s, type, a0, a2);
+>>> +}
+>>> +
+>>> +static const TCGOutOpBinary outop_and = {
+>>> +    .base.static_constraint = C_O1_I2(r, r, rNKR),
+>>
+>> So INDEX_op_and_i32 gets more constraints (ri -> rNKR):
+>>
+>> CONST('K', TCG_CT_CONST_P32)
+>> CONST('N', TCG_CT_CONST_INV)
+>> CONST('R', TCG_CT_CONST_INVRISBG)
+>>
+>> IIUC this doesn't affect anything, as these constraints are only
+>> useful for 64-bit ops, right?
+> 
+> Yes, as with the similar question vs addition, TCG_CT_CONST_P32 will 
+> match all TCG_TYPE_I32.
+> 
+>>> +++ b/tcg/sparc64/tcg-target.c.inc
+>>
+>>
+>>> +static const TCGOutOpBinary outop_and = {
 >>> +    .base.static_constraint = C_O1_I2(r, r, rJ),
 >>
->> So now 32-bit uses 'T' constraint (TCG_CT_CONST_S32) and we get the
->> signed32 cast, OK.
+>> Again, missing 'z', so C_O1_I2(r, rz, rJ)?
 > 
-> Yes, TCG_CT_CONST_S32 will match all constants for TCG_TYPE_I32, so 
-> there is no change in functionality.
-> 
->>> +static const TCGOutOpBinary outop_add = {
->>> +    .base.static_constraint = C_O1_I2(r, r, rT),
->>
->> Similarly, 32-bit uses 'T' constraint (TCG_CT_CONST_S32) and we get the
->> signed32 cast, OK.
-> 
-> Yes.
-> 
->>> @@ -2989,8 +3000,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode 
->>> opc, TCGType type,
->>>                   tcg_out32(s, SUBFIC | TAI(a0, a2, a1));
->>>               }
->>>           } else if (const_args[2]) {
->>> -            a2 = -a2;
->>> -            goto do_addi_32;
->>> +            tgen_addi(s, type, a0, a1, (int32_t)-a2);
->>
->> So do we really need the (int32_t) cast here?
-> 
-> Interesting question.
-> 
-> (0) Truncate -INT32_MIN to remain a 32-bit quantity.
-> 
-> (1) We are *supposed* to have eliminated this case already, converting
->      all subtract of constant to add of negative constant.  That said,
->      patch 9 fixes one more case of this.  (There were rebase conflicts
->      moving patch 9 earlier, so I took the lazy way and left it where it 
-> is.)
-> 
-> (2) The cast goes away when we convert INDEX_op_sub_* and forcefully
->      disallow subtract of constant.
-> 
-> Because of (1), we *probably* don't need the cast now, but until (2) 
-> it's difficult to prove.  On balance I think it's better to have it 
-> until we are sure we don't need it.
+> Again, eliminating impossible constraints.
+> AND shares the same assert for non-constant as ADD.
 
-Got it.
-
-> 
->>> +static const TCGOutOpBinary outop_add = {
->>> +    .base.static_constraint = C_O1_I2(r, r, rJ),
->>
->> Don't we need
->>
->>         .base.static_constraint = C_O1_I2(r, rz, rJ),
->>
->> since commit 1bbcae5adaa ("tcg/sparc64: Use 'z' constraint")?
-> 
-> Constants should never appear in the first source operand.
-> The optimize pass will always swap commutative operands.
-> 
-> This patch asserts that this has been done:
-> 
->> +    case INDEX_op_add_i32:
->> +    case INDEX_op_add_i64:
->> +        {
->> +            const TCGOutOpBinary *out =
->> +                container_of(all_outop[op->opc], TCGOutOpBinary, base);
->> +
-
-OK, I get it, but it was not obvious. Could you add a comment here,
-
-     /* Constants should never appear in the first source operand. */
-
->> +            tcg_debug_assert(!const_args[1]);
-> 
-> Therefore, simplify the constraints so that they're not attempting to 
-> handle nonsense.
-
-and also comment that in the description?
-
-Thanks for the explanation!
+Yes.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
