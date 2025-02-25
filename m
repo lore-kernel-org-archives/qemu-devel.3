@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257C1C021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 16:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C37C021BB
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 16:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmxOn-0000mB-N6; Tue, 25 Feb 2025 11:03:10 -0500
+	id 1tmxOq-00011h-Sw; Tue, 25 Feb 2025 11:03:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tmxN1-0007Gg-5a
+ (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tmxN1-0007Gi-75
  for qemu-devel@nongnu.org; Tue, 25 Feb 2025 11:01:19 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tmxMs-0001wO-PT
+ (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tmxMt-0001xE-UY
  for qemu-devel@nongnu.org; Tue, 25 Feb 2025 11:01:18 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4394345e4d5so38616325e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 08:00:56 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4394a0c65fcso58745215e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 08:01:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1740499255; x=1741104055;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1740499260; x=1741104060;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=D0G1BlFEwahcM4AHHFlaoJCV2Tx9e8WvmvlKENfqIqs=;
- b=1pQPqI8MjZMJj9f73A/2n5VqSu3nxCNbnNTHwx1ZCUu3AXU6x3zzLap7PrLKEoraiw
- 1qN5mddC5mceLO/CpBUUJqZ0m/ElME3LS/GZxXSww5qjsk2KkoZKiZPRtjB7O80p4DoS
- YUJ81LnfD7GECt42DG9VNgCpoCc7vRcDVXiONesvr2cdBJfnGGVFOQzEjwCLnr3di+eU
- 3fj9uAA94KqRH6mte3eHdVCrc8t8VHdjd/c7uYlXuW8ch4HYmjsQPiZJU4aGGAtl+dnm
- EXe0urdWU7FcKhBgYruCDtqj9kE40pX8MVWDhR4XuU4iZX5dIsa3fsG6D+49IOTzaBNR
- 5C6g==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gFwyJsZ9aRSgNbolC4VPZjvH7EqpCkFhCwlagWn/q9A=;
+ b=d1lq1bT3TWyNTG2U2qOjnIl/N8TdFcn6qBSioVbhZSYtwlh1TS1Ir9JffHo/5hglUM
+ 5QXfpz+vgAgRdY7jS6AjN1YIo95NtNGOnnZdRA4HX1qZpaGPrv71/sGAYGM/zjHfV8M+
+ YS7AFkvQhjc03qfRVMkhQ+yggEQ3QRNOO+lRB73WjlwqDjRiwOrK2oXvkj/xvWaG2IJf
+ 4Hspx7w+s3mBAE0A3UgUh/7YRWfUfBLDSEvh8vWeMIerdNDMP99wJmdtzjHpDHyOHx22
+ xAfi0Fc6n6IcPf56gapU/NfEzQgj0Jh84EC/K075VzgZ9yMcM1ogMuNbLuitaniRqM69
+ NBmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740499255; x=1741104055;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D0G1BlFEwahcM4AHHFlaoJCV2Tx9e8WvmvlKENfqIqs=;
- b=J/QFTUB5/pIMbPkrd2DF87Mb/wgio+c25bpQ776tZO9iNcGJb03c6CGIHtO8h5xgdT
- 3k4iUk4yOEUquqPoABdqlJEdCZ2hz09g/Dovqy52qiEs5okOqzkH8R0ilAGxRNR3CZzt
- rbcc8iBeE0vRCYpm5vRMPv8CbR3KoYqF0ELQHRT25wLRhR+PQRR4PF1LcvGdlfATgetO
- aJbKBzCYnZbUQseciEuifLKisEZLgtxsyF2Qh/OqwpnQPCj/go9UH2ew+szv2CK1CZn0
- PZZpJzz7NoK/TYcxz3JAOeyNEj3+N8PoF1PwevCtWY5ddDWunBhFaMyYruaW/vCpKFNS
- 5PFQ==
-X-Gm-Message-State: AOJu0Yyx67+sUMiDr/TUiw23qY7QafS/cioPo8yYGfyf4JyaFq9lBoq1
- m94PqVbPTeMDp8QR6h5zkffpeheeM6l3nLYoFiNmlcWj3ieXV2V456tNTWWfI7mTnp1IC+Xz+gL
- yKayzp+Vt
-X-Gm-Gg: ASbGncumxmYB6aodyK8fg4DZ3HvMXu6uB6YOXzup18tJjEMOKutwpHYnwMk19tBv49s
- MuFvKiyyA6AO1qwWoojdjhlHuEIb574oVsdGyC7ToREJ9uE2aphPmKG9VqNKBC51b1SwHIvjrdq
- 9OsDkVcWgS2liTt0Em0/iexe29+GseLKkYfjYwzWI4oyRmVDZsIFyJ1oVGXfSqkCWX0/b/Zd2b3
- 1QkYq2yLmH1OK8KA6baUHCBq1odF0XGs7by9Mwe06ZSp4sZF6GAwCDhRFm03/1wn461N/fktzBa
- 8QK8aIdEx3iOCDNdAky1nxDXgGBDTkw8qZHvgyYTBZvNZZq+7Gv+Xkbdf9x6jfErcptE75ii+g=
+ d=1e100.net; s=20230601; t=1740499260; x=1741104060;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gFwyJsZ9aRSgNbolC4VPZjvH7EqpCkFhCwlagWn/q9A=;
+ b=N05cEdzZwyxYJ5qIOYJfyydCf73+t5EhMkT64XhGAgZ5ofsBxQG3VQ+kzh2Tixy0xi
+ BQbisjo4I5ifXYPfBdJcZ/mAVhHRSVSMlGdagMERfHd7UkWqVhfB8rD48ZERr/uGRjRZ
+ rGPqXDj9I1nVmcLkUG//tU83Z4K7FocM9t0C1/PnMOJy75LoUU73ioU6gz3F5yD7CGth
+ 0RjazRkJkpokKUzdthCMyHcBkH+n9oTfbKBkwZtF0666ZbHrxf6h9ooxIhRLB2DlZZyw
+ gcc78noE4D/tznOS/oWwf5bk2eUVJsIuFDAJ9ndSsbVCJxcbYA9u9MQp1oaMLue2Td6b
+ e4mw==
+X-Gm-Message-State: AOJu0Yy2ndFZzjMeBsE1DLpf3TVUXn9VLRJAhwDZWvn5OMUmmhsV3rSA
+ aUoOC/NXrSfJCTgYQSYLKFZ572SG2YgNY0HgjEpi1+dGXnmxepqqZkEYWrygQiG6JelVUQZGn/B
+ vdkddK+cs
+X-Gm-Gg: ASbGncsN2hjBNWdiL7776/abNvVNCm36+wN1m0Wg1dSL/dRZECuyufkND1e7wG+SJ4j
+ 7Eu2di//kaUsA90KsZ86n7MpU6nk/blFt32LWeeGMB0A6UsxAoFoPnmsvhfqI65B26GML6NYZ1x
+ yb+A7y3BWZfkSvZfI6LIkgMVzZR7QSFDg/agpKVI2016nSsmaBROSeUJZiMk/uc8TaXxDdXYn+o
+ wXaTkpYJJEmWTB83AjX7LCZwak2fvf5iaoCDA+CykTKRppQX9un134cyv7sf4GaMJY5iTtJbOxT
+ dqvgpaK9k/FNwf4k149TC3Xuwrac2ZTPA444WUWtIrNZm9MXYoRhQCmpwD5ud2hU7P2XQK6m6w=
  =
-X-Google-Smtp-Source: AGHT+IH9/nIdXEJG8xS0y2So5FuCfzYmG8qjQ2yNx1oWH8TLHk7/aqf2xNxzTgkojx5IEwL/KxLS4g==
-X-Received: by 2002:a05:600c:4ece:b0:439:9274:8203 with SMTP id
- 5b1f17b1804b1-439aeae0543mr145133975e9.6.1740499254652; 
- Tue, 25 Feb 2025 08:00:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF9zC9j0LMpWwQJ9hPqqKtvjzOhmUmKjZiUsWMVEOysBPz5Aa6LQedkEf8EJOFeKLdogLqPKA==
+X-Received: by 2002:a05:600c:1d8c:b0:439:98ca:e39b with SMTP id
+ 5b1f17b1804b1-43ab44b58c3mr27814935e9.29.1740499260185; 
+ Tue, 25 Feb 2025 08:01:00 -0800 (PST)
 Received: from llx1.cad.pilog.net (lfbn-mar-1-50-94.w86-229.abo.wanadoo.fr.
  [86.229.28.94]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ab1546df4sm30530755e9.17.2025.02.25.08.00.53
+ 5b1f17b1804b1-43ab1546df4sm30530755e9.17.2025.02.25.08.00.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 08:00:54 -0800 (PST)
+ Tue, 25 Feb 2025 08:00:59 -0800 (PST)
 From: =?UTF-8?q?Lo=C3=AFc=20Lefort?= <loic@rivosinc.com>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair.francis@wdc.com>,
@@ -70,15 +71,17 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Lo=C3=AFc=20Lefort?= <loic@rivosinc.com>
-Subject: [PATCH 0/5] target/riscv: Smepmp fixes to match specification
-Date: Tue, 25 Feb 2025 17:00:47 +0100
-Message-ID: <20250225160052.39564-1-loic@rivosinc.com>
+Subject: [PATCH 5/5] target/riscv: pmp: remove redundant check in pmp_is_locked
+Date: Tue, 25 Feb 2025 17:00:52 +0100
+Message-ID: <20250225160052.39564-6-loic@rivosinc.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250225160052.39564-1-loic@rivosinc.com>
+References: <20250225160052.39564-1-loic@rivosinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=loic@rivosinc.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=loic@rivosinc.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,26 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Remove useless check in pmp_is_locked, the function will return 0 in either
+case.
 
-These patches fix Smepmp implementation to make it compliant with the spec.
+Signed-off-by: Loïc Lefort <loic@rivosinc.com>
+---
+ target/riscv/pmp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-First patch limits RLB to CSR changes since RLB should not affect privilege
-evaluation. Patch 2 extracts some common code into a function (to be used in
-patch 3). Patch 3 fixes validation of pmpcfg CSR writes in order to match Smepmp
-specification. Patch 4 is a small optimization and last patch is just removing
-redundant code.
-
-Loïc Lefort (5):
-  target/riscv: pmp: don't allow RLB to bypass rule privileges
-  target/riscv: pmp: move Smepmp operation conversion into a function
-  target/riscv: pmp: fix checks on writes to pmpcfg in Smepmp MML mode
-  target/riscv: pmp: exit csr writes early if value was not changed
-  target/riscv: pmp: remove redundant check in pmp_is_locked
-
- target/riscv/pmp.c | 151 +++++++++++++++++++++++++--------------------
- 1 file changed, 83 insertions(+), 68 deletions(-)
-
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index e4fee10d93..81c8bd71ce 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -58,11 +58,6 @@ static inline int pmp_is_locked(CPURISCVState *env, uint32_t pmp_index)
+         return 1;
+     }
+ 
+-    /* Top PMP has no 'next' to check */
+-    if ((pmp_index + 1u) >= MAX_RISCV_PMPS) {
+-        return 0;
+-    }
+-
+     return 0;
+ }
+ 
 -- 
 2.47.2
 
