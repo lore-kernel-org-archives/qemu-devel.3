@@ -4,79 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96DFC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 07:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58BCC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 07:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmoxe-0005FQ-Nv; Tue, 25 Feb 2025 02:02:34 -0500
+	id 1tmp2C-00068W-KK; Tue, 25 Feb 2025 02:07:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jksoftdeveloper@gmail.com>)
- id 1tmoxa-0005FE-Hz
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 02:02:30 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jksoftdeveloper@gmail.com>)
- id 1tmoxX-0004dg-AY
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 02:02:28 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5deb1266031so9618977a12.2
- for <qemu-devel@nongnu.org>; Mon, 24 Feb 2025 23:02:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1740466945; x=1741071745; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lBiNhYAD/Hw+3CQYcnOxM+KZflEaCWsEGR0ap+QLUaY=;
- b=YnhjRW8HyS1GU8+f95MfAKJ7+QigvfpeGHkASZEgRwMpC3BWjI2lfiV4fUwWoiS6LS
- E77LTP4+Yz/OEGq7tcTSJjesUtP0hQ8n5WOdVEqOWLW/9tKmzL7+MRIOtldIS6McY8G4
- 7nQyJiH5BhAtsH5VijBPtpazbfnN6wdQA6mF/Eh27qdsNCAGtNU7/JCsVPo8kgu7y//S
- RxYmlczCJbhMo0HOBhjszHNJYW6zUwXbKm9Hi2bIWAnyS5EKzruYx4mYaGma9DJyjnDs
- fGfs7jjWHDMZXsNDYjg0Xo7cQ/h5IqGj4zHjBYpXG0KERmmAHb2C7+AiF9z8bEGl1vy4
- grdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740466945; x=1741071745;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lBiNhYAD/Hw+3CQYcnOxM+KZflEaCWsEGR0ap+QLUaY=;
- b=bqdaMckgCksyFm05ubI1xkUnGdgMsmXJy4r56mBfsCXMmeuXJsPWo25HjNXZGiaRGo
- 2gsQWsIdOgm7xtzDDaxoz09lAEYKMulpYFZGSruCR+/C0zamaAGPgL0AgvT83ECh/e4M
- IJRbsnCthGmyjLbjkfrPQ+x1ElqVqf3dF3x/Q6vXw4bVySTn+H99n/tQqHIZV1DS6Eok
- h1FlBXRUtamsoQTZ68KqUBOEkO+OwRpSDAiUnSNNPquHsYt2cb9PLfW6FJKRZJ9db4p1
- RaGv0KjNobB1nI4nzBiDjWQQKLAd7d+pAM6JyBMkVtm2zAlcyUe7X9FtDrx5J047PVrJ
- iUyQ==
-X-Gm-Message-State: AOJu0YxoSBzmWJMrvgfletRAYMhC8MLVdGk8D6ibAajGs6DrfeU9lFaL
- At+hs6wIb25B8JlEVS4xozibuWjedSj5M60TExt7tkRkR98RI2iVIYbbqwzmmKYJoi4zmkmrwmN
- BdwmYFSEigqSekl/g4JEUKBG0heQJwg==
-X-Gm-Gg: ASbGncsD4ph6r0IZkXWf+n1ZEcUBIZnS1SGCFzBbfyMz05j6SO3vOB94gmgzHZcHcWv
- gHijyQXd26xcoZ2xjH2+y9eQZQhsyL+922+r9nGjuRVjeoGqYu26Gkgyc2o54AzoWQnpwoswqil
- IpeXhceaa/BL5OcTneKtzxCA+X3GUokX1+Q0FX6iA=
-X-Google-Smtp-Source: AGHT+IHy/qk5upE7w1jX1+zPoeQI5scJmQ71NGlEL2CWtSeTl1gXBWScUu8TCbAhgwqPkYzZWeWmdGcbbpz0AMrO6xI=
-X-Received: by 2002:a05:6402:348d:b0:5dc:7823:e7e4 with SMTP id
- 4fb4d7f45d1cf-5e0b70f8732mr15970093a12.12.1740466944480; Mon, 24 Feb 2025
- 23:02:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tmp2A-000683-8C
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 02:07:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tmp28-0005JA-No
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 02:07:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1740467231;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JJUwcMDtze5FkBkRSan6dq0u2k5MOAPSeGdYFgAWptk=;
+ b=YDlEJDQv+egOJq1dW2lviXwlM127SRRAcU2f1XK0FP3QdCS7DvWzBPG5s0kDCZsclX5uDR
+ /BFeZT/CEKAYjlTMCznUkKgn/ZI7JdMdfnTN1tRmfeWuRFlnOL6kzR8UCUrrsfXVo4r/fk
+ gyu1w2xmVQ7ImB4a2ltWVxfH15iX9Sk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-qfDQ1ouiP76bj2JZS0dEGQ-1; Tue,
+ 25 Feb 2025 02:07:07 -0500
+X-MC-Unique: qfDQ1ouiP76bj2JZS0dEGQ-1
+X-Mimecast-MFC-AGG-ID: qfDQ1ouiP76bj2JZS0dEGQ_1740467226
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D4E7180056F; Tue, 25 Feb 2025 07:07:00 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.174])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 906261800352; Tue, 25 Feb 2025 07:06:57 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>,
+	qemu-block@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH] iotests: Stop NBD server in test 162 before starting the next
+ one
+Date: Tue, 25 Feb 2025 08:06:50 +0100
+Message-ID: <20250225070650.387638-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <CAEHwtECacvmv98uAvXisx57qEN1hMbLjHNWUkm8mOt56wtWGaQ@mail.gmail.com>
- <3c9247b8-7caa-49f8-a892-f044ab48ec12@linaro.org>
-In-Reply-To: <3c9247b8-7caa-49f8-a892-f044ab48ec12@linaro.org>
-From: Jayakrishnan A <jksoftdeveloper@gmail.com>
-Date: Tue, 25 Feb 2025 12:32:13 +0530
-X-Gm-Features: AQ5f1Jq9XncugqvuMD_bGmaiYmKj2DdhnoLMx3wUCPqUT78Oo3jamoQffsQ26ws
-Message-ID: <CAEHwtEBSv4KUh6momc=u7k9v8tbQ8sNCAdVprHg-mLVqOU_QGw@mail.gmail.com>
-Subject: Re: Seeking help on implementing sync over ivshmem shared memory
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000f81b17062ef2091a"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=jksoftdeveloper@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,72 +81,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f81b17062ef2091a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Test 162 recently started failing for me for no obvious reasons (I
+did not spot any suspicious commits in this area), but looking in
+the 162.out.bad log file, there was a suspicious message at the end:
 
-Thanks for your support . It will be a great help for us .
+ qemu-nbd: Cannot lock pid file: Resource temporarily unavailable
 
-On Mon, 24 Feb 2025 at 3:03=E2=80=AFPM, Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
+And indeed, the test starts the NBD server two times, without stopping
+the first server before running the second one, so the second one can
+indeed fail to lock the PID file. Thus let's make sure to stop the
+first server before the test continues with the second one. With this
+change, the test works fine for me again.
 
-> Cc'ing Gustavo who maintains the IVSHMEM device.
->
-> On 23/2/25 15:48, Jayakrishnan A wrote:
-> > Hi Team ,
-> >
-> > Seeking help on implementing sync over ivshmem shared memory , As part
-> > of internal project we could able to achieve shared ivshmem with
-> > doorbell mechanism ,But in order to achieve shared memory
-> > synchronisation we are trying to add atomic operation  over this shared
-> > memory area variables , Just wanted to analyse whether this atomic
-> > variable between VMs shared memory will work as expected , If not is
-> > there any suggested way ahead to implement synchronisation over ivshmem
-> > shared memory for threads running in multiple VMs.
-> >
-> > Thanks and Regards ,
-> > Jayakrishnan A
-> >
->
->
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qemu-iotests/162 | 1 +
+ 1 file changed, 1 insertion(+)
 
---000000000000f81b17062ef2091a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+diff --git a/tests/qemu-iotests/162 b/tests/qemu-iotests/162
+index 94dae60d304..956c2c5f339 100755
+--- a/tests/qemu-iotests/162
++++ b/tests/qemu-iotests/162
+@@ -65,6 +65,7 @@ done
+ 
+ $QEMU_IMG info "json:{'driver': 'nbd', 'host': 'localhost', 'port': $port}" \
+     | grep '^image' | sed -e "s/$port/PORT/"
++_stop_nbd_server
+ 
+ # This is a test for NBD's bdrv_refresh_filename() implementation: It expects
+ # either host or path to be set, but it must not assume that they are set to
+-- 
+2.48.1
 
-<div><div dir=3D"auto">Thanks for your support . It will be a great help fo=
-r us .</div></div><div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
- class=3D"gmail_attr">On Mon, 24 Feb 2025 at 3:03=E2=80=AFPM, Philippe Math=
-ieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">p=
-hilmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:s=
-olid;padding-left:1ex;border-left-color:rgb(204,204,204)">Cc&#39;ing Gustav=
-o who maintains the IVSHMEM device.<br>
-<br>
-On 23/2/25 15:48, Jayakrishnan A wrote:<br>
-&gt; Hi Team ,<br>
-&gt; <br>
-&gt; Seeking help on implementing sync over ivshmem shared memory , As part=
- <br>
-&gt; of internal project we could able to achieve shared ivshmem with <br>
-&gt; doorbell mechanism ,But in order to achieve shared memory <br>
-&gt; synchronisation we are trying to add atomic operation =C2=A0over this =
-shared <br>
-&gt; memory area variables , Just wanted to analyse whether this atomic <br=
->
-&gt; variable between VMs shared memory will work as expected , If not is <=
-br>
-&gt; there any suggested way ahead to implement synchronisation over ivshme=
-m <br>
-&gt; shared memory for threads running in multiple VMs.<br>
-&gt; <br>
-&gt; Thanks and Regards ,<br>
-&gt; Jayakrishnan A<br>
-&gt; <br>
-<br>
-</blockquote></div></div>
-</div>
-
---000000000000f81b17062ef2091a--
 
