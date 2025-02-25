@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8036EC021B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400DEC021B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Feb 2025 18:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tmzxo-0002VM-M6; Tue, 25 Feb 2025 13:47:32 -0500
+	id 1tn07t-0000S1-8n; Tue, 25 Feb 2025 13:57:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmzx1-0002Bt-I1
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:43 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1tn07r-0000Re-RN
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:57:51 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tmzwv-0000HG-I6
- for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:46:36 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-390cf7458f5so945998f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:46:32 -0800 (PST)
+ id 1tn07q-0002NL-0c
+ for qemu-devel@nongnu.org; Tue, 25 Feb 2025 13:57:51 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38f325dd9e6so3144825f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Feb 2025 10:57:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1740509191; x=1741113991; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZSVra8nBfTZ84QaRLv+FUaCWxVEY3WH1UDqPpiF+8yM=;
- b=Txt8npCXbTlJhDYWeTJ0p5Bm8PUlsxol5ekRGeBFzl5RSsqfG4c7fCjrHFf34lcvfp
- /8XtXQ+M3Bh9aFC7YZg7783zFmkmxqLyeI1yvrRGh4ULB/l6EviK4GMQ0Em7b8Uu3u04
- imqrsFtsaBhmaOr7YBaU0fb1TDuMmd2WcHzWshKCLOTw+jt3Pi0h8y293t88RoRbwx2v
- FvVuqZ3fFMF/swlH4h8MIGOytjYH9gm2fviFITLLeTDrFf+aHUoSIiQehInoLmcYD+pu
- IgbJXqANduyWGXCSIyZxdqBXK+P9Ob+URm21xQfbcTqX4dcTkwEs/bNdHjE8E1eVthZV
- XqHQ==
+ d=linaro.org; s=google; t=1740509867; x=1741114667; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FKeJckXh02muOHav+sX40o1d9PTRHiNcm43oyBpHGLs=;
+ b=fpVssMK3AQ3UkT/GrTVpof1wPvR19gubR7UZ8JUHiRwaE+Ke0SKSp8KzYKlJH8iaxE
+ 349OLSLljZp5vGpbTpQw13f47DsNgxFr9Wgk4BepmrswOqNDwi8KtoziGUD3hEuWrmma
+ 1JePQYPERYsirCPAlA8rSR0tSpLI2Ki1tJmkHaCuLy16fUM96PYt0ENJr8YESaa1dERo
+ HWZNyNN2jkQ1FSnTiW3iw/Y+mDF+yOdFAw6ou+AVnz82C4a/D2s0KflsETWw8Bd5G0gk
+ 4bykWcdH60/JkybQfDnVg6xJDhs9vqPn0tXm/ka+CC29w5qrURkhxgqkAMH+MAmr2ayj
+ deeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1740509191; x=1741113991;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZSVra8nBfTZ84QaRLv+FUaCWxVEY3WH1UDqPpiF+8yM=;
- b=td3lgdqQk+RzLbaYMrA3rnvzAfo/7aYfl0etntQH+tpyVzsK1BtlE3JaaMVmV/zQ5O
- Nd7kl5trlR01EOwM8MzRkQK0UOn4cwvqr2k8YFRkCicsJUHklYlaQK78n4cMY0T6bTmy
- C3dfaebgJ+EtqZow8M+97PwSutGhZ2dfS+khUSqv/An71tvnNVZTWEZ11KpjFyuq9+E3
- ZwhK8Xule3/4DEKsHZrNdTIdYoYOI48EAkQ/leEoi193BVpTlN+GpRJL3H5obNN1kKm3
- IDHiXD8jcDPKTVyF32PxgwncRGpSWwTrP2fNVkYaDR29X9KmaV9Yv/gch+NddjyBvRq2
- X4eQ==
-X-Gm-Message-State: AOJu0YxX3wU/G8gNZvnd79UrtVJ4MsM2JuRptfInRBE3HlIQxBeLVrQl
- keP8/PrEfnjX2PjhrCQ4fgE1HyqiEQFYAr4nM99Jr691uhaXxzl6UdVAxvC1RXA=
-X-Gm-Gg: ASbGncu8aPvX3uehSlwD/tTE9gTJ0qruzIXZqPx7bZh9BvqMwomWryOaoyBGRukP8FR
- jB0hFUwmOZ5sNxiXcAZb1S3puvvjZzBSrW8LGTZ5/unMs2iCekVefphKFJkKhLCNbc4n9U6yk58
- e3hlyquF/5Ks687uL619rhiokExieumUgF9Hu2g/RpUH15iGV1ek1BCfptBvuzDYSeGX5qH43rg
- eOkGaLVCw66EH307D2MujhHobJiKWXsJLGVnsfq4gnZ5hT0EyAZW5+e0FvqVJE2I4LIEn5exsB3
- 8C/Lh2Uj8T9ZPa1xZA8pi18GtwAP
-X-Google-Smtp-Source: AGHT+IFibIKuCXd0/zjGl376aEjluvPdXTC01vBJiJAv/QjlYySpH64ia9+neba1rTnRAXgYmn1iQQ==
-X-Received: by 2002:a5d:5847:0:b0:38d:d299:7097 with SMTP id
- ffacd0b85a97d-390cc5f5858mr3915637f8f.5.1740509191428; 
- Tue, 25 Feb 2025 10:46:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1740509867; x=1741114667;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FKeJckXh02muOHav+sX40o1d9PTRHiNcm43oyBpHGLs=;
+ b=UiaOZl71m2f21YKbt5IVimJrAHF9i7pymtgght36b4Ex29/pSmQpvC9fPB0/gTzsZQ
+ dUqikgNZxYuAVZ7rhM20TrOqhpr5sLAEh4onW/QbOkeoMnXfcjOjBS0uQ62cxM3Qd/QW
+ C/IU44VzIVvJiqDgbcBExCL4BdCNau80rKVmGJqPikBIMY+9ZW4QOvjevnq/kghB059a
+ 8O495EOlj/NIHI6YlmnAMDLhdpUS+A1d+PygFocD1pJ/DwvVmr0bel3Zy0uxrxAp3Q9E
+ Wvs1dnmHbErOsmCaAO8XOGY6c+L71uiZBrTbq1fXaT0f/gATBBg5R75vkRVMPyr9bZHT
+ Ryow==
+X-Gm-Message-State: AOJu0YzuEw8+u49R27Cifc7ol77zJYQMo17Z01A1uvwPbGHS04w0jVJ+
+ Cs/XqoV65sx/LIQ6aELjlvBaE26EgGYf+Rm5/U2TReVEPm407n2Dtkl20zmFKZapafKuPNHy6dj
+ znhw=
+X-Gm-Gg: ASbGncu+dybsjCH8Yl8HTnNmnvnxA5IrlqhoDoR95clZ9SZTnZGiGI7U8Y67yL+zqy8
+ 7IVqfC5gcvt3jWTe2rMPHmaC5yQbfgHNLIJ7oZYMYLqvl+uT3HOmZUVBxlb/T2lgWscqL42v+uB
+ hOR0b7TEv5iz1Xjo9ddDmceIKHodjDYSP7tO2voqFyTQudrSz6+huCZ45CKyQbnTyX9o302nrdS
+ CPEPyARG2JjhOszi6if30rXP/7UsL6kuV/FzeYZvzfITx6CZp9MPbxSZqgp2Iz/n6YJ9Gb2IVkd
+ hRO8KTO5tIClp39cTBiGuytObqR4
+X-Google-Smtp-Source: AGHT+IE2ZskyQA2ozaSgjgmY1frTSmiQBVWdNZ+RF4TT9qjqnPXrNXes6Gy4HEZDJhpK4KzHlwhR1w==
+X-Received: by 2002:a05:6000:1561:b0:38d:d387:166 with SMTP id
+ ffacd0b85a97d-390d4f84aadmr279799f8f.34.1740509867436; 
+ Tue, 25 Feb 2025 10:57:47 -0800 (PST)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-390cd88300bsm3243560f8f.54.2025.02.25.10.46.29
+ ffacd0b85a97d-390cd86caa8sm3192571f8f.25.2025.02.25.10.57.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Feb 2025 10:46:29 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6D5B55F7DC;
- Tue, 25 Feb 2025 18:46:28 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/4] cputlb: add tlb_flush_other_cpu
-Date: Tue, 25 Feb 2025 18:46:24 +0000
-Message-Id: <20250225184628.3590671-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ Tue, 25 Feb 2025 10:57:46 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0712B5F7DC;
+ Tue, 25 Feb 2025 18:57:46 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 07/10] plugins/api: split out binary
+ path/start/end/entry code
+In-Reply-To: <5c79e077-138c-4013-bdd6-0719dfe1e26f@linaro.org> (Richard
+ Henderson's message of "Tue, 25 Feb 2025 10:32:19 -0800")
+References: <20250225110844.3296991-1-alex.bennee@linaro.org>
+ <20250225110844.3296991-8-alex.bennee@linaro.org>
+ <5c79e077-138c-4013-bdd6-0719dfe1e26f@linaro.org>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Tue, 25 Feb 2025 18:57:45 +0000
+Message-ID: <875xkx6edy.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,38 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is based on one of the fixes from Igor's series:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-  20250207162048.1890669-1-imammedo@redhat.com
+> On 2/25/25 03:08, Alex Benn=C3=A9e wrote:
+>> To move the main api.c to a single build compilation object we need to
+>> start splitting out user and system specific code. As we need to grob
+>> around host headers we move these particular helpers into the *-user
+>> mode directories.
+>> The binary/start/end/entry helpers are all NOPs for system mode.
+>> Signed-off-by: Alex Benn=C3=A9e<alex.bennee@linaro.org>
+>> ---
+>>   linux-user/plugin-api.c | 43 +++++++++++++++++++++++++++++++++++++++++
+>>   plugins/api-system.c    | 39 +++++++++++++++++++++++++++++++++++++
+>>   plugins/api.c           | 43 -----------------------------------------
+>>   linux-user/meson.build  |  1 +
+>>   plugins/meson.build     |  2 +-
+>>   5 files changed, 84 insertions(+), 44 deletions(-)
+>>   create mode 100644 linux-user/plugin-api.c
+>>   create mode 100644 plugins/api-system.c
+>
+> Surely this breaks bsd-user.
 
-Rather than reverting the patch I cleaned up a couple of cases where
-we either didn't need to do a flush or we could trivially defer to
-when the CPU started running. For the other cases I introduced
-tlb_flush_other_cpu() for users like reset and post migration. Any
-other users wanting to do a cross-vcpu blat everything function like
-tlb_flush() are almost certainly wanting to use a different more
-targeted helper which still supports queuing async work.
+It didn't seem to - but my local building isn't working so maybe CI
+disables plugins.
 
-Alex.
+>
+> Ideally this would go in common-user, but I think you'd need to move
+> structures out of {bsd,linux}-user/qemu.h into include/user/.
+>
+> In the very short term you could put plugin-api.c.inc in common-user, and
+>
+>
+> #include "qemu.h"
+> #include "common-user/plugin-api.c.inc"
+>
+>
+> in both linux-user and bsd-user.
+>
+>
+> r~
 
-Alex Bennée (3):
-  target/ppc: drop ppc_tlb_invalidate_all from cpu_reset
-  target/hppa: defer hppa_ptlbe until CPU starts running
-  cputlb: introduce tlb_flush_other_cpu for reset use
-
-Igor Mammedov (1):
-  tcg:tlb: use tcg_debug_assert() in assert_cpu_is_self()
-
- include/exec/exec-all.h   | 20 ++++++++++++++++----
- accel/tcg/cputlb.c        | 18 +++++++++++++-----
- accel/tcg/tcg-accel-ops.c |  2 +-
- cpu-target.c              |  2 +-
- target/hppa/cpu.c         | 10 +++++++++-
- target/i386/machine.c     |  2 +-
- target/ppc/cpu_init.c     |  3 ---
- 7 files changed, 41 insertions(+), 16 deletions(-)
-
--- 
-2.39.5
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
